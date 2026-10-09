@@ -37,6 +37,14 @@ from tennislive.video.explainer import _data_uri  # noqa: E402
 # 缺省画布就是成片的 3:4；带式（美网）传画面带的尺寸（1080×960），
 # `still_canvas_for_layout` 缩进去时才不会两边留出大片底色。
 DEFAULT_SIZE = (1080, 1440)
+# 品牌距卡底的像素。2026-10-08 年终第一（year-end-no1-zverev-2026，1080×1440，
+# 字幕上锚 MarginV=1284）：距底 64px 时品牌墨迹约 y=1339–1372，单行旁白墨迹
+# 约 y=1303–1349，叠了约 11px。下移 36px 到距底 28px 后，品牌墨迹约 y=1375–1408：
+# 单行旁白底下空约 26px，双语下锚的中文行（约到 y=1341）底下空约 33px，离画布
+# 底边约 32px，不贴边。上锚两行中文的第二行会落到 y≈1409，品牌再往下也没有
+# 安全带——闸锁的是真正烧进章节卡的单行旁白和双语两行。不按字幕锚把品牌抬回
+# 页面中段（#1172 否掉的那一版）。
+HANDLE_BOTTOM_PX = 28
 # 总字数上限；排版保留作者的语义分行，不能靠浏览器把长句随意折开。
 MAX_CHARS = 18
 COLUMN_LABELS = frozenset({"赛场之上", "赛后开麦", "网球有故事"})
@@ -86,10 +94,10 @@ def length_problem(text: str) -> str | None:
 
 def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
           clear_bottom: int = 0) -> str:
-    """品牌默认距卡底 64px，保持独立于字幕锚的底部安全区。
+    """品牌默认距卡底 `HANDLE_BOTTOM_PX`，落在默认字幕区下方，仍留底边安全区。
 
-    `clear_bottom` 保留为显式增加底边留白的接口；原生章节卡使用默认值，
-    不根据全片字幕上锚自动抬高品牌。"""
+    `clear_bottom` 保留为显式增加底边留白的接口（只会把品牌再抬高）；原生
+    章节卡传 0，不根据全片字幕上锚自动抬高品牌。"""
     text = str(text or "").strip()
     if not text:
         raise SystemExit("章节卡要有一句话（text 是空的）")
@@ -126,7 +134,7 @@ body{{width:{w}px;height:{h}px;overflow:hidden;background:{CARD_BACKGROUND_CSS};
  font-size:{px}px;line-height:1.28;letter-spacing:2px;max-width:{min(940, w - 140)}px;
  white-space:nowrap;
  text-shadow:0 4px 24px rgba(0,0,0,.45)}}
-.handle{{position:absolute;bottom:{max(64, int(clear_bottom))}px;left:0;right:0;text-align:center;
+.handle{{position:absolute;bottom:{max(HANDLE_BOTTOM_PX, int(clear_bottom))}px;left:0;right:0;text-align:center;
  display:flex;align-items:center;justify-content:center;gap:14px;
  font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:26px;
  letter-spacing:3px;color:{outro_page.SUB};opacity:.72}}

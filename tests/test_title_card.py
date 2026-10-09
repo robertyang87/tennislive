@@ -70,7 +70,7 @@ def test_render在切段之前按版式尺寸渲章节卡(tmp_path, monkeypatch)
         out.write_bytes(b"jpg")
 
     got = reel._materialize_title_cards({}, segs, tmp_path, renderer=fake)
-    # 全出血：品牌使用卡片默认的底部 64px 安全区，不受字幕上锚影响。
+    # 全出血：品牌用卡片自己的底边（HANDLE_BOTTOM_PX），不跟字幕上锚抬高。
     assert calls == [("排名是怎么掉的", "01", (1080, 1440), "title_card_02.jpg",
                       0)]
     assert got[1].image == str(tmp_path / "title_card_02.jpg")
@@ -239,39 +239,100 @@ def test_按画面区尺寸渲的章节卡铺满整幅_彩条落在顶边不缩�
     assert y0 > 0 and x0 > 0 and x1 - x0 <= int(reel.VIDEO_W * 0.94)
 
 
-def test_章节卡品牌在真实字幕下方的底部安全区(tmp_path, monkeypatch):
-    """郑钦文本期字幕下锚 y=1079；品牌应在 y=1336~1376。
+def _bright_rows(im, y0, y1, *, thresh=100, min_hits=8):
+    """一行里中段够亮的像素达到 `min_hits` 才算墨迹，柔光底不算。"""
+    xs = range(im.width // 5, 4 * im.width // 5, 2)
+    return [y for y in range(max(0, y0), min(im.height, y1))
+            if sum(im.getpixel((x, y)) > thresh for x in xs) >= min_hits]
 
-    验证原生卡片与真实 ASS 字幕同时存在，不许靠隐藏字幕或品牌过关。
-    全片字幕上锚变化也不能把卡片品牌重新抬到正文中间。"""
+
+def _row_spans(rows, join=3):
+    if not rows:
+        return []
+    spans = [[rows[0], rows[0]]]
+    for y in rows[1:]:
+        if y - spans[-1][1] <= join:
+            spans[-1][1] = y
+        else:
+            spans.append([y, y])
+    return [(a, b) for a, b in spans]
+
+
+def _burn_caption(card, ass, frame):
     import subprocess  # noqa: PLC0415
 
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y", "-i", str(card),
+         "-vf", f"scale=1080:1440,ass={ass}:fontsdir={ROOT / 'assets' / 'fonts'}",
+         "-frames:v", "1", str(frame)],
+        check=True)
+
+
+def test_章节卡品牌在真实字幕下方的底部安全区(tmp_path, monkeypatch):
+    """默认全出血字幕锚下，品牌在字幕墨迹下方，并留在底边安全区内。
+
+    2026-10-08 年终第一的章节卡把「网球时差 · TENNIS JETLAG」叠进了单行旁白：
+    品牌距底 64px（墨迹约 y=1339–1372），旁白上锚 MarginV=1284（墨迹约
+    y=1303–1349）。下移之后要同时满足三件事——单行旁白底下留空、双语两行
+    （下锚，中文在下）底下留空、品牌离画布底边不贴死。高字幕锚（郑钦文那档
+    bottom_margin=361）也不许把品牌抬回正文中段。
+
+    上锚的两行中文第二行会落到画布最底，位置上腾不出安全带，闸不拿它当放行
+    样本。真正烧进章节卡旁白的是单行；两行是双语原声。
+    """
     from PIL import Image  # noqa: PLC0415
 
     monkeypatch.setattr(reel, "LAYOUT", "full")
+    # 高字幕锚也不许改变卡片：materialize 不传 clear_bottom。
     monkeypatch.setattr(reel, "default_margin_v", lambda: 943)
     segs = reel.parse_segments(_spec(), {"": 1}, "")
     card = reel._materialize_title_cards({}, segs, tmp_path)[1]
-    assert "bottom:64px" in tc.build("排名是怎么掉的", kicker="01")
-    im = Image.open(card.image).convert("L")  # Native browser output is 2x.
-    brand = im.crop((0, 1330 * 2, im.width, 1380 * 2))
-    assert sum(v > 120 for v in brand.getdata()) > 200, "底部品牌必须真的画出来"
-    assert sum(v > 120 for v in im.crop((0, 990 * 2, im.width, 1100 * 2)).getdata()) == 0, \
-        "未叠字幕时，此区域应没有被错误抬高的品牌"
+    html = tc.build("排名是怎么掉的", kicker="01")
+    assert f"bottom:{tc.HANDLE_BOTTOM_PX}px" in html
+    assert "bottom:64px" not in html
 
-    ass = reel.write_subtitles([(0, 2.4, "北京时间十月三号下午")], tmp_path / "caption.ass",
-                               height=1440, margin_v=1002, outline=4, shadow=1,
-                               bottom_margin=361)
-    frame = tmp_path / "with-caption.png"
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", card.image,
-                    "-vf", f"scale=1080:1440,ass={ass}:fontsdir={ROOT / 'assets' / 'fonts'}",
-                    "-frames:v", "1", str(frame)], check=True)
-    landed = Image.open(frame).convert("L")
-    assert landed.size == (1080, 1440)
-    assert sum(v > 120 for v in landed.crop((0, 990, 1080, 1100)).getdata()) > 200, \
-        "真实字幕必须仍在原定锚位可见"
-    assert sum(v > 120 for v in landed.crop((0, 1330, 1080, 1380)).getdata()) > 200, \
-        "叠字幕后底部品牌必须仍然可见，与字幕分离"
+    bare = Image.open(card.image).convert("L").resize((1080, 1440), Image.Resampling.BOX)
+    brand_spans = _row_spans(_bright_rows(bare, 1100, 1440))
+    assert len(brand_spans) == 1, f"底部只该有一条品牌，量到 {brand_spans}"
+    brand_top, brand_bot = brand_spans[-1]
+    inset = bare.height - 1 - brand_bot
+    assert inset >= 24, f"品牌离画布底只有 {inset}px，贴边了 ({brand_top}–{brand_bot})"
+    assert brand_top >= 1360, f"品牌被抬离底部安全区：y={brand_top}–{brand_bot}"
+    assert not _bright_rows(bare, 900, 1200), "未叠字幕时，页面中段不该有品牌"
+
+    def gap_under(shown, name):
+        ass = reel.write_subtitles(
+            [(0, 2.4, shown)], tmp_path / f"{name}.ass",
+            height=1440, margin_v=reel._REEL_MARGIN_V, outline=4, shadow=1)
+        frame = tmp_path / f"{name}.png"
+        _burn_caption(card.image, ass, frame)
+        landed = Image.open(frame).convert("L")
+        assert landed.size == (1080, 1440)
+        above = _row_spans(_bright_rows(landed, 1100, brand_top))
+        assert above, f"{name} 的字幕没有烧出来"
+        sub_bot = above[-1][1]
+        gap = brand_top - sub_bot - 1
+        assert gap >= 16, (
+            f"{name} 字幕底 y={sub_bot} 与品牌顶 y={brand_top} 只隔 {gap}px")
+        # 品牌自己还在，没有被字幕盖住或渲丢。
+        assert _bright_rows(landed, brand_top, brand_bot + 1), f"{name} 叠完后品牌不见了"
+        return gap
+
+    one_gap = gap_under("10月6日，辛纳宣布结束赛季", "one-line")
+    bi_gap = gap_under("Year-end number one\n年终第一几乎到手", "bilingual")
+    assert one_gap >= 16 and bi_gap >= 16
+
+    # 郑钦文那种高锚：字幕停在页面中上段，品牌仍钉在刚才量到的底边。
+    high = reel.write_subtitles(
+        [(0, 2.4, "北京时间十月三号下午")], tmp_path / "high.ass",
+        height=1440, margin_v=1002, outline=4, shadow=1, bottom_margin=361)
+    high_frame = tmp_path / "high.png"
+    _burn_caption(card.image, high, high_frame)
+    high_im = Image.open(high_frame).convert("L")
+    assert _bright_rows(high_im, 990, 1150), "高锚字幕必须仍在原定锚位可见"
+    high_brand = _row_spans(_bright_rows(high_im, 1200, 1440))
+    assert high_brand and abs(high_brand[-1][0] - brand_top) <= 2, (
+        f"高字幕锚把品牌从 y={brand_top} 挪到了 {high_brand}")
 
 
 def test_真渲的章节卡走完切段那条路_成片第一行就是彩条(tmp_path):

@@ -9589,7 +9589,7 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
             import render_title_card  # noqa: PLC0415
             renderer = render_title_card.render
         size = (VIDEO_W, BAND_PIC_H) if LAYOUT == "band" else (VIDEO_W, VIDEO_H)
-        # 品牌固定在卡底 64px 安全区（render_title_card 的默认值）。
+        # 品牌固定在卡底 HANDLE_BOTTOM_PX（render_title_card，2026-10-08 从 64 下移到 28）。
         # 字幕保留自己的真实锚，不再拿默认字幕上锚把品牌抬到标题/正文中间。
         out_segments = []
         for i, s in enumerate(segments):
