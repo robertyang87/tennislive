@@ -144,21 +144,38 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
     after = last + 1
     # Normal colour boundaries (including a withdrawn point cell) remain exact.
     # Antialiasing removes a few pixels from the blue run, hence the allowance.
-    if cell < 18 or edge <= after + 6:
+    h = band.shape[0]
+    pixels = band.astype(np.float32)
+    whites = (pixels.min(axis=2) > 150) & (pixels.max(axis=2) - pixels.min(axis=2) < 50)
+    points = whites[:, after + 3:min(len(blue_cols), after + cell + 12)]
+    point_digits = (points.shape[1] >= 18
+                    and 0.008 < points[:h // 2].mean() < 0.25
+                    and 0.008 < points[h // 2:].mean() < 0.25)
+    if cell < 18 or (edge <= after + 6 and not point_digits):
         return edge
     if after + cell + 8 <= edge <= after + cell + 10:
         return edge
-    pixels = band.astype(np.float32)
-    h = band.shape[0]
     if h < 24:
         return edge
     top = np.median(pixels[2:7], axis=0)
     bottom = np.median(pixels[h - 10:h - 3], axis=0)
     top_step = np.mean(np.diff(top, axis=0), axis=1)
     bottom_step = np.mean(np.diff(bottom, axis=0), axis=1)
-    # Text is away from these border strips. Requiring a positive step in both
-    # strips rejects a bright sleeve/letter confined to only one score row.
+    # Text is away from these border strips. Both rows must change together;
+    # an absolute difference from only one bright sleeve is not a board edge.
     shared = np.minimum(top_step, bottom_step)
+    if point_digits:
+        # Dark close-ups can hide an outer strip, and a darker backdrop can
+        # reverse the opacity step. Require actual white point digits in both
+        # rows before using inner borders or a shared negative step.
+        upper = np.median(pixels[h // 2 - 15:h // 2 - 8], axis=0)
+        lower = np.median(pixels[h // 2 + 2:h // 2 + 9], axis=0)
+        upper_step = np.mean(np.diff(upper, axis=0), axis=1)
+        lower_step = np.mean(np.diff(lower, axis=0), axis=1)
+        shared = np.maximum.reduce([
+            shared, np.minimum(-top_step, -bottom_step),
+            np.minimum(upper_step, lower_step),
+            np.minimum(-upper_step, -lower_step)])
     lo = after + 10
     hi = min(after + cell + 16, len(shared) + 1)
     if hi <= lo:
@@ -269,6 +286,10 @@ def stabilize(frames: list) -> list:
             continue
         near = [v for v in edges[max(0, i - half):i + half + 1] if v is not None]
         m = int(np.median(near))
+        if any(v is None for v in edges[max(0, i - half):i + half + 1]):
+            # During removal, the remaining frame's exact contour must not be
+            # widened by older neighbours after newer frames are already off.
+            m = min(e, m)
         tags = [t for _, t in frames[max(0, i - 1):i + 2]]
         keep = tag if (tag is not None and sum(t is not None for t in tags) >= 2) else None
         if keep is not None:

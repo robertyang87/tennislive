@@ -20,7 +20,8 @@ FIXTURES = Path(__file__).parent / 'fixtures/atp_scoreboard/shanghai2026'
     ('23.570', 278), ('35.700', 278), ('47.833', 223),
     ('64.533', 325), ('64.900', 325), ('85.933', 372),
     ('88.800', 372), ('89.000', 372), ('64.433', 325),
-    ('97.500', 373), ('ttv-91.200', 329),
+    ('97.500', 372), ('ttv-91.200', 329),
+    ('34.370', 278), ('34.500', 278), ('34.703', 278),
 ])
 def test_actual_full_board_boundary(timestamp, expected):
     band = np.asarray(Image.open(FIXTURES / f'{timestamp}.png').convert('RGB'))
@@ -39,3 +40,8 @@ def test_point_border_survives_backdrop_joining_the_entire_colour_scan():
     band = np.asarray(Image.open(FIXTURES / '64.900.png').convert('RGB')).copy()
     band[:, 325:] = (40, 64, 56)
     assert atp.board_edge(band, cap=455) == 325
+
+
+def test_removal_does_not_widen_last_contour_with_older_frames():
+    frames = [(298, None), (271, None), (244, None), (None, None), (None, None)]
+    assert atp.stabilize(frames)[2] == (244, None)
