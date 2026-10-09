@@ -90,8 +90,8 @@ jobs:
         env:
           OUTDIR: ${{ steps.master.outputs.outdir }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           # Native spec/QC/ASS/covers remain unchanged; stage only transport/pages.
           git add --sparse "$OUTDIR/render.json" "$OUTDIR/render.before-release.json" "$OUTDIR/copy.html" "$OUTDIR/push.html" "$OUTDIR/release-verification.json" "$OUTDIR/import-provenance.json" data/evidence/zhou-musetti/final-audio-review-manifest.json
           if git diff --cached --name-only | grep -E '\.(mp4|mp3|mov|mkv|wav)$'; then
