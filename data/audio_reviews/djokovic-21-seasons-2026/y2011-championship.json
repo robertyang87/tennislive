@@ -1,0 +1,20 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=Ke_m8cYKb04",
+  "source_path": "/workspace/video-review/dj21/raw/y2011ao.mp4",
+  "source_sha256": "b134a53cfcaadca47ae033fc2440dccbcfbe052e44c07a8c8390982a45564c98",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T00:03:19.536769+00:00",
+  "reviewed_from": 30.5,
+  "reviewed_to": 44.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "冠军点约在文件 36 秒，拥抱约 42 秒。"
+  ],
+  "no_foreground_english_reason": "small 与 medium 在 28–44.3 秒都没有字。"
+}

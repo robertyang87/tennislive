@@ -6563,6 +6563,20 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     "https://www.youtube.com/watch?v=_qFsD0_Cans": 720,
     # 温网官方 2022 决赛集锦（对克耶高斯）。这一条没有 1080，最高就是 720p。
     "https://www.youtube.com/watch?v=RO52Y8SOIUU": 720,
+    # 同一条片子补上的官方 720p 短片。账号所有者 2026-10-09：没有小体积 1080
+    # 时用官方 720p。下面六条本片核过的文件都是 1280×720。
+    # 2010 北京决赛，Tennis TV 官方短片（对费雷尔）。
+    "https://www.youtube.com/watch?v=i1LtteR8jd0": 720,
+    # 2011 澳网决赛，澳网官方（对穆雷）。
+    "https://www.youtube.com/watch?v=Ke_m8cYKb04": 720,
+    # 2013 澳网决赛，澳网官方（对穆雷）。
+    "https://www.youtube.com/watch?v=dOuCulN1aqg": 720,
+    # 2014 印第安维尔斯决赛，BNP Paribas Open 官方（对费德勒）。
+    "https://www.youtube.com/watch?v=59MAVH6OeKw": 720,
+    # 2019 温网决赛，温网官方（对费德勒）。
+    "https://www.youtube.com/watch?v=mnLdAeSXZv0": 720,
+    # 2020 澳网决赛，澳网官方（对蒂姆）。
+    "https://www.youtube.com/watch?v=0FsIdkTFLms": 720,
 }
 
 

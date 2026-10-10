@@ -1,0 +1,26 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=zqAhgZ3-4QY",
+  "source_path": "/workspace/video-review/dj21/raw/y2025.mp4",
+  "source_sha256": "82223c68f31241d869558a1b38a3b99ffbfb19c614d6f48cb643a08892d8be42",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T00:03:19.536769+00:00",
+  "reviewed_from": 454.45,
+  "reviewed_to": 457.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 454.54,
+      "end": 457.46,
+      "en": "What a fabulous match.",
+      "zh": "这场球太漂亮了。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "small 是 What a fabulous match，454.54–457.46。medium 同一时间少了一个 a，仍是这一句。460.30 之后那句不收。"
+  ]
+}
