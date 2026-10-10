@@ -1,0 +1,351 @@
+{
+  "schema": "tennislive.manual-facts.v1",
+  "slug": "zheng-mertens-beijing-2026-sf",
+  "retrieved_at": "2026-10-10T16:15:52.627750+00:00",
+  "identity": {
+    "youtube_id": "22pyy0S0S3s",
+    "channel": "WTA",
+    "event_year": 2026,
+    "tournament_id": "1020",
+    "wta_match_id": "LS002",
+    "round": "semifinal",
+    "date": "2026-10-10",
+    "city": "Beijing",
+    "level": "WTA1000",
+    "surface": "outdoor hard",
+    "court": "Capital Group Diamond (钻石球场)",
+    "court_evidence": "Actual rendered officialWTA MatchInfo Court=Capital Group Diamond, in wta-match-browser.txt; officialOOP also confirms thismatchvenue.",
+    "winner": "zheng",
+    "loser": "mertens",
+    "sets_zheng_mertens": [
+      [
+        7,
+        5
+      ],
+      [
+        6,
+        2
+      ]
+    ],
+    "duration": "01:32:52",
+    "duration_precision": "Official MatchTimeTotal; firstset55:38 and second37:10 sum92:48 differ4sec from match total. Prefer match total; do not substitute wallclock length.",
+    "api_match_timestamp_utc": "2026-10-10T10:49:20.567+00:00",
+    "api_match_timestamp_beijing": "2026-10-10T18:49:20.567+08:00",
+    "natural_time": "北京时间10月10日晚上",
+    "natural_time_evidence": "WTA completed match MatchTimeStamp starts18:49local; official article says Saturday night. Not inferred from upload time.",
+    "first_final": "First Chinese China Open singles finalist; in WTA context say first Chinese player to reach women’s singles final.",
+    "source": "wta-matches.json"
+  },
+  "players": {
+    "zheng": {
+      "wta_id": 328120,
+      "name": "Qinwen Zheng",
+      "country": "CHN",
+      "date_of_birth": "2002-10-08",
+      "age": 24,
+      "rank": 54,
+      "points": 1083,
+      "rankedAt": "2026-09-28T00:00:00Z",
+      "rank_date_note": "Official ranking API returned rankedAt2026-09-28 even with date2026-10-05 parameter; do not relabel rankedAt. Current matchreport explicitlyZhengNo54 andWTA10-05 HTMLMertensNo19 agree.",
+      "seed": null,
+      "entry": "WC"
+    },
+    "mertens": {
+      "wta_id": 317964,
+      "name": "Elise Mertens",
+      "country": "BEL",
+      "date_of_birth": "1995-11-17",
+      "age": 30,
+      "rank": 19,
+      "points": 2165,
+      "rankedAt": "2026-09-28T00:00:00Z",
+      "rank_date_note": "Official ranking API returned rankedAt2026-09-28 even with date2026-10-05 parameter; do not relabel rankedAt. Current matchreport explicitlyZhengNo54 andWTA10-05 HTMLMertensNo19 agree.",
+      "seed": 13,
+      "entry": "direct"
+    }
+  },
+  "statistics": {
+    "player_order": [
+      "zheng",
+      "mertens"
+    ],
+    "aces": [
+      8,
+      0
+    ],
+    "double_faults": [
+      2,
+      2
+    ],
+    "winners": [
+      32,
+      9
+    ],
+    "unforced_errors": [
+      16,
+      12
+    ],
+    "first_serve_in_percent": [
+      47,
+      72
+    ],
+    "first_serve_in_fraction": [
+      [
+        26,
+        55
+      ],
+      [
+        46,
+        64
+      ]
+    ],
+    "first_serve_points_won_percent": [
+      88,
+      61
+    ],
+    "first_serve_points_won_fraction": [
+      [
+        23,
+        26
+      ],
+      [
+        28,
+        46
+      ]
+    ],
+    "second_serve_points_won_percent": [
+      59,
+      33
+    ],
+    "second_serve_points_won_fraction": [
+      [
+        17,
+        29
+      ],
+      [
+        6,
+        18
+      ]
+    ],
+    "break_points_converted": [
+      [
+        4,
+        6
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "break_points_saved": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "total_points_won": [
+      70,
+      49
+    ],
+    "stats_source": [
+      "wta-stats.json",
+      "flashscore-df_st_1.txt"
+    ],
+    "winners_ue_source": "Official WTA advanced-stats MatchTotal teamA/teamB, actual rendered WTA key stats, and report4590078 forZheng. Direct API200原始完整证据。",
+    "headline_constraint": "Do not frame headline around total points difference.",
+    "winners_by_set": [
+      [
+        19,
+        4
+      ],
+      [
+        13,
+        5
+      ]
+    ],
+    "ue_by_set": [
+      [
+        11,
+        7
+      ],
+      [
+        5,
+        5
+      ]
+    ],
+    "net_points_won_total": [
+      [
+        5,
+        7
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "winners_ue_rejected_source": "RallyHer claims38/12winners conflicting with official32/9. Do not use.",
+    "published_ui_points_percentage_discrepancy": "Official rendered match summary KeyStats shows61%/39% PointsWon, inconsistent with officialbasicAPI andFlashscore70/119=59%,49/119=41%, aswellasadvancedshot arithmetic32+12+26=70 and9+16+24=49. Use rawcounts70/49 andfraction119; do not copyUIpercentage61/39."
+  },
+  "turning_points": [
+    {
+      "set": 1,
+      "facts": "Zheng holds then breaks Mertens on second opportunity and holds:3-0. Mertens saves another breakpoint to hold1-3; Zheng leads4-1.",
+      "pbp_games": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "set": 1,
+      "facts": "Mertens holds2-4, breaks Zheng after Zheng led30-0 in game7, then holds4-4. No Zheng2-4 or4-5 deficit.",
+      "pbp_games": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "set": 1,
+      "facts": "At5-5 Zheng holds to love6-5, then at30-30 on Mertens serve gains40-30 setpoint and converts first setpoint7-5.",
+      "pbp_games": [
+        11,
+        12
+      ]
+    },
+    {
+      "set": 2,
+      "facts": "Zheng holds to love1-0 then breaks Mertens to love2-0. At2-0 Zheng saves30-40 breakpoint, wins deuce/A40 and holds3-0.",
+      "pbp_games": [
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "set": 2,
+      "facts": "Mertens holds1-3 and2-4. Zheng holds5-2, then at30-30 on Mertens serve gains40-30 matchpoint, wins first matchpoint6-2.",
+      "pbp_games": [
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    }
+  ],
+  "last10games": "Atfirstset5-5, Zheng winslast2firstsetgames and6of8secondsetgames =8oflast10; official article and independent PBP agree.",
+  "background": {
+    "entry": "wildcard",
+    "early_matches": "Firstfourmatches wentthree sets, fourth againstCharaeva; quarterfinalstraightsetsSvitolina.",
+    "age_context": "Zheng had24thbirthday2daysbefore thismatch, DOBofficial2002-10-08.",
+    "career_final_number": 11,
+    "career_wta1000_final_number": 2,
+    "historical_semifinal_record": "WTA report Chinese players previous0-7 at eventsemifinals; context excludes doubles.",
+    "limits": "Do not assert injuryreturn/recovery specifics without new current sources."
+  },
+  "next_round": {
+    "round": "final",
+    "opponent": "Mirra Andreeva",
+    "seed": 4,
+    "country": "RUS",
+    "date": "2026-10-11",
+    "not_before_beijing": "19:30",
+    "court": "Capital Group Diamond",
+    "source": [
+      "wta-final-schedule.json",
+      "wta-text-4590078.json"
+    ],
+    "h2h": "Zheng won only prior meeting2024ChinaOpenquarterfinal5-7,6-0,6-4, current WTA article states1-0; do not confuse2026currentQF opponentCharaeva."
+  },
+  "raw_match": {
+    "BinPacketBase64": null,
+    "CourtID": 1,
+    "DateSeq": 13,
+    "DrawLevelType": "M",
+    "DrawMatchType": "S",
+    "EntryTypeA": "Wc",
+    "EntryTypeB": "",
+    "EventID": "1020",
+    "EventYear": 2026,
+    "LastUpdated": "2026-10-10T12:40:51.403+00:00",
+    "MatchID": "LS002",
+    "MatchState": "F",
+    "MatchTimeStamp": "2026-10-10T10:49:20.567+00:00",
+    "MatchTimeTotal": "01:32:52",
+    "Message": "{11|Q. Zheng}",
+    "NumSets": 2,
+    "PlayerCountryA": "CHN",
+    "PlayerCountryA2": "",
+    "PlayerCountryB": "BEL",
+    "PlayerCountryB2": "",
+    "PlayerIDA": "328120",
+    "PlayerIDA2": "",
+    "PlayerIDB": "317964",
+    "PlayerIDB2": "",
+    "PlayerNameFirstA": "Qinwen",
+    "PlayerNameFirstA2": "",
+    "PlayerNameFirstB": "Elise",
+    "PlayerNameFirstB2": "",
+    "PlayerNameLastA": "Zheng",
+    "PlayerNameLastA2": "",
+    "PlayerNameLastB": "Mertens",
+    "PlayerNameLastB2": "",
+    "PointA": "",
+    "PointB": "",
+    "ResultString": "Q. Zheng d [13]E. Mertens 7-5,6-2",
+    "RoundID": "S",
+    "ScoreSet1A": "7",
+    "ScoreSet1B": "5",
+    "ScoreSet2A": "6",
+    "ScoreSet2B": "2",
+    "ScoreSet3A": "",
+    "ScoreSet3B": "",
+    "ScoreSet4A": "",
+    "ScoreSet4B": "",
+    "ScoreSet5A": "",
+    "ScoreSet5B": "",
+    "ScoreString": "7-5,6-2",
+    "ScoreSys": "1",
+    "ScoreTbSet1": "",
+    "ScoreTbSet2": "",
+    "ScoreTbSet3": "",
+    "ScoreTbSet4": "",
+    "SeedA": "",
+    "SeedB": "13",
+    "Serve": "",
+    "Winner": "2"
+  },
+  "source_urls": {
+    "video-oembed.json": "https://noembed.com/embed?url=https://www.youtube.com/watch?v=22pyy0S0S3s",
+    "wta-matches.json": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches?states=C",
+    "wta-stats.json": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS002/stats",
+    "wta-score-page.html": "https://www.wtatennis.com/tournament/1020/beijing/2026/scores/LS002",
+    "wta-tournament.json": "https://api.wtatennis.com/tennis/tournaments/1020/2026",
+    "flashscore-day.txt": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "wta-ranking.json": "https://api.wtatennis.com/tennis/rankings/singles?date=2026-10-05",
+    "zheng-player.json": "https://api.wtatennis.com/tennis/players/328120",
+    "mertens-player.json": "https://api.wtatennis.com/tennis/players/317964",
+    "flashscore-df_st_1.txt": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_vebJGCxJ",
+    "flashscore-df_mh_1.txt": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_vebJGCxJ",
+    "flashscore-df_sui_1.txt": "https://local-global.flashscore.ninja/2/x/feed/df_sui_1_vebJGCxJ",
+    "wta-photo-page0.json": "https://api.wtatennis.com/content/wta/photo/EN/?pageSize=100&page=0",
+    "wta-video-4590081.json": "https://api.wtatennis.com/content/wta/video/EN/4590081",
+    "wta-rank-page.html": "https://www.wtatennis.com/rankings/singles?rankDate=2026-10-05",
+    "official-cover-candidate.jpg": "https://photoresources.wtatennis.com/photo-resources/2026/10/10/4492b094-723a-4639-8320-f8afbbd0202d/GettyImages-2299507680.jpg?width=4000",
+    "official-cover-native.jpg": "https://photoresources.wtatennis.com/photo-resources/2026/10/10/4492b094-723a-4639-8320-f8afbbd0202d/GettyImages-2299507680.jpg?width=3414",
+    "getty-zheng-newest.html": "https://www.gettyimages.com/photos/qinwen-zheng?assettype=image&family=editorial&sort=newest",
+    "wta-ranking-official.json": "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES&date=2026-10-05",
+    "wta-advanced-stats.json": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS002/advanced-stats",
+    "wta-oop.json": "https://api.wtatennis.com/tennis/tournaments/1020/2026/oop",
+    "wta-official-point-by-point.json": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS002/point-by-point",
+    "wta-zheng-ranking-history.json": "https://api.wtatennis.com/tennis/players/328120/ranking",
+    "wta-mertens-ranking-history.json": "https://api.wtatennis.com/tennis/players/317964/ranking"
+  }
+}

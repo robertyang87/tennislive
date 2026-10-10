@@ -1,0 +1,280 @@
+{
+  "schema": "tennislive.independent-native-qc.v1",
+  "status": "source_visual_precheck_complete_final_movie_pending",
+  "reviewer": "Codex independent final QC agent",
+  "source_sha256": "a060dfa0f7be58e43c094df7f5a3d3b05cedd56e679c303ff3318a2ba1fd4cb2",
+  "review_method": "actual decoded native source frames and contact sheets, no manual audio hearing claimed",
+  "source_checks": [
+    {
+      "check": "match_vs_interview_boundary",
+      "observed": "Wide rally/celebration/handshake before 297 s; 300 s is clearly microphone interview. All final selected source ends must stay before 297 s."
+    },
+    {
+      "check": "matchpoint_serve_and_outcome",
+      "observed": "245.5–246.0 Zheng receiving close-up; 246.1 wide shot Mertens raised serving arm before ball strike; rally continues through 255+; Zheng smiling fist celebration257–258; handshake267."
+    },
+    {
+      "check": "firstset_setpoint",
+      "observed": "156.2–157.0 Zheng ready receiving;157.4 wide Mertens serving motion. Score6–5,40–30 + SET POINT, then rally through166+ and outcome7–5."
+    },
+    {
+      "check": "secondset_first_break",
+      "observed": "188–189.6 actual Mertens serve from0–1,0–40 + BREAK POINT; outcome leads2–0 (not BP saved in following Zheng game)."
+    },
+    {
+      "check": "cover_diagnostic_crop",
+      "observed": "Actually viewed native3:4 diagnostic crop: recognisable Zheng near frontal eyes open; face approx330–565clear header0–170/hook790–1100. This is a diagnostic crop only, not finalposter pass.",
+      "image_sha256": "13dcb887b3f8e47adec21381abf18556534cc7059fba4b6790825dbd1ecce2ab"
+    }
+  ],
+  "limits": [
+    "No final movie/nativeposter/burnedASS yet; formal spec prechecked but no final visual pass asserted.",
+    "No human/audio listening claim; voice review delegated separately."
+  ],
+  "evidence": [
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/155.80.jpg",
+      "sha256": "66e47c05da675f1c5997e076085ebcb687a764101ffe6ce0e69ffdd413be855d"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/156.20.jpg",
+      "sha256": "f248369febd053c20ff2c9ba9776b5ef0e77d56fb35f3e5c10b21a6eaec9f363"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/156.60.jpg",
+      "sha256": "a02ac0fc337375bae79060a37af71fd30f295938bfba17234317bc28c308284f"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/157.00.jpg",
+      "sha256": "02fa0775ea8f8264371ddb560689e8bdef5ae66295b9cab1867b84db6a1167c7"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/157.40.jpg",
+      "sha256": "e36d885860631b16a104245f8cece2808ebf5ec0f843c4ba48efbfa2a763fcdd"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/157.80.jpg",
+      "sha256": "ea20e0f6a6aff70d475cd085f1d960fb9b6400f9efee5078bb602c85f9c3524d"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/188.00.jpg",
+      "sha256": "1fe10a2fbe7b0209c1208bee52915dc797b1d88a728dbad94195966ff9983884"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/188.40.jpg",
+      "sha256": "7bd6c705048773758b08e09cd215b5725fd0897867dc4963dbbf018e667940f5"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/188.80.jpg",
+      "sha256": "aaf291f57d93d28f916d62234b67295e3ab95bc18d7bae617d41dfda0f351f65"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/189.20.jpg",
+      "sha256": "40253a218640ae084d380bf680b233cd16b8ab54aecf1c04e4f0c969e1847c33"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/189.60.jpg",
+      "sha256": "faa78b6592d030b11cc3c7f6bb2afa8db93be4bd9a55a6dc2c7b619b84fc045f"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/190.00.jpg",
+      "sha256": "e90ab4a74982b2bc578b614839ec5c8a7d74581ff43b2df761d8c3eabc207608"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/245.50.jpg",
+      "sha256": "424a1f165c40905e78035d36e268879dc900f07da47982ac32a0839c327fa160"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/245.70.jpg",
+      "sha256": "9d174e99bad57703489d9787326d7fe6297879d8ed2332abbb9d3ae226e74a6c"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/245.90.jpg",
+      "sha256": "b85a0e23465210e6ddff41fc5d929b92570293ea418c5a07c3f325319488f7da"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/246.00.jpg",
+      "sha256": "2571c0f2f6e9e5647476b2ca6837b6431f6d52bcb2d562b69ee513870753e5c6"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/246.10.jpg",
+      "sha256": "4e25642cfdecde1da1e23a1ea3b47db5f9fd0c3c61da392f798dfea3f01e93f9"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/246.20.jpg",
+      "sha256": "213b7b0170d3e4176bbfed9f0b84f2c7269b5bc87498a11ccfb5f752519ee42e"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/246.30.jpg",
+      "sha256": "f6c1e0f9f168fa6a9b40e16a0c34b816514b6e61e712ea684b1e0f5ca1069fe2"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/246.40.jpg",
+      "sha256": "7df3399fbfc58936617f710a9b39594f6af6018581263c78f6219d9937ab53dd"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/246.50.jpg",
+      "sha256": "0f20aa623943f62733345a1780f394e521950d762b81acdd03a5db7149355ef2"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/246.70.jpg",
+      "sha256": "0666040aec6f48dd5fb7ccf233b0e8aa17fd31adaf89505ace074da1b5d3ef22"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/246.90.jpg",
+      "sha256": "f7458323c7f18e99ceb2ddccb4c360f19a267d8b5f55724631ad24c30b2c76a4"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/247.10.jpg",
+      "sha256": "c6e166b9baa772fc819394fbd0ff6eebd82176672ab5fcfc4090f25e7a942f33"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/source-boundaries/boundaries.jpg",
+      "sha256": "ed8d66326d311fb24650459aa409bf5b62864ff3808aa6940dda0dcea97c91af"
+    },
+    {
+      "source_time": 17.3,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/17.30.jpg",
+      "sha256": "51d06bcd0d5028be464d9835da763432511479b679d5cff15ec2753d953efe8f"
+    },
+    {
+      "source_time": 17.8,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/17.80.jpg",
+      "sha256": "53bf8854cbbce0e3aa500640b06c02426a01e75276425382f131eed86209012d"
+    },
+    {
+      "source_time": 18.3,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/18.30.jpg",
+      "sha256": "c8ea2ccb749d0a9284a73f5b7f7d69de8d88a729019e3666888c943d8681766e"
+    },
+    {
+      "source_time": 28.8,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/28.80.jpg",
+      "sha256": "f5d8f226c2214393da47bc77413fe1a094074da1352ba897ce9e71961b43cf95"
+    },
+    {
+      "source_time": 29.6,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/29.60.jpg",
+      "sha256": "cf55660b3e0a53ec4e9f3d0db938092938801078251a103d29483c45bdfa67b2"
+    },
+    {
+      "source_time": 30.2,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/30.20.jpg",
+      "sha256": "ea74c079b1da28f96786b9296b1e913150d890ced9e1404c6830097d14220931"
+    },
+    {
+      "source_time": 70.48,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/70.48.jpg",
+      "sha256": "4678f1448e830b2b86b31e50134cff35b2f269bfdad93e1572b4bc903143642f"
+    },
+    {
+      "source_time": 71,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/71.00.jpg",
+      "sha256": "b3f64fa77e6d4dc390623dc31bef83aab7c70993684db9a18edeae01f4e50894"
+    },
+    {
+      "source_time": 71.5,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/71.50.jpg",
+      "sha256": "0211e7c7331aea261014bf5c8b2e05150cfd6bf46340cfdd0cf090423538b221"
+    },
+    {
+      "source_time": 126.8,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/126.80.jpg",
+      "sha256": "0cc75aaf56f84f0c2fa521dcd70ecb746e4587572f8948e00dc4d5091651d9d4"
+    },
+    {
+      "source_time": 127.1,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/127.10.jpg",
+      "sha256": "35e091716c2616c6107315cda25e15f2b35d8a28a39ecab5b1f51797562feff5"
+    },
+    {
+      "source_time": 127.4,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/127.40.jpg",
+      "sha256": "a994f28722437648d01b5864cec4d3e2e1cf37a06e268fda4ba9355b5794bd1e"
+    },
+    {
+      "source_time": 225.72,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/225.72.jpg",
+      "sha256": "8f617534c0133834df5b1403f24c8e2ea9f3874a08c2ad3d5cc198f967280e30"
+    },
+    {
+      "source_time": 226,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/226.00.jpg",
+      "sha256": "6ee641520f10ab9cf94f1461242ffaff13b648cbd9910bbb32df5ff4469b5040"
+    },
+    {
+      "source_time": 226.3,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/226.30.jpg",
+      "sha256": "97ec1e9630d0c2645791d7204625bbda158731fd5795c34e88eb2659c9119538"
+    },
+    {
+      "source_time": 235.8,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/235.80.jpg",
+      "sha256": "32e97890da29d2459fbffe3f5ae0aecff563d57a05fa64eba72824f265c2f747"
+    },
+    {
+      "source_time": 236.2,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/236.20.jpg",
+      "sha256": "f9600033fe63ff8b782117fc63c834f83f9bc86c46bb43ec8c0f6d8453d4e769"
+    },
+    {
+      "source_time": 244.48,
+      "path": "/workspace/scratch/zheng-independent-qc/source-spec/244.48.jpg",
+      "sha256": "b0b1e3b59710772d5c6431a407ec12c7f3cc3f764ad1f093a0e242d99c503200"
+    }
+  ],
+  "recorded_at": "2026-10-10T16:24:08.767503+00:00",
+  "spec_precheck_sha256": "8aa8e65d62ff66c4749e3f74a63556e3234e580c194c46a0809868b7e13d0d22",
+  "spec_precheck": {
+    "body_seconds": 191.51,
+    "title_card_count": 2,
+    "title_card_seconds": 20.6,
+    "title_card_share": 0.107566,
+    "interview_included": false,
+    "terminal_expectation_before_matchpoint": true,
+    "same_point_video_continuity": [
+      {
+        "sources": [
+          141.12,
+          148.65,
+          155.96
+        ],
+        "meaning": "Adv hold5–4"
+      },
+      {
+        "sources": [
+          155.96,
+          166.5,
+          184.7
+        ],
+        "meaning": "setpoint7–5"
+      },
+      {
+        "sources": [
+          187,
+          201.4,
+          205.75
+        ],
+        "meaning": "secondsetbreak2–0"
+      },
+      {
+        "sources": [
+          225.72,
+          235.8,
+          244.48
+        ],
+        "meaning": "hold5–2"
+      },
+      {
+        "sources": [
+          244.48,
+          260,
+          281.4
+        ],
+        "meaning": "matchpoint+celebration+handshake"
+      }
+    ],
+    "visual_observations": "Independent newly decoded frames17.3/70.48/126.8/225.72 show preparation/serve, not segment starting mid-rally.126.8ballready127.1toss;17.3ready18.3toss;30.2reaction.",
+    "raw_report_firstfour_three_sets": "Independently checked wta-report-plain.txt lines19–20 confirms firstfourthree sets, thenstraightsetQF Svitolina."
+  }
+}

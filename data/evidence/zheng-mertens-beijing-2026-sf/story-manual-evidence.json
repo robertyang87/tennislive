@@ -1,0 +1,223 @@
+{
+  "slug": "zheng-mertens-beijing-2026-sf",
+  "method": "current_assistant_manual_fact_and_native_frame_review",
+  "human_listening_claimed": false,
+  "external_model_pass_claimed": false,
+  "facts_package": "facts-package.json",
+  "broadcast_candidates": "broadcast-quote-candidates.json",
+  "tactics": [
+    {
+      "window": [
+        141.12,
+        155.96
+      ],
+      "description": "发球后，郑钦文从底线压向网前，保住发球局。",
+      "evidence": "/workspace/scratch/zheng-source/fine/firstset-turn/contact_00.jpg; contact_01.jpg"
+    },
+    {
+      "window": [
+        187,
+        205.75
+      ],
+      "description": "第二盘，接发后在底线连续回击，反复把球送向对手反手侧，率先破发。",
+      "evidence": "/workspace/scratch/zheng-source/fine/secondset-break/contact_00.jpg"
+    }
+  ],
+  "point_gaps_internal_only": [
+    "此前二比零发球局救一个破发点的真实官方逐分，当前视频只展示3-0后的梅发球局，不误写为救点画面。"
+  ],
+  "native_continuity_required": [
+    [
+      126.8,
+      141.12,
+      143.16,
+      148.65,
+      155.96,
+      166.5,
+      171.9,
+      178.18,
+      184.7
+    ],
+    [
+      187,
+      201.4,
+      205.75
+    ],
+    [
+      226.0,
+      235.8,
+      244.48
+    ],
+    [
+      244.48,
+      260,
+      281.4
+    ]
+  ],
+  "copy_paths": [
+    "specs/reels/zheng-mertens-beijing-2026-sf.json",
+    "specs/reels/zheng-mertens-beijing-2026-sf.xhs.txt"
+  ],
+  "dryrun_log": "/workspace/scratch/zheng-story/native-dryrun.log",
+  "dryrun_result": "exit0: schema, copy, selected-window hard checks; native render and actual audio/visual checks are separate and still pending",
+  "final_copy_freeze": {
+    "card_2_seconds": 12.0,
+    "card_2_actual_tts_seconds": 10.704,
+    "first_four_matches_narration": "前四轮比赛，全部打到第三盘。",
+    "meaning": "赛事第一至第四轮，不包括直落两盘的四分之一决赛。",
+    "scope": "root最后实际修复授权：first_set_net当前point_end_ok/crosses_cut同步合法固定中心contain0.65，hold_commentary148.65–155.96恢复crop0.5避开153秒观众delogo块；全部19段文字/英语/音频/源窗口不变。require_reel_center实跑通过。",
+    "external_model_pass_claimed": false,
+    "human_listening_claimed": false,
+    "updated_term": "第一发球得分率百分之八十八",
+    "spec_sha256": "8a1b964a3b8a05420d33c53d37646fa5e4b0efa7eafe83ac15307e358a355786"
+  },
+  "caption_geometry_correction": {
+    "native_field": "subtitle_bottom",
+    "actual_semantics": "bottom margin in1440canvas, not y-coordinate",
+    "plain_board_top": 1163,
+    "plain_subtitle_y_bottom": 1139,
+    "plain_margin": 301,
+    "badge_top": 1108,
+    "badge_subtitle_y_bottom": 1084,
+    "badge_margin": 356,
+    "gap_px": 24,
+    "firstset_hold_tail": "margin356 for whole148.65–155.96 due badge start155.8",
+    "setpoint_split_source_s": 171.9,
+    "split_reason": "full English clause ends171.8; same-source continuous postpoint cut to lower normal-margin subtitle afterbadge disappears168.8",
+    "previous_margin_1139_1084_invalid": true,
+    "final_render_still_required": true,
+    "native_summary": {
+      "source_window": [
+        178.18,
+        184.7
+      ],
+      "source_frame_path": "/workspace/scratch/zheng-story/18146-original.png",
+      "source_frame_sha256": "f15e32d172c1ef993c8f056a1e018b991d389e823e13bce2f4c37804963b02e5",
+      "actual_viewer": "current assistant direct original frame view",
+      "small_scoreboard_present": false,
+      "native_large_summary_present": true,
+      "output_summary_top_y": 951,
+      "subtitle_y_bottom": 927,
+      "bottom_margin": 513,
+      "gap_px": 24,
+      "final_movie_independent_QC_required": true,
+      "onset_evidence": {
+        "source179_5": "absent",
+        "source180_0": "animation frame",
+        "source180_5": "complete7-5summary",
+        "method": "independent QC actual original frames",
+        "subtitle_move": "earlier complete English sentence onset178.18"
+      },
+      "pre_summary_frame": {
+        "source_s": 178.18,
+        "path": "/workspace/scratch/zheng-story/17818-original.png",
+        "sha256": "f454a4ff4823c0f9473b472b4c22f2c30f651451d219a671123625ca369ccf00",
+        "small_scoreboard_present": false,
+        "directly_viewed": true
+      }
+    }
+  },
+  "crop_geometry": {
+    "owner_policy": "fixedcx0.5/trackfalse; no weakened gate/no renderer change",
+    "matchpoint": {
+      "source": [
+        244.48,
+        260.0
+      ],
+      "cx": 0.5,
+      "fit": "full_source",
+      "score_inset": false,
+      "delogo": false,
+      "native_foreground_size": [
+        1080,
+        608
+      ],
+      "native_foreground_top": 416,
+      "original_scorebox_diagnostic": [
+        88,
+        828,
+        560,
+        986
+      ],
+      "subtitle_bottom_margin": 356,
+      "actual_native_preview_dir": "/workspace/scratch/zheng-story/native-fullsource-preview",
+      "actual_native_ass_viewed_key_source_times": [
+        255.98,
+        257.48
+      ],
+      "independent_QC_measurement": {
+        "raw_board_bottom_y": 968,
+        "english_glyph_y": [
+          984,
+          1014
+        ],
+        "chinese_glyph_y": [
+          1030,
+          1075
+        ],
+        "gap_board_to_first_glyph_px": 16
+      }
+    },
+    "superseded_rejected_geometry": [
+      "offcenter.55/.435 rejected by global fixed-center policy; no waiver",
+      "contain0.65+native delogo on matchpoint smears receiver; actual native preview rejected",
+      "full_source margin582 blocks head/celebration-arm; actual ASS preview rejected",
+      "contain0.65 on148.65–155.96 adds crowd rectangle delogo at153.0; restorecrop.5"
+    ],
+    "current_assistant_directly_viewed_native_previews": true,
+    "independent_QC_and_root_reviewed_native_previews": true,
+    "human_audio_listening_claimed": false,
+    "final_rendered_movie_QC_still_required": true,
+    "first_set_serve_and_net": {
+      "source": [
+        141.12,
+        148.65
+      ],
+      "cx": 0.5,
+      "fit": "contain",
+      "contain_keep": 0.65,
+      "native_source_window_x": [
+        336,
+        1584
+      ],
+      "native_foreground_size": [
+        1080,
+        936
+      ],
+      "native_foreground_top": 252,
+      "original_margins_preserved": [
+        301,
+        301
+      ],
+      "actual_native_preview_dir": "/workspace/scratch/zheng-story/native-contain-preview",
+      "actual_viewed_key_source_times": [
+        142.12,
+        146.62,
+        147.12,
+        151.62
+      ]
+    },
+    "first_set_hold_commentary": {
+      "source": [
+        148.65,
+        155.96
+      ],
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "subtitle_bottom_margin": 356,
+      "why": "independent actual source153.0 nativecontain preview showed added crowd rectangle delogo blur; restore legal center crop for noncritical point-tail/reaction"
+    }
+  },
+  "formal_probe_fix": {
+    "source_window": [
+      171.9,
+      178.18
+    ],
+    "sample_fps": 5,
+    "frames_tested": 32,
+    "scoreboard_frames_detected": 0,
+    "score_inset": false,
+    "dryrun_outdir": "output/2026-10-11/reel/zheng-mertens-beijing-2026-sf"
+  }
+}

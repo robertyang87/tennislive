@@ -1,0 +1,90 @@
+{
+  "stage": "independent_visual_revision_hold",
+  "created_utc": "2026-10-10T16:58:31.468125+00:00",
+  "not_final_approval": true,
+  "reviewed_movie": "/workspace/tennislive/output/2026-10-11/reel/zheng-mertens-beijing-2026-sf/zheng-mertens-beijing-2026-sf.mp4",
+  "reviewed_movie_sha256": "d9084031fd1e0b5981f58c14a6cd8945ac2a1b0f4f6478db08ce48bf9a9af5b7",
+  "reviewed_spec_sha256": "c822516cae45c7b9ceabaf258103a4983a78f559a06259e436f43cb0f1174d6e",
+  "sample_manifest": "/workspace/scratch/zheng-independent-qc/final-frames/samples.json",
+  "sample_images_reviewed_count": 74,
+  "rally_manifest": "/workspace/scratch/zheng-independent-qc/final-rallies/manifest.json",
+  "rally_sampling_step_seconds": 0.5,
+  "rally_frame_count": 103,
+  "rally_contact_sheets_reviewed": 8,
+  "blocking_findings": [
+    {
+      "issue": "English subtitle overlaps native first-set result name plate",
+      "movie_times": [
+        101.09,
+        101.48
+      ],
+      "source_plate_onset": {
+        "179.5": "absent",
+        "180.0": "white plate animation begins",
+        "180.5": "full result plate visible"
+      },
+      "required_complete_cue_range": [
+        178.18,
+        184.7
+      ],
+      "native_plate_top_px": 951,
+      "required_margin_v": 513,
+      "status": "spec corrected; formal rerender pending"
+    },
+    {
+      "issue": "right-side first-set forehand approach cut by 3:4 frame",
+      "source_range": [
+        146.5,
+        147.1
+      ],
+      "tested_cx_0_55": "right side fixed but whole-segment use cuts server at142.12; shot-boundary track required",
+      "status": "crop repair pending"
+    },
+    {
+      "issue": "left side match-point return cut by 3:4 frame",
+      "source_range": [
+        246.48,
+        247.48
+      ],
+      "tested_cx_0_435": "raw-source geometry preview preserves player throughout every0.5s sequence 244.48 to259.98",
+      "status": "formal rerender with cx0.435 pending"
+    }
+  ],
+  "candidate_contact_images": [
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/crop-candidates/firstset-0.55-0.jpg",
+      "sha256": "1d6cc91baee68a591abfb9062f6fee67914a6252945000ff843c28f179ec6c55"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/crop-candidates/firstset-0.55-1.jpg",
+      "sha256": "c96dd4fa34c9d87172077a25d18d39bdac72f0f411cb3c8c3828946bdd134e58"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/crop-candidates/matchpoint-0.435-0.jpg",
+      "sha256": "738b4fd7222cd5b0c68c52edce4456387386225486249b88f1ec5ba80601fa61"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/crop-candidates/matchpoint-0.435-1.jpg",
+      "sha256": "b201e61353cecf860a1d66996470349eba65ebd350dec46226027cb64edb9d8b"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/crop-candidates/matchpoint-0.45-0.jpg",
+      "sha256": "d6feaaaacc8cc89952b0b5142cbff3625971c4daf1d614104a2145bc9a8fa919"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/crop-candidates/matchpoint-0.45-1.jpg",
+      "sha256": "488c0d5941dec31dec35c6ce82a4a3750359a45e810ed81dc776d6c3dac8c224"
+    }
+  ],
+  "candidate_is_final_movie": false,
+  "native_stat_card": {
+    "path": "/workspace/tennislive/output/2026-10-11/reel/zheng-mertens-beijing-2026-sf/stat_card.jpg",
+    "sha256": "f808927b4c87624c7343720d03fee0fc9378a18b7fb23e699394abdb51b090bf",
+    "actually_viewed": true,
+    "verified": "7-5 6-2;8/0aces;2/2df;32/9winners;16/12UE;47/72first serve;88/61first serve points;59/33second serve points;4/6vs1/2break points;70/49totalpoints. Text, portraits, ranks and court not clipped."
+  },
+  "audio_scope": "No human listening claimed. Pronunciation and ASR uncertainty remain separately assigned.",
+  "archived_reviewed_movie": "/workspace/scratch/zheng-independent-qc/revision-v1.mp4",
+  "archived_sample_manifest": "/workspace/scratch/zheng-independent-qc/final-frames-v1/samples.json",
+  "archived_rally_manifest": "/workspace/scratch/zheng-independent-qc/final-rallies-v1/manifest.json"
+}

@@ -1,0 +1,134 @@
+{
+  "stage": "native_framing_preview",
+  "not_final_film_pass": true,
+  "created_utc": "2026-10-10T17:16:27.956568+00:00",
+  "fixed_center_rule": "cx0.5 trackfalse global gate; prior shiftedcx candidates rejected and cannot pass",
+  "native_path": "wta_scoreboard.resolve_masks plus build_match_reel.cut_segment,25fps1080x1440",
+  "firstset_candidate": {
+    "fit": "contain",
+    "contain_keep": 0.65,
+    "source_window": [
+      141.12,
+      148.65
+    ],
+    "actually_viewed_source_frames": [
+      141.12,
+      142.12,
+      142.62,
+      143.12,
+      143.16,
+      146.62,
+      147.12,
+      148.12
+    ],
+    "result": "native preview preserves server head, toss/serve, right-side body/racket approach; inset does not obscure critical action",
+    "additional_editor_native_frames_actually_viewed": [
+      147.12,
+      151.62
+    ]
+  },
+  "matchpoint_contain_candidate": {
+    "fit": "contain",
+    "contain_keep": 0.65,
+    "source_window": [
+      246,
+      251
+    ],
+    "status": "blocking",
+    "actually_viewed_source_frames": [
+      246.1,
+      246.48,
+      246.98,
+      247.48,
+      247.98,
+      248.98,
+      250.48
+    ],
+    "finding": "native whole-rectangle delogo erases visible near-player body in prompt-strip transparent area; red horizontal smear, not just original embedded board occlusion"
+  },
+  "matchpoint_full_source_candidate": {
+    "fit": "full_source",
+    "cx": 0.5,
+    "score_inset": false,
+    "source_window": [
+      244.48,
+      260
+    ],
+    "preserves": "original source pixels including scoreboard; no delogo and no moved inset",
+    "actually_viewed_source_frames": [
+      246.1,
+      246.48,
+      246.98,
+      247.48,
+      250.48,
+      254.48,
+      255.82,
+      256.2,
+      256.98,
+      257.48,
+      258.48,
+      259.9
+    ],
+    "subtitle_preview": {
+      "actual_formal_cue_style": true,
+      "582_status": "blocking: Chinese caption covers near-player head at255.82 and celebratory fist at257.48",
+      "356_status": "native burn preview clear face/fist/racket/board; low below original board",
+      "libass_ink_y_bands": [
+        [
+          984,
+          1014
+        ],
+        [
+          1030,
+          1075
+        ]
+      ],
+      "original_graphic_green_bottom_y": 968,
+      "first_english_ink_gap_below_board_px": 16
+    },
+    "limitation": "formal spec schema and full final movie still must pass; source_scorebox is top-level in current parser and cannot assert scratch Segment is legal JSON"
+  },
+  "artifacts": [
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/contain-native/firstset.mp4",
+      "sha256": "fe1e1b2dd140894d14970c6b02bde93b4d07e69c5dd43a07f59958547e3d1a06"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/contain-native/match-return.mp4",
+      "sha256": "2fc855967ad0cc90ba5700751e7d72e5df5b750743bcad289068d05a279946ea"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/contain-native/firstset-contact.jpg",
+      "sha256": "9cdab15a167347829cfb2a4e0af1d42679c0fa13dd4f29dbde27df05133a0c3e"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/contain-native/match-return-contact.jpg",
+      "sha256": "f4f0e3f76e8d88a8c830fe861bc88bedb6d1064a562d0e0122c736ebdf30d880"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/full-source-native/matchpoint.mp4",
+      "sha256": "8b71b7b3323624e254b36d1c1dacbb98bca994fe108b6c06eaf6027705b49f1d"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/full-source-native/with-caption356.mp4",
+      "sha256": "91fb41514c21f5eab6af60d8d07d8e9108864e83aa8a7d8ee9286a0dd0c91bb1"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/full-source-native/caption356-255.82.jpg",
+      "sha256": "12c3a5ba248b7eb330650395908a080ef1229641b259ccfcc76d1799c978a67f"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/full-source-native/caption356-257.48.jpg",
+      "sha256": "0f91e9e3edc877406a2abbc43016de36762fac49574bd769030040d81d953b12"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/full-source-native/caption356-259.90.jpg",
+      "sha256": "2539c66821781b89b261ef40409cfa3c7de82e06062cb8f28842b1d5c89c5d47"
+    },
+    {
+      "path": "/workspace/scratch/zheng-independent-qc/full-source-native/matchpoint-255.82.jpg",
+      "sha256": "54624353a875193b5a16ee5141c70769945d9e814d549782129062cfb85d9d49"
+    }
+  ],
+  "audio_scope": "No human listening claimed."
+}
