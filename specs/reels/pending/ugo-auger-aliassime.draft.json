@@ -18,7 +18,16 @@
       }
     ],
     "winner": "阿利亚西姆",
-    "result": "4-6 7-6(1) 7-5"
+    "result": "4-6 7-6(1) 7-5",
+    "portrait": {
+      "image": "assets/reel/ugo-auger-aliassime-cover.jpg",
+      "focus": 0.0,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「felix auger-aliassime」「Shanghai」，日期对上当地 2026-10-10（Asia/Shanghai；日期来源 flashscore dc_1_0KoNaKED）。② 分辨率：2400×1740，zoom 1 铺 1080×1440 是 1.21×（不放大）。③ 认人：最大那张脸像 阿利亚西姆 0.54（≥ 0.34）。④ 睁眼：EAR 0.2873（≥ 0.16）。⑤ 钩子带：脸落在 y286~613，钩子顶边 790。排序：[True, False, False, True, True, 327, 0.5413]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/10/5d1d46d5-80e7-418b-b5fa-0afc952c6847/Camilo-UGO-CARABELLI-vs-Felix-AUGER-ALIASSIME2826.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/10/5d1d46d5-80e7-418b-b5fa-0afc952c6847/Camilo-UGO-CARABELLI-vs-Felix-AUGER-ALIASSIME2826.jpg（条目 #4589801，接口发布 2026-10-10T05:24:33Z，原图 2400×1740），说明原文「2026 Shanghai Auger-Aliassime」。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -288,45 +297,54 @@
     "visual_status": "waiting",
     "retryable": false,
     "cold_open": {
-      "start": 137.7,
+      "start": 135.9,
       "end": 146.18,
       "kind": "match_point",
       "winner_visible": true,
-      "reason": "画面在 137.7–146.18s 区段，144.5s 卡拉贝利低头失意（输家），146.5s 两人在网前准备握手——前段 132.5–142.5s 比分从 5-6/40-30、5-6/A40、6-6 进入决胜分阶段。结结合闪播频道的赛后/握手画面，这是比赛终点时刻的连续镜头。",
-      "confidence": 0.82
+      "reason": "136.5s 显示比分 6-4 6-7(1) 5-6，阿利亚西姆握拳庆祝先得赛点；142.5s 卡拉贝利低头走向球网；144.5s 卡拉贝利再次低头持拍；146.5s 双方在网前准备握手，赛点/赛末余波画面完整呈现赢家（阿利亚西姆）与输家反应",
+      "confidence": 0.9
     },
     "ending": {
-      "start": 137.7,
+      "start": 135.9,
       "end": 148.44,
-      "kind": "aftermath",
+      "kind": "winner_celebration",
       "winner_visible": true,
-      "reason": "画面在 144.5s 输家卡拉贝利低头失落、146.5s 双方在网前握手（winner 阿利亚西姆可见），150.5s 阿利亚西姆手指耳边、指耳庆祝动作为赢家庆祝。整个 ending 完全覆盖 cold_open 窗口并多握热掌声。",
-      "confidence": 0.83
+      "reason": "136.5s 阿利亚西姆握拳庆祝得赛点；138.5s 阿利亚西姆走过镜头；146.5s 双方在网前完成握手；140.5s 阿利亚西姆看向上方；142.5–144.5s 卡拉贝利低头失落形成输家反应对照；ending 完整覆盖冷开场 135.9–146.18 并延伸至握手结束",
+      "confidence": 0.9
     },
     "cover": {
       "same_match": false,
-      "subject": "",
+      "subject": "阿利亚西姆",
       "moment": "other",
       "wrong_or_old": true,
-      "reason": "未提供候选封面照片；无候选图可核对人物、比分字样、赛事标识、服装或场景。按规则无法证明本场，same_match=false。",
-      "confidence": 0.2
+      "reason": "封面右下角电子屏明确写有 '3:41 Warm Up' 字样，是赛前热身镜头，并非本场正式比赛画面；球员虽与本场获胜者阿利亚西姆外形相符，但该帧取自热身阶段（手持 Babolat 拍、白粉Polo衫），无法证明是本场决胜瞬间，故 same_match=false",
+      "confidence": 0.55
     },
     "problems": [
-      "cold_open 理由引用窗口外时间：[132.5]",
-      "ending 理由引用窗口外时间：[150.5]",
-      "没有官方高清封面候选",
       "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.20 低于 0.80",
-      "封面人物应为 阿利亚西姆，模型识别为 空",
+      "封面置信度 0.55 低于 0.80",
       "封面情绪应为 winner_celebration，现在是 other"
     ],
     "model_attempts": 1,
-    "input_sha256": "64a0c332e2ed84ee0101f4b2577f68e651ff3ddc9601beaa2800bb82e3777627",
+    "input_sha256": "43ae312335528d2db39c67c6b066e4ec99ca4108d674916cd73b59a64ef2be24",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
       "contact_02.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/ugo-auger-aliassime-cover.jpg"
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "0KoNaKED",
+      "start_utc": "2026-10-10T04:10:00Z",
+      "end_utc": "2026-10-10T07:09:48Z",
+      "source": "flashscore dc_1_0KoNaKED（DC／DD）"
+    },
+    "replaced_under": "64a0c332e2ed84ee0101f4b2577f68e651ff3ddc9601beaa2800bb82e3777627",
+    "rejected": [
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/10/5d1d46d5-80e7-418b-b5fa-0afc952c6847/Camilo-UGO-CARABELLI-vs-Felix-AUGER-ALIASSIME2826.jpg"
+    ],
+    "stuck_checked": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/10/5d1d46d5-80e7-418b-b5fa-0afc952c6847/Camilo-UGO-CARABELLI-vs-Felix-AUGER-ALIASSIME2826.jpg#43ae312335528d2db39c67c6b066e4ec99ca4108d674916cd73b59a64ef2be24"
   }
 }
