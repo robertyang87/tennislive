@@ -1,0 +1,1781 @@
+{
+  "schema": "tennislive.authorized-narration-split.v1",
+  "old": {
+    "label": "第 6 段",
+    "index": 5,
+    "display_text": "发球后，郑钦文从底线压向网前，保住发球局。",
+    "text": "发球后，郑钦文从底线压向网前，保住发球局。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "cache_key": "b6850073b27c8dea7720fe97aaf27768",
+    "actual_mp3_sha256": "31b0eff9b42b4059926c010b3e753f85b6f1e3b937dec3cd2d008432f7789c00",
+    "bound_snapshot_path": "/workspace/scratch/zheng-voice/formal-tts/voice_05.mp3",
+    "marks_snapshot_path": "/workspace/scratch/zheng-voice/formal-tts/voice_05.marks.json",
+    "mp3_duration_seconds": 4.92,
+    "window_seconds": 7.530000000000001,
+    "headroom_seconds": 2.610000000000001,
+    "enumerated_polyphones": [
+      {
+        "at": 0,
+        "char": "发",
+        "word": "发球",
+        "reading": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ]
+      },
+      {
+        "at": 17,
+        "char": "发",
+        "word": "发球",
+        "reading": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ]
+      }
+    ]
+  },
+  "new": {
+    "spec_sha256_at_preparation": "88fa0e7dd123853e8a2f36d9ddd261eb928fd88a9a6b4236db9034c08915fedc",
+    "bindings": [
+      {
+        "label": "第 6 段",
+        "index": 5,
+        "display_text": "郑钦文发球。",
+        "text": "郑钦文发球。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "cache_key": "1e0bf33ea5c653a7b3911e8b237e6065",
+        "actual_mp3_sha256": "bf74799a6be201005791dd25c9b67ad7381d2a1efb4b007e3ff938b393071f54",
+        "bound_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.mp3",
+        "marks_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.marks.json",
+        "mp3_duration_seconds": 1.896,
+        "window_seconds": 2.039999999999992,
+        "headroom_seconds": 0.14399999999999213,
+        "enumerated_polyphones": [
+          {
+            "at": 3,
+            "char": "发",
+            "word": "发球",
+            "reading": "fa1",
+            "live": [
+              "fa1",
+              "fa4"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "第 7 段",
+        "index": 6,
+        "display_text": "她从底线压向网前，保住发球局。",
+        "text": "她从底线压向网前，保住发球局。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "cache_key": "0fe6fb0dd7fc48a6e70abde97aae3f8f",
+        "actual_mp3_sha256": "198483e9887a3d29b7f8bed9d58ba1b7259f606509bce435e463b444e3000cd3",
+        "bound_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_06.mp3",
+        "marks_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_06.marks.json",
+        "mp3_duration_seconds": 3.528,
+        "window_seconds": 5.490000000000009,
+        "headroom_seconds": 1.962000000000009,
+        "enumerated_polyphones": [
+          {
+            "at": 11,
+            "char": "发",
+            "word": "发球",
+            "reading": "fa1",
+            "live": [
+              "fa1",
+              "fa4"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "records": [
+    {
+      "label": "第 6 段",
+      "word": "发",
+      "char": "发",
+      "at": 3,
+      "sentence": "郑钦文发球。",
+      "intended": "fa1",
+      "wrong": "fa4",
+      "ok_refs": [
+        "發",
+        "発"
+      ],
+      "bad_refs": [
+        "髮",
+        "珐"
+      ],
+      "actual_binding": {
+        "label": "第 6 段",
+        "index": 5,
+        "display_text": "郑钦文发球。",
+        "text": "郑钦文发球。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "cache_key": "1e0bf33ea5c653a7b3911e8b237e6065",
+        "actual_mp3_sha256": "bf74799a6be201005791dd25c9b67ad7381d2a1efb4b007e3ff938b393071f54",
+        "bound_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.mp3",
+        "marks_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.marks.json",
+        "mp3_duration_seconds": 1.896,
+        "window_seconds": 2.039999999999992,
+        "headroom_seconds": 0.14399999999999213,
+        "enumerated_polyphones": [
+          {
+            "at": 3,
+            "char": "发",
+            "word": "发球",
+            "reading": "fa1",
+            "live": [
+              "fa1",
+              "fa4"
+            ]
+          }
+        ],
+        "edit_id": "first_set_serve"
+      },
+      "check_kind": "polyphone",
+      "reference_notes": [
+        "Uncommon/traditional or context-sensitive references; independent reference calibration is mandatory. fa1 uses explicitly disclosed 發/発 reading assumption, no same-original glyph control.",
+        "Uncommon/traditional or context-sensitive references; independent reference calibration is mandatory. fa1 uses explicitly disclosed 發/発 reading assumption, no same-original glyph control."
+      ],
+      "reference_validity_limited": true,
+      "acoustic": {
+        "word": "发",
+        "char": "发",
+        "sentence": "郑钦文发球。",
+        "tts_text": "郑钦文发球。",
+        "intended_refs": [
+          "發",
+          "発"
+        ],
+        "wrong_refs": [
+          "髮",
+          "珐"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "verdict": "unreliable",
+        "confidence": null,
+        "verdict_raw": "correct",
+        "score": 0.245,
+        "margin": 0.2,
+        "near_identical_to": null,
+        "far_from_both": true,
+        "dropped_refs": [],
+        "override": null,
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 2.679,
+            "d_wrong": 2.682,
+            "score": 0.001
+          },
+          "f0": {
+            "d_intended": 0.224,
+            "d_wrong": 1.189,
+            "score": 0.683
+          },
+          "comb": {
+            "d_intended": 1.563,
+            "d_wrong": 2.576,
+            "score": 0.245
+          }
+        },
+        "neighbour_shift": {
+          "intended": 1.954,
+          "wrong": 2.097
+        },
+        "separation": {
+          "spec": {
+            "within": 1.507,
+            "between": 2.828,
+            "separation": 1.876
+          },
+          "f0": {
+            "within": 0.363,
+            "between": 1.42,
+            "separation": 3.916
+          },
+          "comb": {
+            "within": 1.116,
+            "between": 2.834,
+            "separation": 2.539
+          }
+        },
+        "selftest_loo": {
+          "發": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.848
+          },
+          "発": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.851
+          },
+          "髮": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": -0.191
+          },
+          "珐": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": -0.155
+          }
+        },
+        "selftest_pass": false,
+        "distances_from_orig": {
+          "A:發": {
+            "spec": 2.679,
+            "f0": 0.224,
+            "vmis": 0.038,
+            "frames": 26,
+            "comb": 1.563
+          },
+          "A:発": {
+            "spec": 2.69,
+            "f0": 0.345,
+            "vmis": 0.038,
+            "frames": 26,
+            "comb": 1.69
+          },
+          "B:髮": {
+            "spec": 3.182,
+            "f0": 1.189,
+            "vmis": 0.038,
+            "frames": 26,
+            "comb": 2.78
+          },
+          "B:珐": {
+            "spec": 2.682,
+            "f0": 1.235,
+            "vmis": 0.0,
+            "frames": 26,
+            "comb": 2.576
+          }
+        },
+        "window_s": [
+          0.61,
+          0.87
+        ],
+        "boundary_token": "发球",
+        "window_anchor": "A:發",
+        "tokens": {
+          "ORIG": [
+            "郑钦文",
+            "发球"
+          ],
+          "A:發": [
+            "郑钦文",
+            "發",
+            "球"
+          ],
+          "A:発": [
+            "郑钦文",
+            "発",
+            "球"
+          ],
+          "B:髮": [
+            "郑钦文",
+            "髮",
+            "球"
+          ],
+          "B:珐": [
+            "郑钦文",
+            "珐球"
+          ]
+        },
+        "f0_semitones_window": {
+          "ORIG": [
+            -1.4,
+            -0.3,
+            0.5,
+            0.2,
+            -1.4,
+            null,
+            1.7,
+            1.1,
+            0.6,
+            0.5,
+            0.9,
+            1.1,
+            0.7
+          ],
+          "A:發": [
+            -1.3,
+            -0.9,
+            -0.1,
+            0.0,
+            -1.6,
+            null,
+            null,
+            0.7,
+            0.4,
+            0.5,
+            0.7,
+            0.8,
+            0.7
+          ],
+          "A:発": [
+            -1.5,
+            -1.0,
+            -0.2,
+            -0.1,
+            -1.7,
+            null,
+            null,
+            0.6,
+            0.3,
+            0.4,
+            0.5,
+            0.7,
+            0.6
+          ],
+          "B:髮": [
+            -0.8,
+            -0.1,
+            0.7,
+            0.3,
+            -1.3,
+            null,
+            2.1,
+            0.9,
+            -0.4,
+            -3.4,
+            -3.7,
+            null
+          ],
+          "B:珐": [
+            -1.3,
+            -0.4,
+            0.6,
+            1.0,
+            0.0,
+            null,
+            null,
+            3.0,
+            2.1,
+            -0.4,
+            -1.7,
+            -2.4,
+            -2.9,
+            null
+          ]
+        },
+        "audio": {
+          "ORIG": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.mp3",
+          "A:發": "/home/agent/.cache/tennislive/polyphone/227e8864c06ce90e3271a6fe.mp3",
+          "A:発": "/home/agent/.cache/tennislive/polyphone/9f5d7f1b6efabcb4394e925c.mp3",
+          "B:髮": "/home/agent/.cache/tennislive/polyphone/6c34aeacdc4587e4963d7b2b.mp3",
+          "B:珐": "/home/agent/.cache/tennislive/polyphone/6dac72715f84202c294fce30.mp3"
+        }
+      }
+    },
+    {
+      "label": "第 6 段",
+      "word": "郑",
+      "char": "郑",
+      "at": 0,
+      "sentence": "郑钦文发球。",
+      "intended": "zheng4",
+      "wrong": "zheng1",
+      "ok_refs": [
+        "证",
+        "诤",
+        "政"
+      ],
+      "bad_refs": [
+        "争",
+        "征",
+        "狰"
+      ],
+      "actual_binding": {
+        "label": "第 6 段",
+        "index": 5,
+        "display_text": "郑钦文发球。",
+        "text": "郑钦文发球。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "cache_key": "1e0bf33ea5c653a7b3911e8b237e6065",
+        "actual_mp3_sha256": "bf74799a6be201005791dd25c9b67ad7381d2a1efb4b007e3ff938b393071f54",
+        "bound_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.mp3",
+        "marks_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.marks.json",
+        "mp3_duration_seconds": 1.896,
+        "window_seconds": 2.039999999999992,
+        "headroom_seconds": 0.14399999999999213,
+        "enumerated_polyphones": [
+          {
+            "at": 3,
+            "char": "发",
+            "word": "发球",
+            "reading": "fa1",
+            "live": [
+              "fa1",
+              "fa4"
+            ]
+          }
+        ],
+        "edit_id": "first_set_serve"
+      },
+      "check_kind": "proper_name",
+      "reference_notes": [
+        "dominant-reading only, single-reading common, single-reading level-2",
+        "single-reading common"
+      ],
+      "reference_validity_limited": false,
+      "acoustic": {
+        "word": "郑",
+        "char": "郑",
+        "sentence": "郑钦文发球。",
+        "tts_text": "郑钦文发球。",
+        "intended_refs": [
+          "证",
+          "诤",
+          "政"
+        ],
+        "wrong_refs": [
+          "争",
+          "征",
+          "狰"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "verdict": "correct",
+        "confidence": "high",
+        "verdict_raw": "correct",
+        "score": 0.907,
+        "margin": 0.2,
+        "near_identical_to": "intended",
+        "far_from_both": false,
+        "dropped_refs": [],
+        "override": null,
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 0.0,
+            "d_wrong": 1.917,
+            "score": 1.0
+          },
+          "f0": {
+            "d_intended": 0.168,
+            "d_wrong": 2.489,
+            "score": 0.874
+          },
+          "comb": {
+            "d_intended": 0.168,
+            "d_wrong": 3.447,
+            "score": 0.907
+          }
+        },
+        "neighbour_shift": {
+          "intended": 0.168,
+          "wrong": 4.013
+        },
+        "separation": {
+          "spec": {
+            "within": 1.496,
+            "between": 2.164,
+            "separation": 1.446
+          },
+          "f0": {
+            "within": 0.445,
+            "between": 2.6,
+            "separation": 5.839
+          },
+          "comb": {
+            "within": 1.194,
+            "between": 3.682,
+            "separation": 3.085
+          }
+        },
+        "selftest_loo": {
+          "证": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.454
+          },
+          "诤": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.419
+          },
+          "政": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.442
+          },
+          "争": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -1.0
+          },
+          "征": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.448
+          },
+          "狰": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -1.0
+          }
+        },
+        "selftest_pass": true,
+        "distances_from_orig": {
+          "A:证": {
+            "spec": 1.933,
+            "f0": 0.399,
+            "vmis": 0.026,
+            "frames": 38,
+            "comb": 1.365
+          },
+          "A:诤": {
+            "spec": 1.647,
+            "f0": 0.563,
+            "vmis": 0.0,
+            "frames": 36,
+            "comb": 1.386
+          },
+          "A:政": {
+            "spec": 0.0,
+            "f0": 0.168,
+            "vmis": 0.0,
+            "frames": 35,
+            "comb": 0.168
+          },
+          "B:争": {
+            "spec": 2.157,
+            "f0": 2.546,
+            "vmis": 0.0,
+            "frames": 35,
+            "comb": 3.624
+          },
+          "B:征": {
+            "spec": 1.917,
+            "f0": 2.489,
+            "vmis": 0.057,
+            "frames": 35,
+            "comb": 3.447
+          },
+          "B:狰": {
+            "spec": 2.157,
+            "f0": 2.546,
+            "vmis": 0.0,
+            "frames": 35,
+            "comb": 3.624
+          }
+        },
+        "window_s": [
+          0.05,
+          0.39
+        ],
+        "boundary_token": "郑钦文",
+        "window_anchor": "A:诤",
+        "tokens": {
+          "ORIG": [
+            "郑钦文",
+            "发球"
+          ],
+          "A:证": [
+            "证钦",
+            "文发球"
+          ],
+          "A:诤": [
+            "诤",
+            "钦文",
+            "发球"
+          ],
+          "A:政": [
+            "政钦文",
+            "发球"
+          ],
+          "B:争": [
+            "争钦文",
+            "发球"
+          ],
+          "B:征": [
+            "征",
+            "钦文",
+            "发球"
+          ],
+          "B:狰": [
+            "狰钦文",
+            "发球"
+          ]
+        },
+        "f0_semitones_window": {
+          "ORIG": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            4.9,
+            3.8,
+            2.5,
+            0.7,
+            -0.6,
+            -1.6,
+            -2.3,
+            -2.7,
+            -4.0
+          ],
+          "A:证": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            5.3,
+            4.7,
+            3.5,
+            2.2,
+            0.9,
+            -0.1,
+            -0.8,
+            -1.6,
+            -2.8,
+            -3.5
+          ],
+          "A:诤": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            4.2,
+            3.1,
+            1.7,
+            0.3,
+            -1.0,
+            -2.2,
+            -3.3,
+            -3.8,
+            -4.3
+          ],
+          "A:政": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            5.0,
+            4.0,
+            2.7,
+            0.9,
+            -0.4,
+            -1.4,
+            -2.1,
+            -2.5,
+            -3.8
+          ],
+          "B:争": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            1.9,
+            1.7,
+            1.8,
+            2.0,
+            1.9,
+            1.3,
+            0.5
+          ],
+          "B:征": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            2.3,
+            1.2,
+            1.1,
+            1.4,
+            1.6,
+            1.5,
+            1.0,
+            0.6
+          ],
+          "B:狰": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            1.9,
+            1.7,
+            1.8,
+            2.0,
+            1.9,
+            1.3,
+            0.5
+          ]
+        },
+        "audio": {
+          "ORIG": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.mp3",
+          "A:证": "/home/agent/.cache/tennislive/polyphone/52a3d247e820cff59cf5dd60.mp3",
+          "A:诤": "/home/agent/.cache/tennislive/polyphone/feb5f416bbeec4d5358ad9a2.mp3",
+          "A:政": "/home/agent/.cache/tennislive/polyphone/6ecfa77ffe20fcc0072e0edc.mp3",
+          "B:争": "/home/agent/.cache/tennislive/polyphone/d470ae5555553043241dfe36.mp3",
+          "B:征": "/home/agent/.cache/tennislive/polyphone/4c18845977897d0886d80195.mp3",
+          "B:狰": "/home/agent/.cache/tennislive/polyphone/4978a7335ff213ef273e77a3.mp3"
+        }
+      }
+    },
+    {
+      "label": "第 6 段",
+      "word": "钦",
+      "char": "钦",
+      "at": 1,
+      "sentence": "郑钦文发球。",
+      "intended": "qin1",
+      "wrong": "qin2",
+      "ok_refs": [
+        "衾",
+        "亲",
+        "侵"
+      ],
+      "bad_refs": [
+        "擒",
+        "琴",
+        "禽"
+      ],
+      "actual_binding": {
+        "label": "第 6 段",
+        "index": 5,
+        "display_text": "郑钦文发球。",
+        "text": "郑钦文发球。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "cache_key": "1e0bf33ea5c653a7b3911e8b237e6065",
+        "actual_mp3_sha256": "bf74799a6be201005791dd25c9b67ad7381d2a1efb4b007e3ff938b393071f54",
+        "bound_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.mp3",
+        "marks_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.marks.json",
+        "mp3_duration_seconds": 1.896,
+        "window_seconds": 2.039999999999992,
+        "headroom_seconds": 0.14399999999999213,
+        "enumerated_polyphones": [
+          {
+            "at": 3,
+            "char": "发",
+            "word": "发球",
+            "reading": "fa1",
+            "live": [
+              "fa1",
+              "fa4"
+            ]
+          }
+        ],
+        "edit_id": "first_set_serve"
+      },
+      "check_kind": "proper_name",
+      "reference_notes": [
+        "dominant-reading only, single-reading level-2",
+        "single-reading common"
+      ],
+      "reference_validity_limited": false,
+      "acoustic": {
+        "word": "钦",
+        "char": "钦",
+        "sentence": "郑钦文发球。",
+        "tts_text": "郑钦文发球。",
+        "intended_refs": [
+          "衾",
+          "亲",
+          "侵"
+        ],
+        "wrong_refs": [
+          "擒",
+          "琴",
+          "禽"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "verdict": "correct",
+        "confidence": "high",
+        "verdict_raw": "correct",
+        "score": 1.0,
+        "margin": 0.2,
+        "near_identical_to": "intended",
+        "far_from_both": false,
+        "dropped_refs": [],
+        "override": null,
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 0.0,
+            "d_wrong": 2.608,
+            "score": 1.0
+          },
+          "f0": {
+            "d_intended": 0.0,
+            "d_wrong": 1.069,
+            "score": 1.0
+          },
+          "comb": {
+            "d_intended": 0.0,
+            "d_wrong": 2.373,
+            "score": 1.0
+          }
+        },
+        "neighbour_shift": {
+          "intended": 0.0,
+          "wrong": 2.396
+        },
+        "separation": {
+          "spec": {
+            "within": 0.0,
+            "between": 2.611,
+            "separation": null
+          },
+          "f0": {
+            "within": 0.064,
+            "between": 1.036,
+            "separation": 16.081
+          },
+          "comb": {
+            "within": 0.064,
+            "between": 2.342,
+            "separation": 36.335
+          }
+        },
+        "selftest_loo": {
+          "衾": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 1.0
+          },
+          "亲": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 1.0
+          },
+          "侵": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.868
+          },
+          "擒": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.978
+          },
+          "琴": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -1.0
+          },
+          "禽": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -1.0
+          }
+        },
+        "selftest_pass": true,
+        "distances_from_orig": {
+          "A:衾": {
+            "spec": 0.0,
+            "f0": 0.168,
+            "vmis": 0.0,
+            "frames": 27,
+            "comb": 0.168
+          },
+          "A:亲": {
+            "spec": 0.0,
+            "f0": 0.168,
+            "vmis": 0.0,
+            "frames": 27,
+            "comb": 0.168
+          },
+          "A:侵": {
+            "spec": 0.0,
+            "f0": 0.0,
+            "vmis": 0.0,
+            "frames": 27,
+            "comb": 0.0
+          },
+          "B:擒": {
+            "spec": 2.608,
+            "f0": 1.074,
+            "vmis": 0.0,
+            "frames": 28,
+            "comb": 2.378
+          },
+          "B:琴": {
+            "spec": 2.608,
+            "f0": 1.069,
+            "vmis": 0.0,
+            "frames": 28,
+            "comb": 2.373
+          },
+          "B:禽": {
+            "spec": 2.608,
+            "f0": 1.069,
+            "vmis": 0.0,
+            "frames": 28,
+            "comb": 2.373
+          }
+        },
+        "window_s": [
+          0.238,
+          0.499
+        ],
+        "boundary_token": "郑钦文",
+        "window_anchor": "ORIG",
+        "tokens": {
+          "ORIG": [
+            "郑钦文",
+            "发球"
+          ],
+          "A:衾": [
+            "郑衾文",
+            "发球"
+          ],
+          "A:亲": [
+            "郑亲文",
+            "发球"
+          ],
+          "A:侵": [
+            "郑侵文",
+            "发球"
+          ],
+          "B:擒": [
+            "郑擒文",
+            "发球"
+          ],
+          "B:琴": [
+            "郑琴文",
+            "发球"
+          ],
+          "B:禽": [
+            "郑禽文",
+            "发球"
+          ]
+        },
+        "f0_semitones_window": {
+          "ORIG": [
+            4.4,
+            3.3,
+            1.5,
+            0.1,
+            -1.1,
+            -2.0,
+            -2.5,
+            -3.1,
+            null,
+            null,
+            null,
+            null,
+            null,
+            2.0
+          ],
+          "A:衾": [
+            4.6,
+            3.4,
+            1.7,
+            0.2,
+            -0.9,
+            -1.9,
+            -2.3,
+            -2.9,
+            null,
+            null,
+            null,
+            null,
+            null,
+            2.2
+          ],
+          "A:亲": [
+            4.6,
+            3.4,
+            1.7,
+            0.2,
+            -0.9,
+            -1.9,
+            -2.3,
+            -2.9,
+            null,
+            null,
+            null,
+            null,
+            null,
+            2.2
+          ],
+          "A:侵": [
+            4.4,
+            3.3,
+            1.5,
+            0.1,
+            -1.1,
+            -2.0,
+            -2.5,
+            -3.1,
+            null,
+            null,
+            null,
+            null,
+            null,
+            2.0
+          ],
+          "B:擒": [
+            3.2,
+            2.2,
+            1.4,
+            0.8,
+            0.1,
+            -1.2,
+            -2.4,
+            null,
+            null,
+            null,
+            null,
+            null,
+            0.9,
+            0.2
+          ],
+          "B:琴": [
+            3.1,
+            2.2,
+            1.4,
+            0.8,
+            0.1,
+            -1.3,
+            -2.5,
+            null,
+            null,
+            null,
+            null,
+            null,
+            0.9,
+            0.1
+          ],
+          "B:禽": [
+            3.1,
+            2.2,
+            1.4,
+            0.8,
+            0.1,
+            -1.3,
+            -2.5,
+            null,
+            null,
+            null,
+            null,
+            null,
+            0.9,
+            0.1
+          ]
+        },
+        "audio": {
+          "ORIG": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.mp3",
+          "A:衾": "/home/agent/.cache/tennislive/polyphone/86ce33bc3ad69a74aa6fb38d.mp3",
+          "A:亲": "/home/agent/.cache/tennislive/polyphone/f2545bbcb1b088014874f202.mp3",
+          "A:侵": "/home/agent/.cache/tennislive/polyphone/4be4dc89cdccdfdd2547a6a4.mp3",
+          "B:擒": "/home/agent/.cache/tennislive/polyphone/dc6e9c7c04ead8a3480a0474.mp3",
+          "B:琴": "/home/agent/.cache/tennislive/polyphone/8149e2514d55e9e4b4895086.mp3",
+          "B:禽": "/home/agent/.cache/tennislive/polyphone/e615e88b62b834658a4d55de.mp3"
+        }
+      }
+    },
+    {
+      "label": "第 6 段",
+      "word": "文",
+      "char": "文",
+      "at": 2,
+      "sentence": "郑钦文发球。",
+      "intended": "wen2",
+      "wrong": "wen4",
+      "ok_refs": [
+        "蚊",
+        "闻",
+        "阌"
+      ],
+      "bad_refs": [
+        "问",
+        "璺"
+      ],
+      "actual_binding": {
+        "label": "第 6 段",
+        "index": 5,
+        "display_text": "郑钦文发球。",
+        "text": "郑钦文发球。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "cache_key": "1e0bf33ea5c653a7b3911e8b237e6065",
+        "actual_mp3_sha256": "bf74799a6be201005791dd25c9b67ad7381d2a1efb4b007e3ff938b393071f54",
+        "bound_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.mp3",
+        "marks_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.marks.json",
+        "mp3_duration_seconds": 1.896,
+        "window_seconds": 2.039999999999992,
+        "headroom_seconds": 0.14399999999999213,
+        "enumerated_polyphones": [
+          {
+            "at": 3,
+            "char": "发",
+            "word": "发球",
+            "reading": "fa1",
+            "live": [
+              "fa1",
+              "fa4"
+            ]
+          }
+        ],
+        "edit_id": "first_set_serve"
+      },
+      "check_kind": "proper_name",
+      "reference_notes": [
+        "single-reading common, single-reading level-2",
+        "single-reading common, single-reading level-2"
+      ],
+      "reference_validity_limited": false,
+      "acoustic": {
+        "word": "文",
+        "char": "文",
+        "sentence": "郑钦文发球。",
+        "tts_text": "郑钦文发球。",
+        "intended_refs": [
+          "蚊",
+          "闻",
+          "阌"
+        ],
+        "wrong_refs": [
+          "问",
+          "璺"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "verdict": "correct",
+        "confidence": "high",
+        "verdict_raw": "correct",
+        "score": 1.0,
+        "margin": 0.2,
+        "near_identical_to": "intended",
+        "far_from_both": false,
+        "dropped_refs": [],
+        "override": null,
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 0.0,
+            "d_wrong": 2.685,
+            "score": 1.0
+          },
+          "f0": {
+            "d_intended": 0.0,
+            "d_wrong": 1.918,
+            "score": 1.0
+          },
+          "comb": {
+            "d_intended": 0.0,
+            "d_wrong": 3.261,
+            "score": 1.0
+          }
+        },
+        "neighbour_shift": {
+          "intended": 0.001,
+          "wrong": 2.997
+        },
+        "separation": {
+          "spec": {
+            "within": 1.257,
+            "between": 2.648,
+            "separation": 2.108
+          },
+          "f0": {
+            "within": 0.202,
+            "between": 1.856,
+            "separation": 9.167
+          },
+          "comb": {
+            "within": 0.831,
+            "between": 3.18,
+            "separation": 3.828
+          }
+        },
+        "selftest_loo": {
+          "蚊": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 1.0
+          },
+          "闻": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 1.0
+          },
+          "阌": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.317
+          },
+          "问": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.945
+          },
+          "璺": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.946
+          }
+        },
+        "selftest_pass": true,
+        "distances_from_orig": {
+          "A:蚊": {
+            "spec": 0.0,
+            "f0": 0.0,
+            "vmis": 0.0,
+            "frames": 23,
+            "comb": 0.0
+          },
+          "A:闻": {
+            "spec": 0.0,
+            "f0": 0.0,
+            "vmis": 0.0,
+            "frames": 23,
+            "comb": 0.0
+          },
+          "A:阌": {
+            "spec": 2.494,
+            "f0": 0.354,
+            "vmis": 0.038,
+            "frames": 26,
+            "comb": 1.601
+          },
+          "B:问": {
+            "spec": 2.685,
+            "f0": 1.918,
+            "vmis": 0.0,
+            "frames": 25,
+            "comb": 3.261
+          },
+          "B:璺": {
+            "spec": 2.685,
+            "f0": 1.942,
+            "vmis": 0.0,
+            "frames": 25,
+            "comb": 3.285
+          }
+        },
+        "window_s": [
+          0.47,
+          0.69
+        ],
+        "boundary_token": "郑钦文",
+        "window_anchor": "A:阌",
+        "tokens": {
+          "ORIG": [
+            "郑钦文",
+            "发球"
+          ],
+          "A:蚊": [
+            "郑钦蚊",
+            "发球"
+          ],
+          "A:闻": [
+            "郑钦闻",
+            "发球"
+          ],
+          "A:阌": [
+            "郑钦",
+            "阌",
+            "发球"
+          ],
+          "B:问": [
+            "郑钦",
+            "问",
+            "发球"
+          ],
+          "B:璺": [
+            "郑钦",
+            "璺",
+            "发球"
+          ]
+        },
+        "f0_semitones_window": {
+          "ORIG": [
+            null,
+            2.0,
+            1.3,
+            0.4,
+            -0.5,
+            -1.4,
+            -1.8,
+            -1.4,
+            -0.3,
+            0.5,
+            0.2,
+            -1.4
+          ],
+          "A:蚊": [
+            null,
+            2.0,
+            1.3,
+            0.4,
+            -0.5,
+            -1.4,
+            -1.8,
+            -1.4,
+            -0.3,
+            0.5,
+            0.2,
+            -1.4
+          ],
+          "A:闻": [
+            null,
+            2.0,
+            1.3,
+            0.4,
+            -0.5,
+            -1.4,
+            -1.8,
+            -1.4,
+            -0.3,
+            0.5,
+            0.2,
+            -1.4
+          ],
+          "A:阌": [
+            3.2,
+            2.6,
+            1.5,
+            0.9,
+            0.1,
+            -0.8,
+            -2.1,
+            -2.8,
+            -2.0,
+            -1.2,
+            0.2,
+            0.4
+          ],
+          "B:问": [
+            null,
+            2.4,
+            1.7,
+            1.5,
+            1.5,
+            1.4,
+            1.4,
+            0.8,
+            -0.7,
+            -2.7,
+            -3.8,
+            -4.3,
+            -5.5
+          ],
+          "B:璺": [
+            null,
+            2.5,
+            1.8,
+            1.6,
+            1.5,
+            1.5,
+            1.5,
+            0.9,
+            -0.7,
+            -2.7,
+            -3.7,
+            -4.3,
+            -5.4
+          ]
+        },
+        "audio": {
+          "ORIG": "/workspace/scratch/zheng-voice/net-split-tts/voice_05.mp3",
+          "A:蚊": "/home/agent/.cache/tennislive/polyphone/202a128691999b54b1524a72.mp3",
+          "A:闻": "/home/agent/.cache/tennislive/polyphone/fccd4a43c076f5bdbf6a994c.mp3",
+          "A:阌": "/home/agent/.cache/tennislive/polyphone/bc9543179f6ae2aad7e2826e.mp3",
+          "B:问": "/home/agent/.cache/tennislive/polyphone/97349cfbd60b43adee59cad8.mp3",
+          "B:璺": "/home/agent/.cache/tennislive/polyphone/f096612f36b1eb819638c923.mp3"
+        }
+      }
+    },
+    {
+      "label": "第 7 段",
+      "word": "发",
+      "char": "发",
+      "at": 11,
+      "sentence": "她从底线压向网前，保住发球局。",
+      "intended": "fa1",
+      "wrong": "fa4",
+      "ok_refs": [
+        "發",
+        "発"
+      ],
+      "bad_refs": [
+        "髮",
+        "珐"
+      ],
+      "actual_binding": {
+        "label": "第 7 段",
+        "index": 6,
+        "display_text": "她从底线压向网前，保住发球局。",
+        "text": "她从底线压向网前，保住发球局。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "cache_key": "0fe6fb0dd7fc48a6e70abde97aae3f8f",
+        "actual_mp3_sha256": "198483e9887a3d29b7f8bed9d58ba1b7259f606509bce435e463b444e3000cd3",
+        "bound_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_06.mp3",
+        "marks_snapshot_path": "/workspace/scratch/zheng-voice/net-split-tts/voice_06.marks.json",
+        "mp3_duration_seconds": 3.528,
+        "window_seconds": 5.490000000000009,
+        "headroom_seconds": 1.962000000000009,
+        "enumerated_polyphones": [
+          {
+            "at": 11,
+            "char": "发",
+            "word": "发球",
+            "reading": "fa1",
+            "live": [
+              "fa1",
+              "fa4"
+            ]
+          }
+        ],
+        "edit_id": "first_set_net"
+      },
+      "check_kind": "polyphone",
+      "reference_notes": [
+        "Uncommon/traditional or context-sensitive references; independent reference calibration is mandatory. fa1 uses explicitly disclosed 發/発 reading assumption, no same-original glyph control.",
+        "Uncommon/traditional or context-sensitive references; independent reference calibration is mandatory. fa1 uses explicitly disclosed 發/発 reading assumption, no same-original glyph control."
+      ],
+      "reference_validity_limited": true,
+      "acoustic": {
+        "word": "发",
+        "char": "发",
+        "sentence": "她从底线压向网前，保住发球局。",
+        "tts_text": "她从底线压向网前，保住发球局。",
+        "intended_refs": [
+          "發",
+          "発"
+        ],
+        "wrong_refs": [
+          "髮",
+          "珐"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "verdict": "correct",
+        "confidence": "medium",
+        "verdict_raw": "correct",
+        "score": 0.543,
+        "margin": 0.2,
+        "near_identical_to": null,
+        "far_from_both": false,
+        "dropped_refs": [],
+        "override": null,
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 2.344,
+            "d_wrong": 2.797,
+            "score": 0.088
+          },
+          "f0": {
+            "d_intended": 0.274,
+            "d_wrong": 3.486,
+            "score": 0.854
+          },
+          "comb": {
+            "d_intended": 1.446,
+            "d_wrong": 4.884,
+            "score": 0.543
+          }
+        },
+        "neighbour_shift": {
+          "intended": 1.681,
+          "wrong": 4.411
+        },
+        "separation": {
+          "spec": {
+            "within": 0.037,
+            "between": 3.035,
+            "separation": 81.973
+          },
+          "f0": {
+            "within": 0.0,
+            "between": 3.417,
+            "separation": 51667.707
+          },
+          "comb": {
+            "within": 0.019,
+            "between": 4.934,
+            "separation": 265.571
+          }
+        },
+        "selftest_loo": {
+          "發": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 1.0
+          },
+          "発": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 1.0
+          },
+          "髮": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.985
+          },
+          "珐": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.985
+          }
+        },
+        "selftest_pass": true,
+        "distances_from_orig": {
+          "A:發": {
+            "spec": 2.344,
+            "f0": 0.274,
+            "vmis": 0.067,
+            "frames": 30,
+            "comb": 1.446
+          },
+          "A:発": {
+            "spec": 2.344,
+            "f0": 0.274,
+            "vmis": 0.067,
+            "frames": 30,
+            "comb": 1.446
+          },
+          "B:髮": {
+            "spec": 2.797,
+            "f0": 3.486,
+            "vmis": 0.1,
+            "frames": 30,
+            "comb": 4.884
+          },
+          "B:珐": {
+            "spec": 2.81,
+            "f0": 3.497,
+            "vmis": 0.1,
+            "frames": 30,
+            "comb": 4.902
+          }
+        },
+        "window_s": [
+          2.097,
+          2.366
+        ],
+        "boundary_token": "发球局",
+        "window_anchor": "ORIG",
+        "tokens": {
+          "ORIG": [
+            "她",
+            "从",
+            "底线",
+            "压",
+            "向",
+            "网",
+            "前",
+            "保住",
+            "发球局"
+          ],
+          "A:發": [
+            "她",
+            "从",
+            "底线",
+            "压",
+            "向",
+            "网",
+            "前",
+            "保住",
+            "發球局"
+          ],
+          "A:発": [
+            "她",
+            "从",
+            "底线",
+            "压",
+            "向",
+            "网",
+            "前",
+            "保住",
+            "発球局"
+          ],
+          "B:髮": [
+            "她",
+            "从",
+            "底线",
+            "压",
+            "向",
+            "网",
+            "前",
+            "保住",
+            "髮球局"
+          ],
+          "B:珐": [
+            "她",
+            "从",
+            "底线",
+            "压",
+            "向",
+            "网",
+            "前",
+            "保住",
+            "珐球局"
+          ]
+        },
+        "f0_semitones_window": {
+          "ORIG": [
+            0.6,
+            0.0,
+            -0.4,
+            -1.1,
+            null,
+            null,
+            null,
+            5.1,
+            3.8,
+            3.6,
+            3.7,
+            3.8,
+            3.9,
+            3.1
+          ],
+          "A:發": [
+            0.5,
+            -0.4,
+            -1.6,
+            -3.2,
+            null,
+            null,
+            null,
+            4.5,
+            3.9,
+            3.7,
+            3.8,
+            3.7,
+            3.6,
+            3.3
+          ],
+          "A:発": [
+            0.5,
+            -0.4,
+            -1.6,
+            -3.2,
+            null,
+            null,
+            null,
+            4.5,
+            3.9,
+            3.7,
+            3.8,
+            3.7,
+            3.6,
+            3.3
+          ],
+          "B:髮": [
+            3.8,
+            2.4,
+            1.1,
+            -1.9,
+            -6.1,
+            null,
+            null,
+            5.6,
+            2.8,
+            0.9,
+            -3.0,
+            -2.9,
+            -2.9,
+            -2.9
+          ],
+          "B:珐": [
+            3.8,
+            2.4,
+            1.1,
+            -1.9,
+            -6.1,
+            null,
+            null,
+            5.6,
+            2.8,
+            0.9,
+            -3.0,
+            -2.9,
+            -2.9,
+            -3.2
+          ]
+        },
+        "audio": {
+          "ORIG": "/workspace/scratch/zheng-voice/net-split-tts/voice_06.mp3",
+          "A:發": "/home/agent/.cache/tennislive/polyphone/17878e3957c9ad2e992f3d4b.mp3",
+          "A:発": "/home/agent/.cache/tennislive/polyphone/0f73e1e53c2ef822abee2816.mp3",
+          "B:髮": "/home/agent/.cache/tennislive/polyphone/f2976f80a83c0ed38b7c842d.mp3",
+          "B:珐": "/home/agent/.cache/tennislive/polyphone/8884fa3b11e2ffe17017f9ab.mp3"
+        }
+      }
+    }
+  ],
+  "human_listening_claimed": false,
+  "notes": [
+    "Geometry required narration split at source cut. Both new whole sentences synthesized natively; no mechanical cut of prior narration.",
+    "Old complete net-sentence audio and five raw comparisons retained in scratch and comprehensive review history.",
+    "Short serve-sentence fa1 vs fa4 has unreliable calibration and remains uncertain_not_pass. No trustworthy current misread."
+  ]
+}

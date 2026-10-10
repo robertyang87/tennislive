@@ -1,0 +1,12 @@
+{
+  "checked_at_utc": "2026-10-10T17:27:17.610854+00:00",
+  "method": "Restore exact staged render-time review and transcript bytes, then invoke native inspect against the CURRENT final spec and actual source bytes; no synthesized ASR or changed native binding.",
+  "render_time_review_sha256": "f6741e3bcdbf88b0e0be04818e14901a7233fbb75d2763c8848362181d806506",
+  "current_plan_sha256": "bbac4be5c9a396c49ad69d9769edfee0dc31567dd7950f598128cd4da4e30207",
+  "final_spec_sha256": "8a1b964a3b8a05420d33c53d37646fa5e4b0efa7eafe83ac15307e358a355786",
+  "actual_source_sha256": "a060dfa0f7be58e43c094df7f5a3d3b05cedd56e679c303ff3318a2ba1fd4cb2",
+  "actual_window_count": 17,
+  "actual_cue_count": 23,
+  "explanation": "Only fixed framing and point-end annotation changed after this audio review. Native audio plan is unchanged. An unnecessary rebind during rendering changed document hashes; restore the exact actually validated render-time evidence, and independently verify it still covers the current audio/caption plan.",
+  "human_listening_claimed": false
+}

@@ -1,0 +1,213 @@
+{
+  "status": "pass",
+  "scope": "independent_actual_movie_visual_sample_review",
+  "slug": "zheng-mertens-beijing-2026-sf",
+  "checked_at": "2026-10-10T17:35:01.603599+00:00",
+  "reviewer": "independent subagent zheng_independent_qc",
+  "film": {
+    "path": "/workspace/tennislive/output/2026-10-11/reel/zheng-mertens-beijing-2026-sf/zheng-mertens-beijing-2026-sf.mp4",
+    "sha256": "8616ad0c3f8bf968067934924b4f3b2f28c973b76e71e401b749368c99a2bf29",
+    "bytes": 94109333,
+    "duration_s": 192.76,
+    "canvas": [
+      1080,
+      1440
+    ]
+  },
+  "bindings": {
+    "spec_path": "/workspace/tennislive/specs/reels/zheng-mertens-beijing-2026-sf.json",
+    "spec_sha256": "8a1b964a3b8a05420d33c53d37646fa5e4b0efa7eafe83ac15307e358a355786",
+    "render_sha256": "6d86c083db7e0affddd56db5461a5e3c756df83de98c466751f883efb3e464d7",
+    "render_inputs_sha256": "b9511d3d96ebdabacb43ab240c62f60b932b4f3e8ba289d6579653d99b21b113",
+    "native_qc_attestation_sha256": "9902e9338f0d4d1966d1f963a25b40479a62b7652449357afadea2f22f5aee36",
+    "native_qc_status": "pass",
+    "poster_sha256": "dea452188ea29009f6203a36e0c2978e470124e2570bc56fb6c28dfc6068f7b3",
+    "stat_card_sha256": "f808927b4c87624c7343720d03fee0fc9378a18b7fb23e699394abdb51b090bf",
+    "source_sha256": "a060dfa0f7be58e43c094df7f5a3d3b05cedd56e679c303ff3318a2ba1fd4cb2"
+  },
+  "sample_sets": [
+    {
+      "manifest": "/workspace/scratch/zheng-independent-qc/final-frames/samples.json",
+      "manifest_sha256": "3ea78675395d493d9ed8ee042fb795ff94cef7195debde87f8767a72e02019ac",
+      "actual_movie_sample_count": 80,
+      "all_contact_sheets_actually_viewed": true,
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-frames/contact-00.jpg",
+          "sha256": "3a0eb881274554fad210b47a5296e789645d4ecf690df8ca17cc38974d2ebc2c"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-frames/contact-01.jpg",
+          "sha256": "c7c9ae8b95b985b7042828d1f2107e7f1bb49fdabc2de7ef95b65b291804d6a7"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-frames/contact-02.jpg",
+          "sha256": "f1d02286c8d61a3cf03826664c61865144d7c9b955969ab2ae7c1758602a6442"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-frames/contact-03.jpg",
+          "sha256": "b8510e5eb89eacaaff1bc9f4c185fb8a8ad2d733f6aaa0c137c63d9885e13969"
+        }
+      ]
+    },
+    {
+      "manifest": "/workspace/scratch/zheng-independent-qc/final-rallies/manifest.json",
+      "manifest_sha256": "14d5d21f650468679c72408e28681ed8dd9d9c28185f24525838cc43f0eefde9",
+      "actual_movie_sample_count": 103,
+      "all_contact_sheets_actually_viewed": true,
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-rallies/firstset_hold-contact-0.jpg",
+          "sha256": "46347d7ea226f0f9e57afa92e75282401c5f872d481540027ba252cb7d65ea99"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-rallies/firstset_hold-contact-1.jpg",
+          "sha256": "4d32a1ffbd00cda001c5dcec8834b6a93e6efccf09e80713b4b94f9c56172ad8"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-rallies/matchpoint-contact-0.jpg",
+          "sha256": "bfbe9680e6f477af6e105dcd3db6ae36f6148caead4900362119a427dbeeefe3"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-rallies/matchpoint-contact-1.jpg",
+          "sha256": "ec29ef9331c3fbb631ef12ea1e5c043170b96c38dc951f30de4c29a591ff8957"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-rallies/matchpoint-contact-2.jpg",
+          "sha256": "82c3c492ec8945a1917add1ac5ba1a3ebc15684143a1cb165bdb054870b27bd2"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-rallies/secondset_break-contact-0.jpg",
+          "sha256": "b7c86042a2b7aa0b41b2644eb18c4533cc649d2535b9ee5e0914dfa63c1d95bd"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-rallies/secondset_break-contact-1.jpg",
+          "sha256": "5d7d3fcb943295d1a1a9d2a7f61de24228d28b267f11c6848982df0fae2f7356"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-rallies/secondset_break-contact-2.jpg",
+          "sha256": "2ff2965345d79fd8c9aa248e00903f81dee812dbc1af77dcba943f46213e6113"
+        }
+      ]
+    },
+    {
+      "manifest": "/workspace/scratch/zheng-independent-qc/final-geometry/manifest.json",
+      "manifest_sha256": "35b49aa04ba0ac1ba4d503945644f7392a49d4460f2ecdee86c904bf78015f44",
+      "actual_movie_sample_count": 51,
+      "all_contact_sheets_actually_viewed": true,
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-geometry/board_subtitle-contact-0.jpg",
+          "sha256": "0c5f6b85d8dbfd89ef79d14aa3d7e1c2571ec4c9d22099942f09d985df563ed7"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-geometry/firstset_seam-contact-0.jpg",
+          "sha256": "85b3da3e1c7b91395cc55c28533df6d87e8b8c6a1524053c78902b2368445b2a"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-geometry/firstset_seam-contact-1.jpg",
+          "sha256": "d6af7f87536e1ee3784c1332ce0c83299efff075a498e5456c197e0254d1453c"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-geometry/handshake-contact-0.jpg",
+          "sha256": "bf59c935bc535587c4ade1cfa842da81c9547b3edffbae4bec7edcbb38a1e2e6"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-geometry/match_return-contact-0.jpg",
+          "sha256": "2764ab2036cfc5aa553207790d6dc3a8f26ac57fbeac3cf24312441136fa2ea8"
+        },
+        {
+          "path": "/workspace/scratch/zheng-independent-qc/final-geometry/restored_hold-contact-0.jpg",
+          "sha256": "4b983895cdca23ce884f1331eca6c8a39b22c410928a76ab15475239696f3dcd"
+        }
+      ]
+    }
+  ],
+  "actual_movie_total_extracted_samples": 234,
+  "coverage": {
+    "segments_start_middle_end": 19,
+    "bilingual_cue_samples": 23,
+    "poster_and_brand_ending": true,
+    "title_cards": 2,
+    "title_card_total_s": 16.8,
+    "point_sequences_step_s": 0.5,
+    "point_sequences": [
+      {
+        "source_range": [
+          141.12,
+          155.96
+        ],
+        "movie_range": [
+          59.18,
+          73.94
+        ],
+        "frames": 31,
+        "finding": "Preparation,toss,serve,baseline-to-net full decisive point and result retained; centered contain.65 preserves the right-side forehand at146.62–147.12. Commentary crop starts after winning stroke."
+      },
+      {
+        "source_range": [
+          187,
+          205.75
+        ],
+        "movie_range": [
+          102.76,
+          121.43
+        ],
+        "frames": 39,
+        "finding": "Receive preparation,opponent serve,full backhand rally and first-break result retained. Native BP badge and all current columns visible."
+      },
+      {
+        "source_range": [
+          244.48,
+          260
+        ],
+        "movie_range": [
+          151.99,
+          167.43
+        ],
+        "frames": 33,
+        "finding": "Full-source centered frame preserves original receive stance/serve/rally/error/result and celebratory fist; no new delogo or copied-body obstruction."
+      }
+    ],
+    "ending_handshake": {
+      "source_time": 267.5,
+      "movie_time": 175.01,
+      "finding": "Hands touching,both faces and subsequent celebration visible in actual ending segment, independently from repeated cold open."
+    }
+  },
+  "findings": {
+    "remaining_material_visual_blockers": [],
+    "facts": "Source and official WTA package agree Zheng7-5,6-2 Mertens Beijing2026-10-10 semifinal,first Chinese women singles finalist,32/9 winners,8/0aces,88%firstservepointswon23/26;stat card independently checked against official pairs. No post297s interview included.",
+    "narrative": "Cold-open result promise followed by match coordinate,first-set comeback/hold/close,second-set break/hold,official stats,next-opponent payoff and complete matchpoint/handshake. Two cards16.8s preserve match footage priority.",
+    "framing": "All segments fixedcx.5 andtrackfalse. Serve/net contains.65; decisive matchpointfull_source. Rejected offsetcx previews never count as passes.",
+    "subtitles": "All23 bilingual cue burns viewed from actual final movie; English above Chinese,faces readable,no clipped glyph or names overwritten. Ordinary margins301 and BP/SP protection356 remain low; summary margin513 starts at178.18 before original large plate. Matchpoint356 stays below originalboard and clear of face/fist.",
+    "scoreboard": "Actual settled native columns and SP/BP/MP badges preserved in sampled frames,alpha outside native body/header avoids field patches. Full-source matchpoint retains original embedded board unchanged; original board itself can cover part of near player at246.x and this was not claimed recoverable.",
+    "final_hold_repair": "Actual source153.00/movie71.06 final crowd has no contain delogo smear; restoredcrop.5 preserves full commentary and native broadcast scoreboard retraction.",
+    "transition_note": "Native0.18s dissolve when postpoint commentary returns fromcontain tocrop shows brief size-changing ghost of the same source after winning shot. No key stroke removed."
+  },
+  "withdrawn_sampling_alarm": {
+    "evidence": "/workspace/tennislive/data/evidence/zheng-mertens-beijing-2026-sf/independent-qc-score-wipe-resolution.json",
+    "sha256": "739a78726cc979b204e2607939ce2c3cb14b52f4713bfaa6043170b95be20de7",
+    "finding": "Single nominal153.00 source/movie still differed by adjacent25fps frame across original right-to-left retract animation. Dense16-frame raw/final paired wall proves all4/4 columns retained before wipe. Initial settled-column-loss alarm withdrawn.",
+    "residual": "Native alpha suppresses last tiny name-only wipe remnant approximately0.12s sooner after score columns are already gone; this is recorded rather than claimed exact full animation fidelity. Parent independently viewed paired wall and accepted this nonmaterial detail."
+  },
+  "prior_revision_findings_resolved": [
+    "Initial1139/1084 mistakenASSMarginV corrected to301/356; actual lowcaption preview andfinalburns checked.",
+    "First-set right forehand crop resolved using legal fixedcentercontain.65.",
+    "Native bigresultplate overlap resolved using completecue513 from178.18.",
+    "Matchpoint crop/delogo body damage resolved using original full_source score_insetfalse.",
+    "Postpoint crowd delogo153 smear resolved by restoredcrop.5."
+  ],
+  "limitations": [
+    "Review is actual sampled decoded-frame inspection,not a claim of unbroken human audiovisual playback or every encoded frame.",
+    "Automatic face model unavailable in native renderer(report-only); independent actual face and action images reviewed.",
+    "Audio pronunciation/tone and PCM/ASR proof are owned by dedicated audio review; this report does not assert human listening or convert uncertain pitch to pass.",
+    "WeChat delivery is handled by parent and no dispatch/receipt is claimed here."
+  ],
+  "providers_excluded": [
+    "DeepSeek",
+    "MiniMax"
+  ],
+  "formal_code_or_spec_edits_by_reviewer": false,
+  "publication_dispatch_by_reviewer": false
+}

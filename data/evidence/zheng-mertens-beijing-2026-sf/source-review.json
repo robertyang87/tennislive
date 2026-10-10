@@ -1,0 +1,420 @@
+{
+  "status": "source_visual_review_complete_audio_review_separate",
+  "source_id": "22pyy0S0S3s",
+  "source_url": "https://www.youtube.com/watch?v=22pyy0S0S3s",
+  "slug": "zheng-mertens-beijing-2026-sf",
+  "recorded_at": "2026-10-10T16:09:20.365580+00:00",
+  "catalog_identity": {
+    "channel": "NA",
+    "discovered_at": "2026-10-10T13:35:47.563194+00:00",
+    "duration_s": 520,
+    "id": "22pyy0S0S3s",
+    "kind": "oncourt",
+    "source": "WTA",
+    "tail_interview": true,
+    "tier": "central",
+    "title": "Zheng Qinwen vs. Elise Mertens | 2026 Beijing Semifinal | WTA Match Highlights",
+    "url": "https://www.youtube.com/watch?v=22pyy0S0S3s"
+  },
+  "catalog_path": "data/oncourt_interviews.json",
+  "catalog_sha256": "988f808dd0cdc5ae16ff9c8f494123ae2265e6a32a0c5d76dac1f5029bc31fea",
+  "catalog_warning": "Catalog identity alone was preliminary; the actual downloaded source duration, scoreboard, points and official WTA identity were independently reviewed below.",
+  "source_acquisition": {
+    "local_youtube_attempts": 2,
+    "observed_error": "Proxy CONNECT403 for both www.youtube.com and youtu.be via inherited proxy; no bypass attempted.",
+    "official_release_acquisition": "Existing download-video workflow38066482983 completed successfully; source acquired by genuine streamed Release GET.",
+    "local_path": "/workspace/scratch/zheng-source/22pyy0S0S3s.mp4",
+    "release_url": "https://github.com/robertyang87/tennislive/releases/download/source-22pyy0S0S3s/22pyy0S0S3s.mp4",
+    "bytes": 108737434,
+    "sha256": "a060dfa0f7be58e43c094df7f5a3d3b05cedd56e679c303ff3318a2ba1fd4cb2",
+    "method": "actual_streaming_GET",
+    "workflow_run": 38066482983
+  },
+  "key_point_coverage": [
+    {
+      "id": "opening-lead",
+      "at": 18.48,
+      "end": 34.32,
+      "score_before": "First set Zheng2-0,30-0; Zheng serves",
+      "score_after_point": "40-0; next source game is3-0",
+      "complete_service_and_point": true,
+      "semantic_limit": "Winning this shown point does not itself clinch3-0; source omits final hold point. Opening break-to2-0 is not shown in full."
+    },
+    {
+      "id": "firstset-finesse",
+      "at": 70.48,
+      "end": 88.88,
+      "score_before": "First set4-2,0-0; Zheng serves",
+      "score_after_point": "15-0",
+      "complete_service_and_point": true,
+      "visual_evidence": "69.12–84.16 exact seek wall;70.48close serve setup,71.84wide serve,81.1Mertens beyond right baseline sideline,81.8close reaction",
+      "tactical_description_zh": "郑钦文在底线把落点送向两边，梅尔滕斯一路追到边线外。",
+      "rejected_description": "No Zheng drop shot or Mertens net approach is shown."
+    },
+    {
+      "id": "firstset-long-baseline",
+      "at": 88.88,
+      "end": 108.84,
+      "score_before": "First set4-2,15-0; Zheng serves",
+      "score_after_point": "30-0",
+      "complete_service_and_point": true,
+      "visual_evidence": "Exact source wall88.88–106.52;92.08wide service then point until103.x;104.04Zheng reaction.94.2start would omit serve."
+    },
+    {
+      "id": "firstset-four-all-early",
+      "at": 126.8,
+      "end": 139.96,
+      "score_before": "First set4-4,30-15; Zheng serves",
+      "score_after_point": "not used to infer missing intermediate points",
+      "complete_service_and_point": true,
+      "visual_evidence": "126.08serve setup126.72wide serve,138.48reaction; point does not establish4-5.; exact126.9Zhengbeforetoss,127.1toss,127.3ballhigh,127.5servicecontact confirms126.8retainswholeaction."
+    },
+    {
+      "id": "firstset-four-all-hold",
+      "at": 141.12,
+      "end": 155.84,
+      "score_before": "First set4-4,AdvZheng; Zheng serves",
+      "score_after_point": "Zheng hold to5-4, official point-by-point fact cross-check separate",
+      "complete_service_and_point": true,
+      "visual_evidence": "141.4serve setup,142.4ball toss;143.16wide;147–149Zheng advances from baseline to net;151.4post-point movement;153.0crowd",
+      "tactical_description_zh": "发球后继续向前压，把回合从底线带到网前。",
+      "semantic_limit": "This full point contains valuable source commentary; prefer original speech rather than narrating over it."
+    },
+    {
+      "id": "firstset-setpoint",
+      "at": 155.84,
+      "end": 184.76,
+      "score_before": "First set6-5,Zheng40-30; Mertens serves; SETPOINT",
+      "score_after_point": "Zheng7-5",
+      "complete_service_and_point": true,
+      "visual_evidence": "155.84Zheng receiving setup,157.28wide full serve;167.xfinal shot,168.16Zheng reaction;171.52crowd;177.0set break",
+      "internal_missing_key_points": [
+        "Mertens comeback from1-4to4-4 includes unshown game endings.",
+        "5-5to6-5break to serve/receive for set is not fully shown; do not call4-4Advpoint a break."
+      ]
+    },
+    {
+      "id": "secondset-early-break",
+      "at": 187.0,
+      "end": 205.75,
+      "score_before": "Second setZheng1-0,40-0; Mertens serves; BREAKPOINT",
+      "score_after_point": "Zheng2-0; following source shows3-0",
+      "complete_service_and_point": true,
+      "visual_evidence": "184.76receiving pose;187.60wide Mertens near-side serve;188–201rally;202.3Mertens lowered racket walking after point;203.68Zheng reaction",
+      "tactical_description_zh": "接发后在底线连续回击，反复把球送向对手反手侧。",
+      "foreground_audio_limit": "No TTS beyond201.4; dedicated ASR earliest English201.54. Preserve continuous same-source picture across201.4 split.",
+      "narrated_part": [
+        187,
+        201.4
+      ],
+      "original_speech_part": [
+        201.4,
+        205.75
+      ],
+      "point_end_evidence": {
+        "at": 201.4,
+        "file": "/workspace/scratch/zheng-source/exact201_4.jpg",
+        "sha256": "8d07444f9d715130b069bf1ede4ee714d9f99cc738c4047736865f7364caf172",
+        "observed": "Both players lower rackets; Mertens walking; ball outside near-right singles sideline. Deadball already at this frame."
+      }
+    },
+    {
+      "id": "secondset-mertens-hold",
+      "at": 207.76,
+      "end": 225.72,
+      "score_before": "Second setZheng3-0,AdvMertens; Mertens serves",
+      "score_after_point": "Mertens1-3; subsequent source4-2",
+      "complete_service_and_point": true,
+      "visual_evidence": "Source207.76courtserve,216.68Mertens close reaction,220.88coach. Exact winners/point result tie to official feed required."
+    },
+    {
+      "id": "secondset-zheng-hold",
+      "at": 226.0,
+      "end": 235.7,
+      "score_before": "Second setZheng4-2,40-15; Zheng serves",
+      "score_after_point": "Zheng5-2",
+      "complete_service_and_point": true,
+      "visual_evidence": "225.72–226.5Mertens receiving setup;226.64wide Zheng far-side still preparing service; full serve retained when starting226.0.235.7both players lower rackets and walking; ball kids rise, confirmed deadball.",
+      "point_end_evidence": {
+        "at": 235.7,
+        "file": "/workspace/scratch/zheng-source/exact235_7.jpg",
+        "sha256": "33d6a69e8de8a58737627965ab41f667d154fdfaf92d33503a9db8f5ee9b9e62"
+      }
+    },
+    {
+      "id": "terminal-full-matchpoint",
+      "at": 244.48,
+      "end": 290.8,
+      "score_before": "Second setZheng5-2,40-30; Mertens serves; MATCHPOINT",
+      "score_after_point": "Final7-5 6-2",
+      "complete_service_and_point": true,
+      "visual_evidence": "244.48Zhengnear-side receiving,246.04wide Mertens far-side complete serve;255.3Mertens last shot;256.1incoming ball near near-side baseline;256.3ball beyond baseline and Zheng relaxed posture;257.16Zheng smile+fist;259.24coachesembrace;267.4ballplayers handshake;275.28wave;284.68courtwide",
+      "point_ending_precision": "Out bounce estimated256.2 from0.2s exact-seek strip, not25fps exact call. Safe fullpoint ending at257.16;255.74cold-open includes incoming final ball before out bounce.",
+      "suggested_original_speech_end": 281.27,
+      "rejected_description": "Not a Zheng service-winner or serve-out game. Zheng receives Mertens serve."
+    }
+  ],
+  "foreground_audio": {
+    "method": "actual independent ASR cross-check by /root/zheng_raw_audio",
+    "human_listening_claimed": false,
+    "registry_pending_from_dedicated_agent": true
+  },
+  "external_model_content_used": false,
+  "official_wta_video": {
+    "source_url": "https://www.wtatennis.com/videos/4590081/zheng-wins-eight-of-final-10-games-to-reach-china-open-final-on-home-soil",
+    "player_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406593615112",
+    "cms_id": 4590081,
+    "brightcove_id": "6406593615112",
+    "published_duration_s": 304,
+    "title": "Zheng wins eight of final 10 games to reach China Open final on home soil",
+    "description": "Backed by the home crowd, Zheng Qinwen took command late in the first set and rolled past No. 13 seed Elise Mertens 7-5, 6-2 on Saturday, winning eight of the final 10 games to become the first Chinese finalist in Beijing.",
+    "published_date": "2026-10-10T12:53:00Z",
+    "metadata_path": "data/evidence/zheng-mertens-beijing-2026-sf/wta-official-video-metadata.json",
+    "metadata_sha256": "8d47090496d2ac2ad729f4e7c64dbdf807ed1750a405ad95a1db7c0d2ac812e9",
+    "downloaded_html_local_path": "/workspace/scratch/zheng-beijing-semifinal-source/wta-video-page.html",
+    "downloaded_html_sha256": "cd2a87396a96d0e0ee31819cb5a45c907ceb72fea8e0611680658896ebe0dd36",
+    "media_downloaded": false
+  },
+  "ffprobe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "av1",
+        "codec_long_name": "Alliance for Open Media AV1",
+        "profile": "Main",
+        "codec_type": "video",
+        "codec_tag_string": "av01",
+        "codec_tag": "0x31307661",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1080,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 0,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 8,
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_transfer": "bt709",
+        "color_primaries": "bt709",
+        "refs": 1,
+        "id": "0x1",
+        "r_frame_rate": "25/1",
+        "avg_frame_rate": "25/1",
+        "time_base": "1/12800",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 6644224,
+        "duration": "519.080000",
+        "bit_rate": "1542683",
+        "nb_frames": "12977",
+        "extradata_size": 20,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "ISO Media file produced by Google Inc.",
+          "vendor_id": "[0][0][0][0]"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "44100",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/44100",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 22895616,
+        "duration": "519.174966",
+        "bit_rate": "127999",
+        "nb_frames": "22359",
+        "extradata_size": 16,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "ISO Media file produced by Google Inc.",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/workspace/scratch/zheng-source/22pyy0S0S3s.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "519.174966",
+      "size": "108737434",
+      "bit_rate": "1675542",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomav01iso2mp41",
+        "encoder": "Lavf63.8.100"
+      }
+    }
+  },
+  "match_identity": {
+    "tour": "WTA1000",
+    "event": "China Open",
+    "city": "Beijing",
+    "round": "Semifinal",
+    "date": "2026-10-10",
+    "players": [
+      "Zheng Qinwen",
+      "Elise Mertens"
+    ],
+    "winner": "Zheng Qinwen",
+    "score": "7-5 6-2",
+    "verified_by": [
+      "official WTA raw page metadata",
+      "actual original source names/scoreboard and final summary"
+    ]
+  },
+  "source_content_regions": {
+    "match_action": [
+      0,
+      257.16
+    ],
+    "celebration_handshake_wave": [
+      257.16,
+      290.84
+    ],
+    "end_summary_graphic": [
+      290.84,
+      299.6
+    ],
+    "on_court_interview": [
+      299.6,
+      509.08
+    ],
+    "silent_outro": [
+      509.08,
+      519.174966
+    ],
+    "note": "Interview scene starts299.60; actual ASR interview question301.47. None of interview/outro retained as match action."
+  },
+  "coarse_contact_sheets": {
+    "path": "/workspace/scratch/zheng-source/contact",
+    "files": [
+      "full_01.jpg",
+      "full_02.jpg",
+      "full_03.jpg",
+      "full_04.jpg"
+    ],
+    "method": "ffmpeg fps1/5 coarse overview",
+    "timestamp_caveat": "FPS output labels nominal sample bins; selected input frame may be up to2.5s after label. Never used as precise cut evidence."
+  },
+  "native_exact_seek_contacts": {
+    "full_source_path": "/workspace/scratch/zheng-source/full-native",
+    "probe_match_path": "output/2026-10-10/reel/zheng-mertens-beijing-2026-sf",
+    "fine_path": "/workspace/scratch/zheng-source/fine",
+    "method": "Unmodified build_match_reel.contact_sheet; individual exact source seeks with source timestamps burned into frame; display rounds to0.1s.",
+    "full_source_sheets": [
+      {
+        "file": "/workspace/scratch/zheng-source/full-native/contact_00.jpg",
+        "sha256": "19da3d2ecd4c23c39753f4bc829a1fa7c7c745533bae3ec3d4973ae6e6666ace"
+      },
+      {
+        "file": "/workspace/scratch/zheng-source/full-native/contact_01.jpg",
+        "sha256": "bfc0918986e037b18c1ab1106a09d47c7dfd2fc9c87bf5aedbe56a38adb0e120"
+      }
+    ],
+    "full_source_every_s": 10
+  },
+  "scoreboard": {
+    "profile": "wta",
+    "box": [
+      88,
+      828,
+      560,
+      986
+    ],
+    "native_probe_path": "output/2026-10-11/reel/zheng-mertens-beijing-2026-sf/probe.json",
+    "scan_range": [
+      0,
+      290.8
+    ],
+    "fps": 5,
+    "frames": 1454,
+    "present": 1108,
+    "unresolved": 0,
+    "coverage_scope": "Only declared match/celebration range; no complete519-second scan pass claim.",
+    "native_geometry_path": "data/evidence/zheng-mertens-beijing-2026-sf/scoreboard-geometry.json",
+    "header_runs_path": "data/evidence/zheng-mertens-beijing-2026-sf/scoreboard-header-runs.json",
+    "summary_error_at": 293.4,
+    "error_preserved": true,
+    "native_probe_original_run_path": "output/2026-10-10/reel/zheng-mertens-beijing-2026-sf/probe.json",
+    "native_probe_sha256": "c9f3f4b5109044b71a3c246021e14abb71f3a8567d33ec7e5f79372fae474e1b"
+  },
+  "statistics_graphic_search": {
+    "scope": "Full original519.175source native contacts + detailed match/celebration",
+    "result": "No full Winners/UnforcedErrors comparison card found; end graphic is finalscore only. Firstset chairs reveal some stadium-screen service percentages but do not establish Mertens W/UE.",
+    "claim_limit": "Do not infer Mertens W/UE from Zheng errors.",
+    "status": "No full Winners/UE comparison found in downloaded source; Mertens values remain unavailable, never zero-filled."
+  },
+  "native_probe_copy": {
+    "source": "output/2026-10-10/reel/zheng-mertens-beijing-2026-sf/probe.json",
+    "destination": "output/2026-10-11/reel/zheng-mertens-beijing-2026-sf/probe.json",
+    "method": "byte-identical metadata copy only; no media copied",
+    "sha256": "c9f3f4b5109044b71a3c246021e14abb71f3a8567d33ec7e5f79372fae474e1b"
+  }
+}

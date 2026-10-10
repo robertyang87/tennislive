@@ -1,0 +1,57 @@
+{
+  "a": {
+    "aces": 8,
+    "df": 2,
+    "winners": 32,
+    "ue": 16,
+    "first_in": 26,
+    "first_won": 23,
+    "second_total": 29,
+    "second_won": 17,
+    "bp_conv": 4,
+    "bp_chances": 6,
+    "pts_won": 70,
+    "pts_total": 119,
+    "first_total": 55
+  },
+  "b": {
+    "aces": 0,
+    "df": 2,
+    "winners": 9,
+    "ue": 12,
+    "first_in": 46,
+    "first_won": 28,
+    "second_total": 18,
+    "second_won": 6,
+    "bp_conv": 1,
+    "bp_chances": 2,
+    "pts_won": 49,
+    "pts_total": 119,
+    "first_total": 64
+  },
+  "tour": "wta",
+  "_winners_ue_evidence": {
+    "provider": "official_wta",
+    "method": "api",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS002/advanced-stats",
+    "source_path": "data/evidence/zheng-mertens-beijing-2026-sf/wta-advanced-stats.json",
+    "source_sha256": "f475ced86cdb83798680d040748a87927a20cf5872cec1edae7613b6f50b41d8",
+    "period": "MatchTotal",
+    "match_date": "2026-10-10",
+    "checked_at": "2026-10-10T16:20:15.039180+00:00",
+    "matchup": [
+      "郑钦文",
+      "梅尔滕斯"
+    ],
+    "winner_result": "7-5 6-2",
+    "winners": [
+      32,
+      9
+    ],
+    "ue": [
+      16,
+      12
+    ]
+  },
+  "_source": "WTA official standardstats plus advanced-stats, corroborated Flashscore vebJGCxJ; original raw API preserved in same evidence directory."
+}

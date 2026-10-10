@@ -1,0 +1,63 @@
+{
+  "source_sha256": "a060dfa0f7be58e43c094df7f5a3d3b05cedd56e679c303ff3318a2ba1fd4cb2",
+  "method": "actual original source native probe_board.scan_plan + native wta_scoreboard.frame_geometry",
+  "fps": 5,
+  "nominal_timing_uncertainty_s": 0.1,
+  "origin": [
+    88,
+    828
+  ],
+  "header_runs": [
+    {
+      "at": 155.8,
+      "end": 168.8,
+      "samples": 65,
+      "header_top_source": 830,
+      "body_top_source": 872
+    },
+    {
+      "at": 184.8,
+      "end": 205.8,
+      "samples": 105,
+      "header_top_source": 831,
+      "body_top_source": 872
+    },
+    {
+      "at": 244.4,
+      "end": 258.6,
+      "samples": 71,
+      "header_top_source": 831,
+      "body_top_source": 872
+    }
+  ],
+  "normal_main_body": {
+    "source_top_steady": 872,
+    "source_bottom_steady": 983
+  },
+  "preserved_errors": {
+    "auto_scan": {
+      "version": 1,
+      "error": "WTA board present but native body height cannot be measured"
+    },
+    "custom_293_4": {
+      "profile": "wta",
+      "sample_index": 1467,
+      "fps": 5,
+      "nominal_sample_time": 293.4,
+      "source": "22pyy0S0S3s",
+      "box": [
+        88,
+        828,
+        560,
+        986
+      ],
+      "band_shape": [
+        158,
+        760,
+        3
+      ],
+      "error": "WTA board present but native right boundary cannot be measured",
+      "method": "native scan_plan actual source; genuine first exception retained"
+    }
+  }
+}

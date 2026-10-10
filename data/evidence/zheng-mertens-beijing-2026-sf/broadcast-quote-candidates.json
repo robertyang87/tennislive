@@ -1,0 +1,211 @@
+{
+  "schema": "tennislive.checked-broadcast-candidates.v1",
+  "source_url": "https://www.youtube.com/watch?v=22pyy0S0S3s",
+  "source_sha256": "a060dfa0f7be58e43c094df7f5a3d3b05cedd56e679c303ff3318a2ba1fd4cb2",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex dedicated source audio agent; actual local faster-whisper small.en + medium.en, key moments large-v3/base.en no-VAD; no manual-hearing claim",
+  "reviewed_at": "2026-10-10T16:37:59.857972+00:00",
+  "human_listening_claimed": false,
+  "status": "candidate_table_pending_final_selected_windows",
+  "normalization_notes": [
+    "Player proper names normalized against official WTA title/score identity: Zheng Qinwen, Elise Mertens; raw phonetic ASR variants retained unchanged in originals.",
+    "Punctuation/case/tennis mishit spelling editorial normalization only; no added English claims.",
+    "Long-context ASR drags leading function words across silence; no-VAD base.en corroborates first-set last sentence onset166.66; large-v3 establishes closing clause end184.30. Curated timing conservatively uses166.60 and184.60; excludes next unclear comment at184.88.",
+    "Narrow no-VAD base.en, medium.en, large-v3 agree written first connector And; full VAD medium.en wrote An. Preserve agreed no-VAD form unchanged rather than grammar-rewrite the broadcaster.",
+    "Narrow no-VAD base.en and medium.en find the second-set reaction onset201.54/202.08; VAD full-match202.44 is too late. Conservative cue201.54 and preceding TTS end201.40 preserve the low-strength first word.",
+    "Final winning point is in Mertens serve game. Commentary239.32–244.38 is previous5-2 lead, NOT the final match-point call. Cold open must retain full utterance255.82 onwards or begin260.60 at next sentence."
+  ],
+  "utterances": [
+    {
+      "start": 81.06,
+      "end": 83.68,
+      "en": "Oh, well, it's not going to be a fair fight.",
+      "zh": "噢，这可就难招架了。"
+    },
+    {
+      "start": 83.68,
+      "end": 87.3,
+      "en": "If Zheng's able to use that sort of finesse",
+      "zh": "如果郑钦文能拿出这种细腻手感，"
+    },
+    {
+      "start": 87.3,
+      "end": 88.54,
+      "en": "to go along with her power.",
+      "zh": "再配上她的力量。"
+    },
+    {
+      "start": 148.78,
+      "end": 150.42,
+      "en": "She gets it done.",
+      "zh": "她拿下了这一分。"
+    },
+    {
+      "start": 150.42,
+      "end": 154.24,
+      "en": "Winners number 12, 13, 14 and 15",
+      "zh": "第十二至十五记制胜分，"
+    },
+    {
+      "start": 154.24,
+      "end": 155.86,
+      "en": "in this opening set.",
+      "zh": "都是在这第一盘里。"
+    },
+    {
+      "start": 166.6,
+      "end": 168.48,
+      "en": "And the mishit from Mertens,",
+      "zh": "梅尔滕斯这一拍打偏了，"
+    },
+    {
+      "start": 168.48,
+      "end": 171.8,
+      "en": "and Zheng Qinwen delights the Beijing faithful.",
+      "zh": "郑钦文让北京球迷欢呼。"
+    },
+    {
+      "start": 172.3,
+      "end": 174.3,
+      "en": "It looked like it was going to be a beatdown",
+      "zh": "原以为会是一边倒，"
+    },
+    {
+      "start": 174.3,
+      "end": 176.5,
+      "en": "in the opening 15, 16 minutes.",
+      "zh": "在开头十五六分钟的时候。"
+    },
+    {
+      "start": 176.5,
+      "end": 178.18,
+      "en": "It turned out to be anything but.",
+      "zh": "结果却完全不是这样。"
+    },
+    {
+      "start": 178.18,
+      "end": 181.46,
+      "en": "But in the end, the Queen comes through in her court",
+      "zh": "最终，女王在主场闯过这一关，"
+    },
+    {
+      "start": 181.46,
+      "end": 184.6,
+      "en": "and has a one-set lead in semifinal number two.",
+      "zh": "在第二场半决赛中先赢一盘。"
+    },
+    {
+      "start": 201.54,
+      "end": 205.6,
+      "en": "And even more dominant start to the set than it was in the first.",
+      "zh": "这一盘的开局比第一盘更强势。"
+    },
+    {
+      "start": 236.0,
+      "end": 239.32,
+      "en": "Oh, that'll seal the deal on a 5-2 lead.",
+      "zh": "这一拍锁定了五比二的领先。"
+    },
+    {
+      "start": 239.32,
+      "end": 244.38,
+      "en": "And Zheng Qinwen wakes up the crowd once again in Beijing.",
+      "zh": "郑钦文又一次点燃了北京的观众。"
+    },
+    {
+      "start": 255.82,
+      "end": 259.96,
+      "en": "And in the end, Elise Mertens ran out of gas.",
+      "zh": "到了最后，梅尔滕斯有些后劲不足了。"
+    },
+    {
+      "start": 260.6,
+      "end": 263.48,
+      "en": "Zheng Qinwen never took her foot off it.",
+      "zh": "郑钦文始终没有松劲。"
+    },
+    {
+      "start": 264.28,
+      "end": 268.22,
+      "en": "And China has a finalist at the China Open for the first time.",
+      "zh": "中国球员首次闯进中网女单决赛。"
+    },
+    {
+      "start": 271.64,
+      "end": 275.81,
+      "en": "Another quality win for Zheng Qinwen as she topples a top-20 opponent.",
+      "zh": "又一场胜利，她击败世界前二十。"
+    },
+    {
+      "start": 275.81,
+      "end": 281.27,
+      "en": "And she is to the last day of this WTA 1000 event in the Chinese capital.",
+      "zh": "她将登上北京一千赛的决赛舞台。"
+    }
+  ],
+  "uncertain_unused": [
+    {
+      "start": 184.88,
+      "end": 186.4,
+      "en_models": [
+        "And there's scrutiny again.",
+        "And there's Kritney again.",
+        "Undescript me again."
+      ],
+      "reason": "Word/name unresolved; exclude whole interval from all selected source windows."
+    },
+    {
+      "start": 103.6,
+      "end": 109.6,
+      "reason": "English/body-language/spin joke and last word differs across models; optional resolve if selected."
+    },
+    {
+      "start": 119.1,
+      "end": 126.5,
+      "reason": "Return-winner qualifier and concluding dynamic-pop clause still need narrow rerun if selected."
+    },
+    {
+      "start": 215.49,
+      "end": 225.73,
+      "reason": "Coach name not independently confirmed; optional resolve if selected."
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "data/evidence/zheng-mertens-beijing-2026-sf/asr-small-en-match-and-boundary.json",
+      "sha256": "c7c6cc25268f041de88c74f786af07e3785ae11349b8387e393e777c20b2adff"
+    },
+    {
+      "path": "data/evidence/zheng-mertens-beijing-2026-sf/asr-base-en-hold-boundary.json",
+      "sha256": "5c33bad141794c9368d2685c6bd1a5afa6dd6dee0f73a6dad6e665ce6c9b4561"
+    },
+    {
+      "path": "data/evidence/zheng-mertens-beijing-2026-sf/asr-medium-en-hold-boundary.json",
+      "sha256": "52adefbef19520cbb263d9bbc64360b7ef581cc62a1256ab69b091bedb298776"
+    },
+    {
+      "path": "data/evidence/zheng-mertens-beijing-2026-sf/asr-medium-en-match-and-boundary.json",
+      "sha256": "607d8faf182f64df78c29c8881e5f958df94080d58a5a2f3b7cfbf6cbbb3e862"
+    },
+    {
+      "path": "data/evidence/zheng-mertens-beijing-2026-sf/asr-base-en-set-2-boundary.json",
+      "sha256": "96943f2b63899b9f1b32b3d58052f49e677da72a7cca2ee61961997a0a628e90"
+    },
+    {
+      "path": "data/evidence/zheng-mertens-beijing-2026-sf/asr-large-v3-set-2-boundary.json",
+      "sha256": "8351dbf7e0e1e5a6fd80f52fea221ef1bef9580be4ae3539792f273e91858641"
+    },
+    {
+      "path": "data/evidence/zheng-mertens-beijing-2026-sf/asr-medium-en-set-2-boundary.json",
+      "sha256": "22457923a7fac98b5bb0a0f6a240b612f714349b8577b2adf0973fc6755a8855"
+    },
+    {
+      "path": "data/evidence/zheng-mertens-beijing-2026-sf/asr-large-v3-keymoments.json",
+      "sha256": "b09fe1af904f6e9637da24eb3e14929973de5e999ccae777ef1749a0397ef818"
+    },
+    {
+      "path": "data/evidence/zheng-mertens-beijing-2026-sf/asr-base-en-boundary-context.json",
+      "sha256": "8eedc454c2b8f6ac9dcc550dfd7d2b2d45c7859db6b14ba6daadb38e30f45cf8"
+    }
+  ]
+}
