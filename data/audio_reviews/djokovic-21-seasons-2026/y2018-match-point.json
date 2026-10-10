@@ -1,0 +1,20 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=6Rnp8AtYIow",
+  "source_path": "/workspace/video-review/dj21/raw/y2018.mp4",
+  "source_sha256": "acc4e7b506f2d87886f4ba5c56bd875d08f7d96d5ecbe18e80e6e07557af3094",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T02:56:42.374767+00:00",
+  "reviewed_from": 240.6,
+  "reviewed_to": 253.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "冠军点和终场比分条。原片没有音轨。"
+  ],
+  "no_foreground_english_reason": "温网官方这条集锦下到的文件没有音轨，YouTube 音轨被登录墙拦住。垫的是 80Hz、约 -49dB 的正弦，用来避开整秒数字静音，不是现场声。small 和 medium 在 240–253 秒都返回空。"
+}

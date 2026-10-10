@@ -1,0 +1,26 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=4c6J0LHp-7E",
+  "source_path": "/workspace/video-review/dj21/raw/y2026sh.mp4",
+  "source_sha256": "efd34260d92ceaf03748bb3125d195d9fc8f19cfb174c302b81d8caacb0de06d",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T00:03:19.536769+00:00",
+  "reviewed_from": 97.85,
+  "reviewed_to": 100.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 98.0,
+      "end": 100.62,
+      "en": "The first time in nine meetings.",
+      "zh": "九次交手，这是第一次。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "small 98.00–100.54，medium 98.08–100.62。前一句 91.86–97.44 两套对不上，不在窗口里。"
+  ]
+}

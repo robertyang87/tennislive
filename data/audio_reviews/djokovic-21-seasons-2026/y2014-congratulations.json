@@ -1,0 +1,26 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=59MAVH6OeKw",
+  "source_path": "/workspace/video-review/dj21/raw/y2014iw.mp4",
+  "source_sha256": "bbdd45145af85101919c61768a4763a60f295d3129595869c5c65ca29ca3e9b8",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T00:03:19.536769+00:00",
+  "reviewed_from": 20.3,
+  "reviewed_to": 24.15,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 20.42,
+      "end": 24.08,
+      "en": "Congratulations to Djokovic as he returns to the winner's circle once more.",
+      "zh": "恭喜德约科维奇，他又拿到冠军。"
+    }
+  ],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "small 20.42–24.06，medium 20.58–24.08，是同一句。24.40 起讲迈阿密，不在窗口里。"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4077678/montreal-2007-djokovic-federer-extended-highlights",
+  "source_path": "/workspace/video-review/dj21/raw/y2007.mp4",
+  "source_sha256": "28deaaad71c8425822ec7c5146b9ff00fb47ebb54f3aa03b8e365522ad8bcb89",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T00:03:19.536769+00:00",
+  "reviewed_from": 24.0,
+  "reviewed_to": 35.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "冠军点还在打。"
+  ],
+  "no_foreground_english_reason": "两套转写一致的下一句从 35.49 起，窗口收到 35.10。这一段里没有英文。"
+}

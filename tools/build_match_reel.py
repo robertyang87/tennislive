@@ -6553,6 +6553,32 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # @hsieh_n_wong 的转播片段（status 2097070765837541743，X CDN 直链），
     # `yt-dlp -J` 最高一档就是 http-2176 1298×720。
     "https://video.twimg.com/amplify_video/2097070560262119424/vid/avc1/1298x720/n05xE1nleDY12yvP.mp4?tag=14": 720,
+    # 德约连续 21 个赛季（djokovic-21-seasons-2026）：账号所有者 2026-10-09
+    # 先允许「没有 1080p 时可以用官方 720p」，同日又说大文件不要硬下，
+    # 官方短集锦里找不到小体积 1080 时再用官方 720p。下面三条都是官方频道，
+    # 本片实际核过的文件是 1280×720。
+    # 澳网官方 2012 决赛集锦（对纳达尔，记分牌五盘）。已下到的成片是 720p。
+    "https://www.youtube.com/watch?v=-kaaXz4IgrA": 720,
+    # ATP 官方 2017 多哈决赛（奖杯、冠军介绍）。已下到的成片是 720p。
+    "https://www.youtube.com/watch?v=_qFsD0_Cans": 720,
+    # 温网官方 2022 决赛集锦（对克耶高斯）。这一条没有 1080，最高就是 720p。
+    "https://www.youtube.com/watch?v=RO52Y8SOIUU": 720,
+    # 同一条片子补上的官方 720p 短片。账号所有者 2026-10-09：没有小体积 1080
+    # 时用官方 720p。下面六条本片核过的文件都是 1280×720。
+    # 2010 北京决赛，Tennis TV 官方短片（对费雷尔）。
+    "https://www.youtube.com/watch?v=i1LtteR8jd0": 720,
+    # 2011 澳网决赛，澳网官方（对穆雷）。
+    "https://www.youtube.com/watch?v=Ke_m8cYKb04": 720,
+    # 2013 澳网决赛，澳网官方（对穆雷）。
+    "https://www.youtube.com/watch?v=dOuCulN1aqg": 720,
+    # 2014 印第安维尔斯决赛，BNP Paribas Open 官方（对费德勒）。
+    "https://www.youtube.com/watch?v=59MAVH6OeKw": 720,
+    # 2019 温网决赛，温网官方（对费德勒）。
+    "https://www.youtube.com/watch?v=mnLdAeSXZv0": 720,
+    # 2020 澳网决赛，澳网官方（对蒂姆）。
+    "https://www.youtube.com/watch?v=0FsIdkTFLms": 720,
+    # 2018 温网决赛，温网官方（对安德森）。这条下到的是 720p 画面，音轨被登录墙拦住。
+    "https://www.youtube.com/watch?v=6Rnp8AtYIow": 720,
 }
 
 

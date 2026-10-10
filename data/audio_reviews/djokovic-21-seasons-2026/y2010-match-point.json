@@ -1,0 +1,20 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=i1LtteR8jd0",
+  "source_path": "/workspace/video-review/dj21/raw/y2010bj.mp4",
+  "source_sha256": "4d08237ed562d2a1d1ec77075429e088206f3c1003d79f12804668771e511d40",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T00:03:19.536769+00:00",
+  "reviewed_from": 0.6,
+  "reviewed_to": 12.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "赛点。"
+  ],
+  "no_foreground_english_reason": "small 只有 2.49–3.07 的一声 Ugh，medium 这一段没有字。不成句，不记成前景英文。成句英文从 30.82 起，不在窗口里。"
+}

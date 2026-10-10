@@ -1,0 +1,20 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=BO9S2WB8I64",
+  "source_path": "/workspace/video-review/dj21/raw/y2023.mp4",
+  "source_sha256": "3e77b8e60f04ed169644292fb0f6ce97e570881cb690aa2156e623421a424fde",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-09T23:09:44.726367+00:00",
+  "reviewed_from": 478.4,
+  "reviewed_to": 495.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。base 在人群声上的套话幻听不采用。",
+  "review_notes": [
+    "奖杯，不点名对手，不念盘分。"
+  ],
+  "no_foreground_english_reason": "medium 在 478.0–495.4 没有英文语句。base 的解说收到 472.64，在窗口 478.40 之前。"
+}

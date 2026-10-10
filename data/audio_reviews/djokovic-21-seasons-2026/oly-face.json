@@ -1,0 +1,20 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=I-BRgX4oceo",
+  "source_path": "/workspace/video-review/dj21/raw/y2024.mp4",
+  "source_sha256": "c6c330508bd07cbf9a333bce3398420b76db966a6d492e6818edcddc9712b08b",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T00:03:19.536769+00:00",
+  "reviewed_from": 163.2,
+  "reviewed_to": 169.45,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "双手捂脸。不收 Golden Slam。"
+  ],
+  "no_foreground_english_reason": "small 与 medium 在 163.0–169.7 秒都没有字。medium 的 Golden Slam 收到 162.90，下一句从 169.85 起。"
+}

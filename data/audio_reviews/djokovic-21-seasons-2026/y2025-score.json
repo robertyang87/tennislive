@@ -1,0 +1,20 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=zqAhgZ3-4QY",
+  "source_path": "/workspace/video-review/dj21/raw/y2025.mp4",
+  "source_sha256": "82223c68f31241d869558a1b38a3b99ffbfb19c614d6f48cb643a08892d8be42",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T00:03:19.536769+00:00",
+  "reviewed_from": 445.5,
+  "reviewed_to": 454.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "比分写在旁白里。"
+  ],
+  "no_foreground_english_reason": "small 与 medium 在 444–454.4 秒都没有字。下一句从 454.54 起。"
+}
