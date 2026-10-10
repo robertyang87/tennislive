@@ -1,0 +1,68 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 4.642,
+  "cover_narrated": true,
+  "outro_seconds": 3.491,
+  "layout": "full",
+  "segments_seconds": 338.95,
+  "topbar": null,
+  "film_seconds": 347.08,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+18%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 14.568,
+    "2": 10.656,
+    "3": 3.84,
+    "4": 10.128,
+    "6": 5.304,
+    "7": 6.216,
+    "8": 5.952,
+    "9": 11.88,
+    "10": 10.656,
+    "11": 11.4,
+    "12": 4.152,
+    "13": 10.536,
+    "14": 6.912,
+    "16": 9.72,
+    "17": 6.432,
+    "19": 15.936,
+    "20": 9.528,
+    "21": 17.688,
+    "22": 13.032,
+    "23": 8.664,
+    "24": 9.216,
+    "25": 10.656,
+    "26": 3.624,
+    "28": 5.496,
+    "29": 8.52,
+    "32": 22.824
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "error",
+      "report_only": true,
+      "error": "ModuleNotFoundError: No module named 'cv2'",
+      "warnings": [
+        "分段画面认人没跑完：ModuleNotFoundError: No module named 'cv2'"
+      ]
+    }
+  },
+  "render_inputs_sha256": "d1c41be989432dbe809b2e1f7e7777c75e754b86efbdc36adac923b7a6749c25",
+  "film_sha256": "876a9a01e17365985b39faea5b411c592b40333261d95920dca644b63fc63b23",
+  "film_bytes": 226111577,
+  "qc_attestation_sha256": "2f76fb40450354732b2b894e287ddb544c9f190d45756551104d5cc4376d372b",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-djokovic-21-seasons-2026-v2/djokovic-21-seasons-2026-v2.mp4",
+  "video_bytes": 226111577,
+  "reattests": [
+    {
+      "at": "2026-10-10T09:08:49Z",
+      "spec_sha256": "4ba56e6d6e363269ffcbea852f84c762d59abd2eb9bb362f081f089dc0c08468",
+      "run": "local-reattest-after-owner-auth-2026-10-10"
+    }
+  ]
+}
