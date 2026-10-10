@@ -442,7 +442,9 @@ def _e2e_setup(tmp_path, monkeypatch, capsys):
                         lambda path: lengths[int(Path(path).stem.split("_")[1])] - 0.4)
     monkeypatch.setattr(reel, "_word_splits", lambda *a: [])
     monkeypatch.setattr(reel, "prosody_report", lambda *a: [])
-    monkeypatch.setattr(reel, "synth_outro", lambda outdir, v, r: (Path(outdir) / "o.mp3", []))
+    # 封面/片尾音高是第 4 个参数（默认 +0Hz）。桩必须接住，否则 --check-narration
+    # 在真 main() 里 TypeError，CI 整趟红在还没碰到 TTS 的地方。
+    monkeypatch.setattr(reel, "synth_outro", lambda outdir, v, r, pitch="+0Hz": (Path(outdir) / "o.mp3", []))
     monkeypatch.setattr(reel, "outro_length", lambda path: 3.0)
 
     def run(*flags: str) -> tuple[int, str]:

@@ -5589,7 +5589,8 @@ def tts_one(text: str, path: Path, voice: str, rate: str,
                         lead_pause, synth=_tts_one_uncached, error=ReelError)
 
 
-def synth_cover(spec: dict, outdir: Path, voice: str, rate: str
+def synth_cover(spec: dict, outdir: Path, voice: str, rate: str,
+                pitch: str = "+0Hz",
                 ) -> tuple[Path | None, list[dict]]:
     """封面那句旁白。没写就返回 `(None, [])`——封面退回定长静止。
 
@@ -5610,11 +5611,14 @@ def synth_cover(spec: dict, outdir: Path, voice: str, rate: str
             "回合——停久了会被当成图片而不是视频。封面跟着配音走是「网球有故事」"
             "那条线的做法（那个栏目讲一个人，念的就是海报上那句钩子）。\n"
             "把 cover.narration 删掉；那句话要留，就放进第一段的 narration。")
+    if not _PITCH_RE.match(pitch):
+        raise ReelError(f"封面音高要写成 `+10Hz` / `-6Hz`，现在是 `{pitch}`")
     path = outdir / "voice_cover.mp3"
     with stage("封面配音"):
         # ⚠️ 喂 `speakable()` 之后那份，不是原文——合成器念的是它（〇→零、
         # 挑→选、硬地→硬帝、5-1→5比1）。屏幕上那份不动，字数 1:1。
-        marks = tts_one(speakable(text), path, voice, rate)
+        # pitch 默认 +0Hz。正文各段的 voice.pitch 盖不到封面，要一起抬就传进来。
+        marks = tts_one(speakable(text), path, voice, rate, pitch)
     return path, marks
 
 
@@ -5639,15 +5643,18 @@ def cover_length(voice_path: Path | None) -> float:
     return length
 
 
-def synth_outro(outdir: Path, voice: str, rate: str) -> tuple[Path, list[dict]]:
+def synth_outro(outdir: Path, voice: str, rate: str,
+                pitch: str = "+0Hz") -> tuple[Path, list[dict]]:
     """片尾那句口播。**文本是常量，不从 spec 读**——见 `OUTRO_NARRATION`。
 
     和封面那句一样要**排在渲页面之前**：片尾停多久由它的长度决定
     （`outro_length`），不能等到 `synthesize()` 那一步。
     """
+    if not _PITCH_RE.match(pitch):
+        raise ReelError(f"片尾音高要写成 `+10Hz` / `-6Hz`，现在是 `{pitch}`")
     path = outdir / "voice_outro.mp3"
     with stage("片尾配音"):
-        marks = tts_one(speakable(OUTRO_NARRATION), path, voice, rate)
+        marks = tts_one(speakable(OUTRO_NARRATION), path, voice, rate, pitch)
     return path, marks
 
 
@@ -9713,6 +9720,7 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
 
 
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
+           pitch: str = "+0Hz",
            source_override: Path | None = None,
            cover_only: bool = False) -> Path:
     # Actual new video renders enforce the current owner policy. Historical
@@ -9820,14 +9828,14 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         print(f"[贴图] 这个栏目画常驻角标，顶角的 inset 一律让到 y ≥ {_INSET_TOP_CLEAR_Y}")
     # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
     narrated_audio_mode.preload_tts(spec, voice=voice, rate=rate)
-    cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate)
+    cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate, pitch)
     cover_secs = cover_length(cover_voice)
     # 默认保留品牌片尾；但当比赛本身已经以双方握手形成完整收束时，spec 可用
     # `"outro": false` 明确要求握手后立即结束。这个开关必须同时控制画面、口播、
     # 长度账和最后一段的溶解底料，不能只跳过其中一层。
     outro_enabled = spec.get("outro", True) is not False
     if outro_enabled:
-        outro_voice, outro_marks = synth_outro(outdir, voice, rate)
+        outro_voice, outro_marks = synth_outro(outdir, voice, rate, pitch)
         outro_secs = outro_length(outro_voice)
     else:
         outro_voice, outro_marks = None, []
@@ -11573,6 +11581,11 @@ def main() -> int:
     # 云见的场景。判据在 `test_默认音色是云见`（现在两处一起钉）。
     r.add_argument("--voice", default="zh-CN-YunjianNeural")
     r.add_argument("--rate", default="+6%")
+    # 封面和片尾不读 segments[].voice.pitch。默认 +0Hz，其他期不传就和原来一样。
+    # 某一期要跟正文一起抬（德约 21 赛季 v2 试听 B 是 +10Hz），渲染时显式传 --pitch。
+    r.add_argument("--pitch", default="+0Hz",
+                   help="封面和片尾的音高，形如 +10Hz。默认 +0Hz。"
+                        "正文各段仍用 segments[].voice.pitch")
     r.add_argument("--dry-run", action="store_true",
                    help="只校验 spec 的形状，不下载不渲染，秒级返回")
     r.add_argument("--check-narration", action="store_true",
@@ -11795,7 +11808,8 @@ def main() -> int:
             # 撞见：`--check-narration` 只 `synthesize()` 了编号的那些段，从没碰过
             # `synth_outro`/`outro_length`。同一类风险（TTS 尾音渐弱被算错）以后
             # 再出现，本该在这 1 分半的本地路里就看见，不该再等一趟 7 分钟的 render。
-            outro_voice, _outro_marks = synth_outro(Path(tmp), args.voice, args.rate)
+            outro_voice, _outro_marks = synth_outro(
+                Path(tmp), args.voice, args.rate, args.pitch)
             outro_secs = outro_length(outro_voice)
             # **真语音也喂给数字静音重放**（2026-09-28）：`--dry-run` 只有离线估，旁白
             # 尾巴落在点估和上包络之间的那一截判不了（渲后静音红 16 趟里 43 个死秒在旁白
@@ -11804,11 +11818,13 @@ def main() -> int:
             # 就是这条命令（那一步先按 URL 把 probe.json 落盘）。render 在 TTS 之后
             # 跑的是同一套（`_render_silence_gate`），段序号口径写在一处。
             measured = measured_speech_ends(voices, spoken)
-            cover_path, _cover_marks = synth_cover(spec, Path(tmp), args.voice, args.rate)
+            cover_path, _cover_marks = synth_cover(
+                spec, Path(tmp), args.voice, args.rate, args.pitch)
             cover_secs = cover_length(cover_path) if cover_path is not None else None
         total = sum(s.length for s in segments)
         print(f"[查旁白] {len(spoken)} 段有旁白，画面共 {total:.1f}s"
-              f"（音色 {args.voice} {args.rate}），片尾 {outro_secs:.2f}s")
+              f"（音色 {args.voice} {args.rate}，封面片尾音高 {args.pitch}），"
+              f"片尾 {outro_secs:.2f}s")
         print(f"[查旁白] 真 TTS 时长（{tts_backend}）记进 {record_path}——和 spec 一起提交，"
               "`--dry-run` 认这份账（改了哪段旁白，哪段就要重量）")
         for index, secs in sorted(spoken.items()):
@@ -12099,7 +12115,7 @@ def main() -> int:
     outcome, error = "success", None
     try:
         film = render(spec, outdir,
-                      voice=args.voice, rate=args.rate,
+                      voice=args.voice, rate=args.rate, pitch=args.pitch,
                       source_override=Path(args.source) if args.source else None,
                       cover_only=args.cover_only)
         if not args.cover_only:
