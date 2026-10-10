@@ -1,0 +1,27 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-10T07:29:34Z",
+  "slug": "djokovic-21-seasons-2026",
+  "spec_sha256": "26a9c915ad96e257757e408beef42beb39adedf3e9b9e7000eed8b734bd90f6a",
+  "ass_sha256": "5fb8a51e4150bfb9272ac24ac524904cb7d651ce1e1f1a4400f55c240a4e78cc",
+  "film_sha256": "2c7ab43f0c303547e29908a06cc48da2de90c7ebd748e3f8ffccdf4cdbfb524d",
+  "film_bytes": 225266047,
+  "checks": {
+    "canvas": [
+      1080,
+      1440
+    ],
+    "silence_floor_db": -60.0,
+    "ending_payoff": "pass",
+    "audio_tail_max_s": 1.0
+  },
+  "render_inputs_sha256": "8ef432733fcf3a60743438b151b914c7bf8c8cedcdc0ccc13ed50fe16b22c23d",
+  "reattest": {
+    "previous_attestation_sha256": "051dff05ed695789d52c63a70c3315a0fe70a27fc325a8c2ae4a3ae994dd7374",
+    "previous_spec_sha256": "32de50d1164fc689461efb7340a5e836ccc30585af3dc3ce473499e08c8a086d",
+    "render_spec_sha256": "32de50d1164fc689461efb7340a5e836ccc30585af3dc3ce473499e08c8a086d",
+    "projection_sha256": "31adc095729a8333fbbf8da31385ba0571e4f2dc44a91b833d463853c45b0ab0",
+    "film_verified": "release-sha256",
+    "run": "local-reattest-after-owner-auth-2026-10-10"
+  }
+}
