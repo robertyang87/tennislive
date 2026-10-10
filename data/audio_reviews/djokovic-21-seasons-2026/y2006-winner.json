@@ -1,0 +1,20 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/3791365/amersfoort-2006-final-djokovic-massu#9680-9766",
+  "source_path": "/workspace/video-review/dj21/raw/y2006b.mp4",
+  "source_sha256": "68fc8a42ed7c0a84e95a58a5f5b238e0e70814dc09bb43620ba58ce6d815c507",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T02:56:42.374767+00:00",
+  "reviewed_from": 76.2,
+  "reviewed_to": 81.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "颁奖队列接到 Winner 2006 Dutch Open。不配字幕。"
+  ],
+  "no_foreground_english_reason": "small 和 medium 在 74–87 秒里第一句都从 81.54 起，而且两句片尾套话对不上。窗口收到 81.3，这一段里两套转写都没有字。"
+}

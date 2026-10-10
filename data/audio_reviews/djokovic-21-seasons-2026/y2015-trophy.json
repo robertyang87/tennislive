@@ -1,0 +1,20 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4170812/when-novak-djokovic-played-roger-federer-in-the-2015-nitto-atp-finals-final",
+  "source_path": "/workspace/video-review/dj21/raw/y2015f.mp4",
+  "source_sha256": "ea28ed6f3e9e8d0b1b13a3645ed34d10895bfb51f7326e2217fb9af89b060ab7",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T02:56:42.374767+00:00",
+  "reviewed_from": 46.2,
+  "reviewed_to": 56.9,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "亲奖杯。窗口落在两句英文中间。"
+  ],
+  "no_foreground_english_reason": "small 和 medium 都有一句约在 45.4 秒说完，下一句 medium 从 57.31、small 从 57.97 起，是他接受采访。46.2–56.9 落在这段空档里，两套转写都没有字。现场声还在。"
+}

@@ -6577,6 +6577,8 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     "https://www.youtube.com/watch?v=mnLdAeSXZv0": 720,
     # 2020 澳网决赛，澳网官方（对蒂姆）。
     "https://www.youtube.com/watch?v=0FsIdkTFLms": 720,
+    # 2018 温网决赛，温网官方（对安德森）。这条下到的是 720p 画面，音轨被登录墙拦住。
+    "https://www.youtube.com/watch?v=6Rnp8AtYIow": 720,
 }
 
 

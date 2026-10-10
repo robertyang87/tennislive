@@ -1,0 +1,20 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=K21S0hxp05M",
+  "source_path": "/workspace/video-review/dj21/raw/y2008f.mp4",
+  "source_sha256": "71cd96ab5f9e18975431747df3ea8c790df5eae4ade1d3fc6143054cb58a44a3",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T02:56:42.374767+00:00",
+  "reviewed_from": 278.4,
+  "reviewed_to": 286.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "举杯。解说切句对不上，不配字幕，原声压低。"
+  ],
+  "no_foreground_english_reason": "两套转写都从 275.12 起听到 faulted ever so slightly in that second set，后面 But with this win 和 I think Djokovic 的切句对不上。对不上的句子不写成字幕。这一段 mute 把原声压到 0.05，旁白盖在举杯上。"
+}

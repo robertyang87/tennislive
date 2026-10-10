@@ -1,0 +1,20 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4077678/montreal-2007-djokovic-federer-extended-highlights",
+  "source_path": "/workspace/video-review/dj21/raw/y2007.mp4",
+  "source_sha256": "28deaaad71c8425822ec7c5146b9ff00fb47ebb54f3aa03b8e365522ad8bcb89",
+  "method": "asr_cross_checked",
+  "reviewer": "Cursor agent source_audio: faster-whisper base/small/medium window cross-check with word timestamps, no claim of human listening",
+  "reviewed_at": "2026-10-10T02:56:42.374767+00:00",
+  "reviewed_from": 61.2,
+  "reviewed_to": 68.7,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "raw_transcript_evidence": [],
+  "normalization_note": "英文按 small 与 medium 一致的词序写出；中文为忠实意译。对不上的句子不采用。",
+  "review_notes": [
+    "奖杯举起。解说切句对不上，不配字幕，原声压低。"
+  ],
+  "no_foreground_english_reason": "56.0–68.9 秒两套转写都有英文，但切句对不上：small 把迈阿密那句收到 64.38，medium 收到 59.26，后半句 top three 和 successive matches 的边界也不一样。对不上的句子不写成字幕。这一段 mute 把原声压到 0.05，旁白盖在奖杯上。"
+}
