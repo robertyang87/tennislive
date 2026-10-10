@@ -1,0 +1,1071 @@
+{
+  "slug": "djokovic-21-seasons-2026-v2",
+  "_cover_reuse_why": "账号所有者要求这版沿用已发布成片的画面和封面，只改旁白。同一张 ATP 北京捧杯图，不换图。",
+  "date": "2026-10-09",
+  "_column": "网球有故事",
+  "title": "为什么39岁的德约连续21年都能夺冠",
+  "cx": 0.5,
+  "track": false,
+  "tts_backend": "edge",
+  "_tts_backend_why": "2026-10-10 试听 B：全片云见 zh-CN-YunjianNeural，渲染 --rate +18% --pitch +10Hz。每段旁白只写 voice.pitch +10Hz，不写 rate（段级 rate 会盖掉全局语速），不写 style 或 lead_pause（edge-tts 没有 Azure 时这两个键会失败）。关键落点单独成句。封面和片尾走 --pitch，默认仍是 +0Hz，其他期不传不受影响。见 research/djokovic-21-seasons-2026-v2/voice_trials.md。",
+  "title_card_handle_bottom": 28,
+  "_title_card_handle_bottom_why": "品牌距底 HANDLE_BOTTOM_PX=28，字卡字幕下锚 TITLE_CARD_SUBTITLE_BOTTOM=96。",
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "subject": "德约科维奇",
+    "hook": "为什么39岁的德约\n连续21年都能夺冠？",
+    "narration": "为什么三十九岁的德约，连续二十一个赛季都能夺冠？",
+    "topic": "连续21个赛季 · 德约科维奇",
+    "_narration_why": "海报用阿拉伯数字，和账号所有者定的那句一致；配音用汉字，避免合成器把 39 和 21 拆开读。口播用「赛季」，因为 ATP 写的是 consecutive seasons。",
+    "portrait": {
+      "image": "assets/reel/djokovic-21-seasons-2026/cover-atp-beijing-2026.jpg",
+      "focus": 0.58,
+      "focus_y": 0.45,
+      "zoom": 1.0,
+      "source_url": "https://www.atptour.com/-/media/images/news/2026/10/07/09/32/djokovic-beijing-2026-title.jpg",
+      "_portrait_why": "ATP 2026-10-07 北京冠军稿配图：湖边捧杯，颐和园方向的背景，双眼睁开。不是 #1199 那张路透封面。",
+      "_low_res_why": "ATP 新闻稿这张静图发布尺寸就是 1920×1080（88KB，?h=2000 与 ?mw=4000 字节不变）。铺 1080×1440 的 fill 是 0.75，要放大 1.33 倍。这是官方实拍，不是集锦抽帧。"
+    }
+  },
+  "push": {
+    "auto": false,
+    "summary": "每年都有冠军",
+    "lead": "从2006年阿默斯福特到2026年北京。",
+    "_why": "未发布，等账号所有者同意。这版只改旁白，不推微信，不写 pushed.json。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "三十九岁的德约科维奇，为什么还能连续二十一个赛季都拿到冠军？",
+    "thesis": "由头是2026年10月6日北京的冠军。片子按赛季把官方冠军点或捧杯接起来，从2006年阿默斯福特讲到2026年北京。各年冠军加总102，其中巡回赛冠军101，2024那1个是巴黎奥运金牌。北京是第102个冠军。2026赛季还没结束，到目前只有北京这一座。旁白在没有英文解说的空档里报年份，并在该年片段结尾说当年冠军数。",
+    "beats": [
+      "2026年10月6日北京决赛：第一盘7比6(3)，第二盘德米纳尔拿下开局一局后退出。这是第102个冠军，不是第102个巡回赛冠军。赛季还没结束，到目前2026年1个冠军。",
+      "2006阿默斯福特胜马苏7比6(5)、6比4。2007蒙特利尔胜费德勒7比6(2)、2比6、7比6(2)。2008年终总决赛胜达维登科6比1、7比5。2009巴塞尔胜费德勒6比4、4比6、6比2。2010北京胜费雷尔6比2、6比4。2011澳网胜穆雷6比4、6比2、6比3。",
+      "2012澳网五盘胜纳达尔。2013澳网胜穆雷6比7(2)、7比6(3)、6比3、6比2。2014印第安维尔斯胜费德勒3比6、6比3、7比6(3)。2015年终总决赛胜费德勒6比3、6比4。2016法网、2017多哈、2018温网胜安德森6比2、6比2、7比6(3)、2019温网五盘13比12(3)胜费德勒、2020澳网胜蒂姆6比4、4比6、2比6、6比3、6比4。",
+      "2017温网右肘让那个赛季停了，美网没打；手术是2018澳网之后。2021法网、2022温网赛点对克耶高斯、2023年终总决赛。2024奥运金牌战7比6(3)、7比6(2)胜阿尔卡拉斯。2025雅典胜穆塞蒂4比6、6比3、7比5。",
+      "2026年10月9日晚上，上海第二轮，胡尔卡奇6比4、6比3赢下他，九次交手第一次。"
+    ],
+    "chapters": [
+      "连续21个赛季\n每年都有冠军",
+      "2006阿默斯福特\n十九岁的第一冠",
+      "2007蒙特利尔\n决赛胜费德勒",
+      "2009巴塞尔\n决赛再胜费德勒",
+      "2010北京\n决赛胜费雷尔",
+      "2011澳网\n决赛胜穆雷",
+      "2014印第安维尔斯\n抢七还在打",
+      "右肘让赛季停了\n美网那一站没打",
+      "37岁\n把一切押上",
+      "九次交手\n这是第一次"
+    ],
+    "human_context": {
+      "angle": "这条片子讲的是二十一个赛季没有断。一年留几秒官方冠军点、拥抱或捧杯。画面和旁白说的是同一场。",
+      "facts": [
+        "2026-10-10 facts_quotes.md：冠军加总102，巡回赛冠军101，另外1个是2024巴黎奥运金牌。北京是第102个冠军。面向观众不说巡回赛冠军，也不把北京说成第102个巡回赛冠军。",
+        "ATP 2026-10-06 北京决赛：7-6(3)，德米纳尔赢下第二盘第一局后退出。",
+        "2006阿默斯福特决赛胜马苏7-6(5)、6-4。2007蒙特利尔决赛胜费德勒7-6(2)、2-6、7-6(2)。2009巴塞尔决赛胜费德勒6-4、4-6、6-2。",
+        "2010北京决赛胜费雷尔6-2、6-4。2011澳网决赛胜穆雷6-4、6-2、6-3。2014印第安维尔斯决赛胜费德勒3-6、6-3、7-6(3)。",
+        "ATP bio（Updated 26 Aug 2026）写右肘：温网造成的赛季结束伤，缺席2017美网；手术在2018澳网之后。",
+        "ATP 2024-08-04 奥运：7-6(3)、7-6(2)胜阿尔卡拉斯，37岁。2024年冠军数是1，这座是巴黎奥运金牌，巡回赛冠军数是0。",
+        "2025雅典决赛胜穆塞蒂4-6、6-3、7-5。ATP 2026-10-09 上海：周五晚上，胡尔卡奇6-4、6-3，九次交手第一次赢他。",
+        "2015年终总决赛决赛胜费德勒6-3、6-4。2018温网决赛胜安德森6-2、6-2、7-6(3)。"
+      ],
+      "sources": [
+        "https://www.atptour.com/en/news/djokovic-beijing-2026-title-count",
+        "https://www.atptour.com/en/news/djokovic-de-minaur-beijing-2026-final",
+        "https://www.atptour.com/en/news/djokovic-amersfoort-2006-first-title",
+        "https://www.espn.com/sports/tennis/news/story?id=2971389",
+        "https://www.reuters.com/article/sports/federer-beaten-by-djokovic-in-home-final-idUSTRE5A71CT/",
+        "https://www.atptour.com/en/players/novak-djokovic/d643/bio",
+        "https://www.atptour.com/en/news/djokovic-alcaraz-paris-olympics-2024-gold-medal-match",
+        "https://www.atptour.com/en/news/djokovic-hurkacz-shanghai-2026-friday",
+        "https://www.bbc.com/sport/tennis/34895649",
+        "https://en.wikipedia.org/wiki/2018_Wimbledon_Championships_%E2%80%93_Men%27s_singles"
+      ]
+    }
+  },
+  "_facts": {
+    "title_count": "ATP 2026-10-07 https://www.atptour.com/en/news/djokovic-beijing-2026-title-count ：first man to win a tour-level title in 21 consecutive seasons；age 39；7th China Open；tour-level tally 102，Federer 103，Connors 109；first title Amersfoort 2006 as a 19-year-old。简介页2026-08-26仍写101个冠军，以10月7日这篇为准。",
+    "atp_titles_page": "atptour.com 冠军列表页这次没有返回逐行记录（页面是脚本壳）。旁白里的赛事和比分改对下面这些已经打开的页面，再对上画面记分牌。",
+    "y2006": "Tennis TV 公开 HLS entry 0_sl1trjpg，只下了8640–8780（文件 y2006a，1080p25，文件0秒约等于源8640秒；拷贝按关键帧，文件比名义长）。8660秒附近文件约20秒：Matchpoint，DJO 7 5 40 / MAS 6 4 30。网前相拥在文件约50秒。ATP 2026-07-23 https://www.atptour.com/en/news/djokovic-amersfoort-2006-first-title ：第二个冠军点，马苏正手出界，19岁，排名36。盘分7-6(5)、6-4，和终场条7-6、6-4对得上；(5)终场条上没有，写在ATP这篇里。两套转写在16–36秒对不上，那段不进片子。 9680–9766那一段也用了：76.2–81.3秒是颁奖和 Winner 2006 Dutch Open。81.54秒之后两套转写对不上，不收。",
+    "y2007": "字卡原写迈阿密，改成蒙特利尔决赛胜费德勒，以画面为准。Tennis TV entry 0_xntssj3m，只下600–668（文件1080p30）。他拿下了这一句在文件35.49–41.38。奖杯在文件61–68秒。解说从56秒连到68.9秒，两套转写切句对不上，而且带出迈阿密，不配字幕，原声压低，旁白只说这座奖杯。比分7-6(2)、2-6、7-6(2)：ESPN https://www.espn.com/sports/tennis/news/story?id=2971389 与 BBC http://news.bbc.co.uk/sport2/hi/tennis/6943406.stm 一致。用户说的500秒记分牌7-6、2-6不在这69秒里。",
+    "y2008": "年终总决赛胜达维登科6-1、7-5。颁奖近景在251.35–257.70。举杯在278.4–286.2，解说切句对不上，不配字幕，原声压低。",
+    "y2009": "字卡原写巴黎，改成巴塞尔决赛胜费德勒。Tennis TV entry 0_kubwcp18，只下780–832（文件1080p30）。文件18秒记分牌 FEDERER 4 6 2 30 / DJOKOVIC 6 4 5 40，举双臂在文件24秒。没有捧杯。比分6-4、4-6、6-2：Reuters https://www.reuters.com/article/sports/federer-beaten-by-djokovic-in-home-final-idUSTRE5A71CT/ 与 BBC http://news.bbc.co.uk/sport2/hi/tennis/8349507.stm 。旁白说这一分过去才是6比2，不说牌子上已经是6比2。",
+    "y2010": "北京决赛胜费雷尔6-2、6-4。文件是 i1LtteR8jd0 的82–150秒一段，720p30，文件0秒约等于源82秒。赛点旁白放在文件0.6–12.0。30秒之后是连续英文，不收。",
+    "y2011": "澳网决赛胜穆雷6-4、6-2、6-3。文件是 Ke_m8cYKb04 的12–56秒一段，720p25。冠军点约在文件36秒，拥抱约42秒，旁白30.5–44.2。",
+    "y2012": "澳网决赛对纳达尔，画面记分牌五列：5-7、6-4、6-2、6-7、7-5。旁白只说五盘。不补抢七小分。",
+    "y2013": "澳网决赛胜穆雷6-7(2)、7-6(3)、6-3、6-2。文件174秒前后是冠军点，不是两盘落后。",
+    "y2014": "印第安维尔斯决赛胜费德勒3-6、6-3、7-6(3)。文件约6秒记分牌还在抢七，费德勒3分、德约6分，没有写已经拿下。恭喜那句在20.42–24.08，两套转写一致。他接受采访那几秒不进片子。",
+    "y2019": "温网决赛胜费德勒7-6(5)、1-6、7-6(4)、4-6、13-12(3)。文件640秒仍是赛点：盘2-2，局12-12，抢七6-3。文件652秒终场图形写7-6 1-6 7-6 4-6 13-12，没有抢七下标。旁白只说十二平和赛点。",
+    "y2020": "澳网决赛胜蒂姆6-4、4-6、2-6、6-3、6-4。文件275秒牌子写着2个冠军点，第五盘5-4、40-15。旁白说这一分过去才是6比4。",
+    "olympics": "ATP 2024-08-04：d. Alcaraz 7-6(3), 7-6(2)，age 37。原声只收到 Olympic gold，不收 Golden Slam。捂脸一段是163.2–169.45，两套转写没有英文。",
+    "y2025": "雅典决赛胜穆塞蒂4-6、6-3、7-5。原声只留 What a fabulous match（454.54–457.46）。",
+    "shanghai": "ATP 2026-10-09：Hurkacz d. Djokovic 6-4, 6-3。九次交手第一次。握手在99–102.0秒。102.4秒已是黑场，102.8秒是订阅卡。原声只留 The first time in nine meetings（98.00–100.62）。问句字卡是因为这1秒多的握手装不下那一句。",
+    "not_in_cut": "2015和2018都进了正片。2015用的是年终总决赛，不是温网。2018用的是温网决赛画面。",
+    "trimmed_files": "渲染前把截好的文件种进 outdir 的 source_{键}.mp4。spec 里的 start/end 是这些文件上的秒，不是整段集锦的秒。重新整段下载会让窗口对上别的比赛。 y06b 是9680–9766，y15 是2015集锦的368–452秒。窗口都从这些文件的0秒起算。y06 和 y06b 是同一场的两段截取、两份字节，地址用 #9680-9766 分开，避免被当成同一个文件。",
+    "y2015": "温网决赛的短片不在这台机器上，YouTube 也被登录墙拦住。改用 Tennis TV 2015年终总决赛集锦 entry 0_8wyjo76u，1080p25，只下源片368–452秒。亲奖杯在文件52秒。旁白窗口46.2–56.9：45.44秒那句说完，57.31秒他才开口。比分6-3、6-4：BBC https://www.bbc.com/sport/tennis/34895649 。",
+    "y2018": "温网官方集锦 https://www.youtube.com/watch?v=6Rnp8AtYIow ，1280×720、25fps、258.6秒。音轨下不下来。240.6秒是冠军点，随后终场条写 CENTRE COURT 6-2 6-2 7-6 DJOKOVIC，253秒还是和安德森网前致意，254秒后是片尾绿卡。比分6-2、6-2、7-6(3)：维基引的是这场决赛 6-2, 6-2, 7-6(7-3)，和画面上的7-6对得上。音轨垫了约-49dB的80Hz，避免整秒数字静音，不是现场声。small 和 medium 在这个窗口都没有字。",
+    "year_title_counts": "2026-10-10 research/djokovic-21-seasons-2026-v2/facts_quotes.md：各年冠军加总102，其中巡回赛冠军101，另外1个是2024巴黎奥运金牌。2006两、2007五、2008四、2009五、2010两、2011十、2012六、2013七、2014七、2015十一、2016七、2017两、2018四、2019五、2020四、2021五、2022五、2023七、2024一（巴黎奥运金牌，巡回赛冠军零）、2025两、2026截至10月10日一（北京）。北京说成第102个冠军，不说第102个巡回赛冠军。2026赛季还没结束，旁白写到目前这一年一个冠军。2012年窗口4.05秒，年份加五盘、对面纳达尔之后放不下「这一年，六个冠军」，这一年的个数跳过。",
+    "quotes": "引语以2026-10-10 facts_quotes.md里打开过原文的句子为准。2011不采用纳达尔那句（文件里没有）。文件里的事实是开季41连胜，温网半决赛后确定将取代纳达尔成为世界第一。2017 ASAP Sports 2017-07-12：It's not the shoulder. It's the elbow that already keeps bothering for over a year and a half。中文用文件里的「不是肩膀。是这只肘，断断续续已经烦了我一年半。」2018不再说「会更强地回来」，文件里没有这句。2019卫报：It's quite unreal to be two match points down and come back。中文「落后两个赛点还能翻回来，很不真实。」12平抢七那半句窗口装不下。2024 ATP 2024-08-04 原文是「为了在 37 岁赢下奥运金牌，我把心、灵魂、身体、家庭，我的一切都押上了。我终于做到了。」前一句加年份在 6.25 秒窗口里是 9.74 秒，放不下。旁白只留后一句原文「我终于做到了」，再报「这一年，一个冠军，巴黎奥运金牌」。北京颁奖原文后半：「尤其是在北京，一个我从没输过的地方。但我也知道，现在的现实已经不太一样了。」前半句「我已经 11 年没在这里比赛」没放进这张收尾卡。不说「证明还能打到最高的那一档」，文件里的北京原话不是这句。"
+  },
+  "_production_status": "review_render_unpublished_waiting_owner_approval",
+  "_tennistv_trim": "2006、2007、2009、2015 用的是 Tennis TV 公开片。取景固定 cx 0.5，16:9 中央铺进 3:4，右上角台标落在窗外。这些文件都是长片里截出的一段，窗口不贴文件末尾：2006 后段收到 81.3（文件 88 秒，81.54 起的片尾套话不收），2007 收到 68.7（文件 74 秒），2009 收到 25.05（文件更长），2015 收到 56.9（文件 84 秒，57.31 起是采访，没有片尾板）。",
+  "_native_cards_why": "字卡只剩三张。开篇那张：连续21个赛季这件事不是一场球的画面，北京集锦后半是在讲德米纳尔退赛。右肘那张：没有对得上的官方伤停画面。收尾那句问：上海握手的英文占到100.62秒，102.4秒已经切黑，剩下的画面装不下这句问。2006、2007、2009、2010、2011、2014的占位字卡都换成了同一场的官方画面。 2015、2018不再是缺口：2015是年终总决赛亲奖杯，2018是温网决赛冠军点。",
+  "_reference_film": "https://github.com/robertyang87/tennislive/releases/download/reel-year-end-no1-zverev-2026/year-end-no1-zverev-2026.mp4",
+  "_reference_why": "沿用网球有故事剪辑片：右上信息条、原声与中文配音分窗、竖版居中。",
+  "segments": [
+    {
+      "source": "bj",
+      "start": 319.9,
+      "end": 325.45,
+      "narration": "",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "完整原声语句；这一句说完才切，不切进下一句。",
+      "_window_key": "bj-seventh-title",
+      "quote": [
+        {
+          "at": 0.04,
+          "end": 5.42,
+          "text": "But it is a seventh Beijing title for Novak Djokovic.\n这是德约科维奇的第七个北京冠军。"
+        }
+      ],
+      "audio_tail": "silence",
+      "_audio_tail_why": "325.32句尾之后326.22下一句开口；溶解底料补零。",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2026.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      }
+    },
+    {
+      "title_card": "连续21个赛季\n每年都有冠军",
+      "kicker": "北京",
+      "seconds": 15.1,
+      "narration": "二〇二六年。十月六日，北京。三十九岁。第一盘七比六，第二盘刚开，德米纳尔退了。这是第一百零二个冠军。赛季还没结束。到目前，这一年一个冠军。",
+      "_card_id": "thesis",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y06",
+      "start": 46.0,
+      "end": 58.0,
+      "narration": "二〇〇六年。十九岁，阿默斯福特。对面马苏，七比六、六比四。这一抱很轻。谁也没当成往后每年一座的开始。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "记分牌那几秒两套转写对不上，不用。这一段是网前相拥，两套转写都没有英文。",
+      "_window_key": "y2006-net",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2006.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y06b",
+      "start": 76.2,
+      "end": 81.3,
+      "narration": "他把冠军收下。这一年，两个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "颁奖队列接到 Winner 2006 Dutch Open。81.54秒起两套转写各说一句对不上的片尾套话，不收。",
+      "_window_key": "y2006-winner",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y07",
+      "start": 24.0,
+      "end": 35.1,
+      "narration": "二〇〇七年。决赛对面换成费德勒。两盘都是七比六，中间二比六。那股锐气。第一次顶到当时的世界第一。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "冠军点还在打。解说从35.49才开口，这一段收到35.10。",
+      "_window_key": "y2007-point",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2007.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y07",
+      "start": 35.4,
+      "end": 41.55,
+      "narration": "",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "整句原声留全，不带出后面的奖杯介绍。",
+      "_window_key": "y2007-done",
+      "quote": [
+        {
+          "at": 0.05,
+          "end": 6.05,
+          "text": "He's done it, what a way to do so.\n他拿下了，就这么拿下的。"
+        }
+      ]
+    },
+    {
+      "source": "y07",
+      "start": 61.2,
+      "end": 68.7,
+      "narration": "这座奖杯。从费德勒手里过来。这一年，五个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "奖杯举起在这一段。解说从56秒连到68.9秒，两套转写切句对不上，而且带出迈阿密。不把那句写成字幕，原声压低。",
+      "_window_key": "y2007-trophy",
+      "mute": true,
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y08",
+      "start": 251.35,
+      "end": 257.7,
+      "narration": "二〇〇八年。年终总决赛，六比一、七比五。对面，达维登科。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "上一句解说收到251.21，下一句258.18才开口。这一段是颁奖时的近景。",
+      "_window_key": "y2008-face",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2008.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y08",
+      "start": 278.4,
+      "end": 286.2,
+      "narration": "他把奖杯举起来。爆发。还要再等。这一年，四个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "举杯在这一段。275秒之后的解说两套转写切句对不上，不配字幕，原声压低。",
+      "_window_key": "y2008-trophy",
+      "mute": true,
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y09",
+      "start": 12.0,
+      "end": 25.05,
+      "narration": "二〇〇九年。巴塞尔，又是费德勒，还是他的主场。这一分过去，才是六比二。和费德勒的账。从这儿变密。这一年，五个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "记分牌还是五比二、四十分对三十分。举双臂在这一段里。下一句英文从25.47起。",
+      "_window_key": "y2009-point",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2009.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y10",
+      "start": 0.6,
+      "end": 12.0,
+      "narration": "二〇一〇年。北京，赛点。对面费雷尔。十六年后，同一座城市。他还在拿冠军。这一年，两个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "赛点这一段没有成句英文。后面的奖杯介绍从30.82起，不收。",
+      "_window_key": "y2010-match-point",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2010.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y11",
+      "start": 30.5,
+      "end": 44.2,
+      "narration": "二〇一一年。澳网冠军点，对面穆雷。这一冠只是开头。开季四十一连胜。第一次登上世界第一。这一年，十个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "冠军点和拥抱都在这一段。两套转写这一窗都没有英文。",
+      "_window_key": "y2011-championship",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2011.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "ao12",
+      "start": 271.15,
+      "end": 275.2,
+      "narration": "二〇一二年。五盘。对面，纳达尔。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "记分牌五盘比分完整留在这一段里，不切进后面的解说。",
+      "_window_key": "ao12-board",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2012.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y13",
+      "start": 170.0,
+      "end": 183.5,
+      "narration": "二〇一三年。又是澳网决赛，又是穆雷。第六座大满贯。这种决赛。开始变成习惯。这一年，七个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "冠军点这一段两套转写都没有英文。",
+      "_window_key": "y2013-championship",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2013.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y14",
+      "start": 1.0,
+      "end": 9.45,
+      "narration": "二〇一四年。先丢一盘。抢七里咬住费德勒。这一年，七个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "抢七还在打，记分牌是六比三，不是已经拿下。他开口从9.82起。",
+      "_window_key": "y2014-tiebreak",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2014.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y14",
+      "start": 20.3,
+      "end": 24.15,
+      "narration": "",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "整句恭喜留全。下一句24.40讲迈阿密，不收。",
+      "_window_key": "y2014-congratulations",
+      "quote": [
+        {
+          "at": 0.08,
+          "end": 3.8,
+          "text": "Congratulations to Djokovic as he returns to the winner's circle once more.\n恭喜德约科维奇，他又拿到冠军。"
+        }
+      ]
+    },
+    {
+      "source": "y15",
+      "start": 46.2,
+      "end": 56.9,
+      "narration": "二〇一五年。年终总决赛，又是费德勒。六比三、六比四。他已经站在那儿了。这一年，十一个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "45.44秒那句说完，下一句57.31秒才开口。中间是亲奖杯。",
+      "_window_key": "y2015-trophy",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2015.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "rg16",
+      "start": 136.9,
+      "end": 143.45,
+      "narration": "二〇一六年。四座大满贯，到这一年凑齐。这一年，七个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "捧杯这一段从上一句结束之后起，到下一句开口之前收。",
+      "_window_key": "rg16-trophy",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2016.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "doha",
+      "start": 174.0,
+      "end": 183.4,
+      "narration": "",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "司仪介绍冠军的整句留全，从奖杯举起之后起。字幕从0.03秒起，避免和上一段交界被刻进同一厘秒。",
+      "_window_key": "doha-champion",
+      "quote": [
+        {
+          "at": 0.03,
+          "end": 9.22,
+          "text": "Ladies and gentlemen, your Qatar ExxonMobil Open 2017 champion, Novak Djokovic.\n卡塔尔公开赛冠军，德约科维奇。"
+        }
+      ],
+      "audio_tail": "silence",
+      "_audio_tail_why": "183.22句尾贴着段尾；溶解底料补零，不带出下一句。",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2017.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      }
+    },
+    {
+      "title_card": "右肘让赛季停了\n这一年仍有两座",
+      "kicker": "2017",
+      "seconds": 16.5,
+      "narration": "二〇一七年。右肘。温网对伯蒂奇，他退了，这个赛季停了。他说，不是肩膀。是这只肘，断断续续已经烦了我一年半。多哈和伊斯特本，都在这之前。这一年，两个冠军。",
+      "_card_id": "elbow",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y18",
+      "start": 240.6,
+      "end": 253.2,
+      "narration": "二〇一八年。手术之后的温网。对面安德森，六比二、六比二，这一分是冠军点。这一年，四个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "240秒是冠军点，246秒起终场比分条，253秒还是网前致意，254秒之后是片尾绿卡。",
+      "_window_key": "y2018-match-point",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2018.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y19",
+      "start": 636.0,
+      "end": 654.0,
+      "narration": "二〇一九年。温网决赛，费德勒。第五盘八比七，两个赛点都没兑现。他后来说，落后两个赛点还能翻回来，很不真实。从赛点里抢回来的，比轻松拿下的。更能说明一个人。这一年，五个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "赛点还在打。终场图形在这一段后半出现。两套转写628到658秒都没有英文。",
+      "_window_key": "y2019-match-point",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2019.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y20",
+      "start": 270.0,
+      "end": 288.0,
+      "narration": "二〇二〇年。澳网决赛，决胜盘五比四。对面蒂姆。这一分过去，才是六比四。他已经不缺冠军。这一分还是不放。这一年，四个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "画面是两个冠军点，第五盘五比四。下一句英文从290.09起。",
+      "_window_key": "y2020-championship",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2020.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "rg21",
+      "start": 460.3,
+      "end": 478.8,
+      "narration": "二〇二一年。法网的冠军杯，又在他手里。纳达尔还在。他也还在。这一年，五个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "司仪介绍结束之后才起，捧杯留到下一句开口之前。",
+      "_window_key": "rg21-trophy",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2021.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "wim22",
+      "start": 302.2,
+      "end": 311.9,
+      "narration": "二〇二二年。温网赛点。对面克耶高斯。三十五岁。大满贯还没停。这一年，五个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "赛点画面这一段没有英文解说，下一句开口之前收住。",
+      "_window_key": "wim22-match-point",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2022.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "fin23",
+      "start": 478.4,
+      "end": 495.0,
+      "narration": "二〇二三年。年终总决赛，第七座。费德勒已经退役。这座奖杯。他一年一年还在拿。这一年，七个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "家人镜头里的解说结束之后才起，奖杯留在这一段。",
+      "_window_key": "fin23-trophy",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2023.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "oly",
+      "start": 141.55,
+      "end": 145.85,
+      "narration": "二〇二四年。三十七岁对二十一岁。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "金牌战抢七还没结束的这几秒，下一句解说开口之前收住。",
+      "_window_key": "oly-tiebreak",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2024.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "oly",
+      "start": 146.0,
+      "end": 155.1,
+      "narration": "",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "两句原声都留全，不收后面那句 Golden Slam。第一句字幕从0.03秒起，避免和上一段交界被刻进同一厘秒。",
+      "_window_key": "oly-gold",
+      "quote": [
+        {
+          "at": 0.03,
+          "end": 7.34,
+          "text": "In his fifth Olympic Games, Novak Djokovic finally gets what he wanted.\n第五次奥运，他终于得到了。"
+        },
+        {
+          "at": 8.18,
+          "end": 8.96,
+          "text": "Olympic gold.\n奥运金牌。"
+        }
+      ],
+      "audio_tail": "silence",
+      "_audio_tail_why": "154.96之后157.02是另一句；段尾155.10，溶解底料补零。"
+    },
+    {
+      "source": "oly",
+      "start": 163.2,
+      "end": 169.45,
+      "narration": "他说，我终于做到了。这一年，一个冠军，巴黎奥运金牌。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "双手捂脸这一段两套转写都没有英文。前面那句 Golden Slam 收到162.90，下一句169.85才开口。",
+      "_window_key": "oly-face",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y25",
+      "start": 445.5,
+      "end": 454.1,
+      "narration": "二〇二五年。雅典。四比六落后。再拿下。对面穆塞蒂。这一年，两个冠军。",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "这一段两套转写都没有英文。下一句从454.54起。",
+      "_window_key": "y2025-score",
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2025.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      },
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    },
+    {
+      "source": "y25",
+      "start": 454.45,
+      "end": 457.6,
+      "narration": "",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "整句留全。后面460秒那句两套转写对不上，不收。",
+      "_window_key": "y2025-fabulous",
+      "quote": [
+        {
+          "at": 0.05,
+          "end": 3.05,
+          "text": "What a fabulous match.\n这场球太漂亮了。"
+        }
+      ]
+    },
+    {
+      "source": "sh",
+      "start": 97.85,
+      "end": 100.8,
+      "narration": "",
+      "cx": 0.5,
+      "track": false,
+      "crosses_cut": true,
+      "_crosses_cut_why": "只留两套转写一致的第二句。前一句对不上，订阅片从102.4秒开始，都不收。",
+      "_window_key": "sh-nine",
+      "quote": [
+        {
+          "at": 0.1,
+          "end": 2.85,
+          "text": "The first time in nine meetings.\n九次交手，这是第一次。"
+        }
+      ],
+      "inset": {
+        "image": "assets/reel/djokovic-21-seasons-2026/info-2026sh.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.56,
+        "show_for": 4.0,
+        "pad": 0.065,
+        "motion": "editorial"
+      }
+    },
+    {
+      "title_card": "不是因为他不败\n每年都还有一座",
+      "kicker": "上海",
+      "seconds": 23.4,
+      "narration": "为什么三十九岁还能赢？不是因为他不再输。上海，胡尔卡奇六比四、六比三淘汰了他。他说。尤其是在北京，一个我从没输过的地方。但我也知道，现在的现实已经不太一样了。连续二十一个赛季，每年都有一座冠军。靠的不是不败。下一个赛季，你等他再添一座吗？",
+      "_card_id": "question",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "2026-10-10 试听 B：云见 +6% 听感平，正文抬 10Hz。见 research/djokovic-21-seasons-2026-v2/voice_trials.md"
+      }
+    }
+  ],
+  "sources": {
+    "bj": "https://www.youtube.com/watch?v=XTIIkb8uFXU",
+    "y06": "https://www.tennistv.com/videos/3791365/amersfoort-2006-final-djokovic-massu",
+    "y07": "https://www.tennistv.com/videos/4077678/montreal-2007-djokovic-federer-extended-highlights",
+    "y08": "https://www.youtube.com/watch?v=K21S0hxp05M",
+    "y09": "https://www.tennistv.com/videos/3741523/basel-2009-final-djokovic-federer-highlights",
+    "y10": "https://www.youtube.com/watch?v=i1LtteR8jd0",
+    "y11": "https://www.youtube.com/watch?v=Ke_m8cYKb04",
+    "ao12": "https://www.youtube.com/watch?v=-kaaXz4IgrA",
+    "y13": "https://www.youtube.com/watch?v=dOuCulN1aqg",
+    "y14": "https://www.youtube.com/watch?v=59MAVH6OeKw",
+    "rg16": "https://www.youtube.com/watch?v=tJ7MBFs31Bo",
+    "doha": "https://www.youtube.com/watch?v=_qFsD0_Cans",
+    "y19": "https://www.youtube.com/watch?v=mnLdAeSXZv0",
+    "y20": "https://www.youtube.com/watch?v=0FsIdkTFLms",
+    "rg21": "https://www.youtube.com/watch?v=c7O8a68d_xM",
+    "wim22": "https://www.youtube.com/watch?v=RO52Y8SOIUU",
+    "fin23": "https://www.youtube.com/watch?v=BO9S2WB8I64",
+    "oly": "https://www.youtube.com/watch?v=I-BRgX4oceo",
+    "y25": "https://www.youtube.com/watch?v=zqAhgZ3-4QY",
+    "sh": "https://www.youtube.com/watch?v=4c6J0LHp-7E",
+    "y06b": "https://www.tennistv.com/videos/3791365/amersfoort-2006-final-djokovic-massu#9680-9766",
+    "y15": "https://www.tennistv.com/videos/4170812/when-novak-djokovic-played-roger-federer-in-the-2015-nitto-atp-finals-final",
+    "y18": "https://www.youtube.com/watch?v=6Rnp8AtYIow"
+  },
+  "conform": {
+    "y10": "2010北京决赛官方短片已下到的文件是1280×720、16:9。lanczos等比放大后中央铺进1920×1080。",
+    "y11": "2011澳网决赛官方短片已下到的文件是1280×720、16:9。lanczos等比放大后中央铺进1920×1080。",
+    "ao12": "澳网官方2012决赛集锦已下到的文件是1280×720、16:9。lanczos等比放大后中央铺进1920×1080。",
+    "y13": "2013澳网决赛官方集锦已下到的文件是1280×720、16:9。lanczos等比放大后中央铺进1920×1080。",
+    "y14": "2014印第安维尔斯官方短片已下到的文件是1280×720、16:9。lanczos等比放大后中央铺进1920×1080。",
+    "doha": "ATP官方2017多哈决赛集锦已下到的文件是1280×720、16:9。lanczos等比放大后中央铺进1920×1080。",
+    "y19": "2019温网决赛官方集锦已下到的文件是1280×720、16:9。lanczos等比放大后中央铺进1920×1080。",
+    "y20": "2020澳网决赛官方集锦已下到的文件是1280×720、16:9。lanczos等比放大后中央铺进1920×1080。",
+    "wim22": "温网官方2022决赛集锦最高就是720p，16:9。lanczos等比放大后中央铺进1920×1080。",
+    "y18": "温网官方2018决赛集锦已下到的文件是1280×720、16:9。lanczos等比放大后中央铺进1920×1080。"
+  },
+  "source_quality_exceptions": {
+    "https://www.youtube.com/watch?v=-kaaXz4IgrA": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者2026-10-09允许官方短集锦里没有小体积1080时用官方720p。澳网频道这条决赛集锦本片核过的文件是1280×720。"
+    },
+    "https://www.youtube.com/watch?v=_qFsD0_Cans": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者2026-10-09允许官方短集锦里没有小体积1080时用官方720p。ATP频道2017多哈决赛本片核过的文件是1280×720。"
+    },
+    "https://www.youtube.com/watch?v=RO52Y8SOIUU": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者2026-10-09允许官方720p。温网频道2022决赛集锦没有1080，最高就是720p。"
+    },
+    "https://www.youtube.com/watch?v=i1LtteR8jd0": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者2026-10-09允许官方720p。2010北京决赛这条Tennis TV短片本片核过的文件是1280×720。"
+    },
+    "https://www.youtube.com/watch?v=Ke_m8cYKb04": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者2026-10-09允许官方720p。2011澳网决赛这条本片核过的文件是1280×720。"
+    },
+    "https://www.youtube.com/watch?v=dOuCulN1aqg": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者2026-10-09允许官方720p。2013澳网决赛这条本片核过的文件是1280×720。"
+    },
+    "https://www.youtube.com/watch?v=59MAVH6OeKw": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者2026-10-09允许官方720p。2014印第安维尔斯这条本片核过的文件是1280×720。"
+    },
+    "https://www.youtube.com/watch?v=mnLdAeSXZv0": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者2026-10-09允许官方720p。2019温网决赛这条本片核过的文件是1280×720。"
+    },
+    "https://www.youtube.com/watch?v=0FsIdkTFLms": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者2026-10-09允许官方720p。2020澳网决赛这条本片核过的文件是1280×720。"
+    },
+    "https://www.youtube.com/watch?v=6Rnp8AtYIow": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者2026-10-10要求2018年必须有当年官方冠军点。温网频道这条决赛集锦本片核过的文件是1280×720。音轨被登录墙拦住，画面按下。"
+    }
+  },
+  "mixed_fps": {
+    "y07": "Tennis TV 2007蒙特利尔加长集锦的1080p档是30fps，主源北京集锦是25fps。用的是冠军点和庆祝，不是要盯走位的长回合。",
+    "y09": "Tennis TV 2009巴塞尔决赛集锦的1080p档是30fps，主源是25fps。用的是冠军点和举双臂。",
+    "y10": "2010北京决赛短片是30fps，主源是25fps。用的是赛点，几秒反应镜头。",
+    "y20": "2020澳网决赛集锦是2981/100，主源是25fps。用的是冠军点牌子和这一分。",
+    "rg21": "罗兰·加洛斯官方集锦是30000/1001，主源北京集锦是25fps。用的是捧杯，不是要盯走位的回合。",
+    "oly": "奥林匹克官方集锦是50fps，主源北京集锦是25fps。抢七、金牌和捂脸是定镜与反应，隔帧丢掉的是重复帧。",
+    "y25": "2025雅典决赛集锦是50fps，主源是25fps。用的是终场和一句原声。",
+    "sh": "2026上海官方集锦是50fps，主源是25fps。用的是网前握手，不是回合。"
+  },
+  "_no_probe_why": {
+    "bj": {
+      "why": "ATP官方北京2026决赛集锦。窗口按记分牌和双模型转写定，不另跑probe。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    },
+    "y06": {
+      "why": "Tennis TV 2006阿默斯福特决赛公开HLS，1080p。只保留8640–8780这一段。窗口按网前相拥和双模型转写定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    },
+    "y07": {
+      "why": "Tennis TV 2007蒙特利尔决赛公开HLS，1080p30。只保留600–668这一段。窗口按冠军点和双模型转写定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1"
+    },
+    "y08": {
+      "why": "年终总决赛2008官方集锦，1080p25。窗口按颁奖近景和双模型转写定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    },
+    "y09": {
+      "why": "Tennis TV 2009巴塞尔决赛公开HLS，1080p30。只保留780–832这一段。窗口按记分牌和双模型转写定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1"
+    },
+    "y10": {
+      "why": "2010北京决赛官方短片，720p30。窗口按赛点和双模型转写定。",
+      "width": 1280,
+      "height": 720,
+      "fps": "30/1"
+    },
+    "y11": {
+      "why": "2011澳网决赛官方短片，720p25。窗口按冠军点和双模型转写定。",
+      "width": 1280,
+      "height": 720,
+      "fps": "25/1"
+    },
+    "ao12": {
+      "why": "澳网官方2012决赛集锦，720p。窗口按记分牌和双模型转写定。",
+      "width": 1280,
+      "height": 720,
+      "fps": "25/1"
+    },
+    "y13": {
+      "why": "2013澳网决赛官方集锦，720p25。窗口按冠军点和双模型转写定。",
+      "width": 1280,
+      "height": 720,
+      "fps": "25/1"
+    },
+    "y14": {
+      "why": "2014印第安维尔斯官方短片，720p25。窗口按抢七记分牌和双模型转写定。",
+      "width": 1280,
+      "height": 720,
+      "fps": "25/1"
+    },
+    "rg16": {
+      "why": "罗兰·加洛斯官方2016决赛集锦，1080p。窗口按捧杯和双模型转写定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    },
+    "doha": {
+      "why": "ATP官方2017多哈决赛集锦，720p。窗口按奖杯介绍和双模型转写定。",
+      "width": 1280,
+      "height": 720,
+      "fps": "25/1"
+    },
+    "y19": {
+      "why": "温网官方2019决赛集锦，720p25。窗口按赛点记分牌和双模型转写定。",
+      "width": 1280,
+      "height": 720,
+      "fps": "25/1"
+    },
+    "y20": {
+      "why": "澳网官方2020决赛集锦，720p。窗口按冠军点牌子和双模型转写定。",
+      "width": 1280,
+      "height": 720,
+      "fps": "2981/100"
+    },
+    "rg21": {
+      "why": "罗兰·加洛斯官方2021决赛集锦，1080p。窗口按捧杯和双模型转写定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30000/1001"
+    },
+    "wim22": {
+      "why": "温网官方2022决赛集锦，最高720p。窗口按赛点画面和双模型转写定。",
+      "width": 1280,
+      "height": 720,
+      "fps": "25/1"
+    },
+    "fin23": {
+      "why": "Tennis TV ATP年终总决赛2023集锦，1080p，与主源同为25fps。窗口按奖杯和双模型转写定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    },
+    "oly": {
+      "why": "奥林匹克官方2024金牌战集锦，1080p50。窗口按抢七、金牌原声和捂脸定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
+    },
+    "y25": {
+      "why": "2025雅典决赛官方集锦，1080p50。窗口按终场和双模型转写定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
+    },
+    "sh": {
+      "why": "ATP官方2026上海集锦，1080p50。窗口按握手和双模型转写定，订阅卡不收。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
+    },
+    "y06b": {
+      "why": "Tennis TV 2006阿默斯福特决赛公开HLS，1080p。只保留9680–9766这一段。窗口按 Winner 2006 Dutch Open 字幕和双模型转写定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    },
+    "y15": {
+      "why": "Tennis TV 2015年终总决赛集锦，1080p25。只保留源片368–452秒。窗口按亲奖杯和双模型转写定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    },
+    "y18": {
+      "why": "温网官方2018决赛集锦，720p25。窗口按冠军点、终场比分条和网前致意定。原片没有音轨。",
+      "width": 1280,
+      "height": 720,
+      "fps": "25/1"
+    }
+  }
+}

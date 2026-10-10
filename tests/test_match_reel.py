@@ -16506,6 +16506,31 @@ def test_合语音喂的是speakable之后那份不是原文(monkeypatch, tmp_pa
     assert fed and fed[-1] == reel.speakable(reel.OUTRO_NARRATION), "片尾那句没过 speakable"
 
 
+def test_封面和片尾音高默认仍是零_传了才抬(monkeypatch, tmp_path):
+    """正文的 voice.pitch 盖不到封面和片尾。
+
+    2026-10-10 德约 21 赛季 v2 试听 B 要把封面片尾一起抬到 +10Hz。
+    做成参数，默认仍是 +0Hz：别的期不传，听感不变。
+    """
+    reel = _reel()
+    heard: list[str] = []
+
+    def fake_uncached(text, path, voice, rate, pitch="+0Hz", *a, **k):
+        heard.append(pitch)
+        path.write_bytes(b"FAKE")
+        return []
+
+    monkeypatch.setattr(reel, "_tts_one_uncached", fake_uncached)
+    spec = {"column": "网球有故事", "cover": {"narration": "封面这一句单独量音高。"}}
+    reel.synth_cover(spec, tmp_path, "v", "+18%")
+    reel.synth_outro(tmp_path, "v", "+18%")
+    assert heard == ["+0Hz", "+0Hz"], heard
+    heard.clear()
+    reel.synth_cover(spec, tmp_path, "v", "+18%", "+10Hz")
+    reel.synth_outro(tmp_path, "v", "+18%", "+10Hz")
+    assert heard == ["+10Hz", "+10Hz"], heard
+
+
 def test_证据卡不许压在字幕上():
     """**居中铺的卡 vs 上锚的字幕——竖图证据卡几何上必然压字幕。**
 
