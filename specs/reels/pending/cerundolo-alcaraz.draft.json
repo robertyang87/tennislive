@@ -18,7 +18,16 @@
       }
     ],
     "winner": "阿尔卡拉斯",
-    "result": "6-3 6-3"
+    "result": "6-3 6-3",
+    "portrait": {
+      "image": "assets/reel/cerundolo-alcaraz-cover.jpg",
+      "focus": 0.603,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「carlos alcaraz」「Rolex Shanghai Masters」，日期对上当地 2026-10-10（Asia/Shanghai；日期来源 flashscore dc_1_fDaZRCXg）（放宽：标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 10-10 19:30:08，落在这场的窗口 当地 10-10 19:15~20:42 里（atp-media #4590021））；EXIF 拍摄 2026:10:10 19:30:08+08:00。② 分辨率：4000×2667，zoom 1 铺 1080×1440 是 1.85×（不放大）。③ 认人：最大那张脸像 阿尔卡拉斯 0.50（≥ 0.34）。④ 睁眼：EAR 0.2962（≥ 0.16）。⑤ 钩子带：脸落在 y309~500，钩子顶边 790。排序：[True, False, False, True, True, 191, 0.5016]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/10/c23ef466-6427-4a52-b9da-b3b3ec1c22bd/Juan-Manuel-CERUNDOLO-vs-Carlos-ALCARAZ3004.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/10/c23ef466-6427-4a52-b9da-b3b3ec1c22bd/Juan-Manuel-CERUNDOLO-vs-Carlos-ALCARAZ3004.jpg（条目 #4590021，接口发布 2026-10-10T12:27:34Z，EXIF 拍摄 2026:10:10 19:30:08+08:00（UTC 2026-10-10T11:30:08Z），原图 4000×2667），说明原文「2026 Shanghai Alcaraz」。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -275,45 +284,53 @@
     "visual_status": "waiting",
     "retryable": false,
     "cold_open": {
-      "start": 85.78,
-      "end": 104.06,
-      "kind": "winning_shot",
-      "winner_visible": true,
-      "reason": "在 85.78–104.06 秒窗口内，画面包含：86.5 秒场上比分 0-2（首盘，阿尔卡拉斯领先），88.5 秒阿尔卡拉斯在底线附近打出一记制胜分，90.5 秒他侧脸特写，92.5 秒他举拍准备发球；94.5 秒至 102.5 秒继续回合，104.5 秒计分牌显示 0:48，阿尔卡拉斯仍在场上奔跑。该段落在视频中段呈现阿尔卡拉斯关键回合中的制胜回合与聚焦镜头，可作为悬念式冷开场，配合结构化赛果 6-3 6-3 由阿尔卡拉斯赢下。",
-      "confidence": 0.62
-    },
-    "ending": {
-      "start": 118.5,
+      "start": 104.06,
       "end": 129.82,
       "kind": "match_point",
       "winner_visible": true,
-      "reason": "在 118.50–129.82 秒窗口内：118.5 秒阿尔卡拉斯底线最后一分，120.5 秒他握拳庆祝画面，122.5 秒塞伦多洛面部失落特写，124.5 秒阿尔卡拉斯低头致意，126.5 秒阿尔卡拉斯赛后走向网前，128.5 秒两人在网前握手（赛终握手画面），完成完整的赢家庆祝 + 输家反应 + 握手三段式收尾。该窗口完整覆盖冷开场的时间区段并兑现结局。",
-      "confidence": 0.82
+      "reason": "104.5s–105s 阿尔卡拉斯在底线挥拍制胜；106.5s–108.5s 塞伦多洛低头失落；110.5s–118.5s 第二盘最后几局（比分牌显示 3-6 AD / AD），阿尔卡拉斯回球后塞伦多洛正手失误；120.5s 塞伦多洛低头；124.5s–126.5s 阿尔卡拉斯握拳庆祝；128.5s 双方网前握手——完整闭环赛点+赢家庆祝+输家失落+握手。",
+      "confidence": 0.93
+    },
+    "ending": {
+      "start": 104.06,
+      "end": 129.82,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "reason": "与冷开场同一窗口，124.5s–126.5s 阿尔卡拉斯握拳庆胜利，128.5s 网前握手结束比赛；含赢家庆祝、输家失落与握手全要素。",
+      "confidence": 0.93
     },
     "cover": {
-      "same_match": false,
-      "subject": "",
+      "same_match": true,
+      "subject": "洛伦佐·穆塞蒂",
       "moment": "other",
-      "wrong_or_old": true,
-      "reason": "题目未提供候选封面照片，无人物、比分牌、场馆等身份证据可用于核对，因此无法证明是本场图片，按规则不得编造，same_match 置为 false；subject 留空；moment 留为 other。",
-      "confidence": 0.2
+      "wrong_or_old": false,
+      "reason": "封面身穿紫色红边背心、短裤，戴白色护腕，发型与本场塞伦多洛吻合；球衣款式、背心侧边红白条纹、白色护臂均与 SOURCE 视频中塞伦多洛一致（120.5s/122.5s 同框特写可印证）。画面为正手大力抽球瞬间，属赛事官方/摄影图风格，无其他平台水印，可认定本场同款；非赢家庆祝、亦非明显失望或咬牙拼争瞬间，定为 other。",
+      "confidence": 0.78
     },
     "problems": [
-      "cold_open 置信度 0.62 低于 0.80",
-      "ending 没有完整覆盖 cold_open，结局不能只在开头出现",
-      "没有官方高清封面候选",
-      "封面无法证明是同一场，或疑似旧图/错图",
-      "封面置信度 0.20 低于 0.80",
-      "封面人物应为 阿尔卡拉斯，模型识别为 空",
+      "封面置信度 0.78 低于 0.80",
+      "封面人物应为 阿尔卡拉斯，模型识别为 洛伦佐·穆塞蒂",
       "封面情绪应为 winner_celebration，现在是 other"
     ],
     "model_attempts": 1,
-    "input_sha256": "c4214c50f8f2d5562986e7347c79fa71936dabc0fc8e5175c32981eb41178990",
+    "input_sha256": "9358622670fff2bc3712d27ad8a20b1bb4957e22f7f1dfbfca4ebc24f4ecd524",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
       "contact_02.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/cerundolo-alcaraz-cover.jpg"
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "fDaZRCXg",
+      "start_utc": "2026-10-10T11:20:00Z",
+      "end_utc": "2026-10-10T12:27:11Z",
+      "source": "flashscore dc_1_fDaZRCXg（DC／DD）"
+    },
+    "tried": [
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/10/4911d648-d805-420c-8867-05a88952c1b7/Juan-Manuel-CERUNDOLO-vs-Carlos-ALCARAZ3017.jpg"
+    ],
+    "replaced_under": "c4214c50f8f2d5562986e7347c79fa71936dabc0fc8e5175c32981eb41178990"
   }
 }
