@@ -18,7 +18,16 @@
       }
     ],
     "winner": "布勃利克",
-    "result": "6-7(7) 6-3 7-6(5)"
+    "result": "6-7(7) 6-3 7-6(5)",
+    "portrait": {
+      "image": "assets/reel/bublik-nakashima-cover.jpg",
+      "focus": 0.545,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「alexander bublik」「Rolex Shanghai Masters」，日期对上当地 2026-10-11（Asia/Shanghai；日期来源 flashscore dc_1_0Osyvtzp）（放宽：标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 10-11 18:05:20，落在这场的窗口 当地 10-11 18:05~20:53 里（atp-media #4590535））；EXIF 拍摄 2026:10:11 18:05:20+08:00。② 分辨率：6240×4160，zoom 1 铺 1080×1440 是 2.89×（不放大）。③ 认人：最大那张脸像 布勃利克 0.62（≥ 0.34）。④ 睁眼：EAR 0.2917（≥ 0.16）。⑤ 钩子带：脸落在 y194~307，钩子顶边 790。排序：[True, False, False, True, True, 113, 0.6157]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/11/4f18f4dd-9a24-4551-a12c-68685bf0c6fa/Alexander-BUBLIK-vs-Brandon-NAKASHIMA-1992.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/11/4f18f4dd-9a24-4551-a12c-68685bf0c6fa/Alexander-BUBLIK-vs-Brandon-NAKASHIMA-1992.jpg（条目 #4590535，接口发布 2026-10-11T12:33:18Z，EXIF 拍摄 2026:10:11 18:05:20+08:00（UTC 2026-10-11T10:05:20Z），原图 6240×4160），说明原文「2026 Shanghai Bublik」，署名 Zark.Zhang。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -251,28 +260,45 @@
       "end": 125.36,
       "kind": "winner_celebration",
       "winner_visible": true,
-      "reason": "Scoreboard reads Bublik 6 6 6 / Nakashima 7 3 6 with Bublik holding match point (6-6, 5 in third-set tiebreak). At 116.5s and 118.5s Bublik (headband, dark shirt) raises racket and both arms in a roar (mouth open, both eyes visible, looking upward at the crown logo) — match-ending winner celebration. Confidence 0.95.",
-      "confidence": 0.95
+      "reason": "Burned timestamps 116.5s/118.5s show Bublik (winner) in dark green FILA/EA7 kit and dark headband, both arms raised overhead with racket in one hand and clenched fist in the other, mouth open in a roar — decisive match point celebration. On-screen scoreboard at 116.5s/118.5s shows BULIK serving at 6-6(5) 40/15 — match-point situation for the winner. Adjacent cuts 100.5s/102.5s repeat the celebration motif, confirming the payoff window falls in this segment.",
+      "confidence": 0.92
     },
     "ending": {
       "start": 115.36,
       "end": 128.64,
       "kind": "winner_celebration",
       "winner_visible": true,
-      "reason": "Same match-point celebration: 116.5s/118.5s Bublik raises racket and arms in triumph; 120.5s he pumps his fist; 126.5s Bublik and Nakashima embrace at the net (handshake hug, both faces visible); 128.5s Nakashima walks off looking upward, dejected (loser reaction preserved). Ending window fully covers cold_open (115.36–125.36). Cut at 128.64 before the ATP outro card.",
-      "confidence": 0.95
+      "reason": "Burned timestamps 116.5s, 118.5s (arms raised, racket overhead, fist clenched, open-mouth roar — winner_celebration at match point), 120.5s (celebration continuing, foreground Bublik in dark green), 122.5s/124.5s (Nakashima in light blue FILA polo, face forward, eyes open — loser reaction, not slumped), and 126.5s (Bublik and Nakashima meet at the net, completing the post-match handshake). Scoreboard at 120.5s still reads 6-6(5) confirming this is the decisive tiebreak sequence through the handshake. Ending fully covers cold_open 115.36–125.36.",
+      "confidence": 0.93
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "布勃利克",
+      "moment": "other",
+      "wrong_or_old": false,
+      "reason": "Player wears the same dark green FILA/EA7 zip-up shirt and dark FILA headband seen in the source frames (e.g., 16.5s, 64.5s, 86.5s, 116.5s). Court barrier text '2026 ROLEX SHANGHAI MASTERS' and teal side-wall padding match the venue shown throughout the source. Foreground shows Bublik in mid-air on a forehand follow-through with both feet off the ground and racket extended — an action/rally moment, not a celebration or a slump, so moment=other. No third-party watermark.",
+      "confidence": 0.88
     },
     "problems": [
-      "没有官方高清封面候选",
-      "缺 cover 视觉证据"
+      "cold_open 理由引用窗口外时间：[100.5, 102.5]",
+      "封面情绪应为 winner_celebration，现在是 other"
     ],
     "model_attempts": 1,
-    "input_sha256": "fac1f265d5ce26d576164866327e738d4db1c93b9082e4841e4715fa4479ff9c",
+    "input_sha256": "86a46f6ec536d1685b1eb8c70aefaab499340125e3957fc8eacd5c2ae3555226",
     "inputs": [
       "contact_00.jpg",
       "contact_01.jpg",
       "contact_02.jpg"
     ],
-    "cover_image": ""
+    "cover_image": "assets/reel/bublik-nakashima-cover.jpg"
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "0Osyvtzp",
+      "start_utc": "2026-10-11T10:10:00Z",
+      "end_utc": "2026-10-11T12:38:40Z",
+      "source": "flashscore dc_1_0Osyvtzp（DC／DD）"
+    },
+    "replaced_under": "fac1f265d5ce26d576164866327e738d4db1c93b9082e4841e4715fa4479ff9c"
   }
 }
