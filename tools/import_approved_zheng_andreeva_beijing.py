@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Restore the exact Zheng master from Git blobs; prepare Release/pages, never send.
 
-Reuse the pinned native spec/QC/assets and actual audio findings unchanged.
+Prepare only the explicitly requested full-frame-v2 revision, retaining old delivery.
 Publication authorization never creates a human listening or pronunciation pass.
 """
 from __future__ import annotations
@@ -19,6 +19,7 @@ import sys
 import time
 
 import requests
+from tennislive.video.crop_policy import require_fixed_center, require_reel_center
 from import_approved_rna10 import download_chunk
 import render_inputs as ri
 
@@ -27,30 +28,52 @@ DATE = '2026-10-11'
 REPOSITORY = 'robertyang87/tennislive'
 OUTDIR = Path('output') / DATE / 'reel' / SLUG
 SPEC = Path('specs/reels') / f'{SLUG}.json'
-AUDIO = Path('data/evidence/zheng-andreeva-beijing-2026-final/final-audio-review-manifest.json')
-AUTHORIZATION = 'data/evidence/zheng-andreeva-beijing-2026-final/owner-publication-instruction.json'
-# Exact final native film/QC/audio pins, sealed after real source and waveform checks.
-EXPECTED_SPEC = 'd7cb28a69493fc15c63e92f0c6025af81c755c7acce37bd49055d7dced12a51b'
-EXPECTED_QC = '27f73e0d771710ae2a843664e4083490c89858a70aa9f74849e462a2360406ee'
-EXPECTED_MANIFEST = 'a6455c85b5efe174e93c8f6bd83886e2e6f249ceff8e181ff4ca5f54b8f838a8'
-EXPECTED_RENDER = 'b9fbc260706f1c7f51989c5ce2f6c3e944d01050c42bc5d662e3f9e929d84c07'
-EXPECTED_AUDIO = '47647f22953d2c89853c8db7c494aa043278063c3391a62069e288a78ce3c164'
-EXPECTED_ASSETS = {'zheng-andreeva-beijing-2026-final.mp4': (67425605, '2431d8edc4b527e6bde115f9308e7ee193f189b775d9ee30260340842368dc13'), 'zheng-andreeva-beijing-2026-final-review.mp4': (26796239, 'e0dc1d34ffcd5334ef6660a403c84df3c49007207e11d6e84830dec8bd962eb5')}
+REVISION = 'full-frame-v2'
+RELEASE_TAG = f'reel-{SLUG}-{REVISION}'
+REVISION_DIR = Path('data/evidence') / SLUG / REVISION
+AUDIO = REVISION_DIR / 'final-audio-review-manifest.json'
+AUTHORIZATION = str(REVISION_DIR / 'owner-publication-instruction.json')
+PREVIOUS_PUBLICATION = REVISION_DIR / 'previous-publication.json'
+LEDGER = Path('data/reel_publish_ledger') / f'{SLUG}.json'
+PREVIOUS_FILM = '2431d8edc4b527e6bde115f9308e7ee193f189b775d9ee30260340842368dc13'
+PREVIOUS_RECEIPT = '3a9d637d82d7429bb0f911fdb8617672'
+EXPECTED_PREVIOUS_PUBLICATION = 'e573f7ef7c23c5433578cf40e96e2edcce1c35a5ff4b48fe507014f2ef73b087'
+# Fail closed until the main operator seals actual v2 film/QC/audio identities.
+EXPECTED_SPEC = '7e5cefa57c88aaee949a6958690a9d4fd227b07e6e3e1d406d206c4bcebe70b1'
+EXPECTED_QC = '01174e2911434c6ea01743d945d39ab80d88802646c54a40978be2a9933e1121'
+EXPECTED_MANIFEST = '760d2012708e9c21742cc639f29e0b1ce0d0f70e83f0866bc5f912c6e0b5ea78'
+EXPECTED_RENDER = 'b806ea43b5d8fffdbbc8c50a1defa29eec8f0cdd35bd788af2cb603e0e4839c0'
+EXPECTED_AUDIO = '76607c7f7ca7a20941f5935776be924e008d5b2c84ed5c2d83d7ee5def99188e'
+EXPECTED_ASSETS = {'zheng-andreeva-beijing-2026-final.mp4': (89428917, 'a077bf723fb8cde97c48ecea3a7e600ec46bcd05dc1321e4511445ad264bc4ad'), 'zheng-andreeva-beijing-2026-final-review.mp4': (27764184, 'ce4428af7a3e2d8cbcdcc83fcf7568507e30da9517cb0b99f668df5de6b05b3b')}
 EXPECTED_UNRESOLVED = 43
 EXPECTED_PRONUNCIATION_STATUS = 'no_confident_misreads_detected_with_calibration_limits'
 MASTER = f'{SLUG}.mp4'
+# Exact existing source coverage, including continuous sound/geometry splits.
+EXPECTED_SOURCE_PLAN = (
+    (0, 'main', 270, 276.1), (2, 'main', 0, 10), (3, 'main', 10, 26.6),
+    (4, 'main', 132.4, 144.7), (5, 'main', 144.7, 149.2),
+    (6, 'main', 149.2, 156.2), (7, 'main', 156.2, 172.12),
+    (8, 'main', 172.12, 173.36), (9, 'main', 173.36, 185.28),
+    (10, 'main', 185.28, 189.8), (11, 'main', 189.8, 193.0),
+    (12, 'main', 193.0, 201.3), (13, 'main', 201.3, 207.8),
+    (14, 'main', 207.8, 228.2), (15, 'main', 228.2, 233.08),
+    (16, 'main', 248.12, 263.44), (18, 'main', 263.44, 276.1),
+    (19, 'main', 276.1, 292.64), (20, 'main', 292.64, 299.4),
+)
+EXPECTED_CARDS = ((1, 5.5), (17, 12.0))
 
 
 def require_armed():
-    hashes = (EXPECTED_SPEC, EXPECTED_QC, EXPECTED_MANIFEST, EXPECTED_RENDER, EXPECTED_AUDIO)
+    hashes = (EXPECTED_SPEC, EXPECTED_QC, EXPECTED_MANIFEST, EXPECTED_RENDER,
+              EXPECTED_AUDIO, EXPECTED_PREVIOUS_PUBLICATION)
     valid_hash = lambda value: isinstance(value, str) and re.fullmatch(r'[a-f0-9]{64}', value) is not None
     if (not all(valid_hash(value) for value in hashes)
             or set(EXPECTED_ASSETS) != {MASTER, f'{SLUG}-review.mp4'}
             or any(type(size) is not int or size <= 0 or not valid_hash(digest)
                    for size, digest in EXPECTED_ASSETS.values())
-            or type(EXPECTED_UNRESOLVED) is not int or EXPECTED_UNRESOLVED < 0
-            or not isinstance(EXPECTED_PRONUNCIATION_STATUS, str)
-            or not EXPECTED_PRONUNCIATION_STATUS):
+            or EXPECTED_ASSETS.get(MASTER, (0, ''))[1] == PREVIOUS_FILM
+            or type(EXPECTED_UNRESOLVED) is not int or EXPECTED_UNRESOLVED != 43
+            or EXPECTED_PRONUNCIATION_STATUS != 'no_confident_misreads_detected_with_calibration_limits'):
         raise RuntimeError('Importer not armed: actual final Zheng film and native evidence are not pinned')
 
 
@@ -81,6 +104,79 @@ def sha(path):
 def pinned(path, expected):
     if sha(path) != expected:
         raise RuntimeError(f'Pinned native evidence changed: {path}')
+
+
+def previous_publication():
+    """Allow one immutable historical sent record, never an arbitrary prior attempt."""
+    pinned(PREVIOUS_PUBLICATION, EXPECTED_PREVIOUS_PUBLICATION)
+    baseline = read(PREVIOUS_PUBLICATION)
+    ledger = baseline.get('previous_ledger', {})
+    attempts = ledger.get('attempts', [])
+    pushed = baseline.get('previous_pushed', {})
+    render = baseline.get('previous_render', {})
+    if (baseline.get('schema') != 'tennislive.reel-revision-baseline.v1'
+            or baseline.get('revision') != REVISION
+            or baseline.get('historical_evidence_only') is not True
+            or baseline.get('user_request') != '要都用铺满画布的竖屏画面，重新做'
+            or ledger.get('slug') != SLUG or ledger.get('channel') != 'pushplus'
+            or not isinstance(attempts, list) or len(attempts) != 1):
+        raise RuntimeError('Invalid exact previous-publication baseline')
+    attempt = attempts[0]
+    if (attempt.get('key') != f'pushplus:reel:{SLUG}:{PREVIOUS_FILM}'
+            or attempt.get('fingerprint') != PREVIOUS_FILM
+            or attempt.get('status') != 'sent'
+            or attempt.get('pushplus_receipt') != PREVIOUS_RECEIPT
+            or pushed.get('pushplus_receipt') != PREVIOUS_RECEIPT
+            or pushed.get('message_url') != f'https://www.pushplus.plus/shortMessage/{PREVIOUS_RECEIPT}'
+            or any(attempt.get(key) != pushed.get(key) for key in ('at', 'run', 'pushplus_receipt', 'message_url'))
+            or not pushed.get('at') or not pushed.get('run')
+            or render.get('film_sha256') != PREVIOUS_FILM
+            or render.get('film_bytes') != 67425605
+            or render.get('video_url') != f'https://github.com/{REPOSITORY}/releases/download/reel-{SLUG}/{MASTER}'):
+        raise RuntimeError('Previous sent film/receipt identity differs')
+    return baseline
+
+
+def revision_authorization(m):
+    baseline = previous_publication()
+    auth = read(AUTHORIZATION)
+    for obj in (m, auth):
+        if (obj.get('revision') != REVISION
+                or obj.get('previous_publication_path') != str(PREVIOUS_PUBLICATION)
+                or obj.get('previous_publication_sha256') != EXPECTED_PREVIOUS_PUBLICATION):
+            raise ValueError('Missing exact full-frame-v2 previous-publication binding')
+    if auth.get('user_instruction') != baseline['user_request']:
+        raise ValueError('Owner instruction does not identify this explicit remake request')
+    size, digest = EXPECTED_ASSETS[MASTER]
+    if ((auth.get('film_bytes'), auth.get('film_sha256')) != (size, digest)
+            or digest == PREVIOUS_FILM
+            or auth.get('unresolved_occurrences') != EXPECTED_UNRESOLVED
+            or auth.get('pronunciation_status') != EXPECTED_PRONUNCIATION_STATUS
+            or auth.get('human_listening_claimed') is not False):
+        raise ValueError('Revision authorization must bind the new film and actual uncertainty')
+    return baseline
+
+
+def full_frame_spec(spec):
+    segments = spec.get('segments', [])
+    videos = [(i, s) for i, s in enumerate(segments) if 'start' in s or 'end' in s]
+    plan = tuple((i, s.get('source'), s.get('start'), s.get('end')) for i, s in videos)
+    cards = tuple((i, s.get('seconds')) for i, s in enumerate(segments) if 'title_card' in s)
+    if (len(segments) != 21 or plan != EXPECTED_SOURCE_PLAN or cards != EXPECTED_CARDS
+            or spec.get('sources') != {'main': 'https://www.youtube.com/watch?v=Vq_UC0n5DKQ'}
+            or spec.get('track') is not False or spec.get('outro') is not False
+            or 'source_scorebox' in spec):
+        raise RuntimeError('Full-frame-v2 source coverage/cards changed')
+    for i, segment in videos:
+        if (segment.get('fit') != 'crop' or type(segment.get('cx')) not in (float, int)
+                or segment['cx'] != 0.5 or segment.get('track') is not False
+                or any(key in segment for key in ('crop_track', 'contain_keep', 'image', 'stat_card', 'title_card'))):
+            raise RuntimeError(f'Full-frame-v2 requires fixed center crop: segment {i}')
+    try:
+        require_fixed_center(spec, where='full-frame-v2')
+        require_reel_center(spec)
+    except ValueError as exc:
+        raise RuntimeError(f'Full-frame-v2 center policy: {exc}') from exc
 
 
 def manifest(path):
@@ -114,6 +210,7 @@ def manifest(path):
         raise ValueError('Owner instruction is not bound to this film')
     if auth.get('unresolved_occurrences') != EXPECTED_UNRESOLVED or auth.get('human_listening_claimed') is not False or auth.get('pronunciation_status') != EXPECTED_PRONUNCIATION_STATUS:
         raise ValueError('Owner authorization must preserve pronunciation uncertainty')
+    revision_authorization(m)
     return m
 
 
@@ -121,6 +218,7 @@ def native_evidence():
     require_armed()
     for path, expected in [(SPEC, EXPECTED_SPEC), (OUTDIR/'qc_attestation.json', EXPECTED_QC), (OUTDIR/'render_inputs.json', EXPECTED_MANIFEST)]:
         pinned(path, expected)
+    full_frame_spec(read(SPEC))
     render_path = OUTDIR/'render.json'
     before = OUTDIR/'render.before-release.json'
     original = before if before.exists() else render_path
@@ -147,7 +245,9 @@ def native_evidence():
             raise RuntimeError('Invalid native artifact name')
         pinned(OUTDIR/name, expected)
     audio = read(AUDIO)
-    if audio.get('pronunciation_status') != EXPECTED_PRONUNCIATION_STATUS:
+    if (audio.get('pronunciation_status') != EXPECTED_PRONUNCIATION_STATUS
+            or audio.get('unresolved_occurrences') != EXPECTED_UNRESOLVED
+            or audio.get('human_listening_claimed') is not False):
         raise RuntimeError('Actual pronunciation status changed')
     if audio.get('render_json_sha256') not in (EXPECTED_RENDER, sha(render_path)):
         raise RuntimeError('Audio evidence binds a different render')
@@ -157,12 +257,17 @@ def native_evidence():
     return render, audio
 
 
-def no_prior_delivery():
+def no_prior_delivery(m):
+    # manifest() already pins the owner instruction; recheck here before mutation.
+    pinned(AUTHORIZATION, m['authorization_sha256'])
+    baseline = revision_authorization(m)
     tracked = subprocess.check_output(['git', 'ls-files'], text=True).splitlines()
     if (any(p.endswith(f'/reel/{SLUG}/pushed.json') for p in tracked)
-            or (OUTDIR/'pushed.json').exists()
-            or Path(f'data/reel_publish_ledger/{SLUG}.json').exists()):
+            or (OUTDIR/'pushed.json').exists()):
         raise RuntimeError('Delivery already recorded: refusing an automatic duplicate import')
+    # Missing history is also an error: the old sent receipt must remain intact.
+    if not LEDGER.exists() or read(LEDGER) != baseline['previous_ledger']:
+        raise RuntimeError('Delivery ledger differs: refusing new, unknown or unfinished attempts')
 
 
 def verify_file(path, name):
@@ -174,7 +279,7 @@ def verify_file(path, name):
 
 def assemble(request):
     m = manifest(request)
-    no_prior_delivery()
+    no_prior_delivery(m)
     native_evidence()
     cache = Path(os.environ.get('RUNNER_TEMP', '.'))/'approved-zheng-andreeva-beijing-2026-final-chunks'
     cache.mkdir(parents=True, exist_ok=True)
@@ -205,6 +310,8 @@ def assemble(request):
         'original_render_json_sha256': EXPECTED_RENDER, 'original_audio_review_manifest_sha256': EXPECTED_AUDIO,
         'qc_status': 'original-local-pass-preserved', 'new_audio_review': False,
         'authorization_path': AUTHORIZATION, 'authorization_sha256': m['authorization_sha256'],
+        'revision': REVISION, 'previous_publication_path': str(PREVIOUS_PUBLICATION),
+        'previous_publication_sha256': EXPECTED_PREVIOUS_PUBLICATION,
         'pronunciation_status': EXPECTED_PRONUNCIATION_STATUS, 'unresolved_occurrences': EXPECTED_UNRESOLVED,
         'human_listening_claimed': False, 'transport': m.get('transport', ''),
         'assets': [{k: a[k] for k in ('name', 'bytes', 'sha256')} for a in m['assets']],
@@ -222,7 +329,7 @@ def remote_verify(asset, name):
     if asset.get('size') != expected_bytes:
         raise RuntimeError(f'Release metadata byte count differs: {name}')
     url = asset['url']
-    if url != f'https://github.com/{REPOSITORY}/releases/download/reel-{SLUG}/{name}':
+    if url != f'https://github.com/{REPOSITORY}/releases/download/{RELEASE_TAG}/{name}':
         raise RuntimeError('Unexpected Release download URL')
     for attempt in range(3):
         try:
@@ -254,12 +361,12 @@ def release_assets(tag):
 
 def release(request):
     m = manifest(request)
-    no_prior_delivery()
+    no_prior_delivery(m)
     render, audio = native_evidence()
     for a in m['assets']:
         verify_file(OUTDIR/a['name'], a['name'])
     run(sys.executable, 'tools/push_reel.py', '--stage', 'check', '--outdir', str(OUTDIR), '--copy', str(SPEC.with_suffix('.xhs.txt')))
-    tag = f'reel-{SLUG}'
+    tag = RELEASE_TAG
     existing = subprocess.run(['gh', 'release', 'view', tag, '--json', 'assets,isDraft'], text=True, capture_output=True)
     if existing.returncode:
         # Distinguish absent Release from authorization/network errors before mutation.

@@ -1,0 +1,35 @@
+{
+  "schema": "tennislive.root-film-frame-review.v1",
+  "revision": "full-frame-v2",
+  "scope": "Five actual encoded-film frames viewed by root; independent whole-segment/ASS/boundary review recorded separately. No human listening claimed.",
+  "film_sha256": "01d6c987aafc3e80305d7e27257e28cb011d79f9e46018c24775768b74414d01",
+  "spec_sha256": "dec8d976dfcabbb0aba59e8fe72bc725e3922d370d571e623227295590b75116",
+  "checked_film_times": [
+    113.8,
+    144.36,
+    170.96,
+    185.8,
+    197.96
+  ],
+  "observations": [
+    "Portrait picture fills full canvas with native topbar overlaid.",
+    "Final central native board is wholly visible; bilingual caption sits just above it.",
+    "Championship point original names, 40/30 and CHAMPIONSHIP POINT header retained.",
+    "Celebration caption clears Zheng face and raised hands.",
+    "252.4 actor-contaminated copied scoreboard absent; complete source picture/time remains."
+  ],
+  "known_limits": [
+    "Fixed center portrait crop excludes source lateral motion; no claim all side movement/strikes remain spatially visible.",
+    "43 prior pronunciation calibration limits retained without human-listening or blanket-tone proof."
+  ],
+  "frame_sha256": {
+    "/workspace/scratch/zheng-fill-delivery/final-frames/113.80.png": "cea825a750854d9743203f4301d516557662be789322ac4d6af714e9bbd1ac16",
+    "/workspace/scratch/zheng-fill-delivery/final-frames/144.36.png": "0d4f01e138fcaf316004fa1106ea823888db9d6906800597f1a5b71bf3be871e",
+    "/workspace/scratch/zheng-fill-delivery/final-frames/170.96.png": "f7f0e6aea6929d9ab838bcc80198fd74f1c7dbe078fcd1297f2f6e747333d6dd",
+    "/workspace/scratch/zheng-fill-delivery/final-frames/185.80.png": "e335e8081b21e6cb463cbe8105864047914d229b7c844c14c099eda0fba3e017",
+    "/workspace/scratch/zheng-fill-delivery/final-frames/197.96.png": "604785ee1e2075e64c5be2c29c36c3b152d8fd8abb51460c94dea72fad136065"
+  },
+  "human_listening_claimed": false,
+  "historical_evidence_only": true,
+  "candidate_publication_status": "rejected due independent transition-tail finding outside these five-frame scope; not final film approval"
+}

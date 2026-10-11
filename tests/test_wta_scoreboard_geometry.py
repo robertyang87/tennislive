@@ -252,3 +252,65 @@ def test_wide_header_never_becomes_games_anchor_even_across_games_column(header_
     assert alpha[20, header_width + 5] == 0
     assert alpha[80, 365] == 255  # points slot independent of tag width
     assert not alpha[60:, 390:].any()
+
+
+def test_native_window_mask_roundtrip_preserves_points_and_header_only_inside_windows(tmp_path, monkeypatch):
+    import json
+    import subprocess
+    from PIL import Image
+    path = (Path(__file__).parent / "fixtures" / "wta_scoreboard"
+            / "beijing-zheng-andreeva-267000-championship-point.png")
+    geometry = w.frame_geometry(np.asarray(Image.open(path)), cap=472)
+    # Ten genuine, identical native graphics. The last two frames represent
+    # dissolve tail; a segment-local window must never leak into that tail.
+    monkeypatch.setattr(w, "scan_geometry", lambda *a: ([geometry] * 10, 760))
+    seg = SimpleNamespace(score_inset=(88, 828, 560, 986), start=267., end=267.32,
+                          speed=1., source=0,
+                          score_inset_windows=((.04, .12), (.20, .32)))
+    proof = w.resolve_masks({0: Path("source.mp4")}, [seg], tmp_path, "25", .08)
+    record = json.loads(proof.read_text())["segments"][0]
+    x0, y0, x1, y1 = record["source_bounds"]
+    width, height = x1 - x0, y1 - y0
+    decoded = subprocess.check_output([
+        "ffmpeg", "-v", "error", "-i", seg.score_inset_mask,
+        "-pix_fmt", "gray", "-f", "rawvideo", "-"])
+    alpha = np.frombuffer(decoded, np.uint8).reshape(10, height, width)
+    # Half-open intervals: start frames 1/5 included; end frames 3/8 excluded.
+    assert np.flatnonzero(alpha.any(axis=(1, 2))).tolist() == [1, 2, 5, 6, 7]
+    for frame in (1, 2, 5, 6, 7):
+        assert alpha[frame, 75 - (y0 - 828), 400 - (x0 - 88)] == 255  # 40
+        assert alpha[frame, 125 - (y0 - 828), 400 - (x0 - 88)] == 255  # 30
+        assert alpha[frame, 20 - (y0 - 828), 180 - (x0 - 88)] == 255  # tag
+        assert alpha[frame, 20 - (y0 - 828), 240 - (x0 - 88)] == 0  # court gap
+    assert record["allowed_source_windows"] == [[267.04, 267.12], [267.2, 267.32]]
+    assert record["measured_present_frames"] == 10
+    assert record["present_frames"] == 5
+    assert record["window_excluded_present_frames"] == 5
+
+
+def test_unset_windows_keep_each_existing_native_geometry_unchanged(tmp_path, monkeypatch):
+    geometry = w.frame_geometry(band())
+    original = [geometry, geometry, geometry, None, None]
+    captured = {}
+    monkeypatch.setattr(w, "scan_geometry", lambda *a: (original, 760))
+    def write(frames, bounds, fps, dest):
+        captured["frames"] = frames
+        dest.parent.mkdir(parents=True)
+        dest.write_bytes(b"native-mask")
+    monkeypatch.setattr(w, "write_geometry_mask", write)
+    seg = SimpleNamespace(score_inset=(88, 828, 560, 1028), start=12., end=12.2,
+                          speed=1., source=0, score_inset_windows=())
+    w.resolve_masks({0: Path("source.mp4")}, [seg], tmp_path, "25", 0)
+    assert captured["frames"] == original
+
+
+def test_window_cannot_borrow_a_native_board_from_outside_its_declared_time(tmp_path, monkeypatch):
+    geometry = w.frame_geometry(band())
+    monkeypatch.setattr(w, "scan_geometry", lambda *a: ([geometry] * 3 + [None] * 3, 760))
+    def forbidden_write(*args):
+        pytest.fail("empty declared window must fail before creating a mask")
+    monkeypatch.setattr(w, "write_geometry_mask", forbidden_write)
+    seg = SimpleNamespace(score_inset=(88, 828, 560, 1028), start=12., end=12.24,
+                          speed=1., source=0, score_inset_windows=((.12, .24),))
+    with pytest.raises(RuntimeError, match="score_inset_windows.*真实 WTA"):
+        w.resolve_masks({0: Path("source.mp4")}, [seg], tmp_path, "25", 0)
