@@ -1,0 +1,57 @@
+{
+  "tour": "wta",
+  "a": {
+    "aces": 4,
+    "df": 2,
+    "winners": 24,
+    "ue": 18,
+    "first_in": 22,
+    "first_total": 58,
+    "first_won": 16,
+    "second_total": 36,
+    "second_won": 23,
+    "bp_conv": 4,
+    "bp_chances": 8,
+    "pts_won": 72,
+    "pts_total": 133
+  },
+  "b": {
+    "aces": 7,
+    "df": 0,
+    "winners": 16,
+    "ue": 15,
+    "first_in": 53,
+    "first_total": 75,
+    "first_won": 32,
+    "second_total": 22,
+    "second_won": 10,
+    "bp_conv": 2,
+    "bp_chances": 6,
+    "pts_won": 61,
+    "pts_total": 133
+  },
+  "_winners_ue_evidence": {
+    "provider": "official_wta",
+    "method": "api",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS001/advanced-stats",
+    "source_path": "data/evidence/zheng-andreeva-beijing-2026-final/advanced-stats.json",
+    "source_sha256": "223c39331aa527f0d557c023a2a9623c91b1cfe94eca5943b749bb4fef920db2",
+    "period": "MatchTotal",
+    "match_date": "2026-10-11",
+    "checked_at": "2026-10-11T14:40:20.401606+00:00",
+    "matchup": [
+      "郑钦文",
+      "米拉·安德烈耶娃"
+    ],
+    "winner_result": "7-5 6-4",
+    "winners": [
+      24,
+      16
+    ],
+    "ue": [
+      18,
+      15
+    ]
+  },
+  "_source": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS001/stats ; https://api.wtatennis.com/tennis/tournaments/1020/2026/matches/LS001/advanced-stats"
+}

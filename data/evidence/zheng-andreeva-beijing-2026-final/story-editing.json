@@ -1,0 +1,313 @@
+{
+  "slug": "zheng-andreeva-beijing-2026-final",
+  "status": "story_frozen_before_native_render",
+  "source": {
+    "official_url": "https://www.youtube.com/watch?v=Vq_UC0n5DKQ",
+    "sha256": "1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f",
+    "duration_video_seconds": 426.12,
+    "fps": 25
+  },
+  "manual_evidence_method": "Current assistant read official report and fresh API blocks, source contact00/01/02 pixels; peer source/QC independently actual frames; actual ASR peer required. No external editorial/vision model and no human listening claimed.",
+  "verified_story": [
+    "0-2 to2-2 is prior context; source frame0 already2-2",
+    "Firstset 4-5 three setpoints saved; final11points allwon",
+    "Secondset openingbreak thenimmediate rebreak 1-1",
+    "Secondset4-4 fourthBP converted; shown248.12point onlyopponentgamepoint saved",
+    "Finalservegame0-30 tofirstmatchpoint then6-4"
+  ],
+  "shot_evidence": [
+    {
+      "source_window": [
+        162.4,
+        171.4
+      ],
+      "claim": "郑远端底线反复换落点，Mirra近端追两边线",
+      "method": "source agent fine actual frame wall",
+      "pending": "native framing and narration silence"
+    },
+    {
+      "source_window": [
+        215.3,
+        218.3
+      ],
+      "claim": "近端郑从中路向右边线伸拍，再回中路准备下一拍",
+      "method": "Current assistant directly viewed source fine setpoint-and-break/contact_01; dedicated source agent independently confirmed same frames",
+      "pending": "native framing actual final film QC"
+    }
+  ],
+  "known_corrections": [
+    "第九局计16分，不用误写15分；XHS已用反复争夺替代",
+    "前4场仅进入第3盘，第二场3-0ret，不声称战满三盘",
+    "Finalhandshake confirmed288.x; no embraceclaim",
+    "Cold271.08截完整270.08句，不合法mute; prefer complete winning-after sentence",
+    "FinalQueen sentence must to299.4; no hardcut298.44",
+    "Outrofalse per root; no native brand TTS in this episode",
+    "SP2中文声责149.2–156.2、156.2以后high原声，避免lowbed在长空白段制造数字静音；同源同几何连续完整回合，无静音豁免。",
+    "root实际native crop193–207.8/301发现205.7起大结果板字幕压名字；在201.3完整英语句头拆出full_source/356，前三后cue全保、原源无删除，共18段。",
+    "root实际native172.9原生近景左胸/上臂delogo矩形；仅原native切点172.12–173.36改full_source不回贴/不delogo，两侧继续contain.65/insettrue，完整长分/第3盘点无任何源帧删除，共20段。"
+  ],
+  "current_assets": [
+    "/workspace/scratch/zheng-final-story/spec-draft.json",
+    "/workspace/scratch/zheng-final-story/copy-draft.json",
+    "/workspace/scratch/zheng-final-story/xhs-draft.txt"
+  ],
+  "pending": [
+    "pre-render independent1.24s closeup/native final geometry",
+    "current20 actual foreground-audio rebind",
+    "pronunciation findings binding",
+    "actual final-film independently stored QC"
+  ],
+  "formal_spec_path": "specs/reels/zheng-andreeva-beijing-2026-final.json",
+  "formal_spec_sha256": "e7ea11674cc8659a3857d2ff6de855934af01014f95fba1358f84450091891fa",
+  "formal_segments": 20,
+  "nominal_body_seconds": 202.16,
+  "native_dryrun": {
+    "actual_outdir": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final",
+    "exit_code": 0,
+    "log_path": "/workspace/scratch/zheng-final-story/dryrun-final20.log",
+    "fixed_center_actual_validation": "success current20",
+    "not_a_final_film_pass": true
+  },
+  "manual_narration": [
+    "郑钦文，在北京捧起首座一千赛冠军奖杯。",
+    "北京时间十月十一日晚上，中网女单决赛。郑钦文对阵安德烈耶娃。",
+    "前四轮比赛，全部进入第三盘。决赛零比二落后，她立即回破，追到二比二。",
+    "四比五，十五比四十。三个盘点，郑钦文全部救回。",
+    "郑钦文在底线反复改变落点，逼对手从一侧边线追到另一侧。",
+    "连赢十一分，七比五拿下首盘。",
+    "第二盘先破发，又被马上回破。侧向追球后，她迅速回到中路，准备下一拍。",
+    "四比四，先把对手局点救回平分。第四次破发机会，她终于兑现，五比四领先。",
+    "第一发球进球率只有百分之三十八，第二发球却赢下二十三分。胜赛局从零比三十追到赛点。她能把冠军留在北京吗？"
+  ],
+  "selected_source_plan": [
+    {
+      "index": 0,
+      "id": "cold_open",
+      "start": 270,
+      "end": 276.1,
+      "fit": "full_source",
+      "cx": 0.5,
+      "score_inset": false,
+      "subtitle_bottom": 356
+    },
+    {
+      "index": 2,
+      "id": "coordinate",
+      "start": 0,
+      "end": 10,
+      "fit": "crop",
+      "cx": 0.5,
+      "score_inset": true,
+      "subtitle_bottom": 301
+    },
+    {
+      "index": 3,
+      "id": "first_set_context",
+      "start": 10,
+      "end": 26.6,
+      "fit": "crop",
+      "cx": 0.5,
+      "score_inset": true,
+      "subtitle_bottom": 301
+    },
+    {
+      "index": 4,
+      "id": "setpoints_context",
+      "start": 132.4,
+      "end": 144.7,
+      "fit": "contain",
+      "cx": 0.5,
+      "score_inset": true,
+      "subtitle_bottom": 356
+    },
+    {
+      "index": 5,
+      "id": "first_saved_setpoint_commentary",
+      "start": 144.7,
+      "end": 149.2,
+      "fit": "contain",
+      "cx": 0.5,
+      "score_inset": true,
+      "subtitle_bottom": 356
+    },
+    {
+      "index": 6,
+      "id": "second_saved_setpoint_technique",
+      "start": 149.2,
+      "end": 156.2,
+      "fit": "contain",
+      "cx": 0.5,
+      "score_inset": true,
+      "subtitle_bottom": 356
+    },
+    {
+      "index": 7,
+      "id": "second_saved_setpoint_ambient",
+      "start": 156.2,
+      "end": 172.12,
+      "fit": "contain",
+      "cx": 0.5,
+      "score_inset": true,
+      "subtitle_bottom": null
+    },
+    {
+      "index": 8,
+      "id": "second_setpoint_reaction_original_board",
+      "start": 172.12,
+      "end": 173.36,
+      "fit": "full_source",
+      "cx": 0.5,
+      "score_inset": false,
+      "subtitle_bottom": null
+    },
+    {
+      "index": 9,
+      "id": "third_saved_setpoint_ambient",
+      "start": 173.36,
+      "end": 185.28,
+      "fit": "contain",
+      "cx": 0.5,
+      "score_inset": true,
+      "subtitle_bottom": null
+    },
+    {
+      "index": 10,
+      "id": "first_set_close",
+      "start": 185.28,
+      "end": 189.8,
+      "fit": "crop",
+      "cx": 0.5,
+      "score_inset": true,
+      "subtitle_bottom": 356
+    },
+    {
+      "index": 11,
+      "id": "first_set_ace_commentary",
+      "start": 189.8,
+      "end": 193.0,
+      "fit": "crop",
+      "cx": 0.5,
+      "score_inset": true,
+      "subtitle_bottom": 356
+    },
+    {
+      "index": 12,
+      "id": "first_set_crowd_commentary",
+      "start": 193.0,
+      "end": 201.3,
+      "fit": "crop",
+      "cx": 0.5,
+      "score_inset": false,
+      "subtitle_bottom": 301
+    },
+    {
+      "index": 13,
+      "id": "first_set_summary_commentary",
+      "start": 201.3,
+      "end": 207.8,
+      "fit": "full_source",
+      "cx": 0.5,
+      "score_inset": false,
+      "subtitle_bottom": 356
+    },
+    {
+      "index": 14,
+      "id": "second_set_opening_break",
+      "start": 207.8,
+      "end": 228.2,
+      "fit": "contain",
+      "cx": 0.5,
+      "score_inset": true,
+      "subtitle_bottom": 356
+    },
+    {
+      "index": 15,
+      "id": "second_set_break_commentary",
+      "start": 228.2,
+      "end": 233.08,
+      "fit": "contain",
+      "cx": 0.5,
+      "score_inset": true,
+      "subtitle_bottom": 356
+    },
+    {
+      "index": 16,
+      "id": "late_break_context",
+      "start": 248.12,
+      "end": 263.44,
+      "fit": "full_source",
+      "cx": 0.5,
+      "score_inset": false,
+      "subtitle_bottom": 400
+    },
+    {
+      "index": 18,
+      "id": "complete_championship_point",
+      "start": 263.44,
+      "end": 276.1,
+      "fit": "full_source",
+      "cx": 0.5,
+      "score_inset": false,
+      "subtitle_bottom": 356
+    },
+    {
+      "index": 19,
+      "id": "celebration_handshake_salute",
+      "start": 276.1,
+      "end": 299.4,
+      "fit": "full_source",
+      "cx": 0.5,
+      "score_inset": false,
+      "subtitle_bottom": 356
+    }
+  ],
+  "actual_source_quote_table": "data/evidence/zheng-andreeva-beijing-2026-final/broadcast-quote-candidates.json",
+  "actual_source_EN_cues": 23,
+  "originalEnglish_method": "Dedicated actual multiple ASR models, including narrowly checked206.57–207.70 Thank you so much; no human listening claimed.",
+  "title_cards": {
+    "count": 2,
+    "seconds": [
+      5.5,
+      12.0
+    ]
+  },
+  "outro": false,
+  "fixed_text_actual_tts_seconds": {
+    "landing": 4.728,
+    "coordinate": 6.792,
+    "first_set_context": 7.392,
+    "setpoints_context": 6.0,
+    "second_saved_setpoint_technique": 5.88,
+    "first_set_close": 3.456,
+    "second_set_opening_break": 7.584,
+    "late_break_context": 7.368,
+    "stats_and_matchpoint": 10.752
+  },
+  "pronunciation_status": "Independent current-episode actual acoustic measurements underway; timing is not pronunciation pass.",
+  "superseded_18_segment_audio_binding": {
+    "status": "native inspect SUCCESS for this exact spec; not a final mixed-audio pass",
+    "source_windows": 16,
+    "cue_count": 23,
+    "spec_sha256": "68e351111af4be43c8538817d083ea63755a4b9c70f9b0e4fd4f1cf85da4aac6",
+    "plan_sha256": "2970755d14b624ad70487952dd12f601eeab23f0162507ecfeb46978f7fec4d1",
+    "review_sha256": "b6e482e6f9f7d7b7ed09b2a580afd4d43d8789d8b399f10a86ed03f20a5c6eca",
+    "method": "Dedicated raw_audio agent actual native rebuild+sourceSHA inspect, no human listening claimed"
+  },
+  "foreground_audio_actual_binding": {
+    "status": "current20 actual rebinding pending; prior18 SUCCESS does not bind this20 spec",
+    "review_path": "data/audio_reviews/zheng-andreeva-beijing-2026-final.json",
+    "source_windows_expected": 18,
+    "cue_count": 23,
+    "human_listening_claimed": false
+  },
+  "pre_render_geometry_evidence": {
+    "root_actual_viewed": [
+      "full_source bigFINAL dualsubtitle356: approx boardbottom970 and English glyph top985, low and clear",
+      "full_source source201.3–207.8 protects source205.7 firstset bigresult board names",
+      "ordinary native board body301 and badge356 actual sample clear"
+    ],
+    "last_pending_before_render": "independent actual 172.12–173.36 full_source closeup preview",
+    "final_film_pass_claimed": false
+  },
+  "freeze_instruction": "Do not mutate this spec/story evidence after native render-input/manifest references; final-film QC and actual mixed-audio binding live in separate evidence reports."
+}

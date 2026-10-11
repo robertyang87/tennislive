@@ -1,0 +1,59 @@
+{
+  "source_sha256": "1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f",
+  "model": "large-v3",
+  "device": "cpu",
+  "compute_type": "int8",
+  "normalization": "none; original amplitude",
+  "vad_filter": true,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "initial_prompt": null,
+  "human_listening_claimed": false,
+  "windows": [
+    [
+      205.72,
+      207.8
+    ]
+  ],
+  "window_results": [
+    {
+      "window": [
+        205.72,
+        207.8
+      ],
+      "duration": 2.08,
+      "duration_after_vad": 1.232,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    }
+  ],
+  "segments": [
+    {
+      "window": [
+        205.72,
+        207.8
+      ],
+      "start": 206.83,
+      "end": 207.19,
+      "text": " Thank you.",
+      "no_speech_prob": 0.6174861788749695,
+      "avg_logprob": -0.46839187542597455,
+      "words": [
+        {
+          "start": 206.83,
+          "end": 207.07,
+          "word": " Thank",
+          "probability": 0.6062551140785217
+        },
+        {
+          "start": 207.07,
+          "end": 207.19,
+          "word": " you.",
+          "probability": 0.9949508905410767
+        }
+      ]
+    }
+  ],
+  "run_status": "complete",
+  "recorded_at": "2026-10-11T15:01:37.406343+00:00"
+}

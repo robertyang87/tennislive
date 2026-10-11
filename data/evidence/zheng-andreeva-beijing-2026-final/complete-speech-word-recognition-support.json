@@ -1,0 +1,55 @@
+{
+  "schema": "tennislive.actual-whole-word-recognition-support.v1",
+  "input_sha256": "b3bac63013325de6325825a9102ba6817add646143cdd579990cf1d078a39c21",
+  "models": [
+    "Systran/faster-whisper-large-v3",
+    "mobiuslabsgmbh/faster-whisper-large-v3-turbo"
+  ],
+  "model_family_correlation": "Both Whisper-family, different model sizes/weights; not independent architecture evidence",
+  "actual_models_completed": true,
+  "parameters": "CPU int8, zh, beam5, word timestamps, VAD, no prompt, no previous-text conditioning",
+  "asr_used_to_prove_tones": false,
+  "human_listening_claimed": false,
+  "literal_names": {
+    "安德烈耶娃": {
+      "large-v3": "安德烈耶娃",
+      "turbo": "安德烈耶娃",
+      "native_tokens": [
+        "安德烈",
+        "耶娃"
+      ],
+      "status": "whole_word_recognition_consistent_not_tone_proof"
+    },
+    "郑钦文": {
+      "large-v3": "郑金文",
+      "turbo": "郑亲文",
+      "native_tokens": [
+        "郑钦文"
+      ],
+      "status": "orthographic_divergence_retained_not_confident_pronunciation_error"
+    },
+    "北京": {
+      "large-v3": "北京",
+      "turbo": "北京",
+      "status": "whole_word_recognition_consistent_not_independent_bei3_proof"
+    },
+    "中网": {
+      "large-v3": "中网",
+      "turbo": "中芒",
+      "status": "orthographic_divergence_retained"
+    }
+  },
+  "actual_only_word": {
+    "text": "只有",
+    "large-v3": "只有",
+    "turbo": "只有",
+    "status": "whole_word_recognized; target069 low/far-from-both comparison does not establish tone3 or tone1"
+  },
+  "content_numbers": "Both raw models recognize first title1000, Oct11, 0-2/2-2,4-5,15-40,3setpoints,11straightpoints,7-5,4-4,4thbreak,5-4,38%,23points,0-30; all original transcripts retained",
+  "method_limits": [
+    "ASR Chinese spelling does not prove tone.",
+    "WordBoundary subword subdivisions are tokenizer output, not phoneme ground truth.",
+    "Native marks complete through each final sentence token; all9 unchanged MP3 files are exact native ZIP audio.",
+    "No manual listening performed; audio content input not supported by this assistant."
+  ]
+}

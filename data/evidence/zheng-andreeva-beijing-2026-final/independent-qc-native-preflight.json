@@ -1,0 +1,73 @@
+{
+  "status": "native_geometry_preflight_ready_to_render_not_final_pass",
+  "slug": "zheng-andreeva-beijing-2026-final",
+  "source_sha256": "1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f",
+  "initial_loaded_candidate_spec_sha256": "8feb1c18866e93d0f67aa585004fdf67fc92a436d03c870fe6df193e23812f66",
+  "initial_manifest_sha_warning": "Manifest spec hash was recomputed during generation; initial loaded 17-segment candidate identified separately. It is not evidence for final 20-segment master.",
+  "preview_method": [
+    "load_spec",
+    "parse_segments",
+    "require_reel_center",
+    "wta_scoreboard.resolve_masks",
+    "build_match_reel.cut_segment"
+  ],
+  "initial_frame_count": 117,
+  "actual_viewed_contact_walls": [
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-00-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-02-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-03-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-04-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-05-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-06-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-07-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-07-contact-1.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-07-contact-2.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-07-contact-3.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-08-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-09-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-10-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-11-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-12-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-13-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-15-contact-0.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/native-preflight/seg-16-contact-0.jpg"
+  ],
+  "title_card_scope": "Two title cards were not rendered in this independent geometry preview. Final movie and poster remain to be reviewed.",
+  "issues": [
+    {
+      "source_window": [
+        201.3,
+        207.8
+      ],
+      "finding": "Crop with margin301 overlapped native set-summary names/score panel.",
+      "fix": "Whole-English-sentence split at201.3; full_source score_insetfalse margin356",
+      "actual_fixed_sample": "/workspace/scratch/zheng-final-delivery/native-samples/first_set_summary_commentary.jpg",
+      "review": "English/Chinese below native scene, no name/score/face overlap in actual sample."
+    },
+    {
+      "source_window": [
+        172.12,
+        173.36
+      ],
+      "finding": "Contain .65 delogo erased upper left chest/upper arm in actual source172.90 native frame.",
+      "fix": "Native full_source score_insetfalse no caption, contiguous ambient split with no source frames removed.",
+      "actual_fixed_manifest": "/workspace/scratch/zheng-final-independent-qc/native-reaction-fixed/manifest.json",
+      "actual_fixed_spec_sha256": "e7ea11674cc8659a3857d2ff6de855934af01014f95fba1358f84450091891fa",
+      "actual_fixed_sample_count": 4,
+      "review": "Actually viewed172.20,172.60,172.92,173.24. Chest/arm/shirt intact with native original scoreboard unobscured, no added delogo."
+    }
+  ],
+  "other_findings": "Dense SP2/SP3 native sequence preserved lateral movement, bodies and rackets. Other start/mid/end geometry samples reveal no further necessary blockers. Full-source championship and celebration preserve native original board. Source299.4end is safely before award299.96.",
+  "caption_samples_actual_viewed": [
+    "first_saved_setpoint_commentary",
+    "second_set_break_commentary",
+    "complete_championship_point",
+    "celebration_handshake_salute",
+    "first_set_summary_commentary"
+  ],
+  "limits": [
+    "These are native preflight clips, not actual final master evidence.",
+    "Initial117 frames have no final actual cue burn-in; separate five actual native subtitle samples reviewed.",
+    "No audio pass or human listening claim; separate actual audio proofs required."
+  ]
+}

@@ -1,0 +1,4802 @@
+{
+  "schema": "tennislive.independent-final-visual-qc.v1",
+  "slug": "zheng-andreeva-beijing-2026-final",
+  "status": "pass",
+  "scope": "independent_actual_final_movie_visual_editorial_review_only",
+  "checked_at": "2026-10-11T15:35:41.868970+00:00",
+  "verdict": "No material visual/editorial blocker detected in actual final master after complete segment/cue coverage and dense critical-point image review. This is not a blanket pronunciation pass or publication authorization.",
+  "pins": {
+    "film": {
+      "path": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/zheng-andreeva-beijing-2026-final.mp4",
+      "sha256": "2431d8edc4b527e6bde115f9308e7ee193f189b775d9ee30260340842368dc13",
+      "bytes": 67425605
+    },
+    "spec": {
+      "path": "specs/reels/zheng-andreeva-beijing-2026-final.json",
+      "sha256": "d7cb28a69493fc15c63e92f0c6025af81c755c7acce37bd49055d7dced12a51b",
+      "bytes": 40292
+    },
+    "render_post_native_qc": {
+      "path": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/render.json",
+      "sha256": "b9fbc260706f1c7f51989c5ce2f6c3e944d01050c42bc5d662e3f9e929d84c07",
+      "bytes": 1546
+    },
+    "render_inputs": {
+      "path": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/render_inputs.json",
+      "sha256": "a6455c85b5efe174e93c8f6bd83886e2e6f249ceff8e181ff4ca5f54b8f838a8",
+      "bytes": 29981
+    },
+    "native_qc_attestation": {
+      "path": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/qc_attestation.json",
+      "sha256": "27f73e0d771710ae2a843664e4083490c89858a70aa9f74849e462a2360406ee",
+      "bytes": 637
+    },
+    "actual_subtitles_ass": {
+      "path": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/subtitles.ass",
+      "sha256": "03c4e96a5f2b2df356f86ee8382f2ce8166d19b2fa7feab730bdd755936b8213",
+      "bytes": 7319
+    },
+    "poster": {
+      "path": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/poster.jpg",
+      "sha256": "752aa15d774c32c6c33d9b878ce6fbbbeff730193aca9f117e22d699090f078b",
+      "bytes": 473914
+    },
+    "scoreboard_qc": {
+      "path": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/scoreboard_qc.json",
+      "sha256": "5ba384089c7f1e02801f6e14275ccbe7d771f4712a7923a15c093aef345ea187",
+      "bytes": 19052
+    },
+    "audio_review_binding": {
+      "path": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/audio_review_binding.json",
+      "sha256": "65da0a1080f44934bf9dda75d1b565b1696aba7cc7a623ad706dc1eb54750a0a",
+      "bytes": 918
+    },
+    "actual_audio_bindings": {
+      "path": "data/evidence/zheng-andreeva-beijing-2026-final/final-actual-audio-bindings.json",
+      "sha256": "a72aca8950e84b4b9fba9fcfd85752da43dc30b93f601f426ccb9739a92a34fd",
+      "bytes": 14310
+    },
+    "final_audio_review": {
+      "path": "data/evidence/zheng-andreeva-beijing-2026-final/final-audio-review-manifest.json",
+      "sha256": "47647f22953d2c89853c8db7c494aa043278063c3391a62069e288a78ce3c164",
+      "bytes": 19317
+    },
+    "pronunciation_pending": {
+      "path": "data/evidence/zheng-andreeva-beijing-2026-final/final-pronunciation-pending-occurrences.json",
+      "sha256": "b9b7f77222e8e75107b23f2c511548bab527cfecbdfa3ce9ba28e165e651db7f",
+      "bytes": 73828
+    },
+    "official_source": {
+      "path": "/workspace/scratch/zheng-final-source/Vq_UC0n5DKQ.mp4",
+      "sha256": "1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f",
+      "bytes": 72740950
+    },
+    "source_review": {
+      "path": "data/evidence/zheng-andreeva-beijing-2026-final/source-review.json",
+      "sha256": "b57a601f9c34c404c2c0cf6af072ed854642231bdeb8dd9159a37447e1737cda",
+      "bytes": 15374
+    },
+    "independent_source_precheck": {
+      "path": "data/evidence/zheng-andreeva-beijing-2026-final/independent-qc-source-precheck.json",
+      "sha256": "1b43893209112ff43777538afb2298453878f87fd3d2191376b518b359eb429d",
+      "bytes": 10247
+    },
+    "raw_frame_extraction_manifest": {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/manifest.json",
+      "sha256": "cc0ae26ad5d0b76a9f26ee0f79d0324a92737b14c037c5ef01c820d5286fd164",
+      "bytes": 171654
+    }
+  },
+  "movie": {
+    "seconds": 203.32,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": 25,
+    "cx": 0.5,
+    "track": false,
+    "outro_seconds": 0
+  },
+  "review_coverage": {
+    "method": "Actual rendered movie decoded once sequentially by exact 25fps frame indices; all generated contact walls actually inspected, with final high-resolution repaired/body/summary/Queen/ending frames additionally inspected. Source-only and placeholder previews do not substitute for this movie review.",
+    "requested_sample_records": 385,
+    "unique_actual_movie_frames_initial": 377,
+    "additional_exact_frame": {
+      "label": "first-summary-exact-206.92",
+      "film_time": 113.92,
+      "source_time": 206.92,
+      "actual_movie_frame_index": 2848,
+      "actual_movie_frame_time": 113.92,
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/summary-exact-206.92.jpg",
+      "sha256": "51c40fb1ea50e75f8d837ba13b16c996a7a7cccf57b0948997fe4dd45992553b",
+      "bytes": 152650
+    },
+    "unique_actual_movie_frames_total": 378,
+    "segments_start_mid_end": 20,
+    "actual_ass_cues_mid_and_end": 46,
+    "contact_walls_actually_viewed": 28,
+    "critical_point_contact_walls": 14,
+    "distinct_complete_point_events_reviewed": 8,
+    "counting_note": "14 denotes keypoint contact walls, not 14 distinct tennis points. Continuous point windows often cross multiple segments. This is image-based dense sampling, not an assertion that every movie frame or audio sample was manually watched/listened to.",
+    "decode_mode": "single-sequential25fps-frame-index-select"
+  },
+  "checks": {
+    "identity_facts": {
+      "status": "pass",
+      "result": "2026 Beijing final: Zheng 7-5 6-4 Mirra Andreeva, first WTA1000 title; actual board and official fact/source evidence agree.",
+      "late_game_accuracy": "Shown 248.12–263.44 point saves opponent game point to deuce at4-4; later fourth break point converted to5-4 is narrated as subsequent fact, not falsely presented as that displayed point."
+    },
+    "story_and_density": {
+      "status": "pass",
+      "cards": 2,
+      "card_seconds": 17.5,
+      "richness": "Cold win declaration, first-set comeback context, three saved set points with lateral play, first-set clinch, opening second-set break and recovery context,4-4 game-point save, service statistics, complete championship point and celebration."
+    },
+    "complete_points": {
+      "status": "pass_in_dense_actual_sampling",
+      "events": [
+        "opening source0–26.6 retains service/winner/reaction",
+        "SP1 source132.4–149.2",
+        "SP2 source149.2–173.36 across continuous splits",
+        "SP3 source173.36–185.28",
+        "first-set clinch source185.28–193 plus207.8 reaction/summary",
+        "opening second-set break source207.8–233.08",
+        "4-4 game-point save source248.12–263.44",
+        "championship point source263.44–276.1 with postpoint payoff through299.4"
+      ],
+      "action": "Contain preserves key lateral runs/rackets; full_source critical return/rally preserves original pixels. No key strike or result omitted in sampled actual sequences."
+    },
+    "scoreboard": {
+      "status": "pass_in_actual_sampling",
+      "details": "Native body columns and SP/BP/MP strips, settled first-set7/5 and final7/6 versus5/4 panels remain legible. Original large panels use full_source without delogo. Genuine native animated partial names/columns during wipes were not misclassified as settled information loss.",
+      "limitation": "Original broadcast board still occludes some player pixels. Full_source avoids additional erasure but cannot restore pixels covered by the original board."
+    },
+    "captions": {
+      "status": "pass",
+      "actual_cues": 46,
+      "details": "All actual cue mid/end samples readable, no font clipping or overlap with board names/scores/faces. Crop301 ordinary and356 badge/bilingual; full_source400 singleCN and356 bilingual. Exact first-summary206.92 and final Queen panel show low text directly below original panel; approximately15px English ink clearance at large settled final panel. Long English lines stay within frame."
+    },
+    "repaired_frames": {
+      "status": "pass_current",
+      "reaction172_92": "Current full_source172.12–173.36 preserves shoulder/chest/arm, no added delogo erasure.",
+      "opening_break210_96_and211_96": "Current whole207.8–228.2 full_source/score_insetfalse restores near-left torso/arms/legs; singleCN400 below original scoreboard. Old containment erase does not recur.",
+      "summary206_92": "Whole sentence full_source tail retains both names7/5; bilingual356 below panel.",
+      "queen_and299_32": "Actual Queen panels/cue45 preserve full final result; cue46 and last5082 frame remain Zheng smiling/high arms."
+    },
+    "ending": {
+      "status": "pass",
+      "details": "Complete winning serve/point, fall/joy, hand contact at net, crowd salute and final raised-arm smile. No hugging claim. Body ends299.4 before award camera299.96;298.44 is still match celebration. No speech/awards or extra outro."
+    },
+    "cover": {
+      "status": "pass",
+      "details": "Actual master opening cover and frozen native poster show official Zheng smile/trophy, coherent identity, first-set3SP hook and7-5/6-4 result."
+    },
+    "native_mechanical_qc": {
+      "status": "pass",
+      "checked_at": "2026-10-11T15:27:43Z",
+      "film_sha256": "2431d8edc4b527e6bde115f9308e7ee193f189b775d9ee30260340842368dc13",
+      "note": "Read-only binding to parent native actual QC. Prior95s silence fixed by first_set_close bedhigh and current native QC passes; independent visual review does not assert manual listening."
+    }
+  },
+  "actual_audio_binding_not_tone_pass": {
+    "status": "final_native_pcm_and9voices_bound_no_confident_misreads_with_calibration_limits",
+    "actual_voice_count": 9,
+    "all_mixed_waveforms_strong_match": true,
+    "minimum_mix_pearson_r": 0.9997625950042469,
+    "full_native_mix_pcm_sha256": "ad0e95cd86082a54df7d296bb4637be046bf157f008ec5c3310034054ded8927",
+    "pronunciation_status": "no_confident_misreads_detected_with_calibration_limits",
+    "unresolved_occurrences": 43,
+    "pronunciation_release_pass_claimed": false,
+    "human_listening_claimed": false,
+    "asr_used_to_prove_tones": false,
+    "note": "43 reference/calibration-limited occurrences retained in linked final audio evidence. No independent acoustic or blanket tone pass claimed here; excluded outro brand has no actual voice."
+  },
+  "limitations": {
+    "visual_review": "Dense actual movie image sampling across all segments/cues/critical points; not frame-by-frame playback or every ball flight between sampled half-second steps.",
+    "machine_face_models": {
+      "status": "unavailable",
+      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）",
+      "report_only": true,
+      "warnings": [
+        "人脸模型不可用，分段画面没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）"
+      ]
+    },
+    "independent_face_review": "Actual sampled player faces/body/cues visually inspected; no machine facial gate pass claimed.",
+    "audio": "No human listening performed or claimed; audio proof pointers preserve calibration limits.",
+    "publication": "Reviewer did not commit, merge, dispatch, or authorize external publication."
+  },
+  "superseded_history": {
+    "path": "data/evidence/zheng-andreeva-beijing-2026-final/independent-qc-rejected-master-9b8191.json",
+    "note": "Old9b movie rejected for actual added body erasure and native silence failure; corrected current2431 reviewed independently. Old failure not reused as current verdict."
+  },
+  "contact_wall_pins": [
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/celebration-contact-00.jpg",
+      "sha256": "83a11d5de91b9aeda7fd0f23b0b507f15763a311507f8dad2889ec8e18edd594",
+      "bytes": 213966
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/cover-contact-00.jpg",
+      "sha256": "bb2f1510762243c3a2c2afa1f64056c09b1d96f6a2555e4d12d70d02ab6141bf",
+      "bytes": 53604
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/cue-contact-00.jpg",
+      "sha256": "367a40e125d969bd2d1e54b14fcc8ebb512a6e80dc2e127b0a47da37fb673975",
+      "bytes": 479316
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/cue-contact-01.jpg",
+      "sha256": "f16b2d2182eef327574e77622f579962551624f02943065dc24320db68ac093a",
+      "bytes": 565558
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/cue-contact-02.jpg",
+      "sha256": "d64bd2ac5a8132aebeedc7562a0db89a921aee75c266b1bdb687437c2138615e",
+      "bytes": 326993
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/cueend-contact-00.jpg",
+      "sha256": "bad5f052de6ea14135491a4031126679e55ff548bcfa21a709a3087bf1143396",
+      "bytes": 523605
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/cueend-contact-01.jpg",
+      "sha256": "ba1b778185a760b628fbcd3160fb7ecea168457b283f04c1e7495bcbb92e30f5",
+      "bytes": 578122
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/cueend-contact-02.jpg",
+      "sha256": "17ddf0b04a11613992f77e77380e04a64a28e810fd427d9a8ecfeeb047210c36",
+      "bytes": 346082
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-00.jpg",
+      "sha256": "82ab4106983393a79e3c7925337cb531ee6a922e04fcb0a8badab264f4834f90",
+      "bytes": 503266
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-01.jpg",
+      "sha256": "edb1a62dc01cc29df4a33d8220c965afd452b3e84dee079671d778ce82cbe26b",
+      "bytes": 541820
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-02.jpg",
+      "sha256": "09fc45c3c328fe3846ddaf060511805b747143511b21a9d362e6023fc2dde6b3",
+      "bytes": 590745
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-03.jpg",
+      "sha256": "38c35d3024345fe97c56ca6d7267e90abe96757ae5d2d3eadac173482665f334",
+      "bytes": 545840
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-04.jpg",
+      "sha256": "33f2a63ea8b367bc510ec43056e7f68df335efc8193f8c279a0939694fd760c5",
+      "bytes": 546860
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-05.jpg",
+      "sha256": "f1b999c239cba63344d8cc92af23585c1ae084bf055ae316d20895ece7d8a2cb",
+      "bytes": 516972
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-06.jpg",
+      "sha256": "0c3a8d1fd11b26c983d54765bb026ac3223abb09a1605d710cce97dd488cb325",
+      "bytes": 584002
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-07.jpg",
+      "sha256": "99f7f306d48828ad83eaf5e4a1a76fff91eb200ccb1e070a860321b7346ab9ca",
+      "bytes": 453764
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-08.jpg",
+      "sha256": "cdcb6266f0c7fa1af973ccfff12f62a8a34626353323458f6553a540a0f68ca6",
+      "bytes": 447569
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-09.jpg",
+      "sha256": "0faa801ec6b77072db50a07b549b1d6e4b2f4193ff5d2dcc0d962dab472f151a",
+      "bytes": 441370
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-10.jpg",
+      "sha256": "aeefc987db0cadfd3e64dc41be35be263cfb02a39b1448c44ef515e61638fd11",
+      "bytes": 411027
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-11.jpg",
+      "sha256": "85e154f02813a28e11a47197aacdce2d3c7f530a39b0c44c81c4cc8a2eecacc8",
+      "bytes": 402575
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-12.jpg",
+      "sha256": "4f9113cb87f42c306b49e29fa3db2266cd64b9252189d6bec3f851b50ed55c32",
+      "bytes": 407607
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/keypoint-contact-13.jpg",
+      "sha256": "8604f15fa110b4d30b82558eca68200f41d2b9949a7851406107173e2064ae5d",
+      "bytes": 189266
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/reaction-contact-00.jpg",
+      "sha256": "0a17184ed4146e10fa0ea26eab476ea215040dd853f7599f65535181b8514dcb",
+      "bytes": 80091
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/segment-contact-00.jpg",
+      "sha256": "5fe7867abbaa648dfe9d02d14df7609fd2915bdda1363c0f51f9ba8ca7a24f56",
+      "bytes": 462728
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/segment-contact-01.jpg",
+      "sha256": "645a44fd6827fefe7fddfe60673050fc7cffc5583f737f2c991bb29068e1db07",
+      "bytes": 523834
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/segment-contact-02.jpg",
+      "sha256": "565e2cbc2cca747e5877b4a51e8279d01a2e9fd1d3572f814b816fbe24f7ca36",
+      "bytes": 536091
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/segment-contact-03.jpg",
+      "sha256": "1c4b13c2df14f05a0aa36a52d4e3f549fd45073ec35a1ca497b6416427036d2b",
+      "bytes": 288296
+    },
+    {
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/summary-contact-00.jpg",
+      "sha256": "8175497e3c7eaee44468289724bd1135d5bd77d691bacd738353bff4aac81c95",
+      "bytes": 209142
+    }
+  ],
+  "representative_actual_frame_pins": [
+    {
+      "film_time": 79.92,
+      "label": "reaction-172.92",
+      "kind": "reaction",
+      "source_time": 172.92,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0139.jpg",
+      "sha256": "2b2231eb98bd9f67bc29542caa0afa66a4fcddad2b57d5048f95485ec1133030",
+      "actual_movie_frame_index": 1998,
+      "actual_movie_frame_time": 79.92
+    },
+    {
+      "film_time": 117.96,
+      "label": "14-second_set_opening_break-3.16",
+      "kind": "keypoint",
+      "source_time": 210.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0228.jpg",
+      "sha256": "c3792b3e0965cfcba4601b1912215af29b567dc80a78d0f1adc2086e8fdafc1c",
+      "actual_movie_frame_index": 2949,
+      "actual_movie_frame_time": 117.96
+    },
+    {
+      "film_time": 118.96,
+      "label": "14-second_set_opening_break-4.16",
+      "kind": "keypoint",
+      "source_time": 211.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0230.jpg",
+      "sha256": "6743612634320f1741a70714dbde40a106131afa9f0c30dcf73477dd3bba8b20",
+      "actual_movie_frame_index": 2974,
+      "actual_movie_frame_time": 118.96
+    },
+    {
+      "film_time": 203.28,
+      "label": "celebration-299.32",
+      "kind": "celebration",
+      "source_time": 299.32,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0377.jpg",
+      "sha256": "dc8fc5ac3d9d2f6a697c3e7bd0ced4f5dc8477e37ac7dccfca204c6cf7b2725f",
+      "actual_movie_frame_index": 5082,
+      "actual_movie_frame_time": 203.28
+    },
+    {
+      "film_time": 0.6,
+      "label": "cover",
+      "kind": "cover",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0001.jpg",
+      "sha256": "1b922df073ce9a000c2d837b2b7b5235f413c2e75d8949963c46fed539954871",
+      "actual_movie_frame_index": 15,
+      "actual_movie_frame_time": 0.6
+    },
+    {
+      "film_time": 200.07,
+      "label": "cue-045",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0372.jpg",
+      "sha256": "49bed36a40a64a7e455d8fbc7b3767e1263719b68b775c43b0da12520f15fbcc",
+      "actual_movie_frame_index": 5002,
+      "actual_movie_frame_time": 200.08
+    },
+    {
+      "film_time": 202.59,
+      "label": "cue-046",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0375.jpg",
+      "sha256": "ed21d80b52f2b2ee33d9b6df8c6c6bbeb2f88a0ac1a5ce1bfd4148158db79c93",
+      "actual_movie_frame_index": 5065,
+      "actual_movie_frame_time": 202.6
+    },
+    {
+      "label": "first-summary-exact-206.92",
+      "film_time": 113.92,
+      "source_time": 206.92,
+      "actual_movie_frame_index": 2848,
+      "actual_movie_frame_time": 113.92,
+      "path": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/summary-exact-206.92.jpg",
+      "sha256": "51c40fb1ea50e75f8d837ba13b16c996a7a7cccf57b0948997fe4dd45992553b",
+      "bytes": 152650
+    }
+  ],
+  "all_actual_sample_pins": [
+    {
+      "film_time": 0.6,
+      "label": "cover",
+      "kind": "cover",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0001.jpg",
+      "sha256": "1b922df073ce9a000c2d837b2b7b5235f413c2e75d8949963c46fed539954871",
+      "actual_movie_frame_index": 15,
+      "actual_movie_frame_time": 0.6
+    },
+    {
+      "film_time": 1.44,
+      "label": "00-cold_open-start",
+      "kind": "segment",
+      "source_time": 270.24,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0002.jpg",
+      "sha256": "ca67eed76d41a66ec049b0c9922ffe9ca97981fbd321633ea8b4f500d8c3cdb0",
+      "actual_movie_frame_index": 36,
+      "actual_movie_frame_time": 1.44
+    },
+    {
+      "film_time": 4.25,
+      "label": "00-cold_open-mid",
+      "kind": "segment",
+      "source_time": 273.05,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0004.jpg",
+      "sha256": "8f3376735e7572b233312d89f45a35e6deee4785c357cbc08a66259ce8faf403",
+      "actual_movie_frame_index": 107,
+      "actual_movie_frame_time": 4.28
+    },
+    {
+      "film_time": 7.06,
+      "label": "00-cold_open-end",
+      "kind": "segment",
+      "source_time": 275.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0007.jpg",
+      "sha256": "dfd04b9576a048a8f19d7678fdb73efc120e5db7d3c3645425658217713e67b8",
+      "actual_movie_frame_index": 177,
+      "actual_movie_frame_time": 7.08
+    },
+    {
+      "film_time": 7.54,
+      "label": "01-landing-start",
+      "kind": "segment",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0008.jpg",
+      "sha256": "4d8da5279d0a39f1614982102da576fe11ab8ec1454149db7c67721388db3593",
+      "actual_movie_frame_index": 189,
+      "actual_movie_frame_time": 7.56
+    },
+    {
+      "film_time": 10.05,
+      "label": "01-landing-mid",
+      "kind": "segment",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0011.jpg",
+      "sha256": "b8ceb5d24d587b5e3d9df9f215235df0cdd3666047bf6b20b93d3f7f75b51738",
+      "actual_movie_frame_index": 252,
+      "actual_movie_frame_time": 10.08
+    },
+    {
+      "film_time": 12.56,
+      "label": "01-landing-end",
+      "kind": "segment",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0014.jpg",
+      "sha256": "73a9ef8c6f2c01ddf09c69ac1588f00c61f7c554119aa00adbfb5744ec0a32ec",
+      "actual_movie_frame_index": 314,
+      "actual_movie_frame_time": 12.56
+    },
+    {
+      "film_time": 13.04,
+      "label": "02-coordinate-start",
+      "kind": "segment",
+      "source_time": 0.24,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0015.jpg",
+      "sha256": "90bd53d66dec9b027af6cf3f3bb5fe17a2c3c86f59cf2a7cf4cd6bce2f77a580",
+      "actual_movie_frame_index": 326,
+      "actual_movie_frame_time": 13.04
+    },
+    {
+      "film_time": 17.8,
+      "label": "02-coordinate-mid",
+      "kind": "segment",
+      "source_time": 5.0,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0020.jpg",
+      "sha256": "73157b1ba9338fad604d3210d4ac35f99108135d5e13d0496f25bdcf035c15ad",
+      "actual_movie_frame_index": 445,
+      "actual_movie_frame_time": 17.8
+    },
+    {
+      "film_time": 22.56,
+      "label": "02-coordinate-end",
+      "kind": "segment",
+      "source_time": 9.76,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0023.jpg",
+      "sha256": "16fde8c1dc6cf3b11ad954649a7b59559b5dba15bada00499c283f97e90194c8",
+      "actual_movie_frame_index": 564,
+      "actual_movie_frame_time": 22.56
+    },
+    {
+      "film_time": 23.04,
+      "label": "03-first_set_context-start",
+      "kind": "segment",
+      "source_time": 10.24,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0024.jpg",
+      "sha256": "8f7efc0781f5d0005349a8d82d451239a1686e48ed701968223ef16682208f3b",
+      "actual_movie_frame_index": 576,
+      "actual_movie_frame_time": 23.04
+    },
+    {
+      "film_time": 31.1,
+      "label": "03-first_set_context-mid",
+      "kind": "segment",
+      "source_time": 18.3,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0031.jpg",
+      "sha256": "98e43bb851ca9c185554b670424ba5382b44084a02d62884dda97324c12b0e31",
+      "actual_movie_frame_index": 778,
+      "actual_movie_frame_time": 31.12
+    },
+    {
+      "film_time": 39.16,
+      "label": "03-first_set_context-end",
+      "kind": "segment",
+      "source_time": 26.360000000000003,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0032.jpg",
+      "sha256": "7f8ae9a7af02cf5d50ee24a50d335efab5967ab92a3673caa6bc14a880509d7e",
+      "actual_movie_frame_index": 979,
+      "actual_movie_frame_time": 39.16
+    },
+    {
+      "film_time": 39.64,
+      "label": "04-setpoints_context-start",
+      "kind": "segment",
+      "source_time": 132.64000000000001,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0034.jpg",
+      "sha256": "353882dd19fe9aa8df7dcbc1eeb85ec82e27e89f2b2370a1daed0e016a573f76",
+      "actual_movie_frame_index": 991,
+      "actual_movie_frame_time": 39.64
+    },
+    {
+      "film_time": 45.55,
+      "label": "04-setpoints_context-mid",
+      "kind": "segment",
+      "source_time": 138.55,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0050.jpg",
+      "sha256": "119604dd1b91eaf16426a4b63db64c532354faa04a239aad835567409bb31378",
+      "actual_movie_frame_index": 1139,
+      "actual_movie_frame_time": 45.56
+    },
+    {
+      "film_time": 51.46,
+      "label": "04-setpoints_context-end",
+      "kind": "segment",
+      "source_time": 144.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0062.jpg",
+      "sha256": "f4725af3a4d2279d0ae12d319377d03ec6d3ed7028da45a71e807568974d347c",
+      "actual_movie_frame_index": 1287,
+      "actual_movie_frame_time": 51.48
+    },
+    {
+      "film_time": 39.56,
+      "label": "04-setpoints_context-0.16",
+      "kind": "keypoint",
+      "source_time": 132.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0033.jpg",
+      "sha256": "3cdf3274b2d65a12952aa8077d6ff07bb1babfee9667287f0bd4bbc5303b5438",
+      "actual_movie_frame_index": 989,
+      "actual_movie_frame_time": 39.56
+    },
+    {
+      "film_time": 40.06,
+      "label": "04-setpoints_context-0.66",
+      "kind": "keypoint",
+      "source_time": 133.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0035.jpg",
+      "sha256": "81bc8b2363fffe7f2bb59f9f169f3ac020abc28358ae7ae4683117405a528f08",
+      "actual_movie_frame_index": 1002,
+      "actual_movie_frame_time": 40.08
+    },
+    {
+      "film_time": 40.56,
+      "label": "04-setpoints_context-1.16",
+      "kind": "keypoint",
+      "source_time": 133.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0036.jpg",
+      "sha256": "d3bebdabcdaf2ed3a2ec30c735055dfaba5eca5444999438de1e52139a49aa90",
+      "actual_movie_frame_index": 1014,
+      "actual_movie_frame_time": 40.56
+    },
+    {
+      "film_time": 41.06,
+      "label": "04-setpoints_context-1.66",
+      "kind": "keypoint",
+      "source_time": 134.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0038.jpg",
+      "sha256": "f1c36700069ee6c3335de241064714f73a592c9d383e1fff4125dbcd1f04f6d7",
+      "actual_movie_frame_index": 1027,
+      "actual_movie_frame_time": 41.08
+    },
+    {
+      "film_time": 41.56,
+      "label": "04-setpoints_context-2.16",
+      "kind": "keypoint",
+      "source_time": 134.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0039.jpg",
+      "sha256": "417ac311457db5705550d0f91f18aec8802f813d3fd2cb0574b09b1ff1002970",
+      "actual_movie_frame_index": 1039,
+      "actual_movie_frame_time": 41.56
+    },
+    {
+      "film_time": 42.06,
+      "label": "04-setpoints_context-2.66",
+      "kind": "keypoint",
+      "source_time": 135.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0041.jpg",
+      "sha256": "0ca33a70a3b27e80ebaf65afa459fbb6d0c6733ea7074afc5d720e731b3fc2d3",
+      "actual_movie_frame_index": 1052,
+      "actual_movie_frame_time": 42.08
+    },
+    {
+      "film_time": 42.56,
+      "label": "04-setpoints_context-3.16",
+      "kind": "keypoint",
+      "source_time": 135.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0042.jpg",
+      "sha256": "1c9500685650489e74301ff581f0dddb7ec176cfaa5d87a31954815da9a47b81",
+      "actual_movie_frame_index": 1064,
+      "actual_movie_frame_time": 42.56
+    },
+    {
+      "film_time": 43.06,
+      "label": "04-setpoints_context-3.66",
+      "kind": "keypoint",
+      "source_time": 136.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0043.jpg",
+      "sha256": "ac05bd8081d0c3e91269c2db8bdeb2f7298f89855ada5af5941cc164aad31e5e",
+      "actual_movie_frame_index": 1077,
+      "actual_movie_frame_time": 43.08
+    },
+    {
+      "film_time": 43.56,
+      "label": "04-setpoints_context-4.16",
+      "kind": "keypoint",
+      "source_time": 136.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0044.jpg",
+      "sha256": "c04cb13656c53e630e8ec07952d74a1d07cd46c2296f54785eae5b598a368445",
+      "actual_movie_frame_index": 1089,
+      "actual_movie_frame_time": 43.56
+    },
+    {
+      "film_time": 44.06,
+      "label": "04-setpoints_context-4.66",
+      "kind": "keypoint",
+      "source_time": 137.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0046.jpg",
+      "sha256": "b9dca0a6583870d3cd9060eb2e3c6eda214fad00418fa675bffe7e924736dffa",
+      "actual_movie_frame_index": 1102,
+      "actual_movie_frame_time": 44.08
+    },
+    {
+      "film_time": 44.56,
+      "label": "04-setpoints_context-5.16",
+      "kind": "keypoint",
+      "source_time": 137.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0047.jpg",
+      "sha256": "4239ab91d05850d8afa28135e828afe08a635a1d269bf6bc97dd8eb3a05a1b4b",
+      "actual_movie_frame_index": 1114,
+      "actual_movie_frame_time": 44.56
+    },
+    {
+      "film_time": 45.06,
+      "label": "04-setpoints_context-5.66",
+      "kind": "keypoint",
+      "source_time": 138.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0048.jpg",
+      "sha256": "63c9b5559dd659cfad88963fd7d76a6d8284227145e01222f0477d5df9c7d482",
+      "actual_movie_frame_index": 1127,
+      "actual_movie_frame_time": 45.08
+    },
+    {
+      "film_time": 45.56,
+      "label": "04-setpoints_context-6.16",
+      "kind": "keypoint",
+      "source_time": 138.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0050.jpg",
+      "sha256": "119604dd1b91eaf16426a4b63db64c532354faa04a239aad835567409bb31378",
+      "actual_movie_frame_index": 1139,
+      "actual_movie_frame_time": 45.56
+    },
+    {
+      "film_time": 46.06,
+      "label": "04-setpoints_context-6.66",
+      "kind": "keypoint",
+      "source_time": 139.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0051.jpg",
+      "sha256": "c3978dcfe4a03bbe07b04798d6fc6e2c783922020629487db55b6b4b8d967191",
+      "actual_movie_frame_index": 1152,
+      "actual_movie_frame_time": 46.08
+    },
+    {
+      "film_time": 46.56,
+      "label": "04-setpoints_context-7.16",
+      "kind": "keypoint",
+      "source_time": 139.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0052.jpg",
+      "sha256": "2389eb366f1608471cc1925deaaf4e9466a8ef482a87e64c09159b4d2c25b5d2",
+      "actual_movie_frame_index": 1164,
+      "actual_movie_frame_time": 46.56
+    },
+    {
+      "film_time": 47.06,
+      "label": "04-setpoints_context-7.66",
+      "kind": "keypoint",
+      "source_time": 140.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0053.jpg",
+      "sha256": "451fa2ff87c8ca04e2ef71df1c5c50b8a09a113e473382bfa071c01d9938ce6e",
+      "actual_movie_frame_index": 1177,
+      "actual_movie_frame_time": 47.08
+    },
+    {
+      "film_time": 47.56,
+      "label": "04-setpoints_context-8.16",
+      "kind": "keypoint",
+      "source_time": 140.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0054.jpg",
+      "sha256": "e23b464e2cf0b03797fd270adeb1896ddee8a04568a90c03fcb1ddd3310b9a00",
+      "actual_movie_frame_index": 1189,
+      "actual_movie_frame_time": 47.56
+    },
+    {
+      "film_time": 48.06,
+      "label": "04-setpoints_context-8.66",
+      "kind": "keypoint",
+      "source_time": 141.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0055.jpg",
+      "sha256": "86155b7c7eba046e3283d236cc0f0f22e0350a9e947073ca06b904acd0b72564",
+      "actual_movie_frame_index": 1202,
+      "actual_movie_frame_time": 48.08
+    },
+    {
+      "film_time": 48.56,
+      "label": "04-setpoints_context-9.16",
+      "kind": "keypoint",
+      "source_time": 141.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0056.jpg",
+      "sha256": "26bee9c288444a400c3870331e7668dec7c830aa511008a1931848ae8c4b67aa",
+      "actual_movie_frame_index": 1214,
+      "actual_movie_frame_time": 48.56
+    },
+    {
+      "film_time": 49.06,
+      "label": "04-setpoints_context-9.66",
+      "kind": "keypoint",
+      "source_time": 142.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0057.jpg",
+      "sha256": "49c4717bac8b6791537b52f176c9f96bf74989836fb6e4da96bb95b18a62613d",
+      "actual_movie_frame_index": 1227,
+      "actual_movie_frame_time": 49.08
+    },
+    {
+      "film_time": 49.56,
+      "label": "04-setpoints_context-10.16",
+      "kind": "keypoint",
+      "source_time": 142.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0058.jpg",
+      "sha256": "b9d82e863d6c2c780a413efc5dcd91c545f26f038b7364a697a06c61dd2cd2ab",
+      "actual_movie_frame_index": 1239,
+      "actual_movie_frame_time": 49.56
+    },
+    {
+      "film_time": 50.06,
+      "label": "04-setpoints_context-10.66",
+      "kind": "keypoint",
+      "source_time": 143.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0059.jpg",
+      "sha256": "39d1f2f123432bac0a8208187950a8d19f4c02c7a5520f4c6976dc73b02a85f9",
+      "actual_movie_frame_index": 1252,
+      "actual_movie_frame_time": 50.08
+    },
+    {
+      "film_time": 50.56,
+      "label": "04-setpoints_context-11.16",
+      "kind": "keypoint",
+      "source_time": 143.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0060.jpg",
+      "sha256": "eb2bbaf618cc2a45256c25c90a58a3a76a27628b784b6ff7044c0f65f01de6db",
+      "actual_movie_frame_index": 1264,
+      "actual_movie_frame_time": 50.56
+    },
+    {
+      "film_time": 51.06,
+      "label": "04-setpoints_context-11.66",
+      "kind": "keypoint",
+      "source_time": 144.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0061.jpg",
+      "sha256": "0130f4b4ba45888c6c5b5ecfb3b13a2b98424184d4945dfddd363af82ba0a25e",
+      "actual_movie_frame_index": 1277,
+      "actual_movie_frame_time": 51.08
+    },
+    {
+      "film_time": 51.56,
+      "label": "04-setpoints_context-12.16",
+      "kind": "keypoint",
+      "source_time": 144.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0063.jpg",
+      "sha256": "8fd6751433c8d04782aac443b1193b34606a45b88b42f3a36b0314c3d88cb70a",
+      "actual_movie_frame_index": 1289,
+      "actual_movie_frame_time": 51.56
+    },
+    {
+      "film_time": 51.94,
+      "label": "05-first_saved_setpoint_commentary-start",
+      "kind": "segment",
+      "source_time": 144.94,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0065.jpg",
+      "sha256": "c2789e12db57043c6442fa807436d77c6a8774a15403db033ab84705c1e2c1fd",
+      "actual_movie_frame_index": 1299,
+      "actual_movie_frame_time": 51.96
+    },
+    {
+      "film_time": 53.95,
+      "label": "05-first_saved_setpoint_commentary-mid",
+      "kind": "segment",
+      "source_time": 146.95,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0071.jpg",
+      "sha256": "d582775b5fe79185e49116851829c8dd2b9c4fe7d0f9a32303d917fca43938df",
+      "actual_movie_frame_index": 1349,
+      "actual_movie_frame_time": 53.96
+    },
+    {
+      "film_time": 55.96,
+      "label": "05-first_saved_setpoint_commentary-end",
+      "kind": "segment",
+      "source_time": 148.95999999999998,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0079.jpg",
+      "sha256": "b4a465e694ff8a49fbeb3ce34bbda56983452bf7e4561d5c33d8f9ed54b2e473",
+      "actual_movie_frame_index": 1399,
+      "actual_movie_frame_time": 55.96
+    },
+    {
+      "film_time": 51.86,
+      "label": "05-first_saved_setpoint_commentary-0.16",
+      "kind": "keypoint",
+      "source_time": 144.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0064.jpg",
+      "sha256": "0b705f0d6c4687caf7f722c0d31914c4de00ea4c88a753b989d853e416d23dfc",
+      "actual_movie_frame_index": 1297,
+      "actual_movie_frame_time": 51.88
+    },
+    {
+      "film_time": 52.36,
+      "label": "05-first_saved_setpoint_commentary-0.66",
+      "kind": "keypoint",
+      "source_time": 145.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0066.jpg",
+      "sha256": "f47e45116e2156bdaac696604f5682361d31d8c0b81b7d4296183b407407c8c5",
+      "actual_movie_frame_index": 1309,
+      "actual_movie_frame_time": 52.36
+    },
+    {
+      "film_time": 52.86,
+      "label": "05-first_saved_setpoint_commentary-1.16",
+      "kind": "keypoint",
+      "source_time": 145.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0067.jpg",
+      "sha256": "bff82e91f923ee7512e93605ab114805560271783271babff970a4e50d1e0273",
+      "actual_movie_frame_index": 1322,
+      "actual_movie_frame_time": 52.88
+    },
+    {
+      "film_time": 53.36,
+      "label": "05-first_saved_setpoint_commentary-1.66",
+      "kind": "keypoint",
+      "source_time": 146.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0069.jpg",
+      "sha256": "d2ecac29b7395dcc7cdb347970d380fee30f6fc9854ceb836b84db659b828e28",
+      "actual_movie_frame_index": 1334,
+      "actual_movie_frame_time": 53.36
+    },
+    {
+      "film_time": 53.86,
+      "label": "05-first_saved_setpoint_commentary-2.16",
+      "kind": "keypoint",
+      "source_time": 146.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0070.jpg",
+      "sha256": "d6290d509492d2510401aa52e82cc9a57e46231b4a6afe1ce7bed55b8d23dc94",
+      "actual_movie_frame_index": 1347,
+      "actual_movie_frame_time": 53.88
+    },
+    {
+      "film_time": 54.36,
+      "label": "05-first_saved_setpoint_commentary-2.66",
+      "kind": "keypoint",
+      "source_time": 147.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0072.jpg",
+      "sha256": "b2c9e9b351ea858bebd2c9bf8a93c6b805767f36ea6127f523517e631449a769",
+      "actual_movie_frame_index": 1359,
+      "actual_movie_frame_time": 54.36
+    },
+    {
+      "film_time": 54.86,
+      "label": "05-first_saved_setpoint_commentary-3.16",
+      "kind": "keypoint",
+      "source_time": 147.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0074.jpg",
+      "sha256": "cf2367a9e26c6be1af876f6c14b235b24558d439822bc2772b09e11d2fb57934",
+      "actual_movie_frame_index": 1372,
+      "actual_movie_frame_time": 54.88
+    },
+    {
+      "film_time": 55.36,
+      "label": "05-first_saved_setpoint_commentary-3.66",
+      "kind": "keypoint",
+      "source_time": 148.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0076.jpg",
+      "sha256": "8130153d01c726688b8f24c103c0a774f2776acd3b91f46a8f799d8bd30ef2d3",
+      "actual_movie_frame_index": 1384,
+      "actual_movie_frame_time": 55.36
+    },
+    {
+      "film_time": 55.86,
+      "label": "05-first_saved_setpoint_commentary-4.16",
+      "kind": "keypoint",
+      "source_time": 148.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0078.jpg",
+      "sha256": "0e1f0d1d3946203ec032dbd86b42fadb43f09c3401ed37737e85997f7585285a",
+      "actual_movie_frame_index": 1397,
+      "actual_movie_frame_time": 55.88
+    },
+    {
+      "film_time": 56.44,
+      "label": "06-second_saved_setpoint_technique-start",
+      "kind": "segment",
+      "source_time": 149.44,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0081.jpg",
+      "sha256": "56d41ec7b3caa284bcbb6a6511b9670088485303c5f087459a907706b4b8101f",
+      "actual_movie_frame_index": 1411,
+      "actual_movie_frame_time": 56.44
+    },
+    {
+      "film_time": 59.7,
+      "label": "06-second_saved_setpoint_technique-mid",
+      "kind": "segment",
+      "source_time": 152.7,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0090.jpg",
+      "sha256": "3e68448e7e16664f43c408b1027159e33d5f125ba20096c7c6aa0b4fec0370d9",
+      "actual_movie_frame_index": 1493,
+      "actual_movie_frame_time": 59.72
+    },
+    {
+      "film_time": 62.96,
+      "label": "06-second_saved_setpoint_technique-end",
+      "kind": "segment",
+      "source_time": 155.95999999999998,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0100.jpg",
+      "sha256": "ee66782a24ae2a3633afea9428088998f066726760d537d094976d08cc49233e",
+      "actual_movie_frame_index": 1574,
+      "actual_movie_frame_time": 62.96
+    },
+    {
+      "film_time": 56.36,
+      "label": "06-second_saved_setpoint_technique-0.16",
+      "kind": "keypoint",
+      "source_time": 149.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0080.jpg",
+      "sha256": "835c3708497d95bd9333d21496f784adcf0caa4df873a60525598c9a564a0f01",
+      "actual_movie_frame_index": 1409,
+      "actual_movie_frame_time": 56.36
+    },
+    {
+      "film_time": 56.86,
+      "label": "06-second_saved_setpoint_technique-0.66",
+      "kind": "keypoint",
+      "source_time": 149.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0082.jpg",
+      "sha256": "7f3b909c26e9b61054b7ab1e7d5ba97bb66ef27d5021d862adc822e85ac16233",
+      "actual_movie_frame_index": 1422,
+      "actual_movie_frame_time": 56.88
+    },
+    {
+      "film_time": 57.36,
+      "label": "06-second_saved_setpoint_technique-1.16",
+      "kind": "keypoint",
+      "source_time": 150.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0083.jpg",
+      "sha256": "4f63c4f93dd1d704f2138f41d6c552a437d2aa1b884e6da2127fbe2895b37a22",
+      "actual_movie_frame_index": 1434,
+      "actual_movie_frame_time": 57.36
+    },
+    {
+      "film_time": 57.86,
+      "label": "06-second_saved_setpoint_technique-1.66",
+      "kind": "keypoint",
+      "source_time": 150.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0085.jpg",
+      "sha256": "61b2e209fa3a5d3be56f45aeb7c6ef40c37aca0ce752add0c40188a746bb777d",
+      "actual_movie_frame_index": 1447,
+      "actual_movie_frame_time": 57.88
+    },
+    {
+      "film_time": 58.36,
+      "label": "06-second_saved_setpoint_technique-2.16",
+      "kind": "keypoint",
+      "source_time": 151.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0086.jpg",
+      "sha256": "befed4d395f559f4585c276d299aaee2048c9317f7e095d26dfdb65a8146fdf8",
+      "actual_movie_frame_index": 1459,
+      "actual_movie_frame_time": 58.36
+    },
+    {
+      "film_time": 58.86,
+      "label": "06-second_saved_setpoint_technique-2.66",
+      "kind": "keypoint",
+      "source_time": 151.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0088.jpg",
+      "sha256": "b8bd826d9d22d03901a0d1b8287cb7d330dad009254771b3691062de99011012",
+      "actual_movie_frame_index": 1472,
+      "actual_movie_frame_time": 58.88
+    },
+    {
+      "film_time": 59.36,
+      "label": "06-second_saved_setpoint_technique-3.16",
+      "kind": "keypoint",
+      "source_time": 152.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0089.jpg",
+      "sha256": "5c7eae056794ac5f8986b1cd8c2a18dc212939ffe0df4b006ccaebb99103a28e",
+      "actual_movie_frame_index": 1484,
+      "actual_movie_frame_time": 59.36
+    },
+    {
+      "film_time": 59.86,
+      "label": "06-second_saved_setpoint_technique-3.66",
+      "kind": "keypoint",
+      "source_time": 152.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0091.jpg",
+      "sha256": "2f4e2d17cb815e8c6d027cec9dd58f31342d1621928d2266d27ac8e86f1c473b",
+      "actual_movie_frame_index": 1497,
+      "actual_movie_frame_time": 59.88
+    },
+    {
+      "film_time": 60.36,
+      "label": "06-second_saved_setpoint_technique-4.16",
+      "kind": "keypoint",
+      "source_time": 153.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0092.jpg",
+      "sha256": "4683aabbfc42c4125e3cb5aa628abe6b0fb2620c5da3345685be5af415ca77e5",
+      "actual_movie_frame_index": 1509,
+      "actual_movie_frame_time": 60.36
+    },
+    {
+      "film_time": 60.86,
+      "label": "06-second_saved_setpoint_technique-4.66",
+      "kind": "keypoint",
+      "source_time": 153.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0094.jpg",
+      "sha256": "c6de2c1cda20ad6c9d9415821d32daa23dbc4011b04f58d7064b4d5f63b5cdce",
+      "actual_movie_frame_index": 1522,
+      "actual_movie_frame_time": 60.88
+    },
+    {
+      "film_time": 61.36,
+      "label": "06-second_saved_setpoint_technique-5.16",
+      "kind": "keypoint",
+      "source_time": 154.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0095.jpg",
+      "sha256": "910b984971ac9c581fb7c734917e5652333ecedbfc51d8f31ed517dbfa60550e",
+      "actual_movie_frame_index": 1534,
+      "actual_movie_frame_time": 61.36
+    },
+    {
+      "film_time": 61.86,
+      "label": "06-second_saved_setpoint_technique-5.66",
+      "kind": "keypoint",
+      "source_time": 154.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0096.jpg",
+      "sha256": "c43710771ec198339625ba69c87bce35846c895f7523c8f94b9685b741ebf6f6",
+      "actual_movie_frame_index": 1547,
+      "actual_movie_frame_time": 61.88
+    },
+    {
+      "film_time": 62.36,
+      "label": "06-second_saved_setpoint_technique-6.16",
+      "kind": "keypoint",
+      "source_time": 155.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0098.jpg",
+      "sha256": "af711ca3b3f3641e3945f213d0a8e03efd8fb7f2e07b37379ef82797aa81aebb",
+      "actual_movie_frame_index": 1559,
+      "actual_movie_frame_time": 62.36
+    },
+    {
+      "film_time": 62.86,
+      "label": "06-second_saved_setpoint_technique-6.66",
+      "kind": "keypoint",
+      "source_time": 155.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0099.jpg",
+      "sha256": "f13210e7f807bc400a687e390bc5aa0c39ca2c84386374f8289b21d8e341fe36",
+      "actual_movie_frame_index": 1572,
+      "actual_movie_frame_time": 62.88
+    },
+    {
+      "film_time": 63.44,
+      "label": "07-second_saved_setpoint_ambient-start",
+      "kind": "segment",
+      "source_time": 156.44,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0102.jpg",
+      "sha256": "f99814f9248de75ca589e5d3fcfee4e4aae57915755cd32a8263b5973d2e2164",
+      "actual_movie_frame_index": 1586,
+      "actual_movie_frame_time": 63.44
+    },
+    {
+      "film_time": 71.16,
+      "label": "07-second_saved_setpoint_ambient-mid",
+      "kind": "segment",
+      "source_time": 164.16,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0118.jpg",
+      "sha256": "a38b33b663a2c706ababa73d464e9e45009a0570dc65e6008df1b635aba51325",
+      "actual_movie_frame_index": 1779,
+      "actual_movie_frame_time": 71.16
+    },
+    {
+      "film_time": 78.88,
+      "label": "07-second_saved_setpoint_ambient-end",
+      "kind": "segment",
+      "source_time": 171.88,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0134.jpg",
+      "sha256": "88ad2448eb27514c182152989974f787749bb78952772b7c9b2a445b75d68503",
+      "actual_movie_frame_index": 1972,
+      "actual_movie_frame_time": 78.88
+    },
+    {
+      "film_time": 63.36,
+      "label": "07-second_saved_setpoint_ambient-0.16",
+      "kind": "keypoint",
+      "source_time": 156.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0101.jpg",
+      "sha256": "b2dd989d6637cd6aef31655b17a8638e6232be0a5c1e4917b8a9d0c987abbecb",
+      "actual_movie_frame_index": 1584,
+      "actual_movie_frame_time": 63.36
+    },
+    {
+      "film_time": 63.86,
+      "label": "07-second_saved_setpoint_ambient-0.66",
+      "kind": "keypoint",
+      "source_time": 156.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0103.jpg",
+      "sha256": "4ace652bca8272f56935cb70c8cd75d507f6e1462f2514ec154e537178b5c1e4",
+      "actual_movie_frame_index": 1597,
+      "actual_movie_frame_time": 63.88
+    },
+    {
+      "film_time": 64.36,
+      "label": "07-second_saved_setpoint_ambient-1.16",
+      "kind": "keypoint",
+      "source_time": 157.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0104.jpg",
+      "sha256": "f47a81a633ef64e8d6cc438b8da759e950f6ceebce3b0e72d22f2f43227fd67f",
+      "actual_movie_frame_index": 1609,
+      "actual_movie_frame_time": 64.36
+    },
+    {
+      "film_time": 64.86,
+      "label": "07-second_saved_setpoint_ambient-1.66",
+      "kind": "keypoint",
+      "source_time": 157.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0105.jpg",
+      "sha256": "243d7a24287f33abf99ba7f9f70041fee8842690b1a097dfc2de7a71be79ed46",
+      "actual_movie_frame_index": 1622,
+      "actual_movie_frame_time": 64.88
+    },
+    {
+      "film_time": 65.36,
+      "label": "07-second_saved_setpoint_ambient-2.16",
+      "kind": "keypoint",
+      "source_time": 158.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0106.jpg",
+      "sha256": "ddfbb9c5988a302c7837f15c25b841dde88091da180e1b060cff3a4986d62117",
+      "actual_movie_frame_index": 1634,
+      "actual_movie_frame_time": 65.36
+    },
+    {
+      "film_time": 65.86,
+      "label": "07-second_saved_setpoint_ambient-2.66",
+      "kind": "keypoint",
+      "source_time": 158.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0107.jpg",
+      "sha256": "62c28c948fdf8e97f9bd17c685158c84aae9f7b4d18bda4045f9153e36cabc3b",
+      "actual_movie_frame_index": 1647,
+      "actual_movie_frame_time": 65.88
+    },
+    {
+      "film_time": 66.36,
+      "label": "07-second_saved_setpoint_ambient-3.16",
+      "kind": "keypoint",
+      "source_time": 159.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0108.jpg",
+      "sha256": "1eb7a1fe8bd1b7212b8ff576cca77e6ad3b44cd6fb1b0ccec022c0ac8348d314",
+      "actual_movie_frame_index": 1659,
+      "actual_movie_frame_time": 66.36
+    },
+    {
+      "film_time": 66.86,
+      "label": "07-second_saved_setpoint_ambient-3.66",
+      "kind": "keypoint",
+      "source_time": 159.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0109.jpg",
+      "sha256": "42bfa48e065b06ca515ab9f91bc3a6862dc494855ef1cc36efa1f5f3c141dcd4",
+      "actual_movie_frame_index": 1672,
+      "actual_movie_frame_time": 66.88
+    },
+    {
+      "film_time": 67.36,
+      "label": "07-second_saved_setpoint_ambient-4.16",
+      "kind": "keypoint",
+      "source_time": 160.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0110.jpg",
+      "sha256": "f75e2d9814fa64d7e21f550c4f0d12d59631c60b938c3c2aaffeabbc37f4ce37",
+      "actual_movie_frame_index": 1684,
+      "actual_movie_frame_time": 67.36
+    },
+    {
+      "film_time": 67.86,
+      "label": "07-second_saved_setpoint_ambient-4.66",
+      "kind": "keypoint",
+      "source_time": 160.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0111.jpg",
+      "sha256": "0d1bab23b4fce1b71e667f3a10c829f011e61a0b9685e9c82b83c5808089151a",
+      "actual_movie_frame_index": 1697,
+      "actual_movie_frame_time": 67.88
+    },
+    {
+      "film_time": 68.36,
+      "label": "07-second_saved_setpoint_ambient-5.16",
+      "kind": "keypoint",
+      "source_time": 161.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0112.jpg",
+      "sha256": "2bca7b657f0e1ea1e05c4044acc0e7b9ef925e23ff518c6d9390a1226f0cf6e1",
+      "actual_movie_frame_index": 1709,
+      "actual_movie_frame_time": 68.36
+    },
+    {
+      "film_time": 68.86,
+      "label": "07-second_saved_setpoint_ambient-5.66",
+      "kind": "keypoint",
+      "source_time": 161.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0113.jpg",
+      "sha256": "e1435d5a24aef93c377c306e82e409e3e7cfe9414b36dbbcf492d430533f62c7",
+      "actual_movie_frame_index": 1722,
+      "actual_movie_frame_time": 68.88
+    },
+    {
+      "film_time": 69.36,
+      "label": "07-second_saved_setpoint_ambient-6.16",
+      "kind": "keypoint",
+      "source_time": 162.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0114.jpg",
+      "sha256": "663bf1e34976c3787db421fd3311821c968b2779bd760074cae5e3b5109fa2d8",
+      "actual_movie_frame_index": 1734,
+      "actual_movie_frame_time": 69.36
+    },
+    {
+      "film_time": 69.86,
+      "label": "07-second_saved_setpoint_ambient-6.66",
+      "kind": "keypoint",
+      "source_time": 162.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0115.jpg",
+      "sha256": "4358a2d15186f6eb2cb8df68c6eb725f76f1d9bd5de93897faade277f3bbbb94",
+      "actual_movie_frame_index": 1747,
+      "actual_movie_frame_time": 69.88
+    },
+    {
+      "film_time": 70.36,
+      "label": "07-second_saved_setpoint_ambient-7.16",
+      "kind": "keypoint",
+      "source_time": 163.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0116.jpg",
+      "sha256": "4836bd66fbe0a5e6603f187d58f460ebfd62b7a6d9536047179f4f52cce69178",
+      "actual_movie_frame_index": 1759,
+      "actual_movie_frame_time": 70.36
+    },
+    {
+      "film_time": 70.86,
+      "label": "07-second_saved_setpoint_ambient-7.66",
+      "kind": "keypoint",
+      "source_time": 163.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0117.jpg",
+      "sha256": "0bc4ecae1fddad349dae09977e9c370c3a62f415a420bd57681aa7a08884a2f9",
+      "actual_movie_frame_index": 1772,
+      "actual_movie_frame_time": 70.88
+    },
+    {
+      "film_time": 71.36,
+      "label": "07-second_saved_setpoint_ambient-8.16",
+      "kind": "keypoint",
+      "source_time": 164.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0119.jpg",
+      "sha256": "48bd0d465ad814f8a73bf45d7abdde197f605e1794d68fae44d3790e370e6a1e",
+      "actual_movie_frame_index": 1784,
+      "actual_movie_frame_time": 71.36
+    },
+    {
+      "film_time": 71.86,
+      "label": "07-second_saved_setpoint_ambient-8.66",
+      "kind": "keypoint",
+      "source_time": 164.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0120.jpg",
+      "sha256": "a04cf6964e847706eb410d0866ea64c2a4a6ed274581e00f7cd403499f1e2c09",
+      "actual_movie_frame_index": 1797,
+      "actual_movie_frame_time": 71.88
+    },
+    {
+      "film_time": 72.36,
+      "label": "07-second_saved_setpoint_ambient-9.16",
+      "kind": "keypoint",
+      "source_time": 165.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0121.jpg",
+      "sha256": "c018e6709674a54738e2774ca2ca720daec623de0b596fc42260c1642de8cd74",
+      "actual_movie_frame_index": 1809,
+      "actual_movie_frame_time": 72.36
+    },
+    {
+      "film_time": 72.86,
+      "label": "07-second_saved_setpoint_ambient-9.66",
+      "kind": "keypoint",
+      "source_time": 165.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0122.jpg",
+      "sha256": "cd68d10202c8bbc88de7f76f45f23884bf116558de9bd85309fff1bad53ad475",
+      "actual_movie_frame_index": 1822,
+      "actual_movie_frame_time": 72.88
+    },
+    {
+      "film_time": 73.36,
+      "label": "07-second_saved_setpoint_ambient-10.16",
+      "kind": "keypoint",
+      "source_time": 166.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0123.jpg",
+      "sha256": "3777d5517a2dd56c2d0aafdb99675082e516c6b182ee591cf6e42d69a15af3d5",
+      "actual_movie_frame_index": 1834,
+      "actual_movie_frame_time": 73.36
+    },
+    {
+      "film_time": 73.86,
+      "label": "07-second_saved_setpoint_ambient-10.66",
+      "kind": "keypoint",
+      "source_time": 166.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0124.jpg",
+      "sha256": "eda17cb729d61cfc242b6e3c75d194dd193c450c6200461c6806b694242eb955",
+      "actual_movie_frame_index": 1847,
+      "actual_movie_frame_time": 73.88
+    },
+    {
+      "film_time": 74.36,
+      "label": "07-second_saved_setpoint_ambient-11.16",
+      "kind": "keypoint",
+      "source_time": 167.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0125.jpg",
+      "sha256": "aad6f95a33936a5cb31ecaa74468648977e908b758badca0f4bbd53e9ad57c4b",
+      "actual_movie_frame_index": 1859,
+      "actual_movie_frame_time": 74.36
+    },
+    {
+      "film_time": 74.86,
+      "label": "07-second_saved_setpoint_ambient-11.66",
+      "kind": "keypoint",
+      "source_time": 167.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0126.jpg",
+      "sha256": "7ac71f5655660dd8ed1e0741fbe53841b7556b45f736184e9fdf46f4c6c18e22",
+      "actual_movie_frame_index": 1872,
+      "actual_movie_frame_time": 74.88
+    },
+    {
+      "film_time": 75.36,
+      "label": "07-second_saved_setpoint_ambient-12.16",
+      "kind": "keypoint",
+      "source_time": 168.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0127.jpg",
+      "sha256": "95bc076355b7b988469ebf3fc4eda10626aa9ddb183d3536449ffe69177c01f0",
+      "actual_movie_frame_index": 1884,
+      "actual_movie_frame_time": 75.36
+    },
+    {
+      "film_time": 75.86,
+      "label": "07-second_saved_setpoint_ambient-12.66",
+      "kind": "keypoint",
+      "source_time": 168.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0128.jpg",
+      "sha256": "4704802756ec4efed7be9549bed78495520a0602b0f3fc8e0722825423e61da2",
+      "actual_movie_frame_index": 1897,
+      "actual_movie_frame_time": 75.88
+    },
+    {
+      "film_time": 76.36,
+      "label": "07-second_saved_setpoint_ambient-13.16",
+      "kind": "keypoint",
+      "source_time": 169.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0129.jpg",
+      "sha256": "034242375ff5e85c09b973a33540c09ce674dc6e923d7c141bf8850f2a512aed",
+      "actual_movie_frame_index": 1909,
+      "actual_movie_frame_time": 76.36
+    },
+    {
+      "film_time": 76.86,
+      "label": "07-second_saved_setpoint_ambient-13.66",
+      "kind": "keypoint",
+      "source_time": 169.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0130.jpg",
+      "sha256": "0889538bcf01ea84bbfe5c7e442cfd9150990767989800c28b335010c61e2281",
+      "actual_movie_frame_index": 1922,
+      "actual_movie_frame_time": 76.88
+    },
+    {
+      "film_time": 77.36,
+      "label": "07-second_saved_setpoint_ambient-14.16",
+      "kind": "keypoint",
+      "source_time": 170.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0131.jpg",
+      "sha256": "69c66d24dbd22fe3df766c403430b551bb2414095c54860aba4971d1ccfd79ee",
+      "actual_movie_frame_index": 1934,
+      "actual_movie_frame_time": 77.36
+    },
+    {
+      "film_time": 77.86,
+      "label": "07-second_saved_setpoint_ambient-14.66",
+      "kind": "keypoint",
+      "source_time": 170.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0132.jpg",
+      "sha256": "9c4a2ef2e9e022ddb835c30f0e23b47c9268183daf9ff259e58586bb87817a42",
+      "actual_movie_frame_index": 1947,
+      "actual_movie_frame_time": 77.88
+    },
+    {
+      "film_time": 78.36,
+      "label": "07-second_saved_setpoint_ambient-15.16",
+      "kind": "keypoint",
+      "source_time": 171.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0133.jpg",
+      "sha256": "3f881330517a930065faedb05f5bdcfd1f32a041feb58e59543774082c1721f1",
+      "actual_movie_frame_index": 1959,
+      "actual_movie_frame_time": 78.36
+    },
+    {
+      "film_time": 78.86,
+      "label": "07-second_saved_setpoint_ambient-15.66",
+      "kind": "keypoint",
+      "source_time": 171.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0134.jpg",
+      "sha256": "88ad2448eb27514c182152989974f787749bb78952772b7c9b2a445b75d68503",
+      "actual_movie_frame_index": 1972,
+      "actual_movie_frame_time": 78.88
+    },
+    {
+      "film_time": 79.36,
+      "label": "08-second_setpoint_reaction_original_board-start",
+      "kind": "segment",
+      "source_time": 172.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0136.jpg",
+      "sha256": "b0e43840679e45ac799a92c19171a3659bb282df4ea98a497f008071276bd83e",
+      "actual_movie_frame_index": 1984,
+      "actual_movie_frame_time": 79.36
+    },
+    {
+      "film_time": 79.74,
+      "label": "08-second_setpoint_reaction_original_board-mid",
+      "kind": "segment",
+      "source_time": 172.74,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0138.jpg",
+      "sha256": "72af996e7703991306ff0cd3ee7d98bf7eeb80b2565d51425a8e6b3f19d77aaa",
+      "actual_movie_frame_index": 1994,
+      "actual_movie_frame_time": 79.76
+    },
+    {
+      "film_time": 80.12,
+      "label": "08-second_setpoint_reaction_original_board-end",
+      "kind": "segment",
+      "source_time": 173.12,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0140.jpg",
+      "sha256": "0770f1eb50e4ae2b74ab769d6da41000593d09aa2b632320042db848fbd0b83a",
+      "actual_movie_frame_index": 2003,
+      "actual_movie_frame_time": 80.12
+    },
+    {
+      "film_time": 79.2,
+      "label": "reaction-172.20",
+      "kind": "reaction",
+      "source_time": 172.2,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0135.jpg",
+      "sha256": "f1cf9cade430a51214a328c469568d4477f03d70109b072861a0831f96aae71e",
+      "actual_movie_frame_index": 1980,
+      "actual_movie_frame_time": 79.2
+    },
+    {
+      "film_time": 79.6,
+      "label": "reaction-172.60",
+      "kind": "reaction",
+      "source_time": 172.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0137.jpg",
+      "sha256": "16b6ab6c767543422fc5b7153d2fc5dca1b79b0c997bc22d05397c3e5d2b74c0",
+      "actual_movie_frame_index": 1990,
+      "actual_movie_frame_time": 79.6
+    },
+    {
+      "film_time": 79.92,
+      "label": "reaction-172.92",
+      "kind": "reaction",
+      "source_time": 172.92,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0139.jpg",
+      "sha256": "2b2231eb98bd9f67bc29542caa0afa66a4fcddad2b57d5048f95485ec1133030",
+      "actual_movie_frame_index": 1998,
+      "actual_movie_frame_time": 79.92
+    },
+    {
+      "film_time": 80.24,
+      "label": "reaction-173.24",
+      "kind": "reaction",
+      "source_time": 173.24,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0141.jpg",
+      "sha256": "3da7273ccb538812abffdf3470935d781a1dc189c823eab38c8bd8aaadcc4a52",
+      "actual_movie_frame_index": 2006,
+      "actual_movie_frame_time": 80.24
+    },
+    {
+      "film_time": 80.6,
+      "label": "09-third_saved_setpoint_ambient-start",
+      "kind": "segment",
+      "source_time": 173.60000000000002,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0143.jpg",
+      "sha256": "34dd9e1ad457689b19e14fb6c35cb405ec3af7e491fd21a3968038f0e047c053",
+      "actual_movie_frame_index": 2015,
+      "actual_movie_frame_time": 80.6
+    },
+    {
+      "film_time": 86.32,
+      "label": "09-third_saved_setpoint_ambient-mid",
+      "kind": "segment",
+      "source_time": 179.32000000000002,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0155.jpg",
+      "sha256": "dfa3a3bd942ff353804dc76a65376de49cd1cbfc143fa86bd9c1ee8c15400e08",
+      "actual_movie_frame_index": 2158,
+      "actual_movie_frame_time": 86.32
+    },
+    {
+      "film_time": 92.04,
+      "label": "09-third_saved_setpoint_ambient-end",
+      "kind": "segment",
+      "source_time": 185.04000000000002,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0167.jpg",
+      "sha256": "cc581252b8fbcedc610aeaae7ea4fb76829e9066506a620b14d820391506e46b",
+      "actual_movie_frame_index": 2301,
+      "actual_movie_frame_time": 92.04
+    },
+    {
+      "film_time": 80.52,
+      "label": "09-third_saved_setpoint_ambient-0.16",
+      "kind": "keypoint",
+      "source_time": 173.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0142.jpg",
+      "sha256": "91328f027123dc3da2b69a3e421c266d9519eb4b1a7738f35707e7042f8bb020",
+      "actual_movie_frame_index": 2013,
+      "actual_movie_frame_time": 80.52
+    },
+    {
+      "film_time": 81.02,
+      "label": "09-third_saved_setpoint_ambient-0.66",
+      "kind": "keypoint",
+      "source_time": 174.02,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0144.jpg",
+      "sha256": "de12991e644508d119a59de686e3c10024dd2c68877de127657e7350de7c6f73",
+      "actual_movie_frame_index": 2026,
+      "actual_movie_frame_time": 81.04
+    },
+    {
+      "film_time": 81.52,
+      "label": "09-third_saved_setpoint_ambient-1.16",
+      "kind": "keypoint",
+      "source_time": 174.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0145.jpg",
+      "sha256": "68e169c081d35ec018988366a708c3bc34592c17ba9ea564cab0b0f96d3ab2ef",
+      "actual_movie_frame_index": 2038,
+      "actual_movie_frame_time": 81.52
+    },
+    {
+      "film_time": 82.02,
+      "label": "09-third_saved_setpoint_ambient-1.66",
+      "kind": "keypoint",
+      "source_time": 175.02,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0146.jpg",
+      "sha256": "b2fe2db24c900b5e16e828f6961de54c176bc61027e7dd6af0e4482a7228e6be",
+      "actual_movie_frame_index": 2051,
+      "actual_movie_frame_time": 82.04
+    },
+    {
+      "film_time": 82.52,
+      "label": "09-third_saved_setpoint_ambient-2.16",
+      "kind": "keypoint",
+      "source_time": 175.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0147.jpg",
+      "sha256": "00bec612060a5502abe7a6a8673af85a90d11a25fcd42351d88b9e7be71c6190",
+      "actual_movie_frame_index": 2063,
+      "actual_movie_frame_time": 82.52
+    },
+    {
+      "film_time": 83.02,
+      "label": "09-third_saved_setpoint_ambient-2.66",
+      "kind": "keypoint",
+      "source_time": 176.02,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0148.jpg",
+      "sha256": "54da87a7a5db5a5c5dd9d5d340002600ec06650911236b36a85fe27314facfaf",
+      "actual_movie_frame_index": 2076,
+      "actual_movie_frame_time": 83.04
+    },
+    {
+      "film_time": 83.52,
+      "label": "09-third_saved_setpoint_ambient-3.16",
+      "kind": "keypoint",
+      "source_time": 176.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0149.jpg",
+      "sha256": "ae28e76d604a189b8a59f321ed8860ccf7cc1aee8d3db455a4f9e7a05e30df5a",
+      "actual_movie_frame_index": 2088,
+      "actual_movie_frame_time": 83.52
+    },
+    {
+      "film_time": 84.02,
+      "label": "09-third_saved_setpoint_ambient-3.66",
+      "kind": "keypoint",
+      "source_time": 177.02,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0150.jpg",
+      "sha256": "2bff35ecc126b335578d1912f889d292314c8da7514a517f5ef9df472b602afd",
+      "actual_movie_frame_index": 2101,
+      "actual_movie_frame_time": 84.04
+    },
+    {
+      "film_time": 84.52,
+      "label": "09-third_saved_setpoint_ambient-4.16",
+      "kind": "keypoint",
+      "source_time": 177.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0151.jpg",
+      "sha256": "319778d4ea29e677592954dc5cf9683188946a188c315eb4b72aeee22c5a32de",
+      "actual_movie_frame_index": 2113,
+      "actual_movie_frame_time": 84.52
+    },
+    {
+      "film_time": 85.02,
+      "label": "09-third_saved_setpoint_ambient-4.66",
+      "kind": "keypoint",
+      "source_time": 178.02,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0152.jpg",
+      "sha256": "f17519a911b30681d91947881b780e64c8a8e8b1f78e388d7e4457f52ae0395e",
+      "actual_movie_frame_index": 2126,
+      "actual_movie_frame_time": 85.04
+    },
+    {
+      "film_time": 85.52,
+      "label": "09-third_saved_setpoint_ambient-5.16",
+      "kind": "keypoint",
+      "source_time": 178.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0153.jpg",
+      "sha256": "9ee999e3f2debcec49cc90e5b67d19883ef3c13bba8e5c19e074dd2a1bb66ac5",
+      "actual_movie_frame_index": 2138,
+      "actual_movie_frame_time": 85.52
+    },
+    {
+      "film_time": 86.02,
+      "label": "09-third_saved_setpoint_ambient-5.66",
+      "kind": "keypoint",
+      "source_time": 179.02,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0154.jpg",
+      "sha256": "07dc98f0e8be588faffd110e3e2ed40475fb18e11a3b752d190485d4ebbc9912",
+      "actual_movie_frame_index": 2151,
+      "actual_movie_frame_time": 86.04
+    },
+    {
+      "film_time": 86.52,
+      "label": "09-third_saved_setpoint_ambient-6.16",
+      "kind": "keypoint",
+      "source_time": 179.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0156.jpg",
+      "sha256": "bca4d7291f17e05c31f2526733bda7c4978234bbe151c864edfc799bf852dc24",
+      "actual_movie_frame_index": 2163,
+      "actual_movie_frame_time": 86.52
+    },
+    {
+      "film_time": 87.02,
+      "label": "09-third_saved_setpoint_ambient-6.66",
+      "kind": "keypoint",
+      "source_time": 180.02,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0157.jpg",
+      "sha256": "fff8d1c665908207f3af6449d30e756af3df34d311afcef92be0e2c0ae570d83",
+      "actual_movie_frame_index": 2176,
+      "actual_movie_frame_time": 87.04
+    },
+    {
+      "film_time": 87.52,
+      "label": "09-third_saved_setpoint_ambient-7.16",
+      "kind": "keypoint",
+      "source_time": 180.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0158.jpg",
+      "sha256": "d0e3b9c7fb07dc341e7e020b9fa39eec518f0e5cd5c3d92c1df0089a3803e1d6",
+      "actual_movie_frame_index": 2188,
+      "actual_movie_frame_time": 87.52
+    },
+    {
+      "film_time": 88.02,
+      "label": "09-third_saved_setpoint_ambient-7.66",
+      "kind": "keypoint",
+      "source_time": 181.02,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0159.jpg",
+      "sha256": "638d64aebd8a488d7d8a80b2f46960cc8cfd04d61bba71529d03b629af2db6eb",
+      "actual_movie_frame_index": 2201,
+      "actual_movie_frame_time": 88.04
+    },
+    {
+      "film_time": 88.52,
+      "label": "09-third_saved_setpoint_ambient-8.16",
+      "kind": "keypoint",
+      "source_time": 181.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0160.jpg",
+      "sha256": "ba805263b9fe0d52a0c9b4992cc3b655c327f5b168b402c10ae2c2164537a389",
+      "actual_movie_frame_index": 2213,
+      "actual_movie_frame_time": 88.52
+    },
+    {
+      "film_time": 89.02,
+      "label": "09-third_saved_setpoint_ambient-8.66",
+      "kind": "keypoint",
+      "source_time": 182.02,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0161.jpg",
+      "sha256": "af6625720f6dbe2aa9084506fd7930cfb3048ff14b63721fd649ffee728eaa8c",
+      "actual_movie_frame_index": 2226,
+      "actual_movie_frame_time": 89.04
+    },
+    {
+      "film_time": 89.52,
+      "label": "09-third_saved_setpoint_ambient-9.16",
+      "kind": "keypoint",
+      "source_time": 182.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0162.jpg",
+      "sha256": "18e7675b858578c6367d040bbca4afe7beb796eee35b06fa4bdd1a08817e8a58",
+      "actual_movie_frame_index": 2238,
+      "actual_movie_frame_time": 89.52
+    },
+    {
+      "film_time": 90.02,
+      "label": "09-third_saved_setpoint_ambient-9.66",
+      "kind": "keypoint",
+      "source_time": 183.02,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0163.jpg",
+      "sha256": "933610e47ff6c50d10357f2bc60e93509819ba01be335c3a74a50c7046028753",
+      "actual_movie_frame_index": 2251,
+      "actual_movie_frame_time": 90.04
+    },
+    {
+      "film_time": 90.52,
+      "label": "09-third_saved_setpoint_ambient-10.16",
+      "kind": "keypoint",
+      "source_time": 183.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0164.jpg",
+      "sha256": "56aed948a78837c406205e88bb6abec0a12b325d00a84ed1bdaed578d3862d8d",
+      "actual_movie_frame_index": 2263,
+      "actual_movie_frame_time": 90.52
+    },
+    {
+      "film_time": 91.02,
+      "label": "09-third_saved_setpoint_ambient-10.66",
+      "kind": "keypoint",
+      "source_time": 184.02,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0165.jpg",
+      "sha256": "9d08b51c02d892a9eaf8f4c37e67005929026c589a10672bebb6f1490a6eef7b",
+      "actual_movie_frame_index": 2276,
+      "actual_movie_frame_time": 91.04
+    },
+    {
+      "film_time": 91.52,
+      "label": "09-third_saved_setpoint_ambient-11.16",
+      "kind": "keypoint",
+      "source_time": 184.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0166.jpg",
+      "sha256": "b29a5d88aa6fd67a1bc40bee3dcfc27b0b6a8c9f5ef8b87690c3e076121663ca",
+      "actual_movie_frame_index": 2288,
+      "actual_movie_frame_time": 91.52
+    },
+    {
+      "film_time": 92.02,
+      "label": "09-third_saved_setpoint_ambient-11.66",
+      "kind": "keypoint",
+      "source_time": 185.02,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0167.jpg",
+      "sha256": "cc581252b8fbcedc610aeaae7ea4fb76829e9066506a620b14d820391506e46b",
+      "actual_movie_frame_index": 2301,
+      "actual_movie_frame_time": 92.04
+    },
+    {
+      "film_time": 92.52,
+      "label": "10-first_set_close-start",
+      "kind": "segment",
+      "source_time": 185.52,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0169.jpg",
+      "sha256": "c2645e1202fdb5d3754c2457f2718445b94406dbd7e5ea06c96335659ac78a93",
+      "actual_movie_frame_index": 2313,
+      "actual_movie_frame_time": 92.52
+    },
+    {
+      "film_time": 94.54,
+      "label": "10-first_set_close-mid",
+      "kind": "segment",
+      "source_time": 187.54,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0175.jpg",
+      "sha256": "2167a60a3abf56dd5d01a59ad214ba9a2e926e6b15b03d38fc1e257eb5e9acd2",
+      "actual_movie_frame_index": 2364,
+      "actual_movie_frame_time": 94.56
+    },
+    {
+      "film_time": 96.56,
+      "label": "10-first_set_close-end",
+      "kind": "segment",
+      "source_time": 189.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0181.jpg",
+      "sha256": "1b9ad5a6dddc593667781dd6343aef0365ba17bec76f622781f22237e2723baf",
+      "actual_movie_frame_index": 2414,
+      "actual_movie_frame_time": 96.56
+    },
+    {
+      "film_time": 92.44,
+      "label": "10-first_set_close-0.16",
+      "kind": "keypoint",
+      "source_time": 185.44,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0168.jpg",
+      "sha256": "173d7f4a68849c28b187a290aa102e163eb3dcce6ddbb03845a805e4d557c397",
+      "actual_movie_frame_index": 2311,
+      "actual_movie_frame_time": 92.44
+    },
+    {
+      "film_time": 92.94,
+      "label": "10-first_set_close-0.66",
+      "kind": "keypoint",
+      "source_time": 185.94,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0170.jpg",
+      "sha256": "3b1453012f106ecdaae0cf62edb0139d7ff6e357d7c6afd0c674c617a3735053",
+      "actual_movie_frame_index": 2324,
+      "actual_movie_frame_time": 92.96
+    },
+    {
+      "film_time": 93.44,
+      "label": "10-first_set_close-1.16",
+      "kind": "keypoint",
+      "source_time": 186.44,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0171.jpg",
+      "sha256": "6abaff47d743e3d0c1583bb2f3650446baa85253da6bb41bf8aa7299c0ed4905",
+      "actual_movie_frame_index": 2336,
+      "actual_movie_frame_time": 93.44
+    },
+    {
+      "film_time": 93.94,
+      "label": "10-first_set_close-1.66",
+      "kind": "keypoint",
+      "source_time": 186.94,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0172.jpg",
+      "sha256": "1d134f946a2375df556ded7bf1e49ea6ea2206d9b63a4c77f31b6cbd2a7635f9",
+      "actual_movie_frame_index": 2349,
+      "actual_movie_frame_time": 93.96
+    },
+    {
+      "film_time": 94.44,
+      "label": "10-first_set_close-2.16",
+      "kind": "keypoint",
+      "source_time": 187.44,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0174.jpg",
+      "sha256": "d640e0c136496d1b93538e68e75d4120063992fa007bd1c6afe9ebad792eede3",
+      "actual_movie_frame_index": 2361,
+      "actual_movie_frame_time": 94.44
+    },
+    {
+      "film_time": 94.94,
+      "label": "10-first_set_close-2.66",
+      "kind": "keypoint",
+      "source_time": 187.94,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0176.jpg",
+      "sha256": "6bd53c19d87d88661f66a84b7e549db12ce11b88fec85bf7dfb5fe605e51e6c1",
+      "actual_movie_frame_index": 2374,
+      "actual_movie_frame_time": 94.96
+    },
+    {
+      "film_time": 95.44,
+      "label": "10-first_set_close-3.16",
+      "kind": "keypoint",
+      "source_time": 188.44,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0177.jpg",
+      "sha256": "119b597489923aac41ddf74106ff23c659498732827026157877afa3aa248eaa",
+      "actual_movie_frame_index": 2386,
+      "actual_movie_frame_time": 95.44
+    },
+    {
+      "film_time": 95.94,
+      "label": "10-first_set_close-3.66",
+      "kind": "keypoint",
+      "source_time": 188.94,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0179.jpg",
+      "sha256": "ad14a5895547a59996891bc69d5cf069ea3385cee56603517c7ad3affc0988c8",
+      "actual_movie_frame_index": 2399,
+      "actual_movie_frame_time": 95.96
+    },
+    {
+      "film_time": 96.44,
+      "label": "10-first_set_close-4.16",
+      "kind": "keypoint",
+      "source_time": 189.44,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0180.jpg",
+      "sha256": "497f4eeed343d3df09a16038b0fb3d1ad011229c55ba7b78cab94aa2384b2d5a",
+      "actual_movie_frame_index": 2411,
+      "actual_movie_frame_time": 96.44
+    },
+    {
+      "film_time": 97.04,
+      "label": "11-first_set_ace_commentary-start",
+      "kind": "segment",
+      "source_time": 190.04000000000002,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0183.jpg",
+      "sha256": "34e15f71d1bba78184997530dadc22e7ebed034ce0b57df0496cc662565e5190",
+      "actual_movie_frame_index": 2426,
+      "actual_movie_frame_time": 97.04
+    },
+    {
+      "film_time": 98.4,
+      "label": "11-first_set_ace_commentary-mid",
+      "kind": "segment",
+      "source_time": 191.4,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0186.jpg",
+      "sha256": "20b5cedd2d72c28c8c77bfe3ad01e19a18e430a3f92ebbb8c1ae64626a834de4",
+      "actual_movie_frame_index": 2460,
+      "actual_movie_frame_time": 98.4
+    },
+    {
+      "film_time": 99.76,
+      "label": "11-first_set_ace_commentary-end",
+      "kind": "segment",
+      "source_time": 192.76000000000002,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0190.jpg",
+      "sha256": "f569d555c138c96469e107622e53299eb1ea61bc8b79fb0a1d0cd1e4a1398695",
+      "actual_movie_frame_index": 2494,
+      "actual_movie_frame_time": 99.76
+    },
+    {
+      "film_time": 96.96,
+      "label": "11-first_set_ace_commentary-0.16",
+      "kind": "keypoint",
+      "source_time": 189.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0182.jpg",
+      "sha256": "e187d45a2ec55fc528c57b0bc98bb3a2cb9639c55de7aaeaa5fbd1e511462fa0",
+      "actual_movie_frame_index": 2424,
+      "actual_movie_frame_time": 96.96
+    },
+    {
+      "film_time": 97.46,
+      "label": "11-first_set_ace_commentary-0.66",
+      "kind": "keypoint",
+      "source_time": 190.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0184.jpg",
+      "sha256": "035b0f298baa5f22b1f84ba3d87ca632108a063bd607a844f4ee240d20d85eb9",
+      "actual_movie_frame_index": 2437,
+      "actual_movie_frame_time": 97.48
+    },
+    {
+      "film_time": 97.96,
+      "label": "11-first_set_ace_commentary-1.16",
+      "kind": "keypoint",
+      "source_time": 190.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0185.jpg",
+      "sha256": "3892d2514258c06e4ca6bd7de2417fb9f2b091745911e3fb2971f943b795e4bc",
+      "actual_movie_frame_index": 2449,
+      "actual_movie_frame_time": 97.96
+    },
+    {
+      "film_time": 98.46,
+      "label": "11-first_set_ace_commentary-1.66",
+      "kind": "keypoint",
+      "source_time": 191.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0187.jpg",
+      "sha256": "d2db6f9ebf819fd21d5e1e6207d1b26c0a363c917f4b11632145c8be379e6a6e",
+      "actual_movie_frame_index": 2462,
+      "actual_movie_frame_time": 98.48
+    },
+    {
+      "film_time": 98.96,
+      "label": "11-first_set_ace_commentary-2.16",
+      "kind": "keypoint",
+      "source_time": 191.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0188.jpg",
+      "sha256": "ef3395ac9c3f18a4ac118e074306d78bf2f32991eeb0cb9bc09dcf97e121a723",
+      "actual_movie_frame_index": 2474,
+      "actual_movie_frame_time": 98.96
+    },
+    {
+      "film_time": 99.46,
+      "label": "11-first_set_ace_commentary-2.66",
+      "kind": "keypoint",
+      "source_time": 192.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0189.jpg",
+      "sha256": "41dd9ab654e485b933263820937843f96e8a6801279c265e5e7024f934331419",
+      "actual_movie_frame_index": 2487,
+      "actual_movie_frame_time": 99.48
+    },
+    {
+      "film_time": 100.24,
+      "label": "12-first_set_crowd_commentary-start",
+      "kind": "segment",
+      "source_time": 193.24,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0192.jpg",
+      "sha256": "96a07775310ab6aba06409c78a85ac7fe81e62391f7a9d51a76a1d585040f572",
+      "actual_movie_frame_index": 2506,
+      "actual_movie_frame_time": 100.24
+    },
+    {
+      "film_time": 104.15,
+      "label": "12-first_set_crowd_commentary-mid",
+      "kind": "segment",
+      "source_time": 197.15,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0198.jpg",
+      "sha256": "e43dad66651ded8b621dd82fbd9bd9048b2da87f677c22458aa94c926cad8fce",
+      "actual_movie_frame_index": 2604,
+      "actual_movie_frame_time": 104.16
+    },
+    {
+      "film_time": 108.06,
+      "label": "12-first_set_crowd_commentary-end",
+      "kind": "segment",
+      "source_time": 201.06,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0204.jpg",
+      "sha256": "8950194ee599588493716fc80887d55ada672807a868bf241c714b5378f2355b",
+      "actual_movie_frame_index": 2702,
+      "actual_movie_frame_time": 108.08
+    },
+    {
+      "film_time": 108.54,
+      "label": "13-first_set_summary_commentary-start",
+      "kind": "segment",
+      "source_time": 201.54000000000002,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0206.jpg",
+      "sha256": "852e23d913e1cd297d2ad4ad8de593c3f72efed5c25ed3908b86539b10221095",
+      "actual_movie_frame_index": 2714,
+      "actual_movie_frame_time": 108.56
+    },
+    {
+      "film_time": 111.55,
+      "label": "13-first_set_summary_commentary-mid",
+      "kind": "segment",
+      "source_time": 204.55,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0211.jpg",
+      "sha256": "0a4c508039395460066dbb5a9c4ff87a26532fa5f4dbee6fe22ca8a724865efe",
+      "actual_movie_frame_index": 2789,
+      "actual_movie_frame_time": 111.56
+    },
+    {
+      "film_time": 114.56,
+      "label": "13-first_set_summary_commentary-end",
+      "kind": "segment",
+      "source_time": 207.56,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0217.jpg",
+      "sha256": "292153227677f353c54fdb7da7984bbd2e9d8a8037bec6b98fa05cd3997e6c1b",
+      "actual_movie_frame_index": 2864,
+      "actual_movie_frame_time": 114.56
+    },
+    {
+      "film_time": 108.4,
+      "label": "summary-201.40",
+      "kind": "summary",
+      "source_time": 201.4,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0205.jpg",
+      "sha256": "fd6f3d8d2957908349f811c4a9225037a23089e87197fcc64b500439ac7a256a",
+      "actual_movie_frame_index": 2710,
+      "actual_movie_frame_time": 108.4
+    },
+    {
+      "film_time": 109.6,
+      "label": "summary-202.60",
+      "kind": "summary",
+      "source_time": 202.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0208.jpg",
+      "sha256": "2007fa40abea157849352d3401470cf0a8a79bc948e4e16740c8a1a23fafec3a",
+      "actual_movie_frame_index": 2740,
+      "actual_movie_frame_time": 109.6
+    },
+    {
+      "film_time": 110.6,
+      "label": "summary-203.60",
+      "kind": "summary",
+      "source_time": 203.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0210.jpg",
+      "sha256": "5d3fadfd76d394320e477f7f1fbde3c14852bc162414334291a1ac0577f248a2",
+      "actual_movie_frame_index": 2765,
+      "actual_movie_frame_time": 110.6
+    },
+    {
+      "film_time": 112.0,
+      "label": "summary-205.00",
+      "kind": "summary",
+      "source_time": 205,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0213.jpg",
+      "sha256": "65ce66adcff491b6edd470cfed971b527353a4696c234d779adf40dc7af759a2",
+      "actual_movie_frame_index": 2800,
+      "actual_movie_frame_time": 112.0
+    },
+    {
+      "film_time": 113.6,
+      "label": "summary-206.60",
+      "kind": "summary",
+      "source_time": 206.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0215.jpg",
+      "sha256": "65429f69033e6c94f65277f248a047cf83e11e9ea1480e4e62f11738d04d807d",
+      "actual_movie_frame_index": 2840,
+      "actual_movie_frame_time": 113.6
+    },
+    {
+      "film_time": 114.6,
+      "label": "summary-207.60",
+      "kind": "summary",
+      "source_time": 207.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0218.jpg",
+      "sha256": "7092dfb4238de1c61c1d03b148bda4066fe0d7abbeb7ec56375f7c82c5be505f",
+      "actual_movie_frame_index": 2865,
+      "actual_movie_frame_time": 114.6
+    },
+    {
+      "film_time": 115.04,
+      "label": "14-second_set_opening_break-start",
+      "kind": "segment",
+      "source_time": 208.04000000000002,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0220.jpg",
+      "sha256": "68df1f36b6d8dc6d11a0f46646a7e1ca407466ccff1913d31d455b949aab7f7d",
+      "actual_movie_frame_index": 2876,
+      "actual_movie_frame_time": 115.04
+    },
+    {
+      "film_time": 125.0,
+      "label": "14-second_set_opening_break-mid",
+      "kind": "segment",
+      "source_time": 218.0,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0247.jpg",
+      "sha256": "01e67e3f56c0d27b3eae070c38deb9bedbfdb916508087535e62e738138997a4",
+      "actual_movie_frame_index": 3125,
+      "actual_movie_frame_time": 125.0
+    },
+    {
+      "film_time": 134.96,
+      "label": "14-second_set_opening_break-end",
+      "kind": "segment",
+      "source_time": 227.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0267.jpg",
+      "sha256": "c95d8981cd4e7974d5fcde2f4601d0abfe5ea70756395870d23d36749360cef3",
+      "actual_movie_frame_index": 3374,
+      "actual_movie_frame_time": 134.96
+    },
+    {
+      "film_time": 114.96,
+      "label": "14-second_set_opening_break-0.16",
+      "kind": "keypoint",
+      "source_time": 207.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0219.jpg",
+      "sha256": "1c93a2a2745aff39892fd23efb1a4f2b271e60daa7854503bd4331d2ffbb9ab0",
+      "actual_movie_frame_index": 2874,
+      "actual_movie_frame_time": 114.96
+    },
+    {
+      "film_time": 115.46,
+      "label": "14-second_set_opening_break-0.66",
+      "kind": "keypoint",
+      "source_time": 208.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0221.jpg",
+      "sha256": "7f2b2b20119a45a5043370fbbcc2116236cf222d000bc8d4549fd28560d14ce4",
+      "actual_movie_frame_index": 2887,
+      "actual_movie_frame_time": 115.48
+    },
+    {
+      "film_time": 115.96,
+      "label": "14-second_set_opening_break-1.16",
+      "kind": "keypoint",
+      "source_time": 208.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0222.jpg",
+      "sha256": "4a0042c4893d8204d28a523511d38f99b6ba02ab47c48fe0b8a4add4eccda474",
+      "actual_movie_frame_index": 2899,
+      "actual_movie_frame_time": 115.96
+    },
+    {
+      "film_time": 116.46,
+      "label": "14-second_set_opening_break-1.66",
+      "kind": "keypoint",
+      "source_time": 209.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0224.jpg",
+      "sha256": "547a1c7405efc94a09c2843391a90067a2d71bf8c72708e22c0f17c733a71678",
+      "actual_movie_frame_index": 2912,
+      "actual_movie_frame_time": 116.48
+    },
+    {
+      "film_time": 116.96,
+      "label": "14-second_set_opening_break-2.16",
+      "kind": "keypoint",
+      "source_time": 209.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0225.jpg",
+      "sha256": "8130c83ddaca363a06116c7653a15cd367e20f2378cc537fb718bf400a80ff63",
+      "actual_movie_frame_index": 2924,
+      "actual_movie_frame_time": 116.96
+    },
+    {
+      "film_time": 117.46,
+      "label": "14-second_set_opening_break-2.66",
+      "kind": "keypoint",
+      "source_time": 210.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0226.jpg",
+      "sha256": "914a2f80245eb223e34fce6c06c3fc537d156d547a08a99821cb1bb8ab7d3cdd",
+      "actual_movie_frame_index": 2937,
+      "actual_movie_frame_time": 117.48
+    },
+    {
+      "film_time": 117.96,
+      "label": "14-second_set_opening_break-3.16",
+      "kind": "keypoint",
+      "source_time": 210.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0228.jpg",
+      "sha256": "c3792b3e0965cfcba4601b1912215af29b567dc80a78d0f1adc2086e8fdafc1c",
+      "actual_movie_frame_index": 2949,
+      "actual_movie_frame_time": 117.96
+    },
+    {
+      "film_time": 118.46,
+      "label": "14-second_set_opening_break-3.66",
+      "kind": "keypoint",
+      "source_time": 211.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0229.jpg",
+      "sha256": "4f67fcdece92f58c4dde19fcf9ae8f794d46d4298ded4b0f25ec4c46e7868c23",
+      "actual_movie_frame_index": 2962,
+      "actual_movie_frame_time": 118.48
+    },
+    {
+      "film_time": 118.96,
+      "label": "14-second_set_opening_break-4.16",
+      "kind": "keypoint",
+      "source_time": 211.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0230.jpg",
+      "sha256": "6743612634320f1741a70714dbde40a106131afa9f0c30dcf73477dd3bba8b20",
+      "actual_movie_frame_index": 2974,
+      "actual_movie_frame_time": 118.96
+    },
+    {
+      "film_time": 119.46,
+      "label": "14-second_set_opening_break-4.66",
+      "kind": "keypoint",
+      "source_time": 212.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0232.jpg",
+      "sha256": "4dc4d053b23a9e5cefd1a6d328e4611d013137b28daa340447c04bd013ff485a",
+      "actual_movie_frame_index": 2987,
+      "actual_movie_frame_time": 119.48
+    },
+    {
+      "film_time": 119.96,
+      "label": "14-second_set_opening_break-5.16",
+      "kind": "keypoint",
+      "source_time": 212.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0233.jpg",
+      "sha256": "f6cfd4b05e52ebd8e93981bcfc143cdfcd6c61d9e31e18a139bbfea2990e3f66",
+      "actual_movie_frame_index": 2999,
+      "actual_movie_frame_time": 119.96
+    },
+    {
+      "film_time": 120.46,
+      "label": "14-second_set_opening_break-5.66",
+      "kind": "keypoint",
+      "source_time": 213.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0234.jpg",
+      "sha256": "c7f0b26568896decce4e9bf457d0b40d79df9b8f0a8ecda434b5a984910cb664",
+      "actual_movie_frame_index": 3012,
+      "actual_movie_frame_time": 120.48
+    },
+    {
+      "film_time": 120.96,
+      "label": "14-second_set_opening_break-6.16",
+      "kind": "keypoint",
+      "source_time": 213.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0236.jpg",
+      "sha256": "7e47f7cb69faf30edcefdf45e8dabc0da5e173a8240e2adfd0ea0440dfd71e21",
+      "actual_movie_frame_index": 3024,
+      "actual_movie_frame_time": 120.96
+    },
+    {
+      "film_time": 121.46,
+      "label": "14-second_set_opening_break-6.66",
+      "kind": "keypoint",
+      "source_time": 214.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0237.jpg",
+      "sha256": "cecba79663a0805059c4d7f3aa4dda11788f796694888f4e34c360f528a15d8f",
+      "actual_movie_frame_index": 3037,
+      "actual_movie_frame_time": 121.48
+    },
+    {
+      "film_time": 121.96,
+      "label": "14-second_set_opening_break-7.16",
+      "kind": "keypoint",
+      "source_time": 214.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0239.jpg",
+      "sha256": "2f1772024e174e3a26756d6879c4732528cb000a55c023583eb136ce4585a9bd",
+      "actual_movie_frame_index": 3049,
+      "actual_movie_frame_time": 121.96
+    },
+    {
+      "film_time": 122.46,
+      "label": "14-second_set_opening_break-7.66",
+      "kind": "keypoint",
+      "source_time": 215.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0241.jpg",
+      "sha256": "b7db2d7ce688890a65c41e40ca5b74feacf50317fe495550007da75d55b00014",
+      "actual_movie_frame_index": 3062,
+      "actual_movie_frame_time": 122.48
+    },
+    {
+      "film_time": 122.96,
+      "label": "14-second_set_opening_break-8.16",
+      "kind": "keypoint",
+      "source_time": 215.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0242.jpg",
+      "sha256": "003a38e5abf4ad602c7941104d20faccb31d54797905c8b46f2b29ab24dad66a",
+      "actual_movie_frame_index": 3074,
+      "actual_movie_frame_time": 122.96
+    },
+    {
+      "film_time": 123.46,
+      "label": "14-second_set_opening_break-8.66",
+      "kind": "keypoint",
+      "source_time": 216.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0243.jpg",
+      "sha256": "a5289bbf243a9ba791fb1f851ab4fd1fbf55144f5346d11362fed844d0dd28fd",
+      "actual_movie_frame_index": 3087,
+      "actual_movie_frame_time": 123.48
+    },
+    {
+      "film_time": 123.96,
+      "label": "14-second_set_opening_break-9.16",
+      "kind": "keypoint",
+      "source_time": 216.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0244.jpg",
+      "sha256": "8c94d51ecb624359466364f7d7acab263c77a9da0de569ee879498e806c8460a",
+      "actual_movie_frame_index": 3099,
+      "actual_movie_frame_time": 123.96
+    },
+    {
+      "film_time": 124.46,
+      "label": "14-second_set_opening_break-9.66",
+      "kind": "keypoint",
+      "source_time": 217.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0245.jpg",
+      "sha256": "2308978b7e3824f1eb9a94eb3752aca9b81ae2c1de04b431cfd77c90425426d8",
+      "actual_movie_frame_index": 3112,
+      "actual_movie_frame_time": 124.48
+    },
+    {
+      "film_time": 124.96,
+      "label": "14-second_set_opening_break-10.16",
+      "kind": "keypoint",
+      "source_time": 217.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0246.jpg",
+      "sha256": "d576b6e2995bd1a0aa31b0c6336bf2634c6f14c92ba042e81c1d68135fd439aa",
+      "actual_movie_frame_index": 3124,
+      "actual_movie_frame_time": 124.96
+    },
+    {
+      "film_time": 125.46,
+      "label": "14-second_set_opening_break-10.66",
+      "kind": "keypoint",
+      "source_time": 218.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0248.jpg",
+      "sha256": "845173da217b90a7bda77659dcd2fec50d17aeffe9593494a7f74594a99e9467",
+      "actual_movie_frame_index": 3137,
+      "actual_movie_frame_time": 125.48
+    },
+    {
+      "film_time": 125.96,
+      "label": "14-second_set_opening_break-11.16",
+      "kind": "keypoint",
+      "source_time": 218.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0249.jpg",
+      "sha256": "2e6d1da7eec6b51f340e45048b3d2e230182dc2841eac158bab4e91880285fb9",
+      "actual_movie_frame_index": 3149,
+      "actual_movie_frame_time": 125.96
+    },
+    {
+      "film_time": 126.46,
+      "label": "14-second_set_opening_break-11.66",
+      "kind": "keypoint",
+      "source_time": 219.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0250.jpg",
+      "sha256": "811f98fdd0b2b1417325115bbc9b13545ea421b8b0b5951cf24f8663cdc30267",
+      "actual_movie_frame_index": 3162,
+      "actual_movie_frame_time": 126.48
+    },
+    {
+      "film_time": 126.96,
+      "label": "14-second_set_opening_break-12.16",
+      "kind": "keypoint",
+      "source_time": 219.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0251.jpg",
+      "sha256": "c0068da7fccd5c9da6a948e9131ece2a65cf3934d1c63e877d896254632ff585",
+      "actual_movie_frame_index": 3174,
+      "actual_movie_frame_time": 126.96
+    },
+    {
+      "film_time": 127.46,
+      "label": "14-second_set_opening_break-12.66",
+      "kind": "keypoint",
+      "source_time": 220.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0252.jpg",
+      "sha256": "0f790abea7ec8c2280821b8a0799fdac19679c60cccb1173e51b2f33099ed2ae",
+      "actual_movie_frame_index": 3187,
+      "actual_movie_frame_time": 127.48
+    },
+    {
+      "film_time": 127.96,
+      "label": "14-second_set_opening_break-13.16",
+      "kind": "keypoint",
+      "source_time": 220.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0253.jpg",
+      "sha256": "a0539ecf9567c723924e30bf9f6d9a506378d7006076f53aec44359851273270",
+      "actual_movie_frame_index": 3199,
+      "actual_movie_frame_time": 127.96
+    },
+    {
+      "film_time": 128.46,
+      "label": "14-second_set_opening_break-13.66",
+      "kind": "keypoint",
+      "source_time": 221.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0254.jpg",
+      "sha256": "7acdffbdbf35bc8d8227c816fa83bbe829b3d63c1bb188a79ecef6b95d2ca095",
+      "actual_movie_frame_index": 3212,
+      "actual_movie_frame_time": 128.48
+    },
+    {
+      "film_time": 128.96,
+      "label": "14-second_set_opening_break-14.16",
+      "kind": "keypoint",
+      "source_time": 221.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0255.jpg",
+      "sha256": "c6c195904cb05556a081eb3bcfa5e9a085b4837af10e00c5095d0050b440c6cf",
+      "actual_movie_frame_index": 3224,
+      "actual_movie_frame_time": 128.96
+    },
+    {
+      "film_time": 129.46,
+      "label": "14-second_set_opening_break-14.66",
+      "kind": "keypoint",
+      "source_time": 222.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0256.jpg",
+      "sha256": "02ef7fcde2109d4f72134777cd6390672625b859cf45bf7d4b820da4b1e6b4d3",
+      "actual_movie_frame_index": 3237,
+      "actual_movie_frame_time": 129.48
+    },
+    {
+      "film_time": 129.96,
+      "label": "14-second_set_opening_break-15.16",
+      "kind": "keypoint",
+      "source_time": 222.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0257.jpg",
+      "sha256": "59ac85df72345e9b18a66350dbcdd9b8153daa285d2432fa095c59e38a7ebf2a",
+      "actual_movie_frame_index": 3249,
+      "actual_movie_frame_time": 129.96
+    },
+    {
+      "film_time": 130.46,
+      "label": "14-second_set_opening_break-15.66",
+      "kind": "keypoint",
+      "source_time": 223.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0258.jpg",
+      "sha256": "50581ef944517228d12366189e76c1c079584e715e932c36f1b0dcb807073b76",
+      "actual_movie_frame_index": 3262,
+      "actual_movie_frame_time": 130.48
+    },
+    {
+      "film_time": 130.96,
+      "label": "14-second_set_opening_break-16.16",
+      "kind": "keypoint",
+      "source_time": 223.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0259.jpg",
+      "sha256": "44da6924df0368bc382975a67450e49b853359540bcd6c7febe048037438bcb9",
+      "actual_movie_frame_index": 3274,
+      "actual_movie_frame_time": 130.96
+    },
+    {
+      "film_time": 131.46,
+      "label": "14-second_set_opening_break-16.66",
+      "kind": "keypoint",
+      "source_time": 224.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0260.jpg",
+      "sha256": "f69f8f06168126aa3c278299d94c18f96d9a3ec2f2756c05b502f940a2af6e41",
+      "actual_movie_frame_index": 3287,
+      "actual_movie_frame_time": 131.48
+    },
+    {
+      "film_time": 131.96,
+      "label": "14-second_set_opening_break-17.16",
+      "kind": "keypoint",
+      "source_time": 224.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0261.jpg",
+      "sha256": "4823e992cc01b34753e282e098e7027c76b7e4d0d8bdc9cb2241e1acbf5df4ad",
+      "actual_movie_frame_index": 3299,
+      "actual_movie_frame_time": 131.96
+    },
+    {
+      "film_time": 132.46,
+      "label": "14-second_set_opening_break-17.66",
+      "kind": "keypoint",
+      "source_time": 225.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0262.jpg",
+      "sha256": "b7c4b91a227261ac87eda1b586901c28f023fddb89baac8a7c84ad208a2e366f",
+      "actual_movie_frame_index": 3312,
+      "actual_movie_frame_time": 132.48
+    },
+    {
+      "film_time": 132.96,
+      "label": "14-second_set_opening_break-18.16",
+      "kind": "keypoint",
+      "source_time": 225.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0263.jpg",
+      "sha256": "8d74e29932c2c9ae848a4a25a2b7d0562216ad711761ff9421726d6167713dc6",
+      "actual_movie_frame_index": 3324,
+      "actual_movie_frame_time": 132.96
+    },
+    {
+      "film_time": 133.46,
+      "label": "14-second_set_opening_break-18.66",
+      "kind": "keypoint",
+      "source_time": 226.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0264.jpg",
+      "sha256": "441adb3ab5bde5092dfb81e427c51bc27c98ecdf57ae95274d52904f127b59db",
+      "actual_movie_frame_index": 3337,
+      "actual_movie_frame_time": 133.48
+    },
+    {
+      "film_time": 133.96,
+      "label": "14-second_set_opening_break-19.16",
+      "kind": "keypoint",
+      "source_time": 226.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0265.jpg",
+      "sha256": "6003171306883555e2b2255ffab982bcebd1a96bcbd290f430a018c2119b0ee6",
+      "actual_movie_frame_index": 3349,
+      "actual_movie_frame_time": 133.96
+    },
+    {
+      "film_time": 134.46,
+      "label": "14-second_set_opening_break-19.66",
+      "kind": "keypoint",
+      "source_time": 227.46,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0266.jpg",
+      "sha256": "bf3148275aebe06f94c0d1e167f1d7553680cf5ecdf15c339a701deb3054d4d0",
+      "actual_movie_frame_index": 3362,
+      "actual_movie_frame_time": 134.48
+    },
+    {
+      "film_time": 134.96,
+      "label": "14-second_set_opening_break-20.16",
+      "kind": "keypoint",
+      "source_time": 227.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0267.jpg",
+      "sha256": "c95d8981cd4e7974d5fcde2f4601d0abfe5ea70756395870d23d36749360cef3",
+      "actual_movie_frame_index": 3374,
+      "actual_movie_frame_time": 134.96
+    },
+    {
+      "film_time": 135.44,
+      "label": "15-second_set_break_commentary-start",
+      "kind": "segment",
+      "source_time": 228.44,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0268.jpg",
+      "sha256": "8e6592484c34decc51a08064e90ad2b3eea4587472b30e0cf2656192a48aa62f",
+      "actual_movie_frame_index": 3386,
+      "actual_movie_frame_time": 135.44
+    },
+    {
+      "film_time": 137.64,
+      "label": "15-second_set_break_commentary-mid",
+      "kind": "segment",
+      "source_time": 230.64,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0271.jpg",
+      "sha256": "3573812dfbfc5344cb23f29f2bc0f74cce2cf3e4562e567d4988a878e2f44828",
+      "actual_movie_frame_index": 3441,
+      "actual_movie_frame_time": 137.64
+    },
+    {
+      "film_time": 139.84,
+      "label": "15-second_set_break_commentary-end",
+      "kind": "segment",
+      "source_time": 232.83999999999997,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0272.jpg",
+      "sha256": "79655d3943c08b97f98a36cbb571fd7ecf4c3ab8af136de33ef2032cb78d43ef",
+      "actual_movie_frame_index": 3496,
+      "actual_movie_frame_time": 139.84
+    },
+    {
+      "film_time": 140.32,
+      "label": "16-late_break_context-start",
+      "kind": "segment",
+      "source_time": 248.36,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0274.jpg",
+      "sha256": "39e3b2394aa9eae379613f9c7b5f3e69f3b3f7177f54cf672f757bcd31a1fb46",
+      "actual_movie_frame_index": 3508,
+      "actual_movie_frame_time": 140.32
+    },
+    {
+      "film_time": 147.74,
+      "label": "16-late_break_context-mid",
+      "kind": "segment",
+      "source_time": 255.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0295.jpg",
+      "sha256": "495f191a694568f8d8a3279a9b476bbb6e9ed09c754dba9934118a8f6c00c65d",
+      "actual_movie_frame_index": 3694,
+      "actual_movie_frame_time": 147.76
+    },
+    {
+      "film_time": 155.16,
+      "label": "16-late_break_context-end",
+      "kind": "segment",
+      "source_time": 263.2,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0310.jpg",
+      "sha256": "97dda9ad2cc645974dafdc347321e82cceeb6e7d042d6cd2d77d97128efdb541",
+      "actual_movie_frame_index": 3879,
+      "actual_movie_frame_time": 155.16
+    },
+    {
+      "film_time": 140.24,
+      "label": "16-late_break_context-0.16",
+      "kind": "keypoint",
+      "source_time": 248.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0273.jpg",
+      "sha256": "de9a7c6ab3b1b80cd156c9bc9bcfea672801fd4daeb975f42d1000484792e269",
+      "actual_movie_frame_index": 3506,
+      "actual_movie_frame_time": 140.24
+    },
+    {
+      "film_time": 140.74,
+      "label": "16-late_break_context-0.66",
+      "kind": "keypoint",
+      "source_time": 248.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0275.jpg",
+      "sha256": "5eba929caf49710d9acee47c90d9f138e4a53a79cddb0273394ab30f1f7ff951",
+      "actual_movie_frame_index": 3519,
+      "actual_movie_frame_time": 140.76
+    },
+    {
+      "film_time": 141.24,
+      "label": "16-late_break_context-1.16",
+      "kind": "keypoint",
+      "source_time": 249.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0276.jpg",
+      "sha256": "663e7d5c207f29d89d1a96e1465b6790f2c25c467f5b75b89da2f9451dfa67e6",
+      "actual_movie_frame_index": 3531,
+      "actual_movie_frame_time": 141.24
+    },
+    {
+      "film_time": 141.74,
+      "label": "16-late_break_context-1.66",
+      "kind": "keypoint",
+      "source_time": 249.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0278.jpg",
+      "sha256": "52557dfa4639d129ccf6944dd84719d7b1f248e97fb800caa6a0bc90d4ad6597",
+      "actual_movie_frame_index": 3544,
+      "actual_movie_frame_time": 141.76
+    },
+    {
+      "film_time": 142.24,
+      "label": "16-late_break_context-2.16",
+      "kind": "keypoint",
+      "source_time": 250.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0279.jpg",
+      "sha256": "d4d4122f32c03bd95702023db1154ea3d4054a039bf44a8baaf0be504ba4aebf",
+      "actual_movie_frame_index": 3556,
+      "actual_movie_frame_time": 142.24
+    },
+    {
+      "film_time": 142.74,
+      "label": "16-late_break_context-2.66",
+      "kind": "keypoint",
+      "source_time": 250.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0280.jpg",
+      "sha256": "8334771ab5d83af3e068e3e3d7e52571f67b0bd3d1140802e1bbf2de1aa876d4",
+      "actual_movie_frame_index": 3569,
+      "actual_movie_frame_time": 142.76
+    },
+    {
+      "film_time": 143.24,
+      "label": "16-late_break_context-3.16",
+      "kind": "keypoint",
+      "source_time": 251.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0282.jpg",
+      "sha256": "af2124f5ebae2013f50145986d1ef8ce6598deae76ba5d1579d912e41c0b59d0",
+      "actual_movie_frame_index": 3581,
+      "actual_movie_frame_time": 143.24
+    },
+    {
+      "film_time": 143.74,
+      "label": "16-late_break_context-3.66",
+      "kind": "keypoint",
+      "source_time": 251.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0283.jpg",
+      "sha256": "373c002654fca7da29ecde37925c8e8fea5e00e74895eabd7ebf8d3a556dbcdd",
+      "actual_movie_frame_index": 3594,
+      "actual_movie_frame_time": 143.76
+    },
+    {
+      "film_time": 144.24,
+      "label": "16-late_break_context-4.16",
+      "kind": "keypoint",
+      "source_time": 252.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0285.jpg",
+      "sha256": "80410ee05d7c099b193eaaca44fdcb5e314aa43e931758dfa9b97508ce62217d",
+      "actual_movie_frame_index": 3606,
+      "actual_movie_frame_time": 144.24
+    },
+    {
+      "film_time": 144.74,
+      "label": "16-late_break_context-4.66",
+      "kind": "keypoint",
+      "source_time": 252.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0287.jpg",
+      "sha256": "8ba3b60e894e97b5ff8ba915de02aa20518295819fc8a705c93e3c2460d75a9a",
+      "actual_movie_frame_index": 3619,
+      "actual_movie_frame_time": 144.76
+    },
+    {
+      "film_time": 145.24,
+      "label": "16-late_break_context-5.16",
+      "kind": "keypoint",
+      "source_time": 253.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0288.jpg",
+      "sha256": "c4298a4356d681bdcdf649390a73afd9192f460122a33e04e18e5f8aca2eee2d",
+      "actual_movie_frame_index": 3631,
+      "actual_movie_frame_time": 145.24
+    },
+    {
+      "film_time": 145.74,
+      "label": "16-late_break_context-5.66",
+      "kind": "keypoint",
+      "source_time": 253.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0289.jpg",
+      "sha256": "0b82be625f73bb47aaec1791fa5ae75db9e6a621b2df116c02908813ac68b6d6",
+      "actual_movie_frame_index": 3644,
+      "actual_movie_frame_time": 145.76
+    },
+    {
+      "film_time": 146.24,
+      "label": "16-late_break_context-6.16",
+      "kind": "keypoint",
+      "source_time": 254.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0291.jpg",
+      "sha256": "9829598e1fa78b8d96151ba720c7fb160ae6cb16febce169fa308026ca355473",
+      "actual_movie_frame_index": 3656,
+      "actual_movie_frame_time": 146.24
+    },
+    {
+      "film_time": 146.74,
+      "label": "16-late_break_context-6.66",
+      "kind": "keypoint",
+      "source_time": 254.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0292.jpg",
+      "sha256": "65236314e2722e52157639bff1c4ff625cdb2cf20af2f523e8cb41e862876c17",
+      "actual_movie_frame_index": 3669,
+      "actual_movie_frame_time": 146.76
+    },
+    {
+      "film_time": 147.24,
+      "label": "16-late_break_context-7.16",
+      "kind": "keypoint",
+      "source_time": 255.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0293.jpg",
+      "sha256": "4be95187c6a8b624ade3c5515b589416b6a8f26e22ef71b42aeabf8ac58a48ae",
+      "actual_movie_frame_index": 3681,
+      "actual_movie_frame_time": 147.24
+    },
+    {
+      "film_time": 147.74,
+      "label": "16-late_break_context-7.66",
+      "kind": "keypoint",
+      "source_time": 255.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0295.jpg",
+      "sha256": "495f191a694568f8d8a3279a9b476bbb6e9ed09c754dba9934118a8f6c00c65d",
+      "actual_movie_frame_index": 3694,
+      "actual_movie_frame_time": 147.76
+    },
+    {
+      "film_time": 148.24,
+      "label": "16-late_break_context-8.16",
+      "kind": "keypoint",
+      "source_time": 256.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0296.jpg",
+      "sha256": "a9d4a932addbd04878a02e1ab45d50d294dc03fa70cd5b1a4083f47b8e1dd32d",
+      "actual_movie_frame_index": 3706,
+      "actual_movie_frame_time": 148.24
+    },
+    {
+      "film_time": 148.74,
+      "label": "16-late_break_context-8.66",
+      "kind": "keypoint",
+      "source_time": 256.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0297.jpg",
+      "sha256": "3dd8690e943f33b12ba9d7d771687e296401d4099c7cf5274187832df95c31e6",
+      "actual_movie_frame_index": 3719,
+      "actual_movie_frame_time": 148.76
+    },
+    {
+      "film_time": 149.24,
+      "label": "16-late_break_context-9.16",
+      "kind": "keypoint",
+      "source_time": 257.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0298.jpg",
+      "sha256": "ab7e302ab209087029659d0ed13ffb1d8d674498f0bc219ebf74f1c0d799a491",
+      "actual_movie_frame_index": 3731,
+      "actual_movie_frame_time": 149.24
+    },
+    {
+      "film_time": 149.74,
+      "label": "16-late_break_context-9.66",
+      "kind": "keypoint",
+      "source_time": 257.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0299.jpg",
+      "sha256": "6b717f7971529673badc782a2d7b0d89353ed15d9dbd9c124f14b7070bd57d0b",
+      "actual_movie_frame_index": 3744,
+      "actual_movie_frame_time": 149.76
+    },
+    {
+      "film_time": 150.24,
+      "label": "16-late_break_context-10.16",
+      "kind": "keypoint",
+      "source_time": 258.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0300.jpg",
+      "sha256": "58cd51731fd36fea79c69bb732000d9d38fb46e236037469b9ab3a1947dabc80",
+      "actual_movie_frame_index": 3756,
+      "actual_movie_frame_time": 150.24
+    },
+    {
+      "film_time": 150.74,
+      "label": "16-late_break_context-10.66",
+      "kind": "keypoint",
+      "source_time": 258.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0301.jpg",
+      "sha256": "58ee98607f04ef6c0fe38aa3228db404477eeec54587599403510be903d9f65b",
+      "actual_movie_frame_index": 3769,
+      "actual_movie_frame_time": 150.76
+    },
+    {
+      "film_time": 151.24,
+      "label": "16-late_break_context-11.16",
+      "kind": "keypoint",
+      "source_time": 259.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0302.jpg",
+      "sha256": "39151ffa7c37dc9b0045c69e73d572cbc3ffe8a77c8181e9ed40691af69a3bb6",
+      "actual_movie_frame_index": 3781,
+      "actual_movie_frame_time": 151.24
+    },
+    {
+      "film_time": 151.74,
+      "label": "16-late_break_context-11.66",
+      "kind": "keypoint",
+      "source_time": 259.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0303.jpg",
+      "sha256": "80d49680d47cc270ed69769eb679f3e4bb2afbfa22cb082e4d5f3f66347cd612",
+      "actual_movie_frame_index": 3794,
+      "actual_movie_frame_time": 151.76
+    },
+    {
+      "film_time": 152.24,
+      "label": "16-late_break_context-12.16",
+      "kind": "keypoint",
+      "source_time": 260.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0304.jpg",
+      "sha256": "669bba79565f89a413ea9d272b2b55ab8b394ca9c80474efc6ef6acf3b6d6905",
+      "actual_movie_frame_index": 3806,
+      "actual_movie_frame_time": 152.24
+    },
+    {
+      "film_time": 152.74,
+      "label": "16-late_break_context-12.66",
+      "kind": "keypoint",
+      "source_time": 260.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0305.jpg",
+      "sha256": "e4e10df3d765e020e3d3f3ac2d94118b19255828dc139f85ba4dca2f1e0ae365",
+      "actual_movie_frame_index": 3819,
+      "actual_movie_frame_time": 152.76
+    },
+    {
+      "film_time": 153.24,
+      "label": "16-late_break_context-13.16",
+      "kind": "keypoint",
+      "source_time": 261.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0306.jpg",
+      "sha256": "c6c0ad2e55047630ea77243e7764ba36661c559101f42a72a528c9878c03af28",
+      "actual_movie_frame_index": 3831,
+      "actual_movie_frame_time": 153.24
+    },
+    {
+      "film_time": 153.74,
+      "label": "16-late_break_context-13.66",
+      "kind": "keypoint",
+      "source_time": 261.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0307.jpg",
+      "sha256": "16457ec2f293f7a79673c88bd0320ba60c3a7662cfc7ecf16659129fee314cd8",
+      "actual_movie_frame_index": 3844,
+      "actual_movie_frame_time": 153.76
+    },
+    {
+      "film_time": 154.24,
+      "label": "16-late_break_context-14.16",
+      "kind": "keypoint",
+      "source_time": 262.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0308.jpg",
+      "sha256": "2e013c6d41e961574fdbb2dd6c536227365e5c3ed3673b4cf99374ccb1201158",
+      "actual_movie_frame_index": 3856,
+      "actual_movie_frame_time": 154.24
+    },
+    {
+      "film_time": 154.74,
+      "label": "16-late_break_context-14.66",
+      "kind": "keypoint",
+      "source_time": 262.78,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0309.jpg",
+      "sha256": "439a8298c91381a238519e3785184ea1ec00fecd0161abafb67490b6e4ab5a22",
+      "actual_movie_frame_index": 3869,
+      "actual_movie_frame_time": 154.76
+    },
+    {
+      "film_time": 155.24,
+      "label": "16-late_break_context-15.16",
+      "kind": "keypoint",
+      "source_time": 263.28,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0311.jpg",
+      "sha256": "e147c3450094b16701bca94197059fc723b1b9793406ab0c521e0fa72785f3cb",
+      "actual_movie_frame_index": 3881,
+      "actual_movie_frame_time": 155.24
+    },
+    {
+      "film_time": 155.64,
+      "label": "17-stats_and_matchpoint-start",
+      "kind": "segment",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0312.jpg",
+      "sha256": "f51d55c9c08fcb2d704cbb35e94e893988587421319e65b31d751809f6c988c4",
+      "actual_movie_frame_index": 3891,
+      "actual_movie_frame_time": 155.64
+    },
+    {
+      "film_time": 161.4,
+      "label": "17-stats_and_matchpoint-mid",
+      "kind": "segment",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0317.jpg",
+      "sha256": "b1f68d1de9612b093fbd5547780b16058e5b462d7809fd94916e7c180454a826",
+      "actual_movie_frame_index": 4035,
+      "actual_movie_frame_time": 161.4
+    },
+    {
+      "film_time": 167.16,
+      "label": "17-stats_and_matchpoint-end",
+      "kind": "segment",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0322.jpg",
+      "sha256": "75e219d657565dfe26f5a1381d437a8f64cfe8fc94dccda6f6af284f8d5b2ac6",
+      "actual_movie_frame_index": 4179,
+      "actual_movie_frame_time": 167.16
+    },
+    {
+      "film_time": 167.64,
+      "label": "18-complete_championship_point-start",
+      "kind": "segment",
+      "source_time": 263.68,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0324.jpg",
+      "sha256": "a852d921ddd51b8473e9fd20ef918c1fbf5ad8a6e4d79141db5ba24aaadf0eca",
+      "actual_movie_frame_index": 4191,
+      "actual_movie_frame_time": 167.64
+    },
+    {
+      "film_time": 173.73,
+      "label": "18-complete_championship_point-mid",
+      "kind": "segment",
+      "source_time": 269.77,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0337.jpg",
+      "sha256": "b5d1f9512f0efa91c3820a1f5c9136a87b020588169ff02738bd913d19ddf3a7",
+      "actual_movie_frame_index": 4344,
+      "actual_movie_frame_time": 173.76
+    },
+    {
+      "film_time": 179.82,
+      "label": "18-complete_championship_point-end",
+      "kind": "segment",
+      "source_time": 275.86,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0353.jpg",
+      "sha256": "97e1f4c25c6bdc934bc26282de5bb166d01c930ccba386fdae358e13110924d6",
+      "actual_movie_frame_index": 4496,
+      "actual_movie_frame_time": 179.84
+    },
+    {
+      "film_time": 167.56,
+      "label": "18-complete_championship_point-0.16",
+      "kind": "keypoint",
+      "source_time": 263.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0323.jpg",
+      "sha256": "9eeeb6b621d4adc711e0c010f404d648ad04ea7c556de3c50ebc4ef246f203b1",
+      "actual_movie_frame_index": 4189,
+      "actual_movie_frame_time": 167.56
+    },
+    {
+      "film_time": 168.06,
+      "label": "18-complete_championship_point-0.66",
+      "kind": "keypoint",
+      "source_time": 264.1,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0325.jpg",
+      "sha256": "8e2a2012be1e577547e8724825cfcf59765a47863df65d76fd5aee3cbb79269c",
+      "actual_movie_frame_index": 4202,
+      "actual_movie_frame_time": 168.08
+    },
+    {
+      "film_time": 168.56,
+      "label": "18-complete_championship_point-1.16",
+      "kind": "keypoint",
+      "source_time": 264.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0326.jpg",
+      "sha256": "257560d227a2897efa34614a6b874adc7ba9e71286fa81008c7740464c9ccb02",
+      "actual_movie_frame_index": 4214,
+      "actual_movie_frame_time": 168.56
+    },
+    {
+      "film_time": 169.06,
+      "label": "18-complete_championship_point-1.66",
+      "kind": "keypoint",
+      "source_time": 265.1,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0327.jpg",
+      "sha256": "fd55ca2edc115e7e30136da05cce869672d579ee283c403f89f96bbe56742134",
+      "actual_movie_frame_index": 4227,
+      "actual_movie_frame_time": 169.08
+    },
+    {
+      "film_time": 169.56,
+      "label": "18-complete_championship_point-2.16",
+      "kind": "keypoint",
+      "source_time": 265.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0328.jpg",
+      "sha256": "39c73dccf9d2e7fe5baad6d691baf629fb590dd3a92228ab0db27daa0d694692",
+      "actual_movie_frame_index": 4239,
+      "actual_movie_frame_time": 169.56
+    },
+    {
+      "film_time": 170.06,
+      "label": "18-complete_championship_point-2.66",
+      "kind": "keypoint",
+      "source_time": 266.1,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0329.jpg",
+      "sha256": "b139b7669c59145618c9bb65c273f41288bb09afc9587db9a234d4e5399cf056",
+      "actual_movie_frame_index": 4252,
+      "actual_movie_frame_time": 170.08
+    },
+    {
+      "film_time": 170.56,
+      "label": "18-complete_championship_point-3.16",
+      "kind": "keypoint",
+      "source_time": 266.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0330.jpg",
+      "sha256": "efb8efd28cb26bda914c96bfa3751ccfe30a7809b2a9b620fb7736f5c0d4cbb9",
+      "actual_movie_frame_index": 4264,
+      "actual_movie_frame_time": 170.56
+    },
+    {
+      "film_time": 171.06,
+      "label": "18-complete_championship_point-3.66",
+      "kind": "keypoint",
+      "source_time": 267.1,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0331.jpg",
+      "sha256": "086bc37729288888b934b5a204ae75037e32bc6d51d811da1c8d2ca3914ac3b4",
+      "actual_movie_frame_index": 4277,
+      "actual_movie_frame_time": 171.08
+    },
+    {
+      "film_time": 171.56,
+      "label": "18-complete_championship_point-4.16",
+      "kind": "keypoint",
+      "source_time": 267.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0332.jpg",
+      "sha256": "de0610824af9cb3b919f73cfb908e1dca5eda40718008ffec2046e8860991a1d",
+      "actual_movie_frame_index": 4289,
+      "actual_movie_frame_time": 171.56
+    },
+    {
+      "film_time": 172.06,
+      "label": "18-complete_championship_point-4.66",
+      "kind": "keypoint",
+      "source_time": 268.1,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0333.jpg",
+      "sha256": "f1b2a91c3ba9b9b0e0ebf939c6452360782c8a664a21bf297b7d186126de2485",
+      "actual_movie_frame_index": 4302,
+      "actual_movie_frame_time": 172.08
+    },
+    {
+      "film_time": 172.56,
+      "label": "18-complete_championship_point-5.16",
+      "kind": "keypoint",
+      "source_time": 268.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0334.jpg",
+      "sha256": "4e77445c4c63fcf57a6bf7ee8b9e78f318dd3d36ea113aaff5a9b7e7a17b6aae",
+      "actual_movie_frame_index": 4314,
+      "actual_movie_frame_time": 172.56
+    },
+    {
+      "film_time": 173.06,
+      "label": "18-complete_championship_point-5.66",
+      "kind": "keypoint",
+      "source_time": 269.1,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0335.jpg",
+      "sha256": "1e762e3680c4fbfbec551c14a4455ec0d4da2d33c05b6616fd18726dbfaa5bee",
+      "actual_movie_frame_index": 4327,
+      "actual_movie_frame_time": 173.08
+    },
+    {
+      "film_time": 173.56,
+      "label": "18-complete_championship_point-6.16",
+      "kind": "keypoint",
+      "source_time": 269.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0336.jpg",
+      "sha256": "296cdb765fe63b381553d35a93836026691c3acf7ef2e2edd8c0cd717462f16a",
+      "actual_movie_frame_index": 4339,
+      "actual_movie_frame_time": 173.56
+    },
+    {
+      "film_time": 174.06,
+      "label": "18-complete_championship_point-6.66",
+      "kind": "keypoint",
+      "source_time": 270.1,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0338.jpg",
+      "sha256": "2762eb958e5ff2ce5d964638e8dc75111c7229bca539ddac3594735c8aa848a2",
+      "actual_movie_frame_index": 4352,
+      "actual_movie_frame_time": 174.08
+    },
+    {
+      "film_time": 174.56,
+      "label": "18-complete_championship_point-7.16",
+      "kind": "keypoint",
+      "source_time": 270.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0339.jpg",
+      "sha256": "08321d0cf8e3aa016136148f8e48b1cbc0207f2d3fb34ab54148ea73bad59840",
+      "actual_movie_frame_index": 4364,
+      "actual_movie_frame_time": 174.56
+    },
+    {
+      "film_time": 175.06,
+      "label": "18-complete_championship_point-7.66",
+      "kind": "keypoint",
+      "source_time": 271.1,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0340.jpg",
+      "sha256": "faba13f560dd4a6adef749c0b0211e7cdab11acb350eb12268a4b6bab5e0deab",
+      "actual_movie_frame_index": 4377,
+      "actual_movie_frame_time": 175.08
+    },
+    {
+      "film_time": 175.56,
+      "label": "18-complete_championship_point-8.16",
+      "kind": "keypoint",
+      "source_time": 271.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0341.jpg",
+      "sha256": "a07faaec37bdf763b113ee8863a5df94ba57e2b3965bfd787a43df06cc4de4cb",
+      "actual_movie_frame_index": 4389,
+      "actual_movie_frame_time": 175.56
+    },
+    {
+      "film_time": 176.06,
+      "label": "18-complete_championship_point-8.66",
+      "kind": "keypoint",
+      "source_time": 272.1,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0343.jpg",
+      "sha256": "ac92595470da2b71cf361e6bc21498ca1bbaebf3d02fb738293ea14d18378a3a",
+      "actual_movie_frame_index": 4402,
+      "actual_movie_frame_time": 176.08
+    },
+    {
+      "film_time": 176.56,
+      "label": "18-complete_championship_point-9.16",
+      "kind": "keypoint",
+      "source_time": 272.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0344.jpg",
+      "sha256": "5d13c2b895b93ad058f17083c708ec1736696230224151effc0c287901890193",
+      "actual_movie_frame_index": 4414,
+      "actual_movie_frame_time": 176.56
+    },
+    {
+      "film_time": 177.06,
+      "label": "18-complete_championship_point-9.66",
+      "kind": "keypoint",
+      "source_time": 273.1,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0345.jpg",
+      "sha256": "3f7681d12e7e7d1f61e84ef988543d29985c597e92819bc79cf412ba55db8265",
+      "actual_movie_frame_index": 4427,
+      "actual_movie_frame_time": 177.08
+    },
+    {
+      "film_time": 177.56,
+      "label": "18-complete_championship_point-10.16",
+      "kind": "keypoint",
+      "source_time": 273.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0346.jpg",
+      "sha256": "88deb7374a87b715fb657faea931627251e83420da05fbd66419d92fdc8b7386",
+      "actual_movie_frame_index": 4439,
+      "actual_movie_frame_time": 177.56
+    },
+    {
+      "film_time": 178.06,
+      "label": "18-complete_championship_point-10.66",
+      "kind": "keypoint",
+      "source_time": 274.1,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0348.jpg",
+      "sha256": "26791a5863df6fa4d807c7851cc9ee8fe17b80a608ebcafa34ab2aad144a12b7",
+      "actual_movie_frame_index": 4452,
+      "actual_movie_frame_time": 178.08
+    },
+    {
+      "film_time": 178.56,
+      "label": "18-complete_championship_point-11.16",
+      "kind": "keypoint",
+      "source_time": 274.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0349.jpg",
+      "sha256": "2b9996ef553a2f44952941ff731887d2dd4ac17b37a2fa9b3e1ad0a1559d8023",
+      "actual_movie_frame_index": 4464,
+      "actual_movie_frame_time": 178.56
+    },
+    {
+      "film_time": 179.06,
+      "label": "18-complete_championship_point-11.66",
+      "kind": "keypoint",
+      "source_time": 275.1,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0351.jpg",
+      "sha256": "c151abae587b5eac789e6692acdb55136977543972ae3773d45e5391115333ae",
+      "actual_movie_frame_index": 4477,
+      "actual_movie_frame_time": 179.08
+    },
+    {
+      "film_time": 179.56,
+      "label": "18-complete_championship_point-12.16",
+      "kind": "keypoint",
+      "source_time": 275.6,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0352.jpg",
+      "sha256": "33160b8b34f0cd0c7ee5015128f73a8069c64b53bc5b4225302128b1a4482dd8",
+      "actual_movie_frame_index": 4489,
+      "actual_movie_frame_time": 179.56
+    },
+    {
+      "film_time": 180.3,
+      "label": "19-celebration_handshake_salute-start",
+      "kind": "segment",
+      "source_time": 276.34000000000003,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0354.jpg",
+      "sha256": "cad9f24fb03ef6750663ff7e73af8bc4d0e069979e42aeb44a292b9c7d9d282a",
+      "actual_movie_frame_index": 4508,
+      "actual_movie_frame_time": 180.32
+    },
+    {
+      "film_time": 191.71,
+      "label": "19-celebration_handshake_salute-mid",
+      "kind": "segment",
+      "source_time": 287.75,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0361.jpg",
+      "sha256": "90f7f7cb80bf640d247073a3a251bf9dba92ed53d49e3939942f8288108f3843",
+      "actual_movie_frame_index": 4793,
+      "actual_movie_frame_time": 191.72
+    },
+    {
+      "film_time": 203.12,
+      "label": "19-celebration_handshake_salute-end",
+      "kind": "segment",
+      "source_time": 299.16,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0376.jpg",
+      "sha256": "025faad4c43a4cbd9f1209ab34f245386d139c0a186db16b54e079e4355db3df",
+      "actual_movie_frame_index": 5078,
+      "actual_movie_frame_time": 203.12
+    },
+    {
+      "film_time": 185.8,
+      "label": "celebration-281.84",
+      "kind": "celebration",
+      "source_time": 281.84,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0355.jpg",
+      "sha256": "d2990ee8fa38135d41157455654bf17dcebdc0d1622ce43b9c5b1a3fb2703b04",
+      "actual_movie_frame_index": 4645,
+      "actual_movie_frame_time": 185.8
+    },
+    {
+      "film_time": 191.88,
+      "label": "celebration-287.92",
+      "kind": "celebration",
+      "source_time": 287.92,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0362.jpg",
+      "sha256": "21817f685bb98bf9a0ebc8e8f7531ffc410827664d405fe1e71390ea97c21814",
+      "actual_movie_frame_index": 4797,
+      "actual_movie_frame_time": 191.88
+    },
+    {
+      "film_time": 192.08,
+      "label": "celebration-288.12",
+      "kind": "celebration",
+      "source_time": 288.12,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0363.jpg",
+      "sha256": "8e7e3a741fc2509bae894dbf4c64e60a7064a486de7028024cd474bf85912736",
+      "actual_movie_frame_index": 4802,
+      "actual_movie_frame_time": 192.08
+    },
+    {
+      "film_time": 192.4,
+      "label": "celebration-288.44",
+      "kind": "celebration",
+      "source_time": 288.44,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0365.jpg",
+      "sha256": "1a9c1e10a763dd2c060bbe1a8a9ae62535df9d19eec9a526692cbc8ada82185c",
+      "actual_movie_frame_index": 4810,
+      "actual_movie_frame_time": 192.4
+    },
+    {
+      "film_time": 193.76,
+      "label": "celebration-289.80",
+      "kind": "celebration",
+      "source_time": 289.8,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0366.jpg",
+      "sha256": "fef5184b6d04c83b12104e639e5ab265f71e2b87916e7e99a9c3e1436422180f",
+      "actual_movie_frame_index": 4844,
+      "actual_movie_frame_time": 193.76
+    },
+    {
+      "film_time": 197.16,
+      "label": "celebration-293.20",
+      "kind": "celebration",
+      "source_time": 293.2,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0369.jpg",
+      "sha256": "9ae0ab844002c983712e1a49f44b4a082ed6f60a9b254651c7b4934a8fb55644",
+      "actual_movie_frame_index": 4929,
+      "actual_movie_frame_time": 197.16
+    },
+    {
+      "film_time": 202.4,
+      "label": "celebration-298.44",
+      "kind": "celebration",
+      "source_time": 298.44,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0374.jpg",
+      "sha256": "91325ee5f8e53ebf593f389aa1f41207220541c587f37b15be94de0f3f8c21ee",
+      "actual_movie_frame_index": 5060,
+      "actual_movie_frame_time": 202.4
+    },
+    {
+      "film_time": 203.12,
+      "label": "celebration-299.16",
+      "kind": "celebration",
+      "source_time": 299.16,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0376.jpg",
+      "sha256": "025faad4c43a4cbd9f1209ab34f245386d139c0a186db16b54e079e4355db3df",
+      "actual_movie_frame_index": 5078,
+      "actual_movie_frame_time": 203.12
+    },
+    {
+      "film_time": 203.28,
+      "label": "celebration-299.32",
+      "kind": "celebration",
+      "source_time": 299.32,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0377.jpg",
+      "sha256": "dc8fc5ac3d9d2f6a697c3e7bd0ced4f5dc8477e37ac7dccfca204c6cf7b2725f",
+      "actual_movie_frame_index": 5082,
+      "actual_movie_frame_time": 203.28
+    },
+    {
+      "film_time": 3.19,
+      "label": "cue-001",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0003.jpg",
+      "sha256": "a208bbe3b08f80d4519f870417b4f58db629f2ddd4623c81972bceab0844e06b",
+      "actual_movie_frame_index": 80,
+      "actual_movie_frame_time": 3.2
+    },
+    {
+      "film_time": 4.98,
+      "label": "cueend-001",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0005.jpg",
+      "sha256": "55288799a887d7ebf272b2bf157207939a6f1451a8ebee83eceaf9433e56b474",
+      "actual_movie_frame_index": 125,
+      "actual_movie_frame_time": 5.0
+    },
+    {
+      "film_time": 6.15,
+      "label": "cue-002",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0006.jpg",
+      "sha256": "f964c7c770b0204dd53a1e58f2e12779834195324d499c2de3fb58da5b59e1d6",
+      "actual_movie_frame_index": 154,
+      "actual_movie_frame_time": 6.16
+    },
+    {
+      "film_time": 7.08,
+      "label": "cueend-002",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0007.jpg",
+      "sha256": "dfd04b9576a048a8f19d7678fdb73efc120e5db7d3c3645425658217713e67b8",
+      "actual_movie_frame_index": 177,
+      "actual_movie_frame_time": 7.08
+    },
+    {
+      "film_time": 7.79,
+      "label": "cue-003",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0009.jpg",
+      "sha256": "f975757aa8a307c5d4e435711833b88a1d9564d0606f4e92eaab7c346a6df9b6",
+      "actual_movie_frame_index": 195,
+      "actual_movie_frame_time": 7.8
+    },
+    {
+      "film_time": 8.06,
+      "label": "cueend-003",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0010.jpg",
+      "sha256": "24fd109fd3aec0208e098fa8216ed97e4e5b83059cd6a2da800ff0acc0cd8a0a",
+      "actual_movie_frame_index": 202,
+      "actual_movie_frame_time": 8.08
+    },
+    {
+      "film_time": 10.105,
+      "label": "cue-004",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0012.jpg",
+      "sha256": "c63ed5c6844b17f67fb84f73cec2505d26906518ecdde4dfded55f3d54458741",
+      "actual_movie_frame_index": 253,
+      "actual_movie_frame_time": 10.12
+    },
+    {
+      "film_time": 11.91,
+      "label": "cueend-004",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0013.jpg",
+      "sha256": "699a87666184b98b81f47a6f2601591a5302f71a6b2a38600f93a9776107374d",
+      "actual_movie_frame_index": 298,
+      "actual_movie_frame_time": 11.92
+    },
+    {
+      "film_time": 13.9,
+      "label": "cue-005",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0016.jpg",
+      "sha256": "2653ad1ac786fa2328e15818bcaf3a01864c2e2ff4ff5a19a6d95b2884e13bb6",
+      "actual_movie_frame_index": 348,
+      "actual_movie_frame_time": 13.92
+    },
+    {
+      "film_time": 14.78,
+      "label": "cueend-005",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0017.jpg",
+      "sha256": "8f562dca78b88fa7349f9f430434d3efa37968ce908cf4daf5b99b7d20dadea3",
+      "actual_movie_frame_index": 370,
+      "actual_movie_frame_time": 14.8
+    },
+    {
+      "film_time": 15.785,
+      "label": "cue-006",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0018.jpg",
+      "sha256": "5e0c4ff3acca17589d5bcd44a6697e0287134748efab0726d982b127a88dabd4",
+      "actual_movie_frame_index": 395,
+      "actual_movie_frame_time": 15.8
+    },
+    {
+      "film_time": 16.55,
+      "label": "cueend-006",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0019.jpg",
+      "sha256": "c63a926ca236228e5a067ae64647f50f8dc152af6941da0362d6027289cde4d3",
+      "actual_movie_frame_index": 414,
+      "actual_movie_frame_time": 16.56
+    },
+    {
+      "film_time": 18.13,
+      "label": "cue-007",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0021.jpg",
+      "sha256": "cb2cc6a85b4560aa8af1087e4fbe55b6adc0b95852e1455d84ee2a1de89900f1",
+      "actual_movie_frame_index": 454,
+      "actual_movie_frame_time": 18.16
+    },
+    {
+      "film_time": 19.47,
+      "label": "cueend-007",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0022.jpg",
+      "sha256": "95ace7a08ce129507a88768f3c3a6c23b67b854594973ef1085cf9f70072376f",
+      "actual_movie_frame_index": 487,
+      "actual_movie_frame_time": 19.48
+    },
+    {
+      "film_time": 24.47,
+      "label": "cue-008",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0025.jpg",
+      "sha256": "c68f2a69fc759c4323b3f163d3eab28876b33ee414b47ac48b15973359cb7889",
+      "actual_movie_frame_index": 612,
+      "actual_movie_frame_time": 24.48
+    },
+    {
+      "film_time": 25.92,
+      "label": "cueend-008",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0026.jpg",
+      "sha256": "11ca18b279d94f8dc1f4c4a51d97a0f7b436e3f9aedf6451f95d109ccb145afa",
+      "actual_movie_frame_index": 648,
+      "actual_movie_frame_time": 25.92
+    },
+    {
+      "film_time": 27.26,
+      "label": "cue-009",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0027.jpg",
+      "sha256": "3f0001cf7bc742cc3b620f809772a3a10c3cb022462a9cc7891a622f354d3917",
+      "actual_movie_frame_index": 682,
+      "actual_movie_frame_time": 27.28
+    },
+    {
+      "film_time": 28.36,
+      "label": "cueend-009",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0028.jpg",
+      "sha256": "f2d74f48200afb117cb8582df55cf963f57d1614467c2a5ecc5d85f581fa712c",
+      "actual_movie_frame_index": 709,
+      "actual_movie_frame_time": 28.36
+    },
+    {
+      "film_time": 29.335,
+      "label": "cue-010",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0029.jpg",
+      "sha256": "fe6c332524cacf0e9e0e4c01a75b64dec5bd205a301a3381f80c38104323544a",
+      "actual_movie_frame_index": 734,
+      "actual_movie_frame_time": 29.36
+    },
+    {
+      "film_time": 30.07,
+      "label": "cueend-010",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0030.jpg",
+      "sha256": "af22c88bf556840696eb1ffdc55a1077c6f0138726b2de52d123bdd31b7192c7",
+      "actual_movie_frame_index": 752,
+      "actual_movie_frame_time": 30.08
+    },
+    {
+      "film_time": 40.72,
+      "label": "cue-011",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0037.jpg",
+      "sha256": "67225ddf4d880a1216a2d1acd801d15234cea31d5316549802282812aada479f",
+      "actual_movie_frame_index": 1018,
+      "actual_movie_frame_time": 40.72
+    },
+    {
+      "film_time": 41.82,
+      "label": "cueend-011",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0040.jpg",
+      "sha256": "410822aeba27ecfb985a38a8cf955e7e0753b8b8913ea69a0ff0c6006891e488",
+      "actual_movie_frame_index": 1046,
+      "actual_movie_frame_time": 41.84
+    },
+    {
+      "film_time": 43.67,
+      "label": "cue-012",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0045.jpg",
+      "sha256": "3e51e1b56feecf33ee18fc63a50ae6e69a376a2de77da95b0d18e3122ea71cc8",
+      "actual_movie_frame_index": 1092,
+      "actual_movie_frame_time": 43.68
+    },
+    {
+      "film_time": 45.28,
+      "label": "cueend-012",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0049.jpg",
+      "sha256": "6641897ee8fa5bb58ea70f3ea6a4252e22193f43b59bb568adf5c480ce592fe5",
+      "actual_movie_frame_index": 1132,
+      "actual_movie_frame_time": 45.28
+    },
+    {
+      "film_time": 53.31,
+      "label": "cue-013",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0068.jpg",
+      "sha256": "59f8392fb046ee4ce6746d657d98ef53284583aa08f7d33ceeb1250d73175cde",
+      "actual_movie_frame_index": 1333,
+      "actual_movie_frame_time": 53.32
+    },
+    {
+      "film_time": 54.46,
+      "label": "cueend-013",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0073.jpg",
+      "sha256": "d3a90300668aadc4e37e5dbc83950299571d410097ade48263a61c5449442d29",
+      "actual_movie_frame_index": 1362,
+      "actual_movie_frame_time": 54.48
+    },
+    {
+      "film_time": 55.265,
+      "label": "cue-014",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0075.jpg",
+      "sha256": "271eae8c05e9e73a02f4f9a8bba94f961252877e339852cd43078410518c3bfc",
+      "actual_movie_frame_index": 1382,
+      "actual_movie_frame_time": 55.28
+    },
+    {
+      "film_time": 55.83,
+      "label": "cueend-014",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0077.jpg",
+      "sha256": "89fa807df9918ef89b8e7f15bb4ab23a8300dff17f8dedd1d2fcad09d1b8a121",
+      "actual_movie_frame_index": 1396,
+      "actual_movie_frame_time": 55.84
+    },
+    {
+      "film_time": 57.595,
+      "label": "cue-015",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0084.jpg",
+      "sha256": "a55949d0529c3829173c3bd3c8cb1583b1426ce5675ac89b0cef959f5efd5a33",
+      "actual_movie_frame_index": 1440,
+      "actual_movie_frame_time": 57.6
+    },
+    {
+      "film_time": 58.77,
+      "label": "cueend-015",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0087.jpg",
+      "sha256": "6c33b76d1404f178fa029ad8378a9d7c83f97ae1006b8a9b894425946b3263bc",
+      "actual_movie_frame_index": 1470,
+      "actual_movie_frame_time": 58.8
+    },
+    {
+      "film_time": 60.485,
+      "label": "cue-016",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0093.jpg",
+      "sha256": "2acc5d6d756eab50b9d6392f00ba7cdbab22d7e3ba7f57a0f745adfc5c86b1cd",
+      "actual_movie_frame_index": 1513,
+      "actual_movie_frame_time": 60.52
+    },
+    {
+      "film_time": 61.96,
+      "label": "cueend-016",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0097.jpg",
+      "sha256": "7586b64b95894b50bdad8c91f997e7a55bcd4ae6541734c5cc79a76bd49eb8d4",
+      "actual_movie_frame_index": 1549,
+      "actual_movie_frame_time": 61.96
+    },
+    {
+      "film_time": 94.06,
+      "label": "cue-017",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0173.jpg",
+      "sha256": "94e60879956126fc5a40dbce5828e4d2121e6bf404999a98a2cd10c69c947c5f",
+      "actual_movie_frame_index": 2352,
+      "actual_movie_frame_time": 94.08
+    },
+    {
+      "film_time": 95.62,
+      "label": "cueend-017",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0178.jpg",
+      "sha256": "07320eb79982413d80abdd3635f9c47eb51c74499a3bfdcdb15f93998cdd8127",
+      "actual_movie_frame_index": 2391,
+      "actual_movie_frame_time": 95.64
+    },
+    {
+      "film_time": 98.47,
+      "label": "cue-018",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0187.jpg",
+      "sha256": "d2db6f9ebf819fd21d5e1e6207d1b26c0a363c917f4b11632145c8be379e6a6e",
+      "actual_movie_frame_index": 2462,
+      "actual_movie_frame_time": 98.48
+    },
+    {
+      "film_time": 99.84,
+      "label": "cueend-018",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0191.jpg",
+      "sha256": "a111670a203bc34110fabcec728f470ba0f952b3352a8b324a0aa734b480b249",
+      "actual_movie_frame_index": 2496,
+      "actual_movie_frame_time": 99.84
+    },
+    {
+      "film_time": 100.825,
+      "label": "cue-019",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0193.jpg",
+      "sha256": "b1352cd98ad1ccb88bd5b05a26b7725b74134e1ec2f27f7d17fb027f5a0bebe3",
+      "actual_movie_frame_index": 2521,
+      "actual_movie_frame_time": 100.84
+    },
+    {
+      "film_time": 101.53,
+      "label": "cueend-019",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0194.jpg",
+      "sha256": "4b69d8a52fec5d14e3b3b9f862b4c640d0ee1e8599b239bf4b4212fb23b868a8",
+      "actual_movie_frame_index": 2539,
+      "actual_movie_frame_time": 101.56
+    },
+    {
+      "film_time": 102.5,
+      "label": "cue-020",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0195.jpg",
+      "sha256": "1cbf9db056a08490dc76256a21ec0bd5de06d54a0c73f17032f8e629366e0698",
+      "actual_movie_frame_index": 2563,
+      "actual_movie_frame_time": 102.52
+    },
+    {
+      "film_time": 103.23,
+      "label": "cueend-020",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0196.jpg",
+      "sha256": "5963b57e90d121a349d03b0be73525100648a96b228fe7a246a304b7c43d9c58",
+      "actual_movie_frame_index": 2581,
+      "actual_movie_frame_time": 103.24
+    },
+    {
+      "film_time": 103.95,
+      "label": "cue-021",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0197.jpg",
+      "sha256": "1bd02ccc26f236aaefad218474a34acc005ac92fb1d154847683f92caf6297ba",
+      "actual_movie_frame_index": 2599,
+      "actual_movie_frame_time": 103.96
+    },
+    {
+      "film_time": 104.43,
+      "label": "cueend-021",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0199.jpg",
+      "sha256": "2921177f189b1c992d58468ff99c2bd821a061138db12f326542a0b8450c8c40",
+      "actual_movie_frame_index": 2611,
+      "actual_movie_frame_time": 104.44
+    },
+    {
+      "film_time": 105.425,
+      "label": "cue-022",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0200.jpg",
+      "sha256": "d719adc52a1676fc96ef8c2245a41ea9bbbd9a08763d4b26cdb26b565ef6ea8a",
+      "actual_movie_frame_index": 2636,
+      "actual_movie_frame_time": 105.44
+    },
+    {
+      "film_time": 106.18,
+      "label": "cueend-022",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0201.jpg",
+      "sha256": "dc297d0e548320216b49e20ee851529a81bc329566fbffc686826bb2e7af44c1",
+      "actual_movie_frame_index": 2655,
+      "actual_movie_frame_time": 106.2
+    },
+    {
+      "film_time": 107.035,
+      "label": "cue-023",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0202.jpg",
+      "sha256": "a7c7f140108be7504a9f6ce3ecb5cb1a8282f3bab27996bf52a141380be31cab",
+      "actual_movie_frame_index": 2676,
+      "actual_movie_frame_time": 107.04
+    },
+    {
+      "film_time": 107.65,
+      "label": "cueend-023",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0203.jpg",
+      "sha256": "0241acd1d69244fb328699f388f686ab9d83aa5683b77a7ae76ce82ecdd5d775",
+      "actual_movie_frame_index": 2692,
+      "actual_movie_frame_time": 107.68
+    },
+    {
+      "film_time": 109.3,
+      "label": "cue-024",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0207.jpg",
+      "sha256": "ab370972666d52bb97d9909cb5537a5cd1a18e3617e8f68df5a891d17cff7174",
+      "actual_movie_frame_index": 2733,
+      "actual_movie_frame_time": 109.32
+    },
+    {
+      "film_time": 110.18,
+      "label": "cueend-024",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0209.jpg",
+      "sha256": "1ddd90fe5681266c7702343bac70967288bd2227eb65d09bc9a0731ce6eefe01",
+      "actual_movie_frame_index": 2755,
+      "actual_movie_frame_time": 110.2
+    },
+    {
+      "film_time": 111.775,
+      "label": "cue-025",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0212.jpg",
+      "sha256": "95182ceac67d5a3351437c705c700a54ed798c4e701d08f1eae0a41ecaeff705",
+      "actual_movie_frame_index": 2795,
+      "actual_movie_frame_time": 111.8
+    },
+    {
+      "film_time": 113.13,
+      "label": "cueend-025",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0214.jpg",
+      "sha256": "399799ba47c2e00f6afca982f6202419c83bfe5d5c7c6eec89f63adb9e905b8e",
+      "actual_movie_frame_index": 2829,
+      "actual_movie_frame_time": 113.16
+    },
+    {
+      "film_time": 114.135,
+      "label": "cue-026",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0216.jpg",
+      "sha256": "fce8bd678d43dc77fa4be376824c5e08757f601567ab1b58c697b8ea0a1352ae",
+      "actual_movie_frame_index": 2854,
+      "actual_movie_frame_time": 114.16
+    },
+    {
+      "film_time": 114.58,
+      "label": "cueend-026",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0218.jpg",
+      "sha256": "7092dfb4238de1c61c1d03b148bda4066fe0d7abbeb7ec56375f7c82c5be505f",
+      "actual_movie_frame_index": 2865,
+      "actual_movie_frame_time": 114.6
+    },
+    {
+      "film_time": 116.43,
+      "label": "cue-027",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0223.jpg",
+      "sha256": "f19c715682194a5ae5058f6f90d55dec1007f4254f74fc62803ceff57228021c",
+      "actual_movie_frame_index": 2911,
+      "actual_movie_frame_time": 116.44
+    },
+    {
+      "film_time": 117.84,
+      "label": "cueend-027",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0227.jpg",
+      "sha256": "4042aa510c24dee0f99a55bc7cf078f898b6e97122ca7141ea49734b25f524bf",
+      "actual_movie_frame_index": 2946,
+      "actual_movie_frame_time": 117.84
+    },
+    {
+      "film_time": 119.285,
+      "label": "cue-028",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0231.jpg",
+      "sha256": "0af04481303b9aa8a6abcb9fcf78f2575655436ae5a3677686c1a2eb554e3cb1",
+      "actual_movie_frame_index": 2983,
+      "actual_movie_frame_time": 119.32
+    },
+    {
+      "film_time": 120.49,
+      "label": "cueend-028",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0235.jpg",
+      "sha256": "be419a8e772dded1b185d0280978ea9a5365a50349f92c32554768b27a34ef3f",
+      "actual_movie_frame_index": 3013,
+      "actual_movie_frame_time": 120.52
+    },
+    {
+      "film_time": 121.495,
+      "label": "cue-029",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0238.jpg",
+      "sha256": "48b5aafc08c553e05c793754d6214a4b140b5ab852a07a729b4289813cdcc07e",
+      "actual_movie_frame_index": 3038,
+      "actual_movie_frame_time": 121.52
+    },
+    {
+      "film_time": 122.26,
+      "label": "cueend-029",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0240.jpg",
+      "sha256": "92e709350c8ff3299be950310bea012089a86d3bacd8bb2e00cdcabef3dc0495",
+      "actual_movie_frame_index": 3057,
+      "actual_movie_frame_time": 122.28
+    },
+    {
+      "film_time": 136.26,
+      "label": "cue-030",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0269.jpg",
+      "sha256": "b82426199c399a25175c8e1a85db5683867ce84916c549f8e2eee7a620efe62c",
+      "actual_movie_frame_index": 3407,
+      "actual_movie_frame_time": 136.28
+    },
+    {
+      "film_time": 137.0,
+      "label": "cueend-030",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0270.jpg",
+      "sha256": "1581dc38383959b15a6825516f148afa391a438f6257f081eb77f912cf63d014",
+      "actual_movie_frame_index": 3425,
+      "actual_movie_frame_time": 137.0
+    },
+    {
+      "film_time": 141.71,
+      "label": "cue-031",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0277.jpg",
+      "sha256": "75d237c4f1823473a65a4f778ca63e509509b1850e54c09b80574e1bdb07b157",
+      "actual_movie_frame_index": 3543,
+      "actual_movie_frame_time": 141.72
+    },
+    {
+      "film_time": 143.12,
+      "label": "cueend-031",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0281.jpg",
+      "sha256": "9d0643a8059908d7cc41030f7d4ccbcd125302e1857c3631ed7c642e8b51d205",
+      "actual_movie_frame_index": 3578,
+      "actual_movie_frame_time": 143.12
+    },
+    {
+      "film_time": 143.94,
+      "label": "cue-032",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0284.jpg",
+      "sha256": "f99df7b8b1339d67994cb2013343cee1bfe2b3125732561344dc2b44c0cc1425",
+      "actual_movie_frame_index": 3599,
+      "actual_movie_frame_time": 143.96
+    },
+    {
+      "film_time": 144.52,
+      "label": "cueend-032",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0286.jpg",
+      "sha256": "5b8c4b2befc590d111a911bc7220a27ffbcfb73069fb330fb5b37616e45b1445",
+      "actual_movie_frame_index": 3613,
+      "actual_movie_frame_time": 144.52
+    },
+    {
+      "film_time": 146.045,
+      "label": "cue-033",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0290.jpg",
+      "sha256": "fde70306273710352a20dbfc42b368d572b91c0117a35a4e6ce38fe22fac1f37",
+      "actual_movie_frame_index": 3652,
+      "actual_movie_frame_time": 146.08
+    },
+    {
+      "film_time": 147.33,
+      "label": "cueend-033",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0294.jpg",
+      "sha256": "5ba24fcdebb0a9f31c250e5120b123ae3f4165a7bf9bf41ee26506c5080b9ed2",
+      "actual_movie_frame_index": 3684,
+      "actual_movie_frame_time": 147.36
+    },
+    {
+      "film_time": 156.725,
+      "label": "cue-034",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0313.jpg",
+      "sha256": "dfd05aab4ba0028bb2524cb270f99709251ac9fe7888db90c1e6c760d7be7050",
+      "actual_movie_frame_index": 3919,
+      "actual_movie_frame_time": 156.76
+    },
+    {
+      "film_time": 157.83,
+      "label": "cueend-034",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0314.jpg",
+      "sha256": "c77b698e96fee3904c2fde6e9f8f6c62005cc7e9c34ca8c822323a78d4ea6831",
+      "actual_movie_frame_index": 3946,
+      "actual_movie_frame_time": 157.84
+    },
+    {
+      "film_time": 159.2,
+      "label": "cue-035",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0315.jpg",
+      "sha256": "23c5bff2083836c107e2e70b8cdd32f6fde315187df2ea6947df839ed0fca15d",
+      "actual_movie_frame_index": 3980,
+      "actual_movie_frame_time": 159.2
+    },
+    {
+      "film_time": 160.33,
+      "label": "cueend-035",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0316.jpg",
+      "sha256": "e95188620b12852dc65407f700e44c986c0721301ed6ad046797f78e26712247",
+      "actual_movie_frame_index": 4009,
+      "actual_movie_frame_time": 160.36
+    },
+    {
+      "film_time": 161.97,
+      "label": "cue-036",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0318.jpg",
+      "sha256": "19ff7729f33edd541fe6a2d5dc7f92c7aecddfac21f9f3a939023bb45cc7df21",
+      "actual_movie_frame_index": 4050,
+      "actual_movie_frame_time": 162.0
+    },
+    {
+      "film_time": 163.37,
+      "label": "cueend-036",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0319.jpg",
+      "sha256": "797292f87de79c7e1c895165b75c760303cde5639a98aefc70b3add22aad3c66",
+      "actual_movie_frame_index": 4085,
+      "actual_movie_frame_time": 163.4
+    },
+    {
+      "film_time": 164.82,
+      "label": "cue-037",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0320.jpg",
+      "sha256": "d67ecc14328ae340a1f5b336d3811ab849078c1573b4693709bd1129b25b3884",
+      "actual_movie_frame_index": 4121,
+      "actual_movie_frame_time": 164.84
+    },
+    {
+      "film_time": 166.03,
+      "label": "cueend-037",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0321.jpg",
+      "sha256": "c48981d02ce8a5f0ddeeaee048c6050ca86b641772c75ae028479d8171694e71",
+      "actual_movie_frame_index": 4151,
+      "actual_movie_frame_time": 166.04
+    },
+    {
+      "film_time": 175.95,
+      "label": "cue-038",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0342.jpg",
+      "sha256": "6d0016c44f27e7035b025875e04a1ac45f85df91f3776de8432df0d18b384c72",
+      "actual_movie_frame_index": 4399,
+      "actual_movie_frame_time": 175.96
+    },
+    {
+      "film_time": 177.74,
+      "label": "cueend-038",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0347.jpg",
+      "sha256": "30a771f1d65ad71a547858e20018ddd2f992e8031e99b891f58435fd60bf41ec",
+      "actual_movie_frame_index": 4444,
+      "actual_movie_frame_time": 177.76
+    },
+    {
+      "film_time": 178.91,
+      "label": "cue-039",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0350.jpg",
+      "sha256": "7f6ff510f3dd8aec359f4817d3b0c788710ae84ae4ea38fca2a9ff2ee58fef00",
+      "actual_movie_frame_index": 4473,
+      "actual_movie_frame_time": 178.92
+    },
+    {
+      "film_time": 179.84,
+      "label": "cueend-039",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0353.jpg",
+      "sha256": "97e1f4c25c6bdc934bc26282de5bb166d01c930ccba386fdae358e13110924d6",
+      "actual_movie_frame_index": 4496,
+      "actual_movie_frame_time": 179.84
+    },
+    {
+      "film_time": 186.57,
+      "label": "cue-040",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0356.jpg",
+      "sha256": "dd5f6d35a45a0c81ac2cd40f2640acd6999127e2c2140d1cf3228758d2c5fc6f",
+      "actual_movie_frame_index": 4665,
+      "actual_movie_frame_time": 186.6
+    },
+    {
+      "film_time": 187.76,
+      "label": "cueend-040",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0357.jpg",
+      "sha256": "a881fac9502fc38267ebc6646befcd3f2ea7a0179d8d571978df37d426c7cfd5",
+      "actual_movie_frame_index": 4694,
+      "actual_movie_frame_time": 187.76
+    },
+    {
+      "film_time": 188.85,
+      "label": "cue-041",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0358.jpg",
+      "sha256": "83d14b6bf39f25d55f72d97e252284082920a6359a903a88e6345309f47a0df5",
+      "actual_movie_frame_index": 4722,
+      "actual_movie_frame_time": 188.88
+    },
+    {
+      "film_time": 189.7,
+      "label": "cueend-041",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0359.jpg",
+      "sha256": "5a168769432b35de22bdd9c16fa369e053bc536b9100d1438f6a8bc146a50e9d",
+      "actual_movie_frame_index": 4743,
+      "actual_movie_frame_time": 189.72
+    },
+    {
+      "film_time": 191.04,
+      "label": "cue-042",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0360.jpg",
+      "sha256": "e90d7890dd091be2a8f02683874db3174e0c5a6abf41d0b27b70766f3d093d08",
+      "actual_movie_frame_index": 4776,
+      "actual_movie_frame_time": 191.04
+    },
+    {
+      "film_time": 192.14,
+      "label": "cueend-042",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0364.jpg",
+      "sha256": "52998f5f9968db4359df3bad6f9d189ac87564ce7b594445162a61e0aa88dce4",
+      "actual_movie_frame_index": 4804,
+      "actual_movie_frame_time": 192.16
+    },
+    {
+      "film_time": 195.27,
+      "label": "cue-043",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0367.jpg",
+      "sha256": "ab4d44eb8ee6b41733dcc76c92ffeb1f604f71372c69300cb3a17d03e419a464",
+      "actual_movie_frame_index": 4882,
+      "actual_movie_frame_time": 195.28
+    },
+    {
+      "film_time": 196.48,
+      "label": "cueend-043",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0368.jpg",
+      "sha256": "bf12be36010b479a944ca5f9e4bf0e4e32d239cddb0ef5b788926f0c1c3f3f48",
+      "actual_movie_frame_index": 4912,
+      "actual_movie_frame_time": 196.48
+    },
+    {
+      "film_time": 197.54,
+      "label": "cue-044",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0370.jpg",
+      "sha256": "32e002441c7e2b8dcf80156fd5f77566a75e337c448a140977dbd890546ef7ff",
+      "actual_movie_frame_index": 4939,
+      "actual_movie_frame_time": 197.56
+    },
+    {
+      "film_time": 198.36,
+      "label": "cueend-044",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0371.jpg",
+      "sha256": "d967b1f40681e4e182138b1a168cfae565b53b2b914376f5724aaf534345d697",
+      "actual_movie_frame_index": 4959,
+      "actual_movie_frame_time": 198.36
+    },
+    {
+      "film_time": 200.07,
+      "label": "cue-045",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0372.jpg",
+      "sha256": "49bed36a40a64a7e455d8fbc7b3767e1263719b68b775c43b0da12520f15fbcc",
+      "actual_movie_frame_index": 5002,
+      "actual_movie_frame_time": 200.08
+    },
+    {
+      "film_time": 201.54,
+      "label": "cueend-045",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0373.jpg",
+      "sha256": "17e082902a551391aac6c23d1f13a818eb4a31ad27b6c885fe95a336110722ff",
+      "actual_movie_frame_index": 5039,
+      "actual_movie_frame_time": 201.56
+    },
+    {
+      "film_time": 202.59,
+      "label": "cue-046",
+      "kind": "cue",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0375.jpg",
+      "sha256": "ed21d80b52f2b2ee33d9b6df8c6c6bbeb2f88a0ac1a5ce1bfd4148158db79c93",
+      "actual_movie_frame_index": 5065,
+      "actual_movie_frame_time": 202.6
+    },
+    {
+      "film_time": 203.1,
+      "label": "cueend-046",
+      "kind": "cueend",
+      "source_time": null,
+      "image": "/workspace/scratch/zheng-final-independent-qc/final-2431d8edc4b5/batch-0376.jpg",
+      "sha256": "025faad4c43a4cbd9f1209ab34f245386d139c0a186db16b54e079e4355db3df",
+      "actual_movie_frame_index": 5078,
+      "actual_movie_frame_time": 203.12
+    }
+  ],
+  "actual_ass_events": [
+    {
+      "start": 1.28,
+      "end": 5.1,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}And the ultimate exclamation point{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N这就是最后的点睛一击"
+    },
+    {
+      "start": 5.1,
+      "end": 7.2,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}to conquer the China Open!{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N征服中网！"
+    },
+    {
+      "start": 7.4,
+      "end": 8.18,
+      "style": "TL",
+      "text": "{\\an2}郑钦文"
+    },
+    {
+      "start": 8.18,
+      "end": 12.03,
+      "style": "TL",
+      "text": "{\\an2}在北京捧起首座{\\fs78}1000{\\fs68}赛冠军奖杯"
+    },
+    {
+      "start": 12.9,
+      "end": 14.9,
+      "style": "TL",
+      "text": "{\\an2}北京时间{\\fs78}10{\\fs68}月{\\fs78}11{\\fs68}日晚上"
+    },
+    {
+      "start": 14.9,
+      "end": 16.67,
+      "style": "TL",
+      "text": "{\\an2}中网女单决赛"
+    },
+    {
+      "start": 16.67,
+      "end": 19.59,
+      "style": "TL",
+      "text": "{\\an2}郑钦文对阵安德烈耶娃"
+    },
+    {
+      "start": 22.9,
+      "end": 26.04,
+      "style": "TL",
+      "text": "{\\an2}前{\\fs78}4{\\fs68}轮比赛 全部进入第三盘"
+    },
+    {
+      "start": 26.04,
+      "end": 28.48,
+      "style": "TL",
+      "text": "{\\an2}决赛{\\fs78}0{\\fs68}比{\\fs78}2{\\fs68}落后 她立即回破"
+    },
+    {
+      "start": 28.48,
+      "end": 30.19,
+      "style": "TL",
+      "text": "{\\an2}追到{\\fs78}2{\\fs68}比{\\fs78}2{\\fs68}"
+    },
+    {
+      "start": 39.5,
+      "end": 41.94,
+      "style": "TL",
+      "text": "{\\an2}{\\fs78}4{\\fs68}比{\\fs78}5{\\fs68} {\\fs78}15{\\fs68}比{\\fs78}40{\\fs68}"
+    },
+    {
+      "start": 41.94,
+      "end": 45.4,
+      "style": "TL",
+      "text": "{\\an2}{\\fs78}3{\\fs68}个盘点 郑钦文全部救回"
+    },
+    {
+      "start": 52.04,
+      "end": 54.58,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Not easy. Made it look rather pedestrian,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N真不容易 她却打得很轻松"
+    },
+    {
+      "start": 54.58,
+      "end": 55.95,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}but that was a tough overhead.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N这记高压其实很难"
+    },
+    {
+      "start": 56.3,
+      "end": 58.89,
+      "style": "TL",
+      "text": "{\\an2}郑钦文在底线反复改变落点"
+    },
+    {
+      "start": 58.89,
+      "end": 62.08,
+      "style": "TL",
+      "text": "{\\an2}逼对手从一侧边线追到另一侧"
+    },
+    {
+      "start": 92.38,
+      "end": 95.74000000000001,
+      "style": "TL",
+      "text": "{\\an2}连赢{\\fs78}11{\\fs68}分 {\\fs78}7{\\fs68}比{\\fs78}5{\\fs68}拿下首盘"
+    },
+    {
+      "start": 96.97999999999999,
+      "end": 99.96000000000001,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Oh, what a way to cap it off for their first ace.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N首记{\\fs78}ACE{\\fs68} 精彩收下首盘！"
+    },
+    {
+      "start": 100.0,
+      "end": 101.65,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}And Zheng Qinwen{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N郑钦文"
+    },
+    {
+      "start": 101.65,
+      "end": 103.35,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}will have them out of their seats in Beijing.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N要让北京球迷起立！"
+    },
+    {
+      "start": 103.35,
+      "end": 104.55,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}They're starting to realize{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N球迷开始意识到"
+    },
+    {
+      "start": 104.55,
+      "end": 106.3,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}they're on the precipice of history{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N改写历史近在眼前"
+    },
+    {
+      "start": 106.3,
+      "end": 107.77000000000001,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}at the China Open.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N就在中网赛场上"
+    },
+    {
+      "start": 108.3,
+      "end": 110.3,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}The first Chinese player to reach the final{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N首位闯入决赛的中国球员"
+    },
+    {
+      "start": 110.3,
+      "end": 113.25,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is one set from lifting the trophy.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N再赢一盘 就能捧起奖杯"
+    },
+    {
+      "start": 113.57,
+      "end": 114.7,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Thank you so much.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N非常感谢"
+    },
+    {
+      "start": 114.9,
+      "end": 117.96000000000001,
+      "style": "TL",
+      "text": "{\\an2}第二盘先破发 又被马上回破"
+    },
+    {
+      "start": 117.96000000000001,
+      "end": 120.61,
+      "style": "TL",
+      "text": "{\\an2}侧向追球后 她迅速回到中路"
+    },
+    {
+      "start": 120.61,
+      "end": 122.38,
+      "style": "TL",
+      "text": "{\\an2}准备下一拍"
+    },
+    {
+      "start": 135.4,
+      "end": 137.12,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Listen for the ecstasy.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N听这狂喜的欢呼！"
+    },
+    {
+      "start": 140.18,
+      "end": 143.24,
+      "style": "TL",
+      "text": "{\\an2}{\\fs78}4{\\fs68}比{\\fs78}4{\\fs68} 先把对手局点救回平分"
+    },
+    {
+      "start": 143.24,
+      "end": 144.64,
+      "style": "TL",
+      "text": "{\\an2}第四次破发机会"
+    },
+    {
+      "start": 144.64,
+      "end": 147.45,
+      "style": "TL",
+      "text": "{\\an2}她终于兑现 {\\fs78}5{\\fs68}比{\\fs78}4{\\fs68}领先"
+    },
+    {
+      "start": 155.5,
+      "end": 157.95,
+      "style": "TL",
+      "text": "{\\an2}第一发球进球率只有{\\fs78}38{\\fs68}%"
+    },
+    {
+      "start": 157.95,
+      "end": 160.45,
+      "style": "TL",
+      "text": "{\\an2}第二发球却赢下{\\fs78}23{\\fs68}分"
+    },
+    {
+      "start": 160.45,
+      "end": 163.49,
+      "style": "TL",
+      "text": "{\\an2}胜赛局从{\\fs78}0{\\fs68}比{\\fs78}30{\\fs68}追到赛点"
+    },
+    {
+      "start": 163.49,
+      "end": 166.15,
+      "style": "TL",
+      "text": "{\\an2}她能把冠军留在北京吗？"
+    },
+    {
+      "start": 174.04,
+      "end": 177.86,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}And the ultimate exclamation point{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N这就是最后的点睛一击"
+    },
+    {
+      "start": 177.86,
+      "end": 179.96,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}to conquer the China Open!{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N征服中网！"
+    },
+    {
+      "start": 185.26,
+      "end": 187.88,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Well, her popularity amongst{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N她的人气"
+    },
+    {
+      "start": 187.88,
+      "end": 189.82,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}1.4 billion people{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N在十四亿人之中"
+    },
+    {
+      "start": 189.82,
+      "end": 192.26,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is about to go to another{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N即将跃上一个"
+    },
+    {
+      "start": 193.94,
+      "end": 196.6,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}out-of-this-world stratosphere level.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N难以想象的新高度！"
+    },
+    {
+      "start": 196.6,
+      "end": 198.48,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}It is going to be unbelievable{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N那将是不可思议的一幕"
+    },
+    {
+      "start": 198.48,
+      "end": 201.66,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}as they will coronate the queen of the China Open,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他们将为中网女王加冕"
+    },
+    {
+      "start": 201.96,
+      "end": 203.22,
+      "style": "TL",
+      "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Zheng Qinwen!{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N郑钦文！"
+    }
+  ],
+  "segment_timeline": [
+    {
+      "index": 0,
+      "edit_id": "cold_open",
+      "film_start": 1.2,
+      "film_end": 7.3,
+      "source_start": 270.0,
+      "source_end": 276.1,
+      "image": "",
+      "fit": "full_source"
+    },
+    {
+      "index": 1,
+      "edit_id": "landing",
+      "film_start": 7.3,
+      "film_end": 12.8,
+      "source_start": 0.0,
+      "source_end": 5.5,
+      "image": "<title_card>{\"text\": \"首个一千赛冠军\\n郑钦文在北京捧杯\", \"kicker\": \"属于主场的夜晚\"}",
+      "fit": "contain"
+    },
+    {
+      "index": 2,
+      "edit_id": "coordinate",
+      "film_start": 12.8,
+      "film_end": 22.8,
+      "source_start": 0.0,
+      "source_end": 10.0,
+      "image": "",
+      "fit": "crop"
+    },
+    {
+      "index": 3,
+      "edit_id": "first_set_context",
+      "film_start": 22.8,
+      "film_end": 39.400000000000006,
+      "source_start": 10.0,
+      "source_end": 26.6,
+      "image": "",
+      "fit": "crop"
+    },
+    {
+      "index": 4,
+      "edit_id": "setpoints_context",
+      "film_start": 39.400000000000006,
+      "film_end": 51.7,
+      "source_start": 132.4,
+      "source_end": 144.7,
+      "image": "",
+      "fit": "contain"
+    },
+    {
+      "index": 5,
+      "edit_id": "first_saved_setpoint_commentary",
+      "film_start": 51.7,
+      "film_end": 56.2,
+      "source_start": 144.7,
+      "source_end": 149.2,
+      "image": "",
+      "fit": "contain"
+    },
+    {
+      "index": 6,
+      "edit_id": "second_saved_setpoint_technique",
+      "film_start": 56.2,
+      "film_end": 63.2,
+      "source_start": 149.2,
+      "source_end": 156.2,
+      "image": "",
+      "fit": "contain"
+    },
+    {
+      "index": 7,
+      "edit_id": "second_saved_setpoint_ambient",
+      "film_start": 63.2,
+      "film_end": 79.12,
+      "source_start": 156.2,
+      "source_end": 172.12,
+      "image": "",
+      "fit": "contain"
+    },
+    {
+      "index": 8,
+      "edit_id": "second_setpoint_reaction_original_board",
+      "film_start": 79.12,
+      "film_end": 80.36,
+      "source_start": 172.12,
+      "source_end": 173.36,
+      "image": "",
+      "fit": "full_source"
+    },
+    {
+      "index": 9,
+      "edit_id": "third_saved_setpoint_ambient",
+      "film_start": 80.36,
+      "film_end": 92.28,
+      "source_start": 173.36,
+      "source_end": 185.28,
+      "image": "",
+      "fit": "contain"
+    },
+    {
+      "index": 10,
+      "edit_id": "first_set_close",
+      "film_start": 92.28,
+      "film_end": 96.8,
+      "source_start": 185.28,
+      "source_end": 189.8,
+      "image": "",
+      "fit": "crop"
+    },
+    {
+      "index": 11,
+      "edit_id": "first_set_ace_commentary",
+      "film_start": 96.8,
+      "film_end": 100.0,
+      "source_start": 189.8,
+      "source_end": 193.0,
+      "image": "",
+      "fit": "crop"
+    },
+    {
+      "index": 12,
+      "edit_id": "first_set_crowd_commentary",
+      "film_start": 100.0,
+      "film_end": 108.3,
+      "source_start": 193.0,
+      "source_end": 201.3,
+      "image": "",
+      "fit": "crop"
+    },
+    {
+      "index": 13,
+      "edit_id": "first_set_summary_commentary",
+      "film_start": 108.3,
+      "film_end": 114.8,
+      "source_start": 201.3,
+      "source_end": 207.8,
+      "image": "",
+      "fit": "full_source"
+    },
+    {
+      "index": 14,
+      "edit_id": "second_set_opening_break",
+      "film_start": 114.8,
+      "film_end": 135.2,
+      "source_start": 207.8,
+      "source_end": 228.2,
+      "image": "",
+      "fit": "full_source"
+    },
+    {
+      "index": 15,
+      "edit_id": "second_set_break_commentary",
+      "film_start": 135.2,
+      "film_end": 140.07999999999998,
+      "source_start": 228.2,
+      "source_end": 233.08,
+      "image": "",
+      "fit": "contain"
+    },
+    {
+      "index": 16,
+      "edit_id": "late_break_context",
+      "film_start": 140.07999999999998,
+      "film_end": 155.39999999999998,
+      "source_start": 248.12,
+      "source_end": 263.44,
+      "image": "",
+      "fit": "full_source"
+    },
+    {
+      "index": 17,
+      "edit_id": "stats_and_matchpoint",
+      "film_start": 155.39999999999998,
+      "film_end": 167.39999999999998,
+      "source_start": 0.0,
+      "source_end": 12.0,
+      "image": "<title_card>{\"text\": \"二发拿下23分\\n24记制胜分\", \"kicker\": \"一发进球率38% · 二发得分率64%\"}",
+      "fit": "contain"
+    },
+    {
+      "index": 18,
+      "edit_id": "complete_championship_point",
+      "film_start": 167.39999999999998,
+      "film_end": 180.05999999999997,
+      "source_start": 263.44,
+      "source_end": 276.1,
+      "image": "",
+      "fit": "full_source"
+    },
+    {
+      "index": 19,
+      "edit_id": "celebration_handshake_salute",
+      "film_start": 180.05999999999997,
+      "film_end": 203.35999999999999,
+      "source_start": 276.1,
+      "source_end": 299.4,
+      "image": "",
+      "fit": "full_source"
+    }
+  ],
+  "external_models_used": [],
+  "deepseek_used": false,
+  "minimax_used": false
+}

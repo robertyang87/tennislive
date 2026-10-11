@@ -1,0 +1,81 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Vq_UC0n5DKQ",
+  "source_sha256": "1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex dedicated final source audio agent; actual local faster-whisper small.en/medium.en full-source plus base.en/medium.en/large-v3/distil-large-v3 focused cross-checks; no manual-hearing claim",
+  "reviewed_at": "2026-10-11T15:19:51.450170+00:00",
+  "status": "complete",
+  "reviewed_from": 0.0,
+  "reviewed_to": 10.0,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "human_listening_claimed": false,
+  "evidence_paths": [
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-base-en-planning-windows.json",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-distil-large-v3-keyquotes.json",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-large-v3-ending.json",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-large-v3-firstset-and-ending.json",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-large-v3-firstset-tail-check.json",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-medium-en-ending.json",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-medium-en-firstset-tail-check.json",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-medium-en-full.json",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-medium-en-planning-windows.json",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-medium-en-quiet-window-checks.json",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-small-en-firstset-tail-check.json",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-small-en-full.json",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-small-en-quiet-window-checks.json"
+  ],
+  "candidate_table_sha256": "d28fbc0d500df1dd3206f29772157949402c15bff31d4f43f49fee5eb26ad1ef",
+  "timing_review_notes": [
+    "All source bytes/new English from final Vq_UC0n5DKQ; no semifinal sentence reused.",
+    "Player proper name Zheng Qinwen normalized against official WTA final identity; raw phonetic Jen Kinwen variants retained unchanged.",
+    "Original source timestamps from targeted no-VAD cross-checks; full-source VAD drags initial function words across long silence and is not used alone to position captions.",
+    "First-set ace wording for their first ace is shared by no-VAD base.en/medium.en/large-v3; distil writes with their first ace. Retain shared wording rather than invent a grammatical rewrite.",
+    "Final coronate is agreed by large-v3 and distil-large-v3; full-source smaller models coordinate is a phonetic misrecognition.",
+    "Shortest English clauses divided at actual words for one English and one Chinese line; Chinese faithfully condenses the commentary.",
+    "Actual short-window two-model VAD tail resolves previously uncertain low-volume Thank you so much; retained rather than falsely declaring no English.",
+    "Conservative spoken-timing coverage: first ACE begins189.98; preceding narration ends189.80; winning call begins270.08, full quote ends276.00; last name retained through299.26 and source cut299.40 before ceremony299.96/interview300.11."
+  ],
+  "rejected_forced_decode_artifacts": [
+    {
+      "window": [
+        149.2,
+        185.28
+      ],
+      "phrases": [
+        "Oh",
+        "You"
+      ],
+      "why": "Forced non-VAD decoding interjections disagree; medium probabilities0.032845 and0.008061; both speech-aware small.en and medium.en detect0.0 seconds of speech/zero words across the complete selected window."
+    },
+    {
+      "window": [
+        248.12,
+        263.44
+      ],
+      "phrases": [
+        "I'm not even going to do that.",
+        "Thanks for watching, and I'll see you in the next video."
+      ],
+      "why": "Forced non-VAD outputs contradict each other and have very low initial lexical probability; source is continuous tennis rally, not outro. Actual separate small.en/medium.en VAD checks each find0.0 seconds detected speech/zero words."
+    },
+    {
+      "window": [
+        205.52,
+        207.48
+      ],
+      "phrases": [
+        "Thank you very much.",
+        "Lets go see."
+      ],
+      "why": "Long no-VAD decoding text disagrees. Actual focused205.72–207.8 VAD by small.en and medium.en each detects1.232s speech and agrees Thank you so much206.57–207.65. That exact cross-checked phrase is retained; original conflicting phrases are not promoted."
+    }
+  ],
+  "no_foreground_english_reason": "Actual new-final small.en/medium.en full-source plus focused base.en/medium.en source-window decodes contain no cross-checked English within this complete selected interval. Individual small.en/medium.en VAD checks additionally find zero detected speech/zero words for the full quiet parent windows0–26.6,149.2–185.28,185.28–190.04,207.8–228.2,248.12–263.44 where applicable. No human hearing is claimed; ball hits/crowd/ambience remain. Narrow first-set tail206.57–207.65 was separately identified and retained with captions, not discarded.",
+  "individual_zero_vad_coverage": [
+    [
+      0,
+      26.6
+    ]
+  ]
+}

@@ -1,0 +1,352 @@
+{
+  "status": "actual_source_windows_verified_native_geometry_rescanned",
+  "slug": "zheng-andreeva-beijing-2026-final",
+  "source_id": "Vq_UC0n5DKQ",
+  "source_acquisition": {
+    "source_url": "https://www.youtube.com/watch?v=Vq_UC0n5DKQ",
+    "release_url": "https://github.com/robertyang87/tennislive/releases/download/source-Vq_UC0n5DKQ/Vq_UC0n5DKQ.mp4",
+    "method": "actual_streaming_GET",
+    "workflow_run": 38147676756,
+    "bytes": 72740950,
+    "sha256": "1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f",
+    "local_path": "/workspace/scratch/zheng-final-source/Vq_UC0n5DKQ.mp4"
+  },
+  "source_identity": {
+    "runner_ytdlp_title": "Qinwen Zheng vs. Mirra Andreeva | 2026 Beijing Final | WTA Match Highlights",
+    "title_provenance": "Existing successful download-video workflow parsed yt-dlp title; Release title preserves that output.",
+    "official_pixel_evidence": "Actual source frame10 shows WTA watermark, Beijing centre court, Q.ZHENG and M.ANDREEVA[4] native score names.",
+    "channel_name_directly_fetched": false,
+    "local_oembed_error": "Inherited proxy CONNECT403; no bypass attempted.",
+    "match_facts_crosscheck": "Dedicated facts agent independently checking official WTA final.",
+    "official_channel_evidence": {
+      "path": "data/evidence/zheng-andreeva-beijing-2026-final/video-identity.json",
+      "sha256": "75556ae75026daed3656cf928ae9c76af3c151747e5d36cb507fc00c50b468fc",
+      "author_name": "WTA",
+      "author_url": "https://www.youtube.com/@WTA",
+      "method": "Dedicated facts agent saved real YouTube oEmbed response; local source agent own request had403."
+    },
+    "official_match_evidence": {
+      "path": "data/evidence/zheng-andreeva-beijing-2026-final/final-match.json",
+      "sha256": "2415e79504408dce21032df33a64223692304a7fd28332033101965aae455291",
+      "result": "Zheng 7-5 6-4 Andreeva",
+      "event": "2026 Beijing final"
+    }
+  },
+  "ffprobe": {
+    "local_path": "/workspace/scratch/zheng-final-source/ffprobe.json",
+    "format_duration": 426.202268,
+    "video_duration": 426.12,
+    "width": 1920,
+    "height": 1080,
+    "fps": 25,
+    "video_codec": "av1",
+    "audio_codec": "aac"
+  },
+  "contacts_pending": false,
+  "visual_method": "Native ffmpeg absolute seek frames; actual pixel review, no external visual models.",
+  "audio_method": "Dedicated raw-audio agent independent actual ASR crosscheck. This review makes no human listening claim; final quotes must use that agent registry, not scene timestamps.",
+  "fixed_center_policy": {
+    "cx": 0.5,
+    "track": false,
+    "unclipped_people_and_all_score_columns_required": true
+  },
+  "key_point_coverage": [
+    {
+      "id": "opening_rally",
+      "start": 0,
+      "end": 26.88,
+      "score_before_home_zheng": "1st,2-2,0-15",
+      "server": "Andreeva",
+      "opening_service_wide": 1.48,
+      "reaction_camera_cut": 25.32,
+      "complete_broadcast_point": true,
+      "note": "Zheng wins to15-15; source begins already2-2. Not the initial0-2 comeback break."
+    },
+    {
+      "id": "andreeva_firstset_hold",
+      "start": 26.88,
+      "end": 56.28,
+      "score_before_home_zheng": "1st,2-2,15-40",
+      "server": "Andreeva",
+      "opening_service_wide": 29.24,
+      "reaction_camera_cut": 54.28,
+      "complete_broadcast_point": true,
+      "note": "Andreeva holds3-2."
+    },
+    {
+      "id": "zheng_firstset_service_point",
+      "start": 56.28,
+      "end": 77.4,
+      "score_before_home_zheng": "1st,2-3,15-0",
+      "server": "Zheng",
+      "opening_service_wide": 58.4,
+      "reaction_camera_cut": 76.08,
+      "complete_broadcast_point": true,
+      "note": "Complete point with reaction; winner not separately asserted here."
+    },
+    {
+      "id": "first_setpoint_saved",
+      "start": 132.4,
+      "end": 148.95,
+      "score_before_home_zheng": "1st,4-5,15-40",
+      "server": "Zheng",
+      "opening_service_wide": 134.6,
+      "reaction_camera_cut": 145.12,
+      "complete_broadcast_point": true,
+      "note": "Saves first setpoint to30-40. Reaction commentary145.04–148.82 must retain full sentence; next point149.2."
+    },
+    {
+      "id": "second_setpoint_saved",
+      "start": 149.2,
+      "end": 173.36,
+      "score_before_home_zheng": "1st,4-5,30-40",
+      "server": "Zheng",
+      "opening_service_wide": 151.32,
+      "reaction_camera_cut": 172.12,
+      "complete_broadcast_point": true,
+      "note": "Saves second setpoint toDeuce. Long rally with side-to-side baseline redirection."
+    },
+    {
+      "id": "third_setpoint_saved",
+      "start": 173.36,
+      "end": 185.28,
+      "score_before_home_zheng": "1st,4-5,AdvAndreeva",
+      "server": "Zheng",
+      "opening_service_wide": 175.28,
+      "reaction_camera_cut": 183.2,
+      "complete_broadcast_point": true,
+      "note": "Saves third setpoint toDeuce. Eventual hold5-5 verified in PBP, but this shown point itself is not finalhold."
+    },
+    {
+      "id": "firstset_clinch",
+      "start": 185.28,
+      "end": 207.8,
+      "score_before_home_zheng": "1st,6-5,40-0",
+      "server": "Zheng",
+      "opening_service_wide": 187.08,
+      "reaction_camera_cut": 191.28,
+      "complete_broadcast_point": true,
+      "note": "Complete setpoint to7-5 plus crowd/reaction/changeover. Actual5-5 break preceding6-5 is not shown."
+    },
+    {
+      "id": "secondset_opening_break",
+      "start": 207.8,
+      "end": 233.08,
+      "score_before_home_zheng": "2nd,0-0,40-30",
+      "server": "Andreeva",
+      "opening_service_wide": 209.48,
+      "reaction_camera_cut": 230.6,
+      "complete_broadcast_point": true,
+      "note": "Zheng breaks to1-0. Serve and all rally until coach reaction retained."
+    },
+    {
+      "id": "andreeva_secondset_hold",
+      "start": 233.08,
+      "end": 248.12,
+      "score_before_home_zheng": "2nd,1-1,AdvAndreeva",
+      "server": "Andreeva",
+      "opening_service_wide": 235.08,
+      "reaction_camera_cut": 244.68,
+      "complete_broadcast_point": true,
+      "note": "Andreeva holds2-1; not Zheng break point."
+    },
+    {
+      "id": "secondset_fourall_gamepoint_saved",
+      "start": 248.12,
+      "end": 263.44,
+      "score_before_home_zheng": "2nd,4-4,AdvAndreeva",
+      "server": "Andreeva",
+      "opening_service_wide": 250.08,
+      "reaction_camera_cut": 261.8,
+      "complete_broadcast_point": true,
+      "note": "Zheng forcesDeuce. Subsequent actualbreakto5-4 confirmedPBP but winningbreakpoint itself not shown."
+    },
+    {
+      "id": "championship_point_and_celebration",
+      "start": 263.44,
+      "end": 299.92,
+      "score_before_home_zheng": "2nd,5-4,40-30",
+      "server": "Zheng",
+      "opening_service_wide": 266.12,
+      "reaction_camera_cut": 271.08,
+      "complete_broadcast_point": true,
+      "note": "Championship serve/ace, full celebration and handshake near288s, wave; source270.000 already Zheng lying/deadball. Awardwide starts299.96; exclude interview."
+    }
+  ],
+  "interview_award_boundary_pending": false,
+  "native_board_scan_pending": false,
+  "contacts": {
+    "whole_source": [
+      "/workspace/scratch/zheng-final-source/full-native/contact_00.jpg",
+      "/workspace/scratch/zheng-final-source/full-native/contact_01.jpg",
+      "/workspace/scratch/zheng-final-source/full-native/contact_02.jpg"
+    ],
+    "scoreboard": [
+      "/workspace/scratch/zheng-final-source/score-native/contact_00.jpg",
+      "/workspace/scratch/zheng-final-source/score-native/contact_01.jpg",
+      "/workspace/scratch/zheng-final-source/score-native/contact_02.jpg"
+    ],
+    "fine_point_walls": [
+      "/workspace/scratch/zheng-final-source/fine/early-full-points/contact_00.jpg",
+      "/workspace/scratch/zheng-final-source/fine/early-full-points/contact_01.jpg",
+      "/workspace/scratch/zheng-final-source/fine/saved-setpoints/contact_00.jpg",
+      "/workspace/scratch/zheng-final-source/fine/saved-setpoints/contact_01.jpg",
+      "/workspace/scratch/zheng-final-source/fine/secondset-four-all/contact_00.jpg",
+      "/workspace/scratch/zheng-final-source/fine/secondset-four-all/contact_01.jpg",
+      "/workspace/scratch/zheng-final-source/fine/setpoint-and-break/contact_00.jpg",
+      "/workspace/scratch/zheng-final-source/fine/setpoint-and-break/contact_01.jpg",
+      "/workspace/scratch/zheng-final-source/fine/terminal/contact_00.jpg",
+      "/workspace/scratch/zheng-final-source/fine/terminal/contact_01.jpg"
+    ],
+    "method": "Unmodified native contact_sheet; absolute ffmpeg seeks, stamped actual source time. Full-source three sheets reviewed; selected fine point walls reviewed."
+  },
+  "scene_cuts": {
+    "path": "/workspace/scratch/zheng-final-source/scene-times.json",
+    "sha256": "5386c7d9ff085de833e9ae14f68d9dd216a97595857b43a62ce090737ba1ce91",
+    "threshold": 0.22,
+    "full_source": true,
+    "note": "Overlay result panel animating around293s is not a scene cut."
+  },
+  "service_visibility_note": "Receiver-preparation closeups precede the first three saved-setpoint wide serve strokes. Full broadcast point is retained; no claim that a close-up of server toss exists for these three.",
+  "tactics": [
+    {
+      "window": [
+        149.2,
+        173.36
+      ],
+      "zh": "郑钦文在底线反复改变落点，逼对手从一侧边线追到另一侧。",
+      "method": "Actual1-second native contact-wall pixel review; Zheng far baseline, Andreeva near baseline reaches both sidelines.",
+      "frame_evidence": "/workspace/scratch/zheng-final-source/fine/saved-setpoints/contact_01.jpg"
+    },
+    {
+      "window": [
+        207.8,
+        233.08
+      ],
+      "zh": "侧向追球后，她迅速回到中路，准备下一拍。",
+      "method": "Independently checked actual frames215.3–219.3: Zhengnear center, rightward chase/217.3 stretched return,218.3center,219.3left chase.",
+      "frame_evidence": "/workspace/scratch/zheng-final-source/fine/setpoint-and-break/contact_01.jpg"
+    }
+  ],
+  "internal_coverage_gaps": [
+    {
+      "fact": "Initial0-2→2-2 recovery",
+      "source_coverage": "Source begins2-2; actualinitialbreakpoint absent.",
+      "narration_basis": "Official point-by-point, do not mislabelopening2-2point as comebackbreak."
+    },
+    {
+      "fact": "After third setpoint save eventualhold5-5 and break6-5",
+      "source_coverage": "Shown thirdsave Adv→Deuce, then sourcejumpsownserve6-5,40-0.",
+      "narration_basis": "Official point-by-point only; cannot invent missinghold/breakpoint pictures."
+    },
+    {
+      "fact": "Secondset4-4 actualbreak5-4",
+      "source_coverage": "Shown point is AdvAndreeva→Deuce, then sourcejumpschampionshipserve5-4.",
+      "narration_basis": "Official point-by-point only; cannot labelshown gamepointsave actualwinningbreakpoint."
+    }
+  ],
+  "point_by_point_evidence": {
+    "path": "data/evidence/zheng-andreeva-beijing-2026-final/point-by-point-structured.json",
+    "sha256": "26debc4900d0e5ef840686048d75e057004a36de02174220a073825cde08939e",
+    "orientation": "home=Zheng, away=Andreeva"
+  },
+  "match_celebration_boundary": {
+    "safe_end": 299.92,
+    "award_wide_first_frame": 299.96,
+    "host_to_andreeva_first_words": 300.11,
+    "andreeva_answer_start_approx": 322.81,
+    "interview_end": 416.12,
+    "outro_start": 418.08,
+    "champion_interview_available": false,
+    "notes": "Source interviewer asks runner-up Mirra, not Zheng; exclude ceremony/interview from赛场之上. 298.44 is Zheng raised-arms smiling closeup, not summary introduction. Summary animates292.9–293.4."
+  },
+  "cold_open_evidence": {
+    "start": 270.0,
+    "dead_ball": true,
+    "native_pixel": "/workspace/scratch/zheng-final-source/exact270.jpg",
+    "native_pixel_sha256": "c6ac26739f4ff8ea7c5e90b084c93326a6846e616071f6a6f47b50ca13827fac",
+    "visual": "Zheng already fully lying behind far baseline, legs/armsraised; Andreeva walking towardnet.",
+    "audio_note": "Dedicated independent ASR first complete sentence earliest270.08;270.0 preserves sentencehead. 271.08 start would cutEnglishhead."
+  },
+  "native_board_scan": {
+    "method": "Unmodifiedtools.probe_board.scan_plan actualAV1 ffmpeg decoding; nativeWTA frame_geometry captured withoutdetectorcodechanges.",
+    "window": [
+      0,
+      299.92
+    ],
+    "fps": 5,
+    "frames": 1500,
+    "present": 1261,
+    "unresolved": 0,
+    "box": [
+      88,
+      828,
+      560,
+      986
+    ],
+    "history_path": "data/evidence/zheng-andreeva-beijing-2026-final/board-scan-before-championship-fix.json",
+    "geometry_path": "data/evidence/zheng-andreeva-beijing-2026-final/scoreboard-geometry-before-championship-fix.json",
+    "actual_failed_frame_path": "data/evidence/zheng-andreeva-beijing-2026-final/scoreboard-championship-267.png",
+    "latest": {
+      "path": "data/evidence/zheng-andreeva-beijing-2026-final/board-scan-after-championship-fix.json",
+      "geometry_path": "data/evidence/zheng-andreeva-beijing-2026-final/scoreboard-geometry-after-championship-fix.json",
+      "sha256": "9cb11aa4805bba0438b5446649d5c095ac155def0942d7526ed3a4b3a2f09e07",
+      "detector_sha256": "8e640acca97eb2a943cb79bb3b2856e92ebec6134cccc835ee2926e50fa664e9",
+      "frames": 1500,
+      "present": 1261,
+      "unresolved": 0,
+      "championship_5fps_samples_checked": 32,
+      "championship_correct_body_edge_relative": [
+        427,
+        428
+      ],
+      "scope": "Actualmatchandcelebration0–299.92 only, notfull426sinterviewsource.",
+      "final_film_visual_pass_claimed": false
+    },
+    "defect_status": "Historicaldefect preservedunchanged; currentfrozen detector fixed and actual0–299.92rescanned.",
+    "historical_defect": "CHAMPIONSHIP POINT width corruptsbody width263.44–270.0; root notified fornative detectorrepair andrescan. Successful function return doesnot mean allscorecolumnsvisible.",
+    "historical_defect_resolved": true,
+    "final_film_visual_pass_claimed": false,
+    "final_film_visual_pass_note": "This sourcegeometry registry is not finalnative movievisualQC; dedicatedindependent movieQC decides finalpass.",
+    "source_championship_geometry_status": "corrected_actual_rescan_32_of_32_complete"
+  },
+  "result_summary_graphics": {
+    "source_bounds_approx": [
+      604,
+      713,
+      1318,
+      985
+    ],
+    "name_rows_y_approx": [
+      803,
+      940
+    ],
+    "windows": [
+      [
+        205.7,
+        207.8
+      ],
+      [
+        293.0,
+        298.44
+      ]
+    ],
+    "source_native_frames": [
+      "/workspace/scratch/zheng-final-source/firstset-summary206.6.png",
+      "/workspace/scratch/zheng-final-source/full-summary293.8.png"
+    ],
+    "native_left_board_present": false,
+    "subtitle_instruction": "Finalnative layout must keep glyphs off name rows. Root actual native full_source bilingual preview reports MarginV356 puts subtitle below resultpanel with~15px gap, while513 overlaps names and was rejected. Finalfilm independentQC is authoritative; no forcedabove anchor.",
+    "method": "Actual original1920x1080 source frames viewed; approximate bounding coordinates, finalfilm precise mapping required."
+  },
+  "native_probe": {
+    "path": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/probe.json",
+    "sha256": "547e8225f9ecab15c5f42f1dd528a290a59fcf2783831204220e9ed4d8dcb40a",
+    "metadata_source_duration": 426.202268,
+    "active_match_scope": [
+      0,
+      299.92
+    ],
+    "board_scan_fps": 5
+  }
+}

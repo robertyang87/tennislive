@@ -1,0 +1,82 @@
+{
+  "checked_at": "2026-10-11T14:42:24.891463+00:00",
+  "review_method": "current_assistant actual image and browser crop screenshot inspection; noDeepSeek/MiniMax",
+  "source_api": "https://api.wtatennis.com/content/wta/photo/EN/4590572",
+  "source_metadata_path": "data/evidence/zheng-andreeva-beijing-2026-final/photos-4590572.json",
+  "source_url": "https://photoresources.wtatennis.com/photo-resources/2026/10/11/cf31e471-c2a5-4857-9ec0-76d733731234/Qinwen-Zheng.jpg?width=4000",
+  "official_photo_id": 4590572,
+  "credit": "Getty Images viaWTA officialphotoresources",
+  "date": "2026-10-11",
+  "identity": "QinwenZheng, confirmed officialphoto title/player328120 and videoidentity matchingredkit andface",
+  "moment": "championstrophy,frontalbothopeneyes,broadsmile",
+  "cms_original_dimensions": [
+    6000,
+    4000
+  ],
+  "actual_downloaded_dimensions": [
+    4000,
+    2667
+  ],
+  "cdn_dimension_limit": 4000,
+  "download_downsampled": true,
+  "artificial_upscale": false,
+  "local_image": "assets/reel/zheng-andreeva-beijing-2026-final-cover.jpg",
+  "image_sha256": "cdcce060e740b361b9f3369165ff7599a11a5895034f8650dea1613ef600ccc4",
+  "source_restriction_metadata": {
+    "exif_fields": 0,
+    "China_OUT_or_editorial_restriction_in_raw": false,
+    "note": "CDNstripsmetadata; rawbytes absencealone notrightsproof. OfficialWTACMScreditandtitle/source recorded."
+  },
+  "portrait": {
+    "image": "assets/reel/zheng-andreeva-beijing-2026-final-cover.jpg",
+    "focus": 0.6,
+    "focus_y": 0.5,
+    "zoom": 1.0,
+    "_source_url": "https://photoresources.wtatennis.com/photo-resources/2026/10/11/cf31e471-c2a5-4857-9ec0-76d733731234/Qinwen-Zheng.jpg?width=4000",
+    "_portrait_why": "Fresh2026-10-11 WTAphoto4590572/Getty; Zhengsmilingtrophycelebration; received4000x2667 fromCMSoriginal6000x4000,CDNcap4000downsizing; no upscale/edit. Both eyesopen frontalface. Manual browser1080x1440 crop viewed: eyes~405,chin~600,forehead~255; nofaceoverlapheader0–170 orhook790+. Trophyrightedgecropsbutcup/dragon/emotionalcelebrationclear."
+  },
+  "diagnostic_preview": "data/evidence/zheng-andreeva-beijing-2026-final/cover-crop-precheck.png",
+  "diagnostic_html": "data/evidence/zheng-andreeva-beijing-2026-final/cover-crop-precheck.html",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "native_scale": 0.5399325084364455,
+  "visible_source_window": [
+    1199.85,
+    0,
+    3200.1,
+    2667
+  ],
+  "manual_face_visible_canvas_box_approx": [
+    120,
+    260,
+    430,
+    610
+  ],
+  "eyes_y_approx": 405,
+  "header_safe": true,
+  "hook_safe": true,
+  "face_not_cropped": true,
+  "trophy_right_edge_cropped": true,
+  "final_native_poster_qc": "pending parent formal native render; this is photo/crop precheck only",
+  "rejected_candidates": [
+    {
+      "id": 4590568,
+      "credit": "Jimmie48/WTA",
+      "actual_dimensions": [
+        4000,
+        2473
+      ],
+      "reason": "alsofreshfrontaltruechampiontrophy; lessstrongsmilethanselectedGetty"
+    },
+    {
+      "id": 4590545,
+      "actual_dimensions": [
+        3835,
+        2557
+      ],
+      "reason": "preceremonycelebration fallback, trophyphoto nowavailable"
+    }
+  ]
+}
