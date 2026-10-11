@@ -1,0 +1,25 @@
+{
+  "status": "PENDING",
+  "video_sha256": "861eae3d2cf1a8b4f6932b258e00d54308abec3eeafc7ada5599c0d829ce1272",
+  "video_bytes": 85039635,
+  "source_binding_verified": true,
+  "complete_actual_listening": false,
+  "publishing_voice_pass": false,
+  "release_pass": false,
+  "checks": {
+    "full_decode": "PASS",
+    "actual_geometry": "PASS",
+    "eight_raw_components_and_script_binding": "PASS",
+    "aac_packet_payload_identity": "PASS",
+    "scene_and_seam_visual_sampling": "PASS",
+    "full_final_mix_actual_listening": "PENDING",
+    "actual_pronunciation_and_prosody": "PENDING",
+    "interview_and_embedded_source_voice_review": "PENDING"
+  },
+  "limitations": [
+    "Visual sampling is not continuous full-length viewing.",
+    "File/PCM source identity is not listening or pronunciation evidence.",
+    "Current master has no new native CI attestation.",
+    "Actual release asset URL for current SHA not yet bound."
+  ]
+}

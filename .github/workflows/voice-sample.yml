@@ -11,8 +11,12 @@ on:
       mode:
         description: "sample=合成各音色样本；ssml=只探这条免费通道认哪些 SSML（不写产物）"
         type: choice
-        options: [sample, ssml, azure, compare, phoneme, hd, oss, minimax]
+        options: [sample, ssml, azure, compare, phoneme, hd, oss, minimax, project]
         default: sample
+      script_path:
+        description: "project 模式：已锁定的章节旁白 JSON"
+        type: string
+        default: specs/explainers/sun-xinran-coming-of-age-2026.production.json
 
 permissions:
   contents: write
@@ -37,6 +41,7 @@ jobs:
     timeout-minutes: 65
     steps:
       - uses: actions/checkout@v4
+        if: github.event.inputs.mode != 'project'
         with:
           # **别把整个 output/ 拉下来**（1.36 GB）。产物目录是固定的 `output/voice-samples`，
           # 所以直接列进稀疏范围，不用另算日期再 add。
@@ -49,6 +54,14 @@ jobs:
             tests
             tools
             output/voice-samples
+
+      - uses: actions/checkout@v4
+        if: github.event.inputs.mode == 'project'
+        with:
+          sparse-checkout: |
+            src
+            tools
+            specs
 
       - uses: actions/setup-python@v5
         with:
@@ -191,6 +204,24 @@ jobs:
       - name: 合成语音样本
         if: github.event.inputs.mode == 'sample'
         run: python tools/voice_sample.py output/voice-samples
+
+      - name: 合成已锁定项目章节（统一 TTS，先试短句）
+        if: github.event.inputs.mode == 'project'
+        env:
+          SCRIPT_PATH: ${{ inputs.script_path }}
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
+        run: |
+          pip install -q -e .
+          python tools/synth_story_narration.py --script "$SCRIPT_PATH" --outdir work/story-narration
+
+      - name: 上传项目旁白与词边界（不提交样本）
+        if: github.event.inputs.mode == 'project'
+        uses: actions/upload-artifact@v4
+        with:
+          name: story-narration-${{ github.run_id }}
+          path: work/story-narration
+          if-no-files-found: error
 
       - name: 提交样本到仓库
         if: github.event.inputs.mode == 'sample' || github.event.inputs.mode == 'compare' || github.event.inputs.mode == 'hd' || github.event.inputs.mode == 'oss' || github.event.inputs.mode == 'minimax'
