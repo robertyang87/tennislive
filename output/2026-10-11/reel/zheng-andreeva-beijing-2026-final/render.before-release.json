@@ -1,0 +1,47 @@
+{
+  "scoreboard_qc_sha256": "2cc81d2ea330c942af5edc9337899ddc21c8bf2ffee6a60994e2e946fe9e4d5c",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 0.0,
+  "layout": "full",
+  "segments_seconds": 202.16,
+  "topbar": {
+    "line1": "2026 WTA1000 北京 决赛",
+    "line2": "郑钦文 7-5 6-4 米拉·安德烈耶娃",
+    "start": 1.2,
+    "end": 203.36
+  },
+  "film_seconds": 203.36,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 4.728,
+    "2": 6.792,
+    "3": 7.392,
+    "4": 6.0,
+    "6": 5.88,
+    "10": 3.456,
+    "14": 7.584,
+    "16": 7.368,
+    "17": 10.752
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "unavailable",
+      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）",
+      "report_only": true,
+      "warnings": [
+        "人脸模型不可用，分段画面没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）"
+      ]
+    }
+  },
+  "render_inputs_sha256": "760d2012708e9c21742cc639f29e0b1ce0d0f70e83f0866bc5f912c6e0b5ea78",
+  "film_sha256": "a077bf723fb8cde97c48ecea3a7e600ec46bcd05dc1321e4511445ad264bc4ad",
+  "film_bytes": 89428917,
+  "qc_attestation_sha256": "01174e2911434c6ea01743d945d39ab80d88802646c54a40978be2a9933e1121"
+}
