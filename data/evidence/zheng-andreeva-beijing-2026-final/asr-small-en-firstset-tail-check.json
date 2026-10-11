@@ -1,0 +1,71 @@
+{
+  "source_sha256": "1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "normalization": "none; original amplitude",
+  "vad_filter": true,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "initial_prompt": null,
+  "human_listening_claimed": false,
+  "windows": [
+    [
+      205.72,
+      207.8
+    ]
+  ],
+  "window_results": [
+    {
+      "window": [
+        205.72,
+        207.8
+      ],
+      "duration": 2.08,
+      "duration_after_vad": 1.232,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    }
+  ],
+  "segments": [
+    {
+      "window": [
+        205.72,
+        207.8
+      ],
+      "start": 206.57,
+      "end": 207.51,
+      "text": " Thank you so much.",
+      "no_speech_prob": 0.6591154932975769,
+      "avg_logprob": -0.7020602002739906,
+      "words": [
+        {
+          "start": 206.57,
+          "end": 207.09,
+          "word": " Thank",
+          "probability": 0.14260438084602356
+        },
+        {
+          "start": 207.09,
+          "end": 207.25,
+          "word": " you",
+          "probability": 0.9766087532043457
+        },
+        {
+          "start": 207.25,
+          "end": 207.41,
+          "word": " so",
+          "probability": 0.2676319181919098
+        },
+        {
+          "start": 207.41,
+          "end": 207.51,
+          "word": " much.",
+          "probability": 0.9928862452507019
+        }
+      ]
+    }
+  ],
+  "run_status": "complete",
+  "recorded_at": "2026-10-11T15:00:28.506398+00:00"
+}

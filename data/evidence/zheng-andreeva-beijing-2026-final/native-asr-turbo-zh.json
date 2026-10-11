@@ -1,0 +1,1526 @@
+{
+  "schema": "actual-local-asr.v1",
+  "model": "turbo",
+  "faster_whisper_version": "1.2.1",
+  "device": "cpu",
+  "compute_type": "int8",
+  "language": "zh",
+  "vad_filter": true,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "source_path": "/workspace/scratch/zheng-final-voice/all-nine-native-speech.wav",
+  "source_sha256": "b3bac63013325de6325825a9102ba6817add646143cdd579990cf1d078a39c21",
+  "recorded_at": "2026-10-11T15:05:51.955942+00:00",
+  "human_listening_claimed": false,
+  "run_status": "complete",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 3.86,
+      "text": "郑亲文在北京捧起首座一千赛冠军奖杯",
+      "no_speech_prob": 1.4293520360364464e-11,
+      "avg_logprob": -0.1424947719201974,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.3,
+          "word": "郑",
+          "probability": 0.8965920209884644
+        },
+        {
+          "start": 0.3,
+          "end": 0.46,
+          "word": "亲",
+          "probability": 0.6048243045806885
+        },
+        {
+          "start": 0.46,
+          "end": 0.64,
+          "word": "文",
+          "probability": 0.913608729839325
+        },
+        {
+          "start": 0.64,
+          "end": 1.1,
+          "word": "在",
+          "probability": 0.8911016583442688
+        },
+        {
+          "start": 1.1,
+          "end": 1.32,
+          "word": "北",
+          "probability": 0.9979541301727295
+        },
+        {
+          "start": 1.32,
+          "end": 1.52,
+          "word": "京",
+          "probability": 0.9997937083244324
+        },
+        {
+          "start": 1.52,
+          "end": 1.74,
+          "word": "捧",
+          "probability": 0.5803700983524323
+        },
+        {
+          "start": 1.74,
+          "end": 1.92,
+          "word": "起",
+          "probability": 0.7390151619911194
+        },
+        {
+          "start": 1.92,
+          "end": 2.12,
+          "word": "首",
+          "probability": 0.9703508019447327
+        },
+        {
+          "start": 2.12,
+          "end": 2.32,
+          "word": "座",
+          "probability": 0.8300272524356842
+        },
+        {
+          "start": 2.32,
+          "end": 2.58,
+          "word": "一",
+          "probability": 0.39509615302085876
+        },
+        {
+          "start": 2.58,
+          "end": 2.74,
+          "word": "千",
+          "probability": 0.9925063252449036
+        },
+        {
+          "start": 2.74,
+          "end": 2.98,
+          "word": "赛",
+          "probability": 0.9970909953117371
+        },
+        {
+          "start": 2.98,
+          "end": 3.26,
+          "word": "冠",
+          "probability": 0.9919005334377289
+        },
+        {
+          "start": 3.26,
+          "end": 3.46,
+          "word": "军",
+          "probability": 0.9993971884250641
+        },
+        {
+          "start": 3.46,
+          "end": 3.68,
+          "word": "奖",
+          "probability": 0.9966655075550079
+        },
+        {
+          "start": 3.68,
+          "end": 3.86,
+          "word": "杯",
+          "probability": 0.9811896085739136
+        }
+      ]
+    },
+    {
+      "start": 4.98,
+      "end": 8.46,
+      "text": "北京时间10月11日晚上中芒女单决赛",
+      "no_speech_prob": 1.4293520360364464e-11,
+      "avg_logprob": -0.1424947719201974,
+      "words": [
+        {
+          "start": 4.98,
+          "end": 5.4,
+          "word": "北",
+          "probability": 0.59234219789505
+        },
+        {
+          "start": 5.4,
+          "end": 5.56,
+          "word": "京",
+          "probability": 0.9998581409454346
+        },
+        {
+          "start": 5.56,
+          "end": 5.84,
+          "word": "时间",
+          "probability": 0.9973464012145996
+        },
+        {
+          "start": 5.84,
+          "end": 6.14,
+          "word": "10",
+          "probability": 0.9148990511894226
+        },
+        {
+          "start": 6.14,
+          "end": 6.26,
+          "word": "月",
+          "probability": 0.9998611211776733
+        },
+        {
+          "start": 6.26,
+          "end": 6.5,
+          "word": "11",
+          "probability": 0.9989135265350342
+        },
+        {
+          "start": 6.5,
+          "end": 6.68,
+          "word": "日",
+          "probability": 0.9998574256896973
+        },
+        {
+          "start": 6.68,
+          "end": 7.02,
+          "word": "晚上",
+          "probability": 0.9993395209312439
+        },
+        {
+          "start": 7.02,
+          "end": 7.42,
+          "word": "中",
+          "probability": 0.9433112740516663
+        },
+        {
+          "start": 7.42,
+          "end": 7.66,
+          "word": "芒",
+          "probability": 0.8482808768749237
+        },
+        {
+          "start": 7.66,
+          "end": 7.86,
+          "word": "女",
+          "probability": 0.9996353387832642
+        },
+        {
+          "start": 7.86,
+          "end": 8.02,
+          "word": "单",
+          "probability": 0.9245242476463318
+        },
+        {
+          "start": 8.02,
+          "end": 8.26,
+          "word": "决",
+          "probability": 0.9945255815982819
+        },
+        {
+          "start": 8.26,
+          "end": 8.46,
+          "word": "赛",
+          "probability": 0.9993082582950592
+        }
+      ]
+    },
+    {
+      "start": 8.46,
+      "end": 11.1,
+      "text": "郑亲文对阵安德烈耶娃",
+      "no_speech_prob": 1.4293520360364464e-11,
+      "avg_logprob": -0.1424947719201974,
+      "words": [
+        {
+          "start": 8.46,
+          "end": 9.22,
+          "word": "郑",
+          "probability": 0.9815740287303925
+        },
+        {
+          "start": 9.22,
+          "end": 9.4,
+          "word": "亲",
+          "probability": 0.9985754489898682
+        },
+        {
+          "start": 9.4,
+          "end": 9.62,
+          "word": "文",
+          "probability": 0.9988778233528137
+        },
+        {
+          "start": 9.62,
+          "end": 9.94,
+          "word": "对",
+          "probability": 0.9970192909240723
+        },
+        {
+          "start": 9.94,
+          "end": 10.16,
+          "word": "阵",
+          "probability": 0.9930776357650757
+        },
+        {
+          "start": 10.16,
+          "end": 10.4,
+          "word": "安",
+          "probability": 0.9988375306129456
+        },
+        {
+          "start": 10.4,
+          "end": 10.56,
+          "word": "德",
+          "probability": 0.9912101030349731
+        },
+        {
+          "start": 10.56,
+          "end": 10.7,
+          "word": "烈",
+          "probability": 0.9767032563686371
+        },
+        {
+          "start": 10.7,
+          "end": 10.88,
+          "word": "耶",
+          "probability": 0.9647184610366821
+        },
+        {
+          "start": 10.88,
+          "end": 11.1,
+          "word": "娃",
+          "probability": 0.9144732356071472
+        }
+      ]
+    },
+    {
+      "start": 12.24,
+      "end": 15.0,
+      "text": "前四轮比赛全部进入第三盘",
+      "no_speech_prob": 1.4293520360364464e-11,
+      "avg_logprob": -0.1424947719201974,
+      "words": [
+        {
+          "start": 12.24,
+          "end": 12.66,
+          "word": "前",
+          "probability": 0.998794436454773
+        },
+        {
+          "start": 12.66,
+          "end": 12.88,
+          "word": "四",
+          "probability": 0.9881302118301392
+        },
+        {
+          "start": 12.88,
+          "end": 13.0,
+          "word": "轮",
+          "probability": 0.9991075098514557
+        },
+        {
+          "start": 13.0,
+          "end": 13.18,
+          "word": "比",
+          "probability": 0.9998797178268433
+        },
+        {
+          "start": 13.18,
+          "end": 13.38,
+          "word": "赛",
+          "probability": 0.999489814043045
+        },
+        {
+          "start": 13.38,
+          "end": 14.0,
+          "word": "全部",
+          "probability": 0.9832000732421875
+        },
+        {
+          "start": 14.0,
+          "end": 14.24,
+          "word": "进",
+          "probability": 0.9997592568397522
+        },
+        {
+          "start": 14.24,
+          "end": 14.4,
+          "word": "入",
+          "probability": 0.9999617338180542
+        },
+        {
+          "start": 14.4,
+          "end": 14.7,
+          "word": "第三",
+          "probability": 0.9983628392219543
+        },
+        {
+          "start": 14.7,
+          "end": 15.0,
+          "word": "盘",
+          "probability": 0.9985407292842865
+        }
+      ]
+    },
+    {
+      "start": 15.0,
+      "end": 16.72,
+      "text": "决赛0比2落后",
+      "no_speech_prob": 1.4293520360364464e-11,
+      "avg_logprob": -0.1424947719201974,
+      "words": [
+        {
+          "start": 15.0,
+          "end": 15.74,
+          "word": "决",
+          "probability": 0.9958764910697937
+        },
+        {
+          "start": 15.74,
+          "end": 15.96,
+          "word": "赛",
+          "probability": 0.9994959831237793
+        },
+        {
+          "start": 15.96,
+          "end": 16.1,
+          "word": "0",
+          "probability": 0.9861370325088501
+        },
+        {
+          "start": 16.1,
+          "end": 16.24,
+          "word": "比",
+          "probability": 0.9067306518554688
+        },
+        {
+          "start": 16.24,
+          "end": 16.38,
+          "word": "2",
+          "probability": 0.9991739392280579
+        },
+        {
+          "start": 16.38,
+          "end": 16.52,
+          "word": "落",
+          "probability": 0.9994958639144897
+        },
+        {
+          "start": 16.52,
+          "end": 16.72,
+          "word": "后",
+          "probability": 0.9985740184783936
+        }
+      ]
+    },
+    {
+      "start": 16.72,
+      "end": 18.9,
+      "text": "他立即回破追到2比2",
+      "no_speech_prob": 1.4293520360364464e-11,
+      "avg_logprob": -0.1424947719201974,
+      "words": [
+        {
+          "start": 16.72,
+          "end": 17.14,
+          "word": "他",
+          "probability": 0.9242357611656189
+        },
+        {
+          "start": 17.14,
+          "end": 17.28,
+          "word": "立",
+          "probability": 0.999133288860321
+        },
+        {
+          "start": 17.28,
+          "end": 17.44,
+          "word": "即",
+          "probability": 0.9959744811058044
+        },
+        {
+          "start": 17.44,
+          "end": 17.6,
+          "word": "回",
+          "probability": 0.9995131492614746
+        },
+        {
+          "start": 17.6,
+          "end": 17.82,
+          "word": "破",
+          "probability": 0.9084404110908508
+        },
+        {
+          "start": 17.82,
+          "end": 18.18,
+          "word": "追",
+          "probability": 0.9805907607078552
+        },
+        {
+          "start": 18.18,
+          "end": 18.38,
+          "word": "到",
+          "probability": 0.9979634284973145
+        },
+        {
+          "start": 18.38,
+          "end": 18.62,
+          "word": "2",
+          "probability": 0.9988721013069153
+        },
+        {
+          "start": 18.62,
+          "end": 18.78,
+          "word": "比",
+          "probability": 0.9992058873176575
+        },
+        {
+          "start": 18.78,
+          "end": 18.9,
+          "word": "2",
+          "probability": 0.9990600943565369
+        }
+      ]
+    },
+    {
+      "start": 20.06,
+      "end": 22.02,
+      "text": "4比5 15比40",
+      "no_speech_prob": 1.4293520360364464e-11,
+      "avg_logprob": -0.1424947719201974,
+      "words": [
+        {
+          "start": 20.06,
+          "end": 20.48,
+          "word": "4",
+          "probability": 0.947973370552063
+        },
+        {
+          "start": 20.48,
+          "end": 20.6,
+          "word": "比",
+          "probability": 0.999790608882904
+        },
+        {
+          "start": 20.6,
+          "end": 20.82,
+          "word": "5",
+          "probability": 0.9992801547050476
+        },
+        {
+          "start": 20.82,
+          "end": 21.44,
+          "word": " 15",
+          "probability": 0.30796197056770325
+        },
+        {
+          "start": 21.44,
+          "end": 21.68,
+          "word": "比",
+          "probability": 0.9998805522918701
+        },
+        {
+          "start": 21.68,
+          "end": 22.02,
+          "word": "40",
+          "probability": 0.8912326693534851
+        }
+      ]
+    },
+    {
+      "start": 22.46,
+      "end": 25.26,
+      "text": "三个盘点郑亲文全部就回",
+      "no_speech_prob": 1.4293520360364464e-11,
+      "avg_logprob": -0.1424947719201974,
+      "words": [
+        {
+          "start": 22.46,
+          "end": 22.88,
+          "word": "三",
+          "probability": 0.9709367156028748
+        },
+        {
+          "start": 22.88,
+          "end": 23.04,
+          "word": "个",
+          "probability": 0.9997143149375916
+        },
+        {
+          "start": 23.04,
+          "end": 23.24,
+          "word": "盘",
+          "probability": 0.999718189239502
+        },
+        {
+          "start": 23.24,
+          "end": 23.44,
+          "word": "点",
+          "probability": 0.9996284246444702
+        },
+        {
+          "start": 23.44,
+          "end": 23.98,
+          "word": "郑",
+          "probability": 0.9947155714035034
+        },
+        {
+          "start": 23.98,
+          "end": 24.18,
+          "word": "亲",
+          "probability": 0.9987974166870117
+        },
+        {
+          "start": 24.18,
+          "end": 24.36,
+          "word": "文",
+          "probability": 0.9996724128723145
+        },
+        {
+          "start": 24.36,
+          "end": 24.82,
+          "word": "全部",
+          "probability": 0.9978522062301636
+        },
+        {
+          "start": 24.82,
+          "end": 25.04,
+          "word": "就",
+          "probability": 0.9520191550254822
+        },
+        {
+          "start": 25.04,
+          "end": 25.26,
+          "word": "回",
+          "probability": 0.9992080330848694
+        }
+      ]
+    },
+    {
+      "start": 26.38,
+      "end": 28.88,
+      "text": "郑亲文在底线反复改变落点",
+      "no_speech_prob": 1.4293520360364464e-11,
+      "avg_logprob": -0.1424947719201974,
+      "words": [
+        {
+          "start": 26.38,
+          "end": 26.8,
+          "word": "郑",
+          "probability": 0.9978659451007843
+        },
+        {
+          "start": 26.8,
+          "end": 26.96,
+          "word": "亲",
+          "probability": 0.9976853132247925
+        },
+        {
+          "start": 26.96,
+          "end": 27.12,
+          "word": "文",
+          "probability": 0.9998254179954529
+        },
+        {
+          "start": 27.12,
+          "end": 27.32,
+          "word": "在",
+          "probability": 0.9986176490783691
+        },
+        {
+          "start": 27.32,
+          "end": 27.5,
+          "word": "底",
+          "probability": 0.9988275170326233
+        },
+        {
+          "start": 27.5,
+          "end": 27.72,
+          "word": "线",
+          "probability": 0.9997108280658722
+        },
+        {
+          "start": 27.72,
+          "end": 27.96,
+          "word": "反",
+          "probability": 0.9983407258987427
+        },
+        {
+          "start": 27.96,
+          "end": 28.18,
+          "word": "复",
+          "probability": 0.997409462928772
+        },
+        {
+          "start": 28.18,
+          "end": 28.34,
+          "word": "改",
+          "probability": 0.9997016787528992
+        },
+        {
+          "start": 28.34,
+          "end": 28.52,
+          "word": "变",
+          "probability": 0.9976118206977844
+        },
+        {
+          "start": 28.52,
+          "end": 28.68,
+          "word": "落",
+          "probability": 0.8834090232849121
+        },
+        {
+          "start": 28.68,
+          "end": 28.88,
+          "word": "点",
+          "probability": 0.9992939233779907
+        }
+      ]
+    },
+    {
+      "start": 28.88,
+      "end": 31.56,
+      "text": "B对手从一侧边线追到另一侧",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 28.88,
+          "end": 29.38,
+          "word": "B",
+          "probability": 0.6414358615875244
+        },
+        {
+          "start": 29.38,
+          "end": 29.5,
+          "word": "对",
+          "probability": 0.9743764996528625
+        },
+        {
+          "start": 29.5,
+          "end": 29.7,
+          "word": "手",
+          "probability": 0.9997677206993103
+        },
+        {
+          "start": 29.7,
+          "end": 29.92,
+          "word": "从",
+          "probability": 0.9994192123413086
+        },
+        {
+          "start": 29.92,
+          "end": 30.12,
+          "word": "一",
+          "probability": 0.9975541234016418
+        },
+        {
+          "start": 30.12,
+          "end": 30.24,
+          "word": "侧",
+          "probability": 0.9961692988872528
+        },
+        {
+          "start": 30.24,
+          "end": 30.38,
+          "word": "边",
+          "probability": 0.9993008375167847
+        },
+        {
+          "start": 30.38,
+          "end": 30.64,
+          "word": "线",
+          "probability": 0.9975057244300842
+        },
+        {
+          "start": 30.64,
+          "end": 30.9,
+          "word": "追",
+          "probability": 0.99784255027771
+        },
+        {
+          "start": 30.9,
+          "end": 31.06,
+          "word": "到",
+          "probability": 0.9996004700660706
+        },
+        {
+          "start": 31.06,
+          "end": 31.22,
+          "word": "另",
+          "probability": 0.9984157085418701
+        },
+        {
+          "start": 31.22,
+          "end": 31.4,
+          "word": "一",
+          "probability": 0.9998623132705688
+        },
+        {
+          "start": 31.4,
+          "end": 31.56,
+          "word": "侧",
+          "probability": 0.9998327791690826
+        }
+      ]
+    },
+    {
+      "start": 32.66,
+      "end": 33.74,
+      "text": "连赢11分",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 32.66,
+          "end": 33.06,
+          "word": "连",
+          "probability": 0.8672979772090912
+        },
+        {
+          "start": 33.06,
+          "end": 33.22,
+          "word": "赢",
+          "probability": 0.9641386866569519
+        },
+        {
+          "start": 33.22,
+          "end": 33.52,
+          "word": "11",
+          "probability": 0.9818134307861328
+        },
+        {
+          "start": 33.52,
+          "end": 33.74,
+          "word": "分",
+          "probability": 0.9994022846221924
+        }
+      ]
+    },
+    {
+      "start": 33.74,
+      "end": 35.4,
+      "text": "7比5拿下手盘",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 33.74,
+          "end": 34.3,
+          "word": "7",
+          "probability": 0.650338888168335
+        },
+        {
+          "start": 34.3,
+          "end": 34.46,
+          "word": "比",
+          "probability": 0.9854920506477356
+        },
+        {
+          "start": 34.46,
+          "end": 34.62,
+          "word": "5",
+          "probability": 0.99835604429245
+        },
+        {
+          "start": 34.62,
+          "end": 34.82,
+          "word": "拿",
+          "probability": 0.9992558360099792
+        },
+        {
+          "start": 34.82,
+          "end": 34.98,
+          "word": "下",
+          "probability": 0.9999382495880127
+        },
+        {
+          "start": 34.98,
+          "end": 35.16,
+          "word": "手",
+          "probability": 0.5726679563522339
+        },
+        {
+          "start": 35.16,
+          "end": 35.4,
+          "word": "盘",
+          "probability": 0.998443067073822
+        }
+      ]
+    },
+    {
+      "start": 36.56,
+      "end": 37.82,
+      "text": "第二盘先破发",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 36.56,
+          "end": 36.96,
+          "word": "第二",
+          "probability": 0.9645732641220093
+        },
+        {
+          "start": 36.96,
+          "end": 37.18,
+          "word": "盘",
+          "probability": 0.9991163313388824
+        },
+        {
+          "start": 37.18,
+          "end": 37.38,
+          "word": "先",
+          "probability": 0.9997498393058777
+        },
+        {
+          "start": 37.38,
+          "end": 37.56,
+          "word": "破",
+          "probability": 0.9939106702804565
+        },
+        {
+          "start": 37.56,
+          "end": 37.82,
+          "word": "发",
+          "probability": 0.9939740300178528
+        }
+      ]
+    },
+    {
+      "start": 37.82,
+      "end": 39.24,
+      "text": "右辈马上回破",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 37.82,
+          "end": 38.26,
+          "word": "右",
+          "probability": 0.4620753228664398
+        },
+        {
+          "start": 38.26,
+          "end": 38.4,
+          "word": "辈",
+          "probability": 0.8023757636547089
+        },
+        {
+          "start": 38.4,
+          "end": 38.6,
+          "word": "马",
+          "probability": 0.9976001381874084
+        },
+        {
+          "start": 38.6,
+          "end": 38.8,
+          "word": "上",
+          "probability": 0.9995986819267273
+        },
+        {
+          "start": 38.8,
+          "end": 39.0,
+          "word": "回",
+          "probability": 0.9948433637619019
+        },
+        {
+          "start": 39.0,
+          "end": 39.24,
+          "word": "破",
+          "probability": 0.9984896183013916
+        }
+      ]
+    },
+    {
+      "start": 39.24,
+      "end": 40.78,
+      "text": "侧向追求后",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 39.24,
+          "end": 40.04,
+          "word": "侧",
+          "probability": 0.9640530645847321
+        },
+        {
+          "start": 40.04,
+          "end": 40.22,
+          "word": "向",
+          "probability": 0.9565564393997192
+        },
+        {
+          "start": 40.22,
+          "end": 40.38,
+          "word": "追",
+          "probability": 0.9997732043266296
+        },
+        {
+          "start": 40.38,
+          "end": 40.56,
+          "word": "求",
+          "probability": 0.8238304853439331
+        },
+        {
+          "start": 40.56,
+          "end": 40.78,
+          "word": "后",
+          "probability": 0.9994621872901917
+        }
+      ]
+    },
+    {
+      "start": 40.78,
+      "end": 43.38,
+      "text": "他迅速回到中路准备下一拍",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 40.78,
+          "end": 41.18,
+          "word": "他",
+          "probability": 0.9657716155052185
+        },
+        {
+          "start": 41.18,
+          "end": 41.4,
+          "word": "迅",
+          "probability": 0.9987358450889587
+        },
+        {
+          "start": 41.4,
+          "end": 41.64,
+          "word": "速",
+          "probability": 0.9999208450317383
+        },
+        {
+          "start": 41.64,
+          "end": 41.8,
+          "word": "回",
+          "probability": 0.9998100399971008
+        },
+        {
+          "start": 41.8,
+          "end": 41.96,
+          "word": "到",
+          "probability": 0.999886155128479
+        },
+        {
+          "start": 41.96,
+          "end": 42.12,
+          "word": "中",
+          "probability": 0.9997819066047668
+        },
+        {
+          "start": 42.12,
+          "end": 42.3,
+          "word": "路",
+          "probability": 0.9987770915031433
+        },
+        {
+          "start": 42.3,
+          "end": 42.64,
+          "word": "准",
+          "probability": 0.9989394843578339
+        },
+        {
+          "start": 42.64,
+          "end": 42.82,
+          "word": "备",
+          "probability": 0.9999536275863647
+        },
+        {
+          "start": 42.82,
+          "end": 43.14,
+          "word": "下一",
+          "probability": 0.9980564117431641
+        },
+        {
+          "start": 43.14,
+          "end": 43.38,
+          "word": "拍",
+          "probability": 0.9352560639381409
+        }
+      ]
+    },
+    {
+      "start": 44.56,
+      "end": 45.28,
+      "text": "4比4",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 44.56,
+          "end": 44.96,
+          "word": "4",
+          "probability": 0.9925805330276489
+        },
+        {
+          "start": 44.96,
+          "end": 45.08,
+          "word": "比",
+          "probability": 0.9998968839645386
+        },
+        {
+          "start": 45.08,
+          "end": 45.28,
+          "word": "4",
+          "probability": 0.9998836517333984
+        }
+      ]
+    },
+    {
+      "start": 45.28,
+      "end": 47.24,
+      "text": "先把对手局点就回评分",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 45.28,
+          "end": 45.7,
+          "word": "先",
+          "probability": 0.9951527118682861
+        },
+        {
+          "start": 45.7,
+          "end": 45.84,
+          "word": "把",
+          "probability": 0.9997382760047913
+        },
+        {
+          "start": 45.84,
+          "end": 45.96,
+          "word": "对",
+          "probability": 0.9992073178291321
+        },
+        {
+          "start": 45.96,
+          "end": 46.16,
+          "word": "手",
+          "probability": 0.99982088804245
+        },
+        {
+          "start": 46.16,
+          "end": 46.34,
+          "word": "局",
+          "probability": 0.6394550800323486
+        },
+        {
+          "start": 46.34,
+          "end": 46.58,
+          "word": "点",
+          "probability": 0.9976383447647095
+        },
+        {
+          "start": 46.58,
+          "end": 46.74,
+          "word": "就",
+          "probability": 0.8619439005851746
+        },
+        {
+          "start": 46.74,
+          "end": 46.9,
+          "word": "回",
+          "probability": 0.9987481832504272
+        },
+        {
+          "start": 46.9,
+          "end": 47.06,
+          "word": "评",
+          "probability": 0.791796863079071
+        },
+        {
+          "start": 47.06,
+          "end": 47.24,
+          "word": "分",
+          "probability": 0.9976235032081604
+        }
+      ]
+    },
+    {
+      "start": 47.24,
+      "end": 49.0,
+      "text": "第四次破发机会",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 47.24,
+          "end": 47.96,
+          "word": "第",
+          "probability": 0.9984039664268494
+        },
+        {
+          "start": 47.96,
+          "end": 48.16,
+          "word": "四",
+          "probability": 0.9228318333625793
+        },
+        {
+          "start": 48.16,
+          "end": 48.32,
+          "word": "次",
+          "probability": 0.9997323155403137
+        },
+        {
+          "start": 48.32,
+          "end": 48.5,
+          "word": "破",
+          "probability": 0.9989725351333618
+        },
+        {
+          "start": 48.5,
+          "end": 48.68,
+          "word": "发",
+          "probability": 0.9984198808670044
+        },
+        {
+          "start": 48.68,
+          "end": 48.82,
+          "word": "机",
+          "probability": 0.9934861063957214
+        },
+        {
+          "start": 48.82,
+          "end": 49.0,
+          "word": "会",
+          "probability": 0.9961012601852417
+        }
+      ]
+    },
+    {
+      "start": 49.0,
+      "end": 51.18,
+      "text": "他终于对线5比4领先",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 49.0,
+          "end": 49.36,
+          "word": "他",
+          "probability": 0.9985371828079224
+        },
+        {
+          "start": 49.36,
+          "end": 49.54,
+          "word": "终",
+          "probability": 0.9978806674480438
+        },
+        {
+          "start": 49.54,
+          "end": 49.68,
+          "word": "于",
+          "probability": 0.9999045133590698
+        },
+        {
+          "start": 49.68,
+          "end": 49.8,
+          "word": "对",
+          "probability": 0.7883869409561157
+        },
+        {
+          "start": 49.8,
+          "end": 50.04,
+          "word": "线",
+          "probability": 0.9941138923168182
+        },
+        {
+          "start": 50.04,
+          "end": 50.42,
+          "word": "5",
+          "probability": 0.992112398147583
+        },
+        {
+          "start": 50.42,
+          "end": 50.62,
+          "word": "比",
+          "probability": 0.9998908042907715
+        },
+        {
+          "start": 50.62,
+          "end": 50.84,
+          "word": "4",
+          "probability": 0.9641789197921753
+        },
+        {
+          "start": 50.84,
+          "end": 50.98,
+          "word": "领",
+          "probability": 0.9989357590675354
+        },
+        {
+          "start": 50.98,
+          "end": 51.18,
+          "word": "先",
+          "probability": 0.8301723003387451
+        }
+      ]
+    },
+    {
+      "start": 52.3,
+      "end": 54.48,
+      "text": "第一发球进球率只有38%",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 52.3,
+          "end": 52.7,
+          "word": "第一",
+          "probability": 0.9811810255050659
+        },
+        {
+          "start": 52.7,
+          "end": 52.86,
+          "word": "发",
+          "probability": 0.9983547329902649
+        },
+        {
+          "start": 52.86,
+          "end": 53.04,
+          "word": "球",
+          "probability": 0.9990768432617188
+        },
+        {
+          "start": 53.04,
+          "end": 53.18,
+          "word": "进",
+          "probability": 0.9956910014152527
+        },
+        {
+          "start": 53.18,
+          "end": 53.36,
+          "word": "球",
+          "probability": 0.99321049451828
+        },
+        {
+          "start": 53.36,
+          "end": 53.5,
+          "word": "率",
+          "probability": 0.9997684359550476
+        },
+        {
+          "start": 53.5,
+          "end": 53.86,
+          "word": "只有",
+          "probability": 0.9991406202316284
+        },
+        {
+          "start": 53.86,
+          "end": 54.44,
+          "word": "38",
+          "probability": 0.9981196522712708
+        },
+        {
+          "start": 54.44,
+          "end": 54.48,
+          "word": "%",
+          "probability": 0.9872792959213257
+        }
+      ]
+    },
+    {
+      "start": 54.48,
+      "end": 56.94,
+      "text": "第二发球却赢下23分",
+      "no_speech_prob": 1.0564903119014701e-11,
+      "avg_logprob": -0.14070250590642294,
+      "words": [
+        {
+          "start": 54.48,
+          "end": 55.14,
+          "word": "第二",
+          "probability": 0.995161235332489
+        },
+        {
+          "start": 55.14,
+          "end": 55.32,
+          "word": "发",
+          "probability": 0.9993368983268738
+        },
+        {
+          "start": 55.32,
+          "end": 55.54,
+          "word": "球",
+          "probability": 0.9999508857727051
+        },
+        {
+          "start": 55.54,
+          "end": 55.86,
+          "word": "却",
+          "probability": 0.9994124174118042
+        },
+        {
+          "start": 55.86,
+          "end": 56.04,
+          "word": "赢",
+          "probability": 0.9975195825099945
+        },
+        {
+          "start": 56.04,
+          "end": 56.22,
+          "word": "下",
+          "probability": 0.9993102550506592
+        },
+        {
+          "start": 56.22,
+          "end": 56.48,
+          "word": "23",
+          "probability": 0.9970458149909973
+        },
+        {
+          "start": 56.48,
+          "end": 56.94,
+          "word": "分",
+          "probability": 0.9999030828475952
+        }
+      ]
+    },
+    {
+      "start": 57.36,
+      "end": 59.92,
+      "text": "胜赛局从0比30追到赛点",
+      "no_speech_prob": 8.184918021125753e-12,
+      "avg_logprob": -0.08796227314779835,
+      "words": [
+        {
+          "start": 57.36,
+          "end": 57.72,
+          "word": "胜",
+          "probability": 0.9642541408538818
+        },
+        {
+          "start": 57.72,
+          "end": 57.9,
+          "word": "赛",
+          "probability": 0.9833244979381561
+        },
+        {
+          "start": 57.9,
+          "end": 58.08,
+          "word": "局",
+          "probability": 0.9993060827255249
+        },
+        {
+          "start": 58.08,
+          "end": 58.46,
+          "word": "从",
+          "probability": 0.9992169141769409
+        },
+        {
+          "start": 58.46,
+          "end": 58.62,
+          "word": "0",
+          "probability": 0.8802891373634338
+        },
+        {
+          "start": 58.62,
+          "end": 58.78,
+          "word": "比",
+          "probability": 0.961050271987915
+        },
+        {
+          "start": 58.78,
+          "end": 59.12,
+          "word": "30",
+          "probability": 0.9972278475761414
+        },
+        {
+          "start": 59.12,
+          "end": 59.38,
+          "word": "追",
+          "probability": 0.9978808760643005
+        },
+        {
+          "start": 59.38,
+          "end": 59.56,
+          "word": "到",
+          "probability": 0.9993159770965576
+        },
+        {
+          "start": 59.56,
+          "end": 59.78,
+          "word": "赛",
+          "probability": 0.9997082054615021
+        },
+        {
+          "start": 59.78,
+          "end": 59.92,
+          "word": "点",
+          "probability": 0.9134407639503479
+        }
+      ]
+    },
+    {
+      "start": 59.92,
+      "end": 62.28,
+      "text": "他能把冠军留在北京吗",
+      "no_speech_prob": 8.184918021125753e-12,
+      "avg_logprob": -0.08796227314779835,
+      "words": [
+        {
+          "start": 59.92,
+          "end": 60.62,
+          "word": "他",
+          "probability": 0.7708889245986938
+        },
+        {
+          "start": 60.62,
+          "end": 60.78,
+          "word": "能",
+          "probability": 0.9999325275421143
+        },
+        {
+          "start": 60.78,
+          "end": 60.94,
+          "word": "把",
+          "probability": 0.9998589754104614
+        },
+        {
+          "start": 60.94,
+          "end": 61.16,
+          "word": "冠",
+          "probability": 0.9978486597537994
+        },
+        {
+          "start": 61.16,
+          "end": 61.36,
+          "word": "军",
+          "probability": 0.9994717240333557
+        },
+        {
+          "start": 61.36,
+          "end": 61.54,
+          "word": "留",
+          "probability": 0.998847246170044
+        },
+        {
+          "start": 61.54,
+          "end": 61.7,
+          "word": "在",
+          "probability": 0.9999287128448486
+        },
+        {
+          "start": 61.7,
+          "end": 61.88,
+          "word": "北",
+          "probability": 0.9999186992645264
+        },
+        {
+          "start": 61.88,
+          "end": 62.1,
+          "word": "京",
+          "probability": 0.9996778964996338
+        },
+        {
+          "start": 62.1,
+          "end": 62.28,
+          "word": "吗",
+          "probability": 0.9993858337402344
+        }
+      ]
+    }
+  ],
+  "max_transcribed_end": 62.28
+}

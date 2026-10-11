@@ -40,3 +40,19 @@ cropped to origin (90,820), size 760×170. It contains the large animated
 BREAK POINT tag rather than a complete two-player body. The probe regression
 uses the renderer's frame geometry and reports no board for this animation,
 so it cannot confuse the wide mint tag with a games cell and abort the scan.
+
+2026-10-11 Zheng–Andreeva China Open final, official WTA YouTube
+`Vq_UC0n5DKQ`: `beijing-zheng-andreeva-267000-championship-point.png`
+is the original lossless RGB frame at 267.000 seconds, decoded from the
+1920×1080, 25fps AV1 source with
+`ffmpeg -ss 267.000 -i SOURCE -frames:v 1 -vf format=rgb24,crop=760:158:88:828`.
+The fixture RGB was independently re-extracted and compared pixel for pixel.
+Source SHA-256: `1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f`.
+Fixture SHA-256: `71c7eaf283367aab4b7815415d003cf24a604be72741897a7239bb8a6375ea1f`.
+Crop origin (88,828); search right-edge hint 472. The native championship
+header is approximately x=1..205, y=3..44, while the measured two-player body
+is x=1..428, y=43..155 (including its antialias edge). Previously the wide tag
+entered the mint games anchors, joining header and body and clipping both
+40/30 point numerals at x=376. The regression requires native exclusive body
+edge x=428 (absolute source x=516), retains both point numerals, and leaves
+the court alongside the header and beyond the native body transparent.

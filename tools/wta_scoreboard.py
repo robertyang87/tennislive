@@ -48,7 +48,7 @@ from pathlib import Path
 
 import numpy as np
 
-from atp_scoreboard import beyond_hint, report_beyond_hint
+from atp_scoreboard import report_beyond_hint
 
 PROFILE = "wta-tour-v1"
 EDGE_PAD = 2          # 板右缘外多留的源片像素（抗锯齿的那一列）
@@ -204,7 +204,7 @@ def _runs(flags: np.ndarray) -> list[tuple[int, int]]:
 
 
 def frame_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
-    """Measure native body and optional narrow header; coordinates stay source-relative.
+    """Measure native body and independent header; coordinates stay source-relative.
 
     The search rectangle is never itself an opaque graphic. A positive board signature
     with unmeasurable body geometry is an error, rather than a rectangular fallback.
@@ -213,9 +213,25 @@ def frame_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
         return None
     mint = mint_mask(band)
     colour = board_colour(band)
-    anchor_cols = np.flatnonzero((mint.mean(axis=0) > .25)
+    # A left-hand mint tag can be wider than the name column, including across
+    # the games column. Its mint pixels are not evidence of the two-player body.
+    # Identify those rows from the native left silhouette before selecting games
+    # anchors; otherwise a broad tag and a <=3px gap become one tall "body".
+    left_mint_rows = mint[:, :MIN_BOARD_W].sum(axis=1) >= MINT_COLS
+    body_mint = mint & ~left_mint_rows[:, None]
+    eligible = np.arange(band.shape[1]) >= MIN_BOARD_W
+    original_cols = (mint.mean(axis=0) > .25) & eligible
+    body_cols = (body_mint.mean(axis=0) > .25) & eligible
+    # Preserve an established body-only anchor (including left-hand tag slide
+    # animations). Separate only a demonstrated second set of header-only
+    # columns, with an independently supported games column below the tag.
+    # Two header columns suffice to trigger the existing >=2px row anchor.
+    separate_header = (body_cols.sum() >= MINT_COLS
+                       and (original_cols & ~body_cols).sum() >= 2)
+    anchor_mint = body_mint if separate_header else mint
+    anchor_cols = np.flatnonzero((anchor_mint.mean(axis=0) > .25)
                                 & (np.arange(band.shape[1]) >= MIN_BOARD_W))
-    anchors = _runs(mint[:, anchor_cols].sum(axis=1) >= 2)
+    anchors = _runs(anchor_mint[:, anchor_cols].sum(axis=1) >= 2)
     if anchor_cols.size < MINT_COLS:
         anchors = []
     # Text cuts holes through the mint column; join <= 3px gaps, without joining
@@ -231,10 +247,16 @@ def frame_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
         lo, hi = max(candidates, key=lambda v: v[1] - v[0])
         # Native antialiased/rounded edge can precede/follow the solid mint column.
         broad = colour[:, :max(MIN_BOARD_W, cap or MIN_BOARD_W)].sum(axis=1) >= MIN_BOARD_W
+        # Do not extend the body into the independent mint tag. A few native
+        # rounded body-edge rows can themselves have left mint fringe; retain
+        # them only when the name-to-games region also has the dark body fill.
+        name_to_games = band[:, 8:int(anchor_cols[0])].max(axis=2) < 130
+        body_edge_rows = (~left_mint_rows | (name_to_games.mean(axis=1) >= .5)
+                          if separate_header else np.ones(len(band), dtype=bool))
         for _ in range(3):
-            if lo > 0 and broad[lo - 1]:
+            if lo > 0 and broad[lo - 1] and body_edge_rows[lo - 1]:
                 lo -= 1
-            if hi < len(broad) and broad[hi]:
+            if hi < len(broad) and broad[hi] and body_edge_rows[hi]:
                 hi += 1
         body_band = band[lo:hi]
         edge = board_edge(body_band, cap=cap)
@@ -303,7 +325,7 @@ def frame_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
     # only a clipped 10px animation in an already cropped supplied source.
     header_columns = []
     if lo:
-        for first, last in _runs(mint[:lo, :right_limit].mean(axis=0) > .2):
+        for first, last in _runs(mint[:lo].mean(axis=0) > .2):
             if header_columns and first - header_columns[-1][1] <= 4:
                 header_columns[-1] = (header_columns[-1][0], last)
             else:
@@ -314,7 +336,7 @@ def frame_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
         xs = np.flatnonzero(mint[y, :header_limit])
         if xs.size >= 12:
             header_rows.append((y, max(0, int(xs[0]) - 1),
-                                min(right_limit, int(xs[-1]) + 2)))
+                                min(band.shape[1], int(xs[-1]) + 2)))
     header = None
     if header_rows:
         groups = _runs(np.isin(np.arange(lo), [r[0] for r in header_rows]))

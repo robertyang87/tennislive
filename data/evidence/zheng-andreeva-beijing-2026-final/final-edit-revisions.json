@@ -1,0 +1,30 @@
+{
+  "schema": "tennislive.actual-prepublication-revisions.v1",
+  "slug": "zheng-andreeva-beijing-2026-final",
+  "spec_sha256": "d7cb28a69493fc15c63e92f0c6025af81c755c7acce37bd49055d7dced12a51b",
+  "actual_rejected_initial_movie": "independent-qc-rejected-master-9b8191.json",
+  "first_native_failure": "initial-native-qc-failure.json",
+  "fixes": [
+    {
+      "source": [
+        185.28,
+        189.8
+      ],
+      "change": "bed low→high, original source sound; native automatic TTS ducking remains",
+      "actual_new_mixed_audio_95s_rms_db": -56.80590144791354
+    },
+    {
+      "source": [
+        207.8,
+        228.2
+      ],
+      "change": "full_source scorefalse, subtitle_bottom400; entire point retained without native delogo or duplicated body",
+      "actual_native_210_96_image_viewed": "scratch/native-samples/second_set_opening_break.jpg"
+    }
+  ],
+  "unchanged_narration": 9,
+  "unchanged_bilingual_broadcast_cues": 23,
+  "cards": 2,
+  "human_listening_claimed": false,
+  "status": "final_native_render_in_progress_not_final_qc"
+}

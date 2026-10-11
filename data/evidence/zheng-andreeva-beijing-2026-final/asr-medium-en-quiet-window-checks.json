@@ -1,0 +1,89 @@
+{
+  "source_sha256": "1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "normalization": "none; original amplitude",
+  "vad_filter": true,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "initial_prompt": null,
+  "human_listening_claimed": false,
+  "windows": [
+    [
+      0,
+      26.6
+    ],
+    [
+      149.2,
+      185.28
+    ],
+    [
+      185.28,
+      190.04
+    ],
+    [
+      207.8,
+      228.2
+    ],
+    [
+      248.12,
+      263.44
+    ]
+  ],
+  "window_results": [
+    {
+      "window": [
+        0,
+        26.6
+      ],
+      "duration": 26.6,
+      "duration_after_vad": 0.0,
+      "utterance_count": 0,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        149.2,
+        185.28
+      ],
+      "duration": 36.08,
+      "duration_after_vad": 0.0,
+      "utterance_count": 0,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        185.28,
+        190.04
+      ],
+      "duration": 4.76,
+      "duration_after_vad": 0.0,
+      "utterance_count": 0,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        207.8,
+        228.2
+      ],
+      "duration": 20.4,
+      "duration_after_vad": 0.0,
+      "utterance_count": 0,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        248.12,
+        263.44
+      ],
+      "duration": 15.32,
+      "duration_after_vad": 0.0,
+      "utterance_count": 0,
+      "status": "actual_decode_complete"
+    }
+  ],
+  "segments": [],
+  "run_status": "complete",
+  "recorded_at": "2026-10-11T14:48:45.828686+00:00"
+}

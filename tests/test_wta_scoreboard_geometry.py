@@ -215,3 +215,40 @@ def test_complete_games_cell_uses_its_native_height_when_body_has_fringe():
     # because the surrounding body/search band is 117px high.
     with pytest.raises(RuntimeError, match="native right boundary"):
         w.board_edge(image)
+
+
+def test_zheng_championship_point_real_frame_separates_header_and_keeps_40_30():
+    from PIL import Image
+    path = (Path(__file__).parent / "fixtures" / "wta_scoreboard"
+            / "beijing-zheng-andreeva-267000-championship-point.png")
+    image = np.asarray(Image.open(path))
+    geometry = w.frame_geometry(image, cap=472)
+    # The 205px championship tag used to enter the games anchors, producing
+    # one 152px-high body with edge 376 and deleting both point numerals.
+    assert geometry["body"] == (1, 43, 428, 155)
+    assert geometry["header"] == (1, 3, 205, 44)
+    assert geometry["edge"] == 428
+    alpha = w.alpha_frame(geometry, (0, 0, 760, 158))
+    assert alpha[75, 400] == 255  # Zheng's native 40
+    assert alpha[125, 400] == 255  # Andreeva's native 30
+    assert alpha[20, 180] == 255  # full championship tag and its text
+    assert alpha[20, 240] == 0  # court alongside the tag remains transparent
+    assert not alpha[:, 428:].any()
+
+
+@pytest.mark.parametrize("header_width", [205, 350, 440])
+def test_wide_header_never_becomes_games_anchor_even_across_games_column(header_width):
+    # Use the real search-band height: 40 header pixels exceed the old 25%
+    # column threshold. The largest tag crosses the games column and body edge.
+    image = band(top=44, height=110, header=False)[:158]
+    image[3:44, 4:header_width] = MINT
+    image[12:27, 24:130] = BODY
+    geometry = w.frame_geometry(image)
+    assert geometry["body"] == (3, 43, 390, 155)
+    assert geometry["edge"] == 390
+    assert geometry["header"][2] >= header_width
+    alpha = w.alpha_frame(geometry, (0, 0, 760, 158))
+    assert alpha[20, header_width - 5] == 255
+    assert alpha[20, header_width + 5] == 0
+    assert alpha[80, 365] == 255  # points slot independent of tag width
+    assert not alpha[60:, 390:].any()

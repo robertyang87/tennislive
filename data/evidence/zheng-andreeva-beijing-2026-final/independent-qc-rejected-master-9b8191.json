@@ -1,0 +1,74 @@
+{
+  "status": "rejected_superseded_actual_master_review_not_final_pass",
+  "film_sha256": "9b8191dc8be215c97837ffbe13ec2ae1ead0acc360f4cfc2532a78dab57cf2ca",
+  "spec_sha256": "e7ea11674cc8659a3857d2ff6de855934af01014f95fba1358f84450091891fa",
+  "film_bytes": 68176069,
+  "actual_unique_frame_count": 385,
+  "actual_ass_event_count": 46,
+  "all_contact_walls_actually_viewed": [
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/celebration-contact-00.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/cover-contact-00.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/cue-contact-00.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/cue-contact-01.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/cue-contact-02.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/cueend-contact-00.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/cueend-contact-01.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/cueend-contact-02.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-00.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-01.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-02.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-03.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-04.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-05.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-06.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-07.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-08.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-09.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-10.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-11.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-12.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/keypoint-contact-13.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/reaction-contact-00.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/segment-contact-00.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/segment-contact-01.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/segment-contact-02.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/segment-contact-03.jpg",
+    "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/summary-contact-00.jpg"
+  ],
+  "manifest": "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/manifest.json",
+  "blockers": [
+    {
+      "kind": "native_digital_silence",
+      "film_time": 95.0,
+      "finding": "Parent actual native check found digital silence. Independent visual review does not waive failed mechanical audio gate.",
+      "root_fix": "first_set_close native bed low to high; rerender required."
+    },
+    {
+      "kind": "player_body_delogo",
+      "segment_index": 14,
+      "source_times": [
+        209.96,
+        210.96,
+        211.96
+      ],
+      "film_times": [
+        116.96,
+        117.96,
+        118.96
+      ],
+      "finding": "Actual contain.65 board bounding-box delogo erases near Zheng torso/upper arm above original native scoreboard; native score patch copies red torso into right panel edge. Paired original210.96 shows native original board covers some torso but does not add upper rectangular smear or pasted ghost.",
+      "actual_movie_frames": [
+        "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/frame-0117.960.jpg",
+        "/workspace/scratch/zheng-final-independent-qc/final-9b8191dc8be2/frame-0118.960.jpg"
+      ],
+      "actual_source_frame": "/workspace/scratch/zheng-final-independent-qc/raw-210.96.jpg",
+      "proposed_legal_fix": "Whole source207.8–228.2 full_source score_insetfalse, preserve source allframes and native board, realcaption layout recheck."
+    }
+  ],
+  "other_visual_findings": "All20 segment start/mid/end,46 actual ASS cue mid/end,14 critical-rally contact walls, celebration/handshake, both titlecards and actual cover reviewed. No other visual blocker found.172.12full-source reaction retains chest/arm.201.3full-source summary retains names/score. Original board animation remnants were not misclassified as lost settled columns.",
+  "limits": [
+    "Old film is explicitly rejected, no finalpass seal.",
+    "Final replacement movie must be actually re-extracted and independently viewed.",
+    "No human audio listening claim."
+  ]
+}

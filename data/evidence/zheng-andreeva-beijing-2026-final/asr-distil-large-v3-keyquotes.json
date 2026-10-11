@@ -1,0 +1,847 @@
+{
+  "model": "distil-large-v3",
+  "source_sha256": "1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f",
+  "normalization": "peak .95",
+  "vad_filter": false,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "initial_prompt": null,
+  "human_listening_claimed": false,
+  "recorded_at": "2026-10-11T14:50:53.175113+00:00",
+  "windows": [
+    [
+      140,
+      150
+    ],
+    [
+      183,
+      211
+    ],
+    [
+      263,
+      299.9
+    ]
+  ],
+  "segments": [
+    {
+      "window": [
+        140,
+        150
+      ],
+      "start": 145.2,
+      "end": 145.84,
+      "text": " Not easy.",
+      "no_speech_prob": 0.05066308751702309,
+      "avg_logprob": -0.17531048167835583,
+      "words": [
+        {
+          "start": 145.2,
+          "end": 145.52,
+          "word": " Not",
+          "probability": 0.8737215995788574
+        },
+        {
+          "start": 145.52,
+          "end": 145.84,
+          "word": " easy.",
+          "probability": 0.9975383281707764
+        }
+      ]
+    },
+    {
+      "window": [
+        140,
+        150
+      ],
+      "start": 146.44,
+      "end": 148.66,
+      "text": " Made it look rather a pedestrian, but that was a tough overhead.",
+      "no_speech_prob": 0.05066308751702309,
+      "avg_logprob": -0.17531048167835583,
+      "words": [
+        {
+          "start": 146.44,
+          "end": 146.5,
+          "word": " Made",
+          "probability": 0.9830182790756226
+        },
+        {
+          "start": 146.5,
+          "end": 146.64,
+          "word": " it",
+          "probability": 0.9991294741630554
+        },
+        {
+          "start": 146.64,
+          "end": 146.8,
+          "word": " look",
+          "probability": 0.9978887438774109
+        },
+        {
+          "start": 146.8,
+          "end": 146.98,
+          "word": " rather",
+          "probability": 0.7359694838523865
+        },
+        {
+          "start": 146.98,
+          "end": 147.14,
+          "word": " a",
+          "probability": 0.8602535128593445
+        },
+        {
+          "start": 147.14,
+          "end": 147.48,
+          "word": " pedestrian,",
+          "probability": 0.9954299926757812
+        },
+        {
+          "start": 147.64,
+          "end": 147.74,
+          "word": " but",
+          "probability": 0.9990563988685608
+        },
+        {
+          "start": 147.74,
+          "end": 147.86,
+          "word": " that",
+          "probability": 0.998635470867157
+        },
+        {
+          "start": 147.86,
+          "end": 147.98,
+          "word": " was",
+          "probability": 0.9993532299995422
+        },
+        {
+          "start": 147.98,
+          "end": 148.12,
+          "word": " a",
+          "probability": 0.9974416494369507
+        },
+        {
+          "start": 148.12,
+          "end": 148.32,
+          "word": " tough",
+          "probability": 0.9992782473564148
+        },
+        {
+          "start": 148.32,
+          "end": 148.66,
+          "word": " overhead.",
+          "probability": 0.9965894222259521
+        }
+      ]
+    },
+    {
+      "window": [
+        183,
+        211
+      ],
+      "start": 189.14,
+      "end": 192.96,
+      "text": " Oh, what a way to cap it off with their first ace.",
+      "no_speech_prob": 0.07781929522752762,
+      "avg_logprob": -0.14918577503150618,
+      "words": [
+        {
+          "start": 189.14,
+          "end": 189.62,
+          "word": " Oh,",
+          "probability": 0.8668932914733887
+        },
+        {
+          "start": 191.06,
+          "end": 191.06,
+          "word": " what",
+          "probability": 0.9979996085166931
+        },
+        {
+          "start": 191.06,
+          "end": 191.18,
+          "word": " a",
+          "probability": 0.998221218585968
+        },
+        {
+          "start": 191.18,
+          "end": 191.26,
+          "word": " way",
+          "probability": 0.9998045563697815
+        },
+        {
+          "start": 191.26,
+          "end": 191.36,
+          "word": " to",
+          "probability": 0.9995310306549072
+        },
+        {
+          "start": 191.36,
+          "end": 191.64,
+          "word": " cap",
+          "probability": 0.9972856044769287
+        },
+        {
+          "start": 191.64,
+          "end": 191.76,
+          "word": " it",
+          "probability": 0.9995819926261902
+        },
+        {
+          "start": 191.76,
+          "end": 191.9,
+          "word": " off",
+          "probability": 0.9994161128997803
+        },
+        {
+          "start": 191.9,
+          "end": 192.06,
+          "word": " with",
+          "probability": 0.6845581531524658
+        },
+        {
+          "start": 192.06,
+          "end": 192.24,
+          "word": " their",
+          "probability": 0.8002393245697021
+        },
+        {
+          "start": 192.24,
+          "end": 192.5,
+          "word": " first",
+          "probability": 0.9985094666481018
+        },
+        {
+          "start": 192.5,
+          "end": 192.96,
+          "word": " ace.",
+          "probability": 0.9783251881599426
+        }
+      ]
+    },
+    {
+      "window": [
+        183,
+        211
+      ],
+      "start": 193.74,
+      "end": 196.28,
+      "text": " And Jen Kinwen will have them out of their seats in Beijing.",
+      "no_speech_prob": 0.07781929522752762,
+      "avg_logprob": -0.14918577503150618,
+      "words": [
+        {
+          "start": 193.74,
+          "end": 193.82,
+          "word": " And",
+          "probability": 0.995419979095459
+        },
+        {
+          "start": 193.82,
+          "end": 194.06,
+          "word": " Jen",
+          "probability": 0.49017420411109924
+        },
+        {
+          "start": 194.06,
+          "end": 194.48,
+          "word": " Kinwen",
+          "probability": 0.48391760885715485
+        },
+        {
+          "start": 194.48,
+          "end": 194.68,
+          "word": " will",
+          "probability": 0.9964659214019775
+        },
+        {
+          "start": 194.68,
+          "end": 194.84,
+          "word": " have",
+          "probability": 0.9996652603149414
+        },
+        {
+          "start": 194.84,
+          "end": 195.02,
+          "word": " them",
+          "probability": 0.9989244341850281
+        },
+        {
+          "start": 195.02,
+          "end": 195.2,
+          "word": " out",
+          "probability": 0.9993149042129517
+        },
+        {
+          "start": 195.2,
+          "end": 195.28,
+          "word": " of",
+          "probability": 0.999428927898407
+        },
+        {
+          "start": 195.28,
+          "end": 195.46,
+          "word": " their",
+          "probability": 0.9995788931846619
+        },
+        {
+          "start": 195.46,
+          "end": 195.72,
+          "word": " seats",
+          "probability": 0.9991124272346497
+        },
+        {
+          "start": 195.72,
+          "end": 195.92,
+          "word": " in",
+          "probability": 0.9217615723609924
+        },
+        {
+          "start": 195.92,
+          "end": 196.28,
+          "word": " Beijing.",
+          "probability": 0.9992251396179199
+        }
+      ]
+    },
+    {
+      "window": [
+        183,
+        211
+      ],
+      "start": 196.54,
+      "end": 200.72,
+      "text": " They're starting to realize they're on the precipice of history at the China Open.",
+      "no_speech_prob": 0.07781929522752762,
+      "avg_logprob": -0.14918577503150618,
+      "words": [
+        {
+          "start": 196.54,
+          "end": 196.64,
+          "word": " They're",
+          "probability": 0.9976292848587036
+        },
+        {
+          "start": 196.64,
+          "end": 196.86,
+          "word": " starting",
+          "probability": 0.9983062744140625
+        },
+        {
+          "start": 196.86,
+          "end": 197.0,
+          "word": " to",
+          "probability": 0.9997788071632385
+        },
+        {
+          "start": 197.0,
+          "end": 197.32,
+          "word": " realize",
+          "probability": 0.9986640214920044
+        },
+        {
+          "start": 197.32,
+          "end": 197.6,
+          "word": " they're",
+          "probability": 0.9640321433544159
+        },
+        {
+          "start": 197.6,
+          "end": 197.64,
+          "word": " on",
+          "probability": 0.998511016368866
+        },
+        {
+          "start": 197.64,
+          "end": 197.72,
+          "word": " the",
+          "probability": 0.9996242523193359
+        },
+        {
+          "start": 197.72,
+          "end": 198.68,
+          "word": " precipice",
+          "probability": 0.9995422959327698
+        },
+        {
+          "start": 198.68,
+          "end": 198.76,
+          "word": " of",
+          "probability": 0.9992940425872803
+        },
+        {
+          "start": 198.76,
+          "end": 199.2,
+          "word": " history",
+          "probability": 0.9993792772293091
+        },
+        {
+          "start": 199.2,
+          "end": 200.02,
+          "word": " at",
+          "probability": 0.98414546251297
+        },
+        {
+          "start": 200.02,
+          "end": 200.12,
+          "word": " the",
+          "probability": 0.9991617202758789
+        },
+        {
+          "start": 200.12,
+          "end": 200.38,
+          "word": " China",
+          "probability": 0.9980650544166565
+        },
+        {
+          "start": 200.38,
+          "end": 200.72,
+          "word": " Open.",
+          "probability": 0.9804643392562866
+        }
+      ]
+    },
+    {
+      "window": [
+        183,
+        211
+      ],
+      "start": 201.46,
+      "end": 205.64,
+      "text": " The first Chinese player to reach the final is once set from lifting the trophy.",
+      "no_speech_prob": 0.07781929522752762,
+      "avg_logprob": -0.14918577503150618,
+      "words": [
+        {
+          "start": 201.46,
+          "end": 201.52,
+          "word": " The",
+          "probability": 0.9982682466506958
+        },
+        {
+          "start": 201.52,
+          "end": 201.76,
+          "word": " first",
+          "probability": 0.9997571110725403
+        },
+        {
+          "start": 201.76,
+          "end": 202.12,
+          "word": " Chinese",
+          "probability": 0.9992102384567261
+        },
+        {
+          "start": 202.12,
+          "end": 202.36,
+          "word": " player",
+          "probability": 0.9995959401130676
+        },
+        {
+          "start": 202.36,
+          "end": 202.5,
+          "word": " to",
+          "probability": 0.9993242025375366
+        },
+        {
+          "start": 202.5,
+          "end": 202.72,
+          "word": " reach",
+          "probability": 0.9998096823692322
+        },
+        {
+          "start": 202.72,
+          "end": 202.86,
+          "word": " the",
+          "probability": 0.9997519850730896
+        },
+        {
+          "start": 202.86,
+          "end": 203.22,
+          "word": " final",
+          "probability": 0.996698796749115
+        },
+        {
+          "start": 203.22,
+          "end": 203.7,
+          "word": " is",
+          "probability": 0.994375467300415
+        },
+        {
+          "start": 203.7,
+          "end": 203.96,
+          "word": " once",
+          "probability": 0.42156925797462463
+        },
+        {
+          "start": 203.96,
+          "end": 204.3,
+          "word": " set",
+          "probability": 0.98203045129776
+        },
+        {
+          "start": 204.3,
+          "end": 204.76,
+          "word": " from",
+          "probability": 0.996428906917572
+        },
+        {
+          "start": 204.76,
+          "end": 205.07999999999998,
+          "word": " lifting",
+          "probability": 0.9995080232620239
+        },
+        {
+          "start": 205.07999999999998,
+          "end": 205.3,
+          "word": " the",
+          "probability": 0.9997326731681824
+        },
+        {
+          "start": 205.3,
+          "end": 205.64,
+          "word": " trophy.",
+          "probability": 0.9989587068557739
+        }
+      ]
+    },
+    {
+      "window": [
+        263,
+        299.9
+      ],
+      "start": 263.0,
+      "end": 283.88,
+      "text": " and the ultimate exclamation point to conquer the china open well her popularity amongst",
+      "no_speech_prob": 0.09027975797653198,
+      "avg_logprob": -0.13975378336050573,
+      "words": [
+        {
+          "start": 263.0,
+          "end": 263.92,
+          "word": " and",
+          "probability": 0.13241244852542877
+        },
+        {
+          "start": 263.92,
+          "end": 271.92,
+          "word": " the",
+          "probability": 0.9970057606697083
+        },
+        {
+          "start": 271.92,
+          "end": 272.4,
+          "word": " ultimate",
+          "probability": 0.9990137815475464
+        },
+        {
+          "start": 272.4,
+          "end": 273.4,
+          "word": " exclamation",
+          "probability": 0.9864464402198792
+        },
+        {
+          "start": 273.4,
+          "end": 273.82,
+          "word": " point",
+          "probability": 0.9990519881248474
+        },
+        {
+          "start": 273.82,
+          "end": 274.5,
+          "word": " to",
+          "probability": 0.9912376999855042
+        },
+        {
+          "start": 274.5,
+          "end": 275.02,
+          "word": " conquer",
+          "probability": 0.9973179697990417
+        },
+        {
+          "start": 275.02,
+          "end": 275.26,
+          "word": " the",
+          "probability": 0.9993537068367004
+        },
+        {
+          "start": 275.26,
+          "end": 275.48,
+          "word": " china",
+          "probability": 0.21961481869220734
+        },
+        {
+          "start": 275.48,
+          "end": 275.9,
+          "word": " open",
+          "probability": 0.9969018697738647
+        },
+        {
+          "start": 275.9,
+          "end": 282.46,
+          "word": " well",
+          "probability": 0.8746761679649353
+        },
+        {
+          "start": 282.46,
+          "end": 282.82,
+          "word": " her",
+          "probability": 0.9989749193191528
+        },
+        {
+          "start": 282.82,
+          "end": 283.34,
+          "word": " popularity",
+          "probability": 0.9993289709091187
+        },
+        {
+          "start": 283.34,
+          "end": 283.88,
+          "word": " amongst",
+          "probability": 0.9944149255752563
+        }
+      ]
+    },
+    {
+      "window": [
+        263,
+        299.9
+      ],
+      "start": 283.88,
+      "end": 292.6,
+      "text": " 1.4 billion people is about to go to another out of this world stratosphere level",
+      "no_speech_prob": 0.09027975797653198,
+      "avg_logprob": -0.13975378336050573,
+      "words": [
+        {
+          "start": 283.88,
+          "end": 284.22,
+          "word": " 1",
+          "probability": 0.8334293961524963
+        },
+        {
+          "start": 284.22,
+          "end": 284.78,
+          "word": ".4",
+          "probability": 0.9986415207386017
+        },
+        {
+          "start": 284.78,
+          "end": 285.26,
+          "word": " billion",
+          "probability": 0.9993001222610474
+        },
+        {
+          "start": 285.26,
+          "end": 285.8,
+          "word": " people",
+          "probability": 0.9998131394386292
+        },
+        {
+          "start": 285.8,
+          "end": 286.2,
+          "word": " is",
+          "probability": 0.999035120010376
+        },
+        {
+          "start": 286.2,
+          "end": 286.5,
+          "word": " about",
+          "probability": 0.9996687173843384
+        },
+        {
+          "start": 286.5,
+          "end": 286.92,
+          "word": " to",
+          "probability": 0.9999009370803833
+        },
+        {
+          "start": 286.92,
+          "end": 287.16,
+          "word": " go",
+          "probability": 0.9998321533203125
+        },
+        {
+          "start": 287.16,
+          "end": 287.7,
+          "word": " to",
+          "probability": 0.9987959861755371
+        },
+        {
+          "start": 287.7,
+          "end": 288.26,
+          "word": " another",
+          "probability": 0.9997473359107971
+        },
+        {
+          "start": 288.26,
+          "end": 290.8,
+          "word": " out",
+          "probability": 0.9937729239463806
+        },
+        {
+          "start": 290.8,
+          "end": 290.94,
+          "word": " of",
+          "probability": 0.9984207153320312
+        },
+        {
+          "start": 290.94,
+          "end": 291.18,
+          "word": " this",
+          "probability": 0.9995251893997192
+        },
+        {
+          "start": 291.18,
+          "end": 291.5,
+          "word": " world",
+          "probability": 0.99916672706604
+        },
+        {
+          "start": 291.5,
+          "end": 292.2,
+          "word": " stratosphere",
+          "probability": 0.9969601929187775
+        },
+        {
+          "start": 292.2,
+          "end": 292.6,
+          "word": " level",
+          "probability": 0.9992558360099792
+        }
+      ]
+    },
+    {
+      "window": [
+        263,
+        299.9
+      ],
+      "start": 292.6,
+      "end": 297.65999999999997,
+      "text": " It is going to be unbelievable, as they will coronate the queen of the China Open.",
+      "no_speech_prob": 0.012549005448818207,
+      "avg_logprob": -0.2767941706946918,
+      "words": [
+        {
+          "start": 292.6,
+          "end": 292.98,
+          "word": " It",
+          "probability": 0.9420182108879089
+        },
+        {
+          "start": 292.98,
+          "end": 293.16,
+          "word": " is",
+          "probability": 0.9987140893936157
+        },
+        {
+          "start": 293.16,
+          "end": 293.32,
+          "word": " going",
+          "probability": 0.9273176193237305
+        },
+        {
+          "start": 293.32,
+          "end": 293.44,
+          "word": " to",
+          "probability": 0.999785840511322
+        },
+        {
+          "start": 293.44,
+          "end": 293.66,
+          "word": " be",
+          "probability": 0.9999678134918213
+        },
+        {
+          "start": 293.66,
+          "end": 294.5,
+          "word": " unbelievable,",
+          "probability": 0.9976551532745361
+        },
+        {
+          "start": 295.24,
+          "end": 295.26,
+          "word": " as",
+          "probability": 0.999005138874054
+        },
+        {
+          "start": 295.26,
+          "end": 295.4,
+          "word": " they",
+          "probability": 0.9998787641525269
+        },
+        {
+          "start": 295.4,
+          "end": 295.6,
+          "word": " will",
+          "probability": 0.9998003840446472
+        },
+        {
+          "start": 295.6,
+          "end": 296.1,
+          "word": " coronate",
+          "probability": 0.9165403842926025
+        },
+        {
+          "start": 296.1,
+          "end": 296.2,
+          "word": " the",
+          "probability": 0.999687910079956
+        },
+        {
+          "start": 296.2,
+          "end": 296.6,
+          "word": " queen",
+          "probability": 0.8479035496711731
+        },
+        {
+          "start": 296.6,
+          "end": 296.94,
+          "word": " of",
+          "probability": 0.9995941519737244
+        },
+        {
+          "start": 296.94,
+          "end": 297.02,
+          "word": " the",
+          "probability": 0.9997968077659607
+        },
+        {
+          "start": 297.02,
+          "end": 297.28,
+          "word": " China",
+          "probability": 0.9767951965332031
+        },
+        {
+          "start": 297.28,
+          "end": 297.65999999999997,
+          "word": " Open.",
+          "probability": 0.9730966687202454
+        }
+      ]
+    },
+    {
+      "window": [
+        263,
+        299.9
+      ],
+      "start": 298.1,
+      "end": 298.78,
+      "text": " Jen Kinwen.",
+      "no_speech_prob": 0.012549005448818207,
+      "avg_logprob": -0.2767941706946918,
+      "words": [
+        {
+          "start": 298.1,
+          "end": 298.28,
+          "word": " Jen",
+          "probability": 0.17017307877540588
+        },
+        {
+          "start": 298.28,
+          "end": 298.78,
+          "word": " Kinwen.",
+          "probability": 0.5333795547485352
+        }
+      ]
+    }
+  ]
+}
