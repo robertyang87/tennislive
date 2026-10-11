@@ -1,0 +1,96 @@
+{
+  "schema": "tennislive.independent-rejected-visual-qc.v1",
+  "status": "rejected_candidate_tailfinding_not_final_pass",
+  "slug": "zheng-andreeva-beijing-2026-final",
+  "version": "full-frame-v2",
+  "reviewed_at": "2026-10-11T21:15:43.273211+00:00",
+  "film_sha256": "01d6c987aafc3e80305d7e27257e28cb011d79f9e46018c24775768b74414d01",
+  "film_bytes": 89380995,
+  "spec_sha256": "dec8d976dfcabbb0aba59e8fe72bc725e3922d370d571e623227295590b75116",
+  "actual_ass_sha256": "c9870f4248bc369b779500ef4c1fcc98365f13b7be3606f31eb0846ca464e4c0",
+  "reason": "Prior segment7 inset alpha persisted into0.18s native dissolve tail aftersource172.12 into reaction segment8(scorefalse). Actual movie79.12/79.16 copiesshirt/VIVO pixelsinside remapped score patch. Settled172.92 already clean but transientnewoverlay still a real finding, not accepted as clean boundary.",
+  "actual_review_coverage": {
+    "requests": 437,
+    "unique25fpsmovieframes": 413,
+    "segments_start_mid_end": 21,
+    "actual_ass_cues_mid_end": 46,
+    "all_contact_walls_really_viewed": 31,
+    "keypoint_walls": 14,
+    "additional_dense_pair_count": 12,
+    "scope": "Actualmovieallsegments/cues/densepoints visually viewed; fullfill/captions/settledboards/other repairedgapsclean. No final-pass seal becauseone transient tail finding."
+  },
+  "dense_paired_evidence": {
+    "manifest_path": "/workspace/scratch/zheng-final-independent-qc/full-frame-v2-01d6c987aafc/reaction-dense/manifest.json",
+    "manifest_sha256": "ee18c30f4f36bd83da57934d698d60b960e632d95a2e883237aeaf301ae312ce",
+    "wall_path": "/workspace/scratch/zheng-final-independent-qc/full-frame-v2-01d6c987aafc/reaction-dense/paired-wall.jpg",
+    "wall_sha256": "977cc792d8e58a2b81054cd6dd3088ba0cf309d893deae8350e5c7334fbdb8b6",
+    "actually_viewed": true,
+    "detail": "Source4301..4312(172.04..172.48),movie1976..1987(79.04..79.48),same25fpsindexeddecoding. Sourceoriginalboard containsbodybackground;movieinset relocatesit into croppedscene duringdissolve."
+  },
+  "representative_actual_movie_frames": [
+    {
+      "film_time": 79.92,
+      "label": "v2risk-08-172.92",
+      "kind": "v2risk",
+      "source_time": 172.92,
+      "image": "/workspace/scratch/zheng-final-independent-qc/full-frame-v2-01d6c987aafc/batch-0142.jpg",
+      "sha256": "0c10df4be85e8a7c9d3d3415a4991f00372c4b0267e5dd9347449c55b6aa8d31",
+      "actual_movie_frame_index": 1998,
+      "actual_movie_frame_time": 79.92
+    },
+    {
+      "film_time": 79.12,
+      "label": "v2risk-08-172.12",
+      "kind": "v2risk",
+      "source_time": 172.12,
+      "image": "/workspace/scratch/zheng-final-independent-qc/full-frame-v2-01d6c987aafc/batch-0136.jpg",
+      "sha256": "b3602f2564f63d796ebca98442a89ba0830bf60c9df414e5a8bd104f2524ffcf",
+      "actual_movie_frame_index": 1978,
+      "actual_movie_frame_time": 79.12
+    },
+    {
+      "film_time": 79.16,
+      "label": "v2risk-08-172.16",
+      "kind": "v2risk",
+      "source_time": 172.16,
+      "image": "/workspace/scratch/zheng-final-independent-qc/full-frame-v2-01d6c987aafc/batch-0137.jpg",
+      "sha256": "24e6be4326e20ee22ca05ca80867547b68976b2a50558c550df2b9583b6f0131",
+      "actual_movie_frame_index": 1979,
+      "actual_movie_frame_time": 79.16
+    },
+    {
+      "film_time": 117.96,
+      "label": "v2risk-14-210.96",
+      "kind": "v2risk",
+      "source_time": 210.96,
+      "image": "/workspace/scratch/zheng-final-independent-qc/full-frame-v2-01d6c987aafc/batch-0237.jpg",
+      "sha256": "3ac9216eb125b4f8b71bcafec8a1dce81f23ff5b9af6c9556dbdb2d441cd0921",
+      "actual_movie_frame_index": 2949,
+      "actual_movie_frame_time": 117.96
+    },
+    {
+      "film_time": 144.36,
+      "label": "v2risk-16-252.40",
+      "kind": "v2risk",
+      "source_time": 252.4,
+      "image": "/workspace/scratch/zheng-final-independent-qc/full-frame-v2-01d6c987aafc/batch-0305.jpg",
+      "sha256": "644174d149bf081d8394da2c1d64ca043672b1d1b4ab19d7a754f54a5080f3e7",
+      "actual_movie_frame_index": 3609,
+      "actual_movie_frame_time": 144.36
+    }
+  ],
+  "other_observed_limits": [
+    "Fixed-centered3:4fill clips extreme lateralplayerpositions, including136.06/159.36/209–212/252.40. Full temporalpoints are preserved butnot everystrike/bodypixel canbeclaimedvisible.",
+    "Handshake time kept buthandcontact/secondplayeroftenleftofcrop;no claimtwofacesormutualhug.",
+    "Face-modelgateunavailable;nohumanlistenortoneblanketpass."
+  ],
+  "fix_by_parent": {
+    "new_formal_spec_sha256": "7e5cefa57c88aaee949a6958690a9d4fd227b07e6e3e1d406d206c4bcebe70b1",
+    "change": "segment7score_inset_windows156.2–172.08 avoids0.18tail andfloat-firstframeleak withouttimeline/audio/subtitlechange",
+    "new_render_session": 67777,
+    "status": "pending_new_actual_movie_review"
+  },
+  "deepseek_used": false,
+  "minimax_used": false,
+  "human_listening_claimed": false
+}

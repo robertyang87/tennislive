@@ -1,0 +1,58 @@
+{
+  "schema": "tennislive.superseded-audio-candidate-history.v1",
+  "film_sha256": "01d6c987aafc3e80305d7e27257e28cb011d79f9e46018c24775768b74414d01",
+  "film_bytes": 89380995,
+  "original_audio_manifest_sha256": "8adecd1f8062b98ac88f00b4b20571af52481f57d3ae5948a34cdc54ec11fd38",
+  "status": "superseded_by_root_independent_visual_rejection_not_current_publication_evidence",
+  "reason": "Root actual independent QC found VIVO clothing-text pollution at film79.12/source172.12 transition tail. New spec restricts only segment7 scoreboard safe_window156.2–172.08; voice/source/audio/cue times unchanged. Candidate actual audio binding remains honest historical evidence, not visual release pass.",
+  "new_requested_spec_sha256": "7e5cefa57c88aaee949a6958690a9d4fd227b07e6e3e1d406d206c4bcebe70b1",
+  "items": [
+    {
+      "name": "final-audio-review-manifest.json",
+      "sha256": "8adecd1f8062b98ac88f00b4b20571af52481f57d3ae5948a34cdc54ec11fd38",
+      "bytes": 24924
+    },
+    {
+      "name": "audio-projection-normalization.json",
+      "sha256": "636d4bbb87bc1f059d7384887085d1577b4b37f0050b77eea0aeecc94360c348",
+      "bytes": 8499
+    },
+    {
+      "name": "voice-reuse-preflight.json",
+      "sha256": "f7ffd99e3b1725702eb69bd26e084a8748e862fb31a232f2dec515e8c0ef4f53",
+      "bytes": 21363
+    },
+    {
+      "name": "voice-word-sidecar-restoration.json",
+      "sha256": "3e30f29f53f1e457afb6b03176c465b893d6f8392f188a1e5e3d1b8f8f1770f8",
+      "bytes": 7899
+    },
+    {
+      "name": "native-cache-pronunciation-review.json",
+      "sha256": "5bb5e2496592ba89f6bf74ad3ffbc0edbeb9d6ff2fddfc22f04577d35f9a9308",
+      "bytes": 721632
+    },
+    {
+      "name": "final-pronunciation-pending-occurrences.json",
+      "sha256": "b782216370ec6be822baeb24c85d6e10bd624d64f03852c37d96e46ce5ea5955",
+      "bytes": 75712
+    },
+    {
+      "name": "native-voice-freeze.json",
+      "sha256": "96a44aa76d56e0e7236dce72f85628dbd5f26302c5903a0f6a4518ff0fcf7c1a",
+      "bytes": 16782
+    },
+    {
+      "name": "complete-speech-asr-input-manifest.json",
+      "sha256": "1e53e9414df5bacfb2313003f5be5adb1a2e0f45c13d386baf4917a607ecb5e7",
+      "bytes": 11436
+    },
+    {
+      "name": "final-actual-audio-bindings.json",
+      "sha256": "9a692517b6d547f8c111cdb89e63a907490bcd3d7d3c0e0540fa2677e719d62c",
+      "bytes": 14283
+    }
+  ],
+  "all_archived_bytes_exact": true,
+  "fresh_newfilm_audio_binding_pending": true
+}

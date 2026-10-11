@@ -450,8 +450,22 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
         # one frame to another frame's wider/taller opaque geometry.
         states = debounce([(f["edge"], None) if f else (None, None) for f in frames])
         frames = [f if state[0] is not None else None for f, state in zip(frames, states)]
+        measured_present = sum(f is not None for f in frames)
+        windows = getattr(seg, "score_inset_windows", ())
+        if windows:
+            # parse_segments converts the declared source-time windows to times
+            # relative to seg.start. Gate only the already measured geometry;
+            # never fill an absent board or extend a window into dissolve tail.
+            # Debounce precedes the gate, so a deliberate boundary cannot turn
+            # a steady native board into an isolated detection false positive.
+            frames = [f if any(a <= k / rate < b for a, b in windows) else None
+                      for k, f in enumerate(frames)]
         live = [f for f in frames if f]
         if not live:
+            if windows and measured_present:
+                raise RuntimeError(
+                    f"第 {i + 1} 段 score_inset_windows 内没有真实 WTA 比分板；"
+                    "不能用窗口外的板或实心搜索框补贴。")
             raise RuntimeError(
                 f"第 {i + 1} 段（源片 {seg.start:.2f}→{seg.end:.2f}s）一帧都没认出 WTA 比分板。"
                 "先核实原生图形；不退回整段矩形回贴。整段无板才写 score_inset:false ＋说明。")
@@ -482,6 +496,11 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
                         "header_bounds": [list(h) for h in headers],
                         "geometry_origin": [x0, y0],
                         "alpha_geometry": "native-body-and-header-rows",
+                        "measured_present_frames": measured_present,
+                        "window_excluded_present_frames": measured_present - len(live),
+                        "allowed_source_windows": [[seg.start + a, seg.start + b]
+                                                   for a, b in windows],
+                        "window_policy": "relative-frame-time-half-open-after-native-debounce",
                         "mask": str(dest), "mask_sha256": _sha256(dest)})
         print(f"[score-mask] 第 {i + 1} 段：板在 {len(live)}/{len(frames)} 帧，"
               f"原生有效外缘 {seg.score_inset}，body/header独立透明蒙版（{rate:g} fps）")

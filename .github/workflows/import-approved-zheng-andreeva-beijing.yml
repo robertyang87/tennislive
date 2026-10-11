@@ -1,4 +1,4 @@
-name: Import approved Zheng championship master
+name: Import approved Zheng championship full-frame-v2 master
 on:
   push:
     branches: [main]
@@ -93,14 +93,14 @@ jobs:
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           # Native spec/QC/ASS/covers remain unchanged; stage only transport/pages.
-          git add --sparse "$OUTDIR/render.json" "$OUTDIR/render.before-release.json" "$OUTDIR/copy.html" "$OUTDIR/push.html" "$OUTDIR/release-verification.json" "$OUTDIR/import-provenance.json" data/evidence/zheng-andreeva-beijing-2026-final/final-audio-review-manifest.json
+          git add --sparse "$OUTDIR/render.json" "$OUTDIR/render.before-release.json" "$OUTDIR/copy.html" "$OUTDIR/push.html" "$OUTDIR/release-verification.json" "$OUTDIR/import-provenance.json" data/evidence/zheng-andreeva-beijing-2026-final/full-frame-v2/final-audio-review-manifest.json
           if git diff --cached --name-only | grep -E '\.(mp4|mp3|mov|mkv|wav)$'; then
             echo '::error::Media accidentally staged; refusing publication'
             exit 1
           fi
           python tools/check_staged_file_sizes.py
           if ! git diff --cached --quiet; then
-            git commit -m 'reel: prepare exact Zheng Release and native publication pages'
+            git commit -m 'reel: prepare exact Zheng full-frame-v2 Release and native publication pages'
           fi
           source tools/git_push_retry.sh
           push_with_rebase_retry main
@@ -116,7 +116,7 @@ jobs:
           exit 1
       - name: Report gate result without sending
         run: |
-          echo 'Exact master and review copy remotely verified; original acoustic findings are preserved without a new human-review claim. Main-thread operator must verify the exact reviewed code/assets CI head and the current main native publication gate before dispatching match-reel mode=push push=true once. This workflow sends no message.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Exact full-frame-v2 master and review copy remotely verified on a separate immutable Release; old Release and sent receipt remain historical evidence. Actual 43 unresolved acoustic findings are preserved without a new human-review claim. Main-thread operator must verify the exact reviewed code/assets CI head and the current main native publication gate before dispatching match-reel mode=push push=true once. This workflow sends no message.' >> "$GITHUB_STEP_SUMMARY"
       - name: Retain failure diagnostics
         if: failure()
         uses: actions/upload-artifact@v4

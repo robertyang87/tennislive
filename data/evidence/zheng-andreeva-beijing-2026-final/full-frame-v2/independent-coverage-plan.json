@@ -1,0 +1,27 @@
+{
+  "schema": "tennislive.independent-visual-coverage-plan.v1",
+  "status": "planning_only_no_new_movie_pass",
+  "checked_at": "2026-10-11T20:50:26.054445+00:00",
+  "slug": "zheng-andreeva-beijing-2026-final",
+  "worktree": "/workspace/tennislive-zheng-fill",
+  "old_spec_readonly_sha256": "d7cb28a69493fc15c63e92f0c6025af81c755c7acce37bd49055d7dced12a51b",
+  "instruction": "All source frames crop/fill1080x1440,25fps,cx.5,trackfalse. New actual movie evidence mandatory;2431 previous movie pass never reused.",
+  "roles": "Independent actual movie visual/editorial QC only; no spec/native gate/publication edit.",
+  "coverage": [
+    "Actual all20 segments start/mid/end plus regularly spaced full-frame samples; verify picture covers entire canvas, no contain/full_source bands.",
+    "Parse final emitted ASS; inspect every actual cue mid/end and low placement relative to native insets, not placeholder captions.",
+    "Complete source0–26.6/threeSP132.4–185.28/firstsetclinch185.28–193/openingsecondbreak207.8–233.08/lateGP248.12–263.44/championship263.44–276.1 dense actual sequences; preserve score context and payoff.",
+    "Repaired player body source172.92/210.96/211.96; fixed-center crop key far-lateral run/racket shots and championship-point serve/return source263–270. No old contain-derived conclusion.",
+    "New crop scoreboard original-source residue/double boards, all WTA body columns plus SP/BP/MP. Source267 first point40/30 last column. Summary201–207 firstset7/5 and293–298 final7/6vs5/4.",
+    "Genuine source board animations reviewed exact25fps source/movie pairs for any potential missing column, never infer from coarse floating timestamp.",
+    "Championship celebration handcontact/smile source281.84/288.44/298.44/299.32 without awards after299.96.",
+    "Bind final frozen movie/spec/currentASS/postnativeQC/renderinputs/audio actual pins;43pronunciation calibration limits and unavailablemachineface models retained if current."
+  ],
+  "claims_pending": [
+    "No new formal movie render reviewed yet",
+    "No geometry or visual pass",
+    "No human listening or pronunciation blanket pass"
+  ],
+  "deepseek_used": false,
+  "minimax_used": false
+}

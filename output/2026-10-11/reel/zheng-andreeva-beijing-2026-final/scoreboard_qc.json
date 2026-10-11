@@ -3,6 +3,128 @@
   "profile": "wta-tour-v1",
   "segments": [
     {
+      "segment": 0,
+      "frames": 157,
+      "present_frames": 17,
+      "tag_frames": 10,
+      "board_edges": [
+        378,
+        428
+      ],
+      "right": 428,
+      "source_bounds": [
+        88,
+        830,
+        516,
+        984
+      ],
+      "body_bounds": [
+        [
+          1,
+          41,
+          428,
+          155
+        ],
+        [
+          1,
+          43,
+          378,
+          155
+        ],
+        [
+          1,
+          43,
+          400,
+          155
+        ],
+        [
+          1,
+          43,
+          414,
+          155
+        ],
+        [
+          1,
+          43,
+          423,
+          155
+        ],
+        [
+          1,
+          43,
+          428,
+          155
+        ]
+      ],
+      "header_bounds": [
+        [
+          1,
+          3,
+          205,
+          44
+        ],
+        [
+          1,
+          4,
+          205,
+          42
+        ],
+        [
+          1,
+          5,
+          205,
+          42
+        ],
+        [
+          1,
+          6,
+          205,
+          42
+        ],
+        [
+          1,
+          8,
+          205,
+          42
+        ],
+        [
+          1,
+          10,
+          205,
+          42
+        ],
+        [
+          1,
+          14,
+          205,
+          42
+        ],
+        [
+          1,
+          18,
+          205,
+          42
+        ],
+        [
+          1,
+          24,
+          204,
+          42
+        ]
+      ],
+      "geometry_origin": [
+        88,
+        828
+      ],
+      "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 17,
+      "window_excluded_present_frames": 0,
+      "allowed_source_windows": [],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
+      "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-01.mkv",
+      "mask_sha256": "0e12e6b41376c379b0348eeb0ac04affc4d4ef97cd9fa453a45e9d7f994f6c67"
+    },
+    {
       "segment": 2,
       "frames": 255,
       "present_frames": 255,
@@ -62,8 +184,12 @@
         828
       ],
       "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 255,
+      "window_excluded_present_frames": 0,
+      "allowed_source_windows": [],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
       "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-03.mkv",
-      "mask_sha256": "fdadfa5697ad44ec4bd4adba624478db4c6025a166213a9b0aacd05b868609c1"
+      "mask_sha256": "21b971bd33bcb78d39f11a44cb4fdc23bd1a5e8bbd60c85835a450af7cc35233"
     },
     {
       "segment": 3,
@@ -137,8 +263,12 @@
         828
       ],
       "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 420,
+      "window_excluded_present_frames": 0,
+      "allowed_source_windows": [],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
       "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-04.mkv",
-      "mask_sha256": "396b09ee140825cafe2af182aab7e390b7560872406ff4f932636d8cc226b4d2"
+      "mask_sha256": "6a17c0c3ecdb4827d203bac95df75689280720bb7cae4f115ef9ab7afce0ead4"
     },
     {
       "segment": 4,
@@ -285,8 +415,12 @@
         828
       ],
       "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 312,
+      "window_excluded_present_frames": 0,
+      "allowed_source_windows": [],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
       "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-05.mkv",
-      "mask_sha256": "becb8746036585f5453196051da940af6c8dfa636643f6cfe7f4bd7de3b5604f"
+      "mask_sha256": "8799e9f05fa87417229b96d3a28dadf3a8e73f0bfee67c07b05b0e99f0125baa"
     },
     {
       "segment": 5,
@@ -559,8 +693,12 @@
         828
       ],
       "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 118,
+      "window_excluded_present_frames": 0,
+      "allowed_source_windows": [],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
       "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-06.mkv",
-      "mask_sha256": "b6951e46e51e9d2f9ec8d83615b9f118b67ee2bf1b2e390b87216948907ab42b"
+      "mask_sha256": "bba9061cab6e42468b867919a6d0b7156e0b450fd0df82a3e5085e8484814504"
     },
     {
       "segment": 6,
@@ -653,14 +791,18 @@
         828
       ],
       "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 180,
+      "window_excluded_present_frames": 0,
+      "allowed_source_windows": [],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
       "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-07.mkv",
-      "mask_sha256": "ffe59d27d072fa00cfa27807b7bfcbd0fe64da48c8abc495147f0c7e6746c5b6"
+      "mask_sha256": "42485e963e58e5717f73205cccedfa23fdb3f570a6dab2b5dcfe4af82db7a5fa"
     },
     {
       "segment": 7,
       "frames": 403,
-      "present_frames": 403,
-      "tag_frames": 403,
+      "present_frames": 398,
+      "tag_frames": 398,
       "board_edges": [
         392,
         392
@@ -670,15 +812,9 @@
         88,
         830,
         480,
-        986
+        984
       ],
       "body_bounds": [
-        [
-          1,
-          41,
-          392,
-          157
-        ],
         [
           1,
           43,
@@ -691,19 +827,7 @@
           1,
           3,
           143,
-          42
-        ],
-        [
-          1,
-          3,
-          143,
           44
-        ],
-        [
-          2,
-          3,
-          143,
-          42
         ]
       ],
       "geometry_origin": [
@@ -711,8 +835,17 @@
         828
       ],
       "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 403,
+      "window_excluded_present_frames": 5,
+      "allowed_source_windows": [
+        [
+          156.2,
+          172.08
+        ]
+      ],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
       "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-08.mkv",
-      "mask_sha256": "482f97d2014e9921d91d9904402e96f3df79be7ecab7b254cfd10e6719dc3a31"
+      "mask_sha256": "9d46aec232db035c8ce4ec72953da6113724b1b98b1010d50e6b4abde7e81f99"
     },
     {
       "segment": 9,
@@ -973,8 +1106,12 @@
         828
       ],
       "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 303,
+      "window_excluded_present_frames": 0,
+      "allowed_source_windows": [],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
       "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-10.mkv",
-      "mask_sha256": "22923ee764f8da3ef763dd9a158557c075177510a964e5b70334f69e46e58a77"
+      "mask_sha256": "b58a5bca9d392809dd94e0aa839dd14141dcbe8612a0adb47b20886ad380b931"
     },
     {
       "segment": 10,
@@ -1019,8 +1156,12 @@
         828
       ],
       "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 118,
+      "window_excluded_present_frames": 0,
+      "allowed_source_windows": [],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
       "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-11.mkv",
-      "mask_sha256": "9acd04aae6c268d96285269eaece7dc9f95c346a28c3c77fc320bc9ad3376869"
+      "mask_sha256": "22276f43a7c8409bb8b9f21ac035ea8a5fcc3311c2ae108f2c902be1319489f2"
     },
     {
       "segment": 11,
@@ -1179,8 +1320,95 @@
         828
       ],
       "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 80,
+      "window_excluded_present_frames": 0,
+      "allowed_source_windows": [],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
       "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-12.mkv",
-      "mask_sha256": "2b64aa81b7a380f81670acaa191474d4c6770bc90b4276acc01e612f17d723d1"
+      "mask_sha256": "aefc07482985a4bca5366e348ecb5350d5eca5d90747445b8021feb0c319ed82"
+    },
+    {
+      "segment": 14,
+      "frames": 515,
+      "present_frames": 442,
+      "tag_frames": 442,
+      "board_edges": [
+        427,
+        428
+      ],
+      "right": 428,
+      "source_bounds": [
+        88,
+        830,
+        516,
+        986
+      ],
+      "body_bounds": [
+        [
+          0,
+          40,
+          427,
+          158
+        ],
+        [
+          0,
+          40,
+          428,
+          156
+        ],
+        [
+          0,
+          41,
+          428,
+          158
+        ],
+        [
+          1,
+          43,
+          428,
+          155
+        ]
+      ],
+      "header_bounds": [
+        [
+          1,
+          3,
+          137,
+          41
+        ],
+        [
+          1,
+          3,
+          137,
+          42
+        ],
+        [
+          1,
+          3,
+          137,
+          44
+        ]
+      ],
+      "geometry_origin": [
+        88,
+        828
+      ],
+      "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 515,
+      "window_excluded_present_frames": 73,
+      "allowed_source_windows": [
+        [
+          207.8,
+          209.44
+        ],
+        [
+          212.16,
+          228.2
+        ]
+      ],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
+      "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-15.mkv",
+      "mask_sha256": "e23cf4f236235a8731a6fc6bfdd98ed481c543d5f04e32988cf608ac85d47984"
     },
     {
       "segment": 15,
@@ -1273,8 +1501,272 @@
         828
       ],
       "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 127,
+      "window_excluded_present_frames": 0,
+      "allowed_source_windows": [],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
       "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-16.mkv",
-      "mask_sha256": "d2eb035a83bd2d01082260b24ffcf1451b3fc7db9ced0d20c1361f8b4c3b6d0c"
+      "mask_sha256": "7aa8992b9c238f9a529fd68ae7cf6d753841cc28b3f9e406132d792f5eea5a58"
+    },
+    {
+      "segment": 16,
+      "frames": 388,
+      "present_frames": 343,
+      "tag_frames": 0,
+      "board_edges": [
+        427,
+        430
+      ],
+      "right": 430,
+      "source_bounds": [
+        88,
+        868,
+        518,
+        986
+      ],
+      "body_bounds": [
+        [
+          0,
+          41,
+          427,
+          156
+        ],
+        [
+          0,
+          41,
+          427,
+          157
+        ],
+        [
+          0,
+          41,
+          427,
+          158
+        ],
+        [
+          1,
+          43,
+          428,
+          155
+        ],
+        [
+          1,
+          43,
+          430,
+          155
+        ]
+      ],
+      "header_bounds": [],
+      "geometry_origin": [
+        88,
+        828
+      ],
+      "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 388,
+      "window_excluded_present_frames": 45,
+      "allowed_source_windows": [
+        [
+          248.12,
+          249.76
+        ],
+        [
+          250.12,
+          252.16
+        ],
+        [
+          252.84,
+          262.36
+        ],
+        [
+          262.92,
+          263.44
+        ]
+      ],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
+      "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-17.mkv",
+      "mask_sha256": "9cbba63c49d6ec0b60cf5ca1046c757958fba8136d3cdcfbc32a0c4a19b7409b"
+    },
+    {
+      "segment": 18,
+      "frames": 321,
+      "present_frames": 181,
+      "tag_frames": 174,
+      "board_edges": [
+        378,
+        428
+      ],
+      "right": 428,
+      "source_bounds": [
+        88,
+        830,
+        516,
+        986
+      ],
+      "body_bounds": [
+        [
+          0,
+          43,
+          427,
+          156
+        ],
+        [
+          0,
+          43,
+          427,
+          158
+        ],
+        [
+          0,
+          43,
+          428,
+          158
+        ],
+        [
+          1,
+          41,
+          428,
+          155
+        ],
+        [
+          1,
+          43,
+          378,
+          155
+        ],
+        [
+          1,
+          43,
+          400,
+          155
+        ],
+        [
+          1,
+          43,
+          414,
+          155
+        ],
+        [
+          1,
+          43,
+          423,
+          155
+        ],
+        [
+          1,
+          43,
+          427,
+          155
+        ],
+        [
+          1,
+          43,
+          427,
+          156
+        ],
+        [
+          1,
+          43,
+          428,
+          154
+        ],
+        [
+          1,
+          43,
+          428,
+          155
+        ]
+      ],
+      "header_bounds": [
+        [
+          1,
+          3,
+          203,
+          44
+        ],
+        [
+          1,
+          3,
+          204,
+          44
+        ],
+        [
+          1,
+          3,
+          205,
+          44
+        ],
+        [
+          1,
+          4,
+          205,
+          42
+        ],
+        [
+          1,
+          5,
+          205,
+          42
+        ],
+        [
+          1,
+          6,
+          205,
+          42
+        ],
+        [
+          1,
+          8,
+          205,
+          42
+        ],
+        [
+          1,
+          10,
+          205,
+          42
+        ],
+        [
+          1,
+          14,
+          205,
+          42
+        ],
+        [
+          1,
+          18,
+          205,
+          42
+        ],
+        [
+          1,
+          24,
+          204,
+          42
+        ],
+        [
+          2,
+          3,
+          204,
+          44
+        ],
+        [
+          3,
+          3,
+          204,
+          44
+        ]
+      ],
+      "geometry_origin": [
+        88,
+        828
+      ],
+      "alpha_geometry": "native-body-and-header-rows",
+      "measured_present_frames": 181,
+      "window_excluded_present_frames": 0,
+      "allowed_source_windows": [],
+      "window_policy": "relative-frame-time-half-open-after-native-debounce",
+      "mask": "output/2026-10-11/reel/zheng-andreeva-beijing-2026-final/score_masks/segment-19.mkv",
+      "mask_sha256": "26509bad3305413eed4972d9b48ca4ea6293d07d658936e9a3958103977ee4a2"
     }
   ]
 }

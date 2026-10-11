@@ -1,0 +1,212 @@
+{
+  "schema": "tennislive.foreground-v2-rebind.v1",
+  "status": "native_foreground_audio_gate_inspect_pass",
+  "checked_at": "2026-10-11T20:58:53.689133+00:00",
+  "source_sha256": "1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f",
+  "spec_sha256": "db87cd6a966fb96d17422f76ac5af8ccaaad09d9df2f1062dd4c700d004650ec",
+  "native_audio_plan_sha256": "9f98e4148c5d118676d3c1bcb51218f4671a7641902a0dabedd01ee2d9c1fa4c",
+  "current_review_sha256": "e390dc969e61a46dc04a3ec3d07d25bab09c6d30e3960a3a0a829bceccb480d0",
+  "previous_review_sha256": "600c3dc3d510ac09ed46dad794d525d4eef0281c61520fd06746febd764fad6e",
+  "source_windows": 19,
+  "required_bilingual_cues": 23,
+  "native_tool": "tools/foreground_audio_gate.py",
+  "native_tool_sha256": "ba51ed1aa4f99252002250b11d79fdab91a5865871a45d9a4765d3903be8bea2",
+  "native_function": "foreground_audio_gate.plan_hash / inspect",
+  "asr_models_rerun": false,
+  "human_listening_claimed": false,
+  "tone_verified": false,
+  "geometry_fields_not_in_audio_plan": [
+    "fit",
+    "cx",
+    "track",
+    "score_inset_windows"
+  ],
+  "frozen_original_evidence_hashes": {
+    "data/evidence/zheng-andreeva-beijing-2026-final/broadcast-quote-candidates.json": "d28fbc0d500df1dd3206f29772157949402c15bff31d4f43f49fee5eb26ad1ef",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-base-en-planning-windows.json": "cf288fbc60b8bb8d7816275235c4a3664b89479966d54a8a928e56b531cadc97",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-distil-large-v3-keyquotes.json": "a71461fc5b162147469c061c8a245bf10e35e6be238e55a3ca3a849b19a3010c",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-large-v3-ending.json": "1c73bad95481a6202edeb82d69ba50718dee4ca92375b690d558196797558b60",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-large-v3-firstset-and-ending.json": "1e6f35ed9b979c6fd1bb019923408d4a6c83dd68fee3167802dfa3cb12e4f48d",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-large-v3-firstset-tail-check.json": "85be6c2c3d4143b959521e73520ef04b95d9b58599417af7df23f9950acc0df6",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-medium-en-ending.json": "bc8c06ee7edb32ddf73decd9f7ffa7b958b1e554007455a03500ff9896fc82ab",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-medium-en-firstset-tail-check.json": "74d26168f245cd0c623644e94a2237c189f25babc2d1749028ac2287b9f9a930",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-medium-en-full.json": "5b64d74f0427f1d4801fd08ff4db270a32d4a95e03802fd7bc79209c0b77fe06",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-medium-en-planning-windows.json": "a2f3accd96f257064022e0527f91b1b9e31f6d181630c1f8db8e595a8bca023c",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-medium-en-quiet-window-checks.json": "130fcd4bfce51a9254817528e6f6e7164461d348f6ca06f3a03dfccba2bd3bdf",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-small-en-firstset-tail-check.json": "f5bab6af671766e16b38fae036cd9ea978eac8aef254fb9df01aff37d3312a60",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-small-en-full.json": "c21e13981949e306f6544f1d448272152e56bdfbcee387ddb6b4a8540695be23",
+    "data/evidence/zheng-andreeva-beijing-2026-final/asr-small-en-quiet-window-checks.json": "24f49c732850fd89415fbc4e8284233e98c036926d8ef51e3423e6b0a9246b8b",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-00-foreground-audio.json": "705093861f81125c43c584ecee98582f33d099ed1f283386f1f587d24426dd60",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-02-foreground-audio.json": "609d618776cbe449e9bf8ae9edab10f85bd1cb3b98e6ba3872568bf7688f4e3b",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-03-foreground-audio.json": "77036a3d316d560f4c59ca4990173f35fa9811a365fd60c33eda5f57d462f7ea",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-04-foreground-audio.json": "d49bade409ee787a2e6ead5623bf876517d0aa29ea68a095f624507a2b9a1391",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-05-foreground-audio.json": "a26d70f8f5c94a3ef9c2a6f75cdf4973885f6efff3cbfd16e63058e5dd3a9bf8",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-06-foreground-audio.json": "3fa5da29e0d7b8998d2af85af6be7a9a538c1e515aec2c60e6791d2561cc3078",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-07-foreground-audio.json": "1489abcae05a20c1723ba22fa5dd696e6ac4d2153511183582099469a5439cb2",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-08-foreground-audio.json": "71ea639275278d4466bcd6e266d56eab990985523271e3daf8d3d5588c4867cf",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-09-foreground-audio.json": "cab2a737e9d9325630f78ad1ff722a351d36b6d42e201ae05b88ea341a53b01f",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-10-foreground-audio.json": "c7d6a4aff0e35c4e8fabac3e75cd0dced58e5b0b3b2947b27d6a5fb0a1f7f0bd",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-11-foreground-audio.json": "1eeb429e1ee1d65a5f09e1af626d5d232952af61abc2b8266a653bfddc023ea7",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-12-foreground-audio.json": "b14d3dd89cbd543b03bfdf6fef25272b7b2773b72030cdf495afcc46503ce86c",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-13-foreground-audio.json": "5ad6d108304f9c53914f34154731dd7c5727c7a911330ba526cbb557de5ceda1",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-14-foreground-audio.json": "2ad41f765bd8cc00767633e30faa51ea6ea6732ce826dbab1b0077de0a36e80d",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-15-foreground-audio.json": "cf89a4c9184706098bdc7f0b70a97f2278d58c8eb20c7b817cbb551ffefeb5e4",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-16-foreground-audio.json": "14de8a48997d88679a5c5c57f6c196b0fb670031949c8bd53cbbf360db11892d",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-18-foreground-audio.json": "ce915e26406ce1eb1bbe97fbb8c9b4b919a4b3c0da0379b8adb76692da4d415a",
+    "data/evidence/zheng-andreeva-beijing-2026-final/segment-19-foreground-audio.json": "b294fe5dbafee80347f1057fe77b3926841ac85612c671499de21f3d3788e680"
+  },
+  "source_window_reuse": [
+    {
+      "index": 0,
+      "start": 270.0,
+      "end": 276.1,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-00-foreground-audio.json",
+      "parent_sha256": "705093861f81125c43c584ecee98582f33d099ed1f283386f1f587d24426dd60",
+      "foreground_english_cues": 2
+    },
+    {
+      "index": 2,
+      "start": 0.0,
+      "end": 10.0,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-02-foreground-audio.json",
+      "parent_sha256": "609d618776cbe449e9bf8ae9edab10f85bd1cb3b98e6ba3872568bf7688f4e3b",
+      "foreground_english_cues": 0
+    },
+    {
+      "index": 3,
+      "start": 10.0,
+      "end": 26.6,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-03-foreground-audio.json",
+      "parent_sha256": "77036a3d316d560f4c59ca4990173f35fa9811a365fd60c33eda5f57d462f7ea",
+      "foreground_english_cues": 0
+    },
+    {
+      "index": 4,
+      "start": 132.4,
+      "end": 144.7,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-04-foreground-audio.json",
+      "parent_sha256": "d49bade409ee787a2e6ead5623bf876517d0aa29ea68a095f624507a2b9a1391",
+      "foreground_english_cues": 0
+    },
+    {
+      "index": 5,
+      "start": 144.7,
+      "end": 149.2,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-05-foreground-audio.json",
+      "parent_sha256": "a26d70f8f5c94a3ef9c2a6f75cdf4973885f6efff3cbfd16e63058e5dd3a9bf8",
+      "foreground_english_cues": 2
+    },
+    {
+      "index": 6,
+      "start": 149.2,
+      "end": 156.2,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-06-foreground-audio.json",
+      "parent_sha256": "3fa5da29e0d7b8998d2af85af6be7a9a538c1e515aec2c60e6791d2561cc3078",
+      "foreground_english_cues": 0
+    },
+    {
+      "index": 7,
+      "start": 156.2,
+      "end": 172.12,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-07-foreground-audio.json",
+      "parent_sha256": "1489abcae05a20c1723ba22fa5dd696e6ac4d2153511183582099469a5439cb2",
+      "foreground_english_cues": 0
+    },
+    {
+      "index": 8,
+      "start": 172.12,
+      "end": 173.36,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-08-foreground-audio.json",
+      "parent_sha256": "71ea639275278d4466bcd6e266d56eab990985523271e3daf8d3d5588c4867cf",
+      "foreground_english_cues": 0
+    },
+    {
+      "index": 9,
+      "start": 173.36,
+      "end": 185.28,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-09-foreground-audio.json",
+      "parent_sha256": "cab2a737e9d9325630f78ad1ff722a351d36b6d42e201ae05b88ea341a53b01f",
+      "foreground_english_cues": 0
+    },
+    {
+      "index": 10,
+      "start": 185.28,
+      "end": 189.8,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-10-foreground-audio.json",
+      "parent_sha256": "c7d6a4aff0e35c4e8fabac3e75cd0dced58e5b0b3b2947b27d6a5fb0a1f7f0bd",
+      "foreground_english_cues": 0
+    },
+    {
+      "index": 11,
+      "start": 189.8,
+      "end": 193.0,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-11-foreground-audio.json",
+      "parent_sha256": "1eeb429e1ee1d65a5f09e1af626d5d232952af61abc2b8266a653bfddc023ea7",
+      "foreground_english_cues": 1
+    },
+    {
+      "index": 12,
+      "start": 193.0,
+      "end": 201.3,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-12-foreground-audio.json",
+      "parent_sha256": "b14d3dd89cbd543b03bfdf6fef25272b7b2773b72030cdf495afcc46503ce86c",
+      "foreground_english_cues": 5
+    },
+    {
+      "index": 13,
+      "start": 201.3,
+      "end": 207.8,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-13-foreground-audio.json",
+      "parent_sha256": "5ad6d108304f9c53914f34154731dd7c5727c7a911330ba526cbb557de5ceda1",
+      "foreground_english_cues": 3
+    },
+    {
+      "index": 14,
+      "start": 207.8,
+      "end": 228.2,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-14-foreground-audio.json",
+      "parent_sha256": "2ad41f765bd8cc00767633e30faa51ea6ea6732ce826dbab1b0077de0a36e80d",
+      "foreground_english_cues": 0
+    },
+    {
+      "index": 15,
+      "start": 228.2,
+      "end": 233.08,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-15-foreground-audio.json",
+      "parent_sha256": "cf89a4c9184706098bdc7f0b70a97f2278d58c8eb20c7b817cbb551ffefeb5e4",
+      "foreground_english_cues": 1
+    },
+    {
+      "index": 16,
+      "start": 248.12,
+      "end": 263.44,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-16-foreground-audio.json",
+      "parent_sha256": "14de8a48997d88679a5c5c57f6c196b0fb670031949c8bd53cbbf360db11892d",
+      "foreground_english_cues": 0
+    },
+    {
+      "index": 18,
+      "start": 263.44,
+      "end": 276.1,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-18-foreground-audio.json",
+      "parent_sha256": "ce915e26406ce1eb1bbe97fbb8c9b4b919a4b3c0da0379b8adb76692da4d415a",
+      "foreground_english_cues": 2
+    },
+    {
+      "index": 19,
+      "start": 276.1,
+      "end": 292.64,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-19-foreground-audio.json",
+      "parent_sha256": "b294fe5dbafee80347f1057fe77b3926841ac85612c671499de21f3d3788e680",
+      "foreground_english_cues": 4
+    },
+    {
+      "index": 20,
+      "start": 292.64,
+      "end": 299.4,
+      "parent_path": "data/evidence/zheng-andreeva-beijing-2026-final/segment-19-foreground-audio.json",
+      "parent_sha256": "b294fe5dbafee80347f1057fe77b3926841ac85612c671499de21f3d3788e680",
+      "foreground_english_cues": 3
+    }
+  ]
+}

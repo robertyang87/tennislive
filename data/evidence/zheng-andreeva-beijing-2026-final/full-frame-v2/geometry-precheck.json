@@ -1,0 +1,1127 @@
+{
+  "schema": "native-full-frame-geometry-precheck-v2",
+  "status": "source-geometry-preflight-pass-with-explicit-copy-exclusions",
+  "scope": "Actual-source full-canvas native preview, caption placement, board geometry and native mask-window preflight. This is not final-film/audio/release approval.",
+  "source": {
+    "url": "https://youtu.be/Vq_UC0n5DKQ",
+    "path": "/workspace/scratch/zheng-final-source/Vq_UC0n5DKQ.mp4",
+    "sha256": "1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f",
+    "width": 1920,
+    "height": 1080,
+    "fps": 25
+  },
+  "code_pins": {
+    "detector": {
+      "path": "/workspace/tennislive-zheng-fill/tools/wta_scoreboard.py",
+      "sha256": "22d090e45a9329fcdb17a8768e97788a485e3b053be275e6982448a45edc3ea6",
+      "bytes": 27207
+    },
+    "renderer": {
+      "path": "/workspace/tennislive-zheng-fill/tools/build_match_reel.py",
+      "sha256": "b37bbfe07c7c6a7f83b7a59e59c1d305eb88b6acc913fb30d40970a93684d7d7",
+      "bytes": 740547
+    },
+    "tests": {
+      "path": "/workspace/tennislive-zheng-fill/tests/test_wta_scoreboard_geometry.py",
+      "sha256": "7cb13527b1b4c38ab27f750fc3e602f513d156eb0f37153f0a40db3451f1e5c6",
+      "bytes": 14395
+    }
+  },
+  "method": {
+    "native_interface": "build_match_reel.resolve_crop(1920,1080); Segment(fit=crop,cx=.5,track=False); wta_scoreboard.resolve_masks; build_match_reel.cut_segment; write_subtitles + real ASS/fontsdir render.",
+    "canvas": [
+      1080,
+      1440
+    ],
+    "crop_size": [
+      810,
+      1080
+    ],
+    "nominal_source_crop": [
+      555,
+      0,
+      1365,
+      1080
+    ],
+    "actual_yuv420_source_crop": [
+      554,
+      0,
+      1364,
+      1080
+    ],
+    "fit": "crop",
+    "cx": 0.5,
+    "track": false,
+    "padding": false,
+    "native_crop_delogo": false,
+    "small_board_search_source_box": [
+      88,
+      828,
+      560,
+      986
+    ],
+    "geometry_preview_frame_seconds": 0.32,
+    "geometry_preview_detector_sha256": "8e640acca97eb2a943cb79bb3b2856e92ebec6134cccc835ee2926e50fa664e9",
+    "geometry_preview_renderer_sha256": "b37bbfe07c7c6a7f83b7a59e59c1d305eb88b6acc913fb30d40970a93684d7d7",
+    "window_fix_does_not_change_frame_geometry": true,
+    "framing_limit": "A fixed 3:4 center crop cannot retain the entire source1920px width: extreme lateral player/ball positions may leave the810px window. No dynamic tracking, off-centercx, full_source or contain fallback is used. Source-time windows are preserved; only native-board alpha is withheld during source-baked actor contamination."
+  },
+  "source_previews": [
+    {
+      "source_time": 206.8,
+      "native_frame": {
+        "path": "/workspace/scratch/zheng-fill-geometry/0206.80/margin-500.png",
+        "sha256": "3442c5ad02d4a18a542c101b343f800a85af98fa5055d5a6e049bef5e12c86ac",
+        "bytes": 1523523
+      },
+      "native_source_frame": {
+        "path": "/workspace/scratch/zheng-fill-geometry/0206.80/source.png",
+        "sha256": "8aa3fc659ef1cb5442cde9c96829671751aea2827b8d71aded3504b439c82295",
+        "bytes": 2132104
+      },
+      "thumbnail": {
+        "path": "/workspace/tennislive-zheng-fill/data/evidence/zheng-andreeva-beijing-2026-final/full-frame-v2/source-206.80-caption-500.png",
+        "sha256": "b788dc3e69a5814a0cb74c1c4ca8a465d1fdfe100d9ab172fb2ccb390665f105",
+        "bytes": 589525
+      },
+      "subtitle_bottom": 500,
+      "native_ass": {
+        "path": "/workspace/scratch/zheng-fill-geometry/0206.80/margin-500.ass",
+        "sha256": "58b28cdc444c4390694adc5cfc38642d424678616de9fb1a971501f4aa1d1ae3",
+        "bytes": 738
+      },
+      "caption_pixel_bbox": [
+        388,
+        837,
+        691,
+        936
+      ],
+      "caption_text": "Thank you so much.\n非常感谢。"
+    },
+    {
+      "source_time": 267,
+      "native_frame": {
+        "path": "/workspace/scratch/zheng-fill-geometry/0267.00/native.png",
+        "sha256": "3e6539ced4e2c5275e73416a2d5d18d3531237c9bf654367c6cc73e7b0cecf3a",
+        "bytes": 959030
+      },
+      "native_source_frame": {
+        "path": "/workspace/scratch/zheng-fill-geometry/0267.00/source.png",
+        "sha256": "877803b2a56d422fb629b6ccb2abd841191bc317a3a3414dd30b23087c7b9483",
+        "bytes": 1787665
+      },
+      "thumbnail": {
+        "path": "/workspace/tennislive-zheng-fill/data/evidence/zheng-andreeva-beijing-2026-final/full-frame-v2/source-267.00-native-board.png",
+        "sha256": "d23d4c62e003c19cd9e287c3b7c76c8ff23af62c9ecd7300e90c4b9a87343b3e",
+        "bytes": 356598
+      },
+      "subtitle_bottom": null,
+      "caption_note": "No actual cue at source267; proof is original native championship-point board without a hypothetical caption."
+    },
+    {
+      "source_time": 281.84,
+      "native_frame": {
+        "path": "/workspace/scratch/zheng-fill-geometry/0281.84/margin-301.png",
+        "sha256": "b4585dd0f6d6dd30b83f2f9981f873b19c2e7f0a93ef44e2a2420e4e441c1da5",
+        "bytes": 980669
+      },
+      "native_source_frame": {
+        "path": "/workspace/scratch/zheng-fill-geometry/0281.84/source.png",
+        "sha256": "c59469456296f5262c190c976712eb9bb4d7570452c3d055b61cb181d49355f6",
+        "bytes": 1378663
+      },
+      "thumbnail": {
+        "path": "/workspace/tennislive-zheng-fill/data/evidence/zheng-andreeva-beijing-2026-final/full-frame-v2/source-281.84-caption-301.png",
+        "sha256": "eab4fe5b80ddf95aeff67bea9388cd0f4e2cd6fdd4008d34c5c8b5ab62432d34",
+        "bytes": 443627
+      },
+      "subtitle_bottom": 301,
+      "native_ass": {
+        "path": "/workspace/scratch/zheng-fill-geometry/0281.84/margin-301.ass",
+        "sha256": "626e0c70a642c7d79ab7b9e0091f7c4fce44bbb1feaba05201493eecf6d15c76",
+        "bytes": 748
+      },
+      "caption_pixel_bbox": [
+        323,
+        1035,
+        757,
+        1137
+      ],
+      "caption_text": "Well, her popularity amongst\n她的人气，"
+    },
+    {
+      "source_time": 294,
+      "native_frame": {
+        "path": "/workspace/scratch/zheng-fill-geometry/0294.00/margin-500.png",
+        "sha256": "ccf432e4b77b6213532b27b54bae67e9e00893cf1fec57b67e96e8fda4c0a42f",
+        "bytes": 1315669
+      },
+      "native_source_frame": {
+        "path": "/workspace/scratch/zheng-fill-geometry/0294.00/source.png",
+        "sha256": "d1a633b778064339aa9686526040b6458a441607b49ad1817a88056ed96ed9c1",
+        "bytes": 1936098
+      },
+      "thumbnail": {
+        "path": "/workspace/tennislive-zheng-fill/data/evidence/zheng-andreeva-beijing-2026-final/full-frame-v2/source-294.00-caption-500.png",
+        "sha256": "f837158312673e4429062b60f632eabd737537d60f6f69bb06b798d9a0d92aa8",
+        "bytes": 544069
+      },
+      "subtitle_bottom": 500,
+      "native_ass": {
+        "path": "/workspace/scratch/zheng-fill-geometry/0294.00/margin-500.ass",
+        "sha256": "9965af2911a94d04aa13c6e9934b595d8860dab2699b6add8a5dfc5e0d2676eb",
+        "bytes": 768
+      },
+      "caption_pixel_bbox": [
+        278,
+        836,
+        775,
+        938
+      ],
+      "caption_text": "It is going to be unbelievable\n那将是不可思议的一幕，"
+    }
+  ],
+  "native_geometry_findings": {
+    "ordinary_board": "Original board right edge at source516–518 is left of native sourcecrop554; therefore original small-board pixels leave the maincrop naturally and no residual-board delogo is used.",
+    "championship_point_267": {
+      "body_local": [
+        1,
+        43,
+        428,
+        155
+      ],
+      "header_local": [
+        1,
+        3,
+        205,
+        44
+      ],
+      "origin": [
+        88,
+        828
+      ],
+      "score_column_40_30": "Fully retained by independent native body/header geometry; no word-specific template or opaque search rectangle."
+    },
+    "large_final_boards": "Source206.8 and294 centered native FINAL summaries fit the center crop and preserve names/scores without a duplicate small-board inset.",
+    "reaction_172_92": "Fullcrop leaves actor intact. Native small board is semitransparent with actor baked behind it throughout172.12–173.36; disable copy for whole31frame window without deleting the source shot.",
+    "cold270_276_1": "Original complete clean championship board270.00–270.56; original edge-wipe270.60–270.84; no native board270.88onward. No actor contamination while board visible; use normal native measured presence."
+  },
+  "caption_decisions": {
+    "minimum_native_margin": 96,
+    "large_final_201_3_207_8": {
+      "margin": 500,
+      "reason": "Actual native ASS at206.8 has caption y837–936 above nativeboard topabout952, leaving16px and keeping names/scores intact. The same margin holds continuously across201.3–207.8."
+    },
+    "last_segment": {
+      "276.1_292.64_margin": 301,
+      "292.64_299.4_margin": 500,
+      "reason": "Actual281.84 caption301 clears chin/hands;500 covers them. Source292.64 is a bilingualcue boundary. Actual294 caption500 y836–938 is14px above centered board topabout952."
+    },
+    "ordinary_cn_without_header_margin": 301,
+    "ordinary_point_header_or_bilingual_margin": 356,
+    "source_267_actual_caption": null,
+    "fonts_and_caption_size": "Native write_subtitles styles and fonts unchanged; no96gate weakening."
+  },
+  "safe_native_copy_windows": [
+    {
+      "source_range": [
+        156.2,
+        172.12
+      ],
+      "score_inset": true,
+      "source_windows": [
+        [
+          156.2,
+          172.08
+        ]
+      ],
+      "reason": "Keep complete source range but exclude preceding native0.18s dissolve tail from actor-contaminated source172.12onward; conservative172.08 endpoint prevents floating-point half-open leakage. Seeactual_tail_copy_fix."
+    },
+    {
+      "source_range": [
+        172.12,
+        173.36
+      ],
+      "score_inset": false,
+      "reason": "All31frames contain original actor pixels baked through native board transparency."
+    },
+    {
+      "source_range": [
+        207.8,
+        228.2
+      ],
+      "score_inset": true,
+      "source_windows": [
+        [
+          207.8,
+          209.44
+        ],
+        [
+          212.16,
+          228.2
+        ]
+      ],
+      "withheld": [
+        209.44,
+        212.16
+      ],
+      "reason": "Player feet/legs/torso baked through original point slots209.48–212.08; one-frame conservative boundary padding. All510frames inspected."
+    },
+    {
+      "source_range": [
+        248.12,
+        263.44
+      ],
+      "score_inset": true,
+      "source_windows": [
+        [
+          248.12,
+          249.76
+        ],
+        [
+          250.12,
+          252.16
+        ],
+        [
+          252.84,
+          262.36
+        ],
+        [
+          262.92,
+          263.44
+        ]
+      ],
+      "withheld": [
+        [
+          249.76,
+          250.12
+        ],
+        [
+          252.16,
+          252.84
+        ],
+        [
+          262.36,
+          262.92
+        ]
+      ],
+      "reason": "Racket249.84–250.04,shoe/leg252.24–252.76,forearm262.4–262.8 baked into native translucent point slot. Conservative one/two-frame padding; all383frames inspected."
+    },
+    {
+      "source_range": [
+        270,
+        276.1
+      ],
+      "score_inset": true,
+      "source_windows": null,
+      "reason": "Clean native board and native edge wipe; after native absence mask remains transparent."
+    }
+  ],
+  "actual_mask_window_verification": {
+    "scope": "actual-source-window-mask-preflight",
+    "detector_sha256": "22d090e45a9329fcdb17a8768e97788a485e3b053be275e6982448a45edc3ea6",
+    "source_sha256": "1fc015249cdeb72792c47028d0f56ff01241aae424e8902827c5ef999949416f",
+    "segments": [
+      {
+        "name": "opening",
+        "source_range": [
+          207.8,
+          228.2
+        ],
+        "source_windows": [
+          [
+            207.8,
+            209.44
+          ],
+          [
+            212.16,
+            228.2
+          ]
+        ],
+        "fps": 25,
+        "tail": 0.12,
+        "decoded_mask_frames": 513,
+        "frames_with_alpha": 442,
+        "excluded_alpha_pixels": 0,
+        "mask": "/workspace/scratch/zheng-fill-window-proof/opening/score_masks/segment-01.mkv",
+        "mask_sha256": "100fcd1f6ed3e621cfb8bb8fa1f8302521b33b0339d3cdf0d2b3e4005987942d",
+        "scoreboard_qc": {
+          "status": "pass",
+          "profile": "wta-tour-v1",
+          "segments": [
+            {
+              "segment": 0,
+              "frames": 513,
+              "present_frames": 442,
+              "tag_frames": 442,
+              "board_edges": [
+                427,
+                428
+              ],
+              "right": 428,
+              "source_bounds": [
+                88,
+                830,
+                516,
+                986
+              ],
+              "body_bounds": [
+                [
+                  0,
+                  40,
+                  427,
+                  158
+                ],
+                [
+                  0,
+                  40,
+                  428,
+                  156
+                ],
+                [
+                  0,
+                  41,
+                  428,
+                  158
+                ],
+                [
+                  1,
+                  43,
+                  428,
+                  155
+                ]
+              ],
+              "header_bounds": [
+                [
+                  1,
+                  3,
+                  137,
+                  41
+                ],
+                [
+                  1,
+                  3,
+                  137,
+                  42
+                ],
+                [
+                  1,
+                  3,
+                  137,
+                  44
+                ]
+              ],
+              "geometry_origin": [
+                88,
+                828
+              ],
+              "alpha_geometry": "native-body-and-header-rows",
+              "measured_present_frames": 513,
+              "window_excluded_present_frames": 71,
+              "allowed_source_windows": [
+                [
+                  207.8,
+                  209.44
+                ],
+                [
+                  212.16,
+                  228.2
+                ]
+              ],
+              "window_policy": "relative-frame-time-half-open-after-native-debounce",
+              "mask": "/workspace/scratch/zheng-fill-window-proof/opening/score_masks/segment-01.mkv",
+              "mask_sha256": "100fcd1f6ed3e621cfb8bb8fa1f8302521b33b0339d3cdf0d2b3e4005987942d"
+            }
+          ]
+        }
+      },
+      {
+        "name": "late",
+        "source_range": [
+          248.12,
+          263.44
+        ],
+        "source_windows": [
+          [
+            248.12,
+            249.76
+          ],
+          [
+            250.12,
+            252.16
+          ],
+          [
+            252.84,
+            262.36
+          ],
+          [
+            262.92,
+            263.44
+          ]
+        ],
+        "fps": 25,
+        "tail": 0.12,
+        "decoded_mask_frames": 386,
+        "frames_with_alpha": 343,
+        "excluded_alpha_pixels": 0,
+        "mask": "/workspace/scratch/zheng-fill-window-proof/late/score_masks/segment-01.mkv",
+        "mask_sha256": "b83ab08f72ec641640f2d6a846a959e3461d430bd02c2c473b349a97aaf0886b",
+        "scoreboard_qc": {
+          "status": "pass",
+          "profile": "wta-tour-v1",
+          "segments": [
+            {
+              "segment": 0,
+              "frames": 386,
+              "present_frames": 343,
+              "tag_frames": 0,
+              "board_edges": [
+                427,
+                430
+              ],
+              "right": 430,
+              "source_bounds": [
+                88,
+                868,
+                518,
+                986
+              ],
+              "body_bounds": [
+                [
+                  0,
+                  41,
+                  427,
+                  156
+                ],
+                [
+                  0,
+                  41,
+                  427,
+                  157
+                ],
+                [
+                  0,
+                  41,
+                  427,
+                  158
+                ],
+                [
+                  1,
+                  43,
+                  428,
+                  155
+                ],
+                [
+                  1,
+                  43,
+                  430,
+                  155
+                ]
+              ],
+              "header_bounds": [],
+              "geometry_origin": [
+                88,
+                828
+              ],
+              "alpha_geometry": "native-body-and-header-rows",
+              "measured_present_frames": 386,
+              "window_excluded_present_frames": 43,
+              "allowed_source_windows": [
+                [
+                  248.12,
+                  249.76
+                ],
+                [
+                  250.12,
+                  252.16
+                ],
+                [
+                  252.84,
+                  262.36
+                ],
+                [
+                  262.92,
+                  263.44
+                ]
+              ],
+              "window_policy": "relative-frame-time-half-open-after-native-debounce",
+              "mask": "/workspace/scratch/zheng-fill-window-proof/late/score_masks/segment-01.mkv",
+              "mask_sha256": "b83ab08f72ec641640f2d6a846a959e3461d430bd02c2c473b349a97aaf0886b"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "corrected_native_frames": [
+    {
+      "path": "/workspace/scratch/zheng-fill-window-proof/late/252.40.png",
+      "sha256": "65b8b8c9f453c3030222d2fff7d96564e23152dd55e6541432c82ef300342c72",
+      "bytes": 945280
+    },
+    {
+      "path": "/workspace/scratch/zheng-fill-window-proof/opening/210.96.png",
+      "sha256": "d9253e6972224782f3b34fa055c4aef49c363688dfa412f84908f68ba2a8008a",
+      "bytes": 928264
+    },
+    {
+      "path": "/workspace/scratch/zheng-fill-window-proof/late/259.20.png",
+      "sha256": "28f581b6c1a6a1ce907b87a5cdbab6b2974da8cf72f19766e3d8ce234e377a81",
+      "bytes": 1067349
+    }
+  ],
+  "dense_native_rgb_evidence": {
+    "method": "ffmpeg accurate source seek then472x158 crop origin88,828,25fps RGB tiles; labels outside native source pixels; no resize of individual frame pixels.",
+    "manifest": {
+      "path": "/workspace/scratch/zheng-fill-dense-board/manifest.json",
+      "sha256": "b5b74ea45a38fa931e262451714680949455c03f531e7221fc099e811cad187e",
+      "bytes": 5092
+    },
+    "groups": [
+      {
+        "label": "late",
+        "start": 248.12,
+        "end": 263.44,
+        "fps": 25,
+        "source_crop": [
+          88,
+          828,
+          560,
+          986
+        ],
+        "frames": 383,
+        "inspection": "Every source frame visually inspected from unscaled native-RGB board-crop tiles at25fps.",
+        "wall_pins": [
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-00.png",
+            "sha256": "ce7550259ac7023ed7a0b77a545f68fd926cbebe3cf751b01de875f9157481d0",
+            "bytes": 318848
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-01.png",
+            "sha256": "477b0e44757be38d5262a0ca6dfd23397f5a283544fab6da0ad1094001aaa065",
+            "bytes": 276935
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-02.png",
+            "sha256": "6c96ec619c485a65ea9389a7341afccf382cd0faf14d9741bcd0870876777acb",
+            "bytes": 514915
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-03.png",
+            "sha256": "c3e4121a2d8433ab94ebca4c7d11f17c00eedd1d6f370c7f66748de54b832f5b",
+            "bytes": 374954
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-04.png",
+            "sha256": "8fb191a319084322dfce5c3acb2eff534af3910a380ee2c8daede6a18f623aca",
+            "bytes": 398810
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-05.png",
+            "sha256": "ffb1eef564ab7c53d6be6a96306d6474c421fa7442aa024577267b65426b992b",
+            "bytes": 513974
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-06.png",
+            "sha256": "41164e340a797d6fbd756745c978835ba06c4591e822a7d7c9feb165d58076d8",
+            "bytes": 429937
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-07.png",
+            "sha256": "b5a5a3d463ab6b070c4baece9d18c07f4ccee76dcf6c5f7b5d286828b32a3ac0",
+            "bytes": 314272
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-08.png",
+            "sha256": "1a3d8582b60be4c698d0e22d97171eb5f4fa3c3c991985c61658b94fa702f82b",
+            "bytes": 345259
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-09.png",
+            "sha256": "61345b3cba2852ec2d3bfc8f71cc767af5cc9bf6fa4ab27309838ed8494b9df5",
+            "bytes": 303790
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-10.png",
+            "sha256": "3b5e90cfac0757132ae767483cd76a355c2e226526caab98b6d5aeb80354e7f5",
+            "bytes": 329818
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-11.png",
+            "sha256": "b794029631ab7f86ca0580135281822063c5220de6401703c008b2bf0d48f771",
+            "bytes": 306027
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-12.png",
+            "sha256": "11de8442a5ea8e29dd38378d1778a5c192edf2a9ea7ed7b151b2e5cd0f329d3a",
+            "bytes": 281826
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-13.png",
+            "sha256": "e645e4d9534acc951e0d64a4507584e2443e33e6b80ac6129df1cf5fb7e3b728",
+            "bytes": 304172
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-14.png",
+            "sha256": "ade5ef39490e7dc23407501a99b579ff526e69eaccbd2819cc8bef2572cec6d7",
+            "bytes": 308046
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-15.png",
+            "sha256": "da1419db9e00353270d7b11e334d54a3f33cb0354fd7902ab9d812d5a7035e56",
+            "bytes": 294632
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-16.png",
+            "sha256": "c3b226485d6a6c33bfeb9ffc0e8bb0304d1fe64cf202e26f52ee293b4d80cecf",
+            "bytes": 305048
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-17.png",
+            "sha256": "be53362e374d6fb02dab65ae3f922b0341ed4c04bbfdaf990d56aaf5cf44fd8e",
+            "bytes": 295352
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-18.png",
+            "sha256": "0aef662d6aa687ae223fe217fc4ac9177f1a7808c95e10e813a8123835e5ddee",
+            "bytes": 287333
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-19.png",
+            "sha256": "431368ab4ebc1b09c6944bd89ebd4c2c506d52d42d7c7ee0836692e183b30c11",
+            "bytes": 331562
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-20.png",
+            "sha256": "d455cc117fdea4736313b26994d102a9ed1f6bf22068b91d943dc364763f3de5",
+            "bytes": 529125
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/late/wall-21.png",
+            "sha256": "afba5abfb75c33b3005329373a9a05380bd90b826fae33c5826e5aab0b0c5cf7",
+            "bytes": 138161
+          }
+        ]
+      },
+      {
+        "label": "opening",
+        "start": 207.8,
+        "end": 228.2,
+        "fps": 25,
+        "source_crop": [
+          88,
+          828,
+          560,
+          986
+        ],
+        "frames": 510,
+        "inspection": "Every source frame visually inspected from unscaled native-RGB board-crop tiles at25fps.",
+        "wall_pins": [
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-00.png",
+            "sha256": "be4d3b5d2a755ac574875235ede66f380f157bc1014cdfcf6daf9485b3e77bb2",
+            "bytes": 440604
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-01.png",
+            "sha256": "287748a57b783c9b0aafeb8c18718f8d019064c3156e18f54c3d46012178aaaf",
+            "bytes": 301257
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-02.png",
+            "sha256": "acbcd6251956973b035912b50303d3f0c1cad903cc0d5a745407c96f054f8a6c",
+            "bytes": 531634
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-03.png",
+            "sha256": "1b72f82555eabeff6ae74d5ba9c9ade70561c0b1dc755c39742985b684b4050e",
+            "bytes": 538414
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-04.png",
+            "sha256": "1ecbb2669d04f5a0f4a83773528d1fa0aef6c81d06ae3ce8adc509f160dae033",
+            "bytes": 587908
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-05.png",
+            "sha256": "d9719ca5b23d658cb32c51c17838485189128bd95456f7b365a0d4a80f8b84a5",
+            "bytes": 643773
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-06.png",
+            "sha256": "e4ffc59907123c9894e2ba472162db2ca682a1d023f9d29f3c9ba01a954a286e",
+            "bytes": 392886
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-07.png",
+            "sha256": "910d97d80c19efa5cc955c996dedd889b549152a2e538591a5ff441b173f2f34",
+            "bytes": 371993
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-08.png",
+            "sha256": "98324baa90e6cc0b1069e716a78a713207654cda55068f5c5ff7c27cb6aa0ae0",
+            "bytes": 397881
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-09.png",
+            "sha256": "51cfd269d1418b651e4079fcbabe6468a2bcb6420551ebd3a9a4f89ea92760a4",
+            "bytes": 356786
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-10.png",
+            "sha256": "3f51c7558bf59ffb6cb639eb9cedc14dff340d4f98c37844a86ae8ccc35c8c8a",
+            "bytes": 413505
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-11.png",
+            "sha256": "2ae3e00d12f94648440ee37063fc5933730a6e2c57e5611b32c1016db0a84adb",
+            "bytes": 364003
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-12.png",
+            "sha256": "e7be1154fbc70c0a1fc7bcbe4811bb5be243f5a5c77baaf55ca78cc9455d06c2",
+            "bytes": 347823
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-13.png",
+            "sha256": "1c2536c44368bb2c23efef7a4f6508437ffce0f853998fb3f511e5e866702750",
+            "bytes": 414091
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-14.png",
+            "sha256": "512cccc71b76139ce627003191fea9a1710a2692e92c94fd17b270a4fa18c3b2",
+            "bytes": 402128
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-15.png",
+            "sha256": "35211132b49366ab4c363b7158ab630608629c23cedf89a47e3f817511c8e56e",
+            "bytes": 383198
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-16.png",
+            "sha256": "3111814d81f394867d6e368548ee540ae4eff016710e0fcf44a6cff3ba00ed2f",
+            "bytes": 386758
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-17.png",
+            "sha256": "72151fe34cd502fa1838ba8d20f9be4dce878140320ed799d9317847beafa664",
+            "bytes": 352741
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-18.png",
+            "sha256": "c5347081be876e4b990f5d8690817010aa50e65e0c7f17c48f7ff04acc2ca672",
+            "bytes": 372891
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-19.png",
+            "sha256": "6c8e065c0c4734b0c98098ec1b4231855c070d538faffe8f0c75b95a2d37210a",
+            "bytes": 391549
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-20.png",
+            "sha256": "ece133dfc717c5326bef28771a8ccadfaa46ad848a301e0fdb450802ab1e63d6",
+            "bytes": 378328
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-21.png",
+            "sha256": "1e8be787e4473d867b044017b508edb27988b0f8f82fd65a204c2f1a301a45e1",
+            "bytes": 386806
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-22.png",
+            "sha256": "825c1b7ac1ed948c43e9d7063812ea9f5fb4fc882a39ef60a055f3af3c361719",
+            "bytes": 400089
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-23.png",
+            "sha256": "f44d2833d6fdb8f40470e378f8443de59f42b944f8bc7eeb4de60516d44a85f9",
+            "bytes": 377520
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-24.png",
+            "sha256": "384ad5fbe1f689b30b9a7a9025937483f874c9373de104d214e34a3539237c8c",
+            "bytes": 421176
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-25.png",
+            "sha256": "fb816cac5df1a5a5625cd8af7a59dfc224d8e040e14202d5b66c403354a84ad6",
+            "bytes": 374099
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-26.png",
+            "sha256": "9f1cadfc25fe293ea627f9015c15567a7dcd1b1add343f8804029edf988b5c16",
+            "bytes": 374880
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-27.png",
+            "sha256": "1699677393b0373fd1d005ac416638d4cc213b07e910b336639e767c4b518a7c",
+            "bytes": 385119
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/opening/wall-28.png",
+            "sha256": "6f82dfc8597897205aa64e3a461b0ad7237043038dc52edcb37fc331cc6269c8",
+            "bytes": 131528
+          }
+        ]
+      },
+      {
+        "label": "reaction",
+        "start": 172.12,
+        "end": 173.36,
+        "fps": 25,
+        "source_crop": [
+          88,
+          828,
+          560,
+          986
+        ],
+        "frames": 31,
+        "inspection": "Every source frame visually inspected from unscaled native-RGB board-crop tiles at25fps.",
+        "wall_pins": [
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/reaction/wall-00.png",
+            "sha256": "b44469bbb4b155014b701d27355a7a23d104c6099be7f4f3ef11c456ccd93cac",
+            "bytes": 1012217
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/reaction/wall-01.png",
+            "sha256": "13a0999a686eb719761d98bb0edf7f55e44cce26980bef4dd9846a8b704791b0",
+            "bytes": 744263
+          }
+        ]
+      },
+      {
+        "label": "cold",
+        "start": 270.0,
+        "end": 276.1,
+        "fps": 25,
+        "source_crop": [
+          88,
+          828,
+          560,
+          986
+        ],
+        "frames": 153,
+        "inspection": "Every source frame visually inspected from unscaled native-RGB board-crop tiles at25fps.",
+        "wall_pins": [
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/cold/wall-00.png",
+            "sha256": "60fc262885b969fcb1ee6d3a7fd047f499cb2b7397507869ccb63cbebbc1b652",
+            "bytes": 467319
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/cold/wall-01.png",
+            "sha256": "4790181af3d1e0894d1d204dfe2101a946c5d875e1a9ae8eec4ecef778cec45b",
+            "bytes": 138444
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/cold/wall-02.png",
+            "sha256": "37a6e19eea5c417d656ba37a68e1fffb2a76c4577119629b5d9a0e70eef8b109",
+            "bytes": 696132
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/cold/wall-03.png",
+            "sha256": "031eafd235ed962563f9f2e04567df6d7f1d6ce7a94fa3e867b29a91827ffd47",
+            "bytes": 787421
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/cold/wall-04.png",
+            "sha256": "d5a3c777be39b9b7991e06ed61879ecd2c7a60e47d0ffd0e18dc5ae1f5359d46",
+            "bytes": 858290
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/cold/wall-05.png",
+            "sha256": "5197004261456c4d56c22ca84b06240bc40644809a55ddb7eaf6c12fd0dcac4b",
+            "bytes": 597894
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/cold/wall-06.png",
+            "sha256": "8d9cafc993cedf7fc506f7fa8560a039bb56b4f5887512cb0da787501bde91fc",
+            "bytes": 197937
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/cold/wall-07.png",
+            "sha256": "dd251ebea5e66ace006b591cd6d4494eae61dc51b1b419e33cd63b5777ce77e8",
+            "bytes": 363994
+          },
+          {
+            "path": "/workspace/scratch/zheng-fill-dense-board/cold/wall-08.png",
+            "sha256": "a4f661b545f5e0e5b93ac3e36bd4862af20ac1f8c147f772e790e53f082cbea1",
+            "bytes": 551041
+          }
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "tests_command": "python -m pytest -q tests/test_wta_scoreboard.py tests/test_wta_scoreboard_geometry.py tests/test_scoreboard_geometry.py tests/test_scoreboard_geometry_qc.py",
+    "tests": "39passed in0.74s",
+    "ruff_command": "python -m ruff check --select F tools/wta_scoreboard.py tests/test_wta_scoreboard_geometry.py",
+    "ruff": "All checks passed",
+    "actual_ffv1_mask_decode": "All513opening and386late mask frames decoded: excluded windows/tail have0nonzero alpha pixels. No copied body/header outside declared windows.",
+    "fixture_geometry_comparison": {
+      "baseline": "HEAD:tools/wta_scoreboard.py",
+      "current_sha256": "22d090e45a9329fcdb17a8768e97788a485e3b053be275e6982448a45edc3ea6",
+      "complete_geometry_and_alpha_rows_equal": true,
+      "fixtures": [
+        "tests/fixtures/wta_scoreboard/beijing-200340-wipe.png",
+        "tests/fixtures/wta_scoreboard/beijing-133800-wipe.png",
+        "tests/fixtures/wta_scoreboard/beijing-sun-gauff-231880-tag-animation.png",
+        "tests/fixtures/wta_scoreboard/beijing-swiatek-224040-break-point-2.png",
+        "tests/fixtures/wta_scoreboard/beijing-052520-wipe.png",
+        "tests/fixtures/wta_scoreboard/beijing-swiatek-036960-wipe-glow.png",
+        "tests/fixtures/wta_scoreboard/beijing-zheng-andreeva-267000-championship-point.png",
+        "tests/fixtures/wta_scoreboard/beijing-sun-gauff-232880-ad-gradient.png",
+        "tests/fixtures/wta_scoreboard/beijing-267920-wipe.png",
+        "tests/fixtures/wta_scoreboard/beijing-swiatek-297600-centred-result.png",
+        "tests/fixtures/wta_scoreboard/beijing-234720-wipe.png",
+        "tests/fixtures/wta_scoreboard/beijing-194060-tag-transition.png"
+      ]
+    },
+    "no_final_film_claim": true
+  },
+  "actual_tail_copy_fix": {
+    "scope": "actual-source-native-tail-window-preflight",
+    "source_range": [
+      156.2,
+      172.12
+    ],
+    "safe_source_window": [
+      156.2,
+      172.08
+    ],
+    "old_unsafe_relative_end": 15.920000000000016,
+    "safe_relative_end": 15.880000000000024,
+    "fps": 25,
+    "tail": 0.18,
+    "decoded_mask_frames": 403,
+    "last_opaque_source_frame": 172.07999999999998,
+    "source_17208_frame397_alpha_pixels": 49001,
+    "source_17212_frame398_and_tail_alpha_pixels": 0,
+    "mask": "/workspace/scratch/zheng-fill-tail-proof/score_masks/segment-01.mkv",
+    "mask_sha256": "b632677fb91634d06be7b4037dae9d0325d7cb1e48dd9a22dfb7cf2689eeebd2",
+    "detector_sha256": "22d090e45a9329fcdb17a8768e97788a485e3b053be275e6982448a45edc3ea6",
+    "scoreboard_qc": {
+      "status": "pass",
+      "profile": "wta-tour-v1",
+      "segments": [
+        {
+          "segment": 0,
+          "frames": 403,
+          "present_frames": 398,
+          "tag_frames": 398,
+          "board_edges": [
+            392,
+            392
+          ],
+          "right": 392,
+          "source_bounds": [
+            88,
+            830,
+            480,
+            984
+          ],
+          "body_bounds": [
+            [
+              1,
+              43,
+              392,
+              155
+            ]
+          ],
+          "header_bounds": [
+            [
+              1,
+              3,
+              143,
+              44
+            ]
+          ],
+          "geometry_origin": [
+            88,
+            828
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 403,
+          "window_excluded_present_frames": 5,
+          "allowed_source_windows": [
+            [
+              156.2,
+              172.08
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-after-native-debounce",
+          "mask": "/workspace/scratch/zheng-fill-tail-proof/score_masks/segment-01.mkv",
+          "mask_sha256": "b632677fb91634d06be7b4037dae9d0325d7cb1e48dd9a22dfb7cf2689eeebd2"
+        }
+      ]
+    },
+    "reason": "Independent actual-film QC identified source172.12–172.28 polluted SP2 board in preceding segment0.18s dissolve tail. Next segment score_inset:false does not gate preceding tail. Keep source156.2–172.12 and172.12–173.36 complete, but preceding native-board safe window ends172.08.",
+    "native_transition_method": "Native cut_segment(source156.2–172.12,tail=.18)+cut_segment(source172.12–173.36,score_inset=None); native dissolve_filtergraph([15.92,1.24],.18),25fps1080x1440. Same continuous source-frame timeline; no source time deleted.",
+    "formal_spec_pin": {
+      "path": "/workspace/tennislive-zheng-fill/specs/reels/zheng-andreeva-beijing-2026-final.json",
+      "sha256": "7e5cefa57c88aaee949a6958690a9d4fd227b07e6e3e1d406d206c4bcebe70b1",
+      "bytes": 48246
+    },
+    "validation": "All403actualFFV1maskframesdecoded. Pollutiontailframe398–402 have0nonzeroalpha. Actual native transition172.12,.16,.20,.24,.28 viewed: no SP2board or copied VIVO/actor in lowerleft; actor arm/clothing intact. Source172.08 last clean scoreboard remains.",
+    "float_boundary_note": "172.12-156.2=15.920000000000016 can include398/25=15.92, so an end172.12 window is unsafe. Conservativeend172.08 yields15.880000000000024:397/25 remains included, source172.12onward is strictly excluded. No detector epsilon or global frame-geometry changes.",
+    "native_previous_part": {
+      "path": "/workspace/scratch/zheng-fill-tail-proof/previous-fixed.mp4",
+      "sha256": "4da8b97ff8b0d26937f496fe4bf35ac3f7f6e0b5b99ca2520967675fbb859584",
+      "bytes": 21428358
+    },
+    "native_reaction_part": {
+      "path": "/workspace/scratch/zheng-fill-tail-proof/reaction-native.mp4",
+      "sha256": "13a5886c2410da9024235c100bea587579d2bc379591a8bec57a7f02736c4b04",
+      "bytes": 2981635
+    },
+    "native_transition": {
+      "path": "/workspace/scratch/zheng-fill-tail-proof/transition-native.mp4",
+      "sha256": "5d401271b46685bce1d14a38fa8163cd5393a7b69691016d3863106f5c67dd71",
+      "bytes": 3668975
+    },
+    "transition_frame_pins": [
+      {
+        "path": "/workspace/scratch/zheng-fill-tail-proof/transition-172.04.png",
+        "sha256": "bdc510a71d0444a3b63fbad2898e3bdbb71422af4c8a910318ea05bf4311771f",
+        "bytes": 995971
+      },
+      {
+        "path": "/workspace/scratch/zheng-fill-tail-proof/transition-172.08.png",
+        "sha256": "75835361ccaff3ab6b4bb1faf69f662b793cb256a4dfd269e0cfab28b481dea9",
+        "bytes": 992018
+      },
+      {
+        "path": "/workspace/scratch/zheng-fill-tail-proof/transition-172.12.png",
+        "sha256": "35403d1e46368a17cb821b3eb4bbebad73f51a6b447e06f19912362004007e6e",
+        "bytes": 868480
+      },
+      {
+        "path": "/workspace/scratch/zheng-fill-tail-proof/transition-172.16.png",
+        "sha256": "b68f768154b5f663afb8cb58540bc887a03633e676e1df78b8c26c5f01fec07d",
+        "bytes": 915064
+      },
+      {
+        "path": "/workspace/scratch/zheng-fill-tail-proof/transition-172.20.png",
+        "sha256": "633a2f8661b95f0f7d3b066457c688effa5538c2894b0dd63a0feda23b20045e",
+        "bytes": 875735
+      },
+      {
+        "path": "/workspace/scratch/zheng-fill-tail-proof/transition-172.24.png",
+        "sha256": "5f172c20f54dd736812f5b1c79135be1046c644c3f8041ee96cc06709ce31fe2",
+        "bytes": 814493
+      },
+      {
+        "path": "/workspace/scratch/zheng-fill-tail-proof/transition-172.28.png",
+        "sha256": "100efe829172ccbb6c26aafe815022c7b881be81506b507467f555b2861f4677",
+        "bytes": 848569
+      },
+      {
+        "path": "/workspace/scratch/zheng-fill-tail-proof/transition-172.32.png",
+        "sha256": "64ac03cefcd52e68b7880614365746920163f263bf77625eb37417108a5d0959",
+        "bytes": 810870
+      }
+    ]
+  }
+}
