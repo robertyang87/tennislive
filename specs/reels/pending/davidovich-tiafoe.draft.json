@@ -18,7 +18,16 @@
       }
     ],
     "winner": "达维多维奇·福基纳",
-    "result": "7-6(4) 4-6 7-6(6)"
+    "result": "7-6(4) 4-6 7-6(6)",
+    "portrait": {
+      "image": "assets/reel/davidovich-tiafoe-cover.jpg",
+      "focus": 0.851,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「alejandro davidovich fokina」「Shanghai」，日期对上当地 2026-10-11（Asia/Shanghai；日期来源 flashscore dc_1_YVh1aC2e）；EXIF 拍摄 2026:10:11 21:03:05+08:00。② 分辨率：4422×2948，zoom 1 铺 1080×1440 是 2.05×（不放大）。③ 认人：最大那张脸像 达维多维奇·福基纳 0.62（≥ 0.34）。④ 睁眼：EAR 0.3024（≥ 0.16）。⑤ 钩子带：脸落在 y258~487，钩子顶边 790。排序：[True, False, False, True, True, 229, 0.624]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/11/1c4fcb63-3eae-4198-841b-b36cbc6499db/Alejandro-DAVIDOVICH-FOKINA-vs-Frances-TIAFOE-2057.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/11/1c4fcb63-3eae-4198-841b-b36cbc6499db/Alejandro-DAVIDOVICH-FOKINA-vs-Frances-TIAFOE-2057.jpg（条目 #4590559，接口发布 2026-10-11T13:48:16Z，EXIF 拍摄 2026:10:11 21:03:05+08:00（UTC 2026-10-11T13:03:05Z），原图 4422×2948），说明原文「2026 Shanghai Davidovich Fokina」。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -292,10 +301,52 @@
   "_visual_evidence": {
     "model": "MiniMax-M3",
     "status": "waiting",
-    "visual_status": "error",
-    "retryable": true,
+    "visual_status": "waiting",
+    "retryable": false,
+    "cold_open": {
+      "start": 132.5,
+      "end": 142.28,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "接触表 132.5–134.5s 显示达维多维奇·福基纳在网前张大嘴巴握拳咆哮（赛点/制胜分瞬间）；136.5–142.28s 是他横拍backhand收拍和冲向网前的胜负已分画面，winner 激动庆祝且近景清晰。",
+      "confidence": 0.92
+    },
+    "ending": {
+      "start": 142.28,
+      "end": 153.54,
+      "kind": "aftermath",
+      "winner_visible": true,
+      "reason": "144.5–146.5s 两位选手在网前握手拥抱，赢家福基纳侧身在场；142.28–146.5s 完整覆盖冷开场结局（握手作为终场叙事节拍），随后 152.5s 出现 TennisTV 收尾卡。148.5–150.5s 显示比分 7-6(4) 4-6 7-6(6) 确认本场结果。",
+      "confidence": 0.9
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "达维多维奇·福基纳",
+      "moment": "winner_celebration",
+      "wrong_or_old": false,
+      "reason": "粉色 Adidas 衫、白色头带、青柠绿拍与背景 Rolex 板和 ATP 标识，与源画面 132.5–134.5s 中同一赛点嘶吼瞬间一致；面部特征、双肩宽幅与握拍姿态吻合；无水印、无第三方平台 logo；题图本身是高强度击球/庆祝释放瞬间的脸部特写，符合 eye open、决赛有效姿态。",
+      "confidence": 0.78
+    },
     "problems": [
-      "MiniMax API：JSONDecodeError: Expecting ',' delimiter: line 2 column 146 (char 147)"
-    ]
+      "ending 没有完整覆盖 cold_open，结局不能只在开头出现",
+      "封面置信度 0.78 低于 0.80"
+    ],
+    "model_attempts": 1,
+    "input_sha256": "d17303a1e46459f9ece46d61007c63eb756532245979d3897b8b94d647557d46",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg"
+    ],
+    "cover_image": "assets/reel/davidovich-tiafoe-cover.jpg"
+  },
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "YVh1aC2e",
+      "start_utc": "2026-10-11T12:50:00Z",
+      "end_utc": "2026-10-11T15:37:05Z",
+      "source": "flashscore dc_1_YVh1aC2e（DC／DD）"
+    },
+    "replaced_under": ""
   }
 }
