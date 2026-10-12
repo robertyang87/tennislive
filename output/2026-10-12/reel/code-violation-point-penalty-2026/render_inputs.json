@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "code-violation-point-penalty-2026",
-  "written_at": "2026-10-12T15:16:20Z",
-  "code_sha": "6f42d3fa9e9ef915f7fa8190b04d4df2d874d7cd",
-  "spec_sha256": "98c0fd89574cb3894840d6e591ecd9e265df83c88b5a118d65ceac38db5eb078",
-  "film_sha256": "6cb30084d2bc98c79bcebd0352f07e8e34c47032f3ad7e88efeb11cffaf1e474",
-  "film_bytes": 107744602,
-  "projection_sha256": "aa6f46b603cc53b7bed04e173b4e558185235b650480c5c2f27252fce90a3c46",
+  "written_at": "2026-10-12T15:44:30Z",
+  "code_sha": "e6af6365aa31302eedcdd0ee4df38d2142319e49",
+  "spec_sha256": "e1060d61abc77b77042aa309e65755332063bac8167479b1a4822f9b755c30ab",
+  "film_sha256": "d23d4e29afed554f60001cd3348ede5fcd601227fc8a8069d19a7b2474b560ae",
+  "film_bytes": 107828311,
+  "projection_sha256": "f596654ce38e906b542b1a915860938038a412a9cb5e2d760024da031cca8e11",
   "claims": [
     [
       "cover",
@@ -36,7 +36,7 @@
     "assets/reel/cv2/cv2-zverev.png": "cb1a1929b2cee3e450c64436cfeb3ae09d35cb7e30378f5e7f508defff6dfa17"
   },
   "artifacts": {
-    "audio_review_binding.json": "7c44490d75da80e7a791ec7a43e2d4e3b0a12893d973785b989474bcc1ca2e82",
+    "audio_review_binding.json": "7c9812d70d78417d1c8944b5d75f66f90192abc17b4714fbf8dafb6c258f4961",
     "subtitles.ass": "80d9dd0c08bc9f371070dffe77aba8d6de7517224693f9043e809224c87c8c5d",
     "poster.jpg": "3b1aec2c9425c276722eb05c17996f6a36971a568130f2da6ec251db510dc0ec"
   },
@@ -413,7 +413,9 @@
           "pad": 0.085,
           "show_for": 3.8,
           "motion": "editorial"
-        }
+        },
+        "crop_zoom": 1.04,
+        "fill_y": 1
       },
       {
         "source": "zverev",
@@ -421,7 +423,9 @@
         "end": 25.5,
         "cx": 0.5,
         "track": false,
-        "narration": "连砸主裁椅，当场被逐出赛事。"
+        "narration": "连砸主裁椅，当场被逐出赛事。",
+        "crop_zoom": 1.04,
+        "fill_y": 1
       },
       {
         "source": "zverev",
@@ -438,7 +442,9 @@
           "pad": 0.085,
           "show_for": 3.8,
           "motion": "editorial"
-        }
+        },
+        "crop_zoom": 1.04,
+        "fill_y": 1
       },
       {
         "source": "medvedev",
@@ -520,7 +526,9 @@
         "end": 102.9,
         "cx": 0.5,
         "track": false,
-        "narration": "下一场，他能把火气留在拍子里吗？"
+        "narration": "下一场，他能把火气留在拍子里吗？",
+        "crop_zoom": 1.55,
+        "fill_y": 1
       }
     ],
     "conform": {
