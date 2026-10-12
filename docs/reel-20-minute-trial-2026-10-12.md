@@ -82,3 +82,5 @@
 [微信推送](https://www.pushplus.plus/shortMessage/609af4750e6f4d7eb555ca6e6f1d0ec3)。已复制main的[marker快照](../data/evidence/reel-speed-review-2026-10-12/timed-trial-pushed-snapshot.json)、[sent账本快照](../data/evidence/reel-speed-review-2026-10-12/timed-trial-sent-ledger-snapshot.json)与[快照来源及hash](../data/evidence/reel-speed-review-2026-10-12/timed-trial-delivery-snapshot-provenance.json)。这些只读快照方便复盘核查，不代替实时原生发布门禁、当前账本或授权，不触发发送。
 
 本片交付完成，20分钟目标明确失败。代码优化的实际收益只按同条件单项实测记录；整条新素材链路是否能接近20分钟，还需要再验证一次，不能据本文宣称已经达标。
+
+测试数量、历史参数化与93秒最慢全库检查的实际拆解见[测试套件审计](reel-test-suite-audit-2026-10-12.md)。本期修改了共享模块，完整回归有依据；后续纯新影片应评估当期检查与全库历史回归的执行范围，不按数量直接删除有效判据。

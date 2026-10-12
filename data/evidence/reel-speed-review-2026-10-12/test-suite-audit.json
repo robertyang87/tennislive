@@ -1,0 +1,1884 @@
+{
+  "audited_at_utc": "2026-10-12T22:20:55.302898+00:00",
+  "head": "025bf654402c8572c38a3a4c0adb3fd4c96879c2",
+  "scope": "read-only collection and prior actual CI timing; no test, CI, or permission edits",
+  "collection": {
+    "total_nodes": 6160,
+    "test_files": 291,
+    "distinct_node_bases": 4004,
+    "ast_test_function_definitions": 4004,
+    "parameterized_nodes": 2445,
+    "expansion_over_distinct_bases": 2156,
+    "collection_seconds": 8.95,
+    "ci_passed": 5952,
+    "ci_skipped": 208,
+    "ci_wall_seconds": 478.61,
+    "ci_run": 38314245268,
+    "ci_head": "914eb66948b3f6477b83b0e2daaf6a06afa2f2c6"
+  },
+  "files": [
+    {
+      "file": "tests/test_interview_clip.py",
+      "cases": 1144,
+      "parameterized": 935
+    },
+    {
+      "file": "tests/test_match_reel.py",
+      "cases": 393,
+      "parameterized": 18
+    },
+    {
+      "file": "tests/test_explainer_budget.py",
+      "cases": 168,
+      "parameterized": 162
+    },
+    {
+      "file": "tests/test_render.py",
+      "cases": 128,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_explainer.py",
+      "cases": 109,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_preflight.py",
+      "cases": 105,
+      "parameterized": 46
+    },
+    {
+      "file": "tests/test_winners_ue_gate.py",
+      "cases": 94,
+      "parameterized": 68
+    },
+    {
+      "file": "tests/test_reattest.py",
+      "cases": 84,
+      "parameterized": 44
+    },
+    {
+      "file": "tests/test_oncourt_collect.py",
+      "cases": 83,
+      "parameterized": 38
+    },
+    {
+      "file": "tests/test_oncourt_feed.py",
+      "cases": 73,
+      "parameterized": 41
+    },
+    {
+      "file": "tests/test_cover_upgrade.py",
+      "cases": 72,
+      "parameterized": 31
+    },
+    {
+      "file": "tests/test_official_photo_apis.py",
+      "cases": 70,
+      "parameterized": 30
+    },
+    {
+      "file": "tests/test_import_approved_eala_shi.py",
+      "cases": 67,
+      "parameterized": 48
+    },
+    {
+      "file": "tests/test_auto_push_interview.py",
+      "cases": 63,
+      "parameterized": 12
+    },
+    {
+      "file": "tests/test_reel_asset_gates.py",
+      "cases": 57,
+      "parameterized": 33
+    },
+    {
+      "file": "tests/test_import_approved_bergs_alcaraz_shanghai.py",
+      "cases": 56,
+      "parameterized": 41
+    },
+    {
+      "file": "tests/test_interview_subs_first.py",
+      "cases": 55,
+      "parameterized": 11
+    },
+    {
+      "file": "tests/test_cover_resolution.py",
+      "cases": 54,
+      "parameterized": 47
+    },
+    {
+      "file": "tests/test_import_approved_zheng_andreeva_beijing.py",
+      "cases": 52,
+      "parameterized": 44
+    },
+    {
+      "file": "tests/test_schedule_cards.py",
+      "cases": 52,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_cover_hook_accent_color.py",
+      "cases": 50,
+      "parameterized": 49
+    },
+    {
+      "file": "tests/test_workflow_contract_helpers.py",
+      "cases": 48,
+      "parameterized": 41
+    },
+    {
+      "file": "tests/test_o4_channels.py",
+      "cases": 43,
+      "parameterized": 21
+    },
+    {
+      "file": "tests/test_platform_stats.py",
+      "cases": 42,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_cover_autopick.py",
+      "cases": 41,
+      "parameterized": 18
+    },
+    {
+      "file": "tests/test_foreground_audio_gate.py",
+      "cases": 40,
+      "parameterized": 22
+    },
+    {
+      "file": "tests/test_orchestrate.py",
+      "cases": 38,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_editorial.py",
+      "cases": 38,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_source_probe_robustness.py",
+      "cases": 38,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_dashboard_snapshot.py",
+      "cases": 37,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_match_feed_tools.py",
+      "cases": 37,
+      "parameterized": 4
+    },
+    {
+      "file": "tests/test_probe_claims.py",
+      "cases": 37,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_production_gates.py",
+      "cases": 37,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_zheng_single_film_omission.py",
+      "cases": 37,
+      "parameterized": 34
+    },
+    {
+      "file": "tests/test_small_gates.py",
+      "cases": 35,
+      "parameterized": 5
+    },
+    {
+      "file": "tests/test_taste_gates_extra.py",
+      "cases": 34,
+      "parameterized": 9
+    },
+    {
+      "file": "tests/test_stat_card.py",
+      "cases": 33,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_cover_visual_quality.py",
+      "cases": 32,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_face_checks.py",
+      "cases": 32,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_assemble_spec.py",
+      "cases": 30,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_auto_push.py",
+      "cases": 30,
+      "parameterized": 3
+    },
+    {
+      "file": "tests/test_pipeline_health.py",
+      "cases": 30,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_pushplus.py",
+      "cases": 30,
+      "parameterized": 4
+    },
+    {
+      "file": "tests/test_segment_subtitle_bottom.py",
+      "cases": 30,
+      "parameterized": 24
+    },
+    {
+      "file": "tests/test_interview_cover_first.py",
+      "cases": 29,
+      "parameterized": 2
+    },
+    {
+      "file": "tests/test_interview_source_gate.py",
+      "cases": 29,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_card_palette.py",
+      "cases": 28,
+      "parameterized": 5
+    },
+    {
+      "file": "tests/test_natural_quiet_audio.py",
+      "cases": 28,
+      "parameterized": 15
+    },
+    {
+      "file": "tests/test_taste_gates.py",
+      "cases": 28,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_final_copy_title_boundary.py",
+      "cases": 27,
+      "parameterized": 22
+    },
+    {
+      "file": "tests/test_probe_audio.py",
+      "cases": 27,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_rating.py",
+      "cases": 27,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_narrated_audio_mode.py",
+      "cases": 26,
+      "parameterized": 17
+    },
+    {
+      "file": "tests/test_official_video.py",
+      "cases": 26,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_pick_interview_renders.py",
+      "cases": 26,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_scoreboard_template.py",
+      "cases": 25,
+      "parameterized": 3
+    },
+    {
+      "file": "tests/test_explainer_preflight.py",
+      "cases": 24,
+      "parameterized": 17
+    },
+    {
+      "file": "tests/test_interview_visual.py",
+      "cases": 23,
+      "parameterized": 2
+    },
+    {
+      "file": "tests/test_publication_revision.py",
+      "cases": 23,
+      "parameterized": 7
+    },
+    {
+      "file": "tests/test_venue_assets.py",
+      "cases": 23,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_wta_scoreboard_geometry.py",
+      "cases": 23,
+      "parameterized": 3
+    },
+    {
+      "file": "tests/test_cover_channels.py",
+      "cases": 22,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_production_history.py",
+      "cases": 22,
+      "parameterized": 4
+    },
+    {
+      "file": "tests/test_promote_interview_draft.py",
+      "cases": 21,
+      "parameterized": 4
+    },
+    {
+      "file": "tests/test_dispatch_reel_queue.py",
+      "cases": 20,
+      "parameterized": 11
+    },
+    {
+      "file": "tests/test_native_ambience_proof.py",
+      "cases": 20,
+      "parameterized": 14
+    },
+    {
+      "file": "tests/test_production_style.py",
+      "cases": 20,
+      "parameterized": 17
+    },
+    {
+      "file": "tests/test_detect_highlights.py",
+      "cases": 19,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_feed_retry.py",
+      "cases": 19,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_news_brief.py",
+      "cases": 19,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_polyphone_contexts.py",
+      "cases": 19,
+      "parameterized": 11
+    },
+    {
+      "file": "tests/test_probe_board.py",
+      "cases": 19,
+      "parameterized": 3
+    },
+    {
+      "file": "tests/test_reference_learning.py",
+      "cases": 19,
+      "parameterized": 17
+    },
+    {
+      "file": "tests/test_visual_sources.py",
+      "cases": 19,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_declared_scoreboard_profile.py",
+      "cases": 18,
+      "parameterized": 16
+    },
+    {
+      "file": "tests/test_replay_pronunciation.py",
+      "cases": 18,
+      "parameterized": 15
+    },
+    {
+      "file": "tests/test_topline_format.py",
+      "cases": 18,
+      "parameterized": 14
+    },
+    {
+      "file": "tests/test_absolute_claims.py",
+      "cases": 17,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_atp_scoreboard_shanghai_real.py",
+      "cases": 17,
+      "parameterized": 14
+    },
+    {
+      "file": "tests/test_design_tokens.py",
+      "cases": 17,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_native_opening.py",
+      "cases": 17,
+      "parameterized": 14
+    },
+    {
+      "file": "tests/test_taste_preflight.py",
+      "cases": 17,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_workflow_alerts.py",
+      "cases": 17,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_explainer_visual.py",
+      "cases": 16,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_draft_hold.py",
+      "cases": 16,
+      "parameterized": 5
+    },
+    {
+      "file": "tests/test_interview_landed.py",
+      "cases": 16,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_transcript_languages.py",
+      "cases": 16,
+      "parameterized": 11
+    },
+    {
+      "file": "tests/test_player_names.py",
+      "cases": 16,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_push_visual.py",
+      "cases": 16,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_stat_card_palette.py",
+      "cases": 16,
+      "parameterized": 14
+    },
+    {
+      "file": "tests/test_wta_compilation_identity.py",
+      "cases": 16,
+      "parameterized": 11
+    },
+    {
+      "file": "tests/test_align_points.py",
+      "cases": 15,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_explainer_efficiency.py",
+      "cases": 15,
+      "parameterized": 12
+    },
+    {
+      "file": "tests/test_interview_download_recovery.py",
+      "cases": 15,
+      "parameterized": 10
+    },
+    {
+      "file": "tests/test_pronounce.py",
+      "cases": 15,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_encoding.py",
+      "cases": 15,
+      "parameterized": 15
+    },
+    {
+      "file": "tests/test_spec_wording.py",
+      "cases": 15,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_copy_title_policy.py",
+      "cases": 14,
+      "parameterized": 8
+    },
+    {
+      "file": "tests/test_fixed_center_video_policy.py",
+      "cases": 14,
+      "parameterized": 11
+    },
+    {
+      "file": "tests/test_interview_gap_annotations.py",
+      "cases": 14,
+      "parameterized": 8
+    },
+    {
+      "file": "tests/test_preview_segments.py",
+      "cases": 14,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_qa_xiaohongshu.py",
+      "cases": 14,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_title_card.py",
+      "cases": 14,
+      "parameterized": 2
+    },
+    {
+      "file": "tests/test_topic_radar.py",
+      "cases": 14,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_zh.py",
+      "cases": 14,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_custom_scorebox_preflight.py",
+      "cases": 13,
+      "parameterized": 8
+    },
+    {
+      "file": "tests/test_interview_hall_of_fame.py",
+      "cases": 13,
+      "parameterized": 4
+    },
+    {
+      "file": "tests/test_preview_beats.py",
+      "cases": 13,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_tnns.py",
+      "cases": 13,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_tnns_stats.py",
+      "cases": 13,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_find_cover_photo.py",
+      "cases": 12,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_production_pronunciation_dependencies.py",
+      "cases": 12,
+      "parameterized": 9
+    },
+    {
+      "file": "tests/test_reel_craft.py",
+      "cases": 12,
+      "parameterized": 3
+    },
+    {
+      "file": "tests/test_reel_review_files.py",
+      "cases": 12,
+      "parameterized": 9
+    },
+    {
+      "file": "tests/test_reel_source_quality_exception.py",
+      "cases": 12,
+      "parameterized": 10
+    },
+    {
+      "file": "tests/test_wta_live.py",
+      "cases": 12,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_zh_trends.py",
+      "cases": 12,
+      "parameterized": 3
+    },
+    {
+      "file": "tests/test_cli.py",
+      "cases": 11,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_segment_ruler.py",
+      "cases": 11,
+      "parameterized": 3
+    },
+    {
+      "file": "tests/test_production_speed.py",
+      "cases": 11,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_dispatch_outbox.py",
+      "cases": 11,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_runner_setup_cache.py",
+      "cases": 11,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_scoreboard_profiles.py",
+      "cases": 11,
+      "parameterized": 5
+    },
+    {
+      "file": "tests/test_segment_scorebox.py",
+      "cases": 11,
+      "parameterized": 5
+    },
+    {
+      "file": "tests/test_team_exhibition_scoreboard.py",
+      "cases": 11,
+      "parameterized": 7
+    },
+    {
+      "file": "tests/test_unvoiced_quote.py",
+      "cases": 11,
+      "parameterized": 5
+    },
+    {
+      "file": "tests/test_crop_zoom_segment.py",
+      "cases": 10,
+      "parameterized": 6
+    },
+    {
+      "file": "tests/test_flashscore.py",
+      "cases": 10,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_list_official_uploads.py",
+      "cases": 10,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_nishikori_farewell_source_quality.py",
+      "cases": 10,
+      "parameterized": 7
+    },
+    {
+      "file": "tests/test_probe_sources.py",
+      "cases": 10,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_push_link.py",
+      "cases": 10,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_cover_watermark.py",
+      "cases": 10,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_delivery_sla.py",
+      "cases": 10,
+      "parameterized": 8
+    },
+    {
+      "file": "tests/test_reel_editorial_contract.py",
+      "cases": 10,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_atp_cover_photo.py",
+      "cases": 9,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_content_ops.py",
+      "cases": 9,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_cover_registry.py",
+      "cases": 9,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_find_pending_draft.py",
+      "cases": 9,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_import_approved_zheng_mertens_beijing.py",
+      "cases": 9,
+      "parameterized": 6
+    },
+    {
+      "file": "tests/test_interview_asr_window.py",
+      "cases": 9,
+      "parameterized": 7
+    },
+    {
+      "file": "tests/test_mcp_stats.py",
+      "cases": 9,
+      "parameterized": 2
+    },
+    {
+      "file": "tests/test_official_social_images.py",
+      "cases": 9,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_push_system_theme.py",
+      "cases": 9,
+      "parameterized": 7
+    },
+    {
+      "file": "tests/test_reel_render_budget.py",
+      "cases": 9,
+      "parameterized": 8
+    },
+    {
+      "file": "tests/test_scoreboard_adaptive_width.py",
+      "cases": 9,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_sun_exact_source_quality.py",
+      "cases": 9,
+      "parameterized": 7
+    },
+    {
+      "file": "tests/test_verified_retirement.py",
+      "cases": 9,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_video_pipeline.py",
+      "cases": 9,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_wta_scoreboard.py",
+      "cases": 9,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_crop_zoom_limit.py",
+      "cases": 8,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_en_subtitle_font.py",
+      "cases": 8,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_five_film_wue_omissions.py",
+      "cases": 8,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_hashtags.py",
+      "cases": 8,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_jev_selective.py",
+      "cases": 8,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_pick_oncourt_clips.py",
+      "cases": 8,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_slam_feed.py",
+      "cases": 8,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_source_aggregation.py",
+      "cases": 8,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_source_scoreboard_retention.py",
+      "cases": 8,
+      "parameterized": 5
+    },
+    {
+      "file": "tests/test_story_info_band.py",
+      "cases": 8,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_time_sensitive_facts.py",
+      "cases": 8,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_video_workflow_efficiency.py",
+      "cases": 8,
+      "parameterized": 5
+    },
+    {
+      "file": "tests/test_ai_disclosure.py",
+      "cases": 7,
+      "parameterized": 1
+    },
+    {
+      "file": "tests/test_archive_media.py",
+      "cases": 7,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_atp_scoreboard_beijing_real.py",
+      "cases": 7,
+      "parameterized": 6
+    },
+    {
+      "file": "tests/test_chromium.py",
+      "cases": 7,
+      "parameterized": 2
+    },
+    {
+      "file": "tests/test_collection_cover.py",
+      "cases": 7,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_explainer_gate.py",
+      "cases": 7,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_global_navy_cards.py",
+      "cases": 7,
+      "parameterized": 6
+    },
+    {
+      "file": "tests/test_inset_animation.py",
+      "cases": 7,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_native_chinese.py",
+      "cases": 7,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_jev_review_queue.py",
+      "cases": 7,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_lavercup_scoreboard.py",
+      "cases": 7,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_bilingual_subtitles.py",
+      "cases": 7,
+      "parameterized": 4
+    },
+    {
+      "file": "tests/test_reviewed_effects_mode.py",
+      "cases": 7,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_taste_prompts.py",
+      "cases": 7,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_tts_cache_integrity.py",
+      "cases": 7,
+      "parameterized": 4
+    },
+    {
+      "file": "tests/test_atp_scoreboard.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_claude_md_pointers.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_detect_scorebox.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_docs_pointers.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_edge_tts_transport.py",
+      "cases": 6,
+      "parameterized": 6
+    },
+    {
+      "file": "tests/test_espn.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_gh_runs.py",
+      "cases": 6,
+      "parameterized": 2
+    },
+    {
+      "file": "tests/test_interview_farewell.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_official_farewell_no_lead.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_photo_audit_contract.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_narrative.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_pin_comment.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_probe_tnns.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_rankings.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_narration.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_scoreboard_geometry.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_segment_audio_tail.py",
+      "cases": 6,
+      "parameterized": 4
+    },
+    {
+      "file": "tests/test_stat_card_optional_rows.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_subtitle_override_evidence.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_tennistv_catalog.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_timeutil.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_tts.py",
+      "cases": 6,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_vertical_canvas.py",
+      "cases": 6,
+      "parameterized": 5
+    },
+    {
+      "file": "tests/test_attach_interview_lead_in.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_beat_card.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_compose_native_reel.py",
+      "cases": 5,
+      "parameterized": 2
+    },
+    {
+      "file": "tests/test_corner_label_style.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_cover_topic_format.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_download_video_workflow.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_find_hot_moments.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_flashcard.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_grab_frames.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_identify_player_frame.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_jev_production.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_merge_interview_dispatch.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_merge_orchestration_state.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_models.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_official_schedule.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_pages_watchdog.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_platform_title_limits.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_push_reel_asset_ref.py",
+      "cases": 5,
+      "parameterized": 4
+    },
+    {
+      "file": "tests/test_rna_scoreboard.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_session_start_hook.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_social_search.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_topic_probe.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_verified_disqualification.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_video_sla_workflows.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_wta_cover_photo.py",
+      "cases": 5,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_card_stat_shedding.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_cover_render_binding.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_fetch_official_headshot.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_git_push_retry.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_headshot_index.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_centered_logo_geometry.py",
+      "cases": 4,
+      "parameterized": 4
+    },
+    {
+      "file": "tests/test_interview_film_seconds.py",
+      "cases": 4,
+      "parameterized": 2
+    },
+    {
+      "file": "tests/test_interview_untrusted_broadcaster.py",
+      "cases": 4,
+      "parameterized": 1
+    },
+    {
+      "file": "tests/test_jev_review_policy.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_nudge_stale_ticks.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_outro_master_fresh.py",
+      "cases": 4,
+      "parameterized": 3
+    },
+    {
+      "file": "tests/test_publication_ledger.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_review_repairs.py",
+      "cases": 4,
+      "parameterized": 2
+    },
+    {
+      "file": "tests/test_slow_motion.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_stats_source_routing.py",
+      "cases": 4,
+      "parameterized": 3
+    },
+    {
+      "file": "tests/test_staylive_bjk.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_title_echo.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_topbar_icon.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_trends.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_video_sla.py",
+      "cases": 4,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_bed_tiers.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_finished_master_guard.py",
+      "cases": 3,
+      "parameterized": 3
+    },
+    {
+      "file": "tests/test_full_canvas_subtitles.py",
+      "cases": 3,
+      "parameterized": 2
+    },
+    {
+      "file": "tests/test_git_staged_size.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_itf_scoreboard.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_media_research.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_medvedev_default_episode.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_news_flash.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_no_signed_urls.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_one_shot_cleanup.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_outro_push.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_outro_render.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_match_duration_units.py",
+      "cases": 3,
+      "parameterized": 3
+    },
+    {
+      "file": "tests/test_release_tag_collision.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_segment_subtitle_bottom_windows.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_source_story_cards.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_sportradar.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_visual_backoff.py",
+      "cases": 3,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_actions_write_permission.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_copy_body_headline.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_draft_interview_spec.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_fetch_match_stats_fs.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_photo_cover_source.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_names.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_no_duplicate_defs.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_official_footage_policy.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_visual_source_audio.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_release_orchestration_claim.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_render_startup_cache.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_rna10_exhibition_stats.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_schedule_insight.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_scoreboard_geometry_qc.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_stat_card_rounding.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_video_page.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_warning_classes.py",
+      "cases": 2,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_explainer_workflow_cleanup.py",
+      "cases": 1,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_fullscreen_story_photo.py",
+      "cases": 1,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_direct_media.py",
+      "cases": 1,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_interview_evidence_cleanup.py",
+      "cases": 1,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_match_reel_optional_int_inputs.py",
+      "cases": 1,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_prepare_alignment.py",
+      "cases": 1,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_portrait_archive.py",
+      "cases": 1,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_qc_attestation.py",
+      "cases": 1,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_reel_qc_generated_cards.py",
+      "cases": 1,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_requested_reel_revision.py",
+      "cases": 1,
+      "parameterized": 0
+    },
+    {
+      "file": "tests/test_scoreboard_exact_crop.py",
+      "cases": 1,
+      "parameterized": 0
+    }
+  ],
+  "top_expanded_functions": [
+    {
+      "function": "tests/test_interview_clip.py::test_spec里的人工引语和en_fixed是自洽的",
+      "cases": 116
+    },
+    {
+      "function": "tests/test_interview_clip.py::test_没验过转写的spec不许标verified",
+      "cases": 116
+    },
+    {
+      "function": "tests/test_interview_clip.py::test_挂账的行号得真的存在",
+      "cases": 116
+    },
+    {
+      "function": "tests/test_interview_clip.py::test_销掉的空档得真的是空档",
+      "cases": 116
+    },
+    {
+      "function": "tests/test_interview_clip.py::test_中间物不许进仓库",
+      "cases": 116
+    },
+    {
+      "function": "tests/test_interview_clip.py::test_spec里的推送字段拼得出合格标题",
+      "cases": 116
+    },
+    {
+      "function": "tests/test_interview_clip.py::test_封面引的话必须在片子里",
+      "cases": 116
+    },
+    {
+      "function": "tests/test_interview_clip.py::test_TennisTV的源片必须真的把台标挪出窗口",
+      "cases": 116
+    },
+    {
+      "function": "tests/test_explainer_budget.py::test_旁白字数不超过片长预算",
+      "cases": 54
+    },
+    {
+      "function": "tests/test_explainer_budget.py::test_封面第一句要在决定窗口里说完",
+      "cases": 54
+    },
+    {
+      "function": "tests/test_explainer_budget.py::test_封面那一问要能排进一行",
+      "cases": 54
+    },
+    {
+      "function": "tests/test_cover_resolution.py::test_封面图不许被放大",
+      "cases": 47
+    },
+    {
+      "function": "tests/test_cover_upgrade.py::test_说明不点对手或写的不是比赛本身_不换",
+      "cases": 24
+    },
+    {
+      "function": "tests/test_cover_hook_accent_color.py::test_color_only_changes_title_accent_rules",
+      "cases": 20
+    },
+    {
+      "function": "tests/test_interview_preflight.py::test_抢七注脚整个剥掉_不许被当成另一盘",
+      "cases": 19
+    },
+    {
+      "function": "tests/test_cover_hook_accent_color.py::test_invalid_color_is_rejected_before_render",
+      "cases": 17
+    },
+    {
+      "function": "tests/test_explainer_preflight.py::test_这一项预检真的会红",
+      "cases": 17
+    },
+    {
+      "function": "tests/test_reattest.py::test_认领按那道闸自己的口径算数",
+      "cases": 16
+    },
+    {
+      "function": "tests/test_replay_pronunciation.py::test_replay_rule_does_not_change_other_meanings_or_cross_word_boundaries",
+      "cases": 15
+    },
+    {
+      "function": "tests/test_atp_scoreboard_shanghai_real.py::test_actual_full_board_boundary",
+      "cases": 14
+    }
+  ],
+  "slowest_actual": {
+    "final-914-ci.log": [
+      {
+        "seconds": 93.12,
+        "phase": "call",
+        "node": "tests/test_match_reel.py::test_每条spec的旁白都还估得下"
+      },
+      {
+        "seconds": 42.73,
+        "phase": "call",
+        "node": "tests/test_interview_segment_ruler.py::test_已渲的采访spec按钉死的尺子重切_行一行不差"
+      },
+      {
+        "seconds": 41.04,
+        "phase": "call",
+        "node": "tests/test_interview_segment_ruler.py::test_老尺子表只许减_每条都真的要它"
+      },
+      {
+        "seconds": 34.86,
+        "phase": "call",
+        "node": "tests/test_interview_clip.py::test_片头和片尾各写各的中间物不许撞文件名"
+      },
+      {
+        "seconds": 31.41,
+        "phase": "call",
+        "node": "tests/test_oncourt_collect.py::test_cross_edition_cap_is_close_to_the_best_single_edition"
+      },
+      {
+        "seconds": 29.58,
+        "phase": "call",
+        "node": "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报"
+      },
+      {
+        "seconds": 29.18,
+        "phase": "call",
+        "node": "tests/test_oncourt_collect.py::test_unknown_gender_never_counts_toward_a_single_tour_draw"
+      },
+      {
+        "seconds": 28.82,
+        "phase": "call",
+        "node": "tests/test_match_reel.py::test_封面大图一律用官方高清图不许抽帧"
+      },
+      {
+        "seconds": 27.59,
+        "phase": "call",
+        "node": "tests/test_explainer.py::test_冷开场台头不许把片头拖到台头图那么长"
+      },
+      {
+        "seconds": 26.27,
+        "phase": "call",
+        "node": "tests/test_explainer_visual.py::test_接缝真跑ffmpeg_没有黑帧没有单帧跳变_声画对得上"
+      },
+      {
+        "seconds": 23.65,
+        "phase": "call",
+        "node": "tests/test_interview_subs_first.py::test_已发的采访_当前判定一条都不红"
+      },
+      {
+        "seconds": 22.87,
+        "phase": "call",
+        "node": "tests/test_explainer_visual.py::test_所有带示意图的字卡_渲染后示意图底边离文案块至少16px"
+      },
+      {
+        "seconds": 21.89,
+        "phase": "call",
+        "node": "tests/test_reel_asset_gates.py::test_runner视角下封面复用那道闸和本地一样零误报"
+      },
+      {
+        "seconds": 21.74,
+        "phase": "call",
+        "node": "tests/test_outro_render.py::test_采访片的片尾要和正片拼得起来"
+      },
+      {
+        "seconds": 21.65,
+        "phase": "call",
+        "node": "tests/test_explainer.py::test_冷开场台头要和幻灯片台头同一份样式"
+      },
+      {
+        "seconds": 21.51,
+        "phase": "call",
+        "node": "tests/test_explainer.py::test_解说片接上片头之后成片真的变长"
+      },
+      {
+        "seconds": 20.99,
+        "phase": "call",
+        "node": "tests/test_render.py::test_single_cover_no_hook_page"
+      },
+      {
+        "seconds": 20.31,
+        "phase": "call",
+        "node": "tests/test_interview_clip.py::test_跨源那一段的顶栏要盖住整段不跟着台词收尾"
+      },
+      {
+        "seconds": 20.2,
+        "phase": "call",
+        "node": "tests/test_cover_upgrade.py::test_最终那道闸在工作流的稀疏检出里和全量检出里判得一样"
+      },
+      {
+        "seconds": 19.53,
+        "phase": "call",
+        "node": "tests/test_probe_audio.py::test_十几段之后_段界溶解尾巴_响静边沿_真跑一遍混音链"
+      },
+      {
+        "seconds": 18.37,
+        "phase": "call",
+        "node": "tests/test_interview_clip.py::test_lead_in关掉顶栏时不带subs也真的不烧字幕"
+      },
+      {
+        "seconds": 18.18,
+        "phase": "call",
+        "node": "tests/test_match_reel.py::test_直链下到的网页不许当成源片还存进缓存"
+      },
+      {
+        "seconds": 18.1,
+        "phase": "call",
+        "node": "tests/test_interview_clip.py::test_lead_in不带subs时真烧出顶栏"
+      },
+      {
+        "seconds": 17.33,
+        "phase": "call",
+        "node": "tests/test_outro_push.py::test_片尾推镜亚像素平滑_台标横向不漂_纵向单调"
+      },
+      {
+        "seconds": 17.16,
+        "phase": "call",
+        "node": "tests/test_interview_clip.py::test_lead_in片段和正片拼得起来"
+      }
+    ],
+    "ci-f3c9d28-failed.log": [
+      {
+        "seconds": 95.32,
+        "phase": "call",
+        "node": "tests/test_match_reel.py::test_每条spec的旁白都还估得下"
+      },
+      {
+        "seconds": 41.8,
+        "phase": "call",
+        "node": "tests/test_interview_segment_ruler.py::test_已渲的采访spec按钉死的尺子重切_行一行不差"
+      },
+      {
+        "seconds": 39.9,
+        "phase": "call",
+        "node": "tests/test_interview_segment_ruler.py::test_老尺子表只许减_每条都真的要它"
+      },
+      {
+        "seconds": 35.19,
+        "phase": "call",
+        "node": "tests/test_interview_clip.py::test_片头和片尾各写各的中间物不许撞文件名"
+      },
+      {
+        "seconds": 31.25,
+        "phase": "call",
+        "node": "tests/test_oncourt_collect.py::test_cross_edition_cap_is_close_to_the_best_single_edition"
+      },
+      {
+        "seconds": 28.61,
+        "phase": "call",
+        "node": "tests/test_oncourt_collect.py::test_unknown_gender_never_counts_toward_a_single_tour_draw"
+      },
+      {
+        "seconds": 28.01,
+        "phase": "call",
+        "node": "tests/test_explainer.py::test_冷开场台头不许把片头拖到台头图那么长"
+      },
+      {
+        "seconds": 28.0,
+        "phase": "call",
+        "node": "tests/test_match_reel.py::test_封面大图一律用官方高清图不许抽帧"
+      },
+      {
+        "seconds": 27.56,
+        "phase": "call",
+        "node": "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报"
+      },
+      {
+        "seconds": 26.34,
+        "phase": "call",
+        "node": "tests/test_explainer_visual.py::test_接缝真跑ffmpeg_没有黑帧没有单帧跳变_声画对得上"
+      },
+      {
+        "seconds": 23.26,
+        "phase": "call",
+        "node": "tests/test_interview_subs_first.py::test_已发的采访_当前判定一条都不红"
+      },
+      {
+        "seconds": 22.74,
+        "phase": "call",
+        "node": "tests/test_explainer_visual.py::test_所有带示意图的字卡_渲染后示意图底边离文案块至少16px"
+      },
+      {
+        "seconds": 22.33,
+        "phase": "call",
+        "node": "tests/test_cover_upgrade.py::test_最终那道闸在工作流的稀疏检出里和全量检出里判得一样"
+      },
+      {
+        "seconds": 22.27,
+        "phase": "call",
+        "node": "tests/test_explainer.py::test_冷开场台头要和幻灯片台头同一份样式"
+      },
+      {
+        "seconds": 21.71,
+        "phase": "call",
+        "node": "tests/test_reel_asset_gates.py::test_runner视角下封面复用那道闸和本地一样零误报"
+      },
+      {
+        "seconds": 21.52,
+        "phase": "call",
+        "node": "tests/test_explainer.py::test_解说片接上片头之后成片真的变长"
+      },
+      {
+        "seconds": 21.4,
+        "phase": "call",
+        "node": "tests/test_probe_audio.py::test_十几段之后_段界溶解尾巴_响静边沿_真跑一遍混音链"
+      },
+      {
+        "seconds": 21.4,
+        "phase": "call",
+        "node": "tests/test_outro_render.py::test_采访片的片尾要和正片拼得起来"
+      },
+      {
+        "seconds": 20.44,
+        "phase": "call",
+        "node": "tests/test_render.py::test_single_cover_no_hook_page"
+      },
+      {
+        "seconds": 19.03,
+        "phase": "call",
+        "node": "tests/test_interview_clip.py::test_跨源那一段的顶栏要盖住整段不跟着台词收尾"
+      },
+      {
+        "seconds": 18.36,
+        "phase": "call",
+        "node": "tests/test_interview_clip.py::test_lead_in关掉顶栏时不带subs也真的不烧字幕"
+      },
+      {
+        "seconds": 17.35,
+        "phase": "call",
+        "node": "tests/test_interview_clip.py::test_lead_in片段和正片拼得起来"
+      },
+      {
+        "seconds": 16.83,
+        "phase": "call",
+        "node": "tests/test_outro_push.py::test_片尾推镜亚像素平滑_台标横向不漂_纵向单调"
+      },
+      {
+        "seconds": 16.15,
+        "phase": "call",
+        "node": "tests/test_match_reel.py::test_直链下到的网页不许当成源片还存进缓存"
+      },
+      {
+        "seconds": 16.12,
+        "phase": "call",
+        "node": "tests/test_interview_clip.py::test_lead_in不带subs时真烧出顶栏"
+      }
+    ]
+  },
+  "confirmed_corpus_expansion": {
+    "interview_clip_historical_spec_rules": 8,
+    "historical_interview_specs": 116,
+    "cases": 162,
+    "explainer_budget_historical_scripts_rules": 3,
+    "historical_scripts": 54
+  },
+  "findings": [
+    "Cases count parameter instances, not independent features; 6160 collection = 5952 pass + 208 skip.",
+    "Top 25 per-test timings are parallel worker durations; summing them is not total CI wall time or predicted savings.",
+    "--dist loadfile keeps all tests in each file on one worker; the 393-case match_reel file includes the 93-second all-spec narration scan. Load balancing should be measured, never changed blindly.",
+    "Narration scan validates every reel spec without network and scans publication state; it is not timing actual TTS.",
+    "Two interview ruler tests both enumerate cached historical interview corpus; default mismatch cache exists, but _rendered_corpus itself is rebuilt. Repeated scans also occur in reel cover/asset checks; they cover different invariants and are not proven duplicate assertions.",
+    "Mocks and autouse isolation suppress ambient GitHub/slam/official-photo/headshot/face-model networks; real FFmpeg/Chromium/font/face inference tests remain, so mock-only does not mean zero cost. No global socket prohibition was established.",
+    "208 CI skips are mostly conditional historical interview applicability (110 no quote,27 no outstanding issues,65 no acknowledged gap); they do not imply 208 missing core video checks.",
+    "Existing tests/production_history.py omits only diagnosed exact frozen sent snapshots; new/changed input fails closed. This is not a general changed-slug selector.",
+    "This episode changed shared source staging, rendering fields, aliases, audio QC, compressed-stream composition, release transport, workflow/cache, and timing proof code. Broad current-head regression was justified here even though pure new-video input-only runs could use a narrower policy."
+  ],
+  "recommended_tiers": [
+    {
+      "tier": "Every video / exact current recipe and master",
+      "checks": [
+        "Official source actual SHA, source identity/facts/score timeline and image identity/provenance",
+        "Current slug validate_spec/dry-run, narration fit and source/audio review contracts",
+        "Actual master native check_reel_landed 0, render_inputs/QC exact spec/ASS/movie binding",
+        "Actual subtitles vs scoreboard frames and all key factual moments; actual AAC/words authenticity and natural original audio",
+        "Actual full public GET movie SHA+bytes, actual copy page content, publication fingerprint reservation/sent ledger/receipt"
+      ],
+      "reason": "These validate the new deliverable itself and cannot be replaced with green software unit tests."
+    },
+    {
+      "tier": "Changed code / relevant regression on current head",
+      "checks": [
+        "Map modified source/workflow to direct tests plus shared callers and mandatory negative cases",
+        "Source staging/compose/release changes: test_stage_reel_sources.py, test_compose_native_reel.py, audio/native review, render inputs/binding, publication ledger/push request, cache and workflow semantics",
+        "Captions/voice/mix/names shared logic: relevant reel and interview regressions plus representative historical corpus",
+        "Unknown dependencies, common render/validate engine, broad refactors or selector changes: fail closed to full suite"
+      ],
+      "reason": "Select by exercised shared dependency and behavior, not by filename alone. Validate proposed selector against full results before making it gate authority."
+    },
+    {
+      "tier": "Whole repository periodic / broad-change regression",
+      "checks": [
+        "All 6160 nodes nightly/periodic and common-code changes",
+        "Historical 116 interview specs/54 explainers and prior slug-specific importer/exception contracts",
+        "Real cross-column FFmpeg/Chromium/font/face rendering and corpus compatibility/coverage reports"
+      ],
+      "reason": "Retain valuable historic coverage outside routine pure-new-slug critical path; collect per-file worker timing and JUnit before promising speedup."
+    }
+  ],
+  "policy_constraints": [
+    {
+      "path": "CLAUDE.md",
+      "lines": [
+        655,
+        660,
+        881,
+        1009
+      ],
+      "current": "Full green on current/rebased head required before merge/send. Pure comment-only changes have existing narrow exception at248; this is not blanket video exception."
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "lines": [
+        398
+      ],
+      "current": "Unconditional full pytest PR CI; changing critical path requires explicit repository policy, branch check, workflow and selector update together."
+    }
+  ],
+  "not_authorized": "User question is audit request, not authorization to delete tests, lower QC or bypass current-head full CI."
+}
