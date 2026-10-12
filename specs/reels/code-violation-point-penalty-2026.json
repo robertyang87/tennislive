@@ -1,0 +1,327 @@
+{
+  "slug": "code-violation-point-penalty-2026",
+  "date": "2026-10-12",
+  "_column": "网球有故事",
+  "title": "摔碎球拍，为什么往往只是一次警告",
+  "cx": 0.5,
+  "track": false,
+  "tts_backend": "edge",
+  "_tts_backend_why": "本地制作环境没有 Azure Speech 钥匙。网球有故事近期成片用云见 Yunjian、语速 +6%，不另加音高。字卡时长按这次 Edge 实测再加 0.4 秒。",
+  "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +6%。顶层 voice/rate 没有代码读，不写。",
+  "title_card_handle_bottom": 28,
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "subject": "布勃利克",
+    "hook": "球拍摔碎了\n先记一次警告",
+    "narration": "球拍摔碎了，先记一次警告。",
+    "topic": "代码违规 · 警告、罚分，然后罚一局",
+    "portrait": {
+      "image": "assets/reel/bublik-nakashima-cover.jpg",
+      "focus": 0.58,
+      "focus_y": 0.38,
+      "zoom": 1.15,
+      "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/11/4f18f4dd-9a24-4551-a12c-68685bf0c6fa/Alexander-BUBLIK-vs-Brandon-NAKASHIMA-1992.jpg",
+      "_portrait_why": "ATP Media 官方图库 2026-10-11 上海布勃利克对中岛布兰登的比赛实拍（条目 #4590535，EXIF 2026-10-11 18:05:20+08:00，原图 6240×4160）。画面底板写着 2026 ROLEX SHANGHAI MASTERS，人物是封面主角本人，睁眼，在比赛中击球。这张不是摔拍那一刻。官方集锦里没有摔拍，不用别的回合去冒充。"
+    },
+    "_narration_why": "口播和封面钩子是同一句。钩子不写抢七、破发、罚分术语，只留下警告这一档。"
+  },
+  "push": {
+    "auto": false,
+    "summary": "摔拍往往只是警告",
+    "lead": "下一次，才罚掉这一分。",
+    "_why": "审片任务明确要求 push.auto=false，不合并、不推微信。成片只进 Release 供审看。未收到账号所有者点名发布之前，不要删掉这句去打开自动推送。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "球拍摔碎了，为什么常常只是一次警告？下一次会怎样？",
+    "thesis": "用上海布勃利克这场只收到警告的摔拍当由头，用澳网官方 1990 年麦肯罗包把警告、罚分、取消资格的原声放出来，再用 2026 年 ATP 和四大满贯规则书说明今天的阶梯多了罚一局，以及罚款上限差在哪。",
+    "beats": [
+      "2026-10-11 上海第三轮，布勃利克第一盘抢七输掉后摔碎球拍，主裁给了非体育道德行为警告，没有报道当场罚分。他后来 6-7(7) 6-3 7-6(5) 赢下中岛布兰登。",
+      "1990 澳网第四轮，麦肯罗对佩恩福斯：警告、罚一分、第三次被取消资格。当时大满贯刚拿掉罚一局。",
+      "2026 ATP 与大满贯：警告、罚一分、罚一局；第三次之后由监督或裁判长决定是否取消资格。另有单次直接取消资格。",
+      "摔拍罚款：ATP 每次上限 500 美元；大满贯每次上限 5 万美元。都不拿 2026 的数去套 1990 或 2022。",
+      "2022 阿卡普尔科兹维列夫没有官方比赛画面，只念 ATP 2022-03-07 决定：现场罚款共 4 万美元。"
+    ],
+    "human_context": {
+      "angle": "摔拍看着眼熟，处罚却常常停在警告。用上海这一晚当由头，把阶梯的下一档说清楚。",
+      "facts": [
+        "布勃利克 6-7(7) 6-3 7-6(5) 胜中岛布兰登。第一盘抢七他输了，然后摔碎球拍。Express 写主裁给出非体育道德警告；Sky 标题写他在输掉抢七后摔拍。不写摔了几下，不写罚款。",
+        "1990 澳网官方成片：警告、罚一分、取消资格。洛杉矶时报 1990-01-21 比分 6-1 4-6 7-5 2-4；1990-02-07 罚款共计 6500 美元。",
+        "2026 ATP 规则书第八章与 2026 大满贯规则书第三条：警告、罚一分、罚一局；第三次之后再决定是否取消资格。ATP 摔拍罚款上限 500 美元，大满贯 5 万美元。",
+        "ATP 2022-03-07：兹维列夫阿卡普尔科现场罚款共 4 万美元。没有官方比赛画面。"
+      ],
+      "sources": [
+        "https://www.tennis.com/tournaments/rolex-shanghai-masters/matches/a-bublik-vs-b-nakashima-2026-10-11",
+        "https://www.express.co.uk/sport/tennis/2256267/Alexander-Bublik-Shanghai-Masters-racket-smash-outburst-injury",
+        "https://www.skysports.com/tennis/video/13597730/pulverised-a-furious-alexander-bublik-obliterates-racket-after-losing-tie-break-against-brandon-nakashima",
+        "https://www.youtube.com/watch?v=-_2rjocv-Jo",
+        "https://www.latimes.com/archives/la-xpm-1990-01-21-sp-917-story.html",
+        "https://www.latimes.com/archives/la-xpm-1990-02-07-sp-432-story.html",
+        "https://www.atptour.com/-/media/sites/atp-tour/press/rules/2026-atp-rulebook.pdf",
+        "https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf",
+        "https://www.atptour.com/-/media/sites/atp-tour/press/press-releases/atp-completes-review-of-zverev-acapulco-incident.pdf"
+      ]
+    }
+  },
+  "_facts": {
+    "shanghai": {
+      "when": "北京时间 2026-10-11 晚上。ATP Media 这张实拍 EXIF 18:05:20+08:00，落在这场窗口里。不写具体几点几分。",
+      "round": "第三轮",
+      "score": "布勃利克 6-7(7) 6-3 7-6(5) 胜中岛布兰登",
+      "score_sources": [
+        "https://www.tennis.com/tournaments/rolex-shanghai-masters/matches/a-bublik-vs-b-nakashima-2026-10-11",
+        "flashscore 0Osyvtzp，见 specs/reels/pending/bublik-nakashima.draft.json 的 result_verified"
+      ],
+      "tiebreak": "第一盘抢七 7-9 布勃利克负；第三盘抢七 7-5 布勃利克胜。摔拍发生在他输掉第一盘抢七之后。",
+      "incident_sources": [
+        "https://www.express.co.uk/sport/tennis/2256267/Alexander-Bublik-Shanghai-Masters-racket-smash-outburst-injury",
+        "https://www.skysports.com/tennis/video/13597730/pulverised-a-furious-alexander-bublik-obliterates-racket-after-losing-tie-break-against-brandon-nakashima"
+      ],
+      "what_we_say": "摔碎球拍、主裁给出非体育道德行为警告、没有报道当场罚分。不说摔了几下，不说罚款金额，不说集锦没有收录。",
+      "umpire": "Express 写主裁 John Blom。旁白不念名字，避免只靠这一家的转写。"
+    },
+    "rules_2026": {
+      "atp": "2026 ATP Rulebook Chapter VIII. 警告 / 罚一分 / 第三次及以后罚一局；第三次之后由 Supervisor 决定后续是否取消资格。摔拍或装备滥用：每次罚款上限 500 美元，比赛中同时走阶梯。非体育道德行为在大师赛每次罚款上限 6 万美元，比赛中同时走阶梯。Supervisor 可以因单次违规直接取消资格。",
+      "atp_file": "https://www.atptour.com/-/media/sites/atp-tour/press/rules/2026-atp-rulebook.pdf",
+      "grand_slam": "2026 Grand Slam Rulebook Article III.O 滥用球拍每次罚款上限 5 万美元，并走阶梯。Article III.S 阶梯与 ATP 同形；第三次之后由 Referee 会同 Grand Slam Chief of Supervisors 决定。Article III.T 也可以因单次违规直接取消资格。",
+      "gs_file": "https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf"
+    },
+    "mcenroe_1990": {
+      "film": "https://www.youtube.com/watch?v=-_2rjocv-Jo 澳网官方频道，113 秒，最高 480p。",
+      "score": "取消资格时 6-1 4-6 7-5，第四盘 2-4。洛杉矶时报 1990-01-21 与澳网官方旁白一致。",
+      "ladder_then": "罚一局那一档刚被拿掉，第三次就是取消资格。今天 ATP 和大满贯都把罚一局放了回来。",
+      "fine": "官方旁白与洛杉矶时报 1990-02-07 都写罚款共计 6500 美元。不把 2026 年的 500 美元上限套到 1990。",
+      "fine_url": "https://www.latimes.com/archives/la-xpm-1990-02-07-sp-432-story.html",
+      "score_url": "https://www.latimes.com/archives/la-xpm-1990-01-21-sp-917-story.html"
+    },
+    "zverev_2022": {
+      "what": "2022-02-22 阿卡普尔科。ATP 2022-03-07 新闻稿：因非体育道德行为被退赛；加重行为；现场罚款共 4 万美元（言语攻击与非体育道德）；没收奖金 31570 美元和全部积分；另有 2.5 万美元和八周停赛，缓期至 2023-02-22。",
+      "url": "https://www.atptour.com/-/media/sites/atp-tour/press/press-releases/atp-completes-review-of-zverev-acapulco-incident.pdf",
+      "footage": "没有赛事官方可剪的比赛画面，只用字卡念这份决定。不拿别的回合冒充砸椅子。"
+    }
+  },
+  "sources": {
+    "ao": "https://www.youtube.com/watch?v=-_2rjocv-Jo"
+  },
+  "primary": "ao",
+  "archival": {
+    "ao": "澳网官方频道 John McEnroe Is Disqualified | Australian Open 1990。2026-10-12 查过格式表，最高是 480p（640×480，25fps，itag 135），没有 720 或 1080。这是这条官方成片本身的清晰度。"
+  },
+  "_no_probe_why": {
+    "ao": {
+      "width": 640,
+      "height": 480,
+      "fps": "25/1",
+      "duration": 112.68,
+      "why": "官方源片已按 URL 下载并 sha256 钉死（fe961c9595c541881bbcad5e2878a74bfb275b4bb3a1ab909b8d29c7dcb7d85b）。窗口按逐句转写选定。几何预演用这条 width/height/fps。"
+    }
+  },
+  "_source_geometry": {
+    "ao": {
+      "width": 640,
+      "height": 480,
+      "fps": "25/1",
+      "duration_seconds": 112.68,
+      "sha256": "fe961c9595c541881bbcad5e2878a74bfb275b4bb3a1ab909b8d29c7dcb7d85b"
+    }
+  },
+  "_native_cards_why": "阶梯、罚款上限、1990 与今天的差别、以及没有官方画面的兹维列夫决定，照片和这段澳网成片都讲不清，用短原生字卡。上海摔拍没有官方集锦画面，不用别的回合顶上，由开头字卡讲事实。卡长按 Edge 实测加 0.4 秒。",
+  "_production_status": "review_render_unpublished_no_wechat",
+  "segments": [
+    {
+      "title_card": "上海摔碎球拍\n只给了一次警告",
+      "kicker": "10月11日",
+      "seconds": 9.1,
+      "narration": "北京时间十月十一日晚上，上海第三轮。布勃利克第一盘抢七输了，摔碎球拍，主裁给了一次警告。",
+      "_card_id": "shanghai"
+    },
+    {
+      "source": "ao",
+      "start": 0.3,
+      "end": 4.7,
+      "fit": "contain",
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "_quote_skip_why": "澳网 Classic Moments 片头动画前半，没有解说开口。4.70–6.22 秒源片是数字静音，不留进成片。",
+      "crosses_cut": true,
+      "_crosses_cut_why": "片头动画由多格构成。这一刀只为避开 4.70 秒起的 1.5 秒数字静音。"
+    },
+    {
+      "source": "ao",
+      "start": 6.22,
+      "end": 11.7,
+      "fit": "contain",
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "_quote_skip_why": "片头动画后半，仍然没有解说开口。",
+      "crosses_cut": true,
+      "_crosses_cut_why": "接上静音之后的动画，整段留到旁白开口之前。"
+    },
+    {
+      "source": "ao",
+      "start": 11.9,
+      "end": 21.15,
+      "fit": "contain",
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.08,
+          "end": 5.8,
+          "text": "In 1990, John McEnroe, appearing for only his second time in Australia,\n1990年，麦肯罗第二次来澳网，"
+        },
+        {
+          "at": 5.8,
+          "end": 9.15,
+          "text": "took on the relatively unknown Swede, Mikael Pernfors, in the fourth round.\n第四轮碰上佩恩福斯。"
+        }
+      ],
+      "crosses_cut": true,
+      "_crosses_cut_why": "这句官方旁白跨过资料镜头，整句留完再切。"
+    },
+    {
+      "source": "ao",
+      "start": 22.0,
+      "end": 47.05,
+      "fit": "contain",
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 5.42,
+          "text": "But the volatile American, renowned for his on-court tantrums, received three code violations.\n这场他拿到三次违规。"
+        },
+        {
+          "at": 6.22,
+          "end": 7.72,
+          "text": "One for intimidating a lineswoman.\n一次是恐吓司线员。"
+        },
+        {
+          "at": 7.9,
+          "end": 11.2,
+          "text": "Code violation, unsportsmanlike conduct. Warning, Mr. McEnroe.\n非体育道德，警告。"
+        },
+        {
+          "at": 13.22,
+          "end": 14.85,
+          "text": "One for smashing his racket.\n一次是摔碎球拍。"
+        },
+        {
+          "at": 15.55,
+          "end": 18.2,
+          "text": "Code violation, racket abuse, point penalty, Mr. McEnroe.\n滥用球拍，罚一分。"
+        },
+        {
+          "at": 20.95,
+          "end": 24.95,
+          "text": "And the other for swearing at the umpire and the tournament referee.\n另一次是咒骂主裁。"
+        }
+      ],
+      "crosses_cut": true,
+      "_crosses_cut_why": "警告、摔拍、罚一分三次呼叫都在这一段里，按完整句子留，不在球拍落地时切开。"
+    },
+    {
+      "source": "ao",
+      "start": 54.15,
+      "end": 58.2,
+      "fit": "contain",
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.05,
+          "end": 3.9,
+          "text": "Code violation, verbal abuse, default, Mr. McEnroe.\n言语攻击，取消资格。"
+        }
+      ],
+      "crosses_cut": true,
+      "_crosses_cut_why": "主裁宣布取消资格的这一句留完整。"
+    },
+    {
+      "title_card": "第一次是警告\n第二次罚一分",
+      "kicker": "阶梯",
+      "seconds": 6.6,
+      "narration": "第一次是警告，第二次罚一分，第三次罚一局。之后由监督决定。",
+      "_card_id": "ladder"
+    },
+    {
+      "source": "ao",
+      "start": 65.4,
+      "end": 89.2,
+      "fit": "contain",
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.1,
+          "end": 5.15,
+          "text": "The former world number one thought he had one more violation before he would be ejected.\n他以为还能再犯一次。"
+        },
+        {
+          "at": 5.15,
+          "end": 9.2,
+          "text": "And was leading 6-1, 4-6, 7-5, 2-4 at the time.\n当时6比1、4比6、7比5。"
+        },
+        {
+          "at": 10.3,
+          "end": 19.55,
+          "text": "But the code violation rules had just been reduced from four to three warnings, and McEnroe was defaulted, leaving the crowd aghast and himself in a state of disbelief.\n三档一到，就被取消资格。"
+        },
+        {
+          "at": 20.1,
+          "end": 23.6,
+          "text": "The Mac was also fined 6,500 US dollars.\n另外罚了6500美元。"
+        }
+      ],
+      "crosses_cut": true,
+      "_crosses_cut_why": "官方旁白把比分、三档规则和罚款连着说完，按句留。"
+    },
+    {
+      "title_card": "巡回赛每次\n最多500美元",
+      "kicker": "罚款",
+      "seconds": 9.8,
+      "narration": "摔拍另罚款。巡回赛每次最多五百美元，大满贯五万美元。严重的一次，可以直接取消资格。",
+      "_card_id": "fines"
+    },
+    {
+      "title_card": "砸椅子后退赛\n现场罚4万美元",
+      "kicker": "2022",
+      "seconds": 6.6,
+      "narration": "二〇二二年阿卡普尔科，兹维列夫砸椅子后退赛，现场罚了四万美元。",
+      "_card_id": "zverev"
+    },
+    {
+      "source": "ao",
+      "start": 99.5,
+      "end": 112.5,
+      "fit": "contain",
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.18,
+          "end": 6.6,
+          "text": "Despite never winning the tournament, this infamous moment ensured McEnroe's name has gone down in Australian Open folklore.\n这一幕留在澳网故事里。"
+        }
+      ],
+      "crosses_cut": true,
+      "_crosses_cut_why": "收束这句旁白说完，再留他走下场和片尾字幕。"
+    },
+    {
+      "title_card": "再犯才罚一分\n严重可直接失格",
+      "kicker": "今天",
+      "seconds": 8.1,
+      "narration": "布勃利克后来还是赢了。下一次再犯，罚的就是这一分。你记住这一档了吗？",
+      "_card_id": "close"
+    }
+  ]
+}
