@@ -1,0 +1,55 @@
+name: asr-scratch-wangxiyu
+# 临时：给 wangxiyu-wangxinyu-wuhan-2026-r1 的原声审听出两份 ASR（small.en / medium.en）交叉校验。
+# 只在这个分支上 push 触发，产物提交回本分支；不合进 main。
+on:
+  push:
+    branches: [claude/asr-wangxiyu-wuhan]
+    paths: [.github/workflows/asr-scratch-wangxiyu.yml]
+permissions:
+  contents: write
+jobs:
+  asr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -q faster-whisper
+      - name: ASR
+        run: |
+          set -e
+          curl -sSL -o src.mp4 https://github.com/robertyang87/tennislive/releases/download/source-y9d6IHw0cZk/y9d6IHw0cZk.mp4
+          sha256sum src.mp4
+          mkdir -p asr
+          cat > run_asr.py <<'PY'
+          import json, sys, hashlib
+          from faster_whisper import WhisperModel
+          name = sys.argv[1]
+          m = WhisperModel(name, device="cpu", compute_type="int8")
+          segs, info = m.transcribe("src.mp4", language="en", word_timestamps=True, vad_filter=False, beam_size=5, condition_on_previous_text=False)
+          out = []
+          for s in segs:
+              out.append({"start": round(s.start, 2), "end": round(s.end, 2), "text": s.text.strip(),
+                          "avg_logprob": round(s.avg_logprob, 3), "no_speech_prob": round(s.no_speech_prob, 3),
+                          "words": [{"w": w.word, "s": round(w.start, 2), "e": round(w.end, 2), "p": round(w.probability, 3)} for w in (s.words or [])]})
+          sha = hashlib.sha256(open("src.mp4", "rb").read()).hexdigest()
+          json.dump({"model": name, "source_sha256": sha, "duration": info.duration, "segments": out},
+                    open(f"asr/{name}.json", "w"), ensure_ascii=False, indent=1)
+          print(name, len(out))
+          for s in out:
+              print(f"{s['start']:7.2f}-{s['end']:7.2f} [{s['no_speech_prob']:.2f}] {s['text']}")
+          PY
+          python run_asr.py small.en
+          python run_asr.py medium.en
+      - name: commit
+        run: |
+          mkdir -p data/asr_scratch && mv asr/*.json data/asr_scratch/
+          git config user.name Claude; git config user.email noreply@anthropic.com
+          git sparse-checkout disable || true
+          git add -f data/asr_scratch
+          git commit -m "asr scratch: wangxiyu-wangxinyu-wuhan-2026-r1"
+          git push origin HEAD:claude/asr-wangxiyu-wuhan
