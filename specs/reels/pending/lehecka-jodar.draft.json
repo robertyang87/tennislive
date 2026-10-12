@@ -40,8 +40,8 @@
     "errors": {
       "matchup": "flashscore df_hh_1 没给本场的 FH/FK"
     },
-    "tries": 1,
-    "last_at": "2026-10-12T08:04:31Z"
+    "tries": 2,
+    "last_at": "2026-10-12T08:39:15Z"
   },
   "_tactical_research": {
     "version": 1,
@@ -93,6 +93,8 @@
     "⚠️ Tennis TV 官方头图没成（ValueError: Tennis TV 头图不是本场赛事（2026-Montreal-Jodar.jpg 不匹配 Rolex Shanghai Masters），拒绝资料图）",
     "⚠️ 封面抓取没成（SystemExit: 2026-10-10–2026-10-12 窗口里扫了 110 场，没有同时出现 ['lehecka', 'jodar'] 的比赛）——portrait 留空，终审或 render 前再补",
     "── 备料重跑 第 1/3 次（2026-10-12T08:04:30Z）：matchup、stats、hit_data、points",
+    "⚠️ matchup 顺序没核上 flashscore 的 home/away（flashscore df_hh_1 没给本场的 FH/FK）——stats 块／狠数据／转折局／赛果事实都按 feed 的 home/away 排，顺序不认就一块都不写（写了会把赢家印成输家），草稿留在 waiting；df_hh_1 恢复后重跑备料",
+    "── 备料重跑 第 2/3 次（2026-10-12T08:39:14Z）：matchup、stats、hit_data、points",
     "⚠️ matchup 顺序没核上 flashscore 的 home/away（flashscore df_hh_1 没给本场的 FH/FK）——stats 块／狠数据／转折局／赛果事实都按 feed 的 home/away 排，顺序不认就一块都不写（写了会把赢家印成输家），草稿留在 waiting；df_hh_1 恢复后重跑备料"
   ],
   "_visual_evidence": {
