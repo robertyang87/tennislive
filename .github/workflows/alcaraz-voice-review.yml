@@ -19,13 +19,14 @@ jobs:
     timeout-minutes: 90
     env:
       TENNISLIVE_TTS_BACKEND: edge
-      TENNISLIVE_TTS_CACHE: ${{ runner.temp }}/alcaraz-native-cache
       PYTHONUNBUFFERED: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Set native cache directory
+        run: printf 'TENNISLIVE_TTS_CACHE=%s/alcaraz-native-cache\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
       - name: Install native audio measurement dependencies
         run: |
           sudo apt-get update -qq
