@@ -1,0 +1,73 @@
+{
+  "schema": "actual-master-visual-review-addendum.v1",
+  "checked_at": "2026-10-12T20:58:39.712125+00:00",
+  "film_sha256": "4f00d4b2b523248f717f9ce3c26429e030cba0994ff7a67eaf6ebc6df6ac3661",
+  "reason": "rootrequested fullPNGexactcuecheck ofcentered resultgraphic",
+  "findings": [
+    {
+      "film_at": 315.8,
+      "source_at": 296.96,
+      "actual_cn": "意大利人拿到急需的一胜",
+      "actual_marginV": 360,
+      "glyph_bottom_y_approx": 1075,
+      "centered_graphic_title_top_y_approx": 984,
+      "centered_first_row_top_y_approx": 1067,
+      "issue": "English subtitlecoversnativeROUND1label, Chinese loweroutline reachesgreenfirstrowtopbyabout8px; names/scoresbelowmostlyremainlegible butcannotclaimtitleclear",
+      "suggested_marginV": 480,
+      "expected_glyph_bottom_after_change_approx": 955,
+      "expected_title_gap_after_change_approx": 29,
+      "new_film_review_required": true
+    },
+    {
+      "film_at": 161,
+      "source_at": 142.16,
+      "issue": "samecenteredresultnativeROUND1labelcoveredbysubtitle",
+      "suggested_marginV": 480
+    },
+    {
+      "film_at": 151,
+      "source_at": 132.16,
+      "issue": "no centered graphic yet; not grounds forraisingentire131–144.8 sourcerange"
+    },
+    {
+      "film_at": 155,
+      "source_at": 136.16,
+      "issue": "no centered graphic yet; slideappearsbyactual155.56/source136.72"
+    }
+  ],
+  "scope_of_required_cue_margin_exception": [
+    "134.64–138.78 butthefaststart... straddlesactualgraphslide",
+    "139.92–142.56 Bejlek... nativefullgraphic",
+    "142.56–144.84 butPaolini... nativefullgraphic",
+    "296.38–299.30 amuchneededwin... nativefinalresult in bothcoldandbody"
+  ],
+  "limitation": "480 recommendationisnativepixelgeometrypredictionfromactualoldframeoffset; nofakenewfilmrevieworpreviewclaimed",
+  "actual_frames": [
+    {
+      "film_at": 315.8,
+      "actual_frame_sha256": "01dfc65887d6ddbdfa38f84d64f88166a937f5faa73bb152b16be2d0eb6170b7",
+      "file": "film-00315.800.png"
+    },
+    {
+      "film_at": 151.0,
+      "actual_frame_sha256": "444ac669e889950f2dcdf526a8019f870ccbf790ee3683d0904e3108dc62c5a8",
+      "file": "film-00151.000.png"
+    },
+    {
+      "film_at": 155.0,
+      "actual_frame_sha256": "f141ec3c769a913cfde675b968111c4fc58759d29027a93c3bf1e6f402ba1dc6",
+      "file": "film-00155.000.png"
+    },
+    {
+      "film_at": 161.0,
+      "actual_frame_sha256": "6b8e0f06870ca0a3c6601ae2528c5fcd0e9a530a158d070ea8f8d76700b79724",
+      "file": "film-00161.000.png"
+    },
+    {
+      "film_at": 155.56,
+      "actual_frame_sha256": "8c6c85338003fcb414a38d7fd232ae3242beffa90826141c8693306c1d464ad6",
+      "file": "film-00155.560.png"
+    }
+  ],
+  "status": "needs_caption_position_revision"
+}

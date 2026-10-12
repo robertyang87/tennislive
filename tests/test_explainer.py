@@ -847,7 +847,7 @@ def test_赛前片的封面要写清是哪一场():
         explainer_column,
     )
     from tennislive.zh import _ranked_player_names
-    from tennislive.zh.players import PLAYER_ZH
+    from tennislive.zh.players import PLAYER_ZH, PLAYER_ZH_ALIASES
 
     # 判据和 test_人名要以译名表为准 用的是同一份表，外加那份「同一个人的
     # 另一种叫法」白名单——封面上的名字没有上下文消歧，更不该是手打的。
@@ -857,7 +857,8 @@ def test_赛前片的封面要写清是哪一场():
     # `player_names_top500.json` 优先」），只查旧表会把只登记在新表里的名字
     # （比如「麦克纳莉」）判成「没查过」。两处判据都要跟 `player_zh()`
     # 真正查的范围对齐，不能各查各的一半。
-    known = set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE
+    known = (set(PLAYER_ZH.values()) | set(PLAYER_ZH_ALIASES)
+             | set(_ranked_player_names().values()) | _ON_PURPOSE)
 
     for slug in _SCRIPTED:
         cover = explainer_script(find_story_by_slug(slug))[0]
@@ -3117,13 +3118,14 @@ def test_人名要以译名表为准():
     """
     from tennislive.video import explainer as E
     from tennislive.zh import _ranked_player_names
-    from tennislive.zh.players import PLAYER_ZH
+    from tennislive.zh.players import PLAYER_ZH, PLAYER_ZH_ALIASES
 
     # 同一处漏洞的另一半（见 test_赛前片的封面要写清是哪一场 的注释）：
     # 只并旧表会漏掉只登记在 player_names_top500.json 里的名字，遮罩阶段
     # 遮不掉它们，也就防不住"表里明明有、却被判成手打错"的假阳性。
     known = sorted(
-        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE,
+        set(PLAYER_ZH.values()) | set(PLAYER_ZH_ALIASES)
+        | set(_ranked_player_names().values()) | _ON_PURPOSE,
         key=len, reverse=True,
     )
     canon = [n for n in known if len(n) >= 4]

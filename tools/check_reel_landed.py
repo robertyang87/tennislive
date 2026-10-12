@@ -345,6 +345,8 @@ def stat_card_headshot_problem(
     "已经见过"）。传了 `self_path` 就在扫描时跳过它，让"没有第二处可比"
     这句话真的成立。
     """
+    from tennislive.zh.players import normalize_player_zh  # noqa: PLC0415
+
     stats = spec.get("stats") or {}
     matchup = spec.get("cover", {}).get("matchup") or []
     names = [m.get("name") for m in matchup if isinstance(m, dict)]
@@ -354,7 +356,7 @@ def stat_card_headshot_problem(
     for key, idx in (("a", 0), ("b", 1)):
         shot = (stats.get(key) or {}).get("headshot")
         if isinstance(shot, str) and shot and names[idx]:
-            this_shots[Path(shot).name] = names[idx]
+            this_shots[Path(shot).name] = normalize_player_zh(names[idx])
     if not this_shots:
         return None
 
@@ -373,7 +375,7 @@ def stat_card_headshot_problem(
         for key, idx in (("a", 0), ("b", 1)):
             shot = (o_stats.get(key) or {}).get("headshot")
             if isinstance(shot, str) and shot and o_names[idx]:
-                seen.setdefault(Path(shot).name, set()).add(o_names[idx])
+                seen.setdefault(Path(shot).name, set()).add(normalize_player_zh(o_names[idx]))
 
     clashes, first_seen = [], []
     for filename, name in this_shots.items():
