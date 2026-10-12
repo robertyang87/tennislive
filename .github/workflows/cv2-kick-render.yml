@@ -2,14 +2,14 @@ name: cv2-kick-render
 run-name: cv2-kick-render
 
 # 云代理的 GitHub App token 没有 actions: write，workflow_dispatch 返回 403。
-# 这一份只在自己被推进 cursor/code-violation-point-penalty-2026-1adf 时跑一次：
+# 这一份只在自己被推进 cursor/corner-label-medvedev-style-3a1f 时跑一次：
 # 用仓库 GITHUB_TOKEN 派发 match-reel 的 cookies 自检，绿了立刻派 render。
 # 同时另派一趟 cookies 去试 Serena 那条源（uiBrForlj-k），失败只打日志，不拦渲染。
 # 分支上这一趟仍然 push=false。push.auto 已打开，质检通过并合进 main 之后由 auto-push-reel 发微信。
-# 2026-10-12 重派：兹维列夫三段 crop_zoom 1.04、收尾布勃利克 crop_zoom 1.55，fill_y=1，裁掉顶上暗带。
+# 2026-10-12 重派：12 张角标改成右上角、右缘短轨、文字右对齐。成片先落默认 tag，再另存 v3。
 on:
   push:
-    branches: [cursor/code-violation-point-penalty-2026-1adf]
+    branches: [cursor/corner-label-medvedev-style-3a1f]
     paths: [".github/workflows/cv2-kick-render.yml"]
 
 permissions:
@@ -25,7 +25,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-          REF: cursor/code-violation-point-penalty-2026-1adf
+          REF: cursor/corner-label-medvedev-style-3a1f
         run: |
           set -euo pipefail
           SINCE=$(date -u +%Y-%m-%dT%H:%M:%SZ)

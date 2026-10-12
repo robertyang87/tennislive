@@ -36,6 +36,11 @@
 | 狠数据 | `_hit_data` | `_no_hit_data_why` | `test_赛场之上要么有狠数据要么说清为什么没有` |
 | 自动推送 | `push.auto: true` | `push._no_auto_why` | `test_赛场之上要么开自动推送要么说清走哪条路` |
 | 栏目登记 | `column`/`cover.eyebrow` | 报错（栏目名必须登记） | `test_栏目名不能只活在代码里` |
+| 角标版式 | `story_text` 的 `corner=tr`，PNG 右缘短轨且文字右对齐 | 没有 `story_text` 就不查 | `story_corner_label_problems`（`validate_spec` / `--dry-run` 就红）；`test_corner_label_style.py` |
+
+三条线共用 `tools/render_story_info_band.py`。默认就是右上角、右轨、右对齐，
+不再保留左轨默认。已发左轨片在 `data/legacy_corner_label.json`，只许减不许加。
+解说片和采访片今天没有这层贴图；以后要贴，必须走同一个渲染器，同一道闸。
 
 interview 的自动推送不再靠人补容易忘记的开关：草稿在赛果和 L0 都通过后默认
 `push.auto: true`；发布资格仍由 L0、L2 attestation 和 L3 ledger 决定，开关不能

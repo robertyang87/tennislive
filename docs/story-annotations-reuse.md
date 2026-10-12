@@ -2,8 +2,9 @@
 
 2026-09-08：用户要求精美、辅助理解、不挡主体，并作为通用模板。
 
-复用 `render_story_info_band.py` 的品牌绿、暖白、得意黑标题、数字字体与软阴影，
-不改封面与字幕。配置见 `requests/stories/zheng-usopen-icons.annotations.json`。
+复用 `render_story_info_band.py` 的默认角标：品牌绿右轨、暖白主标题、可选绿字后缀、
+数字字体与软阴影。不传 `align` 就是右对齐。不改封面与字幕。
+配置见 `requests/stories/zheng-usopen-icons.annotations.json`。
 
 | role | 用途 | 限制 |
 |---|---|---|
@@ -20,8 +21,9 @@ python tools/render_story_annotation_set.py requests/stories/zheng-usopen-icons.
 每张透明贴纸宽648px，高约184px（1080×1440成片）；显示3.8秒，轻微上浮淡入。
 配置里的 `inset` 可直接复制到片段；`placement_verified` 是旁证，不能复制为渲染字段。
 
-位置必须按镜头选择，禁止把默认右上角当成已审核。检查出现期间首、中、尾帧：
-人脸、球拍触球处、篮球出手/球框、高尔夫推杆线路/洞杯、比分板都不能相交。
+位置合同是右上角（`corner: tr`）。这不是免检：贴上去之后仍要看这一镜有没有挡住
+人脸、球拍触球处、篮球出手/球框、高尔夫推杆线路/洞杯、比分板。`placement_verified`
+仍是这次人工碰撞检查，不能因为角标已经在右上角就抄成已审核。
 两侧都无留白就延后到死球或庆祝后的空镜，不靠缩小字硬塞。单屏最多一张，
 遇原声关键球先退场。原帖整屏段以原文清晰为先；中文解释可放在独立字幕区。
 

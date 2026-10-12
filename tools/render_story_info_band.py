@@ -29,11 +29,20 @@ There are four semantic variants, but they share one grid and one palette:
 
 The PNG is intentionally rendered near 2x its final display width. The reel
 pipeline scales it down with Lanczos so Chinese strokes stay crisp.
+
+2026-10-12 the default lock-up is the corner label used on the Medvedev
+24-titles film: top-right placement, a brand-green rail on the RIGHT edge,
+every line right-aligned. Row order is the white headline (optional green
+highlight), a small muted kicker, a large set-coloured metric when there is
+one, then a small muted detail. ``layout="classic"`` keeps the older
+left-or-right stack, including ``split_metric``. Shipping a story_text PNG
+that is not right-rail and right-aligned fails ``story_corner_label_problems``.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import unicodedata
 from pathlib import Path
@@ -111,6 +120,22 @@ def display_units(text: str) -> float:
         else:
             units += 0.58
     return units
+
+
+def _validate_highlight(highlight: str) -> str:
+    """绿字后缀：主标题里这一屏要记住的那一个词。空字符串表示整行暖白。"""
+    highlight = highlight.strip()
+    if not highlight:
+        return ""
+    if "\n" in highlight:
+        raise SystemExit("highlight 只能一行；屏幕信息不是第二套字幕")
+    if "｜" in highlight or "|" in highlight:
+        raise SystemExit("highlight 不要用竖线拼字段；请拆到 metric/detail")
+    if display_units(highlight) > 12:
+        raise SystemExit(
+            f"highlight 太长（{display_units(highlight):.1f}>12）："
+            "绿字只留这一屏要记住的那一个词")
+    return highlight
 
 
 def _validate(kicker: str, headline: str, detail: str, metric: str,
@@ -228,15 +253,149 @@ _STROKE_HEAD, _STROKE_SMALL = 2, 1
 _SHADOW_BLUR = 7
 
 
+def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
+                   metric: str, align: str, highlight: str) -> Path:
+    """右轨、右对齐、四行以内：主标题、小坐标、大比分、小说明。
+
+    字号按成片 0.54 倍缩小后对齐梅德韦杰夫 24 冠那张贴图：主标题约 32px、
+    日期约 17px、比分约 36px。画布仍是 1200×340，和没有 metric 的旧卡一样高，
+    右上角贴上去不会比旧贴图更高。
+    """
+    out.parent.mkdir(parents=True, exist_ok=True)
+    height = HEIGHT
+    image = Image.new("RGBA", (WIDTH, height), (0, 0, 0, 0))
+    rail_layer = Image.new("RGBA", image.size, (0, 0, 0, 0))
+    rail_box = ((20, 34, 34, height - 34) if align == "left"
+                else (WIDTH - 34, 34, WIDTH - 20, height - 34))
+    ImageDraw.Draw(rail_layer).rounded_rectangle(rail_box, radius=7,
+                                                 fill=BRAND_GREEN)
+    image.alpha_composite(rail_layer.filter(ImageFilter.GaussianBlur(10)))
+    image.alpha_composite(rail_layer)
+
+    shadow = Image.new("RGBA", image.size, (0, 0, 0, 0))
+    text_layer = Image.new("RGBA", image.size, (0, 0, 0, 0))
+    probe = ImageDraw.Draw(Image.new("RGBA", image.size, (0, 0, 0, 0)))
+    x = 66
+    lane = WIDTH - x - 28
+    head_text = f"{headline} · {highlight}" if highlight else headline
+    head_font = _fit_font(BOLD, 58, 40, head_text, lane, stroke=_STROKE_HEAD)
+    kicker_font = _fit_font(REGULAR, 32, 24, kicker, lane, stroke=_STROKE_SMALL)
+    detail_font = _fit_font(REGULAR, 46, 32, detail, lane, stroke=_STROKE_SMALL)
+    metric_size = 0
+    score_font = None
+    if metric:
+        metric_size = _fit_metric_size(probe, metric, 56, 44, lane, stroke=_STROKE_SMALL)
+        score_font = _metric_fonts(metric_size)[1]
+
+    def block_h(text: str, font: ImageFont.FreeTypeFont, stroke: int) -> int:
+        box = probe.textbbox((0, 0), text, font=font, stroke_width=stroke)
+        return box[3] - box[1]
+
+    row_heights = [
+        block_h(head_text, head_font, _STROKE_HEAD),
+        block_h(kicker, kicker_font, _STROKE_SMALL),
+    ]
+    if metric and score_font is not None:
+        sample = metric.split()[0] if set_score_wins(metric) else metric[:1] or "0"
+        row_heights.append(block_h(sample, score_font, _STROKE_SMALL))
+    row_heights.append(block_h(detail, detail_font, _STROKE_SMALL))
+    gaps = len(row_heights) - 1
+    inner_top, inner_bot = 36, height - 36
+    spare = inner_bot - inner_top - sum(row_heights)
+    gap = max(8, min(16, spare // gaps)) if spare > 0 and gaps else 4
+    used = sum(row_heights) + gap * gaps
+    y = inner_top + max(0, (inner_bot - inner_top - used) // 2)
+
+    right_rows: list[tuple[Image.Image, Image.Image]] = []
+
+    def row_canvas():
+        if align == "left":
+            return ImageDraw.Draw(text_layer), shadow
+        row = Image.new("RGBA", image.size, (0, 0, 0, 0))
+        row_shadow = Image.new("RGBA", image.size, (0, 0, 0, 0))
+        right_rows.append((row, row_shadow))
+        return ImageDraw.Draw(row), row_shadow
+
+    head_draw, head_shadow = row_canvas()
+    _draw_text(head_draw, (x, y), headline, font=head_font, fill=WHITE,
+               stroke=_STROKE_HEAD, shadow_layer=head_shadow)
+    if highlight:
+        advance = round(head_draw.textlength(headline, font=head_font))
+        sep = " · "
+        sep_x = x + advance
+        _draw_text(head_draw, (sep_x, y), sep, font=head_font, fill=WHITE,
+                   stroke=_STROKE_HEAD, shadow_layer=head_shadow)
+        sep_w = round(head_draw.textlength(sep, font=head_font))
+        _draw_text(head_draw, (sep_x + sep_w, y), highlight, font=head_font,
+                   fill=BRAND_GREEN, stroke=_STROKE_HEAD, shadow_layer=head_shadow)
+    y += row_heights[0] + gap
+
+    kick_draw, kick_shadow = row_canvas()
+    _draw_text(kick_draw, (x, y), kicker, font=kicker_font, fill=MUTED,
+               stroke=_STROKE_SMALL, shadow_layer=kick_shadow)
+    y += row_heights[1] + gap
+
+    if metric:
+        metric_draw, metric_shadow = row_canvas()
+        cjk, score = _metric_fonts(metric_size)
+        wins = set_score_wins(metric)
+        if wins is not None:
+            mx = x
+            for token, won in zip(metric.split(), wins):
+                _draw_text(metric_draw, (mx, y), token, font=score,
+                           fill=BRAND_GREEN if won else WHITE,
+                           stroke=_STROKE_SMALL, anchor="la",
+                           shadow_layer=metric_shadow)
+                mx += round(metric_draw.textlength(token, font=score)) + _SET_GAP
+        else:
+            mx = x
+            for chunk, is_score in metric_runs(metric):
+                font = score if is_score else cjk
+                _draw_text(metric_draw, (mx, y), chunk, font=font, fill=BRAND_GREEN,
+                           stroke=_STROKE_SMALL, anchor="la",
+                           shadow_layer=metric_shadow)
+                mx = metric_draw.textbbox(
+                    (mx, y), chunk, font=font, stroke_width=_STROKE_SMALL, anchor="la")[2]
+        y += row_heights[2] + gap
+
+    detail_draw, detail_shadow = row_canvas()
+    _draw_text(detail_draw, (x, y), detail, font=detail_font, fill=MUTED,
+               stroke=_STROKE_SMALL, shadow_layer=detail_shadow)
+
+    if align == "right":
+        for row, row_shadow in right_rows:
+            bounds = row.getbbox()
+            if bounds:
+                # 每行实际墨迹右缘统一为 1134；右轨左缘 1166，留 32px。
+                dx = WIDTH - x - bounds[2]
+                text_layer.alpha_composite(row, (dx, 0))
+                shadow.alpha_composite(row_shadow, (dx, 0))
+
+    image.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(_SHADOW_BLUR)))
+    image.alpha_composite(text_layer)
+    image.save(out)
+    return out
+
+
 def render(kicker: str, headline: str, detail: str, out: Path, *,
-           metric: str = "", variant: str = "timeline", align: str = "left",
-           split_metric: bool = False) -> Path:
+           metric: str = "", variant: str = "timeline", align: str = "right",
+           split_metric: bool = False, layout: str = "corner",
+           highlight: str = "") -> Path:
     kicker, headline, detail, metric = _validate(
         kicker, headline, detail, metric, variant)
+    highlight = _validate_highlight(highlight)
     if align not in {"left", "right"}:
         raise SystemExit("align 只能是 left 或 right")
+    if layout not in {"corner", "classic"}:
+        raise SystemExit("layout 只能是 corner 或 classic")
     if split_metric and not metric:
         raise SystemExit("split_metric 必须填写 metric，比分才能独立成行")
+    # split_metric 是旧四行合同的显式开关。默认 corner 不能把它的字号和行序换掉。
+    if split_metric:
+        layout = "classic"
+    if layout == "corner":
+        return _render_corner(kicker, headline, detail, out, metric=metric,
+                              align=align, highlight=highlight)
 
     out.parent.mkdir(parents=True, exist_ok=True)
     height = SPLIT_METRIC_HEIGHT if split_metric else HEIGHT
@@ -354,21 +513,112 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
     return out
 
 
+_LEGACY_CORNER_LABEL = REPO / "data" / "legacy_corner_label.json"
+
+
+def legacy_corner_label_slugs() -> frozenset[str]:
+    """已发的左轨贴图。只许减不许加，判据在 tests/test_corner_label_style.py。"""
+    if not _LEGACY_CORNER_LABEL.is_file():
+        return frozenset()
+    data = json.loads(_LEGACY_CORNER_LABEL.read_text(encoding="utf-8"))
+    return frozenset(str(slug) for slug in (data.get("slugs") or []))
+
+
+def _green_count(image: Image.Image) -> int:
+    raw = image.tobytes()
+    count = 0
+    for offset in range(0, len(raw), 4):
+        red, green, blue, alpha = raw[offset:offset + 4]
+        if (alpha > 180 and green > 180 and green > red > blue
+                and (green - blue) > 70):
+            count += 1
+    return count
+
+
+def png_corner_label_problem(path: Path) -> str | None:
+    """右缘品牌绿短轨，且文字右缘收在右轨左侧。对得上返回 None。
+
+    只认几何，不认行序：已经用 ``--align right`` 渲过的旧四行卡也能过。
+    左轨、或者字还从左边起排的，过不了。
+    """
+    with Image.open(path) as image:
+        rgba = image.convert("RGBA")
+    width, height = rgba.size
+    if width < 200 or height < 80:
+        return f"{path.name} 不是贴图画布"
+
+    def sx(value: int) -> int:
+        return max(0, min(width, round(value * width / WIDTH)))
+
+    left = rgba.crop((sx(18), 30, sx(40), max(31, height - 30)))
+    right = rgba.crop((sx(WIDTH - 40), 30, sx(WIDTH - 16), max(31, height - 30)))
+    left_n = _green_count(left)
+    right_n = _green_count(right)
+    if right_n < 200:
+        return f"{path.name} 右缘没有品牌绿短轨（绿像素 {right_n}）"
+    if left_n > max(80, right_n * 0.25):
+        return f"{path.name} 左缘还有一条短轨（左 {left_n} / 右 {right_n}）"
+    alpha = rgba.getchannel("A").point(lambda a: 255 if a >= 170 else 0)
+    text = alpha.crop((sx(48), 0, sx(WIDTH - 48), height))
+    box = text.getbbox()
+    if not box:
+        return f"{path.name} 没有文字墨迹"
+    ink_right = sx(48) + box[2]
+    target = width - round(66 * width / WIDTH)
+    slack = round(28 * width / WIDTH)
+    if abs(ink_right - target) > slack:
+        return (f"{path.name} 文字没有右对齐"
+                f"（墨迹右缘 {ink_right}，应收在 {target} 附近）")
+    return None
+
+
+def story_corner_label_problems(spec: dict, *, honor_legacy: bool = True) -> list[str]:
+    """每张 story_text 都要落在右上角，并且 PNG 是右轨右对齐。
+
+    没有贴图的片子不报。已发左轨片挂在 ``data/legacy_corner_label.json``，
+    ``honor_legacy=False`` 用来证明那张表里的片子确实还不合格式。
+    """
+    slug = str(spec.get("slug") or "")
+    if honor_legacy and slug in legacy_corner_label_slugs():
+        return []
+    problems: list[str] = []
+    for index, raw in enumerate(spec.get("segments") or []):
+        inset = (raw or {}).get("inset") or {}
+        if str(inset.get("kind") or "") != "story_text":
+            continue
+        where = f"第 {index + 1} 段"
+        if inset.get("corner") != "tr":
+            problems.append(
+                f"{where} story_text 必须写 corner=tr（右上角），"
+                f"拿到的是 {inset.get('corner')!r}")
+        image = str(inset.get("image") or "")
+        if not image or not Path(image).is_file():
+            continue
+        message = png_corner_label_problem(Path(image))
+        if message:
+            problems.append(f"{where} {message}")
+    return problems
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--kicker", required=True)
     ap.add_argument("--headline", required=True)
+    ap.add_argument("--highlight", default="",
+                    help="主标题右侧的品牌绿后缀，例如「警告」")
     ap.add_argument("--metric", default="")
     ap.add_argument("--detail", required=True)
     ap.add_argument("--variant", choices=sorted(VARIANTS), default="timeline")
-    ap.add_argument("--align", choices=["left", "right"], default="left")
+    ap.add_argument("--layout", choices=["corner", "classic"], default="corner")
+    ap.add_argument("--align", choices=["left", "right"], default="right")
     ap.add_argument("--split-metric", action="store_true",
-                    help="比分独立成第三行，对手说明为第四行；保持原字号上限")
+                    help="走 classic 四行：比分独立成第三行；不是默认角标")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     out = render(args.kicker, args.headline, args.detail, Path(args.out),
                  metric=args.metric, variant=args.variant, align=args.align,
-                 split_metric=args.split_metric)
+                 split_metric=args.split_metric, layout=args.layout,
+                 highlight=args.highlight)
     height = SPLIT_METRIC_HEIGHT if args.split_metric else HEIGHT
     print(f"已渲 {out}（{WIDTH}×{height}，大字版 RGBA，无大底板）")
     return 0

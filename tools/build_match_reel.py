@@ -3734,6 +3734,15 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             f"第 {bad_story_text} 段的 story_text 不符合屏幕文案设计合同："
             "width 0.48~0.60、show_for 2.8~4.2、pad>=0.065，"
             "且 motion 必须为 editorial")
+    # 2026-10-12：角标是全局默认。右上角、右缘短轨、文字右对齐。
+    # 已发的左轨片在 data/legacy_corner_label.json，只许减不许加。
+    from render_story_info_band import story_corner_label_problems  # noqa: PLC0415
+    corner_bad = story_corner_label_problems(spec)
+    if corner_bad:
+        raise ReelError(
+            "屏幕贴图必须是右上角、右缘品牌绿短轨、文字右对齐"
+            "（render_story_info_band 的默认 corner 版式）。\n  "
+            + "\n  ".join(corner_bad))
     unknown = sorted({s.source for s in segments} - set(sources))
     if unknown:
         raise ReelError(

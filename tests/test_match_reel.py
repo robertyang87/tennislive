@@ -2936,9 +2936,13 @@ def test_角标把两件事放进同一帧():
     with pytest.raises(reel.ReelError, match="corner"):
         reel.parse_segments(corner, {"r1": Path("a.mp4")}, "r1")
 
+    import tempfile
+    from render_story_info_band import render as render_band
+    label = Path(tempfile.mkdtemp()) / "label.png"
+    render_band("2026美网", "第1次", "场外指导", label, highlight="警告")
     story_text = {"cover": {}, "segments": [
         {"start": 1, "end": 7, "source": "r1",
-         "inset": {"image": art, "corner": "tr", "kind": "story_text",
+         "inset": {"image": str(label), "corner": "tr", "kind": "story_text",
                    "width": 0.56, "pad": 0.085, "show_for": 3.8,
                    "motion": "editorial"}}]}
     assert reel.parse_segments(story_text, {"r1": Path("a.mp4")}, "r1")

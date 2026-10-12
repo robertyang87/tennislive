@@ -47,7 +47,8 @@ def test_story_info_band_uses_the_brand_green_as_its_only_accent(tmp_path):
                  tmp_path / "band.png", metric="决胜盘 1-5 赛点", variant="player")
     with Image.open(out) as image:
         rgb = image.convert("RGBA")
-        assert rgb.getpixel((27, 170))[:3] == BRAND_GREEN[:3], "短轨要是品牌绿"
+        assert rgb.getpixel((1173, 170))[:3] == BRAND_GREEN[:3], "默认短轨在右缘，而且是品牌绿"
+        assert rgb.getpixel((27, 170))[:3] != BRAND_GREEN[:3], "默认不再画左轨"
         # 全图里饱和的彩色像素只许是品牌绿那一族：不许再出现球场蓝 / 网球黄
         chroma = [p for p in rgb.getdata()
                   if p[3] > 200 and max(p[:3]) - min(p[:3]) > 90]
@@ -88,7 +89,8 @@ def test_整场比分按盘上色赢的盘绿丢的盘白(tmp_path):
     def band(metric, name):
         return _metric_ink(render(
             "2023.01.28 · 澳网决赛", "萨巴伦卡", "第四个冠军点才落地，生涯第一个大满贯",
-            tmp_path / name, metric=metric, variant="player"))
+            tmp_path / name, metric=metric, variant="player",
+            layout="classic", align="left"))
 
     # 同样三盘、同样的字形（6/4/3 和连字符），只有输赢不同——所以墨量可比，
     # 差别只可能来自颜色。
@@ -120,7 +122,8 @@ def test_按盘上色只认整场比分_这一刻的局分照旧整块一个色(
     # 「metric 里有白的」——量的是主标题，不是 metric。
     green, white = _metric_ink(render(
         "2026 美网第三轮", "萨巴伦卡", "凯斯发球胜赛局 40-30",
-        tmp_path / "old.png", metric="决胜盘 1-5 赛点", variant="player"))
+        tmp_path / "old.png", metric="决胜盘 1-5 赛点", variant="player",
+        layout="classic", align="left"))
     assert white == 0 and green > 3000, "老合同那档 metric 要整块一个强调色"
 
 
