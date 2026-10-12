@@ -1,0 +1,42 @@
+name: tts-probe-scratch
+# 临时：查 edge-tts 在 runner 上 403 的原因（只在本分支 push 触发，不合进 main）。
+on:
+  push:
+    branches: [claude/tts-probe-scratch]
+    paths: [.github/workflows/tts-probe-scratch.yml]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -q edge-tts
+      - run: |
+          cat > p.py <<'PY'
+          import asyncio, edge_tts, edge_tts.constants as c, edge_tts.drm as d, sys
+          print("edge-tts", edge_tts.__version__ if hasattr(edge_tts,"__version__") else "?", c.CHROMIUM_FULL_VERSION)
+          async def one(tag):
+              try:
+                  await edge_tts.Communicate("测试一下，网球时差。", "zh-CN-YunjianNeural").save(f"/tmp/{tag}.mp3")
+                  import os; print(tag, "OK", os.path.getsize(f"/tmp/{tag}.mp3"))
+              except Exception as e:
+                  print(tag, "FAIL", type(e).__name__, str(e)[:160])
+          asyncio.run(one("default"))
+          for v in ["144.0.3719.92", "145.0.3800.70", "146.0.3856.62"]:
+              major = v.split(".")[0]
+              c.CHROMIUM_FULL_VERSION = v; c.CHROMIUM_MAJOR_VERSION = major
+              c.SEC_MS_GEC_VERSION = f"1-{v}"
+              for name in ("BASE_HEADERS","WSS_HEADERS","VOICE_HEADERS"):
+                  h = getattr(c, name, None)
+                  if isinstance(h, dict):
+                      for k in list(h):
+                          if isinstance(h[k], str): h[k] = h[k].replace("143.0.3650.75", v).replace("143", major)
+              import importlib, edge_tts.communicate as cm
+              cm.SEC_MS_GEC_VERSION = c.SEC_MS_GEC_VERSION
+              if hasattr(cm, "WSS_HEADERS"): cm.WSS_HEADERS = c.WSS_HEADERS
+              asyncio.run(one("v"+major))
+          PY
+          python p.py
+          curl -sI https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/voices/list | head -5
