@@ -1,0 +1,327 @@
+{
+  "schema": "actual-local-targeted-asr.v1",
+  "source_path": "/workspace/scratch/eala-source/T9TfTnVgHNY.mp4",
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "normalization": "none; original amplitude",
+  "vad_filter": false,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "initial_prompt": null,
+  "human_listening_claimed": false,
+  "windows": [
+    [
+      279,
+      303
+    ]
+  ],
+  "window_results": [
+    {
+      "window": [
+        279,
+        303
+      ],
+      "duration": 24.0,
+      "utterance_count": 3,
+      "status": "actual_decode_complete"
+    }
+  ],
+  "segments": [
+    {
+      "window": [
+        279,
+        303
+      ],
+      "start": 279.0,
+      "end": 289.9,
+      "text": " and Wuhan and a three set triumph they might take some time to process but you",
+      "no_speech_prob": 0.3245871365070343,
+      "avg_logprob": -0.2553709581786511,
+      "words": [
+        {
+          "start": 279.0,
+          "end": 279.16,
+          "word": " and",
+          "probability": 0.2064160257577896
+        },
+        {
+          "start": 279.16,
+          "end": 279.56,
+          "word": " Wuhan",
+          "probability": 0.7887231806914011
+        },
+        {
+          "start": 279.56,
+          "end": 280.24,
+          "word": " and",
+          "probability": 0.47984954714775085
+        },
+        {
+          "start": 280.24,
+          "end": 280.36,
+          "word": " a",
+          "probability": 0.9824193716049194
+        },
+        {
+          "start": 280.36,
+          "end": 280.64,
+          "word": " three",
+          "probability": 0.9297541975975037
+        },
+        {
+          "start": 280.64,
+          "end": 280.9,
+          "word": " set",
+          "probability": 0.8719251751899719
+        },
+        {
+          "start": 280.9,
+          "end": 281.5,
+          "word": " triumph",
+          "probability": 0.9001373052597046
+        },
+        {
+          "start": 281.5,
+          "end": 287.62,
+          "word": " they",
+          "probability": 0.06628138571977615
+        },
+        {
+          "start": 287.62,
+          "end": 287.8,
+          "word": " might",
+          "probability": 0.9949132204055786
+        },
+        {
+          "start": 287.8,
+          "end": 288.0,
+          "word": " take",
+          "probability": 0.9982799291610718
+        },
+        {
+          "start": 288.0,
+          "end": 288.22,
+          "word": " some",
+          "probability": 0.9932697415351868
+        },
+        {
+          "start": 288.22,
+          "end": 288.42,
+          "word": " time",
+          "probability": 0.9991550445556641
+        },
+        {
+          "start": 288.42,
+          "end": 288.58,
+          "word": " to",
+          "probability": 0.9983590245246887
+        },
+        {
+          "start": 288.58,
+          "end": 289.0,
+          "word": " process",
+          "probability": 0.9977974891662598
+        },
+        {
+          "start": 289.0,
+          "end": 289.74,
+          "word": " but",
+          "probability": 0.9278878569602966
+        },
+        {
+          "start": 289.74,
+          "end": 289.9,
+          "word": " you",
+          "probability": 0.9882006645202637
+        }
+      ]
+    },
+    {
+      "window": [
+        279,
+        303
+      ],
+      "start": 289.9,
+      "end": 294.74,
+      "text": " earned it she hon go ahead and take your bow coming back from a set down to win",
+      "no_speech_prob": 0.3245871365070343,
+      "avg_logprob": -0.2553709581786511,
+      "words": [
+        {
+          "start": 289.9,
+          "end": 290.14,
+          "word": " earned",
+          "probability": 0.9183200001716614
+        },
+        {
+          "start": 290.14,
+          "end": 290.54,
+          "word": " it",
+          "probability": 0.9954386353492737
+        },
+        {
+          "start": 290.54,
+          "end": 290.84,
+          "word": " she",
+          "probability": 0.10985117405653
+        },
+        {
+          "start": 290.84,
+          "end": 291.12,
+          "word": " hon",
+          "probability": 0.3049153983592987
+        },
+        {
+          "start": 291.12,
+          "end": 291.52,
+          "word": " go",
+          "probability": 0.7940975427627563
+        },
+        {
+          "start": 291.52,
+          "end": 291.74,
+          "word": " ahead",
+          "probability": 0.9986639022827148
+        },
+        {
+          "start": 291.74,
+          "end": 291.9,
+          "word": " and",
+          "probability": 0.9958118200302124
+        },
+        {
+          "start": 291.9,
+          "end": 292.06,
+          "word": " take",
+          "probability": 0.9994625449180603
+        },
+        {
+          "start": 292.06,
+          "end": 292.28,
+          "word": " your",
+          "probability": 0.9991457462310791
+        },
+        {
+          "start": 292.28,
+          "end": 292.52,
+          "word": " bow",
+          "probability": 0.9737210869789124
+        },
+        {
+          "start": 292.52,
+          "end": 292.9,
+          "word": " coming",
+          "probability": 0.9729161858558655
+        },
+        {
+          "start": 292.9,
+          "end": 293.1,
+          "word": " back",
+          "probability": 0.9994309544563293
+        },
+        {
+          "start": 293.1,
+          "end": 293.28,
+          "word": " from",
+          "probability": 0.999403715133667
+        },
+        {
+          "start": 293.28,
+          "end": 293.4,
+          "word": " a",
+          "probability": 0.9953508377075195
+        },
+        {
+          "start": 293.4,
+          "end": 293.62,
+          "word": " set",
+          "probability": 0.9013808369636536
+        },
+        {
+          "start": 293.62,
+          "end": 294.04,
+          "word": " down",
+          "probability": 0.9946243166923523
+        },
+        {
+          "start": 294.04,
+          "end": 294.6,
+          "word": " to",
+          "probability": 0.9727767705917358
+        },
+        {
+          "start": 294.6,
+          "end": 294.74,
+          "word": " win",
+          "probability": 0.9632537364959717
+        }
+      ]
+    },
+    {
+      "window": [
+        279,
+        303
+      ],
+      "start": 294.74,
+      "end": 296.8,
+      "text": " six three in the third in just shot",
+      "no_speech_prob": 0.3245871365070343,
+      "avg_logprob": -0.2553709581786511,
+      "words": [
+        {
+          "start": 294.74,
+          "end": 295.04,
+          "word": " six",
+          "probability": 0.6382826566696167
+        },
+        {
+          "start": 295.04,
+          "end": 295.3,
+          "word": " three",
+          "probability": 0.9914626479148865
+        },
+        {
+          "start": 295.3,
+          "end": 295.4,
+          "word": " in",
+          "probability": 0.7202813625335693
+        },
+        {
+          "start": 295.4,
+          "end": 295.54,
+          "word": " the",
+          "probability": 0.9989246726036072
+        },
+        {
+          "start": 295.54,
+          "end": 295.78,
+          "word": " third",
+          "probability": 0.9949446320533752
+        },
+        {
+          "start": 295.78,
+          "end": 296.2,
+          "word": " in",
+          "probability": 0.9185128808021545
+        },
+        {
+          "start": 296.2,
+          "end": 296.48,
+          "word": " just",
+          "probability": 0.9517049193382263
+        },
+        {
+          "start": 296.48,
+          "end": 296.8,
+          "word": " shot",
+          "probability": 0.7790824770927429
+        }
+      ]
+    }
+  ],
+  "run_status": "complete",
+  "recorded_at": "2026-10-12T16:36:26.708075+00:00"
+}

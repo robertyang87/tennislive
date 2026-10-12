@@ -1,0 +1,76 @@
+{
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "actually_viewed": [
+    {
+      "sheet": "volley-tactics.jpg",
+      "exact_source_seconds": [
+        17,
+        18,
+        19,
+        19.5,
+        20,
+        20.5,
+        21,
+        21.5,
+        22,
+        22.5,
+        23,
+        23.5
+      ]
+    },
+    {
+      "sheet": "narration-tactics.jpg",
+      "exact_source_seconds": [
+        26.25,
+        28,
+        30,
+        32,
+        33,
+        34,
+        34.22,
+        91.26,
+        93,
+        95,
+        97,
+        99,
+        101,
+        103,
+        104.8
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "window": [
+        17,
+        23.5
+      ],
+      "visible_players": "Shi yellow nearcourt;Eala mint farcourt",
+      "finding": "Shi approachesfromnearbaseline throughservicebox;forwardracquet extension at~20.5volley. Eala remainsfarbaseline. Matchesthequotednot-enough-volley commentary identity.",
+      "narration_change_needed": false
+    },
+    {
+      "window": [
+        26.25,
+        34.22
+      ],
+      "finding": "Both baseline at26.25/28/30/32/33;Eala starts movingforward34–34.22, thenpointcontinues intoforecourt.",
+      "minimum_suggestion": "四比四，伊埃拉化解两次破发点，从底线争夺第五个保发。",
+      "limits": "Do not claimwholepoint entirelybaseline; remainingfullpointcontinuesafterCNwindow34.22."
+    },
+    {
+      "window": [
+        91.26,
+        104.8
+      ],
+      "finding": "Atall8exactframes bothplayers inbaselinearea, alternate groundstroke preparation/strokes andlateralmovement; no netapproach.",
+      "minimum_suggestion": "第二盘，二比二，伊埃拉握着局点。施晗在底线一拍接一拍，把这一分拖进漫长的拉锯。",
+      "limits": "No quantitative stroke count, exactangle,forcederror orwinningstroke claim."
+    }
+  ],
+  "method_limits": [
+    "Image sequence visualverification, noactualaudio listening claim.",
+    "Fullsource native2seccadencecontactwallsalreadyviewed; tacticalfine-samples listedhere areexactseconds separatelydecoded.",
+    "No specmodification or finalmaster gatepassclaimed."
+  ]
+}

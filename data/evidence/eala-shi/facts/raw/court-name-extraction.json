@@ -1,0 +1,24 @@
+{
+  "status": "official_OOP_same_match_court_name_confirmed",
+  "url": "https://www.wtatennis.com/tournament/1075/wuhan/2026/order-of-play",
+  "raw_file": "wta-oop-page.raw",
+  "raw_sha256": "a44f69e41fc0b6964d78b9177411517a429e406a54ec6bea0940e8f644a29e40",
+  "date": "2026-10-12",
+  "court_name": "Dongfeng Voyah Center Court",
+  "court_zh": "中央球场",
+  "match_title": "Alexandra Eala (PHI) [13] vs [Q] Han Shi (CHN)",
+  "extraction_offsets_in_html_unescaped": {
+    "date": 351195,
+    "court_header": 351476,
+    "match_title": 392600,
+    "next_court": 393577
+  },
+  "literal_sections": {
+    "day": "/section>\n                <section class=\"tournament-oop__day js-oop-day\" data-date=\"2026-10-12\">\n                    <!--\n\n\n                   ",
+    "court_header": "<h3 class=\"court-header__name h-xs-b\">\n                                                Dongfeng Voyah Center Court\n                                            </h3>\n\n                                        </he",
+    "match_title": "title=\"Alexandra Eala (PHI) [13] vs [Q] Han Shi (CHN)\" aria-label=\"Alexandra Eala (PHI) [13] vs [Q] Han Shi (CHN)\"\n    data-tracking=\"true\" data-tracking-compon",
+    "next_court": "<div class=\"tournament-oop__court\">\n                                        <header class=\"tournament-oop__court-header court-header theme-gradient\">\n                                            <h3 class=\"court-header__name h-xs-b\">\n                                                Court 1\n                                            </h3>\n\n                                        </header>\n                                        <div class=\"tournament-oop__ma"
+  },
+  "court_id": 1,
+  "warning": "CourtID=1 is internal API identifier; OOP printed Court1 is different physical court. October12 historical daycards are preserved inside HTML comments and render Suspended/upcoming stale state; only literal day/court/match grouping used. No actual completed-state inference from OOP snapshot. OP.pdf nowOctober13, not asserted as match-day OOP."
+}

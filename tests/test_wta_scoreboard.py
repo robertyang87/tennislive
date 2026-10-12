@@ -66,6 +66,34 @@ def test_full_games_cell_cannot_replace_unmeasurable_points_boundary():
         w.board_edge(band)
 
 
+def test_reviewed_windows_gate_real_wuhan_result_before_geometry(monkeypatch):
+    """A real centred result at 194.48s is outside the small-board window.
+
+    Keep the original error without reviewed windows, and retain the complete
+    genuine set-point graphic inside them. The excluded frame is transparent.
+    """
+    from types import SimpleNamespace
+
+    root = Path(__file__).parent / "fixtures" / "wta_scoreboard"
+    good = np.asarray(Image.open(root / "wuhan-175080-setpoint-band.png").convert("RGB"))
+    result = np.asarray(Image.open(root / "wuhan-194480-centred-result-band.png").convert("RGB"))
+    assert good.shape == result.shape == (155, 760, 3)
+    monkeypatch.setattr(w.subprocess, "check_output", lambda *a, **kw: "1920\n")
+    monkeypatch.setattr(w.subprocess, "run", lambda *a, **kw: SimpleNamespace(
+        returncode=0, stdout=good.tobytes() + result.tobytes(), stderr=b""))
+    with pytest.raises(RuntimeError, match="native body row geometry"):
+        w.scan_geometry(Path("same-source.mp4"), (89, 827, 552, 982), 0, .08, "25")
+    measured = w.frame_geometry(good, cap=463)
+    assert measured is not None and measured["header"] is not None
+    frames, width = w.scan_geometry(
+        Path("same-source.mp4"), (89, 827, 552, 982), 0, .08, "25",
+        allowed_windows=((0, .04),))
+    assert width == 760 and frames == [measured, None]
+    assert not w.alpha_frame(frames[1], (0, 0, 760, 155)).any()
+    assert np.array_equal(w.alpha_frame(frames[0], (0, 0, 760, 155)),
+                          w.alpha_frame(measured, (0, 0, 760, 155)))
+
+
 def _band(board_w: int | None, *, bg=COURT, body=BOARD, mint: bool = True) -> np.ndarray:
     band = np.zeros((H, W, 3), np.uint8)
     band[:] = bg

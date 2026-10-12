@@ -1,0 +1,1775 @@
+{
+  "schema": "tennislive.same-episode-exact-utterance-reuse.v1",
+  "slug": "eala-shi",
+  "status": "exact_unchanged_current_utterance_controls_only",
+  "changed_edit_ids": [
+    "first_set_pressure",
+    "long_rally_context"
+  ],
+  "unchanged_edit_ids": [
+    "coordinate_and_rank",
+    "deciding_set_break_pressure",
+    "deciding_set_story",
+    "first_set_story",
+    "landing",
+    "six_game_swing",
+    "stats_and_question"
+  ],
+  "old_native_bindings_sha256": "da9fd71c498df6a02ba18219d2bb5facdf9165e6b9b703911541de78199de779",
+  "new_native_bindings_sha256": "f65e540a2e47b9ed14b895ee029be226f7eb92da2c7a0c8dcb51829665c2a7c1",
+  "old_native_job_sha256": "6743fdace69b1a4ae68bed93062443be4bdf036b8b0a4b6a580f385a7c3a46a5",
+  "new_native_job_sha256": "ca4ebfbced61912a58db3aa56551515c6bb5ce04d7f0e76332b3639ca514e8e2",
+  "reused_raw_record_count": 194,
+  "records": [
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-000.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-000.json",
+      "record_sha256": "2b7eac46d4d8d33077cada72ddfeefd1b983d83f60bb0162e9b19e40806f3dda",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 0,
+      "new_target_index": 0
+    },
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-001.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-001.json",
+      "record_sha256": "02668f17042f1373bb6d7e2f8ab5fbcb827c9c72748ea86466fdba8e43832aea",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 1,
+      "new_target_index": 1
+    },
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-002.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-002.json",
+      "record_sha256": "2619b0ecf31ce7e610a687710cc8953c59a8074c84f6780d427d87e95bc80003",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 2,
+      "new_target_index": 2
+    },
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-003.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-003.json",
+      "record_sha256": "8e84403135873a6351008d6343492037d1d1938bdd52137481e78fe321983f52",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 3,
+      "new_target_index": 3
+    },
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-004.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-004.json",
+      "record_sha256": "c7f0ba9d1f13602e00255170a70c9079f240b19f45722c29aca9bc30a59794c8",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 4,
+      "new_target_index": 4
+    },
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-005.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-005.json",
+      "record_sha256": "df9729b29ba914dab14adc6b94f6abc5d89d397a51613bbe6595b3881a36bf84",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 5,
+      "new_target_index": 5
+    },
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-006.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-006.json",
+      "record_sha256": "496937a9eee378b397b546d9abdbdbc979d35fa1f53d7dcedfff3aa589f20343",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 6,
+      "new_target_index": 6
+    },
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-007.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-007.json",
+      "record_sha256": "4b608ea1be0e22201efbe59c942fdd61c6604996c04ea29f0ffc52d883bdfff7",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 7,
+      "new_target_index": 7
+    },
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-008.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-008.json",
+      "record_sha256": "056270f117d61cb9ba9e7a64936746d49d1ea75dac5d00f6d1779655bd90204a",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 8,
+      "new_target_index": 8
+    },
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-009.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-009.json",
+      "record_sha256": "e443063489a53b871fff719a9337ce654b5721111f6479224ee31bc751295be3",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 9,
+      "new_target_index": 9
+    },
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-010.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-010.json",
+      "record_sha256": "cb5edef075fb140def2cbf00d8e260c4cda0312138ef0afeaa638ad3edb1b8b8",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 10,
+      "new_target_index": 10
+    },
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-011.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-011.json",
+      "record_sha256": "d86e02ecf360b8bbacbce309aa3cb61cae487f7cf57a7f255b7bb2747452317b",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 11,
+      "new_target_index": 11
+    },
+    {
+      "edit_id": "landing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-012.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-012.json",
+      "record_sha256": "be2afa7f18998618f65e3e86eda912ab35b21d70850cab62917840bb5de4315f",
+      "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "old_target_index": 12,
+      "new_target_index": 12
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-013.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-013.json",
+      "record_sha256": "a9f3d112d93fd070e6809f928520a0fd5dc85932209d1ce2fd2f9e1d4e6f400c",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 13,
+      "new_target_index": 13
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-014.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-014.json",
+      "record_sha256": "3c224712fe09fde9aedf8e7b643ac36f99f303c800f518eafafe3c8eb5fcf8e4",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 14,
+      "new_target_index": 14
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-015.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-015.json",
+      "record_sha256": "4046b221078d2172c92720b8e77ca5e42eccc0db65a6de029b775f4be4241206",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 15,
+      "new_target_index": 15
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-016.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-016.json",
+      "record_sha256": "79a79ae7291c568844963e35793868f39e79f1399a62ba638b037f79c2eb289f",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 16,
+      "new_target_index": 16
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-017.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-017.json",
+      "record_sha256": "65ca934abac176311b2b93f64574cc1a022fb138fb7599210d0870387898b939",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 17,
+      "new_target_index": 17
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-018.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-018.json",
+      "record_sha256": "965074d595a5aa3f57c7c229e819e6b0e0c57d87b4a81a84abb2573319063e56",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 18,
+      "new_target_index": 18
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-019.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-019.json",
+      "record_sha256": "0362f336089fb0860edf7f21aac9fd3e70b6bf070947e63c39c0875fed1786d2",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 19,
+      "new_target_index": 19
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-020.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-020.json",
+      "record_sha256": "fe0274dfd70ed283d5b68982f8706ef8ecf4a3e2e74006d50d12857f5b9b8b36",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 20,
+      "new_target_index": 20
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-021.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-021.json",
+      "record_sha256": "1d6f8a790524229d7912a45eb5628cbb4d54e8cc552829da1fd4d675cb5fc30c",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 21,
+      "new_target_index": 21
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-022.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-022.json",
+      "record_sha256": "a8b7eec8def5864eb89b3bc5165c7fbdb9df840413e58d7f57bc446064e80df0",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 22,
+      "new_target_index": 22
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-023.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-023.json",
+      "record_sha256": "951f40ca5f6d81a1f19c4de36bc501670315932ab8eeb3c238913c866bb24d90",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 23,
+      "new_target_index": 23
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-024.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-024.json",
+      "record_sha256": "6b3e14e6cc49ef4b98d1a3c95e32b3202eb5ec0913b6657c20eb16738dd44cae",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 24,
+      "new_target_index": 24
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-025.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-025.json",
+      "record_sha256": "9157380a32336e7a478e71b960ded3c9eb43bf4b3ece7d7bbe9608dcdfa290f2",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 25,
+      "new_target_index": 25
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-026.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-026.json",
+      "record_sha256": "3d5d7ccb51780287e466fb6d4d0e9336a363faabdcb387a4e71d1ddd4609a3e7",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 26,
+      "new_target_index": 26
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-027.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-027.json",
+      "record_sha256": "c3b5c410654a8dcfb32a0908afe1ef614522c26e134a544d613830160c364750",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 27,
+      "new_target_index": 27
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-028.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-028.json",
+      "record_sha256": "32afd012834f68c47d080fd6bd13d813a4d7d4e9274eb9ee7285f2eb26834a3a",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 28,
+      "new_target_index": 28
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-029.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-029.json",
+      "record_sha256": "8c538487250e09d25933d702609d8d4d2661dbed7af3f714f752b4c562ca5989",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 29,
+      "new_target_index": 29
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-030.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-030.json",
+      "record_sha256": "5bab84d9f0b49520e7a8cd65ff0fccb0aa552438075feba113b023293d0a6252",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 30,
+      "new_target_index": 30
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-031.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-031.json",
+      "record_sha256": "6f396b5f671092ae323003e4ccbbb12c86388cbfc10cd33dc26b630b90b3fdce",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 31,
+      "new_target_index": 31
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-032.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-032.json",
+      "record_sha256": "b84f5386a9961d4b76525dd43f036c3fa689fec810ac46e903292519a8066548",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 32,
+      "new_target_index": 32
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-033.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-033.json",
+      "record_sha256": "887a0f7bd0620327a1a236324f9d01c884bd2e61a4c4665f55aaf8fcbb229728",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 33,
+      "new_target_index": 33
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-034.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-034.json",
+      "record_sha256": "c4a917028b8243b5de2947a3fb9dfc6e581ad2799c0cbe1aeea450d96c5396d5",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 34,
+      "new_target_index": 34
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-035.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-035.json",
+      "record_sha256": "4b95b664b2b42b18dcd99786c5eba98bdc5c1a12e063f5fbd92c213394f60b34",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 35,
+      "new_target_index": 35
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-036.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-036.json",
+      "record_sha256": "34eade918670688df277504a8ce70f0b5936d9c013a382ee9eedb4d5e169073d",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 36,
+      "new_target_index": 36
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-037.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-037.json",
+      "record_sha256": "22f57a4c1d34782b87a4f1aaaac482dfcb5c1d5d14f5ca4446edd4e68af4956a",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 37,
+      "new_target_index": 37
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-038.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-038.json",
+      "record_sha256": "c67927ba8a3397fec3f224c706e662f5c5107ce9b07468b7dc8d8a19a3bdb7e2",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 38,
+      "new_target_index": 38
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-039.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-039.json",
+      "record_sha256": "ca6a4f1b4c6fb096c5d62762362d2ddab92c352d71071a5d8a3fb735a6bff07a",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 39,
+      "new_target_index": 39
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-040.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-040.json",
+      "record_sha256": "51a451c5e3eb73061f0fd3472ecb2610e2964e48d83578c3ae279d20ffc49907",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 40,
+      "new_target_index": 40
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-041.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-041.json",
+      "record_sha256": "366438ab2968dc5155fd5158f20faa318b229625a60364d7af7bdb375a7169c8",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 41,
+      "new_target_index": 41
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-042.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-042.json",
+      "record_sha256": "1726e3d757231554f32121a7b827a99c4c5e3df3033e3c048666d289a6bb11d8",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 42,
+      "new_target_index": 42
+    },
+    {
+      "edit_id": "coordinate_and_rank",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-043.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-043.json",
+      "record_sha256": "e0426ba602d2b8da0a36e650d855a8eabc388c6e9612a6128201f6b2526820fb",
+      "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+      "old_target_index": 43,
+      "new_target_index": 43
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-064.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-062.json",
+      "record_sha256": "45397bb64401892f934cf98bdc213f0cb99710072067ee0cb63d5fd019f665e3",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 64,
+      "new_target_index": 62
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-065.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-063.json",
+      "record_sha256": "3c6bee3c093615f43d629bc589c043f00f45e8e5293ee2f2bb26bfd83d68864b",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 65,
+      "new_target_index": 63
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-066.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-064.json",
+      "record_sha256": "a6ff280ff01b58127bf084aefa8ed1002bcf6b4d28167025a84adec81ba6b8e6",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 66,
+      "new_target_index": 64
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-067.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-065.json",
+      "record_sha256": "772cc6fec51e1ec940ffe098de33f487b6c286ef570dd19b4ad27ca9e540844d",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 67,
+      "new_target_index": 65
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-068.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-066.json",
+      "record_sha256": "508620bb1c64cbcdbbb1d66b73b0b021edf248fcefd26d53757b435e6f7e940a",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 68,
+      "new_target_index": 66
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-069.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-067.json",
+      "record_sha256": "4e1c656ce5eaa96e52a65d6b8b210b181db6e6f4d60671b8e3e8ea297fa9719a",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 69,
+      "new_target_index": 67
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-070.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-068.json",
+      "record_sha256": "a8ab24fba3459ee8710116eb6659c88b4e29b3e56979d80f929302fdfce3301f",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 70,
+      "new_target_index": 68
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-071.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-069.json",
+      "record_sha256": "f7b05a1d21605cf57760127572894be57a2ecffb2ef7bfb4d5ef62a213ae5634",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 71,
+      "new_target_index": 69
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-072.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-070.json",
+      "record_sha256": "cdc070a5f0285d891d6e56c5360bdeb9f084f6cf244d73ab33f3c64e671a3e34",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 72,
+      "new_target_index": 70
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-073.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-071.json",
+      "record_sha256": "0edf6e4b1a2f3304a2268e627899dc18f46e30a4d19b9ed5b381d70a76740932",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 73,
+      "new_target_index": 71
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-074.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-072.json",
+      "record_sha256": "b9e73ebe24ad0351c50dd39a59067fd41c8e6cd54bf4a9881c49ec6d9aa50447",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 74,
+      "new_target_index": 72
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-075.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-073.json",
+      "record_sha256": "879872438b9322e0146f92793fb390ec2c1b002dff328871fcd2fe665158dcff",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 75,
+      "new_target_index": 73
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-076.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-074.json",
+      "record_sha256": "f159d7c07f6ee111d1b8ff8afae31474c74cecf243f56baf6094fcaac084c803",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 76,
+      "new_target_index": 74
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-077.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-075.json",
+      "record_sha256": "9922476f9f4d6665094a62edfae5ea4f240a998af41563eea884e512cadeb5de",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 77,
+      "new_target_index": 75
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-078.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-076.json",
+      "record_sha256": "eaf771b50daa99cca45636d6d037920ad2a52aa9812241dbc7e7221b8bd22440",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 78,
+      "new_target_index": 76
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-079.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-077.json",
+      "record_sha256": "d406df4cf7dc56017157a733467bcf7d0d9738d68dc31d18d04fcc3fc9109ca9",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 79,
+      "new_target_index": 77
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-080.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-078.json",
+      "record_sha256": "3945bed114ff48bb2977c9a0311a97cd58f0d04f57d3dd1d676298246500e882",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 80,
+      "new_target_index": 78
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-081.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-079.json",
+      "record_sha256": "0dfbcceeb5253271ab0ab17f6af646073c2fcaa68e7417b858f8f3505d874cf0",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 81,
+      "new_target_index": 79
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-082.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-080.json",
+      "record_sha256": "6daa6b8d8aba8332681ed2f14cfaf67716726ba2cb879b1bb4ec6e811cbe2372",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 82,
+      "new_target_index": 80
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-083.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-081.json",
+      "record_sha256": "dcb0c2c15f9fb31cecd5170245042ffc8aefd9df2d6d74b98212244d76022498",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 83,
+      "new_target_index": 81
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-084.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-082.json",
+      "record_sha256": "40d93847119648e926e993f325823f0687423f3fc7c8f6de7050b690083e5259",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 84,
+      "new_target_index": 82
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-085.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-083.json",
+      "record_sha256": "be1e835f5f2eff72d97b45b7f15e938dc868fffb1c96c564d6c00506e7bd20a1",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 85,
+      "new_target_index": 83
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-086.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-084.json",
+      "record_sha256": "03ee2d28cacae590233756cbbe1ce241538f1cc404c1f9feda65055ae5fa0039",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 86,
+      "new_target_index": 84
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-087.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-085.json",
+      "record_sha256": "3c9d769764875e1d10d67e52de59404114383ef9fbe67458004fac4bac8a7b37",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 87,
+      "new_target_index": 85
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-088.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-086.json",
+      "record_sha256": "1d357828294cc67af692612b015c1c7f3bd227a449ec751f6b17ba1c728fb86b",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 88,
+      "new_target_index": 86
+    },
+    {
+      "edit_id": "first_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-089.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-087.json",
+      "record_sha256": "2bbdf3070665b5d9c2f53b43243c5591066382e4710072f1c46c108e02977ac7",
+      "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "old_target_index": 89,
+      "new_target_index": 87
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-118.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-116.json",
+      "record_sha256": "34154fb36182b447349bff7f60ac9ee5f15485a339174bb82598618cc6c0df92",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 118,
+      "new_target_index": 116
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-119.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-117.json",
+      "record_sha256": "39e4701879fce98ecececa22e43b276fe55bf9cd5bd92a4475fdbc59ffe465fe",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 119,
+      "new_target_index": 117
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-120.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-118.json",
+      "record_sha256": "f1c329f307d8e7165a536407393af5a7bc8c669c4fd612610edfb739a1bcc186",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 120,
+      "new_target_index": 118
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-121.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-119.json",
+      "record_sha256": "f63f9b2dcd93358836af0bfab4feb33c3c9a8ddd74f99a2094486c7b0ae22d60",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 121,
+      "new_target_index": 119
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-122.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-120.json",
+      "record_sha256": "0ea07351c84c21873737bfbdd47ac5244087ae931db5813e0b7565583e207a2b",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 122,
+      "new_target_index": 120
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-123.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-121.json",
+      "record_sha256": "909d189122eef26c3eeb1c293b4c84b41770bf335bf4f8f89862bafdc74b7ffa",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 123,
+      "new_target_index": 121
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-124.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-122.json",
+      "record_sha256": "897062730055156312347bb3da5354cedcb660fb6cbc36474b56ff4af4dabdf0",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 124,
+      "new_target_index": 122
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-125.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-123.json",
+      "record_sha256": "1d76fa6c105e688f0cf971458eb9329d80aed9dfb1edb59cccd4487d91a16cda",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 125,
+      "new_target_index": 123
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-126.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-124.json",
+      "record_sha256": "ab2d98fc6574897534ec676bd43f8abe69ad7fed6cd5b8edb402a12d6e18e114",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 126,
+      "new_target_index": 124
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-127.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-125.json",
+      "record_sha256": "c25d91e0a845cbe93f72eabbc670037e1c2fb60752b2c1868ad808c42998b94f",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 127,
+      "new_target_index": 125
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-128.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-126.json",
+      "record_sha256": "8314ae2548111b195a6df757360deaa2eb99526b9e1be1aae8e8f468cd367fa1",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 128,
+      "new_target_index": 126
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-129.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-127.json",
+      "record_sha256": "b393bdf5bd0913deac20954c15e247492b166bc65358547031bdb02456506663",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 129,
+      "new_target_index": 127
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-130.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-128.json",
+      "record_sha256": "5a6733b29d0cb0690f10de16c66a9270f74c14cd73f82f797b656b201ded93a7",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 130,
+      "new_target_index": 128
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-131.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-129.json",
+      "record_sha256": "829dc9cf401cd9fd898ecdca0f675cf0d214845d7af552e2b654c2912da24e61",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 131,
+      "new_target_index": 129
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-132.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-130.json",
+      "record_sha256": "6b74435a1e42d413bf45764e768f6ea8e06cd5a533fe0f775fd496800ce68022",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 132,
+      "new_target_index": 130
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-133.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-131.json",
+      "record_sha256": "15f61992275e4cd530e85b402db4108a5b16800a2ff753704203316f1374a3eb",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 133,
+      "new_target_index": 131
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-134.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-132.json",
+      "record_sha256": "632841ce65c884a8ce25d2735fd9278f17bf6a5f8f4cc702647a92417f132673",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 134,
+      "new_target_index": 132
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-135.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-133.json",
+      "record_sha256": "9b34ccf8c0ffe49531a802ac584e195d95ff71ceea11b473de322c33e24a1099",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 135,
+      "new_target_index": 133
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-136.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-134.json",
+      "record_sha256": "da70cb4f1888a4d2821e5d75b8be930efe5cd016c0c877cdacd0f6ff57dc1e2f",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 136,
+      "new_target_index": 134
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-137.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-135.json",
+      "record_sha256": "3b7cc787504256ec0a2fadfccb014b63c76d0f9127c2b51993e51daa250116f4",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 137,
+      "new_target_index": 135
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-138.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-136.json",
+      "record_sha256": "2138f32bd6c505d61665f753f4877c111dfec3c289ac4e7af4f24f07b2abc436",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 138,
+      "new_target_index": 136
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-139.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-137.json",
+      "record_sha256": "53d48651bc4b817f18309a33e968fc541e8f144925b8e7f9e98916b6ddbb8e8f",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 139,
+      "new_target_index": 137
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-140.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-138.json",
+      "record_sha256": "91c8de8a6b872a01ee4103fd9e0ba8deb21bd7c9ee3d47fb3d0dfcfcfa0b927d",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 140,
+      "new_target_index": 138
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-141.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-139.json",
+      "record_sha256": "a641c28f3feac82b25f8be099af4de6aea077cd690211669037f51036f920122",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 141,
+      "new_target_index": 139
+    },
+    {
+      "edit_id": "deciding_set_story",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-142.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-140.json",
+      "record_sha256": "8a234474a8eefa7a07c5a0e6eef866e924a4687479ff95b2efa05649e3c80747",
+      "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "old_target_index": 142,
+      "new_target_index": 140
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-143.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-141.json",
+      "record_sha256": "78a02ee7055637456623471d3701295b734d94b7badcd0aa23a170fc7702b96b",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 143,
+      "new_target_index": 141
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-144.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-142.json",
+      "record_sha256": "3f8cc50b491e56a6c8d9b2195cc7923dd17a1aed9aac7ceff7641ccb486bfe1b",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 144,
+      "new_target_index": 142
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-145.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-143.json",
+      "record_sha256": "e242d46b327fcaae998a7074317d1eb2bcd6f9f4c87936f28388ab0d8413a205",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 145,
+      "new_target_index": 143
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-146.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-144.json",
+      "record_sha256": "bdb4fd9dd319eaa7bfe8d847a78fc74ef3c0271820e39760bb11eee2e5f2af35",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 146,
+      "new_target_index": 144
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-147.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-145.json",
+      "record_sha256": "62c89a38d21e2d79c0c6f867de9106b710d69acc8cf84b2bd35dc5828f056a88",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 147,
+      "new_target_index": 145
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-148.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-146.json",
+      "record_sha256": "3766faa06fd85991d44901bad992faa56ee75bab0fee90adcae056b064f00552",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 148,
+      "new_target_index": 146
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-149.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-147.json",
+      "record_sha256": "d3960f8db6ff907eced2a497998f2283228a91800ac023bb8537f5cca4fe59c6",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 149,
+      "new_target_index": 147
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-150.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-148.json",
+      "record_sha256": "0be24a105478f434d9d7c3c6cfc5bdd42283269e93d44f8b96acb11ccf13fa51",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 150,
+      "new_target_index": 148
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-151.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-149.json",
+      "record_sha256": "5cbd83e0edd76db2290e5c59910f960ba9533a0b0f6ca713c508bc5c33c19bde",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 151,
+      "new_target_index": 149
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-152.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-150.json",
+      "record_sha256": "fd86a365d66449f34963a393362c88a63b03b3b293ec827eb2fc29e141de5fac",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 152,
+      "new_target_index": 150
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-153.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-151.json",
+      "record_sha256": "278c92ce90f4e909bd75736cd0bbf98b049cd2eabda48fbbd60282e9df1fddcf",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 153,
+      "new_target_index": 151
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-154.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-152.json",
+      "record_sha256": "848c562d44a734e2f0e8a08a436dbbd272df647e25cf1b6ad762e707c71f6210",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 154,
+      "new_target_index": 152
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-155.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-153.json",
+      "record_sha256": "4dbad9a7d3ac8793db2b6910b8e14149e81e2db7d9ff4c11e6bbff09be90eb06",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 155,
+      "new_target_index": 153
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-156.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-154.json",
+      "record_sha256": "6f2ebd4e7690045d4c80f6e82df6199f2bcf4b5b8119abf97ffc6d18bdc7cf30",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 156,
+      "new_target_index": 154
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-157.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-155.json",
+      "record_sha256": "571757232a1684eb687f173ad2cd5c3403d8169b2b1142c3293e75672e6f09bf",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 157,
+      "new_target_index": 155
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-158.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-156.json",
+      "record_sha256": "abf395937a5ce784a113b7765ef8401fa6de2d53c72612fc2c386df5316d1839",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 158,
+      "new_target_index": 156
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-159.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-157.json",
+      "record_sha256": "aba7e0d8f700786fbcedb43b9ec616a081599382656e4029c790450562d53fd6",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 159,
+      "new_target_index": 157
+    },
+    {
+      "edit_id": "deciding_set_break_pressure",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-160.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-158.json",
+      "record_sha256": "f3536bc87175a5a70331a0193be6f4cda9c420321a67af20794a0f57fe5e29c9",
+      "actual_mp3_sha256": "b7bf10482993e8494d6ee6281082a76cb276432b4524da169a4e7302c14bfb96",
+      "old_target_index": 160,
+      "new_target_index": 158
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-161.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-159.json",
+      "record_sha256": "177c5672e7a96962fe9bd793278adec2aec98298443afc41dc0417c8d3a1a71f",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 161,
+      "new_target_index": 159
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-162.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-160.json",
+      "record_sha256": "3789eaf0bb5d2ccf63bc3e3e2efba0e67fdfc042ba8a6225849ca2aa66a71291",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 162,
+      "new_target_index": 160
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-163.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-161.json",
+      "record_sha256": "53dc6de927cb3dce99d8a519253bbcc84f138bfec01564ed044f37c82e3c675b",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 163,
+      "new_target_index": 161
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-164.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-162.json",
+      "record_sha256": "b9d11f0eaa8f2c7757bde7e5e1a6239857c145a0031c992ed7425ad56aa43c60",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 164,
+      "new_target_index": 162
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-165.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-163.json",
+      "record_sha256": "c9a33245f9a2e7e288882cb50a6614a634ee17f75e3dedd034ef8c69bfcc2266",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 165,
+      "new_target_index": 163
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-166.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-164.json",
+      "record_sha256": "65b4015f267c44a689311a7bf59de172eda08230512a6ee0eb4bedd3d1a62e93",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 166,
+      "new_target_index": 164
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-167.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-165.json",
+      "record_sha256": "2c3607a0457999c5bdd03b56dd065955dd8a00eafb07de53fa6b3730f8945aa9",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 167,
+      "new_target_index": 165
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-168.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-166.json",
+      "record_sha256": "e9b60012f9deac204401fc1bfb93debf819e14bf674add59f7ad95b44e3834d2",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 168,
+      "new_target_index": 166
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-169.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-167.json",
+      "record_sha256": "b51da6bbd3f4baceea3915d286a6779aa8c334b86678a395200ed2f1bf269760",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 169,
+      "new_target_index": 167
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-170.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-168.json",
+      "record_sha256": "bff1dec871f27d4f85742886587ae14f23c7003388aee69d1242f70d10368627",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 170,
+      "new_target_index": 168
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-171.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-169.json",
+      "record_sha256": "af7b8aab10d7581cac21512ae0a1b19896885a3210f512578dce6b60d0f2daac",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 171,
+      "new_target_index": 169
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-172.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-170.json",
+      "record_sha256": "1cd087733239f0b59c5aa2926f90c7c88b780c617339d7eab52d580153968e3d",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 172,
+      "new_target_index": 170
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-173.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-171.json",
+      "record_sha256": "96617688ad4071b72fc75798ce517611db6b3ca3ef326109cbcf3501a6aa4085",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 173,
+      "new_target_index": 171
+    },
+    {
+      "edit_id": "six_game_swing",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-174.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-172.json",
+      "record_sha256": "c9e4f4317761e242f9804742279528ee1becf8962deacab227c9b103a14233d1",
+      "actual_mp3_sha256": "1022b99f0e5795f816ded7bad84e6e3b9ca9411fb7b1a34bedf10cc913e0c376",
+      "old_target_index": 174,
+      "new_target_index": 172
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-175.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-173.json",
+      "record_sha256": "fc752165cadcc10b96eaa102444f5a0bea2e13fc7646ac3291979af9de4619c2",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 175,
+      "new_target_index": 173
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-176.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-174.json",
+      "record_sha256": "14aadd439aea2585d11887c64d981de9a4d42b311f706a00fa71fafd9938ac17",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 176,
+      "new_target_index": 174
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-177.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-175.json",
+      "record_sha256": "c9f790daf3a0ebb49a5a12256147002561caf0f1765814bf761e1b226279cdc9",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 177,
+      "new_target_index": 175
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-178.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-176.json",
+      "record_sha256": "257fbad1174936a7872fc567f1e24cddfc9fd70b7a70fb7db182478d8fcf52d2",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 178,
+      "new_target_index": 176
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-179.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-177.json",
+      "record_sha256": "908c91cff3d4bfd92d01faf8d3ff30683e8afa51212990a16a4f720cd2df58b2",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 179,
+      "new_target_index": 177
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-180.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-178.json",
+      "record_sha256": "b2585810d97d91917e2a82151982d665ed6311f3b0bfa14e58f26dfc21d33d99",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 180,
+      "new_target_index": 178
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-181.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-179.json",
+      "record_sha256": "06e1c45289381a42181fd9b49b06be9c5dcbcd019bff6f2eb9c09caa6af21918",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 181,
+      "new_target_index": 179
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-182.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-180.json",
+      "record_sha256": "5594683411c5099aa79ba6565357bcd7aaaab5c1462d7d53e9096acf5926904b",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 182,
+      "new_target_index": 180
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-183.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-181.json",
+      "record_sha256": "2275a3b791b772d6f9fd4a5a3cf3540ca217821e14511d19e176f665fa5eaa24",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 183,
+      "new_target_index": 181
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-184.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-182.json",
+      "record_sha256": "c190302932f60ac7ae15f55b72041283147935303b676a9ba293ceb1e69f3427",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 184,
+      "new_target_index": 182
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-185.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-183.json",
+      "record_sha256": "4ed034d9a68e3fd383842c462cefa1b3cf5b68f71d046120a22291c652bd8c92",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 185,
+      "new_target_index": 183
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-186.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-184.json",
+      "record_sha256": "bfaeb28abf52b7a362168416f4c62c291750790d3ae99238a3b81edf8de4711c",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 186,
+      "new_target_index": 184
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-187.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-185.json",
+      "record_sha256": "90e529ce85cbb7b562f75060f68d9ec7962f6c1708b03601c8488531a858cdef",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 187,
+      "new_target_index": 185
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-188.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-186.json",
+      "record_sha256": "2c6fb64cbed8857a3e651dfc705426f9f024669519f2926ea9b82fdb02feb2e7",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 188,
+      "new_target_index": 186
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-189.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-187.json",
+      "record_sha256": "4278c194d4c33c2fa34a006e37b76faf066645cf8d284a9dcad3e2407832e86e",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 189,
+      "new_target_index": 187
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-190.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-188.json",
+      "record_sha256": "473416f94ed1eda2df52535960e0e21c2d97ed6cf034112a406c6d870a5a35df",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 190,
+      "new_target_index": 188
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-191.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-189.json",
+      "record_sha256": "bf8d3d30b5e29a61f983f4bb7988e6dcc31bcc5ebf7497d1e7f206ae5e7a3524",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 191,
+      "new_target_index": 189
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-192.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-190.json",
+      "record_sha256": "4005094920274d595325dba74529f18b90e2a1b9d0ec3cc1dbe32d2a787b0760",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 192,
+      "new_target_index": 190
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-193.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-191.json",
+      "record_sha256": "8b67d08879ca5ea1c048cb69539a94a21f26f739c5aad79fb6e10e55ed69479d",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 193,
+      "new_target_index": 191
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-194.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-192.json",
+      "record_sha256": "3ac2faa16e04c51abf4c9fa578b4368b47623cb4a0e0daaae2557fd2166b8a91",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 194,
+      "new_target_index": 192
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-195.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-193.json",
+      "record_sha256": "fe78507003c0cb8afff67523ce74d9fda341baf059e3c578cf331a3f2a15bad6",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 195,
+      "new_target_index": 193
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-196.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-194.json",
+      "record_sha256": "4b06e6947d52f4bffbb0ee61f033efd803d95c12b44394f37865b408cee90ad7",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 196,
+      "new_target_index": 194
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-197.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-195.json",
+      "record_sha256": "2cb265f33c8ac84a55eab1b8b8921df4e7408cc4e886acb6831afb1c6780ce0a",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 197,
+      "new_target_index": 195
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-198.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-196.json",
+      "record_sha256": "e0500a4039b6da32f47dd3654101236cd61d0babb283d1a2a18cb5a30c91b011",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 198,
+      "new_target_index": 196
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-199.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-197.json",
+      "record_sha256": "f30fb90a5c9ab3ee186c53b9c436032f37ce366e3c76ca940c158d47cc6c3ce0",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 199,
+      "new_target_index": 197
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-200.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-198.json",
+      "record_sha256": "8aa3ce211da57c555e910e65150ad60d9d6eee2def202d911218f2781383e6a8",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 200,
+      "new_target_index": 198
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-201.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-199.json",
+      "record_sha256": "a8ddbf108d695a0b4de776edb897e763c0bd6a4f54428821ae749ae3602c8050",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 201,
+      "new_target_index": 199
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-202.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-200.json",
+      "record_sha256": "8ca4b13cd7ec3f7e0ab185f2b94e934a882f9328db465391f4b7d0dc59cf3fb2",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 202,
+      "new_target_index": 200
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-203.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-201.json",
+      "record_sha256": "6730c8cb5b0f33475d72aa25f8421272c0bc3ffade20288d25f1b48dd3b7ec38",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 203,
+      "new_target_index": 201
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-204.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-202.json",
+      "record_sha256": "e374d8da12273ff2030649c248392aea3a753732d0afec567d8cc56b5068f8ff",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 204,
+      "new_target_index": 202
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-205.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-203.json",
+      "record_sha256": "0f7f5321dc6df1b7c6a6e6fe428e348c3aabe36d12205bb4a4f2e5f726ca030c",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 205,
+      "new_target_index": 203
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-206.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-204.json",
+      "record_sha256": "d3b19d49fb22586bab229760c73050b263d08ea25f5c272d2cbe0d75d64f515a",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 206,
+      "new_target_index": 204
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-207.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-205.json",
+      "record_sha256": "82ba41243f94182c06a920de9f61a8d5f74b2c5df2d52e99108038c397236a2d",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 207,
+      "new_target_index": 205
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-208.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-206.json",
+      "record_sha256": "a55227db1de673b6c77a730de46d7a48935ab98345279be636db52692c43a488",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 208,
+      "new_target_index": 206
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-209.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-207.json",
+      "record_sha256": "169ff5f7275e44ca21dc45ceb8fb10bf91a79f9e3c3eec9d95633c2079ce94ed",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 209,
+      "new_target_index": 207
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-210.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-208.json",
+      "record_sha256": "928954720167013ce3988f2c9d393f87152aa93fba8fc7edcd14e7d99e38c387",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 210,
+      "new_target_index": 208
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-211.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-209.json",
+      "record_sha256": "1aa34b22a9b8dbbe4c3343d7e1cfe54566f07bbe4a4369f606ba662a93aea2ef",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 211,
+      "new_target_index": 209
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-212.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-210.json",
+      "record_sha256": "2e26746ca9d24380e408e17a72cf81b7e77c391ceceee09e752a182842faca0d",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 212,
+      "new_target_index": 210
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-213.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-211.json",
+      "record_sha256": "63b02c0266acec0b783643ecb9be437d7bf8cce7b27028cc1ce1e81ae591aeee",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 213,
+      "new_target_index": 211
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-214.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-212.json",
+      "record_sha256": "66b91c71eb95e02ee0f526513bdedbf79096c1169edc6accc3131964d6f15105",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 214,
+      "new_target_index": 212
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-215.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-213.json",
+      "record_sha256": "cd46786dc72e315cfd7b040cfb5ce7e1beb9be673f8b90c7f6f572526fcb9dac",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 215,
+      "new_target_index": 213
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-216.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-214.json",
+      "record_sha256": "bd32d3f3a866102038bb0927a2bbc2541eb165c1270a03d8ee1a026ee07b5d33",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 216,
+      "new_target_index": 214
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-217.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-215.json",
+      "record_sha256": "47b272e862a230885b888317b8c47f533dfbf8019b0810e9bfe2201af602f771",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 217,
+      "new_target_index": 215
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-218.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-216.json",
+      "record_sha256": "c2c0771b5140e210138405758457288e1d86b303dbb6be7b585dd2e1d6b2a078",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 218,
+      "new_target_index": 216
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-219.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-217.json",
+      "record_sha256": "81c962299e18a1eb44638204b9249b3aa77a67531e186313e342a63822fd9604",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 219,
+      "new_target_index": 217
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-220.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-218.json",
+      "record_sha256": "dde3c7f1c64c636aacafd2c921e7d379c85305afef3c5a332c13b452470dc942",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 220,
+      "new_target_index": 218
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-221.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-219.json",
+      "record_sha256": "f10c38beb6296cd7d67f6e36358d77d882d61e50dea51e9c83a9fa04716be9d0",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 221,
+      "new_target_index": 219
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-222.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-220.json",
+      "record_sha256": "6b81ef2712ae598a035c8c25c92ac46d678f63ceec578c17a2f64b3d97a1df09",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 222,
+      "new_target_index": 220
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-223.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-221.json",
+      "record_sha256": "3b61c1ee94d90caf9149eb1d0cee5b37cadfc1c2d589d6983748ca09a0dc39a1",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 223,
+      "new_target_index": 221
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-224.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-222.json",
+      "record_sha256": "ff19ed3a93536ffd099914eb839c6c51e66f37587b71c26bf8904fc781249d47",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 224,
+      "new_target_index": 222
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-225.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-223.json",
+      "record_sha256": "4197f3023b41f6f7f769db744cc73c6e8a58f7c54b69c34d594bcc6659f8226e",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 225,
+      "new_target_index": 223
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-226.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-224.json",
+      "record_sha256": "f8744994b3688fb3d44afdb0f833fe23a0e7634e6ad7a2737434e2227ee9fed8",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 226,
+      "new_target_index": 224
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-227.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-225.json",
+      "record_sha256": "a3684046054e7609544716818fc103009c598160a28cfa2f95cb393ecf813a66",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 227,
+      "new_target_index": 225
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-228.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-226.json",
+      "record_sha256": "979cf3bde36afd5a55da6186a3a91ed541a1169fb2f7311bc7f2a9de95b860e8",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 228,
+      "new_target_index": 226
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-229.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-227.json",
+      "record_sha256": "0d1558490428b10d7db4d4be57952f749beb198f958363b895d42e592259b4fe",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 229,
+      "new_target_index": 227
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-230.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-228.json",
+      "record_sha256": "0fe54adec159ce7d5728d1bf9b4668f0a1a04d23a65623873cfc20ba1b38296b",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 230,
+      "new_target_index": 228
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-231.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-229.json",
+      "record_sha256": "e6382fca23304373e7916e8a39f8f18b482cef9de2d424643e0dc88b80d880f7",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 231,
+      "new_target_index": 229
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-232.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-230.json",
+      "record_sha256": "6f0d738ea541b5e8a5d1f27bb1d086d5d4d392648578483cb739275e0204518a",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 232,
+      "new_target_index": 230
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-233.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-231.json",
+      "record_sha256": "65281c68feefe6bee845f5eca6de5f8faaf9d0254f64cfefdc1bb16358f654c6",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 233,
+      "new_target_index": 231
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-234.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-232.json",
+      "record_sha256": "8355b8025d7c7fb5fed06dba5979b9d5ba178f0e512634f5f739e4bbe0efc9eb",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 234,
+      "new_target_index": 232
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-235.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-233.json",
+      "record_sha256": "d9e01634d48b40572e29f0a32f36febf036f142b2b52201fa76d440da17d85f1",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 235,
+      "new_target_index": 233
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-236.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-234.json",
+      "record_sha256": "f6b7843f4e931fa0ac990f162dc99692d4a625826385603d0de7f054994aed67",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 236,
+      "new_target_index": 234
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-237.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-235.json",
+      "record_sha256": "09eff0aee17c614a074adfad03d5843a098be61b52451397a24c301aa62bdd83",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 237,
+      "new_target_index": 235
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-238.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-236.json",
+      "record_sha256": "4d9278678040bb99b756c016b2a9a2d88c18e094fd17103d0655f362f35d78af",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 238,
+      "new_target_index": 236
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-239.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-237.json",
+      "record_sha256": "280e05fbdf9a5703ede0eb241b3fa03c8de2ea8c38af5fab12636dabe63e01bc",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 239,
+      "new_target_index": 237
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-240.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-238.json",
+      "record_sha256": "eca7bf417625bd556822971ae6b1634f4832ce99e1bce87f99290c0b7ec2079e",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 240,
+      "new_target_index": 238
+    },
+    {
+      "edit_id": "stats_and_question",
+      "source_path": "/workspace/scratch/eala-voice/native-targets/target-241.json",
+      "destination_path": "/workspace/scratch/eala-voice-v2/native-targets/target-239.json",
+      "record_sha256": "2e60225cd8061edee749d022517025f97a01ae729d92e3a3eab6aca674e994fa",
+      "actual_mp3_sha256": "926f6b71f452cd51c0f19bc7c2886b13d56aac4c871af354b46a0121f546c406",
+      "old_target_index": 241,
+      "new_target_index": 239
+    }
+  ],
+  "old_changed_utterance_verdicts_promoted": false,
+  "human_listening_claimed": false,
+  "pronunciation_release_pass_claimed": false,
+  "method": "Byte-for-byte original raw results and hash-verified paired controls. Full edit ID/display/spoken sentence/voice/rate/pitch/native MP3 identity, occurrence position/intended/wrong/reference lists and diagnostic reference flags all match. Changed sentence results remain old history and are never copied."
+}

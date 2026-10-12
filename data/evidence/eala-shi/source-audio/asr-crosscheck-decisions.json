@@ -1,0 +1,153 @@
+{
+  "schema": "tennislive.actual-asr-crosscheck-decisions.v1",
+  "slug": "eala-shi",
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "recorded_at": "2026-10-12T16:44:31.018343+00:00",
+  "method": "asr_cross_checked",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "tone_verified": false,
+  "status": "actual_full_source_review_with_explicit_excluded_uncertainties",
+  "decisions": [
+    {
+      "range": [
+        286.63,
+        289.13
+      ],
+      "status": "unresolved_exclude_from_selected_audio",
+      "variants": [
+        "It might take some time to process",
+        "They might take some time to process"
+      ],
+      "basis": "Full small.en gives It (.38); full medium.en gives they (.20); small.en no-VAD gives they (.066 with an invalid six-second first-word span); two large-v3 no-VAD give they (.158/.390); exact-ending medium.en no-VAD gives it (.021). A majority hypothesis alone does not overcome weak pronoun acoustics or establish a trustworthy actual word. Do not label this complete while selected; preserve later But you earned it and Shi Han go ahead and take your bow separately if editorially suitable."
+    },
+    {
+      "range": [
+        295.83,
+        296.82
+      ],
+      "status": "source_truncated_clause_exclude_from_selected_audio",
+      "variants": [
+        "in just shy",
+        "and just shot",
+        "He just shot"
+      ],
+      "basis": "Source itself ends speech at approximately296.8 before an amount follows just shy. Both large-v3 cropped decodes give in just shy; full medium.en agrees, while small and medium short-context substitutes shot. The complete preceding clause Coming back from a set down to win6-3 in the third is supported by all models; exclude the incomplete time modifier instead of inventing the missing duration."
+    },
+    {
+      "range": [
+        20.59,
+        26.13
+      ],
+      "status": "literal_consensus_with_editorial_context_split",
+      "en": "Yeah not enough on that volley for sure / But you know that program aims to really help",
+      "basis": "Both full English-only models agree word for word. The first complete rally evaluation ends22.93; separate unrelated program chatter begins23.03 and the supplied source then cuts that larger thought. Recommend retain the former full sentence and end22.98; the entire latter clause remains in the evidence if root retains that window."
+    },
+    {
+      "range": [
+        34.34,
+        40.46
+      ],
+      "status": "best_supported_context_and_orthographic_reconciliation",
+      "en": "Well survive she does / Alexandra Eala able to get her fifth hold / But it wasn't without work",
+      "basis": "Small first word is Will, medium is well; same unstressed interjection and supported following survive she does. Yala and Alexander are ASR name spelling errors corrected by actual official match identity. hole corrected to hold: both models support tennis service-game context and the actual footage/scoreboard establishes Eala fifth hold, rather than a different lexical claim."
+    },
+    {
+      "range": [
+        48,
+        66.36
+      ],
+      "status": "dual_model_literal_consensus",
+      "basis": "Every clause smart tennis/final five points/opening set, never looked fully engaged/output/productivity, when she needed it most/first break opportunity, converts/one-set lead agrees in both fresh full-source English models. Split at actual word boundaries for readable cue lines; no conclusion about stroke mechanics is inferred from captions."
+    },
+    {
+      "range": [
+        78.5,
+        84.38
+      ],
+      "status": "best_supported_article_reconciliation_with_rejected_isolated_word",
+      "en": "A sense of urgency yes / Smart indeed / IQ starting to come out / as Eala starts to make her move",
+      "basis": "small.en full and actual no-VAD both decode A sense of urgency (cropped article.246); medium prefix smart is only.03 and duplicates its high-confidence later Smart indeed. large-v3 omits article and gives a .031 initial sense, consistent with weak first-word alignment. Keep best-supported small.en article and every unanimously supported following lexical word; rejected smart prefix remains raw rather than silently adding a second Smart. The proper name follows independently identified Eala, not Ella/Ellis.",
+      "publication_selection_note": "Root requested conservative exclusion78.50–80.24 rather than promote the weak leading-article reconciliation to release wording. Confirmed Smart indeed/IQ/as Eala... afterward remains usable."
+    },
+    {
+      "range": [
+        84.38,
+        91.14
+      ],
+      "status": "literal_consensus_editorial_chatter_recommended_omit",
+      "en": "The fan support but also the whole the media / I mean that was that went crazy for Capriati / when she first stepped on the court",
+      "basis": "Both English models and actual no-VAD short-context small/large support fan support/media/Capriati/first stepped on the court. Keep literal stumbles and use medium plus small no-VAD that rather than small full they after that was. Capriati spelling follows common tennis identity, not Capriotti ASR. Chatter is not the action payoff; root may omit without presenting an unrelated story."
+    },
+    {
+      "range": [
+        123.59,
+        128.17
+      ],
+      "status": "dual_model_and_actual_crop_consensus",
+      "en": "Oh and the grind goes to Shi Han / What an effort",
+      "basis": "Both full models and actual small.en no-VAD agree grind/goes/What an effort. Sheehan/Shehan orthography corrected to the supplied official Shi Han identity. medium full attaches an isolated but with.88 and a 127.81–128.75 span before a 20-second silence; actual small cropped and full small do not contain it. No extra But is accepted solely from that stretched boundary."
+    },
+    {
+      "range": [
+        147.62,
+        153.5
+      ],
+      "status": "dual_model_full_consensus_with_rejected_displaced_word",
+      "en": "Gets the hold nonetheless / Does not have to be perfect / You just got to earn it / And she does exactly that for three all",
+      "basis": "Both full decoders agree complete text and 3-all. Crop small misreads3-0; actual match scoreboard is3-3 and full model agreement wins. medium full prior-clause but aligned127.81–128.75 is not adopted as a missing first word148seconds later. Small cropped first Get begins147.62, full small147.90, medium148.24; retain conservative147.62 start, not invented phonetic certainty."
+    },
+    {
+      "range": [
+        162.59,
+        178.28
+      ],
+      "status": "actual_crop_and_full_reconciliation",
+      "en": "Oh she is starting to turn it up / the volume and the power / And that misses the mark / And here comes the qualifier",
+      "basis": "medium full and small actual no-VAD support introductory Oh; full small omits it. Full medium binds And immediately after power at167.21–168.07 while both actual no-VAD and large context show the next clause after175.2; the full-model eight-second first-word span is not taken as ground truth. Split the complete next clause at175.2; keep volume/power and point result intact."
+    },
+    {
+      "range": [
+        178.52,
+        195.38
+      ],
+      "status": "two_full_models_and_actual_crop_literal_context_consensus",
+      "basis": "Two full English models and small.en actual cropped no-VAD support Shi Han, Zheng Qinwen, Beijing champion, three sets, previous tournament, first two top100 wins in Wuhan qualifying, world19 pushed to a third set on night one. Named-entity orthography uses established tennis identities; preserving commentary is not an independent certification that every historical claim in commentary is factually true. Root facts review may choose not to retain historical claim if unsupported."
+    },
+    {
+      "range": [
+        233.4,
+        240.56
+      ],
+      "status": "best_supported_colloquial_expansion_reconciliation",
+      "en": "Anything is still possible / Hopefully the experience is going to have to play something positive for Eala here",
+      "basis": "Anything is still possible agrees in full small/medium and actual small/large no-VAD. Full small and cropped small give is going to; medium full and large crop use gonna. Use standard expanded spelling is going to from both actual small decodes, not an invented longer new sentence. Eala repairs actual name spelling, substantive experience/play/something positive is unanimous."
+    },
+    {
+      "range": [
+        246.58,
+        251.18
+      ],
+      "status": "best_supported_preposition_reconciliation",
+      "en": "Well much like her opponent Shi Han / in their12th service game that was her best",
+      "basis": "Full medium and actual small crop give in (small cropped.6767), full small has on (.47), large crop has and (.33); large coldopen crop starts249 with in. Literal in their12th service game has strongest actual short-context support and independent medium plus large decoding. Preserve best-supported wording rather than replace their with her to smooth source grammar.",
+      "publication_selection_note": "Root requested conservative exclusion of246.58–251.18 rather than promote preposition reconciliation as certain. Retain complete preceding3-5 hold action before the commentary; root may leave the source interval out."
+    },
+    {
+      "range": [
+        257.02,
+        281.51
+      ],
+      "status": "two_full_and_large_crop_literal_consensus",
+      "basis": "Both full English models and exact coldopen large-v3 agree Cool as the other side of the pillow, remarkable/perhaps unbelievable performance, Maybe even she too does not realize what she has accomplished, dream/reality, world19 Eala falls to world217 Shi Han, second round Wuhan, and a three-set triumph. Names/numeric display repaired only from exact supplied match identity. Large-v3 coldopen starts slightly earlier than full word estimates; cue timings conservatively cover all supported starts without overlapping neighboring clauses."
+    },
+    {
+      "range": [
+        289.13,
+        295.83
+      ],
+      "status": "multiple_actual_model_literal_consensus",
+      "basis": "But you earned it / Shi Han go ahead and take your bow / Coming back from a set down to win6-3 in the third agree among full small/medium and both targeted large plus targeted small/medium. Separate this confirmed actual wording from unresolved prior pronoun and truncated subsequent modifier. No human playback or human pronunciation audit is claimed."
+    }
+  ]
+}

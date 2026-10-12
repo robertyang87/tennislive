@@ -1,0 +1,73 @@
+{
+  "movie_sha256": "dd60eef0078ca720037d4a9ce9543d157598d8d335503363d9f19e69c48b5b35",
+  "status": "sampled_actual_runtime_windows_pass",
+  "screenshots": [
+    {
+      "name": "cold_inside",
+      "movie_seconds": 2.0,
+      "file": "data/evidence/eala-shi/overlay-sync-check/cold_inside.jpg",
+      "sha256": "97a5b2f8cbc066cd801d6706f7055420f26228ddbf760d1878d19af45eba6ffa"
+    },
+    {
+      "name": "cold_outside",
+      "movie_seconds": 3.08,
+      "file": "data/evidence/eala-shi/overlay-sync-check/cold_outside.jpg",
+      "sha256": "c8bcf3210051520e1adf0ccf517cfea17e89d3ca01d25a9b6c12a61b8e37de56"
+    },
+    {
+      "name": "second_inside",
+      "movie_seconds": 156.5,
+      "file": "data/evidence/eala-shi/overlay-sync-check/second_inside.jpg",
+      "sha256": "487d0feaa39d7ffc9fd6c1e844dab2e296279c65f82f38b62d69c4b09fc8c143"
+    },
+    {
+      "name": "second_outside",
+      "movie_seconds": 158.08,
+      "file": "data/evidence/eala-shi/overlay-sync-check/second_outside.jpg",
+      "sha256": "cfbdf6e327b4715c942e4f39d42944b2c9f705bdc3da03f499008ec6f2cda3df"
+    },
+    {
+      "name": "setlevel_inside",
+      "movie_seconds": 182.77,
+      "file": "data/evidence/eala-shi/overlay-sync-check/setlevel_inside.jpg",
+      "sha256": "e1063f6b0c64dc8de4daaf48d87bceb22817c99961c9c640703a272e5616faee"
+    },
+    {
+      "name": "setlevel_outside",
+      "movie_seconds": 185.77,
+      "file": "data/evidence/eala-shi/overlay-sync-check/setlevel_outside.jpg",
+      "sha256": "1ab6269f71fdc0183f5e4d069194e83a0874b4c33b8b114b5c75573cbc9a9de2"
+    },
+    {
+      "name": "final_inside",
+      "movie_seconds": 270.65,
+      "file": "data/evidence/eala-shi/overlay-sync-check/final_inside.jpg",
+      "sha256": "85ccaea94d10db293ea27e705ba7946dad8bd2710887ea9d4eccb8f7c232d00e"
+    },
+    {
+      "name": "final_outside",
+      "movie_seconds": 279.65,
+      "file": "data/evidence/eala-shi/overlay-sync-check/final_outside.jpg",
+      "sha256": "f48be8e2d4ab991a5ada542d9d6b926df70b7c2f714490899ebaaf78d3bf4be0"
+    }
+  ],
+  "renderer_change": false,
+  "reproduction": "native cut_segment with actual spec/source/mask, 25fps, tail0.18, threads1: relative4.88s transparent; no code changes",
+  "scope": "8 screenshots: one inside and one outside each of 4 reviewed source-board windows; not a whole-film global gate",
+  "actual_visual_result": {
+    "inside": [
+      "cold_inside",
+      "second_inside",
+      "setlevel_inside",
+      "final_inside"
+    ],
+    "outside_all_no_board": [
+      "cold_outside",
+      "second_outside",
+      "setlevel_outside",
+      "final_outside"
+    ],
+    "movie158_08_sha256": "f0a385c01ea7601ead1bde7e28523f2af84902fcf1e895bce7ee6bd1cbbd90b1",
+    "discrepancy_resolution": "Independent visual reviewer acknowledged misattribution of adjacent thumbnail frame077 to frame078. Actual frame078 and fullsize movie158.08 contain no board."
+  }
+}

@@ -1,0 +1,493 @@
+{
+  "label": "第 2 段",
+  "edit_id": "landing",
+  "word": "一",
+  "char": "一",
+  "at": 2,
+  "sentence": "先赢一盘，伊埃拉还是在武汉被逆转。",
+  "intended": "yi4",
+  "wrong": "yi1",
+  "actual_binding": {
+    "label": "第 2 段",
+    "index": 1,
+    "edit_id": "landing",
+    "display_text": "先赢一盘，伊埃拉还是在武汉被逆转。",
+    "text": "先赢一盘，伊埃拉还是在武汉被逆转。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "cache_key": "f729cf3e45f4bd97f86b6c8ee4a2c233",
+    "actual_mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+    "bound_snapshot_path": "/workspace/scratch/eala-voice/native-speech/f729cf3e45f4bd97f86b6c8ee4a2c233.mp3",
+    "marks_snapshot_path": "/workspace/scratch/eala-voice/native-speech/f729cf3e45f4bd97f86b6c8ee4a2c233.marks.json",
+    "mp3_duration_seconds": 3.792,
+    "window_seconds": 5.0,
+    "headroom_seconds": 1.2080000000000002,
+    "native_cache_path": "/home/agent/.cache/tennislive-tts/f729cf3e45f4bd97f86b6c8ee4a2c233-edge-v2.zip",
+    "native_zip_snapshot_path": "/workspace/scratch/eala-voice/native-speech/f729cf3e45f4bd97f86b6c8ee4a2c233.native.zip",
+    "native_zip_sha256": "5cf9ca5db93ea2054b25b4bd40d6757c40ef5abcdd5381361217f649f6e467c4",
+    "native_zip_marks_raw_sha256": "b71631f342dab8e8511354d774fca6cea90e5e23ebceed72ce37ce716c8f08a7",
+    "actual_marks_sha256": "de504a3ab870218f2c25cfe2dc770fd85eed187faa4acd081092679729716155",
+    "word_boundary_tokens": [
+      "先",
+      "赢",
+      "一",
+      "盘",
+      "伊埃拉",
+      "还是",
+      "在",
+      "武汉",
+      "被",
+      "逆转"
+    ],
+    "enumerated_polyphones": [
+      {
+        "at": 2,
+        "char": "一",
+        "word": "一",
+        "intended_lexical_reading": "yi1",
+        "all_dictionary_readings": [
+          "yi1",
+          "yi2",
+          "yi4"
+        ]
+      },
+      {
+        "at": 6,
+        "char": "埃",
+        "word": "埃",
+        "intended_lexical_reading": "ai1",
+        "all_dictionary_readings": [
+          "ai1",
+          "zhi4"
+        ]
+      },
+      {
+        "at": 7,
+        "char": "拉",
+        "word": "拉",
+        "intended_lexical_reading": "la1",
+        "all_dictionary_readings": [
+          "la1",
+          "la2",
+          "la3",
+          "la4",
+          "la5"
+        ]
+      },
+      {
+        "at": 8,
+        "char": "还",
+        "word": "还是",
+        "intended_lexical_reading": "hai2",
+        "all_dictionary_readings": [
+          "hai2",
+          "huan2",
+          "fu2"
+        ]
+      },
+      {
+        "at": 9,
+        "char": "是",
+        "word": "还是",
+        "intended_lexical_reading": "shi4",
+        "all_dictionary_readings": [
+          "shi4",
+          "ti2"
+        ]
+      },
+      {
+        "at": 13,
+        "char": "被",
+        "word": "被",
+        "intended_lexical_reading": "bei4",
+        "all_dictionary_readings": [
+          "bei4",
+          "bi4",
+          "pi1",
+          "pi4"
+        ]
+      },
+      {
+        "at": 15,
+        "char": "转",
+        "word": "逆转",
+        "intended_lexical_reading": "zhuan3",
+        "all_dictionary_readings": [
+          "zhuan3",
+          "zhuan4",
+          "zhuai3"
+        ]
+      }
+    ],
+    "tts_only_substitution_changed_text": false
+  },
+  "check_kind": "polyphone",
+  "context_notes": [
+    "Lexical dictionary intended reading is a declared hypothesis; calibration evaluates actual audio."
+  ],
+  "ok_refs": [
+    "义",
+    "亦",
+    "亿"
+  ],
+  "bad_refs": [
+    "衣",
+    "依"
+  ],
+  "reference_notes": [
+    "Provisional declared nonoriginal controls; context-sensitive/traditional/rare controls require fresh self-calibration.",
+    "Provisional declared nonoriginal controls; context-sensitive/traditional/rare controls require fresh self-calibration."
+  ],
+  "reference_validity_limited": false,
+  "acoustic": {
+    "word": "一",
+    "char": "一",
+    "sentence": "先赢一盘，伊埃拉还是在武汉被逆转。",
+    "tts_text": "先赢一盘，伊埃拉还是在武汉被逆转。",
+    "intended_refs": [
+      "义",
+      "亦",
+      "亿"
+    ],
+    "wrong_refs": [
+      "衣",
+      "依"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "low",
+    "verdict_raw": "correct",
+    "score": 0.984,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [
+      "依"
+    ],
+    "override": null,
+    "selftest_sides": [
+      "A"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.0,
+        "d_wrong": 3.207,
+        "score": 1.0
+      },
+      "f0": {
+        "d_intended": 0.023,
+        "d_wrong": 1.293,
+        "score": 0.965
+      },
+      "comb": {
+        "d_intended": 0.023,
+        "d_wrong": 2.897,
+        "score": 0.984
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.029,
+      "wrong": 2.433
+    },
+    "separation": {
+      "spec": {
+        "within": 0.63,
+        "between": 2.923,
+        "separation": 4.639
+      },
+      "f0": {
+        "within": 0.158,
+        "between": 1.154,
+        "separation": 7.306
+      },
+      "comb": {
+        "within": 0.473,
+        "between": 2.615,
+        "separation": 5.53
+      }
+    },
+    "selftest_loo": {
+      "义": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.921
+      },
+      "亦": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.99
+      },
+      "亿": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.99
+      },
+      "依": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.188,
+        "dropped": true
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:义": {
+        "spec": 0.0,
+        "f0": 0.023,
+        "vmis": 0.0,
+        "frames": 23,
+        "comb": 0.023
+      },
+      "A:亦": {
+        "spec": 0.0,
+        "f0": 0.097,
+        "vmis": 0.0,
+        "frames": 23,
+        "comb": 0.097
+      },
+      "A:亿": {
+        "spec": 0.0,
+        "f0": 0.11,
+        "vmis": 0.0,
+        "frames": 23,
+        "comb": 0.11
+      },
+      "B:衣": {
+        "spec": 3.207,
+        "f0": 1.293,
+        "vmis": 0.125,
+        "frames": 24,
+        "comb": 2.897
+      },
+      "B:依": {
+        "spec": 2.66,
+        "f0": 1.112,
+        "vmis": 0.08,
+        "frames": 25,
+        "comb": 2.442
+      }
+    },
+    "window_s": [
+      0.373,
+      0.594
+    ],
+    "boundary_token": "一",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "先",
+        "赢",
+        "一",
+        "盘",
+        "伊埃拉",
+        "还是",
+        "在",
+        "武汉",
+        "被",
+        "逆转"
+      ],
+      "A:义": [
+        "先",
+        "赢",
+        "义",
+        "盘",
+        "伊埃拉",
+        "还是",
+        "在",
+        "武汉",
+        "被",
+        "逆转"
+      ],
+      "A:亦": [
+        "先",
+        "赢",
+        "亦",
+        "盘",
+        "伊埃拉",
+        "还是",
+        "在",
+        "武汉",
+        "被",
+        "逆转"
+      ],
+      "A:亿": [
+        "先",
+        "赢",
+        "亿",
+        "盘",
+        "伊埃拉",
+        "还是",
+        "在",
+        "武汉",
+        "被",
+        "逆转"
+      ],
+      "B:衣": [
+        "先",
+        "赢",
+        "衣",
+        "盘",
+        "伊埃拉",
+        "还是",
+        "在",
+        "武汉",
+        "被",
+        "逆转"
+      ],
+      "B:依": [
+        "先",
+        "赢",
+        "依",
+        "盘",
+        "伊埃拉",
+        "还是",
+        "在",
+        "武汉",
+        "被",
+        "逆转"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -1.1,
+        -1.8,
+        -1.8,
+        -1.3,
+        -0.7,
+        -0.6,
+        -1.2,
+        -1.9,
+        -3.7,
+        -3.9,
+        -4.9,
+        -9.0
+      ],
+      "A:义": [
+        -1.1,
+        -1.8,
+        -1.8,
+        -1.3,
+        -0.8,
+        -0.6,
+        -1.2,
+        -1.9,
+        -3.7,
+        -4.0,
+        -4.9,
+        -9.0
+      ],
+      "A:亦": [
+        -1.0,
+        -1.7,
+        -1.7,
+        -1.2,
+        -0.6,
+        -0.5,
+        -1.1,
+        -1.8,
+        -3.6,
+        -3.8,
+        -4.8,
+        -8.9
+      ],
+      "A:亿": [
+        -1.0,
+        -1.7,
+        -1.7,
+        -1.2,
+        -0.6,
+        -0.5,
+        -1.0,
+        -1.8,
+        -3.5,
+        -3.8,
+        -4.8,
+        -8.9
+      ],
+      "B:衣": [
+        0.3,
+        -0.4,
+        -0.6,
+        -0.6,
+        -0.4,
+        -0.3,
+        -0.1,
+        0.1,
+        0.2,
+        0.1,
+        -0.3,
+        null
+      ],
+      "B:依": [
+        -0.9,
+        -1.3,
+        -1.5,
+        -1.3,
+        -0.8,
+        -0.7,
+        -0.4,
+        0.2,
+        0.3,
+        0.3,
+        0.1,
+        0.0,
+        null
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/scratch/eala-voice/native-speech/f729cf3e45f4bd97f86b6c8ee4a2c233.mp3",
+      "A:义": "/workspace/scratch/eala-voice/fresh-reference-cache/06b5e11c5889906b1407ecf0.mp3",
+      "A:亦": "/workspace/scratch/eala-voice/fresh-reference-cache/87a0991fb111a2fac2631cd5.mp3",
+      "A:亿": "/workspace/scratch/eala-voice/fresh-reference-cache/1a6044338df65312c379ad56.mp3",
+      "B:衣": "/workspace/scratch/eala-voice/fresh-reference-cache/08cb3de120991220cea749c6.mp3",
+      "B:依": "/workspace/scratch/eala-voice/fresh-reference-cache/ff2d03b87751463a9fec3ebf.mp3"
+    }
+  },
+  "control_audio_provenance": [
+    {
+      "label": "ORIG",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/f729cf3e45f4bd97f86b6c8ee4a2c233.mp3",
+      "mp3_sha256": "604df969c78c6f6f6391d86077e92cb05cbea3e8ba12743e7036be0e7f7027b7",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/f729cf3e45f4bd97f86b6c8ee4a2c233.marks.json",
+      "marks_sha256": "de504a3ab870218f2c25cfe2dc770fd85eed187faa4acd081092679729716155"
+    },
+    {
+      "label": "A:义",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/06b5e11c5889906b1407ecf0.mp3",
+      "mp3_sha256": "70ee05c9583ac51e663b24ec29354ebc3935941288d61f3d5f73c7972a34ef42",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/06b5e11c5889906b1407ecf0.marks.json",
+      "marks_sha256": "692c89987845a3c4331dffb3afacf5dd7020511e1bde0f5b660701346dc1b072"
+    },
+    {
+      "label": "A:亦",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/87a0991fb111a2fac2631cd5.mp3",
+      "mp3_sha256": "f737333392ebed073a9118360f4c5529424ddbd0ca6e9cac91b456e67fef2247",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/87a0991fb111a2fac2631cd5.marks.json",
+      "marks_sha256": "6ff60089562396669b9892c8a4ad8bdb594b4790a93e8fcb73bdba23011b6591"
+    },
+    {
+      "label": "A:亿",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/1a6044338df65312c379ad56.mp3",
+      "mp3_sha256": "7798925df15f4beb98088aa4367ad1004ed1d8e3652f40db799ebccd6967ec6b",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/1a6044338df65312c379ad56.marks.json",
+      "marks_sha256": "fb714061414b2e5e2ce8448aaabefc7edea8f9ac8e995d5ecf4096ebfb542e6e"
+    },
+    {
+      "label": "B:衣",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/08cb3de120991220cea749c6.mp3",
+      "mp3_sha256": "78a9d8b9a6a202793c7d3d6e54cb419576e3f8041be8443782a5a46a1ea882ca",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/08cb3de120991220cea749c6.marks.json",
+      "marks_sha256": "477e9463783167749626e339586d685c46ffa9e662607671affaf4ef55f50476"
+    },
+    {
+      "label": "B:依",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/ff2d03b87751463a9fec3ebf.mp3",
+      "mp3_sha256": "c4ec92a2a0d04227fcef4df23d8db252de05b88935c6a59c42a2021f25034c52",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/ff2d03b87751463a9fec3ebf.marks.json",
+      "marks_sha256": "69725ede49a38f53a7d1262708231215b1da713b4542bf844c0909f22d9f1d9f"
+    }
+  ],
+  "measured_at_utc": "2026-10-12T16:59:00.686103+00:00"
+}

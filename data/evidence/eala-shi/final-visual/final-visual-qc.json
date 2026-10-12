@@ -1,0 +1,69 @@
+{
+  "status": "pass_with_recorded_fixed_crop_limitations",
+  "film_sha256": "dd60eef0078ca720037d4a9ce9543d157598d8d335503363d9f19e69c48b5b35",
+  "film_bytes": 122233077,
+  "width": 1080,
+  "height": 1440,
+  "fps": 25,
+  "duration_seconds": 303.88,
+  "actually_viewed_frames": 191,
+  "actually_viewed_contact_sheets": [
+    "sheet-01.jpg",
+    "sheet-02.jpg",
+    "sheet-03.jpg",
+    "sheet-04.jpg",
+    "sheet-05.jpg",
+    "sheet-06.jpg",
+    "sheet-07.jpg",
+    "sheet-08.jpg",
+    "sheet-09.jpg",
+    "sheet-10.jpg",
+    "sheet-11.jpg",
+    "sheet-12.jpg",
+    "sheet-13.jpg",
+    "sheet-14.jpg",
+    "sheet-15.jpg",
+    "sheet-16.jpg"
+  ],
+  "subtitle_midpoints": 75,
+  "method": "Eachof16wallsactuallyviewed;actualfullframe043 additionallyinspected;actualfilm158.08/159.04separatelydecoded;whole-filmblackdetect0. Samplingdoesnotclaimall7597framesviewed.",
+  "verified_observations": [
+    "Liveimage fills1080x1440fixedcenterportrait; no letterbox/blurpad in actualsampledframes.",
+    "Score/narrationroles agreeEala mint/Shiyellow; matchpoint,handshake,bothsalutesandcrowdretained.",
+    "All75ASS cue midpoints sampled andviewed; no cropped/overwidthsubtitleobserved; body-onlycaptionbaselinecloseaboveboard, hintcaptionscloseabovenativehint.",
+    "Fullcanvasstatcard sampled253.84–267.88,no subtitlescoverstatistics;firstservewonEala64%,Shi78%,winners20/31,188totalpoints88/100readable.",
+    "Lastframe303.84 courtcrowd/Shi, noendWTAbrand/QR/watchmore/interview.",
+    "Mostnativeboardpresence/absence transitions visuallymatchsource; final/coldafterwipe noopaquegreenfloorpatchobserved.",
+    "Allfour reviewedscoreboard sourcewindows checkedat runtimewith83consecutiveactualframecrops;actual158.08noboardand194.48-equivalentcenterresultwithoutcopiedleftpatch."
+  ],
+  "recorded_limits": [
+    "Fixedcropnearbaselineplayer partlyoutsideleft/right duringlateralrunning atactual105,205,225,250,273.88; mandatedfixedcenter, nofollowingcropused.",
+    "OriginalnativecentredresultgraphicheaderROUND1overlappedbylowbilingualsubtitleat72.92and195.08;playernames/resultsremainreadable, no copiedleftpatch.",
+    "Originalnativeplate canretainsemi-transparentnativebackgroundcontentinsideitsgraphicbody; nosearchrectanglebackgroundpatchpassclaimed.",
+    "Automatedfacechecks unavailable; manualsampledvisualreviewconducted, noautomatedfacepassclaimed.",
+    "Nohuman_audio_listening_claimed; audioQA handledseparately."
+  ],
+  "pending": [],
+  "blackdetect_hits": [],
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "spec_sha256": "a23fd7cfa977415db1b227d06dbf2814e72dfbf05e326a06762e41e3baab4b09",
+  "final_visual_release_pass_claimed": true,
+  "corrected_false_positive_review": "history/false-positive-visual-review/correction.json",
+  "runtime_transition_review": {
+    "additional_actual_movie_frames": 83,
+    "cadence": "Every25fpsframein6shortcontinuousrangescoveringall4reviewedwindows: cold,three_all disappear/return,set_level disappear/centred-result,final disappear",
+    "actually_viewed_walls": [
+      "runtime-window-01.jpg",
+      "runtime-window-02.jpg",
+      "runtime-window-03.jpg",
+      "runtime-window-04.jpg",
+      "runtime-window-05.jpg",
+      "runtime-window-06.jpg"
+    ],
+    "runtime_window_result": "Correct nativeplate shrink/disappear, zeroopaque courtpatchafterexit, normaltrueplatereturn;centreRound1graphicstaysoriginalmainimage withoutduplicateleftplate.",
+    "movie15808_verified": "BothfullsizeoriginalsampleandindependentfreshPNGvisuallyconfirmnoboard;onlybilingual3-3caption;oldmisreadcorrected.",
+    "new_movie_or_renderer_change_needed": false
+  },
+  "raw_pngs_policy": "191fullPNGand83runtimecropPNGremainlocal;16fullJPEGwalls+6runtimeJPEGwalls/manifests preserveviewedcomparisonand canregeneratefromexact releasedmasterSHA. HistoricalfalsepositivePNG/correctionretainedseparately.",
+  "movie_sha_rechecked": "dd60eef0078ca720037d4a9ce9543d157598d8d335503363d9f19e69c48b5b35"
+}

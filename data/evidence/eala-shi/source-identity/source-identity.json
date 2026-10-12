@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "slug": "eala-shi",
+  "reviewed_at": "2026-10-12T16:32:03.279392+00:00",
+  "requested_url": "https://m.youtube.com/watch?v=T9TfTnVgHNY",
+  "canonical_url": "https://www.youtube.com/watch?v=T9TfTnVgHNY",
+  "exact_video_id": "T9TfTnVgHNY",
+  "downloaded_title": "Alexandra Eala vs. Han Shi | 2026 Wuhan Round 1 | WTA Match Highlights",
+  "download_evidence": {
+    "run_id": 38277201998,
+    "run_url": "https://github.com/robertyang87/tennislive/actions/runs/38277201998",
+    "raw_log": "download-run.log",
+    "release_url": "https://github.com/robertyang87/tennislive/releases/tag/source-T9TfTnVgHNY",
+    "asset_url": "https://github.com/robertyang87/tennislive/releases/download/source-T9TfTnVgHNY/T9TfTnVgHNY.mp4",
+    "bytes": 45935631,
+    "sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "av1",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        },
+        {
+          "index": 1,
+          "codec_name": "aac",
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "306.851701",
+        "size": "45935631"
+      }
+    }
+  },
+  "identity_status": "exact_video_id_download_title_official_match_identity_and_oembed_relay_official_uploader_corroborated",
+  "match_identity": {
+    "official_event_id": "1075",
+    "official_match_id": "LS060",
+    "year": 2026,
+    "event": "Wuhan",
+    "round": "1",
+    "players": [
+      "Alexandra Eala",
+      "Han Shi"
+    ],
+    "result_winner_first": "4-6 6-3 6-3"
+  },
+  "youtube_metadata": {
+    "uploader": "WTA",
+    "author_url": "https://www.youtube.com/@WTA",
+    "channel_id": null,
+    "upload_date": null,
+    "published_at": null,
+    "official_uploader_verified": "oembed_relay_corroboration",
+    "direct_youtube_channel_id_verified": false,
+    "status": "exact_id_and_title_oembed_relay_author_WTA_corroborated",
+    "evidence": {
+      "relay_url": "https://noembed.com/embed?url=https://www.youtube.com/watch?v=T9TfTnVgHNY",
+      "relay_response_raw": "noembed.raw",
+      "relay_response_bytes": 831,
+      "relay_response_sha256": "d616a420b40ae550aa35500834a94a4c98e2c246df1427a20d65f20b13000b93",
+      "relay_author_name": "WTA",
+      "relay_author_url": "https://www.youtube.com/@WTA",
+      "official_wta_site_footer_youtube_urls": [
+        "https://www.youtube.com/user/WTA",
+        "https://www.youtube.com/user/wta"
+      ],
+      "official_footer_evidence": "../facts/raw/wta-highlight-page.raw",
+      "youtube_nocookie_embed_http_status": 200,
+      "youtube_nocookie_raw": "youtube-nocookie.raw"
+    },
+    "note": "Third-party oEmbed relay returned exact video ID/title with author WTA/@WTA; WTA official website links its own WTA YouTube user account. Supports official-uploader identity; not a direct original YouTube oEmbed-body or channel-ID verification. No YouTube publication timestamp obtained."
+  },
+  "official_same_match_alternative": {
+    "url": "https://www.wtatennis.com/videos/4591125/world-no-217-shi-pulls-off-wuhan-stunner-against-eala",
+    "brightcove_id": "6406703039112",
+    "duration_declared_seconds": 364,
+    "published_at_declared": "2026-10-12T15:58:00Z",
+    "same_match_verified": true,
+    "same_video_bytes_verified": false,
+    "same_exact_youtube_id_embedded": false,
+    "note": "Official same-match longer364s page. YouTube306.851701s different duration; cannot conflate assets or publication times."
+  },
+  "limitations": [
+    "Source gameplay/tactics/crop/point coverage reviewed by separate visual/audio roles; this packet does not claim a visual identity pass.",
+    "Direct original YouTube watch/oEmbed access still CONNECT403; channel-ID and exact YouTube publication metadata unverified. Official-uploader support is oEmbed relay corroboration + official WTA website links; no invented direct response claim."
+  ]
+}

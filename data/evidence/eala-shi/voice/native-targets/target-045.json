@@ -1,0 +1,592 @@
+{
+  "label": "第 5 段",
+  "edit_id": "first_set_pressure",
+  "word": "比",
+  "char": "比",
+  "at": 1,
+  "sentence": "四比四，伊埃拉化解两次破发点，在底线争夺第五个保发。",
+  "intended": "bi3",
+  "wrong": "bi4",
+  "actual_binding": {
+    "label": "第 5 段",
+    "index": 4,
+    "edit_id": "first_set_pressure",
+    "display_text": "四比四，伊埃拉化解两次破发点，在底线争夺第五个保发。",
+    "text": "四比四，伊埃拉化解两次破发点，在底线争夺第五个保发。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "cache_key": "a8168f81086de7c12f5cf95f81a9cc55",
+    "actual_mp3_sha256": "4847e772021cafb3605fa9e9e85e166388af500b1fef3dec0697d967539f61e5",
+    "bound_snapshot_path": "/workspace/scratch/eala-voice-v2/native-speech/a8168f81086de7c12f5cf95f81a9cc55.mp3",
+    "marks_snapshot_path": "/workspace/scratch/eala-voice-v2/native-speech/a8168f81086de7c12f5cf95f81a9cc55.marks.json",
+    "mp3_duration_seconds": 5.376,
+    "window_seconds": 7.969999999999999,
+    "headroom_seconds": 2.5939999999999985,
+    "native_cache_path": "/home/agent/.cache/tennislive-tts/a8168f81086de7c12f5cf95f81a9cc55-edge-v2.zip",
+    "native_zip_snapshot_path": "/workspace/scratch/eala-voice-v2/native-speech/a8168f81086de7c12f5cf95f81a9cc55.native.zip",
+    "native_zip_sha256": "7015dd30b9bd154ed909c7487aeb0f174a77d0fafeba59b271cefa7b1fd65d87",
+    "native_zip_marks_raw_sha256": "bc8f0f5a3bef106f27a9663de888f2954cfa12a93f327e225bc443577600a660",
+    "actual_marks_sha256": "c9351e7b96f0fbf86dcfe15477991b86606896a27eb8186e6d8a32c41155619f",
+    "word_boundary_tokens": [
+      "四比四",
+      "伊埃拉",
+      "化解",
+      "两次",
+      "破发",
+      "点",
+      "在",
+      "底线",
+      "争夺",
+      "第五个",
+      "保",
+      "发"
+    ],
+    "enumerated_polyphones": [
+      {
+        "at": 1,
+        "char": "比",
+        "word": "比",
+        "intended_lexical_reading": "bi3",
+        "all_dictionary_readings": [
+          "bi3",
+          "bi4",
+          "pi2",
+          "pi3"
+        ]
+      },
+      {
+        "at": 5,
+        "char": "埃",
+        "word": "埃",
+        "intended_lexical_reading": "ai1",
+        "all_dictionary_readings": [
+          "ai1",
+          "zhi4"
+        ]
+      },
+      {
+        "at": 6,
+        "char": "拉",
+        "word": "拉",
+        "intended_lexical_reading": "la1",
+        "all_dictionary_readings": [
+          "la1",
+          "la2",
+          "la3",
+          "la4",
+          "la5"
+        ]
+      },
+      {
+        "at": 7,
+        "char": "化",
+        "word": "化解",
+        "intended_lexical_reading": "hua4",
+        "all_dictionary_readings": [
+          "hua4",
+          "hua1",
+          "huo4"
+        ]
+      },
+      {
+        "at": 8,
+        "char": "解",
+        "word": "化解",
+        "intended_lexical_reading": "jie3",
+        "all_dictionary_readings": [
+          "jie3",
+          "jie4",
+          "xie4"
+        ]
+      },
+      {
+        "at": 10,
+        "char": "次",
+        "word": "次",
+        "intended_lexical_reading": "ci4",
+        "all_dictionary_readings": [
+          "ci4",
+          "zi1",
+          "ci2"
+        ]
+      },
+      {
+        "at": 12,
+        "char": "发",
+        "word": "发点",
+        "intended_lexical_reading": "fa1",
+        "all_dictionary_readings": [
+          "fa1",
+          "fa4"
+        ]
+      },
+      {
+        "at": 16,
+        "char": "底",
+        "word": "底线",
+        "intended_lexical_reading": "di3",
+        "all_dictionary_readings": [
+          "di3",
+          "de5"
+        ]
+      },
+      {
+        "at": 22,
+        "char": "个",
+        "word": "个",
+        "intended_lexical_reading": "ge4",
+        "all_dictionary_readings": [
+          "ge4",
+          "ge3",
+          "gan4"
+        ]
+      },
+      {
+        "at": 24,
+        "char": "发",
+        "word": "发",
+        "intended_lexical_reading": "fa1",
+        "all_dictionary_readings": [
+          "fa1",
+          "fa4"
+        ]
+      }
+    ],
+    "tts_only_substitution_changed_text": false
+  },
+  "check_kind": "polyphone",
+  "context_notes": [
+    "Lexical dictionary intended reading is a declared hypothesis; calibration evaluates actual audio."
+  ],
+  "ok_refs": [
+    "彼",
+    "笔",
+    "鄙"
+  ],
+  "bad_refs": [
+    "壁",
+    "弊",
+    "必"
+  ],
+  "reference_notes": [
+    "Only dictionary single-reading nonoriginal references selected; single-reading common, single-reading level-2",
+    "Only dictionary single-reading nonoriginal references selected; single-reading common"
+  ],
+  "reference_validity_limited": false,
+  "acoustic": {
+    "word": "比",
+    "char": "比",
+    "sentence": "四比四，伊埃拉化解两次破发点，在底线争夺第五个保发。",
+    "tts_text": "四比四，伊埃拉化解两次破发点，在底线争夺第五个保发。",
+    "intended_refs": [
+      "彼",
+      "笔",
+      "鄙"
+    ],
+    "wrong_refs": [
+      "壁",
+      "弊",
+      "必"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.442,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.455,
+        "d_wrong": 2.68,
+        "score": 0.044
+      },
+      "f0": {
+        "d_intended": 0.341,
+        "d_wrong": 2.718,
+        "score": 0.777
+      },
+      "comb": {
+        "d_intended": 1.569,
+        "d_wrong": 4.058,
+        "score": 0.442
+      }
+    },
+    "neighbour_shift": {
+      "intended": 1.577,
+      "wrong": 4.671
+    },
+    "separation": {
+      "spec": {
+        "within": 2.649,
+        "between": 2.854,
+        "separation": 1.077
+      },
+      "f0": {
+        "within": 0.848,
+        "between": 3.034,
+        "separation": 3.579
+      },
+      "comb": {
+        "within": 2.172,
+        "between": 4.461,
+        "separation": 2.054
+      }
+    },
+    "selftest_loo": {
+      "彼": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.306
+      },
+      "笔": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.403
+      },
+      "鄙": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.395
+      },
+      "壁": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.366
+      },
+      "弊": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.307
+      },
+      "必": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.395
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:彼": {
+        "spec": 2.455,
+        "f0": 0.341,
+        "vmis": 0.0,
+        "frames": 22,
+        "comb": 1.569
+      },
+      "A:笔": {
+        "spec": 2.826,
+        "f0": 1.188,
+        "vmis": 0.12,
+        "frames": 25,
+        "comb": 2.601
+      },
+      "A:鄙": {
+        "spec": 2.744,
+        "f0": 0.878,
+        "vmis": 0.08,
+        "frames": 25,
+        "comb": 2.25
+      },
+      "B:壁": {
+        "spec": 3.066,
+        "f0": 3.422,
+        "vmis": 0.08,
+        "frames": 25,
+        "comb": 4.955
+      },
+      "B:弊": {
+        "spec": 2.68,
+        "f0": 2.718,
+        "vmis": 0.043,
+        "frames": 23,
+        "comb": 4.058
+      },
+      "B:必": {
+        "spec": 3.009,
+        "f0": 3.451,
+        "vmis": 0.0,
+        "frames": 24,
+        "comb": 4.956
+      }
+    },
+    "window_s": [
+      0.23,
+      0.45
+    ],
+    "boundary_token": "四比四",
+    "window_anchor": "A:笔",
+    "tokens": {
+      "ORIG": [
+        "四比四",
+        "伊埃拉",
+        "化解",
+        "两次",
+        "破发",
+        "点",
+        "在",
+        "底线",
+        "争夺",
+        "第五个",
+        "保",
+        "发"
+      ],
+      "A:彼": [
+        "四彼四",
+        "伊埃拉",
+        "化解",
+        "两次",
+        "破发点",
+        "在",
+        "底线",
+        "争夺",
+        "第五个",
+        "保发"
+      ],
+      "A:笔": [
+        "四",
+        "笔",
+        "四",
+        "伊埃拉",
+        "化解",
+        "两次",
+        "破发",
+        "点",
+        "在",
+        "底线",
+        "争夺",
+        "第五个",
+        "保",
+        "发"
+      ],
+      "A:鄙": [
+        "四",
+        "鄙",
+        "四",
+        "伊埃拉",
+        "化解",
+        "两次",
+        "破发",
+        "点",
+        "在",
+        "底线",
+        "争夺",
+        "第五个",
+        "保",
+        "发"
+      ],
+      "B:壁": [
+        "四壁",
+        "四",
+        "伊埃拉",
+        "化解",
+        "两次",
+        "破发",
+        "点",
+        "在",
+        "底线",
+        "争夺",
+        "第五个",
+        "保",
+        "发"
+      ],
+      "B:弊": [
+        "四弊四",
+        "伊埃拉",
+        "化解",
+        "两次",
+        "破发点",
+        "在",
+        "底线",
+        "争夺",
+        "第五个",
+        "保发"
+      ],
+      "B:必": [
+        "四",
+        "必",
+        "四",
+        "伊埃拉",
+        "化解",
+        "两次",
+        "破发",
+        "点",
+        "在",
+        "底线",
+        "争夺",
+        "第五个",
+        "保",
+        "发"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        3.9,
+        2.5,
+        0.9,
+        -3.8,
+        -5.0,
+        -5.9,
+        -6.4,
+        -6.2,
+        -5.5,
+        -5.5
+      ],
+      "A:彼": [
+        null,
+        3.2,
+        1.9,
+        0.3,
+        -4.4,
+        -4.8,
+        -6.1,
+        -6.3,
+        -6.2,
+        -5.7,
+        -5.8
+      ],
+      "A:笔": [
+        4.6,
+        5.9,
+        5.0,
+        3.7,
+        -0.8,
+        -2.4,
+        -3.7,
+        -5.3,
+        -5.8,
+        -5.9,
+        -5.9,
+        -5.8
+      ],
+      "A:鄙": [
+        5.7,
+        5.4,
+        4.4,
+        2.9,
+        -2.0,
+        -3.6,
+        -2.1,
+        -5.8,
+        -6.3,
+        -6.5,
+        -6.0,
+        -6.2
+      ],
+      "B:壁": [
+        null,
+        null,
+        4.6,
+        3.3,
+        1.8,
+        -2.1,
+        0.3,
+        0.6,
+        0.1,
+        -0.5,
+        -1.0,
+        -1.8,
+        null
+      ],
+      "B:弊": [
+        null,
+        null,
+        3.1,
+        1.9,
+        -1.5,
+        -1.2,
+        -0.6,
+        -0.9,
+        -1.1,
+        -1.5,
+        -2.0,
+        -3.5
+      ],
+      "B:必": [
+        null,
+        4.5,
+        3.6,
+        2.5,
+        -0.1,
+        -1.1,
+        0.6,
+        0.6,
+        0.4,
+        0.1,
+        -0.8,
+        -2.4
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/scratch/eala-voice-v2/native-speech/a8168f81086de7c12f5cf95f81a9cc55.mp3",
+      "A:彼": "/workspace/scratch/eala-voice-v2/fresh-reference-cache/9b4ad238d9092f2de0a1fe8d.mp3",
+      "A:笔": "/workspace/scratch/eala-voice-v2/fresh-reference-cache/9e61b19c16db821562d2ce7d.mp3",
+      "A:鄙": "/workspace/scratch/eala-voice-v2/fresh-reference-cache/0e4be62629ef574d7f98c7d8.mp3",
+      "B:壁": "/workspace/scratch/eala-voice-v2/fresh-reference-cache/e53005edf986182f8648626c.mp3",
+      "B:弊": "/workspace/scratch/eala-voice-v2/fresh-reference-cache/b380a999f4a257c299d8a0a3.mp3",
+      "B:必": "/workspace/scratch/eala-voice-v2/fresh-reference-cache/67907b1fcfc661e2a6da178f.mp3"
+    }
+  },
+  "control_audio_provenance": [
+    {
+      "label": "ORIG",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/a8168f81086de7c12f5cf95f81a9cc55.mp3",
+      "mp3_sha256": "4847e772021cafb3605fa9e9e85e166388af500b1fef3dec0697d967539f61e5",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/a8168f81086de7c12f5cf95f81a9cc55.marks.json",
+      "marks_sha256": "c9351e7b96f0fbf86dcfe15477991b86606896a27eb8186e6d8a32c41155619f"
+    },
+    {
+      "label": "A:彼",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/9b4ad238d9092f2de0a1fe8d.mp3",
+      "mp3_sha256": "a7d70116b347cc9d8254463a5c1cc82ab07fe626fa529c78c781966714b39749",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/9b4ad238d9092f2de0a1fe8d.marks.json",
+      "marks_sha256": "c09cb24d2384c8223eeb2d055090dde892a64ece2ecd06e82a525a126226f0a6"
+    },
+    {
+      "label": "A:笔",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/9e61b19c16db821562d2ce7d.mp3",
+      "mp3_sha256": "59f62cf78a44a76a4ee5475f6624bc0504cd32a9f53874e6cf9db5690f341647",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/9e61b19c16db821562d2ce7d.marks.json",
+      "marks_sha256": "1cb7478b726789cc0209e029823f9712a44d8622d25039638b9b64a7556b9e8c"
+    },
+    {
+      "label": "A:鄙",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/0e4be62629ef574d7f98c7d8.mp3",
+      "mp3_sha256": "276be6f4b0b84a68c88777720bd27da641ee6d00fbec76dba4436989611d43ab",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/0e4be62629ef574d7f98c7d8.marks.json",
+      "marks_sha256": "8bb6650dd0637d9fa1cd6c596814e792e0c03f49c157e7188764b9ca4189d004"
+    },
+    {
+      "label": "B:壁",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/e53005edf986182f8648626c.mp3",
+      "mp3_sha256": "8a0bad4049030ac884f123c489a386c692f1f881d8a7805e2b3e452bed0fa148",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/e53005edf986182f8648626c.marks.json",
+      "marks_sha256": "9c862fdec62ca9ba57c207ddc1da31ae688aac223c7d3b6808109d18c6ecc89b"
+    },
+    {
+      "label": "B:弊",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/b380a999f4a257c299d8a0a3.mp3",
+      "mp3_sha256": "053d45eb47c3f5eda349a63c7dc7198ba539c8f0fd347e6e7853a1e4c555e717",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/b380a999f4a257c299d8a0a3.marks.json",
+      "marks_sha256": "067f91bf00b1031d55500bcf3f41b22e8d646660ab58310c0f3297b5a3c209fa"
+    },
+    {
+      "label": "B:必",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/67907b1fcfc661e2a6da178f.mp3",
+      "mp3_sha256": "4fa234223830630ac588afbadecec4c8a2723bc9aa4e58d2f937118121d45b6c",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice-v2/reference-audio/67907b1fcfc661e2a6da178f.marks.json",
+      "marks_sha256": "437b3087c150c041f49a542b6780994643a27c77b0e5adbdb460189e6044212b"
+    }
+  ],
+  "measured_at_utc": "2026-10-12T17:35:34.048202+00:00"
+}

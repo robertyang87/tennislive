@@ -600,6 +600,12 @@ def main() -> int:
     dead = [i for i in dead if i not in natural_quiet]
     reviewed_quiet = natural_quiet_audio.verified_reviewed_mix_seconds(spec, film, dead)
     dead = [i for i in dead if i not in reviewed_quiet]
+    native_ambience = natural_quiet_audio.verified_native_ambience_seconds(spec, film, dead)
+    dead = [i for i in dead if i not in native_ambience]
+    source_verified_seconds = set(natural_quiet + reviewed_quiet + native_ambience)
+    if native_ambience:
+        print(f"[ok] 连续源声/已完成旁白尾部的完整秒实际波形证明 {native_ambience}；"
+              "原源哈希、原生增益、非零PCM与实际成片匹配")
     if reviewed_quiet:
         print(f"[ok] 完整源声核验与实际原生混音波形一致 {reviewed_quiet}；"
               "原声明/绑定未变，接缝含完整线性淡入，非数字静音")
@@ -648,10 +654,13 @@ def main() -> int:
             continue
         window = levels[lo:min(hi, len(levels))]
         worst = max(window)
-        ok = worst > SILENCE_FLOOR_DB
+        proved_quiet = natural_quiet_audio.quiet_window_has_source_proof(
+            lo, min(hi, len(levels)), source_verified_seconds)
+        ok = worst > SILENCE_FLOOR_DB or proved_quiet
         bad += 0 if ok else 1
         print(f"[{'ok' if ok else '不合格'}] 无解说段 {start:.1f}s（源 {src:.1f}s）"
-              f"现场声最响 {worst:.1f} dB")
+              f"现场声最响 {worst:.1f} dB"
+              + ("；窗口全部整秒均有实际原声波形证明" if proved_quiet else ""))
 
     score_problem = scoreboard_geometry_problem(film, spec_path, spec)
     if score_problem:

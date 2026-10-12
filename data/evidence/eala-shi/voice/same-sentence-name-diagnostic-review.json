@@ -1,0 +1,28 @@
+{
+  "schema": "tennislive.current-speech-diagnostic-limit.v1",
+  "slug": "eala-shi",
+  "actual_mp3_sha256": "26bcfed0dfbfe4aeabad7811d0879e449e31432a1f803f6e12e74a0622c7113a",
+  "actual_sentence": "北京时间十月十二日晚上，武汉首轮。排名十九的伊埃拉，迎战排名二百一十七的施晗。",
+  "char": "施",
+  "at": 36,
+  "intended": "shi1",
+  "raw_diagnostic_path": "data/evidence/eala-shi/voice/same-sentence-name-diagnostic-raw.json",
+  "raw_diagnostic_sha256": "5c964e47f3e383fb58c11553a73c9742f74a665c26e5318e4454159f6c4ffa59",
+  "raw_verdict": "misread",
+  "raw_confidence": "medium",
+  "raw_score": -0.492,
+  "reviewed_status": "unresolved_due_to_missing_wrong_side_f0_and_combined_distance_bias",
+  "reviewed_as_pass": false,
+  "confirmed_misread_claimed": false,
+  "findings": [
+    "Raw output preserves original medium misread label; it is not erased or rewritten.",
+    "Independent full-sentence shi1 spelling controls 诗/狮/失 and shi4 controls 世/仕/事 show spectral score -0.017, which does not distinguish the two classes.",
+    "The wrong-side target-to-reference F0 distance is null/NaN. Combined distance halves that side to MFCC-only while keeping finite F0 on intended side; its -0.492 score is not a comparable two-feature tone contrast.",
+    "Different same-syllable control set reproduced this missing-F0 mechanism, not independent confirmation of a stable pronunciation error.",
+    "Adjacent waveform-feature drift is about3.2 on both reference classes; tokenizer boundaries and whole-utterance prosody change under character substitutions.",
+    "Position remains unresolved; neither ASR same-syllable name recognition nor dictionary readings promote it to pass."
+  ],
+  "human_listening_claimed": false,
+  "asr_used_to_prove_tones": false,
+  "pronunciation_release_pass_claimed": false
+}

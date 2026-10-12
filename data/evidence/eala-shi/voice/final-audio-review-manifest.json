@@ -1,0 +1,129 @@
+{
+  "schema": "tennislive.final-audio-review-manifest.v3",
+  "slug": "eala-shi",
+  "status": "actual_native_aac_pcm_binding_confirmed_with_pronunciation_limits",
+  "pronunciation_status": "no_confident_misread_detected_with_calibration_limits",
+  "pronunciation_release_pass_claimed": false,
+  "human_listening_claimed": false,
+  "asr_used_to_prove_tones": false,
+  "film_sha256": "dd60eef0078ca720037d4a9ce9543d157598d8d335503363d9f19e69c48b5b35",
+  "film_bytes": 122233077,
+  "spec_sha256": "a23fd7cfa977415db1b227d06dbf2814e72dfbf05e326a06762e41e3baab4b09",
+  "render_json_sha256": "8ed4189887735e54dd97e8786ae8cbf49f4ac39ff3cb25850e7c2d7a846b3fc4",
+  "qc_attestation_sha256": "ab6f90eeba9c2f7fe34c78599b7c775e6b584adc2b7a13a2f5765418e0595adf",
+  "render_inputs_sha256": "81f4c89b64aa38d51e99b2f678023809919695b54304410d35875d97c1bfff2d",
+  "subtitles_ass_sha256": "7aaab1f92ab815f0b05f3c0b6be2c176f1b12ef9c2e3466ba175e8d0cf1808e3",
+  "native_full_mix_pcm": {
+    "sha256": "1ae47ef312ece3166f0baabac0eea1708de66d68001398742a2d4d81222ee60d",
+    "bytes": 116686848,
+    "sample_format": "f32le",
+    "audio_stream": {
+      "codec_name": "aac",
+      "sample_rate": "48000",
+      "channels": 2,
+      "channel_layout": "stereo"
+    }
+  },
+  "actual_voice_count": 9,
+  "all_actual_mp3_exact_native_zip_and_reviewed_audio": true,
+  "all_production_word_marks_exact_native_cache": true,
+  "all_mixed_waveforms_strong_match": true,
+  "pronunciation_occurrence_counts": {
+    "unresolved_calibration_or_reference_limit": 142,
+    "relative_correct_under_calibrated_controls": 46
+  },
+  "pronunciation_comparison_count": 241,
+  "pronunciation_comparison_counts": {
+    "correct": 167,
+    "uncertain": 25,
+    "unreliable": 46,
+    "misread": 3
+  },
+  "unresolved_occurrences": 142,
+  "confident_misread_occurrences": 0,
+  "all_enumerated_polyphones_covered": true,
+  "exclusions": {
+    "brand_outro": false,
+    "cover_narration": false
+  },
+  "method": "Fresh current full-sentence native ZIP audio+paired marks; finite same-voice/rate calibrated MFCC/F0 controls. Current AAC waveforms correlated with exact native speech, entire native-channel/rate PCM hashed. Final QC/ASS/render inputs/spec identities bind the same film. All uncertain/no-reference/low-confidence cases remain explicit; no historical episode evidence substituted.",
+  "evidence": {
+    "native-cache-pronunciation-review.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/native-cache-pronunciation-review.json",
+      "sha256": "2cd8cca867bb51da7e28b8ad0295a1aa0b70735ea7eddec300312d3e8b30557b"
+    },
+    "native-voice-freeze.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/native-voice-freeze.json",
+      "sha256": "cebd025fd3ae50d04a21f1f109fbb1ab34aeb601e05a8ed9ac89326a85a17e76"
+    },
+    "final-actual-audio-bindings.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/final-actual-audio-bindings.json",
+      "sha256": "3fd540e631a1edcfb36b481dab24cfd37f336404555b1446f2e429dc55305667"
+    },
+    "voice-word-sidecar-restoration.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/voice-word-sidecar-restoration.json",
+      "sha256": "c7855a56df808f6d7b37c5c960bc04bd2bd9f16ffd5acce6c1d91349e99fb2db"
+    },
+    "fresh-native-control-file-manifest.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/fresh-native-control-file-manifest.json",
+      "sha256": "04d0f913fea3d8b746eed09bc83eebe240f39b8b565aba0938f0d9dec956be42"
+    },
+    "final-result-content-mapping.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/final-result-content-mapping.json",
+      "sha256": "0480304d50279a5d1ab5471472b12e72ae113b6450597ee454694469755b4cea"
+    },
+    "diagnostic-uncertainty-adjudication.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/diagnostic-uncertainty-adjudication.json",
+      "sha256": "7f150264d435c42894070cba035a57e9f987e05225abdda74042713ba7f8d4a5"
+    },
+    "edge-endpoint-migration-provenance.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/edge-endpoint-migration-provenance.json",
+      "sha256": "045867d46895122a492c45d5a73bf7d6cf974f62e81c41c5e0ac361ffc64e440"
+    },
+    "complete-speech-asr-input-manifest.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/complete-speech-asr-input-manifest.json",
+      "sha256": "8418606168a27337a180aece90ea242a1c4c4e14f8451c37b45e38f017ef4443"
+    },
+    "complete-speech-word-recognition-support.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/complete-speech-word-recognition-support.json",
+      "sha256": "edfff2fd7e8cecb9fae6b171c491e34d7124a66c5ea85d404cb66d416dbe73ca"
+    },
+    "native-asr-large-v3-zh.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/native-asr-large-v3-zh.json",
+      "sha256": "060f9e92f0c2b2b041e654a13296ec4a24f6d63459c8f3d74b5b3fc6f58b20f1"
+    },
+    "native-asr-turbo-zh.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/native-asr-turbo-zh.json",
+      "sha256": "820defd397ddec709a2c7be0b3002d2e1416c422590777f7bcbb68b9cc5a124d"
+    },
+    "same-sentence-name-diagnostic-raw.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/same-sentence-name-diagnostic-raw.json",
+      "sha256": "5c964e47f3e383fb58c11553a73c9742f74a665c26e5318e4454159f6c4ffa59"
+    },
+    "same-sentence-name-diagnostic-review.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/same-sentence-name-diagnostic-review.json",
+      "sha256": "4f5f52b5d17612c61da7258688d42e22952672334e877acb4ef51ee85d2cd85b"
+    },
+    "unchanged-current-utterance-reuse.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/unchanged-current-utterance-reuse.json",
+      "sha256": "cf0b466242fd4232aeb0e4527c7607b8cb6b308ff6ef8d2dc735a31935e45396"
+    },
+    "scope.json": {
+      "path": "/workspace/tennislive-eala/data/evidence/eala-shi/voice/scope.json",
+      "sha256": "fed232df95049247a82068665ec3d7bc7667649a620d0401ed17bfd795e0a957"
+    }
+  },
+  "same_episode_exact_unchanged_control_reuse": {
+    "manifest_sha256": "cf0b466242fd4232aeb0e4527c7607b8cb6b308ff6ef8d2dc735a31935e45396",
+    "reused_raw_record_count": 194,
+    "current_new_comparison_count": 47,
+    "changed_edit_ids": [
+      "first_set_pressure",
+      "long_rally_context"
+    ],
+    "old_changed_utterance_verdicts_promoted": false
+  },
+  "current_reliable_misread_count": 0,
+  "remaining_uncertain_count": 142,
+  "raw_misread_diagnostic_limit_count": 3
+}
