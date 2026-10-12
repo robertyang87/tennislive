@@ -736,9 +736,14 @@ def test_flashscore_5xx重试之后仍失败_备料降级成只报不拖垮probe
     for name in ("stats_block", "collect", "points", "set_pairs"):
         monkeypatch.setattr(a, name, http500)
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
+    # This test exercises Flashscore failure degradation. Rankings and tactical
+    # article discovery are unrelated external services;
+    # leaving them live made this mocked-feed unit test wait on network timeouts.
+    monkeypatch.setattr(a, "fetch_rankings",
+                        lambda: type("R", (), {"atp": [], "wta": []})())
     draft = a.assemble(slug="x", home="Alexandra Eala", away="Elena-Gabriela Ruse",
                        event="Cincinnati", year=2026, fixture="北京时间",
-                       flashscore_id="4CYI9Ick")
+                       flashscore_id="4CYI9Ick", tactical_packet={"status": "skipped"})
     joined = "\n".join(draft["_notes"])
     assert "stats 块没成（SystemExit" in joined and "转折局没成（SystemExit" in joined
     assert "stats" not in draft and "_turning_points" not in draft

@@ -269,8 +269,13 @@ def test_太宽的候选不量_切出来的行和逐个量一字不差():
                     ("And the " + "Supercalifragilistic " * 6 + "and so on.").split())]])
     assert max(map(len, sents)) >= 90, "没挑到长句，这条就没测到提速的那一段"
     cases = [(name, sent) for name in clip.SEGMENT_RULERS for sent in sents]
+    # Width is a deterministic font/text measurement. Both algorithms still run
+    # every candidate and compare every output; avoid measuring the same substring
+    # again in the O(n²) reference after the production algorithm measured it.
+    widths = {name: functools.lru_cache(maxsize=None)(clip.ruler_width(name))
+              for name in clip.SEGMENT_RULERS}
     for name, sent in cases:
-        width, bare = clip.ruler_width(name), clip.SEGMENT_RULERS[name][2]
+        width, bare = widths[name], clip.SEGMENT_RULERS[name][2]
         assert clip._split_wide(sent, clip._LINE_PX, width, bare) == \
             _split_wide_reference(sent, clip._LINE_PX, width, bare), (
                 f"尺子 {name} 下这一句（{len(sent)} 词）切得不一样了：{clip._text(sent)[:80]}…")

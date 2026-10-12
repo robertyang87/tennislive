@@ -123,6 +123,8 @@ probe 并备料；候选报告写进 job summary，不用翻日志。往下接
 在分支上永远是 404。质检清单（`check_reel_landed` 0 项不合格、全量绿、旁白装得下、
 切词没假词、成片链接探得到）写在 `CLAUDE.md`「渲完 → 质检 → 直接推微信」那一节。
 
+制作返工、慢测试实测和已修复的前置检查见 [视频制作耗时复盘](docs/reel-speed-review-2026-10-12.md)。审听文件按 review index 的真实路径核验：`python tools/reel_review_files.py --slug <slug>`；在任何暂存或推送之前先排除证据缺失与变更。
+
 产物各走各的通道，别混：
 
 | 东西 | 去哪儿 | 为什么 |

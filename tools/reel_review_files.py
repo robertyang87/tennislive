@@ -1,0 +1,118 @@
+#!/usr/bin/env python3
+"""Validate and stage the files actually declared by a reel audio-review index.
+
+Standard-library preflight: no source download, ASR, or media decoding. Native
+foreground_audio_gate remains responsible for plan/source/window/caption identity.
+Only individual reviewed JSON files enter Git; a sibling directory is not evidence.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import subprocess
+from pathlib import Path, PurePosixPath
+
+from foreground_audio_gate import require
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def _file(root: Path, name: str) -> Path:
+    if not isinstance(name, str) or not name:
+        raise ValueError('审听证据路径必须为仓库内 JSON 文件')
+    rel = PurePosixPath(name)
+    if (rel.is_absolute() or '..' in rel.parts or '.git' in rel.parts
+            or '\\' in name or rel.suffix != '.json'):
+        raise ValueError(f'审听证据路径必须为仓库内 JSON 文件：{name}')
+    path = root.joinpath(*rel.parts)
+    if any(p.is_symlink() for p in (path, *path.parents) if p.is_relative_to(root)):
+        raise ValueError(f'审听证据不能使用符号链接：{name}')
+    if not path.resolve().is_relative_to(root.resolve()):
+        raise ValueError('审听证据路径越出仓库')
+    return path
+
+
+def _read(root: Path, path: Path) -> dict:
+    # Sparse checkout can omit a declared JSON outside the selected OUTDIR.
+    # Restore that exact tracked blob, never a directory or a media sibling.
+    if not path.exists():
+        name = path.relative_to(root).as_posix()
+        tracked = subprocess.run(['git', 'ls-files', '-t', '--', name], cwd=root,
+                                 capture_output=True, text=True, check=False)
+        if tracked.returncode or tracked.stdout.rstrip('\n') != f'S {name}':
+            raise ValueError(f'审听证据文件不存在：{name}')
+        proc = subprocess.run(['git', 'show', f'HEAD:{name}'], cwd=root,
+                              capture_output=True, check=False)
+        if proc.returncode:
+            raise ValueError(f'审听证据文件不存在：{name}')
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(proc.stdout)
+    if not path.is_file():
+        raise ValueError(f'审听证据不是普通文件：{path.relative_to(root)}')
+    doc = json.loads(path.read_text(encoding='utf-8'))
+    if not isinstance(doc, dict):
+        raise ValueError('审听证据必须是 JSON object')
+    return doc
+
+
+def review_files(slug: str, *, root: Path = ROOT,
+                 require_review: bool = False) -> list[str]:
+    """Check native evidence and return only this index and its declared packets."""
+    root = root.resolve()
+    if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', slug):
+        raise ValueError('音频审听需要有效 slug')
+    index = _file(root, f'data/audio_reviews/{slug}.json')
+    missing_index = False
+    if not index.exists():
+        # data is normally in the sparse checkout; recognize a tracked index
+        # without imposing new review requirements on historical push/narration.
+        tracked = subprocess.run(['git', 'cat-file', '-e',
+                                  f'HEAD:{index.relative_to(root).as_posix()}'],
+                                 cwd=root, capture_output=True, check=False)
+        if tracked.returncode:
+            if not require_review:
+                return []
+            missing_index = True
+    spec = _read(root, _file(root, f'specs/reels/{slug}.json'))
+    if missing_index:
+        # The native gate distinguishes retained source audio from cards and
+        # the bounded owner-approved narration mode; do not reimplement it.
+        require(spec, root=root)
+        return []
+    review = _read(root, index)
+    names = [index.relative_to(root).as_posix()]
+    for entry in review.get('segments') or []:
+        packet = _file(root, entry['transcript_path'])
+        _read(root, packet)
+        names.append(packet.relative_to(root).as_posix())
+    require(spec, root=root)
+    return list(dict.fromkeys(names))
+
+
+def stage_files(names: list[str], *, root: Path = ROOT) -> None:
+    if names:
+        # --sparse permits the individually restored declared JSON files. Do
+        # not add their parent directory: raw source media must stay out of Git.
+        subprocess.run(['git', 'add', '--sparse', '--', *names], cwd=root,
+                       check=True)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--slug', required=True)
+    parser.add_argument('--require-review', action='store_true')
+    parser.add_argument('--stage', action='store_true')
+    args = parser.parse_args()
+    try:
+        names = review_files(args.slug, require_review=args.require_review)
+        if args.stage:
+            stage_files(names)
+    except (OSError, ValueError, KeyError, TypeError, subprocess.CalledProcessError) as exc:
+        raise SystemExit(f'waiting_audio_review：{exc}') from exc
+    print(f'审听证据已核验：{len(names)} 个声明 JSON 文件'
+          + ('，已逐文件暂存' if args.stage else ''))
+
+
+if __name__ == '__main__':
+    main()

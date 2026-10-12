@@ -90,7 +90,7 @@ def _point_edge_tts_at_live_host() -> None:
     """旧的 speech.platform.bing.com/.../edge/v1 从 2026-10-10 起握手 403。
 
     同一枚 TrustedClientToken 换到 api.msedgeservices.com 仍能合成，Sec-MS-GEC
-    版本保持库里的 1-143（升到 2-155 配这枚旧 token 会再 403）。edge-tts#490。
+    保持库里的版本。只迁移已知旧端点；上游新端点或调用方配置保持原样。
     communicate.py 在 import 时把 WSS_URL 拷进自己的全局，只改 constants 够不着。
 
     重试单测塞进 `sys.modules["edge_tts"]` 的是 `SimpleNamespace`，不是包
@@ -106,6 +106,12 @@ def _point_edge_tts_at_live_host() -> None:
     import edge_tts.communicate as communicate
     import edge_tts.constants as constants
 
+    legacy = (
+        "wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1"
+        f"?TrustedClientToken={constants.TRUSTED_CLIENT_TOKEN}"
+    )
+    if communicate.WSS_URL != legacy or constants.WSS_URL != legacy:
+        return
     url = (
         "wss://api.msedgeservices.com/tts/cognitiveservices/websocket/v1"
         f"?Ocp-Apim-Subscription-Key={constants.TRUSTED_CLIENT_TOKEN}"
@@ -292,13 +298,18 @@ def _tts_one_uncached(text: str, path: Path, voice: str, rate: str,
     import edge_tts
 
     _point_edge_tts_at_live_host()
+    # aiohttp/edge-tts 不自动读取代理环境。显式传给每次新建的 Communicate，
+    # 不改库的全局构造器，也不影响默认 TLS 验证或音频缓存键。
+    proxy = (os.environ.get("HTTPS_PROXY") or
+             os.environ.get("https_proxy") or "").strip()
+    transport = {"proxy": proxy} if proxy else {}
 
     async def one() -> list[dict]:
         marks: list[dict] = []
         with path.open("wb") as fh:
             stream = edge_tts.Communicate(
                 text, voice, rate=rate, pitch=pitch,
-                boundary="WordBoundary").stream()
+                boundary="WordBoundary", **transport).stream()
             async for chunk in stream:
                 if chunk.get("type") == "audio" and chunk.get("data"):
                     fh.write(chunk["data"])

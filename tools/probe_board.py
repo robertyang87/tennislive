@@ -453,6 +453,60 @@ def _pick_scan(board: dict, spec_box, profile: str) -> tuple[dict | None, str]:
                   f"（x0 容差 ±{BOX_TOL_X}、y0/y1 ±{BOX_TOL_Y}）")
 
 
+def scorebox_has_probe(probe: dict, url: str, box, profile: str) -> bool:
+    """CI 与生产预检共用的框校准证据：同源、同框、同转播、实际有扫描帧。
+
+    这只证明该框有同源校准数据，不证明扫描覆盖了所有选段；逐段的覆盖和
+    presence/absence 仍交给 ``board_findings`` 和渲染器的逐帧蒙版检查。
+    """
+    board = probe.get("board") or {}
+    if probe.get("url") != url or not board.get("frames"):
+        return False
+    scan, _ = _pick_scan(board, box, profile)
+    return bool(scan and scan.get("frames") and scan["profiles"][profile].get("runs"))
+
+
+def custom_scorebox_findings(spec: dict, probes: dict, *, profile: str | None
+                            ) -> tuple[list[str], list[str]]:
+    """只检查当前 spec 的自定义框；缺校准在下载、TTS、编码前直接报错。
+
+    标定框保持既有规则。有限区间的真实扫描可用于校准，但明确报告范围，
+    不把它当成全片扫描通过，也不在这里重新解码整条源视频。
+    """
+    hard: list[str] = []
+    soft: list[str] = []
+    if profile not in CALIBRATED:
+        return hard, soft
+    urls = spec.get("sources") or {"": spec.get("source_url")}
+    for url, boxes in scoreboxes_by_url(spec, urls).items():
+        probe = probes.get(url) or {}
+        warned_scope = False
+        for box in boxes:
+            if any(same_box(box, calibrated) for calibrated in CALIBRATED[profile]):
+                continue
+            if not scorebox_has_probe(probe, url, box, profile):
+                hard.append(
+                    f"自定义 scorebox {box} 缺少同源 {profile} 扫描（源 {url}）。"
+                    "先在已核实有真实比分板的源片区间执行 probe_board.scan_plan，"
+                    "把实际结果登记进该源 probe.json 的 board.scans；"
+                    "逐个覆盖顶层与段级框，不用重扫无关视频或全库。")
+                continue
+            board = probe["board"]
+            if not warned_scope:
+                t0 = float(board.get("t0") or 0)
+                fps = float(board.get("fps") or PROBE_FPS)
+                end = t0 + float(board["frames"]) / fps
+                window = board.get("source_window")
+                if isinstance(window, (list, tuple)) and len(window) == 2:
+                    t0, end = map(float, window)
+                soft.append(
+                    f"自定义框校准扫描范围：源 {url}，{t0:.3f}→{end:.3f}s，"
+                    f"{board['frames']} 帧/{fps:g}fps。仅认领这一范围；"
+                    "不据此宣称全片通过，范围外选段仍须原生逐段蒙版检查。")
+                warned_scope = True
+    return hard, soft
+
+
 def _longest_run(flags: list[bool]) -> int:
     best = cur = 0
     for on in flags:
