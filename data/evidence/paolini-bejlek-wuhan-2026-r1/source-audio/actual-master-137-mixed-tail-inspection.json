@@ -1,0 +1,72 @@
+{
+  "schema": "tennislive.actual-mixed-tail-inspection.v1",
+  "checked_at": "2026-10-12T20:54:33.082077+00:00",
+  "slug": "paolini-bejlek-wuhan-2026-r1",
+  "status": "actual_nonzero_mixed_final_word_tail_plus_weak_original_ambience_evidence_not_native_qc_attestation",
+  "film_sha256": "4f00d4b2b523248f717f9ce3c26429e030cba0994ff7a67eaf6ebc6df6ac3661",
+  "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+  "voice_sha256": "c07b6c47cd19a5ecd0459d07719e1237afb3a7aa280804cf74c79938aa7fae60",
+  "words_sha256": "b774d6d0a1fcbceac0505dcac56d7f49bed10409e14d638a21b26ef6ed6c6a04",
+  "spec_sha256": "bba70c4c0e022db3519d0f66b65a320736421e5c801b06790a547b87609d7152",
+  "source_bounds": [
+    118.16,
+    119.16
+  ],
+  "movie_bounds": [
+    137,
+    138
+  ],
+  "native_s16le_mono8k_actual": {
+    "rms_db": -60.635113904900535,
+    "peak": 0.006988525390625,
+    "nonzero_samples": 7884,
+    "samples": 8000
+  },
+  "native_s16le_mono8k_expected_source_with_gain": {
+    "rms_db": -59.78433699811635,
+    "peak": 0.0071740722656249995,
+    "nonzero_samples": 7963,
+    "samples": 8000
+  },
+  "actual_remaining_voice_tail": {
+    "rms_db": -80.47809452925308,
+    "peak": 0.0019637059658195745,
+    "nonzero_samples": 428,
+    "samples": 8000
+  },
+  "native_complete_utterance_AAC_waveform": {
+    "index": 6,
+    "edit_id": "first_set_payoff",
+    "text": "贝莱克把比分追到三比五。帕奥利尼终于拿下盘点，六比三，先赢一盘。",
+    "local_reviewed_mp3_sha256": "5600c183cc8429b7f19362dc3f27cbdc574f8abdd8bf9f86d7cc17d4be0ba61b",
+    "cloud_mp3_present": true,
+    "cloud_mp3_sha256": "c07b6c47cd19a5ecd0459d07719e1237afb3a7aa280804cf74c79938aa7fae60",
+    "cloud_mp3_byte_identical_to_local_reviewed": false,
+    "cloud_words_present": true,
+    "cloud_words_sha256": "b774d6d0a1fcbceac0505dcac56d7f49bed10409e14d638a21b26ef6ed6c6a04",
+    "cloud_complete_text_tokens_match": true,
+    "cloud_marks_equal_local_reviewed_marks": true,
+    "actual_pcm_reference": "actual_cloud_mp3",
+    "timeline_offset_seconds": 130.84,
+    "reference_duration_seconds": 6.96,
+    "actual_aac_mix_lag_ms": 0.0,
+    "actual_aac_mix_pearson_r": 0.9999626015385222,
+    "actual_aac_mix_fitted_gain": 0.9998205900192261,
+    "actual_aac_mix_relative_residual": 0.008650981821119785,
+    "actual_whole_waveform_binding": "strong_match"
+  },
+  "native_voice_word_end_seconds": 6.155625,
+  "measured_voice_acoustic_end_seconds": 6.2,
+  "actual_voice_timeline_offset_seconds": 130.84,
+  "actual_complete_second_elapsed_since_voice_start": 6.159999999999997,
+  "native_guard_rejection_reason": "elapsed6.16 < actual_word_end6.155625+40ms and measured_acoustic_end6.20. The first40ms is a real weak final-word tail; it cannot be falsely called an entirely post-narration source second.",
+  "fixed_source_bed_gain": 0.36,
+  "physical_mono_voice_to_stereo_to_mono_gain": 0.7071067811865475,
+  "source_only_correlation": 0.9715642794837679,
+  "source_plus_actual_voice_tail_correlation": 0.9781397609418725,
+  "composite_level_error_db": -1.056621650968861,
+  "method": "Actual fully decoded s16le 8k mono arrays, immutable actual master/source/CloudMP3/CloudWordBoundary; source at exact native timeline map118.16 for movie137, gain0.72*bedlow0.5=.36 plus actual reviewed utterance tail at native channel conversion1/sqrt2. No global silence-floor change, no fake raw-mute or voice-finished flag, no removed source action.",
+  "native_QC_PASS_claimed": false,
+  "human_listening_claimed": false,
+  "tone_verified": false
+}

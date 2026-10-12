@@ -1,0 +1,187 @@
+name: compose-native-reel
+run-name: "compose-native-reel · ${{ inputs.slug }}"
+on:
+  push:
+    branches: ["production/**"]
+    paths: ["data/reel-compositions/**/request.json"]
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: Verified native reel slug
+        required: true
+        type: string
+      video_run:
+        description: Native match-reel run supplying unchanged compressed video
+        required: true
+        type: string
+      audio_run:
+        description: Native match-reel run supplying unchanged original sound
+        required: true
+        type: string
+permissions:
+  contents: write
+  actions: read
+jobs:
+  request:
+    if: startsWith(github.ref_name, 'production/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      contents: read
+    outputs:
+      slug: ${{ steps.request.outputs.slug }}
+      video_run: ${{ steps.request.outputs.video_run }}
+      audio_run: ${{ steps.request.outputs.audio_run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          sparse-checkout: data/reel-compositions
+      - name: Validate one explicit composition request
+        id: request
+        env:
+          INPUT_SLUG: ${{ inputs.slug }}
+          INPUT_VIDEO_RUN: ${{ inputs.video_run }}
+          INPUT_AUDIO_RUN: ${{ inputs.audio_run }}
+        run: |
+          python - <<'PY_REQUEST'
+          import json,os,pathlib,re,subprocess
+          if os.environ['GITHUB_EVENT_NAME']=='push':
+              event=json.loads(pathlib.Path(os.environ['GITHUB_EVENT_PATH']).read_text());before=event['before']
+              if not re.fullmatch('[a-f0-9]{40}',before):raise ValueError('Invalid push base')
+              subprocess.run(['git','cat-file','-e',before+'^{commit}'],check=True)
+              changed=subprocess.check_output(['git','diff','--diff-filter=AM','--name-only',before,'HEAD','--','data/reel-compositions'],text=True).splitlines()
+              paths=[p for p in changed if re.fullmatch(r'data/reel-compositions/[a-z0-9]+(?:-[a-z0-9]+)*/request.json',p)]
+              if len(paths)!=1 or len(changed)!=1:raise ValueError('Exactly one composition request is required')
+              path=pathlib.Path(paths[0]);request=json.loads(path.read_text())
+              if path.parent.name!=request.get('slug'):raise ValueError('Request path and slug differ')
+          else:
+              request={'slug':os.environ['INPUT_SLUG'],'video_run':os.environ['INPUT_VIDEO_RUN'],'audio_run':os.environ['INPUT_AUDIO_RUN']}
+          if set(request)!={'slug','video_run','audio_run'} or not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*',str(request['slug'])):raise ValueError('Invalid request schema')
+          if any(isinstance(request[k],bool) or not re.fullmatch(r'[1-9][0-9]*',str(request[k])) for k in ['video_run','audio_run']):raise ValueError('Invalid native run IDs')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              for k,v in request.items():f.write(f'{k}={v}\n')
+          PY_REQUEST
+  compose:
+    needs: request
+    concurrency:
+      group: match-reel-${{ needs.request.outputs.slug }}-render
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SLUG: ${{ needs.request.outputs.slug }}
+      VIDEO_RUN: ${{ needs.request.outputs.video_run }}
+      AUDIO_RUN: ${{ needs.request.outputs.audio_run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            assets
+            data
+            specs
+            src
+            tools
+            pyproject.toml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Restore native checker apt cache
+        id: apt_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-compose-native-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-compose-native-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
+      - name: Install native checker dependencies
+        timeout-minutes: 15
+        run: |
+          pip install -q -e . numpy edge-tts
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - name: Save apt packages only after actual download
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+      - name: Restore original audio run native paired TTS cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-tts
+          key: reel-tts-${{ needs.request.outputs.slug }}-${{ needs.request.outputs.audio_run }}
+          # A failed native run does not save its cache. A successful input's
+          # cache is acceptable only after helper byte/paired-mark verification.
+          restore-keys: |
+            reel-tts-${{ needs.request.outputs.slug }}-${{ needs.request.outputs.video_run }}
+      - name: Verify current complete audio evidence
+        run: python tools/reel_review_files.py --slug "$SLUG" --require-review
+      - name: Fetch actual original native run artifacts
+        run: |
+          python tools/compose_native_reel.py fetch --slug "$SLUG" \
+            --video-run "$VIDEO_RUN" --audio-run "$AUDIO_RUN" \
+            --video-dir "$RUNNER_TEMP/native-video" --audio-dir "$RUNNER_TEMP/native-audio" \
+            --outdir "$RUNNER_TEMP/native-composed"
+      - name: Verify recipes and compose unchanged compressed streams
+        run: |
+          python tools/compose_native_reel.py compose --slug "$SLUG" \
+            --video-run "$VIDEO_RUN" --audio-run "$AUDIO_RUN" \
+            --video-dir "$RUNNER_TEMP/native-video" --audio-dir "$RUNNER_TEMP/native-audio" \
+            --outdir "$RUNNER_TEMP/native-composed"
+      - name: Run fresh native whole movie QC and verify uploaded Release bytes
+        run: |
+          python tools/compose_native_reel.py release --slug "$SLUG" \
+            --video-run "$VIDEO_RUN" --audio-run "$AUDIO_RUN" \
+            --video-dir "$RUNNER_TEMP/native-video" --audio-dir "$RUNNER_TEMP/native-audio" \
+            --outdir "$RUNNER_TEMP/native-composed"
+      - name: Commit only verified native metadata to this branch
+        run: |
+          OUTDIR="output/$(TZ=Asia/Shanghai date +%F)/reel/$SLUG"
+          git sparse-checkout add "$OUTDIR"
+          mkdir -p "$OUTDIR"
+          python - "$RUNNER_TEMP/native-composed" "$OUTDIR" <<'PY'
+          import pathlib,shutil,subprocess,sys,hashlib
+          src,dst=map(pathlib.Path,sys.argv[1:]);names=['render.json','render_inputs.json','qc_attestation.json','audio_review_binding.json','subtitles.ass','topbar.ass','poster.jpg','stat_card.jpg','scoreboard_qc.json','composition_provenance.json','composition_release_verification.json','copy.html','push.html']
+          files=[]
+          for mask in (src/'score_masks').glob('*.mkv'):
+              target=dst/'score_masks'/mask.name
+              if not target.is_file() or hashlib.sha256(mask.read_bytes()).digest()!=hashlib.sha256(target.read_bytes()).digest():raise ValueError('Committed video mask is missing/different; stop without sending')
+          for name in names:
+              path=src/name
+              if path.is_file():shutil.copy2(path,dst/name);files.append(str(dst/name))
+          if not files:raise ValueError('No verified publication metadata')
+          subprocess.run(['git','add','--sparse','--']+files,check=True)
+          PY
+          python tools/reel_review_files.py --slug "$SLUG" --stage
+          if git diff --cached --name-only | grep -E '\.(mp4|mp3|wav|zip|mov|mkv)$'; then
+            echo '::error::Media entered staging'; exit 1
+          fi
+          python tools/check_staged_file_sizes.py
+          git config user.name 'Claude'
+          git config user.email 'noreply@anthropic.com'
+          git commit -m "reel: compose verified native video and original sound $SLUG"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry "$GITHUB_REF_NAME"
+      - name: Report without sending or merging
+        run: |
+          echo 'A fresh composed movie passed native QC and remote whole-file verification. Root operator must verify current-head CI and final video/audio evidence before merging. This workflow sends no message.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Retain actual composed artifact for independent review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: composed-native-${{ needs.request.outputs.slug }}-${{ github.run_id }}
+          compression-level: 0
+          path: |
+            ${{ runner.temp }}/native-composed
+            !${{ runner.temp }}/native-composed/source*.mp4
+            !${{ runner.temp }}/native-composed/source*.mkv
+          if-no-files-found: ignore

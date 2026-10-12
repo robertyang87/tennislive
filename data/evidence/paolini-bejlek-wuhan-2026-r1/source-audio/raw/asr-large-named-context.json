@@ -1,0 +1,171 @@
+{
+  "schema": "actual-local-asr.v1",
+  "model": "large-v3",
+  "faster_whisper_version": "1.2.1",
+  "device": "cpu",
+  "compute_type": "int8",
+  "language": "en",
+  "vad_filter": true,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "source_path": "/workspace/scratch/timed-audio/disputed-names-context.wav",
+  "source_sha256": "62d724cc5dc57a86088377a796d33bf06e521432ceae9d8bea2cd27fecc3cff0",
+  "recorded_at": "2026-10-12T20:31:23.180311+00:00",
+  "human_listening_claimed": false,
+  "initial_prompt": "Jasmine Paolini. Sara Bejlek. Tennis match commentary.",
+  "run_status": "complete",
+  "segments": [
+    {
+      "start": 5.1,
+      "end": 8.48,
+      "text": " Oh, she ducked that out ever so well. Tough one.",
+      "no_speech_prob": 0.0847088098526001,
+      "avg_logprob": -0.2903011206424598,
+      "words": [
+        {
+          "start": 5.1,
+          "end": 5.76,
+          "word": " Oh,",
+          "probability": 0.3220959007740021
+        },
+        {
+          "start": 5.76,
+          "end": 6.06,
+          "word": " she",
+          "probability": 0.9522136449813843
+        },
+        {
+          "start": 6.06,
+          "end": 6.54,
+          "word": " ducked",
+          "probability": 0.8390387892723083
+        },
+        {
+          "start": 6.54,
+          "end": 6.56,
+          "word": " that",
+          "probability": 0.5094236731529236
+        },
+        {
+          "start": 6.56,
+          "end": 6.74,
+          "word": " out",
+          "probability": 0.808312177658081
+        },
+        {
+          "start": 6.74,
+          "end": 6.92,
+          "word": " ever",
+          "probability": 0.934552013874054
+        },
+        {
+          "start": 6.92,
+          "end": 7.16,
+          "word": " so",
+          "probability": 0.9742297530174255
+        },
+        {
+          "start": 7.16,
+          "end": 7.36,
+          "word": " well.",
+          "probability": 0.9461553692817688
+        },
+        {
+          "start": 7.82,
+          "end": 8.22,
+          "word": " Tough",
+          "probability": 0.9196228384971619
+        },
+        {
+          "start": 8.22,
+          "end": 8.48,
+          "word": " one.",
+          "probability": 0.9727334380149841
+        }
+      ]
+    },
+    {
+      "start": 10.04,
+      "end": 12.74,
+      "text": " It's got work to do for it to be in this game.",
+      "no_speech_prob": 0.0847088098526001,
+      "avg_logprob": -0.2903011206424598,
+      "words": [
+        {
+          "start": 10.04,
+          "end": 10.44,
+          "word": " It's",
+          "probability": 0.7924187779426575
+        },
+        {
+          "start": 10.44,
+          "end": 10.52,
+          "word": " got",
+          "probability": 0.9889619946479797
+        },
+        {
+          "start": 10.52,
+          "end": 10.72,
+          "word": " work",
+          "probability": 0.9883986115455627
+        },
+        {
+          "start": 10.72,
+          "end": 10.96,
+          "word": " to",
+          "probability": 0.9975669384002686
+        },
+        {
+          "start": 10.96,
+          "end": 11.16,
+          "word": " do",
+          "probability": 0.9978296160697937
+        },
+        {
+          "start": 11.16,
+          "end": 11.96,
+          "word": " for",
+          "probability": 0.9210824370384216
+        },
+        {
+          "start": 11.96,
+          "end": 12.04,
+          "word": " it",
+          "probability": 0.9669725894927979
+        },
+        {
+          "start": 12.04,
+          "end": 12.16,
+          "word": " to",
+          "probability": 0.9922352433204651
+        },
+        {
+          "start": 12.16,
+          "end": 12.26,
+          "word": " be",
+          "probability": 0.998684823513031
+        },
+        {
+          "start": 12.26,
+          "end": 12.36,
+          "word": " in",
+          "probability": 0.997334897518158
+        },
+        {
+          "start": 12.36,
+          "end": 12.52,
+          "word": " this",
+          "probability": 0.9980212450027466
+        },
+        {
+          "start": 12.52,
+          "end": 12.74,
+          "word": " game.",
+          "probability": 0.999148964881897
+        }
+      ]
+    }
+  ],
+  "max_transcribed_end": 12.74
+}

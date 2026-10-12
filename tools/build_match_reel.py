@@ -2882,6 +2882,8 @@ class Segment:
     crop_zoom: float = 1.0
     # Optional per-segment subtitle anchor; absent keeps the existing layout.
     subtitle_bottom: int | None = None
+    # Relative output-segment seconds; only explicitly contained cues move.
+    subtitle_bottom_windows: tuple[tuple[float, float, int], ...] = ()
     # Measured original board retained in an uncropped source frame; never an inset.
     source_scorebox: tuple[int, int, int, int] | None = None
     # Full-canvas graphic with an explicit original-source audio window.
@@ -2913,10 +2915,39 @@ def segment_subtitle_bottom_windows(segments: list[Segment], cover_secs: float):
     cursor = cover_secs
     for seg in segments:
         end = cursor + seg.length
-        if seg.subtitle_bottom is not None:
-            windows.append((cursor, end, seg.subtitle_bottom))
+        previous = 0.0
+        for lo, hi, bottom in seg.subtitle_bottom_windows:
+            if seg.subtitle_bottom is not None and previous < lo:
+                windows.append((cursor + previous, cursor + lo, seg.subtitle_bottom))
+            windows.append((cursor + lo, cursor + hi, bottom))
+            previous = hi
+        if seg.subtitle_bottom is not None and previous < seg.length:
+            windows.append((cursor + previous, end, seg.subtitle_bottom))
         cursor = end
     return windows
+
+
+def _seg_subtitle_bottom_windows(s: dict, i: int, seconds: float):
+    key = "subtitle_bottom_windows"
+    if key not in s:
+        return ()
+    if not (str(s.get("narration") or "").strip() or s.get("quote")):
+        raise ReelError(f"第 {i + 1} 段 {key} 需要实际字幕")
+    values = s[key]
+    if not isinstance(values, list):
+        raise ReelError(f"第 {i + 1} 段 {key} 必须为 [[相对起点,相对终点,底边距], ...]")
+    result, previous = [], 0.0
+    for value in values:
+        if not isinstance(value, (list, tuple)) or len(value) != 3:
+            raise ReelError(f"第 {i + 1} 段 {key} 每项须有三个值")
+        lo, hi, bottom = value
+        if (any(type(v) not in (int, float) or not math.isfinite(v) for v in (lo, hi))
+                or not previous <= lo < hi <= seconds
+                or type(bottom) is not int or not 96 <= bottom <= VIDEO_H - 96):
+            raise ReelError(f"第 {i + 1} 段 {key} 须有限、有序、不重叠且在段内；底边距须96~{VIDEO_H - 96}整数")
+        result.append((float(lo), float(hi), bottom))
+        previous = hi
+    return tuple(result)
 
 
 def _seg_fill_y(s: dict, i: int) -> float | None:
@@ -3494,6 +3525,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 
     segments = [replace(_one(s, i), subtitle_bottom=_seg_subtitle_bottom(s, i))
                 for i, s in enumerate(spec["segments"])]
+    segments = [replace(seg, subtitle_bottom_windows=_seg_subtitle_bottom_windows(raw, i, seg.length))
+                for i, (raw, seg) in enumerate(zip(spec["segments"], segments))]
     source_scorebox = spec.get("source_scorebox")
     if source_scorebox is not None:
         original_box = _scorebox4(source_scorebox)
@@ -3779,7 +3812,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows", "scorebox",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
-                "kicker", "track", "voice", "subtitle_bottom", "visual_image"),
+                "kicker", "track", "voice", "subtitle_bottom", "subtitle_bottom_windows", "visual_image"),
 }
 
 
@@ -11283,7 +11316,7 @@ def full_canvas_filtergraph(graph: str, segments: list[Segment], cover_secs: flo
         end = cursor + seg.length
         if seg.full_canvas:
             window = f"gte(t,{cursor:.6f})*lt(t,{end:.6f})"
-            if seg.subtitle_bottom is not None and subtitles_ass is not None:
+            if (seg.subtitle_bottom is not None or seg.subtitle_bottom_windows) and subtitles_ass is not None:
                 captioned_windows.append(window)
             else:
                 windows.append(window)

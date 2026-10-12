@@ -125,6 +125,8 @@ probe 并备料；候选报告写进 job summary，不用翻日志。往下接
 
 制作返工、慢测试实测和已修复的前置检查见 [视频制作耗时复盘](docs/reel-speed-review-2026-10-12.md)。审听文件按 review index 的真实路径核验：`python tools/reel_review_files.py --slug <slug>`；在任何暂存或推送之前先排除证据缺失与变更。
 
+字幕位置调整见[逐段字幕下锚](docs/reel-caption-bottom-windows.md)；保留已有原音轨、组合已核原生画面见[原生流合成](docs/native-reel-stream-composition.md)。[微信交付计时](docs/reel-delivery-sla.md)从收到素材计到实际回执，不能把渲染完成当成交付完成。
+
 产物各走各的通道，别混：
 
 | 东西 | 去哪儿 | 为什么 |

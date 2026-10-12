@@ -1,0 +1,1379 @@
+{
+  "schema": "actual-local-asr.v1",
+  "model": "small.en",
+  "faster_whisper_version": "1.2.1",
+  "device": "cpu",
+  "compute_type": "int8",
+  "language": "en",
+  "vad_filter": true,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "source_path": "/workspace/scratch/timed-662TF-JlyZY/662TF-JlyZY.mp4",
+  "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+  "recorded_at": "2026-10-12T20:17:13.231925+00:00",
+  "human_listening_claimed": false,
+  "run_status": "intentionally_stopped_actual_prefix",
+  "segments": [
+    {
+      "start": 9.39,
+      "end": 26.62,
+      "text": " Lovely. Yeah, that is what Paulini does such a gorgeous touch. Oh, she ducked out at Emma so well. Tough one",
+      "no_speech_prob": 0.3562815487384796,
+      "avg_logprob": -0.5086709124010962,
+      "words": [
+        {
+          "start": 9.39,
+          "end": 9.93,
+          "word": " Lovely.",
+          "probability": 0.2512194812297821
+        },
+        {
+          "start": 10.31,
+          "end": 10.39,
+          "word": " Yeah,",
+          "probability": 0.8520704507827759
+        },
+        {
+          "start": 10.51,
+          "end": 10.55,
+          "word": " that",
+          "probability": 0.9458990097045898
+        },
+        {
+          "start": 10.55,
+          "end": 10.73,
+          "word": " is",
+          "probability": 0.9845912456512451
+        },
+        {
+          "start": 10.73,
+          "end": 10.95,
+          "word": " what",
+          "probability": 0.9941237568855286
+        },
+        {
+          "start": 10.95,
+          "end": 11.37,
+          "word": " Paulini",
+          "probability": 0.5423426330089569
+        },
+        {
+          "start": 11.37,
+          "end": 11.69,
+          "word": " does",
+          "probability": 0.9910008311271667
+        },
+        {
+          "start": 11.69,
+          "end": 12.01,
+          "word": " such",
+          "probability": 0.23784491419792175
+        },
+        {
+          "start": 12.01,
+          "end": 12.61,
+          "word": " a",
+          "probability": 0.9850324392318726
+        },
+        {
+          "start": 12.61,
+          "end": 13.25,
+          "word": " gorgeous",
+          "probability": 0.9278308749198914
+        },
+        {
+          "start": 13.25,
+          "end": 13.85,
+          "word": " touch.",
+          "probability": 0.9241744875907898
+        },
+        {
+          "start": 13.89,
+          "end": 14.59,
+          "word": " Oh,",
+          "probability": 0.6838492751121521
+        },
+        {
+          "start": 23.94,
+          "end": 24.2,
+          "word": " she",
+          "probability": 0.7533974051475525
+        },
+        {
+          "start": 24.2,
+          "end": 24.48,
+          "word": " ducked",
+          "probability": 0.8228798508644104
+        },
+        {
+          "start": 24.48,
+          "end": 24.66,
+          "word": " out",
+          "probability": 0.4169639050960541
+        },
+        {
+          "start": 24.66,
+          "end": 24.84,
+          "word": " at",
+          "probability": 0.4181838035583496
+        },
+        {
+          "start": 24.84,
+          "end": 25.04,
+          "word": " Emma",
+          "probability": 0.2581900656223297
+        },
+        {
+          "start": 25.04,
+          "end": 25.26,
+          "word": " so",
+          "probability": 0.7685273289680481
+        },
+        {
+          "start": 25.26,
+          "end": 25.66,
+          "word": " well.",
+          "probability": 0.9490373730659485
+        },
+        {
+          "start": 26.08,
+          "end": 26.3,
+          "word": " Tough",
+          "probability": 0.9348703026771545
+        },
+        {
+          "start": 26.3,
+          "end": 26.62,
+          "word": " one",
+          "probability": 0.9691479206085205
+        }
+      ]
+    },
+    {
+      "start": 27.82,
+      "end": 46.05,
+      "text": " That's got work to do for it to be in this game. Oh, it's beautifully struck by fighting away here",
+      "no_speech_prob": 0.3562815487384796,
+      "avg_logprob": -0.5086709124010962,
+      "words": [
+        {
+          "start": 27.82,
+          "end": 28.52,
+          "word": " That's",
+          "probability": 0.5424858145415783
+        },
+        {
+          "start": 28.52,
+          "end": 28.64,
+          "word": " got",
+          "probability": 0.9821391701698303
+        },
+        {
+          "start": 28.64,
+          "end": 28.86,
+          "word": " work",
+          "probability": 0.9922215342521667
+        },
+        {
+          "start": 28.86,
+          "end": 29.04,
+          "word": " to",
+          "probability": 0.9972955584526062
+        },
+        {
+          "start": 29.04,
+          "end": 29.52,
+          "word": " do",
+          "probability": 0.9981175661087036
+        },
+        {
+          "start": 29.52,
+          "end": 30.04,
+          "word": " for",
+          "probability": 0.7467436194419861
+        },
+        {
+          "start": 30.04,
+          "end": 30.14,
+          "word": " it",
+          "probability": 0.9834871888160706
+        },
+        {
+          "start": 30.14,
+          "end": 30.22,
+          "word": " to",
+          "probability": 0.9952532052993774
+        },
+        {
+          "start": 30.22,
+          "end": 30.34,
+          "word": " be",
+          "probability": 0.9990662932395935
+        },
+        {
+          "start": 30.34,
+          "end": 30.46,
+          "word": " in",
+          "probability": 0.9920458793640137
+        },
+        {
+          "start": 30.46,
+          "end": 30.6,
+          "word": " this",
+          "probability": 0.9985652565956116
+        },
+        {
+          "start": 30.6,
+          "end": 30.98,
+          "word": " game.",
+          "probability": 0.998696506023407
+        },
+        {
+          "start": 30.98,
+          "end": 31.52,
+          "word": " Oh,",
+          "probability": 0.2781912684440613
+        },
+        {
+          "start": 43.14,
+          "end": 43.24,
+          "word": " it's",
+          "probability": 0.770942211151123
+        },
+        {
+          "start": 43.24,
+          "end": 43.58,
+          "word": " beautifully",
+          "probability": 0.7151777744293213
+        },
+        {
+          "start": 43.58,
+          "end": 43.96,
+          "word": " struck",
+          "probability": 0.33144864439964294
+        },
+        {
+          "start": 43.96,
+          "end": 44.26,
+          "word": " by",
+          "probability": 0.2670515179634094
+        },
+        {
+          "start": 44.26,
+          "end": 45.34,
+          "word": " fighting",
+          "probability": 0.896223783493042
+        },
+        {
+          "start": 45.34,
+          "end": 45.7,
+          "word": " away",
+          "probability": 0.983426570892334
+        },
+        {
+          "start": 45.7,
+          "end": 46.05,
+          "word": " here",
+          "probability": 0.6344157457351685
+        }
+      ]
+    },
+    {
+      "start": 79.54,
+      "end": 96.08,
+      "text": " Well, Balek, oh so quick, so athletic and so powerful",
+      "no_speech_prob": 0.3562815487384796,
+      "avg_logprob": -0.5086709124010962,
+      "words": [
+        {
+          "start": 79.54,
+          "end": 80.24,
+          "word": " Well,",
+          "probability": 0.0642530769109726
+        },
+        {
+          "start": 80.24,
+          "end": 80.94,
+          "word": " Balek,",
+          "probability": 0.40380482375621796
+        },
+        {
+          "start": 81.12,
+          "end": 81.84,
+          "word": " oh",
+          "probability": 0.7743731141090393
+        },
+        {
+          "start": 91.38,
+          "end": 92.36,
+          "word": " so",
+          "probability": 0.47732654213905334
+        },
+        {
+          "start": 92.36,
+          "end": 92.74,
+          "word": " quick,",
+          "probability": 0.9860915541648865
+        },
+        {
+          "start": 92.9,
+          "end": 93.42,
+          "word": " so",
+          "probability": 0.9907655715942383
+        },
+        {
+          "start": 93.42,
+          "end": 93.88,
+          "word": " athletic",
+          "probability": 0.9961243271827698
+        },
+        {
+          "start": 93.88,
+          "end": 94.86,
+          "word": " and",
+          "probability": 0.6429577469825745
+        },
+        {
+          "start": 94.86,
+          "end": 95.4,
+          "word": " so",
+          "probability": 0.9804134964942932
+        },
+        {
+          "start": 95.4,
+          "end": 96.08,
+          "word": " powerful",
+          "probability": 0.9981550574302673
+        }
+      ]
+    },
+    {
+      "start": 97.22,
+      "end": 107.07,
+      "text": " threatened to come back and she still might do just that third set point she",
+      "no_speech_prob": 0.7581523060798645,
+      "avg_logprob": -0.2676404293378194,
+      "words": [
+        {
+          "start": 97.22,
+          "end": 97.78,
+          "word": " threatened",
+          "probability": 0.03399699553847313
+        },
+        {
+          "start": 97.78,
+          "end": 98.06,
+          "word": " to",
+          "probability": 0.9937204122543335
+        },
+        {
+          "start": 98.06,
+          "end": 98.24,
+          "word": " come",
+          "probability": 0.9715316891670227
+        },
+        {
+          "start": 98.24,
+          "end": 98.62,
+          "word": " back",
+          "probability": 0.9963149428367615
+        },
+        {
+          "start": 98.62,
+          "end": 99.46,
+          "word": " and",
+          "probability": 0.519232988357544
+        },
+        {
+          "start": 103.81,
+          "end": 103.95,
+          "word": " she",
+          "probability": 0.9694939255714417
+        },
+        {
+          "start": 103.95,
+          "end": 104.19,
+          "word": " still",
+          "probability": 0.9690091013908386
+        },
+        {
+          "start": 104.19,
+          "end": 104.39,
+          "word": " might",
+          "probability": 0.9958920478820801
+        },
+        {
+          "start": 104.39,
+          "end": 104.63,
+          "word": " do",
+          "probability": 0.9885042309761047
+        },
+        {
+          "start": 104.63,
+          "end": 104.87,
+          "word": " just",
+          "probability": 0.9917068481445312
+        },
+        {
+          "start": 104.87,
+          "end": 105.37,
+          "word": " that",
+          "probability": 0.9951329827308655
+        },
+        {
+          "start": 105.37,
+          "end": 106.25,
+          "word": " third",
+          "probability": 0.46039557456970215
+        },
+        {
+          "start": 106.25,
+          "end": 106.61,
+          "word": " set",
+          "probability": 0.9829413294792175
+        },
+        {
+          "start": 106.61,
+          "end": 106.87,
+          "word": " point",
+          "probability": 0.9683101177215576
+        },
+        {
+          "start": 106.87,
+          "end": 107.07,
+          "word": " she",
+          "probability": 0.590292751789093
+        }
+      ]
+    },
+    {
+      "start": 107.07,
+      "end": 131.94,
+      "text": " has to take it needs a first serve and she's done it just about did enough",
+      "no_speech_prob": 0.7581523060798645,
+      "avg_logprob": -0.2676404293378194,
+      "words": [
+        {
+          "start": 107.07,
+          "end": 107.27,
+          "word": " has",
+          "probability": 0.992073655128479
+        },
+        {
+          "start": 107.27,
+          "end": 107.45,
+          "word": " to",
+          "probability": 0.9978014826774597
+        },
+        {
+          "start": 107.45,
+          "end": 107.69,
+          "word": " take",
+          "probability": 0.9978601336479187
+        },
+        {
+          "start": 107.69,
+          "end": 108.55,
+          "word": " it",
+          "probability": 0.9943915009498596
+        },
+        {
+          "start": 108.55,
+          "end": 109.89,
+          "word": " needs",
+          "probability": 0.7667877078056335
+        },
+        {
+          "start": 109.89,
+          "end": 110.05,
+          "word": " a",
+          "probability": 0.492270827293396
+        },
+        {
+          "start": 110.05,
+          "end": 110.27,
+          "word": " first",
+          "probability": 0.9917647242546082
+        },
+        {
+          "start": 110.27,
+          "end": 110.83,
+          "word": " serve",
+          "probability": 0.9948924779891968
+        },
+        {
+          "start": 110.83,
+          "end": 111.53,
+          "word": " and",
+          "probability": 0.4407251477241516
+        },
+        {
+          "start": 129.0,
+          "end": 129.3,
+          "word": " she's",
+          "probability": 0.9849606454372406
+        },
+        {
+          "start": 129.3,
+          "end": 129.42,
+          "word": " done",
+          "probability": 0.9962342381477356
+        },
+        {
+          "start": 129.42,
+          "end": 129.64,
+          "word": " it",
+          "probability": 0.9956212639808655
+        },
+        {
+          "start": 129.64,
+          "end": 130.0,
+          "word": " just",
+          "probability": 0.9674989581108093
+        },
+        {
+          "start": 130.0,
+          "end": 130.44,
+          "word": " about",
+          "probability": 0.9957787990570068
+        },
+        {
+          "start": 130.44,
+          "end": 131.62,
+          "word": " did",
+          "probability": 0.8601693511009216
+        },
+        {
+          "start": 131.62,
+          "end": 131.94,
+          "word": " enough",
+          "probability": 0.9970203042030334
+        }
+      ]
+    },
+    {
+      "start": 131.94,
+      "end": 137.36,
+      "text": " there Paolini that was a struggle at times but the fast start good enough for",
+      "no_speech_prob": 0.7581523060798645,
+      "avg_logprob": -0.2676404293378194,
+      "words": [
+        {
+          "start": 131.94,
+          "end": 132.24,
+          "word": " there",
+          "probability": 0.9851743578910828
+        },
+        {
+          "start": 132.24,
+          "end": 132.74,
+          "word": " Paolini",
+          "probability": 0.629340648651123
+        },
+        {
+          "start": 132.74,
+          "end": 133.04,
+          "word": " that",
+          "probability": 0.7962681651115417
+        },
+        {
+          "start": 133.04,
+          "end": 133.18,
+          "word": " was",
+          "probability": 0.9953304529190063
+        },
+        {
+          "start": 133.18,
+          "end": 133.34,
+          "word": " a",
+          "probability": 0.9868943691253662
+        },
+        {
+          "start": 133.34,
+          "end": 133.84,
+          "word": " struggle",
+          "probability": 0.998276948928833
+        },
+        {
+          "start": 133.84,
+          "end": 134.1,
+          "word": " at",
+          "probability": 0.97735196352005
+        },
+        {
+          "start": 134.1,
+          "end": 134.54,
+          "word": " times",
+          "probability": 0.994391143321991
+        },
+        {
+          "start": 134.54,
+          "end": 135.8,
+          "word": " but",
+          "probability": 0.9311869740486145
+        },
+        {
+          "start": 135.8,
+          "end": 135.94,
+          "word": " the",
+          "probability": 0.9939243197441101
+        },
+        {
+          "start": 135.94,
+          "end": 136.22,
+          "word": " fast",
+          "probability": 0.7489893436431885
+        },
+        {
+          "start": 136.22,
+          "end": 136.62,
+          "word": " start",
+          "probability": 0.965061604976654
+        },
+        {
+          "start": 136.62,
+          "end": 136.86,
+          "word": " good",
+          "probability": 0.9271084666252136
+        },
+        {
+          "start": 136.86,
+          "end": 137.14,
+          "word": " enough",
+          "probability": 0.9995635151863098
+        },
+        {
+          "start": 137.14,
+          "end": 137.36,
+          "word": " for",
+          "probability": 0.9952750205993652
+        }
+      ]
+    },
+    {
+      "start": 137.36,
+      "end": 142.84,
+      "text": " her when she led four love Baylech showed real resistance from there on in but",
+      "no_speech_prob": 0.7581523060798645,
+      "avg_logprob": -0.2676404293378194,
+      "words": [
+        {
+          "start": 137.36,
+          "end": 137.58,
+          "word": " her",
+          "probability": 0.9944567680358887
+        },
+        {
+          "start": 137.58,
+          "end": 137.9,
+          "word": " when",
+          "probability": 0.9888816475868225
+        },
+        {
+          "start": 137.9,
+          "end": 138.06,
+          "word": " she",
+          "probability": 0.9979793429374695
+        },
+        {
+          "start": 138.06,
+          "end": 138.24,
+          "word": " led",
+          "probability": 0.8673715591430664
+        },
+        {
+          "start": 138.24,
+          "end": 138.58,
+          "word": " four",
+          "probability": 0.3510926365852356
+        },
+        {
+          "start": 138.58,
+          "end": 138.9,
+          "word": " love",
+          "probability": 0.7287187576293945
+        },
+        {
+          "start": 138.9,
+          "end": 140.58,
+          "word": " Baylech",
+          "probability": 0.3750890716910362
+        },
+        {
+          "start": 140.58,
+          "end": 140.9,
+          "word": " showed",
+          "probability": 0.9659798741340637
+        },
+        {
+          "start": 140.9,
+          "end": 141.18,
+          "word": " real",
+          "probability": 0.9906835556030273
+        },
+        {
+          "start": 141.18,
+          "end": 141.6,
+          "word": " resistance",
+          "probability": 0.9984114170074463
+        },
+        {
+          "start": 141.6,
+          "end": 141.88,
+          "word": " from",
+          "probability": 0.9954501986503601
+        },
+        {
+          "start": 141.88,
+          "end": 142.08,
+          "word": " there",
+          "probability": 0.917606770992279
+        },
+        {
+          "start": 142.08,
+          "end": 142.24,
+          "word": " on",
+          "probability": 0.6917133331298828
+        },
+        {
+          "start": 142.24,
+          "end": 142.58,
+          "word": " in",
+          "probability": 0.8899254202842712
+        },
+        {
+          "start": 142.58,
+          "end": 142.84,
+          "word": " but",
+          "probability": 0.9215356111526489
+        }
+      ]
+    },
+    {
+      "start": 142.84,
+      "end": 171.43,
+      "text": " Paulini takes it 6-3. Oh wonderful work from Paulini, she's so quick. Big chance now for",
+      "no_speech_prob": 0.5945853590965271,
+      "avg_logprob": -0.27365631527370876,
+      "words": [
+        {
+          "start": 142.84,
+          "end": 143.32,
+          "word": " Paulini",
+          "probability": 0.5303621590137482
+        },
+        {
+          "start": 143.32,
+          "end": 143.64,
+          "word": " takes",
+          "probability": 0.9665605425834656
+        },
+        {
+          "start": 143.64,
+          "end": 143.88,
+          "word": " it",
+          "probability": 0.9405487775802612
+        },
+        {
+          "start": 143.88,
+          "end": 144.16,
+          "word": " 6",
+          "probability": 0.7200002670288086
+        },
+        {
+          "start": 144.16,
+          "end": 144.78,
+          "word": "-3.",
+          "probability": 0.9059869945049286
+        },
+        {
+          "start": 164.37,
+          "end": 164.77,
+          "word": " Oh",
+          "probability": 0.5652786493301392
+        },
+        {
+          "start": 164.77,
+          "end": 165.49,
+          "word": " wonderful",
+          "probability": 0.3267318606376648
+        },
+        {
+          "start": 165.49,
+          "end": 166.13,
+          "word": " work",
+          "probability": 0.9894431829452515
+        },
+        {
+          "start": 166.13,
+          "end": 166.43,
+          "word": " from",
+          "probability": 0.958773136138916
+        },
+        {
+          "start": 166.43,
+          "end": 166.99,
+          "word": " Paulini,",
+          "probability": 0.9888501465320587
+        },
+        {
+          "start": 166.99,
+          "end": 167.51,
+          "word": " she's",
+          "probability": 0.8971104323863983
+        },
+        {
+          "start": 167.51,
+          "end": 167.95,
+          "word": " so",
+          "probability": 0.9905269145965576
+        },
+        {
+          "start": 167.95,
+          "end": 168.39,
+          "word": " quick.",
+          "probability": 0.9938471913337708
+        },
+        {
+          "start": 169.13,
+          "end": 169.15,
+          "word": " Big",
+          "probability": 0.866205096244812
+        },
+        {
+          "start": 169.15,
+          "end": 169.49,
+          "word": " chance",
+          "probability": 0.9977501034736633
+        },
+        {
+          "start": 169.49,
+          "end": 170.39,
+          "word": " now",
+          "probability": 0.9895464777946472
+        },
+        {
+          "start": 170.39,
+          "end": 171.43,
+          "word": " for",
+          "probability": 0.5547200441360474
+        }
+      ]
+    },
+    {
+      "start": 171.43,
+      "end": 187.25,
+      "text": " Baelek. Paulini's second serve in particular has been brittle. Beautifully played and it's",
+      "no_speech_prob": 0.5945853590965271,
+      "avg_logprob": -0.27365631527370876,
+      "words": [
+        {
+          "start": 171.43,
+          "end": 171.75,
+          "word": " Baelek.",
+          "probability": 0.4894135184586048
+        },
+        {
+          "start": 171.87,
+          "end": 172.37,
+          "word": " Paulini's",
+          "probability": 0.8909978866577148
+        },
+        {
+          "start": 172.37,
+          "end": 172.61,
+          "word": " second",
+          "probability": 0.9840355515480042
+        },
+        {
+          "start": 172.61,
+          "end": 172.87,
+          "word": " serve",
+          "probability": 0.9916627407073975
+        },
+        {
+          "start": 172.87,
+          "end": 173.01,
+          "word": " in",
+          "probability": 0.9674535393714905
+        },
+        {
+          "start": 173.01,
+          "end": 173.49,
+          "word": " particular",
+          "probability": 0.9973334074020386
+        },
+        {
+          "start": 173.49,
+          "end": 174.75,
+          "word": " has",
+          "probability": 0.5950661301612854
+        },
+        {
+          "start": 174.75,
+          "end": 174.93,
+          "word": " been",
+          "probability": 0.9910905361175537
+        },
+        {
+          "start": 174.93,
+          "end": 175.37,
+          "word": " brittle.",
+          "probability": 0.98246830701828
+        },
+        {
+          "start": 185.19,
+          "end": 185.83,
+          "word": " Beautifully",
+          "probability": 0.9886029362678528
+        },
+        {
+          "start": 185.83,
+          "end": 186.29,
+          "word": " played",
+          "probability": 0.9087390303611755
+        },
+        {
+          "start": 186.29,
+          "end": 187.03,
+          "word": " and",
+          "probability": 0.6174032092094421
+        },
+        {
+          "start": 187.03,
+          "end": 187.25,
+          "word": " it's",
+          "probability": 0.9919969439506531
+        }
+      ]
+    },
+    {
+      "start": 187.25,
+      "end": 223.07,
+      "text": " been coming. That's better, that's a bit more bite to the forehand from Paulini. Well Baelek's",
+      "no_speech_prob": 0.5945853590965271,
+      "avg_logprob": -0.27365631527370876,
+      "words": [
+        {
+          "start": 187.25,
+          "end": 187.39,
+          "word": " been",
+          "probability": 0.9638855457305908
+        },
+        {
+          "start": 187.39,
+          "end": 187.87,
+          "word": " coming.",
+          "probability": 0.997965931892395
+        },
+        {
+          "start": 198.77,
+          "end": 199.65,
+          "word": " That's",
+          "probability": 0.7282040417194366
+        },
+        {
+          "start": 199.65,
+          "end": 199.93,
+          "word": " better,",
+          "probability": 0.910780668258667
+        },
+        {
+          "start": 199.97,
+          "end": 200.25,
+          "word": " that's",
+          "probability": 0.9940650463104248
+        },
+        {
+          "start": 200.25,
+          "end": 200.31,
+          "word": " a",
+          "probability": 0.9980103373527527
+        },
+        {
+          "start": 200.31,
+          "end": 200.45,
+          "word": " bit",
+          "probability": 0.998060405254364
+        },
+        {
+          "start": 200.45,
+          "end": 200.69,
+          "word": " more",
+          "probability": 0.9980529546737671
+        },
+        {
+          "start": 200.69,
+          "end": 201.01,
+          "word": " bite",
+          "probability": 0.940629780292511
+        },
+        {
+          "start": 201.01,
+          "end": 201.25,
+          "word": " to",
+          "probability": 0.9922471046447754
+        },
+        {
+          "start": 201.25,
+          "end": 201.39,
+          "word": " the",
+          "probability": 0.9994621872901917
+        },
+        {
+          "start": 201.39,
+          "end": 201.91,
+          "word": " forehand",
+          "probability": 0.9443261623382568
+        },
+        {
+          "start": 201.91,
+          "end": 202.75,
+          "word": " from",
+          "probability": 0.9427603483200073
+        },
+        {
+          "start": 202.75,
+          "end": 203.39,
+          "word": " Paulini.",
+          "probability": 0.9563477337360382
+        },
+        {
+          "start": 222.09,
+          "end": 222.57,
+          "word": " Well",
+          "probability": 0.9005376100540161
+        },
+        {
+          "start": 222.57,
+          "end": 223.07,
+          "word": " Baelek's",
+          "probability": 0.9454412460327148
+        }
+      ]
+    },
+    {
+      "start": 223.07,
+      "end": 241.6,
+      "text": " looking at the line. Well-watched. That's a huge point save there. Ten taken. Will this",
+      "no_speech_prob": 0.5702348351478577,
+      "avg_logprob": -0.3150576215237379,
+      "words": [
+        {
+          "start": 223.07,
+          "end": 223.29,
+          "word": " looking",
+          "probability": 0.3475421369075775
+        },
+        {
+          "start": 223.29,
+          "end": 223.53,
+          "word": " at",
+          "probability": 0.9504323601722717
+        },
+        {
+          "start": 223.53,
+          "end": 223.65,
+          "word": " the",
+          "probability": 0.9847868084907532
+        },
+        {
+          "start": 223.65,
+          "end": 223.99,
+          "word": " line.",
+          "probability": 0.9675112366676331
+        },
+        {
+          "start": 234.2,
+          "end": 234.3,
+          "word": " Well",
+          "probability": 0.9372972846031189
+        },
+        {
+          "start": 234.3,
+          "end": 234.82,
+          "word": "-watched.",
+          "probability": 0.6958984732627869
+        },
+        {
+          "start": 235.7,
+          "end": 236.24,
+          "word": " That's",
+          "probability": 0.6908784210681915
+        },
+        {
+          "start": 236.24,
+          "end": 236.52,
+          "word": " a",
+          "probability": 0.9949429631233215
+        },
+        {
+          "start": 236.52,
+          "end": 236.82,
+          "word": " huge",
+          "probability": 0.992340087890625
+        },
+        {
+          "start": 236.82,
+          "end": 237.2,
+          "word": " point",
+          "probability": 0.8997906446456909
+        },
+        {
+          "start": 237.2,
+          "end": 237.54,
+          "word": " save",
+          "probability": 0.9490534067153931
+        },
+        {
+          "start": 237.54,
+          "end": 238.32,
+          "word": " there.",
+          "probability": 0.8945172429084778
+        },
+        {
+          "start": 239.94,
+          "end": 240.0,
+          "word": " Ten",
+          "probability": 0.4131421744823456
+        },
+        {
+          "start": 240.0,
+          "end": 240.34,
+          "word": " taken.",
+          "probability": 0.9712466597557068
+        },
+        {
+          "start": 241.42,
+          "end": 241.46,
+          "word": " Will",
+          "probability": 0.509232223033905
+        },
+        {
+          "start": 241.46,
+          "end": 241.6,
+          "word": " this",
+          "probability": 0.9934746623039246
+        }
+      ]
+    },
+    {
+      "start": 241.6,
+      "end": 287.74,
+      "text": " be the 11th? Paulini then back in front. Took too many liberties there. Beyleg. Magnificent.",
+      "no_speech_prob": 0.5702348351478577,
+      "avg_logprob": -0.3150576215237379,
+      "words": [
+        {
+          "start": 241.6,
+          "end": 241.78,
+          "word": " be",
+          "probability": 0.9911841154098511
+        },
+        {
+          "start": 241.78,
+          "end": 241.92,
+          "word": " the",
+          "probability": 0.9923559427261353
+        },
+        {
+          "start": 241.92,
+          "end": 242.76,
+          "word": " 11th?",
+          "probability": 0.8808300197124481
+        },
+        {
+          "start": 253.23,
+          "end": 253.47,
+          "word": " Paulini",
+          "probability": 0.7255541980266571
+        },
+        {
+          "start": 253.47,
+          "end": 253.81,
+          "word": " then",
+          "probability": 0.8231005072593689
+        },
+        {
+          "start": 253.81,
+          "end": 254.11,
+          "word": " back",
+          "probability": 0.6087883710861206
+        },
+        {
+          "start": 254.11,
+          "end": 254.33,
+          "word": " in",
+          "probability": 0.9920791983604431
+        },
+        {
+          "start": 254.33,
+          "end": 254.65,
+          "word": " front.",
+          "probability": 0.9975186586380005
+        },
+        {
+          "start": 264.42,
+          "end": 264.52,
+          "word": " Took",
+          "probability": 0.7426429986953735
+        },
+        {
+          "start": 264.52,
+          "end": 264.7,
+          "word": " too",
+          "probability": 0.9734155535697937
+        },
+        {
+          "start": 264.7,
+          "end": 264.86,
+          "word": " many",
+          "probability": 0.9908549785614014
+        },
+        {
+          "start": 264.86,
+          "end": 265.12,
+          "word": " liberties",
+          "probability": 0.990754246711731
+        },
+        {
+          "start": 265.12,
+          "end": 265.84,
+          "word": " there.",
+          "probability": 0.9668368101119995
+        },
+        {
+          "start": 266.34,
+          "end": 266.6,
+          "word": " Beyleg.",
+          "probability": 0.43065430223941803
+        },
+        {
+          "start": 287.1,
+          "end": 287.74,
+          "word": " Magnificent.",
+          "probability": 0.990424245595932
+        }
+      ]
+    },
+    {
+      "start": 289.4,
+      "end": 298.58,
+      "text": " Sealed in style by Paulini. And what has been a season of struggle, a much-needed win for",
+      "no_speech_prob": 0.5702348351478577,
+      "avg_logprob": -0.3150576215237379,
+      "words": [
+        {
+          "start": 289.4,
+          "end": 289.66,
+          "word": " Sealed",
+          "probability": 0.9547050595283508
+        },
+        {
+          "start": 289.66,
+          "end": 289.98,
+          "word": " in",
+          "probability": 0.9885420799255371
+        },
+        {
+          "start": 289.98,
+          "end": 290.48,
+          "word": " style",
+          "probability": 0.9954138994216919
+        },
+        {
+          "start": 290.48,
+          "end": 291.24,
+          "word": " by",
+          "probability": 0.9799520373344421
+        },
+        {
+          "start": 291.24,
+          "end": 292.0,
+          "word": " Paulini.",
+          "probability": 0.9959571361541748
+        },
+        {
+          "start": 293.3,
+          "end": 293.5,
+          "word": " And",
+          "probability": 0.8540341854095459
+        },
+        {
+          "start": 293.5,
+          "end": 293.7,
+          "word": " what",
+          "probability": 0.9917311072349548
+        },
+        {
+          "start": 293.7,
+          "end": 293.9,
+          "word": " has",
+          "probability": 0.9887886643409729
+        },
+        {
+          "start": 293.9,
+          "end": 294.1,
+          "word": " been",
+          "probability": 0.9971509575843811
+        },
+        {
+          "start": 294.1,
+          "end": 294.32,
+          "word": " a",
+          "probability": 0.9253793358802795
+        },
+        {
+          "start": 294.32,
+          "end": 294.6,
+          "word": " season",
+          "probability": 0.9776775240898132
+        },
+        {
+          "start": 294.6,
+          "end": 294.94,
+          "word": " of",
+          "probability": 0.9969483017921448
+        },
+        {
+          "start": 294.94,
+          "end": 295.26,
+          "word": " struggle,",
+          "probability": 0.9837577939033508
+        },
+        {
+          "start": 296.38,
+          "end": 296.66,
+          "word": " a",
+          "probability": 0.9536803960800171
+        },
+        {
+          "start": 296.66,
+          "end": 296.98,
+          "word": " much",
+          "probability": 0.9943630695343018
+        },
+        {
+          "start": 296.98,
+          "end": 297.32,
+          "word": "-needed",
+          "probability": 0.7693731486797333
+        },
+        {
+          "start": 297.32,
+          "end": 297.64,
+          "word": " win",
+          "probability": 0.9954007267951965
+        },
+        {
+          "start": 297.64,
+          "end": 298.58,
+          "word": " for",
+          "probability": 0.9132044911384583
+        }
+      ]
+    }
+  ],
+  "stop_reason": "Only source before match finish around299s is selected; unselected interview166s is out of scope. Raw genuine completed prefix retained."
+}

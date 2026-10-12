@@ -1,0 +1,63 @@
+{
+  "schema": "tennislive.foreground-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=662TF-JlyZY",
+  "official_source_url": "https://www.youtube.com/watch?v=662TF-JlyZY",
+  "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+  "source_bytes": 104483128,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-audio agent: fresh actual small.en/medium.en prefixes, exact63.5sec source-crop medium comparison, exact ending24sec small context; raw disputed large/distil retained with transparent clause-level tennis-context reconciliation and no invented subject/statistic. No human listening or tone claim.",
+  "reviewed_at": "2026-10-12T20:34:08.610793+00:00",
+  "status": "complete",
+  "reviewed_from": 0.0,
+  "reviewed_to": 9.2,
+  "selected_from": 0.0,
+  "selected_to": 9.2,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "raw_evidence": [
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-medium-en-full.json",
+      "sha256": "306b206acce54eff04057142d1ed5f2f49743c77a259b9eb7f2722dba4e2c082"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-small-en-full.json",
+      "sha256": "1314422aabb7cfe05a439b6cd105eb230e998d459b8e254ee56ebe24396e8c2b"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-medium-keyquotes.json",
+      "sha256": "4a7bc76f10a0f8788e1996e143732f93ffaaca33ca39a951f8634d8e326875cc"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/medium-keyquotes.map.json",
+      "sha256": "ebe99344fac563a0c859a917701f877ea8b92c019cd75507015f36bed554388e"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-small-ending-context.json",
+      "sha256": "0652797b69893c75dddfe9afc69676479e67e8b621dd6abaded2479520c3f587"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-large-disputed-firstset.json",
+      "sha256": "26c7b8c3918ef9c2565e7c19811fd85b905533e8b8040a8a748cc3e5f4da6b3a"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-large-named-context.json",
+      "sha256": "afb58de16404b2cf82fbe4badffa2b413f12edcc86485762a62e96dc53a466b0"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-distil-named-context.json",
+      "sha256": "349e33094de189cdc7bbcb0c14dec50541dab5996b495a8237bbd714740cfb8c"
+    }
+  ],
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "tone_verified": false,
+  "source_evidence_manifest": {
+    "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/actual-source-asr-manifest.json",
+    "sha256": "a2d7a656afa2ed6a68783cf0df494d8900da3842a452bea3456a6325dcede531"
+  },
+  "candidate_transcript": {
+    "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/candidate-cues.json",
+    "sha256": "0684c7a98e122ebf2c54218897453800c1bdbfa1f278b182f34ffa331a128562"
+  },
+  "no_foreground_english_reason": "Current selected interval is outside all supported foreground clauses of genuine decoded-source small/medium ASR and targeted context crosscheck. This is an ASR-based conclusion, not a human listening/tone certificate; raw hypotheses and rejected ranges remain inspectable."
+}

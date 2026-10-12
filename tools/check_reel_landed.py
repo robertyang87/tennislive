@@ -345,6 +345,8 @@ def stat_card_headshot_problem(
     "已经见过"）。传了 `self_path` 就在扫描时跳过它，让"没有第二处可比"
     这句话真的成立。
     """
+    from tennislive.zh.players import normalize_player_zh  # noqa: PLC0415
+
     stats = spec.get("stats") or {}
     matchup = spec.get("cover", {}).get("matchup") or []
     names = [m.get("name") for m in matchup if isinstance(m, dict)]
@@ -354,7 +356,7 @@ def stat_card_headshot_problem(
     for key, idx in (("a", 0), ("b", 1)):
         shot = (stats.get(key) or {}).get("headshot")
         if isinstance(shot, str) and shot and names[idx]:
-            this_shots[Path(shot).name] = names[idx]
+            this_shots[Path(shot).name] = normalize_player_zh(names[idx])
     if not this_shots:
         return None
 
@@ -373,7 +375,7 @@ def stat_card_headshot_problem(
         for key, idx in (("a", 0), ("b", 1)):
             shot = (o_stats.get(key) or {}).get("headshot")
             if isinstance(shot, str) and shot and o_names[idx]:
-                seen.setdefault(Path(shot).name, set()).add(o_names[idx])
+                seen.setdefault(Path(shot).name, set()).add(normalize_player_zh(o_names[idx]))
 
     clashes, first_seen = [], []
     for filename, name in this_shots.items():
@@ -604,7 +606,7 @@ def main() -> int:
     dead = [i for i in dead if i not in native_ambience]
     source_verified_seconds = set(natural_quiet + reviewed_quiet + native_ambience)
     if native_ambience:
-        print(f"[ok] 连续源声/已完成旁白尾部的完整秒实际波形证明 {native_ambience}；"
+        print(f"[ok] 完整旁白与原声的完整秒实际波形证明 {native_ambience}；"
               "原源哈希、原生增益、非零PCM与实际成片匹配")
     if reviewed_quiet:
         print(f"[ok] 完整源声核验与实际原生混音波形一致 {reviewed_quiet}；"

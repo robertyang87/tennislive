@@ -1,0 +1,597 @@
+archive	Set up job	﻿2026-10-12T20:12:42.8197015Z Current runner version: '2.337.0'
+archive	Set up job	2026-10-12T20:12:42.8216297Z ##[group]Runner Image Provisioner
+archive	Set up job	2026-10-12T20:12:42.8217140Z Hosted Compute Agent
+archive	Set up job	2026-10-12T20:12:42.8217704Z Version: 20261002.596
+archive	Set up job	2026-10-12T20:12:42.8218351Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+archive	Set up job	2026-10-12T20:12:42.8219051Z Build Date: 2026-10-02T22:28:27Z
+archive	Set up job	2026-10-12T20:12:42.8219706Z Worker ID: {3a9480b1-380e-4689-9b3f-5c8356d1cbc3}
+archive	Set up job	2026-10-12T20:12:42.8220626Z Region: westus3
+archive	Set up job	2026-10-12T20:12:42.8221218Z Cloud: Azure
+archive	Set up job	2026-10-12T20:12:42.8221750Z ##[endgroup]
+archive	Set up job	2026-10-12T20:12:42.8222771Z ##[group]Operating System
+archive	Set up job	2026-10-12T20:12:42.8223434Z Ubuntu
+archive	Set up job	2026-10-12T20:12:42.8223988Z 24.04.5
+archive	Set up job	2026-10-12T20:12:42.8224527Z LTS
+archive	Set up job	2026-10-12T20:12:42.8225089Z ##[endgroup]
+archive	Set up job	2026-10-12T20:12:42.8225636Z ##[group]Runner Image
+archive	Set up job	2026-10-12T20:12:42.8226266Z Image: ubuntu-24.04
+archive	Set up job	2026-10-12T20:12:42.8226871Z Version: 20261004.327.1
+archive	Set up job	2026-10-12T20:12:42.8227783Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+archive	Set up job	2026-10-12T20:12:42.8229214Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+archive	Set up job	2026-10-12T20:12:42.8230129Z ##[endgroup]
+archive	Set up job	2026-10-12T20:12:42.8231170Z ##[group]GITHUB_TOKEN Permissions
+archive	Set up job	2026-10-12T20:12:42.8232584Z Contents: write
+archive	Set up job	2026-10-12T20:12:42.8233223Z Metadata: read
+archive	Set up job	2026-10-12T20:12:42.8233774Z ##[endgroup]
+archive	Set up job	2026-10-12T20:12:42.8235221Z Secret source: Actions
+archive	Set up job	2026-10-12T20:12:42.8236136Z Cache mode: write
+archive	Set up job	2026-10-12T20:12:42.8236801Z Prepare workflow directory
+archive	Set up job	2026-10-12T20:12:42.8547656Z Prepare all required actions
+archive	Set up job	2026-10-12T20:12:42.8579109Z Getting action download info
+archive	Set up job	2026-10-12T20:12:43.1667456Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+archive	Set up job	2026-10-12T20:12:43.2457071Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+archive	Set up job	2026-10-12T20:12:43.3384093Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+archive	Set up job	2026-10-12T20:12:43.4445185Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+archive	Set up job	2026-10-12T20:12:43.6119380Z Complete job name: archive
+archive	Run actions/checkout@v4	﻿2026-10-12T20:12:43.6631950Z ##[group]Run actions/checkout@v4
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6632502Z with:
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6632888Z   sparse-checkout: tools/ci_apt_install.sh
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6633343Z   sparse-checkout-cone-mode: false
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6633773Z   repository: robertyang87/tennislive
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6636092Z   token: ***
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6636453Z   ssh-strict: true
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6636816Z   ssh-user: git
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6637186Z   persist-credentials: true
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6637576Z   clean: true
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6637930Z   fetch-depth: 1
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6638291Z   fetch-tags: false
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6638662Z   show-progress: true
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6639035Z   lfs: false
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6639385Z   submodules: false
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6639877Z   set-safe-directory: true
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6640305Z   allow-unsafe-pr-checkout: false
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6640790Z env:
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6641192Z   VIDEO_URL: https://www.youtube.com/watch?v=662TF-JlyZY
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6643515Z   GH_TOKEN: ***
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6643911Z   GH_REPO: robertyang87/tennislive
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.6644323Z ##[endgroup]
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7298540Z Syncing repository: robertyang87/tennislive
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7300544Z ##[group]Getting Git version info
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7301374Z Working directory is '/home/runner/work/tennislive/tennislive'
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7302607Z [command]/usr/bin/git version
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7359876Z git version 2.55.0
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7376474Z ##[endgroup]
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7384923Z Temporarily overriding HOME='/home/runner/work/_temp/4000da08-ec95-455a-8964-af6c15e2e419' before making global git config changes
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7386414Z Adding repository directory to the temporary git global config as a safe directory
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7389231Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tennislive/tennislive
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7438107Z Deleting the contents of '/home/runner/work/tennislive/tennislive'
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7440941Z ##[group]Initializing the repository
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7443310Z [command]/usr/bin/git init /home/runner/work/tennislive/tennislive
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7533617Z hint: Using 'master' as the name for the initial branch. This default branch name
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7534712Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7535763Z hint: to use in all of your new repositories, which will suppress this warning,
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7536639Z hint: call:
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7537194Z hint:
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7537857Z hint: 	git config --global init.defaultBranch <name>
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7538607Z hint:
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7539318Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7540487Z hint: 'development'. The just-created branch can be renamed via this command:
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7541359Z hint:
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7541923Z hint: 	git branch -m <name>
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7542536Z hint:
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7543299Z hint: Disable this message with "git config set advice.defaultBranchName false"
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7544459Z Initialized empty Git repository in /home/runner/work/tennislive/tennislive/.git/
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7546388Z [command]/usr/bin/git remote add origin https://github.com/robertyang87/tennislive
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7594699Z ##[endgroup]
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7595690Z ##[group]Disabling automatic garbage collection
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7610377Z [command]/usr/bin/git config --local gc.auto 0
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7624522Z ##[endgroup]
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7625498Z ##[group]Setting up auth
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7628738Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7656627Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7960639Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.7992167Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.8173986Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.8202563Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.8376653Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.8441073Z ##[endgroup]
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.8442065Z ##[group]Fetching the repository
+archive	Run actions/checkout@v4	2026-10-12T20:12:43.8448107Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin +34de4c6db7abd1033abae1c9d9b8385e5b27d6f8:refs/remotes/origin/main
+archive	Run actions/checkout@v4	2026-10-12T20:12:44.6982702Z From https://github.com/robertyang87/tennislive
+archive	Run actions/checkout@v4	2026-10-12T20:12:44.6985092Z  * [new ref]         34de4c6db7abd1033abae1c9d9b8385e5b27d6f8 -> origin/main
+archive	Run actions/checkout@v4	2026-10-12T20:12:44.6990111Z ##[endgroup]
+archive	Run actions/checkout@v4	2026-10-12T20:12:44.6992252Z ##[group]Determining the checkout info
+archive	Run actions/checkout@v4	2026-10-12T20:12:44.6994677Z ##[endgroup]
+archive	Run actions/checkout@v4	2026-10-12T20:12:44.6997046Z ##[group]Setting up sparse checkout
+archive	Run actions/checkout@v4	2026-10-12T20:12:44.6998841Z [command]/usr/bin/git config core.sparseCheckout true
+archive	Run actions/checkout@v4	2026-10-12T20:12:44.7027398Z [command]/usr/bin/git rev-parse --git-path info/sparse-checkout
+archive	Run actions/checkout@v4	2026-10-12T20:12:44.7047900Z .git/info/sparse-checkout
+archive	Run actions/checkout@v4	2026-10-12T20:12:44.7054565Z ##[endgroup]
+archive	Run actions/checkout@v4	2026-10-12T20:12:44.7056654Z ##[group]Checking out the ref
+archive	Run actions/checkout@v4	2026-10-12T20:12:44.7058701Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+archive	Run actions/checkout@v4	2026-10-12T20:12:45.1136022Z Switched to a new branch 'main'
+archive	Run actions/checkout@v4	2026-10-12T20:12:45.1138791Z branch 'main' set up to track 'origin/main'.
+archive	Run actions/checkout@v4	2026-10-12T20:12:45.1147761Z ##[endgroup]
+archive	Run actions/checkout@v4	2026-10-12T20:12:45.1186743Z [command]/usr/bin/git log -1 --format=%H
+archive	Run actions/checkout@v4	2026-10-12T20:12:45.1208820Z 34de4c6db7abd1033abae1c9d9b8385e5b27d6f8
+archive	Run actions/setup-python@v5	﻿2026-10-12T20:12:45.1420023Z ##[group]Run actions/setup-python@v5
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.1420319Z with:
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.1420544Z   python-version: 3.12
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.1420776Z   check-latest: false
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.1422467Z   token: ***
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.1422687Z   update-environment: true
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.1422935Z   allow-prereleases: false
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.1423177Z   freethreaded: false
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.1423404Z env:
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.1423667Z   VIDEO_URL: https://www.youtube.com/watch?v=662TF-JlyZY
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.1425262Z   GH_TOKEN: ***
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.1425487Z   GH_REPO: robertyang87/tennislive
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.1425747Z ##[endgroup]
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.2252863Z ##[group]Installed versions
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.2323051Z (node:2106) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.2323936Z (Use `node --trace-deprecation ...` to show where the warning was created)
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.2324481Z Successfully set up CPython (3.12.15)
+archive	Run actions/setup-python@v5	2026-10-12T20:12:45.2325259Z ##[endgroup]
+archive	Run actions/setup-node@v4	﻿2026-10-12T20:12:45.2512425Z ##[group]Run actions/setup-node@v4
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2512909Z with:
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2513243Z   node-version: 22
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2513592Z   always-auth: false
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2513957Z   check-latest: false
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2516451Z   token: ***
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2516760Z env:
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2517020Z   VIDEO_URL: https://www.youtube.com/watch?v=662TF-JlyZY
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2519456Z   GH_TOKEN: ***
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2519919Z   GH_REPO: robertyang87/tennislive
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2520390Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2521014Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2521630Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2522108Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2522472Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2522869Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.2523195Z ##[endgroup]
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.3436650Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.3438755Z (node:2114) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.3439414Z (Use `node --trace-deprecation ...` to show where the warning was created)
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.3440693Z ##[group]Environment details
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.6540788Z node: v22.23.3
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.6541892Z npm: 10.9.9
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.6542427Z yarn: 1.22.22
+archive	Run actions/setup-node@v4	2026-10-12T20:12:45.6543447Z ##[endgroup]
+archive	安装 YouTube 下载器	﻿2026-10-12T20:12:45.6653092Z ##[group]Run pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.6653518Z [36;1mpip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider[0m
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.6996321Z shell: /usr/bin/bash -e {0}
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.6996542Z env:
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.6996778Z   VIDEO_URL: https://www.youtube.com/watch?v=662TF-JlyZY
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.6998417Z   GH_TOKEN: ***
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.6998604Z   GH_REPO: robertyang87/tennislive
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.6998851Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.6999150Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.6999447Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.6999851Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.7000161Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.7000443Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+archive	安装 YouTube 下载器	2026-10-12T20:12:45.7000914Z ##[endgroup]
+archive	恢复音视频工具 apt 缓存	﻿2026-10-12T20:12:49.1676009Z ##[group]Run actions/cache/restore@v4
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1676263Z with:
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1676465Z   path: ~/.cache/apt-archives
+archive	恢复音视频工具 apt 缓存	~/.cache/apt-lists
+archive	恢复音视频工具 apt 缓存	
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1676740Z   key: apt-pkgs-Linux-24.04-download-video-v1-38302712249
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1677028Z   restore-keys: apt-pkgs-Linux-24.04-download-video-v1-
+archive	恢复音视频工具 apt 缓存	
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1677278Z   enableCrossOsArchive: false
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1677481Z   fail-on-cache-miss: false
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1677672Z   lookup-only: false
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1677845Z env:
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1678054Z   VIDEO_URL: https://www.youtube.com/watch?v=662TF-JlyZY
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1679848Z   GH_TOKEN: ***
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1680035Z   GH_REPO: robertyang87/tennislive
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1680282Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1680581Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1680893Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1681192Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1681467Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1681749Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.1681987Z ##[endgroup]
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.2378516Z (node:2170) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.2379511Z (Use `node --trace-deprecation ...` to show where the warning was created)
+archive	恢复音视频工具 apt 缓存	2026-10-12T20:12:49.4455748Z Cache not found for input keys: apt-pkgs-Linux-24.04-download-video-v1-38302712249, apt-pkgs-Linux-24.04-download-video-v1-
+archive	安装音视频合并工具	﻿2026-10-12T20:12:49.4547487Z ##[group]Run source tools/ci_apt_install.sh
+archive	安装音视频合并工具	2026-10-12T20:12:49.4547770Z [36;1msource tools/ci_apt_install.sh[0m
+archive	安装音视频合并工具	2026-10-12T20:12:49.4547984Z [36;1mensure_ffmpeg[0m
+archive	安装音视频合并工具	2026-10-12T20:12:49.4604416Z shell: /usr/bin/bash -e {0}
+archive	安装音视频合并工具	2026-10-12T20:12:49.4604644Z env:
+archive	安装音视频合并工具	2026-10-12T20:12:49.4604861Z   VIDEO_URL: https://www.youtube.com/watch?v=662TF-JlyZY
+archive	安装音视频合并工具	2026-10-12T20:12:49.4606516Z   GH_TOKEN: ***
+archive	安装音视频合并工具	2026-10-12T20:12:49.4606728Z   GH_REPO: robertyang87/tennislive
+archive	安装音视频合并工具	2026-10-12T20:12:49.4607003Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	安装音视频合并工具	2026-10-12T20:12:49.4607306Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+archive	安装音视频合并工具	2026-10-12T20:12:49.4607605Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	安装音视频合并工具	2026-10-12T20:12:49.4607880Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	安装音视频合并工具	2026-10-12T20:12:49.4608163Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	安装音视频合并工具	2026-10-12T20:12:49.4608442Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+archive	安装音视频合并工具	2026-10-12T20:12:49.4608702Z ##[endgroup]
+archive	安装音视频合并工具	2026-10-12T20:12:52.1160708Z [ffmpeg] 走静态构建（BtbN，GPL 版含 drawtext），没碰 apt 镜像：下载＋解包 3s
+archive	启动 PO token provider	﻿2026-10-12T20:12:52.1202984Z ##[group]Run docker run --name bgutil-pot -d -p 4416:4416 \
+archive	启动 PO token provider	2026-10-12T20:12:52.1203352Z [36;1mdocker run --name bgutil-pot -d -p 4416:4416 \[0m
+archive	启动 PO token provider	2026-10-12T20:12:52.1203618Z [36;1m  brainicism/bgutil-ytdlp-pot-provider[0m
+archive	启动 PO token provider	2026-10-12T20:12:52.1203857Z [36;1mfor attempt in $(seq 1 25); do[0m
+archive	启动 PO token provider	2026-10-12T20:12:52.1204115Z [36;1m  if curl -sf http://127.0.0.1:4416/ping >/dev/null; then[0m
+archive	启动 PO token provider	2026-10-12T20:12:52.1204378Z [36;1m    echo "PO token provider 已就绪"[0m
+archive	启动 PO token provider	2026-10-12T20:12:52.1204587Z [36;1m    exit 0[0m
+archive	启动 PO token provider	2026-10-12T20:12:52.1204759Z [36;1m  fi[0m
+archive	启动 PO token provider	2026-10-12T20:12:52.1204929Z [36;1m  sleep 2[0m
+archive	启动 PO token provider	2026-10-12T20:12:52.1205100Z [36;1mdone[0m
+archive	启动 PO token provider	2026-10-12T20:12:52.1205331Z [36;1mecho "::warning::PO token provider 50 秒内未就绪，继续尝试 cookies/client 通道"[0m
+archive	启动 PO token provider	2026-10-12T20:12:52.1205627Z [36;1mdocker logs bgutil-pot 2>&1 | tail -20 || true[0m
+archive	启动 PO token provider	2026-10-12T20:12:52.1264447Z shell: /usr/bin/bash -e {0}
+archive	启动 PO token provider	2026-10-12T20:12:52.1264667Z env:
+archive	启动 PO token provider	2026-10-12T20:12:52.1264885Z   VIDEO_URL: https://www.youtube.com/watch?v=662TF-JlyZY
+archive	启动 PO token provider	2026-10-12T20:12:52.1266597Z   GH_TOKEN: ***
+archive	启动 PO token provider	2026-10-12T20:12:52.1266936Z   GH_REPO: robertyang87/tennislive
+archive	启动 PO token provider	2026-10-12T20:12:52.1267185Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	启动 PO token provider	2026-10-12T20:12:52.1267481Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+archive	启动 PO token provider	2026-10-12T20:12:52.1267780Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	启动 PO token provider	2026-10-12T20:12:52.1268052Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	启动 PO token provider	2026-10-12T20:12:52.1268322Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	启动 PO token provider	2026-10-12T20:12:52.1268599Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+archive	启动 PO token provider	2026-10-12T20:12:52.1268837Z ##[endgroup]
+archive	启动 PO token provider	2026-10-12T20:12:52.2097836Z Unable to find image 'brainicism/bgutil-ytdlp-pot-provider:latest' locally
+archive	启动 PO token provider	2026-10-12T20:12:53.1385778Z latest: Pulling from brainicism/bgutil-ytdlp-pot-provider
+archive	启动 PO token provider	2026-10-12T20:12:53.3699394Z 7fd1ebe418b5: Pulling fs layer
+archive	启动 PO token provider	2026-10-12T20:12:53.3701317Z 12f09ccd1f8a: Pulling fs layer
+archive	启动 PO token provider	2026-10-12T20:12:53.3710718Z 5984c3385461: Pulling fs layer
+archive	启动 PO token provider	2026-10-12T20:12:53.3711157Z d48cbc14096e: Pulling fs layer
+archive	启动 PO token provider	2026-10-12T20:12:53.3711538Z bd76fb316050: Pulling fs layer
+archive	启动 PO token provider	2026-10-12T20:12:53.3711916Z 953bfe463f43: Pulling fs layer
+archive	启动 PO token provider	2026-10-12T20:12:53.3712319Z 2b505a294b4b: Pulling fs layer
+archive	启动 PO token provider	2026-10-12T20:12:53.3712671Z 373f441cdf9d: Pulling fs layer
+archive	启动 PO token provider	2026-10-12T20:12:53.3712989Z 2b505a294b4b: Waiting
+archive	启动 PO token provider	2026-10-12T20:12:53.3713291Z bd76fb316050: Waiting
+archive	启动 PO token provider	2026-10-12T20:12:53.3713584Z 373f441cdf9d: Waiting
+archive	启动 PO token provider	2026-10-12T20:12:53.3713871Z 953bfe463f43: Waiting
+archive	启动 PO token provider	2026-10-12T20:12:53.3714154Z d48cbc14096e: Waiting
+archive	启动 PO token provider	2026-10-12T20:12:53.5553305Z 12f09ccd1f8a: Verifying Checksum
+archive	启动 PO token provider	2026-10-12T20:12:53.5554230Z 12f09ccd1f8a: Download complete
+archive	启动 PO token provider	2026-10-12T20:12:53.6421475Z 7fd1ebe418b5: Verifying Checksum
+archive	启动 PO token provider	2026-10-12T20:12:53.6421944Z 7fd1ebe418b5: Download complete
+archive	启动 PO token provider	2026-10-12T20:12:53.7037847Z 5984c3385461: Verifying Checksum
+archive	启动 PO token provider	2026-10-12T20:12:53.7038297Z 5984c3385461: Download complete
+archive	启动 PO token provider	2026-10-12T20:12:53.7403210Z d48cbc14096e: Verifying Checksum
+archive	启动 PO token provider	2026-10-12T20:12:53.7403684Z d48cbc14096e: Download complete
+archive	启动 PO token provider	2026-10-12T20:12:53.8135324Z bd76fb316050: Verifying Checksum
+archive	启动 PO token provider	2026-10-12T20:12:53.8137429Z bd76fb316050: Download complete
+archive	启动 PO token provider	2026-10-12T20:12:53.8927054Z 953bfe463f43: Verifying Checksum
+archive	启动 PO token provider	2026-10-12T20:12:53.8927561Z 953bfe463f43: Download complete
+archive	启动 PO token provider	2026-10-12T20:12:53.9963311Z 373f441cdf9d: Verifying Checksum
+archive	启动 PO token provider	2026-10-12T20:12:53.9963861Z 373f441cdf9d: Download complete
+archive	启动 PO token provider	2026-10-12T20:12:53.9984380Z 2b505a294b4b: Verifying Checksum
+archive	启动 PO token provider	2026-10-12T20:12:53.9991743Z 2b505a294b4b: Download complete
+archive	启动 PO token provider	2026-10-12T20:12:54.3626806Z 7fd1ebe418b5: Pull complete
+archive	启动 PO token provider	2026-10-12T20:12:57.6808096Z 12f09ccd1f8a: Pull complete
+archive	启动 PO token provider	2026-10-12T20:12:59.5345886Z 5984c3385461: Pull complete
+archive	启动 PO token provider	2026-10-12T20:12:59.5437409Z d48cbc14096e: Pull complete
+archive	启动 PO token provider	2026-10-12T20:12:59.5503485Z bd76fb316050: Pull complete
+archive	启动 PO token provider	2026-10-12T20:12:59.5571242Z 953bfe463f43: Pull complete
+archive	启动 PO token provider	2026-10-12T20:13:01.3666046Z 2b505a294b4b: Pull complete
+archive	启动 PO token provider	2026-10-12T20:13:01.3759209Z 373f441cdf9d: Pull complete
+archive	启动 PO token provider	2026-10-12T20:13:01.3786271Z Digest: sha256:d7d34108b76e52c7d3b575fe9e797e4bf41c1b2a08f80c5292eff6f851ce8472
+archive	启动 PO token provider	2026-10-12T20:13:01.3801036Z Status: Downloaded newer image for brainicism/bgutil-ytdlp-pot-provider:latest
+archive	启动 PO token provider	2026-10-12T20:13:01.3932015Z c3002925a44f558d9b7b0ecfa27df4e6bb4362627ecdb5c853bf8ab815515e0f
+archive	启动 PO token provider	2026-10-12T20:13:03.5708183Z PO token provider 已就绪
+archive	写入 YouTube cookies（如已配置）	﻿2026-10-12T20:13:03.5748109Z ##[group]Run if [ -n "$YT_COOKIES_TXT" ]; then
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5748394Z [36;1mif [ -n "$YT_COOKIES_TXT" ]; then[0m
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5748660Z [36;1m  printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"[0m
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5748969Z [36;1m  echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"[0m
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5749218Z [36;1melse[0m
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5749450Z [36;1m  echo "::notice::未配置 YT_COOKIES_TXT，仅使用 PO token/client 通道"[0m
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5750059Z [36;1mfi[0m
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5803426Z shell: /usr/bin/bash -e {0}
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5803786Z env:
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5847922Z   VIDEO_URL: https://www.youtube.com/watch?v=662TF-JlyZY
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5849901Z   GH_TOKEN: ***
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5850080Z   GH_REPO: robertyang87/tennislive
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5850336Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5850635Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5850927Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5851224Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5851495Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5851768Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5857878Z   YT_COOKIES_TXT: ***
+archive	写入 YouTube cookies（如已配置）	2026-10-12T20:13:03.5858059Z ##[endgroup]
+archive	解析并下载原片	﻿2026-10-12T20:13:03.5954592Z ##[group]Run set -euo pipefail
+archive	解析并下载原片	2026-10-12T20:13:03.5954837Z [36;1mset -euo pipefail[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5955038Z [36;1mARGS=(--js-runtimes node)[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5955249Z [36;1mif [ -n "$YT_COOKIES" ]; then[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5955463Z [36;1m  ARGS+=(--cookies "$YT_COOKIES")[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5955673Z [36;1mfi[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5955833Z [36;1m[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5956084Z [36;1mVIDEO_ID=$(yt-dlp "${ARGS[@]}" --skip-download --print id "$VIDEO_URL" | tail -1)[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5956449Z [36;1mTITLE=$(yt-dlp "${ARGS[@]}" --skip-download --print title "$VIDEO_URL" | tail -1)[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5956787Z [36;1mtest -n "$VIDEO_ID" || { echo "::error::无法解析 YouTube 视频 ID"; exit 1; }[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5957044Z [36;1m[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5957219Z [36;1mmkdir -p "$RUNNER_TEMP/download"[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5957432Z [36;1myt-dlp "${ARGS[@]}" \[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5957666Z [36;1m  -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/bv*+ba/b" \[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5957963Z [36;1m  --merge-output-format mp4 --remux-video mp4 \[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5958238Z [36;1m  -o "$RUNNER_TEMP/download/$VIDEO_ID.%(ext)s" \[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5958473Z [36;1m  "$VIDEO_URL"[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5958649Z [36;1m[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5958839Z [36;1mFILE="$RUNNER_TEMP/download/$VIDEO_ID.mp4"[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5959107Z [36;1mtest -s "$FILE" || { echo "::error::下载结束但没有生成 MP4"; exit 1; }[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5959360Z [36;1mSIZE=$(stat -c%s "$FILE")[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5959626Z [36;1mtest "$SIZE" -gt 51200 || { echo "::error::文件只有 $SIZE 字节，不是有效视频"; exit 1; }[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5960069Z [36;1m[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5960248Z [36;1mecho "id=$VIDEO_ID" >> "$GITHUB_OUTPUT"[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5960494Z [36;1mecho "title<<EOF" >> "$GITHUB_OUTPUT"[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5960714Z [36;1mecho "$TITLE" >> "$GITHUB_OUTPUT"[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5960925Z [36;1mecho "EOF" >> "$GITHUB_OUTPUT"[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5961140Z [36;1mecho "file=$FILE" >> "$GITHUB_OUTPUT"[0m
+archive	解析并下载原片	2026-10-12T20:13:03.5961370Z [36;1mecho "size=$SIZE" >> "$GITHUB_OUTPUT"[0m
+archive	解析并下载原片	2026-10-12T20:13:03.6008726Z shell: /usr/bin/bash -e {0}
+archive	解析并下载原片	2026-10-12T20:13:03.6008914Z env:
+archive	解析并下载原片	2026-10-12T20:13:03.6009117Z   VIDEO_URL: https://www.youtube.com/watch?v=662TF-JlyZY
+archive	解析并下载原片	2026-10-12T20:13:03.6010828Z   GH_TOKEN: ***
+archive	解析并下载原片	2026-10-12T20:13:03.6011011Z   GH_REPO: robertyang87/tennislive
+archive	解析并下载原片	2026-10-12T20:13:03.6011255Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	解析并下载原片	2026-10-12T20:13:03.6011546Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+archive	解析并下载原片	2026-10-12T20:13:03.6011841Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	解析并下载原片	2026-10-12T20:13:03.6012107Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	解析并下载原片	2026-10-12T20:13:03.6012372Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	解析并下载原片	2026-10-12T20:13:03.6012644Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+archive	解析并下载原片	2026-10-12T20:13:03.6012904Z   YT_COOKIES: /home/runner/work/_temp/yt-cookies.txt
+archive	解析并下载原片	2026-10-12T20:13:03.6013125Z ##[endgroup]
+archive	解析并下载原片	2026-10-12T20:13:11.5924762Z [youtube] Extracting URL: https://www.youtube.com/watch?v=662TF-JlyZY
+archive	解析并下载原片	2026-10-12T20:13:11.5925607Z [youtube] 662TF-JlyZY: Downloading webpage
+archive	解析并下载原片	2026-10-12T20:13:13.3429086Z [youtube] 662TF-JlyZY: Downloading web embedded client config
+archive	解析并下载原片	2026-10-12T20:13:13.5998433Z [youtube] 662TF-JlyZY: Downloading player ec429320-main
+archive	解析并下载原片	2026-10-12T20:13:13.6308572Z [youtube] 662TF-JlyZY: Downloading web embedded player API JSON
+archive	解析并下载原片	2026-10-12T20:13:13.9033074Z [youtube] 662TF-JlyZY: Downloading tv downgraded player API JSON
+archive	解析并下载原片	2026-10-12T20:13:14.0312317Z [youtube] [jsc:node] Solving JS challenges using node
+archive	解析并下载原片	2026-10-12T20:13:15.6286443Z [info] 662TF-JlyZY: Downloading 1 format(s): 399+140-20
+archive	解析并下载原片	2026-10-12T20:13:15.6752958Z [download] Sleeping 13.00 seconds as required by the site...
+archive	解析并下载原片	2026-10-12T20:13:28.7312155Z [download] Destination: /home/runner/work/_temp/download/662TF-JlyZY.f399.mp4
+archive	解析并下载原片	2026-10-12T20:13:28.7313345Z 
+archive	解析并下载原片	2026-10-12T20:13:28.7315857Z [download]   0.0% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:28.7318325Z [download]   0.0% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:28.7320896Z [download]   0.0% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:28.7323366Z [download]   0.0% of   92.37MiB at   13.80MiB/s ETA 00:06  
+archive	解析并下载原片	2026-10-12T20:13:28.7336720Z [download]   0.0% of   92.37MiB at   22.98MiB/s ETA 00:04
+archive	解析并下载原片	2026-10-12T20:13:28.7350298Z [download]   0.1% of   92.37MiB at   23.20MiB/s ETA 00:03
+archive	解析并下载原片	2026-10-12T20:13:28.7367252Z [download]   0.1% of   92.37MiB at   31.96MiB/s ETA 00:02
+archive	解析并下载原片	2026-10-12T20:13:28.7392405Z [download]   0.3% of   92.37MiB at   43.62MiB/s ETA 00:02
+archive	解析并下载原片	2026-10-12T20:13:28.7424304Z [download]   0.5% of   92.37MiB at   60.91MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:28.7459248Z [download]   1.1% of   92.37MiB at   87.53MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:28.7707231Z [download]   2.2% of   92.37MiB at  134.01MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.0084184Z [download]   4.3% of   92.37MiB at  100.77MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.0101602Z [download]   8.7% of   92.37MiB at   28.85MiB/s ETA 00:02
+archive	解析并下载原片	2026-10-12T20:13:29.0192449Z [download]  10.3% of   92.37MiB at   34.21MiB/s ETA 00:02
+archive	解析并下载原片	2026-10-12T20:13:29.0194226Z [download]  10.3% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.0196116Z [download]  10.3% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.0197978Z [download]  10.3% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.0200069Z [download]  10.4% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.0202394Z [download]  10.4% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.0205631Z [download]  10.4% of   92.37MiB at   57.20MiB/s ETA 00:01  
+archive	解析并下载原片	2026-10-12T20:13:29.0208424Z [download]  10.5% of   92.37MiB at   93.83MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.0525824Z [download]  10.6% of   92.37MiB at  146.80MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.0536015Z [download]  10.9% of   92.37MiB at   15.00MiB/s ETA 00:05
+archive	解析并下载原片	2026-10-12T20:13:29.0554838Z [download]  11.4% of   92.37MiB at   29.01MiB/s ETA 00:02
+archive	解析并下载原片	2026-10-12T20:13:29.0997446Z [download]  12.5% of   92.37MiB at   55.19MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:29.1983731Z [download]  14.7% of   92.37MiB at   49.66MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:29.2397760Z [download]  19.0% of   92.37MiB at   44.66MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:29.2795043Z [download]  20.7% of   92.37MiB at   43.61MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:29.2796909Z [download]  20.7% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.2797717Z [download]  20.8% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.2799599Z [download]  20.8% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.2802014Z [download]  20.8% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.2804431Z [download]  20.8% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.2806740Z [download]  20.8% of   92.37MiB at   54.19MiB/s ETA 00:01  
+archive	解析并下载原片	2026-10-12T20:13:29.2812090Z [download]  20.9% of   92.37MiB at   89.89MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.2816978Z [download]  21.0% of   92.37MiB at  149.75MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.2822761Z [download]  21.3% of   92.37MiB at  222.29MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.2936063Z [download]  21.8% of   92.37MiB at  340.56MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.3765446Z [download]  22.9% of   92.37MiB at  140.00MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.4487470Z [download]  25.1% of   92.37MiB at   41.21MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:29.5108373Z [download]  29.4% of   92.37MiB at   47.23MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:29.5319296Z [download]  31.5% of   92.37MiB at   42.77MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:29.5321411Z [download]  31.5% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.5322714Z [download]  31.5% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.5324633Z [download]  31.5% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.5326657Z [download]  31.5% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.5328666Z [download]  31.5% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.5330886Z [download]  31.5% of   92.37MiB at   56.73MiB/s ETA 00:01  
+archive	解析并下载原片	2026-10-12T20:13:29.5333839Z [download]  31.6% of   92.37MiB at   95.20MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.5338939Z [download]  31.7% of   92.37MiB at  158.09MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.5350949Z [download]  32.0% of   92.37MiB at  254.97MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.5677875Z [download]  32.5% of   92.37MiB at  310.32MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.6784960Z [download]  33.6% of   92.37MiB at   55.62MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:29.7295023Z [download]  35.8% of   92.37MiB at   27.29MiB/s ETA 00:02
+archive	解析并下载原片	2026-10-12T20:13:29.8146082Z [download]  40.1% of   92.37MiB at   40.47MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:29.8252452Z [download]  41.8% of   92.37MiB at   33.92MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:29.8254070Z [download]  41.8% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.8256754Z [download]  41.9% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.8257166Z [download]  41.9% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.8259137Z [download]  41.9% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.8261635Z [download]  41.9% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:29.8263832Z [download]  41.9% of   92.37MiB at   60.82MiB/s ETA 00:00  
+archive	解析并下载原片	2026-10-12T20:13:29.8267406Z [download]  42.0% of   92.37MiB at   99.07MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.8270024Z [download]  42.1% of   92.37MiB at  165.21MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.8275805Z [download]  42.4% of   92.37MiB at  267.83MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.8298042Z [download]  42.9% of   92.37MiB at  422.31MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.9123389Z [download]  44.0% of   92.37MiB at  429.25MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:29.9776220Z [download]  46.2% of   92.37MiB at   45.91MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:30.0033372Z [download]  50.5% of   92.37MiB at   52.50MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.0140188Z [download]  52.2% of   92.37MiB at   53.60MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.0141945Z [download]  52.2% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.0144308Z [download]  52.2% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.0145123Z [download]  52.2% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.0147033Z [download]  52.2% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.0148846Z [download]  52.2% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.0151234Z [download]  52.2% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.0154274Z [download]  52.3% of   92.37MiB at  103.03MiB/s ETA 00:00  
+archive	解析并下载原片	2026-10-12T20:13:30.0158493Z [download]  52.5% of   92.37MiB at  169.83MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.0163094Z [download]  52.7% of   92.37MiB at  273.96MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.0173186Z [download]  53.3% of   92.37MiB at  418.18MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.1208060Z [download]  54.3% of   92.37MiB at  604.68MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.1844227Z [download]  56.5% of   92.37MiB at   37.43MiB/s ETA 00:01
+archive	解析并下载原片	2026-10-12T20:13:30.2566071Z [download]  60.8% of   92.37MiB at   46.92MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.2692626Z [download]  62.6% of   92.37MiB at   39.62MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.2694283Z [download]  62.6% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.2695952Z [download]  62.6% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.2697523Z [download]  62.6% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.2699281Z [download]  62.6% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.2701264Z [download]  62.6% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.2703350Z [download]  62.7% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.2728586Z [download]  62.7% of   92.37MiB at  105.49MiB/s ETA 00:00  
+archive	解析并下载原片	2026-10-12T20:13:30.2732716Z [download]  62.9% of   92.37MiB at   67.91MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.2741663Z [download]  63.1% of   92.37MiB at  121.60MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.2907382Z [download]  63.7% of   92.37MiB at  200.31MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.3501195Z [download]  64.8% of   92.37MiB at   92.74MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.4546795Z [download]  66.9% of   92.37MiB at   49.51MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.5170859Z [download]  71.2% of   92.37MiB at   43.14MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.5293075Z [download]  73.0% of   92.37MiB at   38.98MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.5294585Z [download]  73.0% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.5297435Z [download]  73.0% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.5297876Z [download]  73.1% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.5299937Z [download]  73.1% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.5302036Z [download]  73.1% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.5304355Z [download]  73.1% of   92.37MiB at   52.31MiB/s ETA 00:00  
+archive	解析并下载原片	2026-10-12T20:13:30.5307217Z [download]  73.2% of   92.37MiB at   87.35MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.5311555Z [download]  73.3% of   92.37MiB at  145.96MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.5348128Z [download]  73.6% of   92.37MiB at  238.93MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.5584935Z [download]  74.1% of   92.37MiB at  173.18MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.6183992Z [download]  75.2% of   92.37MiB at   67.91MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.7264817Z [download]  77.4% of   92.37MiB at   44.77MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.8136787Z [download]  81.7% of   92.37MiB at   40.55MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.8254734Z [download]  83.6% of   92.37MiB at   34.32MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.8257450Z [download]  83.6% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.8260225Z [download]  83.6% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.8263103Z [download]  83.6% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:30.8264914Z [download]  83.6% of   92.37MiB at   13.81MiB/s ETA 00:01  
+archive	解析并下载原片	2026-10-12T20:13:30.8266654Z [download]  83.7% of   92.37MiB at   24.28MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.8268589Z [download]  83.7% of   92.37MiB at   43.11MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.8271124Z [download]  83.8% of   92.37MiB at   76.47MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.8274462Z [download]  83.9% of   92.37MiB at  134.17MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.8289381Z [download]  84.2% of   92.37MiB at  226.55MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.8306034Z [download]  84.7% of   92.37MiB at  280.30MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:30.9016384Z [download]  85.8% of   92.37MiB at  381.90MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.0510878Z [download]  87.9% of   92.37MiB at   52.44MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.1966977Z [download]  92.3% of   92.37MiB at   35.44MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.2075853Z [download]  94.1% of   92.37MiB at   26.19MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.2077780Z [download]  94.1% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:31.2078606Z [download]  94.1% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:31.2080728Z [download]  94.2% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:31.2083114Z [download]  94.2% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:31.2085899Z [download]  94.2% of   92.37MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:31.2096563Z [download]  94.2% of   92.37MiB at   54.56MiB/s ETA 00:00  
+archive	解析并下载原片	2026-10-12T20:13:31.2097281Z [download]  94.3% of   92.37MiB at   89.60MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.2097749Z [download]  94.4% of   92.37MiB at  149.85MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.2098937Z [download]  94.7% of   92.37MiB at  252.24MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.2123694Z [download]  95.2% of   92.37MiB at  402.05MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.2509286Z [download]  96.3% of   92.37MiB at  405.62MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.3191765Z [download]  98.5% of   92.37MiB at   91.94MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.7450179Z [download] 100.0% of   92.37MiB at   48.44MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.7450930Z [download] 100% of   92.37MiB in 00:00:03 at 30.10MiB/s  
+archive	解析并下载原片	2026-10-12T20:13:31.8448273Z [download] Destination: /home/runner/work/_temp/download/662TF-JlyZY.f140-20.m4a
+archive	解析并下载原片	2026-10-12T20:13:31.8451296Z 
+archive	解析并下载原片	2026-10-12T20:13:31.8453662Z [download]   0.0% of    7.19MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:31.8455440Z [download]   0.0% of    7.19MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:31.8457382Z [download]   0.1% of    7.19MiB at  Unknown B/s ETA Unknown
+archive	解析并下载原片	2026-10-12T20:13:31.8459421Z [download]   0.2% of    7.19MiB at   14.26MiB/s ETA 00:00  
+archive	解析并下载原片	2026-10-12T20:13:31.8461754Z [download]   0.4% of    7.19MiB at   24.53MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.8490272Z [download]   0.9% of    7.19MiB at   41.94MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.8570706Z [download]   1.7% of    7.19MiB at   28.86MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.8896794Z [download]   3.5% of    7.19MiB at   20.19MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:31.9560391Z [download]   6.9% of    7.19MiB at   11.12MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:32.0775315Z [download]  13.9% of    7.19MiB at    8.98MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:32.0805287Z [download]  27.8% of    7.19MiB at    8.59MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:32.3058740Z [download]  55.6% of    7.19MiB at   16.96MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:32.3064393Z [download] 100.0% of    7.19MiB at   15.59MiB/s ETA 00:00
+archive	解析并下载原片	2026-10-12T20:13:32.3065164Z [download] 100% of    7.19MiB in 00:00:00 at 12.81MiB/s  
+archive	解析并下载原片	2026-10-12T20:13:32.3263802Z [Merger] Merging formats into "/home/runner/work/_temp/download/662TF-JlyZY.mp4"
+archive	解析并下载原片	2026-10-12T20:13:32.4906838Z Deleting original file /home/runner/work/_temp/download/662TF-JlyZY.f399.mp4 (pass -k to keep)
+archive	解析并下载原片	2026-10-12T20:13:32.4953262Z Deleting original file /home/runner/work/_temp/download/662TF-JlyZY.f140-20.m4a (pass -k to keep)
+archive	解析并下载原片	2026-10-12T20:13:32.4961555Z [VideoRemuxer] Not remuxing media file "/home/runner/work/_temp/download/662TF-JlyZY.mp4"; already is in target format mp4
+archive	上传到 GitHub Release	﻿2026-10-12T20:13:32.5848437Z ##[group]Run set -euo pipefail
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5848698Z [36;1mset -euo pipefail[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5848892Z [36;1mTAG="source-$VIDEO_ID"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5849092Z [36;1mASSET="$VIDEO_ID.mp4"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5849302Z [36;1mcp "$VIDEO_FILE" "$RUNNER_TEMP/$ASSET"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5849523Z [36;1m[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5849712Z [36;1mgh release view "$TAG" >/dev/null 2>&1 || \[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5850176Z [36;1m  gh release create "$TAG" --title "$VIDEO_TITLE" \[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5850494Z [36;1m    --notes "由 download-video GitHub Action 保存的源视频。来源：$VIDEO_URL"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5850757Z [36;1m[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5850916Z [36;1mUPLOADED=0[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5851098Z [36;1mfor attempt in 1 2 3 4; do[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5851358Z [36;1m  if gh release upload "$TAG" "$RUNNER_TEMP/$ASSET" --clobber; then[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5851624Z [36;1m    UPLOADED=1[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5851802Z [36;1m    break[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5851969Z [36;1m  fi[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5852172Z [36;1m  sleep $((attempt * attempt * 5))[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5852377Z [36;1mdone[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5852607Z [36;1mtest "$UPLOADED" = 1 || { echo "::error::Release 附件连续 4 次上传失败"; exit 1; }[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5852867Z [36;1m[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5853133Z [36;1mURL="https://github.com/robertyang87/tennislive/releases/download/$TAG/$ASSET"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5853427Z [36;1mCODE=000[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5853741Z [36;1mfor attempt in 1 2 3 4 5 6 7 8; do[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5854024Z [36;1m  CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$URL" || echo 000)[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5854324Z [36;1m  if [ "$CODE" = 200 ] || [ "$CODE" = 206 ]; then[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5854546Z [36;1m    break[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5854714Z [36;1m  fi[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5854877Z [36;1m  sleep 5[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5855045Z [36;1mdone[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5855236Z [36;1mif [ "$CODE" != 200 ] && [ "$CODE" != 206 ]; then[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5855500Z [36;1m  echo "::error::Release 已上传，但直链探活返回 HTTP $CODE"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5855725Z [36;1m  exit 1[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5855890Z [36;1mfi[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5856046Z [36;1m[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5856202Z [36;1m{[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5856362Z [36;1m  echo "## 视频已保存"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5856545Z [36;1m  echo[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5856718Z [36;1m  echo "- 标题：$VIDEO_TITLE"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5856928Z [36;1m  echo "- 大小：$VIDEO_SIZE 字节"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5857135Z [36;1m  echo "- [直接下载]($URL)"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5857425Z [36;1m  echo "- [Release 页](https://github.com/robertyang87/tennislive/releases/tag/$TAG)"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5857729Z [36;1m} >> "$GITHUB_STEP_SUMMARY"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5857934Z [36;1mecho "download_url=$URL"[0m
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5911498Z shell: /usr/bin/bash -e {0}
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5911694Z env:
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5911904Z   VIDEO_URL: https://www.youtube.com/watch?v=662TF-JlyZY
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5913646Z   GH_TOKEN: ***
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5913829Z   GH_REPO: robertyang87/tennislive
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5914077Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5914373Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5914668Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5914943Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5915221Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5915496Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5915738Z   VIDEO_ID: 662TF-JlyZY
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5916007Z   VIDEO_TITLE: Jasmine Paolini vs. Sara Bejlek | 2026 Wuhan Round 1 | WTA Match Highlights
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5916342Z   VIDEO_FILE: /home/runner/work/_temp/download/662TF-JlyZY.mp4
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5916582Z   VIDEO_SIZE: 104483128
+archive	上传到 GitHub Release	2026-10-12T20:13:32.5916758Z ##[endgroup]
+archive	上传到 GitHub Release	2026-10-12T20:13:34.1994366Z https://github.com/robertyang87/tennislive/releases/tag/source-662TF-JlyZY
+archive	上传到 GitHub Release	2026-10-12T20:13:39.9041023Z download_url=https://github.com/robertyang87/tennislive/releases/download/source-662TF-JlyZY/662TF-JlyZY.mp4
+archive	Post Run actions/setup-node@v4	﻿2026-10-12T20:13:39.9108079Z Post job cleanup.
+archive	Post Run actions/setup-node@v4	2026-10-12T20:13:39.9904900Z (node:2455) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+archive	Post Run actions/setup-node@v4	2026-10-12T20:13:39.9905779Z (Use `node --trace-deprecation ...` to show where the warning was created)
+archive	Post Run actions/setup-python@v5	﻿2026-10-12T20:13:40.0034518Z Post job cleanup.
+archive	Post Run actions/setup-python@v5	2026-10-12T20:13:40.0795257Z (node:2463) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+archive	Post Run actions/setup-python@v5	2026-10-12T20:13:40.0795910Z (Use `node --trace-deprecation ...` to show where the warning was created)
+archive	Post Run actions/checkout@v4	﻿2026-10-12T20:13:40.0954963Z Post job cleanup.
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.1524622Z [command]/usr/bin/git version
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.1556203Z git version 2.55.0
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.1580988Z Temporarily overriding HOME='/home/runner/work/_temp/d45e352d-c753-4d74-8646-d6376be3efe1' before making global git config changes
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.1581638Z Adding repository directory to the temporary git global config as a safe directory
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.1584642Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tennislive/tennislive
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.1616095Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.1651102Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.1885020Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.1916062Z http.https://github.com/.extraheader
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.1925753Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.1986589Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.2203273Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+archive	Post Run actions/checkout@v4	2026-10-12T20:13:40.2233488Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+archive	Complete job	﻿2026-10-12T20:13:40.2549616Z Cleaning up orphan processes
+archive	Complete job	2026-10-12T20:13:40.2776598Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/cache/restore@v4, actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

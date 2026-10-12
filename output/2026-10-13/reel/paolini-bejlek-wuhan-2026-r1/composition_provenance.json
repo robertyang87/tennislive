@@ -1,0 +1,261 @@
+{
+  "schema": "tennislive.native-stream-composition.v1",
+  "slug": "paolini-bejlek-wuhan-2026-r1",
+  "input_runs": [
+    {
+      "role": "video",
+      "run_id": 38307920960,
+      "head_sha": "4691577fc585b9ed35ade98e89445de20753eec4",
+      "artifact_id": 11773392805
+    },
+    {
+      "role": "audio",
+      "run_id": 38305296490,
+      "head_sha": "6c6720f80a73cf17fe11473ff5b2c8aded777fbb",
+      "artifact_id": 11773052396
+    }
+  ],
+  "input_movies": [
+    {
+      "role": "video",
+      "sha256": "58e16f6a466e42c3cf9a0478cce96045eb6aaf76a46762b52979ba2c6cf3732c",
+      "bytes": 142506254
+    },
+    {
+      "role": "audio",
+      "sha256": "4f00d4b2b523248f717f9ce3c26429e030cba0994ff7a67eaf6ebc6df6ac3661",
+      "bytes": 142410127
+    }
+  ],
+  "streams": [
+    {
+      "stream": "v:0",
+      "packet_count": 8361,
+      "payload_and_timestamps_sha256": "a5d1d7f05704e72f81fb5cf6ce3a99022761990cf5789646e57f6912850bec95",
+      "input_film_sha256": "58e16f6a466e42c3cf9a0478cce96045eb6aaf76a46762b52979ba2c6cf3732c",
+      "output_film_sha256": "7013b7e66c42d62220ebaa826b6b099bbd6a374da593de9b24d7b3393641acfe",
+      "exact_payload_and_timestamps_match": true
+    },
+    {
+      "stream": "a:0",
+      "packet_count": 15678,
+      "payload_and_timestamps_sha256": "bcdc53e813cf615d8e77d2961596e9fcd81d476e11353cd1391ca77725302243",
+      "input_film_sha256": "4f00d4b2b523248f717f9ce3c26429e030cba0994ff7a67eaf6ebc6df6ac3661",
+      "output_film_sha256": "7013b7e66c42d62220ebaa826b6b099bbd6a374da593de9b24d7b3393641acfe",
+      "exact_payload_and_timestamps_match": true
+    }
+  ],
+  "film_sha256": "7013b7e66c42d62220ebaa826b6b099bbd6a374da593de9b24d7b3393641acfe",
+  "film_bytes": 142506185,
+  "audio_plan_sha256": "db46f0d2fc7cb0db0ddd60093f1439f56774035ec92cd89b82194adc90592282",
+  "source_sha256": {
+    "main": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d"
+  },
+  "timeline": {
+    "cover_seconds": 1.2,
+    "offsets": [
+      1.2,
+      13.84,
+      18.84,
+      28.04,
+      50.44,
+      61.94,
+      130.84,
+      147.84,
+      163.84,
+      182.64000000000001,
+      206.84,
+      217.24,
+      222.84,
+      240.64000000000001,
+      261.74,
+      271.84000000000003,
+      318.44000000000005
+    ],
+    "lengths": [
+      12.64,
+      5.0,
+      9.2,
+      22.4,
+      11.5,
+      68.9,
+      17.0,
+      16.0,
+      18.8,
+      24.2,
+      10.4,
+      5.6,
+      17.8,
+      21.1,
+      10.1,
+      46.6,
+      16.0
+    ]
+  },
+  "voice_pairs": [
+    {
+      "segment": 1,
+      "mp3_sha256": "b04b12acc32fd905376c26707df257e9df843c6653800929ce49b41f84cc84b5",
+      "marks_sha256": "125d9d5a17031c3b13060122c5f3881f457a7708ee4bd66b433b73102725949d",
+      "native_zip_sha256": "452a24cff2bf1050720e27bcf148ad81e4fb517fa4137b654a12ccb121a49ab9",
+      "pair_source": "native_run_artifact_pair_repack",
+      "wrapper_sha256": "452a24cff2bf1050720e27bcf148ad81e4fb517fa4137b654a12ccb121a49ab9",
+      "original_cache_archive_claimed": false,
+      "actual_input_aac_correlation": 0.9981595030215061,
+      "actual_input_aac_gain": 0.7070026982189643,
+      "complete_text_and_monotonic_word_marks_authenticated": true,
+      "native_origin": {
+        "role": "audio",
+        "run_id": 38305296490,
+        "head_sha": "6c6720f80a73cf17fe11473ff5b2c8aded777fbb",
+        "artifact_id": 11773052396
+      }
+    },
+    {
+      "segment": 2,
+      "mp3_sha256": "dc32a92f31955b234115f2cb9726f01ff5c2b26d2d515b35079c860248c94a2b",
+      "marks_sha256": "b906c95d8cb732c085655b654d1f820b30486deef4a4a281651921b64a118944",
+      "native_zip_sha256": "a006352dc8b01be999c0127b90140f310544d6fa704a98efcc210e08acd782a4",
+      "pair_source": "native_run_artifact_pair_repack",
+      "wrapper_sha256": "a006352dc8b01be999c0127b90140f310544d6fa704a98efcc210e08acd782a4",
+      "original_cache_archive_claimed": false,
+      "actual_input_aac_correlation": 0.9995377146843409,
+      "actual_input_aac_gain": 0.7067928290146217,
+      "complete_text_and_monotonic_word_marks_authenticated": true,
+      "native_origin": {
+        "role": "audio",
+        "run_id": 38305296490,
+        "head_sha": "6c6720f80a73cf17fe11473ff5b2c8aded777fbb",
+        "artifact_id": 11773052396
+      }
+    },
+    {
+      "segment": 4,
+      "mp3_sha256": "5696af87d795cbbaa457c70d35f3af216194e93130e7288f7e14056d2ca1362d",
+      "marks_sha256": "38be2449ce50afd6a061f535d8d79165dc47226f7a6f9a0f787a73d2065e4df1",
+      "native_zip_sha256": "23c042b5f5b716d2b34f450ee11fa8791dbb99ad40a6a582d2a32927b14eec1c",
+      "pair_source": "native_run_artifact_pair_repack",
+      "wrapper_sha256": "23c042b5f5b716d2b34f450ee11fa8791dbb99ad40a6a582d2a32927b14eec1c",
+      "original_cache_archive_claimed": false,
+      "actual_input_aac_correlation": 0.998799785652799,
+      "actual_input_aac_gain": 0.7070204500928252,
+      "complete_text_and_monotonic_word_marks_authenticated": true,
+      "native_origin": {
+        "role": "audio",
+        "run_id": 38305296490,
+        "head_sha": "6c6720f80a73cf17fe11473ff5b2c8aded777fbb",
+        "artifact_id": 11773052396
+      }
+    },
+    {
+      "segment": 6,
+      "mp3_sha256": "c07b6c47cd19a5ecd0459d07719e1237afb3a7aa280804cf74c79938aa7fae60",
+      "marks_sha256": "b774d6d0a1fcbceac0505dcac56d7f49bed10409e14d638a21b26ef6ed6c6a04",
+      "native_zip_sha256": "5c19e04c0d8e2739bf95265e90f05c3ceeac13020c9fbce1fe160fde8da52382",
+      "pair_source": "native_run_artifact_pair_repack",
+      "wrapper_sha256": "5c19e04c0d8e2739bf95265e90f05c3ceeac13020c9fbce1fe160fde8da52382",
+      "original_cache_archive_claimed": false,
+      "actual_input_aac_correlation": 0.9992792442643726,
+      "actual_input_aac_gain": 0.7069997617770821,
+      "complete_text_and_monotonic_word_marks_authenticated": true,
+      "native_origin": {
+        "role": "audio",
+        "run_id": 38305296490,
+        "head_sha": "6c6720f80a73cf17fe11473ff5b2c8aded777fbb",
+        "artifact_id": 11773052396
+      }
+    },
+    {
+      "segment": 8,
+      "mp3_sha256": "e8d6ac9c866d9eec0730b2791b73cf1616295b3a4ebaeedecad3530d8f06e5a8",
+      "marks_sha256": "6c9b1f8bf95af4309a487af1dc6be863208642cec32f6eea54bdf7558424259f",
+      "native_zip_sha256": "8421fcfffe3d29fdff4817f8caf46a2dcc0572b326fe2375801343d6cf6dfa43",
+      "pair_source": "native_run_artifact_pair_repack",
+      "wrapper_sha256": "8421fcfffe3d29fdff4817f8caf46a2dcc0572b326fe2375801343d6cf6dfa43",
+      "original_cache_archive_claimed": false,
+      "actual_input_aac_correlation": 0.9993853274977078,
+      "actual_input_aac_gain": 0.7069652289860638,
+      "complete_text_and_monotonic_word_marks_authenticated": true,
+      "native_origin": {
+        "role": "audio",
+        "run_id": 38305296490,
+        "head_sha": "6c6720f80a73cf17fe11473ff5b2c8aded777fbb",
+        "artifact_id": 11773052396
+      }
+    },
+    {
+      "segment": 10,
+      "mp3_sha256": "c46a0e7d8ae4266464cbd01b9579bc0b10d8063d7b15e93346ad9da2e40aacdd",
+      "marks_sha256": "a7792afed3a6979a9b36286c6a965005b91d2676f2195fa72d4d871add0d9429",
+      "native_zip_sha256": "19b5c22a55979ef4529943ec859ebac44f24a2bd893d3a405a73c6689589ec6b",
+      "pair_source": "native_run_artifact_pair_repack",
+      "wrapper_sha256": "19b5c22a55979ef4529943ec859ebac44f24a2bd893d3a405a73c6689589ec6b",
+      "original_cache_archive_claimed": false,
+      "actual_input_aac_correlation": 0.9991614304150402,
+      "actual_input_aac_gain": 0.706981817798052,
+      "complete_text_and_monotonic_word_marks_authenticated": true,
+      "native_origin": {
+        "role": "audio",
+        "run_id": 38305296490,
+        "head_sha": "6c6720f80a73cf17fe11473ff5b2c8aded777fbb",
+        "artifact_id": 11773052396
+      }
+    },
+    {
+      "segment": 12,
+      "mp3_sha256": "e630d02ad60938643a31919b20129916a4745df01410ef36d3a5423ebdbfa78b",
+      "marks_sha256": "1bc8a7a10cfd6676fd8ba52defd3bc0cbf7dfaaa8d4a6837a0a2617c033baa36",
+      "native_zip_sha256": "17c69aedbd0117a0f953c76b5db2c03c710b803101fd423f7edd89dcf021f15b",
+      "pair_source": "native_run_artifact_pair_repack",
+      "wrapper_sha256": "17c69aedbd0117a0f953c76b5db2c03c710b803101fd423f7edd89dcf021f15b",
+      "original_cache_archive_claimed": false,
+      "actual_input_aac_correlation": 0.9993210972423533,
+      "actual_input_aac_gain": 0.7070477617507853,
+      "complete_text_and_monotonic_word_marks_authenticated": true,
+      "native_origin": {
+        "role": "audio",
+        "run_id": 38305296490,
+        "head_sha": "6c6720f80a73cf17fe11473ff5b2c8aded777fbb",
+        "artifact_id": 11773052396
+      }
+    },
+    {
+      "segment": 14,
+      "mp3_sha256": "e37b5d97de0bc7cfe1d9d520d9845902a700319dad8f3a2f9b5937c6c81be8fd",
+      "marks_sha256": "3626a8d5cf2a9dc5db2bf51403b458f9b288c3a4e905a4c8776903b125a83130",
+      "native_zip_sha256": "2480f9c8375e511549b8ebbf8700d254ad91a709d4ecb4a3fd4d1c823fd8ab85",
+      "pair_source": "native_run_artifact_pair_repack",
+      "wrapper_sha256": "2480f9c8375e511549b8ebbf8700d254ad91a709d4ecb4a3fd4d1c823fd8ab85",
+      "original_cache_archive_claimed": false,
+      "actual_input_aac_correlation": 0.9994158700341523,
+      "actual_input_aac_gain": 0.706759307828711,
+      "complete_text_and_monotonic_word_marks_authenticated": true,
+      "native_origin": {
+        "role": "audio",
+        "run_id": 38305296490,
+        "head_sha": "6c6720f80a73cf17fe11473ff5b2c8aded777fbb",
+        "artifact_id": 11773052396
+      }
+    },
+    {
+      "segment": 16,
+      "mp3_sha256": "71955ec083fdd945a0daf94311a076f68bd652c25fcf77e831f6aa4cf586c1cb",
+      "marks_sha256": "bca22b217c0be0f030c73b6ab0409a5d766cb721f889c5727ffe3013093ab719",
+      "native_zip_sha256": "83a0cbe4b36e12dc8cbd48a8fb70646a963d49db002731375b0e9e67654add3d",
+      "pair_source": "native_run_artifact_pair_repack",
+      "wrapper_sha256": "83a0cbe4b36e12dc8cbd48a8fb70646a963d49db002731375b0e9e67654add3d",
+      "original_cache_archive_claimed": false,
+      "actual_input_aac_correlation": 0.9994121221758733,
+      "actual_input_aac_gain": 0.7069856569714785,
+      "complete_text_and_monotonic_word_marks_authenticated": true,
+      "native_origin": {
+        "role": "audio",
+        "run_id": 38305296490,
+        "head_sha": "6c6720f80a73cf17fe11473ff5b2c8aded777fbb",
+        "artifact_id": 11773052396
+      }
+    }
+  ],
+  "qc_status": "not_checked",
+  "method": "Actual verified native input compressed streams; ffmpeg copy; exact packet bytes and timestamps"
+}

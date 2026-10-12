@@ -170,3 +170,62 @@ def test_actual_eala_master_regression_when_available(monkeypatch):
     spec=json.loads((root/'specs/reels/eala-shi.json').read_text())
     assert Q.verified_native_ambience_seconds(spec,film,[48,208,211],root=root)==[48,208,211]
     assert 251 in Q.verified_seconds(spec,film,[251])
+
+
+@pytest.fixture
+def mixed_final_word(voiced_tail):
+    """A complete signal utterance with a real quiet 40ms final sound."""
+    spec, film, root, original, pair = voiced_tail
+    raw = np.zeros(32000)
+    raw[:16000] = .13 * np.sin(2*np.pi*250*np.arange(16000)/8000)
+    raw[16000:16320] = .001 * np.sin(2*np.pi*250*np.arange(320)/8000)
+    voice = root/'voice_00.mp3'
+    encode(raw, voice, codec='libmp3lame')
+    marks = [{'offset':0, 'duration':20350000, 'text':'测试'}]
+    voice.with_suffix('.words.json').write_text(json.dumps(marks))
+    with zipfile.ZipFile(pair,'w') as bundle:
+        bundle.writestr('audio.mp3',voice.read_bytes())
+        bundle.writestr('marks.json',json.dumps(marks))
+    decoded = Q.pcm(voice)
+    mix = original*.36
+    mix[:len(decoded)] += decoded
+    encode(mix,film)
+    seal(root,spec,film,[0],[5])
+    return spec,film,root,original,pair,decoded
+
+
+def test_complete_codec_mix_keeps_the_quiet_final_word(mixed_final_word):
+    spec,film,root,_,_,_=mixed_final_word
+    assert Q.verified_native_ambience_seconds(spec,film,[2],root=root)==[2]
+
+
+@pytest.mark.parametrize('failure',['deleted_final_sound','wrong_pair'])
+def test_mixed_word_proof_rejects_deleted_sound_and_wrong_pair(mixed_final_word,failure):
+    spec,film,root,original,pair,decoded=mixed_final_word
+    if failure=='deleted_final_sound':
+        truncated=decoded.copy();truncated[16000:]=0
+        mix=original*.36;mix[:len(truncated)]+=truncated
+        encode(mix,film)
+    else:
+        with zipfile.ZipFile(pair,'w') as bundle:
+            bundle.writestr('audio.mp3',b'not the actual paired MP3')
+            bundle.writestr('marks.json',(root/'voice_00.words.json').read_bytes())
+    seal(root,spec,film,[0],[5])
+    assert Q.verified_native_ambience_seconds(spec,film,[2],root=root)==[]
+
+
+def test_actual_paolini_final_word_with_original_sound_when_available():
+    movie=Path('/workspace/scratch/timed-662TF-JlyZY/final-original-sound-master.mp4')
+    source=Path('/workspace/scratch/timed-662TF-JlyZY/662TF-JlyZY.mp4')
+    voice=Path('/workspace/scratch/timed-cloud-artifact/voice_06.mp3')
+    if not all(p.is_file()for p in(movie,source,voice)):
+        pytest.skip('Actual master/source/utterance are external media, not Git fixtures.')
+    if hashlib.sha256(movie.read_bytes()).hexdigest()!='3339af7058a8ccfb0c260dfe9c72ab6bf69f6bd309111b5ac47784c4c0b70d3c':
+        pytest.skip('This immutable actual source/voice regression has another movie.')
+    final,original,actual_voice=Q.pcm(movie),Q.pcm(source),Q.pcm(voice)
+    at=round(118.16*Q.RATE)
+    proof=Q._mixed_word_tail_match(original[at-640:at+Q.RATE+640],
+        final[137*Q.RATE:138*Q.RATE],actual_voice,6.16,.36,
+        {'word_end':6.155625,'acoustic_end':6.2,'native_channel_gain':1/np.sqrt(2)})
+    assert proof is not None and proof['correlation']>.97
+    assert proof['correlation']>proof['source_only_correlation']+.002

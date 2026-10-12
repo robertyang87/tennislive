@@ -608,3 +608,16 @@ PLAYER_ZH: dict[str, str] = {
     "Jennifer Capriati": "卡普里亚蒂",
     "Tracy Austin": "特蕾西·奥斯汀",
 }
+
+# 精确中文别名 → 仓库规范译名。只登记已核实的同一球员，不用相似字串猜身份。
+# 帕奥利尼/保利尼均指 Jasmine Paolini（WTA 319280）；本场官方身份见
+# data/evidence/paolini-bejlek-wuhan-2026-r1/facts/raw/wta-match-row.json。
+# PLAYER_ZH 的规范输出仍是「保利尼」，别名不改已经配音/渲染的显示文案。
+PLAYER_ZH_ALIASES: dict[str, str] = {
+    "帕奥利尼": PLAYER_ZH["Jasmine Paolini"],
+}
+
+
+def normalize_player_zh(name: str) -> str:
+    """仅统一登记过的完整中文别名；未知名称原样返回，不做模糊身份匹配。"""
+    return PLAYER_ZH_ALIASES.get(name, name)

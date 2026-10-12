@@ -10992,6 +10992,41 @@ def test_推送前也要查数据图头像挂没挂错名字(tmp_path):
         "没把真矛盾接进 bad，或者把「第一次出现」的提醒也算成了不合格"
 
 
+def test_paolini_exact_alias_keeps_headshot_identity_and_rejects_other_players(tmp_path):
+    import check_reel_landed as chk
+    from tennislive.zh.players import PLAYER_ZH, normalize_player_zh
+
+    reels = tmp_path / "reels"
+    reels.mkdir()
+    paolini = "assets/headshots/wta-319280.jpg"
+    bejlek = "assets/headshots/wta-330375.jpg"
+    prior = {
+        "cover": {"matchup": [{"name": "保利尼"}, {"name": "贝莱克"}]},
+        "stats": {"a": {"headshot": paolini}, "b": {"headshot": bejlek}},
+    }
+    (reels / "prior.json").write_text(json.dumps(prior), encoding="utf-8")
+    alias = {
+        "cover": {"matchup": [{"name": "帕奥利尼"}, {"name": "贝莱克"}]},
+        "stats": {"a": {"headshot": paolini}, "b": {"headshot": bejlek}},
+    }
+    assert PLAYER_ZH["Jasmine Paolini"] == "保利尼"
+    assert normalize_player_zh("帕奥利尼") == "保利尼"
+    assert chk.stat_card_headshot_problem(alias, reels) is None
+
+    # 真正的a/b头像填反仍拒绝，不能因接受一个同人别名就放松身份检查。
+    reversed_faces = {**alias, "stats": {
+        "a": {"headshot": bejlek}, "b": {"headshot": paolini}}}
+    result = chk.stat_card_headshot_problem(reversed_faces, reels)
+    assert result is not None and result[0] is True
+
+    # 奥利尼科娃是另一位真实球员；相近字串不产生同人关系。
+    different_player = {**alias, "cover": {
+        "matchup": [{"name": "奥利尼科娃"}, {"name": "贝莱克"}]}}
+    assert normalize_player_zh("奥利尼科娃") == "奥利尼科娃"
+    result = chk.stat_card_headshot_problem(different_player, reels)
+    assert result is not None and result[0] is True
+
+
 def test_ffprobe的csv输出带尾随逗号也解析得出来():
     """2026-08-19 撞的：`ensure_ffmpeg` 第一版装的是 BtbN/FFmpeg-Builds 的
     `latest` 标签——那是**每天跟着 master 重新构建**的快照，不是钉死的版本。
@@ -14182,6 +14217,7 @@ def test_数据图的头像和matchup里的名字必须是同一个人():
     那是它天然的边界——它拦的是**和已有产物矛盾**，不是拦「填错」本身。
     """
     import collections
+    from tennislive.zh.players import normalize_player_zh
 
     seen: dict[str, collections.Counter] = collections.defaultdict(collections.Counter)
     for path in sorted(Path("specs/reels").glob("*.json")):
@@ -14203,7 +14239,7 @@ def test_数据图的头像和matchup里的名字必须是同一个人():
             if isinstance(shot, list):
                 continue
             if shot and names[idx]:
-                seen[Path(shot).name][names[idx]] += 1
+                seen[Path(shot).name][normalize_player_zh(names[idx])] += 1
 
     clashes = {k: dict(v) for k, v in seen.items() if len(v) > 1}
     assert not clashes, (
