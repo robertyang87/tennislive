@@ -1,0 +1,21 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-y9d6IHw0cZk/y9d6IHw0cZk.mp4",
+  "source_sha256": "247b260cfc75e698478b24508d0be95e9c4596da50d732d993e407ef96ac437b",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（本会话，按两份ASR交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-12T16:38:11+00:00",
+  "reviewed_from": 176.2,
+  "reviewed_to": 178.9,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 176.26,
+      "end": 178.86,
+      "en": "So Xiyu starts to take over here, trying to find another break.",
+      "zh": "王曦雨开始掌控局面 想再破一次发"
+    }
+  ],
+  "evidence": "两份独立 faster-whisper 转写（small.en / medium.en，word_timestamps，同一源片 sha256 247b260cfc75e698478b24508d0be95e9c4596da50d732d993e407ef96ac437b，由分支 claude/asr-wangxiyu-wuhan 的 runner 跑出，原样存为 data/audio_reviews/wangxiyu-wangxinyu-wuhan-2026-r1/asr-small.en.json 与 asr-medium.en.json）逐句对照",
+  "cross_check_note": "两份独立 faster-whisper 转写（small.en / medium.en，word_timestamps，同一源片 sha256 247b260cfc75e698478b24508d0be95e9c4596da50d732d993e407ef96ac437b，由分支 claude/asr-wangxiyu-wuhan 的 runner 跑出，原样存为 data/audio_reviews/wangxiyu-wangxinyu-wuhan-2026-r1/asr-small.en.json 与 asr-medium.en.json）逐句对照：本窗英文句子两模型时间与词句一致；人名按解说读音写作 Wang Xiyu／Xinyu（ASR 记作 CU／Wong Siyu／seeing you／Sin-Yi），small.en 把 'sees her way' 记成 'CUC's her way'、medium.en 记成 'CUC's her way'，按上下文与另一处 'Wang Xiyu sees her way' 定为同一说法。"
+}

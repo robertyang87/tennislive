@@ -1,0 +1,51 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-y9d6IHw0cZk/y9d6IHw0cZk.mp4",
+  "source_sha256": "247b260cfc75e698478b24508d0be95e9c4596da50d732d993e407ef96ac437b",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（本会话，按两份ASR交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-12T16:38:11+00:00",
+  "reviewed_from": 265.7,
+  "reviewed_to": 297.15,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 265.76,
+      "end": 270.72,
+      "en": "And win number six in main draws on the WTA Tour comes to Wang Xiyu",
+      "zh": "王曦雨拿下巡回赛正赛第6胜"
+    },
+    {
+      "start": 270.72,
+      "end": 275.86,
+      "en": "as she handles her friend efficiently and effectively from start to finish.",
+      "zh": "面对好友 她全程干净利落"
+    },
+    {
+      "start": 277.78,
+      "end": 281.6,
+      "en": "And Wang Xinyu will be sent packing, experiencing her 16th career bagel.",
+      "zh": "王欣瑜出局 生涯第16次被剃光头"
+    },
+    {
+      "start": 281.8,
+      "end": 285.14,
+      "en": "It was not going to be her night, as it belongs to Xiyu,",
+      "zh": "今晚不属于她 属于王曦雨"
+    },
+    {
+      "start": 285.56,
+      "end": 290.9,
+      "en": "who picks up her first main draw win in Wuhan since 2018,",
+      "zh": "她2018年后在武汉首次赢下正赛"
+    },
+    {
+      "start": 291.54,
+      "end": 297.08,
+      "en": "posting a 6-2, 6-love victory to advance to the second round of this WTA 1000 event.",
+      "zh": "6比2 6比0 晋级WTA1000第二轮"
+    }
+  ],
+  "evidence": "两份独立 faster-whisper 转写（small.en / medium.en，word_timestamps，同一源片 sha256 247b260cfc75e698478b24508d0be95e9c4596da50d732d993e407ef96ac437b，由分支 claude/asr-wangxiyu-wuhan 的 runner 跑出，原样存为 data/audio_reviews/wangxiyu-wangxinyu-wuhan-2026-r1/asr-small.en.json 与 asr-medium.en.json）逐句对照",
+  "cross_check_note": "两份独立 faster-whisper 转写（small.en / medium.en，word_timestamps，同一源片 sha256 247b260cfc75e698478b24508d0be95e9c4596da50d732d993e407ef96ac437b，由分支 claude/asr-wangxiyu-wuhan 的 runner 跑出，原样存为 data/audio_reviews/wangxiyu-wangxinyu-wuhan-2026-r1/asr-small.en.json 与 asr-medium.en.json）逐句对照：本窗英文句子两模型时间与词句一致；人名按解说读音写作 Wang Xiyu／Xinyu（ASR 记作 CU／Wong Siyu／seeing you／Sin-Yi），small.en 把 'sees her way' 记成 'CUC's her way'、medium.en 记成 'CUC's her way'，按上下文与另一处 'Wang Xiyu sees her way' 定为同一说法。"
+}

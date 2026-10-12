@@ -1,0 +1,536 @@
+{
+  "slug": "wangxiyu-wangxinyu-wuhan-2026-r1",
+  "_column": "赛场之上",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-y9d6IHw0cZk/y9d6IHw0cZk.mp4",
+  "_user_source_url": "https://m.youtube.com/watch?v=y9d6IHw0cZk",
+  "_source_why": "用户给的是WTA官方YouTube集锦《Xiyu Wang vs. Xinyu Wang | 2026 Wuhan Round 1 | WTA Match Highlights》（1920×1080，424.48秒）。runner上直接下YouTube在2026-10-12一趟probe里挂了23分钟失败，所以按仓库 download-video.yml 存进本仓库 Release source-y9d6IHw0cZk，渲染和审听都绑这份同一字节（sha256 247b260c…ac437b），画面仍是官方素材。",
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1075_2026_LS045",
+    "participants": [
+      "王曦雨",
+      "王欣瑜"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        2
+      ],
+      [
+        6,
+        0
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "winner": "王曦雨",
+    "loser": "王欣瑜",
+    "winner_result": "6-2 6-0",
+    "loser_result": "2-6 0-6",
+    "date": "2026-10-12",
+    "_match_day_why": "WTA官方 api.wtatennis.com/tennis/tournaments/1075/2026/matches?states=C：LS045 MatchTimeStamp 2026-10-12T11:21:25Z（北京19:21，晚上），MatchState F，ResultString「X. Wang d X. Wang 6-2,6-0」，ScoreSet1A/B 6/2、ScoreSet2A/B 6/0，A=PlayerIDA 326160 Xiyu Wang（EntryTypeA Wc），B=326376 Xinyu Wang；用时01:08:53。当天比赛日，用户点名本场链接。",
+    "_result_why": "赢家按 ScoreSet A 两盘均6、ResultString「X. Wang d X. Wang」顺序、以及集锦结尾转播比分图形（XIYU WANG 6 6 / XINYU WANG 2 0）和解说「posting a 6-2, 6-love victory」三处一致认定为王曦雨。"
+  },
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 首轮",
+    "line2": "王曦雨 6-2 6-0 王欣瑜"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "王曦雨",
+    "_subject_why": "封面放赢家王曦雨（钩子第二行的主语）。",
+    "hook": "第二盘一局没丢\n王曦雨淘汰王欣瑜",
+    "hook_accent": "一局没丢",
+    "_hook_why": "按2026-09-25口径：第一行＝关键局面（第二盘对手一局没拿到，6-0来自官方ScoreSet2），第二行＝结果。7字和8字，无术语。",
+    "topic": "WTA1000 武汉 首轮 · 王曦雨 VS 王欣瑜",
+    "winner": "王曦雨",
+    "result": "6-2 6-0",
+    "matchup": [
+      {
+        "name": "王曦雨",
+        "name_en": "Xiyu Wang",
+        "country": "CHN",
+        "rank": 91
+      },
+      {
+        "name": "王欣瑜",
+        "name_en": "Xinyu Wang",
+        "country": "CHN",
+        "rank": 39
+      }
+    ],
+    "_rank_why": "WTA官方 players/ranked（rankedAt 2026-10-12）：Xiyu Wang（id 326160）91名835分，Xinyu Wang（id 326376）39名；2026-10-12 runner 实取。",
+    "_heat_why": "①档中国球员单打，而且是两位中国球员的德比；用户点名本场官方链接。",
+    "portrait": {
+      "frame_at": 267.2,
+      "focus": 0.6,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_frame_why": "⚠️ 抽帧，不是官方实拍——走账号所有者2026-09-26常设授权（「没有高清大图可备选的话，抽帧也可以，但是要尽量清晰偏正面的图片」），登记进 OWNER_APPROVED_FRAME_COVERS；官方图一到 reel-cover-upgrade 自动换图重推。四类源查过（2026-10-12 15:10–15:16Z，终场约一个半小时后）：① 官方图库：WTA比赛页 www.wtatennis.com/tournament/1075/wuhan/2026/scores/LS045 没挂这一场的赛后稿或图集链接；② WTA赛后稿：同页无含两人姓的 /news/ 链接；③ 主办方：武汉网球公开赛当天战报未取到；④ Getty/AP 沙箱访问不到。**这一帧**：源片267.2秒，第二个赛点拿下后的近景，王曦雨正面朝镜头、右拳举起、双眼睁开，PICC蓝色挡板背景；源片1920×1080，铺3:4按高放大1.33倍。",
+      "_low_res_why": "源片1920×1080，铺1080×1440按高算1.33倍（抽帧理由见 _frame_why）。"
+    },
+    "scoreboard": {
+      "court": "Dongfeng Voyah Center Court",
+      "_court_why": "WTA官方 LS045 CourtID 1；集锦里转播大比分图形台头印着「DONGFENG VOYAH CENTER COURT」（源片约44秒）。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%2201%3A08%3A53%22%2C%22field%22%3A%22MatchTimeTotal%22%2C%22match_id%22%3A%22LS045%22%2C%22source_url%22%3A%22https%3A//api.wtatennis.com/tennis/tournaments/1075/2026/matches%3Fstates%3DC%22%7D",
+        "field": "duration"
+      }
+    }
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "第二盘一局没丢",
+      "王曦雨淘汰王欣瑜"
+    ],
+    "question": "这场中国德比，王曦雨怎样一路把比赛握在手里？",
+    "thesis": "王曦雨开局第三个破发点就破发，第二局顶住对手的破发点保发；左手持拍的她用左右调动撕开场地，第一盘43分钟6-2，第二盘一局未失，全场王欣瑜4个破发点一个没兑现。",
+    "beats": [
+      "冷开场：第二个赛点后握拳、教练席起立、网前拥抱",
+      "坐标与结局：武汉开幕夜的中国德比",
+      "第1局三次机会完成破发，第2局顶住对手破发点",
+      "左手持拍的左右调动，4-2再破发，43分钟拿下首盘",
+      "第二盘一局不丢，两个赛点后晋级，收在挥拍谢场与向前看的一问"
+    ],
+    "human_context": {
+      "angle": "两位中国球员在武汉开幕夜相遇，解说称她们是朋友；对王曦雨，这是2018年之后在武汉的第一场正赛胜利。",
+      "facts": [
+        "WTA官方：LS045 王曦雨（外卡）6-2 6-0 王欣瑜，用时01:08:53，北京时间10月12日晚上开赛",
+        "WTA官方排名（2026-10-12）：王曦雨第91，王欣瑜第39",
+        "WTA官方统计：王曦雨破发5/9、面对4个破发点全部挽救；制胜分13比7，非受迫性失误10比22",
+        "转播解说：首盘43分钟；她在武汉的第一场正赛胜利是2018年之后；王欣瑜职业生涯第16次被剃光头"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches?states=C",
+        "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS045/stats",
+        "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS045/advanced-stats",
+        "https://www.youtube.com/watch?v=y9d6IHw0cZk"
+      ]
+    },
+    "_authoring": {
+      "method": "current_assistant_manual",
+      "external_model_pass_claimed": false,
+      "human_listening_claimed": false
+    }
+  },
+  "push": {
+    "summary": "王曦雨第二盘一局没丢",
+    "lead": "武汉开幕夜的中国德比，王曦雨6-2、6-0击败王欣瑜，晋级第二轮。开局第三个破发点就破发，第二局又顶住对手的破发点；全场王欣瑜拿到的4个破发点，她一个都没让出去。",
+    "matchup": "王曦雨 vs 王欣瑜",
+    "score": "6-2 6-0",
+    "auto": true
+  },
+  "_hit_data": {
+    "break_points": "王曦雨5/9，王欣瑜0/4（WTA官方LS045 stats，setnum 0）",
+    "winners_ue": "制胜分13比7，非受迫性失误10比22（WTA官方 advanced-stats matchTotal）",
+    "first_set_time": "首盘00:43:48（官方 stats setnum 1 settime；解说「forty-three minutes」）"
+  },
+  "_turning_points": [
+    "第1局：平分后第三个破发点破发（解说「Needs three tries」，比分条30秒1-0）",
+    "第2局：王欣瑜占先的破发点被救回，随后保发2-0",
+    "第7局：4-2时40-15第一个破发点兑现，5-2（解说「And there's the break」）",
+    "第二盘：6-0；第一个赛点被救，第二个赛点拿下"
+  ],
+  "stats": {
+    "tour": "wta",
+    "_source": "stats.a=王曦雨（官方A），stats.b=王欣瑜（官方B）。WTA官方 /tournaments/1075/2026/matches/LS045/stats setnum 0：acesa/b 2/0、dblflta/b 0/3、ptsplayed1stserv（一发进）31/29、ptswon1stserv 22/13、totservplayed 44/46、ptstotwonserv 32/19、breakptsconv 5/0、breakptsplayed 9/4；second_total=totserv−一发进=13/17，second_won=发球总得分−一发得分=10/6；pts_won=发球得分+接发得分（对手发球总分−对手发球得分）=32+27=59 / 19+12=31，pts_total 90。",
+    "_winners_ue_evidence": {
+      "provider": "official_wta",
+      "method": "api",
+      "source_url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS045/advanced-stats",
+      "period": "Match",
+      "source_period": "matchTotal",
+      "match_date": "2026-10-12",
+      "checked_at": "2026-10-12T15:14:18+00:00",
+      "matchup": [
+        "Xiyu Wang",
+        "Xinyu Wang"
+      ],
+      "winner_result": "6-2 6-0",
+      "winners": [
+        13,
+        7
+      ],
+      "ue": [
+        10,
+        22
+      ]
+    },
+    "a": {
+      "aces": 2,
+      "df": 0,
+      "winners": 13,
+      "ue": 10,
+      "first_in": 31,
+      "first_won": 22,
+      "first_total": 44,
+      "second_total": 13,
+      "second_won": 10,
+      "bp_conv": 5,
+      "bp_chances": 9,
+      "pts_won": 59,
+      "pts_total": 90,
+      "headshot": "assets/players/headshots/wta-326160.jpg"
+    },
+    "b": {
+      "aces": 0,
+      "df": 3,
+      "winners": 7,
+      "ue": 22,
+      "first_in": 29,
+      "first_won": 13,
+      "first_total": 46,
+      "second_total": 17,
+      "second_won": 6,
+      "bp_conv": 0,
+      "bp_chances": 4,
+      "pts_won": 31,
+      "pts_total": 90,
+      "headshot": "assets/players/headshots/wta-326376.jpg"
+    }
+  },
+  "scorebox": [
+    90,
+    870,
+    550,
+    980
+  ],
+  "_scorebox_why": "probe board 扫描（wta 档）：板左缘约90、上沿870，右缘在第一盘445–480、第二盘515–516；和probe量板的wta框 [90,870,550,980] 一致，右缘550盖过最宽一档516。",
+  "segments": [
+    {
+      "start": 265.7,
+      "end": 275.9,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "point_end_ok": "第二个赛点265.7前后落地，266.68切王曦雨握拳近景、268.6教练席起立鼓掌、272.96网前拥抱；275.90停在解说第二句结束（275.86）之后、下一句（277.78）之前，不切断句子。",
+      "crosses_cut": "第二个赛点265.7前后落地，266.68切王曦雨握拳近景、268.6教练席起立鼓掌、272.96网前拥抱；275.90停在解说第二句结束（275.86）之后、下一句（277.78）之前，不切断句子。",
+      "score_inset": true,
+      "quote": [
+        {
+          "at": 0.06,
+          "end": 5.02,
+          "text": "And win number six in main draws on the WTA Tour comes to Wang Xiyu\n王曦雨拿下巡回赛正赛第6胜"
+        },
+        {
+          "at": 5.02,
+          "end": 10.16,
+          "text": "as she handles her friend efficiently and effectively from start to finish.\n面对好友 她全程干净利落"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "正文最后一段248–297.15按时间顺序重放两个赛点、获胜、握手拥抱和挥拍致谢，结局完整兑现；冷开场只是预告。"
+    },
+    {
+      "start": 0.0,
+      "end": 12.25,
+      "cx": 0.5,
+      "track": false,
+      "narration": "王曦雨六比二、六比零，淘汰了王欣瑜。北京时间十月十二号晚上，武汉网球公开赛首轮，一场中国德比。",
+      "point_end_ok": "源片开头即首盘第1局40-40平分的完整相持，12.25死球后、解说「And there it is」（12.34）开口之前切；0–12.34双模型ASR均无英语。",
+      "crosses_cut": "源片开头即首盘第1局40-40平分的完整相持，12.25死球后、解说「And there it is」（12.34）开口之前切；0–12.34双模型ASR均无英语。",
+      "score_inset": false,
+      "_score_inset_why": "第一局的原生记分条在左下角3:4居中窗口（x 555–1365）之外；probe 逐帧（wta 标定）0–29.8秒一帧都认不出这块板（第一局板只有分数列、还没有盘局列），回贴会报「一帧都没认出」。比分由旁白交代（平分、破发点），30秒起正常回贴。"
+    },
+    {
+      "start": 12.25,
+      "end": 14.45,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "point_end_ok": "同源连续承接上一段：平分那一分落地后的解说短句12.34–14.30完整保留；14.45在下一句（16.02起，措辞两模型不一致，不选用）之前切。",
+      "crosses_cut": "同源连续承接上一段：平分那一分落地后的解说短句12.34–14.30完整保留；14.45在下一句（16.02起，措辞两模型不一致，不选用）之前切。",
+      "score_inset": false,
+      "_score_inset_why": "第一局的原生记分条在左下角3:4居中窗口（x 555–1365）之外；probe 逐帧（wta 标定）0–29.8秒一帧都认不出这块板（第一局板只有分数列、还没有盘局列），回贴会报「一帧都没认出」。比分由旁白交代（平分、破发点），30秒起正常回贴。",
+      "quote": [
+        {
+          "at": 0.09,
+          "end": 2.05,
+          "text": "And there it is.\n就是这一球"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "start": 19.55,
+      "end": 25.4,
+      "cx": 0.5,
+      "track": false,
+      "narration": "平分之后，王曦雨拿到破发点，在底线和对手来回相持。",
+      "point_end_ok": "第1局占先后的破发点：19.55对手准备发球起，完整相持到25.3死球；不含16.02–19.48那句两模型不一致的解说，25.40在下一句（25.46）开口前切。",
+      "crosses_cut": "第1局占先后的破发点：19.55对手准备发球起，完整相持到25.3死球；不含16.02–19.48那句两模型不一致的解说，25.40在下一句（25.46）开口前切。",
+      "score_inset": false,
+      "_score_inset_why": "第一局的原生记分条在左下角3:4居中窗口（x 555–1365）之外；probe 逐帧（wta 标定）0–29.8秒一帧都认不出这块板（第一局板只有分数列、还没有盘局列），回贴会报「一帧都没认出」。比分由旁白交代（平分、破发点），30秒起正常回贴。"
+    },
+    {
+      "start": 25.4,
+      "end": 30.95,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "point_end_ok": "破发成功后的反应镜头与解说两句完整保留（25.46–30.86），30.95在下一分开始前切；比分条30秒翻成1-0。",
+      "crosses_cut": "破发成功后的反应镜头与解说两句完整保留（25.46–30.86），30.95在下一分开始前切；比分条30秒翻成1-0。",
+      "score_inset": true,
+      "quote": [
+        {
+          "at": 0.06,
+          "end": 2.18,
+          "text": "Xiyu sees her way to the early break.\n王曦雨很早就破了发"
+        },
+        {
+          "at": 2.62,
+          "end": 5.46,
+          "text": "Needs three tries, but gets the job done.\n用了三次机会 还是拿下了"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "start": 30.95,
+      "end": 43.1,
+      "cx": 0.5,
+      "track": false,
+      "narration": "一比零，轮到自己发球，对手马上拿到破发点。王曦雨在底线左右跑动，把这一分的相持顶了下来，随后保住发球局。",
+      "point_end_ok": "第2局王欣瑜占先（破发点）：30.95王曦雨发球起，31–41完整底线相持，41.5她拿球走回发球线、比分条翻成40-40；43.10在解说下一句（43.18）开口前切。抽帧逐0.5秒核过相持中她左右跑动。",
+      "crosses_cut": "第2局王欣瑜占先（破发点）：30.95王曦雨发球起，31–41完整底线相持，41.5她拿球走回发球线、比分条翻成40-40；43.10在解说下一句（43.18）开口前切。抽帧逐0.5秒核过相持中她左右跑动。",
+      "score_inset": true
+    },
+    {
+      "start": 116.34,
+      "end": 125.12,
+      "cx": 0.5,
+      "track": false,
+      "narration": "王曦雨是左手持拍。这一分她左右调动，先把王欣瑜拉到一侧边线，再把球打向另一侧的空当。",
+      "point_end_ok": "3比1、王欣瑜发球：116.5近端发球起，120–121对手被拉到右侧、122.5–123滑步扑向左侧，完整一分落地后125.12在解说（125.40）开口前切。逐0.5秒抽帧核过对手被左右调动。",
+      "crosses_cut": "3比1、王欣瑜发球：116.5近端发球起，120–121对手被拉到右侧、122.5–123滑步扑向左侧，完整一分落地后125.12在解说（125.40）开口前切。逐0.5秒抽帧核过对手被左右调动。",
+      "score_inset": true
+    },
+    {
+      "start": 125.12,
+      "end": 129.2,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "point_end_ok": "同源连续承接上一分的死球与解说（125.40–129.14），129.20停在王欣瑜近景（128.76切入）之中、下一分之前。",
+      "crosses_cut": "同源连续承接上一分的死球与解说（125.40–129.14），129.20停在王欣瑜近景（128.76切入）之中、下一分之前。",
+      "score_inset": true,
+      "quote": [
+        {
+          "at": 0.28,
+          "end": 4.02,
+          "text": "That's a perfect point executed by the lefty.\n这位左手将打出了完美的一分"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "start": 165.05,
+      "end": 176.2,
+      "cx": 0.5,
+      "track": false,
+      "narration": "四比二，又是王欣瑜的发球局。这一分是底线相持，王曦雨从正手位追到反手位，再回到中路，一拍一拍接住。",
+      "point_end_ok": "166.32比分条4-2、15-15，168起完整底线相持，逐0.5秒抽帧核过王曦雨（近端蓝衣）从右侧底角追到左侧再回中路；176.20在解说（176.26）开口前切，相持在下一段继续到177.5死球。",
+      "crosses_cut": "166.32比分条4-2、15-15，168起完整底线相持，逐0.5秒抽帧核过王曦雨（近端蓝衣）从右侧底角追到左侧再回中路；176.20在解说（176.26）开口前切，相持在下一段继续到177.5死球。",
+      "score_inset": true
+    },
+    {
+      "start": 176.2,
+      "end": 178.9,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "point_end_ok": "同源连续承接上一段的相持，177.5死球、178.0王曦雨近景；解说176.26–178.86完整保留，178.90在下一分开始前切。",
+      "crosses_cut": "同源连续承接上一段的相持，177.5死球、178.0王曦雨近景；解说176.26–178.86完整保留，178.90在下一分开始前切。",
+      "score_inset": true,
+      "quote": [
+        {
+          "at": 0.06,
+          "end": 2.66,
+          "text": "So Xiyu starts to take over here, trying to find another break.\n王曦雨开始掌控局面 想再破一次发"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "start": 178.9,
+      "end": 185.3,
+      "cx": 0.5,
+      "track": false,
+      "narration": "四十比十五，王曦雨又拿到破发点。",
+      "point_end_ok": "179起王欣瑜发球的破发点完整一分，185.30在解说「And there's the break」（185.36）开口前切；比分条186–188翻成5-2。",
+      "crosses_cut": "179起王欣瑜发球的破发点完整一分，185.30在解说「And there's the break」（185.36）开口前切；比分条186–188翻成5-2。",
+      "score_inset": true
+    },
+    {
+      "start": 185.3,
+      "end": 187.45,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "point_end_ok": "破发落地后的解说完整保留（185.36–187.36），187.45在下一分开始前切。",
+      "crosses_cut": "破发落地后的解说完整保留（185.36–187.36），187.45在下一分开始前切。",
+      "score_inset": true,
+      "quote": [
+        {
+          "at": 0.06,
+          "end": 2.06,
+          "text": "And there's the break. A double-break lead.\n破发成功 领先两个发球局"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "start": 187.45,
+      "end": 195.7,
+      "cx": 0.5,
+      "track": false,
+      "narration": "五比二，轮到王曦雨发球，第一盘的盘点。她在远端，把王欣瑜从左边调到右边。",
+      "point_end_ok": "5-2王曦雨发球局：188拍球准备、189.5起盘点完整相持，逐0.5秒抽帧核过远端王曦雨把近端王欣瑜从左侧（190–193）调到右侧（195.5–196）；195.70在解说（195.78）开口前切，相持在下一段同源连续打完（约196落地）。源片188–192现场声极低，旁白盖住。",
+      "crosses_cut": "5-2王曦雨发球局：188拍球准备、189.5起盘点完整相持，逐0.5秒抽帧核过远端王曦雨把近端王欣瑜从左侧（190–193）调到右侧（195.5–196）；195.70在解说（195.78）开口前切，相持在下一段同源连续打完（约196落地）。源片188–192现场声极低，旁白盖住。",
+      "score_inset": true
+    },
+    {
+      "start": 195.7,
+      "end": 208.15,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "point_end_ok": "同源连续承接上一段的盘点相持，约196落地，197.5王曦雨近景、199.5教练席鼓掌；解说三句195.78–208.02完整保留，208.15在下一句（211.94）之前切。原生左下比分板在正常比赛镜头里回贴，近景与教练席镜头板不在时渲染逐帧不贴。",
+      "crosses_cut": "同源连续承接上一段的盘点相持，约196落地，197.5王曦雨近景、199.5教练席鼓掌；解说三句195.78–208.02完整保留，208.15在下一句（211.94）之前切。原生左下比分板在正常比赛镜头里回贴，近景与教练席镜头板不在时渲染逐帧不贴。",
+      "score_inset": true,
+      "quote": [
+        {
+          "at": 0.08,
+          "end": 3.84,
+          "text": "And the opening set is done in forty-three minutes.\n第一盘只用了43分钟"
+        },
+        {
+          "at": 4.38,
+          "end": 8.36,
+          "text": "Wang Xiyu sees her way to a one-set advantage in the opening round\n王曦雨在首轮先拿下一盘"
+        },
+        {
+          "at": 8.36,
+          "end": 12.32,
+          "text": "on night one of the Dongfeng Voyah Wuhan Open.\n这是武汉网球公开赛的开幕夜"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "start": 211.8,
+      "end": 219.34,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "point_end_ok": "换边休息时的解说评价（211.94–219.26）完整保留，219.34在下一句（219.42，讲别的球员）开口前切。",
+      "crosses_cut": "换边休息时的解说评价（211.94–219.26）完整保留，219.34在下一句（219.42，讲别的球员）开口前切。",
+      "score_inset": false,
+      "_score_inset_why": "换边休息镜头，原生比分板不在画面，转播自带的盘分图形保留原样。",
+      "quote": [
+        {
+          "at": 0.14,
+          "end": 7.46,
+          "text": "Well, overall in this set, it's definitely the amount of unforced errors, really, from Xinyu.\n这盘王欣瑜非受迫性失误太多"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "start": 226.3,
+      "end": 248.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "第二盘，王曦雨三比零领先，在远端发球。她把王欣瑜从左侧底角，一路调动到右侧边线外。这一盘，王欣瑜一局都没拿到。全场她拿到四个破发点，一个也没有兑现。",
+      "point_end_ok": "226.3起3-0、15-0王曦雨发球的完整一分：逐0.5秒抽帧核过近端红衣王欣瑜从左侧底角（226–229）被调到右侧边线外（233–234.5）；直到248五比零赛点前，双模型ASR只有无内容的空白段，无前景英语。",
+      "crosses_cut": "226.3起3-0、15-0王曦雨发球的完整一分：逐0.5秒抽帧核过近端红衣王欣瑜从左侧底角（226–229）被调到右侧边线外（233–234.5）；直到248五比零赛点前，双模型ASR只有无内容的空白段，无前景英语。",
+      "score_inset": true
+    },
+    {
+      "start": 248.0,
+      "end": 256.7,
+      "cx": 0.5,
+      "track": false,
+      "narration": "五比零，四十比零，赛点。王欣瑜把她拉到正手位外角，这一分救了下来。",
+      "point_end_ok": "248 MATCH POINT标签起王曦雨发球的第一个赛点完整一分：255–256她被拉到右侧外角扑救，256.0后比分条翻成40-15；256.70在王曦雨近景（258）之前、下一分之前切。",
+      "crosses_cut": "248 MATCH POINT标签起王曦雨发球的第一个赛点完整一分：255–256她被拉到右侧外角扑救，256.0后比分条翻成40-15；256.70在王曦雨近景（258）之前、下一分之前切。",
+      "score_inset": true
+    },
+    {
+      "start": 256.7,
+      "end": 265.7,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "point_end_ok": "258王曦雨近景、260–261发球准备、261.5发出第二个赛点到265前后落地；265.70在解说「And win number six」（265.76）开口前切，下一段连续承接。",
+      "crosses_cut": "258王曦雨近景、260–261发球准备、261.5发出第二个赛点到265前后落地；265.70在解说「And win number six」（265.76）开口前切，下一段连续承接。",
+      "score_inset": true,
+      "_quote_skip_why": "第二个赛点前的近景、发球准备和完整一分，双模型ASR在256.7–265.7只有空白段，解说没有开口，只保留现场声。",
+      "bed": "high",
+      "_digital_silence_why": "源片第二个赛点这一分（约259–265）官方集锦本身的现场声就极低（dry-run 按源片实测 -63.8 至 -66 dB），是转播原样、不是剪辑造成；保留真实现场声营造赛点前的安静，不加噪声、不盖旁白。",
+      "_digital_silence_windows": [
+        [
+          256.7,
+          265.7
+        ]
+      ]
+    },
+    {
+      "start": 265.7,
+      "end": 297.15,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "point_end_ok": "第二个赛点落地起连续保留：握拳近景、教练席、网前拥抱、致意裁判、挥拍感谢看台到终局比分图形；297.15停在解说最后一句（297.08）之后、赛后采访（297.2起）之前，采访一帧不进。",
+      "crosses_cut": "第二个赛点落地起连续保留：握拳近景、教练席、网前拥抱、致意裁判、挥拍感谢看台到终局比分图形；297.15停在解说最后一句（297.08）之后、赛后采访（297.2起）之前，采访一帧不进。",
+      "score_inset": true,
+      "quote": [
+        {
+          "at": 0.06,
+          "end": 5.02,
+          "text": "And win number six in main draws on the WTA Tour comes to Wang Xiyu\n王曦雨拿下巡回赛正赛第6胜"
+        },
+        {
+          "at": 5.02,
+          "end": 10.16,
+          "text": "as she handles her friend efficiently and effectively from start to finish.\n面对好友 她全程干净利落"
+        },
+        {
+          "at": 12.08,
+          "end": 15.9,
+          "text": "And Wang Xinyu will be sent packing, experiencing her 16th career bagel.\n王欣瑜出局 生涯第16次被剃光头"
+        },
+        {
+          "at": 16.1,
+          "end": 19.44,
+          "text": "It was not going to be her night, as it belongs to Xiyu,\n今晚不属于她 属于王曦雨"
+        },
+        {
+          "at": 19.86,
+          "end": 25.2,
+          "text": "who picks up her first main draw win in Wuhan since 2018,\n她2018年后在武汉首次赢下正赛"
+        },
+        {
+          "at": 25.84,
+          "end": 31.38,
+          "text": "posting a 6-2, 6-love victory to advance to the second round of this WTA 1000 event.\n6比2 6比0 晋级WTA1000第二轮"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_why": "收在挥拍谢场与终局比分图形之后、场上采访之前。"
+    },
+    {
+      "title_card": "面对好朋友\n她一局没让",
+      "kicker": "武汉之夜",
+      "seconds": 8.5,
+      "narration": "面对好朋友，王曦雨从第一局，到最后一分，都没有松劲。第二轮，她还能在武汉走多远？",
+      "_why": "收尾卡：情绪落点＋向前看的一问；第二盘6比0来自官方赛果。下一轮对手抽签未出，不点名。"
+    }
+  ]
+}
