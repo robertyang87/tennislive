@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+  File "/workspace/tennislive-eala/tools/probe_board.py", line 300, in scan_plan
+    got = scan_frames(_decode(source, (ox, oy, right - ox, bottom - oy), start, stop, fps),
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/tennislive-eala/tools/probe_board.py", line 218, in scan_frames
+    got = measure(p, band)
+          ^^^^^^^^^^^^^^^^
+  File "/workspace/tennislive-eala/tools/probe_board.py", line 141, in measure
+    geometry = mod.frame_geometry(band)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/tennislive-eala/tools/wta_scoreboard.py", line 298, in frame_geometry
+    raise RuntimeError("WTA board present but native body row geometry is unmeasurable")
+RuntimeError: WTA board present but native body row geometry is unmeasurable
+Exception ignored in: <generator object _decode at 0x7f913fee5380>
+Traceback (most recent call last):
+  File "/workspace/tennislive-eala/tools/probe_board.py", line 274, in _decode
+    raise RuntimeError(f"ffmpeg 解板失败：{err.strip()[-300:]}")
+RuntimeError: ffmpeg 解板失败：0/rawvideo @ 0x561003dd3680] Task finished with error code: -32 (Broken pipe)
+[out#0/rawvideo @ 0x561003dd3680] Terminating thread with return code -32 (Broken pipe)
+[out#0/rawvideo @ 0x561003dd3680] Error writing trailer: Broken pipe
+[out#0/rawvideo @ 0x561003dd3680] Error closing file: Broken pipe
