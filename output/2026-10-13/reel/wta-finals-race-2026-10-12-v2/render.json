@@ -69,7 +69,7 @@
   },
   "film_sha256": "093e459519954507b030aa848fba9d9a07e64ca360e2e5d4792767b8d9336a75",
   "film_bytes": 47721479,
-  "qc_attestation_sha256": "95a91fc0b9ecba268856a9a99c9faf9fc6d4e6b7fe2d9e020120de5b8aded08a",
+  "qc_attestation_sha256": "77a2dec1aafecc4b5adffe3511ae2c4ec4da6ce414f0afdd8594db714aad5bd2",
   "production_stage_events": [
     {
       "stage": "render",
@@ -83,5 +83,12 @@
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wta-finals-race-2026-10-12-v2/wta-finals-race-2026-10-12-v2.mp4",
-  "video_bytes": 47721479
+  "video_bytes": 47721479,
+  "reattests": [
+    {
+      "at": "2026-10-12T22:05:11Z",
+      "spec_sha256": "68d060cba5a69781c7043d65a3446d9eaff70eb0054225c33da769f1881707cd",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/38314464746"
+    }
+  ]
 }
