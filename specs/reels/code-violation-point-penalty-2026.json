@@ -27,10 +27,10 @@
     "_narration_why": "口播和封面钩子是同一句。钩子不写抢七、破发、罚分术语，只留下警告这一档。"
   },
   "push": {
-    "auto": false,
+    "auto": true,
     "summary": "摔拍往往只是警告",
     "lead": "下一次，才罚掉这一分。",
-    "_why": "审片任务明确要求 push.auto=false，不合并、不推微信。成片只进 Release 供审看。未收到账号所有者点名发布之前，不要删掉这句去打开自动推送。"
+    "_why": "账号所有者 2026-10-12 批准按仓库质检通过后的常规流程合并并推微信。crop_zoom 改了画面，这一版和 push.auto 一起重渲。"
   },
   "editorial": {
     "mode": "match_review",
@@ -419,7 +419,10 @@
         "pad": 0.085,
         "show_for": 3.8,
         "motion": "editorial"
-      }
+      },
+      "crop_zoom": 1.04,
+      "fill_y": 1,
+      "_crop_zoom_why": "Prime Video 源片顶上有一条约 14 像素的黑边，铺进 1080×1440 后变成 18 像素。crop_zoom 1.04、fill_y 1 把窗口底边钉住、只裁掉顶上那一条，横向中心仍是 0.5。"
     },
     {
       "source": "zverev",
@@ -427,7 +430,10 @@
       "end": 25.5,
       "cx": 0.5,
       "track": false,
-      "narration": "连砸主裁椅，当场被逐出赛事。"
+      "narration": "连砸主裁椅，当场被逐出赛事。",
+      "crop_zoom": 1.04,
+      "fill_y": 1,
+      "_crop_zoom_why": "Prime Video 源片顶上有一条约 14 像素的黑边，铺进 1080×1440 后变成 18 像素。crop_zoom 1.04、fill_y 1 把窗口底边钉住、只裁掉顶上那一条，横向中心仍是 0.5。"
     },
     {
       "source": "zverev",
@@ -444,7 +450,10 @@
         "pad": 0.085,
         "show_for": 3.8,
         "motion": "editorial"
-      }
+      },
+      "crop_zoom": 1.04,
+      "fill_y": 1,
+      "_crop_zoom_why": "Prime Video 源片顶上有一条约 14 像素的黑边，铺进 1080×1440 后变成 18 像素。crop_zoom 1.04、fill_y 1 把窗口底边钉住、只裁掉顶上那一条，横向中心仍是 0.5。"
     },
     {
       "source": "medvedev",
@@ -526,7 +535,10 @@
       "end": 102.9,
       "cx": 0.5,
       "track": false,
-      "narration": "下一场，他能把火气留在拍子里吗？"
+      "narration": "下一场，他能把火气留在拍子里吗？",
+      "crop_zoom": 1.55,
+      "fill_y": 1,
+      "_crop_zoom_why": "这一镜顶上约 48 像素是全宽纯暗带，再往下仍是没有画面的暗区，球员要到画布大约四分之一处才成为主体。crop_zoom 1.55、fill_y 1 把窗口底边钉住，裁掉顶上的暗带，让 1080×1440 从第一行起就是画面。横向中心仍是 0.5。"
     }
   ],
   "conform": {
