@@ -16,8 +16,19 @@ def load(name: str):
     sys.path.insert(0, str(TOOLS))
     spec = importlib.util.spec_from_file_location(name, TOOLS / f"{name}.py")
     module = importlib.util.module_from_spec(spec)
+    previous = sys.modules.get(name)
     sys.modules[name] = module  # dataclass 注解解析要回 sys.modules 查本模块
-    spec.loader.exec_module(module)
+    try:
+        spec.loader.exec_module(module)
+    finally:
+        # 只在 exec 期间登记，装完把先前那份还回去（先前没有就保持原样）。
+        # 留着不还会把别的测试正常 import 的那份顶掉：新这份带着它 exec 那一刻
+        # 读到的模块级状态（如 reel_facts.REEL_LEDGER_DIR＝真账本路径），而别的
+        # 测试 monkeypatch 的是老那份、`validate_spec` 调用时现 import 拿到的
+        # 却是新这份——判据测试就这么静静读了真账本（CI run 38249109896：
+        # test_time_sensitive_facts 排在本文件之后跑就红，换个 worker 顺序就绿）。
+        if previous is not None:
+            sys.modules[name] = previous
     return module
 
 

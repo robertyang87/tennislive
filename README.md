@@ -225,7 +225,7 @@ src/tennislive/
 ├── qa.py             # 质检
 ├── sources/          # ESPN / flashscore / SofaScore / TNNS / 官方赛程与统计 / 排名
 ├── zh/               # 中文化：球员 / 赛事 / 轮次 / 国家
-├── research/         # 新闻聚类、正文抓取、模型通道、选题雷达、配图检索
+├── research/         # 新闻聚类、正文抓取、选题雷达、配图检索
 ├── render/           # 终端表格 / 公众号 / 小红书 / 卡片图 / 推送 / 封面
 ├── video/            # 解说视频、TTS、字幕、示意图、水印、片尾
 └── publish/          # 公众号草稿 API / PushPlus

@@ -328,7 +328,7 @@ jobs:
           YT_COOKIES: ${{ steps.lead_cookies.outputs.path }}
         run: |
           set -o pipefail
-          python tools/attach_interview_lead_in.py --write | tee /tmp/lead-in.log
+          python tools/attach_interview_lead_in.py | tee /tmp/lead-in.log
 
       - name: 提交生成与提升结果
         if: steps.gate.outputs.work == 'true'
