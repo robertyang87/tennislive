@@ -32,9 +32,9 @@ pipeline scales it down with Lanczos so Chinese strokes stay crisp.
 
 2026-10-12 the default lock-up is the corner label used on the Medvedev
 24-titles film: top-right placement, a brand-green rail on the RIGHT edge,
-every line right-aligned. Row order is the white topic alone, then the
-event/place on its own line, then the date, the score, then the people.
-A label with no topic starts at the place line. Every text run uses the
+every line right-aligned. Row order is the white topic alone (when there
+is one), then the date, then the event/place, then the score, then the
+people. A label with no topic starts at the date. Every text run uses the
 same face as the top-left brand title (``SmileySans-Oblique``); score
 digits stay on ``TL Score``. ``layout="classic"`` keeps the older
 left-or-right stack, including ``split_metric``. Shipping a story_text PNG
@@ -375,9 +375,9 @@ _SHADOW_BLUR = 7
 
 def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
                    metric: str, align: str, highlight: str) -> Path:
-    """右轨、右对齐。主题独占第一行，地点独占下一行，然后日期、比分、人物。
+    """右轨、右对齐。主题独占第一行，然后日期、地点、比分、人物。
 
-    没有主题时从地点起排。除比分数字外每一行都是左上角品牌标题那一支得意黑。
+    没有主题时从日期起排。除比分数字外每一行都是左上角品牌标题那一支得意黑。
     比分数字仍是 TL Score，按局数上色。行数变多时画布往下长，至少 340，取偶数。
     """
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -395,13 +395,13 @@ def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
         font = _fit_font(LABEL_FONT, 58, 40, headline, lane, stroke=_STROKE_HEAD)
         rows.append(("text", headline, font, WHITE, _STROKE_HEAD,
                      block_h(headline, font, _STROKE_HEAD)))
+    font = _fit_font(LABEL_FONT, 32, 24, kicker, lane, stroke=_STROKE_SMALL)
+    rows.append(("text", kicker, font, MUTED, _STROKE_SMALL,
+                 block_h(kicker, font, _STROKE_SMALL)))
     if highlight:
         font = _fit_font(LABEL_FONT, 46, 32, highlight, lane, stroke=_STROKE_HEAD)
         rows.append(("text", highlight, font, BRAND_GREEN, _STROKE_HEAD,
                      block_h(highlight, font, _STROKE_HEAD)))
-    font = _fit_font(LABEL_FONT, 32, 24, kicker, lane, stroke=_STROKE_SMALL)
-    rows.append(("text", kicker, font, MUTED, _STROKE_SMALL,
-                 block_h(kicker, font, _STROKE_SMALL)))
     if metric:
         metric_size = _fit_metric_size(probe, metric, 56, 44, lane,
                                        stroke=_STROKE_SMALL)
@@ -714,7 +714,7 @@ def main() -> int:
     ap.add_argument("--kicker", required=True)
     ap.add_argument("--headline", required=True)
     ap.add_argument("--highlight", default="",
-                    help="地点或赛事，独占主题下面那一行，例如「ATP1000 上海」")
+                    help="地点或赛事，独占日期下面那一行，例如「ATP1000 上海」")
     ap.add_argument("--metric", default="")
     ap.add_argument("--detail", required=True)
     ap.add_argument("--variant", choices=sorted(VARIANTS), default="timeline")

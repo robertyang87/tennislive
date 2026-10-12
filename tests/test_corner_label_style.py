@@ -108,23 +108,28 @@ def _ink_bands(path):
     return bands
 
 
-def test_主题独占一行_地点在下一行_没有主题就从地点起排(tmp_path):
-    """主题（摔拍警告）自己一行，地点（ATP1000 上海）独占下一行，然后才是日期。"""
+def test_主题独占一行_日期在地点前面(tmp_path):
+    """行序是主题、日期、地点、比分、人物。没有主题时从日期起排。"""
     with_topic = render(
         "2026.10.11", "摔拍警告", "布勃利克 vs 中岛布兰登",
         tmp_path / "topic.png", highlight="ATP1000 上海", metric="6-4")
     bands = _ink_bands(with_topic)
-    assert len(bands) >= 2
+    assert len(bands) >= 3
     _top, top_end, top_green, top_white = bands[0]
-    place_top, _place_end, place_green, _place_white = bands[1]
+    date_top, date_end, date_green, date_white = bands[1]
+    place_top, _place_end, place_green, _place_white = bands[2]
     assert top_white and not top_green
-    assert place_green and place_top >= top_end
+    assert date_top >= top_end and not date_green and not date_white
+    assert place_green and place_top >= date_end
 
-    place_first = render(
+    no_topic = render(
         "2022.02.22", "", "兹维列夫 · 罚款4万美元",
         tmp_path / "place.png", highlight="阿卡普尔科")
-    first = _ink_bands(place_first)[0]
-    assert first[2], "没有主题时第一行就是地点"
+    opened = _ink_bands(no_topic)
+    _first_top, first_end, first_green, first_white = opened[0]
+    second_top, _second_end, second_green, _second_white = opened[1]
+    assert not first_green and not first_white
+    assert second_green and second_top >= first_end
 
 
 def test_角标文字和左上角品牌标题同一支_比分除外():
