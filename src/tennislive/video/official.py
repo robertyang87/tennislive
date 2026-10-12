@@ -20,11 +20,9 @@ import requests
 from ..digest import Digest
 from ..zh import PLAYER_ZH, player_zh
 from .pipeline import (
-    ChatTranslator,
     SubtitleCue,
     VideoPipelineError,
     render_srt,
-    translate_cues,
 )
 
 WTA_VIDEO_HUB = "https://www.wtatennis.com/videos/"
@@ -1044,8 +1042,12 @@ def render_wta_video(
         raise VideoPipelineError(f"ffmpeg executable not found: {ffmpeg_bin}")
     localized = _curated_chinese_cues(metadata, clip_seconds)
     if localized is None:
-        translator = ChatTranslator()
-        localized = translate_cues(_source_cues(metadata, clip_seconds), translator)
+        # 自动翻译兜底已于 2026-10-12 随模型通道整体移除：结构化描述拼不出
+        # 策展字幕时就明确失败，不许假装有中文字幕。
+        raise VideoPipelineError(
+            "Official video description is not structured enough for curated "
+            "Chinese cues, and automatic translation was removed with the "
+            "model channel (2026-10-12)")
     output_dir = Path(output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     subtitle_path = output_dir / "official-highlight.zh-CN.srt"

@@ -37,7 +37,7 @@ def test_all_columns_have_one_canonical_time_policy():
         text=(ROOT/file).read_text()
         assert '2026-09-30' in text and '不强制具体小时或分钟' in text
         assert all(word in text for word in ('夜里','凌晨','清晨','中午','傍晚'))
-    prompt=(ROOT/'tools/draft_segments.py').read_text()
+    prompt=(ROOT/'tools/production_style.py').read_text()
     assert '大概几点（不报到分钟）' not in prompt
     assert '自然时段' in prompt
 

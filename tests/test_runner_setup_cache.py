@@ -400,15 +400,15 @@ def test_同一把apt缓存键在每个会存它的mode下装的包都一样():
 
 
 def test_共用一个apt缓存前缀的几条线装的包一样():
-    """reel-model-benchmark / wang-vekic 只装 ffmpeg，原来跟 match-reel 共用
-    `ffmpeg-fonts-v3-`。benchmark 在推 main 时跑（它的 paths 里有它自己的 yml），
-    于是在 main 上存下一份只有 ffmpeg 的 v3——会话分支上每一趟 render / cover
-    按前缀先捞到它（排在 CI 那份前面），字体落空、退回镜像，直到哪趟 main 上的
-    render 存出一份全的。前缀是**写**缓存的那条线的地盘：谁往里存，谁就得装同一批包。
+    """只装 ffmpeg 的那几条线原来跟 match-reel 共用 `ffmpeg-fonts-v3-`：它们在推
+    main 时跑（paths 里有自己的 yml），于是在 main 上存下一份只有 ffmpeg 的
+    v3——会话分支上每一趟 render / cover 按前缀先捞到它（排在 CI 那份前面），
+    字体落空、退回镜像，直到哪趟 main 上的 render 存出一份全的。前缀是**写**
+    缓存的那条线的地盘：谁往里存，谁就得装同一批包。
 
-    2026-09-27 搬走的是 match-reel（→ `ffmpeg-fonts-v4-`），v3 留给那两条只装 ffmpeg
-    的线：改 benchmark 的 yml 会让合并那一下在 main 上跑一趟 DeepSeek ＋ MiniMax 对比，
-    而账号所有者当天说这两个模型不要用。match-reel 退回 v3，这里就红。
+    2026-09-27 搬走的是 match-reel（→ `ffmpeg-fonts-v4-`），v3 留给只装 ffmpeg
+    的线。（那几条只装 ffmpeg 的模型对比／诊断工作流已于 2026-10-12 随模型
+    通道删除，本判据动态扫现存工作流，口径不变。）match-reel 退回 v3，这里就红。
     """
     by_prefix: dict[str, dict[str, frozenset[str]]] = {}
     for fname, job, prefix, per_mode in _saved_package_sets():

@@ -2563,7 +2563,7 @@ EXIF 那条路的赛事名、NOT_IN_MATCH，决赛放宽的日期要求，原来
 复现（仓库里的 `specs/reels/pending/badosa-gauff.draft.json`，`received_at` 挪到现在）：审核把封面判过了（same_match、高芙、
 winner_celebration、0.88），唯一一条是「ending 必须是 3-30 秒的完整收官窗口」——照样 `stuck_on_cover` True、`needs_official_pick` True
 （这一班装认人依赖）、`refresh` 用接口图把审过的 WTA 赛后稿头图换掉（**同一个路径**）。下一班重审过了新图的封面、结尾照旧不过，
-于是刚审过的接口图进 `_cover_api.rejected`、换下一张，第 3 班再换——每换一次重审一次 MiniMax（`EVIDENCE_CHANGED`，冷开场／结尾跟着重掷）、
+于是刚审过的接口图进 `_cover_api.rejected`、换下一张，第 3 班再换——每换一次重审一次视觉审核（`EVIDENCE_CHANGED`，冷开场／结尾跟着重掷）、
 往 main 提交一张 4.7~9.6 MB（复审量的）的原图，直到候选用完；中途哪次重掷过了，转正的是排在后面的那张（前面审过的都记成了「被判掉」）。
 
 | | 草稿数（2026-09-28 仓库里的 pending） |
@@ -2601,7 +2601,7 @@ winner_celebration、0.88），唯一一条是「ending 必须是 3-30 秒的完
   和排在它前面的每一份草稿的接口档（复审 O4 实跑 5 份 55 秒、约 11 秒一份；接口慢时最坏 `COVER_API_DEADLINE` 420 秒＋`timeout 180`）。
   真修要把「落库＋派发」挪到两轮之间（先跑不用接口的、落库派发，再装依赖跑接口那一轮、再落库派发），而认人依赖的缓存是 `uses:` 那一步、挪不进循环——
   这是工作流结构的改动，这一轮没做
-- **视觉审核判掉接口图之后，回到 Tennis TV／WTA 赛后稿那条路要多一班**：每判掉一张接口图，下一班先挑下一张接口图（一次 MiniMax 重审），
+- **视觉审核判掉接口图之后，回到 Tennis TV／WTA 赛后稿那条路要多一班**：每判掉一张接口图，下一班先挑下一张接口图（一次视觉重审），
   接口没有别的了才走原来那条路——medvedev-royer 回放里第 3 班才走到，基线第 1 班就走。故意的：Tennis TV 页头图那条路只核赛事名、挡不住
   前几轮的图（上面「别拿 tennistv 视频页的缩略图当本场证据」），接口图 EXIF 绑了场次
 

@@ -27,12 +27,6 @@ def _no_ambient_github_token(monkeypatch):
     for name in (
         "GITHUB_TOKEN",
         "GH_TOKEN",
-        # 简报那条线同一个形状：`Chat()` 不给 api_key 时会去读这两个，
-        # 环境里恰好有一个，`ready` 就从假变真，走的是另一条分支。
-        "DEEPSEEK_API_KEY",
-        "ANTHROPIC_API_KEY",
-        "TENNISLIVE_BRIEF_PROVIDER",
-        "TENNISLIVE_BRIEF_MODEL",
     ):
         monkeypatch.delenv(name, raising=False)
 

@@ -168,7 +168,7 @@ def test_metadata_delta_preserves_refined_caption_and_untouched_cover_fields(tmp
         raise AssertionError('metadata edit must not transcribe')
     monkeypatch.setattr(builder, '_transcribe_request', no_asr)
     original_cap = (out / 'cap_asr.json3').read_bytes()
-    builder._build_one(path, object(), write=True)
+    builder._build_one(path, write=True)
     changed = json.loads(spec_path.read_text())
     assert changed['cover'] == {'zoom': 1.8, 'title': '精修标题'}
     assert changed['zh'] == ['精修字幕']

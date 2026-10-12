@@ -193,29 +193,15 @@ Variables：`WECHAT_MODE` = `off`（默认，只生成文件）/ `draft` / `publ
 
 重新导出和更新的步骤在 [`docs/youtube-cookies-refresh.md`](docs/youtube-cookies-refresh.md)。
 
-## 模型通道
+## 模型通道（已移除）
 
-中译、要点提炼、字幕翻译共用一条通道（`research/brief.py` 的 `Chat`）：
+2026-10-12 起模型通道整体移除，仓库不再调用任何外部 LLM，也不需要任何
+模型密钥。`tennislive brief` 只做扫新闻、聚热点、抓正文与热度排序，不再
+生成中译和要点，产物里会照实写明；采访与解说的草稿、翻译改由人工撰写、
+审定后落 spec，确定性闸照常读 spec 把关。
 
-| 通道 | 密钥 | 默认模型 | 要装什么 |
-|---|---|---|---|
-| **DeepSeek**（默认） | `DEEPSEEK_API_KEY` | `deepseek-v4-pro` | **什么都不用装**，走 OpenAI 格式的 HTTP |
-| Anthropic | `ANTHROPIC_API_KEY` | `claude-opus-5` | `pip install -e ".[brief]"` |
-
-两个都配走 DeepSeek，反过来用 `TENNISLIVE_BRIEF_PROVIDER=anthropic`；换模型用
-`TENNISLIVE_BRIEF_MODEL`。**跑了哪条会写进产物**（`brief.json` 的 notes、推送正文
-底部、字幕的审计文件）——判据是「走了哪条」，不是「配了什么」。两个都没配不会让它
-失败，简报退回「只有英文标题和热度」并照实写出来。
-
-⚠️ **不是 `GITHUB_MODELS_TOKEN`**：`models.github.ai/inference` 2026-08-05 实测返回
-HTTP 410 `github_models_retirement_brownout`，已退役。
-⚠️ **也不要改走 DeepSeek 的 Anthropic 兼容端点**（`/anthropic`），哪怕那样两条路能
-共用一个 SDK：`output_config` 只支持 `effort`（json_schema **收下就忽略**），不认识
-的模型名会**自动映射成 `deepseek-v4-flash`**，两件事都不报错。判据
-`test_不许改走DeepSeek的Anthropic兼容端点`。
-
-⚠️ **译名不交给模型判断**：模型会把 Rybakina 译成「里巴金娜」（表里是**莱巴金娜**），
-而且每次译法还可能不一样。先扫出名字当硬约束塞进 prompt（`research/glossary.py`）。
+⚠️ **译名以译名表为准**（见下面「中文化」）：比如 Rybakina 是**莱巴金娜**，
+不许凭印象或机器翻译写成别的译法。
 
 ## 中文化
 
@@ -239,7 +225,7 @@ src/tennislive/
 ├── qa.py             # 质检
 ├── sources/          # ESPN / flashscore / SofaScore / TNNS / 官方赛程与统计 / 排名
 ├── zh/               # 中文化：球员 / 赛事 / 轮次 / 国家
-├── research/         # 新闻聚类、正文抓取、模型通道、选题雷达、配图检索
+├── research/         # 新闻聚类、正文抓取、选题雷达、配图检索
 ├── render/           # 终端表格 / 公众号 / 小红书 / 卡片图 / 推送 / 封面
 ├── video/            # 解说视频、TTS、字幕、示意图、水印、片尾
 └── publish/          # 公众号草稿 API / PushPlus

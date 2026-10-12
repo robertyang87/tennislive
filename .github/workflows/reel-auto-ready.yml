@@ -36,8 +36,8 @@ jobs:
             assets
             data
             specs
-            # analyze_reel_visuals / promote 的重起草在调用时要读生产 skill
-            # 拼 prompt；漏了它，失败要等第一条真 pending 草稿才炸（2026-08-27）
+            # promote 在调用时要读生产 skill；漏了它，失败要等第一条真
+            # pending 草稿才炸（2026-08-27）
             skills
             src
             tools
@@ -100,10 +100,7 @@ jobs:
           path: ~/.cache/tennislive/face-models
           key: face-models-buffalo_s-v0.7-17d6bb6dfcd3
 
-      - name: 重试 pending 的官方封面、视觉证据和正式提升
-        env:
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      - name: 重试 pending 的官方封面和正式提升（视觉证据须已在草稿里）
         run: |
           shopt -s nullglob
           # 备料重跑整班的墙钟预算（秒）：每份 timeout 120 只包住一份，同一班五六份一起到期、flashscore
@@ -155,7 +152,7 @@ jobs:
             # 这份草稿、永不重 probe，所以在这儿**只重跑那几块**——不 probe、不下源片、
             # 不碰模型，最多 FEED_RETRY_MAX 次；试满了打 warning、写 run 摘要，
             # pipeline_health 另外点名。排在补封面／视觉证据之前：补上的赛果这一班就能转正
-            # （赛果变了，probe 那一趟的视觉结论它自己作废，下面那道重审条件会接上）。
+            # （赛果变了，probe 那一趟的视觉结论会随之作废）。
             # - 已经停手（exhausted_at：试满／崩了）的不进这一步——pipeline_health 在点名，
             #   不必每一班再刷一遍 warning
             # - 墙钟上限：flashscore 挂住不回时一趟能拖 2~6 分钟，整个 job 才 15 分钟；被掐掉
@@ -199,35 +196,9 @@ jobs:
             timeout "$COVER_REFRESH_TIMEOUT" python tools/refresh_reel_cover.py --draft "$DRAFT" --write $API_ARGS \
               || { echo "::warning::$SLUG refresh_reel_cover 失败或超时（退出码 $?），这一份跳过"; continue; }
 
-            PORTRAIT=$(jq -r '.cover.portrait.image // ""' "$DRAFT")
-            REVIEWED=$(jq -r '._visual_evidence.cover_image // "__missing__"' "$DRAFT")
-            VISUAL_STATUS=$(jq -r '._visual_evidence.visual_status // ""' "$DRAFT")
-            RETRYABLE=$(jq -r '._visual_evidence.retryable // false' "$DRAFT")
-            # Compare bytes and auditor version, not only a reused filename.
-            EVIDENCE_CHANGED=$(python - "$DRAFT" "$OUTDIR" <<'PY'
-          import json,sys
-          from pathlib import Path
-          sys.path.insert(0,"tools")
-          from analyze_reel_visuals import evidence_hash,select_contact_sheets
-          draft=json.loads(Path(sys.argv[1]).read_text())
-          frames=select_contact_sheets(list(Path(sys.argv[2]).glob("contact_*.jpg")))
-          portrait=Path(str(((draft.get("cover") or {}).get("portrait") or {}).get("image") or ""))
-          cover=portrait if portrait.is_file() else None
-          old=(draft.get("_visual_evidence") or {}).get("input_sha256")
-          print("true" if frames and evidence_hash(frames,cover) != old else "false")
-          PY
-            )
-            # 同一批图片不反复收费问模型；没有报告（含瞬时 API 失败）或官方图
-            # 刚补上/换过时才重新审核。
-            if [ "$REVIEWED" = "__missing__" ] || [ "$PORTRAIT" != "$REVIEWED" ] \
-              || [ "$VISUAL_STATUS" = "error" ] || [ "$RETRYABLE" = "true" ] \
-              || [ "$EVIDENCE_CHANGED" = "true" ]; then
-              python tools/analyze_reel_visuals.py \
-                --draft "$DRAFT" --outdir "$OUTDIR" --write \
-                || { echo "::warning::$SLUG analyze_reel_visuals 失败，这一份跳过"; continue; }
-            else
-              echo "[skip] $SLUG 的同一批视觉证据已经审核过"
-            fi
+            # 视觉证据不再自动生成（原视觉审核工具已随模型通道于 2026-10-12
+            # 移除）：草稿里已有的 `_visual_evidence` 原样交给 promote 的闸；
+            # 没有就停在 pending，等人工补齐后下一班再提升。
             python tools/promote_reel_draft.py --draft "$DRAFT" --write \
               || { echo "::warning::$SLUG promote_reel_draft 失败，这一份跳过"; continue; }
             if [ -f "specs/reels/$SLUG.json" ] && [ ! -f "$DRAFT" ]; then

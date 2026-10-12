@@ -2399,7 +2399,7 @@ A 趟 `apt_install_cached ed` 存下只有 ed 的缓存，B 趟恢复它再装 `
 两个入口都堵了：reel-model-benchmark / wang-vekic 只装 ffmpeg，原来跟 match-reel 共用 v3
 （benchmark 推 main 就跑，会在 main 上存一份只有 ffmpeg 的 v3），**搬走的是 match-reel**（→ `ffmpeg-fonts-v4-`），
 v3 留给那两条——benchmark 的 push 触发器 paths 里有它自己的 yml，改它的缓存键，合并那一下就会在 main 上
-跑一趟 DeepSeek ＋ MiniMax 对比（账号所有者 2026-09-27：这两个模型不要用）；同样的隔离，挪自己这一边就拿得到。
+跑一趟已摘除的模型对比（账号所有者 2026-09-27：这两个模型不要用）；同样的隔离，挪自己这一边就拿得到。
 match-reel 的 apt 恢复从 `mode != 'push'` 收窄到 render / cover（probe / narration 的静态构建一落空
 就退 `apt_install_cached ffmpeg`、标脏、存一份只有 ffmpeg 的；save 认 restore 的 `cache-primary-key`，
 restore 跳过它就跟着跳过；CI 那一格也就写成普通一行，按 mode 开关的写法判据不再认）。
@@ -3622,32 +3622,32 @@ UTC——每天 **16:00 UTC 之后两者差一天**。查 `output/2026-07-26/...
 不是没生成。两个检查脚本的 `--date` 默认值已经改成上海日期。
 
 
-### ⭐ 换成 DeepSeek：兼容端点看着最省事，而它废掉的正好是唯一的保证
+### ⭐ 换成外部模型通道：兼容端点看着最省事，而它废掉的正好是唯一的保证
 
-账号所有者 2026-08-05：「**我没有这个〔ANTHROPIC_API_KEY〕，deepseek 的可以用么**」。
+账号所有者 2026-08-05：「**我没有这个〔ANTHROPIC_API_KEY〕，我手上那个模型的可以用么**」。
 
 可以。而这一节记的是**怎么接**——因为最省事的那条路是错的。
 
-DeepSeek 有两个入口，我的第一反应是走第二个（`base_url` 一改，SDK 都不用换）：
+那个模型商有两个入口，我的第一反应是走第二个（`base_url` 一改，SDK 都不用换）：
 
 | 入口 | 格式 | |
 |---|---|---|
-| `api.deepseek.com/chat/completions` | OpenAI | **现在走这条** |
-| `api.deepseek.com/anthropic` | Anthropic | ❌ 见下 |
+| 供应商的 OpenAI 格式端点 | OpenAI | **现在走这条** |
+| 供应商的 Anthropic 兼容端点 | Anthropic | ❌ 见下 |
 
 官方文档在兼容端点那页写明了两件事，**两件都是静默的**：
 
 - **`output_config` 只支持 `effort`**——也就是 `format` 那半截（json_schema）
   **收下然后忽略**。而 `output_config.format` 正是上一节写的「形状交给 API 保证」
   的全部内容，走这条路它凭空消失，调用方一个字都收不到
-- **传一个它不认识的模型名，后端自动映射成 `deepseek-v4-flash`**——模型名写错
+- **传一个它不认识的模型名，后端自动映射成它的轻量型号**——模型名写错
   不报错，只是悄悄换一个模型把整份简报跑完
 
 两条都是「兜底出事的时候不吭声」的标准形状。而 OpenAI 格式那条路的
 `response_format: {"type": "json_object"}` 是文档明写支持的
 （「guarantees the message the model generates is valid JSON」），
 **而且一个新依赖都不用装**（`requests` 是主依赖，`[brief]` 那个 extra 只给
-Anthropic 那条路）。判据 `test_不许改走DeepSeek的Anthropic兼容端点` 钉在 URL 上，
+Anthropic 那条路）。判据 `test_不许改走模型商的Anthropic兼容端点` 钉在 URL 上，
 ⚠️ 扫之前要**去掉整行注释**——上面这段教训就写在 `brief.py` 的注释里。
 
 四个用法上的点：
@@ -3668,7 +3668,7 @@ Anthropic 那条路）。判据 `test_不许改走DeepSeek的Anthropic兼容端�
   再跑一趟才知道为什么）
 
 **选哪条通道要说出来，而且写错要报错。** 和「图片通道 pushplus / jsdelivr」
-同一条：`brief.json` 的 notes 和推送正文底部都印着 `模型通道 deepseek · deepseek-v4-pro`
+同一条：`brief.json` 的 notes 和推送正文底部都印着 `模型通道 <供应商> · <旗舰型号>`
 ——一个月后有人问「这份简报的要点是谁写的」，答案在当天的产物里。
 ⚠️ `TENNISLIVE_BRIEF_PROVIDER` 拼错**当场 `ValueError`**，不退回另一条：
 环境里往往有一个能用的密钥，静静换一条通道在日志上和「他本来就想用这条」
@@ -3681,7 +3681,7 @@ Anthropic 那条路）。判据 `test_不许改走DeepSeek的Anthropic兼容端�
 
 **跑过了，判据成立**（2026-08-05 06:41Z，run 30982231886）：
 
-    模型通道 deepseek · deepseek-v4-pro
+    模型通道 <供应商> · <旗舰型号>
     新闻 72 条 → 热点 9 个，深挖 8 个；中文平台扫了 231 条
     PushPlus 返回：{"code":200,"data":"08c27f60a0fe4f739276af7979f625a3"}
 
@@ -3691,7 +3691,7 @@ Anthropic 那条路）。判据 `test_不许改走DeepSeek的Anthropic兼容端�
 ⚠️ **`REQUEST_TIMEOUT = 60` 那段注释里的账算漏了一项，方向还偏保守。** 我按
 「13 次调用 × 60 秒」估的是**上界**，而实测**整个「生成今日简报」这一步只用
 了 80 秒**（06:42:11 → 06:43:35），里面还包括 Google News 查询、四条 RSS、
-中文热搜和二十来次抓正文——也就是说关掉思考之后 DeepSeek 单次只要几秒。
+中文热搜和二十来次抓正文——也就是说关掉思考之后模型单次只要几秒。
 那个 60 秒是「挂死了」的闸，不是常态，**别按 80 秒这个实测值往下调**。
 
 #### ⭐ 人工角度表算出来了，却没喂给写 `angle` 的那次调用
@@ -4006,7 +4006,7 @@ dispatch push），**唯一没有自动闭环的就是「render 红了」这一�
 现在 `tools/repair_reel_spec.py` ＋ match-reel.yml 的 `if: failure()` 修复步
 把这一站闭上：dry-run / render / QC 三步的输出 tee 进
 `/tmp/render-findings.log`（**pipefail 不能省**，不带它 tee 会把失败吞成绿），
-render 红了就把判据原话回喂 DeepSeek 修一轮 → 机械复检 → commit → 重新
+render 红了就把判据原话回喂模型修一轮 → 机械复检 → commit → 重新
 dispatch render。**有界**在五层，缺一层都是往内容里放开一个口子：
 
 | 层 | 边界 |
@@ -4029,7 +4029,7 @@ cancel-in-progress——新 run 一启动就把本 run（正在失败的这趟�
 
 ⚠️ **故意没动 promote/finalize 那一带**（教学线会话在改）：修复环只挂在
 render 失败之后，输入是判据文本，输出是 spec 的窗口/删字修订——和 #599
-（MiniMax 机械证据自修）、#601（DeepSeek 算术反馈重试）同形状，推广到渲后。
+（视觉机械证据自修）、#601（模型算术反馈重试）同形状，推广到渲后。
 
 ### ⚠️⚠️ 2026-09-03：而这一轮最后是**撤稿收场**——同一场球被并发做了两遍
 
@@ -4493,7 +4493,7 @@ docstring 和好几处注释里——那是记教训的地方。按文本扫，�
 | 标题中译（`translate_titles`） | **不填**，照旧显示英文原标题——半句机翻比原文更难读 |
 | 字幕（`ChatTranslator`） | **报错**——烧进画面的字幕缺一条就是一段没有字幕的画面 |
 
-⚠️ **默认通道后来换成了 DeepSeek**（账号所有者手上是这个），下一节；
+⚠️ **默认通道后来换成了账号所有者手上的那个模型**，下一节；
 这一节讲的三条对 Anthropic 那条通道照旧成立。
 
 三个用法上的点，都写进了判据（`test_发出去的那次调用要带schema和模型`）：
@@ -4507,9 +4507,9 @@ docstring 和好几处注释里——那是记教训的地方。按文本扫，�
 - ⚠️ **`temperature` / `top_p` / `top_k` 在 Opus 5 上会 400**，别让它们混进来
 
 
-### ⭐⭐ 同一轮的下半场：模型内容线（DeepSeek 文案 / MiniMax 视觉）的执法缺口
+### ⭐⭐ 同一轮的下半场：模型内容线（模型文案 / 模型视觉）的执法缺口
 
-账号所有者点名重点看「codex 教 deepseek 和 minimax 自动化做视频的内容」。
+账号所有者点名重点看「codex 教两个模型自动化做视频的内容」。
 教材本身（`skills/tennis-reel-production/` / `skills/tennis-interview-production/`）
 核过一遍，#593~#611 那批教训都编进去了（算术自洽、证据窗口、口语百分比、
 ASR 译名别名、冷开场覆盖、影子门槛），**教材没大问题；问题在执法**：
@@ -4663,7 +4663,7 @@ orchestrate.yml -f apply=true -f max=N` 一趟就能把积压的候选踢出去�
   / `push_system_prompt()`，lru_cache）：import 一个工具不许要求磁盘上有教材；
   真要起草时教材缺席，仍然当场响。判据 `test_import草稿工具不许要求教材在盘上`
 - **稀疏检出补 `skills`**（reel-auto-ready + orchestrate）：`analyze_reel_visuals`
-  在**调用时**真的要读 skill 给 MiniMax 拼 prompt，lazy 救不了那一步。
+  在**调用时**真的要读 skill 给视觉模型拼 prompt，lazy 救不了那一步。
   判据 `test_跑教材工具的工作流都要检出skills目录` **从 import 图自己推**
   （直接或间接沾 `reel_skill` 的工具都算，宁可保守——几个 markdown 的检出
   成本是零），不维护名单；装上当场把 orchestrate.yml 也抓了出来
@@ -4809,7 +4809,7 @@ tag 行的字符数量出 953，闸算出 1031。要这个数就让 dry-run 印�
 ## ⭐⭐ 2026-09-27：自动链直接提交到 main 的草稿 spec 不许把 main 打红——全库测试对它只报，拦它的是渲染闸
 
 **来路**：17:33Z `interview-auto-render` 把 `laver-cup-2026-trophy-ceremony` 的自动正式 spec
-（01684ef0，`zh` 是 DeepSeek 初译，11 行超 952px）直推 main。**GITHUB_TOKEN 推的提交不触发
+（01684ef0，`zh` 是模型初译，11 行超 952px）直推 main。**GITHUB_TOKEN 推的提交不触发
 ci.yml**，于是它不红在自己身上：`test_字号涨了不许撑破已有的行` 红在 2 分钟后一个无关的人工合并
 （#1127，run 36337538392）上，再把所有开着的 PR（#1112 …）一起打红，38 分钟后 #1130 手修才绿。
 **而那条片子早被渲染闸拦下了**（run 36337385713 停在 `write_ass` →「中文字幕过不了」）——全库测试
@@ -4859,7 +4859,7 @@ spec 也不改），销章看 `_protected`：人核过（`transcript_verified` /
 `promote_interview_draft` 和 `taste_preflight` 里跑，而且不扫 `zh`）。**自动链还能经由这四条把 main 打红**；
 堵法是同一个：先在 `main()` 装同一个判据，再让测试对自动 spec 只报。
 ⚠️ 其中「N 强」那条**草稿转正那条路堵上了一半**（评审 2026-09-27：main 上真草稿
-`bonzi-winston-salem-2026-r` 的 DeepSeek 译文「大概是八强左右」，转正 `check_interview_copy_wording`
+`bonzi-winston-salem-2026-r` 的模型译文「大概是八强左右」，转正 `check_interview_copy_wording`
 返回空、全库测试红）：`promote_all` 按全库测试同一份面（`spec_wording.non_annotation_strings`，**含 `zh`**）
 跑 `strength_round_hits`，命中就留草稿。**人工请求那条路 2026-09-27 晚也堵上了**（确定性的一刀，
 和 promote 同一个处置，不碰模型提示词）：`build_interview_request._round_name_review` 在写正式 spec 之前
@@ -5071,7 +5071,7 @@ render 的封面前置那一步红了会就地扫、自动换一格（tennis-cov
 | 1080p 的框配 720p 源（2，medvedev-wong） | 源片下完才红（cv2 `!_src.empty()` / ReelError），probe 产物一个字节没提交 | `fit_scorebox_to_frame`：按源片高度找一档装得下的参考高度等比缩（`98,920,519,1029`@1280×720 → `65,613,346,686`；同一 slug 后来下到 1080p 那趟这个框量出 97 个死球），缩不进退回猜框；`probe.json` 记 `scorebox_fitted`。⚠️ **只认得出「出界」**：720p 的框配 1080p 源、1080p 左上角的框碰巧装得进 720p，都原样用、量错地方、不报——框照这一趟源片的像素给；**只宽出界、源片比 16:9 窄**（4:3 老转播）时平移（黑边世界）和等比缩（更高一档）两种读法都装得进就不猜、退回猜框，见下面第二轮复审；`--scorebox` 给了却量不了时 `point_ends` 记 `null`（不是 `[]`，`[]` 是量过零次）。全库 94 条 spec 的框对 probe 过的源片：108 次原样、1 次要缩（`zheng-rybakina` 的 720p 那趟）、0 次丢 |
 | 派发 render 的 assert 撞手写 spec（1，run 36331363124） | 裸 `AssertionError` | `tools/probe_dispatch_gate.py`：没 spec → waiting，手写（`_production.kind` 不是 `orchestrated_reel`，含没有 `_production` 的）→ skip，自动 spec 的 ready ＋ `push.auto` 合同照旧硬 |
 | frame-grab 推送 5 次失败（1，run 36317540680） | 手搓循环睡在 fetch 和 push 之间（13~28 秒），远端每一轮都往前走一格 | 改用共享 `push_with_rebase_retry`；**共享脚本本身也改成「先退避、再 rebase、立刻推」**（原来同样睡在 rebase 和 push 之间），同 slug 的 frame-grab 排队——⚠️ 排队只排得下**一个**：GitHub 每组最多一个在跑、一个 pending，同 slug 连拨三趟，第三趟会把还在 pending 的第二趟取消（`cancel-in-progress: false` 只保在跑的那趟）；要抽不同区间就换 slug |
-| 上游 HTTP 5xx（1，run 35708122768） | 审计标成 flashscore，**日志里其实是 MiniMax 读比分板 500**——base 的 47f9f2b6d 已降级只报（`test_scoreboard_http_failure_does_not_write_partial_alignment`），账号所有者 09-27 定了不给模型加重试，没加 | flashscore 这一侧补上同形的洞：`fetch_match_stats_fs.feed` 5xx／网络抖动重试 3 次、最后一律 `StatsError`；`assemble_spec` 读 feed 的四块（stats／狠数据／转折局／抢七小分）接住 `match_feed._get` 抛的 `SystemExit`（原来穿过每一处 `except Exception`，一次 500 就让 probe 整趟不提交）；**matchup 归位那一块不降级**，见下 |
+| 上游 HTTP 5xx（1，run 35708122768） | 审计标成 flashscore，**日志里其实是视觉模型读比分板 500**——base 的 47f9f2b6d 已降级只报（`test_scoreboard_http_failure_does_not_write_partial_alignment`），账号所有者 09-27 定了不给模型加重试，没加 | flashscore 这一侧补上同形的洞：`fetch_match_stats_fs.feed` 5xx／网络抖动重试 3 次、最后一律 `StatsError`；`assemble_spec` 读 feed 的四块（stats／狠数据／转折局／抢七小分）接住 `match_feed._get` 抛的 `SystemExit`（原来穿过每一处 `except Exception`，一次 500 就让 probe 整趟不提交）；**matchup 归位那一块不降级**，见下 |
 
 `assemble_spec --year ''`（3 趟）在 base 的 09e091851 已修，`test_match_reel_optional_int_inputs` 钉着。
 
@@ -5127,7 +5127,7 @@ reel-auto-ready 只补封面和视觉证据、**不重跑备料**。回放（df_
 
 ### ⭐⭐ 第三轮复审（同日）：**补上的赛果会让 probe 那一趟的视觉结论过时**
 
-probe 在 assemble 之后**同一趟**跑 `analyze_reel_visuals`；df_mh_1／df_hh_1／反查 id 读失败时，MiniMax 看到的 `_match`
+probe 在 assemble 之后**同一趟**跑 `analyze_reel_visuals`；df_mh_1／df_hh_1／反查 id 读失败时，视觉模型看到的 `_match`
 只有 flashscore_id、没有 `_cover_brief`——`clean_report` 不核封面人物、情绪退回 winner_celebration。重跑补上赛果之后，
 reel-auto-ready 要不要重审只看封面路径／状态／retryable／`evidence_hash`（**只含图片字节，不含 `_match`**）→ 不重审 →
 promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角，自动渲、自动推**（判据 `test_赛果补齐之后_probe时给的封面人物是输家_不许带着旧pass转正`：
@@ -5139,7 +5139,7 @@ promote 把模型的 `cover.subject` 抄进正式 spec：**输家当封面主角
   摘 `input_sha256`（`main` 按它复用 pass）、`retryable: true`、waiting，走原来那条重审路；存着的回答按新赛果重跑
   `clean_report` 的核对，不过的那几条跟「按新赛果重审」一起留在 `problems` 里给人看。`error` 的不动
 - ⚠️ 第四轮复审改掉了「不过 → 哈希留着，同一张照片不再问」：那份回答是**瞎答的**（prompt 里没名字、没赢家，
-  `ask_minimax` 让它「认不出留空」），`subject` 空着／表外译名／`winner_visible` 蒙错都不说明照片里是输家——
+  视觉审核函数让它「认不出留空」），`subject` 空着／表外译名／`winner_visible` 蒙错都不说明照片里是输家——
   留着哈希就不重审、`refresh_reel_cover` 见「已有封面」不换图、`_feed_retry` 在 healed 时摘掉，**不告警地躺到过期**
   （空 subject／表外译名／`winner_visible` 蒙错三种改前全卡，`test_赛果补齐之后_probe时瞎答的赢家照片_不许凭那份回答判死` 的三个参数各是一种；带着赢家审过的 125 份
   pending 草稿里 `cover.subject` 空着的有 66 份（2026-09-28 实测））。

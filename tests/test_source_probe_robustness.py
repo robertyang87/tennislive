@@ -12,7 +12,7 @@
 | 1080p 的框配 720p 源 | 2 | 源片下完才红，probe 产物全丢 | 按高度等比缩（`98,920,519,1029` → `65,613,346,686`），probe 照样出完 |
 | 派发 render 的 assert 撞手写 spec | 1 | 裸 AssertionError | `[skip]`，自动 spec 的合同照旧硬 |
 | frame-grab 推送 5 次失败 | 1 | 睡在 fetch 和 push 之间，每一轮都撞车 | 共享重试：先睡、再 rebase、立刻推 |
-| 上游 HTTP 5xx（备料） | 1 | 那一趟其实是 MiniMax 500（base 47f9f2b6d 已降级）；flashscore 这一侧 SystemExit 穿过 `except Exception` | feed 先重试，assemble 接住 SystemExit 只报；**matchup 归位核不出不退回命令行顺序**，按 home/away 排的几块整块不写 |
+| 上游 HTTP 5xx（备料） | 1 | 那一趟其实是视觉接口 500（base 47f9f2b6d 已降级）；flashscore 这一侧 SystemExit 穿过 `except Exception` | feed 先重试，assemble 接住 SystemExit 只报；**matchup 归位核不出不退回命令行顺序**，按 home/away 排的几块整块不写 |
 
 `assemble_spec --year ''`（3 趟）在 base 的 09e091851 已修，`test_match_reel_optional_int_inputs` 钉着。
 """
@@ -736,11 +736,6 @@ def test_flashscore_5xx重试之后仍失败_备料降级成只报不拖垮probe
     for name in ("stats_block", "collect", "points", "set_pairs"):
         monkeypatch.setattr(a, name, http500)
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
-
-    class NotReady:
-        ready = False
-
-    monkeypatch.setattr(a, "Chat", lambda: NotReady())
     draft = a.assemble(slug="x", home="Alexandra Eala", away="Elena-Gabriela Ruse",
                        event="Cincinnati", year=2026, fixture="北京时间",
                        flashscore_id="4CYI9Ick")
@@ -776,11 +771,6 @@ def _df_hh_1_assemble(monkeypatch, df_hh_1):
     monkeypatch.setattr(a, "collect", rec("collect", {"candidates": [], "durations": []}))
     monkeypatch.setattr(a, "fetch_rankings",
                         lambda: type("R", (), {"atp": [], "wta": []})())
-
-    class NotReady:
-        ready = False
-
-    monkeypatch.setattr(a, "Chat", lambda: NotReady())
     draft = a.assemble(slug="sabalenka-noskova", home="Aryna Sabalenka",
                        away="Linda Noskova", event="Cincinnati", year=2026,
                        fixture="北京时间", flashscore_id="8QYQMw6l",

@@ -82,7 +82,7 @@ QC 的 `per_second_db` 量：**这两份夹具里**没有一秒被预测成静�
 | 老 probe 没有 `audio_levels`、慢放段、mute 段 | 只报一句「这一层没查」＋重 probe 的原命令——「没量」和「量过没事」不许长一样 |
 
 ⚠️ 无旁白段对自动产的 spec 同样是硬的——和 `silence_findings` 对无旁白段的口径一致（那一头是
-模型，render 红了之后 `repair_reel_spec` 拿 dry-run 当复检闸，改窗口比烧一趟渲染便宜）。
+模型，改窗口比烧一趟渲染便宜）。
 
 ⚠️ **上面「硬」的几档，dry-run 只在 mode=render 那一趟硬**（`mode_demoted`，2026-09-28）：
 和 `probe_sources.coverage_demoted` 同一个口径（工作流传的 `REEL_DRY_RUN_FOR`，本地不传按

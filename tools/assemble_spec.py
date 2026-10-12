@@ -8,9 +8,7 @@
     match_stat_hooks --stats-block     数据图 stats.a / stats.b
     match_stat_hooks                   狠数据候选（总分差/一发摆动/破发点/连续保发/H2H）
     find_turning_points                转折局候选
-    draft_spec                         钩子/论点/beats/旁白/场外切口
-
-本工具把这五件批处理成 `specs/reels/pending/<slug>.draft.json`，供人终审。
+本工具把这四件批处理成 `specs/reels/pending/<slug>.draft.json`，供人终审。
 
 ⚠️ **草稿只许落在 `pending/`，不许落在 `specs/reels/` 正下方**：判据测试是
 **非递归**的 `Path("specs/reels").glob("*.json")`，`.draft.json` 会被 `*.json`
@@ -23,7 +21,7 @@
 要 WTA 的 MatchID/tournament id，不在本工具输入里。
 
 ⚠️ **每一层退化都出声**（仓库里「兜底出事不吭声」栽过太多次）：反查不到 id、
-stats 块缺必填项、狠数据算不出、没配 DeepSeek key——各自在 notes 里写一句，
+stats 块缺必填项、狠数据算不出——各自在 notes 里写一句，
 草稿仍会写出「能备到的那部分」，缺的留给终审补。**不因为一块失败就把整份丢掉。**
 
 用法：
@@ -40,7 +38,7 @@ stats 块缺必填项、狠数据算不出、没配 DeepSeek key——各自在 
     _match.flashscore_id  —— 反查或给定
     cover.matchup         —— player_zh 译名 + 英文名
     stats                 —— stats.a / stats.b（数据图直接粘）
-    editorial             —— draft_spec 的 hook/question/thesis/beats/human_context/narration
+    editorial             —— 终审手写：hook/question/thesis/beats/human_context/narration
     _hit_data             —— 狠数据候选（不是判定）
     _turning_points       —— 转折局候选（不是判定）
     _notes                —— 每个环节的成败，一个字不省
@@ -67,11 +65,9 @@ from fetch_match_stats_fs import FeedUnavailable, StatsError, find_match  # noqa
 from match_feed import fs_feed, points, set_pairs  # noqa: E402
 from match_stat_hooks import BODY_ONLY, BODY_ONLY_NOTE, collect, stats_block  # noqa: E402
 from find_turning_points import _label, rank_games  # noqa: E402
-from tennislive.research.brief import Chat  # noqa: E402
 from tennislive.zh import player_zh  # noqa: E402
 from tennislive.sources.rankings import fetch_rankings, norm_name, rank_map  # noqa: E402
 from tennislive.research.zh_trends import fetch_zh_hot  # noqa: E402
-from draft_spec import arithmetic_claim_problem, draft_editorial  # noqa: E402
 from reel_facts import reconcile_sets, verified_match_fact  # noqa: E402
 from reel_timing import speech_seconds  # noqa: E402
 
@@ -302,7 +298,7 @@ def matchup_order(home: str, away: str, flashscore_id: str) -> list[tuple[str, s
 
 
 def facts_text(hit_data: list[dict]) -> str:
-    """把狠数据候选拼成一段喂给 draft_spec 的 facts。
+    """把狠数据候选拼成一段 facts 文本（终审写文案时参考）。
 
     带 `use: body_only` 的那一条（总分差）在行里注明「只进正文，不进钩子和推送
     标题」——账号所有者 2026-09-13「不要写总分差距了」、09-19「不要把这个放在
@@ -350,6 +346,52 @@ def score_fact(scores: list[tuple[int, int]], home_zh: str, away_zh: str) -> str
 
 
 _SCORE_PAIR = re.compile(r"(?<!\d)([0-7])\s*[-:：]\s*([0-7])(?!\d)")
+
+
+_CLAIM_NUMBER = r"(?:\d{1,3}|[零〇一二三四五六七八九十百两]{1,6})"
+_LEAD_CLAIM = re.compile(
+    rf"(?P<a>{_CLAIM_NUMBER})\s*比\s*(?P<b>{_CLAIM_NUMBER})"
+    rf".{{0,16}}?(?:只|仅)?(?:领先|多拿?|净胜)\s*(?P<delta>{_CLAIM_NUMBER})\s*分"
+)
+
+
+def _claim_integer(value: str) -> int:
+    if value.isdigit():
+        return int(value)
+    digits = {"零": 0, "〇": 0, "一": 1, "二": 2, "两": 2, "三": 3,
+              "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+    total = current = 0
+    for char in value:
+        if char in digits:
+            current = digits[char]
+        elif char in {"十", "百"}:
+            total += (current or 1) * {"十": 10, "百": 100}[char]
+            current = 0
+    return total + current
+
+
+def arithmetic_claim_problem(content) -> str | None:
+    """拒绝“56 比 45 只领先 9 分”一类数字都真但关系为假的文案。"""
+    def texts(value):
+        if isinstance(value, dict):
+            for nested in value.values():
+                yield from texts(nested)
+        elif isinstance(value, (list, tuple)):
+            for nested in value:
+                yield from texts(nested)
+        elif value is not None:
+            yield str(value)
+
+    for text in texts(content):
+        for found in _LEAD_CLAIM.finditer(text):
+            left = _claim_integer(found.group("a"))
+            right = _claim_integer(found.group("b"))
+            claimed = _claim_integer(found.group("delta"))
+            expected = abs(left - right)
+            if claimed != expected:
+                return (f"算术关系错误：{found.group('a')}比{found.group('b')}"
+                        f"相差{expected}分，不是{found.group('delta')}分")
+    return None
 
 
 def editorial_score_problem(editorial: dict, scores: list[tuple[int, int]]) -> str | None:
@@ -586,7 +628,7 @@ def upset_cover_brief(matchup: list[dict], scores: list[tuple[int, int]]) -> dic
         "reason": f"爆冷：世界第{winner_rank}击败世界第{loser_rank}",
         "preferred_subject": loser.get("name") or loser.get("name_en"),
         "preferred_moment": "本场落后或失利时仍在拼的高清近景（握拳、咬牙、怒吼、奋力击球），不要低头垮掉的那一帧",
-        # 闸比的是这个键（`analyze_reel_visuals.COVER_MOMENTS` 里的枚举），不是上面那句中文
+        # 这个键是封面情绪的固定枚举值，不是上面那句中文
         "preferred_moment_key": "loser_fighting",
         "fallback_subject": winner.get("name") or winner.get("name_en"),
         "fallback_moment": "本场获胜后庆祝的高清近景",
@@ -937,14 +979,6 @@ def rearm_feed_retry(draft: dict) -> bool:
     return True
 
 
-def _visual_facts(draft: dict) -> str:
-    """视觉审核依赖的赛果口径：`ask_minimax` 把 `_match`、`_cover_brief` 原样喂给模型，
-    `clean_report` 按它们核封面人物和情绪。matchup 顺序不单独比：只在赛果定下来那一趟处置，
-    而 verified 的 `_match` 就是按归好位的 matchup 算的，顺序变了它必然跟着变。"""
-    return json.dumps([draft.get("_match"), draft.get("_cover_brief")],
-                      ensure_ascii=False, sort_keys=True, default=str)
-
-
 def _recheck_copy(draft: dict, feed: FeedState, notes: list[str]) -> str | None:
     """重跑补上了比分／统计之后，拿**同几道机械闸**把已经起草的文案再核一遍。
 
@@ -992,8 +1026,8 @@ def retry_feed_blocks(draft: dict) -> str:
     | `retry` | 还有没读通的，`tries`＋1，下一班再来 |
     | `gave_up` | 这一趟刚好试满、仍没读通（`exhausted_at` 记上时刻）|
 
-    赛果（`_match`／`_cover_brief`）这一趟定下来了，就把 probe 那一趟的视觉结论交给
-    `analyze_reel_visuals.recheck_after_facts_change` 机械处置——那份结论是在不知道赢家时给的。"""
+    （视觉结论复核原来在这一步交给视觉模型工具处置——该工具已于 2026-10-12
+    随模型通道整体移除，赛果补齐后不再有视觉结论需要作废。）"""
     ledger = draft.get("_feed_retry")
     if not isinstance(ledger, dict) or not ledger.get("blocks"):
         return "none"
@@ -1005,7 +1039,6 @@ def retry_feed_blocks(draft: dict) -> str:
     if len(pair) != 2 or not all(p.get("name_en") for p in pair):
         raise ValueError("草稿 cover.matchup 不是两位带英文名的球员，没法重跑备料")
     home, away = (str(p["name_en"]) for p in pair)
-    facts_before = _visual_facts(draft)
     feed = FeedState(mid=(draft.get("_match") or {}).get("flashscore_id") or None,
                      order_verified="matchup" not in blocks and "match_id" not in blocks,
                      home_zh=str(pair[0].get("name") or ""),
@@ -1038,15 +1071,6 @@ def retry_feed_blocks(draft: dict) -> str:
             _match_fact_block(draft, feed, notes)
         if feed.scores_read or "stats" in blocks:
             copy_dropped = _recheck_copy(draft, feed, notes)
-    # 只在赛果**这一趟定下来**时处置：还没 verified 的草稿 promote 本来就不收，这时作废只会
-    # 让工作流拿半截赛果再问一次模型，下一趟补齐又作废一次——白花钱。定下来那一趟赛果必然
-    # 变（status 变成 result_verified），所以不会漏掉。
-    if _visual_facts(draft) != facts_before \
-            and (draft.get("_match") or {}).get("status") == "result_verified":
-        from analyze_reel_visuals import recheck_after_facts_change  # noqa: PLC0415
-        visual_note = recheck_after_facts_change(draft)
-        if visual_note:
-            notes.append(visual_note)
     record_feed_retry(draft, feed, tries=tries + 1)
     if feed.failed:
         status = "gave_up" if tries + 1 >= FEED_RETRY_MAX else "retry"
@@ -1171,106 +1195,15 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
     draft["_tactical_research"] = tactical
     notes.append(f"技战术资料：{tactical.get('status', 'provided')}；未核观点不进入旁白")
 
-    # ⑤ 文案（DeepSeek）。facts 用上面算出的狠数据候选喂，background 自动聚合
-    #    H2H + 近况 + 排名 + 中文热点（账号所有者：「不光只是 H2H，还有前几轮的
-    #    战国、当前的热点，都要作为信息背景，查全了」）。--background 给了就
-    #    优先用命令行那份，跳过自动聚合（终审手填时用）。
-    chat = Chat()
-    if not chat.ready:
-        notes.append("⚠️ 没配 DEEPSEEK_API_KEY / ANTHROPIC_API_KEY，文案跳过——"
-                     "钩子/论点/beats/旁白留给终审手写。")
-    else:
-        notes.append(f"文案通道 {chat.channel}")
-        hit = draft.get("_hit_data", [])
-        if background_param:
-            background = background_param
-            notes.append("背景用命令行 --background 传入，跳过自动聚合")
-        else:
-            background, bg_notes = build_background(home, away, hit)
-            notes.extend(bg_notes)
-            notes.append("背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句"
-                         "要 human_context 调研补，见 spec 合同）")
-        editorial_facts = facts_text(hit)
-        exact_score = score_fact(authoritative_scores, feed_home_zh, feed_away_zh)
-        if exact_score:
-            editorial_facts = f"- {exact_score}\n{editorial_facts}".rstrip()
-        points_fact = total_points_fact(
-            draft.get("stats", {}), draft.get("cover", {}).get("matchup", []))
-        if points_fact:
-            editorial_facts = f"- {points_fact}\n{editorial_facts}".rstrip()
-        tactical_facts = verified_context(tactical, identity={"home": home, "away": away, "event": event, "year": year})
-        if tactical_facts:
-            editorial_facts += "\n" + tactical_facts
-        draft["editorial"] = draft_editorial(
-            chat, home=home, away=away, event=event, year=year,
-            fixture=fixture, facts=editorial_facts, background=background)
-        if draft["editorial"] is None:
-            draft.pop("editorial", None)
-            notes.append("⚠️ 文案这一步没成（模型或网络），editorial 留空")
-        else:
-            score_problem = editorial_score_problem(
-                draft["editorial"], authoritative_scores)
-            points_problem = editorial_total_points_problem(
-                draft["editorial"], draft.get("stats", {}),
-                draft.get("cover", {}).get("matchup", []), authoritative_scores)
-            problem = score_problem or points_problem or arithmetic_claim_problem(
-                draft["editorial"])
-            if problem:
-                # 数字方向是机械事实，先把具体错误喂回模型重写一次；仍错就撤稿。
-                corrected_facts = (f"{editorial_facts}\n- 上一稿错误：{problem}。"
-                                   "本次必须按上面的精确比分和总得分方向重写")
-                retry = draft_editorial(
-                    chat, home=home, away=away, event=event, year=year,
-                    fixture=fixture, facts=corrected_facts, background=background)
-                retry_problem = (editorial_score_problem(
-                    retry or {}, authoritative_scores)
-                                 or editorial_total_points_problem(
-                                     retry or {}, draft.get("stats", {}),
-                                     draft.get("cover", {}).get("matchup", []),
-                                     authoritative_scores)
-                                 or arithmetic_claim_problem(retry or {}))
-                if retry and not retry_problem:
-                    draft["editorial"] = retry
-                    notes.append(f"文案事实校验发现首稿错误（{problem}），重写后通过")
-                else:
-                    problem = retry_problem or problem
-                    draft.pop("editorial", None)
-                    notes.append(f"⚠️ {problem}；重写仍未通过，已撤下 editorial")
-            # 推送文案（summary/lead）也自动起草。自动编排产出的新片默认认领
-            # `push.auto=true`：render 的 QC 全绿后直接叫醒 auto-push-reel，
-            # 不再停在人工审片。只有用户对某一条明确要求「不要发布」时，才在
-            # 正式 spec 里删掉 auto 并写 `_no_auto_why`；不能让默认值静默回到关。
-            if "editorial" not in draft:
-                notes.append("⚠️ editorial 因事实不一致已撤下，推送文案与窗口同步跳过")
-            else:
-                try:
-                    from draft_spec import draft_push
-                    push = draft_push(chat, editorial=draft["editorial"],
-                                      facts=editorial_facts)
-                    if push and push.get("summary"):
-                        push_problem = (editorial_total_points_problem(
-                            push, draft.get("stats", {}),
-                            draft.get("cover", {}).get("matchup", []),
-                            authoritative_scores)
-                            or arithmetic_claim_problem(push))
-                        if push_problem:
-                            notes.append(
-                                f"⚠️ 推送文案{push_problem}；已撤下 push，禁止发送")
-                        else:
-                            push["auto"] = True
-                            draft["push"] = push
-                            notes.append(
-                                "推送文案已通过事实校验；默认开启 QC 后自动推送")
-                    else:
-                        notes.append("⚠️ 推送文案起草没成，留终审")
-                except Exception as exc:  # noqa: BLE001
-                    notes.append(f"⚠️ 推送文案没成（{type(exc).__name__}: {exc}）")
+    # ⑤ 文案起草（模型）已于 2026-10-12 随模型通道整体移除：钩子/论点/beats/
+    #    旁白一律留给终审手写，这里只在 notes 里出声，别让草稿看起来像缺步骤。
+    notes.append("⚠️ 文案起草已随模型通道移除——钩子/论点/beats/旁白留给终审手写。")
 
     # ⑥ 窗口（机械对齐优先：逐分+比分板 → 骨架）。给了 pbp + scoreboard 才跑——
     #    这是「配音不脱节」的正路（docs/scoreboard-alignment.md）：逐分数据是内容、
     #    比分板是定位，align_points 把「赛点/破发点那一分」定位到视频秒，再按 9 屏
-    #    模板生成 segments 草稿、旁白按 beats 挂。没给就走下面的 DeepSeek 读字幕
-    #    （draft_segments）那条老路。
+    #    模板生成 segments 草稿、旁白按 beats 挂。没给就 segments 留空，
+    #    或走下面 ⑥″ 的无字幕机械兜底。
     if pbp_path and scoreboard_path:
         try:
             from align_points import align as _align_points, point_states as _pt_states
@@ -1313,37 +1246,8 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
         except Exception as exc:  # noqa: BLE001 —— 机械对齐失败不拖垮整份草稿
             notes.append(f"⚠️ 机械对齐没成（{type(exc).__name__}: {exc}）")
 
-    # ⑥′ 窗口起草（DeepSeek 读字幕+切点）。只在「没走机械对齐」且给了 captions +
-    #    cuts（probe 产物）时才跑——probe 之前这两个文件不存在，跳过并在 notes 出声。
-    if captions_path and cuts_path and "segments" not in draft and draft.get("editorial"):
-        try:
-            from draft_segments import _read_captions, _read_cuts, draft_segments
-            caps = _read_captions(Path(captions_path))
-            cuts = _read_cuts(Path(cuts_path))
-            if not caps:
-                notes.append("⚠️ captions 是空的，窗口起草跳过（退回人工）")
-            elif not chat.ready:
-                notes.append("⚠️ 没配 key，窗口起草跳过")
-            else:
-                beats = "\n".join(
-                    (draft.get("editorial") or {}).get("beats", []))
-                hook = (draft.get("editorial") or {}).get("hook") or []
-                seg = draft_segments(chat, captions_text=caps, cuts=cuts,
-                                     beats=beats, home=player_zh(home),
-                                     away=player_zh(away),
-                                     hook="／".join(str(x) for x in hook)
-                                     if isinstance(hook, list) else str(hook))
-                if seg and seg.get("segments"):
-                    draft["segments"] = seg["segments"]
-                    notes.append(f"窗口起草 {len(seg['segments'])} 段"
-                                 + (f"，拦掉 {seg.get('_dropped', 0)} 段废窗口"
-                                    if seg.get("_dropped") else ""))
-                else:
-                    notes.append("⚠️ 窗口起草没成（模型或全被闸拦掉），segments 留空")
-        except Exception as exc:  # noqa: BLE001 —— 窗口起草失败不拖垮整份草稿
-            notes.append(f"⚠️ 窗口起草没成（{type(exc).__name__}: {exc}）")
-    elif "segments" not in draft:
-        notes.append("⚠️ 没给 captions 或字幕不可读，字幕窗口起草跳过")
+    # ⑥′ 窗口起草（模型读字幕+切点）已于 2026-10-12 随模型通道整体移除：
+    #    没走机械对齐时，语义窗口留给终审，segments 不在这里凭空生成。
 
     # ⑥″ Tennis TV 短集锦常常根本没有字幕轨。probe 已经给了完整镜头表时，
     # 不应把这当作永久人工阻塞：选三个互不跨切点、足够装下旁白的高光镜头。
@@ -1447,7 +1351,7 @@ def main() -> int:
     ap.add_argument("--pbp", default=None,
                     help="fetch_match_pbp --json 落盘的 pbp.json（配 --scoreboard 走机械对齐）")
     ap.add_argument("--scoreboard", default=None,
-                    help="read_scoreboard.py 落盘的 scoreboard.json（配 --pbp 走机械对齐）")
+                    help="比分板读数 scoreboard.json（配 --pbp 走机械对齐；由外部备料落盘）")
     ap.add_argument("--cover", action="store_true",
                     help="试抓 WTA 官方实拍封面（抓不到就留空出声，不硬来）")
     ap.add_argument("--source-url", default="",

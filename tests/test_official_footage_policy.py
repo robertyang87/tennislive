@@ -1,26 +1,18 @@
 """Owner 2026-10-04: official-source gaps may use honest native cards.
 
-Verify both model roles receive the shared policy; this is no waiver of QC.
+Verify the shared production skill carries the policy; this is no waiver of QC.
+(The prompt-injection wrappers that used to deliver this file to model roles
+were removed with the model channels on 2026-10-12 — the policy text itself
+lives in the skill file and is read directly here.)
 """
 from pathlib import Path
-import sys
-
-import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-@pytest.mark.parametrize('role', ['deepseek', 'minimax'])
-def test_shared_prompt_injects_official_gap_fallback_for_both_roles(monkeypatch, role):
-    sys.path.insert(0, str(ROOT / 'tools'))
-    import reel_skill
-
-    read = reel_skill._read
-    # Only the shared resource is relevant here; sparse workspaces may omit
-    # role/reference archives. Keep the real policy resource under test.
-    monkeypatch.setattr(reel_skill, '_read', lambda path: read(path) if path == 'SKILL.md' else '')
-    monkeypatch.setattr(reel_skill, 'model_learning_instructions', lambda *_: '')
-    prompt = reel_skill.model_instructions(role)
+def test_shared_skill_carries_official_gap_fallback_policy():
+    prompt = (ROOT / "skills" / "tennis-reel-production" / "SKILL.md").read_text(
+        encoding="utf-8")
     assert 'use official footage only' in prompt
     assert 'Search available official sources first' in prompt
     assert 'native `title_card`' in prompt

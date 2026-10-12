@@ -221,33 +221,6 @@ def test_promote的取姓和窗口只有一处定义(promote, hold):
     assert promote._surname_en is hold._surname_en
 
 
-def test_自动草稿落盘时盖上建草稿的时刻(monkeypatch, tmp_path):
-    """没有这个章，过了赛果窗口的自动草稿就认不出来、又回到每一趟跑满全量。"""
-    sys.path.insert(0, str(_TOOLS))
-    import draft_interview_spec as dis  # noqa: PLC0415
-    import interview_draft_hold as h  # noqa: PLC0415
-
-    monkeypatch.setattr(dis, "SPECS", tmp_path / "specs")
-    monkeypatch.setattr(dis, "OUTDIR", tmp_path / "out")
-    rows = [{"t": 1.0, "end": 1.4, "text": "Hello"}, {"t": 9.7, "end": 10.0, "text": "thanks."}]
-    monkeypatch.setattr(dis, "transcribe", lambda url, td: (rows, 20.0))
-    monkeypatch.setattr(dis, "translate", lambda lines, chat: ["译文"] * len(lines))
-    cal = [{"en": "Cincinnati Open", "zh": "辛辛那提大师赛", "start": "08-16",
-            "end": "08-23", "pat": "cincinnati"}]
-    cand = {"title": "Cincinnati 2026 R3 Alexander Zverev Interview",
-            "url": "https://example.test/x"}
-    before = h.beijing_today()
-    slug, ok, msg = dis._build_one(cand, None, cal, write=True)
-    after = h.beijing_today()
-    assert ok, msg
-    draft = json.loads((tmp_path / "specs" / f"{slug}.draft.json").read_text(encoding="utf-8"))
-    # 前后各取一次「今天」：正好跨过北京零点（16:00Z）时两个都算对（复审 nit：原来偶发红）
-    assert h.drafted_day(draft) in {before, after}, draft.get(h.DRAFTED_AT_KEY)
-
-
-# ── ③ 工作流那一步真跑一遍 ───────────────────────────────────────────────────
-
-
 def _workflow() -> dict:
     import yaml  # noqa: PLC0415
 

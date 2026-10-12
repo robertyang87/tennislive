@@ -22,7 +22,6 @@ on:
       - "tools/build_interview_clip.py"
       - "tools/build_interview_request.py"
       - "tools/interview_zh_tail.py"
-      - "tools/draft_interview_spec.py"
       - "tools/interview_source_gate.py"
       - "tools/attach_interview_lead_in.py"
       # dispatch 之前那道离线预检和推送后修订的判据：修了这几道闸，等待名单里被它们
@@ -201,7 +200,7 @@ jobs:
 
       - name: 先校验转写与翻译脚本语法
         if: steps.gate.outputs.work == 'true'
-        run: python -m py_compile tools/draft_interview_spec.py tools/build_interview_request.py
+        run: python -m py_compile tools/build_interview_request.py
 
       - name: 把人工请求的产物格加回稀疏范围
         if: steps.gate.outputs.work == 'true'
@@ -317,7 +316,6 @@ jobs:
       - name: 人工指定请求转写、切行并逐行翻译
         if: steps.gate.outputs.work == 'true'
         env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           YT_COOKIES: ${{ steps.lead_cookies.outputs.path }}
         run: |
           set -o pipefail
@@ -327,11 +325,10 @@ jobs:
       - name: 自动配同场比赛结尾与解说双语字幕
         if: steps.gate.outputs.work == 'true'
         env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           YT_COOKIES: ${{ steps.lead_cookies.outputs.path }}
         run: |
           set -o pipefail
-          python tools/attach_interview_lead_in.py --write | tee /tmp/lead-in.log
+          python tools/attach_interview_lead_in.py | tee /tmp/lead-in.log
 
       - name: 提交生成与提升结果
         if: steps.gate.outputs.work == 'true'

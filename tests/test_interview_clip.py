@@ -2068,17 +2068,17 @@ _DROP_NAMES = {"cover.html", "whisper.json"}
 # ⚠️ **目录要另走一张表，按后缀判对它没有意义。**
 # 上面那两行判的是文件；`p.suffix` 拿到目录上，一个叫 `evidence` 的目录必红、
 # 一个叫 `foo.json` 的目录必绿——**两种都是碰巧，不是判断**。这一条 2026-09-12
-# 才露面（`audit_zheng_presser_minimax.py` 那次一次性视觉核查往出片目录里写了
-# 两个目录），而它在这之前一直是 CI 上唯一那条红。
+# 才露面（一次一次性视觉核查往出片目录里写了两个目录），而它在这之前一直是
+# CI 上唯一那条红。
 #
-# 留这两个是因为**报告自己引着它们**：`minimax_visual_audit.json`（本来就按
-# `.json` 留着）的 `frames[].path` 逐帧指向 `minimax_visual_evidence/<audit_id>/`，
-# 还记着每帧的 sha256——删掉证据、留下结论，等于把一份可复核的记录变成一句
-# 没法复核的断言。`visual_audit_history/` 是同一份报告的历次快照。
+# 留这个是因为**报告自己引着它**：视觉审核报告（本来就按 `.json` 留着）的
+# `frames[].path` 逐帧指向证据帧目录，还记着每帧的 sha256——删掉证据、留下
+# 结论，等于把一份可复核的记录变成一句没法复核的断言。`visual_audit_history/`
+# 是同一份报告的历次快照。
 #
 # ⚠️ **不许改成「目录一律跳过」**：那会让下一个中间物目录静静地进仓库，
 # 而这条判据存在的全部意义就是「新增一个中间物，这条会红」。
-_KEEP_DIRS = {"minimax_visual_evidence", "visual_audit_history"}
+_KEEP_DIRS = {"visual_audit_history"}
 
 
 @pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
@@ -3558,7 +3558,7 @@ def test_字号涨了不许撑破已有的行():
 
     # 自动链刚提交、还没核也没发的只报：渲染入口 `write_ass` → `zh_problems` 量的是
     # 同一个 `_zh_width`，超宽一行就「中文字幕过不了」、出不了片。2026-09-27 17:33Z 的
-    # `laver-cup-2026-trophy-ceremony`（01684ef0，DeepSeek 初译 11 行超宽）就是渲染闸先
+    # `laver-cup-2026-trophy-ceremony`（01684ef0，自动初译 11 行超宽）就是渲染闸先
     # 拦下、这条再把 main 打红 38 分钟的（`test_自动链刚提交的采访spec只报_销章就红_渲染闸照拦`）。
     hard = _split_auto(over, "字号涨了不许撑破已有的行", specs)
     fresh = {k: v for k, v in hard.items() if k not in _LEGACY_WIDE_AT_70}
@@ -3574,13 +3574,13 @@ def test_字号涨了不许撑破已有的行():
 
 
 #: 01684ef0（自动链 2026-09-27 17:33Z 直推 main 的 `laver-cup-2026-trophy-ceremony`）
-#: `zh` 第 7 行原文——DeepSeek 初译，量出来 1269px（可用 952）。那一版 11 行超宽，
+#: `zh` 第 7 行原文——自动初译，量出来 1269px（可用 952）。那一版 11 行超宽，
 #: 这是最宽的一行；#1130 手修成「阿尔卡拉斯和兹维列夫」。
 _LAVER_AUTO_WIDE_ZH7 = "卡洛斯·阿尔卡拉斯和亚历山大·兹维列夫"
 
 
 def _laver_auto_sim(tmp_path: Path, **marks) -> Path:
-    """main 上那条捧杯致辞，第 7 行换回 01684ef0 的 DeepSeek 原文，盖着自动章。
+    """main 上那条捧杯致辞，第 7 行换回 01684ef0 的自动初译原文，盖着自动章。
 
     ⚠️ slug 换掉：原名的 `pushed.json` 已经在仓库里（推过了），借它的名字就等于
     借了它的「已发」——判据会把它当成过了那一关，测的就不是自动 spec 了。
@@ -6938,12 +6938,6 @@ def test_冷开场每一句解说都要有字幕_老债只许减():
         lead = spec.get("lead_in") or {}
         assert lead and "source_captions" not in lead, (
             f"{slug} 已经带 source_captions 了，从豁免表里删掉它")
-
-
-def test_自动链接冷开场时也写源字幕():
-    src = (Path(__file__).resolve().parent.parent / "tools" / "attach_interview_lead_in.py").read_text("utf-8")
-    body = src.split("def attach(")[1].split("\ndef ")[0]
-    assert '"source_captions"' in body
 
 
 def test_en_fixed按1起的行号_挂错一行要当场红():

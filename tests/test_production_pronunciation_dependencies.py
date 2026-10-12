@@ -52,10 +52,12 @@ def test_production_extra_is_only_the_same_pinned_dictionary():
         assert requirements[0] in dependencies
 
 
+# oncourt-interviews.yml 不在此列：它的发音检查消费者是 draft 作业，已于
+# 2026-10-12 随模型通道整体移除；剩下的 collect / jev 不做合成。采访成片线
+# 由 interview-clip.yml 与 interview-auto-render.yml 覆盖。
 @pytest.mark.parametrize("workflow", [
     "match-reel.yml", "interview-clip.yml", "explainer.yml",
     "preview-reel.yml", "reel-auto-ready.yml", "interview-auto-render.yml",
-    "oncourt-interviews.yml",
 ])
 def test_actual_install_and_import_probe_exist_in_each_production_path(workflow):
     installs = [step for step in _steps(workflow)

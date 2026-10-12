@@ -176,7 +176,7 @@ def test_一条请求没过前置检查_不让整个请求生成步骤红(monkey
     monkeypatch.setattr(pp, "check_copy", lambda *a, **k: None)
     built = []
 
-    def one(path, chat, *, write):
+    def one(path, *, write):
         if path.stem == "too-long":
             pp.check_request(long_req)                     # 真闸，不是桩
         if path.stem == "net-down":
@@ -185,12 +185,12 @@ def test_一条请求没过前置检查_不让整个请求生成步骤红(monkey
         return path.stem, 3, 60.0
     monkeypatch.setattr(bir, "_build_one", one)
     paths = [tmp_path / f"{n}.json" for n in ("too-long", "ok")]
-    assert bir.build_all(paths, None, write=True) == 0
+    assert bir.build_all(paths, write=True) == 0
     out = capsys.readouterr().out
     assert built == ["ok"], "没过前置检查的那条之后的请求照常建"
     assert "::warning::too-long.json" in out and "放不下一行" in out
     assert "::error::" not in out
-    assert bir.build_all([tmp_path / "net-down.json", *paths], None, write=True) == 1, \
+    assert bir.build_all([tmp_path / "net-down.json", *paths], write=True) == 1, \
         "网络／ASR 那类失败照旧让这一步红"
 
 
@@ -907,44 +907,6 @@ def test_没给end时默认收在最后一个词之后_偏向多留(last_end, bo
     assert bir.request_window({}, duration, None) == (0.0, duration)
 
 
-def test_请求生成器切行和写进spec的是同一个默认终点(monkeypatch, tmp_path):
-    """真跑 `build_interview_request._build_one`：没给 `end` 的请求，切行的窗和
-    写进 spec 的 `end` 都是「最后一个词 ＋ 一口气」，不是源片全长。"""
-    import build_interview_request as bir
-    import draft_interview_spec
-
-    path = tmp_path / "demo.json"
-    path.write_text('{"slug":"demo","url":"https://youtu.be/x"}', encoding="utf-8")
-    monkeypatch.setattr(bir, "_transcribe_request", lambda url, d, model: (_rows(50.0), 80.0))
-    windows, seen = [], {}
-    monkeypatch.setattr(bic, "segment", lambda words, start, end, budget=None, ruler=None: (
-        windows.append((start, end)) or [{"a": 0.0, "b": 1.0, "en": "hello"}]))
-    monkeypatch.setattr(draft_interview_spec, "translate",
-                        lambda rows, chat, max_zh_chars=None: ["你好"])
-    monkeypatch.setattr(bir, "build_spec", lambda req, zh, duration: seen.update(req) or {})
-    bir._build_one(path, object(), write=False)
-    assert windows == [(0.0, 50.0 + tail.DEFAULT_TAIL)]
-    assert seen["end"] == 50.0 + tail.DEFAULT_TAIL
-
-
-def test_自动草稿的默认终点也跟着最后一个词(monkeypatch, tmp_path):
-    """真跑 `draft_interview_spec._build_one`：草稿的 `end` 不再是源片全长。"""
-    import draft_interview_spec as dis
-
-    monkeypatch.setattr(dis, "SPECS", tmp_path / "specs")
-    monkeypatch.setattr(dis, "OUTDIR", tmp_path / "out")
-    monkeypatch.setattr(dis, "transcribe", lambda url, td: (_rows(50.0), 80.0))
-    monkeypatch.setattr(dis, "translate", lambda rows, chat: ["译文"] * len(rows))
-    cal = [{"en": "Cincinnati Open", "zh": "辛辛那提大师赛", "start": "08-16",
-            "end": "08-23", "pat": "cincinnati"}]
-    cand = {"title": "Cincinnati 2026 R3 Alexander Zverev Interview",
-            "url": "https://example.test/x"}
-    slug, ok, msg = dis._build_one(cand, None, cal, write=True)
-    assert ok, msg
-    draft = json.loads((tmp_path / "specs" / f"{slug}.draft.json").read_text(encoding="utf-8"))
-    assert draft["end"] == 50.0 + tail.DEFAULT_TAIL, draft["end"]
-
-
 _N = tail.CARD_W * tail.CARD_H
 
 
@@ -1173,44 +1135,6 @@ def test_老spec_请求没写end而end还等于源片全长_算自动():
     origin = {"request": {"url": "u"}, "duration": 119.1531875}
     assert tail.end_is_auto({"end": 119.15, "_request_origin": origin})
     assert not tail.end_is_auto({"end": 112.0, "_request_origin": origin})
-
-
-def test_生成器没拿到人给的end时记下默认值(monkeypatch, tmp_path):
-    """请求／草稿两条生成路都要把算出来的 `end` 记进 `_end_default`——出片那一趟
-    靠它分辨「没人给过」。请求里写了 `end` 的不记。"""
-    import build_interview_request as bir
-    import draft_interview_spec
-
-    path = tmp_path / "demo.json"
-    monkeypatch.setattr(bir, "_transcribe_request", lambda url, d, model: (_rows(50.0), 80.0))
-    monkeypatch.setattr(bic, "segment", lambda words, start, end, budget=None, ruler=None: (
-        [{"a": 0.0, "b": 1.0, "en": "hello"}]))
-    monkeypatch.setattr(draft_interview_spec, "translate",
-                        lambda rows, chat, max_zh_chars=None: ["你好"])
-    for req, marked in (({"slug": "demo", "url": "https://youtu.be/x"}, True),
-                        ({"slug": "demo", "url": "https://youtu.be/x", "end": 30.0}, False)):
-        built: dict = {}
-        monkeypatch.setattr(bir, "build_spec", lambda r, zh, duration, built=built: (
-            built.update(end=r["end"]) or built))
-        path.write_text(json.dumps(req), encoding="utf-8")
-        bir._build_one(path, object(), write=False)
-        assert ("_end_default" in built) is marked, (req, built)
-        if marked:
-            assert tail.end_is_auto(built)
-
-    import draft_interview_spec as dis
-    monkeypatch.setattr(dis, "SPECS", tmp_path / "specs")
-    monkeypatch.setattr(dis, "OUTDIR", tmp_path / "out")
-    monkeypatch.setattr(dis, "transcribe", lambda url, td: (_rows(50.0), 80.0))
-    monkeypatch.setattr(dis, "translate", lambda rows, chat: ["译文"] * len(rows))
-    cal = [{"en": "Cincinnati Open", "zh": "辛辛那提大师赛", "start": "08-16",
-            "end": "08-23", "pat": "cincinnati"}]
-    cand = {"title": "Cincinnati 2026 R3 Alexander Zverev Interview",
-            "url": "https://example.test/x"}
-    slug, ok, msg = dis._build_one(cand, None, cal, write=True)
-    assert ok, msg
-    draft = json.loads((tmp_path / "specs" / f"{slug}.draft.json").read_text(encoding="utf-8"))
-    assert tail.end_is_auto(draft), draft.get("_end_default")
 
 
 def test_收短记进render_json_没收短就把上一版那笔删掉(tmp_path):

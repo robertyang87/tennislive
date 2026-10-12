@@ -804,9 +804,8 @@ def main() -> int:
         dispatched.append(c)
         c["video"] = probe_claims.video_key(url)
         mark_dispatched(state, [c])
-        # 备料不再在编排器本地跑——它没有 captions（probe 还没落库）也没 DeepSeek
-        # key。probe 工作流里已经有「自动备料写 spec 草稿」一步（有 captions + key
-        # + 能写盘），编排器只负责 dispatch probe 并把 home/away/event/year 传进去。
+        # 备料不再在编排器本地跑——它没有 captions（probe 还没落库）。编排器
+        # 只负责 dispatch probe 并把 home/away/event/year 传进去。
     print(f"已点 {len(dispatched)} 条 run 并记入 state。")
     if probe_errors:
         slugs = "、".join(c["slug"] for c, _ in probe_errors)

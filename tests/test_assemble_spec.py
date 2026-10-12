@@ -1,8 +1,9 @@
 """tools/assemble_spec.py —— 备料批处理（只测不联网的半截）。
 
 不联网：assemble 只 mock 掉 `resolve_match_id` / `stats_block` / `collect` /
-`points` / `rank_games` / `Chat` / `draft_editorial`，验的是**拼装逻辑和退化出声**，
-不是 flashscore/DeepSeek 的真调用。
+`points` / `rank_games`，验的是**拼装逻辑和退化出声**，不是 flashscore 的真调用。
+（文案起草与窗口起草的模型步已于 2026-10-12 整体移除：assemble 不再产
+`editorial`，只在 notes 里出声说明。）
 """
 
 from __future__ import annotations
@@ -35,6 +36,7 @@ def test_surname取最后一个词():
     import importlib.util
     spec = importlib.util.spec_from_file_location("assemble_spec", _TOOLS / "assemble_spec.py")
     mod = importlib.util.module_from_spec(spec)
+    sys.modules["assemble_spec"] = mod  # dataclass 注解解析要回 sys.modules 查本模块
     spec.loader.exec_module(mod)
     assert mod._surname("Alexandra Eala") == "Eala"
     assert mod._surname("Elena-Gabriela Ruse") == "Ruse"
@@ -47,6 +49,7 @@ def test_facts_text把狠数据拼成行():
     import importlib.util
     spec = importlib.util.spec_from_file_location("assemble_spec", _TOOLS / "assemble_spec.py")
     mod = importlib.util.module_from_spec(spec)
+    sys.modules["assemble_spec"] = mod  # dataclass 注解解析要回 sys.modules 查本模块
     spec.loader.exec_module(mod)
     txt = mod.facts_text([
         {"label": "总分差", "detail": "甲 60 - 乙 50，净差 10 分"},
@@ -61,6 +64,7 @@ def test_逐局表提取最终盘分并拦模型编错比分():
     import importlib.util
     spec = importlib.util.spec_from_file_location("assemble_spec", _TOOLS / "assemble_spec.py")
     mod = importlib.util.module_from_spec(spec)
+    sys.modules["assemble_spec"] = mod  # dataclass 注解解析要回 sys.modules 查本模块
     spec.loader.exec_module(mod)
     games = [
         {"set": "Set 1", "home_games": "1", "away_games": "0"},
@@ -104,19 +108,6 @@ def test_总分领先者也是赢家时拦无主语领先却输(tool):
     content = {"lead": "全场多拿11分，却最终输掉比赛"}
     assert "也是比赛赢家" in tool.editorial_total_points_problem(
         content, stats, matchup, [(5, 7), (3, 6)])
-
-
-def test_自动草稿的推送文案默认开启质检后自动发送():
-    """用户定的全局规则：不是“先审后发”，而是 QC 通过就发。
-
-    这条检查钉住生成器的赋值点，避免以后重构 push 起草时把 auto 漏掉，
-    导致 render 全绿却静默跳过微信推送。
-    """
-    body = (_TOOLS / "assemble_spec.py").read_text(encoding="utf-8")
-    push_block = body.split("from draft_spec import draft_push", 1)[1].split(
-        "# ⑥ 窗口", 1)[0]
-    assert 'push["auto"] = True' in push_block
-    assert "默认开启 QC 后自动推送" in push_block
 
 
 def test_爆冷封面优先明星输家还在拼的近景(tool):
@@ -212,6 +203,7 @@ def test_matchup_order按flashscore的home归位(monkeypatch):
     import importlib.util
     spec = importlib.util.spec_from_file_location("assemble_spec", _TOOLS / "assemble_spec.py")
     mod = importlib.util.module_from_spec(spec)
+    sys.modules["assemble_spec"] = mod  # dataclass 注解解析要回 sys.modules 查本模块
     spec.loader.exec_module(mod)
     # feed 里 home = Baez S.，away = Dimitrov G.；命令行传反了顺序
     monkeypatch.setattr(mod, "fs_feed", lambda name, mid: "FH÷Baez S.¬FK÷Dimitrov G.¬~...")
@@ -236,6 +228,7 @@ def test_matchup_order核不出顺序就抛_不退回命令行顺序(monkeypatch
     import importlib.util
     spec = importlib.util.spec_from_file_location("assemble_spec", _TOOLS / "assemble_spec.py")
     mod = importlib.util.module_from_spec(spec)
+    sys.modules["assemble_spec"] = mod  # dataclass 注解解析要回 sys.modules 查本模块
     spec.loader.exec_module(mod)
 
     def _boom(name, mid):
@@ -278,10 +271,6 @@ def test_狠数据和转折局的名字按feed的home_away给(tool, monkeypatch)
         **games[0], "density": 2, "tags": []}])
     monkeypatch.setattr(a, "set_pairs", lambda mid: [])
 
-    class NotReady:
-        ready = False
-
-    monkeypatch.setattr(a, "Chat", lambda: NotReady())
     draft = a.assemble(slug="x", home="Alexandra Eala", away="Elena-Gabriela Ruse",
                        event="Cincinnati", year=2026, fixture="北京时间",
                        flashscore_id="4CYI9Ick", tactical_packet={"status": "skipped"})
@@ -296,11 +285,6 @@ def test_assemble无id时跳过三块并出声(tool, monkeypatch):
     a = tool
     # 反查失败 → 无 id → stats/狠数据/转折局都该跳过，但仍写草稿 + 出声
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: None)
-
-    class NotReady:
-        ready = False
-
-    monkeypatch.setattr(a, "Chat", lambda: NotReady())
     draft = a.assemble(slug="x", home="Alexandra Eala", away="Elena-Gabriela Ruse",
                        event="Cincinnati", year=2026, fixture="北京时间",
                        flashscore_id=None)
@@ -310,7 +294,7 @@ def test_assemble无id时跳过三块并出声(tool, monkeypatch):
     assert "_turning_points" not in draft
     joined = "\n".join(draft["_notes"])
     assert "没反查到 flashscore id" in joined, "缺 id 必须出声，不许静默"
-    assert "文案跳过" in joined or "没配" in joined, "缺 key 也要出声"
+    assert "文案起草已随模型通道移除" in joined, "文案那一步没了也要出声，不许装作本来就没有"
     assert draft["cover"]["matchup"][0]["name_en"] == "Alexandra Eala"
 
 
@@ -332,21 +316,7 @@ def test_assemble有id时各块拼装(tool, monkeypatch):
         "match_points": 0}])
     monkeypatch.setattr(a, "rank_games", lambda games: [{
         **games[0], "density": 2, "tags": ["1个盘点"]}])
-
-    captured = {}
-
-    class FakeChat:
-        ready = True
-        channel = "deepseek · test"
-
-        def ask(self, *a, **kw):
-            return {}
-
-    monkeypatch.setattr(a, "Chat", lambda: FakeChat())
-    monkeypatch.setattr(a, "draft_editorial",
-                        lambda chat, **kw: captured.update(kw) or {
-                            "hook": ["a"], "question": "q", "thesis": "t",
-                            "beats": ["b"], "human_context": "h", "narration": ["n"]})
+    monkeypatch.setattr(a, "set_pairs", lambda mid: [])
 
     draft = a.assemble(slug="x", home="Alexandra Eala", away="Elena-Gabriela Ruse",
                        event="Cincinnati", year=2026, fixture="北京时间",
@@ -359,39 +329,9 @@ def test_assemble有id时各块拼装(tool, monkeypatch):
     assert draft["stats"] == {"a": {"aces": 0}, "b": {"aces": 0}}
     assert draft["_hit_data"][0]["label"] == "总分差"
     assert draft["_turning_points"][0]["density"] == 2
-    assert draft["editorial"]["hook"] == ["a"]
-    # draft_spec 收到了狠数据当 facts（文案要能用到算出来的数字）
-    assert "净差 10 分" in captured["facts"]
-    assert captured["fixture"] == "北京时间"
-
-
-def test_assemble把H2H自动喂进background(tool, monkeypatch):
-    a = tool
-    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
-    monkeypatch.setattr(a, "matchup_order",
-                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
-    monkeypatch.setattr(a, "stats_block", lambda mid: {
-        "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
-    # collect 返回含「交手记录」的候选
-    monkeypatch.setattr(a, "collect", lambda mid, h, aw: {
-        "candidates": [{"label": "交手记录", "detail": "Eala S. 1 : 0 Pegula J."}],
-        "durations": []})
-    monkeypatch.setattr(a, "points", lambda mid: [])
-    monkeypatch.setattr(a, "rank_games", lambda games: [])
-    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
-
-    captured = {}
-
-    def fake_editorial(chat, **kw):
-        captured.update(kw)
-        return {"beats": ["b"]}
-
-    monkeypatch.setattr(a, "draft_editorial", fake_editorial)
-
-    a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
-               fixture="", flashscore_id="4CYI9Ick")
-    assert "1 : 0" in captured.get("background", ""), (
-        "H2H 要从狠数据里自动拎出来当球员背景喂给文案——文案要有背景支撑，别纯报比分")
+    # 文案起草已随模型通道移除：editorial 不再产，只出声
+    assert "editorial" not in draft
+    assert any("文案起草已随模型通道移除" in n for n in draft["_notes"])
 
 
 class _Entry:
@@ -473,32 +413,6 @@ def test_build_background热点撞不上不是抓挂了(tool, monkeypatch):
         "扫了 232 条却没撞上，note 要说清是「扫了但没有」，别和「抓挂了」混在一起")
 
 
-def test_assemble命令行background优先跳过聚合(tool, monkeypatch):
-    """--background 显式给了就跳过自动聚合（终审手填时用），别画蛇添足。"""
-    a = tool
-    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
-    monkeypatch.setattr(a, "matchup_order",
-                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
-    monkeypatch.setattr(a, "stats_block", lambda mid: {
-        "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
-    monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
-    monkeypatch.setattr(a, "points", lambda mid: [])
-    monkeypatch.setattr(a, "rank_games", lambda games: [])
-    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
-
-    captured = {}
-
-    def fake_editorial(chat, **kw):
-        captured.update(kw)
-        return {"beats": ["b"]}
-
-    monkeypatch.setattr(a, "draft_editorial", fake_editorial)
-    # 打了桩还显式给了 background——断言收到的就是命令行那份，不是聚合出来的
-    a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
-               fixture="", flashscore_id="4CYI9Ick", background="终审手填的背景")
-    assert captured["background"] == "终审手填的背景"
-
-
 def test_assemble给source_url写进草稿(tool, monkeypatch):
     a = tool
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
@@ -509,8 +423,7 @@ def test_assemble给source_url写进草稿(tool, monkeypatch):
     monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
     monkeypatch.setattr(a, "points", lambda mid: [])
     monkeypatch.setattr(a, "rank_games", lambda games: [])
-    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
-    monkeypatch.setattr(a, "draft_editorial", lambda chat, **kw: {"beats": ["b"]})
+    monkeypatch.setattr(a, "set_pairs", lambda mid: [])
 
     draft = a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
                        fixture="", flashscore_id="4CYI9Ick",
@@ -523,7 +436,10 @@ def test_assemble给source_url写进草稿(tool, monkeypatch):
     assert "source_url" not in draft2
 
 
-def test_assemble有id但文案失败时不静默(tool, monkeypatch):
+def test_assemble文案起草已移除_不产editorial且出声(tool, monkeypatch):
+    """2026-10-12 模型通道整体移除后，assemble 不再起草文案：草稿里没有
+    `editorial`，notes 里必须明说这一步没了——不许把缺 editorial 的草稿
+    装成「本来就没配」。"""
     a = tool
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
     monkeypatch.setattr(a, "matchup_order",
@@ -533,17 +449,15 @@ def test_assemble有id但文案失败时不静默(tool, monkeypatch):
     monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
     monkeypatch.setattr(a, "points", lambda mid: [])
     monkeypatch.setattr(a, "rank_games", lambda games: [])
-    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
-    monkeypatch.setattr(a, "draft_editorial", lambda chat, **kw: None)
+    monkeypatch.setattr(a, "set_pairs", lambda mid: [])
 
     draft = a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
                        fixture="", flashscore_id="4CYI9Ick")
     assert "editorial" not in draft
-    assert any("文案这一步没成" in n for n in draft["_notes"]), (
-        "文案失败必须出声，不许把缺 editorial 的草稿当成「本来就没配」")
+    assert any("文案起草已随模型通道移除" in n for n in draft["_notes"])
 
 
-def test_assemble没给captions出声跳过窗口(tool, monkeypatch):
+def test_assemble没给对齐材料segments留空(tool, monkeypatch):
     a = tool
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
     monkeypatch.setattr(a, "matchup_order",
@@ -553,55 +467,19 @@ def test_assemble没给captions出声跳过窗口(tool, monkeypatch):
     monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
     monkeypatch.setattr(a, "points", lambda mid: [])
     monkeypatch.setattr(a, "rank_games", lambda games: [])
-    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
-    monkeypatch.setattr(a, "draft_editorial", lambda chat, **kw: {"beats": ["b"]})
+    monkeypatch.setattr(a, "set_pairs", lambda mid: [])
 
     draft = a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
                        fixture="", flashscore_id="4CYI9Ick")
-    assert "segments" not in draft
-    assert any("没给 captions" in n for n in draft["_notes"]), (
-        "没给 captions 要出声说明窗口起草跳过，别静默")
-
-
-def test_assemble给captions跑窗口起草(tool, monkeypatch, tmp_path):
-    a = tool
-    monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
-    monkeypatch.setattr(a, "matchup_order",
-                        lambda h, aw, mid: [(h, a.player_zh(h)), (aw, a.player_zh(aw))])
-    monkeypatch.setattr(a, "stats_block", lambda mid: {
-        "a": {}, "b": {}, "_missing_required": [], "_has_winners_ue": False})
-    monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
-    monkeypatch.setattr(a, "points", lambda mid: [])
-    monkeypatch.setattr(a, "rank_games", lambda games: [])
-    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
-    monkeypatch.setattr(a, "draft_editorial",
-                        lambda chat, **kw: {"beats": ["前段"]})
-
-    caps = tmp_path / "captions.txt"
-    caps.write_text("0.08\tBen\n13.76\tDespite\n", encoding="utf-8")
-    cuts = tmp_path / "probe.json"
-    cuts.write_text('{"scene_cuts": [6.8, 13.08]}', encoding="utf-8")
-
-    # 打桩 draft_segments 模块里的函数，避免真调 DeepSeek
-    fake = type("M", (), {
-        "_read_captions": staticmethod(lambda p: "0.08: Ben\n13.76: Despite\n"),
-        "_read_cuts": staticmethod(lambda p: [6.8, 13.08]),
-        "draft_segments": staticmethod(
-            lambda chat, **kw: {"segments": [
-                {"start": 0.08, "end": 13.08, "narration": "一段"}], "_dropped": 0}),
-    })()
-    monkeypatch.setitem(sys.modules, "draft_segments", fake)
-
-    draft = a.assemble(slug="x", home="A E", away="B R", event="C", year=2026,
-                       fixture="", flashscore_id="4CYI9Ick",
-                       captions_path=str(caps), cuts_path=str(cuts))
-    assert draft["segments"][0]["narration"] == "一段"
-    assert any("窗口起草 1 段" in n for n in draft["_notes"])
+    assert "segments" not in draft, (
+        "没给逐分+比分板就没有机械对齐的窗口；读字幕起草窗口的那条模型路已移除，"
+        "不许凭空生成 segments")
 
 
 def test_assemble机械对齐优先于读字幕(tool, monkeypatch, tmp_path):
     """给了 pbp + scoreboard 就走 align_points 机械对齐出 segments，标
-    `_segments_source`，且不跑 draft_segments 那条读字幕的老路。"""
+    `_segments_source`。旁白原来由文案起草喂进来；那一步已随模型通道移除，
+    窗口照样按锚点出骨架、旁白留空给终审。"""
     a = tool
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: "4CYI9Ick")
     monkeypatch.setattr(a, "matchup_order",
@@ -611,9 +489,6 @@ def test_assemble机械对齐优先于读字幕(tool, monkeypatch, tmp_path):
     monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
     monkeypatch.setattr(a, "points", lambda mid: [])
     monkeypatch.setattr(a, "rank_games", lambda games: [])
-    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
-    monkeypatch.setattr(a, "draft_editorial", lambda chat, **kw: {
-        "narration": ["她一分一分追回来", "五个破发点一个都没给", "六比零三比零"]})
 
     # 合成逐分：B 发球被 A 破发（第 3 分是破发点 40-0）
     def _pt(pa, pb, winner="A"):
@@ -647,8 +522,6 @@ def test_assemble封面抓到写portrait(tool, monkeypatch):
     monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
     monkeypatch.setattr(a, "points", lambda mid: [])
     monkeypatch.setattr(a, "rank_games", lambda games: [])
-    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
-    monkeypatch.setattr(a, "draft_editorial", lambda chat, **kw: {"beats": ["b"]})
 
     # 打桩封面反查 + 抓取两个模块（都在 assemble 函数内 import）
     fake_pbp = type("M", (), {"find_match": staticmethod(
@@ -679,8 +552,6 @@ def test_assemble封面没抓到留空出声(tool, monkeypatch):
     monkeypatch.setattr(a, "collect", lambda mid, h, aw: {"candidates": [], "durations": []})
     monkeypatch.setattr(a, "points", lambda mid: [])
     monkeypatch.setattr(a, "rank_games", lambda games: [])
-    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": True, "channel": "x"})())
-    monkeypatch.setattr(a, "draft_editorial", lambda chat, **kw: {"beats": ["b"]})
 
     fake_pbp = type("M", (), {"find_match": staticmethod(
         lambda session, players, since, until: ("1017", 2026, "LS061", {}))})()
@@ -705,7 +576,6 @@ def test_ATP比赛查不到WTA封面不许杀掉整份草稿(tool, monkeypatch):
     """
     a = tool
     monkeypatch.setattr(a, "resolve_match_id", lambda h, aw: None)
-    monkeypatch.setattr(a, "Chat", lambda: type("C", (), {"ready": False})())
     fake_pbp = type("M", (), {"find_match": staticmethod(
         lambda *args, **kwargs: (_ for _ in ()).throw(
             SystemExit("WTA 窗口里没有 medvedev/damm")))})()

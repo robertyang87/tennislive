@@ -7,8 +7,8 @@
 1. 每一道闸**抓得住被否的那一版**，**放得过被接受的那一版**（两个方向都用真稿）
 2. 豁免表**只许减不许加**、**冻的是原文**，而且全库当前零误报
 3. 闸真的坐在入口上：`validate_spec`（`--dry-run`）、采访渲染入口、采访预检——
-   自动产的 spec 只报不拦；**不接任何模型**（账号所有者 2026-09-27「minimax 和
-   deepseek 都不要用，后续会拿掉」）
+   自动产的 spec 只报不拦；**不接任何模型**（账号所有者 2026-09-27「两个模型
+   都不要用，后续会拿掉」——2026-10-12 已整体移除）
 """
 
 from __future__ import annotations
@@ -579,16 +579,17 @@ def test_自动产的spec只报不拦(capsys):
 
 
 def test_口味闸不接模型():
-    """账号所有者 2026-09-27「minimax 和 deepseek 都不要用，后续会拿掉」：口味闸只读
-    spec，不回喂模型重写钩子（原来 `assemble_spec._retry_hook_taste` 那一轮），也不为
-    `repair_reel_spec` 的回喂去挑日志行首（原来的 `REPAIRABLE`）。自动链本身不在这儿拆，
-    那是账号所有者后面的一步——这里只钉住口味闸不往模型那头长。"""
+    """账号所有者 2026-09-27「两个模型都不要用，后续会拿掉」（2026-10-12 已整体
+    移除）：口味闸只读 spec，不回喂模型重写钩子（原来 `assemble_spec._retry_hook_taste`
+    那一轮），也不为已删除的回喂工具去挑日志行首（原来的 `REPAIRABLE`）。
+    这里只钉住口味闸不往模型那一头长。"""
     for gone in ("hook_taste_problems", "REPAIRABLE"):
         assert not hasattr(T, gone), f"taste_gates.{gone} 是给模型回喂用的，别加回来"
-    model_side = ("assemble_spec", "draft_spec", "draft_segments", "repair_reel_spec")
-    for name in model_side:
-        src = Path(f"tools/{name}.py").read_text(encoding="utf-8")
-        assert "taste_gates" not in src, f"{name} 不许把口味闸接进模型那一头"
+    # 还在的备料工具不许把口味闸接进任何起草路；已删的那几个模型工具不许回来
+    src = Path("tools/assemble_spec.py").read_text(encoding="utf-8")
+    assert "taste_gates" not in src, "assemble_spec 不许把口味闸接进模型那一头"
+    for name in ("draft_spec", "draft_segments", "repair_reel_spec"):
+        assert not Path(f"tools/{name}.py").exists(), f"{name} 是模型那一头的工具，已随通道移除"
     owner = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
     body = owner[owner.index("def _owner_taste("):owner.index("def scoreboard_profile(")]
     assert "SALIENT" not in body and "REPAIRABLE" not in body

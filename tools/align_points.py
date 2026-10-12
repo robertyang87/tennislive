@@ -8,10 +8,10 @@
 （15/30/40/AD），比分板画面烧着同样的数字——两者对齐，才能把「赛点那一分」从
 「逐分第 N 分」定位到「视频第 X 秒」，旁白才挂得上画面（`docs/scoreboard-alignment.md`）。
 
-## 分工（和 read_scoreboard.py 的关系）
+## 输入与分工
 
-- `read_scoreboard.py`：**读**——MiniMax 视觉读整帧 `contact_*.jpg`，输出
-  `[{t: 时间码, score: "比分原文"}, …]`。
+- `scoreboard.json`：比分板读数 `[{t: 时间码, score: "比分原文"}, …]`，
+  由外部备料落盘（仓库内的自动读帧通道已于 2026-10-12 移除）。
 - `align_points.py`（本工具）：**对齐**——把「比分原文」和「逐分状态」匹配成
   「第 N 分 → 第 X 秒」。本工具只做纯计算，不联网、不读图。
 
@@ -158,7 +158,7 @@ def _pair(text: str) -> tuple[str, str] | None:
 def _read_state(r: dict) -> tuple[int, int, str, str] | None:
     """从一条比分板读里抽出 (局分A, 局分B, 小分A, 小分B)。
 
-    兼容两种形状：结构化（`games`/`points` 字段，read_scoreboard 新版，局分和小分
+    兼容两种形状：结构化（`games`/`points` 字段，局分和小分
     分开读，不会把「局分 2 + 小分 40」混成一个「2-40」）和自由文本（`score` 字段，
     旧版）。读不出返回 None 不猜。
     """
@@ -195,7 +195,7 @@ def align(reads: list[dict], states: list[dict]) -> list[dict]:
                 continue
             if pa and pb and (pa != s["point_A"] or pb != s["point_B"]):
                 continue
-            # ⚠️ MiniMax 输出的时间码 `t` 类型不稳：同一份 scoreboard.json 里有的
+            # ⚠️ scoreboard.json 里时间码 `t` 的类型不稳：同一份文件里有的
             # 格子给 float（2.5）、有的给字符串（"126.5"）。不归一化的话，
             # segment_skeleton 拿它做减法就 TypeError（str - float）。读不出数字
             # 的格子跳过（不猜）。
@@ -322,7 +322,7 @@ def main() -> int:
     ap.add_argument("--pbp", required=True, type=Path,
                     help="fetch_match_pbp --json 落盘的 pbp.json（读 raw.points）")
     ap.add_argument("--scoreboard", required=True, type=Path,
-                    help="read_scoreboard.py 落盘的 scoreboard.json（[{t, score}]）")
+                    help="比分板读数 scoreboard.json（[{t, score}]，由外部备料落盘）")
     ap.add_argument("--out", default="", help="对齐结果写进这个 json")
     args = ap.parse_args()
 

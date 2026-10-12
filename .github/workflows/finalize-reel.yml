@@ -1,6 +1,6 @@
 name: finalize-reel
 
-# 人工终审补齐背景、选段与官方封面后：重跑视觉硬闸，提升正式 spec，
+# 人工终审补齐背景、选段、官方封面与视觉证据后：提升正式 spec，
 # 再把渲染交还给 match-reel 的既有 QC + 自动推送链。
 on:
   workflow_dispatch:
@@ -54,14 +54,6 @@ jobs:
         run: |
           pip install -q -e .
           pip install -q pillow requests
-      - name: MiniMax visual gate
-        env:
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          SLUG: ${{ inputs.slug }}
-          OUT_DATE: ${{ inputs.out_date }}
-        run: |
-          python tools/analyze_reel_visuals.py             --draft "specs/reels/pending/$SLUG.draft.json"             --outdir "output/$OUT_DATE/reel/$SLUG"             --write
       - name: Promote verified draft
         env:
           SLUG: ${{ inputs.slug }}

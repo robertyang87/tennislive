@@ -1,4 +1,10 @@
-"""同场获胜画面冷开场：窗口选择和身份透传，不联网。"""
+"""同场获胜画面冷开场：窗口选择、字幕解析和待配清单，不联网。
+
+⚠️ 自动配冷开场（找集锦 → 逐 cue 翻译 → 写回 spec）已于 2026-10-12 随
+模型通道整体移除：`attach()` 和它那套 CLI 不在了，这里只钉留下来的
+机械半截——`select_window` / `parse_json3` / `needs_lead_in` 和只报清单
+的 `main`，以及渲染那头 `check_lead_in` 对正式 spec 的合同。
+"""
 
 from __future__ import annotations
 
@@ -48,31 +54,52 @@ def test_select_window只取片尾连续解说且不超40秒():
     assert len(selected) == 3 and end - start <= 40.0
 
 
-def test_attach把同场官方集锦和逐cue双语字幕写回(monkeypatch, tmp_path):
-    sub = tmp_path / "lead.json3"
-    sub.write_text(json.dumps({"events": [
+def test_parse_json3解析字幕事件成cue():
+    import tempfile
+
+    payload = {"events": [
         {"tStartMs": 70000, "dDurationMs": 3000,
          "segs": [{"utf8": "Championship point is over"}]},
         {"tStartMs": 74000, "dDurationMs": 4000,
          "segs": [{"utf8": "What a victory for Zverev"}]},
-    ]}), encoding="utf-8")
-    monkeypatch.setattr(lead, "find_highlight",
-                        lambda *_a, **_k: ("https://youtu.be/highlight", "official search"))
-    monkeypatch.setattr(lead, "probe_meta", lambda _url: ("ATP Tour", 82.0, 1080.0))
-    monkeypatch.setattr(lead, "_download_subtitles", lambda *_a, **_k: sub)
-    monkeypatch.setattr(lead, "translate",
-                        lambda rows, _chat: [f"中译{i}" for i, _ in enumerate(rows, 1)])
+        {"tStartMs": 79000, "dDurationMs": 2000,
+         "segs": [{"utf8": "[cheering]"}]},
+    ]}
+    with tempfile.TemporaryDirectory() as td:
+        path = Path(td) / "lead.json3"
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        rows = lead.parse_json3(path)
+    assert [(r["a"], r["b"], r["en"]) for r in rows] == [
+        (70.0, 73.0, "Championship point is over"),
+        (74.0, 78.0, "What a victory for Zverev"),
+    ], "方括号音效行不算解说，不许进 cue"
 
-    got = lead.attach(_spec(), object())
-    assert got["lead_in"]["url"] == "https://youtu.be/highlight"
-    assert got["lead_in"]["verification"]["match_id"] == got["match"]["id"]
-    assert [row["zh"] for row in got["lead_in"]["subs"]] == ["中译1", "中译2"]
+
+def test_needs_lead_in只认没片头且没配过的正式spec():
+    spec = _spec()
+    assert lead.needs_lead_in({**spec, "opening": {"kind": "none"}})
+    assert not lead.needs_lead_in({**spec, "opening": {"kind": "none"},
+                                   "lead_in": {"url": "https://youtu.be/x"}})
+    assert not lead.needs_lead_in({**spec, "opening": {"kind": "native"}})
 
 
-def test_attach找不到精确同场官方集锦就明确停止(monkeypatch):
-    monkeypatch.setattr(lead, "find_highlight", lambda *_a, **_k: (None, ""))
-    with pytest.raises(RuntimeError, match="尚未找到"):
-        lead.attach(_spec(), object())
+def test_main只报待配清单不写spec(tmp_path, monkeypatch, capsys):
+    """自动配字幕那一步没了之后，CLI 只许出声报清单——一个字节都不许写。"""
+    specs = tmp_path / "interviews"
+    specs.mkdir()
+    base = {"opening": {"kind": "none"}, "requested_content_type": "on_court"}
+    (specs / "pending-one.json").write_text(json.dumps({**base, "slug": "pending-one"}), "utf-8")
+    (specs / "done-one.json").write_text(json.dumps(
+        {**base, "slug": "done-one", "lead_in": {"url": "https://youtu.be/x"}}), "utf-8")
+    (specs / "skip.draft.json").write_text(json.dumps({**base, "slug": "skip"}), "utf-8")
+    monkeypatch.setattr(lead, "SPECS", specs)
+    monkeypatch.setattr(sys, "argv", ["attach_interview_lead_in.py"])
+
+    assert lead.main() == 0
+    out = capsys.readouterr().out
+    assert "待配冷开场：pending-one" in out
+    assert "缺 lead_in 的正式 spec 1 条" in out
+    assert "done-one" not in out and "skip" not in out
 
 
 def test_正式片头verification必须与当前比赛逐字段一致():
@@ -101,58 +128,3 @@ def test_正式片头verification必须与当前比赛逐字段一致():
     spec["lead_in"]["verification"]["loser_en"] = "Wrong Opponent"
     with pytest.raises(SystemExit, match="与当前比赛不一致"):
         check_lead_in(spec)
-
-
-def test_一条源片的意外只算它自己待下一轮_同批的照常落盘(tmp_path, monkeypatch, capsys):
-    """原来 `_one` 只兜 RuntimeError / SourceContractError / ValueError：别的异常
-    从 `future.result()` 原样抛出，同批已完成的结果一起丢掉、摘要不打、退出码
-    非零。现在任何异常都只算那一条「待下一轮」，并把类型名带进警告。
-    反向验证：把 `except Exception` 那一支拆掉，KeyError 直接炸出 main。"""
-    specs = tmp_path / "interviews"
-    specs.mkdir()
-    base = {"opening": {"kind": "none"}, "requested_content_type": "on_court"}
-    for slug in ("good", "bad"):
-        (specs / f"{slug}.json").write_text(json.dumps({**base, "slug": slug}), "utf-8")
-    monkeypatch.setattr(lead, "SPECS", specs)
-
-    def fake_attach(spec, chat):
-        if spec["slug"] == "bad":
-            raise KeyError("winner_en")
-        return {**spec, "lead_in": {"subs": [{"en": "x", "zh": "y"}]}}
-
-    monkeypatch.setattr(lead, "attach", fake_attach)
-    import tennislive.research.brief as brief
-    monkeypatch.setattr(brief, "Chat", lambda: type("C", (), {"ready": True})())
-    monkeypatch.setattr(sys, "argv", ["attach", "--write", "--max-parallel", "2"])
-
-    assert lead.main() == 0
-    out = capsys.readouterr().out
-    assert "冷开场完成 1/2，待重试 1" in out, out
-    assert "::warning::bad 冷开场待下一轮：KeyError" in out, out
-    assert json.loads((specs / "good.json").read_text("utf-8"))["lead_in"]["subs"]
-    assert "lead_in" not in json.loads((specs / "bad.json").read_text("utf-8"))
-
-
-def test_冷开场译文把轮次写成N强_不写_下一轮重配(tmp_path, monkeypatch, capsys):
-    """复审 nit（2026-09-27）：`lead_in.subs[].zh` 是模型译的，全库测试 `test_轮次写分数式不写N强`
-    扫它、对自动 spec 也是硬的，而这一步直推 main——写进去就是下一个 PR 把 main 打红。
-    和 `build_interview_request`、promote 转正闸同一个判据：不写，这条留到下一轮。
-    「打进 8 强」这种成绩说法照写。"""
-    specs = tmp_path / "interviews"
-    specs.mkdir()
-    base = {"opening": {"kind": "none"}, "requested_content_type": "on_court"}
-    for slug in ("round-name", "reached"):
-        (specs / f"{slug}.json").write_text(json.dumps({**base, "slug": slug}), "utf-8")
-    monkeypatch.setattr(lead, "SPECS", specs)
-    said = {"round-name": "这是一场美网八强的较量", "reached": "他打进8强了"}
-    monkeypatch.setattr(lead, "attach", lambda spec, chat: {
-        **spec, "lead_in": {"subs": [{"en": "x", "zh": said[spec["slug"]]}]}})
-    import tennislive.research.brief as brief
-    monkeypatch.setattr(brief, "Chat", lambda: type("C", (), {"ready": True})())
-    monkeypatch.setattr(sys, "argv", ["attach", "--write", "--max-parallel", "1"])
-
-    assert lead.main() == 0
-    out = capsys.readouterr().out
-    assert "::warning::round-name 冷开场待下一轮：冷开场译文把轮次写成「N 强」（八强）" in out, out
-    assert "lead_in" not in json.loads((specs / "round-name.json").read_text("utf-8"))
-    assert json.loads((specs / "reached.json").read_text("utf-8"))["lead_in"]["subs"]

@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-"""probe 之后、写 spec 之前：备好「逐分 + 比分板」两份对齐输入。
+"""probe 之后、写 spec 之前：备好逐分对齐输入（pbp.json）。
 
-这是「配音不脱节」链条（docs/scoreboard-alignment.md）的接缝：probe 已经产出
-contact_*.jpg（整帧缩略图墙，带时间码），本脚本跑两步——
+这是「配音不脱节」链条（docs/scoreboard-alignment.md）的接缝：`fetch_match_pbp`
+按球员姓反查 WTA 逐分 → pbp.json，写进 outdir。
 
-  1. `read_scoreboard.py`：MiniMax 视觉读 contact 帧里的比分板 → scoreboard.json
-  2. `fetch_match_pbp`：WTA 逐分（按球员姓反查）→ pbp.json
-
-两者都成 → 写进 outdir；任一不成 → **退出码 0，只出声**——对齐是「给 segments
-加料」，不是硬闸，没料就退回 assemble 里 DeepSeek 读字幕那条老路。ATP 场没有
-WTA 逐分通路，find_match 查不到就是正常空，不算错。
+比分板读数（scoreboard.json）原来在这一步用视觉模型读 contact 帧——该通道已于
+2026-10-12 随模型整体移除；scoreboard.json 如需使用，由外部备料落盘后交给
+assemble 的机械对齐（⑥）。逐分拿不到 → **退出码 0，只出声**——对齐是「给
+segments 加料」，不是硬闸。ATP 场没有 WTA 逐分通路，find_match 查不到就是
+正常空，不算错。
 
 用法：
     python tools/prepare_alignment.py --home "Maria Timofeeva" \
@@ -20,9 +19,7 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
-import urllib.error
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -68,37 +65,6 @@ def fetch_pbp(home: str, away: str, outdir: Path) -> bool:
     return False
 
 
-def read_scoreboard(outdir: Path) -> bool:
-    """MiniMax 读 contact 帧比分板 → outdir/scoreboard.json。没 key/没帧返回 False。"""
-    if not os.environ.get("MINIMAX_API_KEY"):
-        print("⚠️ 没配 MINIMAX_API_KEY，比分板这一步跳过")
-        return False
-    frames = sorted(outdir.glob("contact_*.jpg"))[:4]
-    if not frames:
-        print("⚠️ 没找到 contact_*.jpg，比分板这一步跳过")
-        return False
-    import read_scoreboard
-
-    rows: list[dict] = []
-    for frame in frames:
-        try:
-            got = read_scoreboard._ask(frame, os.environ["MINIMAX_API_KEY"])
-        except (urllib.error.URLError, TimeoutError, ValueError) as exc:
-            # Alignment is optional enrichment; the independent visual production
-            # gate still has to pass before promotion/render/publication.
-            print(f"⚠️ 比分板服务不可用（{type(exc).__name__}），不写部分对齐结果；后续退回字幕备料")
-            return False
-        if got is not None:
-            rows.extend(got)
-    if not rows:
-        print("⚠️ 比分板没读出任何格子，跳过")
-        return False
-    (outdir / "scoreboard.json").write_text(
-        json.dumps(rows, ensure_ascii=False), encoding="utf-8")
-    print(f"比分板读到 {len(rows)} 个格子")
-    return True
-
-
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--home", required=True, help="英文全名，如 Maria Timofeeva")
@@ -109,11 +75,10 @@ def main() -> int:
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     ok_pbp = fetch_pbp(args.home, args.away, outdir)
-    ok_sb = read_scoreboard(outdir)
-    if ok_pbp and ok_sb:
-        print("对齐备料齐了：pbp.json + scoreboard.json")
+    if ok_pbp:
+        print("对齐备料：pbp.json 已落盘（scoreboard.json 由外部备料提供）。")
     else:
-        print("对齐备料不齐（见上），assemble 会退回读字幕老路。")
+        print("逐分没备到（见上），assemble 的机械对齐这一步跳过。")
     return 0
 
 

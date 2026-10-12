@@ -127,7 +127,7 @@ def test_align关键分定位到视频秒(ap):
 
 
 def test_align读结构化games_points(ap):
-    """read_scoreboard 新版输出 games/points 分开的字段，align 要优先用它——
+    """比分板读数（scoreboard.json，外部备料落盘）新版输出 games/points 分开的字段，align 要优先用它——
     局分和小分分开读，不会把「局分 2 + 小分 40」混成一个「2-40」。"""
     states = ap.point_states(_break_sequence())  # 第 2 分破发点：局分 0-0、小分 40-0
     reads = [
@@ -141,7 +141,7 @@ def test_align读结构化games_points(ap):
 
 
 def test_align时间码类型不一致也归一化(ap):
-    """MiniMax 输出的 t 有的 float 有的 str，align 要统一归一化，别把 str 传给
+    """比分板读数的 t 有的 float 有的 str，align 要统一归一化，别把 str 传给
     下游做减法（TypeError: str - float）。读不出数字的格子跳过。"""
     states = ap.point_states(_break_sequence())  # 第 2 分破发点 40-0
     reads = [

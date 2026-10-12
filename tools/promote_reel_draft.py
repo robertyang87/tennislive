@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """把证据齐全的自动 reel 草稿提升为正式 spec；不齐就明确留在 waiting。
 
-提升不是字段搬运，而是生产资格闸：结构化赛果、MiniMax 视觉证据、DeepSeek
-编辑合同、双语原声冷开场、完整结尾、官方高清封面、排名/国别、技术统计与
-自动推送文案缺一不可。成功后仍要经过 ``build_match_reel.validate_spec``；只有
-正式 spec 落库后工作流才允许 dispatch render。
+提升不是字段搬运，而是生产资格闸：结构化赛果、编辑合同、双语原声冷开场、
+完整结尾、官方高清封面、排名/国别、技术统计与自动推送文案缺一不可。
+成功后仍要经过 ``build_match_reel.validate_spec``；只有正式 spec 落库后
+工作流才允许 dispatch render。
 """
 
 from __future__ import annotations
@@ -173,13 +173,10 @@ def waiting_reasons(draft: dict) -> list[str]:
         reasons.append("结构化赛果尚未 verified")
     if not match.get("winner_result") or not match.get("winner"):
         reasons.append("缺赢家视角逐盘比分")
-    visual = draft.get("_visual_evidence") or {}
-    if visual.get("status") != "pass":
-        reasons.append("MiniMax 冷开场/结尾/封面视觉证据未通过")
     editorial = draft.get("editorial") or {}
     for field in ("question", "thesis", "beats", "narration"):
         if not editorial.get(field):
-            reasons.append(f"DeepSeek editorial 缺 {field}")
+            reasons.append(f"editorial 缺 {field}")
     segments = draft.get("segments") or []
     if not 5 <= len(segments) <= 10:
         reasons.append(f"完整故事要求 5-10 段，现在 {len(segments)} 段")
@@ -263,9 +260,8 @@ def waiting_reasons(draft: dict) -> list[str]:
 
 
 def _spoken(value: int) -> str:
-    # ⚠️ 别从 draft_spec 拿：那会把 reel_skill（读教材）拖进 build_match_reel
-    # 的 import 图（build_match_reel → promote_reel_draft），frame-grab 这类
-    # 没检出 skills 的工作流就被判成要教材。
+    # ⚠️ spoken_integer 只从 spec_wording 拿，别为它把别的重模块拖进
+    # build_match_reel 的 import 图（build_match_reel → promote_reel_draft）。
     from spec_wording import spoken_integer  # noqa: PLC0415
     return spoken_integer(value)
 
@@ -361,9 +357,9 @@ def chapter_cards_problem(editorial: dict) -> str | None:
 def insert_chapter_cards(spec: dict) -> int:
     """按 `editorial.chapters` 在每个 beat 的那一段之前插一张章节卡，返回插了几张。
 
-    beat ↔ 段的钥匙有两把，先硬后软：① 段上的 `_beat`（三条产窗口的路——
-    align_points.segment_skeleton / draft_segments / assemble_spec.scene_cut_segments
-    ——都写它，1 起）；② 没有 `_beat` 的老草稿退回「narration 和
+    beat ↔ 段的钥匙有两把，先硬后软：① 段上的 `_beat`（产窗口的两条路——
+    align_points.segment_skeleton / assemble_spec.scene_cut_segments
+    ——都写它，1 起；模型读字幕那条已于 2026-10-12 移除）；② 没有 `_beat` 的老草稿退回「narration 和
     editorial.narration[i] 逐字相同的第一段」。⚠️ 2026-09-03 拿 47 份 pending
     草稿量过：模型写窗口那条路的旁白**全是改写过的**，第二把钥匙一条都认不到
     ——所以 `_beat` 不是锦上添花，是这个功能在主路上成立的前提。认不到的 beat
@@ -591,8 +587,8 @@ def promote(draft: dict, probe: dict | None = None) -> dict:
             if not (seg.get("image") or seg.get("stat_card") or seg.get("title_card")):
                 seg.setdefault("score_inset", True)
     # ⭐ 证据上屏（2026-09-03 review 路线 ④）：131 条已发 spec 带 stats、0 条烧进
-    # 片子——数据一直只在旁白里被念出来。DeepSeek 不写 segments（窗口全是机械
-    # 工具给的），所以这一段也机械插：收官段之前、一句只讲总得分的旁白。
+    # 片子——数据一直只在旁白里被念出来。segments 窗口全是机械工具给的，
+    # 所以这一段也机械插：收官段之前、一句只讲总得分的旁白。
     insert_stat_card_segment(spec)
     # ⭐ 章节卡（review 路线 ⑤，学「小丝瓜🎾」的 01/02/03 章节页）：每个 beat 的
     # 第一段之前插一张深底大字卡，标题来自 editorial.chapters。排在数据图之后
