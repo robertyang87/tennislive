@@ -1,0 +1,317 @@
+{
+  "slug": "eala-shi",
+  "status": "source_visual_preflight_complete_with_recorded_coverage_gaps_and_fixed_crop_limits",
+  "source": {
+    "url": "https://www.youtube.com/watch?v=T9TfTnVgHNY",
+    "sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+    "bytes": 45935631,
+    "width": 1920,
+    "height": 1080,
+    "fps": "25/1",
+    "duration_seconds": 306.851701
+  },
+  "method": {
+    "actually_viewed_native_contact_sheets": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg",
+      "contact_03.jpg",
+      "contact_04.jpg",
+      "contact_05.jpg"
+    ],
+    "actually_viewed_native_score_sheets": [
+      "score_00.jpg",
+      "score_01.jpg",
+      "score_02.jpg",
+      "score_03.jpg",
+      "score_04.jpg",
+      "score_05.jpg",
+      "score_06.jpg",
+      "score_07.jpg"
+    ],
+    "native_contacts_cadence_seconds": 2,
+    "native_contacts_extent_seconds": [
+      0.5,
+      306.5
+    ],
+    "actually_viewed_additional_boundary_sheets": [
+      "boundary-early.jpg",
+      "boundary-mid.jpg",
+      "boundary-turn.jpg",
+      "boundary-late.jpg"
+    ],
+    "actually_viewed_fixed_center_crop_sheets": [
+      "fixed-center-01.jpg",
+      "fixed-center-02.jpg",
+      "fixed-center-03.jpg",
+      "fixed-center-04.jpg"
+    ],
+    "fixed_crop_sample_cadence_seconds": 5,
+    "additional_boundary_and_crop_labels": "Approximate source timestamps from ffmpeg fps=2 sampling, marked ~. Exact raw100/raw220 separatelydecodedvia-ss; no frame-by-frame viewing claim.",
+    "human_audio_listening_claimed": false,
+    "all_frames_viewed_claimed": false,
+    "actually_viewed_exact_boundary_sheet": "exact-first-hold-start.jpg"
+  },
+  "geometry": {
+    "fit": "crop",
+    "cx": 0.5,
+    "track": false,
+    "source_crop": [
+      555,
+      0,
+      1365,
+      1080
+    ],
+    "canvas": [
+      1080,
+      1440
+    ],
+    "manual_score_search_suggestion": [
+      89,
+      827,
+      552,
+      982
+    ],
+    "old_probe_guess": [
+      90,
+      870,
+      432,
+      979
+    ],
+    "old_probe_error": "WTA board present but native body row geometry is unmeasurable",
+    "old_guess_limitation": "Rightboundary432 truncates second/third-set game columns; two rawframes with widersearch pass existing nativeframe_geometry. Whole-animation/wholemovie validation remains required.",
+    "caption_bottom_suggestion": 358,
+    "caption_note": "Global bottom baseline near1082 leavesabout23pxabove nativehinttop1105. Native resolvedgeometry and actualrender shoulddeterminefinalspacing.",
+    "native_raw_frame_checks": [
+      {
+        "time_seconds": 100,
+        "file": "source-100.jpg",
+        "sha256": "ab76f18545d02f5d6754817b75a358f125cb1450460c99c2c694fb4e39b960c6",
+        "geometry": "native-board-100.json"
+      },
+      {
+        "time_seconds": 220,
+        "file": "source-220.jpg",
+        "sha256": "7e05c6f8b4016223f15c9497d553d9afabdbafed959ce4d9ff79f8aef313dcb7",
+        "geometry": "native-board-220.json"
+      }
+    ],
+    "per_segment_caption_suggestions": {
+      "body_only": 306,
+      "contains_native_header": 360,
+      "note": "Body native y868–870 maps1157.3–1160, bottom306 yieldsbaseline1134/23.3–26pxgap. Hintnativey827–829 maps1102.7–1105.3,bottom360 yieldsbaseline1080/22.7–25.3pxgap. Rootcankeep358if actualQCgapfits. ASSbottomfixedpersegment, do notlowerwithinsegmentwithanyheader."
+    },
+    "header_presence_by_source_window": [
+      {
+        "start": 0,
+        "end": 25.92,
+        "header": false
+      },
+      {
+        "start": 25.92,
+        "end": 39.04,
+        "header": false
+      },
+      {
+        "start": 39.04,
+        "end_approx": 51.32,
+        "header": "SET POINT"
+      },
+      {
+        "start": 67.32,
+        "end": 167.84,
+        "header": false
+      },
+      {
+        "start": 167.84,
+        "end_approx": 178.6,
+        "header": "SET POINT"
+      },
+      {
+        "start": 196.2,
+        "end": 211.08,
+        "header": false
+      },
+      {
+        "start": 211.08,
+        "end_approx": 230.8,
+        "header": "BREAK POINT #3"
+      },
+      {
+        "start": 232.76,
+        "end": 251.76,
+        "header": false
+      },
+      {
+        "start": 251.76,
+        "end_approx": 261,
+        "header": "MATCH POINT"
+      }
+    ]
+  },
+  "brand": {
+    "first_native_cut_seconds": 296.76,
+    "last_clean_suggested_end_seconds": 296.72,
+    "after_brand": "Green WTAanimation thenpurple subscribe/watchmore card; exclude allbranding."
+  },
+  "windows": [
+    {
+      "start": 0,
+      "end": 14.2,
+      "phase": "set1",
+      "pre_point_visible_score": "Eala3-2,Shi serves15-15",
+      "coverage": "Complete first shown service/rally; native jump skips intervening point(s)."
+    },
+    {
+      "start": 14.2,
+      "end": 25.92,
+      "phase": "set1",
+      "pre_point_visible_score": "Eala3-2,Shi serves15-40",
+      "coverage": "Complete second shown service/rally; Eala wins point to30-40; native close-up Eala."
+    },
+    {
+      "start": 25.92,
+      "end": 39.04,
+      "phase": "set1",
+      "pre_point_visible_score": "4-4,Eala servesAdv",
+      "coverage": "Eala holds5-4; prior2BP saves not shown. Retain full rally and recovery."
+    },
+    {
+      "start": 39.04,
+      "end": 54.76,
+      "phase": "set1",
+      "pre_point_visible_score": "Eala5-4,receivesAdv/SETPOINT",
+      "coverage": "Eala converts fourth setpoint to6-4; earlier0-40/deuce sequence not shown. Full serve/rally and Eala reaction."
+    },
+    {
+      "start": 54.76,
+      "end": 67.32,
+      "phase": "setbreak",
+      "pre_point_visible_score": "Eala6-4",
+      "coverage": "First-set bench/result; can host premise/meaning narration, no extra titlecard needed."
+    },
+    {
+      "start": 67.32,
+      "end": 84.32,
+      "phase": "set2",
+      "pre_point_visible_score": "1-1,Eala serves40-15",
+      "coverage": "Eala holds2-1; whole rally and changeover."
+    },
+    {
+      "start": 84.32,
+      "end": 129.84,
+      "phase": "set2",
+      "pre_point_visible_score": "2-2,Eala serves40-15",
+      "coverage": "Full unusually long rally won byShi; source128.5 shows40-30. Eala subsequent game-winning point missing before3-2 shown129.84."
+    },
+    {
+      "start": 129.84,
+      "end": 153.48,
+      "phase": "set2",
+      "pre_point_visible_score": "Eala3-2,Shi serves; later15-40Shi",
+      "coverage": "Two shown points in Shi service game; eventual Shi hold3-3. Do not label this as breakingEala."
+    },
+    {
+      "start": 153.48,
+      "end": 167.84,
+      "phase": "set2",
+      "pre_point_visible_score": "Eala3-4,Shi serves15-40",
+      "coverage": "Shi holds5-3. Eala prior loss ofserve3-3→3-4 absent, explain narrativefact separately."
+    },
+    {
+      "start": 167.84,
+      "end": 183.36,
+      "phase": "set2",
+      "pre_point_visible_score": "Eala3-5,Eala serves15-40/SETPOINT",
+      "coverage": "Shi breaks and winsset6-3; fullpoint, Shi fistpump/reaction177–183."
+    },
+    {
+      "start": 183.36,
+      "end": 196.2,
+      "phase": "setbreak",
+      "pre_point_visible_score": "one setall",
+      "coverage": "Transition/secondsetresult and Shiservingprep; avoid wasting whole12sec if no relevant narration."
+    },
+    {
+      "start": 196.2,
+      "end": 211.08,
+      "phase": "set3",
+      "pre_point_visible_score": "0-0,Shi servesAdv",
+      "coverage": "Shi holds1-0 aftersaving2BP earlier in game, earlier saves notshown. Fullserve/rally and Eala reaction."
+    },
+    {
+      "start": 211.08,
+      "end": 232.76,
+      "phase": "set3",
+      "pre_point_visible_score": "Eala0-1,Eala servesAdvShi/BREAKPOINT#3",
+      "coverage": "Shi converts her thirdBP in game to2-0; fullserve/rally, Shi strongfistpump229–232."
+    },
+    {
+      "start": 232.76,
+      "end": 251.76,
+      "phase": "set3",
+      "pre_point_visible_score": "Eala1-4,Eala serves40-0",
+      "coverage": "Eala holds2-4. Shi3-0hold,Eala1-3hold/BPsave,Shi4-1hold missing beforethiswindow; explain verifiedsequence withoutmislabelingpoint."
+    },
+    {
+      "start": 251.76,
+      "end": 269,
+      "phase": "set3",
+      "pre_point_visible_score": "Eala3-5,Shi serves40-15/MATCHPOINT",
+      "coverage": "Matchpoint fullserviceclose-up251.76–253.60, rally253.60–258.72, Shi hands-on-head/joy258.72–269. Earlier holds to3-5 notshown."
+    },
+    {
+      "start": 269,
+      "end": 280.6,
+      "phase": "payoff",
+      "pre_point_visible_score": "Shi wins4-6 6-3 6-3",
+      "coverage": "Handshake atnet269–273; BOTHplayerssalute273–277; Shi saluteslater277–280.6. Eala ismint,Shi yellow."
+    },
+    {
+      "start": 280.6,
+      "end": 287.64,
+      "phase": "payoff",
+      "pre_point_visible_score": "crowd/qualifierwinner",
+      "coverage": "Crowd and Shi bags/towels, true emotional reaction. Do not assign winnerjoytoEala."
+    },
+    {
+      "start": 287.64,
+      "end": 296.76,
+      "phase": "payoff",
+      "pre_point_visible_score": "native fullresultboard",
+      "coverage": "Shi walks tobench and finalnative6-3thirdset/resultgraphic; cut296.72orbefore, WTA branding296.76."
+    }
+  ],
+  "known_limits": [
+    {
+      "source_seconds_approx": [
+        100,
+        175,
+        215,
+        255
+      ],
+      "limitation": "Nearbaselineplayer partlyoutside fixedcenterportraitcrop during lateral movement. Fullsourcepoint chronology retained, noauto-follow used."
+    },
+    {
+      "limitation": "Sampling establishes compositionandcoverage, not everyframeboardalpha or player visibility pass."
+    },
+    {
+      "limitation": "Nativefullcenterresultgraphic duringbench doesnotneed leftboardinset; leave score_inset false there toavoid duplicating picture."
+    }
+  ],
+  "pending": [
+    "Review actual native mask acrossanimations/presence/absence and allchosenpointwindows.",
+    "Bind finalQC to exactfinalmaster hash after rendering.",
+    "Narration factbridges for internallydocumentedmissingbreak/games; do not show productiongaps toviewers."
+  ],
+  "planned_parent_revision": {
+    "end_seconds": 287.6,
+    "why": "Parentendsafterwholematchpoint,handshake,bothplayerssalutesandcrowd beforefullcentergraphic289+; avoidcroppedfullwidthresult whilepreservingpayoff.",
+    "unrelated_program_exclusion": [
+      23.03,
+      26.13
+    ],
+    "point_start_guard": "Exact25.92,26.00,26.12,26.28,26.44,26.60,26.80,27.00framesviewed: Eala preparingbeforeactualserve, so26.13 startdoesnottruncatefullservice/rally."
+  },
+  "regenerate_raw_frame_command": "ffmpeg -v error -ss <source_time_seconds> -i <exact_source_sha256_movie> -frames:v 1 <raw.png>"
+}

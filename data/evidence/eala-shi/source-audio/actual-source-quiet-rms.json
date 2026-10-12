@@ -1,0 +1,298 @@
+{
+  "schema": "tennislive.actual-source-quiet-measurement.v1",
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "source_bytes": 45935631,
+  "spec_sha256": "374ed31129c90b68d201efb6ab938bce1b3f0a153d79262db5b215243f610d7a",
+  "recorded_at": "2026-10-12T17:35:48.519096+00:00",
+  "pcm_format": "8000Hz mono s16le aresample=first_pts=0",
+  "decoded_pcm_sha256": "2c4c751f6343a16c0b0bdff793fbe3fb2f7cf468f7388ff31b22bcc07ebbb833",
+  "human_listening_claimed": false,
+  "method": "Actual exact source decoding and RMS/peak/nonzero measurement over concrete preflight-listed source spans. Constant gain estimates exclude source AAC rounding, segment boundary fades and active TTS-sidechain compression, so final actual AAC proof remains required.",
+  "measurements": [
+    {
+      "segment": 3,
+      "source_window": [
+        9.2,
+        10.2
+      ],
+      "source_rms_db": -54.8717,
+      "source_peak_db": -38.8516,
+      "zero_fraction": 0.008,
+      "current_constant_gain": 0.36,
+      "current_gain_rms_db": -63.7457,
+      "high_gain_rms_db": -55.1184,
+      "low_gain_rms_db": -63.7457,
+      "natural_source_identity_verifier_possible": false
+    },
+    {
+      "segment": 3,
+      "source_window": [
+        10.2,
+        11.2
+      ],
+      "source_rms_db": -58.0247,
+      "source_peak_db": -37.8855,
+      "zero_fraction": 0.011625,
+      "current_constant_gain": 0.36,
+      "current_gain_rms_db": -66.8986,
+      "high_gain_rms_db": -58.2714,
+      "low_gain_rms_db": -66.8986,
+      "natural_source_identity_verifier_possible": false
+    },
+    {
+      "segment": 3,
+      "source_window": [
+        11.2,
+        12.2
+      ],
+      "source_rms_db": -52.8155,
+      "source_peak_db": -28.3154,
+      "zero_fraction": 0.011625,
+      "current_constant_gain": 0.36,
+      "current_gain_rms_db": -61.6894,
+      "high_gain_rms_db": -53.0621,
+      "low_gain_rms_db": -61.6894,
+      "natural_source_identity_verifier_possible": false
+    },
+    {
+      "segment": 4,
+      "source_window": [
+        15.2,
+        16.2
+      ],
+      "source_rms_db": -67.4041,
+      "source_peak_db": -54.892,
+      "zero_fraction": 0.033625,
+      "current_constant_gain": 0.972,
+      "current_gain_rms_db": -67.6508,
+      "high_gain_rms_db": -67.6508,
+      "low_gain_rms_db": -76.2781,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 7,
+      "source_window": [
+        40.58,
+        41.58
+      ],
+      "source_rms_db": -66.5377,
+      "source_peak_db": -55.1915,
+      "zero_fraction": 0.02775,
+      "current_constant_gain": 0.972,
+      "current_gain_rms_db": -66.7844,
+      "high_gain_rms_db": -66.7844,
+      "low_gain_rms_db": -75.4117,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 7,
+      "source_window": [
+        41.5,
+        42.5
+      ],
+      "source_rms_db": -67.7731,
+      "source_peak_db": -56.5051,
+      "zero_fraction": 0.030625,
+      "current_constant_gain": 0.972,
+      "current_gain_rms_db": -68.0198,
+      "high_gain_rms_db": -68.0198,
+      "low_gain_rms_db": -76.6471,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 7,
+      "source_window": [
+        42.5,
+        43.5
+      ],
+      "source_rms_db": -68.4201,
+      "source_peak_db": -55.5017,
+      "zero_fraction": 0.033625,
+      "current_constant_gain": 0.972,
+      "current_gain_rms_db": -68.6668,
+      "high_gain_rms_db": -68.6668,
+      "low_gain_rms_db": -77.2941,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 11,
+      "source_window": [
+        99.3,
+        100.3
+      ],
+      "source_rms_db": -61.3356,
+      "source_peak_db": -46.9627,
+      "zero_fraction": 0.017625,
+      "current_constant_gain": 0.36,
+      "current_gain_rms_db": -70.2096,
+      "high_gain_rms_db": -61.5823,
+      "low_gain_rms_db": -70.2096,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 14,
+      "source_window": [
+        137.3,
+        138.3
+      ],
+      "source_rms_db": -71.3416,
+      "source_peak_db": -60.206,
+      "zero_fraction": 0.04625,
+      "current_constant_gain": 0.972,
+      "current_gain_rms_db": -71.5883,
+      "high_gain_rms_db": -71.5883,
+      "low_gain_rms_db": -80.2156,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 16,
+      "source_window": [
+        154.3,
+        155.3
+      ],
+      "source_rms_db": -69.4206,
+      "source_peak_db": -57.6396,
+      "zero_fraction": 0.037375,
+      "current_constant_gain": 0.972,
+      "current_gain_rms_db": -69.6673,
+      "high_gain_rms_db": -69.6673,
+      "low_gain_rms_db": -78.2946,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 16,
+      "source_window": [
+        155.3,
+        156.3
+      ],
+      "source_rms_db": -70.5446,
+      "source_peak_db": -58.7133,
+      "zero_fraction": 0.044875,
+      "current_constant_gain": 0.972,
+      "current_gain_rms_db": -70.7913,
+      "high_gain_rms_db": -70.7913,
+      "low_gain_rms_db": -79.4186,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 18,
+      "source_window": [
+        168.3,
+        169.3
+      ],
+      "source_rms_db": -71.2818,
+      "source_peak_db": -59.6794,
+      "zero_fraction": 0.045125,
+      "current_constant_gain": 0.972,
+      "current_gain_rms_db": -71.5285,
+      "high_gain_rms_db": -71.5285,
+      "low_gain_rms_db": -80.1557,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 18,
+      "source_window": [
+        169.3,
+        170.3
+      ],
+      "source_rms_db": -70.0698,
+      "source_peak_db": -55.0404,
+      "zero_fraction": 0.045375,
+      "current_constant_gain": 0.972,
+      "current_gain_rms_db": -70.3164,
+      "high_gain_rms_db": -70.3164,
+      "low_gain_rms_db": -78.9437,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 18,
+      "source_window": [
+        170.3,
+        171.3
+      ],
+      "source_rms_db": -64.8041,
+      "source_peak_db": -48.4406,
+      "zero_fraction": 0.042,
+      "current_constant_gain": 0.972,
+      "current_gain_rms_db": -65.0507,
+      "high_gain_rms_db": -65.0507,
+      "low_gain_rms_db": -73.678,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 22,
+      "source_window": [
+        220.3,
+        221.3
+      ],
+      "source_rms_db": -52.5697,
+      "source_peak_db": -25.7359,
+      "zero_fraction": 0.00925,
+      "current_constant_gain": 0.36,
+      "current_gain_rms_db": -61.4436,
+      "high_gain_rms_db": -52.8163,
+      "low_gain_rms_db": -61.4436,
+      "natural_source_identity_verifier_possible": false
+    },
+    {
+      "segment": 22,
+      "source_window": [
+        221.3,
+        222.3
+      ],
+      "source_rms_db": -59.8829,
+      "source_peak_db": -39.3781,
+      "zero_fraction": 0.01675,
+      "current_constant_gain": 0.36,
+      "current_gain_rms_db": -68.7568,
+      "high_gain_rms_db": -60.1295,
+      "low_gain_rms_db": -68.7568,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 25,
+      "source_window": [
+        245.3,
+        246.3
+      ],
+      "source_rms_db": -60.6024,
+      "source_peak_db": -42.7048,
+      "zero_fraction": 0.018,
+      "current_constant_gain": 0.36,
+      "current_gain_rms_db": -69.4763,
+      "high_gain_rms_db": -60.849,
+      "low_gain_rms_db": -69.4763,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 27,
+      "source_window": [
+        252.7,
+        253.7
+      ],
+      "source_rms_db": -63.634,
+      "source_peak_db": -40.2878,
+      "zero_fraction": 0.031625,
+      "current_constant_gain": 0.972,
+      "current_gain_rms_db": -63.8807,
+      "high_gain_rms_db": -63.8807,
+      "low_gain_rms_db": -72.5079,
+      "natural_source_identity_verifier_possible": true
+    },
+    {
+      "segment": 27,
+      "source_window": [
+        253.7,
+        254.7
+      ],
+      "source_rms_db": -68.2641,
+      "source_peak_db": -49.4025,
+      "zero_fraction": 0.037,
+      "current_constant_gain": 0.972,
+      "current_gain_rms_db": -68.5108,
+      "high_gain_rms_db": -68.5108,
+      "low_gain_rms_db": -77.1381,
+      "natural_source_identity_verifier_possible": true
+    }
+  ]
+}

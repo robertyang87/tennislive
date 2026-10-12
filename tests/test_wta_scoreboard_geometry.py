@@ -263,7 +263,11 @@ def test_native_window_mask_roundtrip_preserves_points_and_header_only_inside_wi
     geometry = w.frame_geometry(np.asarray(Image.open(path)), cap=472)
     # Ten genuine, identical native graphics. The last two frames represent
     # dissolve tail; a segment-local window must never leak into that tail.
-    monkeypatch.setattr(w, "scan_geometry", lambda *a: ([geometry] * 10, 760))
+    def scanned(*args, **kwargs):
+        windows = kwargs["allowed_windows"]
+        return ([geometry if any(a <= k / 25 < b for a, b in windows) else None
+                 for k in range(10)], 760)
+    monkeypatch.setattr(w, "scan_geometry", scanned)
     seg = SimpleNamespace(score_inset=(88, 828, 560, 986), start=267., end=267.32,
                           speed=1., source=0,
                           score_inset_windows=((.04, .12), (.20, .32)))
@@ -283,9 +287,12 @@ def test_native_window_mask_roundtrip_preserves_points_and_header_only_inside_wi
         assert alpha[frame, 20 - (y0 - 828), 180 - (x0 - 88)] == 255  # tag
         assert alpha[frame, 20 - (y0 - 828), 240 - (x0 - 88)] == 0  # court gap
     assert record["allowed_source_windows"] == [[267.04, 267.12], [267.2, 267.32]]
-    assert record["measured_present_frames"] == 10
+    assert record["measured_present_frames"] == 5
     assert record["present_frames"] == 5
-    assert record["window_excluded_present_frames"] == 5
+    assert record["window_excluded_present_frames"] == 0
+    assert record["outside_window_frames_not_scanned"] == 5
+    assert record["measurement_scope"] == "reviewed_windows_only"
+    assert record["window_policy"].endswith("before-geometry-and-after-debounce")
 
 
 def test_unset_windows_keep_each_existing_native_geometry_unchanged(tmp_path, monkeypatch):
@@ -306,7 +313,7 @@ def test_unset_windows_keep_each_existing_native_geometry_unchanged(tmp_path, mo
 
 def test_window_cannot_borrow_a_native_board_from_outside_its_declared_time(tmp_path, monkeypatch):
     geometry = w.frame_geometry(band())
-    monkeypatch.setattr(w, "scan_geometry", lambda *a: ([geometry] * 3 + [None] * 3, 760))
+    monkeypatch.setattr(w, "scan_geometry", lambda *a, **kw: ([geometry] * 3 + [None] * 3, 760))
     def forbidden_write(*args):
         pytest.fail("empty declared window must fail before creating a mask")
     monkeypatch.setattr(w, "write_geometry_mask", forbidden_write)

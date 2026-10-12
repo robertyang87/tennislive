@@ -1,0 +1,65 @@
+{
+  "url": "https://www.youtube.com/watch?v=T9TfTnVgHNY",
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "source_bytes": 45935631,
+  "source_window": [
+    2.1,
+    6.84
+  ],
+  "method": "actual bounded-source probe_board.scan_plan; both current custom boxes in one decode; only wta profile",
+  "full_source_scan_claimed": false,
+  "full_movie_qc_pass_claimed": false,
+  "full_source_scan_failure_preserved": "custom-probe-repair.log",
+  "board": {
+    "version": 1,
+    "fps": 5,
+    "t0": 2.1,
+    "frames": 24,
+    "scans": [
+      {
+        "box": [
+          89,
+          827,
+          552,
+          982
+        ],
+        "frames": 24,
+        "profiles": {
+          "wta": {
+            "present": 24,
+            "unresolved": 0,
+            "runs": [
+              [
+                24,
+                480,
+                480
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "box": [
+          89,
+          850,
+          552,
+          982
+        ],
+        "frames": 24,
+        "profiles": {
+          "wta": {
+            "present": 24,
+            "unresolved": 0,
+            "runs": [
+              [
+                24,
+                480,
+                480
+              ]
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

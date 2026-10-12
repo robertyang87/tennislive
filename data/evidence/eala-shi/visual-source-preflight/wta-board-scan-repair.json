@@ -1,0 +1,54 @@
+{
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "native_segment": {
+    "zero_based_index": 15,
+    "source_window": [
+      147.5,
+      153.62
+    ],
+    "old_search": [
+      89,
+      827,
+      552,
+      982
+    ]
+  },
+  "failure": {
+    "native_scan_frame_index": 146,
+    "native_scan_logical_source_seconds": 153.34,
+    "exact_source_picture_seconds": 153.32,
+    "source_time_binding": "Exact band pixels match raw -ss153.30/153.32 fullPNG crop with 0maxRGBdifference; -ss153.34 picks followingframe anddoesnotreproduce. Nativefps-start rounding yielded.02slogicaloffset.",
+    "error": "WTA board present but native body height cannot be measured",
+    "actually_viewed_raw_frame": "wta-failure-source153.32.png",
+    "actually_viewed_actual_scan_band": "wta-failure-exact-native-band.png",
+    "visible_scene": "Shi yellow closeup, bluewall/greenfloor; nativeboardabsent. Errorisbackground-colourfalsepositive, notboardloweredgeclipping."
+  },
+  "experiments": {
+    "larger_bottom": "1020/1080 convertedgreenfloorintofalsebody; rejected.",
+    "tighter_top": "850/860/865/867 allscan154framespass. But153.02–153.22floor incorrectlyreturnsbody[0,0,463,height65..132], soPASSaloneneverenough.",
+    "actual_plate": "Normal nativebodytop868–870/bottom981, y850search preservesfullplate. Raw151.80 stillname-onlywipeplate. Raw151.92and152.04/.16/.28/.40/.52/.64absent; raw153.48nextmaincamera nativeplatereturns."
+  },
+  "spec_only_repair": {
+    "search": [
+      89,
+      850,
+      552,
+      982
+    ],
+    "allowed_source_windows": [
+      [
+        147.5,
+        151.92
+      ],
+      [
+        153.48,
+        153.62
+      ]
+    ],
+    "why": "Absentplatefloorframes suppressed byexistingnative score_inset_windows aftergeometryscan. Fullnativeframe_geometry samecode, masks remainsameframebody/headeralpha.",
+    "limitations": "Nativegeometry alreadyreturnsNoneforname-onlynarrowwipeafter151.66evenwhen rawtinyplatepresent. Window doesnotclaim perframepresencepass or reconstructunmeasuredframe. ActualmasterQCstillrequired."
+  },
+  "shared_code_changed": false,
+  "narration_changed": false,
+  "final_movie_qc_pass_claimed": false
+}

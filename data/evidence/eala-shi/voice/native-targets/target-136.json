@@ -1,0 +1,528 @@
+{
+  "label": "第 20 段",
+  "edit_id": "deciding_set_story",
+  "word": "胜",
+  "char": "胜",
+  "at": 29,
+  "sentence": "三比三之后，伊埃拉连丢三局。三比六，领先被抹平。比赛进入决胜盘。",
+  "intended": "sheng4",
+  "wrong": "xing1",
+  "actual_binding": {
+    "label": "第 20 段",
+    "index": 19,
+    "edit_id": "deciding_set_story",
+    "display_text": "三比三之后，伊埃拉连丢三局。三比六，领先被抹平。比赛进入决胜盘。",
+    "text": "三比三之后，伊埃拉连丢三局。三比六，领先被抹平。比赛进入决胜盘。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "cache_key": "2c186be40a87b90ebbac7d648e9845a8",
+    "actual_mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+    "bound_snapshot_path": "/workspace/scratch/eala-voice/native-speech/2c186be40a87b90ebbac7d648e9845a8.mp3",
+    "marks_snapshot_path": "/workspace/scratch/eala-voice/native-speech/2c186be40a87b90ebbac7d648e9845a8.marks.json",
+    "mp3_duration_seconds": 7.488,
+    "window_seconds": 12.0,
+    "headroom_seconds": 4.512,
+    "native_cache_path": "/home/agent/.cache/tennislive-tts/2c186be40a87b90ebbac7d648e9845a8-edge-v2.zip",
+    "native_zip_snapshot_path": "/workspace/scratch/eala-voice/native-speech/2c186be40a87b90ebbac7d648e9845a8.native.zip",
+    "native_zip_sha256": "3995a433455d383744c7eceb2be852498e382036d1ada61184cb262f1a230c85",
+    "native_zip_marks_raw_sha256": "ef01313a7ba4f3e60cbf970a041f17e27d138dcba7586af92ec4f2e1f0b78f30",
+    "actual_marks_sha256": "39e44d0cb8f8d116fe0868cabe8e617245e754c704f4cb20be9faf6c1579fc4f",
+    "word_boundary_tokens": [
+      "三比三",
+      "之后",
+      "伊埃拉",
+      "连",
+      "丢",
+      "三局",
+      "三比六",
+      "领先",
+      "被",
+      "抹",
+      "平",
+      "比赛",
+      "进入",
+      "决胜",
+      "盘"
+    ],
+    "enumerated_polyphones": [
+      {
+        "at": 1,
+        "char": "比",
+        "word": "比",
+        "intended_lexical_reading": "bi3",
+        "all_dictionary_readings": [
+          "bi3",
+          "bi4",
+          "pi2",
+          "pi3"
+        ]
+      },
+      {
+        "at": 3,
+        "char": "之",
+        "word": "之",
+        "intended_lexical_reading": "zhi1",
+        "all_dictionary_readings": [
+          "zhi1",
+          "zhu1",
+          "zhi4"
+        ]
+      },
+      {
+        "at": 7,
+        "char": "埃",
+        "word": "埃",
+        "intended_lexical_reading": "ai1",
+        "all_dictionary_readings": [
+          "ai1",
+          "zhi4"
+        ]
+      },
+      {
+        "at": 8,
+        "char": "拉",
+        "word": "拉",
+        "intended_lexical_reading": "la1",
+        "all_dictionary_readings": [
+          "la1",
+          "la2",
+          "la3",
+          "la4",
+          "la5"
+        ]
+      },
+      {
+        "at": 15,
+        "char": "比",
+        "word": "比",
+        "intended_lexical_reading": "bi3",
+        "all_dictionary_readings": [
+          "bi3",
+          "bi4",
+          "pi2",
+          "pi3"
+        ]
+      },
+      {
+        "at": 16,
+        "char": "六",
+        "word": "六",
+        "intended_lexical_reading": "liu4",
+        "all_dictionary_readings": [
+          "liu4",
+          "lu4"
+        ]
+      },
+      {
+        "at": 20,
+        "char": "被",
+        "word": "被",
+        "intended_lexical_reading": "bei4",
+        "all_dictionary_readings": [
+          "bei4",
+          "bi4",
+          "pi1",
+          "pi4"
+        ]
+      },
+      {
+        "at": 21,
+        "char": "抹",
+        "word": "抹",
+        "intended_lexical_reading": "mo3",
+        "all_dictionary_readings": [
+          "mo3",
+          "ma1",
+          "mo4"
+        ]
+      },
+      {
+        "at": 22,
+        "char": "平",
+        "word": "平",
+        "intended_lexical_reading": "ping2",
+        "all_dictionary_readings": [
+          "ping2",
+          "pian2",
+          "bing4",
+          "beng1"
+        ]
+      },
+      {
+        "at": 24,
+        "char": "比",
+        "word": "比",
+        "intended_lexical_reading": "bi3",
+        "all_dictionary_readings": [
+          "bi3",
+          "bi4",
+          "pi2",
+          "pi3"
+        ]
+      },
+      {
+        "at": 29,
+        "char": "胜",
+        "word": "胜",
+        "intended_lexical_reading": "sheng4",
+        "all_dictionary_readings": [
+          "sheng4",
+          "xing1",
+          "qing4",
+          "sheng1"
+        ]
+      }
+    ],
+    "tts_only_substitution_changed_text": false
+  },
+  "check_kind": "polyphone",
+  "context_notes": [
+    "Lexical dictionary intended reading is a declared hypothesis; calibration evaluates actual audio."
+  ],
+  "ok_refs": [
+    "剩"
+  ],
+  "bad_refs": [
+    "惺",
+    "星",
+    "猩"
+  ],
+  "reference_notes": [
+    "Only dictionary single-reading nonoriginal references selected; dominant-reading only, single-reading common",
+    "Only dictionary single-reading nonoriginal references selected; dominant-reading only, single-reading common"
+  ],
+  "reference_validity_limited": true,
+  "acoustic": {
+    "word": "胜",
+    "char": "胜",
+    "sentence": "三比三之后，伊埃拉连丢三局。三比六，领先被抹平。比赛进入决胜盘。",
+    "tts_text": "三比三之后，伊埃拉连丢三局。三比六，领先被抹平。比赛进入决胜盘。",
+    "intended_refs": [
+      "剩"
+    ],
+    "wrong_refs": [
+      "惺",
+      "星",
+      "猩"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "low",
+    "verdict_raw": "correct",
+    "score": 0.477,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.158,
+        "d_wrong": 4.419,
+        "score": 0.344
+      },
+      "f0": {
+        "d_intended": 0.197,
+        "d_wrong": 1.391,
+        "score": 0.752
+      },
+      "comb": {
+        "d_intended": 1.276,
+        "d_wrong": 3.603,
+        "score": 0.477
+      }
+    },
+    "neighbour_shift": {
+      "intended": 1.928,
+      "wrong": 2.671
+    },
+    "separation": {
+      "spec": {
+        "within": 1.666,
+        "between": 4.508,
+        "separation": 2.706
+      },
+      "f0": {
+        "within": 0.291,
+        "between": 1.471,
+        "separation": 5.057
+      },
+      "comb": {
+        "within": 1.124,
+        "between": 3.725,
+        "separation": 3.315
+      }
+    },
+    "selftest_loo": {
+      "惺": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.425
+      },
+      "星": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.975
+      },
+      "猩": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.975
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:剩": {
+        "spec": 2.158,
+        "f0": 0.197,
+        "vmis": 0.04,
+        "frames": 25,
+        "comb": 1.276
+      },
+      "B:惺": {
+        "spec": 4.897,
+        "f0": 1.608,
+        "vmis": 0.04,
+        "frames": 25,
+        "comb": 4.056
+      },
+      "B:星": {
+        "spec": 4.419,
+        "f0": 1.393,
+        "vmis": 0.074,
+        "frames": 27,
+        "comb": 3.603
+      },
+      "B:猩": {
+        "spec": 4.432,
+        "f0": 1.391,
+        "vmis": 0.074,
+        "frames": 27,
+        "comb": 3.607
+      }
+    },
+    "window_s": [
+      6.18,
+      6.43
+    ],
+    "boundary_token": "决胜",
+    "window_anchor": "B:星",
+    "tokens": {
+      "ORIG": [
+        "三比三",
+        "之后",
+        "伊埃拉",
+        "连",
+        "丢",
+        "三局",
+        "三比六",
+        "领先",
+        "被",
+        "抹",
+        "平",
+        "比赛",
+        "进入",
+        "决胜",
+        "盘"
+      ],
+      "A:剩": [
+        "三比三",
+        "之后",
+        "伊埃拉",
+        "连",
+        "丢",
+        "三",
+        "局",
+        "三比六",
+        "领先",
+        "被",
+        "抹平",
+        "比赛",
+        "进入",
+        "决剩盘"
+      ],
+      "B:惺": [
+        "三比三",
+        "之后",
+        "伊埃拉",
+        "连",
+        "丢",
+        "三",
+        "局",
+        "三比六",
+        "领先",
+        "被",
+        "抹平",
+        "比赛",
+        "进入",
+        "决惺",
+        "盘"
+      ],
+      "B:星": [
+        "三比三",
+        "之后",
+        "伊埃拉",
+        "连",
+        "丢",
+        "三局",
+        "三比六",
+        "领先",
+        "被",
+        "抹",
+        "平",
+        "比赛",
+        "进入",
+        "决",
+        "星",
+        "盘"
+      ],
+      "B:猩": [
+        "三比三",
+        "之后",
+        "伊埃拉",
+        "连",
+        "丢",
+        "三局",
+        "三比六",
+        "领先",
+        "被",
+        "抹",
+        "平",
+        "比赛",
+        "进入",
+        "决",
+        "猩",
+        "盘"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -2.8,
+        -1.6,
+        0.1,
+        1.4,
+        2.0,
+        null,
+        null,
+        null,
+        4.3,
+        1.8,
+        -1.6,
+        -3.7,
+        -5.4
+      ],
+      "A:剩": [
+        -2.1,
+        -0.8,
+        0.7,
+        1.7,
+        1.5,
+        null,
+        null,
+        4.7,
+        3.5,
+        -0.1,
+        -2.6,
+        -4.6,
+        -6.1
+      ],
+      "B:惺": [
+        -2.4,
+        -1.2,
+        -0.3,
+        0.5,
+        -0.0,
+        null,
+        null,
+        null,
+        1.4,
+        0.8,
+        0.3,
+        -0.3,
+        -1.3
+      ],
+      "B:星": [
+        -2.3,
+        -0.8,
+        0.2,
+        1.1,
+        0.2,
+        null,
+        null,
+        null,
+        2.5,
+        1.8,
+        0.8,
+        0.2,
+        -0.6,
+        -3.0
+      ],
+      "B:猩": [
+        -2.3,
+        -0.8,
+        0.2,
+        1.1,
+        0.2,
+        null,
+        null,
+        null,
+        2.5,
+        1.8,
+        0.8,
+        0.2,
+        -0.6,
+        -3.1
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/scratch/eala-voice/native-speech/2c186be40a87b90ebbac7d648e9845a8.mp3",
+      "A:剩": "/workspace/scratch/eala-voice/fresh-reference-cache/3d6be03fc6793338579aa9fd.mp3",
+      "B:惺": "/workspace/scratch/eala-voice/fresh-reference-cache/bc46c8538d6f76a5e644fe32.mp3",
+      "B:星": "/workspace/scratch/eala-voice/fresh-reference-cache/dc2a866abc8cb6083d4f6491.mp3",
+      "B:猩": "/workspace/scratch/eala-voice/fresh-reference-cache/df4be8e63a27a07ca58f77c6.mp3"
+    }
+  },
+  "control_audio_provenance": [
+    {
+      "label": "ORIG",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/2c186be40a87b90ebbac7d648e9845a8.mp3",
+      "mp3_sha256": "d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/2c186be40a87b90ebbac7d648e9845a8.marks.json",
+      "marks_sha256": "39e44d0cb8f8d116fe0868cabe8e617245e754c704f4cb20be9faf6c1579fc4f"
+    },
+    {
+      "label": "A:剩",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/3d6be03fc6793338579aa9fd.mp3",
+      "mp3_sha256": "01658739555422a9a873e4ec200db357b7956c8fdd1028e2621d52a5dc3862f5",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/3d6be03fc6793338579aa9fd.marks.json",
+      "marks_sha256": "8b93e599aaf1bcc44cae941ea0534f988658740cd494888f5efa5da78cb46af7"
+    },
+    {
+      "label": "B:惺",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/bc46c8538d6f76a5e644fe32.mp3",
+      "mp3_sha256": "9e6be055924ae0e1214cfb61b3a13b3a8dce63cd1aca70ffcbe826185646887a",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/bc46c8538d6f76a5e644fe32.marks.json",
+      "marks_sha256": "b3c5653664a76050ffec9a57f5cc84ba14f7f210473eea79533beb241941cb43"
+    },
+    {
+      "label": "B:星",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/dc2a866abc8cb6083d4f6491.mp3",
+      "mp3_sha256": "c945a03c0fe83482473c3440ac6ad1fa537c9b764037588b17094845294202b4",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/dc2a866abc8cb6083d4f6491.marks.json",
+      "marks_sha256": "c0e3f4517cfb5fbac2602eebce74d47128f1a44c88aea9c2bd419e60387f37e1"
+    },
+    {
+      "label": "B:猩",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/df4be8e63a27a07ca58f77c6.mp3",
+      "mp3_sha256": "0004040bc8f5f377bda5749e45df4fae79183dc12fd4e137ba898640bc3741d9",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/df4be8e63a27a07ca58f77c6.marks.json",
+      "marks_sha256": "aa985af82cee39588bac1863a3cd16bf3d97eccbedf7c29df31fcb0684776cef"
+    }
+  ],
+  "measured_at_utc": "2026-10-12T17:05:00.410147+00:00"
+}

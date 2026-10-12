@@ -1,0 +1,24 @@
+{
+  "schema": "tennislive.current-edge-transport-provenance.v1",
+  "slug": "eala-shi",
+  "services_used": {
+    "DeepSeek": false,
+    "MiniMax": false
+  },
+  "backend": "edge",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "pitch": "+0Hz",
+  "edge_tts_version": "7.2.8",
+  "adapter_path": "tools/alcaraz_voice_review/runtime/sitecustomize.py",
+  "adapter_sha256": "83ac098e582f742a94d1d1608960f1a7bfca853a771d85a4cda38edd03c42f98",
+  "endpoint": "wss://api.msedgeservices.com/tts/cognitiveservices/websocket/v1",
+  "upstream_reference": "https://github.com/rany2/edge-tts/pull/491",
+  "transport_only_migration": true,
+  "new_ua_or_gec_fabricated": false,
+  "actual_prepared_scope_sha256": "fed232df95049247a82068665ec3d7bc7667649a620d0401ed17bfd795e0a957",
+  "actual_native_bindings_sha256": "f65e540a2e47b9ed14b895ee029be226f7eb92da2c7a0c8dcb51829665c2a7c1",
+  "forbidden_services_called": false,
+  "human_listening_claimed": false,
+  "voice_input_fingerprint": "602003a683d509dfce03deb16447efb0fe7d90815f90a33782852a290898d642"
+}

@@ -1,0 +1,125 @@
+{
+  "checked_at": "2026-10-12T16:36:32.950258+00:00",
+  "match": {
+    "players": [
+      "Alexandra Eala",
+      "Han Shi"
+    ],
+    "date": "2026-10-12",
+    "event": "WTA1000 Wuhan",
+    "round": "R1",
+    "wta_match_id": "LS060"
+  },
+  "requested_cover_subject": "Alexandra Eala",
+  "official_priority": true,
+  "no_deepseek_minimax": true,
+  "status": "no_verified_same_match_eala_official_high_resolution_photo_found_in_checked_channels",
+  "channels": [
+    {
+      "channel": "WTA photo API",
+      "url": "https://api.wtatennis.com/content/wta/photo/EN/?pageSize=100&page=0&references=TENNIS_PLAYER:330332",
+      "finding": "Newest Eala photo is Asian Games 2026, published October 8. Rejected as different event. Unfiltered October 12 page contains Han Shi 2299315394, not Eala."
+    },
+    {
+      "channel": "WTA video page / photo-resources",
+      "url": "https://www.wtatennis.com/videos/4591125/world-no-217-shi-pulls-off-wuhan-stunner-against-eala",
+      "finding": "Getty 2299315394 explicitly Han Shi. Full 6019 × 4013 image viewed and IPTC read. Suitable same-match Shi action but not requested Eala subject."
+    },
+    {
+      "channel": "WTA news/text feed",
+      "finding": "find_cover_photo scans same-match articles; no matching same-match Eala photo returned. Eala news player feed newest is pre-tournament media day."
+    },
+    {
+      "channel": "Wuhan official sites",
+      "urls": [
+        "https://www.wuhanopen.org/",
+        "https://www.wuhanopen.com/"
+      ],
+      "finding": "org blocked proxy CONNECT 403; com HTTP202 168-byte empty shell. No photo gallery available in these responses; not exhaustive official-social absence."
+    },
+    {
+      "channel": "AP",
+      "finding": "Native find_cover_photo AP search ran, returned no match."
+    },
+    {
+      "channel": "Getty agency",
+      "finding": "Search and detail requests returned HTTP403. Native finder returned complete caption for Shi 2299315394 in WTA context."
+    },
+    {
+      "channel": "Chinese media / Sogou WeChat",
+      "finding": "29 search hits; 13 subject/date-filtered contemporary stories, direct mp.weixin article fetch blocked proxy CONNECT403. Xinhuanet search HTTP405 and Sina search shell."
+    },
+    {
+      "channel": "Philippines news",
+      "finding": "Philstar search returns only pre-match Wuhan articles; Rappler Eala topic/WordPress posts results stop at earlier Asian Games articles. Inquirer403, Manila Bulletin403, SCMP403; GMA search JS body no photos, OneSports shell, Spin search empty."
+    },
+    {
+      "channel": "Additional Philippine press / bounded follow-up",
+      "finding": "Rappler explicit Eala people topic stops at Asian Games; Philstar date sorting still only pre-match articles. Eala-referenced WTA photo feed independently confirms no same-match Eala publication at checked time."
+    }
+  ],
+  "raw_research_local_dir": "/workspace/scratch/eala-cover",
+  "raw_find_cover_log_sha256": "59c4ffbb02d32dabcf3e4cde06bbc9eee687e52c067c41e426a4ba6b71899e39",
+  "searched_does_not_claim_all_web_exhausted": true,
+  "fallback_candidate": {
+    "source": "https://www.youtube.com/watch?v=T9TfTnVgHNY",
+    "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+    "source_time": 212.5,
+    "frame_sha256": "4c775d542ae240daad4496cea062f60cdedbf263503b79ffce80423738d1e187",
+    "native_size": [
+      1920,
+      1080
+    ],
+    "identity": "Alexandra Eala, frontal receiving stance, two eyes open; source-stage exact-ID official WTA video identity corroborated. Native board at this window is EALA first-set 6 / second-set 3 / deciding-set 0 versus SHI 4 / 6 / 1, Eala serving, Shi advantage on a break point.",
+    "limitation": "Official-source broadcast-frame fallback, not camera-original photography. Final proposed zoom1.05 scales native vertically1.4× into1080×1440. This is native CSS projection, no image/face editing.",
+    "accepted_for_publication": "Candidate approved under standing 2026-09-26 exception; root final QC required.",
+    "source_uploader_identity_evidence": "data/evidence/eala-shi/source-identity",
+    "source_time_score_review": "Root corrected prior informal 1-1 impression using actual native board + official PBP; no 1-1 assertion is retained in provenance.",
+    "standing_owner_fallback_authorized": true,
+    "proposed_geometry": {
+      "focus": 0.5,
+      "focus_y": 0.65,
+      "zoom": 1.05,
+      "native_preview": "data/evidence/eala-shi/cover/native-proposed-final.jpg",
+      "visually_reviewed": true,
+      "head_top_estimate_canvas_y": 160,
+      "chin_bottom_estimate_canvas_y": 780,
+      "native_header_text_bottom_estimate_canvas_y": 125,
+      "hook_start_estimate_canvas_y": 795,
+      "finding": "Native preview has clear two eyes and complete mouth/chin; header text stops above hair with about35px gap; hook starts below chin with about15px gap; original native scoreboard left residue excluded by horizontal focus0.50.",
+      "previous_zoom1_1_rejected": "chin reaches title first-line region; used only comparison, not final recommendation."
+    }
+  },
+  "queries": [
+    {
+      "query": "\"Eala\" \"Shi\" \"Wuhan\" \"2026\"",
+      "path": "/workspace/scratch/eala-cover/search-0.json",
+      "sha256": "ad3da2e76a2bd87f302438aa73a4ee4513d3ae797cc84ffd6f0d39b9bf6e5659",
+      "finding": "English returned generic older Eala results; Chinese returned unrelated Microsoft/Fidelity items, not evidence of exhaustive absence."
+    },
+    {
+      "query": "\"伊埃拉\" \"施晗\" \"2026\"",
+      "path": "/workspace/scratch/eala-cover/search-1.json",
+      "sha256": "aaeb5872d0ff627d0db1f2863c6734ceeaa9aafe75586ccc34cf999160b20e31",
+      "finding": "English returned generic older Eala results; Chinese returned unrelated Microsoft/Fidelity items, not evidence of exhaustive absence."
+    },
+    {
+      "query": "\"Eala\" \"Wuhan\" \"October 12\"",
+      "path": "/workspace/scratch/eala-cover/search-2.json",
+      "sha256": "086bee8e781aff4cd5b2d289213cb8a49e5e299a77bdf3a434e276ace0940e5a",
+      "finding": "English returned generic older Eala results; Chinese returned unrelated Microsoft/Fidelity items, not evidence of exhaustive absence."
+    },
+    {
+      "query": "\"伊埃拉\" \"武网\" \"2026\"",
+      "path": "/workspace/scratch/eala-cover/search-3.json",
+      "sha256": "d5c71035400ace072e1e47c07af88b368da17fd16e395dc8e15585f94a7ec826",
+      "finding": "English returned generic older Eala results; Chinese returned unrelated Microsoft/Fidelity items, not evidence of exhaustive absence."
+    }
+  ],
+  "limitations_not_claimed_pass": {
+    "face_model_run": false,
+    "manual_visual_review": true,
+    "photo_copyright_license_verified": false,
+    "photo_credit": "Not applicable: extracted official WTA video frame, WTA attribution retained in source provenance."
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schema": "tennislive.current-finite-diagnostic-review.v1",
+  "slug": "eala-shi",
+  "status": "all_raw_misread_diagnostics_limited_and_retained_unresolved",
+  "actual_native_voice_count": 9,
+  "current_finite_comparison_count": 241,
+  "native_pronunciation_review_sha256": "2cd8cca867bb51da7e28b8ad0295a1aa0b70735ea7eddec300312d3e8b30557b",
+  "reviewed_records": [
+    {
+      "raw_record_path": "/workspace/scratch/eala-voice-v2/native-targets/target-036.json",
+      "raw_record_sha256": "34eade918670688df277504a8ce70f0b5936d9c013a382ee9eedb4d5e169073d",
+      "char": "施",
+      "at": 36,
+      "sentence": "北京时间十月十二日晚上，武汉首轮。排名十九的伊埃拉，迎战排名二百一十七的施晗。",
+      "raw_verdict": "misread",
+      "raw_confidence": "low",
+      "raw_score": -0.486,
+      "review_diagnostic_limits": [
+        "Not medium/high relative confidence.",
+        "Actual target is far from both reference classes.",
+        "Same-syllable tone contrast lacks finite F0 distance on both sides; combined MFCC/F0 distance is not comparable."
+      ],
+      "reviewed_status": "unresolved_diagnostic_limit_not_pronunciation_pass"
+    },
+    {
+      "raw_record_path": "/workspace/scratch/eala-voice-v2/native-targets/target-039.json",
+      "raw_record_sha256": "ca6a4f1b4c6fb096c5d62762362d2ddab92c352d71071a5d8a3fb735a6bff07a",
+      "char": "施",
+      "at": 36,
+      "sentence": "北京时间十月十二日晚上，武汉首轮。排名十九的伊埃拉，迎战排名二百一十七的施晗。",
+      "raw_verdict": "misread",
+      "raw_confidence": "medium",
+      "raw_score": -0.492,
+      "review_diagnostic_limits": [
+        "Same-syllable tone contrast lacks finite F0 distance on both sides; combined MFCC/F0 distance is not comparable."
+      ],
+      "reviewed_status": "unresolved_diagnostic_limit_not_pronunciation_pass"
+    },
+    {
+      "raw_record_path": "/workspace/scratch/eala-voice-v2/native-targets/target-184.json",
+      "raw_record_sha256": "bfaeb28abf52b7a362168416f4c62c291750790d3ae99238a3b81edf8de4711c",
+      "char": "分",
+      "at": 18,
+      "sentence": "伊埃拉追到三比五，却再没破发。一发得分率，施晗百分之七十八，伊埃拉百分之六十四。制胜分三十一比二十。下一站，伊埃拉能找回节奏吗？",
+      "raw_verdict": "misread",
+      "raw_confidence": "low",
+      "raw_score": -0.216,
+      "review_diagnostic_limits": [
+        "Not medium/high relative confidence.",
+        "Actual target is far from both reference classes."
+      ],
+      "reviewed_status": "unresolved_diagnostic_limit_not_pronunciation_pass"
+    }
+  ],
+  "remaining_uncertain_count": 142,
+  "current_reliable_misread_count": 0,
+  "pronunciation_release_pass_claimed": false,
+  "human_listening_claimed": false,
+  "asr_used_to_prove_tones": false,
+  "same_episode_exact_unchanged_control_reuse": {
+    "manifest_sha256": "cf0b466242fd4232aeb0e4527c7607b8cb6b308ff6ef8d2dc735a31935e45396",
+    "reused_raw_record_count": 194,
+    "current_new_comparison_count": 47,
+    "changed_edit_ids": [
+      "first_set_pressure",
+      "long_rally_context"
+    ],
+    "old_changed_utterance_verdicts_promoted": false
+  },
+  "method": "Original result JSONs unchanged. Separate report requires medium/high confidence, both-sided LOO, no far-from-both/reference-limit, and finite both-sided F0 for same-syllable tone decisions. Three limited raw misreads remain unresolved; no current stable misread confirmed.",
+  "current_formal_spec_sha256": "a23fd7cfa977415db1b227d06dbf2814e72dfbf05e326a06762e41e3baab4b09",
+  "final_film_sha256": "dd60eef0078ca720037d4a9ce9543d157598d8d335503363d9f19e69c48b5b35"
+}

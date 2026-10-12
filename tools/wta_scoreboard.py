@@ -355,7 +355,8 @@ def frame_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
 
 
 def scan_geometry(source: Path, box: tuple[int, int, int, int], start: float,
-                  seconds: float, fps: str) -> tuple[list, int]:
+                  seconds: float, fps: str, *,
+                  allowed_windows: tuple[tuple[float, float], ...] = ()) -> tuple[list, int]:
     """Read the search band once and retain each frame's measured alpha geometry."""
     x0, y0, x1, y1 = box
     sw = int(subprocess.check_output(
@@ -371,7 +372,14 @@ def scan_geometry(source: Path, box: tuple[int, int, int, int], start: float,
         raise RuntimeError(proc.stderr.decode(errors="replace"))
     raw, per = proc.stdout or b"", width * height * 3
     frames = []
+    rate = float(Fraction(fps))
     for k in range(len(raw) // per):
+        # Reviewed source windows exclude frames without a native score graphic.
+        # Gate before detection too: a centred result graphic or green court can
+        # otherwise resemble an unmeasurable board and fail outside those windows.
+        if allowed_windows and not any(a <= k / rate < b for a, b in allowed_windows):
+            frames.append(None)
+            continue
         band = np.frombuffer(raw[k * per:(k + 1) * per], np.uint8).reshape(height, width, 3)
         frames.append(frame_geometry(band, cap=x1 - x0))
     if not frames:
@@ -444,14 +452,15 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
             continue
         x0, y0, spec_x1, y1 = seg.score_inset
         seconds = seg.end - seg.start + tail * seg.speed
+        windows = getattr(seg, "score_inset_windows", ())
+        scan_options = {"allowed_windows": windows} if windows else {}
         frames, width = scan_geometry(Path(sources[seg.source]), seg.score_inset,
-                                      seg.start, seconds, fps)
+                                      seg.start, seconds, fps, **scan_options)
         # Presence debounce suppresses isolated false positives; it never expands
         # one frame to another frame's wider/taller opaque geometry.
         states = debounce([(f["edge"], None) if f else (None, None) for f in frames])
         frames = [f if state[0] is not None else None for f, state in zip(frames, states)]
         measured_present = sum(f is not None for f in frames)
-        windows = getattr(seg, "score_inset_windows", ())
         if windows:
             # parse_segments converts the declared source-time windows to times
             # relative to seg.start. Gate only the already measured geometry;
@@ -462,7 +471,7 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
                       for k, f in enumerate(frames)]
         live = [f for f in frames if f]
         if not live:
-            if windows and measured_present:
+            if windows:
                 raise RuntimeError(
                     f"第 {i + 1} 段 score_inset_windows 内没有真实 WTA 比分板；"
                     "不能用窗口外的板或实心搜索框补贴。")
@@ -498,9 +507,14 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
                         "alpha_geometry": "native-body-and-header-rows",
                         "measured_present_frames": measured_present,
                         "window_excluded_present_frames": measured_present - len(live),
+                        "outside_window_frames_not_scanned": sum(
+                            not any(a <= k / rate < b for a, b in windows)
+                            for k in range(len(frames))) if windows else 0,
+                        "measurement_scope": "reviewed_windows_only" if windows else "full_segment",
+                        "window_excluded_present_frames_scope": "post_debounce_defense_only",
                         "allowed_source_windows": [[seg.start + a, seg.start + b]
                                                    for a, b in windows],
-                        "window_policy": "relative-frame-time-half-open-after-native-debounce",
+                        "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
                         "mask": str(dest), "mask_sha256": _sha256(dest)})
         print(f"[score-mask] 第 {i + 1} 段：板在 {len(live)}/{len(frames)} 帧，"
               f"原生有效外缘 {seg.score_inset}，body/header独立透明蒙版（{rate:g} fps）")

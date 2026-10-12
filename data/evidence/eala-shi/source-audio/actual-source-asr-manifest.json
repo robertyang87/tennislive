@@ -1,0 +1,104 @@
+{
+  "schema": "tennislive.actual-source-asr-evidence.v1",
+  "slug": "eala-shi",
+  "source_url": "https://www.youtube.com/watch?v=T9TfTnVgHNY",
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "source_bytes": 45935631,
+  "source_duration": 306.851701,
+  "decoded_review_pcm": {
+    "path": "/workspace/scratch/eala-audio/decoded-source-full.wav",
+    "sha256": "1bcc4b9c9d2dcce24d732a2fd989adf5e21a49685915c1c2cfa7e62f77cb2a78",
+    "bytes": 9819332,
+    "format": "16 kHz mono PCM s16le WAV",
+    "in_repository": false
+  },
+  "recorded_at": "2026-10-12T16:43:23.412737+00:00",
+  "method": "asr_cross_checked",
+  "full_source_models": [
+    "small.en",
+    "medium.en"
+  ],
+  "targeted_model": "large-v3",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "tone_verified": false,
+  "raw_evidence": [
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-large-v3-coldopen-novad.json",
+      "sha256": "167656fa9b7c5d4a9fd989af66b03733e85f3cdad2d370b193f746a4a03b57b6",
+      "bytes": 13722,
+      "model": "large-v3",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-large-v3-disputed-novad.json",
+      "sha256": "84b646980d713ac2390812517c7da4c296337170f2404b9bdb5d7c5c80299b74",
+      "bytes": 20520,
+      "model": "large-v3",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-large-v3-ending-novad.json",
+      "sha256": "3ec56cd392281152bc0bf121562f33f5f9eb8b51804160a393af71d146643908",
+      "bytes": 17173,
+      "model": "large-v3",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-medium-en-end-context-novad.json",
+      "sha256": "147f924b79229aa3ad0b93dee830944e25d9b4eb89cea08a6729b182692b35eb",
+      "bytes": 7798,
+      "model": "medium.en",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-medium-en-full.json",
+      "sha256": "f9846cdc3fbd2b72ce16b34a3e815e6b2fc444446b27d35f17b97c11c689a5e3",
+      "bytes": 60147,
+      "model": "medium.en",
+      "vad_filter": true,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-small-en-disputed-novad.json",
+      "sha256": "59b3cb20f77ae50dec806162eebbb6f62e5641d5def439e974fc95d610b64366",
+      "bytes": 33003,
+      "model": "small.en",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-small-en-end-context-novad.json",
+      "sha256": "382fc573825b780fb72f6c5793cc9db44439f1d317c8468afe545053e2f26252",
+      "bytes": 7726,
+      "model": "small.en",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-small-en-full.json",
+      "sha256": "538e68717a30e03ed134e710b630fa010256b98193620196ad64266c834dcd01",
+      "bytes": 61119,
+      "model": "small.en",
+      "vad_filter": true,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/run-asr.py",
+      "sha256": "79c1beb262eef65afb6aa5be2cee3befa1bdda3c42ea3bc4c809ebdcf3acf990",
+      "bytes": 1694,
+      "role": "actual_command_script"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/run-targeted.py",
+      "sha256": "300855c739f4078d3ee0c187a04c8fbe84f97c8ba841b71e87edcc74b1b1adda",
+      "bytes": 1855,
+      "role": "actual_command_script"
+    }
+  ],
+  "note": "Fresh actual local int8 CPU decoding of the exact owner-supplied source. Two full-source English models independently review the entire source; bounded no-VAD actual crops reconcile uncertain wording and context. Raw disagreements, omitted chatter, and orthographic proper-name repair are retained separately. ASR estimated timings do not constitute phonetic ground truth."
+}

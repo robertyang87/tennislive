@@ -1,0 +1,35 @@
+{
+  "schema": "tennislive.actual-native-weak-ambience-proof.v1",
+  "slug": "eala-shi",
+  "recorded_at": "2026-10-12T18:26:37.503970+00:00",
+  "film_sha256": "dd60eef0078ca720037d4a9ce9543d157598d8d335503363d9f19e69c48b5b35",
+  "film_bytes": 122233077,
+  "spec_sha256": "a23fd7cfa977415db1b227d06dbf2814e72dfbf05e326a06762e41e3baab4b09",
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "render_inputs_sha256": "81f4c89b64aa38d51e99b2f678023809919695b54304410d35875d97c1bfff2d",
+  "audio_review_binding_sha256": "d3984164026341b69ee43bbd507516a4b1749f402355c1814567405e1f9b93ea",
+  "method": "Immutable native review, continuous same-source/same-gain timeline reconstruction; actual content-keyed atomic native voice ZIP/MP3/complete WordBoundary and strongly matching entire AAC utterance, then actual completed-tail source PCM/correlation/nonzero/native-gain proof. Global60dB floor unchanged. Short no-commentary windows require every counted second to have an actual source-waveform proof.",
+  "accepted_new_seconds": [
+    48,
+    208,
+    211
+  ],
+  "already_verified_short_window_seconds": [
+    251
+  ],
+  "quiet_window_all_seconds_verified": true,
+  "human_listening_claimed": false,
+  "tone_verified": false,
+  "pronunciation_pass_claimed": false,
+  "code": {
+    "natural_quiet_audio_sha256": "73222add8d5b478d78e5e974388759ab81052c9294088450f4d7a5dbca7d9def",
+    "check_reel_landed_sha256": "88dae928400e78344037443c0f8832af56b5227319dc7059c9f2a30239284589"
+  },
+  "actual_proof_log": [
+    "[原生弱声完整秒证据] 成片48–49s continuous_source_join ← 源main 40.450–41.450s SHA256=daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8；相关=0.996413、gain=0.972000、增益误差=-0.213dB、非零",
+    "[原生弱声完整秒证据] 成片208–209s measured_post_narration_tail ← 源main 202.310–203.310s SHA256=daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8；相关=0.977176、gain=0.360000、增益误差=-1.166dB、非零；全句MP3=d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb、配对ZIP=3995a433455d383744c7eceb2be852498e382036d1ada61184cb262f1a230c85、voice相关=0.999810",
+    "[原生弱声完整秒证据] 成片211–212s measured_post_narration_tail ← 源main 205.310–206.310s SHA256=daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8；相关=0.998055、gain=0.360000、增益误差=-0.144dB、非零；全句MP3=d1c650f04378917b726cb794de5fb09b745b3110b735c8505956261e8d7baacb、配对ZIP=3995a433455d383744c7eceb2be852498e382036d1ada61184cb262f1a230c85、voice相关=0.999810",
+    "[自然弱声证据] 成片251–252s ← 源main 245.310–246.310s SHA256=daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8；波形相关≥0.85、增益误差≤2dB，原源/成片均非零"
+  ],
+  "note": "No spec/master/source/mix/QC threshold edits. This records the additional evidence models applied to previously reported48/208/211 and the existing verified251. Final native check still must complete all other gates and issue its own attestation."
+}

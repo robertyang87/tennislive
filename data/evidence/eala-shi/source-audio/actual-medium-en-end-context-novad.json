@@ -1,0 +1,343 @@
+{
+  "schema": "actual-local-targeted-asr.v1",
+  "source_path": "/workspace/scratch/eala-source/T9TfTnVgHNY.mp4",
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "normalization": "none; original amplitude",
+  "vad_filter": false,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "initial_prompt": null,
+  "human_listening_claimed": false,
+  "windows": [
+    [
+      283,
+      303
+    ]
+  ],
+  "window_results": [
+    {
+      "window": [
+        283,
+        303
+      ],
+      "duration": 20.0,
+      "utterance_count": 7,
+      "status": "actual_decode_complete"
+    }
+  ],
+  "segments": [
+    {
+      "window": [
+        283,
+        303
+      ],
+      "start": 287.18,
+      "end": 288.64,
+      "text": " it might take some time to",
+      "no_speech_prob": 0.7895792722702026,
+      "avg_logprob": -0.5783362875179369,
+      "words": [
+        {
+          "start": 287.18,
+          "end": 287.62,
+          "word": " it",
+          "probability": 0.020695026963949203
+        },
+        {
+          "start": 287.62,
+          "end": 287.78,
+          "word": " might",
+          "probability": 0.79851895570755
+        },
+        {
+          "start": 287.78,
+          "end": 288.04,
+          "word": " take",
+          "probability": 0.9972720742225647
+        },
+        {
+          "start": 288.04,
+          "end": 288.22,
+          "word": " some",
+          "probability": 0.9945870637893677
+        },
+        {
+          "start": 288.22,
+          "end": 288.46,
+          "word": " time",
+          "probability": 0.9984391331672668
+        },
+        {
+          "start": 288.46,
+          "end": 288.64,
+          "word": " to",
+          "probability": 0.99408358335495
+        }
+      ]
+    },
+    {
+      "window": [
+        283,
+        303
+      ],
+      "start": 288.64,
+      "end": 290.58,
+      "text": " process but you earned it.",
+      "no_speech_prob": 0.7895792722702026,
+      "avg_logprob": -0.5783362875179369,
+      "words": [
+        {
+          "start": 288.64,
+          "end": 289.08,
+          "word": " process",
+          "probability": 0.9914019703865051
+        },
+        {
+          "start": 289.08,
+          "end": 289.76,
+          "word": " but",
+          "probability": 0.8864383101463318
+        },
+        {
+          "start": 289.76,
+          "end": 289.94,
+          "word": " you",
+          "probability": 0.9897894263267517
+        },
+        {
+          "start": 289.94,
+          "end": 290.16,
+          "word": " earned",
+          "probability": 0.7582201361656189
+        },
+        {
+          "start": 290.16,
+          "end": 290.58,
+          "word": " it.",
+          "probability": 0.996157705783844
+        }
+      ]
+    },
+    {
+      "window": [
+        283,
+        303
+      ],
+      "start": 290.8,
+      "end": 292.26,
+      "text": " She had go ahead and take your",
+      "no_speech_prob": 0.7895792722702026,
+      "avg_logprob": -0.5783362875179369,
+      "words": [
+        {
+          "start": 290.8,
+          "end": 290.86,
+          "word": " She",
+          "probability": 0.7840254902839661
+        },
+        {
+          "start": 290.86,
+          "end": 291.14,
+          "word": " had",
+          "probability": 0.8030694127082825
+        },
+        {
+          "start": 291.14,
+          "end": 291.56,
+          "word": " go",
+          "probability": 0.4030095040798187
+        },
+        {
+          "start": 291.56,
+          "end": 291.74,
+          "word": " ahead",
+          "probability": 0.9976444840431213
+        },
+        {
+          "start": 291.74,
+          "end": 291.96,
+          "word": " and",
+          "probability": 0.9905710220336914
+        },
+        {
+          "start": 291.96,
+          "end": 292.1,
+          "word": " take",
+          "probability": 0.9953041076660156
+        },
+        {
+          "start": 292.1,
+          "end": 292.26,
+          "word": " your",
+          "probability": 0.9902505874633789
+        }
+      ]
+    },
+    {
+      "window": [
+        283,
+        303
+      ],
+      "start": 292.26,
+      "end": 292.6,
+      "text": " bow.",
+      "no_speech_prob": 0.7895792722702026,
+      "avg_logprob": -0.5783362875179369,
+      "words": [
+        {
+          "start": 292.26,
+          "end": 292.6,
+          "word": " bow.",
+          "probability": 0.9845948219299316
+        }
+      ]
+    },
+    {
+      "window": [
+        283,
+        303
+      ],
+      "start": 292.86,
+      "end": 294.62,
+      "text": " Coming back from a set down to",
+      "no_speech_prob": 0.7895792722702026,
+      "avg_logprob": -0.5783362875179369,
+      "words": [
+        {
+          "start": 292.86,
+          "end": 292.9,
+          "word": " Coming",
+          "probability": 0.9575108289718628
+        },
+        {
+          "start": 292.9,
+          "end": 293.12,
+          "word": " back",
+          "probability": 0.9918373227119446
+        },
+        {
+          "start": 293.12,
+          "end": 293.3,
+          "word": " from",
+          "probability": 0.9966558218002319
+        },
+        {
+          "start": 293.3,
+          "end": 293.44,
+          "word": " a",
+          "probability": 0.9964128136634827
+        },
+        {
+          "start": 293.44,
+          "end": 293.66,
+          "word": " set",
+          "probability": 0.7329632639884949
+        },
+        {
+          "start": 293.66,
+          "end": 294.12,
+          "word": " down",
+          "probability": 0.9814817905426025
+        },
+        {
+          "start": 294.12,
+          "end": 294.62,
+          "word": " to",
+          "probability": 0.9278110861778259
+        }
+      ]
+    },
+    {
+      "window": [
+        283,
+        303
+      ],
+      "start": 294.62,
+      "end": 296.22,
+      "text": " win six three in the third in",
+      "no_speech_prob": 0.7895792722702026,
+      "avg_logprob": -0.5783362875179369,
+      "words": [
+        {
+          "start": 294.62,
+          "end": 294.8,
+          "word": " win",
+          "probability": 0.9816153645515442
+        },
+        {
+          "start": 294.8,
+          "end": 295.08,
+          "word": " six",
+          "probability": 0.5930222272872925
+        },
+        {
+          "start": 295.08,
+          "end": 295.32,
+          "word": " three",
+          "probability": 0.989929735660553
+        },
+        {
+          "start": 295.32,
+          "end": 295.42,
+          "word": " in",
+          "probability": 0.7723051905632019
+        },
+        {
+          "start": 295.42,
+          "end": 295.54,
+          "word": " the",
+          "probability": 0.9991863369941711
+        },
+        {
+          "start": 295.54,
+          "end": 295.8,
+          "word": " third",
+          "probability": 0.9968734383583069
+        },
+        {
+          "start": 295.8,
+          "end": 296.22,
+          "word": " in",
+          "probability": 0.7190779447555542
+        }
+      ]
+    },
+    {
+      "window": [
+        283,
+        303
+      ],
+      "start": 296.22,
+      "end": 296.82,
+      "text": " He just shot.",
+      "no_speech_prob": 0.14854279160499573,
+      "avg_logprob": -0.8721986838749477,
+      "words": [
+        {
+          "start": 296.22,
+          "end": 296.3,
+          "word": " He",
+          "probability": 0.06479780375957489
+        },
+        {
+          "start": 296.3,
+          "end": 296.46,
+          "word": " just",
+          "probability": 0.4262569844722748
+        },
+        {
+          "start": 296.46,
+          "end": 296.82,
+          "word": " shot.",
+          "probability": 0.9076275825500488
+        }
+      ]
+    }
+  ],
+  "run_status": "complete",
+  "recorded_at": "2026-10-12T16:37:36.165647+00:00"
+}

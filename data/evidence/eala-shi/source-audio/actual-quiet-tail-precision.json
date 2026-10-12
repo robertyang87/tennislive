@@ -1,0 +1,270 @@
+{
+  "schema": "tennislive.native-tail-split-analysis.v1",
+  "cover_seconds": 1.2,
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "native_fade_seconds": 0.18,
+  "human_listening_claimed": false,
+  "notes": "Computed exact current spec nominal offsets, actual MP3 durations supplied by voice agent, actual sourcePCM RMS; not yet a final-mix proof. Whole-second split begins after actualMP3end to avoid cross-segment candidate, and existing native audio gain/fade remains required.",
+  "rows": [
+    {
+      "segment": 3,
+      "offset": 10.94,
+      "source_start": 0.12,
+      "source_end": 13.0,
+      "actual_mp3_seconds": 7.968,
+      "mp3_end_film": 18.908,
+      "speech_end_film": 18.14,
+      "first_integer_tail_after_mp3": 19,
+      "integer_source_split": 8.18,
+      "next_integer_tail_after_plus_point8": 20,
+      "integer_source_split_after_plus_point8": 9.18,
+      "seconds_after_spoken": [
+        {
+          "film_second": 18,
+          "source_window": [
+            7.18,
+            8.18
+          ],
+          "source_rms_db": -55.388,
+          "low_rms_db": -64.262,
+          "high_rms_db": -55.634
+        },
+        {
+          "film_second": 19,
+          "source_window": [
+            8.18,
+            9.18
+          ],
+          "source_rms_db": -46.731,
+          "low_rms_db": -55.605,
+          "high_rms_db": -46.978
+        },
+        {
+          "film_second": 20,
+          "source_window": [
+            9.18,
+            10.18
+          ],
+          "source_rms_db": -54.77,
+          "low_rms_db": -63.644,
+          "high_rms_db": -55.016
+        },
+        {
+          "film_second": 21,
+          "source_window": [
+            10.18,
+            11.18
+          ],
+          "source_rms_db": -57.964,
+          "low_rms_db": -66.838,
+          "high_rms_db": -58.211
+        },
+        {
+          "film_second": 22,
+          "source_window": [
+            11.18,
+            12.18
+          ],
+          "source_rms_db": -52.838,
+          "low_rms_db": -61.712,
+          "high_rms_db": -53.084
+        }
+      ]
+    },
+    {
+      "segment": 11,
+      "offset": 96.95,
+      "source_start": 91.26,
+      "source_end": 104.8,
+      "actual_mp3_seconds": 8.088,
+      "mp3_end_film": 105.038,
+      "speech_end_film": 104.27,
+      "first_integer_tail_after_mp3": 106,
+      "integer_source_split": 100.31,
+      "next_integer_tail_after_plus_point8": 106,
+      "integer_source_split_after_plus_point8": 100.31,
+      "seconds_after_spoken": [
+        {
+          "film_second": 104,
+          "source_window": [
+            98.31,
+            99.31
+          ],
+          "source_rms_db": -51.248,
+          "low_rms_db": -60.122,
+          "high_rms_db": -51.495
+        },
+        {
+          "film_second": 105,
+          "source_window": [
+            99.31,
+            100.31
+          ],
+          "source_rms_db": -61.36,
+          "low_rms_db": -70.234,
+          "high_rms_db": -61.607
+        },
+        {
+          "film_second": 106,
+          "source_window": [
+            100.31,
+            101.31
+          ],
+          "source_rms_db": -48.405,
+          "low_rms_db": -57.279,
+          "high_rms_db": -48.652
+        },
+        {
+          "film_second": 107,
+          "source_window": [
+            101.31,
+            102.31
+          ],
+          "source_rms_db": -45.785,
+          "low_rms_db": -54.659,
+          "high_rms_db": -46.031
+        },
+        {
+          "film_second": 108,
+          "source_window": [
+            102.31,
+            103.31
+          ],
+          "source_rms_db": -50.388,
+          "low_rms_db": -59.261,
+          "high_rms_db": -50.634
+        },
+        {
+          "film_second": 109,
+          "source_window": [
+            103.31,
+            104.31
+          ],
+          "source_rms_db": -46.983,
+          "low_rms_db": -55.857,
+          "high_rms_db": -47.23
+        }
+      ]
+    },
+    {
+      "segment": 22,
+      "offset": 216.77,
+      "source_start": 211.08,
+      "source_end": 224.08,
+      "actual_mp3_seconds": 7.368,
+      "mp3_end_film": 224.138,
+      "speech_end_film": 223.37,
+      "first_integer_tail_after_mp3": 225,
+      "integer_source_split": 219.31,
+      "next_integer_tail_after_plus_point8": 225,
+      "integer_source_split_after_plus_point8": 219.31,
+      "seconds_after_spoken": [
+        {
+          "film_second": 223,
+          "source_window": [
+            217.31,
+            218.31
+          ],
+          "source_rms_db": -42.385,
+          "low_rms_db": -51.259,
+          "high_rms_db": -42.632
+        },
+        {
+          "film_second": 224,
+          "source_window": [
+            218.31,
+            219.31
+          ],
+          "source_rms_db": -54.348,
+          "low_rms_db": -63.222,
+          "high_rms_db": -54.594
+        },
+        {
+          "film_second": 225,
+          "source_window": [
+            219.31,
+            220.31
+          ],
+          "source_rms_db": -46.231,
+          "low_rms_db": -55.105,
+          "high_rms_db": -46.477
+        },
+        {
+          "film_second": 226,
+          "source_window": [
+            220.31,
+            221.31
+          ],
+          "source_rms_db": -52.588,
+          "low_rms_db": -61.462,
+          "high_rms_db": -52.835
+        },
+        {
+          "film_second": 227,
+          "source_window": [
+            221.31,
+            222.31
+          ],
+          "source_rms_db": -59.899,
+          "low_rms_db": -68.773,
+          "high_rms_db": -60.146
+        },
+        {
+          "film_second": 228,
+          "source_window": [
+            222.31,
+            223.31
+          ],
+          "source_rms_db": -47.533,
+          "low_rms_db": -56.407,
+          "high_rms_db": -47.78
+        }
+      ]
+    },
+    {
+      "segment": 25,
+      "offset": 246.37,
+      "source_start": 240.68,
+      "source_end": 246.46,
+      "actual_mp3_seconds": 4.032,
+      "mp3_end_film": 250.402,
+      "speech_end_film": 249.634,
+      "first_integer_tail_after_mp3": 251,
+      "integer_source_split": 245.31,
+      "next_integer_tail_after_plus_point8": 252,
+      "integer_source_split_after_plus_point8": 246.31,
+      "seconds_after_spoken": [
+        {
+          "film_second": 249,
+          "source_window": [
+            243.31,
+            244.31
+          ],
+          "source_rms_db": -47.435,
+          "low_rms_db": -56.309,
+          "high_rms_db": -47.681
+        },
+        {
+          "film_second": 250,
+          "source_window": [
+            244.31,
+            245.31
+          ],
+          "source_rms_db": -45.003,
+          "low_rms_db": -53.877,
+          "high_rms_db": -45.25
+        },
+        {
+          "film_second": 251,
+          "source_window": [
+            245.31,
+            246.31
+          ],
+          "source_rms_db": -60.713,
+          "low_rms_db": -69.587,
+          "high_rms_db": -60.959
+        }
+      ]
+    }
+  ]
+}

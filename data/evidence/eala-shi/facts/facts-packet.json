@@ -1,0 +1,516 @@
+{
+  "version": 1,
+  "slug": "eala-shi",
+  "collected_at": "2026-10-12T16:32:03.279392+00:00",
+  "match": {
+    "event": "Wuhan",
+    "event_zh": "武汉网球公开赛",
+    "tour": "WTA",
+    "level": "WTA 1000",
+    "year": 2026,
+    "round": "Round 1",
+    "round_zh": "首轮",
+    "official_event_id": "1075",
+    "official_match_id": "LS060",
+    "flashscore_id": "GUnW9n8D",
+    "court_id": 1,
+    "winner": "Han Shi",
+    "winner_zh": "施晗",
+    "loser": "Alexandra Eala",
+    "loser_zh": "伊埃拉",
+    "winner_first_result": "4-6 6-3 6-3",
+    "set_scores_Eala_Shi": [
+      [
+        6,
+        4
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        3,
+        6
+      ]
+    ],
+    "duration_official": "02:27:58",
+    "duration_cover": "2:27",
+    "set_times_official": [
+      "00:54:29",
+      "00:41:55",
+      "00:51:30"
+    ],
+    "set_time_sum_seconds": 8874,
+    "duration_official_seconds": 8878,
+    "duration_difference_seconds": 4,
+    "first_point_utc": "2026-10-12T13:06:28Z",
+    "first_point_bjt": "2026-10-12T21:06:28+08:00",
+    "flashscore_start_utc": "2026-10-12T13:05:00Z",
+    "narration_time": "北京时间十月十二日晚上",
+    "time_note": "Use natural period evening; WTA MatchTimeStamp12:59:15 is not asserted as actual first serve.",
+    "court_name": "Dongfeng Voyah Center Court",
+    "court_zh": "中央球场",
+    "court_name_source": "https://www.wtatennis.com/tournament/1075/wuhan/2026/order-of-play",
+    "court_name_evidence": "raw/court-name-extraction.json",
+    "duration_display_note": "Native renderer truncates minutes; show2:27 from exact02:27:58. No unrequested rounding-to2:28; exact official seconds retained."
+  },
+  "players": {
+    "Eala": {
+      "name_zh": "伊埃拉",
+      "official_id": "330332",
+      "country": "PHI",
+      "rank": 19,
+      "rank_date": "2026-10-12",
+      "seed": 13,
+      "dob": "2005-05-23",
+      "age_at_match": 21
+    },
+    "Shi": {
+      "name_zh": "施晗",
+      "official_id": "329824",
+      "country": "CHN",
+      "rank": 217,
+      "rank_date": "2026-10-12",
+      "entry": "Q",
+      "dob": "2005-05-30",
+      "age_at_match": 21
+    }
+  },
+  "statistics": {
+    "orientation": {
+      "a": "Alexandra Eala",
+      "b": "Han Shi"
+    },
+    "scope": "whole_match",
+    "Eala": {
+      "aces": 0,
+      "df": 6,
+      "first_in": 61,
+      "first_total": 102,
+      "first_won": 39,
+      "first_win_pct": 64,
+      "second_won": 23,
+      "second_total": 41,
+      "second_win_pct": 56,
+      "bp_conv": 1,
+      "bp_chances": 3,
+      "bp_saved": 6,
+      "bp_faced": 9,
+      "pts_won": 88,
+      "pts_total": 188,
+      "winners": 20,
+      "ue": 37,
+      "service_games_won": 11,
+      "service_games_played": 14
+    },
+    "Shi": {
+      "aces": 4,
+      "df": 3,
+      "first_in": 55,
+      "first_total": 86,
+      "first_won": 43,
+      "first_win_pct": 78,
+      "second_won": 17,
+      "second_total": 31,
+      "second_win_pct": 55,
+      "bp_conv": 3,
+      "bp_chances": 9,
+      "bp_saved": 2,
+      "bp_faced": 3,
+      "pts_won": 100,
+      "pts_total": 188,
+      "winners": 31,
+      "ue": 33,
+      "service_games_won": 13,
+      "service_games_played": 14
+    },
+    "sources": {
+      "official": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS060/stats",
+      "winners_ue": "https://global.flashscore.ninja/4/x/feed/df_st_1_GUnW9n8D",
+      "note": "WTA whole-match stats has no Winners/UE; those two figures are Flashscore whole-match raw, not invented official fields. All other shared quantities cross-match official WTA stats."
+    }
+  },
+  "verified_plot": [
+    {
+      "id": "s1_hold_sequence",
+      "state_Eala_Shi": "0-0 to4-4",
+      "fact": "首盘前八局双方全部保发。",
+      "evidence": [
+        "wta-games-derived.json",
+        "fs-pbp.raw"
+      ]
+    },
+    {
+      "id": "s1_g9_pressure",
+      "state_Eala_Shi": "4-4 to5-4",
+      "server": "Eala",
+      "points": 16,
+      "bp_saved_by_Eala": 2,
+      "fact": "伊埃拉在首盘4-4发球局化解两个破发点，16分长局后保发到5-4。",
+      "evidence": [
+        "wta-games-derived.json",
+        "fs-pbp.raw",
+        "wta-stats.raw"
+      ]
+    },
+    {
+      "id": "s1_g10_break",
+      "state_Eala_Shi": "5-4 to6-4",
+      "server": "Shi",
+      "state_points_Eala_Shi": "0-40 toAD-40 then game",
+      "fact": "施晗5-4落后发球局40-0领先；伊埃拉从0-40连拿五分完成本场唯一一次破发，6-4拿首盘。",
+      "warning": "施晗这三个是局点，不是盘点；伊埃拉的AD-40才同时为破发点/盘点。",
+      "evidence": [
+        "wta-games-derived.json",
+        "fs-pbp.raw"
+      ]
+    },
+    {
+      "id": "s2_open",
+      "state_Eala_Shi": "0-0 to3-3",
+      "fact": "第二盘前六局双方全部保发。",
+      "evidence": [
+        "wta-games-derived.json",
+        "fs-pbp.raw"
+      ]
+    },
+    {
+      "id": "s2_g7_break",
+      "state_Eala_Shi": "3-3 to3-4",
+      "server": "Eala",
+      "points": 12,
+      "bp_faced_by_Eala": 2,
+      "fact": "第二盘3-3伊埃拉发球局经历反复平分，施晗在该局第二个破发点破发到4-3。",
+      "evidence": [
+        "wta-games-derived.json",
+        "fs-pbp.raw"
+      ]
+    },
+    {
+      "id": "s2_finish",
+      "state_Eala_Shi": "3-4 to3-6",
+      "fact": "施晗保发5-3，再在伊埃拉发球局15-40拿下盘点，连赢三局以6-3扳平盘分。",
+      "evidence": [
+        "wta-games-derived.json",
+        "fs-pbp.raw"
+      ]
+    },
+    {
+      "id": "s3_g1_rebuff",
+      "state_Eala_Shi": "0-0 to0-1",
+      "server": "Shi",
+      "points": 14,
+      "bp_saved_by_Shi": 2,
+      "fact": "决胜盘首局伊埃拉先后拿到30-40和占先的两个破发点，施晗都救下并保发。伊埃拉本场另一次机会已在首盘兑现，因此之后再无破发机会。",
+      "evidence": [
+        "wta-games-derived.json",
+        "fs-pbp.raw",
+        "wta-stats.raw"
+      ]
+    },
+    {
+      "id": "s3_g2_break",
+      "state_Eala_Shi": "0-1 to0-2",
+      "server": "Eala",
+      "bp_faced_by_Eala": 3,
+      "fact": "紧接着伊埃拉发球局又被拖到三个破发点，第三个未救下，施晗破发到2-0。",
+      "evidence": [
+        "wta-games-derived.json",
+        "fs-pbp.raw"
+      ]
+    },
+    {
+      "id": "six_games",
+      "state_Eala_Shi": "s2 3-3 to s3 0-3",
+      "fact": "施晗第二盘最后三局加决胜盘前三局，跨盘连赢六局。不是六次破发；其中三局保发三局破发。",
+      "evidence": [
+        "wta-games-derived.json",
+        "fs-pbp.raw"
+      ]
+    },
+    {
+      "id": "s3_resistance",
+      "state_Eala_Shi": "0-3 to1-3",
+      "server": "Eala",
+      "bp_saved_by_Eala": 1,
+      "fact": "伊埃拉0-3时再救下一个破发点，终于保发拿到决胜盘第一局。之后她两次保发追到2-4、3-5，但施晗同样保发，不曾被回破。",
+      "evidence": [
+        "wta-games-derived.json",
+        "fs-pbp.raw"
+      ]
+    },
+    {
+      "id": "payoff",
+      "state_Eala_Shi": "3-5 to3-6",
+      "server": "Shi",
+      "first_match_point_score_Eala_Shi": "15-40",
+      "fact": "施晗在5-3发球胜赛局取得40-15两个赛点，以第一个赛点结束比赛。总比分4-6 6-3 6-3。",
+      "evidence": [
+        "wta-games-derived.json",
+        "fs-pbp.raw"
+      ]
+    }
+  ],
+  "story_background": {
+    "qualifier": true,
+    "qualifying_match_records": [
+      {
+        "BinPacketBase64": null,
+        "CourtID": 2,
+        "DateSeq": 1,
+        "DrawLevelType": "Q",
+        "DrawMatchType": "S",
+        "EntryTypeA": "",
+        "EntryTypeB": "Wc",
+        "EventID": "1075",
+        "EventYear": 2026,
+        "LastUpdated": "2026-10-10T07:13:51.963+00:00",
+        "MatchID": "RS016",
+        "MatchState": "F",
+        "MatchTimeStamp": "2026-10-10T04:51:22.417+00:00",
+        "MatchTimeTotal": "02:09:52",
+        "Message": "{11|H. Shi}",
+        "NumSets": 3,
+        "PlayerCountryA": "USA",
+        "PlayerCountryA2": "",
+        "PlayerCountryB": "CHN",
+        "PlayerCountryB2": "",
+        "PlayerIDA": "327573",
+        "PlayerIDA2": "",
+        "PlayerIDB": "329824",
+        "PlayerIDB2": "",
+        "PlayerNameFirstA": "Peyton",
+        "PlayerNameFirstA2": "",
+        "PlayerNameFirstB": "Han",
+        "PlayerNameFirstB2": "",
+        "PlayerNameLastA": "Stearns",
+        "PlayerNameLastA2": "",
+        "PlayerNameLastB": "Shi",
+        "PlayerNameLastB2": "",
+        "PointA": "",
+        "PointB": "",
+        "ResultString": "H. Shi d [1]P. Stearns 2-6,7-5,6-4",
+        "RoundID": "1",
+        "ScoreSet1A": "6",
+        "ScoreSet1B": "2",
+        "ScoreSet2A": "5",
+        "ScoreSet2B": "7",
+        "ScoreSet3A": "4",
+        "ScoreSet3B": "6",
+        "ScoreSet4A": "",
+        "ScoreSet4B": "",
+        "ScoreSet5A": "",
+        "ScoreSet5B": "",
+        "ScoreString": "2-6,7-5,6-4",
+        "ScoreSys": "1",
+        "ScoreTbSet1": "",
+        "ScoreTbSet2": "",
+        "ScoreTbSet3": "",
+        "ScoreTbSet4": "",
+        "SeedA": "1",
+        "SeedB": "",
+        "Serve": "",
+        "Winner": "3"
+      },
+      {
+        "BinPacketBase64": null,
+        "CourtID": 2,
+        "DateSeq": 2,
+        "DrawLevelType": "Q",
+        "DrawMatchType": "S",
+        "EntryTypeA": "Wc",
+        "EntryTypeB": "",
+        "EventID": "1075",
+        "EventYear": 2026,
+        "LastUpdated": "2026-10-11T06:40:25.297+00:00",
+        "MatchID": "RS008",
+        "MatchState": "F",
+        "MatchTimeStamp": "2026-10-11T04:43:17.46+00:00",
+        "MatchTimeTotal": "01:43:52",
+        "Message": "{11|H. Shi}",
+        "NumSets": 2,
+        "PlayerCountryA": "CHN",
+        "PlayerCountryA2": "",
+        "PlayerCountryB": "UZB",
+        "PlayerCountryB2": "",
+        "PlayerIDA": "329824",
+        "PlayerIDA2": "",
+        "PlayerIDB": "325936",
+        "PlayerIDB2": "",
+        "PlayerNameFirstA": "Han",
+        "PlayerNameFirstA2": "",
+        "PlayerNameFirstB": "Kamilla",
+        "PlayerNameFirstB2": "",
+        "PlayerNameLastA": "Shi",
+        "PlayerNameLastA2": "",
+        "PlayerNameLastB": "Rakhimova",
+        "PlayerNameLastB2": "",
+        "PointA": "",
+        "PointB": "",
+        "ResultString": "H. Shi d [15]K. Rakhimova 7-6(2),6-1",
+        "RoundID": "2",
+        "ScoreSet1A": "7",
+        "ScoreSet1B": "6",
+        "ScoreSet2A": "6",
+        "ScoreSet2B": "1",
+        "ScoreSet3A": "",
+        "ScoreSet3B": "",
+        "ScoreSet4A": "",
+        "ScoreSet4B": "",
+        "ScoreSet5A": "",
+        "ScoreSet5B": "",
+        "ScoreString": "7-6(2),6-1",
+        "ScoreSys": "1",
+        "ScoreTbSet1": "2",
+        "ScoreTbSet2": "",
+        "ScoreTbSet3": "",
+        "ScoreTbSet4": "",
+        "SeedA": "",
+        "SeedB": "15",
+        "Serve": "",
+        "Winner": "2"
+      }
+    ],
+    "official_description": "After arriving in Wuhan without a Top 100 win to her name, qualifier Shi Han earned her third in a matter of days Monday night, rallying from a set down to upset Alexandra Eala 4-6, 6-3, 6-3 in 2 hours, 27 minutes.",
+    "official_description_source": "https://www.wtatennis.com/videos/4591125/world-no-217-shi-pulls-off-wuhan-stunner-against-eala",
+    "safe_narration": "施晗从资格赛突围，三天连胜斯特恩斯、拉希莫娃和伊埃拉。来武汉前，她还没赢过世界前一百选手，如今连续三场做到了。",
+    "note": "Top100 prior-history claim attributed to official WTA description; qualifying wins independently verified official matches; no exhaustive career database audit claim.",
+    "official_match_report": {
+      "url": "https://www.wtatennis.com/news/4591136/shi-rides-qualifying-momentum-to-stunner-over-eala-in-wuhan",
+      "raw_file": "raw/wta-match-report.raw",
+      "published_at": "2026-10-12T16:08:00Z",
+      "modified_at": "2026-10-12T16:33:09Z",
+      "author": "Noah Poser",
+      "first_wta1000_main_draw_win": true,
+      "third_wta_main_draw_win": true,
+      "first_top20_win": true,
+      "quote_patient": "I tried to be patient and play my best tennis. I tried my best on the court, and I tried to save every ball.",
+      "note": "Direct quote and headline milestones are source-attributed. Historical tournament milestones not exhaustive independently audited; optional copy must preserve attribution."
+    }
+  },
+  "limitations": [
+    "WTA PBP lists188 points but raw pointWinner counts87/101; whole-match WTA stats and Flashscore agree88/100. Seven AD-to-deuce pointWinner fields contradict scoreAfterPoint. Use match stats for points totals and scoreboard-state transitions for plot; never promote raw PBP momentum/longest-run metrics.",
+    "Shot type, ball landing, last-shot quality and emotional reactions require separate actual-source visual/audio confirmation; point-by-point alone does not verify tactics.",
+    "Flashscore raw stored here German labels, SH=Eala,SI=Shi established by daily match row and official-player orientation, not text label guess.",
+    "Exact uploader WTA/@WTA corroborated through third-party noembed relay + official WTA site footer. Direct channel-ID and YouTube publish time not fetched; Brightcove publication time remains distinct."
+  ],
+  "source_urls": {
+    "event": "https://api.wtatennis.com/tennis/tournaments?page=0&pageSize=100&excludeLevels=ITF&from=2026-10-10&to=2026-10-13",
+    "matches": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches?states=C",
+    "pbp": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS060/point-by-point",
+    "statistics": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS060/stats",
+    "ranks_19": "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=300&type=rankSingles&sort=asc&name=&metric=SINGLES",
+    "ranks_217": "https://api.wtatennis.com/tennis/players/ranked?page=2&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+    "fs_daily": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "fs_stats": "https://global.flashscore.ninja/4/x/feed/df_st_1_GUnW9n8D",
+    "fs_pbp": "https://global.flashscore.ninja/4/x/feed/df_mh_1_GUnW9n8D",
+    "official_video": "https://www.wtatennis.com/videos/4591125/world-no-217-shi-pulls-off-wuhan-stunner-against-eala"
+  },
+  "raw_artifacts": [
+    {
+      "file": "wta-events.raw",
+      "sha256": "2e323fdaa603987e78dbc949e41b33e68f0eeea9b7de6f7eefe5402b4e8b8edf",
+      "bytes": 6260
+    },
+    {
+      "file": "wta-matches.raw",
+      "sha256": "81fa9c7522e1fe70c9cf32172f0b2cdea7f14f427cfb29fcf3b821c7b407a186",
+      "bytes": 46169
+    },
+    {
+      "file": "wta-stats.raw",
+      "sha256": "db227e967fe5b1adb6769f96e199e1f5849ca7bcd5701dbd7c80416997086f0c",
+      "bytes": 2196
+    },
+    {
+      "file": "wta-pbp.raw",
+      "sha256": "15bc4365a6f366cefdbd64c680b29b4074af25971af7994b2751601dbf8b2159",
+      "bytes": 58270
+    },
+    {
+      "file": "wta-ranking.raw",
+      "sha256": "1cf1590b8be639cd3c4b5530bc6e4dc905f1e3fb65a0d6b3376fd18d66b171e9",
+      "bytes": 25572
+    },
+    {
+      "file": "wta-shi-ranking.raw",
+      "sha256": "bb0ccd42b6aecd2bf99957224240d47e30a416e136a9788b371399926259d4d4",
+      "bytes": 9187
+    },
+    {
+      "file": "wta-ranking-page2.raw",
+      "sha256": "c7ea2596309ba69154b3d9a0354cdd6f5acec761ef1bfc88a0909647ded4c1b1",
+      "bytes": 25623
+    },
+    {
+      "file": "fs-stats.raw",
+      "sha256": "3aaa9215a127e740aae7f02f46d472c9382a7802f197393f2e37ceeaa724822d",
+      "bytes": 4413
+    },
+    {
+      "file": "fs-pbp.raw",
+      "sha256": "78a3b760072398323447714788b16e1823ba21f9a64dcea4e7421c9794bf53a9",
+      "bytes": 2243
+    },
+    {
+      "file": "fs-sui.raw",
+      "sha256": "3fb880d32843757ce04ccf66ebc56eae2d51edd8d9eaebe480cba04fd95f3da1",
+      "bytes": 265
+    },
+    {
+      "file": "fs-info.raw",
+      "sha256": "df1363d423812223ba386058dc81f2b9f759b8b0bc235d00c0d568ea06051c49",
+      "bytes": 349
+    },
+    {
+      "file": "wta-highlight-page.raw",
+      "sha256": "376e356715f1c634649652ed87235558b5eff267a9d21514b0c86c0b8e010a3a",
+      "bytes": 188311
+    },
+    {
+      "file": "wta-scorepage.raw",
+      "sha256": "a9ca0eb0ac6c5b50b2cd60a8e8dddc69aa3a66f7502d840e9315ba688f3c39af",
+      "bytes": 163569
+    },
+    {
+      "file": "wta-pbp-summary.json",
+      "sha256": "7ad63ca52cdcea018ed9cc9c767d1f13ab13c9152d3e05ff582bfe90b8b33204",
+      "bytes": 2257
+    },
+    {
+      "file": "wta-games-derived.json",
+      "sha256": "7efac4c9e734ffabdbaf14d9874804e643bb9e4b348ff9c57f01ad6244d6c1e1",
+      "bytes": 15285
+    },
+    {
+      "file": "wta-pbp-inconsistencies.json",
+      "sha256": "f3bafa2b1feb3e495a707d504e0566d2ca2dae563abcbca3dc16c84e4e371b0a",
+      "bytes": 5490
+    },
+    {
+      "file": "wta-oop-page.raw",
+      "sha256": "a44f69e41fc0b6964d78b9177411517a429e406a54ec6bea0940e8f644a29e40",
+      "bytes": 763241
+    },
+    {
+      "file": "wta-oop-pdf.raw",
+      "sha256": "4adb253e7f558d3311377e213a9c8ede5b8d050dea672f072b3d4bbd463efab0",
+      "bytes": 193500
+    },
+    {
+      "file": "wta-oop-pdf.txt",
+      "sha256": "a51bfc1702612d43fa40d454fb85a93d4a15cb817d1bea448a757e8f934017c5",
+      "bytes": 5135
+    },
+    {
+      "file": "wta-match-report.raw",
+      "sha256": "2e653b5c470dc5215aedf415bff1ab3169b0e7ed06cd9316a54a5de2645697ed",
+      "bytes": 193218
+    },
+    {
+      "file": "court-name-extraction.json",
+      "sha256": "8a143202296a399267938c7bac8bd8810f64e0e789448c6c72c2575c29fe7f8a",
+      "bytes": 2077
+    }
+  ]
+}

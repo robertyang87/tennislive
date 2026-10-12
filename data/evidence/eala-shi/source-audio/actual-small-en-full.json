@@ -1,0 +1,2513 @@
+{
+  "schema": "actual-local-asr.v1",
+  "model": "small.en",
+  "faster_whisper_version": "1.2.1",
+  "device": "cpu",
+  "compute_type": "int8",
+  "language": "en",
+  "vad_filter": true,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "source_path": "/workspace/scratch/eala-source/T9TfTnVgHNY.mp4",
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "recorded_at": "2026-10-12T16:35:36.679703+00:00",
+  "human_listening_claimed": false,
+  "run_status": "complete",
+  "segments": [
+    {
+      "start": 20.59,
+      "end": 25.95,
+      "text": " Yeah, not enough on that volley for sure, but you know that program aims to really help",
+      "no_speech_prob": 0.48950180411338806,
+      "avg_logprob": -0.25548198999002064,
+      "words": [
+        {
+          "start": 20.59,
+          "end": 21.17,
+          "word": " Yeah,",
+          "probability": 0.5015562772750854
+        },
+        {
+          "start": 21.17,
+          "end": 21.57,
+          "word": " not",
+          "probability": 0.9243476986885071
+        },
+        {
+          "start": 21.57,
+          "end": 21.83,
+          "word": " enough",
+          "probability": 0.9919303059577942
+        },
+        {
+          "start": 21.83,
+          "end": 21.97,
+          "word": " on",
+          "probability": 0.714066207408905
+        },
+        {
+          "start": 21.97,
+          "end": 22.11,
+          "word": " that",
+          "probability": 0.9745687246322632
+        },
+        {
+          "start": 22.11,
+          "end": 22.39,
+          "word": " volley",
+          "probability": 0.6676849722862244
+        },
+        {
+          "start": 22.39,
+          "end": 22.67,
+          "word": " for",
+          "probability": 0.8973769545555115
+        },
+        {
+          "start": 22.67,
+          "end": 22.91,
+          "word": " sure,",
+          "probability": 0.9965206384658813
+        },
+        {
+          "start": 22.93,
+          "end": 23.11,
+          "word": " but",
+          "probability": 0.9958788156509399
+        },
+        {
+          "start": 23.11,
+          "end": 23.75,
+          "word": " you",
+          "probability": 0.9277454018592834
+        },
+        {
+          "start": 23.75,
+          "end": 23.83,
+          "word": " know",
+          "probability": 0.9991276860237122
+        },
+        {
+          "start": 23.83,
+          "end": 24.01,
+          "word": " that",
+          "probability": 0.9187229871749878
+        },
+        {
+          "start": 24.01,
+          "end": 24.29,
+          "word": " program",
+          "probability": 0.993378758430481
+        },
+        {
+          "start": 24.29,
+          "end": 24.71,
+          "word": " aims",
+          "probability": 0.9687805771827698
+        },
+        {
+          "start": 24.71,
+          "end": 25.01,
+          "word": " to",
+          "probability": 0.9970711469650269
+        },
+        {
+          "start": 25.01,
+          "end": 25.43,
+          "word": " really",
+          "probability": 0.9949876070022583
+        },
+        {
+          "start": 25.43,
+          "end": 25.95,
+          "word": " help",
+          "probability": 0.9552372694015503
+        }
+      ]
+    },
+    {
+      "start": 34.34,
+      "end": 36.44,
+      "text": " Will survive she does?",
+      "no_speech_prob": 0.48950180411338806,
+      "avg_logprob": -0.25548198999002064,
+      "words": [
+        {
+          "start": 34.34,
+          "end": 35.26,
+          "word": " Will",
+          "probability": 0.3722027838230133
+        },
+        {
+          "start": 35.26,
+          "end": 35.62,
+          "word": " survive",
+          "probability": 0.9826979041099548
+        },
+        {
+          "start": 35.62,
+          "end": 35.92,
+          "word": " she",
+          "probability": 0.7096994519233704
+        },
+        {
+          "start": 35.92,
+          "end": 36.44,
+          "word": " does?",
+          "probability": 0.9982630610466003
+        }
+      ]
+    },
+    {
+      "start": 37.0,
+      "end": 40.2,
+      "text": " Alexander Yala able to get her fifth hole, but it wasn't without work",
+      "no_speech_prob": 0.48950180411338806,
+      "avg_logprob": -0.25548198999002064,
+      "words": [
+        {
+          "start": 37.0,
+          "end": 37.24,
+          "word": " Alexander",
+          "probability": 0.36146965622901917
+        },
+        {
+          "start": 37.24,
+          "end": 37.6,
+          "word": " Yala",
+          "probability": 0.43796171247959137
+        },
+        {
+          "start": 37.6,
+          "end": 37.94,
+          "word": " able",
+          "probability": 0.970085084438324
+        },
+        {
+          "start": 37.94,
+          "end": 38.14,
+          "word": " to",
+          "probability": 0.9996289014816284
+        },
+        {
+          "start": 38.14,
+          "end": 38.3,
+          "word": " get",
+          "probability": 0.9989350438117981
+        },
+        {
+          "start": 38.3,
+          "end": 38.48,
+          "word": " her",
+          "probability": 0.9989874958992004
+        },
+        {
+          "start": 38.48,
+          "end": 38.68,
+          "word": " fifth",
+          "probability": 0.8364629745483398
+        },
+        {
+          "start": 38.68,
+          "end": 38.94,
+          "word": " hole,",
+          "probability": 0.5240572690963745
+        },
+        {
+          "start": 38.94,
+          "end": 39.18,
+          "word": " but",
+          "probability": 0.999283492565155
+        },
+        {
+          "start": 39.18,
+          "end": 39.28,
+          "word": " it",
+          "probability": 0.9986220598220825
+        },
+        {
+          "start": 39.28,
+          "end": 39.5,
+          "word": " wasn't",
+          "probability": 0.9987204968929291
+        },
+        {
+          "start": 39.5,
+          "end": 39.74,
+          "word": " without",
+          "probability": 0.9983161687850952
+        },
+        {
+          "start": 39.74,
+          "end": 40.2,
+          "word": " work",
+          "probability": 0.997512698173523
+        }
+      ]
+    },
+    {
+      "start": 48.0,
+      "end": 53.3,
+      "text": " That is smart tennis on the final five points of the opening set from Alexander Yala",
+      "no_speech_prob": 0.48950180411338806,
+      "avg_logprob": -0.25548198999002064,
+      "words": [
+        {
+          "start": 48.0,
+          "end": 48.9,
+          "word": " That",
+          "probability": 0.6221650242805481
+        },
+        {
+          "start": 48.9,
+          "end": 49.06,
+          "word": " is",
+          "probability": 0.9823997020721436
+        },
+        {
+          "start": 49.06,
+          "end": 49.34,
+          "word": " smart",
+          "probability": 0.9627242088317871
+        },
+        {
+          "start": 49.34,
+          "end": 49.74,
+          "word": " tennis",
+          "probability": 0.8826667666435242
+        },
+        {
+          "start": 49.74,
+          "end": 50.04,
+          "word": " on",
+          "probability": 0.48552823066711426
+        },
+        {
+          "start": 50.04,
+          "end": 50.18,
+          "word": " the",
+          "probability": 0.9988866448402405
+        },
+        {
+          "start": 50.18,
+          "end": 50.42,
+          "word": " final",
+          "probability": 0.9914897680282593
+        },
+        {
+          "start": 50.42,
+          "end": 50.76,
+          "word": " five",
+          "probability": 0.968025267124176
+        },
+        {
+          "start": 50.76,
+          "end": 51.08,
+          "word": " points",
+          "probability": 0.9976944327354431
+        },
+        {
+          "start": 51.08,
+          "end": 51.2,
+          "word": " of",
+          "probability": 0.8954561352729797
+        },
+        {
+          "start": 51.2,
+          "end": 51.28,
+          "word": " the",
+          "probability": 0.9995998740196228
+        },
+        {
+          "start": 51.28,
+          "end": 51.54,
+          "word": " opening",
+          "probability": 0.9846581220626831
+        },
+        {
+          "start": 51.54,
+          "end": 51.82,
+          "word": " set",
+          "probability": 0.9803082942962646
+        },
+        {
+          "start": 51.82,
+          "end": 52.42,
+          "word": " from",
+          "probability": 0.9921660423278809
+        },
+        {
+          "start": 52.42,
+          "end": 52.8,
+          "word": " Alexander",
+          "probability": 0.8477208614349365
+        },
+        {
+          "start": 52.8,
+          "end": 53.3,
+          "word": " Yala",
+          "probability": 0.8265263736248016
+        }
+      ]
+    },
+    {
+      "start": 54.02,
+      "end": 58.2,
+      "text": " Never looked fully engaged in the match as far as her output and her productivity",
+      "no_speech_prob": 0.48950180411338806,
+      "avg_logprob": -0.25548198999002064,
+      "words": [
+        {
+          "start": 54.02,
+          "end": 54.54,
+          "word": " Never",
+          "probability": 0.9177212119102478
+        },
+        {
+          "start": 54.54,
+          "end": 54.78,
+          "word": " looked",
+          "probability": 0.9831867218017578
+        },
+        {
+          "start": 54.78,
+          "end": 55.28,
+          "word": " fully",
+          "probability": 0.9966301321983337
+        },
+        {
+          "start": 55.28,
+          "end": 55.92,
+          "word": " engaged",
+          "probability": 0.9619872570037842
+        },
+        {
+          "start": 55.92,
+          "end": 56.16,
+          "word": " in",
+          "probability": 0.998299777507782
+        },
+        {
+          "start": 56.16,
+          "end": 56.24,
+          "word": " the",
+          "probability": 0.999508261680603
+        },
+        {
+          "start": 56.24,
+          "end": 56.42,
+          "word": " match",
+          "probability": 0.8718828558921814
+        },
+        {
+          "start": 56.42,
+          "end": 56.6,
+          "word": " as",
+          "probability": 0.9824730157852173
+        },
+        {
+          "start": 56.6,
+          "end": 56.8,
+          "word": " far",
+          "probability": 0.9992808699607849
+        },
+        {
+          "start": 56.8,
+          "end": 57.02,
+          "word": " as",
+          "probability": 0.8551959991455078
+        },
+        {
+          "start": 57.02,
+          "end": 57.14,
+          "word": " her",
+          "probability": 0.9990522265434265
+        },
+        {
+          "start": 57.14,
+          "end": 57.46,
+          "word": " output",
+          "probability": 0.9982068538665771
+        },
+        {
+          "start": 57.46,
+          "end": 57.62,
+          "word": " and",
+          "probability": 0.5610222816467285
+        },
+        {
+          "start": 57.62,
+          "end": 57.74,
+          "word": " her",
+          "probability": 0.9965215921401978
+        },
+        {
+          "start": 57.74,
+          "end": 58.2,
+          "word": " productivity",
+          "probability": 0.9984146356582642
+        }
+      ]
+    },
+    {
+      "start": 58.2,
+      "end": 61.92,
+      "text": " But when she needed it most she got it her first break opportunity",
+      "no_speech_prob": 0.48950180411338806,
+      "avg_logprob": -0.25548198999002064,
+      "words": [
+        {
+          "start": 58.2,
+          "end": 58.54,
+          "word": " But",
+          "probability": 0.6568819284439087
+        },
+        {
+          "start": 58.54,
+          "end": 58.74,
+          "word": " when",
+          "probability": 0.9983969330787659
+        },
+        {
+          "start": 58.74,
+          "end": 58.92,
+          "word": " she",
+          "probability": 0.9997580647468567
+        },
+        {
+          "start": 58.92,
+          "end": 59.16,
+          "word": " needed",
+          "probability": 0.99553382396698
+        },
+        {
+          "start": 59.16,
+          "end": 59.32,
+          "word": " it",
+          "probability": 0.9019493460655212
+        },
+        {
+          "start": 59.32,
+          "end": 59.5,
+          "word": " most",
+          "probability": 0.9789606332778931
+        },
+        {
+          "start": 59.5,
+          "end": 59.72,
+          "word": " she",
+          "probability": 0.9670955538749695
+        },
+        {
+          "start": 59.72,
+          "end": 59.92,
+          "word": " got",
+          "probability": 0.9995999932289124
+        },
+        {
+          "start": 59.92,
+          "end": 60.28,
+          "word": " it",
+          "probability": 0.9695983529090881
+        },
+        {
+          "start": 60.28,
+          "end": 60.56,
+          "word": " her",
+          "probability": 0.9776135087013245
+        },
+        {
+          "start": 60.56,
+          "end": 60.88,
+          "word": " first",
+          "probability": 0.9993027448654175
+        },
+        {
+          "start": 60.88,
+          "end": 61.26,
+          "word": " break",
+          "probability": 0.9610520601272583
+        },
+        {
+          "start": 61.26,
+          "end": 61.92,
+          "word": " opportunity",
+          "probability": 0.9851129055023193
+        }
+      ]
+    },
+    {
+      "start": 62.46,
+      "end": 66.24,
+      "text": " She converts and she's got herself a one-set lead and Wuhan",
+      "no_speech_prob": 0.48950180411338806,
+      "avg_logprob": -0.25548198999002064,
+      "words": [
+        {
+          "start": 62.46,
+          "end": 62.94,
+          "word": " She",
+          "probability": 0.667152464389801
+        },
+        {
+          "start": 62.94,
+          "end": 63.4,
+          "word": " converts",
+          "probability": 0.9982529282569885
+        },
+        {
+          "start": 63.4,
+          "end": 63.86,
+          "word": " and",
+          "probability": 0.9638084173202515
+        },
+        {
+          "start": 63.86,
+          "end": 64.02,
+          "word": " she's",
+          "probability": 0.9988307058811188
+        },
+        {
+          "start": 64.02,
+          "end": 64.14,
+          "word": " got",
+          "probability": 0.9994294047355652
+        },
+        {
+          "start": 64.14,
+          "end": 64.38,
+          "word": " herself",
+          "probability": 0.998923122882843
+        },
+        {
+          "start": 64.38,
+          "end": 64.58,
+          "word": " a",
+          "probability": 0.9915873408317566
+        },
+        {
+          "start": 64.58,
+          "end": 64.8,
+          "word": " one",
+          "probability": 0.9793350696563721
+        },
+        {
+          "start": 64.8,
+          "end": 65.04,
+          "word": "-set",
+          "probability": 0.8500429391860962
+        },
+        {
+          "start": 65.04,
+          "end": 65.42,
+          "word": " lead",
+          "probability": 0.9962452054023743
+        },
+        {
+          "start": 65.42,
+          "end": 65.92,
+          "word": " and",
+          "probability": 0.4739673137664795
+        },
+        {
+          "start": 65.92,
+          "end": 66.24,
+          "word": " Wuhan",
+          "probability": 0.9227839907010397
+        }
+      ]
+    },
+    {
+      "start": 78.62,
+      "end": 85.02,
+      "text": " A sense of urgency yes smart indeed IQ starting to come out as the Ella starts to make her move the fans port",
+      "no_speech_prob": 0.5945713520050049,
+      "avg_logprob": -0.3154319537836209,
+      "words": [
+        {
+          "start": 78.62,
+          "end": 78.86,
+          "word": " A",
+          "probability": 0.013818977400660515
+        },
+        {
+          "start": 78.86,
+          "end": 79.22,
+          "word": " sense",
+          "probability": 0.982794463634491
+        },
+        {
+          "start": 79.22,
+          "end": 79.44,
+          "word": " of",
+          "probability": 0.9962174296379089
+        },
+        {
+          "start": 79.44,
+          "end": 79.76,
+          "word": " urgency",
+          "probability": 0.994499683380127
+        },
+        {
+          "start": 79.76,
+          "end": 80.2,
+          "word": " yes",
+          "probability": 0.09518440812826157
+        },
+        {
+          "start": 80.2,
+          "end": 80.46,
+          "word": " smart",
+          "probability": 0.49164751172065735
+        },
+        {
+          "start": 80.46,
+          "end": 80.84,
+          "word": " indeed",
+          "probability": 0.9009699821472168
+        },
+        {
+          "start": 80.84,
+          "end": 81.58,
+          "word": " IQ",
+          "probability": 0.40527409315109253
+        },
+        {
+          "start": 81.58,
+          "end": 81.9,
+          "word": " starting",
+          "probability": 0.7921961545944214
+        },
+        {
+          "start": 81.9,
+          "end": 82.04,
+          "word": " to",
+          "probability": 0.9960817694664001
+        },
+        {
+          "start": 82.04,
+          "end": 82.18,
+          "word": " come",
+          "probability": 0.9981009364128113
+        },
+        {
+          "start": 82.18,
+          "end": 82.46,
+          "word": " out",
+          "probability": 0.9967941641807556
+        },
+        {
+          "start": 82.46,
+          "end": 82.9,
+          "word": " as",
+          "probability": 0.8566257357597351
+        },
+        {
+          "start": 82.9,
+          "end": 83.02,
+          "word": " the",
+          "probability": 0.8298217058181763
+        },
+        {
+          "start": 83.02,
+          "end": 83.3,
+          "word": " Ella",
+          "probability": 0.5936152189970016
+        },
+        {
+          "start": 83.3,
+          "end": 83.52,
+          "word": " starts",
+          "probability": 0.9813195466995239
+        },
+        {
+          "start": 83.52,
+          "end": 83.72,
+          "word": " to",
+          "probability": 0.9968981742858887
+        },
+        {
+          "start": 83.72,
+          "end": 83.88,
+          "word": " make",
+          "probability": 0.9961375594139099
+        },
+        {
+          "start": 83.88,
+          "end": 84.06,
+          "word": " her",
+          "probability": 0.9964146614074707
+        },
+        {
+          "start": 84.06,
+          "end": 84.36,
+          "word": " move",
+          "probability": 0.9904080033302307
+        },
+        {
+          "start": 84.36,
+          "end": 84.52,
+          "word": " the",
+          "probability": 0.3380497694015503
+        },
+        {
+          "start": 84.52,
+          "end": 84.74,
+          "word": " fans",
+          "probability": 0.8337764143943787
+        },
+        {
+          "start": 84.74,
+          "end": 85.02,
+          "word": " port",
+          "probability": 0.44634634256362915
+        }
+      ]
+    },
+    {
+      "start": 85.02,
+      "end": 86.92,
+      "text": " But also the the whole the media",
+      "no_speech_prob": 0.5945713520050049,
+      "avg_logprob": -0.3154319537836209,
+      "words": [
+        {
+          "start": 85.02,
+          "end": 85.18,
+          "word": " But",
+          "probability": 0.07025041431188583
+        },
+        {
+          "start": 85.18,
+          "end": 85.44,
+          "word": " also",
+          "probability": 0.991299569606781
+        },
+        {
+          "start": 85.44,
+          "end": 85.68,
+          "word": " the",
+          "probability": 0.9454250335693359
+        },
+        {
+          "start": 85.68,
+          "end": 86.02,
+          "word": " the",
+          "probability": 0.634427011013031
+        },
+        {
+          "start": 86.02,
+          "end": 86.26,
+          "word": " whole",
+          "probability": 0.8717013001441956
+        },
+        {
+          "start": 86.26,
+          "end": 86.48,
+          "word": " the",
+          "probability": 0.9752975106239319
+        },
+        {
+          "start": 86.48,
+          "end": 86.92,
+          "word": " media",
+          "probability": 0.9890210032463074
+        }
+      ]
+    },
+    {
+      "start": 86.92,
+      "end": 126.29,
+      "text": " I mean that was they went crazy for Capriotti when she first stepped on the court. Oh and the grind goes to Sheehan",
+      "no_speech_prob": 0.5945713520050049,
+      "avg_logprob": -0.3154319537836209,
+      "words": [
+        {
+          "start": 86.92,
+          "end": 87.36,
+          "word": " I",
+          "probability": 0.5906820893287659
+        },
+        {
+          "start": 87.36,
+          "end": 87.48,
+          "word": " mean",
+          "probability": 0.99901282787323
+        },
+        {
+          "start": 87.48,
+          "end": 87.64,
+          "word": " that",
+          "probability": 0.8972663879394531
+        },
+        {
+          "start": 87.64,
+          "end": 87.88,
+          "word": " was",
+          "probability": 0.9932041168212891
+        },
+        {
+          "start": 87.88,
+          "end": 88.16,
+          "word": " they",
+          "probability": 0.36352571845054626
+        },
+        {
+          "start": 88.16,
+          "end": 88.3,
+          "word": " went",
+          "probability": 0.9474232792854309
+        },
+        {
+          "start": 88.3,
+          "end": 88.9,
+          "word": " crazy",
+          "probability": 0.9974495768547058
+        },
+        {
+          "start": 88.9,
+          "end": 89.24,
+          "word": " for",
+          "probability": 0.9939576387405396
+        },
+        {
+          "start": 89.24,
+          "end": 89.72,
+          "word": " Capriotti",
+          "probability": 0.5837804401914278
+        },
+        {
+          "start": 89.72,
+          "end": 89.88,
+          "word": " when",
+          "probability": 0.9912368059158325
+        },
+        {
+          "start": 89.88,
+          "end": 90.04,
+          "word": " she",
+          "probability": 0.9990115165710449
+        },
+        {
+          "start": 90.04,
+          "end": 90.28,
+          "word": " first",
+          "probability": 0.9989259839057922
+        },
+        {
+          "start": 90.28,
+          "end": 90.56,
+          "word": " stepped",
+          "probability": 0.9091243743896484
+        },
+        {
+          "start": 90.56,
+          "end": 90.82,
+          "word": " on",
+          "probability": 0.9537191987037659
+        },
+        {
+          "start": 90.82,
+          "end": 90.94,
+          "word": " the",
+          "probability": 0.8184269666671753
+        },
+        {
+          "start": 90.94,
+          "end": 91.12,
+          "word": " court.",
+          "probability": 0.9756893515586853
+        },
+        {
+          "start": 123.93,
+          "end": 124.41,
+          "word": " Oh",
+          "probability": 0.8137057423591614
+        },
+        {
+          "start": 124.41,
+          "end": 124.53,
+          "word": " and",
+          "probability": 0.5770342350006104
+        },
+        {
+          "start": 124.53,
+          "end": 124.67,
+          "word": " the",
+          "probability": 0.9905874133110046
+        },
+        {
+          "start": 124.67,
+          "end": 125.01,
+          "word": " grind",
+          "probability": 0.9637469053268433
+        },
+        {
+          "start": 125.01,
+          "end": 125.45,
+          "word": " goes",
+          "probability": 0.9829985499382019
+        },
+        {
+          "start": 125.45,
+          "end": 125.75,
+          "word": " to",
+          "probability": 0.9837208986282349
+        },
+        {
+          "start": 125.75,
+          "end": 126.29,
+          "word": " Sheehan",
+          "probability": 0.7519731819629669
+        }
+      ]
+    },
+    {
+      "start": 126.29,
+      "end": 128.17,
+      "text": " What an effort?",
+      "no_speech_prob": 0.5945713520050049,
+      "avg_logprob": -0.3154319537836209,
+      "words": [
+        {
+          "start": 126.29,
+          "end": 127.17,
+          "word": " What",
+          "probability": 0.3695017099380493
+        },
+        {
+          "start": 127.17,
+          "end": 127.39,
+          "word": " an",
+          "probability": 0.9983780384063721
+        },
+        {
+          "start": 127.39,
+          "end": 128.17,
+          "word": " effort?",
+          "probability": 0.9995248317718506
+        }
+      ]
+    },
+    {
+      "start": 147.9,
+      "end": 153.46,
+      "text": " Gets the hold nonetheless doesn't have to be perfect. You just got to earn it and she does exactly that for three all",
+      "no_speech_prob": 0.5945713520050049,
+      "avg_logprob": -0.3154319537836209,
+      "words": [
+        {
+          "start": 147.9,
+          "end": 148.38,
+          "word": " Gets",
+          "probability": 0.4225326478481293
+        },
+        {
+          "start": 148.38,
+          "end": 148.58,
+          "word": " the",
+          "probability": 0.9924620985984802
+        },
+        {
+          "start": 148.58,
+          "end": 148.76,
+          "word": " hold",
+          "probability": 0.6642074584960938
+        },
+        {
+          "start": 148.76,
+          "end": 149.12,
+          "word": " nonetheless",
+          "probability": 0.7359485030174255
+        },
+        {
+          "start": 149.12,
+          "end": 149.46,
+          "word": " doesn't",
+          "probability": 0.9831772744655609
+        },
+        {
+          "start": 149.46,
+          "end": 149.62,
+          "word": " have",
+          "probability": 0.998299777507782
+        },
+        {
+          "start": 149.62,
+          "end": 149.7,
+          "word": " to",
+          "probability": 0.9996366500854492
+        },
+        {
+          "start": 149.7,
+          "end": 149.82,
+          "word": " be",
+          "probability": 0.9996485710144043
+        },
+        {
+          "start": 149.82,
+          "end": 150.14,
+          "word": " perfect.",
+          "probability": 0.9991932511329651
+        },
+        {
+          "start": 150.14,
+          "end": 150.36,
+          "word": " You",
+          "probability": 0.9527912139892578
+        },
+        {
+          "start": 150.36,
+          "end": 150.5,
+          "word": " just",
+          "probability": 0.9962647557258606
+        },
+        {
+          "start": 150.5,
+          "end": 150.68,
+          "word": " got",
+          "probability": 0.7411409616470337
+        },
+        {
+          "start": 150.68,
+          "end": 150.82,
+          "word": " to",
+          "probability": 0.9830508828163147
+        },
+        {
+          "start": 150.82,
+          "end": 150.94,
+          "word": " earn",
+          "probability": 0.9977213740348816
+        },
+        {
+          "start": 150.94,
+          "end": 151.28,
+          "word": " it",
+          "probability": 0.9989966750144958
+        },
+        {
+          "start": 151.28,
+          "end": 151.58,
+          "word": " and",
+          "probability": 0.7196624875068665
+        },
+        {
+          "start": 151.58,
+          "end": 151.72,
+          "word": " she",
+          "probability": 0.9992786049842834
+        },
+        {
+          "start": 151.72,
+          "end": 151.9,
+          "word": " does",
+          "probability": 0.9988834261894226
+        },
+        {
+          "start": 151.9,
+          "end": 152.3,
+          "word": " exactly",
+          "probability": 0.9990496039390564
+        },
+        {
+          "start": 152.3,
+          "end": 152.66,
+          "word": " that",
+          "probability": 0.9980677962303162
+        },
+        {
+          "start": 152.66,
+          "end": 152.84,
+          "word": " for",
+          "probability": 0.980188250541687
+        },
+        {
+          "start": 152.84,
+          "end": 153.04,
+          "word": " three",
+          "probability": 0.7965396642684937
+        },
+        {
+          "start": 153.04,
+          "end": 153.46,
+          "word": " all",
+          "probability": 0.5401901006698608
+        }
+      ]
+    },
+    {
+      "start": 163.29,
+      "end": 167.19,
+      "text": " She's starting to turn it up the volume and the power",
+      "no_speech_prob": 0.5945713520050049,
+      "avg_logprob": -0.3154319537836209,
+      "words": [
+        {
+          "start": 163.29,
+          "end": 163.77,
+          "word": " She's",
+          "probability": 0.565588116645813
+        },
+        {
+          "start": 163.77,
+          "end": 163.95,
+          "word": " starting",
+          "probability": 0.993008017539978
+        },
+        {
+          "start": 163.95,
+          "end": 164.11,
+          "word": " to",
+          "probability": 0.9994981288909912
+        },
+        {
+          "start": 164.11,
+          "end": 164.29,
+          "word": " turn",
+          "probability": 0.9996298551559448
+        },
+        {
+          "start": 164.29,
+          "end": 164.39,
+          "word": " it",
+          "probability": 0.9990578293800354
+        },
+        {
+          "start": 164.39,
+          "end": 164.83,
+          "word": " up",
+          "probability": 0.9987077713012695
+        },
+        {
+          "start": 164.83,
+          "end": 165.51,
+          "word": " the",
+          "probability": 0.8982356786727905
+        },
+        {
+          "start": 165.51,
+          "end": 165.93,
+          "word": " volume",
+          "probability": 0.9965079426765442
+        },
+        {
+          "start": 165.93,
+          "end": 166.65,
+          "word": " and",
+          "probability": 0.9941049218177795
+        },
+        {
+          "start": 166.65,
+          "end": 166.81,
+          "word": " the",
+          "probability": 0.9989847540855408
+        },
+        {
+          "start": 166.81,
+          "end": 167.19,
+          "word": " power",
+          "probability": 0.998029887676239
+        }
+      ]
+    },
+    {
+      "start": 167.19,
+      "end": 178.2,
+      "text": " And that misses the mark, and here comes the qualifier.",
+      "no_speech_prob": 0.8452535271644592,
+      "avg_logprob": -0.30967778952225394,
+      "words": [
+        {
+          "start": 167.19,
+          "end": 168.05,
+          "word": " And",
+          "probability": 0.1774415373802185
+        },
+        {
+          "start": 175.66,
+          "end": 175.82,
+          "word": " that",
+          "probability": 0.7002894878387451
+        },
+        {
+          "start": 175.82,
+          "end": 176.08,
+          "word": " misses",
+          "probability": 0.9571393132209778
+        },
+        {
+          "start": 176.08,
+          "end": 176.26,
+          "word": " the",
+          "probability": 0.9934359788894653
+        },
+        {
+          "start": 176.26,
+          "end": 176.52,
+          "word": " mark,",
+          "probability": 0.9831761121749878
+        },
+        {
+          "start": 177.08,
+          "end": 177.12,
+          "word": " and",
+          "probability": 0.9707781076431274
+        },
+        {
+          "start": 177.12,
+          "end": 177.3,
+          "word": " here",
+          "probability": 0.9940686225891113
+        },
+        {
+          "start": 177.3,
+          "end": 177.52,
+          "word": " comes",
+          "probability": 0.9855945110321045
+        },
+        {
+          "start": 177.52,
+          "end": 177.7,
+          "word": " the",
+          "probability": 0.9929975271224976
+        },
+        {
+          "start": 177.7,
+          "end": 178.2,
+          "word": " qualifier.",
+          "probability": 0.9798526763916016
+        }
+      ]
+    },
+    {
+      "start": 178.52,
+      "end": 183.76,
+      "text": " Xi'an took the Xianqin Wen Beijing champion to three sets in the opening round of the",
+      "no_speech_prob": 0.8452535271644592,
+      "avg_logprob": -0.30967778952225394,
+      "words": [
+        {
+          "start": 178.52,
+          "end": 178.54,
+          "word": " Xi",
+          "probability": 0.39123663306236267
+        },
+        {
+          "start": 178.54,
+          "end": 178.86,
+          "word": "'an",
+          "probability": 0.6796650886535645
+        },
+        {
+          "start": 178.86,
+          "end": 179.74,
+          "word": " took",
+          "probability": 0.9674280285835266
+        },
+        {
+          "start": 179.74,
+          "end": 180.4,
+          "word": " the",
+          "probability": 0.3266371786594391
+        },
+        {
+          "start": 180.4,
+          "end": 180.82,
+          "word": " Xianqin",
+          "probability": 0.4141112454235554
+        },
+        {
+          "start": 180.82,
+          "end": 181.04,
+          "word": " Wen",
+          "probability": 0.5261862277984619
+        },
+        {
+          "start": 181.04,
+          "end": 181.52,
+          "word": " Beijing",
+          "probability": 0.6858987808227539
+        },
+        {
+          "start": 181.52,
+          "end": 181.92,
+          "word": " champion",
+          "probability": 0.900480329990387
+        },
+        {
+          "start": 181.92,
+          "end": 182.16,
+          "word": " to",
+          "probability": 0.7071166038513184
+        },
+        {
+          "start": 182.16,
+          "end": 182.34,
+          "word": " three",
+          "probability": 0.939279317855835
+        },
+        {
+          "start": 182.34,
+          "end": 182.58,
+          "word": " sets",
+          "probability": 0.9955697655677795
+        },
+        {
+          "start": 182.58,
+          "end": 182.78,
+          "word": " in",
+          "probability": 0.9729676842689514
+        },
+        {
+          "start": 182.78,
+          "end": 182.88,
+          "word": " the",
+          "probability": 0.9977090358734131
+        },
+        {
+          "start": 182.88,
+          "end": 183.22,
+          "word": " opening",
+          "probability": 0.982560932636261
+        },
+        {
+          "start": 183.22,
+          "end": 183.5,
+          "word": " round",
+          "probability": 0.9970769882202148
+        },
+        {
+          "start": 183.5,
+          "end": 183.66,
+          "word": " of",
+          "probability": 0.7662400007247925
+        },
+        {
+          "start": 183.66,
+          "end": 183.76,
+          "word": " the",
+          "probability": 0.9967373013496399
+        }
+      ]
+    },
+    {
+      "start": 183.76,
+      "end": 184.4,
+      "text": " previous tournament.",
+      "no_speech_prob": 0.8452535271644592,
+      "avg_logprob": -0.30967778952225394,
+      "words": [
+        {
+          "start": 183.76,
+          "end": 184.06,
+          "word": " previous",
+          "probability": 0.9992936849594116
+        },
+        {
+          "start": 184.06,
+          "end": 184.4,
+          "word": " tournament.",
+          "probability": 0.9974775910377502
+        }
+      ]
+    },
+    {
+      "start": 184.96,
+      "end": 189.76,
+      "text": " She picked up her first two top 100 wins in qualifying here in Wuhan, and now she's",
+      "no_speech_prob": 0.8452535271644592,
+      "avg_logprob": -0.30967778952225394,
+      "words": [
+        {
+          "start": 184.96,
+          "end": 184.98,
+          "word": " She",
+          "probability": 0.99008709192276
+        },
+        {
+          "start": 184.98,
+          "end": 185.18,
+          "word": " picked",
+          "probability": 0.9965576529502869
+        },
+        {
+          "start": 185.18,
+          "end": 185.34,
+          "word": " up",
+          "probability": 0.994804322719574
+        },
+        {
+          "start": 185.34,
+          "end": 185.5,
+          "word": " her",
+          "probability": 0.9952657222747803
+        },
+        {
+          "start": 185.5,
+          "end": 185.68,
+          "word": " first",
+          "probability": 0.9960697889328003
+        },
+        {
+          "start": 185.68,
+          "end": 186.02,
+          "word": " two",
+          "probability": 0.9814175963401794
+        },
+        {
+          "start": 186.02,
+          "end": 186.36,
+          "word": " top",
+          "probability": 0.9614368677139282
+        },
+        {
+          "start": 186.36,
+          "end": 186.8,
+          "word": " 100",
+          "probability": 0.8606981635093689
+        },
+        {
+          "start": 186.8,
+          "end": 187.1,
+          "word": " wins",
+          "probability": 0.9974157810211182
+        },
+        {
+          "start": 187.1,
+          "end": 187.32,
+          "word": " in",
+          "probability": 0.6682409644126892
+        },
+        {
+          "start": 187.32,
+          "end": 187.84,
+          "word": " qualifying",
+          "probability": 0.9945207834243774
+        },
+        {
+          "start": 187.84,
+          "end": 188.16,
+          "word": " here",
+          "probability": 0.9777462482452393
+        },
+        {
+          "start": 188.16,
+          "end": 188.26,
+          "word": " in",
+          "probability": 0.9615756273269653
+        },
+        {
+          "start": 188.26,
+          "end": 188.66,
+          "word": " Wuhan,",
+          "probability": 0.8622483015060425
+        },
+        {
+          "start": 188.82,
+          "end": 189.36,
+          "word": " and",
+          "probability": 0.9849051833152771
+        },
+        {
+          "start": 189.36,
+          "end": 189.52,
+          "word": " now",
+          "probability": 0.9981284737586975
+        },
+        {
+          "start": 189.52,
+          "end": 189.76,
+          "word": " she's",
+          "probability": 0.984630286693573
+        }
+      ]
+    },
+    {
+      "start": 189.76,
+      "end": 195.34,
+      "text": " got the number 19th ranked player in the world, extended to a third set on night one.",
+      "no_speech_prob": 0.8452535271644592,
+      "avg_logprob": -0.30967778952225394,
+      "words": [
+        {
+          "start": 189.76,
+          "end": 189.88,
+          "word": " got",
+          "probability": 0.9986448884010315
+        },
+        {
+          "start": 189.88,
+          "end": 190.1,
+          "word": " the",
+          "probability": 0.9963858127593994
+        },
+        {
+          "start": 190.1,
+          "end": 190.32,
+          "word": " number",
+          "probability": 0.9412999153137207
+        },
+        {
+          "start": 190.32,
+          "end": 191.28,
+          "word": " 19th",
+          "probability": 0.9715825021266937
+        },
+        {
+          "start": 191.28,
+          "end": 191.42,
+          "word": " ranked",
+          "probability": 0.9751205444335938
+        },
+        {
+          "start": 191.42,
+          "end": 191.74,
+          "word": " player",
+          "probability": 0.9925938248634338
+        },
+        {
+          "start": 191.74,
+          "end": 192.06,
+          "word": " in",
+          "probability": 0.9956531524658203
+        },
+        {
+          "start": 192.06,
+          "end": 192.24,
+          "word": " the",
+          "probability": 0.999142050743103
+        },
+        {
+          "start": 192.24,
+          "end": 192.66,
+          "word": " world,",
+          "probability": 0.9916831254959106
+        },
+        {
+          "start": 193.1,
+          "end": 193.48,
+          "word": " extended",
+          "probability": 0.9931673407554626
+        },
+        {
+          "start": 193.48,
+          "end": 193.8,
+          "word": " to",
+          "probability": 0.9984493255615234
+        },
+        {
+          "start": 193.8,
+          "end": 193.92,
+          "word": " a",
+          "probability": 0.9835842251777649
+        },
+        {
+          "start": 193.92,
+          "end": 194.08,
+          "word": " third",
+          "probability": 0.9887680411338806
+        },
+        {
+          "start": 194.08,
+          "end": 194.42,
+          "word": " set",
+          "probability": 0.9965658783912659
+        },
+        {
+          "start": 194.42,
+          "end": 194.78,
+          "word": " on",
+          "probability": 0.9560126066207886
+        },
+        {
+          "start": 194.78,
+          "end": 194.94,
+          "word": " night",
+          "probability": 0.8597962260246277
+        },
+        {
+          "start": 194.94,
+          "end": 195.34,
+          "word": " one.",
+          "probability": 0.9785041213035583
+        }
+      ]
+    },
+    {
+      "start": 233.66,
+      "end": 234.96,
+      "text": " Anything is still possible.",
+      "no_speech_prob": 0.8452535271644592,
+      "avg_logprob": -0.30967778952225394,
+      "words": [
+        {
+          "start": 233.66,
+          "end": 233.98,
+          "word": " Anything",
+          "probability": 0.391752153635025
+        },
+        {
+          "start": 233.98,
+          "end": 234.2,
+          "word": " is",
+          "probability": 0.9945998191833496
+        },
+        {
+          "start": 234.2,
+          "end": 234.44,
+          "word": " still",
+          "probability": 0.9973852038383484
+        },
+        {
+          "start": 234.44,
+          "end": 234.96,
+          "word": " possible.",
+          "probability": 0.9993829727172852
+        }
+      ]
+    },
+    {
+      "start": 236.28,
+      "end": 240.42,
+      "text": " Hopefully the experience is going to have to play something positive for Yalda here.",
+      "no_speech_prob": 0.8452535271644592,
+      "avg_logprob": -0.30967778952225394,
+      "words": [
+        {
+          "start": 236.28,
+          "end": 236.54,
+          "word": " Hopefully",
+          "probability": 0.9913188815116882
+        },
+        {
+          "start": 236.54,
+          "end": 236.74,
+          "word": " the",
+          "probability": 0.8038284778594971
+        },
+        {
+          "start": 236.74,
+          "end": 237.06,
+          "word": " experience",
+          "probability": 0.640640139579773
+        },
+        {
+          "start": 237.06,
+          "end": 237.26,
+          "word": " is",
+          "probability": 0.25825566053390503
+        },
+        {
+          "start": 237.26,
+          "end": 237.3,
+          "word": " going",
+          "probability": 0.7348724603652954
+        },
+        {
+          "start": 237.3,
+          "end": 237.4,
+          "word": " to",
+          "probability": 0.9947549104690552
+        },
+        {
+          "start": 237.4,
+          "end": 237.52,
+          "word": " have",
+          "probability": 0.9918172955513
+        },
+        {
+          "start": 237.52,
+          "end": 237.66,
+          "word": " to",
+          "probability": 0.993708610534668
+        },
+        {
+          "start": 237.66,
+          "end": 237.96,
+          "word": " play",
+          "probability": 0.9941186904907227
+        },
+        {
+          "start": 237.96,
+          "end": 239.12,
+          "word": " something",
+          "probability": 0.9676217436790466
+        },
+        {
+          "start": 239.12,
+          "end": 239.58,
+          "word": " positive",
+          "probability": 0.9969965219497681
+        },
+        {
+          "start": 239.58,
+          "end": 239.84,
+          "word": " for",
+          "probability": 0.9923614263534546
+        },
+        {
+          "start": 239.84,
+          "end": 240.16,
+          "word": " Yalda",
+          "probability": 0.5599292938907942
+        },
+        {
+          "start": 240.16,
+          "end": 240.42,
+          "word": " here.",
+          "probability": 0.9655620455741882
+        }
+      ]
+    },
+    {
+      "start": 240.42,
+      "end": 251.14,
+      "text": " Well much like her opponent Shihan on their 12th service game that was her best.",
+      "no_speech_prob": 0.7231149673461914,
+      "avg_logprob": -0.22974200926575006,
+      "words": [
+        {
+          "start": 240.42,
+          "end": 241.4,
+          "word": " Well",
+          "probability": 0.3898029625415802
+        },
+        {
+          "start": 247.48,
+          "end": 247.7,
+          "word": " much",
+          "probability": 0.3973165452480316
+        },
+        {
+          "start": 247.7,
+          "end": 247.96,
+          "word": " like",
+          "probability": 0.9943286776542664
+        },
+        {
+          "start": 247.96,
+          "end": 248.16,
+          "word": " her",
+          "probability": 0.97479647397995
+        },
+        {
+          "start": 248.16,
+          "end": 248.52,
+          "word": " opponent",
+          "probability": 0.9832325577735901
+        },
+        {
+          "start": 248.52,
+          "end": 249.08,
+          "word": " Shihan",
+          "probability": 0.7210956513881683
+        },
+        {
+          "start": 249.08,
+          "end": 249.24,
+          "word": " on",
+          "probability": 0.46546632051467896
+        },
+        {
+          "start": 249.24,
+          "end": 249.4,
+          "word": " their",
+          "probability": 0.8775609731674194
+        },
+        {
+          "start": 249.4,
+          "end": 250.14,
+          "word": " 12th",
+          "probability": 0.8678177297115326
+        },
+        {
+          "start": 250.14,
+          "end": 250.14,
+          "word": " service",
+          "probability": 0.903237521648407
+        },
+        {
+          "start": 250.14,
+          "end": 250.38,
+          "word": " game",
+          "probability": 0.9898090362548828
+        },
+        {
+          "start": 250.38,
+          "end": 250.54,
+          "word": " that",
+          "probability": 0.5679876208305359
+        },
+        {
+          "start": 250.54,
+          "end": 250.68,
+          "word": " was",
+          "probability": 0.9978224039077759
+        },
+        {
+          "start": 250.68,
+          "end": 250.84,
+          "word": " her",
+          "probability": 0.9894710779190063
+        },
+        {
+          "start": 250.84,
+          "end": 251.14,
+          "word": " best.",
+          "probability": 0.9943979382514954
+        }
+      ]
+    },
+    {
+      "start": 257.15,
+      "end": 262.61,
+      "text": " Cool as the other side of the pillow. What a remarkable perhaps unbelievable",
+      "no_speech_prob": 0.7231149673461914,
+      "avg_logprob": -0.22974200926575006,
+      "words": [
+        {
+          "start": 257.15,
+          "end": 257.65,
+          "word": " Cool",
+          "probability": 0.8756923079490662
+        },
+        {
+          "start": 257.65,
+          "end": 258.01,
+          "word": " as",
+          "probability": 0.9398373961448669
+        },
+        {
+          "start": 258.01,
+          "end": 258.17,
+          "word": " the",
+          "probability": 0.9982940554618835
+        },
+        {
+          "start": 258.17,
+          "end": 258.37,
+          "word": " other",
+          "probability": 0.9989303946495056
+        },
+        {
+          "start": 258.37,
+          "end": 258.65,
+          "word": " side",
+          "probability": 0.9994931221008301
+        },
+        {
+          "start": 258.65,
+          "end": 258.77,
+          "word": " of",
+          "probability": 0.9982841610908508
+        },
+        {
+          "start": 258.77,
+          "end": 258.87,
+          "word": " the",
+          "probability": 0.9984492063522339
+        },
+        {
+          "start": 258.87,
+          "end": 259.13,
+          "word": " pillow.",
+          "probability": 0.9925958514213562
+        },
+        {
+          "start": 260.21,
+          "end": 260.51,
+          "word": " What",
+          "probability": 0.9805954694747925
+        },
+        {
+          "start": 260.51,
+          "end": 260.63,
+          "word": " a",
+          "probability": 0.9852676391601562
+        },
+        {
+          "start": 260.63,
+          "end": 261.13,
+          "word": " remarkable",
+          "probability": 0.9943780303001404
+        },
+        {
+          "start": 261.13,
+          "end": 261.71,
+          "word": " perhaps",
+          "probability": 0.6965411901473999
+        },
+        {
+          "start": 261.71,
+          "end": 262.61,
+          "word": " unbelievable",
+          "probability": 0.9907478094100952
+        }
+      ]
+    },
+    {
+      "start": 262.61,
+      "end": 267.19,
+      "text": " performance from Shihan. Maybe even she too doesn't realize what she's",
+      "no_speech_prob": 0.7231149673461914,
+      "avg_logprob": -0.22974200926575006,
+      "words": [
+        {
+          "start": 262.61,
+          "end": 263.31,
+          "word": " performance",
+          "probability": 0.9948424696922302
+        },
+        {
+          "start": 263.31,
+          "end": 263.63,
+          "word": " from",
+          "probability": 0.9967232346534729
+        },
+        {
+          "start": 263.63,
+          "end": 264.05,
+          "word": " Shihan.",
+          "probability": 0.9768003026644388
+        },
+        {
+          "start": 264.57,
+          "end": 264.77,
+          "word": " Maybe",
+          "probability": 0.975851833820343
+        },
+        {
+          "start": 264.77,
+          "end": 265.09,
+          "word": " even",
+          "probability": 0.8749363422393799
+        },
+        {
+          "start": 265.09,
+          "end": 265.31,
+          "word": " she",
+          "probability": 0.8892125487327576
+        },
+        {
+          "start": 265.31,
+          "end": 265.67,
+          "word": " too",
+          "probability": 0.9467714428901672
+        },
+        {
+          "start": 265.67,
+          "end": 266.41,
+          "word": " doesn't",
+          "probability": 0.9156704843044281
+        },
+        {
+          "start": 266.41,
+          "end": 266.73,
+          "word": " realize",
+          "probability": 0.9858074188232422
+        },
+        {
+          "start": 266.73,
+          "end": 266.93,
+          "word": " what",
+          "probability": 0.9976097345352173
+        },
+        {
+          "start": 266.93,
+          "end": 267.19,
+          "word": " she's",
+          "probability": 0.9901489615440369
+        }
+      ]
+    },
+    {
+      "start": 267.19,
+      "end": 273.95,
+      "text": " accomplished. Is it a dream? It's reality. 19 in the world. Alexandria Allah falls",
+      "no_speech_prob": 0.7231149673461914,
+      "avg_logprob": -0.22974200926575006,
+      "words": [
+        {
+          "start": 267.19,
+          "end": 267.59,
+          "word": " accomplished.",
+          "probability": 0.9992832541465759
+        },
+        {
+          "start": 268.01,
+          "end": 268.15,
+          "word": " Is",
+          "probability": 0.9779766201972961
+        },
+        {
+          "start": 268.15,
+          "end": 268.27,
+          "word": " it",
+          "probability": 0.996758759021759
+        },
+        {
+          "start": 268.27,
+          "end": 268.39,
+          "word": " a",
+          "probability": 0.9988076686859131
+        },
+        {
+          "start": 268.39,
+          "end": 268.69,
+          "word": " dream?",
+          "probability": 0.9990156888961792
+        },
+        {
+          "start": 269.29,
+          "end": 269.83,
+          "word": " It's",
+          "probability": 0.9123559594154358
+        },
+        {
+          "start": 269.83,
+          "end": 270.29,
+          "word": " reality.",
+          "probability": 0.9717534184455872
+        },
+        {
+          "start": 272.13,
+          "end": 272.33,
+          "word": " 19",
+          "probability": 0.6726853847503662
+        },
+        {
+          "start": 272.33,
+          "end": 272.47,
+          "word": " in",
+          "probability": 0.9584265351295471
+        },
+        {
+          "start": 272.47,
+          "end": 272.55,
+          "word": " the",
+          "probability": 0.9990884065628052
+        },
+        {
+          "start": 272.55,
+          "end": 272.77,
+          "word": " world.",
+          "probability": 0.9790714979171753
+        },
+        {
+          "start": 273.09,
+          "end": 273.15,
+          "word": " Alexandria",
+          "probability": 0.6485685110092163
+        },
+        {
+          "start": 273.15,
+          "end": 273.57,
+          "word": " Allah",
+          "probability": 0.09879887849092484
+        },
+        {
+          "start": 273.57,
+          "end": 273.95,
+          "word": " falls",
+          "probability": 0.9674341678619385
+        }
+      ]
+    },
+    {
+      "start": 273.95,
+      "end": 279.59,
+      "text": " at the hands of 217 in the world. Shihan she's into the second round in Wuhan",
+      "no_speech_prob": 0.7231149673461914,
+      "avg_logprob": -0.22974200926575006,
+      "words": [
+        {
+          "start": 273.95,
+          "end": 274.19,
+          "word": " at",
+          "probability": 0.9968743324279785
+        },
+        {
+          "start": 274.19,
+          "end": 274.33,
+          "word": " the",
+          "probability": 0.9995483756065369
+        },
+        {
+          "start": 274.33,
+          "end": 274.67,
+          "word": " hands",
+          "probability": 0.9990027546882629
+        },
+        {
+          "start": 274.67,
+          "end": 274.87,
+          "word": " of",
+          "probability": 0.9926578402519226
+        },
+        {
+          "start": 274.87,
+          "end": 275.39,
+          "word": " 217",
+          "probability": 0.6867178678512573
+        },
+        {
+          "start": 275.39,
+          "end": 275.95,
+          "word": " in",
+          "probability": 0.9823359847068787
+        },
+        {
+          "start": 275.95,
+          "end": 276.05,
+          "word": " the",
+          "probability": 0.9994903802871704
+        },
+        {
+          "start": 276.05,
+          "end": 276.35,
+          "word": " world.",
+          "probability": 0.9921382069587708
+        },
+        {
+          "start": 277.01,
+          "end": 277.35,
+          "word": " Shihan",
+          "probability": 0.9525417486826578
+        },
+        {
+          "start": 277.35,
+          "end": 278.23,
+          "word": " she's",
+          "probability": 0.6297443360090256
+        },
+        {
+          "start": 278.23,
+          "end": 278.35,
+          "word": " into",
+          "probability": 0.8003401160240173
+        },
+        {
+          "start": 278.35,
+          "end": 278.53,
+          "word": " the",
+          "probability": 0.9955183267593384
+        },
+        {
+          "start": 278.53,
+          "end": 278.73,
+          "word": " second",
+          "probability": 0.9843313097953796
+        },
+        {
+          "start": 278.73,
+          "end": 279.03,
+          "word": " round",
+          "probability": 0.991804838180542
+        },
+        {
+          "start": 279.03,
+          "end": 279.19,
+          "word": " in",
+          "probability": 0.6499187350273132
+        },
+        {
+          "start": 279.19,
+          "end": 279.59,
+          "word": " Wuhan",
+          "probability": 0.9799088835716248
+        }
+      ]
+    },
+    {
+      "start": 279.59,
+      "end": 281.41,
+      "text": " and a three set triumph.",
+      "no_speech_prob": 0.3805467486381531,
+      "avg_logprob": -0.28238363930436433,
+      "words": [
+        {
+          "start": 279.59,
+          "end": 280.23,
+          "word": " and",
+          "probability": 0.24546369910240173
+        },
+        {
+          "start": 280.23,
+          "end": 280.37,
+          "word": " a",
+          "probability": 0.9164606332778931
+        },
+        {
+          "start": 280.37,
+          "end": 280.61,
+          "word": " three",
+          "probability": 0.8956210613250732
+        },
+        {
+          "start": 280.61,
+          "end": 280.89,
+          "word": " set",
+          "probability": 0.7596898078918457
+        },
+        {
+          "start": 280.89,
+          "end": 281.41,
+          "word": " triumph.",
+          "probability": 0.8397157788276672
+        }
+      ]
+    },
+    {
+      "start": 287.27,
+      "end": 289.01,
+      "text": " It might take some time to process,",
+      "no_speech_prob": 0.3805467486381531,
+      "avg_logprob": -0.28238363930436433,
+      "words": [
+        {
+          "start": 287.27,
+          "end": 287.65,
+          "word": " It",
+          "probability": 0.3795635402202606
+        },
+        {
+          "start": 287.65,
+          "end": 287.79,
+          "word": " might",
+          "probability": 0.9923447966575623
+        },
+        {
+          "start": 287.79,
+          "end": 288.01,
+          "word": " take",
+          "probability": 0.9973993301391602
+        },
+        {
+          "start": 288.01,
+          "end": 288.21,
+          "word": " some",
+          "probability": 0.9893580079078674
+        },
+        {
+          "start": 288.21,
+          "end": 288.41,
+          "word": " time",
+          "probability": 0.9989379048347473
+        },
+        {
+          "start": 288.41,
+          "end": 288.59,
+          "word": " to",
+          "probability": 0.9978640675544739
+        },
+        {
+          "start": 288.59,
+          "end": 289.01,
+          "word": " process,",
+          "probability": 0.9975691437721252
+        }
+      ]
+    },
+    {
+      "start": 289.61,
+      "end": 290.45,
+      "text": " but you earned it.",
+      "no_speech_prob": 0.3805467486381531,
+      "avg_logprob": -0.28238363930436433,
+      "words": [
+        {
+          "start": 289.61,
+          "end": 289.73,
+          "word": " but",
+          "probability": 0.9964379072189331
+        },
+        {
+          "start": 289.73,
+          "end": 289.91,
+          "word": " you",
+          "probability": 0.9794347882270813
+        },
+        {
+          "start": 289.91,
+          "end": 290.13,
+          "word": " earned",
+          "probability": 0.9397523403167725
+        },
+        {
+          "start": 290.13,
+          "end": 290.45,
+          "word": " it.",
+          "probability": 0.9940388202667236
+        }
+      ]
+    },
+    {
+      "start": 290.83,
+      "end": 292.55,
+      "text": " Shihan, go ahead and take your bow.",
+      "no_speech_prob": 0.3805467486381531,
+      "avg_logprob": -0.28238363930436433,
+      "words": [
+        {
+          "start": 290.83,
+          "end": 291.15,
+          "word": " Shihan,",
+          "probability": 0.6495843430360159
+        },
+        {
+          "start": 291.49,
+          "end": 291.53,
+          "word": " go",
+          "probability": 0.9827659130096436
+        },
+        {
+          "start": 291.53,
+          "end": 291.75,
+          "word": " ahead",
+          "probability": 0.9991827607154846
+        },
+        {
+          "start": 291.75,
+          "end": 291.91,
+          "word": " and",
+          "probability": 0.9921869039535522
+        },
+        {
+          "start": 291.91,
+          "end": 292.05,
+          "word": " take",
+          "probability": 0.998554527759552
+        },
+        {
+          "start": 292.05,
+          "end": 292.27,
+          "word": " your",
+          "probability": 0.9969432950019836
+        },
+        {
+          "start": 292.27,
+          "end": 292.55,
+          "word": " bow.",
+          "probability": 0.9627982378005981
+        }
+      ]
+    },
+    {
+      "start": 292.79,
+      "end": 295.77,
+      "text": " Coming back from a set down to win 6-3 in the third",
+      "no_speech_prob": 0.3805467486381531,
+      "avg_logprob": -0.28238363930436433,
+      "words": [
+        {
+          "start": 292.79,
+          "end": 292.89,
+          "word": " Coming",
+          "probability": 0.9868227243423462
+        },
+        {
+          "start": 292.89,
+          "end": 293.09,
+          "word": " back",
+          "probability": 0.998974084854126
+        },
+        {
+          "start": 293.09,
+          "end": 293.27,
+          "word": " from",
+          "probability": 0.9977442026138306
+        },
+        {
+          "start": 293.27,
+          "end": 293.41,
+          "word": " a",
+          "probability": 0.993428647518158
+        },
+        {
+          "start": 293.41,
+          "end": 293.63,
+          "word": " set",
+          "probability": 0.933023989200592
+        },
+        {
+          "start": 293.63,
+          "end": 294.07,
+          "word": " down",
+          "probability": 0.9868997931480408
+        },
+        {
+          "start": 294.07,
+          "end": 294.59,
+          "word": " to",
+          "probability": 0.9400473237037659
+        },
+        {
+          "start": 294.59,
+          "end": 294.75,
+          "word": " win",
+          "probability": 0.9290986657142639
+        },
+        {
+          "start": 294.75,
+          "end": 295.05,
+          "word": " 6",
+          "probability": 0.5036753416061401
+        },
+        {
+          "start": 295.05,
+          "end": 295.31,
+          "word": "-3",
+          "probability": 0.7021820247173309
+        },
+        {
+          "start": 295.31,
+          "end": 295.43,
+          "word": " in",
+          "probability": 0.938027560710907
+        },
+        {
+          "start": 295.43,
+          "end": 295.51,
+          "word": " the",
+          "probability": 0.9927829504013062
+        },
+        {
+          "start": 295.51,
+          "end": 295.77,
+          "word": " third",
+          "probability": 0.8886711597442627
+        }
+      ]
+    },
+    {
+      "start": 295.77,
+      "end": 296.77,
+      "text": " and just shot.",
+      "no_speech_prob": 0.3805467486381531,
+      "avg_logprob": -0.28238363930436433,
+      "words": [
+        {
+          "start": 295.77,
+          "end": 296.17,
+          "word": " and",
+          "probability": 0.27013304829597473
+        },
+        {
+          "start": 296.17,
+          "end": 296.47,
+          "word": " just",
+          "probability": 0.987586259841919
+        },
+        {
+          "start": 296.47,
+          "end": 296.77,
+          "word": " shot.",
+          "probability": 0.7438770532608032
+        }
+      ]
+    }
+  ],
+  "max_transcribed_end": 296.77
+}

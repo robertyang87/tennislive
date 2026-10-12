@@ -1,0 +1,53 @@
+{
+  "assets": [
+    {
+      "path": "assets/flags/ph.png",
+      "sha256": "089e20ed35c6c16e3d28ced61045285b63c344e00620bf90376dbe9a12865d52",
+      "dimensions": [
+        80,
+        40
+      ],
+      "identity": "Philippines",
+      "source": "existing verified repository asset at HEAD",
+      "use": "native flag/statistics headshot"
+    },
+    {
+      "path": "assets/flags/cn.png",
+      "sha256": "fdbfb0d49ec098827d28f297a4ee3614edd1dcc014bcdf978b7dce73c7b7b4f1",
+      "dimensions": [
+        80,
+        53
+      ],
+      "identity": "China",
+      "source": "existing verified repository asset at HEAD",
+      "use": "native flag/statistics headshot"
+    },
+    {
+      "path": "assets/players/headshots/wta-330332.jpg",
+      "sha256": "732d8295731bdcd254120d5ced523ae83f8b18e4839d22e06637ddc679242831",
+      "dimensions": [
+        492,
+        656
+      ],
+      "identity": "Alexandra Eala",
+      "source": "existing verified repository asset at HEAD",
+      "use": "native flag/statistics headshot"
+    },
+    {
+      "path": "assets/players/headshots/wta-329824-match-LS070.jpg",
+      "sha256": "6d1b8f0895eb2d4dd5fb05ee13ad1a4125d6e54f11d78c901d4c0019c3eb249a",
+      "dimensions": [
+        600,
+        600
+      ],
+      "identity": "Han Shi",
+      "source": "existing verified repository asset at HEAD",
+      "use": "statistic-card headshot only; filename LS070 is a different match, not this LS060 image"
+    }
+  ],
+  "shi_official_headshot_blob_requests": [
+    "https://wtafiles.blob.core.windows.net/images/headshots/329824.jpg",
+    "https://wtafiles.blob.core.windows.net/images/headshots/329824.png"
+  ],
+  "shi_blob_result": "Both proxy CONNECT blocked, not established unavailable. Han Shi identity API returned200 id329824 fullNameHanShi; existing historic-match portrait used as verified-person statistics headshot only."
+}

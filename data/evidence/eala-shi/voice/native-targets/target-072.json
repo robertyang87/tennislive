@@ -1,0 +1,559 @@
+{
+  "label": "第 9 段",
+  "edit_id": "first_set_story",
+  "word": "零",
+  "char": "零",
+  "at": 10,
+  "sentence": "盘末，施晗一度四十比零领先，伊埃拉却连拿五分。六比四，首盘到手。",
+  "intended": "ling2",
+  "wrong": "lian2",
+  "actual_binding": {
+    "label": "第 9 段",
+    "index": 8,
+    "edit_id": "first_set_story",
+    "display_text": "盘末，施晗一度四十比零领先，伊埃拉却连拿五分。六比四，首盘到手。",
+    "text": "盘末，施晗一度四十比零领先，伊埃拉却连拿五分。六比四，首盘到手。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "cache_key": "87659bc65e5f4fd88965c7f29eeee760",
+    "actual_mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+    "bound_snapshot_path": "/workspace/scratch/eala-voice/native-speech/87659bc65e5f4fd88965c7f29eeee760.mp3",
+    "marks_snapshot_path": "/workspace/scratch/eala-voice/native-speech/87659bc65e5f4fd88965c7f29eeee760.marks.json",
+    "mp3_duration_seconds": 7.344,
+    "window_seconds": 11.899999999999991,
+    "headroom_seconds": 4.555999999999991,
+    "native_cache_path": "/home/agent/.cache/tennislive-tts/87659bc65e5f4fd88965c7f29eeee760-edge-v2.zip",
+    "native_zip_snapshot_path": "/workspace/scratch/eala-voice/native-speech/87659bc65e5f4fd88965c7f29eeee760.native.zip",
+    "native_zip_sha256": "f8a5e0f14b832e3e8d8f925de727e493182e3cc85355e9f9890cbd08c3939e4d",
+    "native_zip_marks_raw_sha256": "5474ad90dede168ce15aa5c40877db115495138f2824c721ac521321641b45de",
+    "actual_marks_sha256": "1a0d63c988c8fbd791fdf5496cb6121ebba4aef92f2c14395b27d42538d3d685",
+    "word_boundary_tokens": [
+      "盘末",
+      "施晗",
+      "一度",
+      "四十比零",
+      "领先",
+      "伊埃拉",
+      "却",
+      "连",
+      "拿",
+      "五分",
+      "六比四",
+      "首盘",
+      "到手"
+    ],
+    "enumerated_polyphones": [
+      {
+        "at": 1,
+        "char": "末",
+        "word": "末",
+        "intended_lexical_reading": "mo4",
+        "all_dictionary_readings": [
+          "mo4",
+          "me5"
+        ]
+      },
+      {
+        "at": 3,
+        "char": "施",
+        "word": "施",
+        "intended_lexical_reading": "shi1",
+        "all_dictionary_readings": [
+          "shi1",
+          "yi4",
+          "shi3"
+        ]
+      },
+      {
+        "at": 5,
+        "char": "一",
+        "word": "一度",
+        "intended_lexical_reading": "yi2",
+        "all_dictionary_readings": [
+          "yi1",
+          "yi2",
+          "yi4"
+        ]
+      },
+      {
+        "at": 6,
+        "char": "度",
+        "word": "一度",
+        "intended_lexical_reading": "du4",
+        "all_dictionary_readings": [
+          "du4",
+          "duo2",
+          "zhai2"
+        ]
+      },
+      {
+        "at": 9,
+        "char": "比",
+        "word": "比",
+        "intended_lexical_reading": "bi3",
+        "all_dictionary_readings": [
+          "bi3",
+          "bi4",
+          "pi2",
+          "pi3"
+        ]
+      },
+      {
+        "at": 10,
+        "char": "零",
+        "word": "零",
+        "intended_lexical_reading": "ling2",
+        "all_dictionary_readings": [
+          "ling2",
+          "lian2"
+        ]
+      },
+      {
+        "at": 15,
+        "char": "埃",
+        "word": "埃",
+        "intended_lexical_reading": "ai1",
+        "all_dictionary_readings": [
+          "ai1",
+          "zhi4"
+        ]
+      },
+      {
+        "at": 16,
+        "char": "拉",
+        "word": "拉",
+        "intended_lexical_reading": "la1",
+        "all_dictionary_readings": [
+          "la1",
+          "la2",
+          "la3",
+          "la4",
+          "la5"
+        ]
+      },
+      {
+        "at": 21,
+        "char": "分",
+        "word": "五分",
+        "intended_lexical_reading": "fen1",
+        "all_dictionary_readings": [
+          "fen1",
+          "fen4",
+          "fen2"
+        ]
+      },
+      {
+        "at": 23,
+        "char": "六",
+        "word": "六",
+        "intended_lexical_reading": "liu4",
+        "all_dictionary_readings": [
+          "liu4",
+          "lu4"
+        ]
+      },
+      {
+        "at": 24,
+        "char": "比",
+        "word": "比",
+        "intended_lexical_reading": "bi3",
+        "all_dictionary_readings": [
+          "bi3",
+          "bi4",
+          "pi2",
+          "pi3"
+        ]
+      }
+    ],
+    "tts_only_substitution_changed_text": false
+  },
+  "check_kind": "polyphone",
+  "context_notes": [
+    "Lexical dictionary intended reading is a declared hypothesis; calibration evaluates actual audio."
+  ],
+  "ok_refs": [
+    "灵",
+    "玲"
+  ],
+  "bad_refs": [
+    "廉",
+    "涟",
+    "联"
+  ],
+  "reference_notes": [
+    "Provisional declared nonoriginal controls; context-sensitive/traditional/rare controls require fresh self-calibration.",
+    "Only dictionary single-reading nonoriginal references selected; single-reading common, single-reading level-2"
+  ],
+  "reference_validity_limited": false,
+  "acoustic": {
+    "word": "零",
+    "char": "零",
+    "sentence": "盘末，施晗一度四十比零领先，伊埃拉却连拿五分。六比四，首盘到手。",
+    "tts_text": "盘末，施晗一度四十比零领先，伊埃拉却连拿五分。六比四，首盘到手。",
+    "intended_refs": [
+      "灵",
+      "玲"
+    ],
+    "wrong_refs": [
+      "廉",
+      "涟",
+      "联"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "correct",
+    "score": 0.902,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.218,
+        "d_wrong": 3.381,
+        "score": 0.879
+      },
+      "f0": {
+        "d_intended": 0.005,
+        "d_wrong": 0.533,
+        "score": 0.981
+      },
+      "comb": {
+        "d_intended": 0.114,
+        "d_wrong": 2.225,
+        "score": 0.902
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.422,
+      "wrong": 1.841
+    },
+    "separation": {
+      "spec": {
+        "within": 1.917,
+        "between": 3.376,
+        "separation": 1.761
+      },
+      "f0": {
+        "within": 0.5,
+        "between": 0.73,
+        "separation": 1.46
+      },
+      "comb": {
+        "within": 1.458,
+        "between": 2.417,
+        "separation": 1.658
+      }
+    },
+    "selftest_loo": {
+      "灵": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.111
+      },
+      "玲": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.039
+      },
+      "廉": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.917
+      },
+      "涟": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": -0.157
+      },
+      "联": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.916
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:灵": {
+        "spec": 2.763,
+        "f0": 0.671,
+        "vmis": 0.0,
+        "frames": 21,
+        "comb": 2.053
+      },
+      "A:玲": {
+        "spec": 0.218,
+        "f0": 0.005,
+        "vmis": 0.0,
+        "frames": 21,
+        "comb": 0.114
+      },
+      "B:廉": {
+        "spec": 3.381,
+        "f0": 0.534,
+        "vmis": 0.0,
+        "frames": 22,
+        "comb": 2.225
+      },
+      "B:涟": {
+        "spec": 3.78,
+        "f0": 0.681,
+        "vmis": 0.0,
+        "frames": 22,
+        "comb": 2.571
+      },
+      "B:联": {
+        "spec": 3.396,
+        "f0": 0.533,
+        "vmis": 0.0,
+        "frames": 22,
+        "comb": 2.231
+      }
+    },
+    "window_s": [
+      1.98,
+      2.19
+    ],
+    "boundary_token": "四十比零",
+    "window_anchor": "B:廉",
+    "tokens": {
+      "ORIG": [
+        "盘末",
+        "施晗",
+        "一度",
+        "四十比零",
+        "领先",
+        "伊埃拉",
+        "却",
+        "连",
+        "拿",
+        "五分",
+        "六比四",
+        "首盘",
+        "到手"
+      ],
+      "A:灵": [
+        "盘末",
+        "施晗",
+        "一度",
+        "四十",
+        "比灵",
+        "领先",
+        "伊埃拉",
+        "却",
+        "连",
+        "拿",
+        "五",
+        "分",
+        "六比四",
+        "首盘",
+        "到手"
+      ],
+      "A:玲": [
+        "盘末",
+        "施晗",
+        "一度",
+        "四十比玲",
+        "领先",
+        "伊埃拉",
+        "却",
+        "连",
+        "拿",
+        "五分",
+        "六比四",
+        "首盘",
+        "到手"
+      ],
+      "B:廉": [
+        "盘末",
+        "施晗",
+        "一度",
+        "四十比",
+        "廉",
+        "领先",
+        "伊埃拉",
+        "却",
+        "连",
+        "拿",
+        "五分",
+        "六比四",
+        "首盘",
+        "到手"
+      ],
+      "B:涟": [
+        "盘末",
+        "施晗",
+        "一度",
+        "四十",
+        "比",
+        "涟",
+        "领先",
+        "伊埃拉",
+        "却",
+        "连",
+        "拿",
+        "五分",
+        "六比四",
+        "首盘",
+        "到手"
+      ],
+      "B:联": [
+        "盘末",
+        "施晗",
+        "一度",
+        "四十比",
+        "联",
+        "领先",
+        "伊埃拉",
+        "却",
+        "连",
+        "拿",
+        "五分",
+        "六比四",
+        "首盘",
+        "到手"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -6.3,
+        -7.4,
+        -7.3,
+        -7.5,
+        -7.2,
+        -5.4,
+        -5.2,
+        -2.6,
+        -1.4,
+        -0.5,
+        0.3
+      ],
+      "A:灵": [
+        -3.9,
+        -5.3,
+        -6.8,
+        -7.3,
+        -7.3,
+        -5.3,
+        -4.7,
+        -3.7,
+        -2.3,
+        -1.5,
+        -1.1
+      ],
+      "A:玲": [
+        -6.3,
+        -7.4,
+        -7.3,
+        -7.5,
+        -7.2,
+        -5.3,
+        -5.2,
+        -2.6,
+        -1.4,
+        -0.5,
+        0.3
+      ],
+      "B:廉": [
+        -6.2,
+        -7.1,
+        -7.2,
+        -6.8,
+        -5.6,
+        -4.7,
+        -4.2,
+        -3.1,
+        -1.9,
+        -0.7,
+        0.7
+      ],
+      "B:涟": [
+        -6.0,
+        -6.8,
+        -6.5,
+        -6.8,
+        -6.3,
+        -2.1,
+        -2.8,
+        -2.1,
+        -1.9,
+        -0.3,
+        0.2
+      ],
+      "B:联": [
+        -6.2,
+        -7.1,
+        -7.2,
+        -6.8,
+        -5.6,
+        -4.7,
+        -4.3,
+        -3.1,
+        -1.9,
+        -0.7,
+        0.7
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/scratch/eala-voice/native-speech/87659bc65e5f4fd88965c7f29eeee760.mp3",
+      "A:灵": "/workspace/scratch/eala-voice/fresh-reference-cache/fa043022ea0b639300ed84b7.mp3",
+      "A:玲": "/workspace/scratch/eala-voice/fresh-reference-cache/a1e558b8b5948c898897a169.mp3",
+      "B:廉": "/workspace/scratch/eala-voice/fresh-reference-cache/1ccf21ae664c81400b06a262.mp3",
+      "B:涟": "/workspace/scratch/eala-voice/fresh-reference-cache/e4b90caff3e1894768cdd3df.mp3",
+      "B:联": "/workspace/scratch/eala-voice/fresh-reference-cache/58167b4eb39688290f0a1106.mp3"
+    }
+  },
+  "control_audio_provenance": [
+    {
+      "label": "ORIG",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/87659bc65e5f4fd88965c7f29eeee760.mp3",
+      "mp3_sha256": "f4255e029e513c49c7c30b206809fa6c79713234bd2fd696d1e5b9cb9ddfb639",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/87659bc65e5f4fd88965c7f29eeee760.marks.json",
+      "marks_sha256": "1a0d63c988c8fbd791fdf5496cb6121ebba4aef92f2c14395b27d42538d3d685"
+    },
+    {
+      "label": "A:灵",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/fa043022ea0b639300ed84b7.mp3",
+      "mp3_sha256": "9b2473b21005da9c8f291e1d0b6a3888d6a55ab2ebf2694e78d2fafbe2739b26",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/fa043022ea0b639300ed84b7.marks.json",
+      "marks_sha256": "31107313429b064588c375a57a5a95a953b9ec3fbfd360c491e1b194a4f67ad1"
+    },
+    {
+      "label": "A:玲",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/a1e558b8b5948c898897a169.mp3",
+      "mp3_sha256": "fbde5c4a2a5342cb9e9e1b2d5dfd1f9b17e88798219be16ea5c7afbe605988c9",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/a1e558b8b5948c898897a169.marks.json",
+      "marks_sha256": "fe7ae5242919f60a4eac5a0ad6ba11ce46c7b196476e9174d9c3ab86d45f97bd"
+    },
+    {
+      "label": "B:廉",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/1ccf21ae664c81400b06a262.mp3",
+      "mp3_sha256": "f517d3fae41ed44f7528279065a6e31995e8d3a8107beb93ba7adfa206937599",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/1ccf21ae664c81400b06a262.marks.json",
+      "marks_sha256": "50f30844d1c68fb87fd58856d10a50c3d28dacd212a74569e6a154bbd237ee78"
+    },
+    {
+      "label": "B:涟",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/e4b90caff3e1894768cdd3df.mp3",
+      "mp3_sha256": "1cf3d58bbf3f73b27fac6b513f63af4c08a2f57e70e446ee176e5f192f9948aa",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/e4b90caff3e1894768cdd3df.marks.json",
+      "marks_sha256": "8f5b679d45ea9b02874f48ee176ae819cde6a960dfb8f8fc4757fc88add75461"
+    },
+    {
+      "label": "B:联",
+      "mp3_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/58167b4eb39688290f0a1106.mp3",
+      "mp3_sha256": "ce4f8521ede06bfd00f63e5d7a98abc1023667829b8f15d2310496497d3f1ab1",
+      "marks_snapshot_path": "/workspace/scratch/eala-voice/reference-audio/58167b4eb39688290f0a1106.marks.json",
+      "marks_sha256": "1b0e6496a09504dd5e9fb53bdfe25129a23a99013bad4479a7c96928897753d1"
+    }
+  ],
+  "measured_at_utc": "2026-10-12T17:02:08.733550+00:00"
+}

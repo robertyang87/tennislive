@@ -126,6 +126,62 @@
   "captions": "captions.txt",
   "board": {
     "version": 1,
-    "error": "WTA board present but native body row geometry is unmeasurable"
+    "fps": 5,
+    "t0": 2.1,
+    "frames": 24,
+    "scans": [
+      {
+        "box": [
+          89,
+          827,
+          552,
+          982
+        ],
+        "frames": 24,
+        "profiles": {
+          "wta": {
+            "present": 24,
+            "unresolved": 0,
+            "runs": [
+              [
+                24,
+                480,
+                480
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "box": [
+          89,
+          850,
+          552,
+          982
+        ],
+        "frames": 24,
+        "profiles": {
+          "wta": {
+            "present": 24,
+            "unresolved": 0,
+            "runs": [
+              [
+                24,
+                480,
+                480
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "measurement_scope": "bounded_source_custom_box_calibration",
+    "source_window": [
+      2.1,
+      6.84
+    ],
+    "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+    "full_source_scan_claimed": false,
+    "provenance": "data/evidence/eala-shi/visual-source-preflight/custom-probe-calibration/actual-bounded-scan.json"
   }
 }
