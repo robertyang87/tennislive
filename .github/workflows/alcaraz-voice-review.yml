@@ -3,12 +3,6 @@ run-name: "alcaraz-voice-review · bergs-alcaraz-shanghai-2026-r3"
 
 on:
   workflow_dispatch:
-  push:
-    branches: [production/bergs-alcaraz-shanghai]
-    paths:
-      - .github/workflows/alcaraz-voice-review.yml
-      - tools/alcaraz_voice_review.py
-      - tools/alcaraz_voice_review/**
 
 permissions:
   contents: read

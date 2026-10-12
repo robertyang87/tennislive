@@ -38,7 +38,7 @@ def main():
     env.update(ALCARAZ_VOICE_REVIEW_DIR=str(out), TENNISLIVE_TTS_BACKEND='edge',
                POLYPHONE_CACHE=str(out / 'fresh-reference-cache'),
                OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1', MKL_NUM_THREADS='1')
-    env['PYTHONPATH'] = os.pathsep.join([str(ROOT / 'src'), str(ROOT / 'tools'), env.get('PYTHONPATH', '')])
+    env['PYTHONPATH'] = os.pathsep.join([str(BUNDLE / 'runtime'), str(ROOT / 'src'), str(ROOT / 'tools'), env.get('PYTHONPATH', '')])
     scope = {'slug': SLUG, 'voice_input_fingerprint': actual, 'utterance_count': len(utterances),
              'voice': 'zh-CN-YunjianNeural', 'rate': '+6%', 'pitch': '+0Hz',
              'spec_sha256': hashlib.sha256(spec_path.read_bytes()).hexdigest(),
@@ -46,6 +46,8 @@ def main():
              'github_run_id': os.environ.get('GITHUB_RUN_ID'),
              'github_run_attempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
              'github_commit_sha': os.environ.get('GITHUB_SHA'),
+             'edge_synthesis_transport': 'wss://api.msedgeservices.com/tts/cognitiveservices/websocket/v1',
+             'edge_transport_migration_reference': 'https://github.com/rany2/edge-tts/pull/491',
              'human_listening_claimed': False, 'pronunciation_release_pass_claimed': False,
              'forbidden_services_called': False, 'publishing_enabled': False}
     (out / 'scope.json').write_text(json.dumps(scope, ensure_ascii=False, indent=2) + '\n')
