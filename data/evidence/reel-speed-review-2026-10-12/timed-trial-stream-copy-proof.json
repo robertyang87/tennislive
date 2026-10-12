@@ -1,0 +1,129 @@
+{
+  "recorded_at": "2026-10-12T21:41:12.425303+00:00",
+  "records": [
+    {
+      "asset": "initial_4f00",
+      "stream": "a",
+      "method": "ffmpegcompressedpacketcopyhash",
+      "sha256": "c412444a8a332ae3dce3e5c5101f3359abe277daa77eb854d4157a5af09ed8ac"
+    },
+    {
+      "asset": "final_3339",
+      "stream": "a",
+      "method": "ffmpegcompressedpacketcopyhash",
+      "sha256": "c412444a8a332ae3dce3e5c5101f3359abe277daa77eb854d4157a5af09ed8ac"
+    },
+    {
+      "asset": "caption_58e",
+      "stream": "v",
+      "method": "ffmpegcompressedpacketcopyhash",
+      "sha256": "1876080b35ea4a933b8065cdae59460db3d33f07d4843cef719cfd0809199645"
+    },
+    {
+      "asset": "final_3339",
+      "stream": "v",
+      "method": "ffmpegcompressedpacketcopyhash",
+      "sha256": "1876080b35ea4a933b8065cdae59460db3d33f07d4843cef719cfd0809199645"
+    }
+  ],
+  "final_original_audio_packets_identical": true,
+  "final_caption_video_packets_identical": true,
+  "human_listening_claimed": false,
+  "packet_inspection_recorded_at": "2026-10-12T21:41:47.516136+00:00",
+  "packet_records": [
+    {
+      "asset": "initial_4f00",
+      "stream": "a",
+      "packet_count": 15678,
+      "packet_payload_sequence_sha256": "cfd68886f8b9be605289cd70d53cd6e327c0b7fb30368f247d02931cf1642ae9",
+      "first_pts": "-0.021333",
+      "last_pts": "334.421333",
+      "command_argv": [
+        "ffprobe",
+        "-v",
+        "error",
+        "-select_streams",
+        "a:0",
+        "-show_packets",
+        "-show_data_hash",
+        "sha256",
+        "-show_entries",
+        "packet=pts_time,dts_time,duration_time,size,data_hash",
+        "-of",
+        "json",
+        "/workspace/scratch/timed-662TF-JlyZY/cloud-artifact/paolini-bejlek-wuhan-2026-r1.mp4"
+      ]
+    },
+    {
+      "asset": "final_3339",
+      "stream": "a",
+      "packet_count": 15678,
+      "packet_payload_sequence_sha256": "cfd68886f8b9be605289cd70d53cd6e327c0b7fb30368f247d02931cf1642ae9",
+      "first_pts": "-0.021333",
+      "last_pts": "334.421333",
+      "command_argv": [
+        "ffprobe",
+        "-v",
+        "error",
+        "-select_streams",
+        "a:0",
+        "-show_packets",
+        "-show_data_hash",
+        "sha256",
+        "-show_entries",
+        "packet=pts_time,dts_time,duration_time,size,data_hash",
+        "-of",
+        "json",
+        "/workspace/scratch/timed-662TF-JlyZY/final-original-sound-master.mp4"
+      ]
+    },
+    {
+      "asset": "caption_58e",
+      "stream": "v",
+      "packet_count": 8361,
+      "packet_payload_sequence_sha256": "c96ffa398a4e5c1f11453cb8f96b5bf4d0c2853080c8a812cebde330cbe73526",
+      "first_pts": "0.000000",
+      "last_pts": "334.400000",
+      "command_argv": [
+        "ffprobe",
+        "-v",
+        "error",
+        "-select_streams",
+        "v:0",
+        "-show_packets",
+        "-show_data_hash",
+        "sha256",
+        "-show_entries",
+        "packet=pts_time,dts_time,duration_time,size,data_hash",
+        "-of",
+        "json",
+        "/workspace/scratch/timed-662TF-JlyZY/final-master.mp4"
+      ]
+    },
+    {
+      "asset": "final_3339",
+      "stream": "v",
+      "packet_count": 8361,
+      "packet_payload_sequence_sha256": "c96ffa398a4e5c1f11453cb8f96b5bf4d0c2853080c8a812cebde330cbe73526",
+      "first_pts": "0.000000",
+      "last_pts": "334.400000",
+      "command_argv": [
+        "ffprobe",
+        "-v",
+        "error",
+        "-select_streams",
+        "v:0",
+        "-show_packets",
+        "-show_data_hash",
+        "sha256",
+        "-show_entries",
+        "packet=pts_time,dts_time,duration_time,size,data_hash",
+        "-of",
+        "json",
+        "/workspace/scratch/timed-662TF-JlyZY/final-original-sound-master.mp4"
+      ]
+    }
+  ],
+  "ordered_audio_packets_hash_and_size_exactly_equal": true,
+  "ordered_video_packets_hash_and_size_exactly_equal": true
+}

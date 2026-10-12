@@ -1,0 +1,42 @@
+{
+  "schema": "tennislive.native-original-sound-composition-review.v1",
+  "checked_at": "2026-10-12T21:32:30.169639+00:00",
+  "film_sha256": "3339af7058a8ccfb0c260dfe9c72ab6bf69f6bd309111b5ac47784c4c0b70d3c",
+  "spec_sha256": "f4cfac3a03391711d305eb4469ee558b4c21e9ea34e07a60e04f7f1cc72d825f",
+  "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+  "audio_plan_sha256": "db46f0d2fc7cb0db0ddd60093f1439f56774035ec92cd89b82194adc90592282",
+  "native_QC_status": "pass",
+  "native_QC_attestation_sha256": "57adc717be373d6864e333552d2d2d66c45cab7fd74291de74f8f92ddf841cfd",
+  "source_audio_gain_unchanged": true,
+  "actual_source_native_gain": 0.36,
+  "actual_audio_was_packet_copy_not_reencoded": true,
+  "human_listening_claimed": false,
+  "tone_verified": false,
+  "native_proof_seconds": [
+    {
+      "second": 137,
+      "kind": "measured_final_word_and_source_mix",
+      "source_start": 118.16,
+      "source_end": 119.16,
+      "whole_voice_mp3_sha256": "c07b6c47cd19a5ecd0459d07719e1237afb3a7aa280804cf74c79938aa7fae60",
+      "actual_paired_zip_sha256": "51ceb7b069965b941fb4d904dc3dbd97af9b0e0c92991fda75d57c180745e000",
+      "correlation": 0.9781586612404216,
+      "source_only_correlation": 0.9715880907369506,
+      "gain_error_db": -1.056621650968861,
+      "whole_voice_AAC_correlation": 0.999279,
+      "first40ms_has_real_final_word_tail": true,
+      "falsely_claimed_all_second_unvoiced": false
+    },
+    {
+      "second": 233,
+      "kind": "measured_post_narration_tail",
+      "source_start": 214.16,
+      "source_end": 215.16,
+      "correlation": 0.998709,
+      "gain_error_db": -0.156,
+      "whole_voice_AAC_correlation": 0.999321
+    }
+  ],
+  "gate_change": "Only exact near-final-word composite evidence after complete paired whole-utterance authentication. Fixed physical channel/source gains, correlation>=.97 and >=source-only+.002; missing pair/source/last sound rejected. Existing post-narration branch unchanged; global floor unchanged.",
+  "required_tests": "19passed,1external-Eala-media-skip; includes actual3339 positive and synthetic complete final-word positive, deleted-final-sound/wrong-pair negatives."
+}

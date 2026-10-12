@@ -1,0 +1,18 @@
+{
+  "schema": "read-only-native-delivery-evidence-snapshot.v1",
+  "source_main_commit": "025bf654",
+  "copied_at_utc": "2026-10-12T22:17:56.167753+00:00",
+  "read_only_snapshot": true,
+  "does_not_replace_live_native_gate_or_ledger": true,
+  "native_paths": {
+    "pushed": "output/2026-10-13/reel/paolini-bejlek-wuhan-2026-r1/pushed.json",
+    "ledger": "data/reel_publish_ledger/paolini-bejlek-wuhan-2026-r1.json",
+    "clock": "data/evidence/paolini-bejlek-wuhan-2026-r1/delivery/request-clock.json"
+  },
+  "copied_sha256": {
+    "timed-trial-pushed-snapshot.json": "76a212518de8d9e27f39f83bc6a06d13a9f161c7ead35254ad7ff18c962c60ac",
+    "timed-trial-sent-ledger-snapshot.json": "a541c8330da1f9ef5cc8a548f440f85ee118e91367a2759bace151681daa4e4d",
+    "timed-trial-sla-clock-snapshot.json": "8be657f4439725d6da995d4f405e6b7b4ac0f790b02b1a9bdb8c5e2a55f7d02c"
+  },
+  "snapshot_crosscheck": "one sent attempt, exact same receipt/run/at, native same film/fingerprint and clockSHA; no sending or uncertain claimed complete"
+}
