@@ -1,0 +1,219 @@
+{
+  "schema": "first-set-score-native-and-official-crosscheck.v1",
+  "checked_at": "2026-10-12T22:10:54.302363+00:00",
+  "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+  "official_pbp_url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS052/point-by-point",
+  "official_raw_path": "data/evidence/paolini-bejlek-wuhan-2026-r1/facts/raw/wta-pbp.raw",
+  "official_raw_sha256": "40eebfff7d60b60e4855c69d72b46203545524f991fb3d0a60c885ebe5fa7513",
+  "method": "read exact terminal G states of each official first-set game; independently decode native source scoreboxes at4actualtimes; no inference from BPtotals or corruptedpointWinneraggregate",
+  "confirmed_first_set_path": [
+    "1-0",
+    "2-0",
+    "3-0",
+    "4-0",
+    "4-1",
+    "5-1",
+    "5-2",
+    "5-3",
+    "6-3"
+  ],
+  "hypothesis_4_0_4_1_4_2_5_2_5_3": "rejected_by_actualnative50.5score5-1andofficialg6terminalG_forPaolini",
+  "audience_copy_change_required": false,
+  "internal_5_1_was_correct": true,
+  "first_set_breaks_Paolini_Bejlek": [
+    3,
+    2
+  ],
+  "second_set_breaks_Paolini_Bejlek": [
+    3,
+    2
+  ],
+  "official_full_match_breaks_Paolini_Bejlek": [
+    6,
+    4
+  ],
+  "raw_advantage_spelling": "A, not AD",
+  "known_raw_pointWinner_aggregate_unreliable": "84/61 vs official77/68; not used for this check",
+  "official_game_terminal_records": [
+    {
+      "game_number": 1,
+      "server": "A",
+      "terminal_score_state": {
+        "teamAScore": "G",
+        "teamBScore": "40"
+      },
+      "winner_from_terminal_G": "A",
+      "game_score_after": [
+        1,
+        0
+      ],
+      "timestamp": "2026-10-12T06:16:05Z"
+    },
+    {
+      "game_number": 2,
+      "server": "B",
+      "terminal_score_state": {
+        "teamAScore": "G",
+        "teamBScore": "40"
+      },
+      "winner_from_terminal_G": "A",
+      "game_score_after": [
+        2,
+        0
+      ],
+      "timestamp": "2026-10-12T06:21:42Z"
+    },
+    {
+      "game_number": 3,
+      "server": "A",
+      "terminal_score_state": {
+        "teamAScore": "G",
+        "teamBScore": "40"
+      },
+      "winner_from_terminal_G": "A",
+      "game_score_after": [
+        3,
+        0
+      ],
+      "timestamp": "2026-10-12T06:26:19Z"
+    },
+    {
+      "game_number": 4,
+      "server": "B",
+      "terminal_score_state": {
+        "teamAScore": "G",
+        "teamBScore": "40"
+      },
+      "winner_from_terminal_G": "A",
+      "game_score_after": [
+        4,
+        0
+      ],
+      "timestamp": "2026-10-12T06:34:11Z"
+    },
+    {
+      "game_number": 5,
+      "server": "A",
+      "terminal_score_state": {
+        "teamAScore": "30",
+        "teamBScore": "G"
+      },
+      "winner_from_terminal_G": "B",
+      "game_score_after": [
+        4,
+        1
+      ],
+      "timestamp": "2026-10-12T06:36:57Z"
+    },
+    {
+      "game_number": 6,
+      "server": "B",
+      "terminal_score_state": {
+        "teamAScore": "G",
+        "teamBScore": "40"
+      },
+      "winner_from_terminal_G": "A",
+      "game_score_after": [
+        5,
+        1
+      ],
+      "timestamp": "2026-10-12T06:48:39Z"
+    },
+    {
+      "game_number": 7,
+      "server": "A",
+      "terminal_score_state": {
+        "teamAScore": "30",
+        "teamBScore": "G"
+      },
+      "winner_from_terminal_G": "B",
+      "game_score_after": [
+        5,
+        2
+      ],
+      "timestamp": "2026-10-12T06:51:54Z"
+    },
+    {
+      "game_number": 8,
+      "server": "B",
+      "terminal_score_state": {
+        "teamAScore": "40",
+        "teamBScore": "G"
+      },
+      "winner_from_terminal_G": "B",
+      "game_score_after": [
+        5,
+        3
+      ],
+      "timestamp": "2026-10-12T06:58:03Z"
+    },
+    {
+      "game_number": 9,
+      "server": "A",
+      "terminal_score_state": {
+        "teamAScore": "G",
+        "teamBScore": "30"
+      },
+      "winner_from_terminal_G": "A",
+      "game_score_after": [
+        6,
+        3
+      ],
+      "timestamp": "2026-10-12T07:01:12Z"
+    }
+  ],
+  "actual_source_frames": [
+    {
+      "source_at": 20.5,
+      "actual_native_score_Paolini_Bejlek": "4-1",
+      "actual_server_dot": "Bejlek",
+      "crop_in_original_source_xywh": [
+        50,
+        800,
+        600,
+        200
+      ],
+      "path": "data/evidence/reel-speed-review-2026-10-12/timed-trial-first-set-source-020.5.png",
+      "sha256": "19361f3b471bfb203783f19b1458db103cb82183f0ab72904f96cad25c13e8d5"
+    },
+    {
+      "source_at": 50.5,
+      "actual_native_score_Paolini_Bejlek": "5-1",
+      "actual_server_dot": "Paolini",
+      "crop_in_original_source_xywh": [
+        50,
+        800,
+        600,
+        200
+      ],
+      "path": "data/evidence/reel-speed-review-2026-10-12/timed-trial-first-set-source-050.5.png",
+      "sha256": "7e0414db859c7a3379b13fdf99331bd1dd6da50fa179529e1c3ae35bcb618a66"
+    },
+    {
+      "source_at": 90.5,
+      "actual_native_score_Paolini_Bejlek": "5-2",
+      "actual_server_dot": "Bejlek",
+      "crop_in_original_source_xywh": [
+        50,
+        800,
+        600,
+        200
+      ],
+      "path": "data/evidence/reel-speed-review-2026-10-12/timed-trial-first-set-source-090.5.png",
+      "sha256": "3bd8a4ad7bc091168a53bdb7883c0ec82a86b197ac474bebbcaecae55a796483"
+    },
+    {
+      "source_at": 110.5,
+      "actual_native_score_Paolini_Bejlek": "5-3",
+      "actual_server_dot": "Paolini",
+      "crop_in_original_source_xywh": [
+        50,
+        800,
+        600,
+        200
+      ],
+      "path": "data/evidence/reel-speed-review-2026-10-12/timed-trial-first-set-source-110.5.png",
+      "sha256": "db04ff94dc2c668e29512793a1a4eaaeab22e39d3f76773211910af7eb7244f7"
+    }
+  ]
+}

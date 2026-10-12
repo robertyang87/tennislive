@@ -1,0 +1,144 @@
+{
+  "schema": "timed-reel-production-review.v1",
+  "slug": "paolini-bejlek-wuhan-2026-r1",
+  "source_url": "https://www.youtube.com/watch?v=662TF-JlyZY",
+  "started_at_utc": "2026-10-12T20:11:13Z",
+  "target_deadline_utc": "2026-10-12T20:31:13Z",
+  "target_seconds": 1200,
+  "target_status": "missed",
+  "delivery_status": "confirmed_native_provider_receipt",
+  "finished_at_utc": "2026-10-12T22:14:14Z",
+  "elapsed_seconds": 7381,
+  "review_draft_path": "/workspace/scratch/timed-662TF-JlyZY/timing-review.md",
+  "recorded_at_utc": "2026-10-12T20:33:56.144657+00:00",
+  "timeline": [
+    {
+      "time": "2026-10-12T20:17:25.955114Z",
+      "event": "facts_packet_written",
+      "basis": "facts-packet.json collected_at",
+      "elapsed_seconds": 372.955114
+    },
+    {
+      "time": "2026-10-12T20:22:45.923402Z",
+      "event": "initial_spec_written",
+      "basis": "build-spec.py mtime, immediate logged execution",
+      "elapsed_seconds": 692.923402
+    },
+    {
+      "time": "2026-10-12T20:27:33Z",
+      "event": "audio_ready_reported",
+      "basis": "root/agent handoff report; not final-film-AAC-pass",
+      "elapsed_seconds": 980
+    },
+    {
+      "time": "2026-10-12T20:31:13Z",
+      "event": "target_missed_without_new_receipt",
+      "basis": "root observed task incomplete",
+      "elapsed_seconds": 1200
+    }
+  ],
+  "measured_subtasks": {
+    "wta_correct_profile_scan_seconds": 24.647412369999074,
+    "wta_correct_profile_scan_frames": 1500,
+    "wta_scan_unresolved": 0,
+    "wta_boundary_refinement_seconds": 4.2253637480025645
+  },
+  "reported_not_fully_timestamped": {
+    "initial_native_probe_seconds_approx": 360,
+    "current_full_ci_seconds_approx": 480,
+    "upload_failure_status": 401
+  },
+  "production_completion_claimed": true,
+  "human_listening_claimed": false,
+  "budget_verified": false,
+  "followup_sync_required": true,
+  "final_visual_status": "pass_with_recorded_source_resolution_and_fixed_crop_limits",
+  "final_film_sha256": "7013b7e66c42d62220ebaa826b6b099bbd6a374da593de9b24d7b3393641acfe",
+  "final_visual_actual_frames": 80,
+  "final_visual_actual_ASS_midpoints": 60,
+  "first_render_seconds": 439.706,
+  "second_render_seconds_timing": 431.6,
+  "second_render_started_at": "2026-10-12T21:03:02Z",
+  "second_artifact_ready_at": "2026-10-12T21:10:14Z",
+  "coordination_issue": "send_message to completed subagent did not trigger a turn; root waited repeatedly until followup_task activated it",
+  "synced_at_utc": "2026-10-12T21:43:46.935432+00:00",
+  "source_request_clock": {
+    "started_at_utc": "2026-10-12T20:11:13Z",
+    "target_push_deadline_utc": "2026-10-12T20:31:13Z",
+    "target_seconds": 1200,
+    "source_url": "https://www.youtube.com/watch?v=662TF-JlyZY"
+  },
+  "document": "docs/reel-20-minute-trial-2026-10-12.md",
+  "film_bytes": 142506185,
+  "native_quality_status": "pass",
+  "native_QC_attestation_sha256": "57adc717be373d6864e333552d2d2d66c45cab7fd74291de74f8f92ddf841cfd",
+  "original_audio_policy": "Never increase/normalize/gate-denoise original match sound to make QC pass; preserve stream, repair correct waveform proof if needed.",
+  "stream_copy_proof": "data/evidence/reel-speed-review-2026-10-12/timed-trial-stream-copy-proof.json",
+  "final_visual_checked_at_utc": "2026-10-12T21:26:59.587243+00:00",
+  "final_voice_actual_whole_utterance_binding": "data/evidence/paolini-bejlek-wuhan-2026-r1/voice/final-original-sound-actual-audio-binding.json",
+  "native_QC_checked_at_utc": "2026-10-12T21:31:02Z",
+  "independently_reviewed_local_film_sha256": "3339af7058a8ccfb0c260dfe9c72ab6bf69f6bd309111b5ac47784c4c0b70d3c",
+  "container_lineage": {
+    "independently_reviewed_local_container_sha256": "3339af7058a8ccfb0c260dfe9c72ab6bf69f6bd309111b5ac47784c4c0b70d3c",
+    "independently_reviewed_local_bytes": 142506193,
+    "published_native_container_sha256": "7013b7e66c42d62220ebaa826b6b099bbd6a374da593de9b24d7b3393641acfe",
+    "published_native_bytes": 142506185,
+    "difference_bytes": 8,
+    "video_packet_count": 8361,
+    "audio_packet_count": 15678,
+    "all_payload_and_pts_dts_duration_size_identical": true,
+    "actual_published_decoded_frames_identical_to_reviewed_local": [
+      29.4,
+      161,
+      315.8
+    ],
+    "visual_review_inheritance_basis": "exact ordered video packet payload/timestamps and three actual decoded PNG equality; do not relabel prior80-frame review as newly decoded7013"
+  },
+  "published_native_quality_status": "pass",
+  "published_native_QC_attestation_sha256": "9ab328047a86f7783dfed995e2022ae6951f57e0ff04f527e7ca2ae01a8c01fa",
+  "published_native_run": {
+    "run_id": 38312317536,
+    "artifact_id": 11775057740,
+    "conclusion": "failure",
+    "failure_scope": "canonical cached Release GET returned stalepreviousmovie afterfreshQC0/uploadsuccess; actualartifactQC0andcachebustedfullGET verified current7013"
+  },
+  "remote_exact_GET_verified_at": "2026-10-12T21:47:44.846302+00:00",
+  "current_head_CI_run": 38314245268,
+  "current_head_CI_status_at_update": "success",
+  "updated_at_utc": "2026-10-12T22:17:56.167985+00:00",
+  "delivery_confirmed": true,
+  "receipt_recorded_at": "2026-10-12T22:14:14Z",
+  "elapsed_hms": "02:03:01",
+  "budget_seconds": 1200,
+  "over_budget_seconds": 6181,
+  "over_budget_hms": "01:43:01",
+  "met": false,
+  "pushplus_receipt": "609af4750e6f4d7eb555ca6e6f1d0ec3",
+  "message_url": "https://www.pushplus.plus/shortMessage/609af4750e6f4d7eb555ca6e6f1d0ec3",
+  "delivery_run": "https://github.com/robertyang87/tennislive/actions/runs/38315370804",
+  "live_native_snapshot_main_commit": "025bf654",
+  "delivery_sla_report": "data/evidence/reel-speed-review-2026-10-12/timed-trial-delivery-sla.json",
+  "timestamp_semantics": "native receipt recorded time; not provider response time",
+  "ci_attempt_history": [
+    {
+      "head": "f3c9d28",
+      "run": 38313163551,
+      "conclusion": "failure",
+      "passed": 5951,
+      "failed": 1,
+      "skipped": 208,
+      "pytest_seconds": 472.22,
+      "failure": "new compose-native-reel workflow omitted own native apt rolling restore-prefix; existing cache workflow contract exposed late omission; fixed in914eb669"
+    },
+    {
+      "head": "914eb669",
+      "run": 38314245268,
+      "conclusion": "success",
+      "passed": 5952,
+      "failed": 0,
+      "skipped": 208,
+      "pytest_seconds": 478.61,
+      "basis": "actual root-reviewed final currenthead CI logs"
+    }
+  ]
+}
