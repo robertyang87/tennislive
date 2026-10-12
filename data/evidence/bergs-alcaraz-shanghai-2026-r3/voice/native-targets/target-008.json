@@ -1,0 +1,516 @@
+{
+  "label": "第 4 段",
+  "edit_id": "coordinate",
+  "word": "月",
+  "char": "月",
+  "at": 5,
+  "sentence": "北京时间十月十二日晚上，上海大师赛第三轮。",
+  "intended": "yue4",
+  "wrong": "ru4",
+  "actual_binding": {
+    "label": "第 4 段",
+    "index": 3,
+    "edit_id": "coordinate",
+    "display_text": "北京时间十月十二日晚上，上海大师赛第三轮。",
+    "text": "北京时间十月十二日晚上，上海大师赛第三轮。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "cache_key": "22e7df60927bca0929e0cab800d3e222",
+    "actual_mp3_sha256": "b9290bd145fa8226e7d88346c2d1513db4e4059b4752ab2effd645ec44742d36",
+    "bound_snapshot_path": "/workspace/scratch/alcaraz-voice/native-speech/22e7df60927bca0929e0cab800d3e222.mp3",
+    "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/native-speech/22e7df60927bca0929e0cab800d3e222.marks.json",
+    "mp3_duration_seconds": 4.224,
+    "window_seconds": 7.300000000000001,
+    "headroom_seconds": 3.0760000000000005,
+    "native_cache_path": "/home/agent/.cache/tennislive-tts/22e7df60927bca0929e0cab800d3e222-edge-v2.zip",
+    "native_zip_snapshot_path": "/workspace/scratch/alcaraz-voice/native-speech/22e7df60927bca0929e0cab800d3e222.native.zip",
+    "native_zip_sha256": "798c87501d43f275321b220fa0afc8db070369999a55425a53eed4652b41c06a",
+    "native_zip_marks_raw_sha256": "1a436028f016addcb696139024189238886b3ae42a32705cd819e425dfcc5ed1",
+    "actual_marks_sha256": "4fe8d07cb7b334c3aff191510a1d15959f2dc288a55d12207768c47666013f31",
+    "word_boundary_tokens": [
+      "北京时间",
+      "十月十二日",
+      "晚上",
+      "上海",
+      "大师",
+      "赛",
+      "第三轮"
+    ],
+    "enumerated_polyphones": [
+      {
+        "at": 0,
+        "char": "北",
+        "word": "北京时间",
+        "intended_lexical_reading": "bei3",
+        "all_dictionary_readings": [
+          "bei3",
+          "bei4"
+        ]
+      },
+      {
+        "at": 3,
+        "char": "间",
+        "word": "北京时间",
+        "intended_lexical_reading": "jian1",
+        "all_dictionary_readings": [
+          "jian1",
+          "jian4"
+        ]
+      },
+      {
+        "at": 5,
+        "char": "月",
+        "word": "月",
+        "intended_lexical_reading": "yue4",
+        "all_dictionary_readings": [
+          "yue4",
+          "ru4"
+        ]
+      },
+      {
+        "at": 10,
+        "char": "上",
+        "word": "上",
+        "intended_lexical_reading": "shang4",
+        "all_dictionary_readings": [
+          "shang4",
+          "shang3"
+        ]
+      },
+      {
+        "at": 12,
+        "char": "上",
+        "word": "上海",
+        "intended_lexical_reading": "shang4",
+        "all_dictionary_readings": [
+          "shang4",
+          "shang3"
+        ]
+      },
+      {
+        "at": 14,
+        "char": "大",
+        "word": "大师",
+        "intended_lexical_reading": "da4",
+        "all_dictionary_readings": [
+          "da4",
+          "dai4",
+          "tai4"
+        ]
+      }
+    ],
+    "tts_only_substitution_changed_text": false
+  },
+  "check_kind": "polyphone",
+  "context_notes": [
+    "Lexical dictionary intended reading is a declared hypothesis; calibration evaluates actual audio."
+  ],
+  "ok_refs": [
+    "岳",
+    "悦",
+    "粤"
+  ],
+  "bad_refs": [
+    "入",
+    "缛",
+    "蓐"
+  ],
+  "reference_notes": [
+    "Only dictionary single-reading nonoriginal references selected; single-reading common, single-reading level-2",
+    "Only dictionary single-reading nonoriginal references selected; dominant-reading only, single-reading common, single-reading level-2"
+  ],
+  "reference_validity_limited": false,
+  "acoustic": {
+    "word": "月",
+    "char": "月",
+    "sentence": "北京时间十月十二日晚上，上海大师赛第三轮。",
+    "tts_text": "北京时间十月十二日晚上，上海大师赛第三轮。",
+    "intended_refs": [
+      "岳",
+      "悦",
+      "粤"
+    ],
+    "wrong_refs": [
+      "入",
+      "缛",
+      "蓐"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.466,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.039,
+        "d_wrong": 5.07,
+        "score": 0.426
+      },
+      "f0": {
+        "d_intended": 0.27,
+        "d_wrong": 1.009,
+        "score": 0.578
+      },
+      "comb": {
+        "d_intended": 1.29,
+        "d_wrong": 3.544,
+        "score": 0.466
+      }
+    },
+    "neighbour_shift": {
+      "intended": 1.768,
+      "wrong": 3.282
+    },
+    "separation": {
+      "spec": {
+        "within": 1.941,
+        "between": 5.422,
+        "separation": 2.794
+      },
+      "f0": {
+        "within": 0.27,
+        "between": 1.522,
+        "separation": 5.632
+      },
+      "comb": {
+        "within": 1.241,
+        "between": 4.233,
+        "separation": 3.412
+      }
+    },
+    "selftest_loo": {
+      "岳": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.488
+      },
+      "悦": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.466
+      },
+      "粤": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.477
+      },
+      "入": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.512
+      },
+      "缛": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.82
+      },
+      "蓐": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.819
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:岳": {
+        "spec": 2.651,
+        "f0": 0.404,
+        "vmis": 0.0,
+        "frames": 26,
+        "comb": 1.73
+      },
+      "A:悦": {
+        "spec": 2.702,
+        "f0": 0.442,
+        "vmis": 0.04,
+        "frames": 25,
+        "comb": 1.793
+      },
+      "A:粤": {
+        "spec": 2.039,
+        "f0": 0.27,
+        "vmis": 0.053,
+        "frames": 19,
+        "comb": 1.29
+      },
+      "B:入": {
+        "spec": 5.778,
+        "f0": 1.258,
+        "vmis": 0.0,
+        "frames": 26,
+        "comb": 4.147
+      },
+      "B:缛": {
+        "spec": 5.256,
+        "f0": 1.016,
+        "vmis": 0.0,
+        "frames": 24,
+        "comb": 3.644
+      },
+      "B:蓐": {
+        "spec": 5.07,
+        "f0": 1.009,
+        "vmis": 0.0,
+        "frames": 25,
+        "comb": 3.544
+      }
+    },
+    "window_s": [
+      0.82,
+      1.0
+    ],
+    "boundary_token": "十月十二日",
+    "window_anchor": "A:岳",
+    "tokens": {
+      "ORIG": [
+        "北京时间",
+        "十月十二日",
+        "晚上",
+        "上海",
+        "大师",
+        "赛",
+        "第三轮"
+      ],
+      "A:岳": [
+        "北京时间",
+        "十",
+        "岳",
+        "十二日",
+        "晚上",
+        "上海",
+        "大师",
+        "赛",
+        "第三",
+        "轮"
+      ],
+      "A:悦": [
+        "北京时间",
+        "十悦",
+        "十二日",
+        "晚上",
+        "上海",
+        "大师",
+        "赛",
+        "第三",
+        "轮"
+      ],
+      "A:粤": [
+        "北京时间",
+        "十粤",
+        "十二日",
+        "晚上",
+        "上海",
+        "大师",
+        "赛",
+        "第三",
+        "轮"
+      ],
+      "B:入": [
+        "北京时间",
+        "十入",
+        "十二日",
+        "晚上",
+        "上海",
+        "大师",
+        "赛",
+        "第三轮"
+      ],
+      "B:缛": [
+        "北京时间",
+        "十缛",
+        "十二日",
+        "晚上",
+        "上海",
+        "大师",
+        "赛",
+        "第三",
+        "轮"
+      ],
+      "B:蓐": [
+        "北京时间",
+        "十蓐",
+        "十二日",
+        "晚上",
+        "上海",
+        "大师",
+        "赛",
+        "第三",
+        "轮"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        null,
+        1.8,
+        1.9,
+        3.3,
+        3.4,
+        2.0,
+        0.7,
+        -0.5
+      ],
+      "A:岳": [
+        null,
+        null,
+        1.1,
+        1.8,
+        2.8,
+        3.7,
+        4.4,
+        4.4,
+        4.2,
+        2.5,
+        1.3,
+        -0.4,
+        -1.1
+      ],
+      "A:悦": [
+        null,
+        null,
+        null,
+        1.3,
+        2.5,
+        3.6,
+        4.0,
+        3.9,
+        3.0,
+        1.2,
+        -0.2,
+        -1.1
+      ],
+      "A:粤": [
+        null,
+        null,
+        1.8,
+        2.1,
+        3.7,
+        4.2,
+        3.1,
+        1.5,
+        -0.1,
+        -0.8
+      ],
+      "B:入": [
+        null,
+        null,
+        null,
+        -1.4,
+        0.0,
+        0.8,
+        1.2,
+        1.6,
+        2.1,
+        2.1,
+        1.5,
+        0.6,
+        -0.6,
+        -1.2
+      ],
+      "B:缛": [
+        null,
+        null,
+        -1.5,
+        -0.4,
+        0.4,
+        1.0,
+        1.5,
+        2.1,
+        2.5,
+        2.2,
+        1.2,
+        0.1,
+        -0.8,
+        -1.7
+      ],
+      "B:蓐": [
+        null,
+        null,
+        -1.5,
+        -0.4,
+        0.4,
+        1.0,
+        1.5,
+        2.2,
+        2.5,
+        2.2,
+        1.2,
+        0.1,
+        -0.8,
+        -1.6
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/scratch/alcaraz-voice/native-speech/22e7df60927bca0929e0cab800d3e222.mp3",
+      "A:岳": "/workspace/scratch/alcaraz-voice/fresh-reference-cache/385c166efd6bb35cf7754e2c.mp3",
+      "A:悦": "/workspace/scratch/alcaraz-voice/fresh-reference-cache/06505ac879259b12a701be54.mp3",
+      "A:粤": "/workspace/scratch/alcaraz-voice/fresh-reference-cache/18d34edbd3643237679aafd2.mp3",
+      "B:入": "/workspace/scratch/alcaraz-voice/fresh-reference-cache/a1d75256f642dd129cbd0110.mp3",
+      "B:缛": "/workspace/scratch/alcaraz-voice/fresh-reference-cache/640f470aba71b770fe8b48f8.mp3",
+      "B:蓐": "/workspace/scratch/alcaraz-voice/fresh-reference-cache/8dcb3502b3fbe5bff64f2d4a.mp3"
+    }
+  },
+  "control_audio_provenance": [
+    {
+      "label": "ORIG",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/22e7df60927bca0929e0cab800d3e222.mp3",
+      "mp3_sha256": "b9290bd145fa8226e7d88346c2d1513db4e4059b4752ab2effd645ec44742d36",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/22e7df60927bca0929e0cab800d3e222.marks.json",
+      "marks_sha256": "4fe8d07cb7b334c3aff191510a1d15959f2dc288a55d12207768c47666013f31"
+    },
+    {
+      "label": "A:岳",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/385c166efd6bb35cf7754e2c.mp3",
+      "mp3_sha256": "926404f60b71062090397cd1be3e35357cd0f5092e1f8225f413254adcb2154b",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/385c166efd6bb35cf7754e2c.marks.json",
+      "marks_sha256": "81842e67445a0aeae52f4bb65073b901093eebc833e0b8daeceb42e5db1e3acb"
+    },
+    {
+      "label": "A:悦",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/06505ac879259b12a701be54.mp3",
+      "mp3_sha256": "228d7401d6d6b2611bc0ee073adfaa3ade4ce51cda87013f4a43e70cfd595821",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/06505ac879259b12a701be54.marks.json",
+      "marks_sha256": "cb6f11b51b88eb90da99484c88da332641e76efb11d531e7a67b92427fef4225"
+    },
+    {
+      "label": "A:粤",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/18d34edbd3643237679aafd2.mp3",
+      "mp3_sha256": "728f76a40ec9e7e97c3bdbd4edfb80ad376c99d039ff42aed197c04db493f72a",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/18d34edbd3643237679aafd2.marks.json",
+      "marks_sha256": "934964a359f2ae351cffc350a9696a9453011eff170eb683bba98f6202c01589"
+    },
+    {
+      "label": "B:入",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/a1d75256f642dd129cbd0110.mp3",
+      "mp3_sha256": "e635edb7f66cdd52b056669c0c107c05a14358247c62dff83bdc917237047a9f",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/a1d75256f642dd129cbd0110.marks.json",
+      "marks_sha256": "f703b6491149f8d24c26c2d1d241599c14b1e2e3dbe1b2b8bb2704f7d6c58d74"
+    },
+    {
+      "label": "B:缛",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/640f470aba71b770fe8b48f8.mp3",
+      "mp3_sha256": "b4172afa6fe0d938db15c22813102496ef1c52eba20a1958a023f77fc9e72a12",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/640f470aba71b770fe8b48f8.marks.json",
+      "marks_sha256": "9d0660b27b3d20e39dca6cab65d12fe270542b7ab95508d5f8cca3f16a5db5f1"
+    },
+    {
+      "label": "B:蓐",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/8dcb3502b3fbe5bff64f2d4a.mp3",
+      "mp3_sha256": "dd33d50a9c070a2b26d81278ecfb5076e29b6484697c4225cb9639327ab7b2db",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/8dcb3502b3fbe5bff64f2d4a.marks.json",
+      "marks_sha256": "071a77cc5f0809b633823fcf9a53c4da702f08eecf3492fa27609c46c5acaed5"
+    }
+  ],
+  "measured_at_utc": "2026-10-12T14:37:34.491514+00:00"
+}

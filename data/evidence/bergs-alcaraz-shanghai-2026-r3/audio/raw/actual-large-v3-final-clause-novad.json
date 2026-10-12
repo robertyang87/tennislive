@@ -1,0 +1,235 @@
+{
+  "schema": "actual-local-targeted-asr.v1",
+  "source_path": "/workspace/scratch/alcaraz-source/2tMbUc2Kknk.mp4",
+  "source_sha256": "a4de892b2fb088b59a9b1b7245db944fc58ff67d1349830b204bfddaa72cf0bf",
+  "model": "large-v3",
+  "device": "cpu",
+  "compute_type": "int8",
+  "normalization": "none; original amplitude",
+  "vad_filter": false,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "initial_prompt": null,
+  "human_listening_claimed": false,
+  "windows": [
+    [
+      207.8,
+      212.8
+    ],
+    [
+      214,
+      221.8
+    ],
+    [
+      221,
+      230.12
+    ]
+  ],
+  "window_results": [
+    {
+      "window": [
+        207.8,
+        212.8
+      ],
+      "duration": 5.0,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        214,
+        221.8
+      ],
+      "duration": 7.8,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        221,
+        230.12
+      ],
+      "duration": 9.12,
+      "utterance_count": 3,
+      "status": "actual_decode_complete"
+    }
+  ],
+  "segments": [
+    {
+      "window": [
+        207.8,
+        212.8
+      ],
+      "start": 210.42000000000002,
+      "end": 211.22,
+      "text": " Oh, snatched that.",
+      "no_speech_prob": 0.2720796763896942,
+      "avg_logprob": -0.3738608890109592,
+      "words": [
+        {
+          "start": 210.42000000000002,
+          "end": 210.74,
+          "word": " Oh,",
+          "probability": 0.5885981321334839
+        },
+        {
+          "start": 210.74,
+          "end": 211.06,
+          "word": " snatched",
+          "probability": 0.7052654922008514
+        },
+        {
+          "start": 211.06,
+          "end": 211.22,
+          "word": " that.",
+          "probability": 0.9249774217605591
+        }
+      ]
+    },
+    {
+      "window": [
+        214,
+        221.8
+      ],
+      "start": 214.0,
+      "end": 220.06,
+      "text": " fitting when it ends in such fashion",
+      "no_speech_prob": 0.2239527702331543,
+      "avg_logprob": -0.3185777127742767,
+      "words": [
+        {
+          "start": 214.0,
+          "end": 216.4,
+          "word": " fitting",
+          "probability": 0.08841469138860703
+        },
+        {
+          "start": 216.4,
+          "end": 217.3,
+          "word": " when",
+          "probability": 0.8007346987724304
+        },
+        {
+          "start": 217.3,
+          "end": 217.42,
+          "word": " it",
+          "probability": 0.9993823766708374
+        },
+        {
+          "start": 217.42,
+          "end": 217.76,
+          "word": " ends",
+          "probability": 0.9968326687812805
+        },
+        {
+          "start": 217.76,
+          "end": 218.7,
+          "word": " in",
+          "probability": 0.9973190426826477
+        },
+        {
+          "start": 218.7,
+          "end": 219.56,
+          "word": " such",
+          "probability": 0.9983198046684265
+        },
+        {
+          "start": 219.56,
+          "end": 220.06,
+          "word": " fashion",
+          "probability": 0.9951204657554626
+        }
+      ]
+    },
+    {
+      "window": [
+        221,
+        230.12
+      ],
+      "start": 221.0,
+      "end": 223.46,
+      "text": " Zizou Burks",
+      "no_speech_prob": 0.20994465053081512,
+      "avg_logprob": -0.3687086164951324,
+      "words": [
+        {
+          "start": 221.0,
+          "end": 222.92,
+          "word": " Zizou",
+          "probability": 0.888438900311788
+        },
+        {
+          "start": 222.92,
+          "end": 223.46,
+          "word": " Burks",
+          "probability": 0.6070042103528976
+        }
+      ]
+    },
+    {
+      "window": [
+        221,
+        230.12
+      ],
+      "start": 223.46,
+      "end": 228.04,
+      "text": " gets the better",
+      "no_speech_prob": 0.20994465053081512,
+      "avg_logprob": -0.3687086164951324,
+      "words": [
+        {
+          "start": 223.46,
+          "end": 225.8,
+          "word": " gets",
+          "probability": 0.3411198556423187
+        },
+        {
+          "start": 225.8,
+          "end": 227.78,
+          "word": " the",
+          "probability": 0.9991275668144226
+        },
+        {
+          "start": 227.78,
+          "end": 228.04,
+          "word": " better",
+          "probability": 0.8463994264602661
+        }
+      ]
+    },
+    {
+      "window": [
+        221,
+        230.12
+      ],
+      "start": 228.04,
+      "end": 229.84,
+      "text": " of Carlos Alcaraz",
+      "no_speech_prob": 0.20994465053081512,
+      "avg_logprob": -0.3687086164951324,
+      "words": [
+        {
+          "start": 228.04,
+          "end": 228.56,
+          "word": " of",
+          "probability": 0.9959335923194885
+        },
+        {
+          "start": 228.56,
+          "end": 228.98,
+          "word": " Carlos",
+          "probability": 0.9951972365379333
+        },
+        {
+          "start": 228.98,
+          "end": 229.84,
+          "word": " Alcaraz",
+          "probability": 0.7681507964928945
+        }
+      ]
+    }
+  ],
+  "run_status": "complete",
+  "recorded_at": "2026-10-12T13:43:11.669842+00:00"
+}

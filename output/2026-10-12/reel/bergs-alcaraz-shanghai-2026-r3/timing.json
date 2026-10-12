@@ -1,0 +1,45 @@
+{
+  "schema": 2,
+  "at": "2026-10-12T15:03:10Z",
+  "pipeline": "match-reel",
+  "slug": "bergs-alcaraz-shanghai-2026-r3",
+  "mode": "render",
+  "outcome": "success",
+  "error": null,
+  "elapsed_seconds": 283.164,
+  "last_stage": "烧字幕+成片",
+  "stage_seconds": {
+    "数据统计对照图（剪进片子）": 1.514,
+    "章节卡（剪进片子）": 1.136,
+    "TTS 合成": 0.005,
+    "比分板蒙版": 72.003,
+    "封面海报": 1.89,
+    "封面编码": 0.313,
+    "分段编码·并行": 181.1,
+    "分段编码": 49.412,
+    "拼接": 42.777,
+    "混音": 3.806,
+    "烧字幕+成片": 107.509
+  },
+  "stage_counts": {
+    "数据统计对照图（剪进片子）": 1,
+    "章节卡（剪进片子）": 1,
+    "TTS 合成": 1,
+    "比分板蒙版": 1,
+    "封面海报": 1,
+    "封面编码": 1,
+    "分段编码·并行": 25,
+    "分段编码": 1,
+    "拼接": 1,
+    "混音": 1,
+    "烧字幕+成片": 1
+  },
+  "parallel_stages": [
+    "分段编码·并行"
+  ],
+  "untimed_seconds": 2.799,
+  "cpu_count": 5,
+  "run_id": null,
+  "run_attempt": null,
+  "on_runner": false
+}

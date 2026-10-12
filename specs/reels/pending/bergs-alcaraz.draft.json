@@ -18,7 +18,16 @@
       }
     ],
     "winner": "贝尔格斯",
-    "result": "7-5 7-6(4)"
+    "result": "7-5 7-6(4)",
+    "portrait": {
+      "image": "assets/reel/bergs-alcaraz-cover.jpg",
+      "focus": 0.311,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「carlos alcaraz」「Rolex Shanghai Masters」，日期对上当地 2026-10-12（Asia/Shanghai；日期来源 flashscore dc_1_6NyPYtH8）（放宽：标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 10-12 18:45:41，落在这场的窗口 当地 10-12 18:05~20:27 里（atp-media #4590970））；EXIF 拍摄 2026:10:12 18:45:41+08:00。② 分辨率：4496×3000，zoom 1 铺 1080×1440 是 2.08×（不放大）。③ 认人：最大那张脸像 阿尔卡拉斯 0.40（≥ 0.34）。④ 睁眼：EAR 0.2736（≥ 0.16）。⑤ 钩子带：脸落在 y217~352，钩子顶边 790。排序：[True, False, False, True, True, 135, 0.3985]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/12/ed85cea9-957f-4661-b972-5b4db2760654/Zizou-BERGS-VS-Carlos-ALCARAZ-9433.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/12/ed85cea9-957f-4661-b972-5b4db2760654/Zizou-BERGS-VS-Carlos-ALCARAZ-9433.jpg（条目 #4590970，接口发布 2026-10-12T12:03:31Z，EXIF 拍摄 2026:10:12 18:45:41+08:00（UTC 2026-10-12T10:45:41Z），原图 4496×3000），说明原文「2026 Shanghai Alcaraz」。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -286,5 +295,18 @@
     "技战术资料：ready；未核观点不进入旁白",
     "⚠️ 文案起草已随模型通道移除——钩子/论点/beats/旁白留给终审手写。",
     "⚠️ 封面抓取没成（SystemExit: 2026-10-10–2026-10-12 窗口里扫了 110 场，没有同时出现 ['bergs', 'alcaraz'] 的比赛）——portrait 留空，终审或 render 前再补"
-  ]
+  ],
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "6NyPYtH8",
+      "start_utc": "2026-10-12T10:10:00Z",
+      "end_utc": "2026-10-12T12:12:35Z",
+      "source": "flashscore dc_1_6NyPYtH8（DC／DD）"
+    },
+    "tried": [
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/12/91094c43-b75d-4960-afee-6688f1b4b592/Zizou-BERGS-VS-Carlos-ALCARAZ-9419.jpg",
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/12/98b86793-16a7-4f70-bb84-ed2b30601e9d/Zizou-BERGS-VS-Carlos-ALCARAZ-9441.jpg"
+    ],
+    "replaced_under": ""
+  }
 }

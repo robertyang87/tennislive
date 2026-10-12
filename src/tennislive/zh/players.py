@@ -495,6 +495,7 @@ PLAYER_ZH: dict[str, str] = {
     "Boris Becker": "贝克尔",
     "Bjorn Borg": "博格",
     "John McEnroe": "麦肯罗",
+    "Mikael Pernfors": "米卡埃尔·佩恩福斯",
     "Jimmy Connors": "康纳斯",
     "Andy Roddick": "罗迪克",
     "Ivan Lendl": "伦德尔",

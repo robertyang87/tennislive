@@ -249,3 +249,41 @@ def test_final_gate_distinguishes_abutting_from_spilling_english(tmp_path, event
             A.verify_final(spec, ass, 1., root=tmp_path)
     else:
         A.verify_final(spec, ass, 1., root=tmp_path)
+
+
+def test_stage_reel_sources_binds_each_window_to_the_downloaded_bytes(tmp_path):
+    """审听包的时间是源片绝对时间，sha256 是这一份文件，不是上一次下载。"""
+    from stage_reel_sources import write_reviews
+
+    spec = {
+        "slug": "stage-fixture",
+        "sources": {
+            "bublik": "https://example.test/bublik",
+            "shanghai": "https://example.test/shanghai",
+        },
+        "segments": [
+            {"source": "bublik", "start": 10.0, "end": 14.0,
+             "narration": "旁白一句。"},
+            {"source": "shanghai", "start": 20.0, "end": 24.0, "narration": "",
+             "quote": [{"at": 0.5, "end": 2.0,
+                        "text": "Game, set and match.\n比赛结束"}]},
+        ],
+    }
+    bublik = tmp_path / "bublik.mp4"
+    shanghai = tmp_path / "shanghai.mp4"
+    bublik.write_bytes(b"bublik-bytes")
+    shanghai.write_bytes(b"shanghai-bytes")
+    sources = {"bublik": bublik, "shanghai": shanghai}
+    write_reviews(spec, sources, root=tmp_path, reviewer="unit")
+    cues = A.require(spec, root=tmp_path, sources=sources)
+    assert cues == [{
+        "segment": 1, "start": 0.5, "end": 2.0,
+        "en": "Game, set and match.", "zh": "比赛结束",
+    }]
+    quiet = json.loads((tmp_path / "data/audio_reviews/stage-fixture/00-bublik.json").read_text())
+    assert quiet["foreground_english"] == []
+    assert quiet["no_foreground_english_reason"]
+    assert quiet["source_sha256"] == hashlib.sha256(b"bublik-bytes").hexdigest()
+    shanghai.write_bytes(b"different-download")
+    with pytest.raises(ValueError, match="源片字节"):
+        A.require(spec, root=tmp_path, sources=sources)

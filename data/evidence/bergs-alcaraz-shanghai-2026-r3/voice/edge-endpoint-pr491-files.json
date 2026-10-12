@@ -1,0 +1,26 @@
+[
+  {
+    "sha": "c52e7c1c38fa9f238e8e74659298a49bab7178e2",
+    "filename": "src/edge_tts/constants.py",
+    "status": "modified",
+    "additions": 8,
+    "deletions": 1,
+    "changes": 9,
+    "blob_url": "https://github.com/rany2/edge-tts/blob/8a5844c3a1d33e4e8f2f3e14535542c0d75d4248/src%2Fedge_tts%2Fconstants.py",
+    "raw_url": "https://github.com/rany2/edge-tts/raw/8a5844c3a1d33e4e8f2f3e14535542c0d75d4248/src%2Fedge_tts%2Fconstants.py",
+    "contents_url": "https://api.github.com/repos/rany2/edge-tts/contents/src%2Fedge_tts%2Fconstants.py?ref=8a5844c3a1d33e4e8f2f3e14535542c0d75d4248",
+    "patch": "@@ -3,7 +3,14 @@\n BASE_URL = \"speech.platform.bing.com/consumer/speech/synthesize/readaloud\"\n TRUSTED_CLIENT_TOKEN = \"6A5AA1D4EAFF4E9FB37E23D68491D6F4\"\n \n-WSS_URL = f\"wss://{BASE_URL}/edge/v1?TrustedClientToken={TRUSTED_CLIENT_TOKEN}\"\n+# Since October 2026 the legacy host refuses speech synthesis with a 403.\n+# Microsoft Edge 155 synthesizes through api.msedgeservices.com, which also\n+# accepts the legacy token, given as Ocp-Apim-Subscription-Key. The voice\n+# list is still served by the legacy host.\n+WSS_URL = (\n+    \"wss://api.msedgeservices.com/tts/cognitiveservices/websocket/v1\"\n+    f\"?Ocp-Apim-Subscription-Key={TRUSTED_CLIENT_TOKEN}\"\n+)\n VOICE_LIST = f\"https://{BASE_URL}/voices/list?trustedclienttoken={TRUSTED_CLIENT_TOKEN}\"\n \n DEFAULT_VOICE = \"en-US-EmmaMultilingualNeural\""
+  },
+  {
+    "sha": "415b1728af245e0a16eac4d65834d533516fa13f",
+    "filename": "src/edge_tts/drm.py",
+    "status": "modified",
+    "additions": 9,
+    "deletions": 6,
+    "changes": 15,
+    "blob_url": "https://github.com/rany2/edge-tts/blob/8a5844c3a1d33e4e8f2f3e14535542c0d75d4248/src%2Fedge_tts%2Fdrm.py",
+    "raw_url": "https://github.com/rany2/edge-tts/raw/8a5844c3a1d33e4e8f2f3e14535542c0d75d4248/src%2Fedge_tts%2Fdrm.py",
+    "contents_url": "https://api.github.com/repos/rany2/edge-tts/contents/src%2Fedge_tts%2Fdrm.py?ref=8a5844c3a1d33e4e8f2f3e14535542c0d75d4248",
+    "patch": "@@ -6,6 +6,7 @@\n import secrets\n from datetime import datetime as dt\n from datetime import timezone as tz\n+from email.utils import parsedate_to_datetime\n from typing import Dict, Optional\n \n import aiohttp\n@@ -56,6 +57,9 @@ def parse_rfc2616_date(date: str) -> Optional[float]:\n         Parses an RFC 2616 date string into a Unix timestamp.\n \n         This function parses an RFC 2616 date string into a Unix timestamp.\n+        The day and month names are always English, so they are not read\n+        with strptime, whose %a and %b follow the locale: in a Portuguese,\n+        French or German locale \"Mon\" or \"Oct\" would not be recognized.\n \n         Args:\n             date (str): RFC 2616 date string to parse.\n@@ -64,13 +68,12 @@ def parse_rfc2616_date(date: str) -> Optional[float]:\n             Optional[float]: Unix timestamp of the parsed date string, or None if parsing failed.\n         \"\"\"\n         try:\n-            return (\n-                dt.strptime(date, \"%a, %d %b %Y %H:%M:%S %Z\")\n-                .replace(tzinfo=tz.utc)\n-                .timestamp()\n-            )\n-        except ValueError:\n+            parsed = parsedate_to_datetime(date)\n+        except (TypeError, ValueError, IndexError):\n             return None\n+        if parsed.tzinfo is None:\n+            parsed = parsed.replace(tzinfo=tz.utc)\n+        return parsed.timestamp()\n \n     @staticmethod\n     def handle_client_response_error(e: aiohttp.ClientResponseError) -> None:"
+  }
+]

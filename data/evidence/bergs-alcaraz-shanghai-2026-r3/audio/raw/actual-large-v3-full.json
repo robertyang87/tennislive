@@ -1,0 +1,1139 @@
+{
+  "schema": "actual-local-asr.v1",
+  "model": "large-v3",
+  "faster_whisper_version": "1.2.1",
+  "device": "cpu",
+  "compute_type": "int8",
+  "language": "en",
+  "vad_filter": true,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "source_path": "/workspace/scratch/alcaraz-source/2tMbUc2Kknk.mp4",
+  "source_sha256": "a4de892b2fb088b59a9b1b7245db944fc58ff67d1349830b204bfddaa72cf0bf",
+  "recorded_at": "2026-10-12T13:39:54.156610+00:00",
+  "human_listening_claimed": false,
+  "run_status": "complete",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 1.64,
+      "text": " He's coached a whole host of different players.",
+      "no_speech_prob": 0.24042004346847534,
+      "avg_logprob": -0.28510577277799626,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.2,
+          "word": " He's",
+          "probability": 0.5186317898333073
+        },
+        {
+          "start": 0.2,
+          "end": 0.44,
+          "word": " coached",
+          "probability": 0.9732148945331573
+        },
+        {
+          "start": 0.44,
+          "end": 0.44,
+          "word": " a",
+          "probability": 0.9930907487869263
+        },
+        {
+          "start": 0.44,
+          "end": 0.64,
+          "word": " whole",
+          "probability": 0.9523571133613586
+        },
+        {
+          "start": 0.64,
+          "end": 0.88,
+          "word": " host",
+          "probability": 0.9977454543113708
+        },
+        {
+          "start": 0.88,
+          "end": 1.0,
+          "word": " of",
+          "probability": 0.9928066730499268
+        },
+        {
+          "start": 1.0,
+          "end": 1.18,
+          "word": " different",
+          "probability": 0.9967561364173889
+        },
+        {
+          "start": 1.18,
+          "end": 1.64,
+          "word": " players.",
+          "probability": 0.9970468878746033
+        }
+      ]
+    },
+    {
+      "start": 7.74,
+      "end": 10.8,
+      "text": " Yeah, that's the wrong place to put that ball in. He got punished.",
+      "no_speech_prob": 0.24042004346847534,
+      "avg_logprob": -0.28510577277799626,
+      "words": [
+        {
+          "start": 7.74,
+          "end": 8.22,
+          "word": " Yeah,",
+          "probability": 0.3627024292945862
+        },
+        {
+          "start": 8.32,
+          "end": 8.74,
+          "word": " that's",
+          "probability": 0.9865932464599609
+        },
+        {
+          "start": 8.74,
+          "end": 8.8,
+          "word": " the",
+          "probability": 0.9854786396026611
+        },
+        {
+          "start": 8.8,
+          "end": 9.02,
+          "word": " wrong",
+          "probability": 0.9989451766014099
+        },
+        {
+          "start": 9.02,
+          "end": 9.36,
+          "word": " place",
+          "probability": 0.9709560871124268
+        },
+        {
+          "start": 9.36,
+          "end": 9.54,
+          "word": " to",
+          "probability": 0.9514521360397339
+        },
+        {
+          "start": 9.54,
+          "end": 9.66,
+          "word": " put",
+          "probability": 0.9068437218666077
+        },
+        {
+          "start": 9.66,
+          "end": 9.84,
+          "word": " that",
+          "probability": 0.9903919696807861
+        },
+        {
+          "start": 9.84,
+          "end": 10.08,
+          "word": " ball",
+          "probability": 0.9477367997169495
+        },
+        {
+          "start": 10.08,
+          "end": 10.28,
+          "word": " in.",
+          "probability": 0.6941274404525757
+        },
+        {
+          "start": 10.36,
+          "end": 10.38,
+          "word": " He",
+          "probability": 0.6417279243469238
+        },
+        {
+          "start": 10.38,
+          "end": 10.5,
+          "word": " got",
+          "probability": 0.9876703023910522
+        },
+        {
+          "start": 10.5,
+          "end": 10.8,
+          "word": " punished.",
+          "probability": 0.994341254234314
+        }
+      ]
+    },
+    {
+      "start": 11.44,
+      "end": 15.1,
+      "text": " It's not always easy to hit a drop shot on the surface like this.",
+      "no_speech_prob": 0.24042004346847534,
+      "avg_logprob": -0.28510577277799626,
+      "words": [
+        {
+          "start": 11.44,
+          "end": 11.92,
+          "word": " It's",
+          "probability": 0.9912166893482208
+        },
+        {
+          "start": 11.92,
+          "end": 11.96,
+          "word": " not",
+          "probability": 0.9978610873222351
+        },
+        {
+          "start": 11.96,
+          "end": 12.18,
+          "word": " always",
+          "probability": 0.9983685612678528
+        },
+        {
+          "start": 12.18,
+          "end": 12.46,
+          "word": " easy",
+          "probability": 0.998473584651947
+        },
+        {
+          "start": 12.46,
+          "end": 12.6,
+          "word": " to",
+          "probability": 0.9993005990982056
+        },
+        {
+          "start": 12.6,
+          "end": 12.7,
+          "word": " hit",
+          "probability": 0.9968822002410889
+        },
+        {
+          "start": 12.7,
+          "end": 12.8,
+          "word": " a",
+          "probability": 0.9990062117576599
+        },
+        {
+          "start": 12.8,
+          "end": 13.0,
+          "word": " drop",
+          "probability": 0.9966431856155396
+        },
+        {
+          "start": 13.0,
+          "end": 13.2,
+          "word": " shot",
+          "probability": 0.9221643209457397
+        },
+        {
+          "start": 13.2,
+          "end": 13.86,
+          "word": " on",
+          "probability": 0.9641473293304443
+        },
+        {
+          "start": 13.86,
+          "end": 13.94,
+          "word": " the",
+          "probability": 0.9245643019676208
+        },
+        {
+          "start": 13.94,
+          "end": 14.18,
+          "word": " surface",
+          "probability": 0.9488998651504517
+        },
+        {
+          "start": 14.18,
+          "end": 14.74,
+          "word": " like",
+          "probability": 0.993698239326477
+        },
+        {
+          "start": 14.74,
+          "end": 15.1,
+          "word": " this.",
+          "probability": 0.9995542168617249
+        }
+      ]
+    },
+    {
+      "start": 22.87,
+      "end": 23.83,
+      "text": " Executed brilliantly.",
+      "no_speech_prob": 0.24042004346847534,
+      "avg_logprob": -0.28510577277799626,
+      "words": [
+        {
+          "start": 22.87,
+          "end": 23.35,
+          "word": " Executed",
+          "probability": 0.9728473722934723
+        },
+        {
+          "start": 23.35,
+          "end": 23.83,
+          "word": " brilliantly.",
+          "probability": 0.9940232336521149
+        }
+      ]
+    },
+    {
+      "start": 24.97,
+      "end": 27.07,
+      "text": " That's going to work so well on the quick court.",
+      "no_speech_prob": 0.24042004346847534,
+      "avg_logprob": -0.28510577277799626,
+      "words": [
+        {
+          "start": 24.97,
+          "end": 25.45,
+          "word": " That's",
+          "probability": 0.7139912843704224
+        },
+        {
+          "start": 25.45,
+          "end": 25.61,
+          "word": " going",
+          "probability": 0.32641249895095825
+        },
+        {
+          "start": 25.61,
+          "end": 25.61,
+          "word": " to",
+          "probability": 0.9968950748443604
+        },
+        {
+          "start": 25.61,
+          "end": 25.93,
+          "word": " work",
+          "probability": 0.9981325268745422
+        },
+        {
+          "start": 25.93,
+          "end": 26.09,
+          "word": " so",
+          "probability": 0.9953678846359253
+        },
+        {
+          "start": 26.09,
+          "end": 26.37,
+          "word": " well",
+          "probability": 0.9984117746353149
+        },
+        {
+          "start": 26.37,
+          "end": 26.57,
+          "word": " on",
+          "probability": 0.960379421710968
+        },
+        {
+          "start": 26.57,
+          "end": 26.71,
+          "word": " the",
+          "probability": 0.5802649855613708
+        },
+        {
+          "start": 26.71,
+          "end": 26.77,
+          "word": " quick",
+          "probability": 0.931721568107605
+        },
+        {
+          "start": 26.77,
+          "end": 27.07,
+          "word": " court.",
+          "probability": 0.9474074244499207
+        }
+      ]
+    },
+    {
+      "start": 27.45,
+      "end": 49.09,
+      "text": " Made it difficult. Sublime.",
+      "no_speech_prob": 0.24042004346847534,
+      "avg_logprob": -0.28510577277799626,
+      "words": [
+        {
+          "start": 27.45,
+          "end": 27.93,
+          "word": " Made",
+          "probability": 0.24460437893867493
+        },
+        {
+          "start": 34.58,
+          "end": 34.58,
+          "word": " it",
+          "probability": 0.90460205078125
+        },
+        {
+          "start": 34.58,
+          "end": 34.94,
+          "word": " difficult.",
+          "probability": 0.9983572363853455
+        },
+        {
+          "start": 48.61,
+          "end": 49.09,
+          "word": " Sublime.",
+          "probability": 0.8270898759365082
+        }
+      ]
+    },
+    {
+      "start": 82.56,
+      "end": 86.78,
+      "text": " He's had a few looks already in this match as Bergs.",
+      "no_speech_prob": 0.24042004346847534,
+      "avg_logprob": -0.28510577277799626,
+      "words": [
+        {
+          "start": 82.56,
+          "end": 83.04,
+          "word": " He's",
+          "probability": 0.7732136249542236
+        },
+        {
+          "start": 83.04,
+          "end": 83.06,
+          "word": " had",
+          "probability": 0.9930593967437744
+        },
+        {
+          "start": 83.06,
+          "end": 83.2,
+          "word": " a",
+          "probability": 0.999164342880249
+        },
+        {
+          "start": 83.2,
+          "end": 83.34,
+          "word": " few",
+          "probability": 0.9999241828918457
+        },
+        {
+          "start": 83.34,
+          "end": 83.62,
+          "word": " looks",
+          "probability": 0.9996515512466431
+        },
+        {
+          "start": 83.62,
+          "end": 84.26,
+          "word": " already",
+          "probability": 0.9969780445098877
+        },
+        {
+          "start": 84.26,
+          "end": 84.96,
+          "word": " in",
+          "probability": 0.9954609274864197
+        },
+        {
+          "start": 84.96,
+          "end": 85.16,
+          "word": " this",
+          "probability": 0.9998031258583069
+        },
+        {
+          "start": 85.16,
+          "end": 85.44,
+          "word": " match",
+          "probability": 0.9998200535774231
+        },
+        {
+          "start": 85.44,
+          "end": 86.38,
+          "word": " as",
+          "probability": 0.5526917576789856
+        },
+        {
+          "start": 86.38,
+          "end": 86.78,
+          "word": " Bergs.",
+          "probability": 0.6291897743940353
+        }
+      ]
+    },
+    {
+      "start": 86.8,
+      "end": 89.46,
+      "text": " He's been ever-present in our crisis service games.",
+      "no_speech_prob": 0.24042004346847534,
+      "avg_logprob": -0.28510577277799626,
+      "words": [
+        {
+          "start": 86.8,
+          "end": 86.94,
+          "word": " He's",
+          "probability": 0.9981335997581482
+        },
+        {
+          "start": 86.94,
+          "end": 87.06,
+          "word": " been",
+          "probability": 0.9559580087661743
+        },
+        {
+          "start": 87.06,
+          "end": 87.7,
+          "word": " ever",
+          "probability": 0.9416494369506836
+        },
+        {
+          "start": 87.7,
+          "end": 88.12,
+          "word": "-present",
+          "probability": 0.8161597649256388
+        },
+        {
+          "start": 88.12,
+          "end": 88.38,
+          "word": " in",
+          "probability": 0.9993994235992432
+        },
+        {
+          "start": 88.38,
+          "end": 88.52,
+          "word": " our",
+          "probability": 0.23298192024230957
+        },
+        {
+          "start": 88.52,
+          "end": 88.84,
+          "word": " crisis",
+          "probability": 0.4238862991333008
+        },
+        {
+          "start": 88.84,
+          "end": 89.12,
+          "word": " service",
+          "probability": 0.9959557056427002
+        },
+        {
+          "start": 89.12,
+          "end": 89.46,
+          "word": " games.",
+          "probability": 0.9994565844535828
+        }
+      ]
+    },
+    {
+      "start": 93.08,
+      "end": 93.9,
+      "text": " that's wide",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 93.08,
+          "end": 93.68,
+          "word": " that's",
+          "probability": 0.37673032050952315
+        },
+        {
+          "start": 93.68,
+          "end": 93.9,
+          "word": " wide",
+          "probability": 0.6301010251045227
+        }
+      ]
+    },
+    {
+      "start": 93.9,
+      "end": 104.21,
+      "text": " a rather tepid end",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 93.9,
+          "end": 95.1,
+          "word": " a",
+          "probability": 0.22720572352409363
+        },
+        {
+          "start": 97.37,
+          "end": 98.35,
+          "word": " rather",
+          "probability": 0.8325855731964111
+        },
+        {
+          "start": 103.57,
+          "end": 104.03,
+          "word": " tepid",
+          "probability": 0.9406307935714722
+        },
+        {
+          "start": 104.03,
+          "end": 104.21,
+          "word": " end",
+          "probability": 0.8653209209442139
+        }
+      ]
+    },
+    {
+      "start": 104.21,
+      "end": 106.89,
+      "text": " to the opening set from Carlos Alcaraz",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 104.21,
+          "end": 105.03,
+          "word": " to",
+          "probability": 0.9567745327949524
+        },
+        {
+          "start": 105.03,
+          "end": 105.15,
+          "word": " the",
+          "probability": 0.992938220500946
+        },
+        {
+          "start": 105.15,
+          "end": 105.39,
+          "word": " opening",
+          "probability": 0.9631951451301575
+        },
+        {
+          "start": 105.39,
+          "end": 105.67,
+          "word": " set",
+          "probability": 0.8959319591522217
+        },
+        {
+          "start": 105.67,
+          "end": 105.93,
+          "word": " from",
+          "probability": 0.9038969874382019
+        },
+        {
+          "start": 105.93,
+          "end": 106.29,
+          "word": " Carlos",
+          "probability": 0.5204303860664368
+        },
+        {
+          "start": 106.29,
+          "end": 106.89,
+          "word": " Alcaraz",
+          "probability": 0.964042067527771
+        }
+      ]
+    },
+    {
+      "start": 106.89,
+      "end": 108.07,
+      "text": " who blew hot and cold",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 106.89,
+          "end": 107.09,
+          "word": " who",
+          "probability": 0.9360260367393494
+        },
+        {
+          "start": 107.09,
+          "end": 107.27,
+          "word": " blew",
+          "probability": 0.9706436395645142
+        },
+        {
+          "start": 107.27,
+          "end": 107.53,
+          "word": " hot",
+          "probability": 0.988298773765564
+        },
+        {
+          "start": 107.53,
+          "end": 107.67,
+          "word": " and",
+          "probability": 0.9934831261634827
+        },
+        {
+          "start": 107.67,
+          "end": 108.07,
+          "word": " cold",
+          "probability": 0.998297393321991
+        }
+      ]
+    },
+    {
+      "start": 110.72,
+      "end": 119.84,
+      "text": " what a strike that was",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 110.72,
+          "end": 111.32,
+          "word": " what",
+          "probability": 0.12084468454122543
+        },
+        {
+          "start": 118.84,
+          "end": 118.96,
+          "word": " a",
+          "probability": 0.8760436773300171
+        },
+        {
+          "start": 118.96,
+          "end": 119.3,
+          "word": " strike",
+          "probability": 0.8793959617614746
+        },
+        {
+          "start": 119.3,
+          "end": 119.54,
+          "word": " that",
+          "probability": 0.9670458436012268
+        },
+        {
+          "start": 119.54,
+          "end": 119.84,
+          "word": " was",
+          "probability": 0.9959730505943298
+        }
+      ]
+    },
+    {
+      "start": 119.84,
+      "end": 122.44,
+      "text": " not easy to get the ball by Alcaraz",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 119.84,
+          "end": 120.88,
+          "word": " not",
+          "probability": 0.6679610013961792
+        },
+        {
+          "start": 120.88,
+          "end": 121.16,
+          "word": " easy",
+          "probability": 0.9974216222763062
+        },
+        {
+          "start": 121.16,
+          "end": 121.36,
+          "word": " to",
+          "probability": 0.9953662157058716
+        },
+        {
+          "start": 121.36,
+          "end": 121.52,
+          "word": " get",
+          "probability": 0.9969239830970764
+        },
+        {
+          "start": 121.52,
+          "end": 121.62,
+          "word": " the",
+          "probability": 0.96345454454422
+        },
+        {
+          "start": 121.62,
+          "end": 121.8,
+          "word": " ball",
+          "probability": 0.9959321618080139
+        },
+        {
+          "start": 121.8,
+          "end": 121.98,
+          "word": " by",
+          "probability": 0.9668485522270203
+        },
+        {
+          "start": 121.98,
+          "end": 122.44,
+          "word": " Alcaraz",
+          "probability": 0.9839553435643514
+        }
+      ]
+    },
+    {
+      "start": 122.44,
+      "end": 123.14,
+      "text": " but he comes in",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 122.44,
+          "end": 122.6,
+          "word": " but",
+          "probability": 0.1284087598323822
+        },
+        {
+          "start": 122.6,
+          "end": 122.72,
+          "word": " he",
+          "probability": 0.982758104801178
+        },
+        {
+          "start": 122.72,
+          "end": 122.96,
+          "word": " comes",
+          "probability": 0.9553077220916748
+        },
+        {
+          "start": 122.96,
+          "end": 123.14,
+          "word": " in",
+          "probability": 0.99538654088974
+        }
+      ]
+    },
+    {
+      "start": 123.14,
+      "end": 125.26,
+      "text": " and he did it beautifully",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 123.14,
+          "end": 124.34,
+          "word": " and",
+          "probability": 0.5062663555145264
+        },
+        {
+          "start": 124.34,
+          "end": 124.48,
+          "word": " he",
+          "probability": 0.6456087231636047
+        },
+        {
+          "start": 124.48,
+          "end": 124.68,
+          "word": " did",
+          "probability": 0.9973684549331665
+        },
+        {
+          "start": 124.68,
+          "end": 124.76,
+          "word": " it",
+          "probability": 0.9962345957756042
+        },
+        {
+          "start": 124.76,
+          "end": 125.26,
+          "word": " beautifully",
+          "probability": 0.9903019070625305
+        }
+      ]
+    },
+    {
+      "start": 141.92,
+      "end": 149.3,
+      "text": " and a strong reaction",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 141.92,
+          "end": 142.52,
+          "word": " and",
+          "probability": 0.8494839072227478
+        },
+        {
+          "start": 148.38,
+          "end": 148.52,
+          "word": " a",
+          "probability": 0.9879469275474548
+        },
+        {
+          "start": 148.52,
+          "end": 148.9,
+          "word": " strong",
+          "probability": 0.9979133009910583
+        },
+        {
+          "start": 148.9,
+          "end": 149.3,
+          "word": " reaction",
+          "probability": 0.9974159002304077
+        }
+      ]
+    },
+    {
+      "start": 149.3,
+      "end": 162.0,
+      "text": " world class",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 149.3,
+          "end": 150.28,
+          "word": " world",
+          "probability": 0.24197030067443848
+        },
+        {
+          "start": 161.64,
+          "end": 162.0,
+          "word": " class",
+          "probability": 0.6755616664886475
+        }
+      ]
+    },
+    {
+      "start": 162.0,
+      "end": 173.94,
+      "text": " that has been at times",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 162.0,
+          "end": 162.88,
+          "word": " that",
+          "probability": 0.9362468719482422
+        },
+        {
+          "start": 172.22,
+          "end": 172.44,
+          "word": " has",
+          "probability": 0.9911115765571594
+        },
+        {
+          "start": 172.44,
+          "end": 172.74,
+          "word": " been",
+          "probability": 0.9977225661277771
+        },
+        {
+          "start": 172.74,
+          "end": 173.44,
+          "word": " at",
+          "probability": 0.8607683777809143
+        },
+        {
+          "start": 173.44,
+          "end": 173.94,
+          "word": " times",
+          "probability": 0.9772617816925049
+        }
+      ]
+    },
+    {
+      "start": 173.94,
+      "end": 176.06,
+      "text": " porous this evening here in Shanghai",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 173.94,
+          "end": 174.4,
+          "word": " porous",
+          "probability": 0.6766230016946793
+        },
+        {
+          "start": 174.4,
+          "end": 174.82,
+          "word": " this",
+          "probability": 0.9907007217407227
+        },
+        {
+          "start": 174.82,
+          "end": 175.14,
+          "word": " evening",
+          "probability": 0.9985442161560059
+        },
+        {
+          "start": 175.14,
+          "end": 175.52,
+          "word": " here",
+          "probability": 0.9929942488670349
+        },
+        {
+          "start": 175.52,
+          "end": 175.64,
+          "word": " in",
+          "probability": 0.8564415574073792
+        },
+        {
+          "start": 175.64,
+          "end": 176.06,
+          "word": " Shanghai",
+          "probability": 0.928543210029602
+        }
+      ]
+    },
+    {
+      "start": 176.06,
+      "end": 199.0,
+      "text": " some would say predictable",
+      "no_speech_prob": 0.7775501608848572,
+      "avg_logprob": -0.2612641619652817,
+      "words": [
+        {
+          "start": 176.06,
+          "end": 176.86,
+          "word": " some",
+          "probability": 0.607819139957428
+        },
+        {
+          "start": 198.02,
+          "end": 198.28,
+          "word": " would",
+          "probability": 0.98915034532547
+        },
+        {
+          "start": 198.28,
+          "end": 198.46,
+          "word": " say",
+          "probability": 0.9955698847770691
+        },
+        {
+          "start": 198.46,
+          "end": 199.0,
+          "word": " predictable",
+          "probability": 0.9924381375312805
+        }
+      ]
+    },
+    {
+      "start": 199.0,
+      "end": 206.61,
+      "text": " Just ask Arthur Ferry about that.",
+      "no_speech_prob": 0.3684501647949219,
+      "avg_logprob": -0.4334381283857884,
+      "words": [
+        {
+          "start": 199.0,
+          "end": 200.04,
+          "word": " Just",
+          "probability": 0.28783348202705383
+        },
+        {
+          "start": 205.25,
+          "end": 205.53,
+          "word": " ask",
+          "probability": 0.8664015531539917
+        },
+        {
+          "start": 205.53,
+          "end": 205.81,
+          "word": " Arthur",
+          "probability": 0.8670615553855896
+        },
+        {
+          "start": 205.81,
+          "end": 206.13,
+          "word": " Ferry",
+          "probability": 0.9014236629009247
+        },
+        {
+          "start": 206.13,
+          "end": 206.33,
+          "word": " about",
+          "probability": 0.9930950999259949
+        },
+        {
+          "start": 206.33,
+          "end": 206.61,
+          "word": " that.",
+          "probability": 0.9952505826950073
+        }
+      ]
+    },
+    {
+      "start": 209.5,
+      "end": 211.24,
+      "text": " Oh, snatched that.",
+      "no_speech_prob": 0.3684501647949219,
+      "avg_logprob": -0.4334381283857884,
+      "words": [
+        {
+          "start": 209.5,
+          "end": 210.06,
+          "word": " Oh,",
+          "probability": 0.47668221592903137
+        },
+        {
+          "start": 210.28,
+          "end": 211.06,
+          "word": " snatched",
+          "probability": 0.7281737923622131
+        },
+        {
+          "start": 211.06,
+          "end": 211.24,
+          "word": " that.",
+          "probability": 0.9788656234741211
+        }
+      ]
+    },
+    {
+      "start": 222.36,
+      "end": 223.46,
+      "text": " Zizou Burks.",
+      "no_speech_prob": 0.3684501647949219,
+      "avg_logprob": -0.4334381283857884,
+      "words": [
+        {
+          "start": 222.36,
+          "end": 222.92,
+          "word": " Zizou",
+          "probability": 0.9256695111592611
+        },
+        {
+          "start": 222.92,
+          "end": 223.46,
+          "word": " Burks.",
+          "probability": 0.6676732152700424
+        }
+      ]
+    },
+    {
+      "start": 227.04,
+      "end": 230.0,
+      "text": " Gets the better of Carlos Alcaraz.",
+      "no_speech_prob": 0.3684501647949219,
+      "avg_logprob": -0.4334381283857884,
+      "words": [
+        {
+          "start": 227.04,
+          "end": 227.6,
+          "word": " Gets",
+          "probability": 0.7066747099161148
+        },
+        {
+          "start": 227.6,
+          "end": 227.78,
+          "word": " the",
+          "probability": 0.9981847405433655
+        },
+        {
+          "start": 227.78,
+          "end": 228.04,
+          "word": " better",
+          "probability": 0.9096013903617859
+        },
+        {
+          "start": 228.04,
+          "end": 228.5,
+          "word": " of",
+          "probability": 0.9946133494377136
+        },
+        {
+          "start": 228.5,
+          "end": 228.98,
+          "word": " Carlos",
+          "probability": 0.9971532821655273
+        },
+        {
+          "start": 228.98,
+          "end": 230.0,
+          "word": " Alcaraz.",
+          "probability": 0.7352093607187271
+        }
+      ]
+    }
+  ],
+  "max_transcribed_end": 230.0
+}

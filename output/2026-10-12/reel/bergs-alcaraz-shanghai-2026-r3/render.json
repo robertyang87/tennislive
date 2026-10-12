@@ -1,0 +1,49 @@
+{
+  "scoreboard_qc_sha256": "4d23001320d1f3ac66c3cc90083744a46213069d3542b61a900a4e966931ba7f",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 0.0,
+  "layout": "full",
+  "segments_seconds": 201.96,
+  "topbar": {
+    "line1": "2026 ATP1000 上海 第三轮",
+    "line2": "贝尔格斯 7-5 7-6(4) 阿尔卡拉斯",
+    "start": 1.2,
+    "end": 203.16
+  },
+  "film_seconds": 203.16,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 3.744,
+    "3": 4.224,
+    "5": 8.4,
+    "7": 9.408,
+    "10": 7.776,
+    "12": 7.44,
+    "14": 7.032,
+    "19": 9.12,
+    "21": 9.912
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "unavailable",
+      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）",
+      "report_only": true,
+      "warnings": [
+        "人脸模型不可用，分段画面没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）"
+      ]
+    }
+  },
+  "render_inputs_sha256": "ddc2fe7d134aab0c261862a22cb86bafb2ac141e64faf72986d8d6d0e0012ca7",
+  "film_sha256": "9b5432c12c2906d0843cfa379fdf88d70795425aff402e862e06366fb31e212f",
+  "film_bytes": 101759360,
+  "qc_attestation_sha256": "42de8c00a4aa407fc2aa3646c4fa9e7bc570ab53ea8219c2aaa719982751d196",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-bergs-alcaraz-shanghai-2026-r3/bergs-alcaraz-shanghai-2026-r3.mp4",
+  "video_bytes": 101759360
+}
