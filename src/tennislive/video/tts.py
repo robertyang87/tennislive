@@ -86,6 +86,34 @@ def _exc_chain(exc: BaseException) -> list[BaseException]:
     return chain
 
 
+def _point_edge_tts_at_live_host() -> None:
+    """旧的 speech.platform.bing.com/.../edge/v1 从 2026-10-10 起握手 403。
+
+    同一枚 TrustedClientToken 换到 api.msedgeservices.com 仍能合成，Sec-MS-GEC
+    版本保持库里的 1-143（升到 2-155 配这枚旧 token 会再 403）。edge-tts#490。
+    communicate.py 在 import 时把 WSS_URL 拷进自己的全局，只改 constants 够不着。
+
+    重试单测塞进 `sys.modules["edge_tts"]` 的是 `SimpleNamespace`，不是包
+    （`tests/test_reel_narration.py` 的 `_fake_edge_tts`）。对它 `import
+    edge_tts.communicate` 会 `ModuleNotFoundError`，把「没送到要重试」那三条
+    判据整段打红——而那些假模块本来就不走网络。不是包就跳过。
+    """
+    import sys
+
+    loaded = sys.modules.get("edge_tts")
+    if loaded is not None and getattr(loaded, "__path__", None) is None:
+        return
+    import edge_tts.communicate as communicate
+    import edge_tts.constants as constants
+
+    url = (
+        "wss://api.msedgeservices.com/tts/cognitiveservices/websocket/v1"
+        f"?Ocp-Apim-Subscription-Key={constants.TRUSTED_CLIENT_TOKEN}"
+    )
+    constants.WSS_URL = url
+    communicate.WSS_URL = url
+
+
 def edge_tts_verdict(exc: BaseException) -> tuple[bool, str]:
     """这次 edge-tts 失败该不该重发。返回 `(要不要重试, 判据)`。
 
@@ -262,6 +290,8 @@ def _tts_one_uncached(text: str, path: Path, voice: str, rate: str,
     import asyncio
 
     import edge_tts
+
+    _point_edge_tts_at_live_host()
 
     async def one() -> list[dict]:
         marks: list[dict] = []

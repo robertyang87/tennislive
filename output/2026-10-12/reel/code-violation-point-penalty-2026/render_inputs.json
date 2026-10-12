@@ -1,0 +1,546 @@
+{
+  "version": 2,
+  "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
+  "slug": "code-violation-point-penalty-2026",
+  "written_at": "2026-10-12T15:44:30Z",
+  "code_sha": "e6af6365aa31302eedcdd0ee4df38d2142319e49",
+  "spec_sha256": "e1060d61abc77b77042aa309e65755332063bac8167479b1a4822f9b755c30ab",
+  "film_sha256": "d23d4e29afed554f60001cd3348ede5fcd601227fc8a8069d19a7b2474b560ae",
+  "film_bytes": 107828311,
+  "projection_sha256": "f596654ce38e906b542b1a915860938038a412a9cb5e2d760024da031cca8e11",
+  "claims": [
+    [
+      "cover",
+      "_narration_why"
+    ],
+    [
+      "_no_probe_why"
+    ],
+    [
+      "_tts_backend_why"
+    ]
+  ],
+  "assets": {
+    "assets/reel/bublik-nakashima-cover.jpg": "7fb95793f4bd37e7f49e3c1da288f858e2701c3668b5b55af49f7a4b716553b3",
+    "assets/reel/cv2/cv2-bublik-warning.png": "3d175e0c3599f55428d2385d9c1b49708ced00b81763a6b6537d45dc6f77da42",
+    "assets/reel/cv2/cv2-bublik-win.png": "688896184c6eac34b1d5429830566ced07990ac281c90c68352e715e60b081c8",
+    "assets/reel/cv2/cv2-mac-1.png": "7579c8b0bf0b6389432ccb5efd71f376c12bbfec28fce800482209642feb472a",
+    "assets/reel/cv2/cv2-mac-2.png": "89e1940aa59d2f63b4420846f602c70ee0c44b5783cca1e849902b608a74b399",
+    "assets/reel/cv2/cv2-mac-3.png": "dac1d3f57e371268cd113e39a79d634a4521bd2c66da260c789d83aed9431d38",
+    "assets/reel/cv2/cv2-medvedev.png": "4a3b8fc9e54ed317be8f387922b3a86e42ab3d8d574ddf77667085858e436afc",
+    "assets/reel/cv2/cv2-serena-1.png": "ac59473488fe28788e6ce533945e5531d554c678c9bf08b9d2e5cb8c7b8ad1e8",
+    "assets/reel/cv2/cv2-serena-2.png": "92df2f75d954d8bb71d3a98d9e150a1f5bc67dea7984245be471bad144973344",
+    "assets/reel/cv2/cv2-serena-3.png": "cbc7a474d6d0d8a06ba77f38070710bf0e64671626db6f3d83d46f9883363932",
+    "assets/reel/cv2/cv2-serena-fine.png": "53cd0f1227f46fdaa1e7ec84a2f0031e88dd7bd281cf3b05175c99692a95267c",
+    "assets/reel/cv2/cv2-zverev-out.png": "464dcb2a002f73b9188fbfcc00cd0e9cc36f24382f5a8796c5d903dcecf20bb4",
+    "assets/reel/cv2/cv2-zverev.png": "cb1a1929b2cee3e450c64436cfeb3ae09d35cb7e30378f5e7f508defff6dfa17"
+  },
+  "artifacts": {
+    "audio_review_binding.json": "7c9812d70d78417d1c8944b5d75f66f90192abc17b4714fbf8dafb6c258f4961",
+    "subtitles.ass": "80d9dd0c08bc9f371070dffe77aba8d6de7517224693f9043e809224c87c8c5d",
+    "poster.jpg": "3b1aec2c9425c276722eb05c17996f6a36971a568130f2da6ec251db510dc0ec"
+  },
+  "projection": {
+    "slug": "code-violation-point-penalty-2026",
+    "date": "2026-10-12",
+    "_column": "网球有故事",
+    "title": "摔碎球拍，为什么只吃一次警告",
+    "cx": 0.5,
+    "track": false,
+    "tts_backend": "edge",
+    "title_card_handle_bottom": 28,
+    "cover": {
+      "eyebrow": "网球有故事",
+      "layout": "solo",
+      "subject": "布勃利克",
+      "hook": "摔碎球拍\n为什么只吃警告",
+      "narration": "摔碎球拍，为什么只吃一次警告？",
+      "topic": "代码违规 · 警告、罚分，然后罚一局",
+      "portrait": {
+        "image": "assets/reel/bublik-nakashima-cover.jpg",
+        "focus": 0.58,
+        "focus_y": 0.38,
+        "zoom": 1.15,
+        "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/11/4f18f4dd-9a24-4551-a12c-68685bf0c6fa/Alexander-BUBLIK-vs-Brandon-NAKASHIMA-1992.jpg"
+      }
+    },
+    "editorial": {
+      "mode": "match_review",
+      "question": "球拍摔碎了，为什么常常只是一次警告？下一次会怎样？",
+      "thesis": "用上海布勃利克这场只收到警告的摔拍当由头，用澳网官方 1990 年麦肯罗包把警告、罚分、取消资格的原声放出来，再用 2026 年 ATP 和四大满贯规则书说明今天的阶梯多了罚一局，以及罚款上限差在哪。",
+      "beats": [
+        "2026-10-11 上海第三轮，布勃利克第一盘抢七输掉后摔碎球拍，主裁给了非体育道德行为警告，没有报道当场罚分。他后来 6-7(7) 6-3 7-6(5) 赢下中岛布兰登。",
+        "1990 澳网第四轮，麦肯罗对佩恩福斯：警告、罚一分、第三次被取消资格。当时大满贯刚拿掉罚一局。",
+        "2026 ATP 与大满贯：警告、罚一分、罚一局；第三次之后由监督或裁判长决定是否取消资格。另有单次直接取消资格。",
+        "摔拍罚款：ATP 每次上限 500 美元；大满贯每次上限 5 万美元。都不拿 2026 的数去套 1990 或 2022。",
+        "2022 阿卡普尔科兹维列夫没有官方比赛画面，只念 ATP 2022-03-07 决定：现场罚款共 4 万美元。"
+      ],
+      "human_context": {
+        "angle": "摔拍看着眼熟，处罚却常常停在警告。用上海这一晚当由头，把阶梯的下一档说清楚。",
+        "facts": [
+          "布勃利克 6-7(7) 6-3 7-6(5) 胜中岛布兰登。第一盘抢七他输了，然后摔碎球拍。Express 写主裁给出非体育道德警告；Sky 标题写他在输掉抢七后摔拍。不写摔了几下，不写罚款。",
+          "1990 澳网官方成片：警告、罚一分、取消资格。洛杉矶时报 1990-01-21 比分 6-1 4-6 7-5 2-4；1990-02-07 罚款共计 6500 美元。",
+          "2026 ATP 规则书第八章与 2026 大满贯规则书第三条：警告、罚一分、罚一局；第三次之后再决定是否取消资格。ATP 摔拍罚款上限 500 美元，大满贯 5 万美元。",
+          "ATP 2022-03-07：兹维列夫阿卡普尔科现场罚款共 4 万美元。没有官方比赛画面。"
+        ],
+        "sources": [
+          "https://www.tennis.com/tournaments/rolex-shanghai-masters/matches/a-bublik-vs-b-nakashima-2026-10-11",
+          "https://www.express.co.uk/sport/tennis/2256267/Alexander-Bublik-Shanghai-Masters-racket-smash-outburst-injury",
+          "https://www.skysports.com/tennis/video/13597730/pulverised-a-furious-alexander-bublik-obliterates-racket-after-losing-tie-break-against-brandon-nakashima",
+          "https://www.youtube.com/watch?v=-_2rjocv-Jo",
+          "https://www.latimes.com/archives/la-xpm-1990-01-21-sp-917-story.html",
+          "https://www.latimes.com/archives/la-xpm-1990-02-07-sp-432-story.html",
+          "https://www.atptour.com/-/media/sites/atp-tour/press/rules/2026-atp-rulebook.pdf",
+          "https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf",
+          "https://www.atptour.com/-/media/sites/atp-tour/press/press-releases/atp-completes-review-of-zverev-acapulco-incident.pdf"
+        ]
+      }
+    },
+    "sources": {
+      "bublik": "https://www.youtube.com/watch?v=mX15kVN96uM",
+      "shanghai": "https://www.youtube.com/watch?v=Ehis0MmSm-c",
+      "mcenroe": "https://www.youtube.com/watch?v=i0p2-WZCs-s",
+      "serena": "https://www.youtube.com/watch?v=uiBrForlj-k",
+      "zverev": "https://www.youtube.com/watch?v=7Mw3YyzhF14",
+      "medvedev": "https://www.youtube.com/watch?v=p2lgExFvcug"
+    },
+    "primary": "bublik",
+    "segments": [
+      {
+        "source": "bublik",
+        "start": 21.6,
+        "end": 26.2,
+        "cx": 0.5,
+        "track": false,
+        "narration": "上海第三轮，布勃利克首盘抢七七比九输掉。"
+      },
+      {
+        "source": "shanghai",
+        "start": 49.0,
+        "end": 52.9,
+        "cx": 0.5,
+        "track": false,
+        "narration": "他怒摔球拍伤了手，还叫了医疗暂停。"
+      },
+      {
+        "source": "shanghai",
+        "start": 62.6,
+        "end": 67.2,
+        "cx": 0.5,
+        "track": false,
+        "narration": "主裁只给了一次警告：这是他本场第一次违规。",
+        "inset": {
+          "image": "assets/reel/cv2/cv2-bublik-warning.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.8,
+          "motion": "editorial"
+        }
+      },
+      {
+        "source": "mcenroe",
+        "start": 8950.0,
+        "end": 8962.4,
+        "cx": 0.5,
+        "track": false,
+        "narration": "违规按次数升级。1990年澳网第四轮，麦肯罗对佩恩福斯。那年刚取消罚一局，第三次违规就直接出局。"
+      },
+      {
+        "source": "mcenroe",
+        "start": 5202.5,
+        "end": 5213.0,
+        "cx": 0.5,
+        "track": false,
+        "narration": "",
+        "quote": [
+          {
+            "at": 1.3,
+            "end": 3.65,
+            "text": "Code violation, unsportsmanlike conduct.\n违反准则：非体育道德行为"
+          },
+          {
+            "at": 3.7,
+            "end": 4.9,
+            "text": "Warning, Mr. McEnroe.\n警告，麦肯罗先生"
+          }
+        ],
+        "inset": {
+          "image": "assets/reel/cv2/cv2-mac-1.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.8,
+          "motion": "editorial"
+        }
+      },
+      {
+        "source": "mcenroe",
+        "start": 8962.5,
+        "end": 8971.0,
+        "cx": 0.5,
+        "track": false,
+        "narration": "",
+        "quote": [
+          {
+            "at": 2.4,
+            "end": 4.6,
+            "text": "Advantage Pernfors.\n佩恩福斯占先。"
+          }
+        ],
+        "inset": {
+          "image": "assets/reel/cv2/cv2-mac-2.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.8,
+          "motion": "editorial"
+        }
+      },
+      {
+        "source": "mcenroe",
+        "start": 8974.85,
+        "end": 8978.2,
+        "cx": 0.5,
+        "track": false,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.0,
+            "end": 1.2,
+            "text": "Code violation, racket abuse.\n违反准则：滥用球拍"
+          },
+          {
+            "at": 1.25,
+            "end": 2.9,
+            "text": "Point penalty, Mr. McEnroe.\n罚一分，麦肯罗先生"
+          }
+        ]
+      },
+      {
+        "source": "mcenroe",
+        "start": 9091.6,
+        "end": 9103.0,
+        "cx": 0.5,
+        "track": false,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.1,
+            "end": 2.8,
+            "text": "Code violation, verbal abuse.\n违反准则：言语攻击"
+          },
+          {
+            "at": 2.9,
+            "end": 4.7,
+            "text": "Default, Mr. McEnroe.\n取消比赛资格，麦肯罗先生"
+          },
+          {
+            "at": 9.4,
+            "end": 10.9,
+            "text": "Game, set, match, Pernfors.\n比赛结束，佩恩福斯胜"
+          }
+        ],
+        "inset": {
+          "image": "assets/reel/cv2/cv2-mac-3.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.8,
+          "motion": "editorial"
+        }
+      },
+      {
+        "source": "serena",
+        "start": 94.5,
+        "end": 103.3,
+        "cx": 0.5,
+        "track": false,
+        "narration": "今天的阶梯多了一档：警告、罚一分、罚一局。2018年美网决赛，小威一场吃满三档。"
+      },
+      {
+        "source": "serena",
+        "start": 40.3,
+        "end": 48.9,
+        "cx": 0.5,
+        "track": false,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.4,
+            "end": 1.6,
+            "text": "It was a coaching violation.\n判的是场外指导"
+          },
+          {
+            "at": 1.65,
+            "end": 4.15,
+            "text": "I guess it was a thumbs up, and Serena's setting him straight.\n大概是竖了拇指，小威在跟他理论"
+          },
+          {
+            "at": 4.25,
+            "end": 5.4,
+            "text": "That is not coaching.\n那不是指导"
+          },
+          {
+            "at": 6.6,
+            "end": 8.4,
+            "text": "I don't cheat to win. I'd rather lose.\n我不靠作弊赢球，宁可输"
+          }
+        ],
+        "inset": {
+          "image": "assets/reel/cv2/cv2-serena-1.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.8,
+          "motion": "editorial"
+        }
+      },
+      {
+        "source": "serena",
+        "start": 113.8,
+        "end": 121.6,
+        "cx": 0.5,
+        "track": false,
+        "narration": "",
+        "quote": [
+          {
+            "at": 3.0,
+            "end": 4.8,
+            "text": "Code violation, racket abuse.\n违反准则：滥用球拍"
+          },
+          {
+            "at": 5.4,
+            "end": 7.5,
+            "text": "Point penalty, Mrs. Williams.\n罚一分，威廉姆斯女士"
+          }
+        ],
+        "inset": {
+          "image": "assets/reel/cv2/cv2-serena-2.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.8,
+          "motion": "editorial"
+        }
+      },
+      {
+        "source": "serena",
+        "start": 348.6,
+        "end": 353.95,
+        "cx": 0.5,
+        "track": false,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.3,
+            "end": 1.4,
+            "text": "Are you kidding me?\n你在开玩笑吗？"
+          },
+          {
+            "at": 1.45,
+            "end": 2.9,
+            "text": "Because I said you're a thief?\n就因为我说你是小偷？"
+          },
+          {
+            "at": 3.15,
+            "end": 5.25,
+            "text": "Because you stole a point from me.\n是你偷走了我一分"
+          }
+        ],
+        "inset": {
+          "image": "assets/reel/cv2/cv2-serena-3.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.8,
+          "motion": "editorial"
+        }
+      },
+      {
+        "source": "serena",
+        "start": 371.2,
+        "end": 376.6,
+        "cx": 0.5,
+        "track": false,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.0,
+            "end": 2.35,
+            "text": "But Carlos Ramos said game penalty.\n但拉莫斯判了罚一局"
+          },
+          {
+            "at": 2.4,
+            "end": 4.85,
+            "text": "He said that the third code violation would lead to that.\n他说过第三次违规就是这个结果"
+          },
+          {
+            "at": 4.85,
+            "end": 5.3,
+            "text": "Correct.\n没错"
+          }
+        ],
+        "inset": {
+          "image": "assets/reel/cv2/cv2-serena-fine.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.8,
+          "motion": "editorial"
+        }
+      },
+      {
+        "source": "zverev",
+        "start": 12.4,
+        "end": 17.6,
+        "cx": 0.5,
+        "track": false,
+        "narration": "情节严重，可以直接出局。兹维列夫双打输球后，",
+        "inset": {
+          "image": "assets/reel/cv2/cv2-zverev-out.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.8,
+          "motion": "editorial"
+        },
+        "crop_zoom": 1.04,
+        "fill_y": 1
+      },
+      {
+        "source": "zverev",
+        "start": 21.6,
+        "end": 25.5,
+        "cx": 0.5,
+        "track": false,
+        "narration": "连砸主裁椅，当场被逐出赛事。",
+        "crop_zoom": 1.04,
+        "fill_y": 1
+      },
+      {
+        "source": "zverev",
+        "start": 61.5,
+        "end": 66.8,
+        "cx": 0.5,
+        "track": false,
+        "narration": "罚款四万美元，奖金积分没收，另有缓期八周禁赛。",
+        "inset": {
+          "image": "assets/reel/cv2/cv2-zverev.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.8,
+          "motion": "editorial"
+        },
+        "crop_zoom": 1.04,
+        "fill_y": 1
+      },
+      {
+        "source": "medvedev",
+        "start": 377.6,
+        "end": 383.6,
+        "cx": 0.5,
+        "track": false,
+        "narration": "罚款另算。2025年美网首轮，梅德韦杰夫对邦齐。"
+      },
+      {
+        "source": "medvedev",
+        "start": 386.0,
+        "end": 395.4,
+        "cx": 0.5,
+        "track": false,
+        "narration": "",
+        "quote": [
+          {
+            "at": 1.5,
+            "end": 4.35,
+            "text": "I really feel for Benjamin Bonzi, I have to be honest.\n说实话，我挺同情邦齐"
+          },
+          {
+            "at": 4.4,
+            "end": 6.75,
+            "text": "He didn't ask the cameraman to run on the court.\n又不是他让摄影师跑进场的"
+          }
+        ],
+        "inset": {
+          "image": "assets/reel/cv2/cv2-medvedev.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.8,
+          "motion": "editorial"
+        }
+      },
+      {
+        "source": "bublik",
+        "start": 70.9,
+        "end": 79.9,
+        "cx": 0.5,
+        "track": false,
+        "narration": "违规次数只在一场比赛里累计。那晚他没再犯，拿下了决胜盘抢七。"
+      },
+      {
+        "source": "bublik",
+        "start": 89.5,
+        "end": 99.2,
+        "cx": 0.5,
+        "track": false,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.8,
+            "end": 3.6,
+            "text": "Game, set and match, Bublik.\n比赛结束，布勃利克胜"
+          },
+          {
+            "at": 4.5,
+            "end": 9.3,
+            "text": "Two sets to one. 6-7, 6-3, 7-6.\n二比一：6-7、6-3、7-6"
+          }
+        ],
+        "inset": {
+          "image": "assets/reel/cv2/cv2-bublik-win.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.8,
+          "motion": "editorial"
+        }
+      },
+      {
+        "source": "bublik",
+        "start": 99.0,
+        "end": 102.9,
+        "cx": 0.5,
+        "track": false,
+        "narration": "下一场，他能把火气留在拍子里吗？",
+        "crop_zoom": 1.55,
+        "fill_y": 1
+      }
+    ],
+    "conform": {
+      "mcenroe": "澳网官方频道 1990 全场 720p（4:3 带黑边），等比放大 1.5 倍到 1920×1080，不裁边；3:4 窗口 cx 只在 0.34~0.66 之间取，不碰黑边。",
+      "serena": "ESPN 官方 2018 美网决赛 720p 是这条官方源的最高档，等比放大 1.5 倍到 1920×1080，16:9 不裁边。"
+    },
+    "mixed_fps": {
+      "zverev": "Prime Video 官方 29.83fps；只用砸椅子两段，重采样到 50 以后是隔帧补帧，动作段可见度可接受。",
+      "serena": "59.94fps；画面多是说话、走动和地上的球拍，重采样到 50 几乎无感。",
+      "medvedev": "59.94fps；只用一段对拉和一段抗议近景，重采样到 50 可接受。",
+      "mcenroe": "25fps 档案片，50 是整数倍，逐帧复制无顿挫。",
+      "shanghai": "output/2026-10-11/reel/bublik-nakashima/probe.json 记这条集锦 1920×1080 @ 25fps。主源按 50fps 出片时这一段重采样。"
+    }
+  }
+}
