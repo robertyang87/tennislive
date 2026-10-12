@@ -16,6 +16,12 @@ jobs:
       PYTHONUNBUFFERED: '1'
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            src
+            specs/reels
+            data/evidence/bergs-alcaraz-shanghai-2026-r3
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
