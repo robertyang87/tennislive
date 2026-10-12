@@ -97,6 +97,16 @@ def test_edge_tts改走还活着的合成主机():
     assert "speech.platform.bing.com" not in communicate.WSS_URL
 
 
+def test_假edge_tts不是包时改主机直接跳过(monkeypatch):
+    """CI run 38271277865：三条重试判据在 `_point_edge_tts_at_live_host` 上
+    `ModuleNotFoundError: edge_tts.communicate`。假模块没有 `__path__`。"""
+    import types
+
+    fake = types.SimpleNamespace(Communicate=object)
+    monkeypatch.setitem(sys.modules, "edge_tts", fake)
+    tts._point_edge_tts_at_live_host()
+
+
 def test_三条出片线里edge_tts的Communicate只许出现在共享模块():
     """出处只有一份：`edge_tts.Communicate(` 不许再出现在 reel / 解说片 / 采访
     这三条出片线里（`tools/voice_sample.py` 那类试音/探针脚本不在此列——它们
