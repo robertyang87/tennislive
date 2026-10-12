@@ -32,9 +32,11 @@ pipeline scales it down with Lanczos so Chinese strokes stay crisp.
 
 2026-10-12 the default lock-up is the corner label used on the Medvedev
 24-titles film: top-right placement, a brand-green rail on the RIGHT edge,
-every line right-aligned. Row order is the white headline (optional green
-highlight), a small muted kicker, a large set-coloured metric when there is
-one, then a small muted detail. ``layout="classic"`` keeps the older
+every line right-aligned. Row order is the white topic alone, then the
+event/place on its own line, then the date, the score, then the people.
+A label with no topic starts at the place line. Every text run uses the
+same face as the top-left brand title (``SmileySans-Oblique``); score
+digits stay on ``TL Score``. ``layout="classic"`` keeps the older
 left-or-right stack, including ``split_metric``. Shipping a story_text PNG
 that is not right-rail and right-aligned fails ``story_corner_label_problems``.
 """
@@ -53,12 +55,13 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 
 REPO = Path(__file__).resolve().parents[1]
-BOLD = REPO / "assets" / "fonts" / "NotoSansSC-Bold-sub.ttf"
-REGULAR = REPO / "assets" / "fonts" / "NotoSansSC-Regular-sub.ttf"
 DISPLAY = REPO / "assets" / "fonts" / "SmileySans-Oblique.ttf"
+#: 角标上除比分数字以外的每一行，和左上角「网球时差 · 栏目」是同一支。
+LABEL_FONT = DISPLAY
 # 比分数字和封面比分板、顶栏是同一支（`tools/build_fonts.py` 的 `TL Score`）：
-# 「1-5」在贴图上和在比分板上长得一样，才不像两套系统。它只带 ASCII，
-# 所以只有数字串走它，汉字仍走 Noto。
+# 「1-5」在贴图上和在比分板上长得一样，才不像两套系统。它只带 ASCII。
+# 角标上其余每一行（主题、地点、日期、人物、罚款）走 LABEL_FONT，
+# 和左上角「网球时差 · 栏目」是同一个文件。
 SCORE = REPO / "assets" / "fonts" / "TLScore-Bold.ttf"
 
 # 0.60 * 1080 = 648px in the finished reel. 1200px therefore gives a crisp
@@ -91,11 +94,11 @@ _SET_GAP = 18
 
 @dataclass(frozen=True)
 class SetScore:
-    """一盘的结构化比分。颜色只从这里算，不接受手写的绿/白标记。
+    """一盘的结构化比分。屏幕上的数字从这里来，不接受手写的绿/白标记。
 
-    ``games`` 是屏幕上从左到右的两个局数。``featured`` 指出这一屏的主角是
-    左边还是右边：只有主角赢下的那一盘涂品牌黄绿，丢掉的盘留白。抢七括号
-    里的小分只参与写成 ``7-6(5)``，不参与上色，也不能拿来把输盘涂绿。
+    ``games`` 是从左到右的两个局数。颜色不看主角在哪一侧：每一盘里更大的
+    那个局数是品牌黄绿，更小的那个是白，连字符和抢七括号也是白。
+    ``featured`` 只说明这一屏在讲谁，不参与上色。
     """
 
     games: tuple[int, int]
@@ -129,32 +132,62 @@ class SetScore:
         return text
 
 
-def score_line(sets: Sequence[SetScore]) -> tuple[str, list[bool]]:
-    """结构化盘分 → （屏幕上的比分串，每一盘主角是否赢了）。
-
-    赢没赢是算出来的。调用方不能另传一份颜色，字符串里也不认 ``*`` / 标签。
-    """
+def score_line(sets: Sequence[SetScore]) -> str:
+    """结构化盘分 → 屏幕上的比分串。颜色另从每个局数的大小算，不在这里。"""
     if isinstance(sets, (str, bytes)) or not sets:
         raise SystemExit("sets 要的是一组 SetScore，不能是手写标记或空表")
     tokens: list[str] = []
-    wins: list[bool] = []
     for item in sets:
         if not isinstance(item, SetScore):
-            raise SystemExit("sets 的每一盘必须是 SetScore，不能手写哪一盘涂绿")
+            raise SystemExit("sets 的每一盘必须是 SetScore，不能手写哪一个数涂绿")
         tokens.append(item.token())
-        wins.append(item.won)
-    return " ".join(tokens), wins
+    return " ".join(tokens)
+
+
+def set_number_runs(token: str) -> list[tuple[str, bool]] | None:
+    """一盘拆成 (片段, 这一截是不是更大的那个局数)。
+
+    `6-4` → 6 黄绿、连字符白、4 白。`2-6` 反过来。`7-6(5)` 里括号连同
+    小分整段留白，不因为括号里的数更大就涂绿。平局两个局数都白。
+    不是 `6-3` / `7-6(5)` 这种整盘就返回 None。
+    """
+    matched = _SET_TOKEN.match(token)
+    if not matched:
+        return None
+    left = int(matched.group(1))
+    right = int(matched.group(2))
+    runs = [
+        (matched.group(1), left > right),
+        ("-", False),
+        (matched.group(2), right > left),
+    ]
+    if matched.group(3) is not None:
+        runs.append((f"({matched.group(3)})", False))
+    return runs
+
+
+def score_number_colors(metric: str) -> list[list[tuple[str, bool]]] | None:
+    """整场比分拆成每一盘的上色片段。掺了别的字就返回 None，整行退回一个强调色。"""
+    tokens = metric.split()
+    if not tokens:
+        return None
+    parsed: list[list[tuple[str, bool]]] = []
+    for token in tokens:
+        runs = set_number_runs(token)
+        if runs is None:
+            return None
+        parsed.append(runs)
+    return parsed
 
 
 def set_score_wins(metric: str) -> list[bool] | None:
     """`4-6 6-3 6-4` → `[False, True, True]`；不是纯整场比分串就返回 None。
 
-    只在**没有** ``sets`` 时走这条。它把左边那个数当成主角的局数——旧合同
-    的 metric 就是这么写的。新的角标把盘分交给 ``SetScore``，主角可以在
-    右边，颜色跟着结构化数据走，不跟着「左边更大」。
+    这里的布尔值只表示「左边的局数是不是更大」，用来认出「这是整场比分」。
+    上色不看它：每一侧的局数各自着色，见 ``score_number_colors``。
 
     ⚠️ 认得窄是故意的：`决胜盘 1-5 赛点` 这种「画面上这一刻的局分」必须
-    落回老路径（整块一个强调色），按盘上色对它没有意义。
+    落回老路径（整块一个强调色），按局数上色对它没有意义。
     """
     tokens = metric.split()
     if not tokens:
@@ -198,10 +231,11 @@ def _validate_highlight(highlight: str) -> str:
 
 
 def _validate(kicker: str, headline: str, detail: str, metric: str,
-              variant: str) -> tuple[str, str, str, str]:
+              variant: str, *, allow_empty_headline: bool = False
+              ) -> tuple[str, str, str, str]:
     values = tuple(value.strip() for value in (kicker, headline, detail, metric))
     kicker, headline, detail, metric = values
-    if not kicker or not headline or not detail:
+    if not kicker or not detail or not (headline or allow_empty_headline):
         raise SystemExit("kicker、headline、detail 都必须填写")
     if variant not in VARIANTS:
         raise SystemExit(f"variant 只能是 {sorted(VARIANTS)}")
@@ -259,7 +293,7 @@ def _draw_text(draw: ImageDraw.ImageDraw, xy: tuple[int, int], text: str,
 
 
 def metric_runs(metric: str) -> list[tuple[str, bool]]:
-    """把 metric 切成 (片段, 是不是数字串)：数字串走 TL Score，其余走 Noto。"""
+    """把 metric 切成 (片段, 是不是数字串)：数字串走 TL Score，其余走品牌标题字体。"""
     runs: list[tuple[str, bool]] = []
     pos = 0
     for m in _SCORE_RUN.finditer(metric):
@@ -273,27 +307,25 @@ def metric_runs(metric: str) -> list[tuple[str, bool]]:
 
 
 def _metric_fonts(size: int) -> tuple[ImageFont.FreeTypeFont, ImageFont.FreeTypeFont]:
-    # TL Score 的字面比 Noto 同字号略矮，抬 20% 让数字成为这一截的主体
-    # （「决胜盘」是标签，「1-5」才是要记住的那个数）。
-    return _font(BOLD, size), _font(SCORE, int(round(size * 1.2)))
-
-
-def _set_line(metric: str, set_wins: list[bool] | None) -> bool:
-    """这一行是不是按盘画的整场比分。结构化盘分优先于从字符串猜。"""
-    return set_wins is not None or set_score_wins(metric) is not None
+    # 比分数字比同字号的标题字略矮，抬 20% 让数字成为这一截的主体。
+    # 汉字标签走品牌标题那一支，数字走 TL Score。
+    return _font(LABEL_FONT, size), _font(SCORE, round(size * 1.2))
 
 
 def _metric_width(draw: ImageDraw.ImageDraw, metric: str, size: int,
-                  *, stroke: int, set_wins: list[bool] | None = None) -> int:
+                  *, stroke: int) -> int:
     cjk, score = _metric_fonts(size)
-    if _set_line(metric, set_wins):
-        # 整场比分按盘画，盘之间要真的留出间隔——所以量的是 **advance 宽度**
-        # （`textlength`）不是墨迹框（`textbbox`）：空格的墨迹框宽度是 0，
-        # 拿墨迹框摞下去，三盘会挤成一串。
-        _score = _font(SCORE, int(round(size * 1.2)))
-        tokens = metric.split()
-        total = sum(int(round(draw.textlength(t, font=_score))) for t in tokens)
-        return total + _SET_GAP * (len(tokens) - 1)
+    parsed = score_number_colors(metric)
+    if parsed is not None:
+        # 整场比分按盘画，盘之间要真的留出间隔。量的是 advance 宽度：
+        # 空格的墨迹框宽度是 0，拿墨迹框摞下去，三盘会挤成一串。
+        total = 0
+        for index, runs in enumerate(parsed):
+            for chunk, _won in runs:
+                total += round(draw.textlength(chunk, font=score))
+            if index < len(parsed) - 1:
+                total += _SET_GAP
+        return total
     total = 0
     for chunk, is_score in metric_runs(metric):
         f = score if is_score else cjk
@@ -303,12 +335,36 @@ def _metric_width(draw: ImageDraw.ImageDraw, metric: str, size: int,
 
 
 def _fit_metric_size(draw: ImageDraw.ImageDraw, metric: str, preferred: int,
-                     minimum: int, max_width: int, *, stroke: int,
-                     set_wins: list[bool] | None = None) -> int:
+                     minimum: int, max_width: int, *, stroke: int) -> int:
     for size in range(preferred, minimum - 1, -2):
-        if _metric_width(draw, metric, size, stroke=stroke, set_wins=set_wins) <= max_width:
+        if _metric_width(draw, metric, size, stroke=stroke) <= max_width:
             return size
     return minimum
+
+
+def _draw_colored_score(draw: ImageDraw.ImageDraw, shadow: Image.Image,
+                        xy: tuple[int, int], metric: str, size: int,
+                        stroke: int, anchor: str) -> None:
+    """整场比分按局数上色；不是整场比分时整行一个强调色。"""
+    cjk, score = _metric_fonts(size)
+    mx, y = xy
+    parsed = score_number_colors(metric)
+    if parsed is not None:
+        for index, runs in enumerate(parsed):
+            for chunk, won in runs:
+                _draw_text(draw, (mx, y), chunk, font=score,
+                           fill=BRAND_GREEN if won else WHITE,
+                           stroke=stroke, anchor=anchor, shadow_layer=shadow)
+                mx += round(draw.textlength(chunk, font=score))
+            if index < len(parsed) - 1:
+                mx += _SET_GAP
+        return
+    for chunk, is_score in metric_runs(metric):
+        font = score if is_score else cjk
+        _draw_text(draw, (mx, y), chunk, font=font, fill=BRAND_GREEN,
+                   stroke=stroke, anchor=anchor, shadow_layer=shadow)
+        mx = draw.textbbox((mx, y), chunk, font=font, stroke_width=stroke,
+                           anchor=anchor)[2]
 
 
 #: 描边宽度：只保边，不当底板。
@@ -318,16 +374,53 @@ _SHADOW_BLUR = 7
 
 
 def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
-                   metric: str, align: str, highlight: str,
-                   set_wins: list[bool] | None = None) -> Path:
-    """右轨、右对齐、四行以内：主标题、小坐标、大比分、小说明。
+                   metric: str, align: str, highlight: str) -> Path:
+    """右轨、右对齐。主题独占第一行，地点独占下一行，然后日期、比分、人物。
 
-    字号按成片 0.54 倍缩小后对齐梅德韦杰夫 24 冠那张贴图：主标题约 32px、
-    日期约 17px、比分约 36px。画布仍是 1200×340，和没有 metric 的旧卡一样高，
-    右上角贴上去不会比旧贴图更高。
+    没有主题时从地点起排。除比分数字外每一行都是左上角品牌标题那一支得意黑。
+    比分数字仍是 TL Score，按局数上色。行数变多时画布往下长，至少 340，取偶数。
     """
     out.parent.mkdir(parents=True, exist_ok=True)
-    height = HEIGHT
+    probe = ImageDraw.Draw(Image.new("RGBA", (WIDTH, 8), (0, 0, 0, 0)))
+    x = 66
+    lane = WIDTH - x - 28
+
+    def block_h(text: str, font: ImageFont.FreeTypeFont, stroke: int) -> int:
+        box = probe.textbbox((0, 0), text, font=font, stroke_width=stroke)
+        return max(1, box[3] - box[1])
+
+    # (kind, payload, font_or_size, fill, stroke, height)
+    rows: list[tuple] = []
+    if headline:
+        font = _fit_font(LABEL_FONT, 58, 40, headline, lane, stroke=_STROKE_HEAD)
+        rows.append(("text", headline, font, WHITE, _STROKE_HEAD,
+                     block_h(headline, font, _STROKE_HEAD)))
+    if highlight:
+        font = _fit_font(LABEL_FONT, 46, 32, highlight, lane, stroke=_STROKE_HEAD)
+        rows.append(("text", highlight, font, BRAND_GREEN, _STROKE_HEAD,
+                     block_h(highlight, font, _STROKE_HEAD)))
+    font = _fit_font(LABEL_FONT, 32, 24, kicker, lane, stroke=_STROKE_SMALL)
+    rows.append(("text", kicker, font, MUTED, _STROKE_SMALL,
+                 block_h(kicker, font, _STROKE_SMALL)))
+    if metric:
+        metric_size = _fit_metric_size(probe, metric, 56, 44, lane,
+                                       stroke=_STROKE_SMALL)
+        cjk, score = _metric_fonts(metric_size)
+        sample_h = block_h("8(5)", score, _STROKE_SMALL)
+        if score_number_colors(metric) is None:
+            sample_h = max(sample_h, block_h("字", cjk, _STROKE_SMALL))
+        rows.append(("score", metric, metric_size, None, _STROKE_SMALL, sample_h))
+    font = _fit_font(LABEL_FONT, 40, 28, detail, lane, stroke=_STROKE_SMALL)
+    rows.append(("text", detail, font, MUTED, _STROKE_SMALL,
+                 block_h(detail, font, _STROKE_SMALL)))
+
+    gap = 12
+    pad = 32
+    content = sum(row[5] for row in rows) + gap * (len(rows) - 1)
+    height = max(HEIGHT, content + pad * 2)
+    if height % 2:
+        height += 1
+
     image = Image.new("RGBA", (WIDTH, height), (0, 0, 0, 0))
     rail_layer = Image.new("RGBA", image.size, (0, 0, 0, 0))
     rail_box = ((20, 34, 34, height - 34) if align == "left"
@@ -339,38 +432,7 @@ def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
 
     shadow = Image.new("RGBA", image.size, (0, 0, 0, 0))
     text_layer = Image.new("RGBA", image.size, (0, 0, 0, 0))
-    probe = ImageDraw.Draw(Image.new("RGBA", image.size, (0, 0, 0, 0)))
-    x = 66
-    lane = WIDTH - x - 28
-    head_text = f"{headline} · {highlight}" if highlight else headline
-    head_font = _fit_font(BOLD, 58, 40, head_text, lane, stroke=_STROKE_HEAD)
-    kicker_font = _fit_font(REGULAR, 32, 24, kicker, lane, stroke=_STROKE_SMALL)
-    detail_font = _fit_font(REGULAR, 46, 32, detail, lane, stroke=_STROKE_SMALL)
-    metric_size = 0
-    score_font = None
-    if metric:
-        metric_size = _fit_metric_size(probe, metric, 56, 44, lane, stroke=_STROKE_SMALL,
-                                       set_wins=set_wins)
-        score_font = _metric_fonts(metric_size)[1]
-
-    def block_h(text: str, font: ImageFont.FreeTypeFont, stroke: int) -> int:
-        box = probe.textbbox((0, 0), text, font=font, stroke_width=stroke)
-        return box[3] - box[1]
-
-    row_heights = [
-        block_h(head_text, head_font, _STROKE_HEAD),
-        block_h(kicker, kicker_font, _STROKE_SMALL),
-    ]
-    if metric and score_font is not None:
-        sample = metric.split()[0] if _set_line(metric, set_wins) else metric[:1] or "0"
-        row_heights.append(block_h(sample, score_font, _STROKE_SMALL))
-    row_heights.append(block_h(detail, detail_font, _STROKE_SMALL))
-    gaps = len(row_heights) - 1
-    inner_top, inner_bot = 36, height - 36
-    spare = inner_bot - inner_top - sum(row_heights)
-    gap = max(8, min(16, spare // gaps)) if spare > 0 and gaps else 4
-    used = sum(row_heights) + gap * gaps
-    y = inner_top + max(0, (inner_bot - inner_top - used) // 2)
+    y = (height - content) // 2
 
     right_rows: list[tuple[Image.Image, Image.Image]] = []
 
@@ -382,51 +444,15 @@ def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
         right_rows.append((row, row_shadow))
         return ImageDraw.Draw(row), row_shadow
 
-    head_draw, head_shadow = row_canvas()
-    _draw_text(head_draw, (x, y), headline, font=head_font, fill=WHITE,
-               stroke=_STROKE_HEAD, shadow_layer=head_shadow)
-    if highlight:
-        advance = round(head_draw.textlength(headline, font=head_font))
-        sep = " · "
-        sep_x = x + advance
-        _draw_text(head_draw, (sep_x, y), sep, font=head_font, fill=WHITE,
-                   stroke=_STROKE_HEAD, shadow_layer=head_shadow)
-        sep_w = round(head_draw.textlength(sep, font=head_font))
-        _draw_text(head_draw, (sep_x + sep_w, y), highlight, font=head_font,
-                   fill=BRAND_GREEN, stroke=_STROKE_HEAD, shadow_layer=head_shadow)
-    y += row_heights[0] + gap
-
-    kick_draw, kick_shadow = row_canvas()
-    _draw_text(kick_draw, (x, y), kicker, font=kicker_font, fill=MUTED,
-               stroke=_STROKE_SMALL, shadow_layer=kick_shadow)
-    y += row_heights[1] + gap
-
-    if metric:
-        metric_draw, metric_shadow = row_canvas()
-        cjk, score = _metric_fonts(metric_size)
-        wins = set_wins if set_wins is not None else set_score_wins(metric)
-        if wins is not None:
-            mx = x
-            for token, won in zip(metric.split(), wins):
-                _draw_text(metric_draw, (mx, y), token, font=score,
-                           fill=BRAND_GREEN if won else WHITE,
-                           stroke=_STROKE_SMALL, anchor="la",
-                           shadow_layer=metric_shadow)
-                mx += round(metric_draw.textlength(token, font=score)) + _SET_GAP
+    for kind, payload, font_or_size, fill, stroke, row_h in rows:
+        draw, row_shadow = row_canvas()
+        if kind == "score":
+            _draw_colored_score(draw, row_shadow, (x, y), payload, font_or_size,
+                                stroke, "la")
         else:
-            mx = x
-            for chunk, is_score in metric_runs(metric):
-                font = score if is_score else cjk
-                _draw_text(metric_draw, (mx, y), chunk, font=font, fill=BRAND_GREEN,
-                           stroke=_STROKE_SMALL, anchor="la",
-                           shadow_layer=metric_shadow)
-                mx = metric_draw.textbbox(
-                    (mx, y), chunk, font=font, stroke_width=_STROKE_SMALL, anchor="la")[2]
-        y += row_heights[2] + gap
-
-    detail_draw, detail_shadow = row_canvas()
-    _draw_text(detail_draw, (x, y), detail, font=detail_font, fill=MUTED,
-               stroke=_STROKE_SMALL, shadow_layer=detail_shadow)
+            _draw_text(draw, (x, y), payload, font=font_or_size, fill=fill,
+                       stroke=stroke, shadow_layer=row_shadow)
+        y += row_h + gap
 
     if align == "right":
         for row, row_shadow in right_rows:
@@ -447,16 +473,19 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
            metric: str = "", variant: str = "timeline", align: str = "right",
            split_metric: bool = False, layout: str = "corner",
            highlight: str = "", sets: Sequence[SetScore] | None = None) -> Path:
-    set_wins: list[bool] | None = None
     if sets is not None:
-        formatted, set_wins = score_line(sets)
+        formatted = score_line(sets)
         if metric.strip() and metric.strip() != formatted:
             raise SystemExit(
                 f"metric「{metric.strip()}」和结构化盘分「{formatted}」不一致；"
-                "颜色只从 SetScore 算，不要另写一串或手写绿白")
+                "颜色只从每个局数的大小算，不要另写一串或手写绿白")
         metric = formatted
+    # split_metric 是旧四行合同的显式开关。默认 corner 不能把它的字号和行序换掉。
+    effective = "classic" if split_metric else layout
+    allow_empty = effective == "corner" and bool(highlight.strip())
     kicker, headline, detail, metric = _validate(
-        kicker, headline, detail, metric, variant)
+        kicker, headline, detail, metric, variant,
+        allow_empty_headline=allow_empty)
     highlight = _validate_highlight(highlight)
     if align not in {"left", "right"}:
         raise SystemExit("align 只能是 left 或 right")
@@ -464,12 +493,13 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
         raise SystemExit("layout 只能是 corner 或 classic")
     if split_metric and not metric:
         raise SystemExit("split_metric 必须填写 metric，比分才能独立成行")
-    # split_metric 是旧四行合同的显式开关。默认 corner 不能把它的字号和行序换掉。
+    if effective == "corner" and not headline and not highlight:
+        raise SystemExit("主标题和地点至少要有一个")
     if split_metric:
         layout = "classic"
     if layout == "corner":
         return _render_corner(kicker, headline, detail, out, metric=metric,
-                              align=align, highlight=highlight, set_wins=set_wins)
+                              align=align, highlight=highlight)
 
     out.parent.mkdir(parents=True, exist_ok=True)
     height = SPLIT_METRIC_HEIGHT if split_metric else HEIGHT
@@ -492,21 +522,21 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
     draw = ImageDraw.Draw(text_layer)
 
     x = 66
-    kicker_font = _fit_font(BOLD, 44, 36, kicker, WIDTH - x - 28, stroke=_STROKE_SMALL)
+    kicker_font = _fit_font(LABEL_FONT, 44, 36, kicker, WIDTH - x - 28,
+                            stroke=_STROKE_SMALL)
     metric_width = metric_size = 0
     if metric:
         # 独立行按原60px上限绘制，不缩字去挤；默认同行继续沿用旧字号预算。
         metric_size = _fit_metric_size(draw, metric, 60, 60 if split_metric else 44,
                                       WIDTH - x - 28 if split_metric else 430,
-                                      stroke=_STROKE_SMALL, set_wins=set_wins)
-        metric_width = _metric_width(draw, metric, metric_size, stroke=_STROKE_SMALL,
-                                     set_wins=set_wins)
+                                      stroke=_STROKE_SMALL)
+        metric_width = _metric_width(draw, metric, metric_size, stroke=_STROKE_SMALL)
         if split_metric and metric_width > WIDTH - x - 28:
             raise SystemExit("metric 独立行仍放不下；请缩短文字，不缩小比分字号")
-    # 主标题一律得意黑（和封面钩子、章节卡同一副脸）；变体只改字号。
+    # 主标题和其余文字都是左上角品牌标题那一支；变体只改字号。
     headline_size = {"stat": 134, "chapter": 126}.get(variant, 122)
     headline_room = WIDTH - x - 28 - ((metric_width + 36) if metric and not split_metric else 0)
-    headline_font = _fit_font(DISPLAY, headline_size, 92, headline, headline_room,
+    headline_font = _fit_font(LABEL_FONT, headline_size, 92, headline, headline_room,
                               stroke=_STROKE_HEAD)
     head_box = draw.textbbox((x, 86), headline, font=headline_font,
                              stroke_width=_STROKE_HEAD)
@@ -517,7 +547,8 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
             f"headline「{headline}」加 metric「{metric}」一行装不下"
             f"（缩到 {headline_font.size}px 仍宽 {head_box[2] - x} > {headline_room}）："
             "metric 写短一点，或者把后半句挪进 detail")
-    detail_font = _fit_font(REGULAR, 50, 40, detail, WIDTH - x - 28, stroke=_STROKE_SMALL)
+    detail_font = _fit_font(LABEL_FONT, 50, 40, detail, WIDTH - x - 28,
+                            stroke=_STROKE_SMALL)
 
     # **绿色只给「这一屏最该被记住的那一样」。** 有 metric 时那一样在 metric 上
     # （整场比分＝赢下的那几盘，其余＝那个硬数据），kicker 退成白色——它是坐标，
@@ -546,25 +577,10 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
         baseline = 300 if split_metric else 86 + ascent
         mx = x if split_metric else head_box[2] + 36
         metric_draw, metric_shadow = row_canvas() if split_metric else (head_draw, head_shadow)
-        cjk, score = _metric_fonts(metric_size)
-        wins = set_wins if set_wins is not None else set_score_wins(metric)
-        if wins is not None:
-            # **整场比分按盘上色**：主角赢下的那几盘给品牌黄绿，丢掉的盘白色。
-            # 有 ``sets`` 时赢没赢从 SetScore 算（主角可以在右边）；只有
-            # metric 字符串时，左边那个数就是主角。不认手写的颜色标记。
-            for token, won in zip(metric.split(), wins):
-                _draw_text(metric_draw, (mx, baseline), token, font=score,
-                           fill=BRAND_GREEN if won else WHITE,
-                           stroke=_STROKE_SMALL, anchor="ls", shadow_layer=metric_shadow)
-                mx += int(round(draw.textlength(token, font=score))) + _SET_GAP
-        else:
-            # 数字串和汉字共用一条基线（anchor="ls"），两种字体才对得齐。
-            for chunk, is_score in metric_runs(metric):
-                f = score if is_score else cjk
-                _draw_text(metric_draw, (mx, baseline), chunk, font=f, fill=BRAND_GREEN,
-                           stroke=_STROKE_SMALL, anchor="ls", shadow_layer=metric_shadow)
-                mx = draw.textbbox((mx, baseline), chunk, font=f,
-                                   stroke_width=_STROKE_SMALL, anchor="ls")[2]
+        # 整场比分按局数上色：更大的那个局数黄绿，更小的留白，连字符和抢七括号留白。
+        # 不是整场比分（「决胜盘 1-5 赛点」）时整行一个强调色。不认手写的颜色标记。
+        _draw_colored_score(metric_draw, metric_shadow, (mx, baseline), metric,
+                            metric_size, _STROKE_SMALL, "ls")
     # 证据行直接对齐主标题的左缘，**不再垫一截绿色短横线**（账号所有者
     # 2026-09-11 给的参考样式里没有它）：短轨已经把这一块的左缘立住了，
     # 再加一截同色短横就是第二个绿元素，而绿现在有明确的语义（赢下的盘）。
@@ -646,12 +662,31 @@ def png_corner_label_problem(path: Path) -> str | None:
     return None
 
 
+def label_font_problem() -> str | None:
+    """角标文字必须和左上角品牌标题同一支；比分数字仍是 TL Score。
+
+    对得上返回 None。这道闸不看豁免表：字体漂了，已发的片子下次重渲也要红。
+    """
+    from tennislive.video.watermark import BRAND_FONT
+    brand = (REPO / "assets" / "fonts" / BRAND_FONT).resolve()
+    if LABEL_FONT.resolve() != brand:
+        return (f"角标文字用了 {LABEL_FONT.name}，"
+                f"左上角品牌标题是 {BRAND_FONT}")
+    if SCORE.name != "TLScore-Bold.ttf":
+        return "比分数字不是 TL Score Bold"
+    return None
+
+
 def story_corner_label_problems(spec: dict, *, honor_legacy: bool = True) -> list[str]:
     """每张 story_text 都要落在右上角，并且 PNG 是右轨右对齐。
 
     没有贴图的片子不报。已发左轨片挂在 ``data/legacy_corner_label.json``，
     ``honor_legacy=False`` 用来证明那张表里的片子确实还不合格式。
+    字体闸在豁免之前：角标文字漂离品牌标题，已发的片子也红。
     """
+    font = label_font_problem()
+    if font:
+        return [font]
     slug = str(spec.get("slug") or "")
     if honor_legacy and slug in legacy_corner_label_slugs():
         return []
@@ -679,7 +714,7 @@ def main() -> int:
     ap.add_argument("--kicker", required=True)
     ap.add_argument("--headline", required=True)
     ap.add_argument("--highlight", default="",
-                    help="主标题右侧的品牌绿后缀，例如「警告」")
+                    help="地点或赛事，独占主题下面那一行，例如「ATP1000 上海」")
     ap.add_argument("--metric", default="")
     ap.add_argument("--detail", required=True)
     ap.add_argument("--variant", choices=sorted(VARIANTS), default="timeline")
@@ -693,8 +728,8 @@ def main() -> int:
                  metric=args.metric, variant=args.variant, align=args.align,
                  split_metric=args.split_metric, layout=args.layout,
                  highlight=args.highlight)
-    height = SPLIT_METRIC_HEIGHT if args.split_metric else HEIGHT
-    print(f"已渲 {out}（{WIDTH}×{height}，大字版 RGBA，无大底板）")
+    with Image.open(out) as image:
+        print(f"已渲 {out}（{image.width}×{image.height}，大字版 RGBA，无大底板）")
     return 0
 
 

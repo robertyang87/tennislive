@@ -20,6 +20,11 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from render_story_info_band import (
     BRAND_GREEN,
+    LABEL_FONT,
+    MUTED,
+    SCORE,
+    WHITE,
+    label_font_problem,
     legacy_corner_label_slugs,
     png_corner_label_problem,
     render,
@@ -57,12 +62,93 @@ def test_默认贴图是右轨右对齐(tmp_path):
                  highlight="ATP250 悉尼", metric="1-6 6-4 7-5")
     assert png_corner_label_problem(out) is None
     with Image.open(out) as image:
-        assert image.size == (1200, 340)
+        assert image.size[0] == 1200
+        assert image.size[1] >= 340 and image.size[1] % 2 == 0
         assert image.getpixel((1173, 170))[:3] == BRAND_GREEN[:3]
         assert image.getpixel((27, 170))[:3] != BRAND_GREEN[:3]
     left = render("2018.01.13", "第1冠", "vs 德米纳尔", tmp_path / "left.png",
                   metric="6-4 6-3", layout="classic", align="left")
     assert png_corner_label_problem(left)
+
+
+def _ink_bands(path):
+    """按精确填色把文字行切开。软阴影和描边不进这堆，行与行才分得开。"""
+    exact = {BRAND_GREEN[:3], WHITE[:3], MUTED[:3]}
+    with Image.open(path) as image:
+        pix = image.convert("RGBA").load()
+        _width, height = image.size
+        rows = []
+        for y in range(height):
+            green = white = False
+            seen = False
+            for x in range(80, 1100):
+                pixel = pix[x, y]
+                if pixel[3] < 200 or pixel[:3] not in exact:
+                    continue
+                seen = True
+                if pixel[:3] == BRAND_GREEN[:3]:
+                    green = True
+                if pixel[:3] == WHITE[:3]:
+                    white = True
+            rows.append((seen, green, white))
+    bands = []
+    start = None
+    green = white = False
+    for y, (seen, row_green, row_white) in enumerate(rows):
+        if seen and start is None:
+            start, green, white = y, row_green, row_white
+        elif seen:
+            green = green or row_green
+            white = white or row_white
+        elif start is not None:
+            bands.append((start, y, green, white))
+            start = None
+    if start is not None:
+        bands.append((start, len(rows), green, white))
+    return bands
+
+
+def test_主题独占一行_地点在下一行_没有主题就从地点起排(tmp_path):
+    """主题（摔拍警告）自己一行，地点（ATP1000 上海）独占下一行，然后才是日期。"""
+    with_topic = render(
+        "2026.10.11", "摔拍警告", "布勃利克 vs 中岛布兰登",
+        tmp_path / "topic.png", highlight="ATP1000 上海", metric="6-4")
+    bands = _ink_bands(with_topic)
+    assert len(bands) >= 2
+    _top, top_end, top_green, top_white = bands[0]
+    place_top, _place_end, place_green, _place_white = bands[1]
+    assert top_white and not top_green
+    assert place_green and place_top >= top_end
+
+    place_first = render(
+        "2022.02.22", "", "兹维列夫 · 罚款4万美元",
+        tmp_path / "place.png", highlight="阿卡普尔科")
+    first = _ink_bands(place_first)[0]
+    assert first[2], "没有主题时第一行就是地点"
+
+
+def test_角标文字和左上角品牌标题同一支_比分除外():
+    """主题、地点、日期、人物、罚款都走品牌标题那一支；比分数字仍是 TL Score。"""
+    import render_story_info_band as band
+    from tennislive.video.watermark import BRAND_FONT
+
+    assert label_font_problem() is None
+    assert LABEL_FONT.name == BRAND_FONT
+    assert SCORE.name == "TLScore-Bold.ttf"
+    for fn in (band._render_corner, band._metric_fonts):
+        source = inspect.getsource(fn)
+        assert "BOLD" not in source
+        assert "REGULAR" not in source
+        assert "NotoSans" not in source
+    # 字体漂了，豁免表也拦不住。
+    real = band.LABEL_FONT
+    band.LABEL_FONT = real.parent / "NotoSansSC-Bold-sub.ttf"
+    try:
+        problem = story_corner_label_problems(
+            {"slug": "medvedev-24-titles", "segments": []})
+    finally:
+        band.LABEL_FONT = real
+    assert problem and "品牌标题" in problem[0]
 
 
 def test_别的脚本没有把左对齐写死成默认():
