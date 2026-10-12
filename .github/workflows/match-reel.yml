@@ -208,7 +208,9 @@ jobs:
     # 63 在它上面留了几分钟余量——步骤自己还在正常重试时不许被 job 级的壳先砍掉，
     # 判据 test_job级超时要兜得住各步骤自己声明的最坏预算之和。再加带 timeout 的步骤，
     # 先把这个和重算一遍。
-    timeout-minutes: 63
+    # 2026-10-12：代码违规这条的麦肯罗源片是约 2.5 小时的全场，下载落在没有
+    # 单独 timeout 的 render 步里。job 壳加到 120，步骤之和仍按上面那条判据兜住。
+    timeout-minutes: 120
     steps:
       # 600 秒只算「生产输入已齐 → 我们自己的 MP4 落盘」。发布/Pages 是另一条
       # SLO，不得反过来污染成片耗时；自动 dispatch 把确认链接的时刻传进来，
@@ -1334,6 +1336,9 @@ jobs:
           # 和 narration 那一步同一个理由再落一遍（已经在的不动，一趟批量 fetch 两秒）。
           python tools/probe_sources.py materialize "$SPEC" \
             || echo "::warning::按 URL 认领 probe.json 失败——render 按真语音重放数字静音这一趟可能没查"
+          # 审听 sha256 必须是这一趟真正编码的文件。先落到 outdir，render 见到
+          # source_*.mp4 就不再重下。选择器先用任务书的 avc1≤1080，失败再走 download()。
+          python tools/stage_reel_sources.py --spec "$SPEC" --outdir "$OUTDIR"
           # 600 秒是性能目标，不是内容闸。超线照样做完、照样过 L2 和发布；
           # `finish` 会在产物与 job summary 留 FAIL + warning，供后续定点修复。
           # tee + pipefail：失败原话（TTS 装不下 / 哑场 / ReelError）要留给
@@ -1716,6 +1721,12 @@ jobs:
           COVER_ASSET="assets/reel/${{ github.event.inputs.slug }}-cover.jpg"
           if [ -f "$COVER_ASSET" ]; then
             git add "$COVER_ASSET"
+          fi
+          # stage_reel_sources.py 把审听证据写在 data/ 下，不在 OUTDIR 里。
+          # 不 add 的话这一趟的 sha256 只活在 runner 上，下一次重下就对不上。
+          REVIEW="data/audio_reviews/${{ github.event.inputs.slug }}.json"
+          if [ -f "$REVIEW" ]; then
+            git add "$REVIEW" "data/audio_reviews/${{ github.event.inputs.slug }}"
           fi
           if git diff --cached --quiet; then
             echo "没有变化"
