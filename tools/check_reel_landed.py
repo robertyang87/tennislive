@@ -606,7 +606,7 @@ def main() -> int:
     dead = [i for i in dead if i not in native_ambience]
     source_verified_seconds = set(natural_quiet + reviewed_quiet + native_ambience)
     if native_ambience:
-        print(f"[ok] 连续源声/已完成旁白尾部的完整秒实际波形证明 {native_ambience}；"
+        print(f"[ok] 完整旁白与原声的完整秒实际波形证明 {native_ambience}；"
               "原源哈希、原生增益、非零PCM与实际成片匹配")
     if reviewed_quiet:
         print(f"[ok] 完整源声核验与实际原生混音波形一致 {reviewed_quiet}；"

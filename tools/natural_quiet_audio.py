@@ -377,7 +377,38 @@ def _complete_voice_pair(spec: dict, film: Path, index: int,
             'mp3_sha256': hashlib.sha256(audio).hexdigest(),
             'paired_zip_sha256': hashlib.sha256(pair.read_bytes()).hexdigest(),
             'word_marks_sha256': hashlib.sha256(marks_path.read_bytes()).hexdigest(),
-            'voice_correlation': float(correlations[best]), 'voice_gain': voice_gain}
+            'voice_correlation': float(correlations[best]), 'voice_gain': voice_gain,
+            'native_channel_gain': expected_voice_gain}
+
+
+def _mixed_word_tail_match(source, landed, voice, elapsed, gain, voice_proof):
+    """Prove a whole weak second containing at most 80ms of the final word.
+
+    The caller first authenticates the complete paired utterance in this AAC.
+    Compare the fixed native source+voice mix, and require the actual final-word
+    signal to improve on source alone. A removed last sound cannot pass as mere
+    ambience. No global floor or arbitrary gain is changed.
+    """
+    if (elapsed < voice_proof['word_end'] - .08
+            or elapsed < voice_proof['acoustic_end'] - .08):
+        return None
+    indices = np.arange(round(elapsed * RATE) - 640,
+                        round(elapsed * RATE) + RATE + 640)
+    valid = (indices >= 0) & (indices < len(voice))
+    tail = np.zeros(RATE + 1280)
+    tail[valid] = voice[indices[valid]] * voice_proof['native_channel_gain']
+    if np.dot(tail[640:640 + RATE], tail[640:640 + RATE]) <= 1e-12:
+        return None
+    composite = source * gain + tail
+    proof = _reviewed_mix_match(composite, landed, np.ones(RATE), 1.,
+                               attenuated_ambience=True)
+    baseline = _reviewed_mix_match(source, landed, np.ones(RATE), gain,
+                                  attenuated_ambience=True)
+    if (proof is None or baseline is None or proof['correlation'] < .97
+            or proof['correlation'] < baseline['correlation'] + .002):
+        return None
+    proof['source_only_correlation'] = baseline['correlation']
+    return proof
 
 
 def verified_native_ambience_seconds(spec: dict, film: Path, candidates: list[int],
@@ -456,16 +487,20 @@ def verified_native_ambience_seconds(spec: dict, film: Path, candidates: list[in
                         voices[i] = None
                 voice_proof = voices[i]
                 elapsed = lo - float(offsets[i])
-                if (voice_proof is None or elapsed < voice_proof['word_end'] + .04
-                        or elapsed < voice_proof['acoustic_end']):
+                if voice_proof is None:
                     continue
-                voice_tail = voice_proof['pcm'][max(0, round(elapsed * RATE)):
-                                                max(0, round((elapsed + 1) * RATE))]
-                # Actual decoded cache, including residual tail, must be below -80dB.
-                if any(np.mean(block * block) > 1e-8
-                       for block in np.array_split(voice_tail, max(1, math.ceil(len(voice_tail) / 160)))
-                       if len(block)):
-                    continue
+                mixed_word_tail = (elapsed < voice_proof['word_end'] + .04
+                                   or elapsed < voice_proof['acoustic_end'])
+                if mixed_word_tail:
+                    kind = 'measured_final_word_and_source_mix'
+                else:
+                    voice_tail = voice_proof['pcm'][max(0, round(elapsed * RATE)):
+                                                    max(0, round((elapsed + 1) * RATE))]
+                    # Actual decoded cache, including residual tail, must be below -80dB.
+                    if any(np.mean(block * block) > 1e-8
+                           for block in np.array_split(voice_tail, max(1, math.ceil(len(voice_tail) / 160)))
+                           if len(block)):
+                        continue
             elif len(pieces) < 2:
                 continue  # The existing single-source verifiers already cover this.
             if key not in sources:
@@ -485,9 +520,13 @@ def verified_native_ambience_seconds(spec: dict, film: Path, candidates: list[in
                      & (indices >= 0) & (indices < len(sources[key])))
             reference = np.zeros(RATE + 1280)
             reference[valid] = sources[key][indices[valid]]
-            proof = _reviewed_mix_match(reference, final[second * RATE:(second + 1) * RATE],
-                                        np.ones(RATE), gain,
-                                        attenuated_ambience=bool(narrated))
+            landed = final[second * RATE:(second + 1) * RATE]
+            if kind == 'measured_final_word_and_source_mix':
+                proof = _mixed_word_tail_match(reference, landed, voice_proof['pcm'],
+                                              elapsed, gain, voice_proof)
+            else:
+                proof = _reviewed_mix_match(reference, landed, np.ones(RATE), gain,
+                                            attenuated_ambience=bool(narrated))
             if proof is not None:
                 accepted.append(second)
                 details = (f"；全句MP3={voice_proof['mp3_sha256']}、"
