@@ -1,0 +1,166 @@
+{
+  "schema": "tennislive.foreground-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=T9TfTnVgHNY",
+  "official_source_url": "https://www.youtube.com/watch?v=T9TfTnVgHNY",
+  "source_sha256": "daa20031f91396c2806716021e43fd913cd0e9a17f057e149e7b82f62710b6f8",
+  "source_bytes": 45935631,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-audio agent: fresh actual decoded-PCM cached small.en/medium.en full-source crosscheck plus actual disputed-window large-v3/no-VAD reconciliation; no human listening or tone conclusion",
+  "reviewed_at": "2026-10-12T17:39:37.730832+00:00",
+  "status": "complete",
+  "reviewed_from": 175.08,
+  "reviewed_to": 195.5,
+  "selected_from": 175.08,
+  "selected_to": 195.5,
+  "actual_listening_performed": false,
+  "human_listening_claimed": false,
+  "tone_verified": false,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 175.2,
+      "end": 176.54,
+      "en": "And that misses the mark",
+      "zh": "这一球没有打中目标"
+    },
+    {
+      "start": 176.54,
+      "end": 178.28,
+      "en": "And here comes the qualifier",
+      "zh": "资格赛选手的反扑来了"
+    },
+    {
+      "start": 178.52,
+      "end": 182.0,
+      "en": "Shi Han took the Zheng Qinwen Beijing champion",
+      "zh": "施晗曾与北京冠军郑钦文"
+    },
+    {
+      "start": 182.0,
+      "end": 184.46,
+      "en": "to three sets in the opening round of the previous tournament",
+      "zh": "在上一站首轮打满3盘"
+    },
+    {
+      "start": 184.9,
+      "end": 187.16,
+      "en": "She picked up her first two top 100 wins",
+      "zh": "她首次击败前100的2位球员"
+    },
+    {
+      "start": 187.16,
+      "end": 188.68,
+      "en": "in qualifying here in Wuhan",
+      "zh": "就在武汉的资格赛中"
+    },
+    {
+      "start": 188.68,
+      "end": 190.1,
+      "en": "And now she's got the",
+      "zh": "而现在她把对手"
+    },
+    {
+      "start": 190.1,
+      "end": 192.66,
+      "en": "number 19th ranked player in the world",
+      "zh": "世界排名第19的球员"
+    },
+    {
+      "start": 192.66,
+      "end": 195.38,
+      "en": "extended to a third set on night one",
+      "zh": "在首个夜晚拖进了决胜盘"
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-large-v3-coldopen-novad.json",
+      "sha256": "167656fa9b7c5d4a9fd989af66b03733e85f3cdad2d370b193f746a4a03b57b6",
+      "bytes": 13722,
+      "model": "large-v3",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-large-v3-disputed-novad.json",
+      "sha256": "84b646980d713ac2390812517c7da4c296337170f2404b9bdb5d7c5c80299b74",
+      "bytes": 20520,
+      "model": "large-v3",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-large-v3-ending-novad.json",
+      "sha256": "3ec56cd392281152bc0bf121562f33f5f9eb8b51804160a393af71d146643908",
+      "bytes": 17173,
+      "model": "large-v3",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-medium-en-end-context-novad.json",
+      "sha256": "147f924b79229aa3ad0b93dee830944e25d9b4eb89cea08a6729b182692b35eb",
+      "bytes": 7798,
+      "model": "medium.en",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-medium-en-full.json",
+      "sha256": "f9846cdc3fbd2b72ce16b34a3e815e6b2fc444446b27d35f17b97c11c689a5e3",
+      "bytes": 60147,
+      "model": "medium.en",
+      "vad_filter": true,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-small-en-disputed-novad.json",
+      "sha256": "59b3cb20f77ae50dec806162eebbb6f62e5641d5def439e974fc95d610b64366",
+      "bytes": 33003,
+      "model": "small.en",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-small-en-end-context-novad.json",
+      "sha256": "382fc573825b780fb72f6c5793cc9db44439f1d317c8468afe545053e2f26252",
+      "bytes": 7726,
+      "model": "small.en",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/actual-small-en-full.json",
+      "sha256": "538e68717a30e03ed134e710b630fa010256b98193620196ad64266c834dcd01",
+      "bytes": 61119,
+      "model": "small.en",
+      "vad_filter": true,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/run-asr.py",
+      "sha256": "79c1beb262eef65afb6aa5be2cee3befa1bdda3c42ea3bc4c809ebdcf3acf990",
+      "bytes": 1694,
+      "role": "actual_command_script"
+    },
+    {
+      "path": "data/evidence/eala-shi/source-audio/run-targeted.py",
+      "sha256": "300855c739f4078d3ee0c187a04c8fbe84f97c8ba841b71e87edcc74b1b1adda",
+      "bytes": 1855,
+      "role": "actual_command_script"
+    }
+  ],
+  "source_evidence_manifest": {
+    "path": "data/evidence/eala-shi/source-audio/actual-source-asr-manifest.json",
+    "sha256": "c4a52dab8bc841c2c557b270401fd8d82bce01cb81a91e998168f865ffe0c349"
+  },
+  "crosscheck_decisions": {
+    "path": "data/evidence/eala-shi/source-audio/asr-crosscheck-decisions.json",
+    "sha256": "f7dc04737165838b03fe16b947be1b86dd0468d09664039a7c3d2ff18810db30"
+  },
+  "candidate_transcript": {
+    "path": "data/evidence/eala-shi/source-audio/candidate-cues.json",
+    "sha256": "443c2d26dad8126e3d61d5bb0295feefcfaf00379102c5e1893a046a8b84d752"
+  },
+  "completion_scope": "Actual ASR crosscheck and transparent hypothesis reconciliation over the selected source window, with full-clause context where needed. Estimated ASR timings are not phonetic ground truth. The rejected isolated hypotheses and unresolved excluded range remain in separate evidence. No artificial human listening or pronunciation/tone pass is claimed."
+}
