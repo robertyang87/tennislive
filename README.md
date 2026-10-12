@@ -95,7 +95,7 @@ python -m edge_tts --voice zh-CN-YunjianNeural --rate=+6% --pitch=+0Hz \
   --text "阿卡的反扑，停在抢七最后关头。" --write-media test.mp3
 ```
 
-适配文件虽然存放在阿卡审音目录中，这条直接合成命令可以使用任意文本。文件配音、原生旁白检查、代理与验证边界见 [Edge TTS 使用说明](docs/edge-tts-usage.md)。
+如果当前环境需要 `HTTPS_PROXY` 代理，给上面的命令额外加上 `--proxy "$HTTPS_PROXY"`；CLI 默认的 `proxy=None` 会覆盖适配文件的代理默认值。适配文件虽然存放在阿卡审音目录中，这条直接合成命令可以使用任意文本。文件配音、原生旁白检查、代理与验证边界见 [Edge TTS 使用说明](docs/edge-tts-usage.md)。
 
 ## 无人值守编排
 

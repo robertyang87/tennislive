@@ -71,10 +71,24 @@ GitHub Actions 的临时调用同样需要将该适配目录加入命令的 `PYT
 
 ## 代理与失败排查
 
-适配文件检测到 `HTTPS_PROXY` 时，会将该代理显式传给 `edge_tts.Communicate`；没有该变量时保持直接连接。代理地址可通过运行环境配置，不要写入仓库。需要代理 CA 的环境沿用 [`tennislive.localca`](../src/tennislive/localca.py) 的配置，在导入 Edge TTS 前加载可信 CA。
+适配文件检测到 `HTTPS_PROXY` 时，为 Python 库调用提供该代理作为 `edge_tts.Communicate` 的默认值；没有该变量时保持直接连接。原生共享 TTS 调用会使用这个默认值。
+
+**Edge CLI 会主动传入 `proxy=None`，覆盖这个默认值。** 如果当前环境需要已配置的 `HTTPS_PROXY`，在上面的 CLI 命令中额外指定 `--proxy "$HTTPS_PROXY"`。本地实测过的完整调用如下：
+
+```bash
+PYTHONPATH=tools/alcaraz_voice_review/runtime \
+python -m edge_tts \
+  --proxy "$HTTPS_PROXY" \
+  --voice zh-CN-YunjianNeural \
+  --rate=+6% --pitch=+0Hz \
+  --text "阿卡的反扑，停在抢七最后关头。" \
+  --write-media test.mp3
+```
+
+无需代理的环境使用前面的基础命令。代理地址由运行环境配置，不写入仓库。需要代理 CA 的环境沿用 [`tennislive.localca`](../src/tennislive/localca.py) 的配置，在导入 Edge TTS 前加载可信 CA。
 
 - `ModuleNotFoundError: edge_tts`：确认当前 Python 环境已经安装上面的包。
-- 仍报 403：先确认命令从仓库根目录执行，且包含适配目录的 `PYTHONPATH`；已加载适配仍失败时记录实际错误，不能把过去的成功当成本次成功。
+- 仍报 403：先确认命令从仓库根目录执行，且包含适配目录的 `PYTHONPATH`；代理环境的 CLI 还须显式传 `--proxy`。已加载适配仍失败时记录实际错误，不能把过去的成功当成本次成功。
 - 证书错误：检查当前环境的代理与 CA 配置。CA 校验通过和合成端点可用是两项不同检查。
 
 本次实测没有修改系统安装的包文件，也没有关闭 TLS 验证。合成结果继续按原有视频生产和读音复核要求使用。
