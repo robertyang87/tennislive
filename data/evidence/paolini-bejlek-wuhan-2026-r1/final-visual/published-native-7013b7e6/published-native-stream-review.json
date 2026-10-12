@@ -1,0 +1,51 @@
+{
+  "schema": "published-container-actual-stream-review.v1",
+  "slug": "paolini-bejlek-wuhan-2026-r1",
+  "native_run": 38312317536,
+  "artifact_id": 11775057740,
+  "native_head": "cd685534b4f456e94c537aaf7c0006a4fcf52031",
+  "film_sha256": "7013b7e66c42d62220ebaa826b6b099bbd6a374da593de9b24d7b3393641acfe",
+  "film_bytes": 142506185,
+  "streams": [
+    {
+      "stream": "v:0",
+      "packet_count": 8361,
+      "payload_and_timestamps_sha256": "a5d1d7f05704e72f81fb5cf6ce3a99022761990cf5789646e57f6912850bec95",
+      "input_film_sha256": "58e16f6a466e42c3cf9a0478cce96045eb6aaf76a46762b52979ba2c6cf3732c",
+      "output_film_sha256": "7013b7e66c42d62220ebaa826b6b099bbd6a374da593de9b24d7b3393641acfe",
+      "exact_payload_and_timestamps_match": true
+    },
+    {
+      "stream": "a:0",
+      "packet_count": 15678,
+      "payload_and_timestamps_sha256": "d3e0a12a45765a7da1d8fa196f1504f1968ed6f29b9f3c5a0a779b95808326eb",
+      "input_film_sha256": "4f00d4b2b523248f717f9ce3c26429e030cba0994ff7a67eaf6ebc6df6ac3661",
+      "output_film_sha256": "7013b7e66c42d62220ebaa826b6b099bbd6a374da593de9b24d7b3393641acfe",
+      "exact_payload_and_timestamps_match": true
+    }
+  ],
+  "actual_frames": [
+    {
+      "at": 29.4,
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/final-visual/published-native-7013b7e6/film-00029.400.png",
+      "sha256": "997fbe022fcee3f612f3cef76dc69135db887c7a2d60cba70d213a2fc21b4b48",
+      "decoded_frame_bytes_identical_to_independently_reviewed_3339": true
+    },
+    {
+      "at": 161.0,
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/final-visual/published-native-7013b7e6/film-00161.000.png",
+      "sha256": "adcc29a5fa8cb33913714c4c0099af154b10042999a0bf616d87ef3e3b9b804d",
+      "decoded_frame_bytes_identical_to_independently_reviewed_3339": true
+    },
+    {
+      "at": 315.8,
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/final-visual/published-native-7013b7e6/film-00315.800.png",
+      "sha256": "2c7811f4131b61aba1cf197255f45a41e98f7ba6d819e2ba6cccb290533cb3fc",
+      "decoded_frame_bytes_identical_to_independently_reviewed_3339": true
+    }
+  ],
+  "prior_visual_review": "data/evidence/paolini-bejlek-wuhan-2026-r1/final-visual/final-master-3339af70/independent-visual-review.json",
+  "no_audio_gain_or_transcode": true,
+  "container_byte_difference_reason": "ffmpeg native mux version; both compressed payloads and timestamps strictly identical",
+  "whole_workflow_status": "failure_after_native_QC_pass_at_remote_release_GET"
+}

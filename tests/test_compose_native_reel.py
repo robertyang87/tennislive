@@ -57,3 +57,29 @@ def test_real_stream_copy_preserves_every_payload_and_timestamp(tmp_path):
     assert C.packet_proof(video,result,'v:0')['exact_payload_and_timestamps_match']
     assert C.packet_proof(audio,result,'a:0')['exact_payload_and_timestamps_match']
     with pytest.raises(ValueError,match='packet timestamps'):C.packet_proof(video,result,'a:0')
+
+
+@pytest.mark.parametrize('new_asset_bytes', [b'actual new movie', b'wrong movie'])
+def test_stale_release_response_is_never_accepted_as_new_movie(monkeypatch,new_asset_bytes):
+    import hashlib
+    expected=hashlib.sha256(b'actual new movie').hexdigest();calls=[]
+    class Response:
+        def __init__(self,raw):self.raw=raw
+        def __enter__(self):return self
+        def __exit__(self,*args):pass
+        def raise_for_status(self):pass
+        def iter_content(self,size):return iter([self.raw])
+    def get(url,**kwargs):
+        calls.append(url)
+        return Response(b'stale previous movie' if len(calls)==1 else b'actual new movie' if len(calls)==2 else new_asset_bytes)
+    monkeypatch.setattr(C.requests,'get',get)
+    args=('https://github.com/robertyang87/tennislive/releases/download/reel-match-test/match-test.mp4',expected,len(b'actual new movie'),123)
+    if new_asset_bytes==b'actual new movie':
+        verified=C.verify_remote_release(*args,retry_wait=0)
+        assert verified['sha256']==expected and verified['asset_id']==123
+        assert verified['published_url']==calls[2] and f'?v={expected[:12]}' in calls[2]
+        assert verified['asset_id_verified']
+        assert len(calls)==3 and '/releases/assets/123' in calls[1]
+    else:
+        with pytest.raises(ValueError,match='full-hash verification'):C.verify_remote_release(*args,retry_wait=0)
+        assert len(calls)==3

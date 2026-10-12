@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "paolini-bejlek-wuhan-2026-r1",
-  "written_at": "2026-10-12T21:10:14Z",
-  "code_sha": "4691577fc585b9ed35ade98e89445de20753eec4",
-  "spec_sha256": "a18378df0a795ab3c45b8ed5042a0bb2278099c03d9627269cfc5325756d4a18",
-  "film_sha256": "58e16f6a466e42c3cf9a0478cce96045eb6aaf76a46762b52979ba2c6cf3732c",
-  "film_bytes": 142506254,
-  "projection_sha256": "f7322f7d116352a6700063f2a322b05986071507584722039cda89e910bb31ed",
+  "written_at": "2026-10-12T21:44:26Z",
+  "code_sha": "cd685534b4f456e94c537aaf7c0006a4fcf52031",
+  "spec_sha256": "f4cfac3a03391711d305eb4469ee558b4c21e9ea34e07a60e04f7f1cc72d825f",
+  "film_sha256": "7013b7e66c42d62220ebaa826b6b099bbd6a374da593de9b24d7b3393641acfe",
+  "film_bytes": 142506185,
+  "projection_sha256": "96a7a2fab9ca2e97d50d5d4dbfdc260447a875ede43cbe8cd678e2598d2d36cc",
   "claims": [
     [
       "segments",
@@ -155,12 +155,13 @@
     "assets/reel/paolini-bejlek-wuhan-2026-r1-cover-photo.jpg": "962fd6cfb493523f2133370b44b1bef5c56aad20bbbcdaa8c55895237a8960e7"
   },
   "artifacts": {
-    "audio_review_binding.json": "1df0d9f830c1d09661edf7b2df5914a411946feec99a2696fe9f83d97babd6c7",
+    "audio_review_binding.json": "012d3e3a222f41e5e6959456429b68394ea8e94d3990f6bbab50e05d06b232b2",
     "subtitles.ass": "e627f621c032d1a3703c5733e4a40264b8a19e13f30f598599f89f8a2155cd89",
     "topbar.ass": "da2e68d11f621ec1ce71ef52c562481d68ba65d2efbf9001cfe2a9adddcdd5d4",
     "poster.jpg": "99ea2b99757a5ee3d6f8494961d06c23370b0adfdb04e10095160ba457499147",
     "stat_card.jpg": "d73ba2ca3f158959381ef279e512274dba16fa93cd5d1eb0679a308c278154c4",
-    "scoreboard_qc.json": "0b224e677a9f72325cb6d022d63baadfeb83125d89c22c7280ef405f068f243f"
+    "scoreboard_qc.json": "0b224e677a9f72325cb6d022d63baadfeb83125d89c22c7280ef405f068f243f",
+    "composition_provenance.json": "55e4f7d6d9777b3237885f8c39478d4cd5be6ade50068e1e5def05d43e2f94b7"
   },
   "projection": {
     "slug": "paolini-bejlek-wuhan-2026-r1",
@@ -599,7 +600,8 @@
             112,
             129
           ]
-        ]
+        ],
+        "bed": "low"
       },
       {
         "source": "main",

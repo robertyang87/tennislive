@@ -17,6 +17,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 import zipfile
 import requests
 
@@ -157,6 +158,43 @@ def packet_proof(input_film, output_film, stream):
             'exact_payload_and_timestamps_match': True}
 
 
+def verify_remote_release(url, expected_sha, expected_bytes, asset_id, *, retry_wait=2):
+    """Verify actual full bytes, avoiding a stale canonical redirect after clobber.
+
+    A digest-bearing public query is a cache key, never a relaxation of SHA.
+    The exact new API asset ID provides an independent transport fallback.
+    """
+    published_url = f'{url}?v={expected_sha[:12]}'
+    candidates = [published_url, f'https://api.github.com/repos/{REPO}/releases/assets/{int(asset_id)}',
+                  f'{published_url}&verification_attempt={time.time_ns()}']
+    asset_id_verified = False
+    for index, candidate in enumerate(candidates):
+        headers = {}
+        if candidate.startswith('https://api.github.com/'):
+            headers['Accept'] = 'application/octet-stream'
+            token = os.environ.get('GH_TOKEN') or os.environ.get('GITHUB_TOKEN')
+            if token: headers['Authorization'] = f'Bearer {token}'
+        try:
+            digest = hashlib.sha256(); size = 0
+            with requests.get(candidate, headers=headers, stream=True, timeout=(15, 120)) as response:
+                response.raise_for_status()
+                for block in response.iter_content(1024 * 1024): digest.update(block); size += len(block)
+            if digest.hexdigest() == expected_sha and size == expected_bytes:
+                if index == 1:
+                    # The API proves the asset, not the public button URL.
+                    asset_id_verified = True
+                    continue
+                return {'sha256': digest.hexdigest(), 'bytes': size, 'asset_id': int(asset_id),
+                        'canonical_url': url, 'published_url': candidate,
+                        'asset_id_verified': asset_id_verified,
+                        'verification_transport': 'digest_bound_public_url'}
+            print(f'[Release] Attempt {index+1}: stale/different bytes, refusing acceptance')
+        except requests.RequestException:
+            print(f'[Release] Attempt {index+1}: transport error, no acceptance')
+        if index + 1 < len(candidates) and retry_wait: time.sleep(retry_wait)
+    raise ValueError('Actual remote Release bytes differ after bounded independent full-hash verification')
+
+
 def import_voice_pairs(spec, audio_meta, audio_dir, outdir, audio_film=None, timeline=None):
     from natural_quiet_audio import _complete_voice_pair, pcm
     cache = Path(os.environ.get('TENNISLIVE_TTS_CACHE', str(Path.home() / '.cache/tennislive-tts'))).expanduser()
@@ -282,14 +320,13 @@ def release(args):
     if view['isDraft']: raise ValueError('Release must be public')
     run('gh', 'release', 'upload', tag, film, '--repo', REPO, '--clobber')
     url = f'https://github.com/{REPO}/releases/download/{tag}/{slug}.mp4'
-    digest = hashlib.sha256(); size = 0
-    with requests.get(url, stream=True, timeout=(15, 120)) as response:
-        response.raise_for_status()
-        for block in response.iter_content(1024 * 1024): digest.update(block); size += len(block)
-    if digest.hexdigest() != qc['film_sha256'] or size != film.stat().st_size:
-        raise ValueError('Actual remote Release bytes differ from new native QC')
-    meta = json.loads((out / 'render.json').read_text());meta.update(video_url=url, video_bytes=size);write(out / 'render.json', meta)
-    write(out / 'composition_release_verification.json', {'qc_status':'pass', 'qc_attestation_sha256':ri.sha256_file(out/'qc_attestation.json'), 'remote_sha256':digest.hexdigest(), 'remote_bytes':size, 'composition_provenance_sha256':ri.sha256_file(out/'composition_provenance.json')})
+    assets = json.loads(subprocess.check_output(['gh', 'release', 'view', tag, '--repo', REPO, '--json', 'assets'], text=True))['assets']
+    matches = [a for a in assets if a['name'] == film.name]
+    if len(matches) != 1: raise ValueError('Exactly one new native Release asset required')
+    asset_id = int(matches[0]['apiUrl'].rsplit('/', 1)[1])
+    verified = verify_remote_release(url, qc['film_sha256'], film.stat().st_size, asset_id)
+    meta = json.loads((out / 'render.json').read_text());meta.update(video_url=verified['published_url'], video_bytes=verified['bytes']);write(out / 'render.json', meta)
+    write(out / 'composition_release_verification.json', {'qc_status':'pass', 'qc_attestation_sha256':ri.sha256_file(out/'qc_attestation.json'), 'remote_sha256':verified['sha256'], 'remote_bytes':verified['bytes'], 'composition_provenance_sha256':ri.sha256_file(out/'composition_provenance.json'), 'transport':verified})
     run(sys.executable, ROOT / 'tools/push_reel.py', '--stage', 'page', '--outdir', out, '--copy', ROOT / f'specs/reels/{slug}.xhs.txt')
     # Movies/voice/masks remain in scratch; caller stages a strict small-file list.
 

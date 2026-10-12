@@ -58,7 +58,7 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "60312ac797bf9ea7411e70cf7da9fd4a419bb0ae8e39ffe0c33793a06b670638",
+  "render_inputs_sha256": "4ec1ca10a87c7f36db4c3d7b16f88aedbcd2f2dc39e7ddd9754cfdb5fb0f150d",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
@@ -81,9 +81,6 @@
     "render_seconds": 432.75,
     "pre_render_seconds": 3109.0
   },
-  "film_sha256": "58e16f6a466e42c3cf9a0478cce96045eb6aaf76a46762b52979ba2c6cf3732c",
-  "film_bytes": 142506254,
-  "qc_attestation_sha256": "f944d2c94cb7b5eab6832ac79c51a1c24dc18f5a9218ee8b73e64b9390093ea2",
   "production_stage_events": [
     {
       "stage": "render",
@@ -96,6 +93,10 @@
       "run_id": "38307920960"
     }
   ],
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-paolini-bejlek-wuhan-2026-r1/paolini-bejlek-wuhan-2026-r1.mp4",
-  "video_bytes": 142506254
+  "composition_provenance": "composition_provenance.json",
+  "film_sha256": "7013b7e66c42d62220ebaa826b6b099bbd6a374da593de9b24d7b3393641acfe",
+  "film_bytes": 142506185,
+  "qc_attestation_sha256": "9ab328047a86f7783dfed995e2022ae6951f57e0ff04f527e7ca2ae01a8c01fa",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-paolini-bejlek-wuhan-2026-r1/paolini-bejlek-wuhan-2026-r1.mp4?v=7013b7e66c42",
+  "video_bytes": 142506185
 }
