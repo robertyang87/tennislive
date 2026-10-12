@@ -31,4 +31,3 @@ def check_custom_scoreboxes(spec: dict) -> None:
         print(f'[自定义比分框] {note}')
     if hard:
         raise SystemExit('；'.join(hard))
-
