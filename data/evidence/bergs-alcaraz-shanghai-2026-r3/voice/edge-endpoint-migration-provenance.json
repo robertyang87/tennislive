@@ -1,0 +1,28 @@
+{
+  "status": "actual_standard_edge_synthesis_succeeded_after_official_endpoint_migration",
+  "recorded_at_utc": "2026-10-12T14:35:13.242985+00:00",
+  "old_endpoint": "wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1",
+  "new_endpoint": "wss://api.msedgeservices.com/tts/cognitiveservices/websocket/v1",
+  "reference_url": "https://github.com/rany2/edge-tts/pull/491",
+  "upstream_reference_state": "unmerged_pull_request_evidence_not_package_release",
+  "reference_snapshot_path": "/workspace/scratch/alcaraz-voice/edge-endpoint-pr491-files.json",
+  "reference_snapshot_sha256": "44d287478d7d79192654e91005a05fcba90ae970be1ff02ffd691a7bfc718874",
+  "runtime_adapter_path": "/workspace/scratch/alcaraz-voice/runtime/sitecustomize.py",
+  "runtime_adapter_sha256": "83ac098e582f742a94d1d1608960f1a7bfca853a771d85a4cda38edd03c42f98",
+  "protocol_parameters_changed": [
+    "synthesis_endpoint_and_public_client_token_query_parameter_name"
+  ],
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "pitch": "+0Hz",
+  "backend": "edge-tts",
+  "azure_used": false,
+  "voice_or_rate_changed": false,
+  "human_listening_claimed": false,
+  "old_endpoint_actual_failed_attempts": {
+    "local": "Native retry2 plus ordinary/corrected browser-version handshake probes403",
+    "github_run_id": "38263044384",
+    "github_commit_sha": "f3016b138a779a90f8f9b11887ca17a59005c24d",
+    "github_native_error": "First frozen utterance, handshake403 after native retry2, no usable MP3"
+  }
+}

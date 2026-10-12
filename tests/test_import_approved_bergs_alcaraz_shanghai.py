@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import ast
 import importlib.util
+import json
+import zipfile
 from pathlib import Path
 import sys
 
@@ -36,9 +38,11 @@ def native_chain(tmp_path, monkeypatch):
     review = f'{helper.SLUG}-review.mp4'
     for name in (helper.MASTER, review):
         (helper.OUTDIR / name).write_bytes(f'synthetic film bytes: {name}'.encode())
+    with zipfile.ZipFile(helper.OUTDIR / helper.VOICE_ARCHIVE, 'w') as archive:
+        archive.writestr('synthetic-evidence.json', '{"synthetic_test_fixture":true}')
     helper.EXPECTED_ASSETS = {
         name: ((helper.OUTDIR / name).stat().st_size, helper.sha(helper.OUTDIR / name))
-        for name in (helper.MASTER, review)
+        for name in (helper.MASTER, review, helper.VOICE_ARCHIVE)
     }
     helper.EXPECTED_SPEC = helper.sha(helper.SPEC)
     helper.write(helper.OUTDIR / 'render_inputs.json', helper.ri.build(
@@ -55,7 +59,6 @@ def native_chain(tmp_path, monkeypatch):
         'qc_attestation_sha256': helper.EXPECTED_QC,
         'render_inputs_sha256': helper.EXPECTED_MANIFEST,
         'film_sha256': digest, 'film_bytes': size,
-        'video_url': '', 'video_bytes': size,
     })
     helper.EXPECTED_RENDER = helper.sha(helper.OUTDIR / 'render.json')
     helper.EXPECTED_UNRESOLVED = 2
@@ -99,10 +102,11 @@ def test_native_byte_substitution_is_rejected(native_chain, target):
         helper.native_evidence()
 
 
-@pytest.mark.parametrize('asset', ['master', 'review'])
+@pytest.mark.parametrize('asset', ['master', 'review', 'voice_archive'])
 def test_same_size_film_substitution_is_rejected(native_chain, asset):
     helper = native_chain
-    name = helper.MASTER if asset == 'master' else f'{helper.SLUG}-review.mp4'
+    name = {'master': helper.MASTER, 'review': f'{helper.SLUG}-review.mp4',
+            'voice_archive': helper.VOICE_ARCHIVE}[asset]
     path = helper.OUTDIR / name
     path.write_bytes(b'x' * path.stat().st_size)
     with pytest.raises(RuntimeError, match='Asset bytes differ'):
@@ -116,6 +120,7 @@ def test_release_rebind_preserves_uncertain_findings(native_chain):
     original_audio = helper.read(helper.AUDIO)
     render = helper.read(helper.OUTDIR / 'render.json')
     render['video_url'] = f'https://github.com/{helper.REPOSITORY}/releases/download/reel-{helper.SLUG}/{helper.MASTER}'
+    render['video_bytes'] = helper.EXPECTED_ASSETS[helper.MASTER][0]
     helper.write(helper.OUTDIR / 'render.json', render)
     rebound = dict(original_audio, render_json_sha256=helper.sha(helper.OUTDIR / 'render.json'))
     helper.write(helper.AUDIO, rebound)
@@ -375,4 +380,126 @@ def test_quiet_live_cannot_fake_placement_or_omit_source_reason(native_chain, pr
         segment.pop('subtitle_bottom')
     repin_synthetic_chain(helper, spec)
     with pytest.raises(RuntimeError, match='Quiet live segment'):
+        helper.native_evidence()
+
+
+
+@pytest.mark.parametrize('fps', ['50/1', '30/1'])
+def test_import_rejects_a_non_native_master_frame_rate(native_chain, monkeypatch, fps):
+    helper = native_chain
+    monkeypatch.setattr(helper.subprocess, 'check_output', lambda *a, **kw:
+        json.dumps({'streams': [{'width': 1080, 'height': 1440, 'r_frame_rate': fps}]}))
+    with pytest.raises(RuntimeError, match='native 25 fps rendering'):
+        helper.verify_master_geometry(helper.OUTDIR / helper.MASTER)
+
+
+def test_import_accepts_native_25_fps_full_portrait(native_chain, monkeypatch):
+    helper = native_chain
+    seen = []
+    def probe(args, **kwargs):
+        seen.append(args)
+        return json.dumps({'streams': [{'width': 1080, 'height': 1440,
+                                        'r_frame_rate': '25/1'}]})
+    monkeypatch.setattr(helper.subprocess, 'check_output', probe)
+    helper.verify_master_geometry(helper.OUTDIR / helper.MASTER)
+    assert seen[0][0] == 'ffprobe'
+    assert seen[0][-1] == str(helper.OUTDIR / helper.MASTER)
+    assert 'stream=width,height,r_frame_rate' in seen[0]
+
+
+def test_import_rejects_a_landscape_master_even_with_native_fps(native_chain, monkeypatch):
+    helper = native_chain
+    monkeypatch.setattr(helper.subprocess, 'check_output', lambda *a, **kw:
+        json.dumps({'streams': [{'width': 1920, 'height': 1080, 'r_frame_rate': '25/1'}]}))
+    with pytest.raises(RuntimeError, match='master canvas changed'):
+        helper.verify_master_geometry(helper.OUTDIR / helper.MASTER)
+
+
+
+def test_request_requires_exact_pinned_voice_archive_hash(exact_request):
+    helper, request = exact_request
+    archive = next(a for a in request['assets'] if a['name'] == helper.VOICE_ARCHIVE)
+    archive['sha256'] = 'a' * 64
+    helper.write('request.json', request)
+    with pytest.raises(ValueError, match='Asset identity mismatch'):
+        helper.manifest('request.json')
+
+
+def test_request_cannot_omit_voice_evidence_archive(exact_request):
+    helper, request = exact_request
+    request['assets'] = [a for a in request['assets'] if a['name'] != helper.VOICE_ARCHIVE]
+    helper.write('request.json', request)
+    with pytest.raises(ValueError, match='exactly the pinned assets'):
+        helper.manifest('request.json')
+
+
+def test_request_cannot_replace_voice_archive_with_another_zip(exact_request):
+    helper, request = exact_request
+    archive = next(a for a in request['assets'] if a['name'] == helper.VOICE_ARCHIVE)
+    archive['name'] = 'unreviewed-evidence.zip'
+    helper.write('request.json', request)
+    with pytest.raises(ValueError, match='exactly the pinned assets'):
+        helper.manifest('request.json')
+
+
+def test_opaque_zip_reconstructs_exactly_and_only_master_is_probed(exact_request, monkeypatch):
+    helper, request = exact_request
+    payloads = {a['chunks'][0]['sha']: (helper.OUTDIR / a['name']).read_bytes()
+                for a in request['assets']}
+    archive_sha = helper.sha(helper.OUTDIR / helper.VOICE_ARCHIVE)
+    for asset in request['assets']:
+        (helper.OUTDIR / asset['name']).unlink()
+    restored = []
+    def restore(chunk, cache):
+        path = cache / chunk['sha']
+        path.write_bytes(payloads[chunk['sha']])
+        restored.append(chunk['sha'])
+        return path
+    monkeypatch.setattr(helper, 'download_chunk', restore)
+    monkeypatch.setattr(helper, 'run', lambda *args: None)
+    probes = []
+    monkeypatch.setattr(helper, 'verify_master_geometry', lambda path: probes.append(path))
+    helper.assemble(Path('request.json'))
+    assert set(restored) == set(payloads)
+    assert probes == [helper.OUTDIR / helper.MASTER]
+    assert helper.sha(helper.OUTDIR / helper.VOICE_ARCHIVE) == archive_sha
+    provenance = helper.read(helper.OUTDIR / 'import-provenance.json')
+    assert {a['name'] for a in provenance['assets']} == set(helper.EXPECTED_ASSETS)
+    assert provenance['new_audio_review'] is False
+    assert provenance['message_sent_by_importer'] is False
+
+
+
+def test_original_native_render_without_transport_fields_is_valid(native_chain):
+    helper = native_chain
+    render, _ = helper.native_evidence()
+    assert 'video_url' not in render
+    assert 'video_bytes' not in render
+    assert render['film_bytes'] == helper.EXPECTED_ASSETS[helper.MASTER][0]
+
+
+@pytest.mark.parametrize('bytes_value', [None, 0, True, 'missing'])
+def test_release_url_requires_exact_integer_transport_bytes(native_chain, bytes_value):
+    helper = native_chain
+    original = helper.OUTDIR / 'render.json'
+    (helper.OUTDIR / 'render.before-release.json').write_bytes(original.read_bytes())
+    render = helper.read(original)
+    render['video_url'] = f'https://github.com/{helper.REPOSITORY}/releases/download/reel-{helper.SLUG}/{helper.MASTER}'
+    if bytes_value != 'missing':
+        render['video_bytes'] = bytes_value
+    helper.write(original, render)
+    with pytest.raises(RuntimeError, match='Master transport byte count changed'):
+        helper.native_evidence()
+
+
+@pytest.mark.parametrize('field,value', [('video_bytes', 0), ('video_url', None),
+                                        ('video_url', '')])
+def test_before_release_transport_field_absence_is_immutable(native_chain, field, value):
+    helper = native_chain
+    original = helper.OUTDIR / 'render.json'
+    (helper.OUTDIR / 'render.before-release.json').write_bytes(original.read_bytes())
+    render = helper.read(original)
+    render[field] = value
+    helper.write(original, render)
+    with pytest.raises(RuntimeError, match='transport fields changed before Release|Unexpected master transport URL'):
         helper.native_evidence()

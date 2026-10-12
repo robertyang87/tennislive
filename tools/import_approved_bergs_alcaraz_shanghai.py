@@ -2,6 +2,8 @@
 """Restore the exact Alcaraz Shanghai master from Git blobs; prepare Release/pages, never send.
 
 Reuse the pinned native spec/QC/assets and actual audio findings unchanged.
+The voice-evidence ZIP is opaque, pinned transport; it is never extracted,
+probed as video, or used as a pronunciation pass or the publication movie.
 Publication authorization never creates a human listening or pronunciation pass.
 """
 from __future__ import annotations
@@ -31,22 +33,23 @@ AUDIO = Path('data/evidence/bergs-alcaraz-shanghai-2026-r3/final-audio-review-ma
 AUTHORIZATION = 'data/evidence/bergs-alcaraz-shanghai-2026-r3/owner-publication-instruction.json'
 # UNARMED until the real final film and fresh native evidence have been reviewed.
 # No previous film, receipt, pronunciation count or evidence is a baseline here.
-EXPECTED_SPEC = ''
-EXPECTED_QC = ''
-EXPECTED_MANIFEST = ''
-EXPECTED_RENDER = ''
-EXPECTED_AUDIO = ''
-EXPECTED_ASSETS = {}
-EXPECTED_UNRESOLVED = None
-EXPECTED_PRONUNCIATION_STATUS = ''
+EXPECTED_SPEC = '1c7b76f2fc5142de95907e41d197e888b644de012e1cb0d5a96e87c11158f08f'
+EXPECTED_QC = '42de8c00a4aa407fc2aa3646c4fa9e7bc570ab53ea8219c2aaa719982751d196'
+EXPECTED_MANIFEST = 'ddc2fe7d134aab0c261862a22cb86bafb2ac141e64faf72986d8d6d0e0012ca7'
+EXPECTED_RENDER = '2404bc3a08ef68762d9914b8b8af85e20a6fb1675df589438d52c4c13cd26399'
+EXPECTED_AUDIO = 'c1540c714a7deb8905d985687d4134c2631db2633881fb330b8e6d7769e6ccee'
+EXPECTED_ASSETS = {'bergs-alcaraz-shanghai-2026-r3.mp4': (101759360, '9b5432c12c2906d0843cfa379fdf88d70795425aff402e862e06366fb31e212f'), 'bergs-alcaraz-shanghai-2026-r3-review.mp4': (28187911, 'd98486e78fab3449a755e88fcf46ccbfba71717bf9f98fc7f35597cee04d0a83'), 'bergs-alcaraz-shanghai-2026-r3-voice-evidence.zip': (39225547, '418febcf9dbc98075006f554221cdb4008ed8e01d581f364dee6d775e8373f68')}
+EXPECTED_UNRESOLVED = 130
+EXPECTED_PRONUNCIATION_STATUS = 'no_confident_misread_detected_with_calibration_limits'
 MASTER = f'{SLUG}.mp4'
+VOICE_ARCHIVE = f'{SLUG}-voice-evidence.zip'
 
 
 def require_armed():
     hashes = (EXPECTED_SPEC, EXPECTED_QC, EXPECTED_MANIFEST, EXPECTED_RENDER, EXPECTED_AUDIO)
     valid_hash = lambda value: isinstance(value, str) and re.fullmatch(r'[a-f0-9]{64}', value) is not None
     if (not all(valid_hash(value) for value in hashes)
-            or set(EXPECTED_ASSETS) != {MASTER, f'{SLUG}-review.mp4'}
+            or set(EXPECTED_ASSETS) != {MASTER, f'{SLUG}-review.mp4', VOICE_ARCHIVE}
             or any(type(size) is not int or size <= 0 or not valid_hash(digest)
                    for size, digest in EXPECTED_ASSETS.values())
             or type(EXPECTED_UNRESOLVED) is not int or EXPECTED_UNRESOLVED < 0
@@ -129,10 +132,18 @@ def native_evidence():
     baseline, render = read(original), read(render_path)
     # Only Release transport fields may change; native render/QC data is immutable.
     expected_url = f'https://github.com/{REPOSITORY}/releases/download/reel-{SLUG}/{MASTER}'
-    if render.get('video_url') not in (baseline.get('video_url'), expected_url):
-        raise RuntimeError('Unexpected master transport URL')
-    if render.get('video_bytes') != EXPECTED_ASSETS[MASTER][0]:
-        raise RuntimeError('Master transport byte count changed')
+    transport_keys = ('video_url', 'video_bytes')
+    current_transport = {k: render[k] for k in transport_keys if k in render}
+    baseline_transport = {k: baseline[k] for k in transport_keys if k in baseline}
+    if render.get('video_url') == expected_url:
+        if type(render.get('video_bytes')) is not int or render['video_bytes'] != EXPECTED_ASSETS[MASTER][0]:
+            raise RuntimeError('Master transport byte count changed')
+    elif current_transport != baseline_transport:
+        # The raw native renderer may omit both transport fields. Preserve
+        # their exact presence and values until the verified Release rebind.
+        if render.get('video_url') != baseline.get('video_url'):
+            raise RuntimeError('Unexpected master transport URL')
+        raise RuntimeError('Original master transport fields changed before Release')
     current_native = {k: v for k, v in render.items() if k not in ('video_url', 'video_bytes')}
     baseline_native = {k: v for k, v in baseline.items() if k not in ('video_url', 'video_bytes')}
     if current_native != baseline_native:
@@ -201,6 +212,19 @@ def verify_file(path, name):
         raise RuntimeError(f'Asset bytes differ from pinned identity: {name}')
 
 
+def verify_master_geometry(film):
+    probe = json.loads(subprocess.check_output([
+        'ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries',
+        'stream=width,height,r_frame_rate', '-of', 'json', str(film)], text=True))
+    stream = probe['streams'][0]
+    if (stream['width'], stream['height']) != (1080, 1440):
+        raise RuntimeError('Imported master canvas changed')
+    # Native target_fps divides this genuine 50 fps source by two. Preserve
+    # the renderer's 25 fps master; source FPS is separate source evidence.
+    if stream.get('r_frame_rate') != '25/1':
+        raise RuntimeError('Imported master must preserve native 25 fps rendering')
+
+
 def assemble(request):
     m = manifest(request)
     no_prior_delivery()
@@ -225,11 +249,7 @@ def assemble(request):
         verify_file(temporary, asset['name'])
         temporary.replace(film)
     run(sys.executable, 'tools/push_reel.py', '--stage', 'check', '--outdir', str(OUTDIR), '--copy', str(SPEC.with_suffix('.xhs.txt')))
-    probe = json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height,r_frame_rate', '-of', 'json', str(OUTDIR/MASTER)], text=True))
-    if (probe['streams'][0]['width'], probe['streams'][0]['height']) != (1080, 1440):
-        raise RuntimeError('Imported master canvas changed')
-    if probe['streams'][0].get('r_frame_rate') != '50/1':
-        raise RuntimeError('Imported master must preserve the 50 fps source')
+    verify_master_geometry(OUTDIR/MASTER)
     write(OUTDIR/'import-provenance.json', {
         'film_sha256': EXPECTED_ASSETS[MASTER][1], 'film_bytes': EXPECTED_ASSETS[MASTER][0],
         'original_native_qc_sha256': EXPECTED_QC, 'original_render_inputs_sha256': EXPECTED_MANIFEST,

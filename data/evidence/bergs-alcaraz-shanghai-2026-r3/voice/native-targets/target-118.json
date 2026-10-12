@@ -1,0 +1,645 @@
+{
+  "label": "第 15 段",
+  "edit_id": "five_all_rally",
+  "word": "比",
+  "char": "比",
+  "at": 10,
+  "sentence": "对手同样保发，追到五比五。盘末的拉锯，谁先松手，谁就陷入危险。",
+  "intended": "bi3",
+  "wrong": "pi3",
+  "actual_binding": {
+    "label": "第 15 段",
+    "index": 14,
+    "edit_id": "five_all_rally",
+    "display_text": "对手同样保发，追到五比五。盘末的拉锯，谁先松手，谁就陷入危险。",
+    "text": "对手同样保发，追到五比五。盘末的拉锯，谁先松手，谁就陷入危险。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "cache_key": "6ab76196b58730d9511034827f52a98d",
+    "actual_mp3_sha256": "2b934103c85ae7e0d4a2e4acbc09684b07beb8089e0c4752f5f149e9b1cd44f8",
+    "bound_snapshot_path": "/workspace/scratch/alcaraz-voice/native-speech/6ab76196b58730d9511034827f52a98d.mp3",
+    "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/native-speech/6ab76196b58730d9511034827f52a98d.marks.json",
+    "mp3_duration_seconds": 7.032,
+    "window_seconds": 10.060000000000002,
+    "headroom_seconds": 3.0280000000000022,
+    "native_cache_path": "/home/agent/.cache/tennislive-tts/6ab76196b58730d9511034827f52a98d-edge-v2.zip",
+    "native_zip_snapshot_path": "/workspace/scratch/alcaraz-voice/native-speech/6ab76196b58730d9511034827f52a98d.native.zip",
+    "native_zip_sha256": "381186e4707c52755773a34d44fb577b50c0b97832054e6c8a796bc0a6ab38e0",
+    "native_zip_marks_raw_sha256": "08446944b293bf8f002ef61178346639f1a92fd80f94c9c13c02144584353c02",
+    "actual_marks_sha256": "377e0ed207d7e409f6311055a4074758e1f361fc9ed18170dfdde09d537a9c6c",
+    "word_boundary_tokens": [
+      "对手",
+      "同样",
+      "保发",
+      "追到",
+      "五比五",
+      "盘末",
+      "的",
+      "拉锯",
+      "谁",
+      "先",
+      "松手",
+      "谁",
+      "就",
+      "陷入",
+      "危险"
+    ],
+    "enumerated_polyphones": [
+      {
+        "at": 2,
+        "char": "同",
+        "word": "同样",
+        "intended_lexical_reading": "tong2",
+        "all_dictionary_readings": [
+          "tong2",
+          "tong4"
+        ]
+      },
+      {
+        "at": 3,
+        "char": "样",
+        "word": "同样",
+        "intended_lexical_reading": "yang4",
+        "all_dictionary_readings": [
+          "yang4",
+          "yang2"
+        ]
+      },
+      {
+        "at": 5,
+        "char": "发",
+        "word": "发",
+        "intended_lexical_reading": "fa1",
+        "all_dictionary_readings": [
+          "fa1",
+          "fa4"
+        ]
+      },
+      {
+        "at": 7,
+        "char": "追",
+        "word": "追",
+        "intended_lexical_reading": "zhui1",
+        "all_dictionary_readings": [
+          "zhui1",
+          "dui1",
+          "tui1"
+        ]
+      },
+      {
+        "at": 10,
+        "char": "比",
+        "word": "比",
+        "intended_lexical_reading": "bi3",
+        "all_dictionary_readings": [
+          "bi3",
+          "bi4",
+          "pi2",
+          "pi3"
+        ]
+      },
+      {
+        "at": 14,
+        "char": "末",
+        "word": "末",
+        "intended_lexical_reading": "mo4",
+        "all_dictionary_readings": [
+          "mo4",
+          "me5"
+        ]
+      },
+      {
+        "at": 15,
+        "char": "的",
+        "word": "的",
+        "intended_lexical_reading": "de5",
+        "all_dictionary_readings": [
+          "de5",
+          "di1",
+          "di2",
+          "di4"
+        ]
+      },
+      {
+        "at": 16,
+        "char": "拉",
+        "word": "拉锯",
+        "intended_lexical_reading": "la1",
+        "all_dictionary_readings": [
+          "la1",
+          "la2",
+          "la3",
+          "la4",
+          "la5"
+        ]
+      },
+      {
+        "at": 17,
+        "char": "锯",
+        "word": "拉锯",
+        "intended_lexical_reading": "ju4",
+        "all_dictionary_readings": [
+          "ju4",
+          "ju1"
+        ]
+      },
+      {
+        "at": 19,
+        "char": "谁",
+        "word": "谁",
+        "intended_lexical_reading": "shui2",
+        "all_dictionary_readings": [
+          "shui2",
+          "shei2"
+        ]
+      },
+      {
+        "at": 24,
+        "char": "谁",
+        "word": "谁",
+        "intended_lexical_reading": "shui2",
+        "all_dictionary_readings": [
+          "shui2",
+          "shei2"
+        ]
+      }
+    ],
+    "tts_only_substitution_changed_text": false
+  },
+  "check_kind": "polyphone",
+  "context_notes": [
+    "Lexical dictionary intended reading is a declared hypothesis; calibration evaluates actual audio."
+  ],
+  "ok_refs": [
+    "彼",
+    "笔",
+    "鄙"
+  ],
+  "bad_refs": [
+    "匹",
+    "痞",
+    "圮"
+  ],
+  "reference_notes": [
+    "Only dictionary single-reading nonoriginal references selected; single-reading common, single-reading level-2",
+    "Only dictionary single-reading nonoriginal references selected; single-reading common, single-reading level-2"
+  ],
+  "reference_validity_limited": false,
+  "acoustic": {
+    "word": "比",
+    "char": "比",
+    "sentence": "对手同样保发，追到五比五。盘末的拉锯，谁先松手，谁就陷入危险。",
+    "tts_text": "对手同样保发，追到五比五。盘末的拉锯，谁先松手，谁就陷入危险。",
+    "intended_refs": [
+      "彼",
+      "笔",
+      "鄙"
+    ],
+    "wrong_refs": [
+      "匹",
+      "痞",
+      "圮"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "misread",
+    "confidence": "medium",
+    "verdict_raw": "misread",
+    "score": -0.398,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [
+      "笔"
+    ],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 3.318,
+        "d_wrong": 3.759,
+        "score": 0.062
+      },
+      "f0": {
+        "d_intended": 4.973,
+        "d_wrong": 0.988,
+        "score": -0.668
+      },
+      "comb": {
+        "d_intended": 6.682,
+        "d_wrong": 2.879,
+        "score": -0.398
+      }
+    },
+    "neighbour_shift": {
+      "intended": 10.142,
+      "wrong": 2.39
+    },
+    "separation": {
+      "spec": {
+        "within": 1.539,
+        "between": 4.737,
+        "separation": 3.077
+      },
+      "f0": {
+        "within": 1.626,
+        "between": 5.382,
+        "separation": 3.311
+      },
+      "comb": {
+        "within": 2.395,
+        "between": 7.751,
+        "separation": 3.236
+      }
+    },
+    "selftest_loo": {
+      "彼": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.746
+      },
+      "鄙": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.757
+      },
+      "匹": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.963
+      },
+      "痞": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.963
+      },
+      "圮": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.963
+      },
+      "笔": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": -0.192,
+        "dropped": true
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:彼": {
+        "spec": 3.42,
+        "f0": 4.973,
+        "vmis": 0.111,
+        "frames": 27,
+        "comb": 6.682
+      },
+      "A:笔": {
+        "spec": 2.875,
+        "f0": 0.938,
+        "vmis": 0.0,
+        "frames": 25,
+        "comb": 2.376
+      },
+      "A:鄙": {
+        "spec": 3.318,
+        "f0": 5.119,
+        "vmis": 0.077,
+        "frames": 26,
+        "comb": 6.778
+      },
+      "B:匹": {
+        "spec": 3.759,
+        "f0": 0.999,
+        "vmis": 0.241,
+        "frames": 29,
+        "comb": 2.879
+      },
+      "B:痞": {
+        "spec": 3.786,
+        "f0": 0.988,
+        "vmis": 0.241,
+        "frames": 29,
+        "comb": 2.881
+      },
+      "B:圮": {
+        "spec": 3.813,
+        "f0": 1.006,
+        "vmis": 0.241,
+        "frames": 29,
+        "comb": 2.913
+      }
+    },
+    "window_s": [
+      2.0,
+      2.25
+    ],
+    "boundary_token": "五比五",
+    "window_anchor": "A:彼",
+    "tokens": {
+      "ORIG": [
+        "对手",
+        "同样",
+        "保发",
+        "追到",
+        "五比五",
+        "盘末",
+        "的",
+        "拉锯",
+        "谁",
+        "先",
+        "松手",
+        "谁",
+        "就",
+        "陷入",
+        "危险"
+      ],
+      "A:彼": [
+        "对手",
+        "同样",
+        "保",
+        "发",
+        "追",
+        "到",
+        "五",
+        "彼",
+        "五",
+        "盘末",
+        "的",
+        "拉锯",
+        "谁",
+        "先",
+        "松手",
+        "谁",
+        "就",
+        "陷入",
+        "危险"
+      ],
+      "A:笔": [
+        "对手",
+        "同样",
+        "保发",
+        "追",
+        "到",
+        "五笔",
+        "五",
+        "盘末",
+        "的",
+        "拉锯",
+        "谁",
+        "先",
+        "松手",
+        "谁",
+        "就",
+        "陷入",
+        "危险"
+      ],
+      "A:鄙": [
+        "对手",
+        "同样",
+        "保发",
+        "追",
+        "到",
+        "五",
+        "鄙",
+        "五",
+        "盘末",
+        "的",
+        "拉锯",
+        "谁",
+        "先",
+        "松手",
+        "谁",
+        "就",
+        "陷入",
+        "危险"
+      ],
+      "B:匹": [
+        "对手",
+        "同样",
+        "保发",
+        "追到",
+        "五匹五",
+        "盘末",
+        "的",
+        "拉锯",
+        "谁",
+        "先",
+        "松手",
+        "谁",
+        "就",
+        "陷入",
+        "危险"
+      ],
+      "B:痞": [
+        "对手",
+        "同样",
+        "保发",
+        "追到",
+        "五痞五",
+        "盘末",
+        "的",
+        "拉锯",
+        "谁",
+        "先",
+        "松手",
+        "谁",
+        "就",
+        "陷入",
+        "危险"
+      ],
+      "B:圮": [
+        "对手",
+        "同样",
+        "保发",
+        "追到",
+        "五圮五",
+        "盘末",
+        "的",
+        "拉锯",
+        "谁",
+        "先",
+        "松手",
+        "谁",
+        "就",
+        "陷入",
+        "危险"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        4.8,
+        6.2,
+        7.1,
+        7.2,
+        3.8,
+        2.8,
+        0.8,
+        -0.1,
+        0.9,
+        3.3,
+        5.4,
+        5.9,
+        5.2
+      ],
+      "A:彼": [
+        -7.8,
+        -6.2,
+        -5.8,
+        -6.9,
+        null,
+        null,
+        0.6,
+        0.9,
+        2.3,
+        4.9,
+        7.1,
+        8.5,
+        7.8
+      ],
+      "A:笔": [
+        4.0,
+        6.3,
+        7.5,
+        8.1,
+        5.7,
+        3.9,
+        1.7,
+        1.3,
+        2.0,
+        3.8,
+        6.0,
+        7.1,
+        6.4
+      ],
+      "A:鄙": [
+        -7.9,
+        -6.0,
+        -5.3,
+        -5.6,
+        -5.7,
+        null,
+        0.8,
+        1.0,
+        3.0,
+        5.5,
+        7.5,
+        8.7,
+        7.9
+      ],
+      "B:匹": [
+        4.8,
+        6.1,
+        6.8,
+        6.5,
+        3.2,
+        null,
+        null,
+        null,
+        -0.1,
+        -0.0,
+        0.6,
+        1.8,
+        3.0,
+        3.6
+      ],
+      "B:痞": [
+        4.8,
+        6.1,
+        6.8,
+        6.5,
+        3.3,
+        null,
+        null,
+        null,
+        -0.1,
+        0.0,
+        0.7,
+        1.8,
+        3.0,
+        3.6
+      ],
+      "B:圮": [
+        4.8,
+        6.1,
+        6.8,
+        6.5,
+        3.2,
+        null,
+        null,
+        null,
+        -0.1,
+        -0.0,
+        0.6,
+        1.8,
+        3.0,
+        3.6
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/scratch/alcaraz-voice/native-speech/6ab76196b58730d9511034827f52a98d.mp3",
+      "A:彼": "/workspace/scratch/alcaraz-voice/fresh-reference-cache/cc5a25b6c4bef65c20bc536b.mp3",
+      "A:笔": "/workspace/scratch/alcaraz-voice/fresh-reference-cache/1e95bbe33c6ad875d0aecb32.mp3",
+      "A:鄙": "/workspace/scratch/alcaraz-voice/fresh-reference-cache/b68aa96b6c98f921f22394d2.mp3",
+      "B:匹": "/workspace/scratch/alcaraz-voice/fresh-reference-cache/83ae45d80562cf81fcfa89fd.mp3",
+      "B:痞": "/workspace/scratch/alcaraz-voice/fresh-reference-cache/354b00c34a2678761017ab58.mp3",
+      "B:圮": "/workspace/scratch/alcaraz-voice/fresh-reference-cache/8860e928feeec0f806d05b0a.mp3"
+    }
+  },
+  "control_audio_provenance": [
+    {
+      "label": "ORIG",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/6ab76196b58730d9511034827f52a98d.mp3",
+      "mp3_sha256": "2b934103c85ae7e0d4a2e4acbc09684b07beb8089e0c4752f5f149e9b1cd44f8",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/6ab76196b58730d9511034827f52a98d.marks.json",
+      "marks_sha256": "377e0ed207d7e409f6311055a4074758e1f361fc9ed18170dfdde09d537a9c6c"
+    },
+    {
+      "label": "A:彼",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/cc5a25b6c4bef65c20bc536b.mp3",
+      "mp3_sha256": "6dc99b7e423385b9834c6a7dd831b04753c01333ed14fd2c0538e50e7afece2a",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/cc5a25b6c4bef65c20bc536b.marks.json",
+      "marks_sha256": "62b0ced040ca6a0b29b0e8be812337e50002caa99a0d26d8f91180ad8f5ffd07"
+    },
+    {
+      "label": "A:笔",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/1e95bbe33c6ad875d0aecb32.mp3",
+      "mp3_sha256": "c949de3c0bf675368c6ef2330ce489de9c8f4cc8168e591d763b6760142daf95",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/1e95bbe33c6ad875d0aecb32.marks.json",
+      "marks_sha256": "3c4b10891493b0302c6736731d469a34ea91a7900d7913b383a719705ade283a"
+    },
+    {
+      "label": "A:鄙",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/b68aa96b6c98f921f22394d2.mp3",
+      "mp3_sha256": "d5d24d39eea33484498ddcb1ad21452d28b49c01102fc7d73849202f6f1655ef",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/b68aa96b6c98f921f22394d2.marks.json",
+      "marks_sha256": "5fa7d9f21d7a9f4efbdabb8ccbbe477ea184f83b83d9039767ea30830093790e"
+    },
+    {
+      "label": "B:匹",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/83ae45d80562cf81fcfa89fd.mp3",
+      "mp3_sha256": "16cb2e79b780e330f4680598a9eaaaec9e216a48c9d4cacb7d42049ee3adae58",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/83ae45d80562cf81fcfa89fd.marks.json",
+      "marks_sha256": "5714658a1228cb633bfe2ef068244ec9518774221568177030e646f86e7e2fa3"
+    },
+    {
+      "label": "B:痞",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/354b00c34a2678761017ab58.mp3",
+      "mp3_sha256": "ce87548718b1f6f895c37cc1b211211812818a0a822f949e7433bf0bbda16458",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/354b00c34a2678761017ab58.marks.json",
+      "marks_sha256": "2ff536eb007c315dda031ea5e6cf4efb75f9c7db39a77aad4c00cbec9e074679"
+    },
+    {
+      "label": "B:圮",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/8860e928feeec0f806d05b0a.mp3",
+      "mp3_sha256": "53d0da464f0c7a3880d22e807cf66ccc10a5c6f9ebb682f1e4741472195a8268",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/reference-audio/8860e928feeec0f806d05b0a.marks.json",
+      "marks_sha256": "f5249436617b737bda20f1d749213f99a827c589a8f95a81fd3afd1eff025cf7"
+    }
+  ],
+  "measured_at_utc": "2026-10-12T14:43:32.169310+00:00"
+}

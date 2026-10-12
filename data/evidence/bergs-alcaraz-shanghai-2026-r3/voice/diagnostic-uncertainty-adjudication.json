@@ -1,0 +1,40 @@
+{
+  "schema": "tennislive.finite-contrast-diagnostic-adjudication.v1",
+  "items": [
+    {
+      "sentence": "四比四，阿卡保住发球局，五比四领先。握拳、怒吼，他还不肯让这场球结束。",
+      "at": 14,
+      "char": "四",
+      "intended": "si4",
+      "wrong": "si1",
+      "actual_mp3_sha256": "c04fc7bdd87bedbbd1db554567df65b1d87fb5aca9a89df363a62330a1394672",
+      "raw_verdict": "misread",
+      "raw_confidence": "medium",
+      "reviewed_status": "diagnostic_uncertain_context_window_and_feature_limit",
+      "reason": "The intended controls 肆/饲 contain only one voiced F0 sample in their own unpadded WordBoundary target estimate while ORIG remains inside a merged score token. Padded combined result is dominated by nonmatching pitch samples/estimated token splits; both reference sides also shift adjacent audio. This cannot establish a stable si1 misread.",
+      "raw_target_path": "/workspace/scratch/alcaraz-voice/native-targets/target-103.json",
+      "boundary_diagnostics_path": "/workspace/scratch/alcaraz-voice/raw-misread-boundary-diagnostics.json",
+      "tone_pass_claimed": false,
+      "misread_confirmed": false,
+      "human_listening_claimed": false
+    },
+    {
+      "sentence": "对手同样保发，追到五比五。盘末的拉锯，谁先松手，谁就陷入危险。",
+      "at": 10,
+      "char": "比",
+      "intended": "bi3",
+      "wrong": "pi3",
+      "actual_mp3_sha256": "2b934103c85ae7e0d4a2e4acbc09684b07beb8089e0c4752f5f149e9b1cd44f8",
+      "raw_verdict": "misread",
+      "raw_confidence": "medium",
+      "reviewed_status": "diagnostic_uncertain_context_window_and_feature_limit",
+      "reason": "The supposed wrong contrast is bi3 versus pi3, whose lexical tones are equal. Combined misread is driven by F0 (-0.668) while spectral score weakly favors intended (+0.062); substitutions change score-word segmentation and third-tone grouping. Positive 笔 has pitch pattern close to ORIG but was dropped by the mutual classifier, while 彼/鄙 induce different pitch/neighbor trajectories. This cannot independently establish b→p mispronunciation.",
+      "raw_target_path": "/workspace/scratch/alcaraz-voice/native-targets/target-120.json",
+      "boundary_diagnostics_path": "/workspace/scratch/alcaraz-voice/raw-misread-boundary-diagnostics.json",
+      "tone_pass_claimed": false,
+      "misread_confirmed": false,
+      "human_listening_claimed": false
+    }
+  ],
+  "method": "Preserve original raw comparisons verbatim; audit correspondence of target/neighbor windows and suitability of pitch for phoneme contrast. No original result is erased or promoted to a pronunciation pass."
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "tennislive.actual-whole-word-recognition-support.v2",
+  "input_audio_sha256": "a1a660083017495b811dc2ad5cacb55f5e503ffbac042ab20a2696ad9ee55503",
+  "voice_count": 9,
+  "actual_models_completed": true,
+  "models": {
+    "large-v3": {
+      "model": "large-v3",
+      "source_sha256": "a1a660083017495b811dc2ad5cacb55f5e503ffbac042ab20a2696ad9ee55503",
+      "raw_transcript_path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/native-asr-large-v3-zh.json",
+      "transcript": "阿卡的反扑停在抢七最后关头 北京时间10月12日晚上 上海大师赛第三轮 贝尔戈斯用往前放短拿分 迫使阿卡向前追球 东京夺冠之后 他在上海遭遇新的考验 手盘3比2落后 阿卡立即回破追成3比3 5比5之后再次丢掉发球局 5比7输掉手盘 第二盘 贝尔戈斯打出穿越 突破阿卡的往前防线 双方保发 悬念拖到盘末 4比4 阿卡保住发球局 5比4领线 握拳 怒吼 他还不肯让这场球结束 对手同样保发 追到5比5 盘末的拉锯 谁先松手 谁就陷入危险 5比6 15比40 阿卡又到悬崖边上 他守住这次机会 回破 把比赛拉回6比6 以发得分率 阿卡66% 对手79% 制胜分少了8个 下一战 他能把反扑变成胜利吗"
+    },
+    "turbo": {
+      "model": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+      "source_sha256": "a1a660083017495b811dc2ad5cacb55f5e503ffbac042ab20a2696ad9ee55503",
+      "raw_transcript_path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/native-asr-turbo-zh.json",
+      "transcript": "阿卡的反扑停在抢7最后关头 北京时间10月12日晚上 上海大师赛第三轮 贝尔格斯又往前放短拿分 迫使阿卡向前追求 东京夺冠之后 他在上海遭遇新的考验 手盘3比2落后 阿卡立即回破 追成3比3 5比5之后 再次丢掉发球局 5比7输掉手盘 第二盘 贝尔格斯打出穿越 突破阿卡的往前防线 双方爆发 悬念拖到盘末 4比4 阿卡保住发球局 5比4领先 握拳怒吼 他还不肯让这场球结束 对手同样爆发 追到5比5 盘末的拉锯 谁先松手 谁就陷入危险 5比6 15比40 阿卡又到悬崖边上 他守住这次机会 回破 把比赛拉回6比6 以发得分率 阿卡66% 对手79% 至胜分少了8个 下一站 他能把反扑变成胜利吗"
+    }
+  },
+  "model_family_correlation": "Both Whisper family with different weights; not independent architecture evidence.",
+  "proper_name_divergence": {
+    "阿卡": "Both models recognize 阿卡",
+    "贝尔格斯": "large-v3 renders 贝尔戈斯; turbo renders 贝尔格斯; orthographic divergence is retained and does not prove ge1/ge2."
+  },
+  "other_spelling_divergences": "首盘→手盘, 网前→往前, 保发→爆发, 一发→以发 and 下一站→下一战 occur; raw transcripts retained.",
+  "number_recognition_support": "Both actual full recordings recognize Oct12, third round,3-2/3-3,5-5/5-7,4-4/5-4,5-6,15-40,6-6,66%/79%,8winners difference, and new tie-break landing. Numeral spelling recognition is not tone certification.",
+  "asr_used_to_prove_tones": false,
+  "human_listening_claimed": false,
+  "pronunciation_release_pass_claimed": false
+}

@@ -1,0 +1,64 @@
+[
+  {
+    "name": "official-news",
+    "url": "https://en.rolexshanghaimasters.com/en/media/news/alcaraz-bergs-shanghai-2026-monday",
+    "http_status": 200,
+    "bytes": 35779,
+    "exact_user_youtube_id_present": false
+  },
+  {
+    "name": "brightcove-player-config",
+    "url": "https://players.brightcove.net/6057277721001/8gZSNwgH_default/config.json",
+    "http_status": 200,
+    "bytes": 2896,
+    "exact_user_youtube_id_present": false
+  },
+  {
+    "name": "tennistv-shanghai",
+    "url": "https://www.tennistv.com/tournaments/shanghai-open",
+    "http_status": 200,
+    "bytes": 1413941,
+    "exact_user_youtube_id_present": false
+  },
+  {
+    "name": "official-video-index",
+    "url": "https://en.rolexshanghaimasters.com/en/media/videos",
+    "http_status": 200,
+    "bytes": 43318,
+    "exact_user_youtube_id_present": false
+  },
+  {
+    "name": "lastword-video-embed",
+    "url": "https://lastwordonsports.com/tennis/2026/10/12/carlos-alcaraz-shanghai/",
+    "http_status": 200,
+    "bytes": 103954,
+    "exact_user_youtube_id_present": true
+  },
+  {
+    "name": "official-embedded-brightcove-video",
+    "url": "https://edge.api.brightcove.com/playback/v1/accounts/6057277721001/videos/6406683922112",
+    "http_status": 200,
+    "raw_path": "official-embedded-brightcove-video.raw",
+    "finding": "same-match official hot-shot video only; not user highlight ID"
+  },
+  {
+    "name": "official-full-highlights-brightcove",
+    "url": "https://edge.api.brightcove.com/playback/v1/accounts/6057277721001/videos/6406690820112",
+    "http_status": 200,
+    "raw_path": "official-full-highlights-brightcove.raw",
+    "finding": "same-match official highlights metadata available; exact YouTube ID absent"
+  },
+  {
+    "name": "tennistv-match-highlights",
+    "url": "https://www.tennistv.com/videos/4590978/shanghai-2026-r3-bergs-alcaraz-highlights",
+    "http_status": 200,
+    "raw_path": "tennistv-match-highlights.raw",
+    "finding": "official same-match paid highlights, no exact user YouTube ID; official site links youtube.com/tennistv"
+  },
+  {
+    "name": "atpmedia-content-video",
+    "url": "https://content-api.prod.atpmedia.pulselive.com/content/atpmedia/en/videos/4590978",
+    "http_status": null,
+    "result": "proxy CONNECT403Forbidden; no HTTP response body; no retry/bypass attempted"
+  }
+]

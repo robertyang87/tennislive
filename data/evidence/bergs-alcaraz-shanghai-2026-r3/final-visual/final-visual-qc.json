@@ -1,0 +1,164 @@
+{
+  "status": "pass_with_recorded_fixed_crop_limitations",
+  "film_path": "/workspace/tennislive-alcaraz/output/2026-10-12/reel/bergs-alcaraz-shanghai-2026-r3/bergs-alcaraz-shanghai-2026-r3.mp4",
+  "film_sha256": "9b5432c12c2906d0843cfa379fdf88d70795425aff402e862e06366fb31e212f",
+  "film_bytes": 101759360,
+  "film_seconds": 203.16,
+  "film_geometry": [
+    1080,
+    1440
+  ],
+  "actual_fps": "25/1",
+  "checked_at": "2026-10-12",
+  "scope": "101 actual film PNGs and9 contact sheets viewed:46 ASS cue midpoints,5sec cadence and cold/stat/matchpoint/handshake/end frames. Full-film blackdetect. No audio audit or human-every-frame claim.",
+  "hash_binding": "Expected new SHA verified before and after extraction and again before report; no old film frames reused.",
+  "checks": {
+    "no_black_frames": {
+      "status": "pass",
+      "method": "Full-film ffmpeg blackdetect d=0.1,pix_th=0.10,pic_th=0.98",
+      "hits": []
+    },
+    "full_canvas_live_crop": {
+      "status": "pass",
+      "evidence": [
+        "sheet-01.jpg",
+        "sheet-04.jpg",
+        "sheet-06.jpg",
+        "sheet-08.jpg"
+      ],
+      "description": "Sampled live frames fill1080x1440. Fixed centered3:4 agrees with source preflight; no contain borders or tracking-window change observed."
+    },
+    "captions_above_native_board": {
+      "status": "pass",
+      "ass_margin_v": 237,
+      "caption_bottom_y": 1203,
+      "native_board_top_y": 1227,
+      "evidence": [
+        "frame-035.png",
+        "frame-041.png",
+        "frame-066.png",
+        "frame-072.png",
+        "frame-099.png"
+      ],
+      "description": "Actual Chinese bottom line has visible clearance above board; English wraps upwards. Reviewed long English and near-view captions stay within canvas and avoid faces."
+    },
+    "native_scoreboard_alpha": {
+      "status": "pass_in_reviewed_frames",
+      "evidence": [
+        "sheet-01.jpg",
+        "sheet-03.jpg",
+        "sheet-05.jpg",
+        "sheet-06.jpg",
+        "sheet-08.jpg"
+      ],
+      "description": "Native current score/server dot readable; width adapts between ordinary and point columns. During victory board withdrawal patch disappears. No rectangular court background or duplicated actor seen; no invented yellow header or reconstructed score."
+    },
+    "stat_full_canvas": {
+      "status": "pass",
+      "evidence": [
+        "frame-077.png",
+        "frame-078.png",
+        "frame-079.png",
+        "frame-081.png",
+        "frame-082.png",
+        "frame-083.png"
+      ],
+      "description": "Actual162.48/162.72/165/168.48/168.60/170 display complete native stat image without ASS lowercaptions or live topbar crossing table. Names, left/right values and all rows visible. Source stat asset2160x2880 scales to1080x1440.",
+      "stat_asset_sha256": "54235e014711c6ac57fdad3a38308cf1786f9abdf320cf7dc5d52e186473455a",
+      "pixel_comparison": [
+        {
+          "frame": "frame-077.png",
+          "t": 162.48,
+          "mean_absolute_difference_from_lanczos_downscaled_stat_asset": 1.6674470593278463
+        },
+        {
+          "frame": "frame-078.png",
+          "t": 162.72,
+          "mean_absolute_difference_from_lanczos_downscaled_stat_asset": 1.6675580847050755
+        },
+        {
+          "frame": "frame-079.png",
+          "t": 165.0,
+          "mean_absolute_difference_from_lanczos_downscaled_stat_asset": 1.6679959705075447
+        },
+        {
+          "frame": "frame-080.png",
+          "t": 165.88,
+          "mean_absolute_difference_from_lanczos_downscaled_stat_asset": 1.6677604166666666
+        },
+        {
+          "frame": "frame-081.png",
+          "t": 168.48,
+          "mean_absolute_difference_from_lanczos_downscaled_stat_asset": 1.6677550582990397
+        },
+        {
+          "frame": "frame-082.png",
+          "t": 168.6,
+          "mean_absolute_difference_from_lanczos_downscaled_stat_asset": 1.6678170010288065
+        },
+        {
+          "frame": "frame-083.png",
+          "t": 170.0,
+          "mean_absolute_difference_from_lanczos_downscaled_stat_asset": 1.5660380229766804
+        }
+      ]
+    },
+    "cold_and_english": {
+      "status": "pass_visual",
+      "evidence": [
+        "sheet-01.jpg",
+        "sheet-02.jpg",
+        "sheet-03.jpg",
+        "sheet-04.jpg",
+        "sheet-05.jpg",
+        "sheet-06.jpg",
+        "sheet-08.jpg",
+        "sheet-09.jpg"
+      ],
+      "description": "Cold shows winner after matchpoint. Actual rendered English midpoints inspected across early drop comments, set-end, forehand, Incredible, ArthurFery, finalpoint and winner. Wording/audio separately owned by root/audio review."
+    },
+    "ending_payoff": {
+      "status": "pass_visual_sequence",
+      "evidence": [
+        "frame-089.png",
+        "frame-090.png",
+        "frame-091.png",
+        "frame-093.png",
+        "frame-094.png",
+        "frame-096.png",
+        "frame-097.png",
+        "frame-099.png",
+        "frame-101.png"
+      ],
+      "description": "Actual185.80 starts matchpoint wide scene;188.16 still wide;190/191.16 winner arms;194.16 Alcaraz face;197.16/198.88/200.16 net handshake/embrace;203.12 last frame remains on court with player reaching upward. Finalrender retains source212.72–230.10 continuous ending. No endbrand, QR or interview seen."
+    }
+  },
+  "limitations": [
+    "Fixed center crop intentionally allows lateral athletes/ball to leave view; see corrected source preflight. Temporal point preservation does not assert whole-body visibility.",
+    "Sampled visualQC; blackdetect checks whole film for black spans but does not prove every frame visually perfect.",
+    "No player/action/point-win inference added; corrected serving-dot/PBP packet governs results."
+  ],
+  "artifacts": {
+    "manifest": "actual-film-sample-manifest.json",
+    "contact_sheets": [
+      "sheet-01.jpg",
+      "sheet-02.jpg",
+      "sheet-03.jpg",
+      "sheet-04.jpg",
+      "sheet-05.jpg",
+      "sheet-06.jpg",
+      "sheet-07.jpg",
+      "sheet-08.jpg",
+      "sheet-09.jpg"
+    ],
+    "actual_png_count": 101,
+    "black_log": "blackdetect.log"
+  },
+  "artifact_availability": {
+    "repository": "Actual sample manifest, all nine viewed JPEG contact sheets, blackdetect summary and reproducible sampler.",
+    "full_resolution_png": "101 actual decoded PNGs retained in workspace; excluded from Git tree. Regenerate from the exact SHA-pinned public master using the sample manifest/sampler.",
+    "master_url": "https://github.com/robertyang87/tennislive/releases/download/reel-bergs-alcaraz-shanghai-2026-r3/bergs-alcaraz-shanghai-2026-r3.mp4",
+    "sampler": "data/evidence/bergs-alcaraz-shanghai-2026-r3/final-visual/sample_final.py",
+    "remote_master_verified": false
+  }
+}

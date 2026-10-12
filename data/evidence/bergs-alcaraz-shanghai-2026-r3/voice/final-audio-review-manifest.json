@@ -1,0 +1,107 @@
+{
+  "schema": "tennislive.final-audio-review-manifest.v3",
+  "slug": "bergs-alcaraz-shanghai-2026-r3",
+  "status": "actual_native_aac_pcm_binding_confirmed_with_pronunciation_limits",
+  "pronunciation_status": "no_confident_misread_detected_with_calibration_limits",
+  "pronunciation_release_pass_claimed": false,
+  "human_listening_claimed": false,
+  "asr_used_to_prove_tones": false,
+  "film_sha256": "9b5432c12c2906d0843cfa379fdf88d70795425aff402e862e06366fb31e212f",
+  "film_bytes": 101759360,
+  "spec_sha256": "1c7b76f2fc5142de95907e41d197e888b644de012e1cb0d5a96e87c11158f08f",
+  "render_json_sha256": "2404bc3a08ef68762d9914b8b8af85e20a6fb1675df589438d52c4c13cd26399",
+  "qc_attestation_sha256": "42de8c00a4aa407fc2aa3646c4fa9e7bc570ab53ea8219c2aaa719982751d196",
+  "render_inputs_sha256": "ddc2fe7d134aab0c261862a22cb86bafb2ac141e64faf72986d8d6d0e0012ca7",
+  "subtitles_ass_sha256": "a96f5bd8ec5294317bfce9bee8368793a41a6ba3b590faf64a9a0468967f8394",
+  "native_full_mix_pcm": {
+    "sha256": "9bbb5d0c7960ed56b5e10097e922d4868983fe69d36c266d5e349b42a8325bfe",
+    "bytes": 78012416,
+    "sample_format": "f32le",
+    "audio_stream": {
+      "codec_name": "aac",
+      "sample_rate": "48000",
+      "channels": 2,
+      "channel_layout": "stereo"
+    }
+  },
+  "actual_voice_count": 9,
+  "all_actual_mp3_exact_native_zip_and_reviewed_audio": true,
+  "all_production_word_marks_exact_native_cache": true,
+  "all_mixed_waveforms_strong_match": true,
+  "pronunciation_occurrence_counts": {
+    "unresolved_calibration_or_reference_limit": 130,
+    "relative_correct_under_calibrated_controls": 39
+  },
+  "pronunciation_comparison_count": 201,
+  "pronunciation_comparison_counts": {
+    "correct": 141,
+    "uncertain": 24,
+    "unreliable": 33,
+    "misread": 3
+  },
+  "unresolved_occurrences": 130,
+  "confident_misread_occurrences": 0,
+  "all_enumerated_polyphones_covered": true,
+  "exclusions": {
+    "brand_outro": false,
+    "cover_narration": false
+  },
+  "method": "Fresh current full-sentence native ZIP audio+paired marks; finite same-voice/rate calibrated MFCC/F0 controls. Current AAC waveforms correlated with exact native speech, entire native-channel/rate PCM hashed. Final QC/ASS/render inputs/spec identities bind the same film. All uncertain/no-reference/low-confidence cases remain explicit; no historical episode evidence substituted.",
+  "evidence": {
+    "native-cache-pronunciation-review.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/native-cache-pronunciation-review.json",
+      "sha256": "2cf3c66eb493d846385510d2b6219a4d85e9176891d8d8e440da43bd46bafd42"
+    },
+    "native-voice-freeze.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/native-voice-freeze.json",
+      "sha256": "ac71114bfe6d4b775362228a84f620aaefa474ef52d3bf882cf5ea4656c4c4b0"
+    },
+    "final-actual-audio-bindings.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/final-actual-audio-bindings.json",
+      "sha256": "858daa0bb4dd8586599fe1230a7a7351b2cec8d671bd7ed3fc19b26eae9ff5bb"
+    },
+    "voice-word-sidecar-restoration.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/voice-word-sidecar-restoration.json",
+      "sha256": "a4ddcd91b9cda3a9047821b8061ad093825677af3150a5ca4dbb300ceabbedfd"
+    },
+    "fresh-native-control-file-manifest.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/fresh-native-control-file-manifest.json",
+      "sha256": "14743b93dc81e43048b5d9915cd7e85c8e8917454e3880d9c275a41a0be21e0d"
+    },
+    "final-result-content-mapping.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/final-result-content-mapping.json",
+      "sha256": "f1706d627cdead750c9071e04ddf33d2c4a00041867255e7c10f5a4d838d5bd8"
+    },
+    "diagnostic-uncertainty-adjudication.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/diagnostic-uncertainty-adjudication.json",
+      "sha256": "bd3d988a2963eeb931cae9dd520acada3a4c0f66e87b23f979b1a059fe1981ad"
+    },
+    "raw-misread-boundary-diagnostics.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/raw-misread-boundary-diagnostics.json",
+      "sha256": "e89c383e0c8c9cac5d74a66e0d37bcb9c2c659ab09173681de1b170bc938c803"
+    },
+    "edge-endpoint-migration-provenance.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/edge-endpoint-migration-provenance.json",
+      "sha256": "a40804e31d596c0aece6736a3313761fa2c385ec93e2e9d1bcf6fa5b8e80f3ca"
+    },
+    "complete-speech-asr-input-manifest.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/complete-speech-asr-input-manifest.json",
+      "sha256": "f03b8ccd04959e4b4b0239320e23d1c13632792a846ad8e5d6968bec56eb4659"
+    },
+    "complete-speech-word-recognition-support.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/complete-speech-word-recognition-support.json",
+      "sha256": "42fdf59b0ebf349b8a45a13501e346ef2de6e1be806a5f32cb3cac339b0ddae5"
+    },
+    "native-asr-large-v3-zh.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/native-asr-large-v3-zh.json",
+      "sha256": "19a315c1a4bf126bcf67e0c30d3ce3ab8a48cada03119e68ed4de82023134cf7"
+    },
+    "native-asr-turbo-zh.json": {
+      "path": "/workspace/tennislive-alcaraz/data/evidence/bergs-alcaraz-shanghai-2026-r3/voice/native-asr-turbo-zh.json",
+      "sha256": "e3f7d2a909f36ccd617a27e682e583735eaab2a6a33b025a071964887b7bbdb0"
+    }
+  },
+  "current_reliable_misread_count": 0,
+  "remaining_uncertain_count": 130,
+  "raw_misread_diagnostic_limit_count": 2
+}

@@ -10,7 +10,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 BUNDLE = ROOT / 'tools' / 'alcaraz_voice_review'
 SLUG = 'bergs-alcaraz-shanghai-2026-r3'
-FINGERPRINT = '8eb988f93e710b3be4999a67c4f9474a3118c06cee82deae1007fb29d7e638e6'
+FINGERPRINT = 'c4f929051f7197053c6dea30cad60a34a0a92093793a94ec0a1db991b689a9a8'
 
 
 def main():

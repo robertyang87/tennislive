@@ -124,8 +124,8 @@
     "layout": "solo",
     "subject": "阿尔卡拉斯",
     "topic": "ATP1000 上海 第三轮 · 阿尔卡拉斯 VS 贝尔格斯",
-    "hook": "次盘5-6追到6-6\n阿卡上海第三轮出局",
-    "hook_accent": "第三轮出局",
+    "hook": "次盘5-6追到6-6\n阿卡上海爆冷出局",
+    "hook_accent": "爆冷出局",
     "_portrait_geometry_owner": "root owns current-match official9433 portrait focus; no guessed geometry",
     "portrait": {
       "image": "assets/reel/bergs-alcaraz-shanghai-2026-r3-cover.jpg",
@@ -150,12 +150,12 @@
     "mode": "match_review",
     "hook": [
       "次盘5-6追到6-6",
-      "阿卡上海第三轮出局"
+      "阿卡上海爆冷出局"
     ],
     "question": "阿卡把比赛拖进抢七，最终差距体现在哪里？",
-    "thesis": "东京夺冠后，阿卡来到上海第三轮。首盘5-7落败，次盘双方前十局一路保发到5-5；随后阿卡失去发球局5-6，又立刻回破追到6-6。抢七4-4后连丢三分。贝尔格斯凭更高的一发得分率及更多制胜分胜出，阿卡反扑没能改变结局。",
+    "thesis": "东京夺冠后，阿卡来到上海第三轮。首盘5-7落败，次盘双方前十局一路保发到5-5；随后阿卡失去发球局5-6，又立刻回破追到6-6。抢七4-4后连丢三个小分。贝尔格斯凭更高的一发得分率及更多制胜分胜出，阿卡反扑没能改变结局。",
     "beats": [
-      "终局失利反应冷开，阿卡反扑停在最后三分落点",
+      "终局失利反应冷开，阿卡反扑停在最后三个小分落点",
       "时间坐标与东京冠军前情",
       "Bergs网前drop与快速场地原声",
       "首盘即时回破后，5-5再次被破、7-5收盘",
@@ -165,7 +165,7 @@
       "TB4-4后连丢3分；完整赛点失利与握手结局"
     ],
     "narration": [
-      "阿卡的反扑，这次停在最后三分。",
+      "阿卡的反扑，停在抢七最后关头。",
       "北京时间十月十二日晚上，上海大师赛第三轮。",
       "贝尔格斯用网前放短拿分，迫使阿卡向前追球。东京夺冠之后，他在上海遭遇新的考验。",
       "首盘三比二落后，阿卡立即回破，追成三比三。五比五之后，再次丢掉发球局，五比七输掉首盘。",
@@ -182,7 +182,7 @@
     },
     "_tactics_evidence": "保完整源drop与上网后穿越的两组真实English解说，不靠逐分数据猜线路。中文主要承担坐标与进程。",
     "human_context": {
-      "angle": "东京夺冠后阿卡上海第三轮止步；两次回破和抢七4-4后的最后三分，解释强烈反扑为何仍不足以赢球。",
+      "angle": "东京夺冠后阿卡上海第三轮止步；两次回破和抢七4-4后的最后三个小分，解释强烈反扑为何仍不足以赢球。",
       "facts": [
         "2026-10-12上海第三轮，贝尔格斯7-5 7-6(4)阿尔卡拉斯。",
         "首盘阿卡落后3-2回破3-3；第二盘双方前十局保发，5-6时阿卡再次回破6-6。",
@@ -199,15 +199,15 @@
   },
   "push": {
     "auto": true,
-    "summary": "阿卡上海第三轮出局",
-    "lead": "刚在东京夺冠，阿尔卡拉斯却止步上海第三轮。首盘5-5后被破发；第二盘双方一路保发到5-5。5-6时，阿卡再次回破追到6-6，把悬念带进抢七。可4-4之后，最后三分都归了贝尔格斯：7-5、7-6(4)。对手一发得分率79%，阿卡66%；制胜分24比16。阿卡的真实反扑，没能抵消对手的进攻效率。",
+    "summary": "阿尔卡拉斯上海第三轮出局",
+    "lead": "刚在东京夺冠，阿尔卡拉斯却止步上海第三轮。首盘5-5后被破发；第二盘双方一路保发到5-5。5-6时，阿卡再次回破追到6-6，把悬念带进抢七。可4-4之后，最后三个小分都归了贝尔格斯：7-5、7-6(4)。对手一发得分率79%，阿卡66%；制胜分24比16。阿卡的真实反扑，没能抵消对手的进攻效率。",
     "matchup": "阿尔卡拉斯 vs 贝尔格斯",
     "score": "7-5 7-6(4)",
     "event": "ATP1000 上海 第三轮"
   },
   "_production": {
     "kind": "manual_reel",
-    "status": "production_in_progress",
+    "status": "native_narration_measured_rendering",
     "authoring_method": "current_assistant_manual",
     "external_model_pass_claimed": false,
     "human_listening_claimed": false
@@ -242,7 +242,7 @@
       "title_card": "反扑追到抢七",
       "kicker": "阿卡上海第三轮出局",
       "seconds": 5.0,
-      "narration": "阿卡的反扑，这次停在最后三分。",
+      "narration": "阿卡的反扑，停在抢七最后关头。",
       "_edit_id": "landing",
       "_why": "cold现场之后一句落点：反扑仍以失利结束。首十局全保发已通过ROOTscore-proof实际黄dot校正。"
     },
@@ -602,7 +602,7 @@
     {
       "source": "main",
       "start": 176.76,
-      "end": 179.2,
+      "end": 184.3,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
@@ -610,14 +610,14 @@
       "score_inset": true,
       "bed": "high",
       "_edit_id": "six_five_breakpoint_english_head",
-      "point_end_ok": "176.76新point发球准备，后段同源连续保完整6-5/15-40回破长回合。当前源ASR复核未发现可靠前景英文；198争议句在另一死球范围且不选入。",
-      "crosses_cut": "176.76新point发球准备，后段同源连续保完整6-5/15-40回破长回合。当前源ASR复核未发现可靠前景英文；198争议句在另一死球范围且不选入。",
-      "_why": "176.76新point发球准备，后段同源连续保完整6-5/15-40回破长回合。当前源ASR复核未发现可靠前景英文；198争议句在另一死球范围且不选入。",
-      "_quote_skip_why": "176.76–179.2实际裁窗medium noVAD无句；small孤立Thanks for watching仅单模型幻识，三模型full无句。只保本场发球准备/击球/现场声，未移用实际197.7争议句。"
+      "point_end_ok": "保完整6-5/15-40回破发球准备及长回合前段，前7.54秒让现场声和击球建立张力；184.30音责切分、画面连续，不切掉一拍。",
+      "crosses_cut": "保完整6-5/15-40回破发球准备及长回合前段，前7.54秒让现场声和击球建立张力；184.30音责切分、画面连续，不切掉一拍。",
+      "_why": "保完整6-5/15-40回破发球准备及长回合前段，前7.54秒让现场声和击球建立张力；184.30音责切分、画面连续，不切掉一拍。",
+      "_quote_skip_why": "176.76–184.30发球准备与长回合前段只保现场声；small/medium/large全源真实转写及原选窗核没有可靠前景解说，此段未以孤立ASR幻识增造字幕。下一段184.30同源连续起配音。"
     },
     {
       "source": "main",
-      "start": 179.2,
+      "start": 184.3,
       "end": 193.8,
       "cx": 0.5,
       "track": false,
@@ -627,9 +627,9 @@
       "bed": "low",
       "subtitle_bottom": 237,
       "_edit_id": "alcaraz_breakback_complete",
-      "point_end_ok": "176.76–194.32完整长回合。179.2–193.8同源连续中段中文；193.8后保完整落点、反应与English。五比六/15-40救回6-6经主代理源记分牌实核，不能按旧PBP5-4。",
-      "crosses_cut": "176.76–194.32完整长回合。179.2–193.8同源连续中段中文；193.8后保完整落点、反应与English。五比六/15-40救回6-6经主代理源记分牌实核，不能按旧PBP5-4。",
-      "_why": "176.76–194.32完整长回合。179.2–193.8同源连续中段中文；193.8后保完整落点、反应与English。五比六/15-40救回6-6经主代理源记分牌实核，不能按旧PBP5-4。"
+      "point_end_ok": "同源连续承接176.76–184.30，完整长回合到194.32保留。把本期真实9.12s旁白起点后移5.10s，使追回6-6的收句贴近最后击球和194.06原声Incredible，而不在拉锯前段提前报出结果；193.80只是音责切分，以下继续球/反应。",
+      "crosses_cut": "同源连续承接176.76–184.30，完整长回合到194.32保留。把本期真实9.12s旁白起点后移5.10s，使追回6-6的收句贴近最后击球和194.06原声Incredible，而不在拉锯前段提前报出结果；193.80只是音责切分，以下继续球/反应。",
+      "_why": "同源连续承接176.76–184.30，完整长回合到194.32保留。把本期真实9.12s旁白起点后移5.10s，使追回6-6的收句贴近最后击球和194.06原声Incredible，而不在拉锯前段提前报出结果；193.80只是音责切分，以下继续球/反应。"
     },
     {
       "source": "main",
@@ -657,7 +657,7 @@
     },
     {
       "stat_card": true,
-      "seconds": 16,
+      "seconds": 12,
       "narration": "一发得分率，阿卡百分之六十六，对手百分之七十九。制胜分少了八个。下一站，他能把反扑变成胜利吗？",
       "_edit_id": "stats_efficiency",
       "_why": "唯一第二张静卡，解释发球与进攻效率闭环；一发66%vs79%，W16vs24差八个，不使用ElPais数字，不臆测心理体能。"
@@ -737,8 +737,7 @@
           "text": "Zizou Bergs gets the better of Carlos Alcaraz.\n贝尔格斯击败了阿尔卡拉斯。"
         }
       ],
-      "_quote_kind": "broadcast",
-      "tail": 0
+      "_quote_kind": "broadcast"
     }
   ],
   "_internal_source_discrepancies": "Official prose 5-4 serving-for-match is erroneous; actual board6-5. Source138.34 Carlos serve4-4/40-30: hold5-4, not break. Both players held first10 games second set. Official match total Carlos2/2 break conversions corroborates first-set rebreak3-3 and second-set rebreak6-6. Previous visual-agent misread explicitly corrected; no rejected draft claims published.",
@@ -751,6 +750,53 @@
     432,
     1029
   ],
-  "_tts_backend_why": "标准zh-CN-YunjianNeural +6%配音；本片不使用情绪风格，按用户明确要求不调用DeepSeek或MiniMax，采用本次真实音频独立核查。",
-  "_story_evidence": "data/evidence/bergs-alcaraz-shanghai-2026-r3/visual-source-preflight/independent-source-visual-preflight.json"
+  "_tts_backend_why": "标准zh-CN-YunjianNeural +6%/+0Hz，不用情绪风格。旧微软Edge WebSocket endpoint实际403；采用2026-10-12官方接口迁移的api.msedgeservices.com，stock edge-tts7.2.8 UA/GEC143，仅URL迁移。9段本期真实MP3及pairedZIP已完成，fresh same-backend声学校准持续；未调用DeepSeek或MiniMax。",
+  "_story_evidence": "data/evidence/bergs-alcaraz-shanghai-2026-r3/visual-source-preflight/independent-source-visual-preflight.json",
+  "_tennistv_trim": "本场源品牌首帧230.12；最终连续赛点、庆祝、拥抱、网前阿卡反应到230.10结束。native outro:false使最后段tail0，20ms提前于第一品牌帧。源240.163991s。实际几何精确帧与音频尾词230.04证据在本期visual/audio目录。无赛后采访。",
+  "_hit_data": [
+    {
+      "label": "阿尔卡拉斯 一发得分率摆动",
+      "detail": "第1盘73% → 第2盘59%",
+      "swing": 14,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "贝尔格斯 破发点兑现",
+      "detail": "3/4（75%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "阿尔卡拉斯 破发点兑现",
+      "detail": "2/2（100%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "贝尔格斯 连续保发",
+      "detail": "8 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "阿尔卡拉斯 连续保发",
+      "detail": "5 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Bergs Z. 1 : 1 Alcaraz C.（含本场） · 硬地 1:1",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "label": "近况",
+      "detail": "Bergs Z. 最近 5 场 3 胜（WWWLL）；Alcaraz C. 最近 5 场 4 胜（LWWWW）",
+      "source": "flashscore df_hh_1 Last matches"
+    },
+    {
+      "label": "总分差",
+      "detail": "贝尔格斯 81 - 阿尔卡拉斯 73，净差 8 分，贝尔格斯 领先",
+      "diff": 8,
+      "source": "flashscore df_mh_1（总分）",
+      "use": "body_only"
+    }
+  ],
+  "_hit_data_why": "Nativematch_stat_hooks --from-spec默认按cover loser-first错误标定feed home/away，已拒绝该错误候选；显式 --home贝尔格斯 --away阿尔卡拉斯 对应实际Flashscore feed和官方API后重跑。候选非全部采纳，数字经官方核对；全场一发66%/79%与W16/24进卡/正文，净总分差只供内部不进hook/推送标题。分盘用时不用Flashscore四舍五入值，采用官方02:02:32。"
 }
