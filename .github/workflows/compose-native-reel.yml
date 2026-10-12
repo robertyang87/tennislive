@@ -98,6 +98,7 @@ jobs:
             ~/.cache/apt-lists
           key: apt-pkgs-${{ runner.os }}-24.04-compose-native-${{ github.run_id }}
           restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-compose-native-
             apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       - name: Install native checker dependencies
         timeout-minutes: 15
