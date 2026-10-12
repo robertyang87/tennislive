@@ -45,6 +45,8 @@ import argparse
 import json
 import re
 import unicodedata
+from collections.abc import Sequence
+from dataclasses import dataclass
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -87,12 +89,69 @@ _SET_TOKEN = re.compile(r"^(\d+)-(\d+)(?:\((\d+)\))?$")
 _SET_GAP = 18
 
 
+@dataclass(frozen=True)
+class SetScore:
+    """一盘的结构化比分。颜色只从这里算，不接受手写的绿/白标记。
+
+    ``games`` 是屏幕上从左到右的两个局数。``featured`` 指出这一屏的主角是
+    左边还是右边：只有主角赢下的那一盘涂品牌黄绿，丢掉的盘留白。抢七括号
+    里的小分只参与写成 ``7-6(5)``，不参与上色，也不能拿来把输盘涂绿。
+    """
+
+    games: tuple[int, int]
+    featured: str = "left"
+    tiebreak: int | None = None
+
+    def __post_init__(self) -> None:
+        if (not isinstance(self.games, tuple) or len(self.games) != 2
+                or any(type(n) is not int for n in self.games)):
+            raise TypeError("games 必须是两个整数，不能附带颜色标记")
+        if any(n < 0 for n in self.games):
+            raise ValueError("局数不能是负的")
+        if self.featured not in {"left", "right"}:
+            raise ValueError("featured 只能是 left 或 right")
+        if self.tiebreak is not None and type(self.tiebreak) is not int:
+            raise TypeError("抢七小分必须是整数")
+        if self.tiebreak is not None and self.tiebreak < 0:
+            raise ValueError("抢七小分不能是负的")
+
+    @property
+    def won(self) -> bool:
+        left, right = self.games
+        mine, theirs = (left, right) if self.featured == "left" else (right, left)
+        return mine > theirs
+
+    def token(self) -> str:
+        left, right = self.games
+        text = f"{left}-{right}"
+        if self.tiebreak is not None:
+            text += f"({self.tiebreak})"
+        return text
+
+
+def score_line(sets: Sequence[SetScore]) -> tuple[str, list[bool]]:
+    """结构化盘分 → （屏幕上的比分串，每一盘主角是否赢了）。
+
+    赢没赢是算出来的。调用方不能另传一份颜色，字符串里也不认 ``*`` / 标签。
+    """
+    if isinstance(sets, (str, bytes)) or not sets:
+        raise SystemExit("sets 要的是一组 SetScore，不能是手写标记或空表")
+    tokens: list[str] = []
+    wins: list[bool] = []
+    for item in sets:
+        if not isinstance(item, SetScore):
+            raise SystemExit("sets 的每一盘必须是 SetScore，不能手写哪一盘涂绿")
+        tokens.append(item.token())
+        wins.append(item.won)
+    return " ".join(tokens), wins
+
+
 def set_score_wins(metric: str) -> list[bool] | None:
     """`4-6 6-3 6-4` → `[False, True, True]`；不是纯整场比分串就返回 None。
 
-    **metric 是从 headline 那个人的视角写的**（新的内容合同里 headline 只写
-    赢家），所以「前面那个数大」就是这一盘赢了——判据是机械的，不依赖任何
-    外部数据，也不需要再传一个「谁赢了」进来（传两处必分叉）。
+    只在**没有** ``sets`` 时走这条。它把左边那个数当成主角的局数——旧合同
+    的 metric 就是这么写的。新的角标把盘分交给 ``SetScore``，主角可以在
+    右边，颜色跟着结构化数据走，不跟着「左边更大」。
 
     ⚠️ 认得窄是故意的：`决胜盘 1-5 赛点` 这种「画面上这一刻的局分」必须
     落回老路径（整块一个强调色），按盘上色对它没有意义。
@@ -219,11 +278,15 @@ def _metric_fonts(size: int) -> tuple[ImageFont.FreeTypeFont, ImageFont.FreeType
     return _font(BOLD, size), _font(SCORE, int(round(size * 1.2)))
 
 
+def _set_line(metric: str, set_wins: list[bool] | None) -> bool:
+    """这一行是不是按盘画的整场比分。结构化盘分优先于从字符串猜。"""
+    return set_wins is not None or set_score_wins(metric) is not None
+
+
 def _metric_width(draw: ImageDraw.ImageDraw, metric: str, size: int,
-                  *, stroke: int) -> int:
+                  *, stroke: int, set_wins: list[bool] | None = None) -> int:
     cjk, score = _metric_fonts(size)
-    wins = set_score_wins(metric)
-    if wins is not None:
+    if _set_line(metric, set_wins):
         # 整场比分按盘画，盘之间要真的留出间隔——所以量的是 **advance 宽度**
         # （`textlength`）不是墨迹框（`textbbox`）：空格的墨迹框宽度是 0，
         # 拿墨迹框摞下去，三盘会挤成一串。
@@ -240,9 +303,10 @@ def _metric_width(draw: ImageDraw.ImageDraw, metric: str, size: int,
 
 
 def _fit_metric_size(draw: ImageDraw.ImageDraw, metric: str, preferred: int,
-                     minimum: int, max_width: int, *, stroke: int) -> int:
+                     minimum: int, max_width: int, *, stroke: int,
+                     set_wins: list[bool] | None = None) -> int:
     for size in range(preferred, minimum - 1, -2):
-        if _metric_width(draw, metric, size, stroke=stroke) <= max_width:
+        if _metric_width(draw, metric, size, stroke=stroke, set_wins=set_wins) <= max_width:
             return size
     return minimum
 
@@ -254,7 +318,8 @@ _SHADOW_BLUR = 7
 
 
 def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
-                   metric: str, align: str, highlight: str) -> Path:
+                   metric: str, align: str, highlight: str,
+                   set_wins: list[bool] | None = None) -> Path:
     """右轨、右对齐、四行以内：主标题、小坐标、大比分、小说明。
 
     字号按成片 0.54 倍缩小后对齐梅德韦杰夫 24 冠那张贴图：主标题约 32px、
@@ -284,7 +349,8 @@ def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
     metric_size = 0
     score_font = None
     if metric:
-        metric_size = _fit_metric_size(probe, metric, 56, 44, lane, stroke=_STROKE_SMALL)
+        metric_size = _fit_metric_size(probe, metric, 56, 44, lane, stroke=_STROKE_SMALL,
+                                       set_wins=set_wins)
         score_font = _metric_fonts(metric_size)[1]
 
     def block_h(text: str, font: ImageFont.FreeTypeFont, stroke: int) -> int:
@@ -296,7 +362,7 @@ def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
         block_h(kicker, kicker_font, _STROKE_SMALL),
     ]
     if metric and score_font is not None:
-        sample = metric.split()[0] if set_score_wins(metric) else metric[:1] or "0"
+        sample = metric.split()[0] if _set_line(metric, set_wins) else metric[:1] or "0"
         row_heights.append(block_h(sample, score_font, _STROKE_SMALL))
     row_heights.append(block_h(detail, detail_font, _STROKE_SMALL))
     gaps = len(row_heights) - 1
@@ -338,7 +404,7 @@ def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
     if metric:
         metric_draw, metric_shadow = row_canvas()
         cjk, score = _metric_fonts(metric_size)
-        wins = set_score_wins(metric)
+        wins = set_wins if set_wins is not None else set_score_wins(metric)
         if wins is not None:
             mx = x
             for token, won in zip(metric.split(), wins):
@@ -380,7 +446,15 @@ def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
 def render(kicker: str, headline: str, detail: str, out: Path, *,
            metric: str = "", variant: str = "timeline", align: str = "right",
            split_metric: bool = False, layout: str = "corner",
-           highlight: str = "") -> Path:
+           highlight: str = "", sets: Sequence[SetScore] | None = None) -> Path:
+    set_wins: list[bool] | None = None
+    if sets is not None:
+        formatted, set_wins = score_line(sets)
+        if metric.strip() and metric.strip() != formatted:
+            raise SystemExit(
+                f"metric「{metric.strip()}」和结构化盘分「{formatted}」不一致；"
+                "颜色只从 SetScore 算，不要另写一串或手写绿白")
+        metric = formatted
     kicker, headline, detail, metric = _validate(
         kicker, headline, detail, metric, variant)
     highlight = _validate_highlight(highlight)
@@ -395,7 +469,7 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
         layout = "classic"
     if layout == "corner":
         return _render_corner(kicker, headline, detail, out, metric=metric,
-                              align=align, highlight=highlight)
+                              align=align, highlight=highlight, set_wins=set_wins)
 
     out.parent.mkdir(parents=True, exist_ok=True)
     height = SPLIT_METRIC_HEIGHT if split_metric else HEIGHT
@@ -424,8 +498,9 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
         # 独立行按原60px上限绘制，不缩字去挤；默认同行继续沿用旧字号预算。
         metric_size = _fit_metric_size(draw, metric, 60, 60 if split_metric else 44,
                                       WIDTH - x - 28 if split_metric else 430,
-                                      stroke=_STROKE_SMALL)
-        metric_width = _metric_width(draw, metric, metric_size, stroke=_STROKE_SMALL)
+                                      stroke=_STROKE_SMALL, set_wins=set_wins)
+        metric_width = _metric_width(draw, metric, metric_size, stroke=_STROKE_SMALL,
+                                     set_wins=set_wins)
         if split_metric and metric_width > WIDTH - x - 28:
             raise SystemExit("metric 独立行仍放不下；请缩短文字，不缩小比分字号")
     # 主标题一律得意黑（和封面钩子、章节卡同一副脸）；变体只改字号。
@@ -472,12 +547,11 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
         mx = x if split_metric else head_box[2] + 36
         metric_draw, metric_shadow = row_canvas() if split_metric else (head_draw, head_shadow)
         cjk, score = _metric_fonts(metric_size)
-        wins = set_score_wins(metric)
+        wins = set_wins if set_wins is not None else set_score_wins(metric)
         if wins is not None:
-            # **整场比分按盘上色**：赢下的那几盘给品牌绿，丢掉的盘白色。
-            # 和封面比分板的 `.setwin` 是同一条规矩（赢盘绿），所以贴图和
-            # 海报是一套系统，不是两套。绿在这儿有意义——它就是「赢了哪几盘」，
-            # 不再只是给标签上个色。
+            # **整场比分按盘上色**：主角赢下的那几盘给品牌黄绿，丢掉的盘白色。
+            # 有 ``sets`` 时赢没赢从 SetScore 算（主角可以在右边）；只有
+            # metric 字符串时，左边那个数就是主角。不认手写的颜色标记。
             for token, won in zip(metric.split(), wins):
                 _draw_text(metric_draw, (mx, baseline), token, font=score,
                            fill=BRAND_GREEN if won else WHITE,

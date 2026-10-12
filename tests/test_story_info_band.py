@@ -6,7 +6,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from render_story_info_band import (  # noqa: E402
-    BRAND_GREEN, display_units, metric_runs, render, set_score_wins,
+    BRAND_GREEN, SetScore, display_units, metric_runs, render,
+    score_line, set_score_wins,
 )
 
 
@@ -105,6 +106,95 @@ def test_整场比分按盘上色赢的盘绿丢的盘白(tmp_path):
     # 「第一盘白、其余绿」这种和输赢无关的规则也能过。
     assert 1.5 < mixed_green / mixed_white < 2.5, (
         f"绿白比例 {mixed_green / mixed_white:.2f} 不像「赢两盘丢一盘」")
+
+
+def _fill_split(pixels):
+    """把变色的像素分成品牌黄绿和暖白。描边是墨绿，两边一样，不进这堆。"""
+    green = white = 0
+    for pixel in pixels:
+        if pixel[3] < 180:
+            continue
+        if pixel[1] > pixel[0] > pixel[2] and pixel[1] > 180:
+            green += 1
+        elif min(pixel[:3]) > 200 and max(pixel[:3]) - min(pixel[:3]) < 40:
+            white += 1
+    return green, white
+
+
+def _pixels_that_differ(path_a, path_b):
+    with Image.open(path_a) as image_a, Image.open(path_b) as image_b:
+        a = list(image_a.convert("RGBA").getdata())
+        b = list(image_b.convert("RGBA").getdata())
+    return [ca for ca, cb in zip(a, b) if ca != cb]
+
+
+def test_比分颜色只从结构化盘分算_主角赢的盘才是黄绿(tmp_path):
+    """账号所有者 2026-10-12：比分角标里，只有主角赢下的盘涂品牌黄绿，
+    丢掉的盘留白（梅德韦杰夫那张 ``1-6 6-4 7-5``，后两盘是黄绿）。
+
+    颜色从 ``SetScore`` 算，不接受手写标记。同一串 ``6-4``，主角在左是赢
+    （绿），主角在右是输（白）——若仍按「左边的数更大就涂绿」，这两张会一样。
+    """
+    assert "won" not in SetScore.__dataclass_fields__
+    with pytest.raises(TypeError):
+        SetScore((1, 6), won=True)
+    with pytest.raises(SystemExit, match="SetScore"):
+        score_line([{"games": (6, 4), "color": "green"}])
+
+    # 抢七小分不翻盘：6-7(7) 是输，7-6(5) 是赢。
+    assert SetScore((6, 7), tiebreak=7).won is False
+    assert SetScore((7, 6), tiebreak=5).won is True
+    assert SetScore((6, 7), tiebreak=7).token() == "6-7(7)"
+    line, wins = score_line([
+        SetScore((1, 6)), SetScore((6, 4)), SetScore((7, 5)),
+    ])
+    assert line == "1-6 6-4 7-5"
+    assert wins == [False, True, True]
+    # 同一组局数，主角换到右边，输赢整个翻过来，屏幕上的数字不动。
+    flipped, flipped_wins = score_line([
+        SetScore((1, 6), featured="right"),
+        SetScore((6, 4), featured="right"),
+        SetScore((7, 5), featured="right"),
+    ])
+    assert flipped == line
+    assert flipped_wins == [True, False, False]
+
+    def card(sets, name):
+        return render("2018.01.13", "第1冠", "vs 德米纳尔", tmp_path / name,
+                      highlight="ATP250 悉尼", sets=sets)
+
+    base = card([
+        SetScore((1, 6)), SetScore((6, 4)), SetScore((7, 5)),
+    ], "medvedev.png")
+    for index, won in enumerate(wins):
+        sets = [
+            SetScore((1, 6)), SetScore((6, 4)), SetScore((7, 5)),
+        ]
+        sets[index] = SetScore(sets[index].games, featured="right")
+        other = card(sets, f"flip-{index}.png")
+        changed = _pixels_that_differ(base, other)
+        green, white = _fill_split(changed)
+        assert green + white > 200, f"第 {index + 1} 盘没有涂出可辨的颜色"
+        if won:
+            assert green > white * 5 and white < 80, (
+                f"主角赢的第 {index + 1} 盘应是黄绿，实际绿 {green} 白 {white}")
+        else:
+            assert white > green * 5 and green < 80, (
+                f"主角丢的第 {index + 1} 盘应留白，实际绿 {green} 白 {white}")
+
+    # 同一串字形 ``6-4``：左边是主角 → 绿；右边是主角 → 白。
+    won_card = card([SetScore((6, 4), featured="left")], "won-6-4.png")
+    lost_card = card([SetScore((6, 4), featured="right")], "lost-6-4.png")
+    won_changed = _pixels_that_differ(won_card, lost_card)
+    lost_changed = _pixels_that_differ(lost_card, won_card)
+    won_green, won_white = _fill_split(won_changed)
+    lost_green, lost_white = _fill_split(lost_changed)
+    assert won_green > 200 and won_white < 80
+    assert lost_white > 200 and lost_green < 80
+
+    with pytest.raises(SystemExit, match="不一致"):
+        render("2018.01.13", "第1冠", "vs 德米纳尔", tmp_path / "fork.png",
+               metric="6-4 6-4 6-4", sets=[SetScore((1, 6)), SetScore((6, 4))])
 
 
 def test_按盘上色只认整场比分_这一刻的局分照旧整块一个色(tmp_path):
