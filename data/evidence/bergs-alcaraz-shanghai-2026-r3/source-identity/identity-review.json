@@ -1,0 +1,187 @@
+{
+  "schema": "tennislive.source-identity-attempt.v1",
+  "slug": "bergs-alcaraz-shanghai-2026-r3",
+  "checked_at_utc": "2026-10-12T14:33:24.716444+00:00",
+  "method": "current_assistant_manual_public_HTTP_metadata_and_search",
+  "external_model_pass_claimed": false,
+  "exact_user_source": {
+    "youtube_id": "2tMbUc2Kknk",
+    "user_url": "https://youtu.be/2tMbUc2Kknk?is=aNZ-7kEs8UjwTPqk",
+    "download_run": "https://github.com/robertyang87/tennislive/actions/runs/38255996773",
+    "download_title_reported_by_root": "Zizou Bergs Gets BIGGEST Career Win vs Carlos Alcaraz 🤯 | Shanghai 2026 Highlights",
+    "actual_source_sha256": "a4de892b2fb088b59a9b1b7245db944fc58ff67d1349830b204bfddaa72cf0bf",
+    "actual_source_geometry_reported_by_root": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 50,
+      "duration": 240.163991
+    },
+    "content_watermark": "Tennis TV",
+    "watermark_evidence_scope": "Root reports actual current-source frame visual verification; this identity metadata task did not independently inspect frames.",
+    "uploader_channel_id": null,
+    "uploader_channel_name": null,
+    "uploader_verified": false,
+    "youtube_upload_datetime": null,
+    "youtube_upload_datetime_verified": false
+  },
+  "independent_exact_id_evidence": {
+    "source_url": "https://lastwordonsports.com/tennis/2026/10/12/carlos-alcaraz-shanghai/",
+    "source_type": "secondary sports article HTML",
+    "date_from_article_url": "2026-10-12",
+    "exact_embed_title": "Zizou Bergs Gets BIGGEST Career Win vs Carlos Alcaraz 🤯 | Shanghai 2026 Highlights",
+    "exact_embed_url": "https://www.youtube.com/embed/2tMbUc2Kknk?feature=oembed",
+    "proves": "exact user YouTube ID embedded under matching title in independent same-match article",
+    "does_not_prove": "uploader identity, channel authority, or exact YouTube publication datetime"
+  },
+  "official_same_match_evidence": {
+    "tournament_index_url": "https://en.rolexshanghaimasters.com/en/media/videos",
+    "index_title": "Highlights: Bergs shocks Alcaraz in Shanghai R3",
+    "index_date": "Oct 12, 2026",
+    "brightcove_account_id": "6057277721001",
+    "brightcove_video_id": "6406690820112",
+    "metadata_url": "https://edge.api.brightcove.com/playback/v1/accounts/6057277721001/videos/6406690820112",
+    "name": "Highlights: Bergs shocks Alcaraz in Shanghai 2026 R3",
+    "description": "Watch Zizou Bergs upset second seed Carlos Alcaraz for the biggest win of his career. Watch live & on demand at TennisTV.com. ",
+    "published_at": "2026-10-12T12:48:18.675Z",
+    "created_at": "2026-10-12T12:48:18.675Z",
+    "duration_ms": 236160,
+    "custom_fields": {},
+    "reference_id": null,
+    "link": null,
+    "exact_youtube_id_found": false,
+    "identity_limit": "Official tournament-branded highlight exists today. Duration236.16s differs from user-source240.164s; content/frame identity and exact YouTube linkage not established, so do not bind official datetime to user YouTube."
+  },
+  "official_channel_link_evidence": {
+    "url": "https://www.tennistv.com/videos/4590978/shanghai-2026-r3-bergs-alcaraz-highlights",
+    "official_footer_youtube_href": "https://www.youtube.com/tennistv",
+    "exact_youtube_id_found": false,
+    "identity_limit": "Confirms TennisTV official YouTube social destination, not exact user upload ownership."
+  },
+  "web_search_attempts": {
+    "queries": [
+      "\"2tMbUc2Kknk\"",
+      "\"Zizou Bergs Gets BIGGEST Career Win\" \"2026\"",
+      "site.atptour.com \"Bergs\" \"Alcaraz\" \"2026\" \"Highlights\"",
+      "site.tennistv.com \"Bergs\" \"Alcaraz\" \"2026\" Shanghai"
+    ],
+    "result": "Matching-title independent article found; no indexed authoritative metadata linking exact YouTube ID to uploader/time."
+  },
+  "prior_blocked_paths_not_retried": [
+    "YouTube oEmbed root403",
+    "YouTube RSS root403",
+    "yt-dlp local root403"
+  ],
+  "http_attempts": [
+    {
+      "name": "official-news",
+      "url": "https://en.rolexshanghaimasters.com/en/media/news/alcaraz-bergs-shanghai-2026-monday",
+      "http_status": 200,
+      "bytes": 35779,
+      "exact_user_youtube_id_present": false
+    },
+    {
+      "name": "brightcove-player-config",
+      "url": "https://players.brightcove.net/6057277721001/8gZSNwgH_default/config.json",
+      "http_status": 200,
+      "bytes": 2896,
+      "exact_user_youtube_id_present": false
+    },
+    {
+      "name": "tennistv-shanghai",
+      "url": "https://www.tennistv.com/tournaments/shanghai-open",
+      "http_status": 200,
+      "bytes": 1413941,
+      "exact_user_youtube_id_present": false
+    },
+    {
+      "name": "official-video-index",
+      "url": "https://en.rolexshanghaimasters.com/en/media/videos",
+      "http_status": 200,
+      "bytes": 43318,
+      "exact_user_youtube_id_present": false
+    },
+    {
+      "name": "lastword-video-embed",
+      "url": "https://lastwordonsports.com/tennis/2026/10/12/carlos-alcaraz-shanghai/",
+      "http_status": 200,
+      "bytes": 103954,
+      "exact_user_youtube_id_present": true
+    },
+    {
+      "name": "official-embedded-brightcove-video",
+      "url": "https://edge.api.brightcove.com/playback/v1/accounts/6057277721001/videos/6406683922112",
+      "http_status": 200,
+      "raw_path": "official-embedded-brightcove-video.raw",
+      "finding": "same-match official hot-shot video only; not user highlight ID"
+    },
+    {
+      "name": "official-full-highlights-brightcove",
+      "url": "https://edge.api.brightcove.com/playback/v1/accounts/6057277721001/videos/6406690820112",
+      "http_status": 200,
+      "raw_path": "official-full-highlights-brightcove.raw",
+      "finding": "same-match official highlights metadata available; exact YouTube ID absent"
+    },
+    {
+      "name": "tennistv-match-highlights",
+      "url": "https://www.tennistv.com/videos/4590978/shanghai-2026-r3-bergs-alcaraz-highlights",
+      "http_status": 200,
+      "raw_path": "tennistv-match-highlights.raw",
+      "finding": "official same-match paid highlights, no exact user YouTube ID; official site links youtube.com/tennistv"
+    },
+    {
+      "name": "atpmedia-content-video",
+      "url": "https://content-api.prod.atpmedia.pulselive.com/content/atpmedia/en/videos/4590978",
+      "http_status": null,
+      "result": "proxy CONNECT403Forbidden; no HTTP response body; no retry/bypass attempted"
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "/workspace/scratch/alcaraz-identity/tennistv-shanghai.raw",
+      "sha256": "8250a0cdb230f893df5a1ec5c22d8b0aa393e118c59425bea2f0185a5b4471dd",
+      "bytes": 1413941
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-identity/official-video-index.raw",
+      "sha256": "5c005a67db57c16c12b89d2af238b5ae34010ce09efcedfcb8f44fffafed76f7",
+      "bytes": 43318
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-identity/lastword-video-embed.raw",
+      "sha256": "d233ff4df9c52689b56000c6380fade4a7bf960b60297065b64db327fbfa0ae3",
+      "bytes": 103954
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-identity/official-news.raw",
+      "sha256": "2614e9e55f13436543b16dc76d7667b8c68b69b6590fa15f312761bffe568306",
+      "bytes": 35779
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-identity/tennistv-match-highlights.raw",
+      "sha256": "2aecc427a5165303ba391d99bc253fd9ff5e0da9d481b83bde4c4d45a40a71ae",
+      "bytes": 75790
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-identity/official-embedded-brightcove-video.raw",
+      "sha256": "744792a4316358c3c695e46515adeb53d600a1f77e1b982e96cc6c386c79405f",
+      "bytes": 4975
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-identity/brightcove-player-config.raw",
+      "sha256": "87504d205abd30a529aa5c195707d85f9f3dd87c814986875fb297d9c4cd239b",
+      "bytes": 2896
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-identity/official-full-highlights-brightcove.raw",
+      "sha256": "421d751a8d5c4adbda638b5efd96877c471bd2c62edb4d0516588dc61ae97fbd",
+      "bytes": 5647
+    }
+  ],
+  "verdict": {
+    "content_match_context": "supported by official same-match highlights and independent exact ID/title embed",
+    "exact_youtube_uploader": "NOT_VERIFIED",
+    "exact_youtube_publish_time": "NOT_VERIFIED",
+    "official_channel_pass_claimed": false,
+    "allowed_wording": "User-supplied same-match video with observed Tennis TV watermark; uploader not independently verified. Official tournament same-match highlights independently published2026-10-12, but exact YouTube link relationship not established."
+  }
+}

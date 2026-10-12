@@ -1,0 +1,74 @@
+{
+  "schema": "actual-local-targeted-asr.v1",
+  "source_path": "/workspace/scratch/alcaraz-source/2tMbUc2Kknk.mp4",
+  "source_sha256": "a4de892b2fb088b59a9b1b7245db944fc58ff67d1349830b204bfddaa72cf0bf",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "normalization": "none; original amplitude",
+  "vad_filter": false,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "initial_prompt": null,
+  "human_listening_claimed": false,
+  "windows": [
+    [
+      35.14,
+      49.5
+    ]
+  ],
+  "window_results": [
+    {
+      "window": [
+        35.14,
+        49.5
+      ],
+      "duration": 14.36,
+      "utterance_count": 2,
+      "status": "actual_decode_complete"
+    }
+  ],
+  "segments": [
+    {
+      "window": [
+        35.14,
+        49.5
+      ],
+      "start": 45.58,
+      "end": 46.980000000000004,
+      "text": " Go.",
+      "no_speech_prob": 0.17164327204227448,
+      "avg_logprob": -1.3361596001519098,
+      "words": [
+        {
+          "start": 45.58,
+          "end": 46.980000000000004,
+          "word": " Go.",
+          "probability": 0.07754684239625931
+        }
+      ]
+    },
+    {
+      "window": [
+        35.14,
+        49.5
+      ],
+      "start": 48.04,
+      "end": 49.06,
+      "text": " Supply.",
+      "no_speech_prob": 0.17164327204227448,
+      "avg_logprob": -1.3361596001519098,
+      "words": [
+        {
+          "start": 48.04,
+          "end": 49.06,
+          "word": " Supply.",
+          "probability": 0.6609072089195251
+        }
+      ]
+    }
+  ],
+  "run_status": "complete",
+  "recorded_at": "2026-10-12T13:59:57.119971+00:00"
+}

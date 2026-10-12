@@ -1,0 +1,61 @@
+{
+  "candidates": [
+    {
+      "label": "阿尔卡拉斯 一发得分率摆动",
+      "detail": "第1盘73% → 第2盘59%",
+      "swing": 14,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "贝尔格斯 破发点兑现",
+      "detail": "3/4（75%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "阿尔卡拉斯 破发点兑现",
+      "detail": "2/2（100%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "贝尔格斯 连续保发",
+      "detail": "8 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "阿尔卡拉斯 连续保发",
+      "detail": "5 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Bergs Z. 1 : 1 Alcaraz C.（含本场） · 硬地 1:1",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "label": "近况",
+      "detail": "Bergs Z. 最近 5 场 3 胜（WWWLL）；Alcaraz C. 最近 5 场 4 胜（LWWWW）",
+      "source": "flashscore df_hh_1 Last matches"
+    },
+    {
+      "label": "总分差",
+      "detail": "贝尔格斯 81 - 阿尔卡拉斯 73，净差 8 分，贝尔格斯 领先",
+      "diff": 8,
+      "source": "flashscore df_mh_1（总分）",
+      "use": "body_only"
+    }
+  ],
+  "durations": [
+    [
+      "Set 1",
+      "0:58"
+    ],
+    [
+      "Set 2",
+      "1:05"
+    ],
+    [
+      "全场",
+      "2:03"
+    ]
+  ]
+}

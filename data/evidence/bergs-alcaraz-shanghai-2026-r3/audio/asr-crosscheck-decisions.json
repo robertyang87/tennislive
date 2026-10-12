@@ -1,0 +1,116 @@
+{
+  "schema": "tennislive.actual-asr-crosscheck-decisions.v1",
+  "slug": "bergs-alcaraz-shanghai-2026-r3",
+  "source_sha256": "a4de892b2fb088b59a9b1b7245db944fc58ff67d1349830b204bfddaa72cf0bf",
+  "recorded_at": "2026-10-12T13:54:23.620696+00:00",
+  "method": "asr_cross_checked",
+  "human_listening_claimed": false,
+  "tone_verified": false,
+  "decisions": [
+    {
+      "range": [
+        197.7,
+        199.3
+      ],
+      "status": "unresolved_exclude_from_selected_audio",
+      "variants": [
+        "Some would say predictable.",
+        "Somewhat unpredictable."
+      ],
+      "note": "Semantic polarity differs; no completion claim. Root plans a short native rule card, then starts the terminal source window after this cue."
+    },
+    {
+      "range": [
+        209.8,
+        212
+      ],
+      "status": "best_supported_resolved",
+      "en": "Oh, snatched that.",
+      "zh": "噢，这球打急了。",
+      "basis": "large-v3 full VAD and final-cropped no-VAD agree; cropped no-VAD snatched probability .705, that .925. small.en no-VAD has the same snatch lexical root; medium.en catch is outweighed by both full and cropped large plus independent small lexical agreement."
+    },
+    {
+      "range": [
+        215.6,
+        220.3
+      ],
+      "status": "literal_dual_model_consensus",
+      "en": "Fitting, but it ends in such fashion.",
+      "zh": "以这样的方式结束，也很贴切。",
+      "basis": "small.en and medium.en independent actual no-VAD runs both decode but with probability .976 and the same phrase. large-v3 cropped no-VAD substitutes when (.801). Retain literal dual-model result; do not silently rewrite but to that for grammatical elegance."
+    },
+    {
+      "range": [
+        221.6,
+        230.04
+      ],
+      "status": "source_identity_names_corrected",
+      "en": "Zizou Bergs gets the better of Carlos Alcaraz.",
+      "zh": "齐祖·贝尔格斯战胜了卡洛斯·阿尔卡拉斯。",
+      "basis": "All six actual runs support the same result clause; Burks/Birds and Alparaz/Alperez are ASR orthographic errors corrected from the supplied official source match identity. All observed final word ends are 229.84–230.04."
+    },
+    {
+      "range": [
+        108.1,
+        110.1
+      ],
+      "status": "isolated_asr_hallucination_not_accepted_as_source_speech",
+      "variant": "Thank you for watching!",
+      "basis": "Only small.en targeted no-VAD inserts this after hot/cold; absent from both other full-source models and medium.en exact same no-VAD window. No source wording is fabricated from the isolated hypothesis."
+    },
+    {
+      "range": [
+        81.6,
+        82.1
+      ],
+      "status": "isolated_low_confidence_hypothesis_not_accepted",
+      "variant": "Do a punch",
+      "basis": "Only medium.en full VAD inserts it; probabilities .06/.26/.44, absent from small.en full, large-v3 full, and medium.en actual 78–92 cropped no-VAD. The agreed foreground clause begins with He's had a few looks."
+    },
+    {
+      "range": [
+        229.84,
+        230.16
+      ],
+      "status": "tail_scope_limit",
+      "basis": "Mixed PCM remains nonzero to approximately 230.16; this is not isolated commentary and is not proof of residual Alcaraz speech. Root actual 50fps video boundary is first brand frame230.12. Proposed final source end230.10, no outro terminal tail, covers all ASR final-word ends and excludes the first brand frame."
+    },
+    {
+      "range": [
+        176.76,
+        179.2
+      ],
+      "status": "no_supported_foreground_english_in_actual_candidate_window",
+      "basis": "Actual same selected window no-VAD: medium.en yields zero hypotheses, small.en yields isolated Thanks for watching sign-off hypothesis. Three full-source models yield no words here. The earlier medium.en broad-window Whoa cannot be reproduced by the same model. Neither isolated sign-off nor Whoa is accepted as source speech; retain match action/ambient sound without fabricated quote."
+    },
+    {
+      "range": [
+        194.04,
+        195.7
+      ],
+      "status": "resolved_with_actual_precontext",
+      "en": "Incredible!",
+      "zh": "太不可思议了！",
+      "basis": "Actual190–197.5 no-VAD small.en194.08–195.48 and medium.en194.06–195.46 agree. Previously both194–232 runs began at exactly194 because of cropped boundary; this fresh precontext resolves actual onset. Recommended display194.04–195.70 preserves all observed words and reading time."
+    },
+    {
+      "range": [
+        35.08,
+        35.14
+      ],
+      "status": "boundary_correction",
+      "basis": "Actual maximum previous utterance word-end Made it difficult is35.08 (medium.en full). Earlier35.15 was editorial safety padding, not a measured speech end, and must not become a gate requirement. Source selected start35.14 does not intersect observed word intervals."
+    },
+    {
+      "range": [
+        48.61,
+        49.27
+      ],
+      "status": "phonetic_crosscheck_best_supported_lexeme",
+      "en": "Sublime.",
+      "zh": "太精彩了。",
+      "basis": "large-v3 full word Sublime p=.827 at48.61–49.09; medium.en full and no-VAD decode Supplied p=.65; independent actual small.en35.14–49.5 decodes Supply p=.661. All support the same syllable structure, while the large-v3 word is coherent commentary on a winning shot. Best-supported lexeme chosen transparently; small.en isolated Go45.58–46.98 p=.078 is rejected, absent from other models. Source48.61 onset means TTS window must end before it; suggested split48.50, not48.70."
+    }
+  ],
+  "note": "This is a record of actual model output reconciliation and limitations, not a human listening certificate or a formal current-plan native review. Final packet intervals and quote coverage are still to be bound against the formal spec."
+}

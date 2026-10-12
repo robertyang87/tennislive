@@ -1,0 +1,18 @@
+{
+  "schema": "tennislive.actual-foreground-binding-report.v1",
+  "slug": "bergs-alcaraz-shanghai-2026-r3",
+  "checked_at": "2026-10-12T14:56:53.737129+00:00",
+  "status": "native_inspect_and_extra_quote_crosscheck_pass",
+  "source_sha256": "a4de892b2fb088b59a9b1b7245db944fc58ff67d1349830b204bfddaa72cf0bf",
+  "spec_sha256": "1c7b76f2fc5142de95907e41d197e888b644de012e1cb0d5a96e87c11158f08f",
+  "plan_sha256": "0010c7f99d0c9b98682855fc56a48d190f404ac20af7edac87e99dc04766f031",
+  "review_sha256": "786cab5dbd406de8b813fc9c543d8ea198ef1ed7551826c0a63a8ad3426ff4ab",
+  "selected_source_windows": 23,
+  "required_bilingual_cues": 20,
+  "human_listening_claimed": false,
+  "tone_verified": false,
+  "binding_artifacts_preserved": true,
+  "asr_rerun": false,
+  "issues": [],
+  "note": "Same audio plan, source bytes and evidence: verify against current spec while preserving frozen review/packet hashes, including any in-progress or sealed render binding. Metadata-only spec changes do not trigger a false audio re-review."
+}

@@ -1,0 +1,547 @@
+{
+  "label": "第 2 段",
+  "edit_id": "landing",
+  "word": "抢",
+  "char": "抢",
+  "at": 8,
+  "sentence": "阿卡的反扑，停在抢七最后关头。",
+  "intended": "qiang3",
+  "wrong": "qiang1",
+  "actual_binding": {
+    "label": "第 2 段",
+    "index": 1,
+    "edit_id": "landing",
+    "display_text": "阿卡的反扑，停在抢七最后关头。",
+    "text": "阿卡的反扑，停在抢七最后关头。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "cache_key": "c3ff1dc42c288296484bc63648b13865",
+    "actual_mp3_sha256": "7da3cd88d23581d12d75bfbe9e389b6ec8364ac8a11168ca4ec74b6ce0192581",
+    "bound_snapshot_path": "/workspace/scratch/alcaraz-voice/native-speech/c3ff1dc42c288296484bc63648b13865.mp3",
+    "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/native-speech/c3ff1dc42c288296484bc63648b13865.marks.json",
+    "mp3_duration_seconds": 3.744,
+    "window_seconds": 5.0,
+    "headroom_seconds": 1.2559999999999998,
+    "native_cache_path": "/home/agent/.cache/tennislive-tts/c3ff1dc42c288296484bc63648b13865-edge-v2.zip",
+    "native_zip_snapshot_path": "/workspace/scratch/alcaraz-voice/native-speech/c3ff1dc42c288296484bc63648b13865.native.zip",
+    "native_zip_sha256": "4143abe42b06e0c9b4c563ad9dfcb0e3db3b983cc56c3efa1d224c8f6f503c41",
+    "native_zip_marks_raw_sha256": "7d17fb6b27301c46c16403901a2a20ee5966abb49bbddac12a40f87bea998955",
+    "actual_marks_sha256": "7921be4948801145560d5910c40a9624b57911281d3e393e60b355438ec12f69",
+    "word_boundary_tokens": [
+      "阿卡",
+      "的",
+      "反扑",
+      "停",
+      "在",
+      "抢",
+      "七",
+      "最后",
+      "关头"
+    ],
+    "enumerated_polyphones": [
+      {
+        "at": 0,
+        "char": "阿",
+        "word": "阿",
+        "intended_lexical_reading": "a1",
+        "all_dictionary_readings": [
+          "a1",
+          "e1",
+          "e3",
+          "a3",
+          "a4",
+          "a5"
+        ]
+      },
+      {
+        "at": 1,
+        "char": "卡",
+        "word": "卡",
+        "intended_lexical_reading": "ka3",
+        "all_dictionary_readings": [
+          "ka3",
+          "qia3"
+        ]
+      },
+      {
+        "at": 2,
+        "char": "的",
+        "word": "的",
+        "intended_lexical_reading": "de5",
+        "all_dictionary_readings": [
+          "de5",
+          "di1",
+          "di2",
+          "di4"
+        ]
+      },
+      {
+        "at": 3,
+        "char": "反",
+        "word": "反",
+        "intended_lexical_reading": "fan3",
+        "all_dictionary_readings": [
+          "fan3",
+          "fan4"
+        ]
+      },
+      {
+        "at": 4,
+        "char": "扑",
+        "word": "扑",
+        "intended_lexical_reading": "pu1",
+        "all_dictionary_readings": [
+          "pu1",
+          "pi4"
+        ]
+      },
+      {
+        "at": 8,
+        "char": "抢",
+        "word": "抢",
+        "intended_lexical_reading": "qiang3",
+        "all_dictionary_readings": [
+          "qiang3",
+          "qiang1"
+        ]
+      },
+      {
+        "at": 9,
+        "char": "七",
+        "word": "七",
+        "intended_lexical_reading": "qi1",
+        "all_dictionary_readings": [
+          "qi1",
+          "qi2"
+        ]
+      },
+      {
+        "at": 10,
+        "char": "最",
+        "word": "最",
+        "intended_lexical_reading": "zui4",
+        "all_dictionary_readings": [
+          "zui4",
+          "cuo1"
+        ]
+      },
+      {
+        "at": 13,
+        "char": "头",
+        "word": "关头",
+        "intended_lexical_reading": "tou2",
+        "all_dictionary_readings": [
+          "tou2",
+          "tou5"
+        ]
+      }
+    ],
+    "tts_only_substitution_changed_text": false
+  },
+  "check_kind": "polyphone",
+  "context_notes": [
+    "Lexical dictionary intended reading is a declared hypothesis; calibration evaluates actual audio."
+  ],
+  "ok_refs": [
+    "羟",
+    "襁"
+  ],
+  "bad_refs": [
+    "枪",
+    "羌",
+    "蜣"
+  ],
+  "reference_notes": [
+    "Only dictionary single-reading nonoriginal references selected; single-reading level-2",
+    "Only dictionary single-reading nonoriginal references selected; dominant-reading only, single-reading common, single-reading level-2"
+  ],
+  "reference_validity_limited": false,
+  "acoustic": {
+    "word": "抢",
+    "char": "抢",
+    "sentence": "阿卡的反扑，停在抢七最后关头。",
+    "tts_text": "阿卡的反扑，停在抢七最后关头。",
+    "intended_refs": [
+      "羟",
+      "襁"
+    ],
+    "wrong_refs": [
+      "枪",
+      "羌",
+      "蜣"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.585,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.524,
+        "d_wrong": 3.408,
+        "score": 0.149
+      },
+      "f0": {
+        "d_intended": 0.569,
+        "d_wrong": 5.573,
+        "score": 0.815
+      },
+      "comb": {
+        "d_intended": 1.906,
+        "d_wrong": 7.277,
+        "score": 0.585
+      }
+    },
+    "neighbour_shift": {
+      "intended": 2.099,
+      "wrong": 5.487
+    },
+    "separation": {
+      "spec": {
+        "within": 2.468,
+        "between": 3.158,
+        "separation": 1.28
+      },
+      "f0": {
+        "within": 0.734,
+        "between": 5.915,
+        "separation": 8.059
+      },
+      "comb": {
+        "within": 1.968,
+        "between": 7.494,
+        "separation": 3.808
+      }
+    },
+    "selftest_loo": {
+      "羟": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.566
+      },
+      "襁": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.598
+      },
+      "枪": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.655
+      },
+      "羌": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.643
+      },
+      "蜣": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.54
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:羟": {
+        "spec": 2.674,
+        "f0": 0.569,
+        "vmis": 0.026,
+        "frames": 39,
+        "comb": 1.906
+      },
+      "A:襁": {
+        "spec": 2.524,
+        "f0": 0.656,
+        "vmis": 0.026,
+        "frames": 38,
+        "comb": 1.918
+      },
+      "B:枪": {
+        "spec": 3.433,
+        "f0": 5.669,
+        "vmis": 0.132,
+        "frames": 38,
+        "comb": 7.386
+      },
+      "B:羌": {
+        "spec": 3.408,
+        "f0": 5.573,
+        "vmis": 0.154,
+        "frames": 39,
+        "comb": 7.277
+      },
+      "B:蜣": {
+        "spec": 3.443,
+        "f0": 5.722,
+        "vmis": 0.103,
+        "frames": 39,
+        "comb": 7.443
+      }
+    },
+    "window_s": [
+      1.564,
+      1.939
+    ],
+    "boundary_token": "抢",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "阿卡",
+        "的",
+        "反扑",
+        "停",
+        "在",
+        "抢",
+        "七",
+        "最后",
+        "关头"
+      ],
+      "A:羟": [
+        "阿卡",
+        "的",
+        "反扑",
+        "停",
+        "在",
+        "羟七",
+        "最后",
+        "关头"
+      ],
+      "A:襁": [
+        "阿卡",
+        "的",
+        "反扑",
+        "停",
+        "在",
+        "襁七",
+        "最后",
+        "关头"
+      ],
+      "B:枪": [
+        "阿卡",
+        "的",
+        "反扑",
+        "停",
+        "在",
+        "枪",
+        "七",
+        "最后",
+        "关头"
+      ],
+      "B:羌": [
+        "阿卡",
+        "的",
+        "反扑",
+        "停",
+        "在",
+        "羌",
+        "七",
+        "最后",
+        "关头"
+      ],
+      "B:蜣": [
+        "阿卡",
+        "的",
+        "反扑",
+        "停",
+        "在",
+        "蜣七",
+        "最后",
+        "关头"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        0.7,
+        -1.3,
+        -1.9,
+        -2.1,
+        -5.8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -6.0,
+        -7.5,
+        -6.6,
+        -5.6,
+        -3.1,
+        -3.2,
+        -3.7
+      ],
+      "A:羟": [
+        -1.3,
+        -2.6,
+        -2.6,
+        -3.1,
+        -3.8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -7.1,
+        -7.3,
+        -6.5,
+        -4.6,
+        -3.3,
+        -3.8,
+        -4.3
+      ],
+      "A:襁": [
+        2.3,
+        0.5,
+        -1.4,
+        -1.7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -7.3,
+        -7.4,
+        -6.6,
+        -5.7,
+        -4.9,
+        -4.1,
+        -4.0,
+        -4.2
+      ],
+      "B:枪": [
+        -2.7,
+        -3.7,
+        -3.7,
+        -4.5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2.9,
+        2.6,
+        2.2,
+        2.4,
+        3.0,
+        3.3,
+        3.0,
+        2.6
+      ],
+      "B:羌": [
+        -0.9,
+        -4.2,
+        -3.8,
+        -4.7,
+        -5.1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        3.7,
+        3.7,
+        2.8,
+        2.2,
+        2.5,
+        2.9,
+        3.1,
+        2.8,
+        2.3
+      ],
+      "B:蜣": [
+        -5.2,
+        -5.9,
+        -6.1,
+        -6.2,
+        -6.7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        3.1,
+        2.2,
+        1.6,
+        1.8,
+        2.2,
+        2.3,
+        2.2,
+        2.1
+      ]
+    },
+    "audio": {
+      "ORIG": "/workspace/scratch/alcaraz-voice/native-speech/c3ff1dc42c288296484bc63648b13865.mp3",
+      "A:羟": "/workspace/scratch/alcaraz-voice/new-landing/fresh-reference-cache/7c4c82afef5115ef2baef645.mp3",
+      "A:襁": "/workspace/scratch/alcaraz-voice/new-landing/fresh-reference-cache/e33239b923d2b50a0fda83f7.mp3",
+      "B:枪": "/workspace/scratch/alcaraz-voice/new-landing/fresh-reference-cache/73f75ba66830619f1ac6b1c2.mp3",
+      "B:羌": "/workspace/scratch/alcaraz-voice/new-landing/fresh-reference-cache/929c03bfb8baa29cd98b9b85.mp3",
+      "B:蜣": "/workspace/scratch/alcaraz-voice/new-landing/fresh-reference-cache/455d883436f702c19edf213e.mp3"
+    }
+  },
+  "control_audio_provenance": [
+    {
+      "label": "ORIG",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/new-landing/reference-audio/c3ff1dc42c288296484bc63648b13865.mp3",
+      "mp3_sha256": "7da3cd88d23581d12d75bfbe9e389b6ec8364ac8a11168ca4ec74b6ce0192581",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/new-landing/reference-audio/c3ff1dc42c288296484bc63648b13865.marks.json",
+      "marks_sha256": "7921be4948801145560d5910c40a9624b57911281d3e393e60b355438ec12f69"
+    },
+    {
+      "label": "A:羟",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/new-landing/reference-audio/7c4c82afef5115ef2baef645.mp3",
+      "mp3_sha256": "0d18ce0028f85a84dbd6fd047fe031985695d208f8996cbd234140764e46dab4",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/new-landing/reference-audio/7c4c82afef5115ef2baef645.marks.json",
+      "marks_sha256": "63a42f5fe2f7fa27f276919e031eeb1cdaea5a1fca0979760d14640599710325"
+    },
+    {
+      "label": "A:襁",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/new-landing/reference-audio/e33239b923d2b50a0fda83f7.mp3",
+      "mp3_sha256": "0909100908ec29db28826207d605ad1318875bf3928f132999e51f9e0395af2b",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/new-landing/reference-audio/e33239b923d2b50a0fda83f7.marks.json",
+      "marks_sha256": "4c2ab09ff37f9bf3023f25f9b10b82324be50c79cd19b3df0290659312579c72"
+    },
+    {
+      "label": "B:枪",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/new-landing/reference-audio/73f75ba66830619f1ac6b1c2.mp3",
+      "mp3_sha256": "cd7a2f6d529ea40bd94fea4c64bd73542d05824ba7d5047ef1d5b64aefb3b901",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/new-landing/reference-audio/73f75ba66830619f1ac6b1c2.marks.json",
+      "marks_sha256": "8537a05c19d658d50d0869a3202b5501acd7b8174795c7781fdacce4da09ce63"
+    },
+    {
+      "label": "B:羌",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/new-landing/reference-audio/929c03bfb8baa29cd98b9b85.mp3",
+      "mp3_sha256": "7480f4060937fbd031a9e3c5be1ba70b4a1cb66adfa629359d3553a450221a44",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/new-landing/reference-audio/929c03bfb8baa29cd98b9b85.marks.json",
+      "marks_sha256": "71829b4ce0c4bc4cdec3c3939189a3781834b9ecd855b91ab1a4c3f4aabc4c46"
+    },
+    {
+      "label": "B:蜣",
+      "mp3_snapshot_path": "/workspace/scratch/alcaraz-voice/new-landing/reference-audio/455d883436f702c19edf213e.mp3",
+      "mp3_sha256": "3c903d5cb589b0b892f355a8d1646d9a259106d99d58d8034106c1f0017d5aff",
+      "marks_snapshot_path": "/workspace/scratch/alcaraz-voice/new-landing/reference-audio/455d883436f702c19edf213e.marks.json",
+      "marks_sha256": "0111b56a4ff9d0d175128a2b00dd42544ba15548126c898f6ec66ee813bb1325"
+    }
+  ],
+  "measured_at_utc": "2026-10-12T14:42:39.534087+00:00"
+}
