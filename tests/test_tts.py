@@ -85,6 +85,18 @@ def test_解说片那条线真的走共享模块_并落words_json(tmp_path, monk
     assert words and words[0]["text"] == seen[0][0]
 
 
+def test_edge_tts改走还活着的合成主机():
+    """2026-10-12 runner 上旧 edge/v1 握手 403，封面第一句就红。"""
+    pytest.importorskip("edge_tts")
+    import edge_tts.communicate as communicate
+
+    tts._point_edge_tts_at_live_host()
+    assert communicate.WSS_URL.startswith(
+        "wss://api.msedgeservices.com/tts/cognitiveservices/websocket/v1?"
+    )
+    assert "speech.platform.bing.com" not in communicate.WSS_URL
+
+
 def test_三条出片线里edge_tts的Communicate只许出现在共享模块():
     """出处只有一份：`edge_tts.Communicate(` 不许再出现在 reel / 解说片 / 采访
     这三条出片线里（`tools/voice_sample.py` 那类试音/探针脚本不在此列——它们

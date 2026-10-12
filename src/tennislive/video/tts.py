@@ -86,6 +86,24 @@ def _exc_chain(exc: BaseException) -> list[BaseException]:
     return chain
 
 
+def _point_edge_tts_at_live_host() -> None:
+    """旧的 speech.platform.bing.com/.../edge/v1 从 2026-10-10 起握手 403。
+
+    同一枚 TrustedClientToken 换到 api.msedgeservices.com 仍能合成，Sec-MS-GEC
+    版本保持库里的 1-143（升到 2-155 配这枚旧 token 会再 403）。edge-tts#490。
+    communicate.py 在 import 时把 WSS_URL 拷进自己的全局，只改 constants 够不着。
+    """
+    import edge_tts.communicate as communicate
+    import edge_tts.constants as constants
+
+    url = (
+        "wss://api.msedgeservices.com/tts/cognitiveservices/websocket/v1"
+        f"?Ocp-Apim-Subscription-Key={constants.TRUSTED_CLIENT_TOKEN}"
+    )
+    constants.WSS_URL = url
+    communicate.WSS_URL = url
+
+
 def edge_tts_verdict(exc: BaseException) -> tuple[bool, str]:
     """这次 edge-tts 失败该不该重发。返回 `(要不要重试, 判据)`。
 
@@ -262,6 +280,8 @@ def _tts_one_uncached(text: str, path: Path, voice: str, rate: str,
     import asyncio
 
     import edge_tts
+
+    _point_edge_tts_at_live_host()
 
     async def one() -> list[dict]:
         marks: list[dict] = []
