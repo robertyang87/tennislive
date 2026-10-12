@@ -1,8 +1,8 @@
 {
   "status": "pass",
-  "checked_at": "2026-10-12T20:38:56Z",
+  "checked_at": "2026-10-12T20:43:00Z",
   "slug": "wta-finals-race-2026-10-12",
-  "spec_sha256": "f987895b67bf253b348e567e50ee885d5afa6ffd6dd8d85d5230f89a47f4a710",
+  "spec_sha256": "b74577f9369b9a6e80db63b6b85ff8dc1c161cb7d3f76f706f4fffcc803d02ce",
   "ass_sha256": "b29e920fa8bf496e4446178bfdac5fd290e50bdd9843f70ddca4b888b7faffd7",
   "film_sha256": "a8782e3594a93a04bf78955c8e05633977868073fbcdda248a89ab1c61991ccc",
   "film_bytes": 34288866,
@@ -15,5 +15,13 @@
     "ending_payoff": "pass",
     "audio_tail_max_s": 1.0
   },
-  "render_inputs_sha256": "807c17578ea89cb50d94f96d417627e14198dd6b80d63df5b1ac7b373758b2e0"
+  "render_inputs_sha256": "807c17578ea89cb50d94f96d417627e14198dd6b80d63df5b1ac7b373758b2e0",
+  "reattest": {
+    "previous_attestation_sha256": "e43c409015a284ac3c79e3365f018dffcdda01e2e2df81ac9495189c1291f1ea",
+    "previous_spec_sha256": "f987895b67bf253b348e567e50ee885d5afa6ffd6dd8d85d5230f89a47f4a710",
+    "render_spec_sha256": "f987895b67bf253b348e567e50ee885d5afa6ffd6dd8d85d5230f89a47f4a710",
+    "projection_sha256": "2ef11ea698d57997bdfaf8c70a39fe5fda58f3be60a3370d8a8933772166ac86",
+    "film_verified": "release-sha256",
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/38305875987"
+  }
 }
