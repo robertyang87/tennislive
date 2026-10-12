@@ -1309,9 +1309,6 @@ jobs:
           TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
-          # 仅本分支本条片子：按账号所有者 2026-10-12 指示加载仓库里的 edge-tts 端点适配
-          # （tools/alcaraz_voice_review/runtime/sitecustomize.py），合进 main 前撤掉。
-          PYTHONPATH: ${{ github.workspace }}/tools/alcaraz_voice_review/runtime
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
           OUTDIR="${{ steps.paths.outputs.outdir }}"
