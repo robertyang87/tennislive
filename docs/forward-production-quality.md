@@ -84,6 +84,24 @@ All columns should actively retain as much compelling original commentary during
 
 用户要求按源板实际宽高回贴，并指出多裁入球场产生“膏药”观感。源搜索框与最终可见蒙版分开：主板及短关键分提示分别测真实边界，保留所有可读原生信息和相对位置，使用同一缩放比例；周围球场、提示条右侧和圆角外像素透明。不要为提示条出现而缩小主板，也不把缺损源提示补造成完整文字。具体规则和实帧检查见 tennis-owner-taste 的同日条目。
 
+## Corner labels are one global style (2026-10-12)
+
+Every future reel that puts a corner label on footage uses the same lock-up.
+The shared renderer is `tools/render_story_info_band.py`. Its default is
+`layout=corner` and `align=right`: the label sits top-right, the brand-green
+rail is on the right edge, and every line is right-aligned. Optional green
+highlight text sits on the main line. A large metric, when present, colours
+won sets green and lost sets white. Match reels, explainers, interviews and
+story edits do not keep a second left-rail default.
+
+`parse_segments` rejects a `story_text` inset whose `corner` is not `tr` or
+whose PNG is not right-rail and right-aligned, so `--dry-run` fails before a
+render. `tests/test_corner_label_style.py` scans every spec. Films shipped
+with a left rail stay listed in `data/legacy_corner_label.json` and are not
+re-rendered; that list may only shrink. A reel with no corner label is not
+failed. Placement still has to be checked against the face, the ball and the
+scoreboard; top-right is the required corner, not a substitute for that look.
+
 ## 2026-10-04：统一深蓝图卡设计
 
 全部栏目后续图卡统一使用重新设计的深蓝配色：蓝黑底、低饱和柔光与蓝色信息面，白字清晰、次级文字有对比，中性细线分隔；品牌黄绿只用于品牌/重点，薄荷仍表示胜负，不再铺大面积绿光或绿底。范围包括赛场之上章节/数据卡、赛后开麦解读卡、网球有故事图文图卡及视频示意图/底衬、片尾与 Pillow 兜底。参考图只作蓝色与质感方向，不照搬布局；逐类核实际原生预览，更新缓存片尾母版，不能只改规则或 token。已有语义两行、内容小标题与底部品牌安全区规则继续执行。此条取代旧的墨绿背景口径。逐类以真实浏览器背景像素核对蓝色承托、正文可读性与绿色强调色的分工；片尾同时核已缓存母版，不能让模板是蓝色、实际拼片仍是旧绿底。

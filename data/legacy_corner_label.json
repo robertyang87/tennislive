@@ -1,0 +1,17 @@
+{
+  "_why": "2026-10-12 角标改成全局默认：右上角、右缘品牌绿短轨、文字右对齐（render_story_info_band 的 layout=corner / align=right）。这张表里是改规矩之前已经发出去、贴图仍是左轨的片子。已发的不为版式重渲。只许减不许加：tests/test_corner_label_style.py 自检每个名字都还在、而且拿掉豁免之后仍然不合格式。改好了就要从这里删掉。code-violation-point-penalty-2026 不在表里，它的 12 张贴图按新默认重渲。",
+  "slugs": [
+    "bjk-cup-story",
+    "comeback-five-love-down",
+    "davis-cup-china-first-world-group-1",
+    "djokovic-beijing-return",
+    "sabalenka-rybakina-h2h",
+    "seeds-zheng-china-open-2026",
+    "shelton-zverev-h2h",
+    "zhang-shuai-story",
+    "zheng-bjk-cup-olympic-rule",
+    "zheng-swiatek-eight-meetings",
+    "zheng-us-open-outlook",
+    "zheng-usopen-icons"
+  ]
+}
