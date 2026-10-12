@@ -258,8 +258,6 @@ def test_本地审核不需要外部key_像素分析失败则fail_closed(tmp_pat
     argv = ["audit_interview_cover.py", "--spec", str(spec_path),
             "--poster", str(poster), "--out", str(report)]
     monkeypatch.setattr(sys, "argv", argv)
-    monkeypatch.delenv("MINIMAX_API_KEY", raising=False)
-    monkeypatch.delenv("DEEPSEEK_API_KEY", raising=False)
     monkeypatch.setattr(cover, "analyze_poster", lambda _poster: _good_cover_result())
     assert cover.main() == 0
     passed = json.loads(report.read_text(encoding="utf-8"))
@@ -318,7 +316,7 @@ def test_正式采访工作流在技术L2之前运行完全本地封面硬闸():
     landed = body.index("python tools/check_interview_landed.py")
     assert visual < landed, "必须先取得并验证封面视觉凭证，再写技术 QC pass"
     block = body[body.rfind("- name:", 0, visual):visual + 500]
-    assert "MINIMAX_API_KEY" not in block and "DEEPSEEK" not in block
+    assert "secrets." not in block, "正式采访工作流要保持完全本地，不许传任何模型密钥"
     assert "完全本地" in block
     assert "mode == 'render'" in block and "mode == 'cover'" in block, (
         "完整渲染和只换海报都必须审核，不能让 cover 模式成为绕闸入口")

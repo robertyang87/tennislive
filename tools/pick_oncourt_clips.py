@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+from collections import defaultdict
 import json
 import re
 import sys
@@ -34,7 +35,63 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
 
-from draft_interview_spec import interviewee_en  # noqa: E402
+def _name_lookup():
+    """英文球员名册的查表器，照 `oncourt_feed._zh_lookup` 那套做法。
+
+    **旧版取「标题里最后一个首字母大写的词」当受访者，在真实标题上几乎全错**：
+    `Karen Khachanov on-court interview (RR) | Mastercard Hopman Cup 2018`
+    取出来是 `Hopman`——受访者常在标题**开头**，尾巴上是赛事名。位置猜不出来，
+    只能拿名册认：仓库里本来就躺着两张（`PLAYER_ZH` + `player_names_top500.json`），
+    和 `_zh_lookup` 用的是同一批。
+
+    全名（含空格）优先；姓氏兜底，但**只收姓氏唯一对应一个人的**——
+    Zhang / Zheng 这类一个姓好几个人，认错了比不认更糟（同一条规矩）。
+    """
+    sys.path.insert(0, str(ROOT / "src"))
+    from tennislive.zh.players import PLAYER_ZH  # noqa: PLC0415
+
+    names: set[str] = {en for en in PLAYER_ZH if " " in en}
+    top500 = json.loads(
+        (ROOT / "src" / "tennislive" / "zh" / "player_names_top500.json")
+        .read_text(encoding="utf-8"))
+    for tour in (top500.get("tours") or {}).values():
+        for row in tour:
+            en = (row.get("name_en") or "").strip()
+            if " " in en:
+                names.add(en)
+    # 两张表会重复登记同一个人（拼写完全一致），按 casefold 去重
+    canon: dict[str, str] = {}
+    for en in sorted(names):
+        canon.setdefault(en.casefold(), en)
+
+    full = [(re.compile(r"\b" + re.escape(en).replace("\\ ", " ")
+                        .replace(" ", r"\s+") + r"\b", re.I), en)
+            for en in canon.values()]
+    by_sur: dict[str, set[str]] = defaultdict(set)
+    for en in canon.values():
+        by_sur[en.split()[-1]].add(en)
+    sur = [(re.compile(rf"\b{re.escape(s)}\b"), next(iter(ens)))
+           for s, ens in by_sur.items() if len(ens) == 1 and len(s) > 3]
+    return full, sur
+
+
+def interviewee_en(title: str) -> str:
+    """标题里的受访者 → 名册里的英文全名；认不出返回空串。
+
+    取**位置最靠前**的那个命中（受访者几乎总排在赛事名前面），同位置时
+    全名压过姓氏。`Djokovic and Kyrgios' BROMANCE…` 这类双人标题取第一个
+    ——单人 slug 本来就只装得下一个，另一个由终审改。
+    """
+    full, sur = _name_lookup()
+    hits: list[tuple[int, int, str]] = []
+    for rx, en in full:
+        if (m := rx.search(title or "")):
+            hits.append((m.start(), 0, en))
+    for rx, en in sur:
+        if (m := rx.search(title or "")):
+            hits.append((m.start(), 1, en))
+    return min(hits)[2] if hits else ""
+
 from interview_source_gate import candidate_verification  # noqa: E402
 from oncourt_feed import load_cn, pick  # noqa: E402
 

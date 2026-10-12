@@ -357,12 +357,12 @@ def test_人工请求的_claims跟进正式spec_没认领在build那一刻就红
 
     req_path.write_text(json.dumps(req, ensure_ascii=False), encoding="utf-8")
     with pytest.raises(ValueError, match="全称断言"):
-        B._build_one(req_path, object(), write=True)
+        B._build_one(req_path, write=True)
     assert spec_path.read_bytes() == before, "红了就不许写正式 spec"
 
     req_path.write_text(json.dumps({**req, "_claims": sourced}, ensure_ascii=False),
                         encoding="utf-8")
-    B._build_one(req_path, object(), write=True)
+    B._build_one(req_path, write=True)
     written = json.loads(spec_path.read_text("utf-8"))
     assert written["push"]["lead"] == claim
     assert written.get("_claims") == sourced, "只改元数据那条路没把认领带进 spec"
@@ -371,7 +371,7 @@ def test_人工请求的_claims跟进正式spec_没认领在build那一刻就红
 
     # ④ 请求把那句断言连同认领一起撤掉：spec 里的 `_claims` 跟着删，不留一个 `null`
     req_path.write_text(json.dumps(benign, ensure_ascii=False), encoding="utf-8")
-    B._build_one(req_path, object(), write=True)
+    B._build_one(req_path, write=True)
     written = json.loads(spec_path.read_text("utf-8"))
     assert written["push"] == benign["push"]
     assert "_claims" not in written, f"请求删了 `_claims`，spec 里剩下 {written.get('_claims')!r}"
@@ -430,11 +430,7 @@ def _metadata_only_builder(tmp_path: Path, monkeypatch) -> tuple[Path, Path, Pat
     monkeypatch.setattr(B, "_transcribe_request",
                         lambda *a, **k: pytest.fail("只改元数据不许重跑 ASR"))
     monkeypatch.setattr(PP, "check_copy", lambda *a, **k: None)
-
-    class _Ready:                                   # 只改元数据那条路不调模型
-        ready = True
-
-    monkeypatch.setattr(brief, "Chat", _Ready)
+    # 只改元数据那条路不调模型——2026-10-12 模型通道移除后连桩都不用打了
     return requests_dir, specs, out
 
 
@@ -645,92 +641,6 @@ def test_判不了是不是待build的请求_什么异常都照样列进来(tmp_
 
 
 @pytest.mark.usefixtures("_empty_interview_ledger")
-def test_机器译文把轮次写成N强_正式spec不写_落草稿等人工复核(tmp_path, monkeypatch):
-    """复审 nit（2026-09-27，01684ef0 那条事故的同一条路）：`build_interview_request` 把
-    模型初译的 `zh` 直接写进正式 spec，GITHUB_TOKEN 直推 main、CI 不跑；而全库测试
-    `test_轮次写分数式不写N强` 扫 `zh`、对自动 spec 也是硬的——下一个不相干的 PR 把 main 打红。
-    现在和 promote 转正闸同一个处置：
-    ① 只在机器译文里 → 正式 spec 不写，落成 `<slug>.draft.json`＋`manual_review_required`
-       （promote 见到这个键不提升）；下一趟 `is_pending` 认得它在等人，不重建、不盖掉人改的；
-    ② 请求自己写的「N 强」→ `RequestNotReady`（改请求就好），一个字节都不写。"""
-    import build_interview_request as B  # noqa: PLC0415
-    import draft_interview_spec  # noqa: PLC0415
-    import build_interview_clip  # noqa: PLC0415
-
-    requests_dir, specs, out = _metadata_only_builder(tmp_path, monkeypatch)
-    monkeypatch.setenv("TENNISLIVE_PRODUCTION_CACHE", str(tmp_path / "cache"))
-    rows = [{"t": 0.5, "text": "we made the quarterfinals"}, {"t": 2.0, "text": "thank you"}]
-    monkeypatch.setattr(B, "_transcribe_request", lambda *a, **k: (rows, 60.0))
-    monkeypatch.setattr(build_interview_clip, "segment", lambda words, start, end, budget=None, ruler=None: [
-        {"a": 0.5, "b": 1.8, "en": "we made the quarterfinals"},
-        {"a": 2.0, "b": 3.0, "en": "thank you"}])
-    zh = ["我们打出了一个美网八强的比赛", "谢谢大家"]
-    monkeypatch.setattr(draft_interview_spec, "translate",
-                        lambda rows, chat, max_zh_chars=None: list(zh))
-    req = {**_interview_request("round-name-interview"), "_tactical_research": {"skip": True}}
-    slug = req["slug"]
-    path = requests_dir / f"{slug}.json"
-    path.write_text(json.dumps(req, ensure_ascii=False), encoding="utf-8")
-    assert B.pending_paths() == [path]
-
-    B._build_one(path, object(), write=True)
-    assert not (specs / f"{slug}.json").exists(), "机器译文带「N 强」的正式 spec 不许写"
-    assert not (specs / f"{slug}.xhs.txt").exists()
-    draft = json.loads((specs / f"{slug}.draft.json").read_text("utf-8"))
-    assert draft["manual_review_required"] and draft["_round_name_hits"] == ["八强"]
-    assert draft["zh"] == zh and draft["_xhs"] == req["xhs"]
-    assert B.pending_paths() == [], "在等人改译文：下一趟不重建"
-    # 请求一改，照常重建（身份变了）
-    path.write_text(json.dumps({**req, "event": "2026 拉沃尔杯 第三天单打"}, ensure_ascii=False),
-                    encoding="utf-8")
-    assert B.pending_paths() == [path]
-
-    # 译文干净：照常写正式 spec（换一个缓存目录——同一批行的译文是缓存过的）
-    zh[0] = "我们打进了1/4决赛"
-    monkeypatch.setenv("TENNISLIVE_PRODUCTION_CACHE", str(tmp_path / "cache2"))
-    B._build_one(path, object(), write=True)
-    assert json.loads((specs / f"{slug}.json").read_text("utf-8"))["zh"] == zh
-    assert not (specs / f"{slug}.draft.json").exists(), "正式 spec 写出来，待复核草稿就作废"
-
-    # 复审第三轮 nit：已有正式 spec 的请求改了、重建又撞上机器译文「N 强」——落草稿、
-    # 正式 spec 不动；下一趟认得它在等人，不再每 10 分钟重建一遍盖掉人改的
-    formal_before = (specs / f"{slug}.json").read_bytes()
-    # 改的是转写那一组键（`max_zh_chars`）：不是只改元数据，要重新切行、重新翻译
-    path.write_text(json.dumps({**req, "max_zh_chars": 18}, ensure_ascii=False),
-                    encoding="utf-8")
-    zh[0] = "我们打出了一个美网八强的比赛"
-    monkeypatch.setenv("TENNISLIVE_PRODUCTION_CACHE", str(tmp_path / "cache3"))
-    assert B.pending_paths() == [path]
-    B._build_one(path, object(), write=True)
-    assert (specs / f"{slug}.json").read_bytes() == formal_before
-    assert json.loads((specs / f"{slug}.draft.json").read_text("utf-8"))["_round_name_hits"]
-    assert B.pending_paths() == [], "已有正式 spec 也一样：在等人改译文，不重建"
-
-    # 同一个路径上是 `draft_interview_spec` 的自动草稿（不带 `_round_name_hits`）：不许盖掉
-    (specs / f"{slug}.draft.json").write_text('{"_draft": true, "slug": "%s"}' % slug,
-                                              encoding="utf-8")
-    auto_draft = (specs / f"{slug}.draft.json").read_bytes()
-    path.write_text(json.dumps({**req, "max_zh_chars": 17}, ensure_ascii=False),
-                    encoding="utf-8")
-    monkeypatch.setenv("TENNISLIVE_PRODUCTION_CACHE", str(tmp_path / "cache4"))
-    import production_preflight as PP0  # noqa: PLC0415
-    with pytest.raises(PP0.RequestNotReady, match="另一份草稿"):
-        B._build_one(path, object(), write=True)
-    assert (specs / f"{slug}.draft.json").read_bytes() == auto_draft
-    assert (specs / f"{slug}.json").read_bytes() == formal_before
-
-    # 请求自己写的「N 强」：RequestNotReady，一个字节都不写
-    import production_preflight as PP  # noqa: PLC0415
-    other = {**_interview_request("round-name-req-interview"), "_tactical_research": {"skip": True}}
-    other["push"] = {**other["push"], "lead": "兹维列夫在美网八强之后又赢了一场。"}
-    bad = requests_dir / f"{other['slug']}.json"
-    bad.write_text(json.dumps(other, ensure_ascii=False), encoding="utf-8")
-    zh[0] = "我们打进了1/4决赛"
-    with pytest.raises(PP.RequestNotReady, match="八强"):
-        B._build_one(bad, object(), write=True)
-    assert not list(specs.glob(f"{other['slug']}*"))
-
-
 def test_仓库里的人工采访请求都读得开_slug合法且和文件名一致():
     """`pending_paths` 读不了一条时按文件名认 slug（上面那条）——这个兜底只在
     「文件名就是 slug」时才拦得对。存量 17 条全守着这个约定，这里钉住：CI 上提前红，

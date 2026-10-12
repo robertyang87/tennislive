@@ -304,15 +304,14 @@ def test_老尺子的字体三个工作流都装着(workflow):
 
 
 def test_出片和预检都按spec的尺子切():
-    """`segment()` 的出片、预检、人工请求建 spec 三个调用方都要把 `segment_ruler(spec)`
-    传进去——漏一个就是那一处按默认尺子切，和另一处各说各话（预检绿、runner 红；或者
-    请求按新尺子切行写好 `zh`，渲染按老尺子重切对不上）。`draft_interview_spec` 只建新
-    slug（撞名就换名），新 slug 本来就是默认尺子，不在这张表里。"""
+    """`segment()` 的出片、预检两个调用方都要把 `segment_ruler(spec)`
+    传进去——漏一个就是那一处按默认尺子切，和另一处各说各话（预检绿、runner 红）。
+    （人工请求建 spec 原来也在这张表里；2026-10-12 模型通道移除后它不再自己
+    切行——新请求走人工，存量修订不切已写好的 `zh`。）"""
     import ast  # noqa: PLC0415
 
     for rel, owner in (("tools/build_interview_clip.py", "main"),
-                       ("tools/interview_preflight.py", "subtitle_findings"),
-                       ("tools/build_interview_request.py", "_build_one_unlocked")):
+                       ("tools/interview_preflight.py", "subtitle_findings")):
         tree = ast.parse((ROOT / rel).read_text(encoding="utf-8"))
         fn = next(n for n in ast.walk(tree)
                   if isinstance(n, ast.FunctionDef) and n.name == owner)

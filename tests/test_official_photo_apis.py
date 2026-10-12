@@ -1034,7 +1034,7 @@ def test_自动链_卡在照片接口图上_原来的路也没有_查完了不�
 #: `badosa-gauff` 的视觉审核（specs/reels/pending/badosa-gauff.draft.json，2026-09-28 录下来的）：封面判过了，
 #: 唯一没过的是结尾窗口
 _BADOSA_GAUFF_REVIEW = {
-    "model": "MiniMax-M3", "status": "waiting", "visual_status": "waiting", "retryable": False,
+    "status": "waiting", "visual_status": "waiting", "retryable": False,
     "cover": {"same_match": True, "subject": "高芙", "moment": "winner_celebration", "wrong_or_old": False,
               "reason": "高芙侧面近景握拳……可确认属本场，非旧图。", "confidence": 0.88},
     "problems": ["ending 必须是 3-30 秒的完整收官窗口"],
@@ -1043,41 +1043,34 @@ _BADOSA_GAUFF_REVIEW = {
     "cover_image": "assets/reel/badosa-gauff-cover.jpg"}
 
 
-def _visual_raw(**cover) -> dict:
-    window = {"start": 100.0, "end": 110.0, "kind": "match_point", "winner_visible": True,
-              "reason": "赛点 105s 落地", "confidence": 0.9}
-    return {"cold_open": dict(window), "ending": dict(window),
-            "cover": {"same_match": True, "subject": "梅德韦杰夫", "moment": "winner_celebration",
-                      "wrong_or_old": False, "reason": "同场、握拳", "confidence": 0.9, **cover}}
-
-
 def test_视觉审核只判了窗口没判封面_不算卡在封面上():
-    """`cover_problems` 的分界拿 `analyze_reel_visuals.clean_report` **真出的话**钉：封面那一段的每一种不过都认得出，
-    冷开场／结尾窗口的每一种都不认（换封面解不开它们）。"""
-    import analyze_reel_visuals as visual  # noqa: PLC0415
+    """`cover_problems` 的分界：视觉审核 `problems` 里**说的是封面**的（以「封面」
+    开头，或就是那句没候选）才认；冷开场／结尾窗口、双语字幕那几句都不认——
+    换封面解不开它们。
+
+    （原来这一头拿视觉模型的 `clean_report` 真出的话钉；那个工具已于
+    2026-10-12 随模型通道移除，现在直接拿各类 problem 原话钉 `cover_problems`
+    自己的分界。）"""
     import refresh_reel_cover as rrc  # noqa: PLC0415
 
-    draft = _draft(cover={**_draft()["cover"], "portrait": {"image": "assets/reel/medvedev-royer-cover.jpg"}})
-    _r, ok = visual.clean_report(_visual_raw(), draft, 200.0)
-    assert ok == [] and rrc.cover_problems({"problems": ok}) == []
-    # 封面那一段：每一种都要认得出
-    for bad in ({"same_match": False}, {"wrong_or_old": True}, {"confidence": 0.5}, {"reason": ""},
-                {"subject": "鲁瓦耶"}, {"moment": "other"}):
-        _r, probs = visual.clean_report(_visual_raw(**bad), draft, 200.0)
-        assert probs and rrc.cover_problems({"problems": probs}) == probs, (bad, probs)
-    _r, probs = visual.clean_report(_visual_raw(), {**draft, "cover": _draft()["cover"]}, 200.0)
-    assert rrc.cover_problems({"problems": probs}) == [rrc.NO_COVER_PROBLEM], probs
-    # 窗口那一段：一种都不许认
-    for name in ("cold_open", "ending"):
-        for bad in ({"end": 140.0}, {"end": 101.0}, {"kind": "rally"}, {"winner_visible": False},
-                    {"confidence": 0.5}, {"reason": ""}, {"end": 250.0}):
-            raw = _visual_raw()
-            raw[name] = {**raw[name], **bad}
-            _r, probs = visual.clean_report(raw, draft, 200.0)
-            assert probs and rrc.cover_problems({"problems": probs}) == [], (name, bad, probs)
-    # main 在视觉过了之后追加的双语字幕那几句（status waiting、retryable false）也不是封面
-    for reason in ("冷开场窗口没有来自源站字幕轨的英文转播原声", "没有可用的 DEEPSEEK_API_KEY，双语字幕未生成"):
-        assert rrc.cover_problems({"problems": [reason]}) == []
+    cover_problems = [
+        "封面人物应为 梅德韦杰夫，模型说是鲁瓦耶",
+        "封面不是本场比赛（same_match=false）",
+        "封面是旧图或非本场画面",
+        "封面置信度 0.5 不够",
+        "封面情绪应为 loser_fighting",
+        rrc.NO_COVER_PROBLEM,
+    ]
+    assert rrc.cover_problems({"problems": cover_problems}) == cover_problems
+    not_cover = [
+        "ending 必须是 3-30 秒的完整收官窗口",
+        "cold_open 理由引用窗口外时间 332.5s",
+        "冷开场窗口没有来自源站字幕轨的英文转播原声",
+        "没有可用的模型密钥，双语字幕未生成",
+    ]
+    assert rrc.cover_problems({"problems": not_cover}) == []
+    assert rrc.cover_problems({"problems": cover_problems + not_cover}) == cover_problems
+    assert rrc.cover_problems(None) == [] and rrc.cover_problems({}) == []
 
 
 def test_封面审过了只有结尾窗口不过_照片接口不换图_不装认人依赖(tmp_path, monkeypatch):

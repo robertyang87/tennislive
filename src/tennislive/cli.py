@@ -327,7 +327,7 @@ def cmd_brief(args) -> int:
     标题加链接，另一条大多数日子是空的。
 
     现在一趟做完：扫信号 → 摘掉官网导航页 → 聚簇 → 按热度排 → 前 N 条抓正文
-    出中文要点 → 其余至少给中译标题 → 渲一份 HTML。
+    留下抓取记录 → 渲一份 HTML。（中译与要点提炼已随模型通道于 2026-10-12 移除。）
 
     ⚠️ **空产也要写出产物**。一条热点都没有的日子，`brief.json` 里的
     `source_status` / `notes` / `dropped_nav` 才是当天唯一能查的东西——
@@ -337,7 +337,7 @@ def cmd_brief(args) -> int:
 
     from .render.newsbrief import render_brief_html
     from .render.terminal import console
-    from .research.brief import KEY_HINT, Chat, build_brief
+    from .research.brief import build_brief
     from .research.newsfeeds import fetch_readable_news
     from .research.topic_radar import previous_slugs
     from .research.trends import fetch_trend_signals
@@ -361,18 +361,12 @@ def cmd_brief(args) -> int:
     zh_dicts = [h.as_dict() for h in zh.hits]
     status.update(zh.status)
 
-    chat = Chat()
-    if chat.ready:
-        # 走了哪条通道要当场说出来：两条通道的产物长得一样，日志里不写
-        # 就只能靠回忆当时哪个密钥配着。
-        console.print(f"[dim]模型通道 {chat.channel}[/dim]")
-    else:
-        # **默认那条不许悄悄走。** 没有密钥时这份简报没有中译也没有要点，
-        # 而它看起来和「今天新闻少」一模一样。
-        console.print(
-            f"[yellow]没配 {KEY_HINT}：本次没有中译也没有要点，"
-            "简报退回「只有英文标题和热度」。[/yellow]"
-        )
+    # 模型通道已于 2026-10-12 整体摘除：这份简报没有中译也没有要点，
+    # 看起来会和「今天新闻少」一模一样——所以当场说出来，别悄悄走。
+    console.print(
+        "[yellow]模型通道已移除：本次没有中译也没有要点，"
+        "简报只有英文标题、热度和常青线。[/yellow]"
+    )
 
     brief = build_brief(
         d.isoformat(),
@@ -385,7 +379,6 @@ def cmd_brief(args) -> int:
         deep=args.deep,
         limit=args.max,
         min_sources=args.min_sources,
-        chat=chat,
     )
 
     outdir = Path(args.outdir) / d.isoformat() / "brief"
@@ -943,32 +936,6 @@ def cmd_publish_flash(args) -> int:
     return 0
 
 
-# ---------- 授权视频中文化 ----------
-
-def cmd_video(args) -> int:
-    """Translate local, rights-cleared subtitles and optionally burn them."""
-    from .video import ChatTranslator, VideoPipelineError, localize_video
-
-    try:
-        translator = ChatTranslator(model=args.model)
-        audit = localize_video(
-            video_path=Path(args.video),
-            subtitle_path=Path(args.subtitles),
-            rights_path=Path(args.rights),
-            output_dir=Path(args.outdir),
-            translator=translator,
-            bilingual=args.bilingual,
-            burn=not args.no_burn,
-            overwrite=args.overwrite,
-            ffmpeg_bin=args.ffmpeg,
-        )
-    except VideoPipelineError as exc:
-        print(f"视频中文化失败：{exc}", file=sys.stderr)
-        return 2
-    print(json.dumps(audit, ensure_ascii=False, indent=2))
-    return 0
-
-
 # ---------- 入口 ----------
 
 def build_parser() -> argparse.ArgumentParser:
@@ -1130,23 +1097,6 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--rate", default=None, help="语速，如 +22%%（默认 +22%%）")
     sp.add_argument("--pitch", default=None, help="音高，如 +2Hz（默认 +0Hz）")
 
-    sp = sub.add_parser("video", help="中文化本地且已授权的视频素材")
-    sp.add_argument("--video", required=True, help="本地视频文件；不接受 URL")
-    sp.add_argument("--subtitles", required=True, help="本地原文 SRT 字幕")
-    sp.add_argument("--rights", required=True, help="与视频绑定的授权清单 JSON")
-    sp.add_argument("--outdir", required=True, help="中文字幕、成片与授权审计输出目录")
-    # ⚠️ **不是 GitHub Models**：`models.github.ai/inference` 2026-08-05 实测
-    # 返回 HTTP 410 `github_models_retirement_brownout`，已退役。字幕翻译走的是
-    # 和热点简报同一条通道（`research.brief.Chat`），默认由那边决定。
-    sp.add_argument(
-        "--model",
-        help="翻译模型；留空＝按通道默认（DeepSeek 走 deepseek-v4-pro，Anthropic 走 claude-opus-5）",
-    )
-    sp.add_argument("--bilingual", action="store_true", help="生成原文+中文双语字幕")
-    sp.add_argument("--no-burn", action="store_true", help="只生成 SRT，不调用 ffmpeg")
-    sp.add_argument("--overwrite", action="store_true", help="覆盖已存在的输出文件")
-    sp.add_argument("--ffmpeg", default="ffmpeg", help="ffmpeg 可执行文件名或路径")
-
     pub = sub.add_parser("publish", help="发布内容")
     pub_sub = pub.add_subparsers(dest="channel")
     spw = pub_sub.add_parser("wechat", help="公众号：上传素材并创建草稿")
@@ -1193,8 +1143,6 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_flash_radar(args)
     if args.command == "explainer":
         return cmd_explainer(args)
-    if args.command == "video":
-        return cmd_video(args)
     if args.command == "publish":
         if args.channel == "wechat":
             return cmd_publish_wechat(args)

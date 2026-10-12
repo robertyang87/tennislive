@@ -531,8 +531,8 @@ jobs:
           AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
           AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
         run: |
-          # tee 进 /tmp/render-findings.log：render 红了之后「判据回喂模型修一轮」
-          # 那一步要拿这份**确定性的原话**当输入（tools/repair_reel_spec.py）。
+          # tee 进 /tmp/render-findings.log：render 红了之后人工修 spec 时
+          # 拿这份**确定性的原话**当输入。
           # pipefail 不能省——GitHub 的 bash -e 默认不带它，tee 会把失败吞成绿。
           set -o pipefail
           SLUG="${{ github.event.inputs.slug }}"
@@ -680,7 +680,7 @@ jobs:
           #   probe 的静态构建一落空也会往 v3 里存同样的半份。所以**搬走的是这一条**：
           #   v3 留给那两条只装 ffmpeg 的线，它们的 yml 一个字不动——benchmark 的
           #   push 触发器 paths 里有它自己的 yml，改它，合并那一下就会在 main 上跑一趟
-          #   DeepSeek ＋ MiniMax 对比（账号所有者 2026-09-27：这两个模型不要用）。
+          #   已摘除的模型对比（账号所有者 2026-09-27：这两个模型不要用，2026-10-12 已移除）。
           #   判据 `test_共用一个apt缓存前缀的几条线装的包一样`（这里退回 v3 就红）。
           key: apt-pkgs-${{ runner.os }}-24.04-ffmpeg-fonts-v4-${{ github.run_id }}
           restore-keys: |
@@ -1166,13 +1166,12 @@ jobs:
           ls -la "$OUT/cover_candidates" 2>/dev/null || true
 
       # 逐分 + 比分板机械对齐备料（配音不脱节的命门）。probe 出完 contact_*.jpg
-      # 之后：fetch_match_pbp 拉 WTA 逐分 + MiniMax 读比分板。两步都可选、都降级
-      # ——对齐是「给 segments 加料」不是硬闸，没料就退回下面 assemble 里 DeepSeek
-      # 读字幕那条老路。ATP 场没有 WTA 逐分通路，自然降级（prepare_alignment 出声）。
+      # 之后：fetch_match_pbp 拉 WTA 逐分；比分板读数（scoreboard.json）如需
+      # 使用由外部备料落盘（原视觉模型读比分板已于 2026-10-12 移除）。对齐是
+      # 「给 segments 加料」不是硬闸，没料就退回下面 assemble 读字幕那条路。
+      # ATP 场没有 WTA 逐分通路，自然降级（prepare_alignment 出声）。
       - name: probe — 逐分+比分板对齐备料
         if: github.event.inputs.mode == 'probe' && github.event.inputs.home != '' && github.event.inputs.slug != 'yastremska-chwalinska'
-        env:
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
         run: |
           OUT="${{ steps.paths.outputs.outdir }}"
           PYTHONPATH=src python tools/prepare_alignment.py \
@@ -1187,9 +1186,6 @@ jobs:
       # 逐分+比分板对齐出 segments（比读字幕准）；没备出就退回读字幕。
       - name: probe — 自动备料写 spec 草稿
         if: github.event.inputs.mode == 'probe' && github.event.inputs.home != '' && github.event.inputs.slug != 'yastremska-chwalinska'
-        env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
         run: |
           OUT="${{ steps.paths.outputs.outdir }}"
           SLUG="${{ github.event.inputs.slug }}"
@@ -1226,20 +1222,6 @@ jobs:
             --cover \
             $ALIGN_ARGS \
             "${META_ARGS[@]}" \
-            --write
-
-      # MiniMax 不是“看过就算”：它要把冷开场、结尾兑现和封面人物/情绪写成
-      # 可复核证据；DeepSeek 只翻译这一窗口里真实存在的英文转播字幕。任何一项
-      # 不确定都会把草稿留在 pending，不进入 render。
-      - name: probe — 视觉事实闸 + 双语原声冷开场
-        if: github.event.inputs.mode == 'probe' && github.event.inputs.home != '' && github.event.inputs.slug != 'yastremska-chwalinska'
-        env:
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        run: |
-          python tools/analyze_reel_visuals.py \
-            --draft "specs/reels/pending/${{ github.event.inputs.slug }}.draft.json" \
-            --outdir "${{ steps.paths.outputs.outdir }}" \
             --write
 
       # 只有全部生产证据齐全且 build_match_reel.validate_spec 真通过，才把 pending
@@ -1873,46 +1855,6 @@ jobs:
           done
           [ "$SENT" = 1 ] || {
             echo "::error::成片已质检并落库，但 push-only 连续三次派发失败"; exit 1; }
-
-      # ⭐ render 红了不再干等会话来修：把 tee 捕获的判据原话回喂 DeepSeek
-      # 有界修一轮（只动自动 spec 的窗口/旁白删字，最多 2 轮，全部边界见
-      # tools/repair_reel_spec.py 的 docstring）。修出来的 spec 先过同一套
-      # 本地闸（工具内部跑 dry-run 子进程）才会落盘，所以这里只看 git diff。
-      #
-      # **顺序钉死：先 commit，再 dispatch。** render 组是 cancel-in-progress
-      # （见顶部 concurrency）——新 run 一启动就会把本 run 掐掉，commit 排在
-      # dispatch 后面就会跟着一起死，修订静默丢失。
-      - name: render 红了把判据回喂模型修一轮（只动自动 spec）
-        if: >-
-          failure() && github.event.inputs.mode == 'render'
-          && github.ref_name == 'main'
-          && github.event.inputs.slug != 'yastremska-chwalinska'
-        timeout-minutes: 8
-        env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          SLUG="${{ github.event.inputs.slug }}"
-          SPEC="specs/reels/${SLUG}.json"
-          test -f /tmp/render-findings.log || { echo "[skip] 没捕获到判据文本（失败在 tee 之前，多半是环境错）"; exit 0; }
-          test -f "$SPEC" || { echo "[skip] 找不到 $SPEC"; exit 0; }
-          python tools/repair_reel_spec.py \
-            --spec "$SPEC" \
-            --findings /tmp/render-findings.log \
-            --outdir "${{ steps.paths.outputs.outdir }}" \
-            --write
-          git diff --quiet -- "$SPEC" && { echo "[skip] 本轮没有修出可落盘的版本"; exit 0; }
-          git config user.name "Claude"
-          git config user.email "noreply@anthropic.com"
-          git add "$SPEC"
-          git commit -m "reel: qc-repair $SLUG（判据回喂自动修一轮）"
-          source tools/git_push_retry.sh
-          push_with_rebase_retry main || exit 1
-          gh workflow run match-reel.yml --ref main \
-            -f mode=render \
-            -f slug="$SLUG" \
-            -f received_at="${{ github.event.inputs.received_at }}"
-          echo "[repair] 修订已进 main，已重新派发 render"
 
       # 推送**必须排在提交之后**——正文里的成片链接和复制页链接都指向仓库里的
       # 文件，还没提交上去就是 404。这一段的注释一直写着「推送是最后一步：

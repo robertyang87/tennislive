@@ -193,12 +193,32 @@ def _protected(spec: dict, slug: str) -> bool:
 
 
 #: 三个自动写手给采访 spec 盖的同一个章：本文件 `build_spec`、
-#: `draft_interview_spec`（草稿）、`promote_interview_draft`（草稿转正，原样保留）。
+#: 自动草稿（已随模型通道移除）、`promote_interview_draft`（草稿转正，原样保留）。
 #: ⚠️ **没有任何代码会把它改掉**——人工修 spec（#1130 修拉沃尔杯捧杯那条）也不改，
 #: main 上 17 条正式 spec 带着它、**17 条全都推过**（2026-09-27 晚按发布账本量的；
 #: 其中锦织圭那条只有账本、没有 `pushed.json`）。
 #: 所以「过没过那一关」不能只看这个章，要看 `_protected`：人核过
 #: （`transcript_verified` / `_verified_clean`）或已经推送（发布账本 / `pushed.json`）。
+def cap_json3(rows: list[dict]) -> dict:
+    """faster-whisper 的字幕条 → `fetch_words` 认的 json3 形状。
+
+    形状是 `build_interview_clip.fetch_words` 报错正文里写的那份约定：
+    `events[].tStartMs` + `segs[].utf8`；`dDurationMs` 也要给——
+    `_caption_spans`（空档判据）按它算「这一条挂到几秒」，全填 0 的话每个
+    分段间隙都会被误报成 >2s 的空档，render 那道闸会淹在假红里。
+
+    ⚠️ **不加 `>> ` 说话人标记**：whisper 不分说话人，按停顿编一个标记比
+    没有更糟（切行会把假边界当成「换人说话」去断）。代价是主持人的问和
+    球员的答会被并进同一行——写进草稿的 `_notes`，终审 `--stage subs`
+    之后自己补 `>> ` 再切（商竣程那条就是人工按内容标的六个轮次）。
+    """
+    return {"events": [
+        {"tStartMs": int(round(r["t"] * 1000)),
+         "dDurationMs": max(0, int(round((r.get("end", r["t"]) - r["t"]) * 1000))),
+         "segs": [{"utf8": r["text"]}]}
+        for r in rows]}
+
+
 AUTO_PENDING = "auto_pending"
 
 
@@ -212,7 +232,7 @@ def unverified_auto_spec(spec: dict, slug: str | None = None) -> bool:
 
     **全库测试对它只报，拦它的是渲染闸。** 来路（2026-09-27 17:33Z）：
     `interview-auto-render` 把 `laver-cup-2026-trophy-ceremony` 的自动正式 spec
-    （01684ef0，`zh` 是 DeepSeek 初译，11 行超 952px）直接推上 main。GITHUB_TOKEN 推的
+    （01684ef0，`zh` 是模型初译，11 行超 952px）直接推上 main。GITHUB_TOKEN 推的
     提交不触发 ci.yml，于是它不红在自己身上，红在下一个无关的人工合并上
     （run 36337538392，#1127），再把所有开着的 PR 一起打红 38 分钟——而那条片子
     **早就被渲染闸拦住了**（run 36337385713 停在 `write_ass` →「中文字幕过不了」），
@@ -610,7 +630,7 @@ def build_spec(req: dict, zh: list[str], duration: float) -> dict:
         "_zh_draft": zh,
         "_zh_draft_note": (
             "第一份 faster-whisper small.en 逐词时间码经正式 segment() 切行后，"
-            "由 DeepSeek 逐行翻译；render 时用 medium.en 做第二份独立 ASR。"
+            "由模型逐行翻译；render 时用 medium.en 做第二份独立 ASR。"
         ),
         "_notes": list(req.get("_notes") or []),
         "_facts": list(req.get("_facts") or []),
@@ -673,14 +693,13 @@ def _round_name_review(req: dict, spec: dict, existing: dict, copy_text: str,
     return sorted(from_request), sorted(fresh - from_request)
 
 
-def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
+def _build_one_unlocked(path: Path, *, write: bool) -> tuple[str, int, float]:
     from build_interview_clip import (  # noqa: PLC0415
         segment,
         segment_ruler,
         strip_hesitation_lines,
         transcript_language_windows,
     )
-    from draft_interview_spec import cap_json3, translate  # noqa: PLC0415
 
     req = _read(path)
     slug = _slug(req, path)
@@ -726,59 +745,13 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
         lines = existing.get("zh") or []
         duration = float(origin.get("duration") or existing.get("end") or 0)
     else:
-        if write:
-            from production_preflight import check_request
-            check_request(req)
-        if write and not metadata_only and not req.get("_tactical_research"):
-            match = req.get("match") or {}
-            if match.get("winner_en") and match.get("loser_en"):
-                from tactical_research import start_research
-                research_job = start_research(home=match["winner_en"], away=match["loser_en"],
-                    event=match.get("event_search") or req.get("event", ""), year=match.get("year", 0))
-        def transcribe():
-            with tempfile.TemporaryDirectory() as td:
-                return _transcribe_request(str(req["url"]), Path(td), model="small.en")
-        # Dry runs remain isolated and do not persist checkpoints.
-        rows, duration = (cached_json("interview-asr", {
-            "source": _youtube_id(str(req["url"])) or req["url"],
-            "model": "small.en", "implementation": file_digest(Path(__file__)),
-        }, transcribe) if write else transcribe())
-
-        if not rows:
-            raise RuntimeError(f"{slug}: 第一份 ASR 为空")
-        start, end = request_window(req, duration, rows)
-        # 尺子和出片那一趟同一把：已渲过的 slug（显式修订重建）按它当年那把切，
-        # 不然这里切出来、按行号写进 `zh` 的行，渲染时按老尺子重切就对不上
-        lines = segment(
-            [(row["t"], row["text"]) for row in rows], start, end,
-            budget=req.get("segment_budget_px"), ruler=segment_ruler({"slug": slug}),
-            **({"language_windows": transcript_language_windows({**req, "start": start, "end": end})}
-               if req.get("transcript_languages") is not None else {}),
-        )
-        # render/verify 会在切行后清掉 um/uh 等犹豫音；初次翻译必须走完全相同的
-        # 正文行，否则长讲话会出现“中文 656 行、英文 673 行”这种必然无法渲染的
-        # spec。清理必须发生在 translate 前，不能事后硬补空行。
-        strip_hesitation_lines(lines)
-        if not lines:
-            raise RuntimeError(f"{slug}: 正式切行为空")
-        translation_rows = [{"t": row["a"], "text": row["en"]} for row in lines]
-        def translate_once():
-            return translate(translation_rows, chat, max_zh_chars=req.get("max_zh_chars"))
-        zh = (cached_json("interview-translation", {
-            "rows": translation_rows, "max_zh_chars": req.get("max_zh_chars"),
-            "channel": getattr(chat, "channel", ""),
-            "model": getattr(chat, "model", os.environ.get("TENNISLIVE_BRIEF_MODEL", "deepseek-chat")),
-            "translator": file_digest(ROOT / "tools/draft_interview_spec.py"),
-            "contract": file_digest(ROOT / "skills/tennis-interview-production/references/deepseek.md"),
-        }, translate_once) if write else translate_once())
-        if len(zh) != len(lines):
-            raise RuntimeError(f"{slug}: 中英文行数不一致 {len(zh)} != {len(lines)}")
-        # 默认终点按逐词稿算好再交给 build_spec（`_request_origin` 记的仍是原请求）
-        spec = build_spec({**req, "end": end}, zh, duration)
-        if req.get("end") in (None, "") and "end" in spec:
-            # 请求没给 `end`：这个数是生成器算的。记下来，出片那一趟撞上片尾板时
-            # 按它认「没人给过」、直接收到闸算出来的终点（interview_tail 第四节）。
-            spec["_end_default"] = spec["end"]
+        # 全新请求原来走「转写 → 切行 → 模型逐行翻译 → build_spec」：翻译一步
+        # 已于 2026-10-12 随模型通道整体移除，新请求无法自动生成中文 spec。
+        # 直接出声、留在待生成名单；已有 spec 的元数据修订（上面 metadata_only
+        # 分支，不需要翻译）不受影响。
+        raise RuntimeError(
+            f"{slug}: 自动翻译已随模型通道移除，新请求无法自动生成中文 spec"
+            "（已有 spec 的元数据修订仍可走）")
     copy_file = SPECS / f"{slug}.xhs.txt"
     existing_copy = copy_file.read_text(encoding="utf-8") if copy_file.is_file() else ""
     copy_text = (str(req.get("xhs") or "") if not metadata_only or req.get("xhs") != previous.get("xhs")
@@ -798,7 +771,7 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
         if write:
             if any(file_digest(p) != sha for p, sha in observed.items()):
                 raise RuntimeError(f"{slug}: 输入或正式稿已被另一任务修改，拒绝覆盖")
-            # 复审第三轮 nit：`<slug>.draft.json` 也是 `draft_interview_spec` 自动草稿的路径。
+            # 复审第三轮 nit：`<slug>.draft.json` 也是自动草稿生成器用的路径。
             # 那边落盘前会避撞，这边原来直接盖——而作废清理只删带 `_round_name_hits` 的，
             # 被盖掉的自动草稿就没了。不是自己落的那种，一个字节都不写。
             draft_path = SPECS / f"{slug}.draft.json"
@@ -865,15 +838,15 @@ def _build_one_unlocked(path: Path, chat, *, write: bool) -> tuple[str, int, flo
     return slug, len(lines), duration
 
 
-def _build_one(path: Path, chat, *, write: bool) -> tuple[str, int, float]:
+def _build_one(path: Path, *, write: bool) -> tuple[str, int, float]:
     if not write:
-        return _build_one_unlocked(path, chat, write=False)
+        return _build_one_unlocked(path, write=False)
     import fcntl
     lock = OUTDIR / _slug(_read(path), path) / ".request.lock"
     lock.parent.mkdir(parents=True, exist_ok=True)
     with lock.open("w") as handle:
         fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        return _build_one_unlocked(path, chat, write=True)
+        return _build_one_unlocked(path, write=True)
 
 
 def _rel(path: Path) -> str:
@@ -898,7 +871,7 @@ def main() -> int:
         "--failed-list", default="",
         help="单条请求失败记进这个文件（每行：请求路径<TAB>slug<TAB>原因），退出码不再"
              "因为单条变 1——interview-auto-render 靠它让同一趟的其余请求照常提交，"
-             "整趟到最后一步再标红。整趟跑不起来（没配 key）照旧非 0。")
+             "整趟到最后一步再标红。")
     args = ap.parse_args()
     failed_list = Path(args.failed_list) if args.failed_list else None
     if failed_list:
@@ -921,17 +894,10 @@ def main() -> int:
         print("没有待生成的人工采访请求。")
         return 0
 
-    from tennislive.research.brief import Chat  # noqa: PLC0415
-
-    chat = Chat()
-    if not chat.ready:
-        print("::error::没配 DEEPSEEK_API_KEY，中文字幕无法生成")
-        return 2
-
-    return build_all(paths, chat, write=args.write, failed_list=failed_list)
+    return build_all(paths, write=args.write, failed_list=failed_list)
 
 
-def build_all(paths: list[Path], chat, *, write: bool,
+def build_all(paths: list[Path], *, write: bool,
               failed_list: Path | None = None) -> int:
     """逐条建 spec → 退出码。一条失败不连坐：每条请求各自 try，失败的那条**什么都不写**
     （所有落盘都排在 `_build_one_unlocked` 末尾、所有闸之后），其余照常写。原来单条红就
@@ -952,7 +918,7 @@ def build_all(paths: list[Path], chat, *, write: bool,
     failed: list[tuple[str, str, str]] = []
     for path in paths:
         try:
-            slug, n_lines, duration = _build_one(path, chat, write=write)
+            slug, n_lines, duration = _build_one(path, write=write)
             mode = "已写入" if write else "干跑"
             print(f"✅ {slug}: {n_lines} 行，源长 {duration:.1f}s，{mode}")
         except Exception as exc:  # noqa: BLE001 — 一条失败不吞掉后续请求

@@ -624,7 +624,7 @@ def spoken_texts(slug: str | None = None, spec_path: Path | None = None) -> list
 
 
 def _measure_cmd(slug: str | None, spec_path: str | Path | None) -> str:
-    """提示里那行 `--measure` 命令。给了 spec 路径就指路径：`repair_reel_spec`、
+    """提示里那行 `--measure` 命令。给了 spec 路径就指路径：
     `taste_preflight` 这些拿**临时副本**跑 dry-run 的，按 slug 会指回仓库里那份
     没改过的 spec，量的就不是刚报出来的这几处。"""
     target = (f"--spec {shlex.quote(str(spec_path))}" if spec_path

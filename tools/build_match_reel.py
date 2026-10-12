@@ -9213,7 +9213,7 @@ def _owner_taste(spec: dict) -> None:
     一句没提）对谁都只报——它们在已接受的存量上有误报，做硬会成一条常年红。
 
     日志行首 `[口味·<块>]` 只告诉人去哪一块改。⚠️ 不为任何模型的回喂挑行首写法
-    （账号所有者 2026-09-27「minimax 和 deepseek 都不要用，后续会拿掉」）。
+    （账号所有者 2026-09-27 定了闸不接外部模型，2026-10-12 已摘除）。
     """
     from taste_gates import is_auto, reel_taste_scoped  # noqa: PLC0415
 

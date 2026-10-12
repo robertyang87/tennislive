@@ -1,6 +1,6 @@
 ---
 name: tennis-interview-production
-description: Produce and audit the Chinese tennis post-match video series “赛后开麦”: DeepSeek translates faithful bilingual subtitles, deterministic gates own cover and QC, and MiniMax runs only in the shadow benchmark. Use for on-court interviews, trophy-ceremony speeches, farewells and walk-ons, and for hand-written press conferences and broadcaster interviews, including source identity, subtitles, same-match lead-in, cover, takeaway, QC, PushPlus copy, and publication proof.
+description: Produce and audit the Chinese tennis post-match video series “赛后开麦”: bilingual subtitles are written and checked by humans against the transcript, and deterministic gates own cover and QC. Use for on-court interviews, trophy-ceremony speeches, farewells and walk-ons, and for hand-written press conferences and broadcaster interviews, including source identity, subtitles, same-match lead-in, cover, takeaway, QC, PushPlus copy, and publication proof.
 ---
 
 # 赛后开麦制作
@@ -20,18 +20,17 @@ description: Produce and audit the Chinese tennis post-match video series “赛
 - 优先使用官方单场集锦末尾自带的采访；若集锦没有采访，使用独立官方场上采访。
 - 独立采访正文必须另配同一场官方集锦的获胜/赛点画面作开场；不能拿另一场凑。
 
-## 2. DeepSeek 负责语言事实
+## 2. 语言事实由人工负责
 
-读取 `references/deepseek.md`。英文原话与顺序是不可改写的证据层；中文、收尾和
-推送文案只能建立在逐句转写、已核赛果与给定事实包上。模型不得补故事。
+英文原话与顺序是不可改写的证据层；中文、收尾和推送文案由人工撰写，只能
+建立在逐句转写、已核赛果与给定事实包上。任何人不得补故事。
 
-## 3. 视觉事实：生产链走确定性闸，MiniMax 只在影子基准里
+## 3. 视觉事实：生产链走确定性闸加人工终审
 
-2026-08-30 费德勒名人堂事故复盘之后，生产链的封面与画面判断不再交给外部模型：
+2026-08-30 费德勒名人堂事故复盘之后，生产链的封面与画面判断不交给外部模型：
 封面走 `tools/audit_interview_cover.py`（`interview-clip.yml` 里跑）加人／会话终审。
-`references/minimax.md` 只在影子基准 `tools/benchmark_interview_models.py` 里用——
-标准照旧是那一份：模型必须对自己实际看到的帧给出人物、场景、同场、封面、裁切、
-镜像与字幕可读性证据，看不清就是低置信度或 false。
+标准照旧：审核者必须对自己实际看到的帧给出人物、场景、同场、封面、裁切、
+镜像与字幕可读性证据，看不清就停在 waiting，不得猜。
 
 ## 4. 固定成片合同
 
@@ -52,12 +51,12 @@ QC、PushPlus 发送和 `pushed.json` 五阶段都有可核验证据，才可称
 
 ## 6. 账号所有者的口味
 
-标题、收尾卡、封面帧的被否／被选对照写在 `references/deepseek.md` 和
-`references/minimax.md` 各自的「账号所有者的口味」一节；全部口味规则在
+标题、收尾卡、封面帧的被否／被选对照与全部口味规则在
 `.claude/skills/tennis-owner-taste/SKILL.md`。
 
-## 7. 影子晋级
+## 7. 晋级正式生产
 
-先在已发布的 `gauff-pegula-cin2026-final` 上复做，不改原 spec、不 render、不
-dispatch、不发布。DeepSeek 至少 85 分、MiniMax 至少 90 分，且候选通过机械硬闸，
-才有资格进入正式生产。学习结构和判断标准，禁止复制样片措辞到别的比赛。
+影子基准已随模型通道于 2026-10-12 一并移除。新 spec 先在已发布的
+`gauff-pegula-cin2026-final` 判据下由人工对照复核，不改原 spec、不 render、
+不 dispatch、不发布；候选通过机械硬闸与人工终审，才有资格进入正式生产。
+学习结构和判断标准，禁止复制样片措辞到别的比赛。

@@ -220,7 +220,7 @@ def test_字幕渲染字号换了一个行都不许多(monkeypatch):
         rows = list(spec.get("zh") or [])
         for key in ("lead_in", "trail_in"):
             rows += [c["zh"] for c in ((spec.get(key) or {}).get("subs") or [])]
-        # ③ 那一半只量**过了那一关**的：自动链刚提交、还没核也没发的（DeepSeek 初译）
+        # ③ 那一半只量**过了那一关**的：自动链刚提交、还没核也没发的（自动初译）
         # 超宽只报——渲染入口 `write_ass` → `zh_problems`（正文）和 `check_lead_in` /
         # `check_trail_in`（片头片尾字幕）量的是同一个宽，它出不了片。① ② 是渲染器的性质，照判全部。
         pending = _unverified_auto(spec)

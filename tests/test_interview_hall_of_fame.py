@@ -168,37 +168,6 @@ def test_封面近景参数必须在安全范围内():
         clip_builder._cover_framing({"focus_y": -0.1})
 
 
-def test_人工请求在翻译前与渲染使用同一套语气词清理(tmp_path, monkeypatch):
-    import build_interview_clip
-    import draft_interview_spec
-
-    path = tmp_path / "demo.json"
-    path.write_text('{"slug":"demo","url":"https://youtu.be/x"}', encoding="utf-8")
-    monkeypatch.setattr(
-        request_builder,
-        "_transcribe_request",
-        lambda url, directory, model: ([{"t": 0.0, "text": "Um hello"}], 2.0),
-    )
-    monkeypatch.setattr(
-        build_interview_clip,
-        "segment",
-        lambda words, start, end, budget=None, ruler=None: [
-            {"a": 0.0, "b": 1.0, "en": "Um hello"}
-        ],
-    )
-    seen = []
-
-    def fake_translate(rows, chat, max_zh_chars=None):
-        seen.extend(row["text"] for row in rows)
-        assert max_zh_chars is None
-        return ["你好"]
-
-    monkeypatch.setattr(draft_interview_spec, "translate", fake_translate)
-    monkeypatch.setattr(request_builder, "build_spec", lambda req, zh, duration: {})
-    request_builder._build_one(path, object(), write=False)
-    assert seen == ["Hello"]
-
-
 def test_人工请求渲染优先复用已持久化的第一份ASR(tmp_path, monkeypatch):
     cap = {
         "events": [{
@@ -218,37 +187,3 @@ def test_人工请求渲染优先复用已持久化的第一份ASR(tmp_path, mon
         "https://youtu.be/fQXTNAnY0zE", tmp_path, {"asr_model": "small.en"}
     )
     assert words == [(1.25, "Hello")]
-
-
-def test_长致辞翻译提示会硬性限制单行中文长度():
-    import draft_interview_spec
-
-    prompt = draft_interview_spec._translation_system_prompt(13)
-    assert "最多 13 个字符" in prompt
-    assert "不得通过漏译事实来缩短" in prompt
-
-
-def test_长人名超限时单行重试明确允许姓氏简称():
-    import draft_interview_spec
-
-    prompts = []
-
-    class Chat:
-        def ask(self, system, user, **kwargs):
-            prompts.append(user)
-            return {"line": "瓜拉斯、阿尼科内"}
-
-    line = draft_interview_spec._translate_single(
-        {"text": "Jose Higueras and Paul Annacone"}, Chat(), 1, "system", 13
-    )
-    assert line == "瓜拉斯、阿尼科内"
-    assert "并列人名可用规范姓氏简称" in prompts[0]
-    assert "正如米尔卡所说" in prompts[0]
-
-
-def test_中文短句不能以虚词收尾():
-    import draft_interview_spec
-
-    assert not draft_interview_spec._translation_line_ok("和长期的", 13)
-    assert not draft_interview_spec._translation_line_ok("你给了我巨大的", 13)
-    assert draft_interview_spec._translation_line_ok("这是长期规划", 13)

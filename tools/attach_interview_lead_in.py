@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""给独立赛后讲话自动配同场比赛结尾、现场解说和中英字幕。
+"""赛后讲话冷开场（lead_in）的备料助手：找同场集锦、选结尾解说窗口、解析字幕。
 
-只接受 ``detect_highlights.find_highlight`` 通过的同场官方 1080p 单场集锦；
-从集锦末段的官方英文字幕反推最后一段连续解说窗口，再逐条翻译。
-适用于普通场上采访和最后一战告别仪式；颁奖致辞保持原来的独立开场规则。
+原来这一步全自动：定位同场比赛结尾 → 逐条翻译解说 → 写进 spec 的 `lead_in`。
+翻译一步已于 2026-10-12 随模型通道整体移除，自动配字幕不再发生；本工具保留
+机械部分（哪条 spec 缺 lead_in、窗口怎么选、字幕怎么解析），CLI 只报告待人工
+处理的清单，双语字幕由终审人工配。
 """
 
 from __future__ import annotations
@@ -13,16 +14,12 @@ import json
 import os
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
 
-from detect_highlights import find_highlight, probe_meta  # noqa: E402
-from draft_interview_spec import translate  # noqa: E402
-from interview_source_gate import SourceContractError, validate_source_contract  # noqa: E402
 from build_interview_clip import CAPTION_LANGS, pick_caption  # noqa: E402
 
 SPECS = ROOT / "specs" / "interviews"
@@ -128,76 +125,10 @@ def _download_subtitles(url: str, directory: Path) -> Path:
     return pick_caption(files)
 
 
-def attach(spec: dict, chat) -> dict:
-    validate_source_contract(spec)
-    match = spec["match"]
-    for key in ("winner_en", "loser_en", "event_search", "year"):
-        if not match.get(key):
-            raise RuntimeError(f"match.{key} 为空，不能精确搜索同场集锦")
-    url, via = find_highlight(
-        match["winner_en"],
-        match["loser_en"],
-        match["event_search"],
-        int(match["year"]),
-        per=12,
-    )
-    if not url:
-        raise RuntimeError("尚未找到通过官方/同场/1080p 门禁的单场集锦")
-    meta = probe_meta(url)
-    if not meta or not meta[1]:
-        raise RuntimeError("同场集锦时长读取失败")
-    channel, duration, height = meta[0], meta[1], meta[2]
-    with tempfile.TemporaryDirectory() as td:
-        cues = parse_json3(_download_subtitles(url, Path(td)))
-    window = select_window(cues, float(duration))
-    if not window:
-        raise RuntimeError("集锦末段没有足够的英文解说字幕，不能满足双语冷开场")
-    start, end, selected = window
-    zh = translate([{"t": c["a"], "text": c["en"]} for c in selected], chat)
-    subs = [{**cue, "zh": cn} for cue, cn in zip(selected, zh)]
-    kind = spec.get("interview_kind") or "赛后讲话"
-    spec["lead_in"] = {
-        "url": url,
-        "start": start,
-        "end": end,
-        "subs": subs,
-        # `check_lead_in` 拿它核「窗口里每一句解说都有字幕」。这里的 subs 本来就是
-        # 窗口里的整段直落，所以只抄起点落在窗口里的——被 `select_window` 修掉的
-        # 更早那几句不抄：它们的结尾在窗口之前，抄进来只会让自动链卡在一条
-        # 本来就不在画面里的话上（手写的 spec 才要管「窗口前开口、话没说完」）。
-        "source_captions": [
-            [c["a"], c["en"]] for c in cues if start <= c["a"] < end
-        ],
-        "why": (
-            f"自动同场核验：{match['winner_en']} vs {match['loser_en']}，"
-            f"{match['event_search']} {match['year']}；来源 {channel or via}，"
-            f"{height:.0f}p。取官方单场集锦最后一段连续现场解说，随后接{kind}。"
-        ),
-        "verification": {
-            "match_id": match["id"],
-            "channel": channel or via,
-            "height": height,
-            "method": "official_exact_match_highlight",
-            "winner_en": match["winner_en"],
-            "loser_en": match["loser_en"],
-            "event_search": match["event_search"],
-            "year": match["year"],
-        },
-    }
-    return spec
-
-
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument(
-        "--slug", default="", help="只处理一个 slug；默认扫全部缺 lead_in 的正式 spec"
-    )
-    ap.add_argument("--write", action="store_true")
-    ap.add_argument(
-        "--max-parallel",
-        type=int,
-        default=4,
-        help="不同比赛并行搜索/取字幕/翻译；同一 spec 只会出现一次",
+        "--slug", default="", help="只看一个 slug；默认扫全部缺 lead_in 的正式 spec"
     )
     args = ap.parse_args()
 
@@ -206,77 +137,20 @@ def main() -> int:
         if args.slug
         else sorted(p for p in SPECS.glob("*.json") if not p.name.endswith(".draft.json"))
     )
-    targets: list[tuple[Path, dict]] = []
+    targets: list[Path] = []
     for path in paths:
         if not path.is_file():
             continue
         spec = json.loads(path.read_text(encoding="utf-8"))
         if needs_lead_in(spec):
-            targets.append((path, spec))
+            targets.append(path)
 
-    if not targets:
-        print("冷开场完成 0/0，待重试 0。")
-        return 0
-
-    from tennislive.research.brief import Chat  # noqa: PLC0415
-
-    chat = Chat()
-    if not chat.ready:
-        print("::error::没配 DEEPSEEK_API_KEY，冷开场中文字幕无法生成")
-        return 2
-
-    def _one(target: tuple[Path, dict]):
-        path, spec = target
-        from production_cache import file_digest
-        observed = file_digest(path)
-        try:
-            updated = attach(spec, chat)
-        except (RuntimeError, SourceContractError, ValueError) as exc:
-            return path, None, str(exc)
-        except Exception as exc:  # noqa: BLE001 —— 别的异常也只算这一条没成
-            # 原来只兜上面三类：别的异常（KeyError / 网络层的 OSError…）会从
-            # `future.result()` 里原样抛出来，把**同一批已经完成的**结果一起扔掉
-            # ——摘要一行都不打，退出码非零，而已经 --write 落盘的那几条谁也不
-            # 知道。一条源片的意外只该算它自己「待下一轮」。
-            return path, None, f"{type(exc).__name__}: {exc}"
-        # 冷开场字幕的中文是模型译的，而全库测试 `test_轮次写分数式不写N强` 扫 `lead_in.subs[].zh`
-        # （`non_annotation_strings`）、对自动 spec 也是硬的；这一步由 GITHUB_TOKEN 直推 main、
-        # CI 不跑——写进去就是下一个不相干的 PR 把 main 打红（复审 nit，和
-        # `build_interview_request._round_name_review`、promote 转正闸同一个判据）。
-        # 不写，这条留到下一轮再配；不往翻译提示里加约束（账号所有者 2026-09-27）。
-        from spec_wording import (non_annotation_strings,  # noqa: PLC0415
-                                  strength_round_hits)
-        if hits := strength_round_hits(list(non_annotation_strings(updated.get("lead_in")))):
-            return path, None, (f"冷开场译文把轮次写成「N 强」（{'、'.join(hits)}），不写，"
-                                "下一轮重配")
-        if args.write:
-            if file_digest(path) != observed:
-                return path, None, "正式稿已更新，拒绝用旧片头覆盖"
-            path.write_text(
-                json.dumps(updated, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
-            )
-        return path, updated, ""
-
-    from concurrent.futures import ThreadPoolExecutor, as_completed
-
-    results = []
-    with ThreadPoolExecutor(max_workers=max(1, args.max_parallel)) as pool:
-        futures = [pool.submit(_one, target) for target in targets]
-        for future in as_completed(futures):
-            results.append(future.result())
-    failed = sum(updated is None for _, updated, _ in results)
-    done = len(results) - failed
-    for path, updated, error in results:
-        if updated is None:
-            print(f"::warning::{path.stem} 冷开场待下一轮：{error}")
-        else:
-            print(
-                f"✅ {path.stem}：同场比赛结尾 + "
-                f"{len(updated['lead_in']['subs'])} 条双语解说"
-            )
-    print(f"冷开场完成 {done}/{len(targets)}，待重试 {failed}。")
-    return 1 if args.slug and failed else 0
+    # 自动配冷开场（模型翻译解说字幕）已随模型通道移除：这里只报清单，
+    # 双语字幕留给终审人工配——别悄悄当作「没有待办」。
+    for path in targets:
+        print(f"待配冷开场：{path.stem}")
+    print(f"缺 lead_in 的正式 spec {len(targets)} 条，待人工配双语冷开场。")
+    return 0
 
 
 if __name__ == "__main__":

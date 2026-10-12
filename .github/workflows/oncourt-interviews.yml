@@ -16,15 +16,17 @@ on:
   # 都是这条库的直接消费者。没有定时采集，新采访永远进不来，成片候选永远是空的。
   schedule:
   # **每 15 分钟一轮**（原来每天两轮）。这条现在是「赛后开麦」自动出片链的
-  # 第一环——采集 → 候选 → 草稿，后面 interview-auto-render 每 10 分钟接一次；
-  # 采集一天只醒两次的话，一条比赛日下午打完的采访要等到深夜才建草稿，
+  # 第一环——采集 → 候选，后面 interview-auto-render 每 10 分钟接一次；
+  # 采集一天只醒两次的话，一条比赛日下午打完的采访要等到深夜才被挑成候选，
   # 而这条线的规矩是「上一个比赛日的不做了」——等一晚等出来的常常是过期候选。
-  # 每 15 分钟把「采访上线 → 候选矩阵启动」的最坏等待压到一刻钟。
+  # 每 15 分钟把「采访上线 → 成片候选挑出」的最坏等待压到一刻钟。
+  #
+  # ⚠️ 自动草稿已随模型通道于 2026-10-12 移除：候选之后的转写、翻译与
+  # 草稿 spec 改由人工处理，本工作流只负责采集与候选。
   #
   # 分钟取 7，避开 :00/:30——GitHub 在整点半点最容易延迟或丢弃
   # （daily 当年留下的经验，knowledge-adhoc 的 08:37 也是这么定的）。
-  # 每 15 分钟追一轮新赛果后的采访。不同比赛在下面 matrix 中各占一个 runner，
-  # 不再让第 N 场等待前 N-1 场转写完成。
+  # 每 15 分钟追一轮新赛果后的采访。
   - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
     inputs:
@@ -40,12 +42,12 @@ on:
 
 permissions:
   contents: write
-  # 草稿矩阵全部落库后立即叫醒提升/渲染，不再等下一班最多 10 分钟的 schedule。
+  # 采集后叫醒编排/提升班次，不再等下一班 schedule。
   actions: write
 
 # ⚠️ 这里**故意没有 workflow 级并发锁**（test_oncourt_only_serializes_collect
-# _and_commits_cursor_and_claims 钉着）：draft 矩阵里的长 ASR 会把整条 run 拖
-# 到十几分钟，workflow 级锁会让它阻住下一轮资源扫描。共享 JSON 的提交只发生
+# _and_commits_cursor_and_claims 钉着）：长任务会把整条 run 拖到十几分钟，
+# workflow 级锁会让它阻住下一轮资源扫描。共享 JSON 的提交只发生
 # 在 collect job，那儿有自己的 job 级锁（group: oncourt-interviews-collect），
 # 自撞冲突已经被它挡住了。
 
@@ -347,186 +349,3 @@ jobs:
           retention-days: 14
           if-no-files-found: warn
 
-  # 一场比赛一个 runner：下载/ASR/翻译互不抢 4 核 CPU，一场失败也不会取消其余。
-  # 同一 candidate id 单飞；不同比赛最多 4 路并行。
-  draft:
-    needs: collect
-    # feed 推送告警发生在候选已提交之后；即使那一步把 collect 标红，也不能让
-    # 已发现的比赛错过转写窗口。只有矩阵本身为空才不启动。
-    if: >-
-      always()
-      && needs.collect.outputs.candidate_ids != ''
-      && needs.collect.outputs.candidate_ids != '[]'
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        candidate_id: ${{ fromJSON(needs.collect.outputs.candidate_ids) }}
-    concurrency:
-      group: interview-draft-${{ matrix.candidate_id }}
-      cancel-in-progress: false
-    runs-on: ubuntu-latest
-    timeout-minutes: 35
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          # ⚠️ `skills` 不能漏：`draft_interview_spec.py` 走
-          # `from interview_skill import model_instructions`，**起草那一刻**要读
-          # `skills/tennis-interview-production/SKILL.md` 给 DeepSeek 拼 prompt。
-          # 漏了它报的是 `FileNotFoundError: missing interview production skill
-          # resource`，而这一步排在下载 + 转写之后，白跑三十几秒才炸。
-          # 同一个坑 #613 在 reel 那半边修过（reel-auto-ready / orchestrate），
-          # 判据当时只认 `reel_skill` 这一个模块名，interview 这半边整个漏过去。
-          sparse-checkout: |
-            assets
-            data
-            output/interviews
-            skills
-            specs
-            src
-            tools
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-          cache: pip
-
-      - name: 缓存第一份 ASR 模型
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/huggingface/hub
-          key: faster-whisper-${{ runner.os }}-small.en
-          restore-keys: |
-            faster-whisper-${{ runner.os }}-
-
-      - name: 缓存单场转写的 apt 包（字体）
-        id: apt_cache
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            ~/.cache/apt-archives
-            ~/.cache/apt-lists
-          # 滚动键（2026-09-27 从 `hashFiles('tools/ci_apt_install.sh')` 换过来）：
-          # 固定键第一趟存下什么就永远是什么，改一次共享脚本才换一格；滚动键 ＋
-          # 下面「真下了新包才存」，缺的包补一次就回写，命中的趟不重传。
-          # 末尾带 `strategy.job-index`：这是个 matrix job，同一趟 run 里几场比赛
-          # 共用一个 run_id，都去存同一把主键只有第一个存得上，其余各报一行
-          # `Unable to reserve cache`（无害，但每趟都在日志里当噪音）
-          key: apt-pkgs-${{ runner.os }}-24.04-interview-draft-v1-${{ github.run_id }}-${{ strategy.job-index }}
-          # 第二格退到 CI 在 main 上存的那份（cjk＋core＋emoji，这一步装的字体是它的
-          # 子集）：缓存按 ref 隔离，本线自己存的只有同一条分支看得见，每条新分支
-          # 的第一趟全靠这一格（2026-09-27，见 match-reel.yml 同一步的注释）
-          restore-keys: |
-            apt-pkgs-${{ runner.os }}-24.04-interview-draft-v1-
-            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
-
-      # ⚠️ **`ensure_ffmpeg` 不能漏。** `draft_interview_spec.py` 抽音频走的是
-      # `yt-dlp -x --audio-format mp3`——`-x` 是 **postprocessing**，不管源是
-      # HLS 还是 progressive，转 mp3 这一步一律要 ffmpeg 二进制。少了它报的是
-      # `ERROR: Postprocessing: ffprobe and ffmpeg not found`，而这句被包进
-      # `RuntimeError` 塞在一行「⚠️ <标题>: ...」里，**读起来像这条源下不动**。
-      # ⚠️ **这个 job 是矩阵产生的，没有候选时压根不跑**——所以它从上线起就缺
-      # ffmpeg，而前面十几趟「全绿」只是因为候选一直是空的，2026-08-27 第一批
-      # 真候选进来当天就连炸 5 趟（run 138~142）。「走不到的路怎么查都是绿的」。
-      # ⚠️ 要 ffmpeg 的工具在工作流里真正被跑的有两处：这里，和
-      # `interview-model-benchmark.yml::compare`（`benchmark_interview_models.py`）
-      # ——后者 #608 补过 `ensure_ffmpeg`，**当时没落判据，于是这一处漏着**。
-      # 「修那一个不等于修了那一类」，所以这次和判据一起补。
-      - name: 安装单场转写依赖
-        timeout-minutes: 15
-        run: |
-          source tools/ci_apt_install.sh
-          apt_install_cached fonts-noto-core
-          ensure_ffmpeg
-          pip install -q -e ".[pronunciation]" faster-whisper "yt-dlp[default]>=2026.7.4"
-          python -c "import pypinyin"
-
-      # 只在这一趟真摸了网、下了新包时回写（`APT_CACHE_DIRTY` 由
-      # `tools/ci_apt_install.sh` 置位）。原来靠 actions/cache@v4 的 post 自动存：
-      # 命中的趟白传一份、只装 ffmpeg 的趟把空目录存成最新那一格——见那份脚本
-      # 顶部 2026-09-27 那段。判据 `tests/test_runner_setup_cache.py`。
-      - name: 回写 apt 缓存（这趟真下了新包才存）
-        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            ~/.cache/apt-archives
-            ~/.cache/apt-lists
-          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
-
-      - name: 启动 YouTube PO token provider
-        continue-on-error: true
-        timeout-minutes: 3
-        run: |
-          pip install -q bgutil-ytdlp-pot-provider
-          docker run --name bgutil-pot -d -p 4416:4416 \
-            brainicism/bgutil-ytdlp-pot-provider
-          for i in $(seq 1 25); do
-            curl -fsS http://127.0.0.1:4416/ping >/dev/null && exit 0
-            sleep 2
-          done
-          docker logs bgutil-pot 2>&1 | tail -20 || true
-          echo "::warning::PO token provider 未就绪；继续用 cookies/client 梯子尝试"
-          exit 1
-
-      - name: 落 cookies（配了 Secret 才有）
-        id: cookies
-        env:
-          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
-        run: |
-          if [ -n "$YT_COOKIES_TXT" ]; then
-            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
-            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: 单场生成精确行号草稿
-        env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          YT_COOKIES: ${{ steps.cookies.outputs.path }}
-        run: |
-          set -o pipefail
-          python tools/draft_interview_spec.py \
-            --candidate-id '${{ matrix.candidate_id }}' --max-parallel 1 --write \
-            | tee /tmp/draft.log
-
-      - name: 提交本场草稿
-        run: |
-          git config user.name "Claude"
-          git config user.email "noreply@anthropic.com"
-          git add specs/interviews output/interviews
-          if git diff --cached --quiet; then
-            echo "::error::候选 ${{ matrix.candidate_id }} 返回成功却没有草稿产物"
-            exit 1
-          fi
-          python tools/check_staged_file_sizes.py
-          MSG="interview: 自动建立单场草稿 ${{ matrix.candidate_id }}"
-          git commit -m "$MSG"
-          source tools/git_push_retry.sh
-          if ! push_with_rebase_retry "${GITHUB_REF_NAME}" 5; then
-            echo "::error::本场草稿无法落库；其他 matrix 场次不受影响"
-            exit 1
-          fi
-
-  # matrix 的不同比赛继续并行；等本批最后一条草稿落库后只叫醒一次提升器，
-  # 由它一次扫齐并按 slug dispatch 多条 interview-clip（仍然并行渲染）。
-  # 原来只靠每 10 分钟 schedule，哪怕链接和草稿已经齐了也会白等 0~10 分钟。
-  kick-render:
-    needs: draft
-    if: always() && needs.draft.result != 'skipped'
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: 立即提升并派发本批赛后开麦
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          # 这个 job 不 checkout（它只 dispatch），所以 cwd 不是 Git 仓库。
-          # gh 缺 --repo 会先执行 git remote、当场报 not a git repository；
-          # 草稿明明落库了却永远等下一班 schedule。显式给仓库后无需 checkout。
-          if gh workflow run interview-auto-render.yml \
-            --repo "$GITHUB_REPOSITORY" --ref main; then
-            echo "[dispatch] 已立即叫醒 interview-auto-render；不等下一班 schedule"
-          else
-            echo "::error::草稿已落库，但 interview-auto-render 派发失败"
-            exit 1
-          fi

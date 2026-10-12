@@ -903,8 +903,8 @@ def _jobs_of(text: str) -> list[tuple[str, str]]:
 def test_会下载媒体的工作流都要装ffmpeg():
     """跑 `yt-dlp -x` 那类工具的 job，必须 `ensure_ffmpeg`。
 
-    来路：`oncourt-interviews.yml` 的 `draft` job 只装了字体，而
-    `draft_interview_spec.py` 抽音频走 `yt-dlp -x --audio-format mp3`——
+    来路：`oncourt-interviews.yml` 的 `draft` job 只装了字体，而当时在那一步跑的
+    工具抽音频走 `yt-dlp -x --audio-format mp3`——
     2026-08-29 连炸 5 趟（run 138~142），报的是
 
         ERROR: Postprocessing: ffprobe and ffmpeg not found
@@ -913,13 +913,12 @@ def test_会下载媒体的工作流都要装ffmpeg():
     没有候选时压根不跑，08-27 第一批真候选进来当天就炸。「走不到的路怎么查
     都是绿的」，所以这条判据不能靠「最近跑绿了」来代替。
 
-    ⚠️ **同一个工具的三个调用方，当时只有一个是对的**：
-    `interview-model-benchmark.yml` 在 #608 修过，`oncourt-interviews.yml`
-    和另外的调用点都漏着。**修那一个不等于修了那一类**——所以判据自己从
-    `tools/` 推，谁新增一个调用点都自动盖住。
+    ⚠️ **同一个工具的三个调用方，当时只有一个是对的**：其中一条工作流在
+    #608 修过，`oncourt-interviews.yml` 和另外的调用点都漏着。**修那一个
+    不等于修了那一类**——所以判据自己从 `tools/` 推，谁新增一个调用点都自动盖住。
     """
     need = _tools_needing_ffmpeg()
-    assert "draft_interview_spec.py" in need and "build_match_reel.py" in need, (
+    assert "build_interview_clip.py" in need and "build_match_reel.py" in need, (
         "判据失效了：连 `yt-dlp -x` 和直接调 ffmpeg 的工具都没认出来，"
         f"当前认出 {sorted(need)}")
 

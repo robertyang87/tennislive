@@ -1,7 +1,6 @@
 """Rights-gated localization for user-provided video assets."""
 
 from .pipeline import (
-    ChatTranslator,
     RightsError,
     RightsManifest,
     SubtitleCue,
@@ -14,7 +13,6 @@ from .pipeline import (
 )
 
 __all__ = [
-    "ChatTranslator",
     "RightsError",
     "RightsManifest",
     "SubtitleCue",
