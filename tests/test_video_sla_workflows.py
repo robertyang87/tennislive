@@ -59,14 +59,6 @@ def test_interview_heavy_dependencies_are_cached_without_quality_downgrade():
     assert 'spec.get("whisper_model", "small.en")' in body
 
 
-def test_draft_batch_immediately_wakes_promotion_instead_of_waiting_for_cron():
-    doc = _doc(COLLECT)
-    assert doc["permissions"]["actions"] == "write"
-    kick = doc["jobs"]["kick-render"]
-    assert kick["needs"] == "draft"
-    assert "gh workflow run interview-auto-render.yml" in COLLECT.read_text(encoding="utf-8")
-
-
 def test_source_scan_has_a_bounded_parallelism_control():
     body = (ROOT / "tools/collect_oncourt_interviews.py").read_text(encoding="utf-8")
     assert 'ap.add_argument("--max-parallel", type=int, default=4' in body

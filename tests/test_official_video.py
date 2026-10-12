@@ -634,21 +634,22 @@ def test_wta_metadata_resolves_public_hls_stream():
 
 
 def test_render_wta_video_builds_vertical_ffmpeg_command(tmp_path, monkeypatch):
+    # 字幕走结构化描述的策展路径（自动翻译已于 2026-10-12 随模型通道移除）：
+    # 描述凑齐球员/生涯冠数/上次夺冠/城市回归四件，`_curated_chinese_cues` 才拼得出。
     metadata = OfficialVideoMetadata(
-        candidate=OfficialVideoCandidate("Krejcikova wins Athens", "https://example.com"),
-        description="She won her ninth career title.",
+        candidate=OfficialVideoCandidate("Barbora Krejcikova wins Athens", "https://example.com"),
+        description=(
+            "No. 3 seed Barbora Krejcikova captured her ninth career WTA Tour title, "
+            "first since Wimbledon 2024. It was the first time a WTA tournament had "
+            "been held in Athens since 1990."
+        ),
         thumbnail_url="https://example.com/poster.jpg",
         playback_url="https://manifest.example/master.m3u8",
         duration_ms=651285,
     )
     calls = []
 
-    class Translator:
-        def translate(self, cues):
-            return {cue.index: "中文重点" for cue in cues}
-
     monkeypatch.setattr("tennislive.video.official.shutil.which", lambda _: "ffmpeg")
-    monkeypatch.setattr("tennislive.video.official.ChatTranslator", Translator)
 
     def runner(command, **kwargs):
         calls.append((command, kwargs))

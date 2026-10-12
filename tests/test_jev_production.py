@@ -43,10 +43,12 @@ class ProductionTest(unittest.TestCase):
             self.assertEqual(result['activation'], 'disabled')
             network.assert_not_called()
 
-    def test_production_workflow_does_not_block_drafting(self):
+    def test_production_workflow_runs_off_collect_without_a_draft_job(self):
         workflow = yaml.safe_load((Path(__file__).resolve().parents[1] / '.github/workflows/oncourt-interviews.yml').read_text())
         jobs = workflow['jobs']
-        self.assertEqual(jobs['draft']['needs'], 'collect')
+        # 草稿已转人工（2026-10-12 模型通道整体移除）：工作流里不再有 draft 作业，
+        # jev 只依赖 collect，不被任何自动草稿环节挡住。
+        self.assertNotIn('draft', jobs)
         self.assertEqual(jobs['jev']['needs'], 'collect')
         self.assertEqual(jobs['jev']['permissions'], {'contents': 'write'})
         self.assertEqual(jobs['jev']['concurrency']['group'], 'jev-production-advisory')

@@ -907,6 +907,9 @@ def test_没给end时默认收在最后一个词之后_偏向多留(last_end, bo
     assert bir.request_window({}, duration, None) == (0.0, duration)
 
 
+_N = tail.CARD_W * tail.CARD_H
+
+
 def _gray(value: int) -> bytes:
     return bytes([value]) * _N
 

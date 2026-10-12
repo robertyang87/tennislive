@@ -60,14 +60,6 @@ def test_stale_publication_is_reported():
     assert any("sending" in item for item in alerts)
 
 
-def test_kick_render_without_checkout_passes_repo_explicitly():
-    body = Path(".github/workflows/oncourt-interviews.yml").read_text(encoding="utf-8")
-    block = body.split("- name: 立即提升并派发本批赛后开麦", 1)[1]
-    assert 'gh workflow run interview-auto-render.yml' in block
-    assert '--repo "$GITHUB_REPOSITORY"' in block, (
-        "kick-render 没有 checkout；gh 缺 --repo 会报 not a git repository")
-
-
 def test_oncourt_only_serializes_collect_and_commits_cursor_and_claims():
     body = Path(".github/workflows/oncourt-interviews.yml").read_text(encoding="utf-8")
     before_jobs, jobs = body.split("jobs:", 1)

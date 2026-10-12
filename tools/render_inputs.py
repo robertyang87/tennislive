@@ -362,7 +362,7 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
     "_tts_backend_why": _gate("apply_tts_backend：退回 edge-tts 的认领（后端本身是真字段 "
                               "tts_backend）", "apply_tts_backend", "_tts_backend_why",
                               nonblank_str),
-    "_visual_evidence": _gate("promote_reel_draft（备料提升时读）", "waiting_reasons promote"),
+    "_visual_evidence": _gate("promote_reel_draft（备料提升时读）", "promote"),
     "_winners_ue_omission": _gate("winners_ue_gate：仅限已批准五期精确比赛的两行省略决定，身份/日期/比分和双方字段由原闸逐项核验",
                                 "problem _omission_problem", "stats._winners_ue_omission", truthy),
     "_winners_ue_evidence": _gate("新统计卡/预检/成片QC核验完整制胜分与UE的来源、日期和列序", "problem _omission_problem", "stats._winners_ue_evidence", any_text_value),
