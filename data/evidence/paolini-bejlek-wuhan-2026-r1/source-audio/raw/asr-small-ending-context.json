@@ -1,0 +1,155 @@
+{
+  "schema": "actual-local-asr.v1",
+  "model": "small.en",
+  "faster_whisper_version": "1.2.1",
+  "device": "cpu",
+  "compute_type": "int8",
+  "language": "en",
+  "vad_filter": true,
+  "beam_size": 2,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "source_path": "/workspace/scratch/timed-audio/ending-context.wav",
+  "source_sha256": "122dcd47ff79d16abd5bdcb805e41142415b565c560c549cf2f24b9687fae976",
+  "recorded_at": "2026-10-12T20:17:51.412759+00:00",
+  "human_listening_claimed": false,
+  "run_status": "complete",
+  "segments": [
+    {
+      "start": 6.96,
+      "end": 19.28,
+      "text": " Magnificent. Sealed in style by Pauline. And what has been a season of struggle, a much needed win for the Italian.",
+      "no_speech_prob": 0.06586312502622604,
+      "avg_logprob": -0.38731527905310353,
+      "words": [
+        {
+          "start": 6.96,
+          "end": 7.8,
+          "word": " Magnificent.",
+          "probability": 0.7940702438354492
+        },
+        {
+          "start": 8.86,
+          "end": 9.68,
+          "word": " Sealed",
+          "probability": 0.9290136694908142
+        },
+        {
+          "start": 9.68,
+          "end": 9.98,
+          "word": " in",
+          "probability": 0.9857995510101318
+        },
+        {
+          "start": 9.98,
+          "end": 10.5,
+          "word": " style",
+          "probability": 0.9912323355674744
+        },
+        {
+          "start": 10.5,
+          "end": 11.32,
+          "word": " by",
+          "probability": 0.9835888147354126
+        },
+        {
+          "start": 11.32,
+          "end": 11.96,
+          "word": " Pauline.",
+          "probability": 0.49410027265548706
+        },
+        {
+          "start": 13.04,
+          "end": 13.5,
+          "word": " And",
+          "probability": 0.6959737539291382
+        },
+        {
+          "start": 13.5,
+          "end": 13.7,
+          "word": " what",
+          "probability": 0.9837048649787903
+        },
+        {
+          "start": 13.7,
+          "end": 13.9,
+          "word": " has",
+          "probability": 0.9661557674407959
+        },
+        {
+          "start": 13.9,
+          "end": 14.1,
+          "word": " been",
+          "probability": 0.9959927797317505
+        },
+        {
+          "start": 14.1,
+          "end": 14.32,
+          "word": " a",
+          "probability": 0.8873550891876221
+        },
+        {
+          "start": 14.32,
+          "end": 14.62,
+          "word": " season",
+          "probability": 0.967014491558075
+        },
+        {
+          "start": 14.62,
+          "end": 14.94,
+          "word": " of",
+          "probability": 0.9953864216804504
+        },
+        {
+          "start": 14.94,
+          "end": 15.3,
+          "word": " struggle,",
+          "probability": 0.9807009696960449
+        },
+        {
+          "start": 16.52,
+          "end": 16.66,
+          "word": " a",
+          "probability": 0.9487431049346924
+        },
+        {
+          "start": 16.66,
+          "end": 16.96,
+          "word": " much",
+          "probability": 0.989903450012207
+        },
+        {
+          "start": 16.96,
+          "end": 17.38,
+          "word": " needed",
+          "probability": 0.6622114777565002
+        },
+        {
+          "start": 17.38,
+          "end": 17.64,
+          "word": " win",
+          "probability": 0.9941028952598572
+        },
+        {
+          "start": 17.64,
+          "end": 18.58,
+          "word": " for",
+          "probability": 0.8761365413665771
+        },
+        {
+          "start": 18.58,
+          "end": 18.86,
+          "word": " the",
+          "probability": 0.9033042192459106
+        },
+        {
+          "start": 18.86,
+          "end": 19.28,
+          "word": " Italian.",
+          "probability": 0.9575595855712891
+        }
+      ]
+    }
+  ],
+  "max_transcribed_end": 19.28
+}

@@ -1,0 +1,255 @@
+{
+  "version": 1,
+  "slug": "paolini-bejlek-wuhan-2026-r1",
+  "collected_at": "2026-10-12T20:17:25.955114+00:00",
+  "match": {
+    "event": "Wuhan",
+    "event_zh": "武汉网球公开赛",
+    "tour": "WTA",
+    "level": "WTA 1000",
+    "year": 2026,
+    "round": "Round 1",
+    "round_zh": "首轮",
+    "official_event_id": "1075",
+    "official_match_id": "LS052",
+    "flashscore_id": "2BWvu3Li",
+    "winner": "Jasmine Paolini",
+    "winner_zh": "帕奥利尼",
+    "loser": "Sara Bejlek",
+    "loser_zh": "贝莱克",
+    "winner_first_result": "6-3 6-4",
+    "set_scores_Paolini_Bejlek": [
+      [
+        6,
+        3
+      ],
+      [
+        6,
+        4
+      ]
+    ],
+    "duration_official": "01:41:25",
+    "duration_cover": "1:41",
+    "duration_official_seconds": 6085,
+    "set_times_official": [
+      "00:48:42",
+      "00:52:35"
+    ],
+    "set_sum_seconds": 6077,
+    "duration_difference_seconds": 8,
+    "first_point_utc": "2026-10-12T06:12:45Z",
+    "first_point_bjt": "2026-10-12T14:12:45+08:00",
+    "narration_time": "北京时间十月十二日下午",
+    "court_id": 2,
+    "court_name": "Court 1",
+    "court_zh": "一号球场",
+    "court_name_source": "https://www.wtatennis.com/tournament/1075/wuhan/2026/order-of-play"
+  },
+  "players": {
+    "Bejlek": {
+      "name": "Sara Bejlek",
+      "name_zh": "贝莱克",
+      "official_id": "330375",
+      "country": "CZE",
+      "rank": 30,
+      "rank_date": "2026-10-12T00:00:00Z",
+      "dob": "2006-01-31",
+      "age_at_match": 20,
+      "seed": null
+    },
+    "Paolini": {
+      "name": "Jasmine Paolini",
+      "name_zh": "帕奥利尼",
+      "official_id": "319280",
+      "country": "ITA",
+      "rank": 33,
+      "rank_date": "2026-10-12T00:00:00Z",
+      "dob": "1996-01-04",
+      "age_at_match": 30,
+      "seed": 15
+    }
+  },
+  "statistics": {
+    "orientation": {
+      "a": "Jasmine Paolini",
+      "b": "Sara Bejlek"
+    },
+    "scope": "whole_match",
+    "Paolini": {
+      "aces": 0,
+      "df": 7,
+      "first_in": 43,
+      "first_total": 68,
+      "first_in_pct": 63,
+      "first_won": 28,
+      "first_win_pct": 65,
+      "second_won": 8,
+      "second_total": 25,
+      "second_win_pct": 32,
+      "bp_conv": 6,
+      "bp_chances": 15,
+      "pts_won": 77,
+      "pts_total": 145,
+      "winners": 26,
+      "ue": 26,
+      "bp_saved": 8,
+      "bp_faced": 12
+    },
+    "Bejlek": {
+      "aces": 1,
+      "df": 4,
+      "first_in": 39,
+      "first_total": 77,
+      "first_in_pct": 51,
+      "first_won": 22,
+      "first_win_pct": 56,
+      "second_won": 14,
+      "second_total": 38,
+      "second_win_pct": 37,
+      "bp_conv": 4,
+      "bp_chances": 12,
+      "pts_won": 68,
+      "pts_total": 145,
+      "winners": 17,
+      "ue": 24,
+      "bp_saved": 9,
+      "bp_faced": 15
+    },
+    "sources": {
+      "official": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS052/stats",
+      "winners_ue": "https://global.flashscore.ninja/4/x/feed/df_st_1_2BWvu3Li",
+      "note": "WTA whole-match API has no winners/UE; FS whole-match W/UE retained with exact A/B identity from same daily match record. Shared official stats exactly agree."
+    }
+  },
+  "story": {
+    "set1": "帕奥利尼开局连赢四局4-0；贝莱克回破1-4，帕奥利尼再破5-1；贝莱克回破、保发追到3-5，帕奥利尼保发6-3。",
+    "set2": "前三局双方保发，贝莱克先破3-1；帕奥利尼立即回破2-3，自己的发球局15-40连救两个破发点保发3-3，再破4-3；贝莱克回破4-4，帕奥利尼再破5-4，在自己的发球胜赛局40-15握两赛点，首个被救，第二个兑现6-4。",
+    "closing": "全场10次破发，帕奥利尼6次、贝莱克4次；双误7次仍凭接发与更高制胜分拿下，不能写轻松碾压或一边倒。"
+  },
+  "source_identity": {
+    "url": "https://www.youtube.com/watch?v=662TF-JlyZY",
+    "title": "Jasmine Paolini vs. Sara Bejlek | 2026 Wuhan Round 1 | WTA Match Highlights",
+    "author_name": "WTA",
+    "author_url": "https://www.youtube.com/@WTA",
+    "method": "exact-ID noembed relay; direct channel ID and YouTube publish time unknown",
+    "repository_catalog_duration_s": 466,
+    "tail_interview": true
+  },
+  "limitations": [
+    "Raw WTA pointWinner totals84/61 contradict official whole-match totals77/68; use terminal score-state game transitions for plot and official stats for total points. Do not narrate longest-point runs.",
+    "Current ranking33 for Paolini is distinct from tournament seed15.",
+    "Official total1:41:25 differs set-time sum1:41:17 by8seconds; retain official total.",
+    "No player quotes verified by this facts task; tail interview must be independently transcribed/translated if used."
+  ],
+  "source_urls": {
+    "wta-matches.raw": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches?states=C",
+    "wta-stats.raw": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS052/stats",
+    "wta-pbp.raw": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS052/point-by-point",
+    "wta-ranking.raw": "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=300&type=rankSingles&sort=asc&name=&metric=SINGLES",
+    "fs-stats.raw": "https://global.flashscore.ninja/4/x/feed/df_st_1_2BWvu3Li",
+    "fs-daily.raw": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "fs-info.raw": "https://global.flashscore.ninja/4/x/feed/dc_1_2BWvu3Li",
+    "oembed.raw": "https://noembed.com/embed?url=https://www.youtube.com/watch?v=662TF-JlyZY",
+    "wta-oop-page.raw": "https://www.wtatennis.com/tournament/1075/wuhan/2026/order-of-play"
+  },
+  "evidence_files": [
+    {
+      "file": "court-name-extraction.json",
+      "bytes": 276,
+      "sha256": "40db6ce7046b1c9f9f0cc63950b338d2ec0a16dbe836ad5538f1997005b4934b",
+      "url": null,
+      "method": "derived_from_saved_raw"
+    },
+    {
+      "file": "fs-daily.raw",
+      "bytes": 143522,
+      "sha256": "b44e81264aeff07aba8e3f251689fc54d0ad9dcbd4b234d6dcbbf0becdbb91cd",
+      "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+      "method": "actual_saved_provider_response"
+    },
+    {
+      "file": "fs-info.raw",
+      "bytes": 316,
+      "sha256": "234363c4506e2d356687c5c2bb66da1e6d531556e84d21c81b6bb5c446a18f59",
+      "url": "https://global.flashscore.ninja/4/x/feed/dc_1_2BWvu3Li",
+      "method": "actual_saved_provider_response"
+    },
+    {
+      "file": "fs-match-record.raw",
+      "bytes": 530,
+      "sha256": "77be6f3e84b6a26af387627a33104fa84d3ac5f6d1e2588195c82cd9897e6406",
+      "url": null,
+      "method": "derived_from_saved_raw"
+    },
+    {
+      "file": "fs-stats.raw",
+      "bytes": 3310,
+      "sha256": "70644703d6e2e66e09981d44aaa5346afda3c5c64f76262c50f12fc25e875850",
+      "url": "https://global.flashscore.ninja/4/x/feed/df_st_1_2BWvu3Li",
+      "method": "actual_saved_provider_response"
+    },
+    {
+      "file": "oembed.raw",
+      "bytes": 841,
+      "sha256": "f66a37dce03656cb3869ac810078b596dc189c307266c5e4ac9e262251c55798",
+      "url": "https://noembed.com/embed?url=https://www.youtube.com/watch?v=662TF-JlyZY",
+      "method": "actual_saved_provider_response"
+    },
+    {
+      "file": "wta-games-derived.json",
+      "bytes": 11635,
+      "sha256": "1f833c29226796ee0a61457bca2f433a37d800c884bccf9da4d05c60fdd0d2de",
+      "url": null,
+      "method": "derived_from_saved_raw"
+    },
+    {
+      "file": "wta-match-row.json",
+      "bytes": 1348,
+      "sha256": "daf11c4489aae9c8c6426d3ef0e11f9681d19cd07cbcedde100bfe825e337f68",
+      "url": null,
+      "method": "derived_from_saved_raw"
+    },
+    {
+      "file": "wta-matches.raw",
+      "bytes": 46169,
+      "sha256": "81fa9c7522e1fe70c9cf32172f0b2cdea7f14f427cfb29fcf3b821c7b407a186",
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches?states=C",
+      "method": "actual_saved_provider_response"
+    },
+    {
+      "file": "wta-oop-page.raw",
+      "bytes": 763239,
+      "sha256": "e22e258144c6b8903e50b41d75bdeb7c9b80eab1183bd191b44f8381661f7372",
+      "url": "https://www.wtatennis.com/tournament/1075/wuhan/2026/order-of-play",
+      "method": "actual_saved_provider_response"
+    },
+    {
+      "file": "wta-pbp-inconsistencies.json",
+      "bytes": 158,
+      "sha256": "c30f3e21a1f888c0748a7a18b003145f1867478ce4b8b51678ac00f6eace91a8",
+      "url": null,
+      "method": "derived_from_saved_raw"
+    },
+    {
+      "file": "wta-pbp.raw",
+      "bytes": 44981,
+      "sha256": "40eebfff7d60b60e4855c69d72b46203545524f991fb3d0a60c885ebe5fa7513",
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS052/point-by-point",
+      "method": "actual_saved_provider_response"
+    },
+    {
+      "file": "wta-ranking.raw",
+      "bytes": 25572,
+      "sha256": "1cf1590b8be639cd3c4b5530bc6e4dc905f1e3fb65a0d6b3376fd18d66b171e9",
+      "url": "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=300&type=rankSingles&sort=asc&name=&metric=SINGLES",
+      "method": "actual_saved_provider_response"
+    },
+    {
+      "file": "wta-stats.raw",
+      "bytes": 1645,
+      "sha256": "39ff5506ee3bc1861aa783c60960dd9d0fa3632af9ff16fd09e5b65c1ef2ce84",
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS052/stats",
+      "method": "actual_saved_provider_response"
+    }
+  ]
+}

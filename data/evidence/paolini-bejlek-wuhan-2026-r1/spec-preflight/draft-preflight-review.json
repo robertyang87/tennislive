@@ -1,0 +1,26 @@
+{
+  "status": "native_dry_run_exit_zero",
+  "spec": "specs/reels/paolini-bejlek-wuhan-2026-r1.json",
+  "recorded_at": "2026-10-12T20:26:11Z",
+  "actual_source_review": [
+    {
+      "path": "/workspace/scratch/timed-662TF-JlyZY/fast-walls/contact_00.jpg",
+      "observed": "source30.5/40.5 and150.5/160.5 both players actual baseline exchanges, supports two limited baseline references; no speculative shot-direction claims"
+    }
+  ],
+  "source_windows": "data/evidence/paolini-bejlek-wuhan-2026-r1/source/native-wta-boundary-refinement.json",
+  "manual_constraints": [
+    "no DeepSeek/MiniMax",
+    "1080x1440 full-canvas crop cx.5 track:false",
+    "only landing5sec and fullcanvas stat16sec cards",
+    "exclude unverified interview after300sec",
+    "natural board scopes actual source measured not static cap",
+    "CN actual voice cache still binding separately"
+  ],
+  "open_actions": [
+    "CN low-bed tail must be handled using actual utterance duration and native high ambience; do not confuse source silence with missing audio",
+    "239.1–242.9 source action-boundary independent confirmation required",
+    "subtitle360 uniformly clears native header; finer306 adjustment requires header truth per source",
+    "film AAC/visual/native QC not claimed by dry-run"
+  ]
+}

@@ -251,39 +251,41 @@ def test_final_gate_distinguishes_abutting_from_spilling_english(tmp_path, event
         A.verify_final(spec, ass, 1., root=tmp_path)
 
 
-def test_stage_reel_sources_binds_each_window_to_the_downloaded_bytes(tmp_path):
-    """审听包的时间是源片绝对时间，sha256 是这一份文件，不是上一次下载。"""
-    from stage_reel_sources import write_reviews
-
-    spec = {
-        "slug": "stage-fixture",
-        "sources": {
-            "bublik": "https://example.test/bublik",
-            "shanghai": "https://example.test/shanghai",
-        },
-        "segments": [
-            {"source": "bublik", "start": 10.0, "end": 14.0,
-             "narration": "旁白一句。"},
-            {"source": "shanghai", "start": 20.0, "end": 24.0, "narration": "",
-             "quote": [{"at": 0.5, "end": 2.0,
-                        "text": "Game, set and match.\n比赛结束"}]},
-        ],
-    }
-    bublik = tmp_path / "bublik.mp4"
-    shanghai = tmp_path / "shanghai.mp4"
-    bublik.write_bytes(b"bublik-bytes")
-    shanghai.write_bytes(b"shanghai-bytes")
-    sources = {"bublik": bublik, "shanghai": shanghai}
-    write_reviews(spec, sources, root=tmp_path, reviewer="unit")
-    cues = A.require(spec, root=tmp_path, sources=sources)
-    assert cues == [{
-        "segment": 1, "start": 0.5, "end": 2.0,
-        "en": "Game, set and match.", "zh": "比赛结束",
-    }]
-    quiet = json.loads((tmp_path / "data/audio_reviews/stage-fixture/00-bublik.json").read_text())
-    assert quiet["foreground_english"] == []
-    assert quiet["no_foreground_english_reason"]
-    assert quiet["source_sha256"] == hashlib.sha256(b"bublik-bytes").hexdigest()
-    shanghai.write_bytes(b"different-download")
+def test_stage_preserves_real_review_and_rejects_new_bytes_or_missing_review(tmp_path):
+    from stage_reel_sources import write_reviews, reviewed_source_hashes
+    spec, source, transcript, index = fixture(tmp_path)
+    before = (transcript.read_bytes(), index.read_bytes())
+    assert reviewed_source_hashes(spec, root=tmp_path) == {'': A._sha(source)}
+    write_reviews(spec, {'': source}, root=tmp_path, reviewer='not a listener')
+    assert (transcript.read_bytes(), index.read_bytes()) == before
+    source.write_bytes(b'different-download')
     with pytest.raises(ValueError, match="源片字节"):
-        A.require(spec, root=tmp_path, sources=sources)
+        write_reviews(spec, {'': source}, root=tmp_path, reviewer='not a listener')
+    assert (transcript.read_bytes(), index.read_bytes()) == before
+    index.unlink()
+    with pytest.raises(ValueError, match='waiting_audio_review'):
+        write_reviews(spec, {'': source}, root=tmp_path, reviewer='not a listener')
+    assert not index.exists()
+
+
+@pytest.mark.parametrize('remote_bytes', [b'exact reviewed source', b'different source'])
+def test_stage_release_verifies_actual_bytes_before_install_and_skips_youtube(tmp_path, monkeypatch, remote_bytes):
+    import stage_reel_sources as stage
+    expected = hashlib.sha256(b'exact reviewed source').hexdigest()
+    class Response:
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+        def raise_for_status(self): pass
+        def iter_content(self, size): return iter([remote_bytes])
+    monkeypatch.setattr(stage.requests, 'get', lambda *a, **k: Response())
+    monkeypatch.setattr(stage, '_exact_format', lambda *a: pytest.fail('Reviewed Release must precede fresh YouTube download'))
+    dest = tmp_path / 'source.mp4'
+    kwargs = dict(expected_sha=expected, fallback='https://github.com/robertyang87/tennislive/releases/download/source-test/test.mp4')
+    if remote_bytes == b'exact reviewed source':
+        assert stage.stage_one('', 'https://example.test/source', dest, [], **kwargs) == 'exact-reviewed-source-release'
+        assert dest.read_bytes() == remote_bytes
+    else:
+        with pytest.raises(ValueError, match='源片字节'):
+            stage.stage_one('', 'https://example.test/source', dest, [], **kwargs)
+        assert not dest.exists()
+    assert not dest.with_name('source.mp4.reviewed.part').exists()

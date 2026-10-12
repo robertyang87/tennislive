@@ -1,0 +1,43 @@
+{
+  "schema": "actual-source-audio-manifest.v1",
+  "source_url": "https://www.youtube.com/watch?v=662TF-JlyZY",
+  "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+  "source_bytes": 104483128,
+  "selected_completion_scope": "Full match0–299.6 selected, unused postmatch interview166s not processed. Two actual source prefixes, targeted63.5s medium montage,24s ending small, disputed27s large and two18s named-context large/distil runs retained. Raw best-supported source words reconciled with tennis context and faithful no-subject Chinese without invented facts.",
+  "human_listening_claimed": false,
+  "tone_verified": false,
+  "raw_evidence": [
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-medium-en-full.json",
+      "sha256": "306b206acce54eff04057142d1ed5f2f49743c77a259b9eb7f2722dba4e2c082"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-small-en-full.json",
+      "sha256": "1314422aabb7cfe05a439b6cd105eb230e998d459b8e254ee56ebe24396e8c2b"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-medium-keyquotes.json",
+      "sha256": "4a7bc76f10a0f8788e1996e143732f93ffaaca33ca39a951f8634d8e326875cc"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/medium-keyquotes.map.json",
+      "sha256": "ebe99344fac563a0c859a917701f877ea8b92c019cd75507015f36bed554388e"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-small-ending-context.json",
+      "sha256": "0652797b69893c75dddfe9afc69676479e67e8b621dd6abaded2479520c3f587"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-large-disputed-firstset.json",
+      "sha256": "26c7b8c3918ef9c2565e7c19811fd85b905533e8b8040a8a748cc3e5f4da6b3a"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-large-named-context.json",
+      "sha256": "afb58de16404b2cf82fbe4badffa2b413f12edcc86485762a62e96dc53a466b0"
+    },
+    {
+      "path": "data/evidence/paolini-bejlek-wuhan-2026-r1/source-audio/raw/asr-distil-named-context.json",
+      "sha256": "349e33094de189cdc7bbcb0c14dec50541dab5996b495a8237bbd714740cfb8c"
+    }
+  ]
+}

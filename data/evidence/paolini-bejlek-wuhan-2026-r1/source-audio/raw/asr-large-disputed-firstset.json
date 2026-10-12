@@ -1,0 +1,212 @@
+{
+  "schema": "actual-local-asr.v1",
+  "model": "large-v3",
+  "faster_whisper_version": "1.2.1",
+  "device": "cpu",
+  "compute_type": "int8",
+  "language": "en",
+  "vad_filter": true,
+  "beam_size": 2,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "source_path": "/workspace/scratch/timed-audio/disputed-firstset.wav",
+  "source_sha256": "56b65b5a667473e5532f78a5531c6d633e172a1cab55f086eaa4e789558c1b88",
+  "recorded_at": "2026-10-12T20:20:23.396183+00:00",
+  "human_listening_claimed": false,
+  "run_status": "complete",
+  "segments": [
+    {
+      "start": 2.13,
+      "end": 9.53,
+      "text": " oh she ducked out ever so well tough one it's got work to do for it to be in this",
+      "no_speech_prob": 0.19440476596355438,
+      "avg_logprob": -0.3569769086064519,
+      "words": [
+        {
+          "start": 2.13,
+          "end": 2.65,
+          "word": " oh",
+          "probability": 0.2544325292110443
+        },
+        {
+          "start": 2.65,
+          "end": 3.07,
+          "word": " she",
+          "probability": 0.8908608555793762
+        },
+        {
+          "start": 3.07,
+          "end": 3.53,
+          "word": " ducked",
+          "probability": 0.8224730789661407
+        },
+        {
+          "start": 3.53,
+          "end": 3.59,
+          "word": " out",
+          "probability": 0.37535539269447327
+        },
+        {
+          "start": 3.59,
+          "end": 3.83,
+          "word": " ever",
+          "probability": 0.5519267916679382
+        },
+        {
+          "start": 3.83,
+          "end": 4.15,
+          "word": " so",
+          "probability": 0.9927161335945129
+        },
+        {
+          "start": 4.15,
+          "end": 4.35,
+          "word": " well",
+          "probability": 0.8365597724914551
+        },
+        {
+          "start": 4.35,
+          "end": 5.23,
+          "word": " tough",
+          "probability": 0.7500118017196655
+        },
+        {
+          "start": 5.23,
+          "end": 5.49,
+          "word": " one",
+          "probability": 0.5944135785102844
+        },
+        {
+          "start": 5.49,
+          "end": 7.45,
+          "word": " it's",
+          "probability": 0.6934014111757278
+        },
+        {
+          "start": 7.45,
+          "end": 7.51,
+          "word": " got",
+          "probability": 0.9590024352073669
+        },
+        {
+          "start": 7.51,
+          "end": 7.71,
+          "word": " work",
+          "probability": 0.9371527433395386
+        },
+        {
+          "start": 7.71,
+          "end": 7.97,
+          "word": " to",
+          "probability": 0.9987723231315613
+        },
+        {
+          "start": 7.97,
+          "end": 8.17,
+          "word": " do",
+          "probability": 0.9990293979644775
+        },
+        {
+          "start": 8.17,
+          "end": 8.93,
+          "word": " for",
+          "probability": 0.8801782131195068
+        },
+        {
+          "start": 8.93,
+          "end": 9.05,
+          "word": " it",
+          "probability": 0.9805147051811218
+        },
+        {
+          "start": 9.05,
+          "end": 9.19,
+          "word": " to",
+          "probability": 0.9981910586357117
+        },
+        {
+          "start": 9.19,
+          "end": 9.23,
+          "word": " be",
+          "probability": 0.9993836879730225
+        },
+        {
+          "start": 9.23,
+          "end": 9.37,
+          "word": " in",
+          "probability": 0.9990677237510681
+        },
+        {
+          "start": 9.37,
+          "end": 9.53,
+          "word": " this",
+          "probability": 0.999437153339386
+        }
+      ]
+    },
+    {
+      "start": 9.53,
+      "end": 24.88,
+      "text": " game oh it's beautifully struck though fighting away here",
+      "no_speech_prob": 0.19440476596355438,
+      "avg_logprob": -0.3569769086064519,
+      "words": [
+        {
+          "start": 9.53,
+          "end": 9.77,
+          "word": " game",
+          "probability": 0.9985001087188721
+        },
+        {
+          "start": 9.77,
+          "end": 10.39,
+          "word": " oh",
+          "probability": 0.3318094313144684
+        },
+        {
+          "start": 22.0,
+          "end": 22.14,
+          "word": " it's",
+          "probability": 0.8958939909934998
+        },
+        {
+          "start": 22.14,
+          "end": 22.4,
+          "word": " beautifully",
+          "probability": 0.9452756643295288
+        },
+        {
+          "start": 22.4,
+          "end": 22.88,
+          "word": " struck",
+          "probability": 0.6651038527488708
+        },
+        {
+          "start": 22.88,
+          "end": 23.08,
+          "word": " though",
+          "probability": 0.8885138034820557
+        },
+        {
+          "start": 23.08,
+          "end": 24.18,
+          "word": " fighting",
+          "probability": 0.9896194338798523
+        },
+        {
+          "start": 24.18,
+          "end": 24.54,
+          "word": " away",
+          "probability": 0.8658809661865234
+        },
+        {
+          "start": 24.54,
+          "end": 24.88,
+          "word": " here",
+          "probability": 0.932154655456543
+        }
+      ]
+    }
+  ],
+  "max_transcribed_end": 24.88
+}
