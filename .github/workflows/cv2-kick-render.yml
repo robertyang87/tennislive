@@ -6,7 +6,7 @@ run-name: cv2-kick-render
 # 用仓库 GITHUB_TOKEN 派发 match-reel 的 cookies 自检，绿了立刻派 render。
 # 同时另派一趟 cookies 去试 Serena 那条源（uiBrForlj-k），失败只打日志，不拦渲染。
 # 不合并、不推微信、push=false。
-# 2026-10-12 重派：上一趟 render 死在审听 plan 对不上，证据已按当前 spec 补上。
+# 2026-10-12 重派：审听 plan 已对齐；再派是因为取景 cx 必须固定 0.5。
 on:
   push:
     branches: [cursor/code-violation-point-penalty-2026-1adf]
