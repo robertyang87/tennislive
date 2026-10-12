@@ -1,0 +1,137 @@
+{
+  "_draft": true,
+  "slug": "lehecka-jodar",
+  "_column": "reel",
+  "cover": {
+    "matchup": [
+      {
+        "name": "莱赫奇卡",
+        "name_en": "jiri lehecka",
+        "country": "CZE",
+        "rank": 19
+      },
+      {
+        "name": "霍达尔",
+        "name_en": "rafael jodar",
+        "country": "ESP",
+        "rank": 13
+      }
+    ]
+  },
+  "_production": {
+    "kind": "orchestrated_reel",
+    "received_at": "2026-10-12T07:05:36Z",
+    "event": "Rolex Shanghai Masters",
+    "year": 2026,
+    "round": "第三轮",
+    "court": "Grandstand 2"
+  },
+  "source_url": "https://www.tennistv.com/videos/4556595/montreal-2026-r4-lehecka-jodar-short-highlights",
+  "_match": {
+    "flashscore_id": "QZjkor9F"
+  },
+  "_feed_retry": {
+    "blocks": [
+      "matchup",
+      "stats",
+      "hit_data",
+      "points"
+    ],
+    "errors": {
+      "matchup": "flashscore df_hh_1 没给本场的 FH/FK"
+    },
+    "tries": 0,
+    "last_at": "2026-10-12T07:09:45Z"
+  },
+  "_tactical_research": {
+    "version": 1,
+    "identity": {
+      "home": "jiri lehecka",
+      "away": "rafael jodar",
+      "event": "Rolex Shanghai Masters",
+      "year": 2026,
+      "source_urls": []
+    },
+    "sources": [
+      {
+        "url": "https://www.rolandgarros.com/en-us/article/atp-wta-jovic-guadalajara-title-davis-cup-rune-zverev-lehecka-qualies-final-8",
+        "title": "",
+        "published_at": "",
+        "status": "read",
+        "text_sha256": "590e714ceb28d17811a10cd458e47e0db4520f6cd5b915e77d47bba955d78ca4",
+        "scope": "player_background",
+        "excerpts": [],
+        "note": "读到 24 段",
+        "match_verified": false
+      }
+    ],
+    "source_status": {
+      "brain_game": "feed HTTP 403; index HTTP 403",
+      "tennis_abstract": "feed HTTP 403; index HTTP 403",
+      "hugh_clarke": "feed HTTP 403; index HTTP 403",
+      "atp": "no_matching_article",
+      "wta": "no_matching_article",
+      "usopen": "no_matching_article",
+      "australian_open": "no_matching_article",
+      "roland_garros": "ok",
+      "wimbledon": "no_matching_article"
+    },
+    "status": "no_readable_analysis",
+    "collected_at": "2026-10-12T07:09:41.061299+00:00",
+    "elapsed_seconds": 1.437
+  },
+  "_notes": [
+    "flashscore id：QZjkor9F（按球员姓反查）",
+    "⚠️ matchup 顺序没核上 flashscore 的 home/away（flashscore df_hh_1 没给本场的 FH/FK）——stats 块／狠数据／转折局／赛果事实都按 feed 的 home/away 排，顺序不认就一块都不写（写了会把赢家印成输家），草稿留在 waiting；df_hh_1 恢复后重跑备料",
+    "⚠️ flashscore 备料没读到：matchup、stats、hit_data、points——记进 _feed_retry，reel-auto-ready 下一班只重跑这几块（不 probe、不下源片），最多 3 次",
+    "技战术资料：no_readable_analysis；未核观点不进入旁白",
+    "文案通道 deepseek · deepseek-v4-pro",
+    "中文热点：扫 152 条，没有撞上这两位球员",
+    "背景聚合：H2H/近况/排名/中文热点已备齐（年龄/纪录/金句要 human_context 调研补，见 spec 合同）",
+    "⚠️ 文案这一步没成（模型或网络），editorial 留空",
+    "⚠️ 没给 captions 或字幕不可读，字幕窗口起草跳过",
+    "⚠️ Tennis TV 官方头图没成（ValueError: Tennis TV 头图不是本场赛事（2026-Montreal-Jodar.jpg 不匹配 Rolex Shanghai Masters），拒绝资料图）",
+    "⚠️ 封面抓取没成（SystemExit: 2026-10-10–2026-10-12 窗口里扫了 110 场，没有同时出现 ['lehecka', 'jodar'] 的比赛）——portrait 留空，终审或 render 前再补"
+  ],
+  "_visual_evidence": {
+    "model": "MiniMax-M3",
+    "status": "waiting",
+    "visual_status": "waiting",
+    "retryable": false,
+    "cold_open": {
+      "start": 149.0,
+      "end": 154.56,
+      "kind": "match_point",
+      "winner_visible": true,
+      "reason": "在 149.5s 和 150.5s 画面中，赢家（Lidecka）身穿白色球衣，已完成制胜分后仰头庆祝（抬头张大嘴激情庆祝）；紧接 151.04–154.56s 之间出现另一名穿白色衣服的球员在球场上，150.4s 切点起正是赛后庆祝与握手画面，由此可确认这是制胜分/赛后余波。赢家的庆祝情绪清晰可见。",
+      "confidence": 0.82
+    },
+    "ending": {
+      "start": 149.0,
+      "end": 154.56,
+      "kind": "aftermath",
+      "winner_visible": true,
+      "reason": "149.5–150.5s 看到赢家（Lidecka）仰头呐喊庆祝；151.0–152.0s 选手们在场上集合/握手；152.5–154.56s 继续呈现赛后场上的庆祝与余波画面（球员在场上、围栏边观众互动）。该窗口完整覆盖 cold_open 时间范围，且属赛事自然结尾。",
+      "confidence": 0.82
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "Lidecka",
+      "moment": "winner_celebration",
+      "wrong_or_old": false,
+      "reason": "画面左上角持续显示 TennisTV 烧录时间戳，且记分牌显示 'LIDECKA / JODAR'，比赛场地为蒙特利尔硬地球场（场内可见 'MONTREAL'、'ATP TOUR' 标识），服装、场地、记分牌均与本场素材一致，属于同一场比赛。截图来自 149.5s 之后赢家庆祝瞬间——Lidecka 仰头激情呐喊，属于赢家庆祝场景。",
+      "confidence": 0.85
+    },
+    "problems": [
+      "没有官方高清封面候选"
+    ],
+    "model_attempts": 1,
+    "input_sha256": "9217e473921a227ae6949a2ca8ff6c7b63871ca5cfbc9a52800498f5994e21b9",
+    "inputs": [
+      "contact_00.jpg",
+      "contact_01.jpg",
+      "contact_02.jpg"
+    ],
+    "cover_image": ""
+  }
+}
