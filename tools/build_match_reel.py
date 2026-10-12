@@ -11614,6 +11614,10 @@ def main() -> int:
     p.add_argument("--scorebox", default="",
                    help="记分条位置 x0,y0,x1,y1（源片像素）。给了就顺手量一遍"
                         "死球时刻写进 probe.json——趁源片还在，渲完就删了")
+    from probe_board import CALIBRATED  # noqa: PLC0415
+    p.add_argument("--broadcast-profile", choices=tuple(CALIBRATED), default=None,
+                   help="已根据本源画面确认的转播样式；与 --scorebox 一起用于首遍量板。"
+                        "不知道就不传，保留全样式扫描；不根据赛事名称猜测")
 
     r = sub.add_parser("render", help="按 spec 出成片")
     r.add_argument("--spec", required=True)
@@ -11681,7 +11685,8 @@ def main() -> int:
         # **板在不在、右缘在哪，也趁源片还在的时候逐帧量**——render 用的同一套判据，
         # 后台线程和下面的切点、缩略图墙一起跑，写 probe.json 前收（tools/probe_board.py）。
         from probe_board import BoardScan  # noqa: PLC0415
-        board_scan = BoardScan(source, (w, h), clip_from, clip_to)
+        board_scan = BoardScan(source, (w, h), clip_from, clip_to,
+                               given=scorebox or "", profile=args.broadcast_profile)
         cuts = scene_changes(source, start=clip_from, stop=clip_to)
         # **低门槛那一份也趁源片还在的时候量。** 和死球时刻同一个道理：源片
         # 渲完就删，事后想查得自己再下一份几百 MB。

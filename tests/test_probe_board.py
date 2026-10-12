@@ -259,7 +259,8 @@ def _write_video(path: Path, frames: list[np.ndarray], fps: int = 5) -> None:
     assert proc.returncode == 0, proc.stderr[-400:]
 
 
-def test_probe模式把板逐帧量进probe_json(tmp_path, monkeypatch):
+@pytest.mark.parametrize("source_profile", [None, "atp"])
+def test_probe模式把板逐帧量进probe_json(tmp_path, monkeypatch, source_profile):
     """probe 那一趟真的把 `board` 写进 probe.json——真解一条合成源片（前 2 秒有 ATP 板、
     后 1 秒没有），其余下载/切点/缩略图墙这些要网络和大源片的步骤打桩。"""
     source = tmp_path / "src.mkv"
@@ -271,14 +272,21 @@ def test_probe模式把板逐帧量进probe_json(tmp_path, monkeypatch):
     monkeypatch.setattr(b, "measure_point_ends", lambda *a, **kw: ([], None, None))
     monkeypatch.setattr(b, "silent_audio_spans", lambda *a, **kw: None)
     out = tmp_path / "probe"
-    monkeypatch.setattr(sys, "argv", ["build_match_reel.py", "probe", "--url", "u",
-                                      "--outdir", str(out)])
+    argv = ["build_match_reel.py", "probe", "--url", "u", "--outdir", str(out)]
+    if source_profile:
+        argv += ["--broadcast-profile", source_profile,
+                 "--scorebox", ",".join(map(str, ATP_BOX))]
+    monkeypatch.setattr(sys, "argv", argv)
     assert b.main() == 0
     board = json.loads((out / "probe.json").read_text(encoding="utf-8"))["board"]
     assert board["fps"] == pb.PROBE_FPS and board["frames"] == 15, board
     atp = next(e for e in board["scans"] if tuple(e["box"]) == ATP_BOX)
     edges = pb.frames_of(atp, "atp")
     assert edges[:10] == [(398, 398)] * 10 and edges[10:] == [None] * 5
+    if source_profile:
+        assert board["source_profile"] == source_profile
+        assert len(board["scans"]) == 1
+        return
 
     # 这一趟给的框和标定带都对不上 → 收的时候补扫一份，五家判据都跑
     extra = pb.BoardScan(source, (1920, 1080)).finish("1483,647,1920,850")
@@ -292,6 +300,29 @@ def test_量板失败不许把probe带崩_但要出声并落进probe_json(tmp_pa
     assert "没量成" in capsys.readouterr().out
     skipped = pb.BoardScan(tmp_path / "missing.mkv", (1280, 720)).finish("")
     assert "skipped" in skipped
+
+
+def test_confirmed_wta_custom_box_is_first_pass_and_retains_every_frame(tmp_path, monkeypatch):
+    """A confirmed source must not pay a failing unrelated/calibrated scan first."""
+    box = (90, 827, 580, 982)
+    source = tmp_path / "wta.mkv"
+    _write_video(source, [_frame(wta=True)] * 10 + [_frame()] * 5)
+    calls = []
+    original = pb.scan_plan
+
+    def actual_scan(source, plan, source_w, **kwargs):
+        calls.append((plan, kwargs))
+        return original(source, plan, source_w, **kwargs)
+
+    monkeypatch.setattr(pb, "scan_plan", actual_scan)
+    board = pb.BoardScan(source, (1920, 1080), given=",".join(map(str, box)),
+                         profile="wta").finish(",".join(map(str, box)))
+    assert len(calls) == 1
+    assert calls[0][0] == [(("wta",), box)]
+    assert calls[0][1] == {"start": 0.0, "stop": None, "fps": pb.PROBE_FPS}
+    assert board["source_profile"] == "wta"
+    assert board["frames"] == 15
+    assert pb.frames_of(board["scans"][0], "wta") == [(386, 386)] * 10 + [None] * 5
 
 
 def _custom_box_has_probe(spec: dict, profile: str, probes=None, *, box=None, url=None) -> bool:

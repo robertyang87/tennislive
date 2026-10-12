@@ -180,12 +180,24 @@ def frames_of(entry: dict, profile: str) -> list | None:
 
 
 def plan_boxes(given: tuple[int, int, int, int] | None,
-               source_size: tuple[int, int]) -> list[tuple[tuple[str, ...], tuple[int, int, int, int]]]:
+               source_size: tuple[int, int], *,
+               profile: str | None = None) -> list[tuple[tuple[str, ...], tuple[int, int, int, int]]]:
     """要扫哪些框、每个框跑哪几家判据。
 
     源片是 1920×1080 时，每家标定过的转播各扫**自己那条带**（只跑自己那家判据）；这一趟给的
     或猜的框要是和它们都对不上，再单独扫一份、五家判据都跑（不知道是哪家转播）。
     """
+    # A source-confirmed profile and its actual box belong in the FIRST pass.
+    # Avoid unrelated detectors and a second decode for an already known box.
+    # An explicit source profile narrows detectors, never time/frame coverage;
+    # native geometry errors still fail exactly as before.
+    if profile is not None:
+        if profile not in CALIBRATED:
+            raise ValueError(f"Unknown broadcast profile: {profile}")
+        if given:
+            return [((profile,), tuple(int(v) for v in given))]
+        return ([((profile,), box) for box in CALIBRATED[profile]]
+                if tuple(source_size) == CALIBRATED_SOURCE else [])
     plan: list[tuple[tuple[str, ...], tuple[int, int, int, int]]] = []
     if tuple(source_size) == CALIBRATED_SOURCE:
         plan.extend(((name,), box) for name, boxes in CALIBRATED.items() for box in boxes)
@@ -316,6 +328,10 @@ class BoardScan:
     """probe 模式的入口：源片一下完就在**后台线程**里开扫标定过的那几条带，写 probe.json
     之前 `finish()` 收——这一趟给的或猜到的框要是和标定带都对不上，那时再补扫一份。
 
+    已根据本源画面确认的 `profile` 和 `given` 可一起传入：第一遍直接扫实际框、只跑
+    该转播判据，不先尝试别家/旧框；没有确认时仍保留全部判据。时间区间、采样帧率、
+    单帧几何和错误报告均不变，`source_profile` 只记录显式传入的选择，永不猜测。
+
     ⚠️ **为什么要并行**：量板要把源片整条解一遍，本地量 60 秒的 1080p 源片 10.3 秒
     （光解码 5.8 秒），500 秒的 WTA 集锦串行加上去就是一分多钟——每一趟 probe 都付。
     而 probe 本来最慢的是缩略图墙那几百次单帧 seek（单线程为主），两者叠在一起跑，
@@ -326,12 +342,14 @@ class BoardScan:
     """
 
     def __init__(self, source: Path, source_size: tuple[int, int],
-                 start: float = 0.0, stop: float | None = None, fps: int = PROBE_FPS):
+                 start: float = 0.0, stop: float | None = None, fps: int = PROBE_FPS,
+                 *, given: str = "", profile: str | None = None):
         import threading  # noqa: PLC0415
 
         self.source, self.size = Path(source), tuple(source_size)
         self.start, self.stop, self.fps = float(start or 0.0), stop, fps
-        self._plan = plan_boxes(None, self.size)
+        self.profile = profile
+        self._plan = plan_boxes(_parse_box(given), self.size, profile=profile)
         self._scans: list[dict] = []
         self._error: Exception | None = None
         self._thread = threading.Thread(target=self._run, name="probe-board", daemon=True)
@@ -352,7 +370,8 @@ class BoardScan:
     def finish(self, given: str) -> dict:
         """`given` 是 `--scorebox` 或者猜到的框（"x0,y0,x1,y1"，可以是空串）。"""
         self._thread.join()
-        extra = [p for p in plan_boxes(_parse_box(given), self.size) if p not in self._plan]
+        extra = [p for p in plan_boxes(_parse_box(given), self.size, profile=self.profile)
+                 if p not in self._plan]
         try:
             if self._error is not None:
                 raise self._error
@@ -368,8 +387,11 @@ class BoardScan:
             hits = {p: r["present"] for p, r in entry["profiles"].items() if r["present"]}
             shown = "、".join(f"{p} {n}/{entry['frames']} 帧" for p, n in hits.items()) or "一帧都没认出板"
             print(f"[量板] 框 {entry['box']}：{shown}")
-        return {"version": 1, "fps": self.fps, "t0": round(self.start, 3),
-                "frames": min(e["frames"] for e in scans), "scans": scans}
+        result = {"version": 1, "fps": self.fps, "t0": round(self.start, 3),
+                  "frames": min(e["frames"] for e in scans), "scans": scans}
+        if self.profile is not None:
+            result["source_profile"] = self.profile
+        return result
 
 
 # --------------------------------------------------------------------------
