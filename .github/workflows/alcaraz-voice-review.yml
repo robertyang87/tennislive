@@ -1,0 +1,52 @@
+name: alcaraz-voice-review
+run-name: "alcaraz-voice-review · bergs-alcaraz-shanghai-2026-r3"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [production/bergs-alcaraz-shanghai]
+    paths:
+      - .github/workflows/alcaraz-voice-review.yml
+      - tools/alcaraz_voice_review.py
+      - tools/alcaraz_voice_review/**
+
+permissions:
+  contents: read
+
+jobs:
+  voice-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      TENNISLIVE_TTS_BACKEND: edge
+      TENNISLIVE_TTS_CACHE: ${{ runner.temp }}/alcaraz-native-cache
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install native audio measurement dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          python -m pip install -e '.[polyphone]'
+      - name: Prepare actual frozen nine utterances and paired ZIP evidence
+        run: python tools/alcaraz_voice_review.py --stage prepare --outdir "$RUNNER_TEMP/alcaraz-voice-artifact"
+      - name: Upload native speech immediately
+        uses: actions/upload-artifact@v4
+        with:
+          name: alcaraz-native-speech-${{ github.run_id }}
+          path: ${{ runner.temp }}/alcaraz-voice-artifact
+          if-no-files-found: error
+          retention-days: 7
+      - name: Fresh full-sentence homophone controls and self-calibration
+        run: python tools/alcaraz_voice_review.py --stage analyze --outdir "$RUNNER_TEMP/alcaraz-voice-artifact"
+      - name: Upload complete fresh evidence including limitations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: alcaraz-complete-voice-review-${{ github.run_id }}
+          path: ${{ runner.temp }}/alcaraz-voice-artifact
+          if-no-files-found: error
+          retention-days: 7

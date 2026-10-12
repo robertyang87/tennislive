@@ -1,0 +1,68 @@
+{
+  "schema": "actual-local-targeted-asr.v1",
+  "source_path": "/workspace/scratch/alcaraz-source/2tMbUc2Kknk.mp4",
+  "source_sha256": "a4de892b2fb088b59a9b1b7245db944fc58ff67d1349830b204bfddaa72cf0bf",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "normalization": "none; original amplitude",
+  "vad_filter": false,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "initial_prompt": null,
+  "human_listening_claimed": false,
+  "windows": [
+    [
+      176.76,
+      179.2
+    ],
+    [
+      190,
+      197.5
+    ]
+  ],
+  "window_results": [
+    {
+      "window": [
+        176.76,
+        179.2
+      ],
+      "duration": 2.44,
+      "utterance_count": 0,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        190,
+        197.5
+      ],
+      "duration": 7.5,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    }
+  ],
+  "segments": [
+    {
+      "window": [
+        190,
+        197.5
+      ],
+      "start": 194.06,
+      "end": 195.46,
+      "text": " incredible",
+      "no_speech_prob": 0.13142387568950653,
+      "avg_logprob": -0.9683665931224823,
+      "words": [
+        {
+          "start": 194.06,
+          "end": 195.46,
+          "word": " incredible",
+          "probability": 0.2160288691520691
+        }
+      ]
+    }
+  ],
+  "run_status": "complete",
+  "recorded_at": "2026-10-12T13:56:15.871345+00:00"
+}

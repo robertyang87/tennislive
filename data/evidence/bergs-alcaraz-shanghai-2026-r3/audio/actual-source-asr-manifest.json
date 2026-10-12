@@ -1,0 +1,202 @@
+{
+  "schema": "tennislive.actual-asr-source-manifest.v1",
+  "slug": "bergs-alcaraz-shanghai-2026-r3",
+  "source_url": "https://www.youtube.com/watch?v=2tMbUc2Kknk",
+  "source_path": "/workspace/scratch/alcaraz-source/2tMbUc2Kknk.mp4",
+  "source_sha256": "a4de892b2fb088b59a9b1b7245db944fc58ff67d1349830b204bfddaa72cf0bf",
+  "source_bytes": 52465217,
+  "source_duration": 240.163991,
+  "recorded_at": "2026-10-12T13:42:21.567227+00:00",
+  "fresh_actual_asr_runs": true,
+  "human_listening_claimed": false,
+  "tone_verified": false,
+  "raw_evidence": [
+    {
+      "path": "data/evidence/bergs-alcaraz-shanghai-2026-r3/audio/raw/actual-large-v3-full.json",
+      "sha256": "76a59059b5ba1253fd1d65add775d91b254b68934f2d44331e8958c58a329e9b",
+      "model": "large-v3",
+      "vad_filter": true,
+      "run_status": "complete",
+      "windows": [
+        [
+          0,
+          240.163991
+        ]
+      ]
+    },
+    {
+      "path": "data/evidence/bergs-alcaraz-shanghai-2026-r3/audio/raw/actual-medium-en-disputed-novad.json",
+      "sha256": "654228129afbfb6d7580e00b92b6b769e755ba6e238f9a62eb9430abb6da5968",
+      "model": "medium.en",
+      "vad_filter": false,
+      "run_status": "complete",
+      "windows": [
+        [
+          28,
+          52
+        ],
+        [
+          78,
+          92
+        ],
+        [
+          90,
+          112
+        ],
+        [
+          148,
+          180
+        ],
+        [
+          194,
+          232
+        ]
+      ]
+    },
+    {
+      "path": "data/evidence/bergs-alcaraz-shanghai-2026-r3/audio/raw/actual-medium-en-full.json",
+      "sha256": "5063545574bfcb69614be26a4feb24ad504fa6076e2a188d12836dfb37f440ad",
+      "model": "medium.en",
+      "vad_filter": true,
+      "run_status": "complete",
+      "windows": [
+        [
+          0,
+          240.163991
+        ]
+      ]
+    },
+    {
+      "path": "data/evidence/bergs-alcaraz-shanghai-2026-r3/audio/raw/actual-small-en-disputed-novad.json",
+      "sha256": "591dc20f305406f85afe3c0e6a13dc3d9a6362ffe146a97234cf48cbaa22950c",
+      "model": "small.en",
+      "vad_filter": false,
+      "run_status": "complete",
+      "windows": [
+        [
+          28,
+          42
+        ],
+        [
+          90,
+          112
+        ],
+        [
+          148,
+          180
+        ],
+        [
+          194,
+          232
+        ]
+      ]
+    },
+    {
+      "path": "data/evidence/bergs-alcaraz-shanghai-2026-r3/audio/raw/actual-small-en-full.json",
+      "sha256": "8979c6e36325a56d5ef76ddd740f2bb9dbfa5a54e0e69a8a8537529a804d5f62",
+      "model": "small.en",
+      "vad_filter": true,
+      "run_status": "complete",
+      "windows": [
+        [
+          0,
+          240.163991
+        ]
+      ]
+    },
+    {
+      "path": "data/evidence/bergs-alcaraz-shanghai-2026-r3/audio/raw/actual-large-v3-final-clause-novad.json",
+      "sha256": "74accd60d7da2513699e84f9683a5113641c48c29d24222ed26c5be8be7941cd",
+      "model": "large-v3",
+      "vad_filter": false,
+      "run_status": "complete",
+      "windows": [
+        [
+          207.8,
+          212.8
+        ],
+        [
+          214,
+          221.8
+        ],
+        [
+          221,
+          230.12
+        ]
+      ]
+    },
+    {
+      "path": "data/evidence/bergs-alcaraz-shanghai-2026-r3/audio/raw/actual-small-en-point-tail-novad.json",
+      "sha256": "36e9d419c3aaee10919a9379c5c962f0c7a98efb8fd674eaa0618a613301f524",
+      "model": "small.en",
+      "vad_filter": false,
+      "run_status": "complete",
+      "windows": [
+        [
+          176.76,
+          179.2
+        ],
+        [
+          190,
+          197.5
+        ]
+      ]
+    },
+    {
+      "path": "data/evidence/bergs-alcaraz-shanghai-2026-r3/audio/raw/actual-medium-en-point-tail-novad.json",
+      "sha256": "a72c07614bc31bef1f1b30b87f8e19259e8ca1df3a71f2ce721dc55ca85ea2cf",
+      "model": "medium.en",
+      "vad_filter": false,
+      "run_status": "complete",
+      "windows": [
+        [
+          176.76,
+          179.2
+        ],
+        [
+          190,
+          197.5
+        ]
+      ]
+    },
+    {
+      "path": "data/evidence/bergs-alcaraz-shanghai-2026-r3/audio/raw/actual-small-en-sublime-novad.json",
+      "sha256": "81db428482e918feb006d144c6b56688ba34c6a647ad78b488d8ce81848e3e05",
+      "model": "small.en",
+      "vad_filter": false,
+      "run_status": "complete",
+      "windows": [
+        [
+          35.14,
+          49.5
+        ]
+      ]
+    }
+  ],
+  "note": "Fresh decoded full-source CPU local-files-only ASR and targeted no-VAD runs. Full-source VAD omission is not proof that a selected interval contains no English. Selected native packets must bind actual current windows, resolved cues, and plan hash. Raw output retains model mistakes and hallucinations; it is not an edited transcript.",
+  "runtime_versions": {
+    "faster_whisper": "1.2.1",
+    "ctranslate2": "4.8.2"
+  },
+  "cached_model_snapshots": {
+    "small.en": "d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+    "medium.en": "a29b04bd15381511a9af671baec01072039215e3",
+    "large-v3": "edaa852ec7e145841d8ffdb056a99866b5f0a478"
+  },
+  "final_scene_boundary_update": {
+    "first_brand_frame": 230.12,
+    "source_video_fps": 50,
+    "pure_court_last_segment_end_proposed": 230.1,
+    "tail_reads": 0,
+    "provenance": "Root actual 50fps visual boundary review; parent reports native outro:false terminal tail=0",
+    "actual_asr_final_word_ends": [
+      230.04,
+      230.04,
+      230.0,
+      230.0,
+      230.04,
+      229.84
+    ],
+    "scope": "ASR word ends are estimates; mixed PCM nonzero after 230.04 is not proof of residual Alcaraz speech. End230.10 covers all observed ASR final word endpoints."
+  }
+}

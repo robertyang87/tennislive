@@ -1,0 +1,284 @@
+{
+  "audit_kind": "independent source selection and native geometry preflight; not final rendered QC",
+  "source_path": "/workspace/scratch/alcaraz-source/2tMbUc2Kknk.mp4",
+  "source_sha256": "a4de892b2fb088b59a9b1b7245db944fc58ff67d1349830b204bfddaa72cf0bf",
+  "method": "Direct local source decoding and human viewing of exact n%150 (3 sec), n%25 (0.5 sec), and 50 fps boundary frames. Existing atp_scoreboard.board_edge applied to actual source stills. No DeepSeek or MiniMax. fps downsample timing offset excluded from final boundaries.",
+  "framing": {
+    "canvas": [
+      1080,
+      1440
+    ],
+    "source_crop": [
+      555,
+      0,
+      1365,
+      1080
+    ],
+    "center_x": 0.5,
+    "track": false,
+    "fit": "crop",
+    "source_fps": 50,
+    "status": "matches requested crop geometry; does not preserve both bodies at all times"
+  },
+  "selection": [
+    {
+      "start": 95.58,
+      "end": 108.68,
+      "meaning": "first-set set point at Bergs 6-5 AD; serve as source provides, rally, 102.42 reaction, 7-5 board"
+    },
+    {
+      "start": 138.34,
+      "end": 151.24,
+      "meaning": "second-set 4-4 Alcaraz serving40-30 (yellow server dot by Alcaraz); holds for5-4;145.16 roar and fist;148.5/150.5 yellow dot by Bergs at4-5, following5-5 indicates Bergs holds. Not an Alcaraz break or lost serve-for-set game."
+    },
+    {
+      "start": 151.24,
+      "end": 164.38,
+      "meaning": "second-set 5-5 full long rally; 161.72 Bergs reaction, then near view"
+    },
+    {
+      "start": 164.38,
+      "end": 176.76,
+      "meaning": "second-set5-5 BergsAD, yellow server dot by Alcaraz; Alcaraz serves, Bergs wins the rally and breaks for6-5;168.90 Alcaraz closeup looking at hand is a losing-point reaction;171.5 Bergs near view already6-5. Verified against PBP set2 score_after[6,5], serverAlcaraz,winnerBergs, final prepointA:40 |B1|. No missing winning-break-point claim."
+    },
+    {
+      "start": 176.76,
+      "end": 205.08,
+      "meaning": "Bergs6-5 serving15-40, full long rally;194.32 Alcaraz fist/reaction and rallies crowd;6-6 board"
+    },
+    {
+      "start": 205.08,
+      "end": 212.72,
+      "meaning": "tiebreak4-4 Alcaraz serving; rally;210.66 Alcaraz disappointed reaction; score updates5-4 very late in closeup"
+    },
+    {
+      "start": 212.72,
+      "end": 230.12,
+      "meaning": "tiebreak6-4 Bergs serving match point;215.30 winner spreads arms; opponent and handshake/emotional close preserved;end exclusive before source brand animation"
+    }
+  ],
+  "cold_open": {
+    "start": 215.3,
+    "end": 220.9,
+    "payoff": "Bergs spreads arms after winning match; final body must replay full same window"
+  },
+  "ending_exact_boundaries": {
+    "last_matchpoint_wide_frame": 215.28,
+    "first_winner_reaction_frame": 215.3,
+    "last_live_source_frame": 230.1,
+    "first_brand_tail_frame": 230.12,
+    "interval_semantics": "[start,end), 50 fps; source decode starting requested times"
+  },
+  "missing_official_footage_internal_only": [
+    "Alcaraz first-set break/game progress not all points represented by selected short highlights",
+    "Tiebreak5-4 to6-4 standalone scoring point omitted; source jumps from late5-4 scoreboard closeup to6-4 match point"
+  ],
+  "scoreboard": {
+    "search_box_hint": [
+      98,
+      920,
+      432,
+      1029
+    ],
+    "native_main_y": [
+      920,
+      1029
+    ],
+    "source_right_with_point_cell_exclusive": 431,
+    "source_right_without_point_cell_exclusive": 378,
+    "frame_alpha": "measure actual frame body edge; mainboard full y920:1029; no visible yellow header/tag in reviewed source frames; board absent at216.6,221,225 so patch transparent",
+    "target_left": 0,
+    "target_top": 1227,
+    "target_width_typical": 447,
+    "target_height_typical": 145,
+    "subtitle_bottom_y": 1203,
+    "ass_margin_v": 237,
+    "subtitle_background_default": false,
+    "caption_outline_shadow": [
+      4,
+      1
+    ]
+  },
+  "body_crop_observations": [
+    {
+      "time": 140,
+      "player": "Bergs near court",
+      "loss": "entire body outside fixed left crop"
+    },
+    {
+      "time": 143,
+      "player": "Bergs near court",
+      "loss": "entire body outside fixed right crop"
+    },
+    {
+      "time": 182.5,
+      "player": "Bergs near court",
+      "loss": "entire body outside fixed left crop"
+    },
+    {
+      "time": 187,
+      "player": "Bergs near court",
+      "loss": "body truncated by right crop edge"
+    },
+    {
+      "time": 213.5,
+      "player": "Alcaraz near court on match point",
+      "loss": "entire body outside fixed right crop"
+    },
+    {
+      "time": 215.3,
+      "player": "Bergs reaction",
+      "loss": "outstretched hands/forearms outside fixed crop, face/torso preserved"
+    },
+    {
+      "time": 225,
+      "player": "both at embrace",
+      "loss": "both faces and torsos preserved; lateral racket/arm may be cut"
+    }
+  ],
+  "limitation": "Temporal source point coverage and adherence to fixed center crop are distinct. No claim that both full bodies or every ball flight remain visible. Native preview sheets contain guide lines only and are not the formal render.",
+  "artifacts": [
+    {
+      "name": "key-cuts.json",
+      "sha256": "e4a8d233936417b7e446c3279288f45cfc78b5bcbeab9fa59cf9b3beee35dcb0"
+    },
+    {
+      "name": "native-board-edges.json",
+      "sha256": "a19114712c5e1b0bf6e9c3afaf20c80d71f616060257ebadeb05382e437289e5"
+    },
+    {
+      "name": "native-preflight-frames.json",
+      "sha256": "3a4d6c8e6303d26d547a29c3d3f620bfcb686c1f1d056005f9e847326184e44a"
+    },
+    {
+      "name": "startbound-sheet.jpg",
+      "sha256": "53f0b152b56eb218f20f09625ccbf18868a2b1f5ea7c9988705336fc4ff66d72"
+    },
+    {
+      "name": "coldbound-sheet.jpg",
+      "sha256": "83fb850ab3542a4e5fe3f741800e7f0e61f9a11e887716197c0e2420d58d1205"
+    },
+    {
+      "name": "boundary-sheet.jpg",
+      "sha256": "69be7704ff0821526454a7ef99650e07721cdb8d81b43fdb347ffc7338956aa6"
+    },
+    {
+      "name": "native-preview-sheet.jpg",
+      "sha256": "9eb6be5a324c7924980edfeb4d0931eb9eb79bd81faeac8ca783575f4918bc39"
+    },
+    {
+      "name": "body-crop-guide-sheet.jpg",
+      "sha256": "ebbb4ebda804872baf6ff099924a060da7f27e248e4c70a6cb08086d78ef9b8a"
+    },
+    {
+      "name": "exact-sheet-1.jpg",
+      "sha256": "9d48d10694c1dabcbb5b2faa068ce3f5e0975a1e4629bffd827fd6c0a6289742"
+    },
+    {
+      "name": "exact-sheet-2.jpg",
+      "sha256": "699cfb4149fdb0948a58455ee8ef0b75f25d361bf015212a276ca71e389510b1"
+    },
+    {
+      "name": "exact-sheet-3.jpg",
+      "sha256": "cfb845371db0d26e69bb65b0e13bbe646d020cabf80aad0b1967f487fa537dac"
+    },
+    {
+      "name": "exact-sheet-4.jpg",
+      "sha256": "c7ff4ad9765cd66f098cb4622237dbfc8dc68de28d4713fbc75f7dc97b9b4230"
+    },
+    {
+      "name": "exact-sheet-5.jpg",
+      "sha256": "26302b66914637959a529fdf605fdbb1d68f6b9abc841e502a73a5396bc03256"
+    },
+    {
+      "name": "key-sheet-2.jpg",
+      "sha256": "891936a60a20235d636b8408f75bd2d535b539b8447d67ffb213bb606a19f8b8"
+    },
+    {
+      "name": "key-sheet-3.jpg",
+      "sha256": "bc484a3f4a272b58dfad3fd21bf8ddbb49d5174ba086f8005ddf44a87017d960"
+    },
+    {
+      "name": "key-sheet-7.jpg",
+      "sha256": "ad7c002b112c7602b1ae845d805b4a5387319b8cf750231196729af1f8fc61b6"
+    },
+    {
+      "name": "key-sheet-9.jpg",
+      "sha256": "43edf33726dd23887ba5a77511d15151407d1bafc24276a9b6f96816f945654a"
+    },
+    {
+      "name": "key-sheet-10.jpg",
+      "sha256": "aad296f4d8542c3342548a839a77197fb89d65c8c0051b98a839e06558fc8f97"
+    },
+    {
+      "name": "key-sheet-11.jpg",
+      "sha256": "e8c55fb8fb7c50ad05fb73feb744454c29ac15177e9bda888082c12da46ab3b6"
+    },
+    {
+      "name": "key-sheet-12.jpg",
+      "sha256": "7b31233d5c39961a1ca7234445d9b3f35f4606beea9790ed135d7fa35fff0446"
+    },
+    {
+      "name": "key-sheet-13.jpg",
+      "sha256": "8c91c5e05b0709811f1ed2914ed9b72ff6c7ab83c2a75412f6ff373eb9821357"
+    },
+    {
+      "name": "key-sheet-14.jpg",
+      "sha256": "8142404b0493b38d4f60d984287d56b932d468d275c84e07cb8697ff10e8a136"
+    },
+    {
+      "name": "server-dot-correction-sheet.jpg",
+      "sha256": "877234a4171b696127b53532bad9bcd0dba13d5c19ec66eedd63e6cfc9947ece"
+    },
+    {
+      "name": "first-5052-full.png",
+      "sha256": "d8e4311f2e8fa792b7cda2bf0db179d678f7936935bdfff96290aac852a1ac81"
+    },
+    {
+      "name": "tactic35-sheet.jpg",
+      "sha256": "09f286b9730430faa0fd508f3581d036a066a3d631a1e4b0f84fc43cc1e914a3"
+    }
+  ],
+  "first_set_optional_condense": {
+    "safe_omit": [
+      {
+        "start": 50.52,
+        "end": 65.44,
+        "meaning": "3-2 score30-40 complete point and reaction"
+      },
+      {
+        "start": 65.44,
+        "end": 82.54,
+        "meaning": "4-4 score15-15 complete rally and79.48 Alcaraz reaction"
+      }
+    ],
+    "key_break_window": {
+      "start": 82.54,
+      "end": 95.58,
+      "meaning": "Bergs return-ready closeup;87.30 Alcaraz serving at5-5 15-40, rally,94.06 Alcaraz disappointed reaction, leading to next6-5 Bergs serving; tight start87.30 possible"
+    },
+    "source_native_cuts": [
+      50.52,
+      65.44,
+      79.48,
+      82.54,
+      87.3,
+      94.06,
+      95.58
+    ]
+  },
+  "review_correction": {
+    "reason": "Root independently read actual yellow serving dot. Previous138.34 break interpretation and5-4 lost serve-for-set gap claim were false and are removed. Earlier164.38 saved-break-point and missing break-winning-point inference from Alcaraz hand gesture was unsupported and is withdrawn.",
+    "verified_frame": "/workspace/scratch/alcaraz-score-proof/sheet.jpg",
+    "first_set_50_52": "Actual full frame shows yellow serving dot by Bergs, games3-2, points30-40, far-end Bergs serving and near-end Alcaraz returning. PBP confirms this only break point is converted: Carlos breaks back for3-3.",
+    "score_identity_rule": "Read serving dot and player-specific point column before assigning hold or break; fist/reaction is not evidence of point winner.",
+    "verified_pbp": "../flashscore-pbp-parsed.json: set1 score_after[3,3], serverBergs,winnerAlcaraz finalprepoint30:40 |B1|; set2 score_after[4,5], serverAlcaraz,winnerAlcaraz; set2 score_after[5,5], serverBergs,winnerBergs; set2 score_after[6,5], serverAlcaraz,winnerBergs finalprepointA:40 |B1|."
+  },
+  "verified_break_count": "Alcaraz actual two breaks: first set3-2→3-3 (50.52 window); second set6-5→6-6 (176.76 window). Second-set4-4→4-5 is hold, not break.",
+  "technical_35_window": {
+    "start": 35.14,
+    "end": 49.5,
+    "description": "First35.14 frame still previous Bergs reaction, then near-end Alcaraz returning in Bergs3-2/30-30 service game. Main footage is baseline rally with Alcaraz alternating forehand/backhand, Bergs moving laterally. Alcaraz fist after point at48–49. No drop shot or net rush in this window.",
+    "suggested_short_copy": "阿卡在底线顶住连续对拉，拿下这一分。"
+  }
+}

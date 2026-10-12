@@ -1,0 +1,756 @@
+{
+  "slug": "bergs-alcaraz-shanghai-2026-r3",
+  "_column": "reel",
+  "tts_backend": "edge",
+  "track": false,
+  "outro": false,
+  "stat_card_full_canvas": true,
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=2tMbUc2Kknk"
+  },
+  "primary": "main",
+  "_user_source_url": "https://youtu.be/2tMbUc2Kknk?is=aNZ-7kEs8UjwTPqk",
+  "_match": {
+    "source": "official_atp_tournament",
+    "source_id": "5014_2026_MS031",
+    "participants": [
+      "贝尔格斯",
+      "阿尔卡拉斯"
+    ],
+    "winner": "贝尔格斯",
+    "loser": "阿尔卡拉斯",
+    "winner_result": "7-5 7-6(4)",
+    "loser_result": "5-7 6-7(4)",
+    "date": "2026-10-12",
+    "status": "result_verified",
+    "flashscore_id": "6NyPYtH8",
+    "set_scores_home_away": [
+      [
+        7,
+        5
+      ],
+      [
+        7,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      [
+        7,
+        4
+      ]
+    ]
+  },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "aces": 5,
+      "df": 2,
+      "winners": 16,
+      "ue": 27,
+      "first_in": 53,
+      "first_total": 79,
+      "first_won": 35,
+      "second_total": 26,
+      "second_won": 14,
+      "bp_conv": 2,
+      "bp_chances": 2,
+      "pts_won": 73,
+      "pts_total": 154,
+      "headshot": "assets/players/headshots/atp-A0E2.png"
+    },
+    "b": {
+      "aces": 9,
+      "df": 1,
+      "winners": 24,
+      "ue": 29,
+      "first_in": 47,
+      "first_total": 75,
+      "first_won": 37,
+      "second_total": 28,
+      "second_won": 14,
+      "bp_conv": 3,
+      "bp_chances": 4,
+      "pts_won": 81,
+      "pts_total": 154,
+      "headshot": "assets/players/headshots/atp-BU13.png"
+    },
+    "_source": "Official ATP tournament final API; W/UE Flashscore whole-match final; do not mix ElPais",
+    "_winners_ue_evidence": {
+      "provider": "Flashscore",
+      "method": "api",
+      "source_url": "https://global.flashscore.ninja/4/x/feed/df_st_1_6NyPYtH8",
+      "source_path": "data/evidence/bergs-alcaraz-shanghai-2026-r3/fs-stats-final.txt",
+      "source_sha256": "0e028ab7100b44769c2b38d869794c210321b7d318b1bf3e912553c5dd7ea8b4",
+      "period": "Match",
+      "match_date": "2026-10-12",
+      "checked_at": "2026-10-12T13:32:15.828591+00:00",
+      "matchup": [
+        "阿尔卡拉斯",
+        "贝尔格斯"
+      ],
+      "winner_result": "7-5 7-6(4)",
+      "winners": [
+        16,
+        24
+      ],
+      "ue": [
+        27,
+        29
+      ],
+      "source_period": "Match final",
+      "_provider_note": "Third-party whole-match W/UE; official API independently agrees ace/DF/BP/service/totals, no cross-provider W/UE mixing."
+    }
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "阿尔卡拉斯",
+        "name_en": "Carlos Alcaraz",
+        "country": "ESP",
+        "rank": 3
+      },
+      {
+        "name": "贝尔格斯",
+        "name_en": "Zizou Bergs",
+        "country": "BEL",
+        "rank": 39
+      }
+    ],
+    "winner": "贝尔格斯",
+    "result": "7-5 7-6(4)",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "阿尔卡拉斯",
+    "topic": "ATP1000 上海 第三轮 · 阿尔卡拉斯 VS 贝尔格斯",
+    "hook": "次盘5-6追到6-6\n阿卡上海第三轮出局",
+    "hook_accent": "第三轮出局",
+    "_portrait_geometry_owner": "root owns current-match official9433 portrait focus; no guessed geometry",
+    "portrait": {
+      "image": "assets/reel/bergs-alcaraz-shanghai-2026-r3-cover.jpg",
+      "focus": 0.34,
+      "focus_y": 0.0,
+      "zoom": 1.4
+    },
+    "scoreboard": {
+      "court": "Stadium Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%2202%3A02%3A32%22%2C%22field%22%3A%22MatchTimeTotal%22%2C%22match_id%22%3A%22MS031%22%2C%22source_url%22%3A%22https%3A//en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats%3Fyear%3D2026%26eventId%3D5014%26matchId%3Dms031%22%2C%22source_path%22%3A%22data/evidence/bergs-alcaraz-shanghai-2026-r3/official-stats.json%22%2C%22source_sha256%22%3A%226a4764cf132315f352c7421b957114dce0578d0f59726b6c8bec41234e106d8b%22%2C%22checked_at%22%3A%222026-10-12T13%3A32%3A15.828591%2B00%3A00%22%7D",
+        "field": "duration",
+        "_source_note": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms031"
+      }
+    }
+  },
+  "topbar": {
+    "line1": "2026 ATP1000 上海 第三轮",
+    "line2": "贝尔格斯 7-5 7-6(4) 阿尔卡拉斯"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "hook": [
+      "次盘5-6追到6-6",
+      "阿卡上海第三轮出局"
+    ],
+    "question": "阿卡把比赛拖进抢七，最终差距体现在哪里？",
+    "thesis": "东京夺冠后，阿卡来到上海第三轮。首盘5-7落败，次盘双方前十局一路保发到5-5；随后阿卡失去发球局5-6，又立刻回破追到6-6。抢七4-4后连丢三分。贝尔格斯凭更高的一发得分率及更多制胜分胜出，阿卡反扑没能改变结局。",
+    "beats": [
+      "终局失利反应冷开，阿卡反扑停在最后三分落点",
+      "时间坐标与东京冠军前情",
+      "Bergs网前drop与快速场地原声",
+      "首盘即时回破后，5-5再次被破、7-5收盘",
+      "次盘双方一路保发；4-4阿卡保发到5-4，真实握拳怒吼",
+      "贝尔格斯保发追5-5，阿卡再救BP；贝尔格斯破发至6-5",
+      "完整阿卡5-6/15-40回破分与催动观众",
+      "TB4-4后连丢3分；完整赛点失利与握手结局"
+    ],
+    "narration": [
+      "阿卡的反扑，这次停在最后三分。",
+      "北京时间十月十二日晚上，上海大师赛第三轮。",
+      "贝尔格斯用网前放短拿分，迫使阿卡向前追球。东京夺冠之后，他在上海遭遇新的考验。",
+      "首盘三比二落后，阿卡立即回破，追成三比三。五比五之后，再次丢掉发球局，五比七输掉首盘。",
+      "第二盘，贝尔格斯打出穿越，突破阿卡的网前防线。双方保发，悬念拖到盘末。",
+      "四比四，阿卡保住发球局，五比四领先。握拳、怒吼，他还不肯让这场球结束。",
+      "对手同样保发，追到五比五。盘末的拉锯，谁先松手，谁就陷入危险。",
+      "五比六，十五比四十。阿卡又到悬崖边上。他守住这次机会，回破，把比赛拉回六比六。",
+      "一发得分率，阿卡百分之六十六，对手百分之七十九。制胜分少了八个。下一站，他能把反扑变成胜利吗？"
+    ],
+    "_authoring": {
+      "method": "current_assistant_manual",
+      "external_model_pass_claimed": false,
+      "human_listening_claimed": false
+    },
+    "_tactics_evidence": "保完整源drop与上网后穿越的两组真实English解说，不靠逐分数据猜线路。中文主要承担坐标与进程。",
+    "human_context": {
+      "angle": "东京夺冠后阿卡上海第三轮止步；两次回破和抢七4-4后的最后三分，解释强烈反扑为何仍不足以赢球。",
+      "facts": [
+        "2026-10-12上海第三轮，贝尔格斯7-5 7-6(4)阿尔卡拉斯。",
+        "首盘阿卡落后3-2回破3-3；第二盘双方前十局保发，5-6时阿卡再次回破6-6。",
+        "抢七4-4后阿卡连丢三分。",
+        "官方全场一发得分Carlos35/53、Bergs37/47；Flashscore全场制胜分16/24、UE27/29。"
+      ],
+      "sources": [
+        "https://en.rolexshanghaimasters.com/en/media/news/alcaraz-bergs-shanghai-2026-monday",
+        "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms031",
+        "https://global.flashscore.ninja/4/x/feed/df_st_1_6NyPYtH8",
+        "https://global.flashscore.ninja/4/x/feed/df_mh_1_6NyPYtH8"
+      ]
+    }
+  },
+  "push": {
+    "auto": true,
+    "summary": "阿卡上海第三轮出局",
+    "lead": "刚在东京夺冠，阿尔卡拉斯却止步上海第三轮。首盘5-5后被破发；第二盘双方一路保发到5-5。5-6时，阿卡再次回破追到6-6，把悬念带进抢七。可4-4之后，最后三分都归了贝尔格斯：7-5、7-6(4)。对手一发得分率79%，阿卡66%；制胜分24比16。阿卡的真实反扑，没能抵消对手的进攻效率。",
+    "matchup": "阿尔卡拉斯 vs 贝尔格斯",
+    "score": "7-5 7-6(4)",
+    "event": "ATP1000 上海 第三轮"
+  },
+  "_production": {
+    "kind": "manual_reel",
+    "status": "production_in_progress",
+    "authoring_method": "current_assistant_manual",
+    "external_model_pass_claimed": false,
+    "human_listening_claimed": false
+  },
+  "segments": [
+    {
+      "source": "main",
+      "start": 215.3,
+      "end": 220.9,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "cold_open",
+      "point_end_ok": "本场赛点后贝尔格斯张臂反应。保完整英文句，末段重放完整赛点、反应与握手兑现。",
+      "crosses_cut": "本场赛点后贝尔格斯张臂反应。保完整英文句，末段重放完整赛点、反应与握手兑现。",
+      "_why": "本场赛点后贝尔格斯张臂反应。保完整英文句，末段重放完整赛点、反应与握手兑现。",
+      "quote": [
+        {
+          "at": 0.3,
+          "end": 5.0,
+          "text": "Fitting, but it ends in such fashion.\n以这样的方式结束，也很贴切。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true
+    },
+    {
+      "title_card": "反扑追到抢七",
+      "kicker": "阿卡上海第三轮出局",
+      "seconds": 5.0,
+      "narration": "阿卡的反扑，这次停在最后三分。",
+      "_edit_id": "landing",
+      "_why": "cold现场之后一句落点：反扑仍以失利结束。首十局全保发已通过ROOTscore-proof实际黄dot校正。"
+    },
+    {
+      "source": "main",
+      "start": 11.4,
+      "end": 15.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "early_drop_complete",
+      "point_end_ok": "第三格完整早期drop弧11.4–27.42：11.4–15.5完整原声句，15.5–22.8中文坐标，22.8–27.42完整原声评价，同源连续画面完整回合与replay。第三格先保前景原声，不用TTS盖11.4–15.45句。",
+      "crosses_cut": "第三格完整早期drop弧11.4–27.42：11.4–15.5完整原声句，15.5–22.8中文坐标，22.8–27.42完整原声评价，同源连续画面完整回合与replay。第三格先保前景原声，不用TTS盖11.4–15.45句。",
+      "_why": "第三格完整早期drop弧11.4–27.42：11.4–15.5完整原声句，15.5–22.8中文坐标，22.8–27.42完整原声评价，同源连续画面完整回合与replay。第三格先保前景原声，不用TTS盖11.4–15.45句。",
+      "quote": [
+        {
+          "at": 0,
+          "end": 4.05,
+          "text": "It's not always easy to hit a drop shot on the surface like this.\n这种场地，放小球并不容易。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 15.5,
+      "end": 22.8,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "北京时间十月十二日晚上，上海大师赛第三轮。",
+      "score_inset": true,
+      "bed": "low",
+      "subtitle_bottom": 237,
+      "_edit_id": "coordinate",
+      "point_end_ok": "同源接11.4–15.5，完整drop回合到19.66，反应/replay至27.42。此段原声quiet，中文坐标在第三格，不再拖到35s；22.8前收TTS，下一English22.85开始。",
+      "crosses_cut": "同源接11.4–15.5，完整drop回合到19.66，反应/replay至27.42。此段原声quiet，中文坐标在第三格，不再拖到35s；22.8前收TTS，下一English22.85开始。",
+      "_why": "同源接11.4–15.5，完整drop回合到19.66，反应/replay至27.42。此段原声quiet，中文坐标在第三格，不再拖到35s；22.8前收TTS，下一English22.85开始。"
+    },
+    {
+      "source": "main",
+      "start": 22.8,
+      "end": 27.42,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "early_drop_payoff_quotes",
+      "quote": [
+        {
+          "at": 0.05,
+          "end": 1.25,
+          "text": "Executed brilliantly.\n执行得太漂亮了。"
+        },
+        {
+          "at": 2.15,
+          "end": 4.45,
+          "text": "That's going to work so well on the quick court.\n在快速球场上，这一招会很管用。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "point_end_ok": "连续保同源drop/replay，两个完整句至27.25。",
+      "crosses_cut": "连续保同源drop/replay，两个完整句至27.25。",
+      "_why": "连续保同源drop/replay，两个完整句至27.25。"
+    },
+    {
+      "source": "main",
+      "start": 35.14,
+      "end": 48.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "贝尔格斯用网前放短拿分，迫使阿卡向前追球。东京夺冠之后，他在上海遭遇新的考验。",
+      "score_inset": true,
+      "bed": "low",
+      "subtitle_bottom": 237,
+      "_edit_id": "early_tactics_and_tokyo",
+      "point_end_ok": "35.14–49.5完整早盘新point与反应；48.7只是原声切分，同源下一段保Sublime。中文回顾刚看到的网前drop及东京前情，不称35s这一球就是drop。root/visualagent须核开头动作边界。",
+      "crosses_cut": "35.14–49.5完整早盘新point与反应；48.7只是原声切分，同源下一段保Sublime。中文回顾刚看到的网前drop及东京前情，不称35s这一球就是drop。root/visualagent须核开头动作边界。",
+      "_why": "35.14–49.5完整早盘新point与反应；48.7只是原声切分，同源下一段保Sublime。中文回顾刚看到的网前drop及东京前情，不称35s这一球就是drop。root/visualagent须核开头动作边界。"
+    },
+    {
+      "source": "main",
+      "start": 48.5,
+      "end": 49.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "sublime_reaction",
+      "point_end_ok": "前一完整point反应及Sublime原声保留，不能删除原声词尾。单词不同模型同音分歧，暂不填未经终审字幕。",
+      "crosses_cut": "前一完整point反应及Sublime原声保留，不能删除原声词尾。单词不同模型同音分歧，暂不填未经终审字幕。",
+      "_why": "前一完整point反应及Sublime原声保留，不能删除原声词尾。单词不同模型同音分歧，暂不填未经终审字幕。",
+      "quote": [
+        {
+          "at": 0.1,
+          "end": 0.85,
+          "text": "Sublime.\n太精彩了。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 50.52,
+      "end": 65.44,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "首盘三比二落后，阿卡立即回破，追成三比三。五比五之后，再次丢掉发球局，五比七输掉首盘。",
+      "score_inset": true,
+      "bed": "low",
+      "subtitle_bottom": 237,
+      "_edit_id": "first_set_flow",
+      "point_end_ok": "首盘Bergs3 Carlos2、30-40阿卡BP，新point50.52完整发球、回合至阿卡回破3-3与反应65.44；旁白后半讲后续5-5再次被破，不把本分冒充5-5兑现。",
+      "crosses_cut": "首盘Bergs3 Carlos2、30-40阿卡BP，新point50.52完整发球、回合至阿卡回破3-3与反应65.44；旁白后半讲后续5-5再次被破，不把本分冒充5-5兑现。",
+      "_why": "首盘Bergs3 Carlos2、30-40阿卡BP，新point50.52完整发球、回合至阿卡回破3-3与反应65.44；旁白后半讲后续5-5再次被破，不把本分冒充5-5兑现。"
+    },
+    {
+      "source": "main",
+      "start": 81.3,
+      "end": 95.58,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "first_set_break_pressure",
+      "point_end_ok": "81.3保前一反应中的完整English句头；82.54贝尔格斯准备接发、5-5/40-15板，87.30阿卡serve到94.06失落反应，95.58下一盘点开始。EN81.6–89.7待audioagent裁定词句后补quote。",
+      "crosses_cut": "81.3保前一反应中的完整English句头；82.54贝尔格斯准备接发、5-5/40-15板，87.30阿卡serve到94.06失落反应，95.58下一盘点开始。EN81.6–89.7待audioagent裁定词句后补quote。",
+      "_why": "81.3保前一反应中的完整English句头；82.54贝尔格斯准备接发、5-5/40-15板，87.30阿卡serve到94.06失落反应，95.58下一盘点开始。EN81.6–89.7待audioagent裁定词句后补quote。",
+      "quote": [
+        {
+          "at": 0.88,
+          "end": 5.62,
+          "text": "He's had a few looks already in this match, has Bergs.\n贝尔格斯这场已经多次看到机会了。"
+        },
+        {
+          "at": 5.65,
+          "end": 8.4,
+          "text": "He's been an ever-present in Alcaraz's service games.\n阿卡的发球局，他一直在施压。"
+        },
+        {
+          "at": 11.5,
+          "end": 13.72,
+          "text": "Oh, that's wide.\n噢，出界了。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 95.58,
+      "end": 108.68,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "first_set_close",
+      "point_end_ok": "6-5/AD盘点完整发球至102.42结果；随后阿卡反应、hot/cold完整English句尾，不能被CN盖掉。",
+      "crosses_cut": "6-5/AD盘点完整发球至102.42结果；随后阿卡反应、hot/cold完整English句尾，不能被CN盖掉。",
+      "_why": "6-5/AD盘点完整发球至102.42结果；随后阿卡反应、hot/cold完整English句尾，不能被CN盖掉。",
+      "quote": [
+        {
+          "at": 7.22,
+          "end": 12.92,
+          "text": "A rather tepid end to the opening set from Carlos Alcaraz, who blew hot and cold.\n阿卡首盘收尾乏力，起伏很大。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 108.68,
+      "end": 118.7,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "第二盘，贝尔格斯打出穿越，突破阿卡的网前防线。双方保发，悬念拖到盘末。",
+      "score_inset": true,
+      "bed": "low",
+      "subtitle_bottom": 237,
+      "_edit_id": "second_set_context",
+      "point_end_ok": "108.68–125.5完整次盘回合+反应。118.7只是切音责到完整英语，不切画面或一分。四比四是后续关键局前瞻，不称当前画面4-4。",
+      "crosses_cut": "108.68–125.5完整次盘回合+反应。118.7只是切音责到完整英语，不切画面或一分。四比四是后续关键局前瞻，不称当前画面4-4。",
+      "_why": "108.68–125.5完整次盘回合+反应。118.7只是切音责到完整英语，不切画面或一分。四比四是后续关键局前瞻，不称当前画面4-4。"
+    },
+    {
+      "source": "main",
+      "start": 118.7,
+      "end": 125.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "second_set_strike_quote",
+      "point_end_ok": "连续承接上一分完整球路与上网后穿越评论；125.5在整句尾后结束。",
+      "crosses_cut": "连续承接上一分完整球路与上网后穿越评论；125.5在整句尾后结束。",
+      "_why": "连续承接上一分完整球路与上网后穿越评论；125.5在整句尾后结束。",
+      "quote": [
+        {
+          "at": 0.15,
+          "end": 1.5,
+          "text": "What a strike that was.\n这一击太漂亮了。"
+        },
+        {
+          "at": 2.1,
+          "end": 5.0,
+          "text": "Not easy to get the ball by Alcaraz when he comes in.\n阿卡上网后，想穿越他并不容易。"
+        },
+        {
+          "at": 5.45,
+          "end": 6.75,
+          "text": "And he did it beautifully.\n他却完成得非常漂亮。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 138.34,
+      "end": 148.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "四比四，阿卡保住发球局，五比四领先。握拳、怒吼，他还不肯让这场球结束。",
+      "score_inset": true,
+      "bed": "low",
+      "subtitle_bottom": 237,
+      "_edit_id": "alcaraz_hold_4all",
+      "point_end_ok": "ROOTscore-proof/sheet.jpg已核138.5/142/145.5黄dotCarlos，4-4/30-40为阿卡发球局GAMEPOINT；阿卡完整保发到5-4，真实握拳怒吼。148.5Bergs4Carlos5黄dotBergs。绝不是阿卡破发球。148.0仅CN/EN音责分界，后段连续保反应。",
+      "crosses_cut": "ROOTscore-proof/sheet.jpg已核138.5/142/145.5黄dotCarlos，4-4/30-40为阿卡发球局GAMEPOINT；阿卡完整保发到5-4，真实握拳怒吼。148.5Bergs4Carlos5黄dotBergs。绝不是阿卡破发球。148.0仅CN/EN音责分界，后段连续保反应。",
+      "_why": "ROOTscore-proof/sheet.jpg已核138.5/142/145.5黄dotCarlos，4-4/30-40为阿卡发球局GAMEPOINT；阿卡完整保发到5-4，真实握拳怒吼。148.5Bergs4Carlos5黄dotBergs。绝不是阿卡破发球。148.0仅CN/EN音责分界，后段连续保反应。"
+    },
+    {
+      "source": "main",
+      "start": 148.0,
+      "end": 151.24,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "alcaraz_roar_quote",
+      "point_end_ok": "连续保4-4阿卡保发后握拳怒吼，strong reaction完整句；不是破发庆祝。",
+      "crosses_cut": "连续保4-4阿卡保发后握拳怒吼，strong reaction完整句；不是破发庆祝。",
+      "_why": "连续保4-4阿卡保发后握拳怒吼，strong reaction完整句；不是破发庆祝。",
+      "quote": [
+        {
+          "at": 0.2,
+          "end": 2.9,
+          "text": "And a strong reaction.\n反应也非常强烈。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 151.24,
+      "end": 161.3,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "对手同样保发，追到五比五。盘末的拉锯，谁先松手，谁就陷入危险。",
+      "score_inset": true,
+      "bed": "low",
+      "subtitle_bottom": 237,
+      "_edit_id": "five_all_rally",
+      "point_end_ok": "前十局双方均保发：阿卡4-4保发5-4，贝尔格斯保发追到5-5。此5-5长回合完整151.24–161.72，下段连续保最后一拍与反应，不冒称回破球。",
+      "crosses_cut": "前十局双方均保发：阿卡4-4保发5-4，贝尔格斯保发追到5-5。此5-5长回合完整151.24–161.72，下段连续保最后一拍与反应，不冒称回破球。",
+      "_why": "前十局双方均保发：阿卡4-4保发5-4，贝尔格斯保发追到5-5。此5-5长回合完整151.24–161.72，下段连续保最后一拍与反应，不冒称回破球。"
+    },
+    {
+      "source": "main",
+      "start": 161.3,
+      "end": 164.38,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "world_class_reaction",
+      "point_end_ok": "连续同源长回合最后一拍与赢分反应至164.38；留World class句。",
+      "crosses_cut": "连续同源长回合最后一拍与赢分反应至164.38；留World class句。",
+      "_why": "连续同源长回合最后一拍与赢分反应至164.38；留World class句。",
+      "quote": [
+        {
+          "at": 0.15,
+          "end": 1.0,
+          "text": "World class.\n世界级的一击。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 164.38,
+      "end": 169.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "_edit_id": "second_set_breakpoint",
+      "point_end_ok": "5-5贝尔格斯破发点完整发球、回合164.38–168.90及阿卡失分反应。黄serverdot在Carlos；PBP唯一AD/B1最终点确认Bergs破发6-5。169.4仅音责切分，画面下段继续。",
+      "crosses_cut": "5-5贝尔格斯破发点完整发球、回合164.38–168.90及阿卡失分反应。黄serverdot在Carlos；PBP唯一AD/B1最终点确认Bergs破发6-5。169.4仅音责切分，画面下段继续。",
+      "_why": "5-5贝尔格斯破发点完整发球、回合164.38–168.90及阿卡失分反应。黄serverdot在Carlos；PBP唯一AD/B1最终点确认Bergs破发6-5。169.4仅音责切分，画面下段继续。",
+      "_quote_skip_why": "当前源small/medium/large及实际选窗原声证据中无可靠前景英文，保发球、击球与现场声；下一完整前景句169.6另段双语。见本期foreground审包及实际ASR。"
+    },
+    {
+      "source": "main",
+      "start": 169.4,
+      "end": 176.76,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "late_forehand_quote",
+      "point_end_ok": "同源连续保比分5-5到贝尔格斯6-5及完整正手问题英语，169.6–176.36词头尾全部在内。",
+      "crosses_cut": "同源连续保比分5-5到贝尔格斯6-5及完整正手问题英语，169.6–176.36词头尾全部在内。",
+      "_why": "同源连续保比分5-5到贝尔格斯6-5及完整正手问题英语，169.6–176.36词头尾全部在内。",
+      "quote": [
+        {
+          "at": 0.2,
+          "end": 7.0,
+          "text": "A forehand that has been, at times, porous this evening here in Shanghai.\n今晚在上海，他的正手屡屡出错。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 176.76,
+      "end": 179.2,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "_edit_id": "six_five_breakpoint_english_head",
+      "point_end_ok": "176.76新point发球准备，后段同源连续保完整6-5/15-40回破长回合。当前源ASR复核未发现可靠前景英文；198争议句在另一死球范围且不选入。",
+      "crosses_cut": "176.76新point发球准备，后段同源连续保完整6-5/15-40回破长回合。当前源ASR复核未发现可靠前景英文；198争议句在另一死球范围且不选入。",
+      "_why": "176.76新point发球准备，后段同源连续保完整6-5/15-40回破长回合。当前源ASR复核未发现可靠前景英文；198争议句在另一死球范围且不选入。",
+      "_quote_skip_why": "176.76–179.2实际裁窗medium noVAD无句；small孤立Thanks for watching仅单模型幻识，三模型full无句。只保本场发球准备/击球/现场声，未移用实际197.7争议句。"
+    },
+    {
+      "source": "main",
+      "start": 179.2,
+      "end": 193.8,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "五比六，十五比四十。阿卡又到悬崖边上。他守住这次机会，回破，把比赛拉回六比六。",
+      "score_inset": true,
+      "bed": "low",
+      "subtitle_bottom": 237,
+      "_edit_id": "alcaraz_breakback_complete",
+      "point_end_ok": "176.76–194.32完整长回合。179.2–193.8同源连续中段中文；193.8后保完整落点、反应与English。五比六/15-40救回6-6经主代理源记分牌实核，不能按旧PBP5-4。",
+      "crosses_cut": "176.76–194.32完整长回合。179.2–193.8同源连续中段中文；193.8后保完整落点、反应与English。五比六/15-40救回6-6经主代理源记分牌实核，不能按旧PBP5-4。",
+      "_why": "176.76–194.32完整长回合。179.2–193.8同源连续中段中文；193.8后保完整落点、反应与English。五比六/15-40救回6-6经主代理源记分牌实核，不能按旧PBP5-4。"
+    },
+    {
+      "source": "main",
+      "start": 193.8,
+      "end": 197.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "alcaraz_crowd_reaction",
+      "point_end_ok": "连续保回破最后一拍及阿卡催动观众反应；197.5在完整Incredible词尾后死球切至统计卡，排除197.7–199.3未决英文，之后199.4继续同一死球场景。",
+      "crosses_cut": "连续保回破最后一拍及阿卡催动观众反应；197.5在完整Incredible词尾后死球切至统计卡，排除197.7–199.3未决英文，之后199.4继续同一死球场景。",
+      "_why": "连续保回破最后一拍及阿卡催动观众反应；197.5在完整Incredible词尾后死球切至统计卡，排除197.7–199.3未决英文，之后199.4继续同一死球场景。",
+      "quote": [
+        {
+          "at": 0.24,
+          "end": 1.9,
+          "text": "Incredible!\n太不可思议了！"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "stat_card": true,
+      "seconds": 16,
+      "narration": "一发得分率，阿卡百分之六十六，对手百分之七十九。制胜分少了八个。下一站，他能把反扑变成胜利吗？",
+      "_edit_id": "stats_efficiency",
+      "_why": "唯一第二张静卡，解释发球与进攻效率闭环；一发66%vs79%，W16vs24差八个，不使用ElPais数字，不臆测心理体能。"
+    },
+    {
+      "source": "main",
+      "start": 199.4,
+      "end": 207.05,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "crowd_to_tiebreak",
+      "point_end_ok": "199.4从此前未决英文词尾后继续观众及阿卡反应，完整Just ask Arthur Fery204.8–207.0及抢七4-4新point准备205.08均保留，下段同源连续。",
+      "crosses_cut": "199.4从此前未决英文词尾后继续观众及阿卡反应，完整Just ask Arthur Fery204.8–207.0及抢七4-4新point准备205.08均保留，下段同源连续。",
+      "_why": "199.4从此前未决英文词尾后继续观众及阿卡反应，完整Just ask Arthur Fery204.8–207.0及抢七4-4新point准备205.08均保留，下段同源连续。",
+      "quote": [
+        {
+          "at": 5.4,
+          "end": 7.6,
+          "text": "Just ask Arthur Fery about that.\n问问阿瑟·费里就知道了。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 207.05,
+      "end": 212.72,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "tiebreak_four_all",
+      "point_end_ok": "与193.8–207.05连续，完整TB4-4阿卡丢分point实际205.08–210.66全保，失落近景至212.72。后续5-4到6-4是已核比分进程，仅内部记画面缺口，不向观众说明。",
+      "crosses_cut": "与193.8–207.05连续，完整TB4-4阿卡丢分point实际205.08–210.66全保，失落近景至212.72。后续5-4到6-4是已核比分进程，仅内部记画面缺口，不向观众说明。",
+      "_why": "与193.8–207.05连续，完整TB4-4阿卡丢分point实际205.08–210.66全保，失落近景至212.72。后续5-4到6-4是已核比分进程，仅内部记画面缺口，不向观众说明。",
+      "quote": [
+        {
+          "at": 2.75,
+          "end": 4.95,
+          "text": "Oh, snatched that.\n噢，这球打急了。"
+        }
+      ],
+      "_quote_kind": "broadcast"
+    },
+    {
+      "source": "main",
+      "start": 212.72,
+      "end": 230.1,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": true,
+      "bed": "high",
+      "subtitle_bottom": 237,
+      "_edit_id": "match_point_and_full_payoff",
+      "point_end_ok": "完整Bergs6-4赛点serve+Carlos接发失利212.72–215.30，215.30–230.10张臂、阿卡脸、握手拥抱；本场brand首帧230.12，尾段tail0/outrofalse结束场内。TB4-4之后阿卡连丢3分经最终7-4与主代理视觉确认。",
+      "crosses_cut": "完整Bergs6-4赛点serve+Carlos接发失利212.72–215.30，215.30–230.10张臂、阿卡脸、握手拥抱；本场brand首帧230.12，尾段tail0/outrofalse结束场内。TB4-4之后阿卡连丢3分经最终7-4与主代理视觉确认。",
+      "_why": "完整Bergs6-4赛点serve+Carlos接发失利212.72–215.30，215.30–230.10张臂、阿卡脸、握手拥抱；本场brand首帧230.12，尾段tail0/outrofalse结束场内。TB4-4之后阿卡连丢3分经最终7-4与主代理视觉确认。",
+      "quote": [
+        {
+          "at": 2.88,
+          "end": 7.58,
+          "text": "Fitting, but it ends in such fashion.\n以这样的方式结束，也很贴切。"
+        },
+        {
+          "at": 8.88,
+          "end": 17.32,
+          "text": "Zizou Bergs gets the better of Carlos Alcaraz.\n贝尔格斯击败了阿尔卡拉斯。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "tail": 0
+    }
+  ],
+  "_internal_source_discrepancies": "Official prose 5-4 serving-for-match is erroneous; actual board6-5. Source138.34 Carlos serve4-4/40-30: hold5-4, not break. Both players held first10 games second set. Official match total Carlos2/2 break conversions corroborates first-set rebreak3-3 and second-set rebreak6-6. Previous visual-agent misread explicitly corrected; no rejected draft claims published.",
+  "source_fallbacks": {
+    "main": "https://github.com/robertyang87/tennislive/releases/download/source-2tMbUc2Kknk/2tMbUc2Kknk.mp4"
+  },
+  "scorebox": [
+    98,
+    920,
+    432,
+    1029
+  ],
+  "_tts_backend_why": "标准zh-CN-YunjianNeural +6%配音；本片不使用情绪风格，按用户明确要求不调用DeepSeek或MiniMax，采用本次真实音频独立核查。",
+  "_story_evidence": "data/evidence/bergs-alcaraz-shanghai-2026-r3/visual-source-preflight/independent-source-visual-preflight.json"
+}

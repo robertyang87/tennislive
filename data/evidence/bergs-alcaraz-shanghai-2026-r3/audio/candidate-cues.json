@@ -1,0 +1,141 @@
+{
+  "schema": "tennislive.actual-audio-candidate-cues.v1",
+  "source_url": "https://www.youtube.com/watch?v=2tMbUc2Kknk",
+  "source_sha256": "a4de892b2fb088b59a9b1b7245db944fc58ff67d1349830b204bfddaa72cf0bf",
+  "human_listening_claimed": false,
+  "tone_verified": false,
+  "formal_plan_bound": false,
+  "note": "Editorial candidate intervals conservatively cover reliable ASR estimates and reading time; they are not phonetic ground truth. Individual raw model word timestamps and literal reconciliation remain in raw evidence and asr-crosscheck-decisions.json. Actual native per-window packets must be derived only after formal plan. has Bergs repairs unstressed h/as spelling in British subject-inversion; proper names follow official identity. Very wide source-silence word spans are not treated as ground truth.",
+  "cues": [
+    {
+      "start": 11.44,
+      "end": 15.42,
+      "en": "It's not always easy to hit a drop shot on the surface like this.",
+      "zh": "这种场地，放小球并不容易。"
+    },
+    {
+      "start": 22.87,
+      "end": 23.97,
+      "en": "Executed brilliantly.",
+      "zh": "执行得太漂亮了。"
+    },
+    {
+      "start": 24.97,
+      "end": 27.21,
+      "en": "That's going to work so well on the quick court.",
+      "zh": "在快速球场上，这一招会很管用。"
+    },
+    {
+      "start": 34.46,
+      "end": 35.08,
+      "en": "Made it difficult.",
+      "zh": "让这球变得很难处理。"
+    },
+    {
+      "start": 48.61,
+      "end": 49.27,
+      "en": "Sublime.",
+      "zh": "太精彩了。"
+    },
+    {
+      "start": 82.18,
+      "end": 86.92,
+      "en": "He's had a few looks already in this match, has Bergs.",
+      "zh": "贝尔格斯这场已经多次看到机会了。"
+    },
+    {
+      "start": 86.95,
+      "end": 89.7,
+      "en": "He's been an ever-present in Alcaraz's service games.",
+      "zh": "阿卡的发球局，他一直在施压。"
+    },
+    {
+      "start": 92.8,
+      "end": 95.02,
+      "en": "Oh, that's wide.",
+      "zh": "噢，出界了。",
+      "timing_note": "Discard very long low-confidence Oh alignments; exact-window medium start92.80 is the chosen conservative estimate."
+    },
+    {
+      "start": 102.9,
+      "end": 108.47,
+      "en": "A rather tepid end to the opening set from Carlos Alcaraz, who blew hot and cold.",
+      "zh": "阿卡首盘收尾乏力，起伏很大。",
+      "timing_note": "medium.en exact-window article A102.90–103.50 (.46) outweighs small.en very weak article102.34 (.03); suggested display102.80–108.50."
+    },
+    {
+      "start": 118.85,
+      "end": 120.2,
+      "en": "What a strike that was.",
+      "zh": "这一击太漂亮了。"
+    },
+    {
+      "start": 120.8,
+      "end": 123.7,
+      "en": "Not easy to get the ball by Alcaraz when he comes in.",
+      "zh": "阿卡上网后，想穿越他并不容易。"
+    },
+    {
+      "start": 124.15,
+      "end": 125.45,
+      "en": "And he did it beautifully.",
+      "zh": "他却完成得非常漂亮。"
+    },
+    {
+      "start": 148.2,
+      "end": 150.82,
+      "en": "And a strong reaction.",
+      "zh": "反应也非常强烈。"
+    },
+    {
+      "start": 161.45,
+      "end": 162.3,
+      "en": "World class.",
+      "zh": "世界级的一击。"
+    },
+    {
+      "start": 169.6,
+      "end": 176.36,
+      "en": "A forehand that has been, at times, porous this evening here in Shanghai.",
+      "zh": "今晚在上海，他的正手屡屡出错。"
+    },
+    {
+      "start": 194.06,
+      "end": 195.7,
+      "en": "Incredible!",
+      "zh": "太不可思议了！"
+    },
+    {
+      "start": 204.82,
+      "end": 207.0,
+      "en": "Just ask Arthur Fery about that.",
+      "zh": "问问阿瑟·费里就知道了。"
+    },
+    {
+      "start": 209.8,
+      "end": 212.0,
+      "en": "Oh, snatched that.",
+      "zh": "噢，这球打急了。"
+    },
+    {
+      "start": 215.6,
+      "end": 220.3,
+      "en": "Fitting, but it ends in such fashion.",
+      "zh": "以这样的方式结束，也很贴切。"
+    },
+    {
+      "start": 221.6,
+      "end": 230.04,
+      "en": "Zizou Bergs gets the better of Carlos Alcaraz.",
+      "zh": "贝尔格斯击败了阿尔卡拉斯。"
+    }
+  ],
+  "unresolved_excluded_ranges": [
+    [
+      197.7,
+      199.3
+    ]
+  ],
+  "strong_reaction_note": "Three full-source VAD word ends149.30–149.62; no-VAD broad windows stretch reaction to150.00/150.82. Suggested display through150.90 conservatively covers all while the scene continues to151.24; actual speech completion is not independently heard.",
+  "translation_note": "Chinese display translation shortened to native safe single-line width without changing English literal or source timing."
+}

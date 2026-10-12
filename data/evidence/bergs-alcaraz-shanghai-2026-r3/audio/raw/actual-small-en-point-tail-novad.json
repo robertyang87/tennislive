@@ -1,0 +1,99 @@
+{
+  "schema": "actual-local-targeted-asr.v1",
+  "source_path": "/workspace/scratch/alcaraz-source/2tMbUc2Kknk.mp4",
+  "source_sha256": "a4de892b2fb088b59a9b1b7245db944fc58ff67d1349830b204bfddaa72cf0bf",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "normalization": "none; original amplitude",
+  "vad_filter": false,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "initial_prompt": null,
+  "human_listening_claimed": false,
+  "windows": [
+    [
+      176.76,
+      179.2
+    ],
+    [
+      190,
+      197.5
+    ]
+  ],
+  "window_results": [
+    {
+      "window": [
+        176.76,
+        179.2
+      ],
+      "duration": 2.44,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        190,
+        197.5
+      ],
+      "duration": 7.5,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    }
+  ],
+  "segments": [
+    {
+      "window": [
+        176.76,
+        179.2
+      ],
+      "start": 176.76,
+      "end": 178.38,
+      "text": " Thanks for watching!",
+      "no_speech_prob": 0.626250147819519,
+      "avg_logprob": -0.8936654499598912,
+      "words": [
+        {
+          "start": 176.76,
+          "end": 176.76,
+          "word": " Thanks",
+          "probability": 0.0016033013816922903
+        },
+        {
+          "start": 176.76,
+          "end": 177.66,
+          "word": " for",
+          "probability": 0.6567400097846985
+        },
+        {
+          "start": 177.66,
+          "end": 178.38,
+          "word": " watching!",
+          "probability": 0.9547973275184631
+        }
+      ]
+    },
+    {
+      "window": [
+        190,
+        197.5
+      ],
+      "start": 194.08,
+      "end": 195.48,
+      "text": " incredible",
+      "no_speech_prob": 0.11806957423686981,
+      "avg_logprob": -0.9007501602172852,
+      "words": [
+        {
+          "start": 194.08,
+          "end": 195.48,
+          "word": " incredible",
+          "probability": 0.2698897421360016
+        }
+      ]
+    }
+  ],
+  "run_status": "complete",
+  "recorded_at": "2026-10-12T13:56:07.642056+00:00"
+}
