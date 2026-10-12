@@ -21,6 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from render_story_info_band import (
     BRAND_GREEN,
     LABEL_FONT,
+    META_SEP,
     MUTED,
     SCORE,
     WHITE,
@@ -79,8 +80,10 @@ def _ink_bands(path):
         _width, height = image.size
         rows = []
         for y in range(height):
-            green = white = False
+            green = white = muted = False
             seen = False
+            green_xs = []
+            muted_xs = []
             for x in range(80, 1100):
                 pixel = pix[x, y]
                 if pixel[3] < 200 or pixel[:3] not in exact:
@@ -88,48 +91,69 @@ def _ink_bands(path):
                 seen = True
                 if pixel[:3] == BRAND_GREEN[:3]:
                     green = True
-                if pixel[:3] == WHITE[:3]:
+                    green_xs.append(x)
+                elif pixel[:3] == WHITE[:3]:
                     white = True
-            rows.append((seen, green, white))
+                elif pixel[:3] == MUTED[:3]:
+                    muted = True
+                    muted_xs.append(x)
+            rows.append((seen, green, white, muted, green_xs, muted_xs))
     bands = []
     start = None
-    green = white = False
-    for y, (seen, row_green, row_white) in enumerate(rows):
+    green = white = muted = False
+    green_xs = []
+    muted_xs = []
+    for y, (seen, row_green, row_white, row_muted, row_gxs, row_mxs) in enumerate(rows):
         if seen and start is None:
-            start, green, white = y, row_green, row_white
+            start = y
+            green, white, muted = row_green, row_white, row_muted
+            green_xs, muted_xs = list(row_gxs), list(row_mxs)
         elif seen:
             green = green or row_green
             white = white or row_white
+            muted = muted or row_muted
+            green_xs.extend(row_gxs)
+            muted_xs.extend(row_mxs)
         elif start is not None:
-            bands.append((start, y, green, white))
+            bands.append({
+                "y0": start, "y1": y, "green": green, "white": white, "muted": muted,
+                "green_x0": min(green_xs) if green_xs else None,
+                "green_x1": max(green_xs) if green_xs else None,
+                "muted_x0": min(muted_xs) if muted_xs else None,
+                "muted_x1": max(muted_xs) if muted_xs else None,
+            })
             start = None
     if start is not None:
-        bands.append((start, len(rows), green, white))
+        bands.append({
+            "y0": start, "y1": len(rows), "green": green, "white": white, "muted": muted,
+            "green_x0": min(green_xs) if green_xs else None,
+            "green_x1": max(green_xs) if green_xs else None,
+            "muted_x0": min(muted_xs) if muted_xs else None,
+            "muted_x1": max(muted_xs) if muted_xs else None,
+        })
     return bands
 
 
-def test_主题独占一行_日期在地点前面(tmp_path):
-    """行序是主题、日期、地点、比分、人物。没有主题时从日期起排。"""
+def test_主题独占一行_日期和地点同一行且日期在前(tmp_path):
+    """主题自己一行。日期和地点同一行，日期在前，中间是「 · 」。"""
+    assert META_SEP == " · "
     with_topic = render(
         "2026.10.11", "摔拍警告", "布勃利克 vs 中岛布兰登",
         tmp_path / "topic.png", highlight="ATP1000 上海", metric="6-4")
     bands = _ink_bands(with_topic)
-    assert len(bands) >= 3
-    _top, top_end, top_green, top_white = bands[0]
-    date_top, date_end, date_green, date_white = bands[1]
-    place_top, _place_end, place_green, _place_white = bands[2]
-    assert top_white and not top_green
-    assert date_top >= top_end and not date_green and not date_white
-    assert place_green and place_top >= date_end
+    assert len(bands) >= 2
+    topic, meta = bands[0], bands[1]
+    assert topic["white"] and not topic["green"]
+    assert meta["y0"] >= topic["y1"]
+    assert meta["muted"] and meta["green"]
+    assert meta["muted_x1"] < meta["green_x0"]
 
     no_topic = render(
         "2022.02.22", "", "兹维列夫 · 罚款4万美元",
         tmp_path / "place.png", highlight="阿卡普尔科")
-    opened = _ink_bands(no_topic)
-    _first_top, first_end, first_green, first_white = opened[0]
-    second_top, _second_end, second_green, _second_white = opened[1]
-    assert not first_green and not first_white
-    assert second_green and second_top >= first_end
+    first = _ink_bands(no_topic)[0]
+    assert first["muted"] and first["green"]
+    assert first["muted_x1"] < first["green_x0"]
 
 
 def test_角标文字和左上角品牌标题同一支_比分除外():

@@ -33,8 +33,9 @@ pipeline scales it down with Lanczos so Chinese strokes stay crisp.
 2026-10-12 the default lock-up is the corner label used on the Medvedev
 24-titles film: top-right placement, a brand-green rail on the RIGHT edge,
 every line right-aligned. Row order is the white topic alone (when there
-is one), then the date, then the event/place, then the score, then the
-people. A label with no topic starts at the date. Every text run uses the
+is one), then one line with the date and the event/place (``2026.10.11 · ATP1000 上海``),
+then the score, then the people. A label with no topic starts on that
+date line. Every text run uses the
 same face as the top-left brand title (``SmileySans-Oblique``); score
 digits stay on ``TL Score``. ``layout="classic"`` keeps the older
 left-or-right stack, including ``split_metric``. Shipping a story_text PNG
@@ -367,6 +368,8 @@ def _draw_colored_score(draw: ImageDraw.ImageDraw, shadow: Image.Image,
                            anchor=anchor)[2]
 
 
+#: 日期和地点同一行时的分隔，和人物行里的「 · 」同一套。
+META_SEP = " · "
 #: 描边宽度：只保边，不当底板。
 _STROKE_HEAD, _STROKE_SMALL = 2, 1
 #: 软阴影的模糊半径（整层一次模糊）。
@@ -375,10 +378,11 @@ _SHADOW_BLUR = 7
 
 def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
                    metric: str, align: str, highlight: str) -> Path:
-    """右轨、右对齐。主题独占第一行，然后日期、地点、比分、人物。
+    """右轨、右对齐。主题独占第一行，日期和地点同一行，然后比分、人物。
 
-    没有主题时从日期起排。除比分数字外每一行都是左上角品牌标题那一支得意黑。
-    比分数字仍是 TL Score，按局数上色。行数变多时画布往下长，至少 340，取偶数。
+    日期在前，地点在后，中间是 `` · ``。没有主题时从这一行起排。除比分数字外
+    每一行都是左上角品牌标题那一支得意黑。比分数字仍是 TL Score，按局数上色。
+    行数变多时画布往下长，至少 340，取偶数。
     """
     out.parent.mkdir(parents=True, exist_ok=True)
     probe = ImageDraw.Draw(Image.new("RGBA", (WIDTH, 8), (0, 0, 0, 0)))
@@ -395,13 +399,10 @@ def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
         font = _fit_font(LABEL_FONT, 58, 40, headline, lane, stroke=_STROKE_HEAD)
         rows.append(("text", headline, font, WHITE, _STROKE_HEAD,
                      block_h(headline, font, _STROKE_HEAD)))
-    font = _fit_font(LABEL_FONT, 32, 24, kicker, lane, stroke=_STROKE_SMALL)
-    rows.append(("text", kicker, font, MUTED, _STROKE_SMALL,
-                 block_h(kicker, font, _STROKE_SMALL)))
-    if highlight:
-        font = _fit_font(LABEL_FONT, 46, 32, highlight, lane, stroke=_STROKE_HEAD)
-        rows.append(("text", highlight, font, BRAND_GREEN, _STROKE_HEAD,
-                     block_h(highlight, font, _STROKE_HEAD)))
+    meta_text = f"{kicker}{META_SEP}{highlight}" if highlight else kicker
+    meta_font = _fit_font(LABEL_FONT, 46, 32, meta_text, lane, stroke=_STROKE_SMALL)
+    rows.append(("meta", (kicker, highlight), meta_font, None, _STROKE_SMALL,
+                 block_h(meta_text, meta_font, _STROKE_SMALL)))
     if metric:
         metric_size = _fit_metric_size(probe, metric, 56, 44, lane,
                                        stroke=_STROKE_SMALL)
@@ -449,6 +450,17 @@ def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
         if kind == "score":
             _draw_colored_score(draw, row_shadow, (x, y), payload, font_or_size,
                                 stroke, "la")
+        elif kind == "meta":
+            date, place = payload
+            _draw_text(draw, (x, y), date, font=font_or_size, fill=MUTED,
+                       stroke=stroke, shadow_layer=row_shadow)
+            cursor = x + round(draw.textlength(date, font=font_or_size))
+            if place:
+                _draw_text(draw, (cursor, y), META_SEP, font=font_or_size,
+                           fill=MUTED, stroke=stroke, shadow_layer=row_shadow)
+                cursor += round(draw.textlength(META_SEP, font=font_or_size))
+                _draw_text(draw, (cursor, y), place, font=font_or_size,
+                           fill=BRAND_GREEN, stroke=stroke, shadow_layer=row_shadow)
         else:
             _draw_text(draw, (x, y), payload, font=font_or_size, fill=fill,
                        stroke=stroke, shadow_layer=row_shadow)
@@ -714,7 +726,7 @@ def main() -> int:
     ap.add_argument("--kicker", required=True)
     ap.add_argument("--headline", required=True)
     ap.add_argument("--highlight", default="",
-                    help="地点或赛事，独占日期下面那一行，例如「ATP1000 上海」")
+                    help="地点或赛事，和日期同一行、写在日期后面，例如「ATP1000 上海」")
     ap.add_argument("--metric", default="")
     ap.add_argument("--detail", required=True)
     ap.add_argument("--variant", choices=sorted(VARIANTS), default="timeline")
