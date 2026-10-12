@@ -1,13 +1,13 @@
 {
   "source_url": "https://github.com/robertyang87/tennislive/releases/download/reel-src-wta-finals-race-2026-10-12/a_math.mp4",
-  "source_sha256": "2bacdf0e794ad7a37a8fa77ec27b30c77a7cdd5ab7fa28e3e2b117623f9c3807",
+  "source_sha256": "382ff9ccc71cd005148ea557d50226ee832bdd9484bf8c3a22d8c1e6b4f727b4",
   "method": "asr_cross_checked",
   "reviewer": "grok bot (local box)",
-  "reviewed_at": "2026-10-12T20:15:25.184580+00:00",
+  "reviewed_at": "2026-10-12T20:30:44.768317+00:00",
   "reviewed_from": 0.0,
   "reviewed_to": 9.4,
   "status": "complete",
   "uncertain_spans": [],
   "foreground_english": [],
-  "no_foreground_english_reason": "这一段是中文旁白。窗口按 faster-whisper tiny.en 与 small.en 两份英文转写交叉核对选在解说停顿处，窗口内两份转写都没有英文口播；动画段是本号自制、只有静音音轨。"
+  "no_foreground_english_reason": "本号自制动画源片，音轨只有本号合成的低电平粉红噪声底（约 -39 dBFS，避免数字静音），没有任何人声。"
 }
