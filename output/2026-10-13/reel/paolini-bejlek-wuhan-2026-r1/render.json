@@ -1,0 +1,101 @@
+{
+  "scoreboard_qc_sha256": "0b224e677a9f72325cb6d022d63baadfeb83125d89c22c7280ef405f068f243f",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 0.0,
+  "layout": "full",
+  "segments_seconds": 333.24,
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 首轮",
+    "line2": "帕奥利尼 6-3 6-4 贝莱克",
+    "start": 1.2,
+    "end": 334.44
+  },
+  "film_seconds": 334.44,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 4.032,
+    "2": 6.288,
+    "4": 7.488,
+    "6": 6.96,
+    "8": 7.056,
+    "10": 6.552,
+    "12": 8.64,
+    "14": 7.056,
+    "16": 11.472
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 13,
+          "named": "帕奥利尼",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 15,
+          "named": "帕奥利尼",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 4,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "60312ac797bf9ea7411e70cf7da9fd4a419bb0ae8e39ffe0c33793a06b670638",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "paolini-bejlek-wuhan-2026-r1",
+    "received_at": "2026-10-12T20:11:13Z",
+    "artifact_ready_at": "2026-10-12T21:10:14Z",
+    "elapsed_seconds": 3541.75,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "58e16f6a466e42c3cf9a0478cce96045eb6aaf76a46762b52979ba2c6cf3732c",
+    "spec_sha256": "a18378df0a795ab3c45b8ed5042a0bb2278099c03d9627269cfc5325756d4a18",
+    "run_id": "38307920960",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-12T21:03:02Z",
+        "run_id": "38307920960"
+      }
+    ],
+    "render_seconds": 432.75,
+    "pre_render_seconds": 3109.0
+  },
+  "film_sha256": "58e16f6a466e42c3cf9a0478cce96045eb6aaf76a46762b52979ba2c6cf3732c",
+  "film_bytes": 142506254,
+  "qc_attestation_sha256": "f944d2c94cb7b5eab6832ac79c51a1c24dc18f5a9218ee8b73e64b9390093ea2",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-12T21:03:02Z",
+      "run_id": "38307920960"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-12T21:10:17Z",
+      "run_id": "38307920960"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-paolini-bejlek-wuhan-2026-r1/paolini-bejlek-wuhan-2026-r1.mp4",
+  "video_bytes": 142506254
+}
