@@ -1,0 +1,35 @@
+name: wta-race-tts (one-off narration TTS)
+on:
+  push:
+    branches: [tts/wta-finals-race-2026-10-12]
+    paths: [".github/workflows/wta-race-tts.yml", "data/tts-jobs/wta-finals-race-2026-10-12.json"]
+permissions:
+  contents: read
+jobs:
+  tts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -q edge-tts
+      - name: synth
+        run: |
+          python - <<'PY'
+          import json, asyncio, edge_tts, os
+          S = json.load(open("data/tts-jobs/wta-finals-race-2026-10-12.json"))
+          os.makedirs("tts", exist_ok=True)
+          async def go():
+              for k, t in S:
+                  c = edge_tts.Communicate(t, "zh-CN-YunjianNeural", rate="+18%", pitch="+10Hz")
+                  sub = edge_tts.SubMaker()
+                  with open(f"tts/{k}.mp3", "wb") as f:
+                      async for ch in c.stream():
+                          if ch["type"] == "audio": f.write(ch["data"])
+                          elif ch["type"] in ("WordBoundary", "SentenceBoundary"): sub.feed(ch)
+                  open(f"tts/{k}.srt", "w").write(sub.get_srt())
+          asyncio.run(go())
+          PY
+          ls -la tts
+      - uses: actions/upload-artifact@v4
+        with: {name: tts, path: tts}
