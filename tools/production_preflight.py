@@ -188,6 +188,13 @@ def check_interview_spec_claims(spec: dict, slug: str = '') -> None:
         raise SystemExit(problem)
 
 
+def check_custom_scoreboxes(spec: dict) -> None:
+    """赛场之上分支的兼容入口；不改变采访的预检依赖或唤醒范围。"""
+    _tools_on_path()
+    from reel_calibration_preflight import check_custom_scoreboxes as check
+    check(spec)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--spec', required=True)
@@ -197,7 +204,9 @@ def main() -> None:
     if args.column == '赛场之上' and path.is_file():
         _tools_on_path()
         from winners_ue_gate import require
-        require(json.loads(path.read_text(encoding='utf-8')))
+        spec = json.loads(path.read_text(encoding='utf-8'))
+        check_custom_scoreboxes(spec)
+        require(spec)
     if args.column in {'赛场之上', '网球有故事'} and path.is_file():
         _tools_on_path()
         from production_style import match_footage_problem

@@ -18,6 +18,16 @@ The human editor owns wording and story structure, not footage or factual truth.
 
 Check editorial-rule changes against the published reference sample without rendering, publishing, dispatching another workflow, or writing publication state.
 
+## Avoid repeated preparation and false rework
+
+Use [the measured speed review](../../docs/reel-speed-review-2026-10-12.md) when production is slow. Read native stage timings and the current CI duration list before changing encoding or removing tests.
+
+- Run `production_preflight.py` before TTS and encoding. Custom scoreboxes need real same-source calibration for every declared box; a bounded scan establishes calibration only, never full-window visual approval. In sparse checkouts, materialize the source's existing probe JSON before diagnosing missing evidence.
+- Run `reel_review_files.py --slug <slug>` before publication and use its `--stage` path for audio evidence. Follow the index's actual transcript paths, not an assumed sibling directory.
+- Freeze editorial audio inputs before expensive review. Reuse exact unchanged content caches and review evidence only while their source, voice, parameters, audio-plan and artifact hashes still match. Recheck changed inputs; do not turn cache reuse into a new listening claim.
+- Assign disputed visual findings to an exact movie SHA, frame index and original PNG from the existing manifest. Inspect that PNG before requesting a rerender; a neighboring contact-sheet tile cannot establish the finding. Close a finding when the original frame disproves it.
+- Run targeted checks during implementation and one complete check on the final code/evidence before merging. Do not keep rerunning passed checks without a changed input, new failure or unresolved concern. Rendering and publication must still use fresh on-disk duplicate detection, not a persisted batch-validation inventory.
+
 ## Official footage and missing key points (owner update 2026-10-04)
 
 For every column’s future production, use official footage only. Search available official sources first and record key-point coverage. If a key point remains missing, use a native `title_card` and fact-checked narration to explain the situation and outcome. Owner update 2026-10-05: keep footage gaps in internal production and QC records only. Do not mention missing official highlights or footage in audience-facing narration, subtitles, title cards or publication copy; directly explain the verified match progression and turning points. Never substitute another rally or claim complete visual coverage. Preserve complete available official key actions and reactions. This fallback does not waive statistics, full-window audio review, bilingual subtitles, final QC or publication evidence. Cover photos retain the existing official-gallery and professional agency/photographer policy (including AP, Getty and Jimmie48), not a WTA-website-only restriction.

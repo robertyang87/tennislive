@@ -1,0 +1,236 @@
+{
+  "schema": "tennislive.production-speed-review.v1",
+  "episode": "eala-shi",
+  "observed_source_to_sent_span_seconds": 12277,
+  "span_is_not_encoding_time": true,
+  "workflow_timings": [
+    {
+      "databaseId": 38272804818,
+      "workflowName": "match-reel",
+      "createdAt": "2026-10-12T15:47:34Z",
+      "startedAt": "2026-10-12T15:47:34Z",
+      "updatedAt": "2026-10-12T15:52:18Z",
+      "conclusion": "success",
+      "headSha": "96760c614ae128e8258bafced3b269e5e0d127a7",
+      "run_wall_seconds": 284.0
+    },
+    {
+      "databaseId": 38277201998,
+      "workflowName": "download-video",
+      "createdAt": "2026-10-12T16:24:44Z",
+      "startedAt": "2026-10-12T16:24:44Z",
+      "updatedAt": "2026-10-12T16:26:22Z",
+      "conclusion": "success",
+      "headSha": "0b8a8d144b68398dd54e18ff7ffd7e7e4b311569",
+      "run_wall_seconds": 98.0
+    },
+    {
+      "databaseId": 38291892075,
+      "workflowName": "ci",
+      "createdAt": "2026-10-12T18:35:01Z",
+      "startedAt": "2026-10-12T18:35:01Z",
+      "updatedAt": "2026-10-12T18:42:49Z",
+      "conclusion": "failure",
+      "headSha": "b37d418ae15534d3f5ad011f54b6206fbca7cbc9",
+      "run_wall_seconds": 468.0
+    },
+    {
+      "databaseId": 38293569543,
+      "workflowName": "ci",
+      "createdAt": "2026-10-12T18:50:01Z",
+      "startedAt": "2026-10-12T18:50:01Z",
+      "updatedAt": "2026-10-12T18:51:29Z",
+      "conclusion": "cancelled",
+      "headSha": "f5505ec20647c15ae0b2129fc32d14c97eb3da74",
+      "run_wall_seconds": 88.0
+    },
+    {
+      "databaseId": 38293594028,
+      "workflowName": "ci",
+      "createdAt": "2026-10-12T18:50:13Z",
+      "startedAt": "2026-10-12T18:50:13Z",
+      "updatedAt": "2026-10-12T19:01:52Z",
+      "conclusion": "success",
+      "headSha": "aff1870e471b29ae892b39ea6a725263fbbf5dca",
+      "run_wall_seconds": 699.0
+    },
+    {
+      "databaseId": 38294979465,
+      "workflowName": "Import approved Eala Wuhan master",
+      "createdAt": "2026-10-12T19:02:31Z",
+      "startedAt": "2026-10-12T19:02:31Z",
+      "updatedAt": "2026-10-12T19:04:47Z",
+      "conclusion": "success",
+      "headSha": "444bcc525cd764fe84051ed91ddddf74472d3fb5",
+      "run_wall_seconds": 136.0
+    },
+    {
+      "databaseId": 38295335819,
+      "workflowName": "match-reel",
+      "createdAt": "2026-10-12T19:05:41Z",
+      "startedAt": "2026-10-12T19:05:41Z",
+      "updatedAt": "2026-10-12T19:06:59Z",
+      "conclusion": "failure",
+      "headSha": "055a8fe5330b773375f49a32415f67a8db929183",
+      "run_wall_seconds": 78.0
+    },
+    {
+      "databaseId": 38295835347,
+      "workflowName": "match-reel",
+      "createdAt": "2026-10-12T19:10:10Z",
+      "startedAt": "2026-10-12T19:10:10Z",
+      "updatedAt": "2026-10-12T19:12:17Z",
+      "conclusion": "success",
+      "headSha": "8c6472902ab7e919c2dc65c43c17b738eb08a0e7",
+      "run_wall_seconds": 127.0
+    }
+  ],
+  "actual_final_render_wall_seconds": 316.0,
+  "render_stages_seconds": {
+    "burn_subtitles_and_final": 129.66,
+    "score_masks": 67.1,
+    "concat": 60.4,
+    "parallel_segment_wall": 48.1,
+    "mix": 5.96,
+    "tts_cache_hit": 0.0
+  },
+  "test_work_review": {
+    "ci_baseline": {
+      "run": 38293594028,
+      "items": 6102,
+      "passed": 5895,
+      "skipped": 207,
+      "seconds": 504.58,
+      "durations": {
+        "narration_inventory": 100.9,
+        "duplicate_inventory": 57.72,
+        "source_end_ast": 40.3,
+        "interview_split_equivalence": 18.37
+      }
+    },
+    "local_benchmarks": {
+      "duplicate_inventory": {
+        "before_call_seconds": 18.76,
+        "after_call_seconds": 0.28,
+        "retained": "all same-match/other-match/cross-series/normalized URL/compilation/validate integration/history assertions"
+      },
+      "source_end_ast": {
+        "before_call_seconds": 1.92,
+        "after_call_seconds": 0.46,
+        "retained": "all source duration boundaries and all module function checks",
+        "new_safeguard": "UTF-8 single-line/multiline/nested AST extraction equals stdlib"
+      },
+      "font_width": {
+        "scope": "same 32 native/reference comparisons, exact Git fonts and captions",
+        "results": {
+          "before": {
+            "seconds": 5.189575017000607,
+            "native_font_measurements": 85872,
+            "comparisons": 32,
+            "status": "pass"
+          },
+          "after": {
+            "seconds": 4.643192641000496,
+            "native_font_measurements": 68164,
+            "comparisons": 32,
+            "status": "pass"
+          }
+        }
+      },
+      "flashscore_degradation_network_isolation": {
+        "before_call_seconds": 10.37,
+        "after_call_seconds": 0.01,
+        "old_full_suite_call_seconds": 31.13,
+        "retained": "four FS SystemExit feed mocks and all note/absence degradation assertions",
+        "change": "stub irrelevant rankings and pass explicit skipped tactical research packet; no real publisher discovery subprocess"
+      }
+    },
+    "test_cases_deleted": [],
+    "reason_no_deletion": "Slowest cases test distinct real failures. Remove repeated work inside the same assertions rather than removing quality gates.",
+    "new_safeguards": [
+      "test_AST片段预分行仍和标准库完全一致",
+      "test_批量同场检查和实时一致_新增正式spec实时路径仍立刻看见"
+    ],
+    "limits": [
+      "CI and local CPUs/load differ; local timing is not a guaranteed CI total speedup.",
+      "Full suite validation belongs to root agent.",
+      "Interview benchmark uses exact Git caption/font bytes staged in scratch; no production source or fonts were substituted."
+    ]
+  },
+  "delivery_review": {
+    "scope": "foreground original-audio evidence index; no ASR/media decoding/publication",
+    "old_failed_run": 38295335819,
+    "old_failure": "git add index plus nonexistent guessed data/audio_reviews/eala-shi directory",
+    "old_failure_wall_seconds": 70,
+    "old_checkout_seconds": 52,
+    "old_pip_seconds": 7,
+    "new_preflight_modes": [
+      "render",
+      "reattest",
+      "push"
+    ],
+    "excluded_preflight_modes": [
+      "probe",
+      "cookies",
+      "narration",
+      "cover"
+    ],
+    "native_plan_source_window_caption_gate_preserved": true,
+    "source_bytes_binding_gate_unchanged": true,
+    "declared_json_files": 29,
+    "measurement_runs": 25,
+    "median_ms": 11.067,
+    "max_ms": 14.59,
+    "negative_cases": [
+      "tampered bytes",
+      "missing packet",
+      "stale plan",
+      "wrong source URL",
+      "incomplete source window",
+      "absolute path",
+      "parent escape",
+      "Git metadata path",
+      "media suffix",
+      "symlink",
+      "normally checked-out deleted file"
+    ],
+    "real_git_old_fatal_reproduced": true,
+    "sparse_single_declared_json_restored_without_media_sibling": true,
+    "mutated_existing_evidence_never_overwritten": true,
+    "no_stage_commit_push_or_wechat_called_in_actual_repository": true
+  },
+  "existing_film_changed": false,
+  "wechat_resent": false,
+  "validation": {
+    "initial_full_local": {
+      "passed": 5893,
+      "skipped": 240,
+      "failed": 2,
+      "seconds": 457.17,
+      "workers": 2,
+      "skips_note": "Local face weights/yt-dlp absent; final GitHub CI provisions these."
+    },
+    "initial_full_failures_fixed": [
+      "interview-only wake scope excludes the dedicated reel-calibration module",
+      "review staging remains conditional on an existing index in a probe-only minimal repository"
+    ],
+    "post_fix_regressions": {
+      "calibration_and_interview_wake": "44 passed in 3.86s",
+      "staging_and_real_probe_commit": "13 passed in 0.37s",
+      "mocked_source_failure": "3 passed in 0.87s",
+      "edge_transport_and_existing_tts": "18 passed"
+    },
+    "final_complete_validation": "Authoritative full check is the resulting PR exact-head ci run; inspect GitHub check state rather than a stale local snapshot."
+  },
+  "edge_native_technical_probe": {
+    "edge_tts_version": "7.2.8",
+    "elapsed_seconds": 1.644,
+    "mp3_sha256": "10489b103f97693f737b6167211922e8ee5d03f2ce522515d2a0deb935b2fc63",
+    "mp3_bytes": 16992,
+    "duration_seconds": 2.832,
+    "word_boundary_count": 6,
+    "decodable": true,
+    "scope": "technical connectivity only; no human listening or pronunciation approval",
+    "entrypoint": "tennislive.video.tts._tts_one_uncached; no sitecustomize shim"
+  }
+}

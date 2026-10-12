@@ -838,7 +838,12 @@ def test_采访工作流在取字幕之前跑离线预检():
 #: picker／预检 import 了、但改了也不改变「谁能投」的模块（只出提示）。
 #: ⚠️ `spec_wording` 原来在这儿（预检只拿它出 ⚠️ 措辞提示）——预检接上全称断言闸之后，
 #: `absolute_claims.interview_texts` 的扫描面就是它的 `interview_outward_texts`，改了会变红绿。
-_WAKE_EXEMPT: dict[str, str] = {}
+_WAKE_EXEMPT: dict[str, str] = {
+    # production_preflight 的比赛分支专用校准入口；采访的 _spec_gates /
+    # check_request / check_interview_spec_claims 都不调用它。修改比赛框校准
+    # 不改变采访可投名单，因此不唤醒 interview-auto-render。
+    "reel_calibration_preflight": "只由赛场之上分支调用，采访预检不执行比分框校准",
+}
 #: 预检那排闸在 picker／预检之外的模块里：全称断言闸（`production_preflight`）→ 判据本身
 #: （`absolute_claims`）。它们 import 的本地模块同样要叫醒。
 _WAKE_GATE_MODULES = ("production_preflight", "absolute_claims")

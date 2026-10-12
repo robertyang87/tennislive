@@ -9105,7 +9105,10 @@ _LEGACY_SAME_MATCH_TWICE = frozenset({
 })
 
 
-def duplicate_match_problem(spec: dict, root: Path | None = None) -> str | None:
+def duplicate_match_problem(
+    spec: dict, root: Path | None = None, *,
+    published_matches: dict[str, str] | None = None,
+) -> str | None:
     """这一场球在同一个栏目里已经有一条正式 spec 了吗？
 
     ⚠️ **这道闸的实现 2026-09-01 就写好了，只是坐在 `promote_reel_draft`
@@ -9134,7 +9137,9 @@ def duplicate_match_problem(spec: dict, root: Path | None = None) -> str | None:
     keys = _match_keys(spec)
     if not keys:
         return None
-    published = _published_reel_matches(root)
+    # One read-only batch may reuse its explicitly supplied inventory. Rendering
+    # and publication omit it and always reread disk to see concurrent work.
+    published = _published_reel_matches(root) if published_matches is None else published_matches
     for key in sorted(keys):
         other = published.get(key)
         if other and _compilation_only(spec, key, other, root):
@@ -9302,6 +9307,7 @@ def scoreboard_profile(spec: dict, segments: list | None = None) -> str | None:
 
 def validate_spec(
     spec: dict, *, allow_published_legacy: bool = False,
+    published_matches: dict[str, str] | None = None,
 ) -> list[Segment]:
     """**只看 spec，不碰源片**——所以它能在开跑的第一秒跑完。
 
@@ -9395,7 +9401,7 @@ def validate_spec(
             print(f"[X 直链] 自动 spec，只报不拦：{x_cdn.splitlines()[0]}")
         else:
             raise ReelError(x_cdn)
-    duplicate = duplicate_match_problem(spec)
+    duplicate = duplicate_match_problem(spec, published_matches=published_matches)
     if duplicate:
         raise ReelError(duplicate)
     music = music_problem(spec)

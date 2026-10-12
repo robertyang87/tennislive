@@ -6622,12 +6622,13 @@ def test_写过源片末尾这条规矩只有一处实现():
     # ③ 谁也不许在别处把这条规矩再写一遍。`seg.end` 和源片时长直接比大小的
     #    地方，只许出现在共用的那个函数里。
     tree = ast.parse(src)
+    source_lines = src.splitlines(keepends=True)
     for func in ast.walk(tree):
         if not isinstance(func, ast.FunctionDef):
             continue
         if func.name == "segments_over_source_end":
             continue
-        body = ast.get_source_segment(src, func) or ""
+        body = _source_segment(source_lines, func)
         body = re.sub(r'"""[\s\S]*?"""', "", body)          # docstring 里写着教训
         body = "\n".join(ln for ln in body.splitlines()
                          if not ln.lstrip().startswith("#"))
@@ -6731,16 +6732,41 @@ def test_赛场之上的比分板形状要在dry_run就拦下来():
     }
     assert "_solo_score_html" in callers and "_scoreboard_html" in callers, \
         f"渲染那两处没走共用的那个函数，调用方只有 {sorted(callers)}"
+    poster_lines = poster_src.splitlines(keepends=True)
     for func in ast.walk(ast.parse(poster_src)):
         if not isinstance(func, ast.FunctionDef) or \
                 func.name == "solo_scoreboard_shape_error":
             continue
-        body = ast.get_source_segment(poster_src, func) or ""
+        body = _source_segment(poster_lines, func)
         body = re.sub(r'"""[\s\S]*?"""', "", body)          # docstring 里写着教训
         body = "\n".join(ln for ln in body.splitlines()
                          if not ln.lstrip().startswith("#"))
         assert "cover.scoreboard 不能省略" not in body, \
             f"{func.name} 又把这条规矩自己写了一遍"
+
+
+def _source_segment(lines: list[str], node: ast.AST) -> str:
+    """Equivalent AST segment, splitting the large module only once per scan.
+
+    AST columns are UTF-8 byte offsets, including when the function name is Chinese.
+    ``ast.get_source_segment`` splits the entire module for every function; that made
+    the source-end gate alone take 40 seconds on the CI runner.
+    """
+    start, end = node.lineno - 1, node.end_lineno - 1
+    if start == end:
+        return lines[start].encode("utf-8")[node.col_offset:node.end_col_offset].decode("utf-8")
+    return (lines[start].encode("utf-8")[node.col_offset:].decode("utf-8")
+            + "".join(lines[start + 1:end])
+            + lines[end].encode("utf-8")[:node.end_col_offset].decode("utf-8"))
+
+
+def test_AST片段预分行仍和标准库完全一致():
+    source = ('def 函数():\n    def 内层(): return "中文"\n'
+              '    return 内层()\n\ndef second():\n    return "last"')
+    lines = source.splitlines(keepends=True)
+    for node in ast.walk(ast.parse(source)):
+        if isinstance(node, (ast.FunctionDef, ast.Call, ast.Constant)):
+            assert _source_segment(lines, node) == ast.get_source_segment(source, node)
 
 
 def _calls_named(tree, name: str):
@@ -10222,11 +10248,32 @@ def test_同一场球不许在赛场之上发第二条(tmp_path):
         assert slug in specs, (
             f"豁免表里的 {slug!r} 找不到对应的 spec"
             "——写错一个名字，豁免就成了一盏恒真的绿灯")
+    from promote_reel_draft import _published_reel_matches
+    published_matches = _published_reel_matches()
     flagged = sorted(s for s, sp in specs.items()
-                     if reel.duplicate_match_problem(sp) is not None)
+                     if reel.duplicate_match_problem(sp, published_matches=published_matches) is not None)
     assert not flagged, (
         f"这几条存量被判成「同一场球发了两条」：{flagged}"
         "——要么是真撞了（那就撤一条），要么是这道闸扫宽了")
+
+
+def test_批量同场检查和实时一致_新增正式spec实时路径仍立刻看见(tmp_path):
+    reel = _reel()
+    from promote_reel_draft import _published_reel_matches
+
+    def spec(slug, video):
+        return {"slug": slug, "source_url": f"https://youtu.be/{video}",
+                "cover": {"eyebrow": "赛场之上"}}
+
+    first = spec("first", "FIRST111111")
+    (tmp_path / "first.json").write_text(json.dumps(first), encoding="utf-8")
+    snapshot = _published_reel_matches(tmp_path)
+    for candidate in (spec("same", "FIRST111111"), spec("different", "OTHER111111"), first):
+        assert reel.duplicate_match_problem(candidate, tmp_path, published_matches=snapshot) == \
+            reel.duplicate_match_problem(candidate, tmp_path)
+    assert reel.duplicate_match_problem(spec("new", "NEW11111111"), tmp_path) is None
+    (tmp_path / "added.json").write_text(json.dumps(spec("added", "NEW11111111")), encoding="utf-8")
+    assert "added" in reel.duplicate_match_problem(spec("new", "NEW11111111"), tmp_path)
 
 
 def test_spec引的图不许放在output里CI上看不见():
@@ -10351,6 +10398,8 @@ def test_每条spec的旁白都还估得下():
     broken: list[str] = []
     denied: set[str] = set()
     checked = 0
+    from promote_reel_draft import _published_reel_matches
+    published_matches = _published_reel_matches()
     for slug, spec in _reel_specs().items():
         if not should_check('tests/test_match_reel.py::test_每条spec的旁白都还估得下', Path("specs/reels") / f"{slug}.json"):
             continue
@@ -10365,7 +10414,7 @@ def test_每条spec的旁白都还估得下():
             continue
         spec = _with_legacy_soft_cover(slug, _with_legacy_scoreboard(slug, spec))
         for index, secs, room in reel.narration_estimates(reel.validate_spec(
-                spec, allow_published_legacy=True)):
+                spec, allow_published_legacy=True, published_matches=published_matches)):
             checked += 1
             if room < -reel.SPEECH_EST_ERR:
                 broken.append(f"{slug} 第 {index + 1} 段：画面 "

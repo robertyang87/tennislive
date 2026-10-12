@@ -304,12 +304,8 @@ def _custom_box_has_probe(spec: dict, profile: str, probes=None, *, box=None, ur
     owned = {url: [box]} if url is not None else pb.scoreboxes_by_url(spec, urls)
     for source_url, boxes in owned.items():
         probe = probes.get(source_url) or {}
-        board = probe.get("board") or {}
-        if probe.get("url") != source_url or not board.get("frames"):
-            return False
         for source_box in boxes:
-            scan, _ = pb._pick_scan(board, source_box, profile)
-            if not scan or not scan.get("frames") or not (scan["profiles"][profile].get("runs")):
+            if not pb.scorebox_has_probe(probe, source_url, source_box, profile):
                 return False
     return bool(owned)
 
