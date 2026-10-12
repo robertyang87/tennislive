@@ -82,6 +82,20 @@
 | 3 | 比分或硬数据（`metric`，可空）；整场比分按局数上色 | 数字 TL Score，汉字得意黑 | 比分约 67 |
 | 4 | 冷灰白人物、罚款（`detail`） | 得意黑 | 40 |
 
+新片子的 `inset.label` 要写齐五个字段，`--dry-run` 缺一个就红：
+
+| 字段 | 必填 | 写成什么 |
+|---|---|---|
+| `topic` | 是 | 主题，独占第一行。例如 `摔拍警告` |
+| `date` | 是 | `2026.10.11`，四位年、两位月、两位日 |
+| `place` | 是 | 地点或赛事，接在日期后面：`2026.10.11 · ATP1000 上海` |
+| `people` | 是 | 人物。例如 `布勃利克 vs 中岛布兰登` |
+| `score` 或 `event` | 至少有一个 | `score` 只能是整场比分（`6-7(7) 6-3 7-6(5)`），按局数上色。说明写进 `event`。`event` 和 `topic` 是同一句时不另起一行 |
+
+`story_label_field_problems()` 挂在 `parse_segments` 里，和右轨几何闸一起跑。
+已经发出去、还没写这些字段的片子在 `data/legacy_label_fields.json`，只许减不许加。
+字体闸不看这张表。
+
 行数变多时画布从 1200×340 往下长，高度取偶数。`layout=classic` 才保留旧网格：
 变体改主标题字号（stat 134 / chapter 126 / 其余 122），`split_metric` 把比分独立成行
 并把画布加到 1200×440。classic 的文字同样是得意黑，比分数字同样是 TL Score。
@@ -131,15 +145,25 @@ spec 使用设计合同：
     "width": 0.60,
     "pad": 0.085,
     "show_for": 3.8,
-    "motion": "editorial"
+    "motion": "editorial",
+    "label": {
+      "topic": "第1冠",
+      "date": "2018.01.13",
+      "place": "ATP250 悉尼",
+      "people": "vs 德米纳尔",
+      "score": "1-6 6-4 7-5"
+    }
   }
 }
 ```
 
 `parse_segments` 会拒绝超出宽度、时长、边距或错误动效的 `story_text`，
 也会拒绝 `corner` 不是 `tr`、或者 PNG 不是右缘短轨加右对齐的贴图
-（`story_corner_label_problems`，`--dry-run` 就红）。
-已经发出去的左轨片在 `data/legacy_corner_label.json`，只许减不许加。
+（`story_corner_label_problems`，`--dry-run` 就红），
+还会拒绝没写齐 `label` 的 topic、date、place、people，以及 score 或 event
+（`story_label_field_problems`）。
+已经发出去的左轨片在 `data/legacy_corner_label.json`，
+还没写字段的在 `data/legacy_label_fields.json`，两张表都只许减不许加。
 `test_corner_label_style.py` 扫全部 spec；`test_story_info_band.py` 拒绝大面积实色底板、
 超长文案、换行和竖线字段；`test_inset_animation.py` 真渲验证出现/淡出，并锁定编辑型轻动效。
 

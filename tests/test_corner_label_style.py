@@ -25,12 +25,25 @@ from render_story_info_band import (
     MUTED,
     SCORE,
     WHITE,
+    label_fields_problem,
     label_font_problem,
     legacy_corner_label_slugs,
+    legacy_label_fields_slugs,
+    metric_from_label,
     png_corner_label_problem,
     render,
+    render_label,
     story_corner_label_problems,
+    story_label_field_problems,
 )
+
+_OK_LABEL = {
+    "topic": "第1次",
+    "date": "2026.09.08",
+    "place": "美网",
+    "people": "小威廉姆斯",
+    "event": "第1次",
+}
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -199,6 +212,15 @@ def test_每条片子的贴图都是右上角右轨右对齐():
     assert not bad, "这些贴图不是右上角、右轨、右对齐：\n  " + "\n  ".join(bad)
 
 
+def test_每条片子的贴图都写齐字段():
+    bad = []
+    for path, spec in _specs():
+        problems = story_label_field_problems(spec)
+        if problems:
+            bad.append(f"{spec['slug']}: {problems[0]}")
+    assert not bad, "这些贴图缺 topic、date、place、people 或 score/event：\n  " + "\n  ".join(bad)
+
+
 def test_角标豁免表只许减不许加():
     legacy = legacy_corner_label_slugs()
     assert legacy, "豁免表读不到，整条判据会静静失效"
@@ -226,9 +248,13 @@ def test_渲染入口拒绝左上角或左轨(tmp_path):
             "start": 1, "end": 6, "source": "r1",
             "inset": {"image": str(image), "kind": "story_text", "corner": corner,
                       "width": 0.56, "pad": 0.085, "show_for": 3.8,
-                      "motion": "editorial"}}]}
+                      "motion": "editorial", "label": dict(_OK_LABEL)}}]}
 
     assert reel.parse_segments(spec(good), {"r1": Path("a.mp4")}, "r1")
+    naked = spec(good)
+    naked["segments"][0]["inset"].pop("label")
+    with pytest.raises(reel.ReelError, match="label"):
+        reel.parse_segments(naked, {"r1": Path("a.mp4")}, "r1")
     with pytest.raises(reel.ReelError, match="右上角"):
         reel.parse_segments(spec(good, "tl"), {"r1": Path("a.mp4")}, "r1")
     with pytest.raises(reel.ReelError, match="右缘"):
@@ -236,3 +262,55 @@ def test_渲染入口拒绝左上角或左轨(tmp_path):
     # 豁免只认表里的 slug，换个名字同一张左轨图照样红。
     frozen = next(iter(legacy_corner_label_slugs()))
     assert reel.parse_segments(spec(bad, slug=frozen), {"r1": Path("a.mp4")}, "r1")
+
+
+def test_字段缺一项就红_比分和事件至少要有一个():
+    assert label_fields_problem(None)
+    assert "topic" in (label_fields_problem({**_OK_LABEL, "topic": ""}) or "")
+    assert "date" in (label_fields_problem({**_OK_LABEL, "date": "2026-09-08"}) or "")
+    assert "score" in (label_fields_problem({**_OK_LABEL, "event": ""}) or "")
+    bad_score = label_fields_problem({**_OK_LABEL, "score": "决胜盘 1-5"})
+    assert bad_score and "整场比分" in bad_score
+    assert label_fields_problem({**_OK_LABEL, "event": ""}) 
+    scored = {**_OK_LABEL, "event": "", "score": "6-4 2-6"}
+    assert label_fields_problem(scored) is None
+    assert label_fields_problem(_OK_LABEL) is None
+    assert metric_from_label(_OK_LABEL) == ""
+    assert metric_from_label(scored) == "6-4 2-6"
+    distinct = {**_OK_LABEL, "event": "罚一分"}
+    assert label_fields_problem(distinct) is None
+    assert metric_from_label(distinct) == "罚一分"
+
+
+def test_字段豁免表只许减不许加():
+    legacy = legacy_label_fields_slugs()
+    assert legacy, "豁免表读不到，整条判据会静静失效"
+    assert len(legacy) <= 17, "只许减不许加（定规矩那天是 17 条）"
+    seen = {spec["slug"]: spec for _path, spec in _specs()}
+    missing = sorted(slug for slug in legacy if slug not in seen)
+    fixed = []
+    for slug in sorted(legacy):
+        if slug not in seen:
+            continue
+        still = False
+        for raw in seen[slug].get("segments") or []:
+            inset = (raw or {}).get("inset") or {}
+            if str(inset.get("kind") or "") != "story_text":
+                continue
+            if label_fields_problem(inset.get("label")):
+                still = True
+                break
+        if not still:
+            fixed.append(slug)
+    assert not missing, f"豁免表里有不存在的 slug：{missing}"
+    assert not fixed, f"这些字段已经齐了，从 data/legacy_label_fields.json 里删掉：{fixed}"
+
+
+def test_按字段渲贴图_事件和主题同一句时不另起比分行(tmp_path):
+    out = tmp_path / "label.png"
+    render_label(_OK_LABEL, out)
+    with Image.open(out) as image:
+        assert image.size[0] == 1200
+        assert image.size[1] >= 340 and image.size[1] % 2 == 0
+    with pytest.raises(SystemExit, match="label"):
+        render_label({}, tmp_path / "nope.png")

@@ -2944,7 +2944,10 @@ def test_角标把两件事放进同一帧():
         {"start": 1, "end": 7, "source": "r1",
          "inset": {"image": str(label), "corner": "tr", "kind": "story_text",
                    "width": 0.56, "pad": 0.085, "show_for": 3.8,
-                   "motion": "editorial"}}]}
+                   "motion": "editorial",
+                   "label": {"topic": "第1次", "date": "2026.09.08",
+                             "place": "美网", "people": "场外指导",
+                             "event": "第1次"}}}]}
     assert reel.parse_segments(story_text, {"r1": Path("a.mp4")}, "r1")
     story_text["segments"][0]["inset"]["show_for"] = 6.0
     with pytest.raises(reel.ReelError, match="story_text"):

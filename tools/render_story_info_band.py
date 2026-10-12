@@ -40,6 +40,10 @@ same face as the top-left brand title (``SmileySans-Oblique``); score
 digits stay on ``TL Score``. ``layout="classic"`` keeps the older
 left-or-right stack, including ``split_metric``. Shipping a story_text PNG
 that is not right-rail and right-aligned fails ``story_corner_label_problems``.
+A new spec must also carry ``inset.label`` with topic, date, place, people,
+and either a full-match score or an event; ``story_label_field_problems``
+fails ``--dry-run`` when any of those is missing. Already-shipped stickers
+that predate the fields sit in ``data/legacy_label_fields.json``.
 """
 
 from __future__ import annotations
@@ -615,7 +619,9 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
     return out
 
 
+_DATE = re.compile(r"^\d{4}\.\d{2}\.\d{2}$")
 _LEGACY_CORNER_LABEL = REPO / "data" / "legacy_corner_label.json"
+_LEGACY_LABEL_FIELDS = REPO / "data" / "legacy_label_fields.json"
 
 
 def legacy_corner_label_slugs() -> frozenset[str]:
@@ -672,6 +678,106 @@ def png_corner_label_problem(path: Path) -> str | None:
         return (f"{path.name} 文字没有右对齐"
                 f"（墨迹右缘 {ink_right}，应收在 {target} 附近）")
     return None
+
+
+def legacy_label_fields_slugs() -> frozenset[str]:
+    """已发、还没写齐 label 字段的片子。只许减不许加。"""
+    if not _LEGACY_LABEL_FIELDS.is_file():
+        return frozenset()
+    data = json.loads(_LEGACY_LABEL_FIELDS.read_text(encoding="utf-8"))
+    return frozenset(str(slug) for slug in (data.get("slugs") or []))
+
+
+def label_fields_problem(label: object) -> str | None:
+    """topic、date、place、people 都要有，另外还要有 score 或 event。
+
+    date 写成 ``2026.10.11``。score 只能是整场比分（``6-4`` / ``7-6(5)``），
+    说明性的字写进 event。event 和 topic 是同一句时不另起一行。
+    对得上返回 None。
+    """
+    if not isinstance(label, dict):
+        return "story_text 要写 label：topic、date、place、people，外加 score 或 event"
+    missing = [key for key in ("topic", "date", "place", "people")
+               if not str(label.get(key) or "").strip()]
+    if missing:
+        return f"label 缺 {', '.join(missing)}"
+    topic = str(label["topic"]).strip()
+    date = str(label["date"]).strip()
+    place = str(label["place"]).strip()
+    people = str(label["people"]).strip()
+    score = str(label.get("score") or "").strip()
+    event = str(label.get("event") or "").strip()
+    if not score and not event:
+        return "label 要有 score 或 event"
+    if not _DATE.match(date):
+        return "date 写成 2026.10.11"
+    if score and score_number_colors(score) is None:
+        return f"score「{score}」不是整场比分；说明写进 event"
+    budgets = {"topic": 10.5, "place": 12.0, "people": 23.0, "score": 11.0}
+    for field, value in (("topic", topic), ("place", place),
+                         ("people", people), ("score", score)):
+        if not value:
+            continue
+        if "\n" in value or "｜" in value or "|" in value:
+            return f"{field} 只能一行，不要用竖线拼字段"
+        if display_units(value) > budgets[field]:
+            return (f"{field} 太长（{display_units(value):.1f}>{budgets[field]}）："
+                    "一屏只留一个记忆点")
+    drawn = event if event and event != topic and not score else ""
+    if drawn and ("\n" in drawn or "｜" in drawn or "|" in drawn):
+        return "event 只能一行，不要用竖线拼字段"
+    if drawn and display_units(drawn) > 11.0:
+        return (f"event 太长（{display_units(drawn):.1f}>11.0）："
+                "和 topic 不同又没有比分时，event 自己占比分那一行")
+    return None
+
+
+def metric_from_label(label: dict) -> str:
+    """比分占第三行。没有比分、且 event 不是把 topic 再说一遍时，event 占这一行。"""
+    score = str(label.get("score") or "").strip()
+    if score:
+        return score
+    event = str(label.get("event") or "").strip()
+    topic = str(label.get("topic") or "").strip()
+    if event and event != topic:
+        return event
+    return ""
+
+
+def render_label(label: dict, out: Path, **kwargs) -> Path:
+    """按 label 字段渲一张默认角标。字段不齐就停，不写出半张图。"""
+    problem = label_fields_problem(label)
+    if problem:
+        raise SystemExit(problem)
+    return render(
+        str(label["date"]).strip(),
+        str(label["topic"]).strip(),
+        str(label["people"]).strip(),
+        out,
+        highlight=str(label["place"]).strip(),
+        metric=metric_from_label(label),
+        **kwargs,
+    )
+
+
+def story_label_field_problems(spec: dict, *, honor_legacy: bool = True) -> list[str]:
+    """每张 story_text 都要写齐 label 字段。没有贴图的片子不报。
+
+    已发、还没改字段的挂在 ``data/legacy_label_fields.json``。
+    ``honor_legacy=False`` 用来证明那张表里的片子确实还缺字段。
+    """
+    slug = str(spec.get("slug") or "")
+    if honor_legacy and slug in legacy_label_fields_slugs():
+        return []
+    problems: list[str] = []
+    for index, raw in enumerate(spec.get("segments") or []):
+        inset = (raw or {}).get("inset") or {}
+        if str(inset.get("kind") or "") != "story_text":
+            continue
+        message = label_fields_problem(inset.get("label"))
+        if message:
+            problems.append(f"第 {index + 1} 段 {message}")
+    return problems
 
 
 def label_font_problem() -> str | None:
