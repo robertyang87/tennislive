@@ -1,0 +1,87 @@
+{
+  "scoreboard_qc_sha256": null,
+  "cover_seconds": 3.106,
+  "cover_narrated": true,
+  "outro_seconds": 3.445,
+  "layout": "full",
+  "segments_seconds": 121.1,
+  "topbar": null,
+  "film_seconds": 127.68,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+18%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 7.872,
+    "1": 10.584,
+    "2": 8.424,
+    "3": 3.984,
+    "4": 6.024,
+    "5": 11.04,
+    "6": 8.592,
+    "7": 3.672,
+    "8": 5.064,
+    "9": 5.808,
+    "10": 4.992,
+    "11": 9.024,
+    "12": 7.248,
+    "13": 3.432,
+    "14": 4.2,
+    "15": 5.904,
+    "16": 3.384
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "807c17578ea89cb50d94f96d417627e14198dd6b80d63df5b1ac7b373758b2e0",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "wta-finals-race-2026-10-12",
+    "received_at": "2026-10-12T20:31:29Z",
+    "artifact_ready_at": "2026-10-12T20:38:55Z",
+    "elapsed_seconds": 446.442,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "a8782e3594a93a04bf78955c8e05633977868073fbcdda248a89ab1c61991ccc",
+    "spec_sha256": "f987895b67bf253b348e567e50ee885d5afa6ffd6dd8d85d5230f89a47f4a710",
+    "run_id": "38304769353",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-12T20:36:49Z",
+        "run_id": "38304769353"
+      }
+    ],
+    "render_seconds": 126.442,
+    "pre_render_seconds": 320.0
+  },
+  "film_sha256": "a8782e3594a93a04bf78955c8e05633977868073fbcdda248a89ab1c61991ccc",
+  "film_bytes": 34288866,
+  "qc_attestation_sha256": "e43c409015a284ac3c79e3365f018dffcdda01e2e2df81ac9495189c1291f1ea",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-12T20:36:49Z",
+      "run_id": "38304769353"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-12T20:38:56Z",
+      "run_id": "38304769353"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wta-finals-race-2026-10-12/wta-finals-race-2026-10-12.mp4",
+  "video_bytes": 34288866
+}
