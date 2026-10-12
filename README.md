@@ -68,8 +68,8 @@ tennislive content                  # 内容雷达：赛前焦点的完整小红
 出片之前**先在本地把便宜的闸跑满**，别拿 runner 当第一道检查：
 
 ```bash
-python3 tools/build_match_reel.py --slug <slug> --dry-run           # 0.2 秒，查 spec 形状
-python3 tools/build_match_reel.py --slug <slug> --check-narration   # 约 1 分钟，真 TTS 量每段余量
+python3 tools/build_match_reel.py render --spec specs/reels/<slug>.json --outdir /tmp/tennislive-check --dry-run
+python3 tools/build_match_reel.py render --spec specs/reels/<slug>.json --outdir /tmp/tennislive-check --check-narration
 pytest -q -n auto                                                    # 全量，约 2 分钟
 ```
 

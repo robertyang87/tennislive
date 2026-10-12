@@ -53,7 +53,10 @@ MP3 可解码、非空只证明合成成功，不证明多音字、姓名或数�
 ```bash
 PYTHONPATH=tools/alcaraz_voice_review/runtime:src \
 TENNISLIVE_TTS_BACKEND=edge \
-python tools/build_match_reel.py --slug <slug> --check-narration
+python tools/build_match_reel.py render \
+  --spec specs/reels/<slug>.json \
+  --outdir /tmp/tennislive-narration \
+  --check-narration
 ```
 
 正式 spec 应通过以下字段记录后端选择及理由，再使用同一环境运行原有制作命令：
