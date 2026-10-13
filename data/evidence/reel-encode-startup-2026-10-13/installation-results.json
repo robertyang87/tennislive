@@ -1,0 +1,59 @@
+{
+  "method": "Same Python temporary venv --system-site-packages, inherited warm pip download cache, dependencies already installed, one discarded warmup pair then three alternating pairs; installs affect only temporary venv. Network/build isolation remains available, not offline.",
+  "raw": [
+    {
+      "pair": 1,
+      "kind": "old_editable",
+      "elapsed_seconds": 3.3519647990033263
+    },
+    {
+      "pair": 1,
+      "kind": "new_extra_requirements",
+      "elapsed_seconds": 0.6047363449979457
+    },
+    {
+      "pair": 2,
+      "kind": "old_editable",
+      "elapsed_seconds": 2.793968448997475
+    },
+    {
+      "pair": 2,
+      "kind": "new_extra_requirements",
+      "elapsed_seconds": 0.7635273549967678
+    },
+    {
+      "pair": 3,
+      "kind": "old_editable",
+      "elapsed_seconds": 3.26815821800119
+    },
+    {
+      "pair": 3,
+      "kind": "new_extra_requirements",
+      "elapsed_seconds": 0.8073124619986629
+    }
+  ],
+  "median_seconds": {
+    "old_editable": 3.26815821800119,
+    "new_extra_requirements": 0.7635273549967678
+  },
+  "runner_original_steps": {
+    "38305296490": {
+      "pronunciation": 6,
+      "main_dependencies": 27,
+      "checkout": 51,
+      "ffmpeg": 4,
+      "fonts": 9,
+      "chromium": 1,
+      "provider": 12
+    },
+    "38307920960": {
+      "pronunciation": 6,
+      "main_dependencies": 25,
+      "checkout": 55,
+      "ffmpeg": 3,
+      "fonts": 9,
+      "chromium": 1,
+      "provider": 11
+    }
+  }
+}

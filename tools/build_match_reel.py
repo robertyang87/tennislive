@@ -10137,6 +10137,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     lengths = [cover_secs] + [seg.length for seg in segments]
     if outro_enabled:
         lengths.append(outro_secs)
+    from reel_join_fusion import plan as plan_join_fusion  # noqa: PLC0415
+    native_join_graph = dissolve_filtergraph(lengths, SEG_FADE)
+    join_fusion, legacy_reason = plan_join_fusion(native_join_graph, len(lengths))
+    if join_fusion is None:
+        print(f"[拼接] 保留完整中间视频：{legacy_reason}")
+    else:
+        print("[拼接] 2×2 中间视频保留原生音频和帧时钟；全尺寸溶解接入最终编码")
     parts: list[Path] = [build_cover(sources, primary, spec,
                                  outdir / "part_cover.mp4", source_w,
                                  cover_secs, tail=SEG_FADE)]
@@ -10169,10 +10176,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
 
     silent = outdir / "_video.mp4"
     with stage("拼接"):
-        # ⚠️ **这儿不能再 `-c copy`。** 溶解要两段同时在滤镜图里，所以这一趟
-        # 是一次真编码——按中间产物的参数走（`ultrafast`/`crf 12`，见
-        # 「中间产物要花的是比特，不是时间」），成片那一步另走 `FINAL_*`
-        # （`medium`/`crf 18`，2026-08-14 起 preset 从 `slow` 换过来）。
+        # 溶解仍是真滤镜和编码，不能用 -c copy 代替。已识别的原生图把每路
+        # 画面缩成 2×2 再走同一条 xfade，保留全部帧 PTS、音频样本和旧混音的
+        # -shortest 时钟；全尺寸 xfade 接在最终 medium/crf18 编码前，少一代
+        # ultrafast/crf12 有损压缩。不识别的图提前选择原来的完整中间视频。
         #
         # **每一段都要先量一遍再拼。** `cut_segment` 的 `-t` 越界时 ffmpeg
         # 退出码是 0，只给一段短的；而短了之后 `xfade` 的 offset 就落到流的
@@ -10193,7 +10200,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 + "\n\n把这几段的 `end` 往前收几帧，或者换一条更长的源片。")
         proc = run("ffmpeg", "-y", "-hide_banner", "-loglevel", "warning",
                    *[arg for p in parts for arg in ("-i", str(p))],
-                   "-filter_complex", dissolve_filtergraph(lengths, SEG_FADE),
+                   "-filter_complex", (join_fusion.clock_graph() if join_fusion
+                                      else native_join_graph),
                    "-map", "[vout]", "-map", "[aout]",
                    "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
                    "-pix_fmt", "yuv420p",
@@ -10248,8 +10256,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "-filter_complex",
                 duck_filtergraph(filters, voice_labels, music_graph,
                                  mute_original=narrated_audio_mode.enabled(spec), reviewed_bed=reviewed_bed),
-                # 这一步只是把解说混进现场声，产物是个 m4a——画面在这儿是
-                # 拿来给 `-shortest` 定长度的，**必须 copy**。原来没写 `-c:v`，
+                # 这一步只是把解说混进现场声，产物是个 m4a——中间视频（原生
+                # 图为 2×2 时钟）给 `-shortest` 定长度，**必须 copy**。原来没写 `-c:v`，
                 # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、
                 # 下一步再整个丢掉。（改前/改后的实测见提交说明。）
                 "-map", "0:v:0", "-map", "[out]", "-c:v", "copy",
@@ -10354,6 +10362,17 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                        "-map", "[out]"])
         video_args[1] = full_canvas_filtergraph(video_args[1], segments, cover_secs,
                                               subtitles_ass=ass)
+        # The native audio mixer still copies the intermediate video's exact
+        # clock for -shortest. Only the full-size video is joined at final encode.
+        # Decoration indices were built for the original 0=video/1=mix inputs;
+        # the helper shifts them after the parts and mixed audio in one place.
+        if join_fusion is not None:
+            video_args[1] = join_fusion.final_graph(video_args[1])
+            final_inputs = [arg for part in parts for arg in ("-i", str(part))]
+            final_audio_input = len(parts)
+        else:
+            final_inputs = ["-i", str(silent)]
+            final_audio_input = 1
         # **两支都要出声。** 「这个栏目不画」和「渲角标那一步没走到」在成片上
         # 长得一模一样，而后者是个真 bug——只在画的时候打印，等于把不画那一支
         # 变成静默的。
@@ -10367,13 +10386,21 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                      "。⚠️ 而这条片子**也没有底带脚注**（不是带式，或者带式但没有"
                      "顶栏），所以正片区间一个品牌标识都不带——只剩封面和片尾"))
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-i", str(silent), "-i", str(mixed), *foot_inputs,
+            *final_inputs, "-i", str(mixed), *foot_inputs,
             *wm_inputs, *scrim_inputs, *video_args,
-            "-map", "1:a:0",
+            "-map", f"{final_audio_input}:a:0",
             "-c:v", "libx264", "-preset", FINAL_PRESET, "-crf", FINAL_CRF,
             *final_video_compat_args(VIDEO_W, VIDEO_H, FPS_EXPR),
             "-pix_fmt", "yuv420p",
             "-c:a", "copy", "-movflags", "+faststart", str(final))
+
+    if join_fusion is not None:
+        from reel_join_fusion import require_matching_frame_clock  # noqa: PLC0415
+        with stage("溶解帧时钟复核"):
+            # Packet presentation order, not decode order: medium's B frames
+            # have different DTS from the ultrafast intermediate. No extra
+            # full-size decode and no cached final-QC approval.
+            require_matching_frame_clock(silent, final)
 
     # 片尾那几张分层 PNG 和它们的 HTML 也是中间物：每条片子渲出来都一模一样
     # （版式是常量），留在 outdir 里只会给每条片子多塞半兆进仓库。

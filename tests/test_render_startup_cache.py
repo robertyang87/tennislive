@@ -92,3 +92,49 @@ def test_mask_cache_is_render_only_atomic_entries_and_saved_only_after_current_q
     output.unlink()
     subprocess.run(['bash', '-e', '-c', changed['run'].replace('$HOME', '$MASK_TEST_ROOT')], check=True, env=env)
     assert output.read_text() == 'changed=true\n'
+
+
+def test_pronunciation_bootstrap_reads_actual_extra_and_propagates_pip_failures(tmp_path):
+    """Run the real workflow shell with a recording pip module, including failure.
+
+    No network/package install is performed by this contract. pip's exact argv
+    proves the dictionary version comes from this checkout, not a copied list.
+    """
+    import json
+    import os
+    import subprocess
+    import sys
+    import yaml
+
+    step = next(s for s in yaml.safe_load(WORKFLOW)['jobs']['reel']['steps']
+                if s.get('name') == '安装多音字静态检查依赖')
+    # Keep the real install command; dictionary import is verified separately
+    # by its existing production contract and actual benchmark environment.
+    install = step['run'].split('PYTHONPATH=src python -c', 1)[0]
+    assert 'pip install -q -e' not in install
+    (tmp_path / 'pip.py').write_text(
+        'import json, os, sys\n'
+        'from pathlib import Path\n'
+        'Path(os.environ["PIP_ARGV_RECORD"]).write_text(json.dumps(sys.argv[1:]))\n'
+        'raise SystemExit(int(os.environ.get("PIP_TEST_EXIT", "0")))\n')
+    record = tmp_path / 'argv.json'
+    env = {**os.environ, 'PYTHONPATH': str(tmp_path),
+           'PATH': str(Path(sys.executable).parent) + os.pathsep + os.environ['PATH'],
+           'PIP_ARGV_RECORD': str(record)}
+    (tmp_path / 'pyproject.toml').write_text(
+        '[project.optional-dependencies]\npronunciation = ["test-dictionary==7.8", "second==1"]\n')
+    run = lambda: subprocess.run(['bash', '-e', '-c', install], cwd=tmp_path,
+                                 env=env, capture_output=True, text=True)
+    assert run().returncode == 0
+    assert json.loads(record.read_text()) == ['install', '-q', 'test-dictionary==7.8', 'second==1']
+    env['PIP_TEST_EXIT'] = '19'
+    assert run().returncode != 0
+    record.unlink()
+    env.pop('PIP_TEST_EXIT')
+    for extra in ('pronunciation = []', 'different_extra = ["ignored"]',
+                  'pronunciation = "wrong-string"',
+                  'pronunciation = {wrong_key = "wrong-map"}',
+                  'pronunciation = [7]'):
+        (tmp_path / 'pyproject.toml').write_text('[project.optional-dependencies]\n' + extra + '\n')
+        assert run().returncode != 0
+        assert not record.exists(), 'missing/empty pronunciation must fail before pip'

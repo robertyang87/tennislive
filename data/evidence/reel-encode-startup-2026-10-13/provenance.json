@@ -1,0 +1,42 @@
+{
+  "kind": "final-implementation-and-input-provenance",
+  "created_after_experiments": true,
+  "base_commit": "f3b37de35e26eb23f05e275d0a74eb7048a0589c",
+  "files": {
+    "tools/reel_join_fusion.py": "4cf7b9e842e35c7f347fa8b14020565bd26a566c5079e63beab4c685b463208e",
+    "tools/build_match_reel.py": "46fa3aaf2c8f3c5fd5ded1b55d167198fbfdb921dc1ea94a121dbdf60300a022",
+    ".github/workflows/match-reel.yml": "06269799728a9ce52f0bd23f1d01c887277b5db7011895607e74c6b353a8e88a",
+    "pyproject.toml": "728d43744eff925aa77bf1173ee17b8995b4893f0268826025d325b3320095bc"
+  },
+  "evidence_sha256": {
+    "experimental-plain-local.json": "a7dfa8e9a197f6fb8bc316525cf877c70a580542836576ffa901553847b185aa",
+    "experimental-plain-btbn.json": "17b7edc02590eeed440f1fd10aafb04c091b0a15db8c3880f74719e900895755",
+    "experimental-extended.json": "5bc42dbf33d7c36a2ca3434823919ff28938fad8248f62856b174bec3aa5cf21",
+    "native-tiny-clock.json": "3ec70cb18d7a35228ea4673ff63544302ac091d837b97be5eb27460579f1dba5",
+    "nonintegral-looped-audio-clock.json": "baa0aa293f892c7368cdc39ff527cf634abf094c8c7b2c044636ddb0c469f1ef",
+    "nonintegral-final-media.json": "3288578439f75cd2a2a2f6ca6e330b7528d85b4a109c89559007b876081a046a",
+    "production-bridge-benchmark.json": "f2e2c2de4aae4b41a6273fb429fceaaa4a732c496433c5065bfd5b1be5a7d2e0",
+    "benchmark_production_bridge.py": "ae6a4af14e73e3a35b02afacc2d2e47f996e5f63ac3b76946db2384ab1b62250",
+    "reference-quality.json": "e0b80d1b07a655244056a7d764c7213eb934943a404f0a9712cbec6ada07150a",
+    "visual-review.json": "4b2f454f0906fc51c5489e46678413ce62bc1192c2292d53567f82e534dde59b",
+    "installation-results.json": "006bcc59cc2ee30e5c71365918f28baa1a31f46fb7af1f905f7be748186b3efb",
+    "installation-provenance.json": "48f7063a01a6e1f5d40991108868ed47a536590c8b4eedfd30be25f38be7c185",
+    "benchmark-installation-reconstruction.py": "6aa3b13d53cc308ae8e7834449b9243e59641ecf2e3480c58b0ecfe56ef00122",
+    "runner-38305296490-steps.json": "eb42b936dbfa06119ff806c896274d1de4a068455925f86bfbc7d9ac80f2be58",
+    "runner-38307920960-steps.json": "a4f9de23a265619df282184ee4571ed17e5e63c900987cc98eda175f9268b82f",
+    "frame-01.png": "950cd36a334ec6a6280c5f90eef270a0335e94c9aa60c6df2cc48ee3a4a30269",
+    "frame-02.png": "06d7e67ee1018690c73af9b1680c4a014913f79ecf336310c8322f9bd6cf75ea",
+    "frame-03.png": "b88f323525bd33f06c44a480faad42df8fa1703e20540975191a584e3cb01b6b",
+    "frame-04.png": "dbdd70d048edad065d8447b9f79146ca3ccb384199f992af127c7a2ade52428c"
+  },
+  "actual_voice": {
+    "path": "/workspace/scratch/video-caption-preview-2026-10-13/final-timed-three/voice_01.mp3",
+    "sha256": "b04b12acc32fd905376c26707df257e9df843c6653800929ce49b41f84cc84b5"
+  },
+  "limits": [
+    "Early direct audio-only fusion experiments precede the final tiny-clock bridge; their percentages are not production claims.",
+    "Production benchmark uses final helper and includes frame-clock probe overhead; raw capture reports remain immutable.",
+    "Installation benchmark occurred before stricter list validation; its precise original workflow script is in separate provenance.",
+    "No source movies, MP3 files, published movies, QC attestations or WeChat receipts created by these experiments."
+  ]
+}

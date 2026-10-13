@@ -1,0 +1,23 @@
+{
+  "created_after_measurement": true,
+  "measurement_record_sha256": "006bcc59cc2ee30e5c71365918f28baa1a31f46fb7af1f905f7be748186b3efb",
+  "baseline_commit": "f3b37de3",
+  "workflow_sha256_at_measurement_recovered_before_validation_edit": "35d2d17aa50bdb03e4583b6b77e773de2736af263fe21423d2813e91810a195e",
+  "pyproject_sha256": "728d43744eff925aa77bf1173ee17b8995b4893f0268826025d325b3320095bc",
+  "requirements": [
+    "pypinyin>=0.50,<0.60"
+  ],
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python_executable_used": "/workspace/scratch/pronunciation-bootstrap-benchmark-2026-10-13/venv/bin/python",
+  "pip_version": "pip 25.0.1 from /workspace/scratch/pronunciation-bootstrap-benchmark-2026-10-13/venv/lib/python3.12/site-packages/pip (python 3.12)",
+  "timing_scope": {
+    "old": "temporary venv Python -m pip install -q -e .[pronunciation] process wall time",
+    "new": "workflow Python -c process (tomllib read, validation, subprocess pip call) wall time; excludes separate PYTHONPATH=src dictionary smoke import"
+  },
+  "script_provenance": "Original benchmark was an inline shell heredoc sent to exec_command; no standalone script file existed at measurement time. See separately saved reconstruction for reproducibility; reconstructed script hash must not be represented as execution-time provenance.",
+  "workflow_bootstrap_script_at_measurement": "# The main mode-specific install below already builds the editable\n# project. Read this lightweight extra directly so early speech checks\n# do not build/install the same project and base dependencies twice.\npython -c 'import pathlib, tomllib, subprocess, sys; requirements = tomllib.loads(pathlib.Path(\"pyproject.toml\").read_text())[\"project\"][\"optional-dependencies\"][\"pronunciation\"]; all(isinstance(item, str) and item.strip() for item in requirements) and requirements or sys.exit(\"pronunciation extra must contain requirements\"); subprocess.check_call([sys.executable, \"-m\", \"pip\", \"install\", \"-q\", *requirements])'\nPYTHONPATH=src python -c \"import pypinyin\"\n",
+  "workflow_bootstrap_script_sha256": "9d60e0e4ea82b91d0ffead7a3c569b923a7c2067665dbe4d26a4852b04b00ad5",
+  "reconstructed_script_sha256": "6aa3b13d53cc308ae8e7834449b9243e59641ecf2e3480c58b0ecfe56ef00122",
+  "reconstructed_script_original_measurement_attribution": false
+}
