@@ -1,0 +1,52 @@
+{
+  "schema": "tennislive.final-visual-frame-review.v1",
+  "run_id": "38426710780",
+  "review_kind": "limited_revision_recheck",
+  "movie_path": "/workspace/scratch/yINOy0bSnYk/final-v3/zverev-bublik-shanghai-2026-r16.mp4",
+  "movie_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zverev-bublik-shanghai-2026-r16/zverev-bublik-shanghai-2026-r16.mp4",
+  "movie_sha256": "52fd46792afbf6e12e1d236874c4b7278e8c565f5efa0eca2ee19a4cb394869d",
+  "duration_seconds": 265.04,
+  "dimensions": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "bytes": 127410077,
+  "producer_metadata_ref": "24a40eef351e3e116020c5a25b3bfcc99815f0eb",
+  "producer_metadata_path": "output/2026-10-14/reel/zverev-bublik-shanghai-2026-r16/render.json",
+  "sample_times_seconds": [
+    17.2,
+    124,
+    199.22,
+    220.22,
+    263
+  ],
+  "opening_actual_ass_cue": {
+    "start": 16.27,
+    "end": 18.17,
+    "text": "北京时间10月13日晚上",
+    "sample": 17.2
+  },
+  "contact_sheet": "contact-review.jpg",
+  "opening_full_resolution": "opening-full.png",
+  "overall": "pass_in_inspected_revision_frames",
+  "method": "New canonical Release movie downloaded separately; actual SHA/bytes/duration verified against the current producer's Oct14 output metadata at exactref24a40eef. Five necessary frames decoded and contact sheet plus fullresolution opening actually viewed. This is a local revision recheck; it does not claim16newframes, full playback, human audio listening, ASR, loudness scan or transfer a prior movieSHA.",
+  "observations": [
+    "Changed opening subtitle actually displays北京时间10月13日晚上 fully readable above native scoreboard at17.2s within new ASS16.27–18.17",
+    "Old124s green close-up extra rectangle remains absent; scoreboard ends at native bluecell",
+    "Source183 mapped final199.22 retains complete15/40point column and deciding-set columns",
+    "Source204 mapped final220.22 retains complete4/1tiebreakpoint column and readable narrated subtitle above board",
+    "Brand outro present at263s"
+  ],
+  "issues": [],
+  "prior_review_history": {
+    "movie_sha256": "d17985129eae7440b618ec1cc943f71e7c30084636d977495c645c02da61814f",
+    "path": "/workspace/scratch/yINOy0bSnYk/visual/final-v2/visual-review.json",
+    "method": "Historical V2 16-frame visual review plus three board checks; bounded history of unchanged picture windows/mask/code, not a new16-frame review ofV3"
+  },
+  "tts_bundle_sha256": "deec7ccd03c74c27f687c11dc0f12f697e60031b9b5975b200391cce1c960a04",
+  "canonical_output": "output/2026-10-14/reel/zverev-bublik-shanghai-2026-r16",
+  "native_run": 38426710780,
+  "request_received_at": "2026-10-13T14:03:12Z",
+  "current_review_evidence": "data/evidence/zverev-bublik-shanghai-2026-r16/current-final-review"
+}
