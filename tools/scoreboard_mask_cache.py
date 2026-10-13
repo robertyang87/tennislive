@@ -138,7 +138,8 @@ def _probe(path: Path) -> dict:
          '-show_entries', 'stream=codec_name,width,height,r_frame_rate,nb_read_frames:frame=pts_time',
          '-of', 'json', str(path)], capture_output=True, text=True)
     if result.returncode or result.stderr.strip():
-        raise ValueError('Unreadable mask video')
+        raise ValueError(f'Unreadable mask video (ffprobe rc={result.returncode}): '
+                         f'{result.stderr.strip()[-500:]}')
     metadata = json.loads(result.stdout)
     streams = metadata['streams']
     if len(streams) != 1:
@@ -297,9 +298,11 @@ def resolve_masks_cached(profile, sources, segments, outdir, fps, tail, *,
     try:
         recipe = _recipe(profile, module, sources, segments, fps, tail)
         key = hashlib.sha256(_json(recipe)).hexdigest()
-    except (OSError, ValueError, TypeError, subprocess.SubprocessError):
+    except (OSError, ValueError, TypeError, subprocess.SubprocessError) as exc:
         # Cache preparation is optional; preserve the native resolver's genuine
         # error behavior for unreadable sources or unrepresentable inputs.
+        print(f'[score-mask-cache] preparation failed ({type(exc).__name__}: {exc}); '
+              'native per-frame scan required')
         return _native(module, profile, sources, segments, outdir, fps, tail, spec_path)
     entry = root / 'entries' / key
     if entry.is_dir() and not entry.is_symlink():
@@ -308,8 +311,9 @@ def resolve_masks_cached(profile, sources, segments, outdir, fps, tail, *,
                 lambda: _recipe(profile, module, sources, segments_input(recipe), fps, tail) == recipe)
             print(f'[score-mask-cache] hit {key[:12]}: complete native per-frame alpha sequence')
             return path
-        except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError):
-            print('[score-mask-cache] invalid/incomplete bundle; native per-frame scan required')
+        except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as exc:
+            print(f'[score-mask-cache] invalid/incomplete bundle ({type(exc).__name__}: {exc}); '
+                  'native per-frame scan required')
     path = _native(module, profile, sources, segments, outdir, fps, tail, spec_path)
     try:
         # Detect source/config changes during the native scan before storing it.
@@ -317,8 +321,9 @@ def resolve_masks_cached(profile, sources, segments, outdir, fps, tail, *,
             raise ValueError('Inputs changed during native mask scan')
         _store(root, key, recipe, segments, outdir, fps)
         print(f'[score-mask-cache] stored {key[:12]}: complete native per-frame alpha sequence')
-    except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError):
-        print('[score-mask-cache] cache unavailable; native mask output retained')
+    except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as exc:
+        print(f'[score-mask-cache] cache unavailable ({type(exc).__name__}: {exc}); '
+              'native mask output retained')
     return path
 
 
