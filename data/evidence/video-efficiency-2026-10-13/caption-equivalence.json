@@ -9,8 +9,8 @@
   "bytes_equal": true,
   "ass_bytes": 10071,
   "cue_count": 60,
-  "stopped_before": "scoreboard_profile / masks / build_cover / cut_segment / full encode",
-  "does_not_prove": "picture rendering / final native QC / new video publication",
+  "stopped_before": "track_shots / start_segment_checks / build_cover / cut_segment / full encode",
+  "does_not_prove": "new mask scanning / picture rendering / final native QC / new video publication",
   "source_spec_sha256": "f4cfac3a03391711d305eb4469ee558b4c21e9ea34e07a60e04f7f1cc72d825f",
   "source_render_sha256": "7cc773e4876057c70fcb9c97d4e0eea8e9b88772be94e3af4cb8488f585a7914",
   "actual_marks_sha256": {
@@ -25,5 +25,6 @@
     "voice_16.words.json": "bca22b217c0be0f030c73b6ab0409a5d766cb721f889c5727ffe3013093ab719"
   },
   "old_to_new_subtitle_block_ast_equal": true,
-  "same_native_statement_count": 20
+  "same_native_statement_count": 20,
+  "replay_note": "Executed the final subtitle block at its new position after the scoreboard-profile stage. That stage was isolated with scoreboard_profile=None; this is not a new mask scan. The published Paolini captions have explicit bottom positions. A separate native-render regression tests resolver mutation of default score_inset geometry (US Open y0-36)."
 }

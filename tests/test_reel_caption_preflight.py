@@ -25,7 +25,7 @@ MARKS = [
 ]
 
 
-class BeforeBoardScan(Exception):
+class BeforeTracking(Exception):
     pass
 
 
@@ -34,7 +34,7 @@ def prepared_render(monkeypatch, tmp_path):
     """Isolate subtitle scheduling from independent source/TTS review gates.
 
     Timing, quote parsing, WordBoundary cue construction and ASS writing are
-    native. The boundary spy stops before pixel scanning or any encoder.
+    native. The boundary spy stops before tracking or any encoder, after board geometry is resolved.
     """
     import foreground_audio_gate
     import winners_ue_gate
@@ -70,10 +70,11 @@ def prepared_render(monkeypatch, tmp_path):
     for name, value in {'LAYOUT': 'full', 'VIDEO_H': 1440, 'VIDEO_W': 1080}.items():
         monkeypatch.setattr(reel, name, value)
 
-    def board_boundary(*_a, **_k):
-        raise BeforeBoardScan
+    def tracking_boundary(*_a, **_k):
+        raise BeforeTracking
 
-    monkeypatch.setattr(reel, 'scoreboard_profile', board_boundary)
+    monkeypatch.setattr(reel, 'scoreboard_profile', lambda *_a, **_k: None)
+    monkeypatch.setattr(reel, 'track_shots', tracking_boundary)
     for name in ('build_cover', 'cut_segment', 'cut_still_segment', 'build_outro', 'run'):
         monkeypatch.setattr(reel, name, lambda *_a, **_k: pytest.fail('encoder reached'))
     spec = {
@@ -96,9 +97,9 @@ def prepared_render(monkeypatch, tmp_path):
     return spec, tmp_path, render
 
 
-def test_original_native_ass_bytes_and_timeline_are_ready_before_scan(prepared_render):
+def test_original_native_ass_bytes_and_timeline_are_ready_before_tracking(prepared_render):
     spec, out, render = prepared_render
-    with pytest.raises(BeforeBoardScan):
+    with pytest.raises(BeforeTracking):
         render()
     # Frozen from the original post-encoding native block with these same actual
     # marks, quote intervals, measured MP3 duration and cover/segment lengths.
@@ -111,7 +112,7 @@ def test_original_native_ass_bytes_and_timeline_are_ready_before_scan(prepared_r
 
 
 @pytest.mark.parametrize('fault', ['cross-position-window', 'invalid-quote-end'])
-def test_bad_caption_fails_before_scan_and_encoding_without_success_proof(prepared_render, fault):
+def test_bad_caption_fails_before_tracking_and_encoding_without_success_proof(prepared_render, fault):
     spec, out, render = prepared_render
     if fault == 'cross-position-window':
         spec['segments'][1]['quote'][0]['end'] = 1.1
@@ -156,3 +157,39 @@ def test_bad_cover_is_still_rejected_by_native_asset_gate(tmp_path):
     assert reel_asset_gates.image_load_problem(photo)
     photo.unlink()
     assert reel.cover_photo_problem(spec) == f'封面大图找不到：{photo}'
+
+
+def test_default_caption_margin_uses_resolved_scoreboard_top(prepared_render, monkeypatch):
+    import scoreboard_geometry
+    spec, out, render = prepared_render
+    spec['cover']['eyebrow'] = '赛场之上'
+    spec['scorebox'] = [50, 900, 400, 1000]
+    spec['segments'][0]['score_inset'] = True
+    spec['segments'][1]['score_inset'] = False
+    spec['segments'][1]['_score_inset_why'] = '整段原声字幕样例没有比分板'
+    for raw in spec['segments']:
+        raw.pop('subtitle_bottom', None)
+        raw.pop('subtitle_bottom_windows', None)
+    monkeypatch.setattr(reel, 'CROP_W', 810)
+    monkeypatch.setattr(reel, 'scoreboard_profile', lambda *_a, **_k: 'us-open')
+    resolved = []
+
+    def resolve_masks(_sources, segments, *_a):
+        # The native US Open resolver reserves 36 source pixels above the body
+        # for its point header. Default ASS margins must use this landed frame,
+        # not the initial spec search box.
+        x0, y0, x1, y1 = segments[0].score_inset
+        segments[0].score_inset = (x0, y0 - 36, x1, y1)
+        resolved.append(segments[0].score_inset)
+
+    monkeypatch.setattr(scoreboard_geometry, 'resolve_masks', resolve_masks)
+    with pytest.raises(BeforeTracking):
+        render(spec)
+    assert resolved == [(50, 864, 400, 1000)]
+    lines = (out / 'subtitles.ass').read_text().splitlines()
+    style = next(x for x in lines if x.startswith('Style: TL,'))
+    assert int(style.split(',')[-2]) == 992  # Initial search-box geometry: 1040.
+    cues = [x for x in lines if x.startswith('Dialogue:')]
+    assert cues and all(int(x.split(',', 9)[7]) == 312 for x in cues)  # Initial: 264.
+    assert not (out / 'render.json').exists()
+    assert not (out / 'qc_attestation.json').exists()

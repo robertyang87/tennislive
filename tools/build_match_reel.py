@@ -9967,7 +9967,58 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 每一趟都先付了整趟编码——手写 spec 的硬伤在这儿就红，自动 spec 只报。
     _render_silence_gate(spec, segments, voices, spoken_of, cover_secs)
 
-    # 用已定的真实语音时长和段落偏移写最终 ASS，先于板扫描和视频编码。
+    # **同一个数的另一头：哪几段大半时间没人在说话。** 排在这儿是因为它和上面
+    # 那道闸用的是同一批 TTS 时长，一个源片都不用碰——而下面就要开始编码了，
+    # 在这之前红掉省的是整趟渲染。
+    idle_total = sum(max(0.0, segments[i].length - v) for i, v in spoken_of.items())
+    total_secs = sum(seg.length for seg in segments)
+    print(f"[查哑场] 没人说话合计 {idle_total:.1f}s / {total_secs:.1f}s"
+          f"（{idle_total / total_secs:.0%}），提示线：单段 {MAX_SILENT_GAP}s")
+    idle = silent_stretches(segments, spoken_of)
+    if idle:
+        print("[注意] 以下片段超过旁白留白提示线；现场声仍在，所以不阻断渲染：\n"
+              + "\n".join(idle)
+              + "\n若画面观感确实空，再补旁白或缩短窗口；数字静音仍由成片 QA 硬拦。")
+
+    # **板的右缘现量**（`score_inset: true` 的段）——账号所有者 2026-08-29：
+    # 「比分板的宽度会变化的，所以不能固定宽度去切，要自适应」。排在切片之前，
+    # 和 track_shots 同一个位置：都是「先把整条量完，再逐段切」。
+    profile = scoreboard_profile(spec, segments)
+    # **这一段要计时**（2026-09-27）：逐段解码扫板，board-inset 的片子中位 20 秒、
+    # 最长 40 秒，原来没有 stage 包着——报表上看不见，`last_stage` 也指不到它
+    # （「第 N 段一帧都认不出板」死在这儿时，台账记的是上一步 TTS）。
+    with stage("比分板蒙版") if profile else nullcontext():
+        if profile == "us-open":
+            from scoreboard_geometry import resolve_masks
+            resolve_masks(sources, segments, outdir,
+                          Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
+                          FPS_EXPR, SEG_FADE)
+        elif profile == "rna-slam":
+            from rna_scoreboard import resolve_masks as resolve_rna_masks
+            resolve_rna_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "atp":
+            # ⭐ ATP 巡回赛转播的板：逐帧蒙版，板多宽切多宽，BREAK/SET/MATCH POINT
+            # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
+            from atp_scoreboard import resolve_masks as resolve_atp_masks
+            resolve_atp_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "wta":
+            # ⭐ WTA 巡回赛转播：板不在的帧不贴、板多宽切多宽（见 wta_scoreboard）。
+            from wta_scoreboard import resolve_masks as resolve_wta_masks
+            resolve_wta_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "itf-bjk":
+            # ⭐ 比利·简·金杯（ITF 转播）：宝蓝底＋浅青小分格＋发球小球（见 itf_scoreboard）。
+            from itf_scoreboard import resolve_masks as resolve_itf_masks
+            resolve_itf_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "lavercup":
+            # ⭐ 拉沃尔杯转播（账号所有者 2026-09-25「比分板补一套适配，彻底解决」）：
+            # 蓝边一行＋红边一行＋金色标签，三块胶囊各切各的；宽版全名板不贴（见 lavercup_scoreboard）。
+            from lavercup_scoreboard import resolve_masks as resolve_laver_masks
+            resolve_laver_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        elif profile == "band-legacy":
+            resolve_board_insets(sources, segments)
+
+    # 板蒙版会修正 score_inset 的真实上缘；必须等几何落定再写最终 ASS。
+    # 同一原生字幕块排在跟踪、人脸抽样和第一段视频编码之前。
     # 同一份字幕直接供成片使用；跨位置边界等确定性错误不再白编整条片。
     with stage("字幕预检"):
         # 每段解说落在它那一段的**开头**，字幕跟着同一个偏移
@@ -10074,56 +10125,6 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         print(f"字幕 {len(cues)} 行 → {ass.name}（画布 {VIDEO_W}×{VIDEO_H}，"
               f"上锚 MarginV={margin_v}{moved}，"
               f"左右 {_ASS_MARGIN_H}）")
-
-    # **同一个数的另一头：哪几段大半时间没人在说话。** 排在这儿是因为它和上面
-    # 那道闸用的是同一批 TTS 时长，一个源片都不用碰——而下面就要开始编码了，
-    # 在这之前红掉省的是整趟渲染。
-    idle_total = sum(max(0.0, segments[i].length - v) for i, v in spoken_of.items())
-    total_secs = sum(seg.length for seg in segments)
-    print(f"[查哑场] 没人说话合计 {idle_total:.1f}s / {total_secs:.1f}s"
-          f"（{idle_total / total_secs:.0%}），提示线：单段 {MAX_SILENT_GAP}s")
-    idle = silent_stretches(segments, spoken_of)
-    if idle:
-        print("[注意] 以下片段超过旁白留白提示线；现场声仍在，所以不阻断渲染：\n"
-              + "\n".join(idle)
-              + "\n若画面观感确实空，再补旁白或缩短窗口；数字静音仍由成片 QA 硬拦。")
-
-    # **板的右缘现量**（`score_inset: true` 的段）——账号所有者 2026-08-29：
-    # 「比分板的宽度会变化的，所以不能固定宽度去切，要自适应」。排在切片之前，
-    # 和 track_shots 同一个位置：都是「先把整条量完，再逐段切」。
-    profile = scoreboard_profile(spec, segments)
-    # **这一段要计时**（2026-09-27）：逐段解码扫板，board-inset 的片子中位 20 秒、
-    # 最长 40 秒，原来没有 stage 包着——报表上看不见，`last_stage` 也指不到它
-    # （「第 N 段一帧都认不出板」死在这儿时，台账记的是上一步 TTS）。
-    with stage("比分板蒙版") if profile else nullcontext():
-        if profile == "us-open":
-            from scoreboard_geometry import resolve_masks
-            resolve_masks(sources, segments, outdir,
-                          Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
-                          FPS_EXPR, SEG_FADE)
-        elif profile == "rna-slam":
-            from rna_scoreboard import resolve_masks as resolve_rna_masks
-            resolve_rna_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-        elif profile == "atp":
-            # ⭐ ATP 巡回赛转播的板：逐帧蒙版，板多宽切多宽，BREAK/SET/MATCH POINT
-            # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
-            from atp_scoreboard import resolve_masks as resolve_atp_masks
-            resolve_atp_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-        elif profile == "wta":
-            # ⭐ WTA 巡回赛转播：板不在的帧不贴、板多宽切多宽（见 wta_scoreboard）。
-            from wta_scoreboard import resolve_masks as resolve_wta_masks
-            resolve_wta_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-        elif profile == "itf-bjk":
-            # ⭐ 比利·简·金杯（ITF 转播）：宝蓝底＋浅青小分格＋发球小球（见 itf_scoreboard）。
-            from itf_scoreboard import resolve_masks as resolve_itf_masks
-            resolve_itf_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-        elif profile == "lavercup":
-            # ⭐ 拉沃尔杯转播（账号所有者 2026-09-25「比分板补一套适配，彻底解决」）：
-            # 蓝边一行＋红边一行＋金色标签，三块胶囊各切各的；宽版全名板不贴（见 lavercup_scoreboard）。
-            from lavercup_scoreboard import resolve_masks as resolve_laver_masks
-            resolve_laver_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-        elif profile == "band-legacy":
-            resolve_board_insets(sources, segments)
 
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)
