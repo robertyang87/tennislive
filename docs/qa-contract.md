@@ -48,7 +48,7 @@ interview 的自动推送不再靠人补容易忘记的开关：草稿在赛果�
 
 **reel 一律默认 `push.auto: true`（2026-10-13 起）**：账号所有者定的是「质检通过就推送微信，不用问」。
 新写的 reel spec 必须带 `"push": {"auto": true, ...}`；真不想自动发只能写 `push._no_auto_why`。
-`tests/test_reel_push_auto_default.py` 守这条，旧片豁免在 `data/legacy_push_auto_off.json`（只许减）。
+`tests/test_reel_editorial.py（test_新片默认开自动推送）` 守这条，旧片豁免在 `data/legacy_push_auto_off.json`（只许减）。
 
 ## 三、L2 成片落地闸：统一的核心不变量
 
