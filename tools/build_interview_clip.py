@@ -66,6 +66,7 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
 from __future__ import annotations
 
 import argparse
+import functools
 import contextlib
 import difflib
 import hashlib
@@ -1405,7 +1406,11 @@ def segment(words: list[tuple[float, str]], start: float, end: float,
     ruler = SEGMENT_RULER if ruler is None else ruler
     if ruler not in SEGMENT_RULERS:
         raise SystemExit(f"切行尺子 {ruler!r} 不存在，只有 {sorted(SEGMENT_RULERS)}。")
-    width = ruler_width(ruler) if width is None else width
+    # The DP considers many identical strings repeatedly. Reuse deterministic
+    # font advances only during this segment call; subsequent specs, rulers,
+    # font replacements and explicit caller-supplied width functions stay fresh.
+    if width is None:
+        width = functools.lru_cache(maxsize=4096)(ruler_width(ruler))
     bare = SEGMENT_RULERS[ruler][2]
     fix = {**_NAME_FIX, **(word_fix or {})}
 

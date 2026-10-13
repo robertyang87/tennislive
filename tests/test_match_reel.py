@@ -3873,7 +3873,7 @@ def test_渲完的成片不许因为清理那一步失败而整趟丢掉():
     jobs = body.split("\njobs:", 1)[1]
     blocks = re.split(r"\n(?=      - (?:name|uses):)", jobs)
 
-    upload = [b for b in blocks if "actions/upload-artifact" in b]
+    upload = [b for b in blocks if "- name: 上传 artifact" in b and "actions/upload-artifact" in b]
     assert len(upload) == 1, f"上传 artifact 的步骤有 {len(upload)} 个"
     assert "always()" in upload[0], (
         "上传 artifact 没带 always()——清理那一步的体积兜底一 exit 1，"
@@ -3920,7 +3920,8 @@ def test_失败时的artifact不许带源片(workflow, job, outdir, must_drop, m
 
     spec = yaml.safe_load(workflow.read_text(encoding="utf-8"))
     steps = [s for s in spec["jobs"][job]["steps"]
-             if "actions/upload-artifact" in str(s.get("uses", ""))]
+             if "actions/upload-artifact" in str(s.get("uses", ""))
+             and (workflow != WORKFLOW or s.get("name") == "上传 artifact")]
     assert len(steps) == 1, f"{workflow} 里上传 artifact 的步骤有 {len(steps)} 个"
     step = steps[0]
     assert "always()" in str(step.get("if", ""))

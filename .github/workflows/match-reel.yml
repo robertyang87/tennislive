@@ -1421,6 +1421,40 @@ jobs:
             --film "${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4" \
             2>&1 | tee -a /tmp/render-findings.log
 
+      # Preserve verified original input bytes before Release clobber/cleanup.
+      # This archive is transport evidence, not permission to bypass fresh QC.
+      - name: 列出本次已通过 QC 的原生输入
+        id: native_archive
+        if: github.event.inputs.mode == 'render'
+        env:
+          NATIVE_SLUG: ${{ github.event.inputs.slug }}
+          NATIVE_OUTDIR: ${{ steps.paths.outputs.outdir }}
+        run: |
+          python - <<'PY_NATIVE'
+          import os, pathlib, sys
+          sys.path.insert(0, 'tools')
+          from compose_native_reel import native_archive_paths
+          slug = os.environ['NATIVE_SLUG']
+          record = {'id': int(os.environ['GITHUB_RUN_ID']),
+                    'run_number': int(os.environ['GITHUB_RUN_NUMBER']),
+                    'head_sha': os.environ['GITHUB_SHA']}
+          paths = native_archive_paths(slug, pathlib.Path(os.environ['NATIVE_OUTDIR']), record,
+                                       pathlib.Path('specs/reels', slug + '.json').read_bytes())
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as handle:
+              handle.write('paths<<NATIVE_INPUT_PATHS\n')
+              handle.write('\n'.join(str(path) for path in paths) + '\nNATIVE_INPUT_PATHS\n')
+          PY_NATIVE
+
+      - name: 保留本次原生输入（不进 git）
+        if: github.event.inputs.mode == 'render'
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-input-${{ github.event.inputs.slug }}-${{ github.run_number }}
+          path: ${{ steps.native_archive.outputs.paths }}
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
+
       # **成片一律走 GitHub Release，不进 git。**
       #
       # 账号所有者定过两层。2026-08-02：「我的基础要求是保证内容和画面质量，
