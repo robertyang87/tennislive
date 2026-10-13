@@ -1,0 +1,54 @@
+{
+  "checked_at_utc": "2026-10-13T09:03:12.217416+00:00",
+  "match": {
+    "player": "Hanyu Guo",
+    "opponent": "Sorana Cirstea",
+    "date": "2026-10-13",
+    "event": "Wuhan Open",
+    "round": "R1",
+    "match_id": "WTA1075_2026_LS051"
+  },
+  "channels": [
+    {
+      "channel": "official WTA photo API",
+      "pages": 5,
+      "items": 500,
+      "guo_hits": 0,
+      "latest_date": 1791356399853
+    },
+    {
+      "channel": "WTA articles text API",
+      "pages": 1,
+      "items": 50,
+      "result": "Only October 10 draw article mentions Guo; no same-match Guo lead photo"
+    },
+    {
+      "channel": "Wuhan official site",
+      "urls": [
+        "https://wuhanopen.com/",
+        "https://www.wuhanopen.com/",
+        "https://www.wuhanopen.org/index.php/index-view-aid-1949.html"
+      ],
+      "result": "202 challenge shells on .com; CONNECT 403 on .org. Not proof that no gallery exists."
+    },
+    {
+      "channel": "official event social",
+      "urls": [
+        "https://www.instagram.com/wuhanopen/",
+        "https://weibo.com/u/5225297877"
+      ],
+      "result": "Anonymous app shells retrieved, no usable same-match photo metadata; not proof none exist"
+    },
+    {
+      "channel": "press / agency",
+      "urls": [
+        "https://apnews.com/search?q=Hanyu%20Guo",
+        "https://www.gettyimages.com/photos/hanyu-guo?sort=newest",
+        "https://www.163.com/dy/article/L94LHE7O0529RKN8.html"
+      ],
+      "result": "AP visible results Wimbledon July 2026 and Montreal July 2025 rejected as wrong match; Getty and same-match NetEase article return 403."
+    }
+  ],
+  "selected": null,
+  "fallback_reason": "No same-match official full-resolution photo retrieved from the checked sources; a clear eyes-open same-match official source-video frame remains a fallback with provenance, not a claim that official photos do not exist."
+}

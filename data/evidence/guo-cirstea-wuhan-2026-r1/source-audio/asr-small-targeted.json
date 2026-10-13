@@ -1,0 +1,1024 @@
+{
+  "schema": "actual-local-targeted-asr.v1",
+  "source_path": "/workspace/scratch/guo-IkK3VdqNLaw/source/IkK3VdqNLaw.mp4",
+  "source_sha256": "16b8491f7e99ae70789dcf52e718038bc3839d9868d69ff1d627cfea57371a88",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "normalization": "none; original amplitude",
+  "vad_filter": false,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "initial_prompt": null,
+  "human_listening_claimed": false,
+  "windows": [
+    [
+      78,
+      90
+    ],
+    [
+      103,
+      114
+    ],
+    [
+      121,
+      131
+    ],
+    [
+      165,
+      179
+    ],
+    [
+      213,
+      239
+    ],
+    [
+      249,
+      295
+    ]
+  ],
+  "window_results": [
+    {
+      "window": [
+        78,
+        90
+      ],
+      "duration": 12.0,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        103,
+        114
+      ],
+      "duration": 11.0,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        121,
+        131
+      ],
+      "duration": 10.0,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        165,
+        179
+      ],
+      "duration": 14.0,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        213,
+        239
+      ],
+      "duration": 26.0,
+      "utterance_count": 3,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        249,
+        295
+      ],
+      "duration": 46.0,
+      "utterance_count": 4,
+      "status": "actual_decode_complete"
+    }
+  ],
+  "segments": [
+    {
+      "window": [
+        78,
+        90
+      ],
+      "start": 82.52,
+      "end": 87.16,
+      "text": " Nailed it, can't stop from the rule.",
+      "no_speech_prob": 0.1601613312959671,
+      "avg_logprob": -0.9725997703416007,
+      "words": [
+        {
+          "start": 82.52,
+          "end": 83.34,
+          "word": " Nailed",
+          "probability": 0.8834692239761353
+        },
+        {
+          "start": 83.34,
+          "end": 83.9,
+          "word": " it,",
+          "probability": 0.9910481572151184
+        },
+        {
+          "start": 83.9,
+          "end": 86.18,
+          "word": " can't",
+          "probability": 0.6331959217786789
+        },
+        {
+          "start": 86.18,
+          "end": 86.44,
+          "word": " stop",
+          "probability": 0.6700237989425659
+        },
+        {
+          "start": 86.44,
+          "end": 86.66,
+          "word": " from",
+          "probability": 0.9407211542129517
+        },
+        {
+          "start": 86.66,
+          "end": 86.92,
+          "word": " the",
+          "probability": 0.20644837617874146
+        },
+        {
+          "start": 86.92,
+          "end": 87.16,
+          "word": " rule.",
+          "probability": 0.2615464925765991
+        }
+      ]
+    },
+    {
+      "window": [
+        103,
+        114
+      ],
+      "start": 106.38,
+      "end": 110.42,
+      "text": " Superstar. We're up solid in the 4th court.",
+      "no_speech_prob": 0.25003013014793396,
+      "avg_logprob": -0.6043221987783909,
+      "words": [
+        {
+          "start": 106.38,
+          "end": 107.1,
+          "word": " Superstar.",
+          "probability": 0.6838857233524323
+        },
+        {
+          "start": 108.66,
+          "end": 108.82,
+          "word": " We're",
+          "probability": 0.6293845772743225
+        },
+        {
+          "start": 108.82,
+          "end": 108.82,
+          "word": " up",
+          "probability": 0.6115936636924744
+        },
+        {
+          "start": 108.82,
+          "end": 109.42,
+          "word": " solid",
+          "probability": 0.9865633249282837
+        },
+        {
+          "start": 109.42,
+          "end": 109.7,
+          "word": " in",
+          "probability": 0.9847909808158875
+        },
+        {
+          "start": 109.7,
+          "end": 109.84,
+          "word": " the",
+          "probability": 0.9942506551742554
+        },
+        {
+          "start": 109.84,
+          "end": 110.2,
+          "word": " 4th",
+          "probability": 0.4328139126300812
+        },
+        {
+          "start": 110.2,
+          "end": 110.42,
+          "word": " court.",
+          "probability": 0.5544929504394531
+        }
+      ]
+    },
+    {
+      "window": [
+        121,
+        131
+      ],
+      "start": 123.8,
+      "end": 128.02,
+      "text": " Return was a bit lucky, she was actually a bit late.",
+      "no_speech_prob": 0.11393558233976364,
+      "avg_logprob": -0.3898332081735134,
+      "words": [
+        {
+          "start": 123.8,
+          "end": 124.6,
+          "word": " Return",
+          "probability": 0.6064212322235107
+        },
+        {
+          "start": 124.6,
+          "end": 124.88,
+          "word": " was",
+          "probability": 0.9936931133270264
+        },
+        {
+          "start": 124.88,
+          "end": 124.94,
+          "word": " a",
+          "probability": 0.9935358762741089
+        },
+        {
+          "start": 124.94,
+          "end": 125.04,
+          "word": " bit",
+          "probability": 0.9925028085708618
+        },
+        {
+          "start": 125.04,
+          "end": 125.46,
+          "word": " lucky,",
+          "probability": 0.9782968759536743
+        },
+        {
+          "start": 125.9,
+          "end": 126.08,
+          "word": " she",
+          "probability": 0.9584172368049622
+        },
+        {
+          "start": 126.08,
+          "end": 126.2,
+          "word": " was",
+          "probability": 0.9349690675735474
+        },
+        {
+          "start": 126.2,
+          "end": 126.6,
+          "word": " actually",
+          "probability": 0.9819679856300354
+        },
+        {
+          "start": 126.6,
+          "end": 127.42,
+          "word": " a",
+          "probability": 0.935109555721283
+        },
+        {
+          "start": 127.42,
+          "end": 127.54,
+          "word": " bit",
+          "probability": 0.9908368587493896
+        },
+        {
+          "start": 127.54,
+          "end": 128.02,
+          "word": " late.",
+          "probability": 0.9979658126831055
+        }
+      ]
+    },
+    {
+      "window": [
+        165,
+        179
+      ],
+      "start": 169.02,
+      "end": 177.18,
+      "text": " Last change in height and shape from Guo, and it just unsettled Kursetayat.",
+      "no_speech_prob": 0.20795832574367523,
+      "avg_logprob": -0.5827187995115916,
+      "words": [
+        {
+          "start": 169.02,
+          "end": 169.82,
+          "word": " Last",
+          "probability": 0.4613722860813141
+        },
+        {
+          "start": 169.82,
+          "end": 170.28,
+          "word": " change",
+          "probability": 0.9631404876708984
+        },
+        {
+          "start": 170.28,
+          "end": 170.6,
+          "word": " in",
+          "probability": 0.989654541015625
+        },
+        {
+          "start": 170.6,
+          "end": 171.0,
+          "word": " height",
+          "probability": 0.8614128232002258
+        },
+        {
+          "start": 171.0,
+          "end": 171.26,
+          "word": " and",
+          "probability": 0.9774349927902222
+        },
+        {
+          "start": 171.26,
+          "end": 171.76,
+          "word": " shape",
+          "probability": 0.996819019317627
+        },
+        {
+          "start": 171.76,
+          "end": 172.16,
+          "word": " from",
+          "probability": 0.9709687829017639
+        },
+        {
+          "start": 172.16,
+          "end": 172.74,
+          "word": " Guo,",
+          "probability": 0.8376054763793945
+        },
+        {
+          "start": 172.78,
+          "end": 174.52,
+          "word": " and",
+          "probability": 0.9023003578186035
+        },
+        {
+          "start": 174.52,
+          "end": 174.64,
+          "word": " it",
+          "probability": 0.9882545471191406
+        },
+        {
+          "start": 174.64,
+          "end": 174.98,
+          "word": " just",
+          "probability": 0.9940760135650635
+        },
+        {
+          "start": 174.98,
+          "end": 176.34,
+          "word": " unsettled",
+          "probability": 0.9595404863357544
+        },
+        {
+          "start": 176.34,
+          "end": 177.18,
+          "word": " Kursetayat.",
+          "probability": 0.3449919581413269
+        }
+      ]
+    },
+    {
+      "window": [
+        213,
+        239
+      ],
+      "start": 214.16,
+      "end": 222.92,
+      "text": " what a remarkable transformation three match points saved by Guo Hanyu and into",
+      "no_speech_prob": 0.4583737552165985,
+      "avg_logprob": -0.5256228148937225,
+      "words": [
+        {
+          "start": 214.16,
+          "end": 215.0,
+          "word": " what",
+          "probability": 0.054441653192043304
+        },
+        {
+          "start": 215.0,
+          "end": 215.26,
+          "word": " a",
+          "probability": 0.963839590549469
+        },
+        {
+          "start": 215.26,
+          "end": 216.1,
+          "word": " remarkable",
+          "probability": 0.9785727858543396
+        },
+        {
+          "start": 216.1,
+          "end": 216.96,
+          "word": " transformation",
+          "probability": 0.9753725528717041
+        },
+        {
+          "start": 216.96,
+          "end": 219.28,
+          "word": " three",
+          "probability": 0.5770969390869141
+        },
+        {
+          "start": 219.28,
+          "end": 219.58,
+          "word": " match",
+          "probability": 0.9798780083656311
+        },
+        {
+          "start": 219.58,
+          "end": 220.0,
+          "word": " points",
+          "probability": 0.7479326725006104
+        },
+        {
+          "start": 220.0,
+          "end": 220.7,
+          "word": " saved",
+          "probability": 0.985622227191925
+        },
+        {
+          "start": 220.7,
+          "end": 221.08,
+          "word": " by",
+          "probability": 0.99094557762146
+        },
+        {
+          "start": 221.08,
+          "end": 221.5,
+          "word": " Guo",
+          "probability": 0.8522642850875854
+        },
+        {
+          "start": 221.5,
+          "end": 222.14,
+          "word": " Hanyu",
+          "probability": 0.6813169022401174
+        },
+        {
+          "start": 222.14,
+          "end": 222.48,
+          "word": " and",
+          "probability": 0.8615758419036865
+        },
+        {
+          "start": 222.48,
+          "end": 222.92,
+          "word": " into",
+          "probability": 0.8652344346046448
+        }
+      ]
+    },
+    {
+      "window": [
+        213,
+        239
+      ],
+      "start": 222.92,
+      "end": 228.1,
+      "text": " a decider we go less aggressive",
+      "no_speech_prob": 0.4583737552165985,
+      "avg_logprob": -0.5256228148937225,
+      "words": [
+        {
+          "start": 222.92,
+          "end": 223.08,
+          "word": " a",
+          "probability": 0.9551490545272827
+        },
+        {
+          "start": 223.08,
+          "end": 223.52,
+          "word": " decider",
+          "probability": 0.976825088262558
+        },
+        {
+          "start": 223.52,
+          "end": 223.74,
+          "word": " we",
+          "probability": 0.9639753699302673
+        },
+        {
+          "start": 223.74,
+          "end": 224.78,
+          "word": " go",
+          "probability": 0.9953975081443787
+        },
+        {
+          "start": 224.78,
+          "end": 227.02,
+          "word": " less",
+          "probability": 0.44361570477485657
+        },
+        {
+          "start": 227.02,
+          "end": 228.1,
+          "word": " aggressive",
+          "probability": 0.9935486912727356
+        }
+      ]
+    },
+    {
+      "window": [
+        213,
+        239
+      ],
+      "start": 233.94,
+      "end": 236.84,
+      "text": " letting Gool come back into this match",
+      "no_speech_prob": 0.4583737552165985,
+      "avg_logprob": -0.5256228148937225,
+      "words": [
+        {
+          "start": 233.94,
+          "end": 234.78,
+          "word": " letting",
+          "probability": 0.6055893898010254
+        },
+        {
+          "start": 234.78,
+          "end": 235.2,
+          "word": " Gool",
+          "probability": 0.18771535530686378
+        },
+        {
+          "start": 235.2,
+          "end": 235.54,
+          "word": " come",
+          "probability": 0.9609561562538147
+        },
+        {
+          "start": 235.54,
+          "end": 235.82,
+          "word": " back",
+          "probability": 0.9981536269187927
+        },
+        {
+          "start": 235.82,
+          "end": 236.18,
+          "word": " into",
+          "probability": 0.9953858256340027
+        },
+        {
+          "start": 236.18,
+          "end": 236.46,
+          "word": " this",
+          "probability": 0.9776381850242615
+        },
+        {
+          "start": 236.46,
+          "end": 236.84,
+          "word": " match",
+          "probability": 0.9920118451118469
+        }
+      ]
+    },
+    {
+      "window": [
+        249,
+        295
+      ],
+      "start": 249.0,
+      "end": 267.42,
+      "text": " believe it. Unbelievable. The win of her tennis career for Guo Hanyu. How has she",
+      "no_speech_prob": 0.5466286540031433,
+      "avg_logprob": -0.2406603754783163,
+      "words": [
+        {
+          "start": 249.0,
+          "end": 249.44,
+          "word": " believe",
+          "probability": 0.046796854585409164
+        },
+        {
+          "start": 249.44,
+          "end": 251.84,
+          "word": " it.",
+          "probability": 0.8436044454574585
+        },
+        {
+          "start": 258.14,
+          "end": 258.94,
+          "word": " Unbelievable.",
+          "probability": 0.9497305452823639
+        },
+        {
+          "start": 260.52,
+          "end": 260.76,
+          "word": " The",
+          "probability": 0.8757840991020203
+        },
+        {
+          "start": 260.76,
+          "end": 261.08,
+          "word": " win",
+          "probability": 0.951738715171814
+        },
+        {
+          "start": 261.08,
+          "end": 261.56,
+          "word": " of",
+          "probability": 0.9895287156105042
+        },
+        {
+          "start": 261.56,
+          "end": 261.72,
+          "word": " her",
+          "probability": 0.8455607891082764
+        },
+        {
+          "start": 261.72,
+          "end": 262.28,
+          "word": " tennis",
+          "probability": 0.9913449287414551
+        },
+        {
+          "start": 262.28,
+          "end": 263.04,
+          "word": " career",
+          "probability": 0.986186146736145
+        },
+        {
+          "start": 263.04,
+          "end": 264.46,
+          "word": " for",
+          "probability": 0.6108638048171997
+        },
+        {
+          "start": 264.46,
+          "end": 264.84,
+          "word": " Guo",
+          "probability": 0.9143795073032379
+        },
+        {
+          "start": 264.84,
+          "end": 265.56,
+          "word": " Hanyu.",
+          "probability": 0.7000767290592194
+        },
+        {
+          "start": 266.48,
+          "end": 266.9,
+          "word": " How",
+          "probability": 0.9842840433120728
+        },
+        {
+          "start": 266.9,
+          "end": 267.24,
+          "word": " has",
+          "probability": 0.9933760762214661
+        },
+        {
+          "start": 267.24,
+          "end": 267.42,
+          "word": " she",
+          "probability": 0.9963279366493225
+        }
+      ]
+    },
+    {
+      "window": [
+        249,
+        295
+      ],
+      "start": 267.42,
+      "end": 275.38,
+      "text": " done that? From a set and four love down and then three match points down, she has",
+      "no_speech_prob": 0.5466286540031433,
+      "avg_logprob": -0.2406603754783163,
+      "words": [
+        {
+          "start": 267.42,
+          "end": 267.74,
+          "word": " done",
+          "probability": 0.9976978898048401
+        },
+        {
+          "start": 267.74,
+          "end": 268.18,
+          "word": " that?",
+          "probability": 0.9966129660606384
+        },
+        {
+          "start": 269.76,
+          "end": 270.04,
+          "word": " From",
+          "probability": 0.9620716571807861
+        },
+        {
+          "start": 270.04,
+          "end": 270.22,
+          "word": " a",
+          "probability": 0.9875031113624573
+        },
+        {
+          "start": 270.22,
+          "end": 270.48,
+          "word": " set",
+          "probability": 0.9561110138893127
+        },
+        {
+          "start": 270.48,
+          "end": 270.74,
+          "word": " and",
+          "probability": 0.9352545738220215
+        },
+        {
+          "start": 270.74,
+          "end": 271.08,
+          "word": " four",
+          "probability": 0.5266702175140381
+        },
+        {
+          "start": 271.08,
+          "end": 271.36,
+          "word": " love",
+          "probability": 0.809664249420166
+        },
+        {
+          "start": 271.36,
+          "end": 271.74,
+          "word": " down",
+          "probability": 0.9244169592857361
+        },
+        {
+          "start": 271.74,
+          "end": 272.12,
+          "word": " and",
+          "probability": 0.784320056438446
+        },
+        {
+          "start": 272.12,
+          "end": 272.32,
+          "word": " then",
+          "probability": 0.9768388867378235
+        },
+        {
+          "start": 272.32,
+          "end": 272.76,
+          "word": " three",
+          "probability": 0.9751724600791931
+        },
+        {
+          "start": 272.76,
+          "end": 273.12,
+          "word": " match",
+          "probability": 0.9866201877593994
+        },
+        {
+          "start": 273.12,
+          "end": 273.52,
+          "word": " points",
+          "probability": 0.8300603628158569
+        },
+        {
+          "start": 273.52,
+          "end": 274.04,
+          "word": " down,",
+          "probability": 0.9891849756240845
+        },
+        {
+          "start": 274.72,
+          "end": 275.22,
+          "word": " she",
+          "probability": 0.9876329898834229
+        },
+        {
+          "start": 275.22,
+          "end": 275.38,
+          "word": " has",
+          "probability": 0.9924103021621704
+        }
+      ]
+    },
+    {
+      "window": [
+        249,
+        295
+      ],
+      "start": 275.38,
+      "end": 284.8,
+      "text": " a first top 20 win a first WTA 1000 win and she does it on home soil what a",
+      "no_speech_prob": 0.25306713581085205,
+      "avg_logprob": -0.2671371329398382,
+      "words": [
+        {
+          "start": 275.38,
+          "end": 275.48,
+          "word": " a",
+          "probability": 0.09512204676866531
+        },
+        {
+          "start": 275.48,
+          "end": 275.8,
+          "word": " first",
+          "probability": 0.3734481632709503
+        },
+        {
+          "start": 275.8,
+          "end": 276.12,
+          "word": " top",
+          "probability": 0.7933541536331177
+        },
+        {
+          "start": 276.12,
+          "end": 276.62,
+          "word": " 20",
+          "probability": 0.8885908126831055
+        },
+        {
+          "start": 276.62,
+          "end": 276.86,
+          "word": " win",
+          "probability": 0.9181355834007263
+        },
+        {
+          "start": 276.86,
+          "end": 277.18,
+          "word": " a",
+          "probability": 0.19282490015029907
+        },
+        {
+          "start": 277.18,
+          "end": 277.56,
+          "word": " first",
+          "probability": 0.956875205039978
+        },
+        {
+          "start": 277.56,
+          "end": 278.34,
+          "word": " WTA",
+          "probability": 0.9080031514167786
+        },
+        {
+          "start": 278.34,
+          "end": 279.08,
+          "word": " 1000",
+          "probability": 0.8202060461044312
+        },
+        {
+          "start": 279.08,
+          "end": 279.74,
+          "word": " win",
+          "probability": 0.8914697170257568
+        },
+        {
+          "start": 279.74,
+          "end": 281.24,
+          "word": " and",
+          "probability": 0.7868959307670593
+        },
+        {
+          "start": 281.24,
+          "end": 281.44,
+          "word": " she",
+          "probability": 0.9961119294166565
+        },
+        {
+          "start": 281.44,
+          "end": 281.74,
+          "word": " does",
+          "probability": 0.9980553388595581
+        },
+        {
+          "start": 281.74,
+          "end": 282.0,
+          "word": " it",
+          "probability": 0.9985060691833496
+        },
+        {
+          "start": 282.0,
+          "end": 282.34000000000003,
+          "word": " on",
+          "probability": 0.9954960346221924
+        },
+        {
+          "start": 282.34000000000003,
+          "end": 282.88,
+          "word": " home",
+          "probability": 0.971947968006134
+        },
+        {
+          "start": 282.88,
+          "end": 283.5,
+          "word": " soil",
+          "probability": 0.9954473376274109
+        },
+        {
+          "start": 283.5,
+          "end": 284.52,
+          "word": " what",
+          "probability": 0.6122105121612549
+        },
+        {
+          "start": 284.52,
+          "end": 284.8,
+          "word": " a",
+          "probability": 0.9944085478782654
+        }
+      ]
+    },
+    {
+      "window": [
+        249,
+        295
+      ],
+      "start": 284.8,
+      "end": 293.02,
+      "text": " moment in the career of Guo Hanyu I mean what a comeback from her",
+      "no_speech_prob": 0.25306713581085205,
+      "avg_logprob": -0.2671371329398382,
+      "words": [
+        {
+          "start": 284.8,
+          "end": 285.12,
+          "word": " moment",
+          "probability": 0.9993512034416199
+        },
+        {
+          "start": 285.12,
+          "end": 285.96,
+          "word": " in",
+          "probability": 0.9888536930084229
+        },
+        {
+          "start": 285.96,
+          "end": 286.12,
+          "word": " the",
+          "probability": 0.9992977380752563
+        },
+        {
+          "start": 286.12,
+          "end": 286.56,
+          "word": " career",
+          "probability": 0.9902543425559998
+        },
+        {
+          "start": 286.56,
+          "end": 287.08,
+          "word": " of",
+          "probability": 0.9955944418907166
+        },
+        {
+          "start": 287.08,
+          "end": 287.48,
+          "word": " Guo",
+          "probability": 0.7884125709533691
+        },
+        {
+          "start": 287.48,
+          "end": 288.18,
+          "word": " Hanyu",
+          "probability": 0.7257290283838908
+        },
+        {
+          "start": 288.18,
+          "end": 291.54,
+          "word": " I",
+          "probability": 0.5357014536857605
+        },
+        {
+          "start": 291.54,
+          "end": 291.68,
+          "word": " mean",
+          "probability": 0.9956329464912415
+        },
+        {
+          "start": 291.68,
+          "end": 291.86,
+          "word": " what",
+          "probability": 0.969899594783783
+        },
+        {
+          "start": 291.86,
+          "end": 292.0,
+          "word": " a",
+          "probability": 0.9982896447181702
+        },
+        {
+          "start": 292.0,
+          "end": 292.26,
+          "word": " comeback",
+          "probability": 0.9935463070869446
+        },
+        {
+          "start": 292.26,
+          "end": 292.65999999999997,
+          "word": " from",
+          "probability": 0.9975480437278748
+        },
+        {
+          "start": 292.65999999999997,
+          "end": 293.02,
+          "word": " her",
+          "probability": 0.9941157102584839
+        }
+      ]
+    }
+  ],
+  "run_status": "complete",
+  "recorded_at": "2026-10-13T09:08:19.950918+00:00"
+}

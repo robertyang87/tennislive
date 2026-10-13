@@ -1,0 +1,264 @@
+{
+  "schema": "actual-local-targeted-asr.v1",
+  "source_path": "/workspace/scratch/guo-IkK3VdqNLaw/source/IkK3VdqNLaw.mp4",
+  "source_sha256": "16b8491f7e99ae70789dcf52e718038bc3839d9868d69ff1d627cfea57371a88",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "normalization": "none; original amplitude",
+  "vad_filter": false,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "initial_prompt": null,
+  "human_listening_claimed": false,
+  "windows": [
+    [
+      103,
+      114
+    ],
+    [
+      165,
+      179
+    ],
+    [
+      239,
+      259
+    ]
+  ],
+  "window_results": [
+    {
+      "window": [
+        103,
+        114
+      ],
+      "duration": 11.0,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        165,
+        179
+      ],
+      "duration": 14.0,
+      "utterance_count": 1,
+      "status": "actual_decode_complete"
+    },
+    {
+      "window": [
+        239,
+        259
+      ],
+      "duration": 20.0,
+      "utterance_count": 2,
+      "status": "actual_decode_complete"
+    }
+  ],
+  "segments": [
+    {
+      "window": [
+        103,
+        114
+      ],
+      "start": 106.22,
+      "end": 110.52,
+      "text": " Superstar, rock solid in the forecourt.",
+      "no_speech_prob": 0.06495378166437149,
+      "avg_logprob": -0.8258785651280329,
+      "words": [
+        {
+          "start": 106.22,
+          "end": 107.2,
+          "word": " Superstar,",
+          "probability": 0.4621414467692375
+        },
+        {
+          "start": 108.56,
+          "end": 108.82,
+          "word": " rock",
+          "probability": 0.7978071570396423
+        },
+        {
+          "start": 108.82,
+          "end": 109.48,
+          "word": " solid",
+          "probability": 0.9295014142990112
+        },
+        {
+          "start": 109.48,
+          "end": 109.72,
+          "word": " in",
+          "probability": 0.9909562468528748
+        },
+        {
+          "start": 109.72,
+          "end": 109.88,
+          "word": " the",
+          "probability": 0.9965659976005554
+        },
+        {
+          "start": 109.88,
+          "end": 110.52,
+          "word": " forecourt.",
+          "probability": 0.9861094653606415
+        }
+      ]
+    },
+    {
+      "window": [
+        165,
+        179
+      ],
+      "start": 169.04,
+      "end": 177.24,
+      "text": " Nice change in height and shape from Gwo and it just unsettled Kirsteja.",
+      "no_speech_prob": 0.2504194974899292,
+      "avg_logprob": -0.44475637731097994,
+      "words": [
+        {
+          "start": 169.04,
+          "end": 169.82,
+          "word": " Nice",
+          "probability": 0.5637842416763306
+        },
+        {
+          "start": 169.82,
+          "end": 170.32,
+          "word": " change",
+          "probability": 0.9906284213066101
+        },
+        {
+          "start": 170.32,
+          "end": 170.66,
+          "word": " in",
+          "probability": 0.994186520576477
+        },
+        {
+          "start": 170.66,
+          "end": 171.06,
+          "word": " height",
+          "probability": 0.9854848980903625
+        },
+        {
+          "start": 171.06,
+          "end": 171.34,
+          "word": " and",
+          "probability": 0.9907199144363403
+        },
+        {
+          "start": 171.34,
+          "end": 171.82,
+          "word": " shape",
+          "probability": 0.9967939257621765
+        },
+        {
+          "start": 171.82,
+          "end": 172.18,
+          "word": " from",
+          "probability": 0.987694263458252
+        },
+        {
+          "start": 172.18,
+          "end": 172.5,
+          "word": " Gwo",
+          "probability": 0.4565912038087845
+        },
+        {
+          "start": 172.5,
+          "end": 174.5,
+          "word": " and",
+          "probability": 0.3319340646266937
+        },
+        {
+          "start": 174.5,
+          "end": 174.72,
+          "word": " it",
+          "probability": 0.9875612854957581
+        },
+        {
+          "start": 174.72,
+          "end": 175.02,
+          "word": " just",
+          "probability": 0.9817150831222534
+        },
+        {
+          "start": 175.02,
+          "end": 176.42,
+          "word": " unsettled",
+          "probability": 0.9741051495075226
+        },
+        {
+          "start": 176.42,
+          "end": 177.24,
+          "word": " Kirsteja.",
+          "probability": 0.6343419849872589
+        }
+      ]
+    },
+    {
+      "window": [
+        239,
+        259
+      ],
+      "start": 245.7,
+      "end": 249.8,
+      "text": " Wow, would you believe it?",
+      "no_speech_prob": 0.10012329369783401,
+      "avg_logprob": -0.6509697251021862,
+      "words": [
+        {
+          "start": 245.7,
+          "end": 247.1,
+          "word": " Wow,",
+          "probability": 0.8182523250579834
+        },
+        {
+          "start": 247.3,
+          "end": 248.6,
+          "word": " would",
+          "probability": 0.9803646802902222
+        },
+        {
+          "start": 248.6,
+          "end": 249.06,
+          "word": " you",
+          "probability": 0.999573290348053
+        },
+        {
+          "start": 249.06,
+          "end": 249.58,
+          "word": " believe",
+          "probability": 0.9982200264930725
+        },
+        {
+          "start": 249.58,
+          "end": 250.28,
+          "word": " it?",
+          "probability": 0.9958631992340088
+        }
+      ]
+    },
+    {
+      "window": [
+        239,
+        259
+      ],
+      "start": 257.52,
+      "end": 258.92,
+      "text": " Unbelievable",
+      "no_speech_prob": 0.10012329369783401,
+      "avg_logprob": -0.6509697251021862,
+      "words": [
+        {
+          "start": 257.52,
+          "end": 258.92,
+          "word": " Unbelievable",
+          "probability": 0.9708594977855682
+        }
+      ]
+    }
+  ],
+  "run_status": "complete",
+  "recorded_at": "2026-10-13T09:14:32.752370+00:00"
+}

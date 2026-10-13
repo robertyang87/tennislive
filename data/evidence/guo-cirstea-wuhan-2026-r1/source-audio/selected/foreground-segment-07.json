@@ -1,0 +1,83 @@
+{
+  "schema": "tennislive.foreground-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-IkK3VdqNLaw/IkK3VdqNLaw.mp4",
+  "official_source_url": "https://www.youtube.com/watch?v=IkK3VdqNLaw",
+  "source_sha256": "16b8491f7e99ae70789dcf52e718038bc3839d9868d69ff1d627cfea57371a88",
+  "source_bytes": 80125909,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source agent: two fresh actual full-source ASR decodes plus exact cropped no-VAD reconciliation; no human listening/tone claim.",
+  "reviewed_at": "2026-10-13T09:35:51.691147+00:00",
+  "status": "complete",
+  "reviewed_from": 105.9,
+  "reviewed_to": 114,
+  "selected_from": 105.9,
+  "selected_to": 114,
+  "actual_listening_performed": false,
+  "human_listening_claimed": false,
+  "tone_verified": false,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 106.22,
+      "end": 107.16,
+      "en": "Superstar.",
+      "zh": "太出色了！"
+    },
+    {
+      "start": 108.15,
+      "end": 110.59,
+      "en": "Rock solid in the forecourt.",
+      "zh": "网前处理稳如磐石。"
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/asr-small-en.json",
+      "sha256": "6087ecdb9d62e365520ac6aed714f151dd55abb4c14856bc289d3ca52679597c",
+      "bytes": 55769,
+      "model": "small.en",
+      "vad_filter": true,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/asr-medium-en.json",
+      "sha256": "c01c83304d1a9aee25da85de3a8fc47c215ddadefd826bd93bb65fddb61230c6",
+      "bytes": 73904,
+      "model": "medium.en",
+      "vad_filter": true,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/asr-small-targeted.json",
+      "sha256": "0c5f0e250aee5014e18542835c89c8c80da7869e0b22ba3f68d7318aee655bd4",
+      "bytes": 23781,
+      "model": "small.en",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/asr-medium-targeted-bounded.json",
+      "sha256": "bd2ae5146c4008e80624662f0e650d35afb8b959ee894bb951ee5b8f5cfc8047",
+      "bytes": 5936,
+      "model": "medium.en",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/candidate-cues.json",
+      "sha256": "895ff52888864179b95bcadec9d230064cdc3d44149132e4e3bc352766886358",
+      "bytes": 5503
+    },
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/source-visual-preflight.json",
+      "sha256": "15555e82ac7f058a04676c24dc77e714d7fddaa4380204173ef468ecf35d7766",
+      "bytes": 6221
+    },
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/run-targeted-bounded.py",
+      "sha256": "34cc409fc0c0e0c384c5de747aacfb1fe3d6b4c52b92caa30b6a204cb2807ba7",
+      "bytes": 1873
+    }
+  ],
+  "completion_scope": "Actual model outputs over all selected source footage and overlapping full-clause contexts; timestamps are ASR word estimates. No unsupported human audition or tone gate claimed."
+}
