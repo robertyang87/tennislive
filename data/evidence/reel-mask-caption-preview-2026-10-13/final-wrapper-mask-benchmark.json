@@ -1,0 +1,5618 @@
+{
+  "reason": "Final wrapper expands workflow tilde cache root; fresh code key binds this correction.",
+  "cache_root": "/workspace/scratch/video-mask-cache-2026-10-13/cache",
+  "wrapper_sha256": "b873bbbe9faa55298b26121f3243318329419699c10024656281d55fd5479357",
+  "previous_wrapper_sha256": "d7229975bde63771887ab7a1be25a337056433ce11cd0623b6bbfdf4c00af783",
+  "previous_full_benchmark_sha256": "f0809782721dc41a73dc289d8e72e8376c0ebbdab512df1527bff167fb3bb99f",
+  "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+  "fps": "25/1",
+  "tail": 0.18,
+  "cold": {
+    "seconds": 78.73007089900057,
+    "cache_hit": false,
+    "cache_stored": true,
+    "geometries": [
+      {
+        "segment": 0,
+        "score_inset": [
+          90,
+          827,
+          518,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 2,
+        "score_inset": [
+          90,
+          867,
+          480,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 3,
+        "score_inset": [
+          90,
+          829,
+          482,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 4,
+        "score_inset": [
+          90,
+          829,
+          480,
+          981
+        ],
+        "spans": null
+      },
+      {
+        "segment": 5,
+        "score_inset": [
+          90,
+          827,
+          484,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 6,
+        "score_inset": [
+          90,
+          829,
+          480,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 7,
+        "score_inset": [
+          90,
+          829,
+          516,
+          981
+        ],
+        "spans": null
+      },
+      {
+        "segment": 8,
+        "score_inset": [
+          90,
+          867,
+          516,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 9,
+        "score_inset": [
+          90,
+          829,
+          520,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 10,
+        "score_inset": [
+          90,
+          867,
+          516,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 11,
+        "score_inset": [
+          90,
+          867,
+          516,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 12,
+        "score_inset": [
+          90,
+          867,
+          518,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 13,
+        "score_inset": [
+          90,
+          829,
+          520,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 14,
+        "score_inset": [
+          90,
+          829,
+          520,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 15,
+        "score_inset": [
+          90,
+          827,
+          518,
+          982
+        ],
+        "spans": null
+      }
+    ],
+    "report": {
+      "status": "pass",
+      "profile": "wta-tour-v1",
+      "segments": [
+        {
+          "segment": 0,
+          "frames": 321,
+          "present_frames": 61,
+          "tag_frames": 55,
+          "board_edges": [
+            388,
+            428
+          ],
+          "right": 428,
+          "source_bounds": [
+            90,
+            827,
+            518,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              388,
+              154
+            ],
+            [
+              0,
+              40,
+              406,
+              154
+            ],
+            [
+              0,
+              40,
+              418,
+              154
+            ],
+            [
+              0,
+              40,
+              423,
+              154
+            ],
+            [
+              0,
+              40,
+              425,
+              154
+            ],
+            [
+              0,
+              40,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              425,
+              154
+            ],
+            [
+              0,
+              42,
+              425,
+              155
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              428,
+              154
+            ]
+          ],
+          "header_bounds": [
+            [
+              0,
+              0,
+              167,
+              43
+            ],
+            [
+              0,
+              2,
+              167,
+              43
+            ],
+            [
+              0,
+              4,
+              167,
+              41
+            ],
+            [
+              0,
+              8,
+              167,
+              41
+            ],
+            [
+              0,
+              12,
+              167,
+              41
+            ],
+            [
+              0,
+              14,
+              167,
+              41
+            ],
+            [
+              0,
+              18,
+              167,
+              41
+            ],
+            [
+              0,
+              28,
+              44,
+              41
+            ],
+            [
+              1,
+              0,
+              167,
+              43
+            ],
+            [
+              1,
+              2,
+              167,
+              43
+            ],
+            [
+              1,
+              3,
+              167,
+              41
+            ],
+            [
+              1,
+              6,
+              167,
+              41
+            ]
+          ],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 61,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 260,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              286.96,
+              289.4
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-01.mkv",
+          "mask_sha256": "b97749731e248ead3e907ce58cdf98d790a55b5c8019235dcfa8117ab901e1d3"
+        },
+        {
+          "segment": 2,
+          "frames": 235,
+          "present_frames": 230,
+          "tag_frames": 0,
+          "board_edges": [
+            390,
+            390
+          ],
+          "right": 390,
+          "source_bounds": [
+            90,
+            867,
+            480,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              390,
+              155
+            ],
+            [
+              0,
+              42,
+              390,
+              154
+            ]
+          ],
+          "header_bounds": [],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 230,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 5,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              0.0,
+              9.2
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-03.mkv",
+          "mask_sha256": "f97fdce43d0842625dd5cf0e2e35702de1463794a7461c01f0f6becf31dd0e62"
+        },
+        {
+          "segment": 3,
+          "frames": 565,
+          "present_frames": 561,
+          "tag_frames": 396,
+          "board_edges": [
+            390,
+            394
+          ],
+          "right": 392,
+          "source_bounds": [
+            90,
+            829,
+            482,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              37,
+              390,
+              155
+            ],
+            [
+              0,
+              37,
+              392,
+              155
+            ],
+            [
+              0,
+              39,
+              390,
+              154
+            ],
+            [
+              0,
+              40,
+              390,
+              154
+            ],
+            [
+              0,
+              40,
+              390,
+              155
+            ],
+            [
+              0,
+              40,
+              392,
+              155
+            ],
+            [
+              0,
+              41,
+              390,
+              154
+            ],
+            [
+              0,
+              41,
+              390,
+              155
+            ],
+            [
+              0,
+              42,
+              390,
+              154
+            ],
+            [
+              0,
+              42,
+              390,
+              155
+            ],
+            [
+              0,
+              42,
+              391,
+              154
+            ],
+            [
+              0,
+              42,
+              392,
+              154
+            ],
+            [
+              0,
+              43,
+              390,
+              154
+            ],
+            [
+              0,
+              43,
+              390,
+              155
+            ],
+            [
+              0,
+              44,
+              390,
+              154
+            ],
+            [
+              0,
+              44,
+              390,
+              155
+            ],
+            [
+              0,
+              44,
+              392,
+              154
+            ]
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              163,
+              43
+            ],
+            [
+              0,
+              2,
+              163,
+              45
+            ],
+            [
+              0,
+              3,
+              163,
+              45
+            ],
+            [
+              0,
+              4,
+              163,
+              41
+            ],
+            [
+              0,
+              6,
+              163,
+              40
+            ],
+            [
+              0,
+              8,
+              163,
+              43
+            ],
+            [
+              0,
+              10,
+              163,
+              42
+            ],
+            [
+              0,
+              13,
+              112,
+              42
+            ],
+            [
+              1,
+              2,
+              163,
+              43
+            ],
+            [
+              1,
+              2,
+              163,
+              44
+            ],
+            [
+              1,
+              2,
+              163,
+              45
+            ],
+            [
+              1,
+              18,
+              21,
+              43
+            ],
+            [
+              1,
+              24,
+              21,
+              43
+            ]
+          ],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 561,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 4,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              9.2,
+              31.6
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-04.mkv",
+          "mask_sha256": "1c727cfcf42e1cb465959c8f0b5c4b512d156ea7469dec8d4b6b34deaaf927d6"
+        },
+        {
+          "segment": 4,
+          "frames": 292,
+          "present_frames": 288,
+          "tag_frames": 288,
+          "board_edges": [
+            390,
+            390
+          ],
+          "right": 390,
+          "source_bounds": [
+            90,
+            829,
+            480,
+            981
+          ],
+          "body_bounds": [
+            [
+              0,
+              42,
+              390,
+              154
+            ]
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              163,
+              43
+            ],
+            [
+              1,
+              2,
+              163,
+              43
+            ]
+          ],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 288,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 4,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              31.6,
+              43.1
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-05.mkv",
+          "mask_sha256": "6bba204f1d7b589e189005b48fb909585e3cb7145fc869acd9e97afd964fd9d0"
+        },
+        {
+          "segment": 5,
+          "frames": 1728,
+          "present_frames": 1692,
+          "tag_frames": 1294,
+          "board_edges": [
+            334,
+            394
+          ],
+          "right": 394,
+          "source_bounds": [
+            90,
+            827,
+            484,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              389,
+              154
+            ],
+            [
+              0,
+              40,
+              390,
+              154
+            ],
+            [
+              0,
+              40,
+              390,
+              155
+            ],
+            [
+              0,
+              40,
+              392,
+              154
+            ],
+            [
+              0,
+              40,
+              394,
+              154
+            ],
+            [
+              0,
+              41,
+              390,
+              154
+            ],
+            [
+              0,
+              41,
+              390,
+              155
+            ],
+            [
+              0,
+              41,
+              392,
+              154
+            ],
+            [
+              0,
+              42,
+              334,
+              154
+            ],
+            [
+              0,
+              42,
+              356,
+              154
+            ],
+            [
+              0,
+              42,
+              374,
+              154
+            ],
+            [
+              0,
+              42,
+              382,
+              154
+            ],
+            [
+              0,
+              42,
+              388,
+              154
+            ],
+            [
+              0,
+              42,
+              390,
+              152
+            ],
+            [
+              0,
+              42,
+              390,
+              153
+            ],
+            [
+              0,
+              42,
+              390,
+              154
+            ],
+            [
+              0,
+              42,
+              390,
+              155
+            ],
+            [
+              0,
+              42,
+              391,
+              154
+            ],
+            [
+              0,
+              42,
+              392,
+              154
+            ],
+            [
+              0,
+              42,
+              393,
+              154
+            ],
+            [
+              0,
+              43,
+              390,
+              154
+            ],
+            [
+              0,
+              44,
+              390,
+              154
+            ],
+            [
+              0,
+              44,
+              390,
+              155
+            ]
+          ],
+          "header_bounds": [
+            [
+              0,
+              0,
+              135,
+              41
+            ],
+            [
+              0,
+              0,
+              135,
+              43
+            ],
+            [
+              0,
+              0,
+              136,
+              43
+            ],
+            [
+              0,
+              1,
+              135,
+              43
+            ],
+            [
+              0,
+              1,
+              163,
+              43
+            ],
+            [
+              0,
+              1,
+              163,
+              44
+            ],
+            [
+              0,
+              2,
+              135,
+              43
+            ],
+            [
+              0,
+              2,
+              136,
+              42
+            ],
+            [
+              0,
+              2,
+              136,
+              43
+            ],
+            [
+              0,
+              2,
+              141,
+              41
+            ],
+            [
+              0,
+              2,
+              141,
+              42
+            ],
+            [
+              0,
+              2,
+              163,
+              43
+            ],
+            [
+              0,
+              2,
+              163,
+              44
+            ],
+            [
+              0,
+              2,
+              163,
+              45
+            ],
+            [
+              0,
+              4,
+              136,
+              43
+            ],
+            [
+              0,
+              4,
+              141,
+              41
+            ],
+            [
+              0,
+              5,
+              135,
+              43
+            ],
+            [
+              0,
+              8,
+              135,
+              43
+            ],
+            [
+              0,
+              10,
+              135,
+              43
+            ],
+            [
+              0,
+              10,
+              141,
+              43
+            ],
+            [
+              0,
+              14,
+              135,
+              43
+            ],
+            [
+              1,
+              0,
+              135,
+              41
+            ],
+            [
+              1,
+              0,
+              135,
+              42
+            ],
+            [
+              1,
+              0,
+              135,
+              43
+            ],
+            [
+              1,
+              0,
+              136,
+              43
+            ],
+            [
+              1,
+              2,
+              136,
+              41
+            ],
+            [
+              1,
+              2,
+              136,
+              43
+            ],
+            [
+              1,
+              2,
+              141,
+              41
+            ],
+            [
+              1,
+              2,
+              141,
+              42
+            ],
+            [
+              1,
+              2,
+              163,
+              43
+            ],
+            [
+              1,
+              18,
+              135,
+              43
+            ],
+            [
+              1,
+              22,
+              53,
+              43
+            ],
+            [
+              1,
+              26,
+              135,
+              43
+            ],
+            [
+              1,
+              32,
+              135,
+              42
+            ]
+          ],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 1692,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 36,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              43.1,
+              80.64
+            ],
+            [
+              81.8,
+              96.68
+            ],
+            [
+              96.76,
+              112.0
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-06.mkv",
+          "mask_sha256": "2ff3ad816215cef6bdf733fe1ef0a3c5e826a765e4520443983ec37d6358ff0b"
+        },
+        {
+          "segment": 6,
+          "frames": 430,
+          "present_frames": 425,
+          "tag_frames": 425,
+          "board_edges": [
+            390,
+            390
+          ],
+          "right": 390,
+          "source_bounds": [
+            90,
+            829,
+            480,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              390,
+              155
+            ],
+            [
+              0,
+              41,
+              390,
+              155
+            ]
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              141,
+              41
+            ],
+            [
+              0,
+              2,
+              141,
+              42
+            ],
+            [
+              1,
+              2,
+              141,
+              41
+            ]
+          ],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 425,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 5,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              112.0,
+              129.0
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-07.mkv",
+          "mask_sha256": "279e8259cca417d6a8ff5c1317a0b979796012930400c6c4d8d8248775361a44"
+        },
+        {
+          "segment": 7,
+          "frames": 405,
+          "present_frames": 53,
+          "tag_frames": 42,
+          "board_edges": [
+            346,
+            426
+          ],
+          "right": 426,
+          "source_bounds": [
+            90,
+            829,
+            516,
+            981
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              346,
+              154
+            ],
+            [
+              0,
+              40,
+              365,
+              154
+            ],
+            [
+              0,
+              40,
+              378,
+              154
+            ],
+            [
+              0,
+              40,
+              386,
+              154
+            ],
+            [
+              0,
+              40,
+              390,
+              154
+            ],
+            [
+              0,
+              42,
+              390,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ]
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              141,
+              41
+            ],
+            [
+              0,
+              2,
+              141,
+              43
+            ],
+            [
+              0,
+              3,
+              141,
+              41
+            ],
+            [
+              0,
+              4,
+              141,
+              41
+            ],
+            [
+              0,
+              6,
+              141,
+              41
+            ],
+            [
+              0,
+              8,
+              141,
+              41
+            ],
+            [
+              0,
+              10,
+              141,
+              41
+            ],
+            [
+              0,
+              14,
+              141,
+              41
+            ],
+            [
+              0,
+              18,
+              141,
+              41
+            ],
+            [
+              0,
+              24,
+              140,
+              41
+            ]
+          ],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 53,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 351,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              129.0,
+              130.96
+            ],
+            [
+              144.8,
+              145.0
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-08.mkv",
+          "mask_sha256": "6ff7ec0597d6b09eee66ad197fc90b4cb10df259772c10a653cc575b2f205ae1"
+        },
+        {
+          "segment": 8,
+          "frames": 475,
+          "present_frames": 471,
+          "tag_frames": 0,
+          "board_edges": [
+            425,
+            426
+          ],
+          "right": 426,
+          "source_bounds": [
+            90,
+            867,
+            516,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              40,
+              426,
+              155
+            ],
+            [
+              0,
+              42,
+              425,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              155
+            ]
+          ],
+          "header_bounds": [],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 471,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 4,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              145.0,
+              163.8
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-09.mkv",
+          "mask_sha256": "0b832958da0d26933031ef7f4fdb4f2e823d08ad35412e80058b4a992b986eed"
+        },
+        {
+          "segment": 9,
+          "frames": 610,
+          "present_frames": 593,
+          "tag_frames": 459,
+          "board_edges": [
+            366,
+            430
+          ],
+          "right": 430,
+          "source_bounds": [
+            90,
+            829,
+            520,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              40,
+              426,
+              154
+            ],
+            [
+              0,
+              40,
+              426,
+              155
+            ],
+            [
+              0,
+              40,
+              428,
+              154
+            ],
+            [
+              0,
+              41,
+              425,
+              154
+            ],
+            [
+              0,
+              41,
+              425,
+              155
+            ],
+            [
+              0,
+              41,
+              426,
+              154
+            ],
+            [
+              0,
+              41,
+              428,
+              154
+            ],
+            [
+              0,
+              42,
+              366,
+              154
+            ],
+            [
+              0,
+              42,
+              388,
+              154
+            ],
+            [
+              0,
+              42,
+              406,
+              154
+            ],
+            [
+              0,
+              42,
+              418,
+              154
+            ],
+            [
+              0,
+              42,
+              425,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              427,
+              154
+            ],
+            [
+              0,
+              42,
+              428,
+              154
+            ],
+            [
+              0,
+              42,
+              429,
+              154
+            ],
+            [
+              0,
+              43,
+              426,
+              154
+            ],
+            [
+              0,
+              43,
+              428,
+              154
+            ],
+            [
+              0,
+              44,
+              425,
+              154
+            ],
+            [
+              0,
+              44,
+              426,
+              154
+            ],
+            [
+              0,
+              44,
+              428,
+              154
+            ],
+            [
+              0,
+              44,
+              430,
+              154
+            ]
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              163,
+              42
+            ],
+            [
+              0,
+              2,
+              163,
+              43
+            ],
+            [
+              0,
+              2,
+              163,
+              44
+            ],
+            [
+              0,
+              2,
+              163,
+              45
+            ],
+            [
+              0,
+              3,
+              163,
+              45
+            ],
+            [
+              0,
+              4,
+              163,
+              41
+            ],
+            [
+              0,
+              5,
+              163,
+              41
+            ],
+            [
+              0,
+              6,
+              163,
+              41
+            ],
+            [
+              0,
+              8,
+              163,
+              41
+            ],
+            [
+              0,
+              12,
+              19,
+              43
+            ],
+            [
+              0,
+              16,
+              163,
+              43
+            ],
+            [
+              0,
+              20,
+              163,
+              43
+            ],
+            [
+              0,
+              30,
+              19,
+              43
+            ],
+            [
+              1,
+              2,
+              163,
+              42
+            ],
+            [
+              1,
+              2,
+              163,
+              43
+            ],
+            [
+              1,
+              2,
+              163,
+              44
+            ],
+            [
+              1,
+              2,
+              163,
+              45
+            ]
+          ],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 593,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 17,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              163.8,
+              187.52
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-10.mkv",
+          "mask_sha256": "b836c716e35b3c6a3dfcdf8aa516421f2ae6f872e83211183c17a551f959c2cd"
+        },
+        {
+          "segment": 10,
+          "frames": 265,
+          "present_frames": 257,
+          "tag_frames": 0,
+          "board_edges": [
+            425,
+            426
+          ],
+          "right": 426,
+          "source_bounds": [
+            90,
+            867,
+            516,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              41,
+              425,
+              155
+            ],
+            [
+              0,
+              42,
+              425,
+              153
+            ],
+            [
+              0,
+              42,
+              425,
+              155
+            ],
+            [
+              0,
+              42,
+              426,
+              155
+            ]
+          ],
+          "header_bounds": [],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 257,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 8,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              188.16,
+              198.4
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-11.mkv",
+          "mask_sha256": "0fd57965718638e37a9d7b05f804285c9bde4610033d711e2ae0cb267a5491a6"
+        },
+        {
+          "segment": 11,
+          "frames": 145,
+          "present_frames": 67,
+          "tag_frames": 0,
+          "board_edges": [
+            366,
+            426
+          ],
+          "right": 426,
+          "source_bounds": [
+            90,
+            867,
+            516,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              42,
+              366,
+              154
+            ],
+            [
+              0,
+              42,
+              388,
+              154
+            ],
+            [
+              0,
+              42,
+              406,
+              154
+            ],
+            [
+              0,
+              42,
+              418,
+              154
+            ],
+            [
+              0,
+              42,
+              423,
+              154
+            ],
+            [
+              0,
+              42,
+              425,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ]
+          ],
+          "header_bounds": [],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 67,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 77,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              198.4,
+              201.08
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-12.mkv",
+          "mask_sha256": "72ee9368977f39b83900ad3f84d965298048fcd9b9c7656e495c0b12b8e07bb4"
+        },
+        {
+          "segment": 12,
+          "frames": 450,
+          "present_frames": 446,
+          "tag_frames": 0,
+          "board_edges": [
+            425,
+            427
+          ],
+          "right": 428,
+          "source_bounds": [
+            90,
+            867,
+            518,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              40,
+              426,
+              155
+            ],
+            [
+              0,
+              40,
+              427,
+              155
+            ]
+          ],
+          "header_bounds": [],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 446,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 4,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              204.0,
+              221.8
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-13.mkv",
+          "mask_sha256": "8f7455442792b792bcb4736647ef3452bf44d4607324468bb92f08b980f31120"
+        },
+        {
+          "segment": 13,
+          "frames": 532,
+          "present_frames": 528,
+          "tag_frames": 403,
+          "board_edges": [
+            425,
+            430
+          ],
+          "right": 430,
+          "source_bounds": [
+            90,
+            829,
+            520,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              154
+            ],
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              40,
+              426,
+              155
+            ],
+            [
+              0,
+              40,
+              428,
+              155
+            ],
+            [
+              0,
+              40,
+              430,
+              155
+            ],
+            [
+              0,
+              41,
+              425,
+              154
+            ],
+            [
+              0,
+              41,
+              426,
+              154
+            ],
+            [
+              0,
+              41,
+              428,
+              154
+            ],
+            [
+              0,
+              42,
+              424,
+              154
+            ],
+            [
+              0,
+              42,
+              425,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              428,
+              154
+            ]
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              136,
+              41
+            ],
+            [
+              0,
+              2,
+              136,
+              42
+            ],
+            [
+              0,
+              2,
+              136,
+              43
+            ],
+            [
+              0,
+              4,
+              136,
+              41
+            ],
+            [
+              0,
+              4,
+              136,
+              43
+            ],
+            [
+              0,
+              6,
+              136,
+              43
+            ],
+            [
+              0,
+              8,
+              136,
+              43
+            ],
+            [
+              0,
+              11,
+              136,
+              43
+            ],
+            [
+              1,
+              2,
+              135,
+              41
+            ],
+            [
+              1,
+              2,
+              136,
+              41
+            ],
+            [
+              1,
+              2,
+              136,
+              42
+            ],
+            [
+              1,
+              2,
+              136,
+              43
+            ],
+            [
+              1,
+              3,
+              136,
+              43
+            ],
+            [
+              1,
+              16,
+              21,
+              43
+            ],
+            [
+              1,
+              20,
+              135,
+              43
+            ],
+            [
+              1,
+              28,
+              114,
+              43
+            ]
+          ],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 528,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 4,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              221.8,
+              242.9
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-14.mkv",
+          "mask_sha256": "8e525f7da8bfcf43904c5dda33fde70e717aa02e64dddf9623a25c4332ae2f67"
+        },
+        {
+          "segment": 14,
+          "frames": 258,
+          "present_frames": 253,
+          "tag_frames": 253,
+          "board_edges": [
+            425,
+            430
+          ],
+          "right": 430,
+          "source_bounds": [
+            90,
+            829,
+            520,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              40,
+              426,
+              155
+            ],
+            [
+              0,
+              40,
+              430,
+              155
+            ]
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              136,
+              41
+            ],
+            [
+              1,
+              2,
+              136,
+              41
+            ]
+          ],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 253,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 5,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              242.9,
+              253.0
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-15.mkv",
+          "mask_sha256": "bcfe138e7de8b3249a88484ff81050009ee1051629412448a9ed1d6a541bd945"
+        },
+        {
+          "segment": 15,
+          "frames": 1170,
+          "present_frames": 904,
+          "tag_frames": 628,
+          "board_edges": [
+            366,
+            428
+          ],
+          "right": 428,
+          "source_bounds": [
+            90,
+            827,
+            518,
+            982
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              388,
+              154
+            ],
+            [
+              0,
+              40,
+              406,
+              154
+            ],
+            [
+              0,
+              40,
+              418,
+              154
+            ],
+            [
+              0,
+              40,
+              423,
+              154
+            ],
+            [
+              0,
+              40,
+              425,
+              154
+            ],
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              40,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              366,
+              155
+            ],
+            [
+              0,
+              42,
+              388,
+              155
+            ],
+            [
+              0,
+              42,
+              406,
+              155
+            ],
+            [
+              0,
+              42,
+              417,
+              155
+            ],
+            [
+              0,
+              42,
+              423,
+              155
+            ],
+            [
+              0,
+              42,
+              425,
+              153
+            ],
+            [
+              0,
+              42,
+              425,
+              154
+            ],
+            [
+              0,
+              42,
+              425,
+              155
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              155
+            ],
+            [
+              0,
+              42,
+              427,
+              154
+            ],
+            [
+              0,
+              42,
+              428,
+              154
+            ],
+            [
+              0,
+              43,
+              428,
+              154
+            ],
+            [
+              0,
+              71,
+              387,
+              155
+            ]
+          ],
+          "header_bounds": [
+            [
+              0,
+              0,
+              167,
+              43
+            ],
+            [
+              0,
+              2,
+              136,
+              41
+            ],
+            [
+              0,
+              2,
+              139,
+              43
+            ],
+            [
+              0,
+              2,
+              167,
+              43
+            ],
+            [
+              0,
+              3,
+              136,
+              41
+            ],
+            [
+              0,
+              3,
+              139,
+              43
+            ],
+            [
+              0,
+              4,
+              136,
+              41
+            ],
+            [
+              0,
+              4,
+              139,
+              43
+            ],
+            [
+              0,
+              4,
+              167,
+              41
+            ],
+            [
+              0,
+              6,
+              136,
+              41
+            ],
+            [
+              0,
+              6,
+              139,
+              43
+            ],
+            [
+              0,
+              8,
+              136,
+              41
+            ],
+            [
+              0,
+              8,
+              139,
+              43
+            ],
+            [
+              0,
+              8,
+              167,
+              41
+            ],
+            [
+              0,
+              10,
+              139,
+              43
+            ],
+            [
+              0,
+              12,
+              19,
+              41
+            ],
+            [
+              0,
+              12,
+              167,
+              41
+            ],
+            [
+              0,
+              14,
+              35,
+              43
+            ],
+            [
+              0,
+              14,
+              167,
+              41
+            ],
+            [
+              0,
+              18,
+              35,
+              43
+            ],
+            [
+              0,
+              18,
+              167,
+              41
+            ],
+            [
+              0,
+              24,
+              35,
+              43
+            ],
+            [
+              0,
+              28,
+              44,
+              41
+            ],
+            [
+              0,
+              33,
+              135,
+              44
+            ],
+            [
+              1,
+              0,
+              167,
+              43
+            ],
+            [
+              1,
+              2,
+              167,
+              43
+            ],
+            [
+              1,
+              3,
+              167,
+              41
+            ],
+            [
+              1,
+              6,
+              167,
+              41
+            ],
+            [
+              1,
+              16,
+              19,
+              41
+            ],
+            [
+              1,
+              19,
+              136,
+              41
+            ],
+            [
+              1,
+              28,
+              19,
+              41
+            ]
+          ],
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "measured_present_frames": 904,
+          "window_excluded_present_frames": 0,
+          "outside_window_frames_not_scanned": 265,
+          "measurement_scope": "reviewed_windows_only",
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "allowed_source_windows": [
+            [
+              253.0,
+              255.08
+            ],
+            [
+              255.28,
+              289.4
+            ]
+          ],
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-cold/score_masks/segment-16.mkv",
+          "mask_sha256": "a7c031116e288131eb52f027d67241e7cb9249740448de853fbbc160fdbfacd7"
+        }
+      ]
+    },
+    "decoded_masks": [
+      {
+        "segment": 0,
+        "mask_sha256": "b97749731e248ead3e907ce58cdf98d790a55b5c8019235dcfa8117ab901e1d3",
+        "frames": 321,
+        "decoded_frame_sequence_sha256": "c901daf87a87dfe1b7fcbd2061ecd44bc0b9ac305d746773dbcc52f5acea177f",
+        "absent_frames": 260,
+        "actual_alpha_right_edges": [
+          388,
+          406,
+          418,
+          423,
+          425,
+          426,
+          428
+        ],
+        "distinct_alpha_frames": 42,
+        "native_tag_frames": 55,
+        "source_bounds": [
+          90,
+          827,
+          518,
+          982
+        ]
+      },
+      {
+        "segment": 2,
+        "mask_sha256": "f97fdce43d0842625dd5cf0e2e35702de1463794a7461c01f0f6becf31dd0e62",
+        "frames": 235,
+        "decoded_frame_sequence_sha256": "cd82c53008ee2487b09803092710af76279d91f5f261273cbb0e29acb53781a7",
+        "absent_frames": 5,
+        "actual_alpha_right_edges": [
+          390
+        ],
+        "distinct_alpha_frames": 42,
+        "native_tag_frames": 0,
+        "source_bounds": [
+          90,
+          867,
+          480,
+          982
+        ]
+      },
+      {
+        "segment": 3,
+        "mask_sha256": "1c727cfcf42e1cb465959c8f0b5c4b512d156ea7469dec8d4b6b34deaaf927d6",
+        "frames": 565,
+        "decoded_frame_sequence_sha256": "ef340f5d722abd1af71f9bc9934f37bc9e73add2eadb28106d6cdca361853941",
+        "absent_frames": 4,
+        "actual_alpha_right_edges": [
+          390,
+          391,
+          392
+        ],
+        "distinct_alpha_frames": 233,
+        "native_tag_frames": 396,
+        "source_bounds": [
+          90,
+          829,
+          482,
+          982
+        ]
+      },
+      {
+        "segment": 4,
+        "mask_sha256": "6bba204f1d7b589e189005b48fb909585e3cb7145fc869acd9e97afd964fd9d0",
+        "frames": 292,
+        "decoded_frame_sequence_sha256": "19685491672cdf3aa581bd208c85c86cad6b6403ddf12ec521e2dcf24dc77ac8",
+        "absent_frames": 4,
+        "actual_alpha_right_edges": [
+          390
+        ],
+        "distinct_alpha_frames": 45,
+        "native_tag_frames": 288,
+        "source_bounds": [
+          90,
+          829,
+          480,
+          981
+        ]
+      },
+      {
+        "segment": 5,
+        "mask_sha256": "2ff3ad816215cef6bdf733fe1ef0a3c5e826a765e4520443983ec37d6358ff0b",
+        "frames": 1728,
+        "decoded_frame_sequence_sha256": "3a7939df5fcafe9c320490abb66e94fc3e802d59d4f9a476378c6dc3dc8fe4c4",
+        "absent_frames": 36,
+        "actual_alpha_right_edges": [
+          334,
+          356,
+          374,
+          382,
+          388,
+          389,
+          390,
+          391,
+          392,
+          393,
+          394
+        ],
+        "distinct_alpha_frames": 583,
+        "native_tag_frames": 1294,
+        "source_bounds": [
+          90,
+          827,
+          484,
+          982
+        ]
+      },
+      {
+        "segment": 6,
+        "mask_sha256": "279e8259cca417d6a8ff5c1317a0b979796012930400c6c4d8d8248775361a44",
+        "frames": 430,
+        "decoded_frame_sequence_sha256": "5da3aaaa407185772f0c72f92c3f2e4325261fd61e19d5ffb5a9ae4c9e659d62",
+        "absent_frames": 5,
+        "actual_alpha_right_edges": [
+          390
+        ],
+        "distinct_alpha_frames": 104,
+        "native_tag_frames": 425,
+        "source_bounds": [
+          90,
+          829,
+          480,
+          982
+        ]
+      },
+      {
+        "segment": 7,
+        "mask_sha256": "6ff7ec0597d6b09eee66ad197fc90b4cb10df259772c10a653cc575b2f205ae1",
+        "frames": 405,
+        "decoded_frame_sequence_sha256": "96b440cbc71aed65ff621ecaeceba206f7429589ba29968033cf36a6090f5816",
+        "absent_frames": 352,
+        "actual_alpha_right_edges": [
+          346,
+          365,
+          378,
+          386,
+          390,
+          426
+        ],
+        "distinct_alpha_frames": 53,
+        "native_tag_frames": 42,
+        "source_bounds": [
+          90,
+          829,
+          516,
+          981
+        ]
+      },
+      {
+        "segment": 8,
+        "mask_sha256": "0b832958da0d26933031ef7f4fdb4f2e823d08ad35412e80058b4a992b986eed",
+        "frames": 475,
+        "decoded_frame_sequence_sha256": "692dc7361634ed9e486b15293b38c9d24eccfa77c69c993dbc9920ccb3c54cea",
+        "absent_frames": 4,
+        "actual_alpha_right_edges": [
+          425,
+          426
+        ],
+        "distinct_alpha_frames": 115,
+        "native_tag_frames": 0,
+        "source_bounds": [
+          90,
+          867,
+          516,
+          982
+        ]
+      },
+      {
+        "segment": 9,
+        "mask_sha256": "b836c716e35b3c6a3dfcdf8aa516421f2ae6f872e83211183c17a551f959c2cd",
+        "frames": 610,
+        "decoded_frame_sequence_sha256": "8db734257bbe63d388d10f9c01c37393ccff9d90f9345ec93ff5f0b1e6403195",
+        "absent_frames": 17,
+        "actual_alpha_right_edges": [
+          366,
+          388,
+          406,
+          418,
+          425,
+          426,
+          427,
+          428,
+          429,
+          430
+        ],
+        "distinct_alpha_frames": 327,
+        "native_tag_frames": 459,
+        "source_bounds": [
+          90,
+          829,
+          520,
+          982
+        ]
+      },
+      {
+        "segment": 10,
+        "mask_sha256": "0fd57965718638e37a9d7b05f804285c9bde4610033d711e2ae0cb267a5491a6",
+        "frames": 265,
+        "decoded_frame_sequence_sha256": "f5f8f37537e272197508d154612ef457257a86922bb7c14fb9f95b2dfa1d4038",
+        "absent_frames": 8,
+        "actual_alpha_right_edges": [
+          425,
+          426
+        ],
+        "distinct_alpha_frames": 109,
+        "native_tag_frames": 0,
+        "source_bounds": [
+          90,
+          867,
+          516,
+          982
+        ]
+      },
+      {
+        "segment": 11,
+        "mask_sha256": "72ee9368977f39b83900ad3f84d965298048fcd9b9c7656e495c0b12b8e07bb4",
+        "frames": 145,
+        "decoded_frame_sequence_sha256": "2b61f5259445cf5d82f8ce5b0e5173c8515e04d04aec8280b6b1a07206973d3d",
+        "absent_frames": 78,
+        "actual_alpha_right_edges": [
+          366,
+          388,
+          406,
+          418,
+          423,
+          425,
+          426
+        ],
+        "distinct_alpha_frames": 45,
+        "native_tag_frames": 0,
+        "source_bounds": [
+          90,
+          867,
+          516,
+          982
+        ]
+      },
+      {
+        "segment": 12,
+        "mask_sha256": "8f7455442792b792bcb4736647ef3452bf44d4607324468bb92f08b980f31120",
+        "frames": 450,
+        "decoded_frame_sequence_sha256": "fe33a56150a6dc61c038377f18b7a8b8d29ac8dbc14cc65eb5b0fad2737b7d9f",
+        "absent_frames": 4,
+        "actual_alpha_right_edges": [
+          425,
+          426,
+          427
+        ],
+        "distinct_alpha_frames": 59,
+        "native_tag_frames": 0,
+        "source_bounds": [
+          90,
+          867,
+          518,
+          982
+        ]
+      },
+      {
+        "segment": 13,
+        "mask_sha256": "8e525f7da8bfcf43904c5dda33fde70e717aa02e64dddf9623a25c4332ae2f67",
+        "frames": 532,
+        "decoded_frame_sequence_sha256": "ba4fa04b8a2d21272b2c3bd9c63a6bee2163bab731519132ab487ff5d4bb601d",
+        "absent_frames": 4,
+        "actual_alpha_right_edges": [
+          424,
+          425,
+          426,
+          428,
+          430
+        ],
+        "distinct_alpha_frames": 180,
+        "native_tag_frames": 403,
+        "source_bounds": [
+          90,
+          829,
+          520,
+          982
+        ]
+      },
+      {
+        "segment": 14,
+        "mask_sha256": "bcfe138e7de8b3249a88484ff81050009ee1051629412448a9ed1d6a541bd945",
+        "frames": 258,
+        "decoded_frame_sequence_sha256": "ddccf3345d8024aefa34a45325f30aa9019f30b07efacb0be3630965aad2901b",
+        "absent_frames": 5,
+        "actual_alpha_right_edges": [
+          425,
+          426,
+          430
+        ],
+        "distinct_alpha_frames": 100,
+        "native_tag_frames": 253,
+        "source_bounds": [
+          90,
+          829,
+          520,
+          982
+        ]
+      },
+      {
+        "segment": 15,
+        "mask_sha256": "a7c031116e288131eb52f027d67241e7cb9249740448de853fbbc160fdbfacd7",
+        "frames": 1170,
+        "decoded_frame_sequence_sha256": "9cb269a364436daea6bedb49a76130afebd6ffb9f435450ee34dbeb06cb17535",
+        "absent_frames": 266,
+        "actual_alpha_right_edges": [
+          366,
+          387,
+          388,
+          406,
+          417,
+          418,
+          423,
+          425,
+          426,
+          427,
+          428
+        ],
+        "distinct_alpha_frames": 282,
+        "native_tag_frames": 628,
+        "source_bounds": [
+          90,
+          827,
+          518,
+          982
+        ]
+      }
+    ]
+  },
+  "warm": {
+    "seconds": 2.3160876690017176,
+    "cache_hit": true,
+    "cache_stored": false,
+    "geometries": [
+      {
+        "segment": 0,
+        "score_inset": [
+          90,
+          827,
+          518,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 2,
+        "score_inset": [
+          90,
+          867,
+          480,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 3,
+        "score_inset": [
+          90,
+          829,
+          482,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 4,
+        "score_inset": [
+          90,
+          829,
+          480,
+          981
+        ],
+        "spans": null
+      },
+      {
+        "segment": 5,
+        "score_inset": [
+          90,
+          827,
+          484,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 6,
+        "score_inset": [
+          90,
+          829,
+          480,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 7,
+        "score_inset": [
+          90,
+          829,
+          516,
+          981
+        ],
+        "spans": null
+      },
+      {
+        "segment": 8,
+        "score_inset": [
+          90,
+          867,
+          516,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 9,
+        "score_inset": [
+          90,
+          829,
+          520,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 10,
+        "score_inset": [
+          90,
+          867,
+          516,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 11,
+        "score_inset": [
+          90,
+          867,
+          516,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 12,
+        "score_inset": [
+          90,
+          867,
+          518,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 13,
+        "score_inset": [
+          90,
+          829,
+          520,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 14,
+        "score_inset": [
+          90,
+          829,
+          520,
+          982
+        ],
+        "spans": null
+      },
+      {
+        "segment": 15,
+        "score_inset": [
+          90,
+          827,
+          518,
+          982
+        ],
+        "spans": null
+      }
+    ],
+    "report": {
+      "status": "pass",
+      "profile": "wta-tour-v1",
+      "segments": [
+        {
+          "allowed_source_windows": [
+            [
+              286.96,
+              289.4
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            388,
+            428
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              388,
+              154
+            ],
+            [
+              0,
+              40,
+              406,
+              154
+            ],
+            [
+              0,
+              40,
+              418,
+              154
+            ],
+            [
+              0,
+              40,
+              423,
+              154
+            ],
+            [
+              0,
+              40,
+              425,
+              154
+            ],
+            [
+              0,
+              40,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              425,
+              154
+            ],
+            [
+              0,
+              42,
+              425,
+              155
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              428,
+              154
+            ]
+          ],
+          "frames": 321,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [
+            [
+              0,
+              0,
+              167,
+              43
+            ],
+            [
+              0,
+              2,
+              167,
+              43
+            ],
+            [
+              0,
+              4,
+              167,
+              41
+            ],
+            [
+              0,
+              8,
+              167,
+              41
+            ],
+            [
+              0,
+              12,
+              167,
+              41
+            ],
+            [
+              0,
+              14,
+              167,
+              41
+            ],
+            [
+              0,
+              18,
+              167,
+              41
+            ],
+            [
+              0,
+              28,
+              44,
+              41
+            ],
+            [
+              1,
+              0,
+              167,
+              43
+            ],
+            [
+              1,
+              2,
+              167,
+              43
+            ],
+            [
+              1,
+              3,
+              167,
+              41
+            ],
+            [
+              1,
+              6,
+              167,
+              41
+            ]
+          ],
+          "mask_sha256": "b97749731e248ead3e907ce58cdf98d790a55b5c8019235dcfa8117ab901e1d3",
+          "measured_present_frames": 61,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 260,
+          "present_frames": 61,
+          "right": 428,
+          "segment": 0,
+          "source_bounds": [
+            90,
+            827,
+            518,
+            982
+          ],
+          "tag_frames": 55,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-01.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              0.0,
+              9.2
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            390,
+            390
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              390,
+              155
+            ],
+            [
+              0,
+              42,
+              390,
+              154
+            ]
+          ],
+          "frames": 235,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [],
+          "mask_sha256": "f97fdce43d0842625dd5cf0e2e35702de1463794a7461c01f0f6becf31dd0e62",
+          "measured_present_frames": 230,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 5,
+          "present_frames": 230,
+          "right": 390,
+          "segment": 2,
+          "source_bounds": [
+            90,
+            867,
+            480,
+            982
+          ],
+          "tag_frames": 0,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-03.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              9.2,
+              31.6
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            390,
+            394
+          ],
+          "body_bounds": [
+            [
+              0,
+              37,
+              390,
+              155
+            ],
+            [
+              0,
+              37,
+              392,
+              155
+            ],
+            [
+              0,
+              39,
+              390,
+              154
+            ],
+            [
+              0,
+              40,
+              390,
+              154
+            ],
+            [
+              0,
+              40,
+              390,
+              155
+            ],
+            [
+              0,
+              40,
+              392,
+              155
+            ],
+            [
+              0,
+              41,
+              390,
+              154
+            ],
+            [
+              0,
+              41,
+              390,
+              155
+            ],
+            [
+              0,
+              42,
+              390,
+              154
+            ],
+            [
+              0,
+              42,
+              390,
+              155
+            ],
+            [
+              0,
+              42,
+              391,
+              154
+            ],
+            [
+              0,
+              42,
+              392,
+              154
+            ],
+            [
+              0,
+              43,
+              390,
+              154
+            ],
+            [
+              0,
+              43,
+              390,
+              155
+            ],
+            [
+              0,
+              44,
+              390,
+              154
+            ],
+            [
+              0,
+              44,
+              390,
+              155
+            ],
+            [
+              0,
+              44,
+              392,
+              154
+            ]
+          ],
+          "frames": 565,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              163,
+              43
+            ],
+            [
+              0,
+              2,
+              163,
+              45
+            ],
+            [
+              0,
+              3,
+              163,
+              45
+            ],
+            [
+              0,
+              4,
+              163,
+              41
+            ],
+            [
+              0,
+              6,
+              163,
+              40
+            ],
+            [
+              0,
+              8,
+              163,
+              43
+            ],
+            [
+              0,
+              10,
+              163,
+              42
+            ],
+            [
+              0,
+              13,
+              112,
+              42
+            ],
+            [
+              1,
+              2,
+              163,
+              43
+            ],
+            [
+              1,
+              2,
+              163,
+              44
+            ],
+            [
+              1,
+              2,
+              163,
+              45
+            ],
+            [
+              1,
+              18,
+              21,
+              43
+            ],
+            [
+              1,
+              24,
+              21,
+              43
+            ]
+          ],
+          "mask_sha256": "1c727cfcf42e1cb465959c8f0b5c4b512d156ea7469dec8d4b6b34deaaf927d6",
+          "measured_present_frames": 561,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 4,
+          "present_frames": 561,
+          "right": 392,
+          "segment": 3,
+          "source_bounds": [
+            90,
+            829,
+            482,
+            982
+          ],
+          "tag_frames": 396,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-04.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              31.6,
+              43.1
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            390,
+            390
+          ],
+          "body_bounds": [
+            [
+              0,
+              42,
+              390,
+              154
+            ]
+          ],
+          "frames": 292,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              163,
+              43
+            ],
+            [
+              1,
+              2,
+              163,
+              43
+            ]
+          ],
+          "mask_sha256": "6bba204f1d7b589e189005b48fb909585e3cb7145fc869acd9e97afd964fd9d0",
+          "measured_present_frames": 288,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 4,
+          "present_frames": 288,
+          "right": 390,
+          "segment": 4,
+          "source_bounds": [
+            90,
+            829,
+            480,
+            981
+          ],
+          "tag_frames": 288,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-05.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              43.1,
+              80.64
+            ],
+            [
+              81.8,
+              96.68
+            ],
+            [
+              96.76,
+              112.0
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            334,
+            394
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              389,
+              154
+            ],
+            [
+              0,
+              40,
+              390,
+              154
+            ],
+            [
+              0,
+              40,
+              390,
+              155
+            ],
+            [
+              0,
+              40,
+              392,
+              154
+            ],
+            [
+              0,
+              40,
+              394,
+              154
+            ],
+            [
+              0,
+              41,
+              390,
+              154
+            ],
+            [
+              0,
+              41,
+              390,
+              155
+            ],
+            [
+              0,
+              41,
+              392,
+              154
+            ],
+            [
+              0,
+              42,
+              334,
+              154
+            ],
+            [
+              0,
+              42,
+              356,
+              154
+            ],
+            [
+              0,
+              42,
+              374,
+              154
+            ],
+            [
+              0,
+              42,
+              382,
+              154
+            ],
+            [
+              0,
+              42,
+              388,
+              154
+            ],
+            [
+              0,
+              42,
+              390,
+              152
+            ],
+            [
+              0,
+              42,
+              390,
+              153
+            ],
+            [
+              0,
+              42,
+              390,
+              154
+            ],
+            [
+              0,
+              42,
+              390,
+              155
+            ],
+            [
+              0,
+              42,
+              391,
+              154
+            ],
+            [
+              0,
+              42,
+              392,
+              154
+            ],
+            [
+              0,
+              42,
+              393,
+              154
+            ],
+            [
+              0,
+              43,
+              390,
+              154
+            ],
+            [
+              0,
+              44,
+              390,
+              154
+            ],
+            [
+              0,
+              44,
+              390,
+              155
+            ]
+          ],
+          "frames": 1728,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [
+            [
+              0,
+              0,
+              135,
+              41
+            ],
+            [
+              0,
+              0,
+              135,
+              43
+            ],
+            [
+              0,
+              0,
+              136,
+              43
+            ],
+            [
+              0,
+              1,
+              135,
+              43
+            ],
+            [
+              0,
+              1,
+              163,
+              43
+            ],
+            [
+              0,
+              1,
+              163,
+              44
+            ],
+            [
+              0,
+              2,
+              135,
+              43
+            ],
+            [
+              0,
+              2,
+              136,
+              42
+            ],
+            [
+              0,
+              2,
+              136,
+              43
+            ],
+            [
+              0,
+              2,
+              141,
+              41
+            ],
+            [
+              0,
+              2,
+              141,
+              42
+            ],
+            [
+              0,
+              2,
+              163,
+              43
+            ],
+            [
+              0,
+              2,
+              163,
+              44
+            ],
+            [
+              0,
+              2,
+              163,
+              45
+            ],
+            [
+              0,
+              4,
+              136,
+              43
+            ],
+            [
+              0,
+              4,
+              141,
+              41
+            ],
+            [
+              0,
+              5,
+              135,
+              43
+            ],
+            [
+              0,
+              8,
+              135,
+              43
+            ],
+            [
+              0,
+              10,
+              135,
+              43
+            ],
+            [
+              0,
+              10,
+              141,
+              43
+            ],
+            [
+              0,
+              14,
+              135,
+              43
+            ],
+            [
+              1,
+              0,
+              135,
+              41
+            ],
+            [
+              1,
+              0,
+              135,
+              42
+            ],
+            [
+              1,
+              0,
+              135,
+              43
+            ],
+            [
+              1,
+              0,
+              136,
+              43
+            ],
+            [
+              1,
+              2,
+              136,
+              41
+            ],
+            [
+              1,
+              2,
+              136,
+              43
+            ],
+            [
+              1,
+              2,
+              141,
+              41
+            ],
+            [
+              1,
+              2,
+              141,
+              42
+            ],
+            [
+              1,
+              2,
+              163,
+              43
+            ],
+            [
+              1,
+              18,
+              135,
+              43
+            ],
+            [
+              1,
+              22,
+              53,
+              43
+            ],
+            [
+              1,
+              26,
+              135,
+              43
+            ],
+            [
+              1,
+              32,
+              135,
+              42
+            ]
+          ],
+          "mask_sha256": "2ff3ad816215cef6bdf733fe1ef0a3c5e826a765e4520443983ec37d6358ff0b",
+          "measured_present_frames": 1692,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 36,
+          "present_frames": 1692,
+          "right": 394,
+          "segment": 5,
+          "source_bounds": [
+            90,
+            827,
+            484,
+            982
+          ],
+          "tag_frames": 1294,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-06.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              112.0,
+              129.0
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            390,
+            390
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              390,
+              155
+            ],
+            [
+              0,
+              41,
+              390,
+              155
+            ]
+          ],
+          "frames": 430,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              141,
+              41
+            ],
+            [
+              0,
+              2,
+              141,
+              42
+            ],
+            [
+              1,
+              2,
+              141,
+              41
+            ]
+          ],
+          "mask_sha256": "279e8259cca417d6a8ff5c1317a0b979796012930400c6c4d8d8248775361a44",
+          "measured_present_frames": 425,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 5,
+          "present_frames": 425,
+          "right": 390,
+          "segment": 6,
+          "source_bounds": [
+            90,
+            829,
+            480,
+            982
+          ],
+          "tag_frames": 425,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-07.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              129.0,
+              130.96
+            ],
+            [
+              144.8,
+              145.0
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            346,
+            426
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              346,
+              154
+            ],
+            [
+              0,
+              40,
+              365,
+              154
+            ],
+            [
+              0,
+              40,
+              378,
+              154
+            ],
+            [
+              0,
+              40,
+              386,
+              154
+            ],
+            [
+              0,
+              40,
+              390,
+              154
+            ],
+            [
+              0,
+              42,
+              390,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ]
+          ],
+          "frames": 405,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              141,
+              41
+            ],
+            [
+              0,
+              2,
+              141,
+              43
+            ],
+            [
+              0,
+              3,
+              141,
+              41
+            ],
+            [
+              0,
+              4,
+              141,
+              41
+            ],
+            [
+              0,
+              6,
+              141,
+              41
+            ],
+            [
+              0,
+              8,
+              141,
+              41
+            ],
+            [
+              0,
+              10,
+              141,
+              41
+            ],
+            [
+              0,
+              14,
+              141,
+              41
+            ],
+            [
+              0,
+              18,
+              141,
+              41
+            ],
+            [
+              0,
+              24,
+              140,
+              41
+            ]
+          ],
+          "mask_sha256": "6ff7ec0597d6b09eee66ad197fc90b4cb10df259772c10a653cc575b2f205ae1",
+          "measured_present_frames": 53,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 351,
+          "present_frames": 53,
+          "right": 426,
+          "segment": 7,
+          "source_bounds": [
+            90,
+            829,
+            516,
+            981
+          ],
+          "tag_frames": 42,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-08.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              145.0,
+              163.8
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            425,
+            426
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              40,
+              426,
+              155
+            ],
+            [
+              0,
+              42,
+              425,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              155
+            ]
+          ],
+          "frames": 475,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [],
+          "mask_sha256": "0b832958da0d26933031ef7f4fdb4f2e823d08ad35412e80058b4a992b986eed",
+          "measured_present_frames": 471,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 4,
+          "present_frames": 471,
+          "right": 426,
+          "segment": 8,
+          "source_bounds": [
+            90,
+            867,
+            516,
+            982
+          ],
+          "tag_frames": 0,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-09.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              163.8,
+              187.52
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            366,
+            430
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              40,
+              426,
+              154
+            ],
+            [
+              0,
+              40,
+              426,
+              155
+            ],
+            [
+              0,
+              40,
+              428,
+              154
+            ],
+            [
+              0,
+              41,
+              425,
+              154
+            ],
+            [
+              0,
+              41,
+              425,
+              155
+            ],
+            [
+              0,
+              41,
+              426,
+              154
+            ],
+            [
+              0,
+              41,
+              428,
+              154
+            ],
+            [
+              0,
+              42,
+              366,
+              154
+            ],
+            [
+              0,
+              42,
+              388,
+              154
+            ],
+            [
+              0,
+              42,
+              406,
+              154
+            ],
+            [
+              0,
+              42,
+              418,
+              154
+            ],
+            [
+              0,
+              42,
+              425,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              427,
+              154
+            ],
+            [
+              0,
+              42,
+              428,
+              154
+            ],
+            [
+              0,
+              42,
+              429,
+              154
+            ],
+            [
+              0,
+              43,
+              426,
+              154
+            ],
+            [
+              0,
+              43,
+              428,
+              154
+            ],
+            [
+              0,
+              44,
+              425,
+              154
+            ],
+            [
+              0,
+              44,
+              426,
+              154
+            ],
+            [
+              0,
+              44,
+              428,
+              154
+            ],
+            [
+              0,
+              44,
+              430,
+              154
+            ]
+          ],
+          "frames": 610,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              163,
+              42
+            ],
+            [
+              0,
+              2,
+              163,
+              43
+            ],
+            [
+              0,
+              2,
+              163,
+              44
+            ],
+            [
+              0,
+              2,
+              163,
+              45
+            ],
+            [
+              0,
+              3,
+              163,
+              45
+            ],
+            [
+              0,
+              4,
+              163,
+              41
+            ],
+            [
+              0,
+              5,
+              163,
+              41
+            ],
+            [
+              0,
+              6,
+              163,
+              41
+            ],
+            [
+              0,
+              8,
+              163,
+              41
+            ],
+            [
+              0,
+              12,
+              19,
+              43
+            ],
+            [
+              0,
+              16,
+              163,
+              43
+            ],
+            [
+              0,
+              20,
+              163,
+              43
+            ],
+            [
+              0,
+              30,
+              19,
+              43
+            ],
+            [
+              1,
+              2,
+              163,
+              42
+            ],
+            [
+              1,
+              2,
+              163,
+              43
+            ],
+            [
+              1,
+              2,
+              163,
+              44
+            ],
+            [
+              1,
+              2,
+              163,
+              45
+            ]
+          ],
+          "mask_sha256": "b836c716e35b3c6a3dfcdf8aa516421f2ae6f872e83211183c17a551f959c2cd",
+          "measured_present_frames": 593,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 17,
+          "present_frames": 593,
+          "right": 430,
+          "segment": 9,
+          "source_bounds": [
+            90,
+            829,
+            520,
+            982
+          ],
+          "tag_frames": 459,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-10.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              188.16,
+              198.4
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            425,
+            426
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              41,
+              425,
+              155
+            ],
+            [
+              0,
+              42,
+              425,
+              153
+            ],
+            [
+              0,
+              42,
+              425,
+              155
+            ],
+            [
+              0,
+              42,
+              426,
+              155
+            ]
+          ],
+          "frames": 265,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [],
+          "mask_sha256": "0fd57965718638e37a9d7b05f804285c9bde4610033d711e2ae0cb267a5491a6",
+          "measured_present_frames": 257,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 8,
+          "present_frames": 257,
+          "right": 426,
+          "segment": 10,
+          "source_bounds": [
+            90,
+            867,
+            516,
+            982
+          ],
+          "tag_frames": 0,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-11.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              198.4,
+              201.08
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            366,
+            426
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              42,
+              366,
+              154
+            ],
+            [
+              0,
+              42,
+              388,
+              154
+            ],
+            [
+              0,
+              42,
+              406,
+              154
+            ],
+            [
+              0,
+              42,
+              418,
+              154
+            ],
+            [
+              0,
+              42,
+              423,
+              154
+            ],
+            [
+              0,
+              42,
+              425,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ]
+          ],
+          "frames": 145,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [],
+          "mask_sha256": "72ee9368977f39b83900ad3f84d965298048fcd9b9c7656e495c0b12b8e07bb4",
+          "measured_present_frames": 67,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 77,
+          "present_frames": 67,
+          "right": 426,
+          "segment": 11,
+          "source_bounds": [
+            90,
+            867,
+            516,
+            982
+          ],
+          "tag_frames": 0,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-12.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              204.0,
+              221.8
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            425,
+            427
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              40,
+              426,
+              155
+            ],
+            [
+              0,
+              40,
+              427,
+              155
+            ]
+          ],
+          "frames": 450,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [],
+          "mask_sha256": "8f7455442792b792bcb4736647ef3452bf44d4607324468bb92f08b980f31120",
+          "measured_present_frames": 446,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 4,
+          "present_frames": 446,
+          "right": 428,
+          "segment": 12,
+          "source_bounds": [
+            90,
+            867,
+            518,
+            982
+          ],
+          "tag_frames": 0,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-13.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              221.8,
+              242.9
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            425,
+            430
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              154
+            ],
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              40,
+              426,
+              155
+            ],
+            [
+              0,
+              40,
+              428,
+              155
+            ],
+            [
+              0,
+              40,
+              430,
+              155
+            ],
+            [
+              0,
+              41,
+              425,
+              154
+            ],
+            [
+              0,
+              41,
+              426,
+              154
+            ],
+            [
+              0,
+              41,
+              428,
+              154
+            ],
+            [
+              0,
+              42,
+              424,
+              154
+            ],
+            [
+              0,
+              42,
+              425,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              428,
+              154
+            ]
+          ],
+          "frames": 532,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              136,
+              41
+            ],
+            [
+              0,
+              2,
+              136,
+              42
+            ],
+            [
+              0,
+              2,
+              136,
+              43
+            ],
+            [
+              0,
+              4,
+              136,
+              41
+            ],
+            [
+              0,
+              4,
+              136,
+              43
+            ],
+            [
+              0,
+              6,
+              136,
+              43
+            ],
+            [
+              0,
+              8,
+              136,
+              43
+            ],
+            [
+              0,
+              11,
+              136,
+              43
+            ],
+            [
+              1,
+              2,
+              135,
+              41
+            ],
+            [
+              1,
+              2,
+              136,
+              41
+            ],
+            [
+              1,
+              2,
+              136,
+              42
+            ],
+            [
+              1,
+              2,
+              136,
+              43
+            ],
+            [
+              1,
+              3,
+              136,
+              43
+            ],
+            [
+              1,
+              16,
+              21,
+              43
+            ],
+            [
+              1,
+              20,
+              135,
+              43
+            ],
+            [
+              1,
+              28,
+              114,
+              43
+            ]
+          ],
+          "mask_sha256": "8e525f7da8bfcf43904c5dda33fde70e717aa02e64dddf9623a25c4332ae2f67",
+          "measured_present_frames": 528,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 4,
+          "present_frames": 528,
+          "right": 430,
+          "segment": 13,
+          "source_bounds": [
+            90,
+            829,
+            520,
+            982
+          ],
+          "tag_frames": 403,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-14.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              242.9,
+              253.0
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            425,
+            430
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              40,
+              426,
+              155
+            ],
+            [
+              0,
+              40,
+              430,
+              155
+            ]
+          ],
+          "frames": 258,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [
+            [
+              0,
+              2,
+              136,
+              41
+            ],
+            [
+              1,
+              2,
+              136,
+              41
+            ]
+          ],
+          "mask_sha256": "bcfe138e7de8b3249a88484ff81050009ee1051629412448a9ed1d6a541bd945",
+          "measured_present_frames": 253,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 5,
+          "present_frames": 253,
+          "right": 430,
+          "segment": 14,
+          "source_bounds": [
+            90,
+            829,
+            520,
+            982
+          ],
+          "tag_frames": 253,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-15.mkv"
+        },
+        {
+          "allowed_source_windows": [
+            [
+              253.0,
+              255.08
+            ],
+            [
+              255.28,
+              289.4
+            ]
+          ],
+          "alpha_geometry": "native-body-and-header-rows",
+          "board_edges": [
+            366,
+            428
+          ],
+          "body_bounds": [
+            [
+              0,
+              40,
+              388,
+              154
+            ],
+            [
+              0,
+              40,
+              406,
+              154
+            ],
+            [
+              0,
+              40,
+              418,
+              154
+            ],
+            [
+              0,
+              40,
+              423,
+              154
+            ],
+            [
+              0,
+              40,
+              425,
+              154
+            ],
+            [
+              0,
+              40,
+              425,
+              155
+            ],
+            [
+              0,
+              40,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              366,
+              155
+            ],
+            [
+              0,
+              42,
+              388,
+              155
+            ],
+            [
+              0,
+              42,
+              406,
+              155
+            ],
+            [
+              0,
+              42,
+              417,
+              155
+            ],
+            [
+              0,
+              42,
+              423,
+              155
+            ],
+            [
+              0,
+              42,
+              425,
+              153
+            ],
+            [
+              0,
+              42,
+              425,
+              154
+            ],
+            [
+              0,
+              42,
+              425,
+              155
+            ],
+            [
+              0,
+              42,
+              426,
+              154
+            ],
+            [
+              0,
+              42,
+              426,
+              155
+            ],
+            [
+              0,
+              42,
+              427,
+              154
+            ],
+            [
+              0,
+              42,
+              428,
+              154
+            ],
+            [
+              0,
+              43,
+              428,
+              154
+            ],
+            [
+              0,
+              71,
+              387,
+              155
+            ]
+          ],
+          "frames": 1170,
+          "geometry_origin": [
+            90,
+            827
+          ],
+          "header_bounds": [
+            [
+              0,
+              0,
+              167,
+              43
+            ],
+            [
+              0,
+              2,
+              136,
+              41
+            ],
+            [
+              0,
+              2,
+              139,
+              43
+            ],
+            [
+              0,
+              2,
+              167,
+              43
+            ],
+            [
+              0,
+              3,
+              136,
+              41
+            ],
+            [
+              0,
+              3,
+              139,
+              43
+            ],
+            [
+              0,
+              4,
+              136,
+              41
+            ],
+            [
+              0,
+              4,
+              139,
+              43
+            ],
+            [
+              0,
+              4,
+              167,
+              41
+            ],
+            [
+              0,
+              6,
+              136,
+              41
+            ],
+            [
+              0,
+              6,
+              139,
+              43
+            ],
+            [
+              0,
+              8,
+              136,
+              41
+            ],
+            [
+              0,
+              8,
+              139,
+              43
+            ],
+            [
+              0,
+              8,
+              167,
+              41
+            ],
+            [
+              0,
+              10,
+              139,
+              43
+            ],
+            [
+              0,
+              12,
+              19,
+              41
+            ],
+            [
+              0,
+              12,
+              167,
+              41
+            ],
+            [
+              0,
+              14,
+              35,
+              43
+            ],
+            [
+              0,
+              14,
+              167,
+              41
+            ],
+            [
+              0,
+              18,
+              35,
+              43
+            ],
+            [
+              0,
+              18,
+              167,
+              41
+            ],
+            [
+              0,
+              24,
+              35,
+              43
+            ],
+            [
+              0,
+              28,
+              44,
+              41
+            ],
+            [
+              0,
+              33,
+              135,
+              44
+            ],
+            [
+              1,
+              0,
+              167,
+              43
+            ],
+            [
+              1,
+              2,
+              167,
+              43
+            ],
+            [
+              1,
+              3,
+              167,
+              41
+            ],
+            [
+              1,
+              6,
+              167,
+              41
+            ],
+            [
+              1,
+              16,
+              19,
+              41
+            ],
+            [
+              1,
+              19,
+              136,
+              41
+            ],
+            [
+              1,
+              28,
+              19,
+              41
+            ]
+          ],
+          "mask_sha256": "a7c031116e288131eb52f027d67241e7cb9249740448de853fbbc160fdbfacd7",
+          "measured_present_frames": 904,
+          "measurement_scope": "reviewed_windows_only",
+          "outside_window_frames_not_scanned": 265,
+          "present_frames": 904,
+          "right": 428,
+          "segment": 15,
+          "source_bounds": [
+            90,
+            827,
+            518,
+            982
+          ],
+          "tag_frames": 628,
+          "window_excluded_present_frames": 0,
+          "window_excluded_present_frames_scope": "post_debounce_defense_only",
+          "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+          "mask": "/workspace/scratch/video-mask-cache-2026-10-13/final-root-warm/score_masks/segment-16.mkv"
+        }
+      ]
+    },
+    "decoded_masks": [
+      {
+        "segment": 0,
+        "mask_sha256": "b97749731e248ead3e907ce58cdf98d790a55b5c8019235dcfa8117ab901e1d3",
+        "frames": 321,
+        "decoded_frame_sequence_sha256": "c901daf87a87dfe1b7fcbd2061ecd44bc0b9ac305d746773dbcc52f5acea177f",
+        "absent_frames": 260,
+        "actual_alpha_right_edges": [
+          388,
+          406,
+          418,
+          423,
+          425,
+          426,
+          428
+        ],
+        "distinct_alpha_frames": 42,
+        "native_tag_frames": 55,
+        "source_bounds": [
+          90,
+          827,
+          518,
+          982
+        ]
+      },
+      {
+        "segment": 2,
+        "mask_sha256": "f97fdce43d0842625dd5cf0e2e35702de1463794a7461c01f0f6becf31dd0e62",
+        "frames": 235,
+        "decoded_frame_sequence_sha256": "cd82c53008ee2487b09803092710af76279d91f5f261273cbb0e29acb53781a7",
+        "absent_frames": 5,
+        "actual_alpha_right_edges": [
+          390
+        ],
+        "distinct_alpha_frames": 42,
+        "native_tag_frames": 0,
+        "source_bounds": [
+          90,
+          867,
+          480,
+          982
+        ]
+      },
+      {
+        "segment": 3,
+        "mask_sha256": "1c727cfcf42e1cb465959c8f0b5c4b512d156ea7469dec8d4b6b34deaaf927d6",
+        "frames": 565,
+        "decoded_frame_sequence_sha256": "ef340f5d722abd1af71f9bc9934f37bc9e73add2eadb28106d6cdca361853941",
+        "absent_frames": 4,
+        "actual_alpha_right_edges": [
+          390,
+          391,
+          392
+        ],
+        "distinct_alpha_frames": 233,
+        "native_tag_frames": 396,
+        "source_bounds": [
+          90,
+          829,
+          482,
+          982
+        ]
+      },
+      {
+        "segment": 4,
+        "mask_sha256": "6bba204f1d7b589e189005b48fb909585e3cb7145fc869acd9e97afd964fd9d0",
+        "frames": 292,
+        "decoded_frame_sequence_sha256": "19685491672cdf3aa581bd208c85c86cad6b6403ddf12ec521e2dcf24dc77ac8",
+        "absent_frames": 4,
+        "actual_alpha_right_edges": [
+          390
+        ],
+        "distinct_alpha_frames": 45,
+        "native_tag_frames": 288,
+        "source_bounds": [
+          90,
+          829,
+          480,
+          981
+        ]
+      },
+      {
+        "segment": 5,
+        "mask_sha256": "2ff3ad816215cef6bdf733fe1ef0a3c5e826a765e4520443983ec37d6358ff0b",
+        "frames": 1728,
+        "decoded_frame_sequence_sha256": "3a7939df5fcafe9c320490abb66e94fc3e802d59d4f9a476378c6dc3dc8fe4c4",
+        "absent_frames": 36,
+        "actual_alpha_right_edges": [
+          334,
+          356,
+          374,
+          382,
+          388,
+          389,
+          390,
+          391,
+          392,
+          393,
+          394
+        ],
+        "distinct_alpha_frames": 583,
+        "native_tag_frames": 1294,
+        "source_bounds": [
+          90,
+          827,
+          484,
+          982
+        ]
+      },
+      {
+        "segment": 6,
+        "mask_sha256": "279e8259cca417d6a8ff5c1317a0b979796012930400c6c4d8d8248775361a44",
+        "frames": 430,
+        "decoded_frame_sequence_sha256": "5da3aaaa407185772f0c72f92c3f2e4325261fd61e19d5ffb5a9ae4c9e659d62",
+        "absent_frames": 5,
+        "actual_alpha_right_edges": [
+          390
+        ],
+        "distinct_alpha_frames": 104,
+        "native_tag_frames": 425,
+        "source_bounds": [
+          90,
+          829,
+          480,
+          982
+        ]
+      },
+      {
+        "segment": 7,
+        "mask_sha256": "6ff7ec0597d6b09eee66ad197fc90b4cb10df259772c10a653cc575b2f205ae1",
+        "frames": 405,
+        "decoded_frame_sequence_sha256": "96b440cbc71aed65ff621ecaeceba206f7429589ba29968033cf36a6090f5816",
+        "absent_frames": 352,
+        "actual_alpha_right_edges": [
+          346,
+          365,
+          378,
+          386,
+          390,
+          426
+        ],
+        "distinct_alpha_frames": 53,
+        "native_tag_frames": 42,
+        "source_bounds": [
+          90,
+          829,
+          516,
+          981
+        ]
+      },
+      {
+        "segment": 8,
+        "mask_sha256": "0b832958da0d26933031ef7f4fdb4f2e823d08ad35412e80058b4a992b986eed",
+        "frames": 475,
+        "decoded_frame_sequence_sha256": "692dc7361634ed9e486b15293b38c9d24eccfa77c69c993dbc9920ccb3c54cea",
+        "absent_frames": 4,
+        "actual_alpha_right_edges": [
+          425,
+          426
+        ],
+        "distinct_alpha_frames": 115,
+        "native_tag_frames": 0,
+        "source_bounds": [
+          90,
+          867,
+          516,
+          982
+        ]
+      },
+      {
+        "segment": 9,
+        "mask_sha256": "b836c716e35b3c6a3dfcdf8aa516421f2ae6f872e83211183c17a551f959c2cd",
+        "frames": 610,
+        "decoded_frame_sequence_sha256": "8db734257bbe63d388d10f9c01c37393ccff9d90f9345ec93ff5f0b1e6403195",
+        "absent_frames": 17,
+        "actual_alpha_right_edges": [
+          366,
+          388,
+          406,
+          418,
+          425,
+          426,
+          427,
+          428,
+          429,
+          430
+        ],
+        "distinct_alpha_frames": 327,
+        "native_tag_frames": 459,
+        "source_bounds": [
+          90,
+          829,
+          520,
+          982
+        ]
+      },
+      {
+        "segment": 10,
+        "mask_sha256": "0fd57965718638e37a9d7b05f804285c9bde4610033d711e2ae0cb267a5491a6",
+        "frames": 265,
+        "decoded_frame_sequence_sha256": "f5f8f37537e272197508d154612ef457257a86922bb7c14fb9f95b2dfa1d4038",
+        "absent_frames": 8,
+        "actual_alpha_right_edges": [
+          425,
+          426
+        ],
+        "distinct_alpha_frames": 109,
+        "native_tag_frames": 0,
+        "source_bounds": [
+          90,
+          867,
+          516,
+          982
+        ]
+      },
+      {
+        "segment": 11,
+        "mask_sha256": "72ee9368977f39b83900ad3f84d965298048fcd9b9c7656e495c0b12b8e07bb4",
+        "frames": 145,
+        "decoded_frame_sequence_sha256": "2b61f5259445cf5d82f8ce5b0e5173c8515e04d04aec8280b6b1a07206973d3d",
+        "absent_frames": 78,
+        "actual_alpha_right_edges": [
+          366,
+          388,
+          406,
+          418,
+          423,
+          425,
+          426
+        ],
+        "distinct_alpha_frames": 45,
+        "native_tag_frames": 0,
+        "source_bounds": [
+          90,
+          867,
+          516,
+          982
+        ]
+      },
+      {
+        "segment": 12,
+        "mask_sha256": "8f7455442792b792bcb4736647ef3452bf44d4607324468bb92f08b980f31120",
+        "frames": 450,
+        "decoded_frame_sequence_sha256": "fe33a56150a6dc61c038377f18b7a8b8d29ac8dbc14cc65eb5b0fad2737b7d9f",
+        "absent_frames": 4,
+        "actual_alpha_right_edges": [
+          425,
+          426,
+          427
+        ],
+        "distinct_alpha_frames": 59,
+        "native_tag_frames": 0,
+        "source_bounds": [
+          90,
+          867,
+          518,
+          982
+        ]
+      },
+      {
+        "segment": 13,
+        "mask_sha256": "8e525f7da8bfcf43904c5dda33fde70e717aa02e64dddf9623a25c4332ae2f67",
+        "frames": 532,
+        "decoded_frame_sequence_sha256": "ba4fa04b8a2d21272b2c3bd9c63a6bee2163bab731519132ab487ff5d4bb601d",
+        "absent_frames": 4,
+        "actual_alpha_right_edges": [
+          424,
+          425,
+          426,
+          428,
+          430
+        ],
+        "distinct_alpha_frames": 180,
+        "native_tag_frames": 403,
+        "source_bounds": [
+          90,
+          829,
+          520,
+          982
+        ]
+      },
+      {
+        "segment": 14,
+        "mask_sha256": "bcfe138e7de8b3249a88484ff81050009ee1051629412448a9ed1d6a541bd945",
+        "frames": 258,
+        "decoded_frame_sequence_sha256": "ddccf3345d8024aefa34a45325f30aa9019f30b07efacb0be3630965aad2901b",
+        "absent_frames": 5,
+        "actual_alpha_right_edges": [
+          425,
+          426,
+          430
+        ],
+        "distinct_alpha_frames": 100,
+        "native_tag_frames": 253,
+        "source_bounds": [
+          90,
+          829,
+          520,
+          982
+        ]
+      },
+      {
+        "segment": 15,
+        "mask_sha256": "a7c031116e288131eb52f027d67241e7cb9249740448de853fbbc160fdbfacd7",
+        "frames": 1170,
+        "decoded_frame_sequence_sha256": "9cb269a364436daea6bedb49a76130afebd6ffb9f435450ee34dbeb06cb17535",
+        "absent_frames": 266,
+        "actual_alpha_right_edges": [
+          366,
+          387,
+          388,
+          406,
+          417,
+          418,
+          423,
+          425,
+          426,
+          427,
+          428
+        ],
+        "distinct_alpha_frames": 282,
+        "native_tag_frames": 628,
+        "source_bounds": [
+          90,
+          827,
+          518,
+          982
+        ]
+      }
+    ]
+  },
+  "verified": {
+    "all_masks_byte_identical_cold_warm": true,
+    "all_decoded_frames_identical_cold_warm_and_previous_version": true,
+    "all_resolved_geometries_and_scan_facts_identical_cold_warm": true,
+    "previous_copy_only_hit_and_source_window_miss_evidence_remains_immutable": true
+  },
+  "validation": {
+    "helper_suite": {
+      "passed": 21,
+      "seconds": 15.3,
+      "command": "python -m pytest -q tests/test_scoreboard_mask_cache.py"
+    },
+    "workflow_tilde_env_actual_entry_and_warm_hit_test": "passed; controlled Path.expanduser mapping with real disk entry/dirty creation, no HOME variable mutation",
+    "ruff_F821": "passed",
+    "owned_diff_check": "passed"
+  }
+}

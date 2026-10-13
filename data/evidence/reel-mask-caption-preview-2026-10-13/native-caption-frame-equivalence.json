@@ -1,0 +1,153 @@
+{
+  "kind": "native-caption-frame-pixel-comparison",
+  "preview_is_final_qc": false,
+  "new_tts_synthesized": false,
+  "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+  "spec_file_sha256": "f4cfac3a03391711d305eb4469ee558b4c21e9ea34e07a60e04f7f1cc72d825f",
+  "actual_ass_sha256": "e627f621c032d1a3703c5733e4a40264b8a19e13f30f598599f89f8a2155cd89",
+  "ass_identical_to_published_native": true,
+  "additional_match_point_frame_only_seconds": 0.7887382170010824,
+  "matched_samples": [
+    {
+      "film_time": 4.64,
+      "source_time": 290.4,
+      "segment": 0,
+      "preview_image_sha256": "289b10f319092ef9b889a02d99794b1b8495c630c67e97852497374bbbcf000d",
+      "reference_image_sha256": "289b10f319092ef9b889a02d99794b1b8495c630c67e97852497374bbbcf000d",
+      "whole_image_pixels_identical": true,
+      "absolute_error_max": 0,
+      "absolute_error_mean": 0.0,
+      "subtitle_band_pixels_identical": true
+    },
+    {
+      "film_time": 12.08,
+      "source_time": 297.84,
+      "segment": 0,
+      "preview_image_sha256": "afb12f6faa8040c40ff71a1a2beea6fadd3270217e404d4aefe136f6e0c232b6",
+      "reference_image_sha256": "afb12f6faa8040c40ff71a1a2beea6fadd3270217e404d4aefe136f6e0c232b6",
+      "whole_image_pixels_identical": true,
+      "absolute_error_max": 0,
+      "absolute_error_mean": 0.0,
+      "subtitle_band_pixels_identical": true
+    },
+    {
+      "film_time": 23.759999999999998,
+      "source_time": 4.92,
+      "segment": 2,
+      "preview_image_sha256": "55b1cb337370d9b8a9aa75cf072e15c0acad11c8003ecf5afd9d4daff6b8b8bf",
+      "reference_image_sha256": "55b1cb337370d9b8a9aa75cf072e15c0acad11c8003ecf5afd9d4daff6b8b8bf",
+      "whole_image_pixels_identical": true,
+      "absolute_error_max": 0,
+      "absolute_error_mean": 0.0,
+      "subtitle_band_pixels_identical": true
+    },
+    {
+      "film_time": 2.12,
+      "source_time": 287.88,
+      "segment": 0,
+      "preview_image_sha256": "a079c769466d99544ad7e00e99d7576f61f039a6ec39a16915cbe2e9cb3faae3",
+      "reference_image_sha256": "a079c769466d99544ad7e00e99d7576f61f039a6ec39a16915cbe2e9cb3faae3",
+      "whole_image_pixels_identical": true,
+      "absolute_error_max": 0,
+      "absolute_error_mean": 0.0,
+      "subtitle_band_pixels_identical": true
+    }
+  ],
+  "reference_method": "Real native cut graph -> lossless FFV1 YUV420 intermediate -> full native final topbar/ASS/restore graph. Blank prefix only supplies original film clock in the reference. It does not exist in preview PNGs.",
+  "does_not_prove": "H264 compression / dissolves / sound / full film QC or WeChat delivery",
+  "preview_samples": [
+    {
+      "segment": 0,
+      "frame": 86,
+      "film_time": 4.64,
+      "segment_time": 3.44,
+      "reason": "manual-cue-2",
+      "cue_text": "Sealed in style by Paolini.\n帕奥利尼漂亮收官",
+      "image_sha256": "289b10f319092ef9b889a02d99794b1b8495c630c67e97852497374bbbcf000d",
+      "source": "main",
+      "source_time": 290.4,
+      "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+      "still_sha256": null,
+      "mask_sha256": "b4565a100b5b2a021fd68c5173bed3518f0af5b8deda28942e17cd15ee97730d",
+      "resolved_scorebox": [
+        90,
+        827,
+        518,
+        982
+      ],
+      "image": "board-absent-360.png",
+      "visually_inspected_description": "360 position, board and point graphic absent at this source time"
+    },
+    {
+      "segment": 0,
+      "frame": 272,
+      "film_time": 12.08,
+      "segment_time": 10.88,
+      "reason": "manual-cue-4",
+      "cue_text": "a much-needed win for the Italian.\n意大利人拿到急需的一胜",
+      "image_sha256": "afb12f6faa8040c40ff71a1a2beea6fadd3270217e404d4aefe136f6e0c232b6",
+      "source": "main",
+      "source_time": 297.84,
+      "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+      "still_sha256": null,
+      "mask_sha256": "b4565a100b5b2a021fd68c5173bed3518f0af5b8deda28942e17cd15ee97730d",
+      "resolved_scorebox": [
+        90,
+        827,
+        518,
+        982
+      ],
+      "image": "center-result-480.png",
+      "visually_inspected_description": "Centered original ROUND 1 / final-score graphic remains unobscured"
+    },
+    {
+      "segment": 2,
+      "frame": 123,
+      "film_time": 23.759999999999998,
+      "segment_time": 4.92,
+      "reason": "manual-cue-8",
+      "cue_text": "帕奥利尼迎战贝莱克",
+      "image_sha256": "55b1cb337370d9b8a9aa75cf072e15c0acad11c8003ecf5afd9d4daff6b8b8bf",
+      "source": "main",
+      "source_time": 4.92,
+      "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+      "still_sha256": null,
+      "mask_sha256": "259bd365318872e1b27819cc1cbb13903402b84df1335e287be13280d8c67e6e",
+      "resolved_scorebox": [
+        90,
+        867,
+        480,
+        982
+      ],
+      "image": "normal-board-306.png",
+      "visually_inspected_description": "Actual original score body, ordinary caption bottom 306"
+    },
+    {
+      "segment": 0,
+      "frame": 23,
+      "film_time": 2.12,
+      "segment_time": 0.92,
+      "reason": "manual-cue-1",
+      "cue_text": "Magnificent.\n太精彩了",
+      "image_sha256": "a079c769466d99544ad7e00e99d7576f61f039a6ec39a16915cbe2e9cb3faae3",
+      "source": "main",
+      "source_time": 287.88,
+      "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+      "still_sha256": null,
+      "mask_sha256": "b4565a100b5b2a021fd68c5173bed3518f0af5b8deda28942e17cd15ee97730d",
+      "resolved_scorebox": [
+        90,
+        827,
+        518,
+        982
+      ],
+      "image": "match-point-360.png",
+      "visually_inspected_description": "Actual MATCH POINT #2 header and score body retained from matching source/mask frame"
+    }
+  ],
+  "actual_preview_manifest_sha256": {
+    "initial_three": "d3c67c4867ac6d4240ee439c934b4bbb6ca1db78372a53e1f2ca429245e97cc5",
+    "additional_match_point": "02f349528fe5b729217ddce5c74e75c83732dfc85021184f5954e1a0ee263a04",
+    "final_timed_three": "4de9a8c7d7ce5dff4967ab58dee2230d575a44257a6515268e118103f38ce706"
+  }
+}

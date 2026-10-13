@@ -1,0 +1,39 @@
+{
+  "method": "Root directly viewed the named real PNGs; final CLI inherits review only after exact file byte equality.",
+  "kind": "visual_preview_only",
+  "final_movie_qc_claimed": false,
+  "samples": [
+    {
+      "image": "caption-01.png",
+      "image_sha256": "a079c769466d99544ad7e00e99d7576f61f039a6ec39a16915cbe2e9cb3faae3",
+      "source_time": 287.88,
+      "film_time": 2.12,
+      "inspected_original": "/workspace/scratch/video-caption-preview-2026-10-13/actual-match-point/caption-01.png",
+      "final_cli_png_identical_to_inspected_png": true,
+      "observation": "Actual MATCH POINT #2 retained with separate native body/header alpha; bilingual subtitle clears the tag."
+    },
+    {
+      "image": "caption-02.png",
+      "image_sha256": "afb12f6faa8040c40ff71a1a2beea6fadd3270217e404d4aefe136f6e0c232b6",
+      "source_time": 297.84,
+      "film_time": 12.08,
+      "inspected_original": "/workspace/scratch/video-caption-preview-2026-10-13/real-three/caption-02.png",
+      "final_cli_png_identical_to_inspected_png": true,
+      "observation": "Centred ROUND 1 result remains visible below the bilingual subtitle."
+    },
+    {
+      "image": "caption-03.png",
+      "image_sha256": "55b1cb337370d9b8a9aa75cf072e15c0acad11c8003ecf5afd9d4daff6b8b8bf",
+      "source_time": 4.92,
+      "film_time": 23.759999999999998,
+      "inspected_original": "/workspace/scratch/video-caption-preview-2026-10-13/real-three/caption-03.png",
+      "final_cli_png_identical_to_inspected_png": true,
+      "observation": "Normal scoreboard remains at native aspect ratio; Chinese subtitle sits close above it."
+    }
+  ],
+  "additional_board_absent_sample": {
+    "image_sha256": "289b10f319092ef9b889a02d99794b1b8495c630c67e97852497374bbbcf000d",
+    "source_time": 290.4,
+    "observation": "Handshake close-up retains bilingual text without a leftover scoreboard patch; not classified as a point-header sample."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "kind": "range-corrected-four-frame-warm-native-preview-cli",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "tools/preview_reel_captions.py",
+    "--spec",
+    "specs/reels/paolini-bejlek-wuhan-2026-r1.json",
+    "--source",
+    "main=/workspace/scratch/timed-662TF-JlyZY/662TF-JlyZY.mp4",
+    "--outdir",
+    "/workspace/scratch/video-caption-preview-2026-10-13/range-fixed-four",
+    "--cue",
+    "1,2,4,8",
+    "--max-frames",
+    "4"
+  ],
+  "elapsed_wall_seconds": 14.27746476399625,
+  "returncode": 0,
+  "final_qc_or_delivery": false
+}
