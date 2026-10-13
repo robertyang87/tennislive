@@ -997,6 +997,22 @@ jobs:
           restore-keys: |
             reel-tts-${{ github.event.inputs.slug }}-
 
+      # The wrapper verifies actual source/code/geometry/ffmpeg identity inside
+      # each atomic entry. Never cache a QC pass or intermediate source movie.
+      - name: 恢复记分板蒙版（只用于 render）
+        id: scoreboard_mask_cache
+        if: github.event.inputs.mode == 'render'
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-scoreboard-masks/entries
+          key: reel-scoreboard-masks-${{ runner.os }}-v1-${{ github.event.inputs.slug }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            reel-scoreboard-masks-${{ runner.os }}-v1-${{ github.event.inputs.slug }}-
+
+      - name: 清除上一趟蒙版缓存写入标记
+        if: github.event.inputs.mode == 'render'
+        run: rm -f "$HOME/.cache/tennislive-scoreboard-masks/.dirty"
+
       - name: 算出目录
         id: paths
         run: |
@@ -1332,6 +1348,7 @@ jobs:
           AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
           AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
           TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
+          TENNISLIVE_SCOREBOARD_MASK_CACHE: ~/.cache/tennislive-scoreboard-masks
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
@@ -1420,6 +1437,23 @@ jobs:
             --slug "${{ github.event.inputs.slug }}" \
             --film "${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4" \
             2>&1 | tee -a /tmp/render-findings.log
+
+      - name: 检查本次完整蒙版缓存写入
+        id: scoreboard_mask_changes
+        if: github.event.inputs.mode == 'render'
+        run: |
+          if [ -f "$HOME/.cache/tennislive-scoreboard-masks/.dirty" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 回写完整蒙版缓存（实际成片 QC 通过后）
+        if: github.event.inputs.mode == 'render' && steps.scoreboard_mask_changes.outputs.changed == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/tennislive-scoreboard-masks/entries
+          key: ${{ steps.scoreboard_mask_cache.outputs.cache-primary-key }}
 
       # Preserve verified original input bytes before Release clobber/cleanup.
       # This archive is transport evidence, not permission to bypass fresh QC.

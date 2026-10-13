@@ -129,6 +129,8 @@ probe 并备料；候选报告写进 job summary，不用翻日志。往下接
 
 [产线测试分层](docs/production-test-scopes.md)说明比赛、采访、讲解和新闻视频的自动选择范围；跨线公共检查照跑，未知与基础改动、每日及手动检查走全量。
 
+[逐帧比分板缓存与字幕预览](docs/reel-mask-caption-preview.md)说明如何复用动态蒙版，以及在整片编码前用真实帧核对字幕与破发点、盘点等提示条的位置。
+
 字幕位置调整见[逐段字幕下锚](docs/reel-caption-bottom-windows.md)；保留已有原音轨、组合已核原生画面见[原生流合成](docs/native-reel-stream-composition.md)。[微信交付计时](docs/reel-delivery-sla.md)从收到素材计到实际回执，不能把渲染完成当成交付完成。
 
 产物各走各的通道，别混：

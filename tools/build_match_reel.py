@@ -4483,7 +4483,7 @@ def segment_encode_budget(count: int) -> tuple[int, int]:
 
 
 def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0,
-                      *, threads: int | None = None) -> Path:
+                      *, threads: int | None = None, command_sink=None) -> Path:
     """整屏证据段：深色底 + 卡片居中 → 一段静片。
 
     合成用 PIL（卡是透明底贴纸，缩到画幅内居中），编码参数和其他分段一致
@@ -4492,6 +4492,7 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0,
     所以「占位静音变成成片死寂」那条路在形状层就被堵住了（窗口自己写，
     seconds 只比旁白长零点几秒）。
     """
+    run = globals()["run"] if command_sink is None else command_sink
     from PIL import Image  # noqa: PLC0415
 
     card = Image.open(seg.image).convert("RGBA")
@@ -4541,7 +4542,7 @@ def _canvas_fit() -> str:
 
 def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 path: list[tuple[float, int]] | None = None,
-                tail: float = 0.0, *, threads: int | None = None) -> Path:
+                tail: float = 0.0, *, threads: int | None = None, command_sink=None) -> Path:
     """切一段、裁成 3:4、放大到 1080×1440。
 
     `tail` 是留给**下一个接缝**的溶解料：多切这么几秒源片的自然延续，
@@ -4552,6 +4553,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
 
     `-ss` 放在 `-i` 前面，用默认 accurate_seek 从前一关键帧精确解码到落点。
     """
+    run = globals()["run"] if command_sink is None else command_sink
     thread_args = ["-threads", str(threads)] if threads is not None else []
     filter_args = ["-filter_complex_threads", str(threads)] if threads is not None else []
     if seg.visual_image:
@@ -9777,7 +9779,9 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
            pitch: str = "+0Hz",
            source_override: Path | None = None,
-           cover_only: bool = False) -> Path:
+           cover_only: bool = False, preview_callback=None) -> Path:
+    if cover_only and preview_callback is not None:
+        raise ReelError("Caption preview and cover-only render are separate modes")
     # Actual new video renders enforce the current owner policy. Historical
     # read-only schema validation and cover-photo framing remain unchanged.
     from tennislive.video.crop_policy import require_reel_center
@@ -9988,32 +9992,14 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 最长 40 秒，原来没有 stage 包着——报表上看不见，`last_stage` 也指不到它
     # （「第 N 段一帧都认不出板」死在这儿时，台账记的是上一步 TTS）。
     with stage("比分板蒙版") if profile else nullcontext():
-        if profile == "us-open":
-            from scoreboard_geometry import resolve_masks
-            resolve_masks(sources, segments, outdir,
-                          Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
-                          FPS_EXPR, SEG_FADE)
-        elif profile == "rna-slam":
-            from rna_scoreboard import resolve_masks as resolve_rna_masks
-            resolve_rna_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-        elif profile == "atp":
-            # ⭐ ATP 巡回赛转播的板：逐帧蒙版，板多宽切多宽，BREAK/SET/MATCH POINT
-            # 的黄条单独切、接在板右边（账号所有者 2026-09-24，见 atp_scoreboard）。
-            from atp_scoreboard import resolve_masks as resolve_atp_masks
-            resolve_atp_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-        elif profile == "wta":
-            # ⭐ WTA 巡回赛转播：板不在的帧不贴、板多宽切多宽（见 wta_scoreboard）。
-            from wta_scoreboard import resolve_masks as resolve_wta_masks
-            resolve_wta_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-        elif profile == "itf-bjk":
-            # ⭐ 比利·简·金杯（ITF 转播）：宝蓝底＋浅青小分格＋发球小球（见 itf_scoreboard）。
-            from itf_scoreboard import resolve_masks as resolve_itf_masks
-            resolve_itf_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
-        elif profile == "lavercup":
-            # ⭐ 拉沃尔杯转播（账号所有者 2026-09-25「比分板补一套适配，彻底解决」）：
-            # 蓝边一行＋红边一行＋金色标签，三块胶囊各切各的；宽版全名板不贴（见 lavercup_scoreboard）。
-            from lavercup_scoreboard import resolve_masks as resolve_laver_masks
-            resolve_laver_masks(sources, segments, outdir, FPS_EXPR, SEG_FADE)
+        if profile in {"us-open", "rna-slam", "atp", "wta", "itf-bjk", "lavercup"}:
+            from scoreboard_mask_cache import resolve_masks_cached
+            # Cache the complete native per-frame alpha sequence, never a still
+            # scoreboard or a QC verdict. Width, presence and point headers
+            # retain their original frame timing; score pixels come from source.
+            resolve_masks_cached(
+                profile, sources, segments, outdir, FPS_EXPR, SEG_FADE,
+                spec_path=Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json")
         elif profile == "band-legacy":
             resolve_board_insets(sources, segments)
 
@@ -10125,6 +10111,14 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         print(f"字幕 {len(cues)} 行 → {ass.name}（画布 {VIDEO_W}×{VIDEO_H}，"
               f"上锚 MarginV={margin_v}{moved}，"
               f"左右 {_ASS_MARGIN_H}）")
+
+    # Explicitly invoked only by the frame-preview tool. It receives the same
+    # resolved masks, actual speech timings and final ASS, then exits before
+    # tracking, cover/part encoding, mixing and production success metadata.
+    if preview_callback is not None:
+        return preview_callback(spec=spec, segments=segments, sources=sources,
+                                source_w=source_w, ass=ass, cues=cues,
+                                cover_secs=cover_secs, outdir=outdir)
 
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)
@@ -11492,6 +11486,39 @@ def topbar_scrim_source(label: str = "topbar_scrim") -> str:
             f"geq=r='0':g='0':b='0':a='{alpha}'[{label}]")
 
 
+def match_canvas_filtergraph(*, foot_input: int | None = None,
+                             wm_input: int | None = None,
+                             scrim_input: int | None = None, scrim_y: int = 0) -> str:
+    """Native match decorations, without a cover/outro concat or clock reset."""
+    steps: list[str] = []
+    label = "match_flat"
+    # 字幕的渐变垫（全出血才有：带式的字幕本来就在实色底带里）。排在脚注和角标
+    # 之前——它是垫在最底下的那一层；字幕在 concat 之后才烧，自然压在它上面。
+    if scrim_input is not None and LAYOUT != "band":
+        steps.append(f"[{label}][{scrim_input}:v]overlay=0:{scrim_y}[match_scrim]")
+        label = "match_scrim"
+    if foot_input is not None:
+        steps.append(f"[{label}][{foot_input}:v]"
+                     f"overlay=(W-w)/2:{BAND_FOOT_Y}-h/2[match_foot]")
+        label = "match_foot"
+    # 常驻角标也挂在这儿——和脚注同一个范围（封面和片尾不带），所以不用
+    # `enable=`，上面 split 出来的那三段自己就把范围切好了。
+    if wm_input is not None:
+        wx, wy = watermark_xy(has_topbar=True)
+        steps.append(f"[{label}][{wm_input}:v]overlay={wx}:{wy}[match_wm]")
+        label = "match_wm"
+    steps.append(f"[{label}]setsar=1[match_canvas]")
+    canvas = ";".join(steps)
+    return (
+        f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+        f"crop={VIDEO_W}:{VIDEO_H},"
+        + ("setsar=1[match_flat];" if LAYOUT == "band" else
+           "setsar=1[match_bare];"
+           f"{topbar_scrim_source('topbar_scrim')};"
+           "[match_bare][topbar_scrim]overlay=0:0,setsar=1[match_flat];")
+        + f"{canvas};")
+
+
 def topbar_filtergraph(cover_secs: float, segments_secs: float,
                        topbar_ass: Path, subtitles_ass: Path,
                        foot_input: int | None = None,
@@ -11521,42 +11548,16 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
     # `Input link in0:v0 parameters (size 296x88) do not match`；
     # 但那句话指的是 concat，读起来完全不像「overlay 的输入接反了」。
     # 第一个 overlay 之所以能那么写，是因为它两路输入的标签都是显式的。
-    steps: list[str] = []
-    label = "match_flat"
-    # 字幕的渐变垫（全出血才有：带式的字幕本来就在实色底带里）。排在脚注和角标
-    # 之前——它是垫在最底下的那一层；字幕在 concat 之后才烧，自然压在它上面。
-    if scrim_input is not None and LAYOUT != "band":
-        steps.append(f"[{label}][{scrim_input}:v]overlay=0:{scrim_y}[match_scrim]")
-        label = "match_scrim"
-    if foot_input is not None:
-        steps.append(f"[{label}][{foot_input}:v]"
-                     f"overlay=(W-w)/2:{BAND_FOOT_Y}-h/2[match_foot]")
-        label = "match_foot"
-    # 常驻角标也挂在这儿——和脚注同一个范围（封面和片尾不带），所以不用
-    # `enable=`，上面 split 出来的那三段自己就把范围切好了。
-    if wm_input is not None:
-        wx, wy = watermark_xy(has_topbar=True)
-        steps.append(f"[{label}][{wm_input}:v]overlay={wx}:{wy}[match_wm]")
-        label = "match_wm"
-    steps.append(f"[{label}]setsar=1[match_canvas]")
-    canvas = ";".join(steps)
+    canvas = match_canvas_filtergraph(foot_input=foot_input, wm_input=wm_input,
+                                      scrim_input=scrim_input, scrim_y=scrim_y)
     return (
         f"[0:v]split=3[cover_src][match_src][outro_src];"
         f"[cover_src]trim=start=0:end={cover_secs:.3f},"
         "setpts=PTS-STARTPTS[cover];"
         f"[match_src]trim=start={cover_secs:.3f}:end={match_end:.3f},"
         "setpts=PTS-STARTPTS,"
-        f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
-        f"crop={VIDEO_W}:{VIDEO_H},"
-        # 全出血：顶栏压在画面上，垫一层渐变压暗保住可读性（`TOPBAR_SCRIM_*`）。
-        # 带式：顶带本来就是实色（BAND_BG），再垫这层会在顶带下沿露出一道
-        # 两色接缝。
-        + ("setsar=1[match_flat];" if LAYOUT == "band" else
-           "setsar=1[match_bare];"
-           f"{topbar_scrim_source('topbar_scrim')};"
-           "[match_bare][topbar_scrim]overlay=0:0,setsar=1[match_flat];")
-        + f"{canvas};"
-        f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
+        + canvas
+        + f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
         "[cover][match_canvas][outro]concat=n=3:v=1:a=0,setpts=PTS-STARTPTS[base];"
         f"[base]subtitles={topbar_path}:fontsdir={fontsdir},"
         f"subtitles={subtitles_path}:fontsdir={fontsdir}[out]"

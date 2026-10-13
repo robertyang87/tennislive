@@ -1,0 +1,29 @@
+{
+  "kind": "three-frame-native-preencode-cli-benchmark",
+  "elapsed_wall_seconds": 13.420090269995853,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "tools/preview_reel_captions.py",
+    "--spec",
+    "specs/reels/paolini-bejlek-wuhan-2026-r1.json",
+    "--source",
+    "main=/workspace/scratch/timed-662TF-JlyZY/662TF-JlyZY.mp4",
+    "--outdir",
+    "/workspace/scratch/video-caption-preview-2026-10-13/final-timed-three",
+    "--cue",
+    "1,4,8",
+    "--max-frames",
+    "3"
+  ],
+  "source_and_input_context": "104MB actual official WTA source, 17 segments, 9 exact actual-native MP3/WordBoundary pairs preseeded and verified; warm native full-frame mask cache; all actual preflight/source/TTS-duration checks still executed",
+  "mask_cache": "warm hit with final helper",
+  "tts_reused": 9,
+  "frames": 3,
+  "actual_ass_sha256": "e627f621c032d1a3703c5733e4a40264b8a19e13f30f598599f89f8a2155cd89",
+  "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+  "spec_file_sha256": "f4cfac3a03391711d305eb4469ee558b4c21e9ea34e07a60e04f7f1cc72d825f",
+  "frames_only": false,
+  "full_movie_encoded": false,
+  "publication_or_final_qc": false,
+  "scope_limit": "This is a bounded 3-frame preflight/preview runtime with warm caches, not video creation-to-WeChat SLA or a cold-start benchmark."
+}

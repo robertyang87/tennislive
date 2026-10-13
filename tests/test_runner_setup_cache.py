@@ -705,14 +705,13 @@ def _stage_names(node: ast.With) -> list[str]:
 def test_渲染的计时包住比分板蒙版和分段编码的墙钟():
     """位置判据（只测台账的行为拦不住 render 里包错地方）：
 
-    - 四种转播的 `resolve_*_masks` 都在 `with stage("比分板蒙版")` 里——原来
+    - 原生逐帧蒙版缓存入口和旧版测量都在 `with stage("比分板蒙版")` 里——原来
       没包，中位 20 秒报表上看不见，死在这儿时 `last_stage` 指着上一步 TTS；
     - 线程池在 `with stage("分段编码")` 里（墙钟）；
     - 每段那一行用 `SEGMENT_STAGE`，它带着并行记号。
     """
     tree, render = _render_fn()
-    mask_calls = {"resolve_masks", "resolve_atp_masks", "resolve_wta_masks",
-                  "resolve_itf_masks", "resolve_laver_masks", "resolve_board_insets"}
+    mask_calls = {"resolve_masks_cached", "resolve_board_insets"}
     covered, pool_in_wall = set(), False
     for node in ast.walk(render):
         if not isinstance(node, ast.With):
