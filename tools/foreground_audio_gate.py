@@ -41,6 +41,8 @@ def plan_hash(spec: dict) -> str:
         value['audio_effects_review']=spec['audio_effects_review']
     if spec.get('original_audio_mode') is not None:
         value.update(original_audio_mode=spec['original_audio_mode'],owner_approval=spec.get('owner_approval'))
+    if 'preserve_source_audio' in spec:
+        value['preserve_source_audio']=spec['preserve_source_audio']
     return hashlib.sha256(json.dumps(value,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
 
 
@@ -95,6 +97,11 @@ def _quote_windows(seg: dict):
 
 def inspect(spec: dict, *, root: Path=ROOT, sources: dict[str,Path]|None=None) -> list[dict]:
     """Return every required cue; missing/changed evidence is a hard failure."""
+    from build_match_reel import ReelError, validate_preserved_source_audio
+    try:
+        validate_preserved_source_audio(spec)
+    except ReelError as exc:
+        raise ValueError(str(exc)) from exc
     if narrated_audio_mode.enabled(spec,sources=sources):
         return []
     if spec.get('source_audio'):
