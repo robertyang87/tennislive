@@ -1293,11 +1293,7 @@ jobs:
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
-          # 按真语音重放数字静音要读 probe.json：dry-run 那一步落好的，可能已经被「算出目录」
-          # 那一步的 `git sparse-checkout add` 清掉（落盘要排在每一个 add 之后）——再落一遍，
-          # 已经在的不动。取不到只是这一层哑（会出声），不拦查旁白。
-          python tools/probe_sources.py materialize "$SPEC" \
-            || echo "::warning::按 URL 认领 probe.json 失败——按真语音重放数字静音这一趟可能没查"
+          # 普通赛场之上按 owner 更新不再重放响度/静音预测；这里只查实际配音时长。
           set +e
           python tools/build_match_reel.py render --check-narration \
             --spec "$SPEC" \
@@ -1359,10 +1355,7 @@ jobs:
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           SLUG="${{ github.event.inputs.slug }}"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
-          # render 在 TTS 之后按真语音重放数字静音（`_render_silence_gate`），要读 probe.json——
-          # 和 narration 那一步同一个理由再落一遍（已经在的不动，一趟批量 fetch 两秒）。
-          python tools/probe_sources.py materialize "$SPEC" \
-            || echo "::warning::按 URL 认领 probe.json 失败——render 按真语音重放数字静音这一趟可能没查"
+          # 普通赛场之上保留现场声大小，不再为响度预测重复取 probe。
           # 审听 sha256 必须是这一趟真正编码的文件。先落到 outdir，render 见到
           # source_*.mp4 就不再重下。选择器先用任务书的 avc1≤1080，失败再走 download()。
           python tools/stage_reel_sources.py --spec "$SPEC" --outdir "$OUTDIR"

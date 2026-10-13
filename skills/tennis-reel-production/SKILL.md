@@ -7,6 +7,10 @@ description: Produce and audit “赛场之上” tennis videos with human-writt
 
 Use this as the production contract shared by the human editor, renderer, QC, and publisher.
 
+## Owner update 2026-10-13: remove loudness processing and checks
+
+For ordinary native match reels, preserve source audio at unity and remove automatic gain, ducking and normalization. Do not scan source/final loudness, predict threshold silence, compare source gain/PCM, or repair naturally quiet audio based on those checks. Keep pronunciation review, complete source speech, caption timing, audio-stream presence and duration, visual QC, artifact hashes and unique PushPlus receipts. Historical loudness rules are superseded for this production path; other pipelines and explicitly approved special audio modes retain their own contracts. Do not rerender or resend published movies merely to apply the new rule.
+
 1. Build a verified match fact packet and derive winner-perspective score once.
 2. Write editorial and PushPlus copy by hand against the verified fact packet.
 3. Probe the complete source and sample contact sheets across its full duration.

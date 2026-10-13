@@ -14,8 +14,11 @@ def test_foreground_preinstall_validation_needs_only_standard_library():
 import sys
 sys.path.insert(0, 'tools')
 import foreground_audio_gate as gate
+import reel_source_audio_policy as policy
 spec={'preserve_source_audio':True,'segments':[]}
 gate.validate_preserved_source_audio(spec)
+policy.validate(spec)
+assert policy.normal_source_audio(spec)
 assert gate.require(spec)==[]
 try:
     gate.require({'preserve_source_audio':True,'segments':[{'bed':'high'}]})
@@ -29,8 +32,8 @@ assert 'requests' not in sys.modules
  subprocess.run([sys.executable,'-S','-c',script],cwd=ROOT,check=True)
 
 
-def test_preserved_native_source_stays_at_unity_during_and_after_voice():
- graph=build.duck_filtergraph(['[1:a]anull[v0]'],['[v0]'],preserve_source_audio=True)
+def test_normal_native_source_stays_at_unity_during_and_after_voice():
+ graph=build.native_mix_filtergraph({'segments':[]},['[1:a]anull[v0]'],['[v0]'])
  pcm=np.frombuffer(subprocess.check_output(['ffmpeg','-v','error',
      '-f','lavfi','-i','sine=frequency=300:sample_rate=48000:duration=3',
      '-f','lavfi','-i','sine=frequency=2000:sample_rate=48000:duration=1',
@@ -42,6 +45,21 @@ def test_preserved_native_source_stays_at_unity_during_and_after_voice():
  assert last[300]==pytest.approx(first[300],rel=.001)
  assert first[2000]==pytest.approx(first[300],rel=.001)
  assert last[2000]<1e-7
+
+
+def test_normal_source_policy_rejects_adjustments_and_does_not_scan_tail(tmp_path,monkeypatch):
+ import reel_source_audio_policy as policy
+ assert policy.record({})=='unity_no_loudness_v1'
+ assert not policy.normal_source_audio(candidate())
+ for change in [{'mute':True},{'bed':'high'},{'speed':.8}]:
+  with pytest.raises(ValueError):policy.validate({'segments':[change]})
+ for change in [{'music':{'file':'x.wav'}},{'source_audio':'x.wav'}]:
+  with pytest.raises(ValueError):policy.validate(change)
+ monkeypatch.setattr(build,'_speech_tail_end',lambda *_a,**_k:pytest.fail('loudness tail scan'))
+ voice=tmp_path/'voice.wav'
+ subprocess.run(['ffmpeg','-v','error','-y','-f','lavfi','-i',
+                 'sine=frequency=440:sample_rate=48000:duration=2',str(voice)],check=True)
+ assert build.outro_length(voice)==pytest.approx(max(2+build.OUTRO_TAIL,build.outro_page.min_length()),abs=.001)
 
 
 def test_preserved_audio_rejects_every_gain_or_replacement_conflict():

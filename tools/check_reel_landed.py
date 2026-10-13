@@ -1,16 +1,9 @@
 #!/usr/bin/env python3
 """竖版短片落库之后，直接查产物本身。
 
-「做完了」不看信号看产物——不查提交信息、不查路径变没变，把成片解开量三样：
-
-    1. 分辨率必须是成片画布本身（裁切/缩放一旦被绕过去，成片就是 16:9）
-    2. **没有解说的那几段，现场声不能是数字静音**。踩过：补位的 anullsrc 无条件
-       生效，把真音轨盖了，成片量出来 -91 dB——有音轨、有码率、就是没声音，
-       波形之外看不出来
-    3. 逐秒扫一遍音量，把整条片子的响度画成一行。只测几个点会漏掉「中间五十秒
-       全空」这种：那次抽到的两个点恰好都落在解说里
-
-**不合格的也要列出来**。只在通过时出声的检查，没法证明它真的看过。
+直接核对成片画布、实际音视频流与尾端时序、字幕和渲染输入身份。
+正常赛场之上按账号所有者要求移除响度处理和响度检查，不解 PCM 扫音量，
+不把未测的静音/声强写成通过。已明确授权的特殊音效模式保留独立旧检查。
 
 用法：
 
@@ -31,6 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from render_inputs import MANIFEST_NAME as RENDER_INPUTS_NAME  # noqa: E402
+from reel_source_audio_policy import normal_source_audio  # noqa: E402
 
 # 成片画布。**赛场之上从 9:16 改成 3:4 之后这儿漏改了**，于是每跑一次都报
 # 「分辨率 1080×1440，要 1080×1920」——一条常年红的检查等于没有检查。
@@ -40,6 +34,7 @@ VIDEO_W, VIDEO_H = 1080, 1440
 # 有配音的封面跟着配音走，长度算不出来——render 会把它记进 render.json，
 # 见 cover_seconds()。
 COVER_SECONDS = 1.2
+# 以下阈值和响度 helper 仅供明确授权特殊模式与历史消费者；正常赛场之上不调用。
 # 纯数字静音在 volumedetect 里是 -91 dB。真现场声（球声、观众）远高于此，
 # 门槛放在 -60：宽到不会误报，又能拦住「静音盖住真音轨」
 SILENCE_FLOOR_DB = -60.0
@@ -75,8 +70,11 @@ def write_attestation(film: Path, spec_path: Path, spec: dict) -> Path:
         "film_bytes": film.stat().st_size,
         "checks": {
             "canvas": [VIDEO_W, VIDEO_H],
-            "silence_floor_db": SILENCE_FLOOR_DB,
+            "loudness_checks": ("removed_by_owner" if normal_source_audio(spec)
+                                else "legacy_authorized_mode"),
+            "audio_stream_structure": "pass",
             "ending_payoff": "pass",
+            "audio_start_max_s": 1.0,
             "audio_tail_max_s": 1.0,
         },
     }
@@ -485,106 +483,42 @@ def scoreboard_geometry_problem(film: Path, spec_path: Path, spec: dict) -> str 
     return None
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--slug", default="nishikori-shang")
-    ap.add_argument("--date", default=shanghai_today(),
-                    help="产物日期目录，默认取上海日期")
-    ap.add_argument("--film", help="直接给成片路径（给了就不按 slug 猜）")
-    ap.add_argument("--spec", help="spec 路径，默认 specs/reels/<slug>.json")
-    args = ap.parse_args()
+def probe_media_streams(film: Path) -> tuple[dict, dict]:
+    """Read stream structure once, without decoding PCM or inspecting amplitude."""
+    data = json.loads(sh("ffprobe", "-v", "error", "-show_entries",
+                         "stream=codec_type,codec_name,width,height,channels,sample_rate,duration,start_time",
+                         "-of", "json", str(film)))
+    streams = data.get("streams")
+    if not isinstance(streams, list):
+        raise ValueError("ffprobe 未返回有效 streams")
+    result = []
+    for kind in ("video", "audio"):
+        stream = next((s for s in streams if isinstance(s, dict) and s.get("codec_type") == kind), None)
+        if stream is None or not isinstance(stream.get("codec_name"), str) or stream["codec_name"] in {"", "unknown", "none"}:
+            raise ValueError(f"缺少合法 {kind} 流")
+        row = dict(stream)
+        for field in ("duration", "start_time"):
+            raw = row.get(field, 0 if field == "start_time" else None)
+            if isinstance(raw, bool):
+                raise ValueError(f"{kind} {field} 非法")
+            value = float(raw)
+            if not math.isfinite(value) or (field == "duration" and value <= 0):
+                raise ValueError(f"{kind} {field} 必须为有限{'正数' if field == 'duration' else '数值'}")
+            row[field] = value
+        for field in (("width", "height") if kind == "video" else ("channels", "sample_rate")):
+            raw = row.get(field)
+            if isinstance(raw, bool) or int(raw) <= 0 or float(raw) != int(raw):
+                raise ValueError(f"{kind} {field} 非法")
+            row[field] = int(raw)
+        if not math.isfinite(row["start_time"] + row["duration"]):
+            raise ValueError(f"{kind} 流尾端时间必须有限")
+        result.append(row)
+    return result[0], result[1]
 
-    root = Path(__file__).resolve().parents[1]
-    film = Path(args.film) if args.film else (
-        root / "output" / args.date / "reel" / args.slug / f"{args.slug}.mp4")
-    spec_path = Path(args.spec) if args.spec else (
-        root / "specs" / "reels" / f"{args.slug}.json")
-    if not film.is_file():
-        print(f"[不合格] 找不到成片 {film}")
-        print("        注意目录按**上海日期**算，沙箱是 UTC——查错日期看起来"
-              "就像「还没落库」")
-        return 1
-    # 先撤销旧绿灯，再开始本轮检查。这样中途 ffprobe/解码异常退出也不会让上一版
-    # 的 pass 凭证留在目录里；只有走到末尾 0 项不合格才重新创建。
-    stale = film.parent / "qc_attestation.json"
-    if stale.exists():
-        stale.unlink()
-        print(f"[QC] 本轮重验开始，先撤销旧凭证 {stale}")
-    spec = json.loads(spec_path.read_text(encoding="utf-8"))
-    print(f"成片 {film}（{film.stat().st_size / 1e6:.1f} MB）")
-    from winners_ue_gate import problem as winners_ue_problem  # noqa: PLC0415
-    stats_problem = winners_ue_problem(spec)
-    if stats_problem:
-        print(f"[不合格] {stats_problem}")
-        return 1
 
-    cover = cover_seconds(film)
-    from production_style import match_footage_problem  # noqa: PLC0415
-    from foreground_audio_gate import verify_final  # noqa: PLC0415
-    if issue := match_footage_problem(spec):
-        print(f"[不合格] {issue}")
-        return 1
-    try:
-        if cover is None:
-            raise ValueError("新片原声音轨质检需要本次 render.json 的真实封面时长")
-        verify_final(spec, film.parent / "subtitles.ass", cover, film=film)
-    except (OSError, KeyError, TypeError, ValueError) as exc:
-        print(f"[不合格] waiting_audio_review：{exc}")
-        return 1
-    bad = voiced_by(film, spec)
-
-    headshot = stat_card_headshot_problem(
-        spec, root / "specs" / "reels", self_path=spec_path)
-    if headshot:
-        is_clash, headshot_msg = headshot
-        print(f"\n{headshot_msg}")
-        # 只有真的挂错（和别的 spec 矛盾）才算不合格；「第一次出现，没得比」
-        # 只是提醒人核一眼，不拦——不然会把每一个新球员的首秀都判成不合格
-        if is_clash:
-            bad += 1
-
-    size = sh("ffprobe", "-v", "error", "-select_streams", "v:0",
-              "-show_entries", "stream=width,height",
-              "-of", "csv=p=0:s=x", str(film)).strip().split("x")[:2]
-    w, h = int(size[0]), int(size[1])
-    ok = (w, h) == (VIDEO_W, VIDEO_H)
-    bad += 0 if ok else 1
-    print(f"[{'ok' if ok else '不合格'}] 分辨率 {w}×{h}（要 {VIDEO_W}×{VIDEO_H}）")
-
-    v_dur = _ffprobe_float(sh("ffprobe", "-v", "error", "-select_streams", "v:0",
-                     "-show_entries", "stream=duration",
-                     "-of", "csv=p=0", str(film)))
-    segs = spec_segments_seconds(spec)
-    outro = outro_seconds(film)
-    if cover is None:
-        # 下面几项（数字静音、纯现场声窗口）要按封面长度往后偏移，而这条片子
-        # 没记。**从产物自己量**：画面总长减去段落总长、再减去片尾就是封面停的
-        # 那一截——比拿一个改过三次的常量猜准得多，也正是「查产物，不查信号」。
-        # 片长那一项当然不能再判了（拿它去验它自己，恒真）。
-        cover = max(0.0, v_dur - segs - outro)
-        print(f"[跳过] 画面 {v_dur:.2f}s，段落共 {segs:.2f}s、片尾 {outro:.2f}s——"
-              f"封面按三者之差 {cover:.2f}s 算，片长这一项不判")
-    else:
-        # ⚠️ **片尾这一项漏掉的话，这条恒等式会在每一条新片子上恒假**——
-        # 差出来的正好是片尾那三四秒，看起来像「片长不对」，而一条常年红的
-        # 检查和没有检查是同一个毛病。
-        want = segs + cover + outro
-        ok = abs(v_dur - want) < 0.5
-        bad += 0 if ok else 1
-        print(f"[{'ok' if ok else '不合格'}] 画面 {v_dur:.2f}s"
-              f"（spec 算出来 {want:.2f}s ＝ 段落 {segs:.2f} ＋ 封面 {cover:.2f}"
-              f" ＋ 片尾 {outro:.2f}）")
-
-    # 音轨比画面短 = 结尾那几秒无声。分段拼接（concat + copy）会把每段 AAC 的
-    # 编码器延迟一路累出来，累到几秒就听得出来了。
-    a_dur = _ffprobe_float(sh("ffprobe", "-v", "error", "-select_streams", "a:0",
-                     "-show_entries", "stream=duration",
-                     "-of", "csv=p=0", str(film)))
-    ok = v_dur - a_dur < 1.0
-    bad += 0 if ok else 1
-    print(f"[{'ok' if ok else '不合格'}] 音轨 {a_dur:.2f}s，比画面短 "
-          f"{v_dur - a_dur:.2f}s（短过 1s 就是结尾没声音）")
-
+def legacy_loudness_checks(film: Path, spec: dict, cover: float) -> int:
+    """Only explicitly authorized special modes retain the historical amplitude checks."""
+    bad = 0
     levels = per_second_db(film)
     print(f"\n逐秒响度（{len(levels)}s，# 越长越响，空行＝数字静音）：")
     for i, db in enumerate(levels):
@@ -663,6 +597,117 @@ def main() -> int:
         print(f"[{'ok' if ok else '不合格'}] 无解说段 {start:.1f}s（源 {src:.1f}s）"
               f"现场声最响 {worst:.1f} dB"
               + ("；窗口全部整秒均有实际原声波形证明" if proved_quiet else ""))
+
+    return bad
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--slug", default="nishikori-shang")
+    ap.add_argument("--date", default=shanghai_today(),
+                    help="产物日期目录，默认取上海日期")
+    ap.add_argument("--film", help="直接给成片路径（给了就不按 slug 猜）")
+    ap.add_argument("--spec", help="spec 路径，默认 specs/reels/<slug>.json")
+    args = ap.parse_args()
+
+    root = Path(__file__).resolve().parents[1]
+    film = Path(args.film) if args.film else (
+        root / "output" / args.date / "reel" / args.slug / f"{args.slug}.mp4")
+    spec_path = Path(args.spec) if args.spec else (
+        root / "specs" / "reels" / f"{args.slug}.json")
+    if not film.is_file():
+        print(f"[不合格] 找不到成片 {film}")
+        print("        注意目录按**上海日期**算，沙箱是 UTC——查错日期看起来"
+              "就像「还没落库」")
+        return 1
+    # 先撤销旧绿灯，再开始本轮检查。这样中途 ffprobe/解码异常退出也不会让上一版
+    # 的 pass 凭证留在目录里；只有走到末尾 0 项不合格才重新创建。
+    stale = film.parent / "qc_attestation.json"
+    if stale.exists():
+        stale.unlink()
+        print(f"[QC] 本轮重验开始，先撤销旧凭证 {stale}")
+    spec = json.loads(spec_path.read_text(encoding="utf-8"))
+    print(f"成片 {film}（{film.stat().st_size / 1e6:.1f} MB）")
+    from winners_ue_gate import problem as winners_ue_problem  # noqa: PLC0415
+    stats_problem = winners_ue_problem(spec)
+    if stats_problem:
+        print(f"[不合格] {stats_problem}")
+        return 1
+
+    cover = cover_seconds(film)
+    from production_style import match_footage_problem  # noqa: PLC0415
+    from foreground_audio_gate import verify_final  # noqa: PLC0415
+    if issue := match_footage_problem(spec):
+        print(f"[不合格] {issue}")
+        return 1
+    try:
+        if cover is None:
+            raise ValueError("新片原声音轨质检需要本次 render.json 的真实封面时长")
+        verify_final(spec, film.parent / "subtitles.ass", cover, film=film)
+    except (OSError, KeyError, TypeError, ValueError) as exc:
+        print(f"[不合格] waiting_audio_review：{exc}")
+        return 1
+    bad = voiced_by(film, spec)
+
+    headshot = stat_card_headshot_problem(
+        spec, root / "specs" / "reels", self_path=spec_path)
+    if headshot:
+        is_clash, headshot_msg = headshot
+        print(f"\n{headshot_msg}")
+        # 只有真的挂错（和别的 spec 矛盾）才算不合格；「第一次出现，没得比」
+        # 只是提醒人核一眼，不拦——不然会把每一个新球员的首秀都判成不合格
+        if is_clash:
+            bad += 1
+
+    try:
+        video, audio = probe_media_streams(film)
+    except (KeyError, TypeError, ValueError, json.JSONDecodeError, SystemExit) as exc:
+        print(f"[不合格] 音视频流结构无效：{exc}")
+        return 1
+    w, h = video["width"], video["height"]
+    ok = (w, h) == (VIDEO_W, VIDEO_H)
+    bad += 0 if ok else 1
+    print(f"[{'ok' if ok else '不合格'}] 分辨率 {w}×{h}（要 {VIDEO_W}×{VIDEO_H}）")
+    v_dur = video["duration"]
+    segs = spec_segments_seconds(spec)
+    outro = outro_seconds(film)
+    if cover is None:
+        # 下面几项（数字静音、纯现场声窗口）要按封面长度往后偏移，而这条片子
+        # 没记。**从产物自己量**：画面总长减去段落总长、再减去片尾就是封面停的
+        # 那一截——比拿一个改过三次的常量猜准得多，也正是「查产物，不查信号」。
+        # 片长那一项当然不能再判了（拿它去验它自己，恒真）。
+        cover = max(0.0, v_dur - segs - outro)
+        print(f"[跳过] 画面 {v_dur:.2f}s，段落共 {segs:.2f}s、片尾 {outro:.2f}s——"
+              f"封面按三者之差 {cover:.2f}s 算，片长这一项不判")
+    else:
+        # ⚠️ **片尾这一项漏掉的话，这条恒等式会在每一条新片子上恒假**——
+        # 差出来的正好是片尾那三四秒，看起来像「片长不对」，而一条常年红的
+        # 检查和没有检查是同一个毛病。
+        want = segs + cover + outro
+        ok = abs(v_dur - want) < 0.5
+        bad += 0 if ok else 1
+        print(f"[{'ok' if ok else '不合格'}] 画面 {v_dur:.2f}s"
+              f"（spec 算出来 {want:.2f}s ＝ 段落 {segs:.2f} ＋ 封面 {cover:.2f}"
+              f" ＋ 片尾 {outro:.2f}）")
+
+    # 音轨比画面短 = 结尾那几秒无声。分段拼接（concat + copy）会把每段 AAC 的
+    # 编码器延迟一路累出来，累到几秒就听得出来了。
+    a_dur = audio["duration"]
+    start_gap = audio["start_time"] - video["start_time"]
+    ok = math.isfinite(start_gap) and abs(start_gap) < 1.0
+    bad += 0 if ok else 1
+    print(f"[{'ok' if ok else '不合格'}] 音视频首端差 "
+          f"{start_gap:.2f}s（绝对差须小于 1s；不测响度）")
+    tail_gap = video["start_time"] + v_dur - audio["start_time"] - a_dur
+    ok = math.isfinite(tail_gap) and abs(tail_gap) < 1.0
+    bad += 0 if ok else 1
+    print(f"[{'ok' if ok else '不合格'}] 音轨 {a_dur:.2f}s，音视频尾端差 "
+          f"{tail_gap:.2f}s（绝对差须小于 1s；不测响度）")
+
+    if normal_source_audio(spec):
+        print("[按账号所有者要求移除] 响度、静音阈值与原声增益校验；仅检查音轨结构和尾端时序")
+    else:
+        bad += legacy_loudness_checks(film, spec, cover)
 
     score_problem = scoreboard_geometry_problem(film, spec_path, spec)
     if score_problem:

@@ -3785,7 +3785,7 @@ def test_拿不到封面时长时片长那一项要跳过不要报假红():
         assert keep in check, f"{keep} 这一项没了"
 
 
-def test_源片没有现场声要出声不能默默出一条哑片(tmp_path):
+def test_源片缺音轨要拦但正常制作不测响度(tmp_path, monkeypatch):
     """`_has_audio` 只查**流存不存在**，查不出「有流但是数字静音」。
 
     wong-brooksby 就栽在这儿：spec 的 `_source` 白纸黑字写着「带原声」，而成片
@@ -3845,17 +3845,16 @@ def test_源片没有现场声要出声不能默默出一条哑片(tmp_path):
         render_body.index("require_live_sound(source, spec)"), (
         "原声那道闸排在「只出封面」之前——封面不碰音频，这一拦就把快速预览废了")
 
-    # ④ 闸本身：哑的要报错并**说出路**，认领过的放行，有声的一路畅通
+    # ④ 当前用户要求删除响度校验；正常制作仅以流存在判断，不能扫描峰值。
     import pytest  # noqa: PLC0415
 
-    reel.require_live_sound(loud, {})  # 有声：不该拦
-    for bad in (silent, mute):
-        with pytest.raises(reel.ReelError) as caught:
-            reel.require_live_sound(bad, {})
-        # **报错要说出路，不能只说不行**
-        for way in ("source_audio", "silent_source", "换一个带声音的源片"):
-            assert way in str(caught.value), f"报错没给出路 {way}：{caught.value}"
-        reel.require_live_sound(bad, {"silent_source": "屏录，本来就没有声道"})
+    monkeypatch.setattr(reel, 'audio_peak_db', lambda *_a: pytest.fail('normal peak scan'))
+    reel.require_live_sound(loud, {})
+    reel.require_live_sound(silent, {})  # 有流的静音也不以响度拒绝。
+    with pytest.raises(reel.ReelError, match='没有音频流'):
+        reel.require_live_sound(mute, {})
+    with pytest.raises(reel.ReelError, match='没有音频流'):
+        reel.require_live_sound(mute, {'silent_source':'旧注释不能替代实际音轨'})
 
 
 def test_渲完的成片不许因为清理那一步失败而整趟丢掉():
@@ -8976,7 +8975,7 @@ def test_口播尾音渐弱不许被算成片尾要停多久(tmp_path):
 
     # `outro_length()` 要真的用上这个更短的时刻，不是算出来没人接
     naive = reel.OUTRO_TAIL + reel.probe_duration(tail_off)
-    fixed = reel.outro_length(tail_off)
+    fixed = reel.outro_length(tail_off, measure_tail=True)
     assert fixed < naive - 1.0, (
         f"outro_length 该按真正说完的时刻算，不是文件总长——"
         f"量到 {fixed:.2f}s，该比按总长算的 {naive:.2f}s 短至少 1 秒")

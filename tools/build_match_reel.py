@@ -105,6 +105,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 import narrated_audio_mode  # noqa: E402
 import reviewed_effects_mode  # noqa: E402
+import reel_source_audio_policy  # noqa: E402
 
 from tennislive import localca  # noqa: E402
 from tennislive.video import outro_page  # noqa: E402
@@ -661,6 +662,16 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str],
         + f"{beds}amix=inputs={2 + bool(music)}:normalize=0:"
         f"dropout_transition=0[out]"
     )
+
+
+def native_mix_filtergraph(spec: dict, filters: list[str], voice_labels: list[str],
+                          music: str = "", *, reviewed_bed: str = "") -> str:
+    """Normal production adds TTS without altering the source's gain."""
+    reel_source_audio_policy.validate(spec)
+    return duck_filtergraph(
+        filters, voice_labels, music,
+        mute_original=narrated_audio_mode.enabled(spec), reviewed_bed=reviewed_bed,
+        preserve_source_audio=reel_source_audio_policy.normal_source_audio(spec))
 
 
 def music_chain(index: int, seconds: float, pct: float = MUSIC_GAIN_PCT) -> str:
@@ -1861,15 +1872,12 @@ def resolve_board_insets(sources: dict[str, Path], segments: list["Segment"],
 
 
 def require_live_sound(source: Path, spec: dict) -> float | None:
-    """源片是哑的就报错并给出路，认领过的放行——**两种情况都打印**。
-
-    照 `mixed_fps` 那套做**显式认领**。一律放行等于继续出哑片；一律拒绝会把
-    纯视频轨的源片整个挡在门外（网盘那份常常只有视频轨）。认领这一步是让这个
-    取舍**留下判据**，而不是让它悄悄发生。
-
-    原来这两条分支**一句 print 都没有**，于是「源片是哑的」和「源片正常」在
-    日志上完全一样——wong-brooksby 那条整片没有现场声的片子就是这么发出去的。
-    """
+    """正常制作仅确认实际源音轨存在；显式特殊音频模式保留旧条款。"""
+    if reel_source_audio_policy.normal_source_audio(spec):
+        if not _has_audio(source):
+            raise ReelError(f"{source.name} 没有音频流：正常制作需要带现场原声的源片")
+        print(f"[原声] {source.name} 音频流存在；原样保留，不测响度")
+        return None
     peak = audio_peak_db(source)
     if peak is None:
         print(f"[原声] {source.name} 没有可用音频流")
@@ -5731,7 +5739,7 @@ def synth_outro(outdir: Path, voice: str, rate: str,
     return path, marks
 
 
-def outro_length(voice_path: Path) -> float:
+def outro_length(voice_path: Path, *, measure_tail: bool = False) -> float:
     """片尾停多久：口播说完 + `OUTRO_TAIL`，但**不短于动效自己要的那个下限**。
 
     两个数都可能是较大的那个，所以取 max 而不是选一个：
@@ -5742,14 +5750,13 @@ def outro_length(voice_path: Path) -> float:
     两头都不会被截断**——写死一个数的话，其中一头一变就会悄悄切掉尾巴，
     而 ffmpeg 对这种越界从来不吭声。
 
-    ⚠️ 「口播说了多久」不能直接拿 `probe_duration`（文件总长）：TTS 合出来的
-    尾音常带一截渐弱到近乎无声的静默，`probe_duration` 会把它也算进「口播」，
-    `OUTRO_TAIL` 又在后面**再**叠一层——两层静音叠加，check_reel_landed 的
-    数字静音闸能在片尾整整一秒钟里读不到声音（见 `_speech_tail_end` 的
-    docstring）。所以先用 `_speech_tail_end` 找真正说完的那一刻，找不到
-    （文件末尾本来就不是静音）才退回 `probe_duration`。
+    正常制作按完整 TTS 文件长度安排，不再用响度扫描裁定尾音终点。
+    measure_tail=True 仅保留给显式特殊音频模式的旧消费者。
     """
-    spoken = _speech_tail_end(voice_path) or probe_duration(voice_path)
+    # Owner removed loudness/tail scans from normal production. Preserve the
+    # entire actual TTS file; explicit legacy audio modes may request the old scan.
+    spoken = ((_speech_tail_end(voice_path) or probe_duration(voice_path))
+              if measure_tail else probe_duration(voice_path))
     spoken_need = round(spoken + OUTRO_TAIL, 3)
     motion_need = outro_page.min_length()
     length = round(max(spoken_need, motion_need), 3)
@@ -6719,7 +6726,7 @@ def check_native_quality_exceptions(spec: dict, paths: dict[str, Path]) -> None:
               "展示缩放不会增加源细节")
 
 
-def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
+def probe_dry_run(spec: dict, segments: list["Segment"], *, legacy_loudness_checks: bool = False) -> bool:
     """拿已落库的 probe.json 查选段。返回 True 表示**有硬错**。
 
     | 查什么 | 出处 | 硬不硬 |
@@ -6901,25 +6908,27 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
                    "不是拿这一版将就的退路。换一条更高清的源，或者等官方"
                    "发布更清晰的版本再回来。"))
 
-    # 数字静音这一族（⑥ 和 ⑥b）硬的几档**只在 mode=render 那一趟硬**（cover／narration／
-    # reattest 照印不红，时效第一、封面排最前）——和源片覆盖那道同一个口径
-    # （`probe_sources.dry_run_mode`）。⑥ 那道老的「必红」原来漏在这个口径外面：
-    # cover 那一趟照样被它挡住（集成第三轮 D1），现在两道走同一个 `probe_audio.demote`。
-    import probe_audio  # noqa: PLC0415
+    s_soft, d_soft = [], []
+    if legacy_loudness_checks or not reel_source_audio_policy.normal_source_audio(spec):
+        # 数字静音这一族（⑥ 和 ⑥b）硬的几档**只在 mode=render 那一趟硬**（cover／narration／
+        # reattest 照印不红，时效第一、封面排最前）——和源片覆盖那道同一个口径
+        # （`probe_sources.dry_run_mode`）。⑥ 那道老的「必红」原来漏在这个口径外面：
+        # cover 那一趟照样被它挡住（集成第三轮 D1），现在两道走同一个 `probe_audio.demote`。
+        import probe_audio  # noqa: PLC0415
 
-    demoted = probe_audio.mode_demoted()
-    # ⑥ 段窗口撞源片静音区——省掉「渲 8 分半才被 QC 静音闸判死」那一类返工。
-    s_hard, s_soft = silence_findings(spec, segments, probes, urls)
-    s_hard, s_soft = probe_audio.demote(s_hard, s_soft, demoted)
-    hard.extend(s_hard)
-    soft.extend(s_soft)
-    # ⑥b 按成片口径重放数字静音闸：源片逐块响度 × 这一段的现场声增益，交给 QC
-    #    自己的 `dead_seconds`（`probe_audio`）。无旁白段实测够得着就硬；旁白尾巴按
-    #    上包络也盖不住的，手写 spec 硬（2026-09-28），点估那一截指到 --check-narration。
-    d_hard, d_soft = digital_silence_check(spec, segments, probes, urls,
-                                           demoted=demoted)
-    hard.extend(d_hard)
-    soft.extend(d_soft)
+        demoted = probe_audio.mode_demoted()
+        # ⑥ 段窗口撞源片静音区——省掉「渲 8 分半才被 QC 静音闸判死」那一类返工。
+        s_hard, s_soft = silence_findings(spec, segments, probes, urls)
+        s_hard, s_soft = probe_audio.demote(s_hard, s_soft, demoted)
+        hard.extend(s_hard)
+        soft.extend(s_soft)
+        # ⑥b 按成片口径重放数字静音闸：源片逐块响度 × 这一段的现场声增益，交给 QC
+        #    自己的 `dead_seconds`（`probe_audio`）。无旁白段实测够得着就硬；旁白尾巴按
+        #    上包络也盖不住的，手写 spec 硬（2026-09-28），点估那一截指到 --check-narration。
+        d_hard, d_soft = digital_silence_check(spec, segments, probes, urls,
+                                               demoted=demoted)
+        hard.extend(d_hard)
+        soft.extend(d_soft)
 
     # ⑦ 回贴的开关在镜头中间翻转——2026-09-13 补的，理由见
     #    `board_paste_flips_mid_shot` 的 docstring。**只报不拦。**
@@ -6969,7 +6978,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     deferred = any("数字静音只在 mode=render 硬" in line for line in (*s_soft, *d_soft))
     print("  选段这一层没有硬伤（片长、分辨率、几何"
           + ("；数字静音有几秒到 mode=render 那一趟会红，见上" if deferred else
-             "；数字静音那一层没查，见上" if unmeasured else "、数字静音")
+             "；数字静音那一层没查，见上" if unmeasured else "；响度校验按用户要求移除" if reel_source_audio_policy.normal_source_audio(spec) else "、数字静音")
           + "）。**挑段仍然要看缩略图墙**——「近端是谁」「情绪对不对题」机器判不了。")
     return False
 
@@ -9829,6 +9838,11 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # **先只看 spec，再看这台机器。** 两样都在下载之前，形状错和缺依赖都
     # 死在第 5 秒，不用等 392 MB 下完。
     validate_spec(spec)
+    if not cover_only:
+        try:
+            reel_source_audio_policy.validate(spec)
+        except ValueError as exc:
+            raise ReelError(str(exc)) from exc
     _preflight_cutout(spec)
     urls = spec_sources(spec)
     # 认领过 `archival` 的源，下载那层要知道：缓存复查按 400 的地板、
@@ -9895,6 +9909,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 拿「源片是哑的」去拦一次快速预览，等于把这条路的用处废掉——和
     # `_preflight_cutout` 那次是同一个错：别把无关的检查塞进它前面。
     require_live_sound(source, spec)
+    if reel_source_audio_policy.normal_source_audio(spec):
+        for key, path in sources.items():
+            if key != primary:
+                require_live_sound(path, spec)
 
     # 成片帧率跟着源片走。硬定 30 而源片是 25，就是每 5 帧补一帧，一秒卡五次。
     # 多源时只能有一个输出帧率，取主源的；**别的源和它不一样就要打出来**——
@@ -9925,7 +9943,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     outro_enabled = spec.get("outro", True) is not False
     if outro_enabled:
         outro_voice, outro_marks = synth_outro(outdir, voice, rate, pitch)
-        outro_secs = outro_length(outro_voice)
+        outro_secs = (outro_length(outro_voice) if reel_source_audio_policy.normal_source_audio(spec)
+                      else outro_length(outro_voice, measure_tail=True))
     else:
         outro_voice, outro_marks = None, []
         outro_secs = 0.0
@@ -9999,7 +10018,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 和 `--check-narration` 同一套重放（真语音说到哪儿 × probe 量的源片响度），
     # 不多合一句、不多下一个字节。09-20~27 渲后静音红了 16 趟、117 runner 分钟，
     # 每一趟都先付了整趟编码——手写 spec 的硬伤在这儿就红，自动 spec 只报。
-    _render_silence_gate(spec, segments, voices, spoken_of, cover_secs)
+    if not reel_source_audio_policy.normal_source_audio(spec):
+        _render_silence_gate(spec, segments, voices, spoken_of, cover_secs)
 
     # **同一个数的另一头：哪几段大半时间没人在说话。** 排在这儿是因为它和上面
     # 那道闸用的是同一批 TTS 时长，一个源片都不用碰——而下面就要开始编码了，
@@ -10012,7 +10032,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     if idle:
         print("[注意] 以下片段超过旁白留白提示线；现场声仍在，所以不阻断渲染：\n"
               + "\n".join(idle)
-              + "\n若画面观感确实空，再补旁白或缩短窗口；数字静音仍由成片 QA 硬拦。")
+              + "\n若画面观感确实空，再补旁白或缩短窗口；现场原声不做响度处理或校验。")
 
     # **板的右缘现量**（`score_inset: true` 的段）——账号所有者 2026-08-29：
     # 「比分板的宽度会变化的，所以不能固定宽度去切，要自适应」。排在切片之前，
@@ -10276,19 +10296,16 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         effects_inputs, reviewed_bed, effects_windows = reviewed_effects_mode.bed_graph(
             spec, sources, audio_cue_offsets, 1 + mix_inputs.count("-i"))
         mix_inputs.extend(effects_inputs)
-    if spec.get("preserve_source_audio") is True:
+    if reel_source_audio_policy.normal_source_audio(spec):
         print("[原声] 源片增益 1.0，不随旁白闪避；保留既有转场淡入淡出")
     with stage("混音"):
         if filters:
-            # 闪避，不是一路压死：没人说话的时候现场声开到 BED_LOUD，解说一进来
-            # sidechaincompress 把它压下去，说完再放开。之前是全程一个固定音量——
-            # 要么盖住解说，要么整条片子的球声都听不见，两头不讨好。
+            # 正常只叠加旁白，不改变现场响度；显式特殊音频模式执行各自合同。
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-i", str(silent), *mix_inputs,
                 "-filter_complex",
-                duck_filtergraph(filters, voice_labels, music_graph,
-                                 mute_original=narrated_audio_mode.enabled(spec), reviewed_bed=reviewed_bed,
-                                 preserve_source_audio=spec.get("preserve_source_audio") is True),
+                native_mix_filtergraph(spec, filters, voice_labels, music_graph,
+                                       reviewed_bed=reviewed_bed),
                 # 这一步只是把解说混进现场声，产物是个 m4a——中间视频（原生
                 # 图为 2×2 时钟）给 `-shortest` 定长度，**必须 copy**。原来没写 `-c:v`，
                 # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、
@@ -10454,6 +10471,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     (outdir / "render.json").write_text(json.dumps({
         "scoreboard_qc_sha256": (hashlib.sha256((outdir / "scoreboard_qc.json").read_bytes()).hexdigest()
                                  if (outdir / "scoreboard_qc.json").is_file() else None),
+        "source_audio_policy": reel_source_audio_policy.record(spec),
         "cover_seconds": round(cover_secs, 3),
         "cover_narrated": cover_voice is not None,
         # **片尾也跟着口播走，光看 spec 同样算不出来**（那句话是常量，但它有多长
@@ -11675,6 +11693,8 @@ def main() -> int:
     p.add_argument("--url", required=True)
     p.add_argument("--outdir", required=True)
     p.add_argument("--every", type=float, default=2.0)
+    p.add_argument("--legacy-audio-analysis", action="store_true",
+                   help="仅供明确需要旧响度数据的其他消费者；正常制作不传")
     # **只看源片的一段。** WTA 的单场集锦不是每场都发，Day N 合集才是全覆盖的
     # ——整片扫一遍不但慢，缩略图墙还会出七十多张、绝大多数是别人的比赛。
     # 缩略图上烧的仍是**源片绝对秒数**，spec 里的窗口直接照抄，不用换算。
@@ -11805,19 +11825,14 @@ def main() -> int:
         # ⚠️ 2026-09-27：**同一趟 ffmpeg** 顺手量逐 0.05 秒响度（`audio_levels`）——
         # `silent_audio` 量的是源片峰值，而 QC 数的是成片逐秒 RMS（×BED_LOUD），
         # 20 趟渲后数字静音红它一趟都没预判到（`probe_audio` 的来路）。
-        import probe_audio  # noqa: PLC0415
-
-        silent_audio, audio_levels = probe_audio.measure(
-            source, quietest_gain=QUIETEST_BED_GAIN)
-        if silent_audio is None:
-            print("[静音] 源片没有音轨（或量不出来）——silent_source 那道闸会管")
-        elif silent_audio:
-            print("[静音] 源片音频的静音区间（≥0.8s，≤-60dB）："
-                  + "  ".join(f"{a:.1f}–{b:.1f}" for a, b in silent_audio)
-                  + "\n  段窗口别裸压上去：旁白盖不住的部分渲后就是数字静音"
-                    "（--dry-run 会按旁白离线估预判这一层）")
+        audio_stream_present = _has_audio(source)
+        silent_audio, audio_levels = None, None
+        if args.legacy_audio_analysis:
+            import probe_audio  # noqa: PLC0415
+            silent_audio, audio_levels = probe_audio.measure(
+                source, quietest_gain=QUIETEST_BED_GAIN)
         else:
-            print("[静音] 量过：源片音频没有 ≥0.8s 的静音区间")
+            print("[原声] 仅记录音轨存在；按用户要求移除响度扫描")
         board = board_scan.finish(scorebox or scorebox_guess or "")
         (outdir / "probe.json").write_text(json.dumps({
             "url": args.url, "width": w, "height": h, "duration": duration,
@@ -11848,6 +11863,8 @@ def main() -> int:
             # 逐 0.05 秒 RMS（QC 同口径，只给可能落进死秒的块留数；None=没音轨）。
             # dry-run 按成片增益和时间轴重放 QC 的数字静音闸（`probe_audio`）。
             "audio_levels": audio_levels,
+            "audio_stream_present": audio_stream_present,
+            "audio_analysis": "legacy_requested" if args.legacy_audio_analysis else "removed_by_owner",
             # 只看了一段就记下来——**下一个人拿 probe.json 排窗口时，
             # 「切点少」和「只扫了一段」长得一模一样**。
             "clip_from": clip_from or None,
@@ -11926,7 +11943,8 @@ def main() -> int:
             # ⚠️ **必须在这个 `with` 里量。** 语音只在临时目录里活着，出了这个
             # 块就被删——第一版印在外面，十一段全报「文件不在」（run 30901516117）。
             # 和 `_word_splits` 一样：里面算，外面印。
-            prosody = prosody_report(segments, voices, spoken)
+            prosody = (prosody_report(segments, voices, spoken)
+                       if not reel_source_audio_policy.normal_source_audio(spec) else [])
             # **片尾那句这条路一直没被碰过。** `outro_length()` 靠 `_speech_tail_end`
             # 分辨「说完了」和「文件到头了」——2026-08-24 gauff-pegula 那次真出过
             # bug（两层静音叠加，片尾整整一秒数字静音），而它只在 render 里才会被
@@ -11935,14 +11953,16 @@ def main() -> int:
             # 再出现，本该在这 1 分半的本地路里就看见，不该再等一趟 7 分钟的 render。
             outro_voice, _outro_marks = synth_outro(
                 Path(tmp), args.voice, args.rate, args.pitch)
-            outro_secs = outro_length(outro_voice)
+            outro_secs = (outro_length(outro_voice) if reel_source_audio_policy.normal_source_audio(spec)
+                          else outro_length(outro_voice, measure_tail=True))
             # **真语音也喂给数字静音重放**（2026-09-28）：`--dry-run` 只有离线估，旁白
             # 尾巴落在点估和上包络之间的那一截判不了（渲后静音红 16 趟里 43 个死秒在旁白
             # 尾巴上）——这儿语音在手，每段说到哪儿、封面停多久都是确定的，同一套重放
             # 按真长度再跑一遍，手写 spec 在这儿是硬的。runner 的 mode=narration 跑的
             # 就是这条命令（那一步先按 URL 把 probe.json 落盘）。render 在 TTS 之后
             # 跑的是同一套（`_render_silence_gate`），段序号口径写在一处。
-            measured = measured_speech_ends(voices, spoken)
+            measured = (measured_speech_ends(voices, spoken)
+                        if not reel_source_audio_policy.normal_source_audio(spec) else {})
             cover_path, _cover_marks = synth_cover(
                 spec, Path(tmp), args.voice, args.rate, args.pitch)
             cover_secs = cover_length(cover_path) if cover_path is not None else None
@@ -11982,7 +12002,8 @@ def main() -> int:
         # **风格做出来没有、有没有做过头**，报在这儿——语音还在临时目录里，
         # 这一刻是唯一能干净量到它的时候（成片混了现场声，量出来不可信）。
         print("\n".join(prosody))
-        silence_hard = _check_narration_silence(spec, segments, measured, cover_secs)
+        silence_hard = (_check_narration_silence(spec, segments, measured, cover_secs)
+                        if not reel_source_audio_policy.normal_source_audio(spec) else False)
         if over or silence_hard:
             return 1
         print("\n[查旁白] 每段旁白都装得下；超 4 秒留白仅提示，不阻断渲染。")
