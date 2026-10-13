@@ -4849,6 +4849,23 @@ def test_今日赛程没有发布出口了():
         # GitHub 事件名 schedule 只说明「这条工作流由 cron 触发」，不是已经停掉的
         # 「今日赛程」内容 scope。按裸字符串扫会把任何定时编排工作流误伤。
         body = body.replace('${{ github.event_name }}" = "schedule"', "")
+        if path.name == 'ci.yml':
+            import yaml
+            workflow = yaml.safe_load(path.read_text(encoding='utf-8'))
+            scope = next((step for job in workflow.get('jobs', {}).values()
+                          for step in job.get('steps', []) if step.get('id') == 'test_scope'), {})
+            # Exempt only the event comparison bound to GitHub's event name
+            # whose immediate branch runs full tests. Keep every other CI
+            # command visible so a real schedule publishing exit still fails.
+            if scope.get('env', {}).get('CI_EVENT') == '${{ github.event_name }}':
+                full_branch = re.search(
+                    r'(?m)^\s*if \[ "\$CI_EVENT" = "schedule" \] \|\| '
+                    r'\[ "\$CI_EVENT" = "workflow_dispatch" \]; then\n'
+                    r'\s*python tools/production_test_scopes\.py --full --outdir "\$SCOPE_DIR"\n', body)
+                if full_branch:
+                    start, end = full_branch.span()
+                    branch = full_branch.group().replace('"$CI_EVENT" = "schedule"', '"$CI_EVENT" = "__cron_event__"')
+                    body = body[:start] + branch + body[end:]
         assert "tennislive schedule" not in body, (
             f"{path.name} 又在自动产今日赛程了")
         assert '/schedule"' not in body and "= \"schedule\"" not in body, (

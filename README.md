@@ -120,12 +120,14 @@ probe 并备料；候选报告写进 job summary，不用翻日志。往下接
     渲（push=false，在分支上）→ 质检 → 合进 main → 自动推送微信
 
 顺序不能反：**推必须排在合并之后**，GitHub Pages 只服务 `main`，复制页那个按钮
-在分支上永远是 404。质检清单（`check_reel_landed` 0 项不合格、全量绿、旁白装得下、
+在分支上永远是 404。质检清单（`check_reel_landed` 0 项不合格、当前产线 CI 绿、旁白装得下、
 切词没假词、成片链接探得到）写在 `CLAUDE.md`「渲完 → 质检 → 直接推微信」那一节。
 
 制作返工、慢测试实测和已修复的前置检查见 [视频制作耗时复盘](docs/reel-speed-review-2026-10-12.md)。审听文件按 review index 的真实路径核验：`python tools/reel_review_files.py --slug <slug>`；在任何暂存或推送之前先排除证据缺失与变更。
 
 最新[制作效率与质量优化](docs/video-production-efficiency-2026-10-13.md)记录图片与字宽缓存实测、编码前字幕检查、原生输入归档，以及下一期从素材到微信回执的执行顺序。
+
+[产线测试分层](docs/production-test-scopes.md)说明比赛、采访、讲解和新闻视频的自动选择范围；跨线公共检查照跑，未知与基础改动、每日及手动检查走全量。
 
 字幕位置调整见[逐段字幕下锚](docs/reel-caption-bottom-windows.md)；保留已有原音轨、组合已核原生画面见[原生流合成](docs/native-reel-stream-composition.md)。[微信交付计时](docs/reel-delivery-sla.md)从收到素材计到实际回执，不能把渲染完成当成交付完成。
 
