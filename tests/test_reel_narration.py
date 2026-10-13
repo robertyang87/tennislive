@@ -358,3 +358,146 @@ def test_退避阶梯不许照抄Azure那套():
     # 判据自己的判据：Azure 那套**确实**在这个上界之外，所以上面那句不是恒真。
     assert sum(azure_tts._BACKOFF) > 15, (
         "Azure 的阶梯变短了？那这条判据就成了一盏恒真的绿灯，得重新定上界")
+
+
+@pytest.fixture
+def native_frozen_bundle(tmp_path, monkeypatch):
+    """Real native CLI and valid MP3 fixtures; no network or content approval."""
+    import json
+    import subprocess
+    reel = _reel()
+    monkeypatch.setattr(reel.azure_tts, 'available', lambda: False)
+    monkeypatch.setenv('TENNISLIVE_TTS_CACHE', str(tmp_path / 'capture-cache'))
+    monkeypatch.setattr(reel, 'NARRATION_CHECKS_DIR', tmp_path / 'checks')
+    monkeypatch.setattr(reel, 'enforce_spec_wording', lambda *_a: None)
+    monkeypatch.setattr(reel, 'validate_spec', lambda s: reel.parse_segments(s, {'': 'fixture-source'}, ''))
+    spec = {'slug': 'frozen-native-fixture', 'source_url': 'https://example.test/match.mp4',
+            'cover': {}, 'segments': [
+                {'start': i * 5, 'end': (i + 1) * 5, 'narration': f'第{i + 1}段，继续反扑。'}
+                for i in range(7)]}
+    spec_path = tmp_path / 'spec.json'; spec_path.write_text(json.dumps(spec, ensure_ascii=False))
+    calls = []
+    def synthetic_media(text, path, voice, rate, pitch, style, degree, pause, **_kwargs):
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i',
+                        f'sine=frequency={400 + len(calls) * 31}:duration=0.8',
+                        '-c:a', 'libmp3lame', str(path)], check=True)
+        marks = [{'text': text, 'offset': 0, 'duration': 6_000_000}]
+        calls.append((path.name, path.read_bytes(), marks, text, voice, rate, pitch))
+        return marks
+    monkeypatch.setattr(reel, '_tts_one_uncached', synthetic_media)
+    bundle = tmp_path / 'frozen.zip'
+    monkeypatch.setattr(sys, 'argv', ['build_match_reel.py', 'render', '--check-narration',
+        '--spec', str(spec_path), '--outdir', str(tmp_path / 'not-a-film'),
+        '--tts-bundle-out', str(bundle)])
+    assert reel.main() == 0
+    assert len(calls) == 8
+    # The brand comes from the real synth_outro call, with actual native settings.
+    assert calls[-1][0] == 'voice_outro.mp3'
+    assert calls[-1][3:] == (reel.speakable(reel.OUTRO_NARRATION), 'zh-CN-YunjianNeural', '+6%', '+0Hz')
+    monkeypatch.setenv('TENNISLIVE_TTS_CACHE', str(tmp_path / 'empty-replay-cache'))
+    monkeypatch.setattr(reel, '_tts_one_uncached', lambda *_a, **_k: pytest.fail('frozen input synthesized'))
+    return reel, spec, spec_path, bundle, calls
+
+
+def test_native_cli_freezes_exact_seven_voices_and_real_brand_then_reuses_cold(native_frozen_bundle, tmp_path, monkeypatch):
+    import hashlib
+    import json
+    import zipfile
+    reel, spec, spec_path, bundle, calls = native_frozen_bundle
+    original = bundle.read_bytes()
+    copy = tmp_path / 'copied.zip'
+    monkeypatch.setattr(sys, 'argv', ['build_match_reel.py', 'render', '--check-narration',
+        '--spec', str(spec_path), '--outdir', str(tmp_path / 'not-a-film'),
+        '--tts-bundle-in', str(bundle), '--tts-bundle-out', str(copy)])
+    assert reel.main() == 0
+    assert copy.read_bytes() == original
+    record = json.loads((tmp_path / 'checks' / spec['slug']).with_suffix('.json').read_text())
+    assert record['tts_bundle']['request_count'] == 8
+    assert record['tts_bundle']['strict_reused'] is True
+    assert record['tts_bundle']['quality_approval'] is False
+    assert record['tts_bundle']['bundle_sha256'] == hashlib.sha256(original).hexdigest()
+    with zipfile.ZipFile(bundle) as z:
+        manifest = json.loads(z.read('manifest.json'))
+        by_name = {row['output_name']: row['request_id'] for row in manifest['occurrences']}
+        for name, audio, marks, *_ in calls:
+            assert z.read(f'requests/{by_name[name]}/audio.mp3') == audio
+            assert json.loads(z.read(f'requests/{by_name[name]}/marks.json')) == marks
+    assert not (tmp_path / 'not-a-film').exists()
+    assert not (tmp_path / 'empty-replay-cache').exists()
+
+
+def test_native_bundle_parameter_drift_fails_before_source_or_tts(native_frozen_bundle, tmp_path, monkeypatch):
+    import copy
+    reel, spec, _, bundle, _ = native_frozen_bundle
+    monkeypatch.setattr(reel, 'download', lambda *_a, **_k: pytest.fail('download before frozen rejection'))
+    mutations = [lambda s: s['segments'][0].update(narration='完全不同的话。'),
+                 lambda s: s['segments'][0].update(voice={'rate': '+9%', '_why': 'fixture rate drift'}),
+                 lambda s: s.update(outro=False)]
+    for mutate in mutations:
+        changed = copy.deepcopy(spec); mutate(changed)
+        with pytest.raises(reel.ReelError, match='配音快照导入失败'):
+            reel.render(changed, tmp_path / 'render', voice='zh-CN-YunjianNeural',
+                        rate='+6%', tts_bundle_in=bundle)
+    with pytest.raises(reel.ReelError, match='配音快照导入失败'):
+        reel.render(spec, tmp_path / 'render', voice='different-voice', rate='+6%', tts_bundle_in=bundle)
+    assert not (tmp_path / 'render').exists()
+
+
+def test_native_render_consumes_identical_frozen_bytes_before_encoding(native_frozen_bundle, tmp_path, monkeypatch):
+    """Exercise real render's TTS phase, isolating independent visual/source gates."""
+    reel, spec, _, bundle, calls = native_frozen_bundle
+    import foreground_audio_gate
+    import winners_ue_gate
+    import production_style
+    import tennislive.video.crop_policy as crop_policy
+    for name in ('_preflight_cutout', 'check_native_quality_exceptions', 'conform_sources',
+                 'check_sources_match', 'precheck_cover_face', 'require_live_sound',
+                 'resolve_crop', '_check_segments_fit'):
+        monkeypatch.setattr(reel, name, lambda *_a, **_k: None)
+    monkeypatch.setattr(foreground_audio_gate, 'require', lambda *_a, **_k: None)
+    monkeypatch.setattr(foreground_audio_gate, 'bind_sources', lambda *_a, **_k: None)
+    monkeypatch.setattr(winners_ue_gate, 'require', lambda *_a: None)
+    monkeypatch.setattr(production_style, 'match_footage_problem', lambda *_a: None)
+    monkeypatch.setattr(crop_policy, 'require_reel_center', lambda *_a: None)
+    monkeypatch.setattr(reel, 'effective_size', lambda *_a: (1920, 1080))
+    monkeypatch.setattr(reel, 'resolve_fps', lambda *_a: ('25', 25))
+    actual_duration = reel.probe_duration
+    monkeypatch.setattr(reel, 'probe_duration', lambda p: 40. if p.name == 'source.mp4' else actual_duration(p))
+    for name in ('FPS', 'FPS_EXPR', '_INSET_TOP_CLEAR_Y', '_TIMINGS'):
+        monkeypatch.setattr(reel, name, getattr(reel, name))
+    class BeforeFilmEncoding(Exception):
+        pass
+    def reached_tts_phase(*_a, **_k):
+        raise BeforeFilmEncoding
+    monkeypatch.setattr(reel, 'scoreboard_profile', reached_tts_phase)
+    out = tmp_path / 'native-render'; out.mkdir()
+    (out / 'source.mp4').write_bytes(b'fixture source is not decoded in this TTS-only test')
+    copied = tmp_path / 'native-input-copy.zip'
+    with pytest.raises(BeforeFilmEncoding):
+        reel.render(spec, out, voice='zh-CN-YunjianNeural', rate='+6%',
+                    tts_bundle_in=bundle, tts_bundle_out=copied)
+    assert copied.read_bytes() == bundle.read_bytes()
+    for name, audio, *_ in calls:
+        assert (out / name).read_bytes() == audio
+    assert not (out / 'render.json').exists()  # An input snapshot cannot approve a film.
+
+
+def test_native_cli_precheck_accepts_visual_edits_without_audio_decode(native_frozen_bundle, tmp_path, monkeypatch):
+    import json
+    import tennislive.video.tts_bundle as snapshots
+    reel, spec, spec_path, bundle, _ = native_frozen_bundle
+    spec['source_url'] = 'https://example.test/new-source.mp4'
+    spec['cover']['hook'] = '重新排版'
+    for seg in spec['segments']:
+        seg['start'] += 1
+        seg['end'] += 1
+        seg['subtitle_bottom'] = 316
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False))
+    monkeypatch.setattr(snapshots, '_audio_duration', lambda *_a: pytest.fail('cheap precheck decoded audio'))
+    monkeypatch.setattr(reel, 'download', lambda *_a, **_k: pytest.fail('precheck downloaded source'))
+    record = tmp_path / 'checks' / (spec['slug'] + '.json')
+    before = record.read_bytes()
+    monkeypatch.setattr(sys, 'argv', ['build_match_reel.py', 'render', '--check-tts-bundle',
+        '--spec', str(spec_path), '--tts-bundle-in', str(bundle)])
+    assert reel.main() == 0  # No --outdir, no source read or output directory.
+    assert record.read_bytes() == before

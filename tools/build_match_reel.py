@@ -7675,6 +7675,33 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str,
     return out
 
 
+def reel_tts_requests(spec: dict, voice: str, rate: str,
+                      pitch: str = "+0Hz") -> list[dict]:
+    """Enumerate the actual native calls, including the real brand voice preset.
+
+    Only voice inputs bind a snapshot; changing a crop or subtitle position does
+    not require another synthesis. The shared bundle compares complete requests.
+    """
+    urls = spec_sources(spec)
+    if not urls:
+        raise ReelError("配音快照需要有效的源声明")
+    segments = parse_segments(spec, urls, next(iter(urls)))
+    base_style, base_degree = column_base_style(spec)
+    requests = [
+        _tts.tts_request(speakable(seg.narration), voice, seg.voice_rate or rate,
+                         seg.voice_pitch or "+0Hz", seg.voice_style or base_style,
+                         seg.voice_styledegree if seg.voice_style else base_degree,
+                         seg.voice_lead_pause)
+        for seg in segments if seg.narration.strip()
+    ]
+    cover_text = str((spec.get("cover") or {}).get("narration") or "").strip()
+    if cover_text:
+        requests.append(_tts.tts_request(speakable(cover_text), voice, rate, pitch))
+    if spec.get("outro", True) is not False:
+        requests.append(_tts.tts_request(speakable(OUTRO_NARRATION), voice, rate, pitch))
+    return requests
+
+
 #: 「这条 URL 是换来的，不是公开的」——每条都带一句它是什么，报错时原样印出来，
 #: 免得下一个人只看见「被拦了」却不知道拦的是哪一个特征。
 #: 一律 `re.IGNORECASE` 匹配（查询参数的大小写各家不一样），所以模式里不再
@@ -9818,7 +9845,26 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
            pitch: str = "+0Hz",
            source_override: Path | None = None,
-           cover_only: bool = False, preview_callback=None) -> Path:
+           cover_only: bool = False, preview_callback=None,
+           tts_bundle_in: Path | None = None, tts_bundle_out: Path | None = None,
+           _tts_bundle_session=None) -> Path:
+    if (tts_bundle_in is not None or tts_bundle_out is not None) and _tts_bundle_session is None:
+        if cover_only:
+            raise ReelError("配音快照仅用于完整渲染，不能与封面预览组合")
+        # Validate every byte and every voice request before source downloads,
+        # TTS or video encodes. A changed backend/voice/text never synthesizes.
+        try:
+            with _tts.tts_bundle_session(
+                    input_path=tts_bundle_in,
+                    output_path=tts_bundle_out,
+                    expected_requests=reel_tts_requests(spec, voice, rate, pitch),
+                    metadata={"slug": spec.get("slug"), "kind": "reel_native_tts"}) as bundle:
+                return render(spec, outdir, voice=voice, rate=rate, pitch=pitch,
+                              source_override=source_override, cover_only=cover_only,
+                              preview_callback=preview_callback, tts_bundle_out=tts_bundle_out,
+                              _tts_bundle_session=bundle)
+        except _tts.TTSBundleError as exc:
+            raise ReelError(f"配音快照导入失败：{exc}") from exc
     if cover_only and preview_callback is not None:
         raise ReelError("Caption preview and cover-only render are separate modes")
     # Actual new video renders enforce the current owner policy. Historical
@@ -9993,6 +10039,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     with stage("TTS 合成"):
         voices = synthesize(segments, outdir, voice, rate,
                             *column_base_style(spec))
+    if tts_bundle_out is not None:
+        # Capture only the real body/cover/brand calls already made above. The
+        # snapshot is portable input material, independent of final-film QC.
+        _tts_bundle_session.write()
 
     # **旁白比画面长，就不是「注意」，是错的。**
     #
@@ -10472,6 +10522,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         "scoreboard_qc_sha256": (hashlib.sha256((outdir / "scoreboard_qc.json").read_bytes()).hexdigest()
                                  if (outdir / "scoreboard_qc.json").is_file() else None),
         "source_audio_policy": reel_source_audio_policy.record(spec),
+        **({"tts_bundle": _tts_bundle_session.identity} if _tts_bundle_session is not None else {}),
         "cover_seconds": round(cover_secs, 3),
         "cover_narrated": cover_voice is not None,
         # **片尾也跟着口播走，光看 spec 同样算不出来**（那句话是常量，但它有多长
@@ -11712,7 +11763,7 @@ def main() -> int:
 
     r = sub.add_parser("render", help="按 spec 出成片")
     r.add_argument("--spec", required=True)
-    r.add_argument("--outdir", required=True)
+    r.add_argument("--outdir", help="输出目录；纯配音快照检查不需要")
     r.add_argument("--source", help="已经下好的源片（跳过下载）")
     # ⚠️ 默认值 2026-08-14 从云希改成**云见**——这是这条线上最后一处还写着云希
     # 的地方。`match-reel.yml` 的 `voice` 输入早就改过了（那句注释：「定下来的
@@ -11735,11 +11786,26 @@ def main() -> int:
     r.add_argument("--check-narration", action="store_true",
                    help="只合语音、只报哪几段旁白写长了。**不下源片、不渲染、"
                         "不写产物**——已经发过的片子拿它查，不会多出一个成片")
+    r.add_argument("--tts-bundle-out", type=Path,
+                   help="查旁白或渲染时导出本次实际MP3和词边界快照，不重新合成")
+    r.add_argument("--tts-bundle-in", type=Path,
+                   help="严格复用已导出的配音快照；声音参数变化或损坏立即失败")
+    r.add_argument("--check-tts-bundle", action="store_true",
+                   help="仅核配音包完整性和当前声音请求，不下载源片或重复解码")
     r.add_argument("--cover-only", action="store_true",
                    help="只出封面海报就停（约 20 秒），用来调 cx/scale/focus/box")
 
     args = parser.parse_args()
-    outdir = Path(args.outdir)
+    outdir = Path(args.outdir) if args.outdir else None
+    tts_bundle_input = getattr(args, "tts_bundle_in", None)
+    tts_bundle_output = getattr(args, "tts_bundle_out", None)
+    if args.mode == "render":
+        if not args.check_tts_bundle and outdir is None:
+            parser.error("render 需要 --outdir")
+        if (tts_bundle_input or tts_bundle_output) and (args.dry_run or args.cover_only):
+            parser.error("配音快照不能与 --dry-run 或 --cover-only 一起使用")
+        if args.check_tts_bundle and (not tts_bundle_input or tts_bundle_output or args.check_narration):
+            parser.error("--check-tts-bundle 需要 --tts-bundle-in，不能合成或导出")
 
     if args.mode == "probe":
         # **表单错在下源片之前红**：空地址、框格式错（run 36304133786 空地址第 1.4 分钟
@@ -11899,6 +11965,13 @@ def main() -> int:
     # 三条路一个 seat 全过，0.2 秒就红。豁免表按 slug 查，老 spec 照旧绿。
     enforce_spec_wording(spec, Path(args.spec))
     tts_backend = apply_tts_backend(spec)
+    if args.check_tts_bundle:
+        from tennislive.video.tts_bundle import validate_bundle  # noqa: PLC0415
+        report = validate_bundle(
+            tts_bundle_input, reel_tts_requests(spec, args.voice, args.rate, args.pitch),
+            decode_audio=False)
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        return 0
     if args.dry_run:
         # **多音字：换字表管不到的，出片前列出来。** 账号所有者 2026-09-27「配音 tts
         # 里的多音字最好在生成语音时候替换成同音的字」——换字表（video/pronounce.py）
@@ -11928,44 +12001,60 @@ def main() -> int:
         # 基调取一次、合成和落账用同一份：`--dry-run` 认账时比的就是它（`narration_record_mismatch`）
         base_style = column_base_style(spec)
         with tempfile.TemporaryDirectory() as tmp:
-            voices = synthesize(segments, Path(tmp), args.voice, args.rate, *base_style)
-            spoken, over = narration_overruns(segments, voices)
-            # **量到的真时长当场落账**：`--dry-run` 对「落在估算误差里」的段按旁白指纹认它
-            # （`narration_check_findings`）。账落在 data/，不碰 output/。⚠️ 必须排在这个分支
-            # **任何一个 `return 1` 之前**（装不下也要落账：真时长没错，改画面长度不用重量），
-            # 判据 `test_check_narration落账排在任何return之前`。
-            record_path = write_narration_record(
-                str(spec.get("slug") or Path(args.spec).stem), segments, spoken,
-                voice=args.voice, rate=args.rate,
-                backend=tts_backend if isinstance(tts_backend, str) else str(tts_backend),
-                base_style=base_style)
-            splits = _word_splits(spec, segments, voices)
-            # ⚠️ **必须在这个 `with` 里量。** 语音只在临时目录里活着，出了这个
-            # 块就被删——第一版印在外面，十一段全报「文件不在」（run 30901516117）。
-            # 和 `_word_splits` 一样：里面算，外面印。
-            prosody = (prosody_report(segments, voices, spoken)
-                       if not reel_source_audio_policy.normal_source_audio(spec) else [])
-            # **片尾那句这条路一直没被碰过。** `outro_length()` 靠 `_speech_tail_end`
-            # 分辨「说完了」和「文件到头了」——2026-08-24 gauff-pegula 那次真出过
-            # bug（两层静音叠加，片尾整整一秒数字静音），而它只在 render 里才会被
-            # 撞见：`--check-narration` 只 `synthesize()` 了编号的那些段，从没碰过
-            # `synth_outro`/`outro_length`。同一类风险（TTS 尾音渐弱被算错）以后
-            # 再出现，本该在这 1 分半的本地路里就看见，不该再等一趟 7 分钟的 render。
-            outro_voice, _outro_marks = synth_outro(
-                Path(tmp), args.voice, args.rate, args.pitch)
-            outro_secs = (outro_length(outro_voice) if reel_source_audio_policy.normal_source_audio(spec)
-                          else outro_length(outro_voice, measure_tail=True))
-            # **真语音也喂给数字静音重放**（2026-09-28）：`--dry-run` 只有离线估，旁白
-            # 尾巴落在点估和上包络之间的那一截判不了（渲后静音红 16 趟里 43 个死秒在旁白
-            # 尾巴上）——这儿语音在手，每段说到哪儿、封面停多久都是确定的，同一套重放
-            # 按真长度再跑一遍，手写 spec 在这儿是硬的。runner 的 mode=narration 跑的
-            # 就是这条命令（那一步先按 URL 把 probe.json 落盘）。render 在 TTS 之后
-            # 跑的是同一套（`_render_silence_gate`），段序号口径写在一处。
-            measured = (measured_speech_ends(voices, spoken)
-                        if not reel_source_audio_policy.normal_source_audio(spec) else {})
-            cover_path, _cover_marks = synth_cover(
-                spec, Path(tmp), args.voice, args.rate, args.pitch)
-            cover_secs = cover_length(cover_path) if cover_path is not None else None
+            with (_tts.tts_bundle_session(
+                    input_path=tts_bundle_input, output_path=tts_bundle_output,
+                    expected_requests=reel_tts_requests(spec, args.voice, args.rate, args.pitch),
+                    metadata={"slug": spec.get("slug"), "kind": "reel_native_tts"})
+                  if tts_bundle_input or tts_bundle_output else nullcontext(None)) as bundle:
+                voices = synthesize(segments, Path(tmp), args.voice, args.rate, *base_style)
+                spoken, over = narration_overruns(segments, voices)
+                # **量到的真时长当场落账**：`--dry-run` 对「落在估算误差里」的段按旁白指纹认它
+                # （`narration_check_findings`）。账落在 data/，不碰 output/。⚠️ 必须排在这个分支
+                # **任何一个 `return 1` 之前**（装不下也要落账：真时长没错，改画面长度不用重量），
+                # 判据 `test_check_narration落账排在任何return之前`。
+                record_path = write_narration_record(
+                    str(spec.get("slug") or Path(args.spec).stem), segments, spoken,
+                    voice=args.voice, rate=args.rate,
+                    backend=tts_backend if isinstance(tts_backend, str) else str(tts_backend),
+                    base_style=base_style)
+                splits = _word_splits(spec, segments, voices)
+                # ⚠️ **必须在这个 `with` 里量。** 语音只在临时目录里活着，出了这个
+                # 块就被删——第一版印在外面，十一段全报「文件不在」（run 30901516117）。
+                # 和 `_word_splits` 一样：里面算，外面印。
+                prosody = (prosody_report(segments, voices, spoken)
+                           if not reel_source_audio_policy.normal_source_audio(spec) else [])
+                # **片尾那句这条路一直没被碰过。** `outro_length()` 靠 `_speech_tail_end`
+                # 分辨「说完了」和「文件到头了」——2026-08-24 gauff-pegula 那次真出过
+                # bug（两层静音叠加，片尾整整一秒数字静音），而它只在 render 里才会被
+                # 撞见：`--check-narration` 只 `synthesize()` 了编号的那些段，从没碰过
+                # `synth_outro`/`outro_length`。同一类风险（TTS 尾音渐弱被算错）以后
+                # 再出现，本该在这 1 分半的本地路里就看见，不该再等一趟 7 分钟的 render。
+                if spec.get("outro", True) is not False:
+                    outro_voice, _outro_marks = synth_outro(
+                        Path(tmp), args.voice, args.rate, args.pitch)
+                    outro_secs = (outro_length(outro_voice) if reel_source_audio_policy.normal_source_audio(spec)
+                                  else outro_length(outro_voice, measure_tail=True))
+                else:
+                    outro_secs = 0.0
+                # **真语音也喂给数字静音重放**（2026-09-28）：`--dry-run` 只有离线估，旁白
+                # 尾巴落在点估和上包络之间的那一截判不了（渲后静音红 16 趟里 43 个死秒在旁白
+                # 尾巴上）——这儿语音在手，每段说到哪儿、封面停多久都是确定的，同一套重放
+                # 按真长度再跑一遍，手写 spec 在这儿是硬的。runner 的 mode=narration 跑的
+                # 就是这条命令（那一步先按 URL 把 probe.json 落盘）。render 在 TTS 之后
+                # 跑的是同一套（`_render_silence_gate`），段序号口径写在一处。
+                measured = (measured_speech_ends(voices, spoken)
+                            if not reel_source_audio_policy.normal_source_audio(spec) else {})
+                cover_path, _cover_marks = synth_cover(
+                    spec, Path(tmp), args.voice, args.rate, args.pitch)
+                cover_secs = cover_length(cover_path) if cover_path is not None else None
+                if bundle is not None:
+                    if tts_bundle_output:
+                        bundle.write()
+                    record = json.loads(record_path.read_text(encoding="utf-8"))
+                    record["tts_bundle"] = bundle.identity
+                    record_path.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n",
+                                           encoding="utf-8")
+                    print(f"[配音快照] {bundle.identity}")
         total = sum(s.length for s in segments)
         print(f"[查旁白] {len(spoken)} 段有旁白，画面共 {total:.1f}s"
               f"（音色 {args.voice} {args.rate}，封面片尾音高 {args.pitch}），"
@@ -12263,7 +12352,9 @@ def main() -> int:
         film = render(spec, outdir,
                       voice=args.voice, rate=args.rate, pitch=args.pitch,
                       source_override=Path(args.source) if args.source else None,
-                      cover_only=args.cover_only)
+                      cover_only=args.cover_only,
+                      **({"tts_bundle_in": tts_bundle_input} if tts_bundle_input else {}),
+                      **({"tts_bundle_out": tts_bundle_output} if tts_bundle_output else {}))
         if not args.cover_only:
             # **渲染输入清单**（账号所有者 2026-09-27 选的「重核对，不重渲」，O1）：
             # 这一版成片吃了 spec 里的哪些东西、引用素材的字节、落下的产物，

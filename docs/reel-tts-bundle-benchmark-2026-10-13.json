@@ -1,0 +1,57 @@
+{
+  "kind": "local_actual_cached_tts_bundle_measurement",
+  "scope": "Eight actual prior local production cache outputs, source narration/brand unchanged; no final movie equivalence or WeChat publication claim; no network/cold-start/hosted-runner timing",
+  "trials": [
+    {
+      "trial": 0,
+      "capture_and_full_decode_seconds": 1.1686632689961698,
+      "cheap_integrity_preflight_seconds": 0.0024299329961650074,
+      "strict_import_full_decode_and_materialize_seconds": 1.15738528399379,
+      "bundle_bytes": 404155,
+      "bundle_sha256": "ab7e85264565b5facdfd2cdbcd044102080efee82da7b1bb8d1619d1a608e232",
+      "all_actual_audio_sha256_match": true,
+      "request_count": 8,
+      "quality_approval": false,
+      "new_synthesis_calls": 0
+    },
+    {
+      "trial": 1,
+      "capture_and_full_decode_seconds": 1.1959326060023159,
+      "cheap_integrity_preflight_seconds": 0.0024955229891929775,
+      "strict_import_full_decode_and_materialize_seconds": 1.1587390930071706,
+      "bundle_bytes": 404155,
+      "bundle_sha256": "883b4b97090dc9a040336b5b28396913b8d2f9eaa580fdf025c1c06e676ca4f5",
+      "all_actual_audio_sha256_match": true,
+      "request_count": 8,
+      "quality_approval": false,
+      "new_synthesis_calls": 0
+    },
+    {
+      "trial": 2,
+      "capture_and_full_decode_seconds": 1.211772655005916,
+      "cheap_integrity_preflight_seconds": 0.0017619249993003905,
+      "strict_import_full_decode_and_materialize_seconds": 1.1035208599932957,
+      "bundle_bytes": 404155,
+      "bundle_sha256": "d32c7fd522986930464c7622f7a7c3279765c7072363956f5a209e0716870bb5",
+      "all_actual_audio_sha256_match": true,
+      "request_count": 8,
+      "quality_approval": false,
+      "new_synthesis_calls": 0
+    }
+  ],
+  "median_capture_seconds": 1.1959326060023159,
+  "median_cheap_preflight_seconds": 0.0024299329961650074,
+  "median_strict_restore_seconds": 1.15738528399379,
+  "source_actual_mp3_sha256": [
+    "46072a35296021d74cf2e2514585966790676cf3a71eddf343ccc147679e027e",
+    "a85a6110ead9a25f8e5e087238b5d266cb8fd1736d7162d206828450bed7f67e",
+    "7c3fc8a2ed2788eee9a604b8188e6283a63bdcc1b9da425af33b3e1cbf9b93c9",
+    "71b9c4088ce0cff293484a5b1ca9f076e8c1df1d9766b40a9f9b867dd362a889",
+    "47a0770f8b3bedc4fe62a9fb44ddbc531fb3ccd6353df85cb4416df5e77fd312",
+    "d61f509d3282bc4deb369c5559c2d164ef61561327c8e5d8a7339415aaa5f773",
+    "0ce7f7e766485ddfcec8ba97bb4d5df535cc8b21b1e817debd21759bd2c4064b",
+    "16213613e6ebf0ae7d2810f71da2ab7c7aed01a77948683ffc57b630bb37e6e4"
+  ],
+  "new_network_requests": 0,
+  "amplitude_or_loudness_checks": false
+}
