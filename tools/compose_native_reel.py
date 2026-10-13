@@ -85,6 +85,12 @@ def fetch(slug, run_id, directory):
     write(directory / 'native-run-origin.json', {'run': record, 'artifact': artifact})
 
 
+def _scoreboard_rows(directory):
+    """没有记分板改动的片子（规则图、纯解说剪辑）不写 scoreboard_qc.json：没有蒙版就没有要核的行。"""
+    path = directory / 'scoreboard_qc.json'
+    return json.loads(path.read_text()).get('segments', []) if path.is_file() else []
+
+
 def verified_input(slug, directory, record, original_spec):
     manifest = json.loads((directory / 'render_inputs.json').read_text())
     meta = json.loads((directory / 'render.json').read_text())
@@ -100,7 +106,7 @@ def verified_input(slug, directory, record, original_spec):
         path = directory / name
         if Path(name).name != name or not path.is_file() or ri.sha256_file(path) != digest:
             raise ValueError(f'Native artifact bytes differ: {name}')
-    for row in json.loads((directory / 'scoreboard_qc.json').read_text()).get('segments', []):
+    for row in _scoreboard_rows(directory):
         mask = directory / 'score_masks' / Path(row['mask']).name
         if not mask.is_file() or ri.sha256_file(mask) != row['mask_sha256']:
             raise ValueError('Original video scoreboard mask differs')
@@ -144,7 +150,7 @@ def native_archive_paths(slug, directory, record, original_spec):
     if not set(manifest['artifacts']).issubset(ri.ARTIFACTS):
         raise ValueError('Native render archive has unknown declared output files')
     names = {film.name, 'render.json', 'render_inputs.json', 'qc_attestation.json', *manifest['artifacts']}
-    for row in json.loads((directory / 'scoreboard_qc.json').read_text()).get('segments', []):
+    for row in _scoreboard_rows(directory):
         names.add('score_masks/' + Path(row['mask']).name)
     names.update(archive_voice_names(manifest['projection'], meta))
     for name in names:
