@@ -67,10 +67,12 @@ PYTHONPATH=src python tools/preview_reel_captions.py \
 
 ## 真实字幕预览实测
 
-最终 CLI 对同一真实源片，复用已经核验的 9 组实际配音／WordBoundary ZIP 和完整蒙版，经过原有制作前检查，生成 **3 张样张共 13.420 秒**。样张覆盖源片 287.88 秒的真实 `MATCH POINT #2` 提示条、297.84 秒的居中 `ROUND 1` 赛果图，以及 4.92 秒的普通比分板。它们分别检查 360、480、306 的实际字幕落点；比分、提示文字和板宽均来自相应源帧。
+修订后的 CLI 对同一真实源片，复用已经核验的 9 组实际配音／WordBoundary ZIP 和完整蒙版，经过原有制作前检查，生成 **4 张样张共 14.277 秒**。样张覆盖源片 287.88 秒的真实 `MATCH POINT #2` 提示条、290.4 秒的无板近景、297.84 秒的居中 `ROUND 1` 赛果图，以及 4.92 秒的普通比分板。它们分别检查 360、360、480、306 的实际字幕落点；比分、提示文字和板宽均来自相应源帧。
 
-实际最终 ASS 的 SHA 是 `e627f621c032d1a3703c5733e4a40264b8a19e13f30f598599f89f8a2155cd89`，与已发布版 60 条字幕完全一致。三个样张和额外提示条帧均独立查看：字幕未遮挡提示条、比分或 `ROUND 1`；提示条消失的近景不残留回贴蒙版。
+实际最终 ASS 的 SHA 是 `e627f621c032d1a3703c5733e4a40264b8a19e13f30f598599f89f8a2155cd89`，与已发布版 60 条字幕完全一致。四个样张均独立查看：字幕未遮挡提示条、比分或 `ROUND 1`；提示条消失的近景不残留回贴蒙版。
 
 普通板、居中赛果、真实赛点提示条及无板近景四帧，还分别与两阶段原生无损参照对比：先执行原生裁切输出 FFV1/YUV420，再执行原生最终顶栏／字幕／整屏恢复滤镜。四张 1080×1440 PNG 全图逐像素一致，最大误差为 0。这验证样张构造，不宣称最终 H.264 压缩、溶解或声音一致。证据：[无损参照对比及四张样张](../data/evidence/reel-mask-caption-preview-2026-10-13/native-caption-frame-equivalence.json)、[独立实看记录](../data/evidence/reel-mask-caption-preview-2026-10-13/visual-review.json)。
 
-这次 CLI 计时包含制作前准备，不只是单帧抽取；条件是已有源片及已核真实配音、蒙版缓存。没有测首轮冷启动，也没有编码整片或发送微信。证据：[最终 CLI 计时](../data/evidence/reel-mask-caption-preview-2026-10-13/native-caption-cli-benchmark.json)、[真实样张输入及时间码](../data/evidence/reel-mask-caption-preview-2026-10-13/final-caption-preview-manifest.json)、[配音缓存来源](../data/evidence/reel-mask-caption-preview-2026-10-13/actual-tts-pair-cache-provenance.json)。
+修订后的四帧 CLI 计时包含制作前准备，不只是单帧抽取；条件是已有源片及已核真实配音、蒙版缓存。没有测首轮冷启动，也没有编码整片或发送微信。证据：[修订后 CLI 计时](../data/evidence/reel-mask-caption-preview-2026-10-13/range-fixed-cli-benchmark.json)、[修订后真实样张输入及时间码](../data/evidence/reel-mask-caption-preview-2026-10-13/range-fixed-caption-preview-manifest.json)、[配音缓存来源](../data/evidence/reel-mask-caption-preview-2026-10-13/actual-tts-pair-cache-provenance.json)。
+
+首次完整 CI 的 6062 项检查通过、208 项跳过，只有新增 RGB 动态夹具的像素对比失败：云端 BtbN FFmpeg 保留源图 full range，而原生编码器协商到 limited range。预览在原生分段编码边界使用 `format=yuv420p:color_ranges=tv` 做真正的输出属性协商与转换，未用重新标记代替转换，也未放宽像素相等要求。修订后，云端同款 BtbN 的 24 项相关检查与本地 7.1.5 的 10 项预览检查通过，四张真实样张重新执行后与原生无损参照、旧 PNG 字节完全一致。旧 13.420 秒三帧计时及原始证据保留，不重标为修订后结果。见[色彩范围修订记录](../data/evidence/reel-mask-caption-preview-2026-10-13/range-regression-revision.json)、[修订后四帧像素核验](../data/evidence/reel-mask-caption-preview-2026-10-13/range-fixed-real-frame-equivalence.json)。

@@ -1,0 +1,60 @@
+{
+  "kind": "native-caption-frame-pixel-comparison",
+  "preview_is_final_qc": false,
+  "new_tts_synthesized": false,
+  "source_sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+  "spec_file_sha256": "f4cfac3a03391711d305eb4469ee558b4c21e9ea34e07a60e04f7f1cc72d825f",
+  "actual_ass_sha256": "e627f621c032d1a3703c5733e4a40264b8a19e13f30f598599f89f8a2155cd89",
+  "ass_identical_to_published_native": true,
+  "renderer_sha256": "b8e6b4baacd458b9efbe5a6376472e85a3011044d2b9ebabf207e671627cb381",
+  "previous_evidence_immutable": true,
+  "range_boundary": "Native limited-range yuv420p negotiated with format=yuv420p:color_ranges=tv",
+  "matched_samples": [
+    {
+      "film_time": 2.12,
+      "source_time": 287.88,
+      "segment": 0,
+      "preview_image_sha256": "a079c769466d99544ad7e00e99d7576f61f039a6ec39a16915cbe2e9cb3faae3",
+      "reference_image_sha256": "a079c769466d99544ad7e00e99d7576f61f039a6ec39a16915cbe2e9cb3faae3",
+      "whole_image_pixels_identical": true,
+      "absolute_error_max": 0,
+      "absolute_error_mean": 0.0,
+      "subtitle_band_pixels_identical": true
+    },
+    {
+      "film_time": 4.64,
+      "source_time": 290.4,
+      "segment": 0,
+      "preview_image_sha256": "289b10f319092ef9b889a02d99794b1b8495c630c67e97852497374bbbcf000d",
+      "reference_image_sha256": "289b10f319092ef9b889a02d99794b1b8495c630c67e97852497374bbbcf000d",
+      "whole_image_pixels_identical": true,
+      "absolute_error_max": 0,
+      "absolute_error_mean": 0.0,
+      "subtitle_band_pixels_identical": true
+    },
+    {
+      "film_time": 12.08,
+      "source_time": 297.84,
+      "segment": 0,
+      "preview_image_sha256": "afb12f6faa8040c40ff71a1a2beea6fadd3270217e404d4aefe136f6e0c232b6",
+      "reference_image_sha256": "afb12f6faa8040c40ff71a1a2beea6fadd3270217e404d4aefe136f6e0c232b6",
+      "whole_image_pixels_identical": true,
+      "absolute_error_max": 0,
+      "absolute_error_mean": 0.0,
+      "subtitle_band_pixels_identical": true
+    },
+    {
+      "film_time": 23.759999999999998,
+      "source_time": 4.92,
+      "segment": 2,
+      "preview_image_sha256": "55b1cb337370d9b8a9aa75cf072e15c0acad11c8003ecf5afd9d4daff6b8b8bf",
+      "reference_image_sha256": "55b1cb337370d9b8a9aa75cf072e15c0acad11c8003ecf5afd9d4daff6b8b8bf",
+      "whole_image_pixels_identical": true,
+      "absolute_error_max": 0,
+      "absolute_error_mean": 0.0,
+      "subtitle_band_pixels_identical": true
+    }
+  ],
+  "reference_method": "Real native cut graph -> lossless FFV1 YUV420 intermediate -> full native final topbar/ASS/restore graph. Blank prefix only supplies original film clock in the reference. It does not exist in preview PNGs.",
+  "does_not_prove": "H264 compression / dissolves / sound / full film QC or WeChat delivery"
+}

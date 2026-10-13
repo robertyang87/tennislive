@@ -186,7 +186,11 @@ def frame_command(native, graph, extra_inputs, offset, frame, dest):
     if not count:
         raise ValueError('Native final graph has no video input')
     labels = [f'[preview_global_{i}]' for i in range(count)]
-    normalized = f';[part]format=yuv420p,setpts=PTS+{offset:.9f}/TB'
+    # The native segment encoder negotiates limited-range yuv420p. Specify
+    # both link properties: newer FFmpeg otherwise keeps an RGB source's full
+    # range in this single graph, bypassing the native encoder's conversion.
+    # format negotiates a real conversion, unlike merely relabeling setparams.
+    normalized = f';[part]format=yuv420p:color_ranges=tv,setpts=PTS+{offset:.9f}/TB'
     normalized += (f',split={count}' if count > 1 else ',null') + ''.join(labels) + ';'
     for label in labels:
         graph = graph.replace('[0:v]', label, 1)

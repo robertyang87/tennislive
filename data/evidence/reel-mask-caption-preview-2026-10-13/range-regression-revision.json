@@ -1,0 +1,71 @@
+{
+  "kind": "caption-preview-range-regression-revision",
+  "production_qc_or_delivery": false,
+  "old_evidence_preserved": true,
+  "renderer_sha256": "b8e6b4baacd458b9efbe5a6376472e85a3011044d2b9ebabf207e671627cb381",
+  "previous_renderer_sha256": "6d37e57e10866d73189ab6407e41a54abe29b70cc70bb937b23cbc4c0c3bd49b",
+  "root_cause": "FFmpeg master preserves RGB source full-range through format=yuv420p, while native encoder boundary negotiates limited-range yuv420p. Specify format=yuv420p:color_ranges=tv to negotiate the same conversion, without retiming or relabeling pixels.",
+  "ci_ffmpeg": "ffmpeg version N-127388-g615b07170e-20261012 Copyright (c) 2000-2026 the FFmpeg developers",
+  "local_ffmpeg": "ffmpeg version 7.1.5-0+deb13u1 Copyright (c) 2000-2026 the FFmpeg developers",
+  "before_fix_exact_runner_reproduced": true,
+  "diagnostic_frame_index": 5,
+  "diagnostic_source_pts_seconds": 0.2,
+  "direct_boundary_before_fix": {
+    "format": "yuv420p",
+    "range": "pc",
+    "background_YUV": [
+      53,
+      154,
+      106
+    ]
+  },
+  "native_lossless_decoded_boundary": {
+    "format": "yuv420p",
+    "range": "tv",
+    "background_YUV": [
+      62,
+      151,
+      109
+    ]
+  },
+  "verification": {
+    "ci_build_preview_tests": {
+      "passed": 10,
+      "seconds": 0.81
+    },
+    "local_build_preview_tests": {
+      "passed": 10,
+      "seconds": 2.07
+    },
+    "ci_build_related_caption_full_canvas_topbar_tests": {
+      "passed": 14,
+      "seconds": 1.66
+    },
+    "tests_weakened": false,
+    "four_real_PNGs_identical_to_previous_evidence": true,
+    "all_four_independent_native_lossless_reference_pixels_equal": true,
+    "maximum_pixel_error": 0
+  },
+  "updated_cli_benchmark": {
+    "kind": "range-corrected-four-frame-warm-native-preview-cli",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "tools/preview_reel_captions.py",
+      "--spec",
+      "specs/reels/paolini-bejlek-wuhan-2026-r1.json",
+      "--source",
+      "main=/workspace/scratch/timed-662TF-JlyZY/662TF-JlyZY.mp4",
+      "--outdir",
+      "/workspace/scratch/video-caption-preview-2026-10-13/range-fixed-four",
+      "--cue",
+      "1,2,4,8",
+      "--max-frames",
+      "4"
+    ],
+    "elapsed_wall_seconds": 14.27746476399625,
+    "returncode": 0,
+    "final_qc_or_delivery": false
+  },
+  "actual_source_ass_mask_hashes": "See range-fixed-four/preview_manifest.json and range-fixed-real-frame-equivalence.json",
+  "does_not_prove": "Full H264 video encoding, cold-cache SLA, sound or WeChat delivery"
+}
