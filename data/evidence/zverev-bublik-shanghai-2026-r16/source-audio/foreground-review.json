@@ -1,0 +1,220 @@
+{
+  "source": "/workspace/scratch/yINOy0bSnYk/source/yINOy0bSnYk.mp4",
+  "source_sha256": "4a823330f689dca7416ba8b0a3360d11f869c91e6df6a242e0dcefe50195a19f",
+  "method": "Actual complete source decoded without gain/effect into16kHz mono WAV for local ASR; cached faster-whisper small.en and medium.en CPU int8 full244.02s, bounded large-v3-turbo for disagreements. No human listening claimed. No amplitude/loudness/peak/RMS/silence-threshold checks. ASR absence does not prove absence of speech.",
+  "full_source_asr": [
+    "/workspace/scratch/yINOy0bSnYk/audio/whisper-small.en.json",
+    "/workspace/scratch/yINOy0bSnYk/audio/whisper-medium.en.json"
+  ],
+  "bounded_crosscheck": "/workspace/scratch/yINOy0bSnYk/audio/whisper-turbo-ambiguities.json",
+  "quotes": [
+    {
+      "source_start": 90.0,
+      "source_end": 95.0,
+      "en": "From the most perilous of positions in the tie-break.",
+      "zh": "从抢七最危险的处境中逃出生天",
+      "confidence": "small.en and medium.en agree on all words; spelling tie-break normalized; machine review"
+    },
+    {
+      "source_start": 104.3,
+      "source_end": 111.9,
+      "en": "He's got it. For just the second time this week, Alexander Zverev is broken.",
+      "zh": "他拿下了 这是兹维列夫本周第二次被破发",
+      "confidence": "small.en and medium.en agree"
+    },
+    {
+      "source_start": 119.8,
+      "source_end": 122.5,
+      "en": "He's not really pushing off anymore.",
+      "zh": "他现在已经不太能蹬地发力了",
+      "confidence": "small.en and medium.en agree"
+    },
+    {
+      "source_start": 144.7,
+      "source_end": 149.2,
+      "en": "What a sensational point.",
+      "zh": "这一分太精彩了",
+      "confidence": "small.en and bounded large-v3-turbo agree on quote, optional opening Oh only small.en; medium misses quote"
+    },
+    {
+      "source_start": 166.4,
+      "source_end": 168.2,
+      "en": "Oh, nice.",
+      "zh": "噢 漂亮",
+      "confidence": "medium.en and bounded large-v3-turbo agree"
+    },
+    {
+      "source_start": 190.6,
+      "source_end": 192.7,
+      "en": "Oh, brilliant!",
+      "zh": "噢 太精彩了！",
+      "confidence": "All full and bounded models agree on Oh brilliant. Previous Amen recommendation withdrawn: following voice says something ASRs render Amen/Bublik/Who blew; actual scene Bublik won game. Classify following192.7–194.8 umpire-call candidate, not religious commentator exclamation."
+    },
+    {
+      "source_start": 216.3,
+      "source_end": 218.1,
+      "en": "Quite brilliant.",
+      "zh": "真是精彩绝伦",
+      "confidence": "bounded turbo, large-v3, distil-large-v3 and offset medium.en agree Quite brilliant at216.1–218.0; full medium unique earlier Oh brilliant not reproduced."
+    },
+    {
+      "source_start": 221.9,
+      "source_end": 229.9,
+      "en": "Perfect tie-break to seal the deal from Sascha Zverev.",
+      "zh": "兹维列夫用完美的抢七锁定胜局",
+      "confidence": "all3 agree perfect tie-break to seal the deal from Sascha Zverev; only small.en adds And the, not confirmed; Sascha official spelling normalized; preserve source entire221.9–229.9"
+    }
+  ],
+  "foreground_reserved_windows": [
+    [
+      19.5,
+      22.5
+    ],
+    [
+      28.1,
+      30.9
+    ],
+    [
+      35.5,
+      39.1
+    ],
+    [
+      67.1,
+      70.9
+    ],
+    [
+      77.1,
+      80.6
+    ],
+    [
+      90,
+      95
+    ],
+    [
+      104.3,
+      105.9
+    ],
+    [
+      107,
+      111.9
+    ],
+    [
+      119.8,
+      122.5
+    ],
+    [
+      144.7,
+      151.9
+    ],
+    [
+      161.6,
+      168.2
+    ],
+    [
+      190.6,
+      193.9
+    ],
+    [
+      213.2,
+      218.1
+    ],
+    [
+      221.9,
+      229.9
+    ]
+  ],
+  "narration_candidate_windows_no_speech_detected_by_two_asr": [
+    [
+      0,
+      19.3
+    ],
+    [
+      22.7,
+      27.9
+    ],
+    [
+      39.3,
+      66.9
+    ],
+    [
+      80.8,
+      89.8
+    ],
+    [
+      95.2,
+      104.1
+    ],
+    [
+      112.1,
+      119.6
+    ],
+    [
+      122.7,
+      144.5
+    ],
+    [
+      168.4,
+      190.4
+    ],
+    [
+      194.1,
+      213.0
+    ]
+  ],
+  "uncertainties": [
+    "Role-level context192.7–194.8chaircall likely Game Bublik, literalinitialGame not recovered; previousAmenquote withdrawn.",
+    "Closing first determiner221–223.1 unresolved but complete agreedsemanticcore includes Perfect tie-break to seal the deal from Sascha Zverev.",
+    "ASR no-speech intervals are machine evidence only, not proof of absence/human listening."
+  ],
+  "additional_checks": [
+    "/workspace/scratch/yINOy0bSnYk/audio/whisper-large-ambiguities.json",
+    "/workspace/scratch/yINOy0bSnYk/audio/whisper-distil-ambiguities.json",
+    "/workspace/scratch/yINOy0bSnYk/audio/whisper-medium-offset.json"
+  ],
+  "resolved_or_discarded_first_asr_disagreements": [
+    {
+      "window": [
+        19.5,
+        22.5
+      ],
+      "resolution": "medium.en and independent large-v3 agree Oh, clean as you like that was. First small.en you'd not supported."
+    },
+    {
+      "window": [
+        35.5,
+        39.1
+      ],
+      "resolution": "independent large-v3 identifies And thirty-fifteen. Frame timeline shows15-15becomes30-15. Classify umpire scorecall, no selected broadcast quote."
+    },
+    {
+      "window": [
+        148.9,
+        154
+      ],
+      "resolution": "Full medium He's gotit words0.094/0.10/0.22; offset medium instead hallucinates Thankyouverymuch/Thankyou repeated; small/turbo/large/distil no corresponding sentence. Window shows next-rally continuation in visual timeline. Keep source audio; discard both hallucinated transcript variants; not a human-listening/no-speech claim."
+    },
+    {
+      "window": [
+        213,
+        218.1
+      ],
+      "resolution": "Independent turbo/large/distil and offsetmedium consistently Quite brilliant only216.1–218.0. Unique fullmedium earlier Oh brilliant not reproduced, initialOhword0.028. Keepsourceaudio, subtitle verifiedQuitebrilliant only."
+    }
+  ],
+  "remaining_blocked_literal_windows": [
+    {
+      "window": [
+        192.7,
+        194.8
+      ],
+      "issue": "ASR Amen/Bublik/Who blew likely chair umpire Game Bublik, matches actual Bublik winning game at5-4before5-5, but literal Game not recovered. Do not publish Amen/阿门; no claim human-listening resolved. Source may remain with no quote for umpire scorecall if editorial contract permits role-level classification; otherwise this exactwindow requires human listening or discard after complete rally and reaction."
+    },
+    {
+      "window": [
+        221.0,
+        223.1
+      ],
+      "issue": "Closing initial determiner varies: small And the; fullmedium andturbo Perfect; large a perfect; offsetmedium Many a perfect; distil Tenir perfect. All agree core Perfect tie-break to seal the deal from Sascha Zverev through229.56. Preservefull221.0–229.9sourceaudio, subtitle consensus core only if contractpermits insignificant article omission; strictverbatimwholeutterance needs human literalprefix check."
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-yINOy0bSnYk/yINOy0bSnYk.mp4",
+  "source_sha256": "4a823330f689dca7416ba8b0a3360d11f869c91e6df6a242e0dcefe50195a19f",
+  "method": "asr_cross_checked",
+  "reviewer": "current_assistant_actual_full_small_medium_plus_bounded_large_turbo_distil",
+  "status": "complete",
+  "reviewed_at": "2026-10-13T15:55:11.091054+00:00",
+  "reviewed_from": 66.9,
+  "reviewed_to": 112.1,
+  "foreground_english": [
+    {
+      "start": 67.32,
+      "end": 70.66,
+      "en": "He's missed it.",
+      "zh": "他失误了"
+    },
+    {
+      "start": 77.28,
+      "end": 80.42,
+      "en": "He's got him!",
+      "zh": "他拿下这一分！"
+    },
+    {
+      "start": 90.0,
+      "end": 95.0,
+      "en": "From the most perilous of positions in the tie-break.",
+      "zh": "从抢七最危险的处境中逃出生天"
+    },
+    {
+      "start": 104.3,
+      "end": 105.9,
+      "en": "He's got it.",
+      "zh": "他拿下了"
+    },
+    {
+      "start": 107.0,
+      "end": 111.9,
+      "en": "For just the second time this week, Alexander Zverev is broken.",
+      "zh": "兹维列夫本周第二次被破发"
+    }
+  ],
+  "uncertain_spans": [],
+  "human_listening_claimed": false,
+  "evidence_paths": [
+    "data/evidence/zverev-bublik-shanghai-2026-r16/source-audio/whisper-turbo-ambiguities.json",
+    "data/evidence/zverev-bublik-shanghai-2026-r16/source-audio/whisper-medium.en.json",
+    "data/evidence/zverev-bublik-shanghai-2026-r16/source-audio/whisper-distil-ambiguities.json",
+    "data/evidence/zverev-bublik-shanghai-2026-r16/source-audio/whisper-small.en.json",
+    "data/evidence/zverev-bublik-shanghai-2026-r16/source-audio/whisper-medium-offset.json",
+    "data/evidence/zverev-bublik-shanghai-2026-r16/source-audio/whisper-large-ambiguities.json"
+  ],
+  "normalization_decisions": [
+    "Sascha official spelling and tie-break spelling normalized; source whole222–229.9 clause retained. Models agree all meaningful words; initial function-word alternatives And the/a/none are not claimed as a verbatim listening result. Caption displays the confirmed complete semantic clause.",
+    "Low-probability149–152He has got it/Thankyou and213–216Ohbrilliant disappeared in multiple independent bounded decodes; not treated as real additional foreground speech.",
+    "35.5–39.1thirty-fifteen and192.7–194.8GameBublik are umpire score/game calls; corroborated with exact native scoreboards and multiple models, kept as source sound, not mistranslated as broadcaster commentary or Amen."
+  ]
+}

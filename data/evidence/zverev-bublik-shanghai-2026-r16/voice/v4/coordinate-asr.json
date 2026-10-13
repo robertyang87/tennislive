@@ -1,0 +1,239 @@
+{
+  "schema": "actual-local-asr.v1",
+  "model": "large-v3-turbo",
+  "faster_whisper_version": "1.2.1",
+  "device": "cpu",
+  "compute_type": "int8",
+  "language": "zh",
+  "vad_filter": true,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "source_path": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v4/voice-coordinate.mp3",
+  "source_sha256": "f8d78230fd0c7d47e39815f2390e6c129c86a9285cefe46c201db6aab7bffbe7",
+  "recorded_at": "2026-10-13T15:54:19.440015+00:00",
+  "human_listening_claimed": false,
+  "run_status": "complete",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 7.94,
+      "text": "北京时间10月13日晚上,上海大失赛第四轮,四位列夫迎战布伯利克,谁能顶住盘末的压力?",
+      "no_speech_prob": 1.1135641887760617e-11,
+      "avg_logprob": -0.14656988501548768,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.24,
+          "word": "北",
+          "probability": 0.9618871212005615
+        },
+        {
+          "start": 0.24,
+          "end": 0.36,
+          "word": "京",
+          "probability": 0.9995711445808411
+        },
+        {
+          "start": 0.36,
+          "end": 0.6,
+          "word": "时间",
+          "probability": 0.9937957525253296
+        },
+        {
+          "start": 0.6,
+          "end": 0.84,
+          "word": "10",
+          "probability": 0.9691601395606995
+        },
+        {
+          "start": 0.84,
+          "end": 0.96,
+          "word": "月",
+          "probability": 0.9991346001625061
+        },
+        {
+          "start": 0.96,
+          "end": 1.2,
+          "word": "13",
+          "probability": 0.9992166757583618
+        },
+        {
+          "start": 1.2,
+          "end": 1.38,
+          "word": "日",
+          "probability": 0.9998412132263184
+        },
+        {
+          "start": 1.38,
+          "end": 1.7,
+          "word": "晚上,",
+          "probability": 0.9988341927528381
+        },
+        {
+          "start": 1.9,
+          "end": 2.14,
+          "word": "上",
+          "probability": 0.997063934803009
+        },
+        {
+          "start": 2.14,
+          "end": 2.32,
+          "word": "海",
+          "probability": 0.9999507665634155
+        },
+        {
+          "start": 2.32,
+          "end": 2.48,
+          "word": "大",
+          "probability": 0.9998428821563721
+        },
+        {
+          "start": 2.48,
+          "end": 2.66,
+          "word": "失",
+          "probability": 0.6816628575325012
+        },
+        {
+          "start": 2.66,
+          "end": 2.84,
+          "word": "赛",
+          "probability": 0.9942945837974548
+        },
+        {
+          "start": 2.84,
+          "end": 3.0,
+          "word": "第",
+          "probability": 0.9995484948158264
+        },
+        {
+          "start": 3.0,
+          "end": 3.24,
+          "word": "四",
+          "probability": 0.9449653029441833
+        },
+        {
+          "start": 3.24,
+          "end": 3.48,
+          "word": "轮,",
+          "probability": 0.9983902275562286
+        },
+        {
+          "start": 4.06,
+          "end": 4.18,
+          "word": "四",
+          "probability": 0.2920443117618561
+        },
+        {
+          "start": 4.18,
+          "end": 4.32,
+          "word": "位",
+          "probability": 0.5512062907218933
+        },
+        {
+          "start": 4.32,
+          "end": 4.48,
+          "word": "列",
+          "probability": 0.8209930062294006
+        },
+        {
+          "start": 4.48,
+          "end": 4.7,
+          "word": "夫",
+          "probability": 0.9818269610404968
+        },
+        {
+          "start": 4.7,
+          "end": 4.9,
+          "word": "迎",
+          "probability": 0.983115017414093
+        },
+        {
+          "start": 4.9,
+          "end": 5.18,
+          "word": "战",
+          "probability": 0.9956801533699036
+        },
+        {
+          "start": 5.18,
+          "end": 5.36,
+          "word": "布",
+          "probability": 0.7629938721656799
+        },
+        {
+          "start": 5.36,
+          "end": 5.54,
+          "word": "伯",
+          "probability": 0.7149446308612823
+        },
+        {
+          "start": 5.54,
+          "end": 5.66,
+          "word": "利",
+          "probability": 0.9788669943809509
+        },
+        {
+          "start": 5.66,
+          "end": 5.88,
+          "word": "克,",
+          "probability": 0.9974982142448425
+        },
+        {
+          "start": 6.12,
+          "end": 6.42,
+          "word": "谁",
+          "probability": 0.9994175434112549
+        },
+        {
+          "start": 6.42,
+          "end": 6.62,
+          "word": "能",
+          "probability": 0.9999620914459229
+        },
+        {
+          "start": 6.62,
+          "end": 6.82,
+          "word": "顶",
+          "probability": 0.9973678886890411
+        },
+        {
+          "start": 6.82,
+          "end": 7.0,
+          "word": "住",
+          "probability": 0.9960124492645264
+        },
+        {
+          "start": 7.0,
+          "end": 7.3,
+          "word": "盘",
+          "probability": 0.9968554675579071
+        },
+        {
+          "start": 7.3,
+          "end": 7.48,
+          "word": "末",
+          "probability": 0.6891752779483795
+        },
+        {
+          "start": 7.48,
+          "end": 7.6,
+          "word": "的",
+          "probability": 0.9995880722999573
+        },
+        {
+          "start": 7.6,
+          "end": 7.8,
+          "word": "压",
+          "probability": 0.9997677206993103
+        },
+        {
+          "start": 7.8,
+          "end": 7.94,
+          "word": "力?",
+          "probability": 0.9990319013595581
+        }
+      ]
+    }
+  ],
+  "max_transcribed_end": 7.94
+}

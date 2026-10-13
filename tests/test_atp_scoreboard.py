@@ -9,6 +9,8 @@ import sys
 from pathlib import Path
 
 import numpy as np
+import pytest
+from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import atp_scoreboard as a  # noqa: E402
@@ -101,3 +103,16 @@ def test_半透明小分格压在蓝场上也算板():
     # 球场本身不许被这一档扫进来
     assert not a.board_mask(np.full((4, 4, 3), (100, 165, 220), np.uint8)).any()
     assert not a.board_mask(np.full((4, 4, 3), (123, 167, 128), np.uint8)).any()
+
+
+@pytest.mark.parametrize('timestamp,expected', [
+    ('004.000', 286),       # First set: genuine green translucent 0/15 cell.
+    ('107.780', 282),       # Cell withdrawn on a green close-up: no extra backdrop.
+    ('183.000', 380),       # Deciding set: genuine green translucent 15/40 cell.
+    ('204.000', 380),       # Three set columns plus tiebreak points.
+    ('221.780', 340),       # Point column withdrawing after the final ace.
+])
+def test_real_shanghai_green_closeup_keeps_only_the_native_container(timestamp, expected):
+    fixtures = Path(__file__).resolve().parents[1] / 'data/evidence/zverev-bublik-shanghai-2026-r16/scoreboard-regression'
+    band = np.asarray(Image.open(fixtures / f'{timestamp}.png').convert('RGB'))
+    assert a.board_edge(band, cap=380) == expected

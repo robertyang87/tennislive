@@ -148,9 +148,10 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
     pixels = band.astype(np.float32)
     whites = (pixels.min(axis=2) > 150) & (pixels.max(axis=2) - pixels.min(axis=2) < 50)
     points = whites[:, after + 3:min(len(blue_cols), after + cell + 12)]
-    point_digits = (points.shape[1] >= 18
-                    and 0.008 < points[:h // 2].mean() < 0.25
-                    and 0.008 < points[h // 2:].mean() < 0.25)
+    point_rows = (points.shape[1] >= 18 and (
+        0.008 < points[:h // 2].mean() < 0.25,
+        0.008 < points[h // 2:].mean() < 0.25))
+    point_digits = bool(point_rows and all(point_rows))
     if cell < 18 or (edge <= after + 6 and not point_digits):
         return edge
     if after + cell + 8 <= edge <= after + cell + 10:
@@ -183,6 +184,19 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
     candidate = int(np.argmax(shared[lo - 1:hi - 1])) + lo
     if shared[candidate - 1] >= 4:
         return candidate
+    if not (point_rows and any(point_rows)) and edge > after + cell + 16:
+        # When the point cell withdraws on a dark green close-up, the backdrop
+        # still passes the translucent-cell colour test. It has neither point
+        # glyphs (one AD row is enough) nor an independent container contour.
+        # Retain the observed last blue cell and its antialiased outer border,
+        # rather than interpreting an arbitrarily long green run as a cell.
+        r, g, b = (band[:, :, i].astype(np.int16) for i in range(3))
+        blue_border = ((b - r > 35) & (b - g > 30)).mean(axis=0) > 0.5
+        withdrawn = after
+        while withdrawn < min(after + 6, len(blue_border)) and blue_border[withdrawn]:
+            withdrawn += 1
+        if withdrawn > after:
+            return withdrawn
     # No independent border evidence: retain the original detection so the
     # audit exposes the unresolved width, rather than inventing a cell edge.
     return edge

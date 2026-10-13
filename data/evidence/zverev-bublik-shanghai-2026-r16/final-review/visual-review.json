@@ -1,0 +1,73 @@
+{
+  "schema": "tennislive.final-visual-frame-review.v1",
+  "run_id": "38420766106",
+  "movie_path": "/workspace/scratch/yINOy0bSnYk/final-v2/zverev-bublik-shanghai-2026-r16.mp4",
+  "movie_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zverev-bublik-shanghai-2026-r16/zverev-bublik-shanghai-2026-r16.mp4",
+  "movie_sha256": "d17985129eae7440b618ec1cc943f71e7c30084636d977495c645c02da61814f",
+  "duration_seconds": 265.04,
+  "dimensions": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "bytes": 127411448,
+  "sample_times_seconds": [
+    0.6,
+    2.2,
+    5.1,
+    12.8,
+    20.8,
+    63.9,
+    84.8,
+    107,
+    124,
+    161,
+    189,
+    220,
+    238,
+    248,
+    254,
+    263
+  ],
+  "targeted_board_samples": [
+    {
+      "final": 20.22,
+      "source": 4
+    },
+    {
+      "final": 199.22,
+      "source": 183
+    },
+    {
+      "final": 220.22,
+      "source": 204
+    }
+  ],
+  "contact_sheets": [
+    "contact-1.jpg",
+    "contact-2.jpg",
+    "contact-3.jpg",
+    "contact-4.jpg"
+  ],
+  "targeted_board_sheet": "targeted-boards.jpg",
+  "overall": "pass_in_inspected_frames",
+  "method": "Downloaded canonical GitHub Release repaired actual movie; SHA/bytes/duration match current branch render.json. Decoded 16 actual final frames, opened four contact sheets visually; three additional source-mapped board-only checks also actually opened. No continuous playback, human audio listening, ASR or loudness scan is claimed.",
+  "observations": [
+    "124.0s green-background close-up: original extra green rectangle/stair edge is gone; board ends at native blue-cell boundary",
+    "Actual source4s-tofinal20.22 retains0/15 point cell",
+    "Actual source183s-tofinal199.22 retains15/40 green translucent point cell with all deciding-set columns",
+    "Actual source204s-tofinal220.22 retains4/1 tiebreak points and three set columns",
+    "Subtitle anchor remains just above scoreboard in observed narrated and bilingual frames without score overlap",
+    "Cover eyes open, face clear, title/board do not cover face",
+    "Live match shots fill vertical canvas without bars",
+    "Opening ace/reaction, title landing card, end stat card, complete ending reaction/handshake and brand outro present",
+    "Native post-ace point column withdrawal atfinal238 agrees with original source221.78; no false missing-point issue",
+    "No Tennis TV promo card in observed ending"
+  ],
+  "issues": [],
+  "tts_bundle_sha256": "de90d1b92aa474f32f40fc9333d8bb1b7e1117486991489b1447fc745324d3c9",
+  "archived_review_directory": "data/evidence/zverev-bublik-shanghai-2026-r16/final-review",
+  "actual_movie_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zverev-bublik-shanghai-2026-r16/zverev-bublik-shanghai-2026-r16.mp4",
+  "native_run": 38420766106,
+  "request_received_at": "2026-10-13T14:03:12Z"
+}

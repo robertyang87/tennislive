@@ -1,0 +1,302 @@
+{
+  "schema": "bounded-actual-frozen-reel-voice-review.v1",
+  "slug": "zverev-bublik-shanghai-2026-r16",
+  "recorded_at": "2026-10-13T14:45:58.846988+00:00",
+  "bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "de90d1b92aa474f32f40fc9333d8bb1b7e1117486991489b1447fc745324d3c9",
+    "request_count": 8,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  },
+  "current_native_bindings": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/native-bindings.json",
+  "native_request_count": 8,
+  "changed_ids": [
+    "first_pressure"
+  ],
+  "unchanged_seven_audio_and_raw_marks_byte_identity_verified": true,
+  "unchanged_ids": [
+    "landing",
+    "coordinate",
+    "second",
+    "decider",
+    "tiebreak",
+    "stats",
+    "outro"
+  ],
+  "capture_seconds": 1.590302028998849,
+  "review_scope": "Only current first_pressure newly synthesized and ASR-reviewed. Prior evidence retained solely for identical native audio and marks; current tiebreak belongs to V2 not V1. Full8 requests/MP3/marks were validated by capture and binding hashes.",
+  "native_voice_rows": [
+    {
+      "edit_id": "landing",
+      "spoken_text": "连救四个盘点，兹维列夫把胜利抢了回来！",
+      "mp3_sha256": "c5d52dd3cb48c5c13239e5e7dab4071b270ad27c0a6607faa7716cea9d97bd03",
+      "words_sha256": "a8b677b1d90c5e39c93aa4bf3eaf6e3291bd5e3d9b5368e9e46aa98f6e34da17",
+      "duration_seconds": 4.056,
+      "same_bytes_as_v2": true,
+      "evidence": [
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-landing.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/actual-frozen-asr.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/asr-input-manifest.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/actual-phrase-spectrum-index.json"
+      ],
+      "status": "actual_automated_and_qualitative_evidence_available",
+      "all_tones_machine_pass_claimed": false
+    },
+    {
+      "edit_id": "coordinate",
+      "spoken_text": "北京时间十月十三日，上海大师赛第四轮。兹维列夫迎战布勃利克，谁能顶住盘末的压力？",
+      "mp3_sha256": "59460eb952c87c913448637f5b3410b801c97eed8df6f6ba6b84c259e4e92a5e",
+      "words_sha256": "28029d107a89cd3a3c10ef1f4ef78d69da611b24704a7a7265a5ca8c667ce01a",
+      "duration_seconds": 8.616,
+      "same_bytes_as_v2": true,
+      "evidence": [
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-coordinate.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/actual-frozen-asr.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/asr-input-manifest.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/actual-phrase-spectrum-index.json"
+      ],
+      "status": "actual_automated_and_qualitative_evidence_available",
+      "all_tones_machine_pass_claimed": false
+    },
+    {
+      "edit_id": "first_pressure",
+      "spoken_text": "首盘救回一个盘点，抢七却又三比六落后！布勃利克放短，兹维列夫追到网前，截击另一侧，把盘点救回来！",
+      "mp3_sha256": "b85e7b68413de0fbdd0edce4271a0e73ca69c9a32f642559b5dfb0bb41405a7c",
+      "words_sha256": "1706f93fee521fa52bcd26fc8b643eefc521f2fc2dd2515aa98c21732f599e44",
+      "duration_seconds": 10.224,
+      "same_bytes_as_v2": false,
+      "evidence": [
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-first_pressure.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/first-pressure-asr.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/actual-first-pressure-v3.png",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/actual-first-pressure-spectrum.json"
+      ],
+      "status": "actual_automated_and_qualitative_evidence_available",
+      "all_tones_machine_pass_claimed": false
+    },
+    {
+      "edit_id": "second",
+      "spoken_text": "第二盘，布勃利克掀起反击。胜负，远没有落定！",
+      "mp3_sha256": "d83ba619b4a86672dd53efbbd22d9ea34bf4e94a4ad8931fc50502ae188ff6de",
+      "words_sha256": "3ffe0807dde9e812d6078988cb36c9114b40783b26478597382e1ac2a1c60864",
+      "duration_seconds": 5.448,
+      "same_bytes_as_v2": true,
+      "evidence": [
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-second.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/actual-frozen-asr.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/asr-input-manifest.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/actual-phrase-spectrum-index.json"
+      ],
+      "status": "actual_automated_and_qualitative_evidence_available",
+      "all_tones_machine_pass_claimed": false
+    },
+    {
+      "edit_id": "decider",
+      "spoken_text": "决胜盘刚开局，兹维列夫先丢发球局，又马上回破。双方寸土不让，悬念一直留在最后！",
+      "mp3_sha256": "358a86ce712e33fa852f0457f5a0220bd341397204db3d6cbd4d0fec2a26206e",
+      "words_sha256": "444a0baa4cbb712d86f342cc1d15cc90f1e5b8444872f0895831c91e42072c4c",
+      "duration_seconds": 8.52,
+      "same_bytes_as_v2": true,
+      "evidence": [
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-decider.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/actual-frozen-asr.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/asr-input-manifest.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/actual-phrase-spectrum-index.json"
+      ],
+      "status": "actual_automated_and_qualitative_evidence_available",
+      "all_tones_machine_pass_claimed": false
+    },
+    {
+      "edit_id": "tiebreak",
+      "spoken_text": "又是抢七！先从底线拉开角度，再跟进网前。兹维列夫，把主动权抢了回来！",
+      "mp3_sha256": "1c70c80fdf26d7714a8a0d0cefb48731d672874500436f16251bb5ffa2fac5fa",
+      "words_sha256": "4b6d6e409db74516b1174aec823d984cefc0682f3355bfbfa0776427fb00bda9",
+      "duration_seconds": 8.064,
+      "same_bytes_as_v2": true,
+      "evidence": [
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-tiebreak.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/changed-asr.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/changed-asr-input.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/finite-acoustics.json"
+      ],
+      "status": "actual_automated_and_qualitative_evidence_available",
+      "all_tones_machine_pass_claimed": false
+    },
+    {
+      "edit_id": "stats",
+      "spoken_text": "四十九记制胜分，更少的失误。两个抢七，都被兹维列夫拿下！下一轮，德米纳尔能挡住他吗？",
+      "mp3_sha256": "b76a193ed4c4dfc6fa659d4974b89724e754248a5a37f04538644e46c5994671",
+      "words_sha256": "5f6b6edd35b3aad4532ac0b0ccbdfe4b4bd7402fd18fb77c4a410d5de3cac4ec",
+      "duration_seconds": 9.36,
+      "same_bytes_as_v2": true,
+      "evidence": [
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-stats.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/actual-frozen-asr.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/asr-input-manifest.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/actual-phrase-spectrum-index.json"
+      ],
+      "status": "actual_automated_and_qualitative_evidence_available",
+      "all_tones_machine_pass_claimed": false
+    },
+    {
+      "edit_id": "outro",
+      "spoken_text": "关注网球时差，时差归我，好球归你。",
+      "mp3_sha256": "16213613e6ebf0ae7d2810f71da2ab7c7aed01a77948683ffc57b630bb37e6e4",
+      "words_sha256": "3bbbfd7fe56379da93a86d0ba96d93a49bfd1688f1bdb9111d734652c1e24b7a",
+      "duration_seconds": 4.2,
+      "same_bytes_as_v2": true,
+      "evidence": [
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-outro.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/actual-frozen-asr.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/asr-input-manifest.json",
+        "data/evidence/zverev-bublik-shanghai-2026-r16/voice/actual-phrase-spectrum-index.json"
+      ],
+      "status": "actual_automated_and_qualitative_evidence_available",
+      "all_tones_machine_pass_claimed": false
+    }
+  ],
+  "current_actual_finite_control_evidence": [
+    {
+      "edit_id": "stats",
+      "char": "分",
+      "at": 6,
+      "actual_mp3_sha256": "b76a193ed4c4dfc6fa659d4974b89724e754248a5a37f04538644e46c5994671",
+      "intended": "fen1",
+      "alternate": "fen4",
+      "verdict": "correct",
+      "confidence": "medium",
+      "score": 0.809,
+      "selftest_pass": true,
+      "source_report": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/finite-acoustics.json"
+    },
+    {
+      "edit_id": "tiebreak",
+      "char": "抢",
+      "at": 2,
+      "actual_mp3_sha256": "1c70c80fdf26d7714a8a0d0cefb48731d672874500436f16251bb5ffa2fac5fa",
+      "intended": "qiang3",
+      "alternate": "qiang1",
+      "verdict": "correct",
+      "confidence": "high",
+      "score": 0.954,
+      "selftest_pass": true,
+      "source_report": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/finite-acoustics.json"
+    }
+  ],
+  "retired_actual_control_results_not_current_claims": [
+    {
+      "edit_id": "tiebreak",
+      "char": "冲",
+      "at": 13,
+      "actual_mp3_sha256": "74458c8e33919a368e1a02203de943746c054fbc86257e5391d990717891193f",
+      "intended": "chong1",
+      "alternate": "chong4",
+      "verdict": "correct",
+      "confidence": "medium",
+      "score": 0.406,
+      "selftest_pass": true,
+      "source_report": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/finite-acoustics.json",
+      "current_native_applicability": false,
+      "reason": "Sentence and actual MP3 were replaced; original results preserved without transfer."
+    },
+    {
+      "edit_id": "tiebreak",
+      "char": "朝",
+      "at": 23,
+      "actual_mp3_sha256": "74458c8e33919a368e1a02203de943746c054fbc86257e5391d990717891193f",
+      "intended": "chao2",
+      "alternate": "zhao1",
+      "verdict": "correct",
+      "confidence": "medium",
+      "score": 0.387,
+      "selftest_pass": true,
+      "source_report": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/finite-acoustics.json",
+      "current_native_applicability": false,
+      "reason": "Sentence and actual MP3 were replaced; original results preserved without transfer."
+    },
+    {
+      "edit_id": "first_pressure",
+      "char": "空",
+      "at": 37,
+      "actual_mp3_sha256": "911849882a897d64547ba8e48a365944834349a55298159cfba2949fb0072979",
+      "intended": "kong4",
+      "alternate": "kong1",
+      "verdict": "unreliable",
+      "confidence": null,
+      "score": 0.007,
+      "selftest_pass": false,
+      "source_report": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/finite-acoustics.json",
+      "current_native_applicability": false,
+      "reason": "Sentence and actual MP3 were replaced; original results preserved without transfer."
+    },
+    {
+      "edit_id": "first_pressure",
+      "char": "落",
+      "at": 16,
+      "actual_mp3_sha256": "911849882a897d64547ba8e48a365944834349a55298159cfba2949fb0072979",
+      "intended": "luo4",
+      "alternate": "la4",
+      "verdict": "unreliable",
+      "confidence": null,
+      "score": 0.177,
+      "selftest_pass": false,
+      "source_report": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/finite-acoustics.json",
+      "current_native_applicability": false,
+      "reason": "Sentence and actual MP3 were replaced; original results preserved without transfer."
+    }
+  ],
+  "current_first_pressure_asr_text": "首盘就回一个盘点,抢7却有3比6落后,步驳立刻放短,自卫列夫追到往前,截击另一侧,把盘点救回来。",
+  "current_first_pressure_semantic_cutword_review": {
+    "target_text_exact": true,
+    "actual_marks_tokens": [
+      "首盘",
+      "救",
+      "回",
+      "一个",
+      "盘点",
+      "抢",
+      "七",
+      "却",
+      "又",
+      "三比六",
+      "落后",
+      "布勃利克",
+      "放短",
+      "兹维列夫",
+      "追",
+      "到",
+      "网",
+      "前",
+      "截击",
+      "另",
+      "一侧",
+      "把",
+      "盘点",
+      "救",
+      "回来"
+    ],
+    "tactics_phrase": "截击另一侧",
+    "asr_tactics_phrase_exact": true,
+    "semantic_observation": "Current actual-ASR preserves 三比六落后, 放短, name syllables, advancing to net, 截击另一侧, saving setpoint. Local text has unambiguous 落后 (luo4), no 空当 compound; marks separate 另/一侧 without altering the text. WordBoundary cuts are timing metadata, not proof of acoustic syllables or tone.",
+    "phonetic_transcription_limits": [
+      "救/就、网/往 and transcribed proper-name Chinese characters cannot alone confirm or reject tone.",
+      "Actual Praat contour is provided separately; missing or half-frequency pitch segments are preserved, no fixed automated threshold was weakened."
+    ]
+  },
+  "known_asr_limits": [
+    "Prior Zi-wei-lie-fu is often transcribed 自卫列夫; Bu-bo-li-ke as 布伯利克/步驳立刻. Broad syllable/name contextual support only, no automatic proper-name tone pass.",
+    "Prior full brand ending transcription 好求闺女 is retained as ASR uncertainty; original exact brand MP3/marks and root-reviewed native spectrum are reused byte-identically.",
+    "Number/date recognition supports 10/13, round4, 49, two tiebreaks; no ASR-tone pass."
+  ],
+  "root_review_context": "Root reported viewing original four actual native spectra/F0 graphs and plausible proper-name/brand phonetic evidence. Current V3 focused native spectrum supplied for fresh qualitative review; this report does not impersonate root review or human listening.",
+  "quality_approval": false,
+  "pronunciation_release_pass_claimed": false,
+  "human_listening_claimed": false,
+  "deepseek_or_minimax_called": false,
+  "amplitude_or_loudness_checks": false,
+  "broad_regression_tests_run": false
+}

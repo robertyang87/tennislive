@@ -445,6 +445,9 @@ def test_native_bundle_parameter_drift_fails_before_source_or_tts(native_frozen_
 
 def test_native_render_consumes_identical_frozen_bytes_before_encoding(native_frozen_bundle, tmp_path, monkeypatch):
     """Exercise real render's TTS phase, isolating independent visual/source gates."""
+    import hashlib
+    import json
+    import zipfile
     reel, spec, _, bundle, calls = native_frozen_bundle
     import foreground_audio_gate
     import winners_ue_gate
@@ -477,8 +480,22 @@ def test_native_render_consumes_identical_frozen_bytes_before_encoding(native_fr
         reel.render(spec, out, voice='zh-CN-YunjianNeural', rate='+6%',
                     tts_bundle_in=bundle, tts_bundle_out=copied)
     assert copied.read_bytes() == bundle.read_bytes()
-    for name, audio, *_ in calls:
-        assert (out / name).read_bytes() == audio
+    with zipfile.ZipFile(bundle) as snapshot:
+        manifest = json.loads(snapshot.read('manifest.json'))
+        by_name = {row['output_name']: row['request_id'] for row in manifest['occurrences']}
+        entries = {row['request_id']: row for row in manifest['entries']}
+        for name, audio, marks, *_ in calls:
+            rid = by_name[name]
+            actual_audio = (out / name).read_bytes()
+            actual_marks = (out / name).with_suffix('.words.json').read_bytes()
+            assert actual_audio == audio == snapshot.read(f'requests/{rid}/audio.mp3')
+            assert actual_marks == snapshot.read(f'requests/{rid}/marks.json')
+            assert json.loads(actual_marks) == marks
+            assert hashlib.sha256(actual_audio).hexdigest() == entries[rid]['audio_sha256']
+            assert hashlib.sha256(actual_marks).hexdigest() == entries[rid]['marks_sha256']
+    # The fixture rejects any synthesis/cache fallback during strict replay;
+    # this includes the real synth_outro call, not a hand-written brand request.
+    assert len(calls) == 8
     assert not (out / 'render.json').exists()  # An input snapshot cannot approve a film.
 
 

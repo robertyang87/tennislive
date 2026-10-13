@@ -1,0 +1,1326 @@
+{
+  "schema": "finite-actual-frozen-reel-acoustics.v1",
+  "rows": [
+    {
+      "edit_id": "tiebreak",
+      "char": "冲",
+      "at": 13,
+      "intended": "chong1",
+      "wrong": "chong4",
+      "actual_mp3_sha256": "74458c8e33919a368e1a02203de943746c054fbc86257e5391d990717891193f",
+      "sentence": "又是抢七！这一次，兹维列夫冲得更凶。每一分，都朝着胜利逼近！",
+      "actual_acoustic": {
+        "word": "冲",
+        "char": "冲",
+        "sentence": "又是抢七！这一次，兹维列夫冲得更凶。每一分，都朝着胜利逼近！",
+        "tts_text": "又是抢七！这一次，兹维列夫冲得更凶。每一分，都朝着胜利逼近！",
+        "intended_refs": [
+          "充",
+          "忡",
+          "憧"
+        ],
+        "wrong_refs": [
+          "铳",
+          "銃"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "verdict": "correct",
+        "confidence": "medium",
+        "verdict_raw": "correct",
+        "score": 0.406,
+        "margin": 0.2,
+        "near_identical_to": null,
+        "far_from_both": false,
+        "dropped_refs": [],
+        "override": null,
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 2.494,
+            "d_wrong": 2.988,
+            "score": 0.09
+          },
+          "f0": {
+            "d_intended": 0.328,
+            "d_wrong": 2.235,
+            "score": 0.744
+          },
+          "comb": {
+            "d_intended": 1.576,
+            "d_wrong": 3.729,
+            "score": 0.406
+          }
+        },
+        "neighbour_shift": {
+          "intended": 1.633,
+          "wrong": 5.466
+        },
+        "separation": {
+          "spec": {
+            "within": 0.005,
+            "between": 3.26,
+            "separation": 675.183
+          },
+          "f0": {
+            "within": 0.021,
+            "between": 2.29,
+            "separation": 108.814
+          },
+          "comb": {
+            "within": 0.023,
+            "between": 3.92,
+            "separation": 167.087
+          }
+        },
+        "selftest_loo": {
+          "充": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.982
+          },
+          "忡": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.996
+          },
+          "憧": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.996
+          },
+          "铳": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.994
+          },
+          "銃": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.994
+          }
+        },
+        "selftest_pass": true,
+        "distances_from_orig": {
+          "A:充": {
+            "spec": 2.496,
+            "f0": 0.328,
+            "vmis": 0.053,
+            "frames": 38,
+            "comb": 1.576
+          },
+          "A:忡": {
+            "spec": 2.496,
+            "f0": 0.361,
+            "vmis": 0.053,
+            "frames": 38,
+            "comb": 1.609
+          },
+          "A:憧": {
+            "spec": 2.494,
+            "f0": 0.359,
+            "vmis": 0.053,
+            "frames": 38,
+            "comb": 1.606
+          },
+          "B:铳": {
+            "spec": 2.988,
+            "f0": 2.235,
+            "vmis": 0.059,
+            "frames": 34,
+            "comb": 3.729
+          },
+          "B:銃": {
+            "spec": 2.988,
+            "f0": 2.241,
+            "vmis": 0.059,
+            "frames": 34,
+            "comb": 3.735
+          }
+        },
+        "window_s": [
+          3.05,
+          3.365
+        ],
+        "boundary_token": "冲",
+        "window_anchor": "ORIG",
+        "tokens": {
+          "ORIG": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "冲",
+            "得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "朝着",
+            "胜利",
+            "逼近"
+          ],
+          "A:充": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "充得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "朝着",
+            "胜利",
+            "逼近"
+          ],
+          "A:忡": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "忡得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "朝着",
+            "胜利",
+            "逼近"
+          ],
+          "A:憧": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "憧得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "朝着",
+            "胜利",
+            "逼近"
+          ],
+          "B:铳": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "铳",
+            "得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "朝着",
+            "胜利",
+            "逼近"
+          ],
+          "B:銃": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "銃",
+            "得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "朝着",
+            "胜利",
+            "逼近"
+          ]
+        },
+        "f0_semitones_window": {
+          "ORIG": [
+            1.4,
+            1.5,
+            1.0,
+            0.1,
+            -3.3,
+            null,
+            null,
+            null,
+            null,
+            null,
+            3.0,
+            1.0,
+            0.5,
+            0.3,
+            -0.4,
+            -0.7,
+            -1.6
+          ],
+          "A:充": [
+            1.1,
+            1.2,
+            0.7,
+            -0.8,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            2.9,
+            0.7,
+            0.2,
+            -0.2,
+            -0.5,
+            -0.7,
+            -1.1
+          ],
+          "A:忡": [
+            1.1,
+            1.1,
+            0.6,
+            -0.9,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            2.9,
+            0.6,
+            0.2,
+            -0.2,
+            -0.5,
+            -0.7,
+            -1.1
+          ],
+          "A:憧": [
+            1.1,
+            1.2,
+            0.6,
+            -0.9,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            2.9,
+            0.6,
+            0.2,
+            -0.2,
+            -0.5,
+            -0.7,
+            -1.1
+          ],
+          "B:铳": [
+            2.5,
+            3.1,
+            3.5,
+            3.1,
+            2.2,
+            null,
+            null,
+            null,
+            null,
+            null,
+            4.7,
+            3.8,
+            2.3,
+            0.5,
+            -3.4,
+            -4.1,
+            -4.5
+          ],
+          "B:銃": [
+            2.5,
+            3.1,
+            3.5,
+            3.1,
+            2.3,
+            null,
+            null,
+            null,
+            null,
+            null,
+            4.7,
+            3.8,
+            2.4,
+            0.5,
+            -3.4,
+            -4.1,
+            -4.4
+          ]
+        },
+        "audio": {
+          "ORIG": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/voice-tiebreak.mp3",
+          "A:充": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/919f313fbbefd00c92113f64d6e34220.mp3",
+          "A:忡": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/b914c26565bf1334d9443f11482a7fc8.mp3",
+          "A:憧": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/2efc8988f73c99f7e3a8095388dcadb2.mp3",
+          "B:铳": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/933ff7b60c0ab5336586621b87d4dcd1.mp3",
+          "B:銃": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/366b8c30d3b999b73100f609b5767f49.mp3"
+        }
+      },
+      "human_listening_claimed": false,
+      "pronunciation_release_pass_claimed": false
+    },
+    {
+      "edit_id": "tiebreak",
+      "char": "朝",
+      "at": 23,
+      "intended": "chao2",
+      "wrong": "zhao1",
+      "actual_mp3_sha256": "74458c8e33919a368e1a02203de943746c054fbc86257e5391d990717891193f",
+      "sentence": "又是抢七！这一次，兹维列夫冲得更凶。每一分，都朝着胜利逼近！",
+      "actual_acoustic": {
+        "word": "朝",
+        "char": "朝",
+        "sentence": "又是抢七！这一次，兹维列夫冲得更凶。每一分，都朝着胜利逼近！",
+        "tts_text": "又是抢七！这一次，兹维列夫冲得更凶。每一分，都朝着胜利逼近！",
+        "intended_refs": [
+          "潮",
+          "巢",
+          "晁"
+        ],
+        "wrong_refs": [
+          "昭",
+          "招",
+          "钊"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "verdict": "correct",
+        "confidence": "medium",
+        "verdict_raw": "correct",
+        "score": 0.387,
+        "margin": 0.2,
+        "near_identical_to": null,
+        "far_from_both": false,
+        "dropped_refs": [],
+        "override": null,
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 2.617,
+            "d_wrong": 3.925,
+            "score": 0.2
+          },
+          "f0": {
+            "d_intended": 0.245,
+            "d_wrong": 1.663,
+            "score": 0.743
+          },
+          "comb": {
+            "d_intended": 1.604,
+            "d_wrong": 3.626,
+            "score": 0.387
+          }
+        },
+        "neighbour_shift": {
+          "intended": 1.44,
+          "wrong": 4.24
+        },
+        "separation": {
+          "spec": {
+            "within": 2.091,
+            "between": 3.925,
+            "separation": 1.877
+          },
+          "f0": {
+            "within": 0.248,
+            "between": 2.065,
+            "separation": 8.33
+          },
+          "comb": {
+            "within": 1.294,
+            "between": 4.028,
+            "separation": 3.114
+          }
+        },
+        "selftest_loo": {
+          "潮": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.711
+          },
+          "巢": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.72
+          },
+          "晁": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.473
+          },
+          "昭": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.516
+          },
+          "招": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.421
+          },
+          "钊": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.498
+          }
+        },
+        "selftest_pass": true,
+        "distances_from_orig": {
+          "A:潮": {
+            "spec": 2.617,
+            "f0": 0.55,
+            "vmis": 0.1,
+            "frames": 40,
+            "comb": 1.858
+          },
+          "A:巢": {
+            "spec": 2.645,
+            "f0": 0.504,
+            "vmis": 0.1,
+            "frames": 40,
+            "comb": 1.827
+          },
+          "A:晁": {
+            "spec": 2.717,
+            "f0": 0.245,
+            "vmis": 0.098,
+            "frames": 41,
+            "comb": 1.604
+          },
+          "B:昭": {
+            "spec": 3.943,
+            "f0": 2.028,
+            "vmis": 0.103,
+            "frames": 39,
+            "comb": 3.999
+          },
+          "B:招": {
+            "spec": 3.925,
+            "f0": 1.663,
+            "vmis": 0.175,
+            "frames": 40,
+            "comb": 3.626
+          },
+          "B:钊": {
+            "spec": 3.972,
+            "f0": 1.899,
+            "vmis": 0.103,
+            "frames": 39,
+            "comb": 3.885
+          }
+        },
+        "window_s": [
+          5.24,
+          5.63
+        ],
+        "boundary_token": "朝着",
+        "window_anchor": "A:潮",
+        "tokens": {
+          "ORIG": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "冲",
+            "得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "朝着",
+            "胜利",
+            "逼近"
+          ],
+          "A:潮": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "冲",
+            "得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "潮",
+            "着",
+            "胜利",
+            "逼近"
+          ],
+          "A:巢": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "冲",
+            "得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "巢",
+            "着",
+            "胜利",
+            "逼近"
+          ],
+          "A:晁": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "冲",
+            "得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "晁",
+            "着",
+            "胜利",
+            "逼近"
+          ],
+          "B:昭": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "冲",
+            "得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "昭",
+            "着",
+            "胜利",
+            "逼近"
+          ],
+          "B:招": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "冲",
+            "得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "招",
+            "着",
+            "胜利",
+            "逼近"
+          ],
+          "B:钊": [
+            "又是",
+            "抢",
+            "七",
+            "这",
+            "一次",
+            "兹维列夫",
+            "冲",
+            "得",
+            "更",
+            "凶",
+            "每",
+            "一",
+            "分",
+            "都",
+            "钊",
+            "着",
+            "胜利",
+            "逼近"
+          ]
+        },
+        "f0_semitones_window": {
+          "ORIG": [
+            0.7,
+            0.5,
+            0.7,
+            0.3,
+            -0.9,
+            null,
+            null,
+            null,
+            null,
+            null,
+            0.2,
+            -1.2,
+            -4.9,
+            -4.9,
+            -4.1,
+            -3.2,
+            -2.2,
+            -1.4,
+            -0.9,
+            -3.7
+          ],
+          "A:潮": [
+            1.2,
+            1.1,
+            1.2,
+            0.7,
+            -0.2,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            -3.9,
+            -4.5,
+            -3.3,
+            -2.7,
+            -1.7,
+            -0.8,
+            -0.4,
+            -3.0
+          ],
+          "A:巢": [
+            1.2,
+            1.1,
+            1.2,
+            0.7,
+            -0.2,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            -4.4,
+            -4.5,
+            -3.8,
+            -2.7,
+            -1.7,
+            -0.8,
+            -0.4,
+            -2.9
+          ],
+          "A:晁": [
+            0.8,
+            0.7,
+            0.8,
+            0.5,
+            -0.2,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            -4.3,
+            -4.7,
+            -4.4,
+            -3.5,
+            -2.6,
+            -1.6,
+            -0.5,
+            -0.7
+          ],
+          "B:昭": [
+            -1.0,
+            -1.3,
+            -1.1,
+            -1.8,
+            -3.6,
+            null,
+            null,
+            null,
+            2.7,
+            1.7,
+            1.0,
+            0.4,
+            -0.3,
+            -0.9,
+            -1.3,
+            -1.8
+          ],
+          "B:招": [
+            -0.5,
+            -0.7,
+            -0.4,
+            -0.5,
+            -2.6,
+            null,
+            null,
+            4.1,
+            2.7,
+            1.5,
+            0.7,
+            -0.0,
+            -0.5,
+            -1.0,
+            -1.3,
+            -1.5,
+            null
+          ],
+          "B:钊": [
+            -0.7,
+            -0.8,
+            -0.8,
+            -1.2,
+            -3.5,
+            null,
+            null,
+            null,
+            2.6,
+            2.0,
+            1.1,
+            0.5,
+            -0.1,
+            -0.7,
+            -1.2,
+            -1.7,
+            -2.2
+          ]
+        },
+        "audio": {
+          "ORIG": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/voice-tiebreak.mp3",
+          "A:潮": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/212a1e9fa136f90065ffb06d6bd598d6.mp3",
+          "A:巢": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/db6f4181d42ecea06baedc8ea5eecc78.mp3",
+          "A:晁": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/e8d36e1e922fa465c20f803181033802.mp3",
+          "B:昭": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/3565aa7106b11f8a4f9641758f14adc8.mp3",
+          "B:招": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/531cbd9b0f0c4939ab2f4a74c2f388a4.mp3",
+          "B:钊": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/97778ea28616c3c5140ccf574905d0fc.mp3"
+        }
+      },
+      "human_listening_claimed": false,
+      "pronunciation_release_pass_claimed": false
+    },
+    {
+      "edit_id": "stats",
+      "char": "分",
+      "at": 6,
+      "intended": "fen1",
+      "wrong": "fen4",
+      "actual_mp3_sha256": "b76a193ed4c4dfc6fa659d4974b89724e754248a5a37f04538644e46c5994671",
+      "sentence": "四十九记制胜分，更少的失误。两个抢七，都被兹维列夫拿下！下一轮，德米纳尔能挡住他吗？",
+      "actual_acoustic": {
+        "word": "分",
+        "char": "分",
+        "sentence": "四十九记制胜分，更少的失误。两个抢七，都被兹维列夫拿下！下一轮，德米纳尔能挡住他吗？",
+        "tts_text": "四十九记制胜分，更少的失误。两个抢七，都被兹维列夫拿下！下一轮，德米纳尔能挡住他吗？",
+        "intended_refs": [
+          "氛",
+          "纷",
+          "芬"
+        ],
+        "wrong_refs": [
+          "忿",
+          "愤",
+          "粪"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "verdict": "correct",
+        "confidence": "medium",
+        "verdict_raw": "correct",
+        "score": 0.809,
+        "margin": 0.2,
+        "near_identical_to": null,
+        "far_from_both": false,
+        "dropped_refs": [],
+        "override": null,
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 0.974,
+            "d_wrong": 3.009,
+            "score": 0.511
+          },
+          "f0": {
+            "d_intended": 0.015,
+            "d_wrong": 3.242,
+            "score": 0.991
+          },
+          "comb": {
+            "d_intended": 0.502,
+            "d_wrong": 4.746,
+            "score": 0.809
+          }
+        },
+        "neighbour_shift": {
+          "intended": 0.503,
+          "wrong": 3.574
+        },
+        "separation": {
+          "spec": {
+            "within": 1.97,
+            "between": 3.034,
+            "separation": 1.54
+          },
+          "f0": {
+            "within": 0.745,
+            "between": 3.317,
+            "separation": 4.453
+          },
+          "comb": {
+            "within": 1.73,
+            "between": 4.834,
+            "separation": 2.795
+          }
+        },
+        "selftest_loo": {
+          "氛": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.54
+          },
+          "纷": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.54
+          },
+          "芬": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.422
+          },
+          "忿": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.338
+          },
+          "愤": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.783
+          },
+          "粪": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.781
+          }
+        },
+        "selftest_pass": true,
+        "distances_from_orig": {
+          "A:氛": {
+            "spec": 2.263,
+            "f0": 0.278,
+            "vmis": 0.094,
+            "frames": 32,
+            "comb": 1.409
+          },
+          "A:纷": {
+            "spec": 0.974,
+            "f0": 0.015,
+            "vmis": 0.034,
+            "frames": 29,
+            "comb": 0.502
+          },
+          "A:芬": {
+            "spec": 2.231,
+            "f0": 0.778,
+            "vmis": 0.1,
+            "frames": 30,
+            "comb": 1.893
+          },
+          "B:忿": {
+            "spec": 3.009,
+            "f0": 3.242,
+            "vmis": 0.097,
+            "frames": 31,
+            "comb": 4.746
+          },
+          "B:愤": {
+            "spec": 3.122,
+            "f0": 3.7,
+            "vmis": 0.138,
+            "frames": 29,
+            "comb": 5.261
+          },
+          "B:粪": {
+            "spec": 3.082,
+            "f0": 3.666,
+            "vmis": 0.1,
+            "frames": 30,
+            "comb": 5.207
+          }
+        },
+        "window_s": [
+          1.16,
+          1.45
+        ],
+        "boundary_token": "胜分",
+        "window_anchor": "A:芬",
+        "tokens": {
+          "ORIG": [
+            "四十九",
+            "记制",
+            "胜分",
+            "更",
+            "少",
+            "的",
+            "失误",
+            "两",
+            "个",
+            "抢",
+            "七",
+            "都",
+            "被",
+            "兹维列夫",
+            "拿下",
+            "下",
+            "一",
+            "轮",
+            "德米纳尔",
+            "能",
+            "挡住",
+            "他",
+            "吗"
+          ],
+          "A:氛": [
+            "四十九",
+            "记",
+            "制胜氛",
+            "更",
+            "少",
+            "的",
+            "失误",
+            "两",
+            "个",
+            "抢",
+            "七",
+            "都",
+            "被",
+            "兹维列夫",
+            "拿下",
+            "下",
+            "一",
+            "轮",
+            "德米纳尔",
+            "能",
+            "挡住",
+            "他",
+            "吗"
+          ],
+          "A:纷": [
+            "四十九",
+            "记制",
+            "胜纷",
+            "更",
+            "少",
+            "的",
+            "失误",
+            "两",
+            "个",
+            "抢",
+            "七",
+            "都",
+            "被",
+            "兹维列夫",
+            "拿下",
+            "下",
+            "一",
+            "轮",
+            "德米纳尔",
+            "能",
+            "挡住",
+            "他",
+            "吗"
+          ],
+          "A:芬": [
+            "四十九记",
+            "制胜",
+            "芬",
+            "更",
+            "少",
+            "的",
+            "失误",
+            "两个",
+            "抢",
+            "七",
+            "都",
+            "被",
+            "兹维列夫",
+            "拿下",
+            "下",
+            "一",
+            "轮",
+            "德米纳尔",
+            "能",
+            "挡住",
+            "他",
+            "吗"
+          ],
+          "B:忿": [
+            "四十九",
+            "记制",
+            "胜",
+            "忿",
+            "更",
+            "少",
+            "的",
+            "失误",
+            "两",
+            "个",
+            "抢",
+            "七",
+            "都",
+            "被",
+            "兹维列夫",
+            "拿下",
+            "下",
+            "一",
+            "轮",
+            "德米纳尔",
+            "能",
+            "挡住",
+            "他",
+            "吗"
+          ],
+          "B:愤": [
+            "四十九记",
+            "制胜",
+            "愤",
+            "更",
+            "少",
+            "的",
+            "失误",
+            "两个",
+            "抢",
+            "七",
+            "都",
+            "被",
+            "兹维列夫",
+            "拿下",
+            "下",
+            "一",
+            "轮",
+            "德米纳尔",
+            "能",
+            "挡住",
+            "他",
+            "吗"
+          ],
+          "B:粪": [
+            "四十九记",
+            "制胜",
+            "粪",
+            "更",
+            "少",
+            "的",
+            "失误",
+            "两个",
+            "抢",
+            "七",
+            "都",
+            "被",
+            "兹维列夫",
+            "拿下",
+            "下",
+            "一",
+            "轮",
+            "德米纳尔",
+            "能",
+            "挡住",
+            "他",
+            "吗"
+          ]
+        },
+        "f0_semitones_window": {
+          "ORIG": [
+            -1.3,
+            -2.5,
+            -3.8,
+            -5.1,
+            null,
+            null,
+            2.2,
+            1.2,
+            1.0,
+            1.1,
+            1.6,
+            2.6,
+            3.3,
+            3.1,
+            1.0
+          ],
+          "A:氛": [
+            -0.7,
+            -2.1,
+            -3.5,
+            -4.7,
+            -6.2,
+            null,
+            2.5,
+            1.8,
+            1.4,
+            1.5,
+            1.7,
+            2.4,
+            3.0,
+            3.5,
+            3.3,
+            0.1
+          ],
+          "A:纷": [
+            -1.3,
+            -2.5,
+            -3.8,
+            -5.0,
+            -6.9,
+            null,
+            2.2,
+            1.2,
+            1.0,
+            1.1,
+            1.6,
+            2.6,
+            3.3,
+            3.1,
+            1.1
+          ],
+          "A:芬": [
+            -2.3,
+            -3.6,
+            -4.7,
+            -5.5,
+            -7.7,
+            null,
+            null,
+            1.8,
+            0.9,
+            0.9,
+            1.0,
+            1.6,
+            2.4,
+            2.2,
+            -0.2
+          ],
+          "B:忿": [
+            1.6,
+            0.1,
+            -1.2,
+            -2.1,
+            -4.1,
+            null,
+            null,
+            5.1,
+            3.9,
+            2.6,
+            0.7,
+            -1.4,
+            -4.4,
+            -6.1,
+            null
+          ],
+          "B:愤": [
+            1.8,
+            0.0,
+            -1.1,
+            -2.1,
+            -3.8,
+            -7.0,
+            null,
+            3.8,
+            2.7,
+            0.9,
+            -3.1,
+            -5.0,
+            -6.3,
+            -6.8
+          ],
+          "B:粪": [
+            1.8,
+            0.0,
+            -1.1,
+            -2.1,
+            -3.5,
+            -7.0,
+            null,
+            3.8,
+            2.8,
+            0.9,
+            -3.1,
+            -5.0,
+            -6.3,
+            -6.2
+          ]
+        },
+        "audio": {
+          "ORIG": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/voice-stats.mp3",
+          "A:氛": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/b6719e42beb76ac1f58e71c4f3801d9b.mp3",
+          "A:纷": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/0e40b542bae86b18f9757255e8c4c3ef.mp3",
+          "A:芬": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/0587f60ca369056a12b36b01623dde61.mp3",
+          "B:忿": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/08998c04014e16ecd3b6d5580901ba68.mp3",
+          "B:愤": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/10e498d7802697497ff0d56bfb9a57e5.mp3",
+          "B:粪": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/controls/3a1c8534a432f30967a07102013f0df3.mp3"
+        }
+      },
+      "human_listening_claimed": false,
+      "pronunciation_release_pass_claimed": false
+    }
+  ],
+  "scope": "Only3 current common semantic-risk positions. Exact production baseline MP3/paired words; same exact-sentence correct/wrong controls in standard shared TTS; no historical sentence pass, no ASR tone proof, no human hearing. All uncertain/unreliable/low explicitly pending.",
+  "recorded_at": "2026-10-13T14:23:19.073699+00:00",
+  "human_listening_claimed": false,
+  "amplitude_checks": false,
+  "pronunciation_release_pass_claimed": false
+}
