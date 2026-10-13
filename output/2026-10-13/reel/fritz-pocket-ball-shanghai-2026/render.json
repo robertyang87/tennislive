@@ -66,7 +66,7 @@
   },
   "film_sha256": "839f6bacfa4950d7ef20a488d08e3faa325188aba57f6ba1cca0bb9c90ad12e2",
   "film_bytes": 59618964,
-  "qc_attestation_sha256": "1016d31191f35ba99f4528c43aa52bd38f0fa80ae90890618b2534a8e6c957b7",
+  "qc_attestation_sha256": "1201b5a1ba7f64736fb5ef89c3458064c931356b5befeb52020a7e5d1e473a0b",
   "production_stage_events": [
     {
       "stage": "render",
@@ -80,5 +80,12 @@
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-fritz-pocket-ball-shanghai-2026/fritz-pocket-ball-shanghai-2026.mp4",
-  "video_bytes": 59618964
+  "video_bytes": 59618964,
+  "reattests": [
+    {
+      "at": "2026-10-13T10:34:03Z",
+      "spec_sha256": "551f833738fda030070dc60310b841c85ee62574a2fec656139b60f37682cf00",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/38384087835"
+    }
+  ]
 }
