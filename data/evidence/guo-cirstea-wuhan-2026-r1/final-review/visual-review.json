@@ -1,0 +1,46 @@
+{
+  "schema": "tennislive.final-review.v1",
+  "film_sha256": "210a1d5138a3072d84bbb50b8964fa289813771cbb2d96be48f207ed6865a777",
+  "film_bytes": 120127943,
+  "duration_seconds": 342.12,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "native_qc": "pass; exact downloaded Release bytes match committed qc_attestation and native_input_archive",
+  "visual_review": {
+    "method": "actual decoded final-film contact sheet viewed",
+    "timestamps_seconds": [
+      0.6,
+      8,
+      15,
+      76,
+      85,
+      135,
+      153,
+      190,
+      213,
+      264,
+      288,
+      310,
+      322,
+      330,
+      340
+    ],
+    "findings": [
+      "cover eyes open; text leaves face clear",
+      "full 3:4 filled native footage",
+      "actual evolving WTA scoreboard width and MATCH POINT #1/#2/#3 retained; captions clear above tips",
+      "native final ROUND 1 result fully formed at 322s",
+      "30/20 winners and 54/33 unforced errors correctly shown",
+      "Guo matchpoint reaction, handshake and celebration included; interview body excluded"
+    ],
+    "status": "pass"
+  },
+  "audio_review": "Pending exact-final acoustic review; prototype voices have different SHA and are not represented as final audio pass",
+  "human_listening_performed": false,
+  "received_at": "2026-10-13T08:55:19Z",
+  "twenty_minute_goal_met": false,
+  "at": "2026-10-13T10:21:58.294162+00:00"
+}
