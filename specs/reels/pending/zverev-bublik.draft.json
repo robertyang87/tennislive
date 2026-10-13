@@ -18,7 +18,16 @@
       }
     ],
     "winner": "兹维列夫",
-    "result": "7-6(6) 4-6 7-6(1)"
+    "result": "7-6(6) 4-6 7-6(1)",
+    "portrait": {
+      "image": "assets/reel/zverev-bublik-cover.jpg",
+      "focus": 0.692,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「alexander zverev」「Rolex Shanghai Masters」，日期对上当地 2026-10-13（Asia/Shanghai；日期来源 flashscore dc_1_Yc7hTJ15）（放宽：标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 10-13 18:33:25，落在这场的窗口 当地 10-13 18:05~21:05 里（atp-media #4591607））；EXIF 拍摄 2026:10:13 18:33:25+08:00。② 分辨率：4358×2903，zoom 1 铺 1080×1440 是 2.02×（不放大）。③ 认人：最大那张脸像 兹维列夫 0.47（≥ 0.34）。④ 睁眼：EAR 0.2391（≥ 0.16）。⑤ 钩子带：脸落在 y303~410，钩子顶边 790。排序：[True, False, False, True, True, 107, 0.4695]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/13/e9438203-a813-4f34-86a4-77f89801482d/Alexander-ZVEREV-vs-Alexander-BUBLIK-2449.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/13/e9438203-a813-4f34-86a4-77f89801482d/Alexander-ZVEREV-vs-Alexander-BUBLIK-2449.jpg（条目 #4591607，接口发布 2026-10-13T11:25:55Z，EXIF 拍摄 2026:10:13 18:33:25+08:00（UTC 2026-10-13T10:33:25Z），原图 4358×2903），说明原文「2026 Shanghai Zverev」。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -269,5 +278,17 @@
     "技战术资料：no_readable_analysis；未核观点不进入旁白",
     "⚠️ 文案起草已随模型通道移除——钩子/论点/beats/旁白留给终审手写。",
     "⚠️ 封面抓取没成（SystemExit: 2026-10-11–2026-10-13 窗口里扫了 138 场，没有同时出现 ['zverev', 'bublik'] 的比赛）——portrait 留空，终审或 render 前再补"
-  ]
+  ],
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "Yc7hTJ15",
+      "start_utc": "2026-10-13T10:10:00Z",
+      "end_utc": "2026-10-13T12:50:45Z",
+      "source": "flashscore dc_1_Yc7hTJ15（DC／DD）"
+    },
+    "tried": [
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/13/ea05beec-8396-4d79-a764-3725c34d9270/Alexander-ZVEREV-vs-Alexander-BUBLIK-2456.jpg"
+    ],
+    "replaced_under": ""
+  }
 }
