@@ -20,11 +20,30 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from render_story_info_band import (
     BRAND_GREEN,
+    LABEL_FONT,
+    META_SEP,
+    MUTED,
+    SCORE,
+    WHITE,
+    label_fields_problem,
+    label_font_problem,
     legacy_corner_label_slugs,
+    legacy_label_fields_slugs,
+    metric_from_label,
     png_corner_label_problem,
     render,
+    render_label,
     story_corner_label_problems,
+    story_label_field_problems,
 )
+
+_OK_LABEL = {
+    "topic": "第1次",
+    "date": "2026.09.08",
+    "place": "美网",
+    "people": "小威廉姆斯",
+    "event": "第1次",
+}
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -57,12 +76,121 @@ def test_默认贴图是右轨右对齐(tmp_path):
                  highlight="ATP250 悉尼", metric="1-6 6-4 7-5")
     assert png_corner_label_problem(out) is None
     with Image.open(out) as image:
-        assert image.size == (1200, 340)
+        assert image.size[0] == 1200
+        assert image.size[1] >= 340 and image.size[1] % 2 == 0
         assert image.getpixel((1173, 170))[:3] == BRAND_GREEN[:3]
         assert image.getpixel((27, 170))[:3] != BRAND_GREEN[:3]
     left = render("2018.01.13", "第1冠", "vs 德米纳尔", tmp_path / "left.png",
                   metric="6-4 6-3", layout="classic", align="left")
     assert png_corner_label_problem(left)
+
+
+def _ink_bands(path):
+    """按精确填色把文字行切开。软阴影和描边不进这堆，行与行才分得开。"""
+    exact = {BRAND_GREEN[:3], WHITE[:3], MUTED[:3]}
+    with Image.open(path) as image:
+        pix = image.convert("RGBA").load()
+        _width, height = image.size
+        rows = []
+        for y in range(height):
+            green = white = muted = False
+            seen = False
+            green_xs = []
+            muted_xs = []
+            for x in range(80, 1100):
+                pixel = pix[x, y]
+                if pixel[3] < 200 or pixel[:3] not in exact:
+                    continue
+                seen = True
+                if pixel[:3] == BRAND_GREEN[:3]:
+                    green = True
+                    green_xs.append(x)
+                elif pixel[:3] == WHITE[:3]:
+                    white = True
+                elif pixel[:3] == MUTED[:3]:
+                    muted = True
+                    muted_xs.append(x)
+            rows.append((seen, green, white, muted, green_xs, muted_xs))
+    bands = []
+    start = None
+    green = white = muted = False
+    green_xs = []
+    muted_xs = []
+    for y, (seen, row_green, row_white, row_muted, row_gxs, row_mxs) in enumerate(rows):
+        if seen and start is None:
+            start = y
+            green, white, muted = row_green, row_white, row_muted
+            green_xs, muted_xs = list(row_gxs), list(row_mxs)
+        elif seen:
+            green = green or row_green
+            white = white or row_white
+            muted = muted or row_muted
+            green_xs.extend(row_gxs)
+            muted_xs.extend(row_mxs)
+        elif start is not None:
+            bands.append({
+                "y0": start, "y1": y, "green": green, "white": white, "muted": muted,
+                "green_x0": min(green_xs) if green_xs else None,
+                "green_x1": max(green_xs) if green_xs else None,
+                "muted_x0": min(muted_xs) if muted_xs else None,
+                "muted_x1": max(muted_xs) if muted_xs else None,
+            })
+            start = None
+    if start is not None:
+        bands.append({
+            "y0": start, "y1": len(rows), "green": green, "white": white, "muted": muted,
+            "green_x0": min(green_xs) if green_xs else None,
+            "green_x1": max(green_xs) if green_xs else None,
+            "muted_x0": min(muted_xs) if muted_xs else None,
+            "muted_x1": max(muted_xs) if muted_xs else None,
+        })
+    return bands
+
+
+def test_主题独占一行_日期和地点同一行且日期在前(tmp_path):
+    """主题自己一行。日期和地点同一行，日期在前，中间是「 · 」。"""
+    assert META_SEP == " · "
+    with_topic = render(
+        "2026.10.11", "摔拍警告", "布勃利克 vs 中岛布兰登",
+        tmp_path / "topic.png", highlight="ATP1000 上海", metric="6-4")
+    bands = _ink_bands(with_topic)
+    assert len(bands) >= 2
+    topic, meta = bands[0], bands[1]
+    assert topic["white"] and not topic["green"]
+    assert meta["y0"] >= topic["y1"]
+    assert meta["muted"] and meta["green"]
+    assert meta["muted_x1"] < meta["green_x0"]
+
+    no_topic = render(
+        "2022.02.22", "", "兹维列夫 · 罚款4万美元",
+        tmp_path / "place.png", highlight="阿卡普尔科")
+    first = _ink_bands(no_topic)[0]
+    assert first["muted"] and first["green"]
+    assert first["muted_x1"] < first["green_x0"]
+
+
+def test_角标文字和左上角品牌标题同一支_比分除外():
+    """主题、地点、日期、人物、罚款都走品牌标题那一支；比分数字仍是 TL Score。"""
+    import render_story_info_band as band
+    from tennislive.video.watermark import BRAND_FONT
+
+    assert label_font_problem() is None
+    assert LABEL_FONT.name == BRAND_FONT
+    assert SCORE.name == "TLScore-Bold.ttf"
+    for fn in (band._render_corner, band._metric_fonts):
+        source = inspect.getsource(fn)
+        assert "BOLD" not in source
+        assert "REGULAR" not in source
+        assert "NotoSans" not in source
+    # 字体漂了，豁免表也拦不住。
+    real = band.LABEL_FONT
+    band.LABEL_FONT = real.parent / "NotoSansSC-Bold-sub.ttf"
+    try:
+        problem = story_corner_label_problems(
+            {"slug": "medvedev-24-titles", "segments": []})
+    finally:
+        band.LABEL_FONT = real
+    assert problem and "品牌标题" in problem[0]
 
 
 def test_别的脚本没有把左对齐写死成默认():
@@ -82,6 +210,15 @@ def test_每条片子的贴图都是右上角右轨右对齐():
         if problems:
             bad.append(f"{spec['slug']}: {problems[0]}")
     assert not bad, "这些贴图不是右上角、右轨、右对齐：\n  " + "\n  ".join(bad)
+
+
+def test_每条片子的贴图都写齐字段():
+    bad = []
+    for path, spec in _specs():
+        problems = story_label_field_problems(spec)
+        if problems:
+            bad.append(f"{spec['slug']}: {problems[0]}")
+    assert not bad, "这些贴图缺 topic、date、place、people 或 score/event：\n  " + "\n  ".join(bad)
 
 
 def test_角标豁免表只许减不许加():
@@ -111,9 +248,13 @@ def test_渲染入口拒绝左上角或左轨(tmp_path):
             "start": 1, "end": 6, "source": "r1",
             "inset": {"image": str(image), "kind": "story_text", "corner": corner,
                       "width": 0.56, "pad": 0.085, "show_for": 3.8,
-                      "motion": "editorial"}}]}
+                      "motion": "editorial", "label": dict(_OK_LABEL)}}]}
 
     assert reel.parse_segments(spec(good), {"r1": Path("a.mp4")}, "r1")
+    naked = spec(good)
+    naked["segments"][0]["inset"].pop("label")
+    with pytest.raises(reel.ReelError, match="label"):
+        reel.parse_segments(naked, {"r1": Path("a.mp4")}, "r1")
     with pytest.raises(reel.ReelError, match="右上角"):
         reel.parse_segments(spec(good, "tl"), {"r1": Path("a.mp4")}, "r1")
     with pytest.raises(reel.ReelError, match="右缘"):
@@ -121,3 +262,55 @@ def test_渲染入口拒绝左上角或左轨(tmp_path):
     # 豁免只认表里的 slug，换个名字同一张左轨图照样红。
     frozen = next(iter(legacy_corner_label_slugs()))
     assert reel.parse_segments(spec(bad, slug=frozen), {"r1": Path("a.mp4")}, "r1")
+
+
+def test_字段缺一项就红_比分和事件至少要有一个():
+    assert label_fields_problem(None)
+    assert "topic" in (label_fields_problem({**_OK_LABEL, "topic": ""}) or "")
+    assert "date" in (label_fields_problem({**_OK_LABEL, "date": "2026-09-08"}) or "")
+    assert "score" in (label_fields_problem({**_OK_LABEL, "event": ""}) or "")
+    bad_score = label_fields_problem({**_OK_LABEL, "score": "决胜盘 1-5"})
+    assert bad_score and "整场比分" in bad_score
+    assert label_fields_problem({**_OK_LABEL, "event": ""}) 
+    scored = {**_OK_LABEL, "event": "", "score": "6-4 2-6"}
+    assert label_fields_problem(scored) is None
+    assert label_fields_problem(_OK_LABEL) is None
+    assert metric_from_label(_OK_LABEL) == ""
+    assert metric_from_label(scored) == "6-4 2-6"
+    distinct = {**_OK_LABEL, "event": "罚一分"}
+    assert label_fields_problem(distinct) is None
+    assert metric_from_label(distinct) == "罚一分"
+
+
+def test_字段豁免表只许减不许加():
+    legacy = legacy_label_fields_slugs()
+    assert legacy, "豁免表读不到，整条判据会静静失效"
+    assert len(legacy) <= 21, "只许减不许加（闸合并那天是 21 条）"
+    seen = {spec["slug"]: spec for _path, spec in _specs()}
+    missing = sorted(slug for slug in legacy if slug not in seen)
+    fixed = []
+    for slug in sorted(legacy):
+        if slug not in seen:
+            continue
+        still = False
+        for raw in seen[slug].get("segments") or []:
+            inset = (raw or {}).get("inset") or {}
+            if str(inset.get("kind") or "") != "story_text":
+                continue
+            if label_fields_problem(inset.get("label")):
+                still = True
+                break
+        if not still:
+            fixed.append(slug)
+    assert not missing, f"豁免表里有不存在的 slug：{missing}"
+    assert not fixed, f"这些字段已经齐了，从 data/legacy_label_fields.json 里删掉：{fixed}"
+
+
+def test_按字段渲贴图_事件和主题同一句时不另起比分行(tmp_path):
+    out = tmp_path / "label.png"
+    render_label(_OK_LABEL, out)
+    with Image.open(out) as image:
+        assert image.size[0] == 1200
+        assert image.size[1] >= 340 and image.size[1] % 2 == 0
+    with pytest.raises(SystemExit, match="label"):
+        render_label({}, tmp_path / "nope.png")

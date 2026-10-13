@@ -6,7 +6,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from render_story_info_band import (  # noqa: E402
-    BRAND_GREEN, display_units, metric_runs, render, set_score_wins,
+    BRAND_GREEN, WHITE, SetScore, display_units, metric_runs, render,
+    score_line, score_number_colors, set_number_runs, set_score_wins,
 )
 
 
@@ -79,32 +80,109 @@ def _metric_ink(path):
     return green, white
 
 
-def test_整场比分按盘上色赢的盘绿丢的盘白(tmp_path):
-    """账号所有者 2026-09-11 给了一张参考样式：「以后都用这种样式的贴图」。
+def _score_xs(path, *, x_max=1120):
+    """比分行上的精确黄绿 / 暖白横坐标。地点行也是黄绿，取最下面那一截。"""
+    green_xy = []
+    white_xy = []
+    with Image.open(path) as image:
+        pix = image.convert("RGBA").load()
+        width, height = image.size
+        for y in range(height):
+            for x in range(min(x_max, width)):
+                pixel = pix[x, y]
+                if pixel == BRAND_GREEN:
+                    green_xy.append((x, y))
+                elif pixel == WHITE:
+                    white_xy.append((x, y))
+    if not green_xy:
+        return [], [x for x, _y in white_xy]
+    ys = sorted({y for _x, y in green_xy})
+    start = prev = ys[0]
+    runs = []
+    for y in ys[1:]:
+        if y > prev + 2:
+            runs.append((start, prev))
+            start = y
+        prev = y
+    runs.append((start, prev))
+    y0, y1 = runs[-1]
+    return ([x for x, y in green_xy if y0 <= y <= y1],
+            [x for x, y in white_xy if y0 <= y <= y1])
 
-    它比原来那版硬在一处——**绿有语义了**：主标题只写赢家，metric 写整场比分，
-    赢下的那几盘才是绿的。和封面比分板的 `.setwin`（赢盘绿）是同一条规矩，
-    所以贴图和海报是一套系统。判据钉在**渲出来的像素**上，不是源码文本。
+
+def _median(xs):
+    ordered = sorted(xs)
+    return ordered[len(ordered) // 2]
+
+
+def test_比分按局数上色_赢的那个数黄绿(tmp_path):
+    """账号所有者 2026-10-12 改过一次：颜色按每一个局数，不按整盘，也不看主角在哪一侧。
+
+    `6-4` 的 6 黄绿、4 白；`2-6` 反过来；`7-6(5)` 的 7 黄绿，6 和 `(5)` 白；
+    `6-7(7)` 的 6 白、7 黄绿、括号白。连字符留白。平局两个局数都白。
     """
-    def band(metric, name):
-        return _metric_ink(render(
-            "2023.01.28 · 澳网决赛", "萨巴伦卡", "第四个冠军点才落地，生涯第一个大满贯",
-            tmp_path / name, metric=metric, variant="player",
-            layout="classic", align="left"))
+    assert set_number_runs("6-4") == [("6", True), ("-", False), ("4", False)]
+    assert set_number_runs("2-6") == [("2", False), ("-", False), ("6", True)]
+    assert set_number_runs("7-6(5)") == [
+        ("7", True), ("-", False), ("6", False), ("(5)", False)]
+    assert set_number_runs("6-7(7)") == [
+        ("6", False), ("-", False), ("7", True), ("(7)", False)]
+    assert set_number_runs("6-6") == [("6", False), ("-", False), ("6", False)]
+    assert score_number_colors("决胜盘 1-5 赛点") is None
 
-    # 同样三盘、同样的字形（6/4/3 和连字符），只有输赢不同——所以墨量可比，
-    # 差别只可能来自颜色。
-    mixed_green, mixed_white = band("4-6 6-3 6-4", "mixed.png")
-    won_green, won_white = band("6-4 6-3 6-4", "won.png")
-    lost_green, lost_white = band("4-6 3-6 4-6", "lost.png")
+    def card(metric, name):
+        return render("2026.10.11", "摔拍警告", "布勃利克 vs 中岛布兰登",
+                      tmp_path / name, metric=metric)
 
-    assert won_white == 0 and won_green > 3000, "三盘全赢，metric 里不该有白的"
-    assert lost_green == 0 and lost_white > 3000, "三盘全丢，metric 里不该有绿的"
-    assert mixed_green > 0 and mixed_white > 0, "赢两盘丢一盘，两种颜色都得有"
-    # 赢两盘 : 丢一盘 ≈ 2:1——只断言「两种颜色都有」的话，把上色写成
-    # 「第一盘白、其余绿」这种和输赢无关的规则也能过。
-    assert 1.5 < mixed_green / mixed_white < 2.5, (
-        f"绿白比例 {mixed_green / mixed_white:.2f} 不像「赢两盘丢一盘」")
+    def sides(metric, name):
+        green, white = _score_xs(card(metric, name))
+        assert green and white, f"{metric} 两种颜色都要画出来"
+        return green, white
+
+    green, white = sides("6-4", "six-four.png")
+    assert _median(green) < _median(white)
+    green, white = sides("2-6", "two-six.png")
+    assert _median(green) > _median(white)
+    green, white = sides("7-6(5)", "seven-six.png")
+    assert min(green) < min(white) and max(white) > max(green)
+    green, white = sides("6-7(7)", "six-seven.png")
+    assert min(white) < min(green) and max(white) > max(green)
+    assert _score_xs(card("6-6", "level.png"))[0] == []
+
+
+def test_比分颜色只从局数大小算_主角在哪一侧不改像素(tmp_path):
+    """颜色从结构化盘分的局数大小算，不接受手写标记，也不看 featured。
+
+    同一组 ``6-4``，把主角从左边换到右边，``.won`` 会翻，像素必须一个不动。
+    """
+    assert "won" not in SetScore.__dataclass_fields__
+    with pytest.raises(TypeError):
+        SetScore((1, 6), won=True)
+    with pytest.raises(SystemExit, match="SetScore"):
+        score_line([{"games": (6, 4), "color": "green"}])
+    assert score_line([
+        SetScore((1, 6)), SetScore((6, 4)), SetScore((7, 5), tiebreak=None),
+    ]) == "1-6 6-4 7-5"
+    assert SetScore((6, 7), tiebreak=7).token() == "6-7(7)"
+    # featured 仍然记着这一屏在讲谁，但上色不读它。
+    assert SetScore((6, 4), featured="left").won is True
+    assert SetScore((6, 4), featured="right").won is False
+
+    def card(featured, name):
+        return render("2018.01.13", "第1冠", "vs 德米纳尔", tmp_path / name,
+                      highlight="ATP250 悉尼",
+                      sets=[SetScore((6, 4), featured=featured)])
+
+    left = card("left", "left.png")
+    right = card("right", "right.png")
+    with Image.open(left) as image_a, Image.open(right) as image_b:
+        assert image_a.tobytes() == image_b.tobytes()
+    green, white = _score_xs(left)
+    assert green and white and _median(green) < _median(white)
+
+    with pytest.raises(SystemExit, match="不一致"):
+        render("2018.01.13", "第1冠", "vs 德米纳尔", tmp_path / "fork.png",
+               metric="6-4 6-4 6-4", sets=[SetScore((1, 6)), SetScore((6, 4))])
 
 
 def test_按盘上色只认整场比分_这一刻的局分照旧整块一个色(tmp_path):
@@ -155,7 +233,7 @@ def test_split_metric_has_four_right_aligned_rows_and_preserves_glyphs(tmp_path)
                 masks[align].append(mask.crop(box))
     for left, right in zip(masks["left"], masks["right"]):
         assert left.size == right.size and left.tobytes() == right.tobytes(), "只能平移，不许镜像"
-    # 丢掉的第一盘仍白，赢下的两盘仍绿，独立行不改变比分颜色语义。
+    # 独立行仍按局数上色：4-6 里 4 白 6 绿，7-6(2) 里 7 绿、6 和括号白。
     with Image.open(paths["right"]) as image:
         pixels = list(image.crop((0, 230, 1150, 325)).getdata())
         assert sum(p[:3] == WHITE[:3] and p[3] > 200 for p in pixels) > 1000

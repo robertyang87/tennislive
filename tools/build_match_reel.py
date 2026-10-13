@@ -3792,11 +3792,17 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             "且 motion 必须为 editorial")
     # 2026-10-12：角标是全局默认。右上角、右缘短轨、文字右对齐。
     # 已发的左轨片在 data/legacy_corner_label.json，只许减不许加。
-    from render_story_info_band import story_corner_label_problems  # noqa: PLC0415
-    corner_bad = story_corner_label_problems(spec)
+    # 同一道闸还要 label：topic、date、place、people，外加 score 或 event。
+    # 已发、还没写字段的在 data/legacy_label_fields.json，只许减不许加。
+    from render_story_info_band import (  # noqa: PLC0415
+        story_corner_label_problems,
+        story_label_field_problems,
+    )
+    corner_bad = story_corner_label_problems(spec) + story_label_field_problems(spec)
     if corner_bad:
         raise ReelError(
-            "屏幕贴图必须是右上角、右缘品牌绿短轨、文字右对齐"
+            "屏幕贴图必须是右上角、右缘品牌绿短轨、文字右对齐，"
+            "并写齐 topic、date、place、people，外加 score 或 event"
             "（render_story_info_band 的默认 corner 版式）。\n  "
             + "\n  ".join(corner_bad))
     unknown = sorted({s.source for s in segments} - set(sources))

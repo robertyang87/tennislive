@@ -1,0 +1,26 @@
+{
+  "_why": "2026-10-12 角标加了字段闸：每张 story_text 的 inset.label 要写 topic、date（2026.10.11）、place、people，外加 score（整场比分）或 event。event 和 topic 是同一句时不另起一行。这张表是闸落地时还没写这些字段的片子。已发的不为补字段重渲。只许减不许加：tests/test_corner_label_style.py 自检每个名字都还在、拿掉豁免之后字段仍然不齐，而且条数不得超过合并那天的 21（10-13 rebase 时补进 4 条在闸合并前已上 main 的片子）。写齐了就要从这里删掉。code-violation-point-penalty-2026 先挂在这里，等它的 12 张贴图按新字段重渲后再删。",
+  "slugs": [
+    "bjk-cup-story",
+    "code-violation-point-penalty-2026",
+    "comeback-five-love-down",
+    "davis-cup-china-first-world-group-1",
+    "djokovic-21-seasons-2026",
+    "djokovic-21-seasons-2026-v2",
+    "djokovic-beijing-return",
+    "djokovic-china-open-unbeaten-34",
+    "fritz-pocket-ball-shanghai-2026",
+    "sabalenka-rybakina-h2h",
+    "seeds-zheng-china-open-2026",
+    "shelton-zverev-h2h",
+    "vacherot-shanghai-2026",
+    "wta-finals-race-2026-10-12",
+    "wta-finals-race-2026-10-12-v2",
+    "year-end-no1-zverev-2026",
+    "zhang-shuai-story",
+    "zheng-bjk-cup-olympic-rule",
+    "zheng-swiatek-eight-meetings",
+    "zheng-us-open-outlook",
+    "zheng-usopen-icons"
+  ]
+}
