@@ -1,0 +1,60 @@
+{
+  "slug": "zverev-bublik-shanghai-2026-r16",
+  "checked_at": "2026-10-13T14:42:06Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "c022d78c7399d76a": {
+      "segment": 2,
+      "spoken": 4.056,
+      "picture": 4.5
+    },
+    "303ee83f2ed4786f": {
+      "segment": 3,
+      "spoken": 8.616,
+      "picture": 19.3
+    },
+    "230ba020e9c97d5b": {
+      "segment": 5,
+      "spoken": 10.224,
+      "picture": 27.6
+    },
+    "41609f44d65e9c54": {
+      "segment": 7,
+      "spoken": 5.448,
+      "picture": 7.5
+    },
+    "f3833c5b0ba6be0c": {
+      "segment": 9,
+      "spoken": 8.52,
+      "picture": 22.0
+    },
+    "85970e8a9e684cc7": {
+      "segment": 11,
+      "spoken": 8.064,
+      "picture": 11.5
+    },
+    "0bc4541672bfe9c9": {
+      "segment": 13,
+      "spoken": 9.36,
+      "picture": 10.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "de90d1b92aa474f32f40fc9333d8bb1b7e1117486991489b1447fc745324d3c9",
+    "request_count": 8,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  },
+  "_actual_evidence": "duration from actual frozen MP3 capture and decoder; no resynthesis"
+}

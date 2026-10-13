@@ -1,0 +1,27 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-yINOy0bSnYk/yINOy0bSnYk.mp4",
+  "source_sha256": "4a823330f689dca7416ba8b0a3360d11f869c91e6df6a242e0dcefe50195a19f",
+  "method": "asr_cross_checked",
+  "reviewer": "current_assistant_actual_full_small_medium_plus_bounded_large_turbo_distil",
+  "status": "complete",
+  "reviewed_at": "2026-10-13T14:42:06.363287+00:00",
+  "reviewed_from": 39.3,
+  "reviewed_to": 66.9,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "human_listening_claimed": false,
+  "evidence_paths": [
+    "data/evidence/zverev-bublik-shanghai-2026-r16/source-audio/whisper-turbo-ambiguities.json",
+    "data/evidence/zverev-bublik-shanghai-2026-r16/source-audio/whisper-medium.en.json",
+    "data/evidence/zverev-bublik-shanghai-2026-r16/source-audio/whisper-distil-ambiguities.json",
+    "data/evidence/zverev-bublik-shanghai-2026-r16/source-audio/whisper-small.en.json",
+    "data/evidence/zverev-bublik-shanghai-2026-r16/source-audio/whisper-medium-offset.json",
+    "data/evidence/zverev-bublik-shanghai-2026-r16/source-audio/whisper-large-ambiguities.json"
+  ],
+  "normalization_decisions": [
+    "Sascha official spelling and tie-break spelling normalized; source whole222–229.9 clause retained. Models agree all meaningful words; initial function-word alternatives And the/a/none are not claimed as a verbatim listening result. Caption displays the confirmed complete semantic clause.",
+    "Low-probability149–152He has got it/Thankyou and213–216Ohbrilliant disappeared in multiple independent bounded decodes; not treated as real additional foreground speech.",
+    "35.5–39.1thirty-fifteen and192.7–194.8GameBublik are umpire score/game calls; corroborated with exact native scoreboards and multiple models, kept as source sound, not mistranslated as broadcaster commentary or Amen."
+  ],
+  "no_foreground_english_reason": "两份完整源ASR均无此实际窗口前景英语；有完整击球与现场反应，保留源音，无音量/阈值判定；自配中文只放在这些已交叉核对的窗口。"
+}

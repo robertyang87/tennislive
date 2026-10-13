@@ -1,0 +1,1188 @@
+{
+  "schema": "finite-actual-frozen-reel-acoustics.v1",
+  "rows": [
+    {
+      "edit_id": "first_pressure",
+      "char": "空",
+      "at": 37,
+      "intended": "kong4",
+      "wrong": "kong1",
+      "actual_mp3_sha256": "911849882a897d64547ba8e48a365944834349a55298159cfba2949fb0072979",
+      "sentence": "首盘救回一个盘点，抢七却又三比六落后！布勃利克放短，兹维列夫追到网前，截击空当，把盘点救回来！",
+      "actual_acoustic": {
+        "word": "空",
+        "char": "空",
+        "sentence": "首盘救回一个盘点，抢七却又三比六落后！布勃利克放短，兹维列夫追到网前，截击空当，把盘点救回来！",
+        "tts_text": "首盘救回一个盘点，抢七却又三比六落后！布勃利克放短，兹维列夫追到网前，截击空当，把盘点救回来！",
+        "intended_refs": [
+          "控",
+          "鞚"
+        ],
+        "wrong_refs": [
+          "箜",
+          "崆"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "verdict": "unreliable",
+        "confidence": null,
+        "verdict_raw": "uncertain",
+        "score": 0.007,
+        "margin": 0.2,
+        "near_identical_to": null,
+        "far_from_both": true,
+        "dropped_refs": [],
+        "override": null,
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 3.149,
+            "d_wrong": 3.372,
+            "score": 0.034
+          },
+          "f0": {
+            "d_intended": 2.806,
+            "d_wrong": 2.719,
+            "score": -0.016
+          },
+          "comb": {
+            "d_intended": 4.38,
+            "d_wrong": 4.442,
+            "score": 0.007
+          }
+        },
+        "neighbour_shift": {
+          "intended": 4.278,
+          "wrong": 4.306
+        },
+        "separation": {
+          "spec": {
+            "within": 2.664,
+            "between": 3.079,
+            "separation": 1.156
+          },
+          "f0": {
+            "within": 1.902,
+            "between": 4.898,
+            "separation": 2.575
+          },
+          "comb": {
+            "within": 3.234,
+            "between": 6.438,
+            "separation": 1.991
+          }
+        },
+        "selftest_loo": {
+          "控": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.567
+          },
+          "鞚": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.518
+          },
+          "箜": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": -0.13
+          },
+          "崆": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": -0.153
+          }
+        },
+        "selftest_pass": false,
+        "distances_from_orig": {
+          "A:控": {
+            "spec": 3.299,
+            "f0": 3.723,
+            "vmis": 0.188,
+            "frames": 32,
+            "comb": 5.373
+          },
+          "A:鞚": {
+            "spec": 3.149,
+            "f0": 2.806,
+            "vmis": 0.188,
+            "frames": 32,
+            "comb": 4.38
+          },
+          "B:箜": {
+            "spec": 3.372,
+            "f0": 3.78,
+            "vmis": 0.167,
+            "frames": 30,
+            "comb": 5.466
+          },
+          "B:崆": {
+            "spec": 3.446,
+            "f0": 2.719,
+            "vmis": 0.167,
+            "frames": 30,
+            "comb": 4.442
+          }
+        },
+        "window_s": [
+          7.46,
+          7.76
+        ],
+        "boundary_token": "空当",
+        "window_anchor": "A:控",
+        "tokens": {
+          "ORIG": [
+            "首盘",
+            "救",
+            "回",
+            "一个",
+            "盘点",
+            "抢",
+            "七",
+            "却",
+            "又",
+            "三比六",
+            "落后",
+            "布勃利克",
+            "放短",
+            "兹维列夫",
+            "追",
+            "到",
+            "网",
+            "前",
+            "截击",
+            "空当",
+            "把",
+            "盘点",
+            "救",
+            "回来"
+          ],
+          "A:控": [
+            "首盘",
+            "救回",
+            "一个",
+            "盘点",
+            "抢",
+            "七",
+            "却",
+            "又",
+            "三比六",
+            "落后",
+            "布勃利克",
+            "放",
+            "短",
+            "兹维列夫",
+            "追到",
+            "网",
+            "前",
+            "截击",
+            "控",
+            "当",
+            "把",
+            "盘点",
+            "救",
+            "回来"
+          ],
+          "A:鞚": [
+            "首盘",
+            "救回",
+            "一个",
+            "盘点",
+            "抢",
+            "七",
+            "却",
+            "又",
+            "三比六",
+            "落后",
+            "布勃利克",
+            "放",
+            "短",
+            "兹维列夫",
+            "追到",
+            "网",
+            "前",
+            "截击",
+            "鞚当",
+            "把",
+            "盘点",
+            "救",
+            "回来"
+          ],
+          "B:箜": [
+            "首盘",
+            "救回",
+            "一个",
+            "盘点",
+            "抢",
+            "七",
+            "却",
+            "又",
+            "三比六",
+            "落后",
+            "布勃利克",
+            "放",
+            "短",
+            "兹维列夫",
+            "追到",
+            "网",
+            "前",
+            "截击",
+            "箜当",
+            "把",
+            "盘点",
+            "救",
+            "回来"
+          ],
+          "B:崆": [
+            "首盘",
+            "救回",
+            "一个",
+            "盘点",
+            "抢",
+            "七",
+            "却",
+            "又",
+            "三比六",
+            "落后",
+            "布勃利克",
+            "放",
+            "短",
+            "兹维列夫",
+            "追到",
+            "网",
+            "前",
+            "截击",
+            "崆当",
+            "把",
+            "盘点",
+            "救",
+            "回来"
+          ]
+        },
+        "f0_semitones_window": {
+          "ORIG": [
+            null,
+            1.3,
+            0.7,
+            0.1,
+            null,
+            -0.0,
+            2.5,
+            4.5,
+            5.2,
+            4.3,
+            1.4,
+            -0.8,
+            -3.1,
+            -4.1,
+            -4.0
+          ],
+          "A:控": [
+            3.4,
+            4.9,
+            5.1,
+            5.1,
+            2.5,
+            null,
+            null,
+            null,
+            9.1,
+            9.5,
+            8.4,
+            7.4,
+            4.8,
+            1.9,
+            -1.8,
+            -3.3
+          ],
+          "A:鞚": [
+            null,
+            4.4,
+            4.1,
+            3.8,
+            0.3,
+            null,
+            null,
+            null,
+            null,
+            8.8,
+            7.5,
+            5.3,
+            2.8,
+            -0.5,
+            -2.5,
+            -3.8
+          ],
+          "B:箜": [
+            null,
+            null,
+            0.2,
+            -0.7,
+            -3.5,
+            null,
+            null,
+            null,
+            4.8,
+            3.0,
+            3.0,
+            4.2,
+            5.3,
+            5.9,
+            6.0,
+            6.0
+          ],
+          "B:崆": [
+            null,
+            -1.8,
+            -2.4,
+            -2.5,
+            null,
+            null,
+            null,
+            4.2,
+            2.0,
+            0.5,
+            0.1,
+            0.4,
+            0.6,
+            0.7,
+            0.6
+          ]
+        },
+        "audio": {
+          "ORIG": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/voice-first_pressure.mp3",
+          "A:控": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/edaddb6f29a4ec8be42cf1733f95437d.mp3",
+          "A:鞚": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/e5c85384144fd9abfd07127ee9e28cc5.mp3",
+          "B:箜": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/f7681481b0418a99901874735e8e969f.mp3",
+          "B:崆": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/55a18684c0f615b9f2bd67fcc290d4ec.mp3"
+        }
+      },
+      "human_listening_claimed": false,
+      "pronunciation_release_pass_claimed": false
+    },
+    {
+      "edit_id": "first_pressure",
+      "char": "落",
+      "at": 16,
+      "intended": "luo4",
+      "wrong": "la4",
+      "actual_mp3_sha256": "911849882a897d64547ba8e48a365944834349a55298159cfba2949fb0072979",
+      "sentence": "首盘救回一个盘点，抢七却又三比六落后！布勃利克放短，兹维列夫追到网前，截击空当，把盘点救回来！",
+      "actual_acoustic": {
+        "word": "落",
+        "char": "落",
+        "sentence": "首盘救回一个盘点，抢七却又三比六落后！布勃利克放短，兹维列夫追到网前，截击空当，把盘点救回来！",
+        "tts_text": "首盘救回一个盘点，抢七却又三比六落后！布勃利克放短，兹维列夫追到网前，截击空当，把盘点救回来！",
+        "intended_refs": [
+          "洛",
+          "骆",
+          "摞"
+        ],
+        "wrong_refs": [
+          "辣",
+          "瘌"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "verdict": "unreliable",
+        "confidence": null,
+        "verdict_raw": "uncertain",
+        "score": 0.177,
+        "margin": 0.2,
+        "near_identical_to": null,
+        "far_from_both": true,
+        "dropped_refs": [],
+        "override": null,
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 2.518,
+            "d_wrong": 5.206,
+            "score": 0.348
+          },
+          "f0": {
+            "d_intended": 1.325,
+            "d_wrong": 1.042,
+            "score": -0.12
+          },
+          "comb": {
+            "d_intended": 2.584,
+            "d_wrong": 3.695,
+            "score": 0.177
+          }
+        },
+        "neighbour_shift": {
+          "intended": 5.234,
+          "wrong": 19.862
+        },
+        "separation": {
+          "spec": {
+            "within": 2.436,
+            "between": 4.963,
+            "separation": 2.038
+          },
+          "f0": {
+            "within": 2.181,
+            "between": 2.494,
+            "separation": 1.144
+          },
+          "comb": {
+            "within": 3.398,
+            "between": 4.975,
+            "separation": 1.464
+          }
+        },
+        "selftest_loo": {
+          "洛": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.379
+          },
+          "骆": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": 0.111
+          },
+          "摞": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.287
+          },
+          "辣": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.343
+          },
+          "瘌": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.371
+          }
+        },
+        "selftest_pass": false,
+        "distances_from_orig": {
+          "A:洛": {
+            "spec": 2.605,
+            "f0": 3.401,
+            "vmis": 0.167,
+            "frames": 24,
+            "comb": 4.703
+          },
+          "A:骆": {
+            "spec": 2.518,
+            "f0": 1.325,
+            "vmis": 0.125,
+            "frames": 24,
+            "comb": 2.584
+          },
+          "A:摞": {
+            "spec": 2.839,
+            "f0": 2.246,
+            "vmis": 0.12,
+            "frames": 25,
+            "comb": 3.666
+          },
+          "B:辣": {
+            "spec": 5.308,
+            "f0": 1.042,
+            "vmis": 0.083,
+            "frames": 24,
+            "comb": 3.695
+          },
+          "B:瘌": {
+            "spec": 5.206,
+            "f0": 1.272,
+            "vmis": 0.083,
+            "frames": 24,
+            "comb": 3.875
+          }
+        },
+        "window_s": [
+          3.21,
+          3.45
+        ],
+        "boundary_token": "落后",
+        "window_anchor": "A:摞",
+        "tokens": {
+          "ORIG": [
+            "首盘",
+            "救",
+            "回",
+            "一个",
+            "盘点",
+            "抢",
+            "七",
+            "却",
+            "又",
+            "三比六",
+            "落后",
+            "布勃利克",
+            "放短",
+            "兹维列夫",
+            "追",
+            "到",
+            "网",
+            "前",
+            "截击",
+            "空当",
+            "把",
+            "盘点",
+            "救",
+            "回来"
+          ],
+          "A:洛": [
+            "首盘",
+            "救回",
+            "一个",
+            "盘点",
+            "抢",
+            "七",
+            "却",
+            "又",
+            "三比六洛",
+            "后",
+            "布勃利克",
+            "放",
+            "短",
+            "兹维列夫",
+            "追到",
+            "网",
+            "前",
+            "截击",
+            "空当",
+            "把",
+            "盘点",
+            "救",
+            "回来"
+          ],
+          "A:骆": [
+            "首盘",
+            "救",
+            "回",
+            "一个",
+            "盘点",
+            "抢",
+            "七",
+            "却",
+            "又",
+            "三比",
+            "六",
+            "骆后",
+            "布勃利克",
+            "放短",
+            "兹维列夫",
+            "追",
+            "到",
+            "网",
+            "前",
+            "截击",
+            "空当",
+            "把",
+            "盘点",
+            "救",
+            "回来"
+          ],
+          "A:摞": [
+            "首盘",
+            "救回",
+            "一个",
+            "盘点",
+            "抢",
+            "七",
+            "却",
+            "又",
+            "三比六",
+            "摞",
+            "后",
+            "布勃利克",
+            "放",
+            "短",
+            "兹维列夫",
+            "追到",
+            "网",
+            "前",
+            "截击",
+            "空当",
+            "把",
+            "盘点",
+            "救",
+            "回来"
+          ],
+          "B:辣": [
+            "首盘",
+            "救",
+            "回",
+            "一个",
+            "盘点",
+            "抢",
+            "七",
+            "却",
+            "又",
+            "三",
+            "比",
+            "六",
+            "辣",
+            "后",
+            "布勃利克",
+            "放短",
+            "兹维列夫",
+            "追",
+            "到",
+            "网",
+            "前",
+            "截击",
+            "空当",
+            "把",
+            "盘点",
+            "救",
+            "回来"
+          ],
+          "B:瘌": [
+            "首盘",
+            "救",
+            "回",
+            "一个",
+            "盘点",
+            "抢",
+            "七",
+            "却",
+            "又",
+            "三比六",
+            "瘌",
+            "后",
+            "布勃利克",
+            "放短",
+            "兹维列夫",
+            "追",
+            "到",
+            "网",
+            "前",
+            "截击",
+            "空当",
+            "把",
+            "盘点",
+            "救",
+            "回来"
+          ]
+        },
+        "f0_semitones_window": {
+          "ORIG": [
+            -1.0,
+            -2.9,
+            -3.4,
+            -3.2,
+            -1.5,
+            -0.8,
+            -1.5,
+            -2.9,
+            -4.1,
+            -4.9,
+            -5.3,
+            null
+          ],
+          "A:洛": [
+            5.4,
+            2.6,
+            -1.9,
+            -3.2,
+            -3.4,
+            -2.2,
+            -3.0,
+            -2.9,
+            null,
+            13.9,
+            14.0,
+            14.9
+          ],
+          "A:骆": [
+            2.1,
+            0.0,
+            -1.8,
+            -2.9,
+            -2.8,
+            -2.5,
+            -3.1,
+            -3.9,
+            -4.9,
+            -5.7,
+            null,
+            null
+          ],
+          "A:摞": [
+            5.9,
+            1.9,
+            -1.1,
+            -3.1,
+            -4.3,
+            -3.4,
+            -4.0,
+            -4.8,
+            -5.8,
+            -6.7,
+            -7.4,
+            -8.4,
+            null
+          ],
+          "B:辣": [
+            2.0,
+            0.3,
+            -0.9,
+            -1.6,
+            -2.1,
+            -2.0,
+            -3.0,
+            -3.4,
+            -5.0,
+            -5.3,
+            -4.2
+          ],
+          "B:瘌": [
+            2.3,
+            0.7,
+            -0.8,
+            -1.5,
+            -1.8,
+            -0.9,
+            -1.8,
+            -4.9,
+            -5.2,
+            -4.5,
+            -4.4
+          ]
+        },
+        "audio": {
+          "ORIG": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/voice-first_pressure.mp3",
+          "A:洛": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/9c96890f2df69429ff0d0d76e21db3ec.mp3",
+          "A:骆": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/2ca3e6e1fdb34bacad38f5418e66d67e.mp3",
+          "A:摞": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/d24ecaf4a8c154fe01e2dd266117d5d1.mp3",
+          "B:辣": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/f880f9a488c196de6348f54c82ef6433.mp3",
+          "B:瘌": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/6561945861c65cdd6739ff6c28ea7925.mp3"
+        }
+      },
+      "human_listening_claimed": false,
+      "pronunciation_release_pass_claimed": false
+    },
+    {
+      "edit_id": "tiebreak",
+      "char": "抢",
+      "at": 2,
+      "intended": "qiang3",
+      "wrong": "qiang1",
+      "actual_mp3_sha256": "1c70c80fdf26d7714a8a0d0cefb48731d672874500436f16251bb5ffa2fac5fa",
+      "sentence": "又是抢七！先从底线拉开角度，再跟进网前。兹维列夫，把主动权抢了回来！",
+      "actual_acoustic": {
+        "word": "抢",
+        "char": "抢",
+        "sentence": "又是抢七！先从底线拉开角度，再跟进网前。兹维列夫，把主动权抢了回来！",
+        "tts_text": "又是抢七！先从底线拉开角度，再跟进网前。兹维列夫，把主动权抢了回来！",
+        "intended_refs": [
+          "羟",
+          "襁"
+        ],
+        "wrong_refs": [
+          "枪",
+          "羌",
+          "蜣"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "verdict": "correct",
+        "confidence": "high",
+        "verdict_raw": "correct",
+        "score": 0.954,
+        "margin": 0.2,
+        "near_identical_to": "intended",
+        "far_from_both": false,
+        "dropped_refs": [],
+        "override": null,
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 0.0,
+            "d_wrong": 3.319,
+            "score": 1.0
+          },
+          "f0": {
+            "d_intended": 0.203,
+            "d_wrong": 7.151,
+            "score": 0.945
+          },
+          "comb": {
+            "d_intended": 0.205,
+            "d_wrong": 8.81,
+            "score": 0.954
+          }
+        },
+        "neighbour_shift": {
+          "intended": 0.487,
+          "wrong": 6.275
+        },
+        "separation": {
+          "spec": {
+            "within": 1.266,
+            "between": 3.354,
+            "separation": 2.649
+          },
+          "f0": {
+            "within": 0.202,
+            "between": 7.277,
+            "separation": 36.105
+          },
+          "comb": {
+            "within": 0.834,
+            "between": 8.953,
+            "separation": 10.729
+          }
+        },
+        "selftest_loo": {
+          "羟": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.991
+          },
+          "襁": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.991
+          },
+          "枪": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.999
+          },
+          "羌": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.701
+          },
+          "蜣": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.999
+          }
+        },
+        "selftest_pass": true,
+        "distances_from_orig": {
+          "A:羟": {
+            "spec": 0.004,
+            "f0": 0.203,
+            "vmis": 0.026,
+            "frames": 39,
+            "comb": 0.205
+          },
+          "A:襁": {
+            "spec": 0.0,
+            "f0": 0.237,
+            "vmis": 0.0,
+            "frames": 39,
+            "comb": 0.237
+          },
+          "B:枪": {
+            "spec": 3.319,
+            "f0": 7.152,
+            "vmis": 0.103,
+            "frames": 39,
+            "comb": 8.812
+          },
+          "B:羌": {
+            "spec": 3.493,
+            "f0": 7.935,
+            "vmis": 0.154,
+            "frames": 39,
+            "comb": 9.682
+          },
+          "B:蜣": {
+            "spec": 3.319,
+            "f0": 7.151,
+            "vmis": 0.103,
+            "frames": 39,
+            "comb": 8.81
+          }
+        },
+        "window_s": [
+          0.432,
+          0.818
+        ],
+        "boundary_token": "抢",
+        "window_anchor": "ORIG",
+        "tokens": {
+          "ORIG": [
+            "又是",
+            "抢",
+            "七",
+            "先",
+            "从",
+            "底线",
+            "拉开",
+            "角度",
+            "再",
+            "跟进",
+            "网",
+            "前",
+            "兹维列夫",
+            "把",
+            "主动权",
+            "抢",
+            "了",
+            "回来"
+          ],
+          "A:羟": [
+            "又是",
+            "羟",
+            "七",
+            "先",
+            "从",
+            "底线",
+            "拉开",
+            "角度",
+            "再",
+            "跟进",
+            "网",
+            "前",
+            "兹维列夫",
+            "把",
+            "主动权",
+            "抢",
+            "了",
+            "回来"
+          ],
+          "A:襁": [
+            "又是",
+            "襁",
+            "七",
+            "先",
+            "从",
+            "底线",
+            "拉开",
+            "角度",
+            "再",
+            "跟进",
+            "网",
+            "前",
+            "兹维列夫",
+            "把",
+            "主动权",
+            "抢",
+            "了",
+            "回来"
+          ],
+          "B:枪": [
+            "又是",
+            "枪",
+            "七",
+            "先",
+            "从",
+            "底线",
+            "拉开",
+            "角度",
+            "再",
+            "跟进",
+            "网",
+            "前",
+            "兹维列夫",
+            "把",
+            "主动权",
+            "抢",
+            "了",
+            "回来"
+          ],
+          "B:羌": [
+            "又是",
+            "羌七",
+            "先",
+            "从",
+            "底线",
+            "拉开",
+            "角度",
+            "再",
+            "跟进",
+            "网",
+            "前",
+            "兹维列夫",
+            "把",
+            "主动权",
+            "抢",
+            "了",
+            "回来"
+          ],
+          "B:蜣": [
+            "又是",
+            "蜣",
+            "七",
+            "先",
+            "从",
+            "底线",
+            "拉开",
+            "角度",
+            "再",
+            "跟进",
+            "网",
+            "前",
+            "兹维列夫",
+            "把",
+            "主动权",
+            "抢",
+            "了",
+            "回来"
+          ]
+        },
+        "f0_semitones_window": {
+          "ORIG": [
+            null,
+            2.2,
+            1.6,
+            0.6,
+            -2.3,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            -5.6,
+            -10.1,
+            -9.7,
+            -9.6,
+            -7.5,
+            -7.0,
+            -7.0,
+            null
+          ],
+          "A:羟": [
+            null,
+            2.4,
+            1.8,
+            0.9,
+            -2.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            -5.3,
+            -9.9,
+            -9.5,
+            -9.4,
+            -7.3,
+            -6.8,
+            -6.8,
+            null
+          ],
+          "A:襁": [
+            null,
+            2.4,
+            1.8,
+            0.9,
+            -1.9,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            -5.3,
+            -9.9,
+            -9.4,
+            -9.3,
+            -7.3,
+            -6.8,
+            -6.8,
+            null
+          ],
+          "B:枪": [
+            null,
+            1.2,
+            -0.7,
+            -1.9,
+            -4.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            4.5,
+            3.3,
+            2.8,
+            2.4,
+            2.4,
+            2.3,
+            2.2,
+            2.0,
+            1.3
+          ],
+          "B:羌": [
+            null,
+            null,
+            -0.1,
+            -1.6,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            3.2,
+            2.4,
+            2.1,
+            2.0,
+            2.2,
+            2.4,
+            2.5,
+            2.2,
+            0.7
+          ],
+          "B:蜣": [
+            null,
+            1.2,
+            -0.7,
+            -1.9,
+            -4.1,
+            null,
+            null,
+            null,
+            null,
+            null,
+            4.5,
+            3.3,
+            2.8,
+            2.4,
+            2.4,
+            2.3,
+            2.2,
+            2.0,
+            1.3
+          ]
+        },
+        "audio": {
+          "ORIG": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/voice-tiebreak.mp3",
+          "A:羟": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/4638ce289f2b354058f976182b2ab0ea.mp3",
+          "A:襁": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/33d261103f57fd50a934d09ac47b8157.mp3",
+          "B:枪": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/e7cda2932362f8021992f3c7ec4cb9e0.mp3",
+          "B:羌": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/99623aa774515e940ac769bd1758eb7a.mp3",
+          "B:蜣": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/controls/8ce96b4037dc0146c4674d81c4909149.mp3"
+        }
+      },
+      "human_listening_claimed": false,
+      "pronunciation_release_pass_claimed": false
+    }
+  ],
+  "scope": "Only3 revised-text semantic-risk positions; unmodified6 evidence separately pinned to exact old MP3/words. Exact production baseline MP3/paired words; same exact-sentence correct/wrong controls in standard shared TTS; no historical sentence pass, no ASR tone proof, no human hearing. All uncertain/unreliable/low explicitly pending.",
+  "recorded_at": "2026-10-13T14:36:28.863685+00:00",
+  "human_listening_claimed": false,
+  "amplitude_checks": false,
+  "pronunciation_release_pass_claimed": false
+}

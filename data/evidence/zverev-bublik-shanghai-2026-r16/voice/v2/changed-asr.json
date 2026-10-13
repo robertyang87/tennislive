@@ -1,0 +1,452 @@
+{
+  "schema": "actual-local-asr.v1",
+  "model": "large-v3-turbo",
+  "faster_whisper_version": "1.2.1",
+  "device": "cpu",
+  "compute_type": "int8",
+  "language": "zh",
+  "vad_filter": true,
+  "beam_size": 5,
+  "word_timestamps": true,
+  "condition_on_previous_text": false,
+  "source_path": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v2/changed-two.wav",
+  "source_sha256": "ae8d14abfbe383d2af7e7eae561077412357cbed678139413a69dfac2fb59913",
+  "recorded_at": "2026-10-13T14:35:44.162483+00:00",
+  "human_listening_claimed": false,
+  "run_status": "complete",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 9.28,
+      "text": "手盘就回一个盘点,抢7却有3比6落后,步驳立刻放短,自卫列夫追到往前,节级空当,把盘点救回来。",
+      "no_speech_prob": 1.4085412523845431e-11,
+      "avg_logprob": -0.12426976433822087,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.3,
+          "word": "手",
+          "probability": 0.6021126508712769
+        },
+        {
+          "start": 0.3,
+          "end": 0.56,
+          "word": "盘",
+          "probability": 0.9993493854999542
+        },
+        {
+          "start": 0.56,
+          "end": 0.74,
+          "word": "就",
+          "probability": 0.7149906754493713
+        },
+        {
+          "start": 0.74,
+          "end": 0.9,
+          "word": "回",
+          "probability": 0.9618151187896729
+        },
+        {
+          "start": 0.9,
+          "end": 1.1,
+          "word": "一个",
+          "probability": 0.9995750784873962
+        },
+        {
+          "start": 1.1,
+          "end": 1.32,
+          "word": "盘",
+          "probability": 0.9997301697731018
+        },
+        {
+          "start": 1.32,
+          "end": 1.52,
+          "word": "点,",
+          "probability": 0.9998190999031067
+        },
+        {
+          "start": 1.92,
+          "end": 2.08,
+          "word": "抢",
+          "probability": 0.9423732459545135
+        },
+        {
+          "start": 2.08,
+          "end": 2.28,
+          "word": "7",
+          "probability": 0.5102410912513733
+        },
+        {
+          "start": 2.28,
+          "end": 2.58,
+          "word": "却",
+          "probability": 0.997037261724472
+        },
+        {
+          "start": 2.58,
+          "end": 2.72,
+          "word": "有",
+          "probability": 0.803250253200531
+        },
+        {
+          "start": 2.72,
+          "end": 2.92,
+          "word": "3",
+          "probability": 0.6656703948974609
+        },
+        {
+          "start": 2.92,
+          "end": 3.06,
+          "word": "比",
+          "probability": 0.9512630701065063
+        },
+        {
+          "start": 3.06,
+          "end": 3.24,
+          "word": "6",
+          "probability": 0.9997764229774475
+        },
+        {
+          "start": 3.24,
+          "end": 3.36,
+          "word": "落",
+          "probability": 0.9996182918548584
+        },
+        {
+          "start": 3.36,
+          "end": 3.6,
+          "word": "后,",
+          "probability": 0.9978243112564087
+        },
+        {
+          "start": 4.22,
+          "end": 4.32,
+          "word": "步",
+          "probability": 0.6676276326179504
+        },
+        {
+          "start": 4.32,
+          "end": 4.52,
+          "word": "驳",
+          "probability": 0.9058560729026794
+        },
+        {
+          "start": 4.52,
+          "end": 4.66,
+          "word": "立",
+          "probability": 0.9987332224845886
+        },
+        {
+          "start": 4.66,
+          "end": 4.82,
+          "word": "刻",
+          "probability": 0.9965676069259644
+        },
+        {
+          "start": 4.82,
+          "end": 5.0,
+          "word": "放",
+          "probability": 0.9996874332427979
+        },
+        {
+          "start": 5.0,
+          "end": 5.24,
+          "word": "短,",
+          "probability": 0.9994656443595886
+        },
+        {
+          "start": 5.62,
+          "end": 5.72,
+          "word": "自",
+          "probability": 0.4308139383792877
+        },
+        {
+          "start": 5.72,
+          "end": 5.84,
+          "word": "卫",
+          "probability": 0.8752181529998779
+        },
+        {
+          "start": 5.84,
+          "end": 5.98,
+          "word": "列",
+          "probability": 0.8445081114768982
+        },
+        {
+          "start": 5.98,
+          "end": 6.16,
+          "word": "夫",
+          "probability": 0.9940120577812195
+        },
+        {
+          "start": 6.16,
+          "end": 6.34,
+          "word": "追",
+          "probability": 0.999727189540863
+        },
+        {
+          "start": 6.34,
+          "end": 6.5,
+          "word": "到",
+          "probability": 0.9728988409042358
+        },
+        {
+          "start": 6.5,
+          "end": 6.64,
+          "word": "往",
+          "probability": 0.9990332126617432
+        },
+        {
+          "start": 6.64,
+          "end": 6.94,
+          "word": "前,",
+          "probability": 0.9999853372573853
+        },
+        {
+          "start": 7.28,
+          "end": 7.38,
+          "word": "节",
+          "probability": 0.3740020990371704
+        },
+        {
+          "start": 7.38,
+          "end": 7.52,
+          "word": "级",
+          "probability": 0.8058885931968689
+        },
+        {
+          "start": 7.52,
+          "end": 7.66,
+          "word": "空",
+          "probability": 0.9618950486183167
+        },
+        {
+          "start": 7.66,
+          "end": 7.86,
+          "word": "当,",
+          "probability": 0.7538469433784485
+        },
+        {
+          "start": 8.12,
+          "end": 8.26,
+          "word": "把",
+          "probability": 0.9996439218521118
+        },
+        {
+          "start": 8.26,
+          "end": 8.54,
+          "word": "盘",
+          "probability": 0.9998717904090881
+        },
+        {
+          "start": 8.54,
+          "end": 8.76,
+          "word": "点",
+          "probability": 0.9999316930770874
+        },
+        {
+          "start": 8.76,
+          "end": 8.94,
+          "word": "救",
+          "probability": 0.644616961479187
+        },
+        {
+          "start": 8.94,
+          "end": 9.12,
+          "word": "回",
+          "probability": 0.9997034668922424
+        },
+        {
+          "start": 9.12,
+          "end": 9.28,
+          "word": "来。",
+          "probability": 0.9998763799667358
+        }
+      ]
+    },
+    {
+      "start": 10.4,
+      "end": 17.72,
+      "text": "又是抢7,先从底线拉开角度,再跟进往前,自卫列夫把主动拳抢了回来。",
+      "no_speech_prob": 1.4085412523845431e-11,
+      "avg_logprob": -0.12426976433822087,
+      "words": [
+        {
+          "start": 10.4,
+          "end": 10.76,
+          "word": "又",
+          "probability": 0.9969872832298279
+        },
+        {
+          "start": 10.76,
+          "end": 10.96,
+          "word": "是",
+          "probability": 0.9994582533836365
+        },
+        {
+          "start": 10.96,
+          "end": 11.22,
+          "word": "抢",
+          "probability": 0.9998258948326111
+        },
+        {
+          "start": 11.22,
+          "end": 11.46,
+          "word": "7,",
+          "probability": 0.9983142614364624
+        },
+        {
+          "start": 12.08,
+          "end": 12.24,
+          "word": "先",
+          "probability": 0.9997180104255676
+        },
+        {
+          "start": 12.24,
+          "end": 12.42,
+          "word": "从",
+          "probability": 0.9999111890792847
+        },
+        {
+          "start": 12.42,
+          "end": 12.6,
+          "word": "底",
+          "probability": 0.9997005462646484
+        },
+        {
+          "start": 12.6,
+          "end": 12.8,
+          "word": "线",
+          "probability": 0.9994019269943237
+        },
+        {
+          "start": 12.8,
+          "end": 12.94,
+          "word": "拉",
+          "probability": 0.9998821020126343
+        },
+        {
+          "start": 12.94,
+          "end": 13.12,
+          "word": "开",
+          "probability": 0.9998499155044556
+        },
+        {
+          "start": 13.12,
+          "end": 13.26,
+          "word": "角",
+          "probability": 0.9997207522392273
+        },
+        {
+          "start": 13.26,
+          "end": 13.5,
+          "word": "度,",
+          "probability": 0.999908447265625
+        },
+        {
+          "start": 13.72,
+          "end": 13.88,
+          "word": "再",
+          "probability": 0.9995191097259521
+        },
+        {
+          "start": 13.88,
+          "end": 14.12,
+          "word": "跟",
+          "probability": 0.9998741149902344
+        },
+        {
+          "start": 14.12,
+          "end": 14.34,
+          "word": "进",
+          "probability": 0.9804248213768005
+        },
+        {
+          "start": 14.34,
+          "end": 14.5,
+          "word": "往",
+          "probability": 0.999870777130127
+        },
+        {
+          "start": 14.5,
+          "end": 14.78,
+          "word": "前,",
+          "probability": 0.9999856948852539
+        },
+        {
+          "start": 15.4,
+          "end": 15.54,
+          "word": "自",
+          "probability": 0.9993162155151367
+        },
+        {
+          "start": 15.54,
+          "end": 15.68,
+          "word": "卫",
+          "probability": 0.9994081556797028
+        },
+        {
+          "start": 15.68,
+          "end": 15.82,
+          "word": "列",
+          "probability": 0.9999397993087769
+        },
+        {
+          "start": 15.82,
+          "end": 16.06,
+          "word": "夫",
+          "probability": 0.9999524354934692
+        },
+        {
+          "start": 16.06,
+          "end": 16.4,
+          "word": "把",
+          "probability": 0.9983013868331909
+        },
+        {
+          "start": 16.4,
+          "end": 16.6,
+          "word": "主",
+          "probability": 0.999813973903656
+        },
+        {
+          "start": 16.6,
+          "end": 16.78,
+          "word": "动",
+          "probability": 0.9994845390319824
+        },
+        {
+          "start": 16.78,
+          "end": 17.0,
+          "word": "拳",
+          "probability": 0.9933491349220276
+        },
+        {
+          "start": 17.0,
+          "end": 17.32,
+          "word": "抢",
+          "probability": 0.9992992579936981
+        },
+        {
+          "start": 17.32,
+          "end": 17.44,
+          "word": "了",
+          "probability": 0.9999446868896484
+        },
+        {
+          "start": 17.44,
+          "end": 17.58,
+          "word": "回",
+          "probability": 0.9991675615310669
+        },
+        {
+          "start": 17.58,
+          "end": 17.72,
+          "word": "来。",
+          "probability": 0.9999732971191406
+        }
+      ]
+    }
+  ],
+  "max_transcribed_end": 17.72
+}
