@@ -162,7 +162,7 @@ def native_archive_paths(slug, directory, record, original_spec):
 def archive_voice_names(projection, meta):
     """Same enabled cover/outro semantics as render; never glob voice files."""
     prefixes = [f'voice_{index:02d}' for index, segment in enumerate(projection.get('segments', []))
-                if segment.get('narration')]
+                if str(segment.get('narration') or '').strip()]
     cover_enabled = bool(str((projection.get('cover') or {}).get('narration') or '').strip())
     if meta.get('cover_narrated') is not cover_enabled:
         raise ValueError('Native cover narration disagrees with render projection')

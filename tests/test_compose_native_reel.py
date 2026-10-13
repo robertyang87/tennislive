@@ -128,6 +128,33 @@ def test_native_archive_whitelist_keeps_original_pairs_and_excludes_sources_and_
         C.verified_input(slug,tmp_path,record,spec.read_bytes())
 
 
+def test_whitespace_narration_needs_no_unsynthesized_voice_and_preserves_real_segment_index(tmp_path,monkeypatch):
+    slug,spec,record,_=archive_fixture(tmp_path,monkeypatch)
+    value=json.loads(spec.read_text())
+    value['segments'].insert(0,{'start':0,'end':1,'narration':' \t\n '})
+    spec.write_text(json.dumps(value))
+    for suffix in ('.mp3','.words.json'):
+        (tmp_path/('voice_00'+suffix)).rename(tmp_path/('voice_01'+suffix))
+    R.record(spec,tmp_path,tmp_path/(slug+'.mp4'),tmp_path)
+    manifest=json.loads((tmp_path/'render_inputs.json').read_text())
+    qc=json.loads((tmp_path/'qc_attestation.json').read_text())
+    qc.update({'spec_sha256':manifest['spec_sha256'],
+               'render_inputs_sha256':R.sha256_file(tmp_path/'render_inputs.json')})
+    C.write(tmp_path/'qc_attestation.json',qc)
+    meta=json.loads((tmp_path/'render.json').read_text())
+    meta['qc_attestation_sha256']=R.sha256_file(tmp_path/'qc_attestation.json')
+    C.write(tmp_path/'render.json',meta)
+    selected={path.name for path in C.native_archive_paths(slug,tmp_path,record,spec.read_bytes())}
+    assert {'voice_01.mp3','voice_01.words.json'} <= selected
+    assert not {'voice_00.mp3','voice_00.words.json'}.intersection(selected)
+    record['_native_input_archive']=True
+    C.verified_input(slug,tmp_path,record,spec.read_bytes())
+    (tmp_path/'voice_01.mp3').unlink()
+    with pytest.raises(ValueError):C.verified_input(slug,tmp_path,record,spec.read_bytes())
+    record['_native_input_archive']=False
+    with pytest.raises(ValueError):C.native_archive_paths(slug,tmp_path,record,spec.read_bytes())
+
+
 @pytest.mark.parametrize('damage',['missing_pair','failed_qc','wrong_run','missing_movie'])
 def test_native_archive_rejects_incomplete_pairs_failed_qc_and_wrong_identity(tmp_path,monkeypatch,damage):
     slug,spec,record,_=archive_fixture(tmp_path,monkeypatch)
