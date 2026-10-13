@@ -1,0 +1,147 @@
+{
+  "schema": "single-revision-actual-native-voice-review.v1",
+  "recorded_at": "2026-10-13T15:54:55.366101+00:00",
+  "slug": "zverev-bublik-shanghai-2026-r16",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "deec7ccd03c74c27f687c11dc0f12f697e60031b9b5975b200391cce1c960a04",
+    "request_count": 8,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  },
+  "changed_ids": [
+    "coordinate"
+  ],
+  "unchanged_seven_original_audio_and_words_byte_identical_to_v3": true,
+  "baseline_bundle_sha256": "de90d1b92aa474f32f40fc9333d8bb1b7e1117486991489b1447fc745324d3c9",
+  "capture_seconds": 2.4029518549941713,
+  "coordinate": {
+    "edit_id": "coordinate",
+    "display_text": "北京时间十月十三日晚上，上海大师赛第四轮。兹维列夫迎战布勃利克，谁能顶住盘末的压力？",
+    "spoken_text": "北京时间十月十三日晚上，上海大师赛第四轮。兹维列夫迎战布勃利克，谁能顶住盘末的压力？",
+    "mp3_path": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v4/voice-coordinate.mp3",
+    "mp3_sha256": "f8d78230fd0c7d47e39815f2390e6c129c86a9285cefe46c201db6aab7bffbe7",
+    "words_path": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v4/voice-coordinate.words.json",
+    "words_sha256": "2266768cca37d11a71f7127e04fd74045906782df6c0729b6c56c6911505fe4e",
+    "duration_seconds": 8.784,
+    "word_boundary_tokens": [
+      "北京时间",
+      "十月十三日",
+      "晚上",
+      "上海",
+      "大师",
+      "赛",
+      "第四轮",
+      "兹维列夫",
+      "迎战",
+      "布勃利克",
+      "谁",
+      "能",
+      "顶住",
+      "盘末",
+      "的",
+      "压力"
+    ],
+    "request": {
+      "text": "北京时间十月十三日晚上，上海大师赛第四轮。兹维列夫迎战布勃利克，谁能顶住盘末的压力？",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style": "",
+      "styledegree": "",
+      "lead_pause": 0.0,
+      "backend": "edge",
+      "cache_key": "3e5be0d3e9d6f7cb119ac84fc15a8045"
+    },
+    "unchanged_old_audio_and_words_byte_identity": false,
+    "baseline_mp3_sha256": "59460eb952c87c913448637f5b3410b801c97eed8df6f6ba6b84c259e4e92a5e",
+    "baseline_words_sha256": "28029d107a89cd3a3c10ef1f4ef78d69da611b24704a7a7265a5ca8c667ce01a"
+  },
+  "actual_coordinate_asr": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v4/coordinate-asr.json",
+  "raw_asr_text": "北京时间10月13日晚上,上海大失赛第四轮,四位列夫迎战布伯利克,谁能顶住盘末的压力?",
+  "semantic_review": {
+    "date_and_evening_recognized": true,
+    "round_four_recognized": true,
+    "names_broad_syllable_observation": "ASR transcribes 兹维列夫 as 四位列夫 and 布勃利克 as 布伯利克. wei-lie-fu and bu-bo-li-ke are supported; first zi/si transcription ambiguity retained, no automatic name-tone pass or confirmed actual misread conclusion.",
+    "transcription_ambiguity": "上海大师赛 becomes 上海大失赛; same broad shi syllable, not tone evidence.",
+    "actual_word_boundary_tokens": [
+      "北京时间",
+      "十月十三日",
+      "晚上",
+      "上海",
+      "大师",
+      "赛",
+      "第四轮",
+      "兹维列夫",
+      "迎战",
+      "布勃利克",
+      "谁",
+      "能",
+      "顶住",
+      "盘末",
+      "的",
+      "压力"
+    ],
+    "marks_observation": "Actual returned timing tokens include 十月十三日 and 晚上, with names in complete tokens. Timing tokens are not an acoustic pronunciation pass."
+  },
+  "reused_v3_voice_evidence": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/voice-review.json",
+  "reused_evidence_limit": "Previous V3 coordinate audio evidence cannot transfer to this newly synthesized line. The other7 retain exact native MP3 and original raw marks bytes.",
+  "whole_eight_asr_repeated": false,
+  "new_control_tts_requests": 0,
+  "human_listening_claimed": false,
+  "quality_approval": false,
+  "pronunciation_release_pass_claimed": false,
+  "amplitude_or_loudness_checks": false,
+  "deepseek_or_minimax_called": false,
+  "current_coordinate_spectrum": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v4/actual-coordinate-spectrum.json",
+  "current_coordinate_spectrum_plot": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v4/actual-coordinate-v4.png",
+  "packaged_evidence_scope": "Only new coordinate MP3, original actual words, binding, local ASR, actual spectral/F0 data/image and this proof. Other7 native MP3/raw words retain exact V3 bytes; existing V3 repository evidence is referenced without duplicate audio or new controls.",
+  "root_qualitative_review_status": "New V4 native plot supplied for root review; no old coordinate qualitative pass transferred.",
+  "other_seven_exact_v3_identity": [
+    {
+      "edit_id": "landing",
+      "mp3_sha256": "c5d52dd3cb48c5c13239e5e7dab4071b270ad27c0a6607faa7716cea9d97bd03",
+      "words_sha256": "a8b677b1d90c5e39c93aa4bf3eaf6e3291bd5e3d9b5368e9e46aa98f6e34da17",
+      "repository_evidence_binding": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-landing.json"
+    },
+    {
+      "edit_id": "first_pressure",
+      "mp3_sha256": "b85e7b68413de0fbdd0edce4271a0e73ca69c9a32f642559b5dfb0bb41405a7c",
+      "words_sha256": "1706f93fee521fa52bcd26fc8b643eefc521f2fc2dd2515aa98c21732f599e44",
+      "repository_evidence_binding": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-first_pressure.json"
+    },
+    {
+      "edit_id": "second",
+      "mp3_sha256": "d83ba619b4a86672dd53efbbd22d9ea34bf4e94a4ad8931fc50502ae188ff6de",
+      "words_sha256": "3ffe0807dde9e812d6078988cb36c9114b40783b26478597382e1ac2a1c60864",
+      "repository_evidence_binding": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-second.json"
+    },
+    {
+      "edit_id": "decider",
+      "mp3_sha256": "358a86ce712e33fa852f0457f5a0220bd341397204db3d6cbd4d0fec2a26206e",
+      "words_sha256": "444a0baa4cbb712d86f342cc1d15cc90f1e5b8444872f0895831c91e42072c4c",
+      "repository_evidence_binding": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-decider.json"
+    },
+    {
+      "edit_id": "tiebreak",
+      "mp3_sha256": "1c70c80fdf26d7714a8a0d0cefb48731d672874500436f16251bb5ffa2fac5fa",
+      "words_sha256": "4b6d6e409db74516b1174aec823d984cefc0682f3355bfbfa0776427fb00bda9",
+      "repository_evidence_binding": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-tiebreak.json"
+    },
+    {
+      "edit_id": "stats",
+      "mp3_sha256": "b76a193ed4c4dfc6fa659d4974b89724e754248a5a37f04538644e46c5994671",
+      "words_sha256": "5f6b6edd35b3aad4532ac0b0ccbdfe4b4bd7402fd18fb77c4a410d5de3cac4ec",
+      "repository_evidence_binding": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-stats.json"
+    },
+    {
+      "edit_id": "outro",
+      "mp3_sha256": "16213613e6ebf0ae7d2810f71da2ab7c7aed01a77948683ffc57b630bb37e6e4",
+      "words_sha256": "3bbbfd7fe56379da93a86d0ba96d93a49bfd1688f1bdb9111d734652c1e24b7a",
+      "repository_evidence_binding": "data/evidence/zverev-bublik-shanghai-2026-r16/voice/v3/binding-outro.json"
+    }
+  ]
+}

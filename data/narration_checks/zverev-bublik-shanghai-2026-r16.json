@@ -1,6 +1,6 @@
 {
   "slug": "zverev-bublik-shanghai-2026-r16",
-  "checked_at": "2026-10-13T14:42:06Z",
+  "checked_at": "2026-10-13T15:55:11Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -15,9 +15,9 @@
       "spoken": 4.056,
       "picture": 4.5
     },
-    "303ee83f2ed4786f": {
+    "49336d43de228ff3": {
       "segment": 3,
-      "spoken": 8.616,
+      "spoken": 8.784,
       "picture": 19.3
     },
     "230ba020e9c97d5b": {
@@ -48,17 +48,13 @@
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "de90d1b92aa474f32f40fc9333d8bb1b7e1117486991489b1447fc745324d3c9",
+    "bundle_sha256": "deec7ccd03c74c27f687c11dc0f12f697e60031b9b5975b200391cce1c960a04",
     "request_count": 8,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
-    "audio_decoding_verified": true,
-    "release_tag": "reel-tts-zverev-bublik-shanghai-2026-r16-de90d1b92aa474f3",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-zverev-bublik-shanghai-2026-r16-de90d1b92aa474f3/tts_bundle.zip",
-    "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38417266201"
+    "audio_decoding_verified": true
   },
   "_actual_evidence": "duration from actual frozen MP3 capture and decoder; no resynthesis"
 }
