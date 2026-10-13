@@ -1,0 +1,30 @@
+{
+  "schema": "native-caption-preflight-equivalence.v1",
+  "source_spec": "specs/reels/paolini-bejlek-wuhan-2026-r1.json",
+  "source_render": "output/2026-10-13/reel/paolini-bejlek-wuhan-2026-r1/render.json",
+  "voice_durations": "actual committed native render.json; no synthesis or MP3 decoding repeated",
+  "marks": "actual nine native WordBoundary files",
+  "actual_ass_sha256": "e627f621c032d1a3703c5733e4a40264b8a19e13f30f598599f89f8a2155cd89",
+  "preflight_ass_sha256": "e627f621c032d1a3703c5733e4a40264b8a19e13f30f598599f89f8a2155cd89",
+  "bytes_equal": true,
+  "ass_bytes": 10071,
+  "cue_count": 60,
+  "stopped_before": "track_shots / start_segment_checks / build_cover / cut_segment / full encode",
+  "does_not_prove": "new mask scanning / picture rendering / final native QC / new video publication",
+  "source_spec_sha256": "f4cfac3a03391711d305eb4469ee558b4c21e9ea34e07a60e04f7f1cc72d825f",
+  "source_render_sha256": "7cc773e4876057c70fcb9c97d4e0eea8e9b88772be94e3af4cb8488f585a7914",
+  "actual_marks_sha256": {
+    "voice_01.words.json": "125d9d5a17031c3b13060122c5f3881f457a7708ee4bd66b433b73102725949d",
+    "voice_02.words.json": "b906c95d8cb732c085655b654d1f820b30486deef4a4a281651921b64a118944",
+    "voice_04.words.json": "38be2449ce50afd6a061f535d8d79165dc47226f7a6f9a0f787a73d2065e4df1",
+    "voice_06.words.json": "b774d6d0a1fcbceac0505dcac56d7f49bed10409e14d638a21b26ef6ed6c6a04",
+    "voice_08.words.json": "6c9b1f8bf95af4309a487af1dc6be863208642cec32f6eea54bdf7558424259f",
+    "voice_10.words.json": "a7792afed3a6979a9b36286c6a965005b91d2676f2195fa72d4d871add0d9429",
+    "voice_12.words.json": "1bc8a7a10cfd6676fd8ba52defd3bc0cbf7dfaaa8d4a6837a0a2617c033baa36",
+    "voice_14.words.json": "3626a8d5cf2a9dc5db2bf51403b458f9b288c3a4e905a4c8776903b125a83130",
+    "voice_16.words.json": "bca22b217c0be0f030c73b6ab0409a5d766cb721f889c5727ffe3013093ab719"
+  },
+  "old_to_new_subtitle_block_ast_equal": true,
+  "same_native_statement_count": 20,
+  "replay_note": "Executed the final subtitle block at its new position after the scoreboard-profile stage. That stage was isolated with scoreboard_profile=None; this is not a new mask scan. The published Paolini captions have explicit bottom positions. A separate native-render regression tests resolver mutation of default score_inset geometry (US Open y0-36)."
+}

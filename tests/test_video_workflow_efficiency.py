@@ -77,7 +77,8 @@ def test_reel_failure_artifact_keeps_source_evidence():
     from fnmatch import fnmatch
 
     upload = next(s for s in _steps('match-reel.yml')
-                  if s.get('uses', '').startswith('actions/upload-artifact@'))
+                  if s.get('name') == '上传 artifact'
+                  and s.get('uses', '').startswith('actions/upload-artifact@'))
     root = '${{ steps.paths.outputs.outdir }}/'
     patterns = [line[len('!' + root):] for line in upload['with']['path'].splitlines()
                 if line.startswith('!' + root)]

@@ -1,0 +1,596 @@
+{
+  "scope": "Process-local image decode facts and interview per-segment width memo; no gates removed, no audio changes.",
+  "environment": {
+    "python": "3.12.14",
+    "pillow": "12.3.0",
+    "system": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "baseline_revision": "6402c4ae"
+  },
+  "image_inventory": {
+    "command": "python benchmark_image_gates.py baseline|optimized (separate fresh processes, two scans each)",
+    "baseline": {
+      "mode": "baseline",
+      "scans": [
+        {
+          "seconds": 13.578518712994992,
+          "results_sha256": "fcdec85fcf56d232ad7b738b8f2fdcc097e036e8ec165d856d22ce0cddcbc867",
+          "specs": 369,
+          "problem_count": 3
+        },
+        {
+          "seconds": 13.518179569000495,
+          "results_sha256": "fcdec85fcf56d232ad7b738b8f2fdcc097e036e8ec165d856d22ce0cddcbc867",
+          "specs": 369,
+          "problem_count": 3
+        }
+      ]
+    },
+    "optimized": {
+      "mode": "optimized",
+      "scans": [
+        {
+          "seconds": 11.753101679998508,
+          "results_sha256": "fcdec85fcf56d232ad7b738b8f2fdcc097e036e8ec165d856d22ce0cddcbc867",
+          "specs": 369,
+          "problem_count": 3
+        },
+        {
+          "seconds": 0.6378935359971365,
+          "results_sha256": "fcdec85fcf56d232ad7b738b8f2fdcc097e036e8ec165d856d22ce0cddcbc867",
+          "specs": 369,
+          "problem_count": 3
+        }
+      ]
+    },
+    "same_complete_problem_list_sha256": true,
+    "cache_capacity": 1024,
+    "pixels_retained": false
+  },
+  "interview_inventory": {
+    "command": "python benchmark_interview_rulers.py baseline|optimized (separate fresh processes)",
+    "baseline": {
+      "mode": "baseline",
+      "corpus_size": 112,
+      "resegments": 194,
+      "seconds": 24.72320149299776,
+      "outputs_bytes": 1324356,
+      "outputs_sha256": "dd206c6665f21e175fc65bb04ffb99678482215439f95859306dfe7622f250c2"
+    },
+    "optimized": {
+      "mode": "optimized",
+      "corpus_size": 112,
+      "resegments": 194,
+      "seconds": 23.64397516900499,
+      "outputs_bytes": 1324356,
+      "outputs_sha256": "dd206c6665f21e175fc65bb04ffb99678482215439f95859306dfe7622f250c2"
+    },
+    "same_entire_lines_and_errors_bytes": true,
+    "cache_per_segment_capacity": 4096,
+    "memoizes_explicit_custom_width": false
+  },
+  "narration_test": {
+    "command": "python -m cProfile -o <profile> -m pytest -q tests/test_match_reel.py::test_每条spec的旁白都还估得下",
+    "same_test_no_assertions_removed": true,
+    "baseline_pytest_seconds": 44.49,
+    "optimized_pytest_seconds": 22.1,
+    "both_passed": true,
+    "baseline_hotspots": [
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 9341,
+        "function": "validate_spec",
+        "calls": 365,
+        "self_seconds": 0.384101061,
+        "cumulative_seconds": 40.340079648
+      },
+      {
+        "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/PIL/ImageFile.py",
+        "line": 291,
+        "function": "load",
+        "calls": 2329,
+        "self_seconds": 0.147902327,
+        "cumulative_seconds": 25.861453236000003
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'decode' of 'ImagingDecoder' objects>",
+        "calls": 29145,
+        "self_seconds": 24.882103264,
+        "cumulative_seconds": 24.882103264
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/reel_asset_gates.py",
+        "line": 583,
+        "function": "spec_asset_problems",
+        "calls": 365,
+        "self_seconds": 0.005994661,
+        "cumulative_seconds": 20.058333931
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 8440,
+        "function": "cover_photo_problem",
+        "calls": 365,
+        "self_seconds": 0.1949044,
+        "cumulative_seconds": 16.056746316
+      },
+      {
+        "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/PIL/ImageOps.py",
+        "line": 690,
+        "function": "exif_transpose",
+        "calls": 260,
+        "self_seconds": 0.01031188,
+        "cumulative_seconds": 15.646623796000002
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/reel_asset_gates.py",
+        "line": 251,
+        "function": "image_problems",
+        "calls": 365,
+        "self_seconds": 0.028777111,
+        "cumulative_seconds": 14.534260359000001
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/reel_asset_gates.py",
+        "line": 233,
+        "function": "image_load_problem",
+        "calls": 1621,
+        "self_seconds": 0.021478667,
+        "cumulative_seconds": 14.275351709
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/reel_asset_gates.py",
+        "line": 505,
+        "function": "numeral_display_problems",
+        "calls": 365,
+        "self_seconds": 0.024365648,
+        "cumulative_seconds": 5.416457323
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 3364,
+        "function": "parse_segments",
+        "calls": 365,
+        "self_seconds": 0.034662693,
+        "cumulative_seconds": 1.785193755
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 9209,
+        "function": "_narration_craft",
+        "calls": 365,
+        "self_seconds": 0.005455044,
+        "cumulative_seconds": 0.5082817350000001
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 3457,
+        "function": "_one",
+        "calls": 5411,
+        "self_seconds": 0.055807382,
+        "cumulative_seconds": 0.45265763400000003
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 9247,
+        "function": "_owner_taste",
+        "calls": 365,
+        "self_seconds": 0.002992751,
+        "cumulative_seconds": 0.41923047
+      },
+      {
+        "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py",
+        "line": 333,
+        "function": "decode",
+        "calls": 5421,
+        "self_seconds": 0.011635592,
+        "cumulative_seconds": 0.353603167
+      },
+      {
+        "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py",
+        "line": 344,
+        "function": "raw_decode",
+        "calls": 5421,
+        "self_seconds": 0.331246983,
+        "cumulative_seconds": 0.331246983
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 3987,
+        "function": "_normalize_title_card_segments",
+        "calls": 183,
+        "self_seconds": 0.002552934,
+        "cumulative_seconds": 0.330839572
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tests/production_history.py",
+        "line": 163,
+        "function": "should_check",
+        "calls": 369,
+        "self_seconds": 0.0029735580000000003,
+        "cumulative_seconds": 0.27758959
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tests/production_history.py",
+        "line": 120,
+        "function": "frozen_row",
+        "calls": 369,
+        "self_seconds": 0.005381305,
+        "cumulative_seconds": 0.274616032
+      },
+      {
+        "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/PIL/ImageFile.py",
+        "line": 117,
+        "function": "__init__",
+        "calls": 2104,
+        "self_seconds": 0.028182172000000002,
+        "cumulative_seconds": 0.250943209
+      },
+      {
+        "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/PIL/ImageFile.py",
+        "line": 435,
+        "function": "load_prepare",
+        "calls": 1975,
+        "self_seconds": 0.006949764000000001,
+        "cumulative_seconds": 0.218578883
+      }
+    ],
+    "optimized_hotspots": [
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 9347,
+        "function": "validate_spec",
+        "calls": 365,
+        "self_seconds": 0.026698218000000003,
+        "cumulative_seconds": 21.195170424
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/image_probe_cache.py",
+        "line": 50,
+        "function": "probe_image",
+        "calls": 1881,
+        "self_seconds": 0.054933151000000006,
+        "cumulative_seconds": 12.245951602
+      },
+      {
+        "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/PIL/ImageFile.py",
+        "line": 291,
+        "function": "load",
+        "calls": 1268,
+        "self_seconds": 0.057837646000000006,
+        "cumulative_seconds": 10.851470256
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/reel_asset_gates.py",
+        "line": 576,
+        "function": "spec_asset_problems",
+        "calls": 365,
+        "self_seconds": 0.00443321,
+        "cumulative_seconds": 10.826533917
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<method 'decode' of 'ImagingDecoder' objects>",
+        "calls": 17397,
+        "self_seconds": 10.590868597,
+        "cumulative_seconds": 10.590868597
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 8440,
+        "function": "cover_photo_problem",
+        "calls": 365,
+        "self_seconds": 0.01959253,
+        "cumulative_seconds": 6.865597059000001
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/reel_asset_gates.py",
+        "line": 244,
+        "function": "image_problems",
+        "calls": 365,
+        "self_seconds": 0.006494692000000001,
+        "cumulative_seconds": 5.611173367
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/reel_asset_gates.py",
+        "line": 233,
+        "function": "image_load_problem",
+        "calls": 1621,
+        "self_seconds": 0.009384636,
+        "cumulative_seconds": 5.4191361030000005
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/reel_asset_gates.py",
+        "line": 498,
+        "function": "numeral_display_problems",
+        "calls": 365,
+        "self_seconds": 0.020787193000000002,
+        "cumulative_seconds": 5.120175472000001
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 3364,
+        "function": "parse_segments",
+        "calls": 365,
+        "self_seconds": 0.029982171000000002,
+        "cumulative_seconds": 1.6496898690000001
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 9215,
+        "function": "_narration_craft",
+        "calls": 365,
+        "self_seconds": 0.0040663290000000005,
+        "cumulative_seconds": 0.48164672300000005
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 3457,
+        "function": "_one",
+        "calls": 5411,
+        "self_seconds": 0.050111647,
+        "cumulative_seconds": 0.418704369
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 9253,
+        "function": "_owner_taste",
+        "calls": 365,
+        "self_seconds": 0.0022061380000000003,
+        "cumulative_seconds": 0.389762473
+      },
+      {
+        "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py",
+        "line": 333,
+        "function": "decode",
+        "calls": 5422,
+        "self_seconds": 0.010880129,
+        "cumulative_seconds": 0.327762722
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/build_match_reel.py",
+        "line": 3987,
+        "function": "_normalize_title_card_segments",
+        "calls": 183,
+        "self_seconds": 0.00210313,
+        "cumulative_seconds": 0.30897648
+      },
+      {
+        "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py",
+        "line": 344,
+        "function": "raw_decode",
+        "calls": 5422,
+        "self_seconds": 0.30755190000000004,
+        "cumulative_seconds": 0.30755190000000004
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tests/production_history.py",
+        "line": 163,
+        "function": "should_check",
+        "calls": 369,
+        "self_seconds": 0.002603817,
+        "cumulative_seconds": 0.24976420900000001
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tests/production_history.py",
+        "line": 120,
+        "function": "frozen_row",
+        "calls": 369,
+        "self_seconds": 0.0045679860000000004,
+        "cumulative_seconds": 0.247160392
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/image_probe_cache.py",
+        "line": 31,
+        "function": "_policy",
+        "calls": 2617,
+        "self_seconds": 0.03060266,
+        "cumulative_seconds": 0.234401131
+      },
+      {
+        "file": "/workspace/tennislive-probe-speed/tools/image_probe_cache.py",
+        "line": 38,
+        "function": "<genexpr>",
+        "calls": 115148,
+        "self_seconds": 0.097138687,
+        "cumulative_seconds": 0.13245741
+      }
+    ]
+  },
+  "initial_interview_profile": [
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 1356,
+      "function": "segment",
+      "calls": 196,
+      "self_seconds": 0.124175088,
+      "cumulative_seconds": 27.672776952000003
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 1224,
+      "function": "_split_wide",
+      "calls": 8274,
+      "self_seconds": 0.9679970090000001,
+      "cumulative_seconds": 27.28453353
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 1109,
+      "function": "<lambda>",
+      "calls": 752307,
+      "self_seconds": 0.190633982,
+      "cumulative_seconds": 23.624449841
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 328,
+      "function": "_measure_at",
+      "calls": 752644,
+      "self_seconds": 0.285768575,
+      "cumulative_seconds": 23.448851358000002
+    },
+    {
+      "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/PIL/ImageFont.py",
+      "line": 326,
+      "function": "getlength",
+      "calls": 752644,
+      "self_seconds": 0.35025877600000005,
+      "cumulative_seconds": 23.144433112
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'getlength' of 'Font' objects>",
+      "calls": 752644,
+      "self_seconds": 22.555890258,
+      "cumulative_seconds": 22.555890258
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 1207,
+      "function": "_break_rank",
+      "calls": 754029,
+      "self_seconds": 0.60002203,
+      "cumulative_seconds": 1.8331537740000001
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 1276,
+      "function": "_text",
+      "calls": 753059,
+      "self_seconds": 0.406329883,
+      "cumulative_seconds": 1.5171338
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 2196,
+      "function": "en_problems",
+      "calls": 194,
+      "self_seconds": 0.010277636000000001,
+      "cumulative_seconds": 0.674639187
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 1047,
+      "function": "_bare_0805",
+      "calls": 256024,
+      "self_seconds": 0.066023493,
+      "cumulative_seconds": 0.5173252690000001
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 1043,
+      "function": "_bare",
+      "calls": 902708,
+      "self_seconds": 0.276268942,
+      "cumulative_seconds": 0.498072915
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 797,
+      "function": "cached_words",
+      "calls": 226,
+      "self_seconds": 0.01101503,
+      "cumulative_seconds": 0.393869377
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 1277,
+      "function": "<genexpr>",
+      "calls": 4530781,
+      "self_seconds": 0.359667244,
+      "cumulative_seconds": 0.359667244
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 785,
+      "function": "_json3_words",
+      "calls": 224,
+      "self_seconds": 0.12981556,
+      "cumulative_seconds": 0.3450498
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 2670,
+      "function": "strip_hesitation_lines",
+      "calls": 194,
+      "self_seconds": 0.011178105,
+      "cumulative_seconds": 0.254934702
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 2631,
+      "function": "drop_hesitations",
+      "calls": 19385,
+      "self_seconds": 0.051791729,
+      "cumulative_seconds": 0.22961092600000002
+    },
+    {
+      "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py",
+      "line": 333,
+      "function": "decode",
+      "calls": 848,
+      "self_seconds": 0.001746811,
+      "cumulative_seconds": 0.143517355
+    },
+    {
+      "file": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py",
+      "line": 344,
+      "function": "raw_decode",
+      "calls": 848,
+      "self_seconds": 0.14032189,
+      "cumulative_seconds": 0.14032189
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 1171,
+      "function": "_sentences",
+      "calls": 195,
+      "self_seconds": 0.039490327000000006,
+      "cumulative_seconds": 0.07608395100000001
+    },
+    {
+      "file": "/workspace/tennislive-probe-speed/tools/build_interview_clip.py",
+      "line": 1221,
+      "function": "<genexpr>",
+      "calls": 298680,
+      "self_seconds": 0.067157669,
+      "cumulative_seconds": 0.067157669
+    }
+  ],
+  "decision": "Do not cache production_history publication evidence: 369 calls consumed only 0.278 s. Interview memo saves only 1.079 s (4.4%); distinct substrings still dominate font advances.",
+  "limitations": [
+    "Measured local corpus checks only; not an end-to-end 20-minute publication benchmark.",
+    "Wall times vary with CPU/filesystem conditions; cProfile overhead is present on both narration test runs.",
+    "Original full decode gate retained, including existing corrupt PNG and truncated JPEG rejection."
+  ],
+  "source_hashes": {
+    "tools/image_probe_cache.py": "354b3b41d50e760e02a625d061af9b1b4556cdf92ed023cd71dcd0061f9754ae",
+    "tools/reel_asset_gates.py": "60bc9103595fce92e5ed7a53a9543e9136a6242ea46ee02d37ab3b699fac249c",
+    "tools/build_interview_clip.py": "d753f53d528d33a78c8f5a70f5992b861eb3429b12bfcd70c66744e1e25ef46c",
+    "tests/test_image_probe_cache.py": "b796852b3d85bafbcd2d4fb20bea2145bbfede8ba329be7edd69519589ce5667",
+    "tests/test_interview_width_memo.py": "1d812a45359e6628a2bebbbb949a344f3283b2798035c700c514abfef0dc44a7"
+  },
+  "baseline_source_hashes": {
+    "reel_asset_gates_baseline.py": "21a10041667ba62eb4e7e8c6f134c81ae42378422d96f48b259eae935bce54bf",
+    "build_interview_clip_baseline.py": "8d5171535181a3150d64869e9f889e9f90427c064ee3a57632f4a41c97182008"
+  },
+  "validation": {
+    "related_suite": {
+      "command": "PYTHONPATH=src:tools python -m pytest -q tests/test_image_probe_cache.py tests/test_interview_width_memo.py tests/test_interview_segment_ruler.py tests/test_reel_asset_gates.py tests/test_reel_caption_preflight.py",
+      "passed": 96,
+      "seconds": 50.66
+    },
+    "standalone_new_tests": {
+      "command": "python -m pytest -q tests/test_image_probe_cache.py tests/test_interview_width_memo.py",
+      "passed": 22,
+      "seconds": 0.17
+    },
+    "ruff_F821": "passed",
+    "owned_diff_check": "passed",
+    "full_current_head_CI": "parent-owned, not claimed here"
+  }
+}

@@ -236,16 +236,9 @@ def image_load_problem(path: Path) -> str | None:
     JPEG 用 draft（1/8 缩放）解：熵编码仍然从头解到尾，截断照样报，
     而 22 MB 的封面原图从 0.7 秒降到 0.3 秒。
     """
-    from PIL import Image  # noqa: PLC0415
+    from image_probe_cache import probe_image  # noqa: PLC0415
 
-    try:
-        with Image.open(path) as image:
-            if image.format == "JPEG":
-                image.draft("RGB", (max(1, image.size[0] // 8), max(1, image.size[1] // 8)))
-            image.load()
-    except Exception as exc:  # noqa: BLE001 - 任何解码错误都是这道闸要报的
-        return f"{type(exc).__name__}: {exc}"
-    return None
+    return probe_image(path).problem
 
 
 def image_problems(spec: dict, *, root: Path = ROOT) -> list[str]:

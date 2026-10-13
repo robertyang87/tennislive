@@ -11,6 +11,7 @@ import base64
 import copy
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -48,11 +49,25 @@ def source_run(slug, run_id):
     if (record['event'] != 'workflow_dispatch' or record['path'] != '.github/workflows/match-reel.yml'
             or record['status'] != 'completed' or record['conclusion'] not in ('success', 'failure')):
         raise ValueError('Input is not a completed native match-reel render run')
-    artifacts = api(f'actions/runs/{int(run_id)}/artifacts')['artifacts']
-    name = f"reel-{slug}-{record['run_number']}"
+    artifacts = []
+    page = 1
+    while True:
+        batch = api(f'actions/runs/{int(run_id)}/artifacts?per_page=100&page={page}')['artifacts']
+        artifacts.extend(batch)
+        if len(batch) < 100:
+            break
+        page += 1
+    native_name = f"native-input-{slug}-{record['run_number']}"
+    native = [a for a in artifacts if a['name'] == native_name]
+    # An expired/ambiguous native archive is an error, not permission to hide
+    # it behind the mutable canonical Release or old diagnostic artifact.
+    if native and (len(native) != 1 or native[0]['expired']):
+        raise ValueError('Exactly one unexpired original native input archive is required')
+    name = native_name if native else f"reel-{slug}-{record['run_number']}"
     matches = [a for a in artifacts if a['name'] == name and not a['expired']]
     if len(matches) != 1:
         raise ValueError('Exactly one actual native reel artifact is required')
+    record['_native_input_archive'] = bool(native)
     return record, matches[0]
 
 
@@ -90,6 +105,8 @@ def verified_input(slug, directory, record, original_spec):
         if not mask.is_file() or ri.sha256_file(mask) != row['mask_sha256']:
             raise ValueError('Original video scoreboard mask differs')
     film = directory / f'{slug}.mp4'
+    if record.get('_native_input_archive'):
+        verify_native_archive(slug, directory, record, manifest)
     if not film.is_file():
         url = meta.get('video_url')
         expected = f'https://github.com/{REPO}/releases/download/reel-{slug}/{slug}.mp4'
@@ -102,6 +119,85 @@ def verified_input(slug, directory, record, original_spec):
     if ri.sha256_file(film) != manifest['film_sha256'] or film.stat().st_size != manifest['film_bytes']:
         raise ValueError('Actual input movie SHA/bytes differ from native manifest')
     return manifest, meta, binding, film
+
+
+def _archive_qc(directory, manifest):
+    meta = json.loads((directory / 'render.json').read_text())
+    path = directory / 'qc_attestation.json'
+    qc = json.loads(path.read_text())
+    if (qc.get('status') != 'pass' or qc.get('slug') != manifest['slug']
+            or qc.get('spec_sha256') != manifest['spec_sha256']
+            or qc.get('film_sha256') != manifest['film_sha256']
+            or qc.get('film_bytes') != manifest['film_bytes']
+            or qc.get('ass_sha256') != ri.sha256_file(directory / 'subtitles.ass')
+            or qc.get('render_inputs_sha256') != ri.sha256_file(directory / 'render_inputs.json')
+            or meta.get('qc_attestation_sha256') != ri.sha256_file(path)):
+        raise ValueError('Native archive needs actual matching passing QC')
+
+
+def native_archive_paths(slug, directory, record, original_spec):
+    """Whitelist original files in place; no source/cookie/media staging copies."""
+    if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', slug):
+        raise ValueError('Invalid archive slug')
+    manifest, meta, _, film = verified_input(slug, directory, record, original_spec)
+    _archive_qc(directory, manifest)
+    if not set(manifest['artifacts']).issubset(ri.ARTIFACTS):
+        raise ValueError('Native render archive has unknown declared output files')
+    names = {film.name, 'render.json', 'render_inputs.json', 'qc_attestation.json', *manifest['artifacts']}
+    for row in json.loads((directory / 'scoreboard_qc.json').read_text()).get('segments', []):
+        names.add('score_masks/' + Path(row['mask']).name)
+    names.update(archive_voice_names(manifest['projection'], meta))
+    for name in names:
+        path = directory / name
+        if not path.is_file() or path.is_symlink() or not path.resolve().is_relative_to(directory.resolve()):
+            raise ValueError(f'Missing/unsafe actual native archive file: {name}')
+    identity = {'schema': 'tennislive.native-input-archive.v1', 'slug': slug,
+                'run_id': int(record['id']), 'run_number': int(record['run_number']),
+                'head_sha': record['head_sha'], 'film_sha256': manifest['film_sha256'],
+                'files': {name: ri.sha256_file(directory / name) for name in sorted(names)}}
+    write(directory / 'native_input_archive.json', identity)
+    return [directory / name for name in sorted(names | {'native_input_archive.json'})]
+
+
+def archive_voice_names(projection, meta):
+    """Same enabled cover/outro semantics as render; never glob voice files."""
+    prefixes = [f'voice_{index:02d}' for index, segment in enumerate(projection.get('segments', []))
+                if str(segment.get('narration') or '').strip()]
+    cover_enabled = bool(str((projection.get('cover') or {}).get('narration') or '').strip())
+    if meta.get('cover_narrated') is not cover_enabled:
+        raise ValueError('Native cover narration disagrees with render projection')
+    if cover_enabled:
+        prefixes.append('voice_cover')
+    seconds = meta.get('outro_seconds')
+    if (isinstance(seconds, bool) or not isinstance(seconds, (int, float))
+            or not math.isfinite(seconds) or seconds < 0
+            or (seconds > 0) != (projection.get('outro', True) is not False)):
+        raise ValueError('Native outro narration disagrees with actual render duration/projection')
+    if seconds > 0:
+        prefixes.append('voice_outro')
+    return {prefix + suffix for prefix in prefixes for suffix in ('.mp3', '.words.json')}
+
+
+def verify_native_archive(slug, directory, record, manifest):
+    archive = json.loads((directory / 'native_input_archive.json').read_text())
+    if (archive.get('schema') != 'tennislive.native-input-archive.v1'
+            or archive.get('slug') != slug or archive.get('run_id') != record['id']
+            or archive.get('run_number') != record['run_number']
+            or archive.get('head_sha') != record['head_sha']
+            or archive.get('film_sha256') != manifest['film_sha256']):
+        raise ValueError('Native archive run/head/movie identity differs')
+    files = archive.get('files')
+    required = {f'{slug}.mp4', 'render.json', 'render_inputs.json', 'qc_attestation.json', *manifest['artifacts']}
+    meta = json.loads((directory / 'render.json').read_text())
+    required.update(archive_voice_names(manifest['projection'], meta))
+    if not isinstance(files, dict) or not required.issubset(files):
+        raise ValueError('Native archive missing declared original files or voice pair')
+    for name, digest in files.items():
+        path = directory / name
+        if (path.is_symlink() or not path.resolve().is_relative_to(directory.resolve())
+                or not path.is_file() or ri.sha256_file(path) != digest):
+            raise ValueError(f'Native archive actual file differs: {name}')
+    _archive_qc(directory, manifest)
 
 
 def video_projection(projection):

@@ -8541,10 +8541,16 @@ def cover_photo_problem(spec: dict) -> str | None:
     if not path.exists():
         return f"封面大图找不到：{path}"
     try:
-        from PIL import Image, ImageOps  # noqa: PLC0415
+        from image_probe_cache import probe_image  # noqa: PLC0415
 
-        with Image.open(path) as raw:
-            width, height = ImageOps.exif_transpose(raw).size
+        # Complete decoding is shared with the asset gate; EXIF dimensions do
+        # not require copying/transposing millions of pixels. Unreadable image
+        # or EXIF still declines this geometry check, as before; the separate
+        # asset gate continues to reject failed complete decodes.
+        probe = probe_image(path)
+        if probe.problem or probe.oriented_size is None:
+            return None
+        width, height = probe.oriented_size
     except Exception:                     # noqa: BLE001 — 读不出尺寸就不判
         return None
     crop = art.get("crop")
@@ -10011,6 +10017,115 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         elif profile == "band-legacy":
             resolve_board_insets(sources, segments)
 
+    # 板蒙版会修正 score_inset 的真实上缘；必须等几何落定再写最终 ASS。
+    # 同一原生字幕块排在跟踪、人脸抽样和第一段视频编码之前。
+    # 同一份字幕直接供成片使用；跨位置边界等确定性错误不再白编整条片。
+    with stage("字幕预检"):
+        # 每段解说落在它那一段的**开头**，字幕跟着同一个偏移
+        cues: list[tuple[float, float, str]] = []
+        mix_inputs: list[str] = []
+        filters: list[str] = []
+        # 标签跟着 filters 一起攒，**别在下面另拿一个条件重算一遍**：加封面配音那次
+        # 就是这么差点漏的——`names` 原来是从 segments 里重新筛一遍，封面那一路
+        # 定义了却没人接。这类「两处各写一遍同一个条件」迟早会分叉。
+        voice_labels: list[str] = []
+        # 封面这一句从第 0 秒起。**它也要出字幕**——「静音刷是默认状态」，
+        # 只给耳朵不给眼睛，等于开场那句话对一半人不存在。
+        if cover_voice is not None:
+            mix_inputs.extend(["-i", str(cover_voice)])
+            filters.append(f"[{len(mix_inputs)//2}:a]adelay=0|0[vcover]")
+            voice_labels.append("[vcover]")
+            cover_text = str(spec["cover"]["narration"]).strip()
+            # **念的就是海报上印的那句，就别再排一行字幕。** 钩子在海报上是几十号的
+            # 大字，字幕把同样的话在同一帧里再写一遍，只是把画面弄脏。
+            # 判据是「一不一样」，不是「封面一律不出字幕」：封面那句要是**另说了
+            # 一件事**（存量里没有，但迟早会有），它照样要有字幕——静音刷是默认状态。
+            if same_line_as_printed(cover_text, str(spec["cover"].get("hook", ""))):
+                print("[封面] 旁白就是海报上那句钩子，不另排字幕")
+            else:
+                cues.extend(subtitle_cues(readable(cover_text),
+                                          probe_duration(cover_voice),
+                                          boundaries=cover_marks, offset=0.0))
+        offset = cover_secs
+        audio_cue_offsets = []
+        for index, (seg, (path, marks)) in enumerate(zip(segments, voices)):
+            audio_cue_offsets.append(offset)
+            if seg.quote:
+                # 原声段：没有语音可对齐，按字数等比铺满整段。**行数不能太多**，
+                # 否则每行只剩一瞬——一段 12 秒的采访塞 60 字就是这样。
+                if seg.quote_cues:
+                    cues.extend(explicit_quote_cues(seg.quote_cues, seg.length,
+                                                    offset))
+                else:
+                    cues.extend(subtitle_cues(readable(seg.quote), seg.length,
+                                              offset=offset))
+            elif seg.narration.strip():
+                spoken = spoken_of[index]
+                mix_inputs.extend(["-i", str(path)])
+                filters.append(
+                    f"[{len(mix_inputs)//2}:a]adelay={int(offset*1000)}|"
+                    f"{int(offset*1000)}[v{index}]")
+                voice_labels.append(f"[v{index}]")
+                # 上面已经拦掉了超长的段，这儿再把字幕**收进本段的窗口**——
+                # 边界事件的时刻是按语音插值出来的，末尾那一条可以比语音本身还长
+                # 几分之一秒（伊埃拉那条超出 0.29s 的段，字幕尾巴甩出去 1.02s）。
+                # 兜底和它拦的那件事分开写，坏的方式要选能兜住的那种。
+                limit = offset + seg.length
+                cues.extend(
+                    (a, min(b, limit), text)
+                    for a, b, text in subtitle_cues(
+                        readable(seg.narration), spoken,
+                        boundaries=marks, offset=offset)
+                    if a < limit)
+            offset += seg.length
+
+        from foreground_audio_gate import record_timeline  # noqa: PLC0415
+        record_timeline(spec, outdir, cover_secs, audio_cue_offsets, [seg.length for seg in segments])
+
+        # **片尾那句口播接在所有分段之后。** `offset` 走到这儿正好是
+        # cover_secs + Σ seg.length，也就是片尾页的起点——和 `lengths` 用的是同一份
+        # 累加，不另算一遍。
+        #
+        # ⚠️ **片尾不排字幕，这是有判据的，不是漏了。** 封面那条规矩说的是
+        # 「念的就是画面上印的那句，就别再排一行字幕；判据是**一不一样**」。
+        # 片尾页上印着「网球时差」四个大字 + 「时差归我，好球归你」，
+        # 而口播是「关注网球时差，时差归我，好球归你。」——多出来的
+        # 「关注」二字之外，**每个字都已经在屏幕上了，而且比字幕大得多**。
+        # 再排一行字幕只会压在那句小字上，把这一页弄脏。
+        # 「静音刷是默认状态」这条在这儿是满足的：静音的人照样读得到全部信息。
+        if outro_enabled:
+            mix_inputs.extend(["-i", str(outro_voice)])
+            filters.append(f"[{len(mix_inputs)//2}:a]adelay={int(offset*1000)}|"
+                           f"{int(offset*1000)}[voutro]")
+            voice_labels.append("[voutro]")
+            print(f"[片尾] 口播落在 {offset:.2f}s，画面上已印着同样的话，不另排字幕")
+
+        # 带式版式的字幕默认锚进底带（画面带之下），全出血维持老位置。
+        # `subtitle_top` 的人工覆盖照旧最大——那是「源片自己烧了记分条要让开」的口子。
+        default_margin = default_margin_v()
+        margin_v = int(spec.get("subtitle_top", default_margin))
+        # 全出血回贴了记分条的片子，字幕整条抬到板上方（人工 `subtitle_top` 照旧最大）。
+        board_margin = subtitle_margin_for_boards(segments, default_margin)
+        if "subtitle_top" not in spec:
+            margin_v = board_margin
+        # 回贴了板的全出血片子：每条字幕都下锚、底边钉在板顶上方（人工 `subtitle_top` 照旧最大）。
+        column = str((spec.get("cover") or {}).get("eyebrow", "")
+                     or spec.get("_column", "")).strip()
+        bottom = (None if "subtitle_top" in spec
+                  else subtitle_bottom_for_boards(segments, column=column))
+        ass = write_subtitles(cues, outdir / "subtitles.ass",
+                              height=VIDEO_H, margin_v=margin_v,
+                              outline=SUB_OUTLINE_PX, shadow=SUB_SHADOW_PX,
+                              bottom_margin=bottom,
+                              bottom_margin_windows=segment_subtitle_bottom_windows(segments, cover_secs))
+        moved = "" if margin_v == default_margin else (
+            f"，比默认抬高 {default_margin - margin_v}px "
+            + ("让开回贴在左下的记分条" if margin_v == board_margin != default_margin
+               else "让开源片自己的记分条"))
+        print(f"字幕 {len(cues)} 行 → {ass.name}（画布 {VIDEO_W}×{VIDEO_H}，"
+              f"上锚 MarginV={margin_v}{moved}，"
+              f"左右 {_ASS_MARGIN_H}）")
+
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)
     # 分段 3:4 画面的认人（只报不拦）和下面的分段编码**同时跑**，不占关键路径
@@ -10104,111 +10219,6 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "照这样出片后半段会整体错位。\n"
                 f"  各段实测：{[round(x, 2) for x in measured]}\n"
                 f"  spec 段长：{[round(x, 2) for x in lengths]}")
-
-    # 每段解说落在它那一段的**开头**，字幕跟着同一个偏移
-    cues: list[tuple[float, float, str]] = []
-    mix_inputs: list[str] = []
-    filters: list[str] = []
-    # 标签跟着 filters 一起攒，**别在下面另拿一个条件重算一遍**：加封面配音那次
-    # 就是这么差点漏的——`names` 原来是从 segments 里重新筛一遍，封面那一路
-    # 定义了却没人接。这类「两处各写一遍同一个条件」迟早会分叉。
-    voice_labels: list[str] = []
-    # 封面这一句从第 0 秒起。**它也要出字幕**——「静音刷是默认状态」，
-    # 只给耳朵不给眼睛，等于开场那句话对一半人不存在。
-    if cover_voice is not None:
-        mix_inputs.extend(["-i", str(cover_voice)])
-        filters.append(f"[{len(mix_inputs)//2}:a]adelay=0|0[vcover]")
-        voice_labels.append("[vcover]")
-        cover_text = str(spec["cover"]["narration"]).strip()
-        # **念的就是海报上印的那句，就别再排一行字幕。** 钩子在海报上是几十号的
-        # 大字，字幕把同样的话在同一帧里再写一遍，只是把画面弄脏。
-        # 判据是「一不一样」，不是「封面一律不出字幕」：封面那句要是**另说了
-        # 一件事**（存量里没有，但迟早会有），它照样要有字幕——静音刷是默认状态。
-        if same_line_as_printed(cover_text, str(spec["cover"].get("hook", ""))):
-            print("[封面] 旁白就是海报上那句钩子，不另排字幕")
-        else:
-            cues.extend(subtitle_cues(readable(cover_text),
-                                      probe_duration(cover_voice),
-                                      boundaries=cover_marks, offset=0.0))
-    offset = cover_secs
-    audio_cue_offsets = []
-    for index, (seg, (path, marks)) in enumerate(zip(segments, voices)):
-        audio_cue_offsets.append(offset)
-        if seg.quote:
-            # 原声段：没有语音可对齐，按字数等比铺满整段。**行数不能太多**，
-            # 否则每行只剩一瞬——一段 12 秒的采访塞 60 字就是这样。
-            if seg.quote_cues:
-                cues.extend(explicit_quote_cues(seg.quote_cues, seg.length,
-                                                offset))
-            else:
-                cues.extend(subtitle_cues(readable(seg.quote), seg.length,
-                                          offset=offset))
-        elif seg.narration.strip():
-            spoken = spoken_of[index]
-            mix_inputs.extend(["-i", str(path)])
-            filters.append(
-                f"[{len(mix_inputs)//2}:a]adelay={int(offset*1000)}|"
-                f"{int(offset*1000)}[v{index}]")
-            voice_labels.append(f"[v{index}]")
-            # 上面已经拦掉了超长的段，这儿再把字幕**收进本段的窗口**——
-            # 边界事件的时刻是按语音插值出来的，末尾那一条可以比语音本身还长
-            # 几分之一秒（伊埃拉那条超出 0.29s 的段，字幕尾巴甩出去 1.02s）。
-            # 兜底和它拦的那件事分开写，坏的方式要选能兜住的那种。
-            limit = offset + seg.length
-            cues.extend(
-                (a, min(b, limit), text)
-                for a, b, text in subtitle_cues(
-                    readable(seg.narration), spoken,
-                    boundaries=marks, offset=offset)
-                if a < limit)
-        offset += seg.length
-
-    from foreground_audio_gate import record_timeline  # noqa: PLC0415
-    record_timeline(spec, outdir, cover_secs, audio_cue_offsets, [seg.length for seg in segments])
-
-    # **片尾那句口播接在所有分段之后。** `offset` 走到这儿正好是
-    # cover_secs + Σ seg.length，也就是片尾页的起点——和 `lengths` 用的是同一份
-    # 累加，不另算一遍。
-    #
-    # ⚠️ **片尾不排字幕，这是有判据的，不是漏了。** 封面那条规矩说的是
-    # 「念的就是画面上印的那句，就别再排一行字幕；判据是**一不一样**」。
-    # 片尾页上印着「网球时差」四个大字 + 「时差归我，好球归你」，
-    # 而口播是「关注网球时差，时差归我，好球归你。」——多出来的
-    # 「关注」二字之外，**每个字都已经在屏幕上了，而且比字幕大得多**。
-    # 再排一行字幕只会压在那句小字上，把这一页弄脏。
-    # 「静音刷是默认状态」这条在这儿是满足的：静音的人照样读得到全部信息。
-    if outro_enabled:
-        mix_inputs.extend(["-i", str(outro_voice)])
-        filters.append(f"[{len(mix_inputs)//2}:a]adelay={int(offset*1000)}|"
-                       f"{int(offset*1000)}[voutro]")
-        voice_labels.append("[voutro]")
-        print(f"[片尾] 口播落在 {offset:.2f}s，画面上已印着同样的话，不另排字幕")
-
-    # 带式版式的字幕默认锚进底带（画面带之下），全出血维持老位置。
-    # `subtitle_top` 的人工覆盖照旧最大——那是「源片自己烧了记分条要让开」的口子。
-    default_margin = default_margin_v()
-    margin_v = int(spec.get("subtitle_top", default_margin))
-    # 全出血回贴了记分条的片子，字幕整条抬到板上方（人工 `subtitle_top` 照旧最大）。
-    board_margin = subtitle_margin_for_boards(segments, default_margin)
-    if "subtitle_top" not in spec:
-        margin_v = board_margin
-    # 回贴了板的全出血片子：每条字幕都下锚、底边钉在板顶上方（人工 `subtitle_top` 照旧最大）。
-    column = str((spec.get("cover") or {}).get("eyebrow", "")
-                 or spec.get("_column", "")).strip()
-    bottom = (None if "subtitle_top" in spec
-              else subtitle_bottom_for_boards(segments, column=column))
-    ass = write_subtitles(cues, outdir / "subtitles.ass",
-                          height=VIDEO_H, margin_v=margin_v,
-                          outline=SUB_OUTLINE_PX, shadow=SUB_SHADOW_PX,
-                          bottom_margin=bottom,
-                          bottom_margin_windows=segment_subtitle_bottom_windows(segments, cover_secs))
-    moved = "" if margin_v == default_margin else (
-        f"，比默认抬高 {default_margin - margin_v}px "
-        + ("让开回贴在左下的记分条" if margin_v == board_margin != default_margin
-           else "让开源片自己的记分条"))
-    print(f"字幕 {len(cues)} 行 → {ass.name}（画布 {VIDEO_W}×{VIDEO_H}，"
-          f"上锚 MarginV={margin_v}{moved}，"
-          f"左右 {_ASS_MARGIN_H}）")
 
     mixed = outdir / "_audio.m4a"
     # 背景音乐：独立一路，**不进闪避**（见 duck_filtergraph）。淡出锚在画面的
