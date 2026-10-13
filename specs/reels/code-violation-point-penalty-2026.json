@@ -30,7 +30,7 @@
     "auto": true,
     "summary": "摔拍往往只是警告",
     "lead": "下一次，才罚掉这一分。",
-    "_why": "账号所有者 2026-10-12 批准按仓库质检通过后的常规流程合并并推微信。crop_zoom 改了画面，这一版和 push.auto 一起重渲。"
+    "_why": "账号所有者：质检通过即推送微信，不用问。v4 换角标重渲，默认重推。"
   },
   "editorial": {
     "mode": "match_review",
@@ -136,13 +136,20 @@
       "track": false,
       "narration": "主裁只给了一次警告：这是他本场第一次违规。",
       "inset": {
-        "image": "assets/reel/cv2/cv2-bublik-warning.png",
+        "image": "assets/reel/cv4/cv4-bublik-warning.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "motion": "editorial",
+        "label": {
+          "topic": "摔拍警告",
+          "date": "2026.10.11",
+          "place": "ATP1000 上海 第三轮",
+          "score": "6-7(7) 6-3 7-6(5)",
+          "people": "布勃利克 vs 中岛布兰登"
+        }
       }
     },
     {
@@ -173,13 +180,20 @@
         }
       ],
       "inset": {
-        "image": "assets/reel/cv2/cv2-mac-1.png",
+        "image": "assets/reel/cv4/cv4-mac-1.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "motion": "editorial",
+        "label": {
+          "topic": "第1次 · 警告",
+          "date": "1990.01.21",
+          "place": "澳网 第四轮",
+          "event": "恐吓司线员",
+          "people": "麦肯罗 vs 佩恩福斯"
+        }
       }
     },
     {
@@ -197,13 +211,20 @@
         }
       ],
       "inset": {
-        "image": "assets/reel/cv2/cv2-mac-2.png",
+        "image": "assets/reel/cv4/cv4-mac-2.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "motion": "editorial",
+        "label": {
+          "topic": "第2次 · 罚一分",
+          "date": "1990.01.21",
+          "place": "澳网 第四轮",
+          "event": "摔拍",
+          "people": "麦肯罗 vs 佩恩福斯"
+        }
       }
     },
     {
@@ -251,13 +272,20 @@
         }
       ],
       "inset": {
-        "image": "assets/reel/cv2/cv2-mac-3.png",
+        "image": "assets/reel/cv4/cv4-mac-3.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "motion": "editorial",
+        "label": {
+          "topic": "第3次 · 取消资格",
+          "date": "1990.01.21",
+          "place": "澳网 第四轮",
+          "score": "6-1 4-6 7-5 2-4",
+          "people": "麦肯罗 vs 佩恩福斯"
+        }
       }
     },
     {
@@ -298,13 +326,20 @@
         }
       ],
       "inset": {
-        "image": "assets/reel/cv2/cv2-serena-1.png",
+        "image": "assets/reel/cv4/cv4-serena-1.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "motion": "editorial",
+        "label": {
+          "topic": "第1次 · 警告",
+          "date": "2018.09.08",
+          "place": "美网 女单决赛",
+          "event": "场外指导",
+          "people": "小威廉姆斯 vs 大坂直美"
+        }
       }
     },
     {
@@ -327,13 +362,20 @@
         }
       ],
       "inset": {
-        "image": "assets/reel/cv2/cv2-serena-2.png",
+        "image": "assets/reel/cv4/cv4-serena-2.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "motion": "editorial",
+        "label": {
+          "topic": "第2次 · 罚一分",
+          "date": "2018.09.08",
+          "place": "美网 女单决赛",
+          "event": "摔拍",
+          "people": "小威廉姆斯 vs 大坂直美"
+        }
       }
     },
     {
@@ -361,13 +403,20 @@
         }
       ],
       "inset": {
-        "image": "assets/reel/cv2/cv2-serena-3.png",
+        "image": "assets/reel/cv4/cv4-serena-3.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "motion": "editorial",
+        "label": {
+          "topic": "第3次 · 罚一局",
+          "date": "2018.09.08",
+          "place": "美网 女单决赛",
+          "score": "2-6 4-6",
+          "people": "小威廉姆斯 vs 大坂直美"
+        }
       }
     },
     {
@@ -395,13 +444,20 @@
         }
       ],
       "inset": {
-        "image": "assets/reel/cv2/cv2-serena-fine.png",
+        "image": "assets/reel/cv4/cv4-serena-fine.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "motion": "editorial",
+        "label": {
+          "topic": "罚款1.7万美元",
+          "date": "2018.09.08",
+          "place": "美网 女单决赛",
+          "event": "指导·摔拍·辱骂主裁",
+          "people": "小威廉姆斯"
+        }
       }
     },
     {
@@ -412,13 +468,20 @@
       "track": false,
       "narration": "情节严重，可以直接出局。兹维列夫双打输球后，",
       "inset": {
-        "image": "assets/reel/cv2/cv2-zverev-out.png",
+        "image": "assets/reel/cv4/cv4-zverev-out.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "motion": "editorial",
+        "label": {
+          "topic": "当场逐出赛事",
+          "date": "2022.02.22",
+          "place": "ATP500 阿卡普尔科 双打",
+          "event": "连砸主裁椅",
+          "people": "兹维列夫/梅洛 vs 格拉斯普尔/赫利奥瓦拉"
+        }
       },
       "crop_zoom": 1.04,
       "fill_y": 1,
@@ -443,13 +506,20 @@
       "track": false,
       "narration": "罚款四万美元，奖金积分没收，另有缓期八周禁赛。",
       "inset": {
-        "image": "assets/reel/cv2/cv2-zverev.png",
+        "image": "assets/reel/cv4/cv4-zverev.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "motion": "editorial",
+        "label": {
+          "topic": "罚款4万美元",
+          "date": "2022.02.22",
+          "place": "ATP500 阿卡普尔科 双打",
+          "event": "缓期八周禁赛",
+          "people": "兹维列夫"
+        }
       },
       "crop_zoom": 1.04,
       "fill_y": 1,
@@ -483,13 +553,20 @@
         }
       ],
       "inset": {
-        "image": "assets/reel/cv2/cv2-medvedev.png",
+        "image": "assets/reel/cv4/cv4-medvedev.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "motion": "editorial",
+        "label": {
+          "topic": "罚款4.25万美元",
+          "date": "2025.08.24",
+          "place": "美网 首轮",
+          "event": "非体育道德＋摔拍",
+          "people": "梅德韦杰夫 vs 邦齐"
+        }
       }
     },
     {
@@ -520,13 +597,20 @@
         }
       ],
       "inset": {
-        "image": "assets/reel/cv2/cv2-bublik-win.png",
+        "image": "assets/reel/cv4/cv4-bublik-win.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.085,
         "show_for": 3.8,
-        "motion": "editorial"
+        "motion": "editorial",
+        "label": {
+          "topic": "布勃利克逆转",
+          "date": "2026.10.11",
+          "place": "ATP1000 上海 第三轮",
+          "score": "6-7(7) 6-3 7-6(5)",
+          "people": "布勃利克 vs 中岛布兰登"
+        }
       }
     },
     {
@@ -579,5 +663,6 @@
     }
   },
   "_v2_why": "v2 按 Robert 2026-10-12 要求：真实比赛画面≥80%，只保留故意发泄的案例（摔拍、砸椅、辱骂裁判），去掉德约 2020；每个镜头 3:4 铺满 1080×1440，不加黑边、不垫模糊背景；屏幕文字只用角标。",
-  "_v3_why": "v3 只换 12 张角标，改成全局默认：右上角、右缘品牌绿短轨、文字右对齐。比分、罚金和阶梯用的是 v2 贴图上已经写明的那几句，没有补摔拍次数，也没有把 2026 年的罚款上限套到 1990 或 2022。"
+  "_v3_why": "v3 只换 12 张角标，改成全局默认：右上角、右缘品牌绿短轨、文字右对齐。比分、罚金和阶梯用的是 v2 贴图上已经写明的那几句，没有补摔拍次数，也没有把 2026 年的罚款上限套到 1990 或 2022。",
+  "_v4_why": "v4 只换 12 张角标为 2026-10-12 定稿版式：第一行主题，第二行「日期 · 赛事地点」，再比分（每盘赢家局数黄绿）或事件，最后人物；文字得意黑，比分 TL Score。日期/赛事/轮次/比分逐条核对：布勃利克 2026.10.11 上海第三轮 6-7(7) 6-3 7-6(5)；麦肯罗 1990.01.21 澳网第四轮 6-1 4-6 7-5 2-4 取消资格；小威 2018.09.08 美网决赛 2-6 4-6；兹维列夫 2022.02.22 阿卡普尔科双打首轮；梅德韦杰夫 2025.08.24 美网首轮。"
 }
