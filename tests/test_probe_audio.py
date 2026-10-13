@@ -258,7 +258,7 @@ def test_dry_run接上了逐块重放_无旁白段撞上就红(monkeypatch):
     segs = reel.parse_segments(spec, {"": Path("x")}, "")
     buf = io.StringIO()
     with redirect_stdout(buf):
-        assert reel.probe_dry_run(spec, segs) is True, buf.getvalue()
+        assert reel.probe_dry_run(spec, segs, legacy_loudness_checks=True) is True, buf.getvalue()
     assert "按实测源片响度重放 QC" in buf.getvalue()
     # 同一截静音 silence_findings 不许再报一遍（无旁白段让给逐块重放）
     s_hard, s_soft = reel.silence_findings(spec, segs, {"U": {**probe, "silent_audio": [
@@ -287,7 +287,7 @@ def test_dry_run_旁白尾巴手写硬_自动只报(monkeypatch):
         segs = reel.parse_segments(spec, {"": Path("x")}, "")
         buf = io.StringIO()
         with redirect_stdout(buf):
-            got = reel.probe_dry_run(spec, segs)
+            got = reel.probe_dry_run(spec, segs, legacy_loudness_checks=True)
         assert got is want, (auto, buf.getvalue())
         assert "上包络也说不到这儿" in buf.getvalue(), buf.getvalue()
 
@@ -372,7 +372,7 @@ def test_数字静音硬的几档只在mode_render硬_cover和narration照印不
                 monkeypatch.setenv(ps.MODE_ENV, mode)
             buf = io.StringIO()
             with redirect_stdout(buf):
-                got = reel.probe_dry_run(spec, segs)
+                got = reel.probe_dry_run(spec, segs, legacy_loudness_checks=True)
             out = buf.getvalue()
             assert got is want, (marker, mode, out)
             assert marker in out, (marker, mode, out)            # 同一句照印
@@ -414,7 +414,7 @@ def test_老的静音区必红那道也只在mode_render硬_cover和narration照
             monkeypatch.setenv(ps.MODE_ENV, mode)
         buf = io.StringIO()
         with redirect_stdout(buf):
-            got = reel.probe_dry_run(spec, segs)
+            got = reel.probe_dry_run(spec, segs, legacy_loudness_checks=True)
         out = buf.getvalue()
         assert got is want, (mode, out)
         assert "旁白按最长估也盖不住" in out and "必红" in out, (mode, out)   # 同一句照印
@@ -493,7 +493,7 @@ def test_重probe的命令_老probe没记框就退到spec顶层_都没有要明�
     segs = reel.parse_segments(spec, {"": Path("x")}, "")
     buf = io.StringIO()
     with redirect_stdout(buf):
-        reel.probe_dry_run(spec, segs)
+        reel.probe_dry_run(spec, segs, legacy_loudness_checks=True)
     assert "-f scorebox=104,888,736,978  # 框取自 spec 顶层" in buf.getvalue(), buf.getvalue()
 
 
@@ -538,7 +538,17 @@ def _three_spec(**extra) -> tuple[dict, dict]:
     return spec, probe
 
 
-def test_check_narration从main真跑一遍_段序号对得上_硬伤退出1(tmp_path, monkeypatch):
+def test_normal_dry_run_ignores_old_cached_loudness_predictions(monkeypatch):
+    spec, probe = _three_spec()
+    probe['silent_audio'] = [[0., 30.]]
+    monkeypatch.setattr(reel, 'probes_for_spec', lambda _s: ({'U': probe}, []))
+    for name in ('silence_findings', 'digital_silence_check'):
+        monkeypatch.setattr(reel, name, lambda *_a, **_k: pytest.fail('normal loudness prediction'))
+    segments = reel.parse_segments(spec, {'': Path('x')}, '')
+    assert reel.probe_dry_run(spec, segments) is False
+
+
+def test_check_narration正常制作只核时长不测响度(tmp_path, monkeypatch):
     """`main()` 的 `--check-narration` 那条路真跑一遍（合成打桩成本地假语音）：真语音按
     **段序号**喂进重放（`measured_speech_ends`），手写 spec 的死秒退出码 1，说满了退出码 0。
     段序号错位（按「第几条有旁白」编号）时第二组会误红——两组一起才钉得住。"""
@@ -553,24 +563,22 @@ def test_check_narration从main真跑一遍_段序号对得上_硬伤退出1(tmp
                         lambda outdir, *_a: (_speech(Path(outdir) / "outro.mp3", 1.0), []))
     monkeypatch.setattr(reel, "outro_length", lambda _p: 1.75)
     monkeypatch.setattr(reel, "probes_for_spec", lambda _s: ({"U": probe}, []))
+    for name in ('prosody_report', 'measured_speech_ends', '_check_narration_silence'):
+        monkeypatch.setattr(reel, name, lambda *_a, **_k: pytest.fail('normal loudness scan'))
     # `--check-narration` 当场落真 TTS 的账（`write_narration_record`，同期那一包加的）：
     # 不改道的话，这条测试每跑一趟都往仓库的 data/narration_checks/ 里写一份 t.json
     checks = tmp_path / "checks"
     monkeypatch.setattr(reel, "NARRATION_CHECKS_DIR", checks)
     monkeypatch.setattr(sys, "argv", ["build_match_reel.py", "render", "--check-narration",
                                       "--spec", str(path), "--outdir", str(tmp_path / "o")])
-    for speak, code, said in ((SHORT_THEN_LONG, 1, "2:2.0"), (LONG_THEN_SHORT, 0, "2:13.")):
+    for speak in (SHORT_THEN_LONG, LONG_THEN_SHORT):
         monkeypatch.setattr(reel, "synthesize", _fake_synth(speak))
         buf = io.StringIO()
         with redirect_stdout(buf):
             got = reel.main()
         out = buf.getvalue()
-        assert got == code, (speak, out)
-        assert f"旁白说到段内：{said}" in out, out            # 第 2 段（序号 1）的真语音
-        if code:
-            assert "按真语音，旁白说到段内 2.0" in out and "成片第 12 秒" in out, out
-        else:
-            assert "封面之后没有必红的数字静音" in out, out
+        assert got == 0, (speak, out)
+        assert '[查旁白]' in out and '[查静音]' not in out and '[查韵律]' not in out
     assert not (tmp_path / "o").exists(), "--check-narration 不许写产物"
     assert (checks / "t.json").is_file(), "装不下也要落账——账落进改过道的目录，不落仓库"
 
@@ -616,22 +624,18 @@ def _render_until_encode(tmp_path, monkeypatch, spec: dict, probe: dict, speak: 
     return reel.render(spec, out, voice="v", rate="+0%")
 
 
-def test_render在TTS之后_分段编码之前按真语音重放数字静音(tmp_path, monkeypatch):
-    """2026-09-28 会话定的：render 自己在「TTS 合成」和「旁白比画面长」那道闸之后、分段编码
-    之前，按真语音跑一遍 `--check-narration` 那一档——不多合一句、不多下一个字节。手写 spec
-    的死秒当场 ReelError（报的就是 dry-run／check-narration 那几行原句），自动 spec 只报。"""
+def test_render正常制作不重放响度仍保留旁白时长检查(tmp_path, monkeypatch):
+    """实际渲染继续核TTS时长，但普通制作不再调用响度静音预测。"""
     spec, probe = _three_spec()
     buf = io.StringIO()
-    with redirect_stdout(buf), pytest.raises(reel.ReelError) as err:
+    monkeypatch.setattr(reel, '_render_silence_gate', lambda *_a: pytest.fail('normal loudness replay'))
+    with redirect_stdout(buf), pytest.raises(_Encoded):
         _render_until_encode(tmp_path, monkeypatch, spec, probe, SHORT_THEN_LONG)
-    text = str(err.value)
-    assert "在分段编码之前拦下" in text and "按真语音，旁白说到段内 2.0" in text, text
-    assert "成片第 12 秒" in text and "手写 spec 硬闸" in text, text
-    assert "[耗时] TTS 合成" in buf.getvalue(), "闸要排在 TTS 之后（语音是这一趟合的那几条）"
+    assert "[耗时] TTS 合成" in buf.getvalue()
     # 说满了：闸放行，走到比分板蒙版那一步
     with redirect_stdout(io.StringIO()) as clean, pytest.raises(_Encoded):
         _render_until_encode(tmp_path, monkeypatch, spec, probe, LONG_THEN_SHORT)
-    assert "封面之后没有必红的数字静音" in clean.getvalue(), clean.getvalue()
+    assert "[查静音]" not in clean.getvalue(), clean.getvalue()
     # 自动产的 spec：同一截只报，照样往下走——连无旁白段那一档（dry-run 里对自动 spec 也硬）
     # 在 render 这一遍也只报：源 1–4 安静 → 冷开场那段成片第 3、4 秒是死秒
     auto, _ = _three_spec(_production={"status": "ready_for_render"})
@@ -641,19 +645,18 @@ def test_render在TTS之后_分段编码之前按真语音重放数字静音(tmp
     with redirect_stdout(io.StringIO()) as buf, pytest.raises(_Encoded):
         _render_until_encode(tmp_path, monkeypatch, auto, quiet_open, SHORT_THEN_LONG)
     out = buf.getvalue()
-    assert "自动产的 spec 只报不拦" in out and "（无旁白）" in out and "成片第 3 秒" in out, out
-    assert "按真语音，旁白说到段内 2.0" in out, out
+    assert "[查静音]" not in out, out
     # 一份 probe 都认领不上：出声说没查，不拦
     monkeypatch.setattr(reel, "probes_for_spec", lambda _s: ({}, [""]))
     with redirect_stdout(io.StringIO()) as buf, pytest.raises(_Encoded):
         reel.render(spec, tmp_path / "out", voice="v", rate="+0%")
-    assert "这一层没查" in buf.getvalue(), buf.getvalue()
+    assert "[查静音]" not in buf.getvalue(), buf.getvalue()
 
 
-def test_probe那一趟真把逐块响度和给过的框写进probe_json(tmp_path, monkeypatch):
+def test_probe正常记录音轨和比分框但不扫描响度(tmp_path, monkeypatch):
     """`main()` 的 probe 那条路真跑一遍（合成源片，下载／切点／缩略图墙／字幕打桩）：
     给了 `--scorebox` 就原样记进 probe.json（下次重 probe 照抄得到），没给记 None；
-    `audio_levels` 是真量出来的逐块响度。"""
+    只记录实际音轨存在，响度字段明确未测且不调用measure。"""
     src = tmp_path / "src.mp4"
     _ffmpeg("-f", "lavfi", "-i", "testsrc2=size=320x240:rate=5:duration=6",
             "-f", "lavfi", "-i", "anoisesrc=d=6:a=0.05", "-c:v", "libx264",
@@ -664,6 +667,7 @@ def test_probe那一趟真把逐块响度和给过的框写进probe_json(tmp_pat
     monkeypatch.setattr(reel, "fetch_captions", lambda *a, **kw: None)
     monkeypatch.setattr(reel, "measure_point_ends",
                         lambda _src, box: ([2.5], None, None) if box else ([], None, None))
+    monkeypatch.setattr(pa,'measure',lambda *_a, **_k: pytest.fail('normal source loudness scan'))
     for extra, want in ((["--scorebox", "10,200,300,236"], "10,200,300,236"), ([], None)):
         out = tmp_path / f"probe{len(extra)}"
         monkeypatch.setattr(sys, "argv", ["build_match_reel.py", "probe", "--url", "u",
@@ -672,18 +676,16 @@ def test_probe那一趟真把逐块响度和给过的框写进probe_json(tmp_pat
             assert reel.main() == 0
         data = __import__("json").loads((out / "probe.json").read_text("utf-8"))
         assert data["scorebox"] == want, data.get("scorebox")
-        levels = pa.decode_levels(data["audio_levels"])
-        assert levels is not None and abs(len(levels) - 6 / pa.BLOCK_SECONDS) <= 2, \
-            data["audio_levels"]
+        assert data['audio_levels'] is None and data['silent_audio'] is None
+        assert data['audio_stream_present'] is True
+        assert data['audio_analysis']=='removed_by_owner'
     # 下一趟重 probe 照抄得到这个框
     cmd = pa.reprobe_command("u", "s", data | {"scorebox": "10,200,300,236"}, "b")
     assert cmd.endswith("-f scorebox=10,200,300,236"), cmd
 
 
-def test_narration和render那两步先按URL把probe落盘(tmp_path):
-    """按真语音重放数字静音要读 probe.json——dry-run 那一步落好的，可能被「算出目录」那一步
-    的 `git sparse-checkout add` 清掉（落盘要排在每一个 add 之后）。narration 和 render 两步
-    调 build_match_reel 之前各自再落一遍（已经在的不动），取不到不拦（`||`）。"""
+def test_narration和render不为移除的响度检查重复取probe():
+    """正常制作去掉响度预测后，两步不再为这项检查重复网络获取probe。"""
     import yaml  # noqa: PLC0415
 
     flow = yaml.safe_load((ROOT / ".github" / "workflows" / "match-reel.yml")
@@ -695,10 +697,9 @@ def test_narration和render那两步先按URL把probe落盘(tmp_path):
         at = next(i for i, n in enumerate(names) if n.startswith(prefix))
         assert at > paths, prefix
         code = [line.split("#")[0] for line in steps[at]["run"].splitlines()]
-        mat = next(i for i, line in enumerate(code) if "probe_sources.py materialize" in line)
-        run = next(i for i, line in enumerate(code) if "build_match_reel.py render" in line)
-        assert mat < run, (prefix, mat, run)
-        assert "||" in code[mat] + code[mat + 1], "取不到只是这一层哑，不许拦住这一步"
+        assert not any("probe_sources.py materialize" in line for line in code)
+        assert any("build_match_reel.py render" in line for line in code)
+        assert not any("--legacy-audio-analysis" in line for line in code)
 
 
 def test_不闪避那条分支现场声不乘BED_LOUD(monkeypatch):
@@ -721,7 +722,7 @@ def test_不闪避那条分支现场声不乘BED_LOUD(monkeypatch):
         segs = reel.parse_segments(spec, {"": Path("x")}, "")
         buf = io.StringIO()
         with redirect_stdout(buf):
-            got = reel.probe_dry_run(spec, segs)
+            got = reel.probe_dry_run(spec, segs, legacy_loudness_checks=True)
         assert got is want and ("按实测源片响度重放 QC" in buf.getvalue()) is want, \
             (outro, buf.getvalue())
 

@@ -70,7 +70,9 @@ tennislive content                  # 内容雷达：赛前焦点的完整小红
 ```bash
 python3 tools/build_match_reel.py render --spec specs/reels/<slug>.json --outdir /tmp/tennislive-check --dry-run
 python3 tools/build_match_reel.py render --spec specs/reels/<slug>.json --outdir /tmp/tennislive-check --check-narration
-pytest -q -n auto                                                    # 全量，约 2 分钟
+python3 tools/production_test_scopes.py --base origin/main --head HEAD --outdir /tmp/production-test-scope
+mapfile -t targets < /tmp/production-test-scope/pytest-args.txt
+PYTHONPATH=src pytest "${targets[@]}" -q -n auto --dist loadfile       # 按实际改动选择产线
 ```
 
 ⚠️ `--dry-run` 报「第 N 段落在估算的误差里」＝**判不了**，不是没问题——那时必须
@@ -78,6 +80,8 @@ pytest -q -n auto                                                    # 全量，
 整条快路的账（为什么慢的是趟数不是渲染）见
 [`docs/thirty-minute-pipeline.md`](docs/thirty-minute-pipeline.md) 和
 [`docs/video-production-fast-path.md`](docs/video-production-fast-path.md)。
+
+2026-10-13：普通赛场之上默认保留现场原声大小，移除响度处理、源片/成片响度扫描及增益对比。音轨存在与时长、配音读音、字幕和发布凭据继续检查。说明见 [原声与检查策略](docs/reel-preserve-source-audio.md)。
 
 三条主线的代码/运行记录审查、已实施减负与验证边界见
 [2026-10-04 流水线审查](docs/review-video-pipelines-2026-10-04.md)。
