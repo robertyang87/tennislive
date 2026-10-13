@@ -113,6 +113,6 @@ def test_半透明小分格压在蓝场上也算板():
     ('221.780', 340),       # Point column withdrawing after the final ace.
 ])
 def test_real_shanghai_green_closeup_keeps_only_the_native_container(timestamp, expected):
-    fixtures = Path(__file__).parent / 'fixtures/atp_scoreboard/shanghai2026/zverev-bublik'
+    fixtures = Path(__file__).resolve().parents[1] / 'data/evidence/zverev-bublik-shanghai-2026-r16/scoreboard-regression'
     band = np.asarray(Image.open(fixtures / f'{timestamp}.png').convert('RGB'))
     assert a.board_edge(band, cap=380) == expected
