@@ -1,0 +1,49 @@
+{
+  "url": "https://github.com/robertyang87/tennislive/releases/download/source-IkK3VdqNLaw/IkK3VdqNLaw.mp4",
+  "width": 1920,
+  "height": 1080,
+  "fps": "25/1",
+  "fps_value": 25.0,
+  "duration": 455.45941,
+  "source_sha256": "16b8491f7e99ae70789dcf52e718038bc3839d9868d69ff1d627cfea57371a88",
+  "clip_from": 130.52,
+  "clip_to": 138.52,
+  "scene_cuts": [],
+  "point_ends": [],
+  "board": {
+    "version": 1,
+    "fps": 5,
+    "t0": 130.52,
+    "frames": 40,
+    "source_window": [
+      130.52,
+      138.52
+    ],
+    "scans": [
+      {
+        "box": [
+          90,
+          820,
+          560,
+          984
+        ],
+        "frames": 40,
+        "profiles": {
+          "wta": {
+            "present": 40,
+            "unresolved": 0,
+            "runs": [
+              [
+                40,
+                515,
+                515
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "measurement_scope": "actual_native_WTA_custom_box_calibration_only_130.52_138.52; not whole-source scan"
+  },
+  "_source_probe_method": "actual local ffprobe immutable release source; actual probe_board.scan_plan bounded native WTA search calibration. Empty scene_cuts/point_ends are unmeasured, not absence; match windows reviewed with source GHA evidence and actual native full 25fps alpha separately."
+}
