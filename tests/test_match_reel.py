@@ -4118,8 +4118,14 @@ def test_成片链接发之前要自己探一次(monkeypatch):
     # 要把一条真推送体标成自检）时那一行成了 `push(f"{args.title_prefix}{title}"`，
     # 这条当场 `ValueError`——**而它要钉的「探活排在发送之前」一个字都没变**。
     # 上面那句「取最短的稳定前缀」是它自己写的，只是上次没收够。
-    assert stage.index("wait_for_video(") < stage.index("receipt = push("), (
-        "wait_for_video 没排在 push 之前——「写了」不等于「跑过」")
+    assert stage.index("wait_for_delivery(") < stage.index("receipt = push("), (
+        "复制页/视频门禁没排在 push 之前——「写了」不等于「跑过」")
+    # The real HTTP concurrency and blocked-POST cases live in
+    # test_push_reel_asset_ref; this contract follows the new call boundary.
+    import inspect
+    delivery = inspect.getsource(push_reel.wait_for_delivery)
+    assert "pool.submit(wait_for_video, video_url)" in delivery
+    assert "video.result()" in delivery
 
 
 def _poster_name_order(cover: dict, names: list) -> list:
@@ -16351,8 +16357,8 @@ def test_标题前缀只作用在发出去那一处不许混进探活():
         "发出去那条消息的标题没带 --title-prefix，这个开关等于没接上：\n  "
         + "\n  ".join(push_calls))
 
-    probe_calls = re.findall(r"^\s*wait_for_copy_page\((.+?)\)\s*$", src, re.M)
-    assert probe_calls, "找不到 `wait_for_copy_page(...)`——判据的主语没了"
+    probe_calls = re.findall(r"^\s*wait_for_delivery\((.+?)\)\s*$", src, re.M)
+    assert probe_calls, "找不到 `wait_for_delivery(...)`——判据的主语没了"
     assert not any("title_prefix" in c for c in probe_calls), (
         "前缀混进了复制页探活——那是在等一句永远不出现的话，而它不吭声：\n  "
         + "\n  ".join(probe_calls)

@@ -1,0 +1,1136 @@
+{
+  "kind": "controlled_local_http_benchmark",
+  "base_commit": "7a1dbdb47261e25c01b8e98a98ef1625c1ab78bc",
+  "before_source_sha256": "0cd5f4fe24ff0467dba243ea17d6584b6845148b8ebe96cd255651146f385e80",
+  "after_source_sha256": "c56c16f20b32f4d9e423f051f2b52f191e0d7b906facbabf260a143e3b4e80eb",
+  "script_sha256": "b83be6e53026c335a765e86c2e7ecce03f4ecdd20cb378b75d95427fda75b63a",
+  "latency_per_request_seconds": 0.08,
+  "trials_per_variant": 3,
+  "message_posts": 0,
+  "external_http_requests": 0,
+  "limits": "Controlled transport, not a measured CDN/Pages production run or end-to-end SLA.",
+  "scenarios": [
+    {
+      "scenario": "reel_two_cards_and_movie",
+      "html": "<img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card0.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card0.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card1.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card1.png\">原图</a><a href=\"https://github.com/owner/repo/releases/download/tag/movie.mp4\">视频</a>",
+      "before": {
+        "median_seconds": 0.4112347400005092,
+        "trials": [
+          {
+            "seconds": 0.41223795599944424,
+            "request_count": 5,
+            "peak_delayed_requests": 1,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 2,
+              "/gh/owner/repo@abc/card1.png": 2,
+              "/owner/repo/releases/download/tag/movie.mp4": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/owner/repo/releases/download/tag/movie.mp4",
+                "status": 200,
+                "content_type": "video/mp4"
+              }
+            ]
+          },
+          {
+            "seconds": 0.4112347400005092,
+            "request_count": 5,
+            "peak_delayed_requests": 1,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 2,
+              "/gh/owner/repo@abc/card1.png": 2,
+              "/owner/repo/releases/download/tag/movie.mp4": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/owner/repo/releases/download/tag/movie.mp4",
+                "status": 200,
+                "content_type": "video/mp4"
+              }
+            ]
+          },
+          {
+            "seconds": 0.4109279240001342,
+            "request_count": 5,
+            "peak_delayed_requests": 1,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 2,
+              "/gh/owner/repo@abc/card1.png": 2,
+              "/owner/repo/releases/download/tag/movie.mp4": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/owner/repo/releases/download/tag/movie.mp4",
+                "status": 200,
+                "content_type": "video/mp4"
+              }
+            ]
+          }
+        ]
+      },
+      "after": {
+        "median_seconds": 0.08518913199804956,
+        "trials": [
+          {
+            "seconds": 0.08518913199804956,
+            "request_count": 3,
+            "peak_delayed_requests": 3,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 1,
+              "/gh/owner/repo@abc/card1.png": 1,
+              "/owner/repo/releases/download/tag/movie.mp4": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/owner/repo/releases/download/tag/movie.mp4",
+                "status": 200,
+                "content_type": "video/mp4"
+              }
+            ]
+          },
+          {
+            "seconds": 0.0902129980022437,
+            "request_count": 3,
+            "peak_delayed_requests": 3,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 1,
+              "/owner/repo/releases/download/tag/movie.mp4": 1,
+              "/gh/owner/repo@abc/card1.png": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/owner/repo/releases/download/tag/movie.mp4",
+                "status": 200,
+                "content_type": "video/mp4"
+              }
+            ]
+          },
+          {
+            "seconds": 0.08437658099865075,
+            "request_count": 3,
+            "peak_delayed_requests": 3,
+            "requests_by_path": {
+              "/owner/repo/releases/download/tag/movie.mp4": 1,
+              "/gh/owner/repo@abc/card1.png": 1,
+              "/gh/owner/repo@abc/card0.png": 1
+            },
+            "responses": [
+              {
+                "path": "/owner/repo/releases/download/tag/movie.mp4",
+                "status": 200,
+                "content_type": "video/mp4"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "explainer_twelve_cards",
+      "html": "<img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card0.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card0.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card1.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card1.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card2.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card2.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card3.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card3.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card4.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card4.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card5.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card5.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card6.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card6.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card7.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card7.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card8.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card8.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card9.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card9.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card10.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card10.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card11.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card11.png\">原图</a>",
+      "before": {
+        "median_seconds": 1.9743725469961646,
+        "trials": [
+          {
+            "seconds": 1.9934864099996048,
+            "request_count": 24,
+            "peak_delayed_requests": 1,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 2,
+              "/gh/owner/repo@abc/card1.png": 2,
+              "/gh/owner/repo@abc/card2.png": 2,
+              "/gh/owner/repo@abc/card3.png": 2,
+              "/gh/owner/repo@abc/card4.png": 2,
+              "/gh/owner/repo@abc/card5.png": 2,
+              "/gh/owner/repo@abc/card6.png": 2,
+              "/gh/owner/repo@abc/card7.png": 2,
+              "/gh/owner/repo@abc/card8.png": 2,
+              "/gh/owner/repo@abc/card9.png": 2,
+              "/gh/owner/repo@abc/card10.png": 2,
+              "/gh/owner/repo@abc/card11.png": 2
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card2.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card3.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card4.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card5.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card6.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card7.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card8.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card9.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card10.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card11.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card2.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card3.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card4.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card5.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card6.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card7.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card8.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card9.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card10.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card11.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          },
+          {
+            "seconds": 1.9743725469961646,
+            "request_count": 24,
+            "peak_delayed_requests": 1,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 2,
+              "/gh/owner/repo@abc/card1.png": 2,
+              "/gh/owner/repo@abc/card2.png": 2,
+              "/gh/owner/repo@abc/card3.png": 2,
+              "/gh/owner/repo@abc/card4.png": 2,
+              "/gh/owner/repo@abc/card5.png": 2,
+              "/gh/owner/repo@abc/card6.png": 2,
+              "/gh/owner/repo@abc/card7.png": 2,
+              "/gh/owner/repo@abc/card8.png": 2,
+              "/gh/owner/repo@abc/card9.png": 2,
+              "/gh/owner/repo@abc/card10.png": 2,
+              "/gh/owner/repo@abc/card11.png": 2
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card2.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card3.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card4.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card5.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card6.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card7.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card8.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card9.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card10.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card11.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card2.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card3.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card4.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card5.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card6.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card7.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card8.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card9.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card10.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card11.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          },
+          {
+            "seconds": 1.9710622430065996,
+            "request_count": 24,
+            "peak_delayed_requests": 1,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 2,
+              "/gh/owner/repo@abc/card1.png": 2,
+              "/gh/owner/repo@abc/card2.png": 2,
+              "/gh/owner/repo@abc/card3.png": 2,
+              "/gh/owner/repo@abc/card4.png": 2,
+              "/gh/owner/repo@abc/card5.png": 2,
+              "/gh/owner/repo@abc/card6.png": 2,
+              "/gh/owner/repo@abc/card7.png": 2,
+              "/gh/owner/repo@abc/card8.png": 2,
+              "/gh/owner/repo@abc/card9.png": 2,
+              "/gh/owner/repo@abc/card10.png": 2,
+              "/gh/owner/repo@abc/card11.png": 2
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card2.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card3.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card4.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card5.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card6.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card7.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card8.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card9.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card10.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card11.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card2.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card3.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card4.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card5.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card6.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card7.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card8.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card9.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card10.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card11.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          }
+        ]
+      },
+      "after": {
+        "median_seconds": 0.2562427070006379,
+        "trials": [
+          {
+            "seconds": 0.25663389499823097,
+            "request_count": 12,
+            "peak_delayed_requests": 4,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card1.png": 1,
+              "/gh/owner/repo@abc/card2.png": 1,
+              "/gh/owner/repo@abc/card0.png": 1,
+              "/gh/owner/repo@abc/card3.png": 1,
+              "/gh/owner/repo@abc/card4.png": 1,
+              "/gh/owner/repo@abc/card5.png": 1,
+              "/gh/owner/repo@abc/card6.png": 1,
+              "/gh/owner/repo@abc/card7.png": 1,
+              "/gh/owner/repo@abc/card8.png": 1,
+              "/gh/owner/repo@abc/card9.png": 1,
+              "/gh/owner/repo@abc/card10.png": 1,
+              "/gh/owner/repo@abc/card11.png": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card3.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card2.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card4.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card5.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card6.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card7.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card8.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card9.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card10.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card11.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          },
+          {
+            "seconds": 0.2562427070006379,
+            "request_count": 12,
+            "peak_delayed_requests": 4,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 1,
+              "/gh/owner/repo@abc/card2.png": 1,
+              "/gh/owner/repo@abc/card3.png": 1,
+              "/gh/owner/repo@abc/card1.png": 1,
+              "/gh/owner/repo@abc/card4.png": 1,
+              "/gh/owner/repo@abc/card6.png": 1,
+              "/gh/owner/repo@abc/card5.png": 1,
+              "/gh/owner/repo@abc/card7.png": 1,
+              "/gh/owner/repo@abc/card8.png": 1,
+              "/gh/owner/repo@abc/card9.png": 1,
+              "/gh/owner/repo@abc/card11.png": 1,
+              "/gh/owner/repo@abc/card10.png": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card2.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card3.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card4.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card6.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card5.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card7.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card8.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card9.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card11.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card10.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          },
+          {
+            "seconds": 0.2541124840063276,
+            "request_count": 12,
+            "peak_delayed_requests": 4,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 1,
+              "/gh/owner/repo@abc/card1.png": 1,
+              "/gh/owner/repo@abc/card2.png": 1,
+              "/gh/owner/repo@abc/card3.png": 1,
+              "/gh/owner/repo@abc/card4.png": 1,
+              "/gh/owner/repo@abc/card5.png": 1,
+              "/gh/owner/repo@abc/card6.png": 1,
+              "/gh/owner/repo@abc/card7.png": 1,
+              "/gh/owner/repo@abc/card8.png": 1,
+              "/gh/owner/repo@abc/card9.png": 1,
+              "/gh/owner/repo@abc/card10.png": 1,
+              "/gh/owner/repo@abc/card11.png": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card2.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card3.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card4.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card5.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card6.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card7.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card8.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card9.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card10.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card11.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "reel_html_image_then_ready",
+      "html": "<img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card0.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card0.png\">原图</a><img src=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card1.png\"><a href=\"https://cdn.jsdelivr.net/gh/owner/repo@abc/card1.png\">原图</a><a href=\"https://github.com/owner/repo/releases/download/tag/movie.mp4\">视频</a>",
+      "before": {
+        "median_seconds": 0.5246889440022642,
+        "trials": [
+          {
+            "seconds": 0.5235344180036918,
+            "request_count": 6,
+            "peak_delayed_requests": 1,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 3,
+              "/gh/owner/repo@abc/card1.png": 2,
+              "/owner/repo/releases/download/tag/movie.mp4": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "text/html"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/owner/repo/releases/download/tag/movie.mp4",
+                "status": 200,
+                "content_type": "video/mp4"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          },
+          {
+            "seconds": 0.5259649499930674,
+            "request_count": 6,
+            "peak_delayed_requests": 1,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 3,
+              "/gh/owner/repo@abc/card1.png": 2,
+              "/owner/repo/releases/download/tag/movie.mp4": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "text/html"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/owner/repo/releases/download/tag/movie.mp4",
+                "status": 200,
+                "content_type": "video/mp4"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          },
+          {
+            "seconds": 0.5246889440022642,
+            "request_count": 6,
+            "peak_delayed_requests": 1,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 3,
+              "/gh/owner/repo@abc/card1.png": 2,
+              "/owner/repo/releases/download/tag/movie.mp4": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "text/html"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/owner/repo/releases/download/tag/movie.mp4",
+                "status": 200,
+                "content_type": "video/mp4"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          }
+        ]
+      },
+      "after": {
+        "median_seconds": 0.1983514280000236,
+        "trials": [
+          {
+            "seconds": 0.19737982399965404,
+            "request_count": 4,
+            "peak_delayed_requests": 3,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 2,
+              "/gh/owner/repo@abc/card1.png": 1,
+              "/owner/repo/releases/download/tag/movie.mp4": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "text/html"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/owner/repo/releases/download/tag/movie.mp4",
+                "status": 200,
+                "content_type": "video/mp4"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          },
+          {
+            "seconds": 0.1983514280000236,
+            "request_count": 4,
+            "peak_delayed_requests": 3,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 2,
+              "/owner/repo/releases/download/tag/movie.mp4": 1,
+              "/gh/owner/repo@abc/card1.png": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "text/html"
+              },
+              {
+                "path": "/owner/repo/releases/download/tag/movie.mp4",
+                "status": 200,
+                "content_type": "video/mp4"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          },
+          {
+            "seconds": 0.19884732100035762,
+            "request_count": 4,
+            "peak_delayed_requests": 3,
+            "requests_by_path": {
+              "/gh/owner/repo@abc/card0.png": 2,
+              "/gh/owner/repo@abc/card1.png": 1,
+              "/owner/repo/releases/download/tag/movie.mp4": 1
+            },
+            "responses": [
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "text/html"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card1.png",
+                "status": 200,
+                "content_type": "image/png"
+              },
+              {
+                "path": "/owner/repo/releases/download/tag/movie.mp4",
+                "status": 200,
+                "content_type": "video/mp4"
+              },
+              {
+                "path": "/gh/owner/repo@abc/card0.png",
+                "status": 200,
+                "content_type": "image/png"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

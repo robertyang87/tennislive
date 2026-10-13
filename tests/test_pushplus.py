@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import logging
 import re
+import threading
+from collections import Counter
 from unittest.mock import Mock
 
 import pytest
@@ -223,6 +225,83 @@ def test_wait_for_images_uses_automatic_action_retry_window(monkeypatch):
 
     assert get.call_count == 2
     sleep.assert_called_once_with(15.0)
+
+
+def test_asset_reads_overlap_in_bounded_batches_and_close_every_response(monkeypatch):
+    barrier = threading.Barrier(4)
+    lock = threading.Lock()
+    active = peak = 0
+    responses = []
+
+    def get(url, *, stream, timeout):
+        nonlocal active, peak
+        assert stream and timeout == 7
+        with lock:
+            active += 1
+            peak = max(peak, active)
+        try:
+            # Serial execution or fewer workers cannot clear this barrier.
+            barrier.wait(timeout=3)
+            response = Mock(ok=True, headers={"Content-Type": "image/png"})
+            with lock:
+                responses.append(response)
+            return response
+        finally:
+            with lock:
+                active -= 1
+
+    monkeypatch.setattr(requests, "get", get)
+    wait_for_images(''.join(f'<img src="https://cdn.example/{i}.png">'
+                            for i in range(8)), attempts=1, timeout=7)
+    assert peak == 4 and active == 0 and len(responses) == 8
+    for response in responses:
+        response.close.assert_called_once()
+
+
+def test_duplicate_image_link_keeps_stricter_type_gate_and_only_retries_bad_url(monkeypatch):
+    image = "https://cdn.jsdelivr.net/gh/owner/repo@abc/card.png"
+    video = "https://github.com/owner/repo/releases/download/tag/video.mp4"
+    calls = Counter()
+    responses = []
+
+    def get(url, **kwargs):
+        calls[url] += 1
+        # A successful HTML error page must not pass as an image, even when
+        # that same URL also occurs in a less strict fallback <a> link.
+        response = Mock(ok=True, headers={"Content-Type": (
+            "text/html" if url == image and calls[url] == 1 else
+            "image/png" if url == image else "video/mp4")})
+        responses.append(response)
+        return response
+
+    monkeypatch.setattr(requests, "get", get)
+    sleep = Mock()
+    monkeypatch.setattr(pushplus.time, "sleep", sleep)
+    monkeypatch.setenv("TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS", "2")
+    wait_for_images(f'<img src="{image}"><a href="{image}">原图</a>'
+                    f'<a href="{video}">成片</a>', attempts=2, delay=3)
+    assert calls == Counter({image: 2, video: 1})
+    assert [c.args for c in sleep.call_args_list] == [(3.0,), (2.0,)]
+    for response in responses:
+        response.close.assert_called_once()
+
+
+def test_one_unavailable_parallel_asset_blocks_unique_message_post(monkeypatch):
+    def get(url, **kwargs):
+        if url.endswith("bad.png"):
+            raise requests.Timeout("not ready")
+        return Mock(ok=True, headers={"Content-Type": "image/png"})
+
+    monkeypatch.setattr(requests, "get", get)
+    post = Mock()
+    monkeypatch.setattr(requests, "post", post)
+    monkeypatch.setattr(pushplus, "prepare_image_delivery",
+                        lambda html, **kwargs: (html, "jsdelivr"))
+    monkeypatch.setenv("TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS", "1")
+    with pytest.raises(PushPlusError, match="1 项不可访问"):
+        pushplus.push("标题", '<img src="https://cdn.example/good.png">'
+                      '<img src="https://cdn.example/bad.png">', token="fixture")
+    post.assert_not_called()
 
 
 def test_prepare_image_delivery_uses_jsdelivr_fallback(tmp_path, monkeypatch):
