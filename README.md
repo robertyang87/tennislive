@@ -83,6 +83,8 @@ PYTHONPATH=src pytest "${targets[@]}" -q -n auto --dist loadfile       # 按实�
 
 2026-10-13：普通赛场之上默认保留现场原声大小，移除响度处理、源片/成片响度扫描及增益对比。音轨存在与时长、配音读音、字幕和发布凭据继续检查。说明见 [原声与检查策略](docs/reel-preserve-source-audio.md)。
 
+配音预检现在可导出真实 MP3 与词边界，正式渲染严格复用相同字节；工作流自动传输小快照，避免下载整部影片再审音。调用与失效规则见 [配音快照使用说明](docs/reel-frozen-tts-bundle.md)。
+
 三条主线的代码/运行记录审查、已实施减负与验证边界见
 [2026-10-04 流水线审查](docs/review-video-pipelines-2026-10-04.md)。
 

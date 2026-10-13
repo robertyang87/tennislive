@@ -1288,6 +1288,7 @@ jobs:
       - name: narration — 只查旁白装不装得下
         if: github.event.inputs.mode == 'narration'
         env:
+          GH_TOKEN: ${{ github.token }}
           AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
           AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
         run: |
@@ -1299,6 +1300,7 @@ jobs:
             --spec "$SPEC" \
             --voice "${{ github.event.inputs.voice }}" \
             --rate "${{ github.event.inputs.rate }}" \
+            --tts-bundle-out "$RUNNER_TEMP/${{ github.event.inputs.slug }}-tts.zip" \
             --outdir "${{ steps.paths.outputs.outdir }}"
           rc=$?
           set -e
@@ -1308,6 +1310,12 @@ jobs:
           # 沙箱连不上 edge-tts（WSS 被代理挡），这一趟是会话里补账的路——不提交的话量完就丢。
           # 只 add 这一个小 JSON，装不下（rc=1）也照样落账：真时长本身没错，改画面长度不用重量。
           REC="data/narration_checks/${{ github.event.inputs.slug }}.json"
+          # Complete speech is reusable even when only its picture window is too short.
+          # Transport validates producer identity; the original check still exits with rc.
+          if [ -f "$RUNNER_TEMP/${{ github.event.inputs.slug }}-tts.zip" ] && [ -f "$REC" ]; then
+            python tools/reel_tts_release.py publish --slug "${{ github.event.inputs.slug }}" \
+              --bundle "$RUNNER_TEMP/${{ github.event.inputs.slug }}-tts.zip" --metadata "$REC"
+          fi
           # **main 上不提交**（2026-09-28 修正轮 2）：直接推到 main 的提交不过 CI。在分支上跑，
           # 账和 spec 进同一个 PR；main 上这一趟只报数（日志里那张表照旧印）。
           if [ "${{ github.ref_name }}" = "main" ]; then
@@ -1344,6 +1352,7 @@ jobs:
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
+          GH_TOKEN: ${{ github.token }}
           AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
           AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
           TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
@@ -1355,6 +1364,17 @@ jobs:
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           SLUG="${{ github.event.inputs.slug }}"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          FROZEN_TTS="$RUNNER_TEMP/$SLUG-frozen-tts.zip"
+          python tools/reel_tts_release.py restore --slug "$SLUG" \
+            --metadata "data/narration_checks/$SLUG.json" --fallback-metadata "$OUTDIR/render.json" \
+            --output "$FROZEN_TTS"
+          TTS_BUNDLE_ARGS=()
+          if [ -f "$FROZEN_TTS" ]; then
+            # Cheap identity/request check before expensive source fetch; decode once in render.
+            python tools/build_match_reel.py render --check-tts-bundle --tts-bundle-in "$FROZEN_TTS" \
+              --spec "$SPEC" --voice "${{ github.event.inputs.voice }}" --rate "${{ github.event.inputs.rate }}"
+            TTS_BUNDLE_ARGS=(--tts-bundle-in "$FROZEN_TTS")
+          fi
           # 普通赛场之上保留现场声大小，不再为响度预测重复取 probe。
           # 审听 sha256 必须是这一趟真正编码的文件。先落到 outdir，render 见到
           # source_*.mp4 就不再重下。选择器先用任务书的 avc1≤1080，失败再走 download()。
@@ -1370,7 +1390,10 @@ jobs:
             --spec "$SPEC" \
             --voice "${{ github.event.inputs.voice }}" \
             --rate "${{ github.event.inputs.rate }}" \
+            "${TTS_BUNDLE_ARGS[@]}" --tts-bundle-out "$RUNNER_TEMP/$SLUG-tts.zip" \
             --outdir "$OUTDIR" 2>&1 | tee -a /tmp/render-findings.log
+          python tools/reel_tts_release.py publish --slug "$SLUG" \
+            --bundle "$RUNNER_TEMP/$SLUG-tts.zip" --metadata "$OUTDIR/render.json"
           python tools/video_sla.py finish --spec "$SPEC" --timeline "$RUNNER_TEMP/production-timeline.json" \
             --received-at "${{ steps.production_clock.outputs.received_at }}" \
             --render-started-at "$RENDER_STARTED" \

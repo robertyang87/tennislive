@@ -21,6 +21,7 @@ import time
 from pathlib import Path
 
 from . import azure_tts
+from .tts_bundle import TTSBundleError
 
 
 class TTSError(RuntimeError):
@@ -212,6 +213,27 @@ def tts_content_key(text: str, voice: str, rate: str, pitch: str,
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:32]
 
 
+
+def tts_request(text: str, voice: str, rate: str, pitch: str = "+0Hz",
+                style: str = "", styledegree: str = "", lead_pause: float = 0.0,
+                *, backend: str | None = None) -> dict:
+    """Complete actual synthesis identity for a portable frozen request."""
+    from .tts_bundle import validate_request
+    return validate_request({"text": text, "voice": voice, "rate": rate,
+        "pitch": pitch, "style": style, "styledegree": styledegree,
+        "lead_pause": lead_pause,
+        "backend": backend or ("azure" if azure_tts.available() else "edge"),
+        "cache_key": tts_content_key(text, voice, rate, pitch, style, styledegree, lead_pause)})
+
+
+def tts_bundle_session(*, input_path=None, output_path=None,
+                       expected_requests=None, metadata=None):
+    """Capture actual returned speech or strictly reuse a verified finite bundle."""
+    from .tts_bundle import BundleSession
+    return BundleSession(input_path=input_path, output_path=output_path,
+                         expected_requests=expected_requests, metadata=metadata)
+
+
 def tts_one(text: str, path: Path, voice: str, rate: str,
             pitch: str = "+0Hz", style: str = "", styledegree: str = "",
             lead_pause: float = 0.0, *, synth=None,
@@ -223,6 +245,13 @@ def tts_one(text: str, path: Path, voice: str, rate: str,
     ——调用方要打桩就从这儿递进来（reel 的判据就是这么钉缓存的）；`error` 是
     失败时抛哪一类（各条线各有各的错误类型，报错正文一个字不变）。
     """
+    from .tts_bundle import active_session
+    session = active_session()
+    request = tts_request(text, voice, rate, pitch, style, styledegree, lead_pause) if session else None
+    if session is not None:
+        session.verify_request(request)
+        if session.input_path is not None:
+            return session.materialize(request, path)
     key = tts_content_key(text, voice, rate, pitch, style, styledegree,
                           lead_pause)
     cache_dir = Path(os.environ.get(
@@ -244,9 +273,13 @@ def tts_one(text: str, path: Path, voice: str, rate: str,
     else:
         path.write_bytes(audio)
         print(f"[TTS] 命中缓存 {key[:10]}（{len(text)} 字），不重合成")
+        if session is not None:
+            session.capture(request, path, marks)
         return marks
     marks = (synth or _tts_one_uncached)(text, path, voice, rate, pitch, style,
                                          styledegree, lead_pause, error=error)
+    if session is not None:
+        session.capture(request, path, marks)
     temporary = None
     try:
         cache_dir.mkdir(parents=True, exist_ok=True)

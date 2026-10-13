@@ -5319,3 +5319,8 @@ render 那一趟判定 ok 时照旧装 faster-whisper、恢复模型缓存，只
   `pipeline_health.render_report` 新加的段按关键字传（`parked_subs=`），几条分支各加一段时合并不串位
 - 不改的：人核那一支的老 pass **没记源**照认（人的标记）。量过：人核、写 `asr_model` 的 spec 里 5 条的
   `verify_fingerprint.json` 没记源（4 条老格式连 `status` 都没有），5 条都已发——以后修订其中一条时换源，照旧跳过重量
+
+
+### 2026-10-13：预检与正式渲染复用实际配音
+
+赛场之上预检用 `--check-narration --tts-bundle-out ZIP` 保留真实 MP3 和 WordBoundary；审音以这份实际字节为准，正式渲染用 `--tts-bundle-in ZIP` 严格复用。工作流 narration 完整生成配音后发布有限小包，render 从 narration record 自动恢复并在下载源片前查当前声音请求。无记录允许首次合成；有记录但引用、哈希或声音参数不匹配必须修复或重新预检，不允许静默重合成。只改取景、字幕或时间窗不使声音失效。快照不是 QC 通过凭据，不恢复响度、静音或增益检查。完整用法见 `docs/reel-frozen-tts-bundle.md`。

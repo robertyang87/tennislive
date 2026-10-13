@@ -238,3 +238,14 @@ def test_native_us_open_rebinds_current_spec_and_expands_geometry_only_once(tmp_
     assert cold_segment.score_inset == warm_segment.score_inset == (0, 0, 460, 154)
     assert counter.boxes == [(0, 0, 460, 154)]
     assert json.loads(report.read_text())['spec_sha256'] == C._sha(spec)
+
+
+def test_storage_failure_reports_cause_and_keeps_complete_native_mask(dynamic, monkeypatch, capsys):
+    def deny(*args, **kwargs):
+        raise PermissionError('cache directory is read-only')
+    monkeypatch.setattr(C, '_store', deny)
+    segment, result, mask = dynamic.run('uncached')
+    assert mask.is_file() and result.is_file()
+    assert len(_pixels(mask, segment.score_inset)) == 32
+    assert not (dynamic.root / '.dirty').exists()
+    assert 'PermissionError: cache directory is read-only' in capsys.readouterr().out

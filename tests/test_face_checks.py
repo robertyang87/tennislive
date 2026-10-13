@@ -567,12 +567,30 @@ def test_封面认人在源片到手后立刻跑_排在TTS和分段之前():
     src = (ROOT / "tools" / "build_match_reel.py").read_text(encoding="utf-8")
     body = next(n for n in ast.parse(src).body
                 if isinstance(n, ast.FunctionDef) and n.name == "render")
-    code = ast.get_source_segment(src, body)
-    at = code.index("precheck_cover_face(spec, sources, primary, outdir)")
-    assert code.index("check_sources_match(sources, spec)") < at, "要等源片到手、尺寸对齐之后"
-    for later in ("if cover_only:", "synth_cover(", "synthesize(", "track_shots(",
-                  "start_segment_checks(", "build_cover("):
-        assert at < code.index(later), f"封面认人要排在 `{later}` 之前"
+    def calls(node, name):
+        return [n for n in ast.walk(node) if isinstance(n, ast.Call)
+                and ((isinstance(n.func, ast.Name) and n.func.id == name)
+                     or (isinstance(n.func, ast.Attribute) and n.func.attr == name))]
+
+    faces = calls(body, "precheck_cover_face")
+    assert len(faces) == 1, "渲染入口应在源片到手后统一执行一次封面认人"
+    at = faces[0].lineno
+    aligned = calls(body, "check_sources_match")
+    assert aligned and all(n.lineno < at for n in aligned), "要等源片到手、尺寸对齐之后"
+    # An earlier cover_only guard can legitimately reject incompatible CLI
+    # flags. Identify the branch that actually renders and returns the poster.
+    previews = [n for n in ast.walk(body) if isinstance(n, ast.If)
+                and isinstance(n.test, ast.Name) and n.test.id == "cover_only"
+                and calls(n, "build_cover")
+                and any(isinstance(r, ast.Return) and isinstance(r.value, ast.Name)
+                        and r.value.id == "poster" for r in ast.walk(n))]
+    assert len(previews) == 1, "必须识别真实的封面渲染并返回海报的预览分支"
+    assert at < previews[0].lineno, "封面认人要排在真实封面预览分支之前"
+    for later in ("synth_cover", "synthesize", "track_shots",
+                  "start_segment_checks", "build_cover", "cut_segment"):
+        later_calls = calls(body, later)
+        assert later_calls and all(at < n.lineno for n in later_calls), \
+            f"封面认人要排在全部 `{later}` 调用之前"
 
 
 def test_封面认人只看海报上露出来的那一块(model, tmp_path):

@@ -45,3 +45,8 @@ The small framed `kicker` above each native chapter card is a short title specif
 ## Global navy card design (owner update 2026-10-04)
 
 All columns use a redesigned, visually pleasant navy system for native cards: blue-black foundations, soft low-saturation blue lighting, blue information surfaces, readable white text and restrained neutral dividers. This includes chapter/stat cards, interview explainers, 网球有故事 static image cards and video diagrams/backdrops, outro cards, Pillow fallbacks and the cached outro master. The supplied image is inspiration for color and finish, not a layout to copy. Use shared `design_tokens.DARK` and `CARD_BACKGROUND_CSS`; do not leave independent green backgrounds or large lime/mint washes. Lime remains the brand/key emphasis and mint retains its win semantics. Verify actual native previews and cached-master frames. Existing semantic line breaks, contextual kicker titles and brand/subtitle safe spaces remain mandatory. This replaces the former green-background policy.
+
+
+### 2026-10-13：预检与正式渲染复用实际配音
+
+赛场之上预检用 `--check-narration --tts-bundle-out ZIP` 保留真实 MP3 和 WordBoundary；审音以这份实际字节为准，正式渲染用 `--tts-bundle-in ZIP` 严格复用。工作流 narration 完整生成配音后发布有限小包，render 从 narration record 自动恢复并在下载源片前查当前声音请求。无记录允许首次合成；有记录但引用、哈希或声音参数不匹配必须修复或重新预检，不允许静默重合成。只改取景、字幕或时间窗不使声音失效。快照不是 QC 通过凭据，不恢复响度、静音或增益检查。完整用法见 `docs/reel-frozen-tts-bundle.md`。
