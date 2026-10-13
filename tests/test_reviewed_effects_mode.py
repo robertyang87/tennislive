@@ -8,6 +8,81 @@ import reviewed_effects_mode as mode
 import narrated_audio_mode as narrated
 import build_match_reel as build
 
+
+def test_foreground_preinstall_validation_needs_only_standard_library():
+ script='''
+import sys
+sys.path.insert(0, 'tools')
+import foreground_audio_gate as gate
+spec={'preserve_source_audio':True,'segments':[]}
+gate.validate_preserved_source_audio(spec)
+assert gate.require(spec)==[]
+try:
+    gate.require({'preserve_source_audio':True,'segments':[{'bed':'high'}]})
+except ValueError as exc:
+    assert 'bed' in str(exc)
+else:
+    raise AssertionError('preserved source gain conflict was accepted')
+assert 'build_match_reel' not in sys.modules
+assert 'requests' not in sys.modules
+'''
+ subprocess.run([sys.executable,'-S','-c',script],cwd=ROOT,check=True)
+
+
+def test_preserved_native_source_stays_at_unity_during_and_after_voice():
+ graph=build.duck_filtergraph(['[1:a]anull[v0]'],['[v0]'],preserve_source_audio=True)
+ pcm=np.frombuffer(subprocess.check_output(['ffmpeg','-v','error',
+     '-f','lavfi','-i','sine=frequency=300:sample_rate=48000:duration=3',
+     '-f','lavfi','-i','sine=frequency=2000:sample_rate=48000:duration=1',
+     '-filter_complex',graph,'-map','[out]','-ac','1','-ar','48000','-f','f32le','-']),dtype='<f4')
+ assert len(pcm)==3*48000  # Short narration must not cut off later crowd sound.
+ first=np.abs(np.fft.rfft(pcm[:48000]))*2/48000
+ last=np.abs(np.fft.rfft(pcm[-48000:]))*2/48000
+ assert first[300]==pytest.approx(.125,rel=.001)
+ assert last[300]==pytest.approx(first[300],rel=.001)
+ assert first[2000]==pytest.approx(first[300],rel=.001)
+ assert last[2000]<1e-7
+
+
+def test_preserved_audio_rejects_every_gain_or_replacement_conflict():
+ clean={'preserve_source_audio':True,'segments':[{'start':1,'end':3,'narration':'旁白'}]}
+ build.validate_preserved_source_audio(clean)
+ assert not build._mix_ducks(clean,[build.Segment(1.,3.,None,'旁白')])
+ assert build._seg_bed_gain(build.Segment(1.,3.,None,''),ducked=build._mix_ducks(clean,[]))==1
+ for mutate in [lambda s:s.update(preserve_source_audio='true'),lambda s:s.update(preserve_source_audio=1),
+                lambda s:s.update(music={'file':'music.wav'}),lambda s:s.update(source_audio='other.wav'),
+                lambda s:s.update(original_audio_mode='reviewed_effects'),lambda s:s.update(audio_effects_review='x'),
+                lambda s:s['segments'][0].update(mute=True),lambda s:s['segments'][0].update(bed='high'),
+                lambda s:s['segments'][0].update(speed=.9)]:
+  changed=copy.deepcopy(clean);mutate(changed)
+  with pytest.raises(build.ReelError):build.validate_preserved_source_audio(changed)
+  with pytest.raises(build.ReelError):build.validate_spec(changed)
+ for kwargs in [{'music':'[2:a]anull[music]'}, {'mute_original':True}, {'reviewed_bed':'[2:a]anull[bed];'}]:
+  with pytest.raises(ValueError):build.duck_filtergraph(['[1:a]anull[v0]'],['[v0]'],preserve_source_audio=True,**kwargs)
+
+
+def test_audio_plan_binds_preservation_and_still_blocks_english_under_tts(tmp_path):
+ import foreground_audio_gate as foreground
+ s={'slug':'new-match','source_url':'https://example.test/source','segments':[]}
+ old=foreground.plan_hash(s)
+ s['preserve_source_audio']=False
+ assert foreground.plan_hash(s)!=old
+ disabled=foreground.plan_hash(s)
+ s['preserve_source_audio']=True
+ assert foreground.plan_hash(s)!=disabled
+ import render_inputs
+ assert render_inputs.project(s)['preserve_source_audio'] is True
+ # Reuse the real evidence fixture, including an English sentence under TTS.
+ from test_foreground_audio_gate import fixture
+ s,source,_,review=fixture(tmp_path)
+ s['preserve_source_audio']=True
+ s['segments'][0].pop('quote')
+ s['segments'][0]['narration']='自配旁白。'
+ payload=json.loads(review.read_text());payload['plan_sha256']=foreground.plan_hash(s)
+ review.write_text(json.dumps(payload))
+ with pytest.raises(ValueError,match='前景英文'):
+  foreground.require(s,root=tmp_path,sources={'':source})
+
 def candidate():
  return {'slug':mode.SLUG,'original_audio_mode':mode.MODE,'owner_approval':mode.APPROVAL,'sources':{k:'https://www.youtube.com/watch?v='+v for k,v in mode.IDS.items()},'segments':[{'source':'s2','start':1.,'end':2.,'narration':'中文旁白'},{'source':'s1','start':132.4,'end':145.7}]}
 

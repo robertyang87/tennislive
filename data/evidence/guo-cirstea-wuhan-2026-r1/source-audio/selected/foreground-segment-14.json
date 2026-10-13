@@ -1,0 +1,137 @@
+{
+  "schema": "tennislive.foreground-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-IkK3VdqNLaw/IkK3VdqNLaw.mp4",
+  "official_source_url": "https://www.youtube.com/watch?v=IkK3VdqNLaw",
+  "source_sha256": "16b8491f7e99ae70789dcf52e718038bc3839d9868d69ff1d627cfea57371a88",
+  "source_bytes": 80125909,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source agent: two fresh actual full-source ASR decodes plus exact cropped no-VAD reconciliation; no human listening/tone claim.",
+  "reviewed_at": "2026-10-13T09:35:51.691147+00:00",
+  "status": "complete",
+  "reviewed_from": 250.9,
+  "reviewed_to": 294.4,
+  "selected_from": 250.9,
+  "selected_to": 294.4,
+  "actual_listening_performed": false,
+  "human_listening_claimed": false,
+  "tone_verified": false,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 257.45,
+      "end": 258.94,
+      "en": "Unbelievable.",
+      "zh": "不可思议！"
+    },
+    {
+      "start": 260.52,
+      "end": 263.05,
+      "en": "The win of her tennis career.",
+      "zh": "她职业生涯的代表性胜利"
+    },
+    {
+      "start": 264.46,
+      "end": 265.85,
+      "en": "For Guo Hanyu.",
+      "zh": "属于郭涵煜！"
+    },
+    {
+      "start": 266.48,
+      "end": 268.31,
+      "en": "How has she done that?",
+      "zh": "她到底是怎么做到的！"
+    },
+    {
+      "start": 269.33,
+      "end": 271.81,
+      "en": "From a set and four love down.",
+      "zh": "落后一盘、次盘0比4。"
+    },
+    {
+      "start": 271.81,
+      "end": 274.07,
+      "en": "And then three match points down.",
+      "zh": "然后又面对三个赛点！"
+    },
+    {
+      "start": 274.72,
+      "end": 276.93,
+      "en": "She has a first Top 20 win.",
+      "zh": "她首次战胜世界前20！"
+    },
+    {
+      "start": 276.93,
+      "end": 279.77,
+      "en": "A first WTA 1000 win.",
+      "zh": "首次赢下WTA1000正赛！"
+    },
+    {
+      "start": 281.23,
+      "end": 283.57,
+      "en": "And she does it on home soil.",
+      "zh": "而且，就在自己的主场！"
+    },
+    {
+      "start": 284.52,
+      "end": 288.18,
+      "en": "What a moment in the career of Guo Hanyu.",
+      "zh": "郭涵煜职业生涯难忘的一刻"
+    },
+    {
+      "start": 288.18,
+      "end": 293.32,
+      "en": "I mean, what a comeback from her.",
+      "zh": "这真是一场了不起的逆转！"
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/asr-small-en.json",
+      "sha256": "6087ecdb9d62e365520ac6aed714f151dd55abb4c14856bc289d3ca52679597c",
+      "bytes": 55769,
+      "model": "small.en",
+      "vad_filter": true,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/asr-medium-en.json",
+      "sha256": "c01c83304d1a9aee25da85de3a8fc47c215ddadefd826bd93bb65fddb61230c6",
+      "bytes": 73904,
+      "model": "medium.en",
+      "vad_filter": true,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/asr-small-targeted.json",
+      "sha256": "0c5f0e250aee5014e18542835c89c8c80da7869e0b22ba3f68d7318aee655bd4",
+      "bytes": 23781,
+      "model": "small.en",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/asr-medium-targeted-bounded.json",
+      "sha256": "bd2ae5146c4008e80624662f0e650d35afb8b959ee894bb951ee5b8f5cfc8047",
+      "bytes": 5936,
+      "model": "medium.en",
+      "vad_filter": false,
+      "run_status": "complete"
+    },
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/candidate-cues.json",
+      "sha256": "895ff52888864179b95bcadec9d230064cdc3d44149132e4e3bc352766886358",
+      "bytes": 5503
+    },
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/source-visual-preflight.json",
+      "sha256": "15555e82ac7f058a04676c24dc77e714d7fddaa4380204173ef468ecf35d7766",
+      "bytes": 6221
+    },
+    {
+      "path": "data/evidence/guo-cirstea-wuhan-2026-r1/source-audio/run-targeted-bounded.py",
+      "sha256": "34cc409fc0c0e0c384c5de747aacfb1fe3d6b4c52b92caa30b6a204cb2807ba7",
+      "bytes": 1873
+    }
+  ],
+  "completion_scope": "Actual model outputs over all selected source footage and overlapping full-clause contexts; timestamps are ASR word estimates. No unsupported human audition or tone gate claimed."
+}

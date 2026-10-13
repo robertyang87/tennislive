@@ -1,0 +1,101 @@
+{
+  "scoreboard_qc_sha256": "ee7fde06c371ea02f4f326047882a8e9b569bfd4d96505fba3c3544fbec64c8b",
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 3.782,
+  "layout": "full",
+  "segments_seconds": 337.1,
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 首轮",
+    "line2": "郭涵煜 1-6 7-6(6) 7-5 科斯蒂亚",
+    "start": 1.2,
+    "end": 338.3
+  },
+  "film_seconds": 342.12,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 3.888,
+    "2": 8.16,
+    "4": 9.936,
+    "6": 8.568,
+    "8": 8.736,
+    "12": 7.416,
+    "15": 13.392
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 7,
+          "named": "郭涵煜",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 9,
+          "named": "郭涵煜",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 4,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "f7a95c91c3648e56d305af16f871cd9a977fc5431a9c45fc35729873e0078a84",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "guo-cirstea-wuhan-2026-r1",
+    "received_at": "2026-10-13T08:55:19Z",
+    "artifact_ready_at": "2026-10-13T09:59:11Z",
+    "elapsed_seconds": 3832.53,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "210a1d5138a3072d84bbb50b8964fa289813771cbb2d96be48f207ed6865a777",
+    "spec_sha256": "51d8422ffe44b2cdb6e292358b3acec849b4a340b5f02e412fe124a273939e2c",
+    "request_received_at": "2026-10-13T08:55:19Z",
+    "request_to_artifact_seconds": 3832.53,
+    "run_id": "38379173399",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-13T09:52:39Z",
+        "run_id": "38379173399"
+      }
+    ],
+    "render_seconds": 392.53,
+    "pre_render_seconds": 3440.0
+  },
+  "film_sha256": "210a1d5138a3072d84bbb50b8964fa289813771cbb2d96be48f207ed6865a777",
+  "film_bytes": 120127943,
+  "qc_attestation_sha256": "1ebbbf11ff3f132ff2ac4798436df11a0a746d8dad4b39c2d36d3b847bd48cc5",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-13T09:52:39Z",
+      "run_id": "38379173399"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-13T09:59:16Z",
+      "run_id": "38379173399"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-guo-cirstea-wuhan-2026-r1/guo-cirstea-wuhan-2026-r1.mp4",
+  "video_bytes": 120127943
+}

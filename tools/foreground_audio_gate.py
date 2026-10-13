@@ -41,6 +41,8 @@ def plan_hash(spec: dict) -> str:
         value['audio_effects_review']=spec['audio_effects_review']
     if spec.get('original_audio_mode') is not None:
         value.update(original_audio_mode=spec['original_audio_mode'],owner_approval=spec.get('owner_approval'))
+    if 'preserve_source_audio' in spec:
+        value['preserve_source_audio']=spec['preserve_source_audio']
     return hashlib.sha256(json.dumps(value,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
 
 
@@ -93,8 +95,22 @@ def _quote_windows(seg: dict):
     return result
 
 
+def validate_preserved_source_audio(spec: dict) -> None:
+    """Keep the pre-install audio gate standard-library-only."""
+    if "preserve_source_audio" in spec and not isinstance(spec["preserve_source_audio"], bool):
+        raise ValueError("preserve_source_audio 必须是布尔值")
+    if spec.get("preserve_source_audio") is not True:
+        return
+    if any(spec.get(key) for key in ("music", "source_audio", "original_audio_mode", "audio_effects_review")):
+        raise ValueError("preserve_source_audio 与音乐、额外音轨或替换原声模式冲突")
+    for index, seg in enumerate(spec.get("segments") or []):
+        if seg.get("mute") or seg.get("bed") or seg.get("speed", 1) != 1:
+            raise ValueError(f"第 {index + 1} 段保留原声时不能设置 mute、bed 或变速")
+
+
 def inspect(spec: dict, *, root: Path=ROOT, sources: dict[str,Path]|None=None) -> list[dict]:
     """Return every required cue; missing/changed evidence is a hard failure."""
+    validate_preserved_source_audio(spec)
     if narrated_audio_mode.enabled(spec,sources=sources):
         return []
     if spec.get('source_audio'):

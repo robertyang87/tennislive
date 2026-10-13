@@ -596,7 +596,8 @@ def dissolve_filtergraph(lengths: list[float], fade: float,
 
 
 def duck_filtergraph(filters: list[str], voice_labels: list[str],
-                     music: str = "", *, mute_original: bool = False, reviewed_bed: str = "") -> str:
+                     music: str = "", *, mute_original: bool = False, reviewed_bed: str = "",
+                     preserve_source_audio: bool = False) -> str:
     """闪避的滤镜图：没人说话时现场声开到 `BED_LOUD`，解说一进来就压下去。
 
     **`[vk0]apad[vk]` 那一段不能省，而且不能只当它是个细节。**
@@ -626,6 +627,16 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str],
     抽成函数是为了让判据能**真跑一次混音**：查源码文本的断言只能防「有人把它
     删了」，防不住「它从来没工作过」。
     """
+    if preserve_source_audio:
+        if music or mute_original or reviewed_bed:
+            raise ValueError("保留现场原声不允许音乐、静音或替换音床")
+        # Keep the source at unity, including under TTS. The existing foreground
+        # review separately forbids narration over any audible English sentence.
+        # duration=longest keeps cheers after the last (shorter) voice input.
+        return ("[0:a]anull[bed];" + f"{';'.join(filters)};"
+                f"{''.join(voice_labels)}amix=inputs={len(filters)}:normalize=0[voice];"
+                "[bed][voice]amix=inputs=2:normalize=0:duration=longest:"
+                "dropout_transition=0[out]")
     if reviewed_bed:
         # Speech-separated ball transients must stay audible under Chinese TTS.
         # Fixed native bed gain; no voice-driven compressor on reviewed effects.
@@ -3122,23 +3133,35 @@ def _seg_bed_gain(seg: "Segment", *, ducked: bool = True) -> float:
     `duck_filtergraph` 的 `BED_LOUD`。`--dry-run` 按它把源片实测响度换算成成片
     口径（`probe_audio`）——和上面那条链写在一起，改一处就看得见另一处。
 
-    `ducked=False`：render 混音那一步**一路人声都没有**（`_mix_ducks` 为假）时走的
-    是不闪避那条分支，现场声原样转码、`BED_LOUD` 根本没乘——按 0.72 算会把成片
+    `ducked=False`：没有人声，或显式 preserve_source_audio 时，现场声不闪避、
+    `BED_LOUD` 根本没乘——按 0.72 算会把成片
     估轻 2.85 dB，反过来误报（评审 2026-09-27 nit）。"""
     return ((BED_LOUD if ducked else 1.0) * (MUTE_FLOOR if seg.mute else 1.0)
             * (BED_TIERS[seg.bed] if seg.bed else 1.0))
 
 
 def _mix_ducks(spec: dict, segments: list["Segment"]) -> bool:
-    """render 混音那一步走不走闪避（`filters` 非空）：封面配了音、任何一段（原声段
+    """render 混音那一步走不走闪避：preserve_source_audio 显式关闭闪避；否则
+    封面配了音、任何一段（原声段
     除外）配了旁白、或者开着片尾口播，三样占一样就走 `duck_filtergraph`；
     一样都没有就是 `-vn -c:a aac` 原样转码那条分支。和 render 里拼 `filters`
     的三处同一个判法——改那边就要改这儿（`test_不闪避那条分支现场声不乘BED_LOUD`）。"""
+    if spec.get("preserve_source_audio") is True:
+        return False
     if str((spec.get("cover") or {}).get("narration") or "").strip():
         return True
     if spec.get("outro", True) is not False:
         return True
     return any(seg.narration.strip() and not seg.quote for seg in segments)
+
+
+def validate_preserved_source_audio(spec: dict) -> None:
+    """The opt-in guarantees unity source gain, rather than undoing gain later."""
+    from foreground_audio_gate import validate_preserved_source_audio as validate
+    try:
+        validate(spec)
+    except ValueError as exc:
+        raise ReelError(str(exc)) from exc
 
 
 def _seg_audio_needs_filter(seg: "Segment") -> bool:
@@ -3800,7 +3823,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "music", "outro", "push", "rate", "scorebox", "scoreboard_profile", "source_scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_fallbacks", "source_url",
-             "original_audio_mode", "owner_approval", "audio_effects_review", "track",
+             "original_audio_mode", "owner_approval", "audio_effects_review", "preserve_source_audio", "track",
              "source_quality_exceptions", "sources", "stats",
              "subtitle_scrim", "subtitle_top", "title_card_handle_bottom", "topbar", "tts_backend", "voice",
              "editorial", "narration_audio_recipe", "scene_edl_recipe", "scoreboard_profile"),
@@ -9374,6 +9397,7 @@ def validate_spec(
     **不读发布账本**——「这一趟重渲之前回头查过没有」只有渲染入口问得出意义，
     全库扫描读账本会让推送落账那一下把 main 打红。生产调用一律用默认 false。
     """
+    validate_preserved_source_audio(spec)
     # ⚠️ `spec_sources` 挪到最前面了：整改合同现在按**素材构成**判要不要填
     # （见 `_editorial_contract_required`），得先知道这条 spec 用了谁的画面。
     # 它只读 spec 的两个键、不碰任何文件，放最前面不花钱。
@@ -10246,6 +10270,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         effects_inputs, reviewed_bed, effects_windows = reviewed_effects_mode.bed_graph(
             spec, sources, audio_cue_offsets, 1 + mix_inputs.count("-i"))
         mix_inputs.extend(effects_inputs)
+    if spec.get("preserve_source_audio") is True:
+        print("[原声] 源片增益 1.0，不随旁白闪避；保留既有转场淡入淡出")
     with stage("混音"):
         if filters:
             # 闪避，不是一路压死：没人说话的时候现场声开到 BED_LOUD，解说一进来
@@ -10255,7 +10281,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "-i", str(silent), *mix_inputs,
                 "-filter_complex",
                 duck_filtergraph(filters, voice_labels, music_graph,
-                                 mute_original=narrated_audio_mode.enabled(spec), reviewed_bed=reviewed_bed),
+                                 mute_original=narrated_audio_mode.enabled(spec), reviewed_bed=reviewed_bed,
+                                 preserve_source_audio=spec.get("preserve_source_audio") is True),
                 # 这一步只是把解说混进现场声，产物是个 m4a——中间视频（原生
                 # 图为 2×2 时钟）给 `-shortest` 定长度，**必须 copy**。原来没写 `-c:v`，
                 # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、
