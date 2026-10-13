@@ -12,12 +12,13 @@ import inspect
 import json
 import marshal
 import os
-from pathlib import Path
 import shutil
 import subprocess
 import tempfile
 import types
+from copy import copy
 from fractions import Fraction
+from pathlib import Path
 
 PROFILES = {
     'us-open': 'scoreboard_geometry', 'rna-slam': 'rna_scoreboard',
@@ -136,7 +137,7 @@ def _probe(path: Path) -> dict:
     result = subprocess.run(
         ['ffprobe', '-v', 'error', '-count_frames', '-show_frames', '-select_streams', 'v:0',
          '-show_entries', 'stream=codec_name,width,height,r_frame_rate,nb_read_frames:frame=pts_time',
-         '-of', 'json', str(path)], capture_output=True, text=True)
+         '-of', 'json', str(path)], capture_output=True, text=True, check=False)
     if result.returncode or result.stderr.strip():
         raise ValueError(f'Unreadable mask video (ffprobe rc={result.returncode}): '
                          f'{result.stderr.strip()[-500:]}')
@@ -286,6 +287,43 @@ def _prune(root):
         shutil.rmtree(entry); entries.remove(entry); total -= sizes[entry]
 
 
+def _incremental_wta(sources, segments, outdir, fps, tail, spec_path, root):
+    """Reuse unchanged points after a window edit, with the full bundle validators.
+
+    WTA's resolver reads only its segment's source and geometry. Profiles that
+    read spec-wide calibration retain their original whole-bundle path.
+    """
+    records, resolved = [], []
+    native_profile = importlib.import_module(PROFILES['wta']).PROFILE
+    with tempfile.TemporaryDirectory(dir=outdir, prefix='.mask-points-') as temporary:
+        for index, segment in enumerate(segments):
+            if not segment.score_inset:
+                continue
+            # Normalise index and ignore unrelated sources so card insertion,
+            # reordering and another point's source do not invalidate this point.
+            part = copy(segment)
+            partdir = Path(temporary) / str(index)
+            proof_path = resolve_masks_cached(
+                'wta', {part.source: sources[part.source]}, [part], partdir, fps, tail,
+                spec_path=spec_path, cache_root=root)
+            proof = json.loads(proof_path.read_text())
+            record, = proof['segments']
+            dest = Path(outdir) / 'score_masks' / f'segment-{index+1:02d}.mkv'
+            _atomic_copy(Path(record['mask']), dest)
+            if _sha(dest) != record['mask_sha256']:
+                raise ValueError('Incremental mask copy bytes changed')
+            records.append({**record, 'segment': index, 'mask': str(dest)})
+            resolved.append((segment, part, dest))
+    target = Path(outdir) / 'scoreboard_qc.json'
+    target.write_text(json.dumps({'status': 'pass', 'profile': native_profile,
+                                 'segments': records}, ensure_ascii=False, indent=2) + '\n')
+    for segment, part, dest in resolved:
+        segment.score_inset = part.score_inset
+        segment.score_inset_mask = str(dest.resolve())
+        segment.score_inset_spans = part.score_inset_spans
+    return target
+
+
 def resolve_masks_cached(profile, sources, segments, outdir, fps, tail, *,
                          spec_path=None, cache_root=None) -> Path:
     """Run the exact native resolver on miss; restore its full frame sequence on hit."""
@@ -314,7 +352,10 @@ def resolve_masks_cached(profile, sources, segments, outdir, fps, tail, *,
         except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as exc:
             print(f'[score-mask-cache] invalid/incomplete bundle ({type(exc).__name__}: {exc}); '
                   'native per-frame scan required')
-    path = _native(module, profile, sources, segments, outdir, fps, tail, spec_path)
+    if profile == 'wta' and sum(bool(s.score_inset) for s in segments) > 1:
+        path = _incremental_wta(sources, segments, outdir, fps, tail, spec_path, root)
+    else:
+        path = _native(module, profile, sources, segments, outdir, fps, tail, spec_path)
     try:
         # Detect source/config changes during the native scan before storing it.
         if _recipe(profile, module, sources, segments_input(recipe), fps, tail) != recipe:

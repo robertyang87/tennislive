@@ -1,11 +1,11 @@
 """Native dynamic alpha cache preserves widths, absent frames and point headers."""
 from __future__ import annotations
 
-from copy import deepcopy
 import json
-from pathlib import Path
 import subprocess
 import sys
+from copy import deepcopy
+from pathlib import Path
 from types import SimpleNamespace
 
 import numpy as np
@@ -55,6 +55,79 @@ def _pixels(path, box):
     raw = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', str(path),
         '-f', 'rawvideo', '-pix_fmt', 'gray', '-'])
     return np.frombuffer(raw, np.uint8).reshape(-1, box[3]-box[1], box[2]-box[0])
+
+
+def _run_points(dynamic, name, points, sources=None):
+    out = dynamic.root.parent / name
+    path = C.resolve_masks_cached('wta', sources or {'main': dynamic.source}, points,
+                                  out, '25', 0, cache_root=dynamic.root)
+    return json.loads(path.read_text())['segments']
+
+
+def _three_points(dynamic):
+    points = [deepcopy(dynamic.segment) for _ in range(3)]
+    for i, point in enumerate(points):
+        point.start += i * 2
+        point.end += i * 2
+    return points
+
+
+def test_editing_one_point_only_rescans_that_point(dynamic):
+    cold = _run_points(dynamic, 'cold-points', _three_points(dynamic))
+    assert dynamic.counter.n == 3
+    _run_points(dynamic, 'warm-points', _three_points(dynamic))
+    assert dynamic.counter.n == 3
+    revised = _three_points(dynamic)
+    revised[1].end += .04
+    changed = _run_points(dynamic, 'revised-points', revised)
+    assert dynamic.counter.n == 4
+    assert [r['segment'] for r in changed] == [0, 1, 2]
+    for i in (0, 2):
+        assert Path(cold[i]['mask']).read_bytes() == Path(changed[i]['mask']).read_bytes()
+        assert cold[i]['mask_sha256'] == changed[i]['mask_sha256']
+    assert not list((dynamic.root.parent / 'revised-points').glob('.mask-points-*'))
+
+
+def test_card_insertion_and_reordering_reuse_point_bytes(dynamic):
+    cold = _run_points(dynamic, 'before-card', _three_points(dynamic))
+    points = _three_points(dynamic)
+    card = SimpleNamespace(score_inset=None)
+    changed = _run_points(dynamic, 'after-card', [card, points[2], points[0], points[1]])
+    assert dynamic.counter.n == 3
+    assert [r['segment'] for r in changed] == [1, 2, 3]
+    assert [r['mask_sha256'] for r in changed] == [cold[i]['mask_sha256'] for i in (2, 0, 1)]
+
+
+def test_changing_one_source_reuses_points_from_other_source(dynamic, tmp_path):
+    other = tmp_path / 'other-source.bin'
+    other.write_bytes(b'independent source')
+    sources = {'main': dynamic.source, 'other': other}
+    def points():
+        values = _three_points(dynamic)
+        values[1].source = 'other'
+        return values
+    _run_points(dynamic, 'multi-source-first', points(), sources)
+    assert dynamic.counter.n == 3
+    other.write_bytes(b'changed other source')
+    _run_points(dynamic, 'multi-source-edit', points(), sources)
+    assert dynamic.counter.n == 4
+
+
+def test_damaged_point_is_rescanned_while_other_points_are_reused(dynamic):
+    _run_points(dynamic, 'before-damage', _three_points(dynamic))
+    for entry in (dynamic.root / 'entries').iterdir():
+        manifest = json.loads((entry / 'manifest.json').read_text())
+        rows = manifest['recipe']['segments']
+        if len(rows) == 1 and rows[0]['start'] == 2.:
+            (entry / 'masks/segment-01.mkv').write_bytes(b'corrupt native mask')
+            break
+    else:
+        pytest.fail('Expected a checkpoint for the middle point')
+    changed = _three_points(dynamic)
+    changed[2].end += .04  # miss the whole bundle and inspect all three point entries
+    report = _run_points(dynamic, 'after-damage', changed)
+    assert dynamic.counter.n == 5  # corrupt middle point plus the revised final point
+    assert all(r['frames'] == 32 for r in report)
 
 
 def test_complete_dynamic_ffv1_sequence_is_identical_on_hit_and_copy_edit(dynamic):
