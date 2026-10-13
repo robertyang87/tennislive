@@ -1,0 +1,16 @@
+{
+  "schema":"tennislive.final-visual-frame-review.v1",
+  "movie_path":"/workspace/scratch/yINOy0bSnYk/final-native/zverev-bublik-shanghai-2026-r16.mp4",
+  "movie_sha256":"d5e063cbc71ba64e07b1fd6c58fca7605d7037ebe6d212ac8fe5efc2f7bbee17",
+  "duration_seconds":265.04,
+  "dimensions":[1080,1440],
+  "fps":25,
+  "bytes":127454829,
+  "samples_seconds":[0.6,2.2,5.1,12.8,20.8,63.9,84.8,107,124,161,189,220,238,248,254,263],
+  "contact_sheets":["contact-1.jpg","contact-2.jpg","contact-3.jpg","contact-4.jpg"],
+  "method":"16frames decoded from actual delivered native-run artifact movie, four contact sheets actually opened visually. Also compared source107.78and221.78tofinal124and238for observed board-width issues. This is bounded frame-based visual review, not continuous human playback, manual audio listening, ASR or loudness analysis.",
+  "overall":"needs_scoreboard_repair",
+  "pass_observations":["Cover fullcanvas, eyes open and clear, face unobscured", "Live shots use full vertical canvas without bars", "Native subtitle anchor stays just above board and readable in observed narrated/bilingual frames", "Both title landing card and ending stat card actually present", "First-set and third-set board widths differ while names and scores remain visible", "Final ACE/reaction and final handshake/embrace present", "Brand outro present and noTennisTVpromo in inspected ending", "Source court clock at221.78reads2:37, supporting displayed2:37duration"],
+  "issues":[{"severity":"publication_repair","final_time":124.0,"source_time":107.78,"description":"Bublik green-background close-up includes an extra green rectangular/stair-edged patch approximately100outputpixels wide beyond the native scoreboard blue right edge. Source has no such point cell; board should end at sourcex379, while current board_edge returns353px fromx98, i.e.right451. This is false extra-background capture.","evidence":["full-124.jpg","source-107.78.jpg"],"not_fixed_here":true}],
+  "clarification":"Final238 has the native point column withdrawn in source221.78too; inspected final matches that width and it is not missing points."
+}

@@ -1,0 +1,43 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=yINOy0bSnYk",
+  "source_sha256": "4a823330f689dca7416ba8b0a3360d11f869c91e6df6a242e0dcefe50195a19f",
+  "source_dimensions": [
+    1920,
+    1080
+  ],
+  "source_fps": 50,
+  "crop": {
+    "left": 98,
+    "top": 920,
+    "width": 760,
+    "height": 110
+  },
+  "format": "Lossless RGB PNG, actual source frame at each requested timestamp; 107.780s reproduces falsely extended green close-up after point cell withdrawal",
+  "fixtures": [
+    {
+      "path": "004.000.png",
+      "source_timestamp_seconds": 4.0,
+      "fixture_sha256": "2527405d63b345bbb692f84919b6a4f80e58b6e744f2a9a222b56e97542519c0"
+    },
+    {
+      "path": "107.780.png",
+      "source_timestamp_seconds": 107.78,
+      "fixture_sha256": "7610833d3c70bc1b84cffe5d98755373d03676c35c23759b85012a6c78761e61"
+    },
+    {
+      "path": "183.000.png",
+      "source_timestamp_seconds": 183.0,
+      "fixture_sha256": "140be2115646fec59d627348b7b5a1ea327196368d79b10da5b21e5a74c7c974"
+    },
+    {
+      "path": "204.000.png",
+      "source_timestamp_seconds": 204.0,
+      "fixture_sha256": "e69cc8ccede4c7cbbe82b4cc7ab84dd17bcd1b535950089550e8f62e2b707fdb"
+    },
+    {
+      "path": "221.780.png",
+      "source_timestamp_seconds": 221.78,
+      "fixture_sha256": "90b9c86e1da7b2cb4b3e2194b0a583d6b5600419f824ae86f217831ff75d223c"
+    }
+  ]
+}

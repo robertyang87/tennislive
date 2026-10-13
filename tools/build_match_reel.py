@@ -5666,8 +5666,15 @@ def tts_one(text: str, path: Path, voice: str, rate: str,
     由它的长度决定（见 `cover_length`），不能等到 `synthesize()` 那一步。
     ⚠️ `synth=_tts_one_uncached` 按**名字**在调用那一刻取——判据打桩的就是这个名字。
     """
-    return _tts.tts_one(text, path, voice, rate, pitch, style, styledegree,
-                        lead_pause, synth=_tts_one_uncached, error=ReelError)
+    marks = _tts.tts_one(text, path, voice, rate, pitch, style, styledegree,
+                         lead_pause, synth=_tts_one_uncached, error=ReelError)
+    # Strict frozen input materializes the audio and returns its actual marks;
+    # it bypasses the synthesizer that normally writes this native sidecar.
+    # Use the bundle's canonical JSON form so its marks hash remains inspectable.
+    path.with_suffix(".words.json").write_text(
+        json.dumps(marks, ensure_ascii=False, sort_keys=True,
+                   separators=(",", ":"), allow_nan=False), encoding="utf-8")
+    return marks
 
 
 def synth_cover(spec: dict, outdir: Path, voice: str, rate: str,
