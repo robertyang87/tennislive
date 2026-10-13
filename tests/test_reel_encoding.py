@@ -9,6 +9,7 @@ import subprocess
 import pytest
 
 from tools import build_match_reel as reel
+from tools import reel_join_fusion as fusion
 
 
 def _options(width=1080, height=1440, fps="25"):
@@ -82,6 +83,12 @@ def test_native_export_has_genuine_sps_timing_resources_and_frame_timestamps(
     monkeypatch.setattr(reel, "LAYOUT", "full")
     graph = (reel.topbar_filtergraph(.24, .72, ass, ass) if topbar
              else reel.plain_filtergraph(ass, .24, .96, None))
+    # Use the new joined-video bridge, retaining these existing real SPS/CFR
+    # checks at 25, 30000/1001 and 60 fps. Multi-part relocation and legacy
+    # fallback remain covered by test_reel_join_fusion.
+    plan, reason = fusion.plan(reel.dissolve_filtergraph([1.2], .18), 1)
+    assert plan and not reason
+    graph = plan.final_graph(graph)
     final = tmp_path / "export.mp4"
     # Evaluate the real render() export call with local inputs. This catches a
     # helper that passes unit tests but is forgotten at the production call site.
@@ -103,9 +110,11 @@ def test_native_export_has_genuine_sps_timing_resources_and_frame_timestamps(
         return result
 
     context = dict(vars(reel), run=export, silent=source, mixed=source, final=final,
+                   final_inputs=["-i", str(source)], final_audio_input=1,
                    foot_inputs=[], wm_inputs=[], scrim_inputs=[], FPS_EXPR=fps,
                    video_args=["-filter_complex", graph, "-map", "[out]"])
     eval(compile(ast.Expression(calls[0]), "native-final-export", "eval"), context)
+    fusion.require_matching_frame_clock(source, final)
     assert "vbv_maxrate=12000 vbv_bufsize=24000" in logs[0]
     assert not re.search(r"(?:MB rate|DPB size|frame MB size|VBV).*level limit", logs[0])
     sps = _sps(final)

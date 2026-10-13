@@ -389,8 +389,11 @@ jobs:
           || github.event.inputs.mode == 'narration'
           || github.event.inputs.mode == 'reattest'
         run: |
-          pip install -q -e ".[pronunciation]"
-          python -c "import pypinyin"
+          # The main mode-specific install below already builds the editable
+          # project. Read this lightweight extra directly so early speech checks
+          # do not build/install the same project and base dependencies twice.
+          python -c 'import pathlib, tomllib, subprocess, sys; requirements = tomllib.loads(pathlib.Path("pyproject.toml").read_text())["project"]["optional-dependencies"]["pronunciation"]; isinstance(requirements, list) and requirements and all(isinstance(item, str) and item.strip() for item in requirements) or sys.exit("pronunciation extra must contain requirements"); subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", *requirements])'
+          PYTHONPATH=src python -c "import pypinyin"
 
       - name: 装依赖
         run: |

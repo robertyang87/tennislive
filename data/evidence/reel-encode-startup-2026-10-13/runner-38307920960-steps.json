@@ -1,0 +1,544 @@
+{
+  "run_id": "38307920960",
+  "source_endpoint": "/repos/robertyang87/tennislive/actions/runs/38307920960/jobs",
+  "jobs": [
+    {
+      "id": 115006342131,
+      "name": "reel",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-12T21:00:53Z",
+      "completed_at": "2026-10-12T21:10:29Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-12T21:00:54Z",
+          "completed_at": "2026-10-12T21:00:55Z"
+        },
+        {
+          "name": "10 \u5206\u949f\u6210\u7247\u65f6\u949f\u8d77\u70b9",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-12T21:00:55Z",
+          "completed_at": "2026-10-12T21:00:55Z"
+        },
+        {
+          "name": "push=true \u5fc5\u987b\u5728 main \u4e0a",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 3,
+          "started_at": "2026-10-12T21:00:55Z",
+          "completed_at": "2026-10-12T21:00:55Z"
+        },
+        {
+          "name": "mode=push \u5c31\u5fc5\u987b push=true",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4,
+          "started_at": "2026-10-12T21:00:55Z",
+          "completed_at": "2026-10-12T21:00:55Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-12T21:00:55Z",
+          "completed_at": "2026-10-12T21:01:50Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-12T21:01:50Z",
+          "completed_at": "2026-10-12T21:01:54Z"
+        },
+        {
+          "name": "probe\uff0fcookies \u2014 \u8868\u5355\u81ea\u68c0\uff08\u7a7a URL\u3001\u641c\u7d22\u8bcd\u3001\u9ed8\u8ba4 slug\u3001\u6846\u683c\u5f0f\uff09",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7,
+          "started_at": "2026-10-12T21:01:54Z",
+          "completed_at": "2026-10-12T21:01:54Z"
+        },
+        {
+          "name": "\u5ba1\u542c\u8bc1\u636e\u524d\u7f6e\u68c0\u67e5\uff08\u6309\u7d22\u5f15\u58f0\u660e\u9010\u9879\u9a8c\u8bc1\uff09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-12T21:01:54Z",
+          "completed_at": "2026-10-12T21:01:55Z"
+        },
+        {
+          "name": "probe \u2014 \u8ba4\u9886\u6e90\u7247\uff08\u540c\u4e00\u6761\u96c6\u9526\u522b probe \u4e24\u904d\uff09",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 9,
+          "started_at": "2026-10-12T21:01:55Z",
+          "completed_at": "2026-10-12T21:01:55Z"
+        },
+        {
+          "name": "\u7f13\u5b58\u6280\u6218\u672f\u8d44\u6599",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 10,
+          "started_at": "2026-10-12T21:01:55Z",
+          "completed_at": "2026-10-12T21:01:55Z"
+        },
+        {
+          "name": "\u5b89\u88c5\u591a\u97f3\u5b57\u9759\u6001\u68c0\u67e5\u4f9d\u8d56",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-12T21:01:55Z",
+          "completed_at": "2026-10-12T21:02:01Z"
+        },
+        {
+          "name": "\u88c5\u4f9d\u8d56",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-12T21:02:01Z",
+          "completed_at": "2026-10-12T21:02:26Z"
+        },
+        {
+          "name": "\u53d1\u5e03\u6587\u6848\u524d\u7f6e\u68c0\u67e5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-12T21:02:26Z",
+          "completed_at": "2026-10-12T21:02:28Z"
+        },
+        {
+          "name": "\u53d6\u4eba\u8138\u6a21\u578b\u7f13\u5b58",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-12T21:02:28Z",
+          "completed_at": "2026-10-12T21:02:28Z"
+        },
+        {
+          "name": "\u5907\u597d\u4eba\u8138\u6a21\u578b",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-12T21:02:28Z",
+          "completed_at": "2026-10-12T21:02:28Z"
+        },
+        {
+          "name": "\u5b58\u4eba\u8138\u6a21\u578b\u7f13\u5b58",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 16,
+          "started_at": "2026-10-12T21:02:28Z",
+          "completed_at": "2026-10-12T21:02:28Z"
+        },
+        {
+          "name": "dry-run \u2014 \u5148\u628a spec \u7684\u5f62\u72b6\u9519\u62e6\u5728\u7f16\u7801\u4e4b\u524d",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-12T21:02:28Z",
+          "completed_at": "2026-10-12T21:02:31Z"
+        },
+        {
+          "name": "\u62bd\u5e27\u5c01\u9762\u5148\u67e5\u5b98\u65b9\u56fe\uff08\u6709\u80fd\u8fc7\u673a\u5668\u95f8\u7684\u5c31\u4e0d\u8bb8\u53d1\u62bd\u5e27\uff09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-10-12T21:02:31Z",
+          "completed_at": "2026-10-12T21:02:31Z"
+        },
+        {
+          "name": "\u7f13\u5b58 apt \u5305\uff08ffmpeg + \u5b57\u4f53\uff0c\u7ed5\u5f00\u955c\u50cf\u62bd\u98ce\uff09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-12T21:02:31Z",
+          "completed_at": "2026-10-12T21:02:33Z"
+        },
+        {
+          "name": "\u88c5 ffmpeg",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-10-12T21:02:33Z",
+          "completed_at": "2026-10-12T21:02:36Z"
+        },
+        {
+          "name": "\u88c5\u4e2d\u6587\u5b57\u4f53\uff08\u6e32\u67d3\u548c\u5c01\u9762\u90fd\u8981\uff09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-10-12T21:02:36Z",
+          "completed_at": "2026-10-12T21:02:45Z"
+        },
+        {
+          "name": "\u56de\u5199 apt \u7f13\u5b58\uff08\u8fd9\u8d9f\u771f\u4e0b\u4e86\u65b0\u5305\u624d\u5b58\uff09",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 22,
+          "started_at": "2026-10-12T21:02:45Z",
+          "completed_at": "2026-10-12T21:02:45Z"
+        },
+        {
+          "name": "\u7f13\u5b58\u62a0\u56fe\u6a21\u578b",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23,
+          "started_at": "2026-10-12T21:02:45Z",
+          "completed_at": "2026-10-12T21:02:46Z"
+        },
+        {
+          "name": "\u7b97 Chromium \u7f13\u5b58\u952e\uff08\u88c5\u4e0a\u7684 playwright \u7248\u672c\uff09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-10-12T21:02:46Z",
+          "completed_at": "2026-10-12T21:02:46Z"
+        },
+        {
+          "name": "\u7f13\u5b58 Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25,
+          "started_at": "2026-10-12T21:02:46Z",
+          "completed_at": "2026-10-12T21:02:48Z"
+        },
+        {
+          "name": "\u88c5 Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-10-12T21:02:48Z",
+          "completed_at": "2026-10-12T21:02:49Z"
+        },
+        {
+          "name": "\u7b97\u51fa\u6e90\u7247\u7f13\u5b58\u7684\u952e",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-10-12T21:02:49Z",
+          "completed_at": "2026-10-12T21:02:49Z"
+        },
+        {
+          "name": "\u7f13\u5b58\u6e90\u7247\uff08\u540c\u4e00\u6761\u7247\u5b50\u53ea\u4e0b\u4e00\u6b21\uff09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-10-12T21:02:49Z",
+          "completed_at": "2026-10-12T21:02:49Z"
+        },
+        {
+          "name": "\u7f13\u5b58 TTS\uff08\u540c\u6587\u65c1\u767d\u8de8\u8d9f\u4e0d\u91cd\u5408\u6210\uff09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-10-12T21:02:49Z",
+          "completed_at": "2026-10-12T21:02:50Z"
+        },
+        {
+          "name": "\u7b97\u51fa\u76ee\u5f55",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 30,
+          "started_at": "2026-10-12T21:02:50Z",
+          "completed_at": "2026-10-12T21:02:50Z"
+        },
+        {
+          "name": "push \u6a21\u5f0f\u5148\u786e\u8ba4\u6210\u7247\u771f\u7684\u843d\u5730\u4e86",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 31,
+          "started_at": "2026-10-12T21:02:50Z",
+          "completed_at": "2026-10-12T21:02:50Z"
+        },
+        {
+          "name": "\u8d77 PO token provider",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 32,
+          "started_at": "2026-10-12T21:02:50Z",
+          "completed_at": "2026-10-12T21:03:01Z"
+        },
+        {
+          "name": "\u843d cookies\uff08\u914d\u4e86 Secret \u624d\u6709\uff09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33,
+          "started_at": "2026-10-12T21:03:01Z",
+          "completed_at": "2026-10-12T21:03:01Z"
+        },
+        {
+          "name": "cookies \u2014 \u53ea\u9a8c YouTube \u8fd8\u80fd\u4e0d\u80fd\u4e0b",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 34,
+          "started_at": "2026-10-12T21:03:01Z",
+          "completed_at": "2026-10-12T21:03:01Z"
+        },
+        {
+          "name": "probe \u2014 \u4e0b\u8f7d + \u7f29\u7565\u56fe\u5899",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 35,
+          "started_at": "2026-10-12T21:03:01Z",
+          "completed_at": "2026-10-12T21:03:01Z"
+        },
+        {
+          "name": "probe \u2014 \u5c01\u9762\u5019\u9009\u5e27",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 36,
+          "started_at": "2026-10-12T21:03:01Z",
+          "completed_at": "2026-10-12T21:03:01Z"
+        },
+        {
+          "name": "probe \u2014 \u9010\u5206+\u6bd4\u5206\u677f\u5bf9\u9f50\u5907\u6599",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 37,
+          "started_at": "2026-10-12T21:03:01Z",
+          "completed_at": "2026-10-12T21:03:01Z"
+        },
+        {
+          "name": "probe \u2014 \u81ea\u52a8\u5907\u6599\u5199 spec \u8349\u7a3f",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 38,
+          "started_at": "2026-10-12T21:03:01Z",
+          "completed_at": "2026-10-12T21:03:01Z"
+        },
+        {
+          "name": "probe \u2014 \u63d0\u5347\u901a\u8fc7\u786c\u95f8\u7684\u6b63\u5f0f spec",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 39,
+          "started_at": "2026-10-12T21:03:01Z",
+          "completed_at": "2026-10-12T21:03:01Z"
+        },
+        {
+          "name": "narration \u2014 \u53ea\u67e5\u65c1\u767d\u88c5\u4e0d\u88c5\u5f97\u4e0b",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 40,
+          "started_at": "2026-10-12T21:03:01Z",
+          "completed_at": "2026-10-12T21:03:01Z"
+        },
+        {
+          "name": "cover \u2014 \u53ea\u51fa\u5c01\u9762\u6d77\u62a5",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 41,
+          "started_at": "2026-10-12T21:03:01Z",
+          "completed_at": "2026-10-12T21:03:01Z"
+        },
+        {
+          "name": "render \u2014 \u51fa\u6210\u7247",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 42,
+          "started_at": "2026-10-12T21:03:01Z",
+          "completed_at": "2026-10-12T21:10:14Z"
+        },
+        {
+          "name": "reattest \u2014 \u6e32\u67d3\u8f93\u5165\u6ca1\u53d8\u5c31\u91cd\u51fa\u51ed\u8bc1\uff0c\u4e0d\u91cd\u6e32",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 43,
+          "started_at": "2026-10-12T21:10:14Z",
+          "completed_at": "2026-10-12T21:10:14Z"
+        },
+        {
+          "name": "\u5199\u590d\u5236\u9875\uff08\u5fc5\u987b\u6392\u5728\u63d0\u4ea4\u4e4b\u524d\uff09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 44,
+          "started_at": "2026-10-12T21:10:14Z",
+          "completed_at": "2026-10-12T21:10:15Z"
+        },
+        {
+          "name": "\u67e5\u6210\u7247\u672c\u8eab\u5408\u4e0d\u5408\u683c",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 45,
+          "started_at": "2026-10-12T21:10:15Z",
+          "completed_at": "2026-10-12T21:10:17Z"
+        },
+        {
+          "name": "\u6210\u7247\u53d1\u5230 Release\uff08\u4e0d\u8fdb git\uff09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 46,
+          "started_at": "2026-10-12T21:10:17Z",
+          "completed_at": "2026-10-12T21:10:23Z"
+        },
+        {
+          "name": "\u4e22\u6389\u4e0d\u8fdb\u4ed3\u5e93\u7684\u4e2d\u95f4\u7269",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 47,
+          "started_at": "2026-10-12T21:10:23Z",
+          "completed_at": "2026-10-12T21:10:23Z"
+        },
+        {
+          "name": "\u4e0a\u4f20 artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 48,
+          "started_at": "2026-10-12T21:10:23Z",
+          "completed_at": "2026-10-12T21:10:24Z"
+        },
+        {
+          "name": "probe \u5931\u8d25\u6458\u6e90\u7247\u8ba4\u9886",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 49,
+          "started_at": "2026-10-12T21:10:24Z",
+          "completed_at": "2026-10-12T21:10:24Z"
+        },
+        {
+          "name": "probe \u5931\u8d25\u6458 state\uff08\u81ea\u6108\uff09",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 50,
+          "started_at": "2026-10-12T21:10:24Z",
+          "completed_at": "2026-10-12T21:10:24Z"
+        },
+        {
+          "name": "\u63d0\u4ea4\u4ea7\u7269",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 51,
+          "started_at": "2026-10-12T21:10:24Z",
+          "completed_at": "2026-10-12T21:10:26Z"
+        },
+        {
+          "name": "probe \u6210\u529f\u7ed9\u6e90\u7247\u8ba4\u9886\u6807\u5b8c\u6210",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 52,
+          "started_at": "2026-10-12T21:10:26Z",
+          "completed_at": "2026-10-12T21:10:26Z"
+        },
+        {
+          "name": "probe \u6b63\u5f0f spec \u5c31\u7eea\u540e\u81ea\u52a8\u6d3e\u53d1 render",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 53,
+          "started_at": "2026-10-12T21:10:26Z",
+          "completed_at": "2026-10-12T21:10:26Z"
+        },
+        {
+          "name": "render \u8d28\u68c0\u843d\u5e93\u540e\u8bfb\u53d6 spec \u81ea\u52a8\u63a8\u9001\u89c4\u5219",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 54,
+          "started_at": "2026-10-12T21:10:26Z",
+          "completed_at": "2026-10-12T21:10:26Z"
+        },
+        {
+          "name": "render \u8d28\u68c0\u843d\u5e93\u540e\u81ea\u52a8\u6d3e\u53d1\u5fae\u4fe1\u63a8\u9001",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 55,
+          "started_at": "2026-10-12T21:10:26Z",
+          "completed_at": "2026-10-12T21:10:26Z"
+        },
+        {
+          "name": "\u63a8\u9001\u524d\u9884\u5360\u6301\u4e45\u53d1\u5e03\u8d26\u672c",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 56,
+          "started_at": "2026-10-12T21:10:26Z",
+          "completed_at": "2026-10-12T21:10:26Z"
+        },
+        {
+          "name": "\u63a8\u9001\u5230\u5fae\u4fe1\uff08\u53ef\u9009\uff09",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 57,
+          "started_at": "2026-10-12T21:10:26Z",
+          "completed_at": "2026-10-12T21:10:26Z"
+        },
+        {
+          "name": "\u8bb0\u4e0b\u5df2\u7ecf\u63a8\u9001\u8fc7",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 58,
+          "started_at": "2026-10-12T21:10:26Z",
+          "completed_at": "2026-10-12T21:10:26Z"
+        },
+        {
+          "name": "\u5df2\u9884\u5360\u540e\u5931\u8d25\u5219\u6807\u8bb0\u63a8\u9001\u72b6\u6001\u4e0d\u660e",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 59,
+          "started_at": "2026-10-12T21:10:26Z",
+          "completed_at": "2026-10-12T21:10:26Z"
+        },
+        {
+          "name": "Post \u7f13\u5b58 TTS\uff08\u540c\u6587\u65c1\u767d\u8de8\u8d9f\u4e0d\u91cd\u5408\u6210\uff09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 113,
+          "started_at": "2026-10-12T21:10:26Z",
+          "completed_at": "2026-10-12T21:10:27Z"
+        },
+        {
+          "name": "Post \u7f13\u5b58\u6e90\u7247\uff08\u540c\u4e00\u6761\u7247\u5b50\u53ea\u4e0b\u4e00\u6b21\uff09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 114,
+          "started_at": "2026-10-12T21:10:27Z",
+          "completed_at": "2026-10-12T21:10:27Z"
+        },
+        {
+          "name": "Post \u7f13\u5b58 Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 115,
+          "started_at": "2026-10-12T21:10:27Z",
+          "completed_at": "2026-10-12T21:10:27Z"
+        },
+        {
+          "name": "Post \u7f13\u5b58\u62a0\u56fe\u6a21\u578b",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 116,
+          "started_at": "2026-10-12T21:10:27Z",
+          "completed_at": "2026-10-12T21:10:27Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 117,
+          "started_at": "2026-10-12T21:10:27Z",
+          "completed_at": "2026-10-12T21:10:27Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 118,
+          "started_at": "2026-10-12T21:10:27Z",
+          "completed_at": "2026-10-12T21:10:28Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 119,
+          "started_at": "2026-10-12T21:10:28Z",
+          "completed_at": "2026-10-12T21:10:28Z"
+        }
+      ]
+    }
+  ]
+}

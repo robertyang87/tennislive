@@ -1,0 +1,28 @@
+{
+  "kind": "ci-export-fixture-context-correction",
+  "failed_run_url": "https://github.com/robertyang87/tennislive/actions/runs/38361956826",
+  "failed_feature_head": "7b9494c293161bd76f9c2f5a6bcc40bb19a33449",
+  "original_result": {
+    "failed": 3,
+    "passed": 6076,
+    "skipped": 208,
+    "seconds": 499.41
+  },
+  "cause": "Existing AST export-call fixture supplied old silent/mixed variables but omitted new final_inputs/final_audio_input locals. All three FPS variants failed with NameError before invoking FFmpeg.",
+  "change": "Supply actual new export locals and exercise the one-part fusion bridge at existing 25,30000/1001,60fps cases; retain SPS level/resources/CFR/frame-count assertions and add real frame-clock comparison.",
+  "before_test_sha256": "a4af210aa9e7e96ae3707ac3b7eb3f7f2eadf3bca78a2dc0bdddb70026f0d87d",
+  "after_test_sha256": "f8e3920c0e88c661b606ff91663ee2942eac2b3dd1f27202f899998d3f01a993",
+  "renderer_and_helper_changed": false,
+  "renderer_sha256": "46fa3aaf2c8f3c5fd5ded1b55d167198fbfdb921dc1ea94a121dbdf60300a022",
+  "helper_sha256": "4cf7b9e842e35c7f347fa8b14020565bd26a566c5079e63beab4c685b463208e",
+  "verification": {
+    "ffmpeg": "BtbN N-127388-g615b07170e",
+    "targets": [
+      "tests/test_reel_encoding.py",
+      "tests/test_reel_join_fusion.py"
+    ],
+    "passed": 20,
+    "seconds": 7.55
+  },
+  "publication_approved": false
+}

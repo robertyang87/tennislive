@@ -18,6 +18,34 @@ def _steps(name):
 
 def _installs_pronunciation(run):
     for command in shell_commands(run):
+        if command[0] in {"python", "python3"} and "-c" in command:
+            # The reel reads the exact extra with stdlib tomllib, then invokes
+            # pip once without rebuilding the editable project. Only executed
+            # top-level assignments/calls count; comments/echo remain inert.
+            tree = ast.parse(command[command.index("-c") + 1])
+            assignments = {
+                node.targets[0].id: ast.unparse(node.value)
+                for node in tree.body if isinstance(node, ast.Assign)
+                and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name)
+            }
+            expected = ("tomllib.loads(pathlib.Path('pyproject.toml').read_text())"
+                        "['project']['optional-dependencies']['pronunciation']")
+            for node in tree.body:
+                if not (isinstance(node, ast.Expr) and isinstance(node.value, ast.Call)):
+                    continue
+                call = node.value
+                if ast.unparse(call.func) != "subprocess.check_call" or not call.args:
+                    continue
+                args = call.args[0]
+                if not isinstance(args, ast.List) or len(args.elts) != 6:
+                    continue
+                prefix = [ast.unparse(item) for item in args.elts[:5]]
+                last = args.elts[-1]
+                if (prefix == ["sys.executable", "'-m'", "'pip'", "'install'", "'-q'"]
+                        and isinstance(last, ast.Starred)
+                        and isinstance(last.value, ast.Name)
+                        and assignments.get(last.value.id) == expected):
+                    return True
         if command[:2] != ["pip", "install"]:
             continue
         for argument in command:
