@@ -3,11 +3,23 @@
   "source_sha256": "cc2c1fc7df1cf2b7d9db31d8cbd98c0e96c032578c2b2943e282ca75ed3e8823",
   "method": "asr_cross_checked",
   "reviewer": "grok bot (local box)",
-  "reviewed_at": "2026-10-13T07:14:32.043659+00:00",
-  "reviewed_from": 122.9,
-  "reviewed_to": 125.8,
+  "reviewed_at": "2026-10-13T07:18:15.270366+00:00",
+  "reviewed_from": 125.8,
+  "reviewed_to": 135.0,
   "status": "complete",
   "uncertain_spans": [],
-  "foreground_english": [],
-  "no_foreground_english_reason": "这一段是中文旁白。窗口按 faster-whisper tiny.en 与 small.en 两份逐词英文转写交叉核对，选在解说停顿处（两份转写的所有词前后各留 0.35s 余量），窗口内两份转写都没有英文口播。"
+  "foreground_english": [
+    {
+      "start": 126.39999999999999,
+      "end": 127.2,
+      "en": "Oh, hang on.",
+      "zh": "哎，等一下。"
+    },
+    {
+      "start": 131.5,
+      "end": 133.3,
+      "en": "But that's twice. It's his point.",
+      "zh": "可这是第二次了，这分该判给我！"
+    }
+  ]
 }
