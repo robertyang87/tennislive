@@ -136,6 +136,7 @@ def test_挨饿的定时班次要互相叫醒():
 #: 2026-09-28 的来路：reel-cover-upgrade（O4 自动换图）登记 3 小时 0 趟，没有任何班次
 #: 叫醒它、GitHub 又在丢 schedule 事件——而当时没有一条判据会问「谁来叫醒它」。
 NOT_NUDGED = {
+    "ci.yml": "每日全量是补充跨产线回归，不即时出片或发消息；漏班由次日或人工 full 补，不占生产宿主的时效并发位",
     "official-social-images.yml": "发现类采集，漏一班下一班照样捞到，不卡出片",
     "oncourt-interviews.yml": "场上采访采集，漏一班下一班补；出片那一段由 interview-auto-render 接",
     "source-health.yml": "6 小时一班的源健康检查，晚一班只是晚报",

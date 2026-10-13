@@ -1,0 +1,294 @@
+{
+  "schema": "video-test-selection-dependency-audit.v1",
+  "read_only": true,
+  "tests_executed": false,
+  "cases": [
+    {
+      "id": "reel_renderer_has_interview_download_consumer",
+      "changed_paths": [
+        "tools/build_match_reel.py"
+      ],
+      "required_profiles": [
+        "reel",
+        "interview"
+      ],
+      "required_tests": [
+        "tests/test_match_reel.py",
+        "tests/test_reel_caption_preflight.py",
+        "tests/test_interview_clip.py",
+        "tests/test_interview_download_recovery.py",
+        "tests/test_en_subtitle_font.py",
+        "tests/test_fixed_center_video_policy.py"
+      ],
+      "evidence": [
+        "tools/build_interview_clip.py:4446 imports build_match_reel._ladder",
+        "tests/test_interview_clip.py:6850 directly imports reel",
+        "tools/build_match_reel.py renders multiple editorial columns, including match-footage episodes of 网球有故事"
+      ],
+      "note": "Selecting all three video profiles is a safe conservative choice; reel-only is insufficient. This is the full-file minimum, not a hunk-level optimization."
+    },
+    {
+      "id": "interview_renderer_requires_shared_contract_tests",
+      "changed_paths": [
+        "tools/build_interview_clip.py"
+      ],
+      "required_profiles": [
+        "interview"
+      ],
+      "required_tests": [
+        "tests/test_interview_clip.py",
+        "tests/test_interview_visual.py",
+        "tests/test_interview_landed.py",
+        "tests/test_en_subtitle_font.py",
+        "tests/test_fixed_center_video_policy.py"
+      ],
+      "evidence": [
+        "tests/test_en_subtitle_font.py:24 asserts interview/reel/explainer font identity",
+        "tests/test_fixed_center_video_policy.py:37 exercises interview body/lead_in/trail_in"
+      ],
+      "note": "A pure test_interview* glob loses non-prefixed shared contract tests."
+    },
+    {
+      "id": "explainer_filename_is_shared_subtitle_and_tts_core",
+      "changed_paths": [
+        "src/tennislive/video/explainer.py"
+      ],
+      "required_profiles": [
+        "reel",
+        "interview",
+        "explainer"
+      ],
+      "required_tests": [
+        "tests/test_explainer.py",
+        "tests/test_match_reel.py",
+        "tests/test_interview_clip.py",
+        "tests/test_en_subtitle_font.py",
+        "tests/test_segment_subtitle_bottom_windows.py",
+        "tests/test_tts.py"
+      ],
+      "evidence": [
+        "tools/build_match_reel.py:122 imports write_subtitles/subtitle_cues/readable from explainer",
+        "tools/build_interview_clip.py:4347 imports ExplainerSegment,synthesize_narration,DEFAULT_VOICE,DEFAULT_RATE",
+        "tools/versus_poster.py:75 and tools/render_stat_card.py:225 import explainer._data_uri"
+      ],
+      "note": "Never route this file to only the explainer profile based on its basename."
+    },
+    {
+      "id": "shared_subtitle_normalization_all_three",
+      "changed_paths": [
+        "src/tennislive/video/subtitle_text.py"
+      ],
+      "required_profiles": [
+        "reel",
+        "interview",
+        "explainer"
+      ],
+      "required_tests": [
+        "tests/test_explainer.py",
+        "tests/test_match_reel.py",
+        "tests/test_interview_clip.py",
+        "tests/test_reel_bilingual_subtitles.py",
+        "tests/test_interview_native_chinese.py"
+      ],
+      "evidence": [
+        "tools/build_match_reel.py:148 imports common subtitle normalization",
+        "tools/build_interview_clip.py:2294 zh_display imports drop_punctuation",
+        "src/tennislive/video/explainer.py:50 imports drop_punctuation"
+      ],
+      "note": "Normalization affects final visible Chinese, and must not change English score/quote punctuation."
+    },
+    {
+      "id": "shared_crop_gate_all_three",
+      "changed_paths": [
+        "src/tennislive/video/crop_policy.py"
+      ],
+      "required_profiles": [
+        "reel",
+        "interview",
+        "explainer"
+      ],
+      "required_tests": [
+        "tests/test_fixed_center_video_policy.py",
+        "tests/test_reel_render_budget.py",
+        "tests/test_interview_visual.py",
+        "tests/test_explainer_efficiency.py"
+      ],
+      "evidence": [
+        "tools/build_match_reel.py:4576 and render enforce shared center crop",
+        "tools/build_interview_clip.py:5869 and 6211 enforce interview center",
+        "src/tennislive/video/explainer.py:13963 and 14262 enforce intro center"
+      ],
+      "note": "The existing fixed-center file actually contains bad inputs for all three lines, not just reel."
+    },
+    {
+      "id": "actual_shared_english_font_asset",
+      "changed_paths": [
+        "assets/fonts/Inter-SemiBold.ttf"
+      ],
+      "required_profiles": [
+        "reel",
+        "interview",
+        "explainer"
+      ],
+      "required_tests": [
+        "tests/test_en_subtitle_font.py",
+        "tests/test_interview_clip.py",
+        "tests/test_match_reel.py"
+      ],
+      "evidence": [
+        "src/tennislive/video/explainer.py:13521 _ASS_EN_FONT_FILE points at this exact asset",
+        "tests/test_en_subtitle_font.py:24 cross-line font identity",
+        "tests/test_en_subtitle_font.py:44 real libass resolves Inter"
+      ],
+      "note": "The agreed initial policy keeps modified existing assets / fonts on full. This exact shared font illustrates why a reel-only asset heuristic would be unsafe.",
+      "required_mode": "full"
+    },
+    {
+      "id": "design_tokens_affect_video_and_nonvideo_templates",
+      "changed_paths": [
+        "src/tennislive/design_tokens.py"
+      ],
+      "required_mode": "full",
+      "required_tests": [
+        "tests/test_design_tokens.py",
+        "tests/test_stat_card_palette.py",
+        "tests/test_interview_clip.py",
+        "tests/test_explainer_visual.py"
+      ],
+      "evidence": [
+        "tools/build_interview_clip.py:94, tools/versus_poster.py:66, tools/render_stat_card.py use tokens",
+        "src/tennislive/render/cards.py, pushmsg.py, webcards.py, push_style.py also import tokens"
+      ],
+      "note": "Three video profiles alone do not cover web/push/cards consumers; use full regression initially."
+    },
+    {
+      "id": "reel_media_qc_tests_have_non_reel_names",
+      "changed_paths": [
+        "tools/check_reel_landed.py"
+      ],
+      "required_profiles": [
+        "reel"
+      ],
+      "required_tests": [
+        "tests/test_reel_qc_attestation.py",
+        "tests/test_foreground_audio_gate.py",
+        "tests/test_scoreboard_geometry_qc.py",
+        "tests/test_slow_motion.py",
+        "tests/test_title_card.py",
+        "tests/test_stat_card.py",
+        "tests/test_reattest.py"
+      ],
+      "evidence": [
+        "tests/test_title_card.py:60 imports check_reel_landed",
+        "tests/test_stat_card.py:679 imports check_reel_landed",
+        "tests/test_slow_motion.py:28 imports check_reel_landed",
+        "tools/check_reel_landed.py:523 verify_final / 600 natural_quiet_audio"
+      ],
+      "note": "Prefix-only test_reel* grouping omits native duration, cards, evidence binding and audio regressions."
+    },
+    {
+      "id": "image_cache_has_cover_and_complete_decode_consumers",
+      "changed_paths": [
+        "tools/image_probe_cache.py"
+      ],
+      "required_profiles": [
+        "reel"
+      ],
+      "required_tests": [
+        "tests/test_image_probe_cache.py",
+        "tests/test_reel_asset_gates.py",
+        "tests/test_reel_caption_preflight.py",
+        "tests/test_match_reel.py"
+      ],
+      "evidence": [
+        "tools/build_match_reel.py cover_photo_problem calls probe_image",
+        "tools/reel_asset_gates.py:239 image_load_problem calls probe_image",
+        "tests/test_image_probe_cache.py:43 corrupted same-size/restored-mtime negative",
+        "tests/test_reel_asset_gates.py:201 badcrc PNG / truncated JPEG existing negative"
+      ],
+      "note": "Do not classify a new non-prefixed tool as docs-only/no-tests. Failure cache, EXIF geometry and full decode remain hard checks."
+    },
+    {
+      "id": "mixed_content_paths_are_union_not_first_match",
+      "changed_paths": [
+        "specs/reels/paolini-bejlek-wuhan-2026-r1.json",
+        "specs/interviews/zverev-shelton-us-open-2026-final-ceremony.json"
+      ],
+      "required_profiles": [
+        "reel",
+        "interview"
+      ],
+      "required_tests": [
+        "tests/test_match_reel.py",
+        "tests/test_reel_editorial.py",
+        "tests/test_interview_preflight.py",
+        "tests/test_interview_source_gate.py",
+        "tests/test_interview_clip.py"
+      ],
+      "evidence": [
+        "Both are real repository production specs in different directories"
+      ],
+      "note": "Mixed PRs must union all path decisions; a reel path must never suppress a following interview path."
+    }
+  ],
+  "full_fallback_paths": [
+    "pyproject.toml",
+    "tests/conftest.py",
+    ".github/workflows/ci.yml",
+    "src/tennislive/video/__init__.py",
+    "new unknown implementation path",
+    "selector implementation / its rule manifest"
+  ],
+  "selector_invariants": [
+    "Changed paths are computed against the PR merge-base, not HEAD^; include all commits.",
+    "Renames include both old and new paths; deleted files still map by their former path.",
+    "Union all profile requirements; a shared/full decision dominates narrow decisions.",
+    "Unknown changed production path or unavailable diff cannot produce an empty successful plan; default full.",
+    "A changed test file itself must be included, regardless of its name/prefix.",
+    "Explicitly validate the requested profile against detected changes; do not let a user supplied reel flag narrow a shared-code PR.",
+    "Nonzero pytest exit must propagate. No-tests-collected must not be treated as success for a production change.",
+    "Print/retain current diff and selected test files so the actual executed command is reviewable.",
+    "If using import discovery, include function-local imports, source-file read_text references, assets, workflow invocations, package __init__ and static explicit overrides; top-level AST imports alone are insufficient."
+  ],
+  "negative_validation_recommendations": [
+    {
+      "changed_path": "src/tennislive/video/crop_policy.py",
+      "selected_test_must_include": "tests/test_fixed_center_video_policy.py::test_interview_all_video_blocks_refuse_shift",
+      "actual_mutation": "In an isolated Python process, replace crop_policy.require_interview_center with a no-op, then invoke pytest.main on the selected node.",
+      "expected_result": "Nonzero pytest status; proves a shared change cannot evade the other-line test. Restore by process exit, no source file mutation."
+    },
+    {
+      "changed_path": "src/tennislive/video/explainer.py",
+      "selected_test_must_include": "tests/test_reel_caption_preflight.py::test_bad_caption_fails_before_tracking_and_encoding_without_success_proof",
+      "actual_mutation": "In an isolated Python process, replace reel.write_subtitles with a wrapper that drops bottom_margin_windows before calling the original writer.",
+      "expected_result": "The cross-position-window parameter fails (no ValueError), so the selector must retain that reel test even for an explainer-named shared file."
+    },
+    {
+      "changed_path": "assets/fonts/Inter-SemiBold.ttf",
+      "selected_test_must_include": "tests/test_en_subtitle_font.py::test_三条线的英文字体是同一支",
+      "actual_mutation": "In an isolated Python process, temporarily set build_interview_clip._ASS_NAME[en] to a nonexistent different face before pytest.main.",
+      "expected_result": "Cross-line font contract fails, and this unprefixed test is selected by the font-asset change."
+    },
+    {
+      "changed_paths": [
+        "specs/reels/paolini-bejlek-wuhan-2026-r1.json",
+        "specs/interviews/zverev-shelton-us-open-2026-final-ceremony.json"
+      ],
+      "assertion": "Both reel and interview test groups are selected regardless of path order. Include rename old/new and deleted-path variants."
+    },
+    {
+      "changed_path": "tools/a_new_unclassified_media_gate.py",
+      "assertion": "Unknown implementation path gives full fallback, not empty/no-tests; specifying --profile reel cannot suppress fallback."
+    }
+  ],
+  "policy_alignment": "Parent chose per-line manifests + always critical common nodes; all selector/manifest/tests/CI changes and modified existing media/font assets full; source/tools follow conservative transitive consumers; unknown/non-video consumer full.",
+  "additional_graph_review_points": [
+    "Resolve both from tennislive.video import explainer and from . import outro_page, including function-local imports; do not only follow import foo syntax.",
+    "Even leaf module edits may affect import-time package __init__: video/__init__.py loads pipeline; preserve full fallback for package bootstrap changes.",
+    "File basename/path references in subprocess/workflow/read_text consumers count even without Python imports; false-positive edges are acceptable.",
+    "Tests referring to assets by constructed path or basename must still be retained; modified existing assets are full under initial policy.",
+    "Evidence directory slug may map to both interview/reel or no current spec. Ambiguity is union/full, never guessed from slug words.",
+    "A new requested media asset is narrow only if all actual current references establish a production line; generic credits/font/shared portraits must not inherit the nearest touched spec line.",
+    "Diff contains rename source and destination plus deletions; static current-tree graph alone cannot see a deleted consumer. Use base-tree and current-tree union or full for unresolved deleted/renamed implementations."
+  ]
+}

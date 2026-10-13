@@ -830,8 +830,11 @@ def test_CI要把最慢的测试打进日志():
     上的差别）；也**不钉时长上限**——把一个含 runner 抖动的总时长写成硬闸，
     等于每隔几趟就红一次，而「一条常年红的检查和没有检查是同一个毛病」。
     """
-    body = _yaml_only(_workflow("ci.yml"))
-    line = [ln for ln in body.splitlines() if "pytest" in ln and "run:" in ln]
+    import yaml
+    workflow = yaml.safe_load(_workflow("ci.yml"))
+    line = [ln for job in workflow['jobs'].values() for step in job.get('steps', [])
+            for ln in str(step.get('run') or '').splitlines()
+            if re.match(r'^\s*pytest(?:\s|$)', ln)]
     assert len(line) == 1, f"ci.yml 里跑 pytest 的行不是一条：{line}"
     assert "--durations" in line[0], (
         "ci.yml 那行 pytest 不再打印最慢的测试了：\n  " + line[0].strip()

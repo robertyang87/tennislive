@@ -19,6 +19,10 @@ on:
   pull_request:
     paths-ignore:
       - "data/reel-dispatch-queue/**"
+  # Daily and explicitly requested regressions always retain full coverage.
+  schedule:
+    - cron: "23 3 * * *"
+  workflow_dispatch:
 
 # **同一个 PR 上，新的一推就把旧的那趟掐掉。**
 #
@@ -158,6 +162,31 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
+      - name: 选择本次产线测试范围
+        id: test_scope
+        env:
+          CI_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          CI_EVENT: ${{ github.event_name }}
+        run: |
+          SCOPE_DIR=/tmp/production-test-scope
+          if [ "$CI_EVENT" = "schedule" ] || [ "$CI_EVENT" = "workflow_dispatch" ]; then
+            python tools/production_test_scopes.py --full --outdir "$SCOPE_DIR"
+          else
+            if [ -n "$CI_BASE" ]; then
+              if ! git fetch --no-tags --depth=1 origin "$CI_BASE"; then
+                echo "::warning::Cannot fetch CI base; the selector must use full fallback if the diff is unavailable"
+              fi
+            fi
+            python tools/production_test_scopes.py --base "$CI_BASE" --head HEAD --outdir "$SCOPE_DIR"
+          fi
+          python - "$SCOPE_DIR/plan.json" "$GITHUB_STEP_SUMMARY" <<'PY_SCOPE'
+          import json, pathlib, sys
+          plan = json.loads(pathlib.Path(sys.argv[1]).read_text())
+          rendered = json.dumps(plan, ensure_ascii=False, indent=2)
+          print(rendered)
+          with open(sys.argv[2], 'a') as handle:
+              handle.write('### Selected test scope\n\n```json\n' + rendered + '\n```\n')
+          PY_SCOPE
       # `fonts-noto-core` 不是可选项：字幕切行要**量** Noto Sans 的实际字宽，
       # 少了它 fontconfig 悄悄回退到 DejaVu（宽 8%），量出来的行宽和渲出来的
       # 对不上。代码里缺字体直接报错不回退，所以漏装这个包 CI 会红而不是假绿。
@@ -395,4 +424,29 @@ jobs:
       - name: 历史已发诊断（不代表旧片重新质检通过）
         run: python tests/production_history.py
       - name: 运行测试
-        run: pytest -rs -n auto --dist loadfile --durations=25 -o faulthandler_timeout=180
+        env:
+          PYTHONPATH: src
+        run: |
+          mapfile -t targets < /tmp/production-test-scope/pytest-args.txt
+          if [ "${#targets[@]}" -eq 0 ]; then
+            echo "::error::Test scope has no targets; refusing an empty successful run"
+            exit 1
+          fi
+          for target in "${targets[@]}"; do
+            if [ -z "$target" ]; then
+              echo "::error::Test scope contains an empty target"
+              exit 1
+            fi
+          done
+          pytest "${targets[@]}" -rs -n auto --dist loadfile --durations=25 -o faulthandler_timeout=180
+      - name: 保存实际测试范围
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-test-scope-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            /tmp/production-test-scope/plan.json
+            /tmp/production-test-scope/pytest-args.txt
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error

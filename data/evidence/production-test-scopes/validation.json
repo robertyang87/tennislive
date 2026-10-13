@@ -1,0 +1,82 @@
+{
+  "schema": "tennislive.production-test-scope-validation.v1",
+  "status": "scoped_tests_completed_with_shared_contract_targeted_repairs; final_CI_pending",
+  "source_binding": "PYTHONPATH=src; each corrected process verified explainer.__file__ is under current workspace/src",
+  "collection": {
+    "full_at_initial_collection": 6237,
+    "reel": 3535,
+    "interview": 3207,
+    "explainer": 1718,
+    "news": 1342
+  },
+  "initial_local_runs": {
+    "reel": {
+      "accepted": false,
+      "reason": "old editable source imported",
+      "summary": "23 failed, 3481 passed, 31 skipped, 13 warnings, 70 subtests passed in 495.60s (0:08:15)"
+    },
+    "interview": {
+      "accepted": false,
+      "reason": "old editable source imported",
+      "summary": "19 failed, 2960 passed, 228 skipped, 49 warnings in 334.76s (0:05:34)"
+    },
+    "explainer": {
+      "accepted": false,
+      "reason": "old editable source imported",
+      "summary": "41 failed, 1658 passed, 19 skipped, 19 warnings in 294.67s (0:04:54)"
+    }
+  },
+  "corrected_local_runs": {
+    "reel": {
+      "summary": "2 failed, 3502 passed, 31 skipped, 13 warnings, 70 subtests passed in 520.19s (0:08:40)",
+      "failed_nodes": [
+        "tests/test_match_reel.py::test_今日赛程没有发布出口了",
+        "tests/test_nudge_stale_ticks.py::test_每条定时工作流要么有人叫醒_要么写明为什么不用"
+      ],
+      "failures_fixed": "CI event name disambiguated without hiding real schedule publishing; supplementary daily CI full documented as non-production nudge target",
+      "targeted_recheck": "6 passed in 2.52s",
+      "scope_rerun_after_repair": false
+    },
+    "interview": {
+      "summary": "2 failed, 2977 passed, 228 skipped, 49 warnings in 357.72s (0:05:57)",
+      "failed_nodes": [
+        "tests/test_match_reel.py::test_今日赛程没有发布出口了",
+        "tests/test_nudge_stale_ticks.py::test_每条定时工作流要么有人叫醒_要么写明为什么不用"
+      ],
+      "failures_fixed": "CI event name disambiguated without hiding real schedule publishing; supplementary daily CI full documented as non-production nudge target",
+      "targeted_recheck": "6 passed in 2.52s",
+      "scope_rerun_after_repair": false
+    },
+    "explainer": {
+      "summary": "2 failed, 1697 passed, 19 skipped, 20 warnings in 340.67s (0:05:40)",
+      "failed_nodes": [
+        "tests/test_match_reel.py::test_今日赛程没有发布出口了",
+        "tests/test_nudge_stale_ticks.py::test_每条定时工作流要么有人叫醒_要么写明为什么不用"
+      ],
+      "failures_fixed": "CI event name disambiguated without hiding real schedule publishing; supplementary daily CI full documented as non-production nudge target",
+      "targeted_recheck": "6 passed in 2.52s",
+      "scope_rerun_after_repair": false
+    }
+  },
+  "negative_checks": {
+    "font": "normal passes, injected mismatch fails",
+    "crop": "normal passes, injected disabled guard fails",
+    "window": "normal passes, injected missing bottom-window validation fails"
+  },
+  "limitations": [
+    "First local profiles imported an older editable workspace; their failures are not current-code pipeline results.",
+    "Local face weights and yt-dlp may skip; hosted CI keeps full dependencies and models.",
+    "Parallel local profiles use one worker each; their wall times are not comparable to hosted auto workers or proof of a 20-minute film delivery.",
+    "Corrected full-scope runs each had the same two CI contract failures; they were repaired and rechecked specifically instead of rerunning thousands of unchanged cases. Final CI will check the complete new head."
+  ],
+  "targeted_final": {
+    "summary": "66 passed in 41.10s",
+    "current_source_binding": "PYTHONPATH=src"
+  },
+  "schedule_publication_negative": {
+    "summary": "1 passed in 1.65s",
+    "premise": "original disabled-schedule publication rule passes",
+    "fault": "valid workflow job restored tennisLive schedule command in text; original production ban fails",
+    "executes_publication": false
+  }
+}
