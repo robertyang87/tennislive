@@ -38,44 +38,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "6f6025641154c038263fa72726ba1f5854705dad88adf36180249e17f7d2c1dc",
+  "render_inputs_sha256": "65b6dca365ea3219c0b399b5750b2329ef8b9bddd7e91f0ffa928281c039b6fc",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "code-violation-point-penalty-2026",
-    "received_at": "2026-10-12T17:29:01Z",
-    "artifact_ready_at": "2026-10-12T17:36:15Z",
-    "elapsed_seconds": 434.897,
+    "received_at": "2026-10-13T10:23:15Z",
+    "artifact_ready_at": "2026-10-13T10:29:55Z",
+    "elapsed_seconds": 400.37,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "8128f0ff20582ca703d373bcf3319739081d41d030407ec14a5195a92697a3e7",
-    "spec_sha256": "6a9e67102651b36174eb174ade5386195dcb785a7c2b47d3cef570f207805e2f",
-    "run_id": "38284486892",
+    "film_sha256": "e161fe7f2a83f4afad8fe0d562fc86beed79ba3dc5f306ad2c463dc0b9b1b56a",
+    "spec_sha256": "1a6f9b53acfb861a6102231c5d207e2cf21622d906fd1a0a4df856237748dbf0",
+    "run_id": "38382990853",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-12T17:33:08Z",
-        "run_id": "38284486892"
+        "at": "2026-10-13T10:27:39Z",
+        "run_id": "38382990853"
       }
     ],
-    "render_seconds": 187.897,
-    "pre_render_seconds": 247.0
+    "render_seconds": 136.37,
+    "pre_render_seconds": 264.0
   },
-  "film_sha256": "8128f0ff20582ca703d373bcf3319739081d41d030407ec14a5195a92697a3e7",
-  "film_bytes": 107141210,
-  "qc_attestation_sha256": "aaa4c3355ccef86e7beecf9b04ca52ca59c64f495aad612cf9e268799f2a2f4a",
+  "film_sha256": "e161fe7f2a83f4afad8fe0d562fc86beed79ba3dc5f306ad2c463dc0b9b1b56a",
+  "film_bytes": 104409991,
+  "qc_attestation_sha256": "0b8a39d99a13eb0047e550621e71060138d46f327a3fd095766b5053cc20ee32",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-12T17:33:08Z",
-      "run_id": "38284486892"
+      "at": "2026-10-13T10:27:39Z",
+      "run_id": "38382990853"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-12T17:36:16Z",
-      "run_id": "38284486892"
+      "at": "2026-10-13T10:29:58Z",
+      "run_id": "38382990853"
     }
   ],
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-code-violation-point-penalty-2026-v3/code-violation-point-penalty-2026.mp4",
-  "video_bytes": 107141210
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-code-violation-point-penalty-2026/code-violation-point-penalty-2026.mp4",
+  "video_bytes": 104409991
 }
