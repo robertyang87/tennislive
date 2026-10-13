@@ -1,0 +1,13 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=qEteCDEJgkg",
+  "source_sha256": "1debaadf8dd18d9a40730b088511c680275d4bd27ceedf932fc2fed2588ec418",
+  "method": "asr_cross_checked",
+  "reviewer": "grok bot (local box)",
+  "reviewed_at": "2026-10-13T02:16:09.500091+00:00",
+  "reviewed_from": 8.5,
+  "reviewed_to": 19.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "这一段是中文旁白。窗口按 faster-whisper tiny.en 与 small.en 两份逐词英文转写交叉核对，选在解说停顿处（两份转写的所有词前后各留 0.35s 余量），窗口内两份转写都没有英文口播。"
+}
