@@ -55,3 +55,5 @@ PYTHONPATH=src python data/evidence/reel-encode-startup-2026-10-13/benchmark_pro
 两次真实 runner 的 checkout 为 51／55 秒、主要依赖为 27／25 秒；FFmpeg、字体和 Chromium 缓存已有效。素材目录约 1.28GiB，未验证依赖完整性就删检出范围会导致返工，这轮保留现有规则。原始步骤时间在本证据目录中，数据来自 Actions API，而不是完整日志。
 
 本次没有生成、重发用户电影或推微信。下一期仍要从最初收到素材记录到真实微信回执，才能验证端到端 20 分钟；最终 head 按当前改动范围跑一次 CI，普通单片继续按产线选择回归。
+
+首次 CI 为 6076 项通过、208 项跳过、3 项失败：原导出测试只抽取 `render()` 的最终调用，却未给测试上下文提供新增的 `final_inputs/final_audio_input`。三种帧率均在调用 FFmpeg 前报 `NameError`。修正夹具后，原 SPS、编码资源、CFR 与帧数要求保留，并让这三种帧率实际走融合图和真实帧时钟比较；BtbN 同款的 20 项相关检查通过。生产渲染代码与原始性能／媒体证据没有变化。见[失败与修订记录](../data/evidence/reel-encode-startup-2026-10-13/ci-export-fixture-correction.json)。
