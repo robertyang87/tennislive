@@ -46,6 +46,10 @@ interview 的自动推送不再靠人补容易忘记的开关：草稿在赛果�
 `push.auto: true`；发布资格仍由 L0、L2 attestation 和 L3 ledger 决定，开关不能
 绕过质量门禁。explainer 的认领项仍需继续统一。
 
+**reel 一律默认 `push.auto: true`（2026-10-13 起）**：账号所有者定的是「质检通过就推送微信，不用问」。
+新写的 reel spec 必须带 `"push": {"auto": true, ...}`；真不想自动发只能写 `push._no_auto_why`。
+`tests/test_reel_editorial.py（test_新片默认开自动推送）` 守这条，旧片豁免在 `data/legacy_push_auto_off.json`（只许减）。
+
 ## 三、L2 成片落地闸：统一的核心不变量
 
 三条线成片**共享**这五条（从 `check_reel_landed` 抽出，其余线照抄形状）：

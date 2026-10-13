@@ -1541,3 +1541,38 @@ def test_两种封面版式的钩子字号是同一个出处():
         f"VS 的 .hook 没走 hook_title_px（应是 {want}px）：{html[html.find('.hook'):][:120]}")
     # 11 个字在 948px 里放不下 100px——老写法是**默默多折一行**，不报错
     assert want < 100
+
+
+# 所有 reel spec 默认 push.auto=true（2026-10-13 账号所有者：质检通过即推送微信，不用问）。
+# 不开就写 push._no_auto_why；旧片豁免 data/legacy_push_auto_off.json，只许减不许加。
+
+
+_PUSH_AUTO_ROOT = Path(__file__).resolve().parent.parent
+_PUSH_AUTO_LEGACY = set(json.loads((_PUSH_AUTO_ROOT / "data" / "legacy_push_auto_off.json").read_text())["slugs"])
+
+
+def _missing_push_auto_default():
+    out = set()
+    for p in (_PUSH_AUTO_ROOT / "specs" / "reels").glob("*.json"):
+        try:
+            d = json.loads(p.read_text())
+        except Exception:
+            continue
+        if not isinstance(d, dict):
+            continue
+        push = d.get("push") or {}
+        if push.get("auto") is not True and not push.get("_no_auto_why"):
+            out.add(p.stem)
+    return out
+
+
+def test_新片默认开自动推送():
+    fresh = _missing_push_auto_default() - _PUSH_AUTO_LEGACY
+    assert not fresh, (
+        f"这些 reel spec 没写 push.auto=true 也没写 push._no_auto_why：{sorted(fresh)}。"
+        "默认要开：质检通过即推送微信。")
+
+
+def test_自动推送默认开的豁免表只许减不许加():
+    stale = _PUSH_AUTO_LEGACY - _missing_push_auto_default()
+    assert not stale, f"这些已经开了自动推送或表过态，从豁免表删掉：{sorted(stale)}"
