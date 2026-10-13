@@ -3157,15 +3157,11 @@ def _mix_ducks(spec: dict, segments: list["Segment"]) -> bool:
 
 def validate_preserved_source_audio(spec: dict) -> None:
     """The opt-in guarantees unity source gain, rather than undoing gain later."""
-    if "preserve_source_audio" in spec and not isinstance(spec["preserve_source_audio"], bool):
-        raise ReelError("preserve_source_audio 必须是布尔值")
-    if spec.get("preserve_source_audio") is not True:
-        return
-    if any(spec.get(key) for key in ("music", "source_audio", "original_audio_mode", "audio_effects_review")):
-        raise ReelError("preserve_source_audio 与音乐、额外音轨或替换原声模式冲突")
-    for index, seg in enumerate(spec.get("segments") or []):
-        if seg.get("mute") or seg.get("bed") or seg.get("speed", 1) != 1:
-            raise ReelError(f"第 {index + 1} 段保留原声时不能设置 mute、bed 或变速")
+    from foreground_audio_gate import validate_preserved_source_audio as validate
+    try:
+        validate(spec)
+    except ValueError as exc:
+        raise ReelError(str(exc)) from exc
 
 
 def _seg_audio_needs_filter(seg: "Segment") -> bool:

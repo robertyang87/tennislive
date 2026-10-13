@@ -9,6 +9,26 @@ import narrated_audio_mode as narrated
 import build_match_reel as build
 
 
+def test_foreground_preinstall_validation_needs_only_standard_library():
+ script='''
+import sys
+sys.path.insert(0, 'tools')
+import foreground_audio_gate as gate
+spec={'preserve_source_audio':True,'segments':[]}
+gate.validate_preserved_source_audio(spec)
+assert gate.require(spec)==[]
+try:
+    gate.require({'preserve_source_audio':True,'segments':[{'bed':'high'}]})
+except ValueError as exc:
+    assert 'bed' in str(exc)
+else:
+    raise AssertionError('preserved source gain conflict was accepted')
+assert 'build_match_reel' not in sys.modules
+assert 'requests' not in sys.modules
+'''
+ subprocess.run([sys.executable,'-S','-c',script],cwd=ROOT,check=True)
+
+
 def test_preserved_native_source_stays_at_unity_during_and_after_voice():
  graph=build.duck_filtergraph(['[1:a]anull[v0]'],['[v0]'],preserve_source_audio=True)
  pcm=np.frombuffer(subprocess.check_output(['ffmpeg','-v','error',
