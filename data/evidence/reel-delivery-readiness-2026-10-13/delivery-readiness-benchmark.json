@@ -1,0 +1,2041 @@
+{
+  "base_sha": "7a1dbdb47261e25c01b8e98a98ef1625c1ab78bc",
+  "old_push_reel_sha256": "6085d6216d91a33cff7f254467e0ca7c5962f3aba07bccbe53503b5af5869975",
+  "new_push_reel_sha256": "c1641ecc9d42fddac9477e4d47d6e80464ef0ee2cef6b471a4915ec75bec45a4",
+  "benchmark_script_sha256": "d8bdf7cbae64865d5b2627c659a18eb0eaed43b9161a3800d28c3e2b2885c6b4",
+  "limits": [
+    "Local HTTP latency simulation only, no production network speed claim",
+    "Exactly same shortened attempts=3 retry=0.05s and 0.20s response delay in both paths",
+    "Pages deployment trigger/watchdog mocked; current escaped title and video Range use real HTTP",
+    "No movie generated and no external WeChat/PushPlus POST performed",
+    "Original and new wait functions retain production retry budgets in committed source"
+  ],
+  "rows": [
+    {
+      "scenario": "already-ready",
+      "repeat": 0,
+      "mode": "serial",
+      "seconds": 0.40612804700504057,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 1,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.002219264999439474,
+          "end_seconds": 0.2025715090057929,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:42421",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.20514972600358305,
+          "end_seconds": 0.4054698969994206,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:42421",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "already-ready",
+      "repeat": 0,
+      "mode": "parallel",
+      "seconds": 0.20446598499984248,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 2,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.0024653670043335296,
+          "end_seconds": 0.20279659199877642,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:41381",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.002796507003949955,
+          "end_seconds": 0.20357915500062518,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:41381",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "already-ready",
+      "repeat": 1,
+      "mode": "serial",
+      "seconds": 0.40468280899949605,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 1,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.001621421004529111,
+          "end_seconds": 0.2019921710016206,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:33035",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.2037505490006879,
+          "end_seconds": 0.4040627909998875,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:33035",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "already-ready",
+      "repeat": 1,
+      "mode": "parallel",
+      "seconds": 0.20406105300207855,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 2,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.002323943001101725,
+          "end_seconds": 0.20262979900144273,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:34475",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.002709054999286309,
+          "end_seconds": 0.20379755400063004,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:34475",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "already-ready",
+      "repeat": 2,
+      "mode": "serial",
+      "seconds": 0.4054963609960396,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 1,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.001653048995649442,
+          "end_seconds": 0.20198785299726296,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:42803",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.20405000999744516,
+          "end_seconds": 0.4043953069995041,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:42803",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "already-ready",
+      "repeat": 2,
+      "mode": "parallel",
+      "seconds": 0.20378788300149608,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 2,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.0020815220050280914,
+          "end_seconds": 0.20239459200092824,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:43295",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.0026627050028764643,
+          "end_seconds": 0.20350392399996053,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:43295",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "both-ready-at-0.45s",
+      "repeat": 0,
+      "mode": "serial",
+      "seconds": 0.6583353500027442,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 1,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.001897298003314063,
+          "end_seconds": 0.20224269100435777,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:44405",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.2547626450032112,
+          "end_seconds": 0.455069170006027,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:44405",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.45729630600544624,
+          "end_seconds": 0.6576091530005215,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:44405",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "both-ready-at-0.45s",
+      "repeat": 0,
+      "mode": "parallel",
+      "seconds": 0.45730893899599323,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 2,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.0020631789957406,
+          "end_seconds": 0.20235207899531815,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:37599",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.0024112049941322766,
+          "end_seconds": 0.20324935499957064,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:37599",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.2553380199969979,
+          "end_seconds": 0.45567894499981776,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:37599",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.25607546999526676,
+          "end_seconds": 0.45699910999974236,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:37599",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "both-ready-at-0.45s",
+      "repeat": 1,
+      "mode": "serial",
+      "seconds": 0.6606976580005721,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 1,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.0017430849984521046,
+          "end_seconds": 0.20213379999768222,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:41419",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.25480077900283504,
+          "end_seconds": 0.4552678690015455,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:41419",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.4597582459973637,
+          "end_seconds": 0.6600785769987851,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:41419",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "both-ready-at-0.45s",
+      "repeat": 1,
+      "mode": "parallel",
+      "seconds": 0.4585781479981961,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 2,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.0025126120017375797,
+          "end_seconds": 0.20285542399506085,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:35657",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.0032232820012723096,
+          "end_seconds": 0.20364496299589518,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:35657",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.25617176100058714,
+          "end_seconds": 0.4564935870002955,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:35657",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.25663194099615794,
+          "end_seconds": 0.45809660499799065,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:35657",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "both-ready-at-0.45s",
+      "repeat": 2,
+      "mode": "serial",
+      "seconds": 0.6587595829987549,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 1,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.001811862995964475,
+          "end_seconds": 0.20213616699766135,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:41923",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.2549561999985599,
+          "end_seconds": 0.4552869409963023,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:41923",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.4576042639964726,
+          "end_seconds": 0.6579958489965065,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:41923",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "both-ready-at-0.45s",
+      "repeat": 2,
+      "mode": "parallel",
+      "seconds": 0.4575985629999195,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 2,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.0027011679994757287,
+          "end_seconds": 0.20299742699717171,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:44101",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.0029970649993629195,
+          "end_seconds": 0.20391840899537783,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:44101",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.2558044479956152,
+          "end_seconds": 0.45611599199764896,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:44101",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.25604814699909184,
+          "end_seconds": 0.45679153299715836,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:44101",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "stale-page-and-delayed-video",
+      "repeat": 0,
+      "mode": "serial",
+      "seconds": 1.4156816960021388,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 1,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.001421704000676982,
+          "end_seconds": 0.20179943000403,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:45119",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.2539630540049984,
+          "end_seconds": 0.454298964003101,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:45119",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 3,
+          "begin_seconds": 0.5067486750049284,
+          "end_seconds": 0.7070460160030052,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:45119",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.709039829998801,
+          "end_seconds": 0.9094425729999784,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:45119",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.9617442210001172,
+          "end_seconds": 1.1621204109978862,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:45119",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 3,
+          "begin_seconds": 1.2147265130042797,
+          "end_seconds": 1.4150366660032887,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:45119",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "stale-page-and-delayed-video",
+      "repeat": 0,
+      "mode": "parallel",
+      "seconds": 0.7108053370029666,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 2,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.002471150000928901,
+          "end_seconds": 0.2027957750033238,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:39295",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.0028294869989622384,
+          "end_seconds": 0.20365534000302432,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:39295",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.25554073300008895,
+          "end_seconds": 0.45594468399940524,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:39295",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.255760090003605,
+          "end_seconds": 0.45701361499959603,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:39295",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 3,
+          "begin_seconds": 0.5090829640030279,
+          "end_seconds": 0.7094064280026942,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:39295",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 3,
+          "begin_seconds": 0.5093359919992508,
+          "end_seconds": 0.7100535409990698,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:39295",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "stale-page-and-delayed-video",
+      "repeat": 1,
+      "mode": "serial",
+      "seconds": 1.4151227339971229,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 1,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.0013741519942414016,
+          "end_seconds": 0.20167812999716261,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:37143",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.25412758799939184,
+          "end_seconds": 0.4544360729996697,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:37143",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 3,
+          "begin_seconds": 0.506866222996905,
+          "end_seconds": 0.7071446959962486,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:37143",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.7091255560007994,
+          "end_seconds": 0.9094199469982414,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:37143",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.9616494709989638,
+          "end_seconds": 1.1619668630009983,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:37143",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 3,
+          "begin_seconds": 1.214209726997069,
+          "end_seconds": 1.4145046689955052,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:37143",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "stale-page-and-delayed-video",
+      "repeat": 1,
+      "mode": "parallel",
+      "seconds": 0.7114012130041374,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 2,
+      "trace": [
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.002162568001949694,
+          "end_seconds": 0.20249303099990357,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:40569",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.002526898999349214,
+          "end_seconds": 0.20313335000537336,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:40569",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.2563645020054537,
+          "end_seconds": 0.4566936320043169,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:40569",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.2568123340024613,
+          "end_seconds": 0.45753285500541097,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:40569",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 3,
+          "begin_seconds": 0.5094946000026539,
+          "end_seconds": 0.7098009850014932,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:40569",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 3,
+          "begin_seconds": 0.509799794999708,
+          "end_seconds": 0.7107894190048683,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:40569",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "stale-page-and-delayed-video",
+      "repeat": 2,
+      "mode": "serial",
+      "seconds": 1.4172144650001428,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 1,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.001696178995189257,
+          "end_seconds": 0.20202336899819784,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:39509",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.2550271809959668,
+          "end_seconds": 0.4553438709990587,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:39509",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 3,
+          "begin_seconds": 0.5079883020007401,
+          "end_seconds": 0.708275026998308,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:39509",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.7105925649957499,
+          "end_seconds": 0.9109052769999835,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:39509",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.9635304319963325,
+          "end_seconds": 1.1638563569940743,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:39509",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 3,
+          "begin_seconds": 1.2158438449987443,
+          "end_seconds": 1.4161486239972874,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:39509",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "stale-page-and-delayed-video",
+      "repeat": 2,
+      "mode": "parallel",
+      "seconds": 0.710532664998027,
+      "outcome": "pass",
+      "error": null,
+      "peak_in_flight": 2,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.00208643899532035,
+          "end_seconds": 0.20293697499437258,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:37907",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.0023608389965374954,
+          "end_seconds": 0.20331867200002307,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:37907",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.2550940660003107,
+          "end_seconds": 0.45559538999805227,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:37907",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.25542506700003287,
+          "end_seconds": 0.45568808000098215,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:37907",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 3,
+          "begin_seconds": 0.5085558789942297,
+          "end_seconds": 0.708869671994762,
+          "status": 206,
+          "payload": "movie",
+          "request_headers": {
+            "Host": "127.0.0.1:37907",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 3,
+          "begin_seconds": 0.5089308050010004,
+          "end_seconds": 0.709686360998603,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:37907",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "video-unavailable",
+      "repeat": 0,
+      "mode": "serial",
+      "seconds": 1.4157087540006614,
+      "outcome": "blocked",
+      "error": "成片链接 http://127.0.0.1:45519/video 取不到（HTTP 404）。多半是这一版还没进 main——先把渲染那条 PR 合进去再推。带着一个打不开的 ▶ 按钮发出去，微信那条消息收不回来。",
+      "peak_in_flight": 1,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.0013341910016606562,
+          "end_seconds": 0.20162886100297328,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:45519",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.2542994220057153,
+          "end_seconds": 0.4545926650025649,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:45519",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 3,
+          "begin_seconds": 0.5071878290036693,
+          "end_seconds": 0.7075050650018966,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:45519",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.7093423520054785,
+          "end_seconds": 0.9096681650044047,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:45519",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.9621219149994431,
+          "end_seconds": 1.1624628100034897,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:45519",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 3,
+          "begin_seconds": 1.2146467420025147,
+          "end_seconds": 1.4149813300027745,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:45519",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "video-unavailable",
+      "repeat": 0,
+      "mode": "parallel",
+      "seconds": 0.7114831260041683,
+      "outcome": "blocked",
+      "error": "成片链接 http://127.0.0.1:36727/video 取不到（HTTP 404）。多半是这一版还没进 main——先把渲染那条 PR 合进去再推。带着一个打不开的 ▶ 按钮发出去，微信那条消息收不回来。",
+      "peak_in_flight": 2,
+      "trace": [
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.002351348004594911,
+          "end_seconds": 0.202792814001441,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:36727",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.002584977002697997,
+          "end_seconds": 0.20335692200023914,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:36727",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.255872335001186,
+          "end_seconds": 0.45617184500588337,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:36727",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.2561309510056162,
+          "end_seconds": 0.45711484600178665,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:36727",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 3,
+          "begin_seconds": 0.509305868006777,
+          "end_seconds": 0.7097359050021623,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:36727",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 3,
+          "begin_seconds": 0.5095583340007579,
+          "end_seconds": 0.710789773002034,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:36727",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "video-unavailable",
+      "repeat": 1,
+      "mode": "serial",
+      "seconds": 1.4155397990034544,
+      "outcome": "blocked",
+      "error": "成片链接 http://127.0.0.1:38841/video 取不到（HTTP 404）。多半是这一版还没进 main——先把渲染那条 PR 合进去再推。带着一个打不开的 ▶ 按钮发出去，微信那条消息收不回来。",
+      "peak_in_flight": 1,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.0016128030038089491,
+          "end_seconds": 0.20241749100387096,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:38841",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.2544069360010326,
+          "end_seconds": 0.45468655900185695,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:38841",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 3,
+          "begin_seconds": 0.5069812750007259,
+          "end_seconds": 0.7073192770039896,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:38841",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.7091125450024265,
+          "end_seconds": 0.9094001970006502,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:38841",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.9618125070046517,
+          "end_seconds": 1.1621448010046151,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:38841",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 3,
+          "begin_seconds": 1.2142519480039482,
+          "end_seconds": 1.414534941999591,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:38841",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "video-unavailable",
+      "repeat": 1,
+      "mode": "parallel",
+      "seconds": 0.710476882995863,
+      "outcome": "blocked",
+      "error": "成片链接 http://127.0.0.1:43371/video 取不到（HTTP 404）。多半是这一版还没进 main——先把渲染那条 PR 合进去再推。带着一个打不开的 ▶ 按钮发出去，微信那条消息收不回来。",
+      "peak_in_flight": 2,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.0019950899950345047,
+          "end_seconds": 0.2023054039964336,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:43371",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.0026795589947141707,
+          "end_seconds": 0.20310372599487891,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:43371",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.25511507199553307,
+          "end_seconds": 0.45542501599993557,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:43371",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.25546324399329023,
+          "end_seconds": 0.4564656139991712,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:43371",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 3,
+          "begin_seconds": 0.5086254099951475,
+          "end_seconds": 0.7089425029989798,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:43371",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 3,
+          "begin_seconds": 0.5088866799997049,
+          "end_seconds": 0.7102399539944599,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:43371",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "video-unavailable",
+      "repeat": 2,
+      "mode": "serial",
+      "seconds": 1.4168084379998618,
+      "outcome": "blocked",
+      "error": "成片链接 http://127.0.0.1:40819/video 取不到（HTTP 404）。多半是这一版还没进 main——先把渲染那条 PR 合进去再推。带着一个打不开的 ▶ 按钮发出去，微信那条消息收不回来。",
+      "peak_in_flight": 1,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.0018536659990786575,
+          "end_seconds": 0.20216395799798192,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:40819",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.25435640599607723,
+          "end_seconds": 0.45465839299868094,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:40819",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 3,
+          "begin_seconds": 0.507175886996265,
+          "end_seconds": 0.7077375989974826,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:40819",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.7100321670004632,
+          "end_seconds": 0.9103767399938079,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:40819",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.9628039689996513,
+          "end_seconds": 1.1631678880003165,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:40819",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 3,
+          "begin_seconds": 1.2155413209984545,
+          "end_seconds": 1.4158489479959826,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:40819",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    },
+    {
+      "scenario": "video-unavailable",
+      "repeat": 2,
+      "mode": "parallel",
+      "seconds": 0.7135717010023654,
+      "outcome": "blocked",
+      "error": "成片链接 http://127.0.0.1:43731/video 取不到（HTTP 404）。多半是这一版还没进 main——先把渲染那条 PR 合进去再推。带着一个打不开的 ▶ 按钮发出去，微信那条消息收不回来。",
+      "peak_in_flight": 2,
+      "trace": [
+        {
+          "path": "/copy",
+          "attempt": 1,
+          "begin_seconds": 0.0025654220007709228,
+          "end_seconds": 0.20287505300075281,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:43731",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 1,
+          "begin_seconds": 0.002930889000708703,
+          "end_seconds": 0.2040993780028657,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:43731",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 2,
+          "begin_seconds": 0.2564262809974025,
+          "end_seconds": 0.457799381998484,
+          "status": 200,
+          "payload": "previous-title",
+          "request_headers": {
+            "Host": "127.0.0.1:43731",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 2,
+          "begin_seconds": 0.25606991299719084,
+          "end_seconds": 0.45787817199743586,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:43731",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        },
+        {
+          "path": "/copy",
+          "attempt": 3,
+          "begin_seconds": 0.51141340599861,
+          "end_seconds": 0.7117982810013928,
+          "status": 200,
+          "payload": "current &amp; title",
+          "request_headers": {
+            "Host": "127.0.0.1:43731",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        },
+        {
+          "path": "/video",
+          "attempt": 3,
+          "begin_seconds": 0.5118119879989536,
+          "end_seconds": 0.7134378789996845,
+          "status": 404,
+          "payload": "not-found",
+          "request_headers": {
+            "Host": "127.0.0.1:43731",
+            "User-Agent": "python-requests/2.34.2",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept": "*/*",
+            "Connection": "keep-alive",
+            "Range": "bytes=0-1023"
+          }
+        }
+      ],
+      "pages_triggers": 1,
+      "post_count": 0
+    }
+  ],
+  "summary": [
+    {
+      "scenario": "already-ready",
+      "median_seconds": {
+        "serial": 0.4054963609960396,
+        "parallel": 0.20406105300207855
+      },
+      "saved_seconds": 0.20143530799396103
+    },
+    {
+      "scenario": "both-ready-at-0.45s",
+      "median_seconds": {
+        "serial": 0.6587595829987549,
+        "parallel": 0.4575985629999195
+      },
+      "saved_seconds": 0.2011610199988354
+    },
+    {
+      "scenario": "stale-page-and-delayed-video",
+      "median_seconds": {
+        "serial": 1.4156816960021388,
+        "parallel": 0.7108053370029666
+      },
+      "saved_seconds": 0.7048763589991722
+    },
+    {
+      "scenario": "video-unavailable",
+      "median_seconds": {
+        "serial": 1.4157087540006614,
+        "parallel": 0.7114831260041683
+      },
+      "saved_seconds": 0.7042256279964931
+    }
+  ]
+}

@@ -15,6 +15,7 @@ import mimetypes
 import os
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlparse
@@ -456,13 +457,19 @@ def wait_for_images(
     """
     # Release 附件链接和 jsDelivr 链接同一档待遇：都是**本次 run 刚传上去**、
     # 发出去之前必须确认取得到的东西（成片取不到必须整条不发）。
-    pending: list[tuple[str, bool]] = [
+    sources: list[tuple[str, bool]] = [
         (url, True) for url in image_sources(html_content)
     ] + [
         (url, False)
         for url in jsdelivr_link_sources(html_content)
         + release_link_sources(html_content)
     ]
+    # A card's <img> and its original-image fallback often share one URL.
+    # Check it once per round, retaining the stricter image content-type gate.
+    requirements: dict[str, bool] = {}
+    for url, is_image in sources:
+        requirements[url] = requirements.get(url, False) or is_image
+    pending = list(requirements.items())
     if not pending:
         return
 
@@ -495,20 +502,30 @@ def wait_for_images(
         ),
     )
 
-    for attempt in range(attempt_count):
-        unavailable: list[tuple[str, bool]] = []
-        for url, is_image in pending:
+    def is_ready(source: tuple[str, bool]) -> bool:
+        url, is_image = source
+        try:
+            response = requests.get(url, stream=True, timeout=timeout)
             try:
-                response = requests.get(url, stream=True, timeout=timeout)
                 content_type = response.headers.get("Content-Type", "").lower()
-                ready = response.ok and (
+                return response.ok and (
                     content_type.startswith("image/") if is_image else True
                 )
+            finally:
                 response.close()
-            except requests.RequestException:
-                ready = False
-            if not ready:
-                unavailable.append((url, is_image))
+        except requests.RequestException:
+            return False
+
+    for attempt in range(attempt_count):
+        # Only read-only GETs overlap. Retry sleeps, settling and the unique
+        # message POST remain on the caller, after every requirement passes.
+        if len(pending) == 1:
+            availability = [is_ready(pending[0])]
+        else:
+            with ThreadPoolExecutor(max_workers=min(4, len(pending))) as pool:
+                availability = list(pool.map(is_ready, pending))
+        unavailable = [source for source, ready in zip(pending, availability)
+                       if not ready]
         if not unavailable:
             # The GitHub runner can see a freshly cached jsDelivr asset a few
             # seconds before PushPlus/WeChat's fetch nodes do. Give the

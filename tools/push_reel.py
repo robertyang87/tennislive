@@ -39,6 +39,7 @@ import os
 import re
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import requests
@@ -229,6 +230,21 @@ def wait_for_video(url: str, *, attempts: int = 8, delay: float = 15.0,
         f"成片链接 {url} 取不到（{last}）。多半是这一版还没进 main——"
         "先把渲染那条 PR 合进去再推。带着一个打不开的 ▶ 按钮发出去，"
         "微信那条消息收不回来。")
+
+
+def wait_for_delivery(copy_url: str, title: str, video_url: str) -> None:
+    """同时等复制页和成片；两道现有门禁都通过之后才允许发送。
+
+    Pages 部署和 Release/CDN 可取是互不依赖的读取，固定只用两个 worker。
+    保留各自的重试预算、标题比对和看门狗，不保存上一次探活的成功结果。
+    退出时收束所有 worker；即使其中一个失败，也没有后台任务继续越过发送闸。
+    """
+    with ThreadPoolExecutor(max_workers=2, thread_name_prefix="reel-delivery") as pool:
+        page = pool.submit(wait_for_copy_page, copy_url, title)
+        video = pool.submit(wait_for_video, video_url)
+        # 原先先查复制页：两者都失败时仍先报告复制页的原因。
+        page.result()
+        video.result()
 
 
 def headline(outdir: Path, column: str, matchup: str, score: str = "",
@@ -972,11 +988,7 @@ def main() -> int:
     if not page.is_file():
         raise SystemExit(f"{page} 不在——先跑一次 --stage page，且要排在提交之前")
 
-    # 查产物，不查信号：Pages 真的把它发出来了才发微信。
-    wait_for_copy_page(copy_url, title)
-
     url = released or video_url(outdir, str(name))
-    wait_for_video(url)
     # 海报没进仓库就别硬塞一个链接进去——那就是「推送正文里的每个链接，
     # 指向的文件都必须在推送之前进仓库」那条踩过两次的规矩。缺了就退回无图版，
     # 并且**说出来**，别让它悄悄少一屏。
@@ -1000,7 +1012,9 @@ def main() -> int:
         print(f"[数据图] 带上这一屏：{stat_card}")
     body = build_html(url, copy_url, args.lead, copy_text, poster,
                       column=column, stat_card=stat_card)
-    # ⚠️ 前缀**只作用在这一处**。上面 `wait_for_copy_page(copy_url, title)` 和
+    # 本地缺统计图或文案超限先报错，别先空等部署；发送仍必须等两道远端闸全过。
+    wait_for_delivery(copy_url, title, url)
+    # ⚠️ 前缀**只作用在这一处**。`wait_for_delivery(copy_url, title, url)` 和
     # 复制页里印的都是裸 `title`——前缀混进去就是「等一句永远不出现的话」。
     if revision:
         # Recheck after Pages/CDN waits: no changed bytes may borrow the reservation.

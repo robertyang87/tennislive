@@ -131,6 +131,8 @@ probe 并备料；候选报告写进 job summary，不用翻日志。往下接
 
 [逐帧比分板缓存与字幕预览](docs/reel-mask-caption-preview.md)说明如何复用动态蒙版，以及在整片编码前用真实帧核对字幕与破发点、盘点等提示条的位置。
 
+[交付前并行探活](docs/reel-delivery-readiness.md)说明复制页与视频同时等待、图片地址去重及最多四路检查，附可复现 HTTP 计时；原有发送门禁继续执行。
+
 字幕位置调整见[逐段字幕下锚](docs/reel-caption-bottom-windows.md)；保留已有原音轨、组合已核原生画面见[原生流合成](docs/native-reel-stream-composition.md)。[微信交付计时](docs/reel-delivery-sla.md)从收到素材计到实际回执，不能把渲染完成当成交付完成。
 
 产物各走各的通道，别混：

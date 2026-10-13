@@ -1,0 +1,125 @@
+{
+  "kind": "tts-performance-inspection-no-implementation",
+  "source": {
+    "path": "/workspace/scratch/timed-662TF-JlyZY/662TF-JlyZY.mp4",
+    "sha256": "2fd4166d4f12925c82b64ad6d663af97d2f7d0162c08220e2cf9121086d32d5d",
+    "size_bytes": 104483128,
+    "scope": "current local Paolini source; runner timing provenance is separately bound by original render/timing files"
+  },
+  "actual_runs": [
+    {
+      "timing_file": "/workspace/scratch/timed-662TF-JlyZY/cloud-artifact/timing.json",
+      "timing_file_sha256": "876d79e25c4ff7a650e1aace6b4e3f53c88b67a8bc2bac104ed6caa95cc05581",
+      "render_file": "/workspace/scratch/timed-662TF-JlyZY/cloud-artifact/render.json",
+      "render_file_sha256": "c1cea75defec466c5e0aa92645d3450c97415f7131660f3ad3f9ddded092fdb9",
+      "run_id": "38305296490",
+      "run_url": "https://github.com/robertyang87/tennislive/actions/runs/38305296490",
+      "at": "2026-10-12T20:45:51Z",
+      "cpu_count": 4,
+      "elapsed_seconds": 438.766,
+      "stage_seconds": {
+        "数据统计对照图（剪进片子）": 1.406,
+        "章节卡（剪进片子）": 1.223,
+        "TTS 合成": 9.538,
+        "比分板蒙版": 83.91,
+        "封面海报": 2.067,
+        "封面编码": 0.234,
+        "分段编码·并行": 248.954,
+        "分段编码": 70.112,
+        "拼接": 62.03,
+        "混音": 9.525,
+        "烧字幕+成片": 196.945
+      },
+      "parallel_stages": [
+        "分段编码·并行"
+      ],
+      "narration_backend": "edge-tts",
+      "narrated_segment_indices": [
+        "1",
+        "2",
+        "4",
+        "6",
+        "8",
+        "10",
+        "12",
+        "14",
+        "16"
+      ],
+      "tts_cache_state": "not determined by timing.json; do not label as a controlled cold benchmark",
+      "stage_clock": "TTS 合成 and other outer stages are wall time; 分段编码·并行 is summed nested worker time and must not be added to total"
+    },
+    {
+      "timing_file": "/workspace/scratch/timed-662TF-JlyZY/composed-qc/timing.json",
+      "timing_file_sha256": "caa4f99af813676fab6ea61d85c24125e817aaddd1d24ce0ce8cdf8dd191617d",
+      "render_file": "/workspace/scratch/timed-662TF-JlyZY/composed-qc/render.json",
+      "render_file_sha256": "06d4a37ec74ea598dfba9cc470160a9eb355684bb4db9ae6c31118403a87bf9d",
+      "run_id": "38307920960",
+      "run_url": "https://github.com/robertyang87/tennislive/actions/runs/38307920960",
+      "at": "2026-10-12T21:10:14Z",
+      "cpu_count": 4,
+      "elapsed_seconds": 431.6,
+      "stage_seconds": {
+        "数据统计对照图（剪进片子）": 1.481,
+        "章节卡（剪进片子）": 1.212,
+        "TTS 合成": 7.477,
+        "比分板蒙版": 82.584,
+        "封面海报": 2.029,
+        "封面编码": 0.228,
+        "分段编码·并行": 251.946,
+        "分段编码": 71.317,
+        "拼接": 61.26,
+        "混音": 9.432,
+        "烧字幕+成片": 192.836
+      },
+      "parallel_stages": [
+        "分段编码·并行"
+      ],
+      "narration_backend": "edge-tts",
+      "narrated_segment_indices": [
+        "1",
+        "2",
+        "4",
+        "6",
+        "8",
+        "10",
+        "12",
+        "14",
+        "16"
+      ],
+      "tts_cache_state": "not determined by timing.json; do not label as a controlled cold benchmark",
+      "stage_clock": "TTS 合成 and other outer stages are wall time; 分段编码·并行 is summed nested worker time and must not be added to total"
+    }
+  ],
+  "warm_cache_log": {
+    "log_file": "/workspace/scratch/timed-662TF-JlyZY/local-render.log",
+    "log_file_sha256": "53c4b565815af05c157e92873b9f595b2c54473dbfa6e6c47b508d2243c5a394",
+    "tts_cache_hit_lines": [
+      "[TTS] 命中缓存 4877d3eb0a（17 字），不重合成",
+      "[TTS] 命中缓存 6d2f1f33e2（27 字），不重合成",
+      "[TTS] 命中缓存 6cd89fcc6a（35 字），不重合成",
+      "[TTS] 命中缓存 16821d5d78（32 字），不重合成",
+      "[TTS] 命中缓存 cacc839d9f（34 字），不重合成",
+      "[TTS] 命中缓存 978ef6ed25（30 字），不重合成",
+      "[TTS] 命中缓存 ac1c916aef（41 字），不重合成",
+      "[TTS] 命中缓存 b557ac4515（32 字），不重合成",
+      "[TTS] 命中缓存 e8717fb906（56 字），不重合成"
+    ],
+    "stage_timing_line": [
+      "    [耗时] TTS 合成 0.00s"
+    ],
+    "precision": "log rounded to 0.01s; 0.00s is not exact zero",
+    "asserted_cold": false
+  },
+  "cache_fact": {
+    "implementation": "src/tennislive/video/tts.py::tts_one",
+    "format": "backend-specific content-keyed atomic ZIP, paired audio.mp3 and marks.json; CRC checked on read",
+    "existing_test": "tests/test_tts_cache_integrity.py::test_concurrent_writers_publish_matching_audio_and_marks",
+    "duplicate_requests": "atomic publish preserves pair consistency but simultaneous same-content callers can both invoke provider"
+  },
+  "recommendation": {
+    "implemented": false,
+    "reason": "Measured TTS stage 9.538s / 7.477s is a small share of 438.766s / 431.6s render. Existing warm cache logs show 9 hits and rounded 0.00s. Azure pacing _paced_gap and _last_call are shared mutable process globals and adding concurrency would need provider quota semantics changes. Keep current sequential TTS, backend retries, narration parameters, and cache pairing intact. Prioritize independent read-only delivery readiness.",
+    "absolute_saving_claim": "none; no before/after synthesis benchmark performed",
+    "production_20min_claim": false
+  }
+}
