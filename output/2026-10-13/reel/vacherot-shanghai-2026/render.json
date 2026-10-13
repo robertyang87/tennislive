@@ -69,7 +69,7 @@
   },
   "film_sha256": "f68cd3f3ba892d125078703699ed66e9f741741e251094c5bc10d172377c22ea",
   "film_bytes": 82002391,
-  "qc_attestation_sha256": "7a30d4a6078b11a666fc9ec6ae3966dd7e67b6f4cfa1bc81ef6f7de7ea5db447",
+  "qc_attestation_sha256": "47114e1f32be299f0e7e58cf01c370d4cac721b31d82a090da0f43f69f6ed194",
   "production_stage_events": [
     {
       "stage": "render",
@@ -83,5 +83,12 @@
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-vacherot-shanghai-2026/vacherot-shanghai-2026.mp4",
-  "video_bytes": 82002391
+  "video_bytes": 82002391,
+  "reattests": [
+    {
+      "at": "2026-10-13T02:41:24Z",
+      "spec_sha256": "82bfd3bfd7eb0ab402010b8f218403223381d2cd8586e6466c39dfa9f8f61d75",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/38337979031"
+    }
+  ]
 }

@@ -1,8 +1,8 @@
 {
   "status": "pass",
-  "checked_at": "2026-10-13T02:27:16Z",
+  "checked_at": "2026-10-13T02:41:24Z",
   "slug": "vacherot-shanghai-2026",
-  "spec_sha256": "6f47f69bd211350ed48895448464c59963f7450fc1a7c253015728489ea0378a",
+  "spec_sha256": "82bfd3bfd7eb0ab402010b8f218403223381d2cd8586e6466c39dfa9f8f61d75",
   "ass_sha256": "486aa980c8d41463fff52dc6f11473f153f335d549da843e1b28250d176940be",
   "film_sha256": "f68cd3f3ba892d125078703699ed66e9f741741e251094c5bc10d172377c22ea",
   "film_bytes": 82002391,
@@ -15,5 +15,13 @@
     "ending_payoff": "pass",
     "audio_tail_max_s": 1.0
   },
-  "render_inputs_sha256": "4ab08ba615e0987f5a6faa242d43f7d68ca28b2c59d79a8ddc021726f2ad9165"
+  "render_inputs_sha256": "4ab08ba615e0987f5a6faa242d43f7d68ca28b2c59d79a8ddc021726f2ad9165",
+  "reattest": {
+    "previous_attestation_sha256": "7a30d4a6078b11a666fc9ec6ae3966dd7e67b6f4cfa1bc81ef6f7de7ea5db447",
+    "previous_spec_sha256": "6f47f69bd211350ed48895448464c59963f7450fc1a7c253015728489ea0378a",
+    "render_spec_sha256": "6f47f69bd211350ed48895448464c59963f7450fc1a7c253015728489ea0378a",
+    "projection_sha256": "bd1834801eef61ad1bcdd571776fcaeb46195a41102b7a6ff83380ce668ceea4",
+    "film_verified": "release-sha256",
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/38337979031"
+  }
 }
