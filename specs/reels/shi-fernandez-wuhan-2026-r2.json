@@ -146,8 +146,8 @@
     },
     "eyebrow": "赛场之上",
     "layout": "solo",
-    "hook": "次盘4比1领先\n施晗连丢五局出局",
-    "hook_accent": "连丢五局出局",
+    "hook": "次盘4比1领先\n施晗连丢5局出局",
+    "hook_accent": "连丢5局出局",
     "_heat_why": "用户点名中国球员施晗，关注武汉次盘领先遭逆转的遗憾与关键分处理差距。",
     "portrait": {
       "_pending": "本场高清实拍检索中。当前仅用于冻结旁白，正式render和发布前必须落实本场高清照片及像素审查。"
@@ -214,7 +214,7 @@
     "mode": "match_review",
     "hook": [
       "次盘4比1领先",
-      "施晗连丢五局出局"
+      "施晗连丢5局出局"
     ],
     "question": "次盘四比一领先，施晗为何仍两盘出局？",
     "thesis": "从4-1到4-6，两个接发局错过五个破发点；全场UE23比13与BP1/8比3/4体现关键分处理和失误控制差距。",
@@ -294,7 +294,7 @@
       "_ending_payoff_required": true
     },
     {
-      "title_card": "次盘4比1领先\n施晗连丢五局出局",
+      "title_card": "次盘4比1领先\n施晗连丢5局出局",
       "narration": "次盘四比一领先，施晗却连输五局出局。",
       "seconds": 5.8,
       "kicker": "优势未守住"
@@ -482,12 +482,12 @@
       "track": false,
       "fit": "crop",
       "narration": "",
-      "score_inset": true,
+      "score_inset": false,
       "_quote_kind": "broadcast",
       "point_end_ok": "完整官方单回合；结束落点与真实反应由逐帧source review核验，不以片段标题判断比分。",
       "crosses_cut": "同场官方片段原转播镜头切换，未替换其他回合。",
       "_fit_why": "遵循账号与用户此前居中对齐裁切、纵向尽量铺满画布的要求。固定中心1080x1440，不平移跟踪。",
-      "_score_inset_why": "从同帧原转播提取真实透明轮廓，保留主板与原生关键分提示，不贴搜索矩形。",
+      "_score_inset_why": "本场原转播主体板在8.88秒后消失；本窗20.55–34为裁判握手和致意，全窗实际逐帧无板，因此不生成/回贴比分板。",
       "_edit_id": "umpire_handshake_acknowledgement",
       "quote": [
         {
