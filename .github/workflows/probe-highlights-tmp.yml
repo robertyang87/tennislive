@@ -14,24 +14,39 @@ jobs:
     timeout-minutes: 15
     steps:
       - run: pip install -q "yt-dlp[default]"
+      - name: 落 cookies（配了 Secret 才有）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies"
+          else
+            echo "没有配 YT_COOKIES_TXT"
+          fi
       - name: 启动 PO token provider
         timeout-minutes: 3
         run: |
           pip install -q bgutil-ytdlp-pot-provider
           docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4416/ping && break || sleep 1; done
-      - name: 取时长与字幕
+      - name: 取时长与字幕（失败即红）
         env:
           URL: ${{ inputs.url }}
+          COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
+          set -e
+          ARGS=(--extractor-args "youtube:player_client=web" --js-runtimes node)
+          [ -n "$COOKIES" ] && ARGS+=(--cookies "$COOKIES")
           echo "=== 视频信息 ==="
-          yt-dlp --print "%(duration)s %(title)s" --no-warnings "$URL" || echo "INFO_FAIL"
+          yt-dlp "${ARGS[@]}" --print "%(duration)s %(title)s" --no-warnings "$URL"
           echo "=== 下载英文自动字幕 ==="
           mkdir -p /tmp/cap && cd /tmp/cap
-          yt-dlp --write-auto-subs --write-subs --sub-langs "en.*" --skip-download --sub-format "vtt" --no-warnings "$URL" 2>&1 | tail -3 || echo "CAP_FAIL"
+          yt-dlp "${ARGS[@]}" --write-auto-subs --write-subs --sub-langs "en.*" --skip-download --sub-format "vtt" --no-warnings "$URL"
           ls -la /tmp/cap/
           for f in /tmp/cap/*.vtt; do
-            [ -f "$f" ] || continue
-            echo "--- $f ($(wc -c <"$f") bytes, 尾部50行) ---"
-            tail -50 "$f"
+            echo "--- $f ($(wc -c <"$f") bytes, 尾部60行) ---"
+            tail -60 "$f"
           done
