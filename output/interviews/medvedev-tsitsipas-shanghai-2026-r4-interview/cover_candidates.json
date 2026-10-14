@@ -1,0 +1,1172 @@
+{
+ "slug": "medvedev-tsitsipas-shanghai-2026-r4-interview",
+ "method": "cover_scan_v1",
+ "auditor": "opencv-haar-v1",
+ "thresholds": {
+  "CANVAS": [
+   1080,
+   1440
+  ],
+  "FACE_CENTER_X_RANGE": [
+   0.08,
+   0.92
+  ],
+  "FACE_CENTER_Y_RANGE": [
+   0.06,
+   0.72
+  ],
+  "MIN_CLOSE_UP_FACE_HEIGHT_RATIO": 0.14,
+  "MIN_EYES": 2,
+  "MIN_FACE_AREA_RATIO": 0.01,
+  "MIN_FACE_CONTRAST": 32.0,
+  "MIN_FACE_HEIGHT_RATIO": 0.08,
+  "MIN_FACE_SHARPNESS": 45.0,
+  "MIN_ZOOM_CLOSE_UP": 1.5,
+  "PHOTO_HEIGHT": 810,
+  "PHOTO_TOP": 150
+ },
+ "layout": "6c0f76e19ce8a4f6",
+ "face_model": {
+  "cache_key": "face-models-buffalo_s-v0.7-17d6bb6dfcd3",
+  "thresholds": {
+   "CROP_MARGIN": 0.15,
+   "DET_SIZE": 640,
+   "DET_THRESH": 0.5,
+   "EYE_CLOSED_EAR": 0.12,
+   "EYE_OPEN_EAR": 0.16,
+   "MATCH_SIM": 0.34,
+   "MIN_EYE_FACE_PX": 72,
+   "MIN_ID_FACE_PX": 56,
+   "MISMATCH_SIM": 0.15,
+   "NMS_THRESH": 0.4
+  }
+ },
+ "face_in_scan": true,
+ "rivals_in_scan": 1,
+ "scanned_at": "2026-10-14T19:48:03Z",
+ "framing": {
+  "url": "https://www.youtube.com/watch?v=dy4Zyn8cZ9E",
+  "mirrored": false,
+  "logo_box": null,
+  "video_eq": null,
+  "crop_ratio": null,
+  "crop_keep_top": null,
+  "crop_shift_x": null,
+  "zoom": 1.0,
+  "focus_y": 0.5,
+  "shot_type": ""
+ },
+ "window": [
+  33.0,
+  37.0
+ ],
+ "window_declared": false,
+ "step": 0.2,
+ "spec_frame_at": 35.0,
+ "candidates": [
+  {
+   "frame_at": 33.0,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2"
+   ],
+   "face": {
+    "box": [
+     452,
+     298,
+     264,
+     264
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.32593,
+    "face_area_ratio": 0.07967,
+    "sharpness": 191.886,
+    "contrast": 131.0,
+    "center_x_ratio": 0.54074,
+    "center_y_ratio": 0.34568
+   },
+   "margin": 4.074,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6018
+     },
+     "missing": [],
+     "face_px": 319.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2754,
+     "face_px": 319.6
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6018,
+      "西西帕斯": 0.2583
+     },
+     "missing": [],
+     "face_px": 319.6,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 33.2,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2"
+   ],
+   "face": {
+    "box": [
+     430,
+     315,
+     276,
+     276
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.34074,
+    "face_area_ratio": 0.08708,
+    "sharpness": 177.562,
+    "contrast": 123.0,
+    "center_x_ratio": 0.52593,
+    "center_y_ratio": 0.37407
+   },
+   "margin": 3.844,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6212
+     },
+     "missing": [],
+     "face_px": 324.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2719,
+     "face_px": 324.6
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6212,
+      "西西帕斯": 0.2262
+     },
+     "missing": [],
+     "face_px": 324.6,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 33.4,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2"
+   ],
+   "face": {
+    "box": [
+     346,
+     313,
+     322,
+     322
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.39753,
+    "face_area_ratio": 0.11852,
+    "sharpness": 344.456,
+    "contrast": 116.0,
+    "center_x_ratio": 0.46944,
+    "center_y_ratio": 0.4
+   },
+   "margin": 3.625,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5304
+     },
+     "missing": [],
+     "face_px": 324.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.244,
+     "face_px": 324.4
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5304,
+      "西西帕斯": 0.2245
+     },
+     "missing": [],
+     "face_px": 324.4,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 33.6,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     367,
+     314,
+     314,
+     314
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.38765,
+    "face_area_ratio": 0.11271,
+    "sharpness": 346.743,
+    "contrast": 117.0,
+    "center_x_ratio": 0.48519,
+    "center_y_ratio": 0.3963
+   },
+   "margin": 3.656,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5459
+     },
+     "missing": [],
+     "face_px": 322.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2084,
+     "face_px": 322.6
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5459,
+      "西西帕斯": 0.2078
+     },
+     "missing": [],
+     "face_px": 322.6,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 33.8,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     401,
+     319,
+     290,
+     290
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.35802,
+    "face_area_ratio": 0.09614,
+    "sharpness": 202.97,
+    "contrast": 123.0,
+    "center_x_ratio": 0.50556,
+    "center_y_ratio": 0.38765
+   },
+   "margin": 3.844,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5822
+     },
+     "missing": [],
+     "face_px": 317.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2289,
+     "face_px": 317.4
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5822,
+      "西西帕斯": 0.1981
+     },
+     "missing": [],
+     "face_px": 317.4,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 34.0,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2"
+   ],
+   "face": {
+    "box": [
+     470,
+     310,
+     265,
+     265
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.32716,
+    "face_area_ratio": 0.08028,
+    "sharpness": 267.418,
+    "contrast": 133.0,
+    "center_x_ratio": 0.55787,
+    "center_y_ratio": 0.36111
+   },
+   "margin": 4.09,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5969
+     },
+     "missing": [],
+     "face_px": 326.9
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2609,
+     "face_px": 326.9
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5969,
+      "西西帕斯": 0.2628
+     },
+     "missing": [],
+     "face_px": 326.9,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 34.2,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2"
+   ],
+   "face": {
+    "box": [
+     476,
+     307,
+     262,
+     262
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.32346,
+    "face_area_ratio": 0.07847,
+    "sharpness": 325.684,
+    "contrast": 136.0,
+    "center_x_ratio": 0.56204,
+    "center_y_ratio": 0.35556
+   },
+   "margin": 4.043,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5738
+     },
+     "missing": [],
+     "face_px": 317.0
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.252,
+     "face_px": 317.0
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5738,
+      "西西帕斯": 0.2091
+     },
+     "missing": [],
+     "face_px": 317.0,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 34.4,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2"
+   ],
+   "face": {
+    "box": [
+     469,
+     310,
+     257,
+     257
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.31728,
+    "face_area_ratio": 0.0755,
+    "sharpness": 291.576,
+    "contrast": 136.0,
+    "center_x_ratio": 0.55324,
+    "center_y_ratio": 0.35617
+   },
+   "margin": 3.966,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.57
+     },
+     "missing": [],
+     "face_px": 317.1
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2482,
+     "face_px": 317.1
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.57,
+      "西西帕斯": 0.23
+     },
+     "missing": [],
+     "face_px": 317.1,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 34.6,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2"
+   ],
+   "face": {
+    "box": [
+     421,
+     308,
+     255,
+     255
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.31481,
+    "face_area_ratio": 0.07433,
+    "sharpness": 210.587,
+    "contrast": 134.0,
+    "center_x_ratio": 0.50787,
+    "center_y_ratio": 0.35247
+   },
+   "margin": 3.935,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6064
+     },
+     "missing": [],
+     "face_px": 313.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2561,
+     "face_px": 313.6
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6064,
+      "西西帕斯": 0.2422
+     },
+     "missing": [],
+     "face_px": 313.6,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 34.8,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     429,
+     309,
+     252,
+     252
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.31111,
+    "face_area_ratio": 0.07259,
+    "sharpness": 198.905,
+    "contrast": 133.0,
+    "center_x_ratio": 0.51389,
+    "center_y_ratio": 0.35185
+   },
+   "margin": 3.889,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5727
+     },
+     "missing": [],
+     "face_px": 319.1
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2488,
+     "face_px": 319.1
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5727,
+      "西西帕斯": 0.2594
+     },
+     "missing": [],
+     "face_px": 319.1,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 35.0,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2"
+   ],
+   "face": {
+    "box": [
+     451,
+     296,
+     271,
+     271
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.33457,
+    "face_area_ratio": 0.08395,
+    "sharpness": 230.664,
+    "contrast": 134.0,
+    "center_x_ratio": 0.54306,
+    "center_y_ratio": 0.34753
+   },
+   "margin": 4.182,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.631
+     },
+     "missing": [],
+     "face_px": 343.3
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2398,
+     "face_px": 343.3
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.631,
+      "西西帕斯": 0.2093
+     },
+     "missing": [],
+     "face_px": 343.3,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 35.2,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     424,
+     299,
+     292,
+     292
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.36049,
+    "face_area_ratio": 0.09747,
+    "sharpness": 188.492,
+    "contrast": 129.0,
+    "center_x_ratio": 0.52778,
+    "center_y_ratio": 0.3642
+   },
+   "margin": 4.031,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6027
+     },
+     "missing": [],
+     "face_px": 339.0
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2047,
+     "face_px": 339.0
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6027,
+      "西西帕斯": 0.2521
+     },
+     "missing": [],
+     "face_px": 339.0,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 35.4,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2"
+   ],
+   "face": {
+    "box": [
+     369,
+     311,
+     307,
+     307
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.37901,
+    "face_area_ratio": 0.10774,
+    "sharpness": 263.218,
+    "contrast": 127.0,
+    "center_x_ratio": 0.4838,
+    "center_y_ratio": 0.38827
+   },
+   "margin": 3.969,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5903
+     },
+     "missing": [],
+     "face_px": 332.3
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.1815,
+     "face_px": 332.3
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.5903,
+      "西西帕斯": 0.1775
+     },
+     "missing": [],
+     "face_px": 332.3,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 35.6,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     380,
+     289,
+     319,
+     319
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.39383,
+    "face_area_ratio": 0.11632,
+    "sharpness": 275.831,
+    "contrast": 125.0,
+    "center_x_ratio": 0.49954,
+    "center_y_ratio": 0.36852
+   },
+   "margin": 3.906,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6188
+     },
+     "missing": [],
+     "face_px": 341.5
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.1677,
+     "face_px": 341.5
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6188,
+      "西西帕斯": 0.2016
+     },
+     "missing": [],
+     "face_px": 341.5,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 35.8,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     416,
+     290,
+     308,
+     308
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.38025,
+    "face_area_ratio": 0.10844,
+    "sharpness": 325.158,
+    "contrast": 126.0,
+    "center_x_ratio": 0.52778,
+    "center_y_ratio": 0.36296
+   },
+   "margin": 3.938,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6562
+     },
+     "missing": [],
+     "face_px": 332.0
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2052,
+     "face_px": 332.0
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6562,
+      "西西帕斯": 0.2247
+     },
+     "missing": [],
+     "face_px": 332.0,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 36.0,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     410,
+     298,
+     310,
+     310
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.38272,
+    "face_area_ratio": 0.10985,
+    "sharpness": 243.188,
+    "contrast": 123.0,
+    "center_x_ratio": 0.52315,
+    "center_y_ratio": 0.37407
+   },
+   "margin": 3.844,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6222
+     },
+     "missing": [],
+     "face_px": 340.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.1687,
+     "face_px": 340.6
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6222,
+      "西西帕斯": 0.2158
+     },
+     "missing": [],
+     "face_px": 340.6,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 36.2,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     415,
+     296,
+     311,
+     311
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.38395,
+    "face_area_ratio": 0.11056,
+    "sharpness": 280.097,
+    "contrast": 127.0,
+    "center_x_ratio": 0.52824,
+    "center_y_ratio": 0.37222
+   },
+   "margin": 3.969,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.659
+     },
+     "missing": [],
+     "face_px": 337.9
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.1901,
+     "face_px": 337.9
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.659,
+      "西西帕斯": 0.2666
+     },
+     "missing": [],
+     "face_px": 337.9,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 36.4,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     431,
+     292,
+     302,
+     302
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.37284,
+    "face_area_ratio": 0.10426,
+    "sharpness": 297.277,
+    "contrast": 130.0,
+    "center_x_ratio": 0.53889,
+    "center_y_ratio": 0.36173
+   },
+   "margin": 4.062,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6774
+     },
+     "missing": [],
+     "face_px": 333.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2319,
+     "face_px": 333.4
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6774,
+      "西西帕斯": 0.2886
+     },
+     "missing": [],
+     "face_px": 333.4,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 36.6,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2"
+   ],
+   "face": {
+    "box": [
+     406,
+     297,
+     296,
+     296
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.36543,
+    "face_area_ratio": 0.10016,
+    "sharpness": 196.098,
+    "contrast": 128.0,
+    "center_x_ratio": 0.51296,
+    "center_y_ratio": 0.3642
+   },
+   "margin": 4.0,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.656
+     },
+     "missing": [],
+     "face_px": 340.0
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2236,
+     "face_px": 340.0
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.656,
+      "西西帕斯": 0.2405
+     },
+     "missing": [],
+     "face_px": 340.0,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 36.8,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     387,
+     290,
+     304,
+     304
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.37531,
+    "face_area_ratio": 0.10564,
+    "sharpness": 271.319,
+    "contrast": 127.0,
+    "center_x_ratio": 0.49907,
+    "center_y_ratio": 0.36049
+   },
+   "margin": 3.969,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6415
+     },
+     "missing": [],
+     "face_px": 340.7
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2258,
+     "face_px": 340.7
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6415,
+      "西西帕斯": 0.2105
+     },
+     "missing": [],
+     "face_px": 340.7,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 37.0,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     385,
+     291,
+     309,
+     309
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.38148,
+    "face_area_ratio": 0.10915,
+    "sharpness": 251.955,
+    "contrast": 126.0,
+    "center_x_ratio": 0.49954,
+    "center_y_ratio": 0.36481
+   },
+   "margin": 3.938,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6137
+     },
+     "missing": [],
+     "face_px": 341.9
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2394,
+     "face_px": 341.9
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "梅德韦杰夫",
+     "similarity": {
+      "梅德韦杰夫": 0.6137,
+      "西西帕斯": 0.1842
+     },
+     "missing": [],
+     "face_px": 341.9,
+     "target": [
+      "梅德韦杰夫"
+     ]
+    }
+   }
+  }
+ ],
+ "passing": [
+  36.4,
+  35.2,
+  36.2,
+  36.8,
+  35.8,
+  37.0,
+  35.6,
+  34.8,
+  36.0,
+  33.8,
+  33.6
+ ]
+}
