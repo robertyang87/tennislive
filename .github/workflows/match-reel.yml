@@ -21,16 +21,14 @@ jobs:
           set -euo pipefail
           python - <<'PY_SOURCE'
           from pathlib import Path
-          import json,hashlib,shutil,subprocess
+          import json,hashlib,shutil
           source=Path.home()/'.cache/tennislive-sources/f47556a66fd68019.mp4'
           assert source.is_file() and source.stat().st_size>0
           folder=Path('/tmp/official-source');folder.mkdir()
           shutil.copyfile(source,folder/'B8EO9eKy-mY.mp4')
           manifest={'source_url':'https://www.youtube.com/watch?v=B8EO9eKy-mY','native_probe_run':38592843982,'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'bytes':source.stat().st_size,'publication_approved':False}
           (folder/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
-          probe=subprocess.run(['ffprobe','-v','error','-show_format','-show_streams','-of','json',str(source)],capture_output=True,text=True,check=True)
-          (folder/'media-probe.json').write_text(probe.stdout)
           print(json.dumps(manifest))
           PY_SOURCE
           gh release view source-B8EO9eKy-mY >/dev/null 2>&1 || gh release create source-B8EO9eKy-mY --title 'Exact Tennis TV B8EO9eKy-mY official source' --notes 'Actual native probe source bytes, not a completed production or QC approval.' --latest=false --target '${{ github.sha }}'
-          gh release upload source-B8EO9eKy-mY /tmp/official-source/B8EO9eKy-mY.mp4 /tmp/official-source/manifest.json /tmp/official-source/media-probe.json
+          gh release upload source-B8EO9eKy-mY /tmp/official-source/B8EO9eKy-mY.mp4 /tmp/official-source/manifest.json
