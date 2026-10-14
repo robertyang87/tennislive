@@ -113,12 +113,12 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-14/reel/ostapenko-pegula-wuhan-2026-r2/score_masks/segment-01.mkv",
-      "mask_sha256": "8e381c6a06a49ba2add81d9dc051e23d3e24bdd81804a8f68cf95112e7dfef39"
+      "mask_sha256": "83b8ef39e7155059f238380c5a3e3682cab746b555e7706d2d69467e3e9a93d4"
     },
     {
       "segment": 2,
-      "frames": 715,
-      "present_frames": 397,
+      "frames": 597,
+      "present_frames": 279,
       "tag_frames": 235,
       "board_edges": [
         346,
@@ -208,12 +208,6 @@
           0,
           43,
           425,
-          154
-        ],
-        [
-          0,
-          43,
-          426,
           154
         ],
         [
@@ -314,7 +308,7 @@
         826
       ],
       "alpha_geometry": "native-body-and-header-rows",
-      "measured_present_frames": 397,
+      "measured_present_frames": 279,
       "window_excluded_present_frames": 0,
       "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
@@ -322,12 +316,12 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-14/reel/ostapenko-pegula-wuhan-2026-r2/score_masks/segment-03.mkv",
-      "mask_sha256": "0c8964fe6cdba71657250aaf076a2d87582ee765399ee53ff7724a799324f9bf"
+      "mask_sha256": "6cc12d29019f91dad2b851378b3979881005764ccb2135129cf13f0822cb9de5"
     },
     {
       "segment": 4,
-      "frames": 888,
-      "present_frames": 866,
+      "frames": 1022,
+      "present_frames": 1000,
       "tag_frames": 0,
       "board_edges": [
         360,
@@ -498,7 +492,7 @@
         826
       ],
       "alpha_geometry": "native-body-and-header-rows",
-      "measured_present_frames": 866,
+      "measured_present_frames": 1000,
       "window_excluded_present_frames": 0,
       "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
@@ -506,23 +500,14 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-14/reel/ostapenko-pegula-wuhan-2026-r2/score_masks/segment-05.mkv",
-      "mask_sha256": "1e649b8373c78bd4e7ad45550098acbaf016e89c600e9150fdebf8e3480bd4d9"
+      "mask_sha256": "99c209b6ff0537f915088efed2d2f5ce955e878e69f0207a7f0187dea971ae22"
     },
     {
-      "segment": 6,
-      "frames": 522,
-      "present_frames": 522,
-      "tag_frames": 502,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         425,
         428
-      ],
-      "right": 426,
-      "source_bounds": [
-        90,
-        828,
-        516,
-        980
       ],
       "body_bounds": [
         [
@@ -579,6 +564,11 @@
           426,
           154
         ]
+      ],
+      "frames": 522,
+      "geometry_origin": [
+        90,
+        826
       ],
       "header_bounds": [
         [
@@ -666,36 +656,31 @@
           44
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "fc7684627b56a6f33481ae270d9273a455fb0cd5cbdf4199c2270bfa5285f002",
       "measured_present_frames": 522,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-14/reel/ostapenko-pegula-wuhan-2026-r2/score_masks/segment-07.mkv",
-      "mask_sha256": "fc7684627b56a6f33481ae270d9273a455fb0cd5cbdf4199c2270bfa5285f002"
-    },
-    {
-      "segment": 8,
-      "frames": 269,
-      "present_frames": 184,
-      "tag_frames": 178,
-      "board_edges": [
-        376,
-        430
-      ],
-      "right": 430,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 522,
+      "right": 426,
+      "segment": 6,
       "source_bounds": [
         90,
         828,
-        520,
+        516,
         980
+      ],
+      "tag_frames": 502,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-14/reel/ostapenko-pegula-wuhan-2026-r2/score_masks/segment-07.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        376,
+        430
       ],
       "body_bounds": [
         [
@@ -764,6 +749,11 @@
           376,
           154
         ]
+      ],
+      "frames": 269,
+      "geometry_origin": [
+        90,
+        826
       ],
       "header_bounds": [
         [
@@ -839,36 +829,31 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "d4c293689a952ee47b924fba428d2b5b7b2ba9cb2a0e219bbfc7e1b0e80393bc",
       "measured_present_frames": 184,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-14/reel/ostapenko-pegula-wuhan-2026-r2/score_masks/segment-09.mkv",
-      "mask_sha256": "d4c293689a952ee47b924fba428d2b5b7b2ba9cb2a0e219bbfc7e1b0e80393bc"
-    },
-    {
-      "segment": 10,
-      "frames": 1045,
-      "present_frames": 208,
-      "tag_frames": 202,
-      "board_edges": [
-        406,
-        460
-      ],
-      "right": 460,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 184,
+      "right": 430,
+      "segment": 8,
       "source_bounds": [
         90,
         828,
-        550,
+        520,
         980
+      ],
+      "tag_frames": 178,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-14/reel/ostapenko-pegula-wuhan-2026-r2/score_masks/segment-09.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        406,
+        460
       ],
       "body_bounds": [
         [
@@ -907,6 +892,11 @@
           460,
           154
         ]
+      ],
+      "frames": 1045,
+      "geometry_origin": [
+        90,
+        826
       ],
       "header_bounds": [
         [
@@ -970,20 +960,24 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "7b9f9b9fab7bede41880056a73a82a8bc2d2bf155d2d5f571af68e32a1887c17",
       "measured_present_frames": 208,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 208,
+      "right": 460,
+      "segment": 10,
+      "source_bounds": [
+        90,
+        828,
+        550,
+        980
+      ],
+      "tag_frames": 202,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-14/reel/ostapenko-pegula-wuhan-2026-r2/score_masks/segment-11.mkv",
-      "mask_sha256": "7b9f9b9fab7bede41880056a73a82a8bc2d2bf155d2d5f571af68e32a1887c17"
+      "mask": "output/2026-10-14/reel/ostapenko-pegula-wuhan-2026-r2/score_masks/segment-11.mkv"
     }
   ]
 }
