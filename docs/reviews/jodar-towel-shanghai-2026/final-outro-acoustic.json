@@ -1,0 +1,202 @@
+{
+  "sentence": "关注网球时插，时插归我，好球归你。",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+18%",
+  "pitch": "+0Hz",
+  "results": [
+    {
+      "at": 5,
+      "measurement": {
+        "word": "时插",
+        "char": "插",
+        "sentence": "关注网球时插，时插归我，好球归你。",
+        "tts_text": "关注网球时插，时插归我，好球归你。",
+        "intended_refs": [
+          "锸",
+          "插"
+        ],
+        "wrong_refs": [
+          "诧",
+          "姹"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+18%",
+        "verdict": "correct",
+        "confidence": "medium",
+        "verdict_raw": "correct",
+        "score": 1.0,
+        "margin": 0.2,
+        "near_identical_to": "intended",
+        "far_from_both": false,
+        "dropped_refs": [],
+        "override": "ORIG identical to a A-reference; A-side self-test passed, other side did not",
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 0.0,
+            "d_wrong": 2.589,
+            "score": 1.0
+          },
+          "f0": {
+            "d_intended": 0.0,
+            "d_wrong": 1.329,
+            "score": 1.0
+          },
+          "comb": {
+            "d_intended": 0.0,
+            "d_wrong": 2.623,
+            "score": 1.0
+          }
+        },
+        "separation": {
+          "spec": {
+            "within": 2.131,
+            "between": 2.69,
+            "separation": 1.262
+          },
+          "f0": {
+            "within": 0.794,
+            "between": 1.715,
+            "separation": 2.16
+          },
+          "comb": {
+            "within": 1.859,
+            "between": 3.059,
+            "separation": 1.646
+          }
+        },
+        "selftest_loo": {
+          "锸": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.395
+          },
+          "插": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.347
+          },
+          "诧": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": -0.144
+          },
+          "姹": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": -0.037
+          }
+        },
+        "selftest_pass": false,
+        "window_s": [
+          0.826,
+          1.107
+        ],
+        "boundary_token": "插",
+        "window_anchor": "ORIG"
+      }
+    },
+    {
+      "at": 8,
+      "measurement": {
+        "word": "时插",
+        "char": "插",
+        "sentence": "关注网球时插，时插归我，好球归你。",
+        "tts_text": "关注网球时插，时插归我，好球归你。",
+        "intended_refs": [
+          "锸",
+          "插"
+        ],
+        "wrong_refs": [
+          "诧",
+          "姹"
+        ],
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+18%",
+        "verdict": "correct",
+        "confidence": "high",
+        "verdict_raw": "correct",
+        "score": 1.0,
+        "margin": 0.2,
+        "near_identical_to": "intended",
+        "far_from_both": false,
+        "dropped_refs": [],
+        "override": null,
+        "selftest_sides": [
+          "A",
+          "B"
+        ],
+        "features": {
+          "spec": {
+            "d_intended": 0.0,
+            "d_wrong": 2.495,
+            "score": 1.0
+          },
+          "f0": {
+            "d_intended": 0.0,
+            "d_wrong": 2.089,
+            "score": 1.0
+          },
+          "comb": {
+            "d_intended": 0.0,
+            "d_wrong": 3.336,
+            "score": 1.0
+          }
+        },
+        "separation": {
+          "spec": {
+            "within": 2.555,
+            "between": 2.529,
+            "separation": 0.99
+          },
+          "f0": {
+            "within": 0.502,
+            "between": 2.161,
+            "separation": 4.303
+          },
+          "comb": {
+            "within": 1.78,
+            "between": 3.425,
+            "separation": 1.924
+          }
+        },
+        "selftest_loo": {
+          "锸": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.3
+          },
+          "插": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.328
+          },
+          "诧": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.25
+          },
+          "姹": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.293
+          }
+        },
+        "selftest_pass": true,
+        "window_s": [
+          1.461,
+          1.743
+        ],
+        "boundary_token": "插",
+        "window_anchor": "ORIG"
+      }
+    }
+  ],
+  "excluded_reference_note": "叉 is polyphonic; 岔 changes boundaries in this context and failed leave-one-out. Stable candidate comparison uses 锸/插 vs 诧/姹. Unreliable original results remain unresolved and were not marked pass.",
+  "production_bundle_sha256": "960b1005e9a314afa1438d75306edb747e2088bbbee313e326899700a5f54bd6",
+  "production_audio_sha256": "acfe218ff4299f41dac7b23c7f148b8d99c5be0a708e8d5806129e1383e25b45",
+  "exact_verified_take_reused": true
+}
