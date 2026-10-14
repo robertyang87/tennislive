@@ -1,0 +1,521 @@
+{
+  "status": "complete_current_spec_source_and_story_audit_with_explicit_crop_limits",
+  "reviewed_utc": "2026-10-14T18:16:32.139215+00:00",
+  "scope": "Independent source/action/story/audio-evidence review of actual current13segment spec. No spec/voice/Git changes. No final renderedmovie QC, no publicationclaim.",
+  "repo_head": "1a09851b87d8b77a9f95d3f81536dcbb88873d79",
+  "requested_head_prefix": "1a09851",
+  "spec_path": "/workspace/tennislive-efficiency/specs/reels/medvedev-tsitsipas-shanghai-2026-r4.json",
+  "spec_file_sha256": "9cb958517acadc67f9eb62bf2109af996417951e72175f7b2907e3b083a9df65",
+  "audio_binding_path": "/workspace/tennislive-efficiency/data/audio_reviews/medvedev-tsitsipas-shanghai-2026-r4.json",
+  "audio_binding_file_sha256": "739d78c30f01cc845346dee503f92fe78d6f67c0ac64ab8907efc84fc00039f9",
+  "audio_plan_sha256": "694c100377ffa4bfd01559529c44f4f741d7770604226e6fd049e37a9ef02449",
+  "source": {
+    "url": "https://www.youtube.com/watch?v=B8EO9eKy-mY",
+    "file": "/workspace/scratch/b8-source/source.mp4",
+    "sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+    "bytes": 92282650,
+    "actual_video_fps": 50,
+    "resolution": [
+      1920,
+      1080
+    ],
+    "video_duration": 244.46,
+    "container_duration": 244.529342
+  },
+  "segment_count": 13,
+  "source_segment_count": 7,
+  "fact_statistics_card_count": 6,
+  "segments": [
+    {
+      "segment_index": 0,
+      "edit_id": "cold_open",
+      "source_interval": [
+        214.62,
+        228.44
+      ],
+      "predicted_native_tail_end": 228.62,
+      "boundary_review": "available_source_point_actions_complete_to_deadball_and_kept_reaction_boundary",
+      "note": "214.62现有赛点发球动作到获胜反应；不是只落地后开场。采用完整赛点冷开保护低置信ASR句头；正文ending回收同一点。最后球219.80击出，220.30已在Ts端落地，220.60死球。"
+    },
+    {
+      "segment_index": 1,
+      "edit_id": "coordinate",
+      "type": "fact_or_statistics_card",
+      "narration": "北京时间十月十四日晚，上海大师赛第四轮。梅德韦杰夫与西西帕斯交锋，胜者晋级八强。",
+      "title": "发球局一次没丢\n两盘晋级上海八强",
+      "fact_review": "Consistentwithboundedfacts/PBP; next-rounddate/time/court notasserted; night-sessionidentitynotactual18:00firstserve."
+    },
+    {
+      "segment_index": 2,
+      "edit_id": "early_break",
+      "source_interval": [
+        11.4,
+        17.0
+      ],
+      "predicted_native_tail_end": 17.18,
+      "boundary_review": "available_source_point_actions_complete_to_deadball_and_kept_reaction_boundary",
+      "note": "11.40 Ts抛球已开始；首盘1-1、Med40/Ts0，完整现有第四接发得分至16.30死球、初始步返反应。17.00+.18=17.18，早于17.20近景切换；17.20-20.82整近景与netcord英语一起排除。首盘此局前三个接发得分无画面。"
+    },
+    {
+      "segment_index": 3,
+      "edit_id": "early_following_points",
+      "source_interval": [
+        20.82,
+        35.04
+      ],
+      "predicted_native_tail_end": 35.22,
+      "boundary_review": "available_source_point_actions_complete_to_deadball_and_kept_reaction_boundary",
+      "note": "20.82首盘Med3-1、15-40接发点，Med拿分到30-40；27.50首盘3-2、40-0发球点，Med保发4-2。两点含完整现有发球动作、得分与各自反应；3-1这局其余救破发点/保发过程不在这些画面内。35.04+.18=35.22早于35.26下一点。"
+    },
+    {
+      "segment_index": 4,
+      "edit_id": "first_break",
+      "type": "fact_or_statistics_card",
+      "narration": "首盘一比一时，梅德韦杰夫连赢四球破发。盘末，底线对攻后向前压迫，六比四拿下首盘。",
+      "title": "1比1连赢四球\n带着优势走向盘末",
+      "fact_review": "Consistentwithboundedfacts/PBP; next-rounddate/time/court notasserted; night-sessionidentitynotactual18:00firstserve."
+    },
+    {
+      "segment_index": 5,
+      "edit_id": "first_set_finish",
+      "source_interval": [
+        110.06,
+        119.62
+      ],
+      "predicted_native_tail_end": 119.8,
+      "boundary_review": "available_source_point_actions_complete_to_deadball_and_kept_reaction_boundary",
+      "note": "110.06首盘5-4、40-15盘点，完整现有发球至119.60死球+最初抬拍/转身。119.62+.18=119.80，早于不确定解说最早119.84。原生6-4翻牌及后续获胜近景在被删部分，不声称此选段显示6-4翻牌或全部closeup。"
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "second_pressure_point",
+      "source_interval": [
+        151.02,
+        169.32
+      ],
+      "predicted_native_tail_end": 169.5,
+      "boundary_review": "available_source_point_actions_complete_to_deadball_and_kept_reaction_boundary",
+      "note": "151.02第二盘Med2-3、0-15发球点；Ts穿越前压至网前的Med，Ts拿分到0-30。原点现有发球/相持/得分/双方反应及Incredible tennis完整保留。随后Med连续4个发球得分保发无画面，由逐分事实旁白说明。169.32+.18=169.50早于169.54下一点。"
+    },
+    {
+      "segment_index": 7,
+      "edit_id": "second_pressure",
+      "type": "fact_or_statistics_card",
+      "narration": "第二盘二比三，他在网前被穿越，来到零比三十。随后连赢四球保发。五比五，机会再现。",
+      "title": "首盘6比4\n次盘0比30考验",
+      "fact_review": "Consistentwithboundedfacts/PBP; next-rounddate/time/court notasserted; night-sessionidentitynotactual18:00firstserve."
+    },
+    {
+      "segment_index": 8,
+      "edit_id": "late_break",
+      "source_interval": [
+        187.9,
+        211.18
+      ],
+      "predicted_native_tail_end": 211.36,
+      "boundary_review": "available_source_point_actions_complete_to_deadball_and_kept_reaction_boundary",
+      "note": "187.90次盘5-5、Med30/Ts0接发；随后194.64、40-0破发点，源画面两个得分连续保留至211.18死球+双方步返/低头初始反应。211.18+.18=211.36早于不确定短评最早211.40；完整得分，不声称所有后续Med近景或6-5翻牌被保留。前两个接发得分无画面。"
+    },
+    {
+      "segment_index": 9,
+      "edit_id": "match_payoff",
+      "type": "fact_or_statistics_card",
+      "narration": "五比五后，他又连赢四球破发。发球胜赛局，拿到第一个赛点就兑现。六比四、七比五，晋级上海八强。",
+      "title": "5比5后连赢四球\n第一个赛点就兑现",
+      "fact_review": "Consistentwithboundedfacts/PBP; next-rounddate/time/court notasserted; night-sessionidentitynotactual18:00firstserve."
+    },
+    {
+      "segment_index": 10,
+      "edit_id": "ending",
+      "source_interval": [
+        214.62,
+        234.3
+      ],
+      "predicted_native_tail_end": 234.48,
+      "boundary_review": "available_source_point_actions_complete_to_deadball_and_kept_reaction_boundary",
+      "note": "214.62同首赛点40-30；完整现有发球动作、全点、获胜近景、Ts反应、网前握手及轻拍胸口。232.40-233.90握手，234.48仍是双方走开，234.50黑场/publisher转场。end234.30+.18=234.48截止安全。右上实体大屏233.40有6 7/4 5，但center裁切会丢；原生小板退场之前未确认显示7-5。"
+    },
+    {
+      "segment_index": 11,
+      "edit_id": "full_stats",
+      "type": "fact_or_statistics_card",
+      "narration": "全场制胜球，二十五对二十八。非受迫失误，十对十八。一发赢球率，百分之八十五对百分之六十八。他全场没有面对破发点。",
+      "title": null,
+      "fact_review": "Consistentwithboundedfacts/PBP; next-rounddate/time/court notasserted; night-sessionidentitynotactual18:00firstserve."
+    },
+    {
+      "segment_index": 12,
+      "edit_id": "next_round",
+      "type": "fact_or_statistics_card",
+      "narration": "下一轮，他将面对保罗。这样的发球表现，还能继续吗？",
+      "title": "下一轮面对保罗\n发球优势能否延续？",
+      "fact_review": "Consistentwithboundedfacts/PBP; next-rounddate/time/court notasserted; night-sessionidentitynotactual18:00firstserve."
+    }
+  ],
+  "actual_reviewed_audio_packets": [
+    {
+      "segment_index": 0,
+      "edit_id": "cold_open",
+      "path": "/workspace/tennislive-efficiency/data/evidence/medvedev-tsitsipas-shanghai-2026-r4/audio/cold_open-review.json",
+      "sha256": "3f6b34e4c27cd733f31eea2d65a75b22efed53a71c6215b4c016d78520e5b51d",
+      "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+      "status": "complete",
+      "method": "asr_cross_checked",
+      "reviewed_from": 214.62,
+      "reviewed_to": 228.62,
+      "foreground_english": [
+        {
+          "start": 219.26,
+          "end": 224.4,
+          "en": "The former champion has produced",
+          "zh": "这位前冠军打出了",
+          "verification": "native-f09small explicitlyhas produced + same source caption; mediumcoreproduced. Earliest219.26 is fullmedium lowconfidence smearedwordThe; keep source214.62 fromserve toprotectcompletecapture; no exactacousticstartclaim.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        },
+        {
+          "start": 224.4,
+          "end": 227.58,
+          "en": "one of his best performances of the year.",
+          "zh": "他今年最出色的表现之一。",
+          "verification": "Both native/local recognizers stronglyagree content; native/short tailwordends227.30-227.58. Sourcewholeutterance preserved.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        }
+      ],
+      "no_foreground_english_reason": null,
+      "current_selection_note": "Packet may review larger parent sourcewindow; only completeutterances intersecting this selectedsubwindow belongto actual keptEnglish."
+    },
+    {
+      "segment_index": 2,
+      "edit_id": "early_break",
+      "path": "/workspace/tennislive-efficiency/data/evidence/medvedev-tsitsipas-shanghai-2026-r4/audio/early_break-review.json",
+      "sha256": "658fe8ca28147f5c588937307b98232b1c49b2d19da705dbf5815b24b2928195",
+      "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+      "status": "complete",
+      "method": "asr_cross_checked",
+      "reviewed_from": 11.4,
+      "reviewed_to": 35.22,
+      "foreground_english": [
+        {
+          "start": 17.52,
+          "end": 20.54,
+          "en": "They got a little lucky with the net cord.",
+          "zh": "这一下有些幸运，球擦到了网带。",
+          "verification": "native-f09medium+small core andsourcecaption agree; normalize chord orthographyto cord. OpeningAnd/now hallucinatedlowconfidence alternatives omitted asnonsemantic ASRprefix, no playername inferred.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        },
+        {
+          "start": 23.36,
+          "end": 24.24,
+          "en": "Unbelievable.",
+          "zh": "难以置信！",
+          "verification": "Both actualf09models/localshort/sourcecaptionagree.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        },
+        {
+          "start": 24.24,
+          "end": 25.5,
+          "en": "And to be honest,",
+          "zh": "说实话，",
+          "verification": "Both modelsagree; reading split inside continuous originalsentence.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        },
+        {
+          "start": 25.5,
+          "end": 27.5,
+          "en": "that's how the level has been.",
+          "zh": "这场比赛一直保持这样的水准。",
+          "verification": "Both modelsagree; sourcewindowcontinuous to35.04, thus allwordtails27.42-27.50 preserved.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        },
+        {
+          "start": 32.36,
+          "end": 34.22,
+          "en": "He's toying with it.",
+          "zh": "这球处理得游刃有余。",
+          "verification": "Actualnative-f09small+medium lexicalcorehe's toying with it; Oh/And initial interjection lowconfidenceuncorrelated, not separatelypromoted intoforeground speech. Punctuation/capitalization only, no taunt againstopponent invented.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        }
+      ],
+      "no_foreground_english_reason": null,
+      "current_selection_note": "Packet may review larger parent sourcewindow; only completeutterances intersecting this selectedsubwindow belongto actual keptEnglish."
+    },
+    {
+      "segment_index": 3,
+      "edit_id": "early_following_points",
+      "path": "/workspace/tennislive-efficiency/data/evidence/medvedev-tsitsipas-shanghai-2026-r4/audio/early_break-review.json",
+      "sha256": "658fe8ca28147f5c588937307b98232b1c49b2d19da705dbf5815b24b2928195",
+      "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+      "status": "complete",
+      "method": "asr_cross_checked",
+      "reviewed_from": 11.4,
+      "reviewed_to": 35.22,
+      "foreground_english": [
+        {
+          "start": 17.52,
+          "end": 20.54,
+          "en": "They got a little lucky with the net cord.",
+          "zh": "这一下有些幸运，球擦到了网带。",
+          "verification": "native-f09medium+small core andsourcecaption agree; normalize chord orthographyto cord. OpeningAnd/now hallucinatedlowconfidence alternatives omitted asnonsemantic ASRprefix, no playername inferred.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        },
+        {
+          "start": 23.36,
+          "end": 24.24,
+          "en": "Unbelievable.",
+          "zh": "难以置信！",
+          "verification": "Both actualf09models/localshort/sourcecaptionagree.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        },
+        {
+          "start": 24.24,
+          "end": 25.5,
+          "en": "And to be honest,",
+          "zh": "说实话，",
+          "verification": "Both modelsagree; reading split inside continuous originalsentence.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        },
+        {
+          "start": 25.5,
+          "end": 27.5,
+          "en": "that's how the level has been.",
+          "zh": "这场比赛一直保持这样的水准。",
+          "verification": "Both modelsagree; sourcewindowcontinuous to35.04, thus allwordtails27.42-27.50 preserved.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        },
+        {
+          "start": 32.36,
+          "end": 34.22,
+          "en": "He's toying with it.",
+          "zh": "这球处理得游刃有余。",
+          "verification": "Actualnative-f09small+medium lexicalcorehe's toying with it; Oh/And initial interjection lowconfidenceuncorrelated, not separatelypromoted intoforeground speech. Punctuation/capitalization only, no taunt againstopponent invented.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        }
+      ],
+      "no_foreground_english_reason": null,
+      "current_selection_note": "Packet may review larger parent sourcewindow; only completeutterances intersecting this selectedsubwindow belongto actual keptEnglish."
+    },
+    {
+      "segment_index": 5,
+      "edit_id": "first_set_finish",
+      "path": "/workspace/tennislive-efficiency/data/evidence/medvedev-tsitsipas-shanghai-2026-r4/audio/first_set_finish-review.json",
+      "sha256": "fceb6f768cca89c5bc2a65d5d90678cb10a540eb21335f872956884e514a4530",
+      "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+      "status": "complete",
+      "method": "asr_cross_checked",
+      "reviewed_from": 110.06,
+      "reviewed_to": 119.8,
+      "foreground_english": [],
+      "no_foreground_english_reason": "Two independent fullnativef09models/localraw locate firstintelligiblepost-setcomment119.84+; actualcliptail119.80 earlier. Actualoriginal119.60 deadball+Medraisedracket/playerswalking. Retainsfinalpoint+initialreaction; excludeslater closeup anduncertain40minutes comment. No foregroundEnglishphrase inretainedwindow, crowd/applause/tennis sounds.",
+      "current_selection_note": "Packet may review larger parent sourcewindow; only completeutterances intersecting this selectedsubwindow belongto actual keptEnglish."
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "second_pressure_point",
+      "path": "/workspace/tennislive-efficiency/data/evidence/medvedev-tsitsipas-shanghai-2026-r4/audio/second_pressure_point-review.json",
+      "sha256": "c64856c9a3d5f3e2e349d8a26006d30233921648152ddcdd07bacd0c236bab52",
+      "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+      "status": "complete",
+      "method": "asr_cross_checked",
+      "reviewed_from": 151.02,
+      "reviewed_to": 169.5,
+      "foreground_english": [
+        {
+          "start": 165.82,
+          "end": 167.84,
+          "en": "Incredible tennis.",
+          "zh": "不可思议的网球！",
+          "verification": "Both actualf09native/localmodels+sourcecaption agree core; isolatedIt's introductorytoken inonesmallhypothesis stretched1.4s andabsentallothers notmanufactured.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        }
+      ],
+      "no_foreground_english_reason": null,
+      "current_selection_note": "Packet may review larger parent sourcewindow; only completeutterances intersecting this selectedsubwindow belongto actual keptEnglish."
+    },
+    {
+      "segment_index": 8,
+      "edit_id": "late_break",
+      "path": "/workspace/tennislive-efficiency/data/evidence/medvedev-tsitsipas-shanghai-2026-r4/audio/late_break-review.json",
+      "sha256": "e503b1eeeb209f60264357fb2ee0010eb458d396edc9ede4fbc2fbaa41d2f70f",
+      "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+      "status": "complete",
+      "method": "asr_cross_checked",
+      "reviewed_from": 187.9,
+      "reviewed_to": 211.36,
+      "foreground_english": [],
+      "no_foreground_english_reason": "187.90 startsafter previousgamecommentend187.22/187.24 inactualf09native small+localshort; mediumgameword stretchedto188.08 conflictingwithsource scene andotheractualsameSHAboundaries, not treatedasacousticproof. Selected window retainslasttwo actual5-5 receivingpoints andinitialdeadballreaction at211.18. Uncertainnextreactionutterance earliest211.40 liesafteractualnative tail211.36. IsolatedOh/interjection+repetitionsnoEnglishsentences areASRhallucinations/nonlexicalcourt sounds.",
+      "current_selection_note": "Packet may review larger parent sourcewindow; only completeutterances intersecting this selectedsubwindow belongto actual keptEnglish."
+    },
+    {
+      "segment_index": 10,
+      "edit_id": "ending",
+      "path": "/workspace/tennislive-efficiency/data/evidence/medvedev-tsitsipas-shanghai-2026-r4/audio/ending-review.json",
+      "sha256": "c2cde6f2e49405d35e336c2fd58a5073e21859267a9621329ef45a581e57d9a4",
+      "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+      "status": "complete",
+      "method": "asr_cross_checked",
+      "reviewed_from": 214.62,
+      "reviewed_to": 234.48,
+      "foreground_english": [
+        {
+          "start": 219.26,
+          "end": 224.4,
+          "en": "The former champion has produced",
+          "zh": "这位前冠军打出了",
+          "verification": "native-f09small explicitlyhas produced + same source caption; mediumcoreproduced. Earliest219.26 is fullmedium lowconfidence smearedwordThe; keep source214.62 fromserve toprotectcompletecapture; no exactacousticstartclaim.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        },
+        {
+          "start": 224.4,
+          "end": 227.58,
+          "en": "one of his best performances of the year.",
+          "zh": "他今年最出色的表现之一。",
+          "verification": "Both native/local recognizers stronglyagree content; native/short tailwordends227.30-227.58. Sourcewholeutterance preserved.",
+          "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+        }
+      ],
+      "no_foreground_english_reason": null,
+      "current_selection_note": "Packet may review larger parent sourcewindow; only completeutterances intersecting this selectedsubwindow belongto actual keptEnglish."
+    }
+  ],
+  "audio_method_limit": "Actualsame-SHA native/localindependentASR andsourceauto-caption reconciliation, no manual acousticlistening claimed. Lowprobabilitysmearedwordonsets are not exactphoneticproof. FullpointcoldprotectsEnglishfirstword. Previously8dfencodedsourceevidencewaslocatingonly andnotf09proof. No loudness,silence,gain,mutechecksorprocessing.",
+  "tactical_narration_review": [
+    {
+      "narration_excerpt": "盘末，底线对攻后向前压迫，六比四拿下首盘。",
+      "decision": "supported_as_low_level_court_movement_and_verified_set_result",
+      "source_interval": [
+        110.06,
+        119.62
+      ],
+      "frame_basis": [
+        "/workspace/scratch/b8-tactics/114.png",
+        "/workspace/scratch/b8-tactics/118.png",
+        "/workspace/scratch/b8-key-boundaries/119.60.png"
+      ],
+      "details": "114Med近端底线与Ts远端对攻；118Med向场内前方移动，位置在近端右侧；119.60双方已停止相持，Med抬拍/走向前方。未声称正/反手、直/斜线路、最后一拍制胜或对手主动失误。",
+      "crop_note": "118时Med身体约x1450超过固定center右边1365；来源动作可核，但成片该瞬间可能出框。"
+    },
+    {
+      "narration_excerpt": "第二盘二比三，他在网前被穿越，来到零比三十。",
+      "decision": "supported",
+      "source_interval": [
+        151.02,
+        169.32
+      ],
+      "frame_basis": [
+        "/workspace/scratch/b8-tactics/163.png",
+        "/workspace/scratch/b8-tactics/165.png",
+        "/workspace/scratch/b8-tactics/166.png"
+      ],
+      "details": "163蓝衣Med远端由底线向前；165已到网前，白衣Ts在近端后场出手；166球越过Med落其身后左侧场内，随后Ts得分。PBP/分数板绑定0-15→0-30。未强行指定正反手或直斜线。"
+    }
+  ],
+  "tactical_original_png_proof": [
+    {
+      "path": "/workspace/scratch/b8-tactics/114.png",
+      "sha256": "f9f16c2397234b1f83e2bc3f152be20565457c5027e889458bd2ca08872823bb",
+      "actual_original_png_viewed_in_this_final_turn": true
+    },
+    {
+      "path": "/workspace/scratch/b8-tactics/118.png",
+      "sha256": "1676fdb2d0cf4582dab061e3e469d193b169dbd867dc6ccd2bedc07dcad07d28",
+      "actual_original_png_viewed_in_this_final_turn": true
+    },
+    {
+      "path": "/workspace/scratch/b8-tactics/163.png",
+      "sha256": "8525c5c1add629991d390b43b6cfdc1b1950ba1d3c995011656d617e850572ae",
+      "actual_original_png_viewed_in_this_final_turn": true
+    },
+    {
+      "path": "/workspace/scratch/b8-tactics/165.png",
+      "sha256": "fb4683f74103d349b904c8ce23535d2a13ad9f31a23a7a0552345d63c3b6abcd",
+      "actual_original_png_viewed_in_this_final_turn": true
+    },
+    {
+      "path": "/workspace/scratch/b8-tactics/166.png",
+      "sha256": "8ce68747bf3903ec49293f4876ccaa5b199d0a4b28b30b23ad4c3cfe990b1992",
+      "actual_original_png_viewed_in_this_final_turn": true
+    },
+    {
+      "path": "/workspace/scratch/b8-key-boundaries/119.60.png",
+      "sha256": "49b95c9944210b150d8dc88b179ad206654cb4b33e672d1baff8a083336c5c70",
+      "actual_original_png_viewed_in_this_final_turn": true
+    },
+    {
+      "path": "/workspace/scratch/b8-key-boundaries/211.18.png",
+      "sha256": "14b6879d951ecb35ea562d28675c0971fd5bafca901f5fb8b69d568ee898e442",
+      "actual_original_png_viewed_in_this_final_turn": true
+    }
+  ],
+  "internal_material_gaps": [
+    "首盘1-1的零封破发仅最后一分可见，前三个连续接发得分未示；不拿后续3-1/3-2点冒充。",
+    "次盘5-5的零封破发仅最后两分可见，前两个连续接发得分未示。",
+    "次盘2-3、0-30后连续四个发球得分保发未示。",
+    "次盘4-5平分保发未示，当前旁白不将另一分冒充。",
+    "首盘后续近景/6-4翻牌、关键破发后续近景/6-5翻牌因完整排除不确定英语而未保留；保留已有初始真实反应并由事实卡讲结果。"
+  ],
+  "explicit_exclusions": [
+    {
+      "source_interval": [
+        17.2,
+        20.82
+      ],
+      "reason": "人物closeup固定center出现半脸出框，连同netcord原声整句排除；未截半句。"
+    },
+    {
+      "source_interval": [
+        61.22,
+        95.18
+      ],
+      "reason": "整长回合为非故事必要的精彩点；最后必要同SHA短窗仍未核前缀，不再复测，不伪造确认。整段已删除，未切最后一拍。"
+    },
+    {
+      "source_interval": [
+        119.84,
+        151.02
+      ],
+      "reason": "120不确定整句、非必要中间两局/97数字排除，非静音改混音。"
+    },
+    {
+      "source_interval": [
+        169.54,
+        187.9
+      ],
+      "reason": "非必要中间点/185首词不确定整句排除；当前直接进入5-5最后两个接发点。"
+    },
+    {
+      "source_interval": [
+        211.4,
+        214.62
+      ],
+      "reason": "212不确定短评整句及其所在后续近景排除；不声称全部closeup保留。"
+    }
+  ],
+  "crop_review": {
+    "fixed_center_crop_source_x": [
+      555,
+      1365
+    ],
+    "source_y": [
+      0,
+      1080
+    ],
+    "kept_horizontal_fraction": 0.421875,
+    "rule": "时间连续或保留完整可用回合不等于完整横向空间视野。",
+    "observed_current_source_limits": [
+      "11.40近端Med接发站位约x300在center左侧之外；源远端Ts发球可见。",
+      "118.00Med追向近端右侧，身体约x1450出center右边；该源动作支持前压叙述，不能称成片人人全程在框。",
+      "151.02近端Ts初始站位约x490有左边缘/出框风险。",
+      "204.00关键破发点近端Ts追到右边线约x1750，完全出center右框。",
+      "握手233.40两张脸约x770/1200可见，但肩/body边缘可能裁掉；右上实体最终大屏完全超出1365右边。"
+    ],
+    "scorebody": "主板自然蒙版x0回贴，源搜索bbox[98,920,452,1029]动态宽度；不制造不存在的BREAK/SET/MATCHPOINT头条。真正成片是否字幕压板/贴回带球场仍须finalnativeframeQC。"
+  },
+  "remaining_source_story_blockers": [],
+  "final_render_checks_still_required": [
+    "实际finalsource字节同f09及fallbackimmutablefilename",
+    "最终ASS英文/中文完整、片尾词尾与各relativequotes同当前plan",
+    "实际center裁切/字幕/原比分板自然固定x0布局",
+    "两句真实动作旁白实际TTS及混音进最终片",
+    "真实publicationPushPlus回执与网页链接由root负责，本文未宣称完成"
+  ]
+}

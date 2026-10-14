@@ -1,0 +1,882 @@
+{
+  "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_488k2SDl",
+  "source_identity": "Freshly found from Shanghai results page: Medvedev D. vs Tsitsipas S. 6-4 7-5, 1/8-finals",
+  "ordering": [
+    "Daniil Medvedev",
+    "Stefanos Tsitsipas"
+  ],
+  "terminal_point_method": "Feed each game lists score states before final point, then explicitly gives game winner; final point appended only after legal game-win transition check. Home/away point score maps Medvedev/Tsitsipas.",
+  "point_total": 125,
+  "derived_points": [
+    68,
+    57
+  ],
+  "official_points": [
+    68,
+    57
+  ],
+  "set_derived_points": {
+    "Set 1": [
+      36,
+      25
+    ],
+    "Set 2": [
+      32,
+      32
+    ]
+  },
+  "all_legal": true,
+  "official_stats_set_sum_checks": {
+    "Aces": {
+      "full": [
+        8,
+        4
+      ],
+      "set_sum": [
+        8,
+        4
+      ],
+      "pass": true
+    },
+    "DoubleFaults": {
+      "full": [
+        1,
+        1
+      ],
+      "set_sum": [
+        1,
+        1
+      ],
+      "pass": true
+    },
+    "FirstServePointsWon": {
+      "full": [
+        33,
+        30
+      ],
+      "set_sum": [
+        33,
+        30
+      ],
+      "pass": true
+    },
+    "FirstServePointsPlayed": {
+      "full": [
+        39,
+        44
+      ],
+      "set_sum": [
+        39,
+        44
+      ],
+      "pass": true
+    },
+    "SecondServePointsWon": {
+      "full": [
+        12,
+        10
+      ],
+      "set_sum": [
+        12,
+        10
+      ],
+      "pass": true
+    },
+    "SecondServePointsPlayed": {
+      "full": [
+        23,
+        19
+      ],
+      "set_sum": [
+        23,
+        19
+      ],
+      "pass": true
+    },
+    "BreakPointsFacedServing": {
+      "full": [
+        0,
+        7
+      ],
+      "set_sum": [
+        0,
+        7
+      ],
+      "pass": true
+    },
+    "BreakPointsConverted": {
+      "full": [
+        2,
+        0
+      ],
+      "set_sum": [
+        2,
+        0
+      ],
+      "pass": true
+    },
+    "BreakPointsOpportunities": {
+      "full": [
+        7,
+        0
+      ],
+      "set_sum": [
+        7,
+        0
+      ],
+      "pass": true
+    },
+    "TotalPointsWonPercentageDividend": {
+      "full": [
+        68,
+        57
+      ],
+      "set_sum": [
+        68,
+        57
+      ],
+      "pass": true
+    },
+    "TotalServicePointsWonPercentageDividend": {
+      "full": [
+        45,
+        40
+      ],
+      "set_sum": [
+        45,
+        40
+      ],
+      "pass": true
+    },
+    "TotalServicePointsWonPercentageDivisor": {
+      "full": [
+        62,
+        63
+      ],
+      "set_sum": [
+        62,
+        63
+      ],
+      "pass": true
+    }
+  },
+  "games": [
+    {
+      "game_global": 1,
+      "set": "Set 1",
+      "home_games": "0",
+      "away_games": "1",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "15:0, 30:0, 30:15, 40:15 |B1|, 40:30 |B1|, 40:40, 40:A",
+      "break_points": 2,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        0,
+        0
+      ],
+      "score_after_M_T": [
+        0,
+        1
+      ],
+      "point_winners_M0_T1": [
+        0,
+        0,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "points_count": 8
+    },
+    {
+      "game_global": 2,
+      "set": "Set 1",
+      "home_games": "1",
+      "away_games": "1",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "15:0, 30:0, 40:0, 40:15",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        0,
+        1
+      ],
+      "score_after_M_T": [
+        1,
+        1
+      ],
+      "point_winners_M0_T1": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "points_count": 5
+    },
+    {
+      "game_global": 3,
+      "set": "Set 1",
+      "home_games": "2",
+      "away_games": "1",
+      "server": "away",
+      "winner": "home",
+      "broken": true,
+      "points": "15:0, 30:0, 40:0 |B1|",
+      "break_points": 1,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        1,
+        1
+      ],
+      "score_after_M_T": [
+        2,
+        1
+      ],
+      "point_winners_M0_T1": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "points_count": 4
+    },
+    {
+      "game_global": 4,
+      "set": "Set 1",
+      "home_games": "3",
+      "away_games": "1",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "15:0, 15:15, 30:15, 40:15",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        2,
+        1
+      ],
+      "score_after_M_T": [
+        3,
+        1
+      ],
+      "point_winners_M0_T1": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "points_count": 5
+    },
+    {
+      "game_global": 5,
+      "set": "Set 1",
+      "home_games": "3",
+      "away_games": "2",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "0:15, 15:15, 15:30, 15:40, 30:40, 40:40, A:40 |B1|, 40:40, 40:A",
+      "break_points": 1,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        3,
+        1
+      ],
+      "score_after_M_T": [
+        3,
+        2
+      ],
+      "point_winners_M0_T1": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "points_count": 10
+    },
+    {
+      "game_global": 6,
+      "set": "Set 1",
+      "home_games": "4",
+      "away_games": "2",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "15:0, 30:0, 40:0",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        3,
+        2
+      ],
+      "score_after_M_T": [
+        4,
+        2
+      ],
+      "point_winners_M0_T1": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "points_count": 4
+    },
+    {
+      "game_global": 7,
+      "set": "Set 1",
+      "home_games": "4",
+      "away_games": "3",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "15:0, 15:15, 30:15, 40:15 |B1|, 40:30 |B1|, 40:40, 40:A",
+      "break_points": 2,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        4,
+        2
+      ],
+      "score_after_M_T": [
+        4,
+        3
+      ],
+      "point_winners_M0_T1": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "points_count": 8
+    },
+    {
+      "game_global": 8,
+      "set": "Set 1",
+      "home_games": "5",
+      "away_games": "3",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "0:15, 15:15, 30:15, 30:30, 40:30",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        4,
+        3
+      ],
+      "score_after_M_T": [
+        5,
+        3
+      ],
+      "point_winners_M0_T1": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "points_count": 6
+    },
+    {
+      "game_global": 9,
+      "set": "Set 1",
+      "home_games": "5",
+      "away_games": "4",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "15:0, 30:0, 30:15, 30:30, 30:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        5,
+        3
+      ],
+      "score_after_M_T": [
+        5,
+        4
+      ],
+      "point_winners_M0_T1": [
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "points_count": 6
+    },
+    {
+      "game_global": 10,
+      "set": "Set 1",
+      "home_games": "6",
+      "away_games": "4",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "0:15, 15:15, 30:15, 40:15 |B2|",
+      "break_points": 0,
+      "set_points": 1,
+      "match_points": 0,
+      "score_before_M_T": [
+        5,
+        4
+      ],
+      "score_after_M_T": [
+        6,
+        4
+      ],
+      "point_winners_M0_T1": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "points_count": 5
+    },
+    {
+      "game_global": 11,
+      "set": "Set 2",
+      "home_games": "0",
+      "away_games": "1",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "0:15, 0:30, 0:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        0,
+        0
+      ],
+      "score_after_M_T": [
+        0,
+        1
+      ],
+      "point_winners_M0_T1": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "points_count": 4
+    },
+    {
+      "game_global": 12,
+      "set": "Set 2",
+      "home_games": "1",
+      "away_games": "1",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "0:15, 15:15, 30:15, 40:15, 40:30",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        0,
+        1
+      ],
+      "score_after_M_T": [
+        1,
+        1
+      ],
+      "point_winners_M0_T1": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "points_count": 6
+    },
+    {
+      "game_global": 13,
+      "set": "Set 2",
+      "home_games": "1",
+      "away_games": "2",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "0:15, 0:30, 0:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        1,
+        1
+      ],
+      "score_after_M_T": [
+        1,
+        2
+      ],
+      "point_winners_M0_T1": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "points_count": 4
+    },
+    {
+      "game_global": 14,
+      "set": "Set 2",
+      "home_games": "2",
+      "away_games": "2",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "15:0, 15:15, 30:15, 40:15, 40:30",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        1,
+        2
+      ],
+      "score_after_M_T": [
+        2,
+        2
+      ],
+      "point_winners_M0_T1": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "points_count": 6
+    },
+    {
+      "game_global": 15,
+      "set": "Set 2",
+      "home_games": "2",
+      "away_games": "3",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "0:15, 15:15, 15:30, 15:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        2,
+        2
+      ],
+      "score_after_M_T": [
+        2,
+        3
+      ],
+      "point_winners_M0_T1": [
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "points_count": 5
+    },
+    {
+      "game_global": 16,
+      "set": "Set 2",
+      "home_games": "3",
+      "away_games": "3",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "0:15, 0:30, 15:30, 30:30, 40:30",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        2,
+        3
+      ],
+      "score_after_M_T": [
+        3,
+        3
+      ],
+      "point_winners_M0_T1": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "points_count": 6
+    },
+    {
+      "game_global": 17,
+      "set": "Set 2",
+      "home_games": "3",
+      "away_games": "4",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "0:15, 15:15, 15:30, 30:30, 30:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        3,
+        3
+      ],
+      "score_after_M_T": [
+        3,
+        4
+      ],
+      "point_winners_M0_T1": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "points_count": 6
+    },
+    {
+      "game_global": 18,
+      "set": "Set 2",
+      "home_games": "4",
+      "away_games": "4",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "15:0, 30:0, 40:0, 40:15",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        3,
+        4
+      ],
+      "score_after_M_T": [
+        4,
+        4
+      ],
+      "point_winners_M0_T1": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "points_count": 5
+    },
+    {
+      "game_global": 19,
+      "set": "Set 2",
+      "home_games": "4",
+      "away_games": "5",
+      "server": "away",
+      "winner": "away",
+      "broken": false,
+      "points": "0:15, 0:30, 0:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        4,
+        4
+      ],
+      "score_after_M_T": [
+        4,
+        5
+      ],
+      "point_winners_M0_T1": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "points_count": 4
+    },
+    {
+      "game_global": 20,
+      "set": "Set 2",
+      "home_games": "5",
+      "away_games": "5",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "15:0, 30:0, 30:15, 40:15, 40:30, 40:40, A:40",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        4,
+        5
+      ],
+      "score_after_M_T": [
+        5,
+        5
+      ],
+      "point_winners_M0_T1": [
+        0,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "points_count": 8
+    },
+    {
+      "game_global": 21,
+      "set": "Set 2",
+      "home_games": "6",
+      "away_games": "5",
+      "server": "away",
+      "winner": "home",
+      "broken": true,
+      "points": "15:0, 30:0, 40:0 |B1|",
+      "break_points": 1,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        5,
+        5
+      ],
+      "score_after_M_T": [
+        6,
+        5
+      ],
+      "point_winners_M0_T1": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "points_count": 4
+    },
+    {
+      "game_global": 22,
+      "set": "Set 2",
+      "home_games": "7",
+      "away_games": "5",
+      "server": "home",
+      "winner": "home",
+      "broken": false,
+      "points": "0:15, 15:15, 30:15, 30:30, 40:30 |B3|",
+      "break_points": 0,
+      "set_points": 0,
+      "match_points": 1,
+      "score_before_M_T": [
+        6,
+        5
+      ],
+      "score_after_M_T": [
+        7,
+        5
+      ],
+      "point_winners_M0_T1": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "points_count": 6
+    }
+  ],
+  "breaks": [
+    {
+      "game_global": 3,
+      "set": "Set 1",
+      "home_games": "2",
+      "away_games": "1",
+      "server": "away",
+      "winner": "home",
+      "broken": true,
+      "points": "15:0, 30:0, 40:0 |B1|",
+      "break_points": 1,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        1,
+        1
+      ],
+      "score_after_M_T": [
+        2,
+        1
+      ],
+      "point_winners_M0_T1": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "points_count": 4
+    },
+    {
+      "game_global": 21,
+      "set": "Set 2",
+      "home_games": "6",
+      "away_games": "5",
+      "server": "away",
+      "winner": "home",
+      "broken": true,
+      "points": "15:0, 30:0, 40:0 |B1|",
+      "break_points": 1,
+      "set_points": 0,
+      "match_points": 0,
+      "score_before_M_T": [
+        5,
+        5
+      ],
+      "score_after_M_T": [
+        6,
+        5
+      ],
+      "point_winners_M0_T1": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "points_count": 4
+    }
+  ],
+  "opportunities_count": {
+    "Medvedev_BP": 7,
+    "Tsitsipas_BP": 0,
+    "Medvedev_first_set_points": 1,
+    "Medvedev_match_points": 1
+  }
+}

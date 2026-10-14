@@ -1,0 +1,58 @@
+{
+  "slug": "medvedev-tsitsipas-shanghai-2026-r4",
+  "checked_at": "2026-10-14T17:19:30Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "b710866cdd596bdc": {
+      "segment": 2,
+      "spoken": 8.424,
+      "picture": 13.0
+    },
+    "5ddc7616dda3adba": {
+      "segment": 4,
+      "spoken": 8.928,
+      "picture": 13.5
+    },
+    "be590df12e6b4ae0": {
+      "segment": 7,
+      "spoken": 8.856,
+      "picture": 13.5
+    },
+    "253772f6b728535a": {
+      "segment": 9,
+      "spoken": 10.2,
+      "picture": 13.0
+    },
+    "03222a33065f68db": {
+      "segment": 11,
+      "spoken": 11.76,
+      "picture": 16.0
+    },
+    "4c91520a6952fd03": {
+      "segment": 12,
+      "spoken": 5.928,
+      "picture": 9.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+    "request_count": 7,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-medvedev-tsitsipas-shanghai-2026-r4-cde78c9e5707badb",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-medvedev-tsitsipas-shanghai-2026-r4-cde78c9e5707badb/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38605416723"
+  }
+}

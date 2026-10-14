@@ -1,0 +1,413 @@
+{
+  "version": 2,
+  "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
+  "slug": "medvedev-tsitsipas-shanghai-2026-r4",
+  "written_at": "2026-10-14T18:40:06Z",
+  "code_sha": "f6fa4a44b9ace0a6bc995ce902a03ad6996b614b",
+  "spec_sha256": "9cb958517acadc67f9eb62bf2109af996417951e72175f7b2907e3b083a9df65",
+  "film_sha256": "eafca1baae7a980040ded12dee59f42379d542df872ab7a3b0611040e6aaed8a",
+  "film_bytes": 59378397,
+  "projection_sha256": "b3eee372297d0d3f3ce113f12cf267f95b04460c37fac72045baa64614701cd7",
+  "claims": [
+    [
+      "segments",
+      0,
+      "_ending_payoff_required"
+    ],
+    [
+      "_match"
+    ],
+    [
+      "segments",
+      0,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      2,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      3,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      5,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      6,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      8,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      10,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      2,
+      "_quote_skip_why"
+    ],
+    [
+      "segments",
+      5,
+      "_quote_skip_why"
+    ],
+    [
+      "segments",
+      8,
+      "_quote_skip_why"
+    ],
+    [
+      "_tennistv_trim"
+    ],
+    [
+      "_tts_backend_why"
+    ],
+    [
+      "stats",
+      "_winners_ue_evidence"
+    ]
+  ],
+  "assets": {
+    "assets/players/headshots/atp-MM58.png": "c39c671efe7fde8be71541e37d9bb7d79a21bd2ebc65c2922d97973b70c31910",
+    "assets/players/headshots/atp-TE51.png": "ebedebe82059761762832f2aef9d876fa4e50cff3c8557a2285f85e3d37c8b9c",
+    "assets/reels/medvedev-tsitsipas-shanghai-2026-r4/medvedev-shanghai-r4.jpg": "0e2e55323e43c4b0d178b4b19718b414133f65c56e09eac133c734285ea03ddc"
+  },
+  "artifacts": {
+    "audio_review_binding.json": "fad0209c9de192151fb296e3135d1588baac9c7a7259134c349ea3a62b0fc978",
+    "subtitles.ass": "4912c0982f831985503b68d0e274b53bb021ffd64e48715c20c15e2659067eeb",
+    "topbar.ass": "e0dfef0cb8051bf255c3609f34870d40a4263821a120f1d0bbfa8c97299f956a",
+    "poster.jpg": "32494d04c43f4581a3dc5c6f84f477a2b1dd3733b6dc8af9b8b6d7f18291a797",
+    "stat_card.jpg": "7da2c6e3fd3f6f2a60b6895af705a46f73ea2c47da8ed6b8597fba9a8f3e52c5",
+    "scoreboard_qc.json": "9e973d9b25b49ca5e82f59be2f55591d41e82b5c9b80dadf5f00777096f67cd0"
+  },
+  "projection": {
+    "slug": "medvedev-tsitsipas-shanghai-2026-r4",
+    "_column": "赛场之上",
+    "tts_backend": "edge",
+    "sources": {
+      "main": "https://www.youtube.com/watch?v=B8EO9eKy-mY"
+    },
+    "primary": "main",
+    "source_fallbacks": {
+      "main": "https://github.com/robertyang87/tennislive/releases/download/source-B8EO9eKy-mY/B8EO9eKy-mY-f09b81ad.mp4"
+    },
+    "track": false,
+    "outro": true,
+    "stat_card_full_canvas": true,
+    "preserve_source_audio": true,
+    "scorebox": [
+      98,
+      920,
+      519,
+      1029
+    ],
+    "cover": {
+      "matchup": [
+        {
+          "name": "梅德韦杰夫",
+          "name_en": "Daniil Medvedev",
+          "country": "RUS",
+          "rank": 6
+        },
+        {
+          "name": "西西帕斯",
+          "name_en": "Stefanos Tsitsipas",
+          "country": "GRE",
+          "rank": 43
+        }
+      ],
+      "eyebrow": "赛场之上",
+      "layout": "solo",
+      "subject": "梅德韦杰夫",
+      "winner": "梅德韦杰夫",
+      "result": "6-4 7-5",
+      "hook": "发球局一次没丢\n梅德韦杰夫两盘过关",
+      "hook_accent": "一次没丢",
+      "topic": "ATP1000 上海 第四轮 · 梅德韦杰夫 VS 西西帕斯",
+      "scrim": "clear",
+      "portrait": {
+        "image": "assets/reels/medvedev-tsitsipas-shanghai-2026-r4/medvedev-shanghai-r4.jpg",
+        "fit": "cover",
+        "focus": 0.745,
+        "focus_y": 0.5,
+        "zoom": 1,
+        "source_url": "https://media.zenfs.com/en/ap.org/93001a655545519da6ece3a3e3ae257d.jpg"
+      },
+      "scoreboard": {
+        "court": "Stadium Court",
+        "duration_source": {
+          "url": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms014",
+          "field": "MatchTimeTotal",
+          "match_id": "MS014"
+        }
+      }
+    },
+    "topbar": {
+      "line1": "2026 ATP1000 上海 第四轮",
+      "line2": "梅德韦杰夫 6-4 7-5 西西帕斯"
+    },
+    "stats": {
+      "a": {
+        "aces": 8,
+        "df": 1,
+        "first_in": 39,
+        "first_total": 62,
+        "first_won": 33,
+        "second_total": 23,
+        "second_won": 12,
+        "bp_conv": 2,
+        "bp_chances": 7,
+        "pts_won": 68,
+        "pts_total": 125,
+        "winners": 25,
+        "ue": 10,
+        "headshot": "assets/players/headshots/atp-MM58.png"
+      },
+      "b": {
+        "aces": 4,
+        "df": 1,
+        "first_in": 44,
+        "first_total": 63,
+        "first_won": 30,
+        "second_total": 19,
+        "second_won": 10,
+        "bp_conv": 0,
+        "bp_chances": 0,
+        "pts_won": 57,
+        "pts_total": 125,
+        "winners": 28,
+        "ue": 18,
+        "headshot": "assets/players/headshots/atp-TE51.png"
+      },
+      "tour": "atp",
+      "footer_date": "2026-10-14",
+      "footer_venue": "上海 · 全场"
+    },
+    "editorial": {
+      "mode": "match_review",
+      "question": "没有面对破发点，梅德韦杰夫如何在第二盘末段收下比赛？",
+      "thesis": "首盘早早破发带走6-4；次盘0-30连赢四球稳住发球局，5-5再次连赢四个接发得分，首赛点兑现7-5。",
+      "beats": [
+        "完整首赛点及获胜点评冷开场",
+        "上海第四轮坐标",
+        "首盘1-1破发与领先",
+        "首盘拿盘、次盘压力",
+        "0-30保发事实",
+        "5-5关键破发",
+        "首赛点与握手回收",
+        "全场统计",
+        "保罗下一轮展望"
+      ],
+      "human_context": {
+        "angle": "两盘过关的胜者主线：有压力时稳住自己的发球局，盘末接发连赢四球完成突破。",
+        "facts": [
+          "首盘1-1连赢四个接发得分，2-1领先，6-4拿盘。",
+          "第二盘2-3发球局0-30连赢四球保发，5-5再次连赢四球破发6-5。",
+          "首赛点兑现7-5；全场未面对破发点，下一轮保罗已确定。"
+        ],
+        "sources": [
+          "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms014",
+          "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_488k2SDl",
+          "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms015"
+        ]
+      }
+    },
+    "segments": [
+      {
+        "source": "main",
+        "start": 214.62,
+        "end": 228.44,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 4.64,
+            "end": 9.78,
+            "text": "The former champion has produced\n这位前冠军打出了"
+          },
+          {
+            "at": 9.78,
+            "end": 12.96,
+            "text": "one of his best performances of the year.\n他今年最出色的表现之一。"
+          }
+        ],
+        "crosses_cut": "完整首赛点发球动作、得分与反应保护原声句头，正文终局完整回收。",
+        "point_end_ok": "完整首赛点发球动作、得分与反应保护原声句头，正文终局完整回收。",
+        "subtitle_bottom": 304
+      },
+      {
+        "seconds": 10,
+        "narration": "北京时间十月十四日晚，上海大师赛第四轮。梅德韦杰夫与西西帕斯交锋，胜者晋级八强。",
+        "title_card": "发球局一次没丢\n两盘晋级上海八强",
+        "kicker": "北京时间10月14日晚 · 上海第四轮",
+        "subtitle_bottom": 304
+      },
+      {
+        "source": "main",
+        "start": 11.4,
+        "end": 17.0,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [],
+        "crosses_cut": "完整第一破发第四个接发得分及原场景初始反应；尾17.18在17.20近景原切点前。",
+        "point_end_ok": "完整第一破发第四个接发得分及原场景初始反应；尾17.18在17.20近景原切点前。"
+      },
+      {
+        "source": "main",
+        "start": 20.82,
+        "end": 35.04,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 2.54,
+            "end": 3.42,
+            "text": "Unbelievable.\n难以置信！"
+          },
+          {
+            "at": 3.42,
+            "end": 4.68,
+            "text": "And to be honest,\n说实话，"
+          },
+          {
+            "at": 4.68,
+            "end": 6.68,
+            "text": "that's how the level has been.\n这场比赛一直保持这样的水准。"
+          },
+          {
+            "at": 11.54,
+            "end": 13.4,
+            "text": "He's toying with it.\n这球处理得游刃有余。"
+          }
+        ],
+        "crosses_cut": "按同一已审核源中的真实后续两分完整保留至结果与反应；Unbelievable/level/toying原声完整，未拼接截断英文。",
+        "point_end_ok": "按同一已审核源中的真实后续两分完整保留至结果与反应；Unbelievable/level/toying原声完整，未拼接截断英文。",
+        "subtitle_bottom": 304
+      },
+      {
+        "seconds": 10.5,
+        "narration": "首盘一比一时，梅德韦杰夫连赢四球破发。盘末，底线对攻后向前压迫，六比四拿下首盘。",
+        "title_card": "1比1连赢四球\n带着优势走向盘末",
+        "kicker": "首盘 · 先拿主动",
+        "subtitle_bottom": 304
+      },
+      {
+        "source": "main",
+        "start": 110.06,
+        "end": 119.62,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [],
+        "crosses_cut": "完整盘点发球动作、末球、点后转身与最初反应；尾119.80在未核定120秒整句前。完整首盘赛果用原顶栏、封面与下一事实卡呈现。",
+        "point_end_ok": "完整盘点发球动作、末球、点后转身与最初反应；尾119.80在未核定120秒整句前。完整首盘赛果用原顶栏、封面与下一事实卡呈现。"
+      },
+      {
+        "source": "main",
+        "start": 151.02,
+        "end": 169.32,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 14.8,
+            "end": 16.82,
+            "text": "Incredible tennis.\n不可思议的网球！"
+          }
+        ],
+        "crosses_cut": "2–3发球局0–15到0–30完整可用回合及反应；其后4球保发由合法逐分事实卡讲述。",
+        "point_end_ok": "2–3发球局0–15到0–30完整可用回合及反应；其后4球保发由合法逐分事实卡讲述。",
+        "subtitle_bottom": 304
+      },
+      {
+        "seconds": 10.5,
+        "narration": "第二盘二比三，他在网前被穿越，来到零比三十。随后连赢四球保发。五比五，机会再现。",
+        "title_card": "首盘6比4\n次盘0比30考验",
+        "kicker": "第二盘 · 顶住压力",
+        "subtitle_bottom": 304
+      },
+      {
+        "source": "main",
+        "start": 187.9,
+        "end": 211.18,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [],
+        "crosses_cut": "5–5最后两个真实接发得分至破发落地、双方最初反应及转身；在未核定212秒短评前结束，不假称前2分或全部closeup都取得。",
+        "point_end_ok": "5–5最后两个真实接发得分至破发落地、双方最初反应及转身；在未核定212秒短评前结束，不假称前2分或全部closeup都取得。"
+      },
+      {
+        "seconds": 11.5,
+        "narration": "五比五后，他又连赢四球破发。发球胜赛局，拿到第一个赛点就兑现。六比四、七比五，晋级上海八强。",
+        "title_card": "5比5后连赢四球\n第一个赛点就兑现",
+        "kicker": "第二盘 · 收下胜利",
+        "subtitle_bottom": 304
+      },
+      {
+        "source": "main",
+        "start": 214.62,
+        "end": 234.3,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 4.64,
+            "end": 9.78,
+            "text": "The former champion has produced\n这位前冠军打出了"
+          },
+          {
+            "at": 9.78,
+            "end": 12.96,
+            "text": "one of his best performances of the year.\n他今年最出色的表现之一。"
+          }
+        ],
+        "crosses_cut": "完整首赛点可用发球动作、最后球、双方反应和握手，完整年内最佳表现点评；尾234.48在234.50片尾前。",
+        "point_end_ok": "完整首赛点可用发球动作、最后球、双方反应和握手，完整年内最佳表现点评；尾234.48在234.50片尾前。",
+        "subtitle_bottom": 304
+      },
+      {
+        "seconds": 13.5,
+        "narration": "全场制胜球，二十五对二十八。非受迫失误，十对十八。一发赢球率，百分之八十五对百分之六十八。他全场没有面对破发点。",
+        "stat_card": true
+      },
+      {
+        "seconds": 7.5,
+        "narration": "下一轮，他将面对保罗。这样的发球表现，还能继续吗？",
+        "title_card": "下一轮面对保罗\n发球优势能否延续？",
+        "kicker": "上海1/4决赛 · 下一场",
+        "subtitle_bottom": 304
+      }
+    ]
+  }
+}
