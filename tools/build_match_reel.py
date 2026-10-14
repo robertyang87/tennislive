@@ -3744,7 +3744,17 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                  or spec.get("_column", "")).strip()
     if (layout != "band" and column == "赛场之上" and not spec.get("archival")
             and str(spec.get("slug", "")) not in legacy_fullbleed_no_scoreboard()):
-        missing_box = scorebox is None and source_scorebox is None
+        # Centered, contained footage can retain native score columns without
+        # pasting a second board.  A justified disabled inset on that path
+        # never reads a scorebox; requiring one contradicts the dead-key guard.
+        # Ordinary full-bleed crops still require a box, and undeclared or
+        # unjustified disabled insets remain blocked below.
+        needs_box = any(raw.get("score_inset") is True
+                        or raw.get("fit") not in ("contain", "full_source")
+                        for raw in spec["segments"]
+                        if not (raw.get("image") or raw.get("title_card")
+                                or raw.get("stat_card")))
+        missing_box = needs_box and scorebox is None and source_scorebox is None
         undeclared, unclaimed = [], []
         for i, raw in enumerate(spec["segments"]):
             if raw.get("image") or raw.get("title_card") or raw.get("stat_card"):

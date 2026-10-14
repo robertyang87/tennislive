@@ -1,0 +1,87 @@
+{
+  "schema": "tennislive.independent-centered-court-final-preview-review.v1",
+  "reviewed_at_utc": "2026-10-14T07:56:58.504018+00:00",
+  "status": "three_native_composition_samples_passed",
+  "reviewer": "independent_qc; current OpenAI model; no DeepSeek/MiniMax",
+  "spec_file": "/workspace/tennislive-production/specs/reels/chwalinska-bouzkova-wuhan-2026-r2.json",
+  "spec_file_sha256": "157acb27e065191a42829d7d2a328f552f087f018a5fc26823453fde0133bc2e",
+  "preview_spec_file_sha256": "157acb27e065191a42829d7d2a328f552f087f018a5fc26823453fde0133bc2e",
+  "preview_bound_to_current_spec": true,
+  "spec_canonical_sha256": "b795364b682bac8b8c8779338885d20519956846ace72f0f7adfca236a8c5ee4",
+  "manifest": "/workspace/scratch/moon-centered-court-final/preview_manifest.json",
+  "manifest_sha256": "89d31d456d76874e6ee0a79d5b965e2839796d4396bb09dd83e7070b59b24e61",
+  "ass_sha256": "d580e7a48f582b4a1989568856cadae81fc0612a4b760e00a5335ef30815762f",
+  "source_sha256": "1093e785f0ea89b203fc8a77617e2df885ed2b1c5f0290ab39d58df188b578d5",
+  "geometry": {
+    "contain_keep": 0.814,
+    "native_source_crop": [
+      179,
+      0,
+      1562,
+      1080
+    ],
+    "center": 0.5,
+    "track": false,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "subtitle_bottom": 180,
+    "native_scoreboard": "not inset or removed; left name/icon deliberately cropped as authorized; score numeric columns and row correspondence retained",
+    "native_filter": "split=2[bg][fg];[bg]crop=1562:1080:179:0,scale=1080:1440:force_original_aspect_ratio=increase,crop=1080:1440,drawbox=color=0x080e1d:t=fill[bgb];[fg]crop=1562:1080:179:0,scale=1080:-2:flags=lanczos[fgs];[bgb][fgs]overlay=(W-w)/2:(H-h)/2,fps=25/1,setsar=1[vout]"
+  },
+  "scope": {
+    "native_pngs_actually_viewed": 3,
+    "only_the_three_named_source_times_verified_here": true,
+    "final_film_reviewed": false,
+    "all_source_frames_reviewed": false,
+    "all_caption_cues_reviewed": false,
+    "audio_listened": false,
+    "dissolves_final_h264_or_audio_verified": false,
+    "publication_approved": false
+  },
+  "samples": [
+    {
+      "image": "/workspace/scratch/moon-centered-court-final/caption-01.png",
+      "image_sha256": "0fcb970319a8312d8178fa7bcb21ba8a78f7a5b2d9510b34fa62d900395e1623",
+      "source_time": 160.2,
+      "film_time": 104.9,
+      "native_png_actually_viewed": true,
+      "observation": "源160.20：赫瓦林斯卡左侧正手横移、身体、持拍手与球拍及球完整可见；网前布兹克娃亦在画内，两侧边线和底线完整；原比分数字和上下行对应可读，姓名左端有意裁切。",
+      "status": "pass"
+    },
+    {
+      "image": "/workspace/scratch/moon-centered-court-final/caption-02.png",
+      "image_sha256": "d577cce79e1c4d26145d64700428381fea576810d60567e206625e5c0374cd38",
+      "source_time": 251.8,
+      "film_time": 217.79999999999998,
+      "native_png_actually_viewed": true,
+      "observation": "源251.80：右側追球布兹克娃头、身体、两腿、持拍臂及球拍、右侧球均在画内；远端赫瓦林斯卡和两底线可见。原3–1 deuce比分数字行保留，双语在深蓝留白区可读不遮动作。",
+      "status": "pass"
+    },
+    {
+      "image": "/workspace/scratch/moon-centered-court-final/caption-03.png",
+      "image_sha256": "0112437400d1a5266c66bcea82eca5175345729bb00270b4e752ebf5fa83a452",
+      "source_time": 288.84,
+      "film_time": 262.94,
+      "native_png_actually_viewed": true,
+      "observation": "源288.84：胜后赫瓦林斯卡笑脸、举手、身体保留；英文one-six, six-one, six-one与中文比分准确可读。最右缘此前WTA浅色残边已不见，没有矩形去标痕迹。",
+      "status": "pass"
+    }
+  ],
+  "watermark_edge_recheck": {
+    "at_source_time": 288.84,
+    "earlier_edge_region": [
+      1075,
+      390,
+      1080,
+      440
+    ],
+    "earlier_threshold": "RGB minimum >55",
+    "current_matching_pixel_count": 0,
+    "current_max_RGB_minimum_in_region": 23,
+    "visual_result": "此前右侧x1079,y406–429浅色WTA压缩残线已消失。只证明当前这三张的角标裁切，不替代全片检查。"
+  },
+  "hard_visual_blockers_in_these_three_samples": [],
+  "composition_conclusion": "按最新用户居中宽裁切、去右上WTA并尽量保球场的方向，这三张新原生样张构图通过；左右关键动作及底线、比分数字对应保留，胜后近景WTA残边已收净。整片QC待实际成片。"
+}

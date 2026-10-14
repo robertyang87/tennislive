@@ -41,6 +41,26 @@ def test_normal_fill_still_requires_scorebox():
         reel.parse_segments(s, {'main': 'local.mp4'}, 'main')
 
 
+def test_centered_contain_with_justified_native_scores_needs_no_unused_box():
+    s = spec()
+    del s['source_scorebox']
+    s['segments'][0].update(contain_keep=.815,
+                           _score_inset_why='Owner requested symmetric crop; native score columns remain visible')
+    seg = reel.parse_segments(s, {'main': 'local.mp4'}, 'main')[0]
+    assert seg.score_inset is None
+    assert seg.source_scorebox is None
+    assert seg.contain_keep == .815
+
+
+@pytest.mark.parametrize('changes', [{'score_inset': True}, {'_score_inset_why': ''}])
+def test_contain_does_not_exempt_missing_enabled_box_or_unjustified_inset(changes):
+    s = spec()
+    del s['source_scorebox']
+    s['segments'][0].update(contain_keep=.815, **changes)
+    with pytest.raises(reel.ReelError):
+        reel.parse_segments(s, {'main': 'local.mp4'}, 'main')
+
+
 def test_real_source_geometry_checked_before_encoding(monkeypatch, tmp_path):
     seg = reel.parse_segments(spec(), {'main': 'local.mp4'}, 'main')[0]
     monkeypatch.setattr(reel, 'effective_size', lambda source: (640, 360))

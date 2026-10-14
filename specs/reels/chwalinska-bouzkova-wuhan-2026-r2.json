@@ -16,7 +16,7 @@
     "source": "official_wta",
     "source_id": "1075_2026_LS021",
     "participants": [
-      "布兹克娃",
+      "布兹科娃",
       "赫瓦林斯卡"
     ],
     "set_scores_home_away": [
@@ -39,7 +39,7 @@
       null
     ],
     "winner": "赫瓦林斯卡",
-    "loser": "布兹克娃",
+    "loser": "布兹科娃",
     "winner_result": "1-6 6-1 6-1",
     "loser_result": "6-1 1-6 1-6",
     "source_url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
@@ -58,7 +58,7 @@
         "rank": 22
       },
       {
-        "name": "布兹克娃",
+        "name": "布兹科娃",
         "name_en": "Marie Bouzkova",
         "country": "CZE",
         "rank": 28
@@ -71,7 +71,7 @@
     "result": "1-6 6-1 6-1",
     "hook": "首盘只拿一局\n月亮姐逆转进十六强",
     "hook_accent": "逆转进十六强",
-    "topic": "WTA1000 武汉 第二轮 · 赫瓦林斯卡 VS 布兹克娃",
+    "topic": "WTA1000 武汉 第二轮 · 赫瓦林斯卡 VS 布兹科娃",
     "scrim": "clear",
     "_rank_why": "WTA正式10月12日排名22/28，16是本场种子而非排名。",
     "_subject_why": "用户点名月亮姐即赫瓦林斯卡；本人同场官方图库实拍。",
@@ -98,7 +98,7 @@
     "tour": "wta",
     "footer_date": "2026-10-14",
     "footer_venue": "武汉 · 全场",
-    "_source": "WTA LS021全场整数，A=布兹克娃B=赫瓦林斯卡；本卡按主角/对手重排。PBP4处winner错误已按比分审计。",
+    "_source": "WTA LS021全场整数，A=布兹科娃B=赫瓦林斯卡；本卡按主角/对手重排。PBP4处winner错误已按比分审计。",
     "a": {
       "aces": 1,
       "df": 3,
@@ -158,12 +158,12 @@
   },
   "topbar": {
     "line1": "2026 WTA1000 武汉 第二轮",
-    "line2": "赫瓦林斯卡 1-6 6-1 6-1 布兹克娃"
+    "line2": "赫瓦林斯卡 1-6 6-1 6-1 布兹科娃"
   },
   "push": {
     "auto": true,
     "summary": "月亮姐逆转进十六强",
-    "lead": "首盘只拿一局，月亮姐随后连拿两个6-1，逆转布兹克娃晋级武汉16强。第二盘她救下两个破发点，再在第四次机会兑现破发；决胜盘只有4次非受迫失误。完整关键回合和现场双语解说，看看她如何把比赛拉回来。"
+    "lead": "首盘只拿一局，月亮姐随后连拿两个6-1，逆转布兹科娃晋级武汉16强。第二盘她救下两个破发点，再在第四次机会兑现破发；决胜盘只有4次非受迫失误。完整关键回合和现场双语解说，看看她如何把比赛拉回来。"
   },
   "_heat_why": "用户明确点名月亮姐；首盘1-6后连拿两个6-1的真实逆转。",
   "_model_review": {
@@ -206,7 +206,7 @@
       "end": 291,
       "cx": 0.5,
       "track": false,
-      "fit": "full_source",
+      "fit": "contain",
       "narration": "",
       "score_inset": false,
       "crosses_cut": "获胜后的真实近景、握手及观众致意；无进行中的回合。",
@@ -216,12 +216,12 @@
         {
           "at": 0.02,
           "end": 1.87,
-          "text": "The French Open finalist\n这位法网亚军"
+          "text": "The French Open finalist\n这位法网决赛选手"
         },
         {
           "at": 1.87,
           "end": 5.27,
-          "text": "was nowhere near Marie Bouzkova in the opening set,\n首盘被布兹克娃完全压制"
+          "text": "was nowhere near Marie Bouzkova in the opening set,\n首盘被布兹科娃完全压制"
         },
         {
           "at": 5.7,
@@ -247,21 +247,22 @@
       "_quote_kind": "broadcast",
       "subtitle_bottom": 180,
       "_ending_payoff_required": true,
-      "_fit_why": "关键球员/手拍/球路完整保留，原生比分板与提示条保持原位，避免竖裁丢人和矩形去板补丁。深蓝品牌底，整片1080×1440。",
-      "_score_inset_why": "本段full_source保留完整1920×1080官方画面，原生比分板与提示条均在画面内，未因3:4居中裁切丢板；source_scorebox绑定源左下实际位置。原生contain回贴预览出现去板补丁及截断提示条，故采用原板一次显示。"
+      "_fit_why": "最新用户明确：居中裁掉WTA、画面与球场均尽量最大。固定居中保1564px，x178..1742，是去掉WTA所允许的最大源宽；横向铺满1080，所有关键手拍及球路实查保留，1080×1440原有品牌画布。",
+      "contain_keep": 0.814,
+      "_score_inset_why": "用户实际截图授权相同居中裁切：原生比分数字及两行对应关系保留，姓名/图标左端可部分出画，完整双方姓名持续显示在顶栏。无需回贴，不delogo，避免去板补丁。"
     },
     {
       "title_card": "首盘只拿一局\n月亮姐逆转进十六强",
       "kicker": "北京时间10月14日上午 · 武汉第二轮",
-      "seconds": 10.6,
-      "narration": "北京时间十月十四号上午，武汉网球公开赛第二轮。刚满二十五岁的月亮姐，赫瓦林斯卡，对上布兹克娃。",
+      "seconds": 12.2,
+      "narration": "北京时间十月十四号上午，武汉网球公开赛第二轮。刚满二十五岁，月亮姐首盘只拿一局，随后连赢两盘，晋级十六强。",
       "_edit_id": "coordinate"
     },
     {
       "title_card": "一比一后连丢五局\n首盘只拿一局",
       "kicker": "第一盘 · 对手占先",
       "seconds": 10,
-      "narration": "首盘一比一后，月亮姐连丢五局。布兹克娃用中路发球收下首盘，一比六，月亮姐必须把比赛拉回来。",
+      "narration": "首盘一比一后，月亮姐连丢五局。对手用中路发球收下首盘，一比六，月亮姐必须找回节奏。",
       "_edit_id": "first_set"
     },
     {
@@ -270,7 +271,7 @@
       "end": 95.16,
       "cx": 0.5,
       "track": false,
-      "fit": "full_source",
+      "fit": "contain",
       "narration": "",
       "score_inset": false,
       "crosses_cut": "官方首盘末段回合、首次盘点及拿盘后真实反应。",
@@ -300,19 +301,20 @@
         {
           "at": 23.1,
           "end": 24.72,
-          "text": "That is impressive from Marie Bouzkova.\n布兹克娃令人印象深刻。"
+          "text": "That is impressive from Marie Bouzkova.\n布兹科娃令人印象深刻。"
         }
       ],
       "_quote_kind": "broadcast",
       "subtitle_bottom": 180,
-      "_fit_why": "关键球员/手拍/球路完整保留，原生比分板与提示条保持原位，避免竖裁丢人和矩形去板补丁。深蓝品牌底，整片1080×1440。",
-      "_score_inset_why": "本段full_source保留完整1920×1080官方画面，原生比分板与提示条均在画面内，未因3:4居中裁切丢板；source_scorebox绑定源左下实际位置。原生contain回贴预览出现去板补丁及截断提示条，故采用原板一次显示。"
+      "_fit_why": "最新用户明确：居中裁掉WTA、画面与球场均尽量最大。固定居中保1564px，x178..1742，是去掉WTA所允许的最大源宽；横向铺满1080，所有关键手拍及球路实查保留，1080×1440原有品牌画布。",
+      "contain_keep": 0.814,
+      "_score_inset_why": "用户实际截图授权相同居中裁切：原生比分数字及两行对应关系保留，姓名/图标左端可部分出画，完整双方姓名持续显示在顶栏。无需回贴，不delogo，避免去板补丁。"
     },
     {
       "title_card": "救下两次反扑机会\n先稳住四比一",
       "kicker": "第二盘 · 稳住之后的突破",
-      "seconds": 15.3,
-      "narration": "第二盘三比一，她先救下两个破发点保发。下一局，对手四十比零，却被追到平分。底线被反复拉开，月亮姐救回一拍又一拍，最后正手斜线穿越，拿到机会。",
+      "seconds": 16.4,
+      "narration": "第二盘三比一，她先救下两次丢局危机，守住四比一。下一局，对手四十比零，却被追到平分。底线被反复拉开，月亮姐救回一拍又一拍，最后正手斜线穿越，拿到机会。",
       "_edit_id": "second_turn"
     },
     {
@@ -321,7 +323,7 @@
       "end": 167.12,
       "cx": 0.5,
       "track": false,
-      "fit": "full_source",
+      "fit": "contain",
       "narration": "",
       "score_inset": false,
       "crosses_cut": "次盘4-1对手发球平分，完整发球准备及长回合；只是赢下一分/造BP，不把它当保发3-1→4-1。161到166.48完整原声。",
@@ -346,14 +348,15 @@
       ],
       "_quote_kind": "broadcast",
       "subtitle_bottom": 180,
-      "_fit_why": "关键球员/手拍/球路完整保留，原生比分板与提示条保持原位，避免竖裁丢人和矩形去板补丁。深蓝品牌底，整片1080×1440。",
-      "_score_inset_why": "本段full_source保留完整1920×1080官方画面，原生比分板与提示条均在画面内，未因3:4居中裁切丢板；source_scorebox绑定源左下实际位置。原生contain回贴预览出现去板补丁及截断提示条，故采用原板一次显示。"
+      "_fit_why": "最新用户明确：居中裁掉WTA、画面与球场均尽量最大。固定居中保1564px，x178..1742，是去掉WTA所允许的最大源宽；横向铺满1080，所有关键手拍及球路实查保留，1080×1440原有品牌画布。",
+      "contain_keep": 0.814,
+      "_score_inset_why": "用户实际截图授权相同居中裁切：原生比分数字及两行对应关系保留，姓名/图标左端可部分出画，完整双方姓名持续显示在顶栏。无需回贴，不delogo，避免去板补丁。"
     },
     {
       "title_card": "第四次机会\n终于把优势拉开",
       "kicker": "第二盘 · 四比一的接发局",
       "seconds": 9.8,
-      "narration": "第四次机会又来了。对手冲到网前，月亮姐用一记高吊球越过她的头顶，终于拉到五比一！",
+      "narration": "第四次机会！对手来到网前，月亮姐用一记高吊球越过头顶，终于拉到五比一！",
       "_edit_id": "fourth_bp_context"
     },
     {
@@ -362,7 +365,7 @@
       "end": 217.04,
       "cx": 0.5,
       "track": false,
-      "fit": "full_source",
+      "fit": "contain",
       "narration": "",
       "score_inset": false,
       "crosses_cut": "4-1第4破发点：接发准备、对手完整发球、完整回合、5-1；随后第二盘第2盘点完整发球及拿盘近景/完整原声。",
@@ -422,14 +425,15 @@
       ],
       "_quote_kind": "broadcast",
       "subtitle_bottom": 180,
-      "_fit_why": "关键球员/手拍/球路完整保留，原生比分板与提示条保持原位，避免竖裁丢人和矩形去板补丁。深蓝品牌底，整片1080×1440。",
-      "_score_inset_why": "本段full_source保留完整1920×1080官方画面，原生比分板与提示条均在画面内，未因3:4居中裁切丢板；source_scorebox绑定源左下实际位置。原生contain回贴预览出现去板补丁及截断提示条，故采用原板一次显示。"
+      "_fit_why": "最新用户明确：居中裁掉WTA、画面与球场均尽量最大。固定居中保1564px，x178..1742，是去掉WTA所允许的最大源宽；横向铺满1080，所有关键手拍及球路实查保留，1080×1440原有品牌画布。",
+      "contain_keep": 0.814,
+      "_score_inset_why": "用户实际截图授权相同居中裁切：原生比分数字及两行对应关系保留，姓名/图标左端可部分出画，完整双方姓名持续显示在顶栏。无需回贴，不delogo，避免去板补丁。"
     },
     {
       "title_card": "被追近就再拉开\n第一个赛点结束比赛",
       "kicker": "决胜盘 · 继续回应",
       "seconds": 11.9,
-      "narration": "决胜盘，月亮姐先到三比零，被追成三比一，她下一局再次破发。最后在接发球时拿到第一个赛点，把这场逆转完成。",
+      "narration": "决胜盘，月亮姐先到三比零。对手追成三比一，她下一局又赢回来。最后，第一个赛点，月亮姐赢下比赛！",
       "_edit_id": "third_turn"
     },
     {
@@ -438,7 +442,7 @@
       "end": 258.4,
       "cx": 0.5,
       "track": false,
-      "fit": "full_source",
+      "fit": "contain",
       "narration": "",
       "score_inset": false,
       "crosses_cut": "决胜盘3-1对手发球平分，本分造出第二个BP；没有展示之后4-1破发兑现。官方节目悬句but词尾258.34后结束。",
@@ -473,14 +477,15 @@
       ],
       "_quote_kind": "broadcast",
       "subtitle_bottom": 180,
-      "_fit_why": "关键球员/手拍/球路完整保留，原生比分板与提示条保持原位，避免竖裁丢人和矩形去板补丁。深蓝品牌底，整片1080×1440。",
-      "_score_inset_why": "本段full_source保留完整1920×1080官方画面，原生比分板与提示条均在画面内，未因3:4居中裁切丢板；source_scorebox绑定源左下实际位置。原生contain回贴预览出现去板补丁及截断提示条，故采用原板一次显示。"
+      "_fit_why": "最新用户明确：居中裁掉WTA、画面与球场均尽量最大。固定居中保1564px，x178..1742，是去掉WTA所允许的最大源宽；横向铺满1080，所有关键手拍及球路实查保留，1080×1440原有品牌画布。",
+      "contain_keep": 0.814,
+      "_score_inset_why": "用户实际截图授权相同居中裁切：原生比分数字及两行对应关系保留，姓名/图标左端可部分出画，完整双方姓名持续显示在顶栏。无需回贴，不delogo，避免去板补丁。"
     },
     {
       "title_card": "再次拉开到五比一\n接发迎来第一个赛点",
       "kicker": "决胜盘 · 再次回应",
       "seconds": 8.1,
-      "narration": "月亮姐随后再次破发，四比一，再保到五比一。现在，第一个赛点来了。",
+      "narration": "月亮姐随后再赢一局，四比一，再守到五比一。现在，第一个赛点！",
       "_edit_id": "match_point_context"
     },
     {
@@ -489,10 +494,10 @@
       "end": 291,
       "cx": 0.5,
       "track": false,
-      "fit": "full_source",
+      "fit": "contain",
       "narration": "",
       "score_inset": false,
-      "crosses_cut": "官方节目从BP准备跳到5-1赛点；保留白头带布兹克娃准备、发球、月亮姐完整接发回合及获胜反应/握手/挥手。",
+      "crosses_cut": "官方节目从BP准备跳到5-1赛点；保留白头带布兹科娃准备、发球、月亮姐完整接发回合及获胜反应/握手/挥手。",
       "point_end_ok": "赛点完整准备→回合→结果→握手。",
       "_edit_id": "match_point_payoff",
       "quote": [
@@ -514,12 +519,12 @@
         {
           "at": 16.3,
           "end": 18.15,
-          "text": "The French Open finalist\n这位法网亚军"
+          "text": "The French Open finalist\n这位法网决赛选手"
         },
         {
           "at": 18.15,
           "end": 21.55,
-          "text": "was nowhere near Marie Bouzkova in the opening set,\n首盘被布兹克娃完全压制"
+          "text": "was nowhere near Marie Bouzkova in the opening set,\n首盘被布兹科娃完全压制"
         },
         {
           "at": 21.98,
@@ -544,21 +549,23 @@
       ],
       "_quote_kind": "broadcast",
       "subtitle_bottom": 180,
-      "_fit_why": "关键球员/手拍/球路完整保留，原生比分板与提示条保持原位，避免竖裁丢人和矩形去板补丁。深蓝品牌底，整片1080×1440。",
-      "_score_inset_why": "本段full_source保留完整1920×1080官方画面，原生比分板与提示条均在画面内，未因3:4居中裁切丢板；source_scorebox绑定源左下实际位置。原生contain回贴预览出现去板补丁及截断提示条，故采用原板一次显示。"
+      "_fit_why": "最新用户明确：居中裁掉WTA、画面与球场均尽量最大。固定居中保1564px，x178..1742，是去掉WTA所允许的最大源宽；横向铺满1080，所有关键手拍及球路实查保留，1080×1440原有品牌画布。",
+      "contain_keep": 0.814,
+      "_score_inset_why": "用户实际截图授权相同居中裁切：原生比分数字及两行对应关系保留，姓名/图标左端可部分出画，完整双方姓名持续显示在顶栏。无需回贴，不delogo，避免去板补丁。"
     },
     {
       "stat_card": true,
       "seconds": 15.2,
-      "narration": "全场制胜分，月亮姐二十五，对手二十六。非受迫失误，月亮姐十九，对手三十一。决胜盘，她只有四次，对手十六次。稳定，才是逆转的关键。",
+      "narration": "全场制胜分，月亮姐二十五，对手二十六。非受迫失误，月亮姐十九，对手三十一。决胜盘，她只有四次，对手十六次。稳定，才是赢球关键。",
       "_edit_id": "full_stats"
     },
     {
       "title_card": "武汉十六强见\n月亮姐还能再进一轮吗",
       "kicker": "下一场 · 武汉第三轮",
-      "seconds": 12.7,
-      "narration": "月亮姐晋级武汉十六强。下一轮对手，将在约维奇，和雅斯特雷姆斯卡之间产生。找回节奏后，她还能再进一轮吗？",
-      "_edit_id": "next_round"
+      "seconds": 9.8,
+      "narration": "月亮姐晋级武汉十六强，下一轮迎战十号种子约维奇。连赢两盘后，她还能再进一轮吗？",
+      "_edit_id": "next_round",
+      "_why": "官方LS020已F、Winner2：约维奇6-4 6-1晋级，与月亮姐第三轮相遇。"
     }
   ],
   "_facts": [
@@ -612,11 +619,29 @@
     "note": "用户请求精确收件时刻不可得；以本次首次实际下载工作流记录起点。此前probe输入received_at00:00是占位误填，不作为SLA起点。"
   },
   "_source_handle_note": "第三盘but...实际小模型尾字到258.34，保留主段至258.40。0.18秒溶解底料只含下一赛点发球前的准备，不含发球动作；是否视觉可见须实际成片检查，不砍语句尾字。",
-  "source_scorebox": [
-    90,
-    830,
-    848,
-    980
+  "_canvas_directive": "用户要求固定居中裁掉右上WTA，最大化保留球场并铺满1080px画布宽度。等比居中裁切1562/1920，左右各179px；不追踪、不拉伸。原品牌顶栏、字体、配色保留，字幕下移球场下方。竖版填满高度会丢失两侧球场，因此采用与用户例图一致的横向比赛区。",
+  "_subtitle_position_why": "用户看原风格样张反馈字幕太高；本期双语整体下移，底部间距330，保持比分板上方清楚区，实际样帧复核不重叠。",
+  "_hit_data": [
+    {
+      "label": "决定逆转的是失误控制",
+      "detail": "全场制胜分25比26几乎相当；非受迫失误19比31，决胜盘4比16。",
+      "source": "TNNS全场及分盘原始统计，WTA全场总分74比63复核",
+      "used_in": "全场统计卡及配音；不将单纯制胜分数量当胜负解释。"
+    },
+    {
+      "label": "第二盘关键保发与第四次破发机会",
+      "detail": "第二盘3比1时救下两个破发点保至4比1；下一局对手40比0后仍被追至平分，月亮姐第四次破发机会兑现至5比1。",
+      "source": "官方WTA逐分合法比分 progression 与源片原生比分",
+      "used_in": "第二盘转折字卡、完整穿越回合、第四破发点高吊球回合。"
+    }
   ],
-  "_source_scorebox_why": "保留整个官方源画面，原板和BREAK/SET/MATCH POINT提示条在原位置可见，不抹除或重复贴板；原生contain .82出现矩形delogo块和截断提示条，预览实看已淘汰。完整源几何1920×1080；此框覆盖源左下常规板及提示条，居中赛果同样完整保留。"
+  "_next_opponent_verified": {
+    "name": "约维奇",
+    "name_en": "Iva Jovic",
+    "seed": 10,
+    "match_id": "1075_2026_LS020",
+    "result": "6-4 6-1",
+    "checked_at": "2026-10-14T07:51:44Z",
+    "evidence": "data/research/chwalinska-bouzkova-wuhan-2026-r2/next-opponent-recheck-latest.json"
+  }
 }
