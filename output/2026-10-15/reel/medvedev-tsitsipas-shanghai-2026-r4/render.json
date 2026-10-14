@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "87697cc69332b6e43e2dd76f795019957300979368bc681f44eb5815f032d016",
+  "scoreboard_qc_sha256": "9e973d9b25b49ca5e82f59be2f55591d41e82b5c9b80dadf5f00777096f67cd0",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-medvedev-tsitsipas-shanghai-2026-r4-cde78c9e5707badb",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-medvedev-tsitsipas-shanghai-2026-r4-cde78c9e5707badb/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38613186737"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38616203044"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -53,44 +53,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "b3edfc1e6f96e9c739188bb921b709157808602476cc30c8e0a483674a3cc113",
+  "render_inputs_sha256": "d4739230b8cb7c4fd456e35c2e7308862a41e4eb390fc8082632b807c93c1000",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "medvedev-tsitsipas-shanghai-2026-r4",
     "received_at": "2026-10-14T15:36:00Z",
-    "artifact_ready_at": "2026-10-14T18:19:23Z",
-    "elapsed_seconds": 9803.963,
+    "artifact_ready_at": "2026-10-14T18:40:07Z",
+    "elapsed_seconds": 11047.868,
     "budget_seconds": 600,
     "met": false,
-    "film_sha256": "92fdcdcfd8d4f0a82c793a957610d91b34b6e312adce3e531b1037c008e53d3e",
+    "film_sha256": "eafca1baae7a980040ded12dee59f42379d542df872ab7a3b0611040e6aaed8a",
     "spec_sha256": "9cb958517acadc67f9eb62bf2109af996417951e72175f7b2907e3b083a9df65",
-    "run_id": "38613186737",
+    "run_id": "38616203044",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-14T18:15:43Z",
-        "run_id": "38613186737"
+        "at": "2026-10-14T18:36:31Z",
+        "run_id": "38616203044"
       }
     ],
-    "render_seconds": 220.963,
-    "pre_render_seconds": 9583.0
+    "render_seconds": 216.868,
+    "pre_render_seconds": 10831.0
   },
-  "film_sha256": "92fdcdcfd8d4f0a82c793a957610d91b34b6e312adce3e531b1037c008e53d3e",
-  "film_bytes": 59333960,
-  "qc_attestation_sha256": "5b92d422111ba4999c9cde35376eb79ae5340c5aebd56319c8b32acff8715949",
+  "film_sha256": "eafca1baae7a980040ded12dee59f42379d542df872ab7a3b0611040e6aaed8a",
+  "film_bytes": 59378397,
+  "qc_attestation_sha256": "bcb67b2acf8e5465a2bf976f6a642532ee81465c748b7122643f20c865e6d66d",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-14T18:15:43Z",
-      "run_id": "38613186737"
+      "at": "2026-10-14T18:36:31Z",
+      "run_id": "38616203044"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-14T18:19:26Z",
-      "run_id": "38613186737"
+      "at": "2026-10-14T18:40:10Z",
+      "run_id": "38616203044"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-medvedev-tsitsipas-shanghai-2026-r4/medvedev-tsitsipas-shanghai-2026-r4.mp4",
-  "video_bytes": 59333960
+  "video_bytes": 59378397
 }
