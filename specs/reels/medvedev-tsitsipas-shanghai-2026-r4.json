@@ -259,6 +259,22 @@
     {
       "source": "main",
       "start": 11.4,
+      "end": 17.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "完整第一破发第四个接发得分及原场景初始反应；尾17.18在17.20近景原切点前。",
+      "point_end_ok": "完整第一破发第四个接发得分及原场景初始反应；尾17.18在17.20近景原切点前。",
+      "_edit_id": "early_break",
+      "_quote_skip_why": "完整同SHA父窗口已交叉核验，所选11.40–17.00仅关键分及初始反应；明确英语net cord句始17.52，整句连同人物出框近景17.2–20.82全部排除。"
+    },
+    {
+      "source": "main",
+      "start": 20.82,
       "end": 35.04,
       "cx": 0.5,
       "track": false,
@@ -267,35 +283,30 @@
       "narration": "",
       "quote": [
         {
-          "at": 6.12,
-          "end": 9.14,
-          "text": "They got a little lucky with the net cord.\n这一下有些幸运，球擦到了网带。"
-        },
-        {
-          "at": 11.96,
-          "end": 12.84,
+          "at": 2.54,
+          "end": 3.42,
           "text": "Unbelievable.\n难以置信！"
         },
         {
-          "at": 12.84,
-          "end": 14.1,
+          "at": 3.42,
+          "end": 4.68,
           "text": "And to be honest,\n说实话，"
         },
         {
-          "at": 14.1,
-          "end": 16.1,
+          "at": 4.68,
+          "end": 6.68,
           "text": "that's how the level has been.\n这场比赛一直保持这样的水准。"
         },
         {
-          "at": 20.96,
-          "end": 22.82,
+          "at": 11.54,
+          "end": 13.4,
           "text": "He's toying with it.\n这球处理得游刃有余。"
         }
       ],
       "_quote_kind": "broadcast",
-      "crosses_cut": "第一破发末分及后续真实两分连续保留，止于下个源点前，原声完整。",
-      "point_end_ok": "第一破发末分及后续真实两分连续保留，止于下个源点前，原声完整。",
-      "_edit_id": "early_break",
+      "crosses_cut": "按同一已审核源中的真实后续两分完整保留至结果与反应；Unbelievable/level/toying原声完整，未拼接截断英文。",
+      "point_end_ok": "按同一已审核源中的真实后续两分完整保留至结果与反应；Unbelievable/level/toying原声完整，未拼接截断英文。",
+      "_edit_id": "early_following_points",
       "subtitle_bottom": 304
     },
     {
@@ -432,6 +443,14 @@
     {
       "issue": "long_rally_excluded",
       "note": "61.22–95.00非必要长回合的82秒句头经真实全源与有限medium短窗仍未确认，整段排除，不假称已确认；核心破发、首盘、0–30、次盘破发和终局均保留完整可用窗口。"
+    },
+    {
+      "issue": "offcenter_early_closeup_excluded",
+      "source_interval": [
+        17.2,
+        20.82
+      ],
+      "note": "原生实际preview caption-04源19.0脸在画面右边被固定中心裁切大部截掉；这段近景及完整net cord英语整句排除。首破发整分至原近景切点及后续20.82新点仍完整，不移动取景或比分板。"
     }
   ],
   "_tactical_evidence": [
@@ -464,7 +483,7 @@
   "_source_handle_note": "固定center及逐帧scorebody透明回贴，保留同字节源单位增益现场声。 2026-10-14标准Release文件被另下载任务替换为8df版；本期fallback固定到f09哈希文件，实际源绑定必须仍为f09，旧8df转写不作为本期源字节实测。",
   "_scorebox_why": "同SHA全源实际nativeprobe 5fps扫描，标准ATP搜索提示[98,920,519,1029]；动态主板最大右缘452，不把整个提示框涂实、不改板位置。",
   "_subtitle_layout_why": "所有比赛段、标题卡字幕bottom304保持原位置；full_stats用完整原生数据画布不设置subtitle_bottom。125.5为广告，233.4物理板在center裁切外，不因这些画面上移字幕。",
-  "_audio_status": "正式所选6源窗全部同SHA完整交叉核准；long不确定前缀整段已排除。实际完整窗口packet已绑定，中文声音仍待native冻结包审查。",
+  "_audio_status": "实际七个选用源窗均复用六个完整同SHA原审查packet，17.2–20.82近景及完整net cord句整体排除，中文7requests仍冻结cde78包实际审查中。",
   "_production_timing": {
     "received_at": "2026-10-14T15:36:00Z",
     "first_probe_run": "38592843982",
