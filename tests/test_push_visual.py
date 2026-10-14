@@ -471,6 +471,10 @@ def test_复制页和推送在浏览器里真的量得到(tmp_path):
             ctx.close()
 
         ctx = browser.new_context(viewport={"width": 390, "height": 844})
+        # 推送里的图是真的 jsDelivr 地址，`goto` 要等它们加载完才算 load。量的只是「原图 ↗」
+        # 的点击区，跟图来不来无关——外网请求一律当场掐掉。2026-10-14 CI 上 jsDelivr 挂住，
+        # 这一步连着两趟 30 秒超时（PR #1254），沙箱里代理秒拒所以本地一直绿。
+        ctx.route(re.compile(r"^https?://"), lambda route: route.abort())
         tab = ctx.new_page()
         tab.goto(push_file.as_uri())
         links = tab.evaluate("() => [...document.querySelectorAll('a')]"
