@@ -1,0 +1,78 @@
+{
+  "slug": "davidovich-fokina-chengdu-2026-trophy-moment",
+  "film_sha256": "0e64879ae47c9e41806a07bb1be7c08cdc0cd0604a05180a310f6c1527f63182",
+  "video_bytes": 17790499,
+  "film_seconds": 52.4,
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-davidovich-fokina-chengdu-2026-trophy-moment/davidovich-fokina-chengdu-2026-trophy-moment.mp4",
+  "production_method": "local reconstructive build.py, not native build_interview_clip",
+  "source_sha256": "cfaa4c8dffeca303352dc76dcdf6077e831fb5137bead18762b0116587411341",
+  "compiled_ass_sha256": "6129bc05aa843b184059361e5bd57e0d68cd0aa28d437d2f43210c98a1cc1aa1",
+  "assembly": {
+    "measurement_method": "Actual final-film intervals extracted and measured below; not original native pipeline segment claims",
+    "parts": [
+      {
+        "role": "cover",
+        "seconds": 1.8,
+        "peak_db": -91.0,
+        "final_start": 0,
+        "final_end": 1.8,
+        "measurement": "Extracted from actual final film, inspection-only",
+        "sha256": "b2a59b5f50ad538b25d317f19742c62c24caccac95aa5ff8e454cbeb184d271d"
+      },
+      {
+        "role": "lead_in",
+        "seconds": 2.52,
+        "peak_db": -4.2,
+        "final_start": 1.8,
+        "final_end": 4.3,
+        "measurement": "Extracted from actual final film, inspection-only",
+        "sha256": "18354ee3ad3bafe366ac351dc35ac7426620c72375bffdf61d61d3269ba168d8"
+      },
+      {
+        "role": "body",
+        "seconds": 33.04,
+        "peak_db": -3.8,
+        "final_start": 4.3,
+        "final_end": 37.32,
+        "measurement": "Extracted from actual final film, inspection-only",
+        "sha256": "24e61ebcac4e8c78f1b3d5a574fcf6a4c85714cba8d54a28335d516bf3584bc6"
+      },
+      {
+        "role": "takeaway_close",
+        "seconds": 10.88,
+        "peak_db": -8.6,
+        "final_start": 37.32,
+        "final_end": 48.2,
+        "measurement": "Extracted from actual final film, inspection-only",
+        "sha256": "1e22495859d31f80db462b9abf5167b4d4b1dbc93ea945d44d0c1743c87f8ff6"
+      },
+      {
+        "role": "outro",
+        "seconds": 4.2,
+        "peak_db": -8.5,
+        "final_start": 48.2,
+        "final_end": 52.4,
+        "measurement": "Extracted from actual final film, inspection-only",
+        "sha256": "c689837b1e4416424244744bb5b89a0bf2b0a42bb2edf286a5e02ad0320ae751"
+      }
+    ]
+  },
+  "limitations": [
+    "English audio not manually listened; captions prior two-model reviewed transcript",
+    "No claim of champion speech"
+  ],
+  "qc_attestation_sha256": "50cf671b979468951a29783439418a5301155d86ac482ba32ed67f7beca9903f",
+  "seams": {
+    "transition": "hard_cut",
+    "count": 3,
+    "at_seconds": [
+      1.8,
+      37.32,
+      48.2
+    ],
+    "fallback_reason": "Deliberate reconstruction uses sequential concat; no crossfade or audio overlap",
+    "audio_overlap": false
+  },
+  "release_asset_digest": "sha256:0e64879ae47c9e41806a07bb1be7c08cdc0cd0604a05180a310f6c1527f63182",
+  "release_tag": "interview-davidovich-fokina-chengdu-2026-trophy-moment"
+}

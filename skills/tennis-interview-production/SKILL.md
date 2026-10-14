@@ -10,9 +10,11 @@ description: Produce and audit the Chinese tennis post-match video series “赛
 
 ## 1. 先锁定产品与来源
 
-- L0 认六种内容（`tools/interview_source_gate.py` 的 `REQUESTED_KINDS`）：赛后场上采访
+- L0 认七种内容（`tools/interview_source_gate.py` 的 `REQUESTED_KINDS`）：赛后场上采访
   （`on_court`）、颁奖台致辞（`ceremony`）、告别仪式（`farewell`）、赛前出场秀
-  （`walk_on`）——这四种自动链的来源验证认得出；赛后新闻发布会（`press_conference`）和
+  （`walk_on`）——这四种自动链的来源验证认得出；赛后捧杯时刻（`trophy_moment`）
+  是转播解说压在真实捧杯画面上，必须人工看过同场冠军和奖杯同框，不冒充球员致辞，
+  自动链的标题发现认不出它，冷开场也不因此豁免；赛后新闻发布会（`press_conference`）和
   赛场里的转播商专访（`broadcaster_interview`）**只由人手写 spec 用**，自动链的来源验证
   永远判不出这两种。混采区、演播台对坐、远程连线、第三方台标的独家采访和来源不明的
   一律拒绝。
