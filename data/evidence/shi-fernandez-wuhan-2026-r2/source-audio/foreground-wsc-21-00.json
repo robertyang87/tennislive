@@ -20,12 +20,12 @@
     },
     {
       "start": 16.5,
-      "end": 17.64,
+      "end": 17.94,
       "en": "Not quite yet.",
       "zh": "现在还没有。"
     },
     {
-      "start": 17.64,
+      "start": 18.46,
       "end": 20.06,
       "en": "She continues to blast away.",
       "zh": "她继续全力进攻。"
@@ -42,5 +42,10 @@
       "path": "data/evidence/shi-fernandez-wuhan-2026-r2/source-audio/asr-base.en.json",
       "sha256": "2c9eebe898720a4f5aa494319671f82c167f044ef24208973fee480a23b62a22"
     }
-  ]
+  ],
+  "timing_revision": {
+    "checked_at": "2026-10-14T17:44:38.057564+00:00",
+    "basis": "Two independent actual source ASR word boundaries and source-review comparison-review; first sentence latest end17.94, second earliest start18.46. No new human-listening claim.",
+    "source_review": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/cold21-review/comparison-review.json"
+  }
 }
