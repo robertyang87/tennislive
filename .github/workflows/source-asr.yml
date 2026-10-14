@@ -1,0 +1,108 @@
+name: source-asr
+run-name: "source-asr · ${{ inputs.url }}"
+
+# 源片解说的两档英文转写（small.en / medium.en，逐词时间码），给原声审听交叉核对用。
+# 落在 data/source_asr/<视频 id>/，按视频 id 认领，不按 slug（probe 的临时 slug 和正式
+# spec 的 slug 常常不同）。
+#
+# **跟 probe 并行**：match-reel.yml 的 probe 用上 Release 存档时自动派发这一条
+# （2026-10-12 `wangxiyu-wangxinyu-wuhan-2026-r1`：转写是 probe 跑完之后在临时分支上手搓的，
+# 又等了 10 分钟）。不塞进 probe 本身——两档模型约 10 分钟，塞进去会让每一趟 probe
+# （含编排器自动链）的缩略图墙都晚 10 分钟回来。
+# 判据 tests/test_source_asr.py
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "源片地址：Release 存档直链（source-<id>/<id>.mp4）或其他直链"
+        required: true
+        type: string
+      clip_from:
+        description: "只转写这一段（秒，可空）"
+        required: false
+        default: ""
+        type: string
+      clip_to:
+        description: "只转写这一段（秒，可空）"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: source-asr-${{ inputs.url }}
+  cancel-in-progress: false
+
+jobs:
+  asr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            data/source_asr
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: tools/source_asr.py
+
+      - name: 模型缓存
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: faster-whisper-small.en-medium.en-v1
+
+      - name: 装 faster-whisper
+        timeout-minutes: 5
+        run: pip install -q faster-whisper
+
+      - name: 取源片
+        id: src
+        timeout-minutes: 5
+        env:
+          URL: ${{ inputs.url }}
+        run: |
+          set -euo pipefail
+          KEY=$(python3 -c "import sys; sys.path.insert(0, 'tools'); import probe_claims as p; print(p.video_key(sys.argv[1]) or '')" "$URL")
+          test -n "$KEY" || { echo "::error::认不出视频 id（只认 YouTube 地址或 download-video 的 Release 存档）：$URL"; exit 1; }
+          curl -sSL --fail --retry 3 -o "$RUNNER_TEMP/src.mp4" "$URL"
+          echo "key=$KEY" >> "$GITHUB_OUTPUT"
+          echo "源片 $(stat -c%s "$RUNNER_TEMP/src.mp4") 字节，id=$KEY"
+
+      - name: 两档转写
+        timeout-minutes: 25
+        env:
+          KEY: ${{ steps.src.outputs.key }}
+          FROM: ${{ inputs.clip_from }}
+          TO: ${{ inputs.clip_to }}
+        run: |
+          set -euo pipefail
+          OUT="data/source_asr/$KEY"
+          for MODEL in small.en medium.en; do
+            python tools/source_asr.py --source "$RUNNER_TEMP/src.mp4" --model "$MODEL" \
+              --out "$OUT/$MODEL.json" --from "${FROM:-0}" --to "${TO:-0}"
+          done
+
+      - name: 提交转写
+        timeout-minutes: 3
+        env:
+          KEY: ${{ steps.src.outputs.key }}
+        run: |
+          set -euo pipefail
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add -f "data/source_asr/$KEY"
+          if git diff --cached --quiet; then
+            echo "转写和仓库里已有的一样，不提交"
+            exit 0
+          fi
+          python3 tools/check_staged_file_sizes.py
+          git commit -m "asr: 源片 $KEY 两档英文转写（small.en / medium.en）"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry "${{ github.ref_name }}" 5

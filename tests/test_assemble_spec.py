@@ -241,14 +241,20 @@ def test_matchup_order核不出顺序就抛_不退回命令行顺序(monkeypatch
         monkeypatch.setattr(mod, "fs_feed", feed)
         with pytest.raises(mod.MatchupOrderUnverified, match=want):
             mod.matchup_order("A E", "B R", "x")
-    # 没给 FH/FK、同姓认不出（两个 Wang），都是核不出——不是命令行顺序
+    # 没给 FH/FK、两边真分不开（同姓、缩写名首字母也一样），都是核不出——不是命令行顺序
     monkeypatch.setattr(mod, "fs_feed", lambda *_a: "SA÷2¬~")
     with pytest.raises(mod.MatchupOrderUnverified, match="FH/FK"):
         mod.matchup_order("A E", "B R", "x")
     monkeypatch.setattr(mod, "fs_feed",
-                        lambda *_a: "KP÷x¬FH÷Wang Xin.¬FK÷Wang Xiy.¬~")
+                        lambda *_a: "KP÷x¬FH÷Wang X.¬FK÷Wang X.¬~")
     with pytest.raises(mod.MatchupOrderUnverified, match="按姓认不出"):
         mod.matchup_order("Xinyu Wang", "Xiyu Wang", "x")
+    # 同姓但缩写名分得开（2026-10-14 speedcheck 的 FH='Wang Xiy.' FK='Wang Xin.'）：按名字归位，
+    # 命令行顺序反着传也照 feed 的 home/away 排
+    monkeypatch.setattr(mod, "fs_feed",
+                        lambda *_a: "KP÷x¬FH÷Wang Xiy.¬FK÷Wang Xin.¬~")
+    assert [n for n, _zh in mod.matchup_order("Xinyu Wang", "Xiyu Wang", "x")] == [
+        "Xiyu Wang", "Xinyu Wang"]
 
 
 def test_狠数据和转折局的名字按feed的home_away给(tool, monkeypatch):
