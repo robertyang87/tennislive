@@ -1,0 +1,91 @@
+{
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/0a2a9944-d501-48a4-9909-05ff8e4b864b.mp4",
+  "source_sha256": "ad96e283808ef06ad43129f4b5c8eb13e86da7c754174a955559b83ce31e34f4",
+  "source_key": "wsc-24-00",
+  "reviewed_from": 0,
+  "reviewed_to": 34.18,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_review agent; fresh local faster-whisper independent small.en/base.en, medium.en targeted adjudication",
+  "reviewed_at": "2026-10-14T17:14:25.168926+00:00",
+  "status": "complete",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "fresh_actual_asr_runs": true,
+  "foreground_english": [
+    {
+      "start": 5.6,
+      "end": 6.9,
+      "en": "It's not going to be.",
+      "zh": "这一球没能成功。"
+    },
+    {
+      "start": 7.78,
+      "end": 10.54,
+      "en": "It's going to be Leylah Fernandez who comes through in two,",
+      "zh": "费尔南德斯两盘获胜。"
+    },
+    {
+      "start": 10.54,
+      "end": 13.6,
+      "en": "somehow, some way, as she summons a mighty effort",
+      "zh": "她想尽办法，奋力争取，"
+    },
+    {
+      "start": 13.6,
+      "end": 15.28,
+      "en": "to reach the round of sixteen.",
+      "zh": "终于闯入十六强。"
+    },
+    {
+      "start": 16.98,
+      "end": 19.98,
+      "en": "Triple break point from trailing five-one in the second.",
+      "zh": "第二盘一比五落后时，还面临连续三个破发点。"
+    },
+    {
+      "start": 20.74,
+      "end": 22.22,
+      "en": "Look who comes roaring back.",
+      "zh": "看她强势回来了。"
+    },
+    {
+      "start": 24.12,
+      "end": 27.86,
+      "en": "Leylah Fernandez caps things off with the final five games,",
+      "zh": "费尔南德斯连赢最后五局，"
+    },
+    {
+      "start": 28.3,
+      "end": 30.98,
+      "en": "and now she is a member of the Sweet Sixteen",
+      "zh": "如今已经跻身十六强，"
+    },
+    {
+      "start": 31.0,
+      "end": 33.02,
+      "en": "at this WTA 1000 event.",
+      "zh": "在这项WTA一千赛中。"
+    }
+  ],
+  "uncertain_spans": [],
+  "method_details": "Actual original source audio independently decoded using local faster-whisper small.en and base.en; full source windows, beam5, no VAD, word timestamps, no prompt. medium.en third decode for clips11/14/20/24. ASR cross-check and editorial transcription only, no human listening or visual-model assertion. Proper names normalized to official spelling. Selected-window boundaries exclude unreconciled words and erroneous broadcast fact; no source gain or loudness scan.",
+  "raw_asr_evidence": [
+    {
+      "path": "data/evidence/shi-fernandez-wuhan-2026-r2/source-audio/asr-small.en.json",
+      "sha256": "15892cd04778bdd582c9f3bde5251d0f5e146ff966f4bbd5c0b8c8c370d77a99"
+    },
+    {
+      "path": "data/evidence/shi-fernandez-wuhan-2026-r2/source-audio/asr-base.en.json",
+      "sha256": "2c9eebe898720a4f5aa494319671f82c167f044ef24208973fee480a23b62a22"
+    },
+    {
+      "path": "data/evidence/shi-fernandez-wuhan-2026-r2/source-audio/asr-medium.en.json",
+      "sha256": "54ee48da75a088597813f15493f8a37860710da2a401baa23f5cde3b8b812304"
+    }
+  ],
+  "cross_check_notes": [
+    "All three ASRs decode trailing five-one; official point-by-point verifies four-one, so entire16.98–19.98 erroneous sentence is excluded by the selected edit0–16.30 and20.55–34.00. Transcript preserves original error internally; not burned into film.",
+    "Leylah spelling normalized. False recaps token normalized to coherent caps things off; raw decodes retained. No claim of human listening.",
+    "Cold starts7.70 before second independent full sentence7.78; previous sentence ends6.90. Final source35.36+ commentary and result board excluded."
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "tennislive.final-voice-evidence-manifest.v1",
+  "bundle_sha256": "f3bd88a6fe5451cf10a7a637dac60ab510207fdbfa1ed80a089d710ed3854705",
+  "report_sha256": "a0f52802b5d5fc428dd6cca4573308e30f04cda9a6532c9c2702553fe90a3258",
+  "files": [
+    {
+      "file": "current-actual-acoustic-evidence.json",
+      "sha256": "5f9dfc0b1c3e07cf42b3eb0ec836972394e4288d40ce20ed0a7b586a5ded3b73",
+      "bytes": 626559
+    },
+    {
+      "file": "current-actual-asr-content.json",
+      "sha256": "31d2891c67e806755da5e83d62eb96bf8d49858f97b6da88f2ba60944b6da968",
+      "bytes": 52611
+    },
+    {
+      "file": "final-cloud-pronunciation-review.json",
+      "sha256": "a0f52802b5d5fc428dd6cca4573308e30f04cda9a6532c9c2702553fe90a3258",
+      "bytes": 18754
+    },
+    {
+      "file": "native-bindings.json",
+      "sha256": "ee40e9b093a58fd6a00cd36b5922cfe490ccc85f478c86fd906ca8fd84bd0078",
+      "bytes": 37330
+    },
+    {
+      "file": "reference-audio-manifest.json",
+      "sha256": "b8f8ae17975dc002ea4bac940f968409d87bb402792366c188527e2b08ff5a4e",
+      "bytes": 131031
+    },
+    {
+      "file": "unchanged-six-byte-binding.json",
+      "sha256": "26e2def9e71f9a9e92a4eaebbee3852351bf82983e5aca8dc7f8e92f72cafcff",
+      "bytes": 5431
+    }
+  ],
+  "artifact_audio_location": "Parent can archive actual/reference MP3 outside Git; only these7 JSON are minimal repo evidence.",
+  "human_listening_claimed": false,
+  "tone_verified": false
+}

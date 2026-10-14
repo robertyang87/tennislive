@@ -1,0 +1,1193 @@
+{
+  "slug": "shi-fernandez-wuhan-2026-r2",
+  "youtube_id": "tT-88xPj-ZI",
+  "youtube_match_correspondence": "等待root原生probe核对；本包比赛身份由官方确定，不单凭YouTubeID假设",
+  "prepared_at_utc": "2026-10-14T17:07:14.086717+00:00",
+  "identity": {
+    "official_match_id": "LS030",
+    "event_id": 1075,
+    "year": 2026,
+    "event": "WTA1000武汉",
+    "round": "女单第二轮",
+    "date_beijing": "2026-10-14",
+    "natural_time_beijing": "深夜",
+    "first_point_utc": "2026-10-14T14:11:54Z",
+    "last_point_utc": "2026-10-14T15:47:48Z",
+    "actual_first_point_beijing": "22:11:54",
+    "last_point_beijing": "23:47:48",
+    "time_note": "官方MatchTimeStamp21:56早于首分22:11，外发只用日期深夜，不误报精确开球分钟。",
+    "duration": "01:36:23",
+    "winner": "费尔南德斯",
+    "winner_en": "Leylah Fernandez",
+    "winner_id": "326735",
+    "winner_country": "CAN",
+    "winner_rank": 25,
+    "loser": "施晗",
+    "loser_en": "Han Shi",
+    "loser_id": "329824",
+    "loser_country": "CHN",
+    "loser_rank": 217,
+    "rank_date": "2026-10-12",
+    "loser_entry": "Q",
+    "loser_age": 21,
+    "score_winner_perspective": "6-3 6-4",
+    "score_shi_perspective": "3-6 4-6",
+    "court": {
+      "date": "2026-10-14",
+      "court_id": 1,
+      "court_name": "Dongfeng Voyah Center Court",
+      "not_before": "Followed By"
+    },
+    "winner_next_round": "1/8决赛",
+    "winner_next_opponent": "奥斯塔彭科",
+    "winner_next_opponent_en": "Jelena Ostapenko",
+    "next_match_id": "LS015",
+    "next_date": "2026-10-15",
+    "next_start_note": "not before15:30Beijing为下界，非确切开赛时刻；旁白不需报。"
+  },
+  "evidence": {
+    "match": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+      "file": "wta-wuhan-matches.json",
+      "fields": "LS030 finished;A=Shi/329824 B=Fernandez/326735; winnerB 6-3 6-4; duration01:36:23"
+    },
+    "pbp": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS030/point-by-point",
+      "file": "wta-point-by-point.json",
+      "derived": "pbp-rebuilt.json",
+      "quality": "原始pointWinner有2处错误，根据gameScore转移重建115分：施51费64；破发机会施8费4，与官方stats完全吻合。"
+    },
+    "stats": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS030/stats",
+      "file": "wta-stats.json",
+      "fields": "setnum0 whole match;A=Shi B=Fernandez"
+    },
+    "advanced_stats": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS030/advanced-stats",
+      "file": "wta-advanced-stats.json",
+      "fields": "teamA=HanShi teamB=LeylahFernandez matchTotal；W14/15 UE23/13"
+    },
+    "shi_ranking": {
+      "url": "https://api.wtatennis.com/tennis/players/329824/ranking?date=2026-10-12",
+      "file": "wta-shi-ranking.json",
+      "fields": "weeklyRankings2026-10-12 singlesRanking217;born2005-05-30"
+    },
+    "fernandez_ranking": {
+      "url": "https://api.wtatennis.com/tennis/players/326735/ranking?date=2026-10-12",
+      "file": "wta-fernandez-ranking.json",
+      "fields": "weeklyRankings2026-10-12 singlesRanking25"
+    },
+    "draw": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/draw",
+      "file": "wta-draw.json",
+      "derived": "wta-draw-decoded.json",
+      "fields": "Shi Q;LS015下一轮Fernandez vsOstapenko；LS031奥斯塔彭科2-6 7-6(7)6-3佩古拉。"
+    },
+    "oop": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/oop",
+      "file": "wta-oop.json",
+      "fields": "LS030 CourtId1 DongfengVoyahCenterCourt"
+    },
+    "shi_bio": {
+      "url": "https://api.wtatennis.com/tennis/players/329824/detailed",
+      "file": "wta-shi-detailed.json",
+      "fields": "age21;2026赛季此前4ITF冠军；本周两场资格赛+首轮获胜见matches，不将四ITF冠军当WTA冠军。"
+    },
+    "h2h": {
+      "url": "https://api.wtatennis.com/tennis/players/329824/headtohead/326735",
+      "file": "wta-h2h.json",
+      "fields": "headToHeadSummary与matchEncounterResults为空，只能说官方无此前交手记录，不下绝对生涯首次结论。"
+    }
+  },
+  "progression": {
+    "first_set_shi_view": [
+      "0-1",
+      "1-1",
+      "1-2",
+      "2-2",
+      "2-3",
+      "3-3",
+      "3-4",
+      "3-5",
+      "3-6"
+    ],
+    "second_set_shi_view": [
+      "1-0",
+      "2-0",
+      "3-0",
+      "3-1",
+      "4-1",
+      "4-2",
+      "4-3",
+      "4-4",
+      "4-5",
+      "4-6"
+    ],
+    "first_set_summary": "前7局各自保发；施第8局15-40被破，费第9局保发6-3。",
+    "second_set_summary": "施第2局破发后3-0、4-1领先；费第6局从0-40连拿5分保发，第7局破发，第8局救2BP历14分保发至4-4，第9局再破，第10局保发终结，连赢最后5局。"
+  },
+  "full_statistics": {
+    "teams": "A=施晗，B=费尔南德斯",
+    "official_stats": [
+      {
+        "eventyear": 2026,
+        "eventid": "1075",
+        "matchid": "LS030",
+        "setnum": 0,
+        "settime": "",
+        "scorea": "",
+        "scoreb": "",
+        "scoretb": "",
+        "acesa": 1,
+        "acesb": 0,
+        "dblflta": 2,
+        "dblfltb": 7,
+        "ptswon1stserva": 17,
+        "ptswon1stservb": 36,
+        "ptsplayed1stserva": 25,
+        "ptsplayed1stservb": 46,
+        "ptstotwonserva": 27,
+        "ptstotwonservb": 46,
+        "totservplayeda": 45,
+        "totservplayedb": 70,
+        "breakptsconva": 1,
+        "breakptsconvb": 3,
+        "breakptsplayeda": 8,
+        "breakptsplayedb": 4,
+        "servgamesplayeda": 9,
+        "servgamesplayedb": 10,
+        "pts1stservlosta": 8,
+        "pts1stservlostb": 10,
+        "totptswona": 51,
+        "totptswonb": 64,
+        "acesssa": 0,
+        "acesssb": 0
+      },
+      {
+        "eventyear": 2026,
+        "eventid": "1075",
+        "matchid": "LS030",
+        "setnum": 1,
+        "settime": "00:42:16",
+        "scorea": "3",
+        "scoreb": "6",
+        "scoretb": "0",
+        "acesa": 0,
+        "acesb": 0,
+        "dblflta": 2,
+        "dblfltb": 4,
+        "ptswon1stserva": 10,
+        "ptswon1stservb": 17,
+        "ptsplayed1stserva": 13,
+        "ptsplayed1stservb": 19,
+        "ptstotwonserva": 13,
+        "ptstotwonservb": 23,
+        "totservplayeda": 19,
+        "totservplayedb": 32,
+        "breakptsconva": 0,
+        "breakptsconvb": 1,
+        "breakptsplayeda": 1,
+        "breakptsplayedb": 1,
+        "servgamesplayeda": 4,
+        "servgamesplayedb": 5,
+        "pts1stservlosta": 3,
+        "pts1stservlostb": 2,
+        "totptswona": 22,
+        "totptswonb": 29,
+        "acesssa": 0,
+        "acesssb": 0
+      },
+      {
+        "eventyear": 2026,
+        "eventid": "1075",
+        "matchid": "LS030",
+        "setnum": 2,
+        "settime": "00:54:06",
+        "scorea": "4",
+        "scoreb": "6",
+        "scoretb": "0",
+        "acesa": 1,
+        "acesb": 0,
+        "dblflta": 0,
+        "dblfltb": 3,
+        "ptswon1stserva": 7,
+        "ptswon1stservb": 19,
+        "ptsplayed1stserva": 12,
+        "ptsplayed1stservb": 27,
+        "ptstotwonserva": 14,
+        "ptstotwonservb": 23,
+        "totservplayeda": 26,
+        "totservplayedb": 38,
+        "breakptsconva": 1,
+        "breakptsconvb": 2,
+        "breakptsplayeda": 7,
+        "breakptsplayedb": 3,
+        "servgamesplayeda": 5,
+        "servgamesplayedb": 5,
+        "pts1stservlosta": 5,
+        "pts1stservlostb": 8,
+        "totptswona": 29,
+        "totptswonb": 35,
+        "acesssa": 0,
+        "acesssb": 0
+      }
+    ],
+    "shi_advanced": {
+      "setNumber": null,
+      "shotStats": {
+        "winnersTotal": 14,
+        "winnersForehand": 8,
+        "winnersBackhand": 5,
+        "winnersVolley": 2,
+        "aces": 1,
+        "smashes": 0,
+        "dropShots": 0,
+        "passLobs": 0,
+        "unforcedErrorsTotal": 23,
+        "unforcedErrorsForehand": 9,
+        "unforcedErrorsBackhand": 12,
+        "forcedErrorsTotal": 26,
+        "forcedErrorsForehand": 13,
+        "forcedErrorsBackhand": 13,
+        "winnerErrorRatio": 0.61
+      },
+      "serveStats": {
+        "serviceWinners": 4,
+        "doubleFaults": 2,
+        "firstServeWon": 17,
+        "firstServePlayed": 25,
+        "firstServeLost": 8,
+        "faultReasons": {
+          "net": 10,
+          "out": 12,
+          "footFault": 0
+        }
+      },
+      "returnStats": {
+        "returnWinners": 1
+      },
+      "rallyStats": {
+        "longestRally": 28,
+        "averageRallyLength": 5.2,
+        "pointsWon0To4Shots": {
+          "total": 62,
+          "winPercentage": 48.4
+        },
+        "pointsWon5To8Shots": {
+          "total": 36,
+          "winPercentage": 44.4
+        },
+        "pointsWon9PlusShots": {
+          "total": 17,
+          "winPercentage": 52.9
+        },
+        "rallies20Plus": {
+          "total": 1,
+          "winPercentage": 0
+        }
+      },
+      "netPlayStats": {
+        "netApproaches": 9,
+        "netApproachesSuccessful": 5,
+        "netApproachesUnsuccessful": 4,
+        "netSuccessRate": 55.6
+      },
+      "breakPointStats": {
+        "breakPointsFaced": 4,
+        "breakPointsSaved": 1,
+        "breakPointsConverted": 1,
+        "breakPointsPlayed": 8,
+        "setBreakPoints": 0,
+        "matchBreakPoints": 0
+      },
+      "violationStats": {
+        "timeViolations": 0,
+        "warnings": 0,
+        "pointPenalties": 0,
+        "gamePenalties": 0,
+        "playerDisqualification": false,
+        "playerRetirement": false,
+        "codeViolations": 0
+      }
+    },
+    "fernandez_advanced": {
+      "setNumber": null,
+      "shotStats": {
+        "winnersTotal": 15,
+        "winnersForehand": 6,
+        "winnersBackhand": 9,
+        "winnersVolley": 4,
+        "aces": 0,
+        "smashes": 0,
+        "dropShots": 1,
+        "passLobs": 2,
+        "unforcedErrorsTotal": 13,
+        "unforcedErrorsForehand": 4,
+        "unforcedErrorsBackhand": 2,
+        "forcedErrorsTotal": 24,
+        "forcedErrorsForehand": 13,
+        "forcedErrorsBackhand": 11,
+        "winnerErrorRatio": 1.15
+      },
+      "serveStats": {
+        "serviceWinners": 13,
+        "doubleFaults": 7,
+        "firstServeWon": 36,
+        "firstServePlayed": 46,
+        "firstServeLost": 10,
+        "faultReasons": {
+          "net": 8,
+          "out": 23,
+          "footFault": 0
+        }
+      },
+      "returnStats": {
+        "returnWinners": 1
+      },
+      "rallyStats": {
+        "longestRally": 28,
+        "averageRallyLength": 5.2,
+        "pointsWon0To4Shots": {
+          "total": 62,
+          "winPercentage": 51.6
+        },
+        "pointsWon5To8Shots": {
+          "total": 36,
+          "winPercentage": 55.6
+        },
+        "pointsWon9PlusShots": {
+          "total": 17,
+          "winPercentage": 47.1
+        },
+        "rallies20Plus": {
+          "total": 1,
+          "winPercentage": 100
+        }
+      },
+      "netPlayStats": {
+        "netApproaches": 14,
+        "netApproachesSuccessful": 12,
+        "netApproachesUnsuccessful": 2,
+        "netSuccessRate": 85.7
+      },
+      "breakPointStats": {
+        "breakPointsFaced": 8,
+        "breakPointsSaved": 7,
+        "breakPointsConverted": 3,
+        "breakPointsPlayed": 4,
+        "setBreakPoints": 3,
+        "matchBreakPoints": 2
+      },
+      "violationStats": {
+        "timeViolations": 0,
+        "warnings": 0,
+        "pointPenalties": 0,
+        "gamePenalties": 0,
+        "playerDisqualification": false,
+        "playerRetirement": false,
+        "codeViolations": 0
+      }
+    }
+  },
+  "best_gap_indicators": [
+    {
+      "metric": "破发点兑现",
+      "shi": "1/8=12.5%",
+      "fernandez": "3/4=75%",
+      "meaning": "机会出现后的执行差别，结合4-1的0-40和4-3错过2BP展示。",
+      "sources": [
+        "stats",
+        "pbp"
+      ]
+    },
+    {
+      "metric": "非受迫失误",
+      "shi": 23,
+      "fernandez": 13,
+      "meaning": "施多10次，制胜分14vs15接近，支持本场稳定性差异而非完全没有进攻能力。",
+      "sources": [
+        "advanced_stats"
+      ]
+    },
+    {
+      "metric": "一发得分率",
+      "shi": "17/25=68%",
+      "fernandez": "36/46=78.3%",
+      "meaning": "费有效一发上的优势；不据此泛称费发球每项都更好（其双误7vs2、二发得分率41.7%vs50%）。",
+      "sources": [
+        "stats"
+      ]
+    }
+  ],
+  "additional_stat_context": {
+    "shi_aces": 1,
+    "fernandez_aces": 0,
+    "shi_double_faults": 2,
+    "fernandez_double_faults": 7,
+    "shi_net_success": "5/9=55.6%",
+    "fernandez_net_success": "12/14=85.7%",
+    "shi_winners": 14,
+    "fernandez_winners": 15,
+    "shi_first_in": "25/45=55.6%",
+    "fernandez_first_in": "46/70=65.7%",
+    "shi_second_points_won": "10/20=50%",
+    "fernandez_second_points_won": "10/24=41.7%"
+  },
+  "key_points": {
+    "s2_g6_missed_three_break_points": [
+      81,
+      82,
+      83
+    ],
+    "s2_g8_missed_two_break_points": [
+      96,
+      98
+    ],
+    "first_set_break_point_lost": [
+      46
+    ],
+    "s2_break_to_4_3": [
+      90
+    ],
+    "s2_break_to_4_5": [
+      109
+    ],
+    "match_points": [
+      114,
+      115
+    ],
+    "final_point": 115
+  },
+  "games": [
+    {
+      "set": 1,
+      "game": 1,
+      "server": "B",
+      "winner": "B",
+      "shi_fernandez_score_before": [
+        0,
+        0
+      ],
+      "shi_fernandez_score_after": [
+        0,
+        1
+      ],
+      "point_count": 4,
+      "point_numbers": [
+        1,
+        4
+      ],
+      "first_point_utc": "2026-10-14T14:11:54Z",
+      "last_point_utc": "2026-10-14T14:15:23Z",
+      "break_point_chances": {},
+      "break_point_events": []
+    },
+    {
+      "set": 1,
+      "game": 2,
+      "server": "A",
+      "winner": "A",
+      "shi_fernandez_score_before": [
+        0,
+        1
+      ],
+      "shi_fernandez_score_after": [
+        1,
+        1
+      ],
+      "point_count": 5,
+      "point_numbers": [
+        5,
+        9
+      ],
+      "first_point_utc": "2026-10-14T14:16:46Z",
+      "last_point_utc": "2026-10-14T14:19:09Z",
+      "break_point_chances": {},
+      "break_point_events": []
+    },
+    {
+      "set": 1,
+      "game": 3,
+      "server": "B",
+      "winner": "B",
+      "shi_fernandez_score_before": [
+        1,
+        1
+      ],
+      "shi_fernandez_score_after": [
+        1,
+        2
+      ],
+      "point_count": 8,
+      "point_numbers": [
+        10,
+        17
+      ],
+      "first_point_utc": "2026-10-14T14:20:13Z",
+      "last_point_utc": "2026-10-14T14:24:44Z",
+      "break_point_chances": {},
+      "break_point_events": []
+    },
+    {
+      "set": 1,
+      "game": 4,
+      "server": "A",
+      "winner": "A",
+      "shi_fernandez_score_before": [
+        1,
+        2
+      ],
+      "shi_fernandez_score_after": [
+        2,
+        2
+      ],
+      "point_count": 4,
+      "point_numbers": [
+        18,
+        21
+      ],
+      "first_point_utc": "2026-10-14T14:27:08Z",
+      "last_point_utc": "2026-10-14T14:29:13Z",
+      "break_point_chances": {},
+      "break_point_events": []
+    },
+    {
+      "set": 1,
+      "game": 5,
+      "server": "B",
+      "winner": "B",
+      "shi_fernandez_score_before": [
+        2,
+        2
+      ],
+      "shi_fernandez_score_after": [
+        2,
+        3
+      ],
+      "point_count": 10,
+      "point_numbers": [
+        22,
+        31
+      ],
+      "first_point_utc": "2026-10-14T14:30:20Z",
+      "last_point_utc": "2026-10-14T14:37:06Z",
+      "break_point_chances": {
+        "A": 1
+      },
+      "break_point_events": [
+        {
+          "point_number": 29,
+          "chance_for": "A",
+          "won_by": "B",
+          "score_before_A_B": [
+            "AD",
+            "40"
+          ],
+          "score_after_A_B": [
+            "40",
+            "40"
+          ],
+          "utc": "2026-10-14T14:35:42Z"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 6,
+      "server": "A",
+      "winner": "A",
+      "shi_fernandez_score_before": [
+        2,
+        3
+      ],
+      "shi_fernandez_score_after": [
+        3,
+        3
+      ],
+      "point_count": 5,
+      "point_numbers": [
+        32,
+        36
+      ],
+      "first_point_utc": "2026-10-14T14:39:13Z",
+      "last_point_utc": "2026-10-14T14:41:27Z",
+      "break_point_chances": {},
+      "break_point_events": []
+    },
+    {
+      "set": 1,
+      "game": 7,
+      "server": "B",
+      "winner": "B",
+      "shi_fernandez_score_before": [
+        3,
+        3
+      ],
+      "shi_fernandez_score_after": [
+        3,
+        4
+      ],
+      "point_count": 5,
+      "point_numbers": [
+        37,
+        41
+      ],
+      "first_point_utc": "2026-10-14T14:42:16Z",
+      "last_point_utc": "2026-10-14T14:45:09Z",
+      "break_point_chances": {},
+      "break_point_events": []
+    },
+    {
+      "set": 1,
+      "game": 8,
+      "server": "A",
+      "winner": "B",
+      "shi_fernandez_score_before": [
+        3,
+        4
+      ],
+      "shi_fernandez_score_after": [
+        3,
+        5
+      ],
+      "point_count": 5,
+      "point_numbers": [
+        42,
+        46
+      ],
+      "first_point_utc": "2026-10-14T14:47:40Z",
+      "last_point_utc": "2026-10-14T14:49:55Z",
+      "break_point_chances": {
+        "B": 1
+      },
+      "break_point_events": [
+        {
+          "point_number": 46,
+          "chance_for": "B",
+          "won_by": "B",
+          "score_before_A_B": [
+            "15",
+            "40"
+          ],
+          "score_after_A_B": [
+            "15",
+            "G"
+          ],
+          "utc": "2026-10-14T14:49:55Z"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 9,
+      "server": "B",
+      "winner": "B",
+      "shi_fernandez_score_before": [
+        3,
+        5
+      ],
+      "shi_fernandez_score_after": [
+        3,
+        6
+      ],
+      "point_count": 5,
+      "point_numbers": [
+        47,
+        51
+      ],
+      "first_point_utc": "2026-10-14T14:50:47Z",
+      "last_point_utc": "2026-10-14T14:53:43Z",
+      "break_point_chances": {},
+      "break_point_events": []
+    },
+    {
+      "set": 2,
+      "game": 1,
+      "server": "A",
+      "winner": "A",
+      "shi_fernandez_score_before": [
+        0,
+        0
+      ],
+      "shi_fernandez_score_after": [
+        1,
+        0
+      ],
+      "point_count": 6,
+      "point_numbers": [
+        52,
+        57
+      ],
+      "first_point_utc": "2026-10-14T14:56:18Z",
+      "last_point_utc": "2026-10-14T14:59:10Z",
+      "break_point_chances": {},
+      "break_point_events": []
+    },
+    {
+      "set": 2,
+      "game": 2,
+      "server": "B",
+      "winner": "A",
+      "shi_fernandez_score_before": [
+        1,
+        0
+      ],
+      "shi_fernandez_score_after": [
+        2,
+        0
+      ],
+      "point_count": 6,
+      "point_numbers": [
+        58,
+        63
+      ],
+      "first_point_utc": "2026-10-14T15:00:22Z",
+      "last_point_utc": "2026-10-14T15:04:18Z",
+      "break_point_chances": {
+        "A": 2
+      },
+      "break_point_events": [
+        {
+          "point_number": 62,
+          "chance_for": "A",
+          "won_by": "B",
+          "score_before_A_B": [
+            "40",
+            "15"
+          ],
+          "score_after_A_B": [
+            "40",
+            "30"
+          ],
+          "utc": "2026-10-14T15:03:32Z"
+        },
+        {
+          "point_number": 63,
+          "chance_for": "A",
+          "won_by": "A",
+          "score_before_A_B": [
+            "40",
+            "30"
+          ],
+          "score_after_A_B": [
+            "G",
+            "30"
+          ],
+          "utc": "2026-10-14T15:04:18Z"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 3,
+      "server": "A",
+      "winner": "A",
+      "shi_fernandez_score_before": [
+        2,
+        0
+      ],
+      "shi_fernandez_score_after": [
+        3,
+        0
+      ],
+      "point_count": 6,
+      "point_numbers": [
+        64,
+        69
+      ],
+      "first_point_utc": "2026-10-14T15:05:11Z",
+      "last_point_utc": "2026-10-14T15:08:44Z",
+      "break_point_chances": {},
+      "break_point_events": []
+    },
+    {
+      "set": 2,
+      "game": 4,
+      "server": "B",
+      "winner": "B",
+      "shi_fernandez_score_before": [
+        3,
+        0
+      ],
+      "shi_fernandez_score_after": [
+        3,
+        1
+      ],
+      "point_count": 4,
+      "point_numbers": [
+        70,
+        73
+      ],
+      "first_point_utc": "2026-10-14T15:10:57Z",
+      "last_point_utc": "2026-10-14T15:12:31Z",
+      "break_point_chances": {},
+      "break_point_events": []
+    },
+    {
+      "set": 2,
+      "game": 5,
+      "server": "A",
+      "winner": "A",
+      "shi_fernandez_score_before": [
+        3,
+        1
+      ],
+      "shi_fernandez_score_after": [
+        4,
+        1
+      ],
+      "point_count": 4,
+      "point_numbers": [
+        74,
+        77
+      ],
+      "first_point_utc": "2026-10-14T15:13:17Z",
+      "last_point_utc": "2026-10-14T15:15:09Z",
+      "break_point_chances": {},
+      "break_point_events": []
+    },
+    {
+      "set": 2,
+      "game": 6,
+      "server": "B",
+      "winner": "B",
+      "shi_fernandez_score_before": [
+        4,
+        1
+      ],
+      "shi_fernandez_score_after": [
+        4,
+        2
+      ],
+      "point_count": 8,
+      "point_numbers": [
+        78,
+        85
+      ],
+      "first_point_utc": "2026-10-14T15:17:18Z",
+      "last_point_utc": "2026-10-14T15:21:40Z",
+      "break_point_chances": {
+        "A": 3
+      },
+      "break_point_events": [
+        {
+          "point_number": 81,
+          "chance_for": "A",
+          "won_by": "B",
+          "score_before_A_B": [
+            "40",
+            "0"
+          ],
+          "score_after_A_B": [
+            "40",
+            "15"
+          ],
+          "utc": "2026-10-14T15:19:24Z"
+        },
+        {
+          "point_number": 82,
+          "chance_for": "A",
+          "won_by": "B",
+          "score_before_A_B": [
+            "40",
+            "15"
+          ],
+          "score_after_A_B": [
+            "40",
+            "30"
+          ],
+          "utc": "2026-10-14T15:19:50Z"
+        },
+        {
+          "point_number": 83,
+          "chance_for": "A",
+          "won_by": "B",
+          "score_before_A_B": [
+            "40",
+            "30"
+          ],
+          "score_after_A_B": [
+            "40",
+            "40"
+          ],
+          "utc": "2026-10-14T15:20:16Z"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 7,
+      "server": "A",
+      "winner": "B",
+      "shi_fernandez_score_before": [
+        4,
+        2
+      ],
+      "shi_fernandez_score_after": [
+        4,
+        3
+      ],
+      "point_count": 5,
+      "point_numbers": [
+        86,
+        90
+      ],
+      "first_point_utc": "2026-10-14T15:22:30Z",
+      "last_point_utc": "2026-10-14T15:25:28Z",
+      "break_point_chances": {
+        "B": 2
+      },
+      "break_point_events": [
+        {
+          "point_number": 89,
+          "chance_for": "B",
+          "won_by": "A",
+          "score_before_A_B": [
+            "0",
+            "40"
+          ],
+          "score_after_A_B": [
+            "15",
+            "40"
+          ],
+          "utc": "2026-10-14T15:24:39Z"
+        },
+        {
+          "point_number": 90,
+          "chance_for": "B",
+          "won_by": "B",
+          "score_before_A_B": [
+            "15",
+            "40"
+          ],
+          "score_after_A_B": [
+            "15",
+            "G"
+          ],
+          "utc": "2026-10-14T15:25:28Z"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 8,
+      "server": "B",
+      "winner": "B",
+      "shi_fernandez_score_before": [
+        4,
+        3
+      ],
+      "shi_fernandez_score_after": [
+        4,
+        4
+      ],
+      "point_count": 14,
+      "point_numbers": [
+        91,
+        104
+      ],
+      "first_point_utc": "2026-10-14T15:28:23Z",
+      "last_point_utc": "2026-10-14T15:38:19Z",
+      "break_point_chances": {
+        "A": 2
+      },
+      "break_point_events": [
+        {
+          "point_number": 96,
+          "chance_for": "A",
+          "won_by": "B",
+          "score_before_A_B": [
+            "40",
+            "30"
+          ],
+          "score_after_A_B": [
+            "40",
+            "40"
+          ],
+          "utc": "2026-10-14T15:32:22Z"
+        },
+        {
+          "point_number": 98,
+          "chance_for": "A",
+          "won_by": "B",
+          "score_before_A_B": [
+            "AD",
+            "40"
+          ],
+          "score_after_A_B": [
+            "40",
+            "40"
+          ],
+          "utc": "2026-10-14T15:34:08Z"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 9,
+      "server": "A",
+      "winner": "B",
+      "shi_fernandez_score_before": [
+        4,
+        4
+      ],
+      "shi_fernandez_score_after": [
+        4,
+        5
+      ],
+      "point_count": 5,
+      "point_numbers": [
+        105,
+        109
+      ],
+      "first_point_utc": "2026-10-14T15:39:27Z",
+      "last_point_utc": "2026-10-14T15:41:51Z",
+      "break_point_chances": {
+        "B": 1
+      },
+      "break_point_events": [
+        {
+          "point_number": 109,
+          "chance_for": "B",
+          "won_by": "B",
+          "score_before_A_B": [
+            "15",
+            "40"
+          ],
+          "score_after_A_B": [
+            "15",
+            "G"
+          ],
+          "utc": "2026-10-14T15:41:51Z"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 10,
+      "server": "B",
+      "winner": "B",
+      "shi_fernandez_score_before": [
+        4,
+        5
+      ],
+      "shi_fernandez_score_after": [
+        4,
+        6
+      ],
+      "point_count": 6,
+      "point_numbers": [
+        110,
+        115
+      ],
+      "first_point_utc": "2026-10-14T15:44:13Z",
+      "last_point_utc": "2026-10-14T15:47:48Z",
+      "break_point_chances": {},
+      "break_point_events": []
+    }
+  ],
+  "fact_cards": [
+    {
+      "title": "本场结果",
+      "lines": [
+        "施晗3-6、4-6费尔南德斯",
+        "2026WTA1000武汉女单第二轮"
+      ],
+      "evidence": [
+        "match"
+      ]
+    },
+    {
+      "title": "最可惜的一段",
+      "lines": [
+        "次盘4-1领先",
+        "随后连丢5局"
+      ],
+      "evidence": [
+        "pbp"
+      ]
+    },
+    {
+      "title": "机会兑现",
+      "lines": [
+        "施晗8个破发点拿下1次",
+        "费尔南德斯4次机会兑现3次"
+      ],
+      "evidence": [
+        "stats",
+        "pbp"
+      ]
+    },
+    {
+      "title": "失误差距",
+      "lines": [
+        "施晗23次非受迫失误",
+        "费尔南德斯13次"
+      ],
+      "evidence": [
+        "advanced_stats"
+      ]
+    },
+    {
+      "title": "进攻并非全无机会",
+      "lines": [
+        "制胜分施晗14、费尔南德斯15",
+        "先有进攻与领先，后续关键分和失误控制需提高"
+      ],
+      "evidence": [
+        "advanced_stats",
+        "pbp"
+      ],
+      "note": "第二行是对本场数据的编辑分析，不冒充球员/教练诊断。"
+    }
+  ],
+  "six_voice_suggestions": [
+    "次盘四比一领先，施晗还是连丢五局，两盘止步武汉第二轮。",
+    "北京时间十月十四日深夜，施晗对阵费尔南德斯，两人当周排名分别第二百一十七和第二十五。",
+    "首盘打到三比三，施晗第八局被破发，三比六先丢一盘。",
+    "第二盘她先拿三局，又带到四比一。第六局，零比四十拿到三个破发点，却没能再往前一步。",
+    "四比三时又错失两个破发点，对手守住这局后再破再保，六比四结束比赛。",
+    "制胜分十四对十五，非受迫失误二十三对十三。八个破发点，施晗拿下一次；对手四次机会，兑现三次。闯过三场的施晗，接下来还要把机会变成更多的局。"
+  ],
+  "editorial_angle": {
+    "owner_words": "有点遗憾，可能还是实力有差距",
+    "treatment": "以施晗视角讲次盘领先和错失机会；用破发兑现率、非受迫失误、一发得分支持本场稳定性与关键分执行差异，不把用户假设升级为绝对实力或心理诊断。",
+    "recommended_hook": [
+      "次盘4比1连丢5局",
+      "施晗两盘止步武汉"
+    ],
+    "alternative_hook": [
+      "次盘4比1领先",
+      "施晗未能扳回一盘"
+    ],
+    "copy_title": "10.14赛场之上|施晗4比1后出局",
+    "push_summary": "次盘4比1后连丢5局，施晗止步武汉第二轮",
+    "closing_suggestion": "这一周她闯过两轮资格赛，又逆转伊埃拉。遗憾落在这一场，接下来还要提高关键分的兑现。",
+    "root_selected_hook": [
+      "次盘4比1领先",
+      "施晗连丢五局出局"
+    ]
+  },
+  "background": {
+    "qualifying_1": "RS016施2-6 7-5 6-4斯特恩斯",
+    "qualifying_2": "RS008施7-6(2)6-1拉希莫娃",
+    "main_draw_1": "LS060施4-6 6-3 6-3伊埃拉",
+    "meaning": "本周三场胜利之后第二轮止步；不可说首战出局、正赛三连胜、止步资格赛。",
+    "clarification": "本周三场胜利=两场资格赛+一场正赛首轮，不是资格赛三胜。"
+  },
+  "do_not_claim": [
+    "不写施晗逆转落败整场：她首盘落后，次盘4-1被翻；应指明是次盘领先被翻。",
+    "不强写惜败、只差一口气：两盘结果及后五局不支持过度拔高。",
+    "不说关键分全丢：次盘第2局拿下1个BP；全场施1/8不是0/8。",
+    "不说次盘4-4时施错失2BP：当时局分为施4-3领先，费保发后才4-4。",
+    "不把发球胜赛局套给施晗：她从未到5局，无发球胜盘局。",
+    "不把费7次双误说成施7次。",
+    "不以排名差直接定义每项技术或永久实力差距。",
+    "没有画面核实前不编球路、挥拳、落泪或心理状态。"
+  ],
+  "open_gaps": [
+    "用户YouTube需与本场匹配；rootprobe处理中。",
+    "两处具体技战术球路由素材原声代理验证再进入spec。",
+    "精确关键分是否全有官方完整素材由source代理对照key_points。"
+  ]
+}

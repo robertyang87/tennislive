@@ -1,0 +1,140 @@
+{
+  "slug": "shi-fernandez-wuhan-2026-r2",
+  "reviewed_at_utc": "2026-10-14T17:20:50.971110+00:00",
+  "reviewer": "facts_editorial",
+  "scope": "Static fullspec/editorial/push/xhs fact and sequence review, official PBP/stats/background/rankings, visual-story packet and actual five original-source timeline images; no final render, no continuous full video watch, no human audio listening claim.",
+  "repo_head_observed": "2555be997b36132b0522a127887c403c4ee97b06",
+  "spec_sha256": "9983cf05281677329db2cede54b40729f788510ccc93f14242f2d4f88ade211d",
+  "xhs_sha256": "e2ef1d44249b5f196743eb03e60337f3dd8ab883d335a6b993c7857b1c9d278e",
+  "decision": "pass_editorial_scope",
+  "findings": [
+    {
+      "id": "UPSTREAM-NOTE-SEQUENCE",
+      "severity": "low",
+      "location": "source-review/visual-story.json wsc-21-00.limits",
+      "issue": "内部limits仍说后面丢失的两个BP，但BP96/98发生在source21展示的救费局点之前。最终spec已经修正，本条仅为内部记录陈旧，不阻成片。",
+      "fix": "内部后面改为本局先前，或删去时间副词。",
+      "voice_change_required": false,
+      "blocks_editorial": false
+    }
+  ],
+  "resolved_findings": [
+    {
+      "id": "VOICE-G8-SEQUENCE",
+      "old_issue": "上网救局点后却又错失2BP顺序与PBP冲突。",
+      "resolution": "改先错过两个BP，再上网救回局点，已同步segment10/editorial；旧narrationrun取消，需新合成绑定新文本。",
+      "resolved_in_commit": "2555be997b36132b0522a127887c403c4ee97b06"
+    }
+  ],
+  "checks": [
+    {
+      "id": "identity",
+      "status": "pass",
+      "detail": "WTA LS030，2026-10-14武汉第二轮；费6-3 6-4施；施217费25，周排名日期10/12。"
+    },
+    {
+      "id": "time",
+      "status": "pass",
+      "detail": "北京时间22:11:54首分、23:47:48末分；十月十四日深夜准确，未冒称MatchTimeStamp是精确开球。"
+    },
+    {
+      "id": "first_set",
+      "status": "pass",
+      "detail": "前7局各自保发，3-3后施连丢3局至3-6；wsc11只讲压力，不冒充破发终分或盘点。"
+    },
+    {
+      "id": "second_set_progression",
+      "status": "pass",
+      "detail": "施3-0、4-1领先；第6局0-40三个BP全失，第7局被破，第8局先失2BP后救费局点仍失局，第9局被破、第10局费保发至4-6。"
+    },
+    {
+      "id": "chronology_repair",
+      "status": "pass",
+      "detail": "2555be99的segment10及editorial同步改为先错过两个BP，再上网救局点，纠正旧顺序。旧句不得进入新冻结音轨。",
+      "point_numbers": [
+        96,
+        98,
+        100,
+        102
+      ]
+    },
+    {
+      "id": "wsc14_tactics",
+      "status": "pass",
+      "detail": "实际查看wsc14完整时间墙：施黄衣白帽向场内追短球，40-30拿下次盘首局；不称后续破发。"
+    },
+    {
+      "id": "wsc20_mapping",
+      "status": "pass",
+      "detail": "实际查看wsc20时间墙：4-1 40-40，费得分到Ad，发生在前三BP之后；先事实卡说明三个BP，再放真实随后回合，未冒充BP。"
+    },
+    {
+      "id": "wsc21_tactics",
+      "status": "pass",
+      "detail": "实际查看wsc21时间墙：4-3费Ad，施向前救局点，比分回平分并握拳。两BP的遗漏已用事实卡叙述，改后时序正确。"
+    },
+    {
+      "id": "final_point",
+      "status": "pass",
+      "detail": "实际查看wsc24时间墙：4-5接发30-40、MATCHPOINT#2，费发球末回合、庆祝、网前握手与裁判握手/看台致意确为同场。"
+    },
+    {
+      "id": "audio_fact_conflict_exclusion",
+      "status": "pass_for_planned_windows",
+      "detail": "错误5-1解说位于source24约16.98-19.98；计划窗口7.7-15.7、0-16.3、20.55-34完整排除此句。未声称实际连续听审或成片混音核验。"
+    },
+    {
+      "id": "stats",
+      "status": "pass",
+      "detail": "A施B费，W14/15、UE23/13、BP1/8vs3/4，其他结构化stats与官方setnum0一致。"
+    },
+    {
+      "id": "background",
+      "status": "pass",
+      "detail": "本周3胜=RS016资格赛胜斯特恩斯+RS008资格赛胜拉希莫娃+LS060正赛首轮胜伊埃拉。"
+    },
+    {
+      "id": "next_round",
+      "status": "pass",
+      "detail": "赢家费尔南德斯下一轮奥斯塔彭科，官方LS015明确；未把下一轮写给施晗。"
+    },
+    {
+      "id": "editorial_conclusion",
+      "status": "pass",
+      "detail": "push/xhs把差距限定在本场关键分兑现和失误控制；制胜分14比15并不支持全面打不出进攻。口播展示机会、比率与失误数字，未作心理、能力上限或全面实力的武断诊断。"
+    },
+    {
+      "id": "near_equalizer",
+      "status": "acceptable_editorial_judgment",
+      "detail": "曾离扳平很近/机会在眼前属于次盘4-1、对手0-40时的编辑感受，未说赛点、盘点、仅差一分或惜败。"
+    },
+    {
+      "id": "cards_vs_narration",
+      "status": "pass",
+      "detail": "字卡与旁白对应同盘同局；先事实卡交代未取得画面的BP，再给真实后续回合。救局点后卡片回述本局先前BP已用先/再写明。"
+    }
+  ],
+  "evidence_files": [
+    "wta-wuhan-matches.json",
+    "wta-point-by-point.json",
+    "pbp-rebuilt.json",
+    "wta-stats.json",
+    "wta-advanced-stats.json",
+    "wta-shi-ranking.json",
+    "wta-fernandez-ranking.json",
+    "wta-draw-decoded.json"
+  ],
+  "visual_packet": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/visual-story.json",
+  "actual_viewed_images": [
+    "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/visual-review/wsc-14-00-timeline.jpg",
+    "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/visual-review/wsc-20-00-timeline.jpg",
+    "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/visual-review/wsc-21-00-timeline.jpg",
+    "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/visual-review/wsc-24-00-timeline.jpg",
+    "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/visual-review/wsc-11-00-timeline.jpg"
+  ],
+  "production_gates_outside_review": [
+    "高清本场封面未落实时不宣称可发布。",
+    "需确认新配音实际合成/冻结对应已修正文案。",
+    "正式成片比分板、字幕读音与原声边界及发布凭据由各自原生QC完成。"
+  ]
+}
