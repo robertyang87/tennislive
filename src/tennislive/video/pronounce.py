@@ -83,6 +83,20 @@ _ZHANG_BEFORE = "队成增生年家部兄师院校市局署首酋组班团社处
 _CN_DIGIT = "一二三四五六七八九十两"
 
 HOMOPHONES: tuple[Homophone, ...] = (
+    Homophone(
+        key="brand-outro-shicha-20261014",
+        pattern="关注网球时差，时差归我，好球归你。",
+        replace="关注网球时插，时插归我，好球归你。",
+        word="时差", reading="chā",
+        evidence=("2026-10-14 声学实测冻结输入 1815dbbb、云见 +18%/+0Hz：首个差声学误读 "
+                  "score -0.316，第二个 unreliable；只修复这一完整品牌句。"
+                  "改用单音字插后，两处真实TTS对照 score 1.0，correct medium/high。"
+                  "参考锸/插与诧/姹；叉多音、岔在此语境自测不稳定，未作为通过依据。"
+                  "证据见 docs/reviews/jodar-towel-shanghai-2026/outro-correction-acoustic.json。"),
+        examples=(("关注网球时差，时差归我，好球归你。",
+                   "关注网球时插，时插归我，好球归你。"),),
+        guards=("他适应了时差。", "网球时差报道了这场比赛。"),
+    ),
     # ------------------------------------------------------------------
     # 2026-09-27 之前就在 speakable() 里的四条，原样搬过来（顺序也不变）——
     # 其中 挑→选（`tiao-pick`）同日拿掉了：

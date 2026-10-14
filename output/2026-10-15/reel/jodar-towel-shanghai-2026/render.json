@@ -97,5 +97,5 @@
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-jodar-towel-shanghai-2026/jodar-towel-shanghai-2026.mp4",
   "video_bytes": 46109749,
-  "_release_tag_note": "2026-10-14T18:00:40Z run 38610660425 把这一份（video_bytes 46109749）传上 tag `reel-jodar-towel-shanghai-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-14/reel/jodar-towel-shanghai-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+  "_release_tag_note": "2026-10-14T18:00:40Z run 38610660425 把这一份（video_bytes 46109749）传上 tag `reel-jodar-towel-shanghai-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-14/reel/jodar-towel-shanghai-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。 ｜ 2026-10-14T18:09:10Z 修复本次冻结配音中品牌片尾差的读音，重新生成配音快照与成片：重渲一传上 Release（`gh release upload --clobber`），tag `reel-jodar-towel-shanghai-2026` 上的附件就换成新渲的那一份（记在北京 2026-10-15 或更晚那一格 output/<日期>/reel/jodar-towel-shanghai-2026/render.json），这里记的 video_bytes 46109749 那一版就不在 tag 上了。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
 }
