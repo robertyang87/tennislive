@@ -66,6 +66,22 @@
     "djokovic2015": "BBC 与 Sky News：2015 温网第四轮对安德森，德约科维奇冲球童吼 towel，赛后道歉，未见判罚报道。Wimbledon 官方集锦 IMi4tj3iFzk 与赛后发布会 wEqdNTct-tQ 都只有 1280×720，和其余 1080p 源尺寸不一致不能混剪；集锦里也没有这一幕。本片只用一句旁白带过，画面借本场上海官方集锦。",
     "kyrgios2015": "AP（Tennis.com 转载）与 CBC：2015 蒙特利尔对瓦林卡一场，克耶高斯对一名球童出言不当，ATP 以违反体育道德追加罚款 2,500 美元。画面借用 2016 法网克耶高斯官方集锦，无此一幕。"
   },
+  "conform": {
+    "xg": "X 录屏只有 1206×652（非标准 16:9，约 1.85:1）；账号所有者 2026-10-14 要求那一刻必须用原始画面、可以放大铺满。等比放大 1.66× 后中央裁成 1920×1080，左右各裁约 38 像素，署名和人物都在中央 3:4 窗口里。",
+    "xrgn": "X 慢放只有 1180×652；同上，等比放大 1.66× 中央裁，当事两人已在制作时移到画面中央。"
+  },
+  "source_quality_exceptions": {
+    "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xg.mp4": {
+      "min_height": 652,
+      "approved_by": "user",
+      "reason": "账号所有者 2026-10-14：「去找原视频，否则画面不对」——霍达尔冲球童喊话与主裁警告，官方集锦都没有，唯一完整的是 X @gerebit0 转发的 Tennis TV 转播录屏，最高只有 1206×652。"
+    },
+    "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xrgn.mp4": {
+      "min_height": 652,
+      "approved_by": "user",
+      "reason": "账号所有者 2026-10-14 同一句要求：法网球童摔倒的另一机位，Roland-Garros 官方集锦没有，X @tendenciasespa 那份最高 1180×652。"
+    }
+  },
   "sources": {
     "sh": "https://www.youtube.com/watch?v=I5jIvYOKIqg",
     "atp": "https://www.youtube.com/watch?v=70L65bYCEhM",
@@ -74,7 +90,10 @@
     "rg": "https://www.youtube.com/watch?v=4yatYbazMaY",
     "ky": "https://www.youtube.com/watch?v=FkIw41OLjUQ",
     "a_rule": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/a_rule.mp4",
-    "a_sched": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/a_sched.mp4"
+    "a_sched": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/a_sched.mp4",
+    "xg": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xg.mp4",
+    "xrgn": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xrgn.mp4",
+    "xdj": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xdj.mp4"
   },
   "mixed_fps": {
     "atp": "ATP Tour 官方集锦原片即 25 fps，升到 50 fps 只重复帧，看不出顿挫",
@@ -119,6 +138,24 @@
       "width": 1920,
       "height": 1080,
       "fps": "25/1"
+    },
+    "xg": {
+      "why": "X @gerebit0 转播录屏，原片 1206×652@60；本号只烧署名、转 50 fps，本地 ffprobe 1206×652@50。",
+      "width": 1206,
+      "height": 652,
+      "fps": "50/1"
+    },
+    "xrgn": {
+      "why": "X @tendenciasespa 转播慢放，原片 1180×652@60；当事两人在原画左缘，本号把左侧 490 像素原样搬到画面中央、其余铺同帧虚化底，并烧署名、转 50 fps。本地 ffprobe 1180×652@50。",
+      "width": 1180,
+      "height": 652,
+      "fps": "50/1"
+    },
+    "xdj": {
+      "why": "YouTube World News nun6XXFw9io 14–22 秒（通讯社现场照片），1920×1080@25，本号只烧署名、转 50 fps。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
     },
     "a_rule": {
       "why": "本号自制规则图，1920×1080@25，本地 ffprobe 核过；画面只在中央 3:4 窗口（下垫本场官方画面），不做缩略图墙。",
@@ -181,55 +218,126 @@
       "end": 96.2,
       "cx": 0.5,
       "track": false,
-      "narration": "第二盘开局，他握有两个破发点，全没抓住。第二个，截击出界不到一厘米。",
+      "narration": "第二盘首局，对手发球，他十五比四十握有两个破发点；第二个，截击出界不到一厘米。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与弗里茨一期同一档）。语速走 --rate +18%，音高逐段写在这里。"
       }
     },
     {
-      "source": "atp",
-      "start": 113.03,
-      "end": 120.6,
+      "source": "xg",
+      "start": 0.0,
+      "end": 2.85,
       "cx": 0.5,
       "track": false,
-      "narration": "他走向场角，冲球童吼：把那该死的毛巾给我！西班牙语原话，还带着脏字。",
-      "voice": {
-        "pitch": "+10Hz",
-        "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与弗里茨一期同一档）。语速走 --rate +18%，音高逐段写在这里。"
-      }
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.15,
+          "end": 2.4,
+          "text": "¡Dame la p*** toalla, coño!\n把那该死的毛巾给我！"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "X 用户 @gerebit0 https://x.com/gerebit0/status/2110272759439978664 转发的 Tennis TV 转播录屏（非官方、未获授权，账号所有者 2026-10-14 要求用原始画面、画面左上已标「视频来源 @gerebit0」），本号 reel-src xg.mp4 = 原片 1206×652@60 只加署名并转 50fps；0–2.85 秒：平分后霍达尔走到场角冲球童喊。medium 西语听成 a ver la puta caballa, maño，small 听成 la puta todavía，和 Mundo Deportivo 报道的原话「¡Dame la p*** toalla, coño!」音节对得上，字幕按报道原话、脏字打码。",
+      "point_end_ok": "分已打完，球员走向场角拿毛巾。"
     },
     {
-      "source": "atp",
-      "start": 130.43,
-      "end": 137.8,
+      "source": "xg",
+      "start": 5.6,
+      "end": 14.75,
       "cx": 0.5,
       "track": false,
-      "narration": "主裁皮诺阿尔戈特听得懂西语，当场警告，还补了一句：我完全理解你，但不能这样。",
-      "voice": {
-        "pitch": "+10Hz",
-        "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与弗里茨一期同一档）。语速走 --rate +18%，音高逐段写在这里。"
-      }
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.4,
+          "end": 3.2,
+          "text": "Code violation, unsportsmanlike conduct,\nwarning, Mr. Jódar.\n违反体育道德，警告，霍达尔先生。"
+        },
+        {
+          "at": 4.5,
+          "end": 5.3,
+          "text": "¿Qué me dijiste, tío?\n你说我什么了？"
+        },
+        {
+          "at": 7.1,
+          "end": 8.8,
+          "text": "Me ponen warning, tío.\n给我警告，哥们？"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "X 用户 @gerebit0 https://x.com/gerebit0/status/2110272759439978664 转发的 Tennis TV 转播录屏（非官方、未获授权，账号所有者 2026-10-14 要求用原始画面、画面左上已标「视频来源 @gerebit0」），本号 reel-src xg.mp4 = 原片 1206×652@60 只加署名并转 50fps；5.6–14.75 秒：转播一边重放那记出界的截击，一边是主裁宣布判罚的现场声；记分牌 0-0、40-40、范德赞德舒尔普发球，CODE VIOLATION UNSPORTSMANLIKE 字板随后打出。主裁那句 small/medium 都听不全（Codolesos from Alicante…Mr. Jodar），按 ATP 主裁标准口令与转播字板写出；霍达尔两句 medium 为 ¿Qué me dijiste, tío? / Me ponen warning, tío。",
+      "point_end_ok": "重放画面，没有在打的分。"
     },
     {
-      "source": "tt",
-      "start": 23.58,
-      "end": 31.2,
+      "source": "xg",
+      "start": 15.6,
+      "end": 43.6,
       "cx": 0.5,
       "track": false,
-      "narration": "这一幕，官方集锦一个都没剪进去，网上只有球迷在看台拍的视频。",
+      "narration": "",
+      "quote": [
+        {
+          "at": 5.8,
+          "end": 8.2,
+          "text": "Yo entiendo, pero… así no.\n我理解，但不能这样。"
+        },
+        {
+          "at": 8.4,
+          "end": 10.2,
+          "text": "No me hace caso, tío, le estoy hablando.\n他不理我，我在跟他说话。"
+        },
+        {
+          "at": 10.8,
+          "end": 13.4,
+          "text": "Rafa, pídemelo a mí, y yo se lo pido.\n拉法，跟我说，我替你要。"
+        },
+        {
+          "at": 14.2,
+          "end": 17.5,
+          "text": "No puedo repetir… ¿tú sabes lo que dijiste?\n我不能重复，你知道自己说了啥。"
+        },
+        {
+          "at": 19.3,
+          "end": 21.3,
+          "text": "Así no, así no hablamos con ellos.\n不能这样跟他们说话。"
+        },
+        {
+          "at": 24.4,
+          "end": 26.6,
+          "text": "Yo te entiendo perfectamente, pero eso no.\n我完全理解你，但那样不行。"
+        },
+        {
+          "at": 27.3,
+          "end": 27.9,
+          "text": "Gracias.\n谢谢。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_why": "X 用户 @gerebit0 https://x.com/gerebit0/status/2110272759439978664 转发的 Tennis TV 转播录屏（非官方、未获授权，账号所有者 2026-10-14 要求用原始画面、画面左上已标「视频来源 @gerebit0」），本号 reel-src xg.mp4 = 原片 1206×652@60 只加署名并转 50fps；15.6–43.6 秒：主裁近景与霍达尔走到主裁椅前争辩。small 与 medium 西语逐词对过：yo entiendo pero así no / pídeme a mí y yo se lo pido / no puedo repetir, ¿tú sabes lo que dijiste? / así no hablamos con ellos / yo te entiendo perfectamente, pero eso no / gracias；第二句 medium 听成 no más te caso，按 @Manu_Cepeda1 原帖文字「no me hace caso」写。",
+      "point_end_ok": "判罚后的交涉，没有在打的分。"
+    },
+    {
+      "source": "xg",
+      "start": 43.95,
+      "end": 49.8,
+      "cx": 0.5,
+      "track": false,
+      "narration": "主裁皮诺阿尔戈特来自厄瓜多尔，西语他全听得懂。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与弗里茨一期同一档）。语速走 --rate +18%，音高逐段写在这里。"
-      }
+      },
+      "point_end_ok": "交涉结束，球员回到底线。"
     },
     {
       "source": "a_rule",
       "start": 0.0,
-      "end": 11.0,
+      "end": 11.6,
       "cx": 0.5,
       "track": false,
-      "narration": "为什么判警告？ATP 规则书里写着：不得说出能被听清的脏话，单次最高罚五千美元；辱骂条款的对象，也包括场内任何人。",
+      "narration": "转播打出的判罚是违反体育道德。ATP 规则书里写着：球员须尊重官员、对手、观众和他人；说脏话另有条款，单次最高罚五千美元。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与弗里茨一期同一档）。语速走 --rate +18%，音高逐段写在这里。"
@@ -318,12 +426,24 @@
       }
     },
     {
-      "source": "rg",
-      "start": 12.0,
-      "end": 23.0,
+      "source": "xrgn",
+      "start": 0.3,
+      "end": 6.7,
       "cx": 0.5,
       "track": false,
-      "narration": "他赛后否认：我从没碰到她，绝不会那样做。之后流出的新机位显示，他确实没有碰到；是球童后退时，被场边盖布绊倒。",
+      "narration": "就是这一幕：他从场边走过，身旁的球童往后一退，摔倒在地。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与弗里茨一期同一档）。语速走 --rate +18%，音高逐段写在这里。"
+      }
+    },
+    {
+      "source": "xrgn",
+      "start": 9.0,
+      "end": 19.6,
+      "cx": 0.5,
+      "track": false,
+      "narration": "他赛后否认：我从没碰到她。这个机位能看清，他确实没有碰到；是球童后退时，被场边盖布绊倒。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与弗里茨一期同一档）。语速走 --rate +18%，音高逐段写在这里。"
@@ -358,15 +478,31 @@
       }
     },
     {
-      "source": "tt",
-      "start": 45.5,
-      "end": 53.9,
+      "source": "xdj",
+      "start": 1.15,
+      "end": 5.65,
       "cx": 0.5,
       "track": false,
-      "narration": "二零一五年温网第四轮，德约科维奇冲球童吼了一声毛巾；他说不是冲她，赛后还是道了歉。",
+      "narration": "二零一五年温网，德约冲球童吼毛巾，事后道歉。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与弗里茨一期同一档）。语速走 --rate +18%，音高逐段写在这里。"
+      },
+      "inset": {
+        "label": {
+          "topic": "冲球童吼毛巾",
+          "date": "2015.07.07",
+          "place": "温网第四轮",
+          "people": "德约科维奇 胜 安德森",
+          "event": "赛后道歉"
+        },
+        "image": "assets/reel/jodartw/jodartw-dj.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.085,
+        "show_for": 3.2,
+        "motion": "editorial"
       }
     },
     {
