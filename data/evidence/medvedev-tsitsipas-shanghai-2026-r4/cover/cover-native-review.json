@@ -1,0 +1,100 @@
+{
+  "reviewed_utc": "2026-10-14T16:35:22.316989+00:00",
+  "status": "pass",
+  "review_method": "Actual native tools/render_cover_local.py cover-only render from formal spec; original1080x1440 generated; view_image inspected its600x800 preview. No full render/workflow/Git/spec mutation.",
+  "spec_path": "/workspace/tennislive-efficiency/specs/reels/medvedev-tsitsipas-shanghai-2026-r4.json",
+  "spec_sha256": "e9307677d4e74b1eab395488e43ed391b10e3b8c18802d2d760e550924c27d50",
+  "render_command": "PYTHONPATH=src python3 tools/render_cover_local.py --slug medvedev-tsitsipas-shanghai-2026-r4 --outdir /workspace/scratch/b8-cover/native-preview --out /workspace/scratch/b8-cover/native-preview/poster.jpg",
+  "native_poster": "/workspace/scratch/b8-cover/native-preview/poster.jpg",
+  "poster_size": [
+    1080,
+    1440
+  ],
+  "poster_sha256": "a2e1567997ba36209a4b9505ff91c791f51039604dfe4a747104999a9c09a397",
+  "visual_preview": "/workspace/scratch/b8-cover/native-preview/poster-view.jpg",
+  "render_log": "/workspace/scratch/b8-cover/native-preview/render.log",
+  "checks": {
+    "brand_original_style": {
+      "pass": true,
+      "observed": "Original top multicolor thin line, yellow-green logo and 网球时差·赛场之上; native font hierarchy and navy lower score-panel retained."
+    },
+    "face_header_hook_scoreboard": {
+      "pass": true,
+      "observed": "Face clearly below header and above both title lines and scoreboard. Neither eye nor chin obstructed. Face approximatelyy330-590 on native1440height (visualestimate)."
+    },
+    "eyes_focus": {
+      "pass": true,
+      "observed": "Medvedev nearfrontal eyes visibly open and focused; face unobstructed."
+    },
+    "hands_racket": {
+      "pass": true,
+      "observed": "Full racket head and grip hand inside3:4 frame; freehand and elbow inside frame. Titles overlap forearm/freehand region as native layout but do not cut photograph or obstruct face."
+    },
+    "title_two_lines": {
+      "pass": true,
+      "observed": [
+        "发球局一次没丢",
+        "梅德韦杰夫两盘过关"
+      ],
+      "line1_accent": "一次没丢",
+      "line_count": 2,
+      "observed_complete": true
+    },
+    "scoreboard_original_position": {
+      "pass": true,
+      "observed": "Native scoreboard beneath title, court/duration above winnerblue row; lower losing row visible with ample bottom margin. No manual relocation."
+    },
+    "world_rank": {
+      "pass": true,
+      "observed": {
+        "Medvedev": 6,
+        "Tsitsipas": 43
+      },
+      "note": "Displayed parentheses6/43 are worldrank, not seed."
+    },
+    "set_scores": {
+      "pass": true,
+      "observed": {
+        "Medvedev": [
+          6,
+          7
+        ],
+        "Tsitsipas": [
+          4,
+          5
+        ]
+      },
+      "winner_row_blue": true
+    },
+    "court": {
+      "pass": true,
+      "observed": "Stadium Court",
+      "source_match_id": "MS014"
+    },
+    "duration": {
+      "pass": true,
+      "official_actual": "01:24:32",
+      "equivalent_minutes_seconds": "84:32",
+      "native_display": "1:24",
+      "native_format": "H:MM, existing renderer intentionally hidesseconds",
+      "source_url": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms014",
+      "parent_clarification": "Parent explicitly confirmed retain nativeH:MM1:24;84:32 was equivalent actualduration, not a requested formatting change."
+    },
+    "full_bleed": {
+      "pass": true,
+      "observed": "Photograph fills1080x1440, no letterbox, no generated pixels."
+    }
+  },
+  "portrait_current": {
+    "image": "assets/reels/medvedev-tsitsipas-shanghai-2026-r4/medvedev-shanghai-r4.jpg",
+    "fit": "cover",
+    "focus": 0.745,
+    "focus_y": 0.5,
+    "zoom": 1,
+    "source_url": "https://media.zenfs.com/en/ap.org/93001a655545519da6ece3a3e3ae257d.jpg",
+    "_photo_why": "AP Andy Wong本场5412x3608原图，EXIF2026-10-14 19:26:57+08；脸偏正面、睁眼合焦，原生focus0.745取景保留球拍和双手，脸位于台头下及钩子上。"
+  },
+  "portrait_change_needed": false,
+  "read_cover_evidence": "/workspace/scratch/b8-cover/cover-evidence.json",
+  "repo_changed_by_review": false
+}

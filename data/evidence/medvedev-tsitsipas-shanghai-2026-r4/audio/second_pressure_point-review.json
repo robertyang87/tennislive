@@ -1,0 +1,66 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=B8EO9eKy-mY",
+  "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source-review assistant; actual same-SHA native small.en/medium.en and localbase/smallfull+shortwindowraw reconciled withsourceauto-caption location; no manual listening claimed",
+  "reviewed_at": "2026-10-14T16:50:19.329982+00:00",
+  "status": "complete",
+  "reviewed_from": 151.02,
+  "reviewed_to": 169.5,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 165.82,
+      "end": 167.84,
+      "en": "Incredible tennis.",
+      "zh": "不可思议的网球！",
+      "verification": "Both actualf09native/localmodels+sourcecaption agree core; isolatedIt's introductorytoken inonesmallhypothesis stretched1.4s andabsentallothers notmanufactured.",
+      "timing_note": "Actual ASR-derived conservative sourceinterval; not claimed exact manuallyverified acoustic onset/offset."
+    }
+  ],
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "/workspace/scratch/b8-source-audio/native-f09/small.en.json",
+        "sha256": "cb3b81afeb57b5a5e8b0ca4d9d95085a2f1a832298d747c140e92c22b1596fe9"
+      },
+      {
+        "path": "/workspace/scratch/b8-source-audio/native-f09/medium.en.json",
+        "sha256": "5611adce1b182277c1671118a11539a87c47d0ca31870d7980453b3d8696d766"
+      },
+      {
+        "path": "/workspace/scratch/b8-source-review/base-windows-raw.json",
+        "sha256": "34df191203983736915eafa18aaa2824f03a7196c690e3fb9be03874ad799d98"
+      },
+      {
+        "path": "/workspace/scratch/b8-source-review/small-windows-raw.json",
+        "sha256": "9459994e0de86f933c938038f28ad9b1a6cb19ea48fa785351d3a9d55e8e6062"
+      },
+      {
+        "path": "/workspace/scratch/b8-source-review/base-repair-windows-raw.json",
+        "sha256": "128280662461e8527774e68ebe9cd8f497a29b3379c25cf77d73d96fab4fdf13"
+      },
+      {
+        "path": "/workspace/scratch/b8-source-review/small-repair-windows-raw.json",
+        "sha256": "f8f2348c6832f49456e3faa1270d697760ad7bda86665c9ac24a4529693182e3"
+      },
+      {
+        "path": "/workspace/tennislive-efficiency/output/2026-10-14/reel/medvedev-tsitsipas-shanghai-2026-r4/captions.txt",
+        "sha256": "b0e94b3e26de5e6266ae049c85b0e254c3f8599393de25d556b92f7b1a3b4982"
+      }
+    ],
+    "manual_listening_claimed": false,
+    "source_audio_gain_changes": false,
+    "excluded_audio_notes": [
+      "8dfsame-videoASRonlylocatingnotusedasf09proof.",
+      "Repeatedno/go/ready/thankyouforwatching hallucinationsnotactualforegroundEnglish.",
+      "Changesareclipselectiononly; no muting/silence/loudness/gainprocessing."
+    ]
+  },
+  "_proposed_edit_id": "second_pressure_point",
+  "_proposed_source_interval": [
+    151.02,
+    169.32
+  ]
+}
