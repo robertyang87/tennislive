@@ -529,5 +529,22 @@
     }
   ],
   "_timing_why": "卡片参考实际冻结配音时长，在语音后留约1.4–1.6秒；统计卡14秒保留读图时间。改写的三段另行实际合成核长度，正式输入严格冻结，未以变速塞入时窗。",
-  "_pronunciation_revision": "实际云c062包审音发现“四比一时”的一不符比分读法；同轮第7段晗/冲/场/末句一以及第14段曾/轻声未能确认，三段一次改写避开歧义，待新冻结包核验。其他6请求仅在MP3及marks哈希逐项相等时沿用原实际证据，不迁移相异声音的结论。"
+  "_pronunciation_revision": "正式冻结包f3bd88a6fe5451cf10a7a637dac60ab510207fdbfa1ed80a089d710ed3854705实际复核完成：6请求MP3及raw marks逐项相等沿用实际证据，3段新声重新核验。39个必要出现点在声明的有限声学对照范围内获支持，无具体剩余错读或未确认阻塞；不是人工听审或通用逐字声调认证。详见data/evidence/shi-fernandez-wuhan-2026-r2/pronunciation-final-f3/final-cloud-pronunciation-review.json；正式成片仍须绑定9声及marks实际字节。",
+  "_hit_data": [
+    {
+      "label": "破发点兑现",
+      "detail": "施晗1/8，费尔南德斯3/4；本场关键机会处理差距。",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS030/stats"
+    },
+    {
+      "label": "领先未守住",
+      "detail": "施晗次盘4-1领先后连输5局；4-1时0-40连续3个BP、4-3时再2个BP均未兑现。",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS030/point-by-point"
+    },
+    {
+      "label": "制胜分与失误",
+      "detail": "施晗制胜分14、非受迫失误23；对手15和13，不能将败因泛化成全面发球或进攻能力差距。",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS030/advanced-stats"
+    }
+  ]
 }
