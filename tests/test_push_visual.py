@@ -471,8 +471,24 @@ def test_复制页和推送在浏览器里真的量得到(tmp_path):
             ctx.close()
 
         ctx = browser.new_context(viewport={"width": 390, "height": 844})
+        # These o/r URLs are dummy fixtures, not published assets. Keep the
+        # actual browser layout/load checks without depending on a live CDN
+        # returning missing images (which can stall goto's load event).
+        from io import BytesIO
+        from PIL import Image
+
+        image_buffer = BytesIO()
+        Image.new("RGB", (1080, 1440), "#1a2840").save(image_buffer, format="PNG")
+        loaded_fixture_assets = set()
+
+        def fixture_image(route):
+            loaded_fixture_assets.add(route.request.url)
+            route.fulfill(status=200, content_type="image/png", body=image_buffer.getvalue())
+
+        ctx.route("https://gcore.jsdelivr.net/gh/o/r@main/**", fixture_image)
         tab = ctx.new_page()
         tab.goto(push_file.as_uri())
+        assert tab.evaluate("() => [...document.images].every(i => i.complete && i.naturalWidth > 0)")
         links = tab.evaluate("() => [...document.querySelectorAll('a')]"
                              ".filter(a => a.textContent === '原图 ↗')"
                              ".map(a => a.getBoundingClientRect().height)")
@@ -483,12 +499,14 @@ def test_复制页和推送在浏览器里真的量得到(tmp_path):
         reel_file.write_text('<!doctype html><meta charset="utf-8"><body style="margin:0">'
                              + _reel() + "</body>", encoding="utf-8")
         tab.goto(reel_file.as_uri())
+        assert tab.evaluate("() => [...document.images].every(i => i.complete && i.naturalWidth > 0)")
         gap = tab.evaluate("""() => {
           const divs = [...document.querySelectorAll('div')];
           const label = divs.find(d => d.textContent === '📊 数据统计对照');
           const body = divs.find(d => getComputedStyle(d).whiteSpace === 'pre-wrap');
           return label.getBoundingClientRect().top - body.getBoundingClientRect().bottom; }""")
         assert gap >= 20, gap
+        assert loaded_fixture_assets == set(_slides(2) + [POSTER, STAT])
         ctx.close()
         browser.close()
 
