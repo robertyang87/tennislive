@@ -130,6 +130,26 @@ def test_bad_caption_fails_before_tracking_and_encoding_without_success_proof(pr
     assert not list(out.glob('part_*.mp4'))
 
 
+def test_native_name_protection_is_display_only_before_encoding(prepared_render):
+    spec, out, render = prepared_render
+    spec['cover']['matchup'] = [{'name_en': 'Marie Bouzkova'}, {'name_en': 'Maja Chwalinska'}]
+    text = "Marie Bouzkova's shot.\n布兹科娃这一拍"
+    spec['segments'][1]['quote'][0]['text'] = text
+    with pytest.raises(BeforeTracking):
+        render(spec)
+    assert spec['segments'][1]['quote'][0]['text'] == text
+    assert "Marie\u00a0Bouzkova's shot." in (out / 'subtitles.ass').read_text()
+    # Unrelated cues keep their exact original timing and display.
+    assert '0:00:06.20,0:00:07.20' in (out / 'subtitles.ass').read_text()
+
+
+def test_name_guard_preserves_explicit_lines_and_word_boundaries():
+    spec = {'cover': {'matchup': [{'name_en': 'Marie Bouzkova'}]}}
+    original = 'NotMarie Bouzkovax and MARIE Bouzkova.\nMarie\nBouzkova\n中文 Marie Bouzkova'
+    assert reel.protect_quote_player_names(original, spec) == (
+        'NotMarie Bouzkovax and MARIE\u00a0Bouzkova.\nMarie\nBouzkova\n中文 Marie Bouzkova')
+
+
 @pytest.mark.parametrize('orientation', [1, 6])
 def test_cover_probe_preserves_exif_oriented_geometry(tmp_path, orientation):
     from PIL import Image

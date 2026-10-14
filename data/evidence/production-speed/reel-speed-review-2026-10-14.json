@@ -1,0 +1,65 @@
+{
+  "schema": "tennislive.production-speed-review.v1",
+  "date": "2026-10-14",
+  "scope": "preparation and avoidable rework; no completed-film rerender or resend",
+  "baseline": {
+    "slug": "chwalinska-bouzkova-wuhan-2026-r2",
+    "first_dispatch_at": "2026-10-14T06:07:44Z",
+    "push_accepted_at": "2026-10-14T09:12:45Z",
+    "end_to_end_seconds": 11101,
+    "render_seconds": 241,
+    "final_render_run_id": "38538457076",
+    "push_run_id": "38540542767",
+    "film_sha256": "8619238767d0a031c5eb34d2d7df68c543b470081d42640710c36145c4151c17"
+  },
+  "reference_synthesis_probe": {
+    "text": "参考合成连通测试。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "decoder": "ffmpeg null output; success",
+    "runs": [
+      {
+        "cache_hit": false,
+        "seconds": 0.510533,
+        "bytes": 14832,
+        "word_events": 4,
+        "sha256": "0990669b9c10ecf13ec192c7ba7529600ff3293d33f705185b5b1795a8414695"
+      },
+      {
+        "cache_hit": true,
+        "seconds": 0.000111,
+        "bytes": 14832,
+        "word_events": 4,
+        "sha256": "0990669b9c10ecf13ec192c7ba7529600ff3293d33f705185b5b1795a8414695"
+      }
+    ],
+    "pronunciation_approved": false
+  },
+  "readiness_probe": {
+    "slug": "chwalinska-bouzkova-wuhan-2026-r2",
+    "packet_count": 6,
+    "unchanged_check_seconds": 0.004368709996924736,
+    "stale_plan_rejection": {
+      "seconds": 0.00017025700071826577,
+      "reason": "waiting_audio_review：音频审听证据不是当前剪辑/配音/字幕计划"
+    },
+    "validated_proposal_seconds": 0.0011572660005185753,
+    "writes": 0,
+    "source_downloads": 0,
+    "tts_requests": 0
+  },
+  "controlled_fatal_backoff": {
+    "old_request_count": 4,
+    "old_sleep_seconds": [
+      2,
+      5,
+      8,
+      11
+    ],
+    "new_request_count": 1,
+    "new_sleep_seconds": [],
+    "network_latency_measured": false
+  },
+  "end_to_end_improvement_measured": false
+}
