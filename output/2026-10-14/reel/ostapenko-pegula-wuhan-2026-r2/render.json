@@ -1,40 +1,40 @@
 {
-  "scoreboard_qc_sha256": "6c906dd2c19b248485156df7498e9b23c2af31251fa8460c122118fbfa3255a0",
+  "scoreboard_qc_sha256": "e6f2546bf3738f805e980dd321a76ad8f88ec1d32b5fd17e9ca600c187275897",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "6df4a0c7f60b5f78081c77e8a41c277cfc3839d8f9e5a4a922cbc5059e824d26",
+    "bundle_sha256": "097242a138184043d122391d3958776505670af16ed50eaee5142697c26ae473",
     "request_count": 8,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-ostapenko-pegula-wuhan-2026-r2-6df4a0c7f60b5f78",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-ostapenko-pegula-wuhan-2026-r2-6df4a0c7f60b5f78/tts_bundle.zip",
+    "release_tag": "reel-tts-ostapenko-pegula-wuhan-2026-r2-097242a138184043",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-ostapenko-pegula-wuhan-2026-r2-097242a138184043/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38565257637"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38569697919"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 4.65,
   "layout": "full",
-  "segments_seconds": 240.04,
+  "segments_seconds": 240.68,
   "topbar": {
     "line1": "2026 WTA1000 武汉 第二轮",
     "line2": "奥斯塔彭科 2-6 7-6(7) 6-3 佩古拉",
     "start": 1.2,
-    "end": 241.24
+    "end": 241.88
   },
-  "film_seconds": 245.88,
+  "film_seconds": 246.52,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
   "narration_seconds": {
-    "1": 9.984,
+    "1": 9.624,
     "3": 10.32,
     "5": 10.104,
-    "7": 7.68,
+    "7": 7.512,
     "9": 11.568,
     "11": 12.432,
     "12": 8.928
@@ -54,44 +54,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "e69805a70d76d9710045f5d098f78fbaabf6e7890d3d86bb54bbb92e4aa929c6",
+  "render_inputs_sha256": "ff4d5a64ea2825ef66bf84d025a2bb8c37b5f8550f57dd2f6d4c2bc004e4b5cd",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "ostapenko-pegula-wuhan-2026-r2",
     "received_at": "2026-10-14T11:18:21Z",
-    "artifact_ready_at": "2026-10-14T12:43:58Z",
-    "elapsed_seconds": 5137.181,
+    "artifact_ready_at": "2026-10-14T13:18:15Z",
+    "elapsed_seconds": 7194.921,
     "budget_seconds": 600,
     "met": false,
-    "film_sha256": "082210a6b06998c2496cefc3ec19eebbd9d46397916821d93a7ecae1de425d6c",
-    "spec_sha256": "3dd1b12eda73df1183a2dfef0e4cf8a6818f4ed8542632f12110eebf0d78c860",
-    "run_id": "38565257637",
+    "film_sha256": "2bf22ca3f44e17872728bd286c1f05a5d57af3e8ef357ef604a3b13670b48b92",
+    "spec_sha256": "73d3d732f2d2008c14305bd8caac71668a7533a47026d81666c126148eb39040",
+    "run_id": "38569697919",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-14T12:40:12Z",
-        "run_id": "38565257637"
+        "at": "2026-10-14T13:13:49Z",
+        "run_id": "38569697919"
       }
     ],
-    "render_seconds": 226.181,
-    "pre_render_seconds": 4911.0
+    "render_seconds": 267.921,
+    "pre_render_seconds": 6927.0
   },
-  "film_sha256": "082210a6b06998c2496cefc3ec19eebbd9d46397916821d93a7ecae1de425d6c",
-  "film_bytes": 98939970,
-  "qc_attestation_sha256": "f278997e6e0ae71a3515d9cdd3590ac1f667733a96a9248e33dfc47e52d7175a",
+  "film_sha256": "2bf22ca3f44e17872728bd286c1f05a5d57af3e8ef357ef604a3b13670b48b92",
+  "film_bytes": 99054873,
+  "qc_attestation_sha256": "02d333cec4ccca236a6edd3a4e2fefdff34f80612674b5a15f9c06bfd96bbe74",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-14T12:40:12Z",
-      "run_id": "38565257637"
+      "at": "2026-10-14T13:13:49Z",
+      "run_id": "38569697919"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-14T12:44:01Z",
-      "run_id": "38565257637"
+      "at": "2026-10-14T13:18:19Z",
+      "run_id": "38569697919"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-ostapenko-pegula-wuhan-2026-r2/ostapenko-pegula-wuhan-2026-r2.mp4",
-  "video_bytes": 98939970
+  "video_bytes": 99054873
 }
