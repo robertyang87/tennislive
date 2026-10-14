@@ -1,0 +1,169 @@
+{
+  "schema": "tennislive.independent-final-movie-visual-review.v1",
+  "reviewed_at_utc": "2026-10-14T13:32:01.195947+00:00",
+  "reviewer": "independent QC agent; actual local movie PNG/contact-sheet inspection",
+  "status": "passed_with_declared_sampling_and_fixed_center_crop_limits",
+  "visual_pass": true,
+  "publication_approved": false,
+  "movie": "/workspace/scratch/ostapenko-final-film-repaired/ostapenko-pegula-wuhan-2026-r2.mp4",
+  "movie_sha256": "2bf22ca3f44e17872728bd286c1f05a5d57af3e8ef357ef604a3b13670b48b92",
+  "movie_bytes": 99054873,
+  "film_seconds": 246.52,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "spec_file_sha256": "73d3d732f2d2008c14305bd8caac71668a7533a47026d81666c126148eb39040",
+  "ass_sha256": "30dfeadf1f49109df9edb34aac112a82e9402d33af5b8a24aa8756ab22ec51a2",
+  "render_inputs_sha256": "ff4d5a64ea2825ef66bf84d025a2bb8c37b5f8550f57dd2f6d4c2bc004e4b5cd",
+  "native_qc_attestation_sha256": "02d333cec4ccca236a6edd3a4e2fefdff34f80612674b5a15f9c06bfd96bbe74",
+  "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+  "frame_manifest": "/workspace/scratch/ostapenko-final-visual-qc-repaired/frame_manifest.json",
+  "frame_manifest_sha256": "a37def5e6cd53db911c296995d60d0a17602e0cedfd98ac10d3e370c398d4ad2",
+  "scope": {
+    "movie_frame_samples_actually_viewed": 90,
+    "ass_cue_midpoint_windows_actually_viewed": 48,
+    "visible_caption_midpoint_windows": 43,
+    "intentionally_clean_stat_card_cue_windows": 5,
+    "contact_sheets_actually_viewed": 15,
+    "full_original_movie_pngs_actually_viewed": 3,
+    "movie_frames_total": 6163,
+    "all6163frames_reviewed": false,
+    "audio_listened": false,
+    "loudness_gain_peak_silence_checks_performed": false,
+    "spec_code_modified": false,
+    "publication_state_written": false
+  },
+  "blocking_findings": [],
+  "closed_findings": [
+    {
+      "id": "final-original-resultboard-caption-overlap",
+      "status": "closed_on_actual_repaired_movie",
+      "evidence": [
+        {
+          "frame_index": 5296,
+          "film_time_s": 211.84,
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-repaired/frames/frame-05296.png",
+          "image_sha256": "310842e42c9848552d4c6803d99899c2275db12017f309a913404cdc98970847"
+        },
+        {
+          "frame_index": 5394,
+          "film_time_s": 215.76,
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-repaired/frames/frame-05394.png",
+          "image_sha256": "27e1222cb7d92450f7377d0c521da17b6bf16a2cf2c4e70c03cfaceb1ae07edf"
+        }
+      ],
+      "finding": "Both final score/result caption and What a performance caption sit clearly above original result board. Player names, all three set scores and duration labels readable; board positions unchanged."
+    },
+    {
+      "id": "final-statcard-caption-metric-overlap",
+      "status": "closed_on_actual_repaired_movie",
+      "evidence": [
+        {
+          "frame_index": 5454,
+          "film_time_s": 218.16,
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-repaired/frames/frame-05454.png",
+          "image_sha256": "80fec3c13149caac8ed989d2aea07eae4f52b07b9ebcd355e421ce341b51c8d7"
+        }
+      ],
+      "all_five_stat_ass_cue_midpoint_frames": [
+        5454,
+        5514,
+        5549,
+        5599,
+        5680
+      ],
+      "finding": "All five actual stat cue windows display the clean full-canvas stat card, with no narration subtitle overlay; first-serve-points-won fractions and every other metric unobscured. This visual closure does not assess audio."
+    },
+    {
+      "id": "first-set-to-second-set-card-in-active-point",
+      "status": "closed_on_actual_repaired_movie",
+      "second_source_window_s": [
+        69.12,
+        109.8
+      ],
+      "second_source_film_window_s": [
+        68.26,
+        108.94
+      ],
+      "continuity_evidence_frame_indices": [
+        1706,
+        1731,
+        1756,
+        1781,
+        1806,
+        1831,
+        1856,
+        1881,
+        1906,
+        1931,
+        1956,
+        1981,
+        2006
+      ],
+      "finding": "Chapter card finishes before second-set serve preparation. Thirteen1fps actual movie samples show preparation, toss/serve, return/rally, point completion and winner reaction through film80.24 with no inserted card. Spec retains this entire official sequence in a continuous source window. Sampling is not a claim to have manually reviewed every25fps frame."
+    },
+    {
+      "id": "nominal-source-key-time-unverified",
+      "status": "explained_as0_to1frame_quantization_near_source_hard_cut",
+      "proof_path": "/workspace/scratch/ostapenko-visual-clock-match.json",
+      "finding": "Parent video-only ROI match shows nominal171.56 corresponds to171.52 with.9888 correlation and other sampled deltas0..-.04s. Original movie frame index is authoritative near source cuts; no multi-second drift asserted."
+    }
+  ],
+  "changed_editorial_caption_checks": [
+    {
+      "cue": 6,
+      "evidence": {
+        "frame_index": 650,
+        "film_time_s": 26.0,
+        "image": "/workspace/scratch/ostapenko-final-visual-qc-repaired/frames/frame-00650.png",
+        "image_sha256": "96e38bfa44b8ab34d1c2277cfd8c68e2761caa3cd2959b1c7d8f39b00fe4e6df"
+      },
+      "visible_text": "奥斯塔彭科迎战世界第4佩古拉",
+      "finding": "Single complete line; both Chinese player names intact, no orphan or collision with main title/brand."
+    },
+    {
+      "cue": 26,
+      "evidence": {
+        "frame_index": 3632,
+        "film_time_s": 145.28,
+        "image": "/workspace/scratch/ostapenko-final-visual-qc-repaired/frames/frame-03632.png",
+        "image_sha256": "487a22152c7fa63c77a1b330d41dd6cea2ba9b21a60bc7f55cdca5028c8b1692"
+      },
+      "visible_text": "随后 奥斯塔彭科连赢两球",
+      "finding": "Single complete semantic line; player name not split, separate from main card and branding."
+    }
+  ],
+  "other_positive_sampled_observations": [
+    "All48 ASS midpoint windows were inspected on labeled movie contact sheets. No split Chinese player name, orphan glyph, unreadable off-canvas caption or new text collision found in43 visible-caption windows. English declared player names remain together in inspected cues.",
+    "First-set original large board avoidance remains correct at movieframes1305/1306.",
+    "Native MATCH POINT #3 / MATCH POINT / SET POINT / TIE-BREAK labels are readable in sampled final frames; shorter header right area is transparent, body stays fixed at x0/topapproximately1160, no surrounding-court rectangle patch.",
+    "Cover shows exact two semantic hook lines三个赛点都救回 / 奥斯塔彭科逆转佩古拉, face visible clear of title bands and original cover board placement.",
+    "Six navy chapter cards, clean stat card and cached navy outro retain readable main text, meaningful kicker and separate bottom branding.",
+    "Winner payoff and reaction imagery remain in43cue body samples; source-to-stat seam is bag-collection scene before source WTA bumper. Branded navy outro and final tail show no source WTA bumper in sampled images."
+  ],
+  "known_user_authorized_geometry_limit": {
+    "layout": "fixed-center3:4fill",
+    "tracking": false,
+    "crop": [
+      555,
+      0,
+      810,
+      1080
+    ],
+    "finding": "Previously established source185.50 right-net Pegula body/racket lies beyond right crop boundary; this spatial restriction remains. Complete source time window is retained, but report does not claim complete uncropped court view. Current final keyframe samples retain visible center action and readable board."
+  },
+  "old_movie_record": {
+    "sha256": "082210a6b06998c2496cefc3ec19eebbd9d46397916821d93a7ecae1de425d6c",
+    "visual_pass": false,
+    "report": "/workspace/scratch/ostapenko-final-visual-qc/final-visual-review.json",
+    "unchanged": true
+  },
+  "limitations": [
+    "Pass is independent visual sampling judgment for this exact new movieSHA; not every6163 frame was manually reviewed.",
+    "No independent actual listening claim; pronunciation/source speech/ASR review remain external evidence.",
+    "No loudness/gain/peak/threshold-silence checks or audio processing.",
+    "This scratch review is not publication, PushPlus delivery or pushed.json proof."
+  ]
+}

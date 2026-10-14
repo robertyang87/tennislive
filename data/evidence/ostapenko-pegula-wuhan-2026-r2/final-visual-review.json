@@ -1,150 +1,201 @@
 {
   "schema": "tennislive.independent-final-movie-visual-review.v1",
-  "reviewed_at_utc": "2026-10-14T13:32:01.195947+00:00",
-  "reviewer": "independent QC agent; actual local movie PNG/contact-sheet inspection",
+  "reviewed_at_utc": "2026-10-14T14:34:30.978598+00:00",
+  "reviewer": "independent QC agent; actual local movie contact-sheet and original PNG inspection",
   "status": "passed_with_declared_sampling_and_fixed_center_crop_limits",
   "visual_pass": true,
   "publication_approved": false,
-  "movie": "/workspace/scratch/ostapenko-final-film-repaired/ostapenko-pegula-wuhan-2026-r2.mp4",
-  "movie_sha256": "2bf22ca3f44e17872728bd286c1f05a5d57af3e8ef357ef604a3b13670b48b92",
-  "movie_bytes": 99054873,
+  "movie": "/workspace/scratch/ostapenko-final-film-afternoon/ostapenko-pegula-wuhan-2026-r2.mp4",
+  "movie_sha256": "dd931e37e2848542851b4164c55d7ae8955b3ef4467dd03a69eca4a4aa372a30",
+  "movie_bytes": 99065594,
   "film_seconds": 246.52,
   "canvas": [
     1080,
     1440
   ],
   "fps": 25,
-  "spec_file_sha256": "73d3d732f2d2008c14305bd8caac71668a7533a47026d81666c126148eb39040",
-  "ass_sha256": "30dfeadf1f49109df9edb34aac112a82e9402d33af5b8a24aa8756ab22ec51a2",
-  "render_inputs_sha256": "ff4d5a64ea2825ef66bf84d025a2bb8c37b5f8550f57dd2f6d4c2bc004e4b5cd",
-  "native_qc_attestation_sha256": "02d333cec4ccca236a6edd3a4e2fefdff34f80612674b5a15f9c06bfd96bbe74",
+  "spec_file_sha256": "7a354edd9ac4ea8373db48fb1c8fd4eb9a878db9111bcc4f3db8733da8af9f7b",
+  "ass_sha256": "3b4ec2918fcd7e95dd25be6a8dca613f830e074478135b2df29fb9993570f966",
+  "render_inputs_sha256": "798e3f7df320916d500e1d60e866ebfcca7f1b70f7e75a7d43cf31976d7add7f",
+  "native_qc_attestation_sha256": "d561b8b879e1e5cc450e9dbbdb655b2c0944c616c1b27c64ca9b7b672b73ea1b",
   "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
-  "frame_manifest": "/workspace/scratch/ostapenko-final-visual-qc-repaired/frame_manifest.json",
-  "frame_manifest_sha256": "a37def5e6cd53db911c296995d60d0a17602e0cedfd98ac10d3e370c398d4ad2",
+  "frame_manifest": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frame_manifest.json",
+  "frame_manifest_sha256": "73c309ce411f7270b75223fc495fda1584aa79b448678315775276af8e988cb8",
   "scope": {
-    "movie_frame_samples_actually_viewed": 90,
-    "ass_cue_midpoint_windows_actually_viewed": 48,
-    "visible_caption_midpoint_windows": 43,
-    "intentionally_clean_stat_card_cue_windows": 5,
-    "contact_sheets_actually_viewed": 15,
-    "full_original_movie_pngs_actually_viewed": 3,
+    "current_movie_frame_samples_actually_viewed": 91,
+    "current_ass_cue_midpoint_windows_actually_viewed": 49,
+    "visible_caption_midpoint_windows": 44,
+    "intentionally_clean_stat_card_midpoint_windows": 5,
+    "current_contact_sheets_actually_viewed": 16,
+    "current_full_original_pngs_actually_viewed": 4,
     "movie_frames_total": 6163,
-    "all6163frames_reviewed": false,
+    "all6163frames_manually_reviewed": false,
+    "all6163frames_video_only_hash_compared": true,
     "audio_listened": false,
     "loudness_gain_peak_silence_checks_performed": false,
-    "spec_code_modified": false,
+    "production_spec_code_modified": false,
     "publication_state_written": false
   },
   "blocking_findings": [],
-  "closed_findings": [
+  "afternoon_coordinate_check": {
+    "ass_comparison": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/ass-comparison.json",
+    "findings": [
+      "New4coordinate cue midpoints were actually viewed: dateafternoon, Wuhansecondround, worldnumber4matchup, first-set2–6context.",
+      "Movieframe556 /22.24s original PNG explicitly displays北京时间10月14日下午 as one complete clear line.",
+      "Frames602 /24.08s,657 /26.28s and735 /29.40s show complete remaining coordinate lines. Both player names stay whole; subtitle band is separate from main title and bottom branding.",
+      "45noncoordinate Dialogue lines have exact unchanged text, time and placement; all source windows and segment film offsets match prior repaired version."
+    ],
+    "evidence": [
+      {
+        "frame_index": 556,
+        "film_time_s": 22.24,
+        "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-00556.png",
+        "image_sha256": "fcb6d762c05fe2fb83b4d60e69856f572388059845d3717fc8beb8871bcacda1"
+      },
+      {
+        "frame_index": 602,
+        "film_time_s": 24.08,
+        "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-00602.png",
+        "image_sha256": "d74f5e3ada97bf829e7bd19f17af81ab5678029111faa0b0635e0ad177ae013a"
+      },
+      {
+        "frame_index": 657,
+        "film_time_s": 26.28,
+        "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-00657.png",
+        "image_sha256": "10eba49163a50f393ba42f5c01f18a0acd26ead166c5c456ad543966f399a2c5"
+      },
+      {
+        "frame_index": 735,
+        "film_time_s": 29.4,
+        "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-00735.png",
+        "image_sha256": "2d7d3989871531bfea8ff7a214f355838bdf1efdf705af21b713851d65162362"
+      }
+    ]
+  },
+  "reconfirmed_previous_fixes": [
     {
       "id": "final-original-resultboard-caption-overlap",
-      "status": "closed_on_actual_repaired_movie",
+      "status": "closed_on_current_movie",
       "evidence": [
         {
           "frame_index": 5296,
           "film_time_s": 211.84,
-          "image": "/workspace/scratch/ostapenko-final-visual-qc-repaired/frames/frame-05296.png",
-          "image_sha256": "310842e42c9848552d4c6803d99899c2275db12017f309a913404cdc98970847"
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-05296.png",
+          "image_sha256": "f04a2e2480dc2c3ea2beea36084824ebfd1b670032568b212bb98dad63edb8ff"
         },
         {
           "frame_index": 5394,
           "film_time_s": 215.76,
-          "image": "/workspace/scratch/ostapenko-final-visual-qc-repaired/frames/frame-05394.png",
-          "image_sha256": "27e1222cb7d92450f7377d0c521da17b6bf16a2cf2c4e70c03cfaceb1ae07edf"
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-05394.png",
+          "image_sha256": "c062687ac99980efdb56c3f9e30cbda02e3ac1d899ff32cb8053c53a31d9390d"
         }
       ],
-      "finding": "Both final score/result caption and What a performance caption sit clearly above original result board. Player names, all three set scores and duration labels readable; board positions unchanged."
+      "finding": "Final result-score and lastreaction captions clearly sit above original broadcast resultboard; names, scores and duration labels unobscured."
     },
     {
       "id": "final-statcard-caption-metric-overlap",
-      "status": "closed_on_actual_repaired_movie",
+      "status": "closed_on_current_movie",
       "evidence": [
         {
           "frame_index": 5454,
           "film_time_s": 218.16,
-          "image": "/workspace/scratch/ostapenko-final-visual-qc-repaired/frames/frame-05454.png",
-          "image_sha256": "80fec3c13149caac8ed989d2aea07eae4f52b07b9ebcd355e421ce341b51c8d7"
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-05454.png",
+          "image_sha256": "bb1a2f9a334dc237f764d3146e66e24f7215807fbdb019ea44243e3f4b1a409f"
         }
       ],
-      "all_five_stat_ass_cue_midpoint_frames": [
+      "all_five_clean_stat_cue_frames": [
         5454,
         5514,
         5549,
         5599,
         5680
       ],
-      "finding": "All five actual stat cue windows display the clean full-canvas stat card, with no narration subtitle overlay; first-serve-points-won fractions and every other metric unobscured. This visual closure does not assess audio."
+      "finding": "Five currentstat cue midpoint windows all show the clean full-canvas statcard without narration subtitle overlay; all values/labels readable."
+    },
+    {
+      "id": "native-score-inset-missing-matchpoint-header",
+      "status": "closed_on_current_movie",
+      "evidence": [
+        {
+          "frame_index": 3074,
+          "film_time_s": 122.96,
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-03074.png",
+          "image_sha256": "27b9a78bf040d27514f911cc949ff38e3a0082e12688e8388ded7f1669c9b50a"
+        },
+        {
+          "frame_index": 4424,
+          "film_time_s": 176.96,
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-04424.png",
+          "image_sha256": "3a6f0f0849e812a3bc319ab216770f24325b3f13e3195192b8dd74e2c877103e"
+        }
+      ],
+      "finding": "MATCH POINT #3 and MATCH POINT labels complete; short header rightside remains transparent with no court rectangle patch. Fixedbody remains leftx0/topapproximately1160."
     },
     {
       "id": "first-set-to-second-set-card-in-active-point",
-      "status": "closed_on_actual_repaired_movie",
+      "status": "closed_on_current_movie",
       "second_source_window_s": [
         69.12,
         109.8
       ],
-      "second_source_film_window_s": [
-        68.26,
-        108.94
+      "evidence": [
+        {
+          "frame_index": 1712,
+          "film_time_s": 68.48,
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-01712.png",
+          "image_sha256": "104f816f0cd90244e17a48f73cf8fb190bae6448df5e73e52c671a824695338a"
+        },
+        {
+          "frame_index": 1781,
+          "film_time_s": 71.24,
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-01781.png",
+          "image_sha256": "69243dbbe916c98194a30f38878110ac327d86d2593abe9d07e43ad809fc9800"
+        },
+        {
+          "frame_index": 1856,
+          "film_time_s": 74.24,
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-01856.png",
+          "image_sha256": "badeb06fd0a17e93724d2bab37b5178a68ab21bb4f89e91e4f63df5a359d4cbc"
+        },
+        {
+          "frame_index": 1956,
+          "film_time_s": 78.24,
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-01956.png",
+          "image_sha256": "848ef9843ace8b42dbe435b5e982523623e99b3c740085570dfe5f37220ef3fb"
+        },
+        {
+          "frame_index": 1981,
+          "film_time_s": 79.24,
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-01981.png",
+          "image_sha256": "349a33744b70c7bdf22604682b6c83264281f064ee2264379bef351db882cd6a"
+        },
+        {
+          "frame_index": 2006,
+          "film_time_s": 80.24,
+          "image": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/frames/frame-02006.png",
+          "image_sha256": "558de876afbbb375a105a7d9696995604a9e137e76b5fa65fd4f2c010505490e"
+        }
       ],
-      "continuity_evidence_frame_indices": [
-        1706,
-        1731,
-        1756,
-        1781,
-        1806,
-        1831,
-        1856,
-        1881,
-        1906,
-        1931,
-        1956,
-        1981,
-        2006
-      ],
-      "finding": "Chapter card finishes before second-set serve preparation. Thirteen1fps actual movie samples show preparation, toss/serve, return/rally, point completion and winner reaction through film80.24 with no inserted card. Spec retains this entire official sequence in a continuous source window. Sampling is not a claim to have manually reviewed every25fps frame."
-    },
-    {
-      "id": "nominal-source-key-time-unverified",
-      "status": "explained_as0_to1frame_quantization_near_source_hard_cut",
-      "proof_path": "/workspace/scratch/ostapenko-visual-clock-match.json",
-      "finding": "Parent video-only ROI match shows nominal171.56 corresponds to171.52 with.9888 correlation and other sampled deltas0..-.04s. Original movie frame index is authoritative near source cuts; no multi-second drift asserted."
+      "finding": "Same13onefps actual currentmovie samples show servepreparation through toss/serve, rally, completion and reaction; no inserted card during live point."
     }
   ],
-  "changed_editorial_caption_checks": [
-    {
-      "cue": 6,
-      "evidence": {
-        "frame_index": 650,
-        "film_time_s": 26.0,
-        "image": "/workspace/scratch/ostapenko-final-visual-qc-repaired/frames/frame-00650.png",
-        "image_sha256": "96e38bfa44b8ab34d1c2277cfd8c68e2761caa3cd2959b1c7d8f39b00fe4e6df"
-      },
-      "visible_text": "奥斯塔彭科迎战世界第4佩古拉",
-      "finding": "Single complete line; both Chinese player names intact, no orphan or collision with main title/brand."
-    },
-    {
-      "cue": 26,
-      "evidence": {
-        "frame_index": 3632,
-        "film_time_s": 145.28,
-        "image": "/workspace/scratch/ostapenko-final-visual-qc-repaired/frames/frame-03632.png",
-        "image_sha256": "487a22152c7fa63c77a1b330d41dd6cea2ba9b21a60bc7f55cdca5028c8b1692"
-      },
-      "visible_text": "随后 奥斯塔彭科连赢两球",
-      "finding": "Single complete semantic line; player name not split, separate from main card and branding."
-    }
+  "other_sampled_observations": [
+    "First-set large resultboard caption fix remains atf1305/1306 without overlap.",
+    "Current cover retains exact two semantic lines三个赛点都救回 / 奥斯塔彭科逆转佩古拉, clear face, fixed original cover score placement.",
+    "Navy chapter/stat/outro design remains legible with complete main lines, contextual kicker and separate bottom branding.",
+    "Current source-to-stat and stat-to-ending seams are visually continuous; navy outro/tail show no source WTA bumper in sampled frames.",
+    "No new player-name split, orphan glyph, outside-canvas subtitle or board collision found in all49cue midpoint windows."
   ],
-  "other_positive_sampled_observations": [
-    "All48 ASS midpoint windows were inspected on labeled movie contact sheets. No split Chinese player name, orphan glyph, unreadable off-canvas caption or new text collision found in43 visible-caption windows. English declared player names remain together in inspected cues.",
-    "First-set original large board avoidance remains correct at movieframes1305/1306.",
-    "Native MATCH POINT #3 / MATCH POINT / SET POINT / TIE-BREAK labels are readable in sampled final frames; shorter header right area is transparent, body stays fixed at x0/topapproximately1160, no surrounding-court rectangle patch.",
-    "Cover shows exact two semantic hook lines三个赛点都救回 / 奥斯塔彭科逆转佩古拉, face visible clear of title bands and original cover board placement.",
-    "Six navy chapter cards, clean stat card and cached navy outro retain readable main text, meaningful kicker and separate bottom branding.",
-    "Winner payoff and reaction imagery remain in43cue body samples; source-to-stat seam is bag-collection scene before source WTA bumper. Branded navy outro and final tail show no source WTA bumper in sampled images."
-  ],
+  "pixel_hash_comparison": {
+    "path": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/decoded-frame-comparison.json",
+    "equal_fullframe_count": 1354,
+    "changed_fullframe_count": 4809,
+    "outside_coordinate_changed_count": 4557,
+    "pixel_equality_inheritance_used": false,
+    "finding": "Full decoded frame hashes do not establish identical pixels outside coordinate; no claim of byte-identical visual inheritance is made. Current91samples were freshly extracted and actually viewed. Encoding differences are not assumed to be composition differences or definitively diagnosed here."
+  },
   "known_user_authorized_geometry_limit": {
-    "layout": "fixed-center3:4fill",
+    "fit": "fixed-center3:4fill",
     "tracking": false,
     "crop": [
       555,
@@ -152,18 +203,18 @@
       810,
       1080
     ],
-    "finding": "Previously established source185.50 right-net Pegula body/racket lies beyond right crop boundary; this spatial restriction remains. Complete source time window is retained, but report does not claim complete uncropped court view. Current final keyframe samples retain visible center action and readable board."
+    "finding": "Previously established source185.50 right-net Pegula body/racket can lie beyond the right crop boundary. This spatial restriction remains; report does not claim complete uncropped court view. Nominal source mapping may differ0..1frame near hard cuts; exact movieframe/PNG is authoritative."
   },
-  "old_movie_record": {
-    "sha256": "082210a6b06998c2496cefc3ec19eebbd9d46397916821d93a7ecae1de425d6c",
-    "visual_pass": false,
-    "report": "/workspace/scratch/ostapenko-final-visual-qc/final-visual-review.json",
-    "unchanged": true
+  "previous_versions": {
+    "prior_repaired_movie_sha256": "2bf22ca3f44e17872728bd286c1f05a5d57af3e8ef357ef604a3b13670b48b92",
+    "prior_repaired_report_preserved": "/workspace/scratch/ostapenko-final-visual-qc-afternoon/baseline-final-visual-review.json",
+    "initial_failed_movie_sha256": "082210a6b06998c2496cefc3ec19eebbd9d46397916821d93a7ecae1de425d6c",
+    "initial_failed_visual_pass_remains": false
   },
   "limitations": [
-    "Pass is independent visual sampling judgment for this exact new movieSHA; not every6163 frame was manually reviewed.",
-    "No independent actual listening claim; pronunciation/source speech/ASR review remain external evidence.",
-    "No loudness/gain/peak/threshold-silence checks or audio processing.",
-    "This scratch review is not publication, PushPlus delivery or pushed.json proof."
+    "This visual_pass binds exact currentmovie SHA and91actualsampledframes; not every6163frame was manually checked.",
+    "No source full-film resurvey and no independent actual audio listening; pronunciation/source speech proof remains external evidence.",
+    "No loudness/gain/peak/threshold-silence scan or audio processing.",
+    "This scratch review is not publication, PushPlus or pushed.json proof."
   ]
 }

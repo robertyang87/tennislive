@@ -3,27 +3,27 @@
     "segment_index": 1,
     "edit_id": "coordinate",
     "output_name": "voice_01.mp3",
-    "request_id": "4b1b2fd60cb7629e98de8b90c3ba6fab856b28d3df305279fe5430165494383e",
+    "request_id": "fd1a6714dcf7be3bf1789fdf9a04ecb536836d8563e1f9ad3800f6b5e5082eae",
     "request": {
       "backend": "edge",
-      "cache_key": "a5e049cd42c0fe8b95b755e4bba028d6",
+      "cache_key": "8536dc688c57f0f3692ab6a0fa44e91f",
       "lead_pause": 0.0,
       "pitch": "+0Hz",
       "rate": "+6%",
       "style": "",
       "styledegree": "",
-      "text": "北京时间十月十四日，武汉第二轮。奥斯塔彭科迎战世界第四佩古拉。首盘二比六，比赛远未结束。",
+      "text": "北京时间十月十四日下午，武汉第二轮。奥斯塔彭科迎战世界第四佩古拉。首盘二比六，比赛远未结束。",
       "voice": "zh-CN-YunjianNeural"
     },
-    "tts_text": "北京时间十月十四日，武汉第二轮。奥斯塔彭科迎战世界第四佩古拉。首盘二比六，比赛远未结束。",
-    "display_text": "北京时间十月十四日，武汉第二轮。奥斯塔彭科迎战世界第四佩古拉。首盘二比六，比赛远未结束。",
-    "text_sha256": "b4e4d08c727db61b2cc62e155964a2ae2709d47caba291e26b0ab49408b16cd3",
-    "audio_sha256": "6a2210c5fedd3a7b4844538be9d492af3eac1071198c37b490d85cb4ad814b31",
-    "marks_sha256": "3c988279193f7da0f9195f5e9770b41bac690e0a025746403de85374755ef224",
-    "duration_seconds": 9.624,
-    "native_audio": "/workspace/scratch/ostapenko-pronunciation/native-audio/coordinate-6a2210c5fedd3a7b.mp3",
-    "native_marks": "/workspace/scratch/ostapenko-pronunciation/native-audio/coordinate-6a2210c5fedd3a7b.json",
-    "bundle_sha256": "097242a138184043d122391d3958776505670af16ed50eaee5142697c26ae473",
+    "tts_text": "北京时间十月十四日下午，武汉第二轮。奥斯塔彭科迎战世界第四佩古拉。首盘二比六，比赛远未结束。",
+    "display_text": "北京时间十月十四日下午，武汉第二轮。奥斯塔彭科迎战世界第四佩古拉。首盘二比六，比赛远未结束。",
+    "text_sha256": "b9b4bf40ba19472c71423c88dad9fa9a223cd70f7898063c8709db89854decb1",
+    "audio_sha256": "99eb3af53884a4ff56d3e7ae927b2ed44d6646e4641389b25ee20b8eeff09a92",
+    "marks_sha256": "833e620bba87ed1c686b41d00e530a9c29073f1d0902952b323ec949d8193a5a",
+    "duration_seconds": 9.888,
+    "native_audio": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/coordinate-99eb3af53884a4ff.mp3",
+    "native_marks": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/coordinate-99eb3af53884a4ff.json",
+    "bundle_sha256": "c7592cfccdfbb321264c8809a685c3f73ea8548ca4864258c5bb66d628d37e7a",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [
@@ -42,7 +42,7 @@
         "status": "actual_pending"
       },
       {
-        "index": 41,
+        "index": 43,
         "char": "结",
         "word": "结束",
         "intended": "jie2",
@@ -59,10 +59,10 @@
     "proper_names": [
       {
         "name": "奥斯塔彭科",
-        "start_index": 16,
+        "start_index": 18,
         "targets": [
           {
-            "index": 16,
+            "index": 18,
             "char": "奥",
             "intended": "ao4",
             "all_dictionary_heteronyms_not_audio_proof": [
@@ -72,7 +72,7 @@
             ]
           },
           {
-            "index": 17,
+            "index": 19,
             "char": "斯",
             "intended": "si1",
             "all_dictionary_heteronyms_not_audio_proof": [
@@ -81,7 +81,7 @@
             ]
           },
           {
-            "index": 18,
+            "index": 20,
             "char": "塔",
             "intended": "ta3",
             "all_dictionary_heteronyms_not_audio_proof": [
@@ -91,7 +91,7 @@
             ]
           },
           {
-            "index": 19,
+            "index": 21,
             "char": "彭",
             "intended": "peng2",
             "all_dictionary_heteronyms_not_audio_proof": [
@@ -102,7 +102,7 @@
             ]
           },
           {
-            "index": 20,
+            "index": 22,
             "char": "科",
             "intended": "ke1",
             "all_dictionary_heteronyms_not_audio_proof": [
@@ -115,10 +115,10 @@
       },
       {
         "name": "佩古拉",
-        "start_index": 27,
+        "start_index": 29,
         "targets": [
           {
-            "index": 27,
+            "index": 29,
             "char": "佩",
             "intended": "pei4",
             "all_dictionary_heteronyms_not_audio_proof": [
@@ -126,7 +126,7 @@
             ]
           },
           {
-            "index": 28,
+            "index": 30,
             "char": "古",
             "intended": "gu3",
             "all_dictionary_heteronyms_not_audio_proof": [
@@ -136,7 +136,7 @@
             ]
           },
           {
-            "index": 29,
+            "index": 31,
             "char": "拉",
             "intended": "la1",
             "all_dictionary_heteronyms_not_audio_proof": [
@@ -174,9 +174,9 @@
     "audio_sha256": "20cecc40bfaeed24112df766675d929ce5310d1848cde83a45b4874241863149",
     "marks_sha256": "2d8ebd77120878d87b27965720c4c11197b706b67ed61199508e54ab2eb01819",
     "duration_seconds": 10.32,
-    "native_audio": "/workspace/scratch/ostapenko-pronunciation/native-audio/second_set_turn-20cecc40bfaeed24.mp3",
-    "native_marks": "/workspace/scratch/ostapenko-pronunciation/native-audio/second_set_turn-20cecc40bfaeed24.json",
-    "bundle_sha256": "097242a138184043d122391d3958776505670af16ed50eaee5142697c26ae473",
+    "native_audio": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/second_set_turn-20cecc40bfaeed24.mp3",
+    "native_marks": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/second_set_turn-20cecc40bfaeed24.json",
+    "bundle_sha256": "c7592cfccdfbb321264c8809a685c3f73ea8548ca4864258c5bb66d628d37e7a",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [
@@ -306,9 +306,9 @@
     "audio_sha256": "71574870943d71305f835386388f514e8af4ddabeb96be959d45d610b791811a",
     "marks_sha256": "e8a8630ccb7e077c0bc76929c69470d003df7dd73634b5334024bc7e0bad0a54",
     "duration_seconds": 10.104,
-    "native_audio": "/workspace/scratch/ostapenko-pronunciation/native-audio/three_match_points-71574870943d7130.mp3",
-    "native_marks": "/workspace/scratch/ostapenko-pronunciation/native-audio/three_match_points-71574870943d7130.json",
-    "bundle_sha256": "097242a138184043d122391d3958776505670af16ed50eaee5142697c26ae473",
+    "native_audio": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/three_match_points-71574870943d7130.mp3",
+    "native_marks": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/three_match_points-71574870943d7130.json",
+    "bundle_sha256": "c7592cfccdfbb321264c8809a685c3f73ea8548ca4864258c5bb66d628d37e7a",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [
@@ -422,9 +422,9 @@
     "audio_sha256": "2d32567658a5f55f56ee4e6a821f1f3589d517cce4665bfc1b31f906faa27897",
     "marks_sha256": "b626509cfd67e32a7234cfde35d558941e1a40352a327b6401a379f89ef21ad3",
     "duration_seconds": 7.512,
-    "native_audio": "/workspace/scratch/ostapenko-pronunciation/native-audio/tiebreak_payoff-2d32567658a5f55f.mp3",
-    "native_marks": "/workspace/scratch/ostapenko-pronunciation/native-audio/tiebreak_payoff-2d32567658a5f55f.json",
-    "bundle_sha256": "097242a138184043d122391d3958776505670af16ed50eaee5142697c26ae473",
+    "native_audio": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/tiebreak_payoff-2d32567658a5f55f.mp3",
+    "native_marks": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/tiebreak_payoff-2d32567658a5f55f.json",
+    "bundle_sha256": "c7592cfccdfbb321264c8809a685c3f73ea8548ca4864258c5bb66d628d37e7a",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [],
@@ -509,9 +509,9 @@
     "audio_sha256": "25df078f71310bab36180e5cc400ea3222f5fd0ca905c8339c064c1c6261709d",
     "marks_sha256": "ebff86ac4c10057a90d2226ec802adcc313f49ce4fcfa7f5368390e7dd87ff88",
     "duration_seconds": 11.568,
-    "native_audio": "/workspace/scratch/ostapenko-pronunciation/native-audio/deciding_set_turn-25df078f71310bab.mp3",
-    "native_marks": "/workspace/scratch/ostapenko-pronunciation/native-audio/deciding_set_turn-25df078f71310bab.json",
-    "bundle_sha256": "097242a138184043d122391d3958776505670af16ed50eaee5142697c26ae473",
+    "native_audio": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/deciding_set_turn-25df078f71310bab.mp3",
+    "native_marks": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/deciding_set_turn-25df078f71310bab.json",
+    "bundle_sha256": "c7592cfccdfbb321264c8809a685c3f73ea8548ca4864258c5bb66d628d37e7a",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [
@@ -747,9 +747,9 @@
     "audio_sha256": "d2dee459980ce8226e8784ab00f044c444b9944ef7d410dbea4244725879f05b",
     "marks_sha256": "0793266a42d65a1306f172280f7ac8b526887b2eae33e07a35acdd0200a59c4f",
     "duration_seconds": 12.432,
-    "native_audio": "/workspace/scratch/ostapenko-pronunciation/native-audio/full_stats-d2dee459980ce822.mp3",
-    "native_marks": "/workspace/scratch/ostapenko-pronunciation/native-audio/full_stats-d2dee459980ce822.json",
-    "bundle_sha256": "097242a138184043d122391d3958776505670af16ed50eaee5142697c26ae473",
+    "native_audio": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/full_stats-d2dee459980ce822.mp3",
+    "native_marks": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/full_stats-d2dee459980ce822.json",
+    "bundle_sha256": "c7592cfccdfbb321264c8809a685c3f73ea8548ca4864258c5bb66d628d37e7a",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [
@@ -942,9 +942,9 @@
     "audio_sha256": "bf3b951269e385adfd24b5c13ff09502f1db596d28a739dd5e33ec5f01361895",
     "marks_sha256": "ee817767ae5c2c244a4f87fba8a38de380958f02fdcb8889c61455e3718a052b",
     "duration_seconds": 8.928,
-    "native_audio": "/workspace/scratch/ostapenko-pronunciation/native-audio/ending-bf3b951269e385ad.mp3",
-    "native_marks": "/workspace/scratch/ostapenko-pronunciation/native-audio/ending-bf3b951269e385ad.json",
-    "bundle_sha256": "097242a138184043d122391d3958776505670af16ed50eaee5142697c26ae473",
+    "native_audio": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/ending-bf3b951269e385ad.mp3",
+    "native_marks": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/ending-bf3b951269e385ad.json",
+    "bundle_sha256": "c7592cfccdfbb321264c8809a685c3f73ea8548ca4864258c5bb66d628d37e7a",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [
@@ -1087,9 +1087,9 @@
     "audio_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
     "marks_sha256": "65a15ef4d71972d782173404762c6c3da745d0b1aacc713a6ed389fbcc5d10f2",
     "duration_seconds": 4.2,
-    "native_audio": "/workspace/scratch/ostapenko-pronunciation/native-audio/outro-9043e03e1513e7eb.mp3",
-    "native_marks": "/workspace/scratch/ostapenko-pronunciation/native-audio/outro-9043e03e1513e7eb.json",
-    "bundle_sha256": "097242a138184043d122391d3958776505670af16ed50eaee5142697c26ae473",
+    "native_audio": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/outro-9043e03e1513e7eb.mp3",
+    "native_marks": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/outro-9043e03e1513e7eb.json",
+    "bundle_sha256": "c7592cfccdfbb321264c8809a685c3f73ea8548ca4864258c5bb66d628d37e7a",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [

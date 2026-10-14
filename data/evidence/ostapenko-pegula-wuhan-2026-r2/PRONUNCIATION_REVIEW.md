@@ -1,17 +1,15 @@
-# 当前冻结包中文读音审查
+# 增加“下午”后的实际配音审查
 
-结论：complete_with_declared_supported_low_name。当前 8 个真实请求，20 处正文常规多音位置和49处姓名音节全部有实际音频支持，未确认0处；确认错读0处。当前 coordinate 塔维持有效组合方法的低置信正确支持，不升级为中/高。固定片尾按完整文本、profile、MP3、WordBoundary exact 复用旧审批，旧限制保留。
+结论：complete。冻结包8请求，20处正文常规多音位置、49处姓名音节有实音支持，未确认0处，确认错读0处。
 
-实际输入：`/workspace/scratch/ostapenko-tts-repaired.zip`
+输入：`/workspace/scratch/ostapenko-tts-afternoon.zip`
 
-SHA256：`097242a138184043d122391d3958776505670af16ed50eaee5142697c26ae473`
+SHA256：`c7592cfccdfbb321264c8809a685c3f73ea8548ca4864258c5bb66d628d37e7a`
 
-声线：zh-CN-YunjianNeural，rate +6%，pitch +0Hz。只有 coordinate / tiebreak_payoff 两请求变化，另6请求完整文本/profile/MP3/marks字节一致，逐条见 old-repaired-exact-reuse.json。全部当前精确绑定见 bindings.json / frozen-manifest.json / final-review.json。
+声线云见 zh-CN-YunjianNeural，+6%，+0Hz。新 coordinate 实际9.888秒，MP3 SHA `99eb3af53884a4ff56d3e7ae927b2ed44d6646e4641389b25ee20b8eeff09a92`。正文只插入下午2字，常规间/结和8个姓名音节逐位置重测；另7条完整request/text/MP3/WordBoundary全字节相同，明确继承097既有报告与全部限制。逐条比较见 seven-request-exact-reuse.json。
 
-本轮只追加4个待核音节各正2反2，共16个当前完整语境单目标参照，不再合成。佩真实5.58–5.62秒核心降2.91半音，正确侧沛/配降、错误侧赔/陪升，双侧LOO全部有效，score0.731。拉最终a核保留真实时间：actual斜率+12.749 st/s，垃/邋+17.666/+16.587，辣/瘌−15.766/−25.493，双侧LOO全有效，score0.763；actual静态MFCC到正确侧距离2.649，小于正确侧彼此3.064，CV支持成立。拉默认窗口和等长归一化形状失败均保留在证据。coordinate斯真实3.70–3.75秒核心与丝/嘶完全一致，嗣/四下降，补核双侧LOO全部有效，score1.0，默认单侧override历史仍保留。TB奥当前参照双侧LOO有效且音核近同音，high score1.0；科真实F0核双侧LOO有效，medium0.789。
+只针对斯旧核映射未闭合追加4个当前完整语境单目标参照：丝/嘶、嗣/四。原映射失败与默认单侧override保留；实际真核及独立双侧LOO另列于 evidence/coordinate-i19-斯-current-nucleus.json。其它9处沿用此前已校准真实参照为声学模板，但新actual音节独立测量，不称旧参照是新同语境原句。所有引用音频与证据保留SHA。
 
-coordinate塔原组合方法双侧参照LOO有效、当前CV有效，score0.287为correct low；补纯F0时错误参照LOO失败，不据此抬置信度，也不将其伪装实际错读。
+097塔的correct-low0.287与纯F0反侧失败仍原样保存，当前实际塔是新字节的新测量，不能改写旧置信度。固定片尾旧低置信限制同样继承，没有宣称全部高置信。旧种/解/分疑问与分反证仍在097所链接的旧报告，不被伪造改为正确或错读。
 
-旧稿种/解/分3处未确认原样冻结在 old-final-review.json、OLD_FINAL_REVIEW.md 和 old-6df4a0c7f60b/。分末窗的misread反证和另一内窗correct结果都保留；当前稿删除这3位置，未把旧未知重写成正确或确诊错读。落/迫在未变请求中已有真实CV及降调组件支持，按exact字节继承。
-
-没有调用DeepSeek/MiniMax，没有宣称人工听审，没有用词典或ASR汉字直接判声调，没有更改主仓库、spec或屏幕文字。原始失败、旧语境差异、当前真实音核范围和独立参照hash均留存。
+没有调用DeepSeek/MiniMax，没有宣称人工听审，没有改仓库或spec，没有重合成原句或其它7请求。

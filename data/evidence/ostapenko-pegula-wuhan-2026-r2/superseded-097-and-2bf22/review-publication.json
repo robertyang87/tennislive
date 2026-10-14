@@ -1,0 +1,54 @@
+{
+  "schema": "tennislive.finite-final-review-publication.v1",
+  "slug": "ostapenko-pegula-wuhan-2026-r2",
+  "movie_sha256": "2bf22ca3f44e17872728bd286c1f05a5d57af3e8ef357ef604a3b13670b48b92",
+  "native_render_run": 38569697919,
+  "review_archives": [
+    {
+      "name": "pronunciation-evidence.zip",
+      "sha256": "2beb23e3dc75fd0486e3aaab51c816360f7c5880baf2726286427a3a750a9acd",
+      "bytes": 14694927,
+      "url": "https://github.com/robertyang87/tennislive/releases/download/reel-review-ostapenko-pegula-wuhan-2026-r2/pronunciation-evidence.zip"
+    },
+    {
+      "name": "visual-qc-evidence.zip",
+      "sha256": "4160f211d2c0dff2bf6b5abf2207ae6f4bdebdcabb77db92ab0bf3f2fce2b531",
+      "bytes": 15765230,
+      "url": "https://github.com/robertyang87/tennislive/releases/download/reel-review-ostapenko-pegula-wuhan-2026-r2/visual-qc-evidence.zip"
+    }
+  ],
+  "tracked_reports": [
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/pronunciation-final-review.json",
+      "sha256": "76bbf4ffe06a36e6a8d0c046857b8cbca75cabec1e7c544665247d691aebc23b"
+    },
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/pronunciation-artifact-verification.json",
+      "sha256": "940d70e7f4df72d701bf5e6f97d8ea5853dd8860e2d95ac6b7a6f95caefe86ce"
+    },
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/pronunciation-bindings.json",
+      "sha256": "f7487dee45094c62daf2beda7bb74fdd4f802eaa98a6585c46f6ed2a17419343"
+    },
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/PRONUNCIATION_REVIEW.md",
+      "sha256": "7c4481e1b72cbaf8317d86eaedeadd4ff3a8e339ff932fd73f3fc6fdcc000adc"
+    },
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/final-visual-review.json",
+      "sha256": "dc48e4c03c9699f8ba8171ad5a306fc4ad173476ef1823429ef53151f022c588"
+    },
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/frame_manifest.json",
+      "sha256": "a37def5e6cd53db911c296995d60d0a17602e0cedfd98ac10d3e370c398d4ad2"
+    }
+  ],
+  "limitations": [
+    "Visual inspection uses 90 actual final-movie frames; it does not claim inspection of all frames.",
+    "Acoustic pronunciation evidence uses actual frozen MP3 bytes and measured reference controls; no manual listening is claimed.",
+    "One supported low-confidence name syllable (coordinate index 18 塔) remains explicitly declared.",
+    "Fixed center 3:4 crop has the previously accepted right-net-player spatial limit."
+  ],
+  "publication_receipt": null,
+  "archive_publication_run": 38575802989
+}
