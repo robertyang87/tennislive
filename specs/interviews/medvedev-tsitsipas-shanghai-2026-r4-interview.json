@@ -3,8 +3,7 @@
  "url": "https://www.youtube.com/watch?v=dy4Zyn8cZ9E",
  "source_title": "Daniil Medvedev R4 Post-Match Interview | Rolex Shanghai Masters 2026",
  "start": 0.0,
- "end": 600.0,
- "_end_provisional": "转写窗口上界，待 subs 实测源片时长后收紧",
+ "end": 84.0,
  "asr_model": "small.en",
  "whisper_model": "medium.en",
  "column": "赛后开麦",
@@ -52,14 +51,75 @@
    },
    {
     "kind": "transcript_crosscheck",
-    "note": "内容硬闸：转写后须含已核实的场上采访实录要点（中央球场球速约三倍于副场并理解德约评价、热爱上海、全场未送破发点，见 atptour/tennis365/sabcsport 2026-10-14 战报引文）；不符则停，不出片。"
+    "note": "内容硬闸已过：双 ASR 转写（small.en 273 词 / medium.en 269 词，分歧 4.0%）与已核实的场上采访实录逐段吻合——中央球场球速约三倍于副场、理解德约评价、热爱上海、全场未送破发点（见 atptour/tennis365/sabcsport 2026-10-14 战报引文）。确为本场赛后场上采访。"
    }
   ],
   "match_id": "2026:shanghai-masters:mens-r4:medvedev-tsitsipas",
-  "attestation_sha256": "4424575c0e2926407d3164d3ec0812182db826c83007da04d8ad00b751bf4bdd"
+  "attestation_sha256": "30759fd76b8aed56ff691e8a182005528e6d405b9490bc5e00958ab8827b914f"
  },
+ "en_fixed": {
+  "0": "Great match, Daniil.",
+  "3": "against Stefanos, read his game.",
+  "11": "is so much faster than Beijing, I was like okay,",
+  "25": "and managed to beat him.",
+  "31": "I love I love Shanghai as a city."
+ },
+ "_en_fixed_why": "五处都是 ASR 听错，不是他说错。0『Denil』→Daniil（第二份 ASR 同样纠正）；3『Stephanos Reed』→Stefanos, read（两份 ASR 把 read 听成 reed/reid，read his game 为固定网球表述）；11『BG』→Beijing（战报引文确认他说的是 Beijing）；25 删去口吃重复的 to（第二份 ASR 同样略去）；31『Shanga』→Shanghai（战报引文确认），保留他真实的 I love I love 重复改口未动。",
+ "zh": [
+  "打得漂亮，丹尼尔。",
+  "恭喜。你好像",
+  "很擅长打西西帕斯，",
+  "把他的球路摸得很透。",
+  "嗯，",
+  "今晚你哪方面做得特别好？",
+  "是的。首先，太奇怪了。",
+  "这块球场比另一块",
+  "快了大概三倍。",
+  "所以当我听到诺瓦克",
+  "赛后说这块球场",
+  "比北京快得多，我当时想，好吧，",
+  "走着瞧。",
+  "第二天我上场了，但我是",
+  "在副场打的。",
+  "我就想，他在说什么啊？",
+  "我觉得一样快，甚至更慢。",
+  "而这一场，热身时我就，",
+  "“天哪，太快了。”这对我是",
+  "好事，但我得重新调整，",
+  "因为这块球场跟之前",
+  "打的完全不一样。",
+  "但这帮到了我。",
+  "我觉得我打得很有攻击性，",
+  "给了他很大压力，",
+  "最终拿下了他。",
+  "我们知道你很爱这项赛事，",
+  "你是前冠军，",
+  "去年又走得很远，",
+  "进了八强。",
+  "现在，你觉得势头如何？",
+  "我真的很爱上海这座城市。",
+  "进城的路很长，",
+  "但我非常享受，",
+  "这里可能是我巡回赛",
+  "最喜欢的几站之一。",
+  "所以就想尽可能待久一点。",
+  "那这周",
+  "你对自己的状态感觉如何？",
+  "非常好。",
+  "今天又是这样，",
+  "跟副场完全是两种打法，",
+  "但我打得很好，",
+  "发球也很好。",
+  "我觉得一个破发点都没送。",
+  "所以很开心。",
+  "恭喜，兄弟。",
+  "谢谢，谢谢。"
+ ],
+ "_zh_draft_note": "人工逐行翻译：以双 ASR 转写（48 行）为证据层逐行对应翻译，未合并、未漏行；已对照战报引文核对关键表述。",
+ "transcript_verified": true,
  "cover": {
-  "_why": "临时稿：frame_at 待 cover 扫描产出候选帧后由人工终审确定。标题依据已核实的采访实录要点。",
+  "frame_at": 35.0,
+  "_why": "临时帧：采访中段（35 秒，回答球速问题时）。待 cover 扫描 + 终审确定最终帧；自动换帧可改写。",
   "title": [
    "这块场地快得离谱",
    "但正合我意"
@@ -83,8 +143,8 @@
  },
  "_notes": [
   "用户 2026-10-15 指定制作本期赛后开麦。",
-  "end=600 为转写窗口上界，待 subs 实测源片时长后收紧到实测值。",
-  "封面帧/收尾/推送文案为临时稿，待转写产出后核对精修，不作最终结论。"
+  "转写已核：48 行，双 ASR 分歧 4.0%，内容硬闸通过。",
+  "中文为人工逐行翻译；封面帧为临时值，待扫描+终审。"
  ],
  "_facts": [
   "2026-10-14 上海大师赛男单第四轮：梅德韦杰夫 6-4、7-5 战胜西西帕斯，晋级八强（atptour.com 官方战报）。",
