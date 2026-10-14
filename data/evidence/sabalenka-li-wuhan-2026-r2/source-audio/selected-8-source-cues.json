@@ -1,14 +1,45 @@
 {
+  "schema": "tennislive.final-original-audio-selection.v1",
   "method": "asr_cross_checked",
   "human_listening_claimed": false,
-  "sources": [
+  "source_count": 8,
+  "segments": [
     {
+      "segment": 0,
+      "source": "wsc-29-00",
+      "path": "data/evidence/sabalenka-li-wuhan-2026-r2/source-audio/foreground-wsc-29-00.json",
+      "sha256": "72533285ab516852bc997ae09d8a6ea1c177a777ef1406ce0edd8fdcf0235d47",
+      "window": [
+        6.5,
+        17.1
+      ],
+      "quote": [
+        {
+          "at": 0.12,
+          "end": 4.52,
+          "text": "And a tournament that has already produced headlines in its opening three days,\n开赛三天，赛事头条不断。"
+        },
+        {
+          "at": 4.52,
+          "end": 7.42,
+          "text": "Ann Li produces the biggest of them all,\n李吉妮写下最重磅的头条。"
+        },
+        {
+          "at": 7.42,
+          "end": 10.5,
+          "text": "in all capital letters above the fold.\n足以登上头版醒目位置。"
+        }
+      ],
+      "quote_skip_why": null
+    },
+    {
+      "segment": 3,
       "source": "wsc-06-00",
-      "path": "/workspace/scratch/sabalenka-exit-6m4jt6/source-audio/foreground-wsc-06-00.json",
-      "sha256": "2d33279149d6b0c20a5bd419cea2c1d2f81d2057144a69434e0c2a77125eba27",
+      "path": "data/evidence/sabalenka-li-wuhan-2026-r2/source-audio/foreground-wsc-06-00.json",
+      "sha256": "f84c57771861537d81220e4a0887209611117e03c3c807eae397b5262f83cfbc",
       "window": [
         0,
-        17.48
+        17.3
       ],
       "quote": [
         {
@@ -19,33 +50,37 @@
         {
           "at": 13.76,
           "end": 17.06,
-          "text": "Well, if it's worrying, she's moving pretty well today already.\n即便有些担忧，她今天的移动已经相当不错。"
+          "text": "Well, if it's worrying, she's moving pretty well today already.\n即便有担忧，她的移动仍出色。"
         }
-      ]
+      ],
+      "quote_skip_why": null
     },
     {
+      "segment": 5,
       "source": "wsc-13-00",
-      "path": "/workspace/scratch/sabalenka-exit-6m4jt6/source-audio/foreground-wsc-13-00.json",
+      "path": "data/evidence/sabalenka-li-wuhan-2026-r2/source-audio/foreground-wsc-13-00.json",
       "sha256": "fd9e3764649eecfcc2e9d94f5c06fc91a81d4f3853c181f1ceae0746803eeacb",
       "window": [
         0,
-        14.96
+        14.78
       ],
-      "quote": []
+      "quote": [],
+      "quote_skip_why": "实际完整源窗已做两份独立ASR复核；仅击球、观众、报分或不可稳定辨认的声音，无稳定可译前景英语；未用ASR噪声幻觉编造解说。"
     },
     {
+      "segment": 7,
       "source": "wsc-17-00",
-      "path": "/workspace/scratch/sabalenka-exit-6m4jt6/source-audio/foreground-wsc-17-00.json",
-      "sha256": "d093cafee8e715bb89bf7fdf080c7e41b33552f06a8d6288ee5bb1312030d99f",
+      "path": "data/evidence/sabalenka-li-wuhan-2026-r2/source-audio/foreground-wsc-17-00.json",
+      "sha256": "65d3799aa95b96dc78e5f596efb7afbd8de69238e57a672346e92a16e62f0f9c",
       "window": [
         0,
-        16.48
+        16.3
       ],
       "quote": [
         {
           "at": 0,
           "end": 3.02,
-          "text": "Of course, four games on the trot means she broke twice as well.\n当然，连赢四局也意味着她两次破发。"
+          "text": "Of course, four games on the trot means she broke twice as well.\n连赢四局，期间两次破发。"
         },
         {
           "at": 3.02,
@@ -55,32 +90,36 @@
         {
           "at": 10.78,
           "end": 14.82,
-          "text": "You can see already on the opening point, Ann Li rejuvenated.\n从开场这一分就能看出，李吉妮重振了精神。"
+          "text": "You can see already on the opening point, Ann Li rejuvenated.\n开局这一分，李吉妮重拾精神。"
         },
         {
           "at": 14.82,
           "end": 16.22,
           "text": "She's starting to feel her game.\n她开始找回自己的比赛感觉。"
         }
-      ]
+      ],
+      "quote_skip_why": null
     },
     {
+      "segment": 9,
       "source": "wsc-20-00",
-      "path": "/workspace/scratch/sabalenka-exit-6m4jt6/source-audio/foreground-wsc-20-00.json",
+      "path": "data/evidence/sabalenka-li-wuhan-2026-r2/source-audio/foreground-wsc-20-00.json",
       "sha256": "f1f0fb5032b5c393c7faa773fb2112e9693ba410af2be26d6ceef1cece32c58b",
       "window": [
         0,
-        12.68
+        12.5
       ],
-      "quote": []
+      "quote": [],
+      "quote_skip_why": "实际完整源窗已做两份独立ASR复核；仅击球、观众、报分或不可稳定辨认的声音，无稳定可译前景英语；未用ASR噪声幻觉编造解说。"
     },
     {
+      "segment": 10,
       "source": "wsc-22-00",
-      "path": "/workspace/scratch/sabalenka-exit-6m4jt6/source-audio/foreground-wsc-22-00.json",
-      "sha256": "8411385578ce0c6e73086e3a06457c053fe1242be61f6ae96988089fb70baefc",
+      "path": "data/evidence/sabalenka-li-wuhan-2026-r2/source-audio/foreground-wsc-22-00.json",
+      "sha256": "0441f88bfedf5520d1f753f471d328b73044d5da46fbafa64f660bd55dcb9715",
       "window": [
         0,
-        17.6
+        17.42
       ],
       "quote": [
         {
@@ -91,7 +130,7 @@
         {
           "at": 10.52,
           "end": 13.74,
-          "text": "Now she got that first serve in, but it didn't do her any good.\n这次一发进了，但仍未能帮她拿下这一分。"
+          "text": "Now she got that first serve in, but it didn't do her any good.\n这次一发进了，仍没拿下这一分。"
         },
         {
           "at": 14.16,
@@ -103,56 +142,62 @@
           "end": 16.98,
           "text": "She's fired up.\n她的斗志燃起来了。"
         }
-      ]
+      ],
+      "quote_skip_why": null
     },
     {
+      "segment": 11,
       "source": "wsc-24-00",
-      "path": "/workspace/scratch/sabalenka-exit-6m4jt6/source-audio/foreground-wsc-24-00.json",
+      "path": "data/evidence/sabalenka-li-wuhan-2026-r2/source-audio/foreground-wsc-24-00.json",
       "sha256": "833e050a3e1d57b10f686640d0f58c4d9b8a7d7abdff4ecaa9553182904cdf6c",
       "window": [
         0,
-        15.24
+        15.06
       ],
-      "quote": []
+      "quote": [],
+      "quote_skip_why": "实际完整源窗已做两份独立ASR复核；仅击球、观众、报分或不可稳定辨认的声音，无稳定可译前景英语；未用ASR噪声幻觉编造解说。"
     },
     {
+      "segment": 13,
       "source": "wsc-28-00",
-      "path": "/workspace/scratch/sabalenka-exit-6m4jt6/source-audio/foreground-wsc-28-00.json",
+      "path": "data/evidence/sabalenka-li-wuhan-2026-r2/source-audio/foreground-wsc-28-00.json",
       "sha256": "48cbe0c0b83636f7f3fe93b75b4eb5fac42d5ded5296c01219947502ace5bea8",
       "window": [
         0,
-        10.12
+        9.94
       ],
-      "quote": []
+      "quote": [],
+      "quote_skip_why": "实际完整源窗已做两份独立ASR复核；仅击球、观众、报分或不可稳定辨认的声音，无稳定可译前景英语；未用ASR噪声幻觉编造解说。"
     },
     {
+      "segment": 14,
       "source": "wsc-29-00",
-      "path": "/workspace/scratch/sabalenka-exit-6m4jt6/source-audio/foreground-wsc-29-00.json",
-      "sha256": "156047cd75a74cb23c4744dbca7ed8c063e09be39c5478e73e6ff13c51e4d45d",
+      "path": "data/evidence/sabalenka-li-wuhan-2026-r2/source-audio/foreground-wsc-29-00.json",
+      "sha256": "72533285ab516852bc997ae09d8a6ea1c177a777ef1406ce0edd8fdcf0235d47",
       "window": [
         0,
-        44.44
+        30.5
       ],
       "quote": [
         {
           "at": 6.62,
           "end": 11.02,
-          "text": "And a tournament that has already produced headlines in its opening three days,\n这项赛事开赛三天，已经不断制造头条。"
+          "text": "And a tournament that has already produced headlines in its opening three days,\n开赛三天，赛事头条不断。"
         },
         {
           "at": 11.02,
           "end": 13.92,
-          "text": "Ann Li produces the biggest of them all,\n如今李吉妮制造了其中最大的一个。"
+          "text": "Ann Li produces the biggest of them all,\n李吉妮写下最重磅的头条。"
         },
         {
           "at": 13.92,
           "end": 17.0,
-          "text": "in all capital letters above the fold.\n足以成为头版醒目的大标题。"
+          "text": "in all capital letters above the fold.\n足以登上头版醒目位置。"
         },
         {
           "at": 19.46,
           "end": 24.2,
-          "text": "Three-time champion in Wuhan, Aryna Sabalenka loses her opening match\n武汉三届冠军萨巴伦卡首场比赛就出局了。"
+          "text": "Three-time champion in Wuhan, Aryna Sabalenka loses her opening match\n武汉三冠得主萨巴伦卡首战出局。"
         },
         {
           "at": 24.2,
@@ -162,24 +207,11 @@
         {
           "at": 26.4,
           "end": 29.88,
-          "text": "for the biggest win in Ann Li's career.\n这是李吉妮职业生涯最重要的一场胜利。"
-        },
-        {
-          "at": 35.1,
-          "end": 38.5,
-          "text": "Sabalenka handed just her second loss at the Wuhan Open,\n萨巴伦卡遭遇个人武汉公开赛第二场失利。"
-        },
-        {
-          "at": 38.5,
-          "end": 42.46,
-          "text": "as Ann Li comes through needing ten match points to get it done,\n李吉妮直到第十个赛点才终于锁定胜利。"
-        },
-        {
-          "at": 42.46,
-          "end": 44.24,
-          "text": "7-6 in the third.\n决胜盘七比六。"
+          "text": "for the biggest win in Ann Li's career.\n这是李吉妮生涯最重要的胜利。"
         }
-      ]
+      ],
+      "quote_skip_why": null
     }
-  ]
+  ],
+  "source_policy": "unity_no_loudness_v1"
 }
