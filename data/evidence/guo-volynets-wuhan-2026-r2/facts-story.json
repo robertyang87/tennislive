@@ -1,0 +1,1095 @@
+{
+  "slug": "guo-volynets-wuhan-2026-r2",
+  "prepared_at_utc": "2026-10-14T11:57:06.126093+00:00",
+  "status": "verified_fact_and_story_prep_not_final_spec",
+  "evidence": {
+    "match": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+      "file": "wta-matches.json",
+      "fields": "LS025; A=Katie Volynets/327391, B=Hanyu Guo/323087; MatchState F; result Guo 6-4 4-6 7-6(3); duration03:04:52"
+    },
+    "pbp": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS025/point-by-point",
+      "file": "wta-point-by-point.json",
+      "derived": "pbp-rebuilt.json",
+      "method": "Infer point winner from consecutive gameScore transitions; raw pointWinner has errors. Match teams A=Volynets, B=Guo. Sets score fields in scoreAfterPoint are final set scores, not live scores.",
+      "quality_note": "10 raw pointWinner fields conflict with gameScore transitions. Rebuilt gameScore transitions yield115:115 total points and16:24 break opportunities, consistent with official stats. No raw pointWinner-based streak claims."
+    },
+    "advanced_stats": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS025/advanced-stats",
+      "file": "wta-advanced-stats.json",
+      "fields": "teamA=Volynets; teamB=Guo; matchTotal.shotStats and netPlayStats"
+    },
+    "guo_ranking": {
+      "url": "https://api.wtatennis.com/tennis/players/323087/ranking?date=2026-10-12",
+      "file": "wta-players-323087-ranking-date-2026-10-12.json",
+      "fields": "weeklyRankings[rankedAt=2026-10-12]: singlesRanking240; doublesRanking15"
+    },
+    "volynets_ranking": {
+      "url": "https://api.wtatennis.com/tennis/players/327391/ranking?date=2026-10-12",
+      "file": "wta-players-327391-ranking-date-2026-10-12.json",
+      "fields": "weeklyRankings[rankedAt=2026-10-12]: singlesRanking88"
+    },
+    "draw": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/draw",
+      "file": "wta-tournaments-1075-2026-draw.json",
+      "decoded": "wta-draw-decoded.json",
+      "fields": "LS DrawLine39 Guo WC Rank240; DrawLine38 Volynets Q; next-round LS012 in matches explicitly Svitolina vs Guo"
+    }
+  },
+  "identity": {
+    "event": "2026 WTA1000 武汉 女单第二轮",
+    "date_beijing": "2026-10-14",
+    "time_of_day": "下午",
+    "first_point_utc": "2026-10-14T07:46:43Z",
+    "last_point_utc": "2026-10-14T10:51:01Z",
+    "start_time_note": "MatchTimeStamp07:32 UTC早于官方逐分首分07:46，外发只用日期和下午。",
+    "winner": "郭涵煜",
+    "loser": "沃利内茨",
+    "winner_entry": "WC",
+    "loser_entry": "Q",
+    "ranks_as_of": "2026-10-12",
+    "winner_singles_rank": 240,
+    "loser_singles_rank": 88,
+    "score_winner_perspective": "6-4 4-6 7-6(3)",
+    "duration": "03:04:52",
+    "next_round": "1/8决赛",
+    "next_opponent": "斯维托丽娜",
+    "next_opponent_seed": 5
+  },
+  "key_statistics": {
+    "guo": {
+      "winners": 48,
+      "unforced_errors": 49,
+      "net_approaches": 23,
+      "successful_net_approaches": 17,
+      "return_winners": 8,
+      "break_points_converted": 8,
+      "break_points_played": 24,
+      "aces": 0
+    },
+    "volynets": {
+      "winners": 24,
+      "unforced_errors": 28,
+      "net_approaches": 8,
+      "successful_net_approaches": 4,
+      "return_winners": 2,
+      "break_points_converted": 8,
+      "break_points_played": 16,
+      "aces": 0
+    },
+    "note": "上网23次17成功来自netPlayStats，非winnersVolley16。制胜分48包含正反手31+17，不将单项小计与其他分类相加。"
+  },
+  "core_story": "先下一盘，被拖入决胜盘；关键时刻救下五个破发点保发，五比四发球胜赛局失守，五比六再保发，抢七4-0到4-3后连拿最后三分。",
+  "hook": {
+    "recommended": [
+      "决胜盘5比6落后",
+      "郭涵煜苦战晋级"
+    ],
+    "alternative": [
+      "决胜盘领先又被反超",
+      "郭涵煜三盘过关"
+    ],
+    "copy_title": "10.14赛场之上|郭涵煜苦战晋级",
+    "push_summary": "决胜盘5比6落后，郭涵煜苦战晋级武汉1/8决赛",
+    "caption_first_line": "郭涵煜苦战三小时，武汉晋级1/8决赛"
+  },
+  "beats": [
+    {
+      "id": "cold_open",
+      "role": "真实赛点和庆祝先行",
+      "narration": "",
+      "evidence": [
+        "match",
+        "pbp"
+      ],
+      "point_numbers": [
+        230
+      ],
+      "needs": "使用最后一球完整动作与结果、真实庆祝；保留原声。不可拿早先破发冒充赛点。"
+    },
+    {
+      "id": "landing",
+      "role": "先给结果与反差",
+      "narration": "决胜盘五比四没能收下比赛，五比六又得为留在场上而发球。郭涵煜，最后还是闯了过去。",
+      "evidence": [
+        "pbp",
+        "match"
+      ],
+      "point_numbers": [
+        205,
+        220,
+        230
+      ]
+    },
+    {
+      "id": "coordinates",
+      "role": "日期与本场身份",
+      "narration": "北京时间十月十四号下午，武汉WTA一千赛女单第二轮。外卡出战的郭涵煜，对阵从资格赛打上来的沃利内茨。",
+      "evidence": [
+        "match",
+        "draw",
+        "pbp"
+      ]
+    },
+    {
+      "id": "first_set_swing",
+      "role": "解释首盘而非只报结果",
+      "narration": "郭涵煜开场先破发，随后却一比三落后。她连赢三局反超，四比四之后，再破再保，六比四拿下首盘。",
+      "evidence": [
+        "pbp"
+      ],
+      "points_span": [
+        1,
+        63
+      ],
+      "key_games": [
+        {
+          "set": 1,
+          "game": 4
+        },
+        {
+          "set": 1,
+          "game": 7
+        },
+        {
+          "set": 1,
+          "game": 9
+        },
+        {
+          "set": 1,
+          "game": 10
+        }
+      ]
+    },
+    {
+      "id": "second_set_swing",
+      "role": "次盘回追仍被扳平",
+      "narration": "第二盘，郭涵煜又从一比四追到四比四。但最后两个局都归了沃利内茨，四比六，比赛进入决胜盘。",
+      "evidence": [
+        "pbp"
+      ],
+      "key_games": [
+        {
+          "set": 2,
+          "game": 5
+        },
+        {
+          "set": 2,
+          "game": 8
+        },
+        {
+          "set": 2,
+          "game": 10
+        }
+      ]
+    },
+    {
+      "id": "third_set_save",
+      "role": "关键保发解释困境和应对",
+      "narration": "决胜盘二比三，郭涵煜在自己的发球局零比四十落后。她先连救三个破发点，平分后又救两次，终于保住这一局。",
+      "evidence": [
+        "pbp"
+      ],
+      "point_numbers": [
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176
+      ],
+      "needs": "可压缩无关间隙，关键完整回合保留。没有官方完整画面的点用短字卡事实说明，缺口仅记内部。"
+    },
+    {
+      "id": "third_set_lead",
+      "role": "连续胶着后取得胜赛发球机会",
+      "narration": "接下来，郭涵煜在四比四时再次破发，五比四，可以发球赢下比赛。",
+      "evidence": [
+        "pbp"
+      ],
+      "point_numbers": [
+        193,
+        204
+      ],
+      "key_games": [
+        {
+          "set": 3,
+          "game": 9
+        }
+      ]
+    },
+    {
+      "id": "lead_lost",
+      "role": "胜赛局失守与被反超",
+      "narration": "但这个发球局没能保住。沃利内茨连赢两局，比分翻成五比六，郭涵煜必须先把比赛留下来。",
+      "evidence": [
+        "pbp"
+      ],
+      "point_numbers": [
+        205,
+        215
+      ]
+    },
+    {
+      "id": "stay_and_tiebreak",
+      "role": "保发续命进入最终较量",
+      "narration": "这一次，郭涵煜只丢一分就保发，六比六。抢七先连拿四分，又被追到四比三；最后三分，她全部拿下。",
+      "evidence": [
+        "pbp"
+      ],
+      "point_numbers": [
+        216,
+        230
+      ],
+      "needs": "抢七4-0、4-3及最后三分，使用scoreAfterPoint而非错误pointWinner字段核对。"
+    },
+    {
+      "id": "stat_payoff",
+      "role": "以统计解释比赛代价",
+      "narration": "四十八记制胜分，四十九次非受迫失误。三小时四分，郭涵煜以六比四、四比六、七比六，拿下这场反复拉锯。",
+      "evidence": [
+        "advanced_stats",
+        "match"
+      ],
+      "needs": "可用原生数据卡呈现48/49与24/28对比；不把总得分持平当钩子。"
+    },
+    {
+      "id": "next_round",
+      "role": "落点和下一轮",
+      "narration": "下一轮，她将对阵五号种子斯维托丽娜。接下来，郭涵煜还能把这股冲劲延续下去吗？",
+      "evidence": [
+        "match",
+        "draw"
+      ],
+      "needs": "两处技战术叙述需由实际回合证据补齐；本事实稿不编造球路或情绪动作。"
+    }
+  ],
+  "turning_points": [
+    {
+      "set": 1,
+      "game": 4,
+      "server": "B",
+      "winner": "A",
+      "guo_score_before": [
+        1,
+        2
+      ],
+      "guo_score_after": [
+        1,
+        3
+      ],
+      "points": 6,
+      "point_numbers": [
+        23,
+        28
+      ],
+      "first_point_utc": "2026-10-14T08:02:34Z",
+      "last_point_utc": "2026-10-14T08:05:55Z",
+      "break_point_chances": {
+        "A": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "30"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 7,
+      "server": "A",
+      "winner": "B",
+      "guo_score_before": [
+        3,
+        3
+      ],
+      "guo_score_after": [
+        4,
+        3
+      ],
+      "points": 6,
+      "point_numbers": [
+        43,
+        48
+      ],
+      "first_point_utc": "2026-10-14T08:17:24Z",
+      "last_point_utc": "2026-10-14T08:20:05Z",
+      "break_point_chances": {
+        "B": 2
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 9,
+      "server": "A",
+      "winner": "B",
+      "guo_score_before": [
+        4,
+        4
+      ],
+      "guo_score_after": [
+        5,
+        4
+      ],
+      "points": 6,
+      "point_numbers": [
+        53,
+        58
+      ],
+      "first_point_utc": "2026-10-14T08:24:50Z",
+      "last_point_utc": "2026-10-14T08:27:29Z",
+      "break_point_chances": {
+        "B": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 10,
+      "server": "B",
+      "winner": "B",
+      "guo_score_before": [
+        5,
+        4
+      ],
+      "guo_score_after": [
+        6,
+        4
+      ],
+      "points": 5,
+      "point_numbers": [
+        59,
+        63
+      ],
+      "first_point_utc": "2026-10-14T08:29:38Z",
+      "last_point_utc": "2026-10-14T08:31:46Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 5,
+      "server": "A",
+      "winner": "A",
+      "guo_score_before": [
+        1,
+        3
+      ],
+      "guo_score_after": [
+        1,
+        4
+      ],
+      "points": 4,
+      "point_numbers": [
+        89,
+        92
+      ],
+      "first_point_utc": "2026-10-14T08:52:47Z",
+      "last_point_utc": "2026-10-14T08:55:00Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 8,
+      "server": "B",
+      "winner": "B",
+      "guo_score_before": [
+        3,
+        4
+      ],
+      "guo_score_after": [
+        4,
+        4
+      ],
+      "points": 8,
+      "point_numbers": [
+        102,
+        109
+      ],
+      "first_point_utc": "2026-10-14T09:05:53Z",
+      "last_point_utc": "2026-10-14T09:10:26Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 10,
+      "server": "B",
+      "winner": "A",
+      "guo_score_before": [
+        4,
+        5
+      ],
+      "guo_score_after": [
+        4,
+        6
+      ],
+      "points": 5,
+      "point_numbers": [
+        116,
+        120
+      ],
+      "first_point_utc": "2026-10-14T09:17:36Z",
+      "last_point_utc": "2026-10-14T09:20:46Z",
+      "break_point_chances": {
+        "A": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "15"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 6,
+      "server": "B",
+      "winner": "B",
+      "guo_score_before": [
+        2,
+        3
+      ],
+      "guo_score_after": [
+        3,
+        3
+      ],
+      "points": 12,
+      "point_numbers": [
+        165,
+        176
+      ],
+      "first_point_utc": "2026-10-14T09:59:00Z",
+      "last_point_utc": "2026-10-14T10:06:47Z",
+      "break_point_chances": {
+        "A": 5
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 7,
+      "server": "A",
+      "winner": "B",
+      "guo_score_before": [
+        3,
+        3
+      ],
+      "guo_score_after": [
+        4,
+        3
+      ],
+      "points": 12,
+      "point_numbers": [
+        177,
+        188
+      ],
+      "first_point_utc": "2026-10-14T10:08:07Z",
+      "last_point_utc": "2026-10-14T10:14:53Z",
+      "break_point_chances": {
+        "B": 3
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 8,
+      "server": "B",
+      "winner": "A",
+      "guo_score_before": [
+        4,
+        3
+      ],
+      "guo_score_after": [
+        4,
+        4
+      ],
+      "points": 4,
+      "point_numbers": [
+        189,
+        192
+      ],
+      "first_point_utc": "2026-10-14T10:17:16Z",
+      "last_point_utc": "2026-10-14T10:19:29Z",
+      "break_point_chances": {
+        "A": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 9,
+      "server": "A",
+      "winner": "B",
+      "guo_score_before": [
+        4,
+        4
+      ],
+      "guo_score_after": [
+        5,
+        4
+      ],
+      "points": 12,
+      "point_numbers": [
+        193,
+        204
+      ],
+      "first_point_utc": "2026-10-14T10:20:08Z",
+      "last_point_utc": "2026-10-14T10:27:56Z",
+      "break_point_chances": {
+        "B": 5
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 10,
+      "server": "B",
+      "winner": "A",
+      "guo_score_before": [
+        5,
+        4
+      ],
+      "guo_score_after": [
+        5,
+        5
+      ],
+      "points": 6,
+      "point_numbers": [
+        205,
+        210
+      ],
+      "first_point_utc": "2026-10-14T10:30:02Z",
+      "last_point_utc": "2026-10-14T10:33:59Z",
+      "break_point_chances": {
+        "A": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "30"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 11,
+      "server": "A",
+      "winner": "A",
+      "guo_score_before": [
+        5,
+        5
+      ],
+      "guo_score_after": [
+        5,
+        6
+      ],
+      "points": 5,
+      "point_numbers": [
+        211,
+        215
+      ],
+      "first_point_utc": "2026-10-14T10:34:41Z",
+      "last_point_utc": "2026-10-14T10:37:03Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "15"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 12,
+      "server": "B",
+      "winner": "B",
+      "guo_score_before": [
+        5,
+        6
+      ],
+      "guo_score_after": [
+        6,
+        6
+      ],
+      "points": 5,
+      "point_numbers": [
+        216,
+        220
+      ],
+      "first_point_utc": "2026-10-14T10:39:43Z",
+      "last_point_utc": "2026-10-14T10:42:18Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 13,
+      "server": "",
+      "winner": "B",
+      "guo_score_before": [
+        6,
+        6
+      ],
+      "guo_score_after": [
+        7,
+        6
+      ],
+      "points": 10,
+      "point_numbers": [
+        221,
+        230
+      ],
+      "first_point_utc": "2026-10-14T10:43:08Z",
+      "last_point_utc": "2026-10-14T10:51:01Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "1"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "2"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "3"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "4"
+        },
+        {
+          "teamAScore": "1",
+          "teamBScore": "4"
+        },
+        {
+          "teamAScore": "2",
+          "teamBScore": "4"
+        },
+        {
+          "teamAScore": "3",
+          "teamBScore": "4"
+        },
+        {
+          "teamAScore": "3",
+          "teamBScore": "5"
+        },
+        {
+          "teamAScore": "3",
+          "teamBScore": "6"
+        },
+        {
+          "teamAScore": "3",
+          "teamBScore": "7"
+        }
+      ]
+    }
+  ],
+  "background_optional": {
+    "claim": "郭涵煜本周首轮1-6 7-6(6) 7-5击败科斯蒂亚",
+    "evidence": "wta-matches.json LS051；WTA draw科斯蒂亚12号种子",
+    "use": "一句来路即可，不拿首轮画面冒充第二轮，不称本场首胜。"
+  },
+  "unsupported_claims_to_avoid": [
+    "首次晋级WTA1000第三轮/生涯最佳：未完成历史记录验证",
+    "挽救赛点：本场没有已证实的对手赛点，5比6落后不等于面对赛点",
+    "本场逆转获胜/从落后一盘翻盘：郭先赢首盘，整场应写三盘险胜或苦战晋级",
+    "决胜盘抢七只丢一分/连得九分：raw pointWinner错误，实际4-0→4-3→7-3",
+    "用MatchTimeStamp15:32当实际开球分钟",
+    "未看画面前写握拳怒吼、哭泣、心理活动或具体线路"
+  ],
+  "open_gaps": [
+    "两段以上具体技战术需要画面或真实解说核对后补入最终spec。",
+    "关键回合完整性、真实庆祝、保留原声句及双语字幕由素材/原声代理核验；本稿未声称人工听审。",
+    "下一轮日期10月15日已有未排具体时刻的LS012；不口播未确认开赛小时。",
+    "正文的首次/历史最佳不使用，除非后续取到完整生涯证据。"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "model": "base.en",
+  "engine": "faster-whisper 1.2.1",
+  "method": "independent ASR, full source window, word timestamps; no human listening claimed",
+  "language": "en",
+  "compute_type": "int8",
+  "clips": [
+    {
+      "key": "wsc-40-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-40-00.mp4",
+      "source_sha256": "405fb3377a0c94d075f9ae6a0fedd290536c9a1de702a7b25cddeff8bb9e6538",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/cb6c7d08-d65a-48d3-a3b1-10f7aad47d13.mp4",
+      "window_start": 0,
+      "window_end": 30.36,
+      "segments": [
+        {
+          "start": 26.220000000000002,
+          "end": 27.42,
+          "text": " All the line.",
+          "avg_logprob": -0.9202820360660553,
+          "no_speech_prob": 0.31601598858833313,
+          "words": [
+            {
+              "word": " All",
+              "start": 26.220000000000002,
+              "end": 26.98,
+              "probability": 0.24826088547706604
+            },
+            {
+              "word": " the",
+              "start": 26.98,
+              "end": 27.12,
+              "probability": 0.9610022902488708
+            },
+            {
+              "word": " line.",
+              "start": 27.12,
+              "end": 27.42,
+              "probability": 0.9201292991638184
+            }
+          ]
+        },
+        {
+          "start": 27.42,
+          "end": 29.14,
+          "text": " Tremendous.",
+          "avg_logprob": -0.5788827793938773,
+          "no_speech_prob": 0.12300800532102585,
+          "words": [
+            {
+              "word": " Tremendous.",
+              "start": 27.42,
+              "end": 29.14,
+              "probability": 0.8024951418240865
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

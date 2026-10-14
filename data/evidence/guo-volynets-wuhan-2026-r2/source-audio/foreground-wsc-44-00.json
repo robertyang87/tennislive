@@ -1,0 +1,36 @@
+{
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/45483dbd-115f-4a44-b759-2e28c3a8d7cc.mp4",
+  "source_sha256": "9ec41d21eaa6261a351959074abae08d11404c36c10f20271cd7d029a41eb73d",
+  "source_key": "wsc-44-00",
+  "reviewed_from": 0,
+  "reviewed_to": 17.96,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex audio_review agent; fresh actual independent faster-whisper small.en/base.en, medium.en dispute checks",
+  "reviewed_at": "2026-10-14T11:59:41.488758+00:00",
+  "status": "complete",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "fresh_actual_asr_runs": true,
+  "foreground_english": [
+    {
+      "start": 10.1,
+      "end": 11.4,
+      "en": "Oh, has she made it?",
+      "zh": "噢，这球进了吗？"
+    },
+    {
+      "start": 12.1,
+      "end": 14.15,
+      "en": "Has she found the line? I don't know.",
+      "zh": "压到线了吗？我还不能确定。"
+    },
+    {
+      "start": 15.35,
+      "end": 17.15,
+      "en": "Let's look. Yes, she has.",
+      "zh": "看一下。是的，压线了。"
+    }
+  ],
+  "uncertain_spans": [],
+  "method_details": "All original source windows processed, no VAD filtering, no initial prompt, beam_size=5, word timestamps retained in separate raw JSON. Speaker proper names normalized to official spelling. No audio gain/normalization or loudness QC used."
+}

@@ -1,0 +1,30 @@
+{
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/a6bf48e9-1214-4cd9-a90c-e82a5d21273f.mp4",
+  "source_sha256": "fd47efab7d8061d58c45e9bb4e2d68ce335b56ce11d1a444e63391382e054f1b",
+  "source_key": "wsc-12-00",
+  "reviewed_from": 0,
+  "reviewed_to": 21.4,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex audio_review agent; fresh actual independent faster-whisper small.en/base.en, medium.en dispute checks",
+  "reviewed_at": "2026-10-14T11:59:41.487952+00:00",
+  "status": "complete",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "fresh_actual_asr_runs": true,
+  "foreground_english": [
+    {
+      "start": 14.82,
+      "end": 16.35,
+      "en": "Oh, wow!",
+      "zh": "噢，漂亮！"
+    },
+    {
+      "start": 16.9,
+      "end": 20.98,
+      "en": "Emphatically put away, and it is three in a row for Guo.",
+      "zh": "这一拍干脆利落，郭涵煜连赢三局。"
+    }
+  ],
+  "uncertain_spans": [],
+  "method_details": "All original source windows processed, no VAD filtering, no initial prompt, beam_size=5, word timestamps retained in separate raw JSON. Speaker proper names normalized to official spelling. No audio gain/normalization or loudness QC used."
+}

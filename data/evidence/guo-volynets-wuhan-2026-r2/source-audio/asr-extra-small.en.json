@@ -1,0 +1,67 @@
+{
+  "model": "small.en",
+  "engine": "faster-whisper 1.2.1",
+  "method": "independent ASR, full source window, word timestamps; no human listening claimed",
+  "language": "en",
+  "compute_type": "int8",
+  "clips": [
+    {
+      "key": "wsc-40-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-40-00.mp4",
+      "source_sha256": "405fb3377a0c94d075f9ae6a0fedd290536c9a1de702a7b25cddeff8bb9e6538",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/cb6c7d08-d65a-48d3-a3b1-10f7aad47d13.mp4",
+      "window_start": 0,
+      "window_end": 30.36,
+      "segments": [
+        {
+          "start": 25.68,
+          "end": 29.0,
+          "text": " On the line, tremendous.",
+          "avg_logprob": -0.8108536720275878,
+          "no_speech_prob": 0.2192908525466919,
+          "words": [
+            {
+              "word": " On",
+              "start": 25.68,
+              "end": 27.02,
+              "probability": 0.7707027196884155
+            },
+            {
+              "word": " the",
+              "start": 27.02,
+              "end": 27.16,
+              "probability": 0.9974257349967957
+            },
+            {
+              "word": " line,",
+              "start": 27.16,
+              "end": 27.5,
+              "probability": 0.9801193475723267
+            },
+            {
+              "word": " tremendous.",
+              "start": 28.42,
+              "end": 29.0,
+              "probability": 0.8699001669883728
+            }
+          ]
+        },
+        {
+          "start": 29.0,
+          "end": 29.22,
+          "text": " Yes.",
+          "avg_logprob": -0.8254694938659668,
+          "no_speech_prob": 0.09149052947759628,
+          "words": [
+            {
+              "word": " Yes.",
+              "start": 29.0,
+              "end": 29.22,
+              "probability": 0.1788312792778015
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

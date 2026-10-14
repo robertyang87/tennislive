@@ -1,0 +1,99 @@
+{
+  "schema": "tennislive.independent_final_visual_review.v1",
+  "status": "pass_visual_delta_review",
+  "checked_at": "2026-10-14T12:35:58.311937+00:00",
+  "film": "/workspace/tennislive/output/2026-10-14/reel/guo-volynets-wuhan-2026-r2/guo-volynets-wuhan-2026-r2.mp4",
+  "film_sha256": "befadf11158ad55dec3683a7aada1a0371d343d893858ce20d3541b413ef99ee",
+  "film_duration_seconds": 276.28,
+  "render_inputs_spec_sha256": "8d2e81411ec47de1b14a8de76dc4f71e2b4b9dc965c87370c67400ff4aafaa8e",
+  "render_inputs_projection_sha256": "53ee30cf51bd0876025ca2cdcf3ee7b36c23b7d6cbfb4174ce38a584c61eee27",
+  "method": "v4针对实际改段及后续时间平移作增量视觉复核：从最终成片提取24帧、浏览2张接触表；source45末段12.75、13.2、13.6、14.2、14.5、14.75、15.1秒额外密取样，确认最终落点与反应。前段沿用v3已完成107帧检查与同源窗口证据，不宣称v4逐帧全片观看。本轮不含音频听审、TTS读音或模型人脸识别。",
+  "historical_review": "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-review-v3-needs-fix.json",
+  "historical_film_sha256": "3a15d7b232fce04a2f4aecdec807b13bc95c4450e3350cab98f2abb4c32ff087",
+  "evidence_manifest": "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-v4-frames/manifest.json",
+  "contact_sheets": [
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-v4-frames/sheet-0.jpg",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-v4-frames/sheet-1.jpg"
+  ],
+  "resolved_findings": [
+    {
+      "source": "wsc-45-00",
+      "previous_end": 13.0,
+      "new_end": 15.3,
+      "status": "resolved",
+      "evidence_final_seconds": [
+        220.26,
+        220.66,
+        221.26,
+        221.56,
+        221.81,
+        222.16
+      ],
+      "description": "已保留最后一拍越网及落点，对手停止追击、球童入场；221.81秒郭涵煜近景握拳。旧版得分前截断已修复。"
+    }
+  ],
+  "checks": [
+    {
+      "name": "新增Oh yes字幕位置",
+      "status": "pass_visual",
+      "evidence_final_seconds": [
+        220.66,
+        221.26,
+        221.56,
+        221.81
+      ],
+      "detail": "Oh, yes! / 好球！实际出现在球场下方留白区域，不覆盖比分、球员或球路。222.16秒已结束显示；本项只检查字幕呈现，声音句尾由独立音频记录负责。"
+    },
+    {
+      "name": "完整赛点时间平移",
+      "status": "pass_visual",
+      "evidence_final_seconds": [
+        222.56,
+        224.36,
+        236.36,
+        238.96,
+        240.56,
+        242.86
+      ],
+      "detail": "接续赛点从准备发球、完整回合，到郭涵煜举双手庆祝及观众反应均保留。"
+    },
+    {
+      "name": "双方及裁判握手时间平移",
+      "status": "pass_visual",
+      "evidence_final_seconds": [
+        247.16,
+        248.86,
+        254.26,
+        255.16
+      ],
+      "detail": "双方网前相会握手与裁判握手画面保留，结束原生结板郭6-4 4-6 7-6清楚。"
+    },
+    {
+      "name": "统计卡及片尾时间平移",
+      "status": "pass_visual",
+      "evidence_final_seconds": [
+        263.48,
+        274.5
+      ]
+    },
+    {
+      "name": "固定0.814宽景与原生比分",
+      "status": "pass_with_declared_layout",
+      "detail": "保持用户已接受布局，未增加裁切；关键回合球路及人物动作可见，原板左端姓名部分裁切沿用既定方案，顶部完整对阵和最终比分常驻。"
+    },
+    {
+      "name": "卡片两行和前段字幕",
+      "status": "inherited_unchanged_v3_visual_review",
+      "detail": "本次未重新全片取样；v3对应卡片/字幕检查无问题，v4只改15号段长度及Ohyes字幕，保留历史证据路径。"
+    },
+    {
+      "name": "自动人脸模型",
+      "status": "unavailable",
+      "detail": "模型文件缺失；不将缺失写为通过，未声称模型身份或眼睛检查完成。"
+    }
+  ],
+  "open_visual_findings": [],
+  "scope": "visual_only_delta_review",
+  "audio_review_claimed": false,
+  "face_model_pass_claimed": false
+}

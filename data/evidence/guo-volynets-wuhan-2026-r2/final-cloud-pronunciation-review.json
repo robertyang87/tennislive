@@ -1,0 +1,537 @@
+{
+  "schema": "tennislive.final-cloud-pronunciation-review.v1",
+  "status": "scoped_modern_polyphone_review_complete",
+  "release_conclusion": "All 23 current modern polyphone/function-syllable occurrences have scoped actual-final-audio support; no concrete remaining wrong-reading or modern-polyphone blocker identified. This is limited acoustic evidence, not human listening or universal tone verification.",
+  "bundle_sha256": "e1f5e14854e48b2c3b6668ddc0ed880f4d772718bc78b3d133270a26936191c0",
+  "movie_sha256": "78657640159b0c4137cdd74172359c703c6537670c84e494e7729a7c92a6707d",
+  "native_binding_evidence": "final-native-byte-binding.json",
+  "native_audio_count": 10,
+  "all_10_actual_render_MP3_bytes_equal_final_bundle": true,
+  "all_10_render_marks_parsed_equal_final_bundle": true,
+  "actual_listening_performed": false,
+  "human_listening_claimed": false,
+  "tone_verified": false,
+  "current_modern_occurrence_count": 23,
+  "supported_scoped_occurrence_count": 23,
+  "confident_wrong_readings": [],
+  "remaining_concrete_modern_polyphone_blockers": [],
+  "occurrences": [
+    {
+      "target_index": 0,
+      "label": "第 3 段",
+      "text": "北京时间十月十四日下午，武汉女单第二轮。郭涵煜世界第二百四十，迎战世界第八十八的沃利内茨。",
+      "at": 3,
+      "char": "间",
+      "intended": "jian1",
+      "wrong": "jian4",
+      "actual_mp3_sha256": "d2484d16053752545af35acb5e10952e0994995672be523a6f01a2c50c18bb2e",
+      "actual_window_seconds": [
+        0.5689784,
+        0.7429159
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.6825733171040477,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 1,
+      "label": "第 3 段",
+      "text": "北京时间十月十四日下午，武汉女单第二轮。郭涵煜世界第二百四十，迎战世界第八十八的沃利内茨。",
+      "at": 15,
+      "char": "单",
+      "intended": "dan1",
+      "wrong": "shan4",
+      "actual_mp3_sha256": "d2484d16053752545af35acb5e10952e0994995672be523a6f01a2c50c18bb2e",
+      "actual_window_seconds": [
+        2.7594374999999998,
+        2.948125
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.23724221207944282,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:finite_supplements",
+      "discarded_reference_labels": [
+        "A:郸",
+        "B:缮"
+      ],
+      "original_raw_status_retained": "unconfirmed"
+    },
+    {
+      "target_index": 2,
+      "label": "第 7 段",
+      "text": "第二盘先陷入被动，她追回四比四。随后连输两局，比赛进入决胜盘。",
+      "at": 6,
+      "char": "被",
+      "intended": "bei4",
+      "wrong": "pi1",
+      "actual_mp3_sha256": "ec28e9e24b28abf018c71569fab3ad9ce343e337a1efaa7994e129e55baf9380",
+      "actual_window_seconds": [
+        1.025958,
+        1.1910619999999998
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.3952652595819415,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:finite_supplements",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "unconfirmed"
+    },
+    {
+      "target_index": 3,
+      "label": "第 9 段",
+      "text": "决胜盘二比三，郭涵煜在一局里救回五个破发点。随后破发，比分来到四比三，却又遭到回破。",
+      "at": 19,
+      "char": "发",
+      "intended": "fa1",
+      "wrong": "fa4",
+      "actual_mp3_sha256": "2878494e8a2c73d5df00673d6908fb778c677eaffb94394082da756ee40fa24c",
+      "actual_window_seconds": [
+        3.5495205,
+        3.738208
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.8421823425661785,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 4,
+      "label": "第 9 段",
+      "text": "决胜盘二比三，郭涵煜在一局里救回五个破发点。随后破发，比分来到四比三，却又遭到回破。",
+      "at": 25,
+      "char": "发",
+      "intended": "fa1",
+      "wrong": "fa4",
+      "actual_mp3_sha256": "2878494e8a2c73d5df00673d6908fb778c677eaffb94394082da756ee40fa24c",
+      "actual_window_seconds": [
+        4.964645,
+        5.1651240000000005
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9896807154755116,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:finite_supplements",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "unconfirmed"
+    },
+    {
+      "target_index": 5,
+      "label": "第 9 段",
+      "text": "决胜盘二比三，郭涵煜在一局里救回五个破发点。随后破发，比分来到四比三，却又遭到回破。",
+      "at": 28,
+      "char": "分",
+      "intended": "fen1",
+      "wrong": "fen4",
+      "actual_mp3_sha256": "2878494e8a2c73d5df00673d6908fb778c677eaffb94394082da756ee40fa24c",
+      "actual_window_seconds": [
+        5.566040999999999,
+        5.707541
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.31639057213143384,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 6,
+      "label": "第 11 段",
+      "text": "四比四时，郭涵煜再次破发。五比四仍未收官，随后连输两局，以五比六面对淘汰危机。",
+      "at": 11,
+      "char": "发",
+      "intended": "fa1",
+      "wrong": "fa4",
+      "actual_mp3_sha256": "d9a2e4383f3d5ff2abe35f684c784723a7e3301d09c20cfa5c436411f807a8da",
+      "actual_window_seconds": [
+        2.2877284999999996,
+        2.499999
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.3772238803798293,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 7,
+      "label": "第 12 段",
+      "text": "这一次，她只丢一分就保发。六比六，抢七开局又连拿四分！",
+      "at": 5,
+      "char": "只",
+      "intended": "zhi3",
+      "wrong": "zhi1",
+      "actual_mp3_sha256": "2292234dc9431f80566592cf0075a5003bc2f9e3c91ae80636d35f9324ab6e0e",
+      "actual_window_seconds": [
+        0.919791,
+        1.096666
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.7859148334669505,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 8,
+      "label": "第 12 段",
+      "text": "这一次，她只丢一分就保发。六比六，抢七开局又连拿四分！",
+      "at": 8,
+      "char": "分",
+      "intended": "fen1",
+      "wrong": "fen4",
+      "actual_mp3_sha256": "2292234dc9431f80566592cf0075a5003bc2f9e3c91ae80636d35f9324ab6e0e",
+      "actual_window_seconds": [
+        1.426875,
+        1.591958
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.8166189098797311,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 9,
+      "label": "第 12 段",
+      "text": "这一次，她只丢一分就保发。六比六，抢七开局又连拿四分！",
+      "at": 11,
+      "char": "发",
+      "intended": "fa1",
+      "wrong": "fa4",
+      "actual_mp3_sha256": "2292234dc9431f80566592cf0075a5003bc2f9e3c91ae80636d35f9324ab6e0e",
+      "actual_window_seconds": [
+        1.94577,
+        2.146249
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9236378051493855,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 10,
+      "label": "第 12 段",
+      "text": "这一次，她只丢一分就保发。六比六，抢七开局又连拿四分！",
+      "at": 17,
+      "char": "抢",
+      "intended": "qiang3",
+      "wrong": "qiang1",
+      "actual_mp3_sha256": "2292234dc9431f80566592cf0075a5003bc2f9e3c91ae80636d35f9324ab6e0e",
+      "actual_window_seconds": [
+        3.384416,
+        3.702832
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.8177788000878365,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 11,
+      "label": "第 12 段",
+      "text": "这一次，她只丢一分就保发。六比六，抢七开局又连拿四分！",
+      "at": 25,
+      "char": "分",
+      "intended": "fen1",
+      "wrong": "fen4",
+      "actual_mp3_sha256": "2292234dc9431f80566592cf0075a5003bc2f9e3c91ae80636d35f9324ab6e0e",
+      "actual_window_seconds": [
+        5.21225,
+        5.4245
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9185586380407021,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 12,
+      "label": "第 15 段",
+      "text": "但四比零，又被追到四比三。随后三个回合，郭涵煜全部拿下。",
+      "at": 6,
+      "char": "被",
+      "intended": "bei4",
+      "wrong": "pi1",
+      "actual_mp3_sha256": "615db8e2328136b28b7e9c458a7b5a830e89ed1c3e9eddf30e596fdb52524004",
+      "actual_window_seconds": [
+        1.202833,
+        1.332541
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.6760080817132466,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 13,
+      "label": "第 18 段",
+      "text": "四十八记制胜分，二十三次上网、十七次成功。三盘鏖战，郭涵煜再闯一关。下一轮迎战五号种子斯维托丽娜，她还能继续突破吗？",
+      "at": 6,
+      "char": "分",
+      "intended": "fen1",
+      "wrong": "fen4",
+      "actual_mp3_sha256": "08f3eb12ddb5c0bd875188554e7b6041905b51f4e59321daab7384fcadfaea22",
+      "actual_window_seconds": [
+        1.17925,
+        1.344333
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9629165259716911,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 14,
+      "label": "第 18 段",
+      "text": "四十八记制胜分，二十三次上网、十七次成功。三盘鏖战，郭涵煜再闯一关。下一轮迎战五号种子斯维托丽娜，她还能继续突破吗？",
+      "at": 40,
+      "char": "号",
+      "intended": "hao4",
+      "wrong": "hao2",
+      "actual_mp3_sha256": "08f3eb12ddb5c0bd875188554e7b6041905b51f4e59321daab7384fcadfaea22",
+      "actual_window_seconds": [
+        8.673374500000001,
+        8.856166000000002
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9834485934724246,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:finite_supplements",
+      "discarded_reference_labels": [
+        "B:嚎"
+      ],
+      "original_raw_status_retained": "unconfirmed"
+    },
+    {
+      "target_index": 15,
+      "label": "第 18 段",
+      "text": "四十八记制胜分，二十三次上网、十七次成功。三盘鏖战，郭涵煜再闯一关。下一轮迎战五号种子斯维托丽娜，她还能继续突破吗？",
+      "at": 41,
+      "char": "种",
+      "intended": "zhong3",
+      "wrong": "zhong4",
+      "actual_mp3_sha256": "08f3eb12ddb5c0bd875188554e7b6041905b51f4e59321daab7384fcadfaea22",
+      "actual_window_seconds": [
+        8.867916,
+        9.033019999999999
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.6365821529444203,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 16,
+      "label": "第 18 段",
+      "text": "四十八记制胜分，二十三次上网、十七次成功。三盘鏖战，郭涵煜再闯一关。下一轮迎战五号种子斯维托丽娜，她还能继续突破吗？",
+      "at": 46,
+      "char": "丽",
+      "intended": "li4",
+      "wrong": "li2",
+      "actual_mp3_sha256": "08f3eb12ddb5c0bd875188554e7b6041905b51f4e59321daab7384fcadfaea22",
+      "actual_window_seconds": [
+        9.6886826,
+        9.8443408
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9971089740870372,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 17,
+      "label": "第 18 段",
+      "text": "四十八记制胜分，二十三次上网、十七次成功。三盘鏖战，郭涵煜再闯一关。下一轮迎战五号种子斯维托丽娜，她还能继续突破吗？",
+      "at": 47,
+      "char": "娜",
+      "intended": "na4",
+      "wrong": "nuo2",
+      "actual_mp3_sha256": "08f3eb12ddb5c0bd875188554e7b6041905b51f4e59321daab7384fcadfaea22",
+      "actual_window_seconds": [
+        9.8443408,
+        9.999998999999999
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.8141653049332952,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 18,
+      "label": "第 18 段",
+      "text": "四十八记制胜分，二十三次上网、十七次成功。三盘鏖战，郭涵煜再闯一关。下一轮迎战五号种子斯维托丽娜，她还能继续突破吗？",
+      "at": 50,
+      "char": "还",
+      "intended": "hai2",
+      "wrong": "huan2",
+      "actual_mp3_sha256": "08f3eb12ddb5c0bd875188554e7b6041905b51f4e59321daab7384fcadfaea22",
+      "actual_window_seconds": [
+        10.495291,
+        10.672166
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.35813057366208384,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 19,
+      "label": "片尾",
+      "text": "关注网球时差，时差归我，好球归你。",
+      "at": 5,
+      "char": "差",
+      "intended": "cha1",
+      "wrong": "cha4",
+      "actual_mp3_sha256": "efc32e81086039d06fe6cc78f6c84411a0f9eb14cfb88557cfd816218d86e0a5",
+      "actual_window_seconds": [
+        1.09,
+        1.18
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.8245874179051811,
+      "two_sided_selftest_pass": true,
+      "method": "actual_nucleus_early_fall_timing_contrast",
+      "evidence": "first-cha-timing-evidence.json",
+      "discarded_reference_labels": [
+        "A:锸"
+      ],
+      "original_raw_status_retained": "unconfirmed"
+    },
+    {
+      "target_index": 20,
+      "label": "片尾",
+      "text": "关注网球时差，时差归我，好球归你。",
+      "at": 8,
+      "char": "差",
+      "intended": "cha1",
+      "wrong": "cha4",
+      "actual_mp3_sha256": "efc32e81086039d06fe6cc78f6c84411a0f9eb14cfb88557cfd816218d86e0a5",
+      "actual_window_seconds": [
+        1.8,
+        1.86
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.7198719378401446,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:finite_supplements",
+      "discarded_reference_labels": [
+        "B:诧"
+      ],
+      "original_raw_status_retained": "unconfirmed"
+    },
+    {
+      "target_index": 21,
+      "label": "片尾",
+      "text": "关注网球时差，时差归我，好球归你。",
+      "at": 12,
+      "char": "好",
+      "intended": "hao3",
+      "wrong": "hao4",
+      "actual_mp3_sha256": "efc32e81086039d06fe6cc78f6c84411a0f9eb14cfb88557cfd816218d86e0a5",
+      "actual_window_seconds": [
+        2.582541,
+        2.759416
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9989282958729315,
+      "two_sided_selftest_pass": true,
+      "method": "actual_target_MFCC_or_F0_dual_sided_contrast",
+      "evidence": "acoustic-evidence.json:initial_target_results",
+      "discarded_reference_labels": [],
+      "original_raw_status_retained": "supported_under_declared_controls"
+    },
+    {
+      "label": "第 3 段",
+      "text": "北京时间十月十四日下午，武汉女单第二轮。郭涵煜世界第二百四十，迎战世界第八十八的沃利内茨。",
+      "at": 39,
+      "char": "的",
+      "intended": "de5 (neutral grammatical de)",
+      "actual_mp3_sha256": "d2484d16053752545af35acb5e10952e0994995672be523a6f01a2c50c18bb2e",
+      "actual_window_seconds": [
+        7.311333,
+        7.441041
+      ],
+      "status": "supported_central_de_vowel_and_short_function_syllable",
+      "method": "actual_F1_F2_vowel_and_duration",
+      "evidence": "final-light-de-evidence.json",
+      "actual_F1_F2_Hz": [
+        507.3340712542731,
+        1314.736178990296
+      ],
+      "duration_ms": 129.70799999999994,
+      "limitation": "Neutral syllable is not equated with lexical de2 tone controls."
+    }
+  ],
+  "name_review": {
+    "郭涵煜": {
+      "expected": "guō hán yù",
+      "actual_scope": "Fresh final utterance ASR corroborates guo/han/yu across occurrences via 郭寒玉/郭寒宇 homophones. This is segment/content evidence, not proof of every tone."
+    },
+    "沃利内茨": {
+      "expected": "wò lì nèi cí",
+      "actual_scope": "Fresh final whole-utterance ASR corroborates wo/li/nei/ci via 卧力内次. No unrelated local original pass transferred."
+    },
+    "斯维托丽娜": {
+      "expected": "sī wéi tuō lì nà",
+      "actual_scope": "Fresh final whole-utterance ASR corroborates si/wei/tuo/li/na; actual final 丽 li4/li2 and 娜 na4/nuo2 controls separately pass. Ordinary single-reading name-character tones are not universally certified."
+    }
+  },
+  "scope_and_limits": [
+    "Only actual final cloud MP3 bytes were measured; local-v3 findings remain historical and were not transferred.",
+    "Fresh ASR supports utterance content and name syllables; Chinese glyphs do not prove lexical tone.",
+    "No human audio listening was performed. No universal lexical-tone certification is claimed.",
+    "Modern alternatives and grammatical light de are the finite release scope. Prior arbitrary single-character/number tone negative research and ancient readings are not silently marked pass.",
+    "Original six uncertain contrast records remain unchanged. Finite same-current-sentence controls resolve 单/被/second发; existing one-outlier-per-side rule resolves 号/second差.",
+    "First差 full-contour comparison failed reference calibration. Additional STFT-localized vowel early-fall comparison separates phrase-final chā lowering from immediate chà fall; one edge reference is explicitly removed under the same bounded outlier rule. This is a scoped pairwise result with method sensitivity, not proof against every possible accent.",
+    "Light 的 is supported by central vowel F1/F2 and 130ms short function-syllable duration; no false equivalence to lexical de2 tone.",
+    "Publication loudness/peak/gain normalization was not measured or changed. Main voice was not re-synthesized."
+  ],
+  "updated_at": "2026-10-14T13:29:02.603692+00:00"
+}
