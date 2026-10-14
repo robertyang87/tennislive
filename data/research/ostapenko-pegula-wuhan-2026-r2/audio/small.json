@@ -1,0 +1,1809 @@
+{
+  "status": "complete_raw_independent_asr",
+  "source": "/workspace/scratch/ostapenko-source/source.mp4",
+  "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+  "source_decoded_duration_seconds": 309.5684375,
+  "actual_interval_seconds": [
+    0.0,
+    303.0
+  ],
+  "model_requested_label": "small",
+  "actual_model": "small.en",
+  "engine": "faster-whisper",
+  "configuration": {
+    "language": "en",
+    "beam_size": 8,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "initial_prompt": null,
+    "prefix": null,
+    "temperature": 0.0,
+    "cpu_threads": 3,
+    "device": "cpu",
+    "compute_type": "int8",
+    "local_files_only": true
+  },
+  "method": "Independent complete interval transcribe, no prompt; raw ASR retained; no manual listening claimed",
+  "segments": [
+    {
+      "start": 15.120000000000001,
+      "end": 20.42,
+      "text": " That's a blow on the back up.",
+      "avg_logprob": -0.9351189949295737,
+      "no_speech_prob": 0.36225804686546326,
+      "words": [
+        {
+          "start": 15.120000000000001,
+          "end": 15.66,
+          "word": " That's",
+          "probability": 0.3054802040569484
+        },
+        {
+          "start": 15.66,
+          "end": 15.8,
+          "word": " a",
+          "probability": 0.015519142150878906
+        },
+        {
+          "start": 15.8,
+          "end": 16.12,
+          "word": " blow",
+          "probability": 0.24889075756072998
+        },
+        {
+          "start": 16.12,
+          "end": 17.86,
+          "word": " on",
+          "probability": 0.9156755208969116
+        },
+        {
+          "start": 17.86,
+          "end": 17.94,
+          "word": " the",
+          "probability": 0.9966349005699158
+        },
+        {
+          "start": 17.94,
+          "end": 18.14,
+          "word": " back",
+          "probability": 0.9347096681594849
+        },
+        {
+          "start": 18.14,
+          "end": 20.42,
+          "word": " up.",
+          "probability": 0.18594643473625183
+        }
+      ]
+    },
+    {
+      "start": 25.380000000000003,
+      "end": 26.64,
+      "text": " Rips a back up winner.",
+      "avg_logprob": -0.9351189949295737,
+      "no_speech_prob": 0.36225804686546326,
+      "words": [
+        {
+          "start": 25.380000000000003,
+          "end": 25.92,
+          "word": " Rips",
+          "probability": 0.8934454619884491
+        },
+        {
+          "start": 25.92,
+          "end": 26.1,
+          "word": " a",
+          "probability": 0.36256593465805054
+        },
+        {
+          "start": 26.1,
+          "end": 26.26,
+          "word": " back",
+          "probability": 0.9909089207649231
+        },
+        {
+          "start": 26.26,
+          "end": 26.42,
+          "word": " up",
+          "probability": 0.09211459755897522
+        },
+        {
+          "start": 26.42,
+          "end": 26.64,
+          "word": " winner.",
+          "probability": 0.7769638299942017
+        }
+      ]
+    },
+    {
+      "start": 39.36,
+      "end": 45.28,
+      "text": " A bit of punch and a bit of finesse from Ostapenka.",
+      "avg_logprob": -0.4291184874517577,
+      "no_speech_prob": 0.42165547609329224,
+      "words": [
+        {
+          "start": 39.36,
+          "end": 40.1,
+          "word": " A",
+          "probability": 0.020397180691361427
+        },
+        {
+          "start": 40.1,
+          "end": 40.1,
+          "word": " bit",
+          "probability": 0.7834320664405823
+        },
+        {
+          "start": 40.1,
+          "end": 43.06,
+          "word": " of",
+          "probability": 0.9877830147743225
+        },
+        {
+          "start": 43.06,
+          "end": 43.28,
+          "word": " punch",
+          "probability": 0.6962626576423645
+        },
+        {
+          "start": 43.28,
+          "end": 43.62,
+          "word": " and",
+          "probability": 0.8913933038711548
+        },
+        {
+          "start": 43.62,
+          "end": 43.62,
+          "word": " a",
+          "probability": 0.5599240064620972
+        },
+        {
+          "start": 43.62,
+          "end": 43.76,
+          "word": " bit",
+          "probability": 0.9933279752731323
+        },
+        {
+          "start": 43.76,
+          "end": 43.84,
+          "word": " of",
+          "probability": 0.9885342717170715
+        },
+        {
+          "start": 43.84,
+          "end": 44.46,
+          "word": " finesse",
+          "probability": 0.9990106821060181
+        },
+        {
+          "start": 44.46,
+          "end": 44.6,
+          "word": " from",
+          "probability": 0.941015899181366
+        },
+        {
+          "start": 44.6,
+          "end": 45.28,
+          "word": " Ostapenka.",
+          "probability": 0.6120776012539864
+        }
+      ]
+    },
+    {
+      "start": 47.12,
+      "end": 48.48,
+      "text": " First serve, set point.",
+      "avg_logprob": -0.4291184874517577,
+      "no_speech_prob": 0.42165547609329224,
+      "words": [
+        {
+          "start": 47.12,
+          "end": 47.36,
+          "word": " First",
+          "probability": 0.17741328477859497
+        },
+        {
+          "start": 47.36,
+          "end": 47.76,
+          "word": " serve,",
+          "probability": 0.9941080808639526
+        },
+        {
+          "start": 47.94,
+          "end": 48.02,
+          "word": " set",
+          "probability": 0.9047567844390869
+        },
+        {
+          "start": 48.02,
+          "end": 48.48,
+          "word": " point.",
+          "probability": 0.953408420085907
+        }
+      ]
+    },
+    {
+      "start": 52.519999999999996,
+      "end": 59.28,
+      "text": " Set point gobbled up by Jess Bagula, frustration for Yelena Ostapenka who hasn't quite hit",
+      "avg_logprob": -0.36307060583071277,
+      "no_speech_prob": 0.01340354885905981,
+      "words": [
+        {
+          "start": 52.519999999999996,
+          "end": 53.16,
+          "word": " Set",
+          "probability": 0.8366941213607788
+        },
+        {
+          "start": 53.16,
+          "end": 53.42,
+          "word": " point",
+          "probability": 0.39394161105155945
+        },
+        {
+          "start": 53.42,
+          "end": 53.84,
+          "word": " gobbled",
+          "probability": 0.9775520265102386
+        },
+        {
+          "start": 53.84,
+          "end": 54.18,
+          "word": " up",
+          "probability": 0.9966211318969727
+        },
+        {
+          "start": 54.18,
+          "end": 55.44,
+          "word": " by",
+          "probability": 0.16367590427398682
+        },
+        {
+          "start": 55.44,
+          "end": 55.68,
+          "word": " Jess",
+          "probability": 0.4408445954322815
+        },
+        {
+          "start": 55.68,
+          "end": 56.08,
+          "word": " Bagula,",
+          "probability": 0.48144926875829697
+        },
+        {
+          "start": 56.14,
+          "end": 56.64,
+          "word": " frustration",
+          "probability": 0.9758593440055847
+        },
+        {
+          "start": 56.64,
+          "end": 57.08,
+          "word": " for",
+          "probability": 0.9847068190574646
+        },
+        {
+          "start": 57.08,
+          "end": 57.42,
+          "word": " Yelena",
+          "probability": 0.7654065787792206
+        },
+        {
+          "start": 57.42,
+          "end": 58.08,
+          "word": " Ostapenka",
+          "probability": 0.22463289368897676
+        },
+        {
+          "start": 58.08,
+          "end": 58.34,
+          "word": " who",
+          "probability": 0.32441475987434387
+        },
+        {
+          "start": 58.34,
+          "end": 58.68,
+          "word": " hasn't",
+          "probability": 0.9980051815509796
+        },
+        {
+          "start": 58.68,
+          "end": 58.96,
+          "word": " quite",
+          "probability": 0.997410237789154
+        },
+        {
+          "start": 58.96,
+          "end": 59.28,
+          "word": " hit",
+          "probability": 0.9951164722442627
+        }
+      ]
+    },
+    {
+      "start": 59.28,
+      "end": 61.98,
+      "text": " the heights in the opening set here.",
+      "avg_logprob": -0.36307060583071277,
+      "no_speech_prob": 0.01340354885905981,
+      "words": [
+        {
+          "start": 59.28,
+          "end": 59.44,
+          "word": " the",
+          "probability": 0.9955893754959106
+        },
+        {
+          "start": 59.44,
+          "end": 59.76,
+          "word": " heights",
+          "probability": 0.8652431964874268
+        },
+        {
+          "start": 59.76,
+          "end": 60.94,
+          "word": " in",
+          "probability": 0.6581255197525024
+        },
+        {
+          "start": 60.94,
+          "end": 61.06,
+          "word": " the",
+          "probability": 0.9979975819587708
+        },
+        {
+          "start": 61.06,
+          "end": 61.34,
+          "word": " opening",
+          "probability": 0.996756374835968
+        },
+        {
+          "start": 61.34,
+          "end": 61.62,
+          "word": " set",
+          "probability": 0.9839648008346558
+        },
+        {
+          "start": 61.62,
+          "end": 61.98,
+          "word": " here.",
+          "probability": 0.9236127138137817
+        }
+      ]
+    },
+    {
+      "start": 62.5,
+      "end": 68.1,
+      "text": " Seamless from the American, the world number four in business here, 6-2 in just over half",
+      "avg_logprob": -0.36307060583071277,
+      "no_speech_prob": 0.01340354885905981,
+      "words": [
+        {
+          "start": 62.5,
+          "end": 62.98,
+          "word": " Seamless",
+          "probability": 0.9806155959765116
+        },
+        {
+          "start": 62.98,
+          "end": 63.56,
+          "word": " from",
+          "probability": 0.9897728562355042
+        },
+        {
+          "start": 63.56,
+          "end": 63.7,
+          "word": " the",
+          "probability": 0.9882764220237732
+        },
+        {
+          "start": 63.7,
+          "end": 64.12,
+          "word": " American,",
+          "probability": 0.9909449815750122
+        },
+        {
+          "start": 64.44,
+          "end": 64.68,
+          "word": " the",
+          "probability": 0.9697536826133728
+        },
+        {
+          "start": 64.68,
+          "end": 64.82,
+          "word": " world",
+          "probability": 0.9636806845664978
+        },
+        {
+          "start": 64.82,
+          "end": 65.02,
+          "word": " number",
+          "probability": 0.8413885235786438
+        },
+        {
+          "start": 65.02,
+          "end": 65.3,
+          "word": " four",
+          "probability": 0.9634280204772949
+        },
+        {
+          "start": 65.3,
+          "end": 65.48,
+          "word": " in",
+          "probability": 0.9868767261505127
+        },
+        {
+          "start": 65.48,
+          "end": 65.84,
+          "word": " business",
+          "probability": 0.9869632124900818
+        },
+        {
+          "start": 65.84,
+          "end": 66.16,
+          "word": " here,",
+          "probability": 0.9668857455253601
+        },
+        {
+          "start": 66.46,
+          "end": 66.66,
+          "word": " 6",
+          "probability": 0.5586051344871521
+        },
+        {
+          "start": 66.66,
+          "end": 67.04,
+          "word": "-2",
+          "probability": 0.7719797194004059
+        },
+        {
+          "start": 67.04,
+          "end": 67.4,
+          "word": " in",
+          "probability": 0.9279317855834961
+        },
+        {
+          "start": 67.4,
+          "end": 67.6,
+          "word": " just",
+          "probability": 0.9982969164848328
+        },
+        {
+          "start": 67.6,
+          "end": 67.94,
+          "word": " over",
+          "probability": 0.9981366395950317
+        },
+        {
+          "start": 67.94,
+          "end": 68.1,
+          "word": " half",
+          "probability": 0.9902701377868652
+        }
+      ]
+    },
+    {
+      "start": 68.1,
+      "end": 68.68,
+      "text": " an hour.",
+      "avg_logprob": -0.36307060583071277,
+      "no_speech_prob": 0.01340354885905981,
+      "words": [
+        {
+          "start": 68.1,
+          "end": 68.28,
+          "word": " an",
+          "probability": 0.9954116940498352
+        },
+        {
+          "start": 68.28,
+          "end": 68.68,
+          "word": " hour.",
+          "probability": 0.9995427131652832
+        }
+      ]
+    },
+    {
+      "start": 69.76,
+      "end": 72.62,
+      "text": " So it's a big task facing Ostapenka here.",
+      "avg_logprob": -0.37908845523308066,
+      "no_speech_prob": 0.16742204129695892,
+      "words": [
+        {
+          "start": 69.76,
+          "end": 70.48,
+          "word": " So",
+          "probability": 0.28194236755371094
+        },
+        {
+          "start": 70.48,
+          "end": 70.6,
+          "word": " it's",
+          "probability": 0.8903029263019562
+        },
+        {
+          "start": 70.6,
+          "end": 70.7,
+          "word": " a",
+          "probability": 0.9959326386451721
+        },
+        {
+          "start": 70.7,
+          "end": 70.84,
+          "word": " big",
+          "probability": 0.997696578502655
+        },
+        {
+          "start": 70.84,
+          "end": 71.2,
+          "word": " task",
+          "probability": 0.9975945353507996
+        },
+        {
+          "start": 71.2,
+          "end": 71.56,
+          "word": " facing",
+          "probability": 0.9809998273849487
+        },
+        {
+          "start": 71.56,
+          "end": 72.12,
+          "word": " Ostapenka",
+          "probability": 0.3963932936312631
+        },
+        {
+          "start": 72.12,
+          "end": 72.62,
+          "word": " here.",
+          "probability": 0.938595175743103
+        }
+      ]
+    },
+    {
+      "start": 80.68,
+      "end": 82.96,
+      "text": " There's another example though of her fire power.",
+      "avg_logprob": -0.37908845523308066,
+      "no_speech_prob": 0.16742204129695892,
+      "words": [
+        {
+          "start": 80.44,
+          "end": 80.8,
+          "word": " There's",
+          "probability": 0.8999812304973602
+        },
+        {
+          "start": 80.8,
+          "end": 80.98,
+          "word": " another",
+          "probability": 0.9976779818534851
+        },
+        {
+          "start": 80.98,
+          "end": 81.44,
+          "word": " example",
+          "probability": 0.9986085295677185
+        },
+        {
+          "start": 81.44,
+          "end": 81.68,
+          "word": " though",
+          "probability": 0.47309568524360657
+        },
+        {
+          "start": 81.68,
+          "end": 81.92,
+          "word": " of",
+          "probability": 0.9477280378341675
+        },
+        {
+          "start": 81.92,
+          "end": 82.06,
+          "word": " her",
+          "probability": 0.9794574975967407
+        },
+        {
+          "start": 82.06,
+          "end": 82.38,
+          "word": " fire",
+          "probability": 0.17517225444316864
+        },
+        {
+          "start": 82.38,
+          "end": 82.96,
+          "word": " power.",
+          "probability": 0.9552023410797119
+        }
+      ]
+    },
+    {
+      "start": 92.78,
+      "end": 96.76,
+      "text": " Bagula did well there, jammed the return back but she was always on the back foot.",
+      "avg_logprob": -0.31911670384199725,
+      "no_speech_prob": 0.03115895204246044,
+      "words": [
+        {
+          "start": 92.78,
+          "end": 93.18,
+          "word": " Bagula",
+          "probability": 0.4681680896319449
+        },
+        {
+          "start": 93.18,
+          "end": 93.38,
+          "word": " did",
+          "probability": 0.9703902006149292
+        },
+        {
+          "start": 93.38,
+          "end": 93.58,
+          "word": " well",
+          "probability": 0.9950142502784729
+        },
+        {
+          "start": 93.58,
+          "end": 93.74,
+          "word": " there,",
+          "probability": 0.4689919650554657
+        },
+        {
+          "start": 94.14,
+          "end": 94.16,
+          "word": " jammed",
+          "probability": 0.8789706826210022
+        },
+        {
+          "start": 94.16,
+          "end": 94.3,
+          "word": " the",
+          "probability": 0.9780183434486389
+        },
+        {
+          "start": 94.3,
+          "end": 94.62,
+          "word": " return",
+          "probability": 0.9955191612243652
+        },
+        {
+          "start": 94.62,
+          "end": 94.94,
+          "word": " back",
+          "probability": 0.9720721244812012
+        },
+        {
+          "start": 94.94,
+          "end": 95.14,
+          "word": " but",
+          "probability": 0.5650781393051147
+        },
+        {
+          "start": 95.14,
+          "end": 95.32,
+          "word": " she",
+          "probability": 0.9895620942115784
+        },
+        {
+          "start": 95.32,
+          "end": 95.42,
+          "word": " was",
+          "probability": 0.9981812238693237
+        },
+        {
+          "start": 95.42,
+          "end": 95.66,
+          "word": " always",
+          "probability": 0.9979178309440613
+        },
+        {
+          "start": 95.66,
+          "end": 95.82,
+          "word": " on",
+          "probability": 0.9976842403411865
+        },
+        {
+          "start": 95.82,
+          "end": 95.94,
+          "word": " the",
+          "probability": 0.9988834261894226
+        },
+        {
+          "start": 95.94,
+          "end": 96.14,
+          "word": " back",
+          "probability": 0.9982355833053589
+        },
+        {
+          "start": 96.14,
+          "end": 96.76,
+          "word": " foot.",
+          "probability": 0.9886852502822876
+        }
+      ]
+    },
+    {
+      "start": 105.69999999999999,
+      "end": 109.12,
+      "text": " Found the gap, good pass from Ostapenka.",
+      "avg_logprob": -0.36402270197868347,
+      "no_speech_prob": 0.17915499210357666,
+      "words": [
+        {
+          "start": 105.69999999999999,
+          "end": 106.25999999999999,
+          "word": " Found",
+          "probability": 0.1327873021364212
+        },
+        {
+          "start": 106.25999999999999,
+          "end": 106.82,
+          "word": " the",
+          "probability": 0.9910954236984253
+        },
+        {
+          "start": 106.82,
+          "end": 107.06,
+          "word": " gap,",
+          "probability": 0.9966670870780945
+        },
+        {
+          "start": 107.78,
+          "end": 108.04,
+          "word": " good",
+          "probability": 0.930539071559906
+        },
+        {
+          "start": 108.04,
+          "end": 108.32,
+          "word": " pass",
+          "probability": 0.9977572560310364
+        },
+        {
+          "start": 108.32,
+          "end": 108.56,
+          "word": " from",
+          "probability": 0.8635150194168091
+        },
+        {
+          "start": 108.56,
+          "end": 109.12,
+          "word": " Ostapenka.",
+          "probability": 0.23664178035687655
+        }
+      ]
+    },
+    {
+      "start": 123.7,
+      "end": 125.44,
+      "text": " Is there going to be another twist?",
+      "avg_logprob": -0.36402270197868347,
+      "no_speech_prob": 0.17915499210357666,
+      "words": [
+        {
+          "start": 123.7,
+          "end": 124.26,
+          "word": " Is",
+          "probability": 0.9374471306800842
+        },
+        {
+          "start": 124.26,
+          "end": 124.46,
+          "word": " there",
+          "probability": 0.9907508492469788
+        },
+        {
+          "start": 124.46,
+          "end": 124.6,
+          "word": " going",
+          "probability": 0.732312798500061
+        },
+        {
+          "start": 124.6,
+          "end": 124.72,
+          "word": " to",
+          "probability": 0.9982196688652039
+        },
+        {
+          "start": 124.72,
+          "end": 124.82,
+          "word": " be",
+          "probability": 0.9992365837097168
+        },
+        {
+          "start": 124.82,
+          "end": 125.08,
+          "word": " another",
+          "probability": 0.9966088533401489
+        },
+        {
+          "start": 125.08,
+          "end": 125.44,
+          "word": " twist?",
+          "probability": 0.9976720213890076
+        }
+      ]
+    },
+    {
+      "start": 125.44,
+      "end": 129.48,
+      "text": " That's bone rattling pace from Ostapenka.",
+      "avg_logprob": -0.2811936352934156,
+      "no_speech_prob": 0.31788626313209534,
+      "words": [
+        {
+          "start": 125.44,
+          "end": 126.4,
+          "word": " That's",
+          "probability": 0.602740466594696
+        },
+        {
+          "start": 126.4,
+          "end": 126.8,
+          "word": " bone",
+          "probability": 0.9821776151657104
+        },
+        {
+          "start": 126.8,
+          "end": 127.32,
+          "word": " rattling",
+          "probability": 0.8974093198776245
+        },
+        {
+          "start": 127.32,
+          "end": 127.64,
+          "word": " pace",
+          "probability": 0.9924039244651794
+        },
+        {
+          "start": 127.64,
+          "end": 128.12,
+          "word": " from",
+          "probability": 0.9850548505783081
+        },
+        {
+          "start": 128.12,
+          "end": 129.48,
+          "word": " Ostapenka.",
+          "probability": 0.3051936336560175
+        }
+      ]
+    },
+    {
+      "start": 146.44,
+      "end": 147.86,
+      "text": " Stuck at it, Ostapenka.",
+      "avg_logprob": -0.2811936352934156,
+      "no_speech_prob": 0.31788626313209534,
+      "words": [
+        {
+          "start": 146.11999999999998,
+          "end": 146.64,
+          "word": " Stuck",
+          "probability": 0.9707932472229004
+        },
+        {
+          "start": 146.64,
+          "end": 146.86,
+          "word": " at",
+          "probability": 0.9773221015930176
+        },
+        {
+          "start": 146.86,
+          "end": 147.02,
+          "word": " it,",
+          "probability": 0.9984123706817627
+        },
+        {
+          "start": 147.3,
+          "end": 147.86,
+          "word": " Ostapenka.",
+          "probability": 0.9596380144357681
+        }
+      ]
+    },
+    {
+      "start": 149.57999999999998,
+      "end": 153.1,
+      "text": " Bagula's first serve percentage still, lower than a season average.",
+      "avg_logprob": -0.25443961403586646,
+      "no_speech_prob": 0.21720091998577118,
+      "words": [
+        {
+          "start": 149.57999999999998,
+          "end": 150.22,
+          "word": " Bagula's",
+          "probability": 0.3163372323175319
+        },
+        {
+          "start": 150.22,
+          "end": 150.42,
+          "word": " first",
+          "probability": 0.8156009316444397
+        },
+        {
+          "start": 150.42,
+          "end": 150.64,
+          "word": " serve",
+          "probability": 0.9504982233047485
+        },
+        {
+          "start": 150.64,
+          "end": 151.1,
+          "word": " percentage",
+          "probability": 0.9774771332740784
+        },
+        {
+          "start": 151.1,
+          "end": 151.44,
+          "word": " still,",
+          "probability": 0.8264221549034119
+        },
+        {
+          "start": 151.62,
+          "end": 151.94,
+          "word": " lower",
+          "probability": 0.981257438659668
+        },
+        {
+          "start": 151.94,
+          "end": 152.18,
+          "word": " than",
+          "probability": 0.996996283531189
+        },
+        {
+          "start": 152.18,
+          "end": 152.32,
+          "word": " a",
+          "probability": 0.9814088940620422
+        },
+        {
+          "start": 152.32,
+          "end": 152.58,
+          "word": " season",
+          "probability": 0.9932872653007507
+        },
+        {
+          "start": 152.58,
+          "end": 153.1,
+          "word": " average.",
+          "probability": 0.996403694152832
+        }
+      ]
+    },
+    {
+      "start": 164.4,
+      "end": 168.58,
+      "text": " Well what can you do when Ostapenka plays like that?",
+      "avg_logprob": -0.25443961403586646,
+      "no_speech_prob": 0.21720091998577118,
+      "words": [
+        {
+          "start": 164.4,
+          "end": 165.04,
+          "word": " Well",
+          "probability": 0.8633997440338135
+        },
+        {
+          "start": 165.04,
+          "end": 165.2,
+          "word": " what",
+          "probability": 0.16121065616607666
+        },
+        {
+          "start": 165.2,
+          "end": 165.4,
+          "word": " can",
+          "probability": 0.9977803826332092
+        },
+        {
+          "start": 165.4,
+          "end": 165.54,
+          "word": " you",
+          "probability": 0.9989805817604065
+        },
+        {
+          "start": 165.54,
+          "end": 165.86,
+          "word": " do",
+          "probability": 0.9976164102554321
+        },
+        {
+          "start": 165.86,
+          "end": 167.02,
+          "word": " when",
+          "probability": 0.7952660918235779
+        },
+        {
+          "start": 167.02,
+          "end": 167.66,
+          "word": " Ostapenka",
+          "probability": 0.37666797707788646
+        },
+        {
+          "start": 167.66,
+          "end": 168.0,
+          "word": " plays",
+          "probability": 0.9836969971656799
+        },
+        {
+          "start": 168.0,
+          "end": 168.28,
+          "word": " like",
+          "probability": 0.9984797835350037
+        },
+        {
+          "start": 168.28,
+          "end": 168.58,
+          "word": " that?",
+          "probability": 0.9967705011367798
+        }
+      ]
+    },
+    {
+      "start": 185.22,
+      "end": 187.58,
+      "text": " That is unreal.",
+      "avg_logprob": -0.44672824442386627,
+      "no_speech_prob": 0.07394136488437653,
+      "words": [
+        {
+          "start": 185.22,
+          "end": 186.62,
+          "word": " That",
+          "probability": 0.7575955390930176
+        },
+        {
+          "start": 186.62,
+          "end": 186.82,
+          "word": " is",
+          "probability": 0.989025890827179
+        },
+        {
+          "start": 186.82,
+          "end": 187.58,
+          "word": " unreal.",
+          "probability": 0.9874042272567749
+        }
+      ]
+    },
+    {
+      "start": 200.17999999999998,
+      "end": 204.56,
+      "text": " Oh this is thunderous tennis.",
+      "avg_logprob": -0.295198993249373,
+      "no_speech_prob": 0.10515281558036804,
+      "words": [
+        {
+          "start": 200.17999999999998,
+          "end": 201.57999999999998,
+          "word": " Oh",
+          "probability": 0.463222473859787
+        },
+        {
+          "start": 201.57999999999998,
+          "end": 202.98,
+          "word": " this",
+          "probability": 0.3721054196357727
+        },
+        {
+          "start": 202.98,
+          "end": 203.22,
+          "word": " is",
+          "probability": 0.9952296018600464
+        },
+        {
+          "start": 203.22,
+          "end": 203.98,
+          "word": " thunderous",
+          "probability": 0.9651482999324799
+        },
+        {
+          "start": 203.98,
+          "end": 204.56,
+          "word": " tennis.",
+          "probability": 0.9521549344062805
+        }
+      ]
+    },
+    {
+      "start": 211.9,
+      "end": 214.92,
+      "text": " Incredible, absolutely incredible.",
+      "avg_logprob": -0.2758026113733649,
+      "no_speech_prob": 0.2002490907907486,
+      "words": [
+        {
+          "start": 211.9,
+          "end": 212.9,
+          "word": " Incredible,",
+          "probability": 0.1327267736196518
+        },
+        {
+          "start": 214.4,
+          "end": 214.4,
+          "word": " absolutely",
+          "probability": 0.9858599305152893
+        },
+        {
+          "start": 214.4,
+          "end": 214.92,
+          "word": " incredible.",
+          "probability": 0.990202784538269
+        }
+      ]
+    },
+    {
+      "start": 215.78,
+      "end": 217.24,
+      "text": " And on we go in Wuhan.",
+      "avg_logprob": -0.2758026113733649,
+      "no_speech_prob": 0.2002490907907486,
+      "words": [
+        {
+          "start": 215.78,
+          "end": 215.8,
+          "word": " And",
+          "probability": 0.8567506074905396
+        },
+        {
+          "start": 215.8,
+          "end": 215.94,
+          "word": " on",
+          "probability": 0.9867861866950989
+        },
+        {
+          "start": 215.94,
+          "end": 216.12,
+          "word": " we",
+          "probability": 0.9983071088790894
+        },
+        {
+          "start": 216.12,
+          "end": 216.4,
+          "word": " go",
+          "probability": 0.9989398121833801
+        },
+        {
+          "start": 216.4,
+          "end": 216.74,
+          "word": " in",
+          "probability": 0.774463415145874
+        },
+        {
+          "start": 216.74,
+          "end": 217.24,
+          "word": " Wuhan.",
+          "probability": 0.9960744579633077
+        }
+      ]
+    },
+    {
+      "start": 220.84,
+      "end": 223.02,
+      "text": " Yelena Ostapenka was lit afire.",
+      "avg_logprob": -0.2758026113733649,
+      "no_speech_prob": 0.2002490907907486,
+      "words": [
+        {
+          "start": 220.84,
+          "end": 221.3,
+          "word": " Yelena",
+          "probability": 0.8055942058563232
+        },
+        {
+          "start": 221.3,
+          "end": 222.06,
+          "word": " Ostapenka",
+          "probability": 0.3697071224451065
+        },
+        {
+          "start": 222.06,
+          "end": 222.26,
+          "word": " was",
+          "probability": 0.5217490792274475
+        },
+        {
+          "start": 222.26,
+          "end": 222.5,
+          "word": " lit",
+          "probability": 0.9973239898681641
+        },
+        {
+          "start": 222.5,
+          "end": 223.02,
+          "word": " afire.",
+          "probability": 0.8228719234466553
+        }
+      ]
+    },
+    {
+      "start": 239.38,
+      "end": 245.5,
+      "text": " Nice cushion volley from Ostapenka, previously.",
+      "avg_logprob": -0.3162343462308248,
+      "no_speech_prob": 0.043157123029232025,
+      "words": [
+        {
+          "start": 239.38,
+          "end": 240.78,
+          "word": " Nice",
+          "probability": 0.18738166987895966
+        },
+        {
+          "start": 240.78,
+          "end": 241.12,
+          "word": " cushion",
+          "probability": 0.8737809062004089
+        },
+        {
+          "start": 241.12,
+          "end": 241.38,
+          "word": " volley",
+          "probability": 0.9063761234283447
+        },
+        {
+          "start": 241.38,
+          "end": 241.7,
+          "word": " from",
+          "probability": 0.9732221961021423
+        },
+        {
+          "start": 241.7,
+          "end": 242.62,
+          "word": " Ostapenka,",
+          "probability": 0.2668021460995078
+        },
+        {
+          "start": 243.2,
+          "end": 245.5,
+          "word": " previously.",
+          "probability": 0.9163094758987427
+        }
+      ]
+    },
+    {
+      "start": 252.08,
+      "end": 256.88,
+      "text": " That's a lovely piece of plate.",
+      "avg_logprob": -0.14545581185004927,
+      "no_speech_prob": 0.11107655614614487,
+      "words": [
+        {
+          "start": 252.08,
+          "end": 252.8,
+          "word": " That's",
+          "probability": 0.4241235312074423
+        },
+        {
+          "start": 252.8,
+          "end": 252.88,
+          "word": " a",
+          "probability": 0.9251261353492737
+        },
+        {
+          "start": 252.88,
+          "end": 253.14,
+          "word": " lovely",
+          "probability": 0.9354701638221741
+        },
+        {
+          "start": 253.14,
+          "end": 253.5,
+          "word": " piece",
+          "probability": 0.9419872164726257
+        },
+        {
+          "start": 253.5,
+          "end": 256.8,
+          "word": " of",
+          "probability": 0.9914325475692749
+        },
+        {
+          "start": 256.8,
+          "end": 256.88,
+          "word": " plate.",
+          "probability": 0.3936879634857178
+        }
+      ]
+    },
+    {
+      "start": 264.84,
+      "end": 267.98,
+      "text": " Ostapenka packs a power punch in Wuhan.",
+      "avg_logprob": -0.14545581185004927,
+      "no_speech_prob": 0.11107655614614487,
+      "words": [
+        {
+          "start": 264.84,
+          "end": 265.56,
+          "word": " Ostapenka",
+          "probability": 0.25707987655187026
+        },
+        {
+          "start": 265.56,
+          "end": 266.12,
+          "word": " packs",
+          "probability": 0.7756443619728088
+        },
+        {
+          "start": 266.12,
+          "end": 266.48,
+          "word": " a",
+          "probability": 0.9845483303070068
+        },
+        {
+          "start": 266.48,
+          "end": 266.72,
+          "word": " power",
+          "probability": 0.9369896650314331
+        },
+        {
+          "start": 266.72,
+          "end": 267.16,
+          "word": " punch",
+          "probability": 0.9283297657966614
+        },
+        {
+          "start": 267.16,
+          "end": 267.42,
+          "word": " in",
+          "probability": 0.953289806842804
+        },
+        {
+          "start": 267.42,
+          "end": 267.98,
+          "word": " Wuhan.",
+          "probability": 0.9910498658816019
+        }
+      ]
+    },
+    {
+      "start": 268.78,
+      "end": 274.02,
+      "text": " A dazzling attacking performance from one of the biggest hitters in the game as she",
+      "avg_logprob": -0.14545581185004927,
+      "no_speech_prob": 0.11107655614614487,
+      "words": [
+        {
+          "start": 268.78,
+          "end": 268.98,
+          "word": " A",
+          "probability": 0.9713818430900574
+        },
+        {
+          "start": 268.98,
+          "end": 269.52,
+          "word": " dazzling",
+          "probability": 0.9973375201225281
+        },
+        {
+          "start": 269.52,
+          "end": 270.12,
+          "word": " attacking",
+          "probability": 0.8548473715782166
+        },
+        {
+          "start": 270.12,
+          "end": 270.62,
+          "word": " performance",
+          "probability": 0.9972833395004272
+        },
+        {
+          "start": 270.62,
+          "end": 271.02,
+          "word": " from",
+          "probability": 0.9829257726669312
+        },
+        {
+          "start": 271.02,
+          "end": 271.22,
+          "word": " one",
+          "probability": 0.9932356476783752
+        },
+        {
+          "start": 271.22,
+          "end": 271.34,
+          "word": " of",
+          "probability": 0.9961655139923096
+        },
+        {
+          "start": 271.34,
+          "end": 271.5,
+          "word": " the",
+          "probability": 0.9973887801170349
+        },
+        {
+          "start": 271.5,
+          "end": 271.92,
+          "word": " biggest",
+          "probability": 0.9968738555908203
+        },
+        {
+          "start": 271.92,
+          "end": 272.28,
+          "word": " hitters",
+          "probability": 0.9860329031944275
+        },
+        {
+          "start": 272.28,
+          "end": 272.52,
+          "word": " in",
+          "probability": 0.9960915446281433
+        },
+        {
+          "start": 272.52,
+          "end": 272.7,
+          "word": " the",
+          "probability": 0.9986401200294495
+        },
+        {
+          "start": 272.7,
+          "end": 273.0,
+          "word": " game",
+          "probability": 0.9979239702224731
+        },
+        {
+          "start": 273.0,
+          "end": 273.8,
+          "word": " as",
+          "probability": 0.6158630847930908
+        },
+        {
+          "start": 273.8,
+          "end": 274.02,
+          "word": " she",
+          "probability": 0.9933912754058838
+        }
+      ]
+    },
+    {
+      "start": 274.02,
+      "end": 275.58,
+      "text": " picks Bagula apart.",
+      "avg_logprob": -0.1525751233100891,
+      "no_speech_prob": 0.533315896987915,
+      "words": [
+        {
+          "start": 274.02,
+          "end": 274.46,
+          "word": " picks",
+          "probability": 0.4375588595867157
+        },
+        {
+          "start": 274.46,
+          "end": 275.06,
+          "word": " Bagula",
+          "probability": 0.4501880278403405
+        },
+        {
+          "start": 275.06,
+          "end": 275.58,
+          "word": " apart.",
+          "probability": 0.989080011844635
+        }
+      ]
+    },
+    {
+      "start": 277.04,
+      "end": 278.38,
+      "text": " The second seed is stunned.",
+      "avg_logprob": -0.1525751233100891,
+      "no_speech_prob": 0.533315896987915,
+      "words": [
+        {
+          "start": 277.04,
+          "end": 277.22,
+          "word": " The",
+          "probability": 0.9399598836898804
+        },
+        {
+          "start": 277.22,
+          "end": 277.58,
+          "word": " second",
+          "probability": 0.9894208908081055
+        },
+        {
+          "start": 277.58,
+          "end": 277.84,
+          "word": " seed",
+          "probability": 0.9394018054008484
+        },
+        {
+          "start": 277.84,
+          "end": 278.02,
+          "word": " is",
+          "probability": 0.9920889139175415
+        },
+        {
+          "start": 278.02,
+          "end": 278.38,
+          "word": " stunned.",
+          "probability": 0.998104453086853
+        }
+      ]
+    },
+    {
+      "start": 279.22,
+      "end": 284.0,
+      "text": " She missed three match points in the second set and they proved so costly.",
+      "avg_logprob": -0.1525751233100891,
+      "no_speech_prob": 0.533315896987915,
+      "words": [
+        {
+          "start": 279.22,
+          "end": 279.3,
+          "word": " She",
+          "probability": 0.990365743637085
+        },
+        {
+          "start": 279.3,
+          "end": 279.46,
+          "word": " missed",
+          "probability": 0.9878892302513123
+        },
+        {
+          "start": 279.46,
+          "end": 279.82,
+          "word": " three",
+          "probability": 0.9216067790985107
+        },
+        {
+          "start": 279.82,
+          "end": 280.06,
+          "word": " match",
+          "probability": 0.9722467064857483
+        },
+        {
+          "start": 280.06,
+          "end": 280.38,
+          "word": " points",
+          "probability": 0.9603682160377502
+        },
+        {
+          "start": 280.38,
+          "end": 280.7,
+          "word": " in",
+          "probability": 0.6442887187004089
+        },
+        {
+          "start": 280.7,
+          "end": 280.88,
+          "word": " the",
+          "probability": 0.99642413854599
+        },
+        {
+          "start": 280.88,
+          "end": 281.12,
+          "word": " second",
+          "probability": 0.9946284890174866
+        },
+        {
+          "start": 281.12,
+          "end": 281.52,
+          "word": " set",
+          "probability": 0.9808134436607361
+        },
+        {
+          "start": 281.52,
+          "end": 282.5,
+          "word": " and",
+          "probability": 0.5386654734611511
+        },
+        {
+          "start": 282.5,
+          "end": 282.68,
+          "word": " they",
+          "probability": 0.9955311417579651
+        },
+        {
+          "start": 282.68,
+          "end": 282.94,
+          "word": " proved",
+          "probability": 0.7096754908561707
+        },
+        {
+          "start": 282.94,
+          "end": 283.4,
+          "word": " so",
+          "probability": 0.9954083561897278
+        },
+        {
+          "start": 283.4,
+          "end": 284.0,
+          "word": " costly.",
+          "probability": 0.9991084933280945
+        }
+      ]
+    },
+    {
+      "start": 285.4,
+      "end": 290.52,
+      "text": " Ostapenka, too powerful, too potent, too good.",
+      "avg_logprob": -0.1525751233100891,
+      "no_speech_prob": 0.533315896987915,
+      "words": [
+        {
+          "start": 285.4,
+          "end": 286.12,
+          "word": " Ostapenka,",
+          "probability": 0.11311713948089164
+        },
+        {
+          "start": 287.04,
+          "end": 287.56,
+          "word": " too",
+          "probability": 0.9198217391967773
+        },
+        {
+          "start": 287.56,
+          "end": 288.08,
+          "word": " powerful,",
+          "probability": 0.9980592131614685
+        },
+        {
+          "start": 288.48,
+          "end": 288.74,
+          "word": " too",
+          "probability": 0.9242076873779297
+        },
+        {
+          "start": 288.74,
+          "end": 289.22,
+          "word": " potent,",
+          "probability": 0.9997201561927795
+        },
+        {
+          "start": 289.78,
+          "end": 290.2,
+          "word": " too",
+          "probability": 0.9938826560974121
+        },
+        {
+          "start": 290.2,
+          "end": 290.52,
+          "word": " good.",
+          "probability": 0.9994015693664551
+        }
+      ]
+    },
+    {
+      "start": 291.16,
+      "end": 297.84,
+      "text": " And into the round of 16 from a set down, 2-6, 7-6, 6-3.",
+      "avg_logprob": -0.1525751233100891,
+      "no_speech_prob": 0.533315896987915,
+      "words": [
+        {
+          "start": 291.16,
+          "end": 291.3,
+          "word": " And",
+          "probability": 0.9596217274665833
+        },
+        {
+          "start": 291.3,
+          "end": 291.62,
+          "word": " into",
+          "probability": 0.9601718783378601
+        },
+        {
+          "start": 291.62,
+          "end": 291.74,
+          "word": " the",
+          "probability": 0.9972220659255981
+        },
+        {
+          "start": 291.74,
+          "end": 291.94,
+          "word": " round",
+          "probability": 0.8056041598320007
+        },
+        {
+          "start": 291.94,
+          "end": 292.12,
+          "word": " of",
+          "probability": 0.9132382273674011
+        },
+        {
+          "start": 292.12,
+          "end": 292.64,
+          "word": " 16",
+          "probability": 0.9289035201072693
+        },
+        {
+          "start": 292.64,
+          "end": 293.36,
+          "word": " from",
+          "probability": 0.5488077402114868
+        },
+        {
+          "start": 293.36,
+          "end": 293.54,
+          "word": " a",
+          "probability": 0.9922029972076416
+        },
+        {
+          "start": 293.54,
+          "end": 293.78,
+          "word": " set",
+          "probability": 0.9597628116607666
+        },
+        {
+          "start": 293.78,
+          "end": 294.22,
+          "word": " down,",
+          "probability": 0.9237210154533386
+        },
+        {
+          "start": 294.96,
+          "end": 295.3,
+          "word": " 2",
+          "probability": 0.48683127760887146
+        },
+        {
+          "start": 295.3,
+          "end": 295.58,
+          "word": "-6,",
+          "probability": 0.9069797694683075
+        },
+        {
+          "start": 295.76,
+          "end": 296.06,
+          "word": " 7",
+          "probability": 0.9779232740402222
+        },
+        {
+          "start": 296.06,
+          "end": 296.68,
+          "word": "-6,",
+          "probability": 0.9987383484840393
+        },
+        {
+          "start": 297.02,
+          "end": 297.44,
+          "word": " 6",
+          "probability": 0.9937553405761719
+        },
+        {
+          "start": 297.44,
+          "end": 297.84,
+          "word": "-3.",
+          "probability": 0.9974109828472137
+        }
+      ]
+    },
+    {
+      "start": 297.84,
+      "end": 298.96,
+      "text": " What a performance.",
+      "avg_logprob": -0.3006510053362165,
+      "no_speech_prob": 0.8690118789672852,
+      "words": [
+        {
+          "start": 297.84,
+          "end": 298.42,
+          "word": " What",
+          "probability": 0.5432674884796143
+        },
+        {
+          "start": 298.42,
+          "end": 298.58,
+          "word": " a",
+          "probability": 0.9937467575073242
+        },
+        {
+          "start": 298.58,
+          "end": 298.96,
+          "word": " performance.",
+          "probability": 0.9967164397239685
+        }
+      ]
+    }
+  ],
+  "full_text": "That's a blow on the back up. Rips a back up winner. A bit of punch and a bit of finesse from Ostapenka. First serve, set point. Set point gobbled up by Jess Bagula, frustration for Yelena Ostapenka who hasn't quite hit the heights in the opening set here. Seamless from the American, the world number four in business here, 6-2 in just over half an hour. So it's a big task facing Ostapenka here. There's another example though of her fire power. Bagula did well there, jammed the return back but she was always on the back foot. Found the gap, good pass from Ostapenka. Is there going to be another twist? That's bone rattling pace from Ostapenka. Stuck at it, Ostapenka. Bagula's first serve percentage still, lower than a season average. Well what can you do when Ostapenka plays like that? That is unreal. Oh this is thunderous tennis. Incredible, absolutely incredible. And on we go in Wuhan. Yelena Ostapenka was lit afire. Nice cushion volley from Ostapenka, previously. That's a lovely piece of plate. Ostapenka packs a power punch in Wuhan. A dazzling attacking performance from one of the biggest hitters in the game as she picks Bagula apart. The second seed is stunned. She missed three match points in the second set and they proved so costly. Ostapenka, too powerful, too potent, too good. And into the round of 16 from a set down, 2-6, 7-6, 6-3. What a performance.",
+  "detected_language": "en",
+  "language_probability": 1.0,
+  "elapsed_seconds": 64.49129176139832
+}

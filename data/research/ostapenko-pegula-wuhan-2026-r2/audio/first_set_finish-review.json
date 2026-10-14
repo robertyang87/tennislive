@@ -1,0 +1,78 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=l9Gd5ksrsVM",
+  "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI assistant; original source captions and two full local recognizer hypotheses cross-checked",
+  "reviewed_at": "2026-10-14T12:01:52.868432+00:00",
+  "status": "complete",
+  "reviewed_from": 45.44,
+  "reviewed_to": 74.02,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 47.12,
+      "end": 48.48,
+      "en": "First serve, set point.",
+      "zh": "一发，盘点。",
+      "verification": "small+captions; base omitted",
+      "timing_note": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset"
+    },
+    {
+      "start": 52.52,
+      "end": 56.08,
+      "en": "Set point gobbled up by Jess Pegula.",
+      "zh": "佩古拉轻松拿下盘点",
+      "verification": "small+captions; base omitted",
+      "timing_note": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset"
+    },
+    {
+      "start": 56.14,
+      "end": 61.98,
+      "en": "Frustration for Jelena Ostapenko, who hasn't quite hit the heights in the opening set here.",
+      "zh": "奥斯塔彭科很懊恼\n首盘没打出应有水准",
+      "verification": "small+captions; base only tail fragment",
+      "timing_note": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset"
+    },
+    {
+      "start": 62.5,
+      "end": 68.68,
+      "en": "Seamless from the American, the world number four in business here, six-two in just over half an hour.",
+      "zh": "美国选手打得行云流水\n世界第四掌控局面\n半小时出头六比二拿下首盘",
+      "verification": "base+small+captions",
+      "timing_note": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset"
+    },
+    {
+      "start": 69.76,
+      "end": 72.62,
+      "en": "So it's a big task facing Ostapenko here.",
+      "zh": "奥斯塔彭科面临艰巨任务",
+      "verification": "base+small+captions",
+      "timing_note": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset"
+    }
+  ],
+  "evidence_basis": {
+    "full_source_crosscheck_path": "data/research/ostapenko-pegula-wuhan-2026-r2/audio/crosscheck.json",
+    "full_source_crosscheck_sha256": "41fbee4a2898d2e110b99207d00ade3e64c79d101c851cf68277eaeaa51420e7",
+    "recognizers": [
+      {
+        "path": "data/research/ostapenko-pegula-wuhan-2026-r2/audio/base.json",
+        "sha256": "5fac0d90bd98657bf3309d5bbb256cf947c4417bf748aa442a11780cf7776e84"
+      },
+      {
+        "path": "data/research/ostapenko-pegula-wuhan-2026-r2/audio/small.json",
+        "sha256": "8a62d49fb868bea0bae107eb4474ccce5ac58d076bf8033af7a0a8960c9dc741"
+      }
+    ],
+    "caption_path": "output/2026-10-14/reel/video-l9gd5ksrsvm/captions.txt",
+    "caption_sha256": "b890ab5871476c32890d4630e2a0733afe8134cd18a06fa234e8dc8e9f7d6ba8",
+    "manual_listening_claimed": false,
+    "audit_notes": [
+      "ASR word timing is conservative, not claimed as manual acoustic onset.",
+      "Declared ambiguous intervals were excluded from selected source clips.",
+      "Base omits parts of terminal commentary; small and source captions support those complete sentences, not claimed as two-model agreement.",
+      "Known actual participant names normalized; raw recognizer JSON left unmodified.",
+      "Court outcome and tiebreak bracket come from official score/PBP and visible native scoreboard, not phonetic recognition."
+    ]
+  }
+}

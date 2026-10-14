@@ -1,0 +1,2284 @@
+{
+  "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS031/point-by-point",
+  "mapping": {
+    "A": "Jelena Ostapenko",
+    "B": "Jessica Pegula"
+  },
+  "point_count": 187,
+  "first_point_utc": "2026-10-14T08:22:57Z",
+  "last_point_utc": "2026-10-14T10:46:20Z",
+  "raw_pointWinner_errors": [
+    {
+      "point": 97,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "A",
+      "score_derived": "B"
+    },
+    {
+      "point": 117,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "A",
+      "score_derived": "B"
+    },
+    {
+      "point": 118,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "A",
+      "score_derived": "B"
+    },
+    {
+      "point": 119,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "A",
+      "score_derived": "B"
+    },
+    {
+      "point": 123,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "A",
+      "score_derived": "B"
+    },
+    {
+      "point": 124,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "A",
+      "score_derived": "B"
+    },
+    {
+      "point": 126,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "A",
+      "score_derived": "B"
+    },
+    {
+      "point": 129,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "A",
+      "score_derived": "B"
+    },
+    {
+      "point": 151,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "A",
+      "score_derived": "B"
+    }
+  ],
+  "score_derived_totals_AB": [
+    96,
+    91
+  ],
+  "official_totals_AB": [
+    96,
+    91
+  ],
+  "totals_agree": true,
+  "set_point_totals_AB": {
+    "1": {
+      "A": 15,
+      "B": 28
+    },
+    "2": {
+      "A": 48,
+      "B": 41
+    },
+    "3": {
+      "A": 33,
+      "B": 22
+    }
+  },
+  "games": [
+    {
+      "set": 1,
+      "game": 1,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "B",
+      "is_break": true,
+      "before_AB": [
+        0,
+        0
+      ],
+      "after_AB": [
+        0,
+        1
+      ],
+      "point_numbers": [
+        1,
+        5
+      ],
+      "points_AB": [
+        1,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "0",
+          "30"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "15",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 2,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "B",
+      "is_break": false,
+      "before_AB": [
+        0,
+        1
+      ],
+      "after_AB": [
+        0,
+        2
+      ],
+      "point_numbers": [
+        6,
+        10
+      ],
+      "points_AB": [
+        1,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "15",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 3,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "A",
+      "is_break": false,
+      "before_AB": [
+        0,
+        2
+      ],
+      "after_AB": [
+        1,
+        2
+      ],
+      "point_numbers": [
+        11,
+        16
+      ],
+      "points_AB": [
+        4,
+        2
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "30",
+          "0"
+        ],
+        [
+          "40",
+          "0"
+        ],
+        [
+          "40",
+          "15"
+        ],
+        [
+          "40",
+          "30"
+        ],
+        [
+          "G",
+          "30"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 4,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "B",
+      "is_break": false,
+      "before_AB": [
+        1,
+        2
+      ],
+      "after_AB": [
+        1,
+        3
+      ],
+      "point_numbers": [
+        17,
+        21
+      ],
+      "points_AB": [
+        1,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "0",
+          "30"
+        ],
+        [
+          "0",
+          "40"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "15",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 5,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "B",
+      "is_break": true,
+      "before_AB": [
+        1,
+        3
+      ],
+      "after_AB": [
+        1,
+        4
+      ],
+      "point_numbers": [
+        22,
+        26
+      ],
+      "points_AB": [
+        1,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "15",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 6,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "B",
+      "is_break": false,
+      "before_AB": [
+        1,
+        4
+      ],
+      "after_AB": [
+        1,
+        5
+      ],
+      "point_numbers": [
+        27,
+        31
+      ],
+      "points_AB": [
+        1,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "15",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 7,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "A",
+      "is_break": false,
+      "before_AB": [
+        1,
+        5
+      ],
+      "after_AB": [
+        2,
+        5
+      ],
+      "point_numbers": [
+        32,
+        37
+      ],
+      "points_AB": [
+        4,
+        2
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "0",
+          "30"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "40",
+          "30"
+        ],
+        [
+          "G",
+          "30"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 8,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "B",
+      "is_break": false,
+      "before_AB": [
+        2,
+        5
+      ],
+      "after_AB": [
+        2,
+        6
+      ],
+      "point_numbers": [
+        38,
+        43
+      ],
+      "points_AB": [
+        2,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "30",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 1,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "A",
+      "is_break": false,
+      "before_AB": [
+        0,
+        0
+      ],
+      "after_AB": [
+        1,
+        0
+      ],
+      "point_numbers": [
+        44,
+        49
+      ],
+      "points_AB": [
+        4,
+        2
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "40",
+          "30"
+        ],
+        [
+          "G",
+          "30"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 2,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "B",
+      "is_break": false,
+      "before_AB": [
+        1,
+        0
+      ],
+      "after_AB": [
+        1,
+        1
+      ],
+      "point_numbers": [
+        50,
+        57
+      ],
+      "points_AB": [
+        3,
+        5
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "0",
+          "30"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "40",
+          "30"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 3,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "A",
+      "is_break": false,
+      "before_AB": [
+        1,
+        1
+      ],
+      "after_AB": [
+        2,
+        1
+      ],
+      "point_numbers": [
+        58,
+        62
+      ],
+      "points_AB": [
+        4,
+        1
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "40",
+          "15"
+        ],
+        [
+          "G",
+          "15"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 4,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "B",
+      "is_break": false,
+      "before_AB": [
+        2,
+        1
+      ],
+      "after_AB": [
+        2,
+        2
+      ],
+      "point_numbers": [
+        63,
+        68
+      ],
+      "points_AB": [
+        2,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "0",
+          "30"
+        ],
+        [
+          "0",
+          "40"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "30",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 5,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "B",
+      "is_break": true,
+      "before_AB": [
+        2,
+        2
+      ],
+      "after_AB": [
+        2,
+        3
+      ],
+      "point_numbers": [
+        69,
+        74
+      ],
+      "points_AB": [
+        2,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "30",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 6,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "A",
+      "is_break": true,
+      "before_AB": [
+        2,
+        3
+      ],
+      "after_AB": [
+        3,
+        3
+      ],
+      "point_numbers": [
+        75,
+        78
+      ],
+      "points_AB": [
+        4,
+        0
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "30",
+          "0"
+        ],
+        [
+          "40",
+          "0"
+        ],
+        [
+          "G",
+          "0"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 7,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "B",
+      "is_break": true,
+      "before_AB": [
+        3,
+        3
+      ],
+      "after_AB": [
+        3,
+        4
+      ],
+      "point_numbers": [
+        79,
+        84
+      ],
+      "points_AB": [
+        2,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "30",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 8,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "A",
+      "is_break": true,
+      "before_AB": [
+        3,
+        4
+      ],
+      "after_AB": [
+        4,
+        4
+      ],
+      "point_numbers": [
+        85,
+        89
+      ],
+      "points_AB": [
+        4,
+        1
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "30",
+          "0"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "40",
+          "15"
+        ],
+        [
+          "G",
+          "15"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 9,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "A",
+      "is_break": false,
+      "before_AB": [
+        4,
+        4
+      ],
+      "after_AB": [
+        5,
+        4
+      ],
+      "point_numbers": [
+        90,
+        99
+      ],
+      "points_AB": [
+        6,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "AD",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "AD",
+          "40"
+        ],
+        [
+          "G",
+          "40"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 10,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "B",
+      "is_break": false,
+      "before_AB": [
+        5,
+        4
+      ],
+      "after_AB": [
+        5,
+        5
+      ],
+      "point_numbers": [
+        100,
+        107
+      ],
+      "points_AB": [
+        3,
+        5
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "0",
+          "30"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 11,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "A",
+      "is_break": false,
+      "before_AB": [
+        5,
+        5
+      ],
+      "after_AB": [
+        6,
+        5
+      ],
+      "point_numbers": [
+        108,
+        111
+      ],
+      "points_AB": [
+        4,
+        0
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "30",
+          "0"
+        ],
+        [
+          "40",
+          "0"
+        ],
+        [
+          "G",
+          "0"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 12,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "B",
+      "is_break": false,
+      "before_AB": [
+        6,
+        5
+      ],
+      "after_AB": [
+        6,
+        6
+      ],
+      "point_numbers": [
+        112,
+        116
+      ],
+      "points_AB": [
+        1,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "0",
+          "30"
+        ],
+        [
+          "0",
+          "40"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "15",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 13,
+      "is_tiebreak": true,
+      "server": "",
+      "winner": "A",
+      "is_break": false,
+      "before_AB": [
+        6,
+        6
+      ],
+      "after_AB": [
+        7,
+        6
+      ],
+      "point_numbers": [
+        117,
+        132
+      ],
+      "points_AB": [
+        9,
+        7
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "1"
+        ],
+        [
+          "0",
+          "2"
+        ],
+        [
+          "0",
+          "3"
+        ],
+        [
+          "1",
+          "3"
+        ],
+        [
+          "2",
+          "3"
+        ],
+        [
+          "3",
+          "3"
+        ],
+        [
+          "3",
+          "4"
+        ],
+        [
+          "3",
+          "5"
+        ],
+        [
+          "4",
+          "5"
+        ],
+        [
+          "4",
+          "6"
+        ],
+        [
+          "5",
+          "6"
+        ],
+        [
+          "6",
+          "6"
+        ],
+        [
+          "6",
+          "7"
+        ],
+        [
+          "7",
+          "7"
+        ],
+        [
+          "8",
+          "7"
+        ],
+        [
+          "9",
+          "7"
+        ]
+      ]
+    },
+    {
+      "set": 3,
+      "game": 1,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "B",
+      "is_break": false,
+      "before_AB": [
+        0,
+        0
+      ],
+      "after_AB": [
+        0,
+        1
+      ],
+      "point_numbers": [
+        133,
+        138
+      ],
+      "points_AB": [
+        2,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "30",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 3,
+      "game": 2,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "A",
+      "is_break": false,
+      "before_AB": [
+        0,
+        1
+      ],
+      "after_AB": [
+        1,
+        1
+      ],
+      "point_numbers": [
+        139,
+        143
+      ],
+      "points_AB": [
+        4,
+        1
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "30",
+          "0"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "40",
+          "15"
+        ],
+        [
+          "G",
+          "15"
+        ]
+      ]
+    },
+    {
+      "set": 3,
+      "game": 3,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "A",
+      "is_break": true,
+      "before_AB": [
+        1,
+        1
+      ],
+      "after_AB": [
+        2,
+        1
+      ],
+      "point_numbers": [
+        144,
+        153
+      ],
+      "points_AB": [
+        6,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "30",
+          "0"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "AD",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "AD",
+          "40"
+        ],
+        [
+          "G",
+          "40"
+        ]
+      ]
+    },
+    {
+      "set": 3,
+      "game": 4,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "A",
+      "is_break": false,
+      "before_AB": [
+        2,
+        1
+      ],
+      "after_AB": [
+        3,
+        1
+      ],
+      "point_numbers": [
+        154,
+        161
+      ],
+      "points_AB": [
+        5,
+        3
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "30",
+          "0"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "40",
+          "30"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "AD",
+          "40"
+        ],
+        [
+          "G",
+          "40"
+        ]
+      ]
+    },
+    {
+      "set": 3,
+      "game": 5,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "B",
+      "is_break": false,
+      "before_AB": [
+        3,
+        1
+      ],
+      "after_AB": [
+        3,
+        2
+      ],
+      "point_numbers": [
+        162,
+        166
+      ],
+      "points_AB": [
+        1,
+        4
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "15",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 3,
+      "game": 6,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "A",
+      "is_break": false,
+      "before_AB": [
+        3,
+        2
+      ],
+      "after_AB": [
+        4,
+        2
+      ],
+      "point_numbers": [
+        167,
+        170
+      ],
+      "points_AB": [
+        4,
+        0
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "30",
+          "0"
+        ],
+        [
+          "40",
+          "0"
+        ],
+        [
+          "G",
+          "0"
+        ]
+      ]
+    },
+    {
+      "set": 3,
+      "game": 7,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "A",
+      "is_break": true,
+      "before_AB": [
+        4,
+        2
+      ],
+      "after_AB": [
+        5,
+        2
+      ],
+      "point_numbers": [
+        171,
+        175
+      ],
+      "points_AB": [
+        4,
+        1
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "30",
+          "0"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "40",
+          "15"
+        ],
+        [
+          "G",
+          "15"
+        ]
+      ]
+    },
+    {
+      "set": 3,
+      "game": 8,
+      "is_tiebreak": false,
+      "server": "A",
+      "winner": "B",
+      "is_break": true,
+      "before_AB": [
+        5,
+        2
+      ],
+      "after_AB": [
+        5,
+        3
+      ],
+      "point_numbers": [
+        176,
+        183
+      ],
+      "points_AB": [
+        3,
+        5
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "30",
+          "0"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 3,
+      "game": 9,
+      "is_tiebreak": false,
+      "server": "B",
+      "winner": "A",
+      "is_break": true,
+      "before_AB": [
+        5,
+        3
+      ],
+      "after_AB": [
+        6,
+        3
+      ],
+      "point_numbers": [
+        184,
+        187
+      ],
+      "points_AB": [
+        4,
+        0
+      ],
+      "point_score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "30",
+          "0"
+        ],
+        [
+          "40",
+          "0"
+        ],
+        [
+          "G",
+          "0"
+        ]
+      ]
+    }
+  ],
+  "opportunities": [
+    {
+      "point_number": 5,
+      "set": 1,
+      "game": 1,
+      "server": "A",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "B",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "15",
+        "40"
+      ],
+      "before_games_AB": [
+        0,
+        0
+      ],
+      "converted": true,
+      "timestamp": "2026-10-14T08:25:15Z"
+    },
+    {
+      "point_number": 26,
+      "set": 1,
+      "game": 5,
+      "server": "A",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "B",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "15",
+        "40"
+      ],
+      "before_games_AB": [
+        1,
+        3
+      ],
+      "converted": true,
+      "timestamp": "2026-10-14T08:40:14Z"
+    },
+    {
+      "point_number": 43,
+      "set": 1,
+      "game": 8,
+      "server": "B",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "B",
+      "type": "set_point",
+      "is_break_point": false,
+      "before_point_score_AB": [
+        "30",
+        "40"
+      ],
+      "before_games_AB": [
+        2,
+        5
+      ],
+      "converted": true,
+      "timestamp": "2026-10-14T08:52:57Z"
+    },
+    {
+      "point_number": 55,
+      "set": 2,
+      "game": 2,
+      "server": "B",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "A",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "40",
+        "30"
+      ],
+      "before_games_AB": [
+        1,
+        0
+      ],
+      "converted": false,
+      "timestamp": "2026-10-14T09:03:09Z"
+    },
+    {
+      "point_number": 74,
+      "set": 2,
+      "game": 5,
+      "server": "A",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "B",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "30",
+        "40"
+      ],
+      "before_games_AB": [
+        2,
+        2
+      ],
+      "converted": true,
+      "timestamp": "2026-10-14T09:16:22Z"
+    },
+    {
+      "point_number": 78,
+      "set": 2,
+      "game": 6,
+      "server": "B",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "A",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "40",
+        "0"
+      ],
+      "before_games_AB": [
+        2,
+        3
+      ],
+      "converted": true,
+      "timestamp": "2026-10-14T09:25:44Z"
+    },
+    {
+      "point_number": 83,
+      "set": 2,
+      "game": 7,
+      "server": "A",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "B",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "15",
+        "40"
+      ],
+      "before_games_AB": [
+        3,
+        3
+      ],
+      "converted": false,
+      "timestamp": "2026-10-14T09:29:11Z"
+    },
+    {
+      "point_number": 84,
+      "set": 2,
+      "game": 7,
+      "server": "A",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "B",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "30",
+        "40"
+      ],
+      "before_games_AB": [
+        3,
+        3
+      ],
+      "converted": true,
+      "timestamp": "2026-10-14T09:29:59Z"
+    },
+    {
+      "point_number": 89,
+      "set": 2,
+      "game": 8,
+      "server": "B",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "A",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "40",
+        "15"
+      ],
+      "before_games_AB": [
+        3,
+        4
+      ],
+      "converted": true,
+      "timestamp": "2026-10-14T09:34:39Z"
+    },
+    {
+      "point_number": 94,
+      "set": 2,
+      "game": 9,
+      "server": "A",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "B",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "15",
+        "40"
+      ],
+      "before_games_AB": [
+        4,
+        4
+      ],
+      "converted": false,
+      "timestamp": "2026-10-14T09:38:25Z"
+    },
+    {
+      "point_number": 95,
+      "set": 2,
+      "game": 9,
+      "server": "A",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "B",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "30",
+        "40"
+      ],
+      "before_games_AB": [
+        4,
+        4
+      ],
+      "converted": false,
+      "timestamp": "2026-10-14T09:38:58Z"
+    },
+    {
+      "point_number": 127,
+      "set": 2,
+      "game": 13,
+      "server": "B",
+      "server_inferred_by_standard_tiebreak_rotation": true,
+      "player": "B",
+      "type": "match_point",
+      "is_break_point": false,
+      "before_point_score_AB": [
+        4,
+        6
+      ],
+      "before_games_AB": [
+        6,
+        6
+      ],
+      "converted": false,
+      "timestamp": "2026-10-14T10:00:50Z"
+    },
+    {
+      "point_number": 128,
+      "set": 2,
+      "game": 13,
+      "server": "A",
+      "server_inferred_by_standard_tiebreak_rotation": true,
+      "player": "B",
+      "type": "match_point",
+      "is_break_point": false,
+      "before_point_score_AB": [
+        5,
+        6
+      ],
+      "before_games_AB": [
+        6,
+        6
+      ],
+      "converted": false,
+      "timestamp": "2026-10-14T10:01:46Z"
+    },
+    {
+      "point_number": 130,
+      "set": 2,
+      "game": 13,
+      "server": "B",
+      "server_inferred_by_standard_tiebreak_rotation": true,
+      "player": "B",
+      "type": "match_point",
+      "is_break_point": false,
+      "before_point_score_AB": [
+        6,
+        7
+      ],
+      "before_games_AB": [
+        6,
+        6
+      ],
+      "converted": false,
+      "timestamp": "2026-10-14T10:03:44Z"
+    },
+    {
+      "point_number": 132,
+      "set": 2,
+      "game": 13,
+      "server": "A",
+      "server_inferred_by_standard_tiebreak_rotation": true,
+      "player": "A",
+      "type": "set_point",
+      "is_break_point": false,
+      "before_point_score_AB": [
+        8,
+        7
+      ],
+      "before_games_AB": [
+        6,
+        6
+      ],
+      "converted": true,
+      "timestamp": "2026-10-14T10:05:04Z"
+    },
+    {
+      "point_number": 151,
+      "set": 3,
+      "game": 3,
+      "server": "B",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "A",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "AD",
+        "40"
+      ],
+      "before_games_AB": [
+        1,
+        1
+      ],
+      "converted": false,
+      "timestamp": "2026-10-14T10:18:53Z"
+    },
+    {
+      "point_number": 153,
+      "set": 3,
+      "game": 3,
+      "server": "B",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "A",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "AD",
+        "40"
+      ],
+      "before_games_AB": [
+        1,
+        1
+      ],
+      "converted": true,
+      "timestamp": "2026-10-14T10:19:51Z"
+    },
+    {
+      "point_number": 175,
+      "set": 3,
+      "game": 7,
+      "server": "B",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "A",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "40",
+        "15"
+      ],
+      "before_games_AB": [
+        4,
+        2
+      ],
+      "converted": true,
+      "timestamp": "2026-10-14T10:36:23Z"
+    },
+    {
+      "point_number": 181,
+      "set": 3,
+      "game": 8,
+      "server": "A",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "B",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "30",
+        "40"
+      ],
+      "before_games_AB": [
+        5,
+        2
+      ],
+      "converted": false,
+      "timestamp": "2026-10-14T10:42:34Z"
+    },
+    {
+      "point_number": 183,
+      "set": 3,
+      "game": 8,
+      "server": "A",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "B",
+      "type": "break_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "40",
+        "AD"
+      ],
+      "before_games_AB": [
+        5,
+        2
+      ],
+      "converted": true,
+      "timestamp": "2026-10-14T10:43:59Z"
+    },
+    {
+      "point_number": 187,
+      "set": 3,
+      "game": 9,
+      "server": "B",
+      "server_inferred_by_standard_tiebreak_rotation": false,
+      "player": "A",
+      "type": "match_point",
+      "is_break_point": true,
+      "before_point_score_AB": [
+        "40",
+        "0"
+      ],
+      "before_games_AB": [
+        5,
+        3
+      ],
+      "converted": true,
+      "timestamp": "2026-10-14T10:46:20Z"
+    }
+  ],
+  "tiebreak_points": [
+    {
+      "point_number": 117,
+      "tb_point_number": 1,
+      "before_AB": [
+        0,
+        0
+      ],
+      "after_AB": [
+        0,
+        1
+      ],
+      "winner": "B",
+      "server_inferred": "A",
+      "timestamp": "2026-10-14T09:53:43Z"
+    },
+    {
+      "point_number": 118,
+      "tb_point_number": 2,
+      "before_AB": [
+        0,
+        1
+      ],
+      "after_AB": [
+        0,
+        2
+      ],
+      "winner": "B",
+      "server_inferred": "B",
+      "timestamp": "2026-10-14T09:54:21Z"
+    },
+    {
+      "point_number": 119,
+      "tb_point_number": 3,
+      "before_AB": [
+        0,
+        2
+      ],
+      "after_AB": [
+        0,
+        3
+      ],
+      "winner": "B",
+      "server_inferred": "B",
+      "timestamp": "2026-10-14T09:54:45Z"
+    },
+    {
+      "point_number": 120,
+      "tb_point_number": 4,
+      "before_AB": [
+        0,
+        3
+      ],
+      "after_AB": [
+        1,
+        3
+      ],
+      "winner": "A",
+      "server_inferred": "A",
+      "timestamp": "2026-10-14T09:55:24Z"
+    },
+    {
+      "point_number": 121,
+      "tb_point_number": 5,
+      "before_AB": [
+        1,
+        3
+      ],
+      "after_AB": [
+        2,
+        3
+      ],
+      "winner": "A",
+      "server_inferred": "A",
+      "timestamp": "2026-10-14T09:56:00Z"
+    },
+    {
+      "point_number": 122,
+      "tb_point_number": 6,
+      "before_AB": [
+        2,
+        3
+      ],
+      "after_AB": [
+        3,
+        3
+      ],
+      "winner": "A",
+      "server_inferred": "B",
+      "timestamp": "2026-10-14T09:56:46Z"
+    },
+    {
+      "point_number": 123,
+      "tb_point_number": 7,
+      "before_AB": [
+        3,
+        3
+      ],
+      "after_AB": [
+        3,
+        4
+      ],
+      "winner": "B",
+      "server_inferred": "B",
+      "timestamp": "2026-10-14T09:57:40Z"
+    },
+    {
+      "point_number": 124,
+      "tb_point_number": 8,
+      "before_AB": [
+        3,
+        4
+      ],
+      "after_AB": [
+        3,
+        5
+      ],
+      "winner": "B",
+      "server_inferred": "A",
+      "timestamp": "2026-10-14T09:58:16Z"
+    },
+    {
+      "point_number": 125,
+      "tb_point_number": 9,
+      "before_AB": [
+        3,
+        5
+      ],
+      "after_AB": [
+        4,
+        5
+      ],
+      "winner": "A",
+      "server_inferred": "A",
+      "timestamp": "2026-10-14T09:59:30Z"
+    },
+    {
+      "point_number": 126,
+      "tb_point_number": 10,
+      "before_AB": [
+        4,
+        5
+      ],
+      "after_AB": [
+        4,
+        6
+      ],
+      "winner": "B",
+      "server_inferred": "B",
+      "timestamp": "2026-10-14T10:00:04Z"
+    },
+    {
+      "point_number": 127,
+      "tb_point_number": 11,
+      "before_AB": [
+        4,
+        6
+      ],
+      "after_AB": [
+        5,
+        6
+      ],
+      "winner": "A",
+      "server_inferred": "B",
+      "timestamp": "2026-10-14T10:00:50Z"
+    },
+    {
+      "point_number": 128,
+      "tb_point_number": 12,
+      "before_AB": [
+        5,
+        6
+      ],
+      "after_AB": [
+        6,
+        6
+      ],
+      "winner": "A",
+      "server_inferred": "A",
+      "timestamp": "2026-10-14T10:01:46Z"
+    },
+    {
+      "point_number": 129,
+      "tb_point_number": 13,
+      "before_AB": [
+        6,
+        6
+      ],
+      "after_AB": [
+        6,
+        7
+      ],
+      "winner": "B",
+      "server_inferred": "A",
+      "timestamp": "2026-10-14T10:03:02Z"
+    },
+    {
+      "point_number": 130,
+      "tb_point_number": 14,
+      "before_AB": [
+        6,
+        7
+      ],
+      "after_AB": [
+        7,
+        7
+      ],
+      "winner": "A",
+      "server_inferred": "B",
+      "timestamp": "2026-10-14T10:03:44Z"
+    },
+    {
+      "point_number": 131,
+      "tb_point_number": 15,
+      "before_AB": [
+        7,
+        7
+      ],
+      "after_AB": [
+        8,
+        7
+      ],
+      "winner": "A",
+      "server_inferred": "B",
+      "timestamp": "2026-10-14T10:04:23Z"
+    },
+    {
+      "point_number": 132,
+      "tb_point_number": 16,
+      "before_AB": [
+        8,
+        7
+      ],
+      "after_AB": [
+        9,
+        7
+      ],
+      "winner": "A",
+      "server_inferred": "A",
+      "timestamp": "2026-10-14T10:05:04Z"
+    }
+  ],
+  "warning": "All tiebreak raw pointWinner are A; actual point winners derived from numeric point score. Advantage raw A normalized to AD; server empty during tiebreak, inferred only by standard rotation from actual set first server."
+}
