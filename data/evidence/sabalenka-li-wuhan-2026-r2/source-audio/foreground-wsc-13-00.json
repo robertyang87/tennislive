@@ -1,0 +1,28 @@
+{
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/957c661d-57a2-47bb-979e-850958eb2a6d.mp4",
+  "source_sha256": "9d60cd7ede9d4a0687abec3fc6538abcbac4dd146eb4d9d69c2809f4b998b73d",
+  "source_key": "wsc-13-00",
+  "reviewed_from": 0,
+  "reviewed_to": 14.96,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_review agent; fresh independent faster-whisper small.en/base.en, full source windows",
+  "reviewed_at": "2026-10-14T14:42:30.687381+00:00",
+  "status": "complete",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "fresh_actual_asr_runs": true,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "method_details": "Full source original audio independently decoded twice, language=en, beam_size=5, word_timestamps=True, VAD disabled, no initial prompt; raw word timestamps and ASR confidence retained. This packet is ASR cross-check editorial transcription, not human listening or model visual QC. Proper names normalized to official spelling. No loudness adjustment or normalization.",
+  "raw_asr_evidence": [
+    {
+      "path": "/workspace/scratch/sabalenka-exit-6m4jt6/source-audio/asr-extra-small.en.json",
+      "sha256": "3cf2fa242c6a48a777fc779e0c63e6fb7cff67d4ac9afaf9e59726d0ba7a97aa"
+    },
+    {
+      "path": "/workspace/scratch/sabalenka-exit-6m4jt6/source-audio/asr-extra-base.en.json",
+      "sha256": "2b8e73d28e0b55d266791f4d7e98fca3e0b78f0fc4794f10cd782baa0a32c7c5"
+    }
+  ],
+  "no_foreground_english_reason": "Two fresh full-window ASR runs yield no stable coherent English utterance; isolated grunts/noise are inconsistently decoded as generic You/Oh, dots, Thanks for watching or We will see you next week, at nonmatching positions. These incompatible low-confidence strings are not accepted as broadcast speech and no invented bilingual quotation is created."
+}
