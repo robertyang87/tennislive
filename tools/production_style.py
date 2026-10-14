@@ -7,7 +7,9 @@ NATURAL_TIME_RULE = "全栏目使用已核实的北京时间日期和自然时�
 
 def has_time_period(text: str) -> bool:
     return any(word in text for word in DAYPARTS) or bool(
-        re.search(r"[一二三四五六七八九十两〇零百\d]+\s*[点时]", text))
+        re.search(r"[一二三四五六七八九十两〇零百\d]+\s*[点时]", text)
+        # 日期后的「晚」也是明确时段；单独的「晚些时候」不算。
+        or re.search(r"[一二三四五六七八九十\d]+[日号]晚(?=[，。！？、\s]|$)", text))
 
 
 def opening_context_problem(text: str) -> str | None:
