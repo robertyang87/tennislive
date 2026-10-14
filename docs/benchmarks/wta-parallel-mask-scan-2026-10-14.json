@@ -1,0 +1,53 @@
+{
+  "source_sha256": "da97c5eafb072aa2087e1cee2d893a2c1ea687ac8ef941373e9ccc76553f1d3d",
+  "wrapper_sha256": "3bb2c46d2c7d548b12b702f8fe16ed22afd69b0021fbaef8c1a8b224d02ca31b",
+  "cpu_quota": "400000 100000",
+  "memory_limit": "17179869184",
+  "effective_workers": 2,
+  "timings": {
+    "serial-cold": 35.722,
+    "parallel-cold": 23.561,
+    "parallel-cold-repeat": 24.977,
+    "parallel-whole-hit": 1.155,
+    "parallel-one-window-edit": 5.586
+  },
+  "saved_seconds": 12.161,
+  "percent_reduction": 34.04,
+  "all_3840_frames_identical": true,
+  "frame_evidence": [
+    {
+      "segment": 0,
+      "frames": 442,
+      "decoded_gray_sha256": "a296be46519e47adc0b9759ebccb1b18c21b7e8b93ab23d761c9c13908b3f098"
+    },
+    {
+      "segment": 3,
+      "frames": 969,
+      "decoded_gray_sha256": "ca845fed5ef0ee363b502946629299ef0e17cedc3f22ec67e1afde3caf44d5de"
+    },
+    {
+      "segment": 5,
+      "frames": 533,
+      "decoded_gray_sha256": "59f4aa5f06d36e1e3585d794ea25be739046c32ff87fdcfd92df20da8d3a1e4c"
+    },
+    {
+      "segment": 7,
+      "frames": 299,
+      "decoded_gray_sha256": "88945b2d48f4968a3a5eec0232d0ed1ce24beaf2de004b3577257b2f4650f5bb"
+    },
+    {
+      "segment": 9,
+      "frames": 601,
+      "decoded_gray_sha256": "a0e1c6cedecc4cddb9a24cb572d225534f180ea469354899a00a9fbcf9560627"
+    },
+    {
+      "segment": 10,
+      "frames": 996,
+      "decoded_gray_sha256": "9f390429aa8286678bf870f5c7c6e92b23c9a9035650dc4c6a2677190b76b728"
+    }
+  ],
+  "cold_repeat_confirms_quality": true,
+  "warm_masks_byte_identical": true,
+  "five_unchanged_edit_masks_byte_identical": true,
+  "scope": "Actual WTA scoreboard stage; production spec, film, QC attestation and publication untouched"
+}

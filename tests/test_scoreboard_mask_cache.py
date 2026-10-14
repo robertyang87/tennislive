@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
+import threading
 from copy import deepcopy
 from pathlib import Path
 from types import SimpleNamespace
@@ -70,6 +71,93 @@ def _three_points(dynamic):
         point.start += i * 2
         point.end += i * 2
     return points
+
+
+@pytest.mark.parametrize('count,affinity,quota,memory,requested,expected', [
+    (6, 4, '400000 100000', 8, '2', 2),
+    (1, 4, 'max 100000', 8, '2', 1),
+    (6, 1, '400000 100000', 8, '2', 1),
+    (6, 4, '150000 100000', 8, '2', 1),
+    (6, 4, '400000 100000', 3, '2', 1),
+    (6, 4, '400000 100000', 8, '1', 1),
+    (6, 4, '400000 100000', 8, '999', 2),
+    (6, 4, '400000 100000', 8, 'invalid', 1),
+])
+def test_scan_pool_respects_quota_affinity_memory_and_override(
+        monkeypatch, count, affinity, quota, memory, requested, expected):
+    monkeypatch.setattr(C.os, 'cpu_count', lambda: 64)
+    monkeypatch.setattr(C.os, 'sched_getaffinity', lambda _: set(range(affinity)), raising=False)
+    monkeypatch.setattr(C.os, 'sysconf', lambda name: (
+        16 * 1024**3 // 4096 if name == 'SC_PHYS_PAGES' else 4096))
+    monkeypatch.setattr(C, '_cgroup_value', lambda name: (
+        quota if name == 'cpu.max' else str(memory * 1024**3)))
+    monkeypatch.setenv('TENNISLIVE_SCOREBOARD_MASK_WORKERS', requested)
+    assert C.point_scan_workers(count) == expected
+    assert C.point_scan_workers(count, peak_bytes=memory * 1024**3) == 1
+
+
+def test_long_high_fps_windows_increase_memory_budget(dynamic):
+    part = deepcopy(dynamic.segment)
+    ordinary = C._scan_peak_bytes([(0, part)], '25', .18)
+    part.end = 300
+    long_window = C._scan_peak_bytes([(0, part)], '60', .18)
+    assert long_window > ordinary == 2 * 1024**3
+
+
+def test_missing_memory_information_uses_one_worker(monkeypatch):
+    def missing(_):
+        raise OSError('no physical memory information')
+    monkeypatch.setattr(C.os, 'sysconf', missing)
+    monkeypatch.setattr(C, '_cgroup_value', lambda _: '')
+    assert C.point_scan_workers(6) == 1
+
+
+def test_parallel_points_finish_out_of_order_but_report_keeps_spec_order(dynamic, monkeypatch):
+    monkeypatch.setattr(C, 'point_scan_workers', lambda *a: 2)
+    actual = C._resolve_wta_point
+    first_started, second_finished = threading.Event(), threading.Event()
+    finished = []
+
+    def paced(job):
+        index = job[0]
+        if index == 0:
+            first_started.set()
+            assert second_finished.wait(10), 'second scan must run while first waits'
+        elif index == 1:
+            assert first_started.wait(10)
+        result = actual(job)
+        finished.append(index)
+        if index == 1:
+            second_finished.set()
+        return result
+
+    monkeypatch.setattr(C, '_resolve_wta_point', paced)
+    report = _run_points(dynamic, 'out-of-order', _three_points(dynamic))
+    assert finished.index(1) < finished.index(0)
+    assert [r['segment'] for r in report] == [0, 1, 2]
+    assert [Path(r['mask']).name for r in report] == [
+        'segment-01.mkv', 'segment-02.mkv', 'segment-03.mkv']
+
+
+def test_one_failed_parallel_scan_leaves_no_complete_report_or_geometry(dynamic, monkeypatch):
+    monkeypatch.setattr(C, 'point_scan_workers', lambda *a: 2)
+    actual = C._resolve_wta_point
+
+    def failed(job):
+        if job[0] == 1:
+            raise RuntimeError('unknown native graphic')
+        return actual(job)
+
+    monkeypatch.setattr(C, '_resolve_wta_point', failed)
+    points = _three_points(dynamic)
+    original = [p.score_inset for p in points]
+    with pytest.raises(RuntimeError, match='unknown native graphic'):
+        _run_points(dynamic, 'failed-parallel', points)
+    output = dynamic.root.parent / 'failed-parallel'
+    assert not (output / 'scoreboard_qc.json').exists()
+    assert not list(output.glob('.mask-points-*'))
+    assert [p.score_inset for p in points] == original
+    assert all(p.score_inset_mask is None for p in points)
 
 
 def test_editing_one_point_only_rescans_that_point(dynamic):
