@@ -319,25 +319,6 @@ jobs:
       # 36337385713 实测，见 build_dashboard_snapshot.is_unattended）；个人拨的缺判定只提示，
       # 下面「转写交叉校验」那一步在同一个 job 里现量第二份 ASR（判定不是 ok 就重量，
       # 上线 subs 之前的老路）。已经量出来的红，两种派发者都红。
-      - name: 采访 spec 离线预检（秒级）
-        if: github.event.inputs.mode == 'render'
-        env:
-          SLUG: ${{ github.event.inputs.slug }}
-          DISPATCHED_BY: ${{ github.triggering_actor }}
-        run: PYTHONPATH=src python tools/interview_preflight.py --slug "$SLUG" --skip-copy --dispatched-by "$DISPATCHED_BY"
-
-      # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
-      # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
-      # 匹配不上，看起来像「这个视频没有格式」或者「cookie 过期了」。
-      # **加新能力要同时改三处：代码、这里的依赖、开跑前的预检。** 这条在竖版
-      # 剪辑那条线上连着犯过三次（playwright、Chromium、cv2），每次都是下完源片、
-      # 跑了一分半之后才 ModuleNotFoundError。封面走 HTML 渲染，所以要 playwright。
-      # **`-e .` 不能漏**：这个工具 import `PIL`（量字幕宽度）和
-      # `tennislive.render.webcards`（封面字体），后者又拖着 requests / rich /
-      # pypdf 一整串。只装那三个第三方包，跑到预检就是 `No module named 'PIL'`。
-      # 这是同一条规矩在同一天里第三次咬人（前两次是 fonts-noto-core 和
-      # Chromium 的路径）。判据落在 `test_工作流装的依赖覆盖工具import的每一个`：
-      # 工具里新加一个第三方 import，那条测试会红到你把它登记进来为止。
       - name: 装依赖
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         # ⚠️ 这一步 run 里跑 `playwright install --with-deps`，**那个 `--with-deps`
@@ -445,6 +426,24 @@ jobs:
       # 版本号 ＋ 三个 sha256 的摘要），`test_人脸模型缓存键跟着模型版本走` 逼着这里逐字一致。
       # 没命中时现下也只要约 2 秒（127 MB 的包里只解三个文件），缓存买的是
       # 「GitHub Release 抽风那天不至于整条链降级」。
+      - name: 采访 spec 离线预检（秒级）
+        if: github.event.inputs.mode == 'render'
+        env:
+          SLUG: ${{ github.event.inputs.slug }}
+          DISPATCHED_BY: ${{ github.triggering_actor }}
+        run: PYTHONPATH=src python tools/interview_preflight.py --slug "$SLUG" --skip-copy --dispatched-by "$DISPATCHED_BY"
+      # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
+      # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
+      # 匹配不上，看起来像「这个视频没有格式」或者「cookie 过期了」。
+      # **加新能力要同时改三处：代码、这里的依赖、开跑前的预检。** 这条在竖版
+      # 剪辑那条线上连着犯过三次（playwright、Chromium、cv2），每次都是下完源片、
+      # 跑了一分半之后才 ModuleNotFoundError。封面走 HTML 渲染，所以要 playwright。
+      # **`-e .` 不能漏**：这个工具 import `PIL`（量字幕宽度）和
+      # `tennislive.render.webcards`（封面字体），后者又拖着 requests / rich /
+      # pypdf 一整串。只装那三个第三方包，跑到预检就是 `No module named 'PIL'`。
+      # 这是同一条规矩在同一天里第三次咬人（前两次是 fonts-noto-core 和
+      # Chromium 的路径）。判据落在 `test_工作流装的依赖覆盖工具import的每一个`：
+      # 工具里新加一个第三方 import，那条测试会红到你把它登记进来为止。
       - name: 取人脸模型缓存
         id: face-cache
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
