@@ -1,0 +1,260 @@
+{
+  "schema": "tennislive.independent-cover-research.v1",
+  "created_at_utc": "2026-10-14T06:20:05.036682+00:00",
+  "reviewer": "current OpenAI model independent_qc, no DeepSeek/MiniMax",
+  "match": {
+    "event": "2026 Wuhan WTA1000",
+    "date_local": "2026-10-14",
+    "round": "R2",
+    "winner": "Maja Chwalinska",
+    "opponent": "Marie Bouzkova",
+    "score": "1-6 6-1 6-1",
+    "source_user_url": "https://youtu.be/hONjK8IF-tI",
+    "official_video_id": 4592109,
+    "wta_player_ids": {
+      "Maja Chwalinska": 325639,
+      "Marie Bouzkova": 320983
+    }
+  },
+  "selected_candidate": {
+    "path": "/workspace/scratch/moon-cover/official-1407-h.png",
+    "sha256": "75d8cdf1dc97713c4ce9d3538ee196e3c482c9fbd48ab753daf4585530f3932a",
+    "bytes": 753923,
+    "width": 1600,
+    "height": 1067,
+    "source_url": "https://bucket-wuwang.hubei-41.zos.ctyun.cn/files/ynq1blhjl5cxh0s6n5i155aay.png",
+    "official_album_url": "https://www.wuhanopentennis.com/whNews/Pictures?id=1407",
+    "official_album_api": "https://www.wuhanopentennis.com/api/portal/document/picture/detail?id=1407",
+    "album_title": "MDS Day3 Maja Chwalinska vs Marie Bouzkova",
+    "album_publish_date": "2026-10-14",
+    "album_created_local": "2026-10-14 13:32:46",
+    "uploader_file_created_local": "2026-10-14 13:31:23",
+    "original_asset_preserved": true,
+    "copyright_or_credit": "Tournament official Wuhan Open gallery; photographer not named in provided asset record; no licence grant inferred",
+    "match_binding": "Official site linked by WTA tournament overview; original official API album names both players and Day3, dated2026-10-14, with exact current user match opponent. Chinese album1406 has identical h.png byte hash. PNG has no capture EXIF, so date proof is official album identity, not invented EXIF.",
+    "person_binding": "Actually inspected original h.png against WTA-player-ID325639 explicit Maja Chwalinska portrait and action photographs, plus ID320983 Marie Bouzkova action reference. Maja is black dress/no headband, black Lacoste wristband, black-green racket, left-handed. Bouzkova is grey Joma and white Joma headband in counterpart hh.png. Facial features and left-handed grip agree. Clothing alone was not used as identity.",
+    "face_and_focus": "Face slightly angled toward camera, both eyes open, head/face in focus. Complete active backhand swing with hand and racket intact; no watermark or broadcaster logo on native PNG.",
+    "emotion": "Focused competitive action, no fabricated celebration. Only one Chwalinska photo in this official match album.",
+    "cover_fill_scale": 1.3495782567947516,
+    "suggested_focus_x": 0.66,
+    "suggested_zoom": 1.0,
+    "composition_note": "At fit cover, focus x0.66 and zoom1 gives approximately native x660–1460 crop. Face around originalx920–1040/y170–325 maps above hook band; hand/racket and full active body remain visible. This is a geometric suggestion, not an actually rendered-poster approval.",
+    "low_resolution_note": "Official published original1600x1067 needs1.3496x enlargement to fill1080x1440; explicitly record _low_res_why. Do not claim native1080x1440 or stronger full-canvas resolution. Official sharp still preferred to blurry1280x720 WTA thumbnail; no original replacement or artificial sharpening performed."
+  },
+  "rejected_candidates": [
+    {
+      "path": "Chwalinska-R1-Jimmie.jpg",
+      "width": 4700,
+      "height": 2858,
+      "reason": "Official WTA but first round on10/13, capture EXIF2026:10:13 14:36:20 and actual scene is postmatch fan-signing outside court. Not this10/14 R2 match."
+    },
+    {
+      "url": "https://photoresources.wtatennis.com/wta/photo/2026/09/23/87e4d8dc-16cf-4fb2-aeb9-de4e58b2f308/Maja-Chwalinska-Cincinnati-2026.jpg",
+      "reason": "WTA current R2 video page reused Cincinnati stock image; strong dimensions do not establish same-match identity."
+    },
+    {
+      "path": "GukUgGNy.jpg",
+      "width": 1280,
+      "height": 720,
+      "reason": "Same match official Brightcove screenshot, genuinely Chwalinska but visibly soft and less suitable than tournament still. Early reviewer message tentatively said Bouzkova; that identity was wrong and explicitly corrected after WTA playerID cross-check."
+    },
+    {
+      "path": "official-1406-hh.png",
+      "width": 1600,
+      "height": 1067,
+      "reason": "Official same match counterpart photograph of Marie Bouzkova, not selected protagonist Maja Chwalinska."
+    }
+  ],
+  "channels_checked": [
+    {
+      "channel": "WTA photo API by playerID325639",
+      "result": "All41 entries in a single page inspected, only Wuhan photo is10/13R1; no10/14 same-match still listed at review time. Raw player API retained."
+    },
+    {
+      "channel": "WTA current photo/video/text APIs and photoresources pages",
+      "result": "Latest100photos/latest100videos/latest40articles plus production sweep: finds current R2 official video and1280thumbnail, R1 official still and Cincinnati stock. Raw saved."
+    },
+    {
+      "channel": "AP search and tennis page",
+      "result": "Production tool reports actual channel pages read and no matching result. Sweep log retained; no claim all possible AP assets exhausted."
+    },
+    {
+      "channel": "Official tournament website",
+      "result": "Homepage/gallery/WP path each return same1677-byte Vite shell. Parsed actual2.3MB JS to discover public read-only picture API. List then detail gives exact match album1407 plus mirrored Chinese1406, both2image originals. Detail has no additional higher-resolution variants."
+    },
+    {
+      "channel": "Jimmie48 website",
+      "result": "Returned503 challenge, unknown result, not a proven absence."
+    },
+    {
+      "channel": "Chinese WeChat source",
+      "result": "Sogou returned one10/13R1 article; mp.weixin403 prevented direct image fetch, no same-match evidence from this path."
+    },
+    {
+      "channel": "Generic web search",
+      "result": "Bing requests returned irrelevant results, not treated as proof of absence."
+    }
+  ],
+  "ready_for_parent_cover_choice": true,
+  "not_yet_checked": [
+    "Actual rendered1080x1440 cover layout, title/hook/scoreplate overlap; to inspect after parent renders.",
+    "Full film QC is separate; no pass inferred from this cover research."
+  ],
+  "evidence": [
+    {
+      "path": "/workspace/scratch/moon-cover/BdzbwnTS.jpg",
+      "sha256": "a62299ff41024e7f1714e76bf7a13116b4cb95641902d92f5b38fe01d2d6173c",
+      "bytes": 91011
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/Chwalinska-R1-Jimmie.jpg",
+      "sha256": "0ba4234197531625eb19c0426118f2c240238a31816e92860d92f6f17b4711b9",
+      "bytes": 4750949
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/GukUgGNy.jpg",
+      "sha256": "62d78b06b0dab6aa5e00a7a1d6df903dd9592d05d4720d271c20d476a93b9a0b",
+      "bytes": 57819
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/bing-cover.html",
+      "sha256": "fb31be9f18524c88743075a8eb45c5538c6605ce7d35a9b8ba30247b90f81d96",
+      "bytes": 120523
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/chwalinska-oct14-sweep.log",
+      "sha256": "f6f068678fa831682425ad7b1849770ad58e16538aa14da478d156e9f147982a",
+      "bytes": 4237
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/chwalinska-player.html",
+      "sha256": "d014a1b553df8628050dec5a841c27a92dffcb40f94a826532375bdfbb929b4f",
+      "bytes": 45495
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/event-app.js",
+      "sha256": "56bf9618ff0274aa2ffc87c0e9599bb401b761f8b063b8ee7fc5f6299eecbfa5",
+      "bytes": 2305991
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/event-news-list.json",
+      "sha256": "4c2b4365b8ca6efaa59517261ad28e627d2d007add34ac50360b9a45e82a5fc3",
+      "bytes": 133735
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/event-picture-list.json",
+      "sha256": "790f4fdf49ec9b2ada435d2e5ac00b4af3238b9ce735c9260034a88a81f0f434",
+      "bytes": 14342
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/eventgallery.html",
+      "sha256": "3dd5c286e28b16aef1fcb79b91fe850c90192dc0dab49c174ed2ffc83377be3f",
+      "bytes": 2085
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/eventhome.html",
+      "sha256": "3dd5c286e28b16aef1fcb79b91fe850c90192dc0dab49c174ed2ffc83377be3f",
+      "bytes": 2085
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/eventmedia.html",
+      "sha256": "3dd5c286e28b16aef1fcb79b91fe850c90192dc0dab49c174ed2ffc83377be3f",
+      "bytes": 2085
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/jimmie48.html",
+      "sha256": "e2a0219e6755325943b41cdb8c32d53f35c4f05e4ef5c94809806284a5041b04",
+      "bytes": 10216
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/news-cn.html",
+      "sha256": "1731f118dc83d2d9353693fb5518ab97858c64f57a5a90a4125127046d776299",
+      "bytes": 123037
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/official-1406-h.png",
+      "sha256": "75d8cdf1dc97713c4ce9d3538ee196e3c482c9fbd48ab753daf4585530f3932a",
+      "bytes": 753923
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/official-1406-hh.png",
+      "sha256": "f073363d46efb3212087f9882c9c86175e6addb1c113d7771e83888dbad62b4c",
+      "bytes": 622457
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/official-1407-h.png",
+      "sha256": "75d8cdf1dc97713c4ce9d3538ee196e3c482c9fbd48ab753daf4585530f3932a",
+      "bytes": 753923
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/official-album-1406.json",
+      "sha256": "29e99223fae6198982846191cf49da82c449a3917b9b233f84eaeb5fe54f2bd7",
+      "bytes": 1772
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/official-album-1407-detail.json",
+      "sha256": "07b9bb44d8ebf77738c060c898b8067bd4cdb06dd731aa456e90525567529526",
+      "bytes": 1443
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/official-album-1407.json",
+      "sha256": "a32e7fcc559f6688b01ad41b011acb3bdbe9f73491f6abc3ef2d1026144978e1",
+      "bytes": 1773
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/photos0-hits.json",
+      "sha256": "0ac31c43cc7063115e7f4eb4029d45d2f72dcd78b375cc2cdf7f2b8e42eac228",
+      "bytes": 3733
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/photos0.json",
+      "sha256": "2f43c254ea428ddebcd5f724121f05e88651399880c80352318c30127df1e7ef",
+      "bytes": 98550
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/player-320983.json",
+      "sha256": "91f8775dec2d3694390353623eef8c6020fcd815a2a36699a2edcdd2ccad4b30",
+      "bytes": 21494
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/player-325639.json",
+      "sha256": "1c94a76b73c5b04345d5810059f1b175f1bbc7fa45c93ce219f25ec0474c3884",
+      "bytes": 21707
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/reference-320983.jpg",
+      "sha256": "507954b533922fde50fa1c228e1b377d9e067d1cf4ea3ebd0048542f9f5737b4",
+      "bytes": 1793740
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/reference-325639.jpg",
+      "sha256": "0ba4234197531625eb19c0426118f2c240238a31816e92860d92f6f17b4711b9",
+      "bytes": 4750949
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/reference-chwalinska-action.jpg",
+      "sha256": "101bdabe2c641d0b8ef51b3d3878e926ab749b089ddba59b6aa6c37777dafbeb",
+      "bytes": 3294643
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/videos0-hits.json",
+      "sha256": "c37ed875c5def3fff84066256528c3e99f35332dcfbb0f491a743acc49b687d9",
+      "bytes": 8714
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/videos0.json",
+      "sha256": "f4d395dd686badedd36366458507f8b0c6f3b3e5536ea3bbe09b301a8b5bc914",
+      "bytes": 315025
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/wta-text-page0.json",
+      "sha256": "c8a9d6a3602119527fd4176c2f2282fac453809fec4bed4bf039dc17ba93da5c",
+      "bytes": 678208
+    },
+    {
+      "path": "/workspace/scratch/moon-cover/wuhan-overview.html",
+      "sha256": "70583fe7b6fc0bd62f2fa81031fa69a19693fcc41d7daee3cce9ce5eac52e14b",
+      "bytes": 279930
+    }
+  ]
+}

@@ -1,0 +1,329 @@
+{
+  "schema": "tennislive.independent-selected-window-review.v1",
+  "status": "source_window_review_complete_with_boundary_recommendations",
+  "updated_at_utc": "2026-10-14T06:44:40.818199+00:00",
+  "reviewer": "current OpenAI model /root/independent_qc; no DeepSeek/MiniMax",
+  "source": {
+    "user_url": "https://youtu.be/hONjK8IF-tI",
+    "path": "/workspace/scratch/moon-source.mp4",
+    "sha256": "1093e785f0ea89b203fc8a77617e2df885ed2b1c5f0290ab39d58df188b578d5",
+    "bytes": 67923881,
+    "width": 1920,
+    "height": 1080,
+    "fps": 25,
+    "duration_seconds": 304.227846,
+    "actual_source_reviewed": true,
+    "original_source_unmodified": true
+  },
+  "evidence_scope": "Actually visually reviewed22 real-source2fps contact pages across selected windows,41 native spot-frame images via4 native contact pages,27 exact native25fps edge frames via3 strips, and6 additional1920x1080 tactical payoff frames. Approximate2fps page labels are sampling labels, not exact point timestamps; precise timing conclusions use native -ss frame grabs and source25fps. No continuous human playback or human audio listening claimed.",
+  "observations": [
+    {
+      "window_id": "first_set",
+      "recommended": [
+        70.44,
+        95.16
+      ],
+      "actual_context": "First set Chwalinska1-2 serving30-40 loses to1-3, then official hard cut to Bouzkova5-1/40-15 firstSP→6-1.",
+      "serve_rally_payoff": "Pass for complete retained official start:70.44 first BP preparation front shot,72.04 toss begins,72.32 switch to wide for serve/rally,82.80 winning Bouzkova reaction.85.04 nextSP prep,86.84 wide serve,89.84 winning reaction.",
+      "boundary": "Original72.32 skips visible toss/prep.70.40 belongs prior point; exact70.44 first current BP frame.95.16+0.18=95.34 before95.36 next set; last ASR noun at95.12(base)/95.16(small), includes full She is... sentence across native internal cut."
+    },
+    {
+      "window_id": "second_set_deuce",
+      "recommended": [
+        133.44,
+        167.12
+      ],
+      "actual_context": "Chwalinska4-1 receiving deuce in Bouzkova game6; wins long rally, creates4thBP. Not earlier3-1 key hold.",
+      "serve_rally_payoff": "133.44 server preparation;135.0 beginning toss,135.44 wide shows latter serve phase; complete prolonged defensive rally to161.4 win and162.32 fist.",
+      "boundary": "167.12+0.18=167.30 before167.32 nextBP receiving prep. Source ASR tough nut to crack completes166.4(base)/166.46(small)."
+    },
+    {
+      "window_id": "second_set_break_and_setpoint",
+      "recommended": [
+        167.32,
+        217.04
+      ],
+      "actual_context": "Native BREAK POINT#4 at4-1 converts5-1; then native SET POINT#2 at5-1/40-30 converts6-1.",
+      "serve_rally_payoff": "167.32 first current receiving-prep frame;169.68 first wide server action (original broadcast spent prep on receiver, so do not claim server entire toss was visible). Whole rally to186.92 winner fist.193.88 newSP serve-prep,195.5 toss,196.0 wide,203.92 winner reaction and full second-set result.",
+      "boundary": "169.68 card split would lose available receive prep;167.32 preserves it.217.04+0.18=217.22 before217.24 third-set shot; final second-set one completes216.56/216.60 ASR."
+    },
+    {
+      "window_id": "third_set_long_rally",
+      "recommended_visual": [
+        217.24,
+        258.2
+      ],
+      "actual_context": "Game5 withChwalinska3-1 receivingdeuce following service loss from3-0; prolonged point createsBP#2, not actual4-1break conversion and not firstgame.",
+      "serve_rally_payoff": "217.24 Bouzkova prep,220.5 toss/220.80 firstwide, one continuous rally to252.92; winner ties shoelaces on camera after point, AD/BP#2 appears.",
+      "native_board_anomaly": "Native board briefly changes toBouzkovaAD around227–230 during same uninterrupted rally, reverts todeuce around231. No point ended/serve restarted. OfficialPBP point126 mapsdeuce→ChwalinskaAD; treat native graphic animation as anomaly, not multiple points.",
+      "boundary": "258.36 still previousBP walking shot;258.40 exact hardcut new5-1MP prep. End258.20+0.18=258.38 avoids flash. ASR original suspendedbut sentence:base endsbut257.92,small endsbut258.34; parent acoustic gate must adjudicate actual tail if using258.20. Earlier reviewer soft-dissolve interpretation was withdrawn after exact25fps pair inspection."
+    },
+    {
+      "window_id": "match_point_and_celebration",
+      "recommended": [
+        258.4,
+        291.0
+      ],
+      "actual_context": "Chwalinska5-1 receiving40-30 firstMP wins6-1 and match1-6/6-1/6-1.",
+      "serve_rally_payoff": "258.40 firstcurrentMP preparationframe;260.5 serve toss;260.80 wide; entire rally/win by268 followed269.36 firstwinner fist shot,277+ handshake,288.08 happywave. Native final result bothplayers identities consistent.",
+      "boundary": "Final source original English score ends290.56 in both recognizers, end291 retains it.294.16 WTA bumper excluded. No oncourt interview in source tail."
+    },
+    {
+      "window_id": "cold_open",
+      "recommended": [
+        268.24,
+        291.0
+      ],
+      "actual_context": "Postwin payoff reprise and original complete transformative commentary.",
+      "serve_rally_payoff": "Cold is intentionally aftermath; do not label it as serve/rally segment.",
+      "boundary": "Start268.24 preservesWell (base from268.36; selected cold windowrecognizers allow268.24). Old269 would amputate openingword. Score ends290.56;291 retains full utterance."
+    }
+  ],
+  "required_fact_card_context": [
+    "Second set at3-1 saved2BP to hold4-1; sampled selected footage starts4-1, so earlier hold is factual titlecard only unless another official clip is found.",
+    "Third set built3-0, lost serve→3-1, broke immediately→4-1, held→5-1; selected long-rally clip is game5 deuce createsBP, not all those game conclusions.",
+    "First set1-1 missed onlyBP and lost final5games; selected first-set two points depict laterbreak and setpoint."
+  ],
+  "tactical_observations": [
+    {
+      "id": "running_forehand_crosscourt_pass",
+      "source_interval": [
+        159.8,
+        161.4
+      ],
+      "context": "Set2 Chwal4-1 receivingdeuce → fourthBP",
+      "observation": "After repeated lateral defense, left-handedChwalinska hits a forehand from left side ofnear baseline; ballpasses acrosscourt to right ofBouzkova who has advancednear net, bouncing beyond her reach. Chwal raisesfist, creatingBP.",
+      "narration_candidate": "底线被反复拉开，月亮姐救回一拍又一拍，最后用正手斜线穿越拿到机会。",
+      "native_evidence": [
+        "tactic-160.20.jpg",
+        "tactic-161.00.jpg",
+        "tactic-161.40.jpg"
+      ],
+      "avoid": "Do not call this winning thegame or earlier savingbreakpoints."
+    },
+    {
+      "id": "forehand_lob_over_netplayer",
+      "source_interval": [
+        183.4,
+        186.92
+      ],
+      "context": "Set2 Chwal4-1 fourthBP → breakto5-1",
+      "observation": "Bouzkova advancesnear net; left-handedChwalinska raisesforehand upward at184.4, loftingballoverher;185.2/185.6 Bouzkova looksup withracket and turnsback whileChwal waitsand wins, followedfist186.92.",
+      "narration_candidate": "对手冲到网前，她用一记挑高球越过头顶，第四个破发点终于兑现。",
+      "native_evidence": [
+        "tactic-184.40.jpg",
+        "tactic-185.20.jpg",
+        "tactic-185.60.jpg"
+      ],
+      "avoid": "No guessed psychology, speed, spin, exactstroke count or claim every point usedthispattern."
+    }
+  ],
+  "tactical_status": "Two specific shot-level claims verified against actual fullselected source motion and nativepayoff frames.",
+  "blockers_to_final_window_approval": [
+    "Parent must apply complete-preparation starts and0.18-tail-safe ends tofinalspec, then actually inspect finalfilm.",
+    "Original suspendedbut phrase at258 boundary requires parentacoustic adjudication if trimmingto258.20; no human-listening verdictbythisagent."
+  ],
+  "references": [
+    {
+      "path": "/workspace/scratch/moon-probe/probe.json",
+      "sha256": "38fb81ca527b00a25cbd1712d668f55ebca1aacd217bd7ea59c53a73d1b0b68e",
+      "bytes": 15291
+    },
+    {
+      "path": "/workspace/scratch/moon-facts/facts.json",
+      "sha256": "2e0cae50e8408fbf29624a0f3664c0303b0ccbbbd8dc02fa92e5e45092e1a1ea",
+      "bytes": 11635
+    },
+    {
+      "path": "/workspace/scratch/moon-base.en-asr.json",
+      "sha256": "cecc76d06ee8ded5c30bca01eb5eec9f701a19fa922717776fb4e245ca38d181",
+      "bytes": 50160
+    },
+    {
+      "path": "/workspace/scratch/moon-small.en-asr.json",
+      "sha256": "70c5d15ed220f533a1906d51cc6a3e6f9c7405cabe5d36afecf996ea65389d96",
+      "bytes": 48857
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/native-boundary-wall-00.jpg",
+      "sha256": "6429d329acb2d4dffbd955f99001df8e792f4692dfd626f291cab49d3510dbe8",
+      "bytes": 501086
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/native-boundary-wall-01.jpg",
+      "sha256": "f1670a7b30ec82ba8e8d42268581a57eaebf25a826903efb712bd43dec28bad5",
+      "bytes": 552861
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/native-boundary-wall-02.jpg",
+      "sha256": "6e300445805305ab055beec8194cdd410b6f008fdc6005483bbedf3ab188fac1",
+      "bytes": 549383
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/native-boundary-wall-03.jpg",
+      "sha256": "bdb841ab1e068368f368a6db75218502a8ae7dcddf333455500370f103afa9f8",
+      "bytes": 164394
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set1-wall-00.jpg",
+      "sha256": "866accd63cc3ccd818c0609dbfa3c8dcb4736cbf28f2a23511c9d37dd01a973b",
+      "bytes": 967467
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set1-wall-01.jpg",
+      "sha256": "4af03598f26df05faf509e9db4cb4b61becca228a1067b39dc221a95e3354a07",
+      "bytes": 887640
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set1-wall-02.jpg",
+      "sha256": "dd1ca94780bc0a3e02213c4dcba6425b8c65d47bb5677caef3e82b6c23ce5185",
+      "bytes": 417635
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set2_bp-wall-00.jpg",
+      "sha256": "bf46952155e0ef5e07ef53131ff72fdd67642d538fe1df02bfe199d44b815e07",
+      "bytes": 1028816
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set2_bp-wall-01.jpg",
+      "sha256": "427cdeb7be6877ea9de4a719c569a335a1be732566288c37ce1d690ec1ba7f5e",
+      "bytes": 939270
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set2_bp-wall-02.jpg",
+      "sha256": "1ba1369ede8d912b703ebb1b6e0045a2bbe7a4f4917799fae8c8628fc5f04720",
+      "bytes": 302701
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set2_deuce-wall-00.jpg",
+      "sha256": "ee2421d671d7157c7abf7479adcd606b28c802d35b17f0a14e865ab2a71756e5",
+      "bytes": 989058
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set2_deuce-wall-01.jpg",
+      "sha256": "475678724e4d442fca76512e7f958741e54044de533f31c384e51acb04227478",
+      "bytes": 1040613
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set2_deuce-wall-02.jpg",
+      "sha256": "50add5809d9274a8137d3b37f0e2c5309ea1f14db67f427265256d97a9a7d710",
+      "bytes": 1020660
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set2_deuce-wall-03.jpg",
+      "sha256": "56c3f1d3e5e3a323277a6dc292a99555b9ee1e39b3f287673ded8875439975c8",
+      "bytes": 502832
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set2_sp-wall-00.jpg",
+      "sha256": "df4a1024af9b6ad592d26506245776ae65d51748bce720ae462a7233f7857394",
+      "bytes": 929765
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set2_sp-wall-01.jpg",
+      "sha256": "53efc755b04991f9626cb9da30668163669eb1204abda720778b8b8f17159176",
+      "bytes": 982427
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set2_sp-wall-02.jpg",
+      "sha256": "b7b7db125703be89dbb2f4ee15b9121d26c5ddbe081d8c6eb0f0cd0585a46311",
+      "bytes": 483794
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set3_deuce-wall-00.jpg",
+      "sha256": "7022a101ae6c75c57e7f37ef47c444b6c0e2cfbf6310e85f8acc8b512bf4d075",
+      "bytes": 986586
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set3_deuce-wall-01.jpg",
+      "sha256": "5083cbeffebbd1b6625450de973174fe28fbd356948fa65d60977a10a5024424",
+      "bytes": 1062383
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set3_deuce-wall-02.jpg",
+      "sha256": "a820580e85f62fd6d2fde1c4af7d48a1c4eae520cd1a60f2ace9b3b0f828aa60",
+      "bytes": 1058096
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set3_deuce-wall-03.jpg",
+      "sha256": "2f5678cc1be5118641cddd89eda36f498529e1d14b89d6d5ad044ecd1014166c",
+      "bytes": 932173
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set3_deuce-wall-04.jpg",
+      "sha256": "accd1bd1fb989f8b481dd4b4acd40482924ddd7525f18da644a2243354360b3e",
+      "bytes": 208539
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set3_mp-wall-00.jpg",
+      "sha256": "e688bc2f52bed8f3fced14dad7f91c3530469e274a3ff3abaa9f55815517c9d2",
+      "bytes": 1022114
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set3_mp-wall-01.jpg",
+      "sha256": "931f0f1deb64ea9077a62574ae1ce0f59d7374f18ff3feb57dddb7223dbfd8a1",
+      "bytes": 687447
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set3_mp-wall-02.jpg",
+      "sha256": "4617aafb94882d45830786429d1db84cdc7c99cf53b60dc619cbd768c15ce166",
+      "bytes": 1273176
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/set3_mp-wall-03.jpg",
+      "sha256": "5cdf83b3a8678a5311f25db7ef3952b0a3ba6ec6f0911d32f931a5236549bbe8",
+      "bytes": 372823
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/exact-boundary-strip-00.jpg",
+      "sha256": "82b1b9df8a16c3235503b2b582c4cd5c74e04347fdb10137a6c6c1ce7cb04307",
+      "bytes": 550469
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/exact-boundary-strip-01.jpg",
+      "sha256": "4c3a6166e52d55f0bb88189ce90e1329498cf5e41a6b83e88b0dd723e2898ba7",
+      "bytes": 566898
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/exact-boundary-strip-02.jpg",
+      "sha256": "46ac594a091e9e9de7dcd26d024d840e4a9a226ff400e30100c6f53fe61058fe",
+      "bytes": 198022
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/tactic-160.20.jpg",
+      "sha256": "dbc815b44f185ca50055d876258988d455869c84a17b99e40815d685e8dc1a97",
+      "bytes": 193085
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/tactic-161.00.jpg",
+      "sha256": "80e1abf0a3a8a0b82493b8ecabcf4663924dde966483947b12e083afc55f56b4",
+      "bytes": 192193
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/tactic-161.40.jpg",
+      "sha256": "176ebf3650f37f020673d79eb47fc4d5818888cabfe546bcf8e93918c292791b",
+      "bytes": 191627
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/tactic-184.40.jpg",
+      "sha256": "2bc3b832c4882453b8b0d25e1b847b8da802f6904e2eea7b0322a68d696d2cef",
+      "bytes": 199279
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/tactic-185.20.jpg",
+      "sha256": "6d7bd3528b3f4e1981ba948b18980116268adc90c90f83f8b9001ca9552f45cf",
+      "bytes": 195755
+    },
+    {
+      "path": "/workspace/scratch/moon-window-review/tactic-185.60.jpg",
+      "sha256": "63c22f3378f3563a09452f6e55eeb36fdc7035efba06cde49a2b78898aea2f5e",
+      "bytes": 194534
+    }
+  ],
+  "draft_spec_sha256_at_review": "d71449bb599a030358d168f4080ebd4fefbb503d5acfe68bd290259853c757be",
+  "not_yet_checked": [
+    "Actualrenderedcover and finalfilm",
+    "ActualfinalASS and PCM-injectionbinding",
+    "MandarinTTS pronunciation; separateparentgate"
+  ]
+}

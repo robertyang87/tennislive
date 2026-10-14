@@ -1,0 +1,1840 @@
+{
+  "created_at": "2026-10-14T08:24:04.165400+00:00",
+  "status": "completed_for_exact_v4_frozen_audio_with_prior_outro_review_reuse",
+  "audio_review_complete": true,
+  "current_body_unconfirmed": 0,
+  "confirmed_actual_misread_count": 0,
+  "audio_admissible_for_current_video": true,
+  "scope": "current frozen narration audio only, not whole-video fact/visual/subtitle/publication QC",
+  "bundle_sha256": "e61f706d4aec216dfe02ca24c4593ed98c527ce16f300a29cdd7d0c68e56b8f9",
+  "bundle_path": "/workspace/scratch/moon-tts-v4.zip",
+  "preserved_bundle_path": "/workspace/scratch/moon-pronunciation/input-bundle-e61f706d4aec.zip",
+  "spec_snapshot_sha256": "7d3478d18dc4d3ebf32e6d9233784da65e0855baf9bef3383b043e5f27a7cade",
+  "request_count": 9,
+  "body_polyphone_occurrences": 21,
+  "body_complete_supported_occurrences": 21,
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "pitch": "+0Hz",
+  "cover_has_no_narration": true,
+  "v3_v4_comparison": {
+    "proof": "v3-v4-exact-byte-reuse.json",
+    "unchanged_full_text_mp3_and_marks_requests": 8,
+    "changed_request": "next_round/voice_13.mp3"
+  },
+  "utterances": [
+    {
+      "segment_index": 1,
+      "edit_id": "coordinate",
+      "output_name": "voice_01.mp3",
+      "tts_text": "北京时间十月十四号上午，武汉网球公开赛第二轮。刚满二十五岁，月亮姐首盘只拿一局，随后连赢两盘，晋级十六强。",
+      "text_sha256": "0e4a641a085849120251dc7aa7fe511a512dc5cfc16a3ca16b747d0ffe1538c2",
+      "request_id": "20240d93c59b95ba9d21a7caedfe3e720b9982c9ab954879b9107fe6135f01c2",
+      "request": {
+        "backend": "edge",
+        "cache_key": "4ac28037dd9d8b5bb391db853d3c25d5",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "北京时间十月十四号上午，武汉网球公开赛第二轮。刚满二十五岁，月亮姐首盘只拿一局，随后连赢两盘，晋级十六强。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "da0bfffd1dcf0e9f0e2b7744d77425ee2676ddadfd5ee4c7697add5291197915",
+      "marks_sha256": "76b4331b9c0d98d4a7eddb9a17817a3e75afb296f441a88bb2c597062feef32a",
+      "duration_seconds": 11.016,
+      "bundle_sha256": "e61f706d4aec216dfe02ca24c4593ed98c527ce16f300a29cdd7d0c68e56b8f9",
+      "matches_current_spec": true,
+      "native_audio": "/workspace/scratch/moon-pronunciation/native-audio/coordinate-da0bfffd1dcf0e9f.mp3",
+      "native_marks": "/workspace/scratch/moon-pronunciation/native-audio/coordinate-da0bfffd1dcf0e9f.json",
+      "wordboundary_exact_native_bytes_preserved": true,
+      "status": "current_audio_supported",
+      "v3_exact_byte_reused": true
+    },
+    {
+      "segment_index": 2,
+      "edit_id": "first_set",
+      "output_name": "voice_02.mp3",
+      "tts_text": "首盘一比一后，月亮姐连丢五局。对手用中路发球收下首盘，一比六，月亮姐必须找回节奏。",
+      "text_sha256": "b5bba2eb88a45222dbb9464fcdc10dacb0fc41ad7580f3744ec3c6497ea5c3b2",
+      "request_id": "3d96d50656655b12067765178de08cbb81cb8a9fe42ef1f65e5d5acdabb9261c",
+      "request": {
+        "backend": "edge",
+        "cache_key": "c5e0333d2a028efcd8c15c3c80b78db9",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "首盘一比一后，月亮姐连丢五局。对手用中路发球收下首盘，一比六，月亮姐必须找回节奏。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "dcd3e7149945342e2243e34b72a0f0e7095f05d98097c24947b3ea743a652aa5",
+      "marks_sha256": "a1e53b144ea25e5eb4627cf245bd39ed2ca1efcc13f22aacc48ba4ee24aa36e0",
+      "duration_seconds": 8.688,
+      "bundle_sha256": "e61f706d4aec216dfe02ca24c4593ed98c527ce16f300a29cdd7d0c68e56b8f9",
+      "matches_current_spec": true,
+      "native_audio": "/workspace/scratch/moon-pronunciation/native-audio/first_set-dcd3e7149945342e.mp3",
+      "native_marks": "/workspace/scratch/moon-pronunciation/native-audio/first_set-dcd3e7149945342e.json",
+      "wordboundary_exact_native_bytes_preserved": true,
+      "status": "current_audio_supported",
+      "v3_exact_byte_reused": true
+    },
+    {
+      "segment_index": 4,
+      "edit_id": "second_turn",
+      "output_name": "voice_04.mp3",
+      "tts_text": "第二盘三比一，她先救下两次丢局危机，守住四比一。下一局，对手四十比零，却被追到平分。底线被反复拉开，月亮姐救回一拍又一拍，最后正手斜线穿越，拿到机会。",
+      "text_sha256": "b4f26c2ae98ae9fc611415fb74d434089a4c82d711eb4c8ba641266fdf6aa1d7",
+      "request_id": "594d9f05cb4408662473a236ad859584ff0786be9d10dc49632ca789809a0cb9",
+      "request": {
+        "backend": "edge",
+        "cache_key": "970875513df3c6459babc8e70e7aafcd",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "第二盘三比一，她先救下两次丢局危机，守住四比一。下一局，对手四十比零，却被追到平分。底线被反复拉开，月亮姐救回一拍又一拍，最后正手斜线穿越，拿到机会。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "c2ed8121fd635377ee005715fed30f2785652e3c09afee6231a6842b07f7afac",
+      "marks_sha256": "d49828005f504d448736fb03e4258620632b9595702682c3ba77fb7f89ee601d",
+      "duration_seconds": 15.192,
+      "bundle_sha256": "e61f706d4aec216dfe02ca24c4593ed98c527ce16f300a29cdd7d0c68e56b8f9",
+      "matches_current_spec": true,
+      "native_audio": "/workspace/scratch/moon-pronunciation/native-audio/second_turn-c2ed8121fd635377.mp3",
+      "native_marks": "/workspace/scratch/moon-pronunciation/native-audio/second_turn-c2ed8121fd635377.json",
+      "wordboundary_exact_native_bytes_preserved": true,
+      "status": "current_audio_supported",
+      "v3_exact_byte_reused": true
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "fourth_bp_context",
+      "output_name": "voice_06.mp3",
+      "tts_text": "第四次机会！对手来到网前，月亮姐用一记高吊球越过头顶，终于拉到五比一！",
+      "text_sha256": "dd3e6730da6036f9ee2562abe4a319c08e0974b0f76330dbdf84794e7ac57ef0",
+      "request_id": "0587b5a856cd37db6db16346413ea6763506cce042f5bf81b3f5de748a4fb63f",
+      "request": {
+        "backend": "edge",
+        "cache_key": "86bc3811d770ff9c333e79e2671548e0",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "第四次机会！对手来到网前，月亮姐用一记高吊球越过头顶，终于拉到五比一！",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "e104713e0c8ffcfe97ca28419c291ec4bfd0668d9a8b4a1dbe4e50984138d7e7",
+      "marks_sha256": "9f0655eb0a41a3f90998c9229bbfa9f6e1748e2a034653fcd10105c562a7fa3c",
+      "duration_seconds": 7.536,
+      "bundle_sha256": "e61f706d4aec216dfe02ca24c4593ed98c527ce16f300a29cdd7d0c68e56b8f9",
+      "matches_current_spec": true,
+      "native_audio": "/workspace/scratch/moon-pronunciation/native-audio/fourth_bp_context-e104713e0c8ffcfe.mp3",
+      "native_marks": "/workspace/scratch/moon-pronunciation/native-audio/fourth_bp_context-e104713e0c8ffcfe.json",
+      "wordboundary_exact_native_bytes_preserved": true,
+      "status": "current_audio_supported",
+      "v3_exact_byte_reused": true
+    },
+    {
+      "segment_index": 8,
+      "edit_id": "third_turn",
+      "output_name": "voice_08.mp3",
+      "tts_text": "决胜盘，月亮姐先到三比零。对手追成三比一，她下一局又赢回来。最后，第一个赛点，月亮姐赢下比赛！",
+      "text_sha256": "7d2b9920b371a709dfe0de97e940e14d9443bbda76eec4a3dacdf4cda27ca0d6",
+      "request_id": "afbc16adeb4a1a5980dd2159429f4a8b640cfc781a98cdb2d886f16357a4cb1c",
+      "request": {
+        "backend": "edge",
+        "cache_key": "1bfb203462629b55098a3bbc7d46f54c",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "决胜盘，月亮姐先到三比零。对手追成三比一，她下一局又赢回来。最后，第一个赛点，月亮姐赢下比赛！",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "5b8889c478eb41d084441a7f32d3bdb23766f36df98c8c3144bbe4ac73173ae4",
+      "marks_sha256": "f12223bbf219ef7d851c62951ab113f0eea0613c2a984288daf5c91136851565",
+      "duration_seconds": 10.176,
+      "bundle_sha256": "e61f706d4aec216dfe02ca24c4593ed98c527ce16f300a29cdd7d0c68e56b8f9",
+      "matches_current_spec": true,
+      "native_audio": "/workspace/scratch/moon-pronunciation/native-audio/third_turn-5b8889c478eb41d0.mp3",
+      "native_marks": "/workspace/scratch/moon-pronunciation/native-audio/third_turn-5b8889c478eb41d0.json",
+      "wordboundary_exact_native_bytes_preserved": true,
+      "status": "current_audio_supported",
+      "v3_exact_byte_reused": true
+    },
+    {
+      "segment_index": 10,
+      "edit_id": "match_point_context",
+      "output_name": "voice_10.mp3",
+      "tts_text": "月亮姐随后再赢一局，四比一，再守到五比一。现在，第一个赛点！",
+      "text_sha256": "7a007de662e06587fbb1ee71d3c58b2804437745cd21c59a0e6b32563d18a212",
+      "request_id": "a2654d11ba426a3429528158067c4b2a0d40bbd057a534e671dccd7471478faa",
+      "request": {
+        "backend": "edge",
+        "cache_key": "daa8fbf3a91f08bedfec5cba1124946d",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "月亮姐随后再赢一局，四比一，再守到五比一。现在，第一个赛点！",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "f0da1939d56b693d298fd26444aca598c3deae99a17c4476c599d910f5206334",
+      "marks_sha256": "358fab367eab7d1f1dd274c5e59c90819795c37fed31a019a1218fbb83b7c6be",
+      "duration_seconds": 6.792,
+      "bundle_sha256": "e61f706d4aec216dfe02ca24c4593ed98c527ce16f300a29cdd7d0c68e56b8f9",
+      "matches_current_spec": true,
+      "native_audio": "/workspace/scratch/moon-pronunciation/native-audio/match_point_context-f0da1939d56b693d.mp3",
+      "native_marks": "/workspace/scratch/moon-pronunciation/native-audio/match_point_context-f0da1939d56b693d.json",
+      "wordboundary_exact_native_bytes_preserved": true,
+      "status": "current_audio_supported",
+      "v3_exact_byte_reused": true
+    },
+    {
+      "segment_index": 12,
+      "edit_id": "full_stats",
+      "output_name": "voice_12.mp3",
+      "tts_text": "全场制胜分，月亮姐二十五，对手二十六。非受迫失误，月亮姐十九，对手三十一。决胜盘，她只有四次，对手十六次。稳定，才是赢球关键。",
+      "text_sha256": "b6494b1b162205f90e04185ddda4bf05e232b91c4e057c1201d1189a6488efdd",
+      "request_id": "9d0bbc1f2836019d54e758cf5504e31131006c60e4f10519ad327bd0f2726d98",
+      "request": {
+        "backend": "edge",
+        "cache_key": "0eadcc7f9c54778274fc28bc35769645",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "全场制胜分，月亮姐二十五，对手二十六。非受迫失误，月亮姐十九，对手三十一。决胜盘，她只有四次，对手十六次。稳定，才是赢球关键。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "4701d81deaae564cc10b680919d417f2faa2a862a8866d210658918bc3dacd38",
+      "marks_sha256": "055724c480b740ffcdecf2b62261c4c521d5fbe41ca0fe57a770f9dc364670a2",
+      "duration_seconds": 13.992,
+      "bundle_sha256": "e61f706d4aec216dfe02ca24c4593ed98c527ce16f300a29cdd7d0c68e56b8f9",
+      "matches_current_spec": true,
+      "native_audio": "/workspace/scratch/moon-pronunciation/native-audio/full_stats-4701d81deaae564c.mp3",
+      "native_marks": "/workspace/scratch/moon-pronunciation/native-audio/full_stats-4701d81deaae564c.json",
+      "wordboundary_exact_native_bytes_preserved": true,
+      "status": "current_audio_supported",
+      "v3_exact_byte_reused": true
+    },
+    {
+      "segment_index": 13,
+      "edit_id": "next_round",
+      "output_name": "voice_13.mp3",
+      "tts_text": "月亮姐晋级武汉第三轮，下一轮迎战十号种子约维奇。连赢两盘后，她还能再进一轮吗？",
+      "text_sha256": "f28b5cede244f96137efa10150cb119a7a00c47ed490bf7f6d2133f2d2d5ab68",
+      "request_id": "f517ac4c2a988742279f27b2adaec6c3c2a55b86dd536d78171f761a5bbec85b",
+      "request": {
+        "backend": "edge",
+        "cache_key": "0902119503364af6d6b3bbe32de04d96",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "月亮姐晋级武汉第三轮，下一轮迎战十号种子约维奇。连赢两盘后，她还能再进一轮吗？",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "8a8dc5415eb5f3a9affec79526cfc679071cbb850e4b57a4fd0d595b1984c828",
+      "marks_sha256": "32a870188b848c765afd06597d83e549636553475c357a675624c0b77f353d0e",
+      "duration_seconds": 8.52,
+      "bundle_sha256": "e61f706d4aec216dfe02ca24c4593ed98c527ce16f300a29cdd7d0c68e56b8f9",
+      "matches_current_spec": true,
+      "native_audio": "/workspace/scratch/moon-pronunciation/native-audio/next_round-8a8dc5415eb5f3a9.mp3",
+      "native_marks": "/workspace/scratch/moon-pronunciation/native-audio/next_round-8a8dc5415eb5f3a9.json",
+      "wordboundary_exact_native_bytes_preserved": true,
+      "status": "current_audio_supported",
+      "v3_exact_byte_reused": false
+    },
+    {
+      "segment_index": "outro",
+      "edit_id": "outro",
+      "output_name": "voice_outro.mp3",
+      "tts_text": "关注网球时差，时差归我，好球归你。",
+      "text_sha256": "2bfb6c3faf8ae5b1711f6ea769579ce03d322ce6440b2947a0537cecf4fe660e",
+      "request_id": "75c73f1202071699a9595e6df6c2f0ef0dde6a4732e4b8ebf904ed99e156b312",
+      "request": {
+        "backend": "edge",
+        "cache_key": "7559865dbf4339cccd83a16a1f56beb8",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "关注网球时差，时差归我，好球归你。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+      "marks_sha256": "65a15ef4d71972d782173404762c6c3da745d0b1aacc713a6ed389fbcc5d10f2",
+      "duration_seconds": 4.2,
+      "bundle_sha256": "e61f706d4aec216dfe02ca24c4593ed98c527ce16f300a29cdd7d0c68e56b8f9",
+      "matches_current_spec": true,
+      "native_audio": "/workspace/scratch/moon-pronunciation/native-audio/outro-9043e03e1513e7eb.mp3",
+      "native_marks": "/workspace/scratch/moon-pronunciation/native-audio/outro-9043e03e1513e7eb.json",
+      "wordboundary_exact_native_bytes_preserved": true,
+      "status": "exact_prior_review_inherited",
+      "v3_exact_byte_reused": true
+    }
+  ],
+  "current_body_occurrences": [
+    {
+      "edit_id": "coordinate",
+      "segment_index": 1,
+      "tts_text": "北京时间十月十四号上午，武汉网球公开赛第二轮。刚满二十五岁，月亮姐首盘只拿一局，随后连赢两盘，晋级十六强。",
+      "text_sha256": "0e4a641a085849120251dc7aa7fe511a512dc5cfc16a3ca16b747d0ffe1538c2",
+      "actual_native_mp3_sha256": "da0bfffd1dcf0e9f0e2b7744d77425ee2676ddadfd5ee4c7697add5291197915",
+      "index": 3,
+      "char": "间",
+      "word": "北京时间",
+      "intended": "jian1",
+      "live": [
+        "jian1",
+        "jian4"
+      ],
+      "defaults": [
+        "jian1"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "jian4": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/coordinate-i03-间-jian1-vs-jian4-0e4a641a0858-da0bfffd1dcf.json",
+          "sha256": "265b5d61f8205e3f5b93de0fda3babb9dc246653d3a41c1e51611cec99acf0ad",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.344,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "jian4"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/coordinate-i03-间-jian1-vs-jian4-0e4a641a0858-da0bfffd1dcf.json",
+          "sha256": "265b5d61f8205e3f5b93de0fda3babb9dc246653d3a41c1e51611cec99acf0ad",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.344,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "jian4"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "segment_index": 1,
+      "tts_text": "北京时间十月十四号上午，武汉网球公开赛第二轮。刚满二十五岁，月亮姐首盘只拿一局，随后连赢两盘，晋级十六强。",
+      "text_sha256": "0e4a641a085849120251dc7aa7fe511a512dc5cfc16a3ca16b747d0ffe1538c2",
+      "actual_native_mp3_sha256": "da0bfffd1dcf0e9f0e2b7744d77425ee2676ddadfd5ee4c7697add5291197915",
+      "index": 8,
+      "char": "号",
+      "word": "号",
+      "intended": "hao4",
+      "live": [
+        "hao4",
+        "hao2"
+      ],
+      "defaults": [
+        "hao4"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "hao2": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i08-号-hao4-vs-hao2-0e4a641a0858-suffix-whole-voiced-nucleus.json",
+          "sha256": "0cfb4630b31f65c93000292c8dfc5877d76d1c9ff3154af273d0752b953fa8e7",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.9678486747393815,
+          "selftest_pass": true,
+          "method": "target-nucleus followup; retain failed earlier reference set; independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "hao2"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/coordinate-i08-号-hao4-vs-hao2-0e4a641a0858-da0bfffd1dcf.json",
+          "sha256": "46591d6938a718bd4b5544ec0cb5e6eb59075bb69b84d11ac86b6a8915ca59b5",
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.137,
+          "selftest_pass": false,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "hao2"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i08-号-hao4-vs-hao2-0e4a641a0858-voiced-nucleus.json",
+          "sha256": "fddd54e4b0f175d1107b919792a5ba382e3770239f32854108a0bb19d976e8ab",
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.9133307340995277,
+          "selftest_pass": false,
+          "method": "independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "hao2"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i08-号-hao4-vs-hao2-0e4a641a0858-recalibrated-voiced-nucleus.json",
+          "sha256": "c36fa3e8c152e4c467981818b3b223925eac5fb6a720ea886884ef5cc895b7a5",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.9811349439989668,
+          "selftest_pass": true,
+          "method": "target-nucleus followup; retain failed earlier reference set; independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "hao2"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i08-号-hao4-vs-hao2-0e4a641a0858-suffix-whole-voiced-nucleus.json",
+          "sha256": "0cfb4630b31f65c93000292c8dfc5877d76d1c9ff3154af273d0752b953fa8e7",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.9678486747393815,
+          "selftest_pass": true,
+          "method": "target-nucleus followup; retain failed earlier reference set; independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "hao2"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "segment_index": 1,
+      "tts_text": "北京时间十月十四号上午，武汉网球公开赛第二轮。刚满二十五岁，月亮姐首盘只拿一局，随后连赢两盘，晋级十六强。",
+      "text_sha256": "0e4a641a085849120251dc7aa7fe511a512dc5cfc16a3ca16b747d0ffe1538c2",
+      "actual_native_mp3_sha256": "da0bfffd1dcf0e9f0e2b7744d77425ee2676ddadfd5ee4c7697add5291197915",
+      "index": 35,
+      "char": "只",
+      "word": "只",
+      "intended": "zhi3",
+      "live": [
+        "zhi3",
+        "zhi1"
+      ],
+      "defaults": [
+        "zhi3",
+        "zhi1"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "zhi1": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/coordinate-i35-只-zhi3-vs-zhi1-0e4a641a0858-da0bfffd1dcf.json",
+          "sha256": "2691ef657a3d297391b7ff47b4a2c40964b492d9552d3ff3aaa07beca952b712",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.655,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "zhi1"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/coordinate-i35-只-zhi3-vs-zhi1-0e4a641a0858-da0bfffd1dcf.json",
+          "sha256": "2691ef657a3d297391b7ff47b4a2c40964b492d9552d3ff3aaa07beca952b712",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.655,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "zhi1"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "segment_index": 1,
+      "tts_text": "北京时间十月十四号上午，武汉网球公开赛第二轮。刚满二十五岁，月亮姐首盘只拿一局，随后连赢两盘，晋级十六强。",
+      "text_sha256": "0e4a641a085849120251dc7aa7fe511a512dc5cfc16a3ca16b747d0ffe1538c2",
+      "actual_native_mp3_sha256": "da0bfffd1dcf0e9f0e2b7744d77425ee2676ddadfd5ee4c7697add5291197915",
+      "index": 51,
+      "char": "强",
+      "word": "强",
+      "intended": "qiang2",
+      "live": [
+        "qiang2",
+        "jiang4",
+        "qiang3"
+      ],
+      "defaults": [
+        "qiang2"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "qiang3": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i51-强-qiang2-vs-qiang3-rhyme-0e4a641a0858-rhyme-third-voiced-nucleus.json",
+          "sha256": "edd3d38df6abf1259a7945dd7612a2c40014d3aff58ec7661d772cb8ba2afd59",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 1.0,
+          "selftest_pass": true,
+          "method": "target-nucleus followup; retain failed earlier reference set; independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "qiang3"
+          ]
+        },
+        "jiang4": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i51-强-0e4a641a0858-cv-prevoicing-fraction.json",
+          "sha256": "d4dd1308e78417044dd0ab264df19812034b344919e3edfbe5dcfbda31a039f3",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 1.0,
+          "selftest_pass": true,
+          "method": "strong target q/j aspiration onset: 160ms before real nucleus onset, voicing occupancy measures q aspiration interval versus j short VOT; standalone CV discriminator with independent two-sided LOO; preserve earlier MFCC failure; final suffix nucleus;  pitch_floor30Hz recovers low/creaky native third-tone nuclei; last sustained voiced island must overlap actual final-char interval (not prior斯); no reference tone labels reassigned; first40% shared-standardized MFCC+delta vowel-onset signature distinguishes ka versus qia glide; no surname equal-char average and no tone assignment from proxy glyph; separate ka3 tone evidence still required",
+          "limitations": [
+            "Only segmental q/j onset contrast; both families share iang rhyme, F0 excluded from CV feature. Actual rising F0 proof required separately."
+          ],
+          "covered": [
+            "jiang4"
+          ]
+        }
+      },
+      "limited_low_confidence": {
+        "qiang3": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i51-强-0e4a641a0858-v3-tone-rhyme-third.json",
+          "sha256": "e0ce1f424c99528de22624390126f53baa92c88034349c66d08c89b643d008c8",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.961,
+          "selftest_pass": true,
+          "method": "whole actual-bundle utterance, full MFCC DTW F0-only tone/rhyme comparison; independent reference LOO required",
+          "limitations": [
+            "same iang vowel/rhyme, independently articulated tone2 versus tone3 references with x initial for B; F0 only does not claim x equals q, independent CV evidence required."
+          ],
+          "covered": [
+            "qiang3"
+          ]
+        }
+      },
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/coordinate-i51-强-qiang2-vs-jiang4-0e4a641a0858-da0bfffd1dcf.json",
+          "sha256": "ca95951191acf9704e825a8a3e6bb2789da6e2a4a9a020e5fa4937725ec09c44",
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.952,
+          "selftest_pass": false,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "jiang4"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/coordinate-i51-强-qiang2-vs-qiang3-0e4a641a0858-da0bfffd1dcf.json",
+          "sha256": "8bde974af94b8394d8f2122ae887dc06ab6bfef0fdb96bba36eff2987f92a99f",
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 0.921,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "qiang3"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i51-强-qiang2-vs-qiang3-rhyme-0e4a641a0858-rhyme-third-lowfloor-nucleus.json",
+          "sha256": "da5899e775dd244f218cc6c01d345b1a93565a7dd28e988de6e46a0b95b1ff5d",
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.9999999999999786,
+          "selftest_pass": false,
+          "method": "target-nucleus low-creaky pitch tracking followup;  retain failed earlier reference set; independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "qiang3"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i51-强-0e4a641a0858-cv-aspiration-onset.json",
+          "sha256": "b5035c21c0f3605d8e0add3a29eaf947672eafab38ebb66b10c400392134496b",
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.998332677389138,
+          "selftest_pass": false,
+          "method": "strong target q/j aspiration onset: 100ms pre-voicing..30ms post-voicing MFCC average; final suffix nucleus;  pitch_floor30Hz recovers low/creaky native third-tone nuclei; last sustained voiced island must overlap actual final-char interval (not prior斯); no reference tone labels reassigned; first40% shared-standardized MFCC+delta vowel-onset signature distinguishes ka versus qia glide; no surname equal-char average and no tone assignment from proxy glyph; separate ka3 tone evidence still required",
+          "limitations": [
+            "Only segmental q/j onset contrast; both families share iang rhyme, F0 excluded from CV feature. Actual rising F0 proof required separately."
+          ],
+          "covered": [
+            "jiang4"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i51-强-qiang2-vs-jiang4-0e4a641a0858-whole-token.json",
+          "sha256": "4107b7f72ec82be0aef2c016dce4650c4ee583864b6b72e904f569191c74ae9e",
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.421,
+          "selftest_pass": false,
+          "method": "entire real original WordBoundary token, preserving all token chars except target; no equal char subdivision; MFCC-only segmental distances; independent reference LOO; original char-window result retained",
+          "limitations": [],
+          "covered": [
+            "jiang4"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i51-强-qiang2-vs-jiang4-0e4a641a0858-lowfloor-suffix-voiced-nucleus.json",
+          "sha256": "3dbd1d03ebffa78f0633ebcc3db25d38aada54e47316fe5f2468d4c674af6dc7",
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.9999999999999812,
+          "selftest_pass": false,
+          "method": "target-nucleus followup with low-creaky pitch tracking;  retain failed earlier reference set; independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "jiang4"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i51-强-0e4a641a0858-v3-tone-rhyme-third.json",
+          "sha256": "e0ce1f424c99528de22624390126f53baa92c88034349c66d08c89b643d008c8",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.961,
+          "selftest_pass": true,
+          "method": "whole actual-bundle utterance, full MFCC DTW F0-only tone/rhyme comparison; independent reference LOO required",
+          "limitations": [
+            "same iang vowel/rhyme, independently articulated tone2 versus tone3 references with x initial for B; F0 only does not claim x equals q, independent CV evidence required."
+          ],
+          "covered": [
+            "qiang3"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i51-强-0e4a641a0858-cv-prevoicing-fraction.json",
+          "sha256": "d4dd1308e78417044dd0ab264df19812034b344919e3edfbe5dcfbda31a039f3",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 1.0,
+          "selftest_pass": true,
+          "method": "strong target q/j aspiration onset: 160ms before real nucleus onset, voicing occupancy measures q aspiration interval versus j short VOT; standalone CV discriminator with independent two-sided LOO; preserve earlier MFCC failure; final suffix nucleus;  pitch_floor30Hz recovers low/creaky native third-tone nuclei; last sustained voiced island must overlap actual final-char interval (not prior斯); no reference tone labels reassigned; first40% shared-standardized MFCC+delta vowel-onset signature distinguishes ka versus qia glide; no surname equal-char average and no tone assignment from proxy glyph; separate ka3 tone evidence still required",
+          "limitations": [
+            "Only segmental q/j onset contrast; both families share iang rhyme, F0 excluded from CV feature. Actual rising F0 proof required separately."
+          ],
+          "covered": [
+            "jiang4"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i51-强-qiang2-vs-qiang3-rhyme-0e4a641a0858-rhyme-third-voiced-nucleus.json",
+          "sha256": "edd3d38df6abf1259a7945dd7612a2c40014d3aff58ec7661d772cb8ba2afd59",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 1.0,
+          "selftest_pass": true,
+          "method": "target-nucleus followup; retain failed earlier reference set; independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "qiang3"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i51-强-qiang2-vs-jiang4-0e4a641a0858-recalibrated-voiced-nucleus.json",
+          "sha256": "be11230ec42e0f5dccf6488c2b2de6253cfc4cb8f426ffbdd39d42774584fff0",
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 1.0,
+          "selftest_pass": false,
+          "method": "target-nucleus followup; retain failed earlier reference set; independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "jiang4"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/coordinate-i51-强-qiang2-vs-jiang4-0e4a641a0858-suffix-whole-voiced-nucleus.json",
+          "sha256": "be11230ec42e0f5dccf6488c2b2de6253cfc4cb8f426ffbdd39d42774584fff0",
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 1.0,
+          "selftest_pass": false,
+          "method": "target-nucleus followup; retain failed earlier reference set; independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "jiang4"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "first_set",
+      "segment_index": 2,
+      "tts_text": "首盘一比一后，月亮姐连丢五局。对手用中路发球收下首盘，一比六，月亮姐必须找回节奏。",
+      "text_sha256": "b5bba2eb88a45222dbb9464fcdc10dacb0fc41ad7580f3744ec3c6497ea5c3b2",
+      "actual_native_mp3_sha256": "dcd3e7149945342e2243e34b72a0f0e7095f05d98097c24947b3ea743a652aa5",
+      "index": 18,
+      "char": "中",
+      "word": "中",
+      "intended": "zhong1",
+      "live": [
+        "zhong1",
+        "zhong4"
+      ],
+      "defaults": [
+        "zhong1"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "zhong4": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/first_set-i18-中-zhong1-vs-zhong4-b5bba2eb88a4-whole-token.json",
+          "sha256": "adbdde4cd56f25fe91e52e34ce80cc5c6f35f66785ad9ce801bc20afa9c03ca0",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.48,
+          "selftest_pass": true,
+          "method": "entire real original WordBoundary token, preserving all token chars except target; no equal char subdivision; F0-only same-phoneme tone distances; independent reference LOO; original char-window result retained",
+          "limitations": [],
+          "covered": [
+            "zhong4"
+          ]
+        }
+      },
+      "limited_low_confidence": {
+        "zhong4": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/first_set-i18-中-zhong1-vs-zhong4-b5bba2eb88a4-dcd3e7149945.json",
+          "sha256": "4b15531a4241c9f7888dca5e48f04329372998258f7de802e13b653ce558e20b",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.236,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "zhong4"
+          ]
+        }
+      },
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/first_set-i18-中-zhong1-vs-zhong4-b5bba2eb88a4-dcd3e7149945.json",
+          "sha256": "4b15531a4241c9f7888dca5e48f04329372998258f7de802e13b653ce558e20b",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.236,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "zhong4"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/first_set-i18-中-zhong1-vs-zhong4-b5bba2eb88a4-whole-token.json",
+          "sha256": "adbdde4cd56f25fe91e52e34ce80cc5c6f35f66785ad9ce801bc20afa9c03ca0",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.48,
+          "selftest_pass": true,
+          "method": "entire real original WordBoundary token, preserving all token chars except target; no equal char subdivision; F0-only same-phoneme tone distances; independent reference LOO; original char-window result retained",
+          "limitations": [],
+          "covered": [
+            "zhong4"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "first_set",
+      "segment_index": 2,
+      "tts_text": "首盘一比一后，月亮姐连丢五局。对手用中路发球收下首盘，一比六，月亮姐必须找回节奏。",
+      "text_sha256": "b5bba2eb88a45222dbb9464fcdc10dacb0fc41ad7580f3744ec3c6497ea5c3b2",
+      "actual_native_mp3_sha256": "dcd3e7149945342e2243e34b72a0f0e7095f05d98097c24947b3ea743a652aa5",
+      "index": 20,
+      "char": "发",
+      "word": "发球",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "fa4": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/first_set-i20-发-b5bba2eb88a4-tone-template-stable-interior.json",
+          "sha256": "0a68472a45b3b948ac90a307042f004b4cc77132207f6674132a6a44bb94d01c",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.8332903720473538,
+          "selftest_pass": true,
+          "method": "independent two-sided same-vowel tone templates with different initials; exclude consonants and initial/terminal transitions using sustained nucleus with maximum real overlap boundary+30ms..end+80ms (avoids excluding short-target onset and preceding/following vowels); stable middle35..65% Theil-Sen F0 slope; exclude final vowel-to-next-voiced-consonant articulation that Praat can bridge as one pitch island; original same-initial single-reference comparison remains separate for CV identity; both-side LOO and native nucleus required",
+          "limitations": [
+            "This validates tone shape on matched vowel nucleus, not the consonant. Same-initial/CV evidence must be considered separately; low or failed earlier tests are not relabeled.",
+            "Tone3 sandhi is retained because references replace only target char in exact same context."
+          ],
+          "covered": [
+            "fa4"
+          ]
+        }
+      },
+      "limited_low_confidence": {
+        "fa4": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/first_set-i20-发-fa1-vs-fa4-b5bba2eb88a4-dcd3e7149945.json",
+          "sha256": "1a11702991c8447df7c93e6292a39cb2e6250d32c5048de77c2b0213fbc499b6",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.991,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "fa4"
+          ]
+        }
+      },
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/first_set-i20-发-fa1-vs-fa4-b5bba2eb88a4-dcd3e7149945.json",
+          "sha256": "1a11702991c8447df7c93e6292a39cb2e6250d32c5048de77c2b0213fbc499b6",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.991,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "fa4"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/first_set-i20-发-b5bba2eb88a4-tone-template-stable-interior.json",
+          "sha256": "0a68472a45b3b948ac90a307042f004b4cc77132207f6674132a6a44bb94d01c",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.8332903720473538,
+          "selftest_pass": true,
+          "method": "independent two-sided same-vowel tone templates with different initials; exclude consonants and initial/terminal transitions using sustained nucleus with maximum real overlap boundary+30ms..end+80ms (avoids excluding short-target onset and preceding/following vowels); stable middle35..65% Theil-Sen F0 slope; exclude final vowel-to-next-voiced-consonant articulation that Praat can bridge as one pitch island; original same-initial single-reference comparison remains separate for CV identity; both-side LOO and native nucleus required",
+          "limitations": [
+            "This validates tone shape on matched vowel nucleus, not the consonant. Same-initial/CV evidence must be considered separately; low or failed earlier tests are not relabeled.",
+            "Tone3 sandhi is retained because references replace only target char in exact same context."
+          ],
+          "covered": [
+            "fa4"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "second_turn",
+      "segment_index": 4,
+      "tts_text": "第二盘三比一，她先救下两次丢局危机，守住四比一。下一局，对手四十比零，却被追到平分。底线被反复拉开，月亮姐救回一拍又一拍，最后正手斜线穿越，拿到机会。",
+      "text_sha256": "b4f26c2ae98ae9fc611415fb74d434089a4c82d711eb4c8ba641266fdf6aa1d7",
+      "actual_native_mp3_sha256": "c2ed8121fd635377ee005715fed30f2785652e3c09afee6231a6842b07f7afac",
+      "index": 36,
+      "char": "被",
+      "word": "被",
+      "intended": "bei4",
+      "live": [
+        "bei4",
+        "pi1"
+      ],
+      "defaults": [
+        "bei4"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "pi1": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/second_turn-i36-被-bei4-vs-pi1-b4f26c2ae98a-c2ed8121fd63.json",
+          "sha256": "db9e1d234ef11c86442255c672019fb4412d7b0c76bf370cbea1378f8f37a5fa",
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 1.0,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "pi1"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/second_turn-i36-被-bei4-vs-pi1-b4f26c2ae98a-c2ed8121fd63.json",
+          "sha256": "db9e1d234ef11c86442255c672019fb4412d7b0c76bf370cbea1378f8f37a5fa",
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 1.0,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "pi1"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "second_turn",
+      "segment_index": 4,
+      "tts_text": "第二盘三比一，她先救下两次丢局危机，守住四比一。下一局，对手四十比零，却被追到平分。底线被反复拉开，月亮姐救回一拍又一拍，最后正手斜线穿越，拿到机会。",
+      "text_sha256": "b4f26c2ae98ae9fc611415fb74d434089a4c82d711eb4c8ba641266fdf6aa1d7",
+      "actual_native_mp3_sha256": "c2ed8121fd635377ee005715fed30f2785652e3c09afee6231a6842b07f7afac",
+      "index": 40,
+      "char": "分",
+      "word": "平分",
+      "intended": "fen1",
+      "live": [
+        "fen1",
+        "fen4"
+      ],
+      "defaults": [
+        "fen1"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "fen4": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/second_turn-i40-分-fen1-vs-fen4-b4f26c2ae98a-c2ed8121fd63.json",
+          "sha256": "a017c39312ba7acc33d98a381adfdb2ad0443f377dc39b0ceb255e4912d48150",
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 1.0,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "fen4"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/second_turn-i40-分-fen1-vs-fen4-b4f26c2ae98a-c2ed8121fd63.json",
+          "sha256": "a017c39312ba7acc33d98a381adfdb2ad0443f377dc39b0ceb255e4912d48150",
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 1.0,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "fen4"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "second_turn",
+      "segment_index": 4,
+      "tts_text": "第二盘三比一，她先救下两次丢局危机，守住四比一。下一局，对手四十比零，却被追到平分。底线被反复拉开，月亮姐救回一拍又一拍，最后正手斜线穿越，拿到机会。",
+      "text_sha256": "b4f26c2ae98ae9fc611415fb74d434089a4c82d711eb4c8ba641266fdf6aa1d7",
+      "actual_native_mp3_sha256": "c2ed8121fd635377ee005715fed30f2785652e3c09afee6231a6842b07f7afac",
+      "index": 44,
+      "char": "被",
+      "word": "被",
+      "intended": "bei4",
+      "live": [
+        "bei4",
+        "pi1"
+      ],
+      "defaults": [
+        "bei4"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "pi1": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/second_turn-i44-被-bei4-vs-pi1-b4f26c2ae98a-c2ed8121fd63.json",
+          "sha256": "dc68dbe77c22d7f2996abdd36aa42314454289d2e8088feeb3d5677a60a06ce7",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.323,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "pi1"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/second_turn-i44-被-bei4-vs-pi1-b4f26c2ae98a-c2ed8121fd63.json",
+          "sha256": "dc68dbe77c22d7f2996abdd36aa42314454289d2e8088feeb3d5677a60a06ce7",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.323,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "pi1"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "second_turn",
+      "segment_index": 4,
+      "tts_text": "第二盘三比一，她先救下两次丢局危机，守住四比一。下一局，对手四十比零，却被追到平分。底线被反复拉开，月亮姐救回一拍又一拍，最后正手斜线穿越，拿到机会。",
+      "text_sha256": "b4f26c2ae98ae9fc611415fb74d434089a4c82d711eb4c8ba641266fdf6aa1d7",
+      "actual_native_mp3_sha256": "c2ed8121fd635377ee005715fed30f2785652e3c09afee6231a6842b07f7afac",
+      "index": 63,
+      "char": "正",
+      "word": "正手",
+      "intended": "zheng4",
+      "live": [
+        "zheng4",
+        "zheng1"
+      ],
+      "defaults": [
+        "zheng4"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "zheng1": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/second_turn-i63-正-zheng4-vs-zheng1-b4f26c2ae98a-voiced-nucleus.json",
+          "sha256": "3486095ebcd28cf99e1d11c07d97f6b5b56bdf7f7f350e20e37687317e6acb6f",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.48334844160541524,
+          "selftest_pass": true,
+          "method": "independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "zheng1"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/second_turn-i63-正-zheng4-vs-zheng1-b4f26c2ae98a-c2ed8121fd63.json",
+          "sha256": "027a0dfb0846922cf9750e02589aaafa02565fcb696c6c8f43b71c47d46bbc27",
+          "verdict": "uncertain",
+          "confidence": null,
+          "score": 0.103,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "zheng1"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/second_turn-i63-正-zheng4-vs-zheng1-b4f26c2ae98a-voiced-nucleus.json",
+          "sha256": "3486095ebcd28cf99e1d11c07d97f6b5b56bdf7f7f350e20e37687317e6acb6f",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.48334844160541524,
+          "selftest_pass": true,
+          "method": "independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "zheng1"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "second_turn",
+      "segment_index": 4,
+      "tts_text": "第二盘三比一，她先救下两次丢局危机，守住四比一。下一局，对手四十比零，却被追到平分。底线被反复拉开，月亮姐救回一拍又一拍，最后正手斜线穿越，拿到机会。",
+      "text_sha256": "b4f26c2ae98ae9fc611415fb74d434089a4c82d711eb4c8ba641266fdf6aa1d7",
+      "actual_native_mp3_sha256": "c2ed8121fd635377ee005715fed30f2785652e3c09afee6231a6842b07f7afac",
+      "index": 73,
+      "char": "会",
+      "word": "机会",
+      "intended": "hui4",
+      "live": [
+        "hui4",
+        "kuai4"
+      ],
+      "defaults": [
+        "hui4"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "kuai4": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/second_turn-i73-会-hui4-vs-kuai4-b4f26c2ae98a-c2ed8121fd63.json",
+          "sha256": "f723042b667e15cb0662c1a1eae25f44624af3404a0b1280105006e76064e548",
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 1.0,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "kuai4"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/second_turn-i73-会-hui4-vs-kuai4-b4f26c2ae98a-c2ed8121fd63.json",
+          "sha256": "f723042b667e15cb0662c1a1eae25f44624af3404a0b1280105006e76064e548",
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 1.0,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "kuai4"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "fourth_bp_context",
+      "segment_index": 6,
+      "tts_text": "第四次机会！对手来到网前，月亮姐用一记高吊球越过头顶，终于拉到五比一！",
+      "text_sha256": "dd3e6730da6036f9ee2562abe4a319c08e0974b0f76330dbdf84794e7ac57ef0",
+      "actual_native_mp3_sha256": "e104713e0c8ffcfe97ca28419c291ec4bfd0668d9a8b4a1dbe4e50984138d7e7",
+      "index": 4,
+      "char": "会",
+      "word": "机会",
+      "intended": "hui4",
+      "live": [
+        "hui4",
+        "kuai4"
+      ],
+      "defaults": [
+        "hui4"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "kuai4": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/fourth_bp_context-i04-会-hui4-vs-kuai4-dd3e6730da60-e104713e0c8f.json",
+          "sha256": "38727087cc06ce75bc663515db524b0c84ec9e7a39782c4a6bb37bebdca90351",
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 1.0,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "kuai4"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/fourth_bp_context-i04-会-hui4-vs-kuai4-dd3e6730da60-e104713e0c8f.json",
+          "sha256": "38727087cc06ce75bc663515db524b0c84ec9e7a39782c4a6bb37bebdca90351",
+          "verdict": "correct",
+          "confidence": "high",
+          "score": 1.0,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "kuai4"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "segment_index": 12,
+      "tts_text": "全场制胜分，月亮姐二十五，对手二十六。非受迫失误，月亮姐十九，对手三十一。决胜盘，她只有四次，对手十六次。稳定，才是赢球关键。",
+      "text_sha256": "b6494b1b162205f90e04185ddda4bf05e232b91c4e057c1201d1189a6488efdd",
+      "actual_native_mp3_sha256": "4701d81deaae564cc10b680919d417f2faa2a862a8866d210658918bc3dacd38",
+      "index": 1,
+      "char": "场",
+      "word": "全场",
+      "intended": "chang3",
+      "live": [
+        "chang3",
+        "chang2"
+      ],
+      "defaults": [
+        "chang3"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "chang2": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/full_stats-i01-场-chang3-vs-chang2-b6494b1b1622-4701d81deaae.json",
+          "sha256": "3c40bc6636e147949e0be1a1acaad148ce440989db995e12806d8fcc6ca3cc90",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.477,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "chang2"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/full_stats-i01-场-chang3-vs-chang2-b6494b1b1622-4701d81deaae.json",
+          "sha256": "3c40bc6636e147949e0be1a1acaad148ce440989db995e12806d8fcc6ca3cc90",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.477,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "chang2"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "segment_index": 12,
+      "tts_text": "全场制胜分，月亮姐二十五，对手二十六。非受迫失误，月亮姐十九，对手三十一。决胜盘，她只有四次，对手十六次。稳定，才是赢球关键。",
+      "text_sha256": "b6494b1b162205f90e04185ddda4bf05e232b91c4e057c1201d1189a6488efdd",
+      "actual_native_mp3_sha256": "4701d81deaae564cc10b680919d417f2faa2a862a8866d210658918bc3dacd38",
+      "index": 4,
+      "char": "分",
+      "word": "分",
+      "intended": "fen1",
+      "live": [
+        "fen1",
+        "fen4"
+      ],
+      "defaults": [
+        "fen1"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "fen4": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/full_stats-i04-分-fen1-vs-fen4-b6494b1b1622-4701d81deaae.json",
+          "sha256": "817c72b12ff7bbb1154453c8ec571e81b64418c82e38e2927d84fd1cf665c86a",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.73,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "fen4"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/full_stats-i04-分-fen1-vs-fen4-b6494b1b1622-4701d81deaae.json",
+          "sha256": "817c72b12ff7bbb1154453c8ec571e81b64418c82e38e2927d84fd1cf665c86a",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.73,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "fen4"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "segment_index": 12,
+      "tts_text": "全场制胜分，月亮姐二十五，对手二十六。非受迫失误，月亮姐十九，对手三十一。决胜盘，她只有四次，对手十六次。稳定，才是赢球关键。",
+      "text_sha256": "b6494b1b162205f90e04185ddda4bf05e232b91c4e057c1201d1189a6488efdd",
+      "actual_native_mp3_sha256": "4701d81deaae564cc10b680919d417f2faa2a862a8866d210658918bc3dacd38",
+      "index": 21,
+      "char": "迫",
+      "word": "迫",
+      "intended": "po4",
+      "live": [
+        "po4",
+        "pai3"
+      ],
+      "defaults": [
+        "po4"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "pai3": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/full_stats-i21-迫-b6494b1b1622-full-component-decision.json",
+          "sha256": "c67ff1e6330fc8aa8ed899661cd3890a9aa8df4ddd7f4d96234a4934970359f5",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.9990951963527549,
+          "selftest_pass": true,
+          "method": "complete po4 versus pai3 contrast: independent two-sided vowel/CV LOO excludes pai family, actual last po nucleus falling with two independent single-reading po4 examples珀/粕; no pai2 proxy labelled pai3 and earlier low decision kept",
+          "limitations": [
+            "Semantic/dictionary po4 labels of single-reading 珀/粕 supported by their real falling F0; no claim original approximate char window itself was correct."
+          ],
+          "covered": [
+            "pai3"
+          ]
+        }
+      },
+      "limited_low_confidence": {
+        "pai3": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/full_stats-i21-迫-b6494b1b1622-v3-component-vowel_core.json",
+          "sha256": "61f5680317f12af647419b523aebf55b7af90dd579a4d130a1148d04e2934b00",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.9990951963527549,
+          "selftest_pass": true,
+          "method": "independently fixed WordBoundary middle35..85% with +50ms end compensation; shared standardised MFCC+delta vowel-core mean, paired reference LOO",
+          "limitations": [
+            "CV po vs pai only: paired references distinguish vowel nucleus; pai2 proxy not labelled pai3. Full po4 requires independent actual falling F0 proof."
+          ],
+          "covered": [
+            "pai3"
+          ]
+        }
+      },
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/full_stats-i21-迫-b6494b1b1622-segmental.json",
+          "sha256": "7f3c5af27d627b98110c55ff8c1ffda1b5bff99cf6c508d300e939ddd08683ac",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.998,
+          "selftest_pass": true,
+          "method": "whole actual-bundle utterance, full MFCC DTW MFCC-only phoneme-family comparison; independent reference LOO required",
+          "limitations": [
+            "po vs pai phoneme-family contrast, pai2 proxies for missing pai3 single-reading reference; target poised po4; low confidence"
+          ],
+          "covered": [
+            "pai3"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/full_stats-i21-迫-b6494b1b1622-v3-component-vowel_core.json",
+          "sha256": "61f5680317f12af647419b523aebf55b7af90dd579a4d130a1148d04e2934b00",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.9990951963527549,
+          "selftest_pass": true,
+          "method": "independently fixed WordBoundary middle35..85% with +50ms end compensation; shared standardised MFCC+delta vowel-core mean, paired reference LOO",
+          "limitations": [
+            "CV po vs pai only: paired references distinguish vowel nucleus; pai2 proxy not labelled pai3. Full po4 requires independent actual falling F0 proof."
+          ],
+          "covered": [
+            "pai3"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/full_stats-i21-迫-b6494b1b1622-full-component-decision.json",
+          "sha256": "c67ff1e6330fc8aa8ed899661cd3890a9aa8df4ddd7f4d96234a4934970359f5",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.9990951963527549,
+          "selftest_pass": true,
+          "method": "complete po4 versus pai3 contrast: independent two-sided vowel/CV LOO excludes pai family, actual last po nucleus falling with two independent single-reading po4 examples珀/粕; no pai2 proxy labelled pai3 and earlier low decision kept",
+          "limitations": [
+            "Semantic/dictionary po4 labels of single-reading 珀/粕 supported by their real falling F0; no claim original approximate char window itself was correct."
+          ],
+          "covered": [
+            "pai3"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "segment_index": 12,
+      "tts_text": "全场制胜分，月亮姐二十五，对手二十六。非受迫失误，月亮姐十九，对手三十一。决胜盘，她只有四次，对手十六次。稳定，才是赢球关键。",
+      "text_sha256": "b6494b1b162205f90e04185ddda4bf05e232b91c4e057c1201d1189a6488efdd",
+      "actual_native_mp3_sha256": "4701d81deaae564cc10b680919d417f2faa2a862a8866d210658918bc3dacd38",
+      "index": 42,
+      "char": "只",
+      "word": "只有",
+      "intended": "zhi3",
+      "live": [
+        "zhi3",
+        "zhi1"
+      ],
+      "defaults": [
+        "zhi3",
+        "zhi1"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "zhi1": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/full_stats-i42-只-zhi3-vs-zhi1-b6494b1b1622-whole-token.json",
+          "sha256": "5aa7f4df38d0fde977bd15051e8a78823837e64e76ab6a013d031f5a0378715b",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.54,
+          "selftest_pass": true,
+          "method": "entire real original WordBoundary token, preserving all token chars except target; no equal char subdivision; F0-only same-phoneme tone distances; independent reference LOO; original char-window result retained",
+          "limitations": [],
+          "covered": [
+            "zhi1"
+          ]
+        }
+      },
+      "limited_low_confidence": {
+        "zhi1": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/full_stats-i42-只-zhi3-vs-zhi1-b6494b1b1622-4701d81deaae.json",
+          "sha256": "d44f74174039ba8240836a6e4e4fa95750717e9813a7e1bfe663262a66fdce87",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.316,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "zhi1"
+          ]
+        }
+      },
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/full_stats-i42-只-zhi3-vs-zhi1-b6494b1b1622-4701d81deaae.json",
+          "sha256": "d44f74174039ba8240836a6e4e4fa95750717e9813a7e1bfe663262a66fdce87",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.316,
+          "selftest_pass": true,
+          "method": "whole exact frozen-bundle native original; identical complete utterance variant refs; default MFCC+F0 DTW; independent reference LOO preserved",
+          "limitations": [],
+          "covered": [
+            "zhi1"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/full_stats-i42-只-zhi3-vs-zhi1-b6494b1b1622-whole-token.json",
+          "sha256": "5aa7f4df38d0fde977bd15051e8a78823837e64e76ab6a013d031f5a0378715b",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.54,
+          "selftest_pass": true,
+          "method": "entire real original WordBoundary token, preserving all token chars except target; no equal char subdivision; F0-only same-phoneme tone distances; independent reference LOO; original char-window result retained",
+          "limitations": [],
+          "covered": [
+            "zhi1"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "next_round",
+      "segment_index": 13,
+      "tts_text": "月亮姐晋级武汉第三轮，下一轮迎战十号种子约维奇。连赢两盘后，她还能再进一轮吗？",
+      "text_sha256": "f28b5cede244f96137efa10150cb119a7a00c47ed490bf7f6d2133f2d2d5ab68",
+      "actual_native_mp3_sha256": "8a8dc5415eb5f3a9affec79526cfc679071cbb850e4b57a4fd0d595b1984c828",
+      "index": 17,
+      "char": "号",
+      "word": "号",
+      "intended": "hao4",
+      "live": [
+        "hao4",
+        "hao2"
+      ],
+      "defaults": [
+        "hao4"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "hao2": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/next_round-i17-号-hao4-vs-hao2-f28b5cede244-8a8dc5415eb5-v4-local-ref.json",
+          "sha256": "744ae90c9eee4f4aa5049d13357b7c572a53b872e375f3cdc074765d99485fc0",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.546,
+          "selftest_pass": true,
+          "method": "actual v4 native original; unchanged local phonetic-context reference audio cached from v3; full-utterance DTW maps native changed prefix; paired reference LOO retained; exact full reference text differs only earlier 武汉十六强/第三轮 and is declared",
+          "limitations": [],
+          "covered": [
+            "hao2"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/next_round-i17-号-hao4-vs-hao2-f28b5cede244-8a8dc5415eb5-v4-local-ref.json",
+          "sha256": "744ae90c9eee4f4aa5049d13357b7c572a53b872e375f3cdc074765d99485fc0",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.546,
+          "selftest_pass": true,
+          "method": "actual v4 native original; unchanged local phonetic-context reference audio cached from v3; full-utterance DTW maps native changed prefix; paired reference LOO retained; exact full reference text differs only earlier 武汉十六强/第三轮 and is declared",
+          "limitations": [],
+          "covered": [
+            "hao2"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "next_round",
+      "segment_index": 13,
+      "tts_text": "月亮姐晋级武汉第三轮，下一轮迎战十号种子约维奇。连赢两盘后，她还能再进一轮吗？",
+      "text_sha256": "f28b5cede244f96137efa10150cb119a7a00c47ed490bf7f6d2133f2d2d5ab68",
+      "actual_native_mp3_sha256": "8a8dc5415eb5f3a9affec79526cfc679071cbb850e4b57a4fd0d595b1984c828",
+      "index": 18,
+      "char": "种",
+      "word": "种子",
+      "intended": "zhong3",
+      "live": [
+        "zhong3",
+        "zhong4"
+      ],
+      "defaults": [
+        "zhong3"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "zhong4": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/next_round-i18-种-zhong3-vs-zhong4-f28b5cede244-v4-local-ref-nucleus.json",
+          "sha256": "908935f6c51488ac443993c756cc09ec3bd9baadbf0de44cd920d1130e8f999d",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.9052012167827078,
+          "selftest_pass": true,
+          "method": "v4 actual target-nucleus followup with cached independent v3 local-context refs;  retain failed earlier reference set; independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "zhong4"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/next_round-i18-种-zhong3-vs-zhong4-f28b5cede244-8a8dc5415eb5-v4-local-ref.json",
+          "sha256": "9997ff5ae33950789435b02f548a9a7e20fe84b6f19658099ee0c1ba0d77ab4e",
+          "verdict": "unreliable",
+          "confidence": null,
+          "score": 0.49,
+          "selftest_pass": false,
+          "method": "actual v4 native original; unchanged local phonetic-context reference audio cached from v3; full-utterance DTW maps native changed prefix; paired reference LOO retained; exact full reference text differs only earlier 武汉十六强/第三轮 and is declared",
+          "limitations": [],
+          "covered": [
+            "zhong4"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/next_round-i18-种-zhong3-vs-zhong4-f28b5cede244-v4-local-ref-nucleus.json",
+          "sha256": "908935f6c51488ac443993c756cc09ec3bd9baadbf0de44cd920d1130e8f999d",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.9052012167827078,
+          "selftest_pass": true,
+          "method": "v4 actual target-nucleus followup with cached independent v3 local-context refs;  retain failed earlier reference set; independently selected sustained vowel island, target onset+60ms..end+120ms, middle30..85% Theil-Sen slope; date-final号 uses last voiced island near real token end, excludes prior numerals; full reference LOO required",
+          "limitations": [],
+          "covered": [
+            "zhong4"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "next_round",
+      "segment_index": 13,
+      "tts_text": "月亮姐晋级武汉第三轮，下一轮迎战十号种子约维奇。连赢两盘后，她还能再进一轮吗？",
+      "text_sha256": "f28b5cede244f96137efa10150cb119a7a00c47ed490bf7f6d2133f2d2d5ab68",
+      "actual_native_mp3_sha256": "8a8dc5415eb5f3a9affec79526cfc679071cbb850e4b57a4fd0d595b1984c828",
+      "index": 20,
+      "char": "约",
+      "word": "约维奇",
+      "intended": "yue1",
+      "live": [
+        "yue1",
+        "yao1"
+      ],
+      "inventory_method": "manual proper-name contextual reading inventory; dictionary not audio proof",
+      "supported_medium_high": {
+        "yao1": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/next_round-i20-约-f28b5cede244-v4-contrast-decision.json",
+          "sha256": "67f616eeb2060d1c966c11e1d03467fb9cdbcb3d3cc1b1d561591646b8620b0b",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.7199098414447992,
+          "selftest_pass": true,
+          "method": "current v4 actual yue1/yao1 contrast resolved by yue/yao vowel nucleus; both live alternatives tone1; independent cached v3 local-context reference LOO valid; prior changed phrase 3chars earlier explicitly differs; 月/岳 remain yue4 CV proxies, not tone1 labels",
+          "limitations": [
+            "Only earlier 武汉第三轮 versus cached 武汉十六强 differs; immediate 下一轮迎战十号种子约维奇 context is unchanged. Actual ORIG strictly from frozen v4 bundle.",
+            "This resolves dictionary alternative yao1 using the differentiating vowel; no hypothetical yue3 reading introduced and no proxy tone relabel."
+          ],
+          "covered": [
+            "yao1"
+          ]
+        }
+      },
+      "limited_low_confidence": {
+        "yao1": {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/next_round-i20-约-f28b5cede244-v4-component-vowel_core.json",
+          "sha256": "6215163d3d812544d8e5a55407305288345398e827221be82b73c6a5cb1ba005",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.7199098414447992,
+          "selftest_pass": true,
+          "method": "independently fixed WordBoundary middle35..85% with +50ms end compensation; shared standardised MFCC+delta vowel-core mean, paired reference LOO",
+          "limitations": [
+            "CV yue vs yao only; month and mountain yue4 proxies not labelled yue1. Contrast excludes dictionary alternative yao1 by vowel, tone assessed separately."
+          ],
+          "covered": [
+            "yao1"
+          ]
+        }
+      },
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/next_round-i20-约-yue1-vs-yao1-f28b5cede244-8a8dc5415eb5-v4-local-ref.json",
+          "sha256": "71f44bde63b587210fb365ff23650120af96250a608dd13a6d99a5ede730a166",
+          "verdict": "uncertain",
+          "confidence": null,
+          "score": 0.061,
+          "selftest_pass": true,
+          "method": "actual v4 native original; unchanged local phonetic-context reference audio cached from v3; full-utterance DTW maps native changed prefix; paired reference LOO retained; exact full reference text differs only earlier 武汉十六强/第三轮 and is declared",
+          "limitations": [],
+          "covered": [
+            "yao1"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/next_round-i20-约-f28b5cede244-v4-component-vowel_core.json",
+          "sha256": "6215163d3d812544d8e5a55407305288345398e827221be82b73c6a5cb1ba005",
+          "verdict": "correct",
+          "confidence": "low",
+          "score": 0.7199098414447992,
+          "selftest_pass": true,
+          "method": "independently fixed WordBoundary middle35..85% with +50ms end compensation; shared standardised MFCC+delta vowel-core mean, paired reference LOO",
+          "limitations": [
+            "CV yue vs yao only; month and mountain yue4 proxies not labelled yue1. Contrast excludes dictionary alternative yao1 by vowel, tone assessed separately."
+          ],
+          "covered": [
+            "yao1"
+          ]
+        },
+        {
+          "path": "/workspace/scratch/moon-pronunciation/supplement/next_round-i20-约-f28b5cede244-v4-contrast-decision.json",
+          "sha256": "67f616eeb2060d1c966c11e1d03467fb9cdbcb3d3cc1b1d561591646b8620b0b",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.7199098414447992,
+          "selftest_pass": true,
+          "method": "current v4 actual yue1/yao1 contrast resolved by yue/yao vowel nucleus; both live alternatives tone1; independent cached v3 local-context reference LOO valid; prior changed phrase 3chars earlier explicitly differs; 月/岳 remain yue4 CV proxies, not tone1 labels",
+          "limitations": [
+            "Only earlier 武汉第三轮 versus cached 武汉十六强 differs; immediate 下一轮迎战十号种子约维奇 context is unchanged. Actual ORIG strictly from frozen v4 bundle.",
+            "This resolves dictionary alternative yao1 using the differentiating vowel; no hypothetical yue3 reading introduced and no proxy tone relabel."
+          ],
+          "covered": [
+            "yao1"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "next_round",
+      "segment_index": 13,
+      "tts_text": "月亮姐晋级武汉第三轮，下一轮迎战十号种子约维奇。连赢两盘后，她还能再进一轮吗？",
+      "text_sha256": "f28b5cede244f96137efa10150cb119a7a00c47ed490bf7f6d2133f2d2d5ab68",
+      "actual_native_mp3_sha256": "8a8dc5415eb5f3a9affec79526cfc679071cbb850e4b57a4fd0d595b1984c828",
+      "index": 22,
+      "char": "奇",
+      "word": "奇",
+      "intended": "qi2",
+      "live": [
+        "qi2",
+        "ji1"
+      ],
+      "defaults": [
+        "qi2"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "ji1": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/next_round-i22-奇-qi2-vs-ji1-f28b5cede244-8a8dc5415eb5-v4-local-ref.json",
+          "sha256": "022955acb37ec58dee3916479f127d4bf9649fa2f9ca8c7a61125e5531b6b67a",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.518,
+          "selftest_pass": true,
+          "method": "actual v4 native original; unchanged local phonetic-context reference audio cached from v3; full-utterance DTW maps native changed prefix; paired reference LOO retained; exact full reference text differs only earlier 武汉十六强/第三轮 and is declared",
+          "limitations": [],
+          "covered": [
+            "ji1"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/next_round-i22-奇-qi2-vs-ji1-f28b5cede244-8a8dc5415eb5-v4-local-ref.json",
+          "sha256": "022955acb37ec58dee3916479f127d4bf9649fa2f9ca8c7a61125e5531b6b67a",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.518,
+          "selftest_pass": true,
+          "method": "actual v4 native original; unchanged local phonetic-context reference audio cached from v3; full-utterance DTW maps native changed prefix; paired reference LOO retained; exact full reference text differs only earlier 武汉十六强/第三轮 and is declared",
+          "limitations": [],
+          "covered": [
+            "ji1"
+          ]
+        }
+      ]
+    },
+    {
+      "edit_id": "next_round",
+      "segment_index": 13,
+      "tts_text": "月亮姐晋级武汉第三轮，下一轮迎战十号种子约维奇。连赢两盘后，她还能再进一轮吗？",
+      "text_sha256": "f28b5cede244f96137efa10150cb119a7a00c47ed490bf7f6d2133f2d2d5ab68",
+      "actual_native_mp3_sha256": "8a8dc5415eb5f3a9affec79526cfc679071cbb850e4b57a4fd0d595b1984c828",
+      "index": 31,
+      "char": "还",
+      "word": "还",
+      "intended": "hai2",
+      "live": [
+        "hai2",
+        "huan2"
+      ],
+      "defaults": [
+        "hai2",
+        "huan2"
+      ],
+      "inventory_method": "all common poly_info occurrences; no static whitelist skipping",
+      "supported_medium_high": {
+        "huan2": {
+          "path": "/workspace/scratch/moon-pronunciation/raw/next_round-i31-还-hai2-vs-huan2-f28b5cede244-8a8dc5415eb5-v4-local-ref.json",
+          "sha256": "f30953057169b95bc4d57afa6d96f5af67d9a1633920674f805b04d1ec80e97a",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.428,
+          "selftest_pass": true,
+          "method": "actual v4 native original; unchanged local phonetic-context reference audio cached from v3; full-utterance DTW maps native changed prefix; paired reference LOO retained; exact full reference text differs only earlier 武汉十六强/第三轮 and is declared",
+          "limitations": [],
+          "covered": [
+            "huan2"
+          ]
+        }
+      },
+      "limited_low_confidence": {},
+      "unconfirmed_readings": [],
+      "status": "acoustic_supported_medium_high",
+      "all_actual_measurements_preserved": [
+        {
+          "path": "/workspace/scratch/moon-pronunciation/raw/next_round-i31-还-hai2-vs-huan2-f28b5cede244-8a8dc5415eb5-v4-local-ref.json",
+          "sha256": "f30953057169b95bc4d57afa6d96f5af67d9a1633920674f805b04d1ec80e97a",
+          "verdict": "correct",
+          "confidence": "medium",
+          "score": 0.428,
+          "selftest_pass": true,
+          "method": "actual v4 native original; unchanged local phonetic-context reference audio cached from v3; full-utterance DTW maps native changed prefix; paired reference LOO retained; exact full reference text differs only earlier 武汉十六强/第三轮 and is declared",
+          "limitations": [],
+          "covered": [
+            "huan2"
+          ]
+        }
+      ]
+    }
+  ],
+  "fixed_outro": {
+    "status": "exact_prior_approved_review_inherited_with_original_limits",
+    "audio_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+    "full_text_voice_rate_pitch_audio_and_marks_equal_to_v3": true,
+    "proof": "outro-exact-byte-reuse.json",
+    "strict_new_measurement_limits": "Prior cha/ci and hao3/hao4 low confidence unchanged, not reclassified as new high; historical exact immutable audio review reused as authorized."
+  },
+  "old_uncertain_preserved": {
+    "v3_snapshot": "v3-0ab117707723/",
+    "v3_final_report": "v3-0ab117707723/final-review-v3.json",
+    "old_next_round_strong_unconfirmed": "qiang2 versus qiang3; removed only in new next_round text, not marked actual misread or retrospectively passed",
+    "coordinate_strong": "still exists and identical approved v3 audio, all its valid proofs reused"
+  },
+  "targeted_v4_reference_policy": {
+    "changed_actual_requests_measured": 1,
+    "changed_polyphone_positions": 5,
+    "new_reference_synthesis_count": 0,
+    "reuse": "independent cached v3 reference bytes used only for unchanged local 下一轮迎战十号种子约维奇 context; earlier 3char phrase explicitly differs; actual ORIG always v4",
+    "reference_context_difference_declared": true
+  },
+  "manual_listening_claimed": false,
+  "forbidden_models_called": false,
+  "reference_synthesis_route": "no v4 synthesis; existing refs originally production tts_one / official endpoint migration helper with TLS and inherited proxy",
+  "evidence_reports": [
+    "current-review.json",
+    "bindings.json",
+    "frozen-manifest.json",
+    "default-results.json",
+    "v3-v4-exact-byte-reuse.json",
+    "v4-reference-cache-reuse.json",
+    "outro-exact-byte-reuse.json"
+  ],
+  "limitations": [
+    "No claim of auditory human review or ASR tone verification.",
+    "Failed earlier reference sets, rare-character labels and default unreliable results retained.",
+    "Component CV tone-proxy labels are not relabelled; scalar default low is not automatically promoted.",
+    "Contextual third-tone sandhi and neutral-tone realization permitted;种 not tested against isolated third-tone pitch."
+  ]
+}
