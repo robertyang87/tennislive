@@ -1,0 +1,29 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-14T18:41:12Z",
+  "slug": "jodar-towel-shanghai-2026",
+  "spec_sha256": "8771ecba9c7df47d18e22554e934574fc04af8bd6579ead5a76337bed5e9661c",
+  "ass_sha256": "2760835fd7a133c95e487a4b291f5d9707cc86c1b3932a5af0215c93d7b5b872",
+  "film_sha256": "4e8f684791c06309d71939e3330ce34678860aa97d3e1e1d8d1a35c0432d3c74",
+  "film_bytes": 46115433,
+  "checks": {
+    "canvas": [
+      1080,
+      1440
+    ],
+    "loudness_checks": "removed_by_owner",
+    "audio_stream_structure": "pass",
+    "ending_payoff": "pass",
+    "audio_start_max_s": 1.0,
+    "audio_tail_max_s": 1.0
+  },
+  "render_inputs_sha256": "96f8ebdb96d14ed2a45478a691732d5e7b548d9ab2fcfd8b7542cd900e35c883",
+  "reattest": {
+    "previous_attestation_sha256": "7b18601e5f092858cbc82898a787a6467e5a33dd7248e24cec621abd9f2ca4a9",
+    "previous_spec_sha256": "55b637fe36b1c4c4f9d5bf357077b8f6bc473d8e94ab27c7b41a53b98368d2ca",
+    "render_spec_sha256": "55b637fe36b1c4c4f9d5bf357077b8f6bc473d8e94ab27c7b41a53b98368d2ca",
+    "projection_sha256": "cf3e49803f2ac2957eb4fbb66a7c452d7b70e95cf77dbfdbac76a6025faf0724",
+    "film_verified": "release-sha256",
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/38616141353"
+  }
+}

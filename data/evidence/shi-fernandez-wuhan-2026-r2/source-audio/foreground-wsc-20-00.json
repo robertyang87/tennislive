@@ -1,0 +1,53 @@
+{
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/59c28d24-302b-4bd3-a8f0-a1df0285d73b.mp4",
+  "source_sha256": "81bda62c208660bb99ac0cb797c14863c6dd1ccb531ab68354d08fb2814e6858",
+  "source_key": "wsc-20-00",
+  "reviewed_from": 0,
+  "reviewed_to": 13.64,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_review agent; fresh local faster-whisper independent small.en/base.en, medium.en targeted adjudication",
+  "reviewed_at": "2026-10-14T17:14:25.168926+00:00",
+  "status": "complete",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "fresh_actual_asr_runs": true,
+  "foreground_english": [
+    {
+      "start": 8.42,
+      "end": 9.34,
+      "en": "She's got it.",
+      "zh": "她拿到了这一分。"
+    },
+    {
+      "start": 9.78,
+      "end": 10.6,
+      "en": "Well done.",
+      "zh": "打得漂亮。"
+    },
+    {
+      "start": 10.8,
+      "end": 11.56,
+      "en": "Way to stay low.",
+      "zh": "重心保持得很好。"
+    }
+  ],
+  "uncertain_spans": [],
+  "method_details": "Actual original source audio independently decoded using local faster-whisper small.en and base.en; full source windows, beam5, no VAD, word timestamps, no prompt. medium.en third decode for clips11/14/20/24. ASR cross-check and editorial transcription only, no human listening or visual-model assertion. Proper names normalized to official spelling. Selected-window boundaries exclude unreconciled words and erroneous broadcast fact; no source gain or loudness scan.",
+  "raw_asr_evidence": [
+    {
+      "path": "data/evidence/shi-fernandez-wuhan-2026-r2/source-audio/asr-small.en.json",
+      "sha256": "15892cd04778bdd582c9f3bde5251d0f5e146ff966f4bbd5c0b8c8c370d77a99"
+    },
+    {
+      "path": "data/evidence/shi-fernandez-wuhan-2026-r2/source-audio/asr-base.en.json",
+      "sha256": "2c9eebe898720a4f5aa494319671f82c167f044ef24208973fee480a23b62a22"
+    },
+    {
+      "path": "data/evidence/shi-fernandez-wuhan-2026-r2/source-audio/asr-medium.en.json",
+      "sha256": "54ee48da75a088597813f15493f8a37860710da2a401baa23f5cde3b8b812304"
+    }
+  ],
+  "cross_check_notes": [
+    "Three ASRs agree stable she got it / well done / way to stay low. Base isolated Oh at3.32 has5s word gap and is absent in other decodes; isolated Nope overlaps final low and is absent in both others; neither accepted as additional coherent speech."
+  ]
+}

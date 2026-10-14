@@ -1,0 +1,23 @@
+{
+  "schema": "tennislive.manual-native-preview-review.v1",
+  "reviewed_at": "2026-10-14T17:54:16.993205+00:00",
+  "method": "current_assistant_actual_PNG_visual_review",
+  "tts_bundle_sha256": "f3bd88a6fe5451cf10a7a637dac60ab510207fdbfa1ed80a089d710ed3854705",
+  "samples": 12,
+  "source_manifest": "/workspace/scratch/shi-han-tT-88xPj-ZI/caption-preview-revised-final/preview_manifest.json",
+  "contact_sha256": "e2ee610947f047f58f356abfdd62f26088819fd916e493e30ea56bb78d21ec8b",
+  "findings": [
+    "施晗前压得分和握拳冷开，固定中心裁切主体在画内。",
+    "长英文双行加中文一行均完整，不切中英字幕底行。",
+    "MP#2原生提示与主体板按同帧真实尺寸透明回贴；源8.60秒仅主体板，8.92秒后整板透明消失。",
+    "双方握手、裁判握手与致意窗口完整，未包含错误5-1原声。",
+    "全屏14秒统计卡数字与官方stats/advanced逐项相符。",
+    "官方27912实拍封面0.15取景保留拍头、双手，面部不压台头或钩子。"
+  ],
+  "limitations": [
+    "这是渲染前原生PNG样张，不是最终H264成片或声音混合QC。",
+    "单帧不证明全部动态或溶解过渡，发布前检查真实完整影片。",
+    "单张摄影原图1920x1280，当前封面1.125倍放大已如实记录。"
+  ],
+  "publication_approved": false
+}

@@ -1,0 +1,124 @@
+{
+  "model": "medium.en",
+  "engine": "faster-whisper 1.2.1",
+  "method": "independent ASR, full source window, word timestamps; no human listening claimed",
+  "language": "en",
+  "compute_type": "int8",
+  "clips": [
+    {
+      "key": "wsc-14-00",
+      "source_path": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/sources/wsc-14-00.mp4",
+      "source_sha256": "447c1e7380374c00b9b8c203f654f5df81a2dd70d0d228c2b58742654ba9f02d",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/e1e832e2-1f65-470a-92eb-92d60ea8d29d.mp4",
+      "window_start": 0,
+      "window_end": 18.96,
+      "segments": [
+        {
+          "start": 12.799999999999997,
+          "end": 18.96,
+          "text": " Red so well. Fernandez didn't wait long enough to try to just disguise the drop shot.",
+          "avg_logprob": -0.3923071853139184,
+          "no_speech_prob": 0.8819688558578491,
+          "words": [
+            {
+              "word": " Red",
+              "start": 12.799999999999997,
+              "end": 13.32,
+              "probability": 0.07237856835126877
+            },
+            {
+              "word": " so",
+              "start": 13.32,
+              "end": 13.62,
+              "probability": 0.9161665439605713
+            },
+            {
+              "word": " well.",
+              "start": 13.62,
+              "end": 14.12,
+              "probability": 0.9933671355247498
+            },
+            {
+              "word": " Fernandez",
+              "start": 15.44,
+              "end": 15.64,
+              "probability": 0.08552732318639755
+            },
+            {
+              "word": " didn't",
+              "start": 15.64,
+              "end": 16.24,
+              "probability": 0.9855806529521942
+            },
+            {
+              "word": " wait",
+              "start": 16.24,
+              "end": 16.36,
+              "probability": 0.9953097701072693
+            },
+            {
+              "word": " long",
+              "start": 16.36,
+              "end": 16.62,
+              "probability": 0.9910780787467957
+            },
+            {
+              "word": " enough",
+              "start": 16.62,
+              "end": 16.84,
+              "probability": 0.9952148199081421
+            },
+            {
+              "word": " to",
+              "start": 16.84,
+              "end": 17.02,
+              "probability": 0.9889912605285645
+            },
+            {
+              "word": " try",
+              "start": 17.02,
+              "end": 17.22,
+              "probability": 0.9757574200630188
+            },
+            {
+              "word": " to",
+              "start": 17.22,
+              "end": 17.46,
+              "probability": 0.9888417720794678
+            },
+            {
+              "word": " just",
+              "start": 17.46,
+              "end": 17.66,
+              "probability": 0.9109170436859131
+            },
+            {
+              "word": " disguise",
+              "start": 17.66,
+              "end": 18.18,
+              "probability": 0.9641093015670776
+            },
+            {
+              "word": " the",
+              "start": 18.18,
+              "end": 18.48,
+              "probability": 0.990595817565918
+            },
+            {
+              "word": " drop",
+              "start": 18.48,
+              "end": 18.7,
+              "probability": 0.869356632232666
+            },
+            {
+              "word": " shot.",
+              "start": 18.7,
+              "end": 18.96,
+              "probability": 0.9595670700073242
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

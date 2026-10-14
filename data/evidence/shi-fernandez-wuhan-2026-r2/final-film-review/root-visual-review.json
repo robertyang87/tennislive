@@ -1,0 +1,38 @@
+{
+  "schema": "tennislive.actual-film-visual-review.v1",
+  "slug": "shi-fernandez-wuhan-2026-r2",
+  "reviewed_at": "2026-10-14T18:10:23.225474+00:00",
+  "native_run_id": 38611022255,
+  "render_head_sha": "335526e81f61b53fc0231bc586084929971a640b",
+  "film_sha256": "31e94cff931ac294a640f9ef710ef07140bd31e5739ad61127d6abdcd747db71",
+  "film_seconds": 192.08,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": "25/1",
+  "archive_hash_verification": "passed tools.compose_native_reel.verify_native_archive on actual files",
+  "inspected_actual_h264_frames": 25,
+  "actual_frame_contact_sheets": [
+    "contact-0.jpg",
+    "contact-1.jpg",
+    "contact-2.jpg",
+    "contact-3.jpg"
+  ],
+  "findings": [
+    "Official same-match real cover photo; Shi face and racket remain visible, score direction winner first.",
+    "Fixed centered 810x1080 source crop scaled to 1080x1440; no pan tracking; all live sections fill canvas.",
+    "Cold opening shows Shi winning and fist reaction; full point retained later in body.",
+    "Chapter lines and Chinese subtitles fit; long English sentence uses two lines with corresponding Chinese.",
+    "Native MATCH POINT #2 label present; source 8.60s board only then 8.92s absent without rectangular empty patch.",
+    "Final match point, mutual handshake, acknowledgement, 14-second statistics, branded outro retained.",
+    "Statistics W14/15 UE23/13 BP1/8 vs3/4 and ranks217/25 match official evidence.",
+    "Actual9 voice pairs exactly match reviewed frozen package; separate final-voice-binding evidence."
+  ],
+  "blocking_findings": [],
+  "limits": [
+    "Sampled original PNG frames inspect stated moments; independent final source review also required.",
+    "No human audio listening, universal tone certification, or loudness/gain scans claimed.",
+    "Final displayed source crop intentionally loses some lateral court coverage under user fixed-centered full-canvas preference."
+  ]
+}

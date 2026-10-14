@@ -1,0 +1,753 @@
+{
+  "model": "medium.en",
+  "engine": "faster-whisper 1.2.1",
+  "method": "independent ASR, full source window, word timestamps; no human listening claimed",
+  "language": "en",
+  "compute_type": "int8",
+  "clips": [
+    {
+      "key": "wsc-24-00",
+      "source_path": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/sources/wsc-24-00.mp4",
+      "source_sha256": "ad96e283808ef06ad43129f4b5c8eb13e86da7c754174a955559b83ce31e34f4",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/0a2a9944-d501-48a4-9909-05ff8e4b864b.mp4",
+      "window_start": 0,
+      "window_end": 43.08,
+      "segments": [
+        {
+          "start": 5.600000000000002,
+          "end": 6.9,
+          "text": " It's not going to be.",
+          "avg_logprob": -0.24071702564304526,
+          "no_speech_prob": 0.9971756935119629,
+          "words": [
+            {
+              "word": " It's",
+              "start": 5.600000000000002,
+              "end": 6.2,
+              "probability": 0.5414748936891556
+            },
+            {
+              "word": " not",
+              "start": 6.2,
+              "end": 6.34,
+              "probability": 0.9165440201759338
+            },
+            {
+              "word": " going",
+              "start": 6.34,
+              "end": 6.5,
+              "probability": 0.7103034257888794
+            },
+            {
+              "word": " to",
+              "start": 6.5,
+              "end": 6.6,
+              "probability": 0.9932264685630798
+            },
+            {
+              "word": " be.",
+              "start": 6.6,
+              "end": 6.9,
+              "probability": 0.9952607750892639
+            }
+          ]
+        },
+        {
+          "start": 7.78,
+          "end": 12.24,
+          "text": " It's going to be Leila Fernandez who comes through in two somehow someway as she summons",
+          "avg_logprob": -0.24071702564304526,
+          "no_speech_prob": 0.9971756935119629,
+          "words": [
+            {
+              "word": " It's",
+              "start": 7.78,
+              "end": 8.24,
+              "probability": 0.9723735451698303
+            },
+            {
+              "word": " going",
+              "start": 8.24,
+              "end": 8.34,
+              "probability": 0.9436591267585754
+            },
+            {
+              "word": " to",
+              "start": 8.34,
+              "end": 8.44,
+              "probability": 0.9963200092315674
+            },
+            {
+              "word": " be",
+              "start": 8.44,
+              "end": 8.58,
+              "probability": 0.9975236058235168
+            },
+            {
+              "word": " Leila",
+              "start": 8.58,
+              "end": 8.9,
+              "probability": 0.6472163051366806
+            },
+            {
+              "word": " Fernandez",
+              "start": 8.9,
+              "end": 9.4,
+              "probability": 0.9404645562171936
+            },
+            {
+              "word": " who",
+              "start": 9.4,
+              "end": 9.7,
+              "probability": 0.8803386688232422
+            },
+            {
+              "word": " comes",
+              "start": 9.7,
+              "end": 9.94,
+              "probability": 0.9948234558105469
+            },
+            {
+              "word": " through",
+              "start": 9.94,
+              "end": 10.18,
+              "probability": 0.9793788194656372
+            },
+            {
+              "word": " in",
+              "start": 10.18,
+              "end": 10.38,
+              "probability": 0.1946861296892166
+            },
+            {
+              "word": " two",
+              "start": 10.38,
+              "end": 10.56,
+              "probability": 0.7561945915222168
+            },
+            {
+              "word": " somehow",
+              "start": 10.56,
+              "end": 10.96,
+              "probability": 0.7200264930725098
+            },
+            {
+              "word": " someway",
+              "start": 10.96,
+              "end": 11.54,
+              "probability": 0.8220732808113098
+            },
+            {
+              "word": " as",
+              "start": 11.54,
+              "end": 11.72,
+              "probability": 0.6838125586509705
+            },
+            {
+              "word": " she",
+              "start": 11.72,
+              "end": 11.84,
+              "probability": 0.9958821535110474
+            },
+            {
+              "word": " summons",
+              "start": 11.84,
+              "end": 12.24,
+              "probability": 0.9891659617424011
+            }
+          ]
+        },
+        {
+          "start": 12.24,
+          "end": 15.28,
+          "text": " a mighty effort to reach the round of 16.",
+          "avg_logprob": -0.24071702564304526,
+          "no_speech_prob": 0.9971756935119629,
+          "words": [
+            {
+              "word": " a",
+              "start": 12.24,
+              "end": 12.76,
+              "probability": 0.9648075699806213
+            },
+            {
+              "word": " mighty",
+              "start": 12.76,
+              "end": 13.12,
+              "probability": 0.994376540184021
+            },
+            {
+              "word": " effort",
+              "start": 13.12,
+              "end": 13.6,
+              "probability": 0.9973432421684265
+            },
+            {
+              "word": " to",
+              "start": 13.6,
+              "end": 14.14,
+              "probability": 0.9860170483589172
+            },
+            {
+              "word": " reach",
+              "start": 14.14,
+              "end": 14.32,
+              "probability": 0.9951885938644409
+            },
+            {
+              "word": " the",
+              "start": 14.32,
+              "end": 14.5,
+              "probability": 0.9819653630256653
+            },
+            {
+              "word": " round",
+              "start": 14.5,
+              "end": 14.64,
+              "probability": 0.9362565875053406
+            },
+            {
+              "word": " of",
+              "start": 14.64,
+              "end": 14.8,
+              "probability": 0.8721928000450134
+            },
+            {
+              "word": " 16.",
+              "start": 14.8,
+              "end": 15.28,
+              "probability": 0.787732720375061
+            }
+          ]
+        },
+        {
+          "start": 16.98,
+          "end": 19.96,
+          "text": " Triple break point from trailing 5-1 in the second.",
+          "avg_logprob": -0.24071702564304526,
+          "no_speech_prob": 0.9971756935119629,
+          "words": [
+            {
+              "word": " Triple",
+              "start": 16.98,
+              "end": 17.26,
+              "probability": 0.9432538151741028
+            },
+            {
+              "word": " break",
+              "start": 17.26,
+              "end": 17.64,
+              "probability": 0.9250973463058472
+            },
+            {
+              "word": " point",
+              "start": 17.64,
+              "end": 18.0,
+              "probability": 0.7886363863945007
+            },
+            {
+              "word": " from",
+              "start": 18.0,
+              "end": 18.32,
+              "probability": 0.9945567846298218
+            },
+            {
+              "word": " trailing",
+              "start": 18.32,
+              "end": 18.7,
+              "probability": 0.9933038353919983
+            },
+            {
+              "word": " 5",
+              "start": 18.7,
+              "end": 19.14,
+              "probability": 0.5972735285758972
+            },
+            {
+              "word": "-1",
+              "start": 19.14,
+              "end": 19.38,
+              "probability": 0.8310660123825073
+            },
+            {
+              "word": " in",
+              "start": 19.38,
+              "end": 19.52,
+              "probability": 0.9542030692100525
+            },
+            {
+              "word": " the",
+              "start": 19.52,
+              "end": 19.66,
+              "probability": 0.9957120418548584
+            },
+            {
+              "word": " second.",
+              "start": 19.66,
+              "end": 19.96,
+              "probability": 0.9370294213294983
+            }
+          ]
+        },
+        {
+          "start": 21.02,
+          "end": 22.22,
+          "text": " Look who comes roaring back.",
+          "avg_logprob": -0.24071702564304526,
+          "no_speech_prob": 0.9971756935119629,
+          "words": [
+            {
+              "word": " Look",
+              "start": 21.02,
+              "end": 21.12,
+              "probability": 0.9761121273040771
+            },
+            {
+              "word": " who",
+              "start": 21.12,
+              "end": 21.26,
+              "probability": 0.9915153980255127
+            },
+            {
+              "word": " comes",
+              "start": 21.26,
+              "end": 21.52,
+              "probability": 0.9952749013900757
+            },
+            {
+              "word": " roaring",
+              "start": 21.52,
+              "end": 21.78,
+              "probability": 0.7445323467254639
+            },
+            {
+              "word": " back.",
+              "start": 21.78,
+              "end": 22.22,
+              "probability": 0.998281717300415
+            }
+          ]
+        },
+        {
+          "start": 24.12,
+          "end": 29.48,
+          "text": " Leila Fernandez recaps things off with the final five games and now she is a",
+          "avg_logprob": -0.19734576866030692,
+          "no_speech_prob": 0.9611994624137878,
+          "words": [
+            {
+              "word": " Leila",
+              "start": 24.12,
+              "end": 24.64,
+              "probability": 0.5320041850209236
+            },
+            {
+              "word": " Fernandez",
+              "start": 24.64,
+              "end": 25.04,
+              "probability": 0.9330042004585266
+            },
+            {
+              "word": " recaps",
+              "start": 25.04,
+              "end": 25.86,
+              "probability": 0.9290957748889923
+            },
+            {
+              "word": " things",
+              "start": 25.86,
+              "end": 26.1,
+              "probability": 0.967399001121521
+            },
+            {
+              "word": " off",
+              "start": 26.1,
+              "end": 26.38,
+              "probability": 0.9925233721733093
+            },
+            {
+              "word": " with",
+              "start": 26.38,
+              "end": 26.56,
+              "probability": 0.9832269549369812
+            },
+            {
+              "word": " the",
+              "start": 26.56,
+              "end": 26.72,
+              "probability": 0.9947019219398499
+            },
+            {
+              "word": " final",
+              "start": 26.72,
+              "end": 26.98,
+              "probability": 0.9884082674980164
+            },
+            {
+              "word": " five",
+              "start": 26.98,
+              "end": 27.44,
+              "probability": 0.9434743523597717
+            },
+            {
+              "word": " games",
+              "start": 27.44,
+              "end": 28.0,
+              "probability": 0.9886391162872314
+            },
+            {
+              "word": " and",
+              "start": 28.0,
+              "end": 28.62,
+              "probability": 0.6225205659866333
+            },
+            {
+              "word": " now",
+              "start": 28.62,
+              "end": 28.82,
+              "probability": 0.9959995746612549
+            },
+            {
+              "word": " she",
+              "start": 28.82,
+              "end": 29.08,
+              "probability": 0.9954867959022522
+            },
+            {
+              "word": " is",
+              "start": 29.08,
+              "end": 29.3,
+              "probability": 0.9945599436759949
+            },
+            {
+              "word": " a",
+              "start": 29.3,
+              "end": 29.48,
+              "probability": 0.9976341724395752
+            }
+          ]
+        },
+        {
+          "start": 29.48,
+          "end": 37.14,
+          "text": " member of the Sweet 16 at this WTA 1000 event. Quality performance in just over",
+          "avg_logprob": -0.19734576866030692,
+          "no_speech_prob": 0.9611994624137878,
+          "words": [
+            {
+              "word": " member",
+              "start": 29.48,
+              "end": 29.7,
+              "probability": 0.9976074695587158
+            },
+            {
+              "word": " of",
+              "start": 29.7,
+              "end": 30.12,
+              "probability": 0.9975312948226929
+            },
+            {
+              "word": " the",
+              "start": 30.12,
+              "end": 30.28,
+              "probability": 0.9773245453834534
+            },
+            {
+              "word": " Sweet",
+              "start": 30.28,
+              "end": 30.48,
+              "probability": 0.6786940693855286
+            },
+            {
+              "word": " 16",
+              "start": 30.48,
+              "end": 31.0,
+              "probability": 0.7837936282157898
+            },
+            {
+              "word": " at",
+              "start": 31.0,
+              "end": 31.52,
+              "probability": 0.980591356754303
+            },
+            {
+              "word": " this",
+              "start": 31.52,
+              "end": 31.7,
+              "probability": 0.9608599543571472
+            },
+            {
+              "word": " WTA",
+              "start": 31.7,
+              "end": 32.1,
+              "probability": 0.7233630418777466
+            },
+            {
+              "word": " 1000",
+              "start": 32.1,
+              "end": 32.58,
+              "probability": 0.7649727463722229
+            },
+            {
+              "word": " event.",
+              "start": 32.58,
+              "end": 33.36,
+              "probability": 0.9855960607528687
+            },
+            {
+              "word": " Quality",
+              "start": 35.5,
+              "end": 36.02,
+              "probability": 0.9738208651542664
+            },
+            {
+              "word": " performance",
+              "start": 36.02,
+              "end": 36.46,
+              "probability": 0.9854788780212402
+            },
+            {
+              "word": " in",
+              "start": 36.46,
+              "end": 36.7,
+              "probability": 0.9893078207969666
+            },
+            {
+              "word": " just",
+              "start": 36.7,
+              "end": 36.88,
+              "probability": 0.9978958368301392
+            },
+            {
+              "word": " over",
+              "start": 36.88,
+              "end": 37.14,
+              "probability": 0.9983248114585876
+            }
+          ]
+        },
+        {
+          "start": 37.14,
+          "end": 41.88,
+          "text": " an hour and a half to move through posting a 6-3, 6-4 win.",
+          "avg_logprob": -0.19734576866030692,
+          "no_speech_prob": 0.9611994624137878,
+          "words": [
+            {
+              "word": " an",
+              "start": 37.14,
+              "end": 37.26,
+              "probability": 0.9945303797721863
+            },
+            {
+              "word": " hour",
+              "start": 37.26,
+              "end": 37.38,
+              "probability": 0.9995201826095581
+            },
+            {
+              "word": " and",
+              "start": 37.38,
+              "end": 37.46,
+              "probability": 0.9752551913261414
+            },
+            {
+              "word": " a",
+              "start": 37.46,
+              "end": 37.6,
+              "probability": 0.994175374507904
+            },
+            {
+              "word": " half",
+              "start": 37.6,
+              "end": 37.86,
+              "probability": 0.9990573525428772
+            },
+            {
+              "word": " to",
+              "start": 37.86,
+              "end": 38.3,
+              "probability": 0.9629936814308167
+            },
+            {
+              "word": " move",
+              "start": 38.3,
+              "end": 38.48,
+              "probability": 0.9994230270385742
+            },
+            {
+              "word": " through",
+              "start": 38.48,
+              "end": 38.78,
+              "probability": 0.9984623193740845
+            },
+            {
+              "word": " posting",
+              "start": 38.78,
+              "end": 39.7,
+              "probability": 0.6443577408790588
+            },
+            {
+              "word": " a",
+              "start": 39.7,
+              "end": 39.9,
+              "probability": 0.9892745614051819
+            },
+            {
+              "word": " 6",
+              "start": 39.9,
+              "end": 40.12,
+              "probability": 0.5668902397155762
+            },
+            {
+              "word": "-3,",
+              "start": 40.12,
+              "end": 40.4,
+              "probability": 0.8980082273483276
+            },
+            {
+              "word": " 6",
+              "start": 41.24,
+              "end": 41.4,
+              "probability": 0.978246808052063
+            },
+            {
+              "word": "-4",
+              "start": 41.4,
+              "end": 41.64,
+              "probability": 0.9959582686424255
+            },
+            {
+              "word": " win.",
+              "start": 41.64,
+              "end": 41.88,
+              "probability": 0.6985955238342285
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-11-00",
+      "source_path": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/sources/wsc-11-00.mp4",
+      "source_sha256": "9a557887defd4cfe374f0a66031dcf288e214e2d96e41cf4f599f72280ed8e8e",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/4bbf7457-e58e-4a66-a529-2ac4d26a2445.mp4",
+      "window_start": 0,
+      "window_end": 22.92,
+      "segments": [
+        {
+          "start": 19.68,
+          "end": 21.36,
+          "text": " And that is right there.",
+          "avg_logprob": -0.8587835099962022,
+          "no_speech_prob": 0.10907173156738281,
+          "words": [
+            {
+              "word": " And",
+              "start": 19.68,
+              "end": 20.38,
+              "probability": 0.2721775472164154
+            },
+            {
+              "word": " that",
+              "start": 20.38,
+              "end": 20.54,
+              "probability": 0.12770627439022064
+            },
+            {
+              "word": " is",
+              "start": 20.54,
+              "end": 20.66,
+              "probability": 0.9548473358154297
+            },
+            {
+              "word": " right",
+              "start": 20.66,
+              "end": 20.92,
+              "probability": 0.9836595058441162
+            },
+            {
+              "word": " there.",
+              "start": 20.92,
+              "end": 21.36,
+              "probability": 0.9936396479606628
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-20-00",
+      "source_path": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/sources/wsc-20-00.mp4",
+      "source_sha256": "81bda62c208660bb99ac0cb797c14863c6dd1ccb531ab68354d08fb2814e6858",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/59c28d24-302b-4bd3-a8f0-a1df0285d73b.mp4",
+      "window_start": 0,
+      "window_end": 13.64,
+      "segments": [
+        {
+          "start": 8.419999999999998,
+          "end": 11.56,
+          "text": " she's got it well done way to stay low",
+          "avg_logprob": -0.5688261068784274,
+          "no_speech_prob": 0.2098788022994995,
+          "words": [
+            {
+              "word": " she's",
+              "start": 8.419999999999998,
+              "end": 8.98,
+              "probability": 0.5303036607801914
+            },
+            {
+              "word": " got",
+              "start": 8.98,
+              "end": 9.1,
+              "probability": 0.9973433613777161
+            },
+            {
+              "word": " it",
+              "start": 9.1,
+              "end": 9.6,
+              "probability": 0.9983715415000916
+            },
+            {
+              "word": " well",
+              "start": 9.6,
+              "end": 10.36,
+              "probability": 0.7679532170295715
+            },
+            {
+              "word": " done",
+              "start": 10.36,
+              "end": 10.62,
+              "probability": 0.9919799566268921
+            },
+            {
+              "word": " way",
+              "start": 10.62,
+              "end": 10.9,
+              "probability": 0.9206975698471069
+            },
+            {
+              "word": " to",
+              "start": 10.9,
+              "end": 11.06,
+              "probability": 0.99628084897995
+            },
+            {
+              "word": " stay",
+              "start": 11.06,
+              "end": 11.24,
+              "probability": 0.9974627494812012
+            },
+            {
+              "word": " low",
+              "start": 11.24,
+              "end": 11.56,
+              "probability": 0.9923170804977417
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

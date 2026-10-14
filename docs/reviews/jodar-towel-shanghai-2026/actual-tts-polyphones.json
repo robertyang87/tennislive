@@ -1,0 +1,703 @@
+{
+  "method": "Acoustic MFCC/F0 DTW against unambiguous references; ORIG is frozen production input, not a new synthesis",
+  "bundle_sha256": "1815dbbb0628a301b954200ceac8b95829b0cdb6bb4c19a6356b4e1b15230245",
+  "results": [
+    {
+      "label": "第 4 段",
+      "char": "要",
+      "index": 9,
+      "intended": "yao1",
+      "request": {
+        "backend": "edge",
+        "cache_key": "535f469dc111195e4c378e3e57d07b7f",
+        "lead_pause": 0.0,
+        "pitch": "+10Hz",
+        "rate": "+18%",
+        "style": "",
+        "styledegree": "",
+        "text": "西班牙媒体报道，他要求球童递毛巾时用了粗口。转播随后打出违反体育道德的判罚。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "c4098f20d117ea34e5c7f7a77eff212c837dfeb64e513e8969ad36c0b1238602",
+      "runs": [
+        {
+          "wrong": "yao4",
+          "measurement": {
+            "word": "要求",
+            "char": "要",
+            "sentence": "西班牙媒体报道，他要求球童递毛巾时用了粗口。转播随后打出违反体育道德的判罚。",
+            "tts_text": "西班牙媒体报道，他要求球童递毛巾时用了粗口。转播随后打出违反体育道德的判罚。",
+            "intended_refs": [
+              "腰",
+              "邀",
+              "吆"
+            ],
+            "wrong_refs": [
+              "耀",
+              "药",
+              "曜"
+            ],
+            "voice": "zh-CN-YunjianNeural",
+            "rate": "+18%",
+            "verdict": "correct",
+            "confidence": "medium",
+            "verdict_raw": "correct",
+            "score": 0.542,
+            "margin": 0.2,
+            "near_identical_to": null,
+            "far_from_both": false,
+            "dropped_refs": [],
+            "override": null,
+            "selftest_sides": [
+              "A",
+              "B"
+            ],
+            "features": {
+              "spec": {
+                "d_intended": 2.577,
+                "d_wrong": 3.844,
+                "score": 0.197
+              },
+              "f0": {
+                "d_intended": 0.123,
+                "d_wrong": 2.867,
+                "score": 0.918
+              },
+              "comb": {
+                "d_intended": 1.424,
+                "d_wrong": 4.789,
+                "score": 0.542
+              }
+            },
+            "separation": {
+              "spec": {
+                "within": 1.49,
+                "between": 3.882,
+                "separation": 2.605
+              },
+              "f0": {
+                "within": 0.091,
+                "between": 3.095,
+                "separation": 33.867
+              },
+              "comb": {
+                "within": 0.837,
+                "between": 5.036,
+                "separation": 6.02
+              }
+            },
+            "selftest_loo": {
+              "腰": {
+                "expect": "correct",
+                "got": "correct",
+                "score": 0.825
+              },
+              "邀": {
+                "expect": "correct",
+                "got": "correct",
+                "score": 0.518
+              },
+              "吆": {
+                "expect": "correct",
+                "got": "correct",
+                "score": 0.827
+              },
+              "耀": {
+                "expect": "misread",
+                "got": "misread",
+                "score": -0.819
+              },
+              "药": {
+                "expect": "misread",
+                "got": "misread",
+                "score": -0.813
+              },
+              "曜": {
+                "expect": "misread",
+                "got": "misread",
+                "score": -0.817
+              }
+            },
+            "selftest_pass": true,
+            "window_s": [
+              1.36,
+              1.6
+            ],
+            "boundary_token": "要求",
+            "window_anchor": "A:邀"
+          }
+        }
+      ]
+    },
+    {
+      "label": "第 20 段",
+      "char": "当",
+      "index": 18,
+      "intended": "dang4",
+      "request": {
+        "backend": "edge",
+        "cache_key": "06b0ff388126e1ee774cd46c13969800",
+        "lead_pause": 0.0,
+        "pitch": "+10Hz",
+        "rate": "+18%",
+        "style": "",
+        "styledegree": "",
+        "text": "同年在蒙特利尔，克耶高斯对球童出言不当，被追加罚款两千五百美元。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "a50d9cdc1c91986f8a4110101c2c649bf2b72ee8078a1eaea31368b5acc6b382",
+      "runs": [
+        {
+          "wrong": "dang1",
+          "measurement": {
+            "word": "不当",
+            "char": "当",
+            "sentence": "同年在蒙特利尔，克耶高斯对球童出言不当，被追加罚款两千五百美元。",
+            "tts_text": "同年在蒙特利尔，克耶高斯对球童出言不当，被追加罚款两千五百美元。",
+            "intended_refs": [
+              "档",
+              "荡",
+              "凼"
+            ],
+            "wrong_refs": [
+              "裆"
+            ],
+            "voice": "zh-CN-YunjianNeural",
+            "rate": "+18%",
+            "verdict": "correct",
+            "confidence": "low",
+            "verdict_raw": "correct",
+            "score": 0.466,
+            "margin": 0.2,
+            "near_identical_to": null,
+            "far_from_both": false,
+            "dropped_refs": [],
+            "override": null,
+            "selftest_sides": [
+              "A"
+            ],
+            "features": {
+              "spec": {
+                "d_intended": 2.468,
+                "d_wrong": 3.516,
+                "score": 0.175
+              },
+              "f0": {
+                "d_intended": 0.616,
+                "d_wrong": 3.344,
+                "score": 0.689
+              },
+              "comb": {
+                "d_intended": 1.858,
+                "d_wrong": 5.102,
+                "score": 0.466
+              }
+            },
+            "separation": {
+              "spec": {
+                "within": 1.7,
+                "between": 3.421,
+                "separation": 2.013
+              },
+              "f0": {
+                "within": 0.449,
+                "between": 3.302,
+                "separation": 7.349
+              },
+              "comb": {
+                "within": 1.299,
+                "between": 5.013,
+                "separation": 3.858
+              }
+            },
+            "selftest_loo": {
+              "档": {
+                "expect": "correct",
+                "got": "correct",
+                "score": 0.968
+              },
+              "荡": {
+                "expect": "correct",
+                "got": "correct",
+                "score": 0.968
+              },
+              "凼": {
+                "expect": "correct",
+                "got": "correct",
+                "score": 0.491
+              }
+            },
+            "selftest_pass": true,
+            "window_s": [
+              2.68,
+              2.91
+            ],
+            "boundary_token": "不当",
+            "window_anchor": "A:档"
+          }
+        }
+      ]
+    },
+    {
+      "label": "片尾",
+      "char": "差",
+      "index": 5,
+      "intended": "cha1",
+      "request": {
+        "backend": "edge",
+        "cache_key": "b9ded748e2a7072bab684bdfbadc0ab2",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+18%",
+        "style": "",
+        "styledegree": "",
+        "text": "关注网球时差，时差归我，好球归你。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "a989e6ef7f1751245a07f13fa4da6721ebcce86b2fef524a62f3fbdc7febe6d7",
+      "runs": [
+        {
+          "wrong": "cha4",
+          "measurement": {
+            "word": "时差",
+            "char": "差",
+            "sentence": "关注网球时差，时差归我，好球归你。",
+            "tts_text": "关注网球时差，时差归我，好球归你。",
+            "intended_refs": [
+              "锸",
+              "叉",
+              "插"
+            ],
+            "wrong_refs": [
+              "岔",
+              "诧",
+              "姹"
+            ],
+            "voice": "zh-CN-YunjianNeural",
+            "rate": "+18%",
+            "verdict": "misread",
+            "confidence": "low",
+            "verdict_raw": "misread",
+            "score": -0.316,
+            "margin": 0.2,
+            "near_identical_to": null,
+            "far_from_both": true,
+            "dropped_refs": [
+              "锸",
+              "岔"
+            ],
+            "override": null,
+            "selftest_sides": [
+              "A",
+              "B"
+            ],
+            "features": {
+              "spec": {
+                "d_intended": 2.153,
+                "d_wrong": 2.171,
+                "score": 0.004
+              },
+              "f0": {
+                "d_intended": 5.291,
+                "d_wrong": 2.224,
+                "score": -0.408
+              },
+              "comb": {
+                "d_intended": 6.367,
+                "d_wrong": 3.309,
+                "score": -0.316
+              }
+            },
+            "separation": {
+              "spec": {
+                "within": 2.02,
+                "between": 2.521,
+                "separation": 1.248
+              },
+              "f0": {
+                "within": 2.573,
+                "between": 3.215,
+                "separation": 1.25
+              },
+              "comb": {
+                "within": 3.583,
+                "between": 4.475,
+                "separation": 1.249
+              }
+            },
+            "selftest_loo": {
+              "叉": {
+                "expect": "correct",
+                "got": "correct",
+                "score": 0.806
+              },
+              "插": {
+                "expect": "correct",
+                "got": "correct",
+                "score": 0.808
+              },
+              "诧": {
+                "expect": "misread",
+                "got": "misread",
+                "score": -0.271
+              },
+              "姹": {
+                "expect": "misread",
+                "got": "misread",
+                "score": -0.267
+              },
+              "锸": {
+                "expect": "correct",
+                "got": "misread",
+                "score": -0.38,
+                "dropped": true
+              },
+              "岔": {
+                "expect": "misread",
+                "got": "uncertain",
+                "score": 0.08,
+                "dropped": true
+              }
+            },
+            "selftest_pass": true,
+            "window_s": [
+              0.79,
+              1.09
+            ],
+            "boundary_token": "时差",
+            "window_anchor": "A:叉"
+          }
+        },
+        {
+          "wrong": "chai1",
+          "measurement": {
+            "word": "时差",
+            "char": "差",
+            "sentence": "关注网球时差，时差归我，好球归你。",
+            "tts_text": "关注网球时差，时差归我，好球归你。",
+            "intended_refs": [
+              "锸",
+              "叉",
+              "插"
+            ],
+            "wrong_refs": [
+              "钗",
+              "拆"
+            ],
+            "voice": "zh-CN-YunjianNeural",
+            "rate": "+18%",
+            "verdict": "misread",
+            "confidence": "low",
+            "verdict_raw": "misread",
+            "score": -0.2,
+            "margin": 0.2,
+            "near_identical_to": null,
+            "far_from_both": true,
+            "dropped_refs": [
+              "锸",
+              "钗"
+            ],
+            "override": null,
+            "selftest_sides": [
+              "A"
+            ],
+            "features": {
+              "spec": {
+                "d_intended": 2.162,
+                "d_wrong": 3.056,
+                "score": 0.171
+              },
+              "f0": {
+                "d_intended": 5.291,
+                "d_wrong": 2.721,
+                "score": -0.321
+              },
+              "comb": {
+                "d_intended": 6.372,
+                "d_wrong": 4.249,
+                "score": -0.2
+              }
+            },
+            "separation": {
+              "spec": {
+                "within": 1.714,
+                "between": 3.176,
+                "separation": 1.853
+              },
+              "f0": {
+                "within": 2.715,
+                "between": 5.108,
+                "separation": 1.882
+              },
+              "comb": {
+                "within": 3.572,
+                "between": 6.696,
+                "separation": 1.875
+              }
+            },
+            "selftest_loo": {
+              "叉": {
+                "expect": "correct",
+                "got": "correct",
+                "score": 0.91
+              },
+              "插": {
+                "expect": "correct",
+                "got": "correct",
+                "score": 0.91
+              },
+              "锸": {
+                "expect": "correct",
+                "got": "misread",
+                "score": -0.397,
+                "dropped": true
+              },
+              "钗": {
+                "expect": "misread",
+                "got": "uncertain",
+                "score": -0.121,
+                "dropped": true
+              }
+            },
+            "selftest_pass": true,
+            "window_s": [
+              0.79,
+              1.09
+            ],
+            "boundary_token": "时差",
+            "window_anchor": "A:叉"
+          }
+        }
+      ]
+    },
+    {
+      "label": "片尾",
+      "char": "差",
+      "index": 8,
+      "intended": "cha1",
+      "request": {
+        "backend": "edge",
+        "cache_key": "b9ded748e2a7072bab684bdfbadc0ab2",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+18%",
+        "style": "",
+        "styledegree": "",
+        "text": "关注网球时差，时差归我，好球归你。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "a989e6ef7f1751245a07f13fa4da6721ebcce86b2fef524a62f3fbdc7febe6d7",
+      "runs": [
+        {
+          "wrong": "cha4",
+          "measurement": {
+            "word": "时差",
+            "char": "差",
+            "sentence": "关注网球时差，时差归我，好球归你。",
+            "tts_text": "关注网球时差，时差归我，好球归你。",
+            "intended_refs": [
+              "锸",
+              "叉",
+              "插"
+            ],
+            "wrong_refs": [
+              "岔",
+              "诧",
+              "姹"
+            ],
+            "voice": "zh-CN-YunjianNeural",
+            "rate": "+18%",
+            "verdict": "unreliable",
+            "confidence": null,
+            "verdict_raw": "uncertain",
+            "score": 0.19,
+            "margin": 0.2,
+            "near_identical_to": null,
+            "far_from_both": false,
+            "dropped_refs": [],
+            "override": null,
+            "selftest_sides": [
+              "A",
+              "B"
+            ],
+            "features": {
+              "spec": {
+                "d_intended": 2.345,
+                "d_wrong": 2.494,
+                "score": 0.031
+              },
+              "f0": {
+                "d_intended": 0.145,
+                "d_wrong": 1.077,
+                "score": 0.763
+              },
+              "comb": {
+                "d_intended": 1.582,
+                "d_wrong": 2.325,
+                "score": 0.19
+              }
+            },
+            "separation": {
+              "spec": {
+                "within": 2.783,
+                "between": 2.732,
+                "separation": 0.982
+              },
+              "f0": {
+                "within": 1.267,
+                "between": 2.608,
+                "separation": 2.059
+              },
+              "comb": {
+                "within": 2.658,
+                "between": 3.974,
+                "separation": 1.495
+              }
+            },
+            "selftest_loo": {
+              "锸": {
+                "expect": "correct",
+                "got": "uncertain",
+                "score": 0.045
+              },
+              "叉": {
+                "expect": "correct",
+                "got": "uncertain",
+                "score": 0.163
+              },
+              "插": {
+                "expect": "correct",
+                "got": "correct",
+                "score": 0.275
+              },
+              "岔": {
+                "expect": "misread",
+                "got": "correct",
+                "score": 0.205
+              },
+              "诧": {
+                "expect": "misread",
+                "got": "misread",
+                "score": -0.252
+              },
+              "姹": {
+                "expect": "misread",
+                "got": "misread",
+                "score": -0.293
+              }
+            },
+            "selftest_pass": false,
+            "window_s": [
+              1.47,
+              1.72
+            ],
+            "boundary_token": "时差",
+            "window_anchor": "A:叉"
+          }
+        },
+        {
+          "wrong": "chai1",
+          "measurement": {
+            "word": "时差",
+            "char": "差",
+            "sentence": "关注网球时差，时差归我，好球归你。",
+            "tts_text": "关注网球时差，时差归我，好球归你。",
+            "intended_refs": [
+              "锸",
+              "叉",
+              "插"
+            ],
+            "wrong_refs": [
+              "钗",
+              "拆"
+            ],
+            "voice": "zh-CN-YunjianNeural",
+            "rate": "+18%",
+            "verdict": "unreliable",
+            "confidence": null,
+            "verdict_raw": "uncertain",
+            "score": 0.185,
+            "margin": 0.2,
+            "near_identical_to": null,
+            "far_from_both": true,
+            "dropped_refs": [],
+            "override": null,
+            "selftest_sides": [
+              "A",
+              "B"
+            ],
+            "features": {
+              "spec": {
+                "d_intended": 2.344,
+                "d_wrong": 3.874,
+                "score": 0.246
+              },
+              "f0": {
+                "d_intended": 0.145,
+                "d_wrong": 0.332,
+                "score": 0.392
+              },
+              "comb": {
+                "d_intended": 1.581,
+                "d_wrong": 2.297,
+                "score": 0.185
+              }
+            },
+            "separation": {
+              "spec": {
+                "within": 2.848,
+                "between": 3.77,
+                "separation": 1.324
+              },
+              "f0": {
+                "within": 0.671,
+                "between": 0.542,
+                "separation": 0.808
+              },
+              "comb": {
+                "within": 2.095,
+                "between": 2.427,
+                "separation": 1.159
+              }
+            },
+            "selftest_loo": {
+              "锸": {
+                "expect": "correct",
+                "got": "uncertain",
+                "score": 0.027
+              },
+              "叉": {
+                "expect": "correct",
+                "got": "uncertain",
+                "score": 0.156
+              },
+              "插": {
+                "expect": "correct",
+                "got": "uncertain",
+                "score": 0.08
+              },
+              "钗": {
+                "expect": "misread",
+                "got": "uncertain",
+                "score": -0.102
+              },
+              "拆": {
+                "expect": "misread",
+                "got": "uncertain",
+                "score": -0.032
+              }
+            },
+            "selftest_pass": false,
+            "window_s": [
+              1.47,
+              1.72
+            ],
+            "boundary_token": "时差",
+            "window_anchor": "A:叉"
+          }
+        }
+      ]
+    }
+  ],
+  "excluded_reference_note": "叉 is polyphonic; 岔 changes boundaries in this context and failed leave-one-out. Stable candidate comparison uses 锸/插 vs 诧/姹. Unreliable original results remain unresolved and were not marked pass."
+}

@@ -9,7 +9,7 @@
  "column": "赛后开麦",
  "requested_content_type": "on_court",
  "interview_kind": "赛后场上采访",
- "event": "2026 ATP1000 上海 第四轮",
+ "event": "2026 ATP1000 上海 1/8决赛",
  "winner": "梅德韦杰夫",
  "featured_player": "梅德韦杰夫",
  "opening": {
@@ -64,7 +64,7 @@
   "26": "and managed to beat him.",
   "32": "I love I love Shanghai as a city."
  },
- "_en_fixed_why": "五处都是 ASR 听错，不是他说错。1『Denil』→Daniil（第二份 ASR 同样纠正）；4『Stephanos Reed』→Stefanos, read（两份 ASR 把 read 听成 reed/reid，read his game 为固定网球表述）；12『BG』→Beijing（战报引文确认他说的是 Beijing）；26 删去口吃重复的 to（第二份 ASR 同样略去）；32『Shanga』→Shanghai（战报引文确认），保留他真实的 I love I love 重复改口未动。（行号按仓库口径从 1 数，和 test_挂账的行号得真的存在 一致。）",
+ "_en_fixed_why": "五处都是 ASR 听错，不是他说错。0『Denil』→Daniil（第二份 ASR 同样纠正）；3『Stephanos Reed』→Stefanos, read（两份 ASR 把 read 听成 reed/reid，read his game 为固定网球表述）；11『BG』→Beijing（战报引文确认他说的是 Beijing）；25 删去口吃重复的 to（第二份 ASR 同样略去）；31『Shanga』→Shanghai（战报引文确认），保留他真实的 I love I love 重复改口未动。 本次校正为字幕账本要求的1基行号，对应文本与修正内容不变。",
  "zh": [
   "打得漂亮，丹尼尔。",
   "恭喜。你好像",
@@ -95,7 +95,7 @@
   "我们知道你很爱这项赛事，",
   "你是前冠军，",
   "去年又走得很远，",
-  "进了1/4决赛。",
+  "进了八强。",
   "现在，你觉得势头如何？",
   "我真的很爱上海这座城市。",
   "进城的路很长，",
@@ -124,22 +124,22 @@
    "这块场地快得离谱",
    "但正合我意"
   ],
-  "sub": "梅德韦杰夫 · 上海大师赛晋级1/4决赛",
+  "sub": "梅德韦杰夫 · 上海大师赛晋级八强",
   "tag": "2026 上海大师赛 · 赛后开麦"
  },
  "takeaway": {
   "close": {
-   "point": "球场快得离谱，正合他意",
-   "ask": "1/4决赛对保罗，这种发球还能延续吗？"
+   "point": "快场地，正合他意",
+   "ask": "对阵保罗，发球还能这样稳吗？"
   }
  },
  "push": {
-  "auto": true,
+  "auto": false,
   "matchup": "梅德韦杰夫 vs 西西帕斯",
   "score": "6-4 7-5",
   "event": "",
   "summary": "快得离谱，但正合他意",
-  "lead": "梅德韦杰夫 6-4、7-5 战胜西西帕斯，晋级上海大师赛1/4决赛。赛后他坦言终于理解了德约对中央球场球速的评价，全场未送破发点。"
+  "lead": "梅德韦杰夫 6-4、7-5 战胜西西帕斯，晋级上海大师赛八强。赛后他坦言终于理解了德约对中央球场球速的评价，全场未送破发点。"
  },
  "_notes": [
   "用户 2026-10-15 指定制作本期赛后开麦。",
@@ -147,48 +147,68 @@
   "中文为人工逐行翻译；封面帧为临时值，待扫描+终审。"
  ],
  "_facts": [
-  "2026-10-14 上海大师赛男单第四轮：梅德韦杰夫 6-4、7-5 战胜西西帕斯，晋级1/4决赛（atptour.com 官方战报）。",
+  "2026-10-14 上海大师赛男单第四轮：梅德韦杰夫 6-4、7-5 战胜西西帕斯，晋级八强（atptour.com 官方战报）。",
   "用时 84 分钟；梅德韦杰夫全场未送出破发点；两人第 16 次交手，梅德韦杰夫 11-5 领先；1/4决赛对阵 15 号种子汤米·保罗。",
   "同场官方集锦 https://www.youtube.com/watch?v=sZJCqFpN6S0 可作冷开场素材。"
  ],
+ "_shared_ci_revision_why": "修复main未渲采访稿在共享CI中暴露的行号0、字幕超宽、收尾卡超宽及文案规格用语。英文修正改为1基账本；中文短写保持原意；lead_in仍需实际同场官方源证据，未豁免。施晗成片输入保持不变。 这次是共享CI修复，不构成梅采访的成片/发布审核，故push.auto暂置false以免本PR附带发送另一条影片；其制作任务仍需完成实际成片、封面和最终审核后恢复。",
  "lead_in": {
-  "url": "https://www.youtube.com/watch?v=B8EO9eKy-mY",
-  "start": 214.7,
-  "end": 228.4,
-  "subs": [
-   {
-    "a": 220.54,
-    "b": 224.0,
-    "en": "The former champion has produced",
-    "zh": "这位前冠军"
-   },
-   {
-    "a": 224.02,
-    "b": 227.77,
-    "en": "one of his best performances of the year.",
-    "zh": "打出了今年最好的表现之一"
-   }
-  ],
-  "source_captions": [
-   [
-    220.54,
-    "The former champion has produced"
-   ],
-   [
-    224.02,
-    "one of his best performances of the year."
-   ]
-  ],
+  "url": "https://github.com/robertyang87/tennislive/releases/download/source-B8EO9eKy-mY/B8EO9eKy-mY-f09b81ad.mp4",
+  "start": 214.62,
+  "end": 228.44,
+  "crop_shift_x": 0,
+  "why": "同场Tennis TV官方B8EO9eKy-mY原字节归档，SHA f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c。实际核原帧214.62发球蓄力、215–219相持、约220得分结束、221–225梅德韦杰夫握拳、226–228西西帕斯反应；保留完整首赛点和完整解说句。短窗不含之后232.6–233.3握手，不声称包含。正文独立采访没有获胜画面，故在前接入。",
   "verification": {
-   "channel": "Tennis TV",
-   "event_search": "Shanghai Masters",
-   "year": 2026,
+   "method": "official_exact_match_highlight",
+   "match_id": "2026:shanghai-masters:mens-r4:medvedev-tsitsipas",
    "winner_en": "Daniil Medvedev",
    "loser_en": "Stefanos Tsitsipas",
-   "match_id": "2026:shanghai-masters:mens-r4:medvedev-tsitsipas",
-   "method": "official_exact_match_highlight",
-   "height": 1080
+   "event_search": "Shanghai Masters",
+   "year": 2026,
+   "height": 1080,
+   "width": 1920,
+   "channel": "Tennis TV (@TennisTV)",
+   "origin_url": "https://www.youtube.com/watch?v=B8EO9eKy-mY",
+   "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+   "_review": "data/evidence/shi-fernandez-wuhan-2026-r2/shared-ci-interview-leadin/actual-leadin-review.json"
   },
-  "why": "同场官方集锦 B8EO9eKy-mY（Tennis TV，245 秒，1920×1080，「Stefanos Tsitsipas & Daniil Medvedev Clash Again | Shanghai 2026 Highlights」）的尾巴：214.6 切点之后第二盘 6-5 梅德韦杰夫发球的赛点回合（220.3 打完）→ 220.6 梅德韦杰夫赛后近景 → 225.3 西西帕斯近景，收在 228.4（228.64 之后是走向网前）。解说只有一句，两档 ASR（data/source_asr/B8EO9eKy-mY/）：后半句 one of his best performances of the year 两档逐词一致（224.02–227.77）；前半句 The former champion has produced 只有 medium.en 听到（220.54–224.08），他 2019 年拿过上海冠军，和事实对得上。同一段画面在同日网球有故事 medvedev-tsitsipas-feud-2026 第 2 段核过。"
+  "subs": [
+   {
+    "a": 219.26,
+    "b": 224.4,
+    "en": "The former champion has produced",
+    "zh": "这位前冠军打出了"
+   },
+   {
+    "a": 224.4,
+    "b": 227.58,
+    "en": "one of his best performances of the year.",
+    "zh": "他今年最出色的表现之一。"
+   }
+  ],
+  "_subs_why": "复用同源同SHA已审small.en/medium.en两档真实ASR及既有英文句时轴，实际片头源窗复核记录保存于shared-ci-interview-leadin。方法如实为ASR交叉+实际帧复核，不冒充人工听审。",
+  "source_captions": [
+   [
+    212.0,
+    "Red strikes."
+   ],
+   [
+    221.12,
+    "The former champion"
+   ],
+   [
+    223.36,
+    "has produced"
+   ],
+   [
+    225.52,
+    ">> one of his best performances of the"
+   ],
+   [
+    227.2,
+    "year."
+   ]
+  ],
+  "_source_captions_why": "源片probe官方自动字幕事件，保留窗口前后；原始caption文本全量保存供回查，非凭空重写ASR。其起点可比真实声学起点晚，完整语句采用已有双ASR保守219.26–227.58区间。"
  }
 }

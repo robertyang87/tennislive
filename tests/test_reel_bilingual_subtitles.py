@@ -64,6 +64,17 @@ def test_一行英文加多行中文仍按双语小字号排版(tmp_path: Path):
     assert "MarginV" in body
 
 
+def test_multiline_umpire_call_keeps_all_original_rows_small(tmp_path: Path):
+    shown = ("Code violation, unsportsmanlike conduct,\n"
+             "warning, Mr. Jódar.\n违反体育道德，警告，霍达尔先生。")
+    path = write_subtitles([(1, 4, shown)], tmp_path / "subtitles.ass")
+    body = path.read_text("utf-8")
+    assert E.ass_en_row("warning, Mr. Jódar.", outline=3) in body
+    assert E.ass_row_size(shown, 0) == E._ASS_BILINGUAL_EN_SIZE
+    assert E.ass_row_size(shown, 1) == E._ASS_BILINGUAL_EN_SIZE
+    assert E.ass_row_size(shown, 2) == E._ASS_SIZE
+
+
 @pytest.mark.parametrize("score", ["40-15", "40–15", "40—15", "40−15"])
 def test_broadcast_score_keeps_english_literal_and_chinese_display(score):
     """英文比分不能被整条 readable() 转成中文，实际原声字幕必须可核验。"""

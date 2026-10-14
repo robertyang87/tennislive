@@ -1,0 +1,62 @@
+name: probe-highlights-tmp
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "集锦视频 URL"
+        required: true
+        default: "https://www.youtube.com/watch?v=B8EO9eKy-mY"
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - run: pip install -q "yt-dlp[default]"
+      - name: 落 cookies（配了 Secret 才有）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies"
+          else
+            echo "没有配 YT_COOKIES_TXT"
+          fi
+      - name: 启动 PO token provider
+        timeout-minutes: 3
+        run: |
+          pip install -q bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4416/ping && break || sleep 1; done
+      - name: 取时长与字幕（走 client 梯子，失败即红）
+        env:
+          URL: ${{ inputs.url }}
+          COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -e
+          COOKIE_ARGS=()
+          [ -n "$COOKIES" ] && COOKIE_ARGS=(--cookies "$COOKIES")
+          GOOD_CLIENT=""
+          for CLIENT in web mweb tv android_vr tv_simply web_embedded; do
+            echo "--- 试 client=$CLIENT ---"
+            if DUR=$(yt-dlp --extractor-args "youtube:player_client=$CLIENT" --js-runtimes node "${COOKIE_ARGS[@]}" --print "%(duration)s %(title)s" --no-warnings "$URL" 2>&1); then
+              echo "OK client=$CLIENT: $DUR"
+              GOOD_CLIENT="$CLIENT"
+              break
+            else
+              echo "FAIL client=$CLIENT: $(echo "$DUR" | tail -1)"
+            fi
+          done
+          [ -n "$GOOD_CLIENT" ] || { echo "所有 client 都失败"; exit 1; }
+          echo "=== 下载英文自动字幕 (client=$GOOD_CLIENT) ==="
+          mkdir -p /tmp/cap && cd /tmp/cap
+          yt-dlp --extractor-args "youtube:player_client=$GOOD_CLIENT" --js-runtimes node "${COOKIE_ARGS[@]}" --write-auto-subs --write-subs --sub-langs "en.*" --skip-download --sub-format "vtt" --no-warnings "$URL"
+          ls -la /tmp/cap/
+          for f in /tmp/cap/*.vtt; do
+            echo "--- $f ($(wc -c <"$f") bytes, 尾部60行) ---"
+            tail -60 "$f"
+          done

@@ -1,0 +1,41 @@
+{
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/e1e832e2-1f65-470a-92eb-92d60ea8d29d.mp4",
+  "source_sha256": "447c1e7380374c00b9b8c203f654f5df81a2dd70d0d228c2b58742654ba9f02d",
+  "source_key": "wsc-14-00",
+  "reviewed_from": 0,
+  "reviewed_to": 14.68,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_review agent; fresh local faster-whisper independent small.en/base.en, medium.en targeted adjudication",
+  "reviewed_at": "2026-10-14T17:14:25.168926+00:00",
+  "status": "complete",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "fresh_actual_asr_runs": true,
+  "foreground_english": [
+    {
+      "start": 12.38,
+      "end": 14.26,
+      "en": "Read so well.",
+      "zh": "这一球预判得真好。"
+    }
+  ],
+  "uncertain_spans": [],
+  "method_details": "Actual original source audio independently decoded using local faster-whisper small.en and base.en; full source windows, beam5, no VAD, word timestamps, no prompt. medium.en third decode for clips11/14/20/24. ASR cross-check and editorial transcription only, no human listening or visual-model assertion. Proper names normalized to official spelling. Selected-window boundaries exclude unreconciled words and erroneous broadcast fact; no source gain or loudness scan.",
+  "raw_asr_evidence": [
+    {
+      "path": "data/evidence/shi-fernandez-wuhan-2026-r2/source-audio/asr-small.en.json",
+      "sha256": "15892cd04778bdd582c9f3bde5251d0f5e146ff966f4bbd5c0b8c8c370d77a99"
+    },
+    {
+      "path": "data/evidence/shi-fernandez-wuhan-2026-r2/source-audio/asr-base.en.json",
+      "sha256": "2c9eebe898720a4f5aa494319671f82c167f044ef24208973fee480a23b62a22"
+    },
+    {
+      "path": "data/evidence/shi-fernandez-wuhan-2026-r2/source-audio/asr-extra-medium.en.json",
+      "sha256": "9e288d810b2e42d47cd6280c862763fce2f080191f6e1c1e4aee3e113370d4d2"
+    }
+  ],
+  "cross_check_notes": [
+    "Read/Red is an ASR homophone normalized to Read from the explicit drop-shot context and both further decodes so well. First phrase starts12.38 earliest and ends14.26 latest; clip ends14.50 before next I mean at14.72. Do not include source14to18.96 because final word has inadequate original tail."
+  ]
+}
