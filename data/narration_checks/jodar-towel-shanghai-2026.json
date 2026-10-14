@@ -1,89 +1,103 @@
 {
- "slug": "jodar-towel-shanghai-2026",
- "checked_at": "2026-10-14T08:44:39Z",
- "voice": "zh-CN-YunjianNeural",
- "rate": "+18%",
- "backend": "edge-tts",
- "base_style": [
-  "",
-  ""
- ],
- "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
- "segments": {
-  "f75b56ae087e39b7": {
-   "segment": 1,
-   "spoken": 7.632,
-   "picture": 8.5
+  "slug": "jodar-towel-shanghai-2026",
+  "checked_at": "2026-10-14T08:55:16Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "f75b56ae087e39b7": {
+      "segment": 1,
+      "spoken": 8.472,
+      "picture": 8.5
+    },
+    "957c6856f84f5fb1": {
+      "segment": 2,
+      "spoken": 4.752,
+      "picture": 5.2
+    },
+    "bbc0408fe3db35c6": {
+      "segment": 3,
+      "spoken": 7.44,
+      "picture": 7.26
+    },
+    "4d0c802d87b9809b": {
+      "segment": 7,
+      "spoken": 4.992,
+      "picture": 5.85
+    },
+    "f2273c56723e5281": {
+      "segment": 8,
+      "spoken": 12.216,
+      "picture": 11.6
+    },
+    "2bf9c811e1441c04": {
+      "segment": 9,
+      "spoken": 10.992,
+      "picture": 11.4
+    },
+    "1730bae456ca2c12": {
+      "segment": 10,
+      "spoken": 5.208,
+      "picture": 5.39
+    },
+    "5db7768092ad4ac8": {
+      "segment": 11,
+      "spoken": 10.2,
+      "picture": 10.73
+    },
+    "55ec2c219d586c48": {
+      "segment": 13,
+      "spoken": 8.856,
+      "picture": 9.1
+    },
+    "3186b5f381eef7bf": {
+      "segment": 14,
+      "spoken": 6.096,
+      "picture": 6.4
+    },
+    "ba930414f60429ae": {
+      "segment": 15,
+      "spoken": 9.696,
+      "picture": 10.6
+    },
+    "7f1adc996328aac7": {
+      "segment": 16,
+      "spoken": 10.944,
+      "picture": 10.5
+    },
+    "6a5dda4379902cf7": {
+      "segment": 17,
+      "spoken": 4.824,
+      "picture": 4.5
+    },
+    "fd8486254864b0f3": {
+      "segment": 18,
+      "spoken": 7.152,
+      "picture": 7.2
+    },
+    "a87b6e688dfbcbfd": {
+      "segment": 19,
+      "spoken": 6.024,
+      "picture": 5.65
+    }
   },
-  "957c6856f84f5fb1": {
-   "segment": 2,
-   "spoken": 4.272,
-   "picture": 5.2
-  },
-  "bbc0408fe3db35c6": {
-   "segment": 3,
-   "spoken": 6.672,
-   "picture": 7.26
-  },
-  "4d0c802d87b9809b": {
-   "segment": 7,
-   "spoken": 4.488,
-   "picture": 5.85
-  },
-  "f2273c56723e5281": {
-   "segment": 8,
-   "spoken": 10.992,
-   "picture": 11.6
-  },
-  "2bf9c811e1441c04": {
-   "segment": 9,
-   "spoken": 9.888,
-   "picture": 11.4
-  },
-  "1730bae456ca2c12": {
-   "segment": 10,
-   "spoken": 4.68,
-   "picture": 5.39
-  },
-  "5db7768092ad4ac8": {
-   "segment": 11,
-   "spoken": 9.168,
-   "picture": 10.73
-  },
-  "55ec2c219d586c48": {
-   "segment": 13,
-   "spoken": 7.968,
-   "picture": 9.1
-  },
-  "3186b5f381eef7bf": {
-   "segment": 14,
-   "spoken": 5.472,
-   "picture": 6.4
-  },
-  "ba930414f60429ae": {
-   "segment": 15,
-   "spoken": 8.688,
-   "picture": 10.6
-  },
-  "7f1adc996328aac7": {
-   "segment": 16,
-   "spoken": 9.816,
-   "picture": 10.5
-  },
-  "6a5dda4379902cf7": {
-   "segment": 17,
-   "spoken": 4.32,
-   "picture": 4.5
-  },
-  "fd8486254864b0f3": {
-   "segment": 18,
-   "spoken": 6.432,
-   "picture": 7.2
-  },
-  "a87b6e688dfbcbfd": {
-   "segment": 19,
-   "spoken": 5.4,
-   "picture": 5.65
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "d9cf9a3d6d4d8e886aef1d66ff4716292805885956ab03858d6996585432d81a",
+    "request_count": 17,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-jodar-towel-shanghai-2026-d9cf9a3d6d4d8e88",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-jodar-towel-shanghai-2026-d9cf9a3d6d4d8e88/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38538331684"
   }
- }
 }
