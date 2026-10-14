@@ -95,3 +95,19 @@ def test_claim_probes按视频id认领并换成spec里的地址(tmp_path, monkey
     monkeypatch.chdir(tmp_path)
     found, missing = reel.claim_probes({"sources": {"a": YT}})
     assert missing == [] and found[YT][1]["url"] == YT and found[YT][1]["_probed_url"] == REL
+
+
+def test_原地址探过的probe优先_不被Release存档那份盖掉(tmp_path, monkeypatch):
+    """原地址那份可能带着人给的 --scorebox 量的死球时刻；按存档重探的没有——盖掉会让段尾硬闸失明。"""
+    import json as _json
+    import probe_sources
+
+    for day, url, cuts in (("2026-10-14", YT, [1.0]), ("2026-10-15", REL, [2.0])):
+        d = tmp_path / f"output/{day}/reel/x"
+        d.mkdir(parents=True)
+        (d / "probe.json").write_text(_json.dumps({"url": url, "scene_cuts": cuts}), encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    found, _missing = reel.claim_probes({"sources": {"a": YT}})
+    assert found[YT][1]["scene_cuts"] == [1.0]
+    assert probe_sources.probe_for(YT, {REL: {"k": 2}, YT: {"k": 1}}) == {"k": 1}
+    assert probe_sources.probe_for(YT, {REL: {"k": 2}}) == {"k": 2}

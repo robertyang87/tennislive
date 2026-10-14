@@ -6477,20 +6477,26 @@ def claim_probes(spec: dict) -> tuple[dict[str, tuple[Path, dict]], list[str]]:
     if not urls:
         urls = {"": str(spec.get("source_url", ""))}
     found: dict[str, tuple[Path, dict]] = {}
+    by_id: dict[str, tuple[Path, dict]] = {}
+    from probe_sources import spec_url_for  # noqa: PLC0415
     for path in sorted(Path("output").glob("*/reel/*/probe.json")):
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue                      # 坏的就当没有，别把 dry-run 带崩
-        # Release 存档直链和 YouTube 地址是同一条源（`probe_sources.spec_url_for`）；
-        # 认上之后按 spec 写的那个地址记，下游按 spec 的 URL 查不用再换算。
-        from probe_sources import spec_url_for  # noqa: PLC0415
         url = spec_url_for(data.get("url"), urls.values())
-        if url:
-            if url != data.get("url"):
-                data = {**data, "url": url, "_probed_url": data.get("url")}
-            # 后来的（日期靠后）覆盖先来的
-            found[url] = (path.parent, data)
+        if not url:
+            continue
+        if url == data.get("url"):
+            found[url] = (path.parent, data)      # 后来的（日期靠后）覆盖先来的
+        else:
+            # Release 存档直链和 YouTube 地址是同一条源（`probe_sources.spec_url_for`）；
+            # 按 spec 写的那个地址记，下游不用再换算。**只在没有精确认领时才用**：
+            # 原地址探的那份可能带着人给的 --scorebox 量出来的死球时刻，后来按存档
+            # 重探的一份没有——拿它盖掉会让段尾硬闸静静失明（eala-stoiana 那条就是）。
+            by_id[url] = (path.parent, {**data, "url": url, "_probed_url": data.get("url")})
+    for url, hit in by_id.items():
+        found.setdefault(url, hit)
     missing = sorted(name for name, url in urls.items() if url not in found)
     return found, missing
 

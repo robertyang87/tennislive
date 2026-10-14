@@ -144,9 +144,17 @@ def _claims(spec: dict) -> dict:
     return claims if isinstance(claims, dict) else {}
 
 
+def probe_for(url: str, probes: dict[str, dict]) -> dict | None:
+    """`{probe 的 url: probe}` 里认这一条源的那份：精确的优先，没有才按视频 id（`spec_url_for`）。"""
+    if url in probes:
+        return probes[url]
+    hits = [p for u, p in probes.items() if u and spec_url_for(u, [url])]
+    return hits[-1] if hits else None
+
+
 def missing_probe_keys(spec: dict, probes: dict[str, dict]) -> list[str]:
-    """认领不到 probe.json 的源键（按 URL）。"""
-    return sorted(k for k, url in spec_urls(spec).items() if url not in probes)
+    """认领不到 probe.json 的源键（按 URL，或同一个视频 id 的 Release 存档）。"""
+    return sorted(k for k, url in spec_urls(spec).items() if probe_for(url, probes) is None)
 
 
 def _fps_value(expr: str, stored: object) -> float:
@@ -175,7 +183,7 @@ def source_dims(spec: dict, probes: dict[str, dict],
     lacking: list[str] = []
     claims = _claims(spec)
     for key, url in spec_urls(spec).items():
-        probe = probes.get(url)
+        probe = probe_for(url, probes)
         if probe is None:
             # 没 probe 的源：认领里写了宽高帧率就拿它预演（`claimed_geometry`）
             if (claimed := claimed_geometry(claims.get(key))) is not None:
