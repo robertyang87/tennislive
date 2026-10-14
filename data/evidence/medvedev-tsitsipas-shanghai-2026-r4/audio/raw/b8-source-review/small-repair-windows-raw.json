@@ -1,0 +1,442 @@
+{
+  "status": "complete_raw_independent_window_asr",
+  "source": "/workspace/scratch/b8-source/source.mp4",
+  "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+  "actual_model": "small.en",
+  "method": "Independent unprompted short-window actual source PCM decoding; beam8,VADfalse,word timestamps,temperature0,condition_on_previous_textfalse,no initial prompt/prefix; no manual listening. No gain/loudness/silence checks.",
+  "windows": [
+    {
+      "label": "net_cord",
+      "interval": [
+        18.0,
+        20.7
+      ],
+      "segments": [
+        {
+          "start": 18.0,
+          "end": 20.4,
+          "text": " And they got a little lucky within their court.",
+          "avg_logprob": -0.4777619471916786,
+          "no_speech_prob": 0.20698989927768707,
+          "words": [
+            {
+              "start": 18.0,
+              "end": 18.1,
+              "word": " And",
+              "probability": 0.15643396973609924
+            },
+            {
+              "start": 18.1,
+              "end": 18.64,
+              "word": " they",
+              "probability": 0.5947121977806091
+            },
+            {
+              "start": 18.64,
+              "end": 18.78,
+              "word": " got",
+              "probability": 0.686095118522644
+            },
+            {
+              "start": 18.78,
+              "end": 18.88,
+              "word": " a",
+              "probability": 0.9353014230728149
+            },
+            {
+              "start": 18.88,
+              "end": 19.0,
+              "word": " little",
+              "probability": 0.993772566318512
+            },
+            {
+              "start": 19.0,
+              "end": 19.46,
+              "word": " lucky",
+              "probability": 0.9818391799926758
+            },
+            {
+              "start": 19.46,
+              "end": 19.9,
+              "word": " within",
+              "probability": 0.48980647325515747
+            },
+            {
+              "start": 19.9,
+              "end": 20.14,
+              "word": " their",
+              "probability": 0.8707800507545471
+            },
+            {
+              "start": 20.14,
+              "end": 20.4,
+              "word": " court.",
+              "probability": 0.8835253715515137
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "nice_short",
+      "interval": [
+        31.9,
+        34.5
+      ],
+      "segments": [
+        {
+          "start": 31.9,
+          "end": 33.64,
+          "text": " Nice towing with it.",
+          "avg_logprob": -0.8100713623894585,
+          "no_speech_prob": 0.0839427039027214,
+          "words": [
+            {
+              "start": 31.9,
+              "end": 32.879999999999995,
+              "word": " Nice",
+              "probability": 0.24899142980575562
+            },
+            {
+              "start": 32.879999999999995,
+              "end": 33.24,
+              "word": " towing",
+              "probability": 0.39712487161159515
+            },
+            {
+              "start": 33.24,
+              "end": 33.379999999999995,
+              "word": " with",
+              "probability": 0.9104336500167847
+            },
+            {
+              "start": 33.379999999999995,
+              "end": 33.64,
+              "word": " it.",
+              "probability": 0.753852367401123
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "early_career",
+      "interval": [
+        81.8,
+        88.2
+      ],
+      "segments": [
+        {
+          "start": 83.64,
+          "end": 87.02,
+          "text": " Sometimes he was known as the counter tucker.",
+          "avg_logprob": -0.5907120521251972,
+          "no_speech_prob": 0.23844356834888458,
+          "words": [
+            {
+              "start": 83.64,
+              "end": 84.44,
+              "word": " Sometimes",
+              "probability": 0.0838116854429245
+            },
+            {
+              "start": 84.44,
+              "end": 84.78,
+              "word": " he",
+              "probability": 0.7499343752861023
+            },
+            {
+              "start": 84.78,
+              "end": 85.08,
+              "word": " was",
+              "probability": 0.9904158115386963
+            },
+            {
+              "start": 85.08,
+              "end": 85.74,
+              "word": " known",
+              "probability": 0.9857063889503479
+            },
+            {
+              "start": 85.74,
+              "end": 86.03999999999999,
+              "word": " as",
+              "probability": 0.9940245747566223
+            },
+            {
+              "start": 86.03999999999999,
+              "end": 86.2,
+              "word": " the",
+              "probability": 0.9248743057250977
+            },
+            {
+              "start": 86.2,
+              "end": 86.6,
+              "word": " counter",
+              "probability": 0.9029061198234558
+            },
+            {
+              "start": 86.6,
+              "end": 87.02,
+              "word": " tucker.",
+              "probability": 0.5002032965421677
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "set1_short",
+      "interval": [
+        120.0,
+        125.7
+      ],
+      "segments": [
+        {
+          "start": 120.0,
+          "end": 125.2,
+          "text": " But when you've seen the 40 minutes to win that watch, remember Dave, it's only right.",
+          "avg_logprob": -0.40871208036939305,
+          "no_speech_prob": 0.13880354166030884,
+          "words": [
+            {
+              "start": 120.0,
+              "end": 120.42,
+              "word": " But",
+              "probability": 0.17594324052333832
+            },
+            {
+              "start": 120.42,
+              "end": 120.64,
+              "word": " when",
+              "probability": 0.9149770140647888
+            },
+            {
+              "start": 120.64,
+              "end": 120.84,
+              "word": " you've",
+              "probability": 0.9346520900726318
+            },
+            {
+              "start": 120.84,
+              "end": 121.04,
+              "word": " seen",
+              "probability": 0.995152473449707
+            },
+            {
+              "start": 121.04,
+              "end": 121.5,
+              "word": " the",
+              "probability": 0.8908809423446655
+            },
+            {
+              "start": 121.5,
+              "end": 121.82,
+              "word": " 40",
+              "probability": 0.883584201335907
+            },
+            {
+              "start": 121.82,
+              "end": 122.14,
+              "word": " minutes",
+              "probability": 0.9357962608337402
+            },
+            {
+              "start": 122.14,
+              "end": 122.4,
+              "word": " to",
+              "probability": 0.4544874131679535
+            },
+            {
+              "start": 122.4,
+              "end": 122.58,
+              "word": " win",
+              "probability": 0.9907035827636719
+            },
+            {
+              "start": 122.58,
+              "end": 122.78,
+              "word": " that",
+              "probability": 0.49587592482566833
+            },
+            {
+              "start": 122.78,
+              "end": 123.06,
+              "word": " watch,",
+              "probability": 0.8715887069702148
+            },
+            {
+              "start": 123.24,
+              "end": 123.36,
+              "word": " remember",
+              "probability": 0.9882965683937073
+            },
+            {
+              "start": 123.36,
+              "end": 123.76,
+              "word": " Dave,",
+              "probability": 0.6910613775253296
+            },
+            {
+              "start": 124.4,
+              "end": 124.56,
+              "word": " it's",
+              "probability": 0.9727282226085663
+            },
+            {
+              "start": 124.56,
+              "end": 124.84,
+              "word": " only",
+              "probability": 0.9808949828147888
+            },
+            {
+              "start": 124.84,
+              "end": 125.2,
+              "word": " right.",
+              "probability": 0.9878382682800293
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "love_play",
+      "interval": [
+        147.4,
+        149.9
+      ],
+      "segments": [
+        {
+          "start": 148.4,
+          "end": 149.38,
+          "text": " A lot of back play.",
+          "avg_logprob": -0.9430078930324979,
+          "no_speech_prob": 0.23180460929870605,
+          "words": [
+            {
+              "start": 148.4,
+              "end": 148.8,
+              "word": " A",
+              "probability": 0.04879647120833397
+            },
+            {
+              "start": 148.8,
+              "end": 148.88,
+              "word": " lot",
+              "probability": 0.8534417748451233
+            },
+            {
+              "start": 148.88,
+              "end": 148.98000000000002,
+              "word": " of",
+              "probability": 0.7192931771278381
+            },
+            {
+              "start": 148.98000000000002,
+              "end": 149.12,
+              "word": " back",
+              "probability": 0.6341784596443176
+            },
+            {
+              "start": 149.12,
+              "end": 149.38,
+              "word": " play.",
+              "probability": 0.2986808717250824
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "break_strikes",
+      "interval": [
+        211.5,
+        214.2
+      ],
+      "segments": [
+        {
+          "start": 211.5,
+          "end": 213.34,
+          "text": " And again, it strikes.",
+          "avg_logprob": -1.186060905456543,
+          "no_speech_prob": 0.1853681206703186,
+          "words": [
+            {
+              "start": 211.5,
+              "end": 212.22,
+              "word": " And",
+              "probability": 0.06156936287879944
+            },
+            {
+              "start": 212.22,
+              "end": 212.54,
+              "word": " again,",
+              "probability": 0.0643506795167923
+            },
+            {
+              "start": 212.94,
+              "end": 212.96,
+              "word": " it",
+              "probability": 0.41666823625564575
+            },
+            {
+              "start": 212.96,
+              "end": 213.34,
+              "word": " strikes.",
+              "probability": 0.8395273089408875
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "ending_prefix",
+      "interval": [
+        220.5,
+        224.6
+      ],
+      "segments": [
+        {
+          "start": 220.5,
+          "end": 223.96,
+          "text": " the former champion for juice.",
+          "avg_logprob": -0.7823634677463107,
+          "no_speech_prob": 0.32600635290145874,
+          "words": [
+            {
+              "start": 220.5,
+              "end": 221.16,
+              "word": " the",
+              "probability": 0.22835089266300201
+            },
+            {
+              "start": 221.16,
+              "end": 221.38,
+              "word": " former",
+              "probability": 0.9890677332878113
+            },
+            {
+              "start": 221.38,
+              "end": 221.9,
+              "word": " champion",
+              "probability": 0.9745054244995117
+            },
+            {
+              "start": 221.9,
+              "end": 223.62,
+              "word": " for",
+              "probability": 0.2227666974067688
+            },
+            {
+              "start": 223.62,
+              "end": 223.96,
+              "word": " juice.",
+              "probability": 0.335361123085022
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "elapsed_seconds": 20.49140453338623
+}
