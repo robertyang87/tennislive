@@ -3,8 +3,8 @@
   "width": 1920,
   "height": 1080,
   "duration": 244.529342,
-  "fps": "25",
-  "fps_value": 25.0,
+  "fps": "50/1",
+  "fps_value": 50.0,
   "scene_cuts": [
     9.84,
     17.2,
@@ -724,5 +724,8 @@
         }
       }
     ]
-  }
+  },
+  "actual_source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+  "actual_source_fps_evidence": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/source/media-probe.json",
+  "actual_source_fps_note": "Native probe fps25 was sampling/target metadata; direct frozen-source ffprobe reports avg/r 50/1. Native output remains25fps."
 }

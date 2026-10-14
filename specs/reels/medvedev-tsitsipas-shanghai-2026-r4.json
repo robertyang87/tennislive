@@ -1,0 +1,390 @@
+{
+  "slug": "medvedev-tsitsipas-shanghai-2026-r4",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "沿用云见zh-CN-YunjianNeural，+6%语速、+0Hz音高；六卡旁白已冻结。",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=B8EO9eKy-mY"
+  },
+  "primary": "main",
+  "source_fallbacks": {
+    "main": "https://github.com/robertyang87/tennislive/releases/download/source-B8EO9eKy-mY/B8EO9eKy-mY.mp4"
+  },
+  "track": false,
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "preserve_source_audio": true,
+  "scorebox": [
+    98,
+    920,
+    519,
+    1029
+  ],
+  "_crop_why": "本期固定center cx0.5、fit crop、track false，1920x1080源取555..1365中心窗口3:4铺满；左右边线追球可能出框，时间完整不声称空间视野完整。",
+  "_source": "Tennis TV官方B8EO9eKy-mY；同字节fallback源SHA f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c，1920x1080，244.529342s，实际50fps整除降至25fps。",
+  "_match": {
+    "status": "result_verified",
+    "source": "official_atp",
+    "source_id": "5014_2026_MS014",
+    "participants": [
+      "梅德韦杰夫",
+      "西西帕斯"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        4
+      ],
+      [
+        7,
+        5
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "winner": "梅德韦杰夫",
+    "loser": "西西帕斯",
+    "winner_result": "6-4 7-5",
+    "loser_result": "4-6 5-7",
+    "source_url": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms014",
+    "date": "2026-10-14",
+    "duration": "01:24:32",
+    "daypart": "晚上",
+    "_match_day_why": "同场官方赛后报道、当日赛程与TNNS视频ID绑定；MS014元数据日期0001无效。",
+    "_time_note": "晚场身份来自官方明确night session；不将NB18:00、TNNS计划字段或终场减时长冒充实际首发时刻。"
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "梅德韦杰夫",
+        "name_en": "Daniil Medvedev",
+        "country": "RUS",
+        "rank": 6
+      },
+      {
+        "name": "西西帕斯",
+        "name_en": "Stefanos Tsitsipas",
+        "country": "GRE",
+        "rank": 43
+      }
+    ],
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "梅德韦杰夫",
+    "winner": "梅德韦杰夫",
+    "result": "6-4 7-5",
+    "hook": "发球局一次没丢\n梅德韦杰夫两盘过关",
+    "hook_accent": "一次没丢",
+    "topic": "ATP1000 上海 第四轮 · 梅德韦杰夫 VS 西西帕斯",
+    "scrim": "clear",
+    "_rank_why": "官方球员页当前周排名6/43；梅德韦杰夫五号种子不等于世界第五。",
+    "_subject_why": "本场赢家梅德韦杰夫；AP Andy Wong本场10月14日动作实拍，真人身份、原图EXIF、裁切由封面代理实审。",
+    "portrait": {
+      "image": "assets/reels/medvedev-tsitsipas-shanghai-2026-r4/medvedev-shanghai-r4.jpg",
+      "fit": "cover",
+      "focus": 0.745,
+      "focus_y": 0.5,
+      "zoom": 1,
+      "source_url": "https://media.zenfs.com/en/ap.org/93001a655545519da6ece3a3e3ae257d.jpg",
+      "_photo_why": "AP Andy Wong本场5412x3608原图，EXIF2026-10-14 19:26:57+08；脸偏正面、睁眼合焦，原生focus0.745取景保留球拍和双手，脸位于台头下及钩子上。"
+    },
+    "scoreboard": {
+      "court": "Stadium Court",
+      "duration_source": {
+        "url": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms014",
+        "field": "MatchTimeTotal",
+        "match_id": "MS014"
+      },
+      "_court_why": "官方本场已完赛MS014 CourtName与当日官方赛程一致。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 ATP1000 上海 第四轮",
+    "line2": "梅德韦杰夫 6-4 7-5 西西帕斯"
+  },
+  "stats": {
+    "a": {
+      "aces": 8,
+      "df": 1,
+      "first_in": 39,
+      "first_total": 62,
+      "first_won": 33,
+      "second_total": 23,
+      "second_won": 12,
+      "bp_conv": 2,
+      "bp_chances": 7,
+      "pts_won": 68,
+      "pts_total": 125,
+      "winners": 25,
+      "ue": 10,
+      "headshot": "assets/players/headshots/atp-MM58.png"
+    },
+    "b": {
+      "aces": 4,
+      "df": 1,
+      "first_in": 44,
+      "first_total": 63,
+      "first_won": 30,
+      "second_total": 19,
+      "second_won": 10,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 57,
+      "pts_total": 125,
+      "winners": 28,
+      "ue": 18,
+      "headshot": "assets/players/headshots/atp-TE51.png"
+    },
+    "tour": "atp",
+    "footer_date": "2026-10-14",
+    "footer_venue": "上海 · 全场",
+    "_source": "官方MS014全场SetNumber=0原始整数，A梅德韦杰夫/B西西帕斯；制胜球与非受迫失误取TNNS Match列并与Set1/2相加核对。",
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75558184&mode=match_info&submode=stats&web=true",
+      "source_path": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/facts/tnns-original-full-stats-response.json",
+      "source_sha256": "19d044eee059fdb65f18788651db65aad40aeee3f59df84b1b206ca8bbc65dd1",
+      "period": "Match",
+      "match_date": "2026-10-14",
+      "checked_at": "2026-10-14T13:56:29.839758+00:00",
+      "winner_result": "6-4 7-5",
+      "matchup": [
+        "Medvedev",
+        "Tsitsipas"
+      ],
+      "winners": [
+        25,
+        28
+      ],
+      "ue": [
+        10,
+        18
+      ],
+      "notes": "真实完整列序Medvedev/Tsitsipas；W10+15=25/9+19=28，UE5+5=10/10+8=18。附加by-court的Left/Right列不用于全场。"
+    }
+  },
+  "push": {
+    "auto": true,
+    "matchup": "梅德韦杰夫 VS 西西帕斯",
+    "score": "6-4 7-5",
+    "event": "2026 ATP1000 上海 第四轮",
+    "summary": "发球局一次没丢",
+    "lead": "第二盘2-3，发球局落至0-30，梅德韦杰夫连赢四球保发。5-5又连赢四个接发球得分，第一个赛点就兑现。6-4、7-5两盘过关，全场没有面对破发点，下一轮迎战保罗。"
+  },
+  "_heat_why": "官方排名第六梅德韦杰夫对阵西西帕斯，上海第四轮争八强；零破发点压力与第二盘关键连赢四球均有逐分证据。",
+  "_hit_data": [
+    {
+      "label": "全场没有面对破发点",
+      "detail": "MS014全场BreakPointsFacedServing=0；第二盘2-3发球局0-30之后连赢四球保发。",
+      "source": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms014",
+      "used_in": "封面、第二盘压力卡、统计旁白与小红书。"
+    },
+    {
+      "label": "5-5连赢四球拿到赛末主动",
+      "detail": "第21局在5-5连赢四个接发得分破发6-5；第22局40-30首赛点兑现7-5。",
+      "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_488k2SDl",
+      "used_in": "第二盘真实关键回合、胜利卡及终局。"
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "没有面对破发点，梅德韦杰夫如何在第二盘末段收下比赛？",
+    "thesis": "首盘早早破发带走6-4；次盘0-30连赢四球稳住发球局，5-5再次连赢四个接发得分，首赛点兑现7-5。",
+    "beats": [
+      "获胜真实反应冷开场",
+      "上海第四轮坐标",
+      "首盘1-1破发与领先",
+      "长回合及反应",
+      "首盘拿盘、次盘压力",
+      "0-30保发事实",
+      "5-5关键破发",
+      "首赛点与握手回收",
+      "全场统计",
+      "保罗下一轮展望"
+    ],
+    "human_context": {
+      "angle": "两盘过关的胜者主线：有压力时稳住自己的发球局，盘末接发连赢四球完成突破。",
+      "facts": [
+        "首盘1-1连赢四个接发得分，2-1领先，6-4拿盘。",
+        "第二盘2-3发球局0-30连赢四球保发，5-5再次连赢四球破发6-5。",
+        "首赛点兑现7-5；全场未面对破发点，下一轮保罗已确定。"
+      ],
+      "sources": [
+        "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms014",
+        "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_488k2SDl",
+        "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms015"
+      ]
+    }
+  },
+  "segments": [
+    {
+      "source": "main",
+      "start": 220.64,
+      "end": 228.44,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "_quote_status": "pending_verified_source_audio",
+      "crosses_cut": "胜球之后梅德韦杰夫获胜近景与西西帕斯反应，完整开头解说窗口待原声代理定稿；无进行中回合。",
+      "point_end_ok": "源视觉代理实际原图边界审核；按同SHA源和原生尾部余量0.18s保留动作与结果。胜球之后梅德韦杰夫获胜近景与西西帕斯反应，完整开头解说窗口待原声代理定稿；无进行中回合。",
+      "_edit_id": "cold_open",
+      "subtitle_bottom": 304,
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "正文ending从214.62首赛点发球保留至234.30网前握手，完整回收冷开获胜反应；无颁奖环节。"
+    },
+    {
+      "seconds": 11.5,
+      "narration": "北京时间十月十四日晚，上海大师赛第四轮。梅德韦杰夫与西西帕斯争夺八强席位。",
+      "_edit_id": "coordinate",
+      "title_card": "不给对手可乘之机\n两盘闯入上海八强",
+      "kicker": "北京时间10月14日晚 · 上海第四轮",
+      "subtitle_bottom": 304
+    },
+    {
+      "source": "main",
+      "start": 11.4,
+      "end": 35.04,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "_quote_status": "pending_verified_source_audio",
+      "crosses_cut": "从首盘1-1的0-40破发终结分开始，连续保留真实后续得分、结果与反应；止于下一回合前。",
+      "point_end_ok": "源视觉代理实际原图边界审核；按同SHA源和原生尾部余量0.18s保留动作与结果。从首盘1-1的0-40破发终结分开始，连续保留真实后续得分、结果与反应；止于下一回合前。",
+      "_edit_id": "early_break",
+      "subtitle_bottom": 304
+    },
+    {
+      "seconds": 9.5,
+      "narration": "首盘一比一时，梅德韦杰夫连赢四球完成破发。接下来，他把优势带到盘末。",
+      "_edit_id": "first_break",
+      "title_card": "1比1连赢四球\n带着优势走向盘末",
+      "kicker": "首盘 · 先拿主动",
+      "subtitle_bottom": 304
+    },
+    {
+      "source": "main",
+      "start": 61.22,
+      "end": 94.96,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "_quote_status": "pending_verified_source_audio",
+      "crosses_cut": "保留首盘5-3首分长回合、梅德韦杰夫本人反应、观众与真实慢动作；不将本分称作破发或盘点。",
+      "point_end_ok": "源视觉代理实际原图边界审核；按同SHA源和原生尾部余量0.18s保留动作与结果。保留首盘5-3首分长回合、梅德韦杰夫本人反应、观众与真实慢动作；不将本分称作破发或盘点。",
+      "_edit_id": "long_rally",
+      "subtitle_bottom": 304
+    },
+    {
+      "source": "main",
+      "start": 110.06,
+      "end": 169.32,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "_quote_status": "pending_verified_source_audio",
+      "crosses_cut": "连续保留首盘盘点兑现及反应、第二盘两个40-15丢分和2-3发球局落至0-30的真实过程。125.5场馆大屏为广告。",
+      "point_end_ok": "源视觉代理实际原图边界审核；按同SHA源和原生尾部余量0.18s保留动作与结果。连续保留首盘盘点兑现及反应、第二盘两个40-15丢分和2-3发球局落至0-30的真实过程。125.5场馆大屏为广告。",
+      "_edit_id": "first_set_and_pressure",
+      "subtitle_bottom": 304
+    },
+    {
+      "seconds": 12.5,
+      "narration": "第二盘二比三，他的发球局来到零比三十。接着连赢四球，稳住局面。五比五，机会再次出现。",
+      "_edit_id": "second_pressure",
+      "title_card": "0比30连赢四球\n稳住自己的发球局",
+      "kicker": "第二盘 · 顶住压力",
+      "subtitle_bottom": 304
+    },
+    {
+      "source": "main",
+      "start": 169.54,
+      "end": 214.42,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "_quote_status": "pending_verified_source_audio",
+      "crosses_cut": "连续保留第二盘3-3、4-4真实回合，5-5最后两个接发得分与破发至6-5、本人反应；不声称四球皆有画面。",
+      "point_end_ok": "源视觉代理实际原图边界审核；按同SHA源和原生尾部余量0.18s保留动作与结果。连续保留第二盘3-3、4-4真实回合，5-5最后两个接发得分与破发至6-5、本人反应；不声称四球皆有画面。",
+      "_edit_id": "late_build",
+      "subtitle_bottom": 304
+    },
+    {
+      "seconds": 13,
+      "narration": "五比五后，他又连赢四球破发。发球胜赛局，拿到第一个赛点就兑现。六比四、七比五，晋级上海八强。",
+      "_edit_id": "match_payoff",
+      "title_card": "5比5后连赢四球\n第一个赛点就兑现",
+      "kicker": "第二盘 · 收下胜利",
+      "subtitle_bottom": 304
+    },
+    {
+      "source": "main",
+      "start": 214.62,
+      "end": 234.3,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "_quote_status": "pending_verified_source_audio",
+      "crosses_cut": "从真实首赛点发球动作开始，保留全部现有回合、获胜近景、双方反应、网前握手；止于234.5黑场publisher之前。",
+      "point_end_ok": "源视觉代理实际原图边界审核；按同SHA源和原生尾部余量0.18s保留动作与结果。从真实首赛点发球动作开始，保留全部现有回合、获胜近景、双方反应、网前握手；止于234.5黑场publisher之前。",
+      "_edit_id": "ending",
+      "subtitle_bottom": 304
+    },
+    {
+      "seconds": 16,
+      "narration": "全场制胜球，二十五对二十八。非受迫失误，十对十八。一发赢球率，百分之八十五对百分之六十八。他全场没有面对破发点。",
+      "_edit_id": "full_stats",
+      "stat_card": true,
+      "_subtitle_layout_why": "使用原生完整数据画布；指标和双方数字承载统计旁白，不追加覆盖数据区的独立字幕。"
+    },
+    {
+      "seconds": 9,
+      "narration": "下一轮，他将面对保罗。这样的发球表现，还能继续吗？",
+      "_edit_id": "next_round",
+      "title_card": "下一轮面对保罗\n发球优势能否延续？",
+      "kicker": "上海八强 · 下一场",
+      "subtitle_bottom": 304
+    }
+  ],
+  "_facts": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/facts/facts-bounded.json",
+  "_source_coverage_notes": [
+    "首盘1-1只保留破发第四分，前3个接发得分未见；由first_break事实卡解释。",
+    "次盘2-3落至0-30可见，后续连赢四球保发未见；由second_pressure事实卡解释。",
+    "次盘5-5破发只有最后两个接发得分可见；由match_payoff事实卡解释。",
+    "源物理终局大屏233.4位于中心裁切外，小板退出前未更新7-5；正式顶栏及卡正确显示6-4 7-5，不造原生小板。"
+  ],
+  "_tactical_evidence": {
+    "basis": "统计及合法逐分；不凭得分序列推断球路、心理或伤情。",
+    "visual_review": "/workspace/scratch/b8-source-review/source-visual-review.json"
+  },
+  "_source_handle_note": "固定center及逐帧scorebody透明回贴，保留同字节源单位增益现场声。",
+  "_scorebox_why": "同SHA全源实际nativeprobe 5fps扫描，标准ATP搜索提示[98,920,519,1029]；动态主板最大右缘452，不把整个提示框涂实、不改板位置。",
+  "_subtitle_layout_why": "所有比赛段、标题卡字幕bottom304保持原位置；full_stats用完整原生数据画布不设置subtitle_bottom。125.5为广告，233.4物理板在center裁切外，不因这些画面上移字幕。",
+  "_audio_status": "原声代理正在核验；所有quote暂空，不是审音通过凭据。"
+}

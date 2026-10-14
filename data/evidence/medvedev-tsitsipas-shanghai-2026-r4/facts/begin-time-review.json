@@ -1,0 +1,96 @@
+{
+  "reviewed_utc": "2026-10-14T14:41:39.951092+00:00",
+  "match_video_id": "B8EO9eKy-mY",
+  "official_match_id": "MS014",
+  "players": [
+    "Daniil Medvedev",
+    "Stefanos Tsitsipas"
+  ],
+  "date_local": "2026-10-14",
+  "timezone": "Asia/Shanghai (UTC+08:00; no DST)",
+  "conclusion": {
+    "actual_start_timestamp_verified": false,
+    "actual_first_point_timestamp_verified": false,
+    "actual_begin_time_local": null,
+    "official_session_verified": "night session／晚场",
+    "natural_session_word": "晚上",
+    "permitted_narration": "2026年10月14日，上海大师赛晚场，男单第四轮。",
+    "alternative_narration": "北京时间10月14日晚，上海大师赛男单第四轮。",
+    "scope_note": "“晚／晚上”来自赛事官方点名本场night session，作为本场时段/晚场身份；不是从计划18:00推断的实际第一发时刻。现有数据不能证明“18:00开球”或“18:12开球”等具体时间，也不能把night session改成下午或傍晚。若产线字段必须断言实际开球的分类而非晚场身份，则该字段应保持未知。"
+  },
+  "official_explicit_session_evidence": {
+    "url": "https://en.rolexshanghaimasters.com/en/media/news/wednesday-preview-medvedev-zverev",
+    "source_type": "official tournament preview; explicitly identifies this match in night session",
+    "published_local_date": "2026-10-13",
+    "retrieved_utc": "2026-10-14T12:45:54.126118+00:00",
+    "raw_file": "/workspace/scratch/B8EO9eKy-mY-facts/official-preview.raw",
+    "exact_text": "Medvedev and Tsitsipas kick off the night session from 6 p.m. local time.",
+    "quote_verified_in_raw": true,
+    "meaning": "赛事直接将Medvedev—Tsitsipas列为night session首场。此处6p.m.是该晚场计划开始时刻，非首分时间。"
+  },
+  "raw_time_fields_reviewed": {
+    "official_match_stats": {
+      "MatchDate": "0001-01-01T00:00:00",
+      "MatchTime": null,
+      "MatchTimeTotal": "01:24:32",
+      "MatchStatus": "F",
+      "CourtName": "Stadium Court",
+      "evaluation": "MatchDate=0001-01-01 invalid; MatchTime null; total duration alone does not prove actual start."
+    },
+    "tnns_match_row": {
+      "match_id": "75558184",
+      "start_time_timestamp": 1791972000000,
+      "finishedAt": 1791977792418,
+      "start_field_unit": "milliseconds since Unix epoch",
+      "converted_start_field_utc": "2026-10-14T10:00:00+00:00",
+      "converted_start_field_beijing": "2026-10-14T18:00:00+08:00",
+      "evaluation": "start_time_timestamp matches official planned NB18:00 and contains no actual-first-point semantics; not accepted as actual start. finishedAt is not first-point time; do not subtract duration to invent beginning."
+    },
+    "flashscore_sui_raw": "AC÷Set 1¬IG÷6¬IH÷4¬RC÷0:39¬~AC÷Set 2¬IG÷7¬IH÷5¬RD÷0:45¬~RB÷1:24¬~MIT÷REF¬MIV÷Allensworth G.¬MIT÷RCO¬MIV÷200¬MIT÷RTY¬MIV÷29¬MIT÷RCC¬MIV÷Usa¬PSPH÷5¬A1÷5360ca6c2ead881b64f9f726c22e618e¬~",
+    "flashscore_evaluation": "Only set/match durations, referee and court metadata. No actual start timestamp or first-point timestamp in saved sui/PBP responses.",
+    "official_postmatch_report_evaluation": "Existing report confirms Wednesday completed result and84-minute duration, but does not contain actual start or explicit clock time."
+  },
+  "conversion_rule": "For milliseconds epoch field: datetime.fromtimestamp(ms/1000, UTC).astimezone(UTC+8). Conversion shown for provenance only; schedule semantics are preserved and never promoted to actual-first-serve evidence.",
+  "source_files": [
+    {
+      "file": "/workspace/scratch/B8EO9eKy-mY-facts/official-preview.raw",
+      "bytes": 33723,
+      "sha256": "af5de01c032861e2862de2d47f03caf5325de31456f7e7def8a180bc4276fd7d"
+    },
+    {
+      "file": "/workspace/scratch/B8EO9eKy-mY-facts/official-preview.txt",
+      "bytes": 17837,
+      "sha256": "83ff6af84bf9a7f3e4b88c82ed1ecfd243e79b87b32efa593d7a9efa2468097b"
+    },
+    {
+      "file": "/workspace/scratch/B8EO9eKy-mY-facts/official-stats-api.raw",
+      "bytes": 13189,
+      "sha256": "8dbe0ed109eebf88bb1fcc5b46f05ce9f7e71ee4e10e7d118d8b0d3798e7ecd2"
+    },
+    {
+      "file": "/workspace/scratch/B8EO9eKy-mY-facts/tnns-day-original.raw",
+      "bytes": 257160,
+      "sha256": "4cc18645522896661da66daa9966189bab280675e67329cc4b84e5e53f6e8632"
+    },
+    {
+      "file": "/workspace/scratch/B8EO9eKy-mY-facts/tnns-browser-bodies-2.json",
+      "bytes": 18460,
+      "sha256": "f1d2aa08f9b2e90e390ca126638964b43c075beb8c7d73135c585017709f3dec"
+    },
+    {
+      "file": "/workspace/scratch/B8EO9eKy-mY-facts/df_mh_1.raw",
+      "bytes": 1578,
+      "sha256": "4b692ce79696a02d1b944df90941c81fb735efc85a5251009f2cf281ec573f12"
+    },
+    {
+      "file": "/workspace/scratch/B8EO9eKy-mY-facts/df_sui_1.raw",
+      "bytes": 221,
+      "sha256": "debc32d395d81dc983e967bc199bbd36c1a03ddeef841d8c33d6a39fecfe2c8b"
+    },
+    {
+      "file": "/workspace/scratch/B8EO9eKy-mY-facts/official-report.raw",
+      "bytes": 33443,
+      "sha256": "8b38518edbd01cee94c513ea29eb471caa8a57054513ea074b848141703ae84b"
+    }
+  ]
+}
