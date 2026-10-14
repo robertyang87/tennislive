@@ -1,0 +1,69 @@
+{
+  "slug": "guo-volynets-wuhan-2026-r2",
+  "checked_at": "2026-10-14T12:19:37Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "b4b92a9770ca4202": {
+      "segment": 2,
+      "spoken": 3.528,
+      "picture": 4.8
+    },
+    "976d52cceca5420c": {
+      "segment": 3,
+      "spoken": 8.568,
+      "picture": 11.5
+    },
+    "b867518d3d8d0c2a": {
+      "segment": 4,
+      "spoken": 7.08,
+      "picture": 9.8
+    },
+    "9bb666a4679eccd5": {
+      "segment": 7,
+      "spoken": 7.896,
+      "picture": 10.0
+    },
+    "0e2ab673b21612a7": {
+      "segment": 9,
+      "spoken": 8.352,
+      "picture": 10.8
+    },
+    "21511f99a59e019c": {
+      "segment": 11,
+      "spoken": 8.808,
+      "picture": 12.0
+    },
+    "8c9881aa96b79fd9": {
+      "segment": 12,
+      "spoken": 6.288,
+      "picture": 7.2
+    },
+    "9cb15eaf37ad8daa": {
+      "segment": 15,
+      "spoken": 6.312,
+      "picture": 7.5
+    },
+    "2e563077e64f5dcd": {
+      "segment": 18,
+      "spoken": 12.648,
+      "picture": 16.2
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "8b0cfcf6e265bf1607e669155c64de82462ce28df2df62966d39d7fe7c1d3ff1",
+    "request_count": 10,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  }
+}

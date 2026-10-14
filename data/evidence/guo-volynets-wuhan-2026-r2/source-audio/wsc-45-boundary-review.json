@@ -1,0 +1,51 @@
+{
+  "schema": "tennislive.speech-boundary-evidence.v1",
+  "source_key": "wsc-45-00",
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/81601276-3a78-47fc-80e3-98849fed03d5.mp4",
+  "source_sha256": "49e00c177adc96332ff105cd8dedeb595a63ab86938fd6d39e3466da8956be96",
+  "reviewed_at": "2026-10-14T12:30:55.133619+00:00",
+  "method": "Visual inspection of the actual unchanged 48kHz PCM waveform and STFT; existing full-window and one fresh12.00–18.50s local ASR timing comparison. This is utterance-boundary analysis, not loudness QC or gain processing. No human listening claimed.",
+  "first_utterance": {
+    "start": 13.35,
+    "end": 15.0,
+    "en": "Oh, yes!",
+    "zh": "好球！",
+    "end_basis": "Visible final yes /s/ frication ends near15.00; ASR lexical word ends14.76–14.88 omit some unvoiced tail."
+  },
+  "next_utterance": {
+    "start": 15.9,
+    "en": "So many times this evening,",
+    "zh": "今晚已多次出现这一幕，",
+    "onset_basis": "Distinct next /s/ broadband frication begins about15.90s, followed by voiced vowel around16.10s. Approximate visual onset resolution±0.04s; not claimed sample-exact."
+  },
+  "selected_source_end": 15.3,
+  "natural_transition_tail_seconds": 0.18,
+  "furthest_natural_audio_read": 15.48,
+  "margin_before_next_utterance_seconds": 0.42,
+  "audio_tail_policy": "natural source; no inserted silence; no gain change",
+  "old_coarse_next_cue_start": 14.85,
+  "full_window_asr_word_stamps": {
+    "small.en": {
+      "yes_end": 14.82,
+      "so_start": 14.82,
+      "so_probability": 0.1548917591571808
+    },
+    "base.en": {
+      "yes_end": 14.76,
+      "so_start": 15.16
+    },
+    "medium.en": {
+      "yes_end": 14.88,
+      "so_start": 15.06
+    }
+  },
+  "local_asr_evidence": "asr-45-boundary-local.json",
+  "waveform_evidence": "wsc-45-word-boundary-waveform.png",
+  "wide_spectrogram_evidence": "wsc-45-word-boundary-wide.png",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "limitations": [
+    "ASR lexical timestamps are alignment estimates; the pause must not be treated as foreground speech.",
+    "Spectral onset about15.90s is visual and has an approximate40ms resolution, not a claim of human auditory phoneme segmentation."
+  ]
+}

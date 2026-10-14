@@ -1,0 +1,24 @@
+{
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/ec6a74f1-bc2b-4439-8d02-4828fc6dac44.mp4",
+  "source_sha256": "0ae137195100617fd737e6b5e5f50d45d247065597818a6f941094b3321944d9",
+  "source_key": "wsc-25-00",
+  "reviewed_from": 0,
+  "reviewed_to": 16.28,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex audio_review agent; fresh actual independent faster-whisper small.en/base.en, medium.en dispute checks",
+  "reviewed_at": "2026-10-14T11:59:41.488462+00:00",
+  "status": "complete",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "fresh_actual_asr_runs": true,
+  "foreground_english": [
+    {
+      "start": 13.04,
+      "end": 15.55,
+      "en": "This is a very good game, though.",
+      "zh": "不过，这一局的质量很高。"
+    }
+  ],
+  "uncertain_spans": [],
+  "method_details": "All original source windows processed, no VAD filtering, no initial prompt, beam_size=5, word timestamps retained in separate raw JSON. Speaker proper names normalized to official spelling. No audio gain/normalization or loudness QC used."
+}

@@ -1,0 +1,33 @@
+{
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/d4ee3c2b-912a-42af-bfaa-74d29a18826b.mp4",
+  "source_sha256": "6e2ac076a90d2f3cba5f1400c71aa7e06a85ff2c54f4472fc7564d43a6900c70",
+  "source_key": "wsc-43-00",
+  "reviewed_from": 0,
+  "reviewed_to": 28.8,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex audio_review agent; fresh actual independent faster-whisper small.en/base.en, medium.en dispute checks",
+  "reviewed_at": "2026-10-14T11:59:41.488831+00:00",
+  "status": "complete",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "fresh_actual_asr_runs": true,
+  "foreground_english": [
+    {
+      "start": 23.1,
+      "end": 25.25,
+      "en": "It's well played by Volynets.",
+      "zh": "沃利内茨这一分打得很好。"
+    },
+    {
+      "start": 27.4,
+      "end": 28.7,
+      "en": "She'll keep fighting.",
+      "zh": "她还会继续拼。"
+    }
+  ],
+  "uncertain_spans": [],
+  "method_details": "All original source windows processed, no VAD filtering, no initial prompt, beam_size=5, word timestamps retained in separate raw JSON. Speaker proper names normalized to official spelling. No audio gain/normalization or loudness QC used.",
+  "cross_check_notes": [
+    "Volynets name spelled phonetically by ASR in all three runs; normalized to official opponent identity."
+  ]
+}

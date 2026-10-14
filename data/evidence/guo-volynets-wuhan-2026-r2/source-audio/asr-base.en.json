@@ -1,0 +1,1407 @@
+{
+  "model": "base.en",
+  "engine": "faster-whisper 1.2.1",
+  "method": "independent ASR, full source window, word timestamps; no human listening claimed",
+  "language": "en",
+  "compute_type": "int8",
+  "clips": [
+    {
+      "key": "wsc-46-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-46-00.mp4",
+      "source_sha256": "a7b51c3a308ce04be2b0305f41e24017bb0e842ca5f22ab7713ec603148d5737",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/1a85ee65-6393-4d8b-9f66-286d67a0f11d.mp4",
+      "window_start": 0,
+      "window_end": 33.32,
+      "segments": [
+        {
+          "start": 16.96,
+          "end": 23.46,
+          "text": " She's done it, another remarkable win for Guo Hanyu.",
+          "avg_logprob": -0.6955027249124315,
+          "no_speech_prob": 0.17776353657245636,
+          "words": [
+            {
+              "word": " She's",
+              "start": 16.96,
+              "end": 17.64,
+              "probability": 0.5417931154370308
+            },
+            {
+              "word": " done",
+              "start": 17.64,
+              "end": 17.76,
+              "probability": 0.959178626537323
+            },
+            {
+              "word": " it,",
+              "start": 17.76,
+              "end": 17.96,
+              "probability": 0.9862863421440125
+            },
+            {
+              "word": " another",
+              "start": 18.3,
+              "end": 19.5,
+              "probability": 0.9515577554702759
+            },
+            {
+              "word": " remarkable",
+              "start": 19.5,
+              "end": 21.22,
+              "probability": 0.9919677376747131
+            },
+            {
+              "word": " win",
+              "start": 21.22,
+              "end": 21.62,
+              "probability": 0.9897758960723877
+            },
+            {
+              "word": " for",
+              "start": 21.62,
+              "end": 22.54,
+              "probability": 0.3917444050312042
+            },
+            {
+              "word": " Guo",
+              "start": 22.54,
+              "end": 22.88,
+              "probability": 0.6661536991596222
+            },
+            {
+              "word": " Hanyu.",
+              "start": 22.88,
+              "end": 23.46,
+              "probability": 0.7830348412195841
+            }
+          ]
+        },
+        {
+          "start": 24.5,
+          "end": 28.22,
+          "text": " Well, the win against Saranica Stayer was a high point.",
+          "avg_logprob": -0.6955027249124315,
+          "no_speech_prob": 0.17776353657245636,
+          "words": [
+            {
+              "word": " Well,",
+              "start": 24.5,
+              "end": 25.18,
+              "probability": 0.4348834156990051
+            },
+            {
+              "word": " the",
+              "start": 25.42,
+              "end": 25.44,
+              "probability": 0.9549427032470703
+            },
+            {
+              "word": " win",
+              "start": 25.44,
+              "end": 25.58,
+              "probability": 0.8981166481971741
+            },
+            {
+              "word": " against",
+              "start": 25.58,
+              "end": 25.82,
+              "probability": 0.9903593063354492
+            },
+            {
+              "word": " Saranica",
+              "start": 25.82,
+              "end": 26.38,
+              "probability": 0.28228700657685596
+            },
+            {
+              "word": " Stayer",
+              "start": 26.38,
+              "end": 26.8,
+              "probability": 0.27290526777505875
+            },
+            {
+              "word": " was",
+              "start": 26.8,
+              "end": 27.5,
+              "probability": 0.7256350517272949
+            },
+            {
+              "word": " a",
+              "start": 27.5,
+              "end": 27.78,
+              "probability": 0.9233503937721252
+            },
+            {
+              "word": " high",
+              "start": 27.78,
+              "end": 27.96,
+              "probability": 0.9893150329589844
+            },
+            {
+              "word": " point.",
+              "start": 27.96,
+              "end": 28.22,
+              "probability": 0.8963044881820679
+            }
+          ]
+        },
+        {
+          "start": 28.22,
+          "end": 30.44,
+          "text": " This is even better.",
+          "avg_logprob": -0.6733937188982964,
+          "no_speech_prob": 0.09231024980545044,
+          "words": [
+            {
+              "word": " This",
+              "start": 28.22,
+              "end": 29.36,
+              "probability": 0.42755332589149475
+            },
+            {
+              "word": " is",
+              "start": 29.36,
+              "end": 29.76,
+              "probability": 0.962324321269989
+            },
+            {
+              "word": " even",
+              "start": 29.76,
+              "end": 30.08,
+              "probability": 0.9842275977134705
+            },
+            {
+              "word": " better.",
+              "start": 30.08,
+              "end": 30.44,
+              "probability": 0.989510715007782
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-45-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-45-00.mp4",
+      "source_sha256": "49e00c177adc96332ff105cd8dedeb595a63ab86938fd6d39e3466da8956be96",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/81601276-3a78-47fc-80e3-98849fed03d5.mp4",
+      "window_start": 0,
+      "window_end": 22.2,
+      "segments": [
+        {
+          "start": 6.439999999999998,
+          "end": 22.0,
+          "text": " Oh, yes, so many times this evening will you see Guo coming and do that.",
+          "avg_logprob": -0.5808224786411632,
+          "no_speech_prob": 0.2564969062805176,
+          "words": [
+            {
+              "word": " Oh,",
+              "start": 6.439999999999998,
+              "end": 7.32,
+              "probability": 0.434907466173172
+            },
+            {
+              "word": " yes,",
+              "start": 14.56,
+              "end": 14.76,
+              "probability": 0.9728033542633057
+            },
+            {
+              "word": " so",
+              "start": 15.16,
+              "end": 16.18,
+              "probability": 0.9665480852127075
+            },
+            {
+              "word": " many",
+              "start": 16.18,
+              "end": 16.66,
+              "probability": 0.9926397800445557
+            },
+            {
+              "word": " times",
+              "start": 16.66,
+              "end": 17.28,
+              "probability": 0.9963085055351257
+            },
+            {
+              "word": " this",
+              "start": 17.28,
+              "end": 17.48,
+              "probability": 0.8147879838943481
+            },
+            {
+              "word": " evening",
+              "start": 17.48,
+              "end": 17.76,
+              "probability": 0.9842669367790222
+            },
+            {
+              "word": " will",
+              "start": 17.76,
+              "end": 18.28,
+              "probability": 0.27718716859817505
+            },
+            {
+              "word": " you",
+              "start": 18.28,
+              "end": 18.4,
+              "probability": 0.8409367203712463
+            },
+            {
+              "word": " see",
+              "start": 18.4,
+              "end": 18.7,
+              "probability": 0.9724637866020203
+            },
+            {
+              "word": " Guo",
+              "start": 18.7,
+              "end": 20.02,
+              "probability": 0.5212912634015083
+            },
+            {
+              "word": " coming",
+              "start": 20.02,
+              "end": 20.42,
+              "probability": 0.8194760084152222
+            },
+            {
+              "word": " and",
+              "start": 20.42,
+              "end": 21.16,
+              "probability": 0.8590308427810669
+            },
+            {
+              "word": " do",
+              "start": 21.16,
+              "end": 21.44,
+              "probability": 0.9867245554924011
+            },
+            {
+              "word": " that.",
+              "start": 21.44,
+              "end": 22.0,
+              "probability": 0.9850725531578064
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-44-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-44-00.mp4",
+      "source_sha256": "9ec41d21eaa6261a351959074abae08d11404c36c10f20271cd7d029a41eb73d",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/45483dbd-115f-4a44-b759-2e28c3a8d7cc.mp4",
+      "window_start": 0,
+      "window_end": 17.96,
+      "segments": [
+        {
+          "start": 3.660000000000001,
+          "end": 16.94,
+          "text": " Oh, has she made it? Has she found the line? I don't know. Let's look. Yes, she has.",
+          "avg_logprob": -0.35462747514247894,
+          "no_speech_prob": 0.08426351845264435,
+          "words": [
+            {
+              "word": " Oh,",
+              "start": 3.660000000000001,
+              "end": 4.06,
+              "probability": 0.6601365804672241
+            },
+            {
+              "word": " has",
+              "start": 10.64,
+              "end": 10.74,
+              "probability": 0.2837230861186981
+            },
+            {
+              "word": " she",
+              "start": 10.74,
+              "end": 10.88,
+              "probability": 0.9204596281051636
+            },
+            {
+              "word": " made",
+              "start": 10.88,
+              "end": 11.06,
+              "probability": 0.9863365888595581
+            },
+            {
+              "word": " it?",
+              "start": 11.06,
+              "end": 11.2,
+              "probability": 0.9914286732673645
+            },
+            {
+              "word": " Has",
+              "start": 12.04,
+              "end": 12.1,
+              "probability": 0.9797838926315308
+            },
+            {
+              "word": " she",
+              "start": 12.1,
+              "end": 12.28,
+              "probability": 0.985338568687439
+            },
+            {
+              "word": " found",
+              "start": 12.28,
+              "end": 12.48,
+              "probability": 0.9959988594055176
+            },
+            {
+              "word": " the",
+              "start": 12.48,
+              "end": 12.66,
+              "probability": 0.9619724154472351
+            },
+            {
+              "word": " line?",
+              "start": 12.66,
+              "end": 12.86,
+              "probability": 0.9812373518943787
+            },
+            {
+              "word": " I",
+              "start": 13.38,
+              "end": 13.46,
+              "probability": 0.98970627784729
+            },
+            {
+              "word": " don't",
+              "start": 13.46,
+              "end": 13.74,
+              "probability": 0.9948134124279022
+            },
+            {
+              "word": " know.",
+              "start": 13.74,
+              "end": 13.96,
+              "probability": 0.998684823513031
+            },
+            {
+              "word": " Let's",
+              "start": 15.3,
+              "end": 15.7,
+              "probability": 0.9549549520015717
+            },
+            {
+              "word": " look.",
+              "start": 15.7,
+              "end": 15.86,
+              "probability": 0.9944525361061096
+            },
+            {
+              "word": " Yes,",
+              "start": 16.38,
+              "end": 16.44,
+              "probability": 0.8267126679420471
+            },
+            {
+              "word": " she",
+              "start": 16.48,
+              "end": 16.68,
+              "probability": 0.9968869090080261
+            },
+            {
+              "word": " has.",
+              "start": 16.68,
+              "end": 16.94,
+              "probability": 0.9981757402420044
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-43-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-43-00.mp4",
+      "source_sha256": "6e2ac076a90d2f3cba5f1400c71aa7e06a85ff2c54f4472fc7564d43a6900c70",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/d4ee3c2b-912a-42af-bfaa-74d29a18826b.mp4",
+      "window_start": 0,
+      "window_end": 28.8,
+      "segments": [
+        {
+          "start": 23.2,
+          "end": 24.98,
+          "text": " It's well played by Folliness.",
+          "avg_logprob": -0.8377592380230243,
+          "no_speech_prob": 0.19676055014133453,
+          "words": [
+            {
+              "word": " It's",
+              "start": 23.2,
+              "end": 23.9,
+              "probability": 0.6493918150663376
+            },
+            {
+              "word": " well",
+              "start": 23.9,
+              "end": 24.02,
+              "probability": 0.8660909533500671
+            },
+            {
+              "word": " played",
+              "start": 24.02,
+              "end": 24.34,
+              "probability": 0.9568644762039185
+            },
+            {
+              "word": " by",
+              "start": 24.34,
+              "end": 24.6,
+              "probability": 0.9889328479766846
+            },
+            {
+              "word": " Folliness.",
+              "start": 24.6,
+              "end": 24.98,
+              "probability": 0.40999797483285266
+            }
+          ]
+        },
+        {
+          "start": 27.419999999999998,
+          "end": 28.58,
+          "text": " She'll keep fighting.",
+          "avg_logprob": -0.4953327029943466,
+          "no_speech_prob": 0.1059209555387497,
+          "words": [
+            {
+              "word": " She'll",
+              "start": 27.419999999999998,
+              "end": 28.04,
+              "probability": 0.7996891140937805
+            },
+            {
+              "word": " keep",
+              "start": 28.04,
+              "end": 28.18,
+              "probability": 0.9559109210968018
+            },
+            {
+              "word": " fighting.",
+              "start": 28.18,
+              "end": 28.58,
+              "probability": 0.9756802320480347
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-42-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-42-00.mp4",
+      "source_sha256": "ef55470e3a0db5f425196cb57524fa751dc8bc8de2763d7ba2ab87c7f543c235",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/a31be4b3-4add-4db1-825a-0a6e81a64312.mp4",
+      "window_start": 0,
+      "window_end": 15.04,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 1.44,
+          "text": " Fermi handy indeed",
+          "avg_logprob": -0.4405654107148831,
+          "no_speech_prob": 0.021354541182518005,
+          "words": [
+            {
+              "word": " Fermi",
+              "start": 0.0,
+              "end": 0.62,
+              "probability": 0.6626610159873962
+            },
+            {
+              "word": " handy",
+              "start": 0.62,
+              "end": 0.8,
+              "probability": 0.8319180011749268
+            },
+            {
+              "word": " indeed",
+              "start": 0.8,
+              "end": 1.44,
+              "probability": 0.9756903648376465
+            }
+          ]
+        },
+        {
+          "start": 8.560000000000004,
+          "end": 14.74,
+          "text": " And that is what Guo has this is a very nice position to be in",
+          "avg_logprob": -0.4405654107148831,
+          "no_speech_prob": 0.021354541182518005,
+          "words": [
+            {
+              "word": " And",
+              "start": 8.560000000000004,
+              "end": 9.340000000000002,
+              "probability": 0.3358759880065918
+            },
+            {
+              "word": " that",
+              "start": 9.340000000000002,
+              "end": 10.12,
+              "probability": 0.9838104248046875
+            },
+            {
+              "word": " is",
+              "start": 10.12,
+              "end": 10.28,
+              "probability": 0.9951838850975037
+            },
+            {
+              "word": " what",
+              "start": 10.28,
+              "end": 10.42,
+              "probability": 0.9940517544746399
+            },
+            {
+              "word": " Guo",
+              "start": 10.42,
+              "end": 10.68,
+              "probability": 0.6725814044475555
+            },
+            {
+              "word": " has",
+              "start": 10.68,
+              "end": 11.12,
+              "probability": 0.9913069605827332
+            },
+            {
+              "word": " this",
+              "start": 11.12,
+              "end": 12.24,
+              "probability": 0.32744184136390686
+            },
+            {
+              "word": " is",
+              "start": 12.24,
+              "end": 12.62,
+              "probability": 0.9731053709983826
+            },
+            {
+              "word": " a",
+              "start": 12.62,
+              "end": 12.86,
+              "probability": 0.9903462529182434
+            },
+            {
+              "word": " very",
+              "start": 12.86,
+              "end": 13.3,
+              "probability": 0.9796404242515564
+            },
+            {
+              "word": " nice",
+              "start": 13.3,
+              "end": 13.72,
+              "probability": 0.9993057250976562
+            },
+            {
+              "word": " position",
+              "start": 13.72,
+              "end": 14.12,
+              "probability": 0.997366726398468
+            },
+            {
+              "word": " to",
+              "start": 14.12,
+              "end": 14.42,
+              "probability": 0.9937392473220825
+            },
+            {
+              "word": " be",
+              "start": 14.42,
+              "end": 14.58,
+              "probability": 0.8885464668273926
+            },
+            {
+              "word": " in",
+              "start": 14.58,
+              "end": 14.74,
+              "probability": 0.8428750038146973
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-41-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-41-00.mp4",
+      "source_sha256": "46ac5a08729eb3da677c79ad58ab85be11a09fd1b93c26cc1f372d41dd07a398",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/40a53d56-717d-402a-87a5-562faa6f0204.mp4",
+      "window_start": 0,
+      "window_end": 17.12,
+      "segments": [
+        {
+          "start": 12.620000000000001,
+          "end": 16.0,
+          "text": " And back sit up, initially.",
+          "avg_logprob": -0.8152741670608521,
+          "no_speech_prob": 0.05674679949879646,
+          "words": [
+            {
+              "word": " And",
+              "start": 12.620000000000001,
+              "end": 13.3,
+              "probability": 0.3984469771385193
+            },
+            {
+              "word": " back",
+              "start": 13.3,
+              "end": 13.56,
+              "probability": 0.8014357686042786
+            },
+            {
+              "word": " sit",
+              "start": 13.56,
+              "end": 13.82,
+              "probability": 0.8234391212463379
+            },
+            {
+              "word": " up,",
+              "start": 13.82,
+              "end": 14.16,
+              "probability": 0.8896722793579102
+            },
+            {
+              "word": " initially.",
+              "start": 14.32,
+              "end": 16.0,
+              "probability": 0.9217197895050049
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-13-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-13-00.mp4",
+      "source_sha256": "ceadc859972b13dadfe55fdc920a19ca7a0cff8b9c4150c2b166427150ce2e56",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/53e18949-1040-4c20-8acb-24ce0bd2d5d5.mp4",
+      "window_start": 0,
+      "window_end": 31.16,
+      "segments": [
+        {
+          "start": 5.140000000000001,
+          "end": 15.86,
+          "text": " Oh, never would doubt what she came into the net.",
+          "avg_logprob": -0.5545881059434679,
+          "no_speech_prob": 0.16456803679466248,
+          "words": [
+            {
+              "word": " Oh,",
+              "start": 5.140000000000001,
+              "end": 5.68,
+              "probability": 0.2564014494419098
+            },
+            {
+              "word": " never",
+              "start": 13.4,
+              "end": 13.56,
+              "probability": 0.8558686971664429
+            },
+            {
+              "word": " would",
+              "start": 13.56,
+              "end": 13.8,
+              "probability": 0.062444038689136505
+            },
+            {
+              "word": " doubt",
+              "start": 13.8,
+              "end": 14.04,
+              "probability": 0.6914060711860657
+            },
+            {
+              "word": " what",
+              "start": 14.04,
+              "end": 14.68,
+              "probability": 0.9077600836753845
+            },
+            {
+              "word": " she",
+              "start": 14.68,
+              "end": 14.94,
+              "probability": 0.9889128804206848
+            },
+            {
+              "word": " came",
+              "start": 14.94,
+              "end": 15.16,
+              "probability": 0.9921813011169434
+            },
+            {
+              "word": " into",
+              "start": 15.16,
+              "end": 15.5,
+              "probability": 0.9152159690856934
+            },
+            {
+              "word": " the",
+              "start": 15.5,
+              "end": 15.68,
+              "probability": 0.9941428303718567
+            },
+            {
+              "word": " net.",
+              "start": 15.68,
+              "end": 15.86,
+              "probability": 0.9593936204910278
+            }
+          ]
+        },
+        {
+          "start": 17.06,
+          "end": 18.44,
+          "text": " What said that was.",
+          "avg_logprob": -0.5545881059434679,
+          "no_speech_prob": 0.16456803679466248,
+          "words": [
+            {
+              "word": " What",
+              "start": 17.06,
+              "end": 17.44,
+              "probability": 0.8477184176445007
+            },
+            {
+              "word": " said",
+              "start": 17.44,
+              "end": 17.94,
+              "probability": 0.5049535036087036
+            },
+            {
+              "word": " that",
+              "start": 17.94,
+              "end": 18.2,
+              "probability": 0.9953436255455017
+            },
+            {
+              "word": " was.",
+              "start": 18.2,
+              "end": 18.44,
+              "probability": 0.9151259064674377
+            }
+          ]
+        },
+        {
+          "start": 20.240000000000002,
+          "end": 25.6,
+          "text": " Grewakes a serve everywhere, but when Growne needed to step up and find the quality hold,",
+          "avg_logprob": -0.5545881059434679,
+          "no_speech_prob": 0.16456803679466248,
+          "words": [
+            {
+              "word": " Grewakes",
+              "start": 20.240000000000002,
+              "end": 20.78,
+              "probability": 0.4148509204387665
+            },
+            {
+              "word": " a",
+              "start": 20.78,
+              "end": 20.92,
+              "probability": 0.7052168250083923
+            },
+            {
+              "word": " serve",
+              "start": 20.92,
+              "end": 21.2,
+              "probability": 0.9794142842292786
+            },
+            {
+              "word": " everywhere,",
+              "start": 21.2,
+              "end": 21.64,
+              "probability": 0.9851588606834412
+            },
+            {
+              "word": " but",
+              "start": 22.34,
+              "end": 22.44,
+              "probability": 0.992252767086029
+            },
+            {
+              "word": " when",
+              "start": 22.44,
+              "end": 22.64,
+              "probability": 0.8537365794181824
+            },
+            {
+              "word": " Growne",
+              "start": 22.64,
+              "end": 23.22,
+              "probability": 0.36839407682418823
+            },
+            {
+              "word": " needed",
+              "start": 23.22,
+              "end": 23.6,
+              "probability": 0.5510819554328918
+            },
+            {
+              "word": " to",
+              "start": 23.6,
+              "end": 23.76,
+              "probability": 0.9324379563331604
+            },
+            {
+              "word": " step",
+              "start": 23.76,
+              "end": 23.96,
+              "probability": 0.9964315891265869
+            },
+            {
+              "word": " up",
+              "start": 23.96,
+              "end": 24.26,
+              "probability": 0.9946985244750977
+            },
+            {
+              "word": " and",
+              "start": 24.26,
+              "end": 24.52,
+              "probability": 0.9784210324287415
+            },
+            {
+              "word": " find",
+              "start": 24.52,
+              "end": 24.78,
+              "probability": 0.8156108856201172
+            },
+            {
+              "word": " the",
+              "start": 24.78,
+              "end": 25.0,
+              "probability": 0.8521432280540466
+            },
+            {
+              "word": " quality",
+              "start": 25.0,
+              "end": 25.3,
+              "probability": 0.9499172568321228
+            },
+            {
+              "word": " hold,",
+              "start": 25.3,
+              "end": 25.6,
+              "probability": 0.9613981246948242
+            }
+          ]
+        },
+        {
+          "start": 26.24,
+          "end": 27.22,
+          "text": " she did just that.",
+          "avg_logprob": -0.5545881059434679,
+          "no_speech_prob": 0.16456803679466248,
+          "words": [
+            {
+              "word": " she",
+              "start": 26.24,
+              "end": 26.46,
+              "probability": 0.9870656728744507
+            },
+            {
+              "word": " did",
+              "start": 26.46,
+              "end": 26.64,
+              "probability": 0.9992051720619202
+            },
+            {
+              "word": " just",
+              "start": 26.64,
+              "end": 26.98,
+              "probability": 0.9936304688453674
+            },
+            {
+              "word": " that.",
+              "start": 26.98,
+              "end": 27.22,
+              "probability": 0.9655977487564087
+            }
+          ]
+        },
+        {
+          "start": 27.22,
+          "end": 30.36,
+          "text": " six four just over three quarters of an hour.",
+          "avg_logprob": -0.4497867272450374,
+          "no_speech_prob": 0.01318628154695034,
+          "words": [
+            {
+              "word": " six",
+              "start": 27.22,
+              "end": 27.68,
+              "probability": 0.2573176920413971
+            },
+            {
+              "word": " four",
+              "start": 27.68,
+              "end": 28.04,
+              "probability": 0.7159989476203918
+            },
+            {
+              "word": " just",
+              "start": 28.04,
+              "end": 28.68,
+              "probability": 0.4747522473335266
+            },
+            {
+              "word": " over",
+              "start": 28.68,
+              "end": 28.9,
+              "probability": 0.9970044493675232
+            },
+            {
+              "word": " three",
+              "start": 28.9,
+              "end": 29.18,
+              "probability": 0.9491235017776489
+            },
+            {
+              "word": " quarters",
+              "start": 29.18,
+              "end": 29.58,
+              "probability": 0.7430635094642639
+            },
+            {
+              "word": " of",
+              "start": 29.58,
+              "end": 29.92,
+              "probability": 0.6803704500198364
+            },
+            {
+              "word": " an",
+              "start": 29.92,
+              "end": 30.16,
+              "probability": 0.9928786158561707
+            },
+            {
+              "word": " hour.",
+              "start": 30.16,
+              "end": 30.36,
+              "probability": 0.9981670379638672
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-12-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-12-00.mp4",
+      "source_sha256": "fd47efab7d8061d58c45e9bb4e2d68ce335b56ce11d1a444e63391382e054f1b",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/a6bf48e9-1214-4cd9-a90c-e82a5d21273f.mp4",
+      "window_start": 0,
+      "window_end": 21.4,
+      "segments": [
+        {
+          "start": 14.820000000000004,
+          "end": 20.86,
+          "text": " Oh wow, emphatically put away, and it is three to vote for Guo.",
+          "avg_logprob": -0.7342430382966996,
+          "no_speech_prob": 0.08324898779392242,
+          "words": [
+            {
+              "word": " Oh",
+              "start": 14.820000000000004,
+              "end": 15.540000000000003,
+              "probability": 0.4340648949146271
+            },
+            {
+              "word": " wow,",
+              "start": 15.540000000000003,
+              "end": 16.26,
+              "probability": 0.566987931728363
+            },
+            {
+              "word": " emphatically",
+              "start": 16.5,
+              "end": 17.32,
+              "probability": 0.445895254611969
+            },
+            {
+              "word": " put",
+              "start": 17.32,
+              "end": 17.82,
+              "probability": 0.928787887096405
+            },
+            {
+              "word": " away,",
+              "start": 17.82,
+              "end": 18.2,
+              "probability": 0.7252050042152405
+            },
+            {
+              "word": " and",
+              "start": 18.42,
+              "end": 18.92,
+              "probability": 0.916698694229126
+            },
+            {
+              "word": " it",
+              "start": 18.92,
+              "end": 19.06,
+              "probability": 0.9672543406486511
+            },
+            {
+              "word": " is",
+              "start": 19.06,
+              "end": 19.18,
+              "probability": 0.9649248719215393
+            },
+            {
+              "word": " three",
+              "start": 19.18,
+              "end": 19.58,
+              "probability": 0.5276595950126648
+            },
+            {
+              "word": " to",
+              "start": 19.58,
+              "end": 19.78,
+              "probability": 0.6535463333129883
+            },
+            {
+              "word": " vote",
+              "start": 19.78,
+              "end": 20.02,
+              "probability": 0.3834492862224579
+            },
+            {
+              "word": " for",
+              "start": 20.02,
+              "end": 20.6,
+              "probability": 0.5413345098495483
+            },
+            {
+              "word": " Guo.",
+              "start": 20.6,
+              "end": 20.86,
+              "probability": 0.5974967628717422
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-25-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-25-00.mp4",
+      "source_sha256": "0ae137195100617fd737e6b5e5f50d45d247065597818a6f941094b3321944d9",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/ec6a74f1-bc2b-4439-8d02-4828fc6dac44.mp4",
+      "window_start": 0,
+      "window_end": 16.28,
+      "segments": [
+        {
+          "start": 13.04,
+          "end": 15.46,
+          "text": " This is a very good game though.",
+          "avg_logprob": -0.5900169502605092,
+          "no_speech_prob": 0.051706671714782715,
+          "words": [
+            {
+              "word": " This",
+              "start": 13.04,
+              "end": 13.68,
+              "probability": 0.3603653311729431
+            },
+            {
+              "word": " is",
+              "start": 13.68,
+              "end": 14.32,
+              "probability": 0.9901916980743408
+            },
+            {
+              "word": " a",
+              "start": 14.32,
+              "end": 14.44,
+              "probability": 0.9935217499732971
+            },
+            {
+              "word": " very",
+              "start": 14.44,
+              "end": 14.62,
+              "probability": 0.8225001096725464
+            },
+            {
+              "word": " good",
+              "start": 14.62,
+              "end": 14.96,
+              "probability": 0.9964625239372253
+            },
+            {
+              "word": " game",
+              "start": 14.96,
+              "end": 15.26,
+              "probability": 0.9927707314491272
+            },
+            {
+              "word": " though.",
+              "start": 15.26,
+              "end": 15.46,
+              "probability": 0.799781858921051
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-28-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-28-00.mp4",
+      "source_sha256": "c601038adf008a3b387971ac96345abf2249136fffceb1c8bb047497efc89013",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/b577067c-4f74-4e0b-ad1a-26ed44f814dd.mp4",
+      "window_start": 0,
+      "window_end": 25.04,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 2.1,
+          "text": " Under severe pressure on serve.",
+          "avg_logprob": -0.3533761439954533,
+          "no_speech_prob": 0.049373168498277664,
+          "words": [
+            {
+              "word": " Under",
+              "start": 0.0,
+              "end": 0.66,
+              "probability": 0.42880555987358093
+            },
+            {
+              "word": " severe",
+              "start": 0.66,
+              "end": 1.1,
+              "probability": 0.9895931482315063
+            },
+            {
+              "word": " pressure",
+              "start": 1.1,
+              "end": 1.5,
+              "probability": 0.9894858598709106
+            },
+            {
+              "word": " on",
+              "start": 1.5,
+              "end": 1.82,
+              "probability": 0.7931997179985046
+            },
+            {
+              "word": " serve.",
+              "start": 1.82,
+              "end": 2.1,
+              "probability": 0.7126578092575073
+            }
+          ]
+        },
+        {
+          "start": 15.539999999999996,
+          "end": 17.26,
+          "text": " And she takes the chance.",
+          "avg_logprob": -0.3533761439954533,
+          "no_speech_prob": 0.049373168498277664,
+          "words": [
+            {
+              "word": " And",
+              "start": 15.539999999999996,
+              "end": 16.099999999999998,
+              "probability": 0.7650792598724365
+            },
+            {
+              "word": " she",
+              "start": 16.099999999999998,
+              "end": 16.66,
+              "probability": 0.5446241497993469
+            },
+            {
+              "word": " takes",
+              "start": 16.66,
+              "end": 16.86,
+              "probability": 0.99854975938797
+            },
+            {
+              "word": " the",
+              "start": 16.86,
+              "end": 17.06,
+              "probability": 0.8281401991844177
+            },
+            {
+              "word": " chance.",
+              "start": 17.06,
+              "end": 17.26,
+              "probability": 0.5865139961242676
+            }
+          ]
+        },
+        {
+          "start": 18.14,
+          "end": 24.36,
+          "text": " You can hear what it means to the crowd and finally gets the break.",
+          "avg_logprob": -0.3533761439954533,
+          "no_speech_prob": 0.049373168498277664,
+          "words": [
+            {
+              "word": " You",
+              "start": 18.14,
+              "end": 18.66,
+              "probability": 0.9868782162666321
+            },
+            {
+              "word": " can",
+              "start": 18.66,
+              "end": 18.76,
+              "probability": 0.8261014223098755
+            },
+            {
+              "word": " hear",
+              "start": 18.76,
+              "end": 18.96,
+              "probability": 0.9938720464706421
+            },
+            {
+              "word": " what",
+              "start": 18.96,
+              "end": 19.18,
+              "probability": 0.997031569480896
+            },
+            {
+              "word": " it",
+              "start": 19.18,
+              "end": 19.28,
+              "probability": 0.9965317845344543
+            },
+            {
+              "word": " means",
+              "start": 19.28,
+              "end": 19.5,
+              "probability": 0.9983697533607483
+            },
+            {
+              "word": " to",
+              "start": 19.5,
+              "end": 19.78,
+              "probability": 0.9702395796775818
+            },
+            {
+              "word": " the",
+              "start": 19.78,
+              "end": 19.88,
+              "probability": 0.995536208152771
+            },
+            {
+              "word": " crowd",
+              "start": 19.88,
+              "end": 20.16,
+              "probability": 0.9969689249992371
+            },
+            {
+              "word": " and",
+              "start": 20.16,
+              "end": 20.88,
+              "probability": 0.5961492657661438
+            },
+            {
+              "word": " finally",
+              "start": 20.88,
+              "end": 23.04,
+              "probability": 0.9629296660423279
+            },
+            {
+              "word": " gets",
+              "start": 23.04,
+              "end": 23.92,
+              "probability": 0.8919105529785156
+            },
+            {
+              "word": " the",
+              "start": 23.92,
+              "end": 24.16,
+              "probability": 0.9972164630889893
+            },
+            {
+              "word": " break.",
+              "start": 24.16,
+              "end": 24.36,
+              "probability": 0.9933149218559265
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-35-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-35-00.mp4",
+      "source_sha256": "ad618d556673659882a9b9ed0e5a5fa0e0967c5864134973c9f20d49138731ba",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/7dc565a7-060c-4017-806f-4d22137d6dfc.mp4",
+      "window_start": 0,
+      "window_end": 13.24,
+      "segments": [
+        {
+          "start": 11.16,
+          "end": 12.56,
+          "text": " Wow.",
+          "avg_logprob": -1.1612855911254882,
+          "no_speech_prob": 0.08089109510183334,
+          "words": [
+            {
+              "word": " Wow.",
+              "start": 11.16,
+              "end": 12.56,
+              "probability": 0.6240525245666504
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-39-00",
+      "source_path": "/workspace/scratch/guo-volynets-wuhan-2026-r2/sources/wsc-39-00.mp4",
+      "source_sha256": "3b61bb310605804c22f62d2a96e050641f44fbb5de3330989226bc0c0cc6f5a7",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/de6ab725-7244-4f79-b3ed-deb390d9cf21.mp4",
+      "window_start": 0,
+      "window_end": 11.56,
+      "segments": [
+        {
+          "start": 2.3000000000000016,
+          "end": 10.88,
+          "text": " Oh, she's found another worldie.",
+          "avg_logprob": -0.7819242477416992,
+          "no_speech_prob": 0.05443659797310829,
+          "words": [
+            {
+              "word": " Oh,",
+              "start": 2.3000000000000016,
+              "end": 3.38,
+              "probability": 0.5775666832923889
+            },
+            {
+              "word": " she's",
+              "start": 9.36,
+              "end": 9.58,
+              "probability": 0.9695251882076263
+            },
+            {
+              "word": " found",
+              "start": 9.58,
+              "end": 9.8,
+              "probability": 0.9653684496879578
+            },
+            {
+              "word": " another",
+              "start": 9.8,
+              "end": 10.34,
+              "probability": 0.9935227632522583
+            },
+            {
+              "word": " worldie.",
+              "start": 10.34,
+              "end": 10.88,
+              "probability": 0.3801378905773163
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "schema": "tennislive.independent_final_visual_review.v1",
+  "status": "needs_fix",
+  "checked_at": "2026-10-14T12:27:04.898966+00:00",
+  "film": "/workspace/tennislive/output/2026-10-14/reel/guo-volynets-wuhan-2026-r2/guo-volynets-wuhan-2026-r2.mp4",
+  "film_sha256": "3a15d7b232fce04a2f4aecdec807b13bc95c4450e3350cab98f2abb4c32ff087",
+  "film_duration_seconds": 274.0,
+  "method": "独立视觉复核：从最终成片提取107帧并逐页浏览9张接触表，覆盖每个段落、全部卡片及所有保留原声句中点；回合完整性对照同场源片逐2秒时间轴，source45另外查看最终219.95秒/源12.95秒原分辨率帧。非逐帧全片观看、未进行本轮听审或模型人脸识别。",
+  "evidence_manifest": "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-frames/manifest.json",
+  "contact_sheets": [
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-frames/sheet-0.jpg",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-frames/sheet-1.jpg",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-frames/sheet-2.jpg",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-frames/sheet-3.jpg",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-frames/sheet-4.jpg",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-frames/sheet-5.jpg",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-frames/sheet-6.jpg",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-frames/sheet-7.jpg",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-frames/sheet-8.jpg"
+  ],
+  "findings": [
+    {
+      "severity": "blocking",
+      "check": "完整关键回合",
+      "source": "wsc-45-00",
+      "source_time_seconds": 12.95,
+      "film_time_seconds": 219.95,
+      "description": "本段end13.00切得过早：郭最后一拍刚完成，球仍在远端半场、尚未越网，未保留最终落点和得分结果。当前成片不能认定此关键回合完整。",
+      "evidence": "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-frames/point45-end.jpg",
+      "source_evidence": "/workspace/scratch/guo-volynets-wuhan-2026-r2/visual-review/point45-end-source.jpg",
+      "repair": "保留至完整得分结果和反应，建议至少source14.2；13.35开始的真实解说需完整保留并补对应双语字幕，不可为了避开解说句头切断得分。"
+    }
+  ],
+  "checks": [
+    {
+      "name": "完整首盘破发和盘点",
+      "status": "pass",
+      "evidence_final_seconds": [
+        34.8,
+        36.6,
+        48.6,
+        50.19,
+        55.45,
+        56,
+        57.8,
+        66.8,
+        69.8,
+        84.78
+      ]
+    },
+    {
+      "name": "次盘后段回合与决胜盘回破",
+      "status": "pass",
+      "evidence_final_seconds": [
+        96.96,
+        98.76,
+        107.76,
+        112.45,
+        123.8,
+        125.6,
+        131.6,
+        135.51,
+        136.25
+      ]
+    },
+    {
+      "name": "抢七4-0压线/对手回分",
+      "status": "pass",
+      "evidence_final_seconds": [
+        156,
+        157.8,
+        163.8,
+        166.55,
+        173.21,
+        175.56,
+        193.56,
+        197.74,
+        199.21
+      ]
+    },
+    {
+      "name": "完整赛点及庆祝握手",
+      "status": "pass",
+      "detail": "完整赛点准备发球、回合及得分庆祝在220.26–240.56；双方握手244.86，裁判握手251.96，252.86结板明确最终比分。",
+      "evidence_final_seconds": [
+        220.26,
+        222.06,
+        234.06,
+        236.66,
+        238.26,
+        240.56,
+        244.86,
+        246.56,
+        251.96,
+        252.86
+      ]
+    },
+    {
+      "name": "卡片两行、布局与字幕",
+      "status": "pass",
+      "detail": "各卡片为完整语义两行，无孤字；字幕在球场下方留白区，所查最长中英文句未压比分或球场动作。",
+      "evidence_final_seconds": [
+        10.9,
+        19.05,
+        29.7,
+        51.6,
+        78.8,
+        91.76,
+        118.2,
+        142.6,
+        152.2,
+        168.92,
+        203.31,
+        244.86
+      ]
+    },
+    {
+      "name": "固定0.814宽景与原生比分",
+      "status": "pass_with_declared_layout",
+      "detail": "维持用户已接受固定0.814；比赛数字/行对应在左下可见，原板姓名左侧部分被裁，顶部双方完整姓名和最终比分常驻。未增加更紧裁切。"
+    },
+    {
+      "name": "封面人物眼睛及面部",
+      "status": "visual_observation_only",
+      "detail": "实际最终0.5s封面郭涵煜睁眼、偏正面、握拳，钩子未遮脸。模型人脸检查缺失，未将其写通过。"
+    },
+    {
+      "name": "自动人脸模型",
+      "status": "unavailable",
+      "detail": "沿用render.json诚实记录模型文件缺失；本次无模型身份/眼睛校验通过声明。"
+    }
+  ],
+  "approval": false
+}

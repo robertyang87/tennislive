@@ -1,0 +1,45 @@
+{
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/1a85ee65-6393-4d8b-9f66-286d67a0f11d.mp4",
+  "source_sha256": "a7b51c3a308ce04be2b0305f41e24017bb0e842ca5f22ab7713ec603148d5737",
+  "source_key": "wsc-46-00",
+  "reviewed_from": 0,
+  "reviewed_to": 33.32,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex audio_review agent; fresh actual independent faster-whisper small.en/base.en, medium.en dispute checks",
+  "reviewed_at": "2026-10-14T11:59:41.488954+00:00",
+  "status": "complete",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "fresh_actual_asr_runs": true,
+  "foreground_english": [
+    {
+      "start": 16.66,
+      "end": 18.4,
+      "en": "She's done it!",
+      "zh": "她做到了！"
+    },
+    {
+      "start": 19.1,
+      "end": 23.6,
+      "en": "Another remarkable win for Guo Hanyu.",
+      "zh": "郭涵煜又赢下了一场了不起的胜利。"
+    },
+    {
+      "start": 24.36,
+      "end": 28.45,
+      "en": "Well, the win against Sorana Cirstea was a high point.",
+      "zh": "战胜索拉娜·科斯蒂亚已是一个高点。"
+    },
+    {
+      "start": 29.1,
+      "end": 30.65,
+      "en": "This is even better.",
+      "zh": "而这一场更胜一筹。"
+    }
+  ],
+  "uncertain_spans": [],
+  "method_details": "All original source windows processed, no VAD filtering, no initial prompt, beam_size=5, word timestamps retained in separate raw JSON. Speaker proper names normalized to official spelling. No audio gain/normalization or loudness QC used.",
+  "cross_check_notes": [
+    "All three models agree first two sentences; cold-open full two-sentence window must include through23.60 and end before next Well24.36. Sorana Cirstea phonetic ASR spelling normalized against official prior-round identity."
+  ]
+}

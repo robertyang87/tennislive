@@ -1,0 +1,58 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "8b0cfcf6e265bf1607e669155c64de82462ce28df2df62966d39d7fe7c1d3ff1",
+    "request_count": 10,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.602,
+  "layout": "full",
+  "segments_seconds": 270.48,
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 第二轮",
+    "line2": "郭涵煜 6-4 4-6 7-6(3) 沃利内茨",
+    "start": 1.2,
+    "end": 271.68
+  },
+  "film_seconds": 276.28,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 3.528,
+    "2": 8.568,
+    "3": 7.08,
+    "6": 7.896,
+    "8": 8.352,
+    "10": 8.808,
+    "11": 6.288,
+    "14": 6.312,
+    "17": 12.648
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "unavailable",
+      "error": "人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）",
+      "report_only": true,
+      "warnings": [
+        "人脸模型不可用，分段画面没查：人脸模型不全：缺 det_500m.onnx, w600k_mbf.onnx, 2d106det.onnx（/home/agent/.cache/tennislive/face-models/buffalo_s-v0.7）"
+      ]
+    }
+  },
+  "render_inputs_sha256": "cf678edeab61e4848420b8e3726d31def43874531d04ab00ea2c424c93afa8fb",
+  "film_sha256": "befadf11158ad55dec3683a7aada1a0371d343d893858ce20d3541b413ef99ee",
+  "film_bytes": 62790454,
+  "qc_attestation_sha256": "c4081fb4b402f475a0787e24777822313f61c02b77f4a8cb53bfe49e272a03b3"
+}

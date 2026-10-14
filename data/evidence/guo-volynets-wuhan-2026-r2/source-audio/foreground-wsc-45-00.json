@@ -1,0 +1,40 @@
+{
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/81601276-3a78-47fc-80e3-98849fed03d5.mp4",
+  "source_sha256": "49e00c177adc96332ff105cd8dedeb595a63ab86938fd6d39e3466da8956be96",
+  "source_key": "wsc-45-00",
+  "reviewed_from": 0,
+  "reviewed_to": 22.2,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex audio_review agent; fresh actual independent faster-whisper small.en/base.en, medium.en dispute checks",
+  "reviewed_at": "2026-10-14T12:30:55.131849+00:00",
+  "status": "complete",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "fresh_actual_asr_runs": true,
+  "foreground_english": [
+    {
+      "start": 13.35,
+      "end": 15.0,
+      "en": "Oh, yes!",
+      "zh": "好球！"
+    },
+    {
+      "start": 15.9,
+      "end": 17.9,
+      "en": "So many times this evening,",
+      "zh": "今晚已多次出现这一幕，"
+    },
+    {
+      "start": 17.9,
+      "end": 22.2,
+      "en": "we have seen Guo come in and do that.",
+      "zh": "郭涵煜上网完成得分。"
+    }
+  ],
+  "uncertain_spans": [],
+  "method_details": "All original source windows processed, no VAD filtering, no initial prompt, beam_size=5, word timestamps retained in separate raw JSON. Speaker proper names normalized to official spelling. No audio gain/normalization or loudness QC used.",
+  "cross_check_notes": [
+    "small.en and medium.en independently agree exact full sentence; base.en grammatical errors rejected by two matching runs. Last word that ends 22.14 of 22.20 seconds; syntactically complete.",
+    "2026-10-14 boundary correction: original source PCM/STFT visually inspected. Final /s/ in yes ends about15.00s; next So has a distinct /s/ band beginning about15.90s followed by its vowel around16.10s. Full/local ASR word-start stamps include varying portions of the intervening pause, so earlier coarse14.85s start was not a true next-word onset. Cue text and other sentence ends unchanged. Source45 end15.30 plus0.18s natural transition tail reaches15.48s, before the next actual sentence; no silence replacement or source gain change. No human audio listening claimed."
+  ]
+}
