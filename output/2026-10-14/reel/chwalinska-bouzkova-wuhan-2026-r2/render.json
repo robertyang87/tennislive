@@ -3,17 +3,17 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "0ab1177077232e5c851d6e730da10e0923b704eb8246c8828406e6aeae42ef03",
+    "bundle_sha256": "e61f706d4aec216dfe02ca24c4593ed98c527ce16f300a29cdd7d0c68e56b8f9",
     "request_count": 9,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-chwalinska-bouzkova-wuhan-2026-r2-0ab1177077232e5c",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-bouzkova-wuhan-2026-r2-0ab1177077232e5c/tts_bundle.zip",
+    "release_tag": "reel-tts-chwalinska-bouzkova-wuhan-2026-r2-e61f706d4aec216d",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-bouzkova-wuhan-2026-r2-e61f706d4aec216d/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38533357397"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38535603073"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -38,7 +38,7 @@
     "8": 10.176,
     "10": 6.792,
     "12": 13.992,
-    "13": 8.64
+    "13": 8.52
   },
   "face_checks": {
     "cover": {
@@ -55,44 +55,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "0c67455bb72c885fc4eced7c954e15246ff61550e4a547314a13ba90404f5ce7",
+  "render_inputs_sha256": "a8f3082a54235dfb96c7a3680134d15730261bc17a865cab67f2bc040ab1d2d0",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "chwalinska-bouzkova-wuhan-2026-r2",
     "received_at": "2026-10-14T06:07:44Z",
-    "artifact_ready_at": "2026-10-14T08:16:02Z",
-    "elapsed_seconds": 7698.741,
+    "artifact_ready_at": "2026-10-14T08:37:06Z",
+    "elapsed_seconds": 8962.984,
     "budget_seconds": 600,
     "met": false,
-    "film_sha256": "2f06834a808edf0e38453414a2014d9e8ac052adc17fb9129b178bdc4b45097f",
-    "spec_sha256": "420618faaa6a81fd26ae1cc5ac6e96e50b7b9b2a41d3aade2243b0c77ff12044",
-    "run_id": "38533357397",
+    "film_sha256": "8193d4a113948ad5dd926f48030d09863841c9bf8d2303e315ee5fb3c5336760",
+    "spec_sha256": "7d3478d18dc4d3ebf32e6d9233784da65e0855baf9bef3383b043e5f27a7cade",
+    "run_id": "38535603073",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-14T08:13:37Z",
-        "run_id": "38533357397"
+        "at": "2026-10-14T08:33:05Z",
+        "run_id": "38535603073"
       }
     ],
-    "render_seconds": 145.741,
-    "pre_render_seconds": 7553.0
+    "render_seconds": 241.984,
+    "pre_render_seconds": 8721.0
   },
-  "film_sha256": "2f06834a808edf0e38453414a2014d9e8ac052adc17fb9129b178bdc4b45097f",
-  "film_bytes": 63684975,
-  "qc_attestation_sha256": "2afe26063d1800655cce0673fd6e27c96d24f938ea255379c2bef301428c8ebc",
+  "film_sha256": "8193d4a113948ad5dd926f48030d09863841c9bf8d2303e315ee5fb3c5336760",
+  "film_bytes": 63664758,
+  "qc_attestation_sha256": "6123890178b488db8167f775492789791482155dd26bf4dae44862f86021cce6",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-14T08:13:37Z",
-      "run_id": "38533357397"
+      "at": "2026-10-14T08:33:05Z",
+      "run_id": "38535603073"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-14T08:16:05Z",
-      "run_id": "38533357397"
+      "at": "2026-10-14T08:37:10Z",
+      "run_id": "38535603073"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-chwalinska-bouzkova-wuhan-2026-r2/chwalinska-bouzkova-wuhan-2026-r2.mp4",
-  "video_bytes": 63684975
+  "video_bytes": 63664758
 }
