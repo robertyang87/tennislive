@@ -1,0 +1,38 @@
+{
+  "schema": "tennislive.native-scoreboard-correction-preview.v1",
+  "reviewed_at": "2026-10-14T18:33:15.930804+00:00",
+  "spec_file_sha256": "9cb958517acadc67f9eb62bf2109af996417951e72175f7b2907e3b083a9df65",
+  "ass_sha256": "4912c0982f831985503b68d0e274b53bb021ffd64e48715c20c15e2659067eeb",
+  "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+  "tts_bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+  "detector_file_sha256": "d2cabad81384c55870e2cfc2154263f0731e82ecf81a607c016f55235b0b4d61",
+  "samples": [
+    {
+      "image": "caption-01.png",
+      "image_sha256": "ba7beafdc1dc7c73a7e2a95f248be27afef87b36c5118880bef1fb5781e92d3e",
+      "film_time": 8.08,
+      "source_time": 221.5
+    },
+    {
+      "image": "caption-02.png",
+      "image_sha256": "bd45aba6a15aa64d6fb1b08b498db53fc59d1d2595632274769b1d6d24132f6b",
+      "film_time": 135.28,
+      "source_time": 221.42000000000002
+    },
+    {
+      "image": "caption-03.png",
+      "image_sha256": "ba7beafdc1dc7c73a7e2a95f248be27afef87b36c5118880bef1fb5781e92d3e",
+      "film_time": 135.35999999999999,
+      "source_time": 221.5
+    },
+    {
+      "image": "caption-04.png",
+      "image_sha256": "d7eacd222b35e9f213826ed5e66489527da9b59f566d8d91ec780714196b0852",
+      "film_time": 135.44,
+      "source_time": 221.58
+    }
+  ],
+  "actual_inspection": "Root viewed all four original native preview PNGs. Corrected withdrawing board retains the authentic blue/name body with no wide green rectangular backdrop; the source221.58 sample preserves its narrower partially withdrawn body. Scoreboard stays x0,y1227. English cue and subject composition are unchanged.",
+  "publication_approved": false,
+  "limitation": "Pre-encode only. The previous movie92fd is blocked; corrected full movie and exact final native QC remain required."
+}

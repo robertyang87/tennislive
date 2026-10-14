@@ -1,0 +1,4471 @@
+{
+  "created_at": "2026-10-14T18:19:54.611379+00:00",
+  "status": "completed_current_finite_acoustic_review_with_declared_low_support",
+  "quality_approval": false,
+  "publication_performed": false,
+  "release_audio_review_completed": true,
+  "scope": "Exact current7 frozen B8 MP3/WordBoundary requests:28 polyphone positions, all16 nominated player-name syllable occurrences, all28 numeric spans and7 full utterance lexical/chunking checks; supplementary place/brand phrases recorded separately without new per-character-tone claim.",
+  "bundle_path": "/workspace/scratch/b8-tts.zip",
+  "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "pitch": "+0Hz",
+  "backend": "edge",
+  "request_count": 7,
+  "current_formal_spec_path": "/workspace/tennislive-efficiency/specs/reels/medvedev-tsitsipas-shanghai-2026-r4.json",
+  "current_formal_spec_sha256": "9cb958517acadc67f9eb62bf2109af996417951e72175f7b2907e3b083a9df65",
+  "frozen_spec_sha256": "d6c5e67f543543f8eaebad108d310e501579414968ec067f7566dd10b29b6327",
+  "current_text_matches_by_edit_id": true,
+  "current_segment_indices": {
+    "coordinate": 1,
+    "first_break": 4,
+    "second_pressure": 7,
+    "match_payoff": 9,
+    "full_stats": 11,
+    "next_round": 12
+  },
+  "frozen_segment_indices": {
+    "coordinate": 1,
+    "first_break": 3,
+    "second_pressure": 6,
+    "match_payoff": 8,
+    "full_stats": 10,
+    "next_round": 11,
+    "outro": "outro"
+  },
+  "body_polyphone_positions": 25,
+  "fixed_outro_polyphone_positions": 3,
+  "all_polyphone_positions": 28,
+  "nominated_player_name_syllable_positions": 16,
+  "supplementary_named_phrase_syllables": 10,
+  "number_spans": 28,
+  "unconfirmed_primary_positions": [],
+  "confirmed_actual_misreads": 0,
+  "manual_listening_claimed": false,
+  "original_sentence_resynthesis": false,
+  "new_reference_mp3_count": 78,
+  "synthesis_stopped_before_final_alignment": true,
+  "no_loudness_silence_gain_pcm_comparison": true,
+  "body": [
+    {
+      "edit_id": "coordinate",
+      "index": 3,
+      "char": "间",
+      "intended": "jian1",
+      "word": "北京时间",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "coordinate",
+        "index": 3,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "f0",
+            "score": 0.8484831447238697,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_comb",
+            "score": 0.4910545496259341,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.9367850935759598,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_curve",
+            "score": 0.7361071104094591,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 0.909511349628169,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_net",
+            "score": 0.8914516584234637,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 0.7609534618391508,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 13,
+      "char": "大",
+      "intended": "da4",
+      "word": "大师",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "coordinate",
+        "index": 13,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.3510710794871005,
+            "selftest_pass": true
+          },
+          {
+            "component": "spec",
+            "score": 0.22868016576274006,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_comb",
+            "score": 0.30831469000858513,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_spec",
+            "score": 0.31338403892147226,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 0.40758088685490484,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 25,
+      "char": "与",
+      "intended": "yu3",
+      "word": "与",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "coordinate",
+        "index": 25,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "f0",
+            "score": 0.4454286751114222,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.29493988018247824,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 0.47429042694370643,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 38,
+      "char": "强",
+      "intended": "qiang2",
+      "word": "强",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "coordinate",
+        "index": 38,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "tail40_spec",
+            "score": 0.48109046627468854,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 0.8713328003228692,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "first_break",
+      "index": 17,
+      "char": "发",
+      "intended": "fa1",
+      "word": "发",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "first_break",
+        "index": 17,
+        "actual_orig_mp3_sha256": "bdd6e7646f28271e0709af463c8491cb68b815e20c0a8ae391be7cdc4bac140c",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.9405598995684201,
+            "selftest_pass": true
+          },
+          {
+            "component": "spec",
+            "score": 0.9063461454728697,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.9680853270008551,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_comb",
+            "score": 0.9736306619294166,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_spec",
+            "score": 0.9810657627823156,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.9715211265701009,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low.",
+        "Positive controls use traditional發; duplicate positive letters are distinct real card utterances, not independent positive homophone characters."
+      ]
+    },
+    {
+      "edit_id": "first_break",
+      "index": 30,
+      "char": "迫",
+      "intended": "po4",
+      "word": "压迫",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-boundary-core-results.json",
+        "sha256": "e141fb13b2c9b0f9cc9776e90f0101b4f5502c59b921932a3678d212ee97b40f",
+        "edit_id": "first_break",
+        "index": 30,
+        "actual_orig_mp3_sha256": "bdd6e7646f28271e0709af463c8491cb68b815e20c0a8ae391be7cdc4bac140c",
+        "raw_result": "pending",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.6450655770635042,
+            "selftest_pass": true
+          },
+          {
+            "component": "spec",
+            "score": 0.3319887945695738,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.8473307912719267,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_comb",
+            "score": 0.7467958277221095,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_spec",
+            "score": 0.31406329307423325,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.8895338772954192,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_curve",
+            "score": 0.31067110174127993,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": null
+      },
+      "limitations": [
+        "Net F0 compares a40ms current last island to80ms positive islands and110–120ms negative islands. Unnormalised pitch change confounds nucleus duration; it cannot overturn the independently valid CV/combined/F0 current po-versus-pai vowel controls. Genuine negative牌/俳 are pai2 proxies, never relabelled pai3.",
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low.",
+        "Genuine negative牌/俳 are pai2 vowel proxies, not actualpai3; positive破/粕 and current CV establishpo, positive tone behaviour separately retained."
+      ]
+    },
+    {
+      "edit_id": "second_pressure",
+      "index": 11,
+      "char": "被",
+      "intended": "bei4",
+      "word": "被",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/body-template-results.json",
+        "sha256": "bf8fcb239550aa11011efabc692d8a36595c416ab03b7acca95c0b3043c5cb61",
+        "edit_id": "second_pressure",
+        "index": 11,
+        "actual_orig_mp3_sha256": "9a291fe7e642151d47a73886476f57f8a6d3c6a1cbbb63c4eb0dbf2fac4012c7",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.295906423152623,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Current bei4/pi1 target independently recalibrated against older genuine same-profile audible syllable controls, full reference sentence differences declared; current card controls did not separate it.",
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "second_pressure",
+      "index": 29,
+      "char": "发",
+      "intended": "fa1",
+      "word": "发",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "second_pressure",
+        "index": 29,
+        "actual_orig_mp3_sha256": "9a291fe7e642151d47a73886476f57f8a6d3c6a1cbbb63c4eb0dbf2fac4012c7",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.7172697892758837,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.8847683546889921,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_comb",
+            "score": 0.8192163416791112,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_spec",
+            "score": 0.4806410850445161,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.9572011394735169,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_curve",
+            "score": 0.8039386960656255,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 0.88797975080211,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_net",
+            "score": 0.7772759831912688,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 0.7577681138772449,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low.",
+        "Positive controls use traditional發; duplicate positive letters are distinct real card utterances, not independent positive homophone characters."
+      ]
+    },
+    {
+      "edit_id": "second_pressure",
+      "index": 36,
+      "char": "会",
+      "intended": "hui4",
+      "word": "机会",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "second_pressure",
+        "index": 36,
+        "actual_orig_mp3_sha256": "9a291fe7e642151d47a73886476f57f8a6d3c6a1cbbb63c4eb0dbf2fac4012c7",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.4410541726770524,
+            "selftest_pass": true
+          },
+          {
+            "component": "spec",
+            "score": 0.3398165436266824,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.597329959998562,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_comb",
+            "score": 0.34169337613122763,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_spec",
+            "score": 0.31400855893337476,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.3310465278137061,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_curve",
+            "score": 0.7564514905225307,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 0.811213269878675,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "match_payoff",
+      "index": 12,
+      "char": "发",
+      "intended": "fa1",
+      "word": "发",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "match_payoff",
+        "index": 12,
+        "actual_orig_mp3_sha256": "e8d253f8a4b968f63cae10f7742a0a691b209c7e70a0495a80c29f71d0d170fe",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "tail40_comb",
+            "score": 0.9956519128300501,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.9948500175770503,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_curve",
+            "score": 0.9999999999999997,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 0.9999999999999994,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_net",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 1.0,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low.",
+        "Positive controls use traditional發; duplicate positive letters are distinct real card utterances, not independent positive homophone characters."
+      ]
+    },
+    {
+      "edit_id": "match_payoff",
+      "index": 14,
+      "char": "发",
+      "intended": "fa1",
+      "word": "发球",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "match_payoff",
+        "index": 14,
+        "actual_orig_mp3_sha256": "e8d253f8a4b968f63cae10f7742a0a691b209c7e70a0495a80c29f71d0d170fe",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "f0",
+            "score": 0.9580692134549396,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.9502056689740139,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_curve",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_net",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 1.0,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low.",
+        "Positive controls use traditional發; duplicate positive letters are distinct real card utterances, not independent positive homophone characters."
+      ]
+    },
+    {
+      "edit_id": "match_payoff",
+      "index": 44,
+      "char": "强",
+      "intended": "qiang2",
+      "word": "强",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "match_payoff",
+        "index": 44,
+        "actual_orig_mp3_sha256": "e8d253f8a4b968f63cae10f7742a0a691b209c7e70a0495a80c29f71d0d170fe",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.5829359805520898,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.8968623075998204,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_spec",
+            "score": 0.4086080868873783,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 1,
+      "char": "场",
+      "intended": "chang3",
+      "word": "全场",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-boundary-core-results.json",
+        "sha256": "e141fb13b2c9b0f9cc9776e90f0101b4f5502c59b921932a3678d212ee97b40f",
+        "edit_id": "full_stats",
+        "index": 1,
+        "actual_orig_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "f0",
+            "score": 0.2771885534675076,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 0.7862331267940995,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Raw total F0 fall compares current80ms with120/240ms control islands; the240ms merged full-token candidate includes earlier音. Total fall is not a duration-comparable isolated-tone counterproof. Actual timing-preserving slope and F0 components independently classify the current fall against genuine chang3/chang2 controls; confidence stays low.",
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 16,
+      "char": "迫",
+      "intended": "po4",
+      "word": "迫",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "full_stats",
+        "index": 16,
+        "actual_orig_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.32831448617160003,
+            "selftest_pass": true
+          },
+          {
+            "component": "spec",
+            "score": 0.29901705622673963,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.37555673732404626,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_comb",
+            "score": 0.2665344656024224,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_spec",
+            "score": 0.34573538331441694,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.26938842079409486,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_curve",
+            "score": 0.40504869384426195,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 0.8328137172834695,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_net",
+            "score": 0.33750312915838815,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 0.9794491141821823,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low.",
+        "Genuine negative牌/俳 are pai2 vowel proxies, not actualpai3; positive破/粕 and current CV establishpo, positive tone behaviour separately retained."
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 26,
+      "char": "发",
+      "intended": "fa1",
+      "word": "一发",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "full_stats",
+        "index": 26,
+        "actual_orig_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.529104666696139,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.8551740523761087,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 0.9268801571845927,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low.",
+        "Positive controls use traditional發; duplicate positive letters are distinct real card utterances, not independent positive homophone characters."
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 29,
+      "char": "率",
+      "intended": "lv4",
+      "word": "率",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-boundary-core-results.json",
+        "sha256": "e141fb13b2c9b0f9cc9776e90f0101b4f5502c59b921932a3678d212ee97b40f",
+        "edit_id": "full_stats",
+        "index": 29,
+        "actual_orig_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.6386656811362474,
+            "selftest_pass": true
+          },
+          {
+            "component": "spec",
+            "score": 0.3836707947432284,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.8035070681970301,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_spec",
+            "score": 0.4550910127600189,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Both contrast families lv4 and shuai4 have fourth tone. A tail-only F0 net classifier is not an admissible vowel-family error diagnosis; nuclei also differ substantially. Current independently calibrated real CV and combined classifiers establish lv rather than shuai. No raw opposing score is deleted.",
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 32,
+      "char": "分",
+      "intended": "fen1",
+      "word": "百分",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "full_stats",
+        "index": 32,
+        "actual_orig_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "nucleus_slope",
+            "score": 0.46779507834502154,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_net",
+            "score": 0.20514942016092355,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 39,
+      "char": "分",
+      "intended": "fen1",
+      "word": "百分",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "full_stats",
+        "index": 39,
+        "actual_orig_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "nucleus_curve",
+            "score": 0.7238073855740874,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_net",
+            "score": 0.9554054612011582,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 0.6724529569743232,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 47,
+      "char": "场",
+      "intended": "chang3",
+      "word": "全场",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "full_stats",
+        "index": 47,
+        "actual_orig_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "tail40_comb",
+            "score": 0.27920298419809214,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 0.267708197331114,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 48,
+      "char": "没",
+      "intended": "mei2",
+      "word": "没有",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "full_stats",
+        "index": 48,
+        "actual_orig_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.4477834747788929,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.7523143549176277,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_comb",
+            "score": 0.3277991878855745,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_spec",
+            "score": 0.2236127595422801,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.5086749889983122,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_curve",
+            "score": 0.641056409019934,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_net",
+            "score": 0.7982592697756399,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 0.9815713575677391,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 53,
+      "char": "发",
+      "intended": "fa1",
+      "word": "发点",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "full_stats",
+        "index": 53,
+        "actual_orig_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "nucleus_net",
+            "score": 0.9665124987722166,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 0.7161681349496487,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low.",
+        "Positive controls use traditional發; duplicate positive letters are distinct real card utterances, not independent positive homophone characters."
+      ]
+    },
+    {
+      "edit_id": "next_round",
+      "index": 5,
+      "char": "将",
+      "intended": "jiang1",
+      "word": "将",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "next_round",
+        "index": 5,
+        "actual_orig_mp3_sha256": "ed249500023117432a26cbdb40f17865276b0ab2388d91b61dadc592ab099d1b",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.5639434777184951,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.8759223549351506,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_comb",
+            "score": 0.6286216639331201,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.9004584171609158,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_curve",
+            "score": 0.9879739515555469,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 0.9703572291479153,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_net",
+            "score": 0.9764612827615743,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 0.8941916622195362,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "next_round",
+      "index": 13,
+      "char": "的",
+      "intended": "de5",
+      "word": "的",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "next_round",
+        "index": 13,
+        "actual_orig_mp3_sha256": "ed249500023117432a26cbdb40f17865276b0ab2388d91b61dadc592ab099d1b",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.9706736694586641,
+            "selftest_pass": true
+          },
+          {
+            "component": "spec",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.9352660475882725,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_comb",
+            "score": 0.9730038050754254,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_spec",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.9414022550823877,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_curve",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_net",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 1.0,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low.",
+        "Contextual neutral的/地 proxies; no unambiguous neutral-tone letter claim."
+      ]
+    },
+    {
+      "edit_id": "next_round",
+      "index": 14,
+      "char": "发",
+      "intended": "fa1",
+      "word": "发球",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "next_round",
+        "index": 14,
+        "actual_orig_mp3_sha256": "ed249500023117432a26cbdb40f17865276b0ab2388d91b61dadc592ab099d1b",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.9718985926045048,
+            "selftest_pass": true
+          },
+          {
+            "component": "spec",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.9478823683569967,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_comb",
+            "score": 0.9709909910370184,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_spec",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.9506855846794187,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_curve",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_net",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 1.0,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low.",
+        "Positive controls use traditional發; duplicate positive letters are distinct real card utterances, not independent positive homophone characters."
+      ]
+    },
+    {
+      "edit_id": "next_round",
+      "index": 19,
+      "char": "还",
+      "intended": "hai2",
+      "word": "还",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-net-results.json",
+        "sha256": "a41339bac058281d1b4190df698836e81431ccf2795a30f903b518d0971b0a8c",
+        "edit_id": "next_round",
+        "index": 19,
+        "actual_orig_mp3_sha256": "ed249500023117432a26cbdb40f17865276b0ab2388d91b61dadc592ab099d1b",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.9674696704584216,
+            "selftest_pass": true
+          },
+          {
+            "component": "spec",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.9325807287727218,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_comb",
+            "score": 0.9711291410133831,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_spec",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "tail40_f0",
+            "score": 0.9370115350896209,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_curve",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_net",
+            "score": 1.0,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_tail40_net",
+            "score": 1.0,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Finite current card references alter multiple polyphone letters; raw neighbour/context changes and all failed calibrations retained. Support is capped at low."
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "index": 5,
+      "char": "差",
+      "intended": "cha1",
+      "word": "时差",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/outro-current-existing-control-results.json",
+        "sha256": "598ac00424da4c5a1ca3003a516b29b8bd0c557da26cd0ec4f8da2c8ba02edc9",
+        "edit_id": "outro",
+        "index": 5,
+        "actual_orig_mp3_sha256": "8dc3127182612249a6ed7f68cf6f68a46bbaf42d443e7f3b42c8e76d7ed515ac",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.647,
+        "raw_confidence": "medium"
+      },
+      "limitations": [
+        "Positive-side actual near-identical F0 override; all3 positive LOO probes valid but negative-side LOO fails. This is limited low support, not fully two-sided validation."
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "index": 8,
+      "char": "差",
+      "intended": "cha1",
+      "word": "时差",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/outro-current-existing-control-results.json",
+        "sha256": "598ac00424da4c5a1ca3003a516b29b8bd0c557da26cd0ec4f8da2c8ba02edc9",
+        "edit_id": "outro",
+        "index": 8,
+        "actual_orig_mp3_sha256": "8dc3127182612249a6ed7f68cf6f68a46bbaf42d443e7f3b42c8e76d7ed515ac",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.634,
+        "raw_confidence": "high"
+      },
+      "limitations": []
+    },
+    {
+      "edit_id": "outro",
+      "index": 12,
+      "char": "好",
+      "intended": "hao3",
+      "word": "好",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/outro-current-existing-control-results.json",
+        "sha256": "598ac00424da4c5a1ca3003a516b29b8bd0c557da26cd0ec4f8da2c8ba02edc9",
+        "edit_id": "outro",
+        "index": 12,
+        "actual_orig_mp3_sha256": "8dc3127182612249a6ed7f68cf6f68a46bbaf42d443e7f3b42c8e76d7ed515ac",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.492,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "One literalhao3 positive郝; three genuinehao4 negative controls. Actual remeasurement valid at low confidence; earlier current broad-window/proxy failures preserved."
+      ]
+    }
+  ],
+  "names": [
+    {
+      "edit_id": "coordinate",
+      "name": "梅德韦杰夫",
+      "index": 20,
+      "char": "梅",
+      "intended": "mei2",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/current-targeted-results.json",
+        "sha256": "f1e92042b97b5084682a47955a9bf69a678915aaa8c3f1e783de4267ef1fec97",
+        "edit_id": "coordinate",
+        "index": 20,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.991,
+        "raw_confidence": "high"
+      },
+      "limitations": []
+    },
+    {
+      "edit_id": "coordinate",
+      "name": "梅德韦杰夫",
+      "index": 21,
+      "char": "德",
+      "intended": "de2",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/current-targeted-results.json",
+        "sha256": "f1e92042b97b5084682a47955a9bf69a678915aaa8c3f1e783de4267ef1fec97",
+        "edit_id": "coordinate",
+        "index": 21,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.978,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "de5 references 的/地 are neutral-tone contextual proxies, not single-reading letters; confidence cannot exceed low"
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "name": "梅德韦杰夫",
+      "index": 22,
+      "char": "韦",
+      "intended": "wei2",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/current-targeted-results.json",
+        "sha256": "f1e92042b97b5084682a47955a9bf69a678915aaa8c3f1e783de4267ef1fec97",
+        "edit_id": "coordinate",
+        "index": 22,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.987,
+        "raw_confidence": "high"
+      },
+      "limitations": []
+    },
+    {
+      "edit_id": "coordinate",
+      "name": "梅德韦杰夫",
+      "index": 23,
+      "char": "杰",
+      "intended": "jie2",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/current-targeted-results.json",
+        "sha256": "f1e92042b97b5084682a47955a9bf69a678915aaa8c3f1e783de4267ef1fec97",
+        "edit_id": "coordinate",
+        "index": 23,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.999,
+        "raw_confidence": "high"
+      },
+      "limitations": []
+    },
+    {
+      "edit_id": "coordinate",
+      "name": "梅德韦杰夫",
+      "index": 24,
+      "char": "夫",
+      "intended": "fu1",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/current-targeted-results.json",
+        "sha256": "f1e92042b97b5084682a47955a9bf69a678915aaa8c3f1e783de4267ef1fec97",
+        "edit_id": "coordinate",
+        "index": 24,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.997,
+        "raw_confidence": "low"
+      },
+      "limitations": []
+    },
+    {
+      "edit_id": "coordinate",
+      "name": "西西帕斯",
+      "index": 26,
+      "char": "西",
+      "intended": "xi1",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/current-targeted-results.json",
+        "sha256": "f1e92042b97b5084682a47955a9bf69a678915aaa8c3f1e783de4267ef1fec97",
+        "edit_id": "coordinate",
+        "index": 26,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.575,
+        "raw_confidence": "medium"
+      },
+      "limitations": []
+    },
+    {
+      "edit_id": "coordinate",
+      "name": "西西帕斯",
+      "index": 27,
+      "char": "西",
+      "intended": "xi1",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/repeated-name-results.json",
+        "sha256": "cc2c3cdb999fbe73bb7513304e2c6ecd20b5edcd089c157f710ec8e4b08e273d",
+        "edit_id": "coordinate",
+        "index": 27,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "tail40_f0",
+            "score": 0.3381550614749218,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Actual current occurrence independently compared to current B8 name controls; full reference context and target-index differences are disclosed. No former name verdict is inherited.",
+        "Actual second西 separately compared to current first西 true tone controls in the same name, target-index difference explicitly declared."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "name": "西西帕斯",
+      "index": 28,
+      "char": "帕",
+      "intended": "pa4",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/current-targeted-results.json",
+        "sha256": "f1e92042b97b5084682a47955a9bf69a678915aaa8c3f1e783de4267ef1fec97",
+        "edit_id": "coordinate",
+        "index": 28,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.766,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "帊 is rare reference; actual reference selftest must validate it, otherwise pending"
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "name": "西西帕斯",
+      "index": 29,
+      "char": "斯",
+      "intended": "si1",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/current-targeted-results.json",
+        "sha256": "f1e92042b97b5084682a47955a9bf69a678915aaa8c3f1e783de4267ef1fec97",
+        "edit_id": "coordinate",
+        "index": 29,
+        "actual_orig_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.623,
+        "raw_confidence": "medium"
+      },
+      "limitations": []
+    },
+    {
+      "edit_id": "first_break",
+      "name": "梅德韦杰夫",
+      "index": 7,
+      "char": "梅",
+      "intended": "mei2",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/first-break-wholename-results.json",
+        "sha256": "8acd217f860c9152e0c7eeeb5f5e3a16b0869f96792e3728f1394a7fe101267a",
+        "edit_id": "first_break",
+        "index": 7,
+        "actual_orig_mp3_sha256": "bdd6e7646f28271e0709af463c8491cb68b815e20c0a8ae391be7cdc4bac140c",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "f0",
+            "score": 0.2818587025543062,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Full utterance contexts differ; actual whole name blocks and mapped physical target times disclosed.",
+        "Known positive native coordinate name has its own current audible controls; it is reference only, not substituted as ORIG.",
+        "Finite one-outlier rule retains at least two genuine LOO probes; one retained negative means positive-side calibration only, explicitly capped at low confidence.",
+        "All preceding failed local-template and strict-CV guards remain preserved."
+      ]
+    },
+    {
+      "edit_id": "first_break",
+      "name": "梅德韦杰夫",
+      "index": 8,
+      "char": "德",
+      "intended": "de2",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/first-break-wholename-results.json",
+        "sha256": "8acd217f860c9152e0c7eeeb5f5e3a16b0869f96792e3728f1394a7fe101267a",
+        "edit_id": "first_break",
+        "index": 8,
+        "actual_orig_mp3_sha256": "bdd6e7646f28271e0709af463c8491cb68b815e20c0a8ae391be7cdc4bac140c",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.20501099195940636,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.20994744006145463,
+            "selftest_pass": true
+          },
+          {
+            "component": "spec",
+            "score": 0.20371605782620772,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Full utterance contexts differ; actual whole name blocks and mapped physical target times disclosed.",
+        "Known positive native coordinate name has its own current audible controls; it is reference only, not substituted as ORIG.",
+        "Finite one-outlier rule retains at least two genuine LOO probes; one retained negative means positive-side calibration only, explicitly capped at low confidence.",
+        "All preceding failed local-template and strict-CV guards remain preserved."
+      ]
+    },
+    {
+      "edit_id": "first_break",
+      "name": "梅德韦杰夫",
+      "index": 9,
+      "char": "韦",
+      "intended": "wei2",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/first-break-wholename-results.json",
+        "sha256": "8acd217f860c9152e0c7eeeb5f5e3a16b0869f96792e3728f1394a7fe101267a",
+        "edit_id": "first_break",
+        "index": 9,
+        "actual_orig_mp3_sha256": "bdd6e7646f28271e0709af463c8491cb68b815e20c0a8ae391be7cdc4bac140c",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.34495548262648595,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.7590882142040056,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Full utterance contexts differ; actual whole name blocks and mapped physical target times disclosed.",
+        "Known positive native coordinate name has its own current audible controls; it is reference only, not substituted as ORIG.",
+        "Finite one-outlier rule retains at least two genuine LOO probes; one retained negative means positive-side calibration only, explicitly capped at low confidence.",
+        "All preceding failed local-template and strict-CV guards remain preserved."
+      ]
+    },
+    {
+      "edit_id": "first_break",
+      "name": "梅德韦杰夫",
+      "index": 10,
+      "char": "杰",
+      "intended": "jie2",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/first-break-wholename-results.json",
+        "sha256": "8acd217f860c9152e0c7eeeb5f5e3a16b0869f96792e3728f1394a7fe101267a",
+        "edit_id": "first_break",
+        "index": 10,
+        "actual_orig_mp3_sha256": "bdd6e7646f28271e0709af463c8491cb68b815e20c0a8ae391be7cdc4bac140c",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.4979305289737636,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.8209269041351346,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Full utterance contexts differ; actual whole name blocks and mapped physical target times disclosed.",
+        "Known positive native coordinate name has its own current audible controls; it is reference only, not substituted as ORIG.",
+        "Finite one-outlier rule retains at least two genuine LOO probes; one retained negative means positive-side calibration only, explicitly capped at low confidence.",
+        "All preceding failed local-template and strict-CV guards remain preserved."
+      ]
+    },
+    {
+      "edit_id": "first_break",
+      "name": "梅德韦杰夫",
+      "index": 11,
+      "char": "夫",
+      "intended": "fu1",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/first-break-wholename-results.json",
+        "sha256": "8acd217f860c9152e0c7eeeb5f5e3a16b0869f96792e3728f1394a7fe101267a",
+        "edit_id": "first_break",
+        "index": 11,
+        "actual_orig_mp3_sha256": "bdd6e7646f28271e0709af463c8491cb68b815e20c0a8ae391be7cdc4bac140c",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.5200949265080015,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.826082560260656,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Full utterance contexts differ; actual whole name blocks and mapped physical target times disclosed.",
+        "Known positive native coordinate name has its own current audible controls; it is reference only, not substituted as ORIG.",
+        "Finite one-outlier rule retains at least two genuine LOO probes; one retained negative means positive-side calibration only, explicitly capped at low confidence.",
+        "All preceding failed local-template and strict-CV guards remain preserved."
+      ]
+    },
+    {
+      "edit_id": "next_round",
+      "name": "保罗",
+      "index": 8,
+      "char": "保",
+      "intended": "bao3",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/aligned-existing-results.json",
+        "sha256": "87090c2483a8f651a8fb2b26ee834dab9c9ada1ea3cd1221536513ff2d99fdcd",
+        "edit_id": "next_round",
+        "index": 8,
+        "actual_orig_mp3_sha256": "ed249500023117432a26cbdb40f17865276b0ab2388d91b61dadc592ab099d1b",
+        "raw_result": "correct",
+        "valid_components": [
+          {
+            "component": "comb",
+            "score": 0.6424187822099615,
+            "selftest_pass": true
+          },
+          {
+            "component": "f0",
+            "score": 0.9495560806019355,
+            "selftest_pass": true
+          },
+          {
+            "component": "nucleus_slope",
+            "score": 0.6193470928526638,
+            "selftest_pass": true
+          }
+        ],
+        "raw_score": null,
+        "raw_confidence": "low"
+      },
+      "limitations": [
+        "Actual ASR-assisted1.65–1.85-second single-character window validates two-sided current controls; wider-window failures retained, no manual listening."
+      ]
+    },
+    {
+      "edit_id": "next_round",
+      "name": "保罗",
+      "index": 9,
+      "char": "罗",
+      "intended": "luo2",
+      "status": "current_finite_acoustic_support",
+      "confidence": "low",
+      "decision_evidence": {
+        "path": "/workspace/scratch/b8-pronunciation/current-targeted-results.json",
+        "sha256": "f1e92042b97b5084682a47955a9bf69a678915aaa8c3f1e783de4267ef1fec97",
+        "edit_id": "next_round",
+        "index": 9,
+        "actual_orig_mp3_sha256": "ed249500023117432a26cbdb40f17865276b0ab2388d91b61dadc592ab099d1b",
+        "raw_result": "correct",
+        "valid_components": [],
+        "raw_score": 0.267,
+        "raw_confidence": "low"
+      },
+      "limitations": []
+    }
+  ],
+  "numbers": [
+    {
+      "edit_id": "coordinate",
+      "start_index": 4,
+      "text": "十",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "coordinate",
+      "start_index": 6,
+      "text": "十四",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "coordinate",
+      "start_index": 17,
+      "text": "四",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "coordinate",
+      "start_index": 37,
+      "text": "八",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "first_break",
+      "start_index": 2,
+      "text": "一比一",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "bdd6e7646f28271e0709af463c8491cb68b815e20c0a8ae391be7cdc4bac140c",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "first_break",
+      "start_index": 14,
+      "text": "四",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "bdd6e7646f28271e0709af463c8491cb68b815e20c0a8ae391be7cdc4bac140c",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "first_break",
+      "start_index": 32,
+      "text": "六比四",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "bdd6e7646f28271e0709af463c8491cb68b815e20c0a8ae391be7cdc4bac140c",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "second_pressure",
+      "start_index": 1,
+      "text": "二",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "9a291fe7e642151d47a73886476f57f8a6d3c6a1cbbb63c4eb0dbf2fac4012c7",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "second_pressure",
+      "start_index": 3,
+      "text": "二比三",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "9a291fe7e642151d47a73886476f57f8a6d3c6a1cbbb63c4eb0dbf2fac4012c7",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "second_pressure",
+      "start_index": 17,
+      "text": "零比三十",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "9a291fe7e642151d47a73886476f57f8a6d3c6a1cbbb63c4eb0dbf2fac4012c7",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "second_pressure",
+      "start_index": 26,
+      "text": "四",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "9a291fe7e642151d47a73886476f57f8a6d3c6a1cbbb63c4eb0dbf2fac4012c7",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "second_pressure",
+      "start_index": 31,
+      "text": "五比五",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "9a291fe7e642151d47a73886476f57f8a6d3c6a1cbbb63c4eb0dbf2fac4012c7",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "match_payoff",
+      "start_index": 0,
+      "text": "五比五",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "e8d253f8a4b968f63cae10f7742a0a691b209c7e70a0495a80c29f71d0d170fe",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "match_payoff",
+      "start_index": 9,
+      "text": "四",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "e8d253f8a4b968f63cae10f7742a0a691b209c7e70a0495a80c29f71d0d170fe",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "match_payoff",
+      "start_index": 23,
+      "text": "一",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "e8d253f8a4b968f63cae10f7742a0a691b209c7e70a0495a80c29f71d0d170fe",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "match_payoff",
+      "start_index": 31,
+      "text": "六比四",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "e8d253f8a4b968f63cae10f7742a0a691b209c7e70a0495a80c29f71d0d170fe",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "match_payoff",
+      "start_index": 35,
+      "text": "七比五",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "e8d253f8a4b968f63cae10f7742a0a691b209c7e70a0495a80c29f71d0d170fe",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "match_payoff",
+      "start_index": 43,
+      "text": "八",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "e8d253f8a4b968f63cae10f7742a0a691b209c7e70a0495a80c29f71d0d170fe",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 6,
+      "text": "二十五",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 10,
+      "text": "二十八",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 20,
+      "text": "十",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 22,
+      "text": "十八",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 25,
+      "text": "一",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 31,
+      "text": "百",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 34,
+      "text": "八十五",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 38,
+      "text": "百",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 41,
+      "text": "六十八",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    },
+    {
+      "edit_id": "next_round",
+      "start_index": 1,
+      "text": "一",
+      "status": "current_actual_full_utterance_numeric_lexical_support",
+      "evidence_path": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+      "actual_mp3_sha256": "ed249500023117432a26cbdb40f17865276b0ab2388d91b61dadc592ab099d1b",
+      "limitation": "ASR supports spoken numeric values/sequence, not individual digit tones. Chinese五比五→無比五 is an ASR/sandhi ambiguity, not confirmed misread."
+    }
+  ],
+  "supplementary_named_phrases": [
+    {
+      "edit_id": "coordinate",
+      "name": "北京",
+      "start_index": 0,
+      "status": "whole_phrase_native_lexical_asr_support",
+      "per_character_tone_approval_claimed": false,
+      "phoneme_targets": [
+        {
+          "index": 0,
+          "char": "北",
+          "intended": "bei3",
+          "status": "actual_pending"
+        },
+        {
+          "index": 1,
+          "char": "京",
+          "intended": "jing1",
+          "status": "actual_pending"
+        }
+      ],
+      "limitation": "Extra place/brand phrase inventory is lexical location evidence, not new isolated tonal calibration for every monophonic character."
+    },
+    {
+      "edit_id": "coordinate",
+      "name": "上海",
+      "start_index": 11,
+      "status": "whole_phrase_native_lexical_asr_support",
+      "per_character_tone_approval_claimed": false,
+      "phoneme_targets": [
+        {
+          "index": 11,
+          "char": "上",
+          "intended": "shang4",
+          "status": "actual_pending"
+        },
+        {
+          "index": 12,
+          "char": "海",
+          "intended": "hai3",
+          "status": "actual_pending"
+        }
+      ],
+      "limitation": "Extra place/brand phrase inventory is lexical location evidence, not new isolated tonal calibration for every monophonic character."
+    },
+    {
+      "edit_id": "match_payoff",
+      "name": "上海",
+      "start_index": 41,
+      "status": "whole_phrase_native_lexical_asr_support",
+      "per_character_tone_approval_claimed": false,
+      "phoneme_targets": [
+        {
+          "index": 41,
+          "char": "上",
+          "intended": "shang4",
+          "status": "actual_pending"
+        },
+        {
+          "index": 42,
+          "char": "海",
+          "intended": "hai3",
+          "status": "actual_pending"
+        }
+      ],
+      "limitation": "Extra place/brand phrase inventory is lexical location evidence, not new isolated tonal calibration for every monophonic character."
+    },
+    {
+      "edit_id": "outro",
+      "name": "网球时差",
+      "start_index": 2,
+      "status": "whole_phrase_native_lexical_asr_support",
+      "per_character_tone_approval_claimed": false,
+      "phoneme_targets": [
+        {
+          "index": 2,
+          "char": "网",
+          "intended": "wang3",
+          "status": "actual_pending"
+        },
+        {
+          "index": 3,
+          "char": "球",
+          "intended": "qiu2",
+          "status": "actual_pending"
+        },
+        {
+          "index": 4,
+          "char": "时",
+          "intended": "shi2",
+          "status": "actual_pending"
+        },
+        {
+          "index": 5,
+          "char": "差",
+          "intended": "cha1",
+          "status": "actual_pending"
+        }
+      ],
+      "limitation": "Extra place/brand phrase inventory is lexical location evidence, not new isolated tonal calibration for every monophonic character."
+    }
+  ],
+  "utterance_lexical_evidence": "/workspace/scratch/b8-pronunciation/native-lexical-asr.json",
+  "all_full_utterances_lexically_transcribed_without_prompt": true,
+  "fixed_outro_exact_reuse": {
+    "all_exact_conditions_match": false,
+    "conditions": {
+      "tts_text": true,
+      "text_sha256": true,
+      "audio_sha256": false,
+      "marks_sha256": false,
+      "complete_request_profile": true,
+      "actual_current_audio_matches_bound_hash": true,
+      "actual_current_marks_matches_bound_hash": true,
+      "old_actual_audio_matches_bound_hash": true,
+      "old_actual_marks_matches_bound_hash": true,
+      "prior_review_reports_completed_audio": true
+    },
+    "prior_final_review": "/workspace/scratch/ostapenko-afternoon-pronunciation/final-review.json",
+    "prior_final_review_sha256": "75dbf34b881436e97468b2882200c8605c21f0b32148c50a57b1b81c35a5d764",
+    "prior_outro_reuse_conditions": "/workspace/scratch/ostapenko-afternoon-pronunciation/outro-reuse-conditions.json",
+    "prior_outro_reuse_conditions_sha256": "1ccad0cf620e66c56f356d05264cb05ef2e2785b09ceadb37253cde3f3160fc4",
+    "prior_review_status": "complete",
+    "prior_review_limitations": [
+      "Seven unchanged requests full request/text/MP3/marks match prior097 and inherit all original restrictions, including immutable fixed-outro earlier low-confidence limits.",
+      "Coordinate references from prior097 are reused SHA-identical acoustic templates with explicit different fulltext; every new actual target separately measured, not assumed same utterance.",
+      "Old097 coordinate塔 remains correct-low with its failed F0-only supplement preserved unchanged. Current afternoon is independently measured and cannot overwrite old confidence.",
+      "New current斯 needed exactly4 single-target controls; template-mapping failure and default positive-side-only override preserved, independent true-nucleus LOO closes both sides.",
+      "No auditory listening claim. No ASR Chinese text or dictionary-only tone judgment."
+    ],
+    "current_bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+    "full_text": "关注网球时差，时差归我，好球归你。",
+    "current_outro": {
+      "segment_index": "outro",
+      "edit_id": "outro",
+      "output_name": "voice_outro.mp3",
+      "request_id": "75c73f1202071699a9595e6df6c2f0ef0dde6a4732e4b8ebf904ed99e156b312",
+      "request": {
+        "backend": "edge",
+        "cache_key": "7559865dbf4339cccd83a16a1f56beb8",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "关注网球时差，时差归我，好球归你。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "关注网球时差，时差归我，好球归你。",
+      "display_text": "关注网球时差，时差归我，好球归你。",
+      "text_sha256": "2bfb6c3faf8ae5b1711f6ea769579ce03d322ce6440b2947a0537cecf4fe660e",
+      "audio_sha256": "8dc3127182612249a6ed7f68cf6f68a46bbaf42d443e7f3b42c8e76d7ed515ac",
+      "marks_sha256": "bf33e7d2af5679adb575e53259c0e0aa92a351b65570fe9e3f33055321608898",
+      "duration_seconds": 4.152,
+      "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/outro-8dc3127182612249.mp3",
+      "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/outro-8dc3127182612249.json",
+      "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "差",
+          "word": "时差",
+          "intended": "cha1",
+          "live": [
+            "cha4",
+            "cha1",
+            "chai1",
+            "ci1"
+          ],
+          "defaults": [
+            "cha4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 8,
+          "char": "差",
+          "word": "时差",
+          "intended": "cha1",
+          "live": [
+            "cha4",
+            "cha1",
+            "chai1",
+            "ci1"
+          ],
+          "defaults": [
+            "cha4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 12,
+          "char": "好",
+          "word": "好",
+          "intended": "hao3",
+          "live": [
+            "hao3",
+            "hao4"
+          ],
+          "defaults": [
+            "hao3"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "网球时差",
+          "start_index": 2,
+          "targets": [
+            {
+              "index": 2,
+              "char": "网",
+              "intended": "wang3",
+              "status": "actual_pending"
+            },
+            {
+              "index": 3,
+              "char": "球",
+              "intended": "qiu2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 4,
+              "char": "时",
+              "intended": "shi2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 5,
+              "char": "差",
+              "intended": "cha1",
+              "status": "actual_pending"
+            }
+          ]
+        }
+      ],
+      "numbers": [],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "关注",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.4009569,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "网球",
+          "start_index": 2,
+          "start_seconds": 0.41275,
+          "end_seconds": 0.731166,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "时差",
+          "start_index": 4,
+          "start_seconds": 0.742916,
+          "end_seconds": 1.155666,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "时差",
+          "start_index": 7,
+          "start_seconds": 1.474041,
+          "end_seconds": 1.851416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "归",
+          "start_index": 9,
+          "start_seconds": 1.863208,
+          "end_seconds": 2.028291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "我",
+          "start_index": 10,
+          "start_seconds": 2.028291,
+          "end_seconds": 2.275916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "好",
+          "start_index": 12,
+          "start_seconds": 2.582541,
+          "end_seconds": 2.759416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "球",
+          "start_index": 13,
+          "start_seconds": 2.759416,
+          "end_seconds": 2.948082,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "归",
+          "start_index": 14,
+          "start_seconds": 2.959916,
+          "end_seconds": 3.183957,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "你",
+          "start_index": 15,
+          "start_seconds": 3.183958,
+          "end_seconds": 3.337249,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    },
+    "old_outro": {
+      "segment_index": "outro",
+      "edit_id": "outro",
+      "output_name": "voice_outro.mp3",
+      "request_id": "75c73f1202071699a9595e6df6c2f0ef0dde6a4732e4b8ebf904ed99e156b312",
+      "request": {
+        "backend": "edge",
+        "cache_key": "7559865dbf4339cccd83a16a1f56beb8",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "关注网球时差，时差归我，好球归你。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "关注网球时差，时差归我，好球归你。",
+      "display_text": "关注网球时差，时差归我，好球归你。",
+      "text_sha256": "2bfb6c3faf8ae5b1711f6ea769579ce03d322ce6440b2947a0537cecf4fe660e",
+      "audio_sha256": "9043e03e1513e7eb3187292475847a74d08db2e3c67f71f023e8082660d88596",
+      "marks_sha256": "65a15ef4d71972d782173404762c6c3da745d0b1aacc713a6ed389fbcc5d10f2",
+      "duration_seconds": 4.2,
+      "native_audio": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/outro-9043e03e1513e7eb.mp3",
+      "native_marks": "/workspace/scratch/ostapenko-afternoon-pronunciation/native-audio/outro-9043e03e1513e7eb.json",
+      "bundle_sha256": "c7592cfccdfbb321264c8809a685c3f73ea8548ca4864258c5bb66d628d37e7a",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "差",
+          "word": "时差",
+          "intended": "cha1",
+          "live": [
+            "cha4",
+            "cha1",
+            "chai1",
+            "ci1"
+          ],
+          "defaults": [
+            "cha4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 8,
+          "char": "差",
+          "word": "时差",
+          "intended": "cha1",
+          "live": [
+            "cha4",
+            "cha1",
+            "chai1",
+            "ci1"
+          ],
+          "defaults": [
+            "cha4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 12,
+          "char": "好",
+          "word": "好",
+          "intended": "hao3",
+          "live": [
+            "hao3",
+            "hao4"
+          ],
+          "defaults": [
+            "hao3"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": []
+    },
+    "manual_listening_claimed": false,
+    "status": "current_outro_pending"
+  },
+  "fixed_outro_current_independent_review": "/workspace/scratch/b8-pronunciation/outro-current-existing-control-results.json",
+  "component_admissibility_assessments": [
+    {
+      "edit_id": "first_break",
+      "index": 30,
+      "char": "迫",
+      "raw_opposite_evidence": "aligned-net-results.json",
+      "reason": "Net F0 compares a40ms current last island to80ms positive islands and110–120ms negative islands. Unnormalised pitch change confounds nucleus duration; it cannot overturn the independently valid CV/combined/F0 current po-versus-pai vowel controls. Genuine negative牌/俳 are pai2 proxies, never relabelled pai3.",
+      "actual_net_st": 1.1085449795255151,
+      "positive_net_st": [
+        3.6276674043218016,
+        3.6275747243168084
+      ],
+      "status": "preserved_non_admissible_raw_net_contrast_not_actual_misread"
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 1,
+      "char": "场",
+      "raw_opposite_evidence": "aligned-net-results.json",
+      "reason": "Raw total F0 fall compares current80ms with120/240ms control islands; the240ms merged full-token candidate includes earlier音. Total fall is not a duration-comparable isolated-tone counterproof. Actual timing-preserving slope and F0 components independently classify the current fall against genuine chang3/chang2 controls; confidence stays low.",
+      "actual_nucleus_seconds": [
+        0.37,
+        0.45
+      ],
+      "positive_nucleus_seconds": [
+        [
+          0.37,
+          0.49
+        ],
+        [
+          0.29,
+          0.53
+        ]
+      ],
+      "status": "preserved_duration_and_neighbour_confounded_net_not_actual_misread"
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 29,
+      "char": "率",
+      "raw_opposite_evidence": "aligned-net-results.json",
+      "reason": "Both contrast families lv4 and shuai4 have fourth tone. A tail-only F0 net classifier is not an admissible vowel-family error diagnosis; nuclei also differ substantially. Current independently calibrated real CV and combined classifiers establish lv rather than shuai. No raw opposing score is deleted.",
+      "status": "preserved_non_segmental_tail_f0_contrast_not_actual_shuai_proof"
+    }
+  ],
+  "all_failed_raw_evidence_preserved": true,
+  "bindings": [
+    {
+      "segment_index": 1,
+      "edit_id": "coordinate",
+      "output_name": "voice_01.mp3",
+      "request_id": "b4eaa79664caba0c6dfad405d2842b7e20fdfdf0371f6020a79f4d507cc623dc",
+      "request": {
+        "backend": "edge",
+        "cache_key": "44d0338589b62705766e658e73e6ad3d",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "北京时间十月十四日晚，上海大师赛第四轮。梅德韦杰夫与西西帕斯交锋，胜者晋级八强。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "北京时间十月十四日晚，上海大师赛第四轮。梅德韦杰夫与西西帕斯交锋，胜者晋级八强。",
+      "display_text": "北京时间十月十四日晚，上海大师赛第四轮。梅德韦杰夫与西西帕斯交锋，胜者晋级八强。",
+      "text_sha256": "1f4c8db40192f57d0b87e1dd347df04fdf6c8f521480d5f4a018585aa40eb0a6",
+      "audio_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+      "marks_sha256": "2d92ee96ee460c7d679045eeb4e0fe4b125bb5bef17aa8705a62449b254aa7b3",
+      "duration_seconds": 8.424,
+      "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/coordinate-8d1c027fe892dc6e.mp3",
+      "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/coordinate-8d1c027fe892dc6e.json",
+      "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "间",
+          "word": "北京时间",
+          "intended": "jian1",
+          "live": [
+            "jian1",
+            "jian4"
+          ],
+          "defaults": [
+            "jian1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 13,
+          "char": "大",
+          "word": "大师",
+          "intended": "da4",
+          "live": [
+            "da4",
+            "dai4"
+          ],
+          "defaults": [
+            "da4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 25,
+          "char": "与",
+          "word": "与",
+          "intended": "yu3",
+          "live": [
+            "yu3",
+            "yu4"
+          ],
+          "defaults": [
+            "yu3"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 38,
+          "char": "强",
+          "word": "强",
+          "intended": "qiang2",
+          "live": [
+            "qiang2",
+            "jiang4",
+            "qiang3"
+          ],
+          "defaults": [
+            "qiang2"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "梅德韦杰夫",
+          "start_index": 20,
+          "targets": [
+            {
+              "index": 20,
+              "char": "梅",
+              "intended": "mei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 21,
+              "char": "德",
+              "intended": "de2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 22,
+              "char": "韦",
+              "intended": "wei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 23,
+              "char": "杰",
+              "intended": "jie2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 24,
+              "char": "夫",
+              "intended": "fu1",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "西西帕斯",
+          "start_index": 26,
+          "targets": [
+            {
+              "index": 26,
+              "char": "西",
+              "intended": "xi1",
+              "status": "actual_pending"
+            },
+            {
+              "index": 27,
+              "char": "西",
+              "intended": "xi1",
+              "status": "actual_pending"
+            },
+            {
+              "index": 28,
+              "char": "帕",
+              "intended": "pa4",
+              "status": "actual_pending"
+            },
+            {
+              "index": 29,
+              "char": "斯",
+              "intended": "si1",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "北京",
+          "start_index": 0,
+          "targets": [
+            {
+              "index": 0,
+              "char": "北",
+              "intended": "bei3",
+              "status": "actual_pending"
+            },
+            {
+              "index": 1,
+              "char": "京",
+              "intended": "jing1",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "上海",
+          "start_index": 11,
+          "targets": [
+            {
+              "index": 11,
+              "char": "上",
+              "intended": "shang4",
+              "status": "actual_pending"
+            },
+            {
+              "index": 12,
+              "char": "海",
+              "intended": "hai3",
+              "status": "actual_pending"
+            }
+          ]
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 4,
+          "text": "十",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 6,
+          "text": "十四",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 17,
+          "text": "四",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 37,
+          "text": "八",
+          "status": "actual_pending"
+        }
+      ],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "北京时间",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.6485819,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "十月十四日",
+          "start_index": 4,
+          "start_seconds": 0.660375,
+          "end_seconds": 1.356125,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "晚",
+          "start_index": 9,
+          "start_seconds": 1.356125,
+          "end_seconds": 1.521208,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "上海",
+          "start_index": 11,
+          "start_seconds": 1.757083,
+          "end_seconds": 2.134458,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "大师",
+          "start_index": 13,
+          "start_seconds": 2.146208,
+          "end_seconds": 2.499999,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "赛",
+          "start_index": 15,
+          "start_seconds": 2.5,
+          "end_seconds": 2.688666,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "第四轮",
+          "start_index": 16,
+          "start_seconds": 2.688666,
+          "end_seconds": 3.242916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "梅德韦杰夫",
+          "start_index": 20,
+          "start_seconds": 3.785375,
+          "end_seconds": 4.693375,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "与",
+          "start_index": 25,
+          "start_seconds": 4.775958,
+          "end_seconds": 4.941041,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "西西帕斯",
+          "start_index": 26,
+          "start_seconds": 4.952833,
+          "end_seconds": 5.660374,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "交锋",
+          "start_index": 30,
+          "start_seconds": 5.672166,
+          "end_seconds": 6.073124,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "胜",
+          "start_index": 33,
+          "start_seconds": 6.308958,
+          "end_seconds": 6.556583,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "者",
+          "start_index": 34,
+          "start_seconds": 6.556583,
+          "end_seconds": 6.709874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "晋级",
+          "start_index": 35,
+          "start_seconds": 6.7335,
+          "end_seconds": 7.134416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "八",
+          "start_index": 37,
+          "start_seconds": 7.134416,
+          "end_seconds": 7.334874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "强",
+          "start_index": 38,
+          "start_seconds": 7.334916,
+          "end_seconds": 7.617916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    },
+    {
+      "segment_index": 3,
+      "edit_id": "first_break",
+      "output_name": "voice_03.mp3",
+      "request_id": "c7ef1cc20e098e6ff0bea9cc593f3525c0ce365fc1c977191f7e45ac0024504a",
+      "request": {
+        "backend": "edge",
+        "cache_key": "81949946a4c4fe144ac69dc7666bc41a",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "首盘一比一时，梅德韦杰夫连赢四球破发。盘末，底线对攻后向前压迫，六比四拿下首盘。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "首盘一比一时，梅德韦杰夫连赢四球破发。盘末，底线对攻后向前压迫，六比四拿下首盘。",
+      "display_text": "首盘一比一时，梅德韦杰夫连赢四球破发。盘末，底线对攻后向前压迫，六比四拿下首盘。",
+      "text_sha256": "944dbfff59ee0aa098cbb22dbad626982731e9d6b1e678d143e4afcc257a44ca",
+      "audio_sha256": "bdd6e7646f28271e0709af463c8491cb68b815e20c0a8ae391be7cdc4bac140c",
+      "marks_sha256": "155312b2e7e579e2a9a39f2a83dae399f9685dc7e1418c50d6c406f7b3cb57f4",
+      "duration_seconds": 8.928,
+      "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/first_break-bdd6e7646f28271e.mp3",
+      "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/first_break-bdd6e7646f28271e.json",
+      "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 17,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "live": [
+            "fa1",
+            "fa4"
+          ],
+          "defaults": [
+            "fa1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 30,
+          "char": "迫",
+          "word": "压迫",
+          "intended": "po4",
+          "live": [
+            "po4",
+            "pai3"
+          ],
+          "defaults": [
+            "po4"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "梅德韦杰夫",
+          "start_index": 7,
+          "targets": [
+            {
+              "index": 7,
+              "char": "梅",
+              "intended": "mei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 8,
+              "char": "德",
+              "intended": "de2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 9,
+              "char": "韦",
+              "intended": "wei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 10,
+              "char": "杰",
+              "intended": "jie2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 11,
+              "char": "夫",
+              "intended": "fu1",
+              "status": "actual_pending"
+            }
+          ]
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 2,
+          "text": "一比一",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 14,
+          "text": "四",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 32,
+          "text": "六比四",
+          "status": "actual_pending"
+        }
+      ],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "首盘",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.4717069,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "一",
+          "start_index": 2,
+          "start_seconds": 0.495291,
+          "end_seconds": 0.660374,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "比",
+          "start_index": 3,
+          "start_seconds": 0.660375,
+          "end_seconds": 0.778291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "一时",
+          "start_index": 4,
+          "start_seconds": 0.778291,
+          "end_seconds": 1.143874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "梅德韦杰夫",
+          "start_index": 7,
+          "start_seconds": 1.3915,
+          "end_seconds": 2.169791,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "连",
+          "start_index": 12,
+          "start_seconds": 2.252375,
+          "end_seconds": 2.382083,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "赢",
+          "start_index": 13,
+          "start_seconds": 2.382083,
+          "end_seconds": 2.582541,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "四",
+          "start_index": 14,
+          "start_seconds": 2.594333,
+          "end_seconds": 2.759416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "球",
+          "start_index": 15,
+          "start_seconds": 2.759416,
+          "end_seconds": 2.948082,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "破发",
+          "start_index": 16,
+          "start_seconds": 2.959916,
+          "end_seconds": 3.384457,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "盘末",
+          "start_index": 19,
+          "start_seconds": 3.915083,
+          "end_seconds": 4.292458,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "底线",
+          "start_index": 22,
+          "start_seconds": 4.658,
+          "end_seconds": 5.011791,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "对攻",
+          "start_index": 24,
+          "start_seconds": 5.023583,
+          "end_seconds": 5.353791,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "后",
+          "start_index": 26,
+          "start_seconds": 5.353791,
+          "end_seconds": 5.542457,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "向前",
+          "start_index": 27,
+          "start_seconds": 5.660375,
+          "end_seconds": 6.049541,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "压迫",
+          "start_index": 29,
+          "start_seconds": 6.061333,
+          "end_seconds": 6.485874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "六比四",
+          "start_index": 32,
+          "start_seconds": 6.745291,
+          "end_seconds": 7.275957,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "拿下",
+          "start_index": 35,
+          "start_seconds": 7.299541,
+          "end_seconds": 7.617957,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "首盘",
+          "start_index": 37,
+          "start_seconds": 7.629708,
+          "end_seconds": 8.101416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "second_pressure",
+      "output_name": "voice_06.mp3",
+      "request_id": "3b35b84c38edb8f34ad5fdd9b3ec9deaf916eeffd7ca93eb123917b97edc494a",
+      "request": {
+        "backend": "edge",
+        "cache_key": "b7e90aff3c6642b686864dac2d1ad26a",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "第二盘二比三，他在网前被穿越，来到零比三十。随后连赢四球保发。五比五，机会再现。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "第二盘二比三，他在网前被穿越，来到零比三十。随后连赢四球保发。五比五，机会再现。",
+      "display_text": "第二盘二比三，他在网前被穿越，来到零比三十。随后连赢四球保发。五比五，机会再现。",
+      "text_sha256": "e7e3c9d4ea78c5cadecffbe71bdb10d517ece173b62c3195967f8aa05c8c15b0",
+      "audio_sha256": "9a291fe7e642151d47a73886476f57f8a6d3c6a1cbbb63c4eb0dbf2fac4012c7",
+      "marks_sha256": "eab59582ac644f272ac71c650a47d087aceedc664d374ad421752c05de97e387",
+      "duration_seconds": 8.856,
+      "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/second_pressure-9a291fe7e642151d.mp3",
+      "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/second_pressure-9a291fe7e642151d.json",
+      "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 11,
+          "char": "被",
+          "word": "被",
+          "intended": "bei4",
+          "live": [
+            "bei4",
+            "pi1"
+          ],
+          "defaults": [
+            "bei4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 29,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "live": [
+            "fa1",
+            "fa4"
+          ],
+          "defaults": [
+            "fa1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 36,
+          "char": "会",
+          "word": "机会",
+          "intended": "hui4",
+          "live": [
+            "hui4",
+            "kuai4"
+          ],
+          "defaults": [
+            "hui4"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [],
+      "numbers": [
+        {
+          "start_index": 1,
+          "text": "二",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 3,
+          "text": "二比三",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 17,
+          "text": "零比三十",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 26,
+          "text": "四",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 31,
+          "text": "五比五",
+          "status": "actual_pending"
+        }
+      ],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "第二盘",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.4009569,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "二比三",
+          "start_index": 3,
+          "start_seconds": 0.424541,
+          "end_seconds": 0.884457,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "他",
+          "start_index": 7,
+          "start_seconds": 1.167458,
+          "end_seconds": 1.320749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "在",
+          "start_index": 8,
+          "start_seconds": 1.32075,
+          "end_seconds": 1.426875,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "网",
+          "start_index": 9,
+          "start_seconds": 1.438666,
+          "end_seconds": 1.603749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "前",
+          "start_index": 10,
+          "start_seconds": 1.603791,
+          "end_seconds": 1.874999,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "被",
+          "start_index": 11,
+          "start_seconds": 1.898583,
+          "end_seconds": 2.028291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "穿越",
+          "start_index": 12,
+          "start_seconds": 2.040083,
+          "end_seconds": 2.393874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "来到",
+          "start_index": 15,
+          "start_seconds": 2.688666,
+          "end_seconds": 2.959874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "零比三十",
+          "start_index": 17,
+          "start_seconds": 2.9835,
+          "end_seconds": 3.738208,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "随后",
+          "start_index": 22,
+          "start_seconds": 4.280666,
+          "end_seconds": 4.693416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "连",
+          "start_index": 24,
+          "start_seconds": 4.78775,
+          "end_seconds": 4.976416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "赢",
+          "start_index": 25,
+          "start_seconds": 4.976416,
+          "end_seconds": 5.165082,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "四",
+          "start_index": 26,
+          "start_seconds": 5.188666,
+          "end_seconds": 5.341957,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "球",
+          "start_index": 27,
+          "start_seconds": 5.342,
+          "end_seconds": 5.507083,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "保发",
+          "start_index": 28,
+          "start_seconds": 5.518875,
+          "end_seconds": 5.89625,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "五比五",
+          "start_index": 31,
+          "start_seconds": 6.438666,
+          "end_seconds": 7.016499,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "机会",
+          "start_index": 35,
+          "start_seconds": 7.205208,
+          "end_seconds": 7.606166,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "再现",
+          "start_index": 37,
+          "start_seconds": 7.617916,
+          "end_seconds": 8.030666,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    },
+    {
+      "segment_index": 8,
+      "edit_id": "match_payoff",
+      "output_name": "voice_08.mp3",
+      "request_id": "d76bdc43320bcc890c53435b2853a9f090f9c8d9db180b162b8f08acf8b9f661",
+      "request": {
+        "backend": "edge",
+        "cache_key": "d2b54381e5fa9d283aa90ebe8683f86a",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "五比五后，他又连赢四球破发。发球胜赛局，拿到第一个赛点就兑现。六比四、七比五，晋级上海八强。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "五比五后，他又连赢四球破发。发球胜赛局，拿到第一个赛点就兑现。六比四、七比五，晋级上海八强。",
+      "display_text": "五比五后，他又连赢四球破发。发球胜赛局，拿到第一个赛点就兑现。六比四、七比五，晋级上海八强。",
+      "text_sha256": "caebaf6f96eb1ef437b00d4a8b4df71f468147fb275637d5047a601c854d32e1",
+      "audio_sha256": "e8d253f8a4b968f63cae10f7742a0a691b209c7e70a0495a80c29f71d0d170fe",
+      "marks_sha256": "0132e500c18cb9af0c9776688805e04a31390d66f2f0a526052064f2f209e752",
+      "duration_seconds": 10.2,
+      "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/match_payoff-e8d253f8a4b968f6.mp3",
+      "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/match_payoff-e8d253f8a4b968f6.json",
+      "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "live": [
+            "fa1",
+            "fa4"
+          ],
+          "defaults": [
+            "fa1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 14,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "live": [
+            "fa1",
+            "fa4"
+          ],
+          "defaults": [
+            "fa1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 44,
+          "char": "强",
+          "word": "强",
+          "intended": "qiang2",
+          "live": [
+            "qiang2",
+            "jiang4",
+            "qiang3"
+          ],
+          "defaults": [
+            "qiang2"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "上海",
+          "start_index": 41,
+          "targets": [
+            {
+              "index": 41,
+              "char": "上",
+              "intended": "shang4",
+              "status": "actual_pending"
+            },
+            {
+              "index": 42,
+              "char": "海",
+              "intended": "hai3",
+              "status": "actual_pending"
+            }
+          ]
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 0,
+          "text": "五比五",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 9,
+          "text": "四",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 23,
+          "text": "一",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 31,
+          "text": "六比四",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 35,
+          "text": "七比五",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 43,
+          "text": "八",
+          "status": "actual_pending"
+        }
+      ],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "五比五",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.5070819,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "后",
+          "start_index": 3,
+          "start_seconds": 0.507083,
+          "end_seconds": 0.731124,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "他",
+          "start_index": 5,
+          "start_seconds": 1.025958,
+          "end_seconds": 1.167458,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "又",
+          "start_index": 6,
+          "start_seconds": 1.167458,
+          "end_seconds": 1.344333,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "连",
+          "start_index": 7,
+          "start_seconds": 1.344333,
+          "end_seconds": 1.521208,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "赢",
+          "start_index": 8,
+          "start_seconds": 1.521208,
+          "end_seconds": 1.733458,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "四",
+          "start_index": 9,
+          "start_seconds": 1.757083,
+          "end_seconds": 1.933958,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "球",
+          "start_index": 10,
+          "start_seconds": 1.933958,
+          "end_seconds": 2.134416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "破发",
+          "start_index": 11,
+          "start_seconds": 2.146208,
+          "end_seconds": 2.582541,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "发球",
+          "start_index": 14,
+          "start_seconds": 3.113208,
+          "end_seconds": 3.561333,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "胜",
+          "start_index": 16,
+          "start_seconds": 3.584916,
+          "end_seconds": 3.773582,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "赛",
+          "start_index": 17,
+          "start_seconds": 3.773583,
+          "end_seconds": 3.962249,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "局",
+          "start_index": 18,
+          "start_seconds": 3.96225,
+          "end_seconds": 4.150916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "拿",
+          "start_index": 20,
+          "start_seconds": 4.457541,
+          "end_seconds": 4.610832,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "到",
+          "start_index": 21,
+          "start_seconds": 4.610833,
+          "end_seconds": 4.775916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "第一个",
+          "start_index": 22,
+          "start_seconds": 4.78775,
+          "end_seconds": 5.0589579,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "赛点",
+          "start_index": 25,
+          "start_seconds": 5.07075,
+          "end_seconds": 5.448125,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "就",
+          "start_index": 27,
+          "start_seconds": 5.471708,
+          "end_seconds": 5.613208,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "兑现",
+          "start_index": 28,
+          "start_seconds": 5.613208,
+          "end_seconds": 5.978791,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "六比四",
+          "start_index": 31,
+          "start_seconds": 6.509416,
+          "end_seconds": 7.075457,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "七比五",
+          "start_index": 35,
+          "start_seconds": 7.299541,
+          "end_seconds": 7.877374,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "晋级",
+          "start_index": 39,
+          "start_seconds": 8.030666,
+          "end_seconds": 8.443416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "上海",
+          "start_index": 41,
+          "start_seconds": 8.455208,
+          "end_seconds": 8.915083,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "八",
+          "start_index": 43,
+          "start_seconds": 8.915083,
+          "end_seconds": 9.103749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "强",
+          "start_index": 44,
+          "start_seconds": 9.103791,
+          "end_seconds": 9.374999,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    },
+    {
+      "segment_index": 10,
+      "edit_id": "full_stats",
+      "output_name": "voice_10.mp3",
+      "request_id": "daf609a05807e398ea2358a49887c21ab9026c101f9a84b8ab89e6d6a7e0e790",
+      "request": {
+        "backend": "edge",
+        "cache_key": "0c216b38c4d834465eda72fe2742227b",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "全场制胜球，二十五对二十八。非受迫失误，十对十八。一发赢球率，百分之八十五对百分之六十八。他全场没有面对破发点。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "全场制胜球，二十五对二十八。非受迫失误，十对十八。一发赢球率，百分之八十五对百分之六十八。他全场没有面对破发点。",
+      "display_text": "全场制胜球，二十五对二十八。非受迫失误，十对十八。一发赢球率，百分之八十五对百分之六十八。他全场没有面对破发点。",
+      "text_sha256": "931bf8b4d054c1d790a709942c14c193c6f6e2a3de8bc68837d56be1e73b97a5",
+      "audio_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+      "marks_sha256": "4001e57673fcfa2b50636bb453e75aa68fe1ea2b5fc0a3946f5161407e024b7c",
+      "duration_seconds": 11.76,
+      "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/full_stats-914aca131648f6f0.mp3",
+      "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/full_stats-914aca131648f6f0.json",
+      "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 1,
+          "char": "场",
+          "word": "全场",
+          "intended": "chang3",
+          "live": [
+            "chang3",
+            "chang2"
+          ],
+          "defaults": [
+            "chang3"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 16,
+          "char": "迫",
+          "word": "迫",
+          "intended": "po4",
+          "live": [
+            "po4",
+            "pai3"
+          ],
+          "defaults": [
+            "po4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 26,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "live": [
+            "fa1",
+            "fa4"
+          ],
+          "defaults": [
+            "fa1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 29,
+          "char": "率",
+          "word": "率",
+          "intended": "lv4",
+          "live": [
+            "lv4",
+            "shuai4"
+          ],
+          "defaults": [
+            "lv4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 32,
+          "char": "分",
+          "word": "百分",
+          "intended": "fen1",
+          "live": [
+            "fen1",
+            "fen4"
+          ],
+          "defaults": [
+            "fen1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 39,
+          "char": "分",
+          "word": "百分",
+          "intended": "fen1",
+          "live": [
+            "fen1",
+            "fen4"
+          ],
+          "defaults": [
+            "fen1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 47,
+          "char": "场",
+          "word": "全场",
+          "intended": "chang3",
+          "live": [
+            "chang3",
+            "chang2"
+          ],
+          "defaults": [
+            "chang3"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 48,
+          "char": "没",
+          "word": "没有",
+          "intended": "mei2",
+          "live": [
+            "mei2",
+            "mo4"
+          ],
+          "defaults": [
+            "mei2"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 53,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "live": [
+            "fa1",
+            "fa4"
+          ],
+          "defaults": [
+            "fa1"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [],
+      "numbers": [
+        {
+          "start_index": 6,
+          "text": "二十五",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 10,
+          "text": "二十八",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 20,
+          "text": "十",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 22,
+          "text": "十八",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 25,
+          "text": "一",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 31,
+          "text": "百",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 34,
+          "text": "八十五",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 38,
+          "text": "百",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 41,
+          "text": "六十八",
+          "status": "actual_pending"
+        }
+      ],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "全场",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.4599159,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "制胜",
+          "start_index": 2,
+          "start_seconds": 0.471708,
+          "end_seconds": 0.742916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "球",
+          "start_index": 4,
+          "start_seconds": 0.742916,
+          "end_seconds": 0.943374,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "二十五",
+          "start_index": 6,
+          "start_seconds": 1.191041,
+          "end_seconds": 1.627374,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "对",
+          "start_index": 9,
+          "start_seconds": 1.650958,
+          "end_seconds": 1.804249,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "二十八",
+          "start_index": 10,
+          "start_seconds": 1.80425,
+          "end_seconds": 2.311333,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "非",
+          "start_index": 14,
+          "start_seconds": 2.853791,
+          "end_seconds": 3.195749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "受迫",
+          "start_index": 15,
+          "start_seconds": 3.19575,
+          "end_seconds": 3.561333,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "失误",
+          "start_index": 17,
+          "start_seconds": 3.561333,
+          "end_seconds": 3.903333,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "十对十八",
+          "start_index": 20,
+          "start_seconds": 4.056583,
+          "end_seconds": 4.858458,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "一发",
+          "start_index": 25,
+          "start_seconds": 5.389166,
+          "end_seconds": 5.707582,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "赢",
+          "start_index": 27,
+          "start_seconds": 5.719333,
+          "end_seconds": 5.896208,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "球",
+          "start_index": 28,
+          "start_seconds": 5.896208,
+          "end_seconds": 6.061291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "率",
+          "start_index": 29,
+          "start_seconds": 6.061333,
+          "end_seconds": 6.191041,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "百分之",
+          "start_index": 31,
+          "start_seconds": 6.474041,
+          "end_seconds": 6.898582,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "八十五",
+          "start_index": 34,
+          "start_seconds": 6.910375,
+          "end_seconds": 7.417458,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "对",
+          "start_index": 37,
+          "start_seconds": 7.523583,
+          "end_seconds": 7.724041,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "百分之",
+          "start_index": 38,
+          "start_seconds": 7.735833,
+          "end_seconds": 8.207541,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "六十八",
+          "start_index": 41,
+          "start_seconds": 8.219333,
+          "end_seconds": 8.714624,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "他",
+          "start_index": 45,
+          "start_seconds": 9.257083,
+          "end_seconds": 9.398583,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "全场",
+          "start_index": 46,
+          "start_seconds": 9.398583,
+          "end_seconds": 9.787749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "没有",
+          "start_index": 48,
+          "start_seconds": 9.799541,
+          "end_seconds": 9.999999,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "面对",
+          "start_index": 50,
+          "start_seconds": 10.0,
+          "end_seconds": 10.294791,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "破发",
+          "start_index": 52,
+          "start_seconds": 10.318416,
+          "end_seconds": 10.695749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "点",
+          "start_index": 54,
+          "start_seconds": 10.69575,
+          "end_seconds": 10.943375,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    },
+    {
+      "segment_index": 11,
+      "edit_id": "next_round",
+      "output_name": "voice_11.mp3",
+      "request_id": "f707f42086e4336b09347e3b2a51ead57aa07d72df41a4609a2d927a133c5405",
+      "request": {
+        "backend": "edge",
+        "cache_key": "1ce9c4c4d691540cc42d6912b8dc9ef4",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "下一轮，他将面对保罗。这样的发球表现，还能继续吗？",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "下一轮，他将面对保罗。这样的发球表现，还能继续吗？",
+      "display_text": "下一轮，他将面对保罗。这样的发球表现，还能继续吗？",
+      "text_sha256": "1953e35528707b820f22c38326c22973062a45b83a05686894037f45edc54976",
+      "audio_sha256": "ed249500023117432a26cbdb40f17865276b0ab2388d91b61dadc592ab099d1b",
+      "marks_sha256": "8bb922ceaddf9523c58ec845f3fa94333b39473bd88fac44cb6afafc4370f92b",
+      "duration_seconds": 5.928,
+      "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/next_round-ed24950002311743.mp3",
+      "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/next_round-ed24950002311743.json",
+      "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "将",
+          "word": "将",
+          "intended": "jiang1",
+          "live": [
+            "jiang1",
+            "jiang4",
+            "qiang1"
+          ],
+          "defaults": [
+            "jiang1",
+            "jiang4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 13,
+          "char": "的",
+          "word": "的",
+          "intended": "de5",
+          "live": [
+            "de5",
+            "di1",
+            "di2",
+            "di4"
+          ],
+          "defaults": [
+            "de5"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 14,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "live": [
+            "fa1",
+            "fa4"
+          ],
+          "defaults": [
+            "fa1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 19,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "live": [
+            "hai2",
+            "huan2"
+          ],
+          "defaults": [
+            "hai2",
+            "huan2"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "保罗",
+          "start_index": 8,
+          "targets": [
+            {
+              "index": 8,
+              "char": "保",
+              "intended": "bao3",
+              "status": "actual_pending"
+            },
+            {
+              "index": 9,
+              "char": "罗",
+              "intended": "luo2",
+              "status": "actual_pending"
+            }
+          ]
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 1,
+          "text": "一",
+          "status": "actual_pending"
+        }
+      ],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "下",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.3655819,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "一",
+          "start_index": 1,
+          "start_seconds": 0.365583,
+          "end_seconds": 0.471708,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "轮",
+          "start_index": 2,
+          "start_seconds": 0.471708,
+          "end_seconds": 0.695749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "他",
+          "start_index": 4,
+          "start_seconds": 0.978791,
+          "end_seconds": 1.132082,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "将",
+          "start_index": 5,
+          "start_seconds": 1.132083,
+          "end_seconds": 1.297166,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "面对",
+          "start_index": 6,
+          "start_seconds": 1.308958,
+          "end_seconds": 1.639166,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "保罗",
+          "start_index": 8,
+          "start_seconds": 1.650958,
+          "end_seconds": 2.110874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "这样",
+          "start_index": 11,
+          "start_seconds": 2.653291,
+          "end_seconds": 2.936291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "的",
+          "start_index": 13,
+          "start_seconds": 2.936333,
+          "end_seconds": 3.030666,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "发球",
+          "start_index": 14,
+          "start_seconds": 3.042458,
+          "end_seconds": 3.396249,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "表现",
+          "start_index": 16,
+          "start_seconds": 3.408,
+          "end_seconds": 3.832541,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "还",
+          "start_index": 19,
+          "start_seconds": 4.092,
+          "end_seconds": 4.339625,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "能",
+          "start_index": 20,
+          "start_seconds": 4.339625,
+          "end_seconds": 4.5165,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "继续",
+          "start_index": 21,
+          "start_seconds": 4.5165,
+          "end_seconds": 4.893875,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "吗",
+          "start_index": 23,
+          "start_seconds": 4.893875,
+          "end_seconds": 5.082541,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    },
+    {
+      "segment_index": "outro",
+      "edit_id": "outro",
+      "output_name": "voice_outro.mp3",
+      "request_id": "75c73f1202071699a9595e6df6c2f0ef0dde6a4732e4b8ebf904ed99e156b312",
+      "request": {
+        "backend": "edge",
+        "cache_key": "7559865dbf4339cccd83a16a1f56beb8",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "关注网球时差，时差归我，好球归你。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "关注网球时差，时差归我，好球归你。",
+      "display_text": "关注网球时差，时差归我，好球归你。",
+      "text_sha256": "2bfb6c3faf8ae5b1711f6ea769579ce03d322ce6440b2947a0537cecf4fe660e",
+      "audio_sha256": "8dc3127182612249a6ed7f68cf6f68a46bbaf42d443e7f3b42c8e76d7ed515ac",
+      "marks_sha256": "bf33e7d2af5679adb575e53259c0e0aa92a351b65570fe9e3f33055321608898",
+      "duration_seconds": 4.152,
+      "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/outro-8dc3127182612249.mp3",
+      "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/outro-8dc3127182612249.json",
+      "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "差",
+          "word": "时差",
+          "intended": "cha1",
+          "live": [
+            "cha4",
+            "cha1",
+            "chai1",
+            "ci1"
+          ],
+          "defaults": [
+            "cha4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 8,
+          "char": "差",
+          "word": "时差",
+          "intended": "cha1",
+          "live": [
+            "cha4",
+            "cha1",
+            "chai1",
+            "ci1"
+          ],
+          "defaults": [
+            "cha4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 12,
+          "char": "好",
+          "word": "好",
+          "intended": "hao3",
+          "live": [
+            "hao3",
+            "hao4"
+          ],
+          "defaults": [
+            "hao3"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "网球时差",
+          "start_index": 2,
+          "targets": [
+            {
+              "index": 2,
+              "char": "网",
+              "intended": "wang3",
+              "status": "actual_pending"
+            },
+            {
+              "index": 3,
+              "char": "球",
+              "intended": "qiu2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 4,
+              "char": "时",
+              "intended": "shi2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 5,
+              "char": "差",
+              "intended": "cha1",
+              "status": "actual_pending"
+            }
+          ]
+        }
+      ],
+      "numbers": [],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "关注",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.4009569,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "网球",
+          "start_index": 2,
+          "start_seconds": 0.41275,
+          "end_seconds": 0.731166,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "时差",
+          "start_index": 4,
+          "start_seconds": 0.742916,
+          "end_seconds": 1.155666,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "时差",
+          "start_index": 7,
+          "start_seconds": 1.474041,
+          "end_seconds": 1.851416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "归",
+          "start_index": 9,
+          "start_seconds": 1.863208,
+          "end_seconds": 2.028291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "我",
+          "start_index": 10,
+          "start_seconds": 2.028291,
+          "end_seconds": 2.275916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "好",
+          "start_index": 12,
+          "start_seconds": 2.582541,
+          "end_seconds": 2.759416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "球",
+          "start_index": 13,
+          "start_seconds": 2.759416,
+          "end_seconds": 2.948082,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "归",
+          "start_index": 14,
+          "start_seconds": 2.959916,
+          "end_seconds": 3.183957,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "你",
+          "start_index": 15,
+          "start_seconds": 3.183958,
+          "end_seconds": 3.337249,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "No human auditory listening is claimed; this is actual acoustic evidence with explicit limited support, not an all-high or publication approval.",
+    "Three nominated player names are checked syllable by syllable; additional北京/上海/网球时差 phrase inventory has actual ASR lexical support without a new isolated-tone assertion for every ordinary monophonic character.",
+    "Fixed outro bytes differ from previous approved outro, so previous approval is not inherited. Each current target was independently remeasured against exact same full-text/profile archived audible controls.",
+    "Valid current evidence is selected by modality and physical window applicability; all original failed classifiers and added inapplicable net-component opposing scores are retained and explained.",
+    "Finite reference classes cover tested pronunciation contrasts, not every rare dictionary reading. Body card-level controls may alter multiple neighbours; limitations remain in every row.",
+    "The original and all WordBoundary bytes remain immutablecde78c…; source-clip edits, card timing and segment-index changes are not new voice evidence."
+  ]
+}

@@ -116,3 +116,9 @@ def test_real_shanghai_green_closeup_keeps_only_the_native_container(timestamp, 
     fixtures = Path(__file__).resolve().parents[1] / 'data/evidence/zverev-bublik-shanghai-2026-r16/scoreboard-regression'
     band = np.asarray(Image.open(fixtures / f'{timestamp}.png').convert('RGB'))
     assert a.board_edge(band, cap=380) == expected
+
+
+def test_real_shanghai_board_removal_without_extra_blue_border_excludes_green_backdrop():
+    fixtures = Path(__file__).resolve().parents[1] / 'data/evidence/medvedev-tsitsipas-shanghai-2026-r4/scoreboard-regression'
+    band = np.asarray(Image.open(fixtures / '221.500.png').convert('RGB'))
+    assert a.board_edge(band, cap=421) == 290
