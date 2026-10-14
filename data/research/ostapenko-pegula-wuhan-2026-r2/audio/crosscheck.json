@@ -1,0 +1,680 @@
+{
+  "created_at": "2026-10-14T11:34:18.784614+00:00",
+  "status": "complete_independent_full_source_asr_crosscheck_with_declared_uncertainties",
+  "source_video_id": "l9Gd5ksrsVM",
+  "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+  "source_decoded_duration_seconds": 309.5684375,
+  "reviewed_interval_seconds": [
+    0,
+    303
+  ],
+  "source_caption_path": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/captions.txt",
+  "source_caption_sha256": "b890ab5871476c32890d4630e2a0733afe8134cd18a06fa234e8dc8e9f7d6ba8",
+  "raw_models": [
+    {
+      "requested_label": "base",
+      "actual_model": "base.en",
+      "configuration": {
+        "language": "en",
+        "beam_size": 8,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "initial_prompt": null,
+        "prefix": null,
+        "temperature": 0.0,
+        "cpu_threads": 3,
+        "device": "cpu",
+        "compute_type": "int8",
+        "local_files_only": true
+      },
+      "segments": 17,
+      "elapsed_seconds": 33.9843807220459,
+      "raw_json": "base.json",
+      "raw_json_sha256": "5fac0d90bd98657bf3309d5bbb256cf947c4417bf748aa442a11780cf7776e84"
+    },
+    {
+      "requested_label": "small",
+      "actual_model": "small.en",
+      "configuration": {
+        "language": "en",
+        "beam_size": 8,
+        "vad_filter": false,
+        "word_timestamps": true,
+        "initial_prompt": null,
+        "prefix": null,
+        "temperature": 0.0,
+        "cpu_threads": 3,
+        "device": "cpu",
+        "compute_type": "int8",
+        "local_files_only": true
+      },
+      "segments": 32,
+      "elapsed_seconds": 64.49129176139832,
+      "raw_json": "small.json",
+      "raw_json_sha256": "8a62d49fb868bea0bae107eb4474ccce5ac58d076bf8033af7a0a8960c9dc741"
+    }
+  ],
+  "manual_listening_claimed": false,
+  "prompt_used": false,
+  "forbidden_models_called": false,
+  "same_source_full_interval_both_models": true,
+  "source_captions_are_automatic_not_manual_ground_truth": true,
+  "name_normalization_policy": "Only known actual participants permit Ostapenka/Officer Panko/Austin Penko -> Ostapenko and Bagula/Pigula -> Pegula; no ASR raw output rewritten, ambiguous pronoun/statistic ownership remains uncertain",
+  "usable_complete_sentences": [
+    {
+      "start_seconds": 39.36,
+      "end_seconds": 45.28,
+      "english_identity_corrected": "A bit of punch and a bit of finesse from Ostapenko.",
+      "faithful_chinese": "奥斯塔彭科既有力量，也有细腻的处理。",
+      "agreement": "small+captions; base phrase partial",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "small initial A probability0.02, of spans40.10–43.06; caption phrase starts42.80. Interval deliberately wider than reliable spoken onset.",
+      "base_evidence": [
+        {
+          "start": 26.62,
+          "end": 56.6,
+          "raw_text": " up, a bit of punch and a bit of finesse from"
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 39.36,
+          "end": 45.28,
+          "raw_text": " A bit of punch and a bit of finesse from Ostapenka."
+        }
+      ]
+    },
+    {
+      "start_seconds": 47.12,
+      "end_seconds": 48.48,
+      "english_identity_corrected": "First serve, set point.",
+      "faithful_chinese": "一发，盘点。",
+      "agreement": "small+captions; base omitted",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "",
+      "base_evidence": [
+        {
+          "start": 26.62,
+          "end": 56.6,
+          "raw_text": " up, a bit of punch and a bit of finesse from"
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 47.12,
+          "end": 48.48,
+          "raw_text": " First serve, set point."
+        }
+      ]
+    },
+    {
+      "start_seconds": 52.52,
+      "end_seconds": 56.08,
+      "english_identity_corrected": "Set point gobbled up by Jess Pegula.",
+      "faithful_chinese": "杰斯·佩古拉轻松拿下盘点。",
+      "agreement": "small+captions; base omitted",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "Jess Bagula/Pigula normalized to known player Jess Pegula.",
+      "base_evidence": [
+        {
+          "start": 26.62,
+          "end": 56.6,
+          "raw_text": " up, a bit of punch and a bit of finesse from"
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 52.519999999999996,
+          "end": 59.28,
+          "raw_text": " Set point gobbled up by Jess Bagula, frustration for Yelena Ostapenka who hasn't quite hit"
+        }
+      ]
+    },
+    {
+      "start_seconds": 56.14,
+      "end_seconds": 61.98,
+      "english_identity_corrected": "Frustration for Jelena Ostapenko, who hasn't quite hit the heights in the opening set here.",
+      "faithful_chinese": "奥斯塔彭科很懊恼，她在首盘还没打出应有的水准。",
+      "agreement": "small+captions; base only tail fragment",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "Jelena is normalized official given-name spelling; no claim every ASR proper noun was recognized correctly.",
+      "base_evidence": [
+        {
+          "start": 26.62,
+          "end": 56.6,
+          "raw_text": " up, a bit of punch and a bit of finesse from"
+        },
+        {
+          "start": 60.0,
+          "end": 68.46,
+          "raw_text": " here in the opening set here, seamless from the American, the World No. 4 in business here, 6-2 in just over half an hour."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 52.519999999999996,
+          "end": 59.28,
+          "raw_text": " Set point gobbled up by Jess Bagula, frustration for Yelena Ostapenka who hasn't quite hit"
+        },
+        {
+          "start": 59.28,
+          "end": 61.98,
+          "raw_text": " the heights in the opening set here."
+        }
+      ]
+    },
+    {
+      "start_seconds": 62.5,
+      "end_seconds": 68.68,
+      "english_identity_corrected": "Seamless from the American, the world number four in business here, six-two in just over half an hour.",
+      "faithful_chinese": "美国选手打得行云流水，世界第四此刻掌控局面，半小时出头就以六比二拿下首盘。",
+      "agreement": "base+small+captions",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "First-set score6–2 is Pegula perspective, Ostapenko perspective2–6. Opening-set meaning retained from immediately preceding sentence.",
+      "base_evidence": [
+        {
+          "start": 60.0,
+          "end": 68.46,
+          "raw_text": " here in the opening set here, seamless from the American, the World No. 4 in business here, 6-2 in just over half an hour."
+        },
+        {
+          "start": 68.46,
+          "end": 72.42,
+          "raw_text": " So it's a big task facing us to Panko here."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 62.5,
+          "end": 68.1,
+          "raw_text": " Seamless from the American, the world number four in business here, 6-2 in just over half"
+        },
+        {
+          "start": 68.1,
+          "end": 68.68,
+          "raw_text": " an hour."
+        }
+      ]
+    },
+    {
+      "start_seconds": 69.76,
+      "end_seconds": 72.62,
+      "english_identity_corrected": "So it's a big task facing Ostapenko here.",
+      "faithful_chinese": "所以，奥斯塔彭科此刻面临着艰巨的任务。",
+      "agreement": "base+small+captions",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "",
+      "base_evidence": [
+        {
+          "start": 68.46,
+          "end": 72.42,
+          "raw_text": " So it's a big task facing us to Panko here."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 69.76,
+          "end": 72.62,
+          "raw_text": " So it's a big task facing Ostapenka here."
+        }
+      ]
+    },
+    {
+      "start_seconds": 80.68,
+      "end_seconds": 82.96,
+      "english_identity_corrected": "There's another example, though, of her firepower.",
+      "faithful_chinese": "不过，这又一次展示了她的火力。",
+      "agreement": "base+small+captions",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "Pronoun her needs the matching visual/source context; transcript alone does not establish player identity for the particular rally.",
+      "base_evidence": [
+        {
+          "start": 79.48,
+          "end": 82.46,
+          "raw_text": " There's another example though of her firepower."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 80.68,
+          "end": 82.96,
+          "raw_text": " There's another example though of her fire power."
+        }
+      ]
+    },
+    {
+      "start_seconds": 92.78,
+      "end_seconds": 96.76,
+      "english_identity_corrected": "Pegula did well to jam the return back, but she was always on the back foot.",
+      "faithful_chinese": "佩古拉已经很好地把接发球挡了回去，但她始终处在被动之中。",
+      "agreement": "base+small+captions",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "Small/base include a possible filler there after well; captions omit it. Curated sentence preserves substantive content, not a claim of verbatim filler identity.",
+      "base_evidence": [
+        {
+          "start": 92.35999999999999,
+          "end": 96.36,
+          "raw_text": " The gula did well, they jammed the return back, but she was always on the back foot."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 92.78,
+          "end": 96.76,
+          "raw_text": " Bagula did well there, jammed the return back but she was always on the back foot."
+        }
+      ]
+    },
+    {
+      "start_seconds": 105.7,
+      "end_seconds": 109.12,
+      "english_identity_corrected": "Found the gap. Good pass from Ostapenko.",
+      "faithful_chinese": "找到空当了，奥斯塔彭科打出漂亮的穿越。",
+      "agreement": "base+small+captions",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "Found the gap is original commentary ellipsis; both clauses retained, not expanded into unspoken details.",
+      "base_evidence": [
+        {
+          "start": 104.8,
+          "end": 109.26,
+          "raw_text": " Found the gap, good pass from Officer Panko."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 105.69999999999999,
+          "end": 109.12,
+          "raw_text": " Found the gap, good pass from Ostapenka."
+        }
+      ]
+    },
+    {
+      "start_seconds": 123.7,
+      "end_seconds": 125.44,
+      "english_identity_corrected": "Is there going to be another twist?",
+      "faithful_chinese": "还会再有转折吗？",
+      "agreement": "base+small+captions",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "Base segment continues falsely to139.22 although lexical phrase agrees; use small word-end125.44.",
+      "base_evidence": [
+        {
+          "start": 123.97999999999999,
+          "end": 139.22,
+          "raw_text": " Is there going to be another twist?"
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 123.7,
+          "end": 125.44,
+          "raw_text": " Is there going to be another twist?"
+        }
+      ]
+    },
+    {
+      "start_seconds": 125.44,
+      "end_seconds": 129.48,
+      "english_identity_corrected": "That's bone-rattling pace from Ostapenko.",
+      "faithful_chinese": "奥斯塔彭科这一拍快得震人。",
+      "agreement": "small+captions; base omitted",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "Rhetorical force retained; no unsupported measured ball speed.",
+      "base_evidence": [
+        {
+          "start": 123.97999999999999,
+          "end": 139.22,
+          "raw_text": " Is there going to be another twist?"
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 125.44,
+          "end": 129.48,
+          "raw_text": " That's bone rattling pace from Ostapenka."
+        }
+      ]
+    },
+    {
+      "start_seconds": 164.4,
+      "end_seconds": 168.58,
+      "english_identity_corrected": "Well, what can you do when Ostapenko plays like that?",
+      "faithful_chinese": "奥斯塔彭科打成这样，你还能有什么办法？",
+      "agreement": "base+small+captions",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "",
+      "base_evidence": [
+        {
+          "start": 164.14000000000001,
+          "end": 168.5,
+          "raw_text": " What can you do when Officer Panko plays like that?"
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 164.4,
+          "end": 168.58,
+          "raw_text": " Well what can you do when Ostapenka plays like that?"
+        }
+      ]
+    },
+    {
+      "start_seconds": 185.22,
+      "end_seconds": 187.58,
+      "english_identity_corrected": "That is unreal.",
+      "faithful_chinese": "太不可思议了。",
+      "agreement": "base+small+captions",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "That assigned185.22–186.62, captions186.40. Conservative cut interval, not exact first-phoneme boundary.",
+      "base_evidence": [
+        {
+          "start": 185.16,
+          "end": 187.0,
+          "raw_text": " That is unreal."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 185.22,
+          "end": 187.58,
+          "raw_text": " That is unreal."
+        }
+      ]
+    },
+    {
+      "start_seconds": 200.18,
+      "end_seconds": 204.56,
+      "english_identity_corrected": "Oh, this is thunderous tennis.",
+      "faithful_chinese": "这网球打得震天响。",
+      "agreement": "base+small+captions",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "ASR initial words extend across possible pre-speech crowd/silence; caption starts202.56. Do not assert200.18 is precise foreground voice onset.",
+      "base_evidence": [
+        {
+          "start": 200.32,
+          "end": 204.14,
+          "raw_text": " This is thunderous tennis."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 200.17999999999998,
+          "end": 204.56,
+          "raw_text": " Oh this is thunderous tennis."
+        }
+      ]
+    },
+    {
+      "start_seconds": 211.9,
+      "end_seconds": 217.24,
+      "english_identity_corrected": "Incredible. Absolutely incredible. And on we go in Wuhan.",
+      "faithful_chinese": "不可思议。实在不可思议。武汉这场比赛还在继续。",
+      "agreement": "base+small+captions",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "Base merges speech and later material through222.14. Small resolves final sentence to217.24; no inference of current set/score without visual context.",
+      "base_evidence": [
+        {
+          "start": 210.54000000000002,
+          "end": 222.14000000000001,
+          "raw_text": " Incredible, absolutely incredible, and on we go in Wuhan."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 211.9,
+          "end": 214.92,
+          "raw_text": " Incredible, absolutely incredible."
+        },
+        {
+          "start": 215.78,
+          "end": 217.24,
+          "raw_text": " And on we go in Wuhan."
+        }
+      ]
+    },
+    {
+      "start_seconds": 264.84,
+      "end_seconds": 267.98,
+      "english_identity_corrected": "Ostapenko packs a power punch in Wuhan.",
+      "faithful_chinese": "奥斯塔彭科在武汉打出强劲一击。",
+      "agreement": "small+captions; base omitted",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "",
+      "base_evidence": [
+        {
+          "start": 252.12,
+          "end": 282.1,
+          "raw_text": " That's a lovely piece of play."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 264.84,
+          "end": 267.98,
+          "raw_text": " Ostapenka packs a power punch in Wuhan."
+        }
+      ]
+    },
+    {
+      "start_seconds": 268.78,
+      "end_seconds": 275.58,
+      "english_identity_corrected": "A dazzling attacking performance from one of the biggest hitters in the game, as she picks Pegula apart.",
+      "faithful_chinese": "网坛火力最强的球员之一，打出耀眼的进攻表现，一点点拆解佩古拉。",
+      "agreement": "small+captions; base omitted",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "Raw surname Bagula/Pigula corrected from verified opponent identity. Original she refers to Ostapenko in preceding complete sentence.",
+      "base_evidence": [
+        {
+          "start": 252.12,
+          "end": 282.1,
+          "raw_text": " That's a lovely piece of play."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 268.78,
+          "end": 274.02,
+          "raw_text": " A dazzling attacking performance from one of the biggest hitters in the game as she"
+        },
+        {
+          "start": 274.02,
+          "end": 275.58,
+          "raw_text": " picks Bagula apart."
+        }
+      ]
+    },
+    {
+      "start_seconds": 277.04,
+      "end_seconds": 278.38,
+      "english_identity_corrected": "The second seed is stunned.",
+      "faithful_chinese": "二号种子被打懵了。",
+      "agreement": "small+captions; base omitted",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "Rhetorical stunned retained; not a medical condition claim.",
+      "base_evidence": [
+        {
+          "start": 252.12,
+          "end": 282.1,
+          "raw_text": " That's a lovely piece of play."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 277.04,
+          "end": 278.38,
+          "raw_text": " The second seed is stunned."
+        }
+      ]
+    },
+    {
+      "start_seconds": 279.22,
+      "end_seconds": 284.0,
+      "english_identity_corrected": "She missed three match points in the second set, and they proved so costly.",
+      "faithful_chinese": "她在第二盘错失了三个赛点，而这让她付出了沉重代价。",
+      "agreement": "small+captions; base agrees only final they proved so costly",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "She is Pegula from the immediately preceding second-seed sentence; do not attach missed to Ostapenko. Captions prove vs both ASR proved: tense spelling not manually heard; fact/meaning agrees.",
+      "base_evidence": [
+        {
+          "start": 252.12,
+          "end": 282.1,
+          "raw_text": " That's a lovely piece of play."
+        },
+        {
+          "start": 282.1,
+          "end": 283.68,
+          "raw_text": " And they proved so costly."
+        }
+      ],
+      "small_evidence": [
+        {
+          "start": 279.22,
+          "end": 284.0,
+          "raw_text": " She missed three match points in the second set and they proved so costly."
+        }
+      ]
+    },
+    {
+      "start_seconds": 285.4,
+      "end_seconds": 290.52,
+      "english_identity_corrected": "Ostapenko: too powerful, too potent, too good.",
+      "faithful_chinese": "奥斯塔彭科：力量太强，威力太猛，打得太好了。",
+      "agreement": "small+captions; base omitted",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "Ostapenka/Austin Penko identity normalized. Do not add ace count or speed claims.",
+      "base_evidence": [],
+      "small_evidence": [
+        {
+          "start": 285.4,
+          "end": 290.52,
+          "raw_text": " Ostapenka, too powerful, too potent, too good."
+        }
+      ]
+    },
+    {
+      "start_seconds": 291.16,
+      "end_seconds": 297.84,
+      "english_identity_corrected": "And into the round of 16 from a set down: two-six, seven-six, six-three.",
+      "faithful_chinese": "先丢一盘后逆转晋级十六强：二比六、七比六、六比三。",
+      "agreement": "small+captions; base omitted",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "Audio supports7–6 only; tiebreak7–6(7) bracket cannot be established by this ASR evidence and must come from official/visual fact packet.",
+      "base_evidence": [],
+      "small_evidence": [
+        {
+          "start": 291.16,
+          "end": 297.84,
+          "raw_text": " And into the round of 16 from a set down, 2-6, 7-6, 6-3."
+        }
+      ]
+    },
+    {
+      "start_seconds": 297.84,
+      "end_seconds": 298.96,
+      "english_identity_corrected": "What a performance.",
+      "faithful_chinese": "多么精彩的表现！",
+      "agreement": "small+captions; base omitted",
+      "status": "usable_complete_sentence",
+      "timing_scope": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset",
+      "notes": "",
+      "base_evidence": [],
+      "small_evidence": [
+        {
+          "start": 297.84,
+          "end": 298.96,
+          "raw_text": " What a performance."
+        }
+      ]
+    }
+  ],
+  "uncertain_or_exclude": [
+    {
+      "interval_seconds": [
+        15.12,
+        26.64
+      ],
+      "issue": "backhand commentary name/word corruption and long interval bridging between two rallies",
+      "base": "Nice to pick up, lands a blow on the backhand, and rips a backhand winner.",
+      "small": "That's a blow on the back up. / Rips a back up winner.",
+      "captions": "Master Pekco lands a blow on the backand / rips a backhand winner",
+      "decision": "Can normalize player name to Ostapenko from identity, but do not treat merged15–26 interval as one continuous complete utterance. Backhand lexical restoration is plausible/caption-supported but ASR phoneme spelling weak."
+    },
+    {
+      "interval_seconds": [
+        146.12,
+        153.1
+      ],
+      "issue": "First-serve-percentage subject conflicts",
+      "base": "Stuck at it, Officer Panko. / The gula's first percentage still, lower than a season average.",
+      "small": "Stuck at it, Ostapenka. / Bagula's first serve percentage still, lower than a season average.",
+      "captions": "stuck at it. Oster Penko's first serve percentage still lower than a season average.",
+      "decision": "Do not claim subject verified: both ASR models name Pegula in the statistic sentence while captions attach Ostapenko. Neither identity nor statistic ownership can be silently corrected from task facts. Exclude exact quotation until resolved by additional evidence."
+    },
+    {
+      "interval_seconds": [
+        220.84,
+        223.02
+      ],
+      "issue": "has/was lit a fire auxiliary and subject conflict",
+      "base": "The gula's litter fire.",
+      "small": "Yelena Ostapenka was lit afire.",
+      "captions": "Yena Ostapenko has lit a fire.",
+      "decision": "Likely intended Jelena Ostapenko has lit a fire, but exact auxiliary not independently agreed; avoid verbatim assertion. Name identity correction only, no automatic replacement of base subject."
+    },
+    {
+      "interval_seconds": [
+        239.38,
+        245.5
+      ],
+      "issue": "Nice cushion volley ... previously is retrospective/deictic, word timing extends",
+      "small": "Nice cushion volley from Ostapenka, previously.",
+      "captions": "Nice cushion volley from Oapekco / previously",
+      "decision": "Do not assert commentary describes the currently shown contact without visual matching. Conservative ASR window includes substantial gap, not precise acoustic offset."
+    },
+    {
+      "interval_seconds": [
+        252.08,
+        256.88
+      ],
+      "issue": "play/plate and trailing boundary unreliable",
+      "base": "That's a lovely piece of play.",
+      "small": "That's a lovely piece of plate.",
+      "captions": "That's a lovely piece of play.",
+      "decision": "play is base+caption-supported lexical correction. Small assigns of253.50–256.80 and plate256.80–256.88; exact end unsafe. Prefer other clean complete sentences for source-backed clips."
+    }
+  ],
+  "fact_scope": {
+    "supported_by_end_small_and_captions": [
+      "Ostapenko won from a set down,2–6,7–6,6–3",
+      "Pegula missed three match points in the second set",
+      "Ostapenko advances into round of16"
+    ],
+    "not_audio_supported": [
+      "tiebreak small-score(7)",
+      "specific times each of the3matchpoints occurred",
+      "elapsed full match duration",
+      "player who owns first-serve percentage line149s"
+    ],
+    "base_limits": "base missed large tail portions and stretched some segments across silence/rallies; missing speech not corroboration or contradiction. Small/captions agreement explicitly labelled, never represented as two-model full agreement."
+  }
+}

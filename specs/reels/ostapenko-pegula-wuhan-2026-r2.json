@@ -1,0 +1,544 @@
+{
+  "slug": "ostapenko-pegula-wuhan-2026-r2",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "沿用原生云见配音、相同声线与语速。",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=l9Gd5ksrsVM"
+  },
+  "primary": "main",
+  "source_fallbacks": {
+    "main": "https://github.com/robertyang87/tennislive/releases/download/source-ostapenko-pegula-wuhan-2026-r2-301dd05c374b11e5/source.mp4"
+  },
+  "track": false,
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "preserve_source_audio": true,
+  "scorebox": [
+    90,
+    870,
+    550,
+    980
+  ],
+  "_crop_why": "用户本期明确要求中心场地使用3:4铺满画布、固定居中。原生中心窗口555..1365；185.50s右网前佩古拉被裁出画框，已展示实际裁切给用户并诚实记录，不称完整空间视野。",
+  "_source": "用户指定WTA官方l9Gd5ksrsVM，实际源SHA301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847；原生probe38555626888。",
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1075_2026_LS031",
+    "participants": [
+      "奥斯塔彭科",
+      "佩古拉"
+    ],
+    "set_scores_home_away": [
+      [
+        2,
+        6
+      ],
+      [
+        7,
+        6
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      [
+        9,
+        7
+      ],
+      null
+    ],
+    "winner": "奥斯塔彭科",
+    "loser": "佩古拉",
+    "winner_result": "2-6 7-6(7) 6-3",
+    "loser_result": "6-2 6-7(7) 3-6",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+    "date": "2026-10-14",
+    "duration": "02:23:59",
+    "daypart": "下午",
+    "_match_day_why": "用户指定本场当日官方集锦；WTA已完赛。",
+    "_time_note": "官方逐分首点16:22:57、末点18:46:20北京时间；不把元数据16:06当首次发球。"
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "奥斯塔彭科",
+        "name_en": "Jelena Ostapenko",
+        "country": "LAT",
+        "rank": 34
+      },
+      {
+        "name": "佩古拉",
+        "name_en": "Jessica Pegula",
+        "country": "USA",
+        "rank": 4
+      }
+    ],
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "奥斯塔彭科",
+    "winner": "奥斯塔彭科",
+    "result": "2-6 7-6(7) 6-3",
+    "hook": "三个赛点都救回\n奥斯塔彭科逆转佩古拉",
+    "hook_accent": "逆转",
+    "topic": "WTA1000 武汉 第二轮 · 奥斯塔彭科 VS 佩古拉",
+    "scrim": "clear",
+    "_rank_why": "WTA正式10月12日排名34/4；佩古拉2号种子不等于世界第2。",
+    "_subject_why": "逆转赢家奥斯塔彭科；官方本场R2庆祝照、日期与实际服饰一致。",
+    "portrait": {
+      "image": "assets/reels/ostapenko-pegula-wuhan-2026-r2/ostapenko-wuhan-r2.jpg",
+      "fit": "cover",
+      "focus": 0.51,
+      "focus_y": 0.5,
+      "zoom": 1,
+      "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/14/b62c720a-4d62-4769-bb06-e38cdd8acf56/Ostapenko-R2-Jimmie-2.jpg",
+      "_photo_why": "WTA官方Jimmie48本场R2原图4700x3151；EXIF10月14日18:46:14，单人握拳笑、睁眼合焦，完整保留手与拍。"
+    },
+    "scoreboard": {
+      "court": "Dongfeng Voyah Center Court",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS031"
+      },
+      "_court_why": "实际本场源182秒左上球场大屏标示DONGFENG VOYAH CENTER COURT，与武汉官方中央场命名一致。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 第二轮",
+    "line2": "奥斯塔彭科 2-6 7-6(7) 6-3 佩古拉"
+  },
+  "stats": {
+    "tour": "wta",
+    "footer_date": "2026-10-14",
+    "footer_venue": "武汉 · 全场",
+    "_source": "WTA LS031完整全场原始整数，A奥斯塔彭科/B佩古拉；W/UE来自同场TNNS完整Match列，已按分盘合计复核。",
+    "a": {
+      "aces": 10,
+      "df": 11,
+      "first_in": 47,
+      "first_total": 92,
+      "first_won": 31,
+      "second_total": 45,
+      "second_won": 22,
+      "bp_conv": 5,
+      "bp_chances": 7,
+      "pts_won": 96,
+      "pts_total": 187,
+      "winners": 45,
+      "ue": 37,
+      "headshot": "assets/players/headshots/wta-319939.jpg"
+    },
+    "b": {
+      "aces": 2,
+      "df": 4,
+      "first_in": 52,
+      "first_total": 95,
+      "first_won": 36,
+      "second_total": 43,
+      "second_won": 16,
+      "bp_conv": 5,
+      "bp_chances": 9,
+      "pts_won": 91,
+      "pts_total": 187,
+      "winners": 15,
+      "ue": 12,
+      "headshot": "assets/players/headshots/wta-316956.jpg"
+    },
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://api.tnnslive.com/v1/web?id=75373582&mode=match_info&submode=stats&web=true",
+      "source_path": "data/research/ostapenko-pegula-wuhan-2026-r2/tnns-original-full-stats-response.json",
+      "source_sha256": "1b3668fcb69c820ca3a1a2b623aec7638a442f2b73fa6f862234ad45358f6ccb",
+      "period": "Match",
+      "match_date": "2026-10-14",
+      "checked_at": "2026-10-14T11:48:03.035991+00:00",
+      "winner_result": "2-6 7-6(7) 6-3",
+      "matchup": [
+        "Ostapenko",
+        "Pegula"
+      ],
+      "winners": [
+        45,
+        15
+      ],
+      "ue": [
+        37,
+        12
+      ],
+      "notes": "真实完整列序Ostapenko/Pegula。W9+21+15=45/5+7+3=15；UE11+18+8=37/2+3+7=12。同目录保留原始响应、列序与分盘合计。"
+    }
+  },
+  "push": {
+    "auto": true,
+    "matchup": "奥斯塔彭科 VS 佩古拉",
+    "score": "2-6 7-6(7) 6-3",
+    "event": "2026 WTA1000 武汉 第二轮",
+    "summary": "3救赛点逆转",
+    "lead": "首盘2-6，第二盘抢七又从0-3追起。奥斯塔彭科挽救三个赛点，以9-7扳盘；决胜盘5-2被追到5-3后，立即在接发球时连得四分，逆转二号种子佩古拉。全场45记制胜分，带你看这场进攻赢到最后的逆转。"
+  },
+  "_heat_why": "用户点名逆转：三救赛点、逆转2号种子；完整官方逐分与全场统计支撑。",
+  "_hit_data": [
+    {
+      "label": "三个赛点都没能终结比赛",
+      "detail": "第二盘抢七4-6、5-6、6-7三救赛点，9-7扳盘。",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS031/point-by-point",
+      "used_in": "冷开场、第二盘赛点事实卡、真实第三赛点与拿盘回合。"
+    },
+    {
+      "label": "进攻赢到最后",
+      "detail": "全场制胜分45比15，决胜盘15比3；全场非受迫失误37比12，同时展示，不伪造少失误的叙事。",
+      "source": "https://tnnslive.com/match/75373582",
+      "used_in": "全场统计卡与结尾。"
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "三个赛点都来了，奥斯塔彭科如何把比赛翻回来？",
+    "thesis": "两次追平后，抢七三救赛点、9-7扳盘；决胜盘5-2被追近仍立刻收下比赛，真实进攻与关键分支撑逆转。",
+    "beats": [
+      "赢球后3赛点原声冷开场",
+      "武汉第二轮坐标",
+      "首盘落后",
+      "第二盘两次追平",
+      "前三个赛点事实",
+      "第三赛点完整时间窗口",
+      "9-7扳盘",
+      "决胜盘5-2至5-3事实",
+      "接发首赛点与庆祝",
+      "完整统计",
+      "第三轮展望"
+    ],
+    "human_context": {
+      "angle": "从三个赛点边缘到逆转二号种子：完整关键分与官方逐分结合，说明进攻如何支撑这次逆转，而非编造失误更少。",
+      "facts": [
+        "首盘2-6，第二盘抢七0-3开局，4-6、5-6、6-7三救赛点，9-7扳盘。",
+        "决胜盘5-2发球胜赛局被破后，在5-3接发局连拿四分，第一个赛点结束比赛。",
+        "完整TNNS统计W45:15、UE37:12，决胜盘W15:3；两项一并展示。"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+        "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS031/point-by-point",
+        "https://tnnslive.com/match/75373582"
+      ]
+    }
+  },
+  "segments": [
+    {
+      "source": "main",
+      "start": 264.52,
+      "end": 284.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.28,
+          "end": 3.5,
+          "text": "Ostapenko packs a power punch in Wuhan.\n奥斯塔彭科在武汉\n打出强劲一击"
+        },
+        {
+          "at": 4.22,
+          "end": 11.1,
+          "text": "A dazzling attacking performance from one of the biggest hitters in the game, as she picks Pegula apart.\n网坛火力最猛的球员之一\n用耀眼的进攻拆解佩古拉"
+        },
+        {
+          "at": 12.48,
+          "end": 13.9,
+          "text": "The second seed is stunned.\n二号种子被震住了"
+        },
+        {
+          "at": 14.66,
+          "end": 19.52,
+          "text": "She missed three match points in the second set, and they proved so costly.\n第二盘错失三个赛点\n让她付出了沉重代价"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "获胜后的真实近景、握手与观众致意；无进行中回合。",
+      "point_end_ok": "25fps实核263.80获胜后笑拳，此冷开从264.52完整解说前起，无进行中回合。",
+      "_edit_id": "cold_open",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "赢球后真实笑拳、握手与完整原声说二号种子错失3赛点；正文match_payoff从257.64完整保留最后接发赛点至299.24致意与报结果，覆盖这个冷开场。"
+    },
+    {
+      "title_card": "逆转二号种子\n从赛点边缘归来",
+      "kicker": "北京时间10月14日 · 武汉第二轮",
+      "seconds": 11.0,
+      "narration": "北京时间十月十四日，武汉第二轮。奥斯塔彭科迎战二号种子佩古拉。首盘二比六，比赛远未结束。",
+      "_edit_id": "coordinate"
+    },
+    {
+      "source": "main",
+      "start": 45.44,
+      "end": 73.84,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 1.64,
+          "end": 3.08,
+          "text": "First serve, set point.\n一发，盘点。"
+        },
+        {
+          "at": 7.04,
+          "end": 10.68,
+          "text": "Set point gobbled up by Jess Pegula.\n佩古拉轻松拿下盘点"
+        },
+        {
+          "at": 10.68,
+          "end": 16.58,
+          "text": "Frustration for Jelena Ostapenko, who hasn't quite hit the heights in the opening set here.\n奥斯塔彭科很懊恼\n首盘没打出应有水准"
+        },
+        {
+          "at": 17.02,
+          "end": 23.28,
+          "text": "Seamless from the American, the world number four in business here, six-two in just over half an hour.\n美国选手打得行云流水\n世界第四掌控局面\n半小时出头六比二拿下首盘"
+        },
+        {
+          "at": 24.28,
+          "end": 27.22,
+          "text": "So it's a big task facing Ostapenko here.\n奥斯塔彭科面临艰巨任务"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "首盘最后一分前的准备、完整盘点、盘后完整原声与双方反应；不截上一句finesse词尾。",
+      "point_end_ok": "首盘最后一分前的准备、完整盘点、盘后完整原声与双方反应；不截上一句finesse词尾。",
+      "_edit_id": "first_set_finish",
+      "subtitle_bottom_windows": [
+        [
+          17.02,
+          23.28,
+          550
+        ]
+      ],
+      "_subtitle_layout_why": "只在首盘盘后原转播大赛果板出现的完整解说句局部提高字幕底边，避免盖住板内姓名/比分；原转播板、所有回贴比分板固定位置、封面比分板均不改。源64.20无板、65.00有板、69.00有板、69.40无板，前后两句不受影响。"
+    },
+    {
+      "title_card": "两次落后\n两次追平",
+      "kicker": "第二盘 · 进攻继续",
+      "seconds": 12.5,
+      "narration": "第二盘，奥斯塔彭科两次落后，都立即追平。她用反手直线穿越上网对手。比赛进入抢七，险境接连出现。",
+      "_edit_id": "second_set_turn"
+    },
+    {
+      "source": "main",
+      "start": 74.48,
+      "end": 109.8,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 6.16,
+          "end": 8.52,
+          "text": "There's another example, though, of her firepower.\n这又一次展示了她的火力"
+        },
+        {
+          "at": 18.26,
+          "end": 22.32,
+          "text": "Pegula did well to jam the return back, but she was always on the back foot.\n佩古拉把接发球挡回去了\n但她始终处在被动之中"
+        },
+        {
+          "at": 31.18,
+          "end": 34.68,
+          "text": "Found the gap. Good pass from Ostapenko.\n找到空当\n奥斯塔彭科漂亮的穿越"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "第二盘真实进攻回合与完整火力、接发、穿越解说；结束在Good pass完整词尾后，不带入发球成功率主语未确认句。",
+      "point_end_ok": "第二盘真实进攻回合与完整火力、接发、穿越解说；结束在Good pass完整词尾后，不带入发球成功率主语未确认句。",
+      "_edit_id": "second_set_attack"
+    },
+    {
+      "title_card": "4比6追到6比6\n第3个赛点又来了",
+      "kicker": "第二盘抢七 · 三次绝境",
+      "seconds": 11.8,
+      "narration": "抢七，从零比三到四比六，对手拿到两个赛点。奥斯塔彭科连救两分，追到六比六。六比七，第三个赛点！",
+      "_edit_id": "three_match_points"
+    },
+    {
+      "source": "main",
+      "start": 169.56,
+      "end": 190.24,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 15.62,
+          "end": 18.06,
+          "text": "That is unreal.\n太不可思议了。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "同一真实第三赛点在故事时间重现，从准备至结果，不冒充前两个救赛点；源有完整时间、固定中心裁边如实记录。",
+      "point_end_ok": "同一真实第三赛点在故事时间重现，从准备至结果，不冒充前两个救赛点；源有完整时间、固定中心裁边如实记录。",
+      "_edit_id": "third_match_point"
+    },
+    {
+      "title_card": "连救三个赛点\n9比7扳平盘分",
+      "kicker": "第二盘 · 翻过赛点",
+      "seconds": 10,
+      "narration": "第三个赛点，她也成功化解。随后，奥斯塔彭科连拿两分，九比七扳平盘分！",
+      "_edit_id": "tiebreak_payoff"
+    },
+    {
+      "source": "main",
+      "start": 207.04,
+      "end": 217.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 4.82,
+          "end": 10.24,
+          "text": "Incredible. Absolutely incredible. And on we go in Wuhan.\n不可思议 实在不可思议\n武汉这场比赛还在继续"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "8-7准备、原生抛球、完整发球回合、赢盘真实反应及Incredible完整解说；避开220秒has/was不确定句，不把缺发球准备的7-7点冒充完整回合。",
+      "point_end_ok": "8-7准备、原生抛球、完整发球回合、赢盘真实反应及Incredible完整解说；避开220秒has/was不确定句，不把缺发球准备的7-7点冒充完整回合。",
+      "_edit_id": "second_set_finish"
+    },
+    {
+      "title_card": "5比2被追近\n立即收下最后一局",
+      "kicker": "决胜盘 · 逆转落地",
+      "seconds": 13.0,
+      "narration": "决胜盘，奥斯塔彭科五比二领先。佩古拉又追成五比三。奥斯塔彭科马上回应，在接发球时连拿四分，第一个赛点就结束比赛！",
+      "_edit_id": "deciding_set_turn"
+    },
+    {
+      "source": "main",
+      "start": 257.64,
+      "end": 299.24,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 7.16,
+          "end": 10.38,
+          "text": "Ostapenko packs a power punch in Wuhan.\n奥斯塔彭科在武汉\n打出强劲一击"
+        },
+        {
+          "at": 11.1,
+          "end": 17.98,
+          "text": "A dazzling attacking performance from one of the biggest hitters in the game, as she picks Pegula apart.\n网坛火力最猛的球员之一\n用耀眼的进攻拆解佩古拉"
+        },
+        {
+          "at": 19.36,
+          "end": 20.78,
+          "text": "The second seed is stunned.\n二号种子被震住了"
+        },
+        {
+          "at": 21.54,
+          "end": 26.4,
+          "text": "She missed three match points in the second set, and they proved so costly.\n第二盘错失三个赛点\n让她付出了沉重代价"
+        },
+        {
+          "at": 27.72,
+          "end": 32.92,
+          "text": "Ostapenko: too powerful, too potent, too good.\n奥斯塔彭科力量太强\n威力太猛 打得太好了"
+        },
+        {
+          "at": 33.48,
+          "end": 40.24,
+          "text": "And into the round of 16 from a set down: two-six, seven-six, six-three.\n先丢一盘后逆转进十六强\n二比六 七比六 六比三"
+        },
+        {
+          "at": 40.24,
+          "end": 41.36,
+          "text": "What a performance.\n多么精彩的表现！"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "crosses_cut": "5-3接发首赛点原生发球准备至终局、握手、笑拳与观众致意；实际终结方式不自行改成正手制胜，完整原声报赛果句尾后止于WTA片尾前。",
+      "point_end_ok": "5-3接发首赛点原生发球准备至终局、握手、笑拳与观众致意；实际终结方式不自行改成正手制胜，完整原声报赛果句尾后止于WTA片尾前。",
+      "_edit_id": "match_payoff"
+    },
+    {
+      "stat_card": true,
+      "seconds": 14.8,
+      "_edit_id": "full_stats",
+      "narration": "全场，奥斯塔彭科四十五记制胜分，佩古拉十五记。非受迫失误，她也有三十七次，对手十二次。这场胜利，靠进攻，靠关键分。"
+    },
+    {
+      "title_card": "武汉第三轮见\n她能再进一步吗？",
+      "kicker": "下一场 · 继续向前",
+      "seconds": 10.5,
+      "narration": "奥斯塔彭科晋级武汉第三轮。三个赛点，都没能终结她。下一场，她能再进一步吗？",
+      "_edit_id": "ending"
+    }
+  ],
+  "_facts": [
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+      "type": "verified_match_source",
+      "why": "official_results"
+    },
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS031/stats",
+      "type": "verified_match_source",
+      "why": "complete_official_stats"
+    },
+    {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS031/point-by-point",
+      "type": "verified_match_source",
+      "why": "three_match_points_and_game_progression"
+    },
+    {
+      "url": "https://tnnslive.com/match/75373582",
+      "type": "verified_match_source",
+      "why": "full_winners_unforced_errors"
+    },
+    {
+      "url": "https://photoresources.wtatennis.com/wta/photo/2026/10/14/b62c720a-4d62-4769-bb06-e38cdd8acf56/Ostapenko-R2-Jimmie-2.jpg",
+      "type": "verified_match_source",
+      "why": "same_match_photo"
+    }
+  ],
+  "_source_coverage_notes": {
+    "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+    "missing_first_two_match_points": "由官方合法逐分4-6、5-6事实卡说明，不拿2-3/3-3抢七回合冒充。",
+    "missing_decider_5_2_to_5_3": "由官方逐分事实卡说明，不把1-1追平或3-1回合标成这次破发。",
+    "source_7_7_point_missing_prepare": "190.48硬切至进行中的回合；不作为完整关键回合使用。",
+    "fill_spatial_boundary": "最新用户要求全程3:4固定中心铺满；185.50右网前佩古拉超出画框，已实际显示并记录。"
+  },
+  "_tactical_evidence": [
+    {
+      "claim": "奥斯塔彭科用反手直线穿越佩古拉上网",
+      "source": "同源97.28–109.28连续墙与104.80/105.20/105.60/106.00原始PNG独立目视：Peg到发球线附近，Os近端左底线双手反手击球，左侧直线方向穿过Peg身侧；Good pass原声交叉支持。",
+      "limitation": "不量球速、不把这一球自行标成某次破发，具体源比分保留原板。"
+    },
+    {
+      "claim": "决胜盘5-3在接发球局连得4分，第一个赛点结束",
+      "source": "官方LS031合法逐分与257.64–263.80原生发球/接发/终局画面",
+      "limitation": "不把球滚动反弹当比赛仍在进行，不自行标正手制胜。"
+    }
+  ],
+  "_source_handle_note": "原生跨段0.18秒底料边界已逐帧核对：190.24+0.18在190.48新点前，299.24+0.18在299.48片尾前；不启用silence尾料处理。",
+  "_production_timing": {
+    "received_at": "2026-10-14T11:18:21Z",
+    "first_probe_run": "38555626888",
+    "note": "沿用首次可用链接派发时刻，不在重试/渲染前重置耗时起点。"
+  }
+}
