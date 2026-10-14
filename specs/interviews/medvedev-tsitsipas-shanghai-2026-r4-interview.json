@@ -153,62 +153,43 @@
  ],
  "_shared_ci_revision_why": "修复main未渲采访稿在共享CI中暴露的行号0、字幕超宽、收尾卡超宽及文案规格用语。英文修正改为1基账本；中文短写保持原意；lead_in仍需实际同场官方源证据，未豁免。施晗成片输入保持不变。 这次是共享CI修复，不构成梅采访的成片/发布审核，故push.auto暂置false以免本PR附带发送另一条影片；其制作任务仍需完成实际成片、封面和最终审核后恢复。",
  "lead_in": {
-  "url": "https://github.com/robertyang87/tennislive/releases/download/source-B8EO9eKy-mY/B8EO9eKy-mY-f09b81ad.mp4",
-  "start": 214.62,
-  "end": 228.44,
-  "crop_shift_x": 0,
-  "why": "同场Tennis TV官方B8EO9eKy-mY原字节归档，SHA f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c。实际核原帧214.62发球蓄力、215–219相持、约220得分结束、221–225梅德韦杰夫握拳、226–228西西帕斯反应；保留完整首赛点和完整解说句。短窗不含之后232.6–233.3握手，不声称包含。正文独立采访没有获胜画面，故在前接入。",
+  "url": "https://www.youtube.com/watch?v=B8EO9eKy-mY",
+  "start": 212.0,
+  "end": 230.2,
   "verification": {
-   "method": "official_exact_match_highlight",
-   "match_id": "2026:shanghai-masters:mens-r4:medvedev-tsitsipas",
+   "match_id": "2026:atp-shanghai:r4:medvedev-tsitsipas",
    "winner_en": "Daniil Medvedev",
    "loser_en": "Stefanos Tsitsipas",
-   "event_search": "Shanghai Masters",
+   "event_search": "Rolex Shanghai Masters",
    "year": 2026,
+   "method": "official_exact_match_highlight",
    "height": 1080,
-   "width": 1920,
-   "channel": "Tennis TV (@TennisTV)",
-   "origin_url": "https://www.youtube.com/watch?v=B8EO9eKy-mY",
-   "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
-   "_review": "data/evidence/shi-fernandez-wuhan-2026-r2/shared-ci-interview-leadin/actual-leadin-review.json"
+   "channel": "Tennis TV"
   },
   "subs": [
    {
-    "a": 219.26,
-    "b": 224.4,
-    "en": "The former champion has produced",
-    "zh": "这位前冠军打出了"
+    "a": 212.0,
+    "b": 221.1,
+    "en": "Medvedev strikes.",
+    "zh": "梅德韦杰夫一击制胜。"
    },
    {
-    "a": 224.4,
-    "b": 227.58,
-    "en": "one of his best performances of the year.",
-    "zh": "他今年最出色的表现之一。"
+    "a": 221.1,
+    "b": 230.2,
+    "en": "The former champion has produced one of his best performances of the year.",
+    "zh": "这位前冠军打出了今年最出色的表现之一。"
    }
   ],
-  "_subs_why": "复用同源同SHA已审small.en/medium.en两档真实ASR及既有英文句时轴，实际片头源窗复核记录保存于shared-ci-interview-leadin。方法如实为ASR交叉+实际帧复核，不冒充人工听审。",
   "source_captions": [
    [
     212.0,
     "Red strikes."
    ],
    [
-    221.12,
-    "The former champion"
-   ],
-   [
-    223.36,
-    "has produced"
-   ],
-   [
-    225.52,
-    ">> one of his best performances of the"
-   ],
-   [
-    227.2,
-    "year."
+    221.1,
+    "The former champion has produced >> one of his best performances of the year."
    ]
   ],
-  "_source_captions_why": "源片probe官方自动字幕事件，保留窗口前后；原始caption文本全量保存供回查，非凭空重写ASR。其起点可比真实声学起点晚，完整语句采用已有双ASR保守219.26–227.58区间。"
+  "why": "同场 Tennis TV 官方集锦 B8EO9eKy-mY（Stefanos Tsitsipas & Daniil Medvedev Clash Again | Shanghai 2026 Highlights，245 秒）。窗口 212.0-230.2（18.2 秒）：212.0 起制胜分解说（ASR 作 Red strikes.，按语境修正为 Medvedev strikes.）→ 221.1 起解说交代赛果 → 230.2 解说结束；之后约 15 秒无解说（庆祝/片尾画面），不收。起点卡在制胜分句首，终点卡在赛果解说说完。"
  }
 }
