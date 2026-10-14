@@ -11,11 +11,14 @@ import importlib
 import inspect
 import json
 import marshal
+import math
 import os
 import shutil
 import subprocess
 import tempfile
+import threading
 import types
+from concurrent.futures import ThreadPoolExecutor
 from copy import copy
 from fractions import Fraction
 from pathlib import Path
@@ -30,6 +33,7 @@ MAX_ENTRIES = 32
 MAX_BYTES = 256 * 1024 * 1024
 INPUT_FIELDS = ('source', 'start', 'end', 'speed', 'score_inset',
                 'score_inset_windows', 'score_inset_spans', 'score_inset_auto')
+_CACHE_WRITE_LOCK = threading.Lock()
 
 
 def _json(value) -> bytes:
@@ -287,6 +291,67 @@ def _prune(root):
         shutil.rmtree(entry); entries.remove(entry); total -= sizes[entry]
 
 
+def _cgroup_value(name):
+    try:
+        return (Path('/sys/fs/cgroup') / name).read_text().strip()
+    except OSError:
+        return ''
+
+
+def point_scan_workers(count, peak_bytes=2 * 1024**3):
+    """At most two decoders/detectors, bounded by CPU quota and memory capacity."""
+    try:
+        requested = int(os.environ.get('TENNISLIVE_SCOREBOARD_MASK_WORKERS', '2'))
+    except ValueError:
+        requested = 1
+    cpus = os.cpu_count() or 1
+    try:
+        cpus = min(cpus, len(os.sched_getaffinity(0)))
+    except (AttributeError, OSError):
+        pass
+    try:
+        quota, period = _cgroup_value('cpu.max').split()
+        if quota != 'max':
+            cpus = min(cpus, max(1, int(quota) // int(period)))
+    except (ValueError, ZeroDivisionError):
+        pass
+    # capture_output temporarily holds both raw-frame chunks and their joined
+    # bytes. Reserve 1 GiB for the parent and 2 GiB for each concurrent scanner.
+    limits = []
+    try:
+        limits.append(os.sysconf('SC_PHYS_PAGES') * os.sysconf('SC_PAGE_SIZE'))
+    except (AttributeError, OSError, ValueError):
+        pass
+    try:
+        limits.append(int(_cgroup_value('memory.max')))
+    except ValueError:
+        pass
+    memory_workers = max(1, (min(limits) - 1024**3) // peak_bytes) if limits else 1
+    return max(1, min(count, requested, cpus, memory_workers, 2))
+
+
+def _scan_peak_bytes(jobs, fps, tail):
+    # Account for longer/high-fps windows instead of assuming every point fits
+    # in the normal two-GiB allowance. Full decoded RGB is retained by scan_geometry.
+    width = importlib.import_module(PROFILES['wta']).SCAN_W
+    peaks = [2 * 1024**3]
+    for _, part, *_ in jobs:
+        frames = math.ceil((part.end - part.start + tail * part.speed) * float(Fraction(fps)))
+        height = part.score_inset[3] - part.score_inset[1]
+        peaks.append(frames * height * (width * 3 * 2 + 128) + 256 * 1024**2)
+    return max(peaks)
+
+
+def _resolve_wta_point(job):
+    index, part, source, partdir, fps, tail, spec_path, root = job
+    proof_path = resolve_masks_cached(
+        'wta', {part.source: source}, [part], partdir, fps, tail,
+        spec_path=spec_path, cache_root=root)
+    proof = json.loads(proof_path.read_text())
+    record, = proof['segments']
+    return index, part, record
+
+
 def _incremental_wta(sources, segments, outdir, fps, tail, spec_path, root):
     """Reuse unchanged points after a window edit, with the full bundle validators.
 
@@ -296,6 +361,7 @@ def _incremental_wta(sources, segments, outdir, fps, tail, spec_path, root):
     records, resolved = [], []
     native_profile = importlib.import_module(PROFILES['wta']).PROFILE
     with tempfile.TemporaryDirectory(dir=outdir, prefix='.mask-points-') as temporary:
+        jobs = []
         for index, segment in enumerate(segments):
             if not segment.score_inset:
                 continue
@@ -303,17 +369,24 @@ def _incremental_wta(sources, segments, outdir, fps, tail, spec_path, root):
             # reordering and another point's source do not invalidate this point.
             part = copy(segment)
             partdir = Path(temporary) / str(index)
-            proof_path = resolve_masks_cached(
-                'wta', {part.source: sources[part.source]}, [part], partdir, fps, tail,
-                spec_path=spec_path, cache_root=root)
-            proof = json.loads(proof_path.read_text())
-            record, = proof['segments']
+            jobs.append((index, part, sources[part.source], partdir, fps, tail, spec_path, root))
+        workers = point_scan_workers(len(jobs), _scan_peak_bytes(jobs, fps, tail))
+        print(f'[score-mask-cache] {workers} bounded WTA scan workers')
+        if workers > 1:
+            # map preserves spec order, including when later points finish first.
+            # Every worker owns its geometry and directory. Join all workers
+            # before exposing any resolved caller geometry or complete report.
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                measured = list(pool.map(_resolve_wta_point, jobs))
+        else:
+            measured = [_resolve_wta_point(job) for job in jobs]
+        for index, part, record in measured:
             dest = Path(outdir) / 'score_masks' / f'segment-{index+1:02d}.mkv'
             _atomic_copy(Path(record['mask']), dest)
             if _sha(dest) != record['mask_sha256']:
                 raise ValueError('Incremental mask copy bytes changed')
             records.append({**record, 'segment': index, 'mask': str(dest)})
-            resolved.append((segment, part, dest))
+            resolved.append((segments[index], part, dest))
     target = Path(outdir) / 'scoreboard_qc.json'
     target.write_text(json.dumps({'status': 'pass', 'profile': native_profile,
                                  'segments': records}, ensure_ascii=False, indent=2) + '\n')
@@ -360,7 +433,11 @@ def resolve_masks_cached(profile, sources, segments, outdir, fps, tail, *,
         # Detect source/config changes during the native scan before storing it.
         if _recipe(profile, module, sources, segments_input(recipe), fps, tail) != recipe:
             raise ValueError('Inputs changed during native mask scan')
-        _store(root, key, recipe, segments, outdir, fps)
+        # Concurrent scans may save identical entries or prune the same cache.
+        # Serialize commits/pruning; decode, detection and validation on read
+        # remain parallel, with all original byte and frame checks intact.
+        with _CACHE_WRITE_LOCK:
+            _store(root, key, recipe, segments, outdir, fps)
         print(f'[score-mask-cache] stored {key[:12]}: complete native per-frame alpha sequence')
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as exc:
         print(f'[score-mask-cache] cache unavailable ({type(exc).__name__}: {exc}); '
