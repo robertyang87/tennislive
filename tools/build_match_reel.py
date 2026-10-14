@@ -6632,6 +6632,11 @@ def silence_findings(spec: dict, segments, probes: dict,
 # 戴维斯杯的官方影像档案（ITF 频道）highlights 一律只有 720p、没有全场重播，
 # 1930 年代的英国百代新闻片只有 640×480，**这两档「等」也等不出 1080p**。
 APPROVED_LOW_RES_SOURCES: dict[str, int] = {
+    # 霍达尔上海毛巾风波（jodar-towel-shanghai-2026）：账号所有者 2026-10-14「去找原视频，
+    # 否则画面不对」——冲球童喊话与主裁警告官方集锦都没有，唯一完整的是 X @gerebit0 转发的
+    # Tennis TV 转播录屏，最高 1206×652。spec 的 source_quality_exceptions 认领了它，这里补上白名单
+    # （片子已经发了；缺这一行 main 上 test_每条spec的旁白都还估得下 一直红）。
+    "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xg.mp4": 652,
     # Sun–Lys Beijing2026: official highest rendition720p; conditional owner approval.
     "https://www.wtatennis.com/videos/4585115/junior-no-1-sun-xinran-advances-on-wta-debut-in-beijing-as-lys-retires": 720,
     "https://www.youtube.com/watch?v=-6Gv0033I2I": 720,   # 郑钦文重剪源
