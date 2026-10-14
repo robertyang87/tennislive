@@ -58,3 +58,47 @@ def test_两条探活循环都挂着看门狗():
     for fn in (push_reel.wait_for_copy_page, pushmsg._probe_page):
         src = inspect.getsource(fn)
         assert "PagesWatchdog()" in src and "watchdog.tick()" in src, fn.__name__
+
+
+def _manual_pages_cleanup():
+    from pathlib import Path
+    import yaml
+    workflow = yaml.safe_load((Path(__file__).resolve().parents[1]
+                              / '.github/workflows/pages.yml').read_text())
+    step = next(s for s in workflow['jobs']['deploy']['steps']
+                if 'CANCEL_DEPLOYMENT_ID' in s.get('env', {}))
+    return workflow, step
+
+
+def test_pages_cleanup_is_explicit_and_uses_existing_publisher_permission():
+    workflow, step = _manual_pages_cleanup()
+    assert workflow[True]['workflow_dispatch']['inputs']['cancel_deployment_id']['default'] == ''
+    assert "github.event_name == 'workflow_dispatch'" in step['if']
+    assert "inputs.cancel_deployment_id != ''" in step['if']
+    assert workflow['permissions'] == {
+        'contents': 'read', 'actions': 'read', 'pages': 'write', 'id-token': 'write'}
+    assert workflow['concurrency']['cancel-in-progress'] is False
+
+
+def test_pages_cleanup_validates_id_before_calling_api(tmp_path):
+    import json
+    import os
+    import subprocess
+    _, step = _manual_pages_cleanup()
+    mock = tmp_path / 'gh'
+    capture = tmp_path / 'calls.json'
+    mock.write_text('#!/usr/bin/env python3\nimport os,sys,json\n'
+                    'open(os.environ["CAPTURE_GH"],"w").write(json.dumps(sys.argv[1:]))\n')
+    mock.chmod(0o755)
+    env = {'PATH': str(tmp_path) + os.pathsep + os.environ['PATH'],
+           'CAPTURE_GH': str(capture), 'GITHUB_REPOSITORY': 'owner/repo'}
+    for value in ['', '../other', 'x' * 40, 'a' * 40 + ';echo unsafe']:
+        result = subprocess.run(['bash', '-eo', 'pipefail', '-c', step['run']],
+                                env={**env, 'CANCEL_DEPLOYMENT_ID': value}, capture_output=True)
+        assert result.returncode != 0 and not capture.exists()
+    deployment = 'a83687c61eec26d06b1a488f539173b7eb67ebd6'
+    result = subprocess.run(['bash', '-eo', 'pipefail', '-c', step['run']],
+                            env={**env, 'CANCEL_DEPLOYMENT_ID': deployment}, capture_output=True)
+    assert result.returncode == 0, result.stderr
+    assert json.loads(capture.read_text()) == [
+        'api', '--method', 'POST', f'repos/owner/repo/pages/deployments/{deployment}/cancel']
