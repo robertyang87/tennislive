@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "jodar-towel-shanghai-2026",
-  "written_at": "2026-10-14T08:04:51Z",
-  "code_sha": "302fc86fa77cd8ab9dcafb4f4007ae6740506ddd",
-  "spec_sha256": "c1091431b15d4a99a8e9b63e7b4349e67ea5d6fe2431e1446268acecebfdd4ab",
-  "film_sha256": "f90ebd636cedc8db3b56921ed17a75fb4f348c7af976d8eb37cc5bf4b849f976",
-  "film_bytes": 56049936,
-  "projection_sha256": "ae3c00fdced2614e7c184236485d8190703bfb79d7be631c82bef5c12857091e",
+  "written_at": "2026-10-14T10:24:27Z",
+  "code_sha": "c459dcb4b16956fe2b2a8c3840a9ee250874e5b5",
+  "spec_sha256": "6bfd18944efa7ea11f023f0095ed43bdd69b5058960598bdbc98ae11ba6f5875",
+  "film_sha256": "4fb069fe6d523f7f5cb952c2c1b7745583844959e137fe584caebbb08126a79c",
+  "film_bytes": 66405492,
+  "projection_sha256": "c7690ef47b481e5ed62c2e4a2f4862f6334d4ab57658b0fd821fc9919d8cb876",
   "claims": [
     [
       "cover",
@@ -19,7 +19,22 @@
     ],
     [
       "segments",
-      10,
+      3,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      4,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      5,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      11,
       "_quote_kind"
     ],
     [
@@ -40,24 +55,6 @@
     [
       "segments",
       2,
-      "voice",
-      "_why"
-    ],
-    [
-      "segments",
-      3,
-      "voice",
-      "_why"
-    ],
-    [
-      "segments",
-      4,
-      "voice",
-      "_why"
-    ],
-    [
-      "segments",
-      5,
       "voice",
       "_why"
     ],
@@ -87,7 +84,7 @@
     ],
     [
       "segments",
-      11,
+      10,
       "voice",
       "_why"
     ],
@@ -120,18 +117,31 @@
       16,
       "voice",
       "_why"
+    ],
+    [
+      "segments",
+      17,
+      "voice",
+      "_why"
+    ],
+    [
+      "segments",
+      18,
+      "voice",
+      "_why"
     ]
   ],
   "assets": {
     "assets/reel/jodar-towel-cover.jpg": "acfec072db80e4d104690fb8ff3ccbbb5a92b75ad5c58c3ac5c7bc2c02b42f7b",
+    "assets/reel/jodartw/jodartw-dj.png": "3ede2bfdba91048dc44ab32af4d966360ac49698aa718a382575805267e5ee1a",
     "assets/reel/jodartw/jodartw-ky.png": "21fc9a9e384febd4f74a653192c293eab5e1a18605726d2ada9b9ce884531a63",
     "assets/reel/jodartw/jodartw-mtl.png": "c91ab588cf38cc20998fdb6f4875ee6bdcc861a715d7400345ca31b9ad25bad3",
     "assets/reel/jodartw/jodartw-r16.png": "ddc28073937d79745c71c757041036e81002d56fa58da79f5bb061d649cfbe25",
     "assets/reel/jodartw/jodartw-rg.png": "25d31f8a391892af1444ac23650b604483fe0f67e1d92a733348924388a3516a"
   },
   "artifacts": {
-    "audio_review_binding.json": "8805dc0dc82ec5997fa320131855c46e25d3765800a06f459a883047edfcd799",
-    "subtitles.ass": "a4f12c923f73eb7daa2128138afc4a52d00607aa1ab119f8fb182347a9517b37",
+    "audio_review_binding.json": "52dc459c0788519cf9d8ce72678d284fc36e5fe499e33b25c5be037610cbae67",
+    "subtitles.ass": "bf8fe109fa166b4a8e55fb4ee59d3ec13ce8c73e521b7fe21280b9e8e6cebad3",
     "poster.jpg": "82e7bc94132418d80de1e381262673dce21f765af3ed16a06473abc63bead315"
   },
   "projection": {
@@ -181,6 +191,22 @@
         ]
       }
     },
+    "conform": {
+      "xg": "X 录屏只有 1206×652（非标准 16:9，约 1.85:1）；账号所有者 2026-10-14 要求那一刻必须用原始画面、可以放大铺满。等比放大 1.66× 后中央裁成 1920×1080，左右各裁约 38 像素，署名和人物都在中央 3:4 窗口里。",
+      "xrgn": "X 慢放只有 1180×652；同上，等比放大 1.66× 中央裁，当事两人已在制作时移到画面中央。"
+    },
+    "source_quality_exceptions": {
+      "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xg.mp4": {
+        "min_height": 652,
+        "approved_by": "user",
+        "reason": "账号所有者 2026-10-14：「去找原视频，否则画面不对」——霍达尔冲球童喊话与主裁警告，官方集锦都没有，唯一完整的是 X @gerebit0 转发的 Tennis TV 转播录屏，最高只有 1206×652。"
+      },
+      "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xrgn.mp4": {
+        "min_height": 652,
+        "approved_by": "user",
+        "reason": "账号所有者 2026-10-14 同一句要求：法网球童摔倒的另一机位，Roland-Garros 官方集锦没有，X @tendenciasespa 那份最高 1180×652。"
+      }
+    },
     "sources": {
       "sh": "https://www.youtube.com/watch?v=I5jIvYOKIqg",
       "atp": "https://www.youtube.com/watch?v=70L65bYCEhM",
@@ -188,8 +214,11 @@
       "iv": "https://www.youtube.com/watch?v=S-qLmqFHD2c",
       "rg": "https://www.youtube.com/watch?v=4yatYbazMaY",
       "ky": "https://www.youtube.com/watch?v=FkIw41OLjUQ",
-      "a_rule": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/a_rule.mp4",
-      "a_sched": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/a_sched.mp4"
+      "a_rule": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/a_rule2.mp4",
+      "a_sched": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/a_sched.mp4",
+      "xg": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xg.mp4",
+      "xrgn": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xrgn.mp4",
+      "xdj": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xdj.mp4"
     },
     "mixed_fps": {
       "atp": "ATP Tour 官方集锦原片即 25 fps，升到 50 fps 只重复帧，看不出顿挫",
@@ -243,51 +272,118 @@
         "end": 96.2,
         "cx": 0.5,
         "track": false,
-        "narration": "第二盘开局，他握有两个破发点，全没抓住。第二个，截击出界不到一厘米。",
+        "narration": "第二盘首局，他十五比四十拿到两个破发点；第二个，截击出界不到一厘米。",
         "voice": {
           "pitch": "+10Hz"
         }
       },
       {
-        "source": "atp",
-        "start": 113.03,
-        "end": 120.6,
+        "source": "xg",
+        "start": 0.0,
+        "end": 2.85,
         "cx": 0.5,
         "track": false,
-        "narration": "他走向场角，冲球童吼：把那该死的毛巾给我！西班牙语原话，还带着脏字。",
-        "voice": {
-          "pitch": "+10Hz"
-        }
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.15,
+            "end": 2.4,
+            "text": "¡Dame la p*** toalla, coño!\n把那该死的毛巾给我！"
+          }
+        ],
+        "point_end_ok": "分已打完，球员走向场角拿毛巾。"
       },
       {
-        "source": "atp",
-        "start": 130.43,
-        "end": 137.8,
+        "source": "xg",
+        "start": 5.6,
+        "end": 14.75,
         "cx": 0.5,
         "track": false,
-        "narration": "主裁皮诺阿尔戈特听得懂西语，当场警告，还补了一句：我完全理解你，但不能这样。",
-        "voice": {
-          "pitch": "+10Hz"
-        }
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.4,
+            "end": 3.2,
+            "text": "Code violation, unsportsmanlike conduct,\nwarning, Mr. Jódar.\n违反体育道德，警告，霍达尔先生。"
+          },
+          {
+            "at": 4.5,
+            "end": 5.3,
+            "text": "¿Qué me dijiste, tío?\n你说我什么了？"
+          },
+          {
+            "at": 7.1,
+            "end": 8.8,
+            "text": "Me ponen warning, tío.\n给我警告，哥们？"
+          }
+        ],
+        "point_end_ok": "重放画面，没有在打的分。"
       },
       {
-        "source": "tt",
-        "start": 23.58,
-        "end": 31.2,
+        "source": "xg",
+        "start": 15.6,
+        "end": 43.6,
         "cx": 0.5,
         "track": false,
-        "narration": "这一幕，官方集锦一个都没剪进去，网上只有球迷在看台拍的视频。",
+        "narration": "",
+        "quote": [
+          {
+            "at": 5.8,
+            "end": 8.2,
+            "text": "Yo entiendo, pero… así no.\n我理解，但不能这样。"
+          },
+          {
+            "at": 8.4,
+            "end": 10.2,
+            "text": "No me hace caso, tío, le estoy hablando.\n他不理我，我在跟他说话。"
+          },
+          {
+            "at": 10.8,
+            "end": 13.4,
+            "text": "Rafa, pídemelo a mí, y yo se lo pido.\n拉法，跟我说，我替你要。"
+          },
+          {
+            "at": 14.2,
+            "end": 17.5,
+            "text": "No puedo repetir… ¿tú sabes lo que dijiste?\n我不能重复，你知道自己说了啥。"
+          },
+          {
+            "at": 19.3,
+            "end": 21.3,
+            "text": "Así no, así no hablamos con ellos.\n不能这样跟他们说话。"
+          },
+          {
+            "at": 24.4,
+            "end": 26.6,
+            "text": "Yo te entiendo perfectamente, pero eso no.\n我完全理解你，但那样不行。"
+          },
+          {
+            "at": 27.3,
+            "end": 27.9,
+            "text": "Gracias.\n谢谢。"
+          }
+        ],
+        "point_end_ok": "判罚后的交涉，没有在打的分。"
+      },
+      {
+        "source": "xg",
+        "start": 43.95,
+        "end": 49.6,
+        "cx": 0.5,
+        "track": false,
+        "narration": "主裁皮诺阿尔戈特来自厄瓜多尔，西语他全听得懂。",
         "voice": {
           "pitch": "+10Hz"
-        }
+        },
+        "point_end_ok": "交涉结束，球员回到底线。"
       },
       {
         "source": "a_rule",
         "start": 0.0,
-        "end": 11.0,
+        "end": 11.6,
         "cx": 0.5,
         "track": false,
-        "narration": "为什么判警告？ATP 规则书里写着：不得说出能被听清的脏话，单次最高罚五千美元；辱骂条款的对象，也包括场内任何人。",
+        "narration": "转播打出的判罚是违反体育道德。按 ATP 规则，球员须尊重官员、对手、观众和他人；脏话另有条款，最高罚五千美元。",
         "voice": {
           "pitch": "+10Hz"
         }
@@ -369,12 +465,23 @@
         }
       },
       {
-        "source": "rg",
-        "start": 12.0,
-        "end": 23.0,
+        "source": "xrgn",
+        "start": 0.3,
+        "end": 6.7,
         "cx": 0.5,
         "track": false,
-        "narration": "他赛后否认：我从没碰到她，绝不会那样做。之后流出的新机位显示，他确实没有碰到；是球童后退时，被场边盖布绊倒。",
+        "narration": "就是这一幕：他从场边走过，身旁的球童往后一退，摔倒在地。",
+        "voice": {
+          "pitch": "+10Hz"
+        }
+      },
+      {
+        "source": "xrgn",
+        "start": 9.0,
+        "end": 19.6,
+        "cx": 0.5,
+        "track": false,
+        "narration": "他赛后否认：我从没碰到她。这个机位能看清，他确实没有碰到；是球童后退时，被场边盖布绊倒。",
         "voice": {
           "pitch": "+10Hz"
         }
@@ -385,7 +492,7 @@
         "end": 21.8,
         "cx": 0.5,
         "track": false,
-        "narration": "冲球童发火，他也不是第一个。二零一六年法网首轮，克耶高斯大声冲球童要毛巾，主裁拉莫斯以违反体育道德，判了警告。",
+        "narration": "二零一六年法网首轮，克耶高斯大声冲球童要毛巾，被主裁拉莫斯判了警告。",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -407,14 +514,30 @@
         }
       },
       {
-        "source": "tt",
-        "start": 45.5,
-        "end": 53.9,
+        "source": "xdj",
+        "start": 1.0,
+        "end": 5.8,
         "cx": 0.5,
         "track": false,
-        "narration": "二零一五年温网第四轮，德约科维奇冲球童吼了一声毛巾；他说不是冲她，赛后还是道了歉。",
+        "narration": "二零一五年温网，德约冲球童吼，事后道歉。",
         "voice": {
           "pitch": "+10Hz"
+        },
+        "inset": {
+          "label": {
+            "topic": "冲球童吼毛巾",
+            "date": "2015.07.07",
+            "place": "温网第四轮",
+            "people": "德约科维奇 胜 安德森",
+            "event": "赛后道歉"
+          },
+          "image": "assets/reel/jodartw/jodartw-dj.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.085,
+          "show_for": 3.2,
+          "motion": "editorial"
         }
       },
       {
@@ -423,7 +546,7 @@
         "end": 31.2,
         "cx": 0.5,
         "track": false,
-        "narration": "同年在蒙特利尔，克耶高斯对一名球童出言不当，被 ATP 追加罚款两千五百美元。",
+        "narration": "同年在蒙特利尔，克耶高斯对球童出言不当，被追加罚款两千五百美元。",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -446,11 +569,11 @@
       },
       {
         "source": "atp",
-        "start": 137.8,
+        "start": 136.9,
         "end": 143.45,
         "cx": 0.5,
         "track": false,
-        "narration": "一次警告，换来一次破发。下一场，他能把火气留给对手吗？",
+        "narration": "一次警告，换来一次破发。下一场，火气能留给对手吗？",
         "voice": {
           "pitch": "+10Hz"
         }
