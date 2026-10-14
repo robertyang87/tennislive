@@ -1,6 +1,6 @@
 {
   "slug": "ostapenko-pegula-wuhan-2026-r2",
-  "checked_at": "2026-10-14T12:57:56Z",
+  "checked_at": "2026-10-14T14:11:25Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -10,9 +10,9 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "3b5819a2806a96a9": {
+    "6f5091f2f0b1f38a": {
       "segment": 2,
-      "spoken": 9.624,
+      "spoken": 9.888,
       "picture": 11.0
     },
     "e60684d6244481e1": {
@@ -48,16 +48,12 @@
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "097242a138184043d122391d3958776505670af16ed50eaee5142697c26ae473",
+    "bundle_sha256": "c7592cfccdfbb321264c8809a685c3f73ea8548ca4864258c5bb66d628d37e7a",
     "request_count": 8,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
-    "audio_decoding_verified": true,
-    "release_tag": "reel-tts-ostapenko-pegula-wuhan-2026-r2-097242a138184043",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-ostapenko-pegula-wuhan-2026-r2-097242a138184043/tts_bundle.zip",
-    "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38569034490"
+    "audio_decoding_verified": true
   }
 }
