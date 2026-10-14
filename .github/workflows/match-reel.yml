@@ -1201,6 +1201,20 @@ jobs:
       # 全是，上一次真用它挑出候选写进 spec 是 2026-08-19 的 `zhang-li`），
       # 所以这 71 秒常规就是白烧的。真要用 `cutout` 版式再显式开
       # `cutout_candidates: true`。
+      - name: 临时导出官方源片供当前模型制作审听
+        if: github.event.inputs.mode == 'probe'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+          SOURCE_URL: ${{ github.event.inputs.url }}
+        run: |
+          set -euo pipefail
+          OUT="${{ steps.paths.outputs.outdir }}"
+          cp "$OUT/source.mp4" /tmp/moon-source.mp4
+          python -m yt_dlp --skip-download --dump-single-json --cookies "$YT_COOKIES" "$SOURCE_URL" > /tmp/moon-source-info.json
+          gh release view review-source-chwalinska-wuhan >/dev/null 2>&1 || gh release create review-source-chwalinska-wuhan --draft --target "${{ github.sha }}" --title "Temporary official match source for current-model review" --notes "Internal source only; not a completed reel."
+          gh release upload review-source-chwalinska-wuhan /tmp/moon-source.mp4 /tmp/moon-source-info.json --clobber
+
       - name: probe — 封面候选帧
         if: github.event.inputs.mode == 'probe' && github.event.inputs.cutout_candidates == 'true'
         run: |
