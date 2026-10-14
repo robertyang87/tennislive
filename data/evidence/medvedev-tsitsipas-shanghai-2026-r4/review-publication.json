@@ -1,0 +1,71 @@
+{
+  "schema": "tennislive.finite-final-review-publication.v1",
+  "slug": "medvedev-tsitsipas-shanghai-2026-r4",
+  "movie_sha256": "eafca1baae7a980040ded12dee59f42379d542df872ab7a3b0611040e6aaed8a",
+  "movie_bytes": 59378397,
+  "native_render_run": 38616203044,
+  "tts_bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+  "review_archives": [
+    {
+      "name": "pronunciation-evidence.zip",
+      "sha256": "b7cafa1ffa8ff4b69e4e72fbb889b2577c37bb15c570b939d96eedfcaef002ae",
+      "bytes": 8608213,
+      "url": "https://github.com/robertyang87/tennislive/releases/download/reel-review-medvedev-tsitsipas-shanghai-2026-r4-cde78c9e5707badb/pronunciation-evidence.zip"
+    },
+    {
+      "name": "visual-qc-evidence.zip",
+      "sha256": "8a4fda9ca59509bcf06a68e962930e4b5d777d10e3c96e2b65d53aca3672b48e",
+      "bytes": 110233972,
+      "url": "https://github.com/robertyang87/tennislive/releases/download/reel-review-medvedev-tsitsipas-shanghai-2026-r4-cde78c9e5707badb/visual-qc-evidence.zip"
+    }
+  ],
+  "tracked_reports": [
+    {
+      "path": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/visual/final-visual-review.json",
+      "sha256": "53cc6e31b62667b541621efd118c513a89e286c46f4ae388aa20f30cd248989e"
+    },
+    {
+      "path": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/visual/frame_manifest.json",
+      "sha256": "adf888f8828918cdc12f6f9232a81e78c01ac33740bed63becd506da31334198"
+    },
+    {
+      "path": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/visual/root-exact-mask-correction.json",
+      "sha256": "66eb1e1934e9aa4d68a8815785deed9df428e26e5b8e5108947e2d8eed84eaa8"
+    },
+    {
+      "path": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/visual/superseded-mask-failure.json",
+      "sha256": "c7c946c31978ef97b48b38dca08e965d03711ebe8559ce5d244c998bba4ad383"
+    },
+    {
+      "path": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/pronunciation/final-review.json",
+      "sha256": "ded2c2339b95cc4d470eaf2356a3ff49b547f587935c3085a7f0193a15f036ae"
+    },
+    {
+      "path": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/pronunciation/bindings.json",
+      "sha256": "8fc1f82a978644bd206a01a6d7eb8dc367e61abdc765edc7c8be6a5b049b0ae6"
+    },
+    {
+      "path": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/pronunciation/artifact-verification.json",
+      "sha256": "8e53ebfc299d541ff6260e5e58516177d6e2b5b2430a314963dc6c2e576a72e0"
+    },
+    {
+      "path": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/pronunciation/FINAL_REVIEW.md",
+      "sha256": "abc1989b4f7f7d7356ae14104d6f4367e0ef40265b449c17dc729a60a83fa5b6"
+    },
+    {
+      "path": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/pronunciation/archive-verification.json",
+      "sha256": "708198ca3f9adffeb9fdcda555070343446fd7a00ab5871e7570a84761efd6bc"
+    },
+    {
+      "path": "data/evidence/medvedev-tsitsipas-shanghai-2026-r4/source/final-current-story-review.json",
+      "sha256": "426827d7c0b83d4d32696778f5c1c5d3264fee11ee3eb3d25d1b095e11ab639f"
+    }
+  ],
+  "limitations": [
+    "Visual review covers102 actual current movie frames and all30 ASS cue-midpoint windows; it does not claim viewing all4344 frames.",
+    "Actual frozen MP3 acoustic evidence has finite conservative low-support limits, no unconfirmed primary positions or confirmed misreads, and no human listening claim. Failed comparisons remain archived.",
+    "User-authorized fixed center3:4 crop excludes source sides; complete selected temporal action windows do not imply whole horizontal court/player visibility.",
+    "Absolute original paths in raw execution reports identify original artifacts. ZIP archives retain corresponding original PNG/audio bytes and SHA mappings."
+  ],
+  "publication_receipt": null
+}
