@@ -5,15 +5,15 @@
     "schema": "tennislive.frozen-tts-bundle.v1",
     "bundle_sha256": "4f7a5348d2aff33e92b77b7854b07ff3b34c3d40156269c0e569f0c326582046",
     "request_count": 18,
-    "mode": "capture_export",
-    "strict_reused": false,
+    "mode": "strict_import",
+    "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
     "release_tag": "reel-tts-jodar-towel-shanghai-2026-4f7a5348d2aff33e",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-jodar-towel-shanghai-2026-4f7a5348d2aff33e/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38531199467"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38531973223"
   },
   "cover_seconds": 3.466,
   "cover_narrated": true,
@@ -58,44 +58,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "a1993a45eb60d1477844447de58ace2f794e31029f6a6834c50525ccb30e18cc",
+  "render_inputs_sha256": "35520e5d9fb6c130aab3b970d90c731eef7779249b2520a4d81716f743c16d25",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "jodar-towel-shanghai-2026",
-    "received_at": "2026-10-14T07:52:27Z",
-    "artifact_ready_at": "2026-10-14T07:57:30Z",
-    "elapsed_seconds": 303.45,
+    "received_at": "2026-10-14T07:59:29Z",
+    "artifact_ready_at": "2026-10-14T08:04:52Z",
+    "elapsed_seconds": 323.743,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "1f286a0fd49fbc9da0f835cfc8586beaba8ba4a38d276c8c7b8715990746c6e7",
-    "spec_sha256": "f3a5323d71beed0bc0a6baee1992e05405858f44c9c7facd5c7bf9cba3d0104b",
-    "run_id": "38531199467",
+    "film_sha256": "f90ebd636cedc8db3b56921ed17a75fb4f348c7af976d8eb37cc5bf4b849f976",
+    "spec_sha256": "c1091431b15d4a99a8e9b63e7b4349e67ea5d6fe2431e1446268acecebfdd4ab",
+    "run_id": "38531973223",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-14T07:55:14Z",
-        "run_id": "38531199467"
+        "at": "2026-10-14T08:02:33Z",
+        "run_id": "38531973223"
       }
     ],
-    "render_seconds": 136.45,
-    "pre_render_seconds": 167.0
+    "render_seconds": 139.743,
+    "pre_render_seconds": 184.0
   },
-  "film_sha256": "1f286a0fd49fbc9da0f835cfc8586beaba8ba4a38d276c8c7b8715990746c6e7",
-  "film_bytes": 56056324,
-  "qc_attestation_sha256": "96463118c8249345a9316823c8a84899e573d633db8367064b49618dc0dbd247",
+  "film_sha256": "f90ebd636cedc8db3b56921ed17a75fb4f348c7af976d8eb37cc5bf4b849f976",
+  "film_bytes": 56049936,
+  "qc_attestation_sha256": "b9a07ed49a6f988af5e58fb0c393819823b56f71c66f581e2c9f81fa02d67502",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-14T07:55:14Z",
-      "run_id": "38531199467"
+      "at": "2026-10-14T08:02:33Z",
+      "run_id": "38531973223"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-14T07:57:32Z",
-      "run_id": "38531199467"
+      "at": "2026-10-14T08:05:00Z",
+      "run_id": "38531973223"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-jodar-towel-shanghai-2026/jodar-towel-shanghai-2026.mp4",
-  "video_bytes": 56056324
+  "video_bytes": 56049936
 }
