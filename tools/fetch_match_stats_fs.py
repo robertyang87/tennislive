@@ -173,6 +173,7 @@ def find_match(
         with ThreadPoolExecutor(max_workers=len(batch)) as pool:
             bodies = list(pool.map(
                 lambda offset: _feed_result(offset), batch))
+        rows = []
         for offset, body, error in bodies:
             tried.append(offset)
             if error:
@@ -180,10 +181,12 @@ def find_match(
                 continue
             for record in body.split("~AA÷")[1:]:
                 scanned += 1
-                row = _fields("AA÷" + record)
-                home = row.get("AE", "")
-                away = row.get("AF", "")
-                if pair_fits(names, home, away):
+                rows.append(_fields("AA÷" + record))
+        # 先按名字严格认；这一批整份都没命中才按姓宽松认一遍（昵称兜底，同姓不认）
+        for loose in (False, True):
+            for row in rows:
+                home, away = row.get("AE", ""), row.get("AF", "")
+                if pair_fits(names, home, away, loose=loose):
                     return row.get("AA", ""), home, away
     if tried and len(failures) == len(tried):
         raise FeedUnavailable("近期赛果喂料全部读取失败：" + "；".join(failures))

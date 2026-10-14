@@ -277,22 +277,26 @@ def matchup_order(home: str, away: str, flashscore_id: str) -> list[tuple[str, s
     if not fs_home or not fs_away:
         # 读到了、只是这一场的记录还没挂出来——赛后刚打完常见，下一班再读
         raise MatchupOrderUnverified("flashscore df_hh_1 没给本场的 FH/FK", transient=True)
-    # 按「谁的姓出现在 flashscore 的 home 里」归位，而不是按整名相等——feed 是
-    # 「Baez S.」缩写，命令行是「Sebastian Baez」，整名对不上。
-    def side_is(fs_name: str, full: str) -> bool:
-        return _surname(full).casefold() in fs_name.casefold()
+    # 按 `tennislive.names.name_fits` 归位（整词、名字前缀相容），而不是按整名相等——
+    # feed 是「Baez S.」缩写，命令行是「Sebastian Baez」，整名对不上。原来按「姓是不是
+    # 子串」认，同姓的两个 Wang 永远认不出（2026-10-14 speedcheck：FH='Wang Xiy.'
+    # FK='Wang Xin.' 一样卡在这儿）；名字前缀把 Xiyu / Xinyu 分开。
+    from tennislive.names import name_fits  # noqa: PLC0415
 
-    # ⚠️ 同姓（王欣瑜/王曦雨、两个 Wang）时两边都会命中 home，`ordered` 会变成
-    # `[home, home]`——长度也是 2，静默把 away 吞掉。要求两边各认领一个。
-    ordered = []
-    for fs_name in (fs_home, fs_away):
-        hit_home, hit_away = side_is(fs_name, home), side_is(fs_name, away)
-        if hit_home and not hit_away:
-            ordered.append((home, player_zh(home)))
-        elif hit_away and not hit_home:
-            ordered.append((away, player_zh(away)))
-    if len(ordered) == 2 and ordered[0][0] != ordered[1][0]:
-        return ordered
+    # ⚠️ 同姓（王欣瑜/王曦雨、两个 Wang）且缩写名也分不开时两边都会命中 home，`ordered`
+    # 会变成 `[home, home]`——长度也是 2，静默把 away 吞掉。要求两边各认领一个。
+    # 先严格（名字要对得上）再宽松（只比姓，昵称兜底）。
+    for loose in (False, True):
+        ordered = []
+        for fs_name in (fs_home, fs_away):
+            hit_home = name_fits(home, fs_name, loose=loose)
+            hit_away = name_fits(away, fs_name, loose=loose)
+            if hit_home and not hit_away:
+                ordered.append((home, player_zh(home)))
+            elif hit_away and not hit_home:
+                ordered.append((away, player_zh(away)))
+        if len(ordered) == 2 and ordered[0][0] != ordered[1][0]:
+            return ordered
     raise MatchupOrderUnverified(
         f"按姓认不出 home/away（FH={fs_home!r} FK={fs_away!r}）", transient=False)
 

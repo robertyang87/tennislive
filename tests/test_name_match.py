@@ -55,3 +55,24 @@ def test_WTA接口反查同一条规则(monkeypatch):
     from datetime import date
     got = pbp.find_match(None, ["Xinyu Wang", "Xiyu Wang"], date(2026, 10, 11), date(2026, 10, 12))
     assert got[2] == "LS045"
+
+
+def test_feed没写出来的名字不算数():
+    """`Ruse E.` 对 Elena-Gabriela Ruse：Gabriela 没写出来不许当成对不上（首版就这么误伤过）。"""
+    assert name_fits("Elena-Gabriela Ruse", "Ruse E.")
+    assert pair_fits(["Alexandra Eala", "Elena-Gabriela Ruse"], "Eala A.", "Ruse E.")
+
+
+def test_昵称走宽松那一遍_同姓宽松不认():
+    assert not name_fits("Bia Haddad Maia", "Beatriz Haddad Maia")
+    assert name_fits("Bia Haddad Maia", "Beatriz Haddad Maia", loose=True)
+    assert not pair_fits(["Xiyu Wang", "Xinyu Wang"], "Wang Yafan", "Wang Qiang", loose=True)
+
+
+def test_flashscore严格没命中才宽松(monkeypatch):
+    rows = _body("Haddad Maia Beatriz", "Joint M.", "loose") + _body("Wang Yaf.", "Wang Qia.", "nope")
+    monkeypatch.setattr(fs, "feed", lambda name: rows)
+    assert fs.find_match(["Bia Haddad Maia", "Maya Joint"], offsets=(0,))[0] == "loose"
+    import pytest
+    with pytest.raises(fs.StatsError):
+        fs.find_match(["Xiyu Wang", "Xinyu Wang"], offsets=(0,))

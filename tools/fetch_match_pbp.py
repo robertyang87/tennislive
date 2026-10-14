@@ -81,6 +81,11 @@ def get(session: requests.Session, path: str, params: dict | None = None,
     return resp.json()
 
 
+def _sides(row: dict) -> tuple[str, str]:
+    return (f"{row.get('PlayerNameFirstA') or ''} {row.get('PlayerNameLastA') or ''}",
+            f"{row.get('PlayerNameFirstB') or ''} {row.get('PlayerNameLastB') or ''}")
+
+
 def find_match(
     session: requests.Session, players: list[str], since: date, until: date
 ) -> tuple[str, int, str, dict]:
@@ -97,6 +102,7 @@ def find_match(
         },
     )
     scanned = 0
+    rows: list[tuple[str, int, dict]] = []
     for event in events.get("content", []):
         group = event.get("tournamentGroup") or {}
         event_id, year = group.get("id"), event.get("year")
@@ -109,10 +115,13 @@ def find_match(
         )
         for row in payload.get("matches") or []:
             scanned += 1
-            side_a = f"{row.get('PlayerNameFirstA') or ''} {row.get('PlayerNameLastA') or ''}"
-            side_b = f"{row.get('PlayerNameFirstB') or ''} {row.get('PlayerNameLastB') or ''}"
-            if pair_fits(players, side_a, side_b):
+            rows.append((str(event_id), int(year), row))
+            if pair_fits(players, *_sides(row)):
                 return str(event_id), int(year), str(row["MatchID"]), row
+    # 严格那一遍整个窗口都没命中，才按姓宽松认一遍（昵称兜底，同姓不认）
+    for event_id, year, row in rows:
+        if pair_fits(players, *_sides(row), loose=True):
+            return event_id, year, str(row["MatchID"]), row
     # 空结果先自证是真空：报出扫了多少场，别让"没找到"和"没扫到"长得一样
     raise SystemExit(
         f"{since}–{until} 窗口里扫了 {scanned} 场，没有同时出现 {players} 的比赛"

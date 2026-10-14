@@ -30,23 +30,39 @@ def _name_tokens(text: str) -> list[str]:
     return [t for t in plain.casefold().replace("-", " ").replace(".", " ").split() if t]
 
 
-def name_fits(given: str, side: str) -> bool:
+def name_fits(given: str, side: str, *, loose: bool = False) -> bool:
     """`given`（「Xiyu Wang」或只给姓「wang」）是不是 feed 里这一边（「Wang Xiy.」）。
 
     **按整词比，不按子串比**（2026-10-12 `wangxiyu-wangxinyu-wuhan-2026-r1`：两个姓都是
     「wang」，`"wang" in "sawangkaew joint"` 成立，自动草稿的统计配到了 Sawangkaew/Joint）。
-    至少一个词完全相同；给出的每个词都要在这一边找到前缀相容的词——缩写名 `Xiy.`／`F.`
-    认得出，而「Xinyu」对不上「Xiy.」，同姓的两个人分得开。"""
+
+    - 严格（默认）：至少一个词完全相同；**feed 这一边多出来的词**（缩写名 `Xiy.`／`E.`）
+      都要和给出的某个名字前缀相容——「Xinyu」对不上「Xiy.」，同姓的两个人分得开；
+      feed 没写出来的名字不算数（`Ruse E.` 对 Elena-Gabriela Ruse 照样认）
+    - 宽松（`loose`）：只按姓（`surname_en`）整词比，给昵称和 feed 写法不同的兜底
+      （Bia／Beatriz），调用方只在严格那一遍整份 feed 都没命中时才用"""
     want, have = _name_tokens(given), _name_tokens(side)
+    if loose:
+        sur = _name_tokens(surname_en(given)) if len(want) > 1 else want
+        return bool(sur) and all(t in have for t in sur)
     if not want or not have or not set(want) & set(have):
         return False
-    return all(any(h.startswith(w) or w.startswith(h) for h in have) for w in want)
+    rest_want = [w for w in want if w not in have]
+    rest_have = [h for h in have if h not in want]
+    if not rest_want:
+        return True
+    return all(any(w.startswith(h) or h.startswith(w) for w in rest_want) for h in rest_have)
 
 
-def pair_fits(names: list[str], home: str, away: str) -> bool:
-    """两个名字分别落在**两边**（任一顺序）；不是两个名字时退回「每个都落在某一边」。"""
+def pair_fits(names: list[str], home: str, away: str, *, loose: bool = False) -> bool:
+    """两个名字分别落在**两边**（任一顺序）；不是两个名字时退回「每个都落在某一边」。
+
+    宽松那一遍两个人同姓就不认——只剩姓可比时同姓的两个人分不开，宁可说没找到。"""
     if len(names) == 2:
         a, b = names
-        return ((name_fits(a, home) and name_fits(b, away))
-                or (name_fits(a, away) and name_fits(b, home)))
-    return all(name_fits(n, home) or name_fits(n, away) for n in names)
+        if loose and _name_tokens(surname_en(a)) == _name_tokens(surname_en(b)):
+            return False
+        return ((name_fits(a, home, loose=loose) and name_fits(b, away, loose=loose))
+                or (name_fits(a, away, loose=loose) and name_fits(b, home, loose=loose)))
+    return all(name_fits(n, home, loose=loose) or name_fits(n, away, loose=loose)
+               for n in names)
