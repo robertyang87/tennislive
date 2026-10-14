@@ -1,0 +1,21 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xg.mp4",
+  "source_sha256": "6c38a4b220026431bcf8d898d67d17c56a1d838a5d594bd682ed611954a42a55",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: local faster-whisper large-v3 and large-v3-turbo cross-check; not human listening",
+  "reviewed_at": "2026-10-14T17:12:46.915881+00:00",
+  "reviewed_from": 26.15,
+  "reviewed_to": 29.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 26.28,
+      "end": 29.0,
+      "en": "Rafa, pídemelo a mí, y yo se lo pido.",
+      "zh": "拉法，向我要，我再让他拿给你。"
+    }
+  ],
+  "language": "es",
+  "_evidence": "Retained only mutually intelligible complete umpire sentences; rejected original shouting, reconstructed English call and overlapping player responses. ASR source outputs retained in docs/reviews/jodar-towel-shanghai-2026/. This record is not human auditory approval."
+}
