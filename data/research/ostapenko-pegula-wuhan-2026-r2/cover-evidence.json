@@ -1,0 +1,86 @@
+{
+  "best": {
+    "file": "/workspace/scratch/ostapenko-pegula-cover/Ostapenko-R2-Jimmie-2.jpg",
+    "original_size": [
+      4700,
+      3151
+    ],
+    "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/14/b62c720a-4d62-4769-bb06-e38cdd8acf56/Ostapenko-R2-Jimmie-2.jpg",
+    "source_metadata_api": "https://api.wtatennis.com/content/wta/photo/EN/?pageSize=100&page=0",
+    "photo_id": 4592266,
+    "credit": "Jimmie48/WTA; Rob Prange",
+    "capture_datetime": "2026-10-14T18:46:14+08:00",
+    "publish_utc": "2026-10-14T11:04:21Z",
+    "identity_evidence": [
+      "WTA metadata title Jelena Ostapenko, Wuhan 2026; TENNIS_PLAYER319939; TOURNAMENTGROUP1075",
+      "Native filename Ostapenko-R2-Jimmie-2.jpg",
+      "EXIF ImageDescription: Jelena Ostapenko of Latvia in action during the second round of the 2026 Dongfeng Voyah Wuhan Open WTA 1000 tennis tournament",
+      "EXIF DateTimeOriginal 2026:10:14 18:46:14 and OffsetTimeOriginal +08:00",
+      "Visual court Wuhan signage, winner in burgundy polo and skirt, single player, celebratory fist; compared second official photo same day"
+    ],
+    "visual_review": {
+      "method": "view_image original-size-downsampled view + actual 1080x1440 crop viewed",
+      "person": "Ostapenko; single player, no opponent",
+      "face": "three-quarter face; both eyes visibly open; eyes and facial skin in focus",
+      "emotion": "fist raised and smile; suitable for comeback payoff",
+      "hands_racket": "complete racket head, grip hand and raised fist are inside crop",
+      "crop": "3:4 full bleed, player torso on center axis; head and chin avoid top header and hook bands",
+      "foreign_logo": "no broadcast channel watermark; court advertising is background"
+    },
+    "portrait": {
+      "image": "/workspace/scratch/ostapenko-pegula-cover/Ostapenko-R2-Jimmie-2.jpg",
+      "fit": "cover",
+      "focus": 0.51,
+      "focus_y": 0.5,
+      "zoom": 1.0
+    },
+    "crop_native": [
+      1192,
+      0,
+      3555,
+      3151
+    ],
+    "preview": "/workspace/scratch/ostapenko-pegula-cover/crop-focus051.jpg",
+    "upscale_required": false,
+    "rights_status": "public WTA CDN; original EXIF says editorial use is fee-liable unless licensed. No licensing action performed."
+  },
+  "other_wta": {
+    "file": "/workspace/scratch/ostapenko-pegula-cover/Ostapenko-R2-Jimmie.jpg",
+    "size": [
+      4329,
+      2834
+    ],
+    "capture_datetime": "2026-10-14T16:24:27+08:00",
+    "visual_review": "sharp backhand action but face too side-on; full racket/hand geometry cannot fit tight 3:4 as well. Not recommended."
+  },
+  "comparison_channels": [
+    {
+      "channel": "WTA photo API / WTA CDN Jimmie48",
+      "status": "2 genuine R2 high resolution photos found; both downloaded and inspected. Select fist celebration #4592266."
+    },
+    {
+      "channel": "Getty / AFP",
+      "status": "37 search assets; 18 caption entries reference Pegula; same-match celebration ids2299591797,2299591720 dated Oct14. Both 612px public previews downloaded and viewed. First has racket extending far left, awkward 3:4; second has uplifted hand that imposes crop ceiling. Selected WTA is much higher resolution and easier centered framing. No licensed high-res download acquired.",
+      "metadata": "/workspace/scratch/ostapenko-pegula-cover/getty-candidates.json"
+    },
+    {
+      "channel": "AP",
+      "status": "Search returns today Wuhan article /wuhan-tennis-wta-01235a4a22d6dc0ea7ba952b0e612034; inspected attached image caption is Mertens vs Swiatek Beijing Oct9, no matching Ostapenko photo. Search page accessible HTTP200."
+    },
+    {
+      "channel": "Wuhan official gallery",
+      "status": "Public official gallery works: POST https://www.wuhanopentennis.com/api/portal/document/picture/list. Album id1439 title 正赛第3日 奥斯塔彭科vs佩古拉, published 2026-10-14, uploaded 19:09 +08. Two photos downloaded and viewed: 1600x1067 PNG each. Neither resolution can fill 1080x1440 without enlargement (1.35x); WTA original 4700x3151 is superior.",
+      "album_metadata": "/workspace/scratch/ostapenko-pegula-cover/wuhan-match-metadata.json",
+      "photos": [
+        "/workspace/scratch/ostapenko-pegula-cover/wuhan-pgl.png",
+        "/workspace/scratch/ostapenko-pegula-cover/wuhan-pgll.png"
+      ],
+      "detail_api": "https://www.wuhanopentennis.com/api/portal/document/picture/detail?id=1439",
+      "visual_review": {
+        "wuhan-pgl.png": "Pegula serving, not winner; excluded for protagonist mismatch.",
+        "wuhan-pgll.png": "Ostapenko front-facing, open eyes, focused fist expression. Sharp, but racket extends across lower left and grip hand partly hidden behind foreground; tight 3:4 crop that centers face cuts racket. Also 1600x1067 requires 1.35x enlargement. WTA celebratory original fits both hand and racket."
+      }
+    }
+  ],
+  "tool_scan_caveat": "find_cover_photo.py with surname Ostapenko mistakenly treats given name Jelena as another person. Visual review confirms one player, so do not inherit automatic two-person warning; first official-domain attempt wuhanopen.org failed and was superseded by real domain."
+}

@@ -1,0 +1,1122 @@
+{
+  "status": "complete_raw_independent_asr",
+  "source": "/workspace/scratch/ostapenko-source/source.mp4",
+  "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+  "source_decoded_duration_seconds": 309.5684375,
+  "actual_interval_seconds": [
+    0.0,
+    303.0
+  ],
+  "model_requested_label": "base",
+  "actual_model": "base.en",
+  "engine": "faster-whisper",
+  "configuration": {
+    "language": "en",
+    "beam_size": 8,
+    "vad_filter": false,
+    "word_timestamps": true,
+    "initial_prompt": null,
+    "prefix": null,
+    "temperature": 0.0,
+    "cpu_threads": 3,
+    "device": "cpu",
+    "compute_type": "int8",
+    "local_files_only": true
+  },
+  "method": "Independent complete interval transcribe, no prompt; raw ASR retained; no manual listening claimed",
+  "segments": [
+    {
+      "start": 15.120000000000005,
+      "end": 26.62,
+      "text": " Nice to pick up, lands a blow on the backhand, and rips a backhand winner.",
+      "avg_logprob": -0.594668312072754,
+      "no_speech_prob": 0.13254202902317047,
+      "words": [
+        {
+          "start": 15.120000000000005,
+          "end": 15.64,
+          "word": " Nice",
+          "probability": 0.18998366594314575
+        },
+        {
+          "start": 15.64,
+          "end": 15.74,
+          "word": " to",
+          "probability": 0.8409053087234497
+        },
+        {
+          "start": 15.74,
+          "end": 15.88,
+          "word": " pick",
+          "probability": 0.4739952087402344
+        },
+        {
+          "start": 15.88,
+          "end": 16.1,
+          "word": " up,",
+          "probability": 0.984904944896698
+        },
+        {
+          "start": 16.54,
+          "end": 17.26,
+          "word": " lands",
+          "probability": 0.563457727432251
+        },
+        {
+          "start": 17.26,
+          "end": 17.5,
+          "word": " a",
+          "probability": 0.41193917393684387
+        },
+        {
+          "start": 17.5,
+          "end": 17.64,
+          "word": " blow",
+          "probability": 0.9913263916969299
+        },
+        {
+          "start": 17.64,
+          "end": 17.82,
+          "word": " on",
+          "probability": 0.9660132527351379
+        },
+        {
+          "start": 17.82,
+          "end": 17.9,
+          "word": " the",
+          "probability": 0.9980980753898621
+        },
+        {
+          "start": 17.9,
+          "end": 18.26,
+          "word": " backhand,",
+          "probability": 0.7926783859729767
+        },
+        {
+          "start": 18.54,
+          "end": 21.08,
+          "word": " and",
+          "probability": 0.6252765655517578
+        },
+        {
+          "start": 21.08,
+          "end": 25.86,
+          "word": " rips",
+          "probability": 0.9091134369373322
+        },
+        {
+          "start": 25.86,
+          "end": 26.04,
+          "word": " a",
+          "probability": 0.6805266737937927
+        },
+        {
+          "start": 26.04,
+          "end": 26.4,
+          "word": " backhand",
+          "probability": 0.9780723452568054
+        },
+        {
+          "start": 26.4,
+          "end": 26.62,
+          "word": " winner.",
+          "probability": 0.979764997959137
+        }
+      ]
+    },
+    {
+      "start": 26.62,
+      "end": 56.6,
+      "text": " up, a bit of punch and a bit of finesse from",
+      "avg_logprob": -0.5911123612347771,
+      "no_speech_prob": 0.3003387153148651,
+      "words": [
+        {
+          "start": 26.62,
+          "end": 26.78,
+          "word": " up,",
+          "probability": 0.041239771991968155
+        },
+        {
+          "start": 27.28,
+          "end": 29.06,
+          "word": " a",
+          "probability": 0.24092675745487213
+        },
+        {
+          "start": 29.06,
+          "end": 55.98,
+          "word": " bit",
+          "probability": 0.798317551612854
+        },
+        {
+          "start": 55.98,
+          "end": 56.06,
+          "word": " of",
+          "probability": 0.9915440082550049
+        },
+        {
+          "start": 56.06,
+          "end": 56.06,
+          "word": " punch",
+          "probability": 0.8432573676109314
+        },
+        {
+          "start": 56.06,
+          "end": 56.06,
+          "word": " and",
+          "probability": 0.835647463798523
+        },
+        {
+          "start": 56.06,
+          "end": 56.12,
+          "word": " a",
+          "probability": 0.9607288837432861
+        },
+        {
+          "start": 56.12,
+          "end": 56.5,
+          "word": " bit",
+          "probability": 0.9894683957099915
+        },
+        {
+          "start": 56.5,
+          "end": 56.5,
+          "word": " of",
+          "probability": 0.9943073391914368
+        },
+        {
+          "start": 56.5,
+          "end": 56.6,
+          "word": " finesse",
+          "probability": 0.9925981163978577
+        },
+        {
+          "start": 56.6,
+          "end": 56.6,
+          "word": " from",
+          "probability": 0.9308968782424927
+        }
+      ]
+    },
+    {
+      "start": 60.0,
+      "end": 68.46,
+      "text": " here in the opening set here, seamless from the American, the World No. 4 in business here, 6-2 in just over half an hour.",
+      "avg_logprob": -0.7811432361602784,
+      "no_speech_prob": 0.3181033134460449,
+      "words": [
+        {
+          "start": 60.0,
+          "end": 60.480000000000004,
+          "word": " here",
+          "probability": 0.0010940296342596412
+        },
+        {
+          "start": 60.480000000000004,
+          "end": 60.96,
+          "word": " in",
+          "probability": 0.17017321288585663
+        },
+        {
+          "start": 60.96,
+          "end": 61.02,
+          "word": " the",
+          "probability": 0.5829251408576965
+        },
+        {
+          "start": 61.02,
+          "end": 61.22,
+          "word": " opening",
+          "probability": 0.39387571811676025
+        },
+        {
+          "start": 61.22,
+          "end": 61.56,
+          "word": " set",
+          "probability": 0.9200272560119629
+        },
+        {
+          "start": 61.56,
+          "end": 61.94,
+          "word": " here,",
+          "probability": 0.8562191128730774
+        },
+        {
+          "start": 62.36,
+          "end": 62.74,
+          "word": " seamless",
+          "probability": 0.6942409873008728
+        },
+        {
+          "start": 62.74,
+          "end": 63.52,
+          "word": " from",
+          "probability": 0.8944472074508667
+        },
+        {
+          "start": 63.52,
+          "end": 63.66,
+          "word": " the",
+          "probability": 0.9814882278442383
+        },
+        {
+          "start": 63.66,
+          "end": 63.9,
+          "word": " American,",
+          "probability": 0.9291859269142151
+        },
+        {
+          "start": 64.54,
+          "end": 64.64,
+          "word": " the",
+          "probability": 0.920989990234375
+        },
+        {
+          "start": 64.64,
+          "end": 64.78,
+          "word": " World",
+          "probability": 0.20803344249725342
+        },
+        {
+          "start": 64.78,
+          "end": 64.92,
+          "word": " No.",
+          "probability": 0.25701478123664856
+        },
+        {
+          "start": 65.04,
+          "end": 65.24,
+          "word": " 4",
+          "probability": 0.6873515248298645
+        },
+        {
+          "start": 65.24,
+          "end": 65.44,
+          "word": " in",
+          "probability": 0.9033034443855286
+        },
+        {
+          "start": 65.44,
+          "end": 65.74,
+          "word": " business",
+          "probability": 0.8257976174354553
+        },
+        {
+          "start": 65.74,
+          "end": 66.12,
+          "word": " here,",
+          "probability": 0.9287975430488586
+        },
+        {
+          "start": 66.36,
+          "end": 66.56,
+          "word": " 6",
+          "probability": 0.8942417502403259
+        },
+        {
+          "start": 66.56,
+          "end": 67.0,
+          "word": "-2",
+          "probability": 0.7342278808355331
+        },
+        {
+          "start": 67.0,
+          "end": 67.34,
+          "word": " in",
+          "probability": 0.8555586338043213
+        },
+        {
+          "start": 67.34,
+          "end": 67.54,
+          "word": " just",
+          "probability": 0.9740808606147766
+        },
+        {
+          "start": 67.54,
+          "end": 67.82,
+          "word": " over",
+          "probability": 0.9568337202072144
+        },
+        {
+          "start": 67.82,
+          "end": 68.06,
+          "word": " half",
+          "probability": 0.9669413566589355
+        },
+        {
+          "start": 68.06,
+          "end": 68.24,
+          "word": " an",
+          "probability": 0.9911066889762878
+        },
+        {
+          "start": 68.24,
+          "end": 68.46,
+          "word": " hour.",
+          "probability": 0.9968333840370178
+        }
+      ]
+    },
+    {
+      "start": 68.46,
+      "end": 72.42,
+      "text": " So it's a big task facing us to Panko here.",
+      "avg_logprob": -0.44750020010717984,
+      "no_speech_prob": 0.7219942212104797,
+      "words": [
+        {
+          "start": 68.46,
+          "end": 69.3,
+          "word": " So",
+          "probability": 0.1354396790266037
+        },
+        {
+          "start": 69.3,
+          "end": 70.56,
+          "word": " it's",
+          "probability": 0.8227270841598511
+        },
+        {
+          "start": 70.56,
+          "end": 70.64,
+          "word": " a",
+          "probability": 0.9903647303581238
+        },
+        {
+          "start": 70.64,
+          "end": 70.8,
+          "word": " big",
+          "probability": 0.9970484375953674
+        },
+        {
+          "start": 70.8,
+          "end": 71.02,
+          "word": " task",
+          "probability": 0.9857445359230042
+        },
+        {
+          "start": 71.02,
+          "end": 71.52,
+          "word": " facing",
+          "probability": 0.9805805683135986
+        },
+        {
+          "start": 71.52,
+          "end": 71.64,
+          "word": " us",
+          "probability": 0.22799338400363922
+        },
+        {
+          "start": 71.64,
+          "end": 71.8,
+          "word": " to",
+          "probability": 0.9588553309440613
+        },
+        {
+          "start": 71.8,
+          "end": 72.16,
+          "word": " Panko",
+          "probability": 0.6312847832838694
+        },
+        {
+          "start": 72.16,
+          "end": 72.42,
+          "word": " here.",
+          "probability": 0.9540413618087769
+        }
+      ]
+    },
+    {
+      "start": 79.48,
+      "end": 82.46,
+      "text": " There's another example though of her firepower.",
+      "avg_logprob": -0.44750020010717984,
+      "no_speech_prob": 0.7219942212104797,
+      "words": [
+        {
+          "start": 79.48,
+          "end": 80.2,
+          "word": " There's",
+          "probability": 0.9131254851818085
+        },
+        {
+          "start": 80.2,
+          "end": 80.92,
+          "word": " another",
+          "probability": 0.9984874725341797
+        },
+        {
+          "start": 80.92,
+          "end": 81.36,
+          "word": " example",
+          "probability": 0.9991117119789124
+        },
+        {
+          "start": 81.36,
+          "end": 81.62,
+          "word": " though",
+          "probability": 0.702131450176239
+        },
+        {
+          "start": 81.62,
+          "end": 81.86,
+          "word": " of",
+          "probability": 0.8270633816719055
+        },
+        {
+          "start": 81.86,
+          "end": 82.0,
+          "word": " her",
+          "probability": 0.9858993291854858
+        },
+        {
+          "start": 82.0,
+          "end": 82.46,
+          "word": " firepower.",
+          "probability": 0.8736789226531982
+        }
+      ]
+    },
+    {
+      "start": 92.35999999999999,
+      "end": 96.36,
+      "text": " The gula did well, they jammed the return back, but she was always on the back foot.",
+      "avg_logprob": -0.40675578117370603,
+      "no_speech_prob": 0.13702748715877533,
+      "words": [
+        {
+          "start": 92.35999999999999,
+          "end": 92.75999999999999,
+          "word": " The",
+          "probability": 0.03668573126196861
+        },
+        {
+          "start": 92.75999999999999,
+          "end": 93.16,
+          "word": " gula",
+          "probability": 0.2769833989441395
+        },
+        {
+          "start": 93.16,
+          "end": 93.34,
+          "word": " did",
+          "probability": 0.9825403094291687
+        },
+        {
+          "start": 93.34,
+          "end": 93.54,
+          "word": " well,",
+          "probability": 0.9803368449211121
+        },
+        {
+          "start": 93.66,
+          "end": 93.68,
+          "word": " they",
+          "probability": 0.7117990851402283
+        },
+        {
+          "start": 93.68,
+          "end": 94.06,
+          "word": " jammed",
+          "probability": 0.7620229125022888
+        },
+        {
+          "start": 94.06,
+          "end": 94.28,
+          "word": " the",
+          "probability": 0.8531568646430969
+        },
+        {
+          "start": 94.28,
+          "end": 94.52,
+          "word": " return",
+          "probability": 0.9913311004638672
+        },
+        {
+          "start": 94.52,
+          "end": 94.88,
+          "word": " back,",
+          "probability": 0.9364585280418396
+        },
+        {
+          "start": 95.08,
+          "end": 95.1,
+          "word": " but",
+          "probability": 0.9782289862632751
+        },
+        {
+          "start": 95.1,
+          "end": 95.28,
+          "word": " she",
+          "probability": 0.9943169951438904
+        },
+        {
+          "start": 95.28,
+          "end": 95.38,
+          "word": " was",
+          "probability": 0.9974634647369385
+        },
+        {
+          "start": 95.38,
+          "end": 95.64,
+          "word": " always",
+          "probability": 0.9948640465736389
+        },
+        {
+          "start": 95.64,
+          "end": 95.78,
+          "word": " on",
+          "probability": 0.9988817572593689
+        },
+        {
+          "start": 95.78,
+          "end": 95.9,
+          "word": " the",
+          "probability": 0.9974710941314697
+        },
+        {
+          "start": 95.9,
+          "end": 96.06,
+          "word": " back",
+          "probability": 0.9963397979736328
+        },
+        {
+          "start": 96.06,
+          "end": 96.36,
+          "word": " foot.",
+          "probability": 0.9574488997459412
+        }
+      ]
+    },
+    {
+      "start": 104.8,
+      "end": 109.26,
+      "text": " Found the gap, good pass from Officer Panko.",
+      "avg_logprob": -0.3787915036082268,
+      "no_speech_prob": 0.22940577566623688,
+      "words": [
+        {
+          "start": 104.8,
+          "end": 105.8,
+          "word": " Found",
+          "probability": 0.10880573838949203
+        },
+        {
+          "start": 105.8,
+          "end": 106.8,
+          "word": " the",
+          "probability": 0.9842850565910339
+        },
+        {
+          "start": 106.8,
+          "end": 107.0,
+          "word": " gap,",
+          "probability": 0.9639531970024109
+        },
+        {
+          "start": 107.48,
+          "end": 108.0,
+          "word": " good",
+          "probability": 0.9450680017471313
+        },
+        {
+          "start": 108.0,
+          "end": 108.26,
+          "word": " pass",
+          "probability": 0.9969960451126099
+        },
+        {
+          "start": 108.26,
+          "end": 108.5,
+          "word": " from",
+          "probability": 0.6046331524848938
+        },
+        {
+          "start": 108.5,
+          "end": 108.64,
+          "word": " Officer",
+          "probability": 0.17376713454723358
+        },
+        {
+          "start": 108.64,
+          "end": 109.26,
+          "word": " Panko.",
+          "probability": 0.4878783772389094
+        }
+      ]
+    },
+    {
+      "start": 123.97999999999999,
+      "end": 139.22,
+      "text": " Is there going to be another twist?",
+      "avg_logprob": -0.248975470662117,
+      "no_speech_prob": 0.17558401823043823,
+      "words": [
+        {
+          "start": 123.97999999999999,
+          "end": 124.24,
+          "word": " Is",
+          "probability": 0.6496337652206421
+        },
+        {
+          "start": 124.24,
+          "end": 124.4,
+          "word": " there",
+          "probability": 0.9929231405258179
+        },
+        {
+          "start": 124.4,
+          "end": 124.56,
+          "word": " going",
+          "probability": 0.5980463624000549
+        },
+        {
+          "start": 124.56,
+          "end": 124.66,
+          "word": " to",
+          "probability": 0.998904824256897
+        },
+        {
+          "start": 124.66,
+          "end": 139.18,
+          "word": " be",
+          "probability": 0.998325526714325
+        },
+        {
+          "start": 139.18,
+          "end": 139.2,
+          "word": " another",
+          "probability": 0.9964274764060974
+        },
+        {
+          "start": 139.2,
+          "end": 139.22,
+          "word": " twist?",
+          "probability": 0.992003321647644
+        }
+      ]
+    },
+    {
+      "start": 146.16,
+      "end": 147.84,
+      "text": " Stuck at it, Officer Panko.",
+      "avg_logprob": -0.4573193873677935,
+      "no_speech_prob": 0.4215441346168518,
+      "words": [
+        {
+          "start": 146.16,
+          "end": 146.64,
+          "word": " Stuck",
+          "probability": 0.8894963562488556
+        },
+        {
+          "start": 146.64,
+          "end": 146.78,
+          "word": " at",
+          "probability": 0.7512224316596985
+        },
+        {
+          "start": 146.78,
+          "end": 146.96,
+          "word": " it,",
+          "probability": 0.9950324296951294
+        },
+        {
+          "start": 147.2,
+          "end": 147.36,
+          "word": " Officer",
+          "probability": 0.004583366680890322
+        },
+        {
+          "start": 147.36,
+          "end": 147.84,
+          "word": " Panko.",
+          "probability": 0.6138893961906433
+        }
+      ]
+    },
+    {
+      "start": 149.16,
+      "end": 152.88,
+      "text": " The gula's first percentage still, lower than a season average.",
+      "avg_logprob": -0.4992947843339708,
+      "no_speech_prob": 0.4434795081615448,
+      "words": [
+        {
+          "start": 149.16,
+          "end": 149.82,
+          "word": " The",
+          "probability": 0.018010465428233147
+        },
+        {
+          "start": 149.82,
+          "end": 150.18,
+          "word": " gula's",
+          "probability": 0.22245110482132682
+        },
+        {
+          "start": 150.18,
+          "end": 150.32,
+          "word": " first",
+          "probability": 0.5088688731193542
+        },
+        {
+          "start": 150.32,
+          "end": 150.92,
+          "word": " percentage",
+          "probability": 0.12002195417881012
+        },
+        {
+          "start": 150.92,
+          "end": 151.38,
+          "word": " still,",
+          "probability": 0.7936856150627136
+        },
+        {
+          "start": 151.6,
+          "end": 151.9,
+          "word": " lower",
+          "probability": 0.9299241900444031
+        },
+        {
+          "start": 151.9,
+          "end": 152.16,
+          "word": " than",
+          "probability": 0.9919872283935547
+        },
+        {
+          "start": 152.16,
+          "end": 152.26,
+          "word": " a",
+          "probability": 0.9479051828384399
+        },
+        {
+          "start": 152.26,
+          "end": 152.52,
+          "word": " season",
+          "probability": 0.9616373777389526
+        },
+        {
+          "start": 152.52,
+          "end": 152.88,
+          "word": " average.",
+          "probability": 0.9993009567260742
+        }
+      ]
+    },
+    {
+      "start": 164.14000000000001,
+      "end": 168.5,
+      "text": " What can you do when Officer Panko plays like that?",
+      "avg_logprob": -0.2788325758541332,
+      "no_speech_prob": 0.49380987882614136,
+      "words": [
+        {
+          "start": 164.14000000000001,
+          "end": 164.74,
+          "word": " What",
+          "probability": 0.11011479049921036
+        },
+        {
+          "start": 164.74,
+          "end": 165.34,
+          "word": " can",
+          "probability": 0.8820016384124756
+        },
+        {
+          "start": 165.34,
+          "end": 165.5,
+          "word": " you",
+          "probability": 0.977933943271637
+        },
+        {
+          "start": 165.5,
+          "end": 165.68,
+          "word": " do",
+          "probability": 0.9906057715415955
+        },
+        {
+          "start": 165.68,
+          "end": 167.0,
+          "word": " when",
+          "probability": 0.6494739651679993
+        },
+        {
+          "start": 167.0,
+          "end": 167.24,
+          "word": " Officer",
+          "probability": 0.0004718440177384764
+        },
+        {
+          "start": 167.24,
+          "end": 167.72,
+          "word": " Panko",
+          "probability": 0.6292685767014822
+        },
+        {
+          "start": 167.72,
+          "end": 167.98,
+          "word": " plays",
+          "probability": 0.9910219311714172
+        },
+        {
+          "start": 167.98,
+          "end": 168.28,
+          "word": " like",
+          "probability": 0.9905241131782532
+        },
+        {
+          "start": 168.28,
+          "end": 168.5,
+          "word": " that?",
+          "probability": 0.9970955848693848
+        }
+      ]
+    },
+    {
+      "start": 185.16,
+      "end": 187.0,
+      "text": " That is unreal.",
+      "avg_logprob": -0.5431977733969688,
+      "no_speech_prob": 0.5422307252883911,
+      "words": [
+        {
+          "start": 185.16,
+          "end": 186.56,
+          "word": " That",
+          "probability": 0.5145431160926819
+        },
+        {
+          "start": 186.56,
+          "end": 186.76,
+          "word": " is",
+          "probability": 0.9781370759010315
+        },
+        {
+          "start": 186.76,
+          "end": 187.0,
+          "word": " unreal.",
+          "probability": 0.9919026494026184
+        }
+      ]
+    },
+    {
+      "start": 200.32,
+      "end": 204.14,
+      "text": " This is thunderous tennis.",
+      "avg_logprob": -0.3250971704721451,
+      "no_speech_prob": 0.3138904869556427,
+      "words": [
+        {
+          "start": 200.32,
+          "end": 201.72,
+          "word": " This",
+          "probability": 0.04498467221856117
+        },
+        {
+          "start": 201.72,
+          "end": 203.12,
+          "word": " is",
+          "probability": 0.9536760449409485
+        },
+        {
+          "start": 203.12,
+          "end": 203.94,
+          "word": " thunderous",
+          "probability": 0.8729884624481201
+        },
+        {
+          "start": 203.94,
+          "end": 204.14,
+          "word": " tennis.",
+          "probability": 0.9499701857566833
+        }
+      ]
+    },
+    {
+      "start": 210.54000000000002,
+      "end": 222.14000000000001,
+      "text": " Incredible, absolutely incredible, and on we go in Wuhan.",
+      "avg_logprob": -0.3160403006606632,
+      "no_speech_prob": 0.16669055819511414,
+      "words": [
+        {
+          "start": 210.54000000000002,
+          "end": 211.4,
+          "word": " Incredible,",
+          "probability": 0.004417098127305508
+        },
+        {
+          "start": 213.42,
+          "end": 214.24,
+          "word": " absolutely",
+          "probability": 0.936709463596344
+        },
+        {
+          "start": 214.24,
+          "end": 214.74,
+          "word": " incredible,",
+          "probability": 0.9790070056915283
+        },
+        {
+          "start": 215.5,
+          "end": 215.78,
+          "word": " and",
+          "probability": 0.9698446393013
+        },
+        {
+          "start": 215.78,
+          "end": 215.88,
+          "word": " on",
+          "probability": 0.972342312335968
+        },
+        {
+          "start": 215.88,
+          "end": 216.06,
+          "word": " we",
+          "probability": 0.9967344403266907
+        },
+        {
+          "start": 216.06,
+          "end": 216.3,
+          "word": " go",
+          "probability": 0.9966262578964233
+        },
+        {
+          "start": 216.3,
+          "end": 216.66,
+          "word": " in",
+          "probability": 0.7141484618186951
+        },
+        {
+          "start": 216.66,
+          "end": 222.14000000000001,
+          "word": " Wuhan.",
+          "probability": 0.9805619517962137
+        }
+      ]
+    },
+    {
+      "start": 222.14,
+      "end": 252.12,
+      "text": " The gula's litter fire.",
+      "avg_logprob": -0.5840736627578735,
+      "no_speech_prob": 0.32657507061958313,
+      "words": [
+        {
+          "start": 222.14,
+          "end": 223.18,
+          "word": " The",
+          "probability": 0.007317633833736181
+        },
+        {
+          "start": 223.18,
+          "end": 252.12,
+          "word": " gula's",
+          "probability": 0.0835889543814119
+        },
+        {
+          "start": 252.12,
+          "end": 252.12,
+          "word": " litter",
+          "probability": 0.8372012972831726
+        },
+        {
+          "start": 252.12,
+          "end": 252.12,
+          "word": " fire.",
+          "probability": 0.9653160572052002
+        }
+      ]
+    },
+    {
+      "start": 252.12,
+      "end": 282.1,
+      "text": " That's a lovely piece of play.",
+      "avg_logprob": -0.2812960371375084,
+      "no_speech_prob": 0.24517782032489777,
+      "words": [
+        {
+          "start": 252.12,
+          "end": 252.8,
+          "word": " That's",
+          "probability": 0.7244628369808197
+        },
+        {
+          "start": 252.8,
+          "end": 252.84,
+          "word": " a",
+          "probability": 0.9347392320632935
+        },
+        {
+          "start": 252.84,
+          "end": 253.1,
+          "word": " lovely",
+          "probability": 0.9974216222763062
+        },
+        {
+          "start": 253.1,
+          "end": 253.42,
+          "word": " piece",
+          "probability": 0.9939036965370178
+        },
+        {
+          "start": 253.42,
+          "end": 282.1,
+          "word": " of",
+          "probability": 0.9969289898872375
+        },
+        {
+          "start": 282.1,
+          "end": 282.1,
+          "word": " play.",
+          "probability": 0.8763923645019531
+        }
+      ]
+    },
+    {
+      "start": 282.1,
+      "end": 283.68,
+      "text": " And they proved so costly.",
+      "avg_logprob": -0.56883790757921,
+      "no_speech_prob": 0.78205806016922,
+      "words": [
+        {
+          "start": 282.1,
+          "end": 282.48,
+          "word": " And",
+          "probability": 0.3580363392829895
+        },
+        {
+          "start": 282.48,
+          "end": 282.62,
+          "word": " they",
+          "probability": 0.9841833710670471
+        },
+        {
+          "start": 282.62,
+          "end": 282.84,
+          "word": " proved",
+          "probability": 0.8433494567871094
+        },
+        {
+          "start": 282.84,
+          "end": 283.28,
+          "word": " so",
+          "probability": 0.9872621893882751
+        },
+        {
+          "start": 283.28,
+          "end": 283.68,
+          "word": " costly.",
+          "probability": 0.9922643899917603
+        }
+      ]
+    }
+  ],
+  "full_text": "Nice to pick up, lands a blow on the backhand, and rips a backhand winner. up, a bit of punch and a bit of finesse from here in the opening set here, seamless from the American, the World No. 4 in business here, 6-2 in just over half an hour. So it's a big task facing us to Panko here. There's another example though of her firepower. The gula did well, they jammed the return back, but she was always on the back foot. Found the gap, good pass from Officer Panko. Is there going to be another twist? Stuck at it, Officer Panko. The gula's first percentage still, lower than a season average. What can you do when Officer Panko plays like that? That is unreal. This is thunderous tennis. Incredible, absolutely incredible, and on we go in Wuhan. The gula's litter fire. That's a lovely piece of play. And they proved so costly.",
+  "detected_language": "en",
+  "language_probability": 1.0,
+  "elapsed_seconds": 33.9843807220459
+}
