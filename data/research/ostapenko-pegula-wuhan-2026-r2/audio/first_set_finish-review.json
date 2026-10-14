@@ -4,10 +4,10 @@
   "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
   "method": "asr_cross_checked",
   "reviewer": "Current OpenAI assistant; original source captions and two full local recognizer hypotheses cross-checked",
-  "reviewed_at": "2026-10-14T12:01:52.868432+00:00",
+  "reviewed_at": "2026-10-14T12:57:51.853899+00:00",
   "status": "complete",
   "reviewed_from": 45.44,
-  "reviewed_to": 74.02,
+  "reviewed_to": 69.12,
   "uncertain_spans": [],
   "foreground_english": [
     {
@@ -39,14 +39,6 @@
       "end": 68.68,
       "en": "Seamless from the American, the world number four in business here, six-two in just over half an hour.",
       "zh": "美国选手打得行云流水\n世界第四掌控局面\n半小时出头六比二拿下首盘",
-      "verification": "base+small+captions",
-      "timing_note": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset"
-    },
-    {
-      "start": 69.76,
-      "end": 72.62,
-      "en": "So it's a big task facing Ostapenko here.",
-      "zh": "奥斯塔彭科面临艰巨任务",
       "verification": "base+small+captions",
       "timing_note": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset"
     }
