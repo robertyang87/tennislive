@@ -1,0 +1,721 @@
+{
+ "slug": "medvedev-tsitsipas-feud-2026",
+ "date": "2026-10-15",
+ "_column": "网球有故事",
+ "title": "梅德韦杰夫和西西帕斯的八年恩怨",
+ "cx": 0.5,
+ "track": false,
+ "tts_backend": "edge",
+ "_tts_backend_why": "沿用近期网球有故事剪辑片（year-end-no1-zverev-2026、fritz-pocket-ball-shanghai-2026）：云见标准音色、不加情绪风格。",
+ "cover": {
+  "eyebrow": "网球有故事",
+  "layout": "solo",
+  "subject": "梅德韦杰夫与西西帕斯",
+  "hook": "握手之后当场吵起来\n这对冤家斗了8年",
+  "narration": "握手之后当场吵起来，这对冤家斗了8年。",
+  "topic": "上海梅西之战 · 8年恩怨",
+  "portrait": {
+   "image": "assets/reel/medvedev-tsitsipas-feud-cover.jpg",
+   "focus": 0.47,
+   "focus_y": 0.4,
+   "zoom": 1.0,
+   "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/14/d0fea624-791c-4717-b7ac-be025919233a/Daniil-MEDVEDEV-vs-Stefanos-TSITSIPAS3590.jpg",
+   "_portrait_why": "ATP Media 官方图库 2026-10-14「2026 Shanghai Medvedev Tsitsipas」（原图 4000×2667，等比缩到 3000×2000 入库，未裁未补画）。EXIF 拍摄于当地 10-14 19:37:13，落在这场 18:10~19:36 的窗口末尾（tools/official_photo_apis.window_verdict 绑定）：比赛刚结束，两人在网前握手，主裁在椅上。这条片子讲的是「握手之后吵起来」的八年，封面放今晚这次握手——两人都正面、睁眼、看着对方。"
+  },
+  "_narration_why": "封面口播与钩子同一句。钩子第一行是由头（2018 迈阿密握手后当场争吵），第二行是这条片子讲的跨度；没有术语和要算的数。"
+ },
+ "push": {
+  "auto": true,
+  "summary": "梅西握手后吵了8年",
+  "lead": "从2018年迈阿密的一场口角，到2026年10月14日上海的握手：16次交手，梅德韦杰夫11胜5负。",
+  "_why": "CLAUDE.md「片子做完就合并、就推微信」；必须在 render 之前写 auto。"
+ },
+ "sources": {
+  "sh26": "https://www.youtube.com/watch?v=B8EO9eKy-mY",
+  "mia18": "https://www.youtube.com/watch?v=L_hN2m9Bk4k",
+  "rivals": "https://www.youtube.com/watch?v=JcEBmZ9cfFg",
+  "ao22": "https://www.youtube.com/watch?v=uWxN2lH2Fa0",
+  "cin22": "https://www.youtube.com/watch?v=Bxge6vs-QrI",
+  "cin22fun": "https://www.youtube.com/watch?v=LFjxqeTGGzI",
+  "rome23": "https://www.youtube.com/watch?v=pwUJajGMx30",
+  "rome23fun": "https://www.youtube.com/watch?v=F1BLataGzug",
+  "sh24": "https://www.youtube.com/watch?v=o682QKaRBmk",
+  "doha26": "https://www.youtube.com/watch?v=OZz_ro54jYs"
+ },
+ "primary": "sh26",
+ "source_fallbacks": {
+  "sh26": "https://github.com/robertyang87/tennislive/releases/download/source-B8EO9eKy-mY/B8EO9eKy-mY.mp4",
+  "mia18": "https://github.com/robertyang87/tennislive/releases/download/source-L_hN2m9Bk4k/L_hN2m9Bk4k.mp4",
+  "rivals": "https://github.com/robertyang87/tennislive/releases/download/source-JcEBmZ9cfFg/JcEBmZ9cfFg.mp4",
+  "ao22": "https://github.com/robertyang87/tennislive/releases/download/source-uWxN2lH2Fa0/uWxN2lH2Fa0.mp4",
+  "cin22": "https://github.com/robertyang87/tennislive/releases/download/source-Bxge6vs-QrI/Bxge6vs-QrI.mp4",
+  "cin22fun": "https://github.com/robertyang87/tennislive/releases/download/source-LFjxqeTGGzI/LFjxqeTGGzI.mp4",
+  "rome23": "https://github.com/robertyang87/tennislive/releases/download/source-pwUJajGMx30/pwUJajGMx30.mp4",
+  "rome23fun": "https://github.com/robertyang87/tennislive/releases/download/source-F1BLataGzug/F1BLataGzug.mp4",
+  "sh24": "https://github.com/robertyang87/tennislive/releases/download/source-o682QKaRBmk/o682QKaRBmk.mp4",
+  "doha26": "https://github.com/robertyang87/tennislive/releases/download/source-OZz_ro54jYs/OZz_ro54jYs.mp4"
+ },
+ "mixed_fps": {
+  "mia18": "30 fps → 25：2018 迈阿密，段落以最后几分、离场和赛后争吵的近景为主，争吵段是手持近景、动作慢，六帧丢一帧看不出来；决胜盘回合那 8 秒会略顿，可接受。",
+  "rivals": "30 fps → 25：Tennis TV 历年交手合集，四段各 9~11 秒广角回合配旁白，丢帧可接受。",
+  "cin22": "30 fps → 25：辛辛那提 2022，长回合广角＋赛点后近景庆祝。",
+  "cin22fun": "30 fps → 25：赛后跳舞那一镜，人在原地扭动，重采样看不出。",
+  "rome23fun": "29.97 fps → 25：赛点回合＋跳舞＋场上采访说话头，后两者静态。"
+ },
+ "editorial": {
+  "mode": "match_review",
+  "question": "梅德韦杰夫和西西帕斯为什么是网坛最出名的一对冤家？八年里发生了什么？",
+  "thesis": "以 2026-10-14 上海第四轮梅德韦杰夫 6-4 7-5 胜西西帕斯为由头，按时间把两人十六次交手里的恩怨讲清楚：2018 迈阿密握手后当场争吵（官方集锦里梅德韦杰夫的原声）、2018~2019 的拉黑与冷战语录、2022 澳网半决赛冲主裁爆发、2022 辛辛那提与 2023 罗马的互跳舞蹈，再到这两年的缓和；交手 11 胜 5 负，但年终总决赛 0 比 2。",
+  "beats": [
+   "由头：今晚上海第二盘 5-5 破发、赛点、握手；交手总账卡",
+   "01 迈阿密：西西帕斯离场上厕所 → 决胜盘逆转 → 握手后争吵原声 → 双方说法",
+   "02 冷战：Instagram 拉黑、不是敌人也不是朋友、无聊、不会一起吃饭",
+   "03 墨尔本：父亲指导之争、冲主裁吼、双方被罚、梅德韦杰夫进决赛",
+   "04 跳舞：辛辛那提西西帕斯跳、罗马梅德韦杰夫跳回去、他自己的采访",
+   "05 缓和：2024 上海、2026 多哈、今晚；两人近况；收在一问"
+  ],
+  "human_context": {
+   "angle": "一句话结下的梁子，八年后变成一次平静的握手。",
+   "facts": [
+    "交手记录（flashscore df_hh_1_488k2SDl，交手段逐场）：16 场，梅德韦杰夫 11 胜 5 负；今晚是第 16 次。",
+    "2018 迈阿密首轮梅德韦杰夫 2-6 6-4 6-2；赛后争吵见 Tennis TV 官方集锦 L_hN2m9Bk4k 712~738 秒原声。",
+    "2018 美网后梅德韦杰夫透露被西西帕斯在 Instagram 拉黑（puntodebreak 2018-08-29）。",
+    "2019-08 梅德韦杰夫：不是敌人，但绝对不是朋友（tennisnow）；2019-10 上海半决赛后西西帕斯称比赛 boring（tennishead、tennis.com）；2019-11 伦敦：It's not that I hate him… we will not go to dinner together（lastwordonsports）。",
+    "2022 澳网半决赛：梅德韦杰夫冲主裁 Jaume Campistol 吼叫、称其 small cat，被罚款；西西帕斯第四盘吃教练指导警告（Yahoo Sports AU、Defector、Wikipedia）。罚款金额各家报道不一致，片中不报数。",
+    "2022 辛辛那提半决赛西西帕斯 7-6 3-6 6-3 后跳舞；2023 罗马半决赛梅德韦杰夫 7-5 7-5 后跳舞（Tennis TV 两条趣味集锦画面自证）。",
+    "2024-09 梅德韦杰夫：显然不是最好的朋友，但百分之百尊重对方（puntodebreak 2024-09-21、tennis365）；上海 2026 赛前西西帕斯：those things have resolved themselves over time（tennisuptodate）。",
+    "2026-02-18 多哈西西帕斯 6-3 6-4，2022 年之后第一次赢梅德韦杰夫（tennismajors、puntodebreak）。",
+    "梅德韦杰夫世界第 6、2026 年三冠（布里斯班、迪拜、杭州，ATP 杭州决赛稿）；10-05 中网半决赛击球打中观众被判失格（仓库 medvedev-beijing-default-2026）；四分之一决赛对保罗（france24、yardbarker）。",
+    "西西帕斯世界第 43（ATP 2026-10-10 稿）；10-10 胜达尔德里拿到生涯第 400 胜（ATP、puntodebreak）。"
+   ],
+   "sources": [
+    "https://www.atptour.com/en/news/medvedev-tsitsipas-shanghai-2026-wednesday",
+    "https://www.france24.com/en/live-news/20261014-medvedev-sees-off-tsitsipas-to-reach-shanghai-masters-quarters",
+    "https://tennishead.net/i-did-get-pissed-and-said-what-i-said-which-i-do-regret-stefanos-tsitsipas-opens-up-on-controversial-feud-with-daniil-medvedev/",
+    "https://www.puntodebreak.com/2018/08/29/medvedev-tsitsipas-bloqueo-instagram",
+    "https://tennisnow.com/medvedev-on-tsitsipas-were-not-friends/",
+    "https://lastwordonsports.com/tennis/2019/11/11/tsitsipas-on-medvedev-we-will-not-go-to-dinner-together/",
+    "https://defector.com/daniil-medvedev-calls-umpire-a-small-cat-for-not-calling-coaching-violation-on-stefanos-tsitsipas",
+    "https://www.puntodebreak.com/en/2024/09/21/medvedev-explains-how-his-coexistence-with-tsitsipas-and-zverev-is-going-at-the-laver-cup-2024",
+    "https://tennisuptodate.com/atp/i-think-those-things-have-resolved-themselves-over-time-stefanos-tsitsipas-has-change-of-heart-over-daniil-medvedev-ahead-of-shanghai-clash",
+    "https://www.atptour.com/en/news/tsitsipas-shanghai-2026-saturday"
+   ]
+  }
+ },
+ "_social_search_why": "不是当事人发声明类的选题：讲的是两人八年、十六次交手的历史，由头是 2026-10-14 上海的一场比赛，不是某一条帖子。当事人亲口的部分用官方集锦里的原声（2018 迈阿密握手后梅德韦杰夫的争吵、2023 罗马赛后他自己讲跳舞），其余语录按报道写进旁白、出处在 editorial.human_context。这一轮没有去翻两人的 X／Instagram。",
+ "_owner_brief": "账号所有者 2026-10-14：「做一期梅西两人之间的恩怨情仇网球有故事视频，以视频讲述为主，建议右上角配上字卡的方式呈现」；随后：「再加上今晚的比赛，还有他们之间一些 drama 的故事的视频要汇总出来，把历史的恩怨情仇讲清楚，用视频的方式，只是有今晚比赛做引子」。他说「今晚 18 点以后开打」时比赛已经打完（6-4 7-5），按数据走：今晚的赛果做由头。",
+ "_corrections_vs_brief": "核对过、和账号所有者给的资料不一致的：①「不会一起吃饭」是西西帕斯 2019-11 伦敦说的，原话还说「就像他说的」；「无聊」是 2019-10 上海半决赛后；②「一切都是从迈阿密开始的」查不到出处，不用；③澳网罚款金额各家报道不一致（1.2 万／1.7 万澳元；西西帕斯 5000／7000），片中只说被罚款、吃警告；④「上厕所五分钟」查到的是「去了很久」，不报数。",
+ "_editing_why": "账号所有者要「以视频讲述为主、右上角配字卡」：每一场第一次出现的那一段贴 story_text 角标（日期·赛事轮次、比分、双方）；字卡只用于 01~05 章节和一张交手总账卡。精彩原声留下配中英字幕：迈阿密握手后争吵（梅德韦杰夫本人的声音）、罗马赛后他自己讲跳舞。澳网那次冲主裁，官方集锦里没有画面，用第二盘的回合画面配旁白讲（内部记录，片中不说集锦没收录）。",
+ "_claims": {
+  "十一胜五负": "flashscore https://global.flashscore.ninja/2/x/feed/df_hh_1_488k2SDl（Hard 13 场＋Clay 3 场＋Grass 0，逐场带星号赢家）；ATP 上海 2026-10-14 稿「11-5」。",
+  "年终总决赛两次都输": "同一 flashscore 交手段：2019-11-11 Finals - London、2022-11-16 Finals - Turin，两场赢家都是西西帕斯；tennisexplorer 交手表同。"
+ },
+ "segments": [
+  {
+   "source": "sh26",
+   "start": 196.4,
+   "end": 211.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "北京时间十月十四号晚上，上海大师赛第四轮。第二盘五平，梅德韦杰夫拿下这个破发，再发球胜赛，六比四、七比五击败西西帕斯。",
+   "inset": {
+    "image": "assets/reel/mt-feud/label-sh26.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 4.2,
+    "motion": "editorial",
+    "label": {
+     "topic": "今晚第16次交手",
+     "date": "2026.10.14",
+     "place": "ATP1000 上海 第四轮",
+     "score": "6-4 7-5",
+     "people": "梅德韦杰夫 vs 西西帕斯"
+    }
+   },
+   "_ending_payoff_required": false,
+   "_ending_payoff_why": "网球有故事的由头：今晚的破发与赛点放在开头交代结果，后面讲的是八年交手史，不是这场比赛的复盘；收尾回到同一场的握手。",
+   "_why": "第二盘 5-5 西西帕斯发球、0-40 的破发分整段广角（194.6 切点之后），英文解说只有两档都不认的低置信词；落在 214.5 记分条翻成 6-5 之前。"
+  },
+  {
+   "source": "sh26",
+   "start": 211.5,
+   "end": 227.9,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 9.04,
+     "end": 16.27,
+     "text": "The former champion has produced one of his best performances of the year.\n前冠军打出了今年最佳表现之一"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": true,
+   "_crosses_cut_why": "211.5 破发后握拳 → 214.6 赛点发球与回合 → 220.6 赛后梅德韦杰夫近景 → 225.3 西西帕斯近景，同一场比赛连续的收尾。",
+   "_quote_skip_why": "211.5–220.5 只有现场声（破发后握拳与赛点回合），没有解说。",
+   "point_end_ok": "赛点回合在 220.3 打完（220.6 切到梅德韦杰夫近景）；229.7 那次记分条变化是赛后的终局比分条，不是一分还没打完。"
+  },
+  {
+   "image": "assets/reel/mt-feud/h2h-record.png",
+   "seconds": 11.5,
+   "narration": "这是两人第十六次交手，梅德韦杰夫十一胜五负；大满贯三比一。可在年终总决赛，他两次都输给了西西帕斯。",
+   "_why": "flashscore df_hh_1_488k2SDl 交手段逐场数出：16 场，梅德韦杰夫 11 胜；大满贯 2018 美网、2021 澳网、2022 澳网胜，2021 法网负；年终总决赛 2019、2022 两次都负。"
+  },
+  {
+   "title_card": "握手之后\n当场吵起来",
+   "kicker": "01",
+   "narration": "故事要从二零一八年的迈阿密说起。",
+   "seconds": 4.2
+  },
+  {
+   "source": "mia18",
+   "start": 647.1,
+   "end": 656.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "那年三月，迈阿密首轮，二十二岁的梅德韦杰夫，第一次碰上十九岁的西西帕斯。",
+   "inset": {
+    "image": "assets/reel/mt-feud/label-mia18.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 4.2,
+    "motion": "editorial",
+    "label": {
+     "topic": "第一次交手",
+     "date": "2018.03.22",
+     "place": "ATP1000 迈阿密 首轮",
+     "score": "2-6 6-4 6-2",
+     "people": "梅德韦杰夫 vs 西西帕斯"
+    }
+   },
+   "_why": "决胜盘广角回合，644.98 切点之后、英文解说空当 647.08–670.64 之内。"
+  },
+  {
+   "source": "mia18",
+   "start": 344.2,
+   "end": 350.8,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.3,
+     "end": 2.5,
+     "text": "Going to make an exit off court for a moment.\n他要暂时离场一下。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "第二盘打完，西西帕斯起身走出球场（342~350 逐格看过）。只留这一句解说，351.0 起的下一句不进窗口。"
+  },
+  {
+   "source": "mia18",
+   "start": 428.2,
+   "end": 436.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "第二盘打完，西西帕斯去了洗手间。这一去，就是好一阵子。",
+   "_why": "空当 428.08–467.16 内的决胜盘广角回合（427.43 切点之后）。"
+  },
+  {
+   "source": "mia18",
+   "start": 677.8,
+   "end": 686.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "决胜盘六比二，梅德韦杰夫逆转。可真正的故事，在握手之后。",
+   "crosses_cut": "678.63：最后一分的广角换到另一个角度，同一场的同一个回合。",
+   "_why": "最后几分与赛点，空当 677.74–686.12。"
+  },
+  {
+   "source": "mia18",
+   "start": 712.6,
+   "end": 738.3,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.8,
+     "end": 5.8,
+     "text": "Quite a start on the year as a 2-6, 6-4, 6-2 win, and some words.\n逆转取胜，还附带一番口角"
+    },
+    {
+     "at": 6.1,
+     "end": 7.7,
+     "text": "You don't say sorry, you think you're a good kid?\n你不道歉，还觉得自己是个好孩子？"
+    },
+    {
+     "at": 8.4,
+     "end": 10.2,
+     "text": "Look at me. Hey, look at me, huh?\n看着我。喂，看着我！"
+    },
+    {
+     "at": 10.8,
+     "end": 12.2,
+     "text": "You don't look at me.\n你都不敢看我。"
+    },
+    {
+     "at": 12.9,
+     "end": 17.6,
+     "text": "He started it. He started it. Yes, he started it.\n是他先挑事的，是他先挑事的"
+    },
+    {
+     "at": 17.9,
+     "end": 19.5,
+     "text": "He said, Russian, you think this is normal?\n他骂我「俄罗斯……」，这正常吗？"
+    },
+    {
+     "at": 21.3,
+     "end": 23.1,
+     "text": "I answered him because he doesn't know how to fight.\n我回他，是因为他不懂怎么较量"
+    },
+    {
+     "at": 23.8,
+     "end": 25.2,
+     "text": "He's a small kid who doesn't know how to fight.\n他就是个不懂怎么较量的小屁孩。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": true,
+   "_crosses_cut_why": "712.6 梅德韦杰夫走向主裁椅 → 722.23 切到他和主裁的近景，同一段争吵的连续画面。",
+   "_why": "Tennis TV 官方加长集锦 L_hN2m9Bk4k 结尾：握手后梅德韦杰夫冲西西帕斯喊话，主裁下椅子隔开（700.5 起）。small.en 与 medium.en 逐句一致（只有 727.4 主裁的「I know, but stop it」是 small 单档）。窗口收在 738.3：738.5 起解说「Medvedev taking exception…」另起一句，不进来。"
+  },
+  {
+   "source": "mia18",
+   "start": 436.4,
+   "end": 451.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "梅德韦杰夫的说法是：西西帕斯擦网得分没有道歉，握手时，还骂了他一句，带着「俄罗斯」的脏话。西西帕斯后来承认，那天自己生气了，说了那些话，也后悔了。",
+   "crosses_cut": "437.55：梅德韦杰夫场边摊手接回合广角，同一场。",
+   "_why": "空当 428.08–467.16 内：436.5 梅德韦杰夫场边摊手、452.5 西西帕斯近景与广角回合。"
+  },
+  {
+   "title_card": "不是敌人\n也不是朋友",
+   "kicker": "02",
+   "narration": "此后一年多，梅德韦杰夫连赢五次。",
+   "seconds": 4.2
+  },
+  {
+   "source": "rivals",
+   "start": 61.6,
+   "end": 70.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二零一八年美网之后，梅德韦杰夫透露：西西帕斯在Instagram上，把他拉黑了。",
+   "inset": {
+    "image": "assets/reel/mt-feud/label-bas18.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 4.2,
+    "motion": "editorial",
+    "label": {
+     "topic": "梅德韦杰夫连胜",
+     "date": "2018.10.26",
+     "place": "ATP500 巴塞尔",
+     "event": "梅德韦杰夫2比1",
+     "people": "梅德韦杰夫 vs 西西帕斯"
+    }
+   },
+   "_why": "Tennis TV「Best ATP Shots & Rallies」合集里 2018 巴塞尔那一段（记分条 Tsitsipas/Medvedev、场地印着 Basel），空当 61.46–75.64。"
+  },
+  {
+   "source": "rivals",
+   "start": 89.7,
+   "end": 98.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二零一九年八月，梅德韦杰夫这样形容两人的关系：不是敌人，但绝对不是朋友。",
+   "inset": {
+    "image": "assets/reel/mt-feud/label-mc19.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 4.2,
+    "motion": "editorial",
+    "label": {
+     "topic": "第4次交手",
+     "date": "2019.04.18",
+     "place": "ATP1000 蒙特卡洛",
+     "event": "梅德韦杰夫2比1",
+     "people": "梅德韦杰夫 vs 西西帕斯"
+    }
+   },
+   "_why": "同一合集 2019 蒙特卡洛红土段（89.3 切点之后），空当 89.58–121.06。"
+  },
+  {
+   "source": "rivals",
+   "start": 299.3,
+   "end": 309.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "十月上海半决赛，西西帕斯第五次输给他。赛后他只用一个词，形容这场比赛：无聊。",
+   "inset": {
+    "image": "assets/reel/mt-feud/label-sh19.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 4.2,
+    "motion": "editorial",
+    "label": {
+     "topic": "第5次交手",
+     "date": "2019.10.12",
+     "place": "ATP1000 上海 半决赛",
+     "event": "梅德韦杰夫2比0",
+     "people": "梅德韦杰夫 vs 西西帕斯"
+    }
+   },
+   "_why": "同一合集 2019 上海段（场地 SHANGHAI 上海、广告牌 2019），空当 299.18–321.42。"
+  },
+  {
+   "source": "rivals",
+   "start": 427.6,
+   "end": 438.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "一个月后的伦敦年终总决赛，西西帕斯终于赢了一次。他说：我不恨他，但就像他说的，我们不会一起吃饭。",
+   "inset": {
+    "image": "assets/reel/mt-feud/label-lon19.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 4.2,
+    "motion": "editorial",
+    "label": {
+     "topic": "第一次赢",
+     "date": "2019.11.11",
+     "place": "年终总决赛 伦敦",
+     "event": "西西帕斯2比0",
+     "people": "西西帕斯 vs 梅德韦杰夫"
+    }
+   },
+   "_why": "同一合集 2019 伦敦年终总决赛段（Nitto ATP FINALS），427.43 切点之后，空当 427.24–445.16。"
+  },
+  {
+   "title_card": "墨尔本\n一场爆发",
+   "kicker": "03",
+   "narration": "二零二二年澳网半决赛，矛盾彻底爆发。",
+   "seconds": 4.6
+  },
+  {
+   "source": "ao22",
+   "start": 296.8,
+   "end": 311.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "第二盘，梅德韦杰夫认定，西西帕斯的父亲在看台上一直指导。换边时，他冲主裁大吼：你傻吗？他父亲每一分都能说话吗？还骂主裁是「小猫」。",
+   "inset": {
+    "image": "assets/reel/mt-feud/label-ao22.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 4.2,
+    "motion": "editorial",
+    "label": {
+     "topic": "矛盾爆发",
+     "date": "2022.01.28",
+     "place": "澳网 半决赛",
+     "score": "7-6 4-6 6-4 6-1",
+     "people": "梅德韦杰夫 vs 西西帕斯"
+    }
+   },
+   "crosses_cut": "299.68：第二盘两个回合之间的切换，都是双方对打的广角。",
+   "_why": "官方集锦没有这段争执的画面；用第二盘的回合画面（空当 296.48–336.48）讲。"
+  },
+  {
+   "source": "ao22",
+   "start": 370.0,
+   "end": 379.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 4.46,
+     "end": 8.54,
+     "text": "What just unfolded at the tail end of that second set?\n第二盘末尾到底发生了什么？"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_quote_skip_why": "370.0–374.4 只有现场声。",
+   "crosses_cut": "371.76 / 375.32：西西帕斯近景 → 看台，第二盘刚打完的同一刻。",
+   "_why": "第二盘西西帕斯 6-4 拿下后的近景与看台，两档 ASR 一致。"
+  },
+  {
+   "source": "ao22",
+   "start": 379.2,
+   "end": 388.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "梅德韦杰夫被罚了款。西西帕斯这边，随后也因为看台上的指导，吃到一次警告。",
+   "_why": "空当 378.74–406.98。"
+  },
+  {
+   "source": "ao22",
+   "start": 478.9,
+   "end": 484.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "四盘过后，梅德韦杰夫闯进决赛。",
+   "_why": "赛点回合与赛后近景，空当 476.64–486.48。"
+  },
+  {
+   "title_card": "你跳舞\n我也跳",
+   "kicker": "04",
+   "narration": "后来，两人换了一种方式较劲。",
+   "seconds": 4.0
+  },
+  {
+   "source": "cin22",
+   "start": 173.4,
+   "end": 182.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二零二二年八月，辛辛那提半决赛。决胜盘，这一次领先的是西西帕斯。",
+   "inset": {
+    "image": "assets/reel/mt-feud/label-cin22.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 4.2,
+    "motion": "editorial",
+    "label": {
+     "topic": "西西帕斯跳舞",
+     "date": "2022.08.20",
+     "place": "ATP1000 辛辛那提 半决赛",
+     "score": "7-6 3-6 6-3",
+     "people": "西西帕斯 vs 梅德韦杰夫"
+    }
+   },
+   "_why": "决胜盘长回合（156.3 起），英文空当 159.14–182.08。"
+  },
+  {
+   "source": "cin22",
+   "start": 186.3,
+   "end": 196.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 3.8,
+     "end": 10.06,
+     "text": "It is a first Cincinnati final for Stefanos Tsitsipas.\n西西帕斯首进辛辛那提决赛"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": true,
+   "_crosses_cut_why": "186.2 赛点回合 → 191.1 西西帕斯近景 → 194.0 包厢庆祝，同一场的收尾。",
+   "_quote_skip_why": "186.3–190.1 赛点回合，只有现场声。"
+  },
+  {
+   "source": "cin22fun",
+   "start": 86.0,
+   "end": 92.9,
+   "cx": 0.5,
+   "track": false,
+   "narration": "赢球之后，他在场上跳起了舞。",
+   "_why": "Tennis TV 辛辛那提 2022 趣味集锦：赛后在 DOBEL 广告牌前跳舞那一镜（83.22 切点之后，92.9 切走），英文空当 78.02–99.06。"
+  },
+  {
+   "source": "rome23",
+   "start": 353.6,
+   "end": 363.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "九个月后的罗马半决赛，梅德韦杰夫七比五、七比五赢了回来。",
+   "inset": {
+    "image": "assets/reel/mt-feud/label-rome23.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 4.2,
+    "motion": "editorial",
+    "label": {
+     "topic": "梅德韦杰夫跳回去",
+     "date": "2023.05.20",
+     "place": "ATP1000 罗马 半决赛",
+     "score": "7-5 7-5",
+     "people": "梅德韦杰夫 vs 西西帕斯"
+    }
+   },
+   "_why": "第二盘 5-5 西西帕斯发球的破发回合，英文空当 353.58–363.02。"
+  },
+  {
+   "source": "rome23fun",
+   "start": 4.0,
+   "end": 12.3,
+   "cx": 0.5,
+   "track": false,
+   "narration": "赛点拿下。这一次轮到梅德韦杰夫跳舞，他算是还了回去。",
+   "crosses_cut": "9.68：赛点回合 → 梅德韦杰夫近景 → 跳舞，同一刻的连续画面。",
+   "_why": "Tennis TV 罗马 2023 趣味集锦开头：赛点回合 → 9.7 近景 → 11.44 跳舞，英文空当 0.20–12.26。"
+  },
+  {
+   "source": "rome23fun",
+   "start": 12.3,
+   "end": 17.2,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.26,
+     "end": 4.84,
+     "text": "It is a third Masters 1000 final.\n这是他第三个大师赛决赛。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "跳舞那一镜接近景，两档 ASR 一致。"
+  },
+  {
+   "source": "rome23fun",
+   "start": 28.0,
+   "end": 43.1,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.26,
+     "end": 2.36,
+     "text": "So, let's see what comes out with this one,\n看看这次跳成什么样吧"
+    },
+    {
+     "at": 2.4,
+     "end": 5.62,
+     "text": "because when you do it, it's like being in the club completely drunk.\n跳的时候，就像在夜店喝醉了"
+    },
+    {
+     "at": 6.62,
+     "end": 9.06,
+     "text": "When you're dancing, and I have a lot of friends like this,\n跳舞的时候，我很多朋友也这样"
+    },
+    {
+     "at": 9.4,
+     "end": 11.76,
+     "text": "you feel like you're the god of the dance floor.\n你会觉得自己是舞池之王"
+    },
+    {
+     "at": 12.14,
+     "end": 13.32,
+     "text": "But then when they show you the video,\n可等别人把视频拿给你看"
+    },
+    {
+     "at": 13.38,
+     "end": 15.0,
+     "text": "you know it was not the thing.\n你才知道根本不是那样"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "罗马赛后场上采访（下三分之一字幕 DEFEATED S. TSITSIPAS 7-5 7-5）。两档 ASR 都写成 dance ball；Tennis TV 同一段采访的官方标题是「God of the dance floor」，按官方标题写 floor。43.14 起的下一句不进窗口。"
+  },
+  {
+   "title_card": "从争吵\n到握手",
+   "kicker": "05",
+   "narration": "这几年，火药味慢慢淡了。",
+   "seconds": 3.8
+  },
+  {
+   "source": "sh24",
+   "start": 0.3,
+   "end": 11.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二零二四年上海，梅德韦杰夫又赢了。那年九月他说：两人显然不是最好的朋友，但百分之百尊重对方。",
+   "inset": {
+    "image": "assets/reel/mt-feud/label-sh24.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 4.2,
+    "motion": "editorial",
+    "label": {
+     "topic": "火药味淡了",
+     "date": "2024.10.09",
+     "place": "ATP1000 上海 第四轮",
+     "score": "7-6 6-3",
+     "people": "梅德韦杰夫 vs 西西帕斯"
+    }
+   },
+   "_why": "开场广角，梅德韦杰夫发球（0–16.6），无解说。"
+  },
+  {
+   "source": "doha26",
+   "start": 101.4,
+   "end": 113.1,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二零二六年二月多哈，西西帕斯直落两盘，拿到二零二二年之后，对梅德韦杰夫的第一场胜利。",
+   "inset": {
+    "image": "assets/reel/mt-feud/label-doha26.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 4.2,
+    "motion": "editorial",
+    "label": {
+     "topic": "终止连败",
+     "date": "2026.02.18",
+     "place": "ATP500 多哈 第二轮",
+     "score": "6-3 6-4",
+     "people": "西西帕斯 vs 梅德韦杰夫"
+    }
+   },
+   "_why": "第二盘回合与西西帕斯走动，空当里的英文都在 113.2 之后。"
+  },
+  {
+   "source": "sh26",
+   "start": 125.9,
+   "end": 138.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "上海赛前，西西帕斯说，那些事随着时间已经化解了。十月十四号这一场，梅德韦杰夫一个破发点都没给对手。",
+   "_why": "第二盘广角回合，英文空当 125.76–148.04。"
+  },
+  {
+   "source": "sh26",
+   "start": 140.4,
+   "end": 147.8,
+   "cx": 0.5,
+   "track": false,
+   "narration": "西西帕斯排名掉到第四十三，但就在这一周，他拿到了生涯第四百场胜利。",
+   "_why": "140.3 西西帕斯低头近景起，空当内。"
+  },
+  {
+   "source": "sh26",
+   "start": 168.1,
+   "end": 180.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "梅德韦杰夫世界第六，这个赛季已经拿了三个冠军；十月初的中网半决赛，他击球打中观众，被判失格。下一轮，他对保罗。",
+   "crosses_cut": "169.54 / 175.40：第二盘回合之间的切换，画面都是双方对打。",
+   "_why": "第二盘广角回合，空当 167.98–184.70。"
+  },
+  {
+   "source": "sh26",
+   "start": 228.0,
+   "end": 234.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "八年，十六次交手，从争吵到握手。下次见面，你想看到哪一幕？",
+   "crosses_cut": "228.64：西西帕斯近景 → 走向网前 → 握手特写，同一刻的连续画面。",
+   "_why": "网前握手（228.6 走向网前、231.5 握手特写），空当 227.97–244.80，收在 234.5 Tennis TV 台标之前。"
+  }
+ ]
+}

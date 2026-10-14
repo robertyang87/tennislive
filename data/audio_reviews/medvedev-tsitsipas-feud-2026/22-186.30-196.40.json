@@ -1,0 +1,20 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Bxge6vs-QrI",
+  "source_sha256": "42a22eb0fc66f5dc307cd1b469cba0b4f30afae06c4aeb5c9718c59a22dc9b7a",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-14T17:12:44+00:00",
+  "reviewed_from": 186.3,
+  "reviewed_to": 196.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 190.1,
+      "end": 196.36,
+      "en": "It is a first Cincinnati final for Stefanos Tsitsipas.",
+      "zh": "西西帕斯首进辛辛那提决赛"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 42a22eb0fc66f5dc307cd1b469cba0b4f30afae06c4aeb5c9718c59a22dc9b7a，存于 data/source_asr/Bxge6vs-QrI/small.en.json 与 data/source_asr/Bxge6vs-QrI/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
