@@ -68,3 +68,26 @@ def test_生成的审听包过得了真的审听闸(sents, tmp_path):
     asr_plan.write_review(spec, VIDEO, sha, root=tmp_path)
     required = foreground_audio_gate.inspect(copy.deepcopy(spec), root=tmp_path)
     assert required, "这条片子留了原声，审听闸应该要求一串双语字幕"
+
+
+MULTI = ROOT / "specs/reels/medvedev-tsitsipas-feud-2026.json"
+
+
+def _multi_hard(spec: dict) -> list[str]:
+    hard = []
+    for key, vid in asr_plan.source_ids(spec).items():
+        docs, _sha = asr_plan.load(vid)
+        hard += asr_plan.check(spec, asr_plan.sentences(docs), key)[0]
+    return hard
+
+
+def test_多源片子各条源对各自的转写():
+    """梅西恩怨片十条源：每段只拿它自己那条源的转写查（单源时这个工具直接拒绝多源 spec）。"""
+    spec = json.loads(MULTI.read_text(encoding="utf-8"))
+    assert len(asr_plan.source_ids(spec)) == 10
+    assert _multi_hard(spec) == []
+    broken = copy.deepcopy(spec)
+    seg = next(s for s in broken["segments"] if s.get("source") == "mia18" and s.get("start") == 712.6)
+    seg["narration"], seg["quote"] = "配音压在英文争吵上。", []
+    hard = _multi_hard(broken)
+    assert hard and all("712.60" in h for h in hard)

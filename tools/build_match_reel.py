@@ -6482,9 +6482,15 @@ def claim_probes(spec: dict) -> tuple[dict[str, tuple[Path, dict]], list[str]]:
             data = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue                      # 坏的就当没有，别把 dry-run 带崩
-        if data.get("url") in urls.values():
+        # Release 存档直链和 YouTube 地址是同一条源（`probe_sources.spec_url_for`）；
+        # 认上之后按 spec 写的那个地址记，下游按 spec 的 URL 查不用再换算。
+        from probe_sources import spec_url_for  # noqa: PLC0415
+        url = spec_url_for(data.get("url"), urls.values())
+        if url:
+            if url != data.get("url"):
+                data = {**data, "url": url, "_probed_url": data.get("url")}
             # 后来的（日期靠后）覆盖先来的
-            found[str(data["url"])] = (path.parent, data)
+            found[url] = (path.parent, data)
     missing = sorted(name for name, url in urls.items() if url not in found)
     return found, missing
 

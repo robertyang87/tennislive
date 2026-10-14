@@ -77,6 +77,26 @@ def spec_urls(spec: dict) -> dict[str, str]:
             or {"": str(spec.get("source_url", ""))})
 
 
+def spec_url_for(probe_url: object, urls) -> str | None:
+    """这份 probe 探的 URL 对应 spec 里的哪一条源：先精确比，不中再按视频 id 比。
+
+    probe 有 Release 存档就改用存档直链下载（`tools/release_source.py`，2026-10-14），
+    于是 `probe.json` 的 `url` 是 `…/releases/download/source-<id>/<id>.mp4`，而 spec 写的
+    是 YouTube 地址——只按字符串比，这条源的切点、静音、宽高就全认不上（梅西恩怨片
+    十条源一条都没认上）。视频 id 用 `probe_claims.video_key`，和去重、认领同一把尺子。
+    """
+    if not probe_url:
+        return None
+    urls = [u for u in urls if u]
+    if probe_url in urls:
+        return str(probe_url)
+    from probe_claims import video_key  # noqa: PLC0415
+    key = video_key(str(probe_url))
+    if not key:
+        return None
+    return next((u for u in urls if video_key(u) == key), None)
+
+
 def is_auto(spec: dict) -> bool:
     return (spec.get("_production") or {}).get("status") == "ready_for_render"
 
@@ -348,12 +368,13 @@ def committed_probes(ref: str = "HEAD", cwd: Path = ROOT,
 def claim_paths(spec: dict, ref: str = "HEAD", cwd: Path = ROOT,
                 problems: list[str] | None = None) -> dict[str, bytes]:
     """HEAD 的树里，`url` 是这条 spec 某一条源的那几份 probe.json：`{路径: 内容}`。
-    按 `url` 字段精确比对——**不按 slug 猜**，否则会拿别的片子的切点来判。"""
+    按 `url` 字段比对（`spec_url_for`：精确或同一个视频 id）——**不按 slug 猜**，
+    否则会拿别的片子的切点来判。"""
     urls = {u for u in spec_urls(spec).values() if u}
     out: dict[str, bytes] = {}
     for path, (_oid, blob) in committed_probes(ref, cwd, problems).items():
         try:
-            if json.loads(blob).get("url") in urls:
+            if spec_url_for(json.loads(blob).get("url"), urls):
                 out[path] = blob
         except ValueError:
             continue
