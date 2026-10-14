@@ -1,0 +1,46 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=l9Gd5ksrsVM",
+  "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI assistant; original source captions and two full local recognizer hypotheses cross-checked",
+  "reviewed_at": "2026-10-14T12:57:51.853899+00:00",
+  "status": "complete",
+  "reviewed_from": 169.56,
+  "reviewed_to": 190.24,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 185.22,
+      "end": 187.58,
+      "en": "That is unreal.",
+      "zh": "太不可思议了。",
+      "verification": "base+small+captions",
+      "timing_note": "conservative raw ASR word-boundary interval, not manually verified acoustic onset/offset"
+    }
+  ],
+  "evidence_basis": {
+    "full_source_crosscheck_path": "data/research/ostapenko-pegula-wuhan-2026-r2/audio/crosscheck.json",
+    "full_source_crosscheck_sha256": "41fbee4a2898d2e110b99207d00ade3e64c79d101c851cf68277eaeaa51420e7",
+    "recognizers": [
+      {
+        "path": "data/research/ostapenko-pegula-wuhan-2026-r2/audio/base.json",
+        "sha256": "5fac0d90bd98657bf3309d5bbb256cf947c4417bf748aa442a11780cf7776e84"
+      },
+      {
+        "path": "data/research/ostapenko-pegula-wuhan-2026-r2/audio/small.json",
+        "sha256": "8a62d49fb868bea0bae107eb4474ccce5ac58d076bf8033af7a0a8960c9dc741"
+      }
+    ],
+    "caption_path": "output/2026-10-14/reel/video-l9gd5ksrsvm/captions.txt",
+    "caption_sha256": "b890ab5871476c32890d4630e2a0733afe8134cd18a06fa234e8dc8e9f7d6ba8",
+    "manual_listening_claimed": false,
+    "audit_notes": [
+      "ASR word timing is conservative, not claimed as manual acoustic onset.",
+      "Declared ambiguous intervals were excluded from selected source clips.",
+      "Base omits parts of terminal commentary; small and source captions support those complete sentences, not claimed as two-model agreement.",
+      "Known actual participant names normalized; raw recognizer JSON left unmodified.",
+      "Court outcome and tiebreak bracket come from official score/PBP and visible native scoreboard, not phonetic recognition."
+    ]
+  }
+}

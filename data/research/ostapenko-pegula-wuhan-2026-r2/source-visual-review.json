@@ -1,0 +1,457 @@
+{
+  "schema": "tennislive.independent-source-visual-segmentation-review.v1",
+  "reviewed_at_utc": "2026-10-14T11:41:29.630354+00:00",
+  "status": "source_key_windows_located_current_center_fill_has_edge_action_risks",
+  "reviewer": "independent_qc; current OpenAI model only; no DeepSeek/MiniMax",
+  "source": {
+    "user_url": "https://youtu.be/l9Gd5ksrsVM",
+    "local_file": "/workspace/scratch/ostapenko-source/source.mp4",
+    "sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+    "bytes": 88569394,
+    "width": 1920,
+    "height": 1080,
+    "fps": "25/1",
+    "seconds": 309.568435
+  },
+  "probe_path": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/probe.json",
+  "probe_sha256": "5e4db1a33508c8de819b4d1c852a934c2d79fd87f4c09d10f775283877f9af51",
+  "scope": {
+    "actual_contact_sheets_viewed": 6,
+    "actual_score_sheets_viewed": 8,
+    "contact_interval_s": 2.0,
+    "native_boundary_frames_seen_as_separate_480px_wall_samples": 59,
+    "dense_25fps_frames_actually_seen_on_labeled_walls": 170,
+    "dense_25fps_ranges_s": [
+      [
+        188.0,
+        190.76
+      ],
+      [
+        260.0,
+        263.96
+      ]
+    ],
+    "full_resolution_pngs_actually_viewed": 10,
+    "audio_listened": false,
+    "asr_reviewed_here": false,
+    "all_25fps_source_frames_reviewed": false,
+    "production_spec_edited": false,
+    "final_film_reviewed": false,
+    "publication_approved": false
+  },
+  "initial_actual_sheets": [
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/contact_00.jpg",
+      "sha256": "26581fe7700fe6a08de451e968e2e49167883c8ff168e86b25245df6abe275bd",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/contact_01.jpg",
+      "sha256": "7096845bd18d628c929a00a0cc88363b58709e3481ef3714e4db87df3378986f",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/contact_02.jpg",
+      "sha256": "3e7fb69d10d11c8925c9b7b421b1b583bb52b009ded26e8115440b0eca33ab78",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/contact_03.jpg",
+      "sha256": "c24b9e44a0ad7d219da22c5e1b682d96123a5ce0fd4e8d1f674ea98d7e26c933",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/contact_04.jpg",
+      "sha256": "ce43fff7e5a5ea83726bea06c1f35a80d24ae04ab0fc276843d5989b951fc80d",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/contact_05.jpg",
+      "sha256": "1932ec14c9acdde0349eaadcfeeb344734fb2795aabe52a6321b4c00b02e56e9",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/score_00.jpg",
+      "sha256": "2c0e4936b62b6b3c7c07cd09bfeb7c2bd0055634faeae9f9395b0509eacfa79c",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/score_01.jpg",
+      "sha256": "4cbc71583b6b2e6b2f52f01deb7a81af83bea2749adb32544d3df5293915ffcb",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/score_02.jpg",
+      "sha256": "993507d0d7fb3dcfd5921b4895ffb9bc9d8d19385b603b5868f113778160d35f",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/score_03.jpg",
+      "sha256": "c5058646491b8b2150e9ae474194baa5dc6a414c4afdc78d868a8e37c14156c5",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/score_04.jpg",
+      "sha256": "0d6be799f0b66a309f1e0281c85166fc76268a61b225c8a29764828879d2642a",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/score_05.jpg",
+      "sha256": "b68d19d08820d32cfe3a53a6817a8fda1232f8c0574546d91a3003806decdf66",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/score_06.jpg",
+      "sha256": "6e41282af611ffbdba0615abfe7d76edb25b56305e3d6454717762bd54e2fc67",
+      "actual_viewed": true
+    },
+    {
+      "image": "/workspace/tennislive-efficiency/output/2026-10-14/reel/video-l9gd5ksrsvm/score_07.jpg",
+      "sha256": "73ee207f23215a27541d2c407a56e6234938ccfa62b46245e8af52c046deaeed",
+      "actual_viewed": true
+    }
+  ],
+  "boundary_and_dense_frame_walls": [
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/boundary-wall-00.jpg",
+      "sha256": "bc6a64c1031b475bc7888ac95a1a5fe8f20cdc605a185e6a595726f8b2e9f431",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/boundary-wall-01.jpg",
+      "sha256": "3fd7c1205895bc69b4df5cf915d2a006c8bf5ed4886a8145c6043867e09baf97",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/boundary-wall-02.jpg",
+      "sha256": "1374c55b3651ac49455ec8c11b0a7ecc8a46d4edf8a0307d2a91026ca96ef503",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/boundary-wall-03.jpg",
+      "sha256": "ef7919694c19f0184ea2cffa5c2b26224eeaa15c4597fef463f9c5a88c6d4084",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/boundary-wall-04.jpg",
+      "sha256": "f0f28e5111c09de7db0242b61fc503bd18b4e82fe8a1178d3cbc086c4727c8a5",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/tb-switch/wall-00.jpg",
+      "sha256": "39d967c3039a9f914467eb93d3b7661b59e8f52a24e34dd94d92df3c4746b657",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/tb-switch/wall-01.jpg",
+      "sha256": "d618baaab874b7beed5becf50a31cad5317bd160a9b4188d363907d967fe544d",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/tb-switch/wall-02.jpg",
+      "sha256": "50532908c31d4754ef769a404bbf9351c0cf23171df5b5882e0447d184a2ea35",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/tb-switch/wall-03.jpg",
+      "sha256": "65c48ba8627e3a22d121621507af5897df05158d345c692f326216c80512ef63",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/mp-payoff/wall-00.jpg",
+      "sha256": "88fcf25c932274e3c8aa7aea0c3b38c3dc0e43c0dcd0c324a41bc900146d8757",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/mp-payoff/wall-01.jpg",
+      "sha256": "7e6d4803fe307b60639c62c8f25756aa3db513f874557607a102eb18db98ce06",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/mp-payoff/wall-02.jpg",
+      "sha256": "eaf19a1a2cf281259df6b662fabef0b60f6219039a6db0ba5e4cb7e4c5a7c418",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/mp-payoff/wall-03.jpg",
+      "sha256": "c2f56e1e8406688c884c8ff10014f64a0b2d94767ef594787c61493deae6bcf3",
+      "actually_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/mp-payoff/wall-04.jpg",
+      "sha256": "f4f792cad775993ff9fc22f2e53adf7099ed05a85811ddbb578783fea27a84f4",
+      "actually_viewed": true
+    }
+  ],
+  "full_native_frame_evidence": [
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/native-100.50.png",
+      "sha256": "d949855912fa18ad2c0ea51dc3372a3ae9f28cc167249fb205e2f6dfddde07ca",
+      "source_time": 100.5,
+      "actual_full_native_png_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/native-171.56.png",
+      "sha256": "8b501511989008b966b0d467edae0e6014f13d9e971e819c184a62e195660518",
+      "source_time": 171.56,
+      "actual_full_native_png_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/native-188.80.png",
+      "sha256": "a01d3852dddd49ed6070d9e8068b37ad2d0745d025992524aeaea933a00af554",
+      "source_time": 188.8,
+      "actual_full_native_png_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/native-186.80.png",
+      "sha256": "fa00e2b57359982bec657650623b793c97fd6c14a2199c7e023a8c1e7ab5430e",
+      "source_time": 186.8,
+      "actual_full_native_png_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/native-208.36.png",
+      "sha256": "6e794d212572cf90bda5fe8c71b4800f416fecf858e6f34f2653ed27e437c7ff",
+      "source_time": 208.36,
+      "actual_full_native_png_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/native-178.50.png",
+      "sha256": "44b210c534e1618b96ec295ec742a6fea7d32f69b0939e7ab252a1bb87a4df2b",
+      "source_time": 178.5,
+      "actual_full_native_png_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/native-184.50.png",
+      "sha256": "c9205efe37908873dae14d48dd5899515d8b8e113d059c4831db3222e8e357b6",
+      "source_time": 184.5,
+      "actual_full_native_png_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/native-185.50.png",
+      "sha256": "1de3b2492506090ea98e5059fba698628ddf724cf258dca2f70bb0e9ad18d994",
+      "source_time": 185.5,
+      "actual_full_native_png_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/mp-payoff/f050.png",
+      "sha256": "077c5cdaf5aa1b8993cb17efbebdb3f8ee994c276d52fb1787967df88d371abb",
+      "source_time": 262.0,
+      "actual_full_native_png_viewed": true
+    },
+    {
+      "image": "/workspace/scratch/ostapenko-visual-native/mp-payoff/f054.png",
+      "sha256": "7b55f204c3c203e161a552bc94435ccf6a3a32da04e65e970b91bea70765e70e",
+      "source_time": 262.16,
+      "actual_full_native_png_viewed": true
+    }
+  ],
+  "score_observations": [
+    {
+      "sheet": "score_04.jpg",
+      "labels": [
+        168.5,
+        170.5
+      ],
+      "observation": "TB3–3到6–7/MATCH POINT #3直接跨过中间三个TB点和前两次MP。",
+      "native_exact_confirmation": "169.52仍3–3；169.56第一帧Peg持球准备、6–7/MP#3。"
+    },
+    {
+      "sheet": "score_04.jpg",
+      "labels": [
+        172.5,
+        188.5,
+        190.5
+      ],
+      "observation": "第三赛点6–7，救后7–7。",
+      "native_exact_confirmation": "source188–189连续赛点后走动；189.12左右原板更新7–7；190.44仍旧point反应，190.48硬剪进入7–7新point的广角动作，已没有serve prep。"
+    },
+    {
+      "sheet": "score_05.jpg",
+      "labels": [
+        204.5,
+        206.5,
+        208.5,
+        212.5
+      ],
+      "observation": "7–7点后8–7；下一点8–7原板保持到赢球反应。",
+      "native_exact_confirmation": "207.00奥握拳仍上一点反应，207.04奥持球准备下一点；208.32原生抛球、208.36首广角；213.84胜后近景，225.96原结果板2/7对6/6。"
+    },
+    {
+      "sheet": "score_06.jpg",
+      "labels": [
+        244.5,
+        256.5,
+        258.5,
+        264.5
+      ],
+      "observation": "第三盘3–1/15–0→15–15，再直接5–3/奥40–0(Peg0–40)首MP。",
+      "native_exact_confirmation": "257.60还是Peg反应3–1/15–15，257.64切奥接发准备、5–3首MP；259.32广角Peg近端发球，263.80奥远端赢后拳近景。"
+    }
+  ],
+  "missing_official_points_internal_only": [
+    {
+      "event": "TB4–6 firstMP saved;5–6 secondMP saved",
+      "finding": "实际所有contact/score未出现；原source169.52的3–3→169.56的6–7精确硬切也证明关键区被节目省略。事实卡可以交代，禁止将148.96–169.52的2–3→3–3普通TB点冒充救赛点。",
+      "audience_facing_gap_apology": false
+    },
+    {
+      "event": "deciding set5–2→5–3被追近",
+      "finding": "source243附近为3–1点，257.64已是5–3首MP；没有5–2及追到5–3那局的动作证据。用官方PBP事实卡交代，不以225–243的1–1平分点替代。",
+      "audience_facing_gap_apology": false
+    }
+  ],
+  "recommended_primary_windows": [
+    {
+      "name": "third_match_point_saved",
+      "start": 169.56,
+      "end": 190.24,
+      "native_start": "首帧Peg发球准备近景、6–7 MATCH POINT #3；171.56首广角。",
+      "native_finish": "第三MP回合及赛点后走动、更新7–7保留；190.48剪入新点。",
+      "handle_guard": "若renderer向后加0.18s，190.24+.18=190.42，仍在190.48前。",
+      "serve_prep_complete_for_retained_official_shots": true,
+      "caveat": "原声cue句尾由独立ASR任务确认，未听音。"
+    },
+    {
+      "name": "set_equalizer_last_point",
+      "start": 207.04,
+      "end": 225.76,
+      "native_start": "207.04奥持球准备；208.32左手抛球；208.36广角。",
+      "native_finish": "213.84奥胜后近景、握拳/慢走/擦汗及结果板；225.96仍盘间椅上，226.00进入决胜盘新点。",
+      "handle_guard": "225.76+.18=225.94，在226.00新点前。",
+      "serve_prep_complete_for_retained_official_shots": true,
+      "caveat": "9–7抢七终局由8–7前板→赢盘反应/7–6结果及官方赛况闭合；不是说画面出现9–7最终TB数字。ASR尾句单独核。"
+    },
+    {
+      "name": "receiving_first_match_point_and_full_payoff",
+      "start": 257.64,
+      "end": 299.24,
+      "native_start": "奥远端接发准备近景；原板5–3/40–0，服务图标属Peg0–40；259.32首广角Peg近端发球。",
+      "native_finish": "263.80第一赢后笑脸举拳；268.48团队反应；271.08握手，278.00/282.80/292.00观众致意与结果板，299.44仍收包，299.48进入WTA bumper。",
+      "handle_guard": "299.24+.18=299.42在299.48 bumper前。",
+      "serve_prep_complete_for_retained_official_shots": "原片先保奥接发准备，再切Peg第一可见发球动作；没有Peg特写准备，不能称节目展示了她完整手中备球。",
+      "caveat": "260后停步与离场、262球仍跳/滚；不能把残余球当未结束或把近侧右双打巷球当致胜落点。最终point结束方式必须以真实原声/官方逐分核实，本报告不推断正手制胜或DF。"
+    }
+  ],
+  "other_windows_with_context": [
+    {
+      "range": [
+        129.72,
+        148.96
+      ],
+      "event": "第二盘4–4/奥15–40接两个BP危机：完整第一BP应含129.72前奥准备特写，源148.92为30–40/BP#2；148.96跳TB2–3。",
+      "warning": "不是赛点，不可用作前两次救MP。"
+    },
+    {
+      "range": [
+        148.96,
+        169.52
+      ],
+      "event": "TB2–3→3–3普通点及反应。",
+      "warning": "不能冒称救MP或救到6–6。"
+    },
+    {
+      "range": [
+        190.48,
+        207.04
+      ],
+      "event": "TB7–7→8–7，207.00奥握拳。",
+      "warning": "190.48首帧已进入广角动作，没有该点发球准备；如需严格完整点，宜事实卡交代到8–7并接207.04，而非假称完整serve→point。"
+    },
+    {
+      "range": [
+        226.0,
+        243.8
+      ],
+      "event": "决胜盘1–1/Peg40–30→奥赢分到平分及反应；243.x跳3–1。",
+      "warning": "不是直接破发到2–1证据；下一次实际破发point未显示。"
+    }
+  ],
+  "active_user_geometry": {
+    "latest_instruction": "本期用户明确中心场地用3:4铺满画布；替代上一期contain建议。",
+    "fit": "fill/crop",
+    "cx": 0.5,
+    "track": false,
+    "native_source_crop": [
+      555,
+      0,
+      810,
+      1080
+    ],
+    "WTA_removal": "WTA字形在source1742..1833，中心窗到1365，自然完全裁掉。原场地/网WTA是现场标识，不能等同右上角标。",
+    "score_inset_required": true,
+    "native_scorebox_extent": "左x90..550，最宽第三盘/MP板约x550；整板位于center crop外。回贴要保持贴片紧框并保透明MP#3/BREAKPOINT header。",
+    "geometry_risks": [
+      {
+        "source_time": 171.56,
+        "risk": "第三MP近端奥左脚约x530略在crop左界555外，不能忽视角边截脚。"
+      },
+      {
+        "source_time": 185.5,
+        "risk": "第三MP仍有击球动作/球在空中，Peg右网边约1375..1415在crop右界1365之外；关键对手身体/拍可能被裁。",
+        "evidence_png": "/workspace/scratch/ostapenko-visual-native/native-185.50.png"
+      },
+      {
+        "source_time": 186.8,
+        "risk": "Peg右网外约1450，原生反应被center crop移出；奥主体仍可见。",
+        "evidence_png": "/workspace/scratch/ostapenko-visual-native/native-186.80.png"
+      },
+      {
+        "source_time": 190.48,
+        "risk": "下一7–7point首帧奥在近右角超中心窗，与缺serve prep叠加；不要用中路图掩盖。"
+      },
+      {
+        "source_time": 262.16,
+        "risk": "MP后的近右双打巷残余球约x1358贴右界，稍后出窗；源已停步不能错误当最后winning landing。"
+      }
+    ],
+    "composition_verdict": "当前3:4固定中心fill遵循用户最新明确版式；185.50右网前Peg被裁是真实已知空间限制，不能称整点无裁切/完整视野。源时间完整第三赛点不删除该帧或隐藏空间裁边；WTA自然去掉、原板需真实回贴。后续成片QC诚实保留该限制，不以旧contain或中路图替代。",
+    "confirmed_actual_fill_preview": {
+      "path": "/workspace/scratch/ostapenko-fill-court-check.png",
+      "parent_actual_observation": "root已实际view并向用户展示185.50 fill图，Peg右网前被裁出；本reviewer未把该截图单独view计入前面10 native。",
+      "latest_parent_instruction": "继续最新用户要求全程3:4固定居中铺满，真实记录空间裁边；不要称整点无裁切或完整视野。",
+      "layout_change_recommended_here": false
+    }
+  },
+  "no_final_qc_claim": true,
+  "suggested_fact_cards": [
+    {
+      "placement": "169.56第三赛点前",
+      "two_line_semantic_text": [
+        "抢七连救两个赛点",
+        "6比7 第三个赛点又到眼前"
+      ],
+      "fact_detail": "前两次在4–6与5–6，来自官方事实，源片没两回合；不向观众说素材缺失。数字详情可由口播/小label表达。"
+    },
+    {
+      "placement": "190.24第三赛点后、207.04末点前",
+      "two_line_semantic_text": [
+        "第三个赛点也守住",
+        "再赢一分 抢七8比7"
+      ],
+      "fact_detail": "用事实交代7–7→8–7，不把190.48已缺发球准备的半途点说成完整。"
+    },
+    {
+      "placement": "扳盘后进决胜盘",
+      "two_line_semantic_text": [
+        "抢七9比7扳回一盘",
+        "决胜盘把机会握住"
+      ],
+      "fact_detail": "第三赛点后9–7赢盘由官方比分及8–7末点获胜闭合。"
+    },
+    {
+      "placement": "257.64首MP之前",
+      "two_line_semantic_text": [
+        "5比2之后被追近",
+        "5比3 接发迎来首个赛点"
+      ],
+      "fact_detail": "5–2→5–3那局源片没给动作，依官方PBP事实卡交代；不要用1–1平分点替代。"
+    }
+  ],
+  "finite_evidence_archive": {
+    "url": "https://github.com/robertyang87/tennislive/releases/download/source-ostapenko-pegula-wuhan-2026-r2-301dd05c374b11e5/source-visual-evidence.zip",
+    "sha256": "c68b2c3794ebe52b1b7e9bc0688fa59b77a6814b2e3b36d4d9ad6b3e401cb590",
+    "bytes": 23818517,
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38569034490",
+    "scope": "25 exact source frame/contact PNG/JPEGs referenced by this source review; does not approve a final movie"
+  }
+}

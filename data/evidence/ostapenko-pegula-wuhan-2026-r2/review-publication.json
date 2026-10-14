@@ -1,0 +1,65 @@
+{
+  "schema": "tennislive.finite-final-review-publication.v1",
+  "slug": "ostapenko-pegula-wuhan-2026-r2",
+  "movie_sha256": "dd931e37e2848542851b4164c55d7ae8955b3ef4467dd03a69eca4a4aa372a30",
+  "movie_bytes": 99065594,
+  "native_render_run": 38578718620,
+  "tts_bundle_sha256": "c7592cfccdfbb321264c8809a685c3f73ea8548ca4864258c5bb66d628d37e7a",
+  "review_archives": [
+    {
+      "name": "pronunciation-evidence.zip",
+      "sha256": "b3411fff68ad1d18acce5250274d5daf6c9807942f29658bb8c0bfde50ae88f6",
+      "bytes": 15713358,
+      "url": "https://github.com/robertyang87/tennislive/releases/download/reel-review-ostapenko-pegula-wuhan-2026-r2-c7592cfccdfbb321/pronunciation-evidence.zip"
+    },
+    {
+      "name": "visual-qc-evidence.zip",
+      "sha256": "f1d0028a6a70dac59a769944d1b02de7334520fdad4629a195001ef8d06f3575",
+      "bytes": 16098807,
+      "url": "https://github.com/robertyang87/tennislive/releases/download/reel-review-ostapenko-pegula-wuhan-2026-r2-c7592cfccdfbb321/visual-qc-evidence.zip"
+    }
+  ],
+  "tracked_reports": [
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/pronunciation-final-review.json",
+      "sha256": "75dbf34b881436e97468b2882200c8605c21f0b32148c50a57b1b81c35a5d764"
+    },
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/pronunciation-artifact-verification.json",
+      "sha256": "58d90c4332541ffade759eb730792c9c3c5010ab85b0666c3f3ff9db297a2679"
+    },
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/pronunciation-bindings.json",
+      "sha256": "3e9318b5f2eb5aeea15c697cafff938ba27921e6d2b0b2c3f7346fc57e9a2f00"
+    },
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/PRONUNCIATION_REVIEW.md",
+      "sha256": "f7d47fee34a658e2e4cc6cc5caf354c56c7cb72727b9599ace8b129c48627585"
+    },
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/seven-request-exact-reuse.json",
+      "sha256": "c0bfbea229d49479fd3fdf29ca3fe6f07316f670ded59bbf4aee218e92aa6c74"
+    },
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/final-visual-review.json",
+      "sha256": "e4e67e294ffb7487428030984b5baaba6897a1e4da1564d60945a910c6501f62"
+    },
+    {
+      "path": "data/evidence/ostapenko-pegula-wuhan-2026-r2/frame_manifest.json",
+      "sha256": "73c309ce411f7270b75223fc495fda1584aa79b448678315775276af8e988cb8"
+    }
+  ],
+  "inherited_evidence": {
+    "old_097_archive_embedded_as": "inherited/097-pronunciation-evidence.zip",
+    "old_archive_sha256": "2beb23e3dc75fd0486e3aaab51c816360f7c5880baf2726286427a3a750a9acd",
+    "fixed_outro_prior_archive_manifest": "data/evidence/chwalinska-bouzkova-wuhan-2026-r2/pronunciation/archive.json"
+  },
+  "superseded_records": "superseded-097-and-2bf22/",
+  "limitations": [
+    "Visual inspection covers 91 current actual movie frames and all 49 ASS cue midpoint windows. It does not claim viewing all 6163 frames or pixel equality with a prior encoding.",
+    "Acoustic review uses actual frozen MP3 bytes and independently calibrated controls. No manual listening is claimed.",
+    "Seven unchanged voice requests inherit the exact previous review and its declared limits. Prior low-confidence and failed evidence remain preserved.",
+    "User-authorized fixed center crop spatial limit remains explicitly declared."
+  ],
+  "archive_publication_run": 38581911852
+}
