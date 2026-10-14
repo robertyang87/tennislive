@@ -66,6 +66,25 @@ def test_full_games_cell_cannot_replace_unmeasurable_points_boundary():
         w.board_edge(band)
 
 
+def test_wuhan_green_background_wipe_has_a_measured_edge():
+    path = (Path(__file__).parent / "fixtures" / "wta_scoreboard"
+            / "wuhan-sabalenka-li-008960-green-wipe.png")
+    band = np.asarray(Image.open(path).convert("RGB"))
+    geometry = w.frame_geometry(band, cap=464)
+    assert geometry["edge"] == 411
+    alpha = w.alpha_frame(geometry, (0, 0, 760, 158))
+    assert alpha[75, 400] == 255  # native games numeral remains
+    assert not alpha[:, 411:].any()  # no exposed court rectangle
+
+
+def test_uniform_green_point_slot_is_not_exposed_background():
+    band = np.empty((110, 760, 3), np.uint8)
+    band[:] = BOARD
+    band[:, 310:340] = MINT
+    with pytest.raises(RuntimeError, match="native right boundary"):
+        w.board_edge(band)
+
+
 def test_reviewed_windows_gate_real_wuhan_result_before_geometry(monkeypatch):
     """A real centred result at 194.48s is outside the small-board window.
 

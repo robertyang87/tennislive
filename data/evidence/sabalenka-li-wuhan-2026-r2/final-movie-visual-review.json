@@ -1,0 +1,140 @@
+{
+  "schema": "tennislive.independent-final-movie-visual-review.v1",
+  "status": "pass_no_new_visual_blocker_with_declared_owner_crop_tradeoff",
+  "reviewed_at": "2026-10-14T15:30:34.769173+00:00",
+  "github_run_id": "38588031709",
+  "github_run_url": "https://github.com/robertyang87/tennislive/actions/runs/38588031709",
+  "code_sha": "edd816f6c52de8f10e3985d1431a80ed8ec46e77",
+  "film": "/workspace/scratch/sabalenka-exit-6m4jt6/cloud-release/sabalenka-li-wuhan-2026-r2.mp4",
+  "film_sha256": "803323c84e71a0328e425c481cee9432e8b3245d016a3bb5f59ad11c917740d0",
+  "film_bytes": 74787848,
+  "film_duration_seconds": 219.72,
+  "film_dimensions": [
+    1080,
+    1440
+  ],
+  "render_inputs_spec_sha256": "fd0c0afee1aa48e79e70aa840625fd3dfa28685b7e8e0919fbd6a6b4e38af66c",
+  "render_inputs_projection_sha256": "2b8cbbb962dedf572dd9d7c5d2f7fea8b96f056db363671cf1704d6c8a9c87f4",
+  "method": "对实际GitHub正式Release影片独立核SHA，与同run render_inputs绑定一致。从这部影片提取94张真实PNG并浏览8张接触表，覆盖所有段落、各关键回合开始/后段、每个双语字幕中点、全部卡片、终局动态比分板wipe前中后、双方/裁判握手、谢场/统计/片尾。另对原始8源此前时间轴证据交叉核对。属于关键时点抽查，不是全片逐帧观看。没有做响度/gain扫描、没有新音频听审或模型人脸识别。",
+  "frame_manifest": "/workspace/scratch/sabalenka-exit-6m4jt6/final-movie-frames/manifest.json",
+  "contact_sheets": [
+    "/workspace/scratch/sabalenka-exit-6m4jt6/final-movie-frames/sheet-0.jpg",
+    "/workspace/scratch/sabalenka-exit-6m4jt6/final-movie-frames/sheet-1.jpg",
+    "/workspace/scratch/sabalenka-exit-6m4jt6/final-movie-frames/sheet-2.jpg",
+    "/workspace/scratch/sabalenka-exit-6m4jt6/final-movie-frames/sheet-3.jpg",
+    "/workspace/scratch/sabalenka-exit-6m4jt6/final-movie-frames/sheet-4.jpg",
+    "/workspace/scratch/sabalenka-exit-6m4jt6/final-movie-frames/sheet-5.jpg",
+    "/workspace/scratch/sabalenka-exit-6m4jt6/final-movie-frames/sheet-6.jpg",
+    "/workspace/scratch/sabalenka-exit-6m4jt6/final-movie-frames/sheet-7.jpg"
+  ],
+  "checks": [
+    {
+      "name": "原生3比4固定中心全出血",
+      "status": "pass_against_explicit_owner_direction",
+      "description": "最终所有比赛段铺满画布、固定中心，未自行跟随；此前已告知并获明确选择的边缘动作出画仍存在，按用户优先级执行，不宣称空间全覆盖。",
+      "owner_tradeoff_evidence": "data/evidence/sabalenka-li-wuhan-2026-r2/fullbleed-crop-evidence.json",
+      "scratch_tradeoff_evidence": "/workspace/scratch/sabalenka-exit-6m4jt6/fullbleed-crop-evidence.json"
+    },
+    {
+      "name": "关键回合时间窗口",
+      "status": "pass_temporal_coverage",
+      "description": "8条选源保留发球/回合起点至真实得分或反应；源29正文0–30.50完整保留最终赛点、赢球反应、双方/裁判握手及挥拍谢场。没有复现得分前人为提前切出的时间截断。空间边缘裁切仍属于已确认取舍。",
+      "evidence_final_seconds": [
+        27.3,
+        29.1,
+        41.1,
+        44.05,
+        53.6,
+        67.83,
+        75.88,
+        91.63,
+        105.18,
+        117.13,
+        117.68,
+        129.61,
+        134.55,
+        135.1,
+        149.61,
+        160.36,
+        169.75,
+        170.3,
+        172.1,
+        174.1,
+        176.1,
+        176.7
+      ]
+    },
+    {
+      "name": "动态原生比分板和赛点提示",
+      "status": "pass_visual_samples",
+      "description": "完整双方原名、盘分、局分/小分均在左下按原生同比显示；#3/#7/#8/#10独立提示条清楚，所查字幕均未压板。最终#10显示及wipe中点point-slot消失保留真实剩余games-cell，消失后无残留矩形球场补丁。",
+      "evidence_final_seconds": [
+        105.18,
+        135.1,
+        160.36,
+        170.3,
+        172.1,
+        176.1,
+        178.86,
+        178.92,
+        179.06,
+        179.14,
+        180.9
+      ],
+      "wipe_fix_evidence": "data/evidence/sabalenka-li-wuhan-2026-r2/scoreboard-wipe-fix-review.json"
+    },
+    {
+      "name": "章节卡与字幕排版",
+      "status": "pass_visual_samples",
+      "description": "各卡标题两行按完整意思，字号清晰、无孤字或截字；中文旁白字幕在卡底安全区；比赛中英文字幕位于原生板上方，抽查长句未越出画布或压比分。",
+      "evidence_final_seconds": [
+        14.2,
+        19.6,
+        42.51,
+        47.4,
+        71.18,
+        80.22,
+        94.98,
+        129.61,
+        132.34,
+        134.04,
+        152.96,
+        185.56,
+        191.93,
+        195.4
+      ]
+    },
+    {
+      "name": "完整终局握手与收尾",
+      "status": "pass_visual_samples",
+      "description": "187.9秒双方握手；194.1–195.4秒与主裁握手过程；198.1–200.2秒李吉妮挥拍谢场；203.6秒统计卡、217.5秒品牌片尾。",
+      "evidence_final_seconds": [
+        176.7,
+        178.86,
+        182.57,
+        187.9,
+        188.9,
+        194.1,
+        195.4,
+        198.1,
+        200.2,
+        203.6,
+        217.5
+      ]
+    },
+    {
+      "name": "模型脸识别",
+      "status": "not_claimed",
+      "description": "本复核没有调用人脸模型。云端render.json虽记录segments status=ok，但frames=0/faces=0，不把它当作本次已确认人物身份或眼睛模型通过。"
+    }
+  ],
+  "new_visual_blockers": [],
+  "limitations": [
+    "固定中心裁切将部分边缘救球/击球人物拍球裁出，是已告知且用户再次明确选择的构图取舍；本报告不把空间完整性写通过。",
+    "94张真实帧是重点抽查，未声明全片逐帧视觉审阅。",
+    "本报告只涵盖视觉；声调、译文忠实度/原声音频切点由相应音频证据负责。",
+    "最终统计为李吉妮3-6 6-4 7-6(5)晋级，广播world number30原话与官方31的内部差异记录延续，不改写广播。"
+  ],
+  "human_audio_listening_claimed": false,
+  "face_model_pass_claimed": false
+}

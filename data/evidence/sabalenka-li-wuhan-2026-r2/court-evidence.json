@@ -1,0 +1,65 @@
+{
+  "source_url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/oop",
+  "raw_source": "wta-oop.json",
+  "date": "2026-10-14",
+  "court_id": 1,
+  "court_name": "Dongfeng Voyah Center Court",
+  "match": {
+    "Status": "In Progress",
+    "NotBeforeISOTime": "19:15+0800",
+    "RoundId": 5,
+    "AssociationCode": "WTA",
+    "MatchupDisplayLine": "Aryna Sabalenka (BLR) [1] vs Ann Li (USA)",
+    "PossiblePlayersInMatch": "",
+    "FreeText": "",
+    "NotBeforeText": "Not before",
+    "PossiblePlayersIdsInMatch": {
+      "playerid": [
+        320760,
+        326096
+      ]
+    },
+    "MatchId": "LS016",
+    "Official": {
+      "OfficialItfId": "",
+      "FirstName": "",
+      "Country": "",
+      "SurName": "",
+      "OfficialId": ""
+    },
+    "NotBefore": "Not before 7:15 PM",
+    "seq": 5,
+    "Players": [
+      {
+        "Player": {
+          "FirstName": "Aryna",
+          "Country": "BLR",
+          "id": 320760,
+          "SurName": "Sabalenka",
+          "PlayerDisplayLine": "Aryna Sabalenka (BLR)",
+          "order": 1
+        },
+        "EntryType": "",
+        "Seed": 1,
+        "PlayerTeamDisplay": "Aryna Sabalenka (BLR) [1]",
+        "isKnown": 1,
+        "plyrTeam": 1
+      },
+      {
+        "Player": {
+          "FirstName": "Ann",
+          "Country": "USA",
+          "id": 326096,
+          "SurName": "Li",
+          "PlayerDisplayLine": "Ann Li (USA)",
+          "order": 1
+        },
+        "EntryType": "",
+        "Seed": "",
+        "PlayerTeamDisplay": "Ann Li (USA)",
+        "isKnown": 1,
+        "plyrTeam": 2
+      }
+    ]
+  }
+}

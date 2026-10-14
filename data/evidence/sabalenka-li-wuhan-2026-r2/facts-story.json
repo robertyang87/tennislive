@@ -1,0 +1,1283 @@
+{
+  "slug": "sabalenka-li-wuhan-2026-r2",
+  "youtube_id": "6m4JT6-Jk4c",
+  "youtube_identity_status": "比赛身份从WTA核实；YouTube metadata由root probe复核对应",
+  "prepared_at": "2026-10-14T14:32:35.828981+00:00",
+  "evidence": {
+    "match": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+      "file": "wta-matches.json",
+      "fields": "LS016, A=Sabalenka/320760, B=Li/326096, finished; Li3-6 6-4 7-6(5),02:27:35"
+    },
+    "pbp": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS016/point-by-point",
+      "file": "wta-point-by-point.json",
+      "derived": "pbp-rebuilt.json",
+      "quality_note": "raw pointWinner11条与比分变化冲突；根据gameScore转移重建213分，总分108:105和破发机会8:17与官方stats一致。不得按raw pointWinner写连得分。"
+    },
+    "advanced_stats": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS016/advanced-stats",
+      "file": "wta-advanced-stats.json",
+      "fields": "teamA.matchTotal=Sabalenka; teamB.matchTotal=Li; Li.matchBreakPoints10与逐分独立计数吻合"
+    },
+    "li_ranking": {
+      "url": "https://api.wtatennis.com/tennis/players/326096/ranking?date=2026-10-12",
+      "file": "wta-li-ranking.json",
+      "fields": "2026-10-12 singlesRanking31"
+    },
+    "sabalenka_ranking": {
+      "url": "https://api.wtatennis.com/tennis/players/320760/ranking?date=2026-10-12",
+      "file": "wta-sabalenka-ranking.json",
+      "fields": "2026-10-12 singlesRanking2"
+    },
+    "draw": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/draw",
+      "file": "wta-draw.json",
+      "derived": "wta-draw-decoded.json",
+      "fields": "萨首轮Bye；下一轮签表LS008对曾丽美，LS017曾丽美7-5 6-3斯尼古尔见matches。draw李吉妮Rank29是入围旧排名，以最新weeklyRanking31为准。"
+    },
+    "h2h": {
+      "url": "https://api.wtatennis.com/tennis/players/320760/headtohead/326096",
+      "file": "wta-h2h.json",
+      "fields": "赛前Sab单打3-0；筛s_d_flag=S：2021AO6-3 6-1、2023Cincinnati7-5 2-6 6-4、2026Miami7-6(5)6-4。本场是Li首次单打战胜Sab。注意另有2020双打，不计入单打交手。"
+    },
+    "sab_bio": {
+      "url": "https://api.wtatennis.com/tennis/players/320760/detailed",
+      "file": "wta-sabalenka-detailed.json",
+      "fields": "CareerHighlights列2018/2019/2024武汉单打冠军；本届为三冠得主，非卫冕冠军。"
+    },
+    "names": {
+      "files": [
+        "/workspace/tennislive-sabalenka/data/player_name_overrides.json",
+        "/workspace/tennislive-sabalenka/src/tennislive/zh/players.py"
+      ],
+      "method": "已实际调用player_zh()：Ann Li=李吉妮；Aryna Sabalenka=萨巴伦卡；Janice Tjen=曾丽美。"
+    }
+  },
+  "identity": {
+    "official_match_id": "LS016",
+    "date_beijing": "2026-10-14",
+    "time_of_day_beijing": "晚上",
+    "first_point_utc": "2026-10-14T11:25:44Z",
+    "last_point_utc": "2026-10-14T13:52:47Z",
+    "event": "2026 WTA1000 武汉 女单第二轮",
+    "winner": "李吉妮",
+    "winner_en": "Ann Li",
+    "winner_id": "326096",
+    "loser": "萨巴伦卡",
+    "loser_en": "Aryna Sabalenka",
+    "loser_id": "320760",
+    "loser_seed": 1,
+    "winner_rank": 31,
+    "loser_rank": 2,
+    "rank_date": "2026-10-12",
+    "score_winner_perspective": "3-6 6-4 7-6(5)",
+    "score_sabalenka_perspective": "6-3 4-6 6-7(5)",
+    "duration": "02:27:35",
+    "next_round": "1/8决赛",
+    "winner_next_opponent": "曾丽美",
+    "winner_next_opponent_en": "Janice Tjen",
+    "next_opponent_evidence": "LS0177-5 6-3胜Snigur；LS008B位为Tjen，A位截至首次拉取仍TBD，签表1-4区赢家对5-8区赢家确定。"
+  },
+  "key_stats": {
+    "sabalenka": {
+      "winners": 36,
+      "unforced_errors": 44,
+      "aces": 2,
+      "double_faults": 6,
+      "break_points_converted": 4,
+      "break_points_played": 8,
+      "net_approaches": 17,
+      "successful_net_approaches": 14
+    },
+    "li": {
+      "winners": 31,
+      "unforced_errors": 28,
+      "aces": 8,
+      "double_faults": 4,
+      "break_points_converted": 4,
+      "break_points_played": 17,
+      "net_approaches": 12,
+      "successful_net_approaches": 8
+    },
+    "match_points_for_li": 10,
+    "match_points_saved_by_sabalenka": 9
+  },
+  "match_points": [
+    {
+      "ordinal": 1,
+      "point_number": 167,
+      "set": 3,
+      "game": 8,
+      "score_A_B_before": {
+        "teamAScore": "15",
+        "teamBScore": "40"
+      },
+      "score_A_B_after": {
+        "teamAScore": "30",
+        "teamBScore": "40"
+      },
+      "saved_by_sabalenka": true,
+      "timestamp": "2026-10-14T13:22:07Z"
+    },
+    {
+      "ordinal": 2,
+      "point_number": 168,
+      "set": 3,
+      "game": 8,
+      "score_A_B_before": {
+        "teamAScore": "30",
+        "teamBScore": "40"
+      },
+      "score_A_B_after": {
+        "teamAScore": "40",
+        "teamBScore": "40"
+      },
+      "saved_by_sabalenka": true,
+      "timestamp": "2026-10-14T13:22:44Z"
+    },
+    {
+      "ordinal": 3,
+      "point_number": 170,
+      "set": 3,
+      "game": 8,
+      "score_A_B_before": {
+        "teamAScore": "40",
+        "teamBScore": "A"
+      },
+      "score_A_B_after": {
+        "teamAScore": "40",
+        "teamBScore": "40"
+      },
+      "saved_by_sabalenka": true,
+      "timestamp": "2026-10-14T13:24:12Z"
+    },
+    {
+      "ordinal": 4,
+      "point_number": 172,
+      "set": 3,
+      "game": 8,
+      "score_A_B_before": {
+        "teamAScore": "40",
+        "teamBScore": "A"
+      },
+      "score_A_B_after": {
+        "teamAScore": "40",
+        "teamBScore": "40"
+      },
+      "saved_by_sabalenka": true,
+      "timestamp": "2026-10-14T13:25:16Z"
+    },
+    {
+      "ordinal": 5,
+      "point_number": 174,
+      "set": 3,
+      "game": 8,
+      "score_A_B_before": {
+        "teamAScore": "40",
+        "teamBScore": "A"
+      },
+      "score_A_B_after": {
+        "teamAScore": "40",
+        "teamBScore": "40"
+      },
+      "saved_by_sabalenka": true,
+      "timestamp": "2026-10-14T13:26:34Z"
+    },
+    {
+      "ordinal": 6,
+      "point_number": 189,
+      "set": 3,
+      "game": 10,
+      "score_A_B_before": {
+        "teamAScore": "15",
+        "teamBScore": "40"
+      },
+      "score_A_B_after": {
+        "teamAScore": "30",
+        "teamBScore": "40"
+      },
+      "saved_by_sabalenka": true,
+      "timestamp": "2026-10-14T13:36:45Z"
+    },
+    {
+      "ordinal": 7,
+      "point_number": 190,
+      "set": 3,
+      "game": 10,
+      "score_A_B_before": {
+        "teamAScore": "30",
+        "teamBScore": "40"
+      },
+      "score_A_B_after": {
+        "teamAScore": "40",
+        "teamBScore": "40"
+      },
+      "saved_by_sabalenka": true,
+      "timestamp": "2026-10-14T13:37:29Z"
+    },
+    {
+      "ordinal": 8,
+      "point_number": 211,
+      "set": 3,
+      "game": 13,
+      "score_A_B_before": {
+        "teamAScore": "3",
+        "teamBScore": "6"
+      },
+      "score_A_B_after": {
+        "teamAScore": "4",
+        "teamBScore": "6"
+      },
+      "saved_by_sabalenka": true,
+      "timestamp": "2026-10-14T13:51:21Z"
+    },
+    {
+      "ordinal": 9,
+      "point_number": 212,
+      "set": 3,
+      "game": 13,
+      "score_A_B_before": {
+        "teamAScore": "4",
+        "teamBScore": "6"
+      },
+      "score_A_B_after": {
+        "teamAScore": "5",
+        "teamBScore": "6"
+      },
+      "saved_by_sabalenka": true,
+      "timestamp": "2026-10-14T13:51:57Z"
+    },
+    {
+      "ordinal": 10,
+      "point_number": 213,
+      "set": 3,
+      "game": 13,
+      "score_A_B_before": {
+        "teamAScore": "5",
+        "teamBScore": "6"
+      },
+      "score_A_B_after": {
+        "teamAScore": "5",
+        "teamBScore": "7"
+      },
+      "saved_by_sabalenka": false,
+      "timestamp": "2026-10-14T13:52:47Z"
+    }
+  ],
+  "core_story": "萨先赢首盘；次盘4-2后连丢4局；决胜1-4/2-5落后，救5赛点保发、破掉对手发球胜赛局，再救2赛点保发，追到5-5；抢七3-6再救2赛点，最终5-7落败。",
+  "hook": {
+    "recommended": [
+      "连救9个赛点",
+      "萨巴伦卡仍遭逆转"
+    ],
+    "alternative": [
+      "次盘4比2领先",
+      "萨巴伦卡武汉出局"
+    ],
+    "copy_title": "10.14赛场之上|萨巴伦卡救9赛点出局",
+    "copy_title_characters": 20,
+    "push_summary": "连救9个赛点仍遭逆转，萨巴伦卡武汉出局",
+    "caption_first_line": "萨巴伦卡连救9个赛点，仍遭李吉妮逆转"
+  },
+  "beats": [
+    {
+      "id": "cold_open",
+      "narration": "",
+      "role": "最后赛点真实原声与反应先行",
+      "point_numbers": [
+        213
+      ],
+      "needs": "保留完整最后回合与真实赛后反应，不凭结果编写握拳/哭泣。"
+    },
+    {
+      "id": "landing",
+      "narration": "九个赛点，萨巴伦卡都救回来了。但第十个，她没能再续。武汉三冠得主，被李吉妮逆转淘汰。",
+      "evidence": [
+        "pbp",
+        "advanced_stats",
+        "sab_bio",
+        "match"
+      ]
+    },
+    {
+      "id": "coordinates",
+      "narration": "北京时间十月十四号晚上，武汉WTA一千赛女单第二轮。头号种子萨巴伦卡，对阵李吉妮。",
+      "evidence": [
+        "match",
+        "pbp",
+        "draw"
+      ]
+    },
+    {
+      "id": "context",
+      "narration": "此前三次单打交手，赢的都是萨巴伦卡。这一次，她也先拿下了第一盘。",
+      "evidence": [
+        "h2h",
+        "match"
+      ]
+    },
+    {
+      "id": "first_set",
+      "narration": "首盘四比一领先后，萨巴伦卡被追到四比三。她马上回破，再保发，六比三先下一盘。",
+      "evidence": [
+        "pbp"
+      ],
+      "key_games": [
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "second_set_turn",
+      "narration": "第二盘，萨巴伦卡破发后带到四比二。可比赛从这里转了方向，李吉妮连赢四局，六比四扳平。",
+      "evidence": [
+        "pbp"
+      ],
+      "key_games": [
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          2,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "third_set_down",
+      "narration": "决胜盘，萨巴伦卡一度一比四落后。二比五时，她自己的发球局，又被逼到十五比四十。",
+      "evidence": [
+        "pbp"
+      ],
+      "point_numbers": [
+        166
+      ],
+      "key_games": [
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "save_first_five",
+      "narration": "先救两个赛点，平分后又救三个。这个十六分的发球局，萨巴伦卡硬是保了下来。",
+      "evidence": [
+        "pbp"
+      ],
+      "point_numbers": [
+        167,
+        168,
+        170,
+        172,
+        174,
+        178
+      ],
+      "needs": "5次赛点的比分映射与画面逐点核对；不能把其他普通分冒充赛点。"
+    },
+    {
+      "id": "save_seven",
+      "narration": "李吉妮的发球胜赛局也没守住。萨巴伦卡追到四比五，下一局又从十五比四十救回两个赛点，五比五。",
+      "evidence": [
+        "pbp"
+      ],
+      "point_numbers": [
+        184,
+        188,
+        189,
+        190,
+        192
+      ],
+      "key_games": [
+        [
+          3,
+          9
+        ],
+        [
+          3,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "tiebreak_final",
+      "narration": "两人进入抢七，萨巴伦卡又被拉开到三比六。她追到五比六，第九个赛点也救了。最后这一分，李吉妮终于拿下。",
+      "evidence": [
+        "pbp"
+      ],
+      "point_numbers": [
+        210,
+        211,
+        212,
+        213
+      ],
+      "needs": "这里的最后一分必须与真实原声衔接，可让解说直接承担最终结果。"
+    },
+    {
+      "id": "stats_and_result",
+      "narration": "萨巴伦卡三十六记制胜分，四十四次非受迫失误；李吉妮三十一记制胜分，二十八次非受迫失误。两小时二十七分，这场反复拉扯，落在了李吉妮这一边。",
+      "evidence": [
+        "advanced_stats",
+        "match"
+      ]
+    },
+    {
+      "id": "next",
+      "narration": "李吉妮首次在单打击败萨巴伦卡，下一轮对阵曾丽美。救回九个赛点仍没赢下，萨巴伦卡这场最可惜的是哪一段？",
+      "evidence": [
+        "h2h",
+        "match",
+        "draw"
+      ]
+    }
+  ],
+  "turning_points": [
+    {
+      "set": 1,
+      "game": 7,
+      "server": "A",
+      "winner": "B",
+      "li_score_before": [
+        2,
+        4
+      ],
+      "li_score_after": [
+        3,
+        4
+      ],
+      "points": 5,
+      "point_numbers": [
+        43,
+        47
+      ],
+      "first_point_utc": "2026-10-14T11:52:45Z",
+      "last_point_utc": "2026-10-14T11:54:51Z",
+      "break_point_chances": {
+        "B": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 8,
+      "server": "B",
+      "winner": "A",
+      "li_score_before": [
+        3,
+        4
+      ],
+      "li_score_after": [
+        3,
+        5
+      ],
+      "points": 4,
+      "point_numbers": [
+        48,
+        51
+      ],
+      "first_point_utc": "2026-10-14T11:56:56Z",
+      "last_point_utc": "2026-10-14T11:58:13Z",
+      "break_point_chances": {
+        "A": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 9,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        3,
+        5
+      ],
+      "li_score_after": [
+        3,
+        6
+      ],
+      "points": 4,
+      "point_numbers": [
+        52,
+        55
+      ],
+      "first_point_utc": "2026-10-14T11:58:57Z",
+      "last_point_utc": "2026-10-14T12:00:24Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 5,
+      "server": "B",
+      "winner": "A",
+      "li_score_before": [
+        2,
+        2
+      ],
+      "li_score_after": [
+        2,
+        3
+      ],
+      "points": 8,
+      "point_numbers": [
+        81,
+        88
+      ],
+      "first_point_utc": "2026-10-14T12:20:08Z",
+      "last_point_utc": "2026-10-14T12:23:49Z",
+      "break_point_chances": {
+        "A": 3
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 6,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        2,
+        3
+      ],
+      "li_score_after": [
+        2,
+        4
+      ],
+      "points": 14,
+      "point_numbers": [
+        89,
+        102
+      ],
+      "first_point_utc": "2026-10-14T12:26:11Z",
+      "last_point_utc": "2026-10-14T12:35:22Z",
+      "break_point_chances": {
+        "B": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 8,
+      "server": "A",
+      "winner": "B",
+      "li_score_before": [
+        3,
+        4
+      ],
+      "li_score_after": [
+        4,
+        4
+      ],
+      "points": 8,
+      "point_numbers": [
+        108,
+        115
+      ],
+      "first_point_utc": "2026-10-14T12:39:36Z",
+      "last_point_utc": "2026-10-14T12:43:34Z",
+      "break_point_chances": {
+        "B": 2
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 10,
+      "server": "A",
+      "winner": "B",
+      "li_score_before": [
+        5,
+        4
+      ],
+      "li_score_after": [
+        6,
+        4
+      ],
+      "points": 8,
+      "point_numbers": [
+        121,
+        128
+      ],
+      "first_point_utc": "2026-10-14T12:48:21Z",
+      "last_point_utc": "2026-10-14T12:53:06Z",
+      "break_point_chances": {
+        "B": 3
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 5,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        3,
+        1
+      ],
+      "li_score_after": [
+        4,
+        1
+      ],
+      "points": 4,
+      "point_numbers": [
+        148,
+        151
+      ],
+      "first_point_utc": "2026-10-14T13:07:37Z",
+      "last_point_utc": "2026-10-14T13:08:57Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 7,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        4,
+        2
+      ],
+      "li_score_after": [
+        5,
+        2
+      ],
+      "points": 6,
+      "point_numbers": [
+        157,
+        162
+      ],
+      "first_point_utc": "2026-10-14T13:15:16Z",
+      "last_point_utc": "2026-10-14T13:17:45Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 8,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        5,
+        2
+      ],
+      "li_score_after": [
+        5,
+        3
+      ],
+      "points": 16,
+      "point_numbers": [
+        163,
+        178
+      ],
+      "first_point_utc": "2026-10-14T13:19:31Z",
+      "last_point_utc": "2026-10-14T13:28:11Z",
+      "break_point_chances": {
+        "B": 5
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 9,
+      "server": "B",
+      "winner": "A",
+      "li_score_before": [
+        5,
+        3
+      ],
+      "li_score_after": [
+        5,
+        4
+      ],
+      "points": 6,
+      "point_numbers": [
+        179,
+        184
+      ],
+      "first_point_utc": "2026-10-14T13:29:08Z",
+      "last_point_utc": "2026-10-14T13:32:19Z",
+      "break_point_chances": {
+        "A": 2
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "30"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 10,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        5,
+        4
+      ],
+      "li_score_after": [
+        5,
+        5
+      ],
+      "points": 8,
+      "point_numbers": [
+        185,
+        192
+      ],
+      "first_point_utc": "2026-10-14T13:34:32Z",
+      "last_point_utc": "2026-10-14T13:39:05Z",
+      "break_point_chances": {
+        "B": 2
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 12,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        6,
+        5
+      ],
+      "li_score_after": [
+        6,
+        6
+      ],
+      "points": 4,
+      "point_numbers": [
+        198,
+        201
+      ],
+      "first_point_utc": "2026-10-14T13:43:38Z",
+      "last_point_utc": "2026-10-14T13:45:36Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 13,
+      "server": "",
+      "winner": "B",
+      "li_score_before": [
+        6,
+        6
+      ],
+      "li_score_after": [
+        7,
+        6
+      ],
+      "points": 12,
+      "point_numbers": [
+        202,
+        213
+      ],
+      "first_point_utc": "2026-10-14T13:46:18Z",
+      "last_point_utc": "2026-10-14T13:52:47Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "1",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "1",
+          "teamBScore": "1"
+        },
+        {
+          "teamAScore": "2",
+          "teamBScore": "1"
+        },
+        {
+          "teamAScore": "2",
+          "teamBScore": "2"
+        },
+        {
+          "teamAScore": "2",
+          "teamBScore": "3"
+        },
+        {
+          "teamAScore": "2",
+          "teamBScore": "4"
+        },
+        {
+          "teamAScore": "3",
+          "teamBScore": "4"
+        },
+        {
+          "teamAScore": "3",
+          "teamBScore": "5"
+        },
+        {
+          "teamAScore": "3",
+          "teamBScore": "6"
+        },
+        {
+          "teamAScore": "4",
+          "teamBScore": "6"
+        },
+        {
+          "teamAScore": "5",
+          "teamBScore": "6"
+        },
+        {
+          "teamAScore": "5",
+          "teamBScore": "7"
+        }
+      ]
+    }
+  ],
+  "story_meaning": {
+    "verified": [
+      "三届武汉冠军本届首场比赛出局（首轮轮空，第二轮登场）。",
+      "李吉妮结束此前对萨巴伦卡单打三战全败，首次击败此对手。"
+    ],
+    "avoid": [
+      "不称萨巴伦卡世界第一：当前第2，本站1号种子。",
+      "不称卫冕冠军或武汉不败金身：官方生涯冠军只有2018/2019/2024。",
+      "不称李吉妮世界29：签表入围排名29，10月12最新第31。",
+      "不写赛点只兑现1个；写萨救回9个，第10个结束。",
+      "不以总分108:105制造标题；总分只留内部核验。",
+      "不虚构九个赛点的球路；未见画面不写双误送赛点、怒砸球拍等动作。"
+    ]
+  },
+  "open_gaps": [
+    "两处以上具体球路/技战术需原声或实际回合核对后补到最终spec。",
+    "保留原声句准确听审和双语字幕需由素材代理核验。",
+    "YouTube用户视频metadata待probe；若不对应当前场次，暂停按本身份使用其画面。"
+  ],
+  "files": [
+    "wta-matches.json",
+    "wta-point-by-point.json",
+    "wta-stats.json",
+    "wta-advanced-stats.json",
+    "wta-li-ranking.json",
+    "wta-sabalenka-ranking.json",
+    "wta-draw.json",
+    "wta-draw-decoded.json",
+    "wta-h2h.json",
+    "wta-sabalenka-detailed.json",
+    "pbp-rebuilt.json",
+    "match-points.json"
+  ]
+}

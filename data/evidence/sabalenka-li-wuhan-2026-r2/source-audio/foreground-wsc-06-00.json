@@ -1,0 +1,48 @@
+{
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/91deddba-e166-416d-947a-c907a4f61d80.mp4",
+  "source_sha256": "b314656ef81cce1d75b6cb93aee74c1ef8176e64091d5f78c9c78c6568266948",
+  "source_key": "wsc-06-00",
+  "reviewed_from": 0,
+  "reviewed_to": 17.48,
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_review agent; fresh independent faster-whisper small.en/base.en, full source windows",
+  "reviewed_at": "2026-10-14T14:42:30.686805+00:00",
+  "status": "complete",
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "fresh_actual_asr_runs": true,
+  "foreground_english": [
+    {
+      "start": 0.98,
+      "end": 3,
+      "en": "Lined up for her second hold.",
+      "zh": "准备争取第二次保发。"
+    },
+    {
+      "start": 13.76,
+      "end": 17.06,
+      "en": "Well, if it's worrying, she's moving pretty well today already.",
+      "zh": "即便有担忧，她的移动仍出色。"
+    }
+  ],
+  "uncertain_spans": [],
+  "method_details": "Full source original audio independently decoded twice, language=en, beam_size=5, word_timestamps=True, VAD disabled, no initial prompt; raw word timestamps and ASR confidence retained. This packet is ASR cross-check editorial transcription, not human listening or model visual QC. Proper names normalized to official spelling. No loudness adjustment or normalization.",
+  "raw_asr_evidence": [
+    {
+      "path": "/workspace/scratch/sabalenka-exit-6m4jt6/source-audio/asr-small.en.json",
+      "sha256": "2df531e31f5b53313ccb91509f096f0017cebca1acf2f2e90401e6bb429eee3c"
+    },
+    {
+      "path": "/workspace/scratch/sabalenka-exit-6m4jt6/source-audio/asr-base.en.json",
+      "sha256": "3b962f0aa7ae1074c16a70fe36296aa6a54ed4b566560874627c0557610c3bc9"
+    }
+  ],
+  "cross_check_notes": [
+    "Both models agree second hold opening phrase and moving pretty well ending; first-set4-1, Ann Li serving40-30, Sabalenka wins this point; do not call end of game."
+  ],
+  "translation_revision": {
+    "method": "current_assistant_manual",
+    "why": "Concise faithful Chinese captions fit native fixed-size lines; original English and exact source timing unchanged.",
+    "original_packet_sha256": "2d33279149d6b0c20a5bd419cea2c1d2f81d2057144a69434e0c2a77125eba27"
+  }
+}

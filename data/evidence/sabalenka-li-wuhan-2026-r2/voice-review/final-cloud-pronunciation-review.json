@@ -1,0 +1,520 @@
+{
+  "schema": "tennislive.final-cloud-pronunciation-review.v1",
+  "episode": "sabalenka-li-wuhan-2026-r2",
+  "status": "scoped_modern_polyphone_review_complete",
+  "release_conclusion": "All22 current modern-polyphone/function-syllable occurrences have scoped actual-final-cloud-audio support. No concrete wrong-reading or remaining modern-polyphone blocker identified. This is limited acoustic evidence, not human listening or universal tone verification.",
+  "bundle_sha256": "5cb7673454f6d9fc8d133b66f51b6d5ed9dbbff11d154616ccaf1db939b1ed41",
+  "bundle_run": 38583458160,
+  "current_request_count": 8,
+  "actual_native_prepared_binding": "native-bindings.json",
+  "native_cache_binding": "actual-8-cache-seed.json",
+  "all8_cache_only_native_calls_byte_equal": true,
+  "modern_occurrence_count": 22,
+  "scoped_supported_occurrence_count": 22,
+  "occurrences": [
+    {
+      "target_index": 0,
+      "label": "第 2 段",
+      "text": "救回九个赛点，萨巴伦卡仍然出局。",
+      "at": 10,
+      "char": "卡",
+      "intended": "ka3",
+      "wrong": "qia3",
+      "actual_mp3_sha256": "1145009dfacaaf71b05aff1d4f74ca004a569bb021fd0604c88311a1a5bce040",
+      "actual_window": [
+        1.9840619999999998,
+        2.169791
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.30970487745612035,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 1,
+      "label": "第 3 段",
+      "text": "北京时间十月十四日晚，武汉第二轮。萨巴伦卡世界第二，对手李吉妮世界第三十一。",
+      "at": 3,
+      "char": "间",
+      "intended": "jian1",
+      "wrong": "jian4",
+      "actual_mp3_sha256": "d63d31bdfd506451656c8580539c39e09f477a05a4f88652d5de25704afa381e",
+      "actual_window": [
+        0.5689784,
+        0.7429159
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.6733122489966421,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 2,
+      "label": "第 3 段",
+      "text": "北京时间十月十四日晚，武汉第二轮。萨巴伦卡世界第二，对手李吉妮世界第三十一。",
+      "at": 20,
+      "char": "卡",
+      "intended": "ka3",
+      "wrong": "qia3",
+      "actual_mp3_sha256": "d63d31bdfd506451656c8580539c39e09f477a05a4f88652d5de25704afa381e",
+      "actual_window": [
+        4.080197,
+        4.268874
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.36143906856284574,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 3,
+      "label": "第 5 段",
+      "text": "首盘主动上网抢分，萨巴伦卡六比三取胜。次盘又以四比二领先。",
+      "at": 6,
+      "char": "抢",
+      "intended": "qiang3",
+      "wrong": "qiang1",
+      "actual_mp3_sha256": "21d3cc3eb8c015a68c55b4af19b67bd87fd88a046661b66dee40bec87a5b5d13",
+      "actual_window": [
+        1.238208,
+        1.485833
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9168438091781798,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 4,
+      "label": "第 5 段",
+      "text": "首盘主动上网抢分，萨巴伦卡六比三取胜。次盘又以四比二领先。",
+      "at": 7,
+      "char": "分",
+      "intended": "fen1",
+      "wrong": "fen4",
+      "actual_mp3_sha256": "21d3cc3eb8c015a68c55b4af19b67bd87fd88a046661b66dee40bec87a5b5d13",
+      "actual_window": [
+        1.485833,
+        1.698083
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9859581690568964,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 5,
+      "label": "第 5 段",
+      "text": "首盘主动上网抢分，萨巴伦卡六比三取胜。次盘又以四比二领先。",
+      "at": 12,
+      "char": "卡",
+      "intended": "ka3",
+      "wrong": "qia3",
+      "actual_mp3_sha256": "21d3cc3eb8c015a68c55b4af19b67bd87fd88a046661b66dee40bec87a5b5d13",
+      "actual_window": [
+        2.5943217499999998,
+        2.771207
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.2769340648663084,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 6,
+      "label": "第 9 段",
+      "text": "决胜盘二比五，萨巴伦卡陷入绝境。第八局救回五个赛点，随后上网抢分追到四比五，第十局再救两个。",
+      "at": 10,
+      "char": "卡",
+      "intended": "ka3",
+      "wrong": "qia3",
+      "actual_mp3_sha256": "17d991b27ce174270470596e625a756e6021b4cc0be0cf111184e855d3971887",
+      "actual_window": [
+        2.17,
+        2.37
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.29623695513275594,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "finite_supplements",
+      "reference_outliers_removed": [
+        "A:咔"
+      ],
+      "initial_raw_status_preserved": "unconfirmed"
+    },
+    {
+      "target_index": 7,
+      "label": "第 9 段",
+      "text": "决胜盘二比五，萨巴伦卡陷入绝境。第八局救回五个赛点，随后上网抢分追到四比五，第十局再救两个。",
+      "at": 30,
+      "char": "抢",
+      "intended": "qiang3",
+      "wrong": "qiang1",
+      "actual_mp3_sha256": "17d991b27ce174270470596e625a756e6021b4cc0be0cf111184e855d3971887",
+      "actual_window": [
+        6.073125,
+        6.344333
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.7553360343168112,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 8,
+      "label": "第 9 段",
+      "text": "决胜盘二比五，萨巴伦卡陷入绝境。第八局救回五个赛点，随后上网抢分追到四比五，第十局再救两个。",
+      "at": 31,
+      "char": "分",
+      "intended": "fen1",
+      "wrong": "fen4",
+      "actual_mp3_sha256": "17d991b27ce174270470596e625a756e6021b4cc0be0cf111184e855d3971887",
+      "actual_window": [
+        6.344333,
+        6.544791
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9972580172652473,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 9,
+      "label": "第 13 段",
+      "text": "追到六比六，抢七却又三比六。萨巴伦卡连续救回两个赛点，比分追到五比六。",
+      "at": 6,
+      "char": "抢",
+      "intended": "qiang3",
+      "wrong": "qiang1",
+      "actual_mp3_sha256": "ca60c33bfd9f250037bc258fb043647c0e5bd668c7324feb5296f951181df1f7",
+      "actual_window": [
+        1.120291,
+        1.462249
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.8788386498688714,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 10,
+      "label": "第 13 段",
+      "text": "追到六比六，抢七却又三比六。萨巴伦卡连续救回两个赛点，比分追到五比六。",
+      "at": 17,
+      "char": "卡",
+      "intended": "ka3",
+      "wrong": "qia3",
+      "actual_mp3_sha256": "ca60c33bfd9f250037bc258fb043647c0e5bd668c7324feb5296f951181df1f7",
+      "actual_window": [
+        3.75293725,
+        3.9504580000000002
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.26681965548889514,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 11,
+      "label": "第 13 段",
+      "text": "追到六比六，抢七却又三比六。萨巴伦卡连续救回两个赛点，比分追到五比六。",
+      "at": 28,
+      "char": "分",
+      "intended": "fen1",
+      "wrong": "fen4",
+      "actual_mp3_sha256": "ca60c33bfd9f250037bc258fb043647c0e5bd668c7324feb5296f951181df1f7",
+      "actual_window": [
+        5.843165999999999,
+        6.002374
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.894597568046548,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [
+        "B:份"
+      ],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 12,
+      "label": "第 16 段",
+      "text": "三十六记制胜分，四十四次非受迫失误。李吉妮下一轮对阵曾丽美。萨巴伦卡，下一站能带来怎样的回应？",
+      "at": 6,
+      "char": "分",
+      "intended": "fen1",
+      "wrong": "fen4",
+      "actual_mp3_sha256": "e85fa4d70299c017b9d2672ec3dadd82d0cc0c07c675670b8ad3bdff99dfbfba",
+      "actual_window": [
+        1.226416,
+        1.426874
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.8099073001458542,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 13,
+      "label": "第 16 段",
+      "text": "三十六记制胜分，四十四次非受迫失误。李吉妮下一轮对阵曾丽美。萨巴伦卡，下一站能带来怎样的回应？",
+      "at": 14,
+      "char": "迫",
+      "intended": "po4",
+      "wrong": "pai3",
+      "actual_mp3_sha256": "e85fa4d70299c017b9d2672ec3dadd82d0cc0c07c675670b8ad3bdff99dfbfba",
+      "actual_window": [
+        2.942208,
+        3.113208
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.20219393001326438,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 14,
+      "label": "第 16 段",
+      "text": "三十六记制胜分，四十四次非受迫失误。李吉妮下一轮对阵曾丽美。萨巴伦卡，下一站能带来怎样的回应？",
+      "at": 26,
+      "char": "曾",
+      "intended": "zeng1",
+      "wrong": "ceng2",
+      "actual_mp3_sha256": "e85fa4d70299c017b9d2672ec3dadd82d0cc0c07c675670b8ad3bdff99dfbfba",
+      "actual_window": [
+        5.44,
+        5.65
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 1.0,
+      "two_sided_selftest_pass": true,
+      "method": "actual affricate frication/periodicity timing contrast",
+      "evidence_section": "zeng_affricate_timing",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "unconfirmed"
+    },
+    {
+      "target_index": 15,
+      "label": "第 16 段",
+      "text": "三十六记制胜分，四十四次非受迫失误。李吉妮下一轮对阵曾丽美。萨巴伦卡，下一站能带来怎样的回应？",
+      "at": 27,
+      "char": "丽",
+      "intended": "li4",
+      "wrong": "li2",
+      "actual_mp3_sha256": "e85fa4d70299c017b9d2672ec3dadd82d0cc0c07c675670b8ad3bdff99dfbfba",
+      "actual_window": [
+        5.585708,
+        5.7704580000000005
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9706223977942467,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [
+        "B:黎"
+      ],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 16,
+      "label": "第 16 段",
+      "text": "三十六记制胜分，四十四次非受迫失误。李吉妮下一轮对阵曾丽美。萨巴伦卡，下一站能带来怎样的回应？",
+      "at": 33,
+      "char": "卡",
+      "intended": "ka3",
+      "wrong": "qia3",
+      "actual_mp3_sha256": "e85fa4d70299c017b9d2672ec3dadd82d0cc0c07c675670b8ad3bdff99dfbfba",
+      "actual_window": [
+        7.1167185,
+        7.3230830000000005
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.31226660927088046,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 17,
+      "label": "第 16 段",
+      "text": "三十六记制胜分，四十四次非受迫失误。李吉妮下一轮对阵曾丽美。萨巴伦卡，下一站能带来怎样的回应？",
+      "at": 45,
+      "char": "应",
+      "intended": "ying4",
+      "wrong": "ying1",
+      "actual_mp3_sha256": "e85fa4d70299c017b9d2672ec3dadd82d0cc0c07c675670b8ad3bdff99dfbfba",
+      "actual_window": [
+        9.475249,
+        9.669832
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9851596410169403,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [
+        "A:硬"
+      ],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 18,
+      "label": "片尾",
+      "text": "关注网球时差，时差归我，好球归你。",
+      "at": 5,
+      "char": "差",
+      "intended": "cha1",
+      "wrong": "cha4",
+      "actual_mp3_sha256": "1153bb02380f858de8c4350c5301e9818e22768c82c813469c1b80133367ac74",
+      "actual_window": [
+        1.0892910000000002,
+        1.204291
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.8249178373179954,
+      "two_sided_selftest_pass": true,
+      "method": "actual /a/ initial35ms F0 fall contrast",
+      "evidence_section": "first_cha_timing",
+      "reference_outliers_removed": [
+        "A:锸"
+      ],
+      "initial_raw_status_preserved": "unconfirmed"
+    },
+    {
+      "target_index": 19,
+      "label": "片尾",
+      "text": "关注网球时差，时差归我，好球归你。",
+      "at": 8,
+      "char": "差",
+      "intended": "cha1",
+      "wrong": "cha4",
+      "actual_mp3_sha256": "1153bb02380f858de8c4350c5301e9818e22768c82c813469c1b80133367ac74",
+      "actual_window": [
+        1.7877284999999978,
+        1.8627284999999962
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.925158696675863,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "initial_target_results",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "supported_under_declared_controls"
+    },
+    {
+      "target_index": 20,
+      "label": "片尾",
+      "text": "关注网球时差，时差归我，好球归你。",
+      "at": 12,
+      "char": "好",
+      "intended": "hao3",
+      "wrong": "hao4",
+      "actual_mp3_sha256": "1153bb02380f858de8c4350c5301e9818e22768c82c813469c1b80133367ac74",
+      "actual_window": [
+        2.582541,
+        2.759416
+      ],
+      "status": "supported_under_declared_controls",
+      "score": 0.9922076911329488,
+      "two_sided_selftest_pass": true,
+      "method": "actual full-sentence homophone controls, target-only MFCC or F0 contrast",
+      "evidence_section": "finite_supplements",
+      "reference_outliers_removed": [],
+      "initial_raw_status_preserved": "unconfirmed"
+    },
+    {
+      "label": "第 16 段",
+      "text": "三十六记制胜分，四十四次非受迫失误。李吉妮下一轮对阵曾丽美。萨巴伦卡，下一站能带来怎样的回应？",
+      "at": 43,
+      "char": "的",
+      "intended": "neutral de5",
+      "actual_mp3_sha256": "e85fa4d70299c017b9d2672ec3dadd82d0cc0c07c675670b8ad3bdff99dfbfba",
+      "actual_window": [
+        9.174541,
+        9.268874
+      ],
+      "status": "supported_central_de_vowel_and_short_function_syllable",
+      "method": "actual formants and duration; not lexical de2 comparison",
+      "F1_F2_Hz": [
+        524.9092647265644,
+        1227.0149592687183
+      ],
+      "duration_ms": 94.33300000000067,
+      "evidence_section": "light_de_actual"
+    }
+  ],
+  "confident_wrong_readings": [],
+  "remaining_concrete_modern_polyphone_blockers": [],
+  "human_listening_claimed": false,
+  "actual_listening_performed": false,
+  "tone_verified": false,
+  "proper_names": {
+    "萨巴伦卡": {
+      "expected": "sà bā lún kǎ",
+      "actual_evidence": "Fresh actual8-utterance ASR corroborates syllables; all6卡occurrences separately distinguishka/qia with current actual controls."
+    },
+    "李吉妮": {
+      "expected": "lǐ jí nī",
+      "actual_evidence": "Fresh actual whole-utterance ASR corroboratesli/ji/ni via里吉尼homophones. Ordinary single-reading name-character tones are not universally certified by ASR."
+    },
+    "曾丽美": {
+      "expected": "zēng lì měi",
+      "actual_evidence": "Actual ASR增丽美corroborates name syllables; actual曾z/c affricate timing and丽li4/li2 F0 contrast separately supported."
+    }
+  },
+  "numeral_content_evidence": "actual-numeral-content-review.json",
+  "method_limits": [
+    "No prior local or old cloud original verdict was transferred by identical text. New outro differs in MP3 and decoded PCM, so all3outro targets were remeasured.",
+    "All original unconfirmed/failed control records are preserved. Initial恏positive reference was a method error, corrected before accepting any source result.",
+    "Native WordBoundary character equal-split is a localization estimate. Actual source/reference STFT refined卡and曾boundaries; first差/a/nucleus was inspected independently.",
+    "Control-only bounded outlier selection may remove at most1reference per side, retain>=2per side and require all remaining LOO tests to pass; actual source score does not choose calibration set. Explicit removed labels retained.",
+    "First差 uses finite early-fall timing because phrase-final first-tone lowering and fourth-tone early fall are blurred by DTW. Scope is this pair under declared same-voice controls.",
+    "曾uses affricate-release to fixed-CC detected-periodicity timing, corroborated by inspected frication/voicing. Detector onset is15–30ms later than visual vowel onset, so this is a relative same-method proxy, not laboratory absolute VOT.",
+    "Neutral的是central vowelF1/F2and94msfunction syllable, not lexicalde2tone.",
+    "ASR Chinese glyphs/homophones are content/syllable support, never sole lexical-tone proof. Complete ordinary single-reading name/digit tone certification is not claimed.",
+    "No loudness/peak/gain QC or audio normalization was performed. Main voice was never re-synthesized by this reviewer.",
+    "Report binds frozen actual8requests. Final movie/native input audio byte binding must be recorded after rendering; this report does not claim an unrendered movie has been checked."
+  ],
+  "reviewed_at": "2026-10-14T15:01:01.065869+00:00"
+}
