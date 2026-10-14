@@ -3,42 +3,42 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "6f219fbef83522d2d921e5cbdd45913f5069f48da440261721d08e573dcb8a4b",
+    "bundle_sha256": "71459d574e72e5b35a985f98567002dd783de14375f172a4262fd6d45dfebdbd",
     "request_count": 15,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-trophy-photoshoot-tradition-2026-6f219fbef83522d2",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-trophy-photoshoot-tradition-2026-6f219fbef83522d2/tts_bundle.zip",
+    "release_tag": "reel-tts-trophy-photoshoot-tradition-2026-71459d574e72e5b3",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-trophy-photoshoot-tradition-2026-71459d574e72e5b3/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38546393096"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38547974445"
   },
-  "cover_seconds": 3.802,
+  "cover_seconds": 3.442,
   "cover_narrated": true,
-  "outro_seconds": 4.602,
+  "outro_seconds": 4.194,
   "layout": "full",
-  "segments_seconds": 102.45,
+  "segments_seconds": 92.49,
   "topbar": null,
-  "film_seconds": 110.88,
+  "film_seconds": 100.16,
   "narration_voice": "zh-CN-YunjianNeural",
-  "narration_rate": "+6%",
+  "narration_rate": "+18%",
   "narration_backend": "edge-tts",
   "narration_seconds": {
-    "0": 8.016,
-    "1": 8.592,
-    "2": 4.8,
-    "3": 7.824,
-    "4": 4.296,
-    "5": 8.016,
-    "6": 4.32,
-    "7": 8.496,
-    "8": 6.504,
-    "9": 5.544,
-    "10": 9.024,
-    "11": 10.512,
-    "12": 7.032
+    "0": 7.2,
+    "1": 7.728,
+    "2": 4.32,
+    "3": 7.032,
+    "4": 3.864,
+    "5": 7.2,
+    "6": 3.888,
+    "7": 7.632,
+    "8": 5.856,
+    "9": 4.968,
+    "10": 8.088,
+    "11": 9.456,
+    "12": 6.312
   },
   "face_checks": {
     "cover": {
@@ -55,44 +55,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "88529663f1c31a64bead41afe68cd8a59ecd219809b77f84390557417b20b8aa",
+  "render_inputs_sha256": "0d4bd977fdb34a5a862cfbd27609943017b352a2b63f15d30688b098008fe3a8",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "trophy-photoshoot-tradition-2026",
-    "received_at": "2026-10-14T10:00:41Z",
-    "artifact_ready_at": "2026-10-14T10:06:04Z",
-    "elapsed_seconds": 323.297,
+    "received_at": "2026-10-14T10:12:54Z",
+    "artifact_ready_at": "2026-10-14T10:17:46Z",
+    "elapsed_seconds": 292.495,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "2ff81f462421e234e1ed4ce6206d9bacf3f34922d6e0607fae2a64a471036e2e",
-    "spec_sha256": "1b4a62cb16b9b43882a7825f3d30d4ec59015d1a2d4c0deac348207e1164a04b",
-    "run_id": "38546393096",
+    "film_sha256": "5db0058c33744bec3b1266c01e743182d87091f4a5b8cf11a960d43abed2fcac",
+    "spec_sha256": "4cba331a57f75e4ec310aaf48994f4c21b23e72e8456cbb2b0792faa57b3d959",
+    "run_id": "38547974445",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-14T10:03:32Z",
-        "run_id": "38546393096"
+        "at": "2026-10-14T10:15:27Z",
+        "run_id": "38547974445"
       }
     ],
-    "render_seconds": 152.297,
-    "pre_render_seconds": 171.0
+    "render_seconds": 139.495,
+    "pre_render_seconds": 153.0
   },
-  "film_sha256": "2ff81f462421e234e1ed4ce6206d9bacf3f34922d6e0607fae2a64a471036e2e",
-  "film_bytes": 74143820,
-  "qc_attestation_sha256": "ed0af3cbc878631c7716cbd4bcabd124c4a8071b943bd78a6e883c16d6acbb56",
+  "film_sha256": "5db0058c33744bec3b1266c01e743182d87091f4a5b8cf11a960d43abed2fcac",
+  "film_bytes": 66827363,
+  "qc_attestation_sha256": "13fe752864579d874f0ee77caaafa87d85fc2532dbe02b14737b3d2481caf27d",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-14T10:03:32Z",
-      "run_id": "38546393096"
+      "at": "2026-10-14T10:15:27Z",
+      "run_id": "38547974445"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-14T10:06:07Z",
-      "run_id": "38546393096"
+      "at": "2026-10-14T10:17:48Z",
+      "run_id": "38547974445"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-trophy-photoshoot-tradition-2026/trophy-photoshoot-tradition-2026.mp4",
-  "video_bytes": 74143820
+  "video_bytes": 66827363
 }
