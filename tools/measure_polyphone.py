@@ -89,6 +89,7 @@ import json
 import os
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import numpy as np
@@ -133,36 +134,50 @@ def synth(text: str, voice: str, rate: str, pitch: str = "+0Hz") -> tuple[Path, 
         return mp3, json.loads(js.read_text(encoding="utf-8"))
     _trust_ca()
     import edge_tts
+    from tennislive.video.tts import (
+        EDGE_BACKOFF, _point_edge_tts_at_live_host, edge_tts_verdict,
+    )
+
+    # Reference text must stay raw: do not call pronounce.speakable or select
+    # another backend. Share only the production Edge transport policy.
+    _point_edge_tts_at_live_host()
+    proxy = (os.environ.get("HTTPS_PROXY") or
+             os.environ.get("https_proxy") or "").strip()
+    transport = {"proxy": proxy} if proxy else {}
 
     async def one() -> list[dict]:
         marks: list[dict] = []
         with mp3.open("wb") as fh:
             async for c in edge_tts.Communicate(text, voice, rate=rate, pitch=pitch,
-                                                boundary="WordBoundary").stream():
+                                                boundary="WordBoundary", **transport).stream():
                 if c.get("type") == "audio" and c.get("data"):
                     fh.write(c["data"])
                 elif c.get("type") == "WordBoundary":
                     marks.append({"offset": c["offset"], "duration": c["duration"],
                                   "text": c["text"]})
+        if not mp3.stat().st_size:
+            raise edge_tts.exceptions.NoAudioReceived("Reference TTS returned no audio")
         return marks
 
-    last = None
     final_mp3 = mp3
     mp3 = mp3.with_name(f"{key}.{os.getpid()}.part.mp3")   # parallel callers
-    for attempt in range(4):
-        try:
-            marks = asyncio.run(one())
-            if mp3.stat().st_size > 0:
-                tmpj = js.with_name(f"{key}.{os.getpid()}.part.json")
+    tmpj = js.with_name(f"{key}.{os.getpid()}.part.json")
+    try:
+        for attempt in range(len(EDGE_BACKOFF) + 1):
+            try:
+                marks = asyncio.run(one())
                 tmpj.write_text(json.dumps(marks, ensure_ascii=False), encoding="utf-8")
                 os.replace(mp3, final_mp3)
                 os.replace(tmpj, js)
                 return final_mp3, marks
-        except Exception as e:  # noqa: BLE001
-            last = e
-        import time
-        time.sleep(2 + 3 * attempt)
-    raise RuntimeError(f"edge-tts failed for {text!r}: {last}")
+            except Exception as exc:  # noqa: BLE001
+                retry, why = edge_tts_verdict(exc)
+                if not retry or attempt == len(EDGE_BACKOFF):
+                    raise RuntimeError(f"edge-tts failed for {text!r}: {why}") from exc
+                time.sleep(EDGE_BACKOFF[attempt])
+    finally:
+        mp3.unlink(missing_ok=True)
+        tmpj.unlink(missing_ok=True)
 
 
 def load_wav(mp3: Path) -> np.ndarray:

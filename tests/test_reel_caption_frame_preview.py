@@ -123,6 +123,36 @@ def test_preview_hook_uses_final_ass_and_exits_before_track_and_encoding(prepare
     assert not (outdir / 'render.json').exists() and not (outdir / 'qc_attestation.json').exists()
 
 
+def test_real_libass_keeps_match_player_name_on_one_line(tmp_path):
+    import cv2
+    spec = {'cover': {'matchup': [{'name_en': 'Marie Bouzkova'}]}}
+    original = 'was nowhere near Marie Bouzkova in the opening set,\n首盘被布兹科娃完全压制'
+    protected = reel.protect_quote_player_names(original, spec)
+    masks = []
+    for i, text in enumerate((original, protected, 'Marie\u00a0Bouzkova\n中文')):
+        ass = reel.write_subtitles([(0., 1., text)], tmp_path / f'{i}.ass',
+                                  height=1440, bottom_margin=180)
+        picture = tmp_path / f'{i}.png'
+        ff('-f', 'lavfi', '-i', 'color=black:s=1080x1440:d=0.04',
+           '-vf', f'subtitles={reel._escape(ass)}:fontsdir={reel._escape(ROOT / "assets/fonts")}',
+           '-frames:v', '1', picture)
+        mask = (np.asarray(Image.open(picture).convert('RGB'))[:, :, 0] > 200).astype('uint8') * 255
+        masks.append(mask)
+    # Find the actual English name glyphs in a native isolated-name control.
+    # A match in the full caption proves both words occupy one physical row.
+    ys = np.flatnonzero(masks[2].any(axis=1))
+    last = next(y for y in ys if y + 1 not in ys)
+    xs = np.flatnonzero(masks[2][ys[0]:last + 1].any(axis=0))
+    # Smooth by one pixel to tolerate fractional glyph positioning when the
+    # same name is centered as a standalone line vs part of a longer line.
+    smoothed = [cv2.GaussianBlur(mask, (0, 0), 1.) for mask in masks]
+    template = smoothed[2][ys[0]:last + 1, xs[0]:xs[-1] + 1]
+    scores = [cv2.matchTemplate(mask, template, cv2.TM_CCOEFF_NORMED).max()
+              for mask in smoothed[:2]]
+    assert scores[0] < .80, 'fixture must reproduce the original split name'
+    assert scores[1] > .95, 'both words must appear intact on one physical row'
+
+
 @pytest.mark.parametrize('name', ['render.json', 'qc_attestation.json', 'pushed.json', 'preview_manifest.json'])
 def test_destination_with_old_proof_cannot_be_reused(tmp_path, name):
     (tmp_path / name).write_text('{}')

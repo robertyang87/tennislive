@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import sys
+import ssl
+from types import SimpleNamespace
 from pathlib import Path
 
 import pytest
@@ -9,6 +11,79 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 import check_polyphones as C
+
+
+@pytest.fixture
+def reference_transport(tmp_path, monkeypatch):
+    import measure_polyphone as M
+    from tennislive.video import tts
+    calls, sleeps, endpoint = [], [], []
+    failures = []
+    no_audio = type('NoAudioReceived', (Exception,), {'__module__': 'edge_tts.exceptions'})
+
+    class Communicate:
+        def __init__(self, text, voice, **kwargs):
+            calls.append((text, voice, kwargs))
+
+        async def stream(self):
+            yield {'type': 'audio', 'data': b'partial'}
+            if failures:
+                raise failures.pop(0)
+            yield {'type': 'audio', 'data': b'-complete'}
+            yield {'type': 'WordBoundary', 'offset': 1, 'duration': 2, 'text': '重打'}
+
+    monkeypatch.setattr(M, 'CACHE', tmp_path / 'reference-cache')
+    monkeypatch.setattr(M, '_trust_ca', lambda: None)
+    monkeypatch.setattr(M.time, 'sleep', sleeps.append)
+    monkeypatch.setattr(tts, '_point_edge_tts_at_live_host', lambda: endpoint.append(True))
+    monkeypatch.setitem(sys.modules, 'edge_tts', SimpleNamespace(
+        Communicate=Communicate, exceptions=SimpleNamespace(NoAudioReceived=no_audio)))
+    monkeypatch.setenv('HTTPS_PROXY', 'http://proxy.test:8080')
+    return M, failures, calls, sleeps, endpoint
+
+
+def test_reference_raw_text_proxy_and_exact_cache_are_preserved(reference_transport):
+    M, failures, calls, sleeps, endpoint = reference_transport
+    path, marks = M.synth('这一分要重打。', 'fixture', '+6%')
+    before = path.read_bytes()
+    assert calls == [('这一分要重打。', 'fixture', {
+        'rate': '+6%', 'pitch': '+0Hz', 'boundary': 'WordBoundary',
+        'proxy': 'http://proxy.test:8080'})]
+    assert endpoint == [True] and not sleeps
+    assert M.synth('这一分要重打。', 'fixture', '+6%') == (path, marks)
+    assert path.read_bytes() == before and len(calls) == 1
+    M.synth('这一分要重打。', 'fixture', '+22%')
+    assert len(calls) == 2
+
+
+@pytest.mark.parametrize('failure', [ssl.SSLCertVerificationError('untrusted'),
+    type('SkewAdjustmentError', (Exception,), {'__module__': 'edge_tts.exceptions'})('403')])
+def test_reference_fatal_failures_stop_without_sleep_or_partial_cache(reference_transport, failure):
+    M, failures, calls, sleeps, _ = reference_transport
+    failures.append(failure)
+    with pytest.raises(RuntimeError):
+        M.synth('测试参考。', 'fixture', '+6%')
+    assert len(calls) == 1 and sleeps == []
+    assert list(M.CACHE.iterdir()) == []
+
+
+def test_reference_transient_retry_discards_partial_audio(reference_transport):
+    M, failures, calls, sleeps, _ = reference_transport
+    failures.extend([TimeoutError('timeout'), ConnectionError('disconnected')])
+    path, marks = M.synth('测试参考。', 'fixture', '+6%')
+    assert len(calls) == 3 and sleeps == [2., 6.]
+    assert path.read_bytes() == b'partial-complete'
+    assert marks == [{'offset': 1, 'duration': 2, 'text': '重打'}]
+    assert not list(M.CACHE.glob('*.part.*'))
+
+
+def test_reference_exhaustion_never_sleeps_after_last_attempt(reference_transport):
+    M, failures, calls, sleeps, _ = reference_transport
+    failures.extend([TimeoutError('timeout')] * 3)
+    with pytest.raises(RuntimeError):
+        M.synth('测试参考。', 'fixture', '+6%')
+    assert len(calls) == 3 and sleeps == [2., 6.]
+    assert list(M.CACHE.iterdir()) == []
 
 
 @pytest.mark.parametrize("text", [

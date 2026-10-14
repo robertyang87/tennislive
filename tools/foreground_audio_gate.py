@@ -110,8 +110,30 @@ def validate_preserved_source_audio(spec: dict) -> None:
 
 def inspect(spec: dict, *, root: Path=ROOT, sources: dict[str,Path]|None=None) -> list[dict]:
     """Return every required cue; missing/changed evidence is a hard failure."""
+    return _inspect(spec, root=root, sources=sources, review=None)
+
+
+def rebind_plan(spec: dict, review: dict, *, root: Path=ROOT) -> dict:
+    """Propose a new plan binding only after all immutable packets validate.
+
+    Does not change review conclusions, timestamps or packet hashes. The normal
+    gate still rejects stale plans; callers must explicitly persist this result.
+    Downloaded source bytes are still checked by bind_sources during production.
+    """
+    if (review.get('schema') != SCHEMA or not review.get('segments')
+            or not re.fullmatch(r'[a-f0-9]{64}', str(review.get('plan_sha256') or ''))):
+        raise ValueError('计划重绑定需要有效的原审听索引')
+    proposed = {**review, 'plan_sha256': plan_hash(spec)}
+    _inspect(spec, root=root, sources=None, review=proposed)
+    return proposed
+
+
+def _inspect(spec: dict, *, root: Path, sources: dict[str,Path]|None,
+             review: dict|None) -> list[dict]:
     validate_preserved_source_audio(spec)
     if narrated_audio_mode.enabled(spec,sources=sources):
+        if review is not None:
+            raise ValueError('替换原声模式不能重绑定原审听索引')
         return []
     if spec.get('source_audio'):
         raise ValueError('source_audio 额外音轨未绑定审听：先合并为确定的源文件并重新审听，不能复用旧证据')
@@ -123,12 +145,15 @@ def inspect(spec: dict, *, root: Path=ROOT, sources: dict[str,Path]|None=None) -
         if 'start' in seg and 'end' in seg and not seg.get('image') and (not effects or reviewed_effects_mode.raw_segment(seg)):
             selected.append((i,seg))
     if not selected:
+        if review is not None:
+            raise ValueError('当前计划没有可重绑定的原声窗口')
         return []
     slug=str(spec.get('slug') or '')
     if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*',slug):
         raise ValueError('音频审听需要有效 slug')
     path=root/'data/audio_reviews'/f'{slug}.json'
-    review=json.loads(path.read_text())
+    if review is None:
+        review=json.loads(path.read_text())
     if review.get('schema')!=SCHEMA or review.get('plan_sha256')!=plan_hash(spec):
         raise ValueError('音频审听证据不是当前剪辑/配音/字幕计划')
     entries=review.get('segments') or []

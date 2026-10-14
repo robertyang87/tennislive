@@ -117,6 +117,81 @@ def test_sparse_checkout_restores_only_declared_tracked_json(tmp_path):
         R.review_files('example-match', root=tmp_path)
 
 
+def test_explicit_rebind_reuses_immutable_review_after_card_copy_change(tmp_path):
+    packet, index, sp = fixture(tmp_path)
+    before_packet = packet.read_bytes()
+    before_review = json.loads(index.read_text())
+    spec = json.loads(sp.read_text())
+    spec['segments'].append({'image': 'chapter.png', 'title_card': {'title': '第三轮'},
+                             'narration': '下一场争夺第三轮席位。'})
+    sp.write_text(json.dumps(spec))
+    with pytest.raises(ValueError, match='当前剪辑'):
+        R.review_files('example-match', root=tmp_path)
+    R.review_files('example-match', root=tmp_path, rebind=True)
+    after = json.loads(index.read_text())
+    assert after == {**before_review, 'plan_sha256': plan_hash(spec)}
+    assert packet.read_bytes() == before_packet
+    # Repeating the readiness check does not rewrite any valid evidence.
+    before = index.read_bytes()
+    R.review_files('example-match', root=tmp_path, rebind=True)
+    assert index.read_bytes() == before
+    source = tmp_path / 'source.mp4'; source.write_bytes(b'different source bytes')
+    with pytest.raises(ValueError, match='源片字节'):
+        R.require(spec, root=tmp_path, sources={'': source})
+
+
+@pytest.mark.parametrize('fault,reason', [
+    ('packet-bytes', '字节已变'), ('source-url', '源片身份'),
+    ('window', '整个选用窗口'), ('partial-sentence', '切断'),
+    ('missing-caption', '缺完整中英字幕'), ('uncertain', '不确定'),
+    ('removed-window', '没有可重绑定'), ('extra-window', '每个保留原声'),
+])
+def test_rebind_failure_does_not_write_or_stage_an_index(tmp_path, fault, reason):
+    packet, index, sp = fixture(tmp_path)
+    spec = json.loads(sp.read_text())
+    doc = json.loads(packet.read_text())
+    review = json.loads(index.read_text())
+    if fault == 'source-url':
+        spec['source_url'] += '/new'
+    elif fault == 'window':
+        spec['segments'][0]['end'] = 5
+    elif fault in {'partial-sentence', 'missing-caption'}:
+        spec['segments'][0].pop('narration')
+        doc['foreground_english'] = [{'start': 1, 'end': 3, 'en': 'Great shot!', 'zh': '精彩一拍'}]
+        if fault == 'partial-sentence':
+            spec['segments'][0]['start'] = 2
+        else:
+            spec['segments'][0]['quote'] = [{'at': 1, 'end': 3, 'text': 'Wrong words\n错误字幕'}]
+    elif fault == 'uncertain':
+        doc['uncertain_spans'] = [[1, 2]]
+    elif fault == 'removed-window':
+        spec['segments'] = []
+    elif fault == 'extra-window':
+        spec['segments'].append(dict(spec['segments'][0]))
+    packet.write_text(json.dumps(doc))
+    review['segments'][0]['transcript_sha256'] = _sha(packet)
+    if fault == 'packet-bytes':
+        packet.write_text(packet.read_text() + ' ')
+    index.write_text(json.dumps(review))
+    sp.write_text(json.dumps(spec))
+    before = index.read_bytes()
+    git(tmp_path, 'init', '-q')
+    with pytest.raises(ValueError, match=reason):
+        names = R.review_files('example-match', root=tmp_path, rebind=True)
+        R.stage_files(names, root=tmp_path)
+    assert index.read_bytes() == before
+    assert not git(tmp_path, 'diff', '--cached', '--name-only')
+
+
+def test_explicit_rebind_cannot_create_an_unreviewed_index(tmp_path):
+    _packet, index, _spec = fixture(tmp_path)
+    index.unlink()
+    git(tmp_path, 'init', '-q')
+    with pytest.raises(ValueError, match='已有审听索引'):
+        R.review_files('example-match', root=tmp_path, rebind=True)
+    assert not index.exists()
+
+
 def test_missing_index_keeps_optional_history_but_required_native_gate_fails(tmp_path):
     _, index, _ = fixture(tmp_path)
     index.unlink()

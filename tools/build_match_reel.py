@@ -3219,6 +3219,31 @@ def _quote_text(raw: object) -> str:
 _QUOTE_CJK = re.compile(r"[㐀-鿿]")
 
 
+def protect_quote_player_names(text: str, spec: dict) -> str:
+    """Keep declared English player names together in native ASS display only.
+
+    Preserve quote evidence, punctuation, explicit line breaks and cue timing.
+    Other spaces remain available for libass wrapping; do not join whole lines.
+    """
+    names = {str(p.get("name_en") or "").strip()
+             for p in ((spec.get("cover") or {}).get("matchup") or [])
+             if isinstance(p, dict)}
+    patterns = []
+    for name in sorted(names, key=len, reverse=True):
+        words = re.split(r"[ \u00a0]+", name)
+        if len(words) > 1 and all(words) and "\n" not in name:
+            patterns.append(re.compile(r"(?<!\w)" + r"[ \u00a0]+".join(
+                re.escape(word) for word in words) + r"(?!\w)", re.IGNORECASE))
+    rows = text.split("\n")
+    for i, row in enumerate(rows):
+        if _QUOTE_CJK.search(row):
+            continue
+        for pattern in patterns:
+            row = pattern.sub(lambda m: re.sub(r"[ \u00a0]+", "\u00a0", m[0]), row)
+        rows[i] = row
+    return "\n".join(rows)
+
+
 def _quote_display(text: str) -> str:
     """原声字幕画出来的那一份：中文行照全站规矩去标点（只留？！），英文行原样。
 
@@ -10216,6 +10241,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                      or spec.get("_column", "")).strip()
         bottom = (None if "subtitle_top" in spec
                   else subtitle_bottom_for_boards(segments, column=column))
+        cues = [(start, end, protect_quote_player_names(text, spec))
+                for start, end, text in cues]
         ass = write_subtitles(cues, outdir / "subtitles.ass",
                               height=VIDEO_H, margin_v=margin_v,
                               outline=SUB_OUTLINE_PX, shadow=SUB_SHADOW_PX,
