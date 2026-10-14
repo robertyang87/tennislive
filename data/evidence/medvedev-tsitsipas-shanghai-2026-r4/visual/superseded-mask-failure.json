@@ -1,0 +1,24 @@
+{
+  "status": "blocked",
+  "visual_pass": false,
+  "reviewed_at": "2026-10-14T18:40:48.376285+00:00",
+  "movie_sha256": "92fdcdcfd8d4f0a82c793a957610d91b34b6e312adce3e531b1037c008e53d3e",
+  "movie_bytes": 59333960,
+  "actual_root_original_png_inspection": true,
+  "independent_reviewer": "/root/b8_final_visual_qc",
+  "independent_review_scope_reported": "98 actual final-movie frames and all30 ASS midpoint cues, reported in collaboration messages. This root finding record records only the exact original failure inspected by root.",
+  "blocking_findings": [
+    {
+      "frame_index": 3384,
+      "film_time_s": 135.36,
+      "image": "frame-03384.png",
+      "image_sha256": "46b1fd141274a8d985915dde6f9d7ed281c7e091411ec34db89426c0320d3e9c",
+      "source_time_s": 221.5,
+      "source_image": "source-221.50.png",
+      "source_image_sha256": "2e7463da63601a81a5ca1ae16bafad9c63c65c9a6de82f827a228d951aadf98c",
+      "finding": "Board removal mask extends into green backdrop past the observed final blue cell, creating rectangle over right forearm/wrist. Actual original source board ends at x388; no point digits/container beyond blue anchor."
+    }
+  ],
+  "publication_performed": false,
+  "correction": "tools/atp_scoreboard.py now returns observed withdrawing blue boundary even when zero further anti-alias pixels exist. New real-frame regression=290px relative98x. Corrected final movie review remains required."
+}

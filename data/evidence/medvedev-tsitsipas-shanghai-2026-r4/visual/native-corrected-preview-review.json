@@ -1,0 +1,50 @@
+{
+  "schema": "tennislive.native-preencode-visual-review.v1",
+  "reviewed_at": "2026-10-14T18:12:03.988714+00:00",
+  "publication_approved": false,
+  "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+  "tts_bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+  "spec_file_sha256": "9cb958517acadc67f9eb62bf2109af996417951e72175f7b2907e3b083a9df65",
+  "ass_sha256": "4912c0982f831985503b68d0e274b53bb021ffd64e48715c20c15e2659067eeb",
+  "samples": [
+    {
+      "segment": 1,
+      "image": "caption-01.png",
+      "image_sha256": "ad701bff5940b1bbf2be1ef346c2a4aa0b5f06c64014721e1d63e9b557878fbc",
+      "film_time": 20.06,
+      "source_time": null
+    },
+    {
+      "segment": 2,
+      "image": "caption-02.png",
+      "image_sha256": "013f382ad7c3d9f65deee5ac53ff0ccf2e2c6e35b1bf0ff836e2638d5798158c",
+      "film_time": 27.02,
+      "source_time": 13.4
+    },
+    {
+      "segment": 3,
+      "image": "caption-03.png",
+      "image_sha256": "a8020540b351dcd5b5ae02d7c5b6c4754495d75252dfbdf006d21888bf6d19ea",
+      "film_time": 32.62,
+      "source_time": 22.82
+    },
+    {
+      "segment": 3,
+      "image": "caption-04.png",
+      "image_sha256": "d8e0e64d1e80812e361604378ad21b6a2d0d3d835adc8a888f4d51d4cd728e0f",
+      "film_time": 43.059999999999995,
+      "source_time": 33.26
+    }
+  ],
+  "method": "Root inspected all four original native PNGs with actual fixed center crop, score masks and ASS. Preview only, final compressed film review remains required.",
+  "findings": [
+    "Coordinate player name is on one complete line; original navy card and lowered subtitle retained.",
+    "Changed source windows are court shots, excluding source 17.20–20.82 off-center face close-up and its whole net-cord commentary sentence.",
+    "Scoreboard remains source-scaled at canvas x=0, y=1227. No court-background rectangular patch visible in sampled boards.",
+    "Final sampled toying cue has readable bilingual lines below action, above scoreboard."
+  ],
+  "limitations": [
+    "Fixed center 3:4 crop excludes horizontal court sidelines and sometimes a lateral player; sample 22.82 has far player at left edge. Do not claim full horizontal court/player coverage.",
+    "Interior frame samples do not establish final transition, full ASS, audio or publication approval."
+  ]
+}

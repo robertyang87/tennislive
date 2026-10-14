@@ -1,5 +1,6 @@
 """720p is a URL-bound user exception, never a global quality downgrade."""
 from pathlib import Path
+import json
 import sys
 
 import pytest
@@ -105,3 +106,16 @@ def test_授权是按URL各配一档的_不是全局放宽到720():
             reel.source_quality_exceptions(spec(url, wrong))
     with pytest.raises(reel.ReelError, match="未授权"):
         reel.source_quality_exceptions(spec("https://www.youtube.com/watch?v=notapproved", 720))
+
+
+def test_existing_jodar_source_approval_is_episode_and_native_height_bound(monkeypatch):
+    reel = _reel()
+    spec = json.loads(Path('specs/reels/jodar-towel-shanghai-2026.json').read_text())
+    url = spec['sources']['xg']
+    assert reel.source_quality_exceptions(spec)[url]['min_height'] == 652
+    monkeypatch.setattr(reel, 'probe_size', lambda _: (1206, 651))
+    with pytest.raises(reel.ReelError, match='低于明确授权'):
+        reel.check_native_quality_exceptions(spec, {'xg': Path('native.mp4')})
+    spec['slug'] = 'another-reel'
+    with pytest.raises(reel.ReelError, match='仅限'):
+        reel.source_quality_exceptions(spec)

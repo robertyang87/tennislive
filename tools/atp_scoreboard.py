@@ -195,8 +195,9 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
         withdrawn = after
         while withdrawn < min(after + 6, len(blue_border)) and blue_border[withdrawn]:
             withdrawn += 1
-        if withdrawn > after:
-            return withdrawn
+        # The observed blue cell itself is the boundary even when it has no
+        # additional antialias pixels (Shanghai final board-removal animation).
+        return withdrawn
     # No independent border evidence: retain the original detection so the
     # audit exposes the unresolved width, rather than inventing a cell edge.
     return edge

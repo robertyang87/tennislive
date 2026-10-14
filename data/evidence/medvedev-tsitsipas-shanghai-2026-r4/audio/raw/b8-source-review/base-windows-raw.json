@@ -1,0 +1,988 @@
+{
+  "status": "complete_raw_independent_window_asr",
+  "source": "/workspace/scratch/b8-source/source.mp4",
+  "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+  "actual_model": "base.en",
+  "method": "Independent unprompted short-window actual source PCM decoding; beam8,VADfalse,word timestamps,temperature0,condition_on_previous_textfalse,no initial prompt/prefix; no manual listening. No gain/loudness/silence checks.",
+  "windows": [
+    {
+      "label": "opening",
+      "interval": [
+        8.0,
+        11.4
+      ],
+      "segments": [
+        {
+          "start": 8.0,
+          "end": 10.379999999999999,
+          "text": " He went straight out since he passed.",
+          "avg_logprob": -0.739120136607777,
+          "no_speech_prob": 0.20876967906951904,
+          "words": [
+            {
+              "start": 8.0,
+              "end": 9.02,
+              "word": " He",
+              "probability": 0.7680224180221558
+            },
+            {
+              "start": 9.02,
+              "end": 9.16,
+              "word": " went",
+              "probability": 0.3952292501926422
+            },
+            {
+              "start": 9.16,
+              "end": 9.44,
+              "word": " straight",
+              "probability": 0.9978354573249817
+            },
+            {
+              "start": 9.44,
+              "end": 9.72,
+              "word": " out",
+              "probability": 0.15171287953853607
+            },
+            {
+              "start": 9.72,
+              "end": 9.96,
+              "word": " since",
+              "probability": 0.6294938325881958
+            },
+            {
+              "start": 9.96,
+              "end": 10.16,
+              "word": " he",
+              "probability": 0.9813422560691833
+            },
+            {
+              "start": 10.16,
+              "end": 10.379999999999999,
+              "word": " passed.",
+              "probability": 0.5649911761283875
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "break1_reaction",
+      "interval": [
+        16.8,
+        20.82
+      ],
+      "segments": [
+        {
+          "start": 16.8,
+          "end": 20.36,
+          "text": " And now they've got a little lucky with the net cord.",
+          "avg_logprob": -0.8079263381659985,
+          "no_speech_prob": 0.08443348109722137,
+          "words": [
+            {
+              "start": 16.8,
+              "end": 17.48,
+              "word": " And",
+              "probability": 0.17337672412395477
+            },
+            {
+              "start": 17.48,
+              "end": 17.98,
+              "word": " now",
+              "probability": 0.2744002640247345
+            },
+            {
+              "start": 17.98,
+              "end": 18.68,
+              "word": " they've",
+              "probability": 0.2893947809934616
+            },
+            {
+              "start": 18.68,
+              "end": 18.76,
+              "word": " got",
+              "probability": 0.9741435050964355
+            },
+            {
+              "start": 18.76,
+              "end": 18.84,
+              "word": " a",
+              "probability": 0.9749501943588257
+            },
+            {
+              "start": 18.84,
+              "end": 19.060000000000002,
+              "word": " little",
+              "probability": 0.9870878458023071
+            },
+            {
+              "start": 19.060000000000002,
+              "end": 19.380000000000003,
+              "word": " lucky",
+              "probability": 0.40699148178100586
+            },
+            {
+              "start": 19.380000000000003,
+              "end": 19.8,
+              "word": " with",
+              "probability": 0.5549378395080566
+            },
+            {
+              "start": 19.8,
+              "end": 19.94,
+              "word": " the",
+              "probability": 0.5362539291381836
+            },
+            {
+              "start": 19.94,
+              "end": 20.060000000000002,
+              "word": " net",
+              "probability": 0.8819419145584106
+            },
+            {
+              "start": 20.060000000000002,
+              "end": 20.36,
+              "word": " cord.",
+              "probability": 0.13208195567131042
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "early_reaction",
+      "interval": [
+        22.8,
+        27.5
+      ],
+      "segments": [
+        {
+          "start": 23.740000000000002,
+          "end": 27.32,
+          "text": " Unbelievable and to be honest that's how the level has been.",
+          "avg_logprob": -0.3303700560017636,
+          "no_speech_prob": 0.042975518852472305,
+          "words": [
+            {
+              "start": 23.740000000000002,
+              "end": 24.240000000000002,
+              "word": " Unbelievable",
+              "probability": 0.8906815052032471
+            },
+            {
+              "start": 24.240000000000002,
+              "end": 24.740000000000002,
+              "word": " and",
+              "probability": 0.3575366139411926
+            },
+            {
+              "start": 24.740000000000002,
+              "end": 24.900000000000002,
+              "word": " to",
+              "probability": 0.974932074546814
+            },
+            {
+              "start": 24.900000000000002,
+              "end": 25.02,
+              "word": " be",
+              "probability": 0.9984446167945862
+            },
+            {
+              "start": 25.02,
+              "end": 25.3,
+              "word": " honest",
+              "probability": 0.9986510872840881
+            },
+            {
+              "start": 25.3,
+              "end": 26.28,
+              "word": " that's",
+              "probability": 0.7731691598892212
+            },
+            {
+              "start": 26.28,
+              "end": 26.44,
+              "word": " how",
+              "probability": 0.997600257396698
+            },
+            {
+              "start": 26.44,
+              "end": 26.54,
+              "word": " the",
+              "probability": 0.9971504807472229
+            },
+            {
+              "start": 26.54,
+              "end": 26.8,
+              "word": " level",
+              "probability": 0.9815654158592224
+            },
+            {
+              "start": 26.8,
+              "end": 27.04,
+              "word": " has",
+              "probability": 0.9956082701683044
+            },
+            {
+              "start": 27.04,
+              "end": 27.32,
+              "word": " been.",
+              "probability": 0.9631232619285583
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "nice",
+      "interval": [
+        31.5,
+        35.26
+      ],
+      "segments": [
+        {
+          "start": 32.34,
+          "end": 33.46,
+          "text": " Nice 20 with it.",
+          "avg_logprob": -0.9866191893815994,
+          "no_speech_prob": 0.1898202896118164,
+          "words": [
+            {
+              "start": 32.34,
+              "end": 32.86,
+              "word": " Nice",
+              "probability": 0.22326762974262238
+            },
+            {
+              "start": 32.86,
+              "end": 33.1,
+              "word": " 20",
+              "probability": 0.4604043662548065
+            },
+            {
+              "start": 33.1,
+              "end": 33.36,
+              "word": " with",
+              "probability": 0.44067639112472534
+            },
+            {
+              "start": 33.36,
+              "end": 33.46,
+              "word": " it.",
+              "probability": 0.37171709537506104
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "first_set_last",
+      "interval": [
+        47.6,
+        54.4
+      ],
+      "segments": [
+        {
+          "start": 48.7,
+          "end": 53.760000000000005,
+          "text": " Only makes the first set last, and I didn't expect a match like that from my bad ass.",
+          "avg_logprob": -0.537639727195104,
+          "no_speech_prob": 0.18794797360897064,
+          "words": [
+            {
+              "start": 48.7,
+              "end": 49.1,
+              "word": " Only",
+              "probability": 0.10885431617498398
+            },
+            {
+              "start": 49.1,
+              "end": 49.28,
+              "word": " makes",
+              "probability": 0.9509063959121704
+            },
+            {
+              "start": 49.28,
+              "end": 49.480000000000004,
+              "word": " the",
+              "probability": 0.7403899431228638
+            },
+            {
+              "start": 49.480000000000004,
+              "end": 49.68,
+              "word": " first",
+              "probability": 0.974746823310852
+            },
+            {
+              "start": 49.68,
+              "end": 49.94,
+              "word": " set",
+              "probability": 0.7778445482254028
+            },
+            {
+              "start": 49.94,
+              "end": 50.14,
+              "word": " last,",
+              "probability": 0.9636720418930054
+            },
+            {
+              "start": 50.44,
+              "end": 50.480000000000004,
+              "word": " and",
+              "probability": 0.5208166241645813
+            },
+            {
+              "start": 50.480000000000004,
+              "end": 50.58,
+              "word": " I",
+              "probability": 0.4588475227355957
+            },
+            {
+              "start": 50.58,
+              "end": 51.4,
+              "word": " didn't",
+              "probability": 0.9773515462875366
+            },
+            {
+              "start": 51.4,
+              "end": 51.68,
+              "word": " expect",
+              "probability": 0.9946686625480652
+            },
+            {
+              "start": 51.68,
+              "end": 52.160000000000004,
+              "word": " a",
+              "probability": 0.9077017903327942
+            },
+            {
+              "start": 52.160000000000004,
+              "end": 52.300000000000004,
+              "word": " match",
+              "probability": 0.9915165901184082
+            },
+            {
+              "start": 52.300000000000004,
+              "end": 52.5,
+              "word": " like",
+              "probability": 0.9923582673072815
+            },
+            {
+              "start": 52.5,
+              "end": 52.68,
+              "word": " that",
+              "probability": 0.9948924779891968
+            },
+            {
+              "start": 52.68,
+              "end": 52.94,
+              "word": " from",
+              "probability": 0.9414172768592834
+            },
+            {
+              "start": 52.94,
+              "end": 53.44,
+              "word": " my",
+              "probability": 0.5240234732627869
+            },
+            {
+              "start": 53.44,
+              "end": 53.58,
+              "word": " bad",
+              "probability": 0.07824286073446274
+            },
+            {
+              "start": 53.58,
+              "end": 53.760000000000005,
+              "word": " ass.",
+              "probability": 0.2960301637649536
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "counterattacker",
+      "interval": [
+        81.4,
+        95.18
+      ],
+      "segments": [
+        {
+          "start": 88.30000000000001,
+          "end": 94.94,
+          "text": " And then another good example of how aggressive he is playing.",
+          "avg_logprob": -0.7664907296498616,
+          "no_speech_prob": 0.2090373933315277,
+          "words": [
+            {
+              "start": 88.30000000000001,
+              "end": 89.0,
+              "word": " And",
+              "probability": 0.026867249980568886
+            },
+            {
+              "start": 89.0,
+              "end": 89.2,
+              "word": " then",
+              "probability": 0.28776854276657104
+            },
+            {
+              "start": 89.2,
+              "end": 89.42,
+              "word": " another",
+              "probability": 0.4780140221118927
+            },
+            {
+              "start": 89.42,
+              "end": 90.02000000000001,
+              "word": " good",
+              "probability": 0.9925326704978943
+            },
+            {
+              "start": 90.02000000000001,
+              "end": 90.42,
+              "word": " example",
+              "probability": 0.9865977764129639
+            },
+            {
+              "start": 90.42,
+              "end": 91.76,
+              "word": " of",
+              "probability": 0.8546507954597473
+            },
+            {
+              "start": 91.76,
+              "end": 92.06,
+              "word": " how",
+              "probability": 0.9965776801109314
+            },
+            {
+              "start": 92.06,
+              "end": 92.60000000000001,
+              "word": " aggressive",
+              "probability": 0.9821881651878357
+            },
+            {
+              "start": 92.60000000000001,
+              "end": 94.38000000000001,
+              "word": " he",
+              "probability": 0.9486203193664551
+            },
+            {
+              "start": 94.38000000000001,
+              "end": 94.66000000000001,
+              "word": " is",
+              "probability": 0.9907616972923279
+            },
+            {
+              "start": 94.66000000000001,
+              "end": 94.94,
+              "word": " playing.",
+              "probability": 0.9923170804977417
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "firecracker",
+      "interval": [
+        108.3,
+        110.06
+      ],
+      "segments": [
+        {
+          "start": 108.3,
+          "end": 109.7,
+          "text": " Oh, fire cracker!",
+          "avg_logprob": -0.8812257978651259,
+          "no_speech_prob": 0.085918128490448,
+          "words": [
+            {
+              "start": 108.3,
+              "end": 108.34,
+              "word": " Oh,",
+              "probability": 0.05042748153209686
+            },
+            {
+              "start": 108.67999999999999,
+              "end": 109.08,
+              "word": " fire",
+              "probability": 0.5449368953704834
+            },
+            {
+              "start": 109.08,
+              "end": 109.7,
+              "word": " cracker!",
+              "probability": 0.821138858795166
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "set1_reaction",
+      "interval": [
+        119.0,
+        125.76
+      ],
+      "segments": [
+        {
+          "start": 119.84,
+          "end": 125.12,
+          "text": " When you've seen the 40 minutes of the win and watched from every day, it's only right.",
+          "avg_logprob": -0.49317482113838196,
+          "no_speech_prob": 0.2603936493396759,
+          "words": [
+            {
+              "start": 119.84,
+              "end": 120.42,
+              "word": " When",
+              "probability": 0.1359487771987915
+            },
+            {
+              "start": 120.42,
+              "end": 120.76,
+              "word": " you've",
+              "probability": 0.9003525078296661
+            },
+            {
+              "start": 120.76,
+              "end": 120.96,
+              "word": " seen",
+              "probability": 0.9907153844833374
+            },
+            {
+              "start": 120.96,
+              "end": 121.44,
+              "word": " the",
+              "probability": 0.7493977546691895
+            },
+            {
+              "start": 121.44,
+              "end": 121.76,
+              "word": " 40",
+              "probability": 0.9225773215293884
+            },
+            {
+              "start": 121.76,
+              "end": 122.08,
+              "word": " minutes",
+              "probability": 0.9598395824432373
+            },
+            {
+              "start": 122.08,
+              "end": 122.34,
+              "word": " of",
+              "probability": 0.0816231369972229
+            },
+            {
+              "start": 122.34,
+              "end": 122.34,
+              "word": " the",
+              "probability": 0.8785704970359802
+            },
+            {
+              "start": 122.34,
+              "end": 122.54,
+              "word": " win",
+              "probability": 0.7428956031799316
+            },
+            {
+              "start": 122.54,
+              "end": 122.72,
+              "word": " and",
+              "probability": 0.38974088430404663
+            },
+            {
+              "start": 122.72,
+              "end": 122.98,
+              "word": " watched",
+              "probability": 0.35647469758987427
+            },
+            {
+              "start": 122.98,
+              "end": 123.2,
+              "word": " from",
+              "probability": 0.4069320559501648
+            },
+            {
+              "start": 123.2,
+              "end": 123.32,
+              "word": " every",
+              "probability": 0.5557878017425537
+            },
+            {
+              "start": 123.32,
+              "end": 123.7,
+              "word": " day,",
+              "probability": 0.9954913258552551
+            },
+            {
+              "start": 124.32,
+              "end": 124.52,
+              "word": " it's",
+              "probability": 0.9633015096187592
+            },
+            {
+              "start": 124.52,
+              "end": 124.78,
+              "word": " only",
+              "probability": 0.9891737699508667
+            },
+            {
+              "start": 124.78,
+              "end": 125.12,
+              "word": " right.",
+              "probability": 0.9910978078842163
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "play",
+      "interval": [
+        140.9,
+        150.0
+      ],
+      "segments": [
+        {
+          "start": 140.9,
+          "end": 142.48000000000002,
+          "text": " This is 97.",
+          "avg_logprob": -0.9955299084003155,
+          "no_speech_prob": 0.37624019384384155,
+          "words": [
+            {
+              "start": 140.9,
+              "end": 141.28,
+              "word": " This",
+              "probability": 0.00941081065684557
+            },
+            {
+              "start": 141.28,
+              "end": 141.96,
+              "word": " is",
+              "probability": 0.8917310237884521
+            },
+            {
+              "start": 141.96,
+              "end": 142.48000000000002,
+              "word": " 97.",
+              "probability": 0.6086815595626831
+            }
+          ]
+        },
+        {
+          "start": 147.78,
+          "end": 149.3,
+          "text": " Love that one!",
+          "avg_logprob": -0.9955299084003155,
+          "no_speech_prob": 0.37624019384384155,
+          "words": [
+            {
+              "start": 147.78,
+              "end": 148.84,
+              "word": " Love",
+              "probability": 0.3689461648464203
+            },
+            {
+              "start": 148.84,
+              "end": 149.04000000000002,
+              "word": " that",
+              "probability": 0.9219902157783508
+            },
+            {
+              "start": 149.04000000000002,
+              "end": 149.3,
+              "word": " one!",
+              "probability": 0.3191796541213989
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "incredible",
+      "interval": [
+        165.0,
+        168.5
+      ],
+      "segments": [
+        {
+          "start": 166.26,
+          "end": 167.52,
+          "text": " Incredible tennis.",
+          "avg_logprob": -0.7801092664400736,
+          "no_speech_prob": 0.15987049043178558,
+          "words": [
+            {
+              "start": 166.26,
+              "end": 167.22,
+              "word": " Incredible",
+              "probability": 0.7329436540603638
+            },
+            {
+              "start": 167.22,
+              "end": 167.52,
+              "word": " tennis.",
+              "probability": 0.9192438125610352
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "game_finish",
+      "interval": [
+        184.3,
+        187.9
+      ],
+      "segments": [
+        {
+          "start": 184.3,
+          "end": 187.16000000000003,
+          "text": " and start being finished to the game.",
+          "avg_logprob": -0.6609211726622148,
+          "no_speech_prob": 0.12967784702777863,
+          "words": [
+            {
+              "start": 184.3,
+              "end": 185.32000000000002,
+              "word": " and",
+              "probability": 0.14254267513751984
+            },
+            {
+              "start": 185.32000000000002,
+              "end": 185.98000000000002,
+              "word": " start",
+              "probability": 0.2846517860889435
+            },
+            {
+              "start": 185.98000000000002,
+              "end": 186.28,
+              "word": " being",
+              "probability": 0.37641802430152893
+            },
+            {
+              "start": 186.28,
+              "end": 186.68,
+              "word": " finished",
+              "probability": 0.9862512350082397
+            },
+            {
+              "start": 186.68,
+              "end": 186.86,
+              "word": " to",
+              "probability": 0.9474165439605713
+            },
+            {
+              "start": 186.86,
+              "end": 186.96,
+              "word": " the",
+              "probability": 0.9970899820327759
+            },
+            {
+              "start": 186.96,
+              "end": 187.16000000000003,
+              "word": " game.",
+              "probability": 0.9926173090934753
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "break2_reaction",
+      "interval": [
+        210.9,
+        214.62
+      ],
+      "segments": [
+        {
+          "start": 210.9,
+          "end": 213.20000000000002,
+          "text": " I'm ready to go ahead and shine.",
+          "avg_logprob": -1.1615218619505565,
+          "no_speech_prob": 0.22024469077587128,
+          "words": [
+            {
+              "start": 210.9,
+              "end": 212.0,
+              "word": " I'm",
+              "probability": 0.21431070985272527
+            },
+            {
+              "start": 212.0,
+              "end": 212.12,
+              "word": " ready",
+              "probability": 0.4842543303966522
+            },
+            {
+              "start": 212.12,
+              "end": 212.48000000000002,
+              "word": " to",
+              "probability": 0.4349132776260376
+            },
+            {
+              "start": 212.48000000000002,
+              "end": 212.5,
+              "word": " go",
+              "probability": 0.2524828612804413
+            },
+            {
+              "start": 212.5,
+              "end": 212.64000000000001,
+              "word": " ahead",
+              "probability": 0.17258542776107788
+            },
+            {
+              "start": 212.64000000000001,
+              "end": 212.92000000000002,
+              "word": " and",
+              "probability": 0.7975703477859497
+            },
+            {
+              "start": 212.92000000000002,
+              "end": 213.20000000000002,
+              "word": " shine.",
+              "probability": 0.4210768938064575
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "ending_quote",
+      "interval": [
+        220.64,
+        228.64
+      ],
+      "segments": [
+        {
+          "start": 220.64,
+          "end": 223.79999999999998,
+          "text": " The former champion, the producer.",
+          "avg_logprob": -0.8228946867443266,
+          "no_speech_prob": 0.3182677924633026,
+          "words": [
+            {
+              "start": 220.64,
+              "end": 221.07999999999998,
+              "word": " The",
+              "probability": 0.07052405178546906
+            },
+            {
+              "start": 221.07999999999998,
+              "end": 221.32,
+              "word": " former",
+              "probability": 0.9683400392532349
+            },
+            {
+              "start": 221.32,
+              "end": 221.7,
+              "word": " champion,",
+              "probability": 0.9833282232284546
+            },
+            {
+              "start": 222.35999999999999,
+              "end": 223.35999999999999,
+              "word": " the",
+              "probability": 0.23015250265598297
+            },
+            {
+              "start": 223.35999999999999,
+              "end": 223.79999999999998,
+              "word": " producer.",
+              "probability": 0.5980459451675415
+            }
+          ]
+        },
+        {
+          "start": 224.26,
+          "end": 227.29999999999998,
+          "text": " One of his best performances of the year.",
+          "avg_logprob": -0.8228946867443266,
+          "no_speech_prob": 0.3182677924633026,
+          "words": [
+            {
+              "start": 224.26,
+              "end": 224.32,
+              "word": " One",
+              "probability": 0.10227230191230774
+            },
+            {
+              "start": 224.32,
+              "end": 225.67999999999998,
+              "word": " of",
+              "probability": 0.9961773157119751
+            },
+            {
+              "start": 225.67999999999998,
+              "end": 225.77999999999997,
+              "word": " his",
+              "probability": 0.9309937953948975
+            },
+            {
+              "start": 225.77999999999997,
+              "end": 225.95999999999998,
+              "word": " best",
+              "probability": 0.9636817574501038
+            },
+            {
+              "start": 225.95999999999998,
+              "end": 226.67999999999998,
+              "word": " performances",
+              "probability": 0.9969372749328613
+            },
+            {
+              "start": 226.67999999999998,
+              "end": 226.92,
+              "word": " of",
+              "probability": 0.8266322016716003
+            },
+            {
+              "start": 226.92,
+              "end": 227.1,
+              "word": " the",
+              "probability": 0.9815850257873535
+            },
+            {
+              "start": 227.1,
+              "end": 227.29999999999998,
+              "word": " year.",
+              "probability": 0.9854352474212646
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "handshake",
+      "interval": [
+        228.64,
+        234.5
+      ],
+      "segments": [
+        {
+          "start": 231.88,
+          "end": 233.27999999999997,
+          "text": " You",
+          "avg_logprob": -0.9790941774845123,
+          "no_speech_prob": 0.56092369556427,
+          "words": [
+            {
+              "start": 231.88,
+              "end": 233.27999999999997,
+              "word": " You",
+              "probability": 0.035544026643037796
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "elapsed_seconds": 17.031538486480713
+}

@@ -1,0 +1,227 @@
+{
+  "schema": "tennislive.independent-final-movie-visual-review.v1",
+  "reviewed_at_utc": "2026-10-14T18:46:38.488397+00:00",
+  "reviewer": "b8_final_visual_qc agent; actual new-movie contact sheets and original PNG inspection",
+  "status": "passed_with_declared_sampling_and_fixed_center_crop_limits",
+  "visual_pass": true,
+  "publication_approved": false,
+  "movie": "/workspace/scratch/b8-final-film/medvedev-tsitsipas-shanghai-2026-r4.mp4",
+  "movie_sha256": "eafca1baae7a980040ded12dee59f42379d542df872ab7a3b0611040e6aaed8a",
+  "movie_bytes": 59378397,
+  "film_seconds": 173.76,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25.0,
+  "render_run_id": 38616203044,
+  "render_code_sha": "f6fa4a44b9ace0a6bc995ce902a03ad6996b614b",
+  "spec_file_sha256": "9cb958517acadc67f9eb62bf2109af996417951e72175f7b2907e3b083a9df65",
+  "native_spec_sha256": "9cb958517acadc67f9eb62bf2109af996417951e72175f7b2907e3b083a9df65",
+  "ass_sha256": "4912c0982f831985503b68d0e274b53bb021ffd64e48715c20c15e2659067eeb",
+  "render_inputs_sha256": "d4739230b8cb7c4fd456e35c2e7308862a41e4eb390fc8082632b807c93c1000",
+  "native_qc_attestation_sha256": "bcb67b2acf8e5465a2bf976f6a642532ee81465c748b7122643f20c865e6d66d",
+  "source_sha256": "f09b81ad2dcfb90b5be14120921eb6dccc92780e2b625c1ecfce51598a6afd5c",
+  "tts_bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+  "tts_strict_reused": true,
+  "frame_manifest": "/workspace/scratch/b8-final-visual-qc/frame_manifest.json",
+  "frame_manifest_sha256": "adf888f8828918cdc12f6f9232a81e78c01ac33740bed63becd506da31334198",
+  "scope": {
+    "movie_frame_samples_actually_viewed": 102,
+    "ass_cue_midpoint_windows_actually_viewed": 30,
+    "visible_caption_midpoint_windows": 26,
+    "intentionally_clean_stat_card_cue_windows": 4,
+    "contact_sheets_actually_viewed": 16,
+    "full_original_movie_pngs_actually_viewed": 8,
+    "movie_frames_total": 4344,
+    "all_movie_frames_reviewed": false,
+    "audio_listened": false,
+    "loudness_gain_peak_silence_checks_performed": false,
+    "production_spec_or_workflow_modified": false,
+    "publication_state_written": false
+  },
+  "blocking_findings": [],
+  "closed_findings": [
+    {
+      "id": "withdrawn-scoreboard-retains-green-source-rectangle",
+      "status": "closed_on_actual_corrected_movie",
+      "old_movie_sha256": "92fdcdcfd8d4f0a82c793a957610d91b34b6e312adce3e531b1037c008e53d3e",
+      "old_failure_archive": "superseded-mask-failure/",
+      "evidence": [
+        {
+          "frame_index": 3382,
+          "film_time_s": 135.28,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-03382.png",
+          "image_sha256": "2ede4c05849d5d987b5c08066f751f2d8c14b4b0a85158fa93b07b1ec79d1422"
+        },
+        {
+          "frame_index": 3384,
+          "film_time_s": 135.36,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-03384.png",
+          "image_sha256": "646bed8173d792e7175155ba6dd8b16457628b7e51d576b7a4d425eeec3ae220"
+        },
+        {
+          "frame_index": 3386,
+          "film_time_s": 135.44,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-03386.png",
+          "image_sha256": "660b877fd18a93fa0d41fe1cca8c90d4f69495894a1e628ef27991c7c71ad150"
+        },
+        {
+          "frame_index": 201,
+          "film_time_s": 8.04,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-00201.png",
+          "image_sha256": "b05b9532786c2073335b94b19217b8196b897a013a8662f4a172c3adc94cc5f8"
+        },
+        {
+          "frame_index": 203,
+          "film_time_s": 8.12,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-00203.png",
+          "image_sha256": "65b2560ab0eb2e1cf7a3fa40a2b1e4ede8dca65622fc2c9ee9e5ee9d92db41d8"
+        },
+        {
+          "frame_index": 207,
+          "film_time_s": 8.28,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-00207.png",
+          "image_sha256": "ef79d8ebab6a81108932ffe05971ff9d0b7b8117495f1552f4c8d40490ac19f3"
+        }
+      ],
+      "finding": "Actual current ending frame3384 and adjacent3382/3386, plus repeated cold-open201/203/207, show only the shrinking natural scoreboard graphic at fixed x0/top1227. The formerly appended green source rectangle is absent. Board withdrawal animation naturally compresses and removes its own numbers; it is not a static recreated final score."
+    },
+    {
+      "id": "early-closeup-half-face",
+      "status": "closed_by_excluding_entire_nonessential_closeup_and_complete_netcord_phrase",
+      "evidence": [
+        {
+          "frame_index": 650,
+          "film_time_s": 26.0,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-00650.png",
+          "image_sha256": "2cdee4b21897e9ef066a1ea9e1f814b79f28c96638defc1b740507df7456aade"
+        },
+        {
+          "frame_index": 750,
+          "film_time_s": 30.0,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-00750.png",
+          "image_sha256": "2dbbcd288da69b8f138146915223f08d96839880b6bb7291f6427b279b98b1a8"
+        },
+        {
+          "frame_index": 764,
+          "film_time_s": 30.56,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-00764.png",
+          "image_sha256": "88ef682abafdbc2aaf495b6b191e9c646feac01bdc2a95047bdcb56f22e14fd8"
+        },
+        {
+          "frame_index": 771,
+          "film_time_s": 30.84,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-00771.png",
+          "image_sha256": "4f6dec28e33f5259c1f02d2205b6e7cfa820ce54d5226b8e7dae881e9c6c8a6f"
+        }
+      ],
+      "finding": "Actual current early_break retains source point through first wide-shot reaction; subsequent early_following_points starts with real serve footage. Source17.2–20.82 off-center closeup and its entire commentary sentence are absent. Fixed-center coordinates unchanged."
+    },
+    {
+      "id": "stats-caption-obscures-metrics",
+      "status": "not_present_on_current_actual_movie",
+      "evidence": [
+        {
+          "frame_index": 3740,
+          "film_time_s": 149.6,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-03740.png",
+          "image_sha256": "ce930231774c3a92a42f80aff70eecd14c33ce96712d19d4db84c2fb9da74782"
+        },
+        {
+          "frame_index": 3807,
+          "film_time_s": 152.28,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-03807.png",
+          "image_sha256": "8499569f953f12faf3b7fe0a43b954aa5cd16a19323a78a667556681de7438ed"
+        },
+        {
+          "frame_index": 3887,
+          "film_time_s": 155.48,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-03887.png",
+          "image_sha256": "8499569f953f12faf3b7fe0a43b954aa5cd16a19323a78a667556681de7438ed"
+        },
+        {
+          "frame_index": 3967,
+          "film_time_s": 158.68,
+          "image": "/workspace/scratch/b8-final-visual-qc/frames/frame-03967.png",
+          "image_sha256": "112f912a4c3d63064d08ba5f60451ea0cdbac73fdf005524e8ddf85c14aff751"
+        }
+      ],
+      "finding": "All four actual statistics ASS midpoint windows display clean full-canvas card with no independent caption overlay. Nine rows, both names/ranks, 6-4/7-5 and1:24 remain readable; true fractions12/23 and10/19 visible."
+    }
+  ],
+  "positive_sampled_observations": [
+    "All30 actual current ASS cue-midpoint windows were inspected on current movie contact sheets, including26 displayed-caption windows and4 intentionally clean stat windows. No split player name, orphan glyph, off-canvas text or collision with main text/branding/scoreboard found in these windows.",
+    "Actual coordinate player-name caption frame502 preserves both Chinese names on one semantic line, distinct from title and bottom brand.",
+    "Cover sampled atframe15 preserves exact two-line hook, visible full face, hands/racket and original native score table at unchanged location; both players/result/court/duration match current verified facts.",
+    "Sampled source scoreboards remain flush x0 and natural y1227, with dynamically shrinking widths and no extra court patch. Source contains no BREAK/SET/MATCH POINT header; none was fabricated.",
+    "Available key source actions, result and initial reactions occur in uninterrupted selected source windows. Sampled source-to-card boundaries follow observed stopped-play reactions. Parent source report documents internal official missing points; this review does not claim those actions were shown.",
+    "Ending samples contain first match-point action, winner reaction, opponent reaction and handshake; source tail ends before publisher bumper. Native navy outro and final tail contain no Tennis TV end card in sampled frames.",
+    "Native cards retain navy design, two complete title lines, context-specific kicker, separately placed narration caption and bottom branding."
+  ],
+  "known_user_authorized_geometry_limit": {
+    "layout": "fixed-center3:4fill",
+    "tracking": false,
+    "source_crop": [
+      555,
+      0,
+      810,
+      1080
+    ],
+    "finding": "Center crop fills canvas and preserves central court, while source sides are outside view. Near Medvedev at source118 and near Tsitsipas at source204 can be outside crop; complete selected time window is not complete horizontal-court or whole-player visibility. Source report and actual sampled center views agree with this declared limit."
+  },
+  "source_context": {
+    "report_path": "/workspace/tennislive-efficiency/data/evidence/medvedev-tsitsipas-shanghai-2026-r4/source/final-current-story-review.json",
+    "report_sha256": "426827d7c0b83d4d32696778f5c1c5d3264fee11ee3eb3d25d1b095e11ab639f",
+    "included_proofs": [
+      {
+        "original_path": "/workspace/scratch/b8-tactics/114.png",
+        "archive_path": "source-context/tactics-114.png",
+        "sha256": "f9f16c2397234b1f83e2bc3f152be20565457c5027e889458bd2ca08872823bb",
+        "classification": "source context; not final-movie frame; original viewing claim belongs to source reviewer"
+      },
+      {
+        "original_path": "/workspace/scratch/b8-tactics/118.png",
+        "archive_path": "source-context/tactics-118.png",
+        "sha256": "1676fdb2d0cf4582dab061e3e469d193b169dbd867dc6ccd2bedc07dcad07d28",
+        "classification": "source context; not final-movie frame; original viewing claim belongs to source reviewer"
+      },
+      {
+        "original_path": "/workspace/scratch/b8-tactics/163.png",
+        "archive_path": "source-context/tactics-163.png",
+        "sha256": "8525c5c1add629991d390b43b6cfdc1b1950ba1d3c995011656d617e850572ae",
+        "classification": "source context; not final-movie frame; original viewing claim belongs to source reviewer"
+      },
+      {
+        "original_path": "/workspace/scratch/b8-tactics/165.png",
+        "archive_path": "source-context/tactics-165.png",
+        "sha256": "fb4683f74103d349b904c8ce23535d2a13ad9f31a23a7a0552345d63c3b6abcd",
+        "classification": "source context; not final-movie frame; original viewing claim belongs to source reviewer"
+      },
+      {
+        "original_path": "/workspace/scratch/b8-tactics/166.png",
+        "archive_path": "source-context/tactics-166.png",
+        "sha256": "8ce68747bf3903ec49293f4876ccaa5b199d0a4b28b30b23ad4c3cfe990b1992",
+        "classification": "source context; not final-movie frame; original viewing claim belongs to source reviewer"
+      },
+      {
+        "original_path": "/workspace/scratch/b8-key-boundaries/119.60.png",
+        "archive_path": "source-context/boundary-119.60.png",
+        "sha256": "49b95c9944210b150d8dc88b179ad206654cb4b33e672d1baff8a083336c5c70",
+        "classification": "source context; not final-movie frame; original viewing claim belongs to source reviewer"
+      },
+      {
+        "original_path": "/workspace/scratch/b8-key-boundaries/211.18.png",
+        "archive_path": "source-context/boundary-211.18.png",
+        "sha256": "14b6879d951ecb35ea562d28675c0971fd5bafca901f5fb8b69d568ee898e442",
+        "classification": "source context; not final-movie frame; original viewing claim belongs to source reviewer"
+      }
+    ],
+    "note": "Source-context images are not current movie frame evidence; no independent viewing claim inherited from source reviewer."
+  },
+  "limitations": [
+    "Sampling judgment applies only to current eafca1... movie SHA; not every movie frame manually reviewed.",
+    "No actual listening claim; pronunciation and whole-source speech reviews are separate evidence. No loudness/gain/peak/threshold-silence checks.",
+    "No merge, release publication, PushPlus send or delivery receipt written by this agent."
+  ]
+}

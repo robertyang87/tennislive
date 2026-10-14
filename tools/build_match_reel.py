@@ -6758,6 +6758,13 @@ NISHIKORI_FAREWELL_LOW_RES_SOURCES: dict[str, int] = {
     "https://www.tennistv.com/videos/2377777/the-road-to-the-2019-season-kei-nishikori": 720,
 }
 
+# Existing owner-approved Jodar episode records this exact 1206x652 source in
+# its spec and docs/reviews/jodar-towel-shanghai-2026/final-review.md.
+# Keep that approval episode-bound; other videos retain their native floor.
+JODAR_TOWEL_LOW_RES_SOURCES: dict[str, int] = {
+    "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xg.mp4": 652,
+}
+
 
 def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     """按精确 URL 记录用户授权；保留原生分辨率，默认门槛仍是 1080p。"""
@@ -6771,6 +6778,10 @@ def source_quality_exceptions(spec: dict) -> dict[str, dict]:
             if spec.get("slug") != "nishikori-career-farewell":
                 raise ReelError("source_quality_exceptions 此档案低清授权仅限锦织圭生涯告别影片")
             floor = NISHIKORI_FAREWELL_LOW_RES_SOURCES[url]
+        if url in JODAR_TOWEL_LOW_RES_SOURCES:
+            if spec.get("slug") != "jodar-towel-shanghai-2026":
+                raise ReelError("source_quality_exceptions 此源授权仅限霍达尔毛巾风波影片")
+            floor = JODAR_TOWEL_LOW_RES_SOURCES[url]
         if floor is None or url not in urls:
             raise ReelError(f"source_quality_exceptions 未授权或未引用的源：{url}")
         if (not isinstance(claim, dict)

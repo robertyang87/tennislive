@@ -1,0 +1,1908 @@
+[
+  {
+    "segment_index": 1,
+    "edit_id": "coordinate",
+    "output_name": "voice_01.mp3",
+    "request_id": "b4eaa79664caba0c6dfad405d2842b7e20fdfdf0371f6020a79f4d507cc623dc",
+    "request": {
+      "backend": "edge",
+      "cache_key": "44d0338589b62705766e658e73e6ad3d",
+      "lead_pause": 0.0,
+      "pitch": "+0Hz",
+      "rate": "+6%",
+      "style": "",
+      "styledegree": "",
+      "text": "北京时间十月十四日晚，上海大师赛第四轮。梅德韦杰夫与西西帕斯交锋，胜者晋级八强。",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    "tts_text": "北京时间十月十四日晚，上海大师赛第四轮。梅德韦杰夫与西西帕斯交锋，胜者晋级八强。",
+    "display_text": "北京时间十月十四日晚，上海大师赛第四轮。梅德韦杰夫与西西帕斯交锋，胜者晋级八强。",
+    "text_sha256": "1f4c8db40192f57d0b87e1dd347df04fdf6c8f521480d5f4a018585aa40eb0a6",
+    "audio_sha256": "8d1c027fe892dc6ec1dd6d579cfb6535c385d059d05306f88a54bcd347acae9f",
+    "marks_sha256": "2d92ee96ee460c7d679045eeb4e0fe4b125bb5bef17aa8705a62449b254aa7b3",
+    "duration_seconds": 8.424,
+    "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/coordinate-8d1c027fe892dc6e.mp3",
+    "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/coordinate-8d1c027fe892dc6e.json",
+    "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+    "matches_current_spec": true,
+    "wordboundary_exact_native_bytes_preserved": true,
+    "polyphones": [
+      {
+        "index": 3,
+        "char": "间",
+        "word": "北京时间",
+        "intended": "jian1",
+        "live": [
+          "jian1",
+          "jian4"
+        ],
+        "defaults": [
+          "jian1"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 13,
+        "char": "大",
+        "word": "大师",
+        "intended": "da4",
+        "live": [
+          "da4",
+          "dai4"
+        ],
+        "defaults": [
+          "da4"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 25,
+        "char": "与",
+        "word": "与",
+        "intended": "yu3",
+        "live": [
+          "yu3",
+          "yu4"
+        ],
+        "defaults": [
+          "yu3"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 38,
+        "char": "强",
+        "word": "强",
+        "intended": "qiang2",
+        "live": [
+          "qiang2",
+          "jiang4",
+          "qiang3"
+        ],
+        "defaults": [
+          "qiang2"
+        ],
+        "status": "actual_pending"
+      }
+    ],
+    "proper_names": [
+      {
+        "name": "梅德韦杰夫",
+        "start_index": 20,
+        "targets": [
+          {
+            "index": 20,
+            "char": "梅",
+            "intended": "mei2",
+            "status": "actual_pending"
+          },
+          {
+            "index": 21,
+            "char": "德",
+            "intended": "de2",
+            "status": "actual_pending"
+          },
+          {
+            "index": 22,
+            "char": "韦",
+            "intended": "wei2",
+            "status": "actual_pending"
+          },
+          {
+            "index": 23,
+            "char": "杰",
+            "intended": "jie2",
+            "status": "actual_pending"
+          },
+          {
+            "index": 24,
+            "char": "夫",
+            "intended": "fu1",
+            "status": "actual_pending"
+          }
+        ]
+      },
+      {
+        "name": "西西帕斯",
+        "start_index": 26,
+        "targets": [
+          {
+            "index": 26,
+            "char": "西",
+            "intended": "xi1",
+            "status": "actual_pending"
+          },
+          {
+            "index": 27,
+            "char": "西",
+            "intended": "xi1",
+            "status": "actual_pending"
+          },
+          {
+            "index": 28,
+            "char": "帕",
+            "intended": "pa4",
+            "status": "actual_pending"
+          },
+          {
+            "index": 29,
+            "char": "斯",
+            "intended": "si1",
+            "status": "actual_pending"
+          }
+        ]
+      },
+      {
+        "name": "北京",
+        "start_index": 0,
+        "targets": [
+          {
+            "index": 0,
+            "char": "北",
+            "intended": "bei3",
+            "status": "actual_pending"
+          },
+          {
+            "index": 1,
+            "char": "京",
+            "intended": "jing1",
+            "status": "actual_pending"
+          }
+        ]
+      },
+      {
+        "name": "上海",
+        "start_index": 11,
+        "targets": [
+          {
+            "index": 11,
+            "char": "上",
+            "intended": "shang4",
+            "status": "actual_pending"
+          },
+          {
+            "index": 12,
+            "char": "海",
+            "intended": "hai3",
+            "status": "actual_pending"
+          }
+        ]
+      }
+    ],
+    "numbers": [
+      {
+        "start_index": 4,
+        "text": "十",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 6,
+        "text": "十四",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 17,
+        "text": "四",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 37,
+        "text": "八",
+        "status": "actual_pending"
+      }
+    ],
+    "abbreviations": [],
+    "actual_wordboundary_tokens": [
+      {
+        "text": "北京时间",
+        "start_index": 0,
+        "start_seconds": 0.0471659,
+        "end_seconds": 0.6485819,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "十月十四日",
+        "start_index": 4,
+        "start_seconds": 0.660375,
+        "end_seconds": 1.356125,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "晚",
+        "start_index": 9,
+        "start_seconds": 1.356125,
+        "end_seconds": 1.521208,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "上海",
+        "start_index": 11,
+        "start_seconds": 1.757083,
+        "end_seconds": 2.134458,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "大师",
+        "start_index": 13,
+        "start_seconds": 2.146208,
+        "end_seconds": 2.499999,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "赛",
+        "start_index": 15,
+        "start_seconds": 2.5,
+        "end_seconds": 2.688666,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "第四轮",
+        "start_index": 16,
+        "start_seconds": 2.688666,
+        "end_seconds": 3.242916,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "梅德韦杰夫",
+        "start_index": 20,
+        "start_seconds": 3.785375,
+        "end_seconds": 4.693375,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "与",
+        "start_index": 25,
+        "start_seconds": 4.775958,
+        "end_seconds": 4.941041,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "西西帕斯",
+        "start_index": 26,
+        "start_seconds": 4.952833,
+        "end_seconds": 5.660374,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "交锋",
+        "start_index": 30,
+        "start_seconds": 5.672166,
+        "end_seconds": 6.073124,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "胜",
+        "start_index": 33,
+        "start_seconds": 6.308958,
+        "end_seconds": 6.556583,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "者",
+        "start_index": 34,
+        "start_seconds": 6.556583,
+        "end_seconds": 6.709874,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "晋级",
+        "start_index": 35,
+        "start_seconds": 6.7335,
+        "end_seconds": 7.134416,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "八",
+        "start_index": 37,
+        "start_seconds": 7.134416,
+        "end_seconds": 7.334874,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "强",
+        "start_index": 38,
+        "start_seconds": 7.334916,
+        "end_seconds": 7.617916,
+        "status": "boundary_exists_not_pronunciation_proof"
+      }
+    ]
+  },
+  {
+    "segment_index": 3,
+    "edit_id": "first_break",
+    "output_name": "voice_03.mp3",
+    "request_id": "c7ef1cc20e098e6ff0bea9cc593f3525c0ce365fc1c977191f7e45ac0024504a",
+    "request": {
+      "backend": "edge",
+      "cache_key": "81949946a4c4fe144ac69dc7666bc41a",
+      "lead_pause": 0.0,
+      "pitch": "+0Hz",
+      "rate": "+6%",
+      "style": "",
+      "styledegree": "",
+      "text": "首盘一比一时，梅德韦杰夫连赢四球破发。盘末，底线对攻后向前压迫，六比四拿下首盘。",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    "tts_text": "首盘一比一时，梅德韦杰夫连赢四球破发。盘末，底线对攻后向前压迫，六比四拿下首盘。",
+    "display_text": "首盘一比一时，梅德韦杰夫连赢四球破发。盘末，底线对攻后向前压迫，六比四拿下首盘。",
+    "text_sha256": "944dbfff59ee0aa098cbb22dbad626982731e9d6b1e678d143e4afcc257a44ca",
+    "audio_sha256": "bdd6e7646f28271e0709af463c8491cb68b815e20c0a8ae391be7cdc4bac140c",
+    "marks_sha256": "155312b2e7e579e2a9a39f2a83dae399f9685dc7e1418c50d6c406f7b3cb57f4",
+    "duration_seconds": 8.928,
+    "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/first_break-bdd6e7646f28271e.mp3",
+    "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/first_break-bdd6e7646f28271e.json",
+    "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+    "matches_current_spec": true,
+    "wordboundary_exact_native_bytes_preserved": true,
+    "polyphones": [
+      {
+        "index": 17,
+        "char": "发",
+        "word": "发",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 30,
+        "char": "迫",
+        "word": "压迫",
+        "intended": "po4",
+        "live": [
+          "po4",
+          "pai3"
+        ],
+        "defaults": [
+          "po4"
+        ],
+        "status": "actual_pending"
+      }
+    ],
+    "proper_names": [
+      {
+        "name": "梅德韦杰夫",
+        "start_index": 7,
+        "targets": [
+          {
+            "index": 7,
+            "char": "梅",
+            "intended": "mei2",
+            "status": "actual_pending"
+          },
+          {
+            "index": 8,
+            "char": "德",
+            "intended": "de2",
+            "status": "actual_pending"
+          },
+          {
+            "index": 9,
+            "char": "韦",
+            "intended": "wei2",
+            "status": "actual_pending"
+          },
+          {
+            "index": 10,
+            "char": "杰",
+            "intended": "jie2",
+            "status": "actual_pending"
+          },
+          {
+            "index": 11,
+            "char": "夫",
+            "intended": "fu1",
+            "status": "actual_pending"
+          }
+        ]
+      }
+    ],
+    "numbers": [
+      {
+        "start_index": 2,
+        "text": "一比一",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 14,
+        "text": "四",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 32,
+        "text": "六比四",
+        "status": "actual_pending"
+      }
+    ],
+    "abbreviations": [],
+    "actual_wordboundary_tokens": [
+      {
+        "text": "首盘",
+        "start_index": 0,
+        "start_seconds": 0.0471659,
+        "end_seconds": 0.4717069,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "一",
+        "start_index": 2,
+        "start_seconds": 0.495291,
+        "end_seconds": 0.660374,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "比",
+        "start_index": 3,
+        "start_seconds": 0.660375,
+        "end_seconds": 0.778291,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "一时",
+        "start_index": 4,
+        "start_seconds": 0.778291,
+        "end_seconds": 1.143874,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "梅德韦杰夫",
+        "start_index": 7,
+        "start_seconds": 1.3915,
+        "end_seconds": 2.169791,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "连",
+        "start_index": 12,
+        "start_seconds": 2.252375,
+        "end_seconds": 2.382083,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "赢",
+        "start_index": 13,
+        "start_seconds": 2.382083,
+        "end_seconds": 2.582541,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "四",
+        "start_index": 14,
+        "start_seconds": 2.594333,
+        "end_seconds": 2.759416,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "球",
+        "start_index": 15,
+        "start_seconds": 2.759416,
+        "end_seconds": 2.948082,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "破发",
+        "start_index": 16,
+        "start_seconds": 2.959916,
+        "end_seconds": 3.384457,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "盘末",
+        "start_index": 19,
+        "start_seconds": 3.915083,
+        "end_seconds": 4.292458,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "底线",
+        "start_index": 22,
+        "start_seconds": 4.658,
+        "end_seconds": 5.011791,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "对攻",
+        "start_index": 24,
+        "start_seconds": 5.023583,
+        "end_seconds": 5.353791,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "后",
+        "start_index": 26,
+        "start_seconds": 5.353791,
+        "end_seconds": 5.542457,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "向前",
+        "start_index": 27,
+        "start_seconds": 5.660375,
+        "end_seconds": 6.049541,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "压迫",
+        "start_index": 29,
+        "start_seconds": 6.061333,
+        "end_seconds": 6.485874,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "六比四",
+        "start_index": 32,
+        "start_seconds": 6.745291,
+        "end_seconds": 7.275957,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "拿下",
+        "start_index": 35,
+        "start_seconds": 7.299541,
+        "end_seconds": 7.617957,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "首盘",
+        "start_index": 37,
+        "start_seconds": 7.629708,
+        "end_seconds": 8.101416,
+        "status": "boundary_exists_not_pronunciation_proof"
+      }
+    ]
+  },
+  {
+    "segment_index": 6,
+    "edit_id": "second_pressure",
+    "output_name": "voice_06.mp3",
+    "request_id": "3b35b84c38edb8f34ad5fdd9b3ec9deaf916eeffd7ca93eb123917b97edc494a",
+    "request": {
+      "backend": "edge",
+      "cache_key": "b7e90aff3c6642b686864dac2d1ad26a",
+      "lead_pause": 0.0,
+      "pitch": "+0Hz",
+      "rate": "+6%",
+      "style": "",
+      "styledegree": "",
+      "text": "第二盘二比三，他在网前被穿越，来到零比三十。随后连赢四球保发。五比五，机会再现。",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    "tts_text": "第二盘二比三，他在网前被穿越，来到零比三十。随后连赢四球保发。五比五，机会再现。",
+    "display_text": "第二盘二比三，他在网前被穿越，来到零比三十。随后连赢四球保发。五比五，机会再现。",
+    "text_sha256": "e7e3c9d4ea78c5cadecffbe71bdb10d517ece173b62c3195967f8aa05c8c15b0",
+    "audio_sha256": "9a291fe7e642151d47a73886476f57f8a6d3c6a1cbbb63c4eb0dbf2fac4012c7",
+    "marks_sha256": "eab59582ac644f272ac71c650a47d087aceedc664d374ad421752c05de97e387",
+    "duration_seconds": 8.856,
+    "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/second_pressure-9a291fe7e642151d.mp3",
+    "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/second_pressure-9a291fe7e642151d.json",
+    "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+    "matches_current_spec": true,
+    "wordboundary_exact_native_bytes_preserved": true,
+    "polyphones": [
+      {
+        "index": 11,
+        "char": "被",
+        "word": "被",
+        "intended": "bei4",
+        "live": [
+          "bei4",
+          "pi1"
+        ],
+        "defaults": [
+          "bei4"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 29,
+        "char": "发",
+        "word": "发",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 36,
+        "char": "会",
+        "word": "机会",
+        "intended": "hui4",
+        "live": [
+          "hui4",
+          "kuai4"
+        ],
+        "defaults": [
+          "hui4"
+        ],
+        "status": "actual_pending"
+      }
+    ],
+    "proper_names": [],
+    "numbers": [
+      {
+        "start_index": 1,
+        "text": "二",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 3,
+        "text": "二比三",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 17,
+        "text": "零比三十",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 26,
+        "text": "四",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 31,
+        "text": "五比五",
+        "status": "actual_pending"
+      }
+    ],
+    "abbreviations": [],
+    "actual_wordboundary_tokens": [
+      {
+        "text": "第二盘",
+        "start_index": 0,
+        "start_seconds": 0.0471659,
+        "end_seconds": 0.4009569,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "二比三",
+        "start_index": 3,
+        "start_seconds": 0.424541,
+        "end_seconds": 0.884457,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "他",
+        "start_index": 7,
+        "start_seconds": 1.167458,
+        "end_seconds": 1.320749,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "在",
+        "start_index": 8,
+        "start_seconds": 1.32075,
+        "end_seconds": 1.426875,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "网",
+        "start_index": 9,
+        "start_seconds": 1.438666,
+        "end_seconds": 1.603749,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "前",
+        "start_index": 10,
+        "start_seconds": 1.603791,
+        "end_seconds": 1.874999,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "被",
+        "start_index": 11,
+        "start_seconds": 1.898583,
+        "end_seconds": 2.028291,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "穿越",
+        "start_index": 12,
+        "start_seconds": 2.040083,
+        "end_seconds": 2.393874,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "来到",
+        "start_index": 15,
+        "start_seconds": 2.688666,
+        "end_seconds": 2.959874,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "零比三十",
+        "start_index": 17,
+        "start_seconds": 2.9835,
+        "end_seconds": 3.738208,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "随后",
+        "start_index": 22,
+        "start_seconds": 4.280666,
+        "end_seconds": 4.693416,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "连",
+        "start_index": 24,
+        "start_seconds": 4.78775,
+        "end_seconds": 4.976416,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "赢",
+        "start_index": 25,
+        "start_seconds": 4.976416,
+        "end_seconds": 5.165082,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "四",
+        "start_index": 26,
+        "start_seconds": 5.188666,
+        "end_seconds": 5.341957,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "球",
+        "start_index": 27,
+        "start_seconds": 5.342,
+        "end_seconds": 5.507083,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "保发",
+        "start_index": 28,
+        "start_seconds": 5.518875,
+        "end_seconds": 5.89625,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "五比五",
+        "start_index": 31,
+        "start_seconds": 6.438666,
+        "end_seconds": 7.016499,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "机会",
+        "start_index": 35,
+        "start_seconds": 7.205208,
+        "end_seconds": 7.606166,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "再现",
+        "start_index": 37,
+        "start_seconds": 7.617916,
+        "end_seconds": 8.030666,
+        "status": "boundary_exists_not_pronunciation_proof"
+      }
+    ]
+  },
+  {
+    "segment_index": 8,
+    "edit_id": "match_payoff",
+    "output_name": "voice_08.mp3",
+    "request_id": "d76bdc43320bcc890c53435b2853a9f090f9c8d9db180b162b8f08acf8b9f661",
+    "request": {
+      "backend": "edge",
+      "cache_key": "d2b54381e5fa9d283aa90ebe8683f86a",
+      "lead_pause": 0.0,
+      "pitch": "+0Hz",
+      "rate": "+6%",
+      "style": "",
+      "styledegree": "",
+      "text": "五比五后，他又连赢四球破发。发球胜赛局，拿到第一个赛点就兑现。六比四、七比五，晋级上海八强。",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    "tts_text": "五比五后，他又连赢四球破发。发球胜赛局，拿到第一个赛点就兑现。六比四、七比五，晋级上海八强。",
+    "display_text": "五比五后，他又连赢四球破发。发球胜赛局，拿到第一个赛点就兑现。六比四、七比五，晋级上海八强。",
+    "text_sha256": "caebaf6f96eb1ef437b00d4a8b4df71f468147fb275637d5047a601c854d32e1",
+    "audio_sha256": "e8d253f8a4b968f63cae10f7742a0a691b209c7e70a0495a80c29f71d0d170fe",
+    "marks_sha256": "0132e500c18cb9af0c9776688805e04a31390d66f2f0a526052064f2f209e752",
+    "duration_seconds": 10.2,
+    "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/match_payoff-e8d253f8a4b968f6.mp3",
+    "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/match_payoff-e8d253f8a4b968f6.json",
+    "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+    "matches_current_spec": true,
+    "wordboundary_exact_native_bytes_preserved": true,
+    "polyphones": [
+      {
+        "index": 12,
+        "char": "发",
+        "word": "发",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 14,
+        "char": "发",
+        "word": "发球",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 44,
+        "char": "强",
+        "word": "强",
+        "intended": "qiang2",
+        "live": [
+          "qiang2",
+          "jiang4",
+          "qiang3"
+        ],
+        "defaults": [
+          "qiang2"
+        ],
+        "status": "actual_pending"
+      }
+    ],
+    "proper_names": [
+      {
+        "name": "上海",
+        "start_index": 41,
+        "targets": [
+          {
+            "index": 41,
+            "char": "上",
+            "intended": "shang4",
+            "status": "actual_pending"
+          },
+          {
+            "index": 42,
+            "char": "海",
+            "intended": "hai3",
+            "status": "actual_pending"
+          }
+        ]
+      }
+    ],
+    "numbers": [
+      {
+        "start_index": 0,
+        "text": "五比五",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 9,
+        "text": "四",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 23,
+        "text": "一",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 31,
+        "text": "六比四",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 35,
+        "text": "七比五",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 43,
+        "text": "八",
+        "status": "actual_pending"
+      }
+    ],
+    "abbreviations": [],
+    "actual_wordboundary_tokens": [
+      {
+        "text": "五比五",
+        "start_index": 0,
+        "start_seconds": 0.0471659,
+        "end_seconds": 0.5070819,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "后",
+        "start_index": 3,
+        "start_seconds": 0.507083,
+        "end_seconds": 0.731124,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "他",
+        "start_index": 5,
+        "start_seconds": 1.025958,
+        "end_seconds": 1.167458,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "又",
+        "start_index": 6,
+        "start_seconds": 1.167458,
+        "end_seconds": 1.344333,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "连",
+        "start_index": 7,
+        "start_seconds": 1.344333,
+        "end_seconds": 1.521208,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "赢",
+        "start_index": 8,
+        "start_seconds": 1.521208,
+        "end_seconds": 1.733458,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "四",
+        "start_index": 9,
+        "start_seconds": 1.757083,
+        "end_seconds": 1.933958,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "球",
+        "start_index": 10,
+        "start_seconds": 1.933958,
+        "end_seconds": 2.134416,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "破发",
+        "start_index": 11,
+        "start_seconds": 2.146208,
+        "end_seconds": 2.582541,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "发球",
+        "start_index": 14,
+        "start_seconds": 3.113208,
+        "end_seconds": 3.561333,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "胜",
+        "start_index": 16,
+        "start_seconds": 3.584916,
+        "end_seconds": 3.773582,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "赛",
+        "start_index": 17,
+        "start_seconds": 3.773583,
+        "end_seconds": 3.962249,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "局",
+        "start_index": 18,
+        "start_seconds": 3.96225,
+        "end_seconds": 4.150916,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "拿",
+        "start_index": 20,
+        "start_seconds": 4.457541,
+        "end_seconds": 4.610832,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "到",
+        "start_index": 21,
+        "start_seconds": 4.610833,
+        "end_seconds": 4.775916,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "第一个",
+        "start_index": 22,
+        "start_seconds": 4.78775,
+        "end_seconds": 5.0589579,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "赛点",
+        "start_index": 25,
+        "start_seconds": 5.07075,
+        "end_seconds": 5.448125,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "就",
+        "start_index": 27,
+        "start_seconds": 5.471708,
+        "end_seconds": 5.613208,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "兑现",
+        "start_index": 28,
+        "start_seconds": 5.613208,
+        "end_seconds": 5.978791,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "六比四",
+        "start_index": 31,
+        "start_seconds": 6.509416,
+        "end_seconds": 7.075457,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "七比五",
+        "start_index": 35,
+        "start_seconds": 7.299541,
+        "end_seconds": 7.877374,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "晋级",
+        "start_index": 39,
+        "start_seconds": 8.030666,
+        "end_seconds": 8.443416,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "上海",
+        "start_index": 41,
+        "start_seconds": 8.455208,
+        "end_seconds": 8.915083,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "八",
+        "start_index": 43,
+        "start_seconds": 8.915083,
+        "end_seconds": 9.103749,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "强",
+        "start_index": 44,
+        "start_seconds": 9.103791,
+        "end_seconds": 9.374999,
+        "status": "boundary_exists_not_pronunciation_proof"
+      }
+    ]
+  },
+  {
+    "segment_index": 10,
+    "edit_id": "full_stats",
+    "output_name": "voice_10.mp3",
+    "request_id": "daf609a05807e398ea2358a49887c21ab9026c101f9a84b8ab89e6d6a7e0e790",
+    "request": {
+      "backend": "edge",
+      "cache_key": "0c216b38c4d834465eda72fe2742227b",
+      "lead_pause": 0.0,
+      "pitch": "+0Hz",
+      "rate": "+6%",
+      "style": "",
+      "styledegree": "",
+      "text": "全场制胜球，二十五对二十八。非受迫失误，十对十八。一发赢球率，百分之八十五对百分之六十八。他全场没有面对破发点。",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    "tts_text": "全场制胜球，二十五对二十八。非受迫失误，十对十八。一发赢球率，百分之八十五对百分之六十八。他全场没有面对破发点。",
+    "display_text": "全场制胜球，二十五对二十八。非受迫失误，十对十八。一发赢球率，百分之八十五对百分之六十八。他全场没有面对破发点。",
+    "text_sha256": "931bf8b4d054c1d790a709942c14c193c6f6e2a3de8bc68837d56be1e73b97a5",
+    "audio_sha256": "914aca131648f6f0f9efb820a37eb656f36774ac5838de2163999cc3f9e7e90a",
+    "marks_sha256": "4001e57673fcfa2b50636bb453e75aa68fe1ea2b5fc0a3946f5161407e024b7c",
+    "duration_seconds": 11.76,
+    "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/full_stats-914aca131648f6f0.mp3",
+    "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/full_stats-914aca131648f6f0.json",
+    "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+    "matches_current_spec": true,
+    "wordboundary_exact_native_bytes_preserved": true,
+    "polyphones": [
+      {
+        "index": 1,
+        "char": "场",
+        "word": "全场",
+        "intended": "chang3",
+        "live": [
+          "chang3",
+          "chang2"
+        ],
+        "defaults": [
+          "chang3"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 16,
+        "char": "迫",
+        "word": "迫",
+        "intended": "po4",
+        "live": [
+          "po4",
+          "pai3"
+        ],
+        "defaults": [
+          "po4"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 26,
+        "char": "发",
+        "word": "一发",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 29,
+        "char": "率",
+        "word": "率",
+        "intended": "lv4",
+        "live": [
+          "lv4",
+          "shuai4"
+        ],
+        "defaults": [
+          "lv4"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 32,
+        "char": "分",
+        "word": "百分",
+        "intended": "fen1",
+        "live": [
+          "fen1",
+          "fen4"
+        ],
+        "defaults": [
+          "fen1"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 39,
+        "char": "分",
+        "word": "百分",
+        "intended": "fen1",
+        "live": [
+          "fen1",
+          "fen4"
+        ],
+        "defaults": [
+          "fen1"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 47,
+        "char": "场",
+        "word": "全场",
+        "intended": "chang3",
+        "live": [
+          "chang3",
+          "chang2"
+        ],
+        "defaults": [
+          "chang3"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 48,
+        "char": "没",
+        "word": "没有",
+        "intended": "mei2",
+        "live": [
+          "mei2",
+          "mo4"
+        ],
+        "defaults": [
+          "mei2"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 53,
+        "char": "发",
+        "word": "发点",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending"
+      }
+    ],
+    "proper_names": [],
+    "numbers": [
+      {
+        "start_index": 6,
+        "text": "二十五",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 10,
+        "text": "二十八",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 20,
+        "text": "十",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 22,
+        "text": "十八",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 25,
+        "text": "一",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 31,
+        "text": "百",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 34,
+        "text": "八十五",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 38,
+        "text": "百",
+        "status": "actual_pending"
+      },
+      {
+        "start_index": 41,
+        "text": "六十八",
+        "status": "actual_pending"
+      }
+    ],
+    "abbreviations": [],
+    "actual_wordboundary_tokens": [
+      {
+        "text": "全场",
+        "start_index": 0,
+        "start_seconds": 0.0471659,
+        "end_seconds": 0.4599159,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "制胜",
+        "start_index": 2,
+        "start_seconds": 0.471708,
+        "end_seconds": 0.742916,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "球",
+        "start_index": 4,
+        "start_seconds": 0.742916,
+        "end_seconds": 0.943374,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "二十五",
+        "start_index": 6,
+        "start_seconds": 1.191041,
+        "end_seconds": 1.627374,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "对",
+        "start_index": 9,
+        "start_seconds": 1.650958,
+        "end_seconds": 1.804249,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "二十八",
+        "start_index": 10,
+        "start_seconds": 1.80425,
+        "end_seconds": 2.311333,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "非",
+        "start_index": 14,
+        "start_seconds": 2.853791,
+        "end_seconds": 3.195749,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "受迫",
+        "start_index": 15,
+        "start_seconds": 3.19575,
+        "end_seconds": 3.561333,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "失误",
+        "start_index": 17,
+        "start_seconds": 3.561333,
+        "end_seconds": 3.903333,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "十对十八",
+        "start_index": 20,
+        "start_seconds": 4.056583,
+        "end_seconds": 4.858458,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "一发",
+        "start_index": 25,
+        "start_seconds": 5.389166,
+        "end_seconds": 5.707582,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "赢",
+        "start_index": 27,
+        "start_seconds": 5.719333,
+        "end_seconds": 5.896208,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "球",
+        "start_index": 28,
+        "start_seconds": 5.896208,
+        "end_seconds": 6.061291,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "率",
+        "start_index": 29,
+        "start_seconds": 6.061333,
+        "end_seconds": 6.191041,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "百分之",
+        "start_index": 31,
+        "start_seconds": 6.474041,
+        "end_seconds": 6.898582,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "八十五",
+        "start_index": 34,
+        "start_seconds": 6.910375,
+        "end_seconds": 7.417458,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "对",
+        "start_index": 37,
+        "start_seconds": 7.523583,
+        "end_seconds": 7.724041,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "百分之",
+        "start_index": 38,
+        "start_seconds": 7.735833,
+        "end_seconds": 8.207541,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "六十八",
+        "start_index": 41,
+        "start_seconds": 8.219333,
+        "end_seconds": 8.714624,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "他",
+        "start_index": 45,
+        "start_seconds": 9.257083,
+        "end_seconds": 9.398583,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "全场",
+        "start_index": 46,
+        "start_seconds": 9.398583,
+        "end_seconds": 9.787749,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "没有",
+        "start_index": 48,
+        "start_seconds": 9.799541,
+        "end_seconds": 9.999999,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "面对",
+        "start_index": 50,
+        "start_seconds": 10.0,
+        "end_seconds": 10.294791,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "破发",
+        "start_index": 52,
+        "start_seconds": 10.318416,
+        "end_seconds": 10.695749,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "点",
+        "start_index": 54,
+        "start_seconds": 10.69575,
+        "end_seconds": 10.943375,
+        "status": "boundary_exists_not_pronunciation_proof"
+      }
+    ]
+  },
+  {
+    "segment_index": 11,
+    "edit_id": "next_round",
+    "output_name": "voice_11.mp3",
+    "request_id": "f707f42086e4336b09347e3b2a51ead57aa07d72df41a4609a2d927a133c5405",
+    "request": {
+      "backend": "edge",
+      "cache_key": "1ce9c4c4d691540cc42d6912b8dc9ef4",
+      "lead_pause": 0.0,
+      "pitch": "+0Hz",
+      "rate": "+6%",
+      "style": "",
+      "styledegree": "",
+      "text": "下一轮，他将面对保罗。这样的发球表现，还能继续吗？",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    "tts_text": "下一轮，他将面对保罗。这样的发球表现，还能继续吗？",
+    "display_text": "下一轮，他将面对保罗。这样的发球表现，还能继续吗？",
+    "text_sha256": "1953e35528707b820f22c38326c22973062a45b83a05686894037f45edc54976",
+    "audio_sha256": "ed249500023117432a26cbdb40f17865276b0ab2388d91b61dadc592ab099d1b",
+    "marks_sha256": "8bb922ceaddf9523c58ec845f3fa94333b39473bd88fac44cb6afafc4370f92b",
+    "duration_seconds": 5.928,
+    "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/next_round-ed24950002311743.mp3",
+    "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/next_round-ed24950002311743.json",
+    "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+    "matches_current_spec": true,
+    "wordboundary_exact_native_bytes_preserved": true,
+    "polyphones": [
+      {
+        "index": 5,
+        "char": "将",
+        "word": "将",
+        "intended": "jiang1",
+        "live": [
+          "jiang1",
+          "jiang4",
+          "qiang1"
+        ],
+        "defaults": [
+          "jiang1",
+          "jiang4"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 13,
+        "char": "的",
+        "word": "的",
+        "intended": "de5",
+        "live": [
+          "de5",
+          "di1",
+          "di2",
+          "di4"
+        ],
+        "defaults": [
+          "de5"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 14,
+        "char": "发",
+        "word": "发球",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 19,
+        "char": "还",
+        "word": "还",
+        "intended": "hai2",
+        "live": [
+          "hai2",
+          "huan2"
+        ],
+        "defaults": [
+          "hai2",
+          "huan2"
+        ],
+        "status": "actual_pending"
+      }
+    ],
+    "proper_names": [
+      {
+        "name": "保罗",
+        "start_index": 8,
+        "targets": [
+          {
+            "index": 8,
+            "char": "保",
+            "intended": "bao3",
+            "status": "actual_pending"
+          },
+          {
+            "index": 9,
+            "char": "罗",
+            "intended": "luo2",
+            "status": "actual_pending"
+          }
+        ]
+      }
+    ],
+    "numbers": [
+      {
+        "start_index": 1,
+        "text": "一",
+        "status": "actual_pending"
+      }
+    ],
+    "abbreviations": [],
+    "actual_wordboundary_tokens": [
+      {
+        "text": "下",
+        "start_index": 0,
+        "start_seconds": 0.0471659,
+        "end_seconds": 0.3655819,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "一",
+        "start_index": 1,
+        "start_seconds": 0.365583,
+        "end_seconds": 0.471708,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "轮",
+        "start_index": 2,
+        "start_seconds": 0.471708,
+        "end_seconds": 0.695749,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "他",
+        "start_index": 4,
+        "start_seconds": 0.978791,
+        "end_seconds": 1.132082,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "将",
+        "start_index": 5,
+        "start_seconds": 1.132083,
+        "end_seconds": 1.297166,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "面对",
+        "start_index": 6,
+        "start_seconds": 1.308958,
+        "end_seconds": 1.639166,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "保罗",
+        "start_index": 8,
+        "start_seconds": 1.650958,
+        "end_seconds": 2.110874,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "这样",
+        "start_index": 11,
+        "start_seconds": 2.653291,
+        "end_seconds": 2.936291,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "的",
+        "start_index": 13,
+        "start_seconds": 2.936333,
+        "end_seconds": 3.030666,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "发球",
+        "start_index": 14,
+        "start_seconds": 3.042458,
+        "end_seconds": 3.396249,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "表现",
+        "start_index": 16,
+        "start_seconds": 3.408,
+        "end_seconds": 3.832541,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "还",
+        "start_index": 19,
+        "start_seconds": 4.092,
+        "end_seconds": 4.339625,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "能",
+        "start_index": 20,
+        "start_seconds": 4.339625,
+        "end_seconds": 4.5165,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "继续",
+        "start_index": 21,
+        "start_seconds": 4.5165,
+        "end_seconds": 4.893875,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "吗",
+        "start_index": 23,
+        "start_seconds": 4.893875,
+        "end_seconds": 5.082541,
+        "status": "boundary_exists_not_pronunciation_proof"
+      }
+    ]
+  },
+  {
+    "segment_index": "outro",
+    "edit_id": "outro",
+    "output_name": "voice_outro.mp3",
+    "request_id": "75c73f1202071699a9595e6df6c2f0ef0dde6a4732e4b8ebf904ed99e156b312",
+    "request": {
+      "backend": "edge",
+      "cache_key": "7559865dbf4339cccd83a16a1f56beb8",
+      "lead_pause": 0.0,
+      "pitch": "+0Hz",
+      "rate": "+6%",
+      "style": "",
+      "styledegree": "",
+      "text": "关注网球时差，时差归我，好球归你。",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    "tts_text": "关注网球时差，时差归我，好球归你。",
+    "display_text": "关注网球时差，时差归我，好球归你。",
+    "text_sha256": "2bfb6c3faf8ae5b1711f6ea769579ce03d322ce6440b2947a0537cecf4fe660e",
+    "audio_sha256": "8dc3127182612249a6ed7f68cf6f68a46bbaf42d443e7f3b42c8e76d7ed515ac",
+    "marks_sha256": "bf33e7d2af5679adb575e53259c0e0aa92a351b65570fe9e3f33055321608898",
+    "duration_seconds": 4.152,
+    "native_audio": "/workspace/scratch/b8-pronunciation/native-audio/outro-8dc3127182612249.mp3",
+    "native_marks": "/workspace/scratch/b8-pronunciation/native-audio/outro-8dc3127182612249.json",
+    "bundle_sha256": "cde78c9e5707badb9c81dacf6a7df052dde44f4bdbd0ccf14de6f6ae7b3ad724",
+    "matches_current_spec": true,
+    "wordboundary_exact_native_bytes_preserved": true,
+    "polyphones": [
+      {
+        "index": 5,
+        "char": "差",
+        "word": "时差",
+        "intended": "cha1",
+        "live": [
+          "cha4",
+          "cha1",
+          "chai1",
+          "ci1"
+        ],
+        "defaults": [
+          "cha4"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 8,
+        "char": "差",
+        "word": "时差",
+        "intended": "cha1",
+        "live": [
+          "cha4",
+          "cha1",
+          "chai1",
+          "ci1"
+        ],
+        "defaults": [
+          "cha4"
+        ],
+        "status": "actual_pending"
+      },
+      {
+        "index": 12,
+        "char": "好",
+        "word": "好",
+        "intended": "hao3",
+        "live": [
+          "hao3",
+          "hao4"
+        ],
+        "defaults": [
+          "hao3"
+        ],
+        "status": "actual_pending"
+      }
+    ],
+    "proper_names": [
+      {
+        "name": "网球时差",
+        "start_index": 2,
+        "targets": [
+          {
+            "index": 2,
+            "char": "网",
+            "intended": "wang3",
+            "status": "actual_pending"
+          },
+          {
+            "index": 3,
+            "char": "球",
+            "intended": "qiu2",
+            "status": "actual_pending"
+          },
+          {
+            "index": 4,
+            "char": "时",
+            "intended": "shi2",
+            "status": "actual_pending"
+          },
+          {
+            "index": 5,
+            "char": "差",
+            "intended": "cha1",
+            "status": "actual_pending"
+          }
+        ]
+      }
+    ],
+    "numbers": [],
+    "abbreviations": [],
+    "actual_wordboundary_tokens": [
+      {
+        "text": "关注",
+        "start_index": 0,
+        "start_seconds": 0.0471659,
+        "end_seconds": 0.4009569,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "网球",
+        "start_index": 2,
+        "start_seconds": 0.41275,
+        "end_seconds": 0.731166,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "时差",
+        "start_index": 4,
+        "start_seconds": 0.742916,
+        "end_seconds": 1.155666,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "时差",
+        "start_index": 7,
+        "start_seconds": 1.474041,
+        "end_seconds": 1.851416,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "归",
+        "start_index": 9,
+        "start_seconds": 1.863208,
+        "end_seconds": 2.028291,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "我",
+        "start_index": 10,
+        "start_seconds": 2.028291,
+        "end_seconds": 2.275916,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "好",
+        "start_index": 12,
+        "start_seconds": 2.582541,
+        "end_seconds": 2.759416,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "球",
+        "start_index": 13,
+        "start_seconds": 2.759416,
+        "end_seconds": 2.948082,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "归",
+        "start_index": 14,
+        "start_seconds": 2.959916,
+        "end_seconds": 3.183957,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "你",
+        "start_index": 15,
+        "start_seconds": 3.183958,
+        "end_seconds": 3.337249,
+        "status": "boundary_exists_not_pronunciation_proof"
+      }
+    ]
+  }
+]
