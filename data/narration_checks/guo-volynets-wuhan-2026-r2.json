@@ -1,6 +1,6 @@
 {
   "slug": "guo-volynets-wuhan-2026-r2",
-  "checked_at": "2026-10-14T12:19:37Z",
+  "checked_at": "2026-10-14T12:55:31Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -17,22 +17,22 @@
     },
     "976d52cceca5420c": {
       "segment": 3,
-      "spoken": 8.568,
+      "spoken": 8.736,
       "picture": 11.5
     },
     "b867518d3d8d0c2a": {
       "segment": 4,
-      "spoken": 7.08,
+      "spoken": 7.152,
       "picture": 9.8
     },
     "9bb666a4679eccd5": {
       "segment": 7,
-      "spoken": 7.896,
+      "spoken": 7.992,
       "picture": 10.0
     },
     "0e2ab673b21612a7": {
       "segment": 9,
-      "spoken": 8.352,
+      "spoken": 8.28,
       "picture": 10.8
     },
     "21511f99a59e019c": {
@@ -42,7 +42,7 @@
     },
     "8c9881aa96b79fd9": {
       "segment": 12,
-      "spoken": 6.288,
+      "spoken": 6.24,
       "picture": 7.2
     },
     "9cb15eaf37ad8daa": {
@@ -58,12 +58,16 @@
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "8b0cfcf6e265bf1607e669155c64de82462ce28df2df62966d39d7fe7c1d3ff1",
+    "bundle_sha256": "31883f277d67356c2dc997a7717401ae7b3bb44a846022d2483de11291f1dc5c",
     "request_count": 10,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
-    "audio_decoding_verified": true
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-guo-volynets-wuhan-2026-r2-31883f277d67356c",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-guo-volynets-wuhan-2026-r2-31883f277d67356c/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38567320508"
   }
 }
