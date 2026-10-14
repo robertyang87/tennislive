@@ -1,0 +1,7981 @@
+{
+  "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS016/point-by-point",
+  "method": "Infer point winner from consecutive gameScore transitions; raw pointWinner has errors. Match teams A=Sabalenka, B=Li. Sets score fields in scoreAfterPoint are final set scores, not live scores.",
+  "total_points_inferred": {
+    "A": 108,
+    "B": 105
+  },
+  "pointWinner_mismatch_count": 11,
+  "mismatches": [
+    {
+      "pointNumber": 8,
+      "raw": "A",
+      "score_inferred": "B",
+      "before": [
+        "AD",
+        "40"
+      ],
+      "after": [
+        "40",
+        "40"
+      ]
+    },
+    {
+      "pointNumber": 12,
+      "raw": "A",
+      "score_inferred": "B",
+      "before": [
+        "AD",
+        "40"
+      ],
+      "after": [
+        "40",
+        "40"
+      ]
+    },
+    {
+      "pointNumber": 72,
+      "raw": "B",
+      "score_inferred": "A",
+      "before": [
+        "40",
+        "AD"
+      ],
+      "after": [
+        "40",
+        "40"
+      ]
+    },
+    {
+      "pointNumber": 96,
+      "raw": "A",
+      "score_inferred": "B",
+      "before": [
+        "AD",
+        "40"
+      ],
+      "after": [
+        "40",
+        "40"
+      ]
+    },
+    {
+      "pointNumber": 98,
+      "raw": "A",
+      "score_inferred": "B",
+      "before": [
+        "AD",
+        "40"
+      ],
+      "after": [
+        "40",
+        "40"
+      ]
+    },
+    {
+      "pointNumber": 176,
+      "raw": "A",
+      "score_inferred": "B",
+      "before": [
+        "AD",
+        "40"
+      ],
+      "after": [
+        "40",
+        "40"
+      ]
+    },
+    {
+      "pointNumber": 202,
+      "raw": "B",
+      "score_inferred": "A",
+      "before": [
+        "0",
+        "0"
+      ],
+      "after": [
+        "1",
+        "0"
+      ]
+    },
+    {
+      "pointNumber": 204,
+      "raw": "B",
+      "score_inferred": "A",
+      "before": [
+        "1",
+        "1"
+      ],
+      "after": [
+        "2",
+        "1"
+      ]
+    },
+    {
+      "pointNumber": 208,
+      "raw": "B",
+      "score_inferred": "A",
+      "before": [
+        "2",
+        "4"
+      ],
+      "after": [
+        "3",
+        "4"
+      ]
+    },
+    {
+      "pointNumber": 211,
+      "raw": "B",
+      "score_inferred": "A",
+      "before": [
+        "3",
+        "6"
+      ],
+      "after": [
+        "4",
+        "6"
+      ]
+    },
+    {
+      "pointNumber": 212,
+      "raw": "B",
+      "score_inferred": "A",
+      "before": [
+        "4",
+        "6"
+      ],
+      "after": [
+        "5",
+        "6"
+      ]
+    }
+  ],
+  "games": [
+    {
+      "set": 1,
+      "game": 1,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        0,
+        0
+      ],
+      "li_score_after": [
+        0,
+        1
+      ],
+      "points": 14,
+      "point_numbers": [
+        1,
+        14
+      ],
+      "first_point_utc": "2026-10-14T11:25:44Z",
+      "last_point_utc": "2026-10-14T11:33:22Z",
+      "break_point_chances": {
+        "B": 2
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 2,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        0,
+        1
+      ],
+      "li_score_after": [
+        1,
+        1
+      ],
+      "points": 6,
+      "point_numbers": [
+        15,
+        20
+      ],
+      "first_point_utc": "2026-10-14T11:34:42Z",
+      "last_point_utc": "2026-10-14T11:37:01Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 3,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        1,
+        1
+      ],
+      "li_score_after": [
+        1,
+        2
+      ],
+      "points": 5,
+      "point_numbers": [
+        21,
+        25
+      ],
+      "first_point_utc": "2026-10-14T11:37:35Z",
+      "last_point_utc": "2026-10-14T11:39:46Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "15"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 4,
+      "server": "B",
+      "winner": "A",
+      "li_score_before": [
+        1,
+        2
+      ],
+      "li_score_after": [
+        1,
+        3
+      ],
+      "points": 5,
+      "point_numbers": [
+        26,
+        30
+      ],
+      "first_point_utc": "2026-10-14T11:41:55Z",
+      "last_point_utc": "2026-10-14T11:44:04Z",
+      "break_point_chances": {
+        "A": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "15"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 5,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        1,
+        3
+      ],
+      "li_score_after": [
+        1,
+        4
+      ],
+      "points": 4,
+      "point_numbers": [
+        31,
+        34
+      ],
+      "first_point_utc": "2026-10-14T11:45:03Z",
+      "last_point_utc": "2026-10-14T11:46:45Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 6,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        1,
+        4
+      ],
+      "li_score_after": [
+        2,
+        4
+      ],
+      "points": 8,
+      "point_numbers": [
+        35,
+        42
+      ],
+      "first_point_utc": "2026-10-14T11:48:48Z",
+      "last_point_utc": "2026-10-14T11:52:11Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 7,
+      "server": "A",
+      "winner": "B",
+      "li_score_before": [
+        2,
+        4
+      ],
+      "li_score_after": [
+        3,
+        4
+      ],
+      "points": 5,
+      "point_numbers": [
+        43,
+        47
+      ],
+      "first_point_utc": "2026-10-14T11:52:45Z",
+      "last_point_utc": "2026-10-14T11:54:51Z",
+      "break_point_chances": {
+        "B": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 8,
+      "server": "B",
+      "winner": "A",
+      "li_score_before": [
+        3,
+        4
+      ],
+      "li_score_after": [
+        3,
+        5
+      ],
+      "points": 4,
+      "point_numbers": [
+        48,
+        51
+      ],
+      "first_point_utc": "2026-10-14T11:56:56Z",
+      "last_point_utc": "2026-10-14T11:58:13Z",
+      "break_point_chances": {
+        "A": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      ]
+    },
+    {
+      "set": 1,
+      "game": 9,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        3,
+        5
+      ],
+      "li_score_after": [
+        3,
+        6
+      ],
+      "points": 4,
+      "point_numbers": [
+        52,
+        55
+      ],
+      "first_point_utc": "2026-10-14T11:58:57Z",
+      "last_point_utc": "2026-10-14T12:00:24Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 1,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        0,
+        0
+      ],
+      "li_score_after": [
+        1,
+        0
+      ],
+      "points": 5,
+      "point_numbers": [
+        56,
+        60
+      ],
+      "first_point_utc": "2026-10-14T12:02:53Z",
+      "last_point_utc": "2026-10-14T12:04:53Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 2,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        1,
+        0
+      ],
+      "li_score_after": [
+        1,
+        1
+      ],
+      "points": 4,
+      "point_numbers": [
+        61,
+        64
+      ],
+      "first_point_utc": "2026-10-14T12:05:57Z",
+      "last_point_utc": "2026-10-14T12:08:11Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 3,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        1,
+        1
+      ],
+      "li_score_after": [
+        2,
+        1
+      ],
+      "points": 10,
+      "point_numbers": [
+        65,
+        74
+      ],
+      "first_point_utc": "2026-10-14T12:09:09Z",
+      "last_point_utc": "2026-10-14T12:14:04Z",
+      "break_point_chances": {
+        "A": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 4,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        2,
+        1
+      ],
+      "li_score_after": [
+        2,
+        2
+      ],
+      "points": 6,
+      "point_numbers": [
+        75,
+        80
+      ],
+      "first_point_utc": "2026-10-14T12:16:00Z",
+      "last_point_utc": "2026-10-14T12:19:25Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "30"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 5,
+      "server": "B",
+      "winner": "A",
+      "li_score_before": [
+        2,
+        2
+      ],
+      "li_score_after": [
+        2,
+        3
+      ],
+      "points": 8,
+      "point_numbers": [
+        81,
+        88
+      ],
+      "first_point_utc": "2026-10-14T12:20:08Z",
+      "last_point_utc": "2026-10-14T12:23:49Z",
+      "break_point_chances": {
+        "A": 3
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 6,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        2,
+        3
+      ],
+      "li_score_after": [
+        2,
+        4
+      ],
+      "points": 14,
+      "point_numbers": [
+        89,
+        102
+      ],
+      "first_point_utc": "2026-10-14T12:26:11Z",
+      "last_point_utc": "2026-10-14T12:35:22Z",
+      "break_point_chances": {
+        "B": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 7,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        2,
+        4
+      ],
+      "li_score_after": [
+        3,
+        4
+      ],
+      "points": 5,
+      "point_numbers": [
+        103,
+        107
+      ],
+      "first_point_utc": "2026-10-14T12:35:58Z",
+      "last_point_utc": "2026-10-14T12:37:37Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 8,
+      "server": "A",
+      "winner": "B",
+      "li_score_before": [
+        3,
+        4
+      ],
+      "li_score_after": [
+        4,
+        4
+      ],
+      "points": 8,
+      "point_numbers": [
+        108,
+        115
+      ],
+      "first_point_utc": "2026-10-14T12:39:36Z",
+      "last_point_utc": "2026-10-14T12:43:34Z",
+      "break_point_chances": {
+        "B": 2
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 9,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        4,
+        4
+      ],
+      "li_score_after": [
+        5,
+        4
+      ],
+      "points": 5,
+      "point_numbers": [
+        116,
+        120
+      ],
+      "first_point_utc": "2026-10-14T12:44:05Z",
+      "last_point_utc": "2026-10-14T12:46:11Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 2,
+      "game": 10,
+      "server": "A",
+      "winner": "B",
+      "li_score_before": [
+        5,
+        4
+      ],
+      "li_score_after": [
+        6,
+        4
+      ],
+      "points": 8,
+      "point_numbers": [
+        121,
+        128
+      ],
+      "first_point_utc": "2026-10-14T12:48:21Z",
+      "last_point_utc": "2026-10-14T12:53:06Z",
+      "break_point_chances": {
+        "B": 3
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 1,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        0,
+        0
+      ],
+      "li_score_after": [
+        1,
+        0
+      ],
+      "points": 4,
+      "point_numbers": [
+        129,
+        132
+      ],
+      "first_point_utc": "2026-10-14T12:55:38Z",
+      "last_point_utc": "2026-10-14T12:56:56Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 2,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        1,
+        0
+      ],
+      "li_score_after": [
+        1,
+        1
+      ],
+      "points": 5,
+      "point_numbers": [
+        133,
+        137
+      ],
+      "first_point_utc": "2026-10-14T12:57:42Z",
+      "last_point_utc": "2026-10-14T13:00:00Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "15"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 3,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        1,
+        1
+      ],
+      "li_score_after": [
+        2,
+        1
+      ],
+      "points": 4,
+      "point_numbers": [
+        138,
+        141
+      ],
+      "first_point_utc": "2026-10-14T13:00:39Z",
+      "last_point_utc": "2026-10-14T13:02:12Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 4,
+      "server": "A",
+      "winner": "B",
+      "li_score_before": [
+        2,
+        1
+      ],
+      "li_score_after": [
+        3,
+        1
+      ],
+      "points": 6,
+      "point_numbers": [
+        142,
+        147
+      ],
+      "first_point_utc": "2026-10-14T13:04:17Z",
+      "last_point_utc": "2026-10-14T13:06:44Z",
+      "break_point_chances": {
+        "B": 1
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 5,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        3,
+        1
+      ],
+      "li_score_after": [
+        4,
+        1
+      ],
+      "points": 4,
+      "point_numbers": [
+        148,
+        151
+      ],
+      "first_point_utc": "2026-10-14T13:07:37Z",
+      "last_point_utc": "2026-10-14T13:08:57Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 6,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        4,
+        1
+      ],
+      "li_score_after": [
+        4,
+        2
+      ],
+      "points": 5,
+      "point_numbers": [
+        152,
+        156
+      ],
+      "first_point_utc": "2026-10-14T13:12:44Z",
+      "last_point_utc": "2026-10-14T13:14:26Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "15"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 7,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        4,
+        2
+      ],
+      "li_score_after": [
+        5,
+        2
+      ],
+      "points": 6,
+      "point_numbers": [
+        157,
+        162
+      ],
+      "first_point_utc": "2026-10-14T13:15:16Z",
+      "last_point_utc": "2026-10-14T13:17:45Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 8,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        5,
+        2
+      ],
+      "li_score_after": [
+        5,
+        3
+      ],
+      "points": 16,
+      "point_numbers": [
+        163,
+        178
+      ],
+      "first_point_utc": "2026-10-14T13:19:31Z",
+      "last_point_utc": "2026-10-14T13:28:11Z",
+      "break_point_chances": {
+        "B": 5
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 9,
+      "server": "B",
+      "winner": "A",
+      "li_score_before": [
+        5,
+        3
+      ],
+      "li_score_after": [
+        5,
+        4
+      ],
+      "points": 6,
+      "point_numbers": [
+        179,
+        184
+      ],
+      "first_point_utc": "2026-10-14T13:29:08Z",
+      "last_point_utc": "2026-10-14T13:32:19Z",
+      "break_point_chances": {
+        "A": 2
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "30"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 10,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        5,
+        4
+      ],
+      "li_score_after": [
+        5,
+        5
+      ],
+      "points": 8,
+      "point_numbers": [
+        185,
+        192
+      ],
+      "first_point_utc": "2026-10-14T13:34:32Z",
+      "last_point_utc": "2026-10-14T13:39:05Z",
+      "break_point_chances": {
+        "B": 2
+      },
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 11,
+      "server": "B",
+      "winner": "B",
+      "li_score_before": [
+        5,
+        5
+      ],
+      "li_score_after": [
+        6,
+        5
+      ],
+      "points": 5,
+      "point_numbers": [
+        193,
+        197
+      ],
+      "first_point_utc": "2026-10-14T13:39:51Z",
+      "last_point_utc": "2026-10-14T13:41:43Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        },
+        {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 12,
+      "server": "A",
+      "winner": "A",
+      "li_score_before": [
+        6,
+        5
+      ],
+      "li_score_after": [
+        6,
+        6
+      ],
+      "points": 4,
+      "point_numbers": [
+        198,
+        201
+      ],
+      "first_point_utc": "2026-10-14T13:43:38Z",
+      "last_point_utc": "2026-10-14T13:45:36Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      ]
+    },
+    {
+      "set": 3,
+      "game": 13,
+      "server": "",
+      "winner": "B",
+      "li_score_before": [
+        6,
+        6
+      ],
+      "li_score_after": [
+        7,
+        6
+      ],
+      "points": 12,
+      "point_numbers": [
+        202,
+        213
+      ],
+      "first_point_utc": "2026-10-14T13:46:18Z",
+      "last_point_utc": "2026-10-14T13:52:47Z",
+      "break_point_chances": {},
+      "point_score_sequence_A_B": [
+        {
+          "teamAScore": "1",
+          "teamBScore": "0"
+        },
+        {
+          "teamAScore": "1",
+          "teamBScore": "1"
+        },
+        {
+          "teamAScore": "2",
+          "teamBScore": "1"
+        },
+        {
+          "teamAScore": "2",
+          "teamBScore": "2"
+        },
+        {
+          "teamAScore": "2",
+          "teamBScore": "3"
+        },
+        {
+          "teamAScore": "2",
+          "teamBScore": "4"
+        },
+        {
+          "teamAScore": "3",
+          "teamBScore": "4"
+        },
+        {
+          "teamAScore": "3",
+          "teamBScore": "5"
+        },
+        {
+          "teamAScore": "3",
+          "teamBScore": "6"
+        },
+        {
+          "teamAScore": "4",
+          "teamBScore": "6"
+        },
+        {
+          "teamAScore": "5",
+          "teamBScore": "6"
+        },
+        {
+          "teamAScore": "5",
+          "teamBScore": "7"
+        }
+      ]
+    }
+  ],
+  "points": [
+    {
+      "pointNumber": 1,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:25:44Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 2,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:26:26Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 3,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:26:51Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 4,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T11:27:16Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 5,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:27:48Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 6,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:28:21Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 7,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:29:03Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 8,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:29:28Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 9,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        }
+      },
+      "timestamp": "2026-10-14T11:29:57Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 10,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:30:24Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 11,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:30:51Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 12,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:31:34Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 13,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:32:25Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 14,
+      "setNumber": 1,
+      "gameNumber": 1,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:33:22Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 15,
+      "setNumber": 1,
+      "gameNumber": 2,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:34:42Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 16,
+      "setNumber": 1,
+      "gameNumber": 2,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:35:09Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 17,
+      "setNumber": 1,
+      "gameNumber": 2,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:35:40Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 18,
+      "setNumber": 1,
+      "gameNumber": 2,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T11:36:03Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 19,
+      "setNumber": 1,
+      "gameNumber": 2,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:36:36Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 20,
+      "setNumber": 1,
+      "gameNumber": 2,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T11:37:01Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 21,
+      "setNumber": 1,
+      "gameNumber": 3,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:37:35Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 22,
+      "setNumber": 1,
+      "gameNumber": 3,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:38:04Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 23,
+      "setNumber": 1,
+      "gameNumber": 3,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:38:34Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 24,
+      "setNumber": 1,
+      "gameNumber": 3,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:39:12Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 25,
+      "setNumber": 1,
+      "gameNumber": 3,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:39:46Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 26,
+      "setNumber": 1,
+      "gameNumber": 4,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:41:55Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 27,
+      "setNumber": 1,
+      "gameNumber": 4,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:42:31Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 28,
+      "setNumber": 1,
+      "gameNumber": 4,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:43:04Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 29,
+      "setNumber": 1,
+      "gameNumber": 4,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:43:38Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 30,
+      "setNumber": 1,
+      "gameNumber": 4,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:44:04Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 31,
+      "setNumber": 1,
+      "gameNumber": 5,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:45:03Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 32,
+      "setNumber": 1,
+      "gameNumber": 5,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:45:43Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 33,
+      "setNumber": 1,
+      "gameNumber": 5,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:46:17Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 34,
+      "setNumber": 1,
+      "gameNumber": 5,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:46:45Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 35,
+      "setNumber": 1,
+      "gameNumber": 6,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:48:48Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 36,
+      "setNumber": 1,
+      "gameNumber": 6,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:49:14Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 37,
+      "setNumber": 1,
+      "gameNumber": 6,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:49:46Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 38,
+      "setNumber": 1,
+      "gameNumber": 6,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T11:50:08Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 39,
+      "setNumber": 1,
+      "gameNumber": 6,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:50:33Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 40,
+      "setNumber": 1,
+      "gameNumber": 6,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:51:06Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 41,
+      "setNumber": 1,
+      "gameNumber": 6,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        }
+      },
+      "timestamp": "2026-10-14T11:51:37Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 42,
+      "setNumber": 1,
+      "gameNumber": 6,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T11:52:11Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 43,
+      "setNumber": 1,
+      "gameNumber": 7,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:52:45Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 44,
+      "setNumber": 1,
+      "gameNumber": 7,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T11:53:07Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 45,
+      "setNumber": 1,
+      "gameNumber": 7,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T11:53:33Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 46,
+      "setNumber": 1,
+      "gameNumber": 7,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T11:54:14Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 47,
+      "setNumber": 1,
+      "gameNumber": 7,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T11:54:51Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 48,
+      "setNumber": 1,
+      "gameNumber": 8,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:56:56Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 49,
+      "setNumber": 1,
+      "gameNumber": 8,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:57:17Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 50,
+      "setNumber": 1,
+      "gameNumber": 8,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:57:46Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 51,
+      "setNumber": 1,
+      "gameNumber": 8,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:58:13Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 52,
+      "setNumber": 1,
+      "gameNumber": 9,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:58:57Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 53,
+      "setNumber": 1,
+      "gameNumber": 9,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:59:21Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 54,
+      "setNumber": 1,
+      "gameNumber": 9,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T11:59:46Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 55,
+      "setNumber": 1,
+      "gameNumber": 9,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 1,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 1,
+            "team": "B",
+            "score": 3,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:00:24Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 56,
+      "setNumber": 2,
+      "gameNumber": 1,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:02:53Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 57,
+      "setNumber": 2,
+      "gameNumber": 1,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:03:12Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 58,
+      "setNumber": 2,
+      "gameNumber": 1,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:03:43Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 59,
+      "setNumber": 2,
+      "gameNumber": 1,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:04:15Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 60,
+      "setNumber": 2,
+      "gameNumber": 1,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T12:04:53Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 61,
+      "setNumber": 2,
+      "gameNumber": 2,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:05:57Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 62,
+      "setNumber": 2,
+      "gameNumber": 2,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:06:37Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 63,
+      "setNumber": 2,
+      "gameNumber": 2,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:07:27Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 64,
+      "setNumber": 2,
+      "gameNumber": 2,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:08:11Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 65,
+      "setNumber": 2,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:09:09Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 66,
+      "setNumber": 2,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:09:35Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 67,
+      "setNumber": 2,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:10:08Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 68,
+      "setNumber": 2,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:10:37Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 69,
+      "setNumber": 2,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:11:04Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 70,
+      "setNumber": 2,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:11:33Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 71,
+      "setNumber": 2,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        }
+      },
+      "timestamp": "2026-10-14T12:12:14Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 72,
+      "setNumber": 2,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:12:52Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 73,
+      "setNumber": 2,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        }
+      },
+      "timestamp": "2026-10-14T12:13:21Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 74,
+      "setNumber": 2,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T12:14:04Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 75,
+      "setNumber": 2,
+      "gameNumber": 4,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:16:00Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 76,
+      "setNumber": 2,
+      "gameNumber": 4,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:16:46Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 77,
+      "setNumber": 2,
+      "gameNumber": 4,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:17:35Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 78,
+      "setNumber": 2,
+      "gameNumber": 4,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:18:12Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 79,
+      "setNumber": 2,
+      "gameNumber": 4,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:18:49Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 80,
+      "setNumber": 2,
+      "gameNumber": 4,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:19:25Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 81,
+      "setNumber": 2,
+      "gameNumber": 5,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:20:08Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 82,
+      "setNumber": 2,
+      "gameNumber": 5,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:20:43Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 83,
+      "setNumber": 2,
+      "gameNumber": 5,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:21:23Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 84,
+      "setNumber": 2,
+      "gameNumber": 5,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:21:39Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 85,
+      "setNumber": 2,
+      "gameNumber": 5,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:22:03Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 86,
+      "setNumber": 2,
+      "gameNumber": 5,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:22:33Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 87,
+      "setNumber": 2,
+      "gameNumber": 5,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:23:07Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 88,
+      "setNumber": 2,
+      "gameNumber": 5,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:23:49Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 89,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:26:11Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 90,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:26:41Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 91,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:27:21Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 92,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:27:47Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 93,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:28:19Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 94,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:29:05Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 95,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:29:34Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 96,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:30:18Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 97,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:31:13Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 98,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:31:49Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 99,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        }
+      },
+      "timestamp": "2026-10-14T12:32:24Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 100,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:34:01Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 101,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:34:06Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 102,
+      "setNumber": 2,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:35:22Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 103,
+      "setNumber": 2,
+      "gameNumber": 7,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:35:58Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 104,
+      "setNumber": 2,
+      "gameNumber": 7,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:36:25Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 105,
+      "setNumber": 2,
+      "gameNumber": 7,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:36:51Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 106,
+      "setNumber": 2,
+      "gameNumber": 7,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:37:16Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 107,
+      "setNumber": 2,
+      "gameNumber": 7,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T12:37:37Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 108,
+      "setNumber": 2,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:39:36Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 109,
+      "setNumber": 2,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:39:54Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 110,
+      "setNumber": 2,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:40:23Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 111,
+      "setNumber": 2,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:41:08Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 112,
+      "setNumber": 2,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:41:46Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 113,
+      "setNumber": 2,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:42:15Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 114,
+      "setNumber": 2,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        }
+      },
+      "timestamp": "2026-10-14T12:43:06Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 115,
+      "setNumber": 2,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T12:43:34Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 116,
+      "setNumber": 2,
+      "gameNumber": 9,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:44:05Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 117,
+      "setNumber": 2,
+      "gameNumber": 9,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:44:39Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 118,
+      "setNumber": 2,
+      "gameNumber": 9,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:45:13Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 119,
+      "setNumber": 2,
+      "gameNumber": 9,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:45:45Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 120,
+      "setNumber": 2,
+      "gameNumber": 9,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T12:46:11Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 121,
+      "setNumber": 2,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:48:21Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 122,
+      "setNumber": 2,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:48:51Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 123,
+      "setNumber": 2,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:49:41Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 124,
+      "setNumber": 2,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:50:30Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 125,
+      "setNumber": 2,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:51:13Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 126,
+      "setNumber": 2,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:51:41Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 127,
+      "setNumber": 2,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        }
+      },
+      "timestamp": "2026-10-14T12:52:23Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 128,
+      "setNumber": 2,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 2,
+            "team": "A",
+            "score": 4,
+            "tieBreakScore": null
+          },
+          {
+            "setNumber": 2,
+            "team": "B",
+            "score": 6,
+            "tieBreakScore": null
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T12:53:06Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 129,
+      "setNumber": 3,
+      "gameNumber": 1,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:55:38Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 130,
+      "setNumber": 3,
+      "gameNumber": 1,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T12:56:14Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 131,
+      "setNumber": 3,
+      "gameNumber": 1,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T12:56:37Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 132,
+      "setNumber": 3,
+      "gameNumber": 1,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T12:56:56Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 133,
+      "setNumber": 3,
+      "gameNumber": 2,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:57:42Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 134,
+      "setNumber": 3,
+      "gameNumber": 2,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T12:58:16Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 135,
+      "setNumber": 3,
+      "gameNumber": 2,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:58:53Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 136,
+      "setNumber": 3,
+      "gameNumber": 2,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T12:59:27Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 137,
+      "setNumber": 3,
+      "gameNumber": 2,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:00:00Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 138,
+      "setNumber": 3,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:00:39Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 139,
+      "setNumber": 3,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T13:01:00Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 140,
+      "setNumber": 3,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:01:34Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 141,
+      "setNumber": 3,
+      "gameNumber": 3,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T13:02:12Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 142,
+      "setNumber": 3,
+      "gameNumber": 4,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:04:17Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 143,
+      "setNumber": 3,
+      "gameNumber": 4,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:04:39Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 144,
+      "setNumber": 3,
+      "gameNumber": 4,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:05:03Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 145,
+      "setNumber": 3,
+      "gameNumber": 4,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T13:05:37Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 146,
+      "setNumber": 3,
+      "gameNumber": 4,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:06:17Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 147,
+      "setNumber": 3,
+      "gameNumber": 4,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T13:06:44Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 148,
+      "setNumber": 3,
+      "gameNumber": 5,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:07:37Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 149,
+      "setNumber": 3,
+      "gameNumber": 5,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T13:08:08Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 150,
+      "setNumber": 3,
+      "gameNumber": 5,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:08:36Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 151,
+      "setNumber": 3,
+      "gameNumber": 5,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T13:08:57Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 152,
+      "setNumber": 3,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T13:12:44Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 153,
+      "setNumber": 3,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T13:13:01Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 154,
+      "setNumber": 3,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:13:32Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 155,
+      "setNumber": 3,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:13:53Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 156,
+      "setNumber": 3,
+      "gameNumber": 6,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:14:26Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 157,
+      "setNumber": 3,
+      "gameNumber": 7,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:15:16Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 158,
+      "setNumber": 3,
+      "gameNumber": 7,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:15:47Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 159,
+      "setNumber": 3,
+      "gameNumber": 7,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T13:16:07Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 160,
+      "setNumber": 3,
+      "gameNumber": 7,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:16:44Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 161,
+      "setNumber": 3,
+      "gameNumber": 7,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:17:20Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 162,
+      "setNumber": 3,
+      "gameNumber": 7,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T13:17:45Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 163,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:19:31Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 164,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T13:20:11Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 165,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T13:20:43Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 166,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:21:25Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 167,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:22:07Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 168,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:22:44Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 169,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        }
+      },
+      "timestamp": "2026-10-14T13:23:38Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 170,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:24:12Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 171,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        }
+      },
+      "timestamp": "2026-10-14T13:24:47Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 172,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:25:16Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 173,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "A"
+        }
+      },
+      "timestamp": "2026-10-14T13:26:05Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 174,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:26:34Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 175,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:27:05Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 176,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:27:25Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 177,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:27:50Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 178,
+      "setNumber": 3,
+      "gameNumber": 8,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:28:11Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 179,
+      "setNumber": 3,
+      "gameNumber": 9,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T13:29:08Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 180,
+      "setNumber": 3,
+      "gameNumber": 9,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T13:29:58Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 181,
+      "setNumber": 3,
+      "gameNumber": 9,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:30:22Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 182,
+      "setNumber": 3,
+      "gameNumber": 9,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:31:17Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 183,
+      "setNumber": 3,
+      "gameNumber": 9,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T13:31:41Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 184,
+      "setNumber": 3,
+      "gameNumber": 9,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T13:32:19Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 185,
+      "setNumber": 3,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:34:32Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 186,
+      "setNumber": 3,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:35:03Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 187,
+      "setNumber": 3,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T13:35:32Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 188,
+      "setNumber": 3,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:36:18Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 189,
+      "setNumber": 3,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:36:45Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 190,
+      "setNumber": 3,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:37:29Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 191,
+      "setNumber": 3,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "A",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:38:18Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 192,
+      "setNumber": 3,
+      "gameNumber": 10,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:39:05Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 193,
+      "setNumber": 3,
+      "gameNumber": 11,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "0",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:39:51Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 194,
+      "setNumber": 3,
+      "gameNumber": 11,
+      "server": "B",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "15"
+        }
+      },
+      "timestamp": "2026-10-14T13:40:21Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 195,
+      "setNumber": 3,
+      "gameNumber": 11,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "30"
+        }
+      },
+      "timestamp": "2026-10-14T13:40:49Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 196,
+      "setNumber": 3,
+      "gameNumber": 11,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "40"
+        }
+      },
+      "timestamp": "2026-10-14T13:41:16Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 197,
+      "setNumber": 3,
+      "gameNumber": 11,
+      "server": "B",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "G"
+        }
+      },
+      "timestamp": "2026-10-14T13:41:43Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 198,
+      "setNumber": 3,
+      "gameNumber": 12,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "15",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T13:43:38Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 199,
+      "setNumber": 3,
+      "gameNumber": 12,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "30",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T13:44:28Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 200,
+      "setNumber": 3,
+      "gameNumber": 12,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "40",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T13:44:58Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 201,
+      "setNumber": 3,
+      "gameNumber": 12,
+      "server": "A",
+      "pointWinner": "A",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "G",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T13:45:36Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 202,
+      "setNumber": 3,
+      "gameNumber": 13,
+      "server": "",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "1",
+          "teamBScore": "0"
+        }
+      },
+      "timestamp": "2026-10-14T13:46:18Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 203,
+      "setNumber": 3,
+      "gameNumber": 13,
+      "server": "",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "1",
+          "teamBScore": "1"
+        }
+      },
+      "timestamp": "2026-10-14T13:47:04Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 204,
+      "setNumber": 3,
+      "gameNumber": 13,
+      "server": "",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "2",
+          "teamBScore": "1"
+        }
+      },
+      "timestamp": "2026-10-14T13:47:45Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 205,
+      "setNumber": 3,
+      "gameNumber": 13,
+      "server": "",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "2",
+          "teamBScore": "2"
+        }
+      },
+      "timestamp": "2026-10-14T13:48:14Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 206,
+      "setNumber": 3,
+      "gameNumber": 13,
+      "server": "",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "2",
+          "teamBScore": "3"
+        }
+      },
+      "timestamp": "2026-10-14T13:48:33Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 207,
+      "setNumber": 3,
+      "gameNumber": 13,
+      "server": "",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "2",
+          "teamBScore": "4"
+        }
+      },
+      "timestamp": "2026-10-14T13:49:03Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 208,
+      "setNumber": 3,
+      "gameNumber": 13,
+      "server": "",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "3",
+          "teamBScore": "4"
+        }
+      },
+      "timestamp": "2026-10-14T13:49:49Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 209,
+      "setNumber": 3,
+      "gameNumber": 13,
+      "server": "",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "3",
+          "teamBScore": "5"
+        }
+      },
+      "timestamp": "2026-10-14T13:50:19Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 210,
+      "setNumber": 3,
+      "gameNumber": 13,
+      "server": "",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "3",
+          "teamBScore": "6"
+        }
+      },
+      "timestamp": "2026-10-14T13:50:45Z",
+      "scoreInferredPointWinner": "B"
+    },
+    {
+      "pointNumber": 211,
+      "setNumber": 3,
+      "gameNumber": 13,
+      "server": "",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "4",
+          "teamBScore": "6"
+        }
+      },
+      "timestamp": "2026-10-14T13:51:21Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 212,
+      "setNumber": 3,
+      "gameNumber": 13,
+      "server": "",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "5",
+          "teamBScore": "6"
+        }
+      },
+      "timestamp": "2026-10-14T13:51:57Z",
+      "scoreInferredPointWinner": "A"
+    },
+    {
+      "pointNumber": 213,
+      "setNumber": 3,
+      "gameNumber": 13,
+      "server": "",
+      "pointWinner": "B",
+      "scoreAfterPoint": {
+        "sets": [
+          {
+            "setNumber": 3,
+            "team": "A",
+            "score": 6,
+            "tieBreakScore": 5
+          },
+          {
+            "setNumber": 3,
+            "team": "B",
+            "score": 7,
+            "tieBreakScore": 7
+          }
+        ],
+        "gameScore": {
+          "teamAScore": "5",
+          "teamBScore": "7"
+        }
+      },
+      "timestamp": "2026-10-14T13:52:47Z",
+      "scoreInferredPointWinner": "B"
+    }
+  ]
+}

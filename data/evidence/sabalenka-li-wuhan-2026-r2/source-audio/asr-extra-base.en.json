@@ -1,0 +1,34 @@
+{
+  "model": "base.en",
+  "engine": "faster-whisper 1.2.1",
+  "method": "independent ASR, full source window, word timestamps; no human listening claimed",
+  "language": "en",
+  "compute_type": "int8",
+  "clips": [
+    {
+      "key": "wsc-13-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-13-00.mp4",
+      "source_sha256": "9d60cd7ede9d4a0687abec3fc6538abcbac4dd146eb4d9d69c2809f4b998b73d",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/957c661d-57a2-47bb-979e-850958eb2a6d.mp4",
+      "window_start": 0,
+      "window_end": 14.96,
+      "segments": [
+        {
+          "start": 2.6599999999999997,
+          "end": 4.06,
+          "text": " You",
+          "avg_logprob": -1.0771510899066925,
+          "no_speech_prob": 0.3440970182418823,
+          "words": [
+            {
+              "word": " You",
+              "start": 2.6599999999999997,
+              "end": 4.06,
+              "probability": 0.004141613375395536
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

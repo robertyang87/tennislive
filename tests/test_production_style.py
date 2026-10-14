@@ -23,6 +23,16 @@ def test_night_session_opening_needs_no_clock():
     assert opening_context_problem(opening) is None
 
 
+@pytest.mark.parametrize('date', ['十月十四日', '十月十四号', '10月14日'])
+def test_date_followed_by_evening_is_a_natural_daypart(date):
+    assert opening_context_problem(f'北京时间{date}晚，武汉第二轮。') is None
+
+
+@pytest.mark.parametrize('suffix', ['，武汉第二轮。', '，晚些时候登场。', '晚些时候登场。'])
+def test_a_date_or_later_wording_does_not_supply_an_evening_slot(suffix):
+    assert opening_context_problem('北京时间十月十四日' + suffix) == '没有已核实的开球时段'
+
+
 @pytest.mark.parametrize('text, problem', [
     ('十月五号夜场，中网第三轮。', '没有北京时间口径'),
     ('北京时间夜场，中网第三轮。', '没有比赛日期'),

@@ -13602,7 +13602,10 @@ def ass_row_size(shown: str, index: int) -> int:
     其余都是主读行（`_ASS_SIZE`，行内的数字和西文被 `_ass_text` 放大到
     `_ASS_NUM_SIZE`）。
     """
-    return (_ASS_BILINGUAL_EN_SIZE if is_bilingual_cue(shown) and index == 0
+    rows = shown.split("\n")
+    source_row = (is_bilingual_cue(shown) and 0 <= index < len(rows)
+                  and not re.search(r"[\u3400-\u9fff]", rows[index]))
+    return (_ASS_BILINGUAL_EN_SIZE if source_row
             else _ASS_SIZE)
 
 
@@ -13667,7 +13670,8 @@ def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
             # 英文行不用 `_ass_text`：它会把每个拉丁词重新放大到 78px，外面套
             # 一个小字号也会被里面的标签逐词覆盖。中文行仍走原逻辑，数字照常
             # 放大；末尾还原 68px，避免样式泄到下一行。
-            return ([en_row(rows[0])] + [_ass_text(row) for row in rows[1:]])
+            return [(_ass_text(row) if re.search(r"[\u3400-\u9fff]", row)
+                     else en_row(row)) for row in rows]
         return [_ass_text(row) for row in rows]
 
     # 双语那一档下锚（`\\an2` ＋ 底边距），别的照旧走样式里的上锚（MarginV=0

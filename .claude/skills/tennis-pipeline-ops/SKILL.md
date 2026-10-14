@@ -5334,3 +5334,11 @@ render 那一趟判定 ok 时照旧装 faster-whisper、恢复模型缓存，只
 - **反查比赛按整词、分两边**：`tennislive.names.pair_fits`（flashscore 和 WTA 接口两处 `find_match` 共用）。原来是子串 `"wang" in "sawangkaew joint"`，两个人同姓时把统计配到了别的比赛；现在传全名，「Xiyu」和「Xinyu」靠名字分开
 
 判据 `tests/test_release_source.py`、`tests/test_source_asr.py`、`tests/test_name_match.py`。
+
+**转写拿回来之后**（`data/source_asr/<视频 id>/` 落库，见上），写 spec 时用 `tools/asr_plan.py`，不再对着两份转写用眼睛排：
+
+    python3 tools/asr_plan.py gaps --video-id <id> --from 0 --to 300      # 哪几截没有英文解说，能放中文旁白
+    python3 tools/asr_plan.py check --spec specs/reels/<slug>.json        # 配音窗口里的英文／切断的句子／没配字幕的英文，一次全报
+    python3 tools/asr_plan.py write-review --spec specs/reels/<slug>.json # check 全过才写审听包和索引（method: asr_cross_checked）
+
+两档各自按逐词时间码切句：**两档都看到的才算硬伤**，只有一档看到的只报（那正是要对一下原话的地方）；单档低置信的句子按疑似幻听不算。判据 `tests/test_asr_plan.py`（拿真转写和已过审听闸的 spec，三类硬伤各拆一处，生成的审听包要过真的 `foreground_audio_gate`）。

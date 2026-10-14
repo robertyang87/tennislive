@@ -14,5 +14,20 @@
   },
   "correct_locked_version_asr_run": 38599894781,
   "verified_at": "2026-10-14T16:45:17.813019+00:00",
-  "method": "Actual GitHub release asset digests, local full source SHA, and raw recognizer source SHA; no PCM or gain comparison."
+  "method": "Actual GitHub release asset digests, local full source SHA, and raw recognizer source SHA; no PCM or gain comparison.",
+  "canonical_asr_merge_resolution": {
+    "main_commit": "5d6300b2f0c1ef3b6771486eac74585faf69149f",
+    "canonical_source_sha256": "8df0bf5cd648009b929f44a76923e0709f265c7f865c9456be1aa129790287ed",
+    "policy": "Preserve concurrent main canonical ASR cache for its actual8df source. Current reel complete reviewedf09 raw transcripts remain independently committed under data/evidence/medvedev-tsitsipas-shanghai-2026-r4/audio/raw/native-f09/ and are the indexed audio review basis. Never use8df canonical ASR asf09 proof.",
+    "canonical_files": [
+      {
+        "path": "data/source_asr/B8EO9eKy-mY/small.en.json",
+        "sha256": "56de01e46f13b4df422a305f50859f2eb782c24b272e8e30236731288997531d"
+      },
+      {
+        "path": "data/source_asr/B8EO9eKy-mY/medium.en.json",
+        "sha256": "ef66bd8f133d1449004fef1bd7785e2b38cb2b08560c85eb46b0aefea443b1fe"
+      }
+    ]
+  }
 }

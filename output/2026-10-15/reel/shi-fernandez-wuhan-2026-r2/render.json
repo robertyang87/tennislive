@@ -1,0 +1,100 @@
+{
+  "scoreboard_qc_sha256": "893939f84bcc90aa91761f17d021cb9c6dce0c3dacb0f8c9040c021fff461f3b",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "f3bd88a6fe5451cf10a7a637dac60ab510207fdbfa1ed80a089d710ed3854705",
+    "request_count": 9,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-shi-fernandez-wuhan-2026-r2-f3bd88a6fe5451cf",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-shi-fernandez-wuhan-2026-r2-f3bd88a6fe5451cf/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38611022255"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.602,
+  "layout": "full",
+  "segments_seconds": 186.25,
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 第二轮",
+    "line2": "费尔南德斯 6-3 6-4 施晗",
+    "start": 1.2,
+    "end": 187.45
+  },
+  "film_seconds": 192.08,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 4.2,
+    "2": 10.704,
+    "4": 5.4,
+    "6": 6.936,
+    "7": 5.544,
+    "10": 11.88,
+    "13": 12.024,
+    "14": 11.496
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "d1ca65bdec43a65b77b2f7e82f0089b1f565df8ace7eabc1fc5e91c4a27594f3",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "shi-fernandez-wuhan-2026-r2",
+    "received_at": "2026-10-14T17:03:39Z",
+    "artifact_ready_at": "2026-10-14T18:08:10Z",
+    "elapsed_seconds": 3871.106,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "31e94cff931ac294a640f9ef710ef07140bd31e5739ad61127d6abdcd747db71",
+    "spec_sha256": "73b6c14ab2720ff87d4a904878e96210cb5a51dcfe03c9509c1e7e6fd5c383e2",
+    "request_received_at": "2026-10-14T17:03:39Z",
+    "request_to_artifact_seconds": 3871.106,
+    "run_id": "38611022255",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-14T18:02:07Z",
+        "run_id": "38611022255"
+      }
+    ],
+    "render_seconds": 363.106,
+    "pre_render_seconds": 3508.0
+  },
+  "film_sha256": "31e94cff931ac294a640f9ef710ef07140bd31e5739ad61127d6abdcd747db71",
+  "film_bytes": 61448726,
+  "qc_attestation_sha256": "0d7abe0a246973fcc1c436b328edb40b0559b54d006596f8cd28594ae3892485",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-14T18:02:07Z",
+      "run_id": "38611022255"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-14T18:08:17Z",
+      "run_id": "38611022255"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shi-fernandez-wuhan-2026-r2/shi-fernandez-wuhan-2026-r2.mp4",
+  "video_bytes": 61448726
+}

@@ -1,0 +1,51 @@
+{
+  "status": "source_and_existing_native_preview_editorial_comparison_only",
+  "recommendation": "Use source21[14.40,21.30] cold-open, retain full same-point replay in body",
+  "reason": "Current native cold24 first preview frame cuts Fernandez face at fixed-center right edge; proposed source21 places Shi central during final attacking stroke and then fist/face closeup. Better matches user Shi-focused regret angle.",
+  "viewed_native_preview": "/workspace/scratch/shi-han-tT-88xPj-ZI/caption-preview-cloud-final/contact-native-preview.jpg",
+  "viewed_candidate_contact": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/cold21-review/fixed-center-contact.jpg",
+  "candidate_frames": [
+    {
+      "source_time": 14.4,
+      "path": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/cold21-review/source21-14.40.png"
+    },
+    {
+      "source_time": 15.3,
+      "path": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/cold21-review/source21-15.30.png"
+    },
+    {
+      "source_time": 16.9,
+      "path": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/cold21-review/source21-16.90.png"
+    },
+    {
+      "source_time": 17.7,
+      "path": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/cold21-review/source21-17.70.png"
+    },
+    {
+      "source_time": 18.5,
+      "path": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/cold21-review/source21-18.50.png"
+    },
+    {
+      "source_time": 20.7,
+      "path": "/workspace/scratch/shi-han-tT-88xPj-ZI/source-review/cold21-review/source21-20.70.png"
+    }
+  ],
+  "source_sha256": "db381fc308bd14c6906947ef9a6792e5d68d322337c3a2ed01cbc06643d87a33",
+  "word_evidence": {
+    "Not quite yet": {
+      "earliest_start": 16.5,
+      "latest_end": 17.94
+    },
+    "She continues to blast away": {
+      "earliest_start": 18.46,
+      "latest_end": 20.06
+    }
+  },
+  "correction_to_previous_packet": "Prior sentence partition17.64 preceded latest actual yet ending17.94; update first utterance/cue end17.94 and next start18.46, retaining rawASR.",
+  "limitations": [
+    "Candidate is an actual source-frame centered crop comparison; candidate native overlay/composite not rendered in these pictures.",
+    "Opens during point14.4, full serve/rally not included in cold-open. Whole-point body replay required; do not label this cold-open complete point.",
+    "No human listening, no final-movie approval, no spec or frozen narration change made."
+  ],
+  "reviewed_at": "2026-10-14T17:43:57.967854+00:00"
+}

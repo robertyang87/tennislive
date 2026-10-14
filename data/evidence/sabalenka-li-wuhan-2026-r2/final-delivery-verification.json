@@ -1,0 +1,41 @@
+{
+  "schema": "tennislive.final-delivery-verification.v1",
+  "checked_at": "2026-10-14T15:26:48.901739+00:00",
+  "native_run_id": 38588031709,
+  "native_run_number": 2789,
+  "native_head_sha": "edd816f6c52de8f10e3985d1431a80ed8ec46e77",
+  "film_sha256": "803323c84e71a0328e425c481cee9432e8b3245d016a3bb5f59ad11c917740d0",
+  "native_archive_integrity": "verified by compose_native_reel.verify_native_archive, all declared files actual SHA256",
+  "release_movie_matches_native_archive": true,
+  "current_spec_matches_render_inputs": true,
+  "native_qc_status": "pass",
+  "duration_seconds": 219.72,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "framing": "fixed_center_crop_all_match_segments",
+  "loudness_or_gain_tests": "not performed, removed by owner",
+  "voice_identity_report": "data/evidence/sabalenka-li-wuhan-2026-r2/final-voice-binding.json",
+  "publication_status": "native movie/voice/cover verified; independent final visual review finds no new blocker; current-head CI and merge/committed WeChat receipt remain required",
+  "actual_cover_review": {
+    "method": "Current assistant visually inspected actual canonical native poster.jpg; Sabalenka face visible, open eyes, headline and winner-first score legible",
+    "poster_sha256": "125ddb1cb39b7e05b990b0d5b7d237d6745007f3bcd5ce2412e805df0f38b588",
+    "findings": []
+  },
+  "additional_actual_film_review": {
+    "method": "Current assistant viewed actual Release movie frames at110.0s and207.0s, beyond the separate pre-encode preview",
+    "frames": [
+      {
+        "time": 110,
+        "sha256": "d2190579089c7c4198c7c23eb9bb433765f0261b2cdf36624cca354da8521f49"
+      },
+      {
+        "time": 207,
+        "sha256": "f65930e8f2e483d10505d6b9fed01a0c16e5efb0ff2170f1360b0c0388bcbbbf"
+      }
+    ],
+    "findings": [],
+    "notes": "Actual footage fills the 1080x1440 canvas with fixed centred crop; MATCH POINT #3 and both native score rows legible. Extreme left player edge clipping follows disclosed user directive. Actual full-canvas final statistics are legible and match official 31/28 vs36/44 winner/UE facts."
+  }
+}

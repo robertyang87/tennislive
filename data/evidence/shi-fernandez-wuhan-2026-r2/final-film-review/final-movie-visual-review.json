@@ -1,0 +1,136 @@
+{
+  "status": "pass_no_new_visual_blocker_with_declared_fixed_center_crop_tradeoff",
+  "reviewed_at": "2026-10-14T18:11:40.341313+00:00",
+  "reviewer": "Codex source_review independent final encoded movie visual review",
+  "run_id": 38611022255,
+  "code_sha": "335526e81f61b53fc0231bc586084929971a640b",
+  "film": {
+    "path": "/workspace/scratch/shi-han-tT-88xPj-ZI/final-native/shi-fernandez-wuhan-2026-r2.mp4",
+    "sha256": "31e94cff931ac294a640f9ef710ef07140bd31e5739ad61127d6abdcd747db71",
+    "bytes": 61448726,
+    "codec": "h264",
+    "dimensions": [
+      1080,
+      1440
+    ],
+    "fps": "25/1",
+    "duration_seconds": 192.08
+  },
+  "binding": {
+    "render_inputs_sha256": "d1ca65bdec43a65b77b2f7e82f0089b1f565df8ace7eabc1fc5e91c4a27594f3",
+    "spec_sha256": "73b6c14ab2720ff87d4a904878e96210cb5a51dcfe03c9509c1e7e6fd5c383e2",
+    "native_audio_review_binding_sha256": "79b8f3e6eea2c30e17b43325d4a091c6de916ef0e508b6ad46eba70c69d30003",
+    "root_frame_manifest": {
+      "path": "/workspace/scratch/shi-han-tT-88xPj-ZI/final-native/actual-film-frames/manifest.json",
+      "sha256": "ac28b5d0c26b6fdba00c4b01fde2ebba5444bd655547f60a35d5f642fbcf3dc7",
+      "frames": 25
+    },
+    "independent_extra_frame_manifest": {
+      "path": "/workspace/scratch/shi-han-tT-88xPj-ZI/final-native/independent-review-frames/manifest.json",
+      "sha256": "b4c9bd089c575684f8ae27c055733f3a1c519e3d5988aa8d1222ed756c54fb8e",
+      "frames": 15
+    }
+  },
+  "method": "Viewed actual final encoded H264 MP4 frame contact sheets:25 root-extracted actual-film frames4 pages, plus15 independently decoded actual-film PNGs2 pages at native audio_review_binding timeline offsets. Matched official-source window/action evidence from prior source review; actual movie timeline used, not nominal pre-TTS estimates. Verified actual movie SHA and all40 sampled PNG SHA matches. No spec edits, no source gain/loudness scan.",
+  "checks": [
+    {
+      "item": "cold_open_and_subject",
+      "status": "pass",
+      "evidence_film_seconds": [
+        1.6,
+        2.3,
+        4.5,
+        5.0,
+        6.2
+      ],
+      "observation": "Cold-open uses source21 attack ending and Shi fist/face closeup. Main actor visible in sampled center crop; caption Not quite yet and She continues to blast away readable. Cold-open is an explicitly partial-point teaser, whole point is replayed in body."
+    },
+    {
+      "item": "retained_points_and_actions",
+      "status": "pass_with_spatial_limit",
+      "evidence_film_seconds": [
+        33.7,
+        44.6,
+        57.8,
+        63.3,
+        64.3,
+        66.1,
+        92.6,
+        110.9,
+        112.0,
+        132.6,
+        136.85
+      ],
+      "observation": "First-set point reaches player reaction44.6; second-set drop-shot chase63.3 followed by result64.3 and closeup66.1; later Shi forward attack110.9 reaches completed point112.0. Final serve132.6 and completed match point136.85 precede celebration/handshake. Whole selected main point windows retain temporal endings. Original source evidence remains required for full rally continuity; fixed crop does not preserve all wide-side strokes."
+    },
+    {
+      "item": "bilingual_captions_and_two_line_cards",
+      "status": "pass",
+      "evidence_film_seconds": [
+        4.5,
+        6.2,
+        10.6,
+        18.5,
+        48.0,
+        64.3,
+        70.3,
+        78.0,
+        92.6,
+        96.9,
+        112.9,
+        123.7,
+        145.3,
+        152.85,
+        155.0,
+        158.15,
+        164.95
+      ],
+      "observation": "Actual long English four-all sentence breaks into readable English lines above one Chinese line, kept below the subject face. Short quotes and ending multi-clause captions remain within canvas. Reviewed title cards stay two main lines with separate narration line; no new clipping or overlapping lanes in sampled frames. No erroneous five-one sentence appears in retained source windows."
+    },
+    {
+      "item": "dynamic_scoreboard_and_matchpoint_header",
+      "status": "pass",
+      "evidence_film_seconds": [
+        131.0,
+        132.6,
+        136.85,
+        138.8,
+        139.12,
+        139.32
+      ],
+      "source_mapping": "segment11 offset130.20; source24 header/body source8.60/8.88/8.92 transitions",
+      "observation": "MATCH POINT #2 is visible with complete body at131.0 and132.6, showing Shi4 vs Fernandez5 and30-40.138.8 depicts native wipe residual without a full search-rectangle patch;139.12 corresponding source8.92 and139.32 stable follow-up show no board patch. Separate body/header shape preserved in sampled encoded frames."
+    },
+    {
+      "item": "ending_payoff_handshakes_acknowledgement",
+      "status": "pass",
+      "evidence_film_seconds": [
+        145.3,
+        145.55,
+        147.55,
+        152.85,
+        155.0,
+        158.15
+      ],
+      "observation": "Both players handshake visible145.3/145.55. Umpire hand interaction visible147.55 in second retained source window; subsequent winner acknowledgement and final five games/Sweet Sixteen/WTA1000 subtitles present. Error sentence source16.98–19.98 removed as complete gap; there is no audio-muting or false continuous-time claim."
+    },
+    {
+      "item": "statistics_and_outro",
+      "status": "pass",
+      "evidence_film_seconds": [
+        177.45,
+        183.45,
+        190.08
+      ],
+      "observation": "Statistics page shows Shi3-6,4-6, winners14/15, UE23/13 andBP1/8 vs3/4; two samples have stable layout. Branded outro fills canvas with readable slogan."
+    }
+  ],
+  "new_visual_blockers": [],
+  "limitations": [
+    "Sampled encoded-frame review, not continuous frame-by-frame viewing of all192.08seconds.",
+    "Approved fixed centered full-bleed3:4 crop can put lateral strokes or an opponent at source edges out of frame. This is preserved owner choice; report does not assert complete spatial visibility of every player/ball/racket.",
+    "No independent human listening or full-movie acoustic review claimed; subtitle word identity/timing uses existing actual source ASR and native binding evidence.",
+    "No model-based face identity/face-detection pass claimed; player identities are anchored to official source provenance and scoreboards.",
+    "Source review and pre-encode preview are supporting evidence only; this report is bound to the actual final H264 SHA above."
+  ]
+}

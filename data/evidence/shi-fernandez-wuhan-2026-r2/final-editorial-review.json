@@ -1,0 +1,157 @@
+{
+  "slug": "shi-fernandez-wuhan-2026-r2",
+  "reviewed_at_utc": "2026-10-14T17:58:45.264345+00:00",
+  "reviewer": "facts_editorial",
+  "decision": "pass_final_editorial_scope",
+  "repo_head": "335526e81f61b53fc0231bc586084929971a640b",
+  "render_run": "38611022255",
+  "spec_sha256": "73b6c14ab2720ff87d4a904878e96210cb5a51dcfe03c9509c1e7e6fd5c383e2",
+  "xhs_sha256": "e2ef1d44249b5f196743eb03e60337f3dd8ab883d335a6b993c7857b1c9d278e",
+  "scope": "只读复核当前最终spec全部对外正文、editorial、push、xhs及已核官方事实与原源画面映射；不改spec、声音或冻结资产，不替代实际成片QC。",
+  "blocking_findings": [],
+  "owner_angle": {
+    "verbatim": "有点遗憾，可能还是实力有差距",
+    "interpretation": "保留遗憾和不确定口径；将可核结论限定为本场关键分兑现、失误控制等具体表现差距，不宣称单场统计证明双方全面实力、永久上限或心理问题。",
+    "supported_by": [
+      {
+        "metric": "制胜分",
+        "shi": 14,
+        "fernandez": 15,
+        "official_field": "teamA/teamB.matchTotal.shotStats.winnersTotal",
+        "editorial_use": "主动得分能力在这场并非全无机会，给失利中的具体进攻表现留出真实空间。只看数量不能等同全面攻击水平。"
+      },
+      {
+        "metric": "非受迫失误",
+        "shi": 23,
+        "fernandez": 13,
+        "difference": 10,
+        "official_field": "teamA/teamB.matchTotal.shotStats.unforcedErrorsTotal",
+        "editorial_use": "施晗本场比对手多10次非受迫失误，支持失误控制存在差距；不据此诊断紧张、崩溃、体能不足或长期技战术缺陷。"
+      },
+      {
+        "metric": "破发点兑现",
+        "shi": {
+          "converted": 1,
+          "chances": 8,
+          "percent": 12.5
+        },
+        "fernandez": {
+          "converted": 3,
+          "chances": 4,
+          "percent": 75
+        },
+        "official_field": "setnum0 breakptsconv[a/b]/breakptsplayed[a/b]",
+        "editorial_use": "关键机会处理的本场结果差别；结合真实4-1时错过3BP、4-3错过2BP解释领先如何失去。8与4次样本只支持本场描述，不当稳定能力估计。"
+      }
+    ],
+    "context_and_counterweights": [
+      "施晗曾次盘3-0、4-1领先，说明本场存在真实竞争机会。",
+      "本周两场资格赛和正赛首轮共3胜，不能写成从未打出进步或资格赛3胜。",
+      "费尔南德斯双误7次对施晗2次、二发得分率41.7%对50%；数据不支持费尔南德斯所有技术环节都占优。",
+      "世界排名217对25提供对手层级坐标，不直接用作全面实力结论。"
+    ],
+    "where_implemented": {
+      "spec_editorial_human_context": "明确承认具体差距、不硬写惜败或以排名判定全面技不如人。",
+      "narration_segments_7_10": "先讲4-1时3BP和4-3时先失2BP后救局点；再讲全场1/8与3/4。",
+      "narration_stat_payoff": "14/15制胜分、23/13UE事实数字，随后赢家下一轮及施晗守住优势的期待。",
+      "push_lead": "用关键分处理与失误控制上的差距限定分析。",
+      "xhs_paragraph3": "14/15说明并非没有进攻机会；23/13与1/8对3/4支持本场具体差距。"
+    },
+    "not_claimed": [
+      "全面技不如人",
+      "只是排名低所以输",
+      "所有发球指标都不如对手",
+      "惜败或只差一分赢下整场",
+      "心理崩溃或被打怕",
+      "长期实力已经被这一场证明"
+    ]
+  },
+  "checks": [
+    {
+      "id": "identity_time_rank",
+      "status": "pass",
+      "detail": "武汉2026 LS030第二轮，10/14北京时间22:11首分23:47末分，深夜；施217、费25，施3-6 4-6。"
+    },
+    {
+      "id": "progression",
+      "status": "pass",
+      "detail": "首盘3-3到3-6；次盘3-0/4-1到4-6连丢5局。第6局三个BP、第8局两个BP的叙述均在正确局分。"
+    },
+    {
+      "id": "g8_chronology",
+      "status": "pass",
+      "detail": "两个施BP发生点96/98，救费局点发生点100/102；新口播明确先错过BP再救局点，随后未拿下此局，顺序准确。"
+    },
+    {
+      "id": "card_scene_order",
+      "status": "pass",
+      "detail": "次盘首局前压追小球的动作与source14一致；source20在4-1平分、是失去3BP之后的回合；source21为4-3救费局点。卡片可说明缺失BP，不把这些原声回合冒称为BP。"
+    },
+    {
+      "id": "cold_open",
+      "status": "pass_fact_scope",
+      "detail": "改用source21尾段施晗救局点后握拳，真实同场施晗视角；未配虚构动作旁白或把这分冒充赢球。只是回合尾段预告，不声称完整冷开场回合。"
+    },
+    {
+      "id": "ending",
+      "status": "pass_fact_scope",
+      "detail": "source24最终第2赛点、握手/致意；错误5-1原声句约16.98-19.98继续排除，官方4-1口径正确。"
+    },
+    {
+      "id": "stats_orientation",
+      "status": "pass",
+      "detail": "统计A施B费，原始stats、advanced字段和头像身份注记均一致。施旧北京比赛近景仅作统计卡头像，明确非本场比赛画面或封面。"
+    },
+    {
+      "id": "cover_identity",
+      "status": "pass_metadata_scope",
+      "detail": "现已换武汉官方本场图集1486摄影原图；图库10/15凌晨发布与比赛10/14深夜并不矛盾。具体眼睛/裁切/画质仍由封面与最终像素QC核。"
+    },
+    {
+      "id": "copy_consistency",
+      "status": "pass",
+      "detail": "cover/editorial hook改数字5，对应口播五；push与xhs写最终连输五局，不误读从4-3才连输五局。"
+    },
+    {
+      "id": "week_context_next_round",
+      "status": "pass",
+      "detail": "2场资格赛+1场正赛共3胜；赢家费下一轮奥斯塔彭科，官方LS015。"
+    },
+    {
+      "id": "narration_mirror",
+      "status": "pass",
+      "detail": "当前editorial.narration与segments实际8条旁白逐条相同，未留下旧顺序文案。"
+    }
+  ],
+  "prior_resolved_issues": [
+    "先救局点却又失2BP的错误时序已在原冻结前修正。",
+    "xhs随后连输五局已改最终连输五局。"
+  ],
+  "evidence": [
+    {
+      "path": "/workspace/tennislive-shi/specs/reels/shi-fernandez-wuhan-2026-r2.json",
+      "sha256": "73b6c14ab2720ff87d4a904878e96210cb5a51dcfe03c9509c1e7e6fd5c383e2"
+    },
+    {
+      "path": "/workspace/tennislive-shi/specs/reels/shi-fernandez-wuhan-2026-r2.xhs.txt",
+      "sha256": "e2ef1d44249b5f196743eb03e60337f3dd8ab883d335a6b993c7857b1c9d278e"
+    },
+    {
+      "path": "/workspace/scratch/shi-han-tT-88xPj-ZI/facts-editorial/wta-advanced-stats.json",
+      "sha256": "4d3ed18b0adc72159afb9fb901c93394634501362d3212c63b6f542c230ad7c8"
+    },
+    {
+      "path": "/workspace/scratch/shi-han-tT-88xPj-ZI/facts-editorial/wta-stats.json",
+      "sha256": "445c6d38e3a92af1b19de59b1498fc8e63693afe21ee96d6e4e0cdfd46854b56"
+    },
+    {
+      "path": "/workspace/scratch/shi-han-tT-88xPj-ZI/facts-editorial/pbp-rebuilt.json",
+      "sha256": "b76567895b5f7caf258d85c963201af4c3e979c33a9819a6b6382a534041c423"
+    }
+  ],
+  "limitations": [
+    "未读取尚未完成的实际成片，不宣称最终画面、声音或发布QC通过。",
+    "本复核没有重新执行ASR或连续人工听审；原声英文完整性和新冻结音轨哈希由原生音频QC处理。",
+    "渲染过程中未改任何spec或声音资产。"
+  ]
+}

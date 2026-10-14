@@ -1,0 +1,1749 @@
+{
+  "model": "small.en",
+  "engine": "faster-whisper 1.2.1",
+  "method": "independent ASR, full source window, word timestamps; no human listening claimed",
+  "language": "en",
+  "compute_type": "int8",
+  "clips": [
+    {
+      "key": "wsc-29-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-29-00.mp4",
+      "source_sha256": "8682acab809a54fbeb21e4b9d0fe7510e6ee9789f2659bb34bc3ba1754792605",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/55429c9c-ae73-4044-a0b8-8c0784b9eb88.mp4",
+      "window_start": 0,
+      "window_end": 44.44,
+      "segments": [
+        {
+          "start": 6.62,
+          "end": 12.14,
+          "text": " And a tournament that has already produced headlines in its opening three days and Lee",
+          "avg_logprob": -0.2652819850321474,
+          "no_speech_prob": 0.4541575610637665,
+          "words": [
+            {
+              "word": " And",
+              "start": 6.62,
+              "end": 7.3,
+              "probability": 0.7329265475273132
+            },
+            {
+              "word": " a",
+              "start": 7.3,
+              "end": 7.42,
+              "probability": 0.9484980702400208
+            },
+            {
+              "word": " tournament",
+              "start": 7.42,
+              "end": 7.76,
+              "probability": 0.9938197731971741
+            },
+            {
+              "word": " that",
+              "start": 7.76,
+              "end": 8.12,
+              "probability": 0.9922646284103394
+            },
+            {
+              "word": " has",
+              "start": 8.12,
+              "end": 8.24,
+              "probability": 0.8728682994842529
+            },
+            {
+              "word": " already",
+              "start": 8.24,
+              "end": 8.54,
+              "probability": 0.9983970522880554
+            },
+            {
+              "word": " produced",
+              "start": 8.54,
+              "end": 8.92,
+              "probability": 0.9934617280960083
+            },
+            {
+              "word": " headlines",
+              "start": 8.92,
+              "end": 9.44,
+              "probability": 0.9941399097442627
+            },
+            {
+              "word": " in",
+              "start": 9.44,
+              "end": 9.98,
+              "probability": 0.9466875791549683
+            },
+            {
+              "word": " its",
+              "start": 9.98,
+              "end": 10.1,
+              "probability": 0.9664052128791809
+            },
+            {
+              "word": " opening",
+              "start": 10.1,
+              "end": 10.4,
+              "probability": 0.9959173798561096
+            },
+            {
+              "word": " three",
+              "start": 10.4,
+              "end": 10.66,
+              "probability": 0.988097608089447
+            },
+            {
+              "word": " days",
+              "start": 10.66,
+              "end": 11.02,
+              "probability": 0.9994931221008301
+            },
+            {
+              "word": " and",
+              "start": 11.02,
+              "end": 11.82,
+              "probability": 0.5851919651031494
+            },
+            {
+              "word": " Lee",
+              "start": 11.82,
+              "end": 12.14,
+              "probability": 0.8434199094772339
+            }
+          ]
+        },
+        {
+          "start": 12.14,
+          "end": 17.0,
+          "text": " produces the biggest of them all in all capital letters above the fold.",
+          "avg_logprob": -0.2652819850321474,
+          "no_speech_prob": 0.4541575610637665,
+          "words": [
+            {
+              "word": " produces",
+              "start": 12.14,
+              "end": 12.72,
+              "probability": 0.9855824708938599
+            },
+            {
+              "word": " the",
+              "start": 12.72,
+              "end": 13.0,
+              "probability": 0.9981971383094788
+            },
+            {
+              "word": " biggest",
+              "start": 13.0,
+              "end": 13.3,
+              "probability": 0.9992503523826599
+            },
+            {
+              "word": " of",
+              "start": 13.3,
+              "end": 13.5,
+              "probability": 0.9876289367675781
+            },
+            {
+              "word": " them",
+              "start": 13.5,
+              "end": 13.64,
+              "probability": 0.9982109069824219
+            },
+            {
+              "word": " all",
+              "start": 13.64,
+              "end": 13.92,
+              "probability": 0.9966559410095215
+            },
+            {
+              "word": " in",
+              "start": 13.92,
+              "end": 14.72,
+              "probability": 0.900941014289856
+            },
+            {
+              "word": " all",
+              "start": 14.72,
+              "end": 14.9,
+              "probability": 0.9970742464065552
+            },
+            {
+              "word": " capital",
+              "start": 14.9,
+              "end": 15.26,
+              "probability": 0.9870045781135559
+            },
+            {
+              "word": " letters",
+              "start": 15.26,
+              "end": 15.76,
+              "probability": 0.9995201826095581
+            },
+            {
+              "word": " above",
+              "start": 15.76,
+              "end": 16.36,
+              "probability": 0.9559399485588074
+            },
+            {
+              "word": " the",
+              "start": 16.36,
+              "end": 16.62,
+              "probability": 0.9967825412750244
+            },
+            {
+              "word": " fold.",
+              "start": 16.62,
+              "end": 17.0,
+              "probability": 0.9841296672821045
+            }
+          ]
+        },
+        {
+          "start": 20.06,
+          "end": 25.46,
+          "text": " Three time champion in Wuhan Arena Sabalenka loses her opening match at the hands of the",
+          "avg_logprob": -0.2652819850321474,
+          "no_speech_prob": 0.4541575610637665,
+          "words": [
+            {
+              "word": " Three",
+              "start": 19.78,
+              "end": 20.12,
+              "probability": 0.985088050365448
+            },
+            {
+              "word": " time",
+              "start": 20.12,
+              "end": 20.36,
+              "probability": 0.9776610136032104
+            },
+            {
+              "word": " champion",
+              "start": 20.36,
+              "end": 20.88,
+              "probability": 0.9969070553779602
+            },
+            {
+              "word": " in",
+              "start": 20.88,
+              "end": 21.12,
+              "probability": 0.9657026529312134
+            },
+            {
+              "word": " Wuhan",
+              "start": 21.12,
+              "end": 21.58,
+              "probability": 0.9374309380849203
+            },
+            {
+              "word": " Arena",
+              "start": 21.58,
+              "end": 21.96,
+              "probability": 0.33587270975112915
+            },
+            {
+              "word": " Sabalenka",
+              "start": 21.96,
+              "end": 22.74,
+              "probability": 0.4796537980437279
+            },
+            {
+              "word": " loses",
+              "start": 22.74,
+              "end": 23.3,
+              "probability": 0.9714003205299377
+            },
+            {
+              "word": " her",
+              "start": 23.3,
+              "end": 23.52,
+              "probability": 0.4596773684024811
+            },
+            {
+              "word": " opening",
+              "start": 23.52,
+              "end": 23.9,
+              "probability": 0.9991368651390076
+            },
+            {
+              "word": " match",
+              "start": 23.9,
+              "end": 24.2,
+              "probability": 0.9989151954650879
+            },
+            {
+              "word": " at",
+              "start": 24.2,
+              "end": 24.4,
+              "probability": 0.9917771816253662
+            },
+            {
+              "word": " the",
+              "start": 24.4,
+              "end": 24.52,
+              "probability": 0.9997202754020691
+            },
+            {
+              "word": " hands",
+              "start": 24.52,
+              "end": 24.8,
+              "probability": 0.9992726445198059
+            },
+            {
+              "word": " of",
+              "start": 24.8,
+              "end": 25.32,
+              "probability": 0.9983626008033752
+            },
+            {
+              "word": " the",
+              "start": 25.32,
+              "end": 25.46,
+              "probability": 0.9986522793769836
+            }
+          ]
+        },
+        {
+          "start": 25.46,
+          "end": 29.88,
+          "text": " The world number 30 for the biggest win in Ann Lee's career.",
+          "avg_logprob": -0.3431676364526516,
+          "no_speech_prob": 0.21377737820148468,
+          "words": [
+            {
+              "word": " The",
+              "start": 25.46,
+              "end": 25.46,
+              "probability": 0.14281518757343292
+            },
+            {
+              "word": " world",
+              "start": 25.46,
+              "end": 25.64,
+              "probability": 0.6801345944404602
+            },
+            {
+              "word": " number",
+              "start": 25.64,
+              "end": 25.98,
+              "probability": 0.8944442272186279
+            },
+            {
+              "word": " 30",
+              "start": 25.98,
+              "end": 26.4,
+              "probability": 0.7997758984565735
+            },
+            {
+              "word": " for",
+              "start": 26.4,
+              "end": 27.08,
+              "probability": 0.9063299298286438
+            },
+            {
+              "word": " the",
+              "start": 27.08,
+              "end": 27.22,
+              "probability": 0.9970327615737915
+            },
+            {
+              "word": " biggest",
+              "start": 27.22,
+              "end": 27.64,
+              "probability": 0.9933950304985046
+            },
+            {
+              "word": " win",
+              "start": 27.64,
+              "end": 28.02,
+              "probability": 0.9972568154335022
+            },
+            {
+              "word": " in",
+              "start": 28.02,
+              "end": 28.54,
+              "probability": 0.9825912117958069
+            },
+            {
+              "word": " Ann",
+              "start": 28.54,
+              "end": 28.72,
+              "probability": 0.5734379291534424
+            },
+            {
+              "word": " Lee's",
+              "start": 28.72,
+              "end": 29.06,
+              "probability": 0.6663999557495117
+            },
+            {
+              "word": " career.",
+              "start": 29.06,
+              "end": 29.88,
+              "probability": 0.9904020428657532
+            }
+          ]
+        },
+        {
+          "start": 35.1,
+          "end": 40.52,
+          "text": " Saba Leike handed just her second loss at the Wuhan Open as Ann Lee comes through needing",
+          "avg_logprob": -0.3431676364526516,
+          "no_speech_prob": 0.21377737820148468,
+          "words": [
+            {
+              "word": " Saba",
+              "start": 35.1,
+              "end": 35.78,
+              "probability": 0.6773123145103455
+            },
+            {
+              "word": " Leike",
+              "start": 35.78,
+              "end": 35.98,
+              "probability": 0.20805877819657326
+            },
+            {
+              "word": " handed",
+              "start": 35.98,
+              "end": 36.22,
+              "probability": 0.8111876249313354
+            },
+            {
+              "word": " just",
+              "start": 36.22,
+              "end": 36.48,
+              "probability": 0.9737128019332886
+            },
+            {
+              "word": " her",
+              "start": 36.48,
+              "end": 36.66,
+              "probability": 0.9952793121337891
+            },
+            {
+              "word": " second",
+              "start": 36.66,
+              "end": 37.04,
+              "probability": 0.9929338693618774
+            },
+            {
+              "word": " loss",
+              "start": 37.04,
+              "end": 37.48,
+              "probability": 0.9650951623916626
+            },
+            {
+              "word": " at",
+              "start": 37.48,
+              "end": 37.76,
+              "probability": 0.973656177520752
+            },
+            {
+              "word": " the",
+              "start": 37.76,
+              "end": 37.88,
+              "probability": 0.9835723042488098
+            },
+            {
+              "word": " Wuhan",
+              "start": 37.88,
+              "end": 38.2,
+              "probability": 0.9531035820643107
+            },
+            {
+              "word": " Open",
+              "start": 38.2,
+              "end": 38.5,
+              "probability": 0.5602312684059143
+            },
+            {
+              "word": " as",
+              "start": 38.5,
+              "end": 38.98,
+              "probability": 0.8022907972335815
+            },
+            {
+              "word": " Ann",
+              "start": 38.98,
+              "end": 39.26,
+              "probability": 0.8847202062606812
+            },
+            {
+              "word": " Lee",
+              "start": 39.26,
+              "end": 39.46,
+              "probability": 0.9543726444244385
+            },
+            {
+              "word": " comes",
+              "start": 39.46,
+              "end": 39.78,
+              "probability": 0.9935316443443298
+            },
+            {
+              "word": " through",
+              "start": 39.78,
+              "end": 40.18,
+              "probability": 0.9958833456039429
+            },
+            {
+              "word": " needing",
+              "start": 40.18,
+              "end": 40.52,
+              "probability": 0.8141539692878723
+            }
+          ]
+        },
+        {
+          "start": 40.52,
+          "end": 44.24,
+          "text": " 10 match points to get it done 7-6 in the third.",
+          "avg_logprob": -0.3500089364893296,
+          "no_speech_prob": 0.1600521355867386,
+          "words": [
+            {
+              "word": " 10",
+              "start": 40.52,
+              "end": 40.8,
+              "probability": 0.24122200906276703
+            },
+            {
+              "word": " match",
+              "start": 40.8,
+              "end": 41.08,
+              "probability": 0.9701483845710754
+            },
+            {
+              "word": " points",
+              "start": 41.08,
+              "end": 41.5,
+              "probability": 0.9077547788619995
+            },
+            {
+              "word": " to",
+              "start": 41.5,
+              "end": 41.96,
+              "probability": 0.9472479224205017
+            },
+            {
+              "word": " get",
+              "start": 41.96,
+              "end": 42.1,
+              "probability": 0.9977713823318481
+            },
+            {
+              "word": " it",
+              "start": 42.1,
+              "end": 42.24,
+              "probability": 0.9924161434173584
+            },
+            {
+              "word": " done",
+              "start": 42.24,
+              "end": 42.46,
+              "probability": 0.9857783317565918
+            },
+            {
+              "word": " 7",
+              "start": 42.46,
+              "end": 43.2,
+              "probability": 0.2939993739128113
+            },
+            {
+              "word": "-6",
+              "start": 43.2,
+              "end": 43.62,
+              "probability": 0.7789289057254791
+            },
+            {
+              "word": " in",
+              "start": 43.62,
+              "end": 43.84,
+              "probability": 0.934281051158905
+            },
+            {
+              "word": " the",
+              "start": 43.84,
+              "end": 44.02,
+              "probability": 0.9917734265327454
+            },
+            {
+              "word": " third.",
+              "start": 44.02,
+              "end": 44.24,
+              "probability": 0.8781136870384216
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-20-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-20-00.mp4",
+      "source_sha256": "afefd3c158a7eddbe543072180df0c735eb4f4103f6eebba872067dca0945d9b",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/28c13a09-1afb-4933-afc9-854c2da6a9f0.mp4",
+      "window_start": 0,
+      "window_end": 12.68,
+      "segments": [
+        {
+          "start": 5.08,
+          "end": 6.48,
+          "text": " You",
+          "avg_logprob": -1.1371837556362152,
+          "no_speech_prob": 0.5221746563911438,
+          "words": [
+            {
+              "word": " You",
+              "start": 5.08,
+              "end": 6.48,
+              "probability": 0.0047660465352237225
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-24-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-24-00.mp4",
+      "source_sha256": "e454b01c83b2fcd818a2e33c0cccd1dc0c9b667e90ed34a0774479b70a5b9d68",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/15df7b9c-caa3-47f1-bc9e-751888cd32a6.mp4",
+      "window_start": 0,
+      "window_end": 15.24,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 1.44,
+          "text": " ...",
+          "avg_logprob": -1.18245929479599,
+          "no_speech_prob": 0.4520385265350342,
+          "words": [
+            {
+              "word": " ...",
+              "start": 0.0,
+              "end": 1.44,
+              "probability": 0.0013420549221336842
+            }
+          ]
+        },
+        {
+          "start": 1.44,
+          "end": 2.64,
+          "text": " ...",
+          "avg_logprob": -1.18245929479599,
+          "no_speech_prob": 0.4520385265350342,
+          "words": [
+            {
+              "word": " ...",
+              "start": 1.44,
+              "end": 2.64,
+              "probability": 0.0829143300652504
+            }
+          ]
+        },
+        {
+          "start": 2.64,
+          "end": 4.62,
+          "text": " ...",
+          "avg_logprob": -1.18245929479599,
+          "no_speech_prob": 0.4520385265350342,
+          "words": [
+            {
+              "word": " ...",
+              "start": 2.64,
+              "end": 4.62,
+              "probability": 0.653577983379364
+            }
+          ]
+        },
+        {
+          "start": 4.62,
+          "end": 6.76,
+          "text": " ....",
+          "avg_logprob": -1.18245929479599,
+          "no_speech_prob": 0.4520385265350342,
+          "words": [
+            {
+              "word": " ....",
+              "start": 4.62,
+              "end": 6.76,
+              "probability": 0.009369514882564545
+            }
+          ]
+        },
+        {
+          "start": 6.76,
+          "end": 9.44,
+          "text": " ...",
+          "avg_logprob": -1.18245929479599,
+          "no_speech_prob": 0.4520385265350342,
+          "words": [
+            {
+              "word": " ...",
+              "start": 6.76,
+              "end": 9.44,
+              "probability": 0.5962961912155151
+            }
+          ]
+        },
+        {
+          "start": 9.44,
+          "end": 13.56,
+          "text": " We'll see you next week.",
+          "avg_logprob": -1.3536561727523804,
+          "no_speech_prob": 0.5444439053535461,
+          "words": [
+            {
+              "word": " We'll",
+              "start": 9.44,
+              "end": 9.48,
+              "probability": 0.0656343309674412
+            },
+            {
+              "word": " see",
+              "start": 9.48,
+              "end": 12.84,
+              "probability": 0.19251233339309692
+            },
+            {
+              "word": " you",
+              "start": 12.84,
+              "end": 13.0,
+              "probability": 0.7374077439308167
+            },
+            {
+              "word": " next",
+              "start": 13.0,
+              "end": 13.4,
+              "probability": 0.28972503542900085
+            },
+            {
+              "word": " week.",
+              "start": 13.4,
+              "end": 13.56,
+              "probability": 0.4264886975288391
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-28-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-28-00.mp4",
+      "source_sha256": "0cc3c4eff5a8c8c2b6597f579378867532586ce3ccabf0dfec0ef337df4c0201",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/355db68a-54db-4f67-a26a-66b8300558fa.mp4",
+      "window_start": 0,
+      "window_end": 10.12,
+      "segments": [
+        {
+          "start": 8.719999999999999,
+          "end": 10.12,
+          "text": " Thanks for watching!",
+          "avg_logprob": -1.0725548948560442,
+          "no_speech_prob": 0.5818337798118591,
+          "words": [
+            {
+              "word": " Thanks",
+              "start": 8.719999999999999,
+              "end": 10.12,
+              "probability": 0.000634589814580977
+            },
+            {
+              "word": " for",
+              "start": 10.12,
+              "end": 10.12,
+              "probability": 0.8281230330467224
+            },
+            {
+              "word": " watching!",
+              "start": 10.12,
+              "end": 10.12,
+              "probability": 0.9445644617080688
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-22-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-22-00.mp4",
+      "source_sha256": "068e8fe7deaf4194bdad95a8749f98a2eeada0abf1e444c50adbfb474a423e1c",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/45687e39-6636-4a65-8388-7179d6d02247.mp4",
+      "window_start": 0,
+      "window_end": 17.6,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 1.72,
+          "text": " She needs one big time here.",
+          "avg_logprob": -0.36397059679031374,
+          "no_speech_prob": 0.00636063190177083,
+          "words": [
+            {
+              "word": " She",
+              "start": 0.0,
+              "end": 0.16,
+              "probability": 0.9204769134521484
+            },
+            {
+              "word": " needs",
+              "start": 0.16,
+              "end": 0.34,
+              "probability": 0.989092230796814
+            },
+            {
+              "word": " one",
+              "start": 0.34,
+              "end": 0.66,
+              "probability": 0.9763931035995483
+            },
+            {
+              "word": " big",
+              "start": 0.66,
+              "end": 1.04,
+              "probability": 0.9870631098747253
+            },
+            {
+              "word": " time",
+              "start": 1.04,
+              "end": 1.32,
+              "probability": 0.9974204301834106
+            },
+            {
+              "word": " here.",
+              "start": 1.32,
+              "end": 1.72,
+              "probability": 0.9935941100120544
+            }
+          ]
+        },
+        {
+          "start": 10.52,
+          "end": 12.5,
+          "text": " Now she got that first serve in,",
+          "avg_logprob": -0.36397059679031374,
+          "no_speech_prob": 0.00636063190177083,
+          "words": [
+            {
+              "word": " Now",
+              "start": 10.52,
+              "end": 11.0,
+              "probability": 0.23982037603855133
+            },
+            {
+              "word": " she",
+              "start": 11.0,
+              "end": 11.48,
+              "probability": 0.9425448775291443
+            },
+            {
+              "word": " got",
+              "start": 11.48,
+              "end": 11.62,
+              "probability": 0.9990330934524536
+            },
+            {
+              "word": " that",
+              "start": 11.62,
+              "end": 11.8,
+              "probability": 0.9988951086997986
+            },
+            {
+              "word": " first",
+              "start": 11.8,
+              "end": 12.04,
+              "probability": 0.9899995923042297
+            },
+            {
+              "word": " serve",
+              "start": 12.04,
+              "end": 12.28,
+              "probability": 0.815946102142334
+            },
+            {
+              "word": " in,",
+              "start": 12.28,
+              "end": 12.5,
+              "probability": 0.9876077771186829
+            }
+          ]
+        },
+        {
+          "start": 12.5,
+          "end": 13.74,
+          "text": " but it didn't do her any good.",
+          "avg_logprob": -0.36397059679031374,
+          "no_speech_prob": 0.00636063190177083,
+          "words": [
+            {
+              "word": " but",
+              "start": 12.5,
+              "end": 12.64,
+              "probability": 0.9995660185813904
+            },
+            {
+              "word": " it",
+              "start": 12.64,
+              "end": 12.78,
+              "probability": 0.9992561936378479
+            },
+            {
+              "word": " didn't",
+              "start": 12.78,
+              "end": 13.02,
+              "probability": 0.9996810257434845
+            },
+            {
+              "word": " do",
+              "start": 13.02,
+              "end": 13.18,
+              "probability": 0.986764669418335
+            },
+            {
+              "word": " her",
+              "start": 13.18,
+              "end": 13.26,
+              "probability": 0.9842352867126465
+            },
+            {
+              "word": " any",
+              "start": 13.26,
+              "end": 13.42,
+              "probability": 0.9974270462989807
+            },
+            {
+              "word": " good.",
+              "start": 13.42,
+              "end": 13.74,
+              "probability": 0.9959200620651245
+            }
+          ]
+        },
+        {
+          "start": 14.22,
+          "end": 15.56,
+          "text": " Sabalenka is back in the mix.",
+          "avg_logprob": -0.36397059679031374,
+          "no_speech_prob": 0.00636063190177083,
+          "words": [
+            {
+              "word": " Sabalenka",
+              "start": 14.22,
+              "end": 14.66,
+              "probability": 0.5839573442935944
+            },
+            {
+              "word": " is",
+              "start": 14.66,
+              "end": 14.8,
+              "probability": 0.7391495704650879
+            },
+            {
+              "word": " back",
+              "start": 14.8,
+              "end": 15.04,
+              "probability": 0.99908447265625
+            },
+            {
+              "word": " in",
+              "start": 15.04,
+              "end": 15.22,
+              "probability": 0.9980997443199158
+            },
+            {
+              "word": " the",
+              "start": 15.22,
+              "end": 15.32,
+              "probability": 0.9987940788269043
+            },
+            {
+              "word": " mix.",
+              "start": 15.32,
+              "end": 15.56,
+              "probability": 0.9961903095245361
+            }
+          ]
+        },
+        {
+          "start": 16.14,
+          "end": 16.98,
+          "text": " She's fired up.",
+          "avg_logprob": -0.36397059679031374,
+          "no_speech_prob": 0.00636063190177083,
+          "words": [
+            {
+              "word": " She's",
+              "start": 16.14,
+              "end": 16.44,
+              "probability": 0.9960931241512299
+            },
+            {
+              "word": " fired",
+              "start": 16.44,
+              "end": 16.68,
+              "probability": 0.9992876648902893
+            },
+            {
+              "word": " up.",
+              "start": 16.68,
+              "end": 16.98,
+              "probability": 0.9988790154457092
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-16-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-16-00.mp4",
+      "source_sha256": "b3a890850dfa92e95bd06ba034ea144b6376dec5da89eb23af179ab18ba0457c",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/07e95328-bd67-46a6-9559-a2e490d97a8c.mp4",
+      "window_start": 0,
+      "window_end": 16.92,
+      "segments": [
+        {
+          "start": 13.84,
+          "end": 15.16,
+          "text": " Who are you?",
+          "avg_logprob": -0.632351313318525,
+          "no_speech_prob": 0.04705889895558357,
+          "words": [
+            {
+              "word": " Who",
+              "start": 13.84,
+              "end": 14.68,
+              "probability": 0.6904570460319519
+            },
+            {
+              "word": " are",
+              "start": 14.68,
+              "end": 14.86,
+              "probability": 0.9898320436477661
+            },
+            {
+              "word": " you?",
+              "start": 14.86,
+              "end": 15.16,
+              "probability": 0.9927141070365906
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-14-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-14-00.mp4",
+      "source_sha256": "7d0fd03edc87a86cd5030bc1f7ef0a0fa187155a556a52f3466ae6574a7f27ef",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/fb91657b-e91b-4afc-ad4d-c5dcd2b20c25.mp4",
+      "window_start": 0,
+      "window_end": 21.8,
+      "segments": [
+        {
+          "start": 0.8599999999999999,
+          "end": 4.46,
+          "text": " Dodger is defending their two titles in the Major League Baseball World Series.",
+          "avg_logprob": -0.32847359942065346,
+          "no_speech_prob": 0.00619152095168829,
+          "words": [
+            {
+              "word": " Dodger",
+              "start": 0.8599999999999999,
+              "end": 1.38,
+              "probability": 0.717994213104248
+            },
+            {
+              "word": " is",
+              "start": 1.38,
+              "end": 1.46,
+              "probability": 0.4299421012401581
+            },
+            {
+              "word": " defending",
+              "start": 1.46,
+              "end": 1.74,
+              "probability": 0.9985172152519226
+            },
+            {
+              "word": " their",
+              "start": 1.74,
+              "end": 1.98,
+              "probability": 0.975680947303772
+            },
+            {
+              "word": " two",
+              "start": 1.98,
+              "end": 2.2,
+              "probability": 0.9706995487213135
+            },
+            {
+              "word": " titles",
+              "start": 2.2,
+              "end": 2.6,
+              "probability": 0.9930539727210999
+            },
+            {
+              "word": " in",
+              "start": 2.6,
+              "end": 2.96,
+              "probability": 0.6787078380584717
+            },
+            {
+              "word": " the",
+              "start": 2.96,
+              "end": 3.04,
+              "probability": 0.8606042861938477
+            },
+            {
+              "word": " Major",
+              "start": 3.04,
+              "end": 3.18,
+              "probability": 0.9448134303092957
+            },
+            {
+              "word": " League",
+              "start": 3.18,
+              "end": 3.38,
+              "probability": 0.9940063953399658
+            },
+            {
+              "word": " Baseball",
+              "start": 3.38,
+              "end": 3.8,
+              "probability": 0.9971912503242493
+            },
+            {
+              "word": " World",
+              "start": 3.8,
+              "end": 4.0,
+              "probability": 0.9733389616012573
+            },
+            {
+              "word": " Series.",
+              "start": 4.0,
+              "end": 4.46,
+              "probability": 0.9948948621749878
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-06-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-06-00.mp4",
+      "source_sha256": "b314656ef81cce1d75b6cb93aee74c1ef8176e64091d5f78c9c78c6568266948",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/91deddba-e166-416d-947a-c907a4f61d80.mp4",
+      "window_start": 0,
+      "window_end": 17.48,
+      "segments": [
+        {
+          "start": 1.0000000000000018,
+          "end": 3.0,
+          "text": " Lined up for her second hold.",
+          "avg_logprob": -0.29826760079179493,
+          "no_speech_prob": 0.14654597640037537,
+          "words": [
+            {
+              "word": " Lined",
+              "start": 1.0000000000000018,
+              "end": 1.58,
+              "probability": 0.7108966559171677
+            },
+            {
+              "word": " up",
+              "start": 1.58,
+              "end": 1.74,
+              "probability": 0.9872773289680481
+            },
+            {
+              "word": " for",
+              "start": 1.74,
+              "end": 1.96,
+              "probability": 0.9863629937171936
+            },
+            {
+              "word": " her",
+              "start": 1.96,
+              "end": 2.1,
+              "probability": 0.2044968158006668
+            },
+            {
+              "word": " second",
+              "start": 2.1,
+              "end": 2.28,
+              "probability": 0.99383544921875
+            },
+            {
+              "word": " hold.",
+              "start": 2.28,
+              "end": 3.0,
+              "probability": 0.9802913665771484
+            }
+          ]
+        },
+        {
+          "start": 13.760000000000002,
+          "end": 17.06,
+          "text": " Well, if it's worrying, she's moving pretty well today already.",
+          "avg_logprob": -0.29826760079179493,
+          "no_speech_prob": 0.14654597640037537,
+          "words": [
+            {
+              "word": " Well,",
+              "start": 13.760000000000002,
+              "end": 14.34,
+              "probability": 0.940841555595398
+            },
+            {
+              "word": " if",
+              "start": 14.42,
+              "end": 14.46,
+              "probability": 0.8950133323669434
+            },
+            {
+              "word": " it's",
+              "start": 14.46,
+              "end": 14.6,
+              "probability": 0.8959725499153137
+            },
+            {
+              "word": " worrying,",
+              "start": 14.6,
+              "end": 14.94,
+              "probability": 0.9959189295768738
+            },
+            {
+              "word": " she's",
+              "start": 15.36,
+              "end": 15.68,
+              "probability": 0.9925620853900909
+            },
+            {
+              "word": " moving",
+              "start": 15.68,
+              "end": 15.88,
+              "probability": 0.9939972162246704
+            },
+            {
+              "word": " pretty",
+              "start": 15.88,
+              "end": 16.14,
+              "probability": 0.9965152740478516
+            },
+            {
+              "word": " well",
+              "start": 16.14,
+              "end": 16.44,
+              "probability": 0.997793436050415
+            },
+            {
+              "word": " today",
+              "start": 16.44,
+              "end": 16.72,
+              "probability": 0.9936601519584656
+            },
+            {
+              "word": " already.",
+              "start": 16.72,
+              "end": 17.06,
+              "probability": 0.8849712610244751
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-10-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-10-00.mp4",
+      "source_sha256": "def6c44c6d2c26fe8dcb3962db1d7c400940d823f5b59def92178ee5f4cb25d0",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/b777213d-77eb-47df-b38d-abf94d8a4221.mp4",
+      "window_start": 0,
+      "window_end": 15.24,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 0.64,
+          "text": " So",
+          "avg_logprob": -0.17442220821976662,
+          "no_speech_prob": 0.04339716583490372,
+          "words": [
+            {
+              "word": " So",
+              "start": 0.0,
+              "end": 0.64,
+              "probability": 0.7156943678855896
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-17-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-17-00.mp4",
+      "source_sha256": "21c73905dfa27d9307fff13ee326a4d32b7e8416deca8fab053e68b871476ed2",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/f5ca9bb4-c7e9-46a7-9d0f-c4d2dfa14b62.mp4",
+      "window_start": 0,
+      "window_end": 16.48,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 3.0,
+          "text": " Of course, four games on the trot means she broke twice as well.",
+          "avg_logprob": -0.29532188699956524,
+          "no_speech_prob": 0.0660175308585167,
+          "words": [
+            {
+              "word": " Of",
+              "start": 0.0,
+              "end": 0.0,
+              "probability": 0.05984530225396156
+            },
+            {
+              "word": " course,",
+              "start": 0.0,
+              "end": 0.16,
+              "probability": 0.9833937287330627
+            },
+            {
+              "word": " four",
+              "start": 0.26,
+              "end": 0.4,
+              "probability": 0.8760693073272705
+            },
+            {
+              "word": " games",
+              "start": 0.4,
+              "end": 0.66,
+              "probability": 0.9949066042900085
+            },
+            {
+              "word": " on",
+              "start": 0.66,
+              "end": 0.88,
+              "probability": 0.9729484915733337
+            },
+            {
+              "word": " the",
+              "start": 0.88,
+              "end": 1.24,
+              "probability": 0.9563973546028137
+            },
+            {
+              "word": " trot",
+              "start": 1.24,
+              "end": 1.58,
+              "probability": 0.630366176366806
+            },
+            {
+              "word": " means",
+              "start": 1.58,
+              "end": 1.72,
+              "probability": 0.9086246490478516
+            },
+            {
+              "word": " she",
+              "start": 1.72,
+              "end": 1.98,
+              "probability": 0.9830405116081238
+            },
+            {
+              "word": " broke",
+              "start": 1.98,
+              "end": 2.2,
+              "probability": 0.9974969029426575
+            },
+            {
+              "word": " twice",
+              "start": 2.2,
+              "end": 2.54,
+              "probability": 0.9981635212898254
+            },
+            {
+              "word": " as",
+              "start": 2.54,
+              "end": 2.76,
+              "probability": 0.8997740745544434
+            },
+            {
+              "word": " well.",
+              "start": 2.76,
+              "end": 3.0,
+              "probability": 0.9977226853370667
+            }
+          ]
+        },
+        {
+          "start": 3.16,
+          "end": 6.06,
+          "text": " And Sabalenka has to reclaim her focus.",
+          "avg_logprob": -0.29532188699956524,
+          "no_speech_prob": 0.0660175308585167,
+          "words": [
+            {
+              "word": " And",
+              "start": 3.16,
+              "end": 3.22,
+              "probability": 0.9136505722999573
+            },
+            {
+              "word": " Sabalenka",
+              "start": 3.22,
+              "end": 3.76,
+              "probability": 0.7383764833211899
+            },
+            {
+              "word": " has",
+              "start": 3.76,
+              "end": 4.82,
+              "probability": 0.9673852920532227
+            },
+            {
+              "word": " to",
+              "start": 4.82,
+              "end": 4.98,
+              "probability": 0.9979848861694336
+            },
+            {
+              "word": " reclaim",
+              "start": 4.98,
+              "end": 5.34,
+              "probability": 0.995197594165802
+            },
+            {
+              "word": " her",
+              "start": 5.34,
+              "end": 5.58,
+              "probability": 0.9991416931152344
+            },
+            {
+              "word": " focus.",
+              "start": 5.58,
+              "end": 6.06,
+              "probability": 0.9992328882217407
+            }
+          ]
+        },
+        {
+          "start": 11.280000000000003,
+          "end": 14.82,
+          "text": " You can see already on the opening point Ann Lee rejuvenated.",
+          "avg_logprob": -0.29532188699956524,
+          "no_speech_prob": 0.0660175308585167,
+          "words": [
+            {
+              "word": " You",
+              "start": 11.280000000000003,
+              "end": 11.76,
+              "probability": 0.5755282044410706
+            },
+            {
+              "word": " can",
+              "start": 11.76,
+              "end": 11.92,
+              "probability": 0.9957765936851501
+            },
+            {
+              "word": " see",
+              "start": 11.92,
+              "end": 12.1,
+              "probability": 0.9881647825241089
+            },
+            {
+              "word": " already",
+              "start": 12.1,
+              "end": 12.46,
+              "probability": 0.958111584186554
+            },
+            {
+              "word": " on",
+              "start": 12.46,
+              "end": 12.68,
+              "probability": 0.9212825894355774
+            },
+            {
+              "word": " the",
+              "start": 12.68,
+              "end": 12.8,
+              "probability": 0.9991884827613831
+            },
+            {
+              "word": " opening",
+              "start": 12.8,
+              "end": 13.12,
+              "probability": 0.9954751133918762
+            },
+            {
+              "word": " point",
+              "start": 13.12,
+              "end": 13.54,
+              "probability": 0.542351484298706
+            },
+            {
+              "word": " Ann",
+              "start": 13.54,
+              "end": 13.9,
+              "probability": 0.3604530990123749
+            },
+            {
+              "word": " Lee",
+              "start": 13.9,
+              "end": 14.1,
+              "probability": 0.5205073952674866
+            },
+            {
+              "word": " rejuvenated.",
+              "start": 14.1,
+              "end": 14.82,
+              "probability": 0.9763772785663605
+            }
+          ]
+        },
+        {
+          "start": 15.02,
+          "end": 16.22,
+          "text": " She's starting to feel her game.",
+          "avg_logprob": -0.29532188699956524,
+          "no_speech_prob": 0.0660175308585167,
+          "words": [
+            {
+              "word": " She's",
+              "start": 15.02,
+              "end": 15.16,
+              "probability": 0.9493987560272217
+            },
+            {
+              "word": " starting",
+              "start": 15.16,
+              "end": 15.3,
+              "probability": 0.9796807169914246
+            },
+            {
+              "word": " to",
+              "start": 15.3,
+              "end": 15.46,
+              "probability": 0.9982450008392334
+            },
+            {
+              "word": " feel",
+              "start": 15.46,
+              "end": 15.7,
+              "probability": 0.9930078983306885
+            },
+            {
+              "word": " her",
+              "start": 15.7,
+              "end": 15.92,
+              "probability": 0.9985653758049011
+            },
+            {
+              "word": " game.",
+              "start": 15.92,
+              "end": 16.22,
+              "probability": 0.8766962289810181
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-26-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-26-00.mp4",
+      "source_sha256": "f65a2b657b3195ceb1e5890e5146f48870923d1b8fd340fb5781d76d3ea04263",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/18ecce00-e9bb-4279-ac91-7d5a022c5f70.mp4",
+      "window_start": 0,
+      "window_end": 15.36,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 1.74,
+          "text": " ...",
+          "avg_logprob": -0.5996541976928711,
+          "no_speech_prob": 0.5219431519508362,
+          "words": [
+            {
+              "word": " ...",
+              "start": 0.0,
+              "end": 1.74,
+              "probability": 0.0013771012891083956
+            }
+          ]
+        },
+        {
+          "start": 1.74,
+          "end": 2.12,
+          "text": " ...",
+          "avg_logprob": -0.5996541976928711,
+          "no_speech_prob": 0.5219431519508362,
+          "words": [
+            {
+              "word": " ...",
+              "start": 1.74,
+              "end": 2.12,
+              "probability": 0.019495731219649315
+            }
+          ]
+        },
+        {
+          "start": 3.86,
+          "end": 5.26,
+          "text": " ...",
+          "avg_logprob": -0.5996541976928711,
+          "no_speech_prob": 0.5219431519508362,
+          "words": [
+            {
+              "word": " ...",
+              "start": 3.86,
+              "end": 5.26,
+              "probability": 0.5253704786300659
+            }
+          ]
+        },
+        {
+          "start": 5.26,
+          "end": 5.98,
+          "text": " ...",
+          "avg_logprob": -0.5996541976928711,
+          "no_speech_prob": 0.5219431519508362,
+          "words": [
+            {
+              "word": " ...",
+              "start": 5.26,
+              "end": 5.98,
+              "probability": 0.7707710266113281
+            }
+          ]
+        },
+        {
+          "start": 5.98,
+          "end": 6.54,
+          "text": " ...",
+          "avg_logprob": -0.5996541976928711,
+          "no_speech_prob": 0.5219431519508362,
+          "words": [
+            {
+              "word": " ...",
+              "start": 5.98,
+              "end": 6.54,
+              "probability": 0.8506546020507812
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wsc-27-00",
+      "source_path": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-27-00.mp4",
+      "source_sha256": "f80d5a7d61ead90427b65dbd3d9f6257868ceb86d8a390acca24c0079d3deacf",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/69aa8742-5d28-41f5-b1e3-02a7d6ce326e.mp4",
+      "window_start": 0,
+      "window_end": 13.6,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 4.1,
+          "text": " Trying to manufacture an eighth match point.",
+          "avg_logprob": -0.3608171680699224,
+          "no_speech_prob": 0.046385157853364944,
+          "words": [
+            {
+              "word": " Trying",
+              "start": 0.0,
+              "end": 1.58,
+              "probability": 0.793911874294281
+            },
+            {
+              "word": " to",
+              "start": 1.58,
+              "end": 1.72,
+              "probability": 0.9927476048469543
+            },
+            {
+              "word": " manufacture",
+              "start": 1.72,
+              "end": 2.24,
+              "probability": 0.927303671836853
+            },
+            {
+              "word": " an",
+              "start": 2.24,
+              "end": 2.88,
+              "probability": 0.9657214283943176
+            },
+            {
+              "word": " eighth",
+              "start": 2.88,
+              "end": 3.24,
+              "probability": 0.673694372177124
+            },
+            {
+              "word": " match",
+              "start": 3.24,
+              "end": 3.46,
+              "probability": 0.9739490747451782
+            },
+            {
+              "word": " point.",
+              "start": 3.46,
+              "end": 4.1,
+              "probability": 0.9388939142227173
+            }
+          ]
+        },
+        {
+          "start": 9.660000000000002,
+          "end": 11.62,
+          "text": " No mistake this time.",
+          "avg_logprob": -0.3608171680699224,
+          "no_speech_prob": 0.046385157853364944,
+          "words": [
+            {
+              "word": " No",
+              "start": 9.660000000000002,
+              "end": 10.58,
+              "probability": 0.9771445393562317
+            },
+            {
+              "word": " mistake",
+              "start": 10.58,
+              "end": 10.84,
+              "probability": 0.968713641166687
+            },
+            {
+              "word": " this",
+              "start": 10.84,
+              "end": 11.14,
+              "probability": 0.8670336604118347
+            },
+            {
+              "word": " time.",
+              "start": 11.14,
+              "end": 11.62,
+              "probability": 0.9989424347877502
+            }
+          ]
+        },
+        {
+          "start": 12.56,
+          "end": 13.3,
+          "text": " Sure handed.",
+          "avg_logprob": -0.3608171680699224,
+          "no_speech_prob": 0.046385157853364944,
+          "words": [
+            {
+              "word": " Sure",
+              "start": 12.56,
+              "end": 13.0,
+              "probability": 0.9301875233650208
+            },
+            {
+              "word": " handed.",
+              "start": 13.0,
+              "end": 13.3,
+              "probability": 0.7366544008255005
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
