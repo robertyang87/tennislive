@@ -1,0 +1,64 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://youtu.be/hONjK8IF-tI",
+  "source_sha256": "1093e785f0ea89b203fc8a77617e2df885ed2b1c5f0290ab39d58df188b578d5",
+  "reviewer": "Current OpenAI assistant; two independent local Whisper hypotheses and YouTube captions cross-checked",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-14T06:43:00.835020+00:00",
+  "reviewed_from": 70.44,
+  "reviewed_to": 95.16,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 81.3,
+      "end": 82.99,
+      "en": "Oh, clipping the line.",
+      "zh": "噢，压线了！"
+    },
+    {
+      "start": 83.0,
+      "end": 84.57,
+      "en": "Chwalinska can't believe it.",
+      "zh": "赫瓦林斯卡难以相信。"
+    },
+    {
+      "start": 84.57,
+      "end": 91.88,
+      "en": "She's finishing with a flourish",
+      "zh": "她用漂亮的方式收尾"
+    },
+    {
+      "start": 91.88,
+      "end": 93.54,
+      "en": "with the big serve down the middle.",
+      "zh": "一记强劲的中路发球。"
+    },
+    {
+      "start": 93.54,
+      "end": 95.16,
+      "en": "That is impressive from Marie Bouzkova.",
+      "zh": "布兹克娃令人印象深刻。"
+    }
+  ],
+  "evidence_basis": {
+    "recognizers": [
+      {
+        "path": "data/evidence/chwalinska-bouzkova-wuhan-2026-r2/source-audio/moon-base.en-asr.json",
+        "sha256": "cecc76d06ee8ded5c30bca01eb5eec9f701a19fa922717776fb4e245ca38d181"
+      },
+      {
+        "path": "data/evidence/chwalinska-bouzkova-wuhan-2026-r2/source-audio/moon-small.en-asr.json",
+        "sha256": "70c5d15ed220f533a1906d51cc6a3e6f9c7405cabe5d36afecf996ea65389d96"
+      }
+    ],
+    "additional_caption_source": "output/2026-10-14/reel/chwalinska-bouzkova-wuhan-2026-r2/captions.txt",
+    "audit_notes": [
+      "Both recognizers distort Polish/Czech names; correct participant identities established by source metadata, visible score and WTA player IDs.",
+      "Word timestamps are cross-model estimates; original caption phrase structure and native frames cross-check complete utterances.",
+      "Original programme contains the unfinished but... phrase; preserved as such, without inventing a continuation.",
+      "Second-set court score call Six games to one overlaps commentator; official upload caption records it, so it is preserved explicitly.",
+      "No claim of listening/manually hearing audio; no loudness/gain/PCM comparison performed."
+    ]
+  }
+}

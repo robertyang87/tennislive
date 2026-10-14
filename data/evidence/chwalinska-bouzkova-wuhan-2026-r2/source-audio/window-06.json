@@ -1,0 +1,52 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://youtu.be/hONjK8IF-tI",
+  "source_sha256": "1093e785f0ea89b203fc8a77617e2df885ed2b1c5f0290ab39d58df188b578d5",
+  "reviewer": "Current OpenAI assistant; two independent local Whisper hypotheses and YouTube captions cross-checked",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-14T06:43:00.835020+00:00",
+  "reviewed_from": 133.44,
+  "reviewed_to": 167.12,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 160.48,
+      "end": 162.02,
+      "en": "Oh my goodness me.",
+      "zh": "我的天！"
+    },
+    {
+      "start": 162.02,
+      "end": 164.93,
+      "en": "Chwalinska is all of a sudden looking like",
+      "zh": "赫瓦林斯卡突然变得"
+    },
+    {
+      "start": 164.93,
+      "end": 166.5,
+      "en": "a very tough nut to crack.",
+      "zh": "难以击破。"
+    }
+  ],
+  "evidence_basis": {
+    "recognizers": [
+      {
+        "path": "data/evidence/chwalinska-bouzkova-wuhan-2026-r2/source-audio/moon-base.en-asr.json",
+        "sha256": "cecc76d06ee8ded5c30bca01eb5eec9f701a19fa922717776fb4e245ca38d181"
+      },
+      {
+        "path": "data/evidence/chwalinska-bouzkova-wuhan-2026-r2/source-audio/moon-small.en-asr.json",
+        "sha256": "70c5d15ed220f533a1906d51cc6a3e6f9c7405cabe5d36afecf996ea65389d96"
+      }
+    ],
+    "additional_caption_source": "output/2026-10-14/reel/chwalinska-bouzkova-wuhan-2026-r2/captions.txt",
+    "audit_notes": [
+      "Both recognizers distort Polish/Czech names; correct participant identities established by source metadata, visible score and WTA player IDs.",
+      "Word timestamps are cross-model estimates; original caption phrase structure and native frames cross-check complete utterances.",
+      "Original programme contains the unfinished but... phrase; preserved as such, without inventing a continuation.",
+      "Second-set court score call Six games to one overlaps commentator; official upload caption records it, so it is preserved explicitly.",
+      "No claim of listening/manually hearing audio; no loudness/gain/PCM comparison performed."
+    ]
+  }
+}

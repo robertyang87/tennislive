@@ -1,0 +1,369 @@
+{
+  "source_video": {
+    "url": "https://www.youtube.com/watch?v=hONjK8IF-tI",
+    "id": "hONjK8IF-tI",
+    "duration_seconds": 304.228,
+    "binding_status": "confirmed",
+    "binding_evidence": "Parent obtained and actually reviewed user-link probe contact sheets and automatic captions. Final native scoreboard names MARIE BOUZKOVA6/1/1 and MAJA CHWALINSKA1/6/6, uniquely matching official LS021 A/B fields. Video bytes not downloaded by this agent; no video SHA is invented."
+  },
+  "match": {
+    "slug_suggestion": "chwalinska-bouzkova-wuhan-2026-r2",
+    "event_id": 1075,
+    "year": 2026,
+    "match_id": "LS021",
+    "date_local": "2026-10-14",
+    "tournament": "2026武汉网球公开赛",
+    "level": "WTA 1000",
+    "round": "第二轮（32强轮）",
+    "winner": "Maja Chwalinska",
+    "result_winner_perspective": [
+      "1-6",
+      "6-1",
+      "6-1"
+    ],
+    "progression_to": "16强",
+    "state": "F",
+    "court": "Court 3",
+    "court_source": "https://wtafiles.wtatennis.com/pdf/draws/2026/1075/OP.pdf",
+    "match_duration": "01:56:33",
+    "planned_oop_local": "11:00（北京时间）",
+    "match_timestamp_metadata_local": "10:51:40.243（官方metadata，与实际逐分时间不同）",
+    "first_recorded_point_local": "11:10:24",
+    "last_recorded_point_local": "13:06:33",
+    "time_note": "实际逐分首点不等于第一发开球精确时刻；可表述“北京时间上午11点开赛场序”，不要把metadata10:51当实战开球。",
+    "surface": "室外硬地",
+    "official_match_source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+    "official_score_url": "https://www.wtatennis.com/tournaments/1075/wuhan/2026/scores/LS021"
+  },
+  "players_in_cover_order": [
+    {
+      "official_team": "B",
+      "id": 325639,
+      "name_en": "Maja Chwalinska",
+      "name_cn": "赫瓦林斯卡",
+      "nickname": "月亮姐",
+      "country": "POL",
+      "rank": 22,
+      "rank_date": "2026-10-12T00:00:00Z",
+      "birthday": "2001-10-11",
+      "age_on_match_day": 25,
+      "seed": 16
+    },
+    {
+      "official_team": "A",
+      "id": 320983,
+      "name_en": "Marie Bouzkova",
+      "name_cn": "布兹克娃",
+      "nickname": null,
+      "country": "CZE",
+      "rank": 28,
+      "rank_date": "2026-10-12T00:00:00Z",
+      "birthday": "1998-07-21",
+      "age_on_match_day": 28,
+      "seed": null
+    }
+  ],
+  "stats_in_cover_order": {
+    "ordering": [
+      "Maja Chwalinska",
+      "Marie Bouzkova"
+    ],
+    "official_api_ordering": [
+      "Marie Bouzkova",
+      "Maja Chwalinska"
+    ],
+    "aces": [
+      1,
+      4
+    ],
+    "double_faults": [
+      3,
+      4
+    ],
+    "first_serve_points_won": [
+      "29/48",
+      "30/48"
+    ],
+    "second_serve_points_won": [
+      "9/17",
+      "6/24"
+    ],
+    "break_points_converted": [
+      "6/11",
+      "3/7"
+    ],
+    "total_points_won": [
+      74,
+      63
+    ],
+    "winners": [
+      25,
+      26
+    ],
+    "unforced_errors": [
+      19,
+      31
+    ],
+    "winners_ue_source": "https://tnnslive.com/match/75373640",
+    "official_other_stats_source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS021/stats",
+    "sets": {
+      "1": {
+        "winners": [
+          6,
+          11
+        ],
+        "unforced_errors": [
+          7,
+          5
+        ]
+      },
+      "2": {
+        "winners": [
+          10,
+          7
+        ],
+        "unforced_errors": [
+          8,
+          10
+        ]
+      },
+      "3": {
+        "winners": [
+          9,
+          8
+        ],
+        "unforced_errors": [
+          4,
+          16
+        ]
+      }
+    }
+  },
+  "process_in_chwalinska_perspective": {
+    "set1": {
+      "games": [
+        "0-1",
+        "1-1",
+        "1-2",
+        "1-3",
+        "1-4",
+        "1-5",
+        "1-6"
+      ],
+      "verified_detail": "1-1时拿到本盘唯一破发点（局内40-30），未兑现；此后连续丢掉5局，首盘1-6。布兹克娃首次盘点兑现。"
+    },
+    "set2": {
+      "games": [
+        "1-0",
+        "1-1",
+        "2-1",
+        "3-1",
+        "4-1",
+        "5-1",
+        "6-1"
+      ],
+      "verified_detail": "1-1后连赢5局。第4局接发连得4分破发到3-1；随后自己的发球局救下2个破发点保到4-1；第6局对手40-0领先仍追到平分，历经4个破发点，第4次兑现到5-1；第2个盘点拿下本盘。",
+      "critical_point_ids": {
+        "love_break_to_3_1": 61,
+        "saved_break_points_hold_to_4_1": [
+          67,
+          69,
+          73
+        ],
+        "fourth_break_point_to_5_1": [
+          81,
+          83,
+          85,
+          87
+        ],
+        "set_points": [
+          92,
+          93
+        ]
+      }
+    },
+    "set3": {
+      "games": [
+        "1-0",
+        "2-0",
+        "3-0",
+        "3-1",
+        "4-1",
+        "5-1",
+        "6-1"
+      ],
+      "verified_detail": "先取得3-0领先；第4局被回破到3-1，紧接着第5局再破到4-1，第6局连得4分保到5-1，最后接发第1个赛点兑现6-1。布兹克娃本盘4个发球局全部被破。",
+      "critical_point_ids": {
+        "to_3_0": 113,
+        "broken_to_3_1": 119,
+        "break_back_to_4_1": 127,
+        "love_hold_to_5_1": 131,
+        "match_point": 137
+      }
+    },
+    "overall": "首盘1-6后，后两盘合计赢12局、只丢2局；不是连续赢12局，也不是对手后两盘只保住2个发球局。"
+  },
+  "narration_ready_verified_lines": [
+    {
+      "text": "月亮姐首盘1比6落后，随后连拿两个6比1，逆转布兹克娃挺进武汉16强。",
+      "sources": [
+        "official match LS021",
+        "PBP gameScore"
+      ]
+    },
+    {
+      "text": "第二盘3比1领先时，她救下两个破发点保住发球局；随后在对手的发球局第4次破发机会才终于兑现。",
+      "sources": [
+        "PBP points62–87",
+        "official set2 stats"
+      ]
+    },
+    {
+      "text": "决胜盘被追到3比1，她紧接着再度破发，最后在接发球时拿下第一个赛点。",
+      "sources": [
+        "PBP points114–137"
+      ]
+    },
+    {
+      "text": "决胜盘她只有4次非受迫失误，布兹克娃则有16次。",
+      "sources": [
+        "https://tnnslive.com/match/75373640"
+      ]
+    },
+    {
+      "text": "3天前刚满25岁的赫瓦林斯卡，在武汉先过谢里芙，再逆转布兹克娃。",
+      "sources": [
+        "official birth2001-10-11",
+        "official LS043/LS021"
+      ]
+    }
+  ],
+  "hit_data_candidates": [
+    {
+      "fact": "决胜盘非受迫失误4:16；主角末盘失误减少至4次",
+      "source": "https://tnnslive.com/match/75373640",
+      "raw": "/workspace/scratch/moon-facts/tnns-full-stats-original-response.json"
+    },
+    {
+      "fact": "主角全场破发点6/11，第2盘2/5、第3盘4/5",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS021/stats"
+    },
+    {
+      "fact": "后两盘累计12局对2局，不是12连胜局",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS021/point-by-point"
+    }
+  ],
+  "next_round": {
+    "status": "not_yet_decided_as_of_official_snapshot",
+    "opponent": "Iva Jovic（10号种子）／Dayana Yastremska（外卡）的胜者",
+    "candidate_match_id": "LS020",
+    "next_round": "第三轮（16强轮），官方赛程为10月15日",
+    "next_round_time": "尚无正式场序，不猜开球时刻",
+    "proof": "Official main draw positions17–24 pair the winners of Jovic/Yastremska and Bouzkova/Chwalinska. Latest LS020 is in progress/paused with Jovic6-4,1-0,Winner0; do not prematurely name Jovic.",
+    "latest_match_snapshot": {
+      "BinPacketBase64": null,
+      "CourtID": 3,
+      "DateSeq": 5,
+      "DrawLevelType": "M",
+      "DrawMatchType": "S",
+      "EntryTypeA": "",
+      "EntryTypeB": "Wc",
+      "EventID": "1075",
+      "EventYear": 2026,
+      "LastUpdated": "2026-10-14T06:16:58.617+00:00",
+      "MatchID": "LS020",
+      "MatchState": "P",
+      "MatchTimeStamp": "2026-10-14T04:51:23.007+00:00",
+      "MatchTimeTotal": "01:14:18",
+      "Message": "{9|1|I. Jovic}",
+      "NumSets": 2,
+      "PlayerCountryA": "USA",
+      "PlayerCountryA2": "",
+      "PlayerCountryB": "UKR",
+      "PlayerCountryB2": "",
+      "PlayerIDA": "332285",
+      "PlayerIDA2": "",
+      "PlayerIDB": "324261",
+      "PlayerIDB2": "",
+      "PlayerNameFirstA": "Iva",
+      "PlayerNameFirstA2": "",
+      "PlayerNameFirstB": "Dayana",
+      "PlayerNameFirstB2": "",
+      "PlayerNameLastA": "Jovic",
+      "PlayerNameLastA2": "",
+      "PlayerNameLastB": "Yastremska",
+      "PlayerNameLastB2": "",
+      "PointA": "30",
+      "PointB": "0",
+      "ResultString": "",
+      "RoundID": "2",
+      "ScoreSet1A": "6",
+      "ScoreSet1B": "4",
+      "ScoreSet2A": "1",
+      "ScoreSet2B": "0",
+      "ScoreSet3A": "",
+      "ScoreSet3B": "",
+      "ScoreSet4A": "",
+      "ScoreSet4B": "",
+      "ScoreSet5A": "",
+      "ScoreSet5B": "",
+      "ScoreString": "6-4,1-0",
+      "ScoreSys": "1",
+      "ScoreTbSet1": "",
+      "ScoreTbSet2": "",
+      "ScoreTbSet3": "",
+      "ScoreTbSet4": "",
+      "SeedA": "10",
+      "SeedB": "",
+      "Serve": "A",
+      "Winner": "0"
+    },
+    "snapshot_last_updated": "2026-10-14T06:16:58.617+00:00",
+    "sources": [
+      "https://wtafiles.wtatennis.com/pdf/draws/2026/1075/MDS.pdf",
+      "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+      "https://www.wtatennis.com/news/4588416/wuhan-2026-dates-draws-prize-money-and-everything-you-need-to-know"
+    ]
+  },
+  "pbp_trust_audit": {
+    "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS021/point-by-point",
+    "point_count": 137,
+    "raw_pointWinner_wrong_rows": [
+      71,
+      81,
+      83,
+      85
+    ],
+    "score_transitions_all_legal": true,
+    "reconstructed_total_in_api_order": [
+      63,
+      74
+    ],
+    "official_total_in_api_order": [
+      63,
+      74
+    ],
+    "warning": "Raw pointWinner incorrectly assigns those4 losing deuce-return points toB. Reconstruct from gameScore and normalize raw advantage A toAD; original helper also ignores raw A advantage for BP counts. Raw pointWinner totals59:78 must not be published.",
+    "artifact": "/workspace/scratch/moon-facts/ls021-pbp-audit.json"
+  },
+  "evidence_paths": {
+    "official_matches": "/workspace/scratch/moon-facts/latest_matches.raw",
+    "official_stats": "/workspace/scratch/moon-facts/ls021_stats.raw",
+    "official_pbp": "/workspace/scratch/moon-facts/ls021_pbp.raw",
+    "rankings": "/workspace/scratch/moon-facts/formal_rankings.raw",
+    "draw_pdf": "/workspace/scratch/moon-facts/draw.pdf",
+    "draw_text": "/workspace/scratch/moon-facts/draw.txt",
+    "oop_pdf": "/workspace/scratch/moon-facts/oop.pdf",
+    "oop_text": "/workspace/scratch/moon-facts/oop.txt",
+    "tnns_raw_compressed": "/workspace/scratch/moon-facts/tnns-full-stats-original-response.json",
+    "tnns_decoded": "/workspace/scratch/moon-facts/tnns-ls021.json",
+    "tnns_identity_totals": "/workspace/scratch/moon-facts/tnns-column-order-and-totals.json",
+    "tnns_http_browser_capture": "/workspace/scratch/moon-facts/tnns-browser-bodies-2.json",
+    "tnns_raw_sha256": "367702fe4b64ab76526393f3f3d2cf93e33e967ece3ffc737382b4bb88305254"
+  },
+  "remaining_gaps": [
+    "下一轮对手尚未决出，发布前再读LS020最新正式完赛结果。",
+    "点分接口不证明击球方式/身体动作/解说，关键点动作与原声仍由实际video逐帧/ASR核。",
+    "H2H及额外人生来路未充分复核，不作为本次已核事实。"
+  ]
+}
