@@ -5324,3 +5324,13 @@ render 那一趟判定 ok 时照旧装 faster-whisper、恢复模型缓存，只
 ### 2026-10-13：预检与正式渲染复用实际配音
 
 赛场之上预检用 `--check-narration --tts-bundle-out ZIP` 保留真实 MP3 和 WordBoundary；审音以这份实际字节为准，正式渲染用 `--tts-bundle-in ZIP` 严格复用。工作流 narration 完整生成配音后发布有限小包，render 从 narration record 自动恢复并在下载源片前查当前声音请求。无记录允许首次合成；有记录但引用、哈希或声音参数不匹配必须修复或重新预检，不允许静默重合成。只改取景、字幕或时间窗不使声音失效。快照不是 QC 通过凭据，不恢复响度、静音或增益检查。完整用法见 `docs/reel-frozen-tts-bundle.md`。
+
+### 2026-10-14：probe 先认 Release 存档、转写跟 probe 并行、反查比赛按整词分两边
+
+来路是 `wangxiyu-wangxinyu-wuhan-2026-r1`（10-12，从链接到推送 2 小时 36 分，约 1.5 小时是卡住、白跑或返工）里三处：
+
+- **probe 先认 Release 存档**：`download-video.yml` 存过的源片（`source-<id>/<id>.mp4`）probe 直接用，不再去 YouTube（那趟 yt-dlp 挂了 23 分钟）。`tools/release_source.py`；probe.json 的 `url` 和草稿的 `source_url` 用同一个解析结果，`probe_claims.video_key` 认 Release 地址里的 id，去重不断。yt-dlp 另加 `--socket-timeout 30`，梯子每一档 480 秒硬上限，挂住就换下一档
+- **解说转写跟 probe 并行**：probe 用上存档时自动派发 `source-asr.yml`（small.en / medium.en，约 10 分钟），落 `data/source_asr/<视频 id>/`，已有就不重跑。只是转写，审听结论照旧由写 spec 的人对照两份定。**不塞进 probe**：塞进去每趟 probe（含自动链）都晚 10 分钟
+- **反查比赛按整词、分两边**：`tennislive.names.pair_fits`（flashscore 和 WTA 接口两处 `find_match` 共用）。原来是子串 `"wang" in "sawangkaew joint"`，两个人同姓时把统计配到了别的比赛；现在传全名，「Xiyu」和「Xinyu」靠名字分开
+
+判据 `tests/test_release_source.py`、`tests/test_source_asr.py`、`tests/test_name_match.py`。
