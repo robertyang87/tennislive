@@ -1,0 +1,154 @@
+{
+  "_draft": true,
+  "slug": "ruud-auger-aliassime",
+  "_column": "reel",
+  "cover": {
+    "matchup": [
+      {
+        "name": "鲁德",
+        "name_en": "casper ruud",
+        "country": "NOR",
+        "rank": 24
+      },
+      {
+        "name": "阿利亚西姆",
+        "name_en": "felix auger-aliassime",
+        "country": "CAN",
+        "rank": 6
+      }
+    ]
+  },
+  "_production": {
+    "kind": "orchestrated_reel",
+    "received_at": "2026-10-14T08:04:40Z",
+    "event": "Rolex Shanghai Masters",
+    "year": 2026,
+    "round": "第四轮",
+    "court": "Stadium Court"
+  },
+  "source_url": "https://www.tennistv.com/videos/4592157/shanghai-2026-r4-ruud-auger-aliassime-short-highlights",
+  "_match": {
+    "flashscore_id": "hv2d66ue"
+  },
+  "stats": {
+    "a": {
+      "aces": 0,
+      "df": 0,
+      "winners": 6,
+      "ue": 2,
+      "first_in": 12,
+      "first_won": 9,
+      "second_total": 8,
+      "second_won": 7,
+      "bp_conv": 1,
+      "bp_chances": 1,
+      "pts_won": 23,
+      "pts_total": 39,
+      "first_total": 20,
+      "headshot": "assets/players/headshots/atp-RH16.png"
+    },
+    "b": {
+      "aces": 1,
+      "df": 1,
+      "winners": 7,
+      "ue": 9,
+      "first_in": 12,
+      "first_won": 8,
+      "second_total": 7,
+      "second_won": 4,
+      "bp_conv": 0,
+      "bp_chances": 0,
+      "pts_won": 16,
+      "pts_total": 39,
+      "first_total": 19,
+      "headshot": "assets/players/headshots/atp-AG37.png"
+    }
+  },
+  "_hit_data": [
+    {
+      "label": "鲁德 破发点兑现",
+      "detail": "1/1（100%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "鲁德 连续保发",
+      "detail": "4 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Ruud C. 5 : 7 Auger-Aliassime F.（含本场） · 红土 2:5 · 硬地 3:2",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "label": "近况",
+      "detail": "Ruud C. 最近 5 场 4 胜（WWWLW）；Auger-Aliassime F. 最近 5 场 3 胜（LWWLW）",
+      "source": "flashscore df_hh_1 Last matches"
+    },
+    {
+      "label": "总分差",
+      "detail": "鲁德 23 - 阿利亚西姆 16，净差 7 分，鲁德 领先",
+      "diff": 7,
+      "source": "flashscore df_mh_1（总分）",
+      "use": "body_only"
+    }
+  ],
+  "_durations": [
+    [
+      "Set 1",
+      "0:34"
+    ],
+    [
+      "全场",
+      "0:34"
+    ]
+  ],
+  "_turning_points": [
+    {
+      "label": "【Set 1】3-1  阿利亚西姆发球，鲁德拿下  密度1  ← 1个破发点、破发成功",
+      "density": 1,
+      "tags": [
+        "1个破发点",
+        "破发成功"
+      ]
+    }
+  ],
+  "_tactical_research": {
+    "version": 1,
+    "identity": {
+      "home": "casper ruud",
+      "away": "felix auger-aliassime",
+      "event": "Rolex Shanghai Masters",
+      "year": 2026,
+      "source_urls": []
+    },
+    "sources": [],
+    "source_status": {
+      "brain_game": "feed HTTP 403; index HTTP 403",
+      "tennis_abstract": "feed HTTP 403; index HTTP 403",
+      "hugh_clarke": "feed HTTP 403; index HTTP 403",
+      "atp": "index HTTP 403",
+      "wta": "no_matching_article",
+      "usopen": "no_matching_article",
+      "australian_open": "no_matching_article",
+      "roland_garros": "no_matching_article",
+      "wimbledon": "no_matching_article"
+    },
+    "status": "no_readable_analysis",
+    "collected_at": "2026-10-14T08:08:49.086937+00:00",
+    "elapsed_seconds": 0.592
+  },
+  "_notes": [
+    "flashscore id：hv2d66ue（按球员姓反查）",
+    "制胜分/非受迫失误：这场有，已填进 stats",
+    "头像 stats.a（鲁德）：已发 spec 里认过，复用 assets/players/headshots/atp-RH16.png",
+    "头像 stats.b（阿利亚西姆）：已发 spec 里认过，复用 assets/players/headshots/atp-AG37.png",
+    "狠数据候选 5 条",
+    "转折局候选 1 局，取前 5",
+    "⚠️ 逐局数据不足以确定赢家和逐盘比分；不生成正式 spec",
+    "技战术资料：no_readable_analysis；未核观点不进入旁白",
+    "⚠️ 文案起草已随模型通道移除——钩子/论点/beats/旁白留给终审手写。",
+    "⚠️ Tennis TV 官方头图没成（ValueError: Tennis TV 头图不是本场赛事（Yunchaokete-BU-vs-Casper-RUUD2926_973470.jpg 不匹配 Rolex Shanghai Masters），拒绝资料图）",
+    "⚠️ 封面抓取没成（SystemExit: 2026-10-12–2026-10-14 窗口里扫了 142 场，没有同时出现 ['ruud', 'auger-aliassime'] 的比赛）——portrait 留空，终审或 render 前再补"
+  ]
+}
