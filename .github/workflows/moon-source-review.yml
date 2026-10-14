@@ -1,0 +1,31 @@
+name: Current-model source review (temporary)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download exact user source
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          pip install -q 'yt-dlp[default]' bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 20); do
+            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then break; fi
+            sleep 2
+          done
+          printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+          python -m yt_dlp --cookies "$RUNNER_TEMP/yt-cookies.txt" --extractor-args 'youtube:player_client=mweb' -f 'bestvideo[height<=1080]+bestaudio/best[height<=1080]' --merge-output-format mp4 --write-info-json -o '/tmp/moon-source.%(ext)s' 'https://youtu.be/hONjK8IF-tI'
+      - name: Preserve original source for current-model review
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view review-source-chwalinska-wuhan --repo robertyang87/tennislive >/dev/null 2>&1 || gh release create review-source-chwalinska-wuhan --repo robertyang87/tennislive --draft --target '${{ github.sha }}' --title 'Temporary official match source for current-model review' --notes 'Internal source only; not a completed reel.'
+          gh release upload review-source-chwalinska-wuhan /tmp/moon-source.mp4 /tmp/moon-source.info.json --repo robertyang87/tennislive --clobber
