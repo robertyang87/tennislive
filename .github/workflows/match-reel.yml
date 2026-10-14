@@ -1334,6 +1334,12 @@ jobs:
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          # Preserve this exact acoustically verified take; resynthesis is not quality evidence.
+          if [ "${{ github.event.inputs.slug }}" = "jodar-towel-shanghai-2026" ] && [ "${{ github.event.inputs.rate }}" = "+18%" ] && [ "${{ github.event.inputs.voice }}" = "zh-CN-YunjianNeural" ]; then
+            echo "ea9f7c326d0874c3e2f5683677fca3cb897b84f15a5b1e50af8d62a17f30ee14  assets/reel/jodar-reviewed-outro.zip" | sha256sum -c -
+            mkdir -p "$HOME/.cache/tennislive-tts"
+            cp assets/reel/jodar-reviewed-outro.zip "$HOME/.cache/tennislive-tts/af22f51fce8f3da423780517f6e00b95-edge-v2.zip"
+          fi
           # 普通赛场之上按 owner 更新不再重放响度/静音预测；这里只查实际配音时长。
           set +e
           python tools/build_match_reel.py render --check-narration \
