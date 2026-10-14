@@ -1,6 +1,6 @@
 {
   "slug": "ostapenko-pegula-wuhan-2026-r2",
-  "checked_at": "2026-10-14T12:11:19Z",
+  "checked_at": "2026-10-14T12:57:56Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -10,9 +10,9 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "628cc8963ae947f6": {
+    "3b5819a2806a96a9": {
       "segment": 2,
-      "spoken": 9.984,
+      "spoken": 9.624,
       "picture": 11.0
     },
     "e60684d6244481e1": {
@@ -25,9 +25,9 @@
       "spoken": 10.104,
       "picture": 11.8
     },
-    "72422831eaf2f4fd": {
+    "63b9a10ed6bf7235": {
       "segment": 8,
-      "spoken": 7.68,
+      "spoken": 7.512,
       "picture": 10.0
     },
     "b216359e00e2a6bb": {
@@ -48,16 +48,16 @@
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "6df4a0c7f60b5f78081c77e8a41c277cfc3839d8f9e5a4a922cbc5059e824d26",
+    "bundle_sha256": "097242a138184043d122391d3958776505670af16ed50eaee5142697c26ae473",
     "request_count": 8,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-ostapenko-pegula-wuhan-2026-r2-6df4a0c7f60b5f78",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-ostapenko-pegula-wuhan-2026-r2-6df4a0c7f60b5f78/tts_bundle.zip",
+    "release_tag": "reel-tts-ostapenko-pegula-wuhan-2026-r2-097242a138184043",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-ostapenko-pegula-wuhan-2026-r2-097242a138184043/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38563457893"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38569034490"
   }
 }
