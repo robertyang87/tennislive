@@ -1,0 +1,90 @@
+{
+  "schema": "tennislive.scoreboard-wipe-fix-review.v1",
+  "checked_at": "2026-10-14T15:16:57.255552+00:00",
+  "status": "regression_checks_passed",
+  "source_key": "wsc-29-00",
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/55429c9c-ae73-4044-a0b8-8c0784b9eb88.mp4",
+  "source_sha256": "8682acab809a54fbeb21e4b9d0fe7510e6ee9789f2659bb34bc3ba1754792605",
+  "official_game_id": "2026_1075_LS016",
+  "frame_index_zero_based": 224,
+  "source_time_seconds": 8.96,
+  "scan_fps": 25,
+  "search_box_xyxy": [
+    88,
+    826,
+    552,
+    984
+  ],
+  "decoded_band_dimensions": [
+    760,
+    158
+  ],
+  "failure_before": "WTA board present but native right boundary cannot be measured",
+  "cause": "原生比分板从右向左wipe，point-slot已经消失而mint games-cell完整保留，右侧露出绿灰背景。既有检测有真实persistent边缘但只接受蓝色外背景，未将本帧绿灰背景识别为已暴露背景；不是板框不足，也不是应跳过hard gate的无板帧。",
+  "fixture": {
+    "path": "tests/fixtures/wta_scoreboard/wuhan-sabalenka-li-008960-green-wipe.png",
+    "sha256": "09b3da9c3332265854b04fe345871d0ec6cd899623380a461e550a6e11255af5",
+    "scratch_original": "/workspace/scratch/sabalenka-exit-6m4jt6/score-debug/wsc-29-00-frame224-band.png",
+    "same_bytes": true
+  },
+  "measured_pixels": {
+    "mint_cell_relative_x": [
+      380,
+      409
+    ],
+    "mint_cell_height": 107,
+    "persistent_wipe_edges_relative_x": [
+      407,
+      408,
+      409,
+      410,
+      411
+    ],
+    "accepted_right_edge_relative_x": 411,
+    "accepted_right_edge_source_x": 499,
+    "geometry_body_relative_xyxy": [
+      0,
+      41,
+      411,
+      156
+    ],
+    "header": null,
+    "alpha_sum_right_of_411": 0,
+    "description": "真实原生右缘，不以旧point-slot56px宽度或整个search矩形兜底。两位球员games numerals均保留，411右侧球场全透明。"
+  },
+  "minimal_production_change": {
+    "path": "tools/wta_scoreboard.py",
+    "scope": "已有实际persistent wipe_edges分支新增独立绿灰背景证据；原truncated_cell/blue分支及其余边缘判断不动",
+    "evidence_requirements": [
+      "在完整mint cell邻域已测到跨双行persistent实际边界",
+      "暴露近端样带>=80%像素满足g-r>10且g-b>5",
+      "近端样带RGB中位数每通道比同帧名字区真实板底亮>20",
+      "近端与远端背景逐像素RGB距离<20的比例>=80%"
+    ],
+    "not_changed": [
+      "spec",
+      "source audio",
+      "scoreboard search limits",
+      "frame skipping",
+      "hard gate failure behavior for unmeasurable dark/green uniform slots"
+    ]
+  },
+  "verification": {
+    "original_scan_script": "/workspace/scratch/sabalenka-exit-6m4jt6/visual-review/debug_scoreboard.py",
+    "original_scan_results": "/workspace/scratch/sabalenka-exit-6m4jt6/score-debug/failures.json",
+    "scan_summary": "17(412帧)、20(317)、22(440)、24(381)、28(253)未报错；29(1111帧)仅224帧报错。06/13已由原native日志完整通过。",
+    "scratch_candidate": "/workspace/scratch/sabalenka-exit-6m4jt6/score-debug/wta_candidate.py",
+    "scratch_candidate_tests": "32 existing tests passed; actual frame edge411/alpha beyond411 zero; uniform dark and uniform green intact-slot negative cases still raise.",
+    "production_tests_log": "/workspace/scratch/sabalenka-exit-6m4jt6/scoreboard-tests.log",
+    "production_tests_log_sha256": "76f4756c010ef702acf325e48cd9f84f1dc08c84f250ed7287c0b179e22e8552",
+    "production_tests_result": "..................................                                       [100%]\n34 passed in 0.76s",
+    "production_regression_cases": [
+      "test_wuhan_green_background_wipe_has_a_measured_edge:真实PNG正例，edge411且411右侧alpha全零",
+      "test_full_games_cell_cannot_replace_unmeasurable_points_boundary:无界uniform-dark完整cell仍失败",
+      "test_uniform_green_point_slot_is_not_exposed_background:无界uniform-green完整cell仍失败"
+    ],
+    "native_preview_v2_manifest": "/workspace/scratch/sabalenka-exit-6m4jt6/caption-preview-full-v2/preview_manifest.json",
+    "preview_scope": "原生caption PNG预览已越过几何hard gate并完成，不等于最终影片QC或发布证明。"
+  },
+  "reviewer_scope": "定位和scratch候选验证由source_review完成；生产tools/test patch由root执行；source_review仅写本证据JSON，未改spec/tools。"
+}

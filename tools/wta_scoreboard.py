@@ -169,7 +169,21 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
             r, g, b = _rgb(exposed)
             exposed_blue = exposed.size > 0 and (
                 (b - g > 15) & (b - r > 20)).mean() >= .8
-            if truncated_cell or exposed_blue:
+            # A wiped point slot can expose the green-grey court too. Require
+            # its measured edge, matching near/far background and a brighter
+            # background than the same frame's name fill. An intact, uniform
+            # dark (or green) point slot supplies no such separation.
+            far = body[:, cell_hi + POINTS_MAX + 2 * EDGE_PAD:
+                       cell_hi + POINTS_MAX + 2 * EDGE_PAD + 6]
+            exposed_green = False
+            if exposed.size and far.shape == exposed.shape:
+                outside = np.median(exposed, axis=(0, 1))
+                name_fill = np.median(body[:, 8:8 + NAME_W], axis=(0, 1))
+                exposed_green = bool(
+                    ((g - r > 10) & (g - b > 5)).mean() >= .8
+                    and (outside - name_fill > 20).all()
+                    and (np.linalg.norm(exposed - far, axis=2) < 20).mean() >= .8)
+            if truncated_cell or exposed_blue or exposed_green:
                 return wipe_edge
         # Native AV1 antialias can spread the outer border over two pixels:
         # neither one-pixel jump spans both rows, but their measured combined

@@ -1,53 +1,126 @@
 {
   "schema": "tennislive.manual-caption-preview-review.v1",
-  "checked_at": "2026-10-14T14:54:42.770052+00:00",
-  "spec_sha256": "0abd7e16c5e2e34251d2a5014b04f4299486a000547e2ff5d7d82966cec5aa9e",
-  "ass_sha256": "9fd9f168345771e0b67053ac40863230c10c611c4ad10d92c138da9a5823690a",
-  "method": "Current assistant inspected 6 native PNGs as a contact sheet; first cold-open bilingual caption and native title-card typography visible; same frozen native voice cache used. Preview only, final movie still requires its own review.",
+  "checked_at": "2026-10-14T15:17:13.676424+00:00",
+  "spec_sha256": "fd0c0afee1aa48e79e70aa840625fd3dfa28685b7e8e0919fbd6a6b4e38af66c",
+  "ass_sha256": "1b33aa9f2ff9a10d46577f8f4de68dbfbf39d14d67e31a9aac1e0e57e93cbb99",
+  "method": "Current assistant visually inspected eight actual native preview PNGs and dedicated source29 2.0s MATCH POINT #10 frame, all 1080x1440 fixed centre full-canvas crop with actual native frame-varying WTA masks and reviewed frozen voice timing. Preview only, no final-movie QC claim.",
   "findings": [],
   "frames": [
-    {
-      "segment": 0,
-      "frame": 58,
-      "film_time": 3.5199999999999996,
-      "image": "caption-01.png",
-      "image_sha256": "f382ba9055fb180d1457e35e7d05043962fc170ea787bbf82bc08a821ed93314"
-    },
-    {
-      "segment": 1,
-      "frame": 0,
-      "film_time": 11.799999999999999,
-      "image": "caption-02.png",
-      "image_sha256": "4c22c4dba82f019b0561a28ebddb32262f5d620320dfbc5827b25aceb0213203"
-    },
-    {
-      "segment": 2,
-      "frame": 261,
-      "film_time": 27.04,
-      "image": "caption-03.png",
-      "image_sha256": "725784082224a51eb44e6585aa0fa5b2ae13dd890f0aec21b509f75fa9e6c782"
-    },
-    {
-      "segment": 4,
-      "frame": 0,
-      "film_time": 44.4,
-      "image": "caption-04.png",
-      "image_sha256": "00f825a86e293ff1b06057fcb7d6d3d16e420c5f6c6c9d880fca3325d7630e4d"
-    },
-    {
-      "segment": 6,
-      "frame": 186,
-      "film_time": 75.61999999999999,
-      "image": "caption-05.png",
-      "image_sha256": "22afb0c0d28f18357366b9a17b7eee40b6fc7fe9e6cb0fc7a6ee314a04d8488b"
-    },
     {
       "segment": 1,
       "frame": 48,
       "film_time": 13.719999999999999,
+      "image": "caption-01.png",
+      "image_sha256": "d9b79bfef681cb837cb1bf7be2f2a375113b2bb05baf5117502fcc2200c46f6a"
+    },
+    {
+      "segment": 12,
+      "frame": 110,
+      "film_time": 154.35999999999999,
+      "image": "caption-02.png",
+      "image_sha256": "ea3c1331d43828f73c13b07700dd2436d6d3fd9cc296655811fcb3ee824df814"
+    },
+    {
+      "segment": 8,
+      "frame": 113,
+      "film_time": 96.49999999999999,
+      "image": "caption-03.png",
+      "image_sha256": "a681c621c5c377e32ecb52e5e4c5b21503fa7f5c5f910a7170f9bc1af369980d"
+    },
+    {
+      "segment": 0,
+      "frame": 58,
+      "film_time": 3.5199999999999996,
+      "image": "caption-04.png",
+      "image_sha256": "79d016f1dd24adb710331bb47dcca0dda1a3c9ae2bb56ce6fb656539d26a7b9a"
+    },
+    {
+      "segment": 14,
+      "frame": 220,
+      "film_time": 178.89999999999998,
+      "image": "caption-05.png",
+      "image_sha256": "308a51ac9d812b6d093f39301e5d1b7ea32a01bb5bd0437d46ef3db019990967"
+    },
+    {
+      "segment": 14,
+      "frame": 545,
+      "film_time": 191.89999999999998,
       "image": "caption-06.png",
-      "image_sha256": "649b9efb686a8e32c2ea38e2ea06759c4e2551b396a91653ae8a1c4842401787"
+      "image_sha256": "87027a4d14dbc8e82d9450e53998ace4b3715993c67292654da209804f28cca1"
+    },
+    {
+      "segment": 7,
+      "frame": 37,
+      "film_time": 77.16,
+      "image": "caption-07.png",
+      "image_sha256": "e647a490db58bf60e74860b1116fb5e3dec2c12659efeaab4a8dd02d7de9d7a1"
+    },
+    {
+      "segment": 3,
+      "frame": 385,
+      "film_time": 42.5,
+      "image": "caption-08.png",
+      "image_sha256": "225a28e4dda2961272b534c94fd89f14d3852f1fe76c825cd4f39f85807d5320"
     }
   ],
+  "additional_header_frame": {
+    "source": "wsc-29-00",
+    "source_time": 2.0,
+    "image_sha256": "690d807d4cf1d49fd22d397f38c92836b1a004832f074131037d6f6ca50139dd",
+    "result": "MATCH POINT #10 and both full score rows visible, no rectangle beside narrow mint header"
+  },
+  "prior_preview": {
+    "schema": "tennislive.manual-caption-preview-review.v1",
+    "checked_at": "2026-10-14T14:54:42.770052+00:00",
+    "spec_sha256": "0abd7e16c5e2e34251d2a5014b04f4299486a000547e2ff5d7d82966cec5aa9e",
+    "ass_sha256": "9fd9f168345771e0b67053ac40863230c10c611c4ad10d92c138da9a5823690a",
+    "method": "Current assistant inspected 6 native PNGs as a contact sheet; first cold-open bilingual caption and native title-card typography visible; same frozen native voice cache used. Preview only, final movie still requires its own review.",
+    "findings": [],
+    "frames": [
+      {
+        "segment": 0,
+        "frame": 58,
+        "film_time": 3.5199999999999996,
+        "image": "caption-01.png",
+        "image_sha256": "f382ba9055fb180d1457e35e7d05043962fc170ea787bbf82bc08a821ed93314"
+      },
+      {
+        "segment": 1,
+        "frame": 0,
+        "film_time": 11.799999999999999,
+        "image": "caption-02.png",
+        "image_sha256": "4c22c4dba82f019b0561a28ebddb32262f5d620320dfbc5827b25aceb0213203"
+      },
+      {
+        "segment": 2,
+        "frame": 261,
+        "film_time": 27.04,
+        "image": "caption-03.png",
+        "image_sha256": "725784082224a51eb44e6585aa0fa5b2ae13dd890f0aec21b509f75fa9e6c782"
+      },
+      {
+        "segment": 4,
+        "frame": 0,
+        "film_time": 44.4,
+        "image": "caption-04.png",
+        "image_sha256": "00f825a86e293ff1b06057fcb7d6d3d16e420c5f6c6c9d880fca3325d7630e4d"
+      },
+      {
+        "segment": 6,
+        "frame": 186,
+        "film_time": 75.61999999999999,
+        "image": "caption-05.png",
+        "image_sha256": "22afb0c0d28f18357366b9a17b7eee40b6fc7fe9e6cb0fc7a6ee314a04d8488b"
+      },
+      {
+        "segment": 1,
+        "frame": 48,
+        "film_time": 13.719999999999999,
+        "image": "caption-06.png",
+        "image_sha256": "649b9efb686a8e32c2ea38e2ea06759c4e2551b396a91653ae8a1c4842401787"
+      }
+    ],
+    "publication_approved": false
+  },
   "publication_approved": false
 }

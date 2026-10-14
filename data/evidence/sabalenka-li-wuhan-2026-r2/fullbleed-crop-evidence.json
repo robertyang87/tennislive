@@ -1,0 +1,133 @@
+{
+  "checked_at": "2026-10-14T15:04:01.567973+00:00",
+  "coordinate_system": "1920x1080 source pixels, xyxy bounds; encoded antialias/compression halo may extend2px",
+  "final_owner_direction": "用户在已告知三处决定性边缘动作出画后明确“居中对齐裁切”，执行全片fixed-center crop铺满，不声称空间完整。",
+  "fixed_center_crop_window": [
+    555,
+    0,
+    1365,
+    1080
+  ],
+  "declared_offscreen_actions": [
+    {
+      "source": "wsc-06-00",
+      "time": 13.5,
+      "description": "萨巴网前右侧追球身体和球拍超过右边界1365",
+      "evidence": "/workspace/scratch/sabalenka-exit-6m4jt6/visual-review/crop810-6-13.5.png"
+    },
+    {
+      "source": "wsc-22-00",
+      "time": 8.5,
+      "description": "李吉妮左侧救球的拍和球在555左侧",
+      "evidence": "/workspace/scratch/sabalenka-exit-6m4jt6/visual-review/crop810-22-8.5.png"
+    },
+    {
+      "source": "wsc-29-00",
+      "time": 4.0,
+      "description": "最终赛点萨巴左侧接发身体、拍和球在555左侧",
+      "evidence": "/workspace/scratch/sabalenka-exit-6m4jt6/visual-review/crop810-29-4.png"
+    }
+  ],
+  "main_scoreboards": {
+    "wsc-06-00": [
+      90,
+      870,
+      480,
+      980
+    ],
+    "wsc-13-00": [
+      90,
+      870,
+      515,
+      980
+    ],
+    "wsc-17-00": [
+      90,
+      870,
+      550,
+      980
+    ],
+    "wsc-20-00": [
+      90,
+      870,
+      550,
+      980
+    ],
+    "wsc-22-00": [
+      90,
+      870,
+      550,
+      980
+    ],
+    "wsc-24-00": [
+      90,
+      870,
+      550,
+      980
+    ],
+    "wsc-28-00": [
+      90,
+      870,
+      550,
+      980
+    ],
+    "wsc-29-00": [
+      90,
+      870,
+      550,
+      980
+    ]
+  },
+  "header_scoreboards": {
+    "wsc-06-00": null,
+    "wsc-13-00": null,
+    "wsc-17-00": null,
+    "wsc-20-00": [
+      90,
+      828,
+      256,
+      880
+    ],
+    "wsc-22-00": [
+      90,
+      828,
+      252,
+      880
+    ],
+    "wsc-24-00": [
+      90,
+      828,
+      256,
+      880
+    ],
+    "wsc-28-00": [
+      90,
+      828,
+      256,
+      880
+    ],
+    "wsc-29-00": [
+      90,
+      828,
+      264,
+      880
+    ]
+  },
+  "scanner_search_outer_bounds": [
+    88,
+    826,
+    552,
+    984
+  ],
+  "mask_requirement": "搜索框不可当实贴矩形。主板与header按本帧形状/圆角分别透明mask，主板短盘右侧保持透明，不统一拉伸；29左下板消失后不可继续贴。",
+  "source29_scoreboard_changes": "约13秒后左下板消失；35秒左右出现下方中部独立结板。",
+  "official_vertical_candidate": {
+    "source": "/workspace/scratch/sabalenka-exit-6m4jt6/sources/wsc-29-vertical.mp4",
+    "dimensions": [
+      608,
+      1080
+    ],
+    "selected": false,
+    "description": "官方重构图t4保留萨巴接发，但t6萨巴部分身体又在左边缘外，且3:4固定居中需要纵向裁y135..945，比分板下边被裁。按root决定不入用、不新增音频绑定。"
+  }
+}

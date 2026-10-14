@@ -1,0 +1,98 @@
+{
+  "schema": "tennislive.sabalenka-numeral-content-review.v1",
+  "bundle_sha256": "5cb7673454f6d9fc8d133b66f51b6d5ed9dbbff11d154616ccaf1db939b1ed41",
+  "method": "Actual whole-utterance ASR plus paired native WordBoundary/content order; focused score segmentation review. Checks contextual numeral content, not arbitrary tone-negative experiments over ordinary single-reading digits.",
+  "utterance_content": [
+    {
+      "label": "第 2 段",
+      "checked": "九个赛点"
+    },
+    {
+      "label": "第 3 段",
+      "checked": "北京时间十月十四日晚；武汉第二轮；世界第二；世界第三十一"
+    },
+    {
+      "label": "第 5 段",
+      "checked": "六比三；四比二领先",
+      "ASR_limitation": "ASR writes4比20线 by merging the following ling syllable into numeral20. Both full and local ASR retain er-ling-xian phonemic content. This textual normalization is not declared an actual misread. Paired native boundaries distinguish四比二(5.035375–5.518875) and领先(5.530666–5.872666).",
+      "status": "content/order supported with explicit ASR segmentation limitation; no universal tone pass"
+    },
+    {
+      "label": "第 7 段",
+      "checked": "四比二→四比六；连输四局"
+    },
+    {
+      "label": "第 9 段",
+      "checked": "二比五；第八局五个赛点；四比五；第十局两个赛点"
+    },
+    {
+      "label": "第 13 段",
+      "checked": "六比六；抢七三比六；两个赛点；五比六"
+    },
+    {
+      "label": "第 16 段",
+      "checked": "三十六记制胜分；四十四次非受迫失误；下一轮"
+    }
+  ],
+  "actual_whole_ASR_evidence": "actual-whole-utterance-asr.json",
+  "local_ASR_original": {
+    "model": "large-v3-turbo",
+    "method": "Fresh actual frozen MP3 whole-utterance ASR; content/syllable corroboration only, never tone proof",
+    "tone_verified": false,
+    "human_listening_claimed": false,
+    "utterances": [
+      {
+        "label": "第 5 段",
+        "actual_mp3_sha256": "21d3cc3eb8c015a68c55b4af19b67bd87fd88a046661b66dee40bec87a5b5d13",
+        "text_expected": "首盘主动上网抢分，萨巴伦卡六比三取胜。次盘又以四比二领先。",
+        "segments": [
+          {
+            "start": 0.0,
+            "end": 1.12,
+            "text": "又以4比20线",
+            "words": [
+              {
+                "start": 0.0,
+                "end": 0.2,
+                "word": "又",
+                "probability": 0.9848858714103699
+              },
+              {
+                "start": 0.2,
+                "end": 0.34,
+                "word": "以",
+                "probability": 0.9252975583076477
+              },
+              {
+                "start": 0.34,
+                "end": 0.58,
+                "word": "4",
+                "probability": 0.9865072965621948
+              },
+              {
+                "start": 0.58,
+                "end": 0.68,
+                "word": "比",
+                "probability": 0.9809888005256653
+              },
+              {
+                "start": 0.68,
+                "end": 0.92,
+                "word": "20",
+                "probability": 0.8275888562202454
+              },
+              {
+                "start": 0.92,
+                "end": 1.12,
+                "word": "线",
+                "probability": 0.9958656430244446
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "human_listening_claimed": false,
+  "tone_verified": false
+}
