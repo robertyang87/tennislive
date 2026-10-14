@@ -3,17 +3,17 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "1815dbbb0628a301b954200ceac8b95829b0cdb6bb4c19a6356b4e1b15230245",
+    "bundle_sha256": "960b1005e9a314afa1438d75306edb747e2088bbbee313e326899700a5f54bd6",
     "request_count": 17,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-jodar-towel-shanghai-2026-1815dbbb0628a301",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-jodar-towel-shanghai-2026-1815dbbb0628a301/tts_bundle.zip",
+    "release_tag": "reel-tts-jodar-towel-shanghai-2026-960b1005e9a314af",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-jodar-towel-shanghai-2026-960b1005e9a314af/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38610660425"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38616141353"
   },
   "cover_seconds": 3.466,
   "cover_narrated": true,
@@ -32,7 +32,7 @@
     "3": 7.08,
     "9": 6.528,
     "10": 10.224,
-    "11": 9.888,
+    "11": 9.408,
     "12": 3.336,
     "13": 7.992,
     "15": 4.392,
@@ -57,45 +57,45 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "40fda34a7d55d697bc4b0b0dae74a1a7d2af54970a67c74444e7b27953790c11",
+  "render_inputs_sha256": "96f8ebdb96d14ed2a45478a691732d5e7b548d9ab2fcfd8b7542cd900e35c883",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "jodar-towel-shanghai-2026",
-    "received_at": "2026-10-14T17:54:48Z",
-    "artifact_ready_at": "2026-10-14T18:00:32Z",
-    "elapsed_seconds": 344.112,
+    "received_at": "2026-10-14T18:33:24Z",
+    "artifact_ready_at": "2026-10-14T18:38:18Z",
+    "elapsed_seconds": 294.281,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "776f856f75d661f93f2850e49a27c14656b03098a73c0b6d3c4373ea40eff157",
-    "spec_sha256": "b77c747eafd466cf8254de9ee07d9c0346c64b08be1cd0865c82bd00cab4a722",
-    "run_id": "38610660425",
+    "film_sha256": "4e8f684791c06309d71939e3330ce34678860aa97d3e1e1d8d1a35c0432d3c74",
+    "spec_sha256": "55b637fe36b1c4c4f9d5bf357077b8f6bc473d8e94ab27c7b41a53b98368d2ca",
+    "run_id": "38616141353",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-14T17:58:10Z",
-        "run_id": "38610660425"
+        "at": "2026-10-14T18:36:28Z",
+        "run_id": "38616141353"
       }
     ],
-    "render_seconds": 142.112,
-    "pre_render_seconds": 202.0
+    "render_seconds": 110.281,
+    "pre_render_seconds": 184.0
   },
-  "film_sha256": "776f856f75d661f93f2850e49a27c14656b03098a73c0b6d3c4373ea40eff157",
-  "film_bytes": 46109749,
-  "qc_attestation_sha256": "f8cf86c660fa3cdd1d4c1e7b8e31b067a4450fcd81319521240cc337cf652371",
+  "film_sha256": "4e8f684791c06309d71939e3330ce34678860aa97d3e1e1d8d1a35c0432d3c74",
+  "film_bytes": 46115433,
+  "qc_attestation_sha256": "7b18601e5f092858cbc82898a787a6467e5a33dd7248e24cec621abd9f2ca4a9",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-14T17:58:10Z",
-      "run_id": "38610660425"
+      "at": "2026-10-14T18:36:28Z",
+      "run_id": "38616141353"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-14T18:00:36Z",
-      "run_id": "38610660425"
+      "at": "2026-10-14T18:38:21Z",
+      "run_id": "38616141353"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-jodar-towel-shanghai-2026/jodar-towel-shanghai-2026.mp4",
-  "video_bytes": 46109749,
-  "_release_tag_note": "2026-10-14T18:00:40Z run 38610660425 把这一份（video_bytes 46109749）传上 tag `reel-jodar-towel-shanghai-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-14/reel/jodar-towel-shanghai-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。 ｜ 2026-10-14T18:09:10Z 修复本次冻结配音中品牌片尾差的读音，重新生成配音快照与成片：重渲一传上 Release（`gh release upload --clobber`），tag `reel-jodar-towel-shanghai-2026` 上的附件就换成新渲的那一份（记在北京 2026-10-15 或更晚那一格 output/<日期>/reel/jodar-towel-shanghai-2026/render.json），这里记的 video_bytes 46109749 那一版就不在 tag 上了。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+  "video_bytes": 46115433,
+  "_release_tag_note": "2026-10-14T18:38:26Z run 38616141353 把这一份（video_bytes 46115433）传上 tag `reel-jodar-towel-shanghai-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-14/reel/jodar-towel-shanghai-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
 }
