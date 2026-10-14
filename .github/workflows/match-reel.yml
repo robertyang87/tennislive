@@ -22,7 +22,7 @@ jobs:
             sleep 2
           done
           printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
-          python -m yt_dlp --js-runtimes node --cookies "$RUNNER_TEMP/yt-cookies.txt" --extractor-args 'youtube:player_client=mweb' -f 'bestvideo[height<=1080]+bestaudio/best[height<=1080]' --merge-output-format mp4 --write-info-json -o '/tmp/moon-source.%(ext)s' 'https://youtu.be/hONjK8IF-tI'
+          python -m yt_dlp --js-runtimes node --cookies "$RUNNER_TEMP/yt-cookies.txt" --extractor-args 'youtube:player_client=mweb' --retries 2 --fragment-retries 2 -f 'bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b' -S 'res:1080,fps,vcodec:h264,acodec:m4a' --merge-output-format mp4 --write-info-json -o '/tmp/moon-source.%(ext)s' 'https://youtu.be/hONjK8IF-tI'
       - name: Preserve original source for current-model review
         env:
           GH_TOKEN: ${{ github.token }}
