@@ -1167,6 +1167,46 @@ jobs:
           URL: ${{ github.event.inputs.url }}
         run: bash tools/yt_cookie_check.sh "$URL"
 
+      # **仓库里已经存过这条源片，就别再去 YouTube 碰运气**（2026-10-12
+      # `wangxiyu-wangxinyu-wuhan-2026-r1`：download-video 14:29 已存进 Release，14:30 拨的
+      # probe 仍按 YouTube 地址下，yt-dlp 挂了 23 分钟；改 Release 直链重拨 5 分钟出结果）。
+      # 只认 download-video.yml 的 `source-<id>/<id>.mp4`；没有就原样走 YouTube。
+      # 下游 probe.json 的 `url` 和自动草稿的 `source_url` 都用这一步的结果，
+      # 两边按 URL 对得上（`probe_claims.video_key` 认 Release 地址里的 id，去重不断）。
+      # 判据 tests/test_release_source.py
+      - name: probe — 有 Release 存档就用存档
+        id: src
+        if: github.event.inputs.mode == 'probe'
+        timeout-minutes: 1
+        env:
+          URL: ${{ github.event.inputs.url }}
+        run: |
+          echo "url=$(python3 tools/release_source.py --url "$URL" --repo "$GITHUB_REPOSITORY")" >> "$GITHUB_OUTPUT"
+
+      # 原声审听要的两档英文转写**跟 probe 并行**跑（source-asr.yml，约 10 分钟）：只在用上
+      # Release 存档时派发（那条工作流只认直链），仓库里已有这条源片的转写就不重跑。
+      # 派不出去不让 probe 红——转写是备料，不是 probe 的一环。判据 tests/test_source_asr.py
+      - name: probe — 并行派发解说转写
+        if: >-
+          github.event.inputs.mode == 'probe'
+          && steps.src.outputs.url != github.event.inputs.url
+        timeout-minutes: 1
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          URL: ${{ steps.src.outputs.url }}
+          FROM: ${{ github.event.inputs.clip_from }}
+          TO: ${{ github.event.inputs.clip_to }}
+        run: |
+          KEY=$(python3 -c "import sys; sys.path.insert(0, 'tools'); import probe_claims as p; print(p.video_key(sys.argv[1]) or '')" "$URL")
+          if [ -f "data/source_asr/$KEY/medium.en.json" ]; then
+            echo "data/source_asr/$KEY 已有转写，不重跑"
+            exit 0
+          fi
+          gh workflow run source-asr.yml --ref "${{ github.ref_name }}" \
+            -f url="$URL" -f clip_from="$FROM" -f clip_to="$TO"
+          echo "[dispatch] source-asr $KEY → data/source_asr/$KEY/（分支 ${{ github.ref_name }}）"
+
       - name: probe — 下载 + 缩略图墙
         if: github.event.inputs.mode == 'probe'
         env:
@@ -1177,7 +1217,7 @@ jobs:
           # 自动链从未覆盖 every；固定 2 秒既保留原生产默认，又让表单保持在
           # GitHub workflow_dispatch 最多 25 个 inputs 的硬限制内。
           python tools/build_match_reel.py probe \
-            --url "${{ github.event.inputs.url }}" \
+            --url "${{ steps.src.outputs.url || github.event.inputs.url }}" \
             --every "2" \
             --from "${{ github.event.inputs.clip_from }}" \
             --to "${{ github.event.inputs.clip_to }}" \
@@ -1264,7 +1304,7 @@ jobs:
             --received-at "${{ github.event.inputs.received_at }}" \
             --captions "$OUT/captions.txt" \
             --cuts "$OUT/probe.json" \
-            --source-url "${{ github.event.inputs.url }}" \
+            --source-url "${{ steps.src.outputs.url || github.event.inputs.url }}" \
             --cover \
             $ALIGN_ARGS \
             "${META_ARGS[@]}" \

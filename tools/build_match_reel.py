@@ -2243,7 +2243,15 @@ X_FMT_SELECTOR = "b[protocol^=http]/bv*+ba/b"
 # 参数**。我给 `fetch_captions` 新写 yt-dlp 调用时正是这么漏的：同一个 job 里
 # `download()` 明明下得动整条 294 秒的片子，字幕那条八个 client 全红。
 # 这就是「加新能力就要同时改三处」的又一个变种——新调用没继承旧调用的前提。
-YTDLP_BASE = ["--js-runtimes", "node"]
+#
+# `--socket-timeout 30`：2026-10-12 `wangxiyu-wangxinyu-wuhan-2026-r1` 那趟 probe，yt-dlp
+# 在 runner 上一个连接挂了 23 分钟不报错（yt-dlp 默认不设 socket 超时）。连接僵住 30 秒
+# 就断，交给下面那张 client 梯子换下一档，而不是整趟 run 干等。
+YTDLP_BASE = ["--js-runtimes", "node", "--socket-timeout", "30"]
+
+#: 梯子里**每一档**的硬上限（秒）。socket 超时管得住「连接僵住」，管不住「一直在涓流」；
+#: 一条 7 分钟 1080p 集锦正常 1~2 分钟下完，8 分钟还没下完就当这一档不通，换下一档。
+YTDLP_ATTEMPT_TIMEOUT = 480
 
 
 def _ladder() -> list[tuple[str, list[str]]]:
@@ -2526,12 +2534,21 @@ def _download_one(url: str, dest: Path, *, archival: bool = False) -> Path:
     # 这里只负责「把能拿到的最好那份拿回来」，并且**大声说清楚拿到的是什么**。
     best: tuple[int, int, Path] | None = None
     for label, extra in _ladder():
-        proc = subprocess.run(
-            [binary, *YTDLP_BASE, "--no-warnings", "-f", selector,
-             *sort, *cookies, *extra, "--merge-output-format", "mp4",
-             "-o", str(dest), fetch],
-            capture_output=True, text=True,
-        )
+        try:
+            proc = subprocess.run(
+                [binary, *YTDLP_BASE, "--no-warnings", "-f", selector,
+                 *sort, *cookies, *extra, "--merge-output-format", "mp4",
+                 "-o", str(dest), fetch],
+                capture_output=True, text=True, timeout=YTDLP_ATTEMPT_TIMEOUT,
+            )
+        except subprocess.TimeoutExpired:
+            why = f"{YTDLP_ATTEMPT_TIMEOUT} 秒没下完，当这一档不通"
+            print(f"[fail] {label}: {why}")
+            failures.append(f"{label}: {why}")
+            dest.unlink(missing_ok=True)
+            for part in dest.parent.glob(dest.name + "*.part"):
+                part.unlink(missing_ok=True)
+            continue
         if proc.returncode == 0 and dest.is_file() and dest.stat().st_size > 0:
             # **下到了不等于下对了。** 某些 player client 只放得出 360p，
             # yt-dlp 照样 returncode 0、照样有文件——直到裁切那一步才炸

@@ -88,6 +88,9 @@ MATCH_COLUMN = "赛场之上"
 _YT = re.compile(r"(?:youtube\.com/(?:watch\?(?:[^#\s]*&)?v=|shorts/|live/|embed/)|youtu\.be/)"
                  r"([A-Za-z0-9_-]{11})")
 _TTV = re.compile(r"tennistv\.com/videos/(\d+)")
+#: download-video.yml 存档的那份：`releases/download/source-<id>/<id>.mp4`——同一条片子，同一个键
+#: （probe 有存档就改用它，`tools/release_source.py`；不认的话去重和认领会把它当成另一条源片）
+_REL = re.compile(r"/releases/download/source-([A-Za-z0-9_-]{11})/")
 _PROBE = re.compile(r"^output/(\d{4}-\d{2}-\d{2})/reel/([^/]+)/probe\.json$")
 
 
@@ -97,7 +100,7 @@ def video_key(url: str | None) -> str | None:
     认不出的（brightcove、x.com、直链）返回 None——**不认领、不去重**，
     别拿整条 URL 当键：同一条片子带不带 `&t=`、`?si=` 是两个串。
     """
-    m = _YT.search(url or "")
+    m = _YT.search(url or "") or _REL.search(url or "")
     if m:
         return m.group(1)
     m = _TTV.search(url or "")

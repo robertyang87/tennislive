@@ -226,7 +226,7 @@ def resolve_match_id(home: str, away: str) -> str | None:
     ⚠️ **没读到**（`FeedUnavailable`：近期赛果那几页 5xx／超时）照旧抛——那不是「没有这场」，
     assemble 把它记进 `_feed_retry`，下一班再查。"""
     try:
-        mid, _, _ = find_match([_surname(home), _surname(away)])
+        mid, _, _ = find_match([home, away])
         return mid or None
     except FeedUnavailable:
         raise
@@ -1295,7 +1295,7 @@ def assemble(*, slug: str, home: str, away: str, event: str, year: int,
                 session = requests.Session()
                 today = date.today()
                 event_id, wyear, match_id, _row = wta_find_match(
-                    session, [_surname(home), _surname(away)],
+                    session, [home, away],
                     today - timedelta(days=2), today)
                 # city slug：WTA 官网赛事 URL 用城市小写（多伦多=toronto、
                 # 辛辛那提=cincinnati）。⚠️ 之前硬编码 "cincinnati"，换别的赛事就

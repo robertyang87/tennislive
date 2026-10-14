@@ -50,6 +50,12 @@ import urllib.request
 from collections.abc import Iterable
 from concurrent.futures import ThreadPoolExecutor
 
+import sys as _sys
+from pathlib import Path as _Path
+
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1] / "src"))
+from tennislive.names import pair_fits  # 按整词、分两边认人，只有这一份
+
 NINJA = "https://local-global.flashscore.ninja/2/x/feed/"
 HEADERS = {
     "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -153,7 +159,6 @@ def find_match(
     常见的昨天/今天/明天优先，未命中再回看一周。单页网络故障不应该取消其余
     页的查找；但所有页都取不到时必须报源站故障，不能伪装成「没有比赛」。
     """
-    want = [n.casefold() for n in names]
     scanned = 0
     tried: list[int] = []
     failures: list[str] = []
@@ -178,8 +183,7 @@ def find_match(
                 row = _fields("AA÷" + record)
                 home = row.get("AE", "")
                 away = row.get("AF", "")
-                blob = f"{home} {away}".casefold()
-                if all(w in blob for w in want):
+                if pair_fits(names, home, away):
                     return row.get("AA", ""), home, away
     if tried and len(failures) == len(tried):
         raise FeedUnavailable("近期赛果喂料全部读取失败：" + "；".join(failures))

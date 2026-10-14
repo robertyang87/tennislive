@@ -50,6 +50,12 @@ from datetime import date, timedelta
 
 import requests
 
+import sys as _sys
+from pathlib import Path as _Path
+
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1] / "src"))
+from tennislive.names import pair_fits  # 按整词、分两边认人，只有这一份
+
 API = "https://api.wtatennis.com/tennis"
 HEADERS = {
     "User-Agent": (
@@ -90,7 +96,6 @@ def find_match(
             "to": until.isoformat(),
         },
     )
-    want = [p.casefold() for p in players]
     scanned = 0
     for event in events.get("content", []):
         group = event.get("tournamentGroup") or {}
@@ -104,14 +109,9 @@ def find_match(
         )
         for row in payload.get("matches") or []:
             scanned += 1
-            haystack = " ".join(
-                str(row.get(key) or "")
-                for key in (
-                    "PlayerNameFirstA", "PlayerNameLastA",
-                    "PlayerNameFirstB", "PlayerNameLastB",
-                )
-            ).casefold()
-            if all(name in haystack for name in want):
+            side_a = f"{row.get('PlayerNameFirstA') or ''} {row.get('PlayerNameLastA') or ''}"
+            side_b = f"{row.get('PlayerNameFirstB') or ''} {row.get('PlayerNameLastB') or ''}"
+            if pair_fits(players, side_a, side_b):
                 return str(event_id), int(year), str(row["MatchID"]), row
     # 空结果先自证是真空：报出扫了多少场，别让"没找到"和"没扫到"长得一样
     raise SystemExit(
