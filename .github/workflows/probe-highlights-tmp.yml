@@ -13,21 +13,25 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - run: pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
+      - run: pip install -q "yt-dlp[default]"
+      - name: 启动 PO token provider
+        timeout-minutes: 3
+        run: |
+          pip install -q bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4416/ping && break || sleep 1; done
       - name: 取时长与字幕
         env:
           URL: ${{ inputs.url }}
         run: |
           echo "=== 视频信息 ==="
           yt-dlp --print "%(duration)s %(title)s" --no-warnings "$URL" || echo "INFO_FAIL"
-          echo "=== 可用字幕 ==="
-          yt-dlp --list-subs --no-warnings "$URL" 2>&1 | head -40 || echo "SUBS_FAIL"
           echo "=== 下载英文自动字幕 ==="
           mkdir -p /tmp/cap && cd /tmp/cap
-          yt-dlp --write-auto-subs --write-subs --sub-langs "en.*" --skip-download --sub-format "vtt/json3" --no-warnings "$URL" 2>&1 | tail -5 || echo "CAP_FAIL"
+          yt-dlp --write-auto-subs --write-subs --sub-langs "en.*" --skip-download --sub-format "vtt" --no-warnings "$URL" 2>&1 | tail -3 || echo "CAP_FAIL"
           ls -la /tmp/cap/
-          for f in /tmp/cap/*; do
-            echo "--- $f ($(wc -c <"$f") bytes) ---"
-            tail -c 3000 "$f"
-            echo
+          for f in /tmp/cap/*.vtt; do
+            [ -f "$f" ] || continue
+            echo "--- $f ($(wc -c <"$f") bytes, 尾部50行) ---"
+            tail -50 "$f"
           done
