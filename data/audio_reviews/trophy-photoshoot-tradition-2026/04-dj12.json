@@ -1,0 +1,13 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=BxcGg2vgxfQ",
+  "source_sha256": "42d845aa09fa62541a21fe94b5c6ef15d096bf0ee6cb7981f00883711fa9a87f",
+  "method": "asr_cross_checked",
+  "reviewer": "grok bot (local box)",
+  "reviewed_at": "2026-10-14T09:58:55.232003+00:00",
+  "reviewed_from": 23.6,
+  "reviewed_to": 29.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "这一段是中文旁白。窗口按 faster-whisper tiny.en 与 small.en 两遍的逐词时间戳选在解说/现场人声停顿里（每个词前后各留 0.35 秒），审听窗口里没有要另配双语字幕的前景口播；现场声留在旁白下面。"
+}
