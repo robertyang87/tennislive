@@ -1,0 +1,138 @@
+{
+  "schema": "tennislive.independent_final_visual_review.v1",
+  "status": "pass_visual_limited_review",
+  "checked_at": "2026-10-14T13:16:15.989793+00:00",
+  "github_run_id": 38568717802,
+  "github_run_number": 2778,
+  "film": "/workspace/scratch/guo-volynets-wuhan-2026-r2/cloud-release/guo-volynets-wuhan-2026-r2.mp4",
+  "film_sha256": "78657640159b0c4137cdd74172359c703c6537670c84e494e7729a7c92a6707d",
+  "film_duration_seconds": 276.28,
+  "render_inputs_spec_sha256": "989f3dfc94b1d20ce45d9947d51f561d29bd19983f1a28ee44dd53ef45df4e90",
+  "render_inputs_projection_sha256": "1ebfe8bb1479f6fbd0eceae7f619a04f736925ab3dd10c6e6d19a1f6be46d492",
+  "render_code_sha": "9108b6869bd95b4c4e5d88901ebf33edb635c032",
+  "method": "针对GitHub正式渲染run38568717802实际Release影片进行有限视觉复核：从此影片抽取40帧并浏览4张接触表，覆盖6张改旁白卡每句字幕、关键回合source45完整终点及握拳、完整赛点与双方/裁判握手、统计卡及片尾。未全片逐帧检查、未在本轮进行听审、未宣称模型人脸识别通过。",
+  "evidence_manifest": "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-github-2778-frames/manifest.json",
+  "contact_sheets": [
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-github-2778-frames/sheet-0.jpg",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-github-2778-frames/sheet-1.jpg",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-github-2778-frames/sheet-2.jpg",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-github-2778-frames/sheet-3.jpg"
+  ],
+  "comparison": {
+    "baseline": "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-review-v4.json",
+    "projection_diff_paths": [
+      "/editorial/narration/0",
+      "/editorial/narration/1",
+      "/editorial/narration/2",
+      "/editorial/narration/3",
+      "/editorial/narration/4",
+      "/editorial/narration/5",
+      "/segments/1/narration",
+      "/segments/2/kicker",
+      "/segments/2/narration",
+      "/segments/3/narration",
+      "/segments/6/narration",
+      "/segments/8/narration",
+      "/segments/10/narration"
+    ],
+    "description": "已实际递归对比云端render_inputs.projection与本地v4已审projection：差异仅6句旁白的editorial/segment副本与segments2.kicker=主场外卡；素材URL、所有素材窗口、contain_keep=0.814、卡片标题/时长、解说quote及其余projection字段相同。"
+  },
+  "checks": [
+    {
+      "name": "6张改旁白卡字幕与字号",
+      "status": "pass_visual",
+      "segments": [
+        1,
+        2,
+        3,
+        6,
+        8,
+        10
+      ],
+      "evidence_final_seconds": [
+        10,
+        14.3,
+        16.3,
+        18.3,
+        20.8,
+        26.6,
+        29.6,
+        88.26,
+        91.76,
+        113.6,
+        115.6,
+        118.4,
+        120.6,
+        138.1,
+        141.1,
+        144.1
+      ],
+      "detail": "抽查每句新字幕实际呈现，字号/数字强调一致，底部安全区内无截字、无孤字折行，不与两行主标题重叠。主场外卡kicker正确。"
+    },
+    {
+      "name": "既定0.814宽景",
+      "status": "pass_with_declared_layout",
+      "detail": "保持用户已接受的0.814轻裁宽景，未额外扩大裁切。原生比分数字仍可见，原板姓名左端部分裁切为既定方案，顶栏完整双方姓名和最终比分常驻。"
+    },
+    {
+      "name": "source45完整落点、握拳与Oh yes字幕",
+      "status": "pass_visual",
+      "evidence_final_seconds": [
+        207.26,
+        209.06,
+        217.06,
+        219.81,
+        220.26,
+        220.66,
+        221.26,
+        221.56,
+        221.81,
+        222.16
+      ],
+      "detail": "完整发球至最后落点、对手停止追击及球童入场，221.81秒郭握拳；Oh yes!/好球!在下方留白，不压关键动作。end15.30保留完成，没有复现v3截断。"
+    },
+    {
+      "name": "完整赛点、庆祝、双方及裁判握手",
+      "status": "pass_visual",
+      "evidence_final_seconds": [
+        222.56,
+        224.36,
+        236.36,
+        238.96,
+        240.56,
+        242.86,
+        247.16,
+        248.86,
+        254.26,
+        255.16
+      ],
+      "detail": "准备发球、决胜回合、举双手及观众庆祝、双方握手、裁判握手和原生最终比分板全部保留。"
+    },
+    {
+      "name": "统计卡与片尾",
+      "status": "pass_visual",
+      "evidence_final_seconds": [
+        263.48,
+        274.5
+      ]
+    },
+    {
+      "name": "其余未改前段",
+      "status": "inherited_from_prior_visual_review_same_projection",
+      "detail": "同源窗口和视觉projection无差异；沿用v3/v4已做关键窗口视觉证据，不冒称此次重新逐帧观看。"
+    },
+    {
+      "name": "自动人脸模型",
+      "status": "not_claimed",
+      "detail": "本轮没有调用人脸模型，未将此前模型缺失写成确认通过。"
+    }
+  ],
+  "open_visual_findings": [],
+  "scope": "visual_only_limited_review",
+  "audio_review_claimed": false,
+  "face_model_pass_claimed": false,
+  "historical_reviews": [
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-review-v3-needs-fix.json",
+    "/workspace/scratch/guo-volynets-wuhan-2026-r2/final-visual-review-v4.json"
+  ]
+}
