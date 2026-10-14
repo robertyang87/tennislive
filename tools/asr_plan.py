@@ -125,9 +125,16 @@ def gaps(sents: list[Sentence], start: float, end: float, min_gap: float = 2.5) 
     return out
 
 
-def _windows(spec: dict) -> list[tuple[int, dict]]:
+def _primary(spec: dict) -> str:
+    return next(iter(spec.get("sources") or {"": ""}))
+
+
+def _windows(spec: dict, source: str | None = None) -> list[tuple[int, dict]]:
+    """取源片的段；给了 `source` 就只要这一条源的（多源片子各自对各自的转写）。"""
+    primary = _primary(spec)
     return [(i, seg) for i, seg in enumerate(spec.get("segments") or [])
-            if "start" in seg and "end" in seg and not seg.get("image")]
+            if "start" in seg and "end" in seg and not seg.get("image")
+            and (source is None or str(seg.get("source", primary)) == source)]
 
 
 def _cues(seg: dict) -> list[tuple[float, float, str, str]]:
@@ -153,10 +160,11 @@ def _covered(lo: float, hi: float, cues: list[tuple[float, float, str, str]]) ->
     return cursor >= hi - SLACK
 
 
-def _issues(spec: dict, sents: list[Sentence], model: str, everyone: list[Sentence]) -> list[tuple]:
+def _issues(spec: dict, sents: list[Sentence], model: str, everyone: list[Sentence],
+            source: str | None = None) -> list[tuple]:
     """这一档转写看到的问题：`(段序号, 类型, 起, 止, 说明)`。"""
     found = []
-    for i, seg in _windows(spec):
+    for i, seg in _windows(spec, source):
         a, b = float(seg["start"]), float(seg["end"])
         narrated = bool(str(seg.get("narration") or "").strip())
         try:
@@ -182,10 +190,12 @@ def _issues(spec: dict, sents: list[Sentence], model: str, everyone: list[Senten
     return found
 
 
-def check(spec: dict, sents: list[Sentence]) -> tuple[list[str], list[str]]:
+def check(spec: dict, sents: list[Sentence], source: str | None = None) -> tuple[list[str], list[str]]:
     """`(硬伤, 只报)`：两档转写**都**看到的问题算硬伤（render 的审听闸必红的那几类），
-    只有一档看到的只报——那正是交叉核对要人去对一下原话的地方。"""
-    per = {m: _issues(spec, sents, m, sents) for m in MODELS}
+    只有一档看到的只报——那正是交叉核对要人去对一下原话的地方。
+
+    `source`：多源片子只查这一条源的段（`sents` 是这条源的转写）。"""
+    per = {m: _issues(spec, sents, m, sents, source) for m in MODELS}
     hard, soft = [], []
     for model in MODELS:
         other = [x for m in MODELS if m != model for x in per[m]]
@@ -199,25 +209,35 @@ def check(spec: dict, sents: list[Sentence]) -> tuple[list[str], list[str]]:
     return hard, soft
 
 
-def write_review(spec: dict, video_id: str, sha: str, root: Path = ROOT) -> Path:
-    """按 spec 当前的计划写审听包：每个保留原声的窗口一份，`foreground_english` 取自 `quote`。"""
+def _evidence(video_id: str, sha: str) -> str:
+    paths = [f"data/source_asr/{video_id}/{m}.json" for m in MODELS]
+    return (f"两档 faster-whisper 转写（{' / '.join(MODELS)}，逐词时间码，源片 sha256 {sha}，"
+            f"存于 {' 与 '.join(paths)}），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句"
+            f"都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文")
+
+
+def write_review(spec: dict, video_id: str | dict[str, tuple[str, str]], sha: str = "",
+                 root: Path = ROOT) -> Path:
+    """按 spec 当前的计划写审听包：每个保留原声的窗口一份，`foreground_english` 取自 `quote`。
+
+    单源给 `video_id, sha`；多源给 `{源键: (视频 id, sha)}`，每个窗口挂它自己那条源的证据。"""
     from foreground_audio_gate import plan_hash  # noqa: PLC0415
 
     slug = str(spec["slug"])
     folder = root / "data/audio_reviews" / slug
     folder.mkdir(parents=True, exist_ok=True)
-    evidence_paths = [f"data/source_asr/{video_id}/{m}.json" for m in MODELS]
-    evidence = (f"两档 faster-whisper 转写（{' / '.join(MODELS)}，逐词时间码，源片 sha256 {sha}，"
-                f"存于 {' 与 '.join(evidence_paths)}），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句"
-                f"都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文")
     now = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
     urls = spec.get("sources") or {"": spec.get("source_url")}
     primary = next(iter(urls))
+    ids = video_id if isinstance(video_id, dict) else {k: (video_id, sha) for k in urls}
     entries = []
     for i, seg in _windows(spec):
+        key = str(seg.get("source", primary))
+        vid, vsha = ids[key]
+        evidence = _evidence(vid, vsha)
         a, b = float(seg["start"]), float(seg["end"])
         said = [{"start": round(c[0], 2), "end": round(c[1], 2), "en": c[2], "zh": c[3]} for c in _cues(seg)]
-        packet = {"source_url": urls[str(seg.get("source", primary))], "source_sha256": sha,
+        packet = {"source_url": urls[key], "source_sha256": vsha,
                   "method": "asr_cross_checked",
                   "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
                   "reviewed_at": now, "reviewed_from": a, "reviewed_to": b, "status": "complete",
@@ -237,14 +257,19 @@ def write_review(spec: dict, video_id: str, sha: str, root: Path = ROOT) -> Path
     return index
 
 
-def _video_id(spec: dict) -> str:
+def source_ids(spec: dict) -> dict[str, str]:
+    """`{源键: 视频 id}`——每条源各自对自己的转写（`data/source_asr/<视频 id>/`）。"""
     from probe_claims import video_key  # noqa: PLC0415
 
-    urls = list((spec.get("sources") or {}).values()) or [spec.get("source_url")]
-    keys = {video_key(u) for u in urls}
-    if len(keys) != 1 or None in keys:
-        raise SystemExit(f"这条 spec 的源片认不出唯一的视频 id（{urls}）——多源片子各自对转写，这个工具先只管单源")
-    return keys.pop()
+    urls = spec.get("sources") or {"": spec.get("source_url")}
+    used = {str(seg.get("source", _primary(spec))) for _i, seg in _windows(spec)}
+    ids = {}
+    for key in sorted(used):
+        vid = video_key(str(urls.get(key) or ""))
+        if not vid:
+            raise SystemExit(f"源 {key!r}（{urls.get(key)}）认不出视频 id——只认 YouTube 地址或 Release 存档直链")
+        ids[key] = vid
+    return ids
 
 
 def main() -> int:
@@ -270,9 +295,13 @@ def main() -> int:
         return 0
 
     spec = json.loads(args.spec.read_text(encoding="utf-8"))
-    video_id = _video_id(spec)
-    docs, sha = load(video_id)
-    hard, soft = check(spec, sentences(docs))
+    hard, soft, evidence = [], [], {}
+    for key, vid in source_ids(spec).items():
+        docs, sha = load(vid)
+        evidence[key] = (vid, sha)
+        h, s_ = check(spec, sentences(docs), key)
+        hard += h
+        soft += s_
     for line in soft:
         print(f"  [只报] {line}")
     if hard:
@@ -283,7 +312,7 @@ def main() -> int:
     if args.cmd == "check":
         print("原声窗口全过：配音窗口没有英文、没有切断的句子、每句英文都有中英字幕")
         return 0
-    index = write_review(spec, video_id, sha)
+    index = write_review(spec, evidence)
     print(f"已写审听包：{index}（逐窗口证据在 {index.with_suffix('')}/）")
     return 0
 

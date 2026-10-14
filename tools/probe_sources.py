@@ -77,6 +77,26 @@ def spec_urls(spec: dict) -> dict[str, str]:
             or {"": str(spec.get("source_url", ""))})
 
 
+def spec_url_for(probe_url: object, urls) -> str | None:
+    """这份 probe 探的 URL 对应 spec 里的哪一条源：先精确比，不中再按视频 id 比。
+
+    probe 有 Release 存档就改用存档直链下载（`tools/release_source.py`，2026-10-14），
+    于是 `probe.json` 的 `url` 是 `…/releases/download/source-<id>/<id>.mp4`，而 spec 写的
+    是 YouTube 地址——只按字符串比，这条源的切点、静音、宽高就全认不上（梅西恩怨片
+    十条源一条都没认上）。视频 id 用 `probe_claims.video_key`，和去重、认领同一把尺子。
+    """
+    if not probe_url:
+        return None
+    urls = [u for u in urls if u]
+    if probe_url in urls:
+        return str(probe_url)
+    from probe_claims import video_key  # noqa: PLC0415
+    key = video_key(str(probe_url))
+    if not key:
+        return None
+    return next((u for u in urls if video_key(u) == key), None)
+
+
 def is_auto(spec: dict) -> bool:
     return (spec.get("_production") or {}).get("status") == "ready_for_render"
 
@@ -124,9 +144,17 @@ def _claims(spec: dict) -> dict:
     return claims if isinstance(claims, dict) else {}
 
 
+def probe_for(url: str, probes: dict[str, dict]) -> dict | None:
+    """`{probe 的 url: probe}` 里认这一条源的那份：精确的优先，没有才按视频 id（`spec_url_for`）。"""
+    if url in probes:
+        return probes[url]
+    hits = [p for u, p in probes.items() if u and spec_url_for(u, [url])]
+    return hits[-1] if hits else None
+
+
 def missing_probe_keys(spec: dict, probes: dict[str, dict]) -> list[str]:
-    """认领不到 probe.json 的源键（按 URL）。"""
-    return sorted(k for k, url in spec_urls(spec).items() if url not in probes)
+    """认领不到 probe.json 的源键（按 URL，或同一个视频 id 的 Release 存档）。"""
+    return sorted(k for k, url in spec_urls(spec).items() if probe_for(url, probes) is None)
 
 
 def _fps_value(expr: str, stored: object) -> float:
@@ -155,7 +183,7 @@ def source_dims(spec: dict, probes: dict[str, dict],
     lacking: list[str] = []
     claims = _claims(spec)
     for key, url in spec_urls(spec).items():
-        probe = probes.get(url)
+        probe = probe_for(url, probes)
         if probe is None:
             # 没 probe 的源：认领里写了宽高帧率就拿它预演（`claimed_geometry`）
             if (claimed := claimed_geometry(claims.get(key))) is not None:
@@ -348,12 +376,13 @@ def committed_probes(ref: str = "HEAD", cwd: Path = ROOT,
 def claim_paths(spec: dict, ref: str = "HEAD", cwd: Path = ROOT,
                 problems: list[str] | None = None) -> dict[str, bytes]:
     """HEAD 的树里，`url` 是这条 spec 某一条源的那几份 probe.json：`{路径: 内容}`。
-    按 `url` 字段精确比对——**不按 slug 猜**，否则会拿别的片子的切点来判。"""
+    按 `url` 字段比对（`spec_url_for`：精确或同一个视频 id）——**不按 slug 猜**，
+    否则会拿别的片子的切点来判。"""
     urls = {u for u in spec_urls(spec).values() if u}
     out: dict[str, bytes] = {}
     for path, (_oid, blob) in committed_probes(ref, cwd, problems).items():
         try:
-            if json.loads(blob).get("url") in urls:
+            if spec_url_for(json.loads(blob).get("url"), urls):
                 out[path] = blob
         except ValueError:
             continue

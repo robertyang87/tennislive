@@ -6477,14 +6477,26 @@ def claim_probes(spec: dict) -> tuple[dict[str, tuple[Path, dict]], list[str]]:
     if not urls:
         urls = {"": str(spec.get("source_url", ""))}
     found: dict[str, tuple[Path, dict]] = {}
+    by_id: dict[str, tuple[Path, dict]] = {}
+    from probe_sources import spec_url_for  # noqa: PLC0415
     for path in sorted(Path("output").glob("*/reel/*/probe.json")):
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue                      # 坏的就当没有，别把 dry-run 带崩
-        if data.get("url") in urls.values():
-            # 后来的（日期靠后）覆盖先来的
-            found[str(data["url"])] = (path.parent, data)
+        url = spec_url_for(data.get("url"), urls.values())
+        if not url:
+            continue
+        if url == data.get("url"):
+            found[url] = (path.parent, data)      # 后来的（日期靠后）覆盖先来的
+        else:
+            # Release 存档直链和 YouTube 地址是同一条源（`probe_sources.spec_url_for`）；
+            # 按 spec 写的那个地址记，下游不用再换算。**只在没有精确认领时才用**：
+            # 原地址探的那份可能带着人给的 --scorebox 量出来的死球时刻，后来按存档
+            # 重探的一份没有——拿它盖掉会让段尾硬闸静静失明（eala-stoiana 那条就是）。
+            by_id[url] = (path.parent, {**data, "url": url, "_probed_url": data.get("url")})
+    for url, hit in by_id.items():
+        found.setdefault(url, hit)
     missing = sorted(name for name, url in urls.items() if url not in found)
     return found, missing
 
@@ -6620,6 +6632,11 @@ def silence_findings(spec: dict, segments, probes: dict,
 # 戴维斯杯的官方影像档案（ITF 频道）highlights 一律只有 720p、没有全场重播，
 # 1930 年代的英国百代新闻片只有 640×480，**这两档「等」也等不出 1080p**。
 APPROVED_LOW_RES_SOURCES: dict[str, int] = {
+    # 霍达尔上海毛巾风波（jodar-towel-shanghai-2026）：账号所有者 2026-10-14「去找原视频，
+    # 否则画面不对」——冲球童喊话与主裁警告官方集锦都没有，唯一完整的是 X @gerebit0 转发的
+    # Tennis TV 转播录屏，最高 1206×652。spec 的 source_quality_exceptions 认领了它，这里补上白名单
+    # （片子已经发了；缺这一行 main 上 test_每条spec的旁白都还估得下 一直红）。
+    "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xg.mp4": 652,
     # Sun–Lys Beijing2026: official highest rendition720p; conditional owner approval.
     "https://www.wtatennis.com/videos/4585115/junior-no-1-sun-xinran-advances-on-wta-debut-in-beijing-as-lys-retires": 720,
     "https://www.youtube.com/watch?v=-6Gv0033I2I": 720,   # 郑钦文重剪源

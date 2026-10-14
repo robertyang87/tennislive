@@ -74,3 +74,40 @@ def test_梯子里某一档挂住会超时换下一档(tmp_path, monkeypatch):
     out = reel._download_one(YT, tmp_path / "src.mp4")
     assert out.is_file()
     assert len(calls) == 2 and all(t == reel.YTDLP_ATTEMPT_TIMEOUT for t in calls)
+
+
+def test_probe用了Release存档_dry_run照样按YouTube地址认领上():
+    """probe.json 的 url 是 Release 直链，spec 写 YouTube 地址——按视频 id 认（梅西恩怨片十条源一条都没认上）。"""
+    import probe_sources
+
+    assert probe_sources.spec_url_for(REL, [YT]) == YT
+    assert probe_sources.spec_url_for(YT, [YT]) == YT
+    assert probe_sources.spec_url_for(REL, ["https://www.youtube.com/watch?v=aaaaaaaaaaa"]) is None
+    assert probe_sources.spec_url_for("https://example.com/a.mp4", [YT]) is None
+
+
+def test_claim_probes按视频id认领并换成spec里的地址(tmp_path, monkeypatch):
+    import json as _json
+
+    d = tmp_path / "output/2026-10-15/reel/x"
+    d.mkdir(parents=True)
+    (d / "probe.json").write_text(_json.dumps({"url": REL, "scene_cuts": [1.0]}), encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    found, missing = reel.claim_probes({"sources": {"a": YT}})
+    assert missing == [] and found[YT][1]["url"] == YT and found[YT][1]["_probed_url"] == REL
+
+
+def test_原地址探过的probe优先_不被Release存档那份盖掉(tmp_path, monkeypatch):
+    """原地址那份可能带着人给的 --scorebox 量的死球时刻；按存档重探的没有——盖掉会让段尾硬闸失明。"""
+    import json as _json
+    import probe_sources
+
+    for day, url, cuts in (("2026-10-14", YT, [1.0]), ("2026-10-15", REL, [2.0])):
+        d = tmp_path / f"output/{day}/reel/x"
+        d.mkdir(parents=True)
+        (d / "probe.json").write_text(_json.dumps({"url": url, "scene_cuts": cuts}), encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    found, _missing = reel.claim_probes({"sources": {"a": YT}})
+    assert found[YT][1]["scene_cuts"] == [1.0]
+    assert probe_sources.probe_for(YT, {REL: {"k": 2}, YT: {"k": 1}}) == {"k": 1}
+    assert probe_sources.probe_for(YT, {REL: {"k": 2}}) == {"k": 2}
