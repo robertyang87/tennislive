@@ -1,33 +1,27 @@
-name: Current-model source review (temporary)
+name: Preserve finite current-model TTS inputs (temporary)
 on:
   workflow_dispatch:
 permissions:
   contents: write
 jobs:
-  source:
+  preserve:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 4
     steps:
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Download exact user source
-        env:
-          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg
-          pip install -q 'yt-dlp[default]' bgutil-ytdlp-pot-provider
-          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
-          for i in $(seq 1 20); do
-            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then break; fi
-            sleep 2
-          done
-          printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
-          python -m yt_dlp --js-runtimes node --cookies "$RUNNER_TEMP/yt-cookies.txt" --extractor-args 'youtube:player_client=mweb' --retries 2 --fragment-retries 2 -f 'bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b' -S 'res:1080,fps,vcodec:h264,acodec:m4a' --merge-output-format mp4 --write-info-json -o '/tmp/moon-source.%(ext)s' 'https://youtu.be/hONjK8IF-tI'
-      - name: Preserve original source for current-model review
+      - name: Preserve already generated finite audio bundle
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release view review-source-chwalinska-wuhan --repo robertyang87/tennislive >/dev/null 2>&1 || gh release create review-source-chwalinska-wuhan --repo robertyang87/tennislive --draft --target '${{ github.sha }}' --title 'Temporary official match source for current-model review' --notes 'Internal source only; not a completed reel.'
-          gh release upload review-source-chwalinska-wuhan /tmp/moon-source.mp4 /tmp/moon-source.info.json --repo robertyang87/tennislive --clobber
+          set -euo pipefail
+          gh api repos/robertyang87/tennislive/git/blobs/8844d5ab8a0a43469f3a07b02f9e328837f9b77d > /tmp/bundle-blob.json
+          python - <<'PY'
+          import json,base64,hashlib
+          from pathlib import Path
+          j=json.loads(Path('/tmp/bundle-blob.json').read_text())
+          b=base64.b64decode(j['content'])
+          assert hashlib.sha256(b).hexdigest()=='37e0599dd181ebb75932f62c58af328bc216902894f7accad8a722f68fc59c72'
+          Path('/tmp/tts_bundle.zip').write_bytes(b)
+          PY
+          TAG='reel-tts-chwalinska-bouzkova-wuhan-2026-r2-37e0599dd181ebb7'
+          gh release view "$TAG" --repo robertyang87/tennislive >/dev/null 2>&1 || gh release create "$TAG" --repo robertyang87/tennislive --target '${{ github.sha }}' --title 'Native TTS inputs: Chwalinska Wuhan round two' --notes 'Finite generated audio and word-boundary inputs. Not a completed film or QC approval.'
+          gh release upload "$TAG" /tmp/tts_bundle.zip --repo robertyang87/tennislive --clobber
