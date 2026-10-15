@@ -11,24 +11,26 @@
   "cover": {
     "eyebrow": "网球有故事",
     "layout": "solo",
-    "subject": "郑钦文",
-    "hook": "擦网为啥喊Let\n郑钦文也中招",
-    "_hook_why": "网球有故事的钩子：第一行交代这期讲什么（擦网为什么喊 Let），第二行是封面上这个人和这件事的关系——郑钦文在快四表演赛里忘了擦网不重发、丢了一分（澳网官方片名「Zheng Qinwen Forgets the Let Rule in Fast4 Tennis!」）。8 字、6 字，solo 每行 ≤10；没有破发、抢七这类术语。",
-    "narration": "擦网为啥喊 let？郑钦文也中招。",
+    "subject": "球网",
+    "hook": "擦网为啥喊Let",
+    "_hook_why": "账号所有者 2026-10-15：不要用郑钦文做封面，钩子只留一行。8 个字符，零术语，问的就是这期的题。",
+    "narration": "擦网为啥喊 let？",
     "_narration_why": "念的就是海报上那句钩子。",
-    "topic": "擦网喊Let · 它原本的意思是阻碍",
+    "topic": "擦网喊的是 Let 不是 Net",
     "portrait": {
-      "frame_at": 11.6,
-      "source": "zq",
+      "image": "assets/reel/letnet/let-cover-net.jpg",
       "fit": "cover",
-      "focus": 0.61,
-      "focus_y": 1.0,
-      "zoom": 1.15,
-      "_frame_why": "官方高清实拍：这场是 2025-01-09 墨尔本罗德·拉沃尔球场「A Night With Novak」慈善表演赛（新华社/中国日报香港版 2025-01-10）。2026-10-15 查过：本仓库 find_cover_photo.py --player Zheng --event \"Australian Open\" --date 2025-01-09 --zh 郑钦文 --zh 德约科维奇 在 runner 上跑（run 38679489114）：ATP Media／WTA 照片接口、WTA photo-resources、WTA 赛后稿头图、搜狗微信都没有对得上的；AP 通讯社一档被 Cloudflare 人机挑战挡下（HTTP 403 cf-mitigated: challenge），墨尔本没有登记当地网站；澳网官网、Getty 本环境不可达；表演赛没有赛后稿可挂头图。按 2026-09-26 常设授权用抽帧：澳网官方 YouTube 1920×1080 原片 11.6 秒，郑钦文偏正面、双眼睁开、合焦、举着球拍在笑，正是她刚在这一分里『忘了快四没有 let』之后的反应；转播比分条在画面左下（x<660），3:4 窗口（focus 0.61）外。zoom 1.15、focus_y 1.0：本地并排渲过 14.0/11.6/12.2/12.8 秒 × 两档取景，只有这一组眼睛到下巴全在台头带（0–170）和钩子带（790 起）之间——14.0 秒那版钩子横穿下巴。",
-      "_low_res_why": "源片 1920×1080，铺 1080×1440 按高度放大 1.33 倍、再乘 zoom 1.15（约 1.53 倍）；这场表演赛没有能取到的更大的官方实拍（见 _frame_why）。"
+      "focus": 0.75,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "source_url": "https://wtop.com/wp-content/uploads/2019/04/GettyImages-914370940.jpg",
+      "_portrait_why": "账号所有者 2026-10-15：封面不要郑钦文，要清晰表达 Let 的场景、必须用高清大图；在四档候选并排图里选了这张（A）。网球打在球网上的特写，Getty Images 编号 914370940（WTOP 媒体库转载原图，说明「Tennis ball hitting to net on blur court background」）。是通用图片，不是某场比赛的实拍。",
+      "_search_why": "Let 场景的高清实拍 2026-10-15 查过：AP（经 WTOP、KXAN、WFLA、PIX11、KTLA 等 WordPress 媒体库的说明全文搜索）只有球员撞网、触网丢分；Wikimedia Commons 搜索与 Tennis nets／Tennis umpires 分类没有擦网实拍；Flickr CC 搜索、Unsplash、Openverse 无结果或要授权；Getty 只拿得到带水印的预览。检索脚本与候选在 research/let-not-net-2026/。",
+      "_low_res_why": "原图 2121×1414，铺 1080×1440 按高度只需放大 1.02 倍。"
     },
     "scrim": "clear",
-    "_layout_why": "网球有故事讲一件事，不印赛果，solo。"
+    "_layout_why": "网球有故事讲一件事，不印赛果，solo。",
+    "_topic_why": "账号所有者 2026-10-15 原话：「副标题改成擦网喊的是 Let 不是 Net」「不要后面半句了」。"
   },
   "push": {
     "auto": true,
