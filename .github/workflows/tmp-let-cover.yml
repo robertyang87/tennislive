@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: search
-        run: python3 research/let-not-net-2026/cover_search.py
+        run: true
       - name: fetch chosen originals
         run: |
           if [ -f research/let-not-net-2026/cover_fetch.txt ]; then
