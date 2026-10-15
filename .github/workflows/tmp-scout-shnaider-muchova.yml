@@ -26,45 +26,40 @@ jobs:
         run: |
           python -m pip install -q -e . playwright pillow
           for i in 1 2; do timeout 240 python -m playwright install --with-deps chromium && break; sudo pkill -9 apt-get || true; sudo dpkg --configure -a || true; done
-      - name: wta official
+      - name: round2
         continue-on-error: true
         run: |
-          D=data/research/shnaider-muchova-wuhan-2026-r3; mkdir -p $D
+          D=data/research/shnaider-muchova-wuhan-2026-r3; mkdir -p $D/photos
           UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
-          curl -sS -A "$UA" "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches" -o $D/matches.raw
-          MID=$(python - <<'P'
-          import json
-          d=json.load(open('data/research/shnaider-muchova-wuhan-2026-r3/matches.raw'))
-          for m in d.get('Matches',[]):
-              s=json.dumps(m).upper()
-              if 'MUCHOVA' in s and 'SHNAIDER' in s and m.get('DrawMatchType')=='S':
-                  print(m['MatchID']); break
-          P
-          )
-          echo "MID=$MID"; echo "$MID" > $D/match_id.txt
-          for p in stats point-by-point; do curl -sS -A "$UA" "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/$MID/$p" -o $D/$p.raw; done
-          curl -sS -A "$UA" "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&metric=SINGLES" -o $D/rankings.raw
-          curl -sS -A "$UA" "https://wtafiles.wtatennis.com/pdf/draws/2026/1075/MDS.pdf" -o $D/draw.pdf
-          ls -la $D
-      - name: tnns
-        continue-on-error: true
-        run: |
-          D=data/research/shnaider-muchova-wuhan-2026-r3
-          python tools/tnns_stats.py fetch --who Shnaider --who Muchova --date 2026-10-14 > $D/tnns.txt 2>&1 || true
-          tail -60 $D/tnns.txt
-      - name: cover
-        continue-on-error: true
-        run: |
-          D=data/research/shnaider-muchova-wuhan-2026-r3; mkdir -p $D/cover
-          MID=$(cat $D/match_id.txt)
-          python tools/fetch_wta_cover_photo.py --tournament 1075 --year 2026 --city wuhan --match "$MID" --surnames muchova shnaider --match-date 2026-10-14 --out $D/cover/reaction.jpg > $D/cover-reaction.txt 2>&1 || true
-          tail -30 $D/cover-reaction.txt
-          for p in Muchova Shnaider; do
-            python tools/find_cover_photo.py --player $p --event Wuhan --date 2026-10-14 --tour wta --days 2 > $D/cover-find-$p.txt 2>&1 || true
-            tail -60 $D/cover-find-$p.txt
+          for p in stats point-by-point; do curl -sS -A "$UA" "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS014/$p" -o $D/$p.raw; done
+          curl -sS -A "$UA" "https://wtafiles.wtatennis.com/pdf/draws/2026/1075/OP.pdf" -o $D/oop.pdf || true
+          for u in \
+            "https://photoresources.wtatennis.com/photo-resources/2026/10/15/af0e284d-bbd7-40a8-b497-54d5a243fce6/Shnaider-R3-Di-Yin.jpg" \
+            "https://photoresources.wtatennis.com/wta/photo/2026/10/15/2a0c79ff-71d7-4128-b507-9cdc3d2c021f/Diana-Shnaider_Wuhan-2026.jpg"; do
+            curl -sS -A "$UA" "$u" -o "$D/photos/$(basename "$u")"
           done
+          python tools/find_cover_photo.py --player Muchova --event Wuhan --date 2026-10-15 --tour wta --days 1 --zh 穆霍娃 --city 武汉 > $D/cover-find-Muchova-r3.txt 2>&1 || true
+          tail -80 $D/cover-find-Muchova-r3.txt
+          python - <<'P'
+          import json,re,subprocess,pathlib
+          D=pathlib.Path('data/research/shnaider-muchova-wuhan-2026-r3')
+          t=(D/'cover-find-Muchova-r3.txt').read_text()
+          urls=sorted(set(u for u in re.findall(r'https://photoresources\.wtatennis\.com/\S+?\.jpg',t) if 'R3' in u or '10/15' in u))
+          for u in urls[:8]:
+              subprocess.run(['curl','-sS','-A','Mozilla/5.0',u,'-o',str(D/'photos'/u.rsplit('/',1)[1])])
+          print(urls)
+          P
+          python - <<'P'
+          from PIL import Image; import pathlib
+          for f in pathlib.Path('data/research/shnaider-muchova-wuhan-2026-r3/photos').glob('*.jpg'):
+              try:
+                  im=Image.open(f); ex=im.getexif(); print(f.name, im.size, ex.get(306), ex.get(270))
+                  im.thumbnail((1200,1200)); im.save(f.with_suffix('.small.jpg'),quality=85)
+              except Exception as e: print(f, e)
+          P
+          ls -la $D $D/photos
       - name: commit
         run: |
           git config user.name github-actions; git config user.email actions@github.com
-          git add -f data/research/shnaider-muchova-wuhan-2026-r3
-          git commit -qm "scout: shnaider-muchova wuhan r3 [skip ci]" && git push origin HEAD:${GITHUB_REF_NAME}
+          rm -f data/research/shnaider-muchova-wuhan-2026-r3/photos/*[!l].jpg.bak; git add -f data/research/shnaider-muchova-wuhan-2026-r3
+          git commit -qm "scout2: shnaider-muchova wuhan r3 [skip ci]" && git push origin HEAD:${GITHUB_REF_NAME}
