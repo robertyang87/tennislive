@@ -2,14 +2,62 @@
   "source_url": "https://www.youtube.com/watch?v=6q9HMdjYpVg",
   "source_sha256": "e3925fe9cfda9768dc000134ef860eab839811d7f2932597376c8f4179e5a900",
   "method": "asr_cross_checked",
-  "reviewed_at": "2026-10-15T19:29:25.558648+00:00",
+  "reviewed_at": "2026-10-15T19:35:27.234466+00:00",
   "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
-  "reviewed_from": 191.6,
-  "reviewed_to": 198.17,
+  "reviewed_from": 153.1,
+  "reviewed_to": 185.7,
   "status": "complete",
   "uncertain_spans": [],
-  "foreground_english": [],
+  "foreground_english": [
+    {
+      "start": 153.32,
+      "end": 157.64,
+      "en": "First of all, I want to ask Novak, what are you still doing here? Come on.",
+      "zh": "先问问诺瓦克：你怎么还在这儿？"
+    },
+    {
+      "start": 159.56,
+      "end": 164.98,
+      "en": "No jokes apart. What is it, our third final?",
+      "zh": "不开玩笑，这是第三次决赛了吧？"
+    },
+    {
+      "start": 165.5,
+      "end": 167.66,
+      "en": "Maybe not the last. Hope so.",
+      "zh": "也许不是最后一次，希望吧。"
+    },
+    {
+      "start": 167.84,
+      "end": 170.9,
+      "en": "Because you're probably going to be in many more.",
+      "zh": "你大概还会进很多次。"
+    },
+    {
+      "start": 171.36,
+      "end": 175.6,
+      "en": "I don't know when are you planning to slow down a little bit,",
+      "zh": "不知道你打算什么时候慢下来，"
+    },
+    {
+      "start": 175.6,
+      "end": 178.3,
+      "en": "but congrats to you and your team.",
+      "zh": "恭喜你和你的团队。"
+    },
+    {
+      "start": 178.44,
+      "end": 181.6,
+      "en": "I mean, 24. I feel like I have not a bad career,",
+      "zh": "24个啊。我觉得我生涯还不错，"
+    },
+    {
+      "start": 181.6,
+      "end": 184.86,
+      "en": "and I have 20 titles. You have 24 Grand Slams. Wow.",
+      "zh": "我有20个冠军，你有24个大满贯。"
+    }
+  ],
   "asr_evidence": "data/source_asr/6q9HMdjYpVg/small.en.json + medium.en.json",
-  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/6q9HMdjYpVg 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 191.6–198.17 秒内都没有任何英文词（窗口边界避开了最近的词）。",
-  "review_note": "致辞中间的掌声空当 189.29–198.17。"
+  "review_note": "梅德韦杰夫颁奖致辞原声，两档逐词一致（small 153.56–182.84；medium 153.28–184.86）。段尾 185.7 在下一句 And so yeah（185.90）之前。"
 }
