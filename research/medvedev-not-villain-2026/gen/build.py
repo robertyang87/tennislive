@@ -56,6 +56,7 @@ spec={
   "us25":"美网官方 59.94 fps → 50，第五盘最后一分的广角与近景配旁白，丢帧看不出",
   "wsc":"规整后 50 fps（原片 30 fps 竖版），场边与发布会说话头，人基本不动"},
  "_no_probe_why":{k:{"why":f"{INFO[k][3]} 官方，download-video 存档后本地 ffprobe {INFO[k][0]}×{INFO[k][1]}@{INFO[k][2]}；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。"+("（9aqUxco0bqo 原片 720×1280 竖版，tmp 工作流 crop 720:960:0:160 → 810×1080 → 左右黑边垫成 1920×1080、50 fps、音轨原样拷贝，见 research/medvedev-not-villain-2026/normalize.sh；3:4 居中窗口正好取到原画面。）" if k=="wsc" else ""),"width":INFO[k][0],"height":INFO[k][1],"fps":INFO[k][2]} for k in sources},
+ "_tennistv_trim":"Tennis TV 源（SXCs4vTWo_s、Rv0Q9jXIz-M、yNxzL-8i9NU、l7F7uLC-GGM、9aqUxco0bqo）：16:9 的几条 cx 0.5 居中，角上的台标在 3:4 取景窗外；蒙特卡洛片尾板 156.3 秒起，末段收在 156.0；竖版短片 ws_c 的台标在画面内，crop_zoom 1.08＋fill_y 1.0 裁掉；马德里那条片尾板 156.3 秒起，末段收在 156.0；辛辛那提、温斯顿-塞勒姆集锦离片尾 30 秒以上。",
  "_primary_why":"主源是 sources 的第一个键 mc26（Tennis TV 1080p50）；北京那条拿掉之后沿用同一个 50 fps 输出。",
  "_production_status":"spec_ready_for_render",
  "_why_sources":"比赛与颁奖画面全部来自官方频道：Tennis TV（SXCs4vTWo_s、Rv0Q9jXIz-M、yNxzL-8i9NU、l7F7uLC-GGM、9aqUxco0bqo）、US Open（9CQYJlU5_Ew、MEFpXBwnyQA、6q9HMdjYpVg）、Australian Open（uWxN2lH2Fa0、MWNZOZr_uMU），以及澳网主转播方 Nine 的 Wide World of Sports（xH4R5HNq-6s，2022 澳网怒吼的原声只有它有）、美网美国主转播方 ESPN（oXmpP1kLyxQ，2025 美网停赛六分钟的全过程；美网官方加长集锦 p2lgExFvcug 把这段剪掉了）。2017 温网撒硬币没有官方画面，用字卡和旁白讲。",

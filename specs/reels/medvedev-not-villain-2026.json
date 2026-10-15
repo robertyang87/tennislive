@@ -244,6 +244,7 @@
    "fps": "50/1"
   }
  },
+ "_tennistv_trim": "Tennis TV 源（SXCs4vTWo_s、Rv0Q9jXIz-M、yNxzL-8i9NU、l7F7uLC-GGM、9aqUxco0bqo）：16:9 的几条 cx 0.5 居中，角上的台标在 3:4 取景窗外；蒙特卡洛片尾板 156.3 秒起，末段收在 156.0；竖版短片 ws_c 的台标在画面内，crop_zoom 1.08＋fill_y 1.0 裁掉；马德里那条片尾板 156.3 秒起，末段收在 156.0；辛辛那提、温斯顿-塞勒姆集锦离片尾 30 秒以上。",
  "_primary_why": "主源是 sources 的第一个键 mc26（Tennis TV 1080p50）；北京那条拿掉之后沿用同一个 50 fps 输出。",
  "_production_status": "spec_ready_for_render",
  "_why_sources": "比赛与颁奖画面全部来自官方频道：Tennis TV（SXCs4vTWo_s、Rv0Q9jXIz-M、yNxzL-8i9NU、l7F7uLC-GGM、9aqUxco0bqo）、US Open（9CQYJlU5_Ew、MEFpXBwnyQA、6q9HMdjYpVg）、Australian Open（uWxN2lH2Fa0、MWNZOZr_uMU），以及澳网主转播方 Nine 的 Wide World of Sports（xH4R5HNq-6s，2022 澳网怒吼的原声只有它有）、美网美国主转播方 ESPN（oXmpP1kLyxQ，2025 美网停赛六分钟的全过程；美网官方加长集锦 p2lgExFvcug 把这段剪掉了）。2017 温网撒硬币没有官方画面，用字卡和旁白讲。",
@@ -503,7 +504,7 @@
   {
    "source": "md21",
    "start": 148.0,
-   "end": 156.3,
+   "end": 156.0,
    "cx": 0.5,
    "track": false,
    "narration": "",
@@ -520,12 +521,12 @@
     },
     {
      "at": 6.36,
-     "end": 8.08,
+     "end": 7.78,
      "text": "He loves the clay, of course he does.\n他爱红土，当然爱。"
     }
    ],
    "_quote_kind": "broadcast",
-   "_why": "赛点后他在镜头上写下 Love clay :)。两档一致（small 144.30–156.10 记成 Klee；medium 147.16–156.18 写 clay）。段首 148.0 在 and ace（147.16–147.9）之后。",
+   "_why": "赛点后他在镜头上写下 Love clay :)。两档一致（small 144.30–156.10 记成 Klee；medium 147.16–156.18 写 clay）。段首 148.0 在 and ace（147.16–147.9）之后；段尾 156.0：Tennis TV 片尾板 156.3 秒起（账号所有者 2026-10-16 要拿掉 Tennis TV logo），解说最后半个词（156.18 前后）随之收掉。",
    "point_end_ok": "比赛已经结束，签名镜头。"
   },
   {
@@ -1138,16 +1139,16 @@
   },
   {
    "source": "mc26",
-   "start": 152.0,
-   "end": 162.5,
+   "start": 151.3,
+   "end": 156.0,
    "cx": 0.5,
    "track": false,
-   "narration": "他把球拍砸了好几下，最后扔进了场边的垃圾桶。整场比赛，他一局都没拿到。",
+   "narration": "砸完球拍，他把它扔进了场边的垃圾桶。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fault-not-out-2026 同一档）。"
    },
-   "_why": "赛点后两人走向网前握手，空当 151.15–164.61；段尾在 Tennis TV 片尾台标（约 164 秒）之前。官方集锦没有扔垃圾桶的画面，旁白按报道讲。",
+   "_why": "赛点后两人走向网前握手，空当 151.15–164.61；Tennis TV 片尾板在 156.3 秒起（156.5 已是台标，账号所有者 2026-10-16：「7 分 40 多秒有 tennis tv 的 logo 要拿掉」），段尾收在 156.0，连 0.18 秒溶解也在片尾板之前。官方集锦没有扔垃圾桶的画面，旁白按报道讲。",
    "point_end_ok": "比赛已经结束，握手。"
   },
   {
@@ -1216,7 +1217,10 @@
    ],
    "_quote_kind": "broadcast",
    "_why": "Tennis TV 官方竖版短片（9aqUxco0bqo，Tennis TV 台标、片内烧录黄字）：前半是场边椅子上的自言自语，后半是赛后发布会。前半两档转写对得上（medium：start a career in pickleball, not too late, with jacksaw…）；后半两档都没转出来，按片内烧录字幕逐字写。段尾 17.3：视频流只有 17.50 秒（容器 17.65 是音轨长度），后面接溶解要多取 0.18 秒。",
-   "point_end_ok": "场边与发布会，不是回合。"
+   "point_end_ok": "场边与发布会，不是回合。",
+   "crop_zoom": 1.08,
+   "fill_y": 1.0,
+   "_crop_zoom_why": "Tennis TV 竖版短片后半段（发布会）左上角烧着 Tennis TV 台标（竖版画面的 y 0–45/1080）；放大 1.08、底边对齐，裁掉顶上约 80px，片内烧录字幕在下半部不受影响。"
   },
   {
    "source": "us19",
