@@ -61,6 +61,7 @@
     "2022 澳网半决赛 7-6(5) 4-6 6-4 6-1 胜西西帕斯；换边时对主裁怒吼（Wide World of Sports 原声），被罚 1.2 万美元，事后说完全后悔。",
     "2023 美网决赛 3-6 6-7(5) 3-6 负德约科维奇；颁奖致辞原声调侃、说当天又是结婚纪念日。",
     "2025 澳网首轮五盘胜世界第 418 的萨姆雷吉，球拍砸向网上摄像机；前两轮共被罚 7.6 万美元。",
+    "2025 美网首轮负邦齐 6-3 7-5 6-7(5) 0-6 6-4（邦齐视角），第三盘 5-4 邦齐赛点时摄影记者走进场地，主裁 Greg Allensworth 判重发一发，梅德韦杰夫煽动看台、停赛六分多钟；赛后砸拍，罚 42500 美元（30000 违反体育道德＋12500 砸拍）；发布会说 I expressed my emotions。",
     "2026 蒙特卡洛第二轮 0-6 0-6 负贝雷蒂尼，49 分钟，生涯第一次双蛋，砸拍后扔进垃圾桶。",
     "2026 温斯顿-塞勒姆第二轮 5-7 3-6 负外卡达姆（达姆首胜前十），自嘲该去打匹克球。"
    ],
@@ -80,6 +81,10 @@
     "https://www.si.com/tennis/daniil-medvedev-fined-whopping-76k-australian-open-broken-camera",
     "https://www.flashscore.com/news/tennis-monte-carlo-atp-singles-medvedev-fails-to-win-a-single-game-in-humiliating-defeat-to-berrettini-in-monte-carlo/bFfa1iCC",
     "https://www.aljazeera.com/sports/2026/4/8/medvedev-thrashed-6-0-6-0-by-berrettini-in-monte-carlo-zverev-battles-on",
+    "https://www.foxsports.com/articles/tennis/daniil-medvedev-is-fined-42500-for-unsportsmanlike-conduct-and-racket-abuse-for-us-open-outburst",
+    "https://www.aljazeera.com/sports/2025/8/25/daniil-medvedev-exits-us-open-after-photographer-incident-on-match-point",
+    "https://news.bet365.com/en-gb/article/i-just-expressed-my-emotions-daniil-medvedev-on-us-open-meltdown/2025082509184152994",
+    "https://tennis.com/news/articles/daniil-medvedev-benjamin-bonzi-us-open-mayhem",
     "https://www.atptour.com/en/news/winston-salem-2026-tuesday-report",
     "https://www.tennismajors.com/atp/maybe-i-should-start-a-career-in-pickleball-medvedev-jokes-after-damm-becomes-his-fourth-loss-in-five-matches-859436.html"
    ]
@@ -105,6 +110,8 @@
   "us23": "https://www.youtube.com/watch?v=6q9HMdjYpVg",
   "ao25": "https://www.youtube.com/watch?v=MWNZOZr_uMU",
   "ws26": "https://www.youtube.com/watch?v=l7F7uLC-GGM",
+  "us25e": "https://www.youtube.com/watch?v=oXmpP1kLyxQ",
+  "us25": "https://www.youtube.com/watch?v=p2lgExFvcug",
   "wsc": "https://github.com/robertyang87/tennislive/releases/download/reel-src-medvedev-not-villain-2026/ws_c.mp4"
  },
  "source_fallbacks": {
@@ -117,12 +124,14 @@
   "ao22r": "https://github.com/robertyang87/tennislive/releases/download/source-xH4R5HNq-6s/xH4R5HNq-6s.mp4",
   "us23": "https://github.com/robertyang87/tennislive/releases/download/source-6q9HMdjYpVg/6q9HMdjYpVg.mp4",
   "ao25": "https://github.com/robertyang87/tennislive/releases/download/source-MWNZOZr_uMU/MWNZOZr_uMU.mp4",
-  "ws26": "https://github.com/robertyang87/tennislive/releases/download/source-l7F7uLC-GGM/l7F7uLC-GGM.mp4"
+  "ws26": "https://github.com/robertyang87/tennislive/releases/download/source-l7F7uLC-GGM/l7F7uLC-GGM.mp4",
+  "us25e": "https://github.com/robertyang87/tennislive/releases/download/source-oXmpP1kLyxQ/oXmpP1kLyxQ.mp4",
+  "us25": "https://github.com/robertyang87/tennislive/releases/download/source-p2lgExFvcug/p2lgExFvcug.mp4"
  },
  "conform": {
+  "us23": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。",
   "us21": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。",
-  "us19": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。",
-  "us23": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。"
+  "us19": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。"
  },
  "source_quality_exceptions": {
   "https://www.youtube.com/watch?v=9CQYJlU5_Ew": {
@@ -151,6 +160,8 @@
   "ao22": "澳网官方 25 fps，升到 50 fps 每帧整齐重复一次",
   "ao22r": "Wide World of Sports 原片 25 fps，升到 50 fps 每帧整齐重复一次",
   "ao25": "澳网官方 25 fps，升到 50 fps 每帧整齐重复一次",
+  "us25e": "ESPN 25 fps，升到 50 fps 每帧整齐重复一次；停赛中的近景与看台",
+  "us25": "美网官方 59.94 fps → 50，第五盘最后一分的广角与近景配旁白，丢帧看不出",
   "wsc": "规整后 50 fps（原片 30 fps 竖版），场边与发布会说话头，人基本不动"
  },
  "_no_probe_why": {
@@ -214,6 +225,18 @@
    "height": 1080,
    "fps": "60000/1001"
   },
+  "us25e": {
+   "why": "ESPN（美网美国主转播方） 官方，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "us25": {
+   "why": "US Open 官方，download-video 存档后本地 ffprobe 1920×1080@60000/1001；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "60000/1001"
+  },
   "wsc": {
    "why": "Tennis TV 官方，download-video 存档后本地 ffprobe 1920×1080@50/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。（9aqUxco0bqo 原片 720×1280 竖版，tmp 工作流 crop 720:960:0:160 → 810×1080 → 左右黑边垫成 1920×1080、50 fps、音轨原样拷贝，见 research/medvedev-not-villain-2026/normalize.sh；3:4 居中窗口正好取到原画面。）",
    "width": 1920,
@@ -223,7 +246,7 @@
  },
  "_primary_why": "主源是 sources 的第一个键 mc26（Tennis TV 1080p50）；北京那条拿掉之后沿用同一个 50 fps 输出。",
  "_production_status": "spec_ready_for_render",
- "_why_sources": "比赛与颁奖画面全部来自官方频道：Tennis TV（SXCs4vTWo_s、Rv0Q9jXIz-M、yNxzL-8i9NU、l7F7uLC-GGM、9aqUxco0bqo）、US Open（9CQYJlU5_Ew、MEFpXBwnyQA、6q9HMdjYpVg）、Australian Open（uWxN2lH2Fa0、MWNZOZr_uMU），以及澳网主转播方 Nine 的 Wide World of Sports（xH4R5HNq-6s，2022 澳网怒吼的原声只有它有）。2017 温网撒硬币没有官方画面，用字卡和旁白讲。",
+ "_why_sources": "比赛与颁奖画面全部来自官方频道：Tennis TV（SXCs4vTWo_s、Rv0Q9jXIz-M、yNxzL-8i9NU、l7F7uLC-GGM、9aqUxco0bqo）、US Open（9CQYJlU5_Ew、MEFpXBwnyQA、6q9HMdjYpVg）、Australian Open（uWxN2lH2Fa0、MWNZOZr_uMU），以及澳网主转播方 Nine 的 Wide World of Sports（xH4R5HNq-6s，2022 澳网怒吼的原声只有它有）、美网美国主转播方 ESPN（oXmpP1kLyxQ，2025 美网停赛六分钟的全过程；美网官方加长集锦 p2lgExFvcug 把这段剪掉了）。2017 温网撒硬币没有官方画面，用字卡和旁白讲。",
  "segments": [
   {
    "source": "ao22r",
@@ -955,6 +978,115 @@
    },
    "_why": "第四盘回合，空当 325.93–338.55。",
    "point_end_ok": "第四盘回合，旁白不讲这一分；段尾 338.5 在解说开口之前。"
+  },
+  {
+   "source": "us25e",
+   "start": 31.0,
+   "end": 50.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二〇二五年美网首轮，他两盘落后。第三盘四比五，邦齐拿到赛点，一发失误之后，一个摄影记者走进了场地，主裁判让邦齐重发一发。梅德韦杰夫冲到主裁椅下理论，又转身对着看台挥手，让全场喊起来。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fault-not-out-2026 同一档）。"
+   },
+   "_why": "ESPN（美网美国主转播方）官方频道「Daniil Medvedev ignites crowd after a photographer walked on the court at match point」（oXmpP1kLyxQ）：主裁椅下理论、转身煽动看台。两档转写在 26.48–50.66 都无词；段首 31.0 从他走到主裁椅下起。",
+   "point_end_ok": "赛点前的停赛，不是回合。",
+   "inset": {
+    "image": "assets/reel/medvedev-real/label-us25.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 4.2,
+    "motion": "editorial",
+    "label": {
+     "topic": "摄影师闯进赛点",
+     "date": "2025.08.24",
+     "place": "美网 第一轮",
+     "score": "3-6 5-7 7-6 6-0 4-6",
+     "people": "梅德韦杰夫 vs 邦齐"
+    }
+   }
+  },
+  {
+   "source": "us25e",
+   "start": 50.5,
+   "end": 56.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.16,
+     "end": 2.9,
+     "text": "He wants to go home, guys. He doesn't like to be here,\n他想回家，他不想待在这儿，"
+    },
+    {
+     "at": 2.9,
+     "end": 5.8,
+     "text": "he gets paid by the match, not by the hour.\n他是按场拿钱，不是按小时。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "梅德韦杰夫对着镜头说主裁（解说随后：he looked directly into the camera, knew exactly … what he was saying）。medium 50.66–56.34 整句；small 52.72–56.30 只转出后半句，前半句按 medium。段首 50.5 在上一句（26.48 结束）之后，段尾 56.6 在下一句 Let's play（67.54）之前。",
+   "point_end_ok": "停赛中，不是回合。"
+  },
+  {
+   "source": "us25e",
+   "start": 266.0,
+   "end": 276.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "嘘声停不下来，看台上一遍遍喊着「二发」，他还朝主裁飞吻。邦齐在底线足足等了六分多钟，这一发才终于发出去。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fault-not-out-2026 同一档）。"
+   },
+   "_why": "同一条 ESPN：邦齐在底线等着发球，空当 262.90–276.66。",
+   "point_end_ok": "停赛中，不是回合。"
+  },
+  {
+   "source": "us25e",
+   "start": 391.0,
+   "end": 420.3,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 18.0,
+     "end": 19.48,
+     "text": "Match point saved.\n赛点被救下来了。"
+    },
+    {
+     "at": 23.46,
+     "end": 26.4,
+     "text": "And Bonzi has never been so close to winning a match,\n邦齐离胜利从没这么近，"
+    },
+    {
+     "at": 26.4,
+     "end": 29.0,
+     "text": "yet so far away as he is right now.\n也从没这么远。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "停赛之后的赛点：邦齐发球、这一分被梅德韦杰夫拿下（395–409），看台沸腾。两档一致（small 409.10–419.88；medium 409.00–420.00）。段首 391.0 在 Wow（390.22）之后，段尾 420.3 在 ESPN 片尾板（421 秒起）之前。",
+   "point_end_ok": "这一分在 409 秒打完，之后是看台和邦齐的近景。"
+  },
+  {
+   "source": "us25",
+   "start": 686.0,
+   "end": 699.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "他把比赛追到二比二，第四盘六比零，决胜盘还是输给了邦齐。赛后他把球拍砸烂在椅子上，被罚四万二千五百美元。他说：我只是表达了我的情绪。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fault-not-out-2026 同一档）。"
+   },
+   "_why": "美网官方加长集锦（p2lgExFvcug），第五盘最后一个赛点（693–698）与邦齐近景，空当 685.74–699.92（两档都无词）。",
+   "point_end_ok": "第五盘最后一分在 698 秒打完，段尾 699.6 停在邦齐的笑。"
   },
   {
    "source": "mc26",

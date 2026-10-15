@@ -12,6 +12,7 @@
 | 2022 澳网半决赛 | 换边时对主裁 Jaume Campistol 怒吼、small cat；罚 12000 美元；事后说后悔；四盘胜西西帕斯 | Tennishead、Free Malaysia Today（AFP）、The Malaysian Insight |
 | 2023 美网决赛 | 3-6 6-7(5) 3-6 负德约；颁奖调侃、纪念日原声（德约也说 Happy anniversary） | 美网官方 6q9HMdjYpVg（两档转写） |
 | 2025 澳网首轮 | 五盘胜世界第 418 的萨姆雷吉；球拍反复砸网上摄像机；首轮罚 1 万、连同第二轮共 7.6 万美元 | Tennis Majors、SI |
+| 2025 美网首轮 | 负邦齐 6-3 7-5 6-7(5) 0-6 6-4；第三盘 5-4 赛点摄影记者入场，主裁判重发一发，停赛六分多钟；罚 42500 美元；I expressed my emotions | Fox Sports/AP、Al Jazeera、Sky Sports、bet365、tennis.com；ESPN oXmpP1kLyxQ、US Open p2lgExFvcug |
 | 2026 蒙特卡洛第二轮 | 0-6 0-6 负贝雷蒂尼，49 分钟，生涯第一次双蛋；砸拍（各家次数不一，片中只说好几下） | flashscore、Al Jazeera、Sky Sports |
 | 2026 温斯顿-塞勒姆第二轮 | 当地 8/25，头号种子负外卡达姆 5-7 3-6；达姆首胜前十；五场输四场；匹克球自嘲 | ATP、Tennis Majors；Tennis TV 官方竖版短片 |
 | ~~2026 中网半决赛~~ | 账号所有者 2026-10-15：中网那一下不是有意的，不放进片子 | — |
