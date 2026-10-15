@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-fault-not-out-2026-1a06c72dcc25a530",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-fault-not-out-2026-1a06c72dcc25a530/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38739860191"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38741103485"
   },
   "cover_seconds": 4.33,
   "cover_narrated": true,
@@ -64,44 +64,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "ece026b131c51391fbc1126105ea8ff4eb4adbec797bee38670e193297e2c91d",
+  "render_inputs_sha256": "cb51354d6c2d4b94e644a6a6951ed53b2a7e41a958770411e448240be97dc306",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "fault-not-out-2026",
-    "received_at": "2026-10-15T13:06:07Z",
-    "artifact_ready_at": "2026-10-15T13:13:04Z",
-    "elapsed_seconds": 417.305,
+    "received_at": "2026-10-15T13:15:12Z",
+    "artifact_ready_at": "2026-10-15T13:22:16Z",
+    "elapsed_seconds": 424.776,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "673eee3ab45e2e856027245c5b4b699d743122ee136d7a73bed006096c666949",
-    "spec_sha256": "bb2165d569435ec04f37865dbc8e6b64c9d12cda9ed934e7a8aebd1d5451641d",
-    "run_id": "38739860191",
+    "film_sha256": "c718b6dc39ee6bebfa225c3d95494b1eb9cae74b09d04439e886029c7376e251",
+    "spec_sha256": "c0d1985e64e961dba209e2037505be361dda414475ddc06d397a19f2afd8208f",
+    "run_id": "38741103485",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-15T13:09:22Z",
-        "run_id": "38739860191"
+        "at": "2026-10-15T13:18:31Z",
+        "run_id": "38741103485"
       }
     ],
-    "render_seconds": 222.305,
-    "pre_render_seconds": 195.0
+    "render_seconds": 225.776,
+    "pre_render_seconds": 199.0
   },
-  "film_sha256": "673eee3ab45e2e856027245c5b4b699d743122ee136d7a73bed006096c666949",
-  "film_bytes": 111670089,
-  "qc_attestation_sha256": "f1374bcf86fcbdf240cb05fcd02eeab6a734ff398dfb6c67411f7af77a8f0ff1",
+  "film_sha256": "c718b6dc39ee6bebfa225c3d95494b1eb9cae74b09d04439e886029c7376e251",
+  "film_bytes": 111666773,
+  "qc_attestation_sha256": "7b02ac2098af9fd16ecbd1477cb937e448c12422592163e2d6d2735afcc6c824",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-15T13:09:22Z",
-      "run_id": "38739860191"
+      "at": "2026-10-15T13:18:31Z",
+      "run_id": "38741103485"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-15T13:13:07Z",
-      "run_id": "38739860191"
+      "at": "2026-10-15T13:22:20Z",
+      "run_id": "38741103485"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-fault-not-out-2026/fault-not-out-2026.mp4",
-  "video_bytes": 111670089
+  "video_bytes": 111666773
 }
