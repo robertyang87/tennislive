@@ -886,7 +886,8 @@ jobs:
           python tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase render
           RENDER_STARTED=$(date -u +%FT%TZ)
           PYTHONPATH=src python tools/build_interview_clip.py \
-            --spec "$SPEC" --stage render
+            --spec "$SPEC" --stage render 2>&1 | tee "$RUNNER_TEMP/render.log"
+          test ${PIPESTATUS[0]} -eq 0
           python tools/video_sla.py finish --spec "$SPEC" --timeline "$RUNNER_TEMP/production-timeline.json" \
             --received-at "${{ steps.production_clock.outputs.received_at }}" \
             --render-started-at "$RENDER_STARTED" \
@@ -903,6 +904,19 @@ jobs:
       # 两档都过）。这一步只剩 render：`render()` 会从同一帧**重渲**一遍
       # poster.jpg，而 L2 质检凭证绑的是最终那份的哈希——对最终海报再量一次、
       # 重写凭证，一秒钟。
+
+      - name: 提交 render 日志（失败时）
+        if: failure()
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          OUTDIR="output/interviews/$SLUG"
+          mkdir -p "$OUTDIR"
+          tail -200 "$RUNNER_TEMP/render.log" > "$OUTDIR/_render.log" 2>/dev/null || echo "无日志" > "$OUTDIR/_render.log"
+          git config user.name "tennislive-bot"
+          git config user.email "bot@tennislive.local"
+          git add "$OUTDIR/_render.log"
+          git commit -m "debug: render 日志 ${{ github.run_id }}" || true
+          git push origin main || true
       - name: 终审封面视觉（出片后的最终海报，完全本地）
         if: github.event.inputs.mode == 'render'
         run: |
