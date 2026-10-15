@@ -19,6 +19,8 @@ on:
 jobs:
   tts:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -35,14 +37,16 @@ jobs:
             --file "${{ inputs.text_file }}" \
             --write-media /tmp/narration.mp3
           ls -la /tmp/narration.mp3
-          python -c "
-          import json, subprocess
-          r = subprocess.run(['ffprobe','-v','error','-show_entries','format=duration,size','-of','json','/tmp/narration.mp3'], capture_output=True, text=True)
-          print(r.stdout)
-          " || echo "ffprobe not available, skipping check"
-      - name: Upload narration
+      - name: Upload narration artifact
         uses: actions/upload-artifact@v4
         with:
           name: medvedev-narration
           path: /tmp/narration.mp3
           retention-days: 7
+      - name: Publish to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: tts-medvedev-narration
+          name: "Medvedev story narration (TTS)"
+          files: /tmp/narration.mp3
+          fail_on_unmatched_files: true
