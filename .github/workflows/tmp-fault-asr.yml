@@ -3,7 +3,7 @@ name: tmp-fault-asr
 on:
   push:
     branches: [claude/fault-not-out-2026]
-    paths: [research/fault-not-out-2026/clips.txt, .github/workflows/tmp-fault-asr.yml]
+    paths: [research/fault-not-out-2026/clips.txt, research/fault-not-out-2026/probe_windows.txt, .github/workflows/tmp-fault-asr.yml]
 permissions:
   contents: write
 jobs:
@@ -26,7 +26,10 @@ jobs:
           path: ~/.cache/huggingface
           key: faster-whisper-small.en-medium.en-v1
       - run: pip install -q faster-whisper
+      - name: probe
+        run: sudo apt-get install -y -qq ffmpeg >/dev/null 2>&1 || true; python research/fault-not-out-2026/asr_probe.py research/fault-not-out-2026/probe_windows.txt
       - name: clips
+        if: false
         run: |
           set -euo pipefail
           mkdir -p research/fault-not-out-2026/asr_clips
