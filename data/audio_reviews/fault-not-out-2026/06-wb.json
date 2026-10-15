@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=GeMppP-gRKc",
+  "source_sha256": "cd12257ae4486585b7069b86534ddaeb218c4abfb5d2dba78d041418d44174d7",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T12:58:30.035264+00:00",
+  "reviewed_from": 104.2,
+  "reviewed_to": 111.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/GeMppP-gRKc/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/GeMppP-gRKc 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 104.2–111.8 秒内都没有任何英文词（窗口边界避开了最近的词）。"
+}

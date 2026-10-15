@@ -1,0 +1,33 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=PYnZo-nL6Hk",
+  "source_sha256": "a9c66f7b9464991e75a98d85adf42a9774c71bb1ff0f48a490c2d53598c88399",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T12:58:30.035264+00:00",
+  "reviewed_from": 37.3,
+  "reviewed_to": 52.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 37.44,
+      "end": 43.28,
+      "en": "So you say it's actually the centre line?",
+      "zh": "你是说，其实是中线？"
+    },
+    {
+      "start": 46.14,
+      "end": 48.86,
+      "en": "I played tennis 30 years.",
+      "zh": "我打了 30 年网球，"
+    },
+    {
+      "start": 48.86,
+      "end": 51.78,
+      "en": "The first time I hear this foot fault in my life.",
+      "zh": "这辈子头一回听说这种脚误。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/PYnZo-nL6Hk/small.en.json + medium.en.json",
+  "review_note": "两档转写一致（small 37.44–43.22、46.18–51.66；medium 40.26–43.28、46.14–51.78）。两档都把最后一句记成 this is also football，按画面里布勃利克向主裁交涉、话题正是这次脚误，写作 this foot fault。段尾 52.5 在 Yeah, it is（52.62）之前。"
+}

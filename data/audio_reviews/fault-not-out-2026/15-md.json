@@ -1,0 +1,39 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=FhSymjai5hM",
+  "source_sha256": "9a2c7eee5d27efbd45d8e54941986bb540355fa878f1a2343c048aac0d7173ff",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T12:58:30.035264+00:00",
+  "reviewed_from": 129.2,
+  "reviewed_to": 139.22,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 129.34,
+      "end": 131.92,
+      "en": "I'm like, maybe I touched the line,",
+      "zh": "我心想，也许我是碰到线了，"
+    },
+    {
+      "start": 131.92,
+      "end": 133.62,
+      "en": "but I was so close.",
+      "zh": "可差得太少了。"
+    },
+    {
+      "start": 133.62,
+      "end": 136.38,
+      "en": "So I want to say, if you want to call it on the second serve,",
+      "zh": "所以我想说：要在二发上判，"
+    },
+    {
+      "start": 136.38,
+      "end": 139.2,
+      "en": "make an electronic system for this.",
+      "zh": "就上电子系统吧。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/FhSymjai5hM/small.en.json + medium.en.json",
+  "review_note": "梅德韦杰夫赛后场上采访原话，两档逐词一致（medium 多记一个 if you 口误，按 small 写）。段尾 139.22 在 this（139.20）之后、下一句 I don't think（139.20 起，small 139.44）之前。"
+}

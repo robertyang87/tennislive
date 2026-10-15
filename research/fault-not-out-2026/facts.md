@@ -25,7 +25,7 @@
 ## 三、电子司线
 - 2021 澳网：全部比赛首次不用司线，Hawk-Eye Live 播放预录人声「out」「fault」「foot fault」（ESPN、Greek City Times 报道 8 位社区英雄录音）。
 - 2025 温网：18 块比赛场首次全部用电子司线（Hawk-Eye），司线员在温网的角色结束；需要时人声在 0.1 秒内报「out」「fault」或「foot fault」，24 种预录声音由全英俱乐部员工和导览录制（wimbledon.com 2025-07-03 官方文章；AP 2024-10-09 宣布停用司线）。⚠️ Metro 说是合成声，与官方说法冲突，按官方。
-- 2025 澳网（官方视频 VwN4Bm3liL0）：汤普森还没抛球，系统就报了脚误；解说「That AI has got to kind of calm down a bit」「three foot faults」。
+- 2025 澳网（官方视频 VwN4Bm3liL0）：发球方还没抛球，系统就连报脚误（汤普森对科普费尔；被报的是谁画面看不准，旁白不点名）；解说「That AI has got to kind of calm down a bit」「three foot faults」。
 
 ## 四、名场面
 - 2009 美网女单半决赛，小威廉姆斯对克莱斯特尔斯：第二盘 5-6、15-30，二发被司线判脚误→双误，15-40；小威冲司线怒吼，被罚一分，正好是赛点，比赛结束，克莱斯特尔斯 6-4 7-5 胜。赛会裁判长 Brian Earley：「it just happened that point penalty was match point」。事后罚款 82500 美元（ESPN、CBS/AP、CNN）。⚠️ 没有官方源片，只用字卡 + 旁白，不放非官方画面。
