@@ -686,22 +686,6 @@ jobs:
       # `Sign in to confirm you're not a bot`，而日志上一行写着「已写入
       # cookies（25 行）」、下一行写着「COOKIES=未设置」。
       # 判据 `test_会下源片的每一步都要拿到cookie` 自己推导，不维护白名单。
-      - name: render 失败时提交错误摘要
-        if: failure()
-        run: |
-          LOGDIR="output/interviews/${{ github.event.inputs.slug }}"
-          mkdir -p "$LOGDIR"
-          echo "## render 失败摘要 $(date -u +%FT%TZ)" > "$LOGDIR/render_error.md"
-          echo "" >> "$LOGDIR/render_error.md"
-          echo "run: ${{ github.run_id }}" >> "$LOGDIR/render_error.md"
-          # GitHub 步骤日志不在 runner 磁盘上，这里记录环境快照供排查
-          df -h /tmp | tail -1 >> "$LOGDIR/render_error.md"
-          ls -la "$LOGDIR" >> "$LOGDIR/render_error.md" 2>&1 || true
-          git config user.name "tennislive-bot" && git config user.email "bot@tennislive.local"
-          git add "$LOGDIR/render_error.md"
-          git commit -m "debug: render 失败摘要 ${{ github.run_id }}" || true
-          git push origin main || true
-
       - name: 出封面并验视觉（完全本地，排在转写和编码之前）
         if: >-
           github.event.inputs.mode == 'render' ||
