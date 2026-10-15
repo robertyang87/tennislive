@@ -1,0 +1,32 @@
+name: medvedev-profanity-check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  transcribe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install whisper and ffmpeg
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null 2>&1
+          python -m pip install -q openai-whisper
+      - name: Transcribe risk segments
+        run: |
+          for f in workspace/medvedev-story/audio-check/*.m4a; do
+            echo "===== $f ====="
+            python -m whisper "$f" --model base --language en --output_format txt --output_dir /tmp/transcripts 2>/dev/null
+            echo ""
+          done
+          echo "===== ALL TRANSCRIPTS ====="
+          cat /tmp/transcripts/*.txt
+      - name: Upload transcripts
+        uses: actions/upload-artifact@v4
+        with:
+          name: profanity-transcripts
+          path: /tmp/transcripts/
+          retention-days: 7
