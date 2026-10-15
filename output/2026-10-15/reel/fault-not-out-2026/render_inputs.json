@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "fault-not-out-2026",
-  "written_at": "2026-10-15T13:36:30Z",
-  "code_sha": "826dd074af6156d0eb0fcb8c3f8342dfb2c2f20c",
-  "spec_sha256": "84507f447933bc46b9b6a0bf9866a746ad01b2e7aebf490aa21ed3d66c6265f0",
-  "film_sha256": "b0f3cff1384fe2e1c2f320fa507ee3cd92f968ce75d921fc35370b32602f889d",
-  "film_bytes": 111648623,
-  "projection_sha256": "7814d8871e780126794e1e3bc8a13e6f5097002472e8d76c899d744ebc919ac9",
+  "written_at": "2026-10-15T14:04:37Z",
+  "code_sha": "db96c8af56cb8ae03d6db67d9018945c39bcea56",
+  "spec_sha256": "b7a4b737ae0175e13c010af4c470fefdafeee4b893bdbcc77e4ede647f19777d",
+  "film_sha256": "00ec8660d9be3c0f45d502c92e8864321379df7052cc1824c22e1a1d1064b5b1",
+  "film_bytes": 112425769,
+  "projection_sha256": "2a55865306ffe916aca9a859da6af8f9b28002da62a62db4cbc6c3ed650ef7cc",
   "claims": [
     [
       "cover",
@@ -47,22 +47,22 @@
     ],
     [
       "segments",
-      18,
+      19,
       "_quote_kind"
     ],
     [
       "segments",
-      20,
-      "_quote_kind"
-    ],
-    [
-      "segments",
-      22,
+      21,
       "_quote_kind"
     ],
     [
       "segments",
       23,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      24,
       "_quote_kind"
     ],
     [
@@ -148,19 +148,19 @@
     ],
     [
       "segments",
-      19,
+      18,
       "voice",
       "_why"
     ],
     [
       "segments",
-      21,
+      20,
       "voice",
       "_why"
     ],
     [
       "segments",
-      24,
+      22,
       "voice",
       "_why"
     ],
@@ -199,14 +199,20 @@
       30,
       "voice",
       "_why"
+    ],
+    [
+      "segments",
+      31,
+      "voice",
+      "_why"
     ]
   ],
   "assets": {
     "assets/reel/faultout/fault-cover-linejudge.jpg": "c07ec57bb5a8ab986d99f342d97290ed15d5403fb0f18ef1baec3185b26fa1a1"
   },
   "artifacts": {
-    "audio_review_binding.json": "1f6cef1e9f11bcea8cb53d96776f42056289c62b4e87b8edac27483dfe6d987a",
-    "subtitles.ass": "9976e034c1bdbb01644714389443ae2b5d973ba12412f15df3ca3ac3fee098ce",
+    "audio_review_binding.json": "2e9315fd8b97ec45924dffc3481d5725f8a0ac51fe33131032b53d47525d708e",
+    "subtitles.ass": "a07d422b64fccaa7c0490910cdd4eb402be97daa08878570aa4324e1975e33db",
     "poster.jpg": "215d16333262393c0d9749cd62d0f1a44dc5c45464873afcc9e84e47da9b24f1"
   },
   "projection": {
@@ -241,7 +247,7 @@
       "beats": [
         "冷开场：2025 澳网电子司线对汤普森连喊脚误。",
         "01 词源：faute／fail／default；发球区与场地的区别；温网电子司线三句话。",
-        "02 不出界也是 fault：克耶高斯脚误、梅德韦杰夫二发脚误与原话、布勃利克中点脚误。",
+        "02 不出界也是 fault：克耶高斯脚误、梅德韦杰夫二发脚误与原话、脚误规则字卡、布勃利克中点脚误。",
         "03 双误：卢布列夫；2009 美网小威；库尔尼科娃 31 次双误。",
         "延伸：羽毛球、壁球、UTS。",
         "收尾：out 说落点，fault 说没做到；落在一问。"
@@ -562,6 +568,15 @@
           "pitch": "+10Hz"
         },
         "point_end_ok": "B-roll，配旁白讲道理，不讲这一分。"
+      },
+      {
+        "title_card": "走动踩线\n都算脚误",
+        "kicker": "规则第18条",
+        "seconds": 12.4,
+        "narration": "脚误怎么算？发球动作里，不能走动或跑动，不能踩到底线，也不能踩到边线和中点的假想延长线。双脚离地跳起来发，不算脚误。",
+        "voice": {
+          "pitch": "+10Hz"
+        }
       },
       {
         "source": "bu",

@@ -3,25 +3,25 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "f1af183caaeb7c1d0cbae0107957c13e55ba26245dbecba297f753470900c6f6",
-    "request_count": 24,
+    "bundle_sha256": "abbb7cbd2b8859963a9f66ba02a12cdaea65dcef94a32576143288f6ccd48798",
+    "request_count": 25,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-fault-not-out-2026-f1af183caaeb7c1d",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-fault-not-out-2026-f1af183caaeb7c1d/tts_bundle.zip",
+    "release_tag": "reel-tts-fault-not-out-2026-abbb7cbd2b885996",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-fault-not-out-2026-abbb7cbd2b885996/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38743077832"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38747031485"
   },
   "cover_seconds": 4.33,
   "cover_narrated": true,
   "outro_seconds": 4.146,
   "layout": "full",
-  "segments_seconds": 273.51,
+  "segments_seconds": 285.91,
   "topbar": null,
-  "film_seconds": 282.0,
+  "film_seconds": 294.4,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+18%",
   "narration_backend": "edge-tts",
@@ -38,16 +38,17 @@
     "11": 6.48,
     "12": 6.192,
     "16": 4.344,
-    "17": 3.264,
-    "19": 4.656,
-    "21": 4.992,
-    "24": 8.808,
-    "25": 9.888,
-    "26": 7.224,
-    "27": 7.08,
-    "28": 7.824,
-    "29": 6.696,
-    "30": 8.544
+    "17": 10.848,
+    "18": 3.264,
+    "20": 4.656,
+    "22": 4.992,
+    "25": 8.808,
+    "26": 9.888,
+    "27": 7.224,
+    "28": 7.08,
+    "29": 7.824,
+    "30": 6.696,
+    "31": 8.544
   },
   "face_checks": {
     "cover": {
@@ -64,44 +65,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "2935db2620204fba1178a78bee102b80decfe74250e358417a9f18a79175d016",
+  "render_inputs_sha256": "311361c7d73951f222c1b00e02c1423d69c05e79bacf0828108fe745c8851506",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "fault-not-out-2026",
-    "received_at": "2026-10-15T13:29:13Z",
-    "artifact_ready_at": "2026-10-15T13:36:31Z",
-    "elapsed_seconds": 438.462,
+    "received_at": "2026-10-15T13:56:44Z",
+    "artifact_ready_at": "2026-10-15T14:04:38Z",
+    "elapsed_seconds": 474.898,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "b0f3cff1384fe2e1c2f320fa507ee3cd92f968ce75d921fc35370b32602f889d",
-    "spec_sha256": "84507f447933bc46b9b6a0bf9866a746ad01b2e7aebf490aa21ed3d66c6265f0",
-    "run_id": "38743077832",
+    "film_sha256": "00ec8660d9be3c0f45d502c92e8864321379df7052cc1824c22e1a1d1064b5b1",
+    "spec_sha256": "b7a4b737ae0175e13c010af4c470fefdafeee4b893bdbcc77e4ede647f19777d",
+    "run_id": "38747031485",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-15T13:31:54Z",
-        "run_id": "38743077832"
+        "at": "2026-10-15T13:59:45Z",
+        "run_id": "38747031485"
       }
     ],
-    "render_seconds": 277.462,
-    "pre_render_seconds": 161.0
+    "render_seconds": 293.898,
+    "pre_render_seconds": 181.0
   },
-  "film_sha256": "b0f3cff1384fe2e1c2f320fa507ee3cd92f968ce75d921fc35370b32602f889d",
-  "film_bytes": 111648623,
-  "qc_attestation_sha256": "95467fa4cd3bd79b9a7611f040692310d392021041b03fdd0a1b85242993c974",
+  "film_sha256": "00ec8660d9be3c0f45d502c92e8864321379df7052cc1824c22e1a1d1064b5b1",
+  "film_bytes": 112425769,
+  "qc_attestation_sha256": "4d6739c06fd0a7a6b0b3c552e51a49a0c3fdef88caa370f32c1ebb3e49f8c565",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-15T13:31:54Z",
-      "run_id": "38743077832"
+      "at": "2026-10-15T13:59:45Z",
+      "run_id": "38747031485"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-15T13:36:34Z",
-      "run_id": "38743077832"
+      "at": "2026-10-15T14:04:41Z",
+      "run_id": "38747031485"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-fault-not-out-2026/fault-not-out-2026.mp4",
-  "video_bytes": 111648623
+  "video_bytes": 112425769
 }
