@@ -18,7 +18,16 @@
       }
     ],
     "winner": "斯维托丽娜",
-    "result": "6-1 6-4"
+    "result": "6-1 6-4",
+    "portrait": {
+      "image": "assets/reel/svitolina-guo-cover.jpg",
+      "focus": 0.58,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「elina svitolina」「Wuhan」，日期对上当地 2026-10-15（Asia/Shanghai；日期来源 flashscore dc_1_CM7vd00b）；EXIF 拍摄 2026:10:15 15:23:59+08:00。② 分辨率：4754×3169，zoom 1 铺 1080×1440 是 2.20×（不放大）。③ 认人：最大那张脸像 斯维托丽娜 0.40（≥ 0.34）。④ 睁眼：EAR 0.2657（≥ 0.16）。⑤ 钩子带：脸落在 y530~627，钩子顶边 790。排序：[True, False, False, True, True, 97, 0.3968]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/15/4b9845bc-dfff-4c3d-9d1b-8f23f2843ffc/Svitolina-R3-Wang-Zhao-AFP.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：wta-photos 渠道 https://photoresources.wtatennis.com/wta/photo/2026/10/15/4b9845bc-dfff-4c3d-9d1b-8f23f2843ffc/Svitolina-R3-Wang-Zhao-AFP.jpg（条目 #4592688，接口发布 2026-10-15T08:48:24Z，EXIF 拍摄 2026:10:15 15:23:59+08:00（UTC 2026-10-15T07:23:59Z），原图 4754×3169），说明原文「Elina Svitolina, Wuhan 2026 · Ukraineâs Elina Svitolina hits a return to China's Guo Hanyu during their womenâs singles match at the Wuhan Open tennis tournament in Wuhan, China's Hubei province on October 15, 2026. (Photo by WANG Zhao / AFP)」，署名 Wang Zhao/AFP via Getty Images；WANG ZHAO；AFP or licensors；AFP via Getty Images。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -235,5 +244,17 @@
     "⚠️ 文案起草已随模型通道移除——钩子/论点/beats/旁白留给终审手写。",
     "封面官方实拍：比赛页上还没有这一场的赛后稿（页面共 0 篇文章，没有一篇 slug 含这两个姓）。Match Reaction 一般赛后一小时内上线——等会儿再试，别当成「没有实拍」。",
     "⚠️ 封面没抓到（稿子没挂或没有实拍），portrait 留空，render 前 cover_photo_problem 闸会要求认领 frame_at/_frame_why"
-  ]
+  ],
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "CM7vd00b",
+      "start_utc": "2026-10-15T05:20:00Z",
+      "end_utc": "2026-10-15T06:52:06Z",
+      "source": "flashscore dc_1_CM7vd00b（DC／DD）"
+    },
+    "tried": [
+      "https://photoresources.wtatennis.com/wta/photo/2026/10/15/01779a9f-bfb2-43c2-b769-1857322966ff/Svitolina-R3-Di-YIn.jpg"
+    ],
+    "replaced_under": ""
+  }
 }
