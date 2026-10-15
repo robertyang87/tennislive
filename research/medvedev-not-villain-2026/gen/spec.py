@@ -19,8 +19,10 @@ def n(src,a,b,text,why,ok="不是回合的收尾：画面是场边、近景或�
     s={"source":src,"start":a,"end":b,"cx":0.5,"track":False,"narration":text,"voice":dict(V),"_why":why,"point_end_ok":ok}
     if label: s["inset"]=lab(label)
     return s
+# 段与段之间有 0.18 秒溶解：原声字幕离段边至少 0.22 秒，否则会和相邻旁白段的窗口重叠（foreground_audio_gate「自配中文TTS窗口出现额外英文翻译行」）。
+EDGE=0.22
 def q(src,a,b,cues,why,ok,label=None,kind="broadcast"):
-    s={"source":src,"start":a,"end":b,"cx":0.5,"track":False,"narration":"","quote":[{"at":round(x-a,2),"end":round(y-a,2),"text":t} for x,y,t in cues],"_quote_kind":kind,"_why":why,"point_end_ok":ok}
+    s={"source":src,"start":a,"end":b,"cx":0.5,"track":False,"narration":"","quote":[{"at":round(max(x-a,EDGE),2),"end":round(min(y-a,(b-a)-EDGE),2),"text":t} for x,y,t in cues],"_quote_kind":kind,"_why":why,"point_end_ok":ok}
     if label: s["inset"]=lab(label)
     return s
 def card(title,kicker,sec,text):
