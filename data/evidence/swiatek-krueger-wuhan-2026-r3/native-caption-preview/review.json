@@ -1,0 +1,26 @@
+{
+  "method": "Actual native frame preview with exact frozen TTS/WordBoundary, opened 8-frame contact and original caption04/stat07; not final compressed movie approval",
+  "reviewed_at": "2026-10-15T14:33:39.073731+00:00",
+  "tts_bundle_sha256": "6c196df17315935b533aaaa6a8b801ac0d31a3e8e430aa3ade0df23ecab37e66",
+  "manifest_sha256": "5e1b93794aee40f74c4beecb7da8c78dae5a7a10470462ba15bcfa71722edb5e",
+  "source_sha256": "eb8a231875a31043e5f81e315f291e8c99d53ee57da53e5d25900f70615115bc",
+  "findings": [
+    "Current canonical cover checked separately.",
+    "Fixed center full3:4 source, no dynamic tracking; retains vertical court but horizontal edge play may leave crop, no whole-court claim.",
+    "Native fixed scoreboard canvas position with adaptive first/second set widths and point tags; no blank green search rectangle pasted.",
+    "Shortened80percent Chinese plus English fits frame, below face, above board.",
+    "Fullcanvas stat intentionally contains no duplicate narration subtitle.",
+    "Chapter semantic lines, kicker and lower caption separate."
+  ],
+  "quality_approval": false,
+  "final_movie_review_required": true,
+  "exact_break_point_caption_frame": {
+    "source_time": 155.2,
+    "segment_index": 3,
+    "local_frame": 265,
+    "film_time": 52.12,
+    "path": "data/evidence/swiatek-krueger-wuhan-2026-r3/native-caption-preview/exact-source-155.20.png",
+    "sha256": "6e73ad86f70be685b587688e0e1705a5a0a455d2189be7d6dd1ce2daa1ac4bef",
+    "finding": "Actual original PNG opened: Chinese left starts approximately300px; tag ends180px; no text/tag overlap despite vertical proximity. English and Chinese clear; native 304 bottom kept."
+  }
+}

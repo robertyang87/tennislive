@@ -1,0 +1,52 @@
+{
+  "slug": "swiatek-krueger-wuhan-2026-r3",
+  "checked_at": "2026-10-15T14:31:12Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "703a99bbd60612b6": {
+      "segment": 2,
+      "spoken": 11.28,
+      "picture": 11.8
+    },
+    "abc5095de27670a1": {
+      "segment": 3,
+      "spoken": 13.704,
+      "picture": 14.1
+    },
+    "70eadfbba6b3eaf5": {
+      "segment": 6,
+      "spoken": 13.464,
+      "picture": 14.8
+    },
+    "460fe0c6f9b9d7ce": {
+      "segment": 8,
+      "spoken": 9.888,
+      "picture": 10.5
+    },
+    "c4eb55bb213f5c1c": {
+      "segment": 9,
+      "spoken": 16.536,
+      "picture": 17.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "6c196df17315935b533aaaa6a8b801ac0d31a3e8e430aa3ade0df23ecab37e66",
+    "request_count": 6,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-swiatek-krueger-wuhan-2026-r3-6c196df17315935b",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-swiatek-krueger-wuhan-2026-r3-6c196df17315935b/tts_bundle.zip",
+    "file_name": "tts_bundle.zip"
+  }
+}

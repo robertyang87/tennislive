@@ -1,0 +1,635 @@
+{
+  "schema": "tennislive.independent-finite-visual-review.v1",
+  "status": "failed_visual_qc_superseded_pending_corrected_render",
+  "run_id": "38752547632",
+  "film_sha256": "e5955f8259ff82d564a4543a733aaa82c0266ebcf4c19bb096a02cf3381b526b",
+  "film_bytes": 87113176,
+  "duration_seconds": 212.48,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "reviewed_at": "2026-10-15T14:49:05.422389+00:00",
+  "artifact_sha256": {
+    "specs/reels/swiatek-krueger-wuhan-2026-r3.json": "692e938369e9479a252afee25f2e64e02af394d944cf938183938cb9703bdef7",
+    "/workspace/tennislive-efficiency/output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/subtitles.ass": "6dc38d527bf0a01f976905176c8d2683eeff35b33f29cd3899129fa73267b198",
+    "/workspace/tennislive-efficiency/output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/render.json": "92579a976181014973f589469502a3b62b73410ea04f67c558925c053e987a08",
+    "/workspace/tennislive-efficiency/output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/audio_review_binding.json": "ddb353508e22d5ebc9960a7df0eb5671e711e63a68a7385304d90bd67250c185",
+    "/workspace/tennislive-efficiency/output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/render_inputs.json": "ff7d26341c303f005f32188b41cf3a2f70d0754b160cf24769f3297a0595402c"
+  },
+  "actual_viewing": {
+    "contact_sheet_count": 7,
+    "all112samples_viewed_on_contact_sheets": true,
+    "sample_count": 112,
+    "all_frame_indices": [
+      15,
+      29,
+      31,
+      35,
+      48,
+      90,
+      139,
+      205,
+      213,
+      290,
+      330,
+      366,
+      385,
+      390,
+      391,
+      431,
+      496,
+      541,
+      589,
+      645,
+      685,
+      686,
+      715,
+      779,
+      838,
+      884,
+      934,
+      996,
+      1037,
+      1039,
+      1048,
+      1098,
+      1198,
+      1293,
+      1303,
+      1323,
+      1348,
+      1373,
+      1433,
+      1470,
+      1472,
+      1477,
+      1568,
+      1668,
+      1682,
+      1716,
+      1750,
+      1781,
+      1822,
+      1862,
+      1913,
+      1974,
+      2036,
+      2063,
+      2076,
+      2078,
+      2099,
+      2145,
+      2199,
+      2265,
+      2327,
+      2383,
+      2446,
+      2448,
+      2456,
+      2551,
+      2776,
+      3026,
+      3276,
+      3346,
+      3451,
+      3551,
+      3641,
+      3685,
+      3710,
+      3763,
+      3824,
+      3900,
+      3951,
+      4010,
+      4056,
+      4094,
+      4136,
+      4146,
+      4168,
+      4210,
+      4259,
+      4333,
+      4410,
+      4450,
+      4486,
+      4506,
+      4510,
+      4512,
+      4546,
+      4619,
+      4671,
+      4721,
+      4772,
+      4774,
+      4801,
+      4847,
+      4899,
+      4957,
+      5007,
+      5055,
+      5088,
+      5142,
+      5197,
+      5199,
+      5255,
+      5311
+    ],
+    "actual_ASS_cue_midpoints": 63,
+    "boundary_sides": 20,
+    "key_source_mapped_samples": 26,
+    "individually_viewed_original_PNGs": [
+      {
+        "frame_index": 1303,
+        "seconds": 52.12,
+        "png": "frames/f001303.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 52.120000000000005,
+            "edit_id": "first_save",
+            "source_seconds": 155.2
+          }
+        ],
+        "png_sha256": "47255590a8a949d260fcfc4f9f0a6c31107b16168e1b45d87d1ee391db6a9ddc"
+      },
+      {
+        "frame_index": 290,
+        "seconds": 11.6,
+        "png": "frames/f000290.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 11.59,
+            "index": 4,
+            "start": 10.5,
+            "end": 12.68,
+            "style": "TL",
+            "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}that... one of the few that she hasn't won{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N她尚未夺冠的少数赛事之一"
+          }
+        ],
+        "png_sha256": "158384cdfea3d4868990616230c660a5da22464ec5391f662eee74b885042e50"
+      },
+      {
+        "frame_index": 330,
+        "seconds": 13.2,
+        "png": "frames/f000330.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 13.18,
+            "index": 5,
+            "start": 12.68,
+            "end": 13.68,
+            "style": "TL",
+            "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is Wuhan.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N就是武汉"
+          }
+        ],
+        "png_sha256": "85ddfd26a17fc1fe0091cfda88986dcbbf518383a7ebaa087a75ed0c7baba974"
+      },
+      {
+        "frame_index": 366,
+        "seconds": 14.64,
+        "png": "frames/f000366.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 14.64,
+            "index": 6,
+            "start": 13.68,
+            "end": 15.6,
+            "style": "TL",
+            "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}That's Swiatek making her case tonight.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N今晚斯瓦泰克正在证明自己"
+          }
+        ],
+        "png_sha256": "53c73786b8cce1de57a08053042532a88919169892940441c2a559c92c887b5b"
+      },
+      {
+        "frame_index": 385,
+        "seconds": 15.4,
+        "png": "frames/f000385.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 15.419999999999959,
+            "edit_id": "cold_open",
+            "source_seconds": 299.2
+          }
+        ],
+        "png_sha256": "97806359adbae38b6a3135907f1e7df25f3c068ca16d24b71858d1d5cbf499ac"
+      },
+      {
+        "frame_index": 2036,
+        "seconds": 81.44,
+        "png": "frames/f002036.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 81.42,
+            "index": 29,
+            "start": 79.98,
+            "end": 82.86,
+            "style": "TL",
+            "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}looking for the last eight in Wuhan.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N正向武汉八强进发"
+          }
+        ],
+        "png_sha256": "f8246c030dc9c1553db803770d4a5d173bc26932ea564b628750e3dd6fd1eaf0"
+      },
+      {
+        "frame_index": 2063,
+        "seconds": 82.52,
+        "png": "frames/f002063.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 82.50000000000003,
+            "edit_id": "first_set_finish",
+            "source_seconds": 185.8
+          }
+        ],
+        "png_sha256": "0835d5c527094d35ba1597fd07cb7f721150807f02a4387b52f1361958c25639"
+      },
+      {
+        "frame_index": 4410,
+        "seconds": 176.4,
+        "png": "frames/f004410.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 176.39,
+            "index": 48,
+            "start": 175.3,
+            "end": 177.48,
+            "style": "TL",
+            "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}that... one of the few that she hasn't won{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N她尚未夺冠的少数赛事之一"
+          }
+        ],
+        "png_sha256": "ee9f50fb04a55cd4b5a171d3cff979675b50b7b51d923845b62022e7a334d54b"
+      },
+      {
+        "frame_index": 4450,
+        "seconds": 178.0,
+        "png": "frames/f004450.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 177.98,
+            "index": 49,
+            "start": 177.48,
+            "end": 178.48,
+            "style": "TL",
+            "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is Wuhan.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N就是武汉"
+          }
+        ],
+        "png_sha256": "3a23eab0abe5e12e5667645d00c075c6c9189681d1b17705690413d901aef683"
+      },
+      {
+        "frame_index": 4486,
+        "seconds": 179.44,
+        "png": "frames/f004486.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 179.44,
+            "index": 50,
+            "start": 178.48,
+            "end": 180.4,
+            "style": "TL",
+            "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}That's Swiatek making her case tonight.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N今晚斯瓦泰克正在证明自己"
+          }
+        ],
+        "png_sha256": "f4ac94a8c201bbafd138b0505d3efaf83fcafe5512bd909c40cc43bc6a13161f"
+      },
+      {
+        "frame_index": 2551,
+        "seconds": 102.04,
+        "png": "frames/f002551.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 102.02000000000001,
+            "edit_id": "match_payoff",
+            "source_seconds": 221.0
+          }
+        ],
+        "png_sha256": "aad44efeb9633232521ad282074bbc35fdb6bb5627a57b94a7f4027efb0c5017"
+      },
+      {
+        "frame_index": 3451,
+        "seconds": 138.04,
+        "png": "frames/f003451.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 138.02,
+            "edit_id": "match_payoff",
+            "source_seconds": 257.0
+          }
+        ],
+        "png_sha256": "8ace91435954f8711aa8a58933eec073fa80b0fde462a9cffb153c30e5777657"
+      },
+      {
+        "frame_index": 4546,
+        "seconds": 181.84,
+        "png": "frames/f004546.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 181.825,
+            "index": 51,
+            "start": 180.47,
+            "end": 183.18,
+            "style": "TL",
+            "text": "{\\an2}全场面对{\\fs78}8{\\fs68}个破发点 她救回{\\fs78}7{\\fs68}个"
+          }
+        ],
+        "png_sha256": "d095ab548d61c0e950ef96c90140ff69ef2cb0c9af29e3c336e5fda55d3673f0"
+      },
+      {
+        "frame_index": 5255,
+        "seconds": 210.2,
+        "png": "frames/f005255.png",
+        "reasons": [
+          {
+            "kind": "brand_outro_center",
+            "requested_seconds": 210.203
+          }
+        ],
+        "png_sha256": "8fc521654c049c72a1c39c0deaf65ee094e1a77ef6d125e46cd4883aa9eb8fe9"
+      },
+      {
+        "frame_index": 15,
+        "seconds": 0.6,
+        "png": "frames/f000015.png",
+        "reasons": [
+          {
+            "kind": "metadata_cover_center_verify_actual_poster",
+            "requested_seconds": 0.6
+          }
+        ],
+        "png_sha256": "29c955d13a12fc4543800ebc4814fc8822cdf09acc799556e7710fdf4b68733c"
+      }
+    ]
+  },
+  "blocking_findings": [
+    {
+      "id": "native-result-panel-caption-overlap",
+      "result": "confirmed_same_film_original_PNGs",
+      "detail": "Large original WTA result panel appears despite no detected mainboard inset. CN subtitle overlaps/covers the Krueger name row of the original panel. This is one defect class in three rendered segments; not a ghost inset diagnosis.",
+      "cold_open": {
+        "segment_index": 0,
+        "evidence": [
+          {
+            "frame_index": 290,
+            "seconds": 11.6,
+            "png": "frames/f000290.png",
+            "reasons": [
+              {
+                "kind": "actual_ASS_cue_midpoint",
+                "requested_seconds": 11.59,
+                "index": 4,
+                "start": 10.5,
+                "end": 12.68,
+                "style": "TL",
+                "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}that... one of the few that she hasn't won{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N她尚未夺冠的少数赛事之一"
+              }
+            ],
+            "png_sha256": "158384cdfea3d4868990616230c660a5da22464ec5391f662eee74b885042e50"
+          },
+          {
+            "frame_index": 330,
+            "seconds": 13.2,
+            "png": "frames/f000330.png",
+            "reasons": [
+              {
+                "kind": "actual_ASS_cue_midpoint",
+                "requested_seconds": 13.18,
+                "index": 5,
+                "start": 12.68,
+                "end": 13.68,
+                "style": "TL",
+                "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is Wuhan.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N就是武汉"
+              }
+            ],
+            "png_sha256": "85ddfd26a17fc1fe0091cfda88986dcbbf518383a7ebaa087a75ed0c7baba974"
+          },
+          {
+            "frame_index": 366,
+            "seconds": 14.64,
+            "png": "frames/f000366.png",
+            "reasons": [
+              {
+                "kind": "actual_ASS_cue_midpoint",
+                "requested_seconds": 14.64,
+                "index": 6,
+                "start": 13.68,
+                "end": 15.6,
+                "style": "TL",
+                "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}That's Swiatek making her case tonight.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N今晚斯瓦泰克正在证明自己"
+              }
+            ],
+            "png_sha256": "53c73786b8cce1de57a08053042532a88919169892940441c2a559c92c887b5b"
+          },
+          {
+            "frame_index": 385,
+            "seconds": 15.4,
+            "png": "frames/f000385.png",
+            "reasons": [
+              {
+                "kind": "key_action_source_mapping",
+                "requested_seconds": 15.419999999999959,
+                "edit_id": "cold_open",
+                "source_seconds": 299.2
+              }
+            ],
+            "png_sha256": "97806359adbae38b6a3135907f1e7df25f3c068ca16d24b71858d1d5cbf499ac"
+          }
+        ]
+      },
+      "first_set_finish": {
+        "segment_index": 4,
+        "evidence": [
+          {
+            "frame_index": 2036,
+            "seconds": 81.44,
+            "png": "frames/f002036.png",
+            "reasons": [
+              {
+                "kind": "actual_ASS_cue_midpoint",
+                "requested_seconds": 81.42,
+                "index": 29,
+                "start": 79.98,
+                "end": 82.86,
+                "style": "TL",
+                "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}looking for the last eight in Wuhan.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N正向武汉八强进发"
+              }
+            ],
+            "png_sha256": "f8246c030dc9c1553db803770d4a5d173bc26932ea564b628750e3dd6fd1eaf0"
+          },
+          {
+            "frame_index": 2063,
+            "seconds": 82.52,
+            "png": "frames/f002063.png",
+            "reasons": [
+              {
+                "kind": "key_action_source_mapping",
+                "requested_seconds": 82.50000000000003,
+                "edit_id": "first_set_finish",
+                "source_seconds": 185.8
+              }
+            ],
+            "png_sha256": "0835d5c527094d35ba1597fd07cb7f721150807f02a4387b52f1361958c25639"
+          }
+        ],
+        "note": "The first-set result panel must be included in the same repair, not only the repeated final-result panel."
+      },
+      "match_payoff": {
+        "segment_index": 6,
+        "evidence": [
+          {
+            "frame_index": 4410,
+            "seconds": 176.4,
+            "png": "frames/f004410.png",
+            "reasons": [
+              {
+                "kind": "actual_ASS_cue_midpoint",
+                "requested_seconds": 176.39,
+                "index": 48,
+                "start": 175.3,
+                "end": 177.48,
+                "style": "TL",
+                "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}that... one of the few that she hasn't won{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N她尚未夺冠的少数赛事之一"
+              }
+            ],
+            "png_sha256": "ee9f50fb04a55cd4b5a171d3cff979675b50b7b51d923845b62022e7a334d54b"
+          },
+          {
+            "frame_index": 4450,
+            "seconds": 178.0,
+            "png": "frames/f004450.png",
+            "reasons": [
+              {
+                "kind": "actual_ASS_cue_midpoint",
+                "requested_seconds": 177.98,
+                "index": 49,
+                "start": 177.48,
+                "end": 178.48,
+                "style": "TL",
+                "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is Wuhan.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N就是武汉"
+              }
+            ],
+            "png_sha256": "3a23eab0abe5e12e5667645d00c075c6c9189681d1b17705690413d901aef683"
+          },
+          {
+            "frame_index": 4486,
+            "seconds": 179.44,
+            "png": "frames/f004486.png",
+            "reasons": [
+              {
+                "kind": "actual_ASS_cue_midpoint",
+                "requested_seconds": 179.44,
+                "index": 50,
+                "start": 178.48,
+                "end": 180.4,
+                "style": "TL",
+                "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}That's Swiatek making her case tonight.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N今晚斯瓦泰克正在证明自己"
+              }
+            ],
+            "png_sha256": "f4ac94a8c201bbafd138b0505d3efaf83fcafe5512bd909c40cc43bc6a13161f"
+          }
+        ]
+      }
+    }
+  ],
+  "resolved_suspect": {
+    "id": "source155.20-BREAK-POINT-tag",
+    "result": "no_overlap_in_actual_encoded_frame",
+    "evidence": {
+      "frame_index": 1303,
+      "seconds": 52.12,
+      "png": "frames/f001303.png",
+      "reasons": [
+        {
+          "kind": "key_action_source_mapping",
+          "requested_seconds": 52.120000000000005,
+          "edit_id": "first_save",
+          "source_seconds": 155.2
+        }
+      ],
+      "png_sha256": "47255590a8a949d260fcfc4f9f0a6c31107b16168e1b45d87d1ee391db6a9ddc"
+    },
+    "mapping": "segment3 start144.60; actual film offset41.52 +10.60=52.12s,frame1303",
+    "detail": "Exact original PNG shows tag right edge approximately180px, CN left edge approximately300px; separate horizontal regions. Original English line above tag remains readable."
+  },
+  "other_observations": [
+    {
+      "id": "approved-fixed-crop-limits",
+      "result": "scope_limit_not_new_blocker",
+      "evidence": [
+        {
+          "frame_index": 2551,
+          "seconds": 102.04,
+          "png": "frames/f002551.png",
+          "reasons": [
+            {
+              "kind": "key_action_source_mapping",
+              "requested_seconds": 102.02000000000001,
+              "edit_id": "match_payoff",
+              "source_seconds": 221.0
+            }
+          ],
+          "png_sha256": "aad44efeb9633232521ad282074bbc35fdb6bb5627a57b94a7f4027efb0c5017"
+        },
+        {
+          "frame_index": 3451,
+          "seconds": 138.04,
+          "png": "frames/f003451.png",
+          "reasons": [
+            {
+              "kind": "key_action_source_mapping",
+              "requested_seconds": 138.02,
+              "edit_id": "match_payoff",
+              "source_seconds": 257.0
+            }
+          ],
+          "png_sha256": "8ace91435954f8711aa8a58933eec073fa80b0fde462a9cffb153c30e5777657"
+        }
+      ],
+      "detail": "Fixed810px center crop visibly cuts small parts of near-player foot/left body edge during lateral movement. Do not claim entire athlete or court retained through all key action."
+    },
+    {
+      "id": "clean-stats",
+      "result": "expected_contract",
+      "evidence": {
+        "frame_index": 4546,
+        "seconds": 181.84,
+        "png": "frames/f004546.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 181.825,
+            "index": 51,
+            "start": 180.47,
+            "end": 183.18,
+            "style": "TL",
+            "text": "{\\an2}全场面对{\\fs78}8{\\fs68}个破发点 她救回{\\fs78}7{\\fs68}个"
+          }
+        ],
+        "png_sha256": "d095ab548d61c0e950ef96c90140ff69ef2cb0c9af29e3c336e5fda55d3673f0"
+      },
+      "detail": "All nine rows readable. Iga/Krueger W9/16,UE27/46,BP4/6 and1/8,total71/53. Four ASS cue midpoints intentionally show clean full-screen table without extra CN overlay."
+    },
+    {
+      "id": "poster-outro-and-remaining-samples",
+      "result": "no_additional_independent_blocker_seen",
+      "detail": "Correct topic uses event/round/matchup by explicit current instruction; intact poster and brand outro. Remaining sample captions/cards/header/mainboard shape/position did not show an additional independent defect."
+    }
+  ],
+  "limitations": [
+    "Only112of5312encoded frames were sampled;15original PNGs individually viewed. This is not whole-film frame-by-frame approval.",
+    "No manual audio listening, loudness/peak/silence/gain/PCM analysis.",
+    "Current film failed; exact newly encoded repair movie must be sampled and viewed again. Old images cannot certify it."
+  ],
+  "archive_status": "Do not seal final evidenceZIP yet; retain actual112PNGs/7sheets/bound metadata/manifest locally for failed history. No formal spec or render metadata altered."
+}

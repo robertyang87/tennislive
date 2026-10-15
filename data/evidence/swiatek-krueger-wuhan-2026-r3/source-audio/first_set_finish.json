@@ -1,0 +1,120 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=2JaGT8z3O60",
+  "source_sha256": "eb8a231875a31043e5f81e315f291e8c99d53ee57da53e5d25900f70615115bc",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source-review assistant; actual native full-source small.en/medium.en cross-check with upload captions and source frames, no manual listening claimed",
+  "reviewed_at": "2026-10-15T14:22:44.758544+00:00",
+  "status": "complete",
+  "reviewed_from": 162.16,
+  "reviewed_to": 186.54,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 169.94,
+      "end": 171.2,
+      "en": "And that'll miss the mark.",
+      "zh": "这一球出了界。",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 171.2,
+      "end": 172.7,
+      "en": "And Krueger will find herself",
+      "zh": "克鲁格又一次，",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 172.7,
+      "end": 173.9,
+      "en": "on the short end once again.",
+      "zh": "成为落后的一方。",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 173.9,
+      "end": 175.2,
+      "en": "For the second straight match,",
+      "zh": "连续第二场比赛，",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 175.2,
+      "end": 177.12,
+      "en": "she'll have to come back from a one-set deficit.",
+      "zh": "她都得从先丢一盘的局面追起。",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 177.12,
+      "end": 178.44,
+      "en": "This one's going to be even tougher,",
+      "zh": "这一次，难度还会更大，",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 178.44,
+      "end": 181.2,
+      "en": "as it's Iga Swiatek who's in control.",
+      "zh": "因为掌控比赛的是斯瓦泰克。",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 181.2,
+      "end": 183.28,
+      "en": "Six of the first seven games,",
+      "zh": "她拿下了前七局中的六局，",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 183.28,
+      "end": 186.16,
+      "en": "looking for the last eight in Wuhan.",
+      "zh": "正向武汉八强进发。",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    }
+  ],
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/evidence/swiatek-krueger-wuhan-2026-r3/source-audio/raw/small.en.json",
+        "sha256": "3043cc713a7ff54cc0397c5ecc2385fad0914d7933e6ac694557f70b4fccbfe1",
+        "model": "small.en",
+        "source_sha256": "eb8a231875a31043e5f81e315f291e8c99d53ee57da53e5d25900f70615115bc",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/evidence/swiatek-krueger-wuhan-2026-r3/source-audio/raw/medium.en.json",
+        "sha256": "9dff201a6f22be5d370e039a8c8f2d81fe90e63c1a8fd28b67acd74c48aac333",
+        "model": "medium.en",
+        "source_sha256": "eb8a231875a31043e5f81e315f291e8c99d53ee57da53e5d25900f70615115bc",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/captions.txt",
+        "sha256": "34c41b140a6263e22037340aad2372aa2d2366b4f2be1f2f6c077c62d5494cb6",
+        "kind": "same_native_probe_source_automatic_captions_locator"
+      }
+    ],
+    "manual_listening_claimed": false,
+    "source_audio_gain_changes": false,
+    "reconciliation_and_limits": [
+      "This is full same-byte small.en/medium.en ASR cross-check with native source captions and frames, not manual listening.",
+      "Source-ASR medium254.46-256.64 Thank you is an isolated hypothesis: Thank p0.034/no_speech0.605, absent small and uploadercaptions; retainedraw, not promoted into foregroundspeech. No source sound is muted or changed.",
+      "Medium final Wuhan185.62-190.02 stretches across the following scene gap; small wordend186.16 and uploadercaption support closing the first-set utterance before186.36.",
+      "Whole-source segment joins across pauses are not clause boundaries. Exact words and uploadercaptions split the player answer after for sure401.76/401.82; next interviewer And starts small402.40/uploader402.24, outside native tail402.18.",
+      "Negation not in playerquote supported smallp0.852 and uploadercaption; medium that p0.534 is the conflicting raw hypothesis. No claim of hearinga manuallyverified phoneme.",
+      "Names normalized to official IgaSwiatek/AshlynKrueger; source For...shell functionwords follow uploadcaptions where fullASR omitted them.",
+      "Final broadcast that... is retained as audible false-start transcription instead of silently polishing every lexicaltoken. Source winner41 claim independently checked by rootfacts, including UnitedCup.",
+      "Cold begins284.98 at The in both full models, after prior opponents ends284.98; retains following15eventclause in full so no arbitrary290-291 halfsentencecut.",
+      "All cue timings remain conservative ASR estimates, not exact manually measured acoustic edges. Native source tails+.18s are included in review coverage."
+    ]
+  },
+  "_edit_id": "first_set_finish"
+}

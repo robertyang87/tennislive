@@ -1,0 +1,1344 @@
+{
+  "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS009/point-by-point",
+  "mapping": {
+    "A": "Ashlyn Krueger",
+    "B": "Iga Swiatek"
+  },
+  "points": 124,
+  "first_point_utc": "2026-10-15T11:25:58Z",
+  "last_point_utc": "2026-10-15T13:00:07Z",
+  "pointWinner_errors": [
+    {
+      "point": 8,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "B",
+      "score_derived": "A"
+    },
+    {
+      "point": 18,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "B",
+      "score_derived": "A"
+    },
+    {
+      "point": 37,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "B",
+      "score_derived": "A"
+    },
+    {
+      "point": 68,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "B",
+      "score_derived": "A"
+    },
+    {
+      "point": 98,
+      "type": "raw_pointWinner_disagrees",
+      "raw": "A",
+      "score_derived": "B"
+    }
+  ],
+  "score_reconstructed_total_AB": {
+    "A": 53,
+    "B": 71
+  },
+  "official_total_AB": {
+    "A": 53,
+    "B": 71
+  },
+  "totals_agree": true,
+  "set_point_totals_AB": {
+    "1": {
+      "A": 20,
+      "B": 33
+    },
+    "2": {
+      "A": 33,
+      "B": 38
+    }
+  },
+  "games": [
+    {
+      "set": 1,
+      "game": 1,
+      "server": "B",
+      "winner": "B",
+      "break": false,
+      "before_AB": [
+        0,
+        0
+      ],
+      "after_AB": [
+        0,
+        1
+      ],
+      "points_AB": [
+        4,
+        6
+      ],
+      "point_numbers": [
+        1,
+        10
+      ],
+      "first_timestamp": "2026-10-15T11:25:58Z",
+      "last_timestamp": "2026-10-15T11:32:16Z",
+      "score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 2,
+      "server": "A",
+      "winner": "B",
+      "break": true,
+      "before_AB": [
+        0,
+        1
+      ],
+      "after_AB": [
+        0,
+        2
+      ],
+      "points_AB": [
+        4,
+        6
+      ],
+      "point_numbers": [
+        11,
+        20
+      ],
+      "first_timestamp": "2026-10-15T11:33:45Z",
+      "last_timestamp": "2026-10-15T11:39:04Z",
+      "score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 3,
+      "server": "B",
+      "winner": "B",
+      "break": false,
+      "before_AB": [
+        0,
+        2
+      ],
+      "after_AB": [
+        0,
+        3
+      ],
+      "points_AB": [
+        1,
+        4
+      ],
+      "point_numbers": [
+        21,
+        25
+      ],
+      "first_timestamp": "2026-10-15T11:39:52Z",
+      "last_timestamp": "2026-10-15T11:42:25Z",
+      "score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "0",
+          "30"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "15",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 4,
+      "server": "A",
+      "winner": "B",
+      "break": true,
+      "before_AB": [
+        0,
+        3
+      ],
+      "after_AB": [
+        0,
+        4
+      ],
+      "points_AB": [
+        0,
+        4
+      ],
+      "point_numbers": [
+        26,
+        29
+      ],
+      "first_timestamp": "2026-10-15T11:44:39Z",
+      "last_timestamp": "2026-10-15T11:46:13Z",
+      "score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "0",
+          "30"
+        ],
+        [
+          "0",
+          "40"
+        ],
+        [
+          "0",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 5,
+      "server": "B",
+      "winner": "B",
+      "break": false,
+      "before_AB": [
+        0,
+        4
+      ],
+      "after_AB": [
+        0,
+        5
+      ],
+      "points_AB": [
+        6,
+        8
+      ],
+      "point_numbers": [
+        30,
+        43
+      ],
+      "first_timestamp": "2026-10-15T11:46:58Z",
+      "last_timestamp": "2026-10-15T11:55:28Z",
+      "score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "AD",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "AD",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 6,
+      "server": "A",
+      "winner": "A",
+      "break": false,
+      "before_AB": [
+        0,
+        5
+      ],
+      "after_AB": [
+        1,
+        5
+      ],
+      "points_AB": [
+        4,
+        1
+      ],
+      "point_numbers": [
+        44,
+        48
+      ],
+      "first_timestamp": "2026-10-15T11:57:34Z",
+      "last_timestamp": "2026-10-15T11:59:34Z",
+      "score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "40",
+          "15"
+        ],
+        [
+          "G",
+          "15"
+        ]
+      ]
+    },
+    {
+      "set": 1,
+      "game": 7,
+      "server": "B",
+      "winner": "B",
+      "break": false,
+      "before_AB": [
+        1,
+        5
+      ],
+      "after_AB": [
+        1,
+        6
+      ],
+      "points_AB": [
+        1,
+        4
+      ],
+      "point_numbers": [
+        49,
+        53
+      ],
+      "first_timestamp": "2026-10-15T12:00:08Z",
+      "last_timestamp": "2026-10-15T12:02:39Z",
+      "score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "0",
+          "30"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "15",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 1,
+      "server": "A",
+      "winner": "A",
+      "break": false,
+      "before_AB": [
+        0,
+        0
+      ],
+      "after_AB": [
+        1,
+        0
+      ],
+      "points_AB": [
+        4,
+        1
+      ],
+      "point_numbers": [
+        54,
+        58
+      ],
+      "first_timestamp": "2026-10-15T12:05:32Z",
+      "last_timestamp": "2026-10-15T12:07:22Z",
+      "score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "40",
+          "15"
+        ],
+        [
+          "G",
+          "15"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 2,
+      "server": "B",
+      "winner": "B",
+      "break": false,
+      "before_AB": [
+        1,
+        0
+      ],
+      "after_AB": [
+        1,
+        1
+      ],
+      "points_AB": [
+        6,
+        8
+      ],
+      "point_numbers": [
+        59,
+        72
+      ],
+      "first_timestamp": "2026-10-15T12:08:28Z",
+      "last_timestamp": "2026-10-15T12:17:39Z",
+      "score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "40",
+          "30"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "AD",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "AD",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 3,
+      "server": "A",
+      "winner": "A",
+      "break": false,
+      "before_AB": [
+        1,
+        1
+      ],
+      "after_AB": [
+        2,
+        1
+      ],
+      "points_AB": [
+        4,
+        1
+      ],
+      "point_numbers": [
+        73,
+        77
+      ],
+      "first_timestamp": "2026-10-15T12:18:20Z",
+      "last_timestamp": "2026-10-15T12:21:10Z",
+      "score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "40",
+          "15"
+        ],
+        [
+          "G",
+          "15"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 4,
+      "server": "B",
+      "winner": "B",
+      "break": false,
+      "before_AB": [
+        2,
+        1
+      ],
+      "after_AB": [
+        2,
+        2
+      ],
+      "points_AB": [
+        3,
+        5
+      ],
+      "point_numbers": [
+        78,
+        85
+      ],
+      "first_timestamp": "2026-10-15T12:23:27Z",
+      "last_timestamp": "2026-10-15T12:28:43Z",
+      "score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "40",
+          "30"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 5,
+      "server": "A",
+      "winner": "B",
+      "break": true,
+      "before_AB": [
+        2,
+        2
+      ],
+      "after_AB": [
+        2,
+        3
+      ],
+      "points_AB": [
+        1,
+        4
+      ],
+      "point_numbers": [
+        86,
+        90
+      ],
+      "first_timestamp": "2026-10-15T12:29:25Z",
+      "last_timestamp": "2026-10-15T12:31:38Z",
+      "score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "15",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 6,
+      "server": "B",
+      "winner": "A",
+      "break": true,
+      "before_AB": [
+        2,
+        3
+      ],
+      "after_AB": [
+        3,
+        3
+      ],
+      "points_AB": [
+        6,
+        4
+      ],
+      "point_numbers": [
+        91,
+        100
+      ],
+      "first_timestamp": "2026-10-15T12:33:44Z",
+      "last_timestamp": "2026-10-15T12:40:06Z",
+      "score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "AD",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "AD",
+          "40"
+        ],
+        [
+          "G",
+          "40"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 7,
+      "server": "A",
+      "winner": "B",
+      "break": true,
+      "before_AB": [
+        3,
+        3
+      ],
+      "after_AB": [
+        3,
+        4
+      ],
+      "points_AB": [
+        1,
+        4
+      ],
+      "point_numbers": [
+        101,
+        105
+      ],
+      "first_timestamp": "2026-10-15T12:40:54Z",
+      "last_timestamp": "2026-10-15T12:43:03Z",
+      "score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "15",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 8,
+      "server": "B",
+      "winner": "B",
+      "break": false,
+      "before_AB": [
+        3,
+        4
+      ],
+      "after_AB": [
+        3,
+        5
+      ],
+      "points_AB": [
+        1,
+        4
+      ],
+      "point_numbers": [
+        106,
+        110
+      ],
+      "first_timestamp": "2026-10-15T12:45:23Z",
+      "last_timestamp": "2026-10-15T12:48:22Z",
+      "score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "0",
+          "30"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "15",
+          "G"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 9,
+      "server": "A",
+      "winner": "A",
+      "break": false,
+      "before_AB": [
+        3,
+        5
+      ],
+      "after_AB": [
+        4,
+        5
+      ],
+      "points_AB": [
+        4,
+        2
+      ],
+      "point_numbers": [
+        111,
+        116
+      ],
+      "first_timestamp": "2026-10-15T12:48:57Z",
+      "last_timestamp": "2026-10-15T12:51:43Z",
+      "score_sequence_AB": [
+        [
+          "15",
+          "0"
+        ],
+        [
+          "30",
+          "0"
+        ],
+        [
+          "30",
+          "15"
+        ],
+        [
+          "30",
+          "30"
+        ],
+        [
+          "40",
+          "30"
+        ],
+        [
+          "G",
+          "30"
+        ]
+      ]
+    },
+    {
+      "set": 2,
+      "game": 10,
+      "server": "B",
+      "winner": "B",
+      "break": false,
+      "before_AB": [
+        4,
+        5
+      ],
+      "after_AB": [
+        4,
+        6
+      ],
+      "points_AB": [
+        3,
+        5
+      ],
+      "point_numbers": [
+        117,
+        124
+      ],
+      "first_timestamp": "2026-10-15T12:53:53Z",
+      "last_timestamp": "2026-10-15T13:00:07Z",
+      "score_sequence_AB": [
+        [
+          "0",
+          "15"
+        ],
+        [
+          "15",
+          "15"
+        ],
+        [
+          "15",
+          "30"
+        ],
+        [
+          "15",
+          "40"
+        ],
+        [
+          "30",
+          "40"
+        ],
+        [
+          "40",
+          "40"
+        ],
+        [
+          "40",
+          "AD"
+        ],
+        [
+          "40",
+          "G"
+        ]
+      ]
+    }
+  ],
+  "point_opportunities": [
+    {
+      "point_number": 16,
+      "set": 1,
+      "game": 2,
+      "server": "A",
+      "player": "B",
+      "type": "break_point",
+      "before_score": [
+        "30",
+        "40"
+      ],
+      "before_games_AB": [
+        0,
+        1
+      ],
+      "converted": false,
+      "timestamp": "2026-10-15T11:36:54Z"
+    },
+    {
+      "point_number": 18,
+      "set": 1,
+      "game": 2,
+      "server": "A",
+      "player": "B",
+      "type": "break_point",
+      "before_score": [
+        "40",
+        "AD"
+      ],
+      "before_games_AB": [
+        0,
+        1
+      ],
+      "converted": false,
+      "timestamp": "2026-10-15T11:38:05Z"
+    },
+    {
+      "point_number": 20,
+      "set": 1,
+      "game": 2,
+      "server": "A",
+      "player": "B",
+      "type": "break_point",
+      "before_score": [
+        "40",
+        "AD"
+      ],
+      "before_games_AB": [
+        0,
+        1
+      ],
+      "converted": true,
+      "timestamp": "2026-10-15T11:39:04Z"
+    },
+    {
+      "point_number": 29,
+      "set": 1,
+      "game": 4,
+      "server": "A",
+      "player": "B",
+      "type": "break_point",
+      "before_score": [
+        "0",
+        "40"
+      ],
+      "before_games_AB": [
+        0,
+        3
+      ],
+      "converted": true,
+      "timestamp": "2026-10-15T11:46:13Z"
+    },
+    {
+      "point_number": 39,
+      "set": 1,
+      "game": 5,
+      "server": "B",
+      "player": "A",
+      "type": "break_point",
+      "before_score": [
+        "AD",
+        "40"
+      ],
+      "before_games_AB": [
+        0,
+        4
+      ],
+      "converted": false,
+      "timestamp": "2026-10-15T11:53:11Z"
+    },
+    {
+      "point_number": 41,
+      "set": 1,
+      "game": 5,
+      "server": "B",
+      "player": "A",
+      "type": "break_point",
+      "before_score": [
+        "AD",
+        "40"
+      ],
+      "before_games_AB": [
+        0,
+        4
+      ],
+      "converted": false,
+      "timestamp": "2026-10-15T11:54:20Z"
+    },
+    {
+      "point_number": 53,
+      "set": 1,
+      "game": 7,
+      "server": "B",
+      "player": "B",
+      "type": "set_point",
+      "before_score": [
+        "15",
+        "40"
+      ],
+      "before_games_AB": [
+        1,
+        5
+      ],
+      "converted": true,
+      "timestamp": "2026-10-15T12:02:39Z"
+    },
+    {
+      "point_number": 64,
+      "set": 2,
+      "game": 2,
+      "server": "B",
+      "player": "A",
+      "type": "break_point",
+      "before_score": [
+        "40",
+        "30"
+      ],
+      "before_games_AB": [
+        1,
+        0
+      ],
+      "converted": false,
+      "timestamp": "2026-10-15T12:11:40Z"
+    },
+    {
+      "point_number": 66,
+      "set": 2,
+      "game": 2,
+      "server": "B",
+      "player": "A",
+      "type": "break_point",
+      "before_score": [
+        "AD",
+        "40"
+      ],
+      "before_games_AB": [
+        1,
+        0
+      ],
+      "converted": false,
+      "timestamp": "2026-10-15T12:13:11Z"
+    },
+    {
+      "point_number": 70,
+      "set": 2,
+      "game": 2,
+      "server": "B",
+      "player": "A",
+      "type": "break_point",
+      "before_score": [
+        "AD",
+        "40"
+      ],
+      "before_games_AB": [
+        1,
+        0
+      ],
+      "converted": false,
+      "timestamp": "2026-10-15T12:16:11Z"
+    },
+    {
+      "point_number": 83,
+      "set": 2,
+      "game": 4,
+      "server": "B",
+      "player": "A",
+      "type": "break_point",
+      "before_score": [
+        "40",
+        "30"
+      ],
+      "before_games_AB": [
+        2,
+        1
+      ],
+      "converted": false,
+      "timestamp": "2026-10-15T12:27:23Z"
+    },
+    {
+      "point_number": 90,
+      "set": 2,
+      "game": 5,
+      "server": "A",
+      "player": "B",
+      "type": "break_point",
+      "before_score": [
+        "15",
+        "40"
+      ],
+      "before_games_AB": [
+        2,
+        2
+      ],
+      "converted": true,
+      "timestamp": "2026-10-15T12:31:38Z"
+    },
+    {
+      "point_number": 98,
+      "set": 2,
+      "game": 6,
+      "server": "B",
+      "player": "A",
+      "type": "break_point",
+      "before_score": [
+        "AD",
+        "40"
+      ],
+      "before_games_AB": [
+        2,
+        3
+      ],
+      "converted": false,
+      "timestamp": "2026-10-15T12:38:09Z"
+    },
+    {
+      "point_number": 100,
+      "set": 2,
+      "game": 6,
+      "server": "B",
+      "player": "A",
+      "type": "break_point",
+      "before_score": [
+        "AD",
+        "40"
+      ],
+      "before_games_AB": [
+        2,
+        3
+      ],
+      "converted": true,
+      "timestamp": "2026-10-15T12:40:06Z"
+    },
+    {
+      "point_number": 105,
+      "set": 2,
+      "game": 7,
+      "server": "A",
+      "player": "B",
+      "type": "break_point",
+      "before_score": [
+        "15",
+        "40"
+      ],
+      "before_games_AB": [
+        3,
+        3
+      ],
+      "converted": true,
+      "timestamp": "2026-10-15T12:43:03Z"
+    },
+    {
+      "point_number": 121,
+      "set": 2,
+      "game": 10,
+      "server": "B",
+      "player": "B",
+      "type": "match_point",
+      "before_score": [
+        "15",
+        "40"
+      ],
+      "before_games_AB": [
+        4,
+        5
+      ],
+      "converted": false,
+      "timestamp": "2026-10-15T12:57:09Z"
+    },
+    {
+      "point_number": 122,
+      "set": 2,
+      "game": 10,
+      "server": "B",
+      "player": "B",
+      "type": "match_point",
+      "before_score": [
+        "30",
+        "40"
+      ],
+      "before_games_AB": [
+        4,
+        5
+      ],
+      "converted": false,
+      "timestamp": "2026-10-15T12:58:18Z"
+    },
+    {
+      "point_number": 124,
+      "set": 2,
+      "game": 10,
+      "server": "B",
+      "player": "B",
+      "type": "match_point",
+      "before_score": [
+        "40",
+        "AD"
+      ],
+      "before_games_AB": [
+        4,
+        5
+      ],
+      "converted": true,
+      "timestamp": "2026-10-15T13:00:07Z"
+    }
+  ]
+}

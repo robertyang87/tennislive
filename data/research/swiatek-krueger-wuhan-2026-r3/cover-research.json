@@ -1,0 +1,112 @@
+{
+  "schema": "tennislive.independent-cover-research.v1",
+  "created_at_utc": "2026-10-15T14:00:01.987528+00:00",
+  "reviewer": "current OpenAI agent iga_cover",
+  "match": {
+    "date_local": "2026-10-15",
+    "event": "Wuhan WTA1000",
+    "round": "R3",
+    "match_id": "LS009",
+    "subject": "Iga Swiatek",
+    "opponent": "Ashlyn Krueger",
+    "score": "6-1 6-4"
+  },
+  "selected": {
+    "repo_path": "assets/reels/swiatek-krueger-wuhan-2026-r3/swiatek-wuhan-r3-official.jpg",
+    "source_url": "https://bucket-wuwang.hubei-41.zos.ctyun.cn/files/vcvmt5dyfy66tjcv7ar40a52u.jpg",
+    "width": 5000,
+    "height": 3333,
+    "sha256": "c8616157f925f297b25d789e3c8543877bb98780ca01a7c0819c48ab712988cb",
+    "bytes": 1031005,
+    "capture_exif": "",
+    "official_album_url": "https://www.wuhanopentennis.com/whNews/Pictures?id=1532",
+    "chinese_match_album_url": "https://www.wuhanopentennis.com/whNews/Pictures?id=1531",
+    "album_title": "MDS Day4 Iga Swiatek vs Ashlyn Krueger",
+    "album_date": "2026-10-15",
+    "album_create_time": "2026-10-15 21:12:52",
+    "file_create_time": "2026-10-15 21:11:30",
+    "copyright": "Wuhan Open official gallery; photographer not named in supplied metadata; no licence grant inferred",
+    "date_binding": "Both official Day4 albums explicitly name current opponent pair and publishDate2026-10-15; no captureEXIF invented. English original fetched after Chinese counterpart URL returned403. Both entries namedss.jpg and declared1031005bytes, actual English original matchesdeclaredsize5000x3333.",
+    "person_binding": "Actually opened both originals. First is Ashlyn Krueger in burgundy Adidas cap/dress withblue racket; second is Iga Swiatek with recognizable face, purple On sleeveless top/white skirt/white racket and toss posture. Selected is second, not first album order. No clothing-only identity inference.",
+    "actual_visual_review": "Full5000px original opened via view_image. Both eyes open looking up at tossed ball, not blinking; face sharp, no watermark. Foreground racket and both arms intact. In actual live-match serve preparation, not training, stands or press room.",
+    "native_fill_scale": 0.43204320432043203,
+    "low_resolution_exception_required": false,
+    "provisional_portrait": {
+      "focus": 0.76,
+      "focus_y": 0.5,
+      "zoom": 1.5
+    },
+    "portrait_status": "Native exact final candidate reviewed and recommended; production spec adoption/encoded movie QC separate.",
+    "candidate_wall": "/workspace/scratch/iga3-cover/candidate-wall.jpg"
+  },
+  "rejected": [
+    {
+      "local_path": "/workspace/scratch/iga3-cover/official-album-1531-1.jpg",
+      "reason": "Same-match official5000px photograph but identity is opponent Ashlyn Krueger, not Iga Swiatek."
+    }
+  ],
+  "channels_checked": [
+    {
+      "channel": "Wuhan official gallery",
+      "result": "Publicpicture/listpage1 returnedexactalbums1531/1532; bothdetailrawsaved. FetchedfirstCNphoto5000px (opponent), secondCNoriginal403 notabsence; secondENmirror200 original5000px (selected). Existing same-matchofficialhighresphoto found, no unrelated exhaustivechannelsearch needed."
+    }
+  ],
+  "scope_limitations": [
+    "Final encoded movie QC not performed by this cover task.",
+    "Coverapprovalbindsexactpayload andportrait0.76/0.5/1.5, notlaterchangedhook/layout."
+  ],
+  "native_cover_review": {
+    "reviewed_at_utc": "2026-10-15T14:30:34.841036+00:00",
+    "method": "Native resolve_cover_payload/render_poster canonical topic preview opened via view_image by root; readable complete event, round and names. No human listening or final movie approval.",
+    "payload_path": "data/evidence/swiatek-krueger-wuhan-2026-r3/cover/native-cover-payload-canonical-topic.json",
+    "payload_sha256": "aa866c8b5412638f0b4be449c5fe915cfcaa5f0a2664ffb1d8fe8bc9d2b75518",
+    "preview_path": "data/evidence/swiatek-krueger-wuhan-2026-r3/cover/native-cover-canonical-topic.jpg",
+    "preview_sha256": "1ecada42697b80a809a0e87b407cbf016c0dc941c76cf3c435481bcdaf4f3b04",
+    "alternate_preview_path": "/workspace/scratch/iga3-cover/native-cover-z14.jpg",
+    "recommended_portrait": {
+      "focus": 0.76,
+      "focus_y": 0.5,
+      "zoom": 1.5
+    },
+    "hook": "首盘连赢5局\n斯瓦泰克强势进8强",
+    "hook_accent": "强势进8强",
+    "topic": "WTA1000 武汉 第三轮 · 斯瓦泰克 VS 克鲁格",
+    "scoreboard": {
+      "court": "Center Court",
+      "ranks": [
+        9,
+        68
+      ],
+      "winner_result": "6-1 6-4",
+      "display_duration": "1:34",
+      "native_duration_source": "WTA LS009 MatchTimeTotal01:34:57"
+    },
+    "findings": {
+      "person": "Iga Swiatek本人，发球进行中；同场服饰/拍型与面部相符。",
+      "eyes": "Both eyes fully open lookingup, fullhead visible, clearface approximatelyx500–605/y345–480.",
+      "raised_hand": "Complete hand atapproximatelyx700/y210, clear ofmasthead endingy130.",
+      "racket": "Complete racket head and grip, leftedgeapproximatelyx150.",
+      "center": "Face/body approximatelyx550 center; stronger than preliminaryx650.",
+      "hook": "Two semantic lines complete, noedgeclipping; titlebandbelowface andarms, readablewhite/limeaccent.",
+      "scoreboard": "Fixednativeboard y1122 unchanged, bothnamesranksflagsandsets correct. Overlapsshinarea asnormal fixedboardgeometry, no claimentirelegsvisibleabovetheboard.",
+      "logo": "Nativebrandmasthead and limeclockball intact, topicseparateandcomplete.",
+      "ball": "Tossedballoutsideverticalcrop; no cut tohands/racket/body. Notrequired tokeepemptyspaceupward atcostofsmallerface."
+    },
+    "pass_for_exact_cover_payload": true,
+    "scope": "Onlythisnativecoverpayload. Finalcompressedmovie andanyfurtherchanges needseparatereview.",
+    "previous_topic_preview": {
+      "topic": "两盘晋级，年终资格再近一步",
+      "payload_sha256": "15dfbff7e373d74de4127599280ff6783b0333e214ca815494410ca2286d24f8",
+      "preview_sha256": "8eafea2c8446bffcd0a825352d201412d3d4a425aed31c01eba8286a9ef13d4e",
+      "superseded_by_user_correction": true
+    },
+    "fact_packet_sha256_at_initial_geometry_review": "cea353e9072c2b3a7652d6ecfed79e771560ba91fd1c78de9fe156d306504111",
+    "current_fact_packet_binding": {
+      "at": "2026-10-15T15:04:25.854451+00:00",
+      "sha256": "86bfffe78408faf5e02867c6fcefc5a3e2b46c91fb77ea68d84c2ce02aad9a9b",
+      "method": "Root checked final actual encoded cover frame15 and current formal cover winner, names, ranks and6-1/6-4. Current packet is bound separately from the historical initial geometry-review hash; its verified cover values remain consistent. No new render or old timestamp claim.",
+      "native_render_poster_sha256": "4724601e0dec8490744afd16ec055acfb0ca53334f552cd7a1abfe188b88bf6c",
+      "initial_packet_hash_is_historical_not_current": true
+    }
+  }
+}

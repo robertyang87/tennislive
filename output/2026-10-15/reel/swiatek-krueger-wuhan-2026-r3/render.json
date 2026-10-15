@@ -1,0 +1,95 @@
+{
+  "scoreboard_qc_sha256": "09185fce73c3095549b5fccfb38ee5e77f2d29dad0de9b335aa267623f30390d",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "6c196df17315935b533aaaa6a8b801ac0d31a3e8e430aa3ade0df23ecab37e66",
+    "request_count": 6,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-swiatek-krueger-wuhan-2026-r3-6c196df17315935b",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-swiatek-krueger-wuhan-2026-r3-6c196df17315935b/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38754990985"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 206.72,
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 第三轮",
+    "line2": "斯瓦泰克 6-1 6-4 克鲁格",
+    "start": 1.2,
+    "end": 207.92
+  },
+  "film_seconds": 212.48,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 11.28,
+    "2": 13.704,
+    "5": 13.464,
+    "7": 9.888,
+    "8": 16.536
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "c7477c39ef8151d52005c2463c2f07f945a1a1fe1ea1d5e1109b87545597c575",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "swiatek-krueger-wuhan-2026-r3",
+    "received_at": "2026-10-15T13:56:48Z",
+    "artifact_ready_at": "2026-10-15T14:57:24Z",
+    "elapsed_seconds": 3636.975,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "8a16bb8f6e941252ea6f37b39b7bacc6fd7c928b440cf21a008cf43efe323e24",
+    "spec_sha256": "3bcd0b133fb7c09a88edb1f54417f7b4ad2b30cf2a61a470cd9c55879619f1f6",
+    "run_id": "38754990985",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-15T14:53:27Z",
+        "run_id": "38754990985"
+      }
+    ],
+    "render_seconds": 237.975,
+    "pre_render_seconds": 3399.0
+  },
+  "film_sha256": "8a16bb8f6e941252ea6f37b39b7bacc6fd7c928b440cf21a008cf43efe323e24",
+  "film_bytes": 87157088,
+  "qc_attestation_sha256": "91e7f244a677c9705c6f1f7d694544549962d1ea5c260928dde842fb43894d2f",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-15T14:53:27Z",
+      "run_id": "38754990985"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-15T14:57:28Z",
+      "run_id": "38754990985"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-swiatek-krueger-wuhan-2026-r3/swiatek-krueger-wuhan-2026-r3.mp4",
+  "video_bytes": 87157088
+}

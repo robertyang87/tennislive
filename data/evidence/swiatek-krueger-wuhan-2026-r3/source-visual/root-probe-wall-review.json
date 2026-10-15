@@ -1,0 +1,73 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=2JaGT8z3O60",
+  "source_sha256": "eb8a231875a31043e5f81e315f291e8c99d53ee57da53e5d25900f70615115bc",
+  "source_bytes": 148540512,
+  "probe_run": 38747368606,
+  "reviewed_at": "2026-10-15T14:13:03.702466+00:00",
+  "method": "Actual direct visual inspection of eight native contact sheets and two source original PNGs using vision tool; no auditory listening claim.",
+  "native_source": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 25,
+    "seconds": 477.564807
+  },
+  "wall_samples": [
+    {
+      "path": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/contact_00.jpg",
+      "sha256": "0a82495cff59806074f31f2af4bda392940163dcd834461c24ccd4455783a0e2"
+    },
+    {
+      "path": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/contact_01.jpg",
+      "sha256": "a8adfca89f21685543c0dee0b573263ab8ae0ad2a2bda89bda619036cc092157"
+    },
+    {
+      "path": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/contact_02.jpg",
+      "sha256": "4b4bace917093d81f8f946268d469199ee2856531a0e05c34cbf7ba2482f0e73"
+    },
+    {
+      "path": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/contact_03.jpg",
+      "sha256": "858b38e43c4fb291fc058f774b0e97db3458a65412f8db9b62f794411cbc9d05"
+    },
+    {
+      "path": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/contact_04.jpg",
+      "sha256": "eb4bb0043b643dd6e1d90aa1f7d3096c33bdb7897ab31647e1da4bb4d62e2446"
+    },
+    {
+      "path": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/contact_05.jpg",
+      "sha256": "d3c5d63ea0454a92bd475c686f11eec9e2472c542f9183c1fca0c69d32b12185"
+    },
+    {
+      "path": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/contact_06.jpg",
+      "sha256": "61cd925e2923f50a94d8b1df5c6fcf10f28d6e2eacd3905b38e8d0738932f474"
+    },
+    {
+      "path": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/contact_07.jpg",
+      "sha256": "9bb45275978730f98a325a7fd1c8d5d25f006fbdf623b8344ecf4f9e459e5635"
+    }
+  ],
+  "findings": [
+    "Observed main score rows A.Krueger above I.Swiatek, Iga purple top/white skirt/On cap and white racket, Krueger purple Adidas dress/blue racket.",
+    "Match highlights and complete win reaction/handshake extend through about299s; player interview follows to about467s; official WTA tail starts around468s and is excluded.",
+    "Cold-open candidate actual victory/handshake/acknowledgement about268–299s; a body ending must retain full final serve/rally before this.",
+    "Full eight walls cover finite2s-spaced samples across the whole source; no claim of reviewing all frames or continuous audio."
+  ],
+  "root_original_pngs": [
+    {
+      "source_seconds": 155.8,
+      "sha256": "9254f597a083ee0c82a9244c92e2c594dedd4a7d80b3f890219a3c7683bcd805",
+      "finding": "Iga at service line after break-point rally; original source scoreboard 0-Ad vs4, sourceBP label above the same original mainboard."
+    },
+    {
+      "source_seconds": 202.2,
+      "sha256": "810ad81b09399a5766532bdef60b73d63970abc55e8b391cab9e8bc0c91fbcb3",
+      "finding": "Second-set original score rows Krueger1,2,30 vsSwiatek6,3,40; current second-set mainboard extends toaboutx515, wider than first-set mainboard endingx479."
+    }
+  ],
+  "calibration_candidate": [
+    90,
+    826,
+    550,
+    980
+  ],
+  "calibration_limit": "Candidate search envelope only, selected from actual same-source boards; native mask must trim actual panel/tag bounds, never paste surrounding court or treat this envelope as fixed visible size. Full final inset inspection remains required."
+}
