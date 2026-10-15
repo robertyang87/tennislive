@@ -34,7 +34,7 @@
 - 2026 中网，布勃利克对门希克（Tennis TV PYnZo-nL6Hk）：被判踩到中点延长线的脚误；布勃利克：打了 30 年球，第一次听说这种脚误。
 - 2018 温网，克耶高斯（Wimbledon o1Ad7ZL7AuU）：被司线判脚误，解说：司线必须等他击球之后才能喊。
 - 2019 温网混双，奥斯塔彭科发球砸中自己的搭档林德斯泰特（Wimbledon LRRPRo71sWY）＝发球失误（Rule 19d）；同届她发球砸中对面网前的科内特，直接得分（LHsOkBl1wRE，Rule 24i）。
-- 2018 澳网，鲁布列夫决胜盘 5-4 双误、摔拍（Australian Open I_vN3qoxO8Q）。
+- 2018 澳网，卢布列夫决胜盘 5-4 双误、摔拍（Australian Open I_vN3qoxO8Q）。
 
 ## 五、别的项目、别的赛制
 - 壁球：只有一次发球，发球失误（fault）直接丢掉这一回合（World Squash 2024/2025 单打规则；旧 Squash 57 规则曾有二发）。
