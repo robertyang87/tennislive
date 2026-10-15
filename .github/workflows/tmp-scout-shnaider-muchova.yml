@@ -54,5 +54,5 @@ jobs:
       - name: commit
         run: |
           git config user.name github-actions; git config user.email actions@github.com
-          git add -f output/2026-10-15/reel/muchova-wuhan-2026/probe.json
+          git add --sparse -f output/2026-10-15/reel/muchova-wuhan-2026/probe.json
           git commit -qm "scout3: shnaider-muchova wuhan r3 [skip ci]" && git push origin HEAD:${GITHUB_REF_NAME}
