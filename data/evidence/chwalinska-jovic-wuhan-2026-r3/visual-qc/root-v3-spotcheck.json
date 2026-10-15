@@ -1,0 +1,47 @@
+{
+  "schema": "finite-root-visual-review.v1",
+  "film_sha256": "d45f651435e44a0b6d8c3039f6b438f46a16ecc4133128395dbe31c2560f11dd",
+  "reviewed_at": "2026-10-15T10:10:33.980049+00:00",
+  "method": "Direct visual inspection of exact PNGs from actual encoded final MP4 using vision tool; independent of draft/native previews.",
+  "sample_count": 6,
+  "samples": [
+    {
+      "frame_index": 15,
+      "seconds": 0.6,
+      "png_sha256": "e9c494891e41839070212674b324458f91f9bdcbea6dae2bfdad404ecceda658",
+      "finding": "Actual encoded cover: correct official same-match protagonist, intact two-line hook, Court 2, ranks22/11 and 6-4/6-1."
+    },
+    {
+      "frame_index": 2855,
+      "seconds": 114.2,
+      "png_sha256": "cc92ba3340a9de80a7dde1a2033c345080027506be5c23c0dbcec6b2d3f4f35c",
+      "finding": "Actual encoded first-set reaction: normal header, full source result board retained in original position, low bilingual caption."
+    },
+    {
+      "frame_index": 4020,
+      "seconds": 160.8,
+      "png_sha256": "1b2c18acb87286bb32ab971bec5202042d97c923bbe999751369ea58b8730961",
+      "finding": "Actual encoded net reaction: normal header; source scoreboard remains in source position with authorized symmetric left-edge crop; low bilingual caption clear."
+    },
+    {
+      "frame_index": 612,
+      "seconds": 24.48,
+      "png_sha256": "f76875ceeb0de925414bb38cd77effad3c5672822bcce7e8985bba34e9e934a3",
+      "finding": "Actual changed first-set narration card: two complete semantic main lines, single low CN subtitle, branding unobstructed."
+    },
+    {
+      "frame_index": 5351,
+      "seconds": 214.04,
+      "png_sha256": "50a1c4d6dcc3205596567add4736ae16b36bb515b618a447c49cb6cd580b44b7",
+      "finding": "Actual full-canvas native stats: clean table intentionally omits narration subtitle overlay; all nine rows readable; winners17/23 and UE15/31."
+    },
+    {
+      "frame_index": 5897,
+      "seconds": 235.88,
+      "png_sha256": "bdabbfb72f7379d49859d1faf5742e192d45b324a1f349512163d530c2cbbe3d",
+      "finding": "Actual encoded brand outro: navy style, intact screen brand spelling and safe footer."
+    }
+  ],
+  "blocking_findings": [],
+  "scope_limit": "Only these six exact frames; independent full finite visual report covers additional actual samples. No whole-film all-frame or human audio listening claim."
+}

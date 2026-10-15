@@ -1,0 +1,403 @@
+{
+  "version": 2,
+  "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
+  "slug": "shnaider-muchova-wuhan-2026-r3",
+  "written_at": "2026-10-15T09:52:14Z",
+  "code_sha": "e1950ee74e442cd63704e5e65dc4bc482e9d285b",
+  "spec_sha256": "073b2eb00bb4334873571fc605b6c8a598ad7ca53f7c362d8ac9cdfb32137ea4",
+  "film_sha256": "c0047a32d8ff94f609341027513af00733ab6a250a763e43bf1e6f065df83c55",
+  "film_bytes": 81554278,
+  "projection_sha256": "d43327e654f7d5a97a598230a108e10b12fdbc56b31e6aa4a4bebe0bf278f1f8",
+  "claims": [
+    [
+      "segments",
+      0,
+      "_ending_payoff_required"
+    ],
+    [
+      "_match"
+    ],
+    [
+      "segments",
+      0,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      3,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      5,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      6,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      8,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      10,
+      "_quote_kind"
+    ],
+    [
+      "_tts_backend_why"
+    ],
+    [
+      "stats",
+      "_winners_ue_evidence"
+    ]
+  ],
+  "assets": {
+    "assets/players/headshots/wta-322191.jpg": "e5fb94a5b16429fd30badeb935907d1291a39587eb68f7666c3e07817b7351d9",
+    "assets/players/headshots/wta-330482.jpg": "df9c9de7ac615488c970fa07cffc4a6501c28d54ab81034c3fcf3f9a8bbdc0d2",
+    "assets/reels/shnaider-muchova-wuhan-2026-r3/shnaider-wuhan-r3.jpg": "030b286ce35e47c736b1c0d88c85d9b6ac1152a6e859d1882284901d5e25e19f"
+  },
+  "artifacts": {
+    "audio_review_binding.json": "521ab571a3491d24ffe2181a0326c9f5124a130b3df3ebe9fb38847b9d322ce8",
+    "subtitles.ass": "a3866c62e864362154fb052a814e26ebebcbe70d5b145be095ea0e30b6789037",
+    "topbar.ass": "c3e827f13bc753d95447b8209635d4e09e073335ff198e7d23f57110f6b7b07d",
+    "poster.jpg": "84b9bd1b3d8158d2635f71fbb095963ff4e16f5f7ba7685896baeef06f6fa5f7",
+    "stat_card.jpg": "f760a42cb0fad896d336254b0e7d9d1656e0066d24f7be7ce8ea372964f79de3",
+    "scoreboard_qc.json": "888bc9ca7e146678f377ebad16e715d0343a15126646f78e57532de56163bb9d"
+  },
+  "projection": {
+    "slug": "shnaider-muchova-wuhan-2026-r3",
+    "_column": "赛场之上",
+    "tts_backend": "edge",
+    "sources": {
+      "main": "https://www.youtube.com/watch?v=XUQeeTikU7k"
+    },
+    "primary": "main",
+    "source_fallbacks": {
+      "main": "https://github.com/robertyang87/tennislive/releases/download/source-XUQeeTikU7k/XUQeeTikU7k.mp4"
+    },
+    "track": false,
+    "outro": true,
+    "stat_card_full_canvas": true,
+    "preserve_source_audio": true,
+    "scorebox": [
+      90,
+      826,
+      550,
+      980
+    ],
+    "cover": {
+      "matchup": [
+        {
+          "name": "施奈德",
+          "name_en": "Diana Shnaider",
+          "country": "RUS",
+          "rank": 13
+        },
+        {
+          "name": "穆霍娃",
+          "name_en": "Karolina Muchova",
+          "country": "CZE",
+          "rank": 7
+        }
+      ],
+      "eyebrow": "赛场之上",
+      "layout": "solo",
+      "subject": "施奈德",
+      "winner": "施奈德",
+      "result": "7-5 6-3",
+      "hook": "首盘5平连拿4分\n施奈德淘汰穆霍娃",
+      "hook_accent": "淘汰",
+      "topic": "WTA1000 武汉 第三轮 · 施奈德 VS 穆霍娃",
+      "scrim": "clear",
+      "portrait": {
+        "image": "assets/reels/shnaider-muchova-wuhan-2026-r3/shnaider-wuhan-r3.jpg",
+        "fit": "cover",
+        "focus": 0.5,
+        "focus_y": 0.4,
+        "zoom": 1,
+        "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/15/2a0c79ff-71d7-4128-b507-9cdc3d2c021f/Diana-Shnaider_Wuhan-2026.jpg"
+      },
+      "scoreboard": {
+        "court": "Dongfeng Voyah Center Court",
+        "duration_source": {
+          "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+          "field": "MatchTimeTotal",
+          "match_id": "LS014"
+        }
+      }
+    },
+    "topbar": {
+      "line1": "2026 WTA1000 武汉 第三轮",
+      "line2": "施奈德 7-5 6-3 穆霍娃"
+    },
+    "stats": {
+      "tour": "wta",
+      "footer_date": "2026-10-15",
+      "footer_venue": "武汉 · 全场",
+      "a": {
+        "aces": 0,
+        "df": 5,
+        "first_in": 54,
+        "first_total": 76,
+        "first_won": 40,
+        "second_total": 22,
+        "second_won": 9,
+        "bp_conv": 4,
+        "bp_chances": 8,
+        "pts_won": 88,
+        "pts_total": 159,
+        "winners": 24,
+        "ue": 14,
+        "headshot": "assets/players/headshots/wta-330482.jpg"
+      },
+      "b": {
+        "aces": 4,
+        "df": 4,
+        "first_in": 55,
+        "first_total": 83,
+        "first_won": 31,
+        "second_total": 28,
+        "second_won": 13,
+        "bp_conv": 1,
+        "bp_chances": 5,
+        "pts_won": 71,
+        "pts_total": 159,
+        "winners": 27,
+        "ue": 26,
+        "headshot": "assets/players/headshots/wta-322191.jpg"
+      }
+    },
+    "editorial": {
+      "mode": "match_review",
+      "question": "制胜分更多的穆霍娃，为什么两盘就出局了？",
+      "thesis": "穆霍娃在关键局里接连没抓住：4比3三个破发点全被救下，5比5手握40比15被连拿四分，第二盘唯一的破发点也没兑现；施奈德8个破发点兑现4个。",
+      "beats": [
+        "赛后原声冷开场",
+        "武汉第三轮坐标与前一天的三小时",
+        "第一盘24分的一局",
+        "5比5 40-15被连拿四分",
+        "第二个盘点拿下首盘",
+        "第二盘再被破、2比3错失破发点",
+        "3比5赛点",
+        "全场统计",
+        "八强展望"
+      ],
+      "human_context": {
+        "angle": "前一天打了近三小时靠两个抢七逆转晋级，第二天在关键局里一个机会都没抓住，年终总决赛资格仍未锁定。",
+        "facts": [
+          "前一轮LS028穆霍娃3-6 7-6(1) 7-6(4)胜麦克纳莉，用时2:52:18。",
+          "本场第一盘第8局24分、3个破发点全被救；第11局40-15后连丢4分。",
+          "施奈德首次闯进武汉八强（转播原声）。"
+        ],
+        "sources": [
+          "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+          "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS014/point-by-point",
+          "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS014/stats",
+          "https://tnnslive.com/match/75373612",
+          "https://www.wtatennis.com/news/4592595/shnaider-lauds-team-for-consistency-after-earning-fourth-career-top-10-win-in-wuhan"
+        ]
+      }
+    },
+    "segments": [
+      {
+        "source": "main",
+        "start": 254.5,
+        "end": 278.4,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.3,
+            "end": 5.8,
+            "text": "It's another top 10 win for Diana Shnaider, her third of the year,\n施奈德又一次击败前十选手\n这是她今年第三次"
+          },
+          {
+            "at": 5.86,
+            "end": 12.0,
+            "text": "and this one takes her into the quarterfinals in Wuhan for the very first time\n这一场让她\n首次闯进武汉八强"
+          },
+          {
+            "at": 12.9,
+            "end": 22.5,
+            "text": "at the expense of Karolina Muchova, whose charge towards the WTA Finals still not confirmed yet.\n代价是穆霍娃\n她冲击年终总决赛的资格\n还没有锁定"
+          }
+        ],
+        "crosses_cut": "赛点落地之后的真实庆祝、握手与致意；无进行中回合。",
+        "point_end_ok": "从赛点最后半秒到赛后反应、握手与致意；冷开场预告，正文末段完整兑现。"
+      },
+      {
+        "title_card": "六号种子\n止步第三轮",
+        "kicker": "北京时间10月15日 · 武汉第三轮",
+        "seconds": 14.5,
+        "narration": "北京时间十月十五日上午，武汉第三轮。六号种子穆霍娃，对阵十一号种子施奈德。前一天，穆霍娃打了将近三个小时，两个抢七都赢下，才逆转麦克纳莉。"
+      },
+      {
+        "title_card": "24分的一局\n3次机会全落空",
+        "kicker": "第一盘4比3 · 施奈德发球",
+        "seconds": 12.0,
+        "narration": "第一盘四比三，施奈德的发球局，一共争夺了二十四分。穆霍娃三次拿到破发点，三次只差一分，三次都没能跨过去。"
+      },
+      {
+        "source": "main",
+        "start": 82.8,
+        "end": 100.0,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.0,
+            "end": 2.88,
+            "text": "A number of points in quite quick succession.\n几分打得节奏很快"
+          },
+          {
+            "at": 4.12,
+            "end": 6.98,
+            "text": "Doesn't waste time between her first and second serves either.\n一发二发之间也不浪费时间"
+          },
+          {
+            "at": 13.44,
+            "end": 16.14,
+            "text": "How good was that volley?\n这记截击太漂亮了"
+          }
+        ],
+        "crosses_cut": "施奈德发球局里穆霍娃的破发点，从准备、发球到截击得分完整保留。",
+        "point_end_ok": "破发点由施奈德截击得分结束，收在比分翻到四平之前。"
+      },
+      {
+        "title_card": "40比15领先\n连丢4分",
+        "kicker": "第一盘5比5 · 穆霍娃发球",
+        "seconds": 15.5,
+        "narration": "五比五，穆霍娃发球，四十比十五领先，只差一分就能六比五。接下来，施奈德连拿四分。四十比三十这一分，她一直压在网前截击，把穆霍娃调得满场跑。"
+      },
+      {
+        "source": "main",
+        "start": 138.0,
+        "end": 155.88,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 12.88,
+            "end": 16.72,
+            "text": "Oh, it's Harry Potter stuff out there.\n这球简直像变魔术"
+          }
+        ],
+        "crosses_cut": "五平局四十比三十那一分，从发球到施奈德得分完整保留，收在她的反应镜头切换处。",
+        "point_end_ok": "施奈德得分后切到她的近景反应，原生镜头切换155.88。"
+      },
+      {
+        "source": "main",
+        "start": 155.88,
+        "end": 186.4,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 10.0,
+            "end": 16.24,
+            "text": "A big finish to a big opening set from Diana Shnaider.\n施奈德漂亮收下这关键的首盘"
+          },
+          {
+            "at": 16.92,
+            "end": 21.56,
+            "text": "Almost an hour and a quarter it took to separate these two.\n两人足足打了将近一小时一刻钟"
+          },
+          {
+            "at": 21.56,
+            "end": 27.52,
+            "text": "But it's the world number 13 who strikes first.\n世界第13先下一城"
+          }
+        ],
+        "crosses_cut": "第二个盘点从发球到得分完整保留，接施奈德盘后的真实反应。",
+        "point_end_ok": "盘点结束后的反应与看台镜头，收在下一次发球之前。"
+      },
+      {
+        "title_card": "又被破发\n唯一机会被穿越",
+        "kicker": "第二盘 · 2比3",
+        "seconds": 15.0,
+        "narration": "第二盘第三局，穆霍娃十五比零领先，又连丢四分，被破发。二比三，她拿到这一盘唯一的破发点。她压到网前，施奈德一记穿越，从她身边打了过去。"
+      },
+      {
+        "source": "main",
+        "start": 221.3,
+        "end": 231.25,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.24,
+            "end": 2.34,
+            "text": "The draw has opened up a little bit.\n这个签区已经松动了一些"
+          }
+        ],
+        "crosses_cut": "二比三穆霍娃的破发点，从分前准备、发球到施奈德穿越落地完整保留。",
+        "point_end_ok": "231.0秒球已从网前的穆霍娃身侧穿过、落在她身后，这一分在此结束；比分板翻到40平在之后的停顿里，收在落地后、避开下一句解说（后半句三档转写不一致，不放进字幕）。"
+      },
+      {
+        "title_card": "3比5\n赛点来了",
+        "kicker": "第二盘 · 穆霍娃发球",
+        "seconds": 9.0,
+        "narration": "三比五，穆霍娃发球，必须保住。可她先丢了三分，十五比四十，施奈德拿到赛点。"
+      },
+      {
+        "source": "main",
+        "start": 246.8,
+        "end": 278.4,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 8.0,
+            "end": 13.5,
+            "text": "It's another top 10 win for Diana Shnaider, her third of the year,\n施奈德又一次击败前十选手\n这是她今年第三次"
+          },
+          {
+            "at": 13.56,
+            "end": 19.7,
+            "text": "and this one takes her into the quarterfinals in Wuhan for the very first time\n这一场让她\n首次闯进武汉八强"
+          },
+          {
+            "at": 20.6,
+            "end": 30.2,
+            "text": "at the expense of Karolina Muchova, whose charge towards the WTA Finals still not confirmed yet.\n代价是穆霍娃\n她冲击年终总决赛的资格\n还没有锁定"
+          }
+        ],
+        "crosses_cut": "三比五穆霍娃发球，从施奈德赛点前的近景到十五比四十赛点落地，再接赛后反应、握手与致意，结局在正文完整兑现。",
+        "point_end_ok": "赛点落地后接庆祝与握手，收在挥手致意。"
+      },
+      {
+        "stat_card": true,
+        "seconds": 14.0,
+        "narration": "全场，穆霍娃制胜分二十七比二十四，还多三个。可她五个破发点只兑现一个，施奈德八个兑现四个。非受迫失误，穆霍娃二十六次，对手十四次。"
+      },
+      {
+        "title_card": "首次闯进武汉八强\n她能走多远？",
+        "kicker": "下一场 · 1/4决赛",
+        "seconds": 11.0,
+        "narration": "施奈德第一次闯进武汉八强。穆霍娃止步第三轮，年终总决赛的门票还没锁定。施奈德这一周，还能走多远？"
+      }
+    ]
+  }
+}

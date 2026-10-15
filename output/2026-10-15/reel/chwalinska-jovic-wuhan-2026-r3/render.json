@@ -1,0 +1,96 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "e35d913c416209be96566582110d4c9d21ce6c170cdebcf8380d7f651b4ad82e",
+    "request_count": 7,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-chwalinska-jovic-wuhan-2026-r3-e35d913c416209be",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-jovic-wuhan-2026-r3-e35d913c416209be/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38716958767"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 232.38,
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 第三轮",
+    "line2": "赫瓦林斯卡 6-4 6-1 约维奇",
+    "start": 1.2,
+    "end": 233.58
+  },
+  "film_seconds": 238.16,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 8.568,
+    "2": 14.52,
+    "6": 11.544,
+    "8": 9.048,
+    "10": 6.696,
+    "11": 9.624
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "c6d9a7fd877e469d7cedd988a51c5ca3fedbdfcbb5b1a6d32c759a6655b50ba0",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "chwalinska-jovic-wuhan-2026-r3",
+    "received_at": "2026-10-15T09:07:20Z",
+    "artifact_ready_at": "2026-10-15T10:05:00Z",
+    "elapsed_seconds": 3460.766,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "d45f651435e44a0b6d8c3039f6b438f46a16ecc4133128395dbe31c2560f11dd",
+    "spec_sha256": "e3e666d248fade6538fc145c2d23cf01099202cdf75f31f9079e3b6a1d114c15",
+    "run_id": "38716958767",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-15T10:01:40Z",
+        "run_id": "38716958767"
+      }
+    ],
+    "render_seconds": 200.766,
+    "pre_render_seconds": 3260.0
+  },
+  "film_sha256": "d45f651435e44a0b6d8c3039f6b438f46a16ecc4133128395dbe31c2560f11dd",
+  "film_bytes": 60466820,
+  "qc_attestation_sha256": "9ff71d68c519169ecd4bcc2e958d3395134ec41d77d1079475535b3954c4a055",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-15T10:01:40Z",
+      "run_id": "38716958767"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-15T10:05:03Z",
+      "run_id": "38716958767"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-chwalinska-jovic-wuhan-2026-r3/chwalinska-jovic-wuhan-2026-r3.mp4",
+  "video_bytes": 60466820
+}
