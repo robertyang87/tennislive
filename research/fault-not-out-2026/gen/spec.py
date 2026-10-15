@@ -34,6 +34,7 @@ S.append(q("md",129.2,139.22,[(0.14,2.72,"I'm like, maybe I touched the line,\n�
   "梅德韦杰夫赛后场上采访原话，两档逐词一致（medium 多记一个 if you 口误，按 small 写）。段尾 139.22 在 this（139.20）之后、下一句 I don't think（139.20 起，small 139.44）之前。",
   "赛后采访，不是回合。"))
 S.append(n("wb",224.6,230.4,"其实就在那一年，澳网已经把脚误也交给了电子系统。"))
+S.append(card("走动踩线\n都算脚误","规则第18条",12.4,"脚误怎么算？发球动作里，不能走动或跑动，不能踩到底线，也不能踩到边线和中点的假想延长线。双脚离地跳起来发，不算脚误。"))
 S.append(n("bu",0.0,4.5,"今年中网，布勃利克也被判了脚误。","布勃利克发球的远景，判罚喊声在下一段；窗口在两档转写都无人声的 0–4.56 之间。"))
 S.append(q("bu",4.5,7.6,[(0.1,1.42,"It's all going on.\n热闹起来了。"),(1.68,2.96,"If you didn't hear, foot fault.\n没听清的话：脚误。")],
   "Tennis TV 官方。两档逐词一致（small 记成 foot fault，medium 连写 footfault）。",
@@ -56,5 +57,5 @@ S.append(card("31次双误\n她还是赢了","1999年澳网",8.4,"也有人双�
 S.append(n("wb",230.6,240.6,"别的项目也用 fault。羽毛球的规则里，出界、触网、发球违例，统统叫 fault，out 只是其中一种。"))
 S.append(n("wb",240.8,250.0,"壁球更狠，只有一次发球，失误就丢分。网球的职业表演赛 UTS，也只给一次发球。"))
 S.append(n("wb",276.0,286.4,"所以 out 说的是球落在哪，fault 说的是这一发没做到。要是网球也只给一次发球，你觉得比赛会更好看吗？","B-roll，窗口在两档转写都无人声的 274.0–292.0 之间。"))
-json.dump(S,open('/tmp/claude-0/fault/gen/segments.json','w'),ensure_ascii=False,indent=1)
+json.dump(S,open('research/fault-not-out-2026/gen/segments.json','w'),ensure_ascii=False,indent=1)
 print(len(S))

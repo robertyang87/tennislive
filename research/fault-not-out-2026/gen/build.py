@@ -1,6 +1,6 @@
 import json
 let=json.load(open('specs/reels/let-not-net-2026.json'))
-segs=json.load(open('/tmp/claude-0/fault/gen/segments.json'))
+segs=json.load(open('research/fault-not-out-2026/gen/segments.json'))
 YT={"bu":"PYnZo-nL6Hk","ao":"VwN4Bm3liL0","ky":"o1Ad7ZL7AuU","md":"FhSymjai5hM","rb":"I_vN3qoxO8Q","wb":"GeMppP-gRKc"}
 FPS={"bu":("50/1","Tennis TV"),"ao":("25/1","Australian Open"),"ky":("25/1","Wimbledon"),"md":("30000/1001","Tennis TV"),"rb":("25/1","Australian Open"),"wb":("25/1","Wimbledon")}
 spec={
@@ -24,7 +24,7 @@ spec={
  "push":{"auto":True,"_why":let["push"]["_why"],"summary":"Fault不是出界","lead":"Fault 不是出界，是没做到。"},
  "editorial":{"mode":"match_review","question":"发球没进，司线为什么喊 Fault 而不是 Out？",
   "thesis":"fault 来自古法语 faute（缺失、做不到），与 fail、default 同出拉丁 fallere；它宣布的是「这一发没做到」，不是「球出界」。发球的目标是斜对面的发球区，落在发球线后、底线前的球还在场内，喊 out 说不通；所以回合球出界喊 out，发球没进喊 fault，2025 温网的电子司线也照样分成 out、fault、foot fault 三句。规则里的 fault 还包括脚误、挥空、碰网柱、砸到自己搭档；两次 fault 丢一分，2009 美网小威的一次脚误正好送出赛点。",
-  "beats":["冷开场：2025 澳网电子司线对汤普森连喊脚误。","01 词源：faute／fail／default；发球区与场地的区别；温网电子司线三句话。","02 不出界也是 fault：克耶高斯脚误、梅德韦杰夫二发脚误与原话、布勃利克中点脚误。","03 双误：卢布列夫；2009 美网小威；库尔尼科娃 31 次双误。","延伸：羽毛球、壁球、UTS。","收尾：out 说落点，fault 说没做到；落在一问。"],
+  "beats":["冷开场：2025 澳网电子司线对汤普森连喊脚误。","01 词源：faute／fail／default；发球区与场地的区别；温网电子司线三句话。","02 不出界也是 fault：克耶高斯脚误、梅德韦杰夫二发脚误与原话、脚误规则字卡、布勃利克中点脚误。","03 双误：卢布列夫；2009 美网小威；库尔尼科娃 31 次双误。","延伸：羽毛球、壁球、UTS。","收尾：out 说落点，fault 说没做到；落在一问。"],
   "human_context":{"angle":"和上一期 let 是一组：一个天天听到、几乎没人细想的词，fault 原意是没做到，所以它管的从来不只是出界。",
    "facts":["Etymonline/Wiktionary：fault 来自古法语 faute，拉丁 fallere；default、fail 同源。","ITF Rule 17/18/19/24；WTA VII.H.1.c。","温网 2025 官方：电子司线报 out、fault、foot fault。","2009 美网半决赛小威脚误→双误→罚分即赛点（ESPN、CBS/AP）。"],
    "sources":["https://www.etymonline.com/word/fault","https://en.wiktionary.org/wiki/fault","https://www.etymonline.com/word/default","https://www.itftennis.com/media/7221/2026-rules-of-tennis-english.pdf","https://www.wimbledon.com/en_GB/news/articles/2025-07-03/the_precision_operation_introducing_electronic_line_calling.html","https://www.espn.com/sports/tennis/usopen09/news/story?id=4468762","https://www.cbsnews.com/news/clijsters-stuns-serena-at-us-open"]}},

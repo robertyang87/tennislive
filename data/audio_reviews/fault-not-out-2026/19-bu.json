@@ -3,12 +3,25 @@
   "source_sha256": "a9c66f7b9464991e75a98d85adf42a9774c71bb1ff0f48a490c2d53598c88399",
   "method": "asr_cross_checked",
   "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
-  "reviewed_at": "2026-10-15T13:23:47.902033+00:00",
-  "reviewed_from": 21.6,
-  "reviewed_to": 27.6,
+  "reviewed_at": "2026-10-15T13:53:52.179386+00:00",
+  "reviewed_from": 4.5,
+  "reviewed_to": 7.6,
   "status": "complete",
   "uncertain_spans": [],
-  "foreground_english": [],
+  "foreground_english": [
+    {
+      "start": 4.6,
+      "end": 5.92,
+      "en": "It's all going on.",
+      "zh": "热闹起来了。"
+    },
+    {
+      "start": 6.18,
+      "end": 7.46,
+      "en": "If you didn't hear, foot fault.",
+      "zh": "没听清的话：脚误。"
+    }
+  ],
   "asr_evidence": "data/source_asr/PYnZo-nL6Hk/small.en.json + medium.en.json",
-  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/PYnZo-nL6Hk 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 21.6–27.6 秒内都没有任何英文词（窗口边界避开了最近的词）。"
+  "review_note": "Tennis TV 官方。两档逐词一致（small 记成 foot fault，medium 连写 footfault）。"
 }
