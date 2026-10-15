@@ -86,8 +86,8 @@ S.append(q("mc26",107.1,111.5,[(107.22,111.42,"This is becoming a real headache 
   "摔拍（109.25–111.4），两档一致（small 107.22–111.42；medium 107.84–111.42）。两档转写里没有梅德韦杰夫本人的话，未见脏话，不消音。","摔拍，不是回合。"))
 S.append(n("mc26",152.0,162.5,"他把球拍砸了好几下，最后扔进了场边的垃圾桶。整场比赛，他一局都没拿到。","赛点后两人走向网前握手，空当 151.15–164.61；段尾在 Tennis TV 片尾台标（约 164 秒）之前。官方集锦没有扔垃圾桶的画面，旁白按报道讲。","比赛已经结束，握手。"))
 S.append(n("ws26",123.17,136.0,"八月的温斯顿-塞勒姆，他是头号种子，却直落两盘输给了外卡达姆，这是达姆第一次赢下世界前十。五场输了四场，他开始认真考虑转行。","Tennis TV 官方当日集锦（l7F7uLC-GGM），梅德韦杰夫与达姆的回合，空当 123.17–143.15。","回合中间的一段，旁白不讲这一分；段尾在空当之内。",label="ws26"))
-c=q("wsc",0.0,17.6,[(0.6,3.6,"Maybe I should start a career in pickleball,\n也许我该改行打匹克球，"),(3.6,5.8,"not too late,\n现在还不晚，"),(5.8,8.6,"with Jack Sock, in doubles.\n和索克搭档打双打。"),(11.0,14.9,"Every sport on this planet is better, man.\n这星球上哪项运动都更好。"),(14.9,17.6,"Even curling right now.\n现在连冰壶都更好。")],
-  "Tennis TV 官方竖版短片（9aqUxco0bqo，Tennis TV 台标、片内烧录黄字）：前半是场边椅子上的自言自语，后半是赛后发布会。前半两档转写对得上（medium：start a career in pickleball, not too late, with jacksaw…）；后半两档都没转出来，按片内烧录字幕逐字写。","场边与发布会，不是回合。")
+c=q("wsc",0.0,17.45,[(0.6,3.6,"Maybe I should start a career in pickleball,\n也许我该改行打匹克球，"),(3.6,5.8,"not too late,\n现在还不晚，"),(5.8,8.6,"with Jack Sock, in doubles.\n和索克搭档打双打。"),(11.0,14.9,"Every sport on this planet is better, man.\n这星球上哪项运动都更好。"),(14.9,17.4,"Even curling right now.\n现在连冰壶都更好。")],
+  "Tennis TV 官方竖版短片（9aqUxco0bqo，Tennis TV 台标、片内烧录黄字）：前半是场边椅子上的自言自语，后半是赛后发布会。前半两档转写对得上（medium：start a career in pickleball, not too late, with jacksaw…）；后半两档都没转出来，按片内烧录字幕逐字写。段尾 17.45：源片 17.65 秒，后面接溶解要多取 0.18 秒。","场边与发布会，不是回合。")
 S.append(c)
 S.append(n("us19",210.01,219.2,"扔硬币的是他，在颁奖台上让全场鼓掌的也是他。你更喜欢哪一个梅总？","2019 美网颁奖，致辞结束后他笑着举手致意，空当 210.01–219.25。"))
 json.dump(S,open('research/medvedev-not-villain-2026/gen/segments.json','w'),ensure_ascii=False,indent=1)
