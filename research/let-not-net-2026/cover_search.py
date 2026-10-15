@@ -22,10 +22,13 @@ for s in SITES:
             c=m.get("caption"); t=m.get("title"); cap=re.sub("<[^>]+>","",(c.get("rendered","") if isinstance(c,dict) else str(c or ""))+" "+(t.get("rendered","") if isinstance(t,dict) else str(t or "")))
             if "tennis" not in cap.lower() and "open" not in cap.lower() and "wimbledon" not in cap.lower(): continue
             md=m.get("media_details") or {}
+            if not isinstance(md,dict): md={}
             w,h=md.get("width",0),md.get("height",0)
             src=m.get("source_url","")
+            if not isinstance(src,str) or not src: continue
             orig=re.sub(r"-scaled(\.\w+)$",r"\1",src)
             sizes=md.get("sizes") or {}
+            if not isinstance(sizes,dict): sizes={}
             th=(sizes.get("medium") or sizes.get("thumbnail") or {}).get("source_url") or src
             rows[orig]={"site":s,"q":q,"w":w,"h":h,"url":orig,"src":src,"thumb":th,"caption":cap.strip()[:500],"date":m.get("date")}
         time.sleep(1)
