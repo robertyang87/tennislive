@@ -1,0 +1,22 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Rv0Q9jXIz-M",
+  "source_sha256": "d1b92bd0641afaf9f4480debb1836004391cbd65bd7b9eed2fa546054b471db9",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-15T18:40:59.642461+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 12.9,
+  "reviewed_to": 16.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 13.12,
+      "end": 15.98,
+      "en": "You okay, sir?",
+      "zh": "你没事吧，先生？"
+    }
+  ],
+  "asr_evidence": "data/source_asr/Rv0Q9jXIz-M/small.en.json + medium.en.json",
+  "profanity_check": "两档转写在这一窗口里都没有脏话；按交接文档「如果确认有脏话」的条件，不消音。",
+  "review_note": "两档一致（small 13.06–16.06；medium 段首记在 9.84，词只有 You ok sir）。"
+}

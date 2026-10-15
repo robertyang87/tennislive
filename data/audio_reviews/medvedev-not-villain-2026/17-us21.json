@@ -1,0 +1,21 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=MEFpXBwnyQA",
+  "source_sha256": "8b516aa9d11d9a0e61f75b14011df29392694c7e440500ab79e57bf3688c3877",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-15T18:40:59.642461+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 136.0,
+  "reviewed_to": 149.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 145.36,
+      "end": 148.88,
+      "en": "Six-four, six-four, six-four.",
+      "zh": "6比4、6比4、6比4。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/MEFpXBwnyQA/small.en.json + medium.en.json",
+  "review_note": "冠军点那一分＋倒地。两档：small 143.62–148.96、medium 145.36–148.98，按 medium 写比分。136–145 只有现场声。"
+}

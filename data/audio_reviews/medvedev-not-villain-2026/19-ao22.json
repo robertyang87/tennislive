@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=uWxN2lH2Fa0",
+  "source_sha256": "2a9ed50619a57e54ac264561fbc46ec0ebacecc7091a9b79d706bcf63c86ad1e",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-15T18:40:59.642461+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 299.8,
+  "reviewed_to": 311.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/uWxN2lH2Fa0/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/uWxN2lH2Fa0 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 299.8–311.2 秒内都没有任何英文词（窗口边界避开了最近的词）。",
+  "review_note": "澳网官方加长集锦（uWxN2lH2Fa0），回合画面，空当 296.89–336.47。"
+}

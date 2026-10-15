@@ -1,0 +1,34 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=SXCs4vTWo_s",
+  "source_sha256": "d4e212906904b7114aae8bfa0cf99fb65da1625701c466ee0ceb4bf1f149828f",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-15T18:40:59.642461+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 148.0,
+  "reviewed_to": 156.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 148.4,
+      "end": 150.8,
+      "en": "See what he's writing on the camera here.",
+      "zh": "看他在镜头上写了什么。"
+    },
+    {
+      "start": 150.8,
+      "end": 153.34,
+      "en": "It might be something about clay.",
+      "zh": "好像跟红土有关。"
+    },
+    {
+      "start": 154.36,
+      "end": 156.08,
+      "en": "He loves the clay, of course he does.",
+      "zh": "他爱红土，当然爱。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/SXCs4vTWo_s/small.en.json + medium.en.json",
+  "profanity_check": "两档转写在这一窗口里都没有脏话；按交接文档「如果确认有脏话」的条件，不消音。",
+  "review_note": "赛点后他在镜头上写下 Love clay :)。两档一致（small 144.30–156.10 记成 Klee；medium 147.16–156.18 写 clay）。段首 148.0 在 and ace（147.16–147.9）之后。"
+}

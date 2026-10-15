@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=xH4R5HNq-6s",
+  "source_sha256": "e50a334fdff8d6e0f10eb1ffa71895851c401666953a8cd3a37da7530f902801",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-15T18:40:59.642461+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 0.0,
+  "reviewed_to": 10.9,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 0.22,
+      "end": 2.76,
+      "en": "His father can talk every point? Are you stupid?",
+      "zh": "他父亲每一分都能说话？你傻吗？"
+    },
+    {
+      "start": 3.18,
+      "end": 10.38,
+      "en": "His father can talk every point, his father can talk every point!",
+      "zh": "他父亲每一分都能说话，每一分！"
+    }
+  ],
+  "asr_evidence": "data/source_asr/xH4R5HNq-6s/small.en.json + medium.en.json",
+  "review_note": "冷开场：全片最出圈的一幕放到最前面当由头，正文讲到 2022 澳网时接着放后半段（第 23 段，11.2 秒起）。两档逐词基本一致（small 记成 can't talk，按 medium 的 can talk 写）。段尾 10.9 在下一句 Will you answer（11.46）之前。stupid 按账号所有者交接文档不算脏话，不消音。"
+}
