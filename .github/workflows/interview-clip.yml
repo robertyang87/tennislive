@@ -914,7 +914,7 @@ jobs:
           tail -200 "$RUNNER_TEMP/render.log" > "$OUTDIR/_render.log" 2>/dev/null || echo "无日志" > "$OUTDIR/_render.log"
           git config user.name "tennislive-bot"
           git config user.email "bot@tennislive.local"
-          git add "$OUTDIR/_render.log"
+          git add "$OUTDIR/_render.log" || true
           git commit -m "debug: render 日志 ${{ github.run_id }}" || true
           git push origin main || true
       - name: 终审封面视觉（出片后的最终海报，完全本地）
