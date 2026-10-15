@@ -25,5 +25,21 @@
       "publish-transcripts commit identity did not match existing repository convention"
     ],
     "repair": "Added native apt restore/save pair with APT_CACHE_DIRTY condition to both callers; aligned automatic transcript commit identity with existing repository contract. No video/spec/audio changes."
+  },
+  "second_final_CI": {
+    "run": 38720854996,
+    "head": "8b1c7e18647133ba3966041c7e68e52378f71b88",
+    "status": "success"
+  },
+  "concurrent_main_update_resolution": {
+    "main": "532006b2",
+    "local_merge": "69ca3f01",
+    "conflicts": [
+      "medvedev-profanity-check.yml",
+      "medvedev-tts.yml",
+      "publish-transcripts.yml"
+    ],
+    "resolution": "Preserved current main versions of all three shared auxiliary workflows; main independently repaired the same contracts. No remaining workflow diff in this PR. Production renderer/tools/src and match-reel workflow unchanged between old and updated main. Actual video/spec/TTS unchanged.",
+    "targeted_recheck": "31 passed on resolved workflow versions; current final-head CI still required."
   }
 }
