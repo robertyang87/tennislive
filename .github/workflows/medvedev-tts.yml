@@ -16,13 +16,21 @@ on:
         required: false
         default: '+10%'
 
+permissions:
+  contents: read
+
 jobs:
   tts:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            workspace/medvedev-story
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'

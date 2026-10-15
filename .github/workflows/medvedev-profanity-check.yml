@@ -3,18 +3,30 @@ name: medvedev-profanity-check
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   transcribe:
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            workspace/medvedev-story/audio-check
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install whisper and ffmpeg
+      - name: Install ffmpeg
+        timeout-minutes: 15
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null 2>&1
-          python -m pip install -q openai-whisper
+          source tools/ci_apt_install.sh
+          apt_install_cached ffmpeg
+      - name: Install whisper
+        timeout-minutes: 8
+        run: python -m pip install -q openai-whisper
       - name: Transcribe risk segments
         run: |
           for f in workspace/medvedev-story/audio-check/*.m4a; do
