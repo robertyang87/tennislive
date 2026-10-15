@@ -2,21 +2,15 @@
   "source_url": "https://www.youtube.com/watch?v=Rv0Q9jXIz-M",
   "source_sha256": "d1b92bd0641afaf9f4480debb1836004391cbd65bd7b9eed2fa546054b471db9",
   "method": "asr_cross_checked",
-  "reviewed_at": "2026-10-15T17:06:59.902478+00:00",
+  "reviewed_at": "2026-10-15T17:23:49.710739+00:00",
   "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
-  "reviewed_from": 12.9,
-  "reviewed_to": 16.2,
+  "reviewed_from": 16.27,
+  "reviewed_to": 29.6,
   "status": "complete",
   "uncertain_spans": [],
-  "foreground_english": [
-    {
-      "start": 13.06,
-      "end": 16.06,
-      "en": "You okay, sir?",
-      "zh": "你没事吧，先生？"
-    }
-  ],
+  "foreground_english": [],
   "asr_evidence": "data/source_asr/Rv0Q9jXIz-M/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/Rv0Q9jXIz-M 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 16.27–29.6 秒内都没有任何英文词（窗口边界避开了最近的词）。",
   "profanity_check": "两档转写在这一窗口里都没有脏话；按交接文档「如果确认有脏话」的条件，不消音。",
-  "review_note": "两档一致（small 13.06–16.06；medium 段首记在 9.84，词只有 You ok sir）。"
+  "review_note": "空当 16.27–32.25，踢镜头在 27 秒前后。"
 }

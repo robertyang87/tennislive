@@ -2,14 +2,38 @@
   "source_url": "https://www.youtube.com/watch?v=9CQYJlU5_Ew",
   "source_sha256": "46990ccb6b7c84354d0733e775fe6aba0f48d75bb43e733035b084d75d8d06e1",
   "method": "asr_cross_checked",
-  "reviewed_at": "2026-10-15T17:06:59.902478+00:00",
+  "reviewed_at": "2026-10-15T17:23:49.710739+00:00",
   "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
-  "reviewed_from": 141.29,
-  "reviewed_to": 155.69,
+  "reviewed_from": 128.6,
+  "reviewed_to": 141.2,
   "status": "complete",
   "uncertain_spans": [],
-  "foreground_english": [],
+  "foreground_english": [
+    {
+      "start": 128.9,
+      "end": 131.6,
+      "en": "I want to talk about you guys.",
+      "zh": "我想说说你们。"
+    },
+    {
+      "start": 131.6,
+      "end": 136.0,
+      "en": "I know, earlier in the tournament I said something kind of in a bad way.",
+      "zh": "我知道，之前我说话不太好听。"
+    },
+    {
+      "start": 136.0,
+      "end": 138.6,
+      "en": "Now I'm saying it in a good way:",
+      "zh": "现在我换个好听的说法："
+    },
+    {
+      "start": 138.6,
+      "end": 141.14,
+      "en": "because of your energy, guys, I was here in the final.",
+      "zh": "是你们的能量把我送进了决赛。"
+    }
+  ],
   "asr_evidence": "data/source_asr/9CQYJlU5_Ew/small.en.json + medium.en.json",
-  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/9CQYJlU5_Ew 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 141.29–155.69 秒内都没有任何英文词（窗口边界避开了最近的词）。",
-  "review_note": "美网官方颁奖仪式（9CQYJlU5_Ew），致辞之间的空当 141.29–155.69（两档转写都无词）。"
+  "review_note": "梅德韦杰夫颁奖致辞原声，两档逐词一致（small 129.38–141.14、medium 129.26–141.14）。段首 128.6 在上一句 didn't go my way and I（128.5 前后）之后。"
 }

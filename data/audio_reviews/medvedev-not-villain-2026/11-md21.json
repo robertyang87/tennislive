@@ -2,33 +2,15 @@
   "source_url": "https://www.youtube.com/watch?v=SXCs4vTWo_s",
   "source_sha256": "d4e212906904b7114aae8bfa0cf99fb65da1625701c466ee0ceb4bf1f149828f",
   "method": "asr_cross_checked",
-  "reviewed_at": "2026-10-15T17:06:59.902478+00:00",
+  "reviewed_at": "2026-10-15T17:23:49.710739+00:00",
   "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
-  "reviewed_from": 12.5,
-  "reviewed_to": 19.98,
+  "reviewed_from": 106.0,
+  "reviewed_to": 115.1,
   "status": "complete",
   "uncertain_spans": [],
-  "foreground_english": [
-    {
-      "start": 12.64,
-      "end": 14.36,
-      "en": "Yeah, he's not looking happy, Medvedev.",
-      "zh": "梅德韦杰夫看起来很不高兴。"
-    },
-    {
-      "start": 14.66,
-      "end": 16.92,
-      "en": "I don't want to play here on this surface.",
-      "zh": "我不想在这种场地上打球。"
-    },
-    {
-      "start": 17.68,
-      "end": 19.98,
-      "en": "Well, pretty clear what he's thinking.",
-      "zh": "他心里怎么想，很清楚了。"
-    }
-  ],
+  "foreground_english": [],
   "asr_evidence": "data/source_asr/SXCs4vTWo_s/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/SXCs4vTWo_s 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 106.0–115.1 秒内都没有任何英文词（窗口边界避开了最近的词）。",
   "profanity_check": "两档转写在这一窗口里都没有脏话；按交接文档「如果确认有脏话」的条件，不消音。",
-  "review_note": "梅德韦杰夫本人的牢骚夹在解说之间。medium 逐词：surface；small 记成 circuit，按 medium 与画面写 surface。段尾 19.98 在 ASR 末尾的 Thank you 幻听（19.98 起，两档都只有这一词且画面无人说话）之前。"
+  "review_note": "第三盘回合，空当之内。"
 }

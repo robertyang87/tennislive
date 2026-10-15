@@ -2,14 +2,50 @@
   "source_url": "https://www.youtube.com/watch?v=6q9HMdjYpVg",
   "source_sha256": "e3925fe9cfda9768dc000134ef860eab839811d7f2932597376c8f4179e5a900",
   "method": "asr_cross_checked",
-  "reviewed_at": "2026-10-15T17:06:59.902478+00:00",
+  "reviewed_at": "2026-10-15T17:23:49.710739+00:00",
   "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
-  "reviewed_from": 191.6,
-  "reviewed_to": 198.17,
+  "reviewed_from": 198.3,
+  "reviewed_to": 225.4,
   "status": "complete",
   "uncertain_spans": [],
-  "foreground_english": [],
+  "foreground_english": [
+    {
+      "start": 198.4,
+      "end": 202.9,
+      "en": "On the second note, I was here two years ago when I won,",
+      "zh": "还有一件事，两年前我在这里夺冠，"
+    },
+    {
+      "start": 202.9,
+      "end": 210.0,
+      "en": "and I was like, what a great anniversary gift for my wife.",
+      "zh": "我想，这份纪念日礼物真不错。"
+    },
+    {
+      "start": 210.0,
+      "end": 215.5,
+      "en": "And yeah, it's funny, because dates usually change,",
+      "zh": "有意思的是，日期一般会变，"
+    },
+    {
+      "start": 215.5,
+      "end": 220.5,
+      "en": "but today, Sunday, again is the anniversary,",
+      "zh": "可今天这个星期天，又是纪念日，"
+    },
+    {
+      "start": 220.5,
+      "end": 222.64,
+      "en": "so I thought, come on, do it one more time.",
+      "zh": "我就想，来吧，再来一次。"
+    },
+    {
+      "start": 222.64,
+      "end": 225.26,
+      "en": "But, yeah, it didn't happen.",
+      "zh": "可惜，没成。"
+    }
+  ],
   "asr_evidence": "data/source_asr/6q9HMdjYpVg/small.en.json + medium.en.json",
-  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/6q9HMdjYpVg 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 191.6–198.17 秒内都没有任何英文词（窗口边界避开了最近的词）。",
-  "review_note": "致辞中间的掌声空当 189.29–198.17。"
+  "review_note": "梅德韦杰夫颁奖致辞原声，两档一致（medium 198.40–225.26）。德约随后致辞也说 Happy anniversary to your wife（644.12），互相印证。段尾 225.4 在下一句（231.66）之前。"
 }

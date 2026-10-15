@@ -2,7 +2,6 @@ import json
 V={"pitch":"+10Hz","_why":"网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fault-not-out-2026 同一档）。"}
 A='assets/reel/medvedev-real'
 LABELS={
- "bj":{"topic":"击球打到观众","date":"2026.10.05","place":"ATP500 北京 半决赛","score":"5-7 3-5","people":"梅德韦杰夫 vs 德约科维奇"},
  "us19":{"topic":"被嘘进了决赛","date":"2019.09.08","place":"美网 决赛","score":"5-7 3-6 7-5 6-4 4-6","people":"梅德韦杰夫 vs 纳达尔"},
  "md21":{"topic":"不想在红土上打","date":"2021.05.05","place":"ATP1000 马德里 第二轮","score":"4-6 6-4 6-2","people":"梅德韦杰夫 vs 福基纳"},
  "ci21":{"topic":"撞上场边摄像机","date":"2021.08.21","place":"ATP1000 辛辛那提 半决赛","score":"6-2 3-6 3-6","people":"梅德韦杰夫 vs 卢布列夫"},
@@ -26,16 +25,14 @@ def q(src,a,b,cues,why,ok,label=None,kind="broadcast"):
 def card(title,kicker,sec,text):
     return {"title_card":title,"kicker":kicker,"seconds":sec,"narration":text,"voice":dict(V)}
 S=[]
-# 冷开场：北京失格
-c=q("bj",349.2,369.4,[(352.48,355.08,"That's a brilliant combination from Djokovic.\n德约这一套组合太漂亮了。"),(356.38,358.04,"Can you believe it?\n你敢信吗？"),(360.48,363.5,"After the most extraordinary level in this match,\n这场球打出了惊人的水准，"),(363.68,366.14,"it has ended on a Medvedev default.\n却以梅德韦杰夫失格收场。")],
-  "冷开场：2026 中网半决赛最后一分→梅德韦杰夫把球打出去（355 秒前后）→监督入场、与主裁握手离场。两档转写一致（small 352.48–366.06；medium 352.58–366.14）。段尾 369.4 在下一句 No real protest（369.64）之前。",
-  "这一分在 352 秒打完，之后是失格的过程，不是新的一分。",label="bj")
+# 冷开场：2022 澳网半决赛换边时冲主裁吼（Wide World of Sports 原声）
+c=q("ao22r",0.0,10.9,[(0.0,2.76,"His father can talk every point? Are you stupid?\n他父亲每一分都能说话？你傻吗？"),(3.18,10.38,"His father can talk every point, his father can talk every point!\n他父亲每一分都能说话，每一分！")],
+  "冷开场：全片最出圈的一幕放到最前面当由头，正文讲到 2022 澳网时接着放后半段（第 23 段，11.2 秒起）。两档逐词基本一致（small 记成 can't talk，按 medium 的 can talk 写）。段尾 10.9 在下一句 Will you answer（11.46）之前。stupid 按账号所有者交接文档不算脏话，不消音。",
+  "换边时的争执，不是回合。")
 c["_ending_payoff_required"]=False
-c["crosses_cut"]="352.5 德约这一分打完 → 355.46 切到梅德韦杰夫把球打出去、监督入场，同一刻连续的画面。"
-c["_ending_payoff_why"]="网球有故事：冷开场是全片由头，正文按时间讲九年的名场面，最后一件事回到同一场比赛（第 36 段起）重新交代失格的来龙去脉。"
+c["_ending_payoff_why"]="网球有故事：冷开场是全片由头，正文按时间讲九年的名场面，讲到 2022 澳网半决赛时接着放这段争执的后半段，交代来龙去脉和罚款。"
 S.append(c)
-S.append(n("bj",199.73,211.2,"这一幕发生在十月五号，中网半决赛。一分打完，他把球狠狠打了出去，打到了看台上的观众，被判失格出局。","Tennis TV 官方，北京半决赛第一盘回合；英文解说空当 199.73–218.55（两档转写都无词）。","第一盘回合中间的一段对打，旁白讲的不是这一分；段尾在空当之内。"))
-S.append(n("bj",133.93,146.6,"撒硬币，踢摄像机，对着主裁吼。再加上砸球拍，他的罚单能列一长串。可也是他，在颁奖台上让全场笑出了声。他是反派，还是只是太真实？","第一盘回合与换边，空当 133.93–160.83。"))
+S.append(n("ao22",311.3,325.8,"对着主裁大吼的这个人，就是梅德韦杰夫。撒硬币，踢摄像机，砸球拍，他的罚单能列一长串。可也是他，在颁奖台上让全场笑出了声。他是反派，还是只是太真实？","澳网官方加长集锦（uWxN2lH2Fa0），同一场半决赛第一盘的破发点回合，空当 296.89–336.47（两档转写都无词）。","这一分在 324 秒前后打完，段尾 325.8 停在西西帕斯握拳，换边之前。"))
 S.append(card("被嘘的\n那几年","01",4.2,"故事要从二〇一七年的温网说起。"))
 S.append(card("朝主裁椅\n扔了硬币","2017年温网 第二轮",9.6,"那年他二十一岁，五盘输给了贝梅尔曼斯。握手之后，他掏出几枚硬币，朝主裁的椅子扔了过去。"))
 S.append(card("一时上头\n做了件坏事","罚款14500美元",8.0,"这场他一共被罚了一万四千五百美元。事后他说：一时上头，我做了件坏事。"))
@@ -59,9 +56,9 @@ S.append(n("us21",124.5,135.8,"二〇二一年美网决赛，德约科维奇离�
 S.append(q("us21",136.0,149.1,[(145.36,148.98,"Six-four, six-four, six-four.\n6比4、6比4、6比4。")],
   "冠军点那一分＋倒地。两档：small 143.62–148.96、medium 145.36–148.98，按 medium 写比分。136–145 只有现场声。","冠军点在 142 秒打完，之后是倒地庆祝。"))
 S.append(n("us21",149.13,159.4,"他慢慢倒在地上，吐着舌头，像一条死鱼。这是他从足球游戏里学来的庆祝，说是给一起打游戏的朋友看的。","倒地庆祝之后，妻子在看台、网前握手；空当 149.13–161.97。"))
-S.append(n("ao22",299.8,311.2,"二〇二二年澳网半决赛，对手是西西帕斯。他认定对方父亲在看台上一直指导，主裁却一直不管。换边的时候，他终于忍不住了。","澳网官方加长集锦（uWxN2lH2Fa0），回合画面，空当 296.89–336.47。","回合间画面，旁白不讲这一分；段尾在空当之内。",label="ao22"))
-S.append(q("ao22r",0.0,29.1,[(0.0,2.76,"His father can talk every point? Are you stupid?\n他父亲每一分都能说话？你傻吗？"),(3.18,10.38,"His father can talk every point, his father can talk every point!\n他父亲每一分都能说话，每一分！"),(11.46,15.48,"Will you answer my question? Can you answer my question, please?\n你能回答我的问题吗？"),(15.98,17.44,"Can his father talk every point?\n他父亲能每一分都说话吗？"),(19.58,22.02,"Oh my God, you are so bad, man.\n天哪，你太差劲了。"),(23.62,25.92,"How can you be so bad in the semi-final?\n半决赛你怎么能这么差？"),(25.92,29.06,"Look at me, I'm talking to you.\n看着我，我在跟你说话。")],
-  "澳网转播方 Nine 的 Wide World of Sports 官方频道（xH4R5HNq-6s）：换边时梅德韦杰夫对主裁的原声。两档逐词基本一致（small 记成 can't talk，按 medium 的 can talk 写，与他的原意「他父亲每一分都能说话吗」吻合）。stupid、small cat 按账号所有者交接文档不算脏话，不消音。","换边时的争执，不是回合。"))
+S.append(n("ao22",299.8,311.2,"二〇二二年澳网半决赛，对手是西西帕斯。他认定对方父亲在看台上一直指导，主裁却不管。于是有了开头那一幕，他还没吼完。","澳网官方加长集锦（uWxN2lH2Fa0），回合画面，空当 296.89–336.47。","回合间画面，旁白不讲这一分；段尾在空当之内。",label="ao22"))
+S.append(q("ao22r",11.2,29.1,[(11.46,15.48,"Will you answer my question? Can you answer my question, please?\n你能回答我的问题吗？"),(15.98,17.44,"Can his father talk every point?\n他父亲能每一分都说话吗？"),(19.58,22.02,"Oh my God, you are so bad, man.\n天哪，你太差劲了。"),(23.62,25.92,"How can you be so bad in the semi-final?\n半决赛你怎么能这么差？"),(25.92,29.06,"Look at me, I'm talking to you.\n看着我，我在跟你说话。")],
+  "澳网转播方 Nine 的 Wide World of Sports 官方频道（xH4R5HNq-6s）：冷开场那段争执的后半段。两档逐词基本一致。段首 11.2 在冷开场最后一句（10.38）之后。","换边时的争执，不是回合。"))
 S.append(q("ao22r",90.1,93.9,[(90.28,93.76,"If you don't, you are a, how can I call it, small cat.\n不然你就是个，怎么说呢，小猫。")],
   "两档一致（small 88.04–93.72；medium 90.28–93.76）。段首 90.1 在上一句（87.10–89.90）之后。","换边时的争执，不是回合。"))
 S.append(n("ao22",474.9,483.7,"他因此被罚了一万两千美元，赛后说自己完全后悔。四盘过后，他还是进了决赛。","比赛结束、握手，空当 474.87–489.73。"))
@@ -80,13 +77,10 @@ S.append(n("mc26",93.97,107.0,"今年蒙特卡洛第二轮，他零比六、零�
 S.append(q("mc26",107.1,111.5,[(107.22,111.42,"This is becoming a real headache now for Medvedev, and goodness me.\n梅德韦杰夫真的头疼了，天哪。")],
   "摔拍（109.25–111.4），两档一致（small 107.22–111.42；medium 107.84–111.42）。两档转写里没有梅德韦杰夫本人的话，未见脏话，不消音。","摔拍，不是回合。"))
 S.append(n("mc26",152.0,162.5,"他把球拍砸了好几下，最后扔进了场边的垃圾桶。整场比赛，他一局都没拿到。","赛点后两人走向网前握手，空当 151.15–164.61；段尾在 Tennis TV 片尾台标（约 164 秒）之前。官方集锦没有扔垃圾桶的画面，旁白按报道讲。","比赛已经结束，握手。"))
-S.append(n("ws26",123.17,136.0,"八月的温斯顿-塞勒姆，他是头号种子，却直落两盘输给了外卡达姆，这是达姆第一次赢下世界前十。那段时间，他五场输了四场。","Tennis TV 官方当日集锦（l7F7uLC-GGM），梅德韦杰夫与达姆的回合，空当 123.17–143.15。","回合中间的一段，旁白不讲这一分；段尾在空当之内。",label="ws26"))
+S.append(n("ws26",123.17,136.0,"八月的温斯顿-塞勒姆，他是头号种子，却直落两盘输给了外卡达姆，这是达姆第一次赢下世界前十。五场输了四场，他开始认真考虑转行。","Tennis TV 官方当日集锦（l7F7uLC-GGM），梅德韦杰夫与达姆的回合，空当 123.17–143.15。","回合中间的一段，旁白不讲这一分；段尾在空当之内。",label="ws26"))
 c=q("wsc",0.0,17.6,[(0.6,3.6,"Maybe I should start a career in pickleball,\n也许我该改行打匹克球，"),(3.6,5.8,"not too late,\n现在还不晚，"),(5.8,8.6,"with Jack Sock, in doubles.\n和索克搭档打双打。"),(11.0,14.9,"Every sport on this planet is better, man.\n这星球上哪项运动都更好。"),(14.9,17.6,"Even curling right now.\n现在连冰壶都更好。")],
   "Tennis TV 官方竖版短片（9aqUxco0bqo，Tennis TV 台标、片内烧录黄字）：前半是场边椅子上的自言自语，后半是赛后发布会。前半两档转写对得上（medium：start a career in pickleball, not too late, with jacksaw…）；后半两档都没转出来，按片内烧录字幕逐字写。","场边与发布会，不是回合。")
 S.append(c)
-S.append(n("bj",314.77,328.0,"然后就是十月五号的北京。他第一盘五比七输掉，第二盘三比五落后，德约科维奇发球胜赛。一分打完，他把球打了出去，打到了看台上的观众。","回到冷开场那一场：第二盘回合，空当 314.77–334.19。","第二盘回合，旁白不讲这一分；段尾在 334.34 解说开口之前。",label="bj"))
-S.append(q("bj",369.5,379.95,[(369.64,372.7,"No real protest from Daniil Medvedev,\n梅德韦杰夫没怎么抗议，"),(372.78,379.94,"but it's hard to argue with the decision from Mohamed Lahyani and the ATP supervisor there.\n主裁和ATP监督的判罚，很难反驳。")],
-  "small 369.64–379.94 整句；medium 只转出后半（372.78–376.46）。ASR 把名字拼成 Hammond-Leyani，按主裁本人姓名 Mohamed Lahyani 写。段尾在 Tennis TV 片尾板（380 秒）之前。","失格之后收拾球包离场，不是回合。"))
 S.append(n("us19",210.01,219.2,"扔硬币的是他，在颁奖台上让全场鼓掌的也是他。你更喜欢哪一个梅总？","2019 美网颁奖，致辞结束后他笑着举手致意，空当 210.01–219.25。"))
 json.dump(S,open('research/medvedev-not-villain-2026/gen/segments.json','w'),ensure_ascii=False,indent=1)
 json.dump(LABELS,open('research/medvedev-not-villain-2026/gen/labels.json','w'),ensure_ascii=False,indent=1)
