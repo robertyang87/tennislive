@@ -1,0 +1,106 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=2JaGT8z3O60",
+  "source_sha256": "eb8a231875a31043e5f81e315f291e8c99d53ee57da53e5d25900f70615115bc",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source-review assistant; actual native full-source small.en/medium.en cross-check with upload captions and source frames, no manual listening claimed",
+  "reviewed_at": "2026-10-15T14:22:44.758073+00:00",
+  "status": "complete",
+  "reviewed_from": 284.98,
+  "reviewed_to": 299.58,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 284.98,
+      "end": 286.38,
+      "en": "The former world number one,",
+      "zh": "这位前世界第一，",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 286.38,
+      "end": 288.36,
+      "en": "too sturdy and too strong",
+      "zh": "实在太稳、太强，",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 288.36,
+      "end": 290.32,
+      "en": "on this fourth night in Wuhan.",
+      "zh": "在武汉的第四个比赛夜。",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 290.32,
+      "end": 294.28,
+      "en": "And of the 15 top-level coveted events,",
+      "zh": "在15项备受瞩目的顶级赛事中，",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 294.28,
+      "end": 296.46,
+      "en": "that... one of the few that she hasn't won",
+      "zh": "她尚未夺冠的少数赛事之一，",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 296.46,
+      "end": 297.46,
+      "en": "is Wuhan.",
+      "zh": "就是武汉。",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    },
+    {
+      "start": 297.46,
+      "end": 299.38,
+      "en": "That's Swiatek making her case tonight.",
+      "zh": "今晚斯瓦泰克正在证明自己。",
+      "verification": "Actual same-source full two-model words reconciled with official uploadercaptions; source_names normalized, semantic display cue splits and punctuation added. ASR edges remain estimates."
+    }
+  ],
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/evidence/swiatek-krueger-wuhan-2026-r3/source-audio/raw/small.en.json",
+        "sha256": "3043cc713a7ff54cc0397c5ecc2385fad0914d7933e6ac694557f70b4fccbfe1",
+        "model": "small.en",
+        "source_sha256": "eb8a231875a31043e5f81e315f291e8c99d53ee57da53e5d25900f70615115bc",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/evidence/swiatek-krueger-wuhan-2026-r3/source-audio/raw/medium.en.json",
+        "sha256": "9dff201a6f22be5d370e039a8c8f2d81fe90e63c1a8fd28b67acd74c48aac333",
+        "model": "medium.en",
+        "source_sha256": "eb8a231875a31043e5f81e315f291e8c99d53ee57da53e5d25900f70615115bc",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/captions.txt",
+        "sha256": "34c41b140a6263e22037340aad2372aa2d2366b4f2be1f2f6c077c62d5494cb6",
+        "kind": "same_native_probe_source_automatic_captions_locator"
+      }
+    ],
+    "manual_listening_claimed": false,
+    "source_audio_gain_changes": false,
+    "reconciliation_and_limits": [
+      "This is full same-byte small.en/medium.en ASR cross-check with native source captions and frames, not manual listening.",
+      "Source-ASR medium254.46-256.64 Thank you is an isolated hypothesis: Thank p0.034/no_speech0.605, absent small and uploadercaptions; retainedraw, not promoted into foregroundspeech. No source sound is muted or changed.",
+      "Medium final Wuhan185.62-190.02 stretches across the following scene gap; small wordend186.16 and uploadercaption support closing the first-set utterance before186.36.",
+      "Whole-source segment joins across pauses are not clause boundaries. Exact words and uploadercaptions split the player answer after for sure401.76/401.82; next interviewer And starts small402.40/uploader402.24, outside native tail402.18.",
+      "Negation not in playerquote supported smallp0.852 and uploadercaption; medium that p0.534 is the conflicting raw hypothesis. No claim of hearinga manuallyverified phoneme.",
+      "Names normalized to official IgaSwiatek/AshlynKrueger; source For...shell functionwords follow uploadcaptions where fullASR omitted them.",
+      "Final broadcast that... is retained as audible false-start transcription instead of silently polishing every lexicaltoken. Source winner41 claim independently checked by rootfacts, including UnitedCup.",
+      "Cold begins284.98 at The in both full models, after prior opponents ends284.98; retains following15eventclause in full so no arbitrary290-291 halfsentencecut.",
+      "All cue timings remain conservative ASR estimates, not exact manually measured acoustic edges. Native source tails+.18s are included in review coverage."
+    ]
+  },
+  "_edit_id": "cold_open"
+}

@@ -1,0 +1,227 @@
+{
+  "checked_at": "2026-10-15T14:17:29.663214Z",
+  "claim": "Iga Swiatek victory number 41 in 2026",
+  "verdict": "independently_supported_with_official_profile_and_yearly_match_history_plus_Wuhan_results",
+  "safe_caption": "斯瓦泰克拿下了本赛季第41场胜利。",
+  "scope": "官方YTD单打口径，包含联合杯单打；排除轮空，包含已经开打后的退赛比赛，非只计算个人巡回赛赛事。",
+  "profile_url": "https://www.wtatennis.com/players/326408/iga-swiatek",
+  "profile_raw": "data/research/swiatek-krueger-wuhan-2026-r3/swiatek-profile.html",
+  "profile_ytd_singles": {
+    "rank": "9",
+    "titles": 1,
+    "winLoss": "39 / 15"
+  },
+  "yearly_api_urls": [
+    "https://api.wtatennis.com/tennis/players/326408/matches?year=2026&page=0&pageSize=1000",
+    "https://api.wtatennis.com/tennis/players/326408/matches?year=2026&page=1&pageSize=1000"
+  ],
+  "yearly_counts": {
+    "page0_total_rows": 64,
+    "page1_total_rows": 0,
+    "all_player_1_is_Iga": true,
+    "all_singles_main_draw": true,
+    "byes_excluded": 10,
+    "played_rows": 54,
+    "wins": 39,
+    "losses": 15,
+    "United_Cup_included_wins": 3,
+    "United_Cup_included_losses": 2,
+    "retirement_played_matches": 2
+  },
+  "winner_enum_validation": "每条记录player_1均为326408，owner-first数值字段winner1为主角赢、2为负；排除10条reason_codeB BYE后39/15与独立官方profile的39/15精确一致。team_name_1/2显示词序会变，不能按team_name位置去猜winner。",
+  "history_cutoff": "API历史最新记录是北京QF负梅尔滕斯，未计武汉；不把资料页39当成武汉赛后当前战绩。",
+  "event_record_breakdown": {
+    "UNITED CUP": {
+      "wins": 3,
+      "losses": 2
+    },
+    "AUSTRALIAN OPEN": {
+      "wins": 4,
+      "losses": 1
+    },
+    "DOHA": {
+      "wins": 2,
+      "losses": 1
+    },
+    "INDIAN WELLS": {
+      "wins": 3,
+      "losses": 1
+    },
+    "MIAMI": {
+      "wins": 0,
+      "losses": 1
+    },
+    "STUTTGART": {
+      "wins": 1,
+      "losses": 1
+    },
+    "MADRID 1000": {
+      "wins": 1,
+      "losses": 1
+    },
+    "ROME": {
+      "wins": 4,
+      "losses": 1
+    },
+    "ROLAND GARROS": {
+      "wins": 3,
+      "losses": 1
+    },
+    "BAD HOMBURG": {
+      "wins": 0,
+      "losses": 1
+    },
+    "WIMBLEDON": {
+      "wins": 2,
+      "losses": 1
+    },
+    "TORONTO": {
+      "wins": 6,
+      "losses": 0
+    },
+    "CINCINNATI": {
+      "wins": 4,
+      "losses": 1
+    },
+    "US OPEN": {
+      "wins": 3,
+      "losses": 1
+    },
+    "BEIJING": {
+      "wins": 3,
+      "losses": 1
+    }
+  },
+  "Wuhan_results_appended": [
+    {
+      "BinPacketBase64": null,
+      "CourtID": 1,
+      "DateSeq": 5,
+      "DrawLevelType": "M",
+      "DrawMatchType": "S",
+      "EntryTypeA": "Ll",
+      "EntryTypeB": "",
+      "EventID": "1075",
+      "EventYear": 2026,
+      "LastUpdated": "2026-10-14T04:52:45.34+00:00",
+      "MatchID": "LS019",
+      "MatchState": "F",
+      "MatchTimeStamp": "2026-10-14T02:46:15.747+00:00",
+      "MatchTimeTotal": "01:43:07",
+      "Message": "{11|I. Swiatek}",
+      "NumSets": 2,
+      "PlayerCountryA": "POL",
+      "PlayerCountryA2": "",
+      "PlayerCountryB": "POL",
+      "PlayerCountryB2": "",
+      "PlayerIDA": "320277",
+      "PlayerIDA2": "",
+      "PlayerIDB": "326408",
+      "PlayerIDB2": "",
+      "PlayerNameFirstA": "Magdalena",
+      "PlayerNameFirstA2": "",
+      "PlayerNameFirstB": "Iga",
+      "PlayerNameFirstB2": "",
+      "PlayerNameLastA": "Frech",
+      "PlayerNameLastA2": "",
+      "PlayerNameLastB": "Swiatek",
+      "PlayerNameLastB2": "",
+      "PointA": "",
+      "PointB": "",
+      "ResultString": "[7]I. Swiatek d M. Frech 6-2,6-1",
+      "RoundID": "2",
+      "ScoreSet1A": "2",
+      "ScoreSet1B": "6",
+      "ScoreSet2A": "1",
+      "ScoreSet2B": "6",
+      "ScoreSet3A": "",
+      "ScoreSet3B": "",
+      "ScoreSet4A": "",
+      "ScoreSet4B": "",
+      "ScoreSet5A": "",
+      "ScoreSet5B": "",
+      "ScoreString": "6-2,6-1",
+      "ScoreSys": "1",
+      "ScoreTbSet1": "",
+      "ScoreTbSet2": "",
+      "ScoreTbSet3": "",
+      "ScoreTbSet4": "",
+      "SeedA": "",
+      "SeedB": "7",
+      "Serve": "",
+      "Winner": "3"
+    },
+    {
+      "BinPacketBase64": null,
+      "CourtID": 1,
+      "DateSeq": 6,
+      "DrawLevelType": "M",
+      "DrawMatchType": "S",
+      "EntryTypeA": "Ll",
+      "EntryTypeB": "",
+      "EventID": "1075",
+      "EventYear": 2026,
+      "LastUpdated": "2026-10-15T13:00:14.44+00:00",
+      "MatchID": "LS009",
+      "MatchState": "F",
+      "MatchTimeStamp": "2026-10-15T11:04:37.693+00:00",
+      "MatchTimeTotal": "01:34:57",
+      "Message": "{11|I. Swiatek}",
+      "NumSets": 2,
+      "PlayerCountryA": "USA",
+      "PlayerCountryA2": "",
+      "PlayerCountryB": "POL",
+      "PlayerCountryB2": "",
+      "PlayerIDA": "329409",
+      "PlayerIDA2": "",
+      "PlayerIDB": "326408",
+      "PlayerIDB2": "",
+      "PlayerNameFirstA": "Ashlyn",
+      "PlayerNameFirstA2": "",
+      "PlayerNameFirstB": "Iga",
+      "PlayerNameFirstB2": "",
+      "PlayerNameLastA": "Krueger",
+      "PlayerNameLastA2": "",
+      "PlayerNameLastB": "Swiatek",
+      "PlayerNameLastB2": "",
+      "PointA": "",
+      "PointB": "",
+      "ResultString": "[7]I. Swiatek d A. Krueger 6-1,6-4",
+      "RoundID": "3",
+      "ScoreSet1A": "1",
+      "ScoreSet1B": "6",
+      "ScoreSet2A": "4",
+      "ScoreSet2B": "6",
+      "ScoreSet3A": "",
+      "ScoreSet3B": "",
+      "ScoreSet4A": "",
+      "ScoreSet4B": "",
+      "ScoreSet5A": "",
+      "ScoreSet5B": "",
+      "ScoreString": "6-1,6-4",
+      "ScoreSys": "1",
+      "ScoreTbSet1": "",
+      "ScoreTbSet2": "",
+      "ScoreTbSet3": "",
+      "ScoreTbSet4": "",
+      "SeedA": "",
+      "SeedB": "7",
+      "Serve": "",
+      "Winner": "3"
+    }
+  ],
+  "arithmetic": {
+    "official_profile_and_history_wins_before_Wuhan": 39,
+    "Wuhan_R2_Frech_win": 1,
+    "Wuhan_R3_Krueger_win": 1,
+    "wins_after_current_match": 41,
+    "losses_after_current_match": 15
+  },
+  "without_team_event_wins_not_41": 38,
+  "publication_note": "只用于源片完整原声字幕的独立支持，不需加入中文旁白或放大标题。",
+  "source_commentary": "root已实际审265–277秒，双ASR均为victory number41；本facts agent没有听原声或查看电影，音频措辞以root的真实原声review为准。",
+  "limitations": [
+    "官方profile/年赛史有更新延迟，因此跨来源追加两场正式完赛而非声称网页已实时写41。",
+    "不要描述成生涯第41胜；是本赛季单打第41胜。"
+  ]
+}

@@ -123,111 +123,28 @@
   "board": {
     "version": 1,
     "fps": 5,
-    "t0": 0.0,
-    "frames": 2387,
+    "t0": 144.6,
+    "frames": 775,
+    "source_window": [
+      144.6,
+      299.6
+    ],
     "scans": [
       {
         "box": [
-          183,
-          890,
-          645,
-          1000
-        ],
-        "frames": 2387,
-        "profiles": {
-          "rna-slam": {
-            "present": 0,
-            "unresolved": 0
-          }
-        }
-      },
-      {
-        "box": [
-          98,
-          920,
-          519,
-          1029
-        ],
-        "frames": 2387,
-        "profiles": {
-          "atp": {
-            "present": 6,
-            "unresolved": 0,
-            "runs": [
-              [
-                717,
-                null,
-                null
-              ],
-              [
-                5,
-                397,
-                397
-              ],
-              [
-                138,
-                null,
-                null
-              ],
-              [
-                1,
-                397,
-                208
-              ],
-              [
-                1526,
-                null,
-                null
-              ]
-            ]
-          }
-        }
-      },
-      {
-        "box": [
           90,
-          870,
+          826,
           550,
           980
         ],
-        "frames": 2387,
+        "frames": 775,
         "profiles": {
           "wta": {
-            "present": 958,
+            "present": 545,
             "unresolved": 0,
             "runs": [
               [
-                310,
-                null,
-                null
-              ],
-              [
-                281,
-                480,
-                480
-              ],
-              [
-                1,
-                484,
-                484
-              ],
-              [
-                121,
-                480,
-                480
-              ],
-              [
-                1,
-                482,
-                482
-              ],
-              [
-                1,
-                481,
-                481
-              ],
-              [
-                74,
+                66,
                 480,
                 480
               ],
@@ -312,146 +229,7 @@
                 508
               ],
               [
-                1048,
-                null,
-                null
-              ]
-            ]
-          }
-        }
-      },
-      {
-        "box": [
-          145,
-          915,
-          600,
-          1012
-        ],
-        "frames": 2387,
-        "profiles": {
-          "itf-bjk": {
-            "present": 3,
-            "unresolved": 0,
-            "runs": [
-              [
-                1340,
-                null,
-                null
-              ],
-              [
-                1,
-                666,
-                null
-              ],
-              [
-                1,
-                646,
-                null
-              ],
-              [
-                1,
-                664,
-                null
-              ],
-              [
-                1044,
-                null,
-                null
-              ]
-            ]
-          }
-        }
-      },
-      {
-        "box": [
-          80,
-          862,
-          520,
-          1036
-        ],
-        "frames": 2387,
-        "profiles": {
-          "lavercup": {
-            "present": 0,
-            "unresolved": 0
-          }
-        }
-      },
-      {
-        "box": [
-          80,
-          862,
-          920,
-          1040
-        ],
-        "frames": 2387,
-        "profiles": {
-          "lavercup": {
-            "present": 0,
-            "unresolved": 0
-          }
-        }
-      },
-      {
-        "box": [
-          104,
-          888,
-          660,
-          978
-        ],
-        "frames": 2387,
-        "profiles": {
-          "us-open": {
-            "present": 9,
-            "unresolved": 0,
-            "runs": [
-              [
-                2320,
-                null,
-                null
-              ],
-              [
-                2,
-                405,
-                405
-              ],
-              [
-                1,
-                412,
-                412
-              ],
-              [
-                1,
-                464,
-                464
-              ],
-              [
-                1,
-                492,
-                492
-              ],
-              [
-                1,
-                495,
-                495
-              ],
-              [
-                1,
-                484,
-                484
-              ],
-              [
-                1,
-                478,
-                478
-              ],
-              [
-                1,
-                461,
-                461
-              ],
-              [
-                58,
+                159,
                 null,
                 null
               ]
@@ -459,6 +237,8 @@
           }
         }
       }
-    ]
+    ],
+    "original_full_scan_archive": "data/evidence/swiatek-krueger-wuhan-2026-r3/source-visual/original-full-source-board-scan.json",
+    "calibration_report": "data/evidence/swiatek-krueger-wuhan-2026-r3/source-visual/custom-scorebox-calibration.json"
   }
 }

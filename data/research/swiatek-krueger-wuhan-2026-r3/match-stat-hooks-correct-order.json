@@ -1,0 +1,67 @@
+{
+  "candidates": [
+    {
+      "label": "克鲁格 一发得分率摆动",
+      "detail": "第1盘38% → 第2盘63%",
+      "swing": 25,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "斯瓦泰克 一发得分率摆动",
+      "detail": "第1盘67% → 第2盘56%",
+      "swing": 11,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "克鲁格 破发点兑现",
+      "detail": "1/8（12%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "斯瓦泰克 破发点兑现",
+      "detail": "4/6（67%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "克鲁格 连续保发",
+      "detail": "3 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "斯瓦泰克 连续保发",
+      "detail": "6 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Krueger A. 0 : 1 Swiatek I.（含本场） · 硬地 0:1",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "label": "近况",
+      "detail": "Krueger A. 最近 5 场 3 胜（LWWLW）；Swiatek I. 最近 5 场 4 胜（WWLWW）",
+      "source": "flashscore df_hh_1 Last matches"
+    },
+    {
+      "label": "总分差",
+      "detail": "克鲁格 53 - 斯瓦泰克 71，净差 18 分，斯瓦泰克 领先",
+      "diff": 18,
+      "source": "flashscore df_mh_1（总分）",
+      "use": "body_only"
+    }
+  ],
+  "durations": [
+    [
+      "Set 1",
+      "0:37"
+    ],
+    [
+      "Set 2",
+      "0:58"
+    ],
+    [
+      "全场",
+      "1:35"
+    ]
+  ]
+}

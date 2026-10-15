@@ -1,0 +1,535 @@
+{
+  "slug": "swiatek-krueger-wuhan-2026-r3",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "沿用同系列固定云健声线+6%/0Hz；仅按定稿文本冻结实际配音，不改变风格。",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=2JaGT8z3O60"
+  },
+  "primary": "main",
+  "source_fallbacks": {
+    "main": "https://github.com/robertyang87/tennislive/releases/download/source-2JaGT8z3O60/2JaGT8z3O60-eb8a231875a31043.mp4"
+  },
+  "track": false,
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "preserve_source_audio": true,
+  "scorebox": [
+    90,
+    826,
+    550,
+    980
+  ],
+  "_scorebox_why": "同一实际1080p源155.80/202.20原PNG校准：源主板分别90..479/90..515，tag从y829，主板y870..980；此框为搜索包络，native按真实板图形裁切，不把包络宽高固定回贴。",
+  "_crop_why": "中心场延续已批准同站Pegula/施奈德3:4固定居中铺满、cx.5、无追踪；原生比分板按同款固定画布位置回贴。固定810px源窗口不可能保留全部极限两侧空间，最终实际帧诚实记录，不称完整横向全景。",
+  "_source": "用户给定WTA官方Krueger vsSwiatek Wuhan R16集锦，实际oembed authorWTA/@WTA；1920x1080/25fps/477.5648s含赛后采访，WTA tail468s+剔除。",
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1075_2026_LS009",
+    "flashscore_id": "nVGrJfNM",
+    "participants": [
+      "克鲁格",
+      "斯瓦泰克"
+    ],
+    "set_scores_home_away": [
+      [
+        1,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "winner": "斯瓦泰克",
+    "loser": "克鲁格",
+    "winner_result": "6-1 6-4",
+    "loser_result": "1-6 4-6",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+    "date": "2026-10-15",
+    "duration": "01:34:57",
+    "daypart": "晚",
+    "_match_day_why": "用户提供本场第三轮集锦；WTA LS009官方完赛结果。源片绑定由独立source agent实看。",
+    "_time_note": "10月15日OOP中心场不早于19:00，逐分首点19:25:58、末点21:00:07北京时间；官方MatchTimeStamp19:04:37为metadata，不当实际首点。"
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "斯瓦泰克",
+        "name_en": "Iga Swiatek",
+        "country": "POL",
+        "rank": 9
+      },
+      {
+        "name": "克鲁格",
+        "name_en": "Ashlyn Krueger",
+        "country": "USA",
+        "rank": 68
+      }
+    ],
+    "subject": "斯瓦泰克",
+    "winner": "斯瓦泰克",
+    "result": "6-1 6-4",
+    "topic": "WTA1000 武汉 第三轮 · 斯瓦泰克 VS 克鲁格",
+    "scoreboard": {
+      "court": "Center Court",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS009"
+      }
+    },
+    "_rank_why": "WTA2026-10-12正式世界排名斯瓦泰克9/克鲁格68；7为赛事种子，Race10为年终积分榜，不能混用。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "scrim": "clear",
+    "hook": "首盘连赢5局\n斯瓦泰克强势进8强",
+    "hook_accent": "强势进8强",
+    "portrait": {
+      "image": "assets/reels/swiatek-krueger-wuhan-2026-r3/swiatek-wuhan-r3-official.jpg",
+      "focus": 0.76,
+      "focus_y": 0.5,
+      "zoom": 1.5,
+      "source_url": "https://bucket-wuwang.hubei-41.zos.ctyun.cn/files/vcvmt5dyfy66tjcv7ar40a52u.jpg",
+      "_photo_why": "本场官方Day4中/英相册1531/1532；5000x3333本场Iga发球照，原生cover-z15实看，双眼/头/手/拍完整且避台头与hook；详cover-research.json。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 第三轮",
+    "line2": "斯瓦泰克 6-1 6-4 克鲁格"
+  },
+  "stats": {
+    "tour": "wta",
+    "footer_date": "2026-10-15",
+    "footer_venue": "武汉 · 全场",
+    "_source": "WTA LS009官方A克鲁格/B斯瓦泰克，stats.a按主角在前反排列；W/UE为已保存原始Flashscore全场/分盘自证。",
+    "a": {
+      "aces": 1,
+      "df": 1,
+      "first_in": 62,
+      "first_total": 79,
+      "first_won": 38,
+      "second_total": 17,
+      "second_won": 10,
+      "bp_conv": 4,
+      "bp_chances": 6,
+      "pts_won": 71,
+      "pts_total": 124,
+      "winners": 9,
+      "ue": 27,
+      "headshot": "assets/players/headshots/wta-326408.jpg"
+    },
+    "b": {
+      "aces": 3,
+      "df": 2,
+      "first_in": 35,
+      "first_total": 45,
+      "first_won": 18,
+      "second_total": 10,
+      "second_won": 4,
+      "bp_conv": 1,
+      "bp_chances": 8,
+      "pts_won": 53,
+      "pts_total": 124,
+      "winners": 16,
+      "ue": 46,
+      "headshot": "assets/players/headshots/wta-329409.jpg"
+    },
+    "_winners_ue_evidence": {
+      "provider": "Flashscore",
+      "method": "api",
+      "source_url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_nVGrJfNM",
+      "source_path": "data/research/swiatek-krueger-wuhan-2026-r3/df_st_1.raw",
+      "source_sha256": "f84802608beb081072416aa7215ca0ead352341072d51849835e97159d679113",
+      "period": "Match",
+      "match_date": "2026-10-15",
+      "checked_at": "2026-10-15T14:01:09.908007Z",
+      "winner_result": "6-1 6-4",
+      "matchup": [
+        "Swiatek",
+        "Krueger"
+      ],
+      "winners": [
+        9,
+        16
+      ],
+      "ue": [
+        27,
+        46
+      ],
+      "notes": "Flashscore原始SH克鲁格/SI斯瓦泰克；本片主角在前重排列。斯瓦泰克W5+4=9、UE10+17=27；克鲁格W8+8=16、UE19+27=46。Ace/DF/发球/总分与WTA统计一致。"
+    }
+  },
+  "push": {
+    "auto": true,
+    "summary": "斯瓦泰克开局连赢5局",
+    "lead": "6比1、6比4，斯瓦泰克击败克鲁格，晋级武汉1/4决赛。首盘连赢5局，次盘被追至3比3后再度拉开。穆霍娃和科斯秋克已经出局，她仍在继续追逐年终席位。"
+  },
+  "_heat_why": "用户指定斯瓦泰克强势晋级8强与年终资格追赶；官方Oct12 Race10尚未锁定，直接竞争者穆霍娃/科斯秋克出局。",
+  "_hit_data": [
+    {
+      "label": "首盘开局连赢5局",
+      "detail": "前5局全部由斯瓦泰克赢下；4-0发球局救下两个破发点并保发，最终6-1。",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS009/point-by-point",
+      "used_in": "封面首行与首盘卡、真实救BP原声。"
+    },
+    {
+      "label": "全场救回7/8破发点",
+      "detail": "克鲁格1/8兑现、斯瓦泰克4/6兑现；对位说明压力与机会，不将强势比分说成毫无阻力。",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS009/stats",
+      "used_in": "统计卡旁白、发布正文。"
+    }
+  ],
+  "editorial": {
+    "question": "武汉这一胜，如何让斯瓦泰克把年终追赶继续下去？",
+    "thesis": "先完整讲出首盘5-0强势开局，及次盘3-3后再次破发、第三个赛点终结；关键分处理用7/8救破发点对4/6破发解释，不编造心理。年终竞争者出局提供空间，但她仍未锁定、并非已经进入Race前8。",
+    "beats": [
+      "真实赢球反应与原声冷开场",
+      "一句落点+10月15日晚武汉第三轮坐标",
+      "首盘4-0时救2BP把连胜延至5局",
+      "次盘3-2被回破后再次破发至4-3",
+      "发球胜赛局第三个赛点兑现与完整庆祝",
+      "全场破发点7/8救险对4/6兑现",
+      "穆霍娃和科斯秋克出局但年终仍要追赶"
+    ],
+    "human_context": {
+      "angle": "克鲁格凭幸运落败者身份入围；斯瓦泰克10月12日正式Race3799分第10，正在追逐年终席位。",
+      "facts": [
+        "斯瓦泰克以6-1 6-4晋级武汉八强",
+        "10月12冠军积分榜第10且未标Qualified；世界排名第9为另一口径",
+        "穆霍娃和科斯秋克在武汉败退，非所有竞争者已出局",
+        "第三赛点兑现，全场救7/8破发点"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+        "https://www.wtatennis.com/rankings/race-to-the-finals",
+        "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS009/point-by-point"
+      ]
+    },
+    "race_precision": "不把世界排名第9与冠军积分榜第10混写；不把10月12日周榜当本场后的实时排名；不把Noskova写成被击败或普通未锁定竞争者；她已凭温网冠军通道锁定。不说“竞争者都出局”。",
+    "mode": "match_review"
+  },
+  "segments": [
+    {
+      "source": "main",
+      "start": 284.98,
+      "end": 299.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": false,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 1.4,
+          "text": "The former world number one,\n这位前世界第一，"
+        },
+        {
+          "at": 1.4,
+          "end": 3.38,
+          "text": "too sturdy and too strong\n实在太稳、太强，"
+        },
+        {
+          "at": 3.38,
+          "end": 5.34,
+          "text": "on this fourth night in Wuhan.\n在武汉的第四个比赛夜。"
+        },
+        {
+          "at": 5.34,
+          "end": 9.3,
+          "text": "And of the 15 top-level coveted events,\n在15项备受瞩目的顶级赛事中，"
+        },
+        {
+          "at": 9.3,
+          "end": 11.48,
+          "text": "that... one of the few that she hasn't won\n她尚未夺冠的少数赛事之一，"
+        },
+        {
+          "at": 11.48,
+          "end": 12.48,
+          "text": "is Wuhan.\n就是武汉。"
+        },
+        {
+          "at": 12.48,
+          "end": 14.4,
+          "text": "That's Swiatek making her case tonight.\n今晚斯瓦泰克正在证明自己。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "cold_open",
+      "subtitle_bottom": 304,
+      "crosses_cut": "完整所选官方回合与实际结果/反应；不把相邻剪辑点当连续比赛。",
+      "point_end_ok": "同源实际图墙/加密帧和双ASR核对窗口，完整末端说话由source-audio包绑定。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "冷开是本人获胜后的致意与完整解说；正文match_payoff从216.84完整保留本场三个赛点动作、获胜、握手与致意，兑现冷开。",
+      "_source_audio_review_status": "complete_actual_same_SHA_full_small.en_and_medium.en_cross_checked_no_manual_listening_claim",
+      "_score_inset_why": "真实源284.98–299.40为赛后球员近景及致意，实际WTA扫描未检出比分板；不贴空板。比赛动作窗口继续使用固定原系列位置。"
+    },
+    {
+      "title_card": "10月15日晚上\n武汉女单第三轮",
+      "kicker": "年终追赶继续",
+      "seconds": 11.8,
+      "narration": "两盘过关，年终的追赶还在继续。北京时间十月十五日晚上，武汉女单第三轮，斯瓦泰克迎战以幸运落败者身份入围的克鲁格。",
+      "_edit_id": "landing_coordinate"
+    },
+    {
+      "title_card": "首盘救下2个破发点\n开局连赢5局",
+      "kicker": "开局连赢5局",
+      "seconds": 14.1,
+      "narration": "首盘开局连赢四局。面对破发点，她从底线压进场内，在前场拿下这一分。两次破发点都守住，开局连胜延续到五局。六比一，先赢一盘。",
+      "_edit_id": "first_set"
+    },
+    {
+      "source": "main",
+      "start": 144.6,
+      "end": 161.94,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 10.32,
+          "end": 12.5,
+          "text": "And Iga takes matters into her own hands\n斯瓦泰克主动掌控局面，"
+        },
+        {
+          "at": 12.5,
+          "end": 14.32,
+          "text": "as she saves break point.\n救回了这个破发点。"
+        },
+        {
+          "at": 14.44,
+          "end": 17.18,
+          "text": "That's now 80% success here in Wuhan.\n武汉的破发点挽救率已达80%。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "first_save",
+      "subtitle_bottom": 304,
+      "crosses_cut": "完整所选官方回合与实际结果/反应；不把相邻剪辑点当连续比赛。",
+      "point_end_ok": "同源实际图墙/加密帧和双ASR核对窗口，完整末端说话由source-audio包绑定。",
+      "_source_audio_review_status": "complete_actual_same_SHA_full_small.en_and_medium.en_cross_checked_no_manual_listening_claim",
+      "_source_start_audio_why": "前一回合英文stack up词尾small144.32/medium144.40；起点微调144.60，145.00原PNG仍处发球准备，保完整本次发球且不夹前句残尾。"
+    },
+    {
+      "source": "main",
+      "start": 162.16,
+      "end": 186.36,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 7.78,
+          "end": 9.04,
+          "text": "And that'll miss the mark.\n这一球出了界。"
+        },
+        {
+          "at": 9.04,
+          "end": 10.54,
+          "text": "And Krueger will find herself\n克鲁格又一次，"
+        },
+        {
+          "at": 10.54,
+          "end": 11.74,
+          "text": "on the short end once again.\n成为落后的一方。"
+        },
+        {
+          "at": 11.74,
+          "end": 13.04,
+          "text": "For the second straight match,\n连续第二场比赛，"
+        },
+        {
+          "at": 13.04,
+          "end": 14.96,
+          "text": "she'll have to come back from a one-set deficit.\n她都得从先丢一盘的局面追起。"
+        },
+        {
+          "at": 14.96,
+          "end": 16.28,
+          "text": "This one's going to be even tougher,\n这一次，难度还会更大，"
+        },
+        {
+          "at": 16.28,
+          "end": 19.04,
+          "text": "as it's Iga Swiatek who's in control.\n因为掌控比赛的是斯瓦泰克。"
+        },
+        {
+          "at": 19.04,
+          "end": 21.12,
+          "text": "Six of the first seven games,\n她拿下了前七局中的六局，"
+        },
+        {
+          "at": 21.12,
+          "end": 24.0,
+          "text": "looking for the last eight in Wuhan.\n正向武汉八强进发。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "first_set_finish",
+      "subtitle_bottom": 304,
+      "crosses_cut": "完整所选官方回合与实际结果/反应；不把相邻剪辑点当连续比赛。",
+      "point_end_ok": "同源实际图墙/加密帧和双ASR核对窗口，完整末端说话由source-audio包绑定。",
+      "_source_audio_review_status": "complete_actual_same_SHA_full_small.en_and_medium.en_cross_checked_no_manual_listening_claim"
+    },
+    {
+      "title_card": "次盘被追到3比3\n再次拉开两盘晋级",
+      "kicker": "被追平后再拉开",
+      "seconds": 14.8,
+      "narration": "第二盘被追到三比三，她立刻再次破发。最后一局，前两个赛点没拿下，第三个赛点经历多拍底线拉锯。她在跑动中把球回进场，终于六比四结束比赛。",
+      "_edit_id": "second_set"
+    },
+    {
+      "source": "main",
+      "start": 216.84,
+      "end": 299.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 47.38,
+          "end": 51.72,
+          "text": "And the final point in the 94th minute\n第94分钟的最后一分，"
+        },
+        {
+          "at": 51.72,
+          "end": 53.58,
+          "text": "goes Iga Swiatek's way,\n归斯瓦泰克所有，"
+        },
+        {
+          "at": 53.58,
+          "end": 56.58,
+          "text": "and she has her victory number 41 on the year\n她拿下了今年的第41场胜利，"
+        },
+        {
+          "at": 56.58,
+          "end": 59.68,
+          "text": "to reach the quarterfinals in Wuhan.\n晋级武汉八强。"
+        },
+        {
+          "at": 61.18,
+          "end": 63.88,
+          "text": "Well, the lucky loser Ashlyn Krueger gave it a go,\n幸运落败者克鲁格奋力尝试，"
+        },
+        {
+          "at": 63.88,
+          "end": 64.84,
+          "text": "but it was not to be.\n但没能如愿。"
+        },
+        {
+          "at": 64.84,
+          "end": 67.0,
+          "text": "And she falls to one and fourteen lifetime\n她的生涯战绩变为1胜14负，"
+        },
+        {
+          "at": 67.0,
+          "end": 68.14,
+          "text": "against top-ten opponents.\n这是她对阵前十选手的战绩。"
+        },
+        {
+          "at": 68.14,
+          "end": 69.54,
+          "text": "The former world number one,\n这位前世界第一，"
+        },
+        {
+          "at": 69.54,
+          "end": 71.52,
+          "text": "too sturdy and too strong\n实在太稳、太强，"
+        },
+        {
+          "at": 71.52,
+          "end": 73.48,
+          "text": "on this fourth night in Wuhan.\n在武汉的第四个比赛夜。"
+        },
+        {
+          "at": 73.48,
+          "end": 77.44,
+          "text": "And of the 15 top-level coveted events,\n在15项备受瞩目的顶级赛事中，"
+        },
+        {
+          "at": 77.44,
+          "end": 79.62,
+          "text": "that... one of the few that she hasn't won\n她尚未夺冠的少数赛事之一，"
+        },
+        {
+          "at": 79.62,
+          "end": 80.62,
+          "text": "is Wuhan.\n就是武汉。"
+        },
+        {
+          "at": 80.62,
+          "end": 82.54,
+          "text": "That's Swiatek making her case tonight.\n今晚斯瓦泰克正在证明自己。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "match_payoff",
+      "subtitle_bottom": 304,
+      "crosses_cut": "完整所选官方回合与实际结果/反应；不把相邻剪辑点当连续比赛。",
+      "point_end_ok": "同源实际图墙/加密帧和双ASR核对窗口，完整末端说话由source-audio包绑定。",
+      "_source_audio_review_status": "complete_actual_same_SHA_full_small.en_and_medium.en_cross_checked_no_manual_listening_claim"
+    },
+    {
+      "stat_card": true,
+      "seconds": 10.5,
+      "narration": "全场面对八个破发点，她救回七个；自己的六次破发机会，兑现了四次。同样是机会，她把更多关键分留给了自己。",
+      "_edit_id": "key_point_stat"
+    },
+    {
+      "title_card": "竞争者出局\n她继续追逐年终",
+      "kicker": "年终仍在追赶",
+      "seconds": 17.0,
+      "narration": "十月十二日的冠军积分榜，她排在第十。排在前面的穆霍娃和科斯秋克，已经在武汉出局。斯瓦泰克还没有锁定年终，但她仍在赢球。下一轮，她能把追赶的脚步再向前推进吗？",
+      "_edit_id": "race_outlook"
+    }
+  ],
+  "_production_timing": {
+    "received_at": "2026-10-15T13:56:48Z",
+    "source_probe_run": 38747368606,
+    "source_asr_run": 38748821459
+  },
+  "_facts": [
+    {
+      "path": "data/research/swiatek-krueger-wuhan-2026-r3/fact-packet.json",
+      "why": "完整赛况/逐分/技术统计/世界排名9与Race10分列、资格规则、已qualified与直接竞争者败绩；实时积分不机械相加。"
+    }
+  ],
+  "_tactical_evidence": [
+    {
+      "source_interval": [
+        144.36,
+        157.6
+      ],
+      "description": "首盘4-0救AD破发点：白裙Iga从底线主动压入场内、前场结束该分；仅救到deuce，不冒充该分直接5-0。",
+      "native_image": "data/evidence/swiatek-krueger-wuhan-2026-r3/source-visual/first-save-tactic.jpg"
+    },
+    {
+      "source_interval": [
+        252.6,
+        267.32
+      ],
+      "description": "第三赛点多拍底线左右拉锯，远端Iga横向跑动回球并不断回位，最终赢下；不编造最后一拍类型。",
+      "native_image": "data/evidence/swiatek-krueger-wuhan-2026-r3/source-visual/last-rally-tactic.jpg"
+    }
+  ],
+  "_source_coverage": {
+    "first_set": "官方实际第一盘4-0救BP回合与6-1盘末完整保留；4-0另一BP与5-0保发其余分按官方PBP叙述，源中该save分只到deuce。",
+    "second_set": "3-3后再破至4-3原集锦未收录；用经PBP核实事实卡承接，不以其他回合冒充。源216.84..267.32完整保留可用的三个实际赛点，不称所有中间分连续覆盖。",
+    "ending": "完整终局得分、握手、致意与原声结果；最后补一段同场本人关于季末恢复与继续前进的完整回答，末卡讲年终追赶。",
+    "tail": "官方WTA tail468+不使用。"
+  },
+  "_source_audio_review_method": "Same-source SHA full small.en/medium.en cross-check, complete selected source windows and finite visible evidence; never claim manual auditory listening."
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "slug": "swiatek-krueger-wuhan-2026-r3",
+  "plan_sha256": "3d830df57055bbb7e2ea29d99c3e0791ef61a906fbc41dd8802e1c53dfa34cca",
+  "reviewed_at": "2026-10-15T14:23:10.063876+00:00",
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/evidence/swiatek-krueger-wuhan-2026-r3/source-audio/cold_open.json",
+      "transcript_sha256": "9d9b899c9332b7d3c543b441ce531d02693f8b5b39a3b4a70719ac82dda5bc7e"
+    },
+    {
+      "index": 3,
+      "transcript_path": "data/evidence/swiatek-krueger-wuhan-2026-r3/source-audio/first_save.json",
+      "transcript_sha256": "4de1cb0dc545c6fe04e962b23250eafc713483c1a5aa2ccb3f780ca8f76ee971"
+    },
+    {
+      "index": 4,
+      "transcript_path": "data/evidence/swiatek-krueger-wuhan-2026-r3/source-audio/first_set_finish.json",
+      "transcript_sha256": "fd76a93b2f5827d6ac5ea7d4edc1b70191a35461332125ed577a6528a42a4d5c"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/evidence/swiatek-krueger-wuhan-2026-r3/source-audio/all_three_match_points.json",
+      "transcript_sha256": "0dba4444f3546015bf868de9d34ff07669d428dce0a7426bdae93bcaebadf1a3"
+    }
+  ],
+  "_review_method": "Complete selected actual same-SHA source windows cross-checked by native full small.en/medium.en and uploadcaptions; no manual listening claimed.",
+  "_plan_rebind_note": "赛场之上不使用赛后采访：移除原第8零基source player_quote，原真实packet/raw保留未使用档案；五段旁白逐dict完全不变。first_save中文80%短译与原义一致，英语/at/end/源字节不变，完整核验当前4源窗后重绑定。"
+}
