@@ -1,0 +1,40 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "slug": "chwalinska-jovic-wuhan-2026-r3",
+  "plan_sha256": "26e50179994d6f9e51464bd700bb97ffadb8ec05251a56cccb8d0cb0b6d5a6f9",
+  "reviewed_at": "2026-10-15T09:27:04.115595+00:00",
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/cold_open.json",
+      "transcript_sha256": "b5c037163876ae07214f95802559a01742a9fecb318f72cf697a5ebd4f1388ac"
+    },
+    {
+      "index": 3,
+      "transcript_path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/first_set_turn.json",
+      "transcript_sha256": "292b2af0b9aaff1e41215737e86fbf6408dcde6ba2fab6a7a2d28c643e257106"
+    },
+    {
+      "index": 4,
+      "transcript_path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/first_set_finish.json",
+      "transcript_sha256": "52e4636231fcd796d69a11df107e2c5234edc3032e3c00ce59d0289f283d32ad"
+    },
+    {
+      "index": 5,
+      "transcript_path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/second_opening_hold.json",
+      "transcript_sha256": "35716f8e8ca8df74451818028ffd6204960b23c5ed1823b241db9c77a6026901"
+    },
+    {
+      "index": 7,
+      "transcript_path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/second_net_break.json",
+      "transcript_sha256": "5bf65751d3bf9acc11c6aefe9717d026b39c9bdfc5d1a3acf1e7560fb3453c0e"
+    },
+    {
+      "index": 9,
+      "transcript_path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/ending.json",
+      "transcript_sha256": "76433d9b53dd5944eda18d0b5d5271d9de85dee47fea30712f0c5bb79ea09c42"
+    }
+  ],
+  "_review_method": "actual source SHA fulltwo-model ASR plus finite boundedreconcile, no manual listening claimed",
+  "_boundary_review_note": "Coarse whole-source ASR merged across applause gaps (opponent/beautiful/court2); all raw preserved. Independent bounded same-byte recognition establishes source speech boundary without rewriting canonical ASR or quote_skip."
+}

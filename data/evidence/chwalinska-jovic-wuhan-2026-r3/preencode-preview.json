@@ -1,0 +1,65 @@
+{
+  "reviewer": "current OpenAI root",
+  "reviewed_at": "2026-10-15T09:32:07.105482+00:00",
+  "actual_preview_spec_file_sha256": "b500acd4989ebabd90216ff7a38de93fb90392db40b31d9412229e4462b3aa7b",
+  "ass_sha256": "c90fdaa3c49df61a770741cccc2c5b9265adc4788a8bb176569c01c170ca1dad",
+  "source_sha256": "bd48c2dd7e379cd2dfdfe397c3e751a3b9521bbe8a0139d10ad46e79da983c54",
+  "tts_bundle_sha256": "e1fe9b7d6cf9b3588b9be0b593fffc91195a5586546147f60381a9909d8e1ef8",
+  "opened_samples": [
+    {
+      "image": "caption-01.png",
+      "sha256": "b93070d6dc612516b42e538a68c59390d7b555d5b2e51eeefa408ea8f86d5f78",
+      "film_time": 6.680000000000001,
+      "source_time": 275.64000000000004
+    },
+    {
+      "image": "caption-02.png",
+      "sha256": "dd5be7c444a4d4845d4ea081a93371e63a279a6c2de79e4bcbbd2c38e94d4d05",
+      "film_time": 59.62,
+      "source_time": 110.12
+    },
+    {
+      "image": "caption-03.png",
+      "sha256": "6270faaac9d310829e5a1c9b0f5c001ef8d1daaa8c6992c0eefdabc73d1ab4e3",
+      "film_time": 114.2,
+      "source_time": 219.16000000000003
+    },
+    {
+      "image": "caption-04.png",
+      "sha256": "78b1dbce44633294b98bb2e887db8575b0f11d0397a86a5ed3da414e831d098b",
+      "film_time": 134.04000000000002,
+      "source_time": 239.24
+    },
+    {
+      "image": "caption-05.png",
+      "sha256": "869aba8c04718332c30850115ef0c666d517e8af336d3c183256a7e5969b4380",
+      "film_time": 160.78,
+      "source_time": 255.76000000000002
+    },
+    {
+      "image": "caption-06.png",
+      "sha256": "b93070d6dc612516b42e538a68c59390d7b555d5b2e51eeefa408ea8f86d5f78",
+      "film_time": 190.42000000000002,
+      "source_time": 275.64
+    },
+    {
+      "image": "caption-07.png",
+      "sha256": "437ad7cb40a57dcac8cdb67fd228a2b0c92b3c4d36c0707b05b444aa383df760",
+      "film_time": 215.78,
+      "source_time": null
+    },
+    {
+      "image": "caption-08.png",
+      "sha256": "9c684688640c103fd7c68ae553e35e0de9d3219ae9a9e9033a41180d0d231107",
+      "film_time": 227.78,
+      "source_time": null
+    }
+  ],
+  "findings": [
+    "All8actualnativepreviewPNGs opened. Samefixedcenter1560pxwindow, readableunbrokenEN/ZH belowcourt, realboard staysinplace, rightupperWTAremoved.",
+    "Statsfullcanvas intactall9rows headshots/columns/score/tablelegible withnocaptionoverlay. Outlooktwo semanticlines andcaption/branding separate.",
+    "Two preview samplescaption03 atfilm114.2 andcaption05 at160.78 haveblankheader whileothersourcepreviewsretainnativeheader. Exactcompressedmovieatsamefilmtimesmustbeinspectedbeforeclaimingheaderconsistency; noremrenderrequestedfromthispreviewalone."
+  ],
+  "publication_approved": false,
+  "limitations": "Interior nativeASS preview only; exact finalcompressedmovie, transitions andallcaptioncues stillpending. Later metadata-only additions correct tactical image paths/source coverage and do not change the previewed rendering inputs."
+}

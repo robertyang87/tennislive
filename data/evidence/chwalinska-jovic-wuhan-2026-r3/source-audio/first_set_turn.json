@@ -1,0 +1,148 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=9JkX_1Oiitg",
+  "source_sha256": "bd48c2dd7e379cd2dfdfe397c3e751a3b9521bbe8a0139d10ad46e79da983c54",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source-review assistant; exact-SHA native two-model full and finite short-window ASR reconciled, no manual listening claimed",
+  "reviewed_at": "2026-10-15T09:25:32.240158+00:00",
+  "status": "complete",
+  "reviewed_from": 88.84,
+  "reviewed_to": 144.08,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 101.08,
+      "end": 103.36,
+      "en": "Well, that's just beautifully done.",
+      "zh": "这一下处理得太漂亮了。",
+      "verification": "Current exact-SHA full small.en/medium.en and finite bounded raw reconciled. Whole clause content and conservative timing reviewed, not manual listening. See evidence_basis files and limitations."
+    },
+    {
+      "start": 103.36,
+      "end": 105.52,
+      "en": "Talk about momentum changer.",
+      "zh": "这一下改变了局势。",
+      "verification": "Current exact-SHA full small.en/medium.en and finite bounded raw reconciled. Whole clause content and conservative timing reviewed, not manual listening. See evidence_basis files and limitations."
+    },
+    {
+      "start": 105.88,
+      "end": 108.32,
+      "en": "And the win in Mexico last year",
+      "zh": "去年在墨西哥的夺冠，",
+      "verification": "Current exact-SHA full small.en/medium.en and finite bounded raw reconciled. Whole clause content and conservative timing reviewed, not manual listening. See evidence_basis files and limitations."
+    },
+    {
+      "start": 108.32,
+      "end": 111.98,
+      "en": "elevated her up into the top 50 for the first time.",
+      "zh": "让她首次跻身世界前50。",
+      "verification": "Current exact-SHA full small.en/medium.en and finite bounded raw reconciled. Whole clause content and conservative timing reviewed, not manual listening. See evidence_basis files and limitations."
+    },
+    {
+      "start": 134.46,
+      "end": 135.46,
+      "en": "That's brilliant.",
+      "zh": "太精彩了！",
+      "verification": "Current exact-SHA full small.en/medium.en and finite bounded raw reconciled. Whole clause content and conservative timing reviewed, not manual listening. See evidence_basis files and limitations."
+    },
+    {
+      "start": 135.9,
+      "end": 138.0,
+      "en": "Great defence and a rapturous ovation",
+      "zh": "精彩防守赢得热烈欢呼，",
+      "verification": "Current exact-SHA full small.en/medium.en and finite bounded raw reconciled. Whole clause content and conservative timing reviewed, not manual listening. See evidence_basis files and limitations."
+    },
+    {
+      "start": 138.0,
+      "end": 141.24,
+      "en": "from the crowd here enjoying this extra match",
+      "zh": "观众正享受这场加赛，",
+      "verification": "Current exact-SHA full small.en/medium.en and finite bounded raw reconciled. Whole clause content and conservative timing reviewed, not manual listening. See evidence_basis files and limitations."
+    },
+    {
+      "start": 141.24,
+      "end": 143.0,
+      "en": "on court number two.",
+      "zh": "就在二号球场。",
+      "verification": "Current exact-SHA full small.en/medium.en and finite bounded raw reconciled. Whole clause content and conservative timing reviewed, not manual listening. See evidence_basis files and limitations."
+    }
+  ],
+  "_edit_id": "first_defence_sequence",
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/raw/full/small.en.json",
+        "sha256": "1004a95b6d2bb9cbecacd7fb4ade03b3f7c747de9edb19c1200c0de721adb183",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/raw/full/medium.en.json",
+        "sha256": "fa4893f76675536f2fa32f7d671e5b8913560bd2a37e12b055b85f1c74bba3a7",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/raw/cold/small.en.json",
+        "sha256": "d4c6d4857cb385ec9f3f6e58ca04c7e6be9a9453c3cec09e9d1fcab0542c571a",
+        "clip": [
+          269.8,
+          298.0
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/raw/cold/medium.en.json",
+        "sha256": "98f6403a64f425aadc9429b03400aac80116f664a4e170186ade8533166034b8",
+        "clip": [
+          269.8,
+          298.0
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/raw/hold/small.en.json",
+        "sha256": "e434cffbc95afeb659d0141400ccb013d2c8b470482bc10987b9ed77f33e9d03",
+        "clip": [
+          218.0,
+          242.08
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/raw/hold/medium.en.json",
+        "sha256": "9a9c4676cf830ba121ab038778cf3e6a2fab538fb9f4bf6fcca5d6abb0f20356",
+        "clip": [
+          218.0,
+          242.08
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/raw/first/small.en.json",
+        "sha256": "48f0c7add331d06c71d3882b8f4337c3d15fd721f5c83a72a6414c33421cd448",
+        "clip": [
+          100.0,
+          144.2
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-audio/raw/first/medium.en.json",
+        "sha256": "a4e530538916c61992eb8d1c14bb6be44110aceb2bfa7818004ee7a71889e2d6",
+        "clip": [
+          100.0,
+          144.2
+        ]
+      }
+    ],
+    "manual_listening_claimed": false,
+    "source_audio_gain_changes": false,
+    "limitations": [
+      "ASR word edges are conservative timing estimates, not manually measured acoustic boundaries.",
+      "Name spellings normalized to official players; small vs medium function-word a/her beforeyounger resolved as a by high-confidence bounded small plus source caption, meaning unchanged.",
+      "Cold That is out versus that is how resolved out by source outcome, full small and bounded medium; bounded small how retained in raw, not hidden.",
+      "First extra match supported fullsmall, fullmedium, boundedmedium, sourcecaption; bounded small extra factor low-confidence outlier retainedraw.",
+      "Ending spoken English uses ellipsis: Kept her nerve, and how! Destroyed Jovic in that second set. Was pretty much flawless... No absent English pronouns inserted."
+    ]
+  }
+}

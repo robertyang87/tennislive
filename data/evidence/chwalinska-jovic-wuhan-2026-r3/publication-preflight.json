@@ -1,0 +1,45 @@
+{
+  "status": "video_final_review_complete_awaiting_current_head_CI_and_publication",
+  "film_sha256": "d45f651435e44a0b6d8c3039f6b438f46a16ecc4133128395dbe31c2560f11dd",
+  "render_run": 38716958767,
+  "pronunciation_report": "pronunciation/current-review.json",
+  "visual_report": "visual-qc/final-visual-qc.json",
+  "native_qc": "output/2026-10-15/reel/chwalinska-jovic-wuhan-2026-r3/qc_attestation.json",
+  "baseline_CI_failure": {
+    "run": 38715699910,
+    "failures": "Existing auxiliary workflows lacked explicit top-level permissions, job timeouts, sparse checkout and shared apt install; latest main also added publish-transcripts without a staged-size gate. These failures predate this video."
+  },
+  "minimal_workflow_repair_commit": "a85508d0",
+  "targeted_checks": {
+    "command": "python -m pytest -q tests/test_workflow_alerts.py tests/test_runner_setup_cache.py tests/test_match_reel.py::test_装ffmpeg和字体一律先试本地缓存不能只靠重试 tests/test_match_reel.py::test_提交产物的工作流一律用Claude的身份 tests/test_match_reel.py::test_不碰产物的工作流不许把output拉下来",
+    "result": "31 passed in 7.93s"
+  },
+  "rendering_code_or_spec_changed_by_workflow_repair": false,
+  "current_head_full_CI_required_before_merge": true,
+  "wechat_publication_claimed": false,
+  "first_final_CI": {
+    "run": 38719257105,
+    "result": "3 failed, 6216 passed, 210 skipped in 505.55s",
+    "remaining_workflow_failures": [
+      "apt restore/save pair missing around new shared apt calls",
+      "publish-transcripts commit identity did not match existing repository convention"
+    ],
+    "repair": "Added native apt restore/save pair with APT_CACHE_DIRTY condition to both callers; aligned automatic transcript commit identity with existing repository contract. No video/spec/audio changes."
+  },
+  "second_final_CI": {
+    "run": 38720854996,
+    "head": "8b1c7e18647133ba3966041c7e68e52378f71b88",
+    "status": "success"
+  },
+  "concurrent_main_update_resolution": {
+    "main": "532006b2",
+    "local_merge": "69ca3f01",
+    "conflicts": [
+      "medvedev-profanity-check.yml",
+      "medvedev-tts.yml",
+      "publish-transcripts.yml"
+    ],
+    "resolution": "Preserved current main versions of all three shared auxiliary workflows; main independently repaired the same contracts. No remaining workflow diff in this PR. Production renderer/tools/src and match-reel workflow unchanged between old and updated main. Actual video/spec/TTS unchanged.",
+    "targeted_recheck": "31 passed on resolved workflow versions; current final-head CI still required."
+  }
+}

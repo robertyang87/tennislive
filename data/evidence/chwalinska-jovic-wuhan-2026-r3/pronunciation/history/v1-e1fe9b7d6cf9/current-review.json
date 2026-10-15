@@ -1,0 +1,1237 @@
+{
+  "created_at": "2026-10-15T09:32:58.100589+00:00",
+  "status": "pending_pronunciation_review_not_release_approval",
+  "bundle_sha256": "e1fe9b7d6cf9b3588b9be0b593fffc91195a5586546147f60381a9909d8e1ef8",
+  "spec_sha256_at_binding": "fb1665d4982dda31ac6919551dd510ff665c8d150ffe8870699cc7c122721535",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "pitch": "+0Hz",
+  "requests": 7,
+  "target_positions": 61,
+  "positions_with_current_limited_low_support": 42,
+  "pending_count": 19,
+  "confirmed_actual_misread_count": 0,
+  "pending": [
+    {
+      "edit_id": "second_set_turn",
+      "index": 15,
+      "char": "分",
+      "intended": "fen1",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "58f2f0bcb9742880a7649b658407facf07935970680b688960f0da2273cdec4d",
+      "evidence_first": "finite-card-evidence/second_set_turn.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "second_set_turn",
+      "index": 17,
+      "char": "发",
+      "intended": "fa1",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "58f2f0bcb9742880a7649b658407facf07935970680b688960f0da2273cdec4d",
+      "evidence_first": "finite-card-evidence/second_set_turn.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 3,
+      "char": "间",
+      "intended": "jian1",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 29,
+      "char": "的",
+      "intended": "de5",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 30,
+      "char": "月",
+      "intended": "yue4",
+      "kind": "proper_name",
+      "verdict": "pending",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 31,
+      "char": "亮",
+      "intended": "liang4",
+      "kind": "proper_name",
+      "verdict": "pending",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 39,
+      "char": "维",
+      "intended": "wei2",
+      "kind": "proper_name",
+      "verdict": "pending",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 53,
+      "char": "得",
+      "intended": "de2",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "236ee763b4c8a7d55b634ee0f692be13f6aa506ed76362a39c7bc076947a7aee",
+      "evidence_first": "finite-card-evidence/first_set_turn.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 57,
+      "char": "发",
+      "intended": "fa1",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "236ee763b4c8a7d55b634ee0f692be13f6aa506ed76362a39c7bc076947a7aee",
+      "evidence_first": "finite-card-evidence/first_set_turn.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 4,
+      "char": "分",
+      "intended": "fen1",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 19,
+      "char": "少",
+      "intended": "shao3",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 20,
+      "char": "了",
+      "intended": "le5",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 39,
+      "char": "背",
+      "intended": "bei4",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 41,
+      "char": "的",
+      "intended": "de5",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 15,
+      "char": "月",
+      "intended": "yue4",
+      "kind": "proper_name",
+      "verdict": "pending",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence_first": "finite-card-evidence/outlook.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 36,
+      "char": "里",
+      "intended": "li3",
+      "kind": "proper_name",
+      "verdict": "pending",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence_first": "finite-card-evidence/outlook.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "last_game",
+      "index": 5,
+      "char": "发",
+      "intended": "fa1",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "60575a8dca8510eba7e23a2aa17717e9f23e754d36d531e92af1849770fb1c3e",
+      "evidence_first": "finite-card-evidence/last_game.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "last_game",
+      "index": 27,
+      "char": "得",
+      "intended": "de2",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "60575a8dca8510eba7e23a2aa17717e9f23e754d36d531e92af1849770fb1c3e",
+      "evidence_first": "finite-card-evidence/last_game.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "index": 12,
+      "char": "好",
+      "intended": "hao3",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "evidence_first": "finite-card-evidence/outro.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    }
+  ],
+  "occurrences": [
+    {
+      "edit_id": "second_set_turn",
+      "index": 15,
+      "char": "分",
+      "intended": "fen1",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "58f2f0bcb9742880a7649b658407facf07935970680b688960f0da2273cdec4d",
+      "evidence_first": "finite-card-evidence/second_set_turn.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "second_set_turn",
+      "index": 16,
+      "char": "的",
+      "intended": "de5",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "58f2f0bcb9742880a7649b658407facf07935970680b688960f0da2273cdec4d",
+      "evidence_first": "finite-card-evidence/second_set_turn.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "second_set_turn",
+      "index": 17,
+      "char": "发",
+      "intended": "fa1",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "58f2f0bcb9742880a7649b658407facf07935970680b688960f0da2273cdec4d",
+      "evidence_first": "finite-card-evidence/second_set_turn.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "second_set_turn",
+      "index": 43,
+      "char": "发",
+      "intended": "fa1",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "58f2f0bcb9742880a7649b658407facf07935970680b688960f0da2273cdec4d",
+      "evidence_first": "finite-card-evidence/second_set_turn.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "second_set_turn",
+      "index": 45,
+      "char": "会",
+      "intended": "hui4",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "58f2f0bcb9742880a7649b658407facf07935970680b688960f0da2273cdec4d",
+      "evidence_first": "finite-card-evidence/second_set_turn.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "second_set_turn",
+      "index": 47,
+      "char": "把",
+      "intended": "ba3",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "58f2f0bcb9742880a7649b658407facf07935970680b688960f0da2273cdec4d",
+      "evidence_first": "finite-card-evidence/second_set_turn.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 3,
+      "char": "间",
+      "intended": "jian1",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 8,
+      "char": "号",
+      "intended": "hao4",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 26,
+      "char": "转",
+      "intended": "zhuan3",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 29,
+      "char": "的",
+      "intended": "de5",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 40,
+      "char": "奇",
+      "intended": "qi2",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 30,
+      "char": "月",
+      "intended": "yue4",
+      "kind": "proper_name",
+      "verdict": "pending",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 31,
+      "char": "亮",
+      "intended": "liang4",
+      "kind": "proper_name",
+      "verdict": "pending",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 32,
+      "char": "姐",
+      "intended": "jie3",
+      "kind": "proper_name",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 38,
+      "char": "约",
+      "intended": "yue1",
+      "kind": "proper_name",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 39,
+      "char": "维",
+      "intended": "wei2",
+      "kind": "proper_name",
+      "verdict": "pending",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 0,
+      "char": "北",
+      "intended": "bei3",
+      "kind": "proper_name",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 1,
+      "char": "京",
+      "intended": "jing1",
+      "kind": "proper_name",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "198895cff140b085e6a4fec63b57df89ac5d9bb41935a7990ad67baea2b720c0",
+      "evidence_first": "finite-card-evidence/coordinate.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 10,
+      "char": "发",
+      "intended": "fa1",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "236ee763b4c8a7d55b634ee0f692be13f6aa506ed76362a39c7bc076947a7aee",
+      "evidence_first": "finite-card-evidence/first_set_turn.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 20,
+      "char": "发",
+      "intended": "fa1",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "236ee763b4c8a7d55b634ee0f692be13f6aa506ed76362a39c7bc076947a7aee",
+      "evidence_first": "finite-card-evidence/first_set_turn.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 25,
+      "char": "落",
+      "intended": "luo4",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "236ee763b4c8a7d55b634ee0f692be13f6aa506ed76362a39c7bc076947a7aee",
+      "evidence_first": "finite-card-evidence/first_set_turn.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 28,
+      "char": "被",
+      "intended": "bei4",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "236ee763b4c8a7d55b634ee0f692be13f6aa506ed76362a39c7bc076947a7aee",
+      "evidence_first": "finite-card-evidence/first_set_turn.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 38,
+      "char": "把",
+      "intended": "ba3",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "236ee763b4c8a7d55b634ee0f692be13f6aa506ed76362a39c7bc076947a7aee",
+      "evidence_first": "finite-card-evidence/first_set_turn.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 47,
+      "char": "分",
+      "intended": "fen1",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "236ee763b4c8a7d55b634ee0f692be13f6aa506ed76362a39c7bc076947a7aee",
+      "evidence_first": "finite-card-evidence/first_set_turn.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 53,
+      "char": "得",
+      "intended": "de2",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "236ee763b4c8a7d55b634ee0f692be13f6aa506ed76362a39c7bc076947a7aee",
+      "evidence_first": "finite-card-evidence/first_set_turn.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 55,
+      "char": "分",
+      "intended": "fen1",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "236ee763b4c8a7d55b634ee0f692be13f6aa506ed76362a39c7bc076947a7aee",
+      "evidence_first": "finite-card-evidence/first_set_turn.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 57,
+      "char": "发",
+      "intended": "fa1",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "236ee763b4c8a7d55b634ee0f692be13f6aa506ed76362a39c7bc076947a7aee",
+      "evidence_first": "finite-card-evidence/first_set_turn.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 61,
+      "char": "发",
+      "intended": "fa1",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "236ee763b4c8a7d55b634ee0f692be13f6aa506ed76362a39c7bc076947a7aee",
+      "evidence_first": "finite-card-evidence/first_set_turn.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 1,
+      "char": "的",
+      "intended": "de5",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 4,
+      "char": "分",
+      "intended": "fen1",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 8,
+      "char": "奇",
+      "intended": "qi2",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 9,
+      "char": "少",
+      "intended": "shao3",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 15,
+      "char": "迫",
+      "intended": "po4",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 19,
+      "char": "少",
+      "intended": "shao3",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 20,
+      "char": "了",
+      "intended": "le5",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 38,
+      "char": "分",
+      "intended": "fen1",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 39,
+      "char": "背",
+      "intended": "bei4",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 41,
+      "char": "的",
+      "intended": "de5",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 42,
+      "char": "差",
+      "intended": "cha1",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 43,
+      "char": "别",
+      "intended": "bie2",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 6,
+      "char": "约",
+      "intended": "yue1",
+      "kind": "proper_name",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 7,
+      "char": "维",
+      "intended": "wei2",
+      "kind": "proper_name",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "3646164dd71fde26cac387025805eec0bd2b540b29af317307e21ca4f0cb4ec7",
+      "evidence_first": "finite-card-evidence/stats.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 3,
+      "char": "的",
+      "intended": "de5",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence_first": "finite-card-evidence/outlook.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 5,
+      "char": "转",
+      "intended": "zhuan3",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence_first": "finite-card-evidence/outlook.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 27,
+      "char": "强",
+      "intended": "qiang2",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence_first": "finite-card-evidence/outlook.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 35,
+      "char": "卡",
+      "intended": "ka3",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence_first": "finite-card-evidence/outlook.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 43,
+      "char": "场",
+      "intended": "chang3",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence_first": "finite-card-evidence/outlook.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 15,
+      "char": "月",
+      "intended": "yue4",
+      "kind": "proper_name",
+      "verdict": "pending",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence_first": "finite-card-evidence/outlook.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 16,
+      "char": "亮",
+      "intended": "liang4",
+      "kind": "proper_name",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence_first": "finite-card-evidence/outlook.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 17,
+      "char": "姐",
+      "intended": "jie3",
+      "kind": "proper_name",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence_first": "finite-card-evidence/outlook.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 34,
+      "char": "萨",
+      "intended": "sa4",
+      "kind": "proper_name",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence_first": "finite-card-evidence/outlook.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 36,
+      "char": "里",
+      "intended": "li3",
+      "kind": "proper_name",
+      "verdict": "pending",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence_first": "finite-card-evidence/outlook.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "last_game",
+      "index": 5,
+      "char": "发",
+      "intended": "fa1",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "60575a8dca8510eba7e23a2aa17717e9f23e754d36d531e92af1849770fb1c3e",
+      "evidence_first": "finite-card-evidence/last_game.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "last_game",
+      "index": 13,
+      "char": "落",
+      "intended": "luo4",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "60575a8dca8510eba7e23a2aa17717e9f23e754d36d531e92af1849770fb1c3e",
+      "evidence_first": "finite-card-evidence/last_game.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "last_game",
+      "index": 18,
+      "char": "解",
+      "intended": "jie3",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "60575a8dca8510eba7e23a2aa17717e9f23e754d36d531e92af1849770fb1c3e",
+      "evidence_first": "finite-card-evidence/last_game.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "last_game",
+      "index": 27,
+      "char": "得",
+      "intended": "de2",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "60575a8dca8510eba7e23a2aa17717e9f23e754d36d531e92af1849770fb1c3e",
+      "evidence_first": "finite-card-evidence/last_game.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "last_game",
+      "index": 31,
+      "char": "分",
+      "intended": "fen1",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "60575a8dca8510eba7e23a2aa17717e9f23e754d36d531e92af1849770fb1c3e",
+      "evidence_first": "finite-card-evidence/last_game.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "last_game",
+      "index": 41,
+      "char": "结",
+      "intended": "jie2",
+      "kind": "polyphone",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "60575a8dca8510eba7e23a2aa17717e9f23e754d36d531e92af1849770fb1c3e",
+      "evidence_first": "finite-card-evidence/last_game.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "index": 12,
+      "char": "好",
+      "intended": "hao3",
+      "kind": "polyphone",
+      "verdict": "pending",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "evidence_first": "finite-card-evidence/outro.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "index": 5,
+      "char": "插",
+      "intended": "cha1",
+      "kind": "fixed_brand_phonetic",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "evidence_first": "finite-card-evidence/outro.json",
+      "evidence_local": "aligned-existing-results.json",
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "index": 8,
+      "char": "插",
+      "intended": "cha1",
+      "kind": "fixed_brand_phonetic",
+      "verdict": "correct_low_support",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "evidence_first": "finite-card-evidence/outro.json",
+      "evidence_local": null,
+      "limitations": [
+        "Controls change all inventoried target letters in same card; changed neighbours and normal tone sandhi can invalidate local conclusions. Only calibrated component support counts.",
+        "Contextual/rare and different-tone vowel proxies retain actual labels; no strongest-confidence or human-listening claim."
+      ]
+    }
+  ],
+  "full_native_asr": "native-lexical-asr.json",
+  "number_spans": 33,
+  "proper_name_syllable_positions": 17,
+  "methods": [
+    "All original audio/marks extracted from exact current frozen native bundle, no resynthesis of original.",
+    "Whole actual native utterances independent unprompted multilingual ASR; lexical numbers and names only, not tone proof.",
+    "Finite 28 current full-card control MP3s with all target substitutions disclosed, target MFCC/F0 and independently calibrated two-sided LOO.",
+    "One bounded localization pass reuses those same28 controls; no expanding acoustic search."
+  ],
+  "limitations": [
+    "Controls change multiple target letters in same utterance and can alter neighbouring phonemes/prosody.",
+    "Some positive homophones are contextual or rare; real reference selftest can fail. Actual uncertain/unreliable positions remain pending.",
+    "The first-round intended-vs-other contrast does not exhaust every rare dictionary pronunciation.",
+    "No human listening performed or claimed.",
+    "No source/final loudness/RMS/peak/silence/gain/PCM checks; pronunciation features omit MFCC C0 and RMS calculation entirely."
+  ],
+  "manual_listening_claimed": false,
+  "new_reference_mp3_count": 28,
+  "all_original_failures_retained": true
+}

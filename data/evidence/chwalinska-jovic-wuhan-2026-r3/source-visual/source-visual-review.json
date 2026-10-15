@@ -1,0 +1,144 @@
+{
+  "schema": "tennislive.source-visual-review.v1",
+  "slug": "chwalinska-jovic-wuhan-2026-r3",
+  "reviewer": "Current OpenAI source review assistant",
+  "reviewed_at": "2026-10-15T09:18:18.239282+00:00",
+  "source_url": "https://www.youtube.com/watch?v=9JkX_1Oiitg",
+  "source_sha256": "bd48c2dd7e379cd2dfdfe397c3e751a3b9521bbe8a0139d10ad46e79da983c54",
+  "immutable_source_url": "https://github.com/robertyang87/tennislive/releases/download/source-9JkX_1Oiitg/9JkX_1Oiitg-bd48c2dd7e379cd2.mp4",
+  "source_bytes": 79465508,
+  "source_dimensions": [
+    1920,
+    1080
+  ],
+  "source_fps": 25,
+  "source_duration_seconds": 308.477098,
+  "source_full_duration_contact_walls": [
+    {
+      "path": "output/2026-10-15/reel/chwalinska-jovic-wuhan-2026-r3/contact_00.jpg",
+      "sha256": "cb851c45c12b7508818831f4cf6c93042f54e8dc3061b895c6d01b7b65c1ba34",
+      "viewed": true
+    },
+    {
+      "path": "output/2026-10-15/reel/chwalinska-jovic-wuhan-2026-r3/contact_01.jpg",
+      "sha256": "4b260d79808ac2a426ea8fe8aa7d8e3d1acc9bad0cb5c44f7f3bdc32d74b72a0",
+      "viewed": true
+    },
+    {
+      "path": "output/2026-10-15/reel/chwalinska-jovic-wuhan-2026-r3/contact_02.jpg",
+      "sha256": "2ebecee85c7289eec1ff377bcf3a9750487f85ab081a1b7be07b92bdf3bf8df3",
+      "viewed": true
+    },
+    {
+      "path": "output/2026-10-15/reel/chwalinska-jovic-wuhan-2026-r3/contact_03.jpg",
+      "sha256": "df40f36de716e84b10e4ae6bdced3d09e07c0450de51f271f13eae11a907664c",
+      "viewed": true
+    },
+    {
+      "path": "output/2026-10-15/reel/chwalinska-jovic-wuhan-2026-r3/contact_04.jpg",
+      "sha256": "409b045f0e314808d5783abe38f70c18dc024d8a5858c7d43b2652edcc7bc404",
+      "viewed": true
+    },
+    {
+      "path": "output/2026-10-15/reel/chwalinska-jovic-wuhan-2026-r3/contact_05.jpg",
+      "sha256": "0a3a80070ebcceac08ca83c3b2c034b5a1af14cf0996fc0193ed02531b44cfac",
+      "viewed": true
+    }
+  ],
+  "dense_action_walls": [
+    {
+      "path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-visual/first-rally-1.jpg",
+      "sha256": "60510e725416b14b2a55db1b4f75dfebff897fc6c846f48bdd2a47b0dae1f28c",
+      "viewed": true
+    },
+    {
+      "path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-visual/first-rally-2.jpg",
+      "sha256": "539c4b3c3708b6584c2e3c121c4fa77e78c95e6df3e7aabbc9de768d3a9b1bf0",
+      "viewed": true
+    },
+    {
+      "path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-visual/second-net-1.jpg",
+      "sha256": "ab418d7eda06d3b588c6be28386038ae67a66eac0122c9569cb86fb27a97d611",
+      "viewed": true
+    },
+    {
+      "path": "data/evidence/chwalinska-jovic-wuhan-2026-r3/source-visual/second-net-2.jpg",
+      "sha256": "674a3a87e42a9bf6d2a52c9c768b71c5aea37035814e3adcc8cae5b83e6ae1ac",
+      "viewed": true
+    }
+  ],
+  "match_identity": {
+    "near_side_initial": "Iva Jovic, black long-sleeve shirt, burgundy skirt and visor",
+    "far_side_initial": "Maja Chwalinska, sleeveless black tennis dress and blonde bun",
+    "after_end_change": "Chwalinska near side in second-set break-point 242.08-255.48 and match point260.16-271.44",
+    "venue_visible": "Wuhan, blue Court2; source commentary and official OOP Court2"
+  },
+  "verified_actions": [
+    {
+      "id": "first_set_4all_defense",
+      "same_rally_source_interval": [
+        107.6,
+        134.92
+      ],
+      "dense_review_interval": [
+        124,
+        134.5
+      ],
+      "score_before_point": "first set4-4, Jovic serving30-0",
+      "player_position": "Chwalinska far side",
+      "description_zh": "底线长回合中，赫瓦林斯卡多次横向跑动守住来球，最终拿下这一分。",
+      "safe_narration_zh": "4比4时，她先用底线防守守下长回合，随后破发并保发，拿走首盘。",
+      "limit": "This point takes30-0 to30-15; do not claim this one point directly completes the break. Prior foreground commentary about Mexico/top50 crosses the107.6 rally boundary; final audio window must preserve entire retained clauses."
+    },
+    {
+      "id": "second_set_net_break",
+      "same_rally_source_interval": [
+        242.08,
+        255.48
+      ],
+      "dense_review_interval": [
+        248,
+        255.2
+      ],
+      "score_before_point": "Chwalinska leads second set3-1, Jovic serving30-40; break point",
+      "player_position": "Chwalinska near side",
+      "description_zh": "赫瓦林斯卡从底线跟进上网，连续网前处理拿下破发点，次盘扩大到4比1。",
+      "safe_narration_zh": "来到破发点，她主动跟进上网，把优势变成4比1。",
+      "limit": "Do not infer a specific winner type, spin or named shot from contact-sheet spacing alone."
+    }
+  ],
+  "ending": {
+    "match_point_rally": [
+      260.16,
+      271.44
+    ],
+    "initial_reaction": [
+      271.44,
+      279.72
+    ],
+    "handshake": [
+      279.72,
+      284
+    ],
+    "final_score_plate_visible": [
+      284,
+      290
+    ],
+    "last_content_before_endcard": 298.4,
+    "wta_endcard_starts": 298.4,
+    "cold_open_candidate": [
+      270.16,
+      282.1
+    ],
+    "cold_open_audio_status": "Exact full and bounded source ASR reconciled: player ends281.88/281.94; nextKeptstarts282.4/282.52; nativecoldtail282.28 lies in gap."
+  },
+  "audio_review_status": "Complete exact-SHA six-window ASR-crosschecked audio packets; finalspec bound in data/audio_reviews/chwalinska-jovic-wuhan-2026-r3.json",
+  "manual_listening_claimed": false,
+  "all_frames_reviewed": false,
+  "source_audio_gain_changes": false,
+  "limitations": [
+    "Every2-second native full-duration contact sheets viewed; this is sampled visual review, not every frame.",
+    "Dense frames establish two concrete action descriptions; final crop, subtitles and final movie need their own inspection.",
+    "No source loudness/peak/RMS/silence or gain/PCM comparison performed."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "tennislive.external-evidence-artifact.v1",
+  "status": "uploaded_exact_bytes_verified",
+  "film_sha256": "d45f651435e44a0b6d8c3039f6b438f46a16ecc4133128395dbe31c2560f11dd",
+  "local_path": "/workspace/scratch/moon3-final-visual-qc/moon3-v3-final-visual-evidence.zip",
+  "bytes": 83131162,
+  "sha256": "151659e82bd72cbed08a608bd19c262e799e308414e03f33b69cf40ec1d6b153",
+  "contents": {
+    "original_sample_PNGs": 113,
+    "contact_sheets": 8,
+    "individually_viewed_original_PNGs": 26,
+    "actual_ASS_cues": 61
+  },
+  "visual_result": "passed_finite_visual_review",
+  "transport_quality_approval": false,
+  "release_tag": "reel-review-chwalinska-jovic-wuhan-2026-r3-e35d913c416209be",
+  "file_name": "visual-qc-evidence.zip",
+  "url": "https://github.com/robertyang87/tennislive/releases/download/reel-review-chwalinska-jovic-wuhan-2026-r3-e35d913c416209be/visual-qc-evidence.zip",
+  "transport": {
+    "status": "uploaded_exact_bytes_verified",
+    "run_url": "https://github.com/robertyang87/tennislive/actions/runs/38719037910",
+    "asset_api_url": "https://api.github.com/repos/robertyang87/tennislive/releases/assets/643470032",
+    "asset_id": 643470032,
+    "service_digest": "sha256:151659e82bd72cbed08a608bd19c262e799e308414e03f33b69cf40ec1d6b153",
+    "service_state": "uploaded",
+    "service_size_bytes": 83131162,
+    "quality_approval": false,
+    "note": "Transport verifies exact archive bytes only. Existing editorial/audio/visual review status is preserved."
+  },
+  "status_at_local_sealing": "local_sealed_waiting_release_archive",
+  "note": "External locator and transport receipt added after sealing; the archived manifest records the earlier local-sealing state. Visual approval remains only the finite visual_result."
+}

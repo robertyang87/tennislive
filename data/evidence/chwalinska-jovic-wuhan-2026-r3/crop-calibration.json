@@ -1,0 +1,53 @@
+{
+  "schema": "tennislive.crop-evidence.v1",
+  "reviewer": "current OpenAI root",
+  "reviewed_at": "2026-10-15T09:22:07.630763+00:00",
+  "source_sha256": "bd48c2dd7e379cd2dfdfe397c3e751a3b9521bbe8a0139d10ad46e79da983c54",
+  "reference_spec": "specs/reels/chwalinska-bouzkova-wuhan-2026-r2.json",
+  "current_geometry": {
+    "native": [
+      1920,
+      1080
+    ],
+    "contain_keep": 0.8125,
+    "crop": [
+      180,
+      0,
+      1560,
+      1080
+    ],
+    "canvas": [
+      1080,
+      1440
+    ],
+    "cx": 0.5,
+    "track": false,
+    "fit": "contain",
+    "score_inset": false,
+    "subtitle_bottom": 180
+  },
+  "reference_geometry": {
+    "contain_keep": 0.814,
+    "native_crop_width": 1562,
+    "native_x": 179
+  },
+  "adaptation": "Same fixed symmetric wide court region as user-selected prior Moon R2. Current frame white WTA watermark begins x1742; crop ends exclusive1740, adding only1px per side versus native prior1562px crop. Native source board remains at same physical location; first name letters may be cropped, full names are in native topbar. No reconstructed/moved board. Net-court real logos remain part of footage.",
+  "viewed_current_frames": [
+    {
+      "source_time": 134.4,
+      "original_sha256": "88f0b17e65698d836d7ab767535115875672dab1df90a9d2364f375a4b1a6503",
+      "path": "/workspace/scratch/moon3-crop/raw-134.4.png"
+    },
+    {
+      "source_time": 268.4,
+      "original_sha256": "9ffeea995a124595fd76000c42c7f4aa91325c7d8886a3f9bc36a6b4a36a1dae",
+      "path": "/workspace/scratch/moon3-crop/raw-268.4.png"
+    },
+    {
+      "source_time": 268.4,
+      "original_sha256": "ceaf32f56860a35d04d36d6f42866d1ee3dcedd7b085ce9bca60e82665ecc605",
+      "path": "/workspace/scratch/moon3-crop/centered-268.4.png"
+    }
+  ],
+  "limitation": "Bounded crop geometry proof, not approval of all retained compressed-film frames; full native ASS preview and final compressed movie review still required."
+}
