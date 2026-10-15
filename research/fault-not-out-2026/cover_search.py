@@ -28,7 +28,8 @@ for s in SITES:
             continue
         for m in d if isinstance(d,list) else []:
             if not isinstance(m,dict): continue
-            cap=re.sub("<[^>]+>","",((m.get("caption") or {}).get("rendered","") or "")+" "+((m.get("title") or {}).get("rendered","") or ""))
+            def _r(x): return str((x or {}).get("rendered","") if isinstance(x,dict) else (x or ""))
+            cap=re.sub("<[^>]+>","",_r(m.get("caption"))+" "+_r(m.get("title")))
             if not re.search("tennis|open|wimbledon",cap,re.I): continue
             md=m.get("media_details") or {}
             if not isinstance(md,dict): continue
