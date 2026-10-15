@@ -913,6 +913,9 @@ jobs:
           echo "# render 错误 $(date -u +%FT%TZ) run ${{ github.run_id }}" > "$OUTDIR/_render_error.md"
           echo "" >> "$OUTDIR/_render_error.md"
           echo "步骤失败，详见 GitHub Actions 日志。" >> "$OUTDIR/_render_error.md"
+          # 把 ASS 字幕文件也提交，排查字幕问题
+          find "$OUTDIR" -name "*.ass" -exec cp {} "$OUTDIR/_debug.ass" \; 2>/dev/null || true
+          ls -lh "$OUTDIR"/*.ass 2>/dev/null >> "$OUTDIR/_render_error.md" || true
           git config user.name "tennislive-bot"
           git config user.email "bot@tennislive.local"
           git add "$OUTDIR/_render_error.md"
