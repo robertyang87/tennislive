@@ -1,6 +1,8 @@
 name: tmp-scout-shnaider-muchova
 on:
-  workflow_dispatch: {}
+  push:
+    branches: [claude/shnaider-muchova-wuhan-r3]
+    paths: ['.github/workflows/tmp-scout-shnaider-muchova.yml']
 permissions:
   contents: write
 jobs:
