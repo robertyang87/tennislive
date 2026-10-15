@@ -1,0 +1,34 @@
+{
+  "schema": "tennislive.external-artifact.v1",
+  "status": "local_sealed_waiting_release_archive",
+  "artifact_kind": "independent_finite_actual_movie_visual_evidence",
+  "film_sha256": "8a16bb8f6e941252ea6f37b39b7bacc6fd7c928b440cf21a008cf43efe323e24",
+  "local_path": "/workspace/scratch/iga-final-visual-qc/iga-v2-final-visual-evidence.zip",
+  "sha256": "b5d63aaa6986ca6c4e89e42c049068239adde540da5ac07b10d67dc6738353fd",
+  "bytes": 134044987,
+  "quality_review_status": "passed_finite_visual_review",
+  "transport_is_quality_approval": false,
+  "report": "data/evidence/swiatek-krueger-wuhan-2026-r3/visual-qc/final-visual-qc.json",
+  "contents": {
+    "current_original_pngs": 118,
+    "current_contact_sheets": 8,
+    "historical_failed_original_pngs": 5,
+    "includes_mp4": false
+  },
+  "sealed_at": "2026-10-15T15:13:07.504813+00:00",
+  "release_tag": "reel-review-swiatek-krueger-wuhan-2026-r3-6c196df17315935b",
+  "file_name": "visual-qc-evidence.zip",
+  "url": "https://github.com/robertyang87/tennislive/releases/download/reel-review-swiatek-krueger-wuhan-2026-r3-6c196df17315935b/visual-qc-evidence.zip",
+  "publication_upload_pending": false,
+  "transport": {
+    "status": "uploaded_exact_bytes_verified",
+    "run_url": "https://github.com/robertyang87/tennislive/actions/runs/38758466318",
+    "asset_api_url": "https://api.github.com/repos/robertyang87/tennislive/releases/assets/644255871",
+    "asset_id": 644255871,
+    "service_digest": "sha256:b5d63aaa6986ca6c4e89e42c049068239adde540da5ac07b10d67dc6738353fd",
+    "service_state": "uploaded",
+    "service_size_bytes": 134044987,
+    "quality_approval": false,
+    "note": "Transport verifies exact archive bytes only. Existing editorial/audio/visual review status is preserved."
+  }
+}
