@@ -1,0 +1,33 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=17IqrJNNvFY",
+  "source_sha256": "f53049fbc8e4083d30244a52101d77bc45d6d3a1171d85eecf6bfe73547e4419",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T04:07:05.131113+00:00",
+  "reviewed_from": 44.35,
+  "reviewed_to": 54.84,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 44.54,
+      "end": 48.34,
+      "en": "You also get yes lets, which is when you get the clearing player,",
+      "zh": "还有 yes let：让位的一方，"
+    },
+    {
+      "start": 48.34,
+      "end": 52.0,
+      "en": "the non-striker, and the striker who's going in to hit the ball,",
+      "zh": "也就是非击球方，和上前击球的一方，"
+    },
+    {
+      "start": 52.0,
+      "end": 54.84,
+      "en": "and they just clash, and no one's really at fault.",
+      "zh": "撞在了一起，谁都没错。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/17IqrJNNvFY/small.en.json + medium.en.json",
+  "review_note": "PSA 官方 SQUASHTV「Squash 101」讲解员原话，两档转写逐词一致。"
+}

@@ -1,0 +1,15 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/reel-src-let-not-net-2026/ng_c.mp4",
+  "source_sha256": "173fb0d9b0cf2d9dead3cbcd363283723915632b6001a92d4e439a55e0e01f61",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T04:07:05.131113+00:00",
+  "reviewed_from": 72.0,
+  "reviewed_to": 85.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/PZVUqAkrS1E/small.en.json + medium.en.json",
+  "source_note": "音轨与 Release source-PZVUqAkrS1E 原片逐字节相同（normalize.sh 用 -c:a copy），转写证据 data/source_asr/PZVUqAkrS1E；全片只有配乐，两档转写在 72–86 秒无任何词。",
+  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/PZVUqAkrS1E 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 72.0–85.5 秒内都没有任何英文词（窗口边界避开了最近的词）。"
+}
