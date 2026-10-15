@@ -1,0 +1,97 @@
+{
+  "scoreboard_qc_sha256": "888bc9ca7e146678f377ebad16e715d0343a15126646f78e57532de56163bb9d",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "fb9d7bf16a7a838cf5749309d53e326b648e1e4f4f03e08ee55dcce42521382a",
+    "request_count": 8,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-shnaider-muchova-wuhan-2026-r3-fb9d7bf16a7a838c",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-shnaider-muchova-wuhan-2026-r3-fb9d7bf16a7a838c/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38715209971"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 222.05,
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 第三轮",
+    "line2": "施奈德 7-5 6-3 穆霍娃",
+    "start": 1.2,
+    "end": 223.25
+  },
+  "film_seconds": 227.84,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 14.4,
+    "2": 10.488,
+    "4": 14.592,
+    "7": 13.752,
+    "9": 8.016,
+    "11": 13.248,
+    "12": 10.704
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "46de5f4a84ae057e7e2b75c746977f6d0de900b3e4e7d12af2245d69bd0e2071",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "shnaider-muchova-wuhan-2026-r3",
+    "received_at": "2026-10-15T09:10:00Z",
+    "artifact_ready_at": "2026-10-15T09:52:18Z",
+    "elapsed_seconds": 2538.119,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "c0047a32d8ff94f609341027513af00733ab6a250a763e43bf1e6f065df83c55",
+    "spec_sha256": "073b2eb00bb4334873571fc605b6c8a598ad7ca53f7c362d8ac9cdfb32137ea4",
+    "run_id": "38715209971",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-15T09:47:57Z",
+        "run_id": "38715209971"
+      }
+    ],
+    "render_seconds": 261.119,
+    "pre_render_seconds": 2277.0
+  },
+  "film_sha256": "c0047a32d8ff94f609341027513af00733ab6a250a763e43bf1e6f065df83c55",
+  "film_bytes": 81554278,
+  "qc_attestation_sha256": "0a68f7158d85c53c948ef926cd833f431bb5b43fd6e8de6a021d49d82c670022",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-15T09:47:57Z",
+      "run_id": "38715209971"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-15T09:52:21Z",
+      "run_id": "38715209971"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shnaider-muchova-wuhan-2026-r3/shnaider-muchova-wuhan-2026-r3.mp4",
+  "video_bytes": 81554278
+}
