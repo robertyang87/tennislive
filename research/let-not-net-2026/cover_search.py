@@ -2,8 +2,8 @@
 import json, os, re, time, urllib.parse, urllib.request
 OUT="research/let-not-net-2026/cover_cands4"; os.makedirs(OUT,exist_ok=True)
 H={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"}
-SITES=["wtop.com","www.wtop.com","www.thenationalnews.com","www.ksl.com","www.mynorthwest.com","www.kxan.com","www.wfla.com","www.8newsnow.com","www.kron4.com","www.wate.com","www.pix11.com","www.nbcsandiego.com"]
-QS=["net cord","netcord","hits the net","hit the net","clips the net","let serve","net judge","net umpire","ball on the net","tennis net ball","umpire tennis let"]
+SITES=["wtop.com","www.kxan.com","www.wfla.com","www.pix11.com","www.ktla.com","www.kron4.com","www.wate.com","www.wkrg.com","www.8newsnow.com","fox8.com","www.wgnradio.com","www.boston.com","www.mynorthwest.com"]
+QS=["net cord","netcord","hits the net","hit the net","clips the net","let serve","net judge","net umpire","ball on the net","tennis net","chair umpire","umpire Wimbledon","umpire Open tennis"]
 def get(u):
     return json.loads(urllib.request.urlopen(urllib.request.Request(u,headers=H),timeout=40).read())
 rows={}
@@ -16,8 +16,10 @@ for s in SITES:
             print("ERR",s,q,str(e)[:80]); 
             if ok==0: break
             continue
+        if not isinstance(d,list): continue
         for m in d:
-            cap=re.sub("<[^>]+>","",(m.get("caption") or {}).get("rendered","")+" "+(m.get("title") or {}).get("rendered",""))
+            if not isinstance(m,dict): continue
+            c=m.get("caption"); t=m.get("title"); cap=re.sub("<[^>]+>","",(c.get("rendered","") if isinstance(c,dict) else str(c or ""))+" "+(t.get("rendered","") if isinstance(t,dict) else str(t or "")))
             if "tennis" not in cap.lower() and "open" not in cap.lower() and "wimbledon" not in cap.lower(): continue
             md=m.get("media_details") or {}
             w,h=md.get("width",0),md.get("height",0)
