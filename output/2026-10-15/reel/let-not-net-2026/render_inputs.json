@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "let-not-net-2026",
-  "written_at": "2026-10-15T04:43:55Z",
-  "code_sha": "11c1f1ef7e6da0dc15c432420104b8d70545097d",
-  "spec_sha256": "01a63b1fe451491d24c872326757f86ad7f4e4a0f346b6a55ad7c627f79154ea",
-  "film_sha256": "28886c75da187ee3145f549f8342d41ec9d04742e4a185769f7309d355186993",
-  "film_bytes": 108504526,
-  "projection_sha256": "5fa8c86bc5d1f3899bdbeb41e2fbeb3dfb9339ba0dae561d53f186f85b47309e",
+  "written_at": "2026-10-15T06:15:08Z",
+  "code_sha": "8098abc85c177fc795c5f0e934d9d86c7326bf1f",
+  "spec_sha256": "3b4d8cc1c57196d5aee4bd3537323da6bb81ae00c8033449f6a839d79d8d2847",
+  "film_sha256": "cd575ab8968ee972b1365bfe93efecd7887c49b39bfb772eaa94a32b2b53dff3",
+  "film_bytes": 108562515,
+  "projection_sha256": "248fe9d68e0f89316d7a48c37e671d137beb8b58d4ea2d8301f6a79ddb1891f3",
   "claims": [
     [
       "cover",
@@ -197,11 +197,13 @@
       "_why"
     ]
   ],
-  "assets": {},
+  "assets": {
+    "assets/reel/letnet/let-cover-net.jpg": "1d4b55eb695b08511c8d92b17631758a2c3fc0f7349913c5de4b6ee7aed6bf42"
+  },
   "artifacts": {
-    "audio_review_binding.json": "f9a7bf7965f2ef8d9086b7793d5945c749088ff4c5d76adf14e66ed5c9acc4c0",
-    "subtitles.ass": "0d26171f49e61947d2ab933cfeeaeadd4f2b7e2f434b4c45c7104b1705977079",
-    "poster.jpg": "0ae987881028ee4c2b01c703cb63cd8ff1e518a1a0acc4a063649b2942f7b7ba"
+    "audio_review_binding.json": "78f61f3e44af559f4864677ce643256c3ad3b74e738ba3a64b8e25eba222e6a5",
+    "subtitles.ass": "fad5ceaee12e690e8202bb465705126acd3c9f21cd6be80bd7e0c07485fd3404",
+    "poster.jpg": "c2ab5316010b02d75dfaf380e00ca41c7ba84c3dcc0c20984e0a0ba9295f804d"
   },
   "projection": {
     "slug": "let-not-net-2026",
@@ -214,17 +216,17 @@
     "cover": {
       "eyebrow": "网球有故事",
       "layout": "solo",
-      "subject": "郑钦文",
-      "hook": "擦网为啥喊Let\n郑钦文也中招",
-      "narration": "擦网为啥喊 let？郑钦文也中招。",
-      "topic": "擦网喊Let · 它原本的意思是阻碍",
+      "subject": "球网",
+      "hook": "擦网为啥喊Let",
+      "narration": "擦网为啥喊 let？",
+      "topic": "擦网喊的是 Let 不是 Net",
       "portrait": {
-        "frame_at": 11.6,
-        "source": "zq",
+        "image": "assets/reel/letnet/let-cover-net.jpg",
         "fit": "cover",
-        "focus": 0.61,
-        "focus_y": 1.0,
-        "zoom": 1.15
+        "focus": 0.75,
+        "focus_y": 0.5,
+        "zoom": 1.0,
+        "source_url": "https://wtop.com/wp-content/uploads/2019/04/GettyImages-914370940.jpg"
       },
       "scrim": "clear"
     },

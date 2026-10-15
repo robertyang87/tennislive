@@ -3,25 +3,25 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "f810381135c6919d77cd9f6b4372a71fdd4f0e768ed6290b9e4689cac16fb69f",
+    "bundle_sha256": "a5aeba5199814c83eb3600b73b864463cde65ceaea5b3abd613c7ad85093d412",
     "request_count": 25,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-let-not-net-2026-f810381135c6919d",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-let-not-net-2026-f810381135c6919d/tts_bundle.zip",
+    "release_tag": "reel-tts-let-not-net-2026-a5aeba5199814c83",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-let-not-net-2026-a5aeba5199814c83/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38682385186"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38690517063"
   },
-  "cover_seconds": 3.874,
+  "cover_seconds": 2.242,
   "cover_narrated": true,
   "outro_seconds": 4.122,
   "layout": "full",
   "segments_seconds": 244.88,
   "topbar": null,
-  "film_seconds": 252.88,
+  "film_seconds": 251.28,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+18%",
   "narration_backend": "edge-tts",
@@ -52,64 +52,8 @@
   },
   "face_checks": {
     "cover": {
-      "status": "ok",
-      "model": "buffalo_s-v0.7",
-      "identity": {
-        "verdict": "match",
-        "name": "郑钦文",
-        "similarity": {
-          "郑钦文": 0.6303
-        },
-        "missing": [],
-        "expected": [
-          "郑钦文"
-        ],
-        "face": [
-          230,
-          38,
-          575,
-          538
-        ],
-        "face_px": 500.3,
-        "reason": "像 郑钦文（0.63 ≥ 0.34）",
-        "thresholds": {
-          "match": 0.34,
-          "mismatch": 0.15,
-          "min_face_px": 56
-        }
-      },
-      "eyes": {
-        "verdict": "open",
-        "ear": 0.2734,
-        "ear_each": [
-          0.2816,
-          0.2652
-        ],
-        "face": [
-          230,
-          38,
-          575,
-          538
-        ],
-        "face_px": 500.3,
-        "reason": "眼睛纵横比 0.27 ≥ 0.16",
-        "thresholds": {
-          "closed": 0.12,
-          "open": 0.16,
-          "min_face_px": 72
-        }
-      },
-      "problems": [],
-      "warnings": [],
-      "region": [
-        741,
-        140,
-        1446,
-        1080
-      ],
-      "frame": "output/2026-10-15/reel/let-not-net-2026/cover_src/portrait.jpg",
-      "frame_at": 11.6,
-      "target": null
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
     },
     "segments": {
       "status": "ok",
@@ -121,44 +65,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "0bf7f6f4adc12623ba8d22d30aa8cefd611d0aa915bae2d5005cc2edf38be14f",
+  "render_inputs_sha256": "0d5d6f38de01d13e5a9c04892333f6c68939c0f2043c8b061bb62af36c08b086",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "let-not-net-2026",
-    "received_at": "2026-10-15T04:36:55Z",
-    "artifact_ready_at": "2026-10-15T04:43:56Z",
-    "elapsed_seconds": 421.753,
+    "received_at": "2026-10-15T06:07:01Z",
+    "artifact_ready_at": "2026-10-15T06:15:09Z",
+    "elapsed_seconds": 488.58,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "28886c75da187ee3145f549f8342d41ec9d04742e4a185769f7309d355186993",
-    "spec_sha256": "01a63b1fe451491d24c872326757f86ad7f4e4a0f346b6a55ad7c627f79154ea",
-    "run_id": "38682385186",
+    "film_sha256": "cd575ab8968ee972b1365bfe93efecd7887c49b39bfb772eaa94a32b2b53dff3",
+    "spec_sha256": "3b4d8cc1c57196d5aee4bd3537323da6bb81ae00c8033449f6a839d79d8d2847",
+    "run_id": "38690517063",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-15T04:41:10Z",
-        "run_id": "38682385186"
+        "at": "2026-10-15T06:10:10Z",
+        "run_id": "38690517063"
       }
     ],
-    "render_seconds": 166.753,
-    "pre_render_seconds": 255.0
+    "render_seconds": 299.58,
+    "pre_render_seconds": 189.0
   },
-  "film_sha256": "28886c75da187ee3145f549f8342d41ec9d04742e4a185769f7309d355186993",
-  "film_bytes": 108504526,
-  "qc_attestation_sha256": "e70ba79345bde3477802b6b9f4736640f84fb820d7f98b0343919188e79be1ff",
+  "film_sha256": "cd575ab8968ee972b1365bfe93efecd7887c49b39bfb772eaa94a32b2b53dff3",
+  "film_bytes": 108562515,
+  "qc_attestation_sha256": "a6b7ef22e5cf01bbaf92ddef59b7dcd966ad06adc3b068dd12e8ca25d8d250de",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-15T04:41:10Z",
-      "run_id": "38682385186"
+      "at": "2026-10-15T06:10:10Z",
+      "run_id": "38690517063"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-15T04:43:59Z",
-      "run_id": "38682385186"
+      "at": "2026-10-15T06:15:12Z",
+      "run_id": "38690517063"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-let-not-net-2026/let-not-net-2026.mp4",
-  "video_bytes": 108504526
+  "video_bytes": 108562515
 }
