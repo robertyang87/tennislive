@@ -3,17 +3,17 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "1a06c72dcc25a5307bac52c85e921f4e042597a38fdcdf4689fb51825fefdc2e",
+    "bundle_sha256": "f1af183caaeb7c1d0cbae0107957c13e55ba26245dbecba297f753470900c6f6",
     "request_count": 24,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-fault-not-out-2026-1a06c72dcc25a530",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-fault-not-out-2026-1a06c72dcc25a530/tts_bundle.zip",
+    "release_tag": "reel-tts-fault-not-out-2026-f1af183caaeb7c1d",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-fault-not-out-2026-f1af183caaeb7c1d/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38741103485"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38743077832"
   },
   "cover_seconds": 4.33,
   "cover_narrated": true,
@@ -41,7 +41,7 @@
     "17": 3.264,
     "19": 4.656,
     "21": 4.992,
-    "24": 8.832,
+    "24": 8.808,
     "25": 9.888,
     "26": 7.224,
     "27": 7.08,
@@ -64,44 +64,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "cb51354d6c2d4b94e644a6a6951ed53b2a7e41a958770411e448240be97dc306",
+  "render_inputs_sha256": "2935db2620204fba1178a78bee102b80decfe74250e358417a9f18a79175d016",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "fault-not-out-2026",
-    "received_at": "2026-10-15T13:15:12Z",
-    "artifact_ready_at": "2026-10-15T13:22:16Z",
-    "elapsed_seconds": 424.776,
+    "received_at": "2026-10-15T13:29:13Z",
+    "artifact_ready_at": "2026-10-15T13:36:31Z",
+    "elapsed_seconds": 438.462,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "c718b6dc39ee6bebfa225c3d95494b1eb9cae74b09d04439e886029c7376e251",
-    "spec_sha256": "c0d1985e64e961dba209e2037505be361dda414475ddc06d397a19f2afd8208f",
-    "run_id": "38741103485",
+    "film_sha256": "b0f3cff1384fe2e1c2f320fa507ee3cd92f968ce75d921fc35370b32602f889d",
+    "spec_sha256": "84507f447933bc46b9b6a0bf9866a746ad01b2e7aebf490aa21ed3d66c6265f0",
+    "run_id": "38743077832",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-15T13:18:31Z",
-        "run_id": "38741103485"
+        "at": "2026-10-15T13:31:54Z",
+        "run_id": "38743077832"
       }
     ],
-    "render_seconds": 225.776,
-    "pre_render_seconds": 199.0
+    "render_seconds": 277.462,
+    "pre_render_seconds": 161.0
   },
-  "film_sha256": "c718b6dc39ee6bebfa225c3d95494b1eb9cae74b09d04439e886029c7376e251",
-  "film_bytes": 111666773,
-  "qc_attestation_sha256": "7b02ac2098af9fd16ecbd1477cb937e448c12422592163e2d6d2735afcc6c824",
+  "film_sha256": "b0f3cff1384fe2e1c2f320fa507ee3cd92f968ce75d921fc35370b32602f889d",
+  "film_bytes": 111648623,
+  "qc_attestation_sha256": "95467fa4cd3bd79b9a7611f040692310d392021041b03fdd0a1b85242993c974",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-15T13:18:31Z",
-      "run_id": "38741103485"
+      "at": "2026-10-15T13:31:54Z",
+      "run_id": "38743077832"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-15T13:22:20Z",
-      "run_id": "38741103485"
+      "at": "2026-10-15T13:36:34Z",
+      "run_id": "38743077832"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-fault-not-out-2026/fault-not-out-2026.mp4",
-  "video_bytes": 111666773
+  "video_bytes": 111648623
 }
