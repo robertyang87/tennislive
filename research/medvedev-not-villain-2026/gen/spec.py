@@ -14,7 +14,7 @@ LABELS={
  "ws26":{"topic":"我该去打匹克球","date":"2026.08.25","place":"温斯顿-塞勒姆 第二轮","score":"5-7 3-6","people":"梅德韦杰夫 vs 达姆"},
 }
 def lab(k):
-    return {"image":f"{A}/label-{k}.png","kind":"story_text","corner":"tr","width":0.6,"pad":0.085,"show_for":4.2,"motion":"editorial","label":dict(LABELS[k])}
+    return {"image":f"{A}/label-{k}.png","kind":"story_text","corner":"tr","width":0.6,"pad":0.085,"show_for":7.0,"motion":"editorial","label":dict(LABELS[k])}
 def n(src,a,b,text,why,ok="不是回合的收尾：画面是场边、近景或颁奖，段尾不在一分打到一半。",label=None):
     s={"source":src,"start":a,"end":b,"cx":0.5,"track":False,"narration":text,"voice":dict(V),"_why":why,"point_end_ok":ok}
     if label: s["inset"]=lab(label)
@@ -49,15 +49,23 @@ S.append(n("md21",91.95,105.0,"二〇二一年马德里，他在红土上已经�
 S.append(q("md21",12.5,19.98,[(12.64,14.36,"Yeah, he's not looking happy, Medvedev.\n梅德韦杰夫看起来很不高兴。"),(14.66,16.92,"I don't want to play here on this surface.\n我不想在这种场地上打球。"),(17.68,19.98,"Well, pretty clear what he's thinking.\n他心里怎么想，很清楚了。")],
   "梅德韦杰夫本人的牢骚夹在解说之间。medium 逐词：surface；small 记成 circuit，按 medium 与画面写 surface。段尾 19.98 在 ASR 末尾的 Thank you 幻听（19.98 起，两档都只有这一词且画面无人说话）之前。","第一盘局间，不是回合。"))
 S.append(n("md21",106.0,115.1,"结果他翻盘赢下了这场，止住了红土上的六连败，这也是他第一次在马德里赢球。","第三盘回合，空当之内。","第三盘回合与庆祝，段尾 115.1 在解说开口（115.15）之前。"))
-S.append(q("md21",148.0,156.3,[(148.4,150.8,"See what he's writing on the camera here.\n看他在镜头上写了什么。"),(150.8,153.34,"It might be something about clay.\n好像跟红土有关。"),(154.36,156.18,"He loves the clay, of course he does.\n他爱红土，当然爱。")],
-  "赛点后他在镜头上写下 Love clay :)。两档一致（small 144.30–156.10 记成 Klee；medium 147.16–156.18 写 clay）。段首 148.0 在 and ace（147.16–147.9）之后。","比赛已经结束，签名镜头。"))
+S.append(q("md21",148.0,156.0,[(148.4,150.8,"See what he's writing on the camera here.\n看他在镜头上写了什么。"),(150.8,153.34,"It might be something about clay.\n好像跟红土有关。"),(154.36,155.9,"He loves the clay, of course he does.\n他爱红土，当然爱。")],
+  "赛点后他在镜头上写下 Love clay :)。两档一致（small 144.30–156.10 记成 Klee；medium 147.16–156.18 写 clay）。段首 148.0 在 and ace（147.16–147.9）之后；段尾 156.0：Tennis TV 片尾板 156.3 秒起（账号所有者 2026-10-16 要拿掉 Tennis TV logo），解说最后半个词（156.18 前后）随之收掉。","比赛已经结束，签名镜头。"))
 S.append(n("ci21",0.15,9.69,"同一年八月，辛辛那提半决赛，对手是卢布列夫。他追一个球，整个人撞上了场边的摄像机。","Tennis TV 官方「Medvedev Collides With Court Camera in Cincinnati」，撞上摄像机在 7.5 秒前后，空当 0.15–9.69。","这一分在撞上摄像机时结束，段尾 9.69 在解说开口之前。",label="ci21"))
 S.append(q("ci21",12.9,16.2,[(13.06,16.06,"You okay, sir?\n你没事吧，先生？")],
   "两档一致（small 13.06–16.06；medium 段首记在 9.84，词只有 You ok sir）。","撞上摄像机之后，不是回合。"))
-S.append(n("ci21",16.27,29.6,"他先问了问摄像师，转头就让主裁把摄像机挪走：我的手差点撞断了。接着他又踢了一脚镜头。领先一盘的比赛，最后他输给了卢布列夫。","空当 16.27–32.25，踢镜头在 27 秒前后。","交涉与踢镜头，不是回合。"))
+S.append(n("ci21",16.27,23.9,"他让主裁把摄像机挪走：我的手差点撞断了。回场边时，他还踹了一脚镜头。","交涉，空当 16.27–32.25。","交涉，不是回合。"))
+c=q("cik",91.4,95.55,[(92.68,95.1,"Absolutely clattering into the camera there.\n他整个人撞上了摄像机。")],
+  "Tennis TV 官方「Daniil Medvedev vs Andrey Rublev Highlights | Cincinnati 2021」（5PSCTOsUYho）：走回场边时抬右脚踹向罩着的摄像机（94.2–94.6），近景、居中裁切取得到。解说两档：small 92.68–95.10，medium 89.66–95.20 记成一句（前半 Oh goodness me 在 91.22 前）；段首 91.4 在 small 的分句之后，段尾 95.55 在下一句（95.80）之前。两档转写里没有梅德韦杰夫本人的话，未见脏话。",
+  "比赛暂停中的交涉与踹镜头，不是回合。")
+c["_why_kick"]="账号所有者 2026-10-16：「用脚踹摄像机的画面没有，只有撞到摄像机的」。Rv0Q9jXIz-M 那条只有撞上和回放，踹镜头只在这条官方集锦里有。"
+S.append(c)
+S.append(n("ci21",24.0,29.6,"领先一盘的比赛，最后他输给了卢布列夫。","撞上摄像机的回放，空当之内。","回放，不是新的一分。"))
 S.append(n("us21",124.5,135.8,"二〇二一年美网决赛，德约科维奇离年度全满贯只差一场。全场都在等他创造历史，梅德韦杰夫没给他机会，三盘全是六比四。","美网官方决赛集锦（MEFpXBwnyQA），第三盘回合，空当 114.87–143.47。","第三盘的回合，段尾 135.8 在冠军点那一分（136 秒发球）开始之前。",label="us21"))
-S.append(q("us21",136.0,149.1,[(145.36,148.98,"Six-four, six-four, six-four.\n6比4、6比4、6比4。")],
-  "冠军点那一分＋倒地。两档：small 143.62–148.96、medium 145.36–148.98，按 medium 写比分。136–145 只有现场声。","冠军点在 142 秒打完，之后是倒地庆祝。"))
+c={"source":"us21","start":136.0,"end":142.75,"cx":0.5,"track":False,"fit":"contain","contain_keep":1.0,"narration":"","_quote_skip_why":"冠军点这一分和倒地只有现场声，解说没开口（两档转写 136–143.6 都无词）。","_fit_why":"账号所有者 2026-10-16：「2021 美网的画面不是居中的，看不到第一下怎么倒下的」。他在远端右侧底线（画面横向 72%–76%）倒地，3:4 居中裁切只到 71%；视频裁切又固定 cx 0.5，所以这一个广角镜头改成 contain、整幅横向全留（留 70% 时镜头右摇，他倒下那一刻仍压在边上），完整看到他从站着到倒下。","_why":"美网官方决赛集锦，冠军点那一分与倒地（141.7–142.3），142.8 前后切到近景。","point_end_ok":"冠军点在 141.5 前后打完，段尾 142.75 停在倒地之后、切近景之前。"}
+S.append(c)
+S.append(q("us21",142.75,149.1,[(145.36,148.98,"Six-four, six-four, six-four.\n6比4、6比4、6比4。")],
+  "倒地近景。两档：small 143.62–148.96、medium 145.36–148.98，按 medium 写比分。","冠军点已经打完，这是倒地之后的近景。"))
 S.append(n("us21",149.13,159.4,"他慢慢倒在地上，吐着舌头，像一条死鱼。这是他从足球游戏里学来的庆祝，说是给一起打游戏的朋友看的。","倒地庆祝之后，妻子在看台、网前握手；空当 149.13–161.97。"))
 S.append(n("ao22",299.8,311.2,"二〇二二年澳网半决赛，对手是西西帕斯。他认定对方父亲在看台上一直指导，主裁却不管。于是有了开头那一幕，他还没吼完。","澳网官方加长集锦（uWxN2lH2Fa0），回合画面，空当 296.89–336.47。","回合间画面，旁白不讲这一分；段尾在空当之内。",label="ao22"))
 S.append(q("ao22r",11.2,29.1,[(11.46,15.48,"Will you answer my question? Can you answer my question, please?\n你能回答我的问题吗？"),(15.98,17.44,"Can his father talk every point?\n他父亲能每一分都说话吗？"),(19.58,22.02,"Oh my God, you are so bad, man.\n天哪，你太差劲了。"),(23.62,25.92,"How can you be so bad in the semi-final?\n半决赛你怎么能这么差？"),(25.92,29.06,"Look at me, I'm talking to you.\n看着我，我在跟你说话。")],
@@ -86,10 +94,13 @@ S.append(n("us25",686.0,699.6,"他把比赛追到二比二，第四盘六比零�
 S.append(n("mc26",93.97,107.0,"今年蒙特卡洛第二轮，他零比六、零比六输给贝雷蒂尼，只打了四十九分钟。这是他职业生涯第一次吃到双蛋。","Tennis TV 官方（yNxzL-8i9NU），第二盘回合，空当 93.97–107.07。","第二盘回合，旁白不讲这一分；段尾在解说开口（107.22）之前。",label="mc26"))
 S.append(q("mc26",107.1,111.5,[(107.22,111.42,"This is becoming a real headache now for Medvedev, and goodness me.\n梅德韦杰夫真的头疼了，天哪。")],
   "摔拍（109.25–111.4），两档一致（small 107.22–111.42；medium 107.84–111.42）。两档转写里没有梅德韦杰夫本人的话，未见脏话，不消音。","摔拍，不是回合。"))
-S.append(n("mc26",152.0,162.5,"他把球拍砸了好几下，最后扔进了场边的垃圾桶。整场比赛，他一局都没拿到。","赛点后两人走向网前握手，空当 151.15–164.61；段尾在 Tennis TV 片尾台标（约 164 秒）之前。官方集锦没有扔垃圾桶的画面，旁白按报道讲。","比赛已经结束，握手。"))
+S.append(n("mc26",151.3,156.0,"砸完球拍，他把它扔进了场边的垃圾桶。","赛点后两人走向网前握手，空当 151.15–164.61；Tennis TV 片尾板在 156.3 秒起（156.5 已是台标，账号所有者 2026-10-16：「7 分 40 多秒有 tennis tv 的 logo 要拿掉」），段尾收在 156.0，连 0.18 秒溶解也在片尾板之前。官方集锦没有扔垃圾桶的画面，旁白按报道讲。","比赛已经结束，握手。"))
 S.append(n("ws26",123.17,136.0,"八月的温斯顿-塞勒姆，他是头号种子，却直落两盘输给了外卡达姆，这是达姆第一次赢下世界前十。五场输了四场，他开始认真考虑转行。","Tennis TV 官方当日集锦（l7F7uLC-GGM），梅德韦杰夫与达姆的回合，空当 123.17–143.15。","回合中间的一段，旁白不讲这一分；段尾在空当之内。",label="ws26"))
 c=q("wsc",0.0,17.3,[(0.6,3.6,"Maybe I should start a career in pickleball,\n也许我该改行打匹克球，"),(3.6,5.8,"not too late,\n现在还不晚，"),(5.8,8.6,"with Jack Sock, in doubles.\n和索克搭档打双打。"),(11.0,14.9,"Every sport on this planet is better, man.\n这星球上哪项运动都更好。"),(14.9,17.25,"Even curling right now.\n现在连冰壶都更好。")],
   "Tennis TV 官方竖版短片（9aqUxco0bqo，Tennis TV 台标、片内烧录黄字）：前半是场边椅子上的自言自语，后半是赛后发布会。前半两档转写对得上（medium：start a career in pickleball, not too late, with jacksaw…）；后半两档都没转出来，按片内烧录字幕逐字写。段尾 17.3：视频流只有 17.50 秒（容器 17.65 是音轨长度），后面接溶解要多取 0.18 秒。","场边与发布会，不是回合。")
+c["crop_zoom"]=1.08
+c["fill_y"]=1.0
+c["_crop_zoom_why"]="Tennis TV 竖版短片后半段（发布会）左上角烧着 Tennis TV 台标（竖版画面的 y 0–45/1080）；放大 1.08、底边对齐，裁掉顶上约 80px，片内烧录字幕在下半部不受影响。"
 S.append(c)
 S.append(n("us19",210.01,219.2,"扔硬币的是他，在颁奖台上让全场鼓掌的也是他。你更喜欢哪一个梅总？","2019 美网颁奖，致辞结束后他笑着举手致意，空当 210.01–219.25。"))
 json.dump(S,open('research/medvedev-not-villain-2026/gen/segments.json','w'),ensure_ascii=False,indent=1)

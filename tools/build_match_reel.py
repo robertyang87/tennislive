@@ -3832,6 +3832,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     # A story-text lock-up has a narrower contract than a generic sticker.
     # These limits keep it out of the platform chrome, stop it becoming a
     # second subtitle block, and make the intended quiet motion non-optional.
+    # show_for 上限 2026-10-16 从 4.2 放到 8.0：账号所有者看完
+    # medvedev-not-villain-2026 说「字卡停留时间再长一些」。
     bad_story_text = []
     for i, seg in enumerate(segments):
         ins = seg.inset or {}
@@ -3841,14 +3843,14 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         show_for = float(ins.get("show_for", 0) or 0)
         pad = float(ins.get("pad", 0) or 0)
         if (not 0.48 <= width <= 0.60
-                or not 2.8 <= show_for <= 4.2
+                or not 2.8 <= show_for <= 8.0
                 or pad < 0.065
                 or str(ins.get("motion", "")) != "editorial"):
             bad_story_text.append(i + 1)
     if bad_story_text:
         raise ReelError(
             f"第 {bad_story_text} 段的 story_text 不符合屏幕文案设计合同："
-            "width 0.48~0.60、show_for 2.8~4.2、pad>=0.065，"
+            "width 0.48~0.60、show_for 2.8~8.0、pad>=0.065，"
             "且 motion 必须为 editorial")
     # 2026-10-12：角标是全局默认。右上角、右缘短轨、文字右对齐。
     # 已发的左轨片在 data/legacy_corner_label.json，只许减不许加。

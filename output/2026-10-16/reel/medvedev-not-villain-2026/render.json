@@ -3,25 +3,25 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "2cd1380f2eb58862499bbbef51926ca3ee5e3cc75116c7736af15a85b8b5c03d",
-    "request_count": 28,
+    "bundle_sha256": "d3982c32f5a4afb1d881a7f690e0f71b9c9181058e3acc8bba5c325913967772",
+    "request_count": 29,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-medvedev-not-villain-2026-2cd1380f2eb58862",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-medvedev-not-villain-2026-2cd1380f2eb58862/tts_bundle.zip",
+    "release_tag": "reel-tts-medvedev-not-villain-2026-d3982c32f5a4afb1",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-medvedev-not-villain-2026-d3982c32f5a4afb1/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38787688626"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38796848911"
   },
   "cover_seconds": 3.346,
   "cover_narrated": true,
   "outro_seconds": 4.146,
   "layout": "full",
-  "segments_seconds": 503.84,
+  "segments_seconds": 501.79,
   "topbar": null,
-  "film_seconds": 511.36,
+  "film_seconds": 509.32,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+18%",
   "narration_backend": "edge-tts",
@@ -35,23 +35,24 @@
     "9": 8.448,
     "11": 6.192,
     "13": 7.536,
-    "15": 11.112,
-    "16": 10.008,
-    "18": 8.664,
-    "19": 10.944,
-    "22": 6.984,
-    "23": 4.56,
-    "24": 6.168,
-    "26": 4.728,
-    "28": 9.192,
-    "30": 8.04,
-    "31": 16.344,
-    "33": 8.976,
-    "35": 12.12,
-    "36": 8.28,
-    "38": 6.528,
-    "39": 11.256,
-    "41": 6.432
+    "15": 6.696,
+    "17": 3.576,
+    "18": 10.008,
+    "21": 8.664,
+    "22": 10.944,
+    "25": 6.984,
+    "26": 4.56,
+    "27": 6.168,
+    "29": 4.728,
+    "31": 9.192,
+    "33": 8.04,
+    "34": 16.344,
+    "36": 8.976,
+    "38": 12.12,
+    "39": 8.28,
+    "41": 3.312,
+    "42": 11.256,
+    "44": 6.432
   },
   "face_checks": {
     "cover": {
@@ -68,44 +69,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "21094027128b7134c3df540039a851a53046e5c68f032d047b88bb5287c696c1",
+  "render_inputs_sha256": "f149fe0c43205389298519cba25784b02bc13545761682d061bff7d060978118",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "medvedev-not-villain-2026",
-    "received_at": "2026-10-15T18:41:24Z",
-    "artifact_ready_at": "2026-10-15T18:55:19Z",
-    "elapsed_seconds": 835.9,
+    "received_at": "2026-10-15T19:48:24Z",
+    "artifact_ready_at": "2026-10-15T20:01:57Z",
+    "elapsed_seconds": 813.299,
     "budget_seconds": 600,
     "met": false,
-    "film_sha256": "ef90680be47b82259443ee0b70ba9182f1860637491f6227ebd5a280c66015be",
-    "spec_sha256": "1ffd6090c9c4afda3698a66823bce2c858a227eb61512902cae99565ed53a963",
-    "run_id": "38787688626",
+    "film_sha256": "313244c7cfca07a6de28d83126db0d2a0a4cabf3640d173141078682aaa9bbd2",
+    "spec_sha256": "326b2e7362ab829594f346efd2a0e94e83e436efc979fb22cd868baa382fa670",
+    "run_id": "38796848911",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-15T18:44:59Z",
-        "run_id": "38787688626"
+        "at": "2026-10-15T19:51:30Z",
+        "run_id": "38796848911"
       }
     ],
-    "render_seconds": 620.9,
-    "pre_render_seconds": 215.0
+    "render_seconds": 627.299,
+    "pre_render_seconds": 186.0
   },
-  "film_sha256": "ef90680be47b82259443ee0b70ba9182f1860637491f6227ebd5a280c66015be",
-  "film_bytes": 302836854,
-  "qc_attestation_sha256": "517cb10f7f3a4db6857258b932dece40cd430706434ac5ad406ee7bd115ead81",
+  "film_sha256": "313244c7cfca07a6de28d83126db0d2a0a4cabf3640d173141078682aaa9bbd2",
+  "film_bytes": 305794744,
+  "qc_attestation_sha256": "e155aed8b53a62382d3d075700007ba91bcd80e7dc5ff05504154a9b7cc7f9ce",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-15T18:44:59Z",
-      "run_id": "38787688626"
+      "at": "2026-10-15T19:51:30Z",
+      "run_id": "38796848911"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-15T18:55:24Z",
-      "run_id": "38787688626"
+      "at": "2026-10-15T20:02:02Z",
+      "run_id": "38796848911"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-medvedev-not-villain-2026/medvedev-not-villain-2026.mp4",
-  "video_bytes": 302836854
+  "video_bytes": 305794744
 }

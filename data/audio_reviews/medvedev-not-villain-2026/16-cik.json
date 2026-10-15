@@ -1,0 +1,22 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=5PSCTOsUYho",
+  "source_sha256": "b358391b9653274766ecb0286bac5841a8225b98dbc300cc150b1e9e7975b043",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-15T19:44:25.770428+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 91.4,
+  "reviewed_to": 95.55,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 92.68,
+      "end": 95.1,
+      "en": "Absolutely clattering into the camera there.",
+      "zh": "他整个人撞上了摄像机。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/5PSCTOsUYho/small.en.json + medium.en.json",
+  "profanity_check": "两档转写在这一窗口里都没有脏话；按交接文档「如果确认有脏话」的条件，不消音。",
+  "review_note": "Tennis TV 官方「Daniil Medvedev vs Andrey Rublev Highlights | Cincinnati 2021」（5PSCTOsUYho）：走回场边时抬右脚踹向罩着的摄像机（94.2–94.6），近景、居中裁切取得到。解说两档：small 92.68–95.10，medium 89.66–95.20 记成一句（前半 Oh goodness me 在 91.22 前）；段首 91.4 在 small 的分句之后，段尾 95.55 在下一句（95.80）之前。两档转写里没有梅德韦杰夫本人的话，未见脏话。"
+}
