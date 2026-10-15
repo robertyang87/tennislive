@@ -143,7 +143,7 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/score_masks/segment-04.mkv",
-      "mask_sha256": "38f77849e045890f1f979dde00fdd896bfac4ebf19d778449bf08e81fafefb41"
+      "mask_sha256": "f83f4eb841b9009ee78c8f854a3ae074c7e7b0cf38be99d607fe8a662fe43133"
     },
     {
       "segment": 4,
@@ -334,23 +334,14 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/score_masks/segment-05.mkv",
-      "mask_sha256": "80682c53fe6b2f4d2b8cecf203bc2e7902c98a8bb70dbb164a0ee86ddeb8e5f7"
+      "mask_sha256": "29b16b7a4668416a9ba55c68bae821abbf902b43ee743f5c10fd5bf090ccd42b"
     },
     {
-      "segment": 6,
-      "frames": 2069,
-      "present_frames": 1275,
-      "tag_frames": 1268,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         362,
         430
-      ],
-      "right": 430,
-      "source_bounds": [
-        90,
-        828,
-        520,
-        980
       ],
       "body_bounds": [
         [
@@ -426,6 +417,11 @@
           154
         ]
       ],
+      "frames": 2069,
+      "geometry_origin": [
+        90,
+        826
+      ],
       "header_bounds": [
         [
           0,
@@ -488,20 +484,24 @@
           45
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "9e2dc02cddf19c898b05b414f79f5c3354a65e98ae740ec01a8e91af25d10c4e",
       "measured_present_frames": 1275,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 1275,
+      "right": 430,
+      "segment": 6,
+      "source_bounds": [
+        90,
+        828,
+        520,
+        980
+      ],
+      "tag_frames": 1268,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/score_masks/segment-07.mkv",
-      "mask_sha256": "9e2dc02cddf19c898b05b414f79f5c3354a65e98ae740ec01a8e91af25d10c4e"
+      "mask": "output/2026-10-15/reel/swiatek-krueger-wuhan-2026-r3/score_masks/segment-07.mkv"
     }
   ]
 }

@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "swiatek-krueger-wuhan-2026-r3",
-  "written_at": "2026-10-15T14:41:23Z",
-  "code_sha": "7b5e78c614932863883fc89738785b3f8a20a1ee",
-  "spec_sha256": "692e938369e9479a252afee25f2e64e02af394d944cf938183938cb9703bdef7",
-  "film_sha256": "e5955f8259ff82d564a4543a733aaa82c0266ebcf4c19bb096a02cf3381b526b",
-  "film_bytes": 87113176,
-  "projection_sha256": "480f67c84638abb7e04d9aff3d4226323ed6b1d21d8645ce743245ccf277c160",
+  "written_at": "2026-10-15T14:57:23Z",
+  "code_sha": "cbc15a3394afebad9b1cc7055a7131a0fea2e964",
+  "spec_sha256": "3bcd0b133fb7c09a88edb1f54417f7b4ad2b30cf2a61a470cd9c55879619f1f6",
+  "film_sha256": "8a16bb8f6e941252ea6f37b39b7bacc6fd7c928b440cf21a008cf43efe323e24",
+  "film_bytes": 87157088,
+  "projection_sha256": "4e45f5694fd72bd3eb103fd075230d720e2e4ae1d79e6f8acc3a34e76b647e08",
   "claims": [
     [
       "segments",
@@ -57,11 +57,11 @@
   },
   "artifacts": {
     "audio_review_binding.json": "ddb353508e22d5ebc9960a7df0eb5671e711e63a68a7385304d90bd67250c185",
-    "subtitles.ass": "6dc38d527bf0a01f976905176c8d2683eeff35b33f29cd3899129fa73267b198",
+    "subtitles.ass": "b042feaa155b2f6076c9b8cf8b77abaebcc8355e62ca7fd6a1d9ededa5721166",
     "topbar.ass": "797759cb7d0cb3ce0e119a7c901bce20ca77d6f5eb7db8332f6b72d159f832d4",
     "poster.jpg": "4724601e0dec8490744afd16ec055acfb0ca53334f552cd7a1abfe188b88bf6c",
     "stat_card.jpg": "6ecd78d865e2aadc6944cbf2623a2c7cd57efb64fc2ccbf1bbec463297dc594e",
-    "scoreboard_qc.json": "3ad38cfca5b13cf4fc451f40f34bb017bea88af9e0fadd24c0b61e2d72759ac8"
+    "scoreboard_qc.json": "09185fce73c3095549b5fccfb38ee5e77f2d29dad0de9b335aa267623f30390d"
   },
   "projection": {
     "slug": "swiatek-krueger-wuhan-2026-r3",
@@ -243,7 +243,14 @@
         ],
         "subtitle_bottom": 304,
         "crosses_cut": "完整所选官方回合与实际结果/反应；不把相邻剪辑点当连续比赛。",
-        "point_end_ok": "同源实际图墙/加密帧和双ASR核对窗口，完整末端说话由source-audio包绑定。"
+        "point_end_ok": "同源实际图墙/加密帧和双ASR核对窗口，完整末端说话由source-audio包绑定。",
+        "subtitle_bottom_windows": [
+          [
+            5.34,
+            14.42,
+            540
+          ]
+        ]
       },
       {
         "title_card": "10月15日晚上\n武汉女单第三轮",
@@ -345,7 +352,14 @@
         ],
         "subtitle_bottom": 304,
         "crosses_cut": "完整所选官方回合与实际结果/反应；不把相邻剪辑点当连续比赛。",
-        "point_end_ok": "同源实际图墙/加密帧和双ASR核对窗口，完整末端说话由source-audio包绑定。"
+        "point_end_ok": "同源实际图墙/加密帧和双ASR核对窗口，完整末端说话由source-audio包绑定。",
+        "subtitle_bottom_windows": [
+          [
+            19.04,
+            24.2,
+            540
+          ]
+        ]
       },
       {
         "title_card": "次盘被追到3比3\n再次拉开两盘晋级",
@@ -441,7 +455,14 @@
         ],
         "subtitle_bottom": 304,
         "crosses_cut": "完整所选官方回合与实际结果/反应；不把相邻剪辑点当连续比赛。",
-        "point_end_ok": "同源实际图墙/加密帧和双ASR核对窗口，完整末端说话由source-audio包绑定。"
+        "point_end_ok": "同源实际图墙/加密帧和双ASR核对窗口，完整末端说话由source-audio包绑定。",
+        "subtitle_bottom_windows": [
+          [
+            73.48,
+            82.56,
+            540
+          ]
+        ]
       },
       {
         "stat_card": true,
