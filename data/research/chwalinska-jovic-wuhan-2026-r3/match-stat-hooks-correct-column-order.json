@@ -1,0 +1,66 @@
+{
+  "candidates": [
+    {
+      "label": "约维奇 一发得分率摆动",
+      "detail": "第1盘57% → 第2盘40%",
+      "swing": 17,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "约维奇 破发点兑现",
+      "detail": "1/2（50%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "赫瓦林斯卡 破发点兑现",
+      "detail": "5/7（71%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "约维奇 连续保发",
+      "detail": "3 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "约维奇 连续被破",
+      "detail": "3 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "赫瓦林斯卡 连续保发",
+      "detail": "7 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Jovic I. 0 : 1 Chwalinska M.（含本场） · 硬地 0:1",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "label": "近况",
+      "detail": "Jovic I. 最近 5 场 3 胜（LWLWW）；Chwalinska M. 最近 5 场 3 胜（WWWLL）",
+      "source": "flashscore df_hh_1 Last matches"
+    },
+    {
+      "label": "总分差",
+      "detail": "约维奇 55 - 赫瓦林斯卡 69，净差 14 分，赫瓦林斯卡 领先",
+      "diff": 14,
+      "source": "flashscore df_mh_1（总分）",
+      "use": "body_only"
+    }
+  ],
+  "durations": [
+    [
+      "Set 1",
+      "0:57"
+    ],
+    [
+      "Set 2",
+      "0:53"
+    ],
+    [
+      "全场",
+      "1:50"
+    ]
+  ]
+}

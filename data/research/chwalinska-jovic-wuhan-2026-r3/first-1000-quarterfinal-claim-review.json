@@ -1,0 +1,250 @@
+{
+  "checked_at": "2026-10-15T09:16:35.217823+00:00",
+  "claim_under_review": "A first ever quarterfinal place in a 1000 event",
+  "verdict": "Supported by official career match history plus source commentary; not supported by a clean explicit sentence in the WTA day-of-match news.",
+  "recommendation": "可以完整保留源片这句解说，译作“她第一次闯进1000赛八强”。本人中文旁白不必额外放大；不要改译为首个WTA巡回赛八强。",
+  "why_supported": [
+    "官方球员赛史2015–2026，完整分页；2015–2024没有WTA1000/Premier/Tier条目，2025仅马德里和罗马资格赛，2026已记录1000赛正赛最佳为辛辛那提R32，其他多伦多和北京R64。未见任何先前单打QF。",
+    "2024默认大pageSize仍被服务端截100；已取page1剩13条、page2为0，避免误把第一页当全赛史。其他年份均少于100条。",
+    "本场LS010官方完赛6-4 6-1已证实进入武汉1000八强，源片原声明确first ever in a1000。"
+  ],
+  "history_source_template": "https://api.wtatennis.com/tennis/players/325639/matches?year={year}&page={page}&pageSize=1000",
+  "history_years_included": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "history_lower_boundary": "2014 page0 response has zero matches",
+  "history_summary": {
+    "2015": {
+      "all_match_rows": 1,
+      "singles_rows": 1,
+      "levels": {
+        "ITF": 1
+      }
+    },
+    "2016": {
+      "all_match_rows": 28,
+      "singles_rows": 20,
+      "levels": {
+        "International": 1,
+        "ITF": 27
+      }
+    },
+    "2017": {
+      "all_match_rows": 38,
+      "singles_rows": 26,
+      "levels": {
+        "ITF": 38
+      }
+    },
+    "2018": {
+      "all_match_rows": 54,
+      "singles_rows": 40,
+      "levels": {
+        "ITF": 54
+      }
+    },
+    "2019": {
+      "all_match_rows": 69,
+      "singles_rows": 49,
+      "levels": {
+        "ITF": 69
+      }
+    },
+    "2020": {
+      "all_match_rows": 14,
+      "singles_rows": 7,
+      "levels": {
+        "Grand Slam": 1,
+        "ITF": 10,
+        "125K": 3
+      }
+    },
+    "2021": {
+      "all_match_rows": 44,
+      "singles_rows": 24,
+      "levels": {
+        "ITF": 41,
+        "Grand Slam": 3
+      }
+    },
+    "2022": {
+      "all_match_rows": 74,
+      "singles_rows": 57,
+      "levels": {
+        "ITF": 55,
+        "WTA 125": 7,
+        "Grand Slam": 7,
+        "WTA 250": 5
+      }
+    },
+    "2023": {
+      "all_match_rows": 63,
+      "singles_rows": 43,
+      "levels": {
+        "ITF": 53,
+        "Grand Slam": 3,
+        "WTA 250": 2,
+        "WTA 125": 5
+      }
+    },
+    "2024": {
+      "all_match_rows": 113,
+      "singles_rows": 71,
+      "levels": {
+        "ITF": 82,
+        "WTA 250": 8,
+        "WTA 125": 22,
+        "Grand Slam": 1
+      }
+    },
+    "2025": {
+      "all_match_rows": 74,
+      "singles_rows": 51,
+      "levels": {
+        "Grand Slam": 9,
+        "WTA 250": 8,
+        "ITF": 13,
+        "WTA 125": 41,
+        "WTA 1000": 3
+      }
+    },
+    "2026": {
+      "all_match_rows": 66,
+      "singles_rows": 54,
+      "levels": {
+        "WTA 250": 9,
+        "Grand Slam": 17,
+        "WTA 125": 20,
+        "ITF": 3,
+        "WTA 1000": 9,
+        "WTA 500": 8
+      }
+    }
+  },
+  "prior_1000_or_predecessor_singles_rows": [
+    {
+      "year": 2025,
+      "event_id": "1038",
+      "event": "MADRID",
+      "level": "WTA 1000",
+      "round": "R64",
+      "draw": "Q",
+      "result": "7-5  6-0",
+      "start": "2025-04-22T00:00:00+00:00"
+    },
+    {
+      "year": 2025,
+      "event_id": " 709",
+      "event": "ROME",
+      "level": "WTA 1000",
+      "round": "R64",
+      "draw": "Q",
+      "result": "6-7(6)  7-5  6-1",
+      "start": "2025-05-06T00:00:00+00:00"
+    },
+    {
+      "year": 2025,
+      "event_id": " 709",
+      "event": "ROME",
+      "level": "WTA 1000",
+      "round": "R32",
+      "draw": "Q",
+      "result": "3-6  6-3  6-1",
+      "start": "2025-05-06T00:00:00+00:00"
+    },
+    {
+      "year": 2026,
+      "event_id": " 806",
+      "event": "TORONTO",
+      "level": "WTA 1000",
+      "round": "R128",
+      "draw": "M",
+      "result": "",
+      "start": "2026-08-02T00:00:00+00:00"
+    },
+    {
+      "year": 2026,
+      "event_id": " 806",
+      "event": "TORONTO",
+      "level": "WTA 1000",
+      "round": "R64",
+      "draw": "M",
+      "result": "7-5  6-1",
+      "start": "2026-08-02T00:00:00+00:00"
+    },
+    {
+      "year": 2026,
+      "event_id": "1017",
+      "event": "CINCINNATI",
+      "level": "WTA 1000",
+      "round": "R128",
+      "draw": "M",
+      "result": "",
+      "start": "2026-08-13T00:00:00+00:00"
+    },
+    {
+      "year": 2026,
+      "event_id": "1017",
+      "event": "CINCINNATI",
+      "level": "WTA 1000",
+      "round": "R64",
+      "draw": "M",
+      "result": "6-2  6-2",
+      "start": "2026-08-13T00:00:00+00:00"
+    },
+    {
+      "year": 2026,
+      "event_id": "1017",
+      "event": "CINCINNATI",
+      "level": "WTA 1000",
+      "round": "R32",
+      "draw": "M",
+      "result": "6-2  7-6(3)",
+      "start": "2026-08-13T00:00:00+00:00"
+    },
+    {
+      "year": 2026,
+      "event_id": "1020",
+      "event": "BEIJING",
+      "level": "WTA 1000",
+      "round": "R128",
+      "draw": "M",
+      "result": "",
+      "start": "2026-09-30T00:00:00+00:00"
+    },
+    {
+      "year": 2026,
+      "event_id": "1020",
+      "event": "BEIJING",
+      "level": "WTA 1000",
+      "round": "R64",
+      "draw": "M",
+      "result": "6-3  6-1",
+      "start": "2026-09-30T00:00:00+00:00"
+    }
+  ],
+  "important_limitations": [
+    "球员赛史接口存在录入延迟：2026快照尚不含当前武汉的三场已完赛比赛，不能宣称实时完整到本场；最后1000记录是北京R64，当前本场结果由赛事matches/PBP独立补证。",
+    "负向历史检索属于有限交叉支持，不是发现了另一句明确写first WTA1000 QF的官方编辑原文。",
+    "当日官方赛报有明确错误：称first WTA Tour quarterfinal，却与本页官方嵌入视频标题fourth QF of2026矛盾；次盘写won five consecutive games，但完整PBP为0-1后六连局。不要引用其first WTA Tour wording。"
+  ],
+  "news": {
+    "url": "https://www.wtatennis.com/news/4592681/chwalinska-scores-biggest-career-to-reach-wuhan-quarters",
+    "raw_path": "data/research/chwalinska-jovic-wuhan-2026-r3/official-first-1000-qf-news.html",
+    "body_path": "data/research/chwalinska-jovic-wuhan-2026-r3/official-first-1000-qf-news-body.txt",
+    "literal_unreliable_sentence": "She'll next face Maria Sakkari in her first WTA Tour Driven by Mercedes-Benz quarterfinal.",
+    "embedded_official_video_title": "Chwalinska drops five games vs. Jovic in Wuhan; into fourth QF of 2026",
+    "clean_other_facts": "W17/UE15 vsW23/UE31, nextSakkari, FrenchOpenrunnerup."
+  }
+}
