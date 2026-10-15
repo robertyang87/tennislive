@@ -1,49 +1,34 @@
-"""封面候选第四轮：转载 AP 原图的新闻站 WordPress 媒体库（WP REST 搜说明），找「Let 场景」。"""
+"""封面候选第五轮：Unsplash napi、Flickr 搜索页（CC），找「球压在网带上」的高清实拍。"""
 import json, os, re, time, urllib.parse, urllib.request
-OUT="research/let-not-net-2026/cover_cands4"; os.makedirs(OUT,exist_ok=True)
-H={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"}
-SITES=["wtop.com","www.kxan.com","www.wfla.com","www.pix11.com","www.ktla.com","www.kron4.com","www.wate.com","www.wkrg.com","www.8newsnow.com","fox8.com","www.wgnradio.com","www.boston.com"]
-QS=["net cord","netcord","hits the net","hit the net","clips the net","let serve","net judge","net umpire","ball on the net","tennis net","chair umpire","umpire Wimbledon","umpire Open tennis"]
-def get(u):
-    return json.loads(urllib.request.urlopen(urllib.request.Request(u,headers=H),timeout=40).read())
-rows={}
-for s in SITES:
-  try:
-      ok=0
-      for q in QS:
-          u=f"https://{s}/wp-json/wp/v2/media?"+urllib.parse.urlencode({"search":q,"per_page":50})
-          try: d=get(u); ok+=1
-          except Exception as e:
-              print("ERR",s,q,str(e)[:80]); 
-              if ok==0: break
-              continue
-          if not isinstance(d,list): continue
-          for m in d:
-              if not isinstance(m,dict): continue
-              c=m.get("caption"); t=m.get("title"); cap=re.sub("<[^>]+>","",(c.get("rendered","") if isinstance(c,dict) else str(c or ""))+" "+(t.get("rendered","") if isinstance(t,dict) else str(t or "")))
-              if "tennis" not in cap.lower() and "open" not in cap.lower() and "wimbledon" not in cap.lower(): continue
-              md=m.get("media_details") or {}
-              if not isinstance(md,dict): md={}
-              w,h=md.get("width",0),md.get("height",0)
-              src=m.get("source_url","")
-              if not isinstance(src,str) or not src: continue
-              orig=re.sub(r"-scaled(\.\w+)$",r"\1",src)
-              sizes=md.get("sizes") or {}
-              if not isinstance(sizes,dict): sizes={}
-              th=src
-              for key in ("medium","thumbnail"):
-                  v=sizes.get(key)
-                  if isinstance(v,dict) and isinstance(v.get("source_url"),str): th=v["source_url"]; break
-              rows[orig]={"site":s,"q":q,"w":w if isinstance(w,int) else 0,"h":h if isinstance(h,int) else 0,"url":orig,"src":src,"thumb":th,"caption":cap.strip()[:500],"date":m.get("date")}
-          time.sleep(1)
-      print(s,"ok queries",ok,"rows",len(rows))
-  except Exception as e: print('SITE ERR',s,e)
-keep=[]
-rows={k:r for k,r in rows.items() if any(w in r['caption'].lower() for w in ['net','let ','umpire','judge'])}
-print(len(rows),'after caption filter')
-for n,(k,r) in enumerate(rows.items()):
-    fn=f"{OUT}/{n:03d}.jpg"
-    try: open(fn,"wb").write(urllib.request.urlopen(urllib.request.Request(r["thumb"],headers=H),timeout=40).read()); r["file"]=fn; keep.append(r)
-    except Exception as e: print("thumb fail",k,e)
+OUT="research/let-not-net-2026/cover_cands5"; os.makedirs(OUT,exist_ok=True)
+H={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36","Accept-Language":"en-US,en;q=0.9"}
+def fetch(u): return urllib.request.urlopen(urllib.request.Request(u,headers=H),timeout=60).read()
+rows=[]
+for q in ["tennis ball net","tennis net ball","tennis ball on net","tennis ball net tape","tennis let","ball net tennis court"]:
+    try:
+        d=json.loads(fetch("https://unsplash.com/napi/search/photos?"+urllib.parse.urlencode({"query":q,"per_page":30})))
+        for r in d.get("results",[]):
+            if not isinstance(r,dict): continue
+            u=r.get("urls") or {}
+            rows.append({"src":"unsplash","q":q,"id":r.get("id"),"w":r.get("width"),"h":r.get("height"),"desc":r.get("alt_description") or r.get("description") or "","author":(r.get("user") or {}).get("name"),"page":(r.get("links") or {}).get("html"),"full":u.get("raw"),"thumb":u.get("small"),"premium":r.get("premium")})
+        print("unsplash",q,len(d.get("results",[])))
+    except Exception as e: print("ERR unsplash",q,str(e)[:100])
+    time.sleep(2)
+for q in ["net cord tennis","tennis ball net","tennis let"]:
+    try:
+        html=fetch("https://www.flickr.com/search/?"+urllib.parse.urlencode({"text":q,"license":"2,3,4,5,6,9,10"})).decode("utf-8","ignore")
+        print("flickr",q,len(html))
+        for m in re.finditer(r'"id":"(\d{8,12})","secret":"(\w+)","server":"(\d+)".{0,400}?"title":"([^"]*)"',html):
+            pid,sec,srv,title=m.groups()
+            rows.append({"src":"flickr","q":q,"id":pid,"desc":title,"page":f"https://www.flickr.com/photo.gne?id={pid}","thumb":f"https://live.staticflickr.com/{srv}/{pid}_{sec}_n.jpg"})
+    except Exception as e: print("ERR flickr",q,str(e)[:100])
+    time.sleep(2)
+seen=set(); keep=[]
+for n,r in enumerate(rows):
+    if r["id"] in seen or not r.get("thumb"): continue
+    seen.add(r["id"])
+    fn=f"{OUT}/{r['src'][0]}{n:03d}.jpg"
+    try: open(fn,"wb").write(fetch(r["thumb"])); r["file"]=fn; keep.append(r)
+    except Exception as e: print("thumb fail",r["id"],str(e)[:80])
 json.dump(keep,open(f"{OUT}/index.json","w"),ensure_ascii=False,indent=1)
 print(len(keep),"thumbs")
