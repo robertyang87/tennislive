@@ -2949,7 +2949,7 @@ def test_角标把两件事放进同一帧():
                              "place": "美网", "people": "场外指导",
                              "event": "第1次"}}}]}
     assert reel.parse_segments(story_text, {"r1": Path("a.mp4")}, "r1")
-    story_text["segments"][0]["inset"]["show_for"] = 6.0
+    story_text["segments"][0]["inset"]["show_for"] = 9.0
     with pytest.raises(reel.ReelError, match="story_text"):
         reel.parse_segments(story_text, {"r1": Path("a.mp4")}, "r1")
 

@@ -14,7 +14,7 @@ LABELS={
  "ws26":{"topic":"我该去打匹克球","date":"2026.08.25","place":"温斯顿-塞勒姆 第二轮","score":"5-7 3-6","people":"梅德韦杰夫 vs 达姆"},
 }
 def lab(k):
-    return {"image":f"{A}/label-{k}.png","kind":"story_text","corner":"tr","width":0.6,"pad":0.085,"show_for":4.2,"motion":"editorial","label":dict(LABELS[k])}
+    return {"image":f"{A}/label-{k}.png","kind":"story_text","corner":"tr","width":0.6,"pad":0.085,"show_for":7.0,"motion":"editorial","label":dict(LABELS[k])}
 def n(src,a,b,text,why,ok="不是回合的收尾：画面是场边、近景或颁奖，段尾不在一分打到一半。",label=None):
     s={"source":src,"start":a,"end":b,"cx":0.5,"track":False,"narration":text,"voice":dict(V),"_why":why,"point_end_ok":ok}
     if label: s["inset"]=lab(label)
