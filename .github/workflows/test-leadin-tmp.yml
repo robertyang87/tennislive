@@ -30,12 +30,16 @@ jobs:
         run: |
           set -e
           URL="https://www.youtube.com/watch?v=B8EO9eKy-mY"
-          ARGS=(--extractor-args "youtube:player_client=mweb" --js-runtimes node)
-          [ -n "$COOKIES" ] && ARGS+=(--cookies "$COOKIES")
-          echo "=== 下载 212-231 秒片段 ==="
-          yt-dlp "${ARGS[@]}" --download-sections "*212-231" --force-keyframes-at-cuts \
-            -f "bv*[height<=1080]+ba/b[height<=1080]" --merge-output-format mp4 \
-            -o "/tmp/leadin_test.mp4" --no-warnings "$URL"
-          ls -lh /tmp/leadin_test.mp4
-          ffprobe -v error -show_entries stream=codec_name,width,height -of default=noprint_wrappers=1 /tmp/leadin_test.mp4
-          echo "SUCCESS"
+          COOKIE_ARGS=()
+          [ -n "$COOKIES" ] && COOKIE_ARGS=(--cookies "$COOKIES")
+          SUCCESS=0
+          for CLIENT in web mweb tv android_vr tv_simply web_embedded; do
+            echo "=== 试 client=$CLIENT ==="
+            if yt-dlp --extractor-args "youtube:player_client=$CLIENT" --js-runtimes node "${COOKIE_ARGS[@]}" --download-sections "*212-231" --force-keyframes-at-cuts -f "bv*[height<=1080]+ba/b[height<=1080]" --merge-output-format mp4 -o "/tmp/leadin_test.mp4" --no-warnings "$URL" 2>&1 | tail -3; then
+              if [ -f /tmp/leadin_test.mp4 ]; then
+                echo "SUCCESS with client=$CLIENT"; ls -lh /tmp/leadin_test.mp4; SUCCESS=1; break
+              fi
+            fi
+            echo "client $CLIENT 失败，试下一个"
+          done
+          [ "$SUCCESS" = "1" ] || { echo "所有 client 都失败"; exit 1; }
