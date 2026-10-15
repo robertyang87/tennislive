@@ -3,25 +3,25 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "a5aeba5199814c83eb3600b73b864463cde65ceaea5b3abd613c7ad85093d412",
+    "bundle_sha256": "ccc3b8830facecaa196291f26740427f80413126e8dfc75a62b705257b81e262",
     "request_count": 25,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-let-not-net-2026-a5aeba5199814c83",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-let-not-net-2026-a5aeba5199814c83/tts_bundle.zip",
+    "release_tag": "reel-tts-let-not-net-2026-ccc3b8830facecaa",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-let-not-net-2026-ccc3b8830facecaa/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38690517063"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38693115964"
   },
-  "cover_seconds": 2.242,
+  "cover_seconds": 3.922,
   "cover_narrated": true,
   "outro_seconds": 4.122,
   "layout": "full",
   "segments_seconds": 244.88,
   "topbar": null,
-  "film_seconds": 251.28,
+  "film_seconds": 252.96,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+18%",
   "narration_backend": "edge-tts",
@@ -65,44 +65,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "0d5d6f38de01d13e5a9c04892333f6c68939c0f2043c8b061bb62af36c08b086",
+  "render_inputs_sha256": "f8c1001a51a0ded4df0a053ae37f2dfd8b2cdb2c290eb9b942f2238477fa1728",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "let-not-net-2026",
-    "received_at": "2026-10-15T06:07:01Z",
-    "artifact_ready_at": "2026-10-15T06:15:09Z",
-    "elapsed_seconds": 488.58,
+    "received_at": "2026-10-15T06:33:32Z",
+    "artifact_ready_at": "2026-10-15T06:40:45Z",
+    "elapsed_seconds": 433.571,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "cd575ab8968ee972b1365bfe93efecd7887c49b39bfb772eaa94a32b2b53dff3",
-    "spec_sha256": "3b4d8cc1c57196d5aee4bd3537323da6bb81ae00c8033449f6a839d79d8d2847",
-    "run_id": "38690517063",
+    "film_sha256": "cccb421c9623607f134a5f44bc2e8ace46f8526c9bd5c2aedfc4a818633a50b4",
+    "spec_sha256": "b145742148b3f6106373a2f4d335db0c2a90307969a034f9384c529f5ab7bb2c",
+    "run_id": "38693115964",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-15T06:10:10Z",
-        "run_id": "38690517063"
+        "at": "2026-10-15T06:36:21Z",
+        "run_id": "38693115964"
       }
     ],
-    "render_seconds": 299.58,
-    "pre_render_seconds": 189.0
+    "render_seconds": 264.571,
+    "pre_render_seconds": 169.0
   },
-  "film_sha256": "cd575ab8968ee972b1365bfe93efecd7887c49b39bfb772eaa94a32b2b53dff3",
-  "film_bytes": 108562515,
-  "qc_attestation_sha256": "a6b7ef22e5cf01bbaf92ddef59b7dcd966ad06adc3b068dd12e8ca25d8d250de",
+  "film_sha256": "cccb421c9623607f134a5f44bc2e8ace46f8526c9bd5c2aedfc4a818633a50b4",
+  "film_bytes": 108783156,
+  "qc_attestation_sha256": "8031ac68adcb20b623b88f4d07b15c7ca61dfc521dc014ae6fdfd8328bca4d57",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-15T06:10:10Z",
-      "run_id": "38690517063"
+      "at": "2026-10-15T06:36:21Z",
+      "run_id": "38693115964"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-15T06:15:12Z",
-      "run_id": "38690517063"
+      "at": "2026-10-15T06:40:48Z",
+      "run_id": "38693115964"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-let-not-net-2026/let-not-net-2026.mp4",
-  "video_bytes": 108562515
+  "video_bytes": 108783156
 }
