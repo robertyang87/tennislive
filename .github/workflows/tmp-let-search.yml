@@ -3,7 +3,7 @@ name: tmp-let-search
 on:
   push:
     branches: [claude/let-not-net-2026]
-    paths: [research/let-not-net-2026/queries.txt, .github/workflows/tmp-let-search.yml]
+    paths: [research/let-not-net-2026/queries.txt, research/let-not-net-2026/cover_cmds.sh, .github/workflows/tmp-let-search.yml]
 permissions:
   contents: read
 jobs:
@@ -52,3 +52,27 @@ jobs:
                   if txt and txt!=last and t is not None and not txt.startswith(('WEBVTT','Kind:','Language:')):
                       print(f'{t:8.2f} {txt}'); last=txt
           PY
+  cover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            src
+            data
+            research/let-not-net-2026
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -e . 2>&1 | tail -2 || true
+      - name: cover search
+        continue-on-error: true
+        run: bash research/let-not-net-2026/cover_cmds.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cover-candidates
+          path: cover_out/
+          if-no-files-found: ignore
