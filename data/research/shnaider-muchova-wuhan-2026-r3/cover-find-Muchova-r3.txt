@@ -1,0 +1,81 @@
+
+=== ATP Media 照片接口（tennistv.com 背后那套 CMS；原图 2579~8256px）（按 EXIF 拍摄时刻绑场次；◎＝点名层过了，认人／睁眼／钩子带没查——`cover_upgrade.py --preflight` 判）
+  ⚠️ **这一档没跑**：WTA 的比赛——ATP Media 只收男子
+
+=== WTA 照片接口（content/wta/photo；赢家比赛中那张终场前后几分钟、捧杯 +30~77 分钟）（按 EXIF 拍摄时刻绑场次；◎＝点名层过了，认人／睁眼／钩子带没查——`cover_upgrade.py --preflight` 判）
+  · 筛掉 标题不是这一站 1 张、原图铺不满 1080×1440 5 张、头像／定妆 4 张
+     [4592179] Karolina Muchova, Wuhan 2026 · Muchova-R2-Wang-Zhao-AFP-2.jpg · 6388×4259 · 发布 2026-10-14T08:19:08Z
+       赛事时区不知道——EXIF 是当地钟点，换算不了
+       ⚠️ 标题／引用里还有别人：karolina——两人同框不用
+       原图 https://photoresources.wtatennis.com/wta/photo/2026/10/14/16fec40b-39ad-4c39-8277-48aa6668b91a/Muchova-R2-Wang-Zhao-AFP-2.jpg
+     [4592178] Karolina Muchova, Wuhan 2026 · Muchova-R2-Wang-Zhao-AFP.jpg · 4363×2909 · 发布 2026-10-14T08:18:42Z
+       赛事时区不知道——EXIF 是当地钟点，换算不了
+       ⚠️ 标题／引用里还有别人：karolina——两人同框不用
+       原图 https://photoresources.wtatennis.com/wta/photo/2026/10/14/cb63d8ba-7c55-48d3-ae5d-b6834e627db9/Muchova-R2-Wang-Zhao-AFP.jpg
+=== WTA photo-resources（文件名带四要素；Getty 的去查说明）
+  Muchova-R2-Wang-Zhao-AFP.jpg　（上传 2026-10-14）
+     https://photoresources.wtatennis.com/photo-resources/2026/10/14/97810e4c-5d74-4eca-8dc1-0db0f9a12dac/Muchova-R2-Wang-Zhao-AFP.jpg?width=4000
+  Muchova-R2-Wang-Zhao-AFP-2.jpg　（上传 2026-10-14）
+     https://photoresources.wtatennis.com/photo-resources/2026/10/14/ba981995-529d-4008-b508-7cc68e1ceb39/Muchova-R2-Wang-Zhao-AFP-2.jpg?width=4000
+
+=== WTA 赛后稿头图（WTA 内容接口；大满贯也有，原图尺寸接口直接给）
+  · 发稿时刻窗口 2026-10-14 12:00Z ~ 2026-10-16 00:00Z
+  2026-10-15T08:08Z  Shnaider lauds team for consistency after earning fourth career top 10
+     头图说明：Shnaider upsets Muchova for fourth career Top 10 win　 　（上传 2026-10-15）
+     https://photoresources.wtatennis.com/wta/photo/2026/10/15/2a0c79ff-71d7-4128-b507-9cdc3d2c021f/Diana-Shnaider_Wuhan-2026.jpg
+     稿子：https://www.wtatennis.com/news/4592595/shnaider-lauds-team-for-consistency-after-earning-fourth-career-top-10-win-in-wuhan
+
+=== AP 通讯社（唯一一条**又高清又跨得过赛事**的，原图 4700~8600px）
+  ⚠️ **这一档没跑**：AP 的搜索页和 tennis 频道页一页都没取到（Cloudflare 人机挑战（HTTP 403，cf-mitigated: challenge）——换 UA／换入口过不去）
+  没有对得上的。⚠️ AP 一天只发几场的图，**「这一场没有」不等于「这条渠道不行」**；隔几小时或换个赛事名再试。
+
+=== 美网官方图片接口　⚠️ **这一档没跑**
+  `--event` 里没有 `US Open`。大满贯不进 WTA/ATP 图库，美网另有自己的接口——查美网请传 --event "US Open"。
+
+=== 当地报纸每日图集　⚠️ **这一档没跑**
+  不知道这一站在哪个城市——`_LOCAL_PAPERS` 里现有 cincinnati、indian wells、phoenix、newport、new york、us open。
+  补一句就有：--paper <报纸域名，如 www.cincinnati.com>；新城市查一次 Gannett／USA TODAY 网络里当地那份，加进 `_LOCAL_PAPERS`。
+
+=== 赛事官网的 WordPress 媒体库　⚠️ **这一档没跑**
+  没给 `--site`，`--event` 也不在 `cover_channels.EVENT_SITES` 里，而它当日实拍最全（原图 2000px 级，去掉 `-scaled` 能到 5541×3694）。
+  补一句就有：--site <赛事域名，如 cincinnatiopen.com> --date <这场球的**当地**日期>
+  ⚠️ 当地日期不是北京日期：夜场（当地 21:00 之后开打）在北京是次日。
+
+=== 中文媒体（搜狗微信公众号推文 ＋ 当地网站；原图 mmbiz `/0`）
+  · 搜狗微信「穆霍娃 武汉」：10 条
+  · 搜狗微信「穆霍娃」：10 条
+  · 去重后 19 条：标题里没有「穆霍娃」的 0 条、发文时刻不在窗口里的 14 条筛掉，剩 5 条
+  · 「武汉」没有登记当地网站（CN_OUTLETS 只有 成都）——这一档没跑
+  [搜狗微信] 10-15 13:22 北京  啊平哥0125  ‌武网再爆冷门!施耐德掀翻穆霍娃进八强
+     https://mp.weixin.qq.com/s?src=11&timestamp=1792055830&ver=7028…（带时效签名，未存）
+  [搜狗微信] 10-15 12:14 北京  金辉6910  穆霍娃双抢七逆转麦克纳莉
+     https://mp.weixin.qq.com/s?src=11&timestamp=1792055830&ver=7028…（带时效签名，未存）
+  [搜狗微信] 10-15 08:19 北京  小吴吃吃吃不饱  仅剩最后一张年终门票!穆霍娃对决斯瓦泰克,将在武网一决高下
+     https://mp.weixin.qq.com/s?src=11&timestamp=1792055830&ver=7028…（带时效签名，未存）
+       1222×1315  要放大 1.10×（写 _low_res_why） https://mmbiz.qpic.cn/sz_mmbiz_jpg/Rjd3k3jZQQw5abw98YnQre70QFn5Z5UiciadHHUO8eA7ehIsmbiaLcC5jeM0n1IBQro0ddgH4ibHn6icPLg1EKYdB5INuLiaicLZ3Jl2LRBljica7v0/0?wx_fmt=jpeg
+        1284×841  要放大 1.71×（写 _low_res_why） https://mmbiz.qpic.cn/mmbiz_jpg/Rjd3k3jZQQxu6THicWqhSa0DEQxmlcHVL4AJRx0KKgs6zTjticzlK8FibibALfhSeibaawdrJczoRLb9P4cqiaRx5lG6NIDdpbqKpq1D2rn7lSQoM/0?wx_fmt=jpeg
+        1284×836  要放大 1.72×（写 _low_res_why） https://mmbiz.qpic.cn/mmbiz_jpg/Rjd3k3jZQQw7ib53hNp6fZUSHibCbKlrBoqqzOmDdVTZXdJqNTSA8zQ1n0PngbrQyBE9icOR95ETBuIG43QImXGDiam1ibGb0lia8yQf8XIhzyqRE/0?wx_fmt=jpeg
+       1280×1920  铺满不放大                  https://mmbiz.qpic.cn/mmbiz_jpg/Rjd3k3jZQQxYpf5CJeptia3vh4WuCrLU76Tn0UPo3BvA8jxLcJpFv5Fia2pK444icicI4o9nAoqGRFCUtpNb02og2uBClVMOrrpB7npD8RDpcTQ/0?wx_fmt=jpeg
+       1280×1707  铺满不放大                  https://mmbiz.qpic.cn/sz_mmbiz_jpg/Rjd3k3jZQQzvEMUwCSYoHiaRxqQPrD1feXiahBpathDnqKEHWwZDTicocPz4sfBBRniaIdvQib8wYeFwibNhEHSkQ514xjicXhRXEAiaeeJyic57KrS8/0?wx_fmt=jpeg
+  [搜狗微信] 10-15 01:09 北京  武汉网球公开赛  中国金花郭涵煜力争再突破,斯瓦泰克、穆霍娃、保利尼登场亮相
+     https://mp.weixin.qq.com/s?src=11&timestamp=1792055830&ver=7028…（带时效签名，未存）
+        1080×460  要放大 3.13×（写 _low_res_why） https://mmbiz.qpic.cn/mmbiz_png/X3yJicovfnElgmpTHjrJpEvfuFExXOybyjPHHVbJ9HyicFa9ncxxXGgdmOC4o7W4uGKsRuwqFxsbgnibibibvgf2hFWK06u3Ke9SapQcCrnozw9s/0?wx_fmt=png
+       2560×4956  铺满不放大                  https://mmbiz.qpic.cn/sz_mmbiz_png/X3yJicovfnEm2wP77GvsxNBicTK2jXCgaib0P8IuqJKGM1d9E5AIvHZbqcWZ7TRoDmqpOX0QLVJaoL3C8YgX7K4fJWUhKFLZNaaVpwttE5mf5I/0?wx_fmt=png
+        1280×853  要放大 1.69×（写 _low_res_why） https://mmbiz.qpic.cn/sz_mmbiz_jpg/X3yJicovfnEmhW4qUetEpycRZnbic0DozoJoohO7Cib9MgQLG8DypBcP3vx4sktbOchdtvzhiaYMKy9tUuujTSp4L0und3wkQYviaHXdIjsejjgA/0?wx_fmt=jpeg
+        1280×853  要放大 1.69×（写 _low_res_why） https://mmbiz.qpic.cn/sz_mmbiz_jpg/X3yJicovfnEk8E0U7wUOiabx4ewGLTY6LoDQt0fibicQl8BTU78WOdYCrwtYBuicdVog2ibp3RFsu2XJtLaMn9PDbGSMtAbrdMZALmaOiaChfsgt2g/0?wx_fmt=jpeg
+        1280×853  要放大 1.69×（写 _low_res_why） https://mmbiz.qpic.cn/mmbiz_jpg/X3yJicovfnEknSXFjbVGWXcopO8cicLQib5SgfDI28bRWHbIZ45CXbKNLYG75QxDgjkS5p9aMnJCAIxIqajSIQkQuM0EKSibrTO2rnp1QR56noY/0?wx_fmt=jpeg
+       1280×1920  铺满不放大                  https://mmbiz.qpic.cn/sz_mmbiz_jpg/X3yJicovfnEkKphU7wd5iaeqOtUwoeXrXUWic4GESbu03JW9alJhq6icLEpSpxLeZQkX9pvGaPJcsYVu2aZ1ZCpmevXTU54arJ62DIiaQ6XFa3ibo/0?wx_fmt=jpeg
+        1280×853  要放大 1.69×（写 _low_res_why） https://mmbiz.qpic.cn/mmbiz_jpg/X3yJicovfnEmPq92iaibbxLCT2XvQxBJibxSkAZXDgwN5MJScJqE5vpqXQHbGdrN56LNKR00SxAvL5e1AGm0VFOjyp7ibEKkzaNePIPia3lRfg6EA/0?wx_fmt=jpeg
+        1280×854  要放大 1.69×（写 _low_res_why） https://mmbiz.qpic.cn/mmbiz_jpg/X3yJicovfnEkDuZKLnRA2wPicQcHaVYaAnxK0tehkX2FmEo5p3mpAcYsaLQH8mo7w5OaWItk78ZqEnSiaJHXqGC9kaYJuaoguFIubxicFuRyMxw/0?wx_fmt=jpeg
+        1280×746  要放大 1.93×（写 _low_res_why） https://mmbiz.qpic.cn/mmbiz_jpg/X3yJicovfnEm7oDClvlrSibSLrOPpwHaZ190Y6d4Wl8RURT9gribLy2Iz9szprqSsOjn2FdN7458iczsB6hE2MTKHfUwGUiasuYiaacOaNSmUXxG8/0?wx_fmt=jpeg
+        1080×375  要放大 3.84×（写 _low_res_why） https://mmbiz.qpic.cn/mmbiz_jpg/X3yJicovfnElz8tMWfXoW3hKcSUMgzhl1nvNHmnu5xUFkSfGlGZNZrS1ib6iaicS8dFy6TPVewmXymxXribX1tUDt8Fobl1I1YI45MBNhWdklNC0/0?wx_fmt=jpeg
+        1080×324  要放大 4.44×（写 _low_res_why） https://mmbiz.qpic.cn/mmbiz_png/X3yJicovfnEkOGtU7pAYPJf8eBoibmicqFAG5RezCia2RN65cRAo0SZLFX0BsibSvhQxy2oicR1qZECdqniagyNSd0QUT9j9L0qiaaPqH2VQY7Xib5oo/0?wx_fmt=png
+       1280×1950  铺满不放大                  https://mmbiz.qpic.cn/sz_mmbiz_jpg/X3yJicovfnEl2G7hYAicibNSlQPGxHe0vEtXxZQ2NSqpicOaux0qxU6YcJgNFRungA3M5djHsib6XyOSny1zzjTcfryBGAccDOiahD54e86yCqCRo/0?wx_fmt=jpeg
+  [搜狗微信] 10-14 19:35 北京  九派新闻  穆霍娃在武网首秀取胜:落后情况下逆转晋级,称“开始有些低落,观众的加油令人激动”
+     https://mp.weixin.qq.com/s?src=11&timestamp=1792055830&ver=7028…（带时效签名，未存）
+        1280×853  要放大 1.69×（写 _low_res_why） https://mmbiz.qpic.cn/mmbiz_jpg/ibBCvyaHntynF8icyZsO3XeVRZEbwexibWvB9DGW7KNBVlEG1tkjjxfaNuIMzM0iaLDUic0uZzUmCU2Oic36OpJvYEINiaQP3GNACGKoStgY7ia5aKM/0?wx_fmt=jpeg
+
+=== 这一趟查了什么
+  跑过：WTA 照片接口、WTA photo-resources、WTA 赛后稿头图、中文媒体·搜狗微信
+  ⚠️ **没跑**：ATP Media 照片接口、AP 通讯社、美网官方图片接口、当地报纸每日图集、赛事官网 WordPress 媒体库、中文媒体·当地网站（武汉没登记）——这几档的结果是**未知**，不是「没有」
+  · 没查成的原因：AP 通讯社（Cloudflare 人机挑战（HTTP 403，cf-mitigated: challenge）——换 UA／换入口过不去）
