@@ -1,0 +1,1296 @@
+{
+  "schema": "tennislive.independent-finite-visual-review.v1",
+  "status": "passed_finite_visual_review",
+  "current": true,
+  "visual_blockers": [],
+  "reviewed_at": "2026-10-15T10:14:44.059379+00:00",
+  "run_id": "38716958767",
+  "film_sha256": "d45f651435e44a0b6d8c3039f6b438f46a16ecc4133128395dbe31c2560f11dd",
+  "film_bytes": 60466820,
+  "duration_seconds": 238.16,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "source_sha256": "bd48c2dd7e379cd2dfdfe397c3e751a3b9521bbe8a0139d10ad46e79da983c54",
+  "artifact_sha256": {
+    "audio_review_binding.json": "7a43eac14d0ed93226004c39df5c0072b6b08b3c0528d5d66ff6dd33df0e2e8c",
+    "chwalinska-jovic-wuhan-2026-r3.json": "e3e666d248fade6538fc145c2d23cf01099202cdf75f31f9079e3b6a1d114c15",
+    "native_input_archive.json": "030c462f483682d09aec994de707b45873f9bca6e4ff4b0ee3da71d934d52211",
+    "poster.jpg": "2ac173f8eb87df83ae876f0e92f17df08584f2c8a6650ecbd1ef747f469e76ea",
+    "qc_attestation.json": "9ff71d68c519169ecd4bcc2e958d3395134ec41d77d1079475535b3954c4a055",
+    "render.json": "6740d27dd77e5d2016e6b29f0b13c40cdb43a2b129dbc4d47dd38400b8df4bbb",
+    "render_inputs.json": "c6d9a7fd877e469d7cedd988a51c5ca3fedbdfcbb5b1a6d32c759a6655b50ba0",
+    "stat_card.jpg": "3aa512e55c3d81856a895718946797a7abe207f8e8d2cfdc85eef3c4f93bd6da",
+    "subtitles.ass": "207b1f81959f0617eac03f32abcb80e4c2e3f583e28a62380fb0fecb9da8d64d",
+    "topbar.ass": "eb8ed49048c51bb5141dd47491c9b731670275d32b1ea19067ce1284a5f22415"
+  },
+  "method": "Fresh extraction from actual encoded V3 MP4 after film/spec/ASS/render_inputs/timeline SHA binding; visual tool review of 8 contact sheets and 26 original PNGs. No verdict inherited from V1.",
+  "actual_viewing": {
+    "sample_count": 113,
+    "all_sample_frame_indices": [
+      15,
+      29,
+      31,
+      43,
+      83,
+      167,
+      249,
+      298,
+      328,
+      329,
+      356,
+      411,
+      463,
+      515,
+      572,
+      574,
+      612,
+      679,
+      726,
+      766,
+      813,
+      888,
+      957,
+      959,
+      961,
+      1293,
+      1348,
+      1415,
+      1440,
+      1491,
+      1850,
+      2000,
+      2110,
+      2112,
+      2161,
+      2228,
+      2290,
+      2334,
+      2336,
+      2339,
+      2466,
+      2474,
+      2507,
+      2558,
+      2621,
+      2682,
+      2725,
+      2790,
+      2853,
+      2855,
+      2856,
+      2857,
+      2902,
+      2904,
+      2908,
+      2948,
+      3220,
+      3223,
+      3270,
+      3318,
+      3351,
+      3372,
+      3374,
+      3389,
+      3426,
+      3482,
+      3545,
+      3617,
+      3676,
+      3678,
+      3682,
+      3935,
+      4012,
+      4017,
+      4020,
+      4022,
+      4056,
+      4058,
+      4089,
+      4163,
+      4245,
+      4318,
+      4320,
+      4326,
+      4369,
+      4637,
+      4656,
+      4677,
+      4761,
+      4842,
+      4892,
+      4919,
+      4958,
+      5029,
+      5097,
+      5163,
+      5212,
+      5276,
+      5315,
+      5318,
+      5320,
+      5351,
+      5434,
+      5568,
+      5570,
+      5607,
+      5678,
+      5736,
+      5784,
+      5839,
+      5840,
+      5897,
+      5953
+    ],
+    "all_sample_seconds": [
+      0.6,
+      1.16,
+      1.24,
+      1.72,
+      3.32,
+      6.68,
+      9.96,
+      11.92,
+      13.12,
+      13.16,
+      14.24,
+      16.44,
+      18.52,
+      20.6,
+      22.88,
+      22.96,
+      24.48,
+      27.16,
+      29.04,
+      30.64,
+      32.52,
+      35.52,
+      38.28,
+      38.36,
+      38.44,
+      51.72,
+      53.92,
+      56.6,
+      57.6,
+      59.64,
+      74.0,
+      80.0,
+      84.4,
+      84.48,
+      86.44,
+      89.12,
+      91.6,
+      93.36,
+      93.44,
+      93.56,
+      98.64,
+      98.96,
+      100.28,
+      102.32,
+      104.84,
+      107.28,
+      109.0,
+      111.6,
+      114.12,
+      114.2,
+      114.24,
+      114.28,
+      116.08,
+      116.16,
+      116.32,
+      117.92,
+      128.8,
+      128.92,
+      130.8,
+      132.72,
+      134.04,
+      134.88,
+      134.96,
+      135.56,
+      137.04,
+      139.28,
+      141.8,
+      144.68,
+      147.04,
+      147.12,
+      147.28,
+      157.4,
+      160.48,
+      160.68,
+      160.8,
+      160.88,
+      162.24,
+      162.32,
+      163.56,
+      166.52,
+      169.8,
+      172.72,
+      172.8,
+      173.04,
+      174.76,
+      185.48,
+      186.24,
+      187.08,
+      190.44,
+      193.68,
+      195.68,
+      196.76,
+      198.32,
+      201.16,
+      203.88,
+      206.52,
+      208.48,
+      211.04,
+      212.6,
+      212.72,
+      212.8,
+      214.04,
+      217.36,
+      222.72,
+      222.8,
+      224.28,
+      227.12,
+      229.44,
+      231.36,
+      233.56,
+      233.6,
+      235.88,
+      238.12
+    ],
+    "contact_sheets_viewed": [
+      {
+        "path": "sheets/contact_00.jpg",
+        "sha256": "a4f654ebe0f2f024c1508c2ffe1d2a7f55f8d5ec388cc66bf89aaaa0183d1a7e"
+      },
+      {
+        "path": "sheets/contact_01.jpg",
+        "sha256": "886ea9eb4f45476f0b069ad7be1e1db53ddfe4d175db56c3f291863422c102cb"
+      },
+      {
+        "path": "sheets/contact_02.jpg",
+        "sha256": "f762e0be4b3ee7a49c626cb580b37bdd44c02e48f945a848319153a5d3846770"
+      },
+      {
+        "path": "sheets/contact_03.jpg",
+        "sha256": "d84af1008266bd00b16bd0797c8bab578ab8b4264573de0503414bc042a66478"
+      },
+      {
+        "path": "sheets/contact_04.jpg",
+        "sha256": "e0648aa96570f623925f407cb6b911762a6c433ab7803a8edad23fbf4893fefc"
+      },
+      {
+        "path": "sheets/contact_05.jpg",
+        "sha256": "330d62b67631c06fdd60869addb089808fb9d249ee0a11a8ca6ae2a147b8067b"
+      },
+      {
+        "path": "sheets/contact_06.jpg",
+        "sha256": "19896f26e800e72992880b7a41fe88551e67c42ca13e3685e8bbe9c8aff39fff"
+      },
+      {
+        "path": "sheets/contact_07.jpg",
+        "sha256": "0155d2316118a20919b598f71fe6cfc4a2f7adb3ee11abbe85605742684dedbf"
+      }
+    ],
+    "original_pngs_individually_viewed": [
+      {
+        "frame_index": 15,
+        "seconds": 0.6,
+        "png": "frames/f000015.png",
+        "reasons": [
+          {
+            "kind": "cover_center",
+            "requested_seconds": 0.6
+          }
+        ],
+        "png_sha256": "e9c494891e41839070212674b324458f91f9bdcbea6dae2bfdad404ecceda658"
+      },
+      {
+        "frame_index": 1850,
+        "seconds": 74.0,
+        "png": "frames/f001850.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 74.0,
+            "edit_id": "first_defence_sequence",
+            "source_seconds": 124.5
+          }
+        ],
+        "png_sha256": "e3dafcd32ed3d595feb39fbb37ed0fdf51615eced091829504bf110b94589090"
+      },
+      {
+        "frame_index": 2000,
+        "seconds": 80.0,
+        "png": "frames/f002000.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 80.0,
+            "edit_id": "first_defence_sequence",
+            "source_seconds": 130.5
+          }
+        ],
+        "png_sha256": "b266fda5db5938ca5935b1c07da47fcada35467dc2d31a305e0ed2a9aaef6ba6"
+      },
+      {
+        "frame_index": 2855,
+        "seconds": 114.2,
+        "png": "frames/f002855.png",
+        "reasons": [
+          {
+            "kind": "preencode_suspect_header_actual_film",
+            "requested_seconds": 114.2
+          }
+        ],
+        "png_sha256": "cc92ba3340a9de80a7dde1a2033c345080027506be5c23c0dbcec6b2d3f4f35c"
+      },
+      {
+        "frame_index": 4020,
+        "seconds": 160.8,
+        "png": "frames/f004020.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 160.81,
+            "index": 40,
+            "start": 159.48,
+            "end": 162.14,
+            "style": "TL",
+            "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Flawless at the net today.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N今天的网前表现无可挑剔"
+          },
+          {
+            "kind": "preencode_suspect_header_actual_film",
+            "requested_seconds": 160.78
+          }
+        ],
+        "png_sha256": "1b2c18acb87286bb32ab971bec5202042d97c923bbe999751369ea58b8730961"
+      },
+      {
+        "frame_index": 5351,
+        "seconds": 214.04,
+        "png": "frames/f005351.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 214.05,
+            "index": 55,
+            "start": 212.82999999999998,
+            "end": 215.27,
+            "style": "TL",
+            "text": "非受迫失误 月亮姐{\\fs78}15{\\fs68}次"
+          }
+        ],
+        "png_sha256": "50a1c4d6dcc3205596567add4736ae16b36bb515b618a447c49cb6cd580b44b7"
+      },
+      {
+        "frame_index": 5434,
+        "seconds": 217.36,
+        "png": "frames/f005434.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 217.375,
+            "index": 56,
+            "start": 215.27,
+            "end": 219.48,
+            "style": "TL",
+            "text": "对手{\\fs78}31{\\fs68}次 稳定 让她笑到最后"
+          }
+        ],
+        "png_sha256": "ef8d5c9a3738d77313b9c6d9884897b8b9a1366a89c8823a8bb96ac368e215eb"
+      },
+      {
+        "frame_index": 5897,
+        "seconds": 235.88,
+        "png": "frames/f005897.png",
+        "reasons": [
+          {
+            "kind": "brand_outro_center",
+            "requested_seconds": 235.883
+          }
+        ],
+        "png_sha256": "bdabbfb72f7379d49859d1faf5742e192d45b324a1f349512163d530c2cbbe3d"
+      },
+      {
+        "frame_index": 961,
+        "seconds": 38.44,
+        "png": "frames/f000961.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 38.45999999999998,
+            "edit_id": "first_defence_sequence",
+            "source_seconds": 88.96
+          }
+        ],
+        "png_sha256": "00fd9d7fafa34642234d453cfbce6d68e76aae4513f1909cfaf51e083c4f6e2a"
+      },
+      {
+        "frame_index": 1440,
+        "seconds": 57.6,
+        "png": "frames/f001440.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 57.620000000000005,
+            "edit_id": "first_defence_sequence",
+            "source_seconds": 108.12
+          }
+        ],
+        "png_sha256": "3d574cdb816f1673055b5e07b0dcd9f0a353895bd1a60ff3e8f1228f09344db1"
+      },
+      {
+        "frame_index": 2110,
+        "seconds": 84.4,
+        "png": "frames/f002110.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 84.41999999999999,
+            "edit_id": "first_defence_sequence",
+            "source_seconds": 134.92
+          }
+        ],
+        "png_sha256": "e5975861726af4245a2f0f6428abbedbee93d61e7f138ac3450b980e8a86bc8b"
+      },
+      {
+        "frame_index": 2339,
+        "seconds": 93.56,
+        "png": "frames/f002339.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 93.56,
+            "edit_id": "first_set_finish",
+            "source_seconds": 198.52
+          }
+        ],
+        "png_sha256": "f9786607021467ff4719d39bee6039e226ba3751fc5ffb3f6a46ca8743f3e685"
+      },
+      {
+        "frame_index": 2474,
+        "seconds": 98.96,
+        "png": "frames/f002474.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 98.95999999999998,
+            "edit_id": "first_set_finish",
+            "source_seconds": 203.92
+          }
+        ],
+        "png_sha256": "bed92a0af0da62d2b678bbedb623a4961b2c0c2f0725a54d20388aae6914e42c"
+      },
+      {
+        "frame_index": 2908,
+        "seconds": 116.32,
+        "png": "frames/f002908.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 116.32,
+            "edit_id": "second_opening_hold",
+            "source_seconds": 221.52
+          }
+        ],
+        "png_sha256": "ae61ef9c3f364f72a044005815de116297225ed9d1f0fc34a44f0e2c4cc9bd15"
+      },
+      {
+        "frame_index": 2948,
+        "seconds": 117.92,
+        "png": "frames/f002948.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 117.92000000000002,
+            "edit_id": "second_opening_hold",
+            "source_seconds": 223.12
+          }
+        ],
+        "png_sha256": "c77a1feac97815a95e6956b0a7c983e28482fb5d3742e14dd6462e282351df39"
+      },
+      {
+        "frame_index": 3220,
+        "seconds": 128.8,
+        "png": "frames/f003220.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 128.8,
+            "edit_id": "second_opening_hold",
+            "source_seconds": 234.0
+          }
+        ],
+        "png_sha256": "2dc1f78f89f40d36c8616501e88bddbeddf87b27d0c43660d08f894c49147107"
+      },
+      {
+        "frame_index": 3682,
+        "seconds": 147.28,
+        "png": "frames/f003682.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 147.26000000000002,
+            "edit_id": "second_net_break",
+            "source_seconds": 242.24
+          }
+        ],
+        "png_sha256": "5f9689bea5cc756659b54404a302c09b04048daa5ba327352368bcbe6acac208"
+      },
+      {
+        "frame_index": 3935,
+        "seconds": 157.4,
+        "png": "frames/f003935.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 157.42,
+            "edit_id": "second_net_break",
+            "source_seconds": 252.4
+          }
+        ],
+        "png_sha256": "c0276a9289455e3896d756ab4beb619d08428167cb4e9f897b0f20b3285753fd"
+      },
+      {
+        "frame_index": 4012,
+        "seconds": 160.48,
+        "png": "frames/f004012.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 160.49999999999997,
+            "edit_id": "second_net_break",
+            "source_seconds": 255.48
+          }
+        ],
+        "png_sha256": "c51c75b58db659a41a5baec9cfa7a6b9e543a5d66a8f6f96475c6afe08729dda"
+      },
+      {
+        "frame_index": 4326,
+        "seconds": 173.04,
+        "png": "frames/f004326.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 173.01999999999998,
+            "edit_id": "ending",
+            "source_seconds": 258.24
+          }
+        ],
+        "png_sha256": "6f8b3184da8665cd82337fa23c8fe3c11fd7582bcc9093dd9302e6df7bc637e0"
+      },
+      {
+        "frame_index": 4369,
+        "seconds": 174.76,
+        "png": "frames/f004369.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 174.77999999999997,
+            "edit_id": "ending",
+            "source_seconds": 260.0
+          }
+        ],
+        "png_sha256": "59bd7ef56d971bc597c9a6b2fd1806cb5ff36c7c709ea7845a0a84e73c71f4ed"
+      },
+      {
+        "frame_index": 4656,
+        "seconds": 186.24,
+        "png": "frames/f004656.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 186.22000000000003,
+            "edit_id": "ending",
+            "source_seconds": 271.44
+          }
+        ],
+        "png_sha256": "0ccf9d5605693ae89d5a0f9196d60fb2a046715b9dc7f80608566f803400c7c0"
+      },
+      {
+        "frame_index": 4919,
+        "seconds": 196.76,
+        "png": "frames/f004919.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 196.77999999999997,
+            "edit_id": "ending",
+            "source_seconds": 282.0
+          }
+        ],
+        "png_sha256": "754fc11deaa78bd9f92b860fa00f5c0d9d1d82a02871a883da85a7828face31c"
+      },
+      {
+        "frame_index": 5315,
+        "seconds": 212.6,
+        "png": "frames/f005315.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 212.58000000000004,
+            "edit_id": "ending",
+            "source_seconds": 297.8
+          }
+        ],
+        "png_sha256": "40133a0e9f5db014c9ec7e1097337bc7758857040372d92e32e96c78b4c0ae96"
+      },
+      {
+        "frame_index": 356,
+        "seconds": 14.24,
+        "png": "frames/f000356.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 14.225,
+            "index": 5,
+            "start": 13.19,
+            "end": 15.26,
+            "style": "TL",
+            "text": "北京时间{\\fs78}10{\\fs68}月{\\fs78}15{\\fs68}号下午"
+          }
+        ],
+        "png_sha256": "20eb26c5c104134cd1c7efd789052feea8c5b19f922541e54d32a0d6b1af7fdf"
+      },
+      {
+        "frame_index": 5953,
+        "seconds": 238.12,
+        "png": "frames/f005953.png",
+        "reasons": [
+          {
+            "kind": "last_encoded_frame",
+            "requested_seconds": 238.12
+          }
+        ],
+        "png_sha256": "bf5e07705cdc0e554ab7e17afe93a506f4f560e9e2708b0f7147075e1b82bbe3"
+      }
+    ],
+    "actual_ASS_cues": 61,
+    "bilingual_source_cues": 37,
+    "other_CN_narration_cues": 22,
+    "expected_clean_stat_cues": 2,
+    "cue_results": [
+      {
+        "cue_index_zero_based": 0,
+        "frame_index": 43,
+        "seconds": 1.72,
+        "png_sha256": "e782c8af4eed916bd5d3c06387529d642972a1f30d08299502d0411fb30f8397",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}That's out.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N出界了！",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 1,
+        "frame_index": 83,
+        "seconds": 3.32,
+        "png_sha256": "9be81a8dac3e27b4c4d91eba383c03af908d38dbddb6781d59b3d14eec03d074",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}The first one was nearly out,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N前一球也险些出界",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 2,
+        "frame_index": 167,
+        "seconds": 6.68,
+        "png_sha256": "ae85bd448a11930db8968dde30dfb88aea3d79abc5268c989ee12f119443ffc6",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}but Maja Chwalinska continues to break new ground{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N但赫瓦林斯卡仍不断突破",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 3,
+        "frame_index": 249,
+        "seconds": 9.96,
+        "png_sha256": "291ad9990e544ae66bd1d3a205e998451c6c0c9dc62e8e63c0491f08137b922b",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}in this sensational season{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N这个赛季实在精彩",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 4,
+        "frame_index": 298,
+        "seconds": 11.92,
+        "png_sha256": "37553941aedb13dd31f1276d10e3a3d85cbd089b293c92c9cbe55f3ec593bb34",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}for the 25-year-old Polish player.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N属于这位{\\fs78}25{\\fs68}岁的波兰选手",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 5,
+        "frame_index": 356,
+        "seconds": 14.24,
+        "png_sha256": "20eb26c5c104134cd1c7efd789052feea8c5b19f922541e54d32a0d6b1af7fdf",
+        "text": "北京时间{\\fs78}10{\\fs68}月{\\fs78}15{\\fs68}号下午",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 6,
+        "frame_index": 411,
+        "seconds": 16.44,
+        "png_sha256": "a09d8a359e49aa7924e062be817d2170c643320ff7ea7566c6a575783c4a4e12",
+        "text": "武汉网球公开赛第三轮",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 7,
+        "frame_index": 463,
+        "seconds": 18.52,
+        "png_sha256": "c64cd454358113762ef79fee3b41f322c2dd2e548928a1838cff84b0c78ebc3d",
+        "text": "月亮姐昨天逆转过关",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 8,
+        "frame_index": 515,
+        "seconds": 20.6,
+        "png_sha256": "d87efea6a83684b46f1c5ddd5f001318fc62ffe10ebd90ea1e2c5c74cf536f59",
+        "text": "今天迎战约维奇",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 9,
+        "frame_index": 612,
+        "seconds": 24.48,
+        "png_sha256": "f76875ceeb0de925414bb38cd77effad3c5672822bcce7e8985bba34e9e934a3",
+        "text": "首盘{\\fs78}3{\\fs68}比{\\fs78}4{\\fs68} 她先守住发球局",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 10,
+        "frame_index": 679,
+        "seconds": 27.16,
+        "png_sha256": "08f3df03434396e8cfa5079fc93ad61bbf7b1031d2be49a01427c6d4ce9d3cf5",
+        "text": "{\\fs78}4{\\fs68}比{\\fs78}4{\\fs68}时 {\\fs78}0{\\fs68}比{\\fs78}30{\\fs68}落后",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 11,
+        "frame_index": 726,
+        "seconds": 29.04,
+        "png_sha256": "a91ef68283b346be3867a1779d97da5138a2cd981a44de39a68d8f07966ff2c0",
+        "text": "被拉向底线两侧",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 12,
+        "frame_index": 766,
+        "seconds": 30.64,
+        "png_sha256": "9d7071fe6aef468f397ab5b425057edf7553431ff1f9743454987a46185c2127",
+        "text": "她仍把球救回来",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 13,
+        "frame_index": 813,
+        "seconds": 32.52,
+        "png_sha256": "ad960bb88d8681bc3c6b6bd9c9b0d2defa53a6f5c4591027161238d9097d539b",
+        "text": "从这一分开始 她连拿四分",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 14,
+        "frame_index": 888,
+        "seconds": 35.52,
+        "png_sha256": "ee1abcc30603c80b9f21c0901a3a1bf78516360bfacee999a52eb830abe7a0dd",
+        "text": "{\\fs78}5{\\fs68}比{\\fs78}4{\\fs68}领先 再保发 {\\fs78}6{\\fs68}比{\\fs78}4{\\fs68}先拿一盘",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 15,
+        "frame_index": 1293,
+        "seconds": 51.72,
+        "png_sha256": "3c5123a1b1c5fb87d4b6d35820a7118b916e3ea06b2fdc61a5ac78dcdb6e7f85",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Well, that's just beautifully done.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N这一下处理得太漂亮了",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 16,
+        "frame_index": 1348,
+        "seconds": 53.92,
+        "png_sha256": "e838b0a877c7b1e97ba622619650d50d0d12212dde586ba35e193500959f9668",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Talk about momentum changer.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N这一下改变了局势",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 17,
+        "frame_index": 1415,
+        "seconds": 56.6,
+        "png_sha256": "df90cb3917bdd3a6ad74ff5c98c1d0659b5bf3e617eae63550b75a66402cbafb",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}And the win in Mexico last year{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N去年在墨西哥的夺冠",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 18,
+        "frame_index": 1491,
+        "seconds": 59.64,
+        "png_sha256": "bff27ff8d13589a438bf3efbf38487f936490d36f8c72bb7f363eb516c3c052d",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}elevated her up into the top 50 for the first time.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N让她首次跻身世界前{\\fs78}50{\\fs68}",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 19,
+        "frame_index": 2112,
+        "seconds": 84.48,
+        "png_sha256": "2f2d94d199a6bae5888fc49519df2b948a80effe086275a8b5255fe1c860335e",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}That's brilliant.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N太精彩了！",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 20,
+        "frame_index": 2161,
+        "seconds": 86.44,
+        "png_sha256": "d42adacaeda43464d0d497b30f988bd623c24edac99a2e3039d026f3685bb060",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Great defence and a rapturous ovation{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N精彩防守赢得热烈欢呼",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 21,
+        "frame_index": 2228,
+        "seconds": 89.12,
+        "png_sha256": "dfae75090842a1f7e34ccdc51c946cadc771b287e42518f5eba82ad31cba5f0d",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}from the crowd here enjoying this extra match{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N观众正享受这场加赛",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 22,
+        "frame_index": 2290,
+        "seconds": 91.6,
+        "png_sha256": "9f54eb7920f58e0dcd07a8fc254331aa8db926d5ff97e1be3663e8a7fd1cadc2",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}on court number two.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N就在二号球场",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 23,
+        "frame_index": 2466,
+        "seconds": 98.64,
+        "png_sha256": "34d3f3480c7d144ffe2e09be1099901a9ab26e601f379eba8d4fa48cff6f5664",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}And there it is.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N拿下了！",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 24,
+        "frame_index": 2507,
+        "seconds": 100.28,
+        "png_sha256": "e7ef80c95cc4536c2256ce57706b71db07e07739978be448aad59ef6b08a794f",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}The opening set is closed out.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N首盘就此结束",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 25,
+        "frame_index": 2558,
+        "seconds": 102.32,
+        "png_sha256": "be116696d77e168a6ab6bc3f5d7443abed4462cff3cc3dad696dcfd7063485f6",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Very good mental awareness,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N出色的临场判断",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 26,
+        "frame_index": 2621,
+        "seconds": 104.84,
+        "png_sha256": "488590c233eb5d5d8763ba9417419b73843990355161cc6a38c9f8393d8d0f4a",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}stability and strength from Maja Chwalinska,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N赫瓦林斯卡展现了稳定与韧劲",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 27,
+        "frame_index": 2682,
+        "seconds": 107.28,
+        "png_sha256": "1f3a355b3d335247ca5af7942df0971eb14573c13e42373a8260b3f706f527ce",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}who continues to surprise,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N她继续带来惊喜",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 28,
+        "frame_index": 2725,
+        "seconds": 109.0,
+        "png_sha256": "62698bbb11f11ba99b7187b13278b3ae905f0b94f52adaf1e18917cc27ab1dfb",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}and not only on the clay this time.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N而且这次不只是在红土",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 29,
+        "frame_index": 2790,
+        "seconds": 111.6,
+        "png_sha256": "cc43d80315e3f7ee26159391199b90accc099673ef85ae8282f22ab752d1abdb",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}The first set goes to the number 16 seed{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N{\\fs78}16{\\fs68}号种子拿下首盘",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 30,
+        "frame_index": 2856,
+        "seconds": 114.24,
+        "png_sha256": "f98c2c75fc757871d1ba686ced81ccf47f72120cb2728049c66611ae57358096",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}against a younger and higher-ranked opponent.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N战胜比她年轻 排名更高的对手",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 31,
+        "frame_index": 3223,
+        "seconds": 128.92,
+        "png_sha256": "4cd46b197bd5b9a92018c100d546620c615afbfc1080a08407e3a854338b1207",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Beautiful pickup.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N漂亮的低球处理！",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 32,
+        "frame_index": 3270,
+        "seconds": 130.8,
+        "png_sha256": "4bf9eead9a6cc1f7e88d265644a1b428342a3cfc6d476929a51667f735c82197",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}What a nice way to end that game{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N用这样的方式拿下这一局",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 33,
+        "frame_index": 3318,
+        "seconds": 132.72,
+        "png_sha256": "db4c32926ffa849e208fc36668eb096bc2dd3278205454c8b1c8ac421493402d",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}that could have become tricky,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N原本可能陷入麻烦",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 34,
+        "frame_index": 3351,
+        "seconds": 134.04,
+        "png_sha256": "dbd6fa58abf97ffb83582e15ac09c3a6dd52352769bf5f56d4ab36b048a43272",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}especially after that double fault.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N尤其刚刚还出现了一次双误",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 35,
+        "frame_index": 3389,
+        "seconds": 135.56,
+        "png_sha256": "3f3d0e4347383e0b8f923d1b95d3eb93075d34ed5263561b5c4920da4c18e8a0",
+        "text": "第二盘{\\fs78}0{\\fs68}比{\\fs78}1{\\fs68}后",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 36,
+        "frame_index": 3426,
+        "seconds": 137.04,
+        "png_sha256": "f560afb708d13dced9f0bc350e2b453283a3e84f3dd518ddd246066a316aab08",
+        "text": "她先经历{\\fs78}3{\\fs68}次平分",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 37,
+        "frame_index": 3482,
+        "seconds": 139.28,
+        "png_sha256": "15314fd300a317b7b703f79a80b9eeaad54415b7d0d34cbe5827ee1b330f4623",
+        "text": "保住这一局 再拿下下一局",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 38,
+        "frame_index": 3545,
+        "seconds": 141.8,
+        "png_sha256": "1595b004fea4b8a8c184ca59d1c2763fc9cdc3eb65c348a6a2278e9bd1b2a1f2",
+        "text": "{\\fs78}3{\\fs68}比{\\fs78}1{\\fs68} 她主动跟进上网",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 39,
+        "frame_index": 3617,
+        "seconds": 144.68,
+        "png_sha256": "6da9c630b74982699529e4e9b667a22c82d64d3edb4de194088178a93419ddb7",
+        "text": "兑现破发机会 把优势拉到{\\fs78}4{\\fs68}比{\\fs78}1{\\fs68}",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 40,
+        "frame_index": 4020,
+        "seconds": 160.8,
+        "png_sha256": "1b2c18acb87286bb32ab971bec5202042d97c923bbe999751369ea58b8730961",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Flawless at the net today.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N今天的网前表现无可挑剔",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 41,
+        "frame_index": 4089,
+        "seconds": 163.56,
+        "png_sha256": "3cd4811a563a3f5f386eb2560445fb5dee8fe2caa0243f067a9ca04d605b4ca8",
+        "text": "最后一局 {\\fs78}15{\\fs68}比{\\fs78}40{\\fs68}落后",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 42,
+        "frame_index": 4163,
+        "seconds": 166.52,
+        "png_sha256": "f6b31f4da59c9772b699596be0bba0e455f303e2c8e7251d0b6362343eff822e",
+        "text": "她化解对手两个局点 连拿{\\fs78}4{\\fs68}个小分",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 43,
+        "frame_index": 4245,
+        "seconds": 169.8,
+        "png_sha256": "a6a955cc79eeb0187b2a6b3d3d142e9a04f22978b64045c9eae4c24541575141",
+        "text": "{\\fs78}6{\\fs68}比{\\fs78}1{\\fs68} 连赢{\\fs78}6{\\fs68}局结束比赛",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 44,
+        "frame_index": 4637,
+        "seconds": 185.48,
+        "png_sha256": "f5e7b9de588baeec4e3ffdcfe81dffc32d0dc1ddd9ffa531187aea0322e6051f",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}That's out.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N出界了！",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 45,
+        "frame_index": 4677,
+        "seconds": 187.08,
+        "png_sha256": "be7f406b6fe421da4f3d64d87d8eb2a1277cc433cc81ab06b77753935a26212c",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}The first one was nearly out,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N前一球也险些出界",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 46,
+        "frame_index": 4761,
+        "seconds": 190.44,
+        "png_sha256": "68ceab049d4a85f0de9841892e956ec0320c590e2778f91ce42d257e3dfb92d8",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}but Maja Chwalinska continues to break new ground{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N但赫瓦林斯卡仍不断突破",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 47,
+        "frame_index": 4842,
+        "seconds": 193.68,
+        "png_sha256": "716b36496ac78bb7f363b308c8a4afe27f9b758e250848a148e2b4647d0bccb0",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}in this sensational season{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N这个赛季实在精彩",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 48,
+        "frame_index": 4892,
+        "seconds": 195.68,
+        "png_sha256": "39f88140226cb5b29cc8d2e6449de7632a9a88f288281e8bc2104ab505309aee",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}for the 25-year-old Polish player.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N属于这位{\\fs78}25{\\fs68}岁的波兰选手",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 49,
+        "frame_index": 4958,
+        "seconds": 198.32,
+        "png_sha256": "cc2dc4a14905027fad01cc9df69417e47e3a906dfc1ceb6af5bcaa0b2b0471e0",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Kept her nerve, and how!{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N她顶住了压力 做得太出色了！",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 50,
+        "frame_index": 5029,
+        "seconds": 201.16,
+        "png_sha256": "ce99366bfc67e64e3747b0cf2fd548ae410e054f2241713dae29fd9835e5ae67",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Destroyed Jovic in that second set.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N第二盘完全压制了约维奇",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 51,
+        "frame_index": 5097,
+        "seconds": 203.88,
+        "png_sha256": "03c2af34f6b54d827e9d0217d49b753b732724ff33f7a0c39ac4a716349d679b",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Was pretty much flawless as the teenager flailed.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N对手陷入挣扎 她几乎无可挑剔",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 52,
+        "frame_index": 5163,
+        "seconds": 206.52,
+        "png_sha256": "0f78dccff3a8f6d13254dcc614db3985701c00be805ebdfb1f72050a1deff898",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Six-four, six-one.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N{\\fs78}6{\\fs68}比{\\fs78}4{\\fs68} {\\fs78}6{\\fs68}比{\\fs78}1{\\fs68}",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 53,
+        "frame_index": 5212,
+        "seconds": 208.48,
+        "png_sha256": "7946d6ce17819e9dd8745d6af6ca698cf3bb9b57fb7e7641ab01f5bcef88943d",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Maja Chwalinska and her fans are happy.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N赫瓦林斯卡和球迷们都很开心",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 54,
+        "frame_index": 5276,
+        "seconds": 211.04,
+        "png_sha256": "76ada89040a4a5ff0ec33f4b71908c480034a2d3cbc60e6a3448ea8755872145",
+        "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}A first-ever quarterfinal place in a 1000 event.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N她首次晋级{\\fs78}1000{\\fs68}赛八强",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 55,
+        "frame_index": 5351,
+        "seconds": 214.04,
+        "png_sha256": "50a1c4d6dcc3205596567add4736ae16b36bb515b618a447c49cb6cd580b44b7",
+        "text": "非受迫失误 月亮姐{\\fs78}15{\\fs68}次",
+        "result": "expected_clean_stat"
+      },
+      {
+        "cue_index_zero_based": 56,
+        "frame_index": 5434,
+        "seconds": 217.36,
+        "png_sha256": "ef8d5c9a3738d77313b9c6d9884897b8b9a1366a89c8823a8bb96ac368e215eb",
+        "text": "对手{\\fs78}31{\\fs68}次 稳定 让她笑到最后",
+        "result": "expected_clean_stat"
+      },
+      {
+        "cue_index_zero_based": 57,
+        "frame_index": 5607,
+        "seconds": 224.28,
+        "png_sha256": "0bb383528263b23860799eda0d721189f6e76f6f91937ccf0dc30d6735bc2464",
+        "text": "从昨天的逆转 到今天两盘晋级",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 58,
+        "frame_index": 5678,
+        "seconds": 227.12,
+        "png_sha256": "26d0c1c319e8387ab5c695c49072bb836f67064a1a0d8c119ae7e04c4a5c4458",
+        "text": "月亮姐第一次闯进{\\fs78}1000{\\fs68}赛八强",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 59,
+        "frame_index": 5736,
+        "seconds": 229.44,
+        "png_sha256": "0de6b70af36bfaa5afd886a1bb385b6c7da9a8a61afe7ea0fe2b8127e314912d",
+        "text": "下一轮对阵萨卡里",
+        "result": "visible_legible_on_contact_sheet"
+      },
+      {
+        "cue_index_zero_based": 60,
+        "frame_index": 5784,
+        "seconds": 231.36,
+        "png_sha256": "060c6a5a457aecf6dbf8d8417d7c74636cc7add2f7d92eae7c46385b728b2eaf",
+        "text": "她能再赢一场吗？",
+        "result": "visible_legible_on_contact_sheet"
+      }
+    ],
+    "transitions": 13,
+    "transition_sides": 26,
+    "key_action_samples": 18
+  },
+  "findings": [
+    {
+      "id": "current-identity",
+      "result": "pass",
+      "detail": "Actual film 238.16s / 60,466,820 bytes and current spec e3e666... bound to current native render; 61 actual ASS cue midpoints. New PNGs were decoded from V3 even where unchanged pixels match V1."
+    },
+    {
+      "id": "preview-header-suspects",
+      "result": "not_reproduced",
+      "frames": [
+        {
+          "frame_index": 2855,
+          "seconds": 114.2,
+          "png": "frames/f002855.png",
+          "reasons": [
+            {
+              "kind": "preencode_suspect_header_actual_film",
+              "requested_seconds": 114.2
+            }
+          ],
+          "png_sha256": "cc92ba3340a9de80a7dde1a2033c345080027506be5c23c0dbcec6b2d3f4f35c"
+        },
+        {
+          "frame_index": 4020,
+          "seconds": 160.8,
+          "png": "frames/f004020.png",
+          "reasons": [
+            {
+              "kind": "actual_ASS_cue_midpoint",
+              "requested_seconds": 160.81,
+              "index": 40,
+              "start": 159.48,
+              "end": 162.14,
+              "style": "TL",
+              "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Flawless at the net today.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N今天的网前表现无可挑剔"
+            },
+            {
+              "kind": "preencode_suspect_header_actual_film",
+              "requested_seconds": 160.78
+            }
+          ],
+          "png_sha256": "1b2c18acb87286bb32ab971bec5202042d97c923bbe999751369ea58b8730961"
+        }
+      ],
+      "detail": "Complete event and both names/result visible in original f2855/114.20s and f4020/160.80s. Contact sheets also show header at 114.12 / 114.24 / 114.28 and 160.68 / 160.88. 25fps has no 160.78s frame; actual nearest sample is 160.80s."
+    },
+    {
+      "id": "viewport",
+      "result": "pass_within_samples",
+      "frames": [
+        1850,
+        2000,
+        3935,
+        4012
+      ],
+      "detail": "1080x1440 with width-filling central match strip and navy surround; fixed central 1560x1080 crop from 1920x1080 specified and bound. Actual distant left/right defence frames at 74.00 / 80.00s (source 124.5 / 130.5) retain the player and court. No sampled upper-right WTA corner logo; real net logos/court marks retained. Original board stays in source position; approved left-edge name clipping retained, full names in header."
+    },
+    {
+      "id": "captions-and-cards",
+      "result": "pass_within_samples",
+      "detail": "37 bilingual source and 22 other CN narration cue midpoints visible/legible in actual contact sheets; low match captions remain beneath court. Semantic main card lines, navy card design, content kickers and bottom brand remain readable. V3 changed Chinese narration captions were actually viewed, including first-set and second-set story cards."
+    },
+    {
+      "id": "clean-full-screen-stats",
+      "result": "expected_contract",
+      "frames": [
+        {
+          "frame_index": 5351,
+          "seconds": 214.04,
+          "png": "frames/f005351.png",
+          "reasons": [
+            {
+              "kind": "actual_ASS_cue_midpoint",
+              "requested_seconds": 214.05,
+              "index": 55,
+              "start": 212.82999999999998,
+              "end": 215.27,
+              "style": "TL",
+              "text": "非受迫失误 月亮姐{\\fs78}15{\\fs68}次"
+            }
+          ],
+          "png_sha256": "50a1c4d6dcc3205596567add4736ae16b36bb515b618a447c49cb6cd580b44b7"
+        },
+        {
+          "frame_index": 5434,
+          "seconds": 217.36,
+          "png": "frames/f005434.png",
+          "reasons": [
+            {
+              "kind": "actual_ASS_cue_midpoint",
+              "requested_seconds": 217.375,
+              "index": 56,
+              "start": 215.27,
+              "end": 219.48,
+              "style": "TL",
+              "text": "对手{\\fs78}31{\\fs68}次 稳定 让她笑到最后"
+            }
+          ],
+          "png_sha256": "ef8d5c9a3738d77313b9c6d9884897b8b9a1366a89c8823a8bb96ac368e215eb"
+        }
+      ],
+      "detail": "Two V3 narration ASS cue windows at214.04/217.36 intentionally show clean full-canvas stat card without extra subtitle/header overlays per root-confirmed native contract. Nine statistic rows readable; correct Moon/Jovic W 17/23, UE 15/31, aces 1/1, DF 1/3, first-in 60/67 percent, first-won 61/49 percent, second-won 64/55 percent, BP 5 of 7 / 1 of 2, total points 69/55."
+    },
+    {
+      "id": "key-story-and-ending",
+      "result": "no_blocker_seen_in_samples",
+      "detail": "Fresh 18 key samples and 13 transition pairs cover first 3-4 sequence, 4-4 defence, third set point result, Jovic opening hold in second set, Moon 3-1 net break, match point serve/result, reaction/handshake and afterward. Early serve samples f961/f2339 visibly overlap the intended short dissolve; do not infer unobscured pre-serve preparation from these sparse samples. No sampled black seam or WTA outro card. Final brand outro and last frame clean."
+    },
+    {
+      "id": "poster-order",
+      "result": "confirmed",
+      "frame_index": 15,
+      "detail": "Actual poster 0–1.2s precedes cold 1.2–13.14s; metadata and original frame 15 agree. Poster has intact subject/face/two-line hook and6-4/6-1scoreboard."
+    }
+  ],
+  "improvements_observed_since_history": [
+    "Fresh 61 cue V3 sample set replaces historical 64 cue set; actual revised Chinese captions are readable.",
+    "Stats interval is 10 seconds and has 2 expected clean stat cue windows; later outlook/outro sampling follows new actual timeline.",
+    "Lateral defence checks now use observed left/right source 124.5/130.5 instead of arbitrary rally times."
+  ],
+  "limitations": [
+    "Finite still-image review: 113 of 5954 frames; not whole film frame-by-frame viewing.",
+    "No certification of every intermediate ball contact, absolute maximum lateral excursion or continuous action between samples. Source completeness and factual identity also rely on their separately bound evidence.",
+    "No manual audio listening, pronunciation approval, loudness/peak/PCM/gain/threshold/silence analysis performed.",
+    "Visual result applies only to the identified film SHA and does not replace audio/factual/native QC/publication gates."
+  ],
+  "separate_root_review": "root-v3-spotcheck.json contains root own 6 exact PNG checks; separate from independent 26 original PNG scope.",
+  "archive": "Complete finite evidence ZIP includes 113 PNGs, 8 contact sheets, manifest, metadata, report, root spot check and sampling code; excludes MP4 and V1."
+}

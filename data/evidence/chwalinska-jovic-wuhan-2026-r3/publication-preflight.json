@@ -1,0 +1,20 @@
+{
+  "status": "video_final_review_complete_awaiting_current_head_CI_and_publication",
+  "film_sha256": "d45f651435e44a0b6d8c3039f6b438f46a16ecc4133128395dbe31c2560f11dd",
+  "render_run": 38716958767,
+  "pronunciation_report": "pronunciation/current-review.json",
+  "visual_report": "visual-qc/final-visual-qc.json",
+  "native_qc": "output/2026-10-15/reel/chwalinska-jovic-wuhan-2026-r3/qc_attestation.json",
+  "baseline_CI_failure": {
+    "run": 38715699910,
+    "failures": "Existing auxiliary workflows lacked explicit top-level permissions, job timeouts, sparse checkout and shared apt install; latest main also added publish-transcripts without a staged-size gate. These failures predate this video."
+  },
+  "minimal_workflow_repair_commit": "a85508d0",
+  "targeted_checks": {
+    "command": "python -m pytest -q tests/test_workflow_alerts.py tests/test_match_reel.py::test_不碰产物的工作流不许把output拉下来",
+    "result": "18 passed in 3.09s"
+  },
+  "rendering_code_or_spec_changed_by_workflow_repair": false,
+  "current_head_full_CI_required_before_merge": true,
+  "wechat_publication_claimed": false
+}

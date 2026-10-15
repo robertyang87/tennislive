@@ -1,0 +1,1208 @@
+{
+  "created_at": "2026-10-15T10:13:33.499925+00:00",
+  "bundle_sha256": "e35d913c416209be96566582110d4c9d21ce6c170cdebcf8380d7f651b4ad82e",
+  "status": "current_v3_finite_actual_pronunciation_review_complete_low_support",
+  "requests": 7,
+  "positions": 43,
+  "supported_low": 43,
+  "pending_count": 0,
+  "pending": [],
+  "occurrences": [
+    {
+      "edit_id": "coordinate",
+      "index": 0,
+      "char": "北",
+      "intended": "bei3",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "北京",
+      "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/v3-current-supplement.json",
+          "source_sha256": "9fed82ef1beec53d09f3d81ec342591ad81bbf9dcb69560ff90b5891b6dba6a6",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6"
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 1,
+      "char": "京",
+      "intended": "jing1",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "北京",
+      "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6"
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 3,
+      "char": "间",
+      "word": "北京时间",
+      "intended": "jian1",
+      "live": [
+        "jian1",
+        "jian4"
+      ],
+      "defaults": [
+        "jian1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6"
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 8,
+      "char": "号",
+      "word": "五号",
+      "intended": "hao4",
+      "live": [
+        "hao4",
+        "hao2"
+      ],
+      "defaults": [
+        "hao4"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6"
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 23,
+      "char": "月",
+      "intended": "yue4",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "月亮姐",
+      "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6"
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 24,
+      "char": "亮",
+      "intended": "liang4",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "月亮姐",
+      "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6"
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 25,
+      "char": "姐",
+      "intended": "jie3",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "月亮姐",
+      "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6"
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 29,
+      "char": "转",
+      "word": "逆转",
+      "intended": "zhuan3",
+      "live": [
+        "zhuan3",
+        "zhuan4"
+      ],
+      "defaults": [
+        "zhuan3"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/v3-current-supplement.json",
+          "source_sha256": "9fed82ef1beec53d09f3d81ec342591ad81bbf9dcb69560ff90b5891b6dba6a6",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6"
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 37,
+      "char": "约",
+      "intended": "yue1",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "约维奇",
+      "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/v3-current-supplement.json",
+          "source_sha256": "9fed82ef1beec53d09f3d81ec342591ad81bbf9dcb69560ff90b5891b6dba6a6",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6"
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 38,
+      "char": "维",
+      "intended": "wei2",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "约维奇",
+      "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6"
+        }
+      ]
+    },
+    {
+      "edit_id": "coordinate",
+      "index": 39,
+      "char": "奇",
+      "word": "奇",
+      "intended": "qi2",
+      "live": [
+        "qi2",
+        "ji1"
+      ],
+      "defaults": [
+        "qi2"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6"
+        }
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 10,
+      "char": "发",
+      "word": "发球",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/v3-current-supplement.json",
+          "source_sha256": "9fed82ef1beec53d09f3d81ec342591ad81bbf9dcb69560ff90b5891b6dba6a6",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2"
+        }
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 23,
+      "char": "落",
+      "word": "落后",
+      "intended": "luo4",
+      "live": [
+        "luo4",
+        "la4",
+        "lao4"
+      ],
+      "defaults": [
+        "luo4"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v3-results.json",
+          "source_sha256": "30b15ad41f56246fad47dcbcd799ff1c9108cd50ab6ac20eca41234740ca4840",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2"
+        }
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 26,
+      "char": "被",
+      "word": "被",
+      "intended": "bei4",
+      "live": [
+        "bei4",
+        "pi1"
+      ],
+      "defaults": [
+        "bei4"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v3-results.json",
+          "source_sha256": "30b15ad41f56246fad47dcbcd799ff1c9108cd50ab6ac20eca41234740ca4840",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2"
+        }
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 36,
+      "char": "把",
+      "word": "把",
+      "intended": "ba3",
+      "live": [
+        "ba3",
+        "ba4"
+      ],
+      "defaults": [
+        "ba3"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v3-results.json",
+          "source_sha256": "30b15ad41f56246fad47dcbcd799ff1c9108cd50ab6ac20eca41234740ca4840",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2"
+        }
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 45,
+      "char": "分",
+      "word": "一分",
+      "intended": "fen1",
+      "live": [
+        "fen1",
+        "fen4"
+      ],
+      "defaults": [
+        "fen1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/v3-current-supplement.json",
+          "source_sha256": "9fed82ef1beec53d09f3d81ec342591ad81bbf9dcb69560ff90b5891b6dba6a6",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2"
+        }
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 53,
+      "char": "分",
+      "word": "分",
+      "intended": "fen1",
+      "live": [
+        "fen1",
+        "fen4"
+      ],
+      "defaults": [
+        "fen1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v3-results.json",
+          "source_sha256": "30b15ad41f56246fad47dcbcd799ff1c9108cd50ab6ac20eca41234740ca4840",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2"
+        }
+      ]
+    },
+    {
+      "edit_id": "first_set_turn",
+      "index": 63,
+      "char": "发",
+      "word": "发",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/v3-current-supplement.json",
+          "source_sha256": "9fed82ef1beec53d09f3d81ec342591ad81bbf9dcb69560ff90b5891b6dba6a6",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2"
+        }
+      ]
+    },
+    {
+      "edit_id": "last_game",
+      "index": 10,
+      "char": "落",
+      "word": "落后",
+      "intended": "luo4",
+      "live": [
+        "luo4",
+        "la4",
+        "lao4"
+      ],
+      "defaults": [
+        "luo4"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "e21e3455241cef012f60ca1d3d2c51864443b0dc3ffcab0e721d065b7b838bc6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/v3-current-supplement.json",
+          "source_sha256": "9fed82ef1beec53d09f3d81ec342591ad81bbf9dcb69560ff90b5891b6dba6a6",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "e21e3455241cef012f60ca1d3d2c51864443b0dc3ffcab0e721d065b7b838bc6"
+        }
+      ]
+    },
+    {
+      "edit_id": "last_game",
+      "index": 15,
+      "char": "解",
+      "word": "化解",
+      "intended": "jie3",
+      "live": [
+        "jie3",
+        "jie4",
+        "xie4"
+      ],
+      "defaults": [
+        "jie3"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "e21e3455241cef012f60ca1d3d2c51864443b0dc3ffcab0e721d065b7b838bc6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "e21e3455241cef012f60ca1d3d2c51864443b0dc3ffcab0e721d065b7b838bc6"
+        }
+      ]
+    },
+    {
+      "edit_id": "last_game",
+      "index": 28,
+      "char": "分",
+      "word": "分",
+      "intended": "fen1",
+      "live": [
+        "fen1",
+        "fen4"
+      ],
+      "defaults": [
+        "fen1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "e21e3455241cef012f60ca1d3d2c51864443b0dc3ffcab0e721d065b7b838bc6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "e21e3455241cef012f60ca1d3d2c51864443b0dc3ffcab0e721d065b7b838bc6"
+        }
+      ]
+    },
+    {
+      "edit_id": "last_game",
+      "index": 38,
+      "char": "结",
+      "word": "结束",
+      "intended": "jie2",
+      "live": [
+        "jie2",
+        "jie1"
+      ],
+      "defaults": [
+        "jie2"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "e21e3455241cef012f60ca1d3d2c51864443b0dc3ffcab0e721d065b7b838bc6",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/v3-current-supplement.json",
+          "source_sha256": "9fed82ef1beec53d09f3d81ec342591ad81bbf9dcb69560ff90b5891b6dba6a6",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "e21e3455241cef012f60ca1d3d2c51864443b0dc3ffcab0e721d065b7b838bc6"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 3,
+      "char": "的",
+      "word": "的",
+      "intended": "de5",
+      "live": [
+        "de5",
+        "di1",
+        "di2",
+        "di4"
+      ],
+      "defaults": [
+        "de5"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+          "source_sha256": "6d6ed359b3c60d213418c7cd45eec06feb41a51c9425667fa584bba24cab2f87",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 5,
+      "char": "转",
+      "word": "逆转",
+      "intended": "zhuan3",
+      "live": [
+        "zhuan3",
+        "zhuan4"
+      ],
+      "defaults": [
+        "zhuan3"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+          "source_sha256": "6d6ed359b3c60d213418c7cd45eec06feb41a51c9425667fa584bba24cab2f87",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 15,
+      "char": "月",
+      "intended": "yue4",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "月亮姐",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/independent-review.json",
+          "source_sha256": "8b10dc40bd10fde074106e9f39d77d659cea589fd129fa5a1282ca453abaddd4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 16,
+      "char": "亮",
+      "intended": "liang4",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "月亮姐",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+          "source_sha256": "6d6ed359b3c60d213418c7cd45eec06feb41a51c9425667fa584bba24cab2f87",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 17,
+      "char": "姐",
+      "intended": "jie3",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "月亮姐",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+          "source_sha256": "6d6ed359b3c60d213418c7cd45eec06feb41a51c9425667fa584bba24cab2f87",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 27,
+      "char": "强",
+      "word": "强",
+      "intended": "qiang2",
+      "live": [
+        "qiang2",
+        "jiang4",
+        "qiang3"
+      ],
+      "defaults": [
+        "qiang2"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+          "source_sha256": "6d6ed359b3c60d213418c7cd45eec06feb41a51c9425667fa584bba24cab2f87",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 34,
+      "char": "萨",
+      "intended": "sa4",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "萨卡里",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+          "source_sha256": "6d6ed359b3c60d213418c7cd45eec06feb41a51c9425667fa584bba24cab2f87",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 35,
+      "char": "卡",
+      "word": "卡",
+      "intended": "ka3",
+      "live": [
+        "ka3",
+        "qia3"
+      ],
+      "defaults": [
+        "ka3"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+          "source_sha256": "6d6ed359b3c60d213418c7cd45eec06feb41a51c9425667fa584bba24cab2f87",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 36,
+      "char": "里",
+      "intended": "li3",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "萨卡里",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/independent-review.json",
+          "source_sha256": "8b10dc40bd10fde074106e9f39d77d659cea589fd129fa5a1282ca453abaddd4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "index": 43,
+      "char": "场",
+      "word": "一场",
+      "intended": "chang3",
+      "live": [
+        "chang3",
+        "chang2"
+      ],
+      "defaults": [
+        "chang3"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+          "source_sha256": "6d6ed359b3c60d213418c7cd45eec06feb41a51c9425667fa584bba24cab2f87",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697"
+        }
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "index": 5,
+      "char": "插",
+      "intended": "cha1",
+      "kind": "brand_phonetic",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "status": "correct_low_support",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+          "source_sha256": "6d6ed359b3c60d213418c7cd45eec06feb41a51c9425667fa584bba24cab2f87",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f"
+        }
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "index": 8,
+      "char": "插",
+      "intended": "cha1",
+      "kind": "brand_phonetic",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "status": "correct_low_support",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+          "source_sha256": "6d6ed359b3c60d213418c7cd45eec06feb41a51c9425667fa584bba24cab2f87",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f"
+        }
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "index": 12,
+      "char": "好",
+      "word": "好",
+      "intended": "hao3",
+      "live": [
+        "hao3",
+        "hao4"
+      ],
+      "defaults": [
+        "hao3"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/independent-review.json",
+          "source_sha256": "8b10dc40bd10fde074106e9f39d77d659cea589fd129fa5a1282ca453abaddd4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f"
+        }
+      ]
+    },
+    {
+      "edit_id": "second_set_turn",
+      "index": 15,
+      "char": "分",
+      "word": "平分",
+      "intended": "fen1",
+      "live": [
+        "fen1",
+        "fen4"
+      ],
+      "defaults": [
+        "fen1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "4378cf6e55ad62f9b42fc01184ef183b1b8f5c658e786782ca5a1a98460f5f88",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/v3-current-supplement.json",
+          "source_sha256": "9fed82ef1beec53d09f3d81ec342591ad81bbf9dcb69560ff90b5891b6dba6a6",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "4378cf6e55ad62f9b42fc01184ef183b1b8f5c658e786782ca5a1a98460f5f88"
+        }
+      ]
+    },
+    {
+      "edit_id": "second_set_turn",
+      "index": 45,
+      "char": "发",
+      "word": "发",
+      "intended": "fa1",
+      "live": [
+        "fa1",
+        "fa4"
+      ],
+      "defaults": [
+        "fa1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "4378cf6e55ad62f9b42fc01184ef183b1b8f5c658e786782ca5a1a98460f5f88",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "4378cf6e55ad62f9b42fc01184ef183b1b8f5c658e786782ca5a1a98460f5f88"
+        }
+      ]
+    },
+    {
+      "edit_id": "second_set_turn",
+      "index": 47,
+      "char": "会",
+      "word": "机会",
+      "intended": "hui4",
+      "live": [
+        "hui4",
+        "kuai4"
+      ],
+      "defaults": [
+        "hui4"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "4378cf6e55ad62f9b42fc01184ef183b1b8f5c658e786782ca5a1a98460f5f88",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/v3-current-supplement.json",
+          "source_sha256": "9fed82ef1beec53d09f3d81ec342591ad81bbf9dcb69560ff90b5891b6dba6a6",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "4378cf6e55ad62f9b42fc01184ef183b1b8f5c658e786782ca5a1a98460f5f88"
+        }
+      ]
+    },
+    {
+      "edit_id": "second_set_turn",
+      "index": 49,
+      "char": "把",
+      "word": "把",
+      "intended": "ba3",
+      "live": [
+        "ba3",
+        "ba4"
+      ],
+      "defaults": [
+        "ba3"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "4378cf6e55ad62f9b42fc01184ef183b1b8f5c658e786782ca5a1a98460f5f88",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "4378cf6e55ad62f9b42fc01184ef183b1b8f5c658e786782ca5a1a98460f5f88"
+        }
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 2,
+      "char": "迫",
+      "word": "迫",
+      "intended": "po4",
+      "live": [
+        "po4",
+        "pai3"
+      ],
+      "defaults": [
+        "po4"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "3e8706de351de9332530adab8f4ca37b24a5f61eabe38d9a695e381bb17a9497",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "3e8706de351de9332530adab8f4ca37b24a5f61eabe38d9a695e381bb17a9497"
+        }
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 6,
+      "char": "月",
+      "intended": "yue4",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "月亮姐",
+      "actual_audio_sha256": "3e8706de351de9332530adab8f4ca37b24a5f61eabe38d9a695e381bb17a9497",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "3e8706de351de9332530adab8f4ca37b24a5f61eabe38d9a695e381bb17a9497"
+        }
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 7,
+      "char": "亮",
+      "intended": "liang4",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "月亮姐",
+      "actual_audio_sha256": "3e8706de351de9332530adab8f4ca37b24a5f61eabe38d9a695e381bb17a9497",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+          "source_sha256": "0ae204ae8db400a487e16c350f7e96eb89c2ee0b92394151cbf93dec07a97ad4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "3e8706de351de9332530adab8f4ca37b24a5f61eabe38d9a695e381bb17a9497"
+        }
+      ]
+    },
+    {
+      "edit_id": "stats",
+      "index": 8,
+      "char": "姐",
+      "intended": "jie3",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "月亮姐",
+      "actual_audio_sha256": "3e8706de351de9332530adab8f4ca37b24a5f61eabe38d9a695e381bb17a9497",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/v3-current-supplement.json",
+          "source_sha256": "9fed82ef1beec53d09f3d81ec342591ad81bbf9dcb69560ff90b5891b6dba6a6",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "3e8706de351de9332530adab8f4ca37b24a5f61eabe38d9a695e381bb17a9497"
+        }
+      ]
+    }
+  ],
+  "ignored_stale_decisions": [
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "second_set_turn",
+      "index": 15,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "second_set_turn",
+      "index": 45,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "second_set_turn",
+      "index": 47,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "coordinate",
+      "index": 3,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "coordinate",
+      "index": 8,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "coordinate",
+      "index": 29,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "coordinate",
+      "index": 38,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "coordinate",
+      "index": 39,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "coordinate",
+      "index": 0,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "coordinate",
+      "index": 1,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "first_set_turn",
+      "index": 10,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "first_set_turn",
+      "index": 53,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "stats",
+      "index": 8,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "stats",
+      "index": 6,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+      "edit_id": "stats",
+      "index": 7,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation-qc/independent-review.json",
+      "edit_id": "coordinate",
+      "index": 3,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation-qc/independent-review.json",
+      "edit_id": "second_set_turn",
+      "index": 15,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation-qc/independent-review.json",
+      "edit_id": "coordinate",
+      "index": 29,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation-qc/independent-review.json",
+      "edit_id": "coordinate",
+      "index": 39,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation-qc/independent-review.json",
+      "edit_id": "first_set_turn",
+      "index": 53,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    },
+    {
+      "source": "/workspace/scratch/moon3-pronunciation/v2-results.json",
+      "edit_id": "first_set_turn",
+      "index": 10,
+      "reason": "actual_audio_SHA_or_current_character_differs"
+    }
+  ],
+  "bindings": "bindings.json",
+  "manual_listening_claimed": false,
+  "confirmed_wrong_in_superseded_v2": {
+    "edit_id": "first_set_turn",
+    "index": 20,
+    "text": "接发",
+    "actual_reading": "fa4",
+    "actual_MP3_SHA256": "7041d46e163aa1702eadca95d2dc196ff611963a91c4e3382116d2149473638d",
+    "evidence": "history/v2-940605eabb1e/v2-confirmed-fa4.json",
+    "not_part_of_current_v3": true
+  },
+  "film_sha256": "d45f651435e44a0b6d8c3039f6b438f46a16ecc4133128395dbe31c2560f11dd",
+  "final_film_input_binding": {
+    "status": "all_seven_actual_frozen_mp3_and_marks_match_native_final_render_input_archive",
+    "method": "bound_input_review_not_human_listening",
+    "bundle_sha256": "e35d913c416209be96566582110d4c9d21ce6c170cdebcf8380d7f651b4ad82e",
+    "native_input_archive_path": "output/2026-10-15/reel/chwalinska-jovic-wuhan-2026-r3/native_input_archive.json",
+    "native_input_archive_sha256": "030c462f483682d09aec994de707b45873f9bca6e4ff4b0ee3da71d934d52211",
+    "film_sha256": "d45f651435e44a0b6d8c3039f6b438f46a16ecc4133128395dbe31c2560f11dd",
+    "actual_inputs": [
+      {
+        "edit_id": "coordinate",
+        "output_name": "voice_01.mp3",
+        "native_mp3_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+        "native_marks_sha256": "a5e1b7120c20f9700f75b44d067b16c57b8ce91103c32129460a09d542802d39",
+        "archive_mp3_sha256": "c3044df2a2cb46b1180a1cd0892fa75cb58d2bd9ca2937db2e7331ea25343de6",
+        "archive_marks_sha256": "a5e1b7120c20f9700f75b44d067b16c57b8ce91103c32129460a09d542802d39",
+        "actual_bound_inputs_match": true
+      },
+      {
+        "edit_id": "first_set_turn",
+        "output_name": "voice_02.mp3",
+        "native_mp3_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2",
+        "native_marks_sha256": "b4a706c4409c7558a22492a4fc164c81671de5ea5516ae0131795a2925995939",
+        "archive_mp3_sha256": "6a212559be3a534e25c5a0ca54131a618f99598ee87e66dbe48465e7007fabb2",
+        "archive_marks_sha256": "b4a706c4409c7558a22492a4fc164c81671de5ea5516ae0131795a2925995939",
+        "actual_bound_inputs_match": true
+      },
+      {
+        "edit_id": "second_set_turn",
+        "output_name": "voice_06.mp3",
+        "native_mp3_sha256": "4378cf6e55ad62f9b42fc01184ef183b1b8f5c658e786782ca5a1a98460f5f88",
+        "native_marks_sha256": "2b9b075f1eff753213e537bc97c42d540d630e824f34942d925bdd2679385452",
+        "archive_mp3_sha256": "4378cf6e55ad62f9b42fc01184ef183b1b8f5c658e786782ca5a1a98460f5f88",
+        "archive_marks_sha256": "2b9b075f1eff753213e537bc97c42d540d630e824f34942d925bdd2679385452",
+        "actual_bound_inputs_match": true
+      },
+      {
+        "edit_id": "last_game",
+        "output_name": "voice_08.mp3",
+        "native_mp3_sha256": "e21e3455241cef012f60ca1d3d2c51864443b0dc3ffcab0e721d065b7b838bc6",
+        "native_marks_sha256": "7462be34b4d220a32b216d4cc6b3c1f81c22c0b625a5f526139a640d2efbb0f6",
+        "archive_mp3_sha256": "e21e3455241cef012f60ca1d3d2c51864443b0dc3ffcab0e721d065b7b838bc6",
+        "archive_marks_sha256": "7462be34b4d220a32b216d4cc6b3c1f81c22c0b625a5f526139a640d2efbb0f6",
+        "actual_bound_inputs_match": true
+      },
+      {
+        "edit_id": "stats",
+        "output_name": "voice_10.mp3",
+        "native_mp3_sha256": "3e8706de351de9332530adab8f4ca37b24a5f61eabe38d9a695e381bb17a9497",
+        "native_marks_sha256": "19e3ff22480199ae4c16ea99af113fecb926b86a71b2c8e5775979235d1c64f3",
+        "archive_mp3_sha256": "3e8706de351de9332530adab8f4ca37b24a5f61eabe38d9a695e381bb17a9497",
+        "archive_marks_sha256": "19e3ff22480199ae4c16ea99af113fecb926b86a71b2c8e5775979235d1c64f3",
+        "actual_bound_inputs_match": true
+      },
+      {
+        "edit_id": "outlook",
+        "output_name": "voice_11.mp3",
+        "native_mp3_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+        "native_marks_sha256": "c0728b49a784fc99e2e66163b9bdd23b172ae4c8b8874cbb0849b77c1993fb25",
+        "archive_mp3_sha256": "d6013d00dba3681af3cf136ebb03eb0849e8392782475d94e872b0becbc97697",
+        "archive_marks_sha256": "c0728b49a784fc99e2e66163b9bdd23b172ae4c8b8874cbb0849b77c1993fb25",
+        "actual_bound_inputs_match": true
+      },
+      {
+        "edit_id": "outro",
+        "output_name": "voice_outro.mp3",
+        "native_mp3_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+        "native_marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+        "archive_mp3_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+        "archive_marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+        "actual_bound_inputs_match": true
+      }
+    ],
+    "manual_listening_claimed": false,
+    "no_actual_final_mix_audition_claimed": true
+  },
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "pitch": "+0Hz",
+  "all_current_spoken_requests_reviewed": true,
+  "cover_narration": false,
+  "numbers_actual_lexical_asr_spans": 33,
+  "proper_name_syllable_positions": 17,
+  "current_confirmed_actual_misread_count": 0,
+  "whole_final_mix_listened": false,
+  "method": "bound_input_review_not_human_listening",
+  "all_mechanical_components_passed": false,
+  "scope_note": "All seven exact V3 native MP3s and WordBoundary bytes match final render native_input_archive. Current actual syllable evidence is limited low support; report does not claim listening to the final mix or every mechanical contrast passed.",
+  "limitations": [
+    "All conclusions retain finite low confidence. No human listening or strongest-confidence claim.",
+    "The final two cross-negative mechanical LOO failures are preserved. Actual independently located vowel F0 curves, reference character phonology and current syllable evidence support their limited decisions; original failed calibration is not relabelled pass.",
+    "For hui/kuai, current spectral contrast provides low support near the decision boundary; Burg formant component does not independently support the reading and remains explicitly unsupported.",
+    "Single positive-reference cases retain their missing positive-side LOO limitation; actual phonetic identity or independently located tone evidence is recorded separately.",
+    "ASR Chinese characters locate words and numeric values only, never establish tone.",
+    "No source/final loudness/RMS/peak/silence/gain processing or checking. Current pronunciation feature extraction omits MFCC C0 and RMS."
+  ],
+  "all_original_failed_results_preserved": true
+}
