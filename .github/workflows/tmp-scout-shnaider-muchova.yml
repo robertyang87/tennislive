@@ -17,6 +17,7 @@ jobs:
             src
             specs
             data
+            .github
             assets/players
             pyproject.toml
       - uses: actions/setup-python@v5
@@ -26,40 +27,32 @@ jobs:
         run: |
           python -m pip install -q -e . playwright pillow
           for i in 1 2; do timeout 240 python -m playwright install --with-deps chromium && break; sudo pkill -9 apt-get || true; sudo dpkg --configure -a || true; done
-      - name: round2
-        continue-on-error: true
+      - name: board scan
         run: |
-          D=data/research/shnaider-muchova-wuhan-2026-r3; mkdir -p $D/photos
-          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
-          for p in stats point-by-point; do curl -sS -A "$UA" "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS014/$p" -o $D/$p.raw; done
-          curl -sS -A "$UA" "https://wtafiles.wtatennis.com/pdf/draws/2026/1075/OP.pdf" -o $D/oop.pdf || true
-          for u in \
-            "https://photoresources.wtatennis.com/photo-resources/2026/10/15/af0e284d-bbd7-40a8-b497-54d5a243fce6/Shnaider-R3-Di-Yin.jpg" \
-            "https://photoresources.wtatennis.com/wta/photo/2026/10/15/2a0c79ff-71d7-4128-b507-9cdc3d2c021f/Diana-Shnaider_Wuhan-2026.jpg"; do
-            curl -sS -A "$UA" "$u" -o "$D/photos/$(basename "$u")"
-          done
-          python tools/find_cover_photo.py --player Muchova --event Wuhan --date 2026-10-15 --tour wta --days 1 --zh 穆霍娃 --city 武汉 > $D/cover-find-Muchova-r3.txt 2>&1 || true
-          tail -80 $D/cover-find-Muchova-r3.txt
-          python - <<'P'
-          import json,re,subprocess,pathlib
-          D=pathlib.Path('data/research/shnaider-muchova-wuhan-2026-r3')
-          t=(D/'cover-find-Muchova-r3.txt').read_text()
-          urls=sorted(set(u for u in re.findall(r'https://photoresources\.wtatennis\.com/\S+?\.jpg',t) if 'R3' in u or '10/15' in u))
-          for u in urls[:8]:
-              subprocess.run(['curl','-sS','-A','Mozilla/5.0',u,'-o',str(D/'photos'/u.rsplit('/',1)[1])])
-          print(urls)
+          sudo apt-get install -y -q ffmpeg >/dev/null 2>&1 || bash tools/ci_apt_install.sh ffmpeg
+          pip install -q -e ".[visualqa]"
+          curl -sSL -o /tmp/src.mp4 -H "Authorization: Bearer ${{ github.token }}" "https://github.com/${{ github.repository }}/releases/download/source-XUQeeTikU7k/XUQeeTikU7k.mp4"
+          ls -la /tmp/src.mp4
+          git fetch -q --depth=1 origin main
+          git checkout origin/main -- output/2026-10-15/reel/muchova-wuhan-2026/probe.json 2>/dev/null || true
+          ls output/2026-10-15/reel/muchova-wuhan-2026/ || true
+          PYTHONPATH=tools:src python - <<'P'
+          import json, pathlib, sys
+          sys.path.insert(0,'tools')
+          from probe_board import plan_boxes, scan_plan
+          p=pathlib.Path('output/2026-10-15/reel/muchova-wuhan-2026/probe.json')
+          d=json.loads(p.read_text())
+          plan=plan_boxes((90,826,550,980),(1920,1080),profile='wta')
+          print('plan',plan)
+          new=scan_plan(pathlib.Path('/tmp/src.mp4'),plan,1920)
+          for e in new: print(json.dumps(e)[:400])
+          boxes=[s['box'] for s in d['board']['scans']]
+          for e in new:
+              if e['box'] not in boxes: d['board']['scans'].append(e)
+          p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+"\n")
           P
-          python - <<'P'
-          from PIL import Image; import pathlib
-          for f in pathlib.Path('data/research/shnaider-muchova-wuhan-2026-r3/photos').glob('*.jpg'):
-              try:
-                  im=Image.open(f); ex=im.getexif(); print(f.name, im.size, ex.get(306), ex.get(270))
-                  im.thumbnail((1200,1200)); im.save(f.with_suffix('.small.jpg'),quality=85)
-              except Exception as e: print(f, e)
-          P
-          ls -la $D $D/photos
       - name: commit
         run: |
           git config user.name github-actions; git config user.email actions@github.com
-          rm -f data/research/shnaider-muchova-wuhan-2026-r3/photos/*[!l].jpg.bak; git add -f data/research/shnaider-muchova-wuhan-2026-r3
-          git commit -qm "scout2: shnaider-muchova wuhan r3 [skip ci]" && git push origin HEAD:${GITHUB_REF_NAME}
+          git add -f output/2026-10-15/reel/muchova-wuhan-2026/probe.json
+          git commit -qm "scout3: shnaider-muchova wuhan r3 [skip ci]" && git push origin HEAD:${GITHUB_REF_NAME}
