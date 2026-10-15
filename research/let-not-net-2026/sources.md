@@ -16,3 +16,13 @@
 | sq | 17IqrJNNvFY Squash 101: Stroke / Yes Let / No Let | PSA SQUASHTV | 壁球 let |
 
 检索过但没用：Pegula 2024 美网 let 后双误（S5IgXi2HASE，情节要靠解说才讲得清）；Pouille 场上鸟（ZUvnK6UVdlk，不是球打中鸟）；BWF Development「Lets (Service)」（UCBV_MmVR-A，只有 720p）。
+
+## 封面（2026-10-15 返工）
+
+账号所有者：「不要用郑钦文做封面」「副标题改成擦网喊的是 Let 不是 Net」「不要后面半句了」「封面要清晰表达 Let 的场景，而且必须用高清大图」。
+
+检索 Let 场景的高清实拍（临时工作流已删，脚本最后一版留在 cover_search.py）：
+- Wikimedia Commons 搜索 ＋ Tennis nets／Tennis umpires 分类：没有擦网实拍（最接近的是温网主裁量网高、美网主裁掷硬币）
+- AP 原图：WTOP、KXAN、WFLA、PIX11、KTLA、KRON4、WATE、WKRG 等站的 WordPress 媒体库按说明全文搜，350 条网球图里只有球员撞网、触网丢分
+- Flickr CC 搜索页：无相关结果；Unsplash／Openverse：要授权（401）；Getty：只拿得到带水印的预览图
+- 并排给了 A 球撞网特写／B 温网主裁量网高／C 福格尼尼趴网三版，账号所有者选 A，钩子只留一行
