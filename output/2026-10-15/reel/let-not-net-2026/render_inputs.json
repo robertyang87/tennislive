@@ -2,21 +2,16 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "let-not-net-2026",
-  "written_at": "2026-10-15T06:15:08Z",
-  "code_sha": "8098abc85c177fc795c5f0e934d9d86c7326bf1f",
-  "spec_sha256": "3b4d8cc1c57196d5aee4bd3537323da6bb81ae00c8033449f6a839d79d8d2847",
-  "film_sha256": "cd575ab8968ee972b1365bfe93efecd7887c49b39bfb772eaa94a32b2b53dff3",
-  "film_bytes": 108562515,
-  "projection_sha256": "248fe9d68e0f89316d7a48c37e671d137beb8b58d4ea2d8301f6a79ddb1891f3",
+  "written_at": "2026-10-15T06:40:44Z",
+  "code_sha": "019988e78f3e1a7d315c9fd3eaaaa14feee2265c",
+  "spec_sha256": "b145742148b3f6106373a2f4d335db0c2a90307969a034f9384c529f5ab7bb2c",
+  "film_sha256": "cccb421c9623607f134a5f44bc2e8ace46f8526c9bd5c2aedfc4a818633a50b4",
+  "film_bytes": 108783156,
+  "projection_sha256": "0d30655a706781fb0ef30b1dcfeb19ef7fe444eecbd9945f06b170c8cf825155",
   "claims": [
     [
       "cover",
       "_layout_why"
-    ],
-    [
-      "cover",
-      "portrait",
-      "_low_res_why"
     ],
     [
       "cover",
@@ -198,12 +193,12 @@
     ]
   ],
   "assets": {
-    "assets/reel/letnet/let-cover-net.jpg": "1d4b55eb695b08511c8d92b17631758a2c3fc0f7349913c5de4b6ee7aed6bf42"
+    "assets/reel/letnet/let-cover-umpire.jpg": "b9019ba48b06ef6014a4e91c4edca475fbaec0e49e02d0c73424b17eda491ed5"
   },
   "artifacts": {
-    "audio_review_binding.json": "78f61f3e44af559f4864677ce643256c3ad3b74e738ba3a64b8e25eba222e6a5",
-    "subtitles.ass": "fad5ceaee12e690e8202bb465705126acd3c9f21cd6be80bd7e0c07485fd3404",
-    "poster.jpg": "c2ab5316010b02d75dfaf380e00ca41c7ba84c3dcc0c20984e0a0ba9295f804d"
+    "audio_review_binding.json": "d2f7fd1a21965ab43e9fd094a5d5af84abcbfbd67a19672b0c7c8929575ab2b5",
+    "subtitles.ass": "e720779a04097f28861c0c20176bd077d9b17b0685451d0ad6d69c29df967386",
+    "poster.jpg": "060d9c897ea1ee3675cfd5034523ac87bb3b498673254fdab39f08b914e02f3b"
   },
   "projection": {
     "slug": "let-not-net-2026",
@@ -216,17 +211,17 @@
     "cover": {
       "eyebrow": "网球有故事",
       "layout": "solo",
-      "subject": "球网",
-      "hook": "擦网为啥喊Let",
-      "narration": "擦网为啥喊 let？",
+      "subject": "主裁",
+      "hook": "擦网为啥喊Let\n主裁喊的是阻碍",
+      "narration": "擦网为啥喊 let？主裁喊的是阻碍。",
       "topic": "擦网喊的是 Let 不是 Net",
       "portrait": {
-        "image": "assets/reel/letnet/let-cover-net.jpg",
+        "image": "assets/reel/letnet/let-cover-umpire.jpg",
         "fit": "cover",
-        "focus": 0.75,
+        "focus": 0.42,
         "focus_y": 0.5,
         "zoom": 1.0,
-        "source_url": "https://wtop.com/wp-content/uploads/2019/04/GettyImages-914370940.jpg"
+        "source_url": "https://commons.wikimedia.org/wiki/File:Chair_umpire_before_match.jpg"
       },
       "scrim": "clear"
     },
