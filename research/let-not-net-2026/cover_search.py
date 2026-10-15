@@ -1,36 +1,37 @@
-"""封面候选第三轮：Getty 搜索页（职业赛「球压网带」）＋ Unsplash，存缩略图和元数据。"""
+"""封面候选第四轮：转载 AP 原图的新闻站 WordPress 媒体库（WP REST 搜说明），找「Let 场景」。"""
 import json, os, re, time, urllib.parse, urllib.request
-OUT="research/let-not-net-2026/cover_cands3"; os.makedirs(OUT,exist_ok=True)
-H={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36","Accept-Language":"en-US,en;q=0.9"}
-def fetch(u):
-    return urllib.request.urlopen(urllib.request.Request(u,headers=H),timeout=60).read()
-rows=[]
-for q in ["net cord tennis","tennis ball net cord","tennis ball on net","tennis let serve","tennis ball clips net","net cord sensor tennis","umpire let tennis"]:
-    u="https://www.gettyimages.com/search/2/image?"+urllib.parse.urlencode({"phrase":q,"sort":"best","family":"editorial"})
-    try:
-        html=fetch(u).decode("utf-8","ignore")
-        print("getty",q,len(html))
-        ids=re.findall(r'/detail/news-photo/([a-z0-9-]+)/(\d{6,12})',html)
-        seen=set()
-        for slug,i in ids:
-            if i in seen: continue
-            seen.add(i); rows.append({"src":"getty","q":q,"id":i,"slug":slug,"thumb":f"https://media.gettyimages.com/id/{i}/photo/{slug}.jpg?s=612x612&w=0&k=20"})
-            if len(seen)>=24: break
-    except Exception as e: print("ERR getty",q,e)
-    time.sleep(2)
-for q in ["tennis ball net","tennis net ball","tennis ball on net tape"]:
-    u="https://unsplash.com/napi/search/photos?"+urllib.parse.urlencode({"query":q,"per_page":30})
-    try:
-        d=json.loads(fetch(u))
-        for r in d.get("results",[]):
-            rows.append({"src":"unsplash","q":q,"id":r["id"],"w":r.get("width"),"h":r.get("height"),"desc":r.get("alt_description") or r.get("description"),"author":(r.get("user") or {}).get("name"),"page":(r.get("links") or {}).get("html"),"full":(r.get("urls") or {}).get("raw"),"thumb":(r.get("urls") or {}).get("small")})
-        print("unsplash",q,len(d.get("results",[])))
-    except Exception as e: print("ERR unsplash",q,e)
-    time.sleep(2)
+OUT="research/let-not-net-2026/cover_cands4"; os.makedirs(OUT,exist_ok=True)
+H={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"}
+SITES=["wtop.com","www.wtop.com","www.thenationalnews.com","www.ksl.com","www.mynorthwest.com","www.kxan.com","www.wfla.com","www.8newsnow.com","www.kron4.com","www.wate.com","www.pix11.com","www.nbcsandiego.com"]
+QS=["net cord","netcord","hits the net","hit the net","clips the net","let serve","net judge","net umpire","ball on the net","tennis net ball","umpire tennis let"]
+def get(u):
+    return json.loads(urllib.request.urlopen(urllib.request.Request(u,headers=H),timeout=40).read())
+rows={}
+for s in SITES:
+    ok=0
+    for q in QS:
+        u=f"https://{s}/wp-json/wp/v2/media?"+urllib.parse.urlencode({"search":q,"per_page":50})
+        try: d=get(u); ok+=1
+        except Exception as e:
+            print("ERR",s,q,str(e)[:80]); 
+            if ok==0: break
+            continue
+        for m in d:
+            cap=re.sub("<[^>]+>","",(m.get("caption") or {}).get("rendered","")+" "+(m.get("title") or {}).get("rendered",""))
+            if "tennis" not in cap.lower() and "open" not in cap.lower() and "wimbledon" not in cap.lower(): continue
+            md=m.get("media_details") or {}
+            w,h=md.get("width",0),md.get("height",0)
+            src=m.get("source_url","")
+            orig=re.sub(r"-scaled(\.\w+)$",r"\1",src)
+            sizes=md.get("sizes") or {}
+            th=(sizes.get("medium") or sizes.get("thumbnail") or {}).get("source_url") or src
+            rows[orig]={"site":s,"q":q,"w":w,"h":h,"url":orig,"src":src,"thumb":th,"caption":cap.strip()[:500],"date":m.get("date")}
+        time.sleep(1)
+    print(s,"ok queries",ok,"rows",len(rows))
 keep=[]
-for n,r in enumerate(rows):
-    fn=f"{OUT}/{r['src'][0]}{n:03d}.jpg"
-    try: open(fn,"wb").write(fetch(r["thumb"])); r["file"]=fn; keep.append(r)
-    except Exception as e: print("thumb fail",r.get("id"),e)
+for n,(k,r) in enumerate(rows.items()):
+    fn=f"{OUT}/{n:03d}.jpg"
+    try: open(fn,"wb").write(urllib.request.urlopen(urllib.request.Request(r["thumb"],headers=H),timeout=40).read()); r["file"]=fn; keep.append(r)
+    except Exception as e: print("thumb fail",k,e)
 json.dump(keep,open(f"{OUT}/index.json","w"),ensure_ascii=False,indent=1)
 print(len(keep),"thumbs")
