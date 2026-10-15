@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=MEFpXBwnyQA",
+  "source_sha256": "8b516aa9d11d9a0e61f75b14011df29392694c7e440500ab79e57bf3688c3877",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-15T17:02:24.993175+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 149.13,
+  "reviewed_to": 159.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/MEFpXBwnyQA/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/MEFpXBwnyQA 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 149.13–159.4 秒内都没有任何英文词（窗口边界避开了最近的词）。",
+  "review_note": "倒地庆祝之后，妻子在看台、网前握手；空当 149.13–161.97。"
+}

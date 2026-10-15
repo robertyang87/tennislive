@@ -1,0 +1,57 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=xH4R5HNq-6s",
+  "source_sha256": "e50a334fdff8d6e0f10eb1ffa71895851c401666953a8cd3a37da7530f902801",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-15T17:02:24.993175+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 0.0,
+  "reviewed_to": 29.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 0.0,
+      "end": 2.76,
+      "en": "His father can talk every point? Are you stupid?",
+      "zh": "他父亲每一分都能说话？你傻吗？"
+    },
+    {
+      "start": 3.18,
+      "end": 10.38,
+      "en": "His father can talk every point, his father can talk every point!",
+      "zh": "他父亲每一分都能说话，每一分！"
+    },
+    {
+      "start": 11.46,
+      "end": 15.48,
+      "en": "Will you answer my question? Can you answer my question, please?",
+      "zh": "你能回答我的问题吗？"
+    },
+    {
+      "start": 15.98,
+      "end": 17.44,
+      "en": "Can his father talk every point?",
+      "zh": "他父亲能每一分都说话吗？"
+    },
+    {
+      "start": 19.58,
+      "end": 22.02,
+      "en": "Oh my God, you are so bad, man.",
+      "zh": "天哪，你太差劲了。"
+    },
+    {
+      "start": 23.62,
+      "end": 25.92,
+      "en": "How can you be so bad in the semi-final?",
+      "zh": "半决赛你怎么能这么差？"
+    },
+    {
+      "start": 25.92,
+      "end": 29.06,
+      "en": "Look at me, I'm talking to you.",
+      "zh": "看着我，我在跟你说话。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/xH4R5HNq-6s/small.en.json + medium.en.json",
+  "review_note": "澳网转播方 Nine 的 Wide World of Sports 官方频道（xH4R5HNq-6s）：换边时梅德韦杰夫对主裁的原声。两档逐词基本一致（small 记成 can't talk，按 medium 的 can talk 写，与他的原意「他父亲每一分都能说话吗」吻合）。stupid、small cat 按账号所有者交接文档不算脏话，不消音。"
+}

@@ -1,0 +1,45 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=9CQYJlU5_Ew",
+  "source_sha256": "46990ccb6b7c84354d0733e775fe6aba0f48d75bb43e733035b084d75d8d06e1",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-15T17:02:24.993175+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 192.7,
+  "reviewed_to": 208.9,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 192.84,
+      "end": 196.0,
+      "en": "Yeah, as I said, it's electric.",
+      "zh": "我说过，这里的气氛太热烈了。"
+    },
+    {
+      "start": 196.0,
+      "end": 200.5,
+      "en": "You were booing me for a reason, I never said that it was not,",
+      "zh": "你们嘘我是有原因的，我从没否认，"
+    },
+    {
+      "start": 200.5,
+      "end": 203.6,
+      "en": "but you guys see that I can also change,",
+      "zh": "但你们也看到了，我也能改变，"
+    },
+    {
+      "start": 203.6,
+      "end": 205.8,
+      "en": "because I'm a human being, I can make mistakes.",
+      "zh": "我是人，我也会犯错。"
+    },
+    {
+      "start": 206.1,
+      "end": 208.68,
+      "en": "And again, thank you very much from the bottom of my heart.",
+      "zh": "再次衷心感谢你们。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/9CQYJlU5_Ew/small.en.json + medium.en.json",
+  "review_note": "两档逐词一致（small 190.76–208.88；medium 192.84–208.68）。段尾 208.9 在 Thank you（209.42）之前。"
+}

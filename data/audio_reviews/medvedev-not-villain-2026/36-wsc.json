@@ -1,0 +1,45 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/reel-src-medvedev-not-villain-2026/ws_c.mp4",
+  "source_sha256": "459b802ba1255f576a5cc38dc8c30e16ec063d433a86af3b8ed0c96337869348",
+  "method": "verified_source_captions",
+  "reviewed_at": "2026-10-15T17:02:24.993175+00:00",
+  "reviewer": "Claude（Claude Code 会话）：前半按 small.en/medium.en 两档转写，后半两档都没转出，按 Tennis TV 片内烧录的英文字幕逐字核对本地抽帧；未人工听音",
+  "reviewed_from": 0.0,
+  "reviewed_to": 17.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 0.6,
+      "end": 3.6,
+      "en": "Maybe I should start a career in pickleball,",
+      "zh": "也许我该改行打匹克球，"
+    },
+    {
+      "start": 3.6,
+      "end": 5.8,
+      "en": "not too late,",
+      "zh": "现在还不晚，"
+    },
+    {
+      "start": 5.8,
+      "end": 8.6,
+      "en": "with Jack Sock, in doubles.",
+      "zh": "和索克搭档打双打。"
+    },
+    {
+      "start": 11.0,
+      "end": 14.9,
+      "en": "Every sport on this planet is better, man.",
+      "zh": "这星球上哪项运动都更好。"
+    },
+    {
+      "start": 14.9,
+      "end": 17.6,
+      "en": "Even curling right now.",
+      "zh": "现在连冰壶都更好。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/9aqUxco0bqo/small.en.json + medium.en.json",
+  "review_note": "Tennis TV 官方竖版短片（9aqUxco0bqo，Tennis TV 台标、片内烧录黄字）：前半是场边椅子上的自言自语，后半是赛后发布会。前半两档转写对得上（medium：start a career in pickleball, not too late, with jacksaw…）；后半两档都没转出来，按片内烧录字幕逐字写。"
+}

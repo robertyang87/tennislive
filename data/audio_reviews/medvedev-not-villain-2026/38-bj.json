@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=LgRD3TLoxr0",
+  "source_sha256": "d188d0e72ab9270039e9d08cc01fa2ed0dc17f10eafb8990b1eb5003e929d04f",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-15T17:02:24.993175+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 369.5,
+  "reviewed_to": 379.95,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 369.64,
+      "end": 372.7,
+      "en": "No real protest from Daniil Medvedev,",
+      "zh": "梅德韦杰夫没怎么抗议，"
+    },
+    {
+      "start": 372.78,
+      "end": 379.94,
+      "en": "but it's hard to argue with the decision from Mohamed Lahyani and the ATP supervisor there.",
+      "zh": "主裁和ATP监督的判罚，很难反驳。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/LgRD3TLoxr0/small.en.json + medium.en.json",
+  "review_note": "small 369.64–379.94 整句；medium 只转出后半（372.78–376.46）。ASR 把名字拼成 Hammond-Leyani，按主裁本人姓名 Mohamed Lahyani 写。段尾在 Tennis TV 片尾板（380 秒）之前。"
+}

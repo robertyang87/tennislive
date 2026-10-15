@@ -6632,6 +6632,12 @@ def silence_findings(spec: dict, segments, probes: dict,
 # 戴维斯杯的官方影像档案（ITF 频道）highlights 一律只有 720p、没有全场重播，
 # 1930 年代的英国百代新闻片只有 640×480，**这两档「等」也等不出 1080p**。
 APPROVED_LOW_RES_SOURCES: dict[str, int] = {
+    # 梅德韦杰夫 11 个名场面（medvedev-not-villain-2026）：账号所有者 2026-10-15 上传的
+    # 制作交接文档逐条点名了这三条美网官方源（2019 颁奖、2021 决赛集锦、2023 颁奖），
+    # 美网官方频道这三条最高一档都是 1280×720 @29.97，等不出 1080p。
+    "https://www.youtube.com/watch?v=9CQYJlU5_Ew": 720,
+    "https://www.youtube.com/watch?v=MEFpXBwnyQA": 720,
+    "https://www.youtube.com/watch?v=6q9HMdjYpVg": 720,
     # 霍达尔上海毛巾风波（jodar-towel-shanghai-2026）：账号所有者 2026-10-14「去找原视频，
     # 否则画面不对」——冲球童喊话与主裁警告官方集锦都没有，唯一完整的是 X @gerebit0 转发的
     # Tennis TV 转播录屏，最高 1206×652。spec 的 source_quality_exceptions 认领了它，这里补上白名单

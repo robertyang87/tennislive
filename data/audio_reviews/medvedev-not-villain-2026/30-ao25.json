@@ -1,0 +1,40 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=MWNZOZr_uMU",
+  "source_sha256": "f021680a3a9d40657930d70fb1bf338ac35e8b98f5842f5bf6c5682b7e6dc22a",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-15T17:02:24.993175+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 306.9,
+  "reviewed_to": 325.9,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 307.02,
+      "end": 312.6,
+      "en": "Well, through the soft, forgiving lens of nostalgia,",
+      "zh": "隔着怀旧那层柔光滤镜，"
+    },
+    {
+      "start": 312.6,
+      "end": 317.26,
+      "en": "and you'll excuse the pun of lens,",
+      "zh": "原谅我拿镜头打比方，"
+    },
+    {
+      "start": 318.0,
+      "end": 321.72,
+      "en": "you'll forgive him, because he's going to be paying for that camera,",
+      "zh": "你会原谅他，反正摄像机他得赔，"
+    },
+    {
+      "start": 321.72,
+      "end": 325.78,
+      "en": "and he'll be happy to put his hand in his pocket if he wins this match.",
+      "zh": "只要赢下这场，他掏钱也乐意。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/MWNZOZr_uMU/small.en.json + medium.en.json",
+  "profanity_check": "两档转写在这一窗口里都没有脏话；按交接文档「如果确认有脏话」的条件，不消音。",
+  "review_note": "球拍砸向网上摄像机（308–323 秒近景），解说原声两档一致（small 310.38–325.36；medium 307.02–325.78）。两档转写里都没有梅德韦杰夫本人的话，未见脏话，不消音。"
+}
