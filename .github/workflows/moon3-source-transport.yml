@@ -1,0 +1,36 @@
+name: Preserve exact Moon third-round official source (temporary)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-chwalinska-jovic-wuhan-2026-r3-3c2c50a86b22aa42
+          fail-on-cache-miss: true
+      - name: Preserve the actual native-probed source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          python - <<'PY_SOURCE'
+          from pathlib import Path
+          import json,hashlib,shutil
+          source=Path.home()/'.cache/tennislive-sources/cef1fc13f2341135.mp4'
+          assert source.is_file() and source.stat().st_size>0
+          folder=Path('/tmp/official-source');folder.mkdir()
+          sha=hashlib.sha256(source.read_bytes()).hexdigest()
+          shutil.copyfile(source,folder/'9JkX_1Oiitg.mp4')
+          shutil.copyfile(source,folder/f'9JkX_1Oiitg-{sha[:16]}.mp4')
+          manifest={'source_url':'https://www.youtube.com/watch?v=9JkX_1Oiitg','native_probe_run':38710603338,'source_sha256':sha,'bytes':source.stat().st_size,'publication_approved':False,'immutable_filename':f'9JkX_1Oiitg-{sha[:16]}.mp4'}
+          (folder/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          print(json.dumps(manifest))
+          PY_SOURCE
+          gh release view source-9JkX_1Oiitg >/dev/null 2>&1 || gh release create source-9JkX_1Oiitg --title 'Exact WTA Moon third-round official source' --notes 'Actual native probe source bytes, not a completed production or QC approval.' --latest=false --target '${{ github.sha }}'
+          gh release upload source-9JkX_1Oiitg /tmp/official-source/*.mp4 /tmp/official-source/manifest.json
