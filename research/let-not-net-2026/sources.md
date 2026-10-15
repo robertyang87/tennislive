@@ -25,4 +25,4 @@
 - Wikimedia Commons 搜索 ＋ Tennis nets／Tennis umpires 分类：没有擦网实拍（最接近的是温网主裁量网高、美网主裁掷硬币）
 - AP 原图：WTOP、KXAN、WFLA、PIX11、KTLA、KRON4、WATE、WKRG 等站的 WordPress 媒体库按说明全文搜，350 条网球图里只有球员撞网、触网丢分
 - Flickr CC 搜索页：无相关结果；Unsplash／Openverse：要授权（401）；Getty：只拿得到带水印的预览图
-- 并排给了 A 球撞网特写／B 温网主裁量网高／C 福格尼尼趴网三版，账号所有者选 A，钩子只留一行
+- 并排给了 A 球撞网特写／B 主裁赛前量网高／C 福格尼尼趴网三版；账号所有者先选 A、钩子只留一行，随后改选 B，并让第二句钩子再斟酌，定为「主裁喊的是阻碍」
