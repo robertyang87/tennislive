@@ -21,11 +21,29 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Restore apt cache
+        id: apt_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-aux-whisper-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-aux-whisper-v1-
       - name: Install ffmpeg
         timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
           apt_install_cached ffmpeg
+      - name: Save downloaded apt packages
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
       - name: Install whisper
         timeout-minutes: 8
         run: python -m pip install -q openai-whisper
@@ -42,8 +60,8 @@ jobs:
         run: |
           mkdir -p workspace/medvedev-story/transcripts
           cp /tmp/transcripts/*.txt workspace/medvedev-story/transcripts/
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           git add workspace/medvedev-story/transcripts/
           python tools/check_staged_file_sizes.py
           git diff --cached --quiet || git commit -m "Add profanity check transcripts"
