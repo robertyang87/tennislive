@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "medvedev-not-villain-2026",
-  "written_at": "2026-10-15T18:55:18Z",
-  "code_sha": "e5fc9b4da37bb56dd4f4860eb0192e0cab01e8cd",
-  "spec_sha256": "1ffd6090c9c4afda3698a66823bce2c858a227eb61512902cae99565ed53a963",
-  "film_sha256": "ef90680be47b82259443ee0b70ba9182f1860637491f6227ebd5a280c66015be",
-  "film_bytes": 302836854,
-  "projection_sha256": "82967c168c4bc91285f9ce51542be640ca2829c8954ef1976d5391437adcc8fa",
+  "written_at": "2026-10-15T20:01:56Z",
+  "code_sha": "7441e8fe2218b34f0b3e7301538a12368560cba9",
+  "spec_sha256": "326b2e7362ab829594f346efd2a0e94e83e436efc979fb22cd868baa382fa670",
+  "film_sha256": "313244c7cfca07a6de28d83126db0d2a0a4cabf3640d173141078682aaa9bbd2",
+  "film_bytes": 305794744,
+  "projection_sha256": "be5395491ffc6240217b6f4a0a21b3f55b72de12eff47c783297f901c0405c48",
   "claims": [
     [
       "_claims"
@@ -60,7 +60,7 @@
     ],
     [
       "segments",
-      17,
+      16,
       "_quote_kind"
     ],
     [
@@ -70,22 +70,22 @@
     ],
     [
       "segments",
-      21,
+      23,
       "_quote_kind"
     ],
     [
       "segments",
-      25,
+      24,
       "_quote_kind"
     ],
     [
       "segments",
-      27,
+      28,
       "_quote_kind"
     ],
     [
       "segments",
-      29,
+      30,
       "_quote_kind"
     ],
     [
@@ -95,7 +95,7 @@
     ],
     [
       "segments",
-      34,
+      35,
       "_quote_kind"
     ],
     [
@@ -109,7 +109,20 @@
       "_quote_kind"
     ],
     [
+      "segments",
+      43,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      19,
+      "_quote_skip_why"
+    ],
+    [
       "_social_search_why"
+    ],
+    [
+      "_tennistv_trim"
     ],
     [
       "_tts_backend_why"
@@ -176,7 +189,7 @@
     ],
     [
       "segments",
-      16,
+      17,
       "voice",
       "_why"
     ],
@@ -188,7 +201,7 @@
     ],
     [
       "segments",
-      19,
+      21,
       "voice",
       "_why"
     ],
@@ -200,13 +213,7 @@
     ],
     [
       "segments",
-      23,
-      "voice",
-      "_why"
-    ],
-    [
-      "segments",
-      24,
+      25,
       "voice",
       "_why"
     ],
@@ -218,13 +225,13 @@
     ],
     [
       "segments",
-      28,
+      27,
       "voice",
       "_why"
     ],
     [
       "segments",
-      30,
+      29,
       "voice",
       "_why"
     ],
@@ -242,7 +249,7 @@
     ],
     [
       "segments",
-      35,
+      34,
       "voice",
       "_why"
     ],
@@ -269,6 +276,18 @@
       41,
       "voice",
       "_why"
+    ],
+    [
+      "segments",
+      42,
+      "voice",
+      "_why"
+    ],
+    [
+      "segments",
+      44,
+      "voice",
+      "_why"
     ]
   ],
   "assets": {
@@ -285,8 +304,8 @@
     "assets/reel/medvedev-real/label-ws26.png": "e160d431fd81ef9da19daeb21ff6b6f3894997b7fa2da7e7fd3a1140362883e3"
   },
   "artifacts": {
-    "audio_review_binding.json": "9d34664a4cf7a016e684b3b9a5a441467ffea783e107dd37783f157212596ae4",
-    "subtitles.ass": "ab7b15f7297e1e0d1495f0004b06496c446851e849c48e24e0fe89221199ca71",
+    "audio_review_binding.json": "c30bc13244e608d023e8cacd5d5669041a3e60cb17fbd76af5211197ab1f76f7",
+    "subtitles.ass": "8fa52131be4a3bd165e0fc2700e172ac46c603711c06331fcdaf69cc13b4bb2f",
     "poster.jpg": "907e4f35c3c88e78597f154fbe8a848a2a6dd08cb6e7e745001d53e24edc497c"
   },
   "projection": {
@@ -379,6 +398,7 @@
       "ws26": "https://www.youtube.com/watch?v=l7F7uLC-GGM",
       "us25e": "https://www.youtube.com/watch?v=oXmpP1kLyxQ",
       "us25": "https://www.youtube.com/watch?v=p2lgExFvcug",
+      "cik": "https://www.youtube.com/watch?v=5PSCTOsUYho",
       "wsc": "https://github.com/robertyang87/tennislive/releases/download/reel-src-medvedev-not-villain-2026/ws_c.mp4"
     },
     "source_fallbacks": {
@@ -393,12 +413,13 @@
       "ao25": "https://github.com/robertyang87/tennislive/releases/download/source-MWNZOZr_uMU/MWNZOZr_uMU.mp4",
       "ws26": "https://github.com/robertyang87/tennislive/releases/download/source-l7F7uLC-GGM/l7F7uLC-GGM.mp4",
       "us25e": "https://github.com/robertyang87/tennislive/releases/download/source-oXmpP1kLyxQ/oXmpP1kLyxQ.mp4",
-      "us25": "https://github.com/robertyang87/tennislive/releases/download/source-p2lgExFvcug/p2lgExFvcug.mp4"
+      "us25": "https://github.com/robertyang87/tennislive/releases/download/source-p2lgExFvcug/p2lgExFvcug.mp4",
+      "cik": "https://github.com/robertyang87/tennislive/releases/download/source-5PSCTOsUYho/5PSCTOsUYho.mp4"
     },
     "conform": {
       "us19": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。",
-      "us21": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。",
-      "us23": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。"
+      "us23": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。",
+      "us21": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。"
     },
     "source_quality_exceptions": {
       "https://www.youtube.com/watch?v=9CQYJlU5_Ew": {
@@ -427,6 +448,7 @@
       "ao22": "澳网官方 25 fps，升到 50 fps 每帧整齐重复一次",
       "ao22r": "Wide World of Sports 原片 25 fps，升到 50 fps 每帧整齐重复一次",
       "ao25": "澳网官方 25 fps，升到 50 fps 每帧整齐重复一次",
+      "cik": "Tennis TV 60 fps → 50，场边近景，丢帧看不出",
       "us25e": "ESPN 25 fps，升到 50 fps 每帧整齐重复一次；停赛中的近景与看台",
       "us25": "美网官方 59.94 fps → 50，第五盘最后一分的广角与近景配旁白，丢帧看不出",
       "wsc": "规整后 50 fps（原片 30 fps 竖版），场边与发布会说话头，人基本不动"
@@ -509,7 +531,7 @@
           "corner": "tr",
           "width": 0.6,
           "pad": 0.085,
-          "show_for": 4.2,
+          "show_for": 7.0,
           "motion": "editorial",
           "label": {
             "topic": "被嘘进了决赛",
@@ -613,7 +635,7 @@
           "corner": "tr",
           "width": 0.6,
           "pad": 0.085,
-          "show_for": 4.2,
+          "show_for": 7.0,
           "motion": "editorial",
           "label": {
             "topic": "不想在红土上打",
@@ -665,7 +687,7 @@
       {
         "source": "md21",
         "start": 148.0,
-        "end": 156.3,
+        "end": 156.0,
         "cx": 0.5,
         "track": false,
         "narration": "",
@@ -682,7 +704,7 @@
           },
           {
             "at": 6.36,
-            "end": 8.08,
+            "end": 7.78,
             "text": "He loves the clay, of course he does.\n他爱红土，当然爱。"
           }
         ],
@@ -705,7 +727,7 @@
           "corner": "tr",
           "width": 0.6,
           "pad": 0.085,
-          "show_for": 4.2,
+          "show_for": 7.0,
           "motion": "editorial",
           "label": {
             "topic": "撞上场边摄像机",
@@ -735,14 +757,42 @@
       {
         "source": "ci21",
         "start": 16.27,
-        "end": 29.6,
+        "end": 23.9,
         "cx": 0.5,
         "track": false,
-        "narration": "他先问了问摄像师，转头就让主裁把摄像机挪走：我的手差点撞断了。接着他又踢了一脚镜头。领先一盘的比赛，最后他输给了卢布列夫。",
+        "narration": "他让主裁把摄像机挪走：我的手差点撞断了。回场边时，他还踹了一脚镜头。",
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "交涉与踢镜头，不是回合。"
+        "point_end_ok": "交涉，不是回合。"
+      },
+      {
+        "source": "cik",
+        "start": 91.4,
+        "end": 95.55,
+        "cx": 0.5,
+        "track": false,
+        "narration": "",
+        "quote": [
+          {
+            "at": 1.28,
+            "end": 3.7,
+            "text": "Absolutely clattering into the camera there.\n他整个人撞上了摄像机。"
+          }
+        ],
+        "point_end_ok": "比赛暂停中的交涉与踹镜头，不是回合。"
+      },
+      {
+        "source": "ci21",
+        "start": 24.0,
+        "end": 29.6,
+        "cx": 0.5,
+        "track": false,
+        "narration": "领先一盘的比赛，最后他输给了卢布列夫。",
+        "voice": {
+          "pitch": "+10Hz"
+        },
+        "point_end_ok": "回放，不是新的一分。"
       },
       {
         "source": "us21",
@@ -761,7 +811,7 @@
           "corner": "tr",
           "width": 0.6,
           "pad": 0.085,
-          "show_for": 4.2,
+          "show_for": 7.0,
           "motion": "editorial",
           "label": {
             "topic": "拦下年度全满贯",
@@ -775,18 +825,29 @@
       {
         "source": "us21",
         "start": 136.0,
+        "end": 142.75,
+        "cx": 0.5,
+        "track": false,
+        "fit": "contain",
+        "contain_keep": 1.0,
+        "narration": "",
+        "point_end_ok": "冠军点在 141.5 前后打完，段尾 142.75 停在倒地之后、切近景之前。"
+      },
+      {
+        "source": "us21",
+        "start": 142.75,
         "end": 149.1,
         "cx": 0.5,
         "track": false,
         "narration": "",
         "quote": [
           {
-            "at": 9.36,
-            "end": 12.88,
+            "at": 2.61,
+            "end": 6.13,
             "text": "Six-four, six-four, six-four.\n6比4、6比4、6比4。"
           }
         ],
-        "point_end_ok": "冠军点在 142 秒打完，之后是倒地庆祝。"
+        "point_end_ok": "冠军点已经打完，这是倒地之后的近景。"
       },
       {
         "source": "us21",
@@ -817,7 +878,7 @@
           "corner": "tr",
           "width": 0.6,
           "pad": 0.085,
-          "show_for": 4.2,
+          "show_for": 7.0,
           "motion": "editorial",
           "label": {
             "topic": "对着主裁怒吼",
@@ -918,7 +979,7 @@
           "corner": "tr",
           "width": 0.6,
           "pad": 0.085,
-          "show_for": 4.2,
+          "show_for": 7.0,
           "motion": "editorial",
           "label": {
             "topic": "颁奖台上的玩笑",
@@ -1050,7 +1111,7 @@
           "corner": "tr",
           "width": 0.6,
           "pad": 0.085,
-          "show_for": 4.2,
+          "show_for": 7.0,
           "motion": "editorial",
           "label": {
             "topic": "球拍砸向摄像机",
@@ -1121,7 +1182,7 @@
           "corner": "tr",
           "width": 0.6,
           "pad": 0.085,
-          "show_for": 4.2,
+          "show_for": 7.0,
           "motion": "editorial",
           "label": {
             "topic": "摄影师闯进赛点",
@@ -1220,7 +1281,7 @@
           "corner": "tr",
           "width": 0.6,
           "pad": 0.085,
-          "show_for": 4.2,
+          "show_for": 7.0,
           "motion": "editorial",
           "label": {
             "topic": "生涯第一次双蛋",
@@ -1249,11 +1310,11 @@
       },
       {
         "source": "mc26",
-        "start": 152.0,
-        "end": 162.5,
+        "start": 151.3,
+        "end": 156.0,
         "cx": 0.5,
         "track": false,
-        "narration": "他把球拍砸了好几下，最后扔进了场边的垃圾桶。整场比赛，他一局都没拿到。",
+        "narration": "砸完球拍，他把它扔进了场边的垃圾桶。",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -1276,7 +1337,7 @@
           "corner": "tr",
           "width": 0.6,
           "pad": 0.085,
-          "show_for": 4.2,
+          "show_for": 7.0,
           "motion": "editorial",
           "label": {
             "topic": "我该去打匹克球",
@@ -1321,7 +1382,9 @@
             "text": "Even curling right now.\n现在连冰壶都更好。"
           }
         ],
-        "point_end_ok": "场边与发布会，不是回合。"
+        "point_end_ok": "场边与发布会，不是回合。",
+        "crop_zoom": 1.08,
+        "fill_y": 1.0
       },
       {
         "source": "us19",
