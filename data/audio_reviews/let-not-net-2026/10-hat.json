@@ -1,0 +1,39 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=hAwOXW99Kbk",
+  "source_sha256": "e5c7651149600f4908acb2bbaa9310946e916336df1b2536533e0eba87027843",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T04:30:49.125013+00:00",
+  "reviewed_from": 42.55,
+  "reviewed_to": 54.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 42.6,
+      "end": 46.46,
+      "en": "I'm not trying to cheat.",
+      "zh": "我不是想耍赖。"
+    },
+    {
+      "start": 46.76,
+      "end": 49.42,
+      "en": "I hit the ball and my hat fell off immediately,",
+      "zh": "我一击球，帽子就掉了，"
+    },
+    {
+      "start": 49.42,
+      "end": 51.14,
+      "en": "and I stopped, okay?",
+      "zh": "我就停了，好吗？"
+    },
+    {
+      "start": 52.18,
+      "end": 53.88,
+      "en": "I promise that's what happened. I'm sorry.",
+      "zh": "我保证就是这样，抱歉。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/hAwOXW99Kbk/small.en.json + medium.en.json",
+  "review_note": "穆雷向奥热-阿利亚西姆解释。两档转写一致，Tennis TV 片中自带的英文字幕同样是这三句（I'm not trying to cheat / I hit the ball and my hat fell off immediately / and I stopped, okay? / Felix I promise that's what happened. I'm sorry）。"
+}

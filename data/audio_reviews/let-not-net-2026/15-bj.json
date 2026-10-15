@@ -1,0 +1,45 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=IhbxwdeYHLo",
+  "source_sha256": "bc2cf990ac6950cd6e257eee8838a19fb5c81af5d29c40121539bbea8dbe30e2",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T04:30:49.125013+00:00",
+  "reviewed_from": 114.8,
+  "reviewed_to": 135.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 115.4,
+      "end": 120.26,
+      "en": "I mean, this must be one of the most stupid change of rules that I've ever heard in my life.",
+      "zh": "这是我听过最蠢的规则改动之一。"
+    },
+    {
+      "start": 121.06,
+      "end": 124.26,
+      "en": "There is no sense if a player sees",
+      "zh": "这说不通：球员要是看到"
+    },
+    {
+      "start": 124.26,
+      "end": 128.14,
+      "en": "that there is a hindrance of that shot, he stops immediately.",
+      "zh": "那一拍受了干扰，会马上停下。"
+    },
+    {
+      "start": 129.74,
+      "end": 133.64,
+      "en": "I mean, we can play a 30-shot rally and he can lose the point,",
+      "zh": "我们打了三十拍，他丢了这一分，"
+    },
+    {
+      "start": 133.72,
+      "end": 135.1,
+      "en": "he's like, OK, I'm going to challenge now.",
+      "zh": "然后说：好，我现在要挑战。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/IhbxwdeYHLo/small.en.json + medium.en.json",
+  "review_note": "德约科维奇向主裁抗议。两档转写逐词一致（small 把 a player 记成 the player、OK 记成 okay，按 medium 写）。他抗议的是对手打完几拍丢分后才申请回看，不是 let 本身。"
+}

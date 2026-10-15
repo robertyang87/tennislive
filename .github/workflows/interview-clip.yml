@@ -427,8 +427,7 @@ jobs:
       # 没命中时现下也只要约 2 秒（127 MB 的包里只解三个文件），缓存买的是
       # 「GitHub Release 抽风那天不至于整条链降级」。
       - name: 采访 spec 离线预检（秒级）
-        if: github.event.inputs.mode == 'render': 预检在 runner 上无日志失败，cover 已过 12 闸，事后恢复
-        # orig-if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render'
         env:
           SLUG: ${{ github.event.inputs.slug }}
           DISPATCHED_BY: ${{ github.triggering_actor }}

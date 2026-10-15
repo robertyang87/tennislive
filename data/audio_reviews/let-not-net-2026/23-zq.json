@@ -1,0 +1,21 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=SB4QxpFvcmo",
+  "source_sha256": "d1970076e2da036eccffcc4a1b7af8627f8e3f5931ea92f2a6c8dbdd5fd1df55",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T04:30:49.125013+00:00",
+  "reviewed_from": 19.0,
+  "reviewed_to": 21.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 19.16,
+      "end": 20.76,
+      "en": "Oh man, these rules.",
+      "zh": "天哪，这规则。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/SB4QxpFvcmo/small.en.json + medium.en.json",
+  "review_note": "两档转写一致。说话人在画面外，字幕不认领是谁。"
+}
