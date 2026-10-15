@@ -31,10 +31,10 @@ jobs:
         run: |
           sudo apt-get install -y -q ffmpeg >/dev/null 2>&1 || bash tools/ci_apt_install.sh ffmpeg
           pip install -q -e ".[visualqa]"
-          curl -sSL -o /tmp/src.mp4 -H "Authorization: Bearer ${{ github.token }}" "https://github.com/${{ github.repository }}/releases/download/source-XUQeeTikU7k/XUQeeTikU7k.mp4"
+          GH_TOKEN=${{ github.token }} gh release download source-XUQeeTikU7k -R ${{ github.repository }} -p XUQeeTikU7k.mp4 -O /tmp/src.mp4
           ls -la /tmp/src.mp4
           git fetch -q --depth=1 origin main
-          git checkout origin/main -- output/2026-10-15/reel/muchova-wuhan-2026/probe.json 2>/dev/null || true
+          mkdir -p output/2026-10-15/reel/muchova-wuhan-2026 && git show origin/main:output/2026-10-15/reel/muchova-wuhan-2026/probe.json > output/2026-10-15/reel/muchova-wuhan-2026/probe.json
           ls output/2026-10-15/reel/muchova-wuhan-2026/ || true
           PYTHONPATH=tools:src python - <<'P'
           import json, pathlib, sys
