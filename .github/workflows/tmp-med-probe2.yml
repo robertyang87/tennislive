@@ -1,0 +1,34 @@
+name: tmp-med-probe2
+# 临时：medvedev-not-villain-2026 封面高清图＋新增名场面源片检索，合并前删除。
+on:
+  push:
+    branches: [claude/medvedev-not-villain-2026]
+    paths: [research/medvedev-not-villain-2026/probe2.py, .github/workflows/tmp-med-probe2.yml]
+permissions:
+  contents: write
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/medvedev-not-villain-2026
+          sparse-checkout: research/medvedev-not-villain-2026
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q pillow "yt-dlp[default]"
+      - name: search
+        run: python3 research/medvedev-not-villain-2026/probe2.py
+      - name: fetch chosen originals
+        run: |
+          if [ -f research/medvedev-not-villain-2026/cover_fetch.txt ]; then
+            while read -r url out; do [ -n "$url" ] && mkdir -p "$(dirname "$out")" && curl -sSLf -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36" -o "$out" "$url" && ls -la "$out"; done < research/medvedev-not-villain-2026/cover_fetch.txt
+          fi
+      - name: commit
+        run: |
+          git config user.name "Claude"; git config user.email "noreply@anthropic.com"
+          git sparse-checkout disable || true
+          git add -A research/medvedev-not-villain-2026 assets/reel || true
+          git diff --cached --quiet || { git commit -qm "tmp: 梅德韦杰夫封面与源片检索结果"; for i in 1 2 3 4; do git pull -q --rebase origin claude/medvedev-not-villain-2026 && git push origin HEAD:claude/medvedev-not-villain-2026 && break; sleep 5; done; }
