@@ -17,7 +17,7 @@ on:
         default: '+10%'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   tts:
@@ -30,7 +30,7 @@ jobs:
         with:
           sparse-checkout: |
             tools
-            workspace/medvedev-story
+            workspace
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
