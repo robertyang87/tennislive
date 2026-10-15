@@ -467,6 +467,9 @@ PLAYER_ZH: dict[str, str] = {
     "Caroline Wozniacki": "沃兹尼亚奇",
     "Evonne Goolagong": "古拉贡",
     "Martina Navratilova": "纳芙拉蒂洛娃",
+    # 2026-10-15 fault-not-out-2026：1999 澳网 31 次双误那场（库尔尼科娃胜佐伯美穗）。
+    "Anna Kournikova": "库尔尼科娃",
+    "Miho Saeki": "佐伯美穗",
     "Na Li": "李娜",
 
     # ↓ 2026-09-06 补。触发的是「赛场之上」伊埃拉美网第三轮那条：官方的出场

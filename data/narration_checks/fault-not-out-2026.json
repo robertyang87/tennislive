@@ -1,0 +1,138 @@
+{
+  "slug": "fault-not-out-2026",
+  "checked_at": "2026-10-15T13:28:34Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+18%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "19300e7639fca847": {
+      "segment": 2,
+      "spoken": 5.856,
+      "picture": 8.2
+    },
+    "707c992d3fa624b8": {
+      "segment": 3,
+      "spoken": 6.264,
+      "picture": 8.4
+    },
+    "708c26842422fb3c": {
+      "segment": 4,
+      "spoken": 3.984,
+      "picture": 5.6
+    },
+    "cb419c197b530ee8": {
+      "segment": 5,
+      "spoken": 9.288,
+      "picture": 11.4
+    },
+    "b0be4ec11cbd246e": {
+      "segment": 6,
+      "spoken": 7.848,
+      "picture": 11.4
+    },
+    "2b834a225731eebb": {
+      "segment": 7,
+      "spoken": 5.088,
+      "picture": 7.6
+    },
+    "3fa426b00283031b": {
+      "segment": 8,
+      "spoken": 9.792,
+      "picture": 11.4
+    },
+    "0da4af2e608ff154": {
+      "segment": 9,
+      "spoken": 8.304,
+      "picture": 11.0
+    },
+    "5c4e33761f170849": {
+      "segment": 10,
+      "spoken": 4.104,
+      "picture": 5.4
+    },
+    "ac40fd1fd7d731f0": {
+      "segment": 12,
+      "spoken": 6.48,
+      "picture": 8.6
+    },
+    "bf468cd8d82514e6": {
+      "segment": 13,
+      "spoken": 6.192,
+      "picture": 8.3
+    },
+    "a5c4786c190280ad": {
+      "segment": 17,
+      "spoken": 4.344,
+      "picture": 5.8
+    },
+    "fe4c7b39970ed6b3": {
+      "segment": 18,
+      "spoken": 3.264,
+      "picture": 4.5
+    },
+    "5bd8a30eec775459": {
+      "segment": 20,
+      "spoken": 4.656,
+      "picture": 6.0
+    },
+    "c43296acebba949f": {
+      "segment": 22,
+      "spoken": 4.992,
+      "picture": 7.0
+    },
+    "08fc019bd653e791": {
+      "segment": 25,
+      "spoken": 8.808,
+      "picture": 11.0
+    },
+    "f46f3633565bddd2": {
+      "segment": 26,
+      "spoken": 9.888,
+      "picture": 12.0
+    },
+    "2cd6fea0a7ac0e4a": {
+      "segment": 27,
+      "spoken": 7.224,
+      "picture": 9.0
+    },
+    "381d0f37109c5c10": {
+      "segment": 28,
+      "spoken": 7.08,
+      "picture": 8.4
+    },
+    "8a537a682bf556ad": {
+      "segment": 29,
+      "spoken": 7.824,
+      "picture": 10.0
+    },
+    "c7684b8754f942e9": {
+      "segment": 30,
+      "spoken": 6.696,
+      "picture": 9.2
+    },
+    "f0ea0e53bcbe6b40": {
+      "segment": 31,
+      "spoken": 8.544,
+      "picture": 10.4
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "f1af183caaeb7c1d0cbae0107957c13e55ba26245dbecba297f753470900c6f6",
+    "request_count": 24,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-fault-not-out-2026-f1af183caaeb7c1d",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-fault-not-out-2026-f1af183caaeb7c1d/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38742728460"
+  }
+}

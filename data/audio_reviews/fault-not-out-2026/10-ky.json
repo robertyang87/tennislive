@@ -1,0 +1,33 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=o1Ad7ZL7AuU",
+  "source_sha256": "3b30e88903786a07ade49efbe4de085502ab80884350d16af762b735baab35c2",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T13:23:47.902033+00:00",
+  "reviewed_from": 8.0,
+  "reviewed_to": 16.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 8.0,
+      "end": 11.5,
+      "en": "Oh, he's been called. There it is.",
+      "zh": "被判了，就是这一下。"
+    },
+    {
+      "start": 13.4,
+      "end": 15.12,
+      "en": "Yeah, that's what he has to do.",
+      "zh": "他只能这么做。"
+    },
+    {
+      "start": 15.22,
+      "end": 16.7,
+      "en": "He can't call it before you hit it.",
+      "zh": "你击球之前，他不能喊。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/o1Ad7ZL7AuU/small.en.json + medium.en.json",
+  "review_note": "温网官方。两档转写一致（small 8.08–11.36、13.80–16.48；medium 8.84–11.46、11.46–16.66）。2 秒小窗补探在 8.48 秒探到 fault 一词，可能是司线的喊声，两档整片转写都没有，未能确认，字幕不加。"
+}

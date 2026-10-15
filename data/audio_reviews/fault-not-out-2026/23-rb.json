@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=I_vN3qoxO8Q",
+  "source_sha256": "4e3588e01d440a36c17158e275a4ac14fdfc581d95d344c2d1921029c02fc683",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T13:23:47.902033+00:00",
+  "reviewed_from": 8.4,
+  "reviewed_to": 14.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 8.5,
+      "end": 11.12,
+      "en": "Double fault from Rublev,",
+      "zh": "卢布列夫双误，"
+    },
+    {
+      "start": 11.54,
+      "end": 14.5,
+      "en": "another turnaround, 5-4 deep in the third.",
+      "zh": "第三盘 5比4，局面又变了。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/I_vN3qoxO8Q/small.en.json + medium.en.json",
+  "review_note": "两档逐词一致（small 8.68–14.42，medium 8.50–14.50）。"
+}

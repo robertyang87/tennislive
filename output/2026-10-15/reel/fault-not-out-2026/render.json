@@ -1,0 +1,107 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "f1af183caaeb7c1d0cbae0107957c13e55ba26245dbecba297f753470900c6f6",
+    "request_count": 24,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-fault-not-out-2026-f1af183caaeb7c1d",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-fault-not-out-2026-f1af183caaeb7c1d/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38743077832"
+  },
+  "cover_seconds": 4.33,
+  "cover_narrated": true,
+  "outro_seconds": 4.146,
+  "layout": "full",
+  "segments_seconds": 273.51,
+  "topbar": null,
+  "film_seconds": 282.0,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+18%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 5.856,
+    "2": 6.264,
+    "3": 3.984,
+    "4": 9.288,
+    "5": 7.848,
+    "6": 5.088,
+    "7": 9.792,
+    "8": 8.304,
+    "9": 4.104,
+    "11": 6.48,
+    "12": 6.192,
+    "16": 4.344,
+    "17": 3.264,
+    "19": 4.656,
+    "21": 4.992,
+    "24": 8.808,
+    "25": 9.888,
+    "26": 7.224,
+    "27": 7.08,
+    "28": 7.824,
+    "29": 6.696,
+    "30": 8.544
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "2935db2620204fba1178a78bee102b80decfe74250e358417a9f18a79175d016",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "fault-not-out-2026",
+    "received_at": "2026-10-15T13:29:13Z",
+    "artifact_ready_at": "2026-10-15T13:36:31Z",
+    "elapsed_seconds": 438.462,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "b0f3cff1384fe2e1c2f320fa507ee3cd92f968ce75d921fc35370b32602f889d",
+    "spec_sha256": "84507f447933bc46b9b6a0bf9866a746ad01b2e7aebf490aa21ed3d66c6265f0",
+    "run_id": "38743077832",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-15T13:31:54Z",
+        "run_id": "38743077832"
+      }
+    ],
+    "render_seconds": 277.462,
+    "pre_render_seconds": 161.0
+  },
+  "film_sha256": "b0f3cff1384fe2e1c2f320fa507ee3cd92f968ce75d921fc35370b32602f889d",
+  "film_bytes": 111648623,
+  "qc_attestation_sha256": "95467fa4cd3bd79b9a7611f040692310d392021041b03fdd0a1b85242993c974",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-15T13:31:54Z",
+      "run_id": "38743077832"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-15T13:36:34Z",
+      "run_id": "38743077832"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-fault-not-out-2026/fault-not-out-2026.mp4",
+  "video_bytes": 111648623
+}

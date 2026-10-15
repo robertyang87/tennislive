@@ -1,0 +1,34 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=VwN4Bm3liL0",
+  "source_sha256": "6e273705097a8875ec31b0236bedf0d017601e615cf263723ae549231c581f19",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T13:23:47.902033+00:00",
+  "reviewed_from": 17.0,
+  "reviewed_to": 29.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 18.5,
+      "end": 20.7,
+      "en": "Foot fault!",
+      "zh": "脚误！"
+    },
+    {
+      "start": 23.3,
+      "end": 25.74,
+      "en": "Pretty handy if you haven't released the ball yet.",
+      "zh": "他球都还没抛出去呢。"
+    },
+    {
+      "start": 25.74,
+      "end": 29.46,
+      "en": "That AI has got to kind of calm down a bit.",
+      "zh": "这个 AI 得冷静一下了。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/VwN4Bm3liL0/small.en.json + medium.en.json",
+  "source_note": "电子司线的 Foot fault 喊声：两档整片转写都没有；另用 research/fault-not-out-2026/asr_probe.py（2 秒小窗、medium.en、带提示词）在 18.62/19.00/19.44/20.30 秒探到，解说随后说 foot fault remix，与之吻合。字幕不写次数。",
+  "review_note": "冷开场：2025 澳网汤普森对科普费尔，电子司线在发球方抛球之前连喊脚误（画面先是汤普森、再切到准备发球的球员，旁白不点名是谁）。两档整片转写只转到解说（23.3–29.46，逐词一致：pretty handy… / that AI… calm down a bit）；电子司线的喊声在两档整片转写里都没有，另用 2 秒小窗、带提示词的 medium.en 补探（research/fault-not-out-2026/asr_probe.py）在 18.62、19.00、19.44、20.30 秒各探到一次 Foot fault，与解说随后说的 foot fault remix 对得上，字幕不写次数，只写一条 Foot fault 覆盖 18.5–20.7。"
+}

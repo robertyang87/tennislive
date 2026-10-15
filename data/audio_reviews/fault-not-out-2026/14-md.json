@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=FhSymjai5hM",
+  "source_sha256": "9a2c7eee5d27efbd45d8e54941986bb540355fa878f1a2343c048aac0d7173ff",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T13:23:47.902033+00:00",
+  "reviewed_from": 74.8,
+  "reviewed_to": 81.14,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 74.88,
+      "end": 76.94,
+      "en": "Well, make your own mind up about that one.",
+      "zh": "是不是脚误，你自己判断吧。"
+    },
+    {
+      "start": 77.12,
+      "end": 81.06,
+      "en": "Mohamed Lahyani is sticking with the call.",
+      "zh": "主裁拉哈亚尼维持原判。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/FhSymjai5hM/small.en.json + medium.en.json",
+  "review_note": "两档逐词一致；ASR 把主裁名拼成 Lajani，按本人姓名 Lahyani 写。段尾 81.14 在下一句 We can see（81.18）之前。"
+}

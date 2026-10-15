@@ -1,0 +1,51 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=FhSymjai5hM",
+  "source_sha256": "9a2c7eee5d27efbd45d8e54941986bb540355fa878f1a2343c048aac0d7173ff",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T13:23:47.902033+00:00",
+  "reviewed_from": 46.85,
+  "reviewed_to": 61.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 47.02,
+      "end": 48.14,
+      "en": "Does the foot touch the line?",
+      "zh": "脚碰到线了吗？"
+    },
+    {
+      "start": 49.0,
+      "end": 49.84,
+      "en": "Oh, that's tight.",
+      "zh": "哦，太接近了。"
+    },
+    {
+      "start": 50.96,
+      "end": 51.64,
+      "en": "You show it again.",
+      "zh": "再放一遍。"
+    },
+    {
+      "start": 51.9,
+      "end": 52.9,
+      "en": "That's really tight.",
+      "zh": "真的太接近了。"
+    },
+    {
+      "start": 53.52,
+      "end": 56.38,
+      "en": "That's a tough judgment call, isn't it?",
+      "zh": "这一下很难判，对吧？"
+    },
+    {
+      "start": 56.92,
+      "end": 61.62,
+      "en": "Has he put enough pressure onto the front part of the foot to touch the line?",
+      "zh": "他前脚掌压下去，碰到线了吗？"
+    }
+  ],
+  "asr_evidence": "data/source_asr/FhSymjai5hM/small.en.json + medium.en.json",
+  "review_note": "Tennis TV 官方。两档逐词一致（medium 47.02–61.62；small 47.06–61.60），medium 把 onto 记成 on to，按 small 写。段首 46.85 在上一句 as we'll see（46.78）之后。"
+}

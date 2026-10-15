@@ -1,0 +1,662 @@
+{
+ "slug": "fault-not-out-2026",
+ "date": "2026-10-15",
+ "_column": "网球有故事",
+ "title": "发球失误为啥喊Fault",
+ "cx": 0.5,
+ "track": false,
+ "tts_backend": "edge",
+ "_tts_backend_why": "不用情绪风格；与 let-not-net-2026 同一把嗓子（edge 云健 +18% +10Hz），两期是一组。",
+ "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +18%。正文各段 pitch +10Hz；不写 style、lead_pause。",
+ "cover": {
+  "eyebrow": "网球有故事",
+  "layout": "solo",
+  "subject": "司线",
+  "hook": "发球为啥喊Fault\n司线喊的是没做到",
+  "_hook_why": "和 let-not-net-2026 同一个句式（账号所有者 2026-10-15 选定的「擦网为啥喊Let／主裁喊的是阻碍」）：第一行是问题，第二行直接给答案的翻转（fault 本义是缺失、做不到，不是出界），「司线」对上画面里正在判罚的司线。10＋8 字符，零术语。",
+  "narration": "发球为啥喊 fault？司线喊的是没做到。",
+  "_narration_why": "念的就是海报上那句钩子。",
+  "topic": "发球失误喊的是 Fault 不是 Out",
+  "_topic_why": "账号所有者 2026-10-15：封面副标题要用这个故事的内容；与上一期「擦网喊的是 Let 不是 Net」同一个说法。",
+  "portrait": {
+   "image": "assets/reel/faultout/fault-cover-linejudge.jpg",
+   "fit": "cover",
+   "focus": 0.6,
+   "focus_y": 0.5,
+   "zoom": 1.0,
+   "source_url": "https://wtop.com/wp-content/uploads/2025/05/French_Open_Tennis_81224.jpg",
+   "_credit": "AP Photo/Lindsey Wasson，经 wtop.com（AP 会员站）媒体库；2025-05-25 法网第一轮",
+   "_portrait_why": "AP 原图 3200×2133，说明原文：「A line judge makes a call as Russia's Anastasia Pavliuchenkova plays China's Zheng Qinwen during their first round match of the French Tennis Open at the Roland Garros stadium, in Paris, Sunday May 25, 2025.」画面里只有坐在场边、伸臂判罚的司线（两位球员都不在画面里），正是「司线喊」的场景。司线正脸偏侧、睁眼、合焦，脸在台头带和钩子带之间；3:4 裁切用到 1600×2133，不放大。说明没写这一下判的是发球还是回合，片中和文案都不说这一下是 fault。",
+   "_search_why": "2026-10-15 查过：Commons 司线类 40 余张（多为站立盯线、无判罚动作）；AP 经 16 个会员站 WordPress 媒体库按说明全文搜「line judge makes a call / linesman gestures / foot fault」等，判罚手势的只有这张和 2011 澳网那张（2000×1106、说明写的是判出界），见 research/fault-not-out-2026/sources.md。"
+  },
+  "scrim": "clear",
+  "_layout_why": "网球有故事讲一件事，不印赛果，solo。"
+ },
+ "push": {
+  "auto": true,
+  "_why": "账号所有者 2026-10-13 起所有 spec 默认自动推送；质检通过即合并推送。",
+  "summary": "Fault不是出界",
+  "lead": "Fault 不是出界，是没做到。"
+ },
+ "editorial": {
+  "mode": "match_review",
+  "question": "发球没进，司线为什么喊 Fault 而不是 Out？",
+  "thesis": "fault 来自古法语 faute（缺失、做不到），与 fail、default 同出拉丁 fallere；它宣布的是「这一发没做到」，不是「球出界」。发球的目标是斜对面的发球区，落在发球线后、底线前的球还在场内，喊 out 说不通；所以回合球出界喊 out，发球没进喊 fault，2025 温网的电子司线也照样分成 out、fault、foot fault 三句。规则里的 fault 还包括脚误、挥空、碰网柱、砸到自己搭档；两次 fault 丢一分，2009 美网小威的一次脚误正好送出赛点。",
+  "beats": [
+   "冷开场：2025 澳网电子司线对汤普森连喊脚误。",
+   "01 词源：faute／fail／default；发球区与场地的区别；温网电子司线三句话。",
+   "02 不出界也是 fault：克耶高斯脚误、梅德韦杰夫二发脚误与原话、布勃利克中点脚误。",
+   "03 双误：卢布列夫；2009 美网小威；库尔尼科娃 31 次双误。",
+   "延伸：羽毛球、壁球、UTS。",
+   "收尾：out 说落点，fault 说没做到；落在一问。"
+  ],
+  "human_context": {
+   "angle": "和上一期 let 是一组：一个天天听到、几乎没人细想的词，fault 原意是没做到，所以它管的从来不只是出界。",
+   "facts": [
+    "Etymonline/Wiktionary：fault 来自古法语 faute，拉丁 fallere；default、fail 同源。",
+    "ITF Rule 17/18/19/24；WTA VII.H.1.c。",
+    "温网 2025 官方：电子司线报 out、fault、foot fault。",
+    "2009 美网半决赛小威脚误→双误→罚分即赛点（ESPN、CBS/AP）。"
+   ],
+   "sources": [
+    "https://www.etymonline.com/word/fault",
+    "https://en.wiktionary.org/wiki/fault",
+    "https://www.etymonline.com/word/default",
+    "https://www.itftennis.com/media/7221/2026-rules-of-tennis-english.pdf",
+    "https://www.wimbledon.com/en_GB/news/articles/2025-07-03/the_precision_operation_introducing_electronic_line_calling.html",
+    "https://www.espn.com/sports/tennis/usopen09/news/story?id=4468762",
+    "https://www.cbsnews.com/news/clijsters-stuns-serena-at-us-open"
+   ]
+  }
+ },
+ "_facts": {
+  "etymology": "Etymonline「fault」：Old French faute（earlier falte），Vulgar Latin *fallita，Latin fallere；Wiktionary 同链。Etymonline「default」：Old French defaute，*defallita，de- + fallere；fail 亦出 fallere。Oxford Learner's「default」同。网球用法约 1600 年（Etymonline 单源）不进旁白。",
+  "rules": "ITF Rules of Tennis（WTA 2026-07-27 规则书 Appendix N，本地 research/sun-gauff-replay-2026/wta-2026-july27.pdf）：Rule 17 发球落进斜对面发球区；Rule 18 脚误（含踩中点假想延长线）；Rule 19 发球失误（违反 16–18 条、挥空、碰永久设施/单打支柱/网柱、碰发球方或搭档）；Rule 24a 连续两次失误丢分。WTA VII.H.1.c：击球前喊脚误须判 let。WTA 规则书 Line Umpires：各线司线喊 Out 与 Fault。",
+  "elc": "2025 温网：18 块比赛场首次全部电子司线，司线员角色结束（备用人员留场外），预录人声报 out、fault、foot fault（wimbledon.com 2025-07-03；AP 2025-07-03 图片说明「Line judges are on standby」）。2021 澳网：全部比赛无司线，Hawk-Eye Live 报 out、fault、foot fault（ESPN、Greek City Times）。",
+  "serena": "2009 美网女单半决赛：小威 5-6、15-30 二发被判脚误→双误，15-40；冲司线怒吼被罚一分（违反体育道德），正好是赛点，克莱斯特尔斯 6-4 7-5 胜（ESPN、CBS/AP、CNN）。无官方画面，用字卡。",
+  "kournikova": "1999 澳网，库尔尼科娃 31 次双误，1-6 6-4 10-8 胜佐伯美穗（tennishead、BNP Paribas wearetennis）；轮次各源不一，不报。",
+  "medvedev": "Tennis TV『Foot Fault: Yes Or No? Controversy In Medvedev vs Zverev | Nitto ATP Finals 2021』：解说「In the second set tiebreak, there was the foot fault call」，主裁 Mohamed Lahyani 看视频回放维持原判；梅德韦杰夫赛后原话见第 16 段。",
+  "bublik": "Tennis TV『Bublik Foot Fault Confusion in Beijing』（2026 中网，对手门希克）：被判踩中线（中点延长线）脚误。",
+  "kyrgios": "Wimbledon『Nick Kyrgios and umpire James Keothavong have comical exchange | Wimbledon 2018』：被司线判脚误，解说：司线只能在击球之后喊。",
+  "rublev": "Australian Open『Rublev's double fault his breaking point | Australian Open 2018』（对季米特洛夫）：解说「Double fault from Rublev, another turnaround 5-4 deep in the third」。第三盘不是决胜盘（大满贯男单五盘三胜），旁白只说第三盘。",
+  "other_sports": "羽毛球 BWF Law 13 Faults；壁球 World Squash 单打规则只有一次发球、失误即输掉回合；UTS 一分一次发球（tennismajors UTS4 规则、tennishead）。"
+ },
+ "sources": {
+  "bu": "https://www.youtube.com/watch?v=PYnZo-nL6Hk",
+  "ao": "https://www.youtube.com/watch?v=VwN4Bm3liL0",
+  "ky": "https://www.youtube.com/watch?v=o1Ad7ZL7AuU",
+  "md": "https://www.youtube.com/watch?v=FhSymjai5hM",
+  "rb": "https://www.youtube.com/watch?v=I_vN3qoxO8Q",
+  "wb": "https://www.youtube.com/watch?v=GeMppP-gRKc"
+ },
+ "source_fallbacks": {
+  "bu": "https://github.com/robertyang87/tennislive/releases/download/source-PYnZo-nL6Hk/PYnZo-nL6Hk.mp4",
+  "ao": "https://github.com/robertyang87/tennislive/releases/download/source-VwN4Bm3liL0/VwN4Bm3liL0.mp4",
+  "ky": "https://github.com/robertyang87/tennislive/releases/download/source-o1Ad7ZL7AuU/o1Ad7ZL7AuU.mp4",
+  "md": "https://github.com/robertyang87/tennislive/releases/download/source-FhSymjai5hM/FhSymjai5hM.mp4",
+  "rb": "https://github.com/robertyang87/tennislive/releases/download/source-I_vN3qoxO8Q/I_vN3qoxO8Q.mp4",
+  "wb": "https://github.com/robertyang87/tennislive/releases/download/source-GeMppP-gRKc/GeMppP-gRKc.mp4"
+ },
+ "primary": "bu",
+ "segments": [
+  {
+   "source": "ao",
+   "start": 17.0,
+   "end": 29.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 1.5,
+     "end": 3.7,
+     "text": "Foot fault!\n脚误！"
+    },
+    {
+     "at": 6.3,
+     "end": 8.74,
+     "text": "Pretty handy if you haven't released the ball yet.\n他球都还没抛出去呢。"
+    },
+    {
+     "at": 8.74,
+     "end": 12.46,
+     "text": "That AI has got to kind of calm down a bit.\n这个 AI 得冷静一下了。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "冷开场：2025 澳网汤普森对科普费尔，电子司线在发球方抛球之前连喊脚误（画面先是汤普森、再切到准备发球的球员，旁白不点名是谁）。两档整片转写只转到解说（23.3–29.46，逐词一致：pretty handy… / that AI… calm down a bit）；电子司线的喊声在两档整片转写里都没有，另用 2 秒小窗、带提示词的 medium.en 补探（research/fault-not-out-2026/asr_probe.py）在 18.62、19.00、19.44、20.30 秒各探到一次 Foot fault，与解说随后说的 foot fault remix 对得上，字幕不写次数，只写一条 Foot fault 覆盖 18.5–20.7。",
+   "point_end_ok": "冷开场是发球前的准备与喊声，不是回合；段尾 29.6 在下一句解说（30.78）之前。"
+  },
+  {
+   "source": "wb",
+   "start": 22.2,
+   "end": 30.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "这是二〇二五年澳网，电子司线连喊脚误，可发球的人连球都还没抛。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "B-roll，配旁白讲道理，不讲这一分。"
+  },
+  {
+   "source": "wb",
+   "start": 43.2,
+   "end": 51.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "发球出了问题，不管是机器还是司线，喊的都是 fault，不是 out。这是为什么？",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "B-roll，配旁白讲道理，不讲这一分。"
+  },
+  {
+   "title_card": "Fault不是出界\n是没做到",
+   "kicker": "01",
+   "seconds": 5.6,
+   "narration": "因为 fault 说的不是球落在哪，而是这一发没做到。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   }
+  },
+  {
+   "source": "wb",
+   "start": 81.0,
+   "end": 92.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "fault 来自古法语，本义是缺失、做不到。英语的 fail 是失败，网球里取消比赛资格叫 default，都出自同一个拉丁词根。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "B-roll，配旁白讲道理，不讲这一分。"
+  },
+  {
+   "source": "wb",
+   "start": 92.6,
+   "end": 104.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "发球的目标，是斜对面那一个发球区。球落在发球线后面、底线前面，还在场地里，喊 out 说不通。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "B-roll，配旁白讲道理，不讲这一分。"
+  },
+  {
+   "source": "wb",
+   "start": 104.2,
+   "end": 111.8,
+   "cx": 0.5,
+   "track": false,
+   "narration": "所以回合里的球出界，喊 out；发球没落进发球区，喊 fault。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "B-roll，配旁白讲道理，不讲这一分。"
+  },
+  {
+   "title_card": "机器也分\nOut和Fault",
+   "kicker": "温网",
+   "seconds": 11.4,
+   "narration": "二〇二五年温网，比赛场上不再有司线员，电子司线接手。系统里预录的人声，照样分成三句：out，fault，foot fault。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   }
+  },
+  {
+   "title_card": "球没出界\n也能是Fault",
+   "kicker": "02",
+   "seconds": 11.0,
+   "narration": "规则里的 fault，比发球出界宽得多。脚误、挥拍没碰到球、球先砸到网柱，甚至砸到自己的搭档，都算。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   }
+  },
+  {
+   "source": "ky",
+   "start": 2.6,
+   "end": 8.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二〇一八年温网，克耶高斯发球，司线盯着他的脚。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "克耶高斯发球的近景，这一发打出去之后的判罚在下一段。"
+  },
+  {
+   "source": "ky",
+   "start": 8.0,
+   "end": 16.8,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.0,
+     "end": 3.5,
+     "text": "Oh, he's been called. There it is.\n被判了，就是这一下。"
+    },
+    {
+     "at": 5.4,
+     "end": 7.12,
+     "text": "Yeah, that's what he has to do.\n他只能这么做。"
+    },
+    {
+     "at": 7.22,
+     "end": 8.7,
+     "text": "He can't call it before you hit it.\n你击球之前，他不能喊。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "温网官方。两档转写一致（small 8.08–11.36、13.80–16.48；medium 8.84–11.46、11.46–16.66）。2 秒小窗补探在 8.48 秒探到 fault 一词，可能是司线的喊声，两档整片转写都没有，未能确认，字幕不加。",
+   "point_end_ok": "司线判脚误之后的交涉与回放，不是新的一分；段尾 16.8 在下一句解说（19.40）之前。"
+  },
+  {
+   "source": "wb",
+   "start": 168.0,
+   "end": 176.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "女子巡回赛的规则书里写着：脚误要是在击球之前就喊，这一发判 let，再发一次。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "B-roll，配旁白讲道理，不讲这一分。"
+  },
+  {
+   "source": "md",
+   "start": 0.0,
+   "end": 8.3,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二〇二一年年终总决赛抢七，梅德韦杰夫二发被判脚误。主裁看了回放。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "判罚前后的远景和主裁近景；窗口在两档转写都无人声的 0–8.48 之间。"
+  },
+  {
+   "source": "md",
+   "start": 46.85,
+   "end": 61.8,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.17,
+     "end": 1.29,
+     "text": "Does the foot touch the line?\n脚碰到线了吗？"
+    },
+    {
+     "at": 2.15,
+     "end": 2.99,
+     "text": "Oh, that's tight.\n哦，太接近了。"
+    },
+    {
+     "at": 4.11,
+     "end": 4.79,
+     "text": "You show it again.\n再放一遍。"
+    },
+    {
+     "at": 5.05,
+     "end": 6.05,
+     "text": "That's really tight.\n真的太接近了。"
+    },
+    {
+     "at": 6.67,
+     "end": 9.53,
+     "text": "That's a tough judgment call, isn't it?\n这一下很难判，对吧？"
+    },
+    {
+     "at": 10.07,
+     "end": 14.77,
+     "text": "Has he put enough pressure onto the front part of the foot to touch the line?\n他前脚掌压下去，碰到线了吗？"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "Tennis TV 官方。两档逐词一致（medium 47.02–61.62；small 47.06–61.60），medium 把 onto 记成 on to，按 small 写。段首 46.85 在上一句 as we'll see（46.78）之后。",
+   "point_end_ok": "脚误回放的慢镜头，不是新的一分。"
+  },
+  {
+   "source": "md",
+   "start": 74.8,
+   "end": 81.14,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.08,
+     "end": 2.14,
+     "text": "Well, make your own mind up about that one.\n是不是脚误，你自己判断吧。"
+    },
+    {
+     "at": 2.32,
+     "end": 6.26,
+     "text": "Mohamed Lahyani is sticking with the call.\n主裁拉哈亚尼维持原判。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "两档逐词一致；ASR 把主裁名拼成 Lajani，按本人姓名 Lahyani 写。段尾 81.14 在下一句 We can see（81.18）之前。",
+   "point_end_ok": "主裁宣布维持原判，不是回合。"
+  },
+  {
+   "source": "md",
+   "start": 129.2,
+   "end": 139.22,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.14,
+     "end": 2.72,
+     "text": "I'm like, maybe I touched the line,\n我心想，也许我是碰到线了，"
+    },
+    {
+     "at": 2.72,
+     "end": 4.42,
+     "text": "but I was so close.\n可差得太少了。"
+    },
+    {
+     "at": 4.42,
+     "end": 7.18,
+     "text": "So I want to say, if you want to call it on the second serve,\n所以我想说：要在二发上判，"
+    },
+    {
+     "at": 7.18,
+     "end": 10.0,
+     "text": "make an electronic system for this.\n就上电子系统吧。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "梅德韦杰夫赛后场上采访原话，两档逐词一致（medium 多记一个 if you 口误，按 small 写）。段尾 139.22 在 this（139.20）之后、下一句 I don't think（139.20 起，small 139.44）之前。",
+   "point_end_ok": "赛后采访，不是回合。"
+  },
+  {
+   "source": "wb",
+   "start": 224.6,
+   "end": 230.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "其实就在那一年，澳网已经把脚误也交给了电子系统。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "B-roll，配旁白讲道理，不讲这一分。"
+  },
+  {
+   "source": "bu",
+   "start": 0.0,
+   "end": 4.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "今年中网，布勃利克也被判了脚误。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "布勃利克发球的远景，判罚喊声在下一段；窗口在两档转写都无人声的 0–4.56 之间。"
+  },
+  {
+   "source": "bu",
+   "start": 4.5,
+   "end": 7.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.1,
+     "end": 1.42,
+     "text": "It's all going on.\n热闹起来了。"
+    },
+    {
+     "at": 1.68,
+     "end": 2.96,
+     "text": "If you didn't hear, foot fault.\n没听清的话：脚误。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "Tennis TV 官方。两档逐词一致（small 记成 foot fault，medium 连写 footfault）。",
+   "point_end_ok": "判罚之后的交涉，不是回合。"
+  },
+  {
+   "source": "bu",
+   "start": 21.6,
+   "end": 27.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "这回他踩的是中点的延长线，规则里，这也算脚误。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "布勃利克交涉之后回到发球位，不是回合；窗口在两档转写都无人声的 21.44–27.76 之间。"
+  },
+  {
+   "source": "bu",
+   "start": 37.3,
+   "end": 52.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.14,
+     "end": 5.98,
+     "text": "So you say it's actually the centre line?\n你是说，其实是中线？"
+    },
+    {
+     "at": 8.84,
+     "end": 11.56,
+     "text": "I played tennis 30 years.\n我打了 30 年网球，"
+    },
+    {
+     "at": 11.56,
+     "end": 14.48,
+     "text": "The first time I hear this foot fault in my life.\n这辈子头一回听说这种脚误。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "两档转写一致（small 37.44–43.22、46.18–51.66；medium 40.26–43.28、46.14–51.78）。两档都把最后一句记成 this is also football，按画面里布勃利克向主裁交涉、话题正是这次脚误，写作 this foot fault。段尾 52.5 在 Yeah, it is（52.62）之前。",
+   "point_end_ok": "场边交涉，不是回合。"
+  },
+  {
+   "title_card": "两次Fault\n丢掉一分",
+   "kicker": "03",
+   "seconds": 7.0,
+   "narration": "一发失误，还有二发；连着两次 fault，就是双误，直接丢一分。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   }
+  },
+  {
+   "source": "rb",
+   "start": 0.0,
+   "end": 5.7,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 1.86,
+     "end": 5.54,
+     "text": "I can't believe what we're seeing.\n真不敢相信眼前这一幕。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "澳网官方。两档一致（small 1.86–5.46，medium 2.14–5.54）。段尾 5.7 避开 6.72–7.52 那句两档都听不清的话。",
+   "point_end_ok": "双误之后的反应，不是回合。"
+  },
+  {
+   "source": "rb",
+   "start": 8.4,
+   "end": 14.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.1,
+     "end": 2.72,
+     "text": "Double fault from Rublev,\n卢布列夫双误，"
+    },
+    {
+     "at": 3.14,
+     "end": 6.1,
+     "text": "another turnaround, 5-4 deep in the third.\n第三盘 5比4，局面又变了。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "两档逐词一致（small 8.68–14.42，medium 8.50–14.50）。",
+   "point_end_ok": "双误之后的反应，不是回合。"
+  },
+  {
+   "source": "rb",
+   "start": 15.0,
+   "end": 26.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二〇一八年澳网，第三盘五比四，卢布列夫双误，球拍遭了殃。连着两次没做到，这一分就白白送了出去。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "卢布列夫回到座位、擦汗，不是回合；窗口在两档转写都无人声的 14.50–30.00 之间。"
+  },
+  {
+   "title_card": "一次脚误\n送出赛点",
+   "kicker": "2009年美网",
+   "seconds": 12.0,
+   "narration": "最出名的一次 fault，在二〇〇九年美网半决赛。小威廉姆斯五比六、十五比三十，二发被判脚误，变成双误，对手拿到赛点。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   }
+  },
+  {
+   "title_card": "罚掉一分\n比赛结束",
+   "kicker": "小威廉姆斯",
+   "seconds": 9.0,
+   "narration": "她对着司线怒吼，被判违反体育道德，罚一分。这一分正好是赛点，比赛就这样结束了。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   }
+  },
+  {
+   "title_card": "31次双误\n她还是赢了",
+   "kicker": "1999年澳网",
+   "seconds": 8.4,
+   "narration": "也有人双误三十一次，照样赢球：一九九九年澳网，库尔尼科娃三盘击败佐伯美穗。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   }
+  },
+  {
+   "source": "wb",
+   "start": 230.6,
+   "end": 240.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "别的项目也用 fault。羽毛球的规则里，出界、触网、发球违例，统统叫 fault，out 只是其中一种。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "B-roll，配旁白讲道理，不讲这一分。"
+  },
+  {
+   "source": "wb",
+   "start": 240.8,
+   "end": 250.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "壁球更狠，只有一次发球，失误就丢分。网球的职业表演赛 UTS，也只给一次发球。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "B-roll，配旁白讲道理，不讲这一分。"
+  },
+  {
+   "source": "wb",
+   "start": 276.0,
+   "end": 286.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "所以 out 说的是球落在哪，fault 说的是这一发没做到。要是网球也只给一次发球，你觉得比赛会更好看吗？",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 let-not-net-2026 同一档）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "point_end_ok": "B-roll，窗口在两档转写都无人声的 274.0–292.0 之间。"
+  }
+ ],
+ "_no_probe_why": {
+  "bu": {
+   "why": "Tennis TV 官方 YouTube，download-video 存档后本地 ffprobe 1920×1080@50/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为短片单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "50/1"
+  },
+  "ao": {
+   "why": "Australian Open 官方 YouTube，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为短片单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "ky": {
+   "why": "Wimbledon 官方 YouTube，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为短片单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "md": {
+   "why": "Tennis TV 官方 YouTube，download-video 存档后本地 ffprobe 1920×1080@30000/1001；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为短片单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "30000/1001"
+  },
+  "rb": {
+   "why": "Australian Open 官方 YouTube，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为短片单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "wb": {
+   "why": "Wimbledon 官方 YouTube，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为短片单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  }
+ },
+ "mixed_fps": {
+  "ao": "Australian Open 官方 YouTube 原片即 25 fps，升到 50 fps 每帧整齐重复一次，看不出顿挫",
+  "ky": "Wimbledon 官方 YouTube 原片即 25 fps，升到 50 fps 每帧整齐重复一次，看不出顿挫",
+  "rb": "Australian Open 官方 YouTube 原片即 25 fps，升到 50 fps 每帧整齐重复一次，看不出顿挫",
+  "wb": "Wimbledon 官方 YouTube 原片即 25 fps，升到 50 fps 每帧整齐重复一次，看不出顿挫",
+  "md": "Tennis TV 原片 29.97 fps，升到 50 fps 帧重复不均匀；用到的是远景、慢镜回放、主裁近景和赛后采访，没有快速横移，顿挫不明显"
+ },
+ "_production_status": "spec_ready_for_render",
+ "_why_sources": "比赛画面全部来自官方频道：Tennis TV（PYnZo-nL6Hk、FhSymjai5hM）、Australian Open（VwN4Bm3liL0、I_vN3qoxO8Q）、Wimbledon（o1Ad7ZL7AuU、GeMppP-gRKc）；全部经 download-video 存进 Release。2009 美网小威脚误、1999 澳网库尔尼科娃没有官方画面，用字卡和旁白讲。"
+}

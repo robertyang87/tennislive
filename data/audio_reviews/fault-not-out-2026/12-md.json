@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=FhSymjai5hM",
+  "source_sha256": "9a2c7eee5d27efbd45d8e54941986bb540355fa878f1a2343c048aac0d7173ff",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_at": "2026-10-15T13:23:47.902033+00:00",
+  "reviewed_from": 0.0,
+  "reviewed_to": 8.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/FhSymjai5hM/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/FhSymjai5hM 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 0.0–8.3 秒内都没有任何英文词（窗口边界避开了最近的词）。"
+}
