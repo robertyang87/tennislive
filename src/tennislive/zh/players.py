@@ -402,6 +402,7 @@ PLAYER_ZH: dict[str, str] = {
     "Lulu Sun": "孙璐璐",
     "Erin Routliffe": "劳特利夫",
     "Ons Jabeur": "贾巴尔",
+    "Leonie Küng": "屈恩",  # 2018 温网青少年女单决赛负斯瓦泰克（swiatek-chwalinska-story-2026）
     "Simona Halep": "哈勒普",
     # 2026-09-17 补：`zhang-shuai-story` 讲 2016 澳网，八强对手是她。
     # CLAUDE.md「表里没有的，定下来之后补进表里，别只写在稿子里」。

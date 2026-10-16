@@ -1,0 +1,39 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=0-v-yZvYAk8",
+  "source_sha256": "daf2900ed133d0b9c2b0c4bfd9f678d0b1bd81ff880b01b83061d29f6d5fe70f",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T19:08:41.945089+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 261.0,
+  "reviewed_to": 280.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 268.0,
+      "end": 269.8,
+      "en": "In a season of dreams,",
+      "zh": "在这个梦幻般的赛季，"
+    },
+    {
+      "start": 270.36,
+      "end": 274.9,
+      "en": "Maja Chwalinska comes through, emerging battle-hardened",
+      "zh": "赫瓦林斯卡历经苦战，"
+    },
+    {
+      "start": 275.3,
+      "end": 276.54,
+      "en": "to defeat Maria Sakkari",
+      "zh": "击败萨卡里，"
+    },
+    {
+      "start": 276.54,
+      "end": 279.5,
+      "en": "to reach her third career WTA semifinal.",
+      "zh": "生涯第三次跻身巡回赛四强。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/0-v-yZvYAk8/small.en.json + medium.en.json",
+  "review_note": "冷开场：WTA 官方集锦（0-v-yZvYAk8）赛点那一分（261 起记分条挂 MATCH POINT，萨卡里发球）、她蹲在场上（268）、握手。解说两档一致（small 268.08–279.42；medium 268.00–283.74 一整句），字幕沿用已发布 chwalinska-sakkari-wuhan-2026-qf 第 10 段的审听稿。段尾 280.3 在下一句 What an effort（281.16）之前。"
+}
