@@ -1,0 +1,39 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "slug": "swiatek-li-wuhan-2026-qf",
+  "reviewed_at": "2026-10-16T13:52:10.055057+00:00",
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/evidence/swiatek-li-wuhan-2026-qf/source-audio/cold_open.json",
+      "transcript_sha256": "b1491637a55cd32d05a96520ced1c15971e9ac856665eefbd91ce399b7731024"
+    },
+    {
+      "index": 2,
+      "transcript_path": "data/evidence/swiatek-li-wuhan-2026-qf/source-audio/tactic1.json",
+      "transcript_sha256": "f9ebe201dbc414fbc77f73d073f1dd1ceb52d8ee056ab554211a9a8d0a702459"
+    },
+    {
+      "index": 4,
+      "transcript_path": "data/evidence/swiatek-li-wuhan-2026-qf/source-audio/first_set_and_second_open.json",
+      "transcript_sha256": "e478303782eb6e4adba7399b463cd27325f53e4a94e346e33d1d6d40ea698d44"
+    },
+    {
+      "index": 5,
+      "transcript_path": "data/evidence/swiatek-li-wuhan-2026-qf/source-audio/tactic2.json",
+      "transcript_sha256": "91a3412964ecfa799c6bd2287cc8741a46fa2bf70c08a364bef9f2ec70b728f2"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/evidence/swiatek-li-wuhan-2026-qf/source-audio/match_point.json",
+      "transcript_sha256": "4c64c90f74690e0dbb28ed8e35328275a73581227f7bc98a77862a89f58c0793"
+    },
+    {
+      "index": 7,
+      "transcript_path": "data/evidence/swiatek-li-wuhan-2026-qf/source-audio/ending_reaction.json",
+      "transcript_sha256": "41a0a36d1ce61ce99083862ca6a8bbbd47e7f77b4ebb28a08031f5cdddbe9149"
+    }
+  ],
+  "plan_sha256": "03633d5da3958e3dc51c582bd6e4d5846301f86840721fd6e289afe41fbdf297",
+  "_review_method": "Exact-SHA two canonical whole-source ASRs and finite actual source imagery. Derived union/subset packets retain unchanged originals and accurate provenance. No manual listening claimed."
+}

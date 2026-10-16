@@ -1,0 +1,555 @@
+{
+  "slug": "swiatek-li-wuhan-2026-qf",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "沿用栏目云健+6%/0Hz，无情绪音色改变；定稿后保留实际MP3/WordBoundary严格复用。",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=O8f_vcT29uY"
+  },
+  "primary": "main",
+  "source_fallbacks": {
+    "main": "https://github.com/robertyang87/tennislive/releases/download/source-O8f_vcT29uY/O8f_vcT29uY.mp4"
+  },
+  "track": false,
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "preserve_source_audio": true,
+  "scorebox": [
+    90,
+    826,
+    550,
+    980
+  ],
+  "_scorebox_why": "本期actual1920x1080原PNG实测主板x89..515/y869..979，SP/MP header上沿826；外框是搜索包络，native按实际边界和透明轮廓裁，不固定宽高。",
+  "_crop_why": "用户明确后续全屏3:4，固定中心810px裁555..1365，比分板在原栏目固定画布位置。222.4..253.6低机位会完全丢失边缘球员，整段不采用，使用203.04..220.3真实完整相持；其他居中裁切仍有边缘空间损失，不称横向全景完整。",
+  "_source": "实际WTA/@WTA/UCaBIVVpHjq6j3tSyxwTE-8Q官方上传O8f_vcT29uY，native metadata核title AnnLi vsIgaSwiatek2026WuhanQuarterfinal；309.568435s/1920x1080/25fps，SHA dc8e6e9ca8f72a7f6a75e2eb6eac91b0bfe24de9c93f4d75cc8aa1e8189f5862，无采访，299.48黑场前收尾。",
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1075_2026_LS004",
+    "flashscore_id": "21am1MHN",
+    "participants": [
+      "安·李",
+      "斯瓦泰克"
+    ],
+    "set_scores_home_away": [
+      [
+        4,
+        6
+      ],
+      [
+        1,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "winner": "斯瓦泰克",
+    "loser": "安·李",
+    "winner_result": "6-4 6-1",
+    "loser_result": "4-6 1-6",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches?from=2026-10-16&to=2026-10-18",
+    "date": "2026-10-16",
+    "duration": "01:33:28",
+    "daypart": "晚上",
+    "_time_note": "北京时间首点19:18:20、末点20:51:39。MatchTimeStamp18:56:41.563为系统metadata，不是第一发。",
+    "_match_day_why": "用户指定本场官方WTA视频，官方LS004 F与实际source身份相符，2026-10-16同比赛日。"
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "斯瓦泰克",
+        "name_en": "Iga Swiatek",
+        "country": "POL",
+        "rank": 9
+      },
+      {
+        "name": "安·李",
+        "name_en": "Ann Li",
+        "country": "USA",
+        "rank": 31
+      }
+    ],
+    "subject": "斯瓦泰克",
+    "winner": "斯瓦泰克",
+    "result": "6-4 6-1",
+    "topic": "WTA1000 武汉 1/4决赛 · 斯瓦泰克 VS 安·李",
+    "scoreboard": {
+      "court": "Center Court",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS004"
+      }
+    },
+    "_rank_why": "10/12正式排名Iga9、AnnLi31；本届赛事种子7与无种子，不将7冒充排名。",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "scrim": "clear",
+    "hook": "首盘5比4遭反扑\n斯瓦泰克两盘进4强",
+    "hook_accent": "两盘进4强",
+    "portrait": {
+      "image": "assets/reels/swiatek-li-wuhan-2026-qf/swiatek-wuhan-qf-official.png",
+      "focus": 0.4,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "source_url": "https://bucket-wuwang.hubei-41.zos.ctyun.cn/files/yd6bhbw3fvw4uys9gkclaqbu3.png",
+      "_photo_why": "武汉官方本场Day5 EN1605/CN1604，双方名字/2026-10-16明确；原图1600x1067PNG，实际view并对照WTA326408脸，睁眼近正面，紫On正手腾空动作，非R3旧照。",
+      "_low_res_why": "官方本场Iga照片仅发布1600x1067PNG，EN/CN两镜像均740718bytes；同辑5000px图是对手AnnLi，不能替代。WTA新闻目前无本场赛后新图、武汉新闻仅赛前预告，Getty公共检索403未绕过；真实本场官方图原字节，native3:4铺满约1.35倍，不做AI放大、不虚称5000px。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 1/4决赛",
+    "line2": "斯瓦泰克 6-4 6-1 安·李"
+  },
+  "stats": {
+    "tour": "wta",
+    "footer_date": "2026-10-16",
+    "footer_venue": "武汉 · 全场",
+    "_source": "WTA原始A=AnnLi/B=Iga，展示stats.a=Iga,stats.b=Li。FS同场全场及分盘W/UE相加自洽。",
+    "a": {
+      "aces": 0,
+      "df": 1,
+      "first_in": 39,
+      "first_total": 54,
+      "first_won": 29,
+      "second_total": 15,
+      "second_won": 9,
+      "bp_conv": 4,
+      "bp_chances": 9,
+      "pts_won": 66,
+      "pts_total": 113,
+      "winners": 10,
+      "ue": 28,
+      "headshot": "assets/players/headshots/wta-326408.jpg"
+    },
+    "b": {
+      "aces": 1,
+      "df": 2,
+      "first_in": 36,
+      "first_total": 59,
+      "first_won": 23,
+      "second_total": 23,
+      "second_won": 8,
+      "bp_conv": 0,
+      "bp_chances": 3,
+      "pts_won": 47,
+      "pts_total": 113,
+      "winners": 13,
+      "ue": 49,
+      "headshot": "assets/players/headshots/wta-326096.jpg"
+    },
+    "_winners_ue_evidence": {
+      "provider": "Flashscore",
+      "method": "api",
+      "source_url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_21am1MHN",
+      "source_path": "data/evidence/swiatek-li-wuhan-2026-qf/facts/fs-stats.raw",
+      "source_sha256": "2a5f6c79f2fccb5c211e063df76fa28462db947bac793419518eeaf8cdcd904c",
+      "period": "Match",
+      "match_date": "2026-10-16",
+      "checked_at": "2026-10-16T13:24:38.489844+00:00",
+      "winner_result": "6-4 6-1",
+      "matchup": [
+        "Swiatek",
+        "Li"
+      ],
+      "winners": [
+        10,
+        13
+      ],
+      "ue": [
+        28,
+        49
+      ],
+      "notes": "原始A安李/B斯瓦泰克，呈现主角Iga在前；W逐盘6+4=10/9+4=13，UE20+8=28/25+24=49；全场及分盘基本发球、总分与WTA一致。"
+    }
+  },
+  "push": {
+    "auto": true,
+    "summary": "斯瓦泰克两盘进4强",
+    "lead": "6比4、6比1，斯瓦泰克击败安·李，晋级武汉半决赛。首盘5比4的发球胜盘局，她救下全部三个破发点；次盘从2比1起连赢四局。下一轮，她将与曾经的青少年双打搭档月亮姐争夺决赛席位。"
+  },
+  "_heat_why": "用户指定世界第9斯瓦泰克本场武汉QF；两盘进四强、下一场会师月亮姐具当前观众连续关注点。",
+  "_facts": [
+    {
+      "path": "data/evidence/swiatek-li-wuhan-2026-qf/facts/fact-packet.json",
+      "why": "官方WTA结果/合法113分/真实北京时间/FS WUE与分盘合计/已确认下一轮与青少年双打搭档事实。"
+    },
+    {
+      "path": "data/evidence/swiatek-li-wuhan-2026-qf/source-identity/source_identity.json",
+      "why": "native实际YouTube上传者WTA与当前videoID/title，补闭facts包较早记录的源身份待核。"
+    }
+  ],
+  "_hit_data": [
+    {
+      "label": "首盘发球胜盘局救3个破发点",
+      "detail": "Iga5-4发球15-40起救2个连续BP，平分后又救第3个；74号分首个SP立即兑现。",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS004/point-by-point",
+      "used_in": "钩子、首盘收官事实卡及实际首SP解说。"
+    },
+    {
+      "label": "全部8个发球局保住",
+      "detail": "Iga全场8/8保发，3/3救破发点；次盘2-1后连赢最后4局。",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS004/stats",
+      "used_in": "统计卡与次盘末局中文讲述。"
+    }
+  ],
+  "editorial": {
+    "question": "首盘收官三次遭反扑，斯瓦泰克如何守住领先并两盘晋级？",
+    "thesis": "从4-3相持的真实压力讲到5-4救3BP事实与首SP兑现，再保留次盘先破后保和2-1完整相持、唯一MP与赛后；两位波兰球员的昔日青少年双打搭档关系引出半决赛。",
+    "beats": [
+      "获胜后完整原声冷开场",
+      "北京时间10月16日晚武汉QF与开场2-0",
+      "4-3真实长相持不冒充救BP",
+      "5-4救3BP事实卡与真实首SP",
+      "次盘1-0保发2-0及完整原声",
+      "2-1时远端横向调动的真实完整相持",
+      "5-1接发首唯一MP和完整握手谢场",
+      "8次保发、真实WUE",
+      "下一场与月亮姐争决赛门票"
+    ],
+    "human_context": {
+      "angle": "两位波兰球员曾是青少年双打搭档，下一场争武汉决赛席位。",
+      "facts": [
+        "本场6-4 6-1，8次保发全保",
+        "首盘5-4救3BP非盘点",
+        "下一轮为月亮姐，2017AO青少年双打亚军搭档，官方4593212已确认",
+        "双方2016ITF职业曾交手，不说生涯首次相遇"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS004/point-by-point",
+        "https://api.wtatennis.com/content/wta/news/en/4593212"
+      ]
+    },
+    "mode": "match_review"
+  },
+  "segments": [
+    {
+      "source": "main",
+      "start": 264.64,
+      "end": 277.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": false,
+      "subtitle_bottom": 304,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.22,
+          "end": 2.7,
+          "text": "There's only two WTA 1000 events\n还有两站WTA1000赛，"
+        },
+        {
+          "at": 2.7,
+          "end": 4.36,
+          "text": "that Iga Swiatek has not won.\n斯瓦泰克仍未夺冠。"
+        },
+        {
+          "at": 5.32,
+          "end": 8.32,
+          "text": "She reached the final of Dubai but still has yet to get a title,\n她在迪拜打进决赛，仍未夺冠。"
+        },
+        {
+          "at": 8.32,
+          "end": 12.64,
+          "text": "but she's never been to the semis before in Wuhan until now.\n武汉却是直到今天才首进四强。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "cold_open",
+      "_fit_why": "沿用用户明确要求的3:4全屏固定居中裁切，1920x1080取555..1365；无动态追踪，比分板在栏目原固定位置回贴。",
+      "_source_audio_review_status": "Complete actual same-SHA small.en/medium.en full-window review; finite source imagery; no human listening claimed.",
+      "_score_inset_why": "同源同帧原生板透明蒙版，主板/关键分提示同比例，固定x0、y1104，不移动比分板。",
+      "crosses_cut": "本场官方集锦固有切换已以精确原PNG和合法逐分核对，不把前后跳局当连续得分。",
+      "point_end_ok": "保留选定官方可用回合从发球动作到得分结果；若为赛后cold则从已死球后的真实庆祝开始。",
+      "_ending_payoff_required": true,
+      "_cold_open_why": "实际264.64/frame6616已经死球，264.86完整原声到277.28，获胜握拳、教练反应与握手；正文赛点253.64..264.64无缝连接264.64..299.34赛后完整英文句。"
+    },
+    {
+      "title_card": "首盘收官遭反扑\n四强之路并不轻松",
+      "kicker": "武汉1/4决赛",
+      "seconds": 13.2,
+      "narration": "北京时间二零二六年十月十六日晚上，武汉一千赛女单四分之一决赛，斯瓦泰克对阵安李。开场连赢两局之后，比赛来到四比三，她的发球局。",
+      "_edit_id": "intro"
+    },
+    {
+      "source": "main",
+      "start": 85.2,
+      "end": 98.2,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 304,
+      "narration": "看近端，安李把球连续打向两侧，她沿底线左右追球。再追到正手外侧时，伸拍也没能救回这一分。",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "_edit_id": "tactic1",
+      "_fit_why": "沿用用户明确要求的3:4全屏固定居中裁切，1920x1080取555..1365；无动态追踪，比分板在栏目原固定位置回贴。",
+      "_source_audio_review_status": "Complete actual same-SHA small.en/medium.en full-window review; finite source imagery; no human listening claimed.",
+      "_score_inset_why": "同源同帧原生板透明蒙版，主板/关键分提示同比例，固定x0、y1104，不移动比分板。",
+      "crosses_cut": "本场官方集锦固有切换已以精确原PNG和合法逐分核对，不把前后跳局当连续得分。",
+      "point_end_ok": "保留选定官方可用回合从发球动作到得分结果；若为赛后cold则从已死球后的真实庆祝开始。",
+      "_no_quote_why": "同SHA两档整源ASR在85.20..98.38没有English speech；中文为本片自配讲球，现场轨单位增益。"
+    },
+    {
+      "title_card": "首盘5比4\n三次险情全部化解",
+      "kicker": "守住发球胜盘局",
+      "seconds": 12.8,
+      "narration": "五比四的发球胜盘局，十五比四十，她先救下两个破发点。回到平分后，又化解第三个。接下来，才是她自己的第一个盘点。",
+      "_edit_id": "first_set_close_card"
+    },
+    {
+      "source": "main",
+      "start": 135.44,
+      "end": 203.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 304,
+      "narration": "",
+      "quote": [
+        {
+          "at": 8.68,
+          "end": 12.6,
+          "text": "Well, Iga Swiatek able to hold off the advances of Ann Li,\n斯瓦泰克顶住安·李的冲击，"
+        },
+        {
+          "at": 12.6,
+          "end": 14.86,
+          "text": "and the forehand holds up when it needs to.\n关键时刻，她的正手顶住了。"
+        },
+        {
+          "at": 15.4,
+          "end": 17.2,
+          "text": "Down the stretch, three break points saved\n盘末挽救三个破发点，"
+        },
+        {
+          "at": 17.2,
+          "end": 19.38,
+          "text": "and converts on her first set point.\n首个盘点便成功兑现。"
+        },
+        {
+          "at": 19.54,
+          "end": 21.46,
+          "text": "And Iga Swiatek out in front,\n斯瓦泰克取得领先，"
+        },
+        {
+          "at": 21.46,
+          "end": 24.18,
+          "text": "one of the great front-runners in women's tennis,\n她是女子网坛善打领先的高手，"
+        },
+        {
+          "at": 24.18,
+          "end": 27.14,
+          "text": "has a one-set lead in Wuhan.\n在武汉先下一盘。"
+        },
+        {
+          "at": 35.48,
+          "end": 39.2,
+          "text": "Lest we forget, there's a little revenge on the mind of Iga Swiatek as well\n别忘了，她也想报马德里之憾。"
+        },
+        {
+          "at": 39.2,
+          "end": 41.46,
+          "text": "for that Madrid performance where she had to beg out\n那场马德里比赛，她中途退赛，"
+        },
+        {
+          "at": 41.46,
+          "end": 44.18,
+          "text": "at three-love in the third set.\n当时决胜盘0比3。"
+        },
+        {
+          "at": 55.34,
+          "end": 60.14,
+          "text": "Looking to extinguish hope as she has the break and hold.\n破发再保发，要掐灭对手希望。"
+        },
+        {
+          "at": 60.54,
+          "end": 63.06,
+          "text": "That's now eleven in the last twelve points,\n最近12分，她拿下了11分，"
+        },
+        {
+          "at": 63.06,
+          "end": 65.2,
+          "text": "since going back to the third break point she faced\n从她面对第三个破发点算起，"
+        },
+        {
+          "at": 65.2,
+          "end": 67.28,
+          "text": "when trying to serve for the opening set.\n那是首盘的发球胜盘局。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "first_set_and_second_open",
+      "_fit_why": "沿用用户明确要求的3:4全屏固定居中裁切，1920x1080取555..1365；无动态追踪，比分板在栏目原固定位置回贴。",
+      "_source_audio_review_status": "Complete actual same-SHA small.en/medium.en full-window review; finite source imagery; no human listening claimed.",
+      "_score_inset_why": "同源同帧原生板透明蒙版，主板/关键分提示同比例，固定x0、y1104，不移动比分板。 Actual same-source finite diagnostic isolates unmeasurable false positives146.32/146.40/.44/.48 after145.44 cut to player reaction; board window ends exactly145.44; next begins actual162.28 camera cut. All canvaspositionunchanged.",
+      "crosses_cut": "本场官方集锦固有切换已以精确原PNG和合法逐分核对，不把前后跳局当连续得分。",
+      "point_end_ok": "保留选定官方可用回合从发球动作到得分结果；若为赛后cold则从已死球后的真实庆祝开始。",
+      "score_inset_windows": [
+        [
+          135.44,
+          145.44
+        ],
+        [
+          162.28,
+          203.0
+        ]
+      ],
+      "subtitle_bottom_windows": [
+        [
+          21.46,
+          27.36,
+          620
+        ]
+      ]
+    },
+    {
+      "source": "main",
+      "start": 203.04,
+      "end": 220.3,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 304,
+      "narration": "二比一，这次看远端。她沿着底线来回移动，又把球连续打向两侧，让对手一趟趟左右奔跑。这个长回合，最后以对手回球出界结束。",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "_edit_id": "tactic2",
+      "_fit_why": "沿用用户明确要求的3:4全屏固定居中裁切，1920x1080取555..1365；无动态追踪，比分板在栏目原固定位置回贴。",
+      "_source_audio_review_status": "Complete actual same-SHA small.en/medium.en full-window review; finite source imagery; no human listening claimed.",
+      "_score_inset_why": "同源同帧原生板透明蒙版，主板/关键分提示同比例，固定x0、y1104，不移动比分板。",
+      "crosses_cut": "本场官方集锦固有切换已以精确原PNG和合法逐分核对，不把前后跳局当连续得分。",
+      "point_end_ok": "保留选定官方可用回合从发球动作到得分结果；若为赛后cold则从已死球后的真实庆祝开始。",
+      "_no_quote_why": "同SHA两档整源ASR在203.04..220.48没有English speech；中文为本片自配讲球，现场轨单位增益。"
+    },
+    {
+      "source": "main",
+      "start": 253.64,
+      "end": 264.64,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 304,
+      "narration": "二比一之后，她连赢最后四局。全场唯一的赛点，她没有错过。",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "_edit_id": "match_point",
+      "_fit_why": "沿用用户明确要求的3:4全屏固定居中裁切，1920x1080取555..1365；无动态追踪，比分板在栏目原固定位置回贴。",
+      "_source_audio_review_status": "Complete actual same-SHA small.en/medium.en full-window review; finite source imagery; no human listening claimed.",
+      "_score_inset_why": "同源同帧原生板透明蒙版，主板/关键分提示同比例，固定x0、y1104，不移动比分板。",
+      "crosses_cut": "本场官方集锦固有切换已以精确原PNG和合法逐分核对，不把前后跳局当连续得分。",
+      "point_end_ok": "保留选定官方可用回合从发球动作到得分结果；若为赛后cold则从已死球后的真实庆祝开始。",
+      "_no_quote_why": "实际253.64..264.82两档ASR无前景英语；264.86解说从下一段完整保留。"
+    },
+    {
+      "source": "main",
+      "start": 264.64,
+      "end": 299.35,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 304,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.22,
+          "end": 2.7,
+          "text": "There's only two WTA 1000 events\n还有两站WTA1000赛，"
+        },
+        {
+          "at": 2.7,
+          "end": 4.36,
+          "text": "that Iga Swiatek has not won.\n斯瓦泰克仍未夺冠。"
+        },
+        {
+          "at": 5.32,
+          "end": 8.32,
+          "text": "She reached the final of Dubai but still has yet to get a title,\n她在迪拜打进决赛，仍未夺冠。"
+        },
+        {
+          "at": 8.32,
+          "end": 12.64,
+          "text": "but she's never been to the semis before in Wuhan until now.\n武汉却是直到今天才首进四强。"
+        },
+        {
+          "at": 14.82,
+          "end": 17.66,
+          "text": "Ann Li will achieve a new career-high ranking\n安·李将刷新生涯最高排名，"
+        },
+        {
+          "at": 17.66,
+          "end": 20.46,
+          "text": "as she wakes up on Monday in the WTA Tour rankings,\n就在周一的WTA世界排名中，"
+        },
+        {
+          "at": 20.46,
+          "end": 23.16,
+          "text": "but she will not find victory over Iga Swiatek\n却没能再次击败斯瓦泰克，"
+        },
+        {
+          "at": 23.16,
+          "end": 25.46,
+          "text": "for a second time this season.\n本赛季没能再赢她一次。"
+        },
+        {
+          "at": 26.24,
+          "end": 30.06,
+          "text": "as Iga Swiatek rolls through in straight sets,\n斯瓦泰克直落两盘过关，"
+        },
+        {
+          "at": 30.06,
+          "end": 32.16,
+          "text": "six-four, six-one,\n6比4、6比1，"
+        },
+        {
+          "at": 32.16,
+          "end": 34.7,
+          "text": "and will face fellow Pole Maja Chwalinska in the semifinals.\n半决赛将对阵同胞赫瓦林斯卡。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "ending_reaction",
+      "_fit_why": "沿用用户明确要求的3:4全屏固定居中裁切，1920x1080取555..1365；无动态追踪，比分板在栏目原固定位置回贴。",
+      "_source_audio_review_status": "Complete actual same-SHA small.en/medium.en full-window review; finite source imagery; no human listening claimed.",
+      "_score_inset_why": "同源同帧原生板透明蒙版，主板/关键分提示同比例，固定x0、y1104，不移动比分板。",
+      "crosses_cut": "本场官方集锦固有切换已以精确原PNG和合法逐分核对，不把前后跳局当连续得分。",
+      "point_end_ok": "保留选定官方可用回合从发球动作到得分结果；若为赛后cold则从已死球后的真实庆祝开始。",
+      "score_inset_windows": [
+        [
+          264.64,
+          265.24
+        ]
+      ],
+      "subtitle_bottom_windows": [
+        [
+          26.24,
+          34.7,
+          620
+        ]
+      ]
+    },
+    {
+      "stat_card": true,
+      "seconds": 11,
+      "narration": "八个发球局全部保住，面对三个破发点，她全部化解。制胜分十比十三，非受迫失误二十八比四十九。",
+      "_edit_id": "full_stats"
+    },
+    {
+      "title_card": "昔日双打搭档\n如今争决赛门票",
+      "kicker": "下一场 月亮姐",
+      "seconds": 12,
+      "narration": "下一场，就是月亮姐。曾经的青少年双打搭档，如今要在武汉隔网相对，争一张决赛门票。你更看好谁？",
+      "_edit_id": "outlook"
+    }
+  ],
+  "_set_coverage_why": "首盘5-4三个BP全部化解以事实卡完整讲述，真实首SP兑现及全句原声交代6-4；次盘先破后保2-0原声、2-1长相持、5-1唯一MP及6-1结果大板完整保留。比分已在原声/大板/封面和顶栏交代，不为重复报比分改写冻结中文音频。"
+}

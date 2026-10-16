@@ -1,0 +1,26 @@
+{
+  "schema": "tennislive.actual-native-failed-gate-evidence.v1",
+  "run_id": 38912186473,
+  "job_id": 117010532949,
+  "run_url": "https://github.com/robertyang87/tennislive/actions/runs/38912186473",
+  "actual_decoded_log_lines": [
+    "2026-10-16T14:07:11.9480200Z 成片 output/2026-10-16/reel/swiatek-li-wuhan-2026-qf/swiatek-li-wuhan-2026-qf.mp4（87.8 MB）",
+    "2026-10-16T14:07:11.9481697Z 封面 1.20s（render.json，定长）",
+    "2026-10-16T14:07:11.9482526Z 配音 edge-tts，无情绪风格",
+    "2026-10-16T14:07:11.9482912Z ",
+    "2026-10-16T14:07:11.9483499Z [不合格] 数据图头像挂错了名字（十有八九是 stats.a/b 填反，a 必须对应 cover.matchup[0]）：",
+    "2026-10-16T14:07:11.9484589Z   wta-326096.jpg 在别的 spec 里挂过「李吉妮」，这条挂的是「安·李」",
+    "2026-10-16T14:07:11.9485653Z [ok] 分辨率 1080×1440（要 1080×1440）",
+    "2026-10-16T14:07:11.9486502Z 片尾 4.55s（render.json，跟着口播）",
+    "2026-10-16T14:07:11.9487412Z [ok] 画面 211.16s（spec 算出来 211.14s ＝ 段落 205.39 ＋ 封面 1.20 ＋ 片尾 4.55）",
+    "2026-10-16T14:07:11.9488137Z [ok] 音视频首端差 0.00s（绝对差须小于 1s；不测响度）",
+    "2026-10-16T14:07:11.9488797Z [ok] 音轨 211.14s，音视频尾端差 0.02s（绝对差须小于 1s；不测响度）",
+    "2026-10-16T14:07:11.9489479Z [按账号所有者要求移除] 响度、静音阈值与原声增益校验；仅检查音轨结构和尾端时序",
+    "2026-10-16T14:07:11.9490062Z [ok] 比分板逐帧贴图证据与当前成片输入一致",
+    "2026-10-16T14:07:11.9490572Z [QC] 本轮不生成发布凭证",
+    "2026-10-16T14:07:11.9490822Z ",
+    "2026-10-16T14:07:11.9491059Z 共 1 项不合格"
+  ],
+  "recovery_run": 38913697827,
+  "recovery_policy": "Same actual native film and inputs authenticated and passed current existing native QC after exact same-player alias normalization. Original failure retained, no rerender."
+}

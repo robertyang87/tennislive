@@ -1,0 +1,41 @@
+{
+  "scope": "Current actual two originals only; not a new positive/negative classifier",
+  "audio": {
+    "tactic2": {
+      "path": "/workspace/scratch/iga-qf-pronunciation/native-audio/tactic2-9dd313b7ec0e29e9.mp3",
+      "sha256": "9dd313b7ec0e29e9535f5560bbd4f3cf4a9bef15942a13ca48c6d586afa30a77"
+    },
+    "match_point": {
+      "path": "/workspace/scratch/iga-qf-pronunciation/native-audio/match_point-b35727cf04d8078f.mp3",
+      "sha256": "b35727cf04d8078f9ab4d9142cffc50d9faceffc78d1e1beb7e861cb6ab30e5e"
+    }
+  },
+  "whole_score_plot_window": {
+    "tactic2": [
+      0.02,
+      0.66
+    ],
+    "match_point": [
+      0.02,
+      0.66
+    ]
+  },
+  "donor_ASR_one_location_hint": [
+    0.44,
+    0.6
+  ],
+  "donor_final_i_candidate_mapped_to_tactic2": [
+    0.44,
+    0.64
+  ],
+  "whole_score_MFCC_DTW_mean_distance": 3.3145461082458496,
+  "plot": "/workspace/scratch/iga-qf-pronunciation/actual-plots-v1/current-two-original-score-comparison.png",
+  "plot_sha256": "8669b1c69d28e73f22344b673e02e4c87170494613a1b8e2fa4bfda6d2fda5bc",
+  "original_ASR_omission_preserved": true,
+  "limitations": [
+    "WordBoundary and donor ASR only locate candidates; neither proves realization.",
+    "Adjacent bi/yi may coalesce; two F0 islands are not a count of pronounced syllables.",
+    "DTW may stretch a vowel, so closeness alone cannot disprove deletion; actual unwarped vowel sequence must be inspected.",
+    "No deletion-negative control was created or assumed. No human listening claim."
+  ]
+}

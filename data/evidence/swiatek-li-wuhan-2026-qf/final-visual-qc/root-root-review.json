@@ -1,0 +1,84 @@
+{
+  "schema": "tennislive.partitioned-actual-final-movie-review.v1",
+  "reviewed_at": "2026-10-16T14:17:09.009053+00:00",
+  "reviewer": "Current root OpenAI assistant",
+  "partition": "cover_cards_outro_seams_and_exact_ending_tail",
+  "status": "pass_with_explicit_finite_sampling_limits",
+  "visual_pass": true,
+  "publication_approved": false,
+  "human_review_claimed": false,
+  "audio_listened": false,
+  "movie_sha256": "e47e301fe40a6cc56380ca48fdf71474d6e90c4eec9d487f4095bd93f2994387",
+  "movie_bytes": 87833751,
+  "spec_sha256": "940473eef60a597bf22ae09400877e786b7bbfd0510ef5ca61b846cd6ac4f8a3",
+  "ass_sha256": "7393e7f61348b18a94f46d029cc7934f207ad3234bc6b22d1132d30f5b3f00cd",
+  "render_inputs_sha256": "d4ab1ee041c5ef16a4d62fe68eb5354f0de1f6910330494dd25b033a802c8139",
+  "native_qc_sha256": "f26de1cd37c01cf059c4dbb4db76ff485d3934948d796bbb8c2fe18b5a36190f",
+  "frame_manifest_sha256": "f3062bbf9b05815db196781e635c1016baad20628245a8bfcad50f618db603db",
+  "native_original_run_id": 38912186473,
+  "native_original_conclusion": "failure_at_avatar_alias_identity_only_after_complete_encoding",
+  "actual_recovery_qc_run_id": 38913697827,
+  "actual_recovery_provenance_sha256": "e9f1e13eede727a3952de3c6f3451bbb959674c0835cd41c7284b8c8d38fce5d",
+  "same_movie_bytes_no_reencoding": true,
+  "scope": {
+    "actual_movie_samples_on_contact_sheets": 61,
+    "actual_walls_viewed": 11,
+    "actual_assigned_ASS_midpoints_inspected": 18,
+    "actual_original_pngs_viewed": 2,
+    "original_png_frame_indices": [
+      15,
+      4594
+    ],
+    "all_movie_frames_viewed": false,
+    "source_action_partition_reviewed_by_root": false,
+    "loudness_gain_silence_PCM_checks": false
+  },
+  "findings": [],
+  "observations": [
+    {
+      "topic": "actual_encoded_cover",
+      "frame": 15,
+      "finding": "Actual encoded cover in full PNG: both eyes open under genuine cap shadow; hook2semanticlines首盘5比4遭反扑 / 斯瓦泰克两盘进4强. Top-left full event/round/both players, rank9/31, POL/USA,6-4/6-1 and1:33 all visible; face clear below topicband."
+    },
+    {
+      "topic": "native_cards_and_captions",
+      "finding": "All18assigned nativeASS cue midpoint windows inspected on actual encoded film;14chapter/outlook subtitles render fully with2semantic headline lines, contextual kicker and separate bottombrand. Four statistics-card cue windows are intentionally clean per existing native stat-card policy: the complete statistics are already printed in the graphic; no duplicate caption overlay claimed. Actual18cue indexes preserved in manifest."
+    },
+    {
+      "topic": "ending_tail_WTA_transition",
+      "frames": [
+        4583,
+        4584,
+        4585,
+        4586,
+        4587,
+        4588,
+        4589,
+        4590,
+        4591,
+        4592,
+        4593,
+        4594,
+        4595,
+        4596,
+        4597
+      ],
+      "finding": "15 consecutive actual25fps frames183.32..183.88 inspected. Last English Maja Chwalinska remains together and complete until183.56. Caption clears at card transition; native statistics becomes opaque by183.72. No black flash or WTA publisher tail visible in this finite interval. Original actual frame4594 at183.76 directly inspected fullsize: cleanstatcard, no WTA tail."
+    },
+    {
+      "topic": "stat_card_identity_and_values",
+      "frame": 4594,
+      "finding": "Full-size original movie PNG shows correct two actual player portraits with Iga first/AnnLi second,9vs31,6-4/6-1,W10/13,UE28/49,firstin39/54vs36/59,1stwon29/39vs23/36,2ndwon9/15vs8/23,BP4/9vs0/3,total66vs47. Exact AnnLi Chinese alias correction is separately evidenced; no asset/frame/audio edits for recovery."
+    },
+    {
+      "topic": "seams_and_outro",
+      "finding": "Both sides of all10segment seams sampled; expected short native dissolves, no confirmed mask defect or unexplained black frame. Actual final3outro samples207.16/209.68/211.04 show navybrand animation, slogan and lowerhandle; final text clear."
+    }
+  ],
+  "limitations": [
+    "Finite61root sampleframes/11walls plus2originalPNGs, not whole movie frame-by-frame approval.",
+    "Source/action99sample partition is independently reviewed by assigned agent; root does not claim its observations as direct personal viewing.",
+    "Full-screen3:4 fixed center loses outerhorizontalcourt; no fullhorizontalcourt claim.",
+    "No human listening or source/final loudness/peak/RMS/silence/gain/PCM comparisons."
+  ]
+}

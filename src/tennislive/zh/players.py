@@ -622,6 +622,9 @@ PLAYER_ZH_ALIASES: dict[str, str] = {
     # 施耐德/施奈德均指 Diana Shnaider（WTA 330482）；官方英文名和 ID 见
     # data/research/ostapenko-shnaider-wuhan-2026-qf/fact-packet.json。
     "施耐德": PLAYER_ZH["Diana Shnaider"],
+    # Ann Li（WTA 326096）的既有译名；top500表与历史spec写「李吉妮」。
+    # 本期官方身份见 data/evidence/swiatek-li-wuhan-2026-qf/facts/。
+    "李吉妮": PLAYER_ZH["Ann Li"],
 }
 
 

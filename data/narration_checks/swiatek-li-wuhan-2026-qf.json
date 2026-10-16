@@ -1,0 +1,65 @@
+{
+  "slug": "swiatek-li-wuhan-2026-qf",
+  "checked_at": "2026-10-16T13:52:20Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "989e4a5f97878ac6": {
+      "segment": 2,
+      "spoken": 11.688,
+      "picture": 13.2
+    },
+    "da80aa320f4842ac": {
+      "segment": 3,
+      "spoken": 9.36,
+      "picture": 13.0
+    },
+    "96e5f02793e79dc5": {
+      "segment": 4,
+      "spoken": 11.304,
+      "picture": 12.8
+    },
+    "d36f1d86016bcc69": {
+      "segment": 6,
+      "spoken": 12.312,
+      "picture": 17.26000000000002
+    },
+    "540a9b4beac1ea3f": {
+      "segment": 7,
+      "spoken": 6.336,
+      "picture": 11.0
+    },
+    "3f5ec59734dd7227": {
+      "segment": 9,
+      "spoken": 9.456,
+      "picture": 11
+    },
+    "2e6eb29b1f484df8": {
+      "segment": 10,
+      "spoken": 10.296,
+      "picture": 12
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "14af885578f8b30a96654521ae767a50c26b5e59bd70cd9881ca3322ebdf5258",
+    "request_count": 8,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-swiatek-li-wuhan-2026-qf-14af885578f8b30a/tts_bundle.zip",
+    "bytes": 469769,
+    "release_tag": "reel-tts-swiatek-li-wuhan-2026-qf-14af885578f8b30a",
+    "file_name": "tts_bundle.zip",
+    "transport_run_id": 38911561665
+  },
+  "_picture_window_rebind": "Only card durations shortened after exact frozen TTS measurement. No synthesis repeated; original spoken measurements and same MP3/WordBoundary SHA retained."
+}

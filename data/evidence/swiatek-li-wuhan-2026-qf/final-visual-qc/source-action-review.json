@@ -1,0 +1,316 @@
+{
+  "schema": "tennislive.partitioned-final-movie-visual-review.v1",
+  "reviewed_at_utc": "2026-10-16T14:17:19.993890+00:00",
+  "reviewer": "b8_final_visual_qc agent, current Iga source/action assignment",
+  "partition": "source_action_segments_0_2_4_5_6_7",
+  "status": "passed_with_declared_sampling_and_fixed_center_limits",
+  "visual_pass": true,
+  "publication_approved": false,
+  "movie": "/workspace/scratch/iga-qf-final/swiatek-li-wuhan-2026-qf.mp4",
+  "movie_sha256": "e47e301fe40a6cc56380ca48fdf71474d6e90c4eec9d487f4095bd93f2994387",
+  "movie_bytes": 87833751,
+  "film_seconds": 211.16,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25.0,
+  "spec_file_sha256": "940473eef60a597bf22ae09400877e786b7bbfd0510ef5ca61b846cd6ac4f8a3",
+  "native_spec_sha256": "940473eef60a597bf22ae09400877e786b7bbfd0510ef5ca61b846cd6ac4f8a3",
+  "ass_sha256": "7393e7f61348b18a94f46d029cc7934f207ad3234bc6b22d1132d30f5b3f00cd",
+  "render_inputs_sha256": "d4ab1ee041c5ef16a4d62fe68eb5354f0de1f6910330494dd25b033a802c8139",
+  "native_qc_sha256": "f26de1cd37c01cf059c4dbb4db76ff485d3934948d796bbb8c2fe18b5a36190f",
+  "source_sha256": {
+    "main": "dc8e6e9ca8f72a7f6a75e2eb6eac91b0bfe24de9c93f4d75cc8aa1e8189f5862"
+  },
+  "frame_manifest": "/workspace/scratch/iga-qf-final-qc/frame_manifest.json",
+  "frame_manifest_sha256": "e2b202ad803f3b84d803e8be3d1a8fade6abce2d9f1c8f4e1c5211d9496c47e9",
+  "scope": {
+    "assigned_segment_indices": [
+      0,
+      2,
+      4,
+      5,
+      6,
+      7
+    ],
+    "assigned_ass_cue_midpoints_actually_viewed": 41,
+    "movie_frame_samples_actually_viewed": 99,
+    "contact_sheets_actually_viewed": 17,
+    "original_full_movie_pngs_actually_viewed": 4,
+    "all_movie_frames_reviewed": false,
+    "cover_cards_outro_and_all_seams_reviewed_by_this_agent": false,
+    "audio_listened": false,
+    "loudness_gain_peak_silence_checks_performed": false,
+    "production_inputs_modified": false,
+    "publication_state_written": false
+  },
+  "blocking_findings": [],
+  "sampled_findings": [
+    {
+      "id": "native-small-scoreboard-and-key-labels",
+      "status": "pass_in_assigned_samples",
+      "proof": [
+        {
+          "frame_index": 1390,
+          "film_time_s": 55.6,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-01390.png",
+          "image_sha256": "08f189ae38909d39adb7d4976a0d3fcbfb82378a50baee2c7fac4ca54f428e22"
+        },
+        {
+          "frame_index": 3485,
+          "film_time_s": 139.4,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-03485.png",
+          "image_sha256": "171a595dd823175d26c41a58e2d872625f2d0323a5b8868ce017fa21b0ebcd6b"
+        },
+        {
+          "frame_index": 2335,
+          "film_time_s": 93.4,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-02335.png",
+          "image_sha256": "c336dfe5f59f306f704865ff3fede6c906cd29cc016505e5490f66d886780889"
+        },
+        {
+          "frame_index": 3733,
+          "film_time_s": 149.32,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-03733.png",
+          "image_sha256": "4c519fd59a55ae007c52701479bbe4e9b4079ea03da8c0c56b2a697646218dfa"
+        }
+      ],
+      "observation": "Small board retains original names, seed, set/game/point numbers and natural shape, flush x0. Native body top is approximately1157 and SP/MP label top approximately1104 at common source scale. Body does not jump when shorter key label appears; header right remains transparent. No surrounding-court rectangle seen in selected examples."
+    },
+    {
+      "id": "large-original-result-board-caption-avoidance",
+      "status": "pass_in_assigned_samples",
+      "proof": [
+        {
+          "frame_index": 1897,
+          "film_time_s": 75.88,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-01897.png",
+          "image_sha256": "7761e89dcd6871730d0bd214157cce1c3fc2245a88c2216c29207f6712fa5191"
+        },
+        {
+          "frame_index": 1968,
+          "film_time_s": 78.72,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-01968.png",
+          "image_sha256": "ea649e8b298587ebae34bd5becc4b5961c209e2a90885156ebcbfac62c2501ac"
+        },
+        {
+          "frame_index": 4426,
+          "film_time_s": 177.04,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-04426.png",
+          "image_sha256": "22394f17875ff4bcdab8759b343c7d5b0f6e543e1ccf19513c57686e2311fdfa"
+        },
+        {
+          "frame_index": 4500,
+          "film_time_s": 180.0,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-04500.png",
+          "image_sha256": "175341030c94949368417d2b3e8868c23a9929c8fae055cb24255eeec53cecf9"
+        },
+        {
+          "frame_index": 4531,
+          "film_time_s": 181.24,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-04531.png",
+          "image_sha256": "ba25210646361b1c02b9750f3deeef4f79585aa80715c6fad0f1edf38128e309"
+        },
+        {
+          "frame_index": 4558,
+          "film_time_s": 182.32,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-04558.png",
+          "image_sha256": "a853bdb19427a8af4a34694ee9d05ad249cc2f646448d0584af67b6112e61a78"
+        }
+      ],
+      "observation": "Actual first-set and final large native result boards remain legible. Assigned English/Chinese captions sit above these boards, including620-bottom windows; no overwritten player name, set score, result-board duration or semifinal opponent name in sampled originals/midpoints."
+    },
+    {
+      "id": "source-caption-semantic-layout",
+      "status": "pass_in_all41_assigned_midpoints",
+      "proof": [
+        {
+          "frame_index": 118,
+          "film_time_s": 4.72,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-00118.png",
+          "image_sha256": "5e0c4f3ecc1644a0739a6496560b8f011502ef04f1a8c351139ff238afada429"
+        },
+        {
+          "frame_index": 1592,
+          "film_time_s": 63.68,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-01592.png",
+          "image_sha256": "14589bdcb9181c893b46ad20995389ae8c01cea7b463d9957c19a9ba2788b3ac"
+        },
+        {
+          "frame_index": 1839,
+          "film_time_s": 73.56,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-01839.png",
+          "image_sha256": "5c79d5796d63a3f133f064e993365c53dde5a3339a232f62fc2098a26c699db4"
+        },
+        {
+          "frame_index": 2260,
+          "film_time_s": 90.4,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-02260.png",
+          "image_sha256": "7216274b6d21ed7a57e88a53e7a81305b227d58ad19bdf4e897d947fef281549"
+        },
+        {
+          "frame_index": 2397,
+          "film_time_s": 95.88,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-02397.png",
+          "image_sha256": "43b3fc83e43b21c74184a230b1c757d1b0906c488d8c339fe711851cdc3ce641"
+        },
+        {
+          "frame_index": 2930,
+          "film_time_s": 117.2,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-02930.png",
+          "image_sha256": "16108e89908b00a4fb323368b92f3dd1fd9411a412b3ad2e749f142fa7c7df22"
+        },
+        {
+          "frame_index": 3984,
+          "film_time_s": 159.36,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-03984.png",
+          "image_sha256": "b3cca78a1b282cfb6c30e0ef5c201c2479af45645d1b142a8f1acdfe2401fcf3"
+        },
+        {
+          "frame_index": 4558,
+          "film_time_s": 182.32,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-04558.png",
+          "image_sha256": "a853bdb19427a8af4a34694ee9d05ad249cc2f646448d0584af67b6112e61a78"
+        }
+      ],
+      "observation": "All assigned41 actual ASS midpoint windows viewed. Chinese player names, scores and fixed phrases remain intact; English declared player names stay together where displayed. Long semifinal line has complete Maja Chwalinska on one English line and complete Chinese transliteration. Captions readable and within canvas in these samples."
+    },
+    {
+      "id": "available-source-action-and-reaction",
+      "status": "pass_with_official_source_and_spatial_limits",
+      "proof": [
+        {
+          "frame_index": 687,
+          "film_time_s": 27.48,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-00687.png",
+          "image_sha256": "c55469f7ad4d6e18b186457b990d4fb726315c2e53cd6a69e65484100c5b7c6e"
+        },
+        {
+          "frame_index": 879,
+          "film_time_s": 35.16,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-00879.png",
+          "image_sha256": "5c1b563d8a0833c432a891789f866f8b752b582f5b88406df127cf0d5ca75513"
+        },
+        {
+          "frame_index": 964,
+          "film_time_s": 38.56,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-00964.png",
+          "image_sha256": "341394a69f4b62b367850a15b25163827960496aa2b0b9f783fa293778a194ab"
+        },
+        {
+          "frame_index": 1330,
+          "film_time_s": 53.2,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-01330.png",
+          "image_sha256": "83ce6e1de20efd2971583b9cd6df226e244c626624e1a569dc7d11d9662afa8f"
+        },
+        {
+          "frame_index": 1540,
+          "film_time_s": 61.6,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-01540.png",
+          "image_sha256": "a2566e59af1b7355d30062f234a428ca084799f305e707fa8803d9a82bfb5203"
+        },
+        {
+          "frame_index": 1573,
+          "film_time_s": 62.92,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-01573.png",
+          "image_sha256": "a6388940d26056acacb6a76e1f49e752d3241091678c1e09037297f123716ba5"
+        },
+        {
+          "frame_index": 3046,
+          "film_time_s": 121.84,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-03046.png",
+          "image_sha256": "0a014e91d6fcf50e5de208331e647fe5cff5eaf5d0d9f754bab6b80081932bdd"
+        },
+        {
+          "frame_index": 3236,
+          "film_time_s": 129.44,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-03236.png",
+          "image_sha256": "b5db0d89ee285efa2df4c1ac5316dd0d3c997b734936ad9bcff91c7fcd8ab583"
+        },
+        {
+          "frame_index": 3390,
+          "film_time_s": 135.6,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-03390.png",
+          "image_sha256": "641feceda7634b20fab310e1da83aecc8f1ae11df317261a4df9f0866e76b7e8"
+        },
+        {
+          "frame_index": 3453,
+          "film_time_s": 138.12,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-03453.png",
+          "image_sha256": "0712f30a93c29f6cfbb8790de00e0f21f51e061c7a8f60d9208e6cf9ae60b22b"
+        },
+        {
+          "frame_index": 3606,
+          "film_time_s": 144.24,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-03606.png",
+          "image_sha256": "899231194c0a4476259c10643254fe901925332f7d6240016bf9564746926ccb"
+        },
+        {
+          "frame_index": 3715,
+          "film_time_s": 148.6,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-03715.png",
+          "image_sha256": "1076d37dcf726a1058f9927e01381bf3c779f79875dcce26511bd85c5fb8782b"
+        },
+        {
+          "frame_index": 3726,
+          "film_time_s": 149.04,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-03726.png",
+          "image_sha256": "dd5e409c4e1eaa03b5b23a67d0343f78c51cfe96c87933ca5ff3034cd18de2b5"
+        },
+        {
+          "frame_index": 3956,
+          "film_time_s": 158.24,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-03956.png",
+          "image_sha256": "25f4af28f4bd018842d5eafcc2179fa8624bf03b087ae932210f9cb84094dbb3"
+        },
+        {
+          "frame_index": 4128,
+          "film_time_s": 165.12,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-04128.png",
+          "image_sha256": "3209e1dc3f1aa31838e827f0a3fbfa57f8fd8942499e46124b7af134773724a4"
+        },
+        {
+          "frame_index": 4330,
+          "film_time_s": 173.2,
+          "image": "/workspace/scratch/iga-qf-final-qc/frames/frame-04330.png",
+          "image_sha256": "c98128916368adf0ed94879719fa793e09ca57b9d1082d74063419285a92e776"
+        }
+      ],
+      "observation": "Assigned selections show available first-set pressure point, first-set conversion and genuine aftermath, second-set action, long rally and its conclusion, match-point action, stopped-play winner reaction, coach reaction, handshake and opponent/umpire interaction. Continuous selected source windows are not interrupted by a fabricated replacement point. Finite sampling does not certify every shot at every frame or complete official missing-point coverage."
+    }
+  ],
+  "source_geometry_limit": {
+    "layout": "fixed-center3:4fill",
+    "source_dimensions": [
+      1920,
+      1080
+    ],
+    "fixed_crop_source_xywh": [
+      555,
+      0,
+      810,
+      1080
+    ],
+    "tracking": false,
+    "observation": "Near-side player can be clipped at a sideline or leave the horizontal crop during wide chasing. This is the declared center-fill spatial limit, not a claim of full horizontal-court or whole-player visibility. Original source camera also changes scale/shot across official edits."
+  },
+  "native_provenance": {
+    "recovery_provenance_path": "/workspace/tennislive-efficiency/output/2026-10-16/reel/swiatek-li-wuhan-2026-qf/recovery_provenance.json",
+    "recovery_provenance_sha256": "e9f1e13eede727a3952de3c6f3451bbb959674c0835cd41c7284b8c8d38fce5d",
+    "original_run_id": 38912186473,
+    "original_run_conclusion": "failure",
+    "original_failure": "headshot identity exact Chinese transliteration alias only",
+    "recovery_run_id": 38913697827,
+    "same_movie_bytes_no_reencoding": true,
+    "actual_native_qc": "pass",
+    "note": "Original encoder run failed exact Chinese headshot-alias identity gate. Same immutable movie/native-input archive passed actual native QC after central exact alias correction. Original run is not relabeled success; movie observations above are independent actual byte-bound PNG inspection."
+  },
+  "other_partition": "Root separately owns cover/cards/outro, all ten seams and fine publisher end-card boundary; joint overall decision remains pending until its actual report.",
+  "limitations": [
+    "Actual visual sampling only for assigned source/action partition of this exact movie SHA; not full-frame/full-film playback or human audio listening.",
+    "Nominal source timestamps can be coalesced by up to0.28s for discretionary samples; manifest marks that request delta, and exact movie frame/PNG is authoritative. Every assigned ASS midpoint is retained independently.",
+    "No loudness/gain/PCM/threshold-silence analysis. Source speech and pronunciation evidence remain separate.",
+    "Not a release publication, GitHub merge, WeChat delivery or pushed.json receipt."
+  ]
+}

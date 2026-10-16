@@ -1,0 +1,99 @@
+{
+  "created_at": "2026-10-16T14:13:53.708373+00:00",
+  "status": "prepared_waiting_actual_final_film_run_and_native_archive",
+  "bundle_sha256": "14af885578f8b30a96654521ae767a50c26b5e59bd70cd9881ca3322ebdf5258",
+  "observed_spec_sha256_provisional_not_final": "940473eef60a597bf22ae09400877e786b7bbfd0510ef5ca61b846cd6ac4f8a3",
+  "dynamic_counts": {
+    "voice_requests": 8,
+    "actual_mp3_files": 8,
+    "actual_native_marks_files": 8,
+    "body_positions": 60,
+    "exact_whole_outro_positions": 3,
+    "current_target_positions": 63,
+    "number_spans": 27,
+    "proper_name_syllable_positions": 17,
+    "actual_current_reference_requests": 28,
+    "original_mechanical_pending_positions": 16,
+    "direct_finite_interpretations": 16,
+    "current_finite_pending_positions": 0
+  },
+  "voice_identity_checks": [
+    {
+      "edit_id": "intro",
+      "current_segment_index": 1,
+      "captured_output_name": "voice_01.mp3",
+      "request_id": "861e0aed4dce63d15b460e2079cab2de0ad3a5e46a7723f7852ea3204f57b62d",
+      "audio_sha256": "bfeb155a047ec5eeb8acfe015a7e37b6d520ba2ebcdd1e71fb81c68f166cf064",
+      "marks_sha256": "32d71e79a99899ff0278f0ab783d7a3b85493a11954ec728f457666d8e232255",
+      "full_text_exact": true
+    },
+    {
+      "edit_id": "tactic1",
+      "current_segment_index": 2,
+      "captured_output_name": "voice_02.mp3",
+      "request_id": "b2719b66be11976737ac1672a7310b61ea6538794f2b75726ccb71074474f6a7",
+      "audio_sha256": "94056a8fe6d08fc552e4cb85dd90c0a1b935720f545751b5284da2a0d6ab04d5",
+      "marks_sha256": "e2b12f5ebc7a75c82feab9b4d3397b26a866a35c1d396db480ec417723f32b57",
+      "full_text_exact": true
+    },
+    {
+      "edit_id": "first_set_close_card",
+      "current_segment_index": 3,
+      "captured_output_name": "voice_03.mp3",
+      "request_id": "88a13e966a48093b76b1b6f41c27440c7f67ec635f8ab9c7d46a0c90282a318a",
+      "audio_sha256": "631592ffbd394fefc8644031791d4c4701dfde5b8b86450ceedc55a385a76c42",
+      "marks_sha256": "1227a875e265f4cb318cf70241aedcf422e5e5f862f51bd3e6ae6249de0a8ae7",
+      "full_text_exact": true
+    },
+    {
+      "edit_id": "tactic2",
+      "current_segment_index": 5,
+      "captured_output_name": "voice_05.mp3",
+      "request_id": "7f65ad0f0177c4692b249681299121e8cc73708f70f8cf42d77850c2e5ca960c",
+      "audio_sha256": "9dd313b7ec0e29e9535f5560bbd4f3cf4a9bef15942a13ca48c6d586afa30a77",
+      "marks_sha256": "38a8cd7c6789f8db25d03f06b46975f193f8062131edb9e94fc7be645376e23f",
+      "full_text_exact": true
+    },
+    {
+      "edit_id": "match_point",
+      "current_segment_index": 6,
+      "captured_output_name": "voice_06.mp3",
+      "request_id": "d1050a79514e651d62bb0ac367febb97526dcaf591063b8377079b8e79f8e034",
+      "audio_sha256": "b35727cf04d8078f9ab4d9142cffc50d9faceffc78d1e1beb7e861cb6ab30e5e",
+      "marks_sha256": "bc832df245701abb0ea92684f06ab291795fc925ae93f913647ce27f2f03310b",
+      "full_text_exact": true
+    },
+    {
+      "edit_id": "full_stats",
+      "current_segment_index": 8,
+      "captured_output_name": "voice_08.mp3",
+      "request_id": "813c0e9e33ee3ceb6203e424ff06bac21602b8d81d31ec7214375b8fc5af4c26",
+      "audio_sha256": "d51a449d54225ca348b45ab737c70fa25bf02034ad1325f83456f264071a55ed",
+      "marks_sha256": "bc65d3bf13914646df8f03b3b0eede334dea7a4395e75e8c662febf0ae83e79e",
+      "full_text_exact": true
+    },
+    {
+      "edit_id": "outlook",
+      "current_segment_index": 9,
+      "captured_output_name": "voice_09.mp3",
+      "request_id": "8acb0ab497794f20bfd3f18443f48b70fdbea3c0f6601e537e16d385ce80aa72",
+      "audio_sha256": "833c002ddfd0371b0726bf2ebf55afa4e9ce76bcdc87442368a7f559cec64f2f",
+      "marks_sha256": "68e08ec5fd41f4fb3f94e2793cc852102c1d247b6018cfff48abdbe693305af2",
+      "full_text_exact": true
+    },
+    {
+      "edit_id": "outro",
+      "current_segment_index": "outro",
+      "captured_output_name": "voice_outro.mp3",
+      "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "full_text_exact": true
+    }
+  ],
+  "final_spec_sha256_will_be_read_at_seal": true,
+  "film_sha256": null,
+  "final_archive_created": false,
+  "manual_listening_claimed": false,
+  "all_mechanical_components_passed": false
+}
