@@ -2,6 +2,7 @@ import json
 V={"pitch":"+10Hz","_why":"网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fault-not-out-2026 同一档）。"}
 A='assets/reel/medvedev-real'
 LABELS={
+ "wb17":{"topic":"朝主裁椅扔硬币","date":"2017.07.05","place":"温网 第二轮","score":"4-6 2-6 6-3 6-2 3-6","people":"梅德韦杰夫 vs 贝梅尔曼斯"},
  "us19":{"topic":"被嘘进了决赛","date":"2019.09.08","place":"美网 决赛","score":"5-7 3-6 7-5 6-4 4-6","people":"梅德韦杰夫 vs 纳达尔"},
  "md21":{"topic":"不想在红土上打","date":"2021.05.05","place":"ATP1000 马德里 第二轮","score":"4-6 6-4 6-2","people":"梅德韦杰夫 vs 福基纳"},
  "ci21":{"topic":"撞上场边摄像机","date":"2021.08.21","place":"ATP1000 辛辛那提 半决赛","score":"6-2 3-6 3-6","people":"梅德韦杰夫 vs 卢布列夫"},
@@ -37,7 +38,15 @@ c["_ending_payoff_why"]="网球有故事：冷开场是全片由头，正文按�
 S.append(c)
 S.append(n("ao22",311.3,325.8,"对着主裁大吼的这个人，就是梅德韦杰夫。撒硬币，踢摄像机，砸球拍，他的罚单能列一长串。可也是他，在颁奖台上让全场笑出了声。他是反派，还是只是太真实？","澳网官方加长集锦（uWxN2lH2Fa0），同一场半决赛第一盘的破发点回合，空当 296.89–336.47（两档转写都无词）。","这一分在 324 秒前后打完，段尾 325.8 停在西西帕斯握拳，换边之前。"))
 S.append(card("被嘘的\n那几年","01",4.2,"故事要从二〇一七年的温网说起。"))
-S.append(card("朝主裁椅\n扔了硬币","2017年温网 第二轮",9.6,"那年他二十一岁，五盘输给了贝梅尔曼斯。握手之后，他掏出几枚硬币，朝主裁的椅子扔了过去。"))
+S.append(card("朝主裁椅\n扔了硬币","2017年温网 第二轮",8.4,"那年他二十一岁，五盘输给了贝梅尔曼斯。收拾球包的时候，他从钱包里掏出了几枚硬币。"))
+c=q("wb17",33.5,41.1,[(33.72,37.5,"This is what he did: he got the coins out of his wallet\n他从钱包里掏出硬币，"),(37.5,40.84,"and started throwing them to the base of the umpire's chair.\n朝主裁椅的底座扔了过去。")],
+  "账号所有者 2026-10-16：「针对这一条内容可以放开用非官方视频」。UKZnd1EliAY（YouTube 个人账号 David Lock 转载的 BBC 转播，手机翻拍电视画面，1280×720@29）：33.5 起是他走到主裁椅旁、把硬币扔向椅子底座（34.5–42）。BBC Sport 90 周年台标转场在 32.1–33.3，段首 33.5 避开；解说两档：small 32.36–40.84、medium 33.00–43.22，段首切掉了前半句 his bag。段尾 41.1 在下一分句（small 40.84 起 we will find out more）之后不久。",
+  "比赛已经结束，赛后收拾球包。",label="wb17")
+c["fit"]="contain"
+c["contain_keep"]=1.0
+c["_fit_why"]="主裁椅在画面左侧，他走过去扔硬币时 3:4 居中裁切只拍到网和观众；视频裁切固定 cx 0.5，改 contain 全宽才看得到扔的动作。"
+c["_unofficial_why"]="账号所有者 2026-10-16 针对这一条单独放开非官方视频；官方频道（Wimbledon、ATP、BBC）查过没有这一幕。"
+S.append(c)
 S.append(card("一时上头\n做了件坏事","罚款14500美元",8.0,"这场他一共被罚了一万四千五百美元。事后他说：一时上头，我做了件坏事。"))
 S.append(n("us19",141.29,155.69,"两年后的美网，第一周他对着看台竖中指，被嘘了好几场。决赛他从零比二追到二比二，最后还是输给了纳达尔。被嘘了两个星期的人，在颁奖台上拿起了话筒。","美网官方颁奖仪式（9CQYJlU5_Ew），致辞之间的空当 141.29–155.69（两档转写都无词）。",label="us19"))
 S.append(q("us19",128.6,141.2,[(128.9,131.6,"I want to talk about you guys.\n我想说说你们。"),(131.6,136.0,"I know, earlier in the tournament I said something kind of in a bad way.\n我知道，之前我说话不太好听。"),(136.0,138.6,"Now I'm saying it in a good way:\n现在我换个好听的说法：") ,(138.6,141.14,"because of your energy, guys, I was here in the final.\n是你们的能量把我送进了决赛。")],

@@ -4,7 +4,7 @@ sys.path.insert(0,'tools')
 import foreground_audio_gate as g
 SLUG='medvedev-not-villain-2026'
 spec=json.load(open(f'specs/reels/{SLUG}.json'))
-VID={"bj":"LgRD3TLoxr0","us19":"9CQYJlU5_Ew","md21":"SXCs4vTWo_s","ci21":"Rv0Q9jXIz-M","us21":"MEFpXBwnyQA","ao22":"uWxN2lH2Fa0","ao22r":"xH4R5HNq-6s","us23":"6q9HMdjYpVg","ao25":"MWNZOZr_uMU","mc26":"yNxzL-8i9NU","ws26":"l7F7uLC-GGM","wsc":"9aqUxco0bqo","us25e":"oXmpP1kLyxQ","us25":"p2lgExFvcug","cik":"5PSCTOsUYho"}
+VID={"bj":"LgRD3TLoxr0","us19":"9CQYJlU5_Ew","md21":"SXCs4vTWo_s","ci21":"Rv0Q9jXIz-M","us21":"MEFpXBwnyQA","ao22":"uWxN2lH2Fa0","ao22r":"xH4R5HNq-6s","us23":"6q9HMdjYpVg","ao25":"MWNZOZr_uMU","mc26":"yNxzL-8i9NU","ws26":"l7F7uLC-GGM","wsc":"9aqUxco0bqo","us25e":"oXmpP1kLyxQ","us25":"p2lgExFvcug","cik":"5PSCTOsUYho","wb17":"UKZnd1EliAY"}
 SRC='/tmp/claude-0/med/src'
 def sha(p):
     h=hashlib.sha256()

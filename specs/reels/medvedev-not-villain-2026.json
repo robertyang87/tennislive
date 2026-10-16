@@ -113,6 +113,7 @@
   "us25e": "https://www.youtube.com/watch?v=oXmpP1kLyxQ",
   "us25": "https://www.youtube.com/watch?v=p2lgExFvcug",
   "cik": "https://www.youtube.com/watch?v=5PSCTOsUYho",
+  "wb17": "https://www.youtube.com/watch?v=UKZnd1EliAY",
   "wsc": "https://github.com/robertyang87/tennislive/releases/download/reel-src-medvedev-not-villain-2026/ws_c.mp4"
  },
  "source_fallbacks": {
@@ -128,11 +129,13 @@
   "ws26": "https://github.com/robertyang87/tennislive/releases/download/source-l7F7uLC-GGM/l7F7uLC-GGM.mp4",
   "us25e": "https://github.com/robertyang87/tennislive/releases/download/source-oXmpP1kLyxQ/oXmpP1kLyxQ.mp4",
   "us25": "https://github.com/robertyang87/tennislive/releases/download/source-p2lgExFvcug/p2lgExFvcug.mp4",
-  "cik": "https://github.com/robertyang87/tennislive/releases/download/source-5PSCTOsUYho/5PSCTOsUYho.mp4"
+  "cik": "https://github.com/robertyang87/tennislive/releases/download/source-5PSCTOsUYho/5PSCTOsUYho.mp4",
+  "wb17": "https://github.com/robertyang87/tennislive/releases/download/source-UKZnd1EliAY/UKZnd1EliAY.mp4"
  },
  "conform": {
-  "us19": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。",
   "us23": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。",
+  "wb17": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。",
+  "us19": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。",
   "us21": "美网官方频道这条最高 1280×720 @29.97，等比放大到主源 1920×1080，不另裁原始内容。"
  },
  "source_quality_exceptions": {
@@ -145,6 +148,11 @@
    "min_height": 720,
    "approved_by": "user",
    "reason": "账号所有者 2026-10-15 交接文档点名的美网官方源，官方频道这条最高 720p。"
+  },
+  "https://www.youtube.com/watch?v=UKZnd1EliAY": {
+   "min_height": 720,
+   "approved_by": "user",
+   "reason": "账号所有者 2026-10-16 针对扔硬币这一幕特许用非官方转载（UKZnd1EliAY，最高 720p）。"
   },
   "https://www.youtube.com/watch?v=MEFpXBwnyQA": {
    "min_height": 720,
@@ -162,6 +170,7 @@
   "ao22": "澳网官方 25 fps，升到 50 fps 每帧整齐重复一次",
   "ao22r": "Wide World of Sports 原片 25 fps，升到 50 fps 每帧整齐重复一次",
   "ao25": "澳网官方 25 fps，升到 50 fps 每帧整齐重复一次",
+  "wb17": "手机翻拍电视的 29 fps，升到 50 fps 帧重复不均匀；画面是赛后走到主裁椅旁，动作不快",
   "cik": "Tennis TV 60 fps → 50，场边近景，丢帧看不出",
   "us25e": "ESPN 25 fps，升到 50 fps 每帧整齐重复一次；停赛中的近景与看台",
   "us25": "美网官方 59.94 fps → 50，第五盘最后一分的广角与近景配旁白，丢帧看不出",
@@ -246,6 +255,12 @@
    "height": 1080,
    "fps": "60/1"
   },
+  "wb17": {
+   "why": "YouTube 个人账号 David Lock 转载的 BBC 转播（账号所有者特许） 官方，download-video 存档后本地 ffprobe 1280×720@29/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1280,
+   "height": 720,
+   "fps": "29/1"
+  },
   "wsc": {
    "why": "Tennis TV 官方，download-video 存档后本地 ffprobe 1920×1080@50/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。（9aqUxco0bqo 原片 720×1280 竖版，tmp 工作流 crop 720:960:0:160 → 810×1080 → 左右黑边垫成 1920×1080、50 fps、音轨原样拷贝，见 research/medvedev-not-villain-2026/normalize.sh；3:4 居中窗口正好取到原画面。）",
    "width": 1920,
@@ -256,7 +271,7 @@
  "_tennistv_trim": "Tennis TV 源（SXCs4vTWo_s、Rv0Q9jXIz-M、5PSCTOsUYho（只用 91.4–95.55，片尾板约 231 秒起）、yNxzL-8i9NU、l7F7uLC-GGM、9aqUxco0bqo）：16:9 的几条 cx 0.5 居中，角上的台标在 3:4 取景窗外；蒙特卡洛片尾板 156.3 秒起，末段收在 156.0；竖版短片 ws_c 的台标在画面内，crop_zoom 1.08＋fill_y 1.0 裁掉；马德里那条片尾板 156.3 秒起，末段收在 156.0；辛辛那提、温斯顿-塞勒姆集锦离片尾 30 秒以上。",
  "_primary_why": "主源是 sources 的第一个键 mc26（Tennis TV 1080p50）；北京那条拿掉之后沿用同一个 50 fps 输出。",
  "_production_status": "spec_ready_for_render",
- "_why_sources": "比赛与颁奖画面全部来自官方频道：Tennis TV（SXCs4vTWo_s、Rv0Q9jXIz-M、5PSCTOsUYho、yNxzL-8i9NU、l7F7uLC-GGM、9aqUxco0bqo）、US Open（9CQYJlU5_Ew、MEFpXBwnyQA、6q9HMdjYpVg）、Australian Open（uWxN2lH2Fa0、MWNZOZr_uMU），以及澳网主转播方 Nine 的 Wide World of Sports（xH4R5HNq-6s，2022 澳网怒吼的原声只有它有）、美网美国主转播方 ESPN（oXmpP1kLyxQ，2025 美网停赛六分钟的全过程；美网官方加长集锦 p2lgExFvcug 把这段剪掉了）。2017 温网撒硬币没有官方画面，用字卡和旁白讲。",
+ "_why_sources": "比赛与颁奖画面全部来自官方频道：Tennis TV（SXCs4vTWo_s、Rv0Q9jXIz-M、5PSCTOsUYho、yNxzL-8i9NU、l7F7uLC-GGM、9aqUxco0bqo）、US Open（9CQYJlU5_Ew、MEFpXBwnyQA、6q9HMdjYpVg）、Australian Open（uWxN2lH2Fa0、MWNZOZr_uMU），以及澳网主转播方 Nine 的 Wide World of Sports（xH4R5HNq-6s，2022 澳网怒吼的原声只有它有）、美网美国主转播方 ESPN（oXmpP1kLyxQ，2025 美网停赛六分钟的全过程；美网官方加长集锦 p2lgExFvcug 把这段剪掉了）。2017 温网扔硬币没有官方画面，账号所有者 2026-10-16 特许用 YouTube 个人账号 David Lock 转载的 BBC 转播（UKZnd1EliAY，33.5–41.1）。",
  "segments": [
   {
    "source": "ao22r",
@@ -310,12 +325,55 @@
   {
    "title_card": "朝主裁椅\n扔了硬币",
    "kicker": "2017年温网 第二轮",
-   "seconds": 9.6,
-   "narration": "那年他二十一岁，五盘输给了贝梅尔曼斯。握手之后，他掏出几枚硬币，朝主裁的椅子扔了过去。",
+   "seconds": 8.4,
+   "narration": "那年他二十一岁，五盘输给了贝梅尔曼斯。收拾球包的时候，他从钱包里掏出了几枚硬币。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fault-not-out-2026 同一档）。"
    }
+  },
+  {
+   "source": "wb17",
+   "start": 33.5,
+   "end": 41.1,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.22,
+     "end": 4.0,
+     "text": "This is what he did: he got the coins out of his wallet\n他从钱包里掏出硬币，"
+    },
+    {
+     "at": 4.0,
+     "end": 7.34,
+     "text": "and started throwing them to the base of the umpire's chair.\n朝主裁椅的底座扔了过去。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "账号所有者 2026-10-16：「针对这一条内容可以放开用非官方视频」。UKZnd1EliAY（YouTube 个人账号 David Lock 转载的 BBC 转播，手机翻拍电视画面，1280×720@29）：33.5 起是他走到主裁椅旁、把硬币扔向椅子底座（34.5–42）。BBC Sport 90 周年台标转场在 32.1–33.3，段首 33.5 避开；解说两档：small 32.36–40.84、medium 33.00–43.22，段首切掉了前半句 his bag。段尾 41.1 在下一分句（small 40.84 起 we will find out more）之后不久。",
+   "point_end_ok": "比赛已经结束，赛后收拾球包。",
+   "inset": {
+    "image": "assets/reel/medvedev-real/label-wb17.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 7.0,
+    "motion": "editorial",
+    "label": {
+     "topic": "朝主裁椅扔硬币",
+     "date": "2017.07.05",
+     "place": "温网 第二轮",
+     "score": "4-6 2-6 6-3 6-2 3-6",
+     "people": "梅德韦杰夫 vs 贝梅尔曼斯"
+    }
+   },
+   "fit": "contain",
+   "contain_keep": 1.0,
+   "_fit_why": "主裁椅在画面左侧，他走过去扔硬币时 3:4 居中裁切只拍到网和观众；视频裁切固定 cx 0.5，改 contain 全宽才看得到扔的动作。",
+   "_unofficial_why": "账号所有者 2026-10-16 针对这一条单独放开非官方视频；官方频道（Wimbledon、ATP、BBC）查过没有这一幕。"
   },
   {
    "title_card": "一时上头\n做了件坏事",
