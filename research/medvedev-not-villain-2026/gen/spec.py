@@ -96,9 +96,9 @@ c=q("tf24",5.6,17.2,[(6.44,10.2,"And another, would you believe it, back-to-back
 c["_unofficial_why"]="账号所有者 2026-10-16：反拿球拍这一条「放开用非官方转载」。Tennis TV 两条官方集锦（ESiiwmCCEEY、l77SO1hB5EQ）都只剪了双误、砸拍和罚分，没有反拿球拍；这条是个人账号转载的 Tennis TV 转播，台标在右上角、3:4 居中取景窗之外。"
 S.append(c)
 S.append(n("tf24",17.3,23.9,"二〇二四年年终总决赛，对弗里茨。他连着三个双误，丢掉了第一盘。","同一条：双误之后弗里茨近景与回合，空当 16.92–24.00（两档都无词）。","局间与回合的一小段，旁白不讲这一分。"))
-S.append(q("tf24",23.9,40.4,[(24.12,25.78,"Oh, you're kidding me.\n不会吧。"),(27.24,31.32,"All he can do is apologize. Complete mis-hit.\n他只能道歉，完全打偏了。"),(33.98,40.02,"Now that's a point now. If it wasn't before, it definitely is after that.\n这下要罚分了，刚才没有，现在肯定有。")],
+S.append(q("tf24",23.9,40.4,[(24.12,25.78,"Oh, you're kidding me.\n不会吧。"),(27.24,31.32,"All he can do is apologize. Complete mis-hit.\n他只能道歉，完全打偏了。"),(33.98,40.02,"Now that's a point now. If it wasn't before, it definitely is after that.\n这下肯定要罚分了。")],
   "弗里茨擦框得分后梅德韦杰夫砸拍、被判罚分。两档一致（small 24.00–40.98；medium 24.12–40.02，按 medium 写 mis-hit）。段尾 40.4 在下一句（45.72）之前。","擦框那一分已经打完，之后是砸拍和罚分。"))
-S.append(n("tf24",97.1,111.6,"第二盘他砸了球拍，被罚了一分。弗里茨四比二领先，他开始把球拍扔来扔去，假装手滑握不住，全场一片嘘声。","同一条：第二盘弗里茨发球前，梅德韦杰夫在底线把球拍扔来扔去，空当 97.06–111.80（两档都无词）。","局间与准备接发，不是回合。"))
+S.append(n("tf24",101.0,111.6,"第二盘他砸了球拍，被罚了一分。弗里茨四比二领先，他开始把球拍扔来扔去，假装手滑握不住，全场一片嘘声。","同一条：第二盘弗里茨发球前，梅德韦杰夫在底线把球拍扔来扔去，空当 97.06–111.80（两档都无词）。","局间与准备接发，不是回合。"))
 S.append(q("tf24",111.7,136.6,[(111.8,115.22,"He hasn't caught one yet, has he? There we go.\n他一个都没接住吧？好，接住了。"),(117.24,121.04,"No, come on, this is getting a bit ridiculous now.\n别闹了，这有点太离谱了。"),(129.26,131.16,"This is hard to believe.\n真叫人难以置信。")],
   "弗里茨 4-2、40-0 发球，梅德韦杰夫倒握拍头站在接发位（近景 127–136，记分条 40）。两档一致（small 111.80–141.70；medium 111.80–131.16）。段尾 136.6 在切回广角（137）之前。","接发准备，这一分还没开始。"))
 S.append(q("tfpc",816.3,824.25,[(816.8,818.06,"I mean, I was just laughing, it's fun.\n我就是在笑，挺好玩的。"),(818.06,819.72,"I think he's really funny, to be honest.\n说实话，我觉得他挺搞笑。"),(819.72,822.48,"Even when he's not playing me, he always cracks me up.\n不跟我打的时候，他也总能逗笑我。"),(822.48,824.1,"He's pretty funny.\n他真的挺好玩。")],
