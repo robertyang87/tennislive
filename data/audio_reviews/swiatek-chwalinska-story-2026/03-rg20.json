@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=OwKaLdNEjlI",
+  "source_sha256": "c6baf8f35949637a4656b23ada35315bd43c7f620757c54ffc53b97631c31755",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T18:52:14.259550+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 403.0,
+  "reviewed_to": 407.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/OwKaLdNEjlI/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这几秒只有掌声：法语场内播报在 388.5 结束，两档英文转写在 403–407.4 都无词（small 399.82 的 Thank you 在段首之前）。这一段是中文旁白或只留现场声。窗口按 data/source_asr/OwKaLdNEjlI 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 403.0–407.4 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "闪回②：2020 法网颁奖台上，戴口罩的斯瓦泰克捧着冠军奖杯（法网官方 OwKaLdNEjlI）。"
+}

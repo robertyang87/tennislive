@@ -1,0 +1,51 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=SdEjFtD4CTU",
+  "source_sha256": "717f75cacd471160a070ad0b9033ef6edce9e04ac69be11d8118b09aa113fef5",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T18:52:14.259550+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 4.4,
+  "reviewed_to": 25.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 4.68,
+      "end": 7.8,
+      "en": "You are in Roland Garros' final. How does it sound?",
+      "zh": "你打进法网决赛了，感觉怎么样？"
+    },
+    {
+      "start": 12.62,
+      "end": 14.98,
+      "en": "I mean, like a dream, honestly.",
+      "zh": "说真的，像做梦一样。"
+    },
+    {
+      "start": 15.52,
+      "end": 16.9,
+      "en": "I don't know what's going on.",
+      "zh": "我都不知道发生了什么。"
+    },
+    {
+      "start": 19.92,
+      "end": 20.9,
+      "en": "I'm just...",
+      "zh": "我只是……"
+    },
+    {
+      "start": 21.54,
+      "end": 23.1,
+      "en": "Yeah, I don't know what to say.",
+      "zh": "我不知道该说什么。"
+    },
+    {
+      "start": 23.2,
+      "end": 24.98,
+      "en": "I'm sorry. I'm just very happy.",
+      "zh": "抱歉，我就是太开心了。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/SdEjFtD4CTU/small.en.json + medium.en.json",
+  "review_note": "法网官方频道半决赛场上采访（SdEjFtD4CTU）。两档逐词一致（medium 4.68–24.58；small 4.88–24.54）。段首 4.4 在主持人前半句 The character continues（3.60–4.2，两档转写不一致，不收）之后，段尾 25.6 在 You understand（26.12）之前。"
+}

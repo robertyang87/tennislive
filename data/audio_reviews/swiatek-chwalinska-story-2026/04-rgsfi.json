@@ -1,0 +1,21 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=SdEjFtD4CTU",
+  "source_sha256": "717f75cacd471160a070ad0b9033ef6edce9e04ac69be11d8118b09aa113fef5",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T18:52:14.259550+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 106.2,
+  "reviewed_to": 109.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 106.42,
+      "end": 109.44,
+      "en": "But inside, there is a storm, believe me.",
+      "zh": "可我心里，其实是一场风暴。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/SdEjFtD4CTU/small.en.json + medium.en.json",
+  "review_note": "闪回③：2026 法网半决赛场上采访（SdEjFtD4CTU），主持人说她看起来很平静，她这样回答。两档逐词一致（medium But@106.42…me.@109.12；small 106.26–109.12）。段首 106.2 在上一句 do.（106.0）之后，段尾 109.8 在看台喊 We love you（110.36）之前。"
+}

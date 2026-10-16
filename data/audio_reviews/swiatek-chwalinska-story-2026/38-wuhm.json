@@ -1,0 +1,57 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=0-v-yZvYAk8",
+  "source_sha256": "daf2900ed133d0b9c2b0c4bfd9f678d0b1bd81ff880b01b83061d29f6d5fe70f",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T18:52:14.259550+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 280.6,
+  "reviewed_to": 299.45,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 281.16,
+      "end": 282.66,
+      "en": "What an effort by the Pole.",
+      "zh": "波兰姑娘拼尽了全力。"
+    },
+    {
+      "start": 283.6,
+      "end": 285.36,
+      "en": "A dominant opening set, score-wise;",
+      "zh": "首盘比分一边倒，"
+    },
+    {
+      "start": 285.36,
+      "end": 287.82,
+      "en": "she had to outlast the Greek in the end.",
+      "zh": "最后还是得熬过这位希腊对手。"
+    },
+    {
+      "start": 292.0,
+      "end": 294.0,
+      "en": "And when it seemed the experience of Sakkari",
+      "zh": "当萨卡里的经验似乎"
+    },
+    {
+      "start": 294.0,
+      "end": 295.64,
+      "en": "might prevail in the end,",
+      "zh": "就要占上风时，"
+    },
+    {
+      "start": 295.92,
+      "end": 297.96,
+      "en": "Maja says, “No, no, not this year,",
+      "zh": "玛雅说：不，今年不行，"
+    },
+    {
+      "start": 298.36,
+      "end": 299.2,
+      "en": "not this tournament.”",
+      "zh": "这项赛事也不行。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/0-v-yZvYAk8/small.en.json + medium.en.json",
+  "review_note": "回到冷开场那场的赛后：月亮姐向看台致意、离场（281–299）。解说两档一致（small 281.16–299.16；medium 275.74–299.20），字幕沿用已发布 chwalinska-sakkari-wuhan-2026-qf 第 10 段的审听稿。段首 280.6 在 semifinal（279.42–279.76）之后。"
+}

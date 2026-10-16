@@ -1,0 +1,22 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=-Vsfptr_DC8",
+  "source_sha256": "76fa7cd6005e88a94cbd8b0901162cf3fe18d9b0541acd32e74d46ebe900ca74",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T18:52:14.259550+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small 与 medium 两档波兰语逐词转写交叉核对（language=pl），对照本地抽帧认人；未人工听音",
+  "reviewed_from": 31.6,
+  "reviewed_to": 34.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 31.88,
+      "end": 33.92,
+      "en": "Jesteśmy mistrzami Europy!",
+      "zh": "我们是欧洲冠军！"
+    }
+  ],
+  "asr_evidence": "data/source_asr/-Vsfptr_DC8/small.pl.json + medium.pl.json",
+  "language_note": "前景原声是波兰语（Polsat Sport 2015 年采访），字段名沿用 foreground_english，原文一行写波兰语、中文一行写译文。",
+  "review_note": "闪回①：Polsat Sport 2015 年采访（-Vsfptr_DC8），14 岁的两人和队友捧着奖杯喊出来。两档波兰语转写：small 31.88–33.92 mistrzami、medium 31.90–33.82（记成 miejscami），按语义与 small 写。段尾 34.3 在教练开口（34.56）之前。"
+}

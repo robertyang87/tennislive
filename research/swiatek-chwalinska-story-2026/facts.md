@@ -35,3 +35,12 @@
 - 不说「第一次交手」：2014 U14 和 2016 ITF 都交过手；只说「第一次在巡回赛相遇」。
 - 不说二人私下关系的细节、不说 United Cup 冰袋那一幕（单一来源）。
 - 不报 2017 澳网决赛比分、不报 JFC 决赛双打比分（只有检索摘要）。
+
+## 第二轮补充（2026-10-17 北京凌晨，账号所有者要求「多讲讲过往」「电视宣传片的质感」）
+- 2018 温网青少年女单决赛：斯瓦泰克 6-4 6-2 胜屈恩（Leonie Küng），2018-07-15。wimbledon.com 2018-07-14/15 稿＋ITF《Swiatek outplays Kung to claim Wimbledon title》。官方画面 Jw9sJZjk97o；解说原话「There's a lot to be written in this lady's career … enjoy the ups, enjoy the downs」两档转写一致。
+- 2020 法网：赛前世界第 54、非种子，一盘未失，决赛 6-4 6-1 胜肯宁（2020-10-10），波兰第一位大满贯单打冠军：Morung Express、NBC Sports、Newshub 等。
+- 2025 温网决赛 6-0 6-0 胜阿尼西莫娃（2025-07-12），第六座大满贯：tennismajors、timeslive 等；官方画面 Ds27hJRfSG4。
+- 2026 法网八强 7-6(3) 6-3 胜卡林斯卡娅（2026-06-03）：puntodebreak、tennismajors；官方画面 -ygefQ6dXFc。半决赛场上采访「But inside, there is a storm, believe me.」（SdEjFtD4CTU）。
+- 法网一路：资格赛 3 场＋正赛 5 场后打半决赛（QF 发布会记者：eight matches in a row, eight victories），半决赛是第 9 场胜利。
+- Polsat Sport 2015 采访（-Vsfptr_DC8）两档波兰语转写：两人 14 岁的自我介绍、「Jesteśmy mistrzami Europy!」（欧洲室内锦标赛 U14 团体冠军）、斯瓦泰克「我和玛雅打过好几次团体赛……有时也会拌嘴，但很快就能和好」、月亮姐「不靠力量……切削和节奏变化，不只是砰砰砰」。说话人按画面认：话筒前的人。
+- 不用：美网 2022 冠军点（olkL68B4Ork，官方只有 720p）、Polsat 2017 月亮姐采访（nrIcqWDZCyo，720p）、BJK 杯 2025 对斯维托丽娜（只有单一来源的比分）。

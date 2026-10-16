@@ -1,0 +1,45 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Jw9sJZjk97o",
+  "source_sha256": "8a50cb194270f11a025b8fd2254bfcaa9d47c863ff05927a4ffe5dc9d0af1314",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T18:52:14.259550+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 368.2,
+  "reviewed_to": 386.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 368.6,
+      "end": 372.42,
+      "en": "There's a lot to be written in this lady's career, for sure,",
+      "zh": "她的职业生涯，还有很多篇章要写，"
+    },
+    {
+      "start": 372.42,
+      "end": 375.0,
+      "en": "if she can continue to improve, stay focused,",
+      "zh": "只要她继续进步、保持专注，"
+    },
+    {
+      "start": 375.0,
+      "end": 379.5,
+      "en": "and more important than just about anything else is to enjoy the journey,",
+      "zh": "更重要的是，享受这段旅程，"
+    },
+    {
+      "start": 381.24,
+      "end": 382.56,
+      "en": "enjoy the ups, enjoy the downs,",
+      "zh": "享受高峰，也享受低谷，"
+    },
+    {
+      "start": 383.04,
+      "end": 385.8,
+      "en": "because there's going to be plenty of them along the way.",
+      "zh": "因为一路上，这样的起落会有很多。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/Jw9sJZjk97o/small.en.json + medium.en.json",
+  "review_note": "同一条：颁奖与捧杯（368–386）时的解说。两档逐词一致（medium 368.70–385.80；small 368.60–385.80）。段首 368.2 在 Forever.（两档都有，366.34/367.12）之后，段尾 386.3 在温网片尾板（388 秒起）之前。"
+}

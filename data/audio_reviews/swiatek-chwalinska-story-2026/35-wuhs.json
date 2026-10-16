@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=O8f_vcT29uY",
+  "source_sha256": "dc8e6e9ca8f72a7f6a75e2eb6eac91b0bfe24de9c93f4d75cc8aa1e8189f5862",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T18:52:14.259550+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 203.1,
+  "reviewed_to": 221.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/O8f_vcT29uY/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/O8f_vcT29uY 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 203.1–221.0 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "WTA 官方集锦（O8f_vcT29uY）第二盘回合，空当 202.72–251.24（两档都无词）。「全部 10 站 WTA1000 都进过半决赛」：WTA 4593251。"
+}
