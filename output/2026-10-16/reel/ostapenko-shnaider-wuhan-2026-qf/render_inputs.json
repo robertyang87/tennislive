@@ -1,0 +1,478 @@
+{
+  "version": 2,
+  "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
+  "slug": "ostapenko-shnaider-wuhan-2026-qf",
+  "written_at": "2026-10-16T09:04:35Z",
+  "code_sha": "2de957b48a77ec848998483744c7cd9b9a05216b",
+  "spec_sha256": "113489f8e7be4f410ebdf869058a8656d7edcb5a82f3c19f12da75645125b3b1",
+  "film_sha256": "3226dd80201c38077dd876f9efa13682f01630f981b631cd3c294718140bff88",
+  "film_bytes": 116060009,
+  "projection_sha256": "61b85f0db42e48e93202e85a75c8739429c829168af91e3307621b1116ca2f7a",
+  "claims": [
+    [
+      "segments",
+      0,
+      "_ending_payoff_required"
+    ],
+    [
+      "_match"
+    ],
+    [
+      "segments",
+      0,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      3,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      5,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      5,
+      "_score_inset_why"
+    ],
+    [
+      "_tts_backend_why"
+    ],
+    [
+      "stats",
+      "_winners_ue_evidence"
+    ]
+  ],
+  "assets": {
+    "assets/players/headshots/wta-319939.jpg": "26030ab9b269ae34e94540a2488139c950b0caab6a64ef498dd0de643c9d7f4e",
+    "assets/players/headshots/wta-330482.jpg": "df9c9de7ac615488c970fa07cffc4a6501c28d54ab81034c3fcf3f9a8bbdc0d2",
+    "assets/reels/ostapenko-shnaider-wuhan-2026-qf/ostapenko-wuhan-qf-official.jpg": "95ab8bb72475553e49a55186de6fbc2745b08e68e8d9a1f350a4564547463b58"
+  },
+  "artifacts": {
+    "audio_review_binding.json": "335be492db06fdc11b38cd534f7577968ab427f1c25431f300d6da559750f288",
+    "subtitles.ass": "b7d3e56fffc522fa9d16530f2eb71707b22a851cb081f6324416947795588c5f",
+    "topbar.ass": "24f29b97bba0c7123cfaca69dc4a1bebbbe017491361f53fe91d36cbb1e6dd88",
+    "poster.jpg": "96a11bf4dbe7aaf0fca2ea572d1488a57eb9f4669bcdbb32917f25b06c36d91a",
+    "stat_card.jpg": "5ed4913cd309591b35ac397705bb8667c6a5e1639c42dbe1cfb7fc2ef1ce15b8",
+    "scoreboard_qc.json": "52f066a2df098f463ee05191186e8f42b8fca39b9b7b0ed4c02ac7d5b65bdb8c"
+  },
+  "projection": {
+    "slug": "ostapenko-shnaider-wuhan-2026-qf",
+    "_column": "赛场之上",
+    "tts_backend": "edge",
+    "sources": {
+      "main": "https://www.youtube.com/watch?v=uI4UCjY34b4"
+    },
+    "primary": "main",
+    "source_fallbacks": {
+      "main": "https://github.com/robertyang87/tennislive/releases/download/source-uI4UCjY34b4/uI4UCjY34b4.mp4"
+    },
+    "track": false,
+    "outro": true,
+    "stat_card_full_canvas": true,
+    "preserve_source_audio": true,
+    "scorebox": [
+      90,
+      826,
+      550,
+      980
+    ],
+    "cover": {
+      "matchup": [
+        {
+          "name": "奥斯塔彭科",
+          "name_en": "Jelena Ostapenko",
+          "country": "LAT",
+          "rank": 34
+        },
+        {
+          "name": "施耐德",
+          "name_en": "Diana Shnaider",
+          "country": "RUS",
+          "rank": 13
+        }
+      ],
+      "subject": "奥斯塔彭科",
+      "winner": "奥斯塔彭科",
+      "result": "7-6(6) 6-1",
+      "topic": "WTA1000 武汉 1/4决赛 · 奥斯塔彭科 VS 施耐德",
+      "scoreboard": {
+        "court": "Center Court",
+        "duration_source": {
+          "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+          "field": "MatchTimeTotal",
+          "match_id": "LS007"
+        }
+      },
+      "eyebrow": "赛场之上",
+      "layout": "solo",
+      "scrim": "clear",
+      "hook": "救下2个盘点\n进4强 离斯瓦泰克更近",
+      "hook_accent": "离斯瓦泰克更近",
+      "portrait": {
+        "image": "assets/reels/ostapenko-shnaider-wuhan-2026-qf/ostapenko-wuhan-qf-official.jpg",
+        "focus": 0.45,
+        "focus_y": 0.5,
+        "zoom": 1.0,
+        "source_url": "https://bucket-wuwang.hubei-41.zos.ctyun.cn/files/yhk68ewhqwyo7wguqw3mbs1ap.jpg"
+      }
+    },
+    "stats": {
+      "tour": "wta",
+      "footer_date": "2026-10-16",
+      "footer_venue": "武汉 · 全场",
+      "a": {
+        "aces": 7,
+        "df": 6,
+        "first_in": 40,
+        "first_total": 70,
+        "first_won": 29,
+        "second_total": 30,
+        "second_won": 16,
+        "bp_conv": 3,
+        "bp_chances": 9,
+        "pts_won": 72,
+        "pts_total": 133,
+        "winners": 32,
+        "ue": 30,
+        "headshot": "assets/players/headshots/wta-319939.jpg"
+      },
+      "b": {
+        "aces": 0,
+        "df": 5,
+        "first_in": 40,
+        "first_total": 63,
+        "first_won": 28,
+        "second_total": 23,
+        "second_won": 8,
+        "bp_conv": 1,
+        "bp_chances": 2,
+        "pts_won": 61,
+        "pts_total": 133,
+        "winners": 8,
+        "ue": 14,
+        "headshot": "assets/players/headshots/wta-330482.jpg"
+      }
+    },
+    "topbar": {
+      "line1": "2026 WTA1000 武汉 1/4决赛",
+      "line2": "奥斯塔彭科 7-6(6) 6-1 施耐德"
+    },
+    "editorial": {
+      "mode": "match_review",
+      "question": "奥斯塔彭科如何从首盘盘点边缘打进四强，让与斯瓦泰克的潜在决赛相遇更近一步？",
+      "thesis": "2-5后两救盘点、抢七第4个盘点兑现，次盘6-1；真实进攻和32W/30UE解释风险与回报，最后准确保留只能决赛相遇的条件。",
+      "beats": [
+        "真实赢球反应与powerhouse原声冷开场",
+        "10月16日上午武汉女单八强赛坐标",
+        "首盘2-5、3-5及4-5两救盘点",
+        "完整实际救险、追平、抢七第4盘点与反应",
+        "次盘3-0至3-1后连赢3局、第二赛点与握手致意",
+        "32W与30UE并列，不把进攻夸成零风险",
+        "对斯瓦泰克6-0历史，只有可能决赛相遇且下一场先过卡塔尔"
+      ],
+      "human_context": {
+        "angle": "进攻的风险与回报，以及用户惦记的潜在决赛对阵；尊重比赛顺序，不虚构既定交手或心理。",
+        "facts": [
+          "Ostapenko7-6(6)6-1晋级武汉四强",
+          "首盘救两个盘点，抢七第4盘点兑现",
+          "32W/30UE对8W/14UE",
+          "半决赛对手Sonay Kartal；与Iga只有决赛可能相遇，历史6-0"
+        ],
+        "sources": [
+          "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+          "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS007/point-by-point",
+          "https://api.wtatennis.com/tennis/players/319939/headtohead/326408"
+        ]
+      }
+    },
+    "segments": [
+      {
+        "source": "main",
+        "start": 256.65,
+        "end": 271.55,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.15,
+            "end": 2.83,
+            "text": "It's another powerhouse performance.\n又是一场火力十足的表现。"
+          },
+          {
+            "at": 3.96,
+            "end": 5.46,
+            "text": "From Jelena Ostapenko.\n来自奥斯塔彭科。"
+          },
+          {
+            "at": 7.08,
+            "end": 8.57,
+            "text": "The Latvian seals\n这位拉脱维亚球员，"
+          },
+          {
+            "at": 8.57,
+            "end": 11.43,
+            "text": "a second 1000 semifinal of the season\n本季第二次打进千赛四强，"
+          },
+          {
+            "at": 12.42,
+            "end": 14.59,
+            "text": "and is into a tenth of her career.\n也是她职业生涯的第十次。"
+          }
+        ],
+        "subtitle_bottom": 304,
+        "point_end_ok": "实际末点源256已结束，264–270为网前握手、271附近走向裁判，无进行中回合；cold完整career句至271.24并保留尾，正文源200.90–294.20完整重放终局。",
+        "crosses_cut": "WTA同场官方集锦自带镜头跳接；完整保留所选实际回合及对应结果/反应、解说完整句，不称跨剪辑为连续全部逐分。"
+      },
+      {
+        "title_card": "两救盘点挺进4强\n离斯瓦泰克又近一步",
+        "kicker": "武汉1/4决赛",
+        "seconds": 15.1,
+        "narration": "奥斯塔彭科，又朝斯瓦泰克近了一步。十月十六日上午，武汉女单四分之一决赛，她七比六、六比一击败施耐德，晋级四强。但首盘，她一度离丢盘只差一分。"
+      },
+      {
+        "title_card": "首盘2比5落后\n救下两个盘点",
+        "kicker": "首盘险境",
+        "seconds": 16.6,
+        "narration": "首盘二比五落后，她在三比五和四比五时各救一个盘点。看这个救险回合，她从底线向前压进发球区，继续进攻。随后追平，抢七又从六比三被追到六平，第四个盘点才拿下。"
+      },
+      {
+        "source": "main",
+        "start": 130.3,
+        "end": 200.9,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 9.38,
+            "end": 11.16,
+            "text": "Sometimes you have to hold your hands up,\n有时你也只能无奈认了，"
+          },
+          {
+            "at": 11.16,
+            "end": 12.58,
+            "text": "so there's not much you can do\n实在没有太多办法，"
+          },
+          {
+            "at": 12.58,
+            "end": 15.1,
+            "text": "against the barrage from Latvia.\n应对来自拉脱维亚的狂轰滥炸。"
+          },
+          {
+            "at": 25.29,
+            "end": 27.06,
+            "text": "Yeah, she's reached four\n是的，她已经四次打进，"
+          },
+          {
+            "at": 27.06,
+            "end": 30.26,
+            "text": "1000 quarterfinals or better in China.\n中国千赛的八强或更远轮次。"
+          },
+          {
+            "at": 40.31,
+            "end": 41.21,
+            "text": "Made it.\n打进了。"
+          },
+          {
+            "at": 52.96,
+            "end": 56.23,
+            "text": "What a finish that is!\n多漂亮的收尾！"
+          },
+          {
+            "at": 57.11,
+            "end": 59.44,
+            "text": "And Ostapenko delights the crowd\n奥斯塔彭科让全场沸腾，"
+          },
+          {
+            "at": 60.48,
+            "end": 64.16,
+            "text": "and converts set point number four.\n兑现了她的第四个盘点。"
+          },
+          {
+            "at": 65.12,
+            "end": 68.62,
+            "text": "Her quest for a first Wuhan semifinal for nine years\n她争取九年来首次进入武汉四强，"
+          },
+          {
+            "at": 68.62,
+            "end": 70.56,
+            "text": "is very much on.\n眼下正大有希望。"
+          }
+        ],
+        "subtitle_bottom": 304,
+        "subtitle_bottom_windows": [
+          [
+            65.12,
+            70.6,
+            540
+          ]
+        ],
+        "point_end_ok": "root/source实际墙与原PNG：首盘184结束、195后大赛果图、200–201施耐德准备次盘发球，202才抛球；200.90为完整上句on尾后且下次发球动作前，非截断一分。",
+        "crosses_cut": "WTA同场官方集锦自带镜头跳接；完整保留所选实际回合及对应结果/反应、解说完整句，不称跨剪辑为连续全部逐分。"
+      },
+      {
+        "title_card": "次盘连赢最后3局\n第二个赛点兑现",
+        "kicker": "把优势带到终点",
+        "seconds": 15.2,
+        "narration": "第二盘，奥斯塔彭科先拿三局，随后被追到三比一。底线相持中，她左右大范围跑动，仍把球回进场。她连赢最后三局，第二个赛点兑现。六比一，比赛结束。"
+      },
+      {
+        "source": "main",
+        "start": 200.9,
+        "end": 294.2,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 12.18,
+            "end": 14.02,
+            "text": "Very good defensively too,\n防守同样相当出色，"
+          },
+          {
+            "at": 14.02,
+            "end": 15.98,
+            "text": "but there's only so much you can do\n但你能做的也只有这些，"
+          },
+          {
+            "at": 15.98,
+            "end": 17.47,
+            "text": "against the onslaught.\n面对这样的猛烈攻势。"
+          },
+          {
+            "at": 17.47,
+            "end": 19.31,
+            "text": "Shnaider's landed a lot of points\n施耐德本场赢下了不少分，"
+          },
+          {
+            "at": 19.31,
+            "end": 21.36,
+            "text": "on first serve in this match, 70%,\n一发得分率达到七成，"
+          },
+          {
+            "at": 21.36,
+            "end": 24.83,
+            "text": "but the second serve has been pickpocketed.\n可二发得分被对手抢走了。"
+          },
+          {
+            "at": 30.05,
+            "end": 32.83,
+            "text": "Oh goodness me, she's made it!\n天哪，这球她打进了！"
+          },
+          {
+            "at": 32.83,
+            "end": 35.61,
+            "text": "What a shot from Ostapenko!\n奥斯塔彭科这一拍太精彩了！"
+          },
+          {
+            "at": 49.02,
+            "end": 50.58,
+            "text": "Too good.\n打得太好了。"
+          },
+          {
+            "at": 55.9,
+            "end": 58.58,
+            "text": "It's another powerhouse performance.\n又是一场火力十足的表现。"
+          },
+          {
+            "at": 59.71,
+            "end": 61.21,
+            "text": "From Jelena Ostapenko.\n来自奥斯塔彭科。"
+          },
+          {
+            "at": 62.83,
+            "end": 64.32,
+            "text": "The Latvian seals\n这位拉脱维亚球员，"
+          },
+          {
+            "at": 64.32,
+            "end": 67.18,
+            "text": "a second 1000 semifinal of the season\n本季第二次打进千赛四强，"
+          },
+          {
+            "at": 68.17,
+            "end": 70.34,
+            "text": "and is into a tenth of her career.\n也是她职业生涯的第十次。"
+          },
+          {
+            "at": 73.85,
+            "end": 77.02,
+            "text": "Shnaider had chances in the opening set.\n施耐德在首盘曾经有过机会。"
+          },
+          {
+            "at": 77.05,
+            "end": 78.23,
+            "text": "She had a couple of set points.\n她拿到过两个盘点。"
+          },
+          {
+            "at": 78.23,
+            "end": 79.57,
+            "text": "She couldn't take them,\n但她没能把握住，"
+          },
+          {
+            "at": 80.1,
+            "end": 82.15,
+            "text": "and she was brutally punished.\n为此付出了沉重代价。"
+          },
+          {
+            "at": 82.91,
+            "end": 86.65,
+            "text": "What a performance from Jelena Ostapenko!\n奥斯塔彭科打出了多棒的表现！"
+          },
+          {
+            "at": 87.47,
+            "end": 89.32,
+            "text": "Maybe the best of the week.\n可能是她本周最好的一场。"
+          },
+          {
+            "at": 89.82,
+            "end": 92.26,
+            "text": "Seven-six, six-one.\n七比六、六比一。"
+          },
+          {
+            "at": 92.83,
+            "end": 93.2,
+            "text": "Wow.\n哇！"
+          }
+        ],
+        "subtitle_bottom": 304,
+        "subtitle_bottom_windows": [
+          [
+            87.47,
+            93.3,
+            540
+          ]
+        ],
+        "point_end_ok": "源256举臂获胜、264–270握手、288–293赛果板，294为WTA转场；294.20只为保留完整Wow，不是进行中一分，原生翻牌检测把尾板转场当新点。",
+        "crosses_cut": "WTA同场官方集锦自带镜头跳接；完整保留所选实际回合及对应结果/反应、解说完整句，不称跨剪辑为连续全部逐分。",
+        "score_inset_windows": [
+          [
+            200.9,
+            256.72
+          ]
+        ]
+      },
+      {
+        "stat_card": true,
+        "seconds": 12.9,
+        "narration": "三十二个制胜分，也有三十次非受迫失误。对面是八个制胜分、十四次失误。她的进攻有代价，但两个盘点之后，比赛被她翻了过来。"
+      },
+      {
+        "title_card": "对斯瓦泰克6战全胜\n只可能决赛相遇",
+        "kicker": "离潜在相遇又近一步",
+        "seconds": 18.2,
+        "narration": "再看签表，她和斯瓦泰克分在两半区，只可能决赛相遇。此前六次交手，奥斯塔彭科全赢。但她下一关还要过索奈·卡塔尔，斯瓦泰克也要继续闯关。这场大家惦记的对决，真能等来吗？"
+      }
+    ]
+  }
+}
