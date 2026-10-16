@@ -73,7 +73,7 @@ for x in S:
     k=(x.get("inset") or {}).get("image","").split("osw-")[-1][:-4]
     if lab and k in EV: lab.pop("score",None); lab["event"]=EV[k]
 for x in S:
-    if x["source"]=="uso23f" and x["start"]==5006.6: x["speed"]=0.6; x["_speed_why"]="美网赛点回合 0.6 倍慢放，压住高潮。"
+    pass
 ZOOM={("doh25f",3473.9):1.25,("uso23f",5009.6):1.2,("stu25",260.95):1.2,("doh25f",3457.6):1.15}
 for x in S:
     z=ZOOM.get((x["source"],x["start"]))
