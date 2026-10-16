@@ -1,0 +1,37 @@
+{
+  "schema": "tennislive.external-artifact.v1",
+  "status": "archived_exact_bytes_verified",
+  "artifact_kind": "independent_finite_actual_movie_visual_evidence",
+  "film_sha256": "3226dd80201c38077dd876f9efa13682f01630f981b631cd3c294718140bff88",
+  "local_path": "/workspace/scratch/osta-final-visual-qc/osta-v2-final-visual-evidence.zip",
+  "sha256": "620469fef2d362e6dc6af55ab6af2ecc25eb66a9f48295d679df0ea6754d3ad9",
+  "bytes": 220293692,
+  "quality_review_status": "passed_finite_visual_review",
+  "transport_is_quality_approval": false,
+  "report": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/visual-qc/final-visual-qc.json",
+  "contents": {
+    "current_main_original_pngs": 164,
+    "current_extra_repair_boundary_pngs": 5,
+    "current_contact_sheets": 11,
+    "historical_failed_original_pngs": 6,
+    "historical_source_comparison_pngs": 2,
+    "historical_failed_contact_sheets": 11,
+    "includes_mp4": false
+  },
+  "sealed_at": "2026-10-16T09:14:16.328834+00:00",
+  "release_tag": "reel-review-ostapenko-shnaider-wuhan-2026-qf-bc91d1d69f056e97",
+  "file_name": "visual-qc-evidence.zip",
+  "url": "https://github.com/robertyang87/tennislive/releases/download/reel-review-ostapenko-shnaider-wuhan-2026-qf-bc91d1d69f056e97/visual-qc-evidence.zip",
+  "publication_upload_pending": false,
+  "transport": {
+    "status": "uploaded_exact_bytes_verified",
+    "run_url": "https://github.com/robertyang87/tennislive/actions/runs/38879235001",
+    "asset_api_url": "https://api.github.com/repos/robertyang87/tennislive/releases/assets/646797113",
+    "asset_id": 646797113,
+    "service_digest": "sha256:620469fef2d362e6dc6af55ab6af2ecc25eb66a9f48295d679df0ea6754d3ad9",
+    "service_state": "uploaded",
+    "service_size_bytes": 220293692,
+    "quality_approval": false,
+    "note": "Transport verifies exact archive bytes only. Existing editorial/audio/visual review status is preserved."
+  }
+}

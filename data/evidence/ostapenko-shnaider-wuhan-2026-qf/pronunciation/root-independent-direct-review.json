@@ -1,0 +1,82 @@
+{
+  "created_at": "2026-10-16T08:28:50.183358+00:00",
+  "reviewer": "current_OpenAI_root_agent",
+  "scope": "Exactly3remaining actual bound targets; actual inspected image hashes preserved.",
+  "bundle_sha256": "bc91d1d69f056e97133ad361d161f02d493587c6d4498a524ddfee10c4c17313",
+  "occurrences": [
+    {
+      "edit_id": "second_set",
+      "index": 43,
+      "char": "场",
+      "actual_audio_sha256": "72f9493cc1c578782c492d388aad13d636105576c52689942a817f1b2a95973c",
+      "verdict": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_root_agent",
+      "method": "AI_direct_finite_actual_spectrogram_phonetic_interpretation_not_human_or_mechanical_pass",
+      "rationale": "Current OpenAI root actually inspected the five-row native/昶/偿/敞/唱 full-context spectrogram and pitch chart. After the native consonant, the vowel is short, breathy/nonperiodic, similar in actual shape to both independent chang3 positive references 昶 and 敞. 偿 chang2 is longer and has a later stable periodic region; 唱 chang4 has a trackable higher-start falling117→93Hz vowel, unlike native. These direct contextual phonation/duration contrasts support a low third-tone realization with limited/low confidence. Native F0 trackers still abstain; spectral distance is not a calibrated decision and has not been renamed mechanical pass.",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/osta-pronunciation/residual-details/second_set-43.png",
+          "sha256": "4944f859dc84c88d9da746463441354477f3358856fba0a679f2831658aea769"
+        },
+        {
+          "path": "/workspace/scratch/osta-pronunciation/final-three-details/second_set-43.png",
+          "sha256": "a9aad3a78c4c4f30c4371e4625fe34f2e47bd2ac36e9134decad9dd17fd70515"
+        }
+      ],
+      "prior_mechanical_status_preserved": "pending",
+      "native_f0_abstention_preserved": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "draw_outlook",
+      "index": 53,
+      "char": "尔",
+      "actual_audio_sha256": "09f23e70c756d2297ee3fd28621d399765ba45f31bd3259d157506961b864d34",
+      "verdict": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_root_agent",
+      "method": "AI_direct_finite_actual_spectrogram_phonetic_interpretation_not_human_or_mechanical_pass",
+      "rationale": "Current OpenAI root actually inspected the original native/耳/二 full-context spectrogram and F0 chart. The original fixed10.985–11.06s central window lies late in the voicing decay and remains a failed tracked window. The surrounding real /ta/→rhotic-vowel transition, approximately10.88–10.97s, shows a low fall around108→70Hz and a shortened low-frequency vowel context resembling the real 耳 er3 reference. 二 er4 has a longer periodic vowel and different trajectory. The expanded contextual observation is explicitly separate from the old fixed-window measurement, with coarticulation uncertainty and low confidence; not a calibrated classifier pass.",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/osta-pronunciation/residual-details/draw_outlook-53.png",
+          "sha256": "2a89f9822a5713c57011f7296d02d6dee636d8c13d07717c42e80208ac1bf7ef"
+        }
+      ],
+      "prior_mechanical_status_preserved": "pending",
+      "native_f0_abstention_preserved": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "draw_outlook",
+      "index": 63,
+      "char": "闯",
+      "actual_audio_sha256": "09f23e70c756d2297ee3fd28621d399765ba45f31bd3259d157506961b864d34",
+      "verdict": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_root_agent",
+      "method": "AI_direct_finite_actual_spectrogram_phonetic_interpretation_not_human_or_mechanical_pass",
+      "rationale": "Current OpenAI root accepted the genuine current pre-fixed nucleus identity to the new 闖 contextual reference: native central12.828–12.912s,1344 decoded samples exactly identical (hash542e65238e90a3bffe1089dccc07e6740daa79e860bb079c09879a7211134cae). Traditional 闖 is the same lexical character and has rare chen4 listed in pypinyin, so this is limited modern 闖关-context support, not an unambiguous independent different-lexeme positive or two-sided calibration. Native short breathy/low realization differs from 创/怆 chuang4 periodic falling context. Original 惝 positive label is invalid (chang3/tang3); rejected permanently and retained raw.",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/osta-pronunciation/residual-details/draw_outlook-63.png",
+          "sha256": "1b7719271fd153dad94f28da3ae819d128789096008e1566ac1b01d37f4d43aa"
+        }
+      ],
+      "prior_mechanical_status_preserved": "pending",
+      "native_f0_abstention_preserved": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    }
+  ],
+  "manual_listening_claimed": false,
+  "human_review_claimed": false,
+  "all_mechanical_components_passed": false,
+  "original_three_pending_history": "history/partial-three-pending-before-final-refinement.json"
+}
