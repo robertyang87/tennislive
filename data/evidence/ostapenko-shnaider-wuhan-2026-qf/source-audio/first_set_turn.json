@@ -1,0 +1,130 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=uI4UCjY34b4",
+  "source_sha256": "3288a4c8597d888ecc6139b7fe46abf890c8673f6d90439f54ff008b1a706137",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source-review assistant; actual native full small.en/medium.en cross-check and finite actual source-image review, no manual listening claimed",
+  "reviewed_at": "2026-10-16T08:08:01.317764+00:00",
+  "status": "complete",
+  "reviewed_from": 130.3,
+  "reviewed_to": 201.08,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 139.68,
+      "end": 141.46,
+      "en": "Sometimes you have to hold your hands up,",
+      "zh": "有时你也只能无奈认了，",
+      "verification": "Actual same-source two-model full-ASR lexical reconciliation, semantic display splits and punctuation added; timings remain ASR estimates."
+    },
+    {
+      "start": 141.46,
+      "end": 142.88,
+      "en": "so there's not much you can do",
+      "zh": "实在没有太多办法，",
+      "verification": "Actual same-source two-model full-ASR lexical reconciliation, semantic display splits and punctuation added; timings remain ASR estimates."
+    },
+    {
+      "start": 142.88,
+      "end": 145.4,
+      "en": "against the barrage from Latvia.",
+      "zh": "应对来自拉脱维亚的狂轰滥炸。",
+      "verification": "Actual same-source two-model full-ASR lexical reconciliation, semantic display splits and punctuation added; timings remain ASR estimates."
+    },
+    {
+      "start": 155.59,
+      "end": 157.36,
+      "en": "Yeah, she's reached four",
+      "zh": "是的，她已经四次打进，",
+      "verification": "Actual same-source two-model full-ASR lexical reconciliation, semantic display splits and punctuation added; timings remain ASR estimates."
+    },
+    {
+      "start": 157.36,
+      "end": 160.56,
+      "en": "1000 quarterfinals or better in China.",
+      "zh": "中国千赛的八强或更远轮次。",
+      "verification": "Actual same-source two-model full-ASR lexical reconciliation, semantic display splits and punctuation added; timings remain ASR estimates."
+    },
+    {
+      "start": 170.61,
+      "end": 171.51,
+      "en": "Made it.",
+      "zh": "打进了。",
+      "verification": "Actual same-source two-model full-ASR lexical reconciliation, semantic display splits and punctuation added; timings remain ASR estimates."
+    },
+    {
+      "start": 183.26,
+      "end": 186.53,
+      "en": "What a finish that is!",
+      "zh": "多漂亮的收尾！",
+      "verification": "Actual same-source two-model full-ASR lexical reconciliation, semantic display splits and punctuation added; timings remain ASR estimates."
+    },
+    {
+      "start": 187.41,
+      "end": 189.74,
+      "en": "And Ostapenko delights the crowd",
+      "zh": "奥斯塔彭科让全场沸腾，",
+      "verification": "Actual same-source two-model full-ASR lexical reconciliation, semantic display splits and punctuation added; timings remain ASR estimates."
+    },
+    {
+      "start": 190.78,
+      "end": 194.46,
+      "en": "and converts set point number four.",
+      "zh": "兑现了她的第四个盘点。",
+      "verification": "Actual same-source two-model full-ASR lexical reconciliation, semantic display splits and punctuation added; timings remain ASR estimates."
+    },
+    {
+      "start": 195.42,
+      "end": 198.92,
+      "en": "Her quest for a first Wuhan semifinal for nine years",
+      "zh": "她争取九年来首次进入武汉四强，",
+      "verification": "Actual same-source two-model full-ASR lexical reconciliation, semantic display splits and punctuation added; timings remain ASR estimates."
+    },
+    {
+      "start": 198.92,
+      "end": 200.86,
+      "en": "is very much on.",
+      "zh": "眼下正大有希望。",
+      "verification": "Actual same-source two-model full-ASR lexical reconciliation, semantic display splits and punctuation added; timings remain ASR estimates."
+    }
+  ],
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-audio/raw/small.en.json",
+        "sha256": "8952eb811fa431086c0fc19fd36c0e1f340b94cbd850ff713de12d2ff3c2e296",
+        "model": "small.en",
+        "source_sha256": "3288a4c8597d888ecc6139b7fe46abf890c8673f6d90439f54ff008b1a706137",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-audio/raw/medium.en.json",
+        "sha256": "e255cb3be1945d584e5ca5e82b781ac200ace83d797e95bc82a0aa045643e7c2",
+        "model": "medium.en",
+        "source_sha256": "3288a4c8597d888ecc6139b7fe46abf890c8673f6d90439f54ff008b1a706137",
+        "clip": [
+          0.0,
+          null
+        ]
+      }
+    ],
+    "manual_listening_claimed": false,
+    "source_audio_gain_changes": false,
+    "reconciliation_and_limits": [
+      "Actual native full-source small.en and medium.en have the exact downloaded source SHA. Both raw results are preserved with actual probabilities; no human listening claimed.",
+      "No automatic uploader captions were returned by the native source probe; none are claimed as evidence.",
+      "The first deterministic packet check rejected a digits-only English score cue; replaced display digits with equivalent spoken words Seven-six, six-one, without changing underlying source audio. Chinese long nationality/season cue was semantically split at actual word boundary to fit native16-character limit.",
+      "Native small/medium segment blocks are not utterance boundaries. Medium joins Latvia145.4 to she155+ and on200.86 to Very213.08 across long gaps; these are split using both models actual word sequences. No cue is stretched across the intervening silence.",
+      "For first-set closing on, medium actual word200.06–200.86 is used; small200.03–202.39 is an overextended final-word edge into the next scene. Both lexical sequences agree and the next independent sentence starts213.08. The first source window ends200.90 while the next begins200.90 with the next serve still in preparation.",
+      "English names normalized from ASR phonetic spellings to official Jelena Ostapenko and Shnaider. Water shot normalized to What a shot, the shared ASR lexical/phonetic phrase in actual sporting context; no claim of a manual phoneme hearing.",
+      "First-set source130.5–140 is exactly one set point at Shnaider5–3,40–30, not two consecutive SP. Tiny-wall initial misreading is retained as a failed visual finding in source-visual/actual-source-review.json.",
+      "Foreground Latvian-nationality phrase is displayed as Latvia exactly as both ASR hypotheses; no unverified suffix is asserted.",
+      "All timing values are conservative cross-model ASR estimates, not hand-measured acoustic ground truth. Native audio tail+.18 is included in every reviewed coverage range.",
+      "Final Wow remains complete through294.10; native selected visual window ends294.20. Official tail-logo transition around294 is a separate finite final-visual-QC issue, not audio evidence of a clean logo-free image."
+    ]
+  },
+  "_edit_id": "first_set_turn"
+}
