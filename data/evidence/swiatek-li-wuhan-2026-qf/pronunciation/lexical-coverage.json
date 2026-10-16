@@ -1,0 +1,528 @@
+{
+  "bundle_sha256": "14af885578f8b30a96654521ae767a50c26b5e59bd70cd9881ca3322ebdf5258",
+  "status": "complete_current_raw_lexical_crosscheck_not_tone_or_all_audio_pass",
+  "manual_listening_claimed": false,
+  "method": "Unprompted whole original MP3 ASR; Arabic integer normalization and tone-free pinyin sequence alignment; unresolved spans remain unresolved. No expected-text prompt.",
+  "limitations": [
+    "ASR Chinese words, integers and tone-free matches are lexical assistance only. They cannot prove any realized tone or classify an ASR mismatch as an actual TTS misread.",
+    "Insertions/deletions and lexical ambiguity remain in raw output and differences; this report does not silently correct recognized words."
+  ],
+  "utterances": [
+    {
+      "edit_id": "intro",
+      "audio_sha256": "bfeb155a047ec5eeb8acfe015a7e37b6d520ba2ebcdd1e71fb81c68f166cf064",
+      "expected_tts_text": "北京时间二零二六年十月十六日晚上，武汉一千赛女单四分之一决赛，斯瓦泰克对阵安李。开场连赢两局之后，比赛来到四比三，她的发球局。",
+      "raw_unprompted_asr": "北京時間2026年10月16日晚上武漢一千賽女單四分之一決賽司馬太克對著安理開場連贏兩局之後比賽來到4比3 她的發修局",
+      "normalized_expected": "北京时间二零二六年十月十六日晚上武汉一千赛女单四分之一决赛斯瓦泰克对阵安李开场连赢两局之后比赛来到四比三她的发球局",
+      "normalized_asr": "北京時間二零二六年十月十六日晚上武漢一千賽女單四分之一決賽司馬太克對著安理開場連贏兩局之後比賽來到四比三她的發修局",
+      "tone_free_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "瓦",
+          "asr": "馬",
+          "expected_pinyin": [
+            "wa"
+          ],
+          "asr_pinyin": [
+            "ma"
+          ],
+          "expected_normalized_indices": [
+            30,
+            31
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "阵",
+          "asr": "著",
+          "expected_pinyin": [
+            "zhen"
+          ],
+          "asr_pinyin": [
+            "zhu"
+          ],
+          "expected_normalized_indices": [
+            34,
+            35
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "球",
+          "asr": "修",
+          "expected_pinyin": [
+            "qiu"
+          ],
+          "asr_pinyin": [
+            "xiu"
+          ],
+          "expected_normalized_indices": [
+            55,
+            56
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "北京时间二零二六年十月十六日晚上，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "武汉一千赛女单四分之一决赛，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "斯瓦泰克对阵安李。",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "开场连赢两局之后，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "比赛来到四比三，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她的发球局。",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 4,
+          "text": "二零二六",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 9,
+          "text": "十",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 11,
+          "text": "十六",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 19,
+          "text": "一千",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 24,
+          "text": "四",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 27,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 44,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 53,
+          "text": "四比三",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "tactic1",
+      "audio_sha256": "94056a8fe6d08fc552e4cb85dd90c0a1b935720f545751b5284da2a0d6ab04d5",
+      "expected_tts_text": "看近端，安李把球连续打向两侧，她沿底线左右追球。再追到正手外侧时，伸拍也没能救回这一分。",
+      "raw_unprompted_asr": "看尽端,按理把球连续打向两侧,它严底线左右追求。在追到正手外侧时,身拍也没能救回这一份。",
+      "normalized_expected": "看近端安李把球连续打向两侧她沿底线左右追球再追到正手外侧时伸拍也没能救回这一分",
+      "normalized_asr": "看尽端按理把球连续打向两侧它严底线左右追求在追到正手外侧时身拍也没能救回这一份",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "看近端，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "安李把球连续打向两侧，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她沿底线左右追球。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "再追到正手外侧时，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "伸拍也没能救回这一分。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 12,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 41,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "first_set_close_card",
+      "audio_sha256": "631592ffbd394fefc8644031791d4c4701dfde5b8b86450ceedc55a385a76c42",
+      "expected_tts_text": "五比四的发球胜盘局，十五比四十，她先救下两个破发点。回到平分后，又化解第三个。接下来，才是她自己的第一个盘点。",
+      "raw_unprompted_asr": "無比四的發球盛盤局15比40他先就下兩個破發點回到評分後 又化解第三個接下來 才是他自己的第一個盤點",
+      "normalized_expected": "五比四的发球胜盘局十五比四十她先救下两个破发点回到平分后又化解第三个接下来才是她自己的第一个盘点",
+      "normalized_asr": "無比四的發球盛盤局十五比四十他先就下兩個破發點回到評分後又化解第三個接下來才是他自己的第一個盤點",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "五比四的发球胜盘局，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "十五比四十，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她先救下两个破发点。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "回到平分后，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "又化解第三个。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "接下来，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "才是她自己的第一个盘点。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 0,
+          "text": "五比四",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 10,
+          "text": "十五比四十",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 20,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 36,
+          "text": "三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 50,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "tactic2",
+      "audio_sha256": "9dd313b7ec0e29e9535f5560bbd4f3cf4a9bef15942a13ca48c6d586afa30a77",
+      "expected_tts_text": "二比一，这次看远端。她沿着底线来回移动，又把球连续打向两侧，让对手一趟趟左右奔跑。这个常回合，最后以对手回球出界结束。",
+      "raw_unprompted_asr": "二鼻 这次看远端他沿着底线来回移动又把球连续打向两次让对手一趟趟左右奔跑这个常回合最后一对手回球 初截结束",
+      "normalized_expected": "二比一这次看远端她沿着底线来回移动又把球连续打向两侧让对手一趟趟左右奔跑这个常回合最后以对手回球出界结束",
+      "normalized_asr": "二鼻这次看远端他沿着底线来回移动又把球连续打向两次让对手一趟趟左右奔跑这个常回合最后一对手回球初截结束",
+      "tone_free_lexical_differences": [
+        {
+          "type": "delete",
+          "expected": "一",
+          "asr": "",
+          "expected_pinyin": [
+            "yi"
+          ],
+          "asr_pinyin": [],
+          "expected_normalized_indices": [
+            2,
+            3
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "侧",
+          "asr": "次",
+          "expected_pinyin": [
+            "ce"
+          ],
+          "asr_pinyin": [
+            "ci"
+          ],
+          "expected_normalized_indices": [
+            25,
+            26
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "二比一，",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "这次看远端。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她沿着底线来回移动，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "又把球连续打向两侧，",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "让对手一趟趟左右奔跑。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "这个常回合，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "最后以对手回球出界结束。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 0,
+          "text": "二比一",
+          "status": "number_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "start_index": 27,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 33,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "match_point",
+      "audio_sha256": "b35727cf04d8078f9ab4d9142cffc50d9faceffc78d1e1beb7e861cb6ab30e5e",
+      "expected_tts_text": "二比一之后，她连赢最后四局。全场唯一的赛点，她没有错过。",
+      "raw_unprompted_asr": "2比1之后他连赢最后4局全场唯一的赛点他没有错过",
+      "normalized_expected": "二比一之后她连赢最后四局全场唯一的赛点她没有错过",
+      "normalized_asr": "二比一之后他连赢最后四局全场唯一的赛点他没有错过",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "二比一之后，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她连赢最后四局。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "全场唯一的赛点，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她没有错过。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 0,
+          "text": "二比一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 11,
+          "text": "四",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 17,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "audio_sha256": "d51a449d54225ca348b45ab737c70fa25bf02034ad1325f83456f264071a55ed",
+      "expected_tts_text": "八个发球局全部保住，面对三个破发点，她全部化解。制胜分十比十三，非受迫失误二十八比四十九。",
+      "raw_unprompted_asr": "8個發酬局全部保住 面對3個破發點 他全部化解智生分10比13 飛碩破15 二是8比49",
+      "normalized_expected": "八个发球局全部保住面对三个破发点她全部化解制胜分十比十三非受迫失误二十八比四十九",
+      "normalized_asr": "八個發酬局全部保住面對三個破發點他全部化解智生分十比十三飛碩破十五二是八比四十九",
+      "tone_free_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "球",
+          "asr": "酬",
+          "expected_pinyin": [
+            "qiu"
+          ],
+          "asr_pinyin": [
+            "chou"
+          ],
+          "expected_normalized_indices": [
+            3,
+            4
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "受",
+          "asr": "碩",
+          "expected_pinyin": [
+            "shou"
+          ],
+          "asr_pinyin": [
+            "shuo"
+          ],
+          "expected_normalized_indices": [
+            29,
+            30
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "八个发球局全部保住，",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "面对三个破发点，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她全部化解。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "制胜分十比十三，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "非受迫失误二十八比四十九。",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 0,
+          "text": "八",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 12,
+          "text": "三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 27,
+          "text": "十比十三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 37,
+          "text": "二十八比四十九",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "audio_sha256": "833c002ddfd0371b0726bf2ebf55afa4e9ce76bcdc87442368a7f559cec64f2f",
+      "expected_tts_text": "下一场，就是月亮姐。曾经的青少年双打搭档，如今要在武汉隔网相对，争一张决赛门票。你更看好谁？",
+      "raw_unprompted_asr": "下一場就是月亮姐曾經的青少年雙打搭檔如今要在武漢隔網相對爭議張決賽門票你更看好誰",
+      "normalized_expected": "下一场就是月亮姐曾经的青少年双打搭档如今要在武汉隔网相对争一张决赛门票你更看好谁",
+      "normalized_asr": "下一場就是月亮姐曾經的青少年雙打搭檔如今要在武漢隔網相對爭議張決賽門票你更看好誰",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "下一场，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "就是月亮姐。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "曾经的青少年双打搭档，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "如今要在武汉隔网相对，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "争一张决赛门票。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "你更看好谁？",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 1,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 33,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "expected_tts_text": "关注网球时插，时插归我，好球归你。",
+      "raw_unprompted_asr": "關注網球時差,時差歸我,好求歸你",
+      "normalized_expected": "关注网球时插时插归我好球归你",
+      "normalized_asr": "關注網球時差時差歸我好求歸你",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "关注网球时插，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "时插归我，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "好球归你。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": []
+    }
+  ]
+}
