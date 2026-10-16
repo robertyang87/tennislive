@@ -2,33 +2,15 @@
   "source_url": "https://www.youtube.com/watch?v=oXmpP1kLyxQ",
   "source_sha256": "829543348f66c09883f9d03a1580f56acc30766756a431717fbe05a0d4dc9114",
   "method": "asr_cross_checked",
-  "reviewed_at": "2026-10-15T19:44:25.770428+00:00",
+  "reviewed_at": "2026-10-16T00:40:48.771597+00:00",
   "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
-  "reviewed_from": 391.0,
-  "reviewed_to": 420.3,
+  "reviewed_from": 266.0,
+  "reviewed_to": 276.5,
   "status": "complete",
   "uncertain_spans": [],
-  "foreground_english": [
-    {
-      "start": 409.0,
-      "end": 410.48,
-      "en": "Match point saved.",
-      "zh": "赛点被救下来了。"
-    },
-    {
-      "start": 414.46,
-      "end": 417.4,
-      "en": "And Bonzi has never been so close to winning a match,",
-      "zh": "邦齐离胜利从没这么近，"
-    },
-    {
-      "start": 417.4,
-      "end": 420.0,
-      "en": "yet so far away as he is right now.",
-      "zh": "也从没这么远。"
-    }
-  ],
+  "foreground_english": [],
   "asr_evidence": "data/source_asr/oXmpP1kLyxQ/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/oXmpP1kLyxQ 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 266.0–276.5 秒内都没有任何英文词（窗口边界避开了最近的词）。",
   "profanity_check": "两档转写在这一窗口里都没有脏话；按交接文档「如果确认有脏话」的条件，不消音。",
-  "review_note": "停赛之后的赛点：邦齐发球、这一分被梅德韦杰夫拿下（395–409），看台沸腾。两档一致（small 409.10–419.88；medium 409.00–420.00）。段首 391.0 在 Wow（390.22）之后，段尾 420.3 在 ESPN 片尾板（421 秒起）之前。"
+  "review_note": "同一条 ESPN：邦齐在底线等着发球，空当 262.90–276.66。"
 }

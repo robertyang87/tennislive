@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=UKZnd1EliAY",
+  "source_sha256": "2bf3dc15d5575cf3f59a3172aaf18e1d53d505e3c79b9e743c16c012e4ad7880",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T00:40:48.771597+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 33.5,
+  "reviewed_to": 41.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 33.72,
+      "end": 37.5,
+      "en": "This is what he did: he got the coins out of his wallet",
+      "zh": "他从钱包里掏出硬币，"
+    },
+    {
+      "start": 37.5,
+      "end": 40.84,
+      "en": "and started throwing them to the base of the umpire's chair.",
+      "zh": "朝主裁椅的底座扔了过去。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/UKZnd1EliAY/small.en.json + medium.en.json",
+  "review_note": "账号所有者 2026-10-16：「针对这一条内容可以放开用非官方视频」。UKZnd1EliAY（YouTube 个人账号 David Lock 转载的 BBC 转播，手机翻拍电视画面，1280×720@29）：33.5 起是他走到主裁椅旁、把硬币扔向椅子底座（34.5–42）。BBC Sport 90 周年台标转场在 32.1–33.3，段首 33.5 避开；解说两档：small 32.36–40.84、medium 33.00–43.22，段首切掉了前半句 his bag。段尾 41.1 在下一分句（small 40.84 起 we will find out more）之后不久。"
+}

@@ -2,20 +2,14 @@
   "source_url": "https://www.youtube.com/watch?v=MEFpXBwnyQA",
   "source_sha256": "8b516aa9d11d9a0e61f75b14011df29392694c7e440500ab79e57bf3688c3877",
   "method": "asr_cross_checked",
-  "reviewed_at": "2026-10-15T19:44:25.770428+00:00",
+  "reviewed_at": "2026-10-16T00:40:48.771597+00:00",
   "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
-  "reviewed_from": 142.75,
-  "reviewed_to": 149.1,
+  "reviewed_from": 136.0,
+  "reviewed_to": 142.75,
   "status": "complete",
   "uncertain_spans": [],
-  "foreground_english": [
-    {
-      "start": 145.36,
-      "end": 148.88,
-      "en": "Six-four, six-four, six-four.",
-      "zh": "6比4、6比4、6比4。"
-    }
-  ],
+  "foreground_english": [],
   "asr_evidence": "data/source_asr/MEFpXBwnyQA/small.en.json + medium.en.json",
-  "review_note": "倒地近景。两档：small 143.62–148.96、medium 145.36–148.98，按 medium 写比分。"
+  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/MEFpXBwnyQA 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 136.0–142.75 秒内都没有任何英文词（窗口边界避开了最近的词）。",
+  "review_note": "美网官方决赛集锦，冠军点那一分与倒地（141.7–142.3），142.8 前后切到近景。"
 }
