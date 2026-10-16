@@ -1,0 +1,20 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=L8RLxDpDFp4",
+  "source_sha256": "aa7394e0f9dc1121425ed0c52f0e578271779b368df75dfc3ef5cf64b523b0b6",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-16T13:57:21+00:00",
+  "reviewed_from": 74.9,
+  "reviewed_to": 111.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 105.12,
+      "end": 110.56,
+      "en": "Oh, he's caught the line… more good work defensively, though.",
+      "zh": "压线了…防守又做得很好"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 aa7394e0f9dc1121425ed0c52f0e578271779b368df75dfc3ef5cf64b523b0b6，存于 data/source_asr/L8RLxDpDFp4/small.en.json 与 data/source_asr/L8RLxDpDFp4/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
