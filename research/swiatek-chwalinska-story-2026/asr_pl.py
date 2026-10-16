@@ -4,9 +4,8 @@ from pathlib import Path
 from faster_whisper import WhisperModel
 src, model, out = sys.argv[1], sys.argv[2], Path(sys.argv[3])
 sha = hashlib.sha256(Path(src).read_bytes()).hexdigest()
-subprocess.run(["ffmpeg","-v","error","-y","-i",src,"-ac","1","-ar","16000","a.wav"],check=True)
 m = WhisperModel(model, device="cpu", compute_type="int8")
-segs, info = m.transcribe("a.wav", language="pl", word_timestamps=True, vad_filter=False, condition_on_previous_text=False)
+segs, info = m.transcribe(src, language="pl", word_timestamps=True, vad_filter=False, condition_on_previous_text=False)
 rows = []
 for s in segs:
     rows.append({"start": round(s.start,2), "end": round(s.end,2), "text": s.text, "avg_logprob": s.avg_logprob, "no_speech_prob": s.no_speech_prob,
