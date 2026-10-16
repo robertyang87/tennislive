@@ -17,7 +17,7 @@ jobs:
           mkdir -p assets/reel/swiatek-chwalinska
           while read -r name url; do
             [ -z "$name" ] && continue
-            curl -sSfL -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124" -o "assets/reel/swiatek-chwalinska/raw-$name" "$url" && ls -l "assets/reel/swiatek-chwalinska/raw-$name" || echo "FAIL $name"
+            curl -sSfL -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124" -o "assets/reel/swiatek-chwalinska/raw-$name" "$url" && ls -l "assets/reel/swiatek-chwalinska/raw-$name" || { echo "FAIL $name, retry 3000"; curl -sSfL -A "Mozilla/5.0" -o "assets/reel/swiatek-chwalinska/raw-$name" "${url%%\?*}?width=3000" || echo "FAIL2 $name"; }
           done < research/swiatek-chwalinska-story-2026/cover_fetch.txt
           python3 -c "
           import glob
