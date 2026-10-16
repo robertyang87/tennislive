@@ -1,0 +1,594 @@
+{
+  "schema": "tennislive.finite-native-preencode-visual-review.v1",
+  "reviewed_at_utc": "2026-10-16T11:08:54.269341+00:00",
+  "reviewer": "current OpenAI moon_qf_cover agent",
+  "kind": "preencode_preview_only",
+  "publication_approved": false,
+  "result": "no_preencode_layout_change_needed_in_reviewed_finite_samples",
+  "slug": "chwalinska-sakkari-wuhan-2026-qf",
+  "spec_file_sha256": "3186f433996a033d3f3e3cbec4e2659723381f5501011d4566ecab9b81c0e3ee",
+  "ass_sha256": "910641aeca4c3a24199f8ce3786966d68b09d5be5189fec4bea54181d863f2e7",
+  "source_sha256": "daf2900ed133d0b9c2b0c4bfd9f678d0b1bd81ff880b01b83061d29f6d5fe70f",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "actual_scope": {
+    "samples": 54,
+    "contact_sheets_actually_viewed": 14,
+    "all_quote_cue_midpoints": 33,
+    "segments": 12,
+    "source_segments": 5,
+    "original_png_opened_separately": [
+      "caption-01.png",
+      "caption-05.png",
+      "caption-08.png",
+      "caption-27.png",
+      "caption-47.png",
+      "caption-50.png",
+      "caption-51.png",
+      "caption-53.png",
+      "caption-54.png"
+    ],
+    "additional_exact_header_crop_review": [
+      1,
+      2,
+      3,
+      8,
+      10,
+      50
+    ],
+    "source_original_contact_actually_viewed": [
+      "267.95",
+      "268.88",
+      "268.92",
+      "268.95",
+      "269.00",
+      "269.10"
+    ],
+    "not_claimed": [
+      "No fullmovie or everyframe inspection",
+      "No audio produced or evaluated inthis stage",
+      "No final H264 compression/dissolve evaluation",
+      "No wholecourt visible atalltimes claim"
+    ]
+  },
+  "method": "Same existing native cut_segment/cut_still_segment + official preview.frame_command + visual_graph; scratch-only grouped finiteframes uses one decode persegment andfps_modevfr. Currentrepo productionrenderer/spec unchanged by reviewer. Root19 same-time originals independentlybyte/pixel-equal and recorded. All54samples/14four-frame contacts actually viewed, selected originalPNGs reopened and uncertainheader/scoreboard cases compared with exactoriginalpixels/source.",
+  "findings": [
+    {
+      "id": "bilingual-and-name-layout",
+      "samples": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54
+      ],
+      "finding": "Reviewed33quote cue midpoint texts: English/Chinese readable; MajaChwalinska andMariaSakkari kepttogether withinEnglishline; Chinese lines no singleorphan finalcharacter. LongEnglish sentences wrap into two coherentlines aboveChinese. Subtitlebottom180 sits beneath matchstrip, no coveredball/rally/board inthese finiteframes."
+    },
+    {
+      "id": "native-cards",
+      "samples": [
+        {
+          "image": "caption-06.png",
+          "film_time": 18.6,
+          "segment": 1,
+          "segment_time": 5.0,
+          "source_time": null,
+          "image_sha256": "a8b05a2dc7a17fe192561dda0692c90b8622d954ea4d0ff5f67c2569248504c2"
+        },
+        {
+          "image": "caption-07.png",
+          "film_time": 33.3,
+          "segment": 2,
+          "segment_time": 5.0,
+          "source_time": null,
+          "image_sha256": "87612fe38ce1296312f7fd40c2c1f1c9a86b8fd878e4ce45b781879ab707ffc2"
+        },
+        {
+          "image": "caption-19.png",
+          "film_time": 107.05,
+          "segment": 4,
+          "segment_time": 5.0,
+          "source_time": null,
+          "image_sha256": "d7461d0206f6e795d65c1b0731ab3acc8966f03b8f616efb89bba8f557e2ddb8"
+        },
+        {
+          "image": "caption-26.png",
+          "film_time": 158.97,
+          "segment": 6,
+          "segment_time": 4.84,
+          "source_time": null,
+          "image_sha256": "a9dc2ad72f9a56d948c2e0183f0348a0c16cf017557f6665d8d29de4b005dae2"
+        },
+        {
+          "image": "caption-37.png",
+          "film_time": 217.32999999999998,
+          "segment": 8,
+          "segment_time": 5.0,
+          "source_time": null,
+          "image_sha256": "863f5b1d1119b0f87e5607e4911994addd06f4a01e1864d5c12b61a4496c5099"
+        },
+        {
+          "image": "caption-54.png",
+          "film_time": 304.93,
+          "segment": 11,
+          "segment_time": 5.0,
+          "source_time": null,
+          "image_sha256": "72cca388c166bbd536ce8dca1e3d285e4b8906303b9c828034a5861adde1e07a"
+        }
+      ],
+      "finding": "Navy nativecards/normaltwo-line semanticunits/one limekicker kept; bottom narration clears separatebrandfooter, no newpanel or oversizedline. Opening actuallyreads北京时间2026年10月16日下午."
+    },
+    {
+      "id": "wide-court-and-fixed-board",
+      "samples": [
+        {
+          "image": "caption-08.png",
+          "film_time": 64.86,
+          "segment": 3,
+          "segment_time": 22.56,
+          "source_time": 74.36,
+          "image_sha256": "12d51fae8b302363e50359046dbd455d96d1fd30ed0c01a580feea85bd28a319"
+        },
+        {
+          "image": "caption-16.png",
+          "film_time": 44.779999999999994,
+          "segment": 3,
+          "segment_time": 2.48,
+          "source_time": 54.279999999999994,
+          "image_sha256": "b72657a52a6284ee1e1078189e0c64978860a1da0d10789aee9d31ddee88d946"
+        },
+        {
+          "image": "caption-17.png",
+          "film_time": 80.3,
+          "segment": 3,
+          "segment_time": 38.0,
+          "source_time": 89.8,
+          "image_sha256": "574c22045d05e67937603908da956a2fc471977c9f41d6efeb242b616483723e"
+        },
+        {
+          "image": "caption-18.png",
+          "film_time": 101.94,
+          "segment": 3,
+          "segment_time": 59.64,
+          "source_time": 111.44,
+          "image_sha256": "d37212f4acf3953cf21d84e4a493ab8fa1aaf6468d4dbd5037e4a57f452cb285"
+        },
+        {
+          "image": "caption-23.png",
+          "film_time": 116.93,
+          "segment": 5,
+          "segment_time": 2.48,
+          "source_time": 156.88,
+          "image_sha256": "9c27d3f032f2e948b4c9d42eb8a3c4325b49ecf7ae9e6f7204be19c0ecd46ec6"
+        },
+        {
+          "image": "caption-24.png",
+          "film_time": 145.93,
+          "segment": 5,
+          "segment_time": 31.48,
+          "source_time": 185.88,
+          "image_sha256": "de473ea6244fc312e8cc12ca47fe067d3360df8255261c868ccff976b1aed417"
+        },
+        {
+          "image": "caption-27.png",
+          "film_time": 196.14999999999998,
+          "segment": 7,
+          "segment_time": 32.32,
+          "source_time": 226.51999999999998,
+          "image_sha256": "ffe3c1440d4dc0c6d858a3d3de1e5531d765db67e39dd46539acf2e292ff398f"
+        },
+        {
+          "image": "caption-34.png",
+          "film_time": 165.30999999999997,
+          "segment": 7,
+          "segment_time": 1.48,
+          "source_time": 195.67999999999998,
+          "image_sha256": "d2276ee875e2743f1d9d3753465109a37fea4507a42ce04278f87082a784f2c0"
+        },
+        {
+          "image": "caption-35.png",
+          "film_time": 189.30999999999997,
+          "segment": 7,
+          "segment_time": 25.48,
+          "source_time": 219.67999999999998,
+          "image_sha256": "2c340c161592ed8bca28d251618c783762eb411a69211c19aa056155e4823331"
+        },
+        {
+          "image": "caption-49.png",
+          "film_time": 232.10999999999999,
+          "segment": 9,
+          "segment_time": 1.48,
+          "source_time": 244.67999999999998,
+          "image_sha256": "ff3a53c5c6e8c15d58d357978c10d0af58156c01a54a750cedbb649ec99fdc43"
+        },
+        {
+          "image": "caption-50.png",
+          "film_time": 247.63,
+          "segment": 9,
+          "segment_time": 17.0,
+          "source_time": 260.2,
+          "image_sha256": "b1887963aa68bc8578e65f460c453f9e8f1fab6bf69de803c1a1156c9d1a35cb"
+        },
+        {
+          "image": "caption-51.png",
+          "film_time": 255.03,
+          "segment": 9,
+          "segment_time": 24.4,
+          "source_time": 267.59999999999997,
+          "image_sha256": "574cf847e463e5ccdf7a928713b1e825f970ef0fb93347ba1ee6e3ee28381bff"
+        }
+      ],
+      "finding": "Centered symmetricx180..1740 sourcewindow, contain_keep.8125/zoomnotracking. Bothbaseline/singlescourtandplayers visible inthese baseline-camera samples; some outerrunoff/chairandnameleftedge crop acknowledged. Originalnativeboardpositionunchanged, visibleactual set/game/pointdigits remaincomplete. MainoriginaltoprightWTAwatermark excluded; realnetpost/net/resultpanelWTAwordmarks remain inworldscene."
+    },
+    {
+      "id": "source-board-animation-not-layout-failure",
+      "samples": [
+        {
+          "image": "caption-01.png",
+          "film_time": 2.3200000000000003,
+          "segment": 0,
+          "segment_time": 1.12,
+          "source_time": 268.92,
+          "image_sha256": "b2c8473d45adda62ad6e79b41825f2bc0dcf8df87f3a9f55c4f1cce3b7dc5fb1"
+        },
+        {
+          "image": "caption-05.png",
+          "film_time": 1.3199999999999998,
+          "segment": 0,
+          "segment_time": 0.12,
+          "source_time": 267.92,
+          "image_sha256": "8ebad66e996c0e266879f7e632c2d46d481bbbbc8380f0a275e10e8fa76075e1"
+        },
+        {
+          "image": "caption-38.png",
+          "film_time": 256.35,
+          "segment": 9,
+          "segment_time": 25.72,
+          "source_time": 268.91999999999996,
+          "image_sha256": "b2c8473d45adda62ad6e79b41825f2bc0dcf8df87f3a9f55c4f1cce3b7dc5fb1"
+        }
+      ],
+      "finding": "At source268.92 sourcebroadcastscoreboard itselfretracts right-to-left, leavingonlyshortnames; originalsame-SHA268.88/268.92/268.95sequencesconfirmdigitsvanishinthesource beforewholeboardleaves. Cold267.92 actualboardhas6 3 6 Ad versus0 6 5 visible. No inventedrestoreorboardmoveproposed."
+    },
+    {
+      "id": "topbar-display-suspicion-resolved-by-original-pixels",
+      "samples": [
+        {
+          "image": "caption-01.png",
+          "film_time": 2.3200000000000003,
+          "segment": 0,
+          "segment_time": 1.12,
+          "source_time": 268.92,
+          "image_sha256": "b2c8473d45adda62ad6e79b41825f2bc0dcf8df87f3a9f55c4f1cce3b7dc5fb1"
+        },
+        {
+          "image": "caption-02.png",
+          "film_time": 6.0,
+          "segment": 0,
+          "segment_time": 4.8,
+          "source_time": 272.6,
+          "image_sha256": "916f94c3fb7e452657574b2493c58a545fd5df3f2c5b8c9b43dae98bf4933868"
+        },
+        {
+          "image": "caption-03.png",
+          "film_time": 9.319999999999999,
+          "segment": 0,
+          "segment_time": 8.12,
+          "source_time": 275.92,
+          "image_sha256": "22c40b64dff9fdc366bbfc762692e0d54ae8b5701c025211e2d39a37764028af"
+        },
+        {
+          "image": "caption-08.png",
+          "film_time": 64.86,
+          "segment": 3,
+          "segment_time": 22.56,
+          "source_time": 74.36,
+          "image_sha256": "12d51fae8b302363e50359046dbd455d96d1fd30ed0c01a580feea85bd28a319"
+        },
+        {
+          "image": "caption-10.png",
+          "film_time": 83.14,
+          "segment": 3,
+          "segment_time": 40.84,
+          "source_time": 92.64,
+          "image_sha256": "7540c52d3b7c24af48456025f00d419300ef5f86d51217f8ba555f6bd3824f70"
+        },
+        {
+          "image": "caption-50.png",
+          "film_time": 247.63,
+          "segment": 9,
+          "segment_time": 17.0,
+          "source_time": 260.2,
+          "image_sha256": "b1887963aa68bc8578e65f460c453f9e8f1fab6bf69de803c1a1156c9d1a35cb"
+        }
+      ],
+      "finding": "Initialfullimage/contactreading suggestedmissingtopbar on02/10(and08/05earlier); exactoriginalPNGtop180RGB crops wereactuallyviewedinstackandarepixel-identicalSHA43e453b7f2c144c96a46365822b0e25039917e16992f92522c7f59a75e8d757d withcomplete2026WTA1000武汉1/4andfullnames/scores. Initialmissingheaderfindingwithdrawn, nofictitiousfadeorASSfix. Exactcommandsetpts+absoluteoffset andASS1.20..312.43preserved; thisfinitecheckdoesnotapprovefinalmovie."
+    },
+    {
+      "id": "full-result-panel",
+      "samples": [
+        {
+          "image": "caption-47.png",
+          "film_time": 284.39,
+          "segment": 9,
+          "segment_time": 53.76,
+          "source_time": 296.96,
+          "image_sha256": "011100553ebd59cf26364945f6082bd6394968bf562059d33d183c038b97cb4e"
+        },
+        {
+          "image": "caption-48.png",
+          "film_time": 286.15,
+          "segment": 9,
+          "segment_time": 55.52,
+          "source_time": 298.71999999999997,
+          "image_sha256": "d9c6eb594dffca2b423f32400847d2c701be85eb7e7eaa647d43a9798f309fd3"
+        },
+        {
+          "image": "caption-52.png",
+          "film_time": 286.51,
+          "segment": 9,
+          "segment_time": 55.88,
+          "source_time": 299.08,
+          "image_sha256": "513c4cdfb502462eaf5b6c213395d6310f54945aba5797d4d180b7efd3fd6ed8"
+        }
+      ],
+      "finding": "OriginalbroadcastQUARTERFINALpanelbothfullnamesandallthree-set6 3 7 /0 6 5 visible/readable. No generatedsmallboardstripcoveringlowername. Bottom180subtitlesseparatebelowpanel."
+    },
+    {
+      "id": "stat-card",
+      "samples": [
+        {
+          "image": "caption-53.png",
+          "film_time": 291.63,
+          "segment": 10,
+          "segment_time": 5.0,
+          "source_time": null,
+          "image_sha256": "3669b41bd9339b2492c63c59300a7c6653550c11266497485185c531e3897855"
+        }
+      ],
+      "finding": "ActualfullcanvasnativeheadshotsMaja/Sakkari correct,6-0/3-6/7-5,CenterCourt/2:35,ranks22/35,W25vs37,UE23vs35,otherdenominatorscomplete. Statcardnarrationabsentatthissamplebecausefullcanvasnativepreservescard; noface/numberclipping."
+    }
+  ],
+  "limitations": [
+    "No final QC or publication approval",
+    "Interior samples exclude dissolves/final H264",
+    "Audio not produced or evaluated",
+    "Finite sampling does not prove all board-width transitions",
+    "Narrationcaption samples oncards arefinite5-secondpoints, notallnarrationASScuemidpoints.",
+    "No coverchange: frozenexactportrait.55/.5/1alreadyseparatelyreviewed.",
+    "Finalnativeencodedmovie stillneedsindependent actualfilmQC beforemerge/push."
+  ],
+  "preserved_artifacts": [
+    {
+      "path": "caption-01.png",
+      "bytes": 434464,
+      "sha256": "b2c8473d45adda62ad6e79b41825f2bc0dcf8df87f3a9f55c4f1cce3b7dc5fb1"
+    },
+    {
+      "path": "caption-02.png",
+      "bytes": 401478,
+      "sha256": "916f94c3fb7e452657574b2493c58a545fd5df3f2c5b8c9b43dae98bf4933868"
+    },
+    {
+      "path": "caption-05.png",
+      "bytes": 413709,
+      "sha256": "8ebad66e996c0e266879f7e632c2d46d481bbbbc8380f0a275e10e8fa76075e1"
+    },
+    {
+      "path": "caption-08.png",
+      "bytes": 744845,
+      "sha256": "12d51fae8b302363e50359046dbd455d96d1fd30ed0c01a580feea85bd28a319"
+    },
+    {
+      "path": "caption-10.png",
+      "bytes": 739549,
+      "sha256": "7540c52d3b7c24af48456025f00d419300ef5f86d51217f8ba555f6bd3824f70"
+    },
+    {
+      "path": "caption-27.png",
+      "bytes": 759156,
+      "sha256": "ffe3c1440d4dc0c6d858a3d3de1e5531d765db67e39dd46539acf2e292ff398f"
+    },
+    {
+      "path": "caption-47.png",
+      "bytes": 1058311,
+      "sha256": "011100553ebd59cf26364945f6082bd6394968bf562059d33d183c038b97cb4e"
+    },
+    {
+      "path": "caption-50.png",
+      "bytes": 691581,
+      "sha256": "b1887963aa68bc8578e65f460c453f9e8f1fab6bf69de803c1a1156c9d1a35cb"
+    },
+    {
+      "path": "caption-51.png",
+      "bytes": 704652,
+      "sha256": "574cf847e463e5ccdf7a928713b1e825f970ef0fb93347ba1ee6e3ee28381bff"
+    },
+    {
+      "path": "caption-53.png",
+      "bytes": 663441,
+      "sha256": "3669b41bd9339b2492c63c59300a7c6653550c11266497485185c531e3897855"
+    },
+    {
+      "path": "caption-54.png",
+      "bytes": 266865,
+      "sha256": "72cca388c166bbd536ce8dca1e3d285e4b8906303b9c828034a5861adde1e07a"
+    },
+    {
+      "path": "contact-01.jpg",
+      "bytes": 125251,
+      "sha256": "b3fb7a85b411c4c08afda8a5b9d137de3ce800c8b331a3aa1bbf916ddb899f12"
+    },
+    {
+      "path": "contact-02.jpg",
+      "bytes": 132394,
+      "sha256": "bebca78d7f1239dd02ec845eed340287e93aca15656a1baffa01529f65f72ecf"
+    },
+    {
+      "path": "contact-03.jpg",
+      "bytes": 156150,
+      "sha256": "120dae6133b814d2e72d85e57f9d3f219e55a4bb168880cd804812a2a0f433d3"
+    },
+    {
+      "path": "contact-04.jpg",
+      "bytes": 178762,
+      "sha256": "07138ec04d1630258bd51070c5bf5fa228f7c99b0c91f029497fd0fe66655512"
+    },
+    {
+      "path": "contact-05.jpg",
+      "bytes": 148231,
+      "sha256": "ff0ad6d446e02989ff5dabc65ccc1fd0c172726a4bf6cce3aa6dd96d949f1295"
+    },
+    {
+      "path": "contact-06.jpg",
+      "bytes": 139034,
+      "sha256": "5f241808cf53ecd655e6ffbed0a744993b14efea67666e82d660bdf5f6a8e2a0"
+    },
+    {
+      "path": "contact-07.jpg",
+      "bytes": 131606,
+      "sha256": "4e7bad17f346713d080f8974aeeaf8a79716c06396d23c6bab361873e994b0b7"
+    },
+    {
+      "path": "contact-08.jpg",
+      "bytes": 148542,
+      "sha256": "47291a7777442afec466cfffa56d085eccbf6014fec8d17c191d25b60e7c3d1f"
+    },
+    {
+      "path": "contact-09.jpg",
+      "bytes": 156655,
+      "sha256": "1662c303691615c397a6b43b949cb0d33f86f76b3a9b383e9dc309c8168f641d"
+    },
+    {
+      "path": "contact-10.jpg",
+      "bytes": 113685,
+      "sha256": "eec7ee9ae18f00af9dd25436a75351ccde0afc71f76d70b533cfa1969eac7d8e"
+    },
+    {
+      "path": "contact-11.jpg",
+      "bytes": 182316,
+      "sha256": "9fae1f0842f211e91d223a46a6264c53338004ffd67f82c71a469ee59ec100bb"
+    },
+    {
+      "path": "contact-12.jpg",
+      "bytes": 184116,
+      "sha256": "5711aab400fa2ca80b20b050cbc76a021df3701e1c5d6c6b124757eadd2d3028"
+    },
+    {
+      "path": "contact-13.jpg",
+      "bytes": 167061,
+      "sha256": "dae4e1c8803315276814fd70681486774ca955754c6574983371f0937eaa2b38"
+    },
+    {
+      "path": "contact-14.jpg",
+      "bytes": 90672,
+      "sha256": "10a9b9f15cd1f50370ab127a64700456e403df204ef0b775b6f4320b87544be1"
+    },
+    {
+      "path": "existing-preview-pixel-comparison.json",
+      "bytes": 4935,
+      "sha256": "5dec7671f321fb9fb7f6c1109578c26d03a679da1478a6d5bfc8f251af0bc4cd"
+    },
+    {
+      "path": "header-exact6.png",
+      "bytes": 222187,
+      "sha256": "f7e77d8352dab860cdd35f6f182c2a2ed22119d7dd86c718e7e76bb76dcd2ce7"
+    },
+    {
+      "path": "header-six-exact-pixel-check.json",
+      "bytes": 1839,
+      "sha256": "2c9d47dad614bce0d24e95d5c040b46903837211a661970bab3ebe0c99875584"
+    },
+    {
+      "path": "preview_manifest.json",
+      "bytes": 194041,
+      "sha256": "3fdfde318d22ca64c34c9cc0a03a12550996a387236e1e343c107b0902b3db55"
+    },
+    {
+      "path": "preview_topbar.ass",
+      "bytes": 1651,
+      "sha256": "71034fec91a29f9a6d65c7d0821292e810ab1069210539b61cbf9bb636684acf"
+    },
+    {
+      "path": "sample_grouped_native_preview.py",
+      "bytes": 4129,
+      "sha256": "6110d38497a6bc11b6ed8cc97358dfda9f00a643e00226b93bce766c5dc3ee7d"
+    },
+    {
+      "path": "sample_original_native_preview.py",
+      "bytes": 1681,
+      "sha256": "b63e2d36411d05c1382f5978325aa8597886a15c1fc0127419e66b87cbc24df6"
+    },
+    {
+      "path": "source-267.95.png",
+      "bytes": 750861,
+      "sha256": "a177a821a49b2bfbcc9470855394619c833912c19efae3793364aea2f000610c"
+    },
+    {
+      "path": "source-268.92.png",
+      "bytes": 759267,
+      "sha256": "cf4f60ee6e453d9a701bc24a5ef0e2cd45461efb7028d95665936354e799a88f"
+    },
+    {
+      "path": "source-scoreboard-transition-wall.jpg",
+      "bytes": 130266,
+      "sha256": "b831789913fb34173c809c27a9e967f35123b399bcd6d65237f1fdd96a06bf4f"
+    },
+    {
+      "path": "subtitles.ass",
+      "bytes": 10485,
+      "sha256": "910641aeca4c3a24199f8ce3786966d68b09d5be5189fec4bea54181d863f2e7"
+    }
+  ]
+}

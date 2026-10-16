@@ -1,0 +1,97 @@
+{
+  "scoreboard_qc_sha256": "50420ccf6f39ded16bdf849025e92329996e0cfbdbca29943d7dfdb6eb08ecb4",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "da9c1b7e5c367c8da9e6b251825a1828b8d4691d95f92dd634c54ebb7895378c",
+    "request_count": 8,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-chwalinska-sakkari-wuhan-2026-qf-da9c1b7e5c367c8d",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-sakkari-wuhan-2026-qf-da9c1b7e5c367c8d/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38894474664"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 311.23,
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 1/4决赛",
+    "line2": "赫瓦林斯卡 6-0 3-6 7-5 萨卡里",
+    "start": 1.2,
+    "end": 312.43
+  },
+  "film_seconds": 317.0,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 13.656,
+    "2": 12.96,
+    "4": 11.328,
+    "6": 8.616,
+    "8": 17.232,
+    "10": 12.192,
+    "11": 11.4
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "672e358f40caba2820844de6c86254ac58bc88160c887473939c538ede253762",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "chwalinska-sakkari-wuhan-2026-qf",
+    "received_at": "2026-10-16T10:35:06Z",
+    "artifact_ready_at": "2026-10-16T11:40:31Z",
+    "elapsed_seconds": 3925.901,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "d876eb0e39d117191c01b8e021f126a4fbd97c143bde9670fba3bd98070ac9b1",
+    "spec_sha256": "b4f466f37997b5a5185fc3a9b704eb37bbf87b7fdef451400df04e88ab9cc7c7",
+    "run_id": "38894474664",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-16T11:36:05Z",
+        "run_id": "38894474664"
+      }
+    ],
+    "render_seconds": 266.901,
+    "pre_render_seconds": 3659.0
+  },
+  "film_sha256": "d876eb0e39d117191c01b8e021f126a4fbd97c143bde9670fba3bd98070ac9b1",
+  "film_bytes": 105629200,
+  "qc_attestation_sha256": "c59252f61b83b8197774072d6d466f230367132297161240766161afffc8474e",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-16T11:36:05Z",
+      "run_id": "38894474664"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-16T11:40:35Z",
+      "run_id": "38894474664"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-chwalinska-sakkari-wuhan-2026-qf/chwalinska-sakkari-wuhan-2026-qf.mp4",
+  "video_bytes": 105629200
+}
