@@ -1,0 +1,20 @@
+[TNNS] 打开 https://tnnslive.com/
+[TNNS] 页面内取 https://api.tnnslive.com/v1/matches?date=2026-10-16&web=true
+[TNNS] 按 date=2026-10-16 取到 145143 字节、325 场
+[TNNS] 认到这一场：id=75620252
+[TNNS] 打开 https://tnnslive.com/match/75620252
+
+=== TNNS 单场统计 id=75620252 ===
+hasExtendedStats: True
+制胜分       [31, 27]
+非受迫失误   [33, 37]
+（选手顺序 ['Medvedev', 'Paul']）
+  [Set 1] 制胜分 [16, 9]　非受迫失误 [13, 12]
+  [Set 2] 制胜分 [7, 11]　非受迫失误 [7, 8]
+  [Set 3] 制胜分 [8, 7]　非受迫失误 [13, 17]
+  自证 winners：分盘合计 [31, 27] vs 全场 [31, 27]  ✅
+  自证 ue：分盘合计 [33, 37] vs 全场 [33, 37]  ✅
+
+粘进 spec 的 `stats` 块（⚠️ a/b 跟 cover.matchup 的顺序，不是这里的顺序——CLAUDE.md「stats.a 跟的是 cover.matchup[0]」）：
+  "winners": 31,  "ue": 33    ← Medvedev
+  "winners": 27,  "ue": 37    ← Paul
