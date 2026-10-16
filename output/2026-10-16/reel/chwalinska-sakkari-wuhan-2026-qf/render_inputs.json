@@ -1,0 +1,525 @@
+{
+  "version": 2,
+  "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
+  "slug": "chwalinska-sakkari-wuhan-2026-qf",
+  "written_at": "2026-10-16T11:40:30Z",
+  "code_sha": "f726d82b0e8ce868dd3111a6dcd0ebe45b43baad",
+  "spec_sha256": "b4f466f37997b5a5185fc3a9b704eb37bbf87b7fdef451400df04e88ab9cc7c7",
+  "film_sha256": "d876eb0e39d117191c01b8e021f126a4fbd97c143bde9670fba3bd98070ac9b1",
+  "film_bytes": 105629200,
+  "projection_sha256": "7b12065f087412d1266bf6a15baf65ddd10594ef949834e8bfd9957f5be49fe8",
+  "claims": [
+    [
+      "segments",
+      0,
+      "_ending_payoff_required"
+    ],
+    [
+      "cover",
+      "_heat_why"
+    ],
+    [
+      "_match"
+    ],
+    [
+      "segments",
+      0,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      3,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      5,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      7,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      9,
+      "_quote_kind"
+    ],
+    [
+      "_rechecked_at"
+    ],
+    [
+      "segments",
+      0,
+      "_score_inset_why"
+    ],
+    [
+      "segments",
+      3,
+      "_score_inset_why"
+    ],
+    [
+      "segments",
+      5,
+      "_score_inset_why"
+    ],
+    [
+      "segments",
+      7,
+      "_score_inset_why"
+    ],
+    [
+      "segments",
+      9,
+      "_score_inset_why"
+    ],
+    [
+      "_tts_backend_why"
+    ],
+    [
+      "stats",
+      "_winners_ue_evidence"
+    ]
+  ],
+  "assets": {
+    "assets/players/headshots/wta-318312.jpg": "aa135532bd3a5dcde3ef7a9fcbd91f2a8626b39715e044d7513ebbb2819675f5",
+    "assets/players/headshots/wta-325639.jpg": "0156d70da993a9f2fdbe40202882ececf37a1339b9f35adcbadd3753d5c065be",
+    "assets/reels/chwalinska-sakkari-wuhan-2026-qf/chwalinska-wuhan-qf-official.jpg": "05b972e9233daa1f2be3727940b1e1d45a76451f3dd8b92765fec39fca53956c"
+  },
+  "artifacts": {
+    "audio_review_binding.json": "6b3f055d4e022a75bbb309ed4aebf59d261be4e48757c984e063a0f7a26d118c",
+    "subtitles.ass": "e7735aeb1b8545303418846c099532495f3ccfbf98af021ea2314b0c825dbf53",
+    "topbar.ass": "71034fec91a29f9a6d65c7d0821292e810ab1069210539b61cbf9bb636684acf",
+    "poster.jpg": "1f5ccac1cd65df84e05545dfb2bd3dd781a5312bdc09a3253584f02557ffbde4",
+    "stat_card.jpg": "7716a3e76f9ae63c8c1a80f4170d752c476bb3998ab5ec4667c94c1cc269a807",
+    "scoreboard_qc.json": "50420ccf6f39ded16bdf849025e92329996e0cfbdbca29943d7dfdb6eb08ecb4"
+  },
+  "projection": {
+    "_column": "赛场之上",
+    "tts_backend": "edge",
+    "track": false,
+    "outro": true,
+    "stat_card_full_canvas": true,
+    "preserve_source_audio": true,
+    "slug": "chwalinska-sakkari-wuhan-2026-qf",
+    "sources": {
+      "main": "https://www.youtube.com/watch?v=0-v-yZvYAk8"
+    },
+    "primary": "main",
+    "stats": {
+      "tour": "wta",
+      "footer_date": "2026-10-16",
+      "footer_venue": "武汉 · 全场",
+      "a": {
+        "aces": 0,
+        "df": 1,
+        "first_in": 63,
+        "first_total": 81,
+        "first_won": 45,
+        "second_total": 18,
+        "second_won": 11,
+        "bp_conv": 4,
+        "bp_chances": 15,
+        "pts_won": 98,
+        "pts_total": 183,
+        "winners": 25,
+        "ue": 23,
+        "headshot": "assets/players/headshots/wta-325639.jpg"
+      },
+      "b": {
+        "aces": 3,
+        "df": 3,
+        "first_in": 75,
+        "first_total": 102,
+        "first_won": 47,
+        "second_total": 27,
+        "second_won": 13,
+        "bp_conv": 1,
+        "bp_chances": 5,
+        "pts_won": 85,
+        "pts_total": 183,
+        "winners": 37,
+        "ue": 35,
+        "headshot": "assets/players/headshots/wta-318312.jpg"
+      }
+    },
+    "cover": {
+      "eyebrow": "赛场之上",
+      "layout": "solo",
+      "scrim": "clear",
+      "matchup": [
+        {
+          "name": "赫瓦林斯卡",
+          "name_en": "Maja Chwalinska",
+          "country": "POL",
+          "rank": 22
+        },
+        {
+          "name": "萨卡里",
+          "name_en": "Maria Sakkari",
+          "country": "GRE",
+          "rank": 35
+        }
+      ],
+      "scoreboard": {
+        "court": "Center Court",
+        "duration_source": {
+          "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+          "field": "MatchTimeTotal",
+          "match_id": "LS005"
+        }
+      },
+      "winner": "赫瓦林斯卡",
+      "subject": "赫瓦林斯卡",
+      "result": "6-0 3-6 7-5",
+      "topic": "WTA1000 武汉 1/4决赛 · 赫瓦林斯卡 VS 萨卡里",
+      "hook": "首盘6比0仍陷苦战\n月亮姐首进1000赛4强",
+      "hook_accent": "首进1000赛4强",
+      "portrait": {
+        "image": "assets/reels/chwalinska-sakkari-wuhan-2026-qf/chwalinska-wuhan-qf-official.jpg",
+        "focus": 0.55,
+        "focus_y": 0.5,
+        "zoom": 1,
+        "fit": "cover",
+        "source_url": "https://bucket-wuwang.hubei-41.zos.ctyun.cn/files/idx6lr7vcglhnepdlbo8l7smi.jpg"
+      }
+    },
+    "topbar": {
+      "line1": "2026 WTA1000 武汉 1/4决赛",
+      "line2": "赫瓦林斯卡 6-0 3-6 7-5 萨卡里"
+    },
+    "editorial": {
+      "mode": "match_review",
+      "question": "首盘6比0之后，月亮姐如何把这场苦战赢到最后？",
+      "thesis": "首盘三次破发6-0；次盘0-3落后至3-6；决胜盘先守住全部六个发球局，错过机会后在6-5接发唯一赛点完成唯一一次破发，首次晋级1000赛四强。",
+      "beats": [
+        "真实赢后反应与完整原声冷开场",
+        "北京时间日期下午武汉八强赛坐标",
+        "首盘强势与次盘反扑",
+        "2-2救破发点与4-3错过三个破发点",
+        "6-5唯一赛点与完整动作反应",
+        "全场统计并列呈现",
+        "首次1000四强与条件性下场对手"
+      ],
+      "human_context": {
+        "angle": "昨天首次1000赛八强，今天再进一步；对手从首盘0-6追回一盘，双方决胜盘前11局互保。",
+        "facts": [
+          "6-0 3-6 7-5",
+          "决胜盘六个发球局全部保住",
+          "全场唯一赛点立即兑现",
+          "首次WTA1000四强"
+        ],
+        "sources": [
+          "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+          "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS005/point-by-point"
+        ]
+      }
+    },
+    "segments": [
+      {
+        "source": "main",
+        "start": 267.8,
+        "end": 280.2,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.2,
+            "end": 2.1,
+            "text": "In a season of dreams,\n在这个梦幻般的赛季，"
+          },
+          {
+            "at": 2.56,
+            "end": 7.1,
+            "text": "Maja Chwalinska comes through, emerging battle-hardened\n赫瓦林斯卡历经苦战，"
+          },
+          {
+            "at": 7.5,
+            "end": 8.74,
+            "text": "to defeat Maria Sakkari\n击败萨卡里，"
+          },
+          {
+            "at": 8.74,
+            "end": 11.96,
+            "text": "to reach her third career WTA semifinal.\n生涯第三次跻身巡回赛四强。"
+          }
+        ],
+        "crosses_cut": "最后一分落地后真实蹲地、起身与亲吻球拍；完整梦想赛季与第三次巡回赛半决赛句。不是第三次1000赛半决赛，无采访。",
+        "point_end_ok": "最后一分落地后真实蹲地、起身与亲吻球拍；完整梦想赛季与第三次巡回赛半决赛句。不是第三次1000赛半决赛，无采访。"
+      },
+      {
+        "title_card": "6比0只是开头\n月亮姐再闯一关",
+        "kicker": "武汉1/4决赛",
+        "seconds": 14.7,
+        "narration": "六比零，只是这场比赛的开头。北京时间二零二六年十月十六日下午，武汉一千赛女单四分之一决赛，月亮姐遇到萨卡里。昨天，她刚刚第一次打进一千赛八强。"
+      },
+      {
+        "title_card": "两侧来球一次次救回\n首盘6比0收下",
+        "kicker": "强势开局",
+        "seconds": 14,
+        "narration": "首盘四比零接发，这个回合里，月亮姐沿底线横向移动，把打向两侧的球一次次救回，兑现破发点。随后六比零收下首盘，自己一次破发点都没给。"
+      },
+      {
+        "source": "main",
+        "start": 51.8,
+        "end": 111.55,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 21.3,
+            "end": 23.88,
+            "text": "Maja Chwalinska, statistically,\n从数据来看，赫瓦林斯卡"
+          },
+          {
+            "at": 23.88,
+            "end": 26.38,
+            "text": "one of the best returners on tour in 2026.\n是今年巡回赛最强接发者之一。"
+          },
+          {
+            "at": 38.36,
+            "end": 43.34,
+            "text": "Oh, and the opening set is a runaway train in 30 minutes.\n首盘势如破竹，只用了30分钟。"
+          },
+          {
+            "at": 43.46,
+            "end": 48.1,
+            "text": "Maja Chwalinska leaves Maria Sakkari on the platform all alone.\n萨卡里像被独自留在站台。"
+          },
+          {
+            "at": 48.9,
+            "end": 50.72,
+            "text": "A blistering start for the Pole.\n波兰姑娘的开局太强势了。"
+          },
+          {
+            "at": 52.8,
+            "end": 53.94,
+            "text": "Six-love.\n6比0！"
+          },
+          {
+            "at": 53.94,
+            "end": 57.02,
+            "text": "In the first quarterfinal at a WTA 1000.\n首次1000赛1/4决赛，"
+          },
+          {
+            "at": 57.54,
+            "end": 59.58,
+            "text": "Maja Chwalinska in the driver's seat.\n赫瓦林斯卡牢牢掌控局面。"
+          }
+        ],
+        "crosses_cut": "首盘4-0接发破发点的完整发球、长回合、赢到5-0；5-0首盘点完整回合及6-0后完整原声。避开49.86残句。",
+        "point_end_ok": "首盘4-0接发破发点的完整发球、长回合、赢到5-0；5-0首盘点完整回合及6-0后完整原声。避开49.86残句。"
+      },
+      {
+        "title_card": "萨卡里持续调动\n破发拉开到2比0",
+        "kicker": "对手反击",
+        "seconds": 12.4,
+        "narration": "第二盘，萨卡里没有放手。零比一，月亮姐发球面对破发点。萨卡里从底线把球连续打向两侧，再跟进到场内，拿下这局。"
+      },
+      {
+        "source": "main",
+        "start": 154.4,
+        "end": 194.08,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 32.88,
+            "end": 34.36,
+            "text": "Break secured.\n终于破发了。"
+          },
+          {
+            "at": 34.36,
+            "end": 37.3,
+            "text": "And a big bellow from Sakkari,\n萨卡里发出一声怒吼，"
+          },
+          {
+            "at": 37.3,
+            "end": 39.66,
+            "text": "as she knows she's back in it.\n她知道自己重回竞争了。"
+          }
+        ],
+        "crosses_cut": "次盘月亮姐0-1发球、AD破发点，实际完整发球/长回合至萨卡里压进场内破发到2-0及呐喊；不冒充月亮姐赢分。154.40避开上句but残句。",
+        "point_end_ok": "次盘月亮姐0-1发球、AD破发点，实际完整发球/长回合至萨卡里压进场内破发到2-0及呐喊；不冒充月亮姐赢分。154.40避开上句but残句。"
+      },
+      {
+        "title_card": "次盘3比6\n比赛进入决胜盘",
+        "kicker": "拉回同一起点",
+        "seconds": 9.7,
+        "narration": "萨卡里先赢三局，月亮姐随后稳住发球局，却一直没能破回去。三比六，比赛来到决胜盘。"
+      },
+      {
+        "source": "main",
+        "start": 194.2,
+        "end": 242.7,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 31.26,
+            "end": 33.38,
+            "text": "And Maria Sakkari completes her mission.\n萨卡里完成了这一盘的任务。"
+          },
+          {
+            "at": 33.94,
+            "end": 35.48,
+            "text": "Get the second set in pocket,\n拿下第二盘，"
+          },
+          {
+            "at": 36.18,
+            "end": 37.72,
+            "text": "take it all the way to a third set,\n把比赛拖进决胜盘，"
+          },
+          {
+            "at": 37.72,
+            "end": 40.6,
+            "text": "and try your hand to be a semifinalist once again.\n再争一次四强席位。"
+          },
+          {
+            "at": 41.3,
+            "end": 42.9,
+            "text": "Maja Chwalinska will have to regroup,\n赫瓦林斯卡需要重新调整，"
+          },
+          {
+            "at": 43.34,
+            "end": 45.56,
+            "text": "as it's Sakkari who takes set number two,\n萨卡里拿下了第二盘，"
+          },
+          {
+            "at": 45.72,
+            "end": 48.12,
+            "text": "six-three, in just under an hour.\n6比3，用时不到一小时。"
+          }
+        ],
+        "crosses_cut": "次盘3-5月亮姐发球，两个真实盘点及萨卡里6-3赢盘后的完整解说。第一个盘点被救，第二个兑现，不省略可用关键回合。",
+        "point_end_ok": "次盘3-5月亮姐发球，两个真实盘点及萨卡里6-3赢盘后的完整解说。第一个盘点被救，第二个兑现，不省略可用关键回合。"
+      },
+      {
+        "title_card": "前11局互相保发\n最后一局迎来突破",
+        "kicker": "决胜盘拉锯",
+        "seconds": 18.3,
+        "narration": "决胜盘，二比二，她先救下破发点。四比三接发，又错过三个机会。前十一局，双方都保住发球局。六比五，月亮姐又站到接发位置。她先救下对手一个局点，再拿到全场第一个赛点。"
+      },
+      {
+        "source": "main",
+        "start": 243.2,
+        "end": 299.2,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 24.8,
+            "end": 26.7,
+            "text": "In a season of dreams,\n在这个梦幻般的赛季，"
+          },
+          {
+            "at": 27.16,
+            "end": 31.7,
+            "text": "Maja Chwalinska comes through, emerging battle-hardened\n赫瓦林斯卡历经苦战，"
+          },
+          {
+            "at": 32.1,
+            "end": 33.34,
+            "text": "to defeat Maria Sakkari\n击败萨卡里，"
+          },
+          {
+            "at": 33.34,
+            "end": 36.56,
+            "text": "to reach her third career WTA semifinal.\n生涯第三次跻身巡回赛四强。"
+          },
+          {
+            "at": 37.7,
+            "end": 39.52,
+            "text": "What an effort by the Pole.\n波兰姑娘付出了多大的努力！"
+          },
+          {
+            "at": 40.32,
+            "end": 42.24,
+            "text": "A dominant opening set, score-wise;\n首盘比分看上去一边倒，"
+          },
+          {
+            "at": 42.24,
+            "end": 45.16,
+            "text": "she had to outlast the Greek in the end.\n最终靠苦战才熬过希腊对手。"
+          },
+          {
+            "at": 48.8,
+            "end": 51.16,
+            "text": "And when it seemed the experience of Sakkari\n当萨卡里的经验似乎"
+          },
+          {
+            "at": 51.16,
+            "end": 52.44,
+            "text": "might prevail in the end,\n就要决定最终胜负，"
+          },
+          {
+            "at": 52.72,
+            "end": 54.8,
+            "text": "Maja says, “No, no, not this year,\n玛雅用表现说：今年不行，"
+          },
+          {
+            "at": 55.1,
+            "end": 56.0,
+            "text": "not this tournament.”\n这项赛事也不行。"
+          }
+        ],
+        "crosses_cut": "第三盘萨卡里5-6发球15-30完整回合，再到AD-40全场唯一赛点；最后一分、月亮姐蹲地、吻拍、握手、向观众致意以及完整末句。end+.18=299.38在299.44黑场与299.48WTA尾板之前。",
+        "point_end_ok": "第三盘萨卡里5-6发球15-30完整回合，再到AD-40全场唯一赛点；最后一分、月亮姐蹲地、吻拍、握手、向观众致意以及完整末句。end+.18=299.38在299.44黑场与299.48WTA尾板之前。",
+        "score_inset_windows": [
+          [
+            243.2,
+            267.76
+          ]
+        ],
+        "subtitle_bottom_windows": [
+          [
+            52.72,
+            56.0,
+            540
+          ]
+        ]
+      },
+      {
+        "stat_card": true,
+        "seconds": 13.3,
+        "narration": "月亮姐二十五个制胜分，萨卡里三十七个。非受迫失误，二十三比三十五。决胜盘六个发球局全部保住，她把突破留在了最后一局。"
+      },
+      {
+        "title_card": "首次1000赛4强\n武汉之旅再向前",
+        "kicker": "再进一步",
+        "seconds": 12.5,
+        "narration": "这一场苦战过后，月亮姐第一次晋级一千赛半决赛。下一关是斯瓦泰克和李安之间的胜者。这趟武汉之旅，她还能走多远？"
+      }
+    ],
+    "source_fallbacks": {
+      "main": "https://github.com/robertyang87/tennislive/releases/download/source-0-v-yZvYAk8/0-v-yZvYAk8.mp4"
+    },
+    "scorebox": [
+      90,
+      826,
+      550,
+      980
+    ]
+  }
+}
