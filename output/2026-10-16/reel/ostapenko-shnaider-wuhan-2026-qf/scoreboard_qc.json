@@ -155,7 +155,7 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/score_masks/segment-01.mkv",
-      "mask_sha256": "ff9680c33d39b296c3a6b17af3ab7f4cf86acd73515663c4ea76693dbdf9ea38"
+      "mask_sha256": "61e5336453341796633e5cd94c5562fc65d85c65a8f1e97e907c57af0c333408"
     },
     {
       "segment": 3,
@@ -568,23 +568,19 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/score_masks/segment-04.mkv",
-      "mask_sha256": "330de2d6d096d51d8754c7f0ab2f78eb6eee72463901ac4f671043e10ee1622a"
+      "mask_sha256": "a7bed479e930eab1353ec3364b0d930b02c5ed1a5d8b0254885ed23231d19e9f"
     },
     {
-      "segment": 5,
-      "frames": 2338,
-      "present_frames": 1340,
-      "tag_frames": 449,
+      "allowed_source_windows": [
+        [
+          200.9,
+          256.72
+        ]
+      ],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         363,
         430
-      ],
-      "right": 430,
-      "source_bounds": [
-        90,
-        826,
-        520,
-        980
       ],
       "body_bounds": [
         [
@@ -762,6 +758,11 @@
           154
         ]
       ],
+      "frames": 2338,
+      "geometry_origin": [
+        90,
+        826
+      ],
       "header_bounds": [
         [
           0,
@@ -830,25 +831,24 @@
           44
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "3e2c7965b55c9ed20c4d0c1b100cb462ec262567f816823a2ff19f20838e8c00",
       "measured_present_frames": 1340,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 942,
       "measurement_scope": "reviewed_windows_only",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [
-        [
-          200.9,
-          256.72
-        ]
+      "outside_window_frames_not_scanned": 942,
+      "present_frames": 1340,
+      "right": 430,
+      "segment": 5,
+      "source_bounds": [
+        90,
+        826,
+        520,
+        980
       ],
+      "tag_frames": 449,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/score_masks/segment-06.mkv",
-      "mask_sha256": "3e2c7965b55c9ed20c4d0c1b100cb462ec262567f816823a2ff19f20838e8c00"
+      "mask": "output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/score_masks/segment-06.mkv"
     }
   ]
 }
