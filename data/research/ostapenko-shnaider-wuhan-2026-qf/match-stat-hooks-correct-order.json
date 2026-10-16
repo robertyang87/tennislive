@@ -1,0 +1,67 @@
+{
+  "candidates": [
+    {
+      "label": "施耐德 一发得分率摆动",
+      "detail": "第1盘75% → 第2盘58%",
+      "swing": 17,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "奥斯塔彭科 一发得分率摆动",
+      "detail": "第1盘65% → 第2盘86%",
+      "swing": 21,
+      "source": "flashscore df_st_1（分盘一发得分率）"
+    },
+    {
+      "label": "施耐德 破发点兑现",
+      "detail": "1/2（50%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "奥斯塔彭科 破发点兑现",
+      "detail": "3/9（33%）",
+      "source": "flashscore df_st_1（破发点）"
+    },
+    {
+      "label": "施耐德 连续保发",
+      "detail": "4 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "奥斯塔彭科 连续保发",
+      "detail": "7 个发球局",
+      "source": "flashscore df_mh_1（逐局）"
+    },
+    {
+      "label": "交手记录",
+      "detail": "Shnaider D. 0 : 1 Ostapenko J.（含本场） · 硬地 0:1",
+      "source": "flashscore df_hh_1"
+    },
+    {
+      "label": "近况",
+      "detail": "Shnaider D. 最近 5 场 3 胜（LWWWL）；Ostapenko J. 最近 5 场 4 胜（WWWWL）",
+      "source": "flashscore df_hh_1 Last matches"
+    },
+    {
+      "label": "总分差",
+      "detail": "施耐德 61 - 奥斯塔彭科 72，净差 11 分，奥斯塔彭科 领先",
+      "diff": 11,
+      "source": "flashscore df_mh_1（总分）",
+      "use": "body_only"
+    }
+  ],
+  "durations": [
+    [
+      "Set 1",
+      "1:08"
+    ],
+    [
+      "Set 2",
+      "0:39"
+    ],
+    [
+      "全场",
+      "1:47"
+    ]
+  ]
+}

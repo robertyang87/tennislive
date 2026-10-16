@@ -11053,6 +11053,41 @@ def test_paolini_exact_alias_keeps_headshot_identity_and_rejects_other_players(t
     assert result is not None and result[0] is True
 
 
+def test_shnaider_exact_alias_keeps_headshot_identity_and_rejects_other_players(tmp_path):
+    import check_reel_landed as chk
+    from tennislive.zh.players import PLAYER_ZH, normalize_player_zh
+
+    reels = tmp_path / "reels"
+    reels.mkdir()
+    shnaider = "assets/players/headshots/wta-330482.jpg"
+    ostapenko = "assets/players/headshots/wta-319939.jpg"
+    prior = {
+        "cover": {"matchup": [{"name": "奥斯塔彭科"}, {"name": "施奈德"}]},
+        "stats": {"a": {"headshot": ostapenko}, "b": {"headshot": shnaider}},
+    }
+    (reels / "prior.json").write_text(json.dumps(prior), encoding="utf-8")
+    alias = {
+        "cover": {"matchup": [{"name": "奥斯塔彭科"}, {"name": "施耐德"}]},
+        "stats": {"a": {"headshot": ostapenko}, "b": {"headshot": shnaider}},
+    }
+    assert PLAYER_ZH["Diana Shnaider"] == "施奈德"
+    assert normalize_player_zh("施耐德") == "施奈德"
+    assert chk.stat_card_headshot_problem(alias, reels) is None
+
+    # 同人别名不能掩盖 a/b 头像互换。
+    reversed_faces = {**alias, "stats": {
+        "a": {"headshot": shnaider}, "b": {"headshot": ostapenko}}}
+    result = chk.stat_card_headshot_problem(reversed_faces, reels)
+    assert result is not None and result[0] is True
+
+    # 施米德洛娃是另一位球员，不能因中文名字有相同字而共享头像。
+    different_player = {**alias, "cover": {
+        "matchup": [{"name": "奥斯塔彭科"}, {"name": "施米德洛娃"}]}}
+    assert normalize_player_zh("施米德洛娃") == "施米德洛娃"
+    result = chk.stat_card_headshot_problem(different_player, reels)
+    assert result is not None and result[0] is True
+
+
 def test_ffprobe的csv输出带尾随逗号也解析得出来():
     """2026-08-19 撞的：`ensure_ffmpeg` 第一版装的是 BtbN/FFmpeg-Builds 的
     `latest` 标签——那是**每天跟着 master 重新构建**的快照，不是钉死的版本。

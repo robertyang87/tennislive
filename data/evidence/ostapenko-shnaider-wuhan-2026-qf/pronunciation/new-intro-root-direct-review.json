@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-10-16T09:54:21.060526+00:00",
+  "reviewer": "current_OpenAI_root_agent",
+  "method": "AI_direct_finite_actual_spectrogram_phonetic_interpretation_not_human_or_mechanical_pass",
+  "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
+  "scope": "Exactly current new intro[55]强, actual frozen new request",
+  "target": {
+    "edit_id": "intro",
+    "index": 55,
+    "char": "强",
+    "intended": "qiang2"
+  },
+  "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+  "verdict": "correct_low_support",
+  "confidence": "low",
+  "rationale": "Current OpenAI root directly inspected the three archived actual diagrams. The current native 强 breathy/creaky target has duration/envelope and resonance motion similar to the independently spelled current 墙 qiang2 reference; the original/native F1/F2 trajectory follows 墙 rather than 羟. The descending F0 at10.21–10.30s belongs to preceding 四 and is explicitly NOT used as 强 tone evidence. All three pitch trackers abstain inside the fixed target window, retained unchanged. This supports only finite/low contextual qiang2 interpretation with no confirmed current native misread; no measured rising tone, no conclusively proven tone, no calibrated classifier or human listening claim. No extra reference request or score-selected boundary change.",
+  "actually_viewed_images": [
+    {
+      "path": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/comparison-overviews/intro-4.png",
+      "sha256": "dd8ebf15dc8179adde2a3273430397fd29caa3523f58507cced55dc04e679c73"
+    },
+    {
+      "path": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-phoneme-charts/intro-1.png",
+      "sha256": "b2b163c16f5aa4693d4b949666c28e7deaf59f1f38e74c36d269f83dec1b52b8"
+    },
+    {
+      "path": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/residual-details/intro-55.png",
+      "sha256": "1df1fa22bda3302a39661415fa702feea99a7d1cc27002c59c03d8f31f4745e0"
+    }
+  ],
+  "fixed_native_vowel_window": [
+    10.36,
+    10.495
+  ],
+  "prior_mechanical_status_preserved": "pending",
+  "all_native_pitch_trackers_abstained": true,
+  "measured_rising_tone_claimed": false,
+  "conclusively_proven_tone_claimed": false,
+  "manual_listening_claimed": false,
+  "human_review_claimed": false,
+  "all_mechanical_components_passed": false,
+  "original_partial_report": "history/current-v3-intro-87plus1-before-root-direct-review.json"
+}

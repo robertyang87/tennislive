@@ -1,0 +1,24 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "slug": "ostapenko-shnaider-wuhan-2026-qf",
+  "reviewed_at": "2026-10-16T08:08:01.317764+00:00",
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-audio/cold_open.json",
+      "transcript_sha256": "f20aec90872991b41c9659f3d96274c1210c4f11d3f1bd1903d6cce03e78fcf2"
+    },
+    {
+      "index": 3,
+      "transcript_path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-audio/first_set_turn.json",
+      "transcript_sha256": "8f2a38d05d0c2398efdbc62909703e2a23caf26cc73df6056ae3736c127a82bb"
+    },
+    {
+      "index": 5,
+      "transcript_path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-audio/match_payoff.json",
+      "transcript_sha256": "5d0c6c2a91b30b67a4288757feff7c41ca0abebe98ad9507bc0c3a8cc2259c0e"
+    }
+  ],
+  "_review_method": "Complete selected same-SHA source windows cross-checked by native full small.en/medium.en word hypotheses and finite actual source images; no manual listening claimed.",
+  "plan_sha256": "b23a720bf5adafeba6e644dd50312c9e3d44e607899d3ef97cfcb1f29ca5deef"
+}
