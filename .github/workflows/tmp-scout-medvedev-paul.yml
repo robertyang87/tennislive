@@ -26,74 +26,31 @@ jobs:
         run: |
           python -m pip install -q -e . playwright pillow
           for i in 1 2; do timeout 240 python -m playwright install --with-deps chromium && break; sudo pkill -9 apt-get || true; sudo dpkg --configure -a || true; done
-      - name: official
+      - name: photos2
         continue-on-error: true
         run: |
-          D=data/research/medvedev-paul-shanghai-2026-qf; mkdir -p $D/photos
-          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
-          for m in ms001 ms002 ms003 ms004 ms005 ms006 ms007; do
-            curl -sS -A "$UA" "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=$m" -o $D/stats-$m.raw || true
-            python - "$D/stats-$m.raw" <<'P' || true
-          import json,sys
-          try:
-              d=json.load(open(sys.argv[1]))
-              print(sys.argv[1], d.get('MatchId'), d.get('RoundName'), d.get('MatchStatus'), d.get('MatchTimeTotal'), (d.get('ExtendedMessage') or '').replace('\n',' ')[:160])
-          except Exception as e: print(sys.argv[1], 'ERR', e)
-          P
-          done
-          curl -sS -A "$UA" "https://www.protennislive.com/posting/2026/5014/op.pdf" -o $D/op.pdf || true
-          curl -sS -A "$UA" "https://www.protennislive.com/posting/2026/5014/mds.pdf" -o $D/mds.pdf || true
-          curl -sS -A "$UA" "https://en.rolexshanghaimasters.com/en/players/daniil-medvedev/mm58" -o $D/player-mm58.raw || true
-          curl -sS -A "$UA" "https://en.rolexshanghaimasters.com/en/players/tommy-paul/pl56" -o $D/player-pl56.raw || true
-      - name: flashscore
-        continue-on-error: true
-        run: |
-          D=data/research/medvedev-paul-shanghai-2026-qf
-          python tools/match_feed.py find --tour atp --event shanghai --who Paul > $D/fs-find.txt 2>&1 || true
-          cat $D/fs-find.txt | tail -20
-          ID=$(grep -oE '\b[A-Za-z0-9]{8}\b' $D/fs-find.txt | head -1)
-          echo "ID=$ID"
-          [ -n "$ID" ] && python tools/match_feed.py show "$ID" --home Medvedev --away Paul > $D/fs-show.txt 2>&1 || true
-          [ -n "$ID" ] && curl -sS -H "x-fsign: SW9D1eZo" "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_$ID" -o $D/df_mh_1.raw || true
-          tail -60 $D/fs-show.txt || true
-      - name: tnns
-        continue-on-error: true
-        run: |
-          D=data/research/medvedev-paul-shanghai-2026-qf
-          for dt in 2026-10-16 2026-10-15; do
-            python tools/tnns_stats.py fetch --who Medvedev --who Paul --date $dt > $D/tnns-$dt.txt 2>&1 || true
-            tail -20 $D/tnns-$dt.txt
-          done
-      - name: cover
-        continue-on-error: true
-        run: |
-          D=data/research/medvedev-paul-shanghai-2026-qf
-          for p in Medvedev Paul; do
-            python tools/find_cover_photo.py --player $p --event Shanghai --date 2026-10-16 --tour atp --days 1 > $D/cover-find-$p.txt 2>&1 || true
-            tail -70 $D/cover-find-$p.txt
-          done
+          D=data/research/medvedev-paul-shanghai-2026-qf; mkdir -p $D/full
+          python tools/find_cover_photo.py --player Medvedev --event Shanghai --date 2026-10-16 --tour atp --days 1 > $D/cover-find-Medvedev-2.txt 2>&1 || true
           python - <<'P'
           import re,subprocess,pathlib
           from PIL import Image
           D=pathlib.Path('data/research/medvedev-paul-shanghai-2026-qf')
           urls=[]
-          for f in D.glob('cover-find-*.txt'):
-              urls+=re.findall(r'https://\S+?\.(?:jpg|jpeg|JPG)(?:\?\S*)?',f.read_text())
-          seen=[]
-          for u in urls:
-              if u not in seen: seen.append(u)
-          for i,u in enumerate(seen[:16]):
-              out=D/'photos'/f'c{i:02d}.jpg'
+          for u in re.findall(r'https://\S+?\.(?:jpg|jpeg|JPG)',(D/'cover-find-Medvedev-2.txt').read_text()):
+              if '2026/10/16' in u and 'PAUL' in u and u not in urls: urls.append(u)
+          lines=[]
+          for u in urls[:12]:
+              name=u.rsplit('/',1)[1]; out=D/'full'/name
               subprocess.run(['curl','-sSL','-A','Mozilla/5.0','-o',str(out),u])
-              try:
-                  im=Image.open(out); ex=im.getexif(); print(i,u,im.size,ex.get(306),ex.get(270))
-                  im.thumbnail((900,900)); im.save(D/'photos'/f'c{i:02d}.small.jpg',quality=82)
-              except Exception as e: print(i,u,'ERR',e)
-              out.unlink(missing_ok=True)
-          (D/'photos'/'urls.txt').write_text('\n'.join(f'{i:02d} {u}' for i,u in enumerate(seen[:16])))
+              im=Image.open(out); ex=im.getexif(); sub=ex.get_ifd(0x8769)
+              line=f"{name} {im.size} dt={ex.get(306)} orig={sub.get(36867)} off={sub.get(36881)} desc={ex.get(270)} artist={ex.get(315)} url={u}"
+              print(line); lines.append(line)
+              sm=im.copy(); sm.thumbnail((900,900)); sm.save(D/'full'/(name[:-4]+'.small.jpg'),quality=82)
+              if 'MEDVEDEV' not in name.split('-vs-')[0].upper(): out.unlink()
+          (D/'full'/'exif.txt').write_text('\n'.join(lines))
           P
       - name: commit
         run: |
           git config user.name Claude; git config user.email noreply@anthropic.com
           git add -f data/research/medvedev-paul-shanghai-2026-qf
-          git commit -qm "scout: medvedev-paul shanghai qf [skip ci]" && git push origin HEAD:${GITHUB_REF_NAME}
+          git commit -qm "scout2: medvedev-paul shanghai qf [skip ci]" && git push origin HEAD:${GITHUB_REF_NAME}
