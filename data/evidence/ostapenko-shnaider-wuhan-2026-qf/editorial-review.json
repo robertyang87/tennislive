@@ -1,0 +1,31 @@
+{
+  "schema": "tennislive.independent-editorial-review.v1",
+  "reviewer": "Current OpenAI story-QC assistant distinct from source/cover editors",
+  "reviewed_at": "2026-10-16T08:19:07.734896+00:00",
+  "status": "passed_after_two_finite_corrections",
+  "corrections": [
+    {
+      "field": "segments[1].kicker",
+      "before": "武汉八强赛",
+      "after": "武汉1/4决赛",
+      "basis": "Existing round naming rule, no voice change."
+    },
+    {
+      "field": "match_payoff CN quote",
+      "before": "靠一发拿到七成分数",
+      "after": "一发得分率达到七成，",
+      "basis": "Broadcast first-serve 70% and official Shnaider28/40; packet/index synchronized."
+    }
+  ],
+  "checks": [
+    "Official result7-6(6)6-1 and winner-firststats32W30UE vs8W14UE",
+    "3-5 and4-5 one saved setpoint each; only first actual clip directlyshown",
+    "TB fourth setpoint converted; second-set3-0→3-1→6-1 andsecondMP",
+    "Two source actualtactics: forward into servicebox, lateral running returns",
+    "Only possible final versusIga;6-0history; Kartal next; no invented psychology"
+  ],
+  "voice_text_changed": false,
+  "limits": [
+    "Editorial verification is not final movie visual approval or human audio listening."
+  ]
+}
