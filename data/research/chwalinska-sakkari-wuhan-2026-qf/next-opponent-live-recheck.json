@@ -1,0 +1,237 @@
+{
+  "checked_at": "2026-10-16T11:14:32.452002+00:00",
+  "fetch_window_utc": [
+    "2026-10-16T11:13:33.229518+00:00",
+    "2026-10-16T11:14:05.688281+00:00"
+  ],
+  "conclusion": "opponent_unresolved_at_check; conditional winner wording remains supported",
+  "safe_copy": "半决赛，她将面对斯瓦泰克和李安之间的胜者。",
+  "current_qf_raw": {
+    "BinPacketBase64": null,
+    "CourtID": 1,
+    "DateSeq": 7,
+    "DrawLevelType": "M",
+    "DrawMatchType": "S",
+    "EntryTypeA": "",
+    "EntryTypeB": "",
+    "EventID": "1075",
+    "EventYear": 2026,
+    "LastUpdated": "2026-10-16T11:13:13.533+00:00",
+    "MatchID": "LS004",
+    "MatchState": "W",
+    "MatchTimeStamp": "2026-10-16T10:56:41.563+00:00",
+    "MatchTimeTotal": "00:00:00",
+    "Message": "",
+    "NumSets": 0,
+    "PlayerCountryA": "USA",
+    "PlayerCountryA2": "",
+    "PlayerCountryB": "POL",
+    "PlayerCountryB2": "",
+    "PlayerIDA": "326096",
+    "PlayerIDA2": "",
+    "PlayerIDB": "326408",
+    "PlayerIDB2": "",
+    "PlayerNameFirstA": "Ann",
+    "PlayerNameFirstA2": "",
+    "PlayerNameFirstB": "Iga",
+    "PlayerNameFirstB2": "",
+    "PlayerNameLastA": "Li",
+    "PlayerNameLastA2": "",
+    "PlayerNameLastB": "Swiatek",
+    "PlayerNameLastB2": "",
+    "PointA": "",
+    "PointB": "",
+    "ResultString": "",
+    "RoundID": "Q",
+    "ScoreSet1A": "",
+    "ScoreSet1B": "",
+    "ScoreSet2A": "",
+    "ScoreSet2B": "",
+    "ScoreSet3A": "",
+    "ScoreSet3B": "",
+    "ScoreSet4A": "",
+    "ScoreSet4B": "",
+    "ScoreSet5A": "",
+    "ScoreSet5B": "",
+    "ScoreString": "",
+    "ScoreSys": "1",
+    "ScoreTbSet1": "",
+    "ScoreTbSet2": "",
+    "ScoreTbSet3": "",
+    "ScoreTbSet4": "",
+    "SeedA": "",
+    "SeedB": "7",
+    "Serve": "",
+    "Winner": "0"
+  },
+  "scheduled_sf_raw": {
+    "CourtName": "Dongfeng Voyah Center Court",
+    "DrawLevelType": "M",
+    "DrawMatchType": "S",
+    "EntryTypeA": "",
+    "EntryTypeB": "",
+    "EventID": "1075",
+    "EventYear": 2026,
+    "FreeText": "",
+    "MatchID": "LS002",
+    "MatchState": "U",
+    "MatchTimeStamp": "2026-10-17T18:30+08:00",
+    "NotBefore": "Not before 6:30 PM",
+    "NotBeforeISOTime": "18:30+0800",
+    "NotBeforeText": "Not before",
+    "PlayerCountryA": "",
+    "PlayerCountryB": "POL",
+    "PlayerIDA": "TBD",
+    "PlayerIDB": "325639",
+    "PlayerNameFirstA": "",
+    "PlayerNameFirstB": "Maja",
+    "PlayerNameLastA": "",
+    "PlayerNameLastB": "Chwalinska",
+    "RoundID": 2,
+    "SeedA": "",
+    "SeedB": "16",
+    "isEstimatedStartTime": null
+  },
+  "official_schedule": {
+    "oop_date": "2026-10-17",
+    "released_local": "2026-10-16 19:02",
+    "court": "Dongfeng Voyah Center Court",
+    "not_before_local": "2026-10-17 18:30 +08:00",
+    "participants_as_printed": [
+      "A. Li OR I. Swiatek",
+      "[16] Maja CHWALINSKA POL"
+    ]
+  },
+  "official_match_state_limits": [
+    "Unfiltered matches endpoint at11:13:33 omits LS004; absence is not a result.",
+    "Date-filtered endpoint includes LS004 MatchState W, Winner0, NumSets0, empty result/scores, duration0. Do not infer walkover from W alone; no winner exists in this payload.",
+    "SF LS002 lists opponentTBD, reinforcing no named opponent yet.",
+    "OP is a released snapshot and could become stale; combine with current match payload and secondary FS."
+  ],
+  "secondary_flashscore": {
+    "record": [
+      {
+        "AA": "21am1MHN",
+        "AD": "1792149000",
+        "ADE": "1792149000",
+        "AB": "1",
+        "CR": "1",
+        "AC": "1",
+        "CX": "Li A.",
+        "RW": "0",
+        "AX": "0",
+        "BW": "0",
+        "BX": "-1",
+        "WL": "",
+        "HMC": "1",
+        "WM": "LI",
+        "PX": "rwvAgOWm",
+        "AE": "Li A.",
+        "FH": "Li A.",
+        "JA": "OWBMEb0e",
+        "WU": "li-ann",
+        "GRA": "0",
+        "CA": "200",
+        "FU": "USA",
+        "CY": "200",
+        "CC": "USA",
+        "OA": "6RepsQQq-f1sNjIYC.png",
+        "WN": "SWI",
+        "PY": "jNyZsXZe",
+        "AF": "Swiatek I.",
+        "FK": "Swiatek I.",
+        "JB": "WdFUCxV7",
+        "WV": "swiatek-iga",
+        "GRB": "0",
+        "CB": "154",
+        "FV": "Poland",
+        "OB": "dvwRt5jT-tOt4Rhy2.png",
+        "AW": "1",
+        "AN": "y"
+      }
+    ],
+    "state_interpretation": "AB1/AC1, no scores or winner fields; secondary feed shows scheduled rather than finished at fetch. No claim of actual first-ball timing."
+  },
+  "raw_fetch_receipts": [
+    {
+      "file": "wta-matches.raw",
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+      "checked_at": "2026-10-16T11:13:33.229518+00:00",
+      "http_status": 200,
+      "bytes": 116823,
+      "sha256": "608bb7e1d9b998a54ad3132974dda74176f9531a3bd28e03c9541e35cffbbdac"
+    },
+    {
+      "file": "fs-today.raw",
+      "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+      "checked_at": "2026-10-16T11:13:33.232194+00:00",
+      "http_status": 200,
+      "bytes": 647120,
+      "sha256": "7c316d65ef7c8b613415f306f7c1e8f1895abbca5cbe02faf975df3dfcb41ded"
+    },
+    {
+      "file": "draw.pdf",
+      "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1075/MDS.pdf",
+      "checked_at": "2026-10-16T11:13:33.233411+00:00",
+      "http_status": 200,
+      "bytes": 209114,
+      "sha256": "30cc8375e5097fdda447647e8501b6cc09907fc47456f839c6cffe79035091cc"
+    },
+    {
+      "file": "oop.pdf",
+      "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1075/OP.pdf",
+      "checked_at": "2026-10-16T11:13:33.238007+00:00",
+      "http_status": 200,
+      "bytes": 189813,
+      "sha256": "f335f85994335f078bd39af066f60732ab5db5af121041b0bf2aaef4d3768701"
+    },
+    {
+      "file": "wta-matches-dated.raw",
+      "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches?from=2026-10-16&to=2026-10-17",
+      "checked_at": "2026-10-16T11:14:05.688281+00:00",
+      "http_status": 200,
+      "bytes": 12154,
+      "sha256": "94575d9ec5349ffd548bcb430d16fe34a01e653e115dcfd08bddf4de5bee8ced"
+    }
+  ],
+  "saved_raw_directory": "next-opponent-live-20261016T111333Z",
+  "saved_files": {
+    "fs-today.raw": {
+      "path": "next-opponent-live-20261016T111333Z/fs-today.raw",
+      "bytes": 647120,
+      "sha256": "7c316d65ef7c8b613415f306f7c1e8f1895abbca5cbe02faf975df3dfcb41ded"
+    },
+    "oop.txt": {
+      "path": "next-opponent-live-20261016T111333Z/oop.txt",
+      "bytes": 2536,
+      "sha256": "814e8ef572c4c6656eee8f43774900e583b2b13386c75e2c13c77c917d8fca0c"
+    },
+    "wta-matches-dated.raw": {
+      "path": "next-opponent-live-20261016T111333Z/wta-matches-dated.raw",
+      "bytes": 12154,
+      "sha256": "94575d9ec5349ffd548bcb430d16fe34a01e653e115dcfd08bddf4de5bee8ced"
+    },
+    "draw.pdf": {
+      "path": "next-opponent-live-20261016T111333Z/draw.pdf",
+      "bytes": 209114,
+      "sha256": "30cc8375e5097fdda447647e8501b6cc09907fc47456f839c6cffe79035091cc"
+    },
+    "wta-matches.raw": {
+      "path": "next-opponent-live-20261016T111333Z/wta-matches.raw",
+      "bytes": 116823,
+      "sha256": "608bb7e1d9b998a54ad3132974dda74176f9531a3bd28e03c9541e35cffbbdac"
+    },
+    "fetch-receipts.json": {
+      "path": "next-opponent-live-20261016T111333Z/fetch-receipts.json",
+      "bytes": 1486,
+      "sha256": "7332d34b3d9f149fcbac0003806c04cf7ca675bf8b6ddf46665992191a5ab3c7"
+    },
+    "oop.pdf": {
+      "path": "next-opponent-live-20261016T111333Z/oop.pdf",
+      "bytes": 189813,
+      "sha256": "f335f85994335f078bd39af066f60732ab5db5af121041b0bf2aaef4d3768701"
+    }
+  },
+  "required_future_recheck": "If later final publication needs contemporaneous wording, recheck LS004 with date-filtered endpoint; do not invent winner from missing row or status code alone.",
+  "no_spec_or_voice_changes": true
+}
