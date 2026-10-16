@@ -1,0 +1,17 @@
+name: tmp-sc-cover
+# 临时：swiatek-chwalinska-story-2026 封面候选（WTA 官方图库），合并前删除。
+on:
+  push:
+    branches: [claude/swiatek-chwalinska-story-2026]
+    paths: [research/swiatek-chwalinska-story-2026/cover_search.py, .github/workflows/tmp-sc-cover.yml]
+permissions:
+  contents: read
+jobs:
+  cover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: research/swiatek-chwalinska-story-2026
+      - run: python3 research/swiatek-chwalinska-story-2026/cover_search.py
