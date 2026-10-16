@@ -1,0 +1,30 @@
+name: tmp-sc-web
+# 临时：swiatek-chwalinska-story-2026 读网页正文、波兰语采访转写，合并前删除。
+on:
+  push:
+    branches: [claude/swiatek-chwalinska-story-2026]
+    paths: [research/swiatek-chwalinska-story-2026/web_urls.txt, research/swiatek-chwalinska-story-2026/asr_pl.py, .github/workflows/tmp-sc-web.yml]
+permissions:
+  contents: read
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: research/swiatek-chwalinska-story-2026
+      - run: python3 research/swiatek-chwalinska-story-2026/web_dump.py research/swiatek-chwalinska-story-2026/web_urls.txt
+  asr_pl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: research/swiatek-chwalinska-story-2026
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -q faster-whisper
+      - run: curl -sSL --fail -o src.mp4 https://github.com/robertyang87/tennislive/releases/download/source--Vsfptr_DC8/-Vsfptr_DC8.mp4
+      - run: python3 research/swiatek-chwalinska-story-2026/asr_pl.py src.mp4 medium
