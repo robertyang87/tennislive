@@ -8,6 +8,7 @@ permissions:
   contents: read
 jobs:
   web:
+    if: ${{ !contains(github.event.head_commit.message, 'skip-web') }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -16,6 +17,9 @@ jobs:
           sparse-checkout: research/swiatek-chwalinska-story-2026
       - run: python3 research/swiatek-chwalinska-story-2026/web_dump.py research/swiatek-chwalinska-story-2026/web_urls.txt
   asr_pl:
+    if: ${{ !contains(github.event.head_commit.message, 'skip-asr') }}
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -27,4 +31,13 @@ jobs:
           python-version: "3.11"
       - run: pip install -q faster-whisper
       - run: curl -sSL --fail -o src.mp4 https://github.com/robertyang87/tennislive/releases/download/source--Vsfptr_DC8/-Vsfptr_DC8.mp4
-      - run: python3 research/swiatek-chwalinska-story-2026/asr_pl.py src.mp4 medium
+      - run: |
+          python3 research/swiatek-chwalinska-story-2026/asr_pl.py src.mp4 small "data/source_asr/-Vsfptr_DC8/small.pl.json"
+          python3 research/swiatek-chwalinska-story-2026/asr_pl.py src.mp4 medium "data/source_asr/-Vsfptr_DC8/medium.pl.json"
+      - name: commit
+        run: |
+          git config user.name "Claude"; git config user.email "noreply@anthropic.com"
+          git sparse-checkout add data/source_asr/-Vsfptr_DC8 || true
+          git add -f data/source_asr/-Vsfptr_DC8
+          git commit -m "asr: 源片 -Vsfptr_DC8 两档波兰语转写（small / medium）"
+          for i in 1 2 3; do git pull --rebase -q origin claude/swiatek-chwalinska-story-2026 && git push -q origin HEAD:claude/swiatek-chwalinska-story-2026 && break; sleep 5; done
