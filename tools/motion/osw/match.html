@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="common.css"><style>
+#yr{left:0;right:0;top:170px;text-align:center;font-family:BC;font-size:150px;line-height:1;letter-spacing:-2px}
+#ev{left:0;right:0;top:330px;text-align:center;font-size:52px;letter-spacing:4px}
+#rows{left:90px;right:90px;top:450px;padding:18px 40px}
+.pr{display:flex;align-items:center;height:130px;border-bottom:1px solid #ffffff14}.pr:last-child{border:0}
+.nm{flex:1;font-size:46px}.nm small{font-family:BCM;font-size:30px;color:#8d9e96;margin-left:12px}
+.st{width:120px;text-align:center;font-family:BC;font-size:84px;color:#7d8c86;position:relative}
+.st.win{color:#c6f65a;text-shadow:0 0 30px #c6f65a55}.st i{font-style:normal;font-family:BCM;font-size:34px;position:absolute;top:8px;right:4px;color:#8d9e96}
+#chips{left:90px;right:90px;top:800px;display:flex;flex-direction:column;gap:26px}
+.chip{padding:30px 40px;font-size:40px;line-height:1.35}.chip b{color:#c6f65a;font-weight:700}.chip small{display:block;font-family:NSR;font-size:26px;color:#8d9e96;margin-top:8px}
+</style></head><body><script src="lib.js"></script><script>document.write(BG)</script>
+<div id="stage" class="abs"><div id="yr" class="abs"></div><div id="ev" class="abs"></div><div id="rows" class="abs glass"></div><div id="chips" class="abs"></div></div><div id="vig" class="abs"></div>
+<script>
+const M={iw21:{yr:"2021",ev:"印第安维尔斯 · 1/8决赛",a:["奥斯塔彭科","24"],b:["斯瓦泰克","2"],sets:["6-4","6-3"],
+ chips:['两位法网冠军相遇','“我把时间从她手里<b>抢走了</b>”<small>奥斯塔彭科赛后 · 澳网官网报道</small>']},
+ dxb22:{yr:"2022",ev:"迪拜",a:["奥斯塔彭科",""],b:["斯瓦泰克","6"],sets:["4-6","6-1","7-6(4)"],
+ chips:['先丢一盘，<b>抢七</b>逆转','斯瓦泰克 <b>37 连胜</b>前的最后一败']}};
+const d=M[new URLSearchParams(location.search).get('m')];
+g('yr').textContent=d.yr;g('ev').textContent=d.ev;
+function row(p,side){let h='<div class="pr"><div class="nm">'+p[0]+(p[1]?'<small>['+p[1]+']</small>':'')+'</div>';
+ d.sets.forEach(s=>{const m=s.match(/(\d+)-(\d+)(\((\d+)\))?/);const a=+m[1],b=+m[2];const me=side?b:a,op=side?a:b;
+  h+='<div class="st'+(me>op?' win':'')+'">'+me+(m[4]&&me<op?'<i>'+m[4]+'</i>':'')+'</div>'});return h+'</div>'}
+g('rows').innerHTML=row(d.a,0)+row(d.b,1);
+d.chips.forEach(c=>{const e=document.createElement('div');e.className='chip glass';e.innerHTML=c;g('chips').appendChild(e)});
+window.renderAt=function(t){window._t=t;bgAt(t,6);const y=enter(g('yr'),0.05,0.8,30,20);g('yr').style.transform+=' scale('+(0.92+0.08*spring(t-0.05))+')';
+ enter(g('ev'),0.35,0.8,20,10);enter(g('rows'),0.6,0.8,40,14);
+ document.querySelectorAll('.st').forEach((e,i)=>{const col=i%d.sets.length;const p=enter(e,1.0+col*0.35,0.6,0,12);e.style.transform='scale('+(e.classList.contains('win')?bounce(t-1.0-col*0.35-0.4)*(0.7+0.3*p):1)+')'});
+ [...g('chips').children].forEach((e,i)=>enter(e,2.4+i*0.6,0.9,40,14))};renderAt(0)
+</script></body></html>

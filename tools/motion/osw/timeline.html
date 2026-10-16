@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="common.css"><style>
+#line{left:200px;top:250px;width:4px;height:0;background:linear-gradient(#c6f65a,#c6f65a55);border-radius:2px;box-shadow:0 0 16px #c6f65a55}
+.n{left:150px;width:840px;height:120px}
+.dot{position:absolute;left:38px;top:40px;width:28px;height:28px;border-radius:50%;background:#c6f65a;box-shadow:0 0 0 8px #c6f65a22,0 0 24px #c6f65a88}
+.card{position:absolute;left:110px;right:0;top:0;height:108px;display:flex;align-items:center;padding:0 34px}
+.yr{font-family:BC;font-size:56px;width:130px}.ev{font-family:NSR;font-size:32px;flex:1;color:#dde9e2}.sc{font-family:BC;font-size:44px;color:#8d9e96}.sc b{color:#c6f65a;font-weight:700}.sc i{font-style:normal;font-size:28px;vertical-align:8px}
+.q .dot{background:none;border:3px dashed #c6f65a;box-shadow:none}.q .card{border-style:dashed}
+</style></head><body><script src="lib.js"></script><script>document.write(BG)</script>
+<div id="stage" class="abs"><div class="abs kick" style="top:150px">六次交手 · 时间线</div><div id="line" class="abs"></div><div id="nodes"></div></div><div id="vig" class="abs"></div>
+<script>
+const D=[["2019","伯明翰","6-0 6-2"],["2021","印第安维尔斯","6-4 6-3"],["2022","迪拜","4-6 6-1 7-6(4)"],["2023","美网","3-6 6-3 6-1"],["2025","多哈","6-3 6-1"],["2025","斯图加特","6-3 3-6 6-2"],["2026","武汉 决赛？",""]];
+const fmt=s=>s.split(" ").map(x=>{const m=x.match(/(\d+)-(\d+)(\(\d+\))?/);const a=+m[1],b=+m[2],tb=m[3]?'<i>'+m[3]+'</i>':'';return (a>b?'<b>'+a+'</b>-'+b:a+'-<b>'+b+'</b>')+tb}).join('  ');
+D.forEach((d,i)=>{const e=document.createElement('div');e.className='abs n'+(d[2]?'':' q');e.style.top=(220+i*150)+'px';
+ e.innerHTML='<div class="dot"></div><div class="card glass"><div class="yr">'+d[0]+'</div><div class="ev">'+d[1]+'</div><div class="sc">'+(d[2]?fmt(d[2]):'')+'</div></div>';g('nodes').appendChild(e)});
+window.renderAt=function(t){window._t=t;bgAt(t,4.5);g('line').style.height=(980*io(cl((t-0.2)/2.6)))+'px';
+ [...g('nodes').children].forEach((e,i)=>{const p=enter(e,0.3+i*0.36,0.8,0,14);e.style.transform='translateX('+(60*(1-p))+'px)'})};renderAt(0)
+</script></body></html>

@@ -1,0 +1,19 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="common.css"><style>
+#ring{left:190px;top:330px;width:700px;height:700px}
+#big{left:0;right:0;top:560px;text-align:center;font-family:BC;font-size:240px;line-height:1;letter-spacing:-6px}
+#big small{font-size:110px}
+#cap{left:0;right:0;top:1090px;text-align:center;font-size:44px}
+#cap2{left:0;right:0;top:1160px;text-align:center;font-family:NSR;font-size:30px;color:#a9bcb2}
+</style></head><body><script src="lib.js"></script><script>document.write(BG)</script>
+<div id="stage" class="abs"><div class="abs kick" style="top:200px">六次交手 · 奥斯塔彭科</div>
+<svg id="ring" class="abs" viewBox="0 0 700 700"><circle cx="350" cy="350" r="300" stroke="#ffffff14" stroke-width="44" fill="none"/>
+<circle id="arc" cx="350" cy="350" r="300" stroke="#c6f65a" stroke-width="44" fill="none" stroke-linecap="round" transform="rotate(-90 350 350)" stroke-dasharray="0 2000" style="filter:drop-shadow(0 0 18px #c6f65a88)"/>
+<line x1="350" y1="18" x2="350" y2="82" stroke="#f4fbf7" stroke-width="4" opacity=".5" transform="rotate(180 350 350)"/></svg>
+<div id="big" class="abs"><span id="v" class="w">0</span><small>%</small></div>
+<div id="cap" class="abs">接发球得分率</div><div id="cap2" class="abs">对手发球，她反而拿下一半以上的分</div>
+<div class="abs src">数据：matchstat</div></div><div id="vig" class="abs"></div>
+<script>const C=2*Math.PI*300;
+window.renderAt=function(t){window._t=t;bgAt(t,4.5);enter(g('ring'),0.1,0.8,0,16);const p=q4(cl((t-0.5)/1.6));
+ g('arc').setAttribute('stroke-dasharray',(C*0.52*p)+' 2000');g('v').textContent=Math.round(52*p);
+ g('big').style.transform='scale('+bounce(t-2.1)+')';enter(g('cap'),1.6,0.8,20,10);enter(g('cap2'),1.9,0.8,20,10)};renderAt(0)
+</script></body></html>
