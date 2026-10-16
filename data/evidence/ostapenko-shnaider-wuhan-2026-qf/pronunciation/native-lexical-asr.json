@@ -1,0 +1,2103 @@
+{
+  "status": "complete_raw_independent_lexical_asr_not_tone_proof",
+  "configuration": {
+    "model": "base multilingual",
+    "device": "cpu",
+    "compute_type": "int8",
+    "language": "zh",
+    "beam_size": 5,
+    "vad_filter": false,
+    "initial_prompt": null,
+    "prefix": null,
+    "condition_on_previous_text": false,
+    "temperature": 0.0,
+    "word_timestamps": true
+  },
+  "manual_listening_claimed": false,
+  "bundle_sha256": "bc91d1d69f056e97133ad361d161f02d493587c6d4498a524ddfee10c4c17313",
+  "method": "transcribe whole actual current frozen MP3 independently, without expected-text prompt",
+  "limitation": "ASR Chinese characters cannot establish tone or prove all numbers/words correct; unresolved mismatches pending.",
+  "utterances": [
+    {
+      "edit_id": "intro",
+      "actual_mp3": "/workspace/scratch/osta-pronunciation/native-audio/intro-8e5d2af289219f0d.mp3",
+      "actual_mp3_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
+      "expected_final_tts_text": "奥斯塔彭科，又朝斯瓦泰克近了一步。十月十六日上午，武汉女单四分之一决赛，她七比六、六比一击败施耐德，晋级四强。但首盘，她一度离丢盘只差一分。",
+      "raw_transcription": "奧斯塔彭科又朝司法泰克進了一步10月16日上午吳漢尼丹4分之一決賽他7比66比1擊敗施耐德緊急四強但手盤他一度離丟盤只差一分",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 3.06,
+          "text": "奧斯塔彭科又朝司法泰克進了一步",
+          "avg_logprob": -0.34743521610895794,
+          "words": [
+            {
+              "word": "奧",
+              "start": 0.0,
+              "end": 0.24,
+              "probability": 0.5387196689844131
+            },
+            {
+              "word": "斯",
+              "start": 0.24,
+              "end": 0.38,
+              "probability": 0.9947929978370667
+            },
+            {
+              "word": "塔",
+              "start": 0.38,
+              "end": 0.54,
+              "probability": 0.9730451703071594
+            },
+            {
+              "word": "彭",
+              "start": 0.54,
+              "end": 0.72,
+              "probability": 0.7955219447612762
+            },
+            {
+              "word": "科",
+              "start": 0.72,
+              "end": 0.98,
+              "probability": 0.44618338346481323
+            },
+            {
+              "word": "又",
+              "start": 0.98,
+              "end": 1.4,
+              "probability": 0.25038954615592957
+            },
+            {
+              "word": "朝",
+              "start": 1.4,
+              "end": 1.62,
+              "probability": 0.5427728891372681
+            },
+            {
+              "word": "司",
+              "start": 1.62,
+              "end": 1.84,
+              "probability": 0.7349092960357666
+            },
+            {
+              "word": "法",
+              "start": 1.84,
+              "end": 1.94,
+              "probability": 0.8375909328460693
+            },
+            {
+              "word": "泰",
+              "start": 1.94,
+              "end": 2.2,
+              "probability": 0.709896981716156
+            },
+            {
+              "word": "克",
+              "start": 2.2,
+              "end": 2.4,
+              "probability": 0.9454048275947571
+            },
+            {
+              "word": "進",
+              "start": 2.4,
+              "end": 2.62,
+              "probability": 0.6470153331756592
+            },
+            {
+              "word": "了",
+              "start": 2.62,
+              "end": 2.74,
+              "probability": 0.9847835898399353
+            },
+            {
+              "word": "一",
+              "start": 2.74,
+              "end": 2.92,
+              "probability": 0.9649680256843567
+            },
+            {
+              "word": "步",
+              "start": 2.92,
+              "end": 3.06,
+              "probability": 0.9841035604476929
+            }
+          ]
+        },
+        {
+          "start": 3.48,
+          "end": 4.78,
+          "text": "10月16日上午",
+          "avg_logprob": -0.34743521610895794,
+          "words": [
+            {
+              "word": "10",
+              "start": 3.48,
+              "end": 3.88,
+              "probability": 0.365945041179657
+            },
+            {
+              "word": "月",
+              "start": 3.88,
+              "end": 4.02,
+              "probability": 0.9345867037773132
+            },
+            {
+              "word": "16",
+              "start": 4.02,
+              "end": 4.22,
+              "probability": 0.9528948664665222
+            },
+            {
+              "word": "日",
+              "start": 4.22,
+              "end": 4.38,
+              "probability": 0.991530179977417
+            },
+            {
+              "word": "上",
+              "start": 4.38,
+              "end": 4.58,
+              "probability": 0.9880131483078003
+            },
+            {
+              "word": "午",
+              "start": 4.58,
+              "end": 4.78,
+              "probability": 0.987007200717926
+            }
+          ]
+        },
+        {
+          "start": 4.78,
+          "end": 6.48,
+          "text": "吳漢尼丹4分之一決賽",
+          "avg_logprob": -0.34743521610895794,
+          "words": [
+            {
+              "word": "吳",
+              "start": 4.78,
+              "end": 5.18,
+              "probability": 0.4868645127862692
+            },
+            {
+              "word": "漢",
+              "start": 5.18,
+              "end": 5.32,
+              "probability": 0.6864298731088638
+            },
+            {
+              "word": "尼",
+              "start": 5.32,
+              "end": 5.44,
+              "probability": 0.6625851988792419
+            },
+            {
+              "word": "丹",
+              "start": 5.44,
+              "end": 5.6,
+              "probability": 0.965915858745575
+            },
+            {
+              "word": "4",
+              "start": 5.6,
+              "end": 5.8,
+              "probability": 0.5274229645729065
+            },
+            {
+              "word": "分",
+              "start": 5.8,
+              "end": 5.9,
+              "probability": 0.7660470604896545
+            },
+            {
+              "word": "之",
+              "start": 5.9,
+              "end": 6.02,
+              "probability": 0.9796731472015381
+            },
+            {
+              "word": "一",
+              "start": 6.02,
+              "end": 6.16,
+              "probability": 0.8050159811973572
+            },
+            {
+              "word": "決",
+              "start": 6.16,
+              "end": 6.28,
+              "probability": 0.8709748387336731
+            },
+            {
+              "word": "賽",
+              "start": 6.28,
+              "end": 6.48,
+              "probability": 0.9346365332603455
+            }
+          ]
+        },
+        {
+          "start": 6.48,
+          "end": 7.38,
+          "text": "他7比6",
+          "avg_logprob": -0.34743521610895794,
+          "words": [
+            {
+              "word": "他",
+              "start": 6.48,
+              "end": 6.86,
+              "probability": 0.5369918346405029
+            },
+            {
+              "word": "7",
+              "start": 6.86,
+              "end": 7.08,
+              "probability": 0.8941789865493774
+            },
+            {
+              "word": "比",
+              "start": 7.08,
+              "end": 7.22,
+              "probability": 0.8619794249534607
+            },
+            {
+              "word": "6",
+              "start": 7.22,
+              "end": 7.38,
+              "probability": 0.9888594150543213
+            }
+          ]
+        },
+        {
+          "start": 7.38,
+          "end": 9.02,
+          "text": "6比1擊敗施耐德",
+          "avg_logprob": -0.34743521610895794,
+          "words": [
+            {
+              "word": "6",
+              "start": 7.38,
+              "end": 7.8,
+              "probability": 0.08965271711349487
+            },
+            {
+              "word": "比",
+              "start": 7.8,
+              "end": 7.96,
+              "probability": 0.9687691330909729
+            },
+            {
+              "word": "1",
+              "start": 7.96,
+              "end": 8.26,
+              "probability": 0.9195055961608887
+            },
+            {
+              "word": "擊",
+              "start": 8.26,
+              "end": 8.38,
+              "probability": 0.568544328212738
+            },
+            {
+              "word": "敗",
+              "start": 8.38,
+              "end": 8.52,
+              "probability": 0.9918701946735382
+            },
+            {
+              "word": "施",
+              "start": 8.52,
+              "end": 8.74,
+              "probability": 0.7077263295650482
+            },
+            {
+              "word": "耐",
+              "start": 8.74,
+              "end": 8.86,
+              "probability": 0.7828696072101593
+            },
+            {
+              "word": "德",
+              "start": 8.86,
+              "end": 9.02,
+              "probability": 0.9860150814056396
+            }
+          ]
+        },
+        {
+          "start": 9.02,
+          "end": 10.08,
+          "text": "緊急四強",
+          "avg_logprob": -0.34743521610895794,
+          "words": [
+            {
+              "word": "緊",
+              "start": 9.02,
+              "end": 9.42,
+              "probability": 0.25327080488204956
+            },
+            {
+              "word": "急",
+              "start": 9.42,
+              "end": 9.66,
+              "probability": 0.8454545736312866
+            },
+            {
+              "word": "四",
+              "start": 9.66,
+              "end": 9.86,
+              "probability": 0.4955509305000305
+            },
+            {
+              "word": "強",
+              "start": 9.86,
+              "end": 10.08,
+              "probability": 0.7753629088401794
+            }
+          ]
+        },
+        {
+          "start": 10.08,
+          "end": 11.16,
+          "text": "但手盤",
+          "avg_logprob": -0.34743521610895794,
+          "words": [
+            {
+              "word": "但",
+              "start": 10.08,
+              "end": 10.78,
+              "probability": 0.8653944730758667
+            },
+            {
+              "word": "手",
+              "start": 10.78,
+              "end": 11.0,
+              "probability": 0.6774625182151794
+            },
+            {
+              "word": "盤",
+              "start": 11.0,
+              "end": 11.16,
+              "probability": 0.9917328059673309
+            }
+          ]
+        },
+        {
+          "start": 11.16,
+          "end": 13.6,
+          "text": "他一度離丟盤只差一分",
+          "avg_logprob": -0.34743521610895794,
+          "words": [
+            {
+              "word": "他",
+              "start": 11.16,
+              "end": 11.7,
+              "probability": 0.832750678062439
+            },
+            {
+              "word": "一",
+              "start": 11.7,
+              "end": 11.9,
+              "probability": 0.9047033786773682
+            },
+            {
+              "word": "度",
+              "start": 11.9,
+              "end": 12.06,
+              "probability": 0.9856254458427429
+            },
+            {
+              "word": "離",
+              "start": 12.06,
+              "end": 12.38,
+              "probability": 0.8572613000869751
+            },
+            {
+              "word": "丟",
+              "start": 12.38,
+              "end": 12.56,
+              "probability": 0.7974654734134674
+            },
+            {
+              "word": "盤",
+              "start": 12.56,
+              "end": 12.86,
+              "probability": 0.9954663217067719
+            },
+            {
+              "word": "只",
+              "start": 12.86,
+              "end": 13.06,
+              "probability": 0.8365036845207214
+            },
+            {
+              "word": "差",
+              "start": 13.06,
+              "end": 13.28,
+              "probability": 0.9930441975593567
+            },
+            {
+              "word": "一",
+              "start": 13.28,
+              "end": 13.46,
+              "probability": 0.8222621083259583
+            },
+            {
+              "word": "分",
+              "start": 13.46,
+              "end": 13.6,
+              "probability": 0.8957775235176086
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    },
+    {
+      "edit_id": "first_set",
+      "actual_mp3": "/workspace/scratch/osta-pronunciation/native-audio/first_set-7a8064f0343a9474.mp3",
+      "actual_mp3_sha256": "7a8064f0343a94741252821867d34e937ed3c1f0a7deee8df83c2e8a93a2497d",
+      "expected_final_tts_text": "首盘二比五落后，她在三比五和四比五时各救一个盘点。看这个救险回合，她从底线向前压进发球区，继续进攻。随后追平，抢七又从六比三被追到六平，第四个盘点才拿下。",
+      "raw_transcription": "手盼2比5落後 它在3比5和4比50 各就一個盤點看這個就顯回合 它從底線向前壓緊發球區繼續進攻隨後追平 強弃又從6比3 被追到6平 第4個盤點才拿下",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 4.42,
+          "text": "手盼2比5落後 它在3比5和4比50 各就一個盤點",
+          "avg_logprob": -0.29596636498846657,
+          "words": [
+            {
+              "word": "手",
+              "start": 0.0,
+              "end": 0.32,
+              "probability": 0.6985280513763428
+            },
+            {
+              "word": "盼",
+              "start": 0.32,
+              "end": 0.46,
+              "probability": 0.5513104796409607
+            },
+            {
+              "word": "2",
+              "start": 0.46,
+              "end": 0.64,
+              "probability": 0.7253670692443848
+            },
+            {
+              "word": "比",
+              "start": 0.64,
+              "end": 0.78,
+              "probability": 0.5071790814399719
+            },
+            {
+              "word": "5",
+              "start": 0.78,
+              "end": 0.96,
+              "probability": 0.9735805988311768
+            },
+            {
+              "word": "落",
+              "start": 0.96,
+              "end": 1.08,
+              "probability": 0.8333160281181335
+            },
+            {
+              "word": "後",
+              "start": 1.08,
+              "end": 1.28,
+              "probability": 0.6931976079940796
+            },
+            {
+              "word": " 它",
+              "start": 1.7,
+              "end": 1.78,
+              "probability": 0.7362154722213745
+            },
+            {
+              "word": "在",
+              "start": 1.78,
+              "end": 1.92,
+              "probability": 0.9637120962142944
+            },
+            {
+              "word": "3",
+              "start": 1.92,
+              "end": 2.1,
+              "probability": 0.9710039496421814
+            },
+            {
+              "word": "比",
+              "start": 2.1,
+              "end": 2.26,
+              "probability": 0.9905686974525452
+            },
+            {
+              "word": "5",
+              "start": 2.26,
+              "end": 2.44,
+              "probability": 0.9941838383674622
+            },
+            {
+              "word": "和",
+              "start": 2.44,
+              "end": 2.62,
+              "probability": 0.9640085697174072
+            },
+            {
+              "word": "4",
+              "start": 2.62,
+              "end": 2.76,
+              "probability": 0.9890007972717285
+            },
+            {
+              "word": "比",
+              "start": 2.76,
+              "end": 2.88,
+              "probability": 0.9952567219734192
+            },
+            {
+              "word": "50",
+              "start": 2.88,
+              "end": 3.24,
+              "probability": 0.862568199634552
+            },
+            {
+              "word": " 各",
+              "start": 3.52,
+              "end": 3.6,
+              "probability": 0.5325132608413696
+            },
+            {
+              "word": "就",
+              "start": 3.6,
+              "end": 3.76,
+              "probability": 0.9808923602104187
+            },
+            {
+              "word": "一個",
+              "start": 3.76,
+              "end": 4.0,
+              "probability": 0.8756487965583801
+            },
+            {
+              "word": "盤",
+              "start": 4.0,
+              "end": 4.2,
+              "probability": 0.9837291538715363
+            },
+            {
+              "word": "點",
+              "start": 4.2,
+              "end": 4.42,
+              "probability": 0.9964073300361633
+            }
+          ]
+        },
+        {
+          "start": 4.800000000000001,
+          "end": 9.48,
+          "text": "看這個就顯回合 它從底線向前壓緊發球區繼續進攻",
+          "avg_logprob": -0.29596636498846657,
+          "words": [
+            {
+              "word": "看",
+              "start": 4.800000000000001,
+              "end": 5.16,
+              "probability": 0.8285692930221558
+            },
+            {
+              "word": "這個",
+              "start": 5.16,
+              "end": 5.42,
+              "probability": 0.9640635251998901
+            },
+            {
+              "word": "就",
+              "start": 5.42,
+              "end": 5.54,
+              "probability": 0.9236323237419128
+            },
+            {
+              "word": "顯",
+              "start": 5.54,
+              "end": 5.7,
+              "probability": 0.4665248692035675
+            },
+            {
+              "word": "回",
+              "start": 5.7,
+              "end": 5.88,
+              "probability": 0.8550597429275513
+            },
+            {
+              "word": "合",
+              "start": 5.88,
+              "end": 6.06,
+              "probability": 0.9802668690681458
+            },
+            {
+              "word": " 它",
+              "start": 6.38,
+              "end": 6.4,
+              "probability": 0.9784072041511536
+            },
+            {
+              "word": "從",
+              "start": 6.4,
+              "end": 6.58,
+              "probability": 0.9925587177276611
+            },
+            {
+              "word": "底",
+              "start": 6.58,
+              "end": 6.7,
+              "probability": 0.9879174828529358
+            },
+            {
+              "word": "線",
+              "start": 6.7,
+              "end": 6.88,
+              "probability": 0.977440357208252
+            },
+            {
+              "word": "向",
+              "start": 6.88,
+              "end": 7.06,
+              "probability": 0.9986717700958252
+            },
+            {
+              "word": "前",
+              "start": 7.06,
+              "end": 7.34,
+              "probability": 0.998913049697876
+            },
+            {
+              "word": "壓",
+              "start": 7.34,
+              "end": 7.62,
+              "probability": 0.9071981310844421
+            },
+            {
+              "word": "緊",
+              "start": 7.62,
+              "end": 7.82,
+              "probability": 0.9697344303131104
+            },
+            {
+              "word": "發",
+              "start": 7.82,
+              "end": 8.02,
+              "probability": 0.9804850220680237
+            },
+            {
+              "word": "球",
+              "start": 8.02,
+              "end": 8.16,
+              "probability": 0.8500189781188965
+            },
+            {
+              "word": "區",
+              "start": 8.16,
+              "end": 8.38,
+              "probability": 0.8793555498123169
+            },
+            {
+              "word": "繼續",
+              "start": 8.38,
+              "end": 9.0,
+              "probability": 0.6153692007064819
+            },
+            {
+              "word": "進",
+              "start": 9.0,
+              "end": 9.22,
+              "probability": 0.8367337584495544
+            },
+            {
+              "word": "攻",
+              "start": 9.22,
+              "end": 9.48,
+              "probability": 0.9736034274101257
+            }
+          ]
+        },
+        {
+          "start": 9.48,
+          "end": 15.06,
+          "text": "隨後追平 強弃又從6比3 被追到6平 第4個盤點才拿下",
+          "avg_logprob": -0.29596636498846657,
+          "words": [
+            {
+              "word": "隨",
+              "start": 9.48,
+              "end": 10.18,
+              "probability": 0.5769567489624023
+            },
+            {
+              "word": "後",
+              "start": 10.18,
+              "end": 10.32,
+              "probability": 0.9942609071731567
+            },
+            {
+              "word": "追",
+              "start": 10.32,
+              "end": 10.48,
+              "probability": 0.9526519179344177
+            },
+            {
+              "word": "平",
+              "start": 10.48,
+              "end": 10.68,
+              "probability": 0.8388853669166565
+            },
+            {
+              "word": " 強",
+              "start": 11.14,
+              "end": 11.18,
+              "probability": 0.44783300161361694
+            },
+            {
+              "word": "弃",
+              "start": 11.18,
+              "end": 11.42,
+              "probability": 0.4340677186846733
+            },
+            {
+              "word": "又",
+              "start": 11.42,
+              "end": 11.6,
+              "probability": 0.9139325022697449
+            },
+            {
+              "word": "從",
+              "start": 11.6,
+              "end": 11.8,
+              "probability": 0.9936373233795166
+            },
+            {
+              "word": "6",
+              "start": 11.8,
+              "end": 11.94,
+              "probability": 0.9731557965278625
+            },
+            {
+              "word": "比",
+              "start": 11.94,
+              "end": 12.12,
+              "probability": 0.9141756296157837
+            },
+            {
+              "word": "3",
+              "start": 12.12,
+              "end": 12.32,
+              "probability": 0.9936890602111816
+            },
+            {
+              "word": " 被",
+              "start": 12.56,
+              "end": 12.64,
+              "probability": 0.9355452656745911
+            },
+            {
+              "word": "追",
+              "start": 12.64,
+              "end": 12.78,
+              "probability": 0.9717473387718201
+            },
+            {
+              "word": "到",
+              "start": 12.78,
+              "end": 12.94,
+              "probability": 0.9917382597923279
+            },
+            {
+              "word": "6",
+              "start": 12.94,
+              "end": 13.12,
+              "probability": 0.9854394197463989
+            },
+            {
+              "word": "平",
+              "start": 13.12,
+              "end": 13.3,
+              "probability": 0.31774964928627014
+            },
+            {
+              "word": " 第",
+              "start": 13.68,
+              "end": 13.76,
+              "probability": 0.9944313168525696
+            },
+            {
+              "word": "4",
+              "start": 13.76,
+              "end": 13.98,
+              "probability": 0.6596201062202454
+            },
+            {
+              "word": "個",
+              "start": 13.98,
+              "end": 14.12,
+              "probability": 0.970913827419281
+            },
+            {
+              "word": "盤",
+              "start": 14.12,
+              "end": 14.28,
+              "probability": 0.9968702793121338
+            },
+            {
+              "word": "點",
+              "start": 14.28,
+              "end": 14.5,
+              "probability": 0.9993744492530823
+            },
+            {
+              "word": "才",
+              "start": 14.5,
+              "end": 14.72,
+              "probability": 0.8091698288917542
+            },
+            {
+              "word": "拿",
+              "start": 14.72,
+              "end": 14.9,
+              "probability": 0.9929496049880981
+            },
+            {
+              "word": "下",
+              "start": 14.9,
+              "end": 15.06,
+              "probability": 0.9807041883468628
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    },
+    {
+      "edit_id": "second_set",
+      "actual_mp3": "/workspace/scratch/osta-pronunciation/native-audio/second_set-72f9493cc1c57878.mp3",
+      "actual_mp3_sha256": "72f9493cc1c578782c492d388aad13d636105576c52689942a817f1b2a95973c",
+      "expected_final_tts_text": "第二盘，奥斯塔彭科先拿三局，随后被追到三比一。底线相持中，她左右大范围跑动，仍把球回进场。她连赢最后三局，第二个赛点兑现。六比一，比赛结束。",
+      "raw_transcription": "第二盘 奥斯塔彭克先拿三局 隨後被追到三比一第一線相遲中 他左右大範圍跑動 仍把球回進場他連贏最後三局 第二個賽點對線 六比一比賽結束",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 4.22,
+          "text": "第二盘 奥斯塔彭克先拿三局 隨後被追到三比一",
+          "avg_logprob": -0.2689044602711995,
+          "words": [
+            {
+              "word": "第二",
+              "start": 0.0,
+              "end": 0.26,
+              "probability": 0.9497063755989075
+            },
+            {
+              "word": "盘",
+              "start": 0.26,
+              "end": 0.48,
+              "probability": 0.8218940198421478
+            },
+            {
+              "word": " 奥",
+              "start": 0.9,
+              "end": 0.94,
+              "probability": 0.5588164627552032
+            },
+            {
+              "word": "斯",
+              "start": 0.94,
+              "end": 1.06,
+              "probability": 0.9837212562561035
+            },
+            {
+              "word": "塔",
+              "start": 1.06,
+              "end": 1.2,
+              "probability": 0.9504262804985046
+            },
+            {
+              "word": "彭",
+              "start": 1.2,
+              "end": 1.4,
+              "probability": 0.7367435693740845
+            },
+            {
+              "word": "克",
+              "start": 1.4,
+              "end": 1.56,
+              "probability": 0.9160848259925842
+            },
+            {
+              "word": "先",
+              "start": 1.56,
+              "end": 1.78,
+              "probability": 0.8775339722633362
+            },
+            {
+              "word": "拿",
+              "start": 1.78,
+              "end": 1.92,
+              "probability": 0.9949777722358704
+            },
+            {
+              "word": "三",
+              "start": 1.92,
+              "end": 2.14,
+              "probability": 0.8346683979034424
+            },
+            {
+              "word": "局",
+              "start": 2.14,
+              "end": 2.3,
+              "probability": 0.8927062749862671
+            },
+            {
+              "word": " 隨",
+              "start": 2.76,
+              "end": 2.8,
+              "probability": 0.9496890306472778
+            },
+            {
+              "word": "後",
+              "start": 2.8,
+              "end": 2.98,
+              "probability": 0.9906022548675537
+            },
+            {
+              "word": "被",
+              "start": 2.98,
+              "end": 3.14,
+              "probability": 0.9992122650146484
+            },
+            {
+              "word": "追",
+              "start": 3.14,
+              "end": 3.3,
+              "probability": 0.9662706255912781
+            },
+            {
+              "word": "到",
+              "start": 3.3,
+              "end": 3.48,
+              "probability": 0.7087357640266418
+            },
+            {
+              "word": "三",
+              "start": 3.48,
+              "end": 3.78,
+              "probability": 0.8417870998382568
+            },
+            {
+              "word": "比",
+              "start": 3.78,
+              "end": 3.92,
+              "probability": 0.9638069868087769
+            },
+            {
+              "word": "一",
+              "start": 3.92,
+              "end": 4.22,
+              "probability": 0.9328463673591614
+            }
+          ]
+        },
+        {
+          "start": 4.22,
+          "end": 8.54,
+          "text": "第一線相遲中 他左右大範圍跑動 仍把球回進場",
+          "avg_logprob": -0.2689044602711995,
+          "words": [
+            {
+              "word": "第一",
+              "start": 4.22,
+              "end": 4.86,
+              "probability": 0.8196871876716614
+            },
+            {
+              "word": "線",
+              "start": 4.86,
+              "end": 5.04,
+              "probability": 0.9123457074165344
+            },
+            {
+              "word": "相",
+              "start": 5.04,
+              "end": 5.22,
+              "probability": 0.9519092440605164
+            },
+            {
+              "word": "遲",
+              "start": 5.22,
+              "end": 5.36,
+              "probability": 0.6525696069002151
+            },
+            {
+              "word": "中",
+              "start": 5.36,
+              "end": 5.58,
+              "probability": 0.9685950875282288
+            },
+            {
+              "word": " 他",
+              "start": 5.58,
+              "end": 5.92,
+              "probability": 0.7511235475540161
+            },
+            {
+              "word": "左右",
+              "start": 5.92,
+              "end": 6.2,
+              "probability": 0.9917446970939636
+            },
+            {
+              "word": "大",
+              "start": 6.2,
+              "end": 6.44,
+              "probability": 0.9962705373764038
+            },
+            {
+              "word": "範",
+              "start": 6.44,
+              "end": 6.64,
+              "probability": 0.9677679538726807
+            },
+            {
+              "word": "圍",
+              "start": 6.64,
+              "end": 6.78,
+              "probability": 0.989582747220993
+            },
+            {
+              "word": "跑",
+              "start": 6.78,
+              "end": 6.98,
+              "probability": 0.9276253581047058
+            },
+            {
+              "word": "動",
+              "start": 6.98,
+              "end": 7.18,
+              "probability": 0.9788929224014282
+            },
+            {
+              "word": " 仍",
+              "start": 7.5,
+              "end": 7.54,
+              "probability": 0.7760336697101593
+            },
+            {
+              "word": "把",
+              "start": 7.54,
+              "end": 7.74,
+              "probability": 0.9690816402435303
+            },
+            {
+              "word": "球",
+              "start": 7.74,
+              "end": 7.96,
+              "probability": 0.995646059513092
+            },
+            {
+              "word": "回",
+              "start": 7.96,
+              "end": 8.16,
+              "probability": 0.9331195950508118
+            },
+            {
+              "word": "進",
+              "start": 8.16,
+              "end": 8.28,
+              "probability": 0.8146467208862305
+            },
+            {
+              "word": "場",
+              "start": 8.28,
+              "end": 8.54,
+              "probability": 0.9926853179931641
+            }
+          ]
+        },
+        {
+          "start": 8.54,
+          "end": 13.68,
+          "text": "他連贏最後三局 第二個賽點對線 六比一比賽結束",
+          "avg_logprob": -0.2689044602711995,
+          "words": [
+            {
+              "word": "他",
+              "start": 8.54,
+              "end": 9.2,
+              "probability": 0.9476621747016907
+            },
+            {
+              "word": "連",
+              "start": 9.2,
+              "end": 9.34,
+              "probability": 0.4620826542377472
+            },
+            {
+              "word": "贏",
+              "start": 9.34,
+              "end": 9.48,
+              "probability": 0.9785325527191162
+            },
+            {
+              "word": "最後",
+              "start": 9.48,
+              "end": 9.76,
+              "probability": 0.9836736917495728
+            },
+            {
+              "word": "三",
+              "start": 9.76,
+              "end": 10.04,
+              "probability": 0.9676083326339722
+            },
+            {
+              "word": "局",
+              "start": 10.04,
+              "end": 10.24,
+              "probability": 0.9991493225097656
+            },
+            {
+              "word": " 第二個",
+              "start": 10.58,
+              "end": 10.82,
+              "probability": 0.5475319027900696
+            },
+            {
+              "word": "賽",
+              "start": 10.82,
+              "end": 11.08,
+              "probability": 0.9698022603988647
+            },
+            {
+              "word": "點",
+              "start": 11.08,
+              "end": 11.26,
+              "probability": 0.6782857775688171
+            },
+            {
+              "word": "對",
+              "start": 11.26,
+              "end": 11.42,
+              "probability": 0.8148234486579895
+            },
+            {
+              "word": "線",
+              "start": 11.42,
+              "end": 11.62,
+              "probability": 0.7228826284408569
+            },
+            {
+              "word": " 六",
+              "start": 12.26,
+              "end": 12.36,
+              "probability": 0.8040128946304321
+            },
+            {
+              "word": "比",
+              "start": 12.36,
+              "end": 12.56,
+              "probability": 0.9979655742645264
+            },
+            {
+              "word": "一",
+              "start": 12.56,
+              "end": 12.82,
+              "probability": 0.9956587553024292
+            },
+            {
+              "word": "比",
+              "start": 12.82,
+              "end": 13.12,
+              "probability": 0.9722447991371155
+            },
+            {
+              "word": "賽",
+              "start": 13.12,
+              "end": 13.32,
+              "probability": 0.9990027546882629
+            },
+            {
+              "word": "結",
+              "start": 13.32,
+              "end": 13.5,
+              "probability": 0.9899711608886719
+            },
+            {
+              "word": "束",
+              "start": 13.5,
+              "end": 13.68,
+              "probability": 0.9962913990020752
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    },
+    {
+      "edit_id": "key_stat",
+      "actual_mp3": "/workspace/scratch/osta-pronunciation/native-audio/key_stat-94d158ef85b01ab5.mp3",
+      "actual_mp3_sha256": "94d158ef85b01ab56575f61e1caec2fcb986374b734cfab2a1f6596877efc22e",
+      "expected_final_tts_text": "三十二个制胜分，也有三十次非受迫失误。对面是八个制胜分、十四次失误。她的进攻有代价，但两个盘点之后，比赛被她翻了过来。",
+      "raw_transcription": "32個智省分也有34非受迫失誤對面是8個智省分14次失誤他的進攻有代價但兩個盤點之後比賽被他翻了過來",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 3.48,
+          "text": "32個智省分也有34非受迫失誤",
+          "avg_logprob": -0.257211209833622,
+          "words": [
+            {
+              "word": "32",
+              "start": 0.0,
+              "end": 0.62,
+              "probability": 0.8768364191055298
+            },
+            {
+              "word": "個",
+              "start": 0.62,
+              "end": 0.84,
+              "probability": 0.8498076796531677
+            },
+            {
+              "word": "智",
+              "start": 0.84,
+              "end": 0.94,
+              "probability": 0.6370402872562408
+            },
+            {
+              "word": "省",
+              "start": 0.94,
+              "end": 1.1,
+              "probability": 0.881100207567215
+            },
+            {
+              "word": "分",
+              "start": 1.1,
+              "end": 1.28,
+              "probability": 0.9244078993797302
+            },
+            {
+              "word": "也",
+              "start": 1.28,
+              "end": 1.74,
+              "probability": 0.7744144797325134
+            },
+            {
+              "word": "有",
+              "start": 1.74,
+              "end": 1.88,
+              "probability": 0.9928561449050903
+            },
+            {
+              "word": "34",
+              "start": 1.88,
+              "end": 2.3,
+              "probability": 0.8040211200714111
+            },
+            {
+              "word": "非",
+              "start": 2.3,
+              "end": 2.72,
+              "probability": 0.4233565628528595
+            },
+            {
+              "word": "受",
+              "start": 2.72,
+              "end": 2.94,
+              "probability": 0.36777105927467346
+            },
+            {
+              "word": "迫",
+              "start": 2.94,
+              "end": 3.12,
+              "probability": 0.9606253206729889
+            },
+            {
+              "word": "失",
+              "start": 3.12,
+              "end": 3.36,
+              "probability": 0.5866232514381409
+            },
+            {
+              "word": "誤",
+              "start": 3.36,
+              "end": 3.48,
+              "probability": 0.9319919347763062
+            }
+          ]
+        },
+        {
+          "start": 3.48,
+          "end": 6.7,
+          "text": "對面是8個智省分14次失誤",
+          "avg_logprob": -0.257211209833622,
+          "words": [
+            {
+              "word": "對",
+              "start": 3.48,
+              "end": 4.16,
+              "probability": 0.8039379119873047
+            },
+            {
+              "word": "面",
+              "start": 4.16,
+              "end": 4.3,
+              "probability": 0.9969598054885864
+            },
+            {
+              "word": "是",
+              "start": 4.3,
+              "end": 4.54,
+              "probability": 0.9696028232574463
+            },
+            {
+              "word": "8",
+              "start": 4.54,
+              "end": 4.76,
+              "probability": 0.9459195137023926
+            },
+            {
+              "word": "個",
+              "start": 4.76,
+              "end": 4.9,
+              "probability": 0.998579740524292
+            },
+            {
+              "word": "智",
+              "start": 4.9,
+              "end": 5.04,
+              "probability": 0.9991324543952942
+            },
+            {
+              "word": "省",
+              "start": 5.04,
+              "end": 5.2,
+              "probability": 0.9975175857543945
+            },
+            {
+              "word": "分",
+              "start": 5.2,
+              "end": 5.4,
+              "probability": 0.9977935552597046
+            },
+            {
+              "word": "14",
+              "start": 5.4,
+              "end": 5.98,
+              "probability": 0.9126178622245789
+            },
+            {
+              "word": "次",
+              "start": 5.98,
+              "end": 6.34,
+              "probability": 0.9916649460792542
+            },
+            {
+              "word": "失",
+              "start": 6.34,
+              "end": 6.56,
+              "probability": 0.9939213991165161
+            },
+            {
+              "word": "誤",
+              "start": 6.56,
+              "end": 6.7,
+              "probability": 0.9996602237224579
+            }
+          ]
+        },
+        {
+          "start": 6.7,
+          "end": 8.38,
+          "text": "他的進攻有代價",
+          "avg_logprob": -0.257211209833622,
+          "words": [
+            {
+              "word": "他的",
+              "start": 6.7,
+              "end": 7.44,
+              "probability": 0.35616928339004517
+            },
+            {
+              "word": "進",
+              "start": 7.44,
+              "end": 7.62,
+              "probability": 0.9565411806106567
+            },
+            {
+              "word": "攻",
+              "start": 7.62,
+              "end": 7.82,
+              "probability": 0.9587542414665222
+            },
+            {
+              "word": "有",
+              "start": 7.82,
+              "end": 8.0,
+              "probability": 0.9926314353942871
+            },
+            {
+              "word": "代",
+              "start": 8.0,
+              "end": 8.16,
+              "probability": 0.9530763030052185
+            },
+            {
+              "word": "價",
+              "start": 8.16,
+              "end": 8.38,
+              "probability": 0.9733196496963501
+            }
+          ]
+        },
+        {
+          "start": 8.38,
+          "end": 11.4,
+          "text": "但兩個盤點之後比賽被他翻了過來",
+          "avg_logprob": -0.257211209833622,
+          "words": [
+            {
+              "word": "但",
+              "start": 8.38,
+              "end": 8.82,
+              "probability": 0.8141388893127441
+            },
+            {
+              "word": "兩個",
+              "start": 8.82,
+              "end": 9.08,
+              "probability": 0.8533307313919067
+            },
+            {
+              "word": "盤",
+              "start": 9.08,
+              "end": 9.28,
+              "probability": 0.9893481731414795
+            },
+            {
+              "word": "點",
+              "start": 9.28,
+              "end": 9.46,
+              "probability": 0.999139666557312
+            },
+            {
+              "word": "之後",
+              "start": 9.46,
+              "end": 9.8,
+              "probability": 0.943278968334198
+            },
+            {
+              "word": "比",
+              "start": 9.8,
+              "end": 10.18,
+              "probability": 0.978287398815155
+            },
+            {
+              "word": "賽",
+              "start": 10.18,
+              "end": 10.34,
+              "probability": 0.996056318283081
+            },
+            {
+              "word": "被",
+              "start": 10.34,
+              "end": 10.48,
+              "probability": 0.9348021745681763
+            },
+            {
+              "word": "他",
+              "start": 10.48,
+              "end": 10.7,
+              "probability": 0.9517690539360046
+            },
+            {
+              "word": "翻",
+              "start": 10.7,
+              "end": 11.02,
+              "probability": 0.9936898946762085
+            },
+            {
+              "word": "了",
+              "start": 11.02,
+              "end": 11.16,
+              "probability": 0.9900659322738647
+            },
+            {
+              "word": "過來",
+              "start": 11.16,
+              "end": 11.4,
+              "probability": 0.9919740557670593
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    },
+    {
+      "edit_id": "draw_outlook",
+      "actual_mp3": "/workspace/scratch/osta-pronunciation/native-audio/draw_outlook-09f23e70c756d229.mp3",
+      "actual_mp3_sha256": "09f23e70c756d2297ee3fd28621d399765ba45f31bd3259d157506961b864d34",
+      "expected_final_tts_text": "再看签表，她和斯瓦泰克分在两半区，只可能决赛相遇。此前六次交手，奥斯塔彭科全赢。但她下一关还要过索奈·卡塔尔，斯瓦泰克也要继续闯关。这场大家惦记的对决，真能等来吗？",
+      "raw_transcription": "再看簽表,他和司法太客分在兩半區,只可能決賽相遇。此前六次交手,奧斯塔彭克全贏。但他下一關,還要過所耐,卡塔爾、司法太客也要繼續闖關。這場大家電機的對決,真能等來嗎?",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 4.72,
+          "text": "再看簽表,他和司法太客分在兩半區,只可能決賽相遇。",
+          "avg_logprob": -0.2693192438075417,
+          "words": [
+            {
+              "word": "再",
+              "start": 0.0,
+              "end": 0.24,
+              "probability": 0.9613398313522339
+            },
+            {
+              "word": "看",
+              "start": 0.24,
+              "end": 0.4,
+              "probability": 0.9921466708183289
+            },
+            {
+              "word": "簽",
+              "start": 0.4,
+              "end": 0.56,
+              "probability": 0.6916634440422058
+            },
+            {
+              "word": "表,",
+              "start": 0.56,
+              "end": 0.78,
+              "probability": 0.9595154523849487
+            },
+            {
+              "word": "他",
+              "start": 1.18,
+              "end": 1.28,
+              "probability": 0.7671395540237427
+            },
+            {
+              "word": "和",
+              "start": 1.28,
+              "end": 1.44,
+              "probability": 0.9882610440254211
+            },
+            {
+              "word": "司",
+              "start": 1.44,
+              "end": 1.56,
+              "probability": 0.6565829515457153
+            },
+            {
+              "word": "法",
+              "start": 1.56,
+              "end": 1.62,
+              "probability": 0.8938640356063843
+            },
+            {
+              "word": "太",
+              "start": 1.62,
+              "end": 1.84,
+              "probability": 0.3388909697532654
+            },
+            {
+              "word": "客",
+              "start": 1.84,
+              "end": 2.0,
+              "probability": 0.5960842967033386
+            },
+            {
+              "word": "分",
+              "start": 2.0,
+              "end": 2.16,
+              "probability": 0.9793917536735535
+            },
+            {
+              "word": "在",
+              "start": 2.16,
+              "end": 2.34,
+              "probability": 0.9724271893501282
+            },
+            {
+              "word": "兩",
+              "start": 2.34,
+              "end": 2.56,
+              "probability": 0.7808166146278381
+            },
+            {
+              "word": "半",
+              "start": 2.56,
+              "end": 2.74,
+              "probability": 0.9248881340026855
+            },
+            {
+              "word": "區,",
+              "start": 2.74,
+              "end": 3.0,
+              "probability": 0.737102210521698
+            },
+            {
+              "word": "只",
+              "start": 3.34,
+              "end": 3.46,
+              "probability": 0.9650730490684509
+            },
+            {
+              "word": "可能",
+              "start": 3.46,
+              "end": 3.78,
+              "probability": 0.9990911483764648
+            },
+            {
+              "word": "決",
+              "start": 3.78,
+              "end": 4.1,
+              "probability": 0.22024637460708618
+            },
+            {
+              "word": "賽",
+              "start": 4.1,
+              "end": 4.36,
+              "probability": 0.9653007984161377
+            },
+            {
+              "word": "相",
+              "start": 4.36,
+              "end": 4.56,
+              "probability": 0.9842251539230347
+            },
+            {
+              "word": "遇。",
+              "start": 4.56,
+              "end": 4.72,
+              "probability": 0.9911538660526276
+            }
+          ]
+        },
+        {
+          "start": 5.24,
+          "end": 8.0,
+          "text": "此前六次交手,奧斯塔彭克全贏。",
+          "avg_logprob": -0.2693192438075417,
+          "words": [
+            {
+              "word": "此",
+              "start": 5.24,
+              "end": 5.48,
+              "probability": 0.9972879886627197
+            },
+            {
+              "word": "前",
+              "start": 5.48,
+              "end": 5.68,
+              "probability": 0.9989351630210876
+            },
+            {
+              "word": "六",
+              "start": 5.68,
+              "end": 5.86,
+              "probability": 0.866434633731842
+            },
+            {
+              "word": "次",
+              "start": 5.86,
+              "end": 6.08,
+              "probability": 0.9964938759803772
+            },
+            {
+              "word": "交",
+              "start": 6.08,
+              "end": 6.22,
+              "probability": 0.8195970058441162
+            },
+            {
+              "word": "手,",
+              "start": 6.22,
+              "end": 6.46,
+              "probability": 0.832172155380249
+            },
+            {
+              "word": "奧",
+              "start": 6.76,
+              "end": 6.86,
+              "probability": 0.747869998216629
+            },
+            {
+              "word": "斯",
+              "start": 6.86,
+              "end": 7.0,
+              "probability": 0.9930364489555359
+            },
+            {
+              "word": "塔",
+              "start": 7.0,
+              "end": 7.18,
+              "probability": 0.9837244749069214
+            },
+            {
+              "word": "彭",
+              "start": 7.18,
+              "end": 7.4,
+              "probability": 0.7757311165332794
+            },
+            {
+              "word": "克",
+              "start": 7.4,
+              "end": 7.62,
+              "probability": 0.7061994671821594
+            },
+            {
+              "word": "全",
+              "start": 7.62,
+              "end": 7.84,
+              "probability": 0.8952772617340088
+            },
+            {
+              "word": "贏。",
+              "start": 7.84,
+              "end": 8.0,
+              "probability": 0.8192876875400543
+            }
+          ]
+        },
+        {
+          "start": 8.56,
+          "end": 13.1,
+          "text": "但他下一關,還要過所耐,卡塔爾、司法太客也要繼續闖關。",
+          "avg_logprob": -0.2693192438075417,
+          "words": [
+            {
+              "word": "但",
+              "start": 8.56,
+              "end": 8.74,
+              "probability": 0.9878453612327576
+            },
+            {
+              "word": "他",
+              "start": 8.74,
+              "end": 8.92,
+              "probability": 0.9577447175979614
+            },
+            {
+              "word": "下一",
+              "start": 8.92,
+              "end": 9.22,
+              "probability": 0.9853717684745789
+            },
+            {
+              "word": "關,",
+              "start": 9.22,
+              "end": 9.4,
+              "probability": 0.8064900636672974
+            },
+            {
+              "word": "還",
+              "start": 9.64,
+              "end": 9.74,
+              "probability": 0.925317645072937
+            },
+            {
+              "word": "要",
+              "start": 9.74,
+              "end": 9.86,
+              "probability": 0.9892095923423767
+            },
+            {
+              "word": "過",
+              "start": 9.86,
+              "end": 10.02,
+              "probability": 0.992298424243927
+            },
+            {
+              "word": "所",
+              "start": 10.02,
+              "end": 10.2,
+              "probability": 0.8366438746452332
+            },
+            {
+              "word": "耐,",
+              "start": 10.2,
+              "end": 10.38,
+              "probability": 0.7471646368503571
+            },
+            {
+              "word": "卡",
+              "start": 10.64,
+              "end": 10.8,
+              "probability": 0.9404135346412659
+            },
+            {
+              "word": "塔",
+              "start": 10.8,
+              "end": 10.92,
+              "probability": 0.8263665437698364
+            },
+            {
+              "word": "爾、",
+              "start": 10.92,
+              "end": 11.06,
+              "probability": 0.9704234600067139
+            },
+            {
+              "word": "司",
+              "start": 11.38,
+              "end": 11.4,
+              "probability": 0.9818326234817505
+            },
+            {
+              "word": "法",
+              "start": 11.4,
+              "end": 11.48,
+              "probability": 0.9992511868476868
+            },
+            {
+              "word": "太",
+              "start": 11.48,
+              "end": 11.7,
+              "probability": 0.9985694885253906
+            },
+            {
+              "word": "客",
+              "start": 11.7,
+              "end": 11.94,
+              "probability": 0.993186354637146
+            },
+            {
+              "word": "也",
+              "start": 11.94,
+              "end": 12.2,
+              "probability": 0.9492025375366211
+            },
+            {
+              "word": "要",
+              "start": 12.2,
+              "end": 12.34,
+              "probability": 0.9814659357070923
+            },
+            {
+              "word": "繼續",
+              "start": 12.34,
+              "end": 12.68,
+              "probability": 0.9967597126960754
+            },
+            {
+              "word": "闖",
+              "start": 12.68,
+              "end": 12.92,
+              "probability": 0.9443109035491943
+            },
+            {
+              "word": "關。",
+              "start": 12.92,
+              "end": 13.1,
+              "probability": 0.8559730052947998
+            }
+          ]
+        },
+        {
+          "start": 13.62,
+          "end": 16.6,
+          "text": "這場大家電機的對決,真能等來嗎?",
+          "avg_logprob": -0.2693192438075417,
+          "words": [
+            {
+              "word": "這",
+              "start": 13.62,
+              "end": 13.88,
+              "probability": 0.9574528336524963
+            },
+            {
+              "word": "場",
+              "start": 13.88,
+              "end": 14.06,
+              "probability": 0.9932199120521545
+            },
+            {
+              "word": "大家",
+              "start": 14.06,
+              "end": 14.36,
+              "probability": 0.9683295488357544
+            },
+            {
+              "word": "電",
+              "start": 14.36,
+              "end": 14.58,
+              "probability": 0.8153778910636902
+            },
+            {
+              "word": "機",
+              "start": 14.58,
+              "end": 14.8,
+              "probability": 0.30016887187957764
+            },
+            {
+              "word": "的",
+              "start": 14.8,
+              "end": 14.92,
+              "probability": 0.9958668947219849
+            },
+            {
+              "word": "對",
+              "start": 14.92,
+              "end": 15.08,
+              "probability": 0.9808245897293091
+            },
+            {
+              "word": "決,",
+              "start": 15.08,
+              "end": 15.3,
+              "probability": 0.992597222328186
+            },
+            {
+              "word": "真",
+              "start": 15.6,
+              "end": 15.8,
+              "probability": 0.8711644411087036
+            },
+            {
+              "word": "能",
+              "start": 15.8,
+              "end": 16.04,
+              "probability": 0.9942595958709717
+            },
+            {
+              "word": "等",
+              "start": 16.04,
+              "end": 16.22,
+              "probability": 0.9829777479171753
+            },
+            {
+              "word": "來",
+              "start": 16.22,
+              "end": 16.42,
+              "probability": 0.9889277219772339
+            },
+            {
+              "word": "嗎?",
+              "start": 16.42,
+              "end": 16.6,
+              "probability": 0.9289847612380981
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    },
+    {
+      "edit_id": "outro",
+      "actual_mp3": "/workspace/scratch/osta-pronunciation/native-audio/outro-3d7277d26afc569a.mp3",
+      "actual_mp3_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "expected_final_tts_text": "关注网球时插，时插归我，好球归你。",
+      "raw_transcription": "關注網球時差,時差歸我,好求歸你",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 3.24,
+          "text": "關注網球時差,時差歸我,好求歸你",
+          "avg_logprob": -0.27856931799934026,
+          "words": [
+            {
+              "word": "關",
+              "start": 0.0,
+              "end": 0.22,
+              "probability": 0.36147162318229675
+            },
+            {
+              "word": "注",
+              "start": 0.22,
+              "end": 0.38,
+              "probability": 0.905109167098999
+            },
+            {
+              "word": "網",
+              "start": 0.38,
+              "end": 0.54,
+              "probability": 0.6303359866142273
+            },
+            {
+              "word": "球",
+              "start": 0.54,
+              "end": 0.74,
+              "probability": 0.8559666275978088
+            },
+            {
+              "word": "時",
+              "start": 0.74,
+              "end": 0.92,
+              "probability": 0.8157612681388855
+            },
+            {
+              "word": "差,",
+              "start": 0.92,
+              "end": 1.12,
+              "probability": 0.9698207378387451
+            },
+            {
+              "word": "時",
+              "start": 1.4,
+              "end": 1.62,
+              "probability": 0.9563893675804138
+            },
+            {
+              "word": "差",
+              "start": 1.62,
+              "end": 1.84,
+              "probability": 0.9970412850379944
+            },
+            {
+              "word": "歸",
+              "start": 1.84,
+              "end": 1.98,
+              "probability": 0.9580798447132111
+            },
+            {
+              "word": "我,",
+              "start": 1.98,
+              "end": 2.2,
+              "probability": 0.9979477524757385
+            },
+            {
+              "word": "好",
+              "start": 2.52,
+              "end": 2.7,
+              "probability": 0.9863312244415283
+            },
+            {
+              "word": "求",
+              "start": 2.7,
+              "end": 2.88,
+              "probability": 0.7608223557472229
+            },
+            {
+              "word": "歸",
+              "start": 2.88,
+              "end": 3.06,
+              "probability": 0.9867072105407715
+            },
+            {
+              "word": "你",
+              "start": 3.06,
+              "end": 3.24,
+              "probability": 0.9676045775413513
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    }
+  ],
+  "elapsed_seconds": 8.393891334533691
+}
