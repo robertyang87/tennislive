@@ -9,6 +9,7 @@ LABELS={
  "us21":{"topic":"拦下年度全满贯","date":"2021.09.12","place":"美网 决赛","score":"6-4 6-4 6-4","people":"梅德韦杰夫 vs 德约科维奇"},
  "ao22":{"topic":"对着主裁怒吼","date":"2022.01.28","place":"澳网 半决赛","score":"7-6(5) 4-6 6-4 6-1","people":"梅德韦杰夫 vs 西西帕斯"},
  "us23":{"topic":"颁奖台上的玩笑","date":"2023.09.10","place":"美网 决赛","score":"3-6 6-7(5) 3-6","people":"梅德韦杰夫 vs 德约科维奇"},
+ "tf24":{"topic":"倒握球拍等接发","date":"2024.11.10","place":"ATP年终总决赛 小组赛","score":"4-6 3-6","people":"梅德韦杰夫 vs 弗里茨"},
  "ao25":{"topic":"球拍砸向摄像机","date":"2025.01.14","place":"澳网 第一轮","score":"6-2 4-6 3-6 6-1 6-2","people":"梅德韦杰夫 vs 萨姆雷吉"},
  "us25":{"topic":"摄影师闯进赛点","date":"2025.08.24","place":"美网 第一轮","score":"3-6 5-7 7-6 6-0 4-6","people":"梅德韦杰夫 vs 邦齐"},
  "mc26":{"topic":"生涯第一次双蛋","date":"2026.04.08","place":"ATP1000 蒙特卡洛 第二轮","score":"0-6 0-6","people":"梅德韦杰夫 vs 贝雷蒂尼"},
@@ -89,6 +90,20 @@ S.append(q("us23",153.1,185.7,[(153.28,157.64,"First of all, I want to ask Novak
 S.append(n("us23",191.6,198.17,"接着，他讲起了一件巧事：那天又是他的结婚纪念日。","致辞中间的掌声空当 189.29–198.17。"))
 S.append(q("us23",198.3,225.4,[(198.4,202.9,"On the second note, I was here two years ago when I won,\n还有一件事，两年前我在这里夺冠，"),(202.9,210.0,"and I was like, what a great anniversary gift for my wife.\n我想，这份纪念日礼物真不错。"),(210.0,215.5,"And yeah, it's funny, because dates usually change,\n有意思的是，日期一般会变，"),(215.5,220.5,"but today, Sunday, again is the anniversary,\n可今天这个星期天，又是纪念日，"),(220.5,222.64,"so I thought, come on, do it one more time.\n我就想，来吧，再来一次。"),(222.64,225.26,"But, yeah, it didn't happen.\n可惜，没成。")],
   "梅德韦杰夫颁奖致辞原声，两档一致（medium 198.40–225.26）。德约随后致辞也说 Happy anniversary to your wife（644.12），互相印证。段尾 225.4 在下一句（231.66）之前。","颁奖致辞，不是回合。",kind="ceremony"))
+# 2024 年终总决赛对弗里茨：反拿球拍（账号所有者 2026-10-16 特许非官方转载）
+c=q("tf24",5.6,17.2,[(6.44,10.2,"And another, would you believe it, back-to-back doubles.\n又一个，你敢信吗，连续双误。"),(11.38,16.92,"Well, a calamitous service game. Three doubles in a row.\n灾难般的发球局，连着三个双误。")],
+  "Tennis Legend TV 转载的 Tennis TV 转播（ASkuvHvCqzc，1080p25）：第一盘 4-5 发球局连着三个双误。两档一致（small 5.78–16.92；medium 6.44–16.92）。段首 5.6 在第一句之前，段尾 17.2 在下一句（24.00）之前。","发球局的双误，这一分已经结束。",label="tf24")
+c["_unofficial_why"]="账号所有者 2026-10-16：反拿球拍这一条「放开用非官方转载」。Tennis TV 两条官方集锦（ESiiwmCCEEY、l77SO1hB5EQ）都只剪了双误、砸拍和罚分，没有反拿球拍；这条是个人账号转载的 Tennis TV 转播，台标在右上角、3:4 居中取景窗之外。"
+S.append(c)
+S.append(n("tf24",17.3,23.9,"二〇二四年年终总决赛，对弗里茨。他连着三个双误，丢掉了第一盘。","同一条：双误之后弗里茨近景与回合，空当 16.92–24.00（两档都无词）。","局间与回合的一小段，旁白不讲这一分。"))
+S.append(q("tf24",23.9,40.4,[(24.12,25.78,"Oh, you're kidding me.\n不会吧。"),(27.24,31.32,"All he can do is apologize. Complete mis-hit.\n他只能道歉，完全打偏了。"),(33.98,40.02,"Now that's a point now. If it wasn't before, it definitely is after that.\n这下肯定要罚分了。")],
+  "弗里茨擦框得分后梅德韦杰夫砸拍、被判罚分。两档一致（small 24.00–40.98；medium 24.12–40.02，按 medium 写 mis-hit）。段尾 40.4 在下一句（45.72）之前。","擦框那一分已经打完，之后是砸拍和罚分。"))
+S.append(n("tf24",101.0,111.6,"第二盘他砸了球拍，被罚了一分。弗里茨四比二领先，他开始把球拍扔来扔去，假装手滑握不住，全场一片嘘声。","同一条：第二盘弗里茨发球前，梅德韦杰夫在底线把球拍扔来扔去，空当 97.06–111.80（两档都无词）。","局间与准备接发，不是回合。"))
+S.append(q("tf24",111.7,136.6,[(111.8,115.22,"He hasn't caught one yet, has he? There we go.\n他一个都没接住吧？好，接住了。"),(117.24,121.04,"No, come on, this is getting a bit ridiculous now.\n别闹了，这有点太离谱了。"),(129.26,131.16,"This is hard to believe.\n真叫人难以置信。")],
+  "弗里茨 4-2、40-0 发球，梅德韦杰夫倒握拍头站在接发位（近景 127–136，记分条 40）。两档一致（small 111.80–141.70；medium 111.80–131.16）。段尾 136.6 在切回广角（137）之前。","接发准备，这一分还没开始。"))
+S.append(q("tfpc",816.3,824.25,[(816.8,818.06,"I mean, I was just laughing, it's fun.\n我就是在笑，挺好玩的。"),(818.06,819.72,"I think he's really funny, to be honest.\n说实话，我觉得他挺搞笑。"),(819.72,822.48,"Even when he's not playing me, he always cracks me up.\n不跟我打的时候，他也总能逗笑我。"),(822.48,824.1,"He's pretty funny.\n他真的挺好玩。")],
+  "Tennis TV 官方赛后发布会（jqLfK2rZdMM）：记者问弗里茨怎么看梅德韦杰夫反拿球拍。medium 逐词：问句止于 815.74，回答 816.80 起，pretty funny 止于 824.10；段尾 824.25 在 but（824.10–824.52）之后，这句后半截随之收掉。","发布会，不是回合。",kind="ceremony"))
+S.append(n("tf24",137.2,146.3,"这场他四比六、三比六输了。赛后他说，现在每场比赛都很挣扎，在场上感受不到一点乐趣。","同一条：反拿球拍之后的回合，空当 131.16–146.50。","回合中间，旁白不讲这一分；段尾在解说开口（146.50）之前。"))
 S.append(n("ao25",296.0,306.8,"二〇二五年澳网首轮，对手是世界第四百一十八位的萨姆雷吉。这场他打得很挣扎，第三盘丢掉，大比分一比二落后。","澳网官方加长集锦（MWNZOZr_uMU），第三盘结束后的近景与观众，空当 293.25–306.87；记分条 2-6 6-4 6-3（萨姆雷吉 2、6、6 / 梅德韦杰夫 6、4、3）。",label="ao25"))
 S.append(q("ao25",306.9,325.9,[(307.02,312.6,"Well, through the soft, forgiving lens of nostalgia,\n隔着怀旧那层柔光滤镜，"),(312.6,317.26,"and you'll excuse the pun of lens,\n原谅我拿镜头打比方，"),(318.0,321.72,"you'll forgive him, because he's going to be paying for that camera,\n你会原谅他，反正摄像机他得赔，"),(321.72,325.78,"and he'll be happy to put his hand in his pocket if he wins this match.\n只要赢下这场，他掏钱也乐意。")],
   "球拍砸向网上摄像机（308–323 秒近景），解说原声两档一致（small 310.38–325.36；medium 307.02–325.78）。两档转写里都没有梅德韦杰夫本人的话，未见脏话，不消音。","第三盘与第四盘之间砸拍，不是回合；段尾在下一分（326 秒）之前。"))

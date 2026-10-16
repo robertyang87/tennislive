@@ -1,0 +1,28 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=ASkuvHvCqzc",
+  "source_sha256": "b0e574c44852c9fd37527748162057a53e966ffcc15a2c8bdcdb9731e942a09e",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T02:30:18.903565+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 5.6,
+  "reviewed_to": 17.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 6.44,
+      "end": 10.2,
+      "en": "And another, would you believe it, back-to-back doubles.",
+      "zh": "又一个，你敢信吗，连续双误。"
+    },
+    {
+      "start": 11.38,
+      "end": 16.92,
+      "en": "Well, a calamitous service game. Three doubles in a row.",
+      "zh": "灾难般的发球局，连着三个双误。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/ASkuvHvCqzc/small.en.json + medium.en.json",
+  "profanity_check": "两档转写在这一窗口里都没有脏话；按交接文档「如果确认有脏话」的条件，不消音。",
+  "review_note": "Tennis Legend TV 转载的 Tennis TV 转播（ASkuvHvCqzc，1080p25）：第一盘 4-5 发球局连着三个双误。两档一致（small 5.78–16.92；medium 6.44–16.92）。段首 5.6 在第一句之前，段尾 17.2 在下一句（24.00）之前。"
+}

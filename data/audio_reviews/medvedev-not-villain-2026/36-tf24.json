@@ -1,0 +1,34 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=ASkuvHvCqzc",
+  "source_sha256": "b0e574c44852c9fd37527748162057a53e966ffcc15a2c8bdcdb9731e942a09e",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T02:30:18.903565+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 111.7,
+  "reviewed_to": 136.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 111.92,
+      "end": 115.22,
+      "en": "He hasn't caught one yet, has he? There we go.",
+      "zh": "他一个都没接住吧？好，接住了。"
+    },
+    {
+      "start": 117.24,
+      "end": 121.04,
+      "en": "No, come on, this is getting a bit ridiculous now.",
+      "zh": "别闹了，这有点太离谱了。"
+    },
+    {
+      "start": 129.26,
+      "end": 131.16,
+      "en": "This is hard to believe.",
+      "zh": "真叫人难以置信。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/ASkuvHvCqzc/small.en.json + medium.en.json",
+  "profanity_check": "两档转写在这一窗口里都没有脏话；按交接文档「如果确认有脏话」的条件，不消音。",
+  "review_note": "弗里茨 4-2、40-0 发球，梅德韦杰夫倒握拍头站在接发位（近景 127–136，记分条 40）。两档一致（small 111.80–141.70；medium 111.80–131.16）。段尾 136.6 在切回广角（137）之前。"
+}

@@ -1,0 +1,16 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=ASkuvHvCqzc",
+  "source_sha256": "b0e574c44852c9fd37527748162057a53e966ffcc15a2c8bdcdb9731e942a09e",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T02:30:18.903565+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 101.0,
+  "reviewed_to": 111.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/ASkuvHvCqzc/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白。窗口按 data/source_asr/ASkuvHvCqzc 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 101.0–111.6 秒内都没有任何英文词（窗口边界避开了最近的词）。",
+  "profanity_check": "两档转写在这一窗口里都没有脏话；按交接文档「如果确认有脏话」的条件，不消音。",
+  "review_note": "同一条：第二盘弗里茨发球前，梅德韦杰夫在底线把球拍扔来扔去，空当 97.06–111.80（两档都无词）。"
+}

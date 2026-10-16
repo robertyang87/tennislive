@@ -30,3 +30,7 @@
 ## 第三版（2026-10-16 run 38831465511）
 
 账号所有者：「针对这一条内容可以放开用非官方视频」。2017 温网扔硬币改用 UKZnd1EliAY（个人账号 David Lock 转载的 BBC 转播，手机翻拍，720p）33.5–41.1，contain 全宽，BBC 台标转场（32.1–33.3）在段外。抽帧看过：字卡 → 扔硬币画面（双语解说字幕＋右上角角标）→ 罚款字卡。成片 515.7 秒，check_reel_landed 通过。
+
+## 第四版（2026-10-16 run 38840999967）
+
+账号所有者：反拿球拍「放开用非官方转载」。加入 2024 年终总决赛对弗里茨一节：Tennis Legend TV 转载的 Tennis TV 转播（ASkuvHvCqzc：三连双误、砸拍罚分、倒握拍头接发近景 127–136）＋Tennis TV 官方赛后发布会（jqLfK2rZdMM 816.3–824.25，弗里茨 I think he's really funny）。Tennis TV 两条官方集锦（ESiiwmCCEEY、l77SO1hB5EQ）都没剪反拿球拍。抽帧看过，成片 603 秒，check_reel_landed 通过。

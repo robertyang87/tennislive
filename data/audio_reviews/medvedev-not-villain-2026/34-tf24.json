@@ -1,0 +1,34 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=ASkuvHvCqzc",
+  "source_sha256": "b0e574c44852c9fd37527748162057a53e966ffcc15a2c8bdcdb9731e942a09e",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T02:30:18.903565+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 23.9,
+  "reviewed_to": 40.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 24.12,
+      "end": 25.78,
+      "en": "Oh, you're kidding me.",
+      "zh": "不会吧。"
+    },
+    {
+      "start": 27.24,
+      "end": 31.32,
+      "en": "All he can do is apologize. Complete mis-hit.",
+      "zh": "他只能道歉，完全打偏了。"
+    },
+    {
+      "start": 33.98,
+      "end": 40.02,
+      "en": "Now that's a point now. If it wasn't before, it definitely is after that.",
+      "zh": "这下肯定要罚分了。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/ASkuvHvCqzc/small.en.json + medium.en.json",
+  "profanity_check": "两档转写在这一窗口里都没有脏话；按交接文档「如果确认有脏话」的条件，不消音。",
+  "review_note": "弗里茨擦框得分后梅德韦杰夫砸拍、被判罚分。两档一致（small 24.00–40.98；medium 24.12–40.02，按 medium 写 mis-hit）。段尾 40.4 在下一句（45.72）之前。"
+}
