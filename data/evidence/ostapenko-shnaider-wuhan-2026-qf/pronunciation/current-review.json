@@ -1,57 +1,20 @@
 {
-  "created_at": "2026-10-16T08:23:06.705010+00:00",
+  "created_at": "2026-10-16T09:52:22.366430+00:00",
   "status": "finite_current_actual_frozen_voice_review_complete_low_support",
-  "bundle_sha256": "bc91d1d69f056e97133ad361d161f02d493587c6d4498a524ddfee10c4c17313",
+  "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
   "requests": 6,
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "pitch": "+0Hz",
   "cover_narration": false,
-  "positions": 86,
-  "supported_low": 86,
+  "positions": 88,
+  "new_intro_positions": 23,
+  "unchanged_other_five_positions": 65,
+  "supported_low": 88,
   "pending_count": 0,
   "pending": [],
   "current_confirmed_actual_misread_count": 0,
   "occurrences": [
-    {
-      "edit_id": "intro",
-      "index": 68,
-      "char": "分",
-      "word": "一分",
-      "intended": "fen1",
-      "live": [
-        "fen1",
-        "fen4"
-      ],
-      "defaults": [
-        "fen1"
-      ],
-      "status": "correct_low_support",
-      "kind": "polyphone",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "independent_uniquely_pronounced_homophone_full_boundary_word_phonetic_identity",
-      "evidence": [
-        "identity-first-results.json"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 46,
-      "char": "施",
-      "intended": "shi1",
-      "status": "correct_low_support",
-      "kind": "proper_name",
-      "name": "施耐德",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "independent_uniquely_pronounced_homophone_full_boundary_word_phonetic_identity",
-      "evidence": [
-        "identity-first-results.json"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
     {
       "edit_id": "second_set",
       "index": 39,
@@ -73,7 +36,8 @@
         "identity-first-results.json"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -96,693 +60,8 @@
         "identity-first-results.json"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 13,
-      "char": "了",
-      "word": "了",
-      "intended": "le5",
-      "live": [
-        "le5",
-        "liao3"
-      ],
-      "defaults": [
-        "le5",
-        "liao3"
-      ],
-      "status": "correct_low_support",
-      "kind": "polyphone",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          86.74,
-          71.65
-        ],
-        "A1": [
-          94.51,
-          75.04
-        ],
-        "B1": [
-          97.04,
-          97.17
-        ]
-      },
-      "evidence": [
-        "located-results/intro-13.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 28,
-      "char": "单",
-      "word": "单",
-      "intended": "dan1",
-      "live": [
-        "dan1",
-        "shan4"
-      ],
-      "defaults": [
-        "dan1"
-      ],
-      "status": "correct_low_support",
-      "kind": "polyphone",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          118.06,
-          126.01
-        ],
-        "A1": [
-          116.09,
-          129.84
-        ],
-        "B1": [
-          130.47,
-          103.39
-        ]
-      },
-      "evidence": [
-        "located-results/intro-28.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 7,
-      "char": "朝",
-      "word": "朝",
-      "intended": "chao2",
-      "live": [
-        "chao2",
-        "zhao1"
-      ],
-      "defaults": [
-        "chao2",
-        "zhao1"
-      ],
-      "status": "correct_low_support",
-      "kind": "polyphone",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          108.39,
-          127.51
-        ],
-        "A1": [
-          113.59,
-          130.5
-        ],
-        "B1": [
-          130.14,
-          131.19
-        ]
-      },
-      "evidence": [
-        "located-results/intro-7.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 30,
-      "char": "分",
-      "word": "分",
-      "intended": "fen1",
-      "live": [
-        "fen1",
-        "fen4"
-      ],
-      "defaults": [
-        "fen1"
-      ],
-      "status": "correct_low_support",
-      "kind": "polyphone",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          126.5,
-          128.95
-        ],
-        "A1": [
-          126.4,
-          132.23
-        ],
-        "B1": [
-          96.49,
-          92.07
-        ]
-      },
-      "evidence": [
-        "located-results/intro-30.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 53,
-      "char": "强",
-      "word": "强",
-      "intended": "qiang2",
-      "live": [
-        "qiang2",
-        "jiang4",
-        "qiang3"
-      ],
-      "defaults": [
-        "qiang2"
-      ],
-      "status": "correct_low_support",
-      "kind": "polyphone",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Native actual spectral envelope and very low/creaky63Hz nucleus match independently spelled 墙 qiang2 closely (spectral contrast .98); full native/reference context charts actually inspected. No normal second-tone rise is invented on the creaky nucleus and negative tracker abstention is retained. Limited single-positive direct phonetic support, not calibrated mechanical pass.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          64.4,
-          62.93
-        ],
-        "A1": [
-          64.4,
-          62.93
-        ],
-        "B1": null
-      },
-      "evidence": [
-        "located-results/intro-53.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/",
-        "residual-details/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 65,
-      "char": "只",
-      "word": "只",
-      "intended": "zhi3",
-      "live": [
-        "zhi3",
-        "zhi1"
-      ],
-      "defaults": [
-        "zhi3",
-        "zhi1"
-      ],
-      "status": "correct_low_support",
-      "kind": "polyphone",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          70.3,
-          68.95
-        ],
-        "A1": [
-          71.24,
-          65.72
-        ],
-        "B1": [
-          118.02,
-          110.72
-        ]
-      },
-      "evidence": [
-        "located-results/intro-65.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 66,
-      "char": "差",
-      "word": "差",
-      "intended": "cha4",
-      "live": [
-        "cha4",
-        "cha1",
-        "chai1",
-        "ci1"
-      ],
-      "defaults": [
-        "cha4"
-      ],
-      "status": "correct_low_support",
-      "kind": "polyphone",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          82.02,
-          77.51
-        ],
-        "A1": [
-          109.68,
-          72.85
-        ],
-        "B1": [
-          116.66,
-          110.42
-        ]
-      },
-      "evidence": [
-        "located-results/intro-66.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 61,
-      "char": "度",
-      "word": "一度",
-      "intended": "du4",
-      "live": [
-        "du4",
-        "duo2"
-      ],
-      "defaults": [
-        "du4"
-      ],
-      "status": "correct_low_support",
-      "kind": "polyphone",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "The actual CC65 trace falls approximately160 to80Hz over the same vowel and agrees with 渡 du4 falling realization. CC50/AC40 produce a visible >300Hz octave error late in the vowel; those failures are archived, not adopted. Original /u/ vowel is distinct from the low-level /uo/ contrast. No score-selected window shift.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          152.52,
-          320.38
-        ],
-        "A1": [
-          183.62,
-          156.96
-        ],
-        "B1": [
-          107.3,
-          108.52
-        ]
-      },
-      "evidence": [
-        "located-results/intro-61.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/",
-        "residual-details/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 0,
-      "char": "奥",
-      "intended": "ao4",
-      "status": "correct_low_support",
-      "kind": "proper_name",
-      "name": "奥斯塔彭科",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual pre-fixed native vowel core has exact independently spelled single-reading homophone sample identity; actual whole context charts also inspected. This finite direct identity is separate from uncalibrated single-control scores.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          126.0,
-          128.64
-        ],
-        "A1": [
-          126.0,
-          128.64
-        ],
-        "B1": [
-          108.51,
-          147.0
-        ]
-      },
-      "evidence": [
-        "located-results/intro-0.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 1,
-      "char": "斯",
-      "intended": "si1",
-      "status": "correct_low_support",
-      "kind": "proper_name",
-      "name": "奥斯塔彭科",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual pre-fixed native vowel core has exact independently spelled single-reading homophone sample identity; actual whole context charts also inspected. This finite direct identity is separate from uncalibrated single-control scores.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          145.04,
-          140.98
-        ],
-        "A1": [
-          145.04,
-          140.98
-        ],
-        "B1": [
-          141.07,
-          129.74
-        ]
-      },
-      "evidence": [
-        "located-results/intro-1.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 3,
-      "char": "彭",
-      "intended": "peng2",
-      "status": "correct_low_support",
-      "kind": "proper_name",
-      "name": "奥斯塔彭科",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual pre-fixed native vowel core has exact independently spelled single-reading homophone sample identity; actual whole context charts also inspected. This finite direct identity is separate from uncalibrated single-control scores.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          102.92,
-          134.54
-        ],
-        "A1": [
-          102.92,
-          134.54
-        ],
-        "B1": [
-          130.15,
-          107.44
-        ]
-      },
-      "evidence": [
-        "located-results/intro-3.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 2,
-      "char": "塔",
-      "intended": "ta3",
-      "status": "correct_low_support",
-      "kind": "proper_name",
-      "name": "奥斯塔彭科",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          90.93,
-          88.12
-        ],
-        "A1": null,
-        "B1": [
-          131.5,
-          110.14
-        ]
-      },
-      "evidence": [
-        "located-results/intro-2.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 4,
-      "char": "科",
-      "intended": "ke1",
-      "status": "correct_low_support",
-      "kind": "proper_name",
-      "name": "奥斯塔彭科",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          143.21,
-          140.47
-        ],
-        "A1": [
-          146.07,
-          145.97
-        ],
-        "B1": [
-          154.83,
-          120.32
-        ]
-      },
-      "evidence": [
-        "located-results/intro-4.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 48,
-      "char": "德",
-      "intended": "de2",
-      "status": "correct_low_support",
-      "kind": "proper_name",
-      "name": "施耐德",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual name-final /de/ is short/weak and low, with /e/ vowel resonances, not /di/. 锝 is a rare de2 reference, explicitly not a clean familiar positive; its similar phoneme is supplementary to actual native vowel and name context, and full ASR lexical check. The weak realization does not claim a stressed isolated rising second-tone contour.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          83.13,
-          84.23
-        ],
-        "A1": [
-          83.12,
-          82.48
-        ],
-        "B1": [
-          114.23,
-          78.69
-        ]
-      },
-      "evidence": [
-        "located-results/intro-48.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/",
-        "residual-details/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 47,
-      "char": "耐",
-      "intended": "nai4",
-      "status": "correct_low_support",
-      "kind": "proper_name",
-      "name": "施耐德",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          135.26,
-          106.94
-        ],
-        "A1": [
-          135.26,
-          106.94
-        ],
-        "B1": [
-          108.22,
-          71.4
-        ]
-      },
-      "evidence": [
-        "located-results/intro-47.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 10,
-      "char": "泰",
-      "intended": "tai4",
-      "status": "correct_low_support",
-      "kind": "proper_name",
-      "name": "斯瓦泰克",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          161.98,
-          115.93
-        ],
-        "A1": [
-          163.74,
-          115.93
-        ],
-        "B1": [
-          111.25,
-          123.08
-        ]
-      },
-      "evidence": [
-        "located-results/intro-10.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 8,
-      "char": "斯",
-      "intended": "si1",
-      "status": "correct_low_support",
-      "kind": "proper_name",
-      "name": "斯瓦泰克",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          173.5,
-          173.5
-        ],
-        "A1": [
-          176.94,
-          176.94
-        ],
-        "B1": [
-          181.03,
-          181.03
-        ]
-      },
-      "evidence": [
-        "located-results/intro-8.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 9,
-      "char": "瓦",
-      "intended": "wa3",
-      "status": "correct_low_support",
-      "kind": "proper_name",
-      "name": "斯瓦泰克",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          91.19,
-          88.42
-        ],
-        "A1": [
-          106.51,
-          86.6
-        ],
-        "B1": [
-          149.98,
-          126.78
-        ]
-      },
-      "evidence": [
-        "located-results/intro-9.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
-    },
-    {
-      "edit_id": "intro",
-      "index": 11,
-      "char": "克",
-      "intended": "ke4",
-      "status": "correct_low_support",
-      "kind": "proper_name",
-      "name": "斯瓦泰克",
-      "actual_audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
-      "rationale": "Actual native, single-positive and contrast vowel/F0/formant curves were visually compared in archived overview and original spectral charts. Native follows the intended independently spelled reference phonetic realization/contour rather than contrasting reading; all actual edge values and uncalibrated failures remain in underlying record. Finite single-context low support; no two-sided LOO or human listening claimed.",
-      "actual_core_f0_first_last_hz": {
-        "ORIG": [
-          95.02,
-          76.5
-        ],
-        "A1": [
-          98.81,
-          88.66
-        ],
-        "B1": [
-          117.65,
-          105.38
-        ]
-      },
-      "evidence": [
-        "located-results/intro-11.json",
-        "comparison-overviews/",
-        "native-phoneme-charts/"
-      ],
-      "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "first_set",
@@ -823,7 +102,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "first_set",
@@ -864,7 +144,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "first_set",
@@ -905,7 +186,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "first_set",
@@ -942,7 +224,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "first_set",
@@ -982,7 +265,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "first_set",
@@ -1022,7 +306,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "first_set",
@@ -1063,7 +348,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "first_set",
@@ -1096,7 +382,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "second_set",
@@ -1136,7 +423,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "second_set",
@@ -1176,7 +464,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "second_set",
@@ -1216,7 +505,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "second_set",
@@ -1256,7 +546,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "second_set",
@@ -1296,7 +587,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "second_set",
@@ -1333,7 +625,8 @@
       ],
       "confidence": "low",
       "manual_listening_claimed": false,
-      "prior_mechanical_status": "pending"
+      "prior_mechanical_status": "pending",
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "second_set",
@@ -1366,7 +659,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "second_set",
@@ -1399,7 +693,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "second_set",
@@ -1432,7 +727,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "second_set",
@@ -1465,7 +761,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "key_stat",
@@ -1497,7 +794,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "second_set",
@@ -1530,7 +828,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "key_stat",
@@ -1567,7 +866,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "key_stat",
@@ -1607,7 +907,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "key_stat",
@@ -1650,7 +951,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "key_stat",
@@ -1690,7 +992,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "key_stat",
@@ -1732,7 +1035,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "key_stat",
@@ -1764,7 +1068,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "key_stat",
@@ -1796,7 +1101,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -1840,7 +1146,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -1880,7 +1187,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -1920,7 +1228,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -1957,7 +1266,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -1998,7 +1308,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2038,7 +1349,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2077,7 +1389,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2117,7 +1430,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2158,7 +1472,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2199,7 +1514,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2239,7 +1555,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2282,7 +1599,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2315,7 +1633,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2345,7 +1664,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2378,7 +1698,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2411,7 +1732,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2444,7 +1766,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2477,7 +1800,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2510,7 +1834,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2543,7 +1868,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2576,7 +1902,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2600,7 +1927,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2633,7 +1961,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2666,7 +1995,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2699,7 +2029,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2732,7 +2063,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2766,7 +2098,8 @@
         "residual-details/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2796,7 +2129,8 @@
       ],
       "confidence": "low",
       "manual_listening_claimed": false,
-      "prior_mechanical_status": "pending"
+      "prior_mechanical_status": "pending",
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2829,7 +2163,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2861,7 +2196,8 @@
       ],
       "confidence": "low",
       "manual_listening_claimed": false,
-      "prior_mechanical_status": "pending"
+      "prior_mechanical_status": "pending",
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2893,7 +2229,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "draw_outlook",
@@ -2922,7 +2259,8 @@
         "native-phoneme-charts/"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "outro",
@@ -2940,7 +2278,8 @@
           "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f"
         }
       ],
-      "method": "exact_entire_utterance_request_audio_marks_prior_actual_review_reuse"
+      "method": "exact_entire_utterance_request_audio_marks_prior_actual_review_reuse",
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "outro",
@@ -2958,7 +2297,8 @@
           "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f"
         }
       ],
-      "method": "exact_entire_utterance_request_audio_marks_prior_actual_review_reuse"
+      "method": "exact_entire_utterance_request_audio_marks_prior_actual_review_reuse",
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "outro",
@@ -2984,7 +2324,8 @@
           "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f"
         }
       ],
-      "method": "exact_entire_utterance_request_audio_marks_prior_actual_review_reuse"
+      "method": "exact_entire_utterance_request_audio_marks_prior_actual_review_reuse",
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
     },
     {
       "edit_id": "key_stat",
@@ -3001,49 +2342,869 @@
         "residual-details/key_stat-12.png"
       ],
       "confidence": "low",
-      "manual_listening_claimed": false
+      "manual_listening_claimed": false,
+      "whole_current_utterance_exact_reuse_evidence": "intro-beijing-v3/five-whole-utterances-exact-reuse.json"
+    },
+    {
+      "edit_id": "intro",
+      "index": 7,
+      "char": "朝",
+      "word": "朝",
+      "intended": "chao2",
+      "live": [
+        "chao2",
+        "zhao1"
+      ],
+      "defaults": [
+        "chao2",
+        "zhao1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual original and single-positive/contrast spectral/F0 curves were directly inspected in archived figures. The fixed native vowel follows intended current reference phonetic realization or contour; raw uncalibrated scores, tracking abstentions and Burg lock failures remain. Finite low single-context support, no two-sided LOO/human listening claimed.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          108.55,
+          127.45
+        ],
+        "A1": [
+          113.74,
+          130.8
+        ],
+        "B1": [
+          130.44,
+          132.4
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-7.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 32,
+      "char": "分",
+      "word": "分",
+      "intended": "fen1",
+      "live": [
+        "fen1",
+        "fen4"
+      ],
+      "defaults": [
+        "fen1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual original and single-positive/contrast spectral/F0 curves were directly inspected in archived figures. The fixed native vowel follows intended current reference phonetic realization or contour; raw uncalibrated scores, tracking abstentions and Burg lock failures remain. Finite low single-context support, no two-sided LOO/human listening claimed.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          130.53,
+          130.99
+        ],
+        "A1": [
+          128.16,
+          134.07
+        ],
+        "B1": [
+          98.64,
+          95.51
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-32.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 20,
+      "char": "间",
+      "word": "北京时间",
+      "intended": "jian1",
+      "live": [
+        "jian1",
+        "jian4"
+      ],
+      "defaults": [
+        "jian1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Actual /jian/ nucleus135→133Hz is nearly level, agreeing with contextual 肩137→133Hz and differing from 剑 jian4 falling142→116Hz. 肩 has rare xian2 listed in dictionary, so modern contextual jian1 is a limited reference, not an unconditionally single-reading character. Current actual /j/ onset/vowel context and level realization provide finite support.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          134.64,
+          132.53
+        ],
+        "A1": [
+          137.44,
+          133.0
+        ],
+        "B1": [
+          142.44,
+          116.1
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-20.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 13,
+      "char": "了",
+      "word": "了",
+      "intended": "le5",
+      "live": [
+        "le5",
+        "liao3"
+      ],
+      "defaults": [
+        "le5",
+        "liao3"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual short unaccented /le/ vowel87→72Hz has reduced /e/ quality rather than the /iao/ transition in 镣 liao4. 嘞 proxy is not certified clean le5; its limitations and raw scores remain. Current original spectral context and short functional particle support low phonetic interpretation, no isolated tone classifier claim.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          86.86,
+          71.57
+        ],
+        "A1": [
+          96.06,
+          73.47
+        ],
+        "B1": [
+          97.07,
+          97.16
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-13.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 65,
+      "char": "只",
+      "word": "只",
+      "intended": "zhi3",
+      "live": [
+        "zhi3",
+        "zhi1"
+      ],
+      "defaults": [
+        "zhi3",
+        "zhi1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual original and single-positive/contrast spectral/F0 curves were directly inspected in archived figures. The fixed native vowel follows intended current reference phonetic realization or contour; raw uncalibrated scores, tracking abstentions and Burg lock failures remain. Finite low single-context support, no two-sided LOO/human listening claimed.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          71.93,
+          71.44
+        ],
+        "A1": [
+          70.84,
+          65.9
+        ],
+        "B1": [
+          120.36,
+          99.33
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-65.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 55,
+      "char": "强",
+      "word": "强",
+      "intended": "qiang2",
+      "live": [
+        "qiang2",
+        "jiang4",
+        "qiang3"
+      ],
+      "defaults": [
+        "qiang2"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "AI_direct_finite_actual_spectrogram_phonetic_interpretation_not_human_or_mechanical_pass",
+      "rationale": "Current OpenAI root directly inspected the three archived actual diagrams. The current native 强 breathy/creaky target has duration/envelope and resonance motion similar to the independently spelled current 墙 qiang2 reference; the original/native F1/F2 trajectory follows 墙 rather than 羟. The descending F0 at10.21–10.30s belongs to preceding 四 and is explicitly NOT used as 强 tone evidence. All three pitch trackers abstain inside the fixed target window, retained unchanged. This supports only finite/low contextual qiang2 interpretation with no confirmed current native misread; no measured rising tone, no conclusively proven tone, no calibrated classifier or human listening claim. No extra reference request or score-selected boundary change.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": null,
+        "A1": null,
+        "B1": null
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-55.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/",
+        "intro-beijing-v3/root-independent-direct-review.json"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "prior_mechanical_status": "pending"
+    },
+    {
+      "edit_id": "intro",
+      "index": 68,
+      "char": "分",
+      "word": "一分",
+      "intended": "fen1",
+      "live": [
+        "fen1",
+        "fen4"
+      ],
+      "defaults": [
+        "fen1"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual original and single-positive/contrast spectral/F0 curves were directly inspected in archived figures. The fixed native vowel follows intended current reference phonetic realization or contour; raw uncalibrated scores, tracking abstentions and Burg lock failures remain. Finite low single-context support, no two-sided LOO/human listening claimed.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          95.99,
+          86.84
+        ],
+        "A1": [
+          96.06,
+          83.09
+        ],
+        "B1": null
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-68.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 66,
+      "char": "差",
+      "word": "差",
+      "intended": "cha4",
+      "live": [
+        "cha4",
+        "cha1",
+        "chai1",
+        "ci1"
+      ],
+      "defaults": [
+        "cha4"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual original and single-positive/contrast spectral/F0 curves were directly inspected in archived figures. The fixed native vowel follows intended current reference phonetic realization or contour; raw uncalibrated scores, tracking abstentions and Burg lock failures remain. Finite low single-context support, no two-sided LOO/human listening claimed.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          139.75,
+          78.47
+        ],
+        "A1": [
+          139.47,
+          78.57
+        ],
+        "B1": [
+          123.26,
+          120.54
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-66.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 0,
+      "char": "奥",
+      "intended": "ao4",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "奥斯塔彭科",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual pre-fixed native vowel core has exact sample identity to independently spelled current positive reference; actual current contextual diagrams also inspected. Finite direct phonetic identity, no two-sided classifier calibration claim.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          125.63,
+          128.73
+        ],
+        "A1": [
+          125.63,
+          128.73
+        ],
+        "B1": [
+          108.53,
+          146.95
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-0.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 1,
+      "char": "斯",
+      "intended": "si1",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "奥斯塔彭科",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual pre-fixed native vowel core has exact sample identity to independently spelled current positive reference; actual current contextual diagrams also inspected. Finite direct phonetic identity, no two-sided classifier calibration claim.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          144.98,
+          141.02
+        ],
+        "A1": [
+          144.98,
+          141.02
+        ],
+        "B1": [
+          141.25,
+          130.03
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-1.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 2,
+      "char": "塔",
+      "intended": "ta3",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "奥斯塔彭科",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual original and single-positive/contrast spectral/F0 curves were directly inspected in archived figures. The fixed native vowel follows intended current reference phonetic realization or contour; raw uncalibrated scores, tracking abstentions and Burg lock failures remain. Finite low single-context support, no two-sided LOO/human listening claimed.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          92.18,
+          88.46
+        ],
+        "A1": null,
+        "B1": [
+          131.48,
+          110.25
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-2.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 3,
+      "char": "彭",
+      "intended": "peng2",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "奥斯塔彭科",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual pre-fixed native vowel core has exact sample identity to independently spelled current positive reference; actual current contextual diagrams also inspected. Finite direct phonetic identity, no two-sided classifier calibration claim.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          102.86,
+          134.32
+        ],
+        "A1": [
+          102.86,
+          134.32
+        ],
+        "B1": [
+          130.57,
+          107.69
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-3.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 4,
+      "char": "科",
+      "intended": "ke1",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "奥斯塔彭科",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual original and single-positive/contrast spectral/F0 curves were directly inspected in archived figures. The fixed native vowel follows intended current reference phonetic realization or contour; raw uncalibrated scores, tracking abstentions and Burg lock failures remain. Finite low single-context support, no two-sided LOO/human listening claimed.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          142.85,
+          140.45
+        ],
+        "A1": [
+          145.67,
+          146.06
+        ],
+        "B1": [
+          155.36,
+          120.4
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-4.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 49,
+      "char": "耐",
+      "intended": "nai4",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "施耐德",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual original and single-positive/contrast spectral/F0 curves were directly inspected in archived figures. The fixed native vowel follows intended current reference phonetic realization or contour; raw uncalibrated scores, tracking abstentions and Burg lock failures remain. Finite low single-context support, no two-sided LOO/human listening claimed.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          133.62,
+          120.71
+        ],
+        "A1": [
+          133.55,
+          124.58
+        ],
+        "B1": [
+          123.49,
+          72.0
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-49.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 48,
+      "char": "施",
+      "intended": "shi1",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "施耐德",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual 施 has short apical /sh/ syllable with actual frication/resonance shape similar to independent 诗 shi1 in the same phrase. All pitch trackers on central frication may abstain; no absent F0 invented. Raw low spectral separation against 事 remains, phonetic context supports only a finite low interpretation.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": null,
+        "A1": null,
+        "B1": null
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-48.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 50,
+      "char": "德",
+      "intended": "de2",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "施耐德",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Actual name-final /de/ vowel is weak/low62→70Hz, matching rare 锝 de2 low61→70Hz and differing from 帝 di4 higher137→122Hz and /i/ resonances. Rare reference and name-final reduction explicitly limit confidence; actual audio reviewed from current native SHA, no old full-sentence exemption.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          61.58,
+          70.11
+        ],
+        "A1": [
+          61.12,
+          70.23
+        ],
+        "B1": [
+          137.01,
+          122.2
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-50.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 8,
+      "char": "斯",
+      "intended": "si1",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "斯瓦泰克",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual 斯 apical syllable is strongly fricated, so the central F0 trackers abstain. Current actual spectrum agrees with independently spelled 丝 in the same name, with actual neighboring /wa3 tai4 ke4/ context inspected. This is finite contextual syllable support, not mechanical tone tracking success.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": null,
+        "A1": null,
+        "B1": null
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-8.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 10,
+      "char": "泰",
+      "intended": "tai4",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "斯瓦泰克",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual pre-fixed native vowel core has exact sample identity to independently spelled current positive reference; actual current contextual diagrams also inspected. Finite direct phonetic identity, no two-sided classifier calibration claim.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          163.28,
+          116.02
+        ],
+        "A1": [
+          164.35,
+          116.02
+        ],
+        "B1": [
+          111.18,
+          123.02
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-10.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 9,
+      "char": "瓦",
+      "intended": "wa3",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "斯瓦泰克",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual original and single-positive/contrast spectral/F0 curves were directly inspected in archived figures. The fixed native vowel follows intended current reference phonetic realization or contour; raw uncalibrated scores, tracking abstentions and Burg lock failures remain. Finite low single-context support, no two-sided LOO/human listening claimed.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          90.4,
+          88.44
+        ],
+        "A1": [
+          106.32,
+          86.38
+        ],
+        "B1": [
+          149.97,
+          127.19
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-9.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 11,
+      "char": "克",
+      "intended": "ke4",
+      "status": "correct_low_support",
+      "kind": "proper_name",
+      "name": "斯瓦泰克",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Current actual original and single-positive/contrast spectral/F0 curves were directly inspected in archived figures. The fixed native vowel follows intended current reference phonetic realization or contour; raw uncalibrated scores, tracking abstentions and Burg lock failures remain. Finite low single-context support, no two-sided LOO/human listening claimed.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          95.12,
+          77.15
+        ],
+        "A1": [
+          98.83,
+          90.28
+        ],
+        "B1": [
+          118.2,
+          105.3
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-11.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 17,
+      "char": "北",
+      "intended": "bei3",
+      "kind": "new_spoken_beijing_time_anchor",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "status": "correct_low_support",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Actual native /bei/ nucleus has low onset115Hz, shallow recovery then fall, matching contextual 鉳 bei3 low113→125Hz, unlike 倍 bei4 higher131→126Hz. The original native full spectrum and F0 chart were directly viewed, not inferred from ASR. 鉳 is a rare positive and single-reference comparison cannot independently calibrate it; finite current low-half-third contextual support only.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          115.29,
+          118.14
+        ],
+        "A1": [
+          113.06,
+          125.12
+        ],
+        "B1": [
+          130.99,
+          125.56
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-17.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 19,
+      "char": "时",
+      "intended": "shi2",
+      "kind": "new_spoken_beijing_time_anchor",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "status": "correct_low_support",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Actual 时 is weak/nonprominent inside 北京时间 and its actual vowel132→120Hz follows contextual 十 shi2 at132→116Hz; 事 shi4 differs in onset and stronger descent139→112Hz. Direct observed /sh/ apical-vowel context and same-context independent 十 support the reduced shi2 realization, low confidence; not an asserted isolated rising-tone contour or ASR-tone proof.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          131.54,
+          119.51
+        ],
+        "A1": [
+          131.5,
+          115.96
+        ],
+        "B1": [
+          139.23,
+          111.53
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-19.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
+    },
+    {
+      "edit_id": "intro",
+      "index": 18,
+      "char": "京",
+      "intended": "jing1",
+      "kind": "new_spoken_beijing_time_anchor",
+      "actual_audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+      "status": "correct_low_support",
+      "method": "current_new_intro_direct_finite_actual_phonetic_interpretation_not_mechanical_pass",
+      "rationale": "Actual native /jing/ higher near-level vowel and phrase declination150→134Hz follows independently spelled 晶 jing1 at151→142Hz rather than 景 jing3 lower112→101Hz. Original native spectrum and current reference curves actually inspected. The uncalibrated slope score fails because small within-first-tone declinations differ; not relabelled a calibrated pass.",
+      "actual_core_f0_first_last_hz": {
+        "ORIG": [
+          149.86,
+          134.19
+        ],
+        "A1": [
+          151.12,
+          141.73
+        ],
+        "B1": [
+          111.87,
+          101.33
+        ]
+      },
+      "evidence": [
+        "intro-beijing-v3/located-results/intro-18.json",
+        "intro-beijing-v3/comparison-overviews/",
+        "intro-beijing-v3/native-phoneme-charts/"
+      ],
+      "confidence": "low",
+      "manual_listening_claimed": false,
+      "human_review_claimed": false
     }
   ],
-  "number_spans": 32,
+  "number_spans": 31,
   "proper_name_syllable_positions": 35,
-  "actual_reference_requests": 166,
+  "actual_reference_requests": 212,
+  "historical_reference_requests_preserved_not_rerun": 166,
+  "current_new_intro_reference_requests": 46,
   "manual_listening_claimed": false,
+  "human_review_claimed": false,
   "whole_final_mix_listened": false,
   "all_mechanical_components_passed": false,
   "current_original_binding": "bindings.json",
   "method": "bound_input_review_not_human_listening",
+  "whole_other_five_reuse": "intro-beijing-v3/five-whole-utterances-exact-reuse.json",
+  "new_intro_capture_proof": "intro-beijing-v3/new-bundle-capture-proof.json",
+  "new_intro_full_actual_lexical_asr": "intro-beijing-v3/native-lexical-asr.json",
   "final_film_binding_pending_final_render": false,
+  "current_final_film_binding_status": "bound_current_final_native_movie_same_frozen_voice",
+  "superseded_v2_history": "history/superseded-v2-spoken-time-anchor/",
   "limitations": [
-    "All86targets have finite low support;3original mechanical pending cases remain raw and are resolved separately by current OpenAI root actual image/phonetic interpretation, not human listening.",
-    "All uncalibrated single-positive/negative scores remain raw, no two-sided LOO claimed.",
-    "ASR words/numbers are lexical alignment only, never tone proof.",
-    "Bad 惝 chuang3 label rejected; actual chang3/tang3.",
-    "Rare/contextual reference labels disclosed; 地/嘞 not clean neutral positive, 汏 not unambiguous da4.",
-    "Low/creaky F0 abstentions, degree CC50 octave error, Burg formant lock failures retained.",
-    "No source/final loudness/RMS/peak/silence/gain or mix-PCM checks."
+    "All88current targets have finite low support. New intro强 original mechanical pending is separately supplemented by current OpenAI root direct actual spectrum judgment; no measured rising tone or conclusive tone proof claimed.",
+    "No old166reference rerun; other5judgments only reused after exact full text/request/profile/MP3/marks match.",
+    "Old intro prefix whole-decoded sample identity test failed; no prefix exemption or old-full-sentence whitelist applied. All23currentintro positions actually reviewed with46newreferences.",
+    "Single-positive/contrast comparisons are not two-sided calibrated LOO; all raw pending/calibration failures remain.",
+    "Rare鉳/锝, contextual肩 and 嘞 proxy limitations explicitly disclosed.",
+    "ASR lexical spelling/digits do not establish tones.",
+    "No human or final-mix listening claim; no loudness/RMS/peak/silence/gain/source-final-mixPCM checks."
   ],
-  "prior_partial_created_at": "2026-10-16T08:23:06.705010+00:00",
-  "completed_at": "2026-10-16T08:28:50.183358+00:00",
-  "root_independent_direct_review": "root-independent-direct-review.json",
-  "film_sha256": "3226dd80201c38077dd876f9efa13682f01630f981b631cd3c294718140bff88",
-  "current_spec_sha256": "113489f8e7be4f410ebdf869058a8656d7edcb5a82f3c19f12da75645125b3b1",
+  "completed_at": "2026-10-16T09:54:21.060526+00:00",
+  "new_intro_root_direct_review": "intro-beijing-v3/root-independent-direct-review.json",
+  "active_current_reference_requests": 172,
+  "superseded_previous_intro_reference_requests": 40,
+  "film_sha256": "44eb19a5edbc27e9d19f770befd5a8769fad5c8b7b83f9de8d5c3462f416a9f9",
+  "current_spec_sha256": "ff5f3f1f4c8ec77eb1210b08d3537f28d86892e4e020c44f3c17d0e0ef2e96f7",
   "final_film_input_binding": {
-    "metadata_bound_at": "2026-10-16T09:09:01.189742+00:00",
+    "metadata_bound_at": "2026-10-16T09:55:31.664742+00:00",
     "status": "all_six_actual_mp3_and_six_marks_match_final_native_input_archive",
-    "bundle_sha256": "bc91d1d69f056e97133ad361d161f02d493587c6d4498a524ddfee10c4c17313",
-    "film_sha256": "3226dd80201c38077dd876f9efa13682f01630f981b631cd3c294718140bff88",
-    "run_id": 38877144363,
+    "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
+    "film_sha256": "44eb19a5edbc27e9d19f770befd5a8769fad5c8b7b83f9de8d5c3462f416a9f9",
+    "run_id": 38882716500,
     "native_input_archive_path": "output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/native_input_archive.json",
-    "native_input_archive_sha256": "ccb5e6575c2167c282185090be4f466d64930b3ebd7a8ecfc8bcd569a9d936ac",
+    "native_input_archive_sha256": "272cbd615f69f0c0dc6c3646515aa55543e7dbb10001536470b839a145dae79b",
     "current_spec_path": "specs/reels/ostapenko-shnaider-wuhan-2026-qf.json",
-    "current_spec_sha256": "113489f8e7be4f410ebdf869058a8656d7edcb5a82f3c19f12da75645125b3b1",
+    "current_spec_sha256": "ff5f3f1f4c8ec77eb1210b08d3537f28d86892e4e020c44f3c17d0e0ef2e96f7",
     "current_full_request_texts_still_exact_match_frozen": true,
     "current_input_identities": [
       {
         "edit_id": "intro",
         "output_name": "voice_01.mp3",
-        "actual_mp3_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-        "actual_marks_sha256": "8e7553df4e08013e7afd6e32912d9bec66a649105a91257e9a13d3af1c5f4fb6",
+        "actual_mp3_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+        "actual_marks_sha256": "572f3b735dd09510b21fe499e4f88149da32597a399b488893a306a811fa8f1c",
         "exact_matches_final_native_input_archive": true
       },
       {
@@ -3086,7 +3247,5 @@
     "manual_listening_claimed": false,
     "human_review_claimed": false,
     "whole_final_mix_listened": false
-  },
-  "superseded_visual_film_history": "history/superseded-visual-film-9a3b3630179d/superseded-film-history.json",
-  "current_final_film_binding_status": "bound_current_final_native_movie_same_frozen_voice"
+  }
 }

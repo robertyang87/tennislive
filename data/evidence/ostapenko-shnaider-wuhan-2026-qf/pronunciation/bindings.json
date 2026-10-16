@@ -3,27 +3,27 @@
     "segment_index": 1,
     "edit_id": "intro",
     "output_name": "voice_01.mp3",
-    "request_id": "c3d9c09fbdb32fd19f08024c0b8cf6eecbe3a9a53aad475a9d294983a7676c72",
+    "request_id": "a5294d0957dfc5a33ea89d49e716e053dee59059aff4b226e945c607a91583e6",
     "request": {
       "backend": "edge",
-      "cache_key": "ff82ca0259eb30a638e3767e89266615",
+      "cache_key": "d9f6218e348c7f6daacc37121be0200b",
       "lead_pause": 0.0,
       "pitch": "+0Hz",
       "rate": "+6%",
       "style": "",
       "styledegree": "",
-      "text": "奥斯塔彭科，又朝斯瓦泰克近了一步。十月十六日上午，武汉女单四分之一决赛，她七比六、六比一击败施耐德，晋级四强。但首盘，她一度离丢盘只差一分。",
+      "text": "奥斯塔彭科，又朝斯瓦泰克近了一步。北京时间十月十六日上午，武汉四分之一决赛，她七比六、六比一击败施耐德，晋级四强。但首盘，她离丢盘只差一分。",
       "voice": "zh-CN-YunjianNeural"
     },
-    "tts_text": "奥斯塔彭科，又朝斯瓦泰克近了一步。十月十六日上午，武汉女单四分之一决赛，她七比六、六比一击败施耐德，晋级四强。但首盘，她一度离丢盘只差一分。",
-    "display_text": "奥斯塔彭科，又朝斯瓦泰克近了一步。十月十六日上午，武汉女单四分之一决赛，她七比六、六比一击败施耐德，晋级四强。但首盘，她一度离丢盘只差一分。",
-    "text_sha256": "459e84acec2c16225b2b46ccdd703670424173f60fd041728e7a83cd3274d846",
-    "audio_sha256": "8e5d2af289219f0d272c282b658c97063deef32c9d28f228f8c58355054b1972",
-    "marks_sha256": "8e7553df4e08013e7afd6e32912d9bec66a649105a91257e9a13d3af1c5f4fb6",
-    "duration_seconds": 14.424,
-    "native_audio": "/workspace/scratch/osta-pronunciation/native-audio/intro-8e5d2af289219f0d.mp3",
-    "native_marks": "/workspace/scratch/osta-pronunciation/native-audio/intro-8e5d2af289219f0d.json",
-    "bundle_sha256": "bc91d1d69f056e97133ad361d161f02d493587c6d4498a524ddfee10c4c17313",
+    "tts_text": "奥斯塔彭科，又朝斯瓦泰克近了一步。北京时间十月十六日上午，武汉四分之一决赛，她七比六、六比一击败施耐德，晋级四强。但首盘，她离丢盘只差一分。",
+    "display_text": "奥斯塔彭科，又朝斯瓦泰克近了一步。北京时间十月十六日上午，武汉四分之一决赛，她七比六、六比一击败施耐德，晋级四强。但首盘，她离丢盘只差一分。",
+    "text_sha256": "f101dd66e69d66a70cb0c67899d2baf035c95e7bb9045cf28e9a4a9832e58405",
+    "audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+    "marks_sha256": "572f3b735dd09510b21fe499e4f88149da32597a399b488893a306a811fa8f1c",
+    "duration_seconds": 14.352,
+    "native_audio": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/intro-7531e01de95e4a6f.mp3",
+    "native_marks": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/intro-7531e01de95e4a6f.json",
+    "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [
@@ -58,21 +58,21 @@
         "status": "actual_pending"
       },
       {
-        "index": 28,
-        "char": "单",
-        "word": "单",
-        "intended": "dan1",
+        "index": 20,
+        "char": "间",
+        "word": "北京时间",
+        "intended": "jian1",
         "live": [
-          "dan1",
-          "shan4"
+          "jian1",
+          "jian4"
         ],
         "defaults": [
-          "dan1"
+          "jian1"
         ],
         "status": "actual_pending"
       },
       {
-        "index": 30,
+        "index": 32,
         "char": "分",
         "word": "分",
         "intended": "fen1",
@@ -86,7 +86,7 @@
         "status": "actual_pending"
       },
       {
-        "index": 53,
+        "index": 55,
         "char": "强",
         "word": "强",
         "intended": "qiang2",
@@ -97,20 +97,6 @@
         ],
         "defaults": [
           "qiang2"
-        ],
-        "status": "actual_pending"
-      },
-      {
-        "index": 61,
-        "char": "度",
-        "word": "一度",
-        "intended": "du4",
-        "live": [
-          "du4",
-          "duo2"
-        ],
-        "defaults": [
-          "du4"
         ],
         "status": "actual_pending"
       },
@@ -199,22 +185,22 @@
       },
       {
         "name": "施耐德",
-        "start_index": 46,
+        "start_index": 48,
         "targets": [
           {
-            "index": 46,
+            "index": 48,
             "char": "施",
             "intended": "shi1",
             "status": "actual_pending"
           },
           {
-            "index": 47,
+            "index": 49,
             "char": "耐",
             "intended": "nai4",
             "status": "actual_pending"
           },
           {
-            "index": 48,
+            "index": 50,
             "char": "德",
             "intended": "de2",
             "status": "actual_pending"
@@ -259,43 +245,38 @@
         "status": "actual_pending"
       },
       {
-        "start_index": 17,
+        "start_index": 21,
         "text": "十",
         "status": "actual_pending"
       },
       {
-        "start_index": 19,
+        "start_index": 23,
         "text": "十六",
         "status": "actual_pending"
       },
       {
-        "start_index": 29,
+        "start_index": 31,
         "text": "四",
         "status": "actual_pending"
       },
       {
-        "start_index": 32,
+        "start_index": 34,
         "text": "一",
         "status": "actual_pending"
       },
       {
-        "start_index": 37,
+        "start_index": 39,
         "text": "七比六",
         "status": "actual_pending"
       },
       {
-        "start_index": 41,
+        "start_index": 43,
         "text": "六比一",
         "status": "actual_pending"
       },
       {
-        "start_index": 52,
+        "start_index": 54,
         "text": "四",
-        "status": "actual_pending"
-      },
-      {
-        "start_index": 60,
-        "text": "一",
         "status": "actual_pending"
       },
       {
@@ -363,178 +344,171 @@
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
-        "text": "十月十六日",
+        "text": "北京时间",
         "start_index": 17,
         "start_seconds": 3.632083,
-        "end_seconds": 4.351416,
+        "end_seconds": 4.280666,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "十月十六日",
+        "start_index": 21,
+        "start_seconds": 4.292458,
+        "end_seconds": 4.964624,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "上午",
-        "start_index": 22,
-        "start_seconds": 4.363208,
-        "end_seconds": 4.775958,
+        "start_index": 26,
+        "start_seconds": 4.976416,
+        "end_seconds": 5.400957,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "武汉",
-        "start_index": 25,
-        "start_seconds": 5.011791,
-        "end_seconds": 5.330207,
-        "status": "boundary_exists_not_pronunciation_proof"
-      },
-      {
-        "text": "女单",
-        "start_index": 27,
-        "start_seconds": 5.330208,
-        "end_seconds": 5.601416,
+        "start_index": 29,
+        "start_seconds": 5.625,
+        "end_seconds": 5.955208,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "四分之一",
-        "start_index": 29,
-        "start_seconds": 5.613208,
-        "end_seconds": 6.108499,
+        "start_index": 31,
+        "start_seconds": 5.978791,
+        "end_seconds": 6.485874,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "决赛",
-        "start_index": 33,
-        "start_seconds": 6.120291,
-        "end_seconds": 6.474082,
+        "start_index": 35,
+        "start_seconds": 6.497625,
+        "end_seconds": 6.875,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "她",
-        "start_index": 36,
-        "start_seconds": 6.66275,
-        "end_seconds": 6.851416,
+        "start_index": 38,
+        "start_seconds": 7.051875,
+        "end_seconds": 7.240541,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "七比六",
-        "start_index": 37,
-        "start_seconds": 6.851416,
-        "end_seconds": 7.370291,
+        "start_index": 39,
+        "start_seconds": 7.240583,
+        "end_seconds": 7.759458,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "六比一",
-        "start_index": 41,
-        "start_seconds": 7.629708,
-        "end_seconds": 8.136791,
+        "start_index": 43,
+        "start_seconds": 8.018875,
+        "end_seconds": 8.53775,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "击败",
-        "start_index": 44,
-        "start_seconds": 8.160375,
-        "end_seconds": 8.514166,
+        "start_index": 46,
+        "start_seconds": 8.561333,
+        "end_seconds": 8.926916,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "施耐德",
-        "start_index": 46,
-        "start_seconds": 8.525958,
-        "end_seconds": 9.033041,
+        "start_index": 48,
+        "start_seconds": 8.938666,
+        "end_seconds": 9.457541,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "晋级",
-        "start_index": 50,
-        "start_seconds": 9.209916,
-        "end_seconds": 9.646249,
+        "start_index": 52,
+        "start_seconds": 9.622625,
+        "end_seconds": 10.047166,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "四",
-        "start_index": 52,
-        "start_seconds": 9.658,
-        "end_seconds": 9.846666,
+        "start_index": 54,
+        "start_seconds": 10.058958,
+        "end_seconds": 10.247624,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "强",
-        "start_index": 53,
-        "start_seconds": 9.846708,
-        "end_seconds": 10.117916,
+        "start_index": 55,
+        "start_seconds": 10.247625,
+        "end_seconds": 10.518833,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "但",
-        "start_index": 55,
-        "start_seconds": 10.636791,
-        "end_seconds": 10.778291,
+        "start_index": 57,
+        "start_seconds": 11.03775,
+        "end_seconds": 11.202833,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "首盘",
-        "start_index": 56,
-        "start_seconds": 10.790083,
-        "end_seconds": 11.249999,
+        "start_index": 58,
+        "start_seconds": 11.214625,
+        "end_seconds": 11.721708,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "她",
-        "start_index": 59,
-        "start_seconds": 11.533,
-        "end_seconds": 11.662708,
-        "status": "boundary_exists_not_pronunciation_proof"
-      },
-      {
-        "text": "一度",
-        "start_index": 60,
-        "start_seconds": 11.66275,
-        "end_seconds": 12.099083,
+        "start_index": 61,
+        "start_seconds": 12.004708,
+        "end_seconds": 12.134416,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "离",
         "start_index": 62,
-        "start_seconds": 12.217,
-        "end_seconds": 12.393875,
+        "start_seconds": 12.134416,
+        "end_seconds": 12.299499,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "丢",
         "start_index": 63,
-        "start_seconds": 12.393875,
-        "end_seconds": 12.57075,
+        "start_seconds": 12.299541,
+        "end_seconds": 12.464624,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "盘",
         "start_index": 64,
-        "start_seconds": 12.57075,
-        "end_seconds": 12.85375,
+        "start_seconds": 12.464625,
+        "end_seconds": 12.735833,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "只",
         "start_index": 65,
-        "start_seconds": 12.877375,
-        "end_seconds": 13.077833,
+        "start_seconds": 12.759416,
+        "end_seconds": 12.971666,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "差",
         "start_index": 66,
-        "start_seconds": 13.077833,
-        "end_seconds": 13.301874,
+        "start_seconds": 12.971708,
+        "end_seconds": 13.195749,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "一",
         "start_index": 67,
-        "start_seconds": 13.313666,
-        "end_seconds": 13.419791,
+        "start_seconds": 13.207541,
+        "end_seconds": 13.325457,
         "status": "boundary_exists_not_pronunciation_proof"
       },
       {
         "text": "分",
         "start_index": 68,
-        "start_seconds": 13.419791,
-        "end_seconds": 13.608457,
+        "start_seconds": 13.325458,
+        "end_seconds": 13.525916,
         "status": "boundary_exists_not_pronunciation_proof"
       }
     ]
@@ -561,9 +535,9 @@
     "audio_sha256": "7a8064f0343a94741252821867d34e937ed3c1f0a7deee8df83c2e8a93a2497d",
     "marks_sha256": "0a7dc914b82f49e2612c6ee9d2d420bcb1b7e7391a5d352730b8c2e0698efc65",
     "duration_seconds": 15.912,
-    "native_audio": "/workspace/scratch/osta-pronunciation/native-audio/first_set-7a8064f0343a9474.mp3",
-    "native_marks": "/workspace/scratch/osta-pronunciation/native-audio/first_set-7a8064f0343a9474.json",
-    "bundle_sha256": "bc91d1d69f056e97133ad361d161f02d493587c6d4498a524ddfee10c4c17313",
+    "native_audio": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/first_set-7a8064f0343a9474.mp3",
+    "native_marks": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/first_set-7a8064f0343a9474.json",
+    "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [
@@ -1047,9 +1021,9 @@
     "audio_sha256": "72f9493cc1c578782c492d388aad13d636105576c52689942a817f1b2a95973c",
     "marks_sha256": "b983a8c54f6daf0edefca0b1457fdfcc90780c0234572664ab6adaec05fd5a39",
     "duration_seconds": 14.52,
-    "native_audio": "/workspace/scratch/osta-pronunciation/native-audio/second_set-72f9493cc1c57878.mp3",
-    "native_marks": "/workspace/scratch/osta-pronunciation/native-audio/second_set-72f9493cc1c57878.json",
-    "bundle_sha256": "bc91d1d69f056e97133ad361d161f02d493587c6d4498a524ddfee10c4c17313",
+    "native_audio": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/second_set-72f9493cc1c57878.mp3",
+    "native_marks": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/second_set-72f9493cc1c57878.json",
+    "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [
@@ -1486,9 +1460,9 @@
     "audio_sha256": "94d158ef85b01ab56575f61e1caec2fcb986374b734cfab2a1f6596877efc22e",
     "marks_sha256": "2bf5072bc4b1470e50941225815e07f16d116db985528a232c0e99c2e51c296c",
     "duration_seconds": 12.264,
-    "native_audio": "/workspace/scratch/osta-pronunciation/native-audio/key_stat-94d158ef85b01ab5.mp3",
-    "native_marks": "/workspace/scratch/osta-pronunciation/native-audio/key_stat-94d158ef85b01ab5.json",
-    "bundle_sha256": "bc91d1d69f056e97133ad361d161f02d493587c6d4498a524ddfee10c4c17313",
+    "native_audio": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/key_stat-94d158ef85b01ab5.mp3",
+    "native_marks": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/key_stat-94d158ef85b01ab5.json",
+    "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [
@@ -1844,9 +1818,9 @@
     "audio_sha256": "09f23e70c756d2297ee3fd28621d399765ba45f31bd3259d157506961b864d34",
     "marks_sha256": "1859f0be9e40de8f1260df97ba3a9f2c20973936d8d8e1c3cf679cc31676bf45",
     "duration_seconds": 17.472,
-    "native_audio": "/workspace/scratch/osta-pronunciation/native-audio/draw_outlook-09f23e70c756d229.mp3",
-    "native_marks": "/workspace/scratch/osta-pronunciation/native-audio/draw_outlook-09f23e70c756d229.json",
-    "bundle_sha256": "bc91d1d69f056e97133ad361d161f02d493587c6d4498a524ddfee10c4c17313",
+    "native_audio": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/draw_outlook-09f23e70c756d229.mp3",
+    "native_marks": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/draw_outlook-09f23e70c756d229.json",
+    "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [
@@ -2538,9 +2512,9 @@
     "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
     "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
     "duration_seconds": 4.104,
-    "native_audio": "/workspace/scratch/osta-pronunciation/native-audio/outro-3d7277d26afc569a.mp3",
-    "native_marks": "/workspace/scratch/osta-pronunciation/native-audio/outro-3d7277d26afc569a.json",
-    "bundle_sha256": "bc91d1d69f056e97133ad361d161f02d493587c6d4498a524ddfee10c4c17313",
+    "native_audio": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/outro-3d7277d26afc569a.mp3",
+    "native_marks": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/outro-3d7277d26afc569a.json",
+    "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
     "matches_current_spec": true,
     "wordboundary_exact_native_bytes_preserved": true,
     "polyphones": [

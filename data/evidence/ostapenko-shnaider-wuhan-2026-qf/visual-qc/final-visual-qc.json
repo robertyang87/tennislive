@@ -2,10 +2,10 @@
   "schema": "tennislive.independent-finite-visual-review.v1",
   "status": "passed_finite_visual_review",
   "slug": "ostapenko-shnaider-wuhan-2026-qf",
-  "run_id": 38877144363,
-  "native_encoder_head": "2de957b48a77ec848998483744c7cd9b9a05216b",
-  "film_sha256": "3226dd80201c38077dd876f9efa13682f01630f981b631cd3c294718140bff88",
-  "film_bytes": 116060009,
+  "run_id": 38882716500,
+  "native_encoder_head": "0cb50e0bc8533c24c77e462b7de5facc4bf16104",
+  "film_sha256": "44eb19a5edbc27e9d19f770befd5a8769fad5c8b7b83f9de8d5c3462f416a9f9",
+  "film_bytes": 116034193,
   "duration_seconds": 262.56,
   "canvas": [
     1080,
@@ -13,13 +13,13 @@
   ],
   "fps": 25,
   "encoded_frame_count": 6564,
-  "reviewed_at": "2026-10-16T09:14:08.798825+00:00",
+  "reviewed_at": "2026-10-16T10:00:35.201373+00:00",
   "artifact_sha256": {
-    "/workspace/tennislive-efficiency/specs/reels/ostapenko-shnaider-wuhan-2026-qf.json": "113489f8e7be4f410ebdf869058a8656d7edcb5a82f3c19f12da75645125b3b1",
-    "/workspace/tennislive-efficiency/output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/subtitles.ass": "b7d3e56fffc522fa9d16530f2eb71707b22a851cb081f6324416947795588c5f",
-    "/workspace/tennislive-efficiency/output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/render.json": "ebe314454048baa3baf7e8905f140a7097a73665f782d3256ff79128e55c23dc",
-    "/workspace/tennislive-efficiency/output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/audio_review_binding.json": "335be492db06fdc11b38cd534f7577968ab427f1c25431f300d6da559750f288",
-    "/workspace/tennislive-efficiency/output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/render_inputs.json": "d04f822cd084a2d149e221caf264715f03bb41a0cf3399b26311901c16f21310"
+    "/workspace/tennislive-efficiency/specs/reels/ostapenko-shnaider-wuhan-2026-qf.json": "ff5f3f1f4c8ec77eb1210b08d3537f28d86892e4e020c44f3c17d0e0ef2e96f7",
+    "/workspace/tennislive-efficiency/output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/subtitles.ass": "180e4f7d7ad813a62e6d0a230a50acd5fb8cd1ca28128a62e2898e194a6c0c23",
+    "/workspace/tennislive-efficiency/output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/render.json": "ae808aa842d0d530809e5b721c243bd87d521618e45632839eb82f82473af524",
+    "/workspace/tennislive-efficiency/output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/audio_review_binding.json": "089f282f9ef5722389d59d0fb5ec01e91675ceaff4f61f52c30c3e5093d475ca",
+    "/workspace/tennislive-efficiency/output/2026-10-16/reel/ostapenko-shnaider-wuhan-2026-qf/render_inputs.json": "c40ac0d19531e13fdd799cf738a21e58525373d6dbef24870a471c8637b5f5dc"
   },
   "actual_viewing": {
     "main_sample_count": 164,
@@ -60,12 +60,12 @@
       402,
       404,
       448,
-      511,
-      548,
+      518,
+      561,
       591,
-      601,
-      651,
-      716,
+      611,
+      661,
+      720,
       779,
       781,
       800,
@@ -205,8 +205,110 @@
       6507,
       6563
     ],
-    "individually_viewed_main_original_PNG_count": 10,
+    "individually_viewed_main_original_PNG_count": 15,
     "individually_viewed_main_original_PNGs": [
+      {
+        "frame_index": 518,
+        "seconds": 20.72,
+        "png": "frames/f000518.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 20.725,
+            "index": 6,
+            "start": 19.73,
+            "end": 21.72,
+            "style": "TL",
+            "text": "{\\an2}北京时间{\\fs78}10{\\fs68}月{\\fs78}16{\\fs68}日上午"
+          }
+        ],
+        "png_sha256": "f6fabad4c03aacd54e2277aff61f7a40fbfb0358895303c39e828b7c1f63a3b3"
+      },
+      {
+        "frame_index": 561,
+        "seconds": 22.44,
+        "png": "frames/f000561.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 22.435,
+            "index": 7,
+            "start": 21.72,
+            "end": 23.15,
+            "style": "TL",
+            "text": "{\\an2}武汉{\\fs78}1{\\fs68}/{\\fs78}4{\\fs68}决赛"
+          }
+        ],
+        "png_sha256": "16c5339c1078bf02fae0296ab3635c60049882088eec5c69a009c062da410a75"
+      },
+      {
+        "frame_index": 448,
+        "seconds": 17.92,
+        "png": "frames/f000448.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 17.939999999999998,
+            "index": 5,
+            "start": 16.15,
+            "end": 19.73,
+            "style": "TL",
+            "text": "{\\an2}奥斯塔彭科 又朝斯瓦泰克近了一步"
+          }
+        ],
+        "png_sha256": "b82766f7902e91a32172b6471add7d2acf0b68fff435023b05b5f595deaac04b"
+      },
+      {
+        "frame_index": 611,
+        "seconds": 24.44,
+        "png": "frames/f000611.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 24.435,
+            "index": 8,
+            "start": 23.15,
+            "end": 25.72,
+            "style": "TL",
+            "text": "{\\an2}她{\\fs78}7{\\fs68}比{\\fs78}6{\\fs68} {\\fs78}6{\\fs68}比{\\fs78}1{\\fs68}击败施耐德"
+          }
+        ],
+        "png_sha256": "cb007e07ca7baadfe2708041bc7ad1412c5dcd16a8626d1feb2a803129a16580"
+      },
+      {
+        "frame_index": 661,
+        "seconds": 26.44,
+        "png": "frames/f000661.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 26.43,
+            "index": 9,
+            "start": 25.72,
+            "end": 27.14,
+            "style": "TL",
+            "text": "{\\an2}晋级四强"
+          }
+        ],
+        "png_sha256": "9a483f9383c595002a6e26cb3193c608f00d8083845cd034dc3397a93b1b3916"
+      },
+      {
+        "frame_index": 720,
+        "seconds": 28.8,
+        "png": "frames/f000720.png",
+        "reasons": [
+          {
+            "kind": "actual_ASS_cue_midpoint",
+            "requested_seconds": 28.795,
+            "index": 10,
+            "start": 27.14,
+            "end": 30.45,
+            "style": "TL",
+            "text": "{\\an2}但首盘 她离丢盘只差一分"
+          }
+        ],
+        "png_sha256": "f5cf5b404045f5fce0a5c4d18fe4a070f4bd3fcb5b95abb462c5e37e91cdf7a8"
+      },
       {
         "frame_index": 5592,
         "seconds": 223.68,
@@ -219,7 +321,7 @@
             "source_seconds": 291.0
           }
         ],
-        "png_sha256": "b8b03b7c8f7f8ed26bd867f663873693e46aa664d773b46b564ee2d41e3f87b8"
+        "png_sha256": "14e7a29a217cf4e58cbf829a9f9b12bec0b9b886151b0398d95796cefdb0abfe"
       },
       {
         "frame_index": 5642,
@@ -233,7 +335,7 @@
             "source_seconds": 293.0
           }
         ],
-        "png_sha256": "279fd0acf1e10fd50f5cd2d3a05e7bbfa95778f1e5b76c6e3c9f711c1ca98882"
+        "png_sha256": "efc156d418f8eb89f4e0bfc8972d1c8884ec513e82e4226a73dd26a5e45a1a58"
       },
       {
         "frame_index": 1438,
@@ -247,7 +349,7 @@
             "source_seconds": 140.0
           }
         ],
-        "png_sha256": "190628d7c95dcbf62a9024b15c9ac50bf69144d08173848eeef18008a69667ce"
+        "png_sha256": "ff4ba8565eb5e7e1c61778be087c450b04d06d4f68aa190c4a2493bde392bb53"
       },
       {
         "frame_index": 4618,
@@ -261,7 +363,7 @@
             "source_seconds": 252.0
           }
         ],
-        "png_sha256": "e011a5c58bfd6c1ca0a4626d830b3256fcbfe2acb00ba49dbc4b6b7d999449e7"
+        "png_sha256": "4369ed082e0bf155a9a25b5b7952c440079946667461f23e9adc4f79cfcf22f5"
       },
       {
         "frame_index": 2888,
@@ -275,36 +377,7 @@
             "source_seconds": 198.0
           }
         ],
-        "png_sha256": "bcbb067732851075c6bf3213369fd7bf4555beca1cdfb3c4e17aa4a732cfef05"
-      },
-      {
-        "frame_index": 5812,
-        "seconds": 232.48,
-        "png": "frames/f005812.png",
-        "reasons": [
-          {
-            "kind": "actual_ASS_cue_midpoint",
-            "requested_seconds": 232.5,
-            "index": 59,
-            "start": 230.91,
-            "end": 234.09,
-            "style": "TL",
-            "text": "{\\an2}对面是{\\fs78}8{\\fs68}个制胜分 {\\fs78}14{\\fs68}次失误"
-          }
-        ],
-        "png_sha256": "bba7d29915e8841b008d0f5cb56d04bbbaf867711fe48dbd5e239e69d2241e11"
-      },
-      {
-        "frame_index": 15,
-        "seconds": 0.6,
-        "png": "frames/f000015.png",
-        "reasons": [
-          {
-            "kind": "metadata_cover_center_verify_actual_poster",
-            "requested_seconds": 0.6
-          }
-        ],
-        "png_sha256": "28019e71f00e57caa11e17e2ffb1e6f70edfd560bccafc70f8c0a5b2ce2fe253"
+        "png_sha256": "9af836b267237f51fe2ffe351480f6cfff0fa958e3a529a6794cb6959d87029a"
       },
       {
         "frame_index": 1912,
@@ -321,7 +394,7 @@
             "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}1000 quarterfinals or better in China.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N中国千赛的八强或更远轮次"
           }
         ],
-        "png_sha256": "b522bacf5cf887ff4061fbcd0179baa3538bb7f87e5810114f8f5d70b12e95b7"
+        "png_sha256": "eed5458ee6d6f09a6c1a9f3b35f0f470d29cce06550f231a98a2b84ee181a835"
       },
       {
         "frame_index": 3848,
@@ -338,7 +411,19 @@
             "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}on first serve in this match, 70%,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N一发得分率达到七成"
           }
         ],
-        "png_sha256": "e0fafee34e181eb9b650ace022ab0a07d0eb1617c311265f8c94fdacc0014ca0"
+        "png_sha256": "720b7c9928db8a59cd1f8b6b40eaea65579c27a9e485c67c409b95b80cc194ac"
+      },
+      {
+        "frame_index": 15,
+        "seconds": 0.6,
+        "png": "frames/f000015.png",
+        "reasons": [
+          {
+            "kind": "metadata_cover_center_verify_actual_poster",
+            "requested_seconds": 0.6
+          }
+        ],
+        "png_sha256": "44883632e420351de32ec5322a7af0e62e79a108c2f81f4f651edb3a44389502"
       },
       {
         "frame_index": 6507,
@@ -350,7 +435,7 @@
             "requested_seconds": 260.283
           }
         ],
-        "png_sha256": "b3abb7710de3cbf1e615b4daea396a17c7b8290c1f04349a71156527c7146ff0"
+        "png_sha256": "c93615c771fd2a8ec0365c76fdd280f208308473916ecb047fb72979ae8d0b58"
       }
     ],
     "individually_viewed_additional_boundary_PNGs": [
@@ -358,7 +443,7 @@
         "frame_index": 4734,
         "seconds": 189.36,
         "png": "scorewindow-boundary/f004734.png",
-        "png_sha256": "1a82c8cb429b312dea1b89b443f10e8cecfdc0774db7fa7183d5dcdbf194a135",
+        "png_sha256": "d3546aaeaa0e845424d04868f94fc0dd60541900120df4d73ad9610eaeb3f492",
         "kind": "exact_score_window_end_boundary",
         "nominal_boundary_film_seconds": 189.42,
         "nominal_boundary_source_seconds": 256.72
@@ -394,61 +479,216 @@
         "frame_index": 4738,
         "seconds": 189.52,
         "png": "scorewindow-boundary/f004738.png",
-        "png_sha256": "d8d56a7b4fbfeb5d4ed04f727185aed31c78464b67f2c8fdf0c284bf3e6a0b2f",
+        "png_sha256": "8b29841c3cf1711db3e6b46f457c1108b36ec975fea110f16f7b0d09d6febcd4",
         "kind": "exact_score_window_end_boundary",
         "nominal_boundary_film_seconds": 189.42,
         "nominal_boundary_source_seconds": 256.72
       }
     ],
-    "total_individually_viewed_original_PNG_count": 15,
+    "total_individually_viewed_original_PNG_count": 20,
     "contact_sheets": [
       {
         "path": "sheets/contact_00.jpg",
-        "sha256": "e392b4dd024ca7f91c03437a80b0defee1e780776fbe5ab87eb60474e7525c39"
+        "sha256": "59ae1d83e68025192507abe43d810837c90445e1ffdeb7a85ea8fe0ec5e19143"
       },
       {
         "path": "sheets/contact_01.jpg",
-        "sha256": "59a0ea33eb8d05985831234fcc3be3c6f6119fea8f99c081dd587598aa4c9148"
+        "sha256": "bd49da3717bb51d356dd3e62544a5583331544225f95a9528a31dbdfb7362498"
       },
       {
         "path": "sheets/contact_02.jpg",
-        "sha256": "4c357c2d98a4216c24b6402513c98769cfc385b3db2c4312c6d5caaf225e0c9e"
+        "sha256": "7f55cf838820ba019b5494506ca2f8e91e9d53780f7d5f103e4322371981f03d"
       },
       {
         "path": "sheets/contact_03.jpg",
-        "sha256": "6ad500c5543ddec50a4a340ca4d1f03255f6462d0e110f776f026649c9b84d3e"
+        "sha256": "49caef37d808c7ad711c76d819afaf8a3f01a9a17dc8fdfda5daaa7df2070980"
       },
       {
         "path": "sheets/contact_04.jpg",
-        "sha256": "77b5976df2898a5811de41a3219964c4e46545e4d5058a4c85c4e9f685b11afe"
+        "sha256": "03cfa912f504554e8f540d01e64096440b8fce6dd638d325c8080e527293c2ab"
       },
       {
         "path": "sheets/contact_05.jpg",
-        "sha256": "e17075e633493d63ab14475d448ac85a400825c6574cca2b9c62b1e9528268d2"
+        "sha256": "1c928659af88f3cb53ee0465641b3d9ef2cfb13891b47949ec673bbdc587317c"
       },
       {
         "path": "sheets/contact_06.jpg",
-        "sha256": "d6f0c2ae178b8819a1f2b3d6424fb05910e70f6e03e595705a912b002328ca0c"
+        "sha256": "41180e0a4a35572d356d0596241a3b183f35af0231c6afa54826739579c9006f"
       },
       {
         "path": "sheets/contact_07.jpg",
-        "sha256": "36bc9f52cf9296136df6eef37ca1cf1595c810aad1adb79835a24a6e411c0159"
+        "sha256": "67297b90ee2b5ab47a77887110639b6febd43e5e8bc8b0823090d6f0cc5e00b0"
       },
       {
         "path": "sheets/contact_08.jpg",
-        "sha256": "97db89f7a0036460afb48137b745871b11d4985e9820033d1965e80c2105f32b"
+        "sha256": "386ac14dde56f13812a63e3eaeab2780614630f01c73a1b7d80f52d947cce524"
       },
       {
         "path": "sheets/contact_09.jpg",
-        "sha256": "e468842745c0df7797683d0376abe04d4a60750e601d8f0241bd0013d52e0f3b"
+        "sha256": "46e568370afa4e18b8ea8402d01a399bca4f8dc2b535076cd240c57ec6b9016c"
       },
       {
         "path": "sheets/contact_10.jpg",
-        "sha256": "63492afb89dbcf2ce3d4a6ad1b43f448a78a68f467f4a89fb8cb522666174c70"
+        "sha256": "5557ee6167e1843070d61ebfe5ea29fe9eb0445aba287029b2c6958930f3a114"
       }
-    ]
+    ],
+    "V2_exact_PNG_inheritance": {
+      "comparison": "V2-V3-exact-PNG-comparison.json",
+      "exact_same_PNG_count": 36,
+      "exact_same_frame_indices": [
+        0,
+        920,
+        983,
+        988,
+        1042,
+        1087,
+        1149,
+        1194,
+        1196,
+        3051,
+        3110,
+        3150,
+        3165,
+        3244,
+        3294,
+        3339,
+        3343,
+        4018,
+        4068,
+        5723,
+        5812,
+        5834,
+        5871,
+        5906,
+        5951,
+        5994,
+        5996,
+        6036,
+        6101,
+        6168,
+        6222,
+        6243,
+        6307,
+        6384,
+        6449,
+        6451
+      ],
+      "prior_individually_opened_originals_retained_by_exact_bytes": [
+        5812
+      ],
+      "all_current_contacts_were_re_viewed": true
+    }
   },
   "findings": [
+    {
+      "id": "corrected_intro_timezone_and_cues",
+      "status": "no_blocker_observed_in_actual_V3",
+      "description": "Actual intro six cue midpoint originals were opened: 北京时间10月16日上午 is complete on one line, followed by武汉1/4决赛; winner/result,晋级四强andfirst-set danger wording remain readable. No overflow or overlap in these samples. This is visual text confirmation only, not an audio listening claim.",
+      "evidence": [
+        {
+          "frame_index": 448,
+          "seconds": 17.92,
+          "png": "frames/f000448.png",
+          "reasons": [
+            {
+              "kind": "actual_ASS_cue_midpoint",
+              "requested_seconds": 17.939999999999998,
+              "index": 5,
+              "start": 16.15,
+              "end": 19.73,
+              "style": "TL",
+              "text": "{\\an2}奥斯塔彭科 又朝斯瓦泰克近了一步"
+            }
+          ],
+          "png_sha256": "b82766f7902e91a32172b6471add7d2acf0b68fff435023b05b5f595deaac04b"
+        },
+        {
+          "frame_index": 518,
+          "seconds": 20.72,
+          "png": "frames/f000518.png",
+          "reasons": [
+            {
+              "kind": "actual_ASS_cue_midpoint",
+              "requested_seconds": 20.725,
+              "index": 6,
+              "start": 19.73,
+              "end": 21.72,
+              "style": "TL",
+              "text": "{\\an2}北京时间{\\fs78}10{\\fs68}月{\\fs78}16{\\fs68}日上午"
+            }
+          ],
+          "png_sha256": "f6fabad4c03aacd54e2277aff61f7a40fbfb0358895303c39e828b7c1f63a3b3"
+        },
+        {
+          "frame_index": 561,
+          "seconds": 22.44,
+          "png": "frames/f000561.png",
+          "reasons": [
+            {
+              "kind": "actual_ASS_cue_midpoint",
+              "requested_seconds": 22.435,
+              "index": 7,
+              "start": 21.72,
+              "end": 23.15,
+              "style": "TL",
+              "text": "{\\an2}武汉{\\fs78}1{\\fs68}/{\\fs78}4{\\fs68}决赛"
+            }
+          ],
+          "png_sha256": "16c5339c1078bf02fae0296ab3635c60049882088eec5c69a009c062da410a75"
+        },
+        {
+          "frame_index": 611,
+          "seconds": 24.44,
+          "png": "frames/f000611.png",
+          "reasons": [
+            {
+              "kind": "actual_ASS_cue_midpoint",
+              "requested_seconds": 24.435,
+              "index": 8,
+              "start": 23.15,
+              "end": 25.72,
+              "style": "TL",
+              "text": "{\\an2}她{\\fs78}7{\\fs68}比{\\fs78}6{\\fs68} {\\fs78}6{\\fs68}比{\\fs78}1{\\fs68}击败施耐德"
+            }
+          ],
+          "png_sha256": "cb007e07ca7baadfe2708041bc7ad1412c5dcd16a8626d1feb2a803129a16580"
+        },
+        {
+          "frame_index": 661,
+          "seconds": 26.44,
+          "png": "frames/f000661.png",
+          "reasons": [
+            {
+              "kind": "actual_ASS_cue_midpoint",
+              "requested_seconds": 26.43,
+              "index": 9,
+              "start": 25.72,
+              "end": 27.14,
+              "style": "TL",
+              "text": "{\\an2}晋级四强"
+            }
+          ],
+          "png_sha256": "9a483f9383c595002a6e26cb3193c608f00d8083845cd034dc3397a93b1b3916"
+        },
+        {
+          "frame_index": 720,
+          "seconds": 28.8,
+          "png": "frames/f000720.png",
+          "reasons": [
+            {
+              "kind": "actual_ASS_cue_midpoint",
+              "requested_seconds": 28.795,
+              "index": 10,
+              "start": 27.14,
+              "end": 30.45,
+              "style": "TL",
+              "text": "{\\an2}但首盘 她离丢盘只差一分"
+            }
+          ],
+          "png_sha256": "f5cf5b404045f5fce0a5c4d18fe4a070f4bd3fcb5b95abb462c5e37e91cdf7a8"
+        }
+      ]
+    },
     {
       "id": "final_large_result_panel_mask_corruption",
       "status": "closed_in_actual_corrected_movie",
@@ -467,7 +707,7 @@
               "source_seconds": 291.0
             }
           ],
-          "png_sha256": "b8b03b7c8f7f8ed26bd867f663873693e46aa664d773b46b564ee2d41e3f87b8"
+          "png_sha256": "14e7a29a217cf4e58cbf829a9f9b12bec0b9b886151b0398d95796cefdb0abfe"
         },
         {
           "frame_index": 5642,
@@ -481,7 +721,7 @@
               "source_seconds": 293.0
             }
           ],
-          "png_sha256": "279fd0acf1e10fd50f5cd2d3a05e7bbfa95778f1e5b76c6e3c9f711c1ca98882"
+          "png_sha256": "efc156d418f8eb89f4e0bfc8972d1c8884ec513e82e4226a73dd26a5e45a1a58"
         }
       ],
       "neighboring_panel_samples": [
@@ -497,7 +737,7 @@
               "source_seconds": 289.0
             }
           ],
-          "png_sha256": "ab170dbb502c37469f2286b23f29f627012414be9dffdb2e4412e46a4a0c756d"
+          "png_sha256": "a04559679553642a23f6bec655d4f940bbe2d5450a15ed275b9cc9e0a5fa2720"
         },
         {
           "frame_index": 5550,
@@ -514,7 +754,7 @@
               "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Maybe the best of the week.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N可能是她本周最好的一场"
             }
           ],
-          "png_sha256": "a86bfefda5ec2fba8f269ec8603f88630bc9217f1c70792d015cae382c0e9dbe"
+          "png_sha256": "d49161cfbd3a9661af4e857264aab4a69fc80bf65ca7935df3520eac39e7a383"
         },
         {
           "frame_index": 5616,
@@ -531,7 +771,7 @@
               "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Seven-six, six-one.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N七比六 六比一"
             }
           ],
-          "png_sha256": "deff80b6e6d69954e4d7beab8ecc330bccae85eedc1cedbb3e0ae2a16423b6bb"
+          "png_sha256": "e84355c6841da0c856a1934c0025462e431b9c3609c7f6fd8f1bb6092c64c178"
         },
         {
           "frame_index": 5662,
@@ -545,7 +785,7 @@
               "source_seconds": 293.8
             }
           ],
-          "png_sha256": "8bef15341e15947191a82840ea15a55ecdbb7ac3076625ec692f1f413203a871"
+          "png_sha256": "9247e1c1f40b745b5315e255298a45257ad50a4a7ef7d34ad4d2d2297548dac6"
         },
         {
           "frame_index": 5665,
@@ -562,7 +802,7 @@
               "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Wow.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N哇！"
             }
           ],
-          "png_sha256": "c075d63038aee563dc3bf54ab2a364d47c76bd9b07bfe130dea64042e1ddf505"
+          "png_sha256": "1dd952a56b8a6f89c2f0f0b6aaf49d4af919f70f8d4b6aa00e64530e9a3bfa4d"
         },
         {
           "frame_index": 5670,
@@ -576,7 +816,7 @@
               "source_seconds": 294.1
             }
           ],
-          "png_sha256": "f4b057817a83bd80eb337e56b6378711dfa5aaffbb1437e9e84e64327a3c6b73"
+          "png_sha256": "652241ca718f20f121e5bd4e8e37b6924a068d9035d8f8e6753d2a0f841c4a19"
         },
         {
           "frame_index": 5671,
@@ -594,7 +834,7 @@
               "bottom_margin": 540
             }
           ],
-          "png_sha256": "900362e1a4263ee6d36036bdfaed8fbfc25c42624e5ffc712711d680e959cebf"
+          "png_sha256": "7a60c2b16a0e1fe412ef21c1f6b846dc3a2beb5589a6fab56c5bb6adf96509eb"
         },
         {
           "frame_index": 5672,
@@ -624,10 +864,10 @@
               "bottom_margin": 540
             }
           ],
-          "png_sha256": "67a6a81d57cd7cdd9b2a38d81134cdb932f52f63dbfd369999e48f716f71c384"
+          "png_sha256": "28b0d5a225e1af44de7b6272b550dcfe90f75a723d42faba31c633af18ae8ff4"
         }
       ],
-      "correction_scope": "payoff source small-score overlay limited to200.90..256.72; original fixed canvas placement unchanged; no text, voice or segment timing changes",
+      "correction_scope": "The V2 source-overlay window fix200.90..256.72 remains unchanged inV3. V3 only changes intro narration to include北京时间; same segment durations and fixed scoreboard position.",
       "history": "history/run38873111090-9a3b3630179d/failure-report.json"
     },
     {
@@ -647,7 +887,7 @@
               "source_seconds": 140.0
             }
           ],
-          "png_sha256": "190628d7c95dcbf62a9024b15c9ac50bf69144d08173848eeef18008a69667ce"
+          "png_sha256": "ff4ba8565eb5e7e1c61778be087c450b04d06d4f68aa190c4a2493bde392bb53"
         },
         {
           "frame_index": 4618,
@@ -661,7 +901,7 @@
               "source_seconds": 252.0
             }
           ],
-          "png_sha256": "e011a5c58bfd6c1ca0a4626d830b3256fcbfe2acb00ba49dbc4b6b7d999449e7"
+          "png_sha256": "4369ed082e0bf155a9a25b5b7952c440079946667461f23e9adc4f79cfcf22f5"
         },
         {
           "frame_index": 4718,
@@ -675,7 +915,7 @@
               "source_seconds": 256.0
             }
           ],
-          "png_sha256": "d3f50bdac42170dce6918da558ea49e16c308e361f5527181e24898044706ec6"
+          "png_sha256": "778570283e30d482b925246b99424ae0635bd15d2c76e1bb07c7c7b4df5ff165"
         },
         {
           "frame_index": 4768,
@@ -689,7 +929,7 @@
               "source_seconds": 258.0
             }
           ],
-          "png_sha256": "7727ddcdd8d25e417c093dfbfeb9ea631aff37182646a1af5fd3941ca8607262"
+          "png_sha256": "f0d184da0256b6c9921529834f2e7f7b1068ad55367bce18de943b3acfd8edfa"
         }
       ],
       "exact_boundary_evidence": [
@@ -697,7 +937,7 @@
           "frame_index": 4734,
           "seconds": 189.36,
           "png": "scorewindow-boundary/f004734.png",
-          "png_sha256": "1a82c8cb429b312dea1b89b443f10e8cecfdc0774db7fa7183d5dcdbf194a135",
+          "png_sha256": "d3546aaeaa0e845424d04868f94fc0dd60541900120df4d73ad9610eaeb3f492",
           "kind": "exact_score_window_end_boundary",
           "nominal_boundary_film_seconds": 189.42,
           "nominal_boundary_source_seconds": 256.72
@@ -733,7 +973,7 @@
           "frame_index": 4738,
           "seconds": 189.52,
           "png": "scorewindow-boundary/f004738.png",
-          "png_sha256": "d8d56a7b4fbfeb5d4ed04f727185aed31c78464b67f2c8fdf0c284bf3e6a0b2f",
+          "png_sha256": "8b29841c3cf1711db3e6b46f457c1108b36ec975fea110f16f7b0d09d6febcd4",
           "kind": "exact_score_window_end_boundary",
           "nominal_boundary_film_seconds": 189.42,
           "nominal_boundary_source_seconds": 256.72
@@ -757,7 +997,7 @@
               "source_seconds": 140.0
             }
           ],
-          "png_sha256": "190628d7c95dcbf62a9024b15c9ac50bf69144d08173848eeef18008a69667ce"
+          "png_sha256": "ff4ba8565eb5e7e1c61778be087c450b04d06d4f68aa190c4a2493bde392bb53"
         },
         {
           "frame_index": 1912,
@@ -774,7 +1014,7 @@
               "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}1000 quarterfinals or better in China.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N中国千赛的八强或更远轮次"
             }
           ],
-          "png_sha256": "b522bacf5cf887ff4061fbcd0179baa3538bb7f87e5810114f8f5d70b12e95b7"
+          "png_sha256": "eed5458ee6d6f09a6c1a9f3b35f0f470d29cce06550f231a98a2b84ee181a835"
         },
         {
           "frame_index": 2888,
@@ -788,7 +1028,7 @@
               "source_seconds": 198.0
             }
           ],
-          "png_sha256": "bcbb067732851075c6bf3213369fd7bf4555beca1cdfb3c4e17aa4a732cfef05"
+          "png_sha256": "9af836b267237f51fe2ffe351480f6cfff0fa958e3a529a6794cb6959d87029a"
         },
         {
           "frame_index": 3848,
@@ -805,7 +1045,7 @@
               "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}on first serve in this match, 70%,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N一发得分率达到七成"
             }
           ],
-          "png_sha256": "e0fafee34e181eb9b650ace022ab0a07d0eb1617c311265f8c94fdacc0014ca0"
+          "png_sha256": "720b7c9928db8a59cd1f8b6b40eaea65579c27a9e485c67c409b95b80cc194ac"
         },
         {
           "frame_index": 5592,
@@ -819,7 +1059,7 @@
               "source_seconds": 291.0
             }
           ],
-          "png_sha256": "b8b03b7c8f7f8ed26bd867f663873693e46aa664d773b46b564ee2d41e3f87b8"
+          "png_sha256": "14e7a29a217cf4e58cbf829a9f9b12bec0b9b886151b0398d95796cefdb0abfe"
         },
         {
           "frame_index": 5642,
@@ -833,14 +1073,14 @@
               "source_seconds": 293.0
             }
           ],
-          "png_sha256": "279fd0acf1e10fd50f5cd2d3a05e7bbfa95778f1e5b76c6e3c9f711c1ca98882"
+          "png_sha256": "efc156d418f8eb89f4e0bfc8972d1c8884ec513e82e4226a73dd26a5e45a1a58"
         }
       ]
     },
     {
       "id": "clean_full_canvas_statistics",
       "status": "intentional_contract_verified",
-      "description": "All five actual ASS cue midpoint samples in the statistics segment show the intended clean full-canvas table without extra CN overlay. Original f5812 has all nine rows readable: aOstapenko/bShnaider ACE7/0,DF6/5,W32/8,UE30/14, first-in57%/63%,first-won73%/70%,second-won53%/35%,BP3/9 vs1/2,total72/61. Match scores7-6(6)/6-1 are visible.",
+      "description": "All five actual ASS cue midpoint samples in the statistics segment show the intended clean full-canvas table without extra CN overlay. ActualV3f5812 is byte-identical to the independently opened V2original; the prior finite original-image observation is explicitly retained and all V3statistics cue midpoints were re-viewed on actual new contacts. It has all nine rows readable: aOstapenko/bShnaider ACE7/0,DF6/5,W32/8,UE30/14, first-in57%/63%,first-won73%/70%,second-won53%/35%,BP3/9 vs1/2,total72/61. Match scores7-6(6)/6-1 are visible.",
       "actual_ASS_cue_indices_zero_based": [
         58,
         59,
@@ -951,7 +1191,7 @@
               "requested_seconds": 0.6
             }
           ],
-          "png_sha256": "28019e71f00e57caa11e17e2ffb1e6f70edfd560bccafc70f8c0a5b2ce2fe253"
+          "png_sha256": "44883632e420351de32ec5322a7af0e62e79a108c2f81f4f651edb3a44389502"
         },
         {
           "frame_index": 6507,
@@ -963,7 +1203,7 @@
               "requested_seconds": 260.283
             }
           ],
-          "png_sha256": "b3abb7710de3cbf1e615b4daea396a17c7b8290c1f04349a71156527c7146ff0"
+          "png_sha256": "c93615c771fd2a8ec0365c76fdd280f208308473916ecb047fb72979ae8d0b58"
         }
       ],
       "outlook_samples": [
@@ -1094,7 +1334,7 @@
             "requested_seconds": 262.52
           }
         ],
-        "png_sha256": "d67fce00a6bcd5b8734008269c34fdd5e44e86fc6876dacf44569e1b54fb0ee1"
+        "png_sha256": "b596715b7c8b264ea1f6c89152113af8679114550a06f5c04a8fd2fe65aadf15"
       }
     },
     {
@@ -1114,7 +1354,7 @@
               "source_seconds": 130.5
             }
           ],
-          "png_sha256": "7490c4fab443f5345148742a521763a6d8f1b7cddd5c783fc6d1e1c4b256c2db"
+          "png_sha256": "2241ec4340023bdc35221dfe5083ff67f72254e442811f7d2e1478b5caa288f2"
         },
         {
           "frame_index": 1288,
@@ -1128,7 +1368,7 @@
               "source_seconds": 134.0
             }
           ],
-          "png_sha256": "533a014d73c4211dbc1b1845eadd530487f84488e57c74cfb7ade2cdac481c59"
+          "png_sha256": "7e486f1d02c1a31218d8afc04b975bc1acaee4fec6f2e36b5bc202cb4f685b49"
         },
         {
           "frame_index": 3848,
@@ -1145,7 +1385,7 @@
               "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}on first serve in this match, 70%,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N一发得分率达到七成"
             }
           ],
-          "png_sha256": "e0fafee34e181eb9b650ace022ab0a07d0eb1617c311265f8c94fdacc0014ca0"
+          "png_sha256": "720b7c9928db8a59cd1f8b6b40eaea65579c27a9e485c67c409b95b80cc194ac"
         },
         {
           "frame_index": 3918,
@@ -1159,7 +1399,7 @@
               "source_seconds": 224.0
             }
           ],
-          "png_sha256": "449a66f04aa2b880f734dcbcccfeccce7d123623f2caa9941dcd7d637fc44a62"
+          "png_sha256": "78ad4edf5b05be43911a5de580caffe8065639d014868f4a66780cf921a5777a"
         }
       ]
     },
@@ -1172,9 +1412,15 @@
   "blocking_visual_findings": [],
   "limitations": [
     "169 selected movie stills of6564encoded frames were inspected, including all69actualASS cue midpoints. This is not whole-film or frame-by-frame approval.",
-    "164main samples were viewed on11contact sheets; listed10main originals and5extra boundary originals were opened separately.",
+    "164main samples were viewed again on11actualV3contact sheets;15listed main originals and5boundary originals were opened separately. Only36exact-byte-identical PNGs can retain previous finite observations; f5812is the sole inherited prior individually viewed original cited as such.",
     "No audio listening, loudness, silence, PCM or gain review was performed by this visual reviewer.",
     "Fixed center crop can exclude lateral action or athlete parts. Source action continuity between the selected stills is outside this finite static review."
   ],
-  "archive_transport_is_not_quality_approval": true
+  "archive_transport_is_not_quality_approval": true,
+  "version_history": {
+    "V1": "history/run38873111090-9a3b3630179d/failure-report.json",
+    "V2": "history/run38877144363-3226dd80201c/superseded-reason.json",
+    "V2_visual_status": "passed_finite_visual_review",
+    "V2_superseded_reason": "CI required spoken北京时间; visual pass remains truthful for3226dd80201c exact movie."
+  }
 }
