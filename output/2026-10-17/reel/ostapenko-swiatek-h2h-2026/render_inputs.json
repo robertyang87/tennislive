@@ -2,24 +2,19 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "ostapenko-swiatek-h2h-2026",
-  "written_at": "2026-10-16T17:06:44Z",
-  "code_sha": "f7533be70887809a8dc11a0362e8eda2c8119daf",
-  "spec_sha256": "5b48911c06892fdf62ebdf78b3dcc6e158ba9284bff1256f8fde7f9fb29a9562",
-  "film_sha256": "cfe9ac11d74b4d41ad9db72208327b72243e425a40ad53ddc70fc3eb8305c5d5",
-  "film_bytes": 92752324,
-  "projection_sha256": "2bae0bd8741f347b6f06f94171a2e2ca656f6c9791887f3f7243ba842aa0a6c3",
+  "written_at": "2026-10-16T17:19:15Z",
+  "code_sha": "6874359a80265f90548916eeaeebfa9e991051fd",
+  "spec_sha256": "ca1cf343e07b58cd85c0956c18d3b07c242ed6e9178dbb2a6e8b36f422014de2",
+  "film_sha256": "ac4ab229a076d75b657cad532296b25ea570b3334653f220a28c7062dead2938",
+  "film_bytes": 90234092,
+  "projection_sha256": "be18bfeb78940529d19c1eb370a25de917406b993ed30719c62330dd464c71de",
   "claims": [
     [
       "_claims"
     ],
     [
       "segments",
-      0,
-      "_band_skip_why"
-    ],
-    [
-      "segments",
-      2,
+      1,
       "_band_skip_why"
     ],
     [
@@ -29,17 +24,22 @@
     ],
     [
       "segments",
-      2,
+      1,
       "_quote_kind"
     ],
     [
       "segments",
-      6,
+      5,
       "_quote_kind"
     ],
     [
       "segments",
-      16,
+      15,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      18,
       "_quote_kind"
     ],
     [
@@ -49,17 +49,12 @@
     ],
     [
       "segments",
-      20,
+      22,
       "_quote_kind"
     ],
     [
       "segments",
-      23,
-      "_quote_kind"
-    ],
-    [
-      "segments",
-      25,
+      24,
       "_quote_kind"
     ],
     [
@@ -73,7 +68,7 @@
     ],
     [
       "segments",
-      1,
+      2,
       "voice",
       "_why"
     ],
@@ -91,7 +86,7 @@
     ],
     [
       "segments",
-      5,
+      6,
       "voice",
       "_why"
     ],
@@ -145,7 +140,7 @@
     ],
     [
       "segments",
-      15,
+      16,
       "voice",
       "_why"
     ],
@@ -157,7 +152,7 @@
     ],
     [
       "segments",
-      18,
+      20,
       "voice",
       "_why"
     ],
@@ -169,19 +164,13 @@
     ],
     [
       "segments",
-      22,
+      23,
       "voice",
       "_why"
     ],
     [
       "segments",
-      24,
-      "voice",
-      "_why"
-    ],
-    [
-      "segments",
-      26,
+      25,
       "voice",
       "_why"
     ]
@@ -201,8 +190,8 @@
     "assets/reel/osw/osw-wuhsh.png": "229a4d835214ca2ab4813b77859e8ea3f187d1246c1d74a2a7d3c3004a739bc5"
   },
   "artifacts": {
-    "audio_review_binding.json": "0a72e7a4119ce22e4b167912a2a34253630d0a2a14d52f07ade02326e53b3275",
-    "subtitles.ass": "3e19614a5b8123c2ef8292ad7fd8b6e3056ba172a91eaef9c9855c352d2372c6",
+    "audio_review_binding.json": "20a789a7e19b36073f127352b68a255e1dde6360a1b18edf96b0f78d3af7e2b4",
+    "subtitles.ass": "8dd29632e1693b0a93bc5e5ac683d7509f402510d1fcf5f227a491e9bd04fffc",
     "poster.jpg": "01344470150c789ef15d1897d3277ccec72cfc3210c91d9d9e7da50e74bd2a75"
   },
   "projection": {
@@ -299,23 +288,11 @@
     "segments": [
       {
         "source": "doh25f",
-        "start": 3457.6,
-        "end": 3461.0,
-        "cx": 0.5,
-        "track": false,
-        "narration": "做过世界第一的斯瓦泰克，",
-        "voice": {
-          "pitch": "+10Hz"
-        },
-        "crop_zoom": 1.15
-      },
-      {
-        "source": "doh25f",
         "start": 3464.0,
         "end": 3468.6,
         "cx": 0.5,
         "track": false,
-        "narration": "六次撞上她，六次全输。",
+        "narration": "世界第一？六次撞上她，六次全输。",
         "voice": {
           "pitch": "+10Hz"
         },
