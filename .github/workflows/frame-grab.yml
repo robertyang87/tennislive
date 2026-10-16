@@ -1,194 +1,104 @@
-name: frame-grab
-
-# 从一条 YouTube 视频里抽候选帧，用来给某一屏配图。
-#
-# 为什么要有这条：YouTube 对机房 IP 一律「Sign in to confirm you're not a bot」，
-# 沙箱里 yt-dlp 拿到 403 或 DRM 报错。runner 上有整套解法（bgutil PO token
-# provider + YT_COOKIES_TXT），match-reel 一直在用——这条复用同一套。
-#
-# 产物**提交进仓库**而不是走 artifact：这个沙箱下不动 artifact
-# （api.github.com 是 403），帧只能进仓库才看得到。
-
+name: Preserve finite actual Ostapenko Wuhan QF review evidence (isolated)
 on:
   workflow_dispatch:
-    inputs:
-      url:
-        description: "YouTube 链接（只用赛事官方或球员官方频道的片子）"
-        required: true
-      slug:
-        description: "落到 output/<日期>/frames/<slug>/"
-        required: true
-      every:
-        description: "每几秒抽一帧"
-        default: "2"
-      width:
-        description: "帧宽（像素）"
-        default: "1600"
-      start:
-        description: "从片子的第几秒开始抽（留空＝从头）"
-        default: ""
-      end:
-        description: "抽到第几秒为止（留空＝到尾）"
-        default: ""
-
 permissions:
   contents: write
-
-# 同一个 slug 排队、不并行：两趟同时往 output/<日期>/frames/<slug>/ 写同名 JPEG，
-# 后推的那趟 rebase 会撞二进制冲突（共享重试 abort 之后每一轮撞同一个）。
-# 不同 slug 各写各的目录，照样并行。
-# ⚠️ **「排队」只排得下一个**：GitHub 每个 concurrency 组最多一个在跑、一个 pending——
-# `cancel-in-progress: false` 保住的是在跑的那趟，**不保 pending 的**。同一个 slug 连拨三趟，
-# 第三趟一进组，还在排队的第二趟就被取消（run 列表里是 cancelled，不是排在后面）。
-# 要抽不同的区间就换个 slug，或者等前一趟跑完再拨。
-concurrency:
-  group: frame-grab-${{ github.event.inputs.slug }}
-  cancel-in-progress: false
-
 jobs:
-  grab:
+  preserve:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
-        with:
-          # output/ 在 HEAD 上就有 1 GB 多，不稀疏检出的话光 checkout 就两分钟。
-          # 本次的 outdir 由下面「算目录」那一步 add 回来。
-          sparse-checkout: |
-            /*
-            !output
-          sparse-checkout-cone-mode: false
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      # ⚠️ apt 镜像会抽风且不是偶发（2026-08-04/18/19 多次撞上 `apt-get
-      # update`/`install` 连着两次吃满 150 秒、零字节进度）——调重试参数治不了根，
-      # 真正的杠杆是大多数 run 根本不碰这个镜像。`tools/ci_apt_install.sh`
-      # 把索引和下载缓存住，先试零网络的本地安装，缓存没命中才回退到老路。
-      - name: 缓存 apt 包（ffmpeg，绕开镜像抽风）
-        id: apt_cache
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            ~/.cache/apt-archives
-            ~/.cache/apt-lists
-          # 滚动键：actions/cache 的主键不可变，固定键会把第一趟存下的
-          # 半份缓存永远钉死，后面补装的包写不回去——形状照抄
-          # match-reel.yml「缓存 apt 包」那一步（那儿有完整注释）。
-          key: apt-pkgs-${{ runner.os }}-24.04-frame-grab-v2-${{ github.run_id }}
-          restore-keys: |
-            apt-pkgs-${{ runner.os }}-24.04-frame-grab-v2-
-      - name: 安装依赖
-        timeout-minutes: 15
-        run: |
-          source tools/ci_apt_install.sh
-          ensure_ffmpeg
-          # **`[default]` 不是可选的**：它才带 `yt-dlp-ejs`，而解 YouTube 的
-          # n challenge 要跑一段 JS。少了它 yt-dlp **不报「装少了」**，而是
-          # 格式表里只剩故事板，于是任何选择器（连 `worst`）都匹配不上，
-          # 报出来是 `Requested format is not available`——看起来像「这条片子
-          # 只有 DRM」。头两趟 run（30791003879 / 30791363067）八个 client
-          # 全红，我据此写下「卡在片源」，方向反了。JS 运行时用 runner 自带的
-          # node，命令行统一带 `--js-runtimes node`（在 YTDLP_BASE 里）。
-          pip install -q -e . "yt-dlp[default]"
-          node --version
-
-      # 只在这一趟真摸了网、下了新包时回写（`APT_CACHE_DIRTY` 由
-      # `tools/ci_apt_install.sh` 置位）。原来靠 actions/cache@v4 的 post 自动存：
-      # 命中的趟白传一份、只装 ffmpeg 的趟把空目录存成最新那一格——见那份脚本
-      # 顶部 2026-09-27 那段。判据 `tests/test_runner_setup_cache.py`。
-      - name: 回写 apt 缓存（这趟真下了新包才存）
-        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            ~/.cache/apt-archives
-            ~/.cache/apt-lists
-          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
-
-      # 起不来不算失败——退回 client 梯子，让下载那一步去报真正的原因。
-      - name: 起 PO token provider
-        id: pot
-        continue-on-error: true
-        run: |
-          pip install -q bgutil-ytdlp-pot-provider
-          docker run --name bgutil-pot -d -p 4416:4416 \
-            brainicism/bgutil-ytdlp-pot-provider
-          for i in $(seq 1 25); do
-            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
-              echo "provider 起来了（第 $i 次探活）"
-              echo "up=1" >> "$GITHUB_OUTPUT"; exit 0
-            fi
-            sleep 2
-          done
-          echo "::warning::PO token provider 50 秒内没起来，退回 client 梯子"
-          docker logs bgutil-pot 2>&1 | tail -20 || true
-
-      - name: 落 cookies（配了 Secret 才有）
-        id: cookies
+      - name: Preserve exact finite reviewed archives (transport only)
         env:
-          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
-          if [ -n "$YT_COOKIES_TXT" ]; then
-            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
-            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
-            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
-          else
-            echo "::notice::未配置 YT_COOKIES_TXT，只能靠 PO token + client 梯子"
-          fi
-
-      # ⚠️ 要排在抽帧**之前**：sparse-checkout add 会把 HEAD 上那一版先铺回
-      # 工作区，反过来会拿旧内容盖掉刚生成的。
-      - name: 算目录
-        id: paths
-        run: |
-          OUT_DATE=$(TZ=Asia/Shanghai date +%F)
-          OUT_DIR="output/$OUT_DATE/frames/${{ github.event.inputs.slug }}"
-          echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
-          git sparse-checkout add "$OUT_DIR" || true
-          mkdir -p "$OUT_DIR"
-
-      - name: 抽帧
-        env:
-          YT_COOKIES: ${{ steps.cookies.outputs.path }}
-          # 起来了就让 POT 那三档排在前面（`_ladder()` 按这个变量决定顺序）。
-          # 不设的话八档照跑，只是把最可能成的那几档排到了最后。
-          YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
-          PYTHONPATH: src
-          # ⚠️ 这两个走 env 不走 `${{ }}` 直插：值可能是空串，而空串插进
-          # `--start ""` 会让 argparse 吃到一个空参数。空就整个不给这个开关。
-          # （CLAUDE.md 记过 `${{ inputs.x }}` 直接拼进 run 正文的引号打架。）
-          GRAB_START: ${{ github.event.inputs.start }}
-          GRAB_END: ${{ github.event.inputs.end }}
-        run: |
-          RANGE=()
-          [ -n "$GRAB_START" ] && RANGE+=(--start "$GRAB_START")
-          [ -n "$GRAB_END" ] && RANGE+=(--end "$GRAB_END")
-          python tools/grab_frames.py "${{ github.event.inputs.url }}" \
-            -o "${{ steps.paths.outputs.outdir }}" \
-            --every "${{ github.event.inputs.every }}" \
-            --width "${{ github.event.inputs.width }}" \
-            "${RANGE[@]}"
-          ls -la "${{ steps.paths.outputs.outdir }}" | head -20
-
-      # push 重试走共享脚本 tools/git_push_retry.sh（和另外十条工作流同一份）。
-      # 原来这里手搓的循环是「fetch → reset → 重放 → **睡 5~35 秒** → push」：睡在
-      # 拿到远端和推之间，main 在那几十秒里又被别的 run 推过，于是每一轮都撞车——
-      # run 36317540680（2026-09-27 12:01Z）五次全红，fetch 到 push 隔 13~28 秒，
-      # 远端每一轮都往前走了一格（b356cc9→93b7013→c2f5998→9fb4d2e→900522d）。
-      # 共享脚本先退避、再 rebase、rebase 完立刻推，撞车窗口只剩 rebase 那一两秒；
-      # 帧目录是本趟独有的（output/<日期>/frames/<slug>/），rebase 不会有内容冲突。
-      - name: 提交候选帧
-        run: |
-          OUTDIR="${{ steps.paths.outputs.outdir }}"
-          git config user.name "Claude"
-          git config user.email "noreply@anthropic.com"
-          # 稀疏模式下裸的 git add 只警告、退出码 0，产物会静默丢掉
-          git add --sparse "$OUTDIR"
-          python tools/check_staged_file_sizes.py
-          git diff --cached --quiet && { echo "没有新内容"; exit 0; }
-          git commit -m "frames: ${{ github.event.inputs.slug }} 候选帧"
-          source tools/git_push_retry.sh
-          push_with_rebase_retry "${{ github.ref_name }}" 8
+          set -euo pipefail
+          gh api repos/robertyang87/tennislive/git/blobs/fd396e4bbe6a37dce0af31afe79b1d35ee7e2b6c > /tmp/blob-0-0.json
+          gh api repos/robertyang87/tennislive/git/blobs/58cd60423df3b37e84f9b9ac906e5678b24fb2c1 > /tmp/blob-0-1.json
+          gh api repos/robertyang87/tennislive/git/blobs/36baac43e719f1ede5d7053a4972a95b666836af > /tmp/blob-0-2.json
+          python - <<'PY_ARCHIVE_0'
+          from pathlib import Path
+          import json,base64,hashlib
+          parts=[]
+          b=base64.b64decode(json.loads(Path('/tmp/blob-0-0.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='985871144da43356c80807ea042b2ee4e1538823dc5ecbd4611dafb2420dac8a'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-0-1.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='d452649d9dc63549482bb72714961cec869bfa4d576fc1c0f3fc8a8354d42072'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-0-2.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='fe98d2c24828418698db9679f2638cccb60d1965970e955c2ae1975d1c557571'
+          parts.append(b)
+          b=b''.join(parts)
+          assert len(b)==47955376 and hashlib.sha256(b).hexdigest()=='4f7885edc8445e8d0d82e86eaf8ddf0b426ad9e6b3e609263cd26f130549f920'
+          Path('/tmp/pronunciation-evidence.zip').write_bytes(b)
+          print('Exact archive bytes verified',len(b),'4f7885edc8445e8d0d82e86eaf8ddf0b426ad9e6b3e609263cd26f130549f920')
+          PY_ARCHIVE_0
+          gh api repos/robertyang87/tennislive/git/blobs/3437a9617f41e518b7efbcdbf21687cbfc61fe85 > /tmp/blob-1-0.json
+          gh api repos/robertyang87/tennislive/git/blobs/6c43663918722be200301d18e136a6e2c60e60ea > /tmp/blob-1-1.json
+          gh api repos/robertyang87/tennislive/git/blobs/96536222c35d633f5614714db6ed5a92aa20d288 > /tmp/blob-1-2.json
+          gh api repos/robertyang87/tennislive/git/blobs/c6c45e33f8b34f78c8a450365dba67851a0d81f5 > /tmp/blob-1-3.json
+          gh api repos/robertyang87/tennislive/git/blobs/a48aecc960994f1f057b95e965e7a293f2c9675a > /tmp/blob-1-4.json
+          gh api repos/robertyang87/tennislive/git/blobs/49904023fd84b037d4c0279b390bd645681eadb1 > /tmp/blob-1-5.json
+          gh api repos/robertyang87/tennislive/git/blobs/8bd009550873d21cc6d5b5c8f89df28d8fb90578 > /tmp/blob-1-6.json
+          gh api repos/robertyang87/tennislive/git/blobs/664a2b4d7e0eac3914c1883ce290f683ab3aa46c > /tmp/blob-1-7.json
+          gh api repos/robertyang87/tennislive/git/blobs/73965d6c202902acbf15fea4238a1980b1b30b83 > /tmp/blob-1-8.json
+          gh api repos/robertyang87/tennislive/git/blobs/278b7f774e767353877422706e9cf6176d6f8466 > /tmp/blob-1-9.json
+          gh api repos/robertyang87/tennislive/git/blobs/1bcf325b029e73518f00f054b47d280074503615 > /tmp/blob-1-10.json
+          gh api repos/robertyang87/tennislive/git/blobs/ad05afeb4980a947671866fcc15707a463734533 > /tmp/blob-1-11.json
+          gh api repos/robertyang87/tennislive/git/blobs/3e735a07bd6d72fa8545de696d0a5ed0ccece849 > /tmp/blob-1-12.json
+          gh api repos/robertyang87/tennislive/git/blobs/3f8dabf3f5b0e18fb9a96b63d482fe6c65984809 > /tmp/blob-1-13.json
+          python - <<'PY_ARCHIVE_1'
+          from pathlib import Path
+          import json,base64,hashlib
+          parts=[]
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-0.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='0cd344aa54cf8c482803902231e1de11fca4e4a73aee540d7620f5281829e503'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-1.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='e439194649b9e0bcc0f5618851ff8aadbd44065164c3af1e16986e0b9656d853'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-2.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='46bab75f2a3a5f4bcc827518597fa9fe752dc85b5e4d3dae14201dcad673b8ae'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-3.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='bfe68c626cb19574c890615a0516343ae44f37f0ac1e9d331d0f6c1ed14ae569'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-4.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='e55f8851f117116ddd8cf3ce5e4c3dda338d6e24cb78e21c4af551db8c3866c5'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-5.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='82d439b1be952570bc14b110bd9a88471a5c2bc9c8f9df8e242d05a3e2ca801c'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-6.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='3c1eb981516ccd965f60afd61f203837a0a3b3924935c594780124cc7b866cb9'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-7.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='743eb55e0e35acaa4cf91c0b8f9917f7cd37906d9ed314153592d46bb754594c'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-8.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='6a8c3847b5f78811b3e02e8978435659ece117ecb50b3ced73f6c8059a49e6b4'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-9.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='d9d31f9d46a08b42ee7baf5b5fda87aaeaaa589c33010eb6e564898cc104bee1'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-10.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='1d7343a14627517f8bffde88418fce9f6ae2c3fd9ba7bc19a3aaeaea0b8d226e'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-11.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='5e5f330494af882fad174e7f64d66ab689b8294af873a513301345e60798024a'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-12.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='d60cc99a3701512a638d967f60148755b5775530a85201a754448add385e88c9'
+          parts.append(b)
+          b=base64.b64decode(json.loads(Path('/tmp/blob-1-13.json').read_text())['content'])
+          assert hashlib.sha256(b).hexdigest()=='25636cbc50b0375d9a4d56252ed375399c1bea8444da54ca10ea4706b9ae59ce'
+          parts.append(b)
+          b=b''.join(parts)
+          assert len(b)==222559501 and hashlib.sha256(b).hexdigest()=='9084304c87249ec0ff9551c794c3f8e80920078c1094bc0d4c9fc0243d3f57ff'
+          Path('/tmp/visual-qc-evidence.zip').write_bytes(b)
+          print('Exact archive bytes verified',len(b),'9084304c87249ec0ff9551c794c3f8e80920078c1094bc0d4c9fc0243d3f57ff')
+          PY_ARCHIVE_1
+          gh release view reel-review-ostapenko-shnaider-wuhan-2026-qf-f5b30c57e32b340d >/dev/null 2>&1 || gh release create reel-review-ostapenko-shnaider-wuhan-2026-qf-f5b30c57e32b340d --target '${{ github.sha }}' --title 'Ostapenko Wuhan QF finite actual review evidence' --notes 'Actual frozen native pronunciation and sampled actual movie evidence. Transport success is not a review/QC approval or delivery receipt.' --latest=false
+          gh release upload reel-review-ostapenko-shnaider-wuhan-2026-qf-f5b30c57e32b340d /tmp/pronunciation-evidence.zip /tmp/visual-qc-evidence.zip
