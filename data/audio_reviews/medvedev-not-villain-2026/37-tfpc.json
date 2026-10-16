@@ -1,0 +1,39 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=jqLfK2rZdMM",
+  "source_sha256": "21b3345d8044a6f71514a8b0ce581adf8b87318ba42f2806206ef7e6c24d87e1",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-16T02:29:24.270460+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 816.3,
+  "reviewed_to": 824.25,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 816.8,
+      "end": 818.06,
+      "en": "I mean, I was just laughing, it's fun.",
+      "zh": "我就是在笑，挺好玩的。"
+    },
+    {
+      "start": 818.06,
+      "end": 819.72,
+      "en": "I think he's really funny, to be honest.",
+      "zh": "说实话，我觉得他挺搞笑。"
+    },
+    {
+      "start": 819.72,
+      "end": 822.48,
+      "en": "Even when he's not playing me, he always cracks me up.",
+      "zh": "不跟我打的时候，他也总能逗笑我。"
+    },
+    {
+      "start": 822.48,
+      "end": 824.03,
+      "en": "He's pretty funny.",
+      "zh": "他真的挺好玩。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/jqLfK2rZdMM/small.en.json + medium.en.json",
+  "review_note": "Tennis TV 官方赛后发布会（jqLfK2rZdMM）：记者问弗里茨怎么看梅德韦杰夫反拿球拍。medium 逐词：问句止于 815.74，回答 816.80 起，pretty funny 止于 824.10；段尾 824.25 在 but（824.10–824.52）之后，这句后半截随之收掉。"
+}

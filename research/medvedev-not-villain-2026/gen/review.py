@@ -4,7 +4,7 @@ sys.path.insert(0,'tools')
 import foreground_audio_gate as g
 SLUG='medvedev-not-villain-2026'
 spec=json.load(open(f'specs/reels/{SLUG}.json'))
-VID={"bj":"LgRD3TLoxr0","us19":"9CQYJlU5_Ew","md21":"SXCs4vTWo_s","ci21":"Rv0Q9jXIz-M","us21":"MEFpXBwnyQA","ao22":"uWxN2lH2Fa0","ao22r":"xH4R5HNq-6s","us23":"6q9HMdjYpVg","ao25":"MWNZOZr_uMU","mc26":"yNxzL-8i9NU","ws26":"l7F7uLC-GGM","wsc":"9aqUxco0bqo","us25e":"oXmpP1kLyxQ","us25":"p2lgExFvcug","cik":"5PSCTOsUYho","wb17":"UKZnd1EliAY"}
+VID={"bj":"LgRD3TLoxr0","us19":"9CQYJlU5_Ew","md21":"SXCs4vTWo_s","ci21":"Rv0Q9jXIz-M","us21":"MEFpXBwnyQA","ao22":"uWxN2lH2Fa0","ao22r":"xH4R5HNq-6s","us23":"6q9HMdjYpVg","ao25":"MWNZOZr_uMU","mc26":"yNxzL-8i9NU","ws26":"l7F7uLC-GGM","wsc":"9aqUxco0bqo","us25e":"oXmpP1kLyxQ","us25":"p2lgExFvcug","cik":"5PSCTOsUYho","wb17":"UKZnd1EliAY","tf24":"ASkuvHvCqzc","tfpc":"jqLfK2rZdMM"}
 SRC='/tmp/claude-0/med/src'
 def sha(p):
     h=hashlib.sha256()
@@ -15,7 +15,7 @@ SHA={k:sha(f"{SRC}/{'ws_c' if k=='wsc' else v}.mp4") for k,v in VID.items()}
 now=datetime.now(timezone.utc).isoformat()
 REV="Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音"
 PROF="两档转写在这一窗口里都没有脏话；按交接文档「如果确认有脏话」的条件，不消音。"
-RISK={"md21","ci21","cik","ao25","mc26","us25e","us25"}
+RISK={"tf24","md21","ci21","cik","ao25","mc26","us25e","us25"}
 entries=[]
 d=f'data/audio_reviews/{SLUG}'; os.makedirs(d,exist_ok=True)
 for f in os.listdir(d): os.remove(os.path.join(d,f))
