@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "ostapenko-swiatek-h2h-2026",
-  "written_at": "2026-10-16T16:47:59Z",
-  "code_sha": "7df0fa42311c38537dd7d0b929c68669844d573b",
-  "spec_sha256": "b31db6a28fb427dc1c85b94b9621af9663635692c3d28c019629146332768b40",
-  "film_sha256": "1f0c59ac28dd768d496569fed543fff34872a71d3102250bf071fabf9ab59bd6",
-  "film_bytes": 93504621,
-  "projection_sha256": "cbab02e7f2d14b0ec2535790d5217d6ca340d20cc5e1e81b3c59522ab5666394",
+  "written_at": "2026-10-16T17:06:44Z",
+  "code_sha": "f7533be70887809a8dc11a0362e8eda2c8119daf",
+  "spec_sha256": "5b48911c06892fdf62ebdf78b3dcc6e158ba9284bff1256f8fde7f9fb29a9562",
+  "film_sha256": "cfe9ac11d74b4d41ad9db72208327b72243e425a40ad53ddc70fc3eb8305c5d5",
+  "film_bytes": 92752324,
+  "projection_sha256": "2bae0bd8741f347b6f06f94171a2e2ca656f6c9791887f3f7243ba842aa0a6c3",
   "claims": [
     [
       "_claims"
@@ -201,8 +201,8 @@
     "assets/reel/osw/osw-wuhsh.png": "229a4d835214ca2ab4813b77859e8ea3f187d1246c1d74a2a7d3c3004a739bc5"
   },
   "artifacts": {
-    "audio_review_binding.json": "1fea475bd5212bb92566873b325ee3af23edce3a0a397791d315cfd97d3634d6",
-    "subtitles.ass": "3a9dd141e9e4db9d8c6d9fbfeb0f6c8ab7dba59e876f90527d8bbf3248857cc2",
+    "audio_review_binding.json": "0a72e7a4119ce22e4b167912a2a34253630d0a2a14d52f07ade02326e53b3275",
+    "subtitles.ass": "3e19614a5b8123c2ef8292ad7fd8b6e3056ba172a91eaef9c9855c352d2372c6",
     "poster.jpg": "01344470150c789ef15d1897d3277ccec72cfc3210c91d9d9e7da50e74bd2a75"
   },
   "projection": {
@@ -306,7 +306,8 @@
         "narration": "做过世界第一的斯瓦泰克，",
         "voice": {
           "pitch": "+10Hz"
-        }
+        },
+        "crop_zoom": 1.15
       },
       {
         "source": "doh25f",
@@ -314,7 +315,7 @@
         "end": 3468.6,
         "cx": 0.5,
         "track": false,
-        "narration": "偏偏有一个人，她一次都没赢过。",
+        "narration": "六次撞上她，六次全输。",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -349,6 +350,7 @@
             "text": "And a reaction to match, Jelena Ostapenko!\n赛点拿下，看奥斯塔彭科的反应！"
           }
         ],
+        "crop_zoom": 1.25,
         "point_end_ok": "赛点刚打完的庆祝；后面的记分条翻牌是赛后字板，不是在打的分。"
       },
       {
@@ -357,7 +359,7 @@
         "end": 27.2,
         "cx": 0.5,
         "track": false,
-        "narration": "伯明翰草地，十八岁的资格赛选手斯瓦泰克，遇上法网冠军。",
+        "narration": "二零一九伯明翰，十八岁的资格赛小将，撞上法网冠军。",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -384,7 +386,7 @@
         "end": 33.2,
         "cx": 0.5,
         "track": false,
-        "narration": "首盘六比零，全场接发球三十八分拿下二十四分。",
+        "narration": "首盘零比六。接发球，三十八分丢了二十四分。",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -411,7 +413,7 @@
         "end": 248.1,
         "cx": 0.5,
         "track": false,
-        "narration": "二零二一年印第安维尔斯，二号种子斯瓦泰克，",
+        "narration": "两年后印第安维尔斯，她已是二号种子。",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -455,7 +457,7 @@
         "end": 462.6,
         "cx": 0.5,
         "track": false,
-        "narration": "四比六、三比六，两盘出局。",
+        "narration": "还是两盘，干脆利落。",
         "voice": {
           "pitch": "+10Hz"
         }
@@ -466,7 +468,7 @@
         "end": 226.0,
         "cx": 0.5,
         "track": false,
-        "narration": "二零二二年迪拜，斯瓦泰克先拿一盘，",
+        "narration": "二零二二迪拜，她终于先拿一盘，",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -493,7 +495,7 @@
         "end": 342.5,
         "cx": 0.5,
         "track": false,
-        "narration": "决胜盘，奥斯塔彭科先破发。",
+        "narration": "可决胜盘，奥斯塔彭科先破发。",
         "voice": {
           "pitch": "+10Hz"
         }
@@ -504,7 +506,7 @@
         "end": 471.5,
         "cx": 0.5,
         "track": false,
-        "narration": "抢七七比四，斯瓦泰克被逆转。",
+        "narration": "抢七四比七，到手的胜利飞了。",
         "voice": {
           "pitch": "+10Hz"
         }
@@ -515,7 +517,7 @@
         "end": 500.6,
         "cx": 0.5,
         "track": false,
-        "narration": "这是她三十七连胜前，最后一场失利。",
+        "narration": "此后她三十七连胜，连胜前最后一败，就是这场。",
         "voice": {
           "pitch": "+10Hz"
         }
@@ -526,7 +528,7 @@
         "end": 4925.4,
         "cx": 0.5,
         "track": false,
-        "narration": "二零二三年美网，斯瓦泰克是卫冕冠军，也是世界第一。",
+        "narration": "最痛的一次：二零二三美网。卫冕冠军，世界第一。",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -553,7 +555,7 @@
         "end": 4931.0,
         "cx": 0.5,
         "track": false,
-        "narration": "斯瓦泰克先赢一盘，奥斯塔彭科随即提速。",
+        "narration": "她先拿一盘。然后，奥斯塔彭科提速了。",
         "voice": {
           "pitch": "+10Hz"
         }
@@ -564,18 +566,18 @@
         "end": 4985.0,
         "cx": 0.5,
         "track": false,
-        "narration": "奥斯塔彭科说：打得又快又狠，斯瓦泰克就有麻烦。",
+        "narration": "奥斯塔彭科说：我打得又快又狠，她就有麻烦。",
         "voice": {
           "pitch": "+10Hz"
         }
       },
       {
         "source": "uso23f",
-        "start": 5004.0,
+        "start": 5006.6,
         "end": 5009.6,
         "cx": 0.5,
         "track": false,
-        "narration": "决胜盘六比一。",
+        "narration": "决胜盘，六比一。",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -595,6 +597,7 @@
             "text": "Game, set, Jelena Ostapenko stuns number one.\n奥斯塔彭科爆冷击败世界第一！"
           }
         ],
+        "crop_zoom": 1.2,
         "point_end_ok": "赛点在 5010s 打完，这段是赛后庆祝与全场；后面的记分条翻牌是赛后字板，不是在打的分。"
       },
       {
@@ -603,7 +606,7 @@
         "end": 5026.0,
         "cx": 0.5,
         "track": false,
-        "narration": "七十五周的世界第一到此为止。她说：突然间，我失去了控制。",
+        "narration": "七十五周的王座，到此为止。她说：突然间，我失去了控制。",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -631,7 +634,7 @@
         "end": 3436.6,
         "cx": 0.5,
         "track": false,
-        "narration": "二零二五年多哈，三届卫冕冠军斯瓦泰克。",
+        "narration": "二零二五多哈，三届卫冕冠军，又倒在她手里。",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -721,7 +724,7 @@
         "end": 254.6,
         "cx": 0.5,
         "track": false,
-        "narration": "决胜盘六比二，还是她。",
+        "narration": "决胜盘，还是她。",
         "voice": {
           "pitch": "+10Hz"
         }
@@ -744,7 +747,8 @@
             "end": 8.5,
             "text": "for Jelena Ostapenko against Iga Swiatek.\n奥斯塔彭科对斯瓦泰克！"
           }
-        ]
+        ],
+        "crop_zoom": 1.2
       },
       {
         "source": "wuhli",
@@ -752,7 +756,7 @@
         "end": 1075.4,
         "cx": 0.5,
         "track": false,
-        "narration": "武汉这一周，两人只可能在决赛碰面。",
+        "narration": "武汉这一周，两人分处两个半区。",
         "voice": {
           "pitch": "+10Hz"
         },
@@ -796,7 +800,7 @@
         "end": 274.7,
         "cx": 0.5,
         "track": false,
-        "narration": "克星续写，还是破局？",
+        "narration": "第七次，你押谁？",
         "voice": {
           "pitch": "+10Hz"
         },
