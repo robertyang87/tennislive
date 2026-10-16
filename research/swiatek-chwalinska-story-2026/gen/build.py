@@ -34,13 +34,13 @@ spec={
  "push":{"auto":True,"_why":"账号所有者 2026-10-13 起所有 spec 默认自动推送；质检通过即合并推送。","summary":"波兰双子星的10年","lead":"9 年前一起站上澳网青少年领奖台，10 月 17 日晚上，斯瓦泰克和月亮姐在武汉半决赛隔网相遇。"},
  "editorial":{"mode":"match_review","question":"明天在武汉隔网的两个人，十年前是怎样的一对搭档？",
   "thesis":"以武汉 1/4 决赛两人各自赢球为由头，倒回十年：2014 年 U14 第一次交手、2015/2016 欧青赛双打冠军、2016 青少年联合会杯一起为波兰夺冠、2016 斯德哥尔摩唯一一次职业赛交手、2017 澳网青少年女双亚军；之后一个 19 岁拿下法网、当上世界第一，一个 19 岁因为抑郁停下；2026 年月亮姐从资格赛打进法网决赛，两人又同在联合杯波兰队；武汉这一周各自过关，第一次在巡回赛相遇。",
-  "beats":["冷开场：月亮姐武汉八强赛点与解说原声","斯瓦泰克同晚过关，解说点出半决赛对手","2017 澳网领奖台合影：九年前站在同一边","01 一起开始打比赛：2015 少年时代、2016 联合会杯夺冠、斯德哥尔摩、澳网亚军","02 一个登顶一个停下：2020 法网冠军；2021 抑郁停赛，2026 法网发布会原声","03 从资格赛到决赛：法网半决赛、场上采访、亚军致辞；联合杯队友；武汉这一周","收尾：一人一段展望，一问"],
+  "beats":["冷开场：月亮姐武汉八强赛点与解说原声","斯瓦泰克同晚过关，解说点出半决赛对手","2017 澳网领奖台合影：九年前站在同一边","01 一起开始打比赛：2015 两人 14 岁的同框采访、2016 联合会杯夺冠、斯德哥尔摩、澳网亚军","02 一个登顶一个停下：一段带过斯瓦泰克登顶，一段带过月亮姐停赛；2025 联合杯又是队友","03 巅峰相见：月亮姐法网决赛一段带过，武汉这一周两人各自过关、互相的原话","收尾：从同一边到隔网，一问"],
   "human_context":{"angle":"十年前一起长大的两个人，明天只有一个能进决赛。",
    "facts":["WTA 4593212：两人 2015 年 U14、2016 年 U16 欧洲青少年锦标赛双打冠军，2017 澳网青少年女双亚军；2014 年波兰 Opalenica U14 八强第一次交手（斯瓦泰克 6-1 6-4）；唯一一次职业交手是 2016 斯德哥尔摩 W10 第二轮（斯瓦泰克 6-2 6-3）；一千赛半决赛第一次两个波兰人。","WTA 4593251：斯瓦泰克 6-4 6-1 胜李吉妮，2009 年以来第四人、现役唯一在全部 10 站 WTA1000 都进过半决赛；六座大满贯；场上采访 I'm really happy for Maja。","法网官方发布会（1ihxUf32bQk）：月亮姐讲停赛前起不了床、不知道还会不会回来。","2026 法网：世界第 114 的资格赛球员，法网历史上第一个打进决赛的资格赛球员，决赛 3-6 2-6 负安德烈耶娃（维基 2026 French Open – Women's singles，引 WTA 4514247、ESPN）。"],
    "sources":["https://api.wtatennis.com/content/wta/news/en/4593212","https://api.wtatennis.com/content/wta/news/en/4593251","https://www.youtube.com/watch?v=1ihxUf32bQk","https://www.wtatennis.com/news/4514247/chwalinska-breaks-new-ground-as-first-qualifier-to-reach-roland-garros-final","https://en.wikipedia.org/wiki/2026_French_Open_%E2%80%93_Women%27s_singles","https://en.wikipedia.org/wiki/2025_United_Cup"]}},
  "_owner_brief":"账号所有者 2026-10-16 上传《波兰双子星：从青梅竹马到巅峰相见》纪录片策划案（三幕：波兰小镇的网球梦、分叉的命运、顶峰重逢），说「参考这个做一期网球有故事讲述斯瓦泰克和赫瓦林斯卡的故事，为明天半决赛做预热」。策划案的素材表全是个人账号转载（DropShot Daily、Tennis366、TennisLegends 等），按 2026-10-04 全局「只用官方素材」一律不用，换成同内容的官方源：WTA、法网、联合杯、Tennis Channel、Polsat Sport、2016 青少年联合会杯东道主匈牙利网协。",
  "_corrections_vs_brief":"①策划案写「顶级巡回赛（如武汉等半决赛）历史性会师」与「赛前温情拥抱与赛后互相致敬」：比赛明天才打，片子只讲到赛前，不写还没发生的拥抱与致敬。②策划案说两人在「波兰小镇」长大：斯瓦泰克在华沙长大、月亮姐在达布罗瓦古尔尼恰，片子不说小镇。③「Maja 遭遇严重伤病折磨、心理低谷与抑郁症边缘」：片中只讲她本人在法网发布会说的停赛经历，不加「边缘」「严重伤病」这类没有一手出处的说法。④联合杯「Maja 对 Iga 的暖心照顾」那一幕只有个人账号的剪辑、检索摘要里轮次说法不一，不用，只讲两人同是 2025 联合杯波兰队成员。",
- "_editing_why":"冷开场是月亮姐武汉八强的赛点与解说原声，紧接斯瓦泰克同晚过关、解说点出半决赛对手——这就是本期由头。之后倒回十年，三个章节字卡（01~03）。整屏照片两张来自同一张 WTA 官方合影（2017 澳网领奖台），一张 2022 复出照（WTA 官方）。精彩原声配中英字幕：两场武汉八强解说、月亮姐法网发布会讲停赛、法网半决赛场上采访、亚军致辞、联合杯场边采访。旁白只放在两档 ASR 都无英文的空当里。",
+ "_editing_why":"账号所有者 2026-10-17：「主要讲他俩一起的故事，不要太多个人的故事」。所以篇幅给两人同框/同队的部分（2015 同框采访三段、2016 联合会杯、斯德哥尔摩与澳网合影、2025 联合杯、武汉这一周互相的原话），各自的经历各只留一段带过（斯瓦泰克 2020 法网冠军点一段；月亮姐停赛一句发布会原声、法网半决赛一段）。冷开场是月亮姐武汉八强的赛点与解说原声，紧接斯瓦泰克同晚过关、解说点出半决赛对手。三个章节字卡（01~03）。整屏照片两张来自同一张 WTA 官方合影（2017 澳网领奖台）。精彩原声配中英字幕。旁白只放在两档 ASR 都无英文的空当里。",
  "_claims":{"波兰第一个大满贯单打冠军":"Morung Express https://morungexpress.com/swiatek-wins-french-open-becomes-first-pole-to-win-grand-slam-singles-title ；NBC Sports https://www.nbcsports.com/olympics/news/iga-swiatek-french-open-roland-garros","第一次两个波兰人":"WTA https://api.wtatennis.com/content/wta/news/en/4593212 ；WTA https://api.wtatennis.com/content/wta/news/en/4593251（first all-Polish semifinal at a WTA-level event in the Open Era）",
   "法网历史上第一个":"WTA https://www.wtatennis.com/news/4514247/chwalinska-breaks-new-ground-as-first-qualifier-to-reach-roland-garros-final ；Wikipedia https://en.wikipedia.org/wiki/2026_French_Open_%E2%80%93_Women%27s_singles"},
  "_social_search_why":"不是当事人发声明类的选题：讲的是两人十年的公开比赛与采访；当事人亲口的部分全部用官方发布会、场上采访和颁奖致辞的原声，武汉这周两人的原话出自 WTA 官方稿。",
@@ -50,7 +50,7 @@ spec={
  "_no_probe_why":{k:{"why":f"{INFO[k][3]} 官方，download-video 存档后本地 ffprobe {INFO[k][0]}×{INFO[k][1]}@{INFO[k][2]}；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。","width":INFO[k][0],"height":INFO[k][1],"fps":INFO[k][2]} for k in YT},
  "_primary_why":"主源是 sources 的第一个键 rgsf（法网官方 1080p50），输出 50 fps。",
  "_production_status":"spec_ready_for_render",
- "_why_sources":"比赛、颁奖和采访画面全部来自官方频道：WTA（0-v-yZvYAk8、O8f_vcT29uY）、Roland-Garros（nuivYz2nq08、OwKaLdNEjlI、1ihxUf32bQk、SdEjFtD4CTU、WVWjACQ11-Y）、Tennis Channel（法网美国转播方，LXRhlHKGKZc）、United Cup（15fLzmh_o7A）、Wimbledon（Jw9sJZjk97o、Ds27hJRfSG4）、Roland-Garros 八强集锦（-ygefQ6dXFc）、Polsat Sport（波兰体育电视台，-Vsfptr_DC8，2015 年两人 14 岁时的采访）、匈牙利网协（2016 青少年联合会杯决赛东道主，p9Xzx3vDPJw）。照片来自 WTA 官方图库。策划案里的个人账号转载一条不用。",
+ "_why_sources":"比赛、颁奖和采访画面全部来自官方频道：WTA（0-v-yZvYAk8、O8f_vcT29uY）、Roland-Garros（nuivYz2nq08、OwKaLdNEjlI、1ihxUf32bQk）、United Cup（15fLzmh_o7A）、Polsat Sport（波兰体育电视台，-Vsfptr_DC8，2015 年两人 14 岁时的采访）、匈牙利网协（2016 青少年联合会杯决赛东道主，p9Xzx3vDPJw）。照片来自 WTA 官方图库。策划案里的个人账号转载一条不用。",
  "segments":segs}
 json.dump(spec,open('specs/reels/swiatek-chwalinska-story-2026.json','w'),ensure_ascii=False,indent=1)
 print("ok",len(segs))
