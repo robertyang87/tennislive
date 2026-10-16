@@ -1,0 +1,105 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "d4714cc84bb1aab35791c37c5083c2d83fe3934bd4b61dfbe6354bad373c1c12",
+    "request_count": 22,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-ostapenko-swiatek-h2h-2026-d4714cc84bb1aab3",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-ostapenko-swiatek-h2h-2026-d4714cc84bb1aab3/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38930218640"
+  },
+  "cover_seconds": 3.61,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 163.35,
+  "topbar": null,
+  "film_seconds": 171.52,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 2.952,
+    "1": 3.504,
+    "3": 4.848,
+    "4": 3.24,
+    "5": 5.688,
+    "6": 4.776,
+    "7": 4.68,
+    "8": 4.176,
+    "9": 5.256,
+    "10": 4.296,
+    "11": 4.992,
+    "12": 2.208,
+    "14": 3.84,
+    "15": 4.176,
+    "16": 3.312,
+    "17": 4.368,
+    "23": 4.248,
+    "24": 3.024,
+    "27": 3.96,
+    "29": 3.048
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "ae2e2a3fdece7bc1e8dd34a730afef54696cc50fc2bcf39f157c6920d920795a",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "ostapenko-swiatek-h2h-2026",
+    "received_at": "2026-10-16T16:13:25Z",
+    "artifact_ready_at": "2026-10-16T16:21:13Z",
+    "elapsed_seconds": 468.287,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "b992d4945c0763c2151dbee01e7baf34de7d4fc22aefbbfc0e659353c3cf02f4",
+    "spec_sha256": "331b1a3e8051889379d58f2fbabdb453e02c364fa384e3c6dd83ee22dce746fa",
+    "run_id": "38930218640",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-16T16:18:04Z",
+        "run_id": "38930218640"
+      }
+    ],
+    "render_seconds": 189.287,
+    "pre_render_seconds": 279.0
+  },
+  "film_sha256": "b992d4945c0763c2151dbee01e7baf34de7d4fc22aefbbfc0e659353c3cf02f4",
+  "film_bytes": 89531685,
+  "qc_attestation_sha256": "80efc0d798d34ad86344191ec9622f9ffbf40b61682d8ca09b84c9157ba9c9d6",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-16T16:18:04Z",
+      "run_id": "38930218640"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-16T16:21:16Z",
+      "run_id": "38930218640"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-ostapenko-swiatek-h2h-2026/ostapenko-swiatek-h2h-2026.mp4",
+  "video_bytes": 89531685
+}
