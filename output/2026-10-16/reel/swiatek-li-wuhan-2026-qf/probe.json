@@ -766,7 +766,36 @@
             ]
           }
         }
+      },
+      {
+        "box": [
+          90,
+          826,
+          550,
+          980
+        ],
+        "frames": 25,
+        "profiles": {
+          "wta": {
+            "present": 25,
+            "unresolved": 0,
+            "runs": [
+              [
+                25,
+                480,
+                480
+              ]
+            ]
+          }
+        },
+        "start": 135.6,
+        "stop": 140.6,
+        "fps": 5,
+        "scope": "bounded_calibration_only",
+        "source_sha256": "dc8e6e9ca8f72a7f6a75e2eb6eac91b0bfe24de9c93f4d75cc8aa1e8189f5862",
+        "_scope_why": "Only these25framesweredecodedforthisbox. Parentboardstart/stop describes original other seven full-source calibration profiles, not this additional custombox. No whole-window orvisualapproval claimed."
       }
-    ]
+    ],
+    "_additional_bounded_calibration": "data/evidence/swiatek-li-wuhan-2026-qf/source-visual/scorebox-calibration.json"
   }
 }

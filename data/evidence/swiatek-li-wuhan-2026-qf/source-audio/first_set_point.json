@@ -1,0 +1,96 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=O8f_vcT29uY",
+  "source_sha256": "dc8e6e9ca8f72a7f6a75e2eb6eac91b0bfe24de9c93f4d75cc8aa1e8189f5862",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source-review assistant; exact-SHA two-model whole-source ASR cross-check, no manual listening claimed",
+  "reviewed_at": "2026-10-16T13:38:26.411976+00:00",
+  "status": "complete",
+  "reviewed_from": 135.44,
+  "reviewed_to": 162.98,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 144.12,
+      "end": 148.04,
+      "en": "Well, Iga Swiatek able to hold off the advances of Ann Li,",
+      "zh": "斯瓦泰克顶住安·李的冲击，",
+      "verification": "Exact-SHA canonical small.en and medium.en whole-source ASR content and word-time cross-check; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 148.04,
+      "end": 150.3,
+      "en": "and the forehand holds up when it needs to.",
+      "zh": "关键时刻，她的正手顶住了。",
+      "verification": "Exact-SHA canonical small.en and medium.en whole-source ASR content and word-time cross-check; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 150.84,
+      "end": 152.64,
+      "en": "Down the stretch, three break points saved",
+      "zh": "盘末挽救三个破发点，",
+      "verification": "Exact-SHA canonical small.en and medium.en whole-source ASR content and word-time cross-check; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 152.64,
+      "end": 154.82,
+      "en": "and converts on her first set point.",
+      "zh": "首个盘点便成功兑现。",
+      "verification": "Exact-SHA canonical small.en and medium.en whole-source ASR content and word-time cross-check; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 154.98,
+      "end": 156.9,
+      "en": "And Iga Swiatek out in front,",
+      "zh": "斯瓦泰克取得领先，",
+      "verification": "Exact-SHA canonical small.en and medium.en whole-source ASR content and word-time cross-check; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 156.9,
+      "end": 159.62,
+      "en": "one of the great front-runners in women's tennis,",
+      "zh": "她是女子网坛善打领先的高手，",
+      "verification": "Exact-SHA canonical small.en and medium.en whole-source ASR content and word-time cross-check; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 159.62,
+      "end": 162.58,
+      "en": "has a one-set lead in Wuhan.",
+      "zh": "在武汉先下一盘。",
+      "verification": "Exact-SHA canonical small.en and medium.en whole-source ASR content and word-time cross-check; official player spellings normalized. No manual listening claimed."
+    }
+  ],
+  "_edit_id": "first_set_point",
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/evidence/swiatek-li-wuhan-2026-qf/source-audio/raw/full/small.en.json",
+        "sha256": "4af0aeb567285e589bf63db9e01aac24577ba83af9b63ad6a14a87ea12f1109a",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/evidence/swiatek-li-wuhan-2026-qf/source-audio/raw/full/medium.en.json",
+        "sha256": "3e67061f1cf2d680b3029956ed9abf8373a9667491ebf2e73030250e3180f9f1",
+        "clip": [
+          0.0,
+          null
+        ]
+      }
+    ],
+    "manual_listening_claimed": false,
+    "source_audio_gain_changes": false,
+    "limitations": [
+      "Word edges are conservative ASR estimates, not manually measured acoustic boundaries.",
+      "Release-source probe captions:null; no YouTube automatic-caption or manual-listening evidence claimed.",
+      "Official player spellings Iga Swiatek, Ann Li and Maja Chwalinska normalize ASR name errors.",
+      "Small.en stretches the word there's across a long preceding applause gap from252.14 to265.32; medium.en provides the conservative actual264.86 start. Small.en Oh no251.24-252.14 belongs to the excluded preceding rally and is not included in these windows. Raw recognition remains unchanged.",
+      "Madrid phrase beg out is agreed by both canonical models; no unsupported bow substitution made.",
+      "Small/medium differ slightly on function words since/it's going back at198 seconds; retained since going back follows small.en and the same commentary meaning.",
+      "Tactical windows85.2-98.2 and203.04-220.3 have no foreground English recognized by either canonical full-source model.",
+      "No loudness, RMS, peak, silence-threshold or source-gain comparisons were performed."
+    ]
+  }
+}

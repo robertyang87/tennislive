@@ -1,0 +1,106 @@
+[
+  {
+    "file": "stats.json",
+    "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS004/stats",
+    "checked_at": "2026-10-16T13:21:31.918761+00:00",
+    "status": 200,
+    "bytes": 1639,
+    "sha256": "b0430d42ee6beca3d60d88f00c13599c4d15dd6876496b6e1d1ddce2f7805040"
+  },
+  {
+    "file": "pbp.json",
+    "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS004/point-by-point",
+    "checked_at": "2026-10-16T13:21:31.919195+00:00",
+    "status": 200,
+    "bytes": 35060,
+    "sha256": "1cc70615d96aff4ebe1b4bc852589bad66d6f1973886e920575c282208c0ad8f"
+  },
+  {
+    "file": "rankings.json",
+    "url": "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+    "checked_at": "2026-10-16T13:21:31.921154+00:00",
+    "status": 200,
+    "bytes": 25572,
+    "sha256": "1cf1590b8be639cd3c4b5530bc6e4dc905f1e3fb65a0d6b3376fd18d66b171e9"
+  },
+  {
+    "file": "draw.pdf",
+    "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1075/MDS.pdf",
+    "checked_at": "2026-10-16T13:21:31.921986+00:00",
+    "status": 200,
+    "bytes": 209114,
+    "sha256": "30cc8375e5097fdda447647e8501b6cc09907fc47456f839c6cffe79035091cc"
+  },
+  {
+    "file": "oop.pdf",
+    "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1075/OP.pdf",
+    "checked_at": "2026-10-16T13:21:31.922883+00:00",
+    "status": 200,
+    "bytes": 189813,
+    "sha256": "f335f85994335f078bd39af066f60732ab5db5af121041b0bf2aaef4d3768701"
+  },
+  {
+    "file": "news.json",
+    "url": "https://api.wtatennis.com/content/wta/news/en/?page=0&pageSize=40&sort=desc",
+    "checked_at": "2026-10-16T13:21:31.924777+00:00",
+    "status": 200,
+    "bytes": 621825,
+    "sha256": "a315acfe43899c9993fc162e261d3f5982626c0b6d3451b330c042a2022ac553"
+  },
+  {
+    "file": "fs-today.raw",
+    "url": "https://global.flashscore.ninja/2/x/feed/f_2_0_0_en_1",
+    "checked_at": "2026-10-16T13:21:31.925930+00:00",
+    "status": 200,
+    "bytes": 515113,
+    "sha256": "43d3031f74f4764c3c07beb877c4a7f76b9ab931b60f582651fc6c405fae1222"
+  },
+  {
+    "file": "fs-stats.raw",
+    "url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_21am1MHN",
+    "checked_at": "2026-10-16T13:21:31.926844+00:00",
+    "status": 200,
+    "bytes": 3036,
+    "sha256": "2a5f6c79f2fccb5c211e063df76fa28462db947bac793419518eeaf8cdcd904c"
+  },
+  {
+    "file": "fs-pbp.raw",
+    "url": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_21am1MHN",
+    "checked_at": "2026-10-16T13:21:32.236558+00:00",
+    "status": 200,
+    "bytes": 1408,
+    "sha256": "d034d64dae9b1ef3f17b01f062f57e894ce315036c977aee9f420837400a8e2d"
+  },
+  {
+    "file": "h2h-li.json",
+    "url": "https://api.wtatennis.com/tennis/players/326408/headtohead/326096",
+    "checked_at": "2026-10-16T13:21:32.284108+00:00",
+    "status": 200,
+    "bytes": 15347,
+    "sha256": "23d42bdf7d1c785a635339eff355a45c9f1f8c0286ca6aa832e773dbe127f06a"
+  },
+  {
+    "file": "h2h-chwalinska.json",
+    "url": "https://api.wtatennis.com/tennis/players/326408/headtohead/325639",
+    "checked_at": "2026-10-16T13:21:32.293042+00:00",
+    "status": 200,
+    "bytes": 13243,
+    "sha256": "479495751bc1654a63aa73d1a5a1a1d937b50ace38b76932b46dc2cfaf663fdc"
+  },
+  {
+    "file": "race.json",
+    "url": "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=RankChampSingles&sort=asc&name=&metric=CHAMPSINGLES",
+    "checked_at": "2026-10-16T13:22:41.712075+00:00",
+    "status": 200,
+    "bytes": 25572,
+    "sha256": "63e33a39776d09b4f74d62b4f0cce8935b623895de70a041e2c99b720808293e"
+  },
+  {
+    "file": "matches-all.json",
+    "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+    "checked_at": "2026-10-16T13:23:12.327772+00:00",
+    "status": 200,
+    "bytes": 118354,
+    "sha256": "14a8b745e782e5ee627afffc7bf8484f29e47265e003eb0098f007e563948aeb"
+  }
+]
