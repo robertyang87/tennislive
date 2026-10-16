@@ -1,0 +1,1794 @@
+{
+  "bundle_sha256": "da9c1b7e5c367c8da9e6b251825a1828b8d4691d95f92dd634c54ebb7895378c",
+  "status": "current_actual_finite_coverage_low_support",
+  "utterances": [
+    {
+      "edit_id": "intro",
+      "segment_index_at_capture": 1,
+      "request_id": "07da4095f106d81fedf40bbe67f376d4497e5bd5ee0f52da7b03c128c637c1e1",
+      "tts_text": "六比零，只是这场比赛的开头。北京时间二零二六年十月十六日下午，武汉一千赛女单四分之一决赛，月亮姐遇到萨卡里。昨天，她刚刚第一次打进一千赛八强。",
+      "display_text": "六比零，只是这场比赛的开头。北京时间二零二六年十月十六日下午，武汉一千赛女单四分之一决赛，月亮姐遇到萨卡里。昨天，她刚刚第一次打进一千赛八强。",
+      "audio_sha256": "24923d038198a168a3f30ff56865e2a0c926959a194d36ce6c040a1810e46136",
+      "marks_sha256": "6108936184318766dbed026a6083c8e90880f4b61f74384c223e10ee0ba7f3c1",
+      "actual_native_audio": "/workspace/scratch/moon-qf-pronunciation/native-audio/intro-24923d038198a168.mp3",
+      "polyphones": [
+        {
+          "index": 4,
+          "char": "只",
+          "intended_static": "zhi3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 7,
+          "char": "场",
+          "intended_static": "chang3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 10,
+          "char": "的",
+          "intended_static": "de5",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 17,
+          "char": "间",
+          "intended_static": "jian1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 37,
+          "char": "单",
+          "intended_static": "dan1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 39,
+          "char": "分",
+          "intended_static": "fen1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 51,
+          "char": "卡",
+          "intended_static": "ka3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 63,
+          "char": "打",
+          "intended_static": "da3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 69,
+          "char": "强",
+          "intended_static": "qiang2",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "月亮姐",
+          "start_index": 45,
+          "syllables": [
+            {
+              "index": 45,
+              "char": "月",
+              "base_reading": "yue4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                7.961708,
+                8.15
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 46,
+              "char": "亮",
+              "base_reading": "liang4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                8.13,
+                8.27
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 47,
+              "char": "姐",
+              "base_reading": "jie3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                8.2565,
+                8.45
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        },
+        {
+          "name": "萨卡里",
+          "start_index": 50,
+          "syllables": [
+            {
+              "index": 50,
+              "char": "萨",
+              "base_reading": "sa4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                8.764999999999999,
+                9.005
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            },
+            {
+              "index": 51,
+              "char": "卡",
+              "base_reading": "ka3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                8.995,
+                9.185
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 52,
+              "char": "里",
+              "base_reading": "li3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                9.174999999999999,
+                9.345
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        },
+        {
+          "name": "北京",
+          "start_index": 14,
+          "syllables": [
+            {
+              "index": 14,
+              "char": "北",
+              "base_reading": "bei3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                2.855583,
+                3.03
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 15,
+              "char": "京",
+              "base_reading": "jing1",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                3.0100000000000002,
+                3.17
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        },
+        {
+          "name": "武汉",
+          "start_index": 31,
+          "syllables": [
+            {
+              "index": 31,
+              "char": "武",
+              "base_reading": "wu3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                5.650375,
+                5.85
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 32,
+              "char": "汉",
+              "base_reading": "han4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                5.83,
+                5.97
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 0,
+          "text": "六比零",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 18,
+          "text": "二零二六",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 23,
+          "text": "十",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 25,
+          "text": "十六",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 33,
+          "text": "一千",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 38,
+          "text": "四",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 41,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 61,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 65,
+          "text": "一千",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 68,
+          "text": "八",
+          "status": "asr_lexical_number_support_only"
+        }
+      ],
+      "full_text_lexical_units": [
+        {
+          "expected": "六比零",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "北京时间二零二六年十月十六日下午",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "武汉",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "一千赛女单四分之一决赛",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "月亮姐",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "萨卡里",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "第一次打进一千赛八强",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        }
+      ],
+      "raw_asr": "6比0 只是這場比賽的開頭北京時間2026年10月16日下午吳漢1000賽女單四分之一決賽月亮姐遇到薩卡里昨天她剛剛第一次打見1000賽8強",
+      "remaining_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "进",
+          "asr": "見",
+          "expected_pinyin": [
+            "jin"
+          ],
+          "asr_pinyin": [
+            "jian"
+          ],
+          "expected_normalized_indices": [
+            58,
+            59
+          ]
+        }
+      ],
+      "audio_pronunciation_status": "finite_current_low_support",
+      "manual_listening_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "first_set_card",
+      "segment_index_at_capture": 2,
+      "request_id": "2738da5233df34cdb99bada8b69b8826a9c1f94b6219e21527e0fb4006ac3435",
+      "tts_text": "首盘四比零接发，这个回合里，月亮姐沿底线横向移动，把打向两侧的球一次次救回，兑现破发点。随后六比零收下首盘，自己一次破发点都没给。",
+      "display_text": "首盘四比零接发，这个回合里，月亮姐沿底线横向移动，把打向两侧的球一次次救回，兑现破发点。随后六比零收下首盘，自己一次破发点都没给。",
+      "audio_sha256": "6823923842fde9f1a6a73a28cceea50f08949dccfc1fa8885fe08147e7fc9313",
+      "marks_sha256": "40884ba7595a9332e064ddbab1be3d93821c70d128b8e9f9447e2a672405bfe9",
+      "actual_native_audio": "/workspace/scratch/moon-qf-pronunciation/native-audio/first_set_card-6823923842fde9f1.mp3",
+      "polyphones": [
+        {
+          "index": 6,
+          "char": "发",
+          "intended_static": "fa1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 20,
+          "char": "横",
+          "intended_static": "heng2",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 25,
+          "char": "把",
+          "intended_static": "ba3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 26,
+          "char": "打",
+          "intended_static": "da3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 30,
+          "char": "的",
+          "intended_static": "de5",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 41,
+          "char": "发",
+          "intended_static": "fa1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 59,
+          "char": "发",
+          "intended_static": "fa1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 61,
+          "char": "都",
+          "intended_static": "dou1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 62,
+          "char": "没",
+          "intended_static": "mei2",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 63,
+          "char": "给",
+          "intended_static": "gei3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "月亮姐",
+          "start_index": 14,
+          "syllables": [
+            {
+              "index": 14,
+              "char": "月",
+              "base_reading": "yue4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                2.575,
+                2.755
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 15,
+              "char": "亮",
+              "base_reading": "liang4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                2.7300000000000004,
+                2.8899999999999997
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 16,
+              "char": "姐",
+              "base_reading": "jie3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                2.8909580000000004,
+                3.07
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 2,
+          "text": "四比零",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 28,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 32,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 46,
+          "text": "六比零",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 56,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ],
+      "full_text_lexical_units": [
+        {
+          "expected": "首盘四比零接发",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "这个回合里",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "月亮姐沿底线横向移动",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "把打向两侧的球一次次救回",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "兑现破发点",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "六比零收下首盘",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "自己一次破发点都没给",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        }
+      ],
+      "raw_asr": "手盤4比0揭发 这个回合里月亮节线底线横向移动把打向两次的球一次次就回对线破发点随后6比0收下手盘自己一次破发点都没点",
+      "remaining_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "沿",
+          "asr": "线",
+          "expected_pinyin": [
+            "yan"
+          ],
+          "asr_pinyin": [
+            "xian"
+          ],
+          "expected_normalized_indices": [
+            15,
+            16
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "侧",
+          "asr": "次",
+          "expected_pinyin": [
+            "ce"
+          ],
+          "asr_pinyin": [
+            "ci"
+          ],
+          "expected_normalized_indices": [
+            26,
+            27
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "给",
+          "asr": "点",
+          "expected_pinyin": [
+            "gei"
+          ],
+          "asr_pinyin": [
+            "dian"
+          ],
+          "expected_normalized_indices": [
+            57,
+            58
+          ]
+        }
+      ],
+      "audio_pronunciation_status": "finite_current_low_support",
+      "manual_listening_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "second_set_card",
+      "segment_index_at_capture": 4,
+      "request_id": "dce5c94d82f5adb30daf319ba927a1446333631a3bcba6fc6fec4a4d4aecc1f7",
+      "tts_text": "第二盘，萨卡里没有放手。零比一，月亮姐发球面对破发点。萨卡里从底线把球连续打向两侧，再跟进到场内，拿下这局。",
+      "display_text": "第二盘，萨卡里没有放手。零比一，月亮姐发球面对破发点。萨卡里从底线把球连续打向两侧，再跟进到场内，拿下这局。",
+      "audio_sha256": "e258bec14d4a55b4506a087c26df0d637b6fae7a602e4b808ecf876dd791a054",
+      "marks_sha256": "b0fb81992e2643dce2ce3f446b4e63f84b85e5f25b51eebcf831e5ae930ea65e",
+      "actual_native_audio": "/workspace/scratch/moon-qf-pronunciation/native-audio/second_set_card-e258bec14d4a55b4.mp3",
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "卡",
+          "intended_static": "ka3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 7,
+          "char": "没",
+          "intended_static": "mei2",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 19,
+          "char": "发",
+          "intended_static": "fa1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 24,
+          "char": "发",
+          "intended_static": "fa1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 28,
+          "char": "卡",
+          "intended_static": "ka3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 33,
+          "char": "把",
+          "intended_static": "ba3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 37,
+          "char": "打",
+          "intended_static": "da3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 46,
+          "char": "场",
+          "intended_static": "chang3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "月亮姐",
+          "start_index": 16,
+          "syllables": [
+            {
+              "index": 16,
+              "char": "月",
+              "base_reading": "yue4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                3.395,
+                3.505
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 17,
+              "char": "亮",
+              "base_reading": "liang4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                3.47,
+                3.61
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 18,
+              "char": "姐",
+              "base_reading": "jie3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                3.5985,
+                3.7699999999999996
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        },
+        {
+          "name": "萨卡里",
+          "start_index": 4,
+          "syllables": [
+            {
+              "index": 4,
+              "char": "萨",
+              "base_reading": "sa4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                0.905,
+                1.155
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            },
+            {
+              "index": 5,
+              "char": "卡",
+              "base_reading": "ka3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                1.1350000000000002,
+                1.325
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            },
+            {
+              "index": 6,
+              "char": "里",
+              "base_reading": "li3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                1.27,
+                1.43
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        },
+        {
+          "name": "萨卡里",
+          "start_index": 27,
+          "syllables": [
+            {
+              "index": 27,
+              "char": "萨",
+              "base_reading": "sa4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                5.650375,
+                5.89
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 28,
+              "char": "卡",
+              "base_reading": "ka3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                5.915,
+                6.095
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 29,
+              "char": "里",
+              "base_reading": "li3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                6.065,
+                6.205
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 1,
+          "text": "二",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 12,
+          "text": "零比一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 39,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        }
+      ],
+      "full_text_lexical_units": [
+        {
+          "expected": "第二盘",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "萨卡里没有放手",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "零比一",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "月亮姐发球面对破发点",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "萨卡里从底线把球连续打向两侧",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "再跟进到场内",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "拿下这局",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "raw_asr": "第二盘 薩卡里没有放手零比一 月亮姐发球面对破发点薩卡里从底线把球连续打向两次在根筋刀场内拿下这句",
+      "remaining_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "侧",
+          "asr": "次",
+          "expected_pinyin": [
+            "ce"
+          ],
+          "asr_pinyin": [
+            "ci"
+          ],
+          "expected_normalized_indices": [
+            36,
+            37
+          ]
+        }
+      ],
+      "audio_pronunciation_status": "finite_current_low_support",
+      "manual_listening_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "second_finish_card",
+      "segment_index_at_capture": 6,
+      "request_id": "34b86fe771a08a2e60618faf9a8acc7dfa65a4f2c94cc0be0803859a67540751",
+      "tts_text": "萨卡里先赢三局，月亮姐随后稳住发球局，却一直没能破回去。三比六，比赛来到决胜盘。",
+      "display_text": "萨卡里先赢三局，月亮姐随后稳住发球局，却一直没能破回去。三比六，比赛来到决胜盘。",
+      "audio_sha256": "3633aa3b3adb71a07f25bf9c55a3c5789648c9115d1c075cdf1be20c31f7fc5d",
+      "marks_sha256": "591a45509d1085569d106aca8c2c5520f95c4dac009292bb288a6e4ce1d175e0",
+      "actual_native_audio": "/workspace/scratch/moon-qf-pronunciation/native-audio/second_finish_card-3633aa3b3adb71a0.mp3",
+      "polyphones": [
+        {
+          "index": 1,
+          "char": "卡",
+          "intended_static": "ka3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 15,
+          "char": "发",
+          "intended_static": "fa1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 22,
+          "char": "没",
+          "intended_static": "mei2",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "月亮姐",
+          "start_index": 8,
+          "syllables": [
+            {
+              "index": 8,
+              "char": "月",
+              "base_reading": "yue4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                1.915,
+                2.045
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 9,
+              "char": "亮",
+              "base_reading": "liang4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                2.015,
+                2.155
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 10,
+              "char": "姐",
+              "base_reading": "jie3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                2.145,
+                2.3249999999999997
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        },
+        {
+          "name": "萨卡里",
+          "start_index": 0,
+          "syllables": [
+            {
+              "index": 0,
+              "char": "萨",
+              "base_reading": "sa4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                0.037165899999999995,
+                0.35000000000000003
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 1,
+              "char": "卡",
+              "base_reading": "ka3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                0.33,
+                0.51
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 2,
+              "char": "里",
+              "base_reading": "li3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                0.49,
+                0.6900000000000001
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 5,
+          "text": "三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 20,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 28,
+          "text": "三比六",
+          "status": "asr_lexical_number_support_only"
+        }
+      ],
+      "full_text_lexical_units": [
+        {
+          "expected": "萨卡里先赢三局",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "月亮姐随后稳住发球局",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "却一直没能破回去",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "三比六",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "比赛来到决胜盘",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "raw_asr": "薩卡里先贏三局 月亮截隨後穩住發球局 卻一直沒能破回去三比六比賽來到決勝盤",
+      "remaining_lexical_differences": [],
+      "audio_pronunciation_status": "finite_current_low_support",
+      "manual_listening_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "deciding_set",
+      "segment_index_at_capture": 8,
+      "request_id": "ea3d71f9bb2e580c5c00a301889b677c6284b48b071c2627542a94e8bf847460",
+      "tts_text": "决胜盘，二比二，她先救下破发点。四比三接发，又错过三个机会。前十一局，双方都保住发球局。六比五，月亮姐又站到接发位置。她先救下对手一个局点，再拿到全场第一个赛点。",
+      "display_text": "决胜盘，二比二，她先救下破发点。四比三接发，又错过三个机会。前十一局，双方都保住发球局。六比五，月亮姐又站到接发位置。她先救下对手一个局点，再拿到全场第一个赛点。",
+      "audio_sha256": "184689d963d572f2bc910cab65a0c637bf094fbeba6483e2481484e70845ef57",
+      "marks_sha256": "87c1f0cc359ab1457e6916f0048909986b7244759008babed0b738fa0c5f4191",
+      "actual_native_audio": "/workspace/scratch/moon-qf-pronunciation/native-audio/deciding_set-184689d963d572f2.mp3",
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "发",
+          "intended_static": "fa1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 20,
+          "char": "发",
+          "intended_static": "fa1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 28,
+          "char": "会",
+          "intended_static": "hui4",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 37,
+          "char": "都",
+          "intended_static": "dou1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 40,
+          "char": "发",
+          "intended_static": "fa1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 55,
+          "char": "发",
+          "intended_static": "fa1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 74,
+          "char": "场",
+          "intended_static": "chang3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "月亮姐",
+          "start_index": 48,
+          "syllables": [
+            {
+              "index": 48,
+              "char": "月",
+              "base_reading": "yue4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                10.325,
+                10.555000000000001
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            },
+            {
+              "index": 49,
+              "char": "亮",
+              "base_reading": "liang4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                10.514999999999999,
+                10.675
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            },
+            {
+              "index": 50,
+              "char": "姐",
+              "base_reading": "jie3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                10.67,
+                10.87
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 4,
+          "text": "二比二",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 16,
+          "text": "四比三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 25,
+          "text": "三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 31,
+          "text": "十一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 44,
+          "text": "六比五",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 65,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 76,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ],
+      "full_text_lexical_units": [
+        {
+          "expected": "决胜盘",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "二比二",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她先救下破发点",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "四比三接发",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "又错过三个机会",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "前十一局",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "双方都保住发球局",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "六比五",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "月亮姐又站到接发位置",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她先救下对手一个局点",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "再拿到全场第一个赛点",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "raw_asr": "绝圣盘2比2 它先旧下破发点4比3接发又错过3个机会前11局双方都保住发酵局6比5 月亮节又站到接发位置它先旧下对手一个局点再拿到全场第一个赛点",
+      "remaining_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "球",
+          "asr": "酵",
+          "expected_pinyin": [
+            "qiu"
+          ],
+          "asr_pinyin": [
+            "jiao"
+          ],
+          "expected_normalized_indices": [
+            35,
+            36
+          ]
+        }
+      ],
+      "audio_pronunciation_status": "finite_current_low_support",
+      "manual_listening_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "full_stats",
+      "segment_index_at_capture": 10,
+      "request_id": "4a13d2dfcda8fcf0143155980471c3052d29a6b8f625fc135a94d9be04f6b95c",
+      "tts_text": "月亮姐二十五个制胜分，萨卡里三十七个。非受迫失误，二十三比三十五。决胜盘六个发球局全部保住，她把突破留在了最后一局。",
+      "display_text": "月亮姐二十五个制胜分，萨卡里三十七个。非受迫失误，二十三比三十五。决胜盘六个发球局全部保住，她把突破留在了最后一局。",
+      "audio_sha256": "d5b527c0c416eb8c0f9fd0928f4e0eee8aec204f0f2f3b4961840e0201348c78",
+      "marks_sha256": "05edce958a7482540484caafd192b2b7c160a4da1d258dd22cdfdb86027ce6af",
+      "actual_native_audio": "/workspace/scratch/moon-qf-pronunciation/native-audio/full_stats-d5b527c0c416eb8c.mp3",
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "分",
+          "intended_static": "fen1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 12,
+          "char": "卡",
+          "intended_static": "ka3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 21,
+          "char": "迫",
+          "intended_static": "po4",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 38,
+          "char": "发",
+          "intended_static": "fa1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 47,
+          "char": "把",
+          "intended_static": "ba3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 52,
+          "char": "了",
+          "intended_static": "le5",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "月亮姐",
+          "start_index": 0,
+          "syllables": [
+            {
+              "index": 0,
+              "char": "月",
+              "base_reading": "yue4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                0.037165899999999995,
+                0.23
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 1,
+              "char": "亮",
+              "base_reading": "liang4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                0.21,
+                0.35000000000000003
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 2,
+              "char": "姐",
+              "base_reading": "jie3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                0.33,
+                0.51
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        },
+        {
+          "name": "萨卡里",
+          "start_index": 11,
+          "syllables": [
+            {
+              "index": 11,
+              "char": "萨",
+              "base_reading": "sa4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                1.995,
+                2.255
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            },
+            {
+              "index": 12,
+              "char": "卡",
+              "base_reading": "ka3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                2.2350000000000003,
+                2.415
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            },
+            {
+              "index": 13,
+              "char": "里",
+              "base_reading": "li3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                2.395,
+                2.535
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 3,
+          "text": "二十五",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 14,
+          "text": "三十七",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 25,
+          "text": "二十三比三十五",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 36,
+          "text": "六",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 55,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ],
+      "full_text_lexical_units": [
+        {
+          "expected": "月亮姐二十五个制胜分",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "萨卡里三十七个",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "非受迫失误",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "二十三比三十五",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "决胜盘六个发球局全部保住",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她把突破留在了最后一局",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "raw_asr": "約量解25個智盛分,薩卡里37個非瘦破15,23比35絕生盤6個發球局全部保住,他把突破留在了最後一局",
+      "remaining_lexical_differences": [],
+      "audio_pronunciation_status": "finite_current_low_support",
+      "manual_listening_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "outlook",
+      "segment_index_at_capture": 11,
+      "request_id": "5f6e9918f06cc990fd7f3545d76709963521cb79956c9966e74a6ecd6070627e",
+      "tts_text": "这一场苦战过后，月亮姐第一次晋级一千赛半决赛。下一关是斯瓦泰克和李安之间的胜者。这趟武汉之旅，她还能走多远？",
+      "display_text": "这一场苦战过后，月亮姐第一次晋级一千赛半决赛。下一关是斯瓦泰克和李安之间的胜者。这趟武汉之旅，她还能走多远？",
+      "audio_sha256": "b8e35adf6432a364ddc87f9fa3bcb1af2dc1b60336e9ee96ef97741d501b6638",
+      "marks_sha256": "e3558837e2f415821913a70f2efe65b263993924abab30e007eb919eb4e3d83c",
+      "actual_native_audio": "/workspace/scratch/moon-qf-pronunciation/native-audio/outlook-b8e35adf6432a364.mp3",
+      "polyphones": [
+        {
+          "index": 2,
+          "char": "场",
+          "intended_static": "chang3",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 31,
+          "char": "和",
+          "intended_static": "he2",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 35,
+          "char": "间",
+          "intended_static": "jian1",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        },
+        {
+          "index": 36,
+          "char": "的",
+          "intended_static": "de5",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "pending",
+          "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+        },
+        {
+          "index": 48,
+          "char": "还",
+          "intended_static": "hai2",
+          "status": "correct_low_support",
+          "prior_mechanical_status": "correct_low_support",
+          "support_kind": "current_calibrated_components_finite_low_support"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "月亮姐",
+          "start_index": 8,
+          "syllables": [
+            {
+              "index": 8,
+              "char": "月",
+              "base_reading": "yue4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                1.51,
+                1.6300000000000001
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 9,
+              "char": "亮",
+              "base_reading": "liang4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                1.5950000000000002,
+                1.7349999999999999
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            },
+            {
+              "index": 10,
+              "char": "姐",
+              "base_reading": "jie3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                1.758875,
+                1.93
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        },
+        {
+          "name": "斯瓦泰克",
+          "start_index": 27,
+          "syllables": [
+            {
+              "index": 27,
+              "char": "斯",
+              "base_reading": "si1",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                5.235,
+                5.455
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            },
+            {
+              "index": 28,
+              "char": "瓦",
+              "base_reading": "wa3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                5.4350000000000005,
+                5.585
+              ],
+              "prior_mechanical_status": "pending",
+              "support_kind": "direct_finite_AI_phonetic_interpretation_not_mechanical_pass"
+            },
+            {
+              "index": 29,
+              "char": "泰",
+              "base_reading": "tai4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                5.565,
+                5.835
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 30,
+              "char": "克",
+              "base_reading": "ke4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                5.79,
+                5.97
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        },
+        {
+          "name": "李安",
+          "start_index": 32,
+          "syllables": [
+            {
+              "index": 32,
+              "char": "李",
+              "base_reading": "li3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                6.17,
+                6.33
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 33,
+              "char": "安",
+              "base_reading": "an1",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                6.3100000000000005,
+                6.529999999999999
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        },
+        {
+          "name": "武汉",
+          "start_index": 42,
+          "syllables": [
+            {
+              "index": 42,
+              "char": "武",
+              "base_reading": "wu3",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                8.290000000000001,
+                8.49
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            },
+            {
+              "index": 43,
+              "char": "汉",
+              "base_reading": "han4",
+              "status": "correct_low_support",
+              "actual_window_seconds": [
+                8.465,
+                8.695
+              ],
+              "prior_mechanical_status": "correct_low_support",
+              "support_kind": "current_calibrated_components_finite_low_support"
+            }
+          ],
+          "status": "all_syllables_finite_current_low_support"
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 1,
+          "text": "一",
+          "status": "correct_low_support_direct_actual_i_vowel_sequence",
+          "raw_asr_status_preserved": "number_asr_unresolved_not_confirmed_misread",
+          "evidence": "root-number-review.json",
+          "not_ASR_or_tone_classifier_pass": true
+        },
+        {
+          "start_index": 12,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 16,
+          "text": "一千",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 24,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ],
+      "full_text_lexical_units": [
+        {
+          "expected": "这一场苦战过后",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "月亮姐第一次晋级一千赛半决赛",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "下一关是斯瓦泰克和李安之间的胜者",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "这趟武汉之旅",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她还能走多远",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "raw_asr": "這場苦戰過後 月亮解第一次禁及一千賽半決賽下一關是司法泰克和李安之間的聖者這趟武漢之旅 他還能走多遠",
+      "remaining_lexical_differences": [
+        {
+          "type": "delete",
+          "expected": "一",
+          "asr": "",
+          "expected_pinyin": [
+            "yi"
+          ],
+          "asr_pinyin": [],
+          "expected_normalized_indices": [
+            1,
+            2
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "瓦",
+          "asr": "法",
+          "expected_pinyin": [
+            "wa"
+          ],
+          "asr_pinyin": [
+            "fa"
+          ],
+          "expected_normalized_indices": [
+            26,
+            27
+          ]
+        }
+      ],
+      "audio_pronunciation_status": "finite_current_low_support",
+      "manual_listening_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "outro",
+      "segment_index_at_capture": "outro",
+      "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "tts_text": "关注网球时插，时插归我，好球归你。",
+      "display_text": "关注网球时差，时差归我，好球归你。",
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "actual_native_audio": "/workspace/scratch/moon-qf-pronunciation/native-audio/outro-3d7277d26afc569a.mp3",
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "好",
+          "intended_static": "hao3",
+          "status": "correct_low_support_exact_whole_utterance_reuse",
+          "prior_mechanical_status": "correct_low_support_exact_whole_utterance_reuse",
+          "support_kind": "whole_utterance_exact_low_review_reuse"
+        }
+      ],
+      "proper_names": [],
+      "numbers": [],
+      "full_text_lexical_units": [
+        {
+          "expected": "关注网球时插",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "时插归我",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "好球归你",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "raw_asr": "關注網球時差,時差歸我,好求歸你",
+      "remaining_lexical_differences": [],
+      "audio_pronunciation_status": "finite_current_low_support",
+      "manual_listening_claimed": false,
+      "all_mechanical_components_passed": false
+    }
+  ],
+  "mechanical_pending_count": 27,
+  "direct_finite_supported_count": 27,
+  "manual_listening_claimed": false,
+  "all_mechanical_components_passed": false
+}

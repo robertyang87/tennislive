@@ -1,0 +1,627 @@
+{
+  "bundle_sha256": "da9c1b7e5c367c8da9e6b251825a1828b8d4691d95f92dd634c54ebb7895378c",
+  "status": "complete_current_raw_lexical_crosscheck_not_tone_or_all_audio_pass",
+  "manual_listening_claimed": false,
+  "method": "Unprompted whole original MP3 ASR; Arabic integer normalization and tone-free pinyin sequence alignment; unresolved spans remain unresolved. No expected-text prompt.",
+  "limitations": [
+    "ASR Chinese words, integers and tone-free matches are lexical assistance only. They cannot prove any realized tone or classify an ASR mismatch as an actual TTS misread.",
+    "Insertions/deletions and lexical ambiguity remain in raw output and differences; this report does not silently correct recognized words."
+  ],
+  "utterances": [
+    {
+      "edit_id": "intro",
+      "audio_sha256": "24923d038198a168a3f30ff56865e2a0c926959a194d36ce6c040a1810e46136",
+      "expected_tts_text": "六比零，只是这场比赛的开头。北京时间二零二六年十月十六日下午，武汉一千赛女单四分之一决赛，月亮姐遇到萨卡里。昨天，她刚刚第一次打进一千赛八强。",
+      "raw_unprompted_asr": "6比0 只是這場比賽的開頭北京時間2026年10月16日下午吳漢1000賽女單四分之一決賽月亮姐遇到薩卡里昨天她剛剛第一次打見1000賽8強",
+      "normalized_expected": "六比零只是这场比赛的开头北京时间二零二六年十月十六日下午武汉一千赛女单四分之一决赛月亮姐遇到萨卡里昨天她刚刚第一次打进一千赛八强",
+      "normalized_asr": "六比零只是這場比賽的開頭北京時間二零二六年十月十六日下午吳漢一千賽女單四分之一決賽月亮姐遇到薩卡里昨天她剛剛第一次打見一千賽八強",
+      "tone_free_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "进",
+          "asr": "見",
+          "expected_pinyin": [
+            "jin"
+          ],
+          "asr_pinyin": [
+            "jian"
+          ],
+          "expected_normalized_indices": [
+            58,
+            59
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "六比零",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "北京时间二零二六年十月十六日下午",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "武汉",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "一千赛女单四分之一决赛",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "月亮姐",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "萨卡里",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "第一次打进一千赛八强",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 0,
+          "text": "六比零",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 18,
+          "text": "二零二六",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 23,
+          "text": "十",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 25,
+          "text": "十六",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 33,
+          "text": "一千",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 38,
+          "text": "四",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 41,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 61,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 65,
+          "text": "一千",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 68,
+          "text": "八",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "first_set_card",
+      "audio_sha256": "6823923842fde9f1a6a73a28cceea50f08949dccfc1fa8885fe08147e7fc9313",
+      "expected_tts_text": "首盘四比零接发，这个回合里，月亮姐沿底线横向移动，把打向两侧的球一次次救回，兑现破发点。随后六比零收下首盘，自己一次破发点都没给。",
+      "raw_unprompted_asr": "手盤4比0揭发 这个回合里月亮节线底线横向移动把打向两次的球一次次就回对线破发点随后6比0收下手盘自己一次破发点都没点",
+      "normalized_expected": "首盘四比零接发这个回合里月亮姐沿底线横向移动把打向两侧的球一次次救回兑现破发点随后六比零收下首盘自己一次破发点都没给",
+      "normalized_asr": "手盤四比零揭发这个回合里月亮节线底线横向移动把打向两次的球一次次就回对线破发点随后六比零收下手盘自己一次破发点都没点",
+      "tone_free_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "沿",
+          "asr": "线",
+          "expected_pinyin": [
+            "yan"
+          ],
+          "asr_pinyin": [
+            "xian"
+          ],
+          "expected_normalized_indices": [
+            15,
+            16
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "侧",
+          "asr": "次",
+          "expected_pinyin": [
+            "ce"
+          ],
+          "asr_pinyin": [
+            "ci"
+          ],
+          "expected_normalized_indices": [
+            26,
+            27
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "给",
+          "asr": "点",
+          "expected_pinyin": [
+            "gei"
+          ],
+          "asr_pinyin": [
+            "dian"
+          ],
+          "expected_normalized_indices": [
+            57,
+            58
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "首盘四比零接发",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "这个回合里",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "月亮姐沿底线横向移动",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "把打向两侧的球一次次救回",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "兑现破发点",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "六比零收下首盘",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "自己一次破发点都没给",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 2,
+          "text": "四比零",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 28,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 32,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 46,
+          "text": "六比零",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 56,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "second_set_card",
+      "audio_sha256": "e258bec14d4a55b4506a087c26df0d637b6fae7a602e4b808ecf876dd791a054",
+      "expected_tts_text": "第二盘，萨卡里没有放手。零比一，月亮姐发球面对破发点。萨卡里从底线把球连续打向两侧，再跟进到场内，拿下这局。",
+      "raw_unprompted_asr": "第二盘 薩卡里没有放手零比一 月亮姐发球面对破发点薩卡里从底线把球连续打向两次在根筋刀场内拿下这句",
+      "normalized_expected": "第二盘萨卡里没有放手零比一月亮姐发球面对破发点萨卡里从底线把球连续打向两侧再跟进到场内拿下这局",
+      "normalized_asr": "第二盘薩卡里没有放手零比一月亮姐发球面对破发点薩卡里从底线把球连续打向两次在根筋刀场内拿下这句",
+      "tone_free_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "侧",
+          "asr": "次",
+          "expected_pinyin": [
+            "ce"
+          ],
+          "asr_pinyin": [
+            "ci"
+          ],
+          "expected_normalized_indices": [
+            36,
+            37
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "第二盘",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "萨卡里没有放手",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "零比一",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "月亮姐发球面对破发点",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "萨卡里从底线把球连续打向两侧",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "再跟进到场内",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "拿下这局",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 1,
+          "text": "二",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 12,
+          "text": "零比一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 39,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "second_finish_card",
+      "audio_sha256": "3633aa3b3adb71a07f25bf9c55a3c5789648c9115d1c075cdf1be20c31f7fc5d",
+      "expected_tts_text": "萨卡里先赢三局，月亮姐随后稳住发球局，却一直没能破回去。三比六，比赛来到决胜盘。",
+      "raw_unprompted_asr": "薩卡里先贏三局 月亮截隨後穩住發球局 卻一直沒能破回去三比六比賽來到決勝盤",
+      "normalized_expected": "萨卡里先赢三局月亮姐随后稳住发球局却一直没能破回去三比六比赛来到决胜盘",
+      "normalized_asr": "薩卡里先贏三局月亮截隨後穩住發球局卻一直沒能破回去三比六比賽來到決勝盤",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "萨卡里先赢三局",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "月亮姐随后稳住发球局",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "却一直没能破回去",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "三比六",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "比赛来到决胜盘",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 5,
+          "text": "三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 20,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 28,
+          "text": "三比六",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "deciding_set",
+      "audio_sha256": "184689d963d572f2bc910cab65a0c637bf094fbeba6483e2481484e70845ef57",
+      "expected_tts_text": "决胜盘，二比二，她先救下破发点。四比三接发，又错过三个机会。前十一局，双方都保住发球局。六比五，月亮姐又站到接发位置。她先救下对手一个局点，再拿到全场第一个赛点。",
+      "raw_unprompted_asr": "绝圣盘2比2 它先旧下破发点4比3接发又错过3个机会前11局双方都保住发酵局6比5 月亮节又站到接发位置它先旧下对手一个局点再拿到全场第一个赛点",
+      "normalized_expected": "决胜盘二比二她先救下破发点四比三接发又错过三个机会前十一局双方都保住发球局六比五月亮姐又站到接发位置她先救下对手一个局点再拿到全场第一个赛点",
+      "normalized_asr": "绝圣盘二比二它先旧下破发点四比三接发又错过三个机会前十一局双方都保住发酵局六比五月亮节又站到接发位置它先旧下对手一个局点再拿到全场第一个赛点",
+      "tone_free_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "球",
+          "asr": "酵",
+          "expected_pinyin": [
+            "qiu"
+          ],
+          "asr_pinyin": [
+            "jiao"
+          ],
+          "expected_normalized_indices": [
+            35,
+            36
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "决胜盘",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "二比二",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她先救下破发点",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "四比三接发",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "又错过三个机会",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "前十一局",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "双方都保住发球局",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "六比五",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "月亮姐又站到接发位置",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她先救下对手一个局点",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "再拿到全场第一个赛点",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 4,
+          "text": "二比二",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 16,
+          "text": "四比三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 25,
+          "text": "三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 31,
+          "text": "十一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 44,
+          "text": "六比五",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 65,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 76,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "audio_sha256": "d5b527c0c416eb8c0f9fd0928f4e0eee8aec204f0f2f3b4961840e0201348c78",
+      "expected_tts_text": "月亮姐二十五个制胜分，萨卡里三十七个。非受迫失误，二十三比三十五。决胜盘六个发球局全部保住，她把突破留在了最后一局。",
+      "raw_unprompted_asr": "約量解25個智盛分,薩卡里37個非瘦破15,23比35絕生盤6個發球局全部保住,他把突破留在了最後一局",
+      "normalized_expected": "月亮姐二十五个制胜分萨卡里三十七个非受迫失误二十三比三十五决胜盘六个发球局全部保住她把突破留在了最后一局",
+      "normalized_asr": "約量解二十五個智盛分薩卡里三十七個非瘦破十五二十三比三十五絕生盤六個發球局全部保住他把突破留在了最後一局",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "月亮姐二十五个制胜分",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "萨卡里三十七个",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "非受迫失误",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "二十三比三十五",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "决胜盘六个发球局全部保住",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她把突破留在了最后一局",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 3,
+          "text": "二十五",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 14,
+          "text": "三十七",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 25,
+          "text": "二十三比三十五",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 36,
+          "text": "六",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 55,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "audio_sha256": "b8e35adf6432a364ddc87f9fa3bcb1af2dc1b60336e9ee96ef97741d501b6638",
+      "expected_tts_text": "这一场苦战过后，月亮姐第一次晋级一千赛半决赛。下一关是斯瓦泰克和李安之间的胜者。这趟武汉之旅，她还能走多远？",
+      "raw_unprompted_asr": "這場苦戰過後 月亮解第一次禁及一千賽半決賽下一關是司法泰克和李安之間的聖者這趟武漢之旅 他還能走多遠",
+      "normalized_expected": "这一场苦战过后月亮姐第一次晋级一千赛半决赛下一关是斯瓦泰克和李安之间的胜者这趟武汉之旅她还能走多远",
+      "normalized_asr": "這場苦戰過後月亮解第一次禁及一千賽半決賽下一關是司法泰克和李安之間的聖者這趟武漢之旅他還能走多遠",
+      "tone_free_lexical_differences": [
+        {
+          "type": "delete",
+          "expected": "一",
+          "asr": "",
+          "expected_pinyin": [
+            "yi"
+          ],
+          "asr_pinyin": [],
+          "expected_normalized_indices": [
+            1,
+            2
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "瓦",
+          "asr": "法",
+          "expected_pinyin": [
+            "wa"
+          ],
+          "asr_pinyin": [
+            "fa"
+          ],
+          "expected_normalized_indices": [
+            26,
+            27
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "这一场苦战过后",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "月亮姐第一次晋级一千赛半决赛",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "下一关是斯瓦泰克和李安之间的胜者",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "这趟武汉之旅",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "她还能走多远",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 1,
+          "text": "一",
+          "status": "number_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "start_index": 12,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 16,
+          "text": "一千",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 24,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "expected_tts_text": "关注网球时插，时插归我，好球归你。",
+      "raw_unprompted_asr": "關注網球時差,時差歸我,好求歸你",
+      "normalized_expected": "关注网球时插时插归我好球归你",
+      "normalized_asr": "關注網球時差時差歸我好求歸你",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "关注网球时插",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "时插归我",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "好球归你",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": []
+    }
+  ]
+}
