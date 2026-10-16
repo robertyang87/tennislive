@@ -1,0 +1,309 @@
+{
+  "schema": "tennislive.independent-finite-visual-review.v1",
+  "status": "failed_finite_visual_review",
+  "film_sha256": "9a3b3630179d79c7703742b361f9d10711814aaf8b3a3f9f84babe4b7db6f34e",
+  "film_bytes": 116131297,
+  "duration_seconds": 262.56,
+  "run_id": 38873111090,
+  "reviewed_at": "2026-10-16T08:52:01.631627+00:00",
+  "sample_count": 164,
+  "all164samples_viewed_on_contact_sheets": true,
+  "contact_sheet_count": 11,
+  "actual_ASS_cue_midpoints": 69,
+  "individually_viewed_original_PNGs": [
+    {
+      "frame_index": 5592,
+      "seconds": 223.68,
+      "png": "frames/f005592.png",
+      "reasons": [
+        {
+          "kind": "key_action_source_mapping",
+          "requested_seconds": 223.70000000000002,
+          "edit_id": "match_payoff",
+          "source_seconds": 291.0
+        }
+      ],
+      "png_sha256": "2d69422bfbdd3c4203295cada89e2bf58a29d7515608c218112ad152cb3e8682"
+    },
+    {
+      "frame_index": 5642,
+      "seconds": 225.68,
+      "png": "frames/f005642.png",
+      "reasons": [
+        {
+          "kind": "key_action_source_mapping",
+          "requested_seconds": 225.70000000000002,
+          "edit_id": "match_payoff",
+          "source_seconds": 293.0
+        }
+      ],
+      "png_sha256": "37774e8d72f155c77a12e4eaf53a8668891e0cefa0a23e14040c96b0816de57d"
+    },
+    {
+      "frame_index": 15,
+      "seconds": 0.6,
+      "png": "frames/f000015.png",
+      "reasons": [
+        {
+          "kind": "metadata_cover_center_verify_actual_poster",
+          "requested_seconds": 0.6
+        }
+      ],
+      "png_sha256": "44883632e420351de32ec5322a7af0e62e79a108c2f81f4f651edb3a44389502"
+    },
+    {
+      "frame_index": 1438,
+      "seconds": 57.52,
+      "png": "frames/f001438.png",
+      "reasons": [
+        {
+          "kind": "key_action_source_mapping",
+          "requested_seconds": 57.5,
+          "edit_id": "first_set_turn",
+          "source_seconds": 140.0
+        }
+      ],
+      "png_sha256": "ff4ba8565eb5e7e1c61778be087c450b04d06d4f68aa190c4a2493bde392bb53"
+    },
+    {
+      "frame_index": 2888,
+      "seconds": 115.52,
+      "png": "frames/f002888.png",
+      "reasons": [
+        {
+          "kind": "key_action_source_mapping",
+          "requested_seconds": 115.5,
+          "edit_id": "first_set_turn",
+          "source_seconds": 198.0
+        }
+      ],
+      "png_sha256": "9af836b267237f51fe2ffe351480f6cfff0fa958e3a529a6794cb6959d87029a"
+    },
+    {
+      "frame_index": 4618,
+      "seconds": 184.72,
+      "png": "frames/f004618.png",
+      "reasons": [
+        {
+          "kind": "key_action_source_mapping",
+          "requested_seconds": 184.70000000000002,
+          "edit_id": "match_payoff",
+          "source_seconds": 252.0
+        }
+      ],
+      "png_sha256": "833d2552376ced07222b0538c7c2705767c9b52b7176df89eac76a0fe13b8e99"
+    }
+  ],
+  "source_comparison_PNGs": [
+    {
+      "path": "source-comparison/source-291.png",
+      "sha256": "8506d4b0cf649b395030a31fbb638e2da150ca5715c95ec5eac34291c6182576",
+      "source_sha256": "3288a4c8597d888ecc6139b7fe46abf890c8673f6d90439f54ff008b1a706137",
+      "requested_source_seconds": 290.98,
+      "actual_seek_note": "ffmpeg input seek to290.98/292.98 then first decoded frame (~291/293)"
+    },
+    {
+      "path": "source-comparison/source-293.png",
+      "sha256": "d3c637e99fbbbe7aad7cc68e658657cf4c2ef492ed8a32b1e915df9e867e1ae3",
+      "source_sha256": "3288a4c8597d888ecc6139b7fe46abf890c8673f6d90439f54ff008b1a706137",
+      "requested_source_seconds": 292.98,
+      "actual_seek_note": "ffmpeg input seek to290.98/292.98 then first decoded frame (~291/293)"
+    }
+  ],
+  "blocking_visual_findings": [
+    {
+      "id": "final_large_result_panel_mask_corruption",
+      "description": "A horizontal strip of underlying scene replaces almost the entire Ostapenko winner/name row of the native large final result panel. The right residual overlay shows only a partial JELEN and final6; her name and first-set7 are obscured. This is not a caption collision: captions are above the panel. Source comparisons show the full native row intact at corresponding moments.",
+      "evidence": [
+        {
+          "frame_index": 5592,
+          "seconds": 223.68,
+          "png": "frames/f005592.png",
+          "reasons": [
+            {
+              "kind": "key_action_source_mapping",
+              "requested_seconds": 223.70000000000002,
+              "edit_id": "match_payoff",
+              "source_seconds": 291.0
+            }
+          ],
+          "png_sha256": "2d69422bfbdd3c4203295cada89e2bf58a29d7515608c218112ad152cb3e8682"
+        },
+        {
+          "frame_index": 5616,
+          "seconds": 224.64,
+          "png": "frames/f005616.png",
+          "reasons": [
+            {
+              "kind": "actual_ASS_cue_midpoint",
+              "requested_seconds": 224.64000000000001,
+              "index": 56,
+              "start": 223.42000000000002,
+              "end": 225.86,
+              "style": "TL",
+              "text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Seven-six, six-one.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N七比六 六比一"
+            }
+          ],
+          "png_sha256": "d0e88db7d60cca7637f90543d7f88cab5df3dc645dae0865947afcea02f75976"
+        },
+        {
+          "frame_index": 5642,
+          "seconds": 225.68,
+          "png": "frames/f005642.png",
+          "reasons": [
+            {
+              "kind": "key_action_source_mapping",
+              "requested_seconds": 225.70000000000002,
+              "edit_id": "match_payoff",
+              "source_seconds": 293.0
+            }
+          ],
+          "png_sha256": "37774e8d72f155c77a12e4eaf53a8668891e0cefa0a23e14040c96b0816de57d"
+        },
+        {
+          "frame_index": 5662,
+          "seconds": 226.48,
+          "png": "frames/f005662.png",
+          "reasons": [
+            {
+              "kind": "key_action_source_mapping",
+              "requested_seconds": 226.49999999999997,
+              "edit_id": "match_payoff",
+              "source_seconds": 293.8
+            }
+          ],
+          "png_sha256": "b964b9ca0b21953d0e2008fb7ca5fdda5c69c33c413348e5925ccd20762db9e0"
+        },
+        {
+          "frame_index": 5670,
+          "seconds": 226.8,
+          "png": "frames/f005670.png",
+          "reasons": [
+            {
+              "kind": "key_action_source_mapping",
+              "requested_seconds": 226.80000000000004,
+              "edit_id": "match_payoff",
+              "source_seconds": 294.1
+            }
+          ],
+          "png_sha256": "bf96370282c562da25174231fe568754aaee190746ff0cb1bf17db083e4d24f8"
+        },
+        {
+          "frame_index": 5672,
+          "seconds": 226.88,
+          "png": "frames/f005672.png",
+          "reasons": [
+            {
+              "kind": "segment_transition_side",
+              "requested_seconds": 226.85999999999999,
+              "boundary": 6,
+              "boundary_seconds": 226.89999999999998
+            },
+            {
+              "kind": "key_action_source_mapping",
+              "requested_seconds": 226.85999999999999,
+              "edit_id": "match_payoff",
+              "source_seconds": 294.16
+            },
+            {
+              "kind": "subtitle_window_edge_nearest_frames",
+              "requested_seconds": 226.88,
+              "segment_index": 5,
+              "edit_id": "match_payoff",
+              "edge": "end",
+              "source_boundary_seconds": 294.2,
+              "nominal_film_boundary_seconds": 226.89999999999998,
+              "bottom_margin": 540
+            }
+          ],
+          "png_sha256": "d3ba7ecfdd43942d6600bf8e7d51920537fab413d34a28770694b65d75c65bd9"
+        }
+      ],
+      "individually_opened_failure_originals": [
+        5592,
+        5642
+      ],
+      "suspected_mechanism_not_proven": "Sourceboard restoration/mask may falsely act on lower part of central large result panel; exact code cause must be verified separately."
+    }
+  ],
+  "other_observations": [
+    {
+      "id": "first_set_large_panel",
+      "status": "no_collision_observed_in_sample",
+      "evidence": {
+        "frame_index": 2888,
+        "seconds": 115.52,
+        "png": "frames/f002888.png",
+        "reasons": [
+          {
+            "kind": "key_action_source_mapping",
+            "requested_seconds": 115.5,
+            "edit_id": "first_set_turn",
+            "source_seconds": 198.0
+          }
+        ],
+        "png_sha256": "9af836b267237f51fe2ffe351480f6cfff0fa958e3a529a6794cb6959d87029a"
+      },
+      "description": "Names and score6/7 clear; raised EN/CN subtitles above result panel."
+    },
+    {
+      "id": "native_fixed_small_board",
+      "status": "no_blocker_observed_in_sample",
+      "evidence": [
+        {
+          "frame_index": 1438,
+          "seconds": 57.52,
+          "png": "frames/f001438.png",
+          "reasons": [
+            {
+              "kind": "key_action_source_mapping",
+              "requested_seconds": 57.5,
+              "edit_id": "first_set_turn",
+              "source_seconds": 140.0
+            }
+          ],
+          "png_sha256": "ff4ba8565eb5e7e1c61778be087c450b04d06d4f68aa190c4a2493bde392bb53"
+        },
+        {
+          "frame_index": 4618,
+          "seconds": 184.72,
+          "png": "frames/f004618.png",
+          "reasons": [
+            {
+              "kind": "key_action_source_mapping",
+              "requested_seconds": 184.70000000000002,
+              "edit_id": "match_payoff",
+              "source_seconds": 252.0
+            }
+          ],
+          "png_sha256": "833d2552376ced07222b0538c7c2705767c9b52b7176df89eac76a0fe13b8e99"
+        }
+      ],
+      "description": "SET POINT and MATCH POINT #2 tags and score rows are readable at original series placement; long cue clears board."
+    },
+    {
+      "id": "approved_crop_limit",
+      "status": "nonblocking_approved_limitation",
+      "description": "Fixed center fill crop excludes lateral player portions at some samples, including near player left leg atf1200/f1288 and player exiting left atf3918. No full-court or full-athlete coverage claim."
+    },
+    {
+      "id": "stat_card",
+      "status": "no_blocker_on_contact_sheets",
+      "description": "Clean full-canvas table with winner-first72/61,W32/8,UE30/14,Ace7/0,DF6/5 readable on contact sheet9; no extra caption overlay as specified."
+    }
+  ],
+  "artifact_sha256": {
+    "/workspace/tennislive-efficiency/specs/reels/ostapenko-shnaider-wuhan-2026-qf.json": "d3701da0e86ebddddc96e6424477aec0a8ac72c8cdc3a0d4b070c523e1341135",
+    "/workspace/scratch/osta-final/metadata/subtitles.ass": "b7d3e56fffc522fa9d16530f2eb71707b22a851cb081f6324416947795588c5f",
+    "/workspace/scratch/osta-final/metadata/render.json": "312acd2a4c261db5bffbbb63af35ffeaa8d1d9902cd787c232b091ff80ad5983",
+    "/workspace/scratch/osta-final/metadata/audio_review_binding.json": "335be492db06fdc11b38cd534f7577968ab427f1c25431f300d6da559750f288",
+    "/workspace/scratch/osta-final/metadata/render_inputs.json": "83dd07bcedfb6d463aa8d81d02e33a55bbb000b6325a691d623a46e7b5ce19df"
+  },
+  "limitations": [
+    "164 selected stills of6564 encoded frames, all69actualASS cue midpoints and sampled boundaries/actions; not whole-film or frame-by-frame review.",
+    "Only listed6movie originals and2source originals separately opened; other samples inspected on11contact sheets.",
+    "No audio listening, loudness, silence, PCM or gain review performed."
+  ],
+  "transport_is_quality_approval": false,
+  "evidence_archive_location": "Included under history/run38873111090-9a3b3630179d in the eventual final visual evidence ZIP; current large PNGs remain in scratch until that seal."
+}
