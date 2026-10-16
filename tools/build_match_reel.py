@@ -3886,7 +3886,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # `test_真字段表要盖住每条spec里出现过的字段` 拿 `specs/reels/*.json` 里实际
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
-    "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom", "cx", "date", "title",
+    "spec": ("archival", "conform", "conform_sharpen", "cover", "crop_y", "crop_zoom", "cx", "date", "title",
              "layout", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
              "music", "outro", "push", "rate", "scorebox", "scoreboard_profile", "source_scorebox", "segments",
              "silent_source",
@@ -6643,6 +6643,11 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 同一条片子 2026-10-16：账号所有者「针对这一条内容可以放开用非官方视频」——2017 温网扔硬币
     # 只有个人账号转载的 BBC 转播（手机翻拍，最高 1280×720）。
     "https://www.youtube.com/watch?v=UKZnd1EliAY": 720,
+    # 奥斯塔彭科×斯瓦泰克六战（ostapenko-swiatek-h2h-2026）：账号所有者 2026-10-17 审 PR #1278
+    # 「不要动画卡」，点名 2021 印第安维尔斯、2022 迪拜两条 WTA 官方集锦（最高 1280×720）
+    # 剪关键分、放大铺满并轻度锐化。
+    "https://www.youtube.com/watch?v=wOsrLbiWZJ4": 720,
+    "https://www.youtube.com/watch?v=vNSSJMmRIBM": 720,
     # 霍达尔上海毛巾风波（jodar-towel-shanghai-2026）：账号所有者 2026-10-14「去找原视频，
     # 否则画面不对」——冲球童喊话与主裁警告官方集锦都没有，唯一完整的是 X @gerebit0 转发的
     # Tennis TV 转播录屏，最高 1206×652。spec 的 source_quality_exceptions 认领了它，这里补上白名单
@@ -7997,6 +8002,9 @@ def x_cdn_source_problem(spec: dict) -> str | None:
 _CONFORM_TARGETS: dict[Path, tuple[int, int]] = {}
 
 
+_CONFORM_SHARPEN: set[Path] = set()
+
+
 def conform_target(source: Path) -> tuple[int, int] | None:
     """这条源认领过 conform 就给基准尺寸，没有就 None。"""
     return _CONFORM_TARGETS.get(Path(source))
@@ -8012,8 +8020,9 @@ def conform_prefilter(source: Path) -> str:
     if not target:
         return ""
     tw, th = target
+    sharpen = ",unsharp=5:5:0.6:5:5:0.0" if Path(source) in _CONFORM_SHARPEN else ""
     return (f"scale={tw}:{th}:force_original_aspect_ratio=increase:flags=lanczos,"
-            f"crop={tw}:{th},")
+            f"crop={tw}:{th}{sharpen},")
 
 
 def conform_vf_args(source: Path) -> tuple[str, ...]:
@@ -8057,6 +8066,7 @@ def conform_sources(paths: dict[str, Path], spec: dict | None) -> None:
     """
     for path in paths.values():
         _CONFORM_TARGETS.pop(Path(path), None)
+        _CONFORM_SHARPEN.discard(Path(path))
     declared = (spec or {}).get("conform") or {}
     if not declared:
         return
@@ -8077,6 +8087,10 @@ def conform_sources(paths: dict[str, Path], spec: dict | None) -> None:
             print(f"[conform] {key} 已经是 {tw}×{th}，跳过")
             continue
         _CONFORM_TARGETS[Path(paths[key])] = (tw, th)
+        # 720p 放大到 1080 的源可以在 spec 的 `conform_sharpen` 里认领轻度锐化
+        # （unsharp 5x5 0.6，只锐亮度）——账号所有者 2026-10-17 对 osw 两条 720p 官方集锦点名要求。
+        if key in ((spec or {}).get("conform_sharpen") or {}):
+            _CONFORM_SHARPEN.add(Path(paths[key]))
         print(f"[conform] {key} {w}×{h} → {tw}×{th}"
               f"（等比放大铺满再中央裁，切到哪几秒做哪几秒，不落盘）——{why}")
 
