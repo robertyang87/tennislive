@@ -447,7 +447,8 @@ FIELDS: dict[str, Callable[[Ctx], list[str]]] = {
     "B9": _f_frame, "B10": _f_story, "B11": _f_story, "B12": _f_segments,
     "B13": _f_backstory, "B14": _f_ending, "B15": _nothing, "B16": _nothing,
     "B17": _f_result, "B18": _f_silent, "B19": _nothing, "B20": _f_visual,
-    "C1": _nothing, "C2": _nothing, "C3": _nothing, "C4": _nothing,
+    "B21": _f_story, "B22": _f_segments, "B23": _f_segments,
+    "C1": _nothing, "C2": _nothing, "C3": _nothing, "C4": _nothing, "C5": _nothing,
     "D1": _nothing, "D2": _nothing, "D3": _nothing,
 }
 
