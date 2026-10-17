@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "slug": "davidovich-zverev-shanghai-2026-sf",
+  "reviewed_at": "2026-10-17T11:41:04.528164+00:00",
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/evidence/davidovich-zverev-shanghai-2026-sf/source-agent/cold_open.json",
+      "transcript_sha256": "7a6fc5cd1fa301a5a984e70c8d14022a0a9caa4874ea626da9b9522e62857403"
+    },
+    {
+      "index": 2,
+      "transcript_path": "data/evidence/davidovich-zverev-shanghai-2026-sf/source-agent/first_set_close.json",
+      "transcript_sha256": "9be9d9984c9b248ec8dd985723546d262797563271e8287610ebd5b01a001955"
+    },
+    {
+      "index": 4,
+      "transcript_path": "data/evidence/davidovich-zverev-shanghai-2026-sf/source-agent/second_set_point.json",
+      "transcript_sha256": "e1ed4f1ea37e4d6df2aba74b9a9297cd7cbfa083b63834c16168da376691bd4f"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/evidence/davidovich-zverev-shanghai-2026-sf/source-agent/ending.json",
+      "transcript_sha256": "2d1e32a36be5ebe39cfe816fe84819872dc9099e1e26150679c8f04de8cbc06c"
+    }
+  ],
+  "plan_sha256": "0c199b13397307c3038bda852b69169122814de6f4efbce7683d49a8fc1ca1f2",
+  "_review_method": "Exact same-MP4 full small.en/medium.en transcripts with finite actual original source PNGs and uploader captions, preserving whole retained English sentences. No human listening claim; actual source review independently completed by source-agent."
+}
