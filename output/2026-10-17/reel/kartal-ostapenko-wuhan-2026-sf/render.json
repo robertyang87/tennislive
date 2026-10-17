@@ -1,32 +1,32 @@
 {
-  "scoreboard_qc_sha256": "04da71eeb0c527ae24447fb5e0c312fbee05bc6b3386dc99b37d82bc1c017ddb",
+  "scoreboard_qc_sha256": "afcfff304482cec7b4ce885756e790ad8c6a535c49fbce223c0e6acd79630603",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "1ae6a065a70d55aa522838f3d853324e353c4b02886aaee17f1c2f4b94ad5491",
-    "request_count": 6,
+    "bundle_sha256": "29a480f2ebc026400c2757b427e891df37c839f99ea7e313c7c04f2a27eb2d12",
+    "request_count": 7,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-kartal-ostapenko-wuhan-2026-sf-1ae6a065a70d55aa",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-kartal-ostapenko-wuhan-2026-sf-1ae6a065a70d55aa/tts_bundle.zip",
+    "release_tag": "reel-tts-kartal-ostapenko-wuhan-2026-sf-29a480f2ebc02640",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-kartal-ostapenko-wuhan-2026-sf-29a480f2ebc02640/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39039887273"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39040831735"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 4.554,
   "layout": "full",
-  "segments_seconds": 238.64,
+  "segments_seconds": 237.14,
   "topbar": {
     "line1": "2026 WTA1000 武汉 半决赛",
     "line2": "卡塔尔 7-6(9) 7-6(5) 奥斯塔彭科",
     "start": 1.2,
-    "end": 239.84
+    "end": 238.34
   },
-  "film_seconds": 244.4,
+  "film_seconds": 242.92,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -35,7 +35,8 @@
     "3": 14.568,
     "5": 17.712,
     "7": 14.208,
-    "9": 14.088
+    "9": 3.984,
+    "10": 10.44
   },
   "face_checks": {
     "cover": {
@@ -52,44 +53,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "9932ec1ea16598318c740e5119a311854610547c90e02f6687ebb96dde01e9de",
+  "render_inputs_sha256": "70c60409eef8aadfa42663c347809e05bf5b64107100e579c2e86539d6762668",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "kartal-ostapenko-wuhan-2026-sf",
-    "received_at": "2026-10-17T14:14:27Z",
-    "artifact_ready_at": "2026-10-17T14:21:56Z",
-    "elapsed_seconds": 449.117,
+    "received_at": "2026-10-17T14:27:35Z",
+    "artifact_ready_at": "2026-10-17T14:33:07Z",
+    "elapsed_seconds": 332.866,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "857a37f53bb29c0c5103ce6ead30f4f5c5cb121e583bf848d48a2c285f81e239",
-    "spec_sha256": "9090991812239ee82b6ef856e9b4479e7b2890b07397142ca6653321aa08d81e",
-    "run_id": "39039887273",
+    "film_sha256": "64603052754386291792976378be479a7b624668c4db4844a2ebb1b521ea0b4f",
+    "spec_sha256": "f9a6392ff5ce4e3b410445f6ddc93fbbadc2062a4d624126f485442226ed9f38",
+    "run_id": "39040831735",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-17T14:17:57Z",
-        "run_id": "39039887273"
+        "at": "2026-10-17T14:29:27Z",
+        "run_id": "39040831735"
       }
     ],
-    "render_seconds": 239.117,
-    "pre_render_seconds": 210.0
+    "render_seconds": 220.866,
+    "pre_render_seconds": 112.0
   },
-  "film_sha256": "857a37f53bb29c0c5103ce6ead30f4f5c5cb121e583bf848d48a2c285f81e239",
-  "film_bytes": 66804690,
-  "qc_attestation_sha256": "40a4f3d4e64a7048240058a9c39545af02b9788a2e54a075194850790469403e",
+  "film_sha256": "64603052754386291792976378be479a7b624668c4db4844a2ebb1b521ea0b4f",
+  "film_bytes": 66744679,
+  "qc_attestation_sha256": "649ff3aec8947d34fa2fa6260bf35f1efe5bc6663e8ce585deb508c80b1526d6",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-17T14:17:57Z",
-      "run_id": "39039887273"
+      "at": "2026-10-17T14:29:27Z",
+      "run_id": "39040831735"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-17T14:22:00Z",
-      "run_id": "39039887273"
+      "at": "2026-10-17T14:33:10Z",
+      "run_id": "39040831735"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-kartal-ostapenko-wuhan-2026-sf/kartal-ostapenko-wuhan-2026-sf.mp4",
-  "video_bytes": 66804690
+  "video_bytes": 66744679
 }
