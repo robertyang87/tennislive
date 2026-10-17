@@ -3,39 +3,42 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "f84d1d683ee17767c966704c348a2e2221b73753738457471703b92e186f2638",
-    "request_count": 12,
+    "bundle_sha256": "e704f9219efde29924e9382e58791a48abe462c66ff18f11db5340892f3e99fe",
+    "request_count": 15,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-kartal-story-2026-f84d1d683ee17767",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-kartal-story-2026-f84d1d683ee17767/tts_bundle.zip",
+    "release_tag": "reel-tts-kartal-story-2026-e704f9219efde299",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-kartal-story-2026-e704f9219efde299/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39035190906"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39036528258"
   },
   "cover_seconds": 4.498,
   "cover_narrated": true,
   "outro_seconds": 4.146,
   "layout": "full",
-  "segments_seconds": 283.1,
+  "segments_seconds": 284.15,
   "topbar": null,
-  "film_seconds": 291.76,
+  "film_seconds": 292.84,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+18%",
   "narration_backend": "edge-tts",
   "narration_seconds": {
-    "1": 14.76,
-    "2": 5.928,
-    "3": 10.152,
-    "7": 8.208,
-    "8": 9.48,
-    "9": 8.424,
-    "10": 16.896,
-    "13": 14.76,
-    "16": 12.792,
-    "18": 18.12
+    "1": 5.928,
+    "2": 8.088,
+    "3": 5.928,
+    "4": 10.152,
+    "8": 8.208,
+    "9": 9.48,
+    "10": 8.424,
+    "11": 6.432,
+    "12": 10.8,
+    "15": 5.424,
+    "16": 8.952,
+    "19": 12.792,
+    "21": 18.12
   },
   "face_checks": {
     "cover": {
@@ -52,44 +55,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "d2c99f574cbce7ca5d3eaeec832918fc428ef4b3f8a7b9d2eb6aabc0632e377a",
+  "render_inputs_sha256": "dda8b8a1dc55b6a76a20c90a445b4204a6aacd233e68c1d887e425b8ea327161",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "kartal-story-2026",
-    "received_at": "2026-10-17T13:06:24Z",
-    "artifact_ready_at": "2026-10-17T13:12:16Z",
-    "elapsed_seconds": 352.363,
+    "received_at": "2026-10-17T13:26:04Z",
+    "artifact_ready_at": "2026-10-17T13:32:51Z",
+    "elapsed_seconds": 407.551,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "8299b0a7545d26a59b6db0188090adf0ca50a2197d91a5941604e54d78aa8f16",
-    "spec_sha256": "c9555c64a6412e80963bec96fdf60160f49c66c0f79d7eb22dcebdd9538a589d",
-    "run_id": "39035190906",
+    "film_sha256": "81c3384e3f33929780e112a3927e46a84ef979eca9c9ce926e7bb1e6e45eac8f",
+    "spec_sha256": "3fa9c5c62a2b0020c46ef186f437823de67f57bd1a39c49100ca3a4bde6ad983",
+    "run_id": "39036528258",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-17T13:08:41Z",
-        "run_id": "39035190906"
+        "at": "2026-10-17T13:28:05Z",
+        "run_id": "39036528258"
       }
     ],
-    "render_seconds": 215.363,
-    "pre_render_seconds": 137.0
+    "render_seconds": 286.551,
+    "pre_render_seconds": 121.0
   },
-  "film_sha256": "8299b0a7545d26a59b6db0188090adf0ca50a2197d91a5941604e54d78aa8f16",
-  "film_bytes": 84243728,
-  "qc_attestation_sha256": "bab61e7e5963f1529425482a199db49ccee6a7c1ae118d229f520824c3ad7a85",
+  "film_sha256": "81c3384e3f33929780e112a3927e46a84ef979eca9c9ce926e7bb1e6e45eac8f",
+  "film_bytes": 90938349,
+  "qc_attestation_sha256": "87c028b9ca6bf0fc5201727860c01e07203c969a4e05b7012d6dcadfbe514335",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-17T13:08:41Z",
-      "run_id": "39035190906"
+      "at": "2026-10-17T13:28:05Z",
+      "run_id": "39036528258"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-17T13:12:19Z",
-      "run_id": "39035190906"
+      "at": "2026-10-17T13:32:55Z",
+      "run_id": "39036528258"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-kartal-story-2026/kartal-story-2026.mp4",
-  "video_bytes": 84243728
+  "video_bytes": 90938349
 }
