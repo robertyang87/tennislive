@@ -1,0 +1,33 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=abL2j0xldOc",
+  "source_sha256": "0bcaea757e8d06944a35b94da6b85eae0474fefc7c35c9a3223967f79b243543",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T13:04:02.078366+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 362.0,
+  "reviewed_to": 374.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 362.22,
+      "end": 365.82,
+      "en": "I was dreaming of playing this match when I was fully fit before the injury,",
+      "zh": "受伤之前，我就梦想打这样的比赛，"
+    },
+    {
+      "start": 366.14,
+      "end": 370.02,
+      "en": "so to be able to come back here in my third event",
+      "zh": "复出第三站就能来到这里，"
+    },
+    {
+      "start": 370.36,
+      "end": 374.12,
+      "en": "and to achieve this regardless is a huge milestone for me.",
+      "zh": "做到这一步，对我是一座里程碑。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/abL2j0xldOc/small.en.json + medium.en.json",
+  "review_note": "同一条：赛后场上采访，主持人问排名 170 打进决赛。两档逐词一致（medium 362.04–374.12；small 363.48–374.10），开头 I was I was 的重复按书面去掉。段首 362.0 在主持人问句（360.20）与 Yeah you know（361.68–361.88）之后，段尾 374.4 在 so yeah（374.60）之前。"
+}
