@@ -1,0 +1,121 @@
+{
+  "schema": "tennislive.source-contact-sheet-observations.v1",
+  "reviewed_at_utc": "2026-10-17T11:34:29.135655+00:00",
+  "reviewer": "zverev_sf_source agent",
+  "stage": "contact-wall first pass; exact source frame inspection pending",
+  "video_id": "NKFVL_lELNE",
+  "url": "https://www.youtube.com/watch?v=NKFVL_lELNE",
+  "duration_seconds": 198.112653,
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "fps": 25,
+  "actual_contact_walls_viewed": 4,
+  "actual_score_walls_viewed": 5,
+  "contact_grid_times_seconds": "0.5 to 196.5, 2-second spacing; 99 whole frames and 99 score crops",
+  "source_sha256": null,
+  "human_listening_claimed": false,
+  "audio_waveform_loudness_gain_or_pcm_checks_performed": false,
+  "evidence_files": [
+    {
+      "path": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/probe.json",
+      "sha256": "892cab2cb49d835c22478efa59163b567001c97dda5f22383a31702501e1516d",
+      "actually_viewed": false
+    },
+    {
+      "path": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/captions.txt",
+      "sha256": "4ebfec80cf4aa544b0db12ebd9386c89814d1bd2d179368033de90223ab2a532",
+      "actually_viewed": false
+    },
+    {
+      "path": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/contact_00.jpg",
+      "sha256": "19eb10f9dc37b78db2ac56b8a60fd378529a9785ad326414d0c0754293a9d2d5",
+      "actually_viewed": true
+    },
+    {
+      "path": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/contact_01.jpg",
+      "sha256": "8029a051a347988b6753c5093f1b5417aa1f4943ec8e81cb9c399e81e87bfe91",
+      "actually_viewed": true
+    },
+    {
+      "path": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/contact_02.jpg",
+      "sha256": "4bc5b95330ae327bc7bf51fdea8a98f34fffef7cb15a04d4c0d2aa29428d338e",
+      "actually_viewed": true
+    },
+    {
+      "path": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/contact_03.jpg",
+      "sha256": "c481da9e7f9f497af2cd2ee9438f2b66fd203ad91c697ac1451b19d5db89e1d1",
+      "actually_viewed": true
+    },
+    {
+      "path": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/score_00.jpg",
+      "sha256": "6cb00679ca5fdb637e66050758f136b50291a639b22b696d6e42d1c885daf333",
+      "actually_viewed": true
+    },
+    {
+      "path": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/score_01.jpg",
+      "sha256": "71a64f52fe8ecf1d1a1337d05c508a328167e470133456463b768af59795c528",
+      "actually_viewed": true
+    },
+    {
+      "path": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/score_02.jpg",
+      "sha256": "4196b5a10afd694c296891bf7ebce5f885d028dc7bf4f6a37eccff3f572d5b38",
+      "actually_viewed": true
+    },
+    {
+      "path": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/score_03.jpg",
+      "sha256": "b92338790597b9d36ce3251203e3a1ce1ae3891a6abdf109173c013a462f1ab0",
+      "actually_viewed": true
+    },
+    {
+      "path": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/score_04.jpg",
+      "sha256": "16e5c249a1c99d81bd6b512374d5a860d984fdf9a090e542db6103341530abe0",
+      "actually_viewed": true
+    }
+  ],
+  "observations": [
+    {
+      "moment": "first set conclusion",
+      "provisional_start": 55,
+      "provisional_end": 62.2,
+      "board_observed": "Zverev 6-5 40-15 serving; then 7-5",
+      "coverage": "serve-start and set result appear on contact samples; exact serve boundaries pending"
+    },
+    {
+      "moment": "second set conclusion",
+      "provisional_start": 104.4,
+      "provisional_end": 135.64,
+      "board_observed": "Zverev 7 4 30 / Davidovich 5 5 40, then 7 4 / 5 6",
+      "coverage": "full deciding set-point rally, celebration and set result visible; exact action boundaries pending"
+    },
+    {
+      "moment": "third set opening double-fault break",
+      "coverage": "absent from source scenes",
+      "reason": "At 135.64 the source skips directly from second-set aftermath to third-set ADF5-3 40-15; no third-set opening score/action frames present",
+      "edit_instruction": "Use verified factual narration/title card only; do not label another point as this break"
+    },
+    {
+      "moment": "two missed match points while receiving at5-2",
+      "coverage": "absent from source scenes",
+      "reason": "No third-set5-2 board/action shown; only actual final serving point at5-3 is present",
+      "edit_instruction": "Use verified factual narration/title card only; do not label final winning point as a missed match point"
+    },
+    {
+      "moment": "final winning match point and aftermath",
+      "provisional_start": 135.64,
+      "provisional_action_start": 137.8,
+      "provisional_action_end": 142.04,
+      "provisional_celebration_end": 184.68,
+      "board_observed": "Zverev 7 4 3 15 / Davidovich 5 6 5 40 serving",
+      "coverage": "real serving match point, winner smile, handshake and post-match applause/acknowledgment visible",
+      "native_endcard_start": 184.68
+    }
+  ],
+  "limitations": [
+    "2-second contact-wall samples are actually inspected, not every source frame.",
+    "Timings are provisional scene-cut/contact-wall bounds until original frames are inspected.",
+    "Provider captions contain malformed player names and cannot be copied as verified quotes.",
+    "No audio was played/listened in this review; actual ASR cross-check is pending root acquisition."
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "tour": "atp",
+  "footer_date": "2026-10-17",
+  "footer_venue": "上海 · 全场",
+  "_source": "官方MS002 SetNumber0完整整数：a兹维列夫（Z355）、b达维多维奇（DH50），列序跟封面对阵而非赢家；Winners/UE取Flashscore rZ1iEDSa Match并逐盘合计自证。",
+  "_winners_ue_evidence": {
+    "provider": "Flashscore",
+    "method": "api",
+    "source_url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_rZ1iEDSa",
+    "source_path": "data/evidence/davidovich-zverev-shanghai-2026-sf/facts-agent/fs-match-stats-raw.raw",
+    "source_sha256": "fbcf992e1050ad7f8a9d429af7e7636ccfe3b71f8d288a8e318e199f8d29f44e",
+    "period": "Match",
+    "match_date": "2026-10-17",
+    "checked_at": "2026-10-17T11:29:54.438707+00:00",
+    "winner_result": "5-7 6-4 6-3",
+    "matchup": [
+      "Zverev",
+      "Davidovich Fokina"
+    ],
+    "winners": [
+      28,
+      36
+    ],
+    "ue": [
+      20,
+      21
+    ],
+    "notes": "rZ1iEDSa; explicit home Zverev A./away Davidovich Fokina A. identity, completed5-7 6-4 6-3 winner DH50 independently bound to officialMS002. W10+12+6=28,14+10+12=36; UE6+8+6=20,11+5+5=21. Whole-match serve denominators/points agree with officialMS002. TNNSdayAPI403 recorded; no claim TNNS supplied the data."
+  },
+  "a": {
+    "aces": 18,
+    "df": 2,
+    "first_in": 71,
+    "first_total": 95,
+    "first_won": 52,
+    "second_total": 24,
+    "second_won": 11,
+    "bp_conv": 1,
+    "bp_chances": 3,
+    "pts_won": 82,
+    "pts_total": 178,
+    "winners": 28,
+    "ue": 20,
+    "headshot": "assets/players/headshots/atp-Z355.png"
+  },
+  "b": {
+    "aces": 5,
+    "df": 2,
+    "first_in": 68,
+    "first_total": 83,
+    "first_won": 58,
+    "second_total": 15,
+    "second_won": 6,
+    "bp_conv": 2,
+    "bp_chances": 6,
+    "pts_won": 96,
+    "pts_total": 178,
+    "winners": 36,
+    "ue": 21,
+    "headshot": "assets/players/headshots/atp-DH50.png"
+  }
+}

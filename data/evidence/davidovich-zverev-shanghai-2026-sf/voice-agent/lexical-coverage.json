@@ -1,0 +1,489 @@
+{
+  "bundle_sha256": "728ab30f7e1adf68ad32695723b248b97da61941d7720a6a8ce1daeb07902f03",
+  "status": "complete_current_raw_lexical_crosscheck_not_tone_or_all_audio_pass",
+  "manual_listening_claimed": false,
+  "method": "Unprompted whole original MP3 ASR; Arabic integer normalization separately within each raw ASR segment (do not merge final 15 and next-segment 20 into fictitious 1520); tone-free pinyin sequence alignment; unresolved spans remain unresolved. No expected-text prompt.",
+  "limitations": [
+    "ASR Chinese words, integers and tone-free matches are lexical assistance only. They cannot prove any realized tone or classify an ASR mismatch as an actual TTS misread.",
+    "Insertions/deletions and lexical ambiguity remain in raw output and differences; this report does not silently correct recognized words."
+  ],
+  "utterances": [
+    {
+      "edit_id": "intro",
+      "audio_sha256": "3452164ca06b4db0c591e59f935d4c642ded5e3bc1615ab65d39975a42fe33d0",
+      "expected_tts_text": "北京时间二零二六年十月十七日下午，上海大师赛男单半决赛。提前锁定年终第一的兹维列夫，对阵达维多维奇·福基纳。首盘九记ACE，没给对手一个破发点。五比五之后率先破发，他拿到先赢一盘的机会。",
+      "raw_unprompted_asr": "北京時間2026年10月17日下午 上海大施賽南南半決賽提前鎖定年中第一的自衛列夫對鎮搭衛多維起伏擊納手盤9G S 沒給對手一個破發點無比五之後率先破發 她拿到先贏一盤的機會",
+      "normalized_expected": "北京时间二零二六年十月十七日下午上海大师赛男单半决赛提前锁定年终第一的兹维列夫对阵达维多维奇福基纳首盘九记没给对手一个破发点五比五之后率先破发他拿到先赢一盘的机会",
+      "normalized_asr": "北京時間二零二六年十月十七日下午上海大施賽南南半決賽提前鎖定年中第一的自衛列夫對鎮搭衛多維起伏擊納手盤九沒給對手一個破發點無比五之後率先破發她拿到先贏一盤的機會",
+      "tone_free_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "单",
+          "asr": "南",
+          "expected_pinyin": [
+            "dan"
+          ],
+          "asr_pinyin": [
+            "nan"
+          ],
+          "expected_normalized_indices": [
+            22,
+            23
+          ]
+        },
+        {
+          "type": "delete",
+          "expected": "记",
+          "asr": "",
+          "expected_pinyin": [
+            "ji"
+          ],
+          "asr_pinyin": [],
+          "expected_normalized_indices": [
+            52,
+            53
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "北京时间二零二六年十月十七日下午，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "上海大师赛男单半决赛。",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "提前锁定年终第一的兹维列夫，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "对阵达维多维奇·福基纳。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "首盘九记ACE，",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "没给对手一个破发点。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "五比五之后率先破发，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "他拿到先赢一盘的机会。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 4,
+          "text": "二零二六",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 9,
+          "text": "十",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 11,
+          "text": "十七",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 35,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 56,
+          "text": "九",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 66,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 72,
+          "text": "五比五",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 87,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "second_set_context",
+      "audio_sha256": "afae15d8c498d53ae6a696fff56f9538efbe85e1c658cea9cc602a7a1054a912",
+      "expected_tts_text": "首盘七比五之后，第二盘的压力换边了。兹维列夫的一发得分率，从百分之七十九降到百分之六十五。四比五，对手在盘点上打出奔跑中的反手穿越。",
+      "raw_unprompted_asr": "手盤7比5之後,第二盤的壓力緩編了思維列夫的一發得分率從79%降到65%4比5對手在盤點上打出奔跑中的反手穿越",
+      "normalized_expected": "首盘七比五之后第二盘的压力换边了兹维列夫的一发得分率从百分之七十九降到百分之六十五四比五对手在盘点上打出奔跑中的反手穿越",
+      "normalized_asr": "手盤七比五之後第二盤的壓力緩編了思維列夫的一發得分率從百分之七十九降到百分之六十五四比五對手在盤點上打出奔跑中的反手穿越",
+      "tone_free_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "兹",
+          "asr": "思",
+          "expected_pinyin": [
+            "zi"
+          ],
+          "asr_pinyin": [
+            "si"
+          ],
+          "expected_normalized_indices": [
+            16,
+            17
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "首盘七比五之后，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "第二盘的压力换边了。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "兹维列夫的一发得分率，",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "从百分之七十九降到百分之六十五。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "四比五，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "对手在盘点上打出奔跑中的反手穿越。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 2,
+          "text": "七比五",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 9,
+          "text": "二",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 23,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 30,
+          "text": "百",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 33,
+          "text": "七十九",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 38,
+          "text": "百",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 41,
+          "text": "六十五",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 45,
+          "text": "四比五",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "deciding_set_context",
+      "audio_sha256": "1a300545001e5c37036552efcfdcf460007ae88e13d560dd170db317ac64773d",
+      "expected_tts_text": "决胜盘开局，一次双误，让兹维列夫先丢发球局。二比五落后，他扛过两个赛点，追到三比五。可接下来，轮到对手发球。",
+      "raw_unprompted_asr": "絕盛盤開局,一次雙誤,讓自衛列夫先丟發球局2比5落後,他扛過兩個賽點,追到3比5可接下來,輪到對手發球",
+      "normalized_expected": "决胜盘开局一次双误让兹维列夫先丢发球局二比五落后他扛过两个赛点追到三比五可接下来轮到对手发球",
+      "normalized_asr": "絕盛盤開局一次雙誤讓自衛列夫先丟發球局二比五落後他扛過兩個賽點追到三比五可接下來輪到對手發球",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "决胜盘开局，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "一次双误，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "让兹维列夫先丢发球局。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "二比五落后，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "他扛过两个赛点，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "追到三比五。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "可接下来，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "轮到对手发球。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 6,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 22,
+          "text": "二比五",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 31,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 38,
+          "text": "三比五",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "audio_sha256": "c7f8f8e3f24fefd70890c9f7a1ed7101064847d6ae60874dda7bd475f3d287a0",
+      "expected_tts_text": "全场十八记ACE，没能换来胜利。制胜分二十八比三十六，非受迫失误二十比二十一。兹维列夫的发球有威力，进攻得分却少了八个。",
+      "raw_unprompted_asr": "全場18GS沒能換來勝利支撐分28比36非受迫1520比21思維列夫的發球有威力進攻得分卻少了8個",
+      "normalized_expected": "全场十八记没能换来胜利制胜分二十八比三十六非受迫失误二十比二十一兹维列夫的发球有威力进攻得分却少了八个",
+      "normalized_asr": "全場十八沒能換來勝利支撐分二十八比三十六非受迫十五二十比二十一思維列夫的發球有威力進攻得分卻少了八個",
+      "tone_free_lexical_differences": [
+        {
+          "type": "delete",
+          "expected": "记",
+          "asr": "",
+          "expected_pinyin": [
+            "ji"
+          ],
+          "asr_pinyin": [],
+          "expected_normalized_indices": [
+            4,
+            5
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "胜",
+          "asr": "撐",
+          "expected_pinyin": [
+            "sheng"
+          ],
+          "asr_pinyin": [
+            "cheng"
+          ],
+          "expected_normalized_indices": [
+            12,
+            13
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "兹",
+          "asr": "思",
+          "expected_pinyin": [
+            "zi"
+          ],
+          "asr_pinyin": [
+            "si"
+          ],
+          "expected_normalized_indices": [
+            32,
+            33
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "全场十八记ACE，",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "没能换来胜利。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "制胜分二十八比三十六，",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "非受迫失误二十比二十一。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "兹维列夫的发球有威力，",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "进攻得分却少了八个。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 2,
+          "text": "十八",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 19,
+          "text": "二十八比三十六",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 32,
+          "text": "二十比二十一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 57,
+          "text": "八",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "audio_sha256": "ed066e876440f5c81f5e1a56b811a99f7cec5c084783e7951ce7d9feb99ef7c9",
+      "expected_tts_text": "另一场半决赛，梅德韦杰夫对阵霍达尔。胜者，将与达维多维奇·福基纳争冠。兹维列夫，这一站先放下，下一站再来。接下来，你最期待他做出什么改变？",
+      "raw_unprompted_asr": "另一場半決賽,梅德維傑夫對鎮獲達爾。剩者,將與達維多維其福基納爭冠。思維列夫,這一戰先放下,下一戰再來。接下來,你最期待他做出什麼改變?",
+      "normalized_expected": "另一场半决赛梅德韦杰夫对阵霍达尔胜者将与达维多维奇福基纳争冠兹维列夫这一站先放下下一站再来接下来你最期待他做出什么改变",
+      "normalized_asr": "另一場半決賽梅德維傑夫對鎮獲達爾剩者將與達維多維其福基納爭冠思維列夫這一戰先放下下一戰再來接下來你最期待他做出什麼改變",
+      "tone_free_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "兹",
+          "asr": "思",
+          "expected_pinyin": [
+            "zi"
+          ],
+          "asr_pinyin": [
+            "si"
+          ],
+          "expected_normalized_indices": [
+            30,
+            31
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "另一场半决赛，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "梅德韦杰夫对阵霍达尔。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "胜者，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "将与达维多维奇·福基纳争冠。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "兹维列夫，",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "这一站先放下，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "下一站再来。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "接下来，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "你最期待他做出什么改变？",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 1,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 41,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 48,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "expected_tts_text": "关注网球时插，时插归我，好球归你。",
+      "raw_unprompted_asr": "關注網球時差,時差歸我,好求歸你",
+      "normalized_expected": "关注网球时插时插归我好球归你",
+      "normalized_asr": "關注網球時差時差歸我好求歸你",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "关注网球时插，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "时插归我，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "好球归你。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": []
+    }
+  ]
+}

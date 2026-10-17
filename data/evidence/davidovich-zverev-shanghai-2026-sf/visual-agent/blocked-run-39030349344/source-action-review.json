@@ -1,0 +1,154 @@
+{
+  "schema": "tennislive.partitioned-final-movie-visual-review.v1",
+  "reviewed_at_utc": "2026-10-17T12:02:22.208623+00:00",
+  "reviewer": "OpenAI independent visual agent zverev_sf_visual_qc",
+  "partition": "source_action_segments_0_2_4_6",
+  "status": "blocked_actual_encoded_scoreboard_defects",
+  "visual_pass": false,
+  "publication_approved": false,
+  "movie": "/workspace/scratch/zverev-sf-final/davidovich-zverev-shanghai-2026-sf.mp4",
+  "movie_sha256": "55f4513b1bec122679a7fff11c2b3d3662a870ff3de273c2cea392a2df2b6b08",
+  "movie_bytes": 58941214,
+  "native_run_id": 39030349344,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "film_seconds": 163.6,
+  "fps": 25.0,
+  "spec_file_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
+  "native_spec_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
+  "ass_sha256": "1c598707d0bfea24eb94d753fd59705d0e86ab46dca150e52d6ea1aa770a0c1e",
+  "render_inputs_sha256": "9a545b6b7f4d3fa9407f2116bfb4197bf14d40757c7fb1f5899a4a8d5ee429ec",
+  "native_qc_sha256": "1e1e54f03e1d781005df07968e14b8c01cfaad8c6af4eee55bad7122f9e20d4e",
+  "frame_manifest_sha256": "89db0fb6ad2c8667560f90b532e8ad5a29a0b77530f81478d7e032349762e562",
+  "scope": {
+    "assigned_source_segments": [
+      0,
+      2,
+      4,
+      6
+    ],
+    "sample_frames_actually_viewed": 92,
+    "contact_walls_actually_viewed": 16,
+    "assigned_ASS_cue_midpoints_actually_viewed": 14,
+    "assigned_ASS_cue_indices": [
+      1,
+      2,
+      3,
+      12,
+      13,
+      20,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
+    ],
+    "original_PNG_frame_indices_actually_viewed": [
+      47,
+      937,
+      1584,
+      1609,
+      1834,
+      1855,
+      2182
+    ],
+    "all_movie_frames_reviewed": false,
+    "cover_cards_outro_reviewed_here": false,
+    "audio_listened": false,
+    "human_review_claimed": false,
+    "loudness_gain_silence_PCM_checks": false,
+    "production_inputs_modified": false
+  },
+  "blocking_findings": [
+    {
+      "id": "ATP-point-column-truncated",
+      "proof": [
+        {
+          "frame_index": 1584,
+          "film_time_s": 63.36,
+          "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01584.png",
+          "image_sha256": "25902ce78f1f21f55352a1a58bd1fce7e9b2e0a741cd66be1daa49c29730f7fd",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 116
+            }
+          ]
+        },
+        {
+          "frame_index": 1609,
+          "film_time_s": 64.36,
+          "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01609.png",
+          "image_sha256": "4deb283e57e123c7d3dd41c535b87c5ebcf9558fe8f7bc2105d77cace382c40e",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 117
+            }
+          ]
+        }
+      ],
+      "finding": "Actual full PNGs show second-set point column30/40 clipped horizontally on right, and underlying court white Shanghai lettering crossing through numbers. At frame1584 output x610 cuts after first digit; frame1609 extends to~625 but still cuts terminal0. Native board position remains x0 and must stay there; repair true board contour, not relocation.",
+      "nominal_source_seconds": [
+        116,
+        117
+      ]
+    },
+    {
+      "id": "ATP-surrounding-background-rectangle",
+      "proof": [
+        {
+          "frame_index": 937,
+          "film_time_s": 37.48,
+          "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00937.png",
+          "image_sha256": "14d3afcb184e945adb01e0a685df81385df94b4f74243d2271149adcd94b2723",
+          "reasons": [
+            {
+              "kind": "assigned_ass_cue_midpoint",
+              "global_cue": 13,
+              "cue_start_s": 36.22,
+              "cue_end_s": 38.74,
+              "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Dominant on serve once again.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他的发球再次展现统治力",
+              "segment_index": 2
+            }
+          ]
+        }
+      ],
+      "finding": "At final encoded frame937 the first-set aftermath board visibly ends nearx586 but a flat green rectangular source-background patch continues to x720 at y1227..1371. This is the owner-forbidden surrounding-court/background rectangle, confirmed in original PNG."
+    }
+  ],
+  "nonblocking_observations": [
+    {
+      "topic": "bilingual_actual_ASS",
+      "finding": "All14 source-window cue midpoints viewed; English lines and Chinese translation fully rendered above board at low placement. Complete Alejandro Davidovich Fokina and Alexander Zverev remain on one line in inspected cue PNG tiles."
+    },
+    {
+      "topic": "actions_and_classification",
+      "finding": "Finite source-action samples retain first-set serve/toss/dead-ball aftermath, full temporal second-set serve/rally and true set-point celebration, final serve/rally/result followed by smile/handshake/umpire acknowledgment/team-crowd reactions. Second set is not labeled match point."
+    },
+    {
+      "topic": "second-window-tail",
+      "finding": "Actual source106.24..126.90 respected; final selected samples74.00..74.20film show ordinary closeup/smallboard, no giant resultboard or What a way clause. Source126.84 frame1855 smallboard visibly contracts as official broadcast animation; not treated as erroneous score in isolation."
+    },
+    {
+      "topic": "ending-tail",
+      "finding": "Four exact actual frames3247,3248,3250 and3244 spanning129.76..130.00 film show player/court tail; no giant final resultboard or ATP publisher endcard. Last His unbeaten run cue33 inspected complete at127.48film."
+    },
+    {
+      "topic": "fixed-center-crop",
+      "finding": "Body source picture fills1080x1440 with fixed center; horizontal edges of near-side pursuit and far-side positions are cropped as declared. Full horizontal court visibility is not claimed."
+    }
+  ],
+  "limitations": [
+    "Finite92 actual source-partition frames/16 walls and7 full original PNGs, not exhaustive frame-by-frame or human listening.",
+    "Root separately reviews cover/cards/seams/outro.",
+    "Any correction produces a new movie SHA and needs actual corrected film review; this record cannot be reused as pass."
+  ]
+}

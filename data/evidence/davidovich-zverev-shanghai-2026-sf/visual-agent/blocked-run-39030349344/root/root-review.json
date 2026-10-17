@@ -1,0 +1,63 @@
+{
+  "schema": "tennislive.partitioned-actual-final-movie-review.v1",
+  "reviewer": "Current root OpenAI assistant",
+  "reviewed_at": "2026-10-17T12:05:55.344538+00:00",
+  "movie_sha256": "55f4513b1bec122679a7fff11c2b3d3662a870ff3de273c2cea392a2df2b6b08",
+  "movie_bytes": 58941214,
+  "spec_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
+  "ass_sha256": "1c598707d0bfea24eb94d753fd59705d0e86ab46dca150e52d6ea1aa770a0c1e",
+  "render_inputs_sha256": "9a545b6b7f4d3fa9407f2116bfb4197bf14d40757c7fb1f5899a4a8d5ee429ec",
+  "native_qc_sha256": "1e1e54f03e1d781005df07968e14b8c01cfaad8c6af4eee55bad7122f9e20d4e",
+  "status": "blocked_at_joint_visual_review",
+  "visual_pass": false,
+  "publication_approved": false,
+  "human_review_claimed": false,
+  "audio_listened": false,
+  "root_partition": "cover_cards_all30nonsourceASSwindows_all9seams_outro_exact_source_to_stats_tail",
+  "frame_manifest_sha256": "6da8ffbd406b416205001f0ff22b6bd6de7e738d5f0606262fcc46d597abfbf1",
+  "scope": {
+    "sampled_frames": 71,
+    "actual_walls_viewed": 12,
+    "all_assigned_ass_midpoint_windows_viewed": 30,
+    "root_original_pngs_viewed": [
+      15,
+      3413
+    ],
+    "additional_source_partner_originals_actually_viewed_by_root": [
+      937,
+      1584,
+      1609
+    ],
+    "all_movie_frames_viewed": false
+  },
+  "observations": [
+    "Actual cover matches same-match Getty2300060071, full event/round/bothnames,2semantic hooklines, clear openeyes and canonical winner-first5-7 6-4 6-3/ranks26,2.",
+    "All4 native chaptercards have coherent2lines/navytheme/contextkicker and lowcaps separatebrand; statcard correct aZbADF/W28:36UE20:21/18:5ACE and true integerdenominators. Five fullstats cue midpoints intentionally show clean native graphic, no duplicate captions per native policy.",
+    "15consecutive actual frames3243..3257 straddling ending130.02 boundary show ordinarynative.18s dissolve into fullstats; no publisher tail/largefinalboard or unexplained blackframe in this interval.",
+    "Outroactualnavybrand/logo/slogan clear; firstset adjacentofficialshot appearsunder the ordinaryshortdissolve, not treated as an extra completed rally."
+  ],
+  "blocking_findings": [
+    {
+      "kind": "point_columns_clipped",
+      "confirmed_actual_movie_frames": [
+        1584,
+        1609
+      ],
+      "root_inspected_partner_originals": true,
+      "finding": "Secondset point30/40 is cut midway, court上海 lettering visible across clippedpointedge."
+    },
+    {
+      "kind": "green_background_leak",
+      "confirmed_actual_movie_frames": [
+        937
+      ],
+      "root_inspected_partner_originals": true,
+      "finding": "Firstset withdrawn pointcolumn still contains solidgreen background rectangle throughcanvasx720 instead ofrealboardedge~586."
+    }
+  ],
+  "next_action": "NativeATPboard colour-signature fix with actualROI tests; preserve samefullcenter/positions/voices, new movie required.",
+  "limitations": [
+    "Finite root sample partition; independent partner source/action report separately attributed",
+    "No humanlistening/loudness/gain/thresholdsilence/PCM comparisons"
+  ]
+}

@@ -1,0 +1,379 @@
+{
+  "schema": "tennislive.partitioned-final-movie-visual-review.v1",
+  "reviewed_at_utc": "2026-10-17T12:26:13.498766+00:00",
+  "reviewer": "OpenAI independent visual agent zverev_sf_visual_qc",
+  "partition": "source_action_segments_0_2_4_6",
+  "status": "passed_with_explicit_finite_sampling_and_fixed_center_limits",
+  "visual_pass": true,
+  "publication_approved": false,
+  "movie": "/workspace/scratch/zverev-sf-final-v2/davidovich-zverev-shanghai-2026-sf.mp4",
+  "movie_sha256": "876f2af99804781e83bb78eea171e1aa79d03be55c9d3165b1f93aa15fff39cb",
+  "movie_bytes": 58710666,
+  "native_run_id": 39031880980,
+  "render_input_code_commit": "411bfaa0",
+  "native_output_commit": "9a29d873",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "film_seconds": 163.6,
+  "fps": 25.0,
+  "spec_file_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
+  "native_spec_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
+  "ass_sha256": "1c598707d0bfea24eb94d753fd59705d0e86ab46dca150e52d6ea1aa770a0c1e",
+  "render_inputs_sha256": "00397a9736dd2cb0d7ab582282be6a020f7824cef6c83d96ebf4a3e7f10c3353",
+  "native_qc_sha256": "ba186c8ea77f53133f4b745fc26db2d1f245fad1bec17c560d40e0322f1fce5b",
+  "frame_manifest_sha256": "3ba19fc9db0f5a405f3fcbb3516116e2491ff85ecb5a0128219ce315a0b040fe",
+  "scope": {
+    "assigned_source_segments": [
+      0,
+      2,
+      4,
+      6
+    ],
+    "sample_frames_actually_viewed": 94,
+    "contact_walls_actually_viewed": 16,
+    "assigned_ASS_cue_midpoints_actually_viewed": 14,
+    "assigned_ASS_cue_indices": [
+      1,
+      2,
+      3,
+      12,
+      13,
+      20,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
+    ],
+    "original_PNG_frame_indices_actually_viewed": [
+      937,
+      1584,
+      1609,
+      1746,
+      1759,
+      1771,
+      1804,
+      1855,
+      2182,
+      2442,
+      3250
+    ],
+    "all_movie_frames_reviewed": false,
+    "cover_cards_outro_reviewed_here": false,
+    "audio_listened": false,
+    "human_review_claimed": false,
+    "loudness_gain_silence_PCM_checks": false,
+    "production_inputs_modified": false,
+    "publication_state_written": false
+  },
+  "blocking_findings": [],
+  "resolved_previous_movie_findings": [
+    {
+      "id": "ATP-point-column-truncated",
+      "previous_movie_sha256": "55f4513b1bec122679a7fff11c2b3d3662a870ff3de273c2cea392a2df2b6b08",
+      "status": "resolved_in_actual_new_movie",
+      "proof": [
+        {
+          "frame_index": 1584,
+          "film_time_s": 63.36,
+          "image": "/workspace/scratch/zverev-sf-final-qc-v2/frames/frame-01584.png",
+          "image_sha256": "07b603f8fa97a8165754d3ffae8aedf6cd8d562dcc3dec690e9eb08dd7a013f9",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 116
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 116
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 116
+            }
+          ]
+        },
+        {
+          "frame_index": 1609,
+          "film_time_s": 64.36,
+          "image": "/workspace/scratch/zverev-sf-final-qc-v2/frames/frame-01609.png",
+          "image_sha256": "1b7cbade7706b5cd43886c55bed4f4111cee814d49737f6aedc49e6aadcc9c5c",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 117
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 117
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 117
+            }
+          ]
+        }
+      ],
+      "observation": "Full original new-film PNGs now show both digits of30/40 fully inside the restored right-point panel, with fixed x0 anchor. The native point panel retains its original translucent appearance; there is no clipped terminal0 in either inspected frame and no extra rectangle beyond its outer edge."
+    },
+    {
+      "id": "ATP-surrounding-background-rectangle",
+      "previous_movie_sha256": "55f4513b1bec122679a7fff11c2b3d3662a870ff3de273c2cea392a2df2b6b08",
+      "status": "resolved_in_actual_new_movie",
+      "proof": [
+        {
+          "frame_index": 937,
+          "film_time_s": 37.48,
+          "image": "/workspace/scratch/zverev-sf-final-qc-v2/frames/frame-00937.png",
+          "image_sha256": "ed7a6a3da3605cb0bc78c533c6b1a7418025663bd6668bd96c2ebdadc929610f",
+          "reasons": [
+            {
+              "kind": "assigned_ass_cue_midpoint",
+              "global_cue": 13,
+              "cue_start_s": 36.22,
+              "cue_end_s": 38.74,
+              "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Dominant on serve once again.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他的发球再次展现统治力",
+              "segment_index": 2
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 2,
+              "nominal_source_s": 60.84
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 2,
+              "nominal_source_s": 60.84
+            }
+          ]
+        }
+      ],
+      "observation": "Full original new-film PNG937 shows the board ending naturally at its blue0/0column nearx588. Previous flat green extension tox720 is absent. Source background and shirt/court texture continue normally immediately outside board."
+    }
+  ],
+  "sampled_findings": [
+    {
+      "id": "result-board-stable-two-set-width",
+      "status": "pass_in_actual_selected_frames",
+      "proof": [
+        {
+          "frame_index": 1746,
+          "film_time_s": 69.84,
+          "image": "/workspace/scratch/zverev-sf-final-qc-v2/frames/frame-01746.png",
+          "image_sha256": "0ee2c49aaee7c12ba309c3e358d0cdb1dc1f9323c9d79b15a1ac141370381a67",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 122.48
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 122.48
+            }
+          ]
+        },
+        {
+          "frame_index": 1759,
+          "film_time_s": 70.36,
+          "image": "/workspace/scratch/zverev-sf-final-qc-v2/frames/frame-01759.png",
+          "image_sha256": "52d57472d1d125bdd6a5893d371a6d24e2ca551778f2e3ed43cd8c9d967cfbd3",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 123
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 123
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 123
+            }
+          ]
+        },
+        {
+          "frame_index": 1771,
+          "film_time_s": 70.84,
+          "image": "/workspace/scratch/zverev-sf-final-qc-v2/frames/frame-01771.png",
+          "image_sha256": "bbdcd615f684466116d1b5fd86e61d01aea18e5572ce9358b188c55802eb4e82",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 123.48
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 123.48
+            }
+          ]
+        },
+        {
+          "frame_index": 1804,
+          "film_time_s": 72.16,
+          "image": "/workspace/scratch/zverev-sf-final-qc-v2/frames/frame-01804.png",
+          "image_sha256": "537be0c093d33eb1a11ec4fb9b823ed01c3c768992681931fc85ef3061c1f5f5",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 124.8
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 124.8
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 125,
+              "coalesced_request_frame_index": 1809,
+              "actual_sample_minus_requested_seconds": -0.2
+            }
+          ]
+        },
+        {
+          "frame_index": 1855,
+          "film_time_s": 74.2,
+          "image": "/workspace/scratch/zverev-sf-final-qc-v2/frames/frame-01855.png",
+          "image_sha256": "1947d2693346a1681382bfa325ae3ec1676a6c2ec376104c5722cd581a3c0270",
+          "reasons": [
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 126.84
+            }
+          ]
+        }
+      ],
+      "observation": "At source122.48/123/123.48/124.8 and126.84 the complete compact two-set board consistently reads Zverev7 4 / Davidovich Fokina5 6. Full original PNGs show both columns, same x0 anchor, no source-background extension, no partial last column."
+    },
+    {
+      "id": "bilingual_actual_ASS",
+      "status": "pass_in_assigned_midpoints",
+      "proof": [
+        {
+          "frame_index": 2442,
+          "film_time_s": 97.68,
+          "image": "/workspace/scratch/zverev-sf-final-qc-v2/frames/frame-02442.png",
+          "image_sha256": "6d76f21616cf7d17420d353df28cb975d7f9c8eee1084cca632019f4be1db1c6",
+          "reasons": [
+            {
+              "kind": "assigned_ass_cue_midpoint",
+              "global_cue": 27,
+              "cue_start_s": 96.47999999999999,
+              "cue_end_s": 98.86,
+              "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Alejandro Davidovich Fokina{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N达维多维奇 福基纳",
+              "segment_index": 6
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 6,
+              "nominal_source_s": 148,
+              "coalesced_request_frame_index": 2447,
+              "actual_sample_minus_requested_seconds": -0.2
+            }
+          ]
+        }
+      ],
+      "observation": "All14 actual source-window ASS cue midpoints inspected on actual encoded movie. All English lines and Chinese translations fit at low subtitle placement above board; actual original2442 confirms Alejandro Davidovich Fokina stays complete on one English line and Chinese name remains intact."
+    },
+    {
+      "id": "complete-key-action-and-reaction",
+      "status": "pass_with_spatial_limit",
+      "observation": "Finite samples retain first-set serve setup/toss/rally finish/dead-ball aftermath, second-set complete temporal serve/rally and actual set-point celebration, final serve/rally/result followed by smile/handshake/umpire acknowledgment/team-crowd reactions. Second set remains labeled set point rather than match point. Full horizontal pursuit is limited by approved fixed-center crop."
+    },
+    {
+      "id": "third-set-board-and-disappearance",
+      "status": "pass_in_assigned_samples",
+      "proof": [
+        {
+          "frame_index": 2182,
+          "film_time_s": 87.28,
+          "image": "/workspace/scratch/zverev-sf-final-qc-v2/frames/frame-02182.png",
+          "image_sha256": "d6cda6652af4264b9caf37dc5992d7cd8db560110ebdf2bcae5d1343c06792c4",
+          "reasons": [
+            {
+              "kind": "source_segment_start_middle_end",
+              "segment_index": 6,
+              "edit_id": "ending",
+              "nominal_source_s": 137.44
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 6,
+              "nominal_source_s": 137.44,
+              "coalesced_request_frame_index": 2183,
+              "actual_sample_minus_requested_seconds": -0.04
+            }
+          ]
+        }
+      ],
+      "observation": "Actual third-set original2182 displays complete native names,7/4/3/15 and5/6/5/40. Board remains at original x0 and naturally disappears at broadcast cuts; later reaction/handshake/crowd samples contain no ghost board/background patch."
+    },
+    {
+      "id": "current-window-tails",
+      "status": "pass_in_assigned_samples",
+      "proof": [
+        {
+          "frame_index": 1855,
+          "film_time_s": 74.2,
+          "image": "/workspace/scratch/zverev-sf-final-qc-v2/frames/frame-01855.png",
+          "image_sha256": "1947d2693346a1681382bfa325ae3ec1676a6c2ec376104c5722cd581a3c0270",
+          "reasons": [
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 126.84
+            }
+          ]
+        },
+        {
+          "frame_index": 3250,
+          "film_time_s": 130.0,
+          "image": "/workspace/scratch/zverev-sf-final-qc-v2/frames/frame-03250.png",
+          "image_sha256": "71e14218189bbbbcc5fa6ff8ad390caaad16c931f2b591f00407ade8dc630938",
+          "reasons": [
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 6,
+              "nominal_source_s": 180.12
+            }
+          ]
+        }
+      ],
+      "observation": "Current second source106.24..126.90 ends on ordinary player closeup with complete compact6-4board; giant resultboard and subsequent What a way clause excluded. Four exact ending samples129.76..130.00film show normal player/court, no giant final resultboard or ATP publisher endcard. Last cue33 actually inspected at127.48film."
+    },
+    {
+      "id": "full-canvas-fixed-center",
+      "status": "pass_with_approved_spatial_limit",
+      "observation": "All assigned body samples fill1080x1440 with fixed-center source picture. Horizontal edge pursuit/players near edges may leave frame; no whole horizontal court claim. Player reactions and selected same-match source are visibly consistent."
+    }
+  ],
+  "limitations": [
+    "Finite94 actual source-partition frames/16 walls and11 full original PNGs. This is not all-frame review or acoustic certification.",
+    "All14 source-window ASS cue midpoints were actually viewed; utterance/ASR alignment belongs to matching source-audio evidence, not a human listening claim here.",
+    "Root separately reviews cover/cards/seams/outro; this partition pass is not standalone publication approval.",
+    "Original blocked55f4513movie records retained separately and unchanged.",
+    "No loudness/RMS/peak/silence-threshold/gain/PCM checks or audio changes."
+  ]
+}

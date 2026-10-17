@@ -1,0 +1,173 @@
+{
+  "status": "all_27_spans_actual_ASR_lexical_support_and_finite_actual_plot_inspection_not_all_digit_tone_pass",
+  "number_spans": [
+    {
+      "edit_id": "intro",
+      "start_index": 4,
+      "text": "二零二六",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "intro",
+      "start_index": 9,
+      "text": "十",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "intro",
+      "start_index": 11,
+      "text": "十七",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "intro",
+      "start_index": 35,
+      "text": "一",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "intro",
+      "start_index": 56,
+      "text": "九",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "intro",
+      "start_index": 66,
+      "text": "一",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "intro",
+      "start_index": 72,
+      "text": "五比五",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "intro",
+      "start_index": 87,
+      "text": "一",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "second_set_context",
+      "start_index": 2,
+      "text": "七比五",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "second_set_context",
+      "start_index": 9,
+      "text": "二",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "second_set_context",
+      "start_index": 23,
+      "text": "一",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "second_set_context",
+      "start_index": 30,
+      "text": "百",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "second_set_context",
+      "start_index": 33,
+      "text": "七十九",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "second_set_context",
+      "start_index": 38,
+      "text": "百",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "second_set_context",
+      "start_index": 41,
+      "text": "六十五",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "second_set_context",
+      "start_index": 45,
+      "text": "四比五",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "deciding_set_context",
+      "start_index": 6,
+      "text": "一",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "deciding_set_context",
+      "start_index": 22,
+      "text": "二比五",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "deciding_set_context",
+      "start_index": 31,
+      "text": "两",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "deciding_set_context",
+      "start_index": 38,
+      "text": "三比五",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 2,
+      "text": "十八",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 19,
+      "text": "二十八比三十六",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 32,
+      "text": "二十比二十一",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "full_stats",
+      "start_index": 57,
+      "text": "八",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "outlook",
+      "start_index": 1,
+      "text": "一",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "outlook",
+      "start_index": 41,
+      "text": "一",
+      "status": "asr_lexical_number_support_only"
+    },
+    {
+      "edit_id": "outlook",
+      "start_index": 48,
+      "text": "一",
+      "status": "asr_lexical_number_support_only"
+    }
+  ],
+  "actual_plot_index": "episode-diagnostic-plot-index.json",
+  "actual_ASR": "native-lexical-asr.json",
+  "normalization_fix": "Normalize raw ASR segments separately: full_stats segment nonforced-errors ends 15 (shi wu), next segment begins 20比21; concatenating creates fictitious1520. Raw segment bytes/text retained.",
+  "bounded_disagreeing_short_crop": "specific-span-asr.json",
+  "limitation": "Standalone short-crop ASR returned20比20 while full original independent ASR returned20比21; keep both. Actual final vowel interval after frication in original6.8..6.95s provides finite support for extra final/i/; no complete or isolated tone guarantee.",
+  "manual_listening_claimed": false
+}
