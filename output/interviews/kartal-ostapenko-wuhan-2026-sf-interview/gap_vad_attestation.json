@@ -1,0 +1,23 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "ff5d8c845e8af4a4cd55b5ba4f780ffb0d2da85cb9c43fa93cd6e8bb0efd5334",
+ "url": "https://www.youtube.com/watch?v=abL2j0xldOc",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "330.2-341.4",
+   "start": 330.2,
+   "end": 341.36,
+   "speech_seconds": 10.116,
+   "second_asr_words": [
+    "So,"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": false,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 10.116s 人声，第二份 ASR（small.en）听到「So,」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  }
+ ]
+}
