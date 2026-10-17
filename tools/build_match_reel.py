@@ -688,7 +688,11 @@ def export_audio_stems(spec: dict, outdir: Path, joined: Path, mixed: Path,
     """
     slug = spec.get("slug", "reel")
     seconds = probe_duration(mixed)
-    out = {k: outdir / f"{slug}.{k}.wav" for k in ("narration", "original", "mix")}
+    # runner 上落到 $RUNNER_TEMP/stems：成片目录有「大文件不许进仓库」的闸（match-reel.yml
+    # 清理步骤），WAV 动辄几十 MB；match-reel.yml 从这里传进 Release。
+    stem_dir = (Path(os.environ["RUNNER_TEMP"]) / "stems") if os.environ.get("RUNNER_TEMP") else outdir
+    stem_dir.mkdir(parents=True, exist_ok=True)
+    out = {k: stem_dir / f"{slug}.{k}.wav" for k in ("narration", "original", "mix")}
     wav = ["-c:a", "pcm_s24le", "-ar", AUDIO_RATE, "-t", f"{seconds:.3f}"]
     with stage("分轨导出"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(joined),
@@ -6708,6 +6712,11 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 同一条片子 2026-10-16：账号所有者「针对这一条内容可以放开用非官方视频」——2017 温网扔硬币
     # 只有个人账号转载的 BBC 转播（手机翻拍，最高 1280×720）。
     "https://www.youtube.com/watch?v=UKZnd1EliAY": 720,
+    # 奥斯塔彭科×斯瓦泰克六战（ostapenko-swiatek-h2h-2026，PR #1278）：账号所有者 2026-10-17
+    # 「不要动画卡」，点名 2021 印第安维尔斯、2022 迪拜两条 WTA 官方集锦（最高 1280×720）
+    # 剪关键分、放大铺满并轻度锐化（conform_sharpen）。
+    "https://www.youtube.com/watch?v=wOsrLbiWZJ4": 720,
+    "https://www.youtube.com/watch?v=vNSSJMmRIBM": 720,
     # 霍达尔上海毛巾风波（jodar-towel-shanghai-2026）：账号所有者 2026-10-14「去找原视频，
     # 否则画面不对」——冲球童喊话与主裁警告官方集锦都没有，唯一完整的是 X @gerebit0 转发的
     # Tennis TV 转播录屏，最高 1206×652。spec 的 source_quality_exceptions 认领了它，这里补上白名单
