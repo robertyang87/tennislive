@@ -26,8 +26,33 @@
     "final_spec_dry_run": "passed",
     "declared_audio_evidence": "10 declared JSON files verified",
     "frozen_tts_bundle_request_integrity": "10 requests match production bundle 4fd93954a516769557bc460e4ce82622d66def832d936898fc778d92d4d250c4",
-    "pronunciation": "unknown_pending_pronunciation_review",
-    "final_render": "pending",
-    "publication_approved": false
+    "pronunciation": "owner_listened_actual_119.54s_all_narration_and_brand_reports_natural; machine_unknowns_retained",
+    "final_render": {
+      "status": "completed",
+      "run": 39044781220,
+      "seconds": 315.52,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "film_sha256": "b7fcc870445141c3d738974104b9ae6f877ae0f222fa83cf2fb3d187671904fb",
+      "bytes": 110431345,
+      "release_download_sha256_verified": true,
+      "native_L2_QC": "pass",
+      "frozen_bundle_strict_import": true
+    },
+    "publication_approved": false,
+    "local_final_render": "completed_315.52_seconds",
+    "local_structural_QC": "passed"
+  },
+  "pre_rebase_branch_ci": {
+    "run": 39044773838,
+    "failed": 2,
+    "passed": 6234,
+    "skipped": 212,
+    "seconds": 323.71,
+    "failure_scope": "five over-width Chinese subtitle lines in other interview davidovichfokina-zverev-shanghai-2026-sf-interview",
+    "already_fixed_on_main_commit": "b8a8b12c",
+    "fresh_rebased_check": "pending"
   }
 }
