@@ -1,0 +1,134 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,44,&H00ECF3E7,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,68,&H00ECF3E7,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00F7FBF4,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:02:44.00,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 WTA1000 武汉 半决赛
+Dialogue: 1,0:00:00.00,0:02:44.00,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}赫瓦林斯卡 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}7{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}5 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}6{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}1{\r\fnNoto Sans CJK SC\fs38} 斯瓦泰克 · 赛后场上采访
+Dialogue: 0,0:00:00.28,0:00:02.68,EN,,0,0,0,,event."
+Dialogue: 0,0:00:00.28,0:00:02.68,ZH,,0,0,0,,解说
+Dialogue: 0,0:00:02.68,0:00:04.28,EN,,0,0,0,,Easi was worse for wear,
+Dialogue: 0,0:00:02.68,0:00:04.28,ZH,,0,0,0,,伊加看起来有些疲惫
+Dialogue: 0,0:00:04.28,0:00:08.68,EN,,0,0,0,,but take nothing away from Maya.
+Dialogue: 0,0:00:04.28,0:00:08.68,ZH,,0,0,0,,但玛雅的表现无可挑剔
+Dialogue: 0,0:00:08.68,0:00:09.24,EN,,0,0,0,,She went out
+Dialogue: 0,0:00:08.68,0:00:09.24,ZH,,0,0,0,,她打出了一场
+Dialogue: 0,0:00:09.24,0:00:13.08,EN,,0,0,0,,and earned a straight set victory 761
+Dialogue: 0,0:00:09.24,0:00:13.08,ZH,,0,0,1186,,直落两盘的胜利 {\fs78}7{\fs68}-{\fs78}6{\fs68} {\fs78}1{\fs68}？
+Dialogue: 0,0:00:13.08,0:00:15.48,EN,,0,0,0,,and will vi in the championship tomorrow
+Dialogue: 0,0:00:13.08,0:00:15.48,ZH,,0,0,0,,明天将出战决赛
+Dialogue: 0,0:00:15.48,0:00:16.92,EN,,0,0,0,,in Wuhan.
+Dialogue: 0,0:00:15.48,0:00:16.92,ZH,,0,0,0,,在武汉
+Dialogue: 0,0:00:16.92,0:00:19.48,EN,,0,0,0,,Maya, congratulations for the win today.
+Dialogue: 0,0:00:16.92,0:00:19.48,ZH,,0,0,0,,玛雅 恭喜你今天获胜
+Dialogue: 0,0:00:19.48,0:00:20.92,EN,,0,0,0,,Two stray sets.
+Dialogue: 0,0:00:19.48,0:00:20.92,ZH,,0,0,0,,直落两盘
+Dialogue: 0,0:00:20.92,0:00:23.16,EN,,0,0,0,,Your Chinese is pretty good.
+Dialogue: 0,0:00:20.92,0:00:23.16,ZH,,0,0,0,,你的中文说得很不错
+Dialogue: 0,0:00:23.16,0:00:24.44,EN,,0,0,0,,We don't mind you start
+Dialogue: 0,0:00:23.16,0:00:24.44,ZH,,0,0,0,,不介意的话
+Dialogue: 0,0:00:24.44,0:00:26.76,EN,,0,0,0,,with your Chinese first.
+Dialogue: 0,0:00:24.44,0:00:26.76,ZH,,0,0,0,,可以先用中文说几句
+Dialogue: 0,0:00:26.76,0:00:28.36,EN,,0,0,0,,I'm sorry I didn't hear you.
+Dialogue: 0,0:00:26.76,0:00:28.36,ZH,,0,0,0,,不好意思 我没听清
+Dialogue: 0,0:00:28.36,0:00:29.48,EN,,0,0,0,,Nih.
+Dialogue: 0,0:00:28.36,0:00:29.48,ZH,,0,0,0,,你
+Dialogue: 0,0:00:29.48,0:00:32.48,EN,,0,0,0,,Niha.
+Dialogue: 0,0:00:29.48,0:00:32.48,ZH,,0,0,0,,你好
+Dialogue: 0,0:00:35.08,0:00:38.04,EN,,0,0,0,,Obviously today you are the you
+Dialogue: 0,0:00:35.08,0:00:38.04,ZH,,0,0,0,,显然今天赢下比赛的是你
+Dialogue: 0,0:00:38.04,0:00:39.56,EN,,0,0,0,,are the one for winning this match.
+Dialogue: 0,0:00:38.04,0:00:39.56,ZH,,0,0,0,,延续
+Dialogue: 0,0:00:39.56,0:00:40.36,EN,,0,0,0,,Talk about the match.
+Dialogue: 0,0:00:39.56,0:00:40.36,ZH,,0,0,0,,聊聊这场比赛吧
+Dialogue: 0,0:00:40.36,0:00:42.28,EN,,0,0,0,,Recap a little bit please.
+Dialogue: 0,0:00:40.36,0:00:42.28,ZH,,0,0,0,,简单回顾一下
+Dialogue: 0,0:00:42.28,0:00:45.24,EN,,0,0,0,,Yeah, it was a very challenging one.
+Dialogue: 0,0:00:42.28,0:00:45.24,ZH,,0,0,0,,是的 这场比赛非常艰难
+Dialogue: 0,0:00:45.24,0:00:47.24,EN,,0,0,0,,very physical.
+Dialogue: 0,0:00:45.24,0:00:47.24,ZH,,0,0,0,,身体对抗也很强
+Dialogue: 0,0:00:47.24,0:00:49.56,EN,,0,0,0,,I think we played like one half hour
+Dialogue: 0,0:00:47.24,0:00:49.56,ZH,,0,0,0,,我觉得光第一盘
+Dialogue: 0,0:00:49.56,0:00:50.76,EN,,0,0,0,,the first set.
+Dialogue: 0,0:00:49.56,0:00:50.76,ZH,,0,0,0,,就打了一个半小时
+Dialogue: 0,0:00:50.76,0:00:54.52,EN,,0,0,0,,Obviously I think wasn't 100% today.
+Dialogue: 0,0:00:50.76,0:00:54.52,ZH,,0,0,0,,显然伊加今天不在最佳状态
+Dialogue: 0,0:00:54.52,0:00:57.64,EN,,0,0,0,,So I wish her all the best of course.
+Dialogue: 0,0:00:54.52,0:00:57.64,ZH,,0,0,0,,所以我当然祝她一切都好
+Dialogue: 0,0:00:57.64,0:00:59.72,EN,,0,0,0,,Hope she will be okay soon.
+Dialogue: 0,0:00:57.64,0:00:59.72,ZH,,0,0,0,,希望她早日康复
+Dialogue: 0,0:00:59.72,0:01:01.32,EN,,0,0,0,,Yeah.
+Dialogue: 0,0:00:59.72,0:01:01.32,ZH,,0,0,0,,嗯
+Dialogue: 0,0:01:01.32,0:01:03.96,EN,,0,0,0,,It's you know it's always tough to play
+Dialogue: 0,0:01:01.32,0:01:03.96,ZH,,0,0,0,,你知道的 和波兰同胞交手
+Dialogue: 0,0:01:03.96,0:01:07.40,EN,,0,0,0,,against I mean fellow Polish player.
+Dialogue: 0,0:01:03.96,0:01:07.40,ZH,,0,0,0,,总是很不容易
+Dialogue: 0,0:01:07.40,0:01:09.08,EN,,0,0,0,,She's a great champion.
+Dialogue: 0,0:01:07.40,0:01:09.08,ZH,,0,0,0,,她是一位伟大的冠军
+Dialogue: 0,0:01:09.08,0:01:10.20,EN,,0,0,0,,I mean living legends.
+Dialogue: 0,0:01:09.08,0:01:10.20,ZH,,0,0,0,,可以说是活着的传奇
+Dialogue: 0,0:01:10.20,0:01:11.08,EN,,0,0,0,,She won everything.
+Dialogue: 0,0:01:10.20,0:01:11.08,ZH,,0,0,0,,她赢得了一切
+Dialogue: 0,0:01:11.08,0:01:13.00,EN,,0,0,0,,So, it was a great honor for me
+Dialogue: 0,0:01:11.08,0:01:13.00,ZH,,0,0,0,,所以今天能和她同场竞技
+Dialogue: 0,0:01:13.00,0:01:15.24,EN,,0,0,0,,to share the court with her today.
+Dialogue: 0,0:01:13.00,0:01:15.24,ZH,,0,0,0,,是我的莫大荣幸
+Dialogue: 0,0:01:15.24,0:01:18.12,EN,,0,0,0,,And I think I I still don't really realize what's
+Dialogue: 0,0:01:15.24,0:01:18.12,ZH,,0,0,0,,说实话
+Dialogue: 0,0:01:18.12,0:01:18.68,EN,,0,0,0,,going on.
+Dialogue: 0,0:01:18.12,0:01:18.68,ZH,,0,0,0,,我还没缓过神来
+Dialogue: 0,0:01:18.68,0:01:20.12,EN,,0,0,0,,And the fact that I won
+Dialogue: 0,0:01:18.68,0:01:20.12,ZH,,0,0,0,,能赢下她这件事
+Dialogue: 0,0:01:20.12,0:01:24.96,EN,,0,0,0,,against her is actually crazy for me.
+Dialogue: 0,0:01:20.12,0:01:24.96,ZH,,0,0,0,,对我来说简直不可思议
+Dialogue: 0,0:01:56.28,0:01:57.56,EN,,0,0,0,,and Maya,
+Dialogue: 0,0:01:56.28,0:01:57.56,ZH,,0,0,0,,玛雅
+Dialogue: 0,0:01:57.56,0:02:01.56,EN,,0,0,0,,you have a remarkable 2026 season both
+Dialogue: 0,0:01:57.56,0:02:01.56,ZH,,0,0,1186,,你{\fs78}2026{\fs68}赛季的表现非常惊人
+Dialogue: 0,0:02:01.56,0:02:03.24,EN,,0,0,0,,in Horang Gallows and now you're
+Dialogue: 0,0:02:01.56,0:02:03.24,ZH,,0,0,0,,法网打进决赛
+Dialogue: 0,0:02:03.24,0:02:05.96,EN,,0,0,0,,through to the WTA 1000 final.
+Dialogue: 0,0:02:03.24,0:02:05.96,ZH,,0,0,1186,,现在又进了{\fs78}WTA1000{\fs68}决赛
+Dialogue: 0,0:02:05.96,0:02:08.04,EN,,0,0,0,,What are you expect tomorrow's
+Dialogue: 0,0:02:05.96,0:02:08.04,ZH,,0,0,0,,对明天的决赛
+Dialogue: 0,0:02:08.04,0:02:10.04,EN,,0,0,0,,final most and what other fans
+Dialogue: 0,0:02:08.04,0:02:10.04,ZH,,0,0,0,,有什么期待？球迷们
+Dialogue: 0,0:02:10.04,0:02:13.40,EN,,0,0,0,,can expect you tomorrow's final most?
+Dialogue: 0,0:02:10.04,0:02:13.40,ZH,,0,0,0,,能期待看到什么样的你？
+Dialogue: 0,0:02:13.40,0:02:14.36,EN,,0,0,0,,Yeah
+Dialogue: 0,0:02:13.40,0:02:14.36,ZH,,0,0,0,,嗯
+Dialogue: 0,0:02:14.36,0:02:18.84,EN,,0,0,0,,for sure another challenging match.
+Dialogue: 0,0:02:14.36,0:02:18.84,ZH,,0,0,0,,肯定又是一场硬仗
+Dialogue: 0,0:02:18.84,0:02:22.68,EN,,0,0,0,,I mean Son
+Dialogue: 0,0:02:18.84,0:02:22.68,ZH,,0,0,0,,我是说 索纳
+Dialogue: 0,0:02:22.68,0:02:23.72,EN,,0,0,0,,I'm sorry I don't know how
+Dialogue: 0,0:02:22.68,0:02:23.72,ZH,,0,0,0,,不好意思我不知道
+Dialogue: 0,0:02:23.72,0:02:25.16,EN,,0,0,0,,to pronounce the name
+Dialogue: 0,0:02:23.72,0:02:25.16,ZH,,0,0,0,,她的名字该怎么念
+Dialogue: 0,0:02:25.16,0:02:26.44,EN,,0,0,0,,Sony.
+Dialogue: 0,0:02:25.16,0:02:26.44,ZH,,0,0,0,,索妮
+Dialogue: 0,0:02:26.44,0:02:28.04,EN,,0,0,0,,She's amazing.
+Dialogue: 0,0:02:26.44,0:02:28.04,ZH,,0,0,0,,她真的太厉害了
+Dialogue: 0,0:02:28.04,0:02:31.16,EN,,0,0,0,,I I saw few of her matches this week
+Dialogue: 0,0:02:28.04,0:02:31.16,ZH,,0,0,0,,这周我看了她几场比赛
+Dialogue: 0,0:02:31.16,0:02:33.72,EN,,0,0,0,,and I was very very very impressed
+Dialogue: 0,0:02:31.16,0:02:33.72,ZH,,0,0,0,,真的非常非常佩服
+Dialogue: 0,0:02:33.72,0:02:36.92,EN,,0,0,0,,and so a great battle hopefully.
+Dialogue: 0,0:02:33.72,0:02:36.92,ZH,,0,0,0,,希望明天是一场精彩的对决
+Dialogue: 0,0:02:36.92,0:02:40.28,EN,,0,0,0,,Hope you guys will enjoy and support us.
+Dialogue: 0,0:02:36.92,0:02:40.28,ZH,,0,0,0,,希望大家开心 多支持
+Dialogue: 0,0:02:40.28,0:02:41.08,EN,,0,0,0,,Yeah,
+Dialogue: 0,0:02:40.28,0:02:41.08,ZH,,0,0,0,,嗯
+Dialogue: 0,0:02:41.08,0:02:44.74,EN,,0,0,0,,we'll definitely give our best tomorrow.
+Dialogue: 0,0:02:41.08,0:02:44.74,ZH,,0,0,0,,明天我们一定拼尽全力

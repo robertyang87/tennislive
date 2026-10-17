@@ -1,0 +1,108 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-17T18:27:30Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "赫瓦林斯卡",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at + face model buffalo_s-v0.7 vs official headshot",
+  "spec_sha256": "682a53a7815625a12f8f10bf41b83e9684ea04ace6b316bed3658b8e048420a4",
+  "poster_sha256": "fd30bf8c2ace290a0237d672c97acd327c6e9546654613f6a7ab15afcb902def",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        568,
+        313,
+        285,
+        285
+      ],
+      "detected_faces": 2,
+      "eyes": 3,
+      "face_height_ratio": 0.35185,
+      "face_area_ratio": 0.09285,
+      "center_x_ratio": 0.65787,
+      "center_y_ratio": 0.37716,
+      "sharpness": 649.274,
+      "contrast": 121.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 360.0,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    },
+    "face_model": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "赫瓦林斯卡",
+        "similarity": {
+          "赫瓦林斯卡": 0.3886
+        },
+        "missing": [],
+        "expected": [
+          "赫瓦林斯卡"
+        ],
+        "face": [
+          615,
+          159,
+          827,
+          449
+        ],
+        "face_px": 290.2,
+        "reason": "像 赫瓦林斯卡（0.39 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2978,
+        "ear_each": [
+          0.3025,
+          0.2931
+        ],
+        "face": [
+          615,
+          159,
+          827,
+          449
+        ],
+        "face_px": 290.2,
+        "reason": "眼睛纵横比 0.30 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "problems": [],
+      "warnings": []
+    }
+  },
+  "issues": [],
+  "warnings": []
+}
