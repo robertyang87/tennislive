@@ -1,0 +1,117 @@
+{
+  "schema": "tennislive.finite-native-source-preview-review.v1",
+  "reviewed_at_utc": "2026-10-17T14:32:40.622691+00:00",
+  "reviewer": "OpenAI independent source visual agent",
+  "kind": "preencode_native_PNG_preview_only",
+  "status": "passed_finite_native_preview_with_actual_caption_fix_supplement",
+  "visual_pass": true,
+  "final_movie_qc_pass": false,
+  "publication_approved": false,
+  "source_sha256": "1c5459904fb369096020dca00b48dc658db723dd3cf7e49bf88d8387ffebe089",
+  "spec_sha256": "e56fdfc711c9c231f200aaf4b6d6c3f803cc35d2dc9b730d44531d27c46782d2",
+  "ass_sha256": "67f76bdb1f2cbf975968f411615a1037e619117009b8846202654c0344684feb",
+  "partition_manifest_sha256": "145337450f660d332504389594a80a185af959547c819a5bf51a24f03a85ca1d",
+  "scope": {
+    "segments": [
+      0,
+      2,
+      4,
+      6
+    ],
+    "samples_actually_viewed": 38,
+    "walls_actually_viewed": 7,
+    "original_PNGs_actually_viewed": [
+      "caption-19.png",
+      "caption-35.png",
+      "caption-39.png",
+      "caption-40.png"
+    ],
+    "actual_English_cue_indices": [
+      1,
+      2,
+      3,
+      9,
+      16,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "actual_English_cue_coverage": "All10 source English cues have at least1actualnativePNGwhileactive; not everycueexactmidpointclaim.",
+    "all_frames_viewed": false,
+    "human_review_claimed": false,
+    "audio_listened": false,
+    "audio_gain_loudness_silence_PCM_checks": false
+  },
+  "findings": [
+    {
+      "id": "english_phrasal_verb_wraps_up_linebreak",
+      "status": "resolved_by_actual_corrected_original_PNG",
+      "image": "/workspace/scratch/jodar-medvedev-sf-caption-preview/caption-19.png",
+      "image_sha256": "5463771cd40225b9b6d2c8735f926bbf94c91c243367989328d8fffeb200d054",
+      "segment": 4,
+      "source_time": 145.36,
+      "actual_ASS_cue_index": 16,
+      "finding": "ActualoriginalPNGshowsEnglishTheSpaniarditisthatwraps / uptheopeningsethere; phrasalverbwrapsupsplitacrosslines. AllwordsvisibleandChinesecomplete, butfixedphraseshouldstaytogether. Suggesteddisplay-onlyNBSPbetweenwraps/uporapprovedexplicitlinebreak; noaudio/sourcewindowchange.",
+      "resolution": {
+        "schema": "tennislive.native-preview-finding-closure.v1",
+        "finding_id": "english_phrasal_verb_wraps_up_linebreak",
+        "reviewed_at_utc": "2026-10-17T14:40:17.266327+00:00",
+        "reviewer": "OpenAI independent source visual agent",
+        "status": "resolved_by_actual_corrected_original_PNG",
+        "kind": "preencode_native_preview_only",
+        "final_movie_qc_pass": false,
+        "publication_approved": false,
+        "actual_original_png_viewed": true,
+        "image": "/workspace/scratch/jodar-medvedev-sf-caption-wrap-fix/caption-19.png",
+        "image_sha256": "fd10b62c206b07af1963b5a01f692e4753f41cb164a8c3a70552be0982140622",
+        "source_sha256": "1c5459904fb369096020dca00b48dc658db723dd3cf7e49bf88d8387ffebe089",
+        "source_time": 145.36,
+        "segment": 4,
+        "segment_frame": 174,
+        "film_time": 62.0,
+        "new_spec_sha256": "9e866f0e5dcd092eb1381f26d5f936c71738667b75a46cc9bbf21f46169b29d9",
+        "new_ASS_sha256": "0fb497221b45a4c17c34e007cc585eb6a35ecc825be365992bd710d838dbcde6",
+        "new_preview_manifest_sha256": "f6ec1aaf8d400881afaa4d5bccbc4023c06960fb51842e8d7e65f38a2f3d6b7d",
+        "observation": "ActualcorrectedoriginalPNGnowrendersTheSpaniarditisthatwrapsup / theopeningsethere. WrapsupstaysinthesameEnglishline,allEnglishwordsandChinesecomplete,subtitleclearofnativeboard; no truncatedlettersorunexpectedoverlapinthisactualframe.",
+        "limitations": [
+          "ThisclosesonlytheprevioussinglepreencodecaptionlinefindingforcurrentsourceSHA;itisnotfinalmovieQC.",
+          "Noaudio/listeningorwholeframeexhaustivereviewclaim.",
+          "Source/ASS/moviechangesneedtheiractualmatchingnewvisualreview."
+        ]
+      }
+    }
+  ],
+  "observations": [
+    {
+      "topic": "board_geometry",
+      "finding": "Actualnativecommandoverlay0:1226,scaled476x146from720p73pxheight; bottomanchor1372unchanged. Thisdiffers1pxfromprior1080p145pxboardtop1227, no manualpositionchangerequestedorperformed."
+    },
+    {
+      "topic": "board_characters_and_contour",
+      "finding": "All38samplesretainlegibleJODAR/MEDVEDEV,nativeset/game/pointnumbersandAD; nativefirst/secondsetwidthschangenaturally.No confirmedclippedpointterminalletter/digit,no externalflatgreenrectangleormissingrightpointpanelinthisfinitepartition. Original35explicitlyshowsADwhole."
+    },
+    {
+      "topic": "key_actions",
+      "finding": "Sourcefinitepointphase-samplesinclude3matchpointstates40-30/AD/ADat5-3; serveimages258.16/264.16/270.16,rally/netphase274.48,original277.0showsJodarfallingbackwardatseatedbaselineedge,original280.48showsbent-getting-up/recoveringcloseup.After5-4hold,finalserve282.48/rally286.0/290.6andpassingfinish291.56/292.36includedinselectednativeframes. Notclaimingeverytemporalrallyframeviewedorwholehorizontalcourt."
+    },
+    {
+      "topic": "bilingual_captions",
+      "finding": "All10EnglishcuewindowsvisuallysampledwithcorrespondingChineseincludingcoldandendingmatchingallSpanishfinaldeclaration. Textfitsanddoesnotcoverboard; singleEnglishsemanticlinebreakfindingseparatelyrecorded."
+    },
+    {
+      "topic": "fixed_center",
+      "finding": "Nativebodyfills1080x1440using540x720centeredcropx370from1280x720source. Edgeplayers/racketscanleaveframeasapproved; fullhorizontalcourtvisibilitynotclaimed."
+    }
+  ],
+  "limitations": [
+    "Nativepreviewonly; finalH264/dissolves/finalmovieSHAhavenotbeenreviewed.",
+    "Finite38PNG/7walls/4originalPNGscope, no exhaustivevisualorhumanlisteningclaim.",
+    "Original38PNGpartitionremainsboundtooriginalspec/ASS;display-onlysinglecuefixisadditionallyreviewedinoneactualnewPNGwithnewSHA.Noclaimall38regeneratedwithnewASS."
+  ],
+  "review_completed_at_utc": "2026-10-17T14:40:17.266327+00:00",
+  "supplementary_corrected_original_PNG_count": 1,
+  "supplementary_fix_review_path": "/workspace/scratch/jodar-medvedev-sf-caption-wrap-fix/source-preview-finding-closure.json",
+  "supplementary_fix_review_sha256": "9d07b2cab2d4dee692619f8d42be0dbf1e6d538acedd5f169291d50f70b8a31b"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "tennislive.actual-native-cover-visual-review.v1",
+  "reviewed_at_utc": "2026-10-17T14:15:38.460621+00:00",
+  "reviewer": "OpenAI cover material agent zverev_sf_visual_qc",
+  "status": "passed_actual_native_preview",
+  "human_review_claimed": false,
+  "publication_approved": false,
+  "spec_sha256": "e62edf3eeb0b56aa964766da83c348163c6c80bf9591ad6c1300a1bbcfb316aa",
+  "asset_sha256": "8e28a5175bc75941713f64d89cddfc4a50297e5db85eea882f7dde021462b5e1",
+  "native_preview_sha256": "0066401e2dbacd24c658f4b3ff0eceddd29669e1dbdd10100ccdb1352fc55368",
+  "native_preview_path": "/workspace/scratch/jodar-medvedev-sf-cover.jpg",
+  "crop_review": {
+    "status": "passed_actual_native_view",
+    "reviewed_at_utc": "2026-10-17T14:15:38.460621+00:00",
+    "layout": "solo",
+    "fit": "cover",
+    "portrait": {
+      "image": "assets/reel/jodar-medvedev-shanghai-2026-sf-atp-4593558.jpg",
+      "fit": "cover",
+      "focus": 0.2,
+      "focus_y": 0.5,
+      "zoom": 1
+    },
+    "native_preview_path": "/workspace/scratch/jodar-medvedev-sf-cover.jpg",
+    "native_preview_sha256": "0066401e2dbacd24c658f4b3ff0eceddd29669e1dbdd10100ccdb1352fc55368",
+    "native_dimensions": [
+      1080,
+      1440
+    ],
+    "source_dimensions": [
+      4800,
+      3200
+    ],
+    "source_pixel_to_canvas_pixel": 0.45,
+    "header_safe_band_y": [
+      0,
+      170
+    ],
+    "hook_start_y": 790,
+    "actual_view_facial_region_y_approx": [
+      220,
+      505
+    ],
+    "actual_view_eyes": "Both eyes open aroundy280..335, nose/mouth/chin unobscured. Header crosses only upperhair edge; nofacialfeatureundertext.",
+    "placement_judgment": "Face nearhorizontalcenter, body fills3:4; noletterbox. Both hooklines readable belowface. Officialphotooriginalalreadyclipsupperracket; no fullracket/handvisibilityclaim.",
+    "scoreboard_observed": "WinnerJodar ESP13 rowhighlighted6/6; Medvedev RUS6 row3/4; StadiumCourt and1:44readable.",
+    "topic_observed": "ATP1000 上海 半决赛 · 梅德韦杰夫 VS 霍达尔",
+    "hook_observed": "连救3个赛点 / 梅总仍遭两盘淘汰"
+  },
+  "formal_spec_modified": false
+}

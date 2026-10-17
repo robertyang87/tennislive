@@ -1,0 +1,242 @@
+{
+  "verified_at": "2026-10-17T14:01:16.399565+00:00",
+  "scope": "match facts and editorial packet only; no source-video frames/ASR reviewed",
+  "user_source_url": "https://www.youtube.com/watch?v=0gX2hUan9Vc",
+  "user_source_identity": "Unverified: root reports first oEmbed request proxy403 and stopped. No further YouTube requests by this agent.",
+  "match": {
+    "status": "result_verified",
+    "date": "2026-10-17",
+    "event": "Rolex Shanghai Masters",
+    "tour": "ATP",
+    "level": "1000",
+    "round": "Semifinal",
+    "event_id": "5014",
+    "match_id": "MS003",
+    "native_status": "F",
+    "winner": "Rafael Jodar",
+    "winner_id": "J0DZ",
+    "loser": "Daniil Medvedev",
+    "loser_id": "MM58",
+    "winner_result": "6-3 6-4",
+    "native_duration": "01:44:06",
+    "natural_period_beijing": "北京时间10月17日晚",
+    "start_utc_flashscore": "2026-10-17T11:10:00Z",
+    "end_utc_flashscore": "2026-10-17T12:54:26Z",
+    "time_note": "FlashscoreDC/DD match lifecycle approximate start/end support evening; narration need not give minutes"
+  },
+  "profiles": {
+    "jodar": {
+      "age": 20,
+      "rank": 13,
+      "seed": 12,
+      "birthday": "2006-09-17"
+    },
+    "medvedev": {
+      "age": 30,
+      "rank": 6,
+      "seed": 5,
+      "previous_shanghai_title": 2019
+    }
+  },
+  "set_flow": [
+    {
+      "set": 1,
+      "score_winner_loser": [
+        6,
+        3
+      ],
+      "flow": "Jodar1-0,1-1,2-1,3-1,3-2,4-2,5-2,5-3,6-3",
+      "key_points": [
+        "Game4Jodarbreakto3-1",
+        "Game5Medvedevbreakback3-2 after4breakpoints",
+        "Game6Jodarimmediatebreak4-2",
+        "Game7Jodarsavedanotherbreakpointto5-2",
+        "Game9Jodar5-3serve took fifth setpoint to finish6-3"
+      ]
+    },
+    {
+      "set": 2,
+      "score_winner_loser": [
+        6,
+        4
+      ],
+      "flow": "Jodar1-0,2-0,2-1,2-2,2-3,3-3,4-3,5-3,5-4,6-4",
+      "key_points": [
+        "Jodaropeningbreakandhold2-0",
+        "Medvedev3straightgamesto3-2",
+        "Jodar3straightgamesfrom2-3to5-3",
+        "Game9Medvedevat3-5 saved3matchpoints and held4-5",
+        "Game10Jodarservedlovehold, firstmatchpoint of that game/fourthoverall finishes6-4"
+      ]
+    }
+  ],
+  "story_angle_zh": "前四轮连续先丢一盘逆转的20岁霍达尔，这一场面对上海前冠军，首盘经历反破、第五个盘点才拿下，第二盘领先被追回后再起势；梅总连救三个赛点仍未能翻盘，上海决赛确定西班牙内战。",
+  "hook_candidates": [
+    {
+      "lines": [
+        "连救3个赛点",
+        "梅总仍遭两盘淘汰"
+      ],
+      "basis": "Set2Game9actual3MPsaved and final6-3 6-4",
+      "coverage": "needs source-review agent full key-point footage check"
+    },
+    {
+      "lines": [
+        "前四轮全靠逆转",
+        "这次两盘淘汰梅总"
+      ],
+      "basis": "Official article explicitlyfour prior matchesfromsetdown + semifinalstraightsets",
+      "coverage": "prior rounds can be factual narration/card; do not substitute off-match rallies"
+    },
+    {
+      "lines": [
+        "5个盘点才拿下",
+        "20岁新星淘汰梅总"
+      ],
+      "basis": "FlashscoreSet1Game9five SP + officialage andresult",
+      "coverage": "needs source-review final set-point footage to align"
+    }
+  ],
+  "context_verified": {
+    "jodar_first_masters_final": true,
+    "jodar_youngest_shanghai_finalist": true,
+    "prior_four_matches_all_from_set_down": true,
+    "jodar_current_masters_semifinal_number": 2,
+    "prior_masters_semifinal": "Montreal",
+    "second_top10_win": true,
+    "jodar_live_race_after_win": 9,
+    "jodar_if_final_win": "can rise to ATP Top10 for firsttime and sixth liveRace",
+    "final_confirmed": {
+      "date": "2026-10-18",
+      "players": [
+        "Alejandro Davidovich Fokina",
+        "Rafael Jodar"
+      ],
+      "all_spanish": true,
+      "scheduled_local_not_before": "16:30 Asia/Shanghai"
+    }
+  },
+  "conflicts": [
+    {
+      "field": "draft.source_url",
+      "draft": "https://www.youtube.com/watch?v=aE21b2-ef-Y",
+      "user": "https://www.youtube.com/watch?v=0gX2hUan9Vc",
+      "resolution": "Do not reuse draft URL automatically; root verifies requested source metadata."
+    },
+    {
+      "field": "draft.duration",
+      "draft": "01:36",
+      "primary_native": "01:44:06",
+      "resolution": "Use native; no narrative duration necessary."
+    },
+    {
+      "field": "draft.medvedev.rank",
+      "draft": 5,
+      "primary_profile": 6,
+      "resolution": "5is seed, worldrank6."
+    },
+    {
+      "field": "medvedev.winners",
+      "official_news": 14,
+      "flashscore_whole": 15,
+      "flashscore_set_sum": "9+6=15",
+      "resolution": "Statistics row uses Flashscore whole+sets15, source explicitly attributed; do not mingle editorial14."
+    },
+    {
+      "field": "draft.medvedev.first_serve_points_won_swing",
+      "draft": "47%→85%",
+      "primary_native": "58%(7/12)→69%(11/16)",
+      "resolution": "Draft uses inconsistent Flashscore per-set denominators15/13 vs native12/16; use nativefull and avoid draft swing claim."
+    }
+  ],
+  "winners_ue": {
+    "source": "Flashscore",
+    "whole": {
+      "winners": [
+        22,
+        15
+      ],
+      "ue": [
+        22,
+        21
+      ]
+    },
+    "sets": [
+      {
+        "period": "Set 1",
+        "winners": [
+          15,
+          9
+        ],
+        "ue": [
+          13,
+          11
+        ]
+      },
+      {
+        "period": "Set 2",
+        "winners": [
+          7,
+          6
+        ],
+        "ue": [
+          9,
+          10
+        ]
+      }
+    ],
+    "set_sums_verified": true
+  },
+  "primary_urls": [
+    "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms003",
+    "https://en.rolexshanghaimasters.com/en/media/news/medvedev-jodar-shanghai-2026-saturday",
+    "https://en.rolexshanghaimasters.com/en/players/rafael-jodar/j0dz",
+    "https://en.rolexshanghaimasters.com/en/players/daniil-medvedev/mm58",
+    "https://en.rolexshanghaimasters.com/en/scores/schedule"
+  ],
+  "secondary_urls": [
+    "https://local-global.flashscore.ninja/2/x/feed/df_st_1_nwiNy6gC",
+    "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_nwiNy6gC",
+    "https://local-global.flashscore.ninja/2/x/feed/df_hh_1_nwiNy6gC",
+    "https://local-global.flashscore.ninja/2/x/feed/dc_1_nwiNy6gC"
+  ],
+  "production_source_candidate": {
+    "url": "https://www.youtube.com/watch?v=aE21b2-ef-Y",
+    "source": "existing native probe and GH source cache",
+    "original_run_id": "39036715783",
+    "cachekey": "reel-src-jodar-medvedev-d5e9b36f39e8470b",
+    "raw_filename": "d36a1ec214289256.mp4",
+    "raw_bytes": 58208673,
+    "duration_seconds": 134.164898,
+    "resolution": [
+      1920,
+      1080
+    ],
+    "fps_probe": 25,
+    "existing_records": [
+      "data/probe_claims/aE21b2-ef-Y.json",
+      "data/orchestration_state.json",
+      "/workspace/scratch/jodar-medvedev-original-probe.log"
+    ],
+    "identity_limit": "existing records bind URL/cachebytes/probe but no title/uploader/channel stored; root independently verifies actual restored frames and official provenance; this facts agent does not claim that review"
+  },
+  "official_same_match_video_listing": {
+    "url": "https://en.rolexshanghaimasters.com/en/media/videos",
+    "title": "Highlights: Jodar defeats Medvedev to reach Shanghai final",
+    "brightcove_video_id": "6407012514112",
+    "brightcove_account_id": "6057277721001",
+    "player": "xO4H0ZXngd_default",
+    "identity_limit": "official onsite clip independent evidence; no claim it has same bytes or YoutubeID as production candidate",
+    "metadata_verified": true,
+    "playback_api_status": 200,
+    "canonical_player_url": "https://players.brightcove.net/6057277721001/xO4H0ZXngd_default/index.html?videoId=6407012514112",
+    "duration_ms": 303147,
+    "name": "Highlights: Jodar defeats Medvedev to reach Shanghai 2026 final",
+    "published_at": "2026-10-17T13:24:46.566Z",
+    "hls_max_height": 720,
+    "metadata_path": "data/evidence/jodar-medvedev-shanghai-2026-sf/facts/official-brightcove-video-metadata.json",
+    "source_packet_path": "data/evidence/jodar-medvedev-shanghai-2026-sf/facts/official-brightcove-source.json",
+    "native_1080_claim": false,
+    "full_video_downloaded_by_facts_agent": false
+  }
+}

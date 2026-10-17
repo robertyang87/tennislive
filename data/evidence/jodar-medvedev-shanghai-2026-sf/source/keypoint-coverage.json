@@ -1,0 +1,176 @@
+{
+  "source_sha256": "1c5459904fb369096020dca00b48dc658db723dd3cf7e49bf88d8387ffebe089",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-shanghai-jodar-medvedev-2026-sf/6407012514112-1c5459904fb36909.mp4",
+  "original_official_player_url": "https://players.brightcove.net/6057277721001/xO4H0ZXngd_default/index.html?videoId=6407012514112",
+  "width": 1280,
+  "height": 720,
+  "source_fps": "50/1",
+  "output_fps": "25/1",
+  "speed": 1,
+  "duration": 303.105,
+  "reviewed_at": "2026-10-17T14:17:53.671880+00:00",
+  "reviewer": "Current OpenAI source-review assistant",
+  "human_listening_claimed": false,
+  "keypoints": [
+    {
+      "key": "first_set_early_break",
+      "source_start": 36.96,
+      "source_end_recommended": 52.8,
+      "current_formal_end": 52.8,
+      "complete_available_action": true,
+      "score_before_jodar_medvedev": "2-1 40-15; Medvedev serving",
+      "score_after": "3-1",
+      "action": "Full available serve and long rally, Jodar reaction",
+      "evidence": "point-boundary-samples.jpg and window-tail-and-first-matchpoint-frames.jpg"
+    },
+    {
+      "key": "first_set_fifth_set_point",
+      "source_start": 138.4,
+      "source_end_recommended": 147.76,
+      "current_formal_end": 147.8,
+      "complete_available_action": true,
+      "score_before": "5-3 AD Jodar serving",
+      "score_after": "6-3 first set",
+      "action": "Final set-point service motion available in official highlight, rally finish, fist and coach reaction",
+      "count_limit": "Other four set points are not all present in this selected source window; five is a fact-source count, not a claim of showing all five.",
+      "evidence": "action-set1-close-1.jpg"
+    },
+    {
+      "key": "second_set_swings",
+      "source_examples": [
+        [
+          175,
+          178.2
+        ],
+        [
+          190.7,
+          193.8
+        ],
+        [
+          204.8,
+          208.4
+        ],
+        [
+          208.8,
+          221.8
+        ],
+        [
+          232.5,
+          241.3
+        ],
+        [
+          250.7,
+          255.7
+        ]
+      ],
+      "states": "Jodar2-0, Medvedev3-2, Jodar5-3",
+      "complete_unbroken_sequence": false,
+      "evidence": "second-swings-score-wall-1.jpg and -2.jpg"
+    },
+    {
+      "key": "all_three_saved_matchpoints",
+      "source_start": 258.0,
+      "source_end": 282.24,
+      "complete_available_action": true,
+      "point_windows_approx": [
+        [
+          258.08,
+          261.9
+        ],
+        [
+          264.08,
+          268.3
+        ],
+        [
+          270.08,
+          280.5
+        ]
+      ],
+      "score_before": "5-3 on Medvedev serve;40-30, AD, AD Jodar",
+      "third_point_reaction": "Jodar sits/falls and rises278..282; preserve",
+      "source_edit_gap": "After third return to deuce, source omits Medvedev's eventual hold-winning point and jumps to next game.",
+      "evidence": "action-three-matchpoints-1.jpg and -2.jpg"
+    },
+    {
+      "key": "fourth_matchpoint_and_handshake",
+      "source_start": 282.24,
+      "source_end": 302.92,
+      "complete_available_action": true,
+      "score_before": "5-4 40-0 Jodar serving",
+      "match_finish_approx": 292.3,
+      "celebration_approx": [
+        293,
+        298
+      ],
+      "handshake_approx": [
+        299.7,
+        301.8
+      ],
+      "love_hold_visual_limit": "40-0 state and winning point shown; preceding three points of the love hold are not all shown.",
+      "evidence": "action-final-1.jpg and -2.jpg",
+      "earlier_candidate_end": 303.08
+    },
+    {
+      "key": "recommended_single_climax",
+      "source_start": 258.0,
+      "source_end": 302.92,
+      "seconds": 44.92,
+      "complete_available_action": true,
+      "source_is_edited_official_highlights": true,
+      "bilingual_cues": "Roll of the dice; It's hanging on by a thread; For just the ninth time...all-Spanish final",
+      "review_packet": "three_saves_and_ending-audio.json",
+      "earlier_candidate_end": 303.08
+    }
+  ],
+  "retained_source_packet_indices": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "audio_index": "data/audio_reviews/jodar-medvedev-shanghai-2026-sf.json",
+  "no_tts_over_retained_english": true,
+  "word_timing_limits": "ASR edges are estimates. Conservative final word timings and source scene boundaries are documented in the audio packets.",
+  "latest_formal_consistency": {
+    "checked_at": "2026-10-17T14:43:15.755835+00:00",
+    "spec_sha256": "9e866f0e5dcd092eb1381f26d5f936c71738667b75a46cc9bbf21f46169b29d9",
+    "source_url_matches": true,
+    "current_source_windows": [
+      {
+        "index": 0,
+        "edit_id": "cold_open",
+        "start": 292.04,
+        "end": 301.24
+      },
+      {
+        "index": 2,
+        "edit_id": "first_set_break",
+        "start": 36.96,
+        "end": 52.8
+      },
+      {
+        "index": 4,
+        "edit_id": "first_set_close",
+        "start": 138.4,
+        "end": 147.8
+      },
+      {
+        "index": 6,
+        "edit_id": "three_saves_and_ending",
+        "start": 258.0,
+        "end": 302.92
+      }
+    ],
+    "retained_english_cues_native_gate": 10,
+    "current_canvas_scoreboard": {
+      "x": 0,
+      "y": 1226,
+      "width_max": 476,
+      "height": 146,
+      "bottom_anchor": 1372,
+      "basis": "Root-completed native pre-encode log for actual720 source,73px board scaled2x. Existing source images were already reviewed; no new frames were decoded for this sampling plan.",
+      "why_previous_y1227": "Previous1080-source board was109px high, rendered145px after native scaling/rounding:1372-145=1227. Current73px at2x is146px:1372-146=1226. The bottom anchor is unchanged; this is not a manual board-position change."
+    },
+    "final_movie_review_complete": false
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "tennislive.source-switch-minimum-revalidation.v1",
+  "prepared_at": "2026-10-17T14:43:15.755835+00:00",
+  "status": "conditional_plan_only_no1080_file_claim",
+  "current_verified_source": {
+    "sha256": "1c5459904fb369096020dca00b48dc658db723dd3cf7e49bf88d8387ffebe089",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 303.105,
+    "note": "Existing official Brightcove303.105-second source is verified720; it must not be renamed or upscaled to claim a native1080 source. Facts agent owns checking already-existing legitimate YouTube source files/caches."
+  },
+  "if_a_real1080_source_is_available": [
+    {
+      "step": 1,
+      "action": "核对真实文件身份和分辨率",
+      "minimum": "Record actual path, bytes, SHA256 and ffprobe coded width/height/fps/duration/audio stream. Match official same match and event; filename/title alone is insufficient."
+    },
+    {
+      "step": 2,
+      "action": "有界核对时间轴是否同剪辑",
+      "minimum": "Compare existing reviewed landmarks in candidate: first break, first-set close, all three saved matchpoints, final serve/forehand/handshake, and sentence starts/ends. Same duration is insufficient; establish per-window mapping and ensure all serve/rally/reaction boundaries remain complete."
+    },
+    {
+      "step": 3,
+      "action": "只重标新源真实比分板ROI",
+      "minimum": "Measure actual1080 x0/y0/y1/right envelope from its own frames; do not multiply720 coordinates by1.5 blindly. Run one source-confirmed atp probe_board.scan_plan bounded actual-board window for calibration, then native selected-window masks. Keep x0/bottom1372 anchor; top derives from actual native scaled/rounded height (may return1227 if145px tall). Check dynamic point-column width/retraction, navy/white clothing and disappearance after winning point."
+    },
+    {
+      "step": 4,
+      "action": "保留可复用旁白和封面",
+      "minimum": "When the editorial Chinese lines/voice indices are unchanged, reuse the exact frozen TTS bytes and reviewed assets. Do not resynthesize or redo unrelated pronunciation reviews merely because source resolution changed."
+    },
+    {
+      "step": 5,
+      "action": "英文音轨/剪辑不同才新增转写",
+      "minimum": "Existing packets are bound to old exact source SHA and cannot simply be relabelled. If sentences/audio/edits differ or alignment cannot be established from existing evidence, run native dual-ASR on the new actual source or required bounded windows, reconcile full words, revise bilingual cue mapping, and seal new honest packets. If audio and editing are demonstrably the same through legitimate container/extraction provenance, document that evidence and remap without unnecessary ASR; no loudness/PCM scans or identity assertions by filename."
+    },
+    {
+      "step": 6,
+      "action": "一次原生预览后正式渲染和有限成片核验",
+      "minimum": "Preview changed source windows with correct25fps timing, fixed-center3:4, native masks and bilingual ASS; use this sampling table with mapped source times. Bind new source SHA, audio index/plan and native masks. Render once when those pass, inspect actual MP4 key actions/board and sentence tails, then existing publication gates. Do not reuse old final-video review SHA for a different MP4."
+    }
+  ],
+  "no_unnecessary_work": [
+    "No new facts hunt if match facts unchanged",
+    "No new stock/cover search if current real-match cover remains valid",
+    "No full unrelated test suite or retranscription without a changed input or detected mismatch",
+    "No new downloader path or bypass request from this task"
+  ]
+}

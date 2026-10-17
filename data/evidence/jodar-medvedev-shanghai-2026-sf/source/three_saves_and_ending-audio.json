@@ -1,0 +1,87 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-shanghai-jodar-medvedev-2026-sf/6407012514112-1c5459904fb36909.mp4",
+  "source_sha256": "1c5459904fb369096020dca00b48dc658db723dd3cf7e49bf88d8387ffebe089",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source-review assistant; actual same-byte dual whole-source ASR and finite original source frames; no manual/human listening claimed",
+  "reviewed_at": "2026-10-17T14:15:33.646863+00:00",
+  "status": "complete",
+  "reviewed_from": 258.0,
+  "reviewed_to": 303.105,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 262.42,
+      "end": 263.66,
+      "en": "Roll of the dice.",
+      "zh": "放手一搏。",
+      "verification": "Actual exact-SHA full small.en and medium.en word cross-check; conservative timing and semantic display splits, no manual listening claim."
+    },
+    {
+      "start": 279.84,
+      "end": 282.02,
+      "en": "It's hanging on by a thread.",
+      "zh": "悬念只剩一线。",
+      "verification": "Actual exact-SHA full small.en and medium.en word cross-check; conservative timing and semantic display splits, no manual listening claim."
+    },
+    {
+      "start": 292.12,
+      "end": 294.4,
+      "en": "For just the ninth time",
+      "zh": "这仅仅是第九次，",
+      "verification": "Actual exact-SHA full small.en and medium.en word cross-check; conservative timing and semantic display splits, no manual listening claim."
+    },
+    {
+      "start": 294.4,
+      "end": 297.86,
+      "en": "in the history of Masters 1000s,",
+      "zh": "在大师赛的历史上，",
+      "verification": "Actual exact-SHA full small.en and medium.en word cross-check; conservative timing and semantic display splits, no manual listening claim."
+    },
+    {
+      "start": 297.86,
+      "end": 300.94,
+      "en": "we will have an all-Spanish final.",
+      "zh": "决赛将是西班牙内战。",
+      "verification": "Actual exact-SHA full small.en and medium.en word cross-check; conservative timing and semantic display splits, no manual listening claim."
+    }
+  ],
+  "_edit_id": "three_saves_and_ending",
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/source_asr/6407012514112/small.en.json",
+        "sha256": "d111280d33a9c1837b6de588a9b618807217e67e7d0685a37db6f28fb68fc148",
+        "model": "small.en",
+        "source_sha256": "1c5459904fb369096020dca00b48dc658db723dd3cf7e49bf88d8387ffebe089",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/source_asr/6407012514112/medium.en.json",
+        "sha256": "e63f748ea14a5883a1b9ed08a4dbbfe7c906c35b1786ec49e5ee08b11893287e",
+        "model": "medium.en",
+        "source_sha256": "1c5459904fb369096020dca00b48dc658db723dd3cf7e49bf88d8387ffebe089",
+        "clip": [
+          0.0,
+          null
+        ]
+      }
+    ],
+    "manual_listening_claimed": false,
+    "source_audio_gain_changes": false,
+    "reconciliation_and_limits": [
+      "Actual exact-byte full-source small.en and medium.en word timestamps were compared against finite original source images. This is ASR cross-check by the current OpenAI assistant, not human or manual listening, nor exhaustive acoustic certification.",
+      "For source292..301, small recognises we all have (all p0.341), medium recognises we will have (will p0.975). Kept grammatical medium recognition; both agree all-Spanish final and the ninth-time context. Source sound is unaltered.",
+      "The first-set here ends small147.04, medium147.76. The following medium oh is stretched147.76..153.18 across a pause/new scene; small places its next Oh at151.08. First-set window147.92 retains the complete agreed sentence; no claim of manually measuring phonemes.",
+      "And he's got it: medium segment ends52.02, but its final word extends52.32; conservative cue tail52.32 retains that estimate, with source window53.12 allowing reaction. Small ends51.94.",
+      "Previous source Back for me...difference tonight is ambiguous in its early words, retained in raw ASR but excluded as a whole: latest small word ends257.98, medium257.76; selected climax begins258.00, before the actual first match-point serve setup.",
+      "It's hanging on by a thread is the literal agreed two-model text. Its metaphor is translated 悬念只剩一线 without inventing another utterance.",
+      "Audio review also covers the available native default0.18-second tail after each window, clamped at sourceEOF303.105. No later English occurs after the final all-Spanish final sentence ends300.94 in the source.",
+      "No loudness, RMS, peak, silence-threshold, PCM comparison, gain analysis, normalisation, ducking or source sound effects were used.",
+      "Display cue grouping and punctuation are editorial; all timing edges remain conservative ASR estimates. Actual complete rally and reaction coverage comes from source-scene-review and keypoint-coverage evidence, not ASR labels alone."
+    ]
+  }
+}

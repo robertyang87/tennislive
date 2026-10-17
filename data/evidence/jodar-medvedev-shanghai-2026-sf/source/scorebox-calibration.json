@@ -1,0 +1,157 @@
+{
+  "source_sha256": "1c5459904fb369096020dca00b48dc658db723dd3cf7e49bf88d8387ffebe089",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-shanghai-jodar-medvedev-2026-sf/6407012514112-1c5459904fb36909.mp4",
+  "original_official_player_url": "https://players.brightcove.net/6057277721001/xO4H0ZXngd_default/index.html?videoId=6407012514112",
+  "width": 1280,
+  "height": 720,
+  "source_fps": "50/1",
+  "output_fps": "25/1",
+  "speed": 1,
+  "duration": 303.105,
+  "reviewed_at": "2026-10-17T14:17:53.671880+00:00",
+  "reviewer": "Current OpenAI source-review assistant",
+  "human_listening_claimed": false,
+  "profile": "atp-tour-v1",
+  "probe_profile": "atp",
+  "source_box": [
+    65,
+    613,
+    303,
+    686
+  ],
+  "source_box_size": [
+    238,
+    73
+  ],
+  "coordinate_basis": "Actual1280x720 original source pixels, not1080p constants. Main board left65/top613/bottom686; first-set right270; active second-set right301 plus existing2px anti-alias pad gives max303.",
+  "sample_measurements_file": "native-scorebox-samples.json",
+  "bounded_native_probe": {
+    "path": "output/2026-10-17/reel/jodar-medvedev-shanghai-2026-sf/probe.json",
+    "from": 258,
+    "to": 260,
+    "fps": 5,
+    "frames": 10,
+    "present": 10,
+    "unresolved": 0,
+    "claim_limit": "Calibration only; no claim of source-wide or final-video scoreboard correctness."
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1440,
+    "fill": "fixed centered crop",
+    "cx": 0.5,
+    "track": false,
+    "source_crop_x": [
+      370,
+      910
+    ],
+    "source_crop_width": 540,
+    "scale": 2,
+    "scoreboard_fixed_position": [
+      0,
+      1226
+    ],
+    "expected_scoreboard_height": 146,
+    "previous_position_estimate": [
+      0,
+      1227
+    ],
+    "native_bottom_anchor": 1372,
+    "position_basis": "Actual native pre-encode result; prior1227 was a different source-height rounding estimate."
+  },
+  "presence": {
+    "first_set_active_examples": [
+      8,
+      38,
+      66,
+      110,
+      140
+    ],
+    "second_set_examples": [
+      150,
+      180,
+      200,
+      258,
+      264,
+      274,
+      286
+    ],
+    "retracting_examples": [
+      143,
+      146,
+      238,
+      293
+    ],
+    "absent_examples": [
+      294,
+      302
+    ]
+  },
+  "visual_limits": [
+    "Fixed3:4 center crop loses horizontal outer court and occasional players running wide; do not claim the full width of every rally remains visible. Preserve user-selected fixed-center/full-canvas treatment.",
+    "Only native scoreboard is copied back at its established x0/y1227. No invented redraw, displaced position, static full-width rectangle, or copy of absent board during handshake.",
+    "Native render still must scan each selected source segment and inspect actual final scoreboard alpha/presence/width."
+  ],
+  "native_observation": {
+    "reported_at": "2026-10-17T14:29:39.563797+00:00",
+    "basis": "Root reports actual completed native pre-encode log; this annotation does not claim a new independent frame inspection.",
+    "native_scoreboard_canvas_rect": [
+      0,
+      1226,
+      476,
+      146
+    ],
+    "native_bottom_anchor": 1372,
+    "explanation": "沿用原生左下底部锚点 y1372 和 x0。当前720源比分板73像素高，按原生2倍缩放为146，故顶部1372−146=1226。此前1080源109像素板原生取整为145高，顶部为1227。1像素差异来自缩放后的高度取整，不是手动移动比分板；前期y1227只是沿用旧板高的预估。",
+    "source_box_unchanged": [
+      65,
+      613,
+      303,
+      686
+    ],
+    "code_spec_anchor_or_frame_evidence_changed": false,
+    "new_scan_or_render_performed": false
+  },
+  "latest_formal_consistency": {
+    "checked_at": "2026-10-17T14:43:15.755835+00:00",
+    "spec_sha256": "9e866f0e5dcd092eb1381f26d5f936c71738667b75a46cc9bbf21f46169b29d9",
+    "source_url_matches": true,
+    "current_source_windows": [
+      {
+        "index": 0,
+        "edit_id": "cold_open",
+        "start": 292.04,
+        "end": 301.24
+      },
+      {
+        "index": 2,
+        "edit_id": "first_set_break",
+        "start": 36.96,
+        "end": 52.8
+      },
+      {
+        "index": 4,
+        "edit_id": "first_set_close",
+        "start": 138.4,
+        "end": 147.8
+      },
+      {
+        "index": 6,
+        "edit_id": "three_saves_and_ending",
+        "start": 258.0,
+        "end": 302.92
+      }
+    ],
+    "retained_english_cues_native_gate": 10,
+    "current_canvas_scoreboard": {
+      "x": 0,
+      "y": 1226,
+      "width_max": 476,
+      "height": 146,
+      "bottom_anchor": 1372,
+      "basis": "Root-completed native pre-encode log for actual720 source,73px board scaled2x. Existing source images were already reviewed; no new frames were decoded for this sampling plan.",
+      "why_previous_y1227": "Previous1080-source board was109px high, rendered145px after native scaling/rounding:1372-145=1227. Current73px at2x is146px:1372-146=1226. The bottom anchor is unchanged; this is not a manual board-position change."
+    },
+    "final_movie_review_complete": false
+  }
+}

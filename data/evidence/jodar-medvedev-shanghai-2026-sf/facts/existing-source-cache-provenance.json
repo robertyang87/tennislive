@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-10-17T14:03:46.718051+00:00",
+  "records": [
+    {
+      "path": "data/probe_claims/aE21b2-ef-Y.json",
+      "relevant_record": {
+        "video_key": "aE21b2-ef-Y",
+        "_why": "probe 一开跑就写的认领（tools/probe_claims.py）：编排器按它不再重复点 run，会话 probe 时按它提示可复用的目录",
+        "claims": [
+          {
+            "slug": "jodar-medvedev",
+            "url": "https://www.youtube.com/watch?v=aE21b2-ef-Y",
+            "branch": "main",
+            "run_id": "39036715783",
+            "outdir": "output/2026-10-17/reel/jodar-medvedev",
+            "claimed_at": "2026-10-17T13:29:47Z"
+          }
+        ]
+      }
+    },
+    {
+      "path": "data/orchestration_state.json",
+      "relevant_record": {
+        "column": "reel",
+        "score": 90,
+        "date": "2026-10-17",
+        "dispatched_at": "2026-10-17T13:28:41Z",
+        "video": "aE21b2-ef-Y"
+      }
+    }
+  ],
+  "native_log_relevant_lines": [
+    "reel\tprobe／cookies — 表单自检（空 URL、搜索词、默认 slug、框格式）\t2026-10-17T13:29:45.8245465Z   URL: https://www.youtube.com/watch?v=aE21b2-ef-Y",
+    "reel\tprobe — 下载 + 缩略图墙\t2026-10-17T13:31:56.4267611Z [ok] mweb(+POT) 下到了 1920×1080，58.2 MB",
+    "reel\tprobe — 下载 + 缩略图墙\t2026-10-17T13:31:56.4267932Z [缓存] 存了一份，下一趟不用重下（d36a1ec214289256.mp4）",
+    "reel\tprobe — 下载 + 缩略图墙\t2026-10-17T13:31:56.4268623Z 源片 1920×1080 @ 25，134.2s，检出 17 个切点，另有 7 个疑似切点（门槛 0.12）"
+  ],
+  "limitations": "Records bind cached file to prior source acquisition, but have no title/uploader/channel. Actual source identity/provenance requires root review."
+}

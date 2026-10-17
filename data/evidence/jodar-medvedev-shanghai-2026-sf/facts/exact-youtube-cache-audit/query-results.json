@@ -1,0 +1,228 @@
+[
+  {
+    "key": "all-actions-caches",
+    "exit_code": 1,
+    "checked_at": "2026-10-17T14:40:52.111975+00:00",
+    "stderr": "unknown flag: --slurp\n\nUsage:  gh api <endpoint> [flags]\n\nFlags:\n      --cache duration        Cache the response, e.g. \"3600s\", \"60m\", \"1h\"\n  -F, --field key=value       Add a typed parameter in key=value format\n  -H, --header key:value      Add a HTTP request header in key:value format\n      --hos"
+  },
+  {
+    "key": "recent-releases",
+    "exit_code": 0,
+    "checked_at": "2026-10-17T14:40:52.819782+00:00",
+    "stderr": "",
+    "total_records": 100,
+    "matching_records": [
+      {
+        "tag_name": "source-shanghai-jodar-medvedev-2026-sf",
+        "assets": [
+          {
+            "name": "6407012514112-1c5459904fb36909.mp4",
+            "size": 80787665,
+            "id": 650632329
+          },
+          {
+            "name": "manifest.json",
+            "size": 866,
+            "id": 650632326
+          },
+          {
+            "name": "medium.en.json",
+            "size": 19895,
+            "id": 650636109
+          },
+          {
+            "name": "small.en.json",
+            "size": 19941,
+            "id": 650636108
+          }
+        ]
+      },
+      {
+        "tag_name": "source-aE21b2-ef-Y",
+        "assets": [
+          {
+            "name": "aE21b2-ef-Y-ca20288580314ff1.mp4",
+            "size": 58208673,
+            "id": 650618736
+          },
+          {
+            "name": "aE21b2-ef-Y.mp4",
+            "size": 58208673,
+            "id": 650618733
+          },
+          {
+            "name": "manifest.json",
+            "size": 401,
+            "id": 650618735
+          }
+        ]
+      },
+      {
+        "tag_name": "reel-tts-jodar-medvedev-shanghai-2026-sf-bccd141c75a33ea1",
+        "assets": [
+          {
+            "name": "tts_bundle.zip",
+            "size": 424686,
+            "id": 650675787
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "recent-run-list",
+    "exit_code": 0,
+    "checked_at": "2026-10-17T14:40:53.930879+00:00",
+    "stderr": "",
+    "total_records": 100,
+    "matching_records": [
+      {
+        "id": 39040748019,
+        "display_title": "frame-grab",
+        "head_branch": "codex/jodar-sf-tts-transport-20261017",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T14:26:19Z"
+      },
+      {
+        "id": 39039394569,
+        "display_title": "frame-grab",
+        "head_branch": "codex/jodar-official-source-asr-20261017",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T14:07:17Z"
+      },
+      {
+        "id": 39039015519,
+        "display_title": "frame-grab",
+        "head_branch": "codex/jodar-source-cache-export-20261017",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T14:01:55Z"
+      },
+      {
+        "id": 39038584622,
+        "display_title": "pages",
+        "head_branch": "main",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "created_at": "2026-10-17T13:55:49Z"
+      },
+      {
+        "id": 39038583443,
+        "display_title": "reel: 更新上海决赛对阵，霍达尔会师达维多维奇 (#1288)",
+        "head_branch": "main",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T13:55:48Z"
+      },
+      {
+        "id": 39038583282,
+        "display_title": "reel: 更新上海决赛对阵，霍达尔会师达维多维奇 (#1288)",
+        "head_branch": "main",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T13:55:48Z"
+      },
+      {
+        "id": 39038583271,
+        "display_title": "reel: 更新上海决赛对阵，霍达尔会师达维多维奇 (#1288)",
+        "head_branch": "main",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T13:55:48Z"
+      },
+      {
+        "id": 39038576666,
+        "display_title": "orchestrate",
+        "head_branch": "main",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T13:55:42Z"
+      },
+      {
+        "id": 39038508537,
+        "display_title": "oncourt-interviews",
+        "head_branch": "main",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T13:54:43Z"
+      },
+      {
+        "id": 39038497240,
+        "display_title": "reel-auto-ready",
+        "head_branch": "main",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T13:54:33Z"
+      },
+      {
+        "id": 39038481843,
+        "display_title": "interview-auto-render",
+        "head_branch": "main",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T13:54:19Z"
+      },
+      {
+        "id": 39038447499,
+        "display_title": "pages",
+        "head_branch": "main",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T13:53:47Z"
+      },
+      {
+        "id": 39037994771,
+        "display_title": "pages",
+        "head_branch": "main",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T13:47:12Z"
+      },
+      {
+        "id": 39037847394,
+        "display_title": "pages",
+        "head_branch": "main",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-17T13:45:07Z"
+      }
+    ]
+  },
+  {
+    "key": "recent-artifacts",
+    "exit_code": 0,
+    "checked_at": "2026-10-17T14:40:54.635110+00:00",
+    "stderr": "",
+    "total_records": 100,
+    "matching_records": [
+      {
+        "id": 12102183994,
+        "node_id": "MDg6QXJ0aWZhY3QxMjEwMjE4Mzk5NA==",
+        "name": "reel-jodar-medvedev-2954",
+        "size_in_bytes": 1730862,
+        "url": "https://api.github.com/repos/robertyang87/tennislive/actions/artifacts/12102183994",
+        "archive_download_url": "https://api.github.com/repos/robertyang87/tennislive/actions/artifacts/12102183994/zip",
+        "expired": false,
+        "digest": "sha256:550b5c06f30111f5f7cf5df25711da202faf5ccb53a29510a7ae26ea7afac475",
+        "created_at": "2026-10-17T13:32:20Z",
+        "updated_at": "2026-10-17T13:32:20Z",
+        "expires_at": "2026-10-31T13:32:19Z",
+        "workflow_run": {
+          "id": 39036715783,
+          "repository_id": 1302347490,
+          "head_repository_id": 1302347490,
+          "head_branch": "main",
+          "head_sha": "619f92200158d203f87ca58d0edf095f2b0cf629"
+        }
+      }
+    ]
+  },
+  {
+    "key": "exact-source-release",
+    "exit_code": 1,
+    "checked_at": "2026-10-17T14:40:52.413026+00:00",
+    "stderr": "gh: Not Found (HTTP 404)\n"
+  }
+]

@@ -1,0 +1,95 @@
+{
+  "scoreboard_qc_sha256": "e385dcb1c82a405fbefd11264326b908dfb091bc4186e9f48af5a66a47982779",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "bccd141c75a33ea1e0f43aaddb407994cdb0a8d8dc6ef843ff0cc4f206dd2c66",
+    "request_count": 6,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-jodar-medvedev-shanghai-2026-sf-bccd141c75a33ea1",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-jodar-medvedev-shanghai-2026-sf-bccd141c75a33ea1/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39041935826"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 150.56,
+  "topbar": {
+    "line1": "2026 ATP1000 上海 半决赛",
+    "line2": "霍达尔 6-3 6-4 梅德韦杰夫",
+    "start": 1.2,
+    "end": 151.76
+  },
+  "film_seconds": 156.32,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 12.528,
+    "3": 13.44,
+    "5": 13.248,
+    "7": 13.632,
+    "8": 11.016
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "f7184e81121a8a2cdc99904b6f2cb98470566bb9e929cf48542595cbdd3d8024",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "jodar-medvedev-shanghai-2026-sf",
+    "received_at": "2026-10-17T14:43:11Z",
+    "artifact_ready_at": "2026-10-17T14:47:48Z",
+    "elapsed_seconds": 277.322,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "dfffe0da46bfad420f631a8d651f442010be9190ae5651ed45b75adad2c82e32",
+    "spec_sha256": "9e866f0e5dcd092eb1381f26d5f936c71738667b75a46cc9bbf21f46169b29d9",
+    "run_id": "39041935826",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-17T14:45:35Z",
+        "run_id": "39041935826"
+      }
+    ],
+    "render_seconds": 133.322,
+    "pre_render_seconds": 144.0
+  },
+  "film_sha256": "dfffe0da46bfad420f631a8d651f442010be9190ae5651ed45b75adad2c82e32",
+  "film_bytes": 47545869,
+  "qc_attestation_sha256": "eb7e841db48574ec93d3a049a362c8e2ee7fb7ba1f8fb2bcf14f0169937fc035",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-17T14:45:35Z",
+      "run_id": "39041935826"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-17T14:47:51Z",
+      "run_id": "39041935826"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-jodar-medvedev-shanghai-2026-sf/jodar-medvedev-shanghai-2026-sf.mp4",
+  "video_bytes": 47545869
+}

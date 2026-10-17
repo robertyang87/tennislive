@@ -1,0 +1,1307 @@
+[
+  {
+    "edit_id": "intro",
+    "audio": {
+      "ORIG": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/intro-00dfbc6539efe718.mp3",
+      "A1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/5f554db73b80e396b98924f8.mp3",
+      "A2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/9b8af4045834605310889a37.mp3",
+      "B1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/f3c3fc8cce9d5ffdbb18a09b.mp3",
+      "B2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/fb591ea08f2a655e9ed0038d.mp3"
+    },
+    "texts": {
+      "ORIG": "北京时间二零二六年十月十七日晚，上海大师赛男单半决赛。梅德韦杰夫迎战霍达尔。对手前四轮全部逆转过关，这次却先抢到了主动。",
+      "A1": "㤳兢时兼二零二六年十月十七日晚，绱醢亣师赛男丹半决赛。嵋锝围劫呋迎战惑妲洱。对手前四轮全部逆䡱㳀关，这次却先羟到餎主动。",
+      "A2": "䋳旌时坚二零二六年十月十七日晚，丄塰眔师赛男殚半决赛。枚㤫帏卩孵迎战祸笪珥。对手前四轮全部逆竱𠋜关，这次却先襁到了主动。",
+      "B1": "备境时健二零二六年十月十七日晚，晌氦代师赛男婵半决赛。妹的卫借俘迎战褐剃二。对手前四轮全部逆啭呙关，这次却先枪到㝋主动。",
+      "B2": "惫婧时剑二零二六年十月十七日晚，赏骇埭师赛男廛半决赛。媚地喂届凫迎战贺嚏贰。对手前四轮全部逆篆埚关，这次却先羌到㶫主动。"
+    },
+    "targets": [
+      {
+        "index": 3,
+        "char": "间",
+        "word": "北京时间",
+        "intended": "jian1",
+        "live": [
+          "jian1",
+          "jian4"
+        ],
+        "defaults": [
+          "jian1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "间|jian1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 18,
+        "char": "大",
+        "word": "大师",
+        "intended": "da4",
+        "live": [
+          "da4",
+          "dai4"
+        ],
+        "defaults": [
+          "da4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "大|da4",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 22,
+        "char": "单",
+        "word": "单",
+        "intended": "dan1",
+        "live": [
+          "dan1",
+          "shan4"
+        ],
+        "defaults": [
+          "dan1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "单|dan1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 46,
+        "char": "转",
+        "word": "逆转",
+        "intended": "zhuan3",
+        "live": [
+          "zhuan3",
+          "zhuan4"
+        ],
+        "defaults": [
+          "zhuan3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "转|zhuan3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 54,
+        "char": "抢",
+        "word": "抢",
+        "intended": "qiang3",
+        "live": [
+          "qiang3",
+          "qiang1"
+        ],
+        "defaults": [
+          "qiang3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "抢|qiang3",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 56,
+        "char": "了",
+        "word": "到了",
+        "intended": "le5",
+        "live": [
+          "le5",
+          "liao3"
+        ],
+        "defaults": [
+          "le5",
+          "liao3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "了|le5",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "positive includes dominant-reading/contextual proxy",
+          "positive has original/contextual letter fallback",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 27,
+        "char": "梅",
+        "intended": "mei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "梅|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 28,
+        "char": "德",
+        "intended": "de2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "德|de2",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy",
+          "negative uses contextual dominant-reading proxy",
+          "neutral de5 contextual proxies only"
+        ]
+      },
+      {
+        "index": 29,
+        "char": "韦",
+        "intended": "wei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "韦|wei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 30,
+        "char": "杰",
+        "intended": "jie2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "杰|jie2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 31,
+        "char": "夫",
+        "intended": "fu1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "夫|fu1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 34,
+        "char": "霍",
+        "intended": "huo4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "霍|huo4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 35,
+        "char": "达",
+        "intended": "da2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "达|da2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 36,
+        "char": "尔",
+        "intended": "er3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "尔|er3",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 16,
+        "char": "上",
+        "intended": "shang4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "上海",
+        "reference_key": "上|shang4",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 17,
+        "char": "海",
+        "intended": "hai3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "上海",
+        "reference_key": "海|hai3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 0,
+        "char": "北",
+        "intended": "bei3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "北京",
+        "reference_key": "北|bei3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 1,
+        "char": "京",
+        "intended": "jing1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "北京",
+        "reference_key": "京|jing1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 47,
+        "char": "过",
+        "intended": "guo4",
+        "kind": "explicit_requested_phoneme",
+        "status": "actual_pending",
+        "reference_key": "过|guo4",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      }
+    ]
+  },
+  {
+    "edit_id": "second_set_context",
+    "audio": {
+      "ORIG": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/second_set_context-7947bf862a5f1504.mp3",
+      "A1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/7fc4b4f8ebd209e118d858d8.mp3",
+      "A2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/e3e4dea25c30c0b41379fde3.mp3",
+      "B1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/05a578639e713aa0b516f32d.mp3",
+      "B2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/8b65431465cef56a82ed8ba2.mp3"
+    },
+    "texts": {
+      "ORIG": "第二盘，梅德韦杰夫从零比二追到三比二，又被连拿三局。三比五，他连救三个赛点。第三次，梅总上网截击，霍达尔追球摔坐在地，悬念还没结束。",
+      "A1": "第二盘，嵋锝围劫呋从零比二追到三比二，又备连拿三局。三比五，他连救三个赛点。第三次，嵋㢔上网截击，惑妲洱追球摔坐在娣，悬念孩嵋劫束。",
+      "A2": "第二盘，枚㤫帏卩孵从零比二追到三比二，又惫连拿三局。三比五，他连救三个赛点。第三次，枚㷓上网截击，祸笪珥追球摔坐在帝，悬念㜾枚卩束。",
+      "B1": "第二盘，妹的卫借俘从零比二追到三比二，又哔连拿三局。三比五，他连救三个赛点。第三次，妹粽上网截击，褐剃二追球摔坐在低，悬念桓寞疖束。",
+      "B2": "第二盘，媚地喂届凫从零比二追到三比二，又壁连拿三局。三比五，他连救三个赛点。第三次，媚纵上网截击，贺嚏贰追球摔坐在滴，悬念洹沫皆束。"
+    },
+    "targets": [
+      {
+        "index": 20,
+        "char": "被",
+        "word": "被",
+        "intended": "bei4",
+        "live": [
+          "bei4",
+          "pi1"
+        ],
+        "defaults": [
+          "bei4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "被|bei4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 57,
+        "char": "地",
+        "word": "地",
+        "intended": "di4",
+        "live": [
+          "di4",
+          "de5"
+        ],
+        "defaults": [
+          "di4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "地|di4",
+        "reference_proxy_limits": [
+          "negative includes rare single-reading proxy",
+          "negative is alternate-tone proxy, not exact lexical alternate"
+        ]
+      },
+      {
+        "index": 61,
+        "char": "还",
+        "word": "还",
+        "intended": "hai2",
+        "live": [
+          "hai2",
+          "huan2"
+        ],
+        "defaults": [
+          "hai2",
+          "huan2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "还|hai2",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 62,
+        "char": "没",
+        "word": "没",
+        "intended": "mei2",
+        "live": [
+          "mei2",
+          "mo4"
+        ],
+        "defaults": [
+          "mei2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "没|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 63,
+        "char": "结",
+        "word": "结束",
+        "intended": "jie2",
+        "live": [
+          "jie2",
+          "jie1"
+        ],
+        "defaults": [
+          "jie2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "结|jie2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 4,
+        "char": "梅",
+        "intended": "mei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "梅|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 5,
+        "char": "德",
+        "intended": "de2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "德|de2",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy",
+          "negative uses contextual dominant-reading proxy",
+          "neutral de5 contextual proxies only"
+        ]
+      },
+      {
+        "index": 6,
+        "char": "韦",
+        "intended": "wei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "韦|wei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 7,
+        "char": "杰",
+        "intended": "jie2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "杰|jie2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 8,
+        "char": "夫",
+        "intended": "fu1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "夫|fu1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 42,
+        "char": "梅",
+        "intended": "mei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅总",
+        "reference_key": "梅|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 43,
+        "char": "总",
+        "intended": "zong3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅总",
+        "reference_key": "总|zong3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 49,
+        "char": "霍",
+        "intended": "huo4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "霍|huo4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 50,
+        "char": "达",
+        "intended": "da2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "达|da2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 51,
+        "char": "尔",
+        "intended": "er3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "尔|er3",
+        "reference_proxy_limits": []
+      }
+    ]
+  },
+  {
+    "edit_id": "first_set_context",
+    "audio": {
+      "ORIG": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/first_set_context-164f45bc159bac81.mp3",
+      "A1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/a8823aafe1a6fb079316f926.mp3",
+      "A2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/5bdfafe670e9ea8a5fee4fdf.mp3",
+      "B1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/bbf7dd2131fab8c57d403aef.mp3",
+      "B2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/edde3f46575edc4c8566952f.mp3"
+    },
+    "texts": {
+      "ORIG": "首盘，梅德韦杰夫被破发后回破到二比三，可随后又丢了发球局。五比三的发球胜盘局，霍达尔用了五个盘点才拿下。梅总没放手，对手也没让步。",
+      "A1": "首盘，嵋锝围劫呋备破彂后回破到二比三，可随后又丢餎彂球局。五比三𠵨彂球胜盘局，惑妲洱用餎五个盘点才拿下。嵋㢔嵋放手，对手也嵋让步。",
+      "A2": "首盘，枚㤫帏卩孵惫破沷后回破到二比三，可随后又丢了沷球局。五比三的沷球胜盘局，祸笪珥用了五个盘点才拿下。枚㷓枚放手，对手也枚让步。",
+      "B1": "首盘，妹的卫借俘哔破珐后回破到二比三，可随后又丢㝋珐球局。五比三低珐球胜盘局，褐剃二用㝋五个盘点才拿下。妹粽寞放手，对手也寞让步。",
+      "B2": "首盘，媚地喂届凫壁破㛲后回破到二比三，可随后又丢㶫㛲球局。五比三滴㛲球胜盘局，贺嚏贰用㶫五个盘点才拿下。媚纵沫放手，对手也沫让步。"
+    },
+    "targets": [
+      {
+        "index": 8,
+        "char": "被",
+        "word": "被",
+        "intended": "bei4",
+        "live": [
+          "bei4",
+          "pi1"
+        ],
+        "defaults": [
+          "bei4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "被|bei4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 10,
+        "char": "发",
+        "word": "发",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "发|fa1",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 24,
+        "char": "了",
+        "word": "了",
+        "intended": "le5",
+        "live": [
+          "le5",
+          "liao3"
+        ],
+        "defaults": [
+          "le5",
+          "liao3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "了|le5",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "positive includes dominant-reading/contextual proxy",
+          "positive has original/contextual letter fallback",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 25,
+        "char": "发",
+        "word": "发球",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "发|fa1",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 32,
+        "char": "的",
+        "word": "的",
+        "intended": "de5",
+        "live": [
+          "de5",
+          "di1",
+          "di2",
+          "di4"
+        ],
+        "defaults": [
+          "de5"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "的|de5",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "positive includes dominant-reading/contextual proxy",
+          "positive has original/contextual letter fallback"
+        ]
+      },
+      {
+        "index": 33,
+        "char": "发",
+        "word": "发球",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "发|fa1",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 43,
+        "char": "了",
+        "word": "了",
+        "intended": "le5",
+        "live": [
+          "le5",
+          "liao3"
+        ],
+        "defaults": [
+          "le5",
+          "liao3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "了|le5",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "positive includes dominant-reading/contextual proxy",
+          "positive has original/contextual letter fallback",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 54,
+        "char": "没",
+        "word": "没",
+        "intended": "mei2",
+        "live": [
+          "mei2",
+          "mo4"
+        ],
+        "defaults": [
+          "mei2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "没|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 61,
+        "char": "没",
+        "word": "没",
+        "intended": "mei2",
+        "live": [
+          "mei2",
+          "mo4"
+        ],
+        "defaults": [
+          "mei2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "没|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 3,
+        "char": "梅",
+        "intended": "mei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "梅|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 4,
+        "char": "德",
+        "intended": "de2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "德|de2",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy",
+          "negative uses contextual dominant-reading proxy",
+          "neutral de5 contextual proxies only"
+        ]
+      },
+      {
+        "index": 5,
+        "char": "韦",
+        "intended": "wei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "韦|wei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 6,
+        "char": "杰",
+        "intended": "jie2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "杰|jie2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 7,
+        "char": "夫",
+        "intended": "fu1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "夫|fu1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 52,
+        "char": "梅",
+        "intended": "mei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅总",
+        "reference_key": "梅|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 53,
+        "char": "总",
+        "intended": "zong3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅总",
+        "reference_key": "总|zong3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 39,
+        "char": "霍",
+        "intended": "huo4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "霍|huo4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 40,
+        "char": "达",
+        "intended": "da2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "达|da2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 41,
+        "char": "尔",
+        "intended": "er3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "尔|er3",
+        "reference_proxy_limits": []
+      }
+    ]
+  },
+  {
+    "edit_id": "outlook",
+    "audio": {
+      "ORIG": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/outlook-cf223c0d0c5919c2.mp3",
+      "A1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/d010eeb3f5b85e18fd27b4be.mp3",
+      "A2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/0ff0e7ec327bceda88bf710b.mp3",
+      "B1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/dbab652f7ecf2073f8599704.mp3",
+      "B2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/b78448832a3b1a6939d817b6.mp3"
+    },
+    "texts": {
+      "ORIG": "这一站先放下，下一站再来。上海决赛，霍达尔对阵达维多维奇·福基纳。两位西班牙球员会师，谁能把这一周走到最后？",
+      "A1": "这一站先放下，下一站再来。绱醢决赛，惑妲洱对阵妲围咄围亓·俘乩捺。两位僖斑伢球元卉师，谁能𢃳这一周走到最后？",
+      "A2": "这一站先放下，下一站再来。丄塰决赛，祸笪珥对阵笪帏裰帏岐·凫击衲。两位兮瘢崖球原恚师，谁能𢺞这一周走到最后？",
+      "B1": "这一站先放下，下一站再来。晌氦决赛，褐剃二对阵剃卫剁卫乩·付冀拿。两位禊办亚球孕侩师，谁能坝这一周走到最后？",
+      "B2": "这一站先放下，下一站再来。赏骇决赛，贺嚏贰对阵嚏喂舵喂击·复剂镎。两位细瓣娅球恽哙师，谁能灞这一周走到最后？"
+    },
+    "targets": [
+      {
+        "index": 27,
+        "char": "奇",
+        "intended": "qi2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "达维多维奇",
+        "reference_key": "奇|qi2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 39,
+        "char": "员",
+        "word": "员",
+        "intended": "yuan2",
+        "live": [
+          "yuan2",
+          "yun4"
+        ],
+        "defaults": [
+          "yuan2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "员|yuan2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 40,
+        "char": "会",
+        "word": "会师",
+        "intended": "hui4",
+        "live": [
+          "hui4",
+          "kuai4"
+        ],
+        "defaults": [
+          "hui4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "会|hui4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 45,
+        "char": "把",
+        "word": "把",
+        "intended": "ba3",
+        "live": [
+          "ba3",
+          "ba4"
+        ],
+        "defaults": [
+          "ba3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "把|ba3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 18,
+        "char": "霍",
+        "intended": "huo4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "霍|huo4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 19,
+        "char": "达",
+        "intended": "da2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "达|da2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 20,
+        "char": "尔",
+        "intended": "er3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "尔|er3",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 23,
+        "char": "达",
+        "intended": "da2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "达维多维奇",
+        "reference_key": "达|da2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 24,
+        "char": "维",
+        "intended": "wei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "达维多维奇",
+        "reference_key": "维|wei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 25,
+        "char": "多",
+        "intended": "duo1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "达维多维奇",
+        "reference_key": "多|duo1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 26,
+        "char": "维",
+        "intended": "wei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "达维多维奇",
+        "reference_key": "维|wei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 29,
+        "char": "福",
+        "intended": "fu2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "福基纳",
+        "reference_key": "福|fu2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 30,
+        "char": "基",
+        "intended": "ji1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "福基纳",
+        "reference_key": "基|ji1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 31,
+        "char": "纳",
+        "intended": "na4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "福基纳",
+        "reference_key": "纳|na4",
+        "reference_proxy_limits": [
+          "negative includes rare single-reading proxy",
+          "negative is alternate-tone proxy, not exact lexical alternate"
+        ]
+      },
+      {
+        "index": 35,
+        "char": "西",
+        "intended": "xi1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "西班牙",
+        "reference_key": "西|xi1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 36,
+        "char": "班",
+        "intended": "ban1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "西班牙",
+        "reference_key": "班|ban1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 37,
+        "char": "牙",
+        "intended": "ya2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "西班牙",
+        "reference_key": "牙|ya2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 13,
+        "char": "上",
+        "intended": "shang4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "上海",
+        "reference_key": "上|shang4",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 14,
+        "char": "海",
+        "intended": "hai3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "上海",
+        "reference_key": "海|hai3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      }
+    ]
+  },
+  {
+    "edit_id": "full_stats",
+    "audio": {
+      "ORIG": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/full_stats-e4caeb528c2dd683.mp3",
+      "A1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/fddfc67f42cdb40b26c2b4c0.mp3",
+      "A2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/d802af2978324f847d59baca.mp3",
+      "B1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/f139f619a70856dee0d28a00.mp3",
+      "B2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/a2100651e18e6abe80510104.mp3"
+    },
+    "texts": {
+      "ORIG": "第四个赛点，霍达尔正手穿越得分。制胜分，梅德韦杰夫十五比二十二；非受迫失误，二十一比二十二。六个破发点只兑现两个，坚持没能变成逆转。",
+      "A1": "第四个赛点，惑妲洱证手穿越德氛。制胜氛，嵋锝围劫呋十五比二十二；非受珀失误，二十一比二十二。六个破彂点咫兑现两个，坚持嵋能变成逆䡱。",
+      "A2": "第四个赛点，祸笪珥诤手穿越锝纷。制胜纷，枚㤫帏卩孵十五比二十二；非受破失误，二十一比二十二。六个破沷点址兑现两个，坚持枚能变成逆竱。",
+      "B1": "第四个赛点，褐剃二争手穿越𠵨偾。制胜偾，妹的卫借俘十五比二十二；非受坡失误，二十一比二十二。六个破珐点卮兑现两个，坚持寞能变成逆啭。",
+      "B2": "第四个赛点，贺嚏贰峥手穿越的忿。制胜忿，媚地喂届凫十五比二十二；非受泼失误，二十一比二十二。六个破㛲点栀兑现两个，坚持沫能变成逆篆。"
+    },
+    "targets": [
+      {
+        "index": 9,
+        "char": "正",
+        "word": "正手",
+        "intended": "zheng4",
+        "live": [
+          "zheng4",
+          "zheng1"
+        ],
+        "defaults": [
+          "zheng4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "正|zheng4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 13,
+        "char": "得",
+        "word": "得",
+        "intended": "de2",
+        "live": [
+          "de2",
+          "de5",
+          "dei3"
+        ],
+        "defaults": [
+          "de2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "得|de2",
+        "reference_proxy_limits": [
+          "negative includes rare single-reading proxy",
+          "negative uses contextual dominant-reading proxy"
+        ]
+      },
+      {
+        "index": 14,
+        "char": "分",
+        "word": "分",
+        "intended": "fen1",
+        "live": [
+          "fen1",
+          "fen4"
+        ],
+        "defaults": [
+          "fen1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "分|fen1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 18,
+        "char": "分",
+        "word": "分",
+        "intended": "fen1",
+        "live": [
+          "fen1",
+          "fen4"
+        ],
+        "defaults": [
+          "fen1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "分|fen1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 34,
+        "char": "迫",
+        "word": "迫",
+        "intended": "po4",
+        "live": [
+          "po4",
+          "pai3"
+        ],
+        "defaults": [
+          "po4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "迫|po4",
+        "reference_proxy_limits": [
+          "negative includes rare single-reading proxy",
+          "negative is alternate-tone proxy, not exact lexical alternate"
+        ]
+      },
+      {
+        "index": 49,
+        "char": "发",
+        "word": "发点",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "发|fa1",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 51,
+        "char": "只",
+        "word": "只",
+        "intended": "zhi3",
+        "live": [
+          "zhi3",
+          "zhi1"
+        ],
+        "defaults": [
+          "zhi3",
+          "zhi1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "只|zhi3",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 59,
+        "char": "没",
+        "word": "没",
+        "intended": "mei2",
+        "live": [
+          "mei2",
+          "mo4"
+        ],
+        "defaults": [
+          "mei2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "没|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 64,
+        "char": "转",
+        "word": "逆转",
+        "intended": "zhuan3",
+        "live": [
+          "zhuan3",
+          "zhuan4"
+        ],
+        "defaults": [
+          "zhuan3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "转|zhuan3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 20,
+        "char": "梅",
+        "intended": "mei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "梅|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 21,
+        "char": "德",
+        "intended": "de2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "德|de2",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy",
+          "negative uses contextual dominant-reading proxy",
+          "neutral de5 contextual proxies only"
+        ]
+      },
+      {
+        "index": 22,
+        "char": "韦",
+        "intended": "wei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "韦|wei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 23,
+        "char": "杰",
+        "intended": "jie2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "杰|jie2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 24,
+        "char": "夫",
+        "intended": "fu1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "夫|fu1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 6,
+        "char": "霍",
+        "intended": "huo4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "霍|huo4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 7,
+        "char": "达",
+        "intended": "da2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "达|da2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 8,
+        "char": "尔",
+        "intended": "er3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "尔|er3",
+        "reference_proxy_limits": []
+      }
+    ]
+  }
+]

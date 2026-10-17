@@ -1,0 +1,432 @@
+{
+  "schema": "tennislive.final-movie-sampling-plan.v1",
+  "status": "prepared_not_executed_on_final_movie",
+  "prepared_at": "2026-10-17T14:43:15.755835+00:00",
+  "spec_sha256": "9e866f0e5dcd092eb1381f26d5f936c71738667b75a46cc9bbf21f46169b29d9",
+  "foreground_audio_plan_sha256": "b0eae6fd9781e22f4918b7dbc4bad57904efb17594a207b3ec2a838ae38789fa",
+  "source_sha256": "1c5459904fb369096020dca00b48dc658db723dd3cf7e49bf88d8387ffebe089",
+  "source_dimensions": [
+    1280,
+    720
+  ],
+  "source_fps": "50/1",
+  "output_dimensions": [
+    1080,
+    1440
+  ],
+  "output_fps": "25/1",
+  "fixed_cx": 0.5,
+  "native_scoreboard": {
+    "x": 0,
+    "y": 1226,
+    "width_max": 476,
+    "height": 146,
+    "bottom_anchor": 1372,
+    "basis": "Root-completed native pre-encode log for actual720 source,73px board scaled2x. Existing source images were already reviewed; no new frames were decoded for this sampling plan.",
+    "why_previous_y1227": "Previous1080-source board was109px high, rendered145px after native scaling/rounding:1372-145=1227. Current73px at2x is146px:1372-146=1226. The bottom anchor is unchanged; this is not a manual board-position change."
+  },
+  "cover_seconds_nominal": 1.2,
+  "segments": [
+    {
+      "index": 0,
+      "edit_id": "cold_open",
+      "film_start_nominal": 1.2,
+      "film_end_nominal": 10.4,
+      "seconds": 9.2,
+      "source_start": 292.04,
+      "source_end": 301.24
+    },
+    {
+      "index": 1,
+      "edit_id": "intro",
+      "film_start_nominal": 10.4,
+      "film_end_nominal": 24.4,
+      "seconds": 14.0,
+      "source_start": null,
+      "source_end": null
+    },
+    {
+      "index": 2,
+      "edit_id": "first_set_break",
+      "film_start_nominal": 24.4,
+      "film_end_nominal": 40.24,
+      "seconds": 15.84,
+      "source_start": 36.96,
+      "source_end": 52.8
+    },
+    {
+      "index": 3,
+      "edit_id": "first_set_context",
+      "film_start_nominal": 40.24,
+      "film_end_nominal": 55.04,
+      "seconds": 14.8,
+      "source_start": null,
+      "source_end": null
+    },
+    {
+      "index": 4,
+      "edit_id": "first_set_close",
+      "film_start_nominal": 55.04,
+      "film_end_nominal": 64.44,
+      "seconds": 9.4,
+      "source_start": 138.4,
+      "source_end": 147.8
+    },
+    {
+      "index": 5,
+      "edit_id": "second_set_context",
+      "film_start_nominal": 64.44,
+      "film_end_nominal": 79.24,
+      "seconds": 14.8,
+      "source_start": null,
+      "source_end": null
+    },
+    {
+      "index": 6,
+      "edit_id": "three_saves_and_ending",
+      "film_start_nominal": 79.24,
+      "film_end_nominal": 124.16,
+      "seconds": 44.92,
+      "source_start": 258.0,
+      "source_end": 302.92
+    },
+    {
+      "index": 7,
+      "edit_id": "full_stats",
+      "film_start_nominal": 124.16,
+      "film_end_nominal": 139.36,
+      "seconds": 15.2,
+      "source_start": null,
+      "source_end": null
+    },
+    {
+      "index": 8,
+      "edit_id": "outlook",
+      "film_start_nominal": 139.36,
+      "film_end_nominal": 151.76,
+      "seconds": 12.4,
+      "source_start": null,
+      "source_end": null
+    }
+  ],
+  "match_end_nominal": 151.76,
+  "brand_seconds_from_current_preview_log": 4.55,
+  "total_seconds_nominal": 156.31,
+  "timeline_limit": "Film timestamps are calculated from latest formal spec nominal segment lengths and current1.20-second cover. Final encoded render.json/timeline and actual MP4 must be checked before extraction. Native0.18-second dissolve handles do not add standalone duration. This file does not certify final-movie QC.",
+  "samples": [
+    {
+      "segment_index": 0,
+      "edit_id": "cold_open",
+      "source_seconds": 292.32,
+      "film_seconds_nominal": 1.48,
+      "purpose": "cold：最后一分余波/板仍在",
+      "check": "原比分板为5-4/40-0状态，之后随原生动画收起；整板不可裁断",
+      "film_frame_25fps": 37,
+      "film_seconds_sample_25fps": 1.48
+    },
+    {
+      "segment_index": 0,
+      "edit_id": "cold_open",
+      "source_seconds": 293.0,
+      "film_seconds_nominal": 2.16,
+      "purpose": "cold：板收起动画",
+      "check": "按该帧真实宽度收窄，不留比分数字残片或长矩形背景",
+      "film_frame_25fps": 54,
+      "film_seconds_sample_25fps": 2.16
+    },
+    {
+      "segment_index": 0,
+      "edit_id": "cold_open",
+      "source_seconds": 294.0,
+      "film_seconds_nominal": 3.16,
+      "purpose": "cold：板已消失",
+      "check": "人物近景不留板底/场地贴片；双语字幕不压人物脸",
+      "film_frame_25fps": 79,
+      "film_seconds_sample_25fps": 3.16
+    },
+    {
+      "segment_index": 0,
+      "edit_id": "cold_open",
+      "source_seconds": 300.8,
+      "film_seconds_nominal": 9.96,
+      "purpose": "cold：英文尾＋握手",
+      "check": "保留完整all-Spanish final句，词尾300.94，字幕无断句或四行重叠",
+      "film_frame_25fps": 249,
+      "film_seconds_sample_25fps": 9.96
+    },
+    {
+      "segment_index": 1,
+      "edit_id": "intro",
+      "source_seconds": null,
+      "film_seconds_nominal": 14.4,
+      "purpose": "章节卡/统计卡",
+      "check": "中文旁白与实际可见文字匹配；没有源比分板残留；统计卡数字、双方列序、完整画布检查",
+      "film_frame_25fps": 360,
+      "film_seconds_sample_25fps": 14.4
+    },
+    {
+      "segment_index": 2,
+      "edit_id": "first_set_break",
+      "source_seconds": 37.12,
+      "film_seconds_nominal": 24.56,
+      "purpose": "首盘破发球：发球起段",
+      "check": "保留源片已有发球准备；近场霍达尔、远场梅总；固定中心，不移动比分板",
+      "film_frame_25fps": 614,
+      "film_seconds_sample_25fps": 24.56
+    },
+    {
+      "segment_index": 2,
+      "edit_id": "first_set_break",
+      "source_seconds": 49.32,
+      "film_seconds_nominal": 36.76,
+      "purpose": "首盘破发球：底线相持",
+      "check": "按真实源球路看图，不出现旁白虚构的霍达尔上网收尾；主板/小分完整",
+      "film_frame_25fps": 919,
+      "film_seconds_sample_25fps": 36.76
+    },
+    {
+      "segment_index": 2,
+      "edit_id": "first_set_break",
+      "source_seconds": 52.64,
+      "film_seconds_nominal": 40.08,
+      "purpose": "首盘破发球：3-1更新与握拳",
+      "check": "点数列撤回，不能带着球场背景；52.80出点并保原生溶解底料",
+      "film_frame_25fps": 1002,
+      "film_seconds_sample_25fps": 40.08
+    },
+    {
+      "segment_index": 3,
+      "edit_id": "first_set_context",
+      "source_seconds": null,
+      "film_seconds_nominal": 44.24,
+      "purpose": "章节卡/统计卡",
+      "check": "中文旁白与实际可见文字匹配；没有源比分板残留；统计卡数字、双方列序、完整画布检查",
+      "film_frame_25fps": 1106,
+      "film_seconds_sample_25fps": 44.24
+    },
+    {
+      "segment_index": 4,
+      "edit_id": "first_set_close",
+      "source_seconds": 140.0,
+      "film_seconds_nominal": 56.64,
+      "purpose": "第五盘点：发球/相持",
+      "check": "比分5-3/AD；名字、盘分、AD均完整",
+      "film_frame_25fps": 1416,
+      "film_seconds_sample_25fps": 56.64
+    },
+    {
+      "segment_index": 4,
+      "edit_id": "first_set_close",
+      "source_seconds": 143.0,
+      "film_seconds_nominal": 59.64,
+      "purpose": "首盘6-3：握拳",
+      "check": "源板更新6-3并添加下一盘0列，宽度按同帧形状，不固定至最大476宽",
+      "film_frame_25fps": 1491,
+      "film_seconds_sample_25fps": 59.64
+    },
+    {
+      "segment_index": 4,
+      "edit_id": "first_set_close",
+      "source_seconds": 147.76,
+      "film_seconds_nominal": 64.4,
+      "purpose": "首盘收尾：英文here词尾",
+      "check": "本人近景保完整here字幕；147.80结束，原生转场不得显著闪入下一盘发球",
+      "film_frame_25fps": 1610,
+      "film_seconds_sample_25fps": 64.4
+    },
+    {
+      "segment_index": 5,
+      "edit_id": "second_set_context",
+      "source_seconds": null,
+      "film_seconds_nominal": 68.44,
+      "purpose": "章节卡/统计卡",
+      "check": "中文旁白与实际可见文字匹配；没有源比分板残留；统计卡数字、双方列序、完整画布检查",
+      "film_frame_25fps": 1711,
+      "film_seconds_sample_25fps": 68.44
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 258.16,
+      "film_seconds_nominal": 79.4,
+      "purpose": "首个赛点：发球",
+      "check": "5-3/40-30，保发球toss，前句difference tonight不残留",
+      "film_frame_25fps": 1985,
+      "film_seconds_sample_25fps": 79.4
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 261.5,
+      "film_seconds_nominal": 82.74,
+      "purpose": "救第1赛点",
+      "check": "动作完整，回到deuce动画时点数与板宽不抖闪",
+      "film_frame_25fps": 2068,
+      "film_seconds_sample_25fps": 82.72
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 264.5,
+      "film_seconds_nominal": 85.74,
+      "purpose": "第2赛点：AD",
+      "check": "AD点数格完整，无细长场地贴片",
+      "film_frame_25fps": 2144,
+      "film_seconds_sample_25fps": 85.76
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 268.75,
+      "film_seconds_nominal": 89.99,
+      "purpose": "救第2赛点后近景",
+      "check": "40-40板与蓝球衣边界分清；不要把蓝衣识别为比分板",
+      "film_frame_25fps": 2250,
+      "film_seconds_sample_25fps": 90.0
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 274.48,
+      "film_seconds_nominal": 95.72,
+      "purpose": "第3赛点：梅总上网截击",
+      "check": "动作与中文回顾一致，固定中心裁切按用户风格；不擅改视窗跟踪",
+      "film_frame_25fps": 2393,
+      "film_seconds_sample_25fps": 95.72
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 277.0,
+      "film_seconds_nominal": 98.24,
+      "purpose": "第3赛点：霍达尔倒地",
+      "check": "完整保留救球/摔坐与后续起身；不提前切走",
+      "film_frame_25fps": 2456,
+      "film_seconds_sample_25fps": 98.24
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 280.5,
+      "film_seconds_nominal": 101.74,
+      "purpose": "第3赛点后起身",
+      "check": "保hanging on by a thread完整句到282.02；官方源随后跳局应如实保留",
+      "film_frame_25fps": 2544,
+      "film_seconds_sample_25fps": 101.76
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 282.4,
+      "film_seconds_nominal": 103.64,
+      "purpose": "第4赛点：5-4/40-0发球",
+      "check": "此时已进发球动作，不能把源起点挪到284秒",
+      "film_frame_25fps": 2591,
+      "film_seconds_sample_25fps": 103.64
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 290.6,
+      "film_seconds_nominal": 111.84,
+      "purpose": "第4赛点：正手穿越起拍",
+      "check": "回顾仅判正手穿越，不判直斜线/UE；近场动作与源一致",
+      "film_frame_25fps": 2796,
+      "film_seconds_sample_25fps": 111.84
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 291.08,
+      "film_seconds_nominal": 112.32,
+      "purpose": "第4赛点：球穿过梅总网前",
+      "check": "确认动作/球路未被接缝切断；不擅判微小触拍",
+      "film_frame_25fps": 2808,
+      "film_seconds_sample_25fps": 112.32
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 293.0,
+      "film_seconds_nominal": 114.24,
+      "purpose": "赛后：收板动画",
+      "check": "按同帧图形缩窄，退场后透明",
+      "film_frame_25fps": 2856,
+      "film_seconds_sample_25fps": 114.24
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 294.0,
+      "film_seconds_nominal": 115.24,
+      "purpose": "赛后：已无板",
+      "check": "无悬浮navy块、绿色贴片、衣物被误贴回",
+      "film_frame_25fps": 2881,
+      "film_seconds_sample_25fps": 115.24
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 300.8,
+      "film_seconds_nominal": 122.04,
+      "purpose": "最终握手＋英文final尾",
+      "check": "整句截止300.94前后均留足，握手接触保留，无board幽灵",
+      "film_frame_25fps": 3051,
+      "film_seconds_sample_25fps": 122.04
+    },
+    {
+      "segment_index": 6,
+      "edit_id": "three_saves_and_ending",
+      "source_seconds": 302.88,
+      "film_seconds_nominal": 124.12,
+      "purpose": "最后源帧接统计卡",
+      "check": "握手后双方离网，302.92名义截止，尾料最多源EOF303.105；不能冻结/静帧",
+      "film_frame_25fps": 3103,
+      "film_seconds_sample_25fps": 124.12
+    },
+    {
+      "segment_index": 7,
+      "edit_id": "full_stats",
+      "source_seconds": null,
+      "film_seconds_nominal": 128.16,
+      "purpose": "章节卡/统计卡",
+      "check": "中文旁白与实际可见文字匹配；没有源比分板残留；统计卡数字、双方列序、完整画布检查",
+      "film_frame_25fps": 3204,
+      "film_seconds_sample_25fps": 128.16
+    },
+    {
+      "segment_index": 8,
+      "edit_id": "outlook",
+      "source_seconds": null,
+      "film_seconds_nominal": 143.36,
+      "purpose": "章节卡/统计卡",
+      "check": "中文旁白与实际可见文字匹配；没有源比分板残留；统计卡数字、双方列序、完整画布检查",
+      "film_frame_25fps": 3584,
+      "film_seconds_sample_25fps": 143.36
+    }
+  ],
+  "full_source_windows_to_review_in_final_movie": [
+    {
+      "index": 0,
+      "film_start_nominal": 1.2,
+      "film_end_nominal": 10.4
+    },
+    {
+      "index": 2,
+      "film_start_nominal": 24.4,
+      "film_end_nominal": 40.24
+    },
+    {
+      "index": 4,
+      "film_start_nominal": 55.04,
+      "film_end_nominal": 64.44
+    },
+    {
+      "index": 6,
+      "film_start_nominal": 79.24,
+      "film_end_nominal": 124.16
+    }
+  ],
+  "no_new_media_actions": "No new source download, YouTube access, ASR, full frame extraction, render, or PCM/loudness analysis performed.",
+  "sample_time_note": "Requested source times map to nominal film time; extraction targets additionally round to the nearest25fps output frame (within0.02s). Verify actual final frame clock first."
+}

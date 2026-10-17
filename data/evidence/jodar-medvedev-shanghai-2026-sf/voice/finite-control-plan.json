@@ -1,0 +1,3527 @@
+[
+  {
+    "binding": {
+      "segment_index": 1,
+      "edit_id": "intro",
+      "output_name": "voice_01.mp3",
+      "request_id": "3794414233b7650264e0b1a198a51557aed9381f4ab78e1182b460e669265676",
+      "request": {
+        "backend": "edge",
+        "cache_key": "039cf8500b227e8a1f506e91e821333b",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "北京时间二零二六年十月十七日晚，上海大师赛男单半决赛。梅德韦杰夫迎战霍达尔。对手前四轮全部逆转过关，这次却先抢到了主动。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "北京时间二零二六年十月十七日晚，上海大师赛男单半决赛。梅德韦杰夫迎战霍达尔。对手前四轮全部逆转过关，这次却先抢到了主动。",
+      "display_text": "北京时间二零二六年十月十七日晚，上海大师赛男单半决赛。梅德韦杰夫迎战霍达尔。对手前四轮全部逆转过关，这次却先抢到了主动。",
+      "text_sha256": "57db42a0f80dd8c8fa37928db99c7a18602dd1d0587f2b95db442515425252b2",
+      "audio_sha256": "00dfbc6539efe718640563e556015ceee1102570187f9c069efa57a7861a5731",
+      "marks_sha256": "b23832c0571802198f26318c7a9b5e0dfbbaae430cc132a27a608080cc9761d8",
+      "duration_seconds": 12.528,
+      "native_audio": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/intro-00dfbc6539efe718.mp3",
+      "native_marks": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/intro-00dfbc6539efe718.json",
+      "bundle_sha256": "bccd141c75a33ea1e0f43aaddb407994cdb0a8d8dc6ef843ff0cc4f206dd2c66",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "间",
+          "word": "北京时间",
+          "intended": "jian1",
+          "live": [
+            "jian1",
+            "jian4"
+          ],
+          "defaults": [
+            "jian1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 18,
+          "char": "大",
+          "word": "大师",
+          "intended": "da4",
+          "live": [
+            "da4",
+            "dai4"
+          ],
+          "defaults": [
+            "da4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 22,
+          "char": "单",
+          "word": "单",
+          "intended": "dan1",
+          "live": [
+            "dan1",
+            "shan4"
+          ],
+          "defaults": [
+            "dan1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 46,
+          "char": "转",
+          "word": "逆转",
+          "intended": "zhuan3",
+          "live": [
+            "zhuan3",
+            "zhuan4"
+          ],
+          "defaults": [
+            "zhuan3"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 54,
+          "char": "抢",
+          "word": "抢",
+          "intended": "qiang3",
+          "live": [
+            "qiang3",
+            "qiang1"
+          ],
+          "defaults": [
+            "qiang3"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 56,
+          "char": "了",
+          "word": "到了",
+          "intended": "le5",
+          "live": [
+            "le5",
+            "liao3"
+          ],
+          "defaults": [
+            "le5",
+            "liao3"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "梅德韦杰夫",
+          "start_index": 27,
+          "targets": [
+            {
+              "index": 27,
+              "char": "梅",
+              "intended": "mei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 28,
+              "char": "德",
+              "intended": "de2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 29,
+              "char": "韦",
+              "intended": "wei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 30,
+              "char": "杰",
+              "intended": "jie2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 31,
+              "char": "夫",
+              "intended": "fu1",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "霍达尔",
+          "start_index": 34,
+          "targets": [
+            {
+              "index": 34,
+              "char": "霍",
+              "intended": "huo4",
+              "status": "actual_pending"
+            },
+            {
+              "index": 35,
+              "char": "达",
+              "intended": "da2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 36,
+              "char": "尔",
+              "intended": "er3",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "上海",
+          "start_index": 16,
+          "targets": [
+            {
+              "index": 16,
+              "char": "上",
+              "intended": "shang4",
+              "status": "actual_pending"
+            },
+            {
+              "index": 17,
+              "char": "海",
+              "intended": "hai3",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "北京",
+          "start_index": 0,
+          "targets": [
+            {
+              "index": 0,
+              "char": "北",
+              "intended": "bei3",
+              "status": "actual_pending"
+            },
+            {
+              "index": 1,
+              "char": "京",
+              "intended": "jing1",
+              "status": "actual_pending"
+            }
+          ]
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 4,
+          "text": "二零二六",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 9,
+          "text": "十",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 11,
+          "text": "十七",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 41,
+          "text": "四",
+          "status": "actual_pending"
+        }
+      ],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "北京时间",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.6485819,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "二零二六年",
+          "start_index": 4,
+          "start_seconds": 0.672166,
+          "end_seconds": 1.426874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "十月",
+          "start_index": 9,
+          "start_seconds": 1.450458,
+          "end_seconds": 1.698083,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "十七日",
+          "start_index": 11,
+          "start_seconds": 1.709916,
+          "end_seconds": 2.134416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "晚",
+          "start_index": 14,
+          "start_seconds": 2.134416,
+          "end_seconds": 2.287707,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "上海",
+          "start_index": 16,
+          "start_seconds": 2.606125,
+          "end_seconds": 2.936333,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "大师",
+          "start_index": 18,
+          "start_seconds": 2.948125,
+          "end_seconds": 3.278291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "赛",
+          "start_index": 20,
+          "start_seconds": 3.278291,
+          "end_seconds": 3.478749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "男单",
+          "start_index": 21,
+          "start_seconds": 3.502375,
+          "end_seconds": 3.891541,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "半决赛",
+          "start_index": 23,
+          "start_seconds": 3.903291,
+          "end_seconds": 4.422166,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "梅德韦杰夫",
+          "start_index": 27,
+          "start_seconds": 4.964625,
+          "end_seconds": 5.884416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "迎战",
+          "start_index": 32,
+          "start_seconds": 5.990583,
+          "end_seconds": 6.462291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "霍达尔",
+          "start_index": 34,
+          "start_seconds": 6.485833,
+          "end_seconds": 6.945749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "对手",
+          "start_index": 38,
+          "start_seconds": 7.476416,
+          "end_seconds": 7.830207,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "前",
+          "start_index": 40,
+          "start_seconds": 7.853791,
+          "end_seconds": 8.054249,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "四轮",
+          "start_index": 41,
+          "start_seconds": 8.05425,
+          "end_seconds": 8.419833,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "全部",
+          "start_index": 43,
+          "start_seconds": 8.431625,
+          "end_seconds": 8.867958,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "逆转",
+          "start_index": 45,
+          "start_seconds": 8.879708,
+          "end_seconds": 9.221708,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "过关",
+          "start_index": 47,
+          "start_seconds": 9.2335,
+          "end_seconds": 9.563708,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "这次",
+          "start_index": 50,
+          "start_seconds": 9.8585,
+          "end_seconds": 10.212291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "却",
+          "start_index": 52,
+          "start_seconds": 10.235833,
+          "end_seconds": 10.412708,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "先",
+          "start_index": 53,
+          "start_seconds": 10.41275,
+          "end_seconds": 10.636791,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "抢",
+          "start_index": 54,
+          "start_seconds": 10.636791,
+          "end_seconds": 10.931582,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "到",
+          "start_index": 55,
+          "start_seconds": 10.931625,
+          "end_seconds": 11.096708,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "了",
+          "start_index": 56,
+          "start_seconds": 11.096708,
+          "end_seconds": 11.273583,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "主动",
+          "start_index": 57,
+          "start_seconds": 11.285375,
+          "end_seconds": 11.698125,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    },
+    "targets": [
+      {
+        "index": 3,
+        "char": "间",
+        "word": "北京时间",
+        "intended": "jian1",
+        "live": [
+          "jian1",
+          "jian4"
+        ],
+        "defaults": [
+          "jian1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "间|jian1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 18,
+        "char": "大",
+        "word": "大师",
+        "intended": "da4",
+        "live": [
+          "da4",
+          "dai4"
+        ],
+        "defaults": [
+          "da4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "大|da4",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 22,
+        "char": "单",
+        "word": "单",
+        "intended": "dan1",
+        "live": [
+          "dan1",
+          "shan4"
+        ],
+        "defaults": [
+          "dan1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "单|dan1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 46,
+        "char": "转",
+        "word": "逆转",
+        "intended": "zhuan3",
+        "live": [
+          "zhuan3",
+          "zhuan4"
+        ],
+        "defaults": [
+          "zhuan3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "转|zhuan3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 54,
+        "char": "抢",
+        "word": "抢",
+        "intended": "qiang3",
+        "live": [
+          "qiang3",
+          "qiang1"
+        ],
+        "defaults": [
+          "qiang3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "抢|qiang3",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 56,
+        "char": "了",
+        "word": "到了",
+        "intended": "le5",
+        "live": [
+          "le5",
+          "liao3"
+        ],
+        "defaults": [
+          "le5",
+          "liao3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "了|le5",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "positive includes dominant-reading/contextual proxy",
+          "positive has original/contextual letter fallback",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 27,
+        "char": "梅",
+        "intended": "mei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "梅|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 28,
+        "char": "德",
+        "intended": "de2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "德|de2",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy",
+          "negative uses contextual dominant-reading proxy",
+          "neutral de5 contextual proxies only"
+        ]
+      },
+      {
+        "index": 29,
+        "char": "韦",
+        "intended": "wei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "韦|wei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 30,
+        "char": "杰",
+        "intended": "jie2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "杰|jie2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 31,
+        "char": "夫",
+        "intended": "fu1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "夫|fu1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 34,
+        "char": "霍",
+        "intended": "huo4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "霍|huo4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 35,
+        "char": "达",
+        "intended": "da2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "达|da2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 36,
+        "char": "尔",
+        "intended": "er3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "尔|er3",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 16,
+        "char": "上",
+        "intended": "shang4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "上海",
+        "reference_key": "上|shang4",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 17,
+        "char": "海",
+        "intended": "hai3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "上海",
+        "reference_key": "海|hai3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 0,
+        "char": "北",
+        "intended": "bei3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "北京",
+        "reference_key": "北|bei3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 1,
+        "char": "京",
+        "intended": "jing1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "北京",
+        "reference_key": "京|jing1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 47,
+        "char": "过",
+        "intended": "guo4",
+        "kind": "explicit_requested_phoneme",
+        "status": "actual_pending",
+        "reference_key": "过|guo4",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      }
+    ],
+    "texts": {
+      "A1": "㤳兢时兼二零二六年十月十七日晚，绱醢亣师赛男丹半决赛。嵋锝围劫呋迎战惑妲洱。对手前四轮全部逆䡱㳀关，这次却先羟到餎主动。",
+      "A2": "䋳旌时坚二零二六年十月十七日晚，丄塰眔师赛男殚半决赛。枚㤫帏卩孵迎战祸笪珥。对手前四轮全部逆竱𠋜关，这次却先襁到了主动。",
+      "B1": "备境时健二零二六年十月十七日晚，晌氦代师赛男婵半决赛。妹的卫借俘迎战褐剃二。对手前四轮全部逆啭呙关，这次却先枪到㝋主动。",
+      "B2": "惫婧时剑二零二六年十月十七日晚，赏骇埭师赛男廛半决赛。媚地喂届凫迎战贺嚏贰。对手前四轮全部逆篆埚关，这次却先羌到㶫主动。"
+    }
+  },
+  {
+    "binding": {
+      "segment_index": 3,
+      "edit_id": "first_set_context",
+      "output_name": "voice_03.mp3",
+      "request_id": "348e198b3337c10e4c36810c503a7b5657686b96a88d18bfc09778c50f0dffe0",
+      "request": {
+        "backend": "edge",
+        "cache_key": "4260fd71c7e03537e6096b2c8e20d492",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "首盘，梅德韦杰夫被破发后回破到二比三，可随后又丢了发球局。五比三的发球胜盘局，霍达尔用了五个盘点才拿下。梅总没放手，对手也没让步。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "首盘，梅德韦杰夫被破发后回破到二比三，可随后又丢了发球局。五比三的发球胜盘局，霍达尔用了五个盘点才拿下。梅总没放手，对手也没让步。",
+      "display_text": "首盘，梅德韦杰夫被破发后回破到二比三，可随后又丢了发球局。五比三的发球胜盘局，霍达尔用了五个盘点才拿下。梅总没放手，对手也没让步。",
+      "text_sha256": "6daa5e4ae2b1328403d489b351cb5607c4c887f37b53d1c14c798d289d4395ff",
+      "audio_sha256": "164f45bc159bac81943d8a2c951b6b1c71e00d54d77760ee45e02afafa3db082",
+      "marks_sha256": "f7fd663c306d0bd6aececd79306979fe6972c8d8e698e8c71c88e90e7080c9f5",
+      "duration_seconds": 13.44,
+      "native_audio": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/first_set_context-164f45bc159bac81.mp3",
+      "native_marks": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/first_set_context-164f45bc159bac81.json",
+      "bundle_sha256": "bccd141c75a33ea1e0f43aaddb407994cdb0a8d8dc6ef843ff0cc4f206dd2c66",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "被",
+          "word": "被",
+          "intended": "bei4",
+          "live": [
+            "bei4",
+            "pi1"
+          ],
+          "defaults": [
+            "bei4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 10,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "live": [
+            "fa1",
+            "fa4"
+          ],
+          "defaults": [
+            "fa1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 24,
+          "char": "了",
+          "word": "了",
+          "intended": "le5",
+          "live": [
+            "le5",
+            "liao3"
+          ],
+          "defaults": [
+            "le5",
+            "liao3"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 25,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "live": [
+            "fa1",
+            "fa4"
+          ],
+          "defaults": [
+            "fa1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 32,
+          "char": "的",
+          "word": "的",
+          "intended": "de5",
+          "live": [
+            "de5",
+            "di1",
+            "di2",
+            "di4"
+          ],
+          "defaults": [
+            "de5"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 33,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "live": [
+            "fa1",
+            "fa4"
+          ],
+          "defaults": [
+            "fa1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 43,
+          "char": "了",
+          "word": "了",
+          "intended": "le5",
+          "live": [
+            "le5",
+            "liao3"
+          ],
+          "defaults": [
+            "le5",
+            "liao3"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 54,
+          "char": "没",
+          "word": "没",
+          "intended": "mei2",
+          "live": [
+            "mei2",
+            "mo4"
+          ],
+          "defaults": [
+            "mei2"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 61,
+          "char": "没",
+          "word": "没",
+          "intended": "mei2",
+          "live": [
+            "mei2",
+            "mo4"
+          ],
+          "defaults": [
+            "mei2"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "梅德韦杰夫",
+          "start_index": 3,
+          "targets": [
+            {
+              "index": 3,
+              "char": "梅",
+              "intended": "mei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 4,
+              "char": "德",
+              "intended": "de2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 5,
+              "char": "韦",
+              "intended": "wei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 6,
+              "char": "杰",
+              "intended": "jie2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 7,
+              "char": "夫",
+              "intended": "fu1",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "梅总",
+          "start_index": 52,
+          "targets": [
+            {
+              "index": 52,
+              "char": "梅",
+              "intended": "mei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 53,
+              "char": "总",
+              "intended": "zong3",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "霍达尔",
+          "start_index": 39,
+          "targets": [
+            {
+              "index": 39,
+              "char": "霍",
+              "intended": "huo4",
+              "status": "actual_pending"
+            },
+            {
+              "index": 40,
+              "char": "达",
+              "intended": "da2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 41,
+              "char": "尔",
+              "intended": "er3",
+              "status": "actual_pending"
+            }
+          ]
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 15,
+          "text": "二比三",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 29,
+          "text": "五比三",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 44,
+          "text": "五",
+          "status": "actual_pending"
+        }
+      ],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "首盘",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.5306659,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "梅德韦杰夫",
+          "start_index": 3,
+          "start_seconds": 0.813666,
+          "end_seconds": 1.591957,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "被",
+          "start_index": 8,
+          "start_seconds": 1.615583,
+          "end_seconds": 1.780666,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "破发",
+          "start_index": 9,
+          "start_seconds": 1.792458,
+          "end_seconds": 2.146208,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "后",
+          "start_index": 11,
+          "start_seconds": 2.146208,
+          "end_seconds": 2.334874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "回",
+          "start_index": 12,
+          "start_seconds": 2.334916,
+          "end_seconds": 2.523582,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "破",
+          "start_index": 13,
+          "start_seconds": 2.523583,
+          "end_seconds": 2.700458,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "到",
+          "start_index": 14,
+          "start_seconds": 2.700458,
+          "end_seconds": 2.806583,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "二比三",
+          "start_index": 15,
+          "start_seconds": 2.818416,
+          "end_seconds": 3.313707,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "可",
+          "start_index": 19,
+          "start_seconds": 3.584916,
+          "end_seconds": 3.714624,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "随后",
+          "start_index": 20,
+          "start_seconds": 3.714625,
+          "end_seconds": 4.044833,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "又",
+          "start_index": 22,
+          "start_seconds": 4.068416,
+          "end_seconds": 4.233499,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "丢",
+          "start_index": 23,
+          "start_seconds": 4.2335,
+          "end_seconds": 4.410375,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "了",
+          "start_index": 24,
+          "start_seconds": 4.410375,
+          "end_seconds": 4.492916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "发球",
+          "start_index": 25,
+          "start_seconds": 4.504708,
+          "end_seconds": 4.846708,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "局",
+          "start_index": 27,
+          "start_seconds": 4.846708,
+          "end_seconds": 5.070749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "五比三",
+          "start_index": 29,
+          "start_seconds": 5.589625,
+          "end_seconds": 6.073125,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "的",
+          "start_index": 32,
+          "start_seconds": 6.073125,
+          "end_seconds": 6.17925,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "发球",
+          "start_index": 33,
+          "start_seconds": 6.191041,
+          "end_seconds": 6.556624,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "胜",
+          "start_index": 35,
+          "start_seconds": 6.580208,
+          "end_seconds": 6.768874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "盘",
+          "start_index": 36,
+          "start_seconds": 6.768875,
+          "end_seconds": 7.004708,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "局",
+          "start_index": 37,
+          "start_seconds": 7.004708,
+          "end_seconds": 7.205166,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "霍达尔",
+          "start_index": 39,
+          "start_seconds": 7.5,
+          "end_seconds": 7.971708,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "用",
+          "start_index": 42,
+          "start_seconds": 7.995291,
+          "end_seconds": 8.160374,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "了",
+          "start_index": 43,
+          "start_seconds": 8.160375,
+          "end_seconds": 8.278291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "五个",
+          "start_index": 44,
+          "start_seconds": 8.301875,
+          "end_seconds": 8.5495,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "盘点",
+          "start_index": 46,
+          "start_seconds": 8.561333,
+          "end_seconds": 9.068416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "才",
+          "start_index": 48,
+          "start_seconds": 9.092,
+          "end_seconds": 9.280666,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "拿下",
+          "start_index": 49,
+          "start_seconds": 9.292458,
+          "end_seconds": 9.681624,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "梅",
+          "start_index": 52,
+          "start_seconds": 10.224041,
+          "end_seconds": 10.459874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "总",
+          "start_index": 53,
+          "start_seconds": 10.459916,
+          "end_seconds": 10.613207,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "没",
+          "start_index": 54,
+          "start_seconds": 10.613208,
+          "end_seconds": 10.766499,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "放手",
+          "start_index": 55,
+          "start_seconds": 10.778291,
+          "end_seconds": 11.238207,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "对手",
+          "start_index": 58,
+          "start_seconds": 11.485833,
+          "end_seconds": 11.910374,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "也",
+          "start_index": 60,
+          "start_seconds": 11.933958,
+          "end_seconds": 12.075458,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "没",
+          "start_index": 61,
+          "start_seconds": 12.075458,
+          "end_seconds": 12.228749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "让步",
+          "start_index": 62,
+          "start_seconds": 12.240583,
+          "end_seconds": 12.594374,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    },
+    "targets": [
+      {
+        "index": 8,
+        "char": "被",
+        "word": "被",
+        "intended": "bei4",
+        "live": [
+          "bei4",
+          "pi1"
+        ],
+        "defaults": [
+          "bei4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "被|bei4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 10,
+        "char": "发",
+        "word": "发",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "发|fa1",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 24,
+        "char": "了",
+        "word": "了",
+        "intended": "le5",
+        "live": [
+          "le5",
+          "liao3"
+        ],
+        "defaults": [
+          "le5",
+          "liao3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "了|le5",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "positive includes dominant-reading/contextual proxy",
+          "positive has original/contextual letter fallback",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 25,
+        "char": "发",
+        "word": "发球",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "发|fa1",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 32,
+        "char": "的",
+        "word": "的",
+        "intended": "de5",
+        "live": [
+          "de5",
+          "di1",
+          "di2",
+          "di4"
+        ],
+        "defaults": [
+          "de5"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "的|de5",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "positive includes dominant-reading/contextual proxy",
+          "positive has original/contextual letter fallback"
+        ]
+      },
+      {
+        "index": 33,
+        "char": "发",
+        "word": "发球",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "发|fa1",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 43,
+        "char": "了",
+        "word": "了",
+        "intended": "le5",
+        "live": [
+          "le5",
+          "liao3"
+        ],
+        "defaults": [
+          "le5",
+          "liao3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "了|le5",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "positive includes dominant-reading/contextual proxy",
+          "positive has original/contextual letter fallback",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 54,
+        "char": "没",
+        "word": "没",
+        "intended": "mei2",
+        "live": [
+          "mei2",
+          "mo4"
+        ],
+        "defaults": [
+          "mei2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "没|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 61,
+        "char": "没",
+        "word": "没",
+        "intended": "mei2",
+        "live": [
+          "mei2",
+          "mo4"
+        ],
+        "defaults": [
+          "mei2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "没|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 3,
+        "char": "梅",
+        "intended": "mei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "梅|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 4,
+        "char": "德",
+        "intended": "de2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "德|de2",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy",
+          "negative uses contextual dominant-reading proxy",
+          "neutral de5 contextual proxies only"
+        ]
+      },
+      {
+        "index": 5,
+        "char": "韦",
+        "intended": "wei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "韦|wei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 6,
+        "char": "杰",
+        "intended": "jie2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "杰|jie2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 7,
+        "char": "夫",
+        "intended": "fu1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "夫|fu1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 52,
+        "char": "梅",
+        "intended": "mei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅总",
+        "reference_key": "梅|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 53,
+        "char": "总",
+        "intended": "zong3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅总",
+        "reference_key": "总|zong3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 39,
+        "char": "霍",
+        "intended": "huo4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "霍|huo4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 40,
+        "char": "达",
+        "intended": "da2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "达|da2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 41,
+        "char": "尔",
+        "intended": "er3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "尔|er3",
+        "reference_proxy_limits": []
+      }
+    ],
+    "texts": {
+      "A1": "首盘，嵋锝围劫呋备破彂后回破到二比三，可随后又丢餎彂球局。五比三𠵨彂球胜盘局，惑妲洱用餎五个盘点才拿下。嵋㢔嵋放手，对手也嵋让步。",
+      "A2": "首盘，枚㤫帏卩孵惫破沷后回破到二比三，可随后又丢了沷球局。五比三的沷球胜盘局，祸笪珥用了五个盘点才拿下。枚㷓枚放手，对手也枚让步。",
+      "B1": "首盘，妹的卫借俘哔破珐后回破到二比三，可随后又丢㝋珐球局。五比三低珐球胜盘局，褐剃二用㝋五个盘点才拿下。妹粽寞放手，对手也寞让步。",
+      "B2": "首盘，媚地喂届凫壁破㛲后回破到二比三，可随后又丢㶫㛲球局。五比三滴㛲球胜盘局，贺嚏贰用㶫五个盘点才拿下。媚纵沫放手，对手也沫让步。"
+    }
+  },
+  {
+    "binding": {
+      "segment_index": 5,
+      "edit_id": "second_set_context",
+      "output_name": "voice_05.mp3",
+      "request_id": "5b73ae30e50307b60bb4bafe830160290e3681e52245e48fd0ec43fdff52edd9",
+      "request": {
+        "backend": "edge",
+        "cache_key": "7c7010e49f61b020d9762f1b3c50f843",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "第二盘，梅德韦杰夫从零比二追到三比二，又被连拿三局。三比五，他连救三个赛点。第三次，梅总上网截击，霍达尔追球摔坐在地，悬念还没结束。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "第二盘，梅德韦杰夫从零比二追到三比二，又被连拿三局。三比五，他连救三个赛点。第三次，梅总上网截击，霍达尔追球摔坐在地，悬念还没结束。",
+      "display_text": "第二盘，梅德韦杰夫从零比二追到三比二，又被连拿三局。三比五，他连救三个赛点。第三次，梅总上网截击，霍达尔追球摔坐在地，悬念还没结束。",
+      "text_sha256": "c7ea6ef11ecd1d55caf2e057ae73c28e598c87fb0a3df5b29dfc6adb341e87ce",
+      "audio_sha256": "7947bf862a5f1504206b9e183e5d848474fcd73d97ffd7c8647f7dc67828bc45",
+      "marks_sha256": "ce361877abe1cf73ab9f44fe46347532abb0eb8a2866b7903d71f8d268255319",
+      "duration_seconds": 13.248,
+      "native_audio": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/second_set_context-7947bf862a5f1504.mp3",
+      "native_marks": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/second_set_context-7947bf862a5f1504.json",
+      "bundle_sha256": "bccd141c75a33ea1e0f43aaddb407994cdb0a8d8dc6ef843ff0cc4f206dd2c66",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 20,
+          "char": "被",
+          "word": "被",
+          "intended": "bei4",
+          "live": [
+            "bei4",
+            "pi1"
+          ],
+          "defaults": [
+            "bei4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 57,
+          "char": "地",
+          "word": "地",
+          "intended": "di4",
+          "live": [
+            "di4",
+            "de5"
+          ],
+          "defaults": [
+            "di4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 61,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "live": [
+            "hai2",
+            "huan2"
+          ],
+          "defaults": [
+            "hai2",
+            "huan2"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 62,
+          "char": "没",
+          "word": "没",
+          "intended": "mei2",
+          "live": [
+            "mei2",
+            "mo4"
+          ],
+          "defaults": [
+            "mei2"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 63,
+          "char": "结",
+          "word": "结束",
+          "intended": "jie2",
+          "live": [
+            "jie2",
+            "jie1"
+          ],
+          "defaults": [
+            "jie2"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "梅德韦杰夫",
+          "start_index": 4,
+          "targets": [
+            {
+              "index": 4,
+              "char": "梅",
+              "intended": "mei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 5,
+              "char": "德",
+              "intended": "de2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 6,
+              "char": "韦",
+              "intended": "wei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 7,
+              "char": "杰",
+              "intended": "jie2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 8,
+              "char": "夫",
+              "intended": "fu1",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "梅总",
+          "start_index": 42,
+          "targets": [
+            {
+              "index": 42,
+              "char": "梅",
+              "intended": "mei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 43,
+              "char": "总",
+              "intended": "zong3",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "霍达尔",
+          "start_index": 49,
+          "targets": [
+            {
+              "index": 49,
+              "char": "霍",
+              "intended": "huo4",
+              "status": "actual_pending"
+            },
+            {
+              "index": 50,
+              "char": "达",
+              "intended": "da2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 51,
+              "char": "尔",
+              "intended": "er3",
+              "status": "actual_pending"
+            }
+          ]
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 1,
+          "text": "二",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 10,
+          "text": "零比二",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 15,
+          "text": "三比二",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 23,
+          "text": "三",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 26,
+          "text": "三比五",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 33,
+          "text": "三",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 39,
+          "text": "三",
+          "status": "actual_pending"
+        }
+      ],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "第二盘",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.5542489,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "梅德韦杰夫",
+          "start_index": 4,
+          "start_seconds": 0.825458,
+          "end_seconds": 1.580166,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "从",
+          "start_index": 9,
+          "start_seconds": 1.603791,
+          "end_seconds": 1.792457,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "零比二",
+          "start_index": 10,
+          "start_seconds": 1.80425,
+          "end_seconds": 2.28775,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "追",
+          "start_index": 13,
+          "start_seconds": 2.299541,
+          "end_seconds": 2.488207,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "到",
+          "start_index": 14,
+          "start_seconds": 2.488208,
+          "end_seconds": 2.629708,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "三比二",
+          "start_index": 15,
+          "start_seconds": 2.653291,
+          "end_seconds": 3.172166,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "又",
+          "start_index": 19,
+          "start_seconds": 3.408,
+          "end_seconds": 3.643833,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "被",
+          "start_index": 20,
+          "start_seconds": 3.643875,
+          "end_seconds": 3.773583,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "连",
+          "start_index": 21,
+          "start_seconds": 3.797166,
+          "end_seconds": 3.950457,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "拿",
+          "start_index": 22,
+          "start_seconds": 3.950458,
+          "end_seconds": 4.091958,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "三局",
+          "start_index": 23,
+          "start_seconds": 4.103791,
+          "end_seconds": 4.551916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "三比五",
+          "start_index": 26,
+          "start_seconds": 5.094333,
+          "end_seconds": 5.766499,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "他",
+          "start_index": 30,
+          "start_seconds": 5.978791,
+          "end_seconds": 6.143874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "连",
+          "start_index": 31,
+          "start_seconds": 6.143875,
+          "end_seconds": 6.332541,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "救",
+          "start_index": 32,
+          "start_seconds": 6.332541,
+          "end_seconds": 6.497624,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "三个",
+          "start_index": 33,
+          "start_seconds": 6.497625,
+          "end_seconds": 6.804208,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "赛点",
+          "start_index": 35,
+          "start_seconds": 6.816041,
+          "end_seconds": 7.181624,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "第三次",
+          "start_index": 38,
+          "start_seconds": 7.724041,
+          "end_seconds": 8.301874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "梅总",
+          "start_index": 42,
+          "start_seconds": 8.53775,
+          "end_seconds": 8.87975,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "上网",
+          "start_index": 44,
+          "start_seconds": 8.903291,
+          "end_seconds": 9.198082,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "截击",
+          "start_index": 46,
+          "start_seconds": 9.198125,
+          "end_seconds": 9.563708,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "霍达尔",
+          "start_index": 49,
+          "start_seconds": 9.775958,
+          "end_seconds": 10.094374,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "追",
+          "start_index": 52,
+          "start_seconds": 10.106125,
+          "end_seconds": 10.294791,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "球",
+          "start_index": 53,
+          "start_seconds": 10.294791,
+          "end_seconds": 10.495249,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "摔",
+          "start_index": 54,
+          "start_seconds": 10.518875,
+          "end_seconds": 10.719333,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "坐",
+          "start_index": 55,
+          "start_seconds": 10.719333,
+          "end_seconds": 10.860833,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "在",
+          "start_index": 56,
+          "start_seconds": 10.860833,
+          "end_seconds": 11.025916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "地",
+          "start_index": 57,
+          "start_seconds": 11.025958,
+          "end_seconds": 11.167458,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "悬念",
+          "start_index": 59,
+          "start_seconds": 11.379708,
+          "end_seconds": 11.745291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "还",
+          "start_index": 61,
+          "start_seconds": 11.768875,
+          "end_seconds": 11.910375,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "没",
+          "start_index": 62,
+          "start_seconds": 11.910375,
+          "end_seconds": 12.040083,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "结束",
+          "start_index": 63,
+          "start_seconds": 12.040083,
+          "end_seconds": 12.417458,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    },
+    "targets": [
+      {
+        "index": 20,
+        "char": "被",
+        "word": "被",
+        "intended": "bei4",
+        "live": [
+          "bei4",
+          "pi1"
+        ],
+        "defaults": [
+          "bei4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "被|bei4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 57,
+        "char": "地",
+        "word": "地",
+        "intended": "di4",
+        "live": [
+          "di4",
+          "de5"
+        ],
+        "defaults": [
+          "di4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "地|di4",
+        "reference_proxy_limits": [
+          "negative includes rare single-reading proxy",
+          "negative is alternate-tone proxy, not exact lexical alternate"
+        ]
+      },
+      {
+        "index": 61,
+        "char": "还",
+        "word": "还",
+        "intended": "hai2",
+        "live": [
+          "hai2",
+          "huan2"
+        ],
+        "defaults": [
+          "hai2",
+          "huan2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "还|hai2",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 62,
+        "char": "没",
+        "word": "没",
+        "intended": "mei2",
+        "live": [
+          "mei2",
+          "mo4"
+        ],
+        "defaults": [
+          "mei2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "没|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 63,
+        "char": "结",
+        "word": "结束",
+        "intended": "jie2",
+        "live": [
+          "jie2",
+          "jie1"
+        ],
+        "defaults": [
+          "jie2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "结|jie2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 4,
+        "char": "梅",
+        "intended": "mei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "梅|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 5,
+        "char": "德",
+        "intended": "de2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "德|de2",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy",
+          "negative uses contextual dominant-reading proxy",
+          "neutral de5 contextual proxies only"
+        ]
+      },
+      {
+        "index": 6,
+        "char": "韦",
+        "intended": "wei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "韦|wei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 7,
+        "char": "杰",
+        "intended": "jie2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "杰|jie2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 8,
+        "char": "夫",
+        "intended": "fu1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "夫|fu1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 42,
+        "char": "梅",
+        "intended": "mei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅总",
+        "reference_key": "梅|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 43,
+        "char": "总",
+        "intended": "zong3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅总",
+        "reference_key": "总|zong3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 49,
+        "char": "霍",
+        "intended": "huo4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "霍|huo4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 50,
+        "char": "达",
+        "intended": "da2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "达|da2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 51,
+        "char": "尔",
+        "intended": "er3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "尔|er3",
+        "reference_proxy_limits": []
+      }
+    ],
+    "texts": {
+      "A1": "第二盘，嵋锝围劫呋从零比二追到三比二，又备连拿三局。三比五，他连救三个赛点。第三次，嵋㢔上网截击，惑妲洱追球摔坐在娣，悬念孩嵋劫束。",
+      "A2": "第二盘，枚㤫帏卩孵从零比二追到三比二，又惫连拿三局。三比五，他连救三个赛点。第三次，枚㷓上网截击，祸笪珥追球摔坐在帝，悬念㜾枚卩束。",
+      "B1": "第二盘，妹的卫借俘从零比二追到三比二，又哔连拿三局。三比五，他连救三个赛点。第三次，妹粽上网截击，褐剃二追球摔坐在低，悬念桓寞疖束。",
+      "B2": "第二盘，媚地喂届凫从零比二追到三比二，又壁连拿三局。三比五，他连救三个赛点。第三次，媚纵上网截击，贺嚏贰追球摔坐在滴，悬念洹沫皆束。"
+    }
+  },
+  {
+    "binding": {
+      "segment_index": 7,
+      "edit_id": "full_stats",
+      "output_name": "voice_07.mp3",
+      "request_id": "0931733f41af38d510d09f3493e642acc748cc5a262cfd803de9fd7ba42c0af5",
+      "request": {
+        "backend": "edge",
+        "cache_key": "81fbc552de9eab4f54aca1d3330d1014",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "第四个赛点，霍达尔正手穿越得分。制胜分，梅德韦杰夫十五比二十二；非受迫失误，二十一比二十二。六个破发点只兑现两个，坚持没能变成逆转。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "第四个赛点，霍达尔正手穿越得分。制胜分，梅德韦杰夫十五比二十二；非受迫失误，二十一比二十二。六个破发点只兑现两个，坚持没能变成逆转。",
+      "display_text": "第四个赛点，霍达尔正手穿越得分。制胜分，梅德韦杰夫十五比二十二；非受迫失误，二十一比二十二。六个破发点只兑现两个，坚持没能变成逆转。",
+      "text_sha256": "ce7406cab072dd0ff73493bd2e7e602462a74483ed6a7f345def45efa6308684",
+      "audio_sha256": "e4caeb528c2dd683d8ef42a25d2776e9dcf5548dcde705df6795c5b08540d056",
+      "marks_sha256": "ce8ec8735d6c020dfdd86999e2eeccc7c03d36fb0e570d876e9dd3f3726dc4c4",
+      "duration_seconds": 13.632,
+      "native_audio": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/full_stats-e4caeb528c2dd683.mp3",
+      "native_marks": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/full_stats-e4caeb528c2dd683.json",
+      "bundle_sha256": "bccd141c75a33ea1e0f43aaddb407994cdb0a8d8dc6ef843ff0cc4f206dd2c66",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "正",
+          "word": "正手",
+          "intended": "zheng4",
+          "live": [
+            "zheng4",
+            "zheng1"
+          ],
+          "defaults": [
+            "zheng4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 13,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "live": [
+            "de2",
+            "de5",
+            "dei3"
+          ],
+          "defaults": [
+            "de2"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 14,
+          "char": "分",
+          "word": "分",
+          "intended": "fen1",
+          "live": [
+            "fen1",
+            "fen4"
+          ],
+          "defaults": [
+            "fen1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 18,
+          "char": "分",
+          "word": "分",
+          "intended": "fen1",
+          "live": [
+            "fen1",
+            "fen4"
+          ],
+          "defaults": [
+            "fen1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 34,
+          "char": "迫",
+          "word": "迫",
+          "intended": "po4",
+          "live": [
+            "po4",
+            "pai3"
+          ],
+          "defaults": [
+            "po4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 49,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "live": [
+            "fa1",
+            "fa4"
+          ],
+          "defaults": [
+            "fa1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 51,
+          "char": "只",
+          "word": "只",
+          "intended": "zhi3",
+          "live": [
+            "zhi3",
+            "zhi1"
+          ],
+          "defaults": [
+            "zhi3",
+            "zhi1"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 59,
+          "char": "没",
+          "word": "没",
+          "intended": "mei2",
+          "live": [
+            "mei2",
+            "mo4"
+          ],
+          "defaults": [
+            "mei2"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 64,
+          "char": "转",
+          "word": "逆转",
+          "intended": "zhuan3",
+          "live": [
+            "zhuan3",
+            "zhuan4"
+          ],
+          "defaults": [
+            "zhuan3"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "梅德韦杰夫",
+          "start_index": 20,
+          "targets": [
+            {
+              "index": 20,
+              "char": "梅",
+              "intended": "mei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 21,
+              "char": "德",
+              "intended": "de2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 22,
+              "char": "韦",
+              "intended": "wei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 23,
+              "char": "杰",
+              "intended": "jie2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 24,
+              "char": "夫",
+              "intended": "fu1",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "霍达尔",
+          "start_index": 6,
+          "targets": [
+            {
+              "index": 6,
+              "char": "霍",
+              "intended": "huo4",
+              "status": "actual_pending"
+            },
+            {
+              "index": 7,
+              "char": "达",
+              "intended": "da2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 8,
+              "char": "尔",
+              "intended": "er3",
+              "status": "actual_pending"
+            }
+          ]
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 1,
+          "text": "四",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 25,
+          "text": "十五比二十二",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 38,
+          "text": "二十一比二十二",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 46,
+          "text": "六",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 54,
+          "text": "两",
+          "status": "actual_pending"
+        }
+      ],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "第四个",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.5070829,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "赛点",
+          "start_index": 3,
+          "start_seconds": 0.518875,
+          "end_seconds": 0.872666,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "霍达尔",
+          "start_index": 6,
+          "start_seconds": 1.191041,
+          "end_seconds": 1.686332,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "正手",
+          "start_index": 9,
+          "start_seconds": 1.709916,
+          "end_seconds": 2.146249,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "穿越",
+          "start_index": 11,
+          "start_seconds": 2.169791,
+          "end_seconds": 2.488207,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "得分",
+          "start_index": 13,
+          "start_seconds": 2.5,
+          "end_seconds": 2.806583,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "制胜",
+          "start_index": 16,
+          "start_seconds": 3.349041,
+          "end_seconds": 3.691041,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "分",
+          "start_index": 18,
+          "start_seconds": 3.691041,
+          "end_seconds": 3.867916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "梅德韦杰夫",
+          "start_index": 20,
+          "start_seconds": 4.127375,
+          "end_seconds": 4.941041,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "十五比",
+          "start_index": 25,
+          "start_seconds": 5.058958,
+          "end_seconds": 5.624999,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "二十二",
+          "start_index": 28,
+          "start_seconds": 5.625,
+          "end_seconds": 6.073125,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "非",
+          "start_index": 32,
+          "start_seconds": 6.403291,
+          "end_seconds": 6.674499,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "受迫",
+          "start_index": 33,
+          "start_seconds": 6.674541,
+          "end_seconds": 7.040082,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "失误",
+          "start_index": 35,
+          "start_seconds": 7.040083,
+          "end_seconds": 7.323083,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "二十一比",
+          "start_index": 38,
+          "start_seconds": 7.488208,
+          "end_seconds": 8.207541,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "二十二",
+          "start_index": 42,
+          "start_seconds": 8.207541,
+          "end_seconds": 8.691041,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "六个",
+          "start_index": 46,
+          "start_seconds": 9.221708,
+          "end_seconds": 9.528291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "破发",
+          "start_index": 48,
+          "start_seconds": 9.528291,
+          "end_seconds": 9.870291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "点",
+          "start_index": 50,
+          "start_seconds": 9.870291,
+          "end_seconds": 10.117916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "只",
+          "start_index": 51,
+          "start_seconds": 10.224041,
+          "end_seconds": 10.412707,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "兑现",
+          "start_index": 52,
+          "start_seconds": 10.424541,
+          "end_seconds": 10.754749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "两个",
+          "start_index": 54,
+          "start_seconds": 10.7665,
+          "end_seconds": 11.132083,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "坚持",
+          "start_index": 57,
+          "start_seconds": 11.356125,
+          "end_seconds": 11.792458,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "没",
+          "start_index": 59,
+          "start_seconds": 11.80425,
+          "end_seconds": 11.981125,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "能",
+          "start_index": 60,
+          "start_seconds": 11.981125,
+          "end_seconds": 12.122625,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "变成",
+          "start_index": 61,
+          "start_seconds": 12.134416,
+          "end_seconds": 12.488207,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "逆转",
+          "start_index": 63,
+          "start_seconds": 12.5,
+          "end_seconds": 12.818416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    },
+    "targets": [
+      {
+        "index": 9,
+        "char": "正",
+        "word": "正手",
+        "intended": "zheng4",
+        "live": [
+          "zheng4",
+          "zheng1"
+        ],
+        "defaults": [
+          "zheng4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "正|zheng4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 13,
+        "char": "得",
+        "word": "得",
+        "intended": "de2",
+        "live": [
+          "de2",
+          "de5",
+          "dei3"
+        ],
+        "defaults": [
+          "de2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "得|de2",
+        "reference_proxy_limits": [
+          "negative includes rare single-reading proxy",
+          "negative uses contextual dominant-reading proxy"
+        ]
+      },
+      {
+        "index": 14,
+        "char": "分",
+        "word": "分",
+        "intended": "fen1",
+        "live": [
+          "fen1",
+          "fen4"
+        ],
+        "defaults": [
+          "fen1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "分|fen1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 18,
+        "char": "分",
+        "word": "分",
+        "intended": "fen1",
+        "live": [
+          "fen1",
+          "fen4"
+        ],
+        "defaults": [
+          "fen1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "分|fen1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 34,
+        "char": "迫",
+        "word": "迫",
+        "intended": "po4",
+        "live": [
+          "po4",
+          "pai3"
+        ],
+        "defaults": [
+          "po4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "迫|po4",
+        "reference_proxy_limits": [
+          "negative includes rare single-reading proxy",
+          "negative is alternate-tone proxy, not exact lexical alternate"
+        ]
+      },
+      {
+        "index": 49,
+        "char": "发",
+        "word": "发点",
+        "intended": "fa1",
+        "live": [
+          "fa1",
+          "fa4"
+        ],
+        "defaults": [
+          "fa1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "发|fa1",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 51,
+        "char": "只",
+        "word": "只",
+        "intended": "zhi3",
+        "live": [
+          "zhi3",
+          "zhi1"
+        ],
+        "defaults": [
+          "zhi3",
+          "zhi1"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "只|zhi3",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 59,
+        "char": "没",
+        "word": "没",
+        "intended": "mei2",
+        "live": [
+          "mei2",
+          "mo4"
+        ],
+        "defaults": [
+          "mei2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "没|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 64,
+        "char": "转",
+        "word": "逆转",
+        "intended": "zhuan3",
+        "live": [
+          "zhuan3",
+          "zhuan4"
+        ],
+        "defaults": [
+          "zhuan3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "转|zhuan3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 20,
+        "char": "梅",
+        "intended": "mei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "梅|mei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 21,
+        "char": "德",
+        "intended": "de2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "德|de2",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy",
+          "negative includes rare single-reading proxy",
+          "negative uses contextual dominant-reading proxy",
+          "neutral de5 contextual proxies only"
+        ]
+      },
+      {
+        "index": 22,
+        "char": "韦",
+        "intended": "wei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "韦|wei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 23,
+        "char": "杰",
+        "intended": "jie2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "杰|jie2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 24,
+        "char": "夫",
+        "intended": "fu1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "梅德韦杰夫",
+        "reference_key": "夫|fu1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 6,
+        "char": "霍",
+        "intended": "huo4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "霍|huo4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 7,
+        "char": "达",
+        "intended": "da2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "达|da2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 8,
+        "char": "尔",
+        "intended": "er3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "尔|er3",
+        "reference_proxy_limits": []
+      }
+    ],
+    "texts": {
+      "A1": "第四个赛点，惑妲洱证手穿越德氛。制胜氛，嵋锝围劫呋十五比二十二；非受珀失误，二十一比二十二。六个破彂点咫兑现两个，坚持嵋能变成逆䡱。",
+      "A2": "第四个赛点，祸笪珥诤手穿越锝纷。制胜纷，枚㤫帏卩孵十五比二十二；非受破失误，二十一比二十二。六个破沷点址兑现两个，坚持枚能变成逆竱。",
+      "B1": "第四个赛点，褐剃二争手穿越𠵨偾。制胜偾，妹的卫借俘十五比二十二；非受坡失误，二十一比二十二。六个破珐点卮兑现两个，坚持寞能变成逆啭。",
+      "B2": "第四个赛点，贺嚏贰峥手穿越的忿。制胜忿，媚地喂届凫十五比二十二；非受泼失误，二十一比二十二。六个破㛲点栀兑现两个，坚持沫能变成逆篆。"
+    }
+  },
+  {
+    "binding": {
+      "segment_index": 8,
+      "edit_id": "outlook",
+      "output_name": "voice_08.mp3",
+      "request_id": "c59a52fa4e46f878c7bc3ee78b29c7d3a00ed0e16287b80e85351db2c328d1ee",
+      "request": {
+        "backend": "edge",
+        "cache_key": "b540c00ba4f15dc72bfff29a3f944e6e",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "这一站先放下，下一站再来。上海决赛，霍达尔对阵达维多维奇·福基纳。两位西班牙球员会师，谁能把这一周走到最后？",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "tts_text": "这一站先放下，下一站再来。上海决赛，霍达尔对阵达维多维奇·福基纳。两位西班牙球员会师，谁能把这一周走到最后？",
+      "display_text": "这一站先放下，下一站再来。上海决赛，霍达尔对阵达维多维奇·福基纳。两位西班牙球员会师，谁能把这一周走到最后？",
+      "text_sha256": "6f7e9cda64b457acc0819a29efbe5b1711e15c04d24eb93f481c3669ac3ef095",
+      "audio_sha256": "cf223c0d0c5919c259ba5e2c4fe06ae6a2cb4f6da164aed2cc9017607cc0003f",
+      "marks_sha256": "ba44ba2636f803b82eab4574c6b2dae2b550b4fbabf53a6bc4a8cf92d14bbadc",
+      "duration_seconds": 11.016,
+      "native_audio": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/outlook-cf223c0d0c5919c2.mp3",
+      "native_marks": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/outlook-cf223c0d0c5919c2.json",
+      "bundle_sha256": "bccd141c75a33ea1e0f43aaddb407994cdb0a8d8dc6ef843ff0cc4f206dd2c66",
+      "matches_current_spec": true,
+      "wordboundary_exact_native_bytes_preserved": true,
+      "polyphones": [
+        {
+          "index": 27,
+          "char": "奇",
+          "word": "奇",
+          "intended": "qi2",
+          "live": [
+            "qi2",
+            "ji1"
+          ],
+          "defaults": [
+            "qi2"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 39,
+          "char": "员",
+          "word": "员",
+          "intended": "yuan2",
+          "live": [
+            "yuan2",
+            "yun4"
+          ],
+          "defaults": [
+            "yuan2"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 40,
+          "char": "会",
+          "word": "会师",
+          "intended": "hui4",
+          "live": [
+            "hui4",
+            "kuai4"
+          ],
+          "defaults": [
+            "hui4"
+          ],
+          "status": "actual_pending"
+        },
+        {
+          "index": 45,
+          "char": "把",
+          "word": "把",
+          "intended": "ba3",
+          "live": [
+            "ba3",
+            "ba4"
+          ],
+          "defaults": [
+            "ba3"
+          ],
+          "status": "actual_pending"
+        }
+      ],
+      "proper_names": [
+        {
+          "name": "霍达尔",
+          "start_index": 18,
+          "targets": [
+            {
+              "index": 18,
+              "char": "霍",
+              "intended": "huo4",
+              "status": "actual_pending"
+            },
+            {
+              "index": 19,
+              "char": "达",
+              "intended": "da2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 20,
+              "char": "尔",
+              "intended": "er3",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "达维多维奇",
+          "start_index": 23,
+          "targets": [
+            {
+              "index": 23,
+              "char": "达",
+              "intended": "da2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 24,
+              "char": "维",
+              "intended": "wei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 25,
+              "char": "多",
+              "intended": "duo1",
+              "status": "actual_pending"
+            },
+            {
+              "index": 26,
+              "char": "维",
+              "intended": "wei2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 27,
+              "char": "奇",
+              "intended": "qi2",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "福基纳",
+          "start_index": 29,
+          "targets": [
+            {
+              "index": 29,
+              "char": "福",
+              "intended": "fu2",
+              "status": "actual_pending"
+            },
+            {
+              "index": 30,
+              "char": "基",
+              "intended": "ji1",
+              "status": "actual_pending"
+            },
+            {
+              "index": 31,
+              "char": "纳",
+              "intended": "na4",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "西班牙",
+          "start_index": 35,
+          "targets": [
+            {
+              "index": 35,
+              "char": "西",
+              "intended": "xi1",
+              "status": "actual_pending"
+            },
+            {
+              "index": 36,
+              "char": "班",
+              "intended": "ban1",
+              "status": "actual_pending"
+            },
+            {
+              "index": 37,
+              "char": "牙",
+              "intended": "ya2",
+              "status": "actual_pending"
+            }
+          ]
+        },
+        {
+          "name": "上海",
+          "start_index": 13,
+          "targets": [
+            {
+              "index": 13,
+              "char": "上",
+              "intended": "shang4",
+              "status": "actual_pending"
+            },
+            {
+              "index": 14,
+              "char": "海",
+              "intended": "hai3",
+              "status": "actual_pending"
+            }
+          ]
+        }
+      ],
+      "numbers": [
+        {
+          "start_index": 1,
+          "text": "一",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 8,
+          "text": "一",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 33,
+          "text": "两",
+          "status": "actual_pending"
+        },
+        {
+          "start_index": 47,
+          "text": "一",
+          "status": "actual_pending"
+        }
+      ],
+      "abbreviations": [],
+      "actual_wordboundary_tokens": [
+        {
+          "text": "这",
+          "start_index": 0,
+          "start_seconds": 0.0471659,
+          "end_seconds": 0.2358319,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "一",
+          "start_index": 1,
+          "start_seconds": 0.235833,
+          "end_seconds": 0.365541,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "站",
+          "start_index": 2,
+          "start_seconds": 0.365583,
+          "end_seconds": 0.530666,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "先",
+          "start_index": 3,
+          "start_seconds": 0.55425,
+          "end_seconds": 0.754708,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "放下",
+          "start_index": 4,
+          "start_seconds": 0.7665,
+          "end_seconds": 1.191041,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "下",
+          "start_index": 7,
+          "start_seconds": 1.46225,
+          "end_seconds": 1.74525,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "一",
+          "start_index": 8,
+          "start_seconds": 1.745291,
+          "end_seconds": 1.910374,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "站",
+          "start_index": 9,
+          "start_seconds": 1.910375,
+          "end_seconds": 2.099041,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "再",
+          "start_index": 10,
+          "start_seconds": 2.110833,
+          "end_seconds": 2.252333,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "来",
+          "start_index": 11,
+          "start_seconds": 2.252375,
+          "end_seconds": 2.42925,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "上海",
+          "start_index": 13,
+          "start_seconds": 2.959916,
+          "end_seconds": 3.337249,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "决赛",
+          "start_index": 15,
+          "start_seconds": 3.33725,
+          "end_seconds": 3.67925,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "霍达尔",
+          "start_index": 18,
+          "start_seconds": 4.009416,
+          "end_seconds": 4.351416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "对阵",
+          "start_index": 21,
+          "start_seconds": 4.363208,
+          "end_seconds": 4.693416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "达维多维奇",
+          "start_index": 23,
+          "start_seconds": 4.717,
+          "end_seconds": 5.507083,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "福基纳",
+          "start_index": 29,
+          "start_seconds": 5.518875,
+          "end_seconds": 6.025958,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "两位",
+          "start_index": 33,
+          "start_seconds": 6.568416,
+          "end_seconds": 6.910416,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "西班牙",
+          "start_index": 35,
+          "start_seconds": 6.933958,
+          "end_seconds": 7.405666,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "球员",
+          "start_index": 38,
+          "start_seconds": 7.417458,
+          "end_seconds": 7.735874,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "会师",
+          "start_index": 40,
+          "start_seconds": 7.747625,
+          "end_seconds": 8.19575,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "谁",
+          "start_index": 43,
+          "start_seconds": 8.443416,
+          "end_seconds": 8.667457,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "能",
+          "start_index": 44,
+          "start_seconds": 8.667458,
+          "end_seconds": 8.773583,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "把",
+          "start_index": 45,
+          "start_seconds": 8.785375,
+          "end_seconds": 8.903291,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "这",
+          "start_index": 46,
+          "start_seconds": 8.915083,
+          "end_seconds": 9.021208,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "一周",
+          "start_index": 47,
+          "start_seconds": 9.021208,
+          "end_seconds": 9.422166,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "走",
+          "start_index": 49,
+          "start_seconds": 9.433958,
+          "end_seconds": 9.610833,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "到",
+          "start_index": 50,
+          "start_seconds": 9.610833,
+          "end_seconds": 9.728749,
+          "status": "boundary_exists_not_pronunciation_proof"
+        },
+        {
+          "text": "最后",
+          "start_index": 51,
+          "start_seconds": 9.740583,
+          "end_seconds": 10.176916,
+          "status": "boundary_exists_not_pronunciation_proof"
+        }
+      ]
+    },
+    "targets": [
+      {
+        "index": 27,
+        "char": "奇",
+        "intended": "qi2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "达维多维奇",
+        "reference_key": "奇|qi2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 39,
+        "char": "员",
+        "word": "员",
+        "intended": "yuan2",
+        "live": [
+          "yuan2",
+          "yun4"
+        ],
+        "defaults": [
+          "yuan2"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "员|yuan2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 40,
+        "char": "会",
+        "word": "会师",
+        "intended": "hui4",
+        "live": [
+          "hui4",
+          "kuai4"
+        ],
+        "defaults": [
+          "hui4"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "会|hui4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 45,
+        "char": "把",
+        "word": "把",
+        "intended": "ba3",
+        "live": [
+          "ba3",
+          "ba4"
+        ],
+        "defaults": [
+          "ba3"
+        ],
+        "status": "actual_pending",
+        "kind": "polyphone",
+        "reference_key": "把|ba3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 18,
+        "char": "霍",
+        "intended": "huo4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "霍|huo4",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 19,
+        "char": "达",
+        "intended": "da2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "达|da2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 20,
+        "char": "尔",
+        "intended": "er3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "霍达尔",
+        "reference_key": "尔|er3",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 23,
+        "char": "达",
+        "intended": "da2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "达维多维奇",
+        "reference_key": "达|da2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 24,
+        "char": "维",
+        "intended": "wei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "达维多维奇",
+        "reference_key": "维|wei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 25,
+        "char": "多",
+        "intended": "duo1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "达维多维奇",
+        "reference_key": "多|duo1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 26,
+        "char": "维",
+        "intended": "wei2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "达维多维奇",
+        "reference_key": "维|wei2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 29,
+        "char": "福",
+        "intended": "fu2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "福基纳",
+        "reference_key": "福|fu2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 30,
+        "char": "基",
+        "intended": "ji1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "福基纳",
+        "reference_key": "基|ji1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 31,
+        "char": "纳",
+        "intended": "na4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "福基纳",
+        "reference_key": "纳|na4",
+        "reference_proxy_limits": [
+          "negative includes rare single-reading proxy",
+          "negative is alternate-tone proxy, not exact lexical alternate"
+        ]
+      },
+      {
+        "index": 35,
+        "char": "西",
+        "intended": "xi1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "西班牙",
+        "reference_key": "西|xi1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 36,
+        "char": "班",
+        "intended": "ban1",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "西班牙",
+        "reference_key": "班|ban1",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 37,
+        "char": "牙",
+        "intended": "ya2",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "西班牙",
+        "reference_key": "牙|ya2",
+        "reference_proxy_limits": []
+      },
+      {
+        "index": 13,
+        "char": "上",
+        "intended": "shang4",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "上海",
+        "reference_key": "上|shang4",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      },
+      {
+        "index": 14,
+        "char": "海",
+        "intended": "hai3",
+        "status": "actual_pending",
+        "kind": "proper_name",
+        "name": "上海",
+        "reference_key": "海|hai3",
+        "reference_proxy_limits": [
+          "positive includes rare single-reading proxy"
+        ]
+      }
+    ],
+    "texts": {
+      "A1": "这一站先放下，下一站再来。绱醢决赛，惑妲洱对阵妲围咄围亓·俘乩捺。两位僖斑伢球元卉师，谁能𢃳这一周走到最后？",
+      "A2": "这一站先放下，下一站再来。丄塰决赛，祸笪珥对阵笪帏裰帏岐·凫击衲。两位兮瘢崖球原恚师，谁能𢺞这一周走到最后？",
+      "B1": "这一站先放下，下一站再来。晌氦决赛，褐剃二对阵剃卫剁卫乩·付冀拿。两位禊办亚球孕侩师，谁能坝这一周走到最后？",
+      "B2": "这一站先放下，下一站再来。赏骇决赛，贺嚏贰对阵嚏喂舵喂击·复剂镎。两位细瓣娅球恽哙师，谁能灞这一周走到最后？"
+    }
+  }
+]

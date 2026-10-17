@@ -6634,6 +6634,9 @@ def silence_findings(spec: dict, segments, probes: dict,
 # 戴维斯杯的官方影像档案（ITF 频道）highlights 一律只有 720p、没有全场重播，
 # 1930 年代的英国百代新闻片只有 640×480，**这两档「等」也等不出 1080p**。
 APPROVED_LOW_RES_SOURCES: dict[str, int] = {
+    # 2026-10-17: owner approved this exact Shanghai semifinal long source after
+    # seeing the actual 3:4 720p preview: 允许本条用720p长版，保留完整关键过程.
+    'https://github.com/robertyang87/tennislive/releases/download/source-shanghai-jodar-medvedev-2026-sf/6407012514112-1c5459904fb36909.mp4': 720,
     # 梅德韦杰夫 11 个名场面（medvedev-not-villain-2026）：账号所有者 2026-10-15 上传的
     # 制作交接文档逐条点名了这三条美网官方源（2019 颁奖、2021 决赛集锦、2023 颁奖），
     # 美网官方频道这三条最高一档都是 1280×720 @29.97，等不出 1080p。

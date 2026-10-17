@@ -1,0 +1,84 @@
+{
+  "schema": "tennislive.cover-photo-candidate-evidence.v1",
+  "reviewed_at_utc": "2026-10-17T14:06:51.599444+00:00",
+  "reviewer": "OpenAI cover material agent zverev_sf_visual_qc",
+  "selected_candidate": {
+    "path": "assets/reel/jodar-medvedev-shanghai-2026-sf-atp-4593558.jpg",
+    "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/17/528e1aba-2b48-41de-8896-49832073a77a/Rafael-JODAR-vs-Daniil-MEDVEDEV0248-1-.jpg",
+    "source_api": "https://api.prod.atpmedia.pulselive.com/content/atpmedia/photo/EN/?pageSize=100&page=0",
+    "source_api_record_id": 4593558,
+    "source_api_raw_path": "data/evidence/jodar-medvedev-shanghai-2026-sf/cover/atp-official-photo-p0.json",
+    "source_api_raw_sha256": "e4eaa184213b2e92799bb2c7868cb03bc7b24b529bfb9fdd6daac4144faabba7",
+    "source_title": "2026 Shanghai Medvedev",
+    "source_date": "2026-10-17T12:31:00Z",
+    "source_filename": "Rafael-JODAR-vs-Daniil-MEDVEDEV0248-1-.jpg",
+    "source_player_reference": "MM58",
+    "source_provider_credit": "ATP Media",
+    "photographer_credit": "unknown: API copyright/description fields empty and actual JPEG metadata empty",
+    "rights_status": "not independently verified; no special restriction found in API record/JPEG metadata",
+    "bytes": 871510,
+    "sha256": "8e28a5175bc75941713f64d89cddfc4a50297e5db85eea882f7dde021462b5e1",
+    "dimensions": [
+      4800,
+      3200
+    ],
+    "actual_jpeg_metadata": {
+      "taken": "",
+      "offset": "",
+      "caption": "",
+      "instructions": "",
+      "credit": "",
+      "segments": 8,
+      "texts": []
+    },
+    "caption_original": null,
+    "same_match_identity_method": "Official API title2026ShanghaiMedvedev and date2026-10-17 plus original both-player match filenameRafael-JODAR-vs-Daniil-MEDVEDEV0248-1-.jpg and nativeATP playerMM58; no EXIF timestamp supplied, so no EXIF-match-window claim.",
+    "actually_viewed": true,
+    "person": "Daniil Medvedev",
+    "visual_observation": "Solo Medvedev in blueLacoste, clear facial details, both eyes open, three-quarter frontal focused expression, racket-follow-through action; no other player in image. Genuine still photo; not extracted video frame.",
+    "proposed_native_portrait": {
+      "image": "assets/reel/jodar-medvedev-shanghai-2026-sf-atp-4593558.jpg",
+      "fit": "cover",
+      "focus": 0.2,
+      "focus_y": 0.5,
+      "zoom": 1
+    },
+    "geometry_note": "4800x3200→1080x1440 uses0.45scale,2160wide source thenfocus0.20 givesxoffset-216. Eyes roughlyx490,y290 and chin belowy400, outside title0..170 and hook790+bands. Root must confirm actual nativecover with finaltopic/hook/scoreboard. Full-racket claim not made: photograph original already clips upperracket."
+  },
+  "alternate": {
+    "path": "assets/reel/jodar-medvedev-shanghai-2026-sf-atp-4593560.jpg",
+    "source_id": 4593560,
+    "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/17/f1fabb6a-ad99-4c37-aab7-33c263120bc2/Rafael-JODAR-vs-Daniil-MEDVEDEV0243-1-.jpg",
+    "sha256": "a14533fc578ada6fba3df57227638c8283fec2ed845cc6713d74693f9fa95df1",
+    "dimensions": [
+      4800,
+      3200
+    ],
+    "actually_viewed": true,
+    "decision": "Do not use as solo cover: both players posing together, compatible as same-match identity reference only."
+  },
+  "rejected_misleading_article_photo": {
+    "page": "https://tennishead.net/daniil-medvedev-threatens-to-retire-from-shanghai-semi-final-after-line-call-controversy/",
+    "getty_id": "2299908368",
+    "caption_original": "Russia's Daniil Medvedev prepares to play a point against USA's Tommy Paul during their men's singles quarter-final match at the Shanghai Masters tennis tournament in Shanghai on October 16, 2026. (Photo by Hector RETAMAL / AFP via Getty Images)",
+    "decision": "Reject: sourcecaption explicitly2026-10-16ShanghaiquarterfinalvsTommyPaul, despite articlebeing2026-10-17semifinal. No image downloaded."
+  },
+  "other_sources_checked": [
+    {
+      "type": "Tournamentofficialnews",
+      "url": "https://en.rolexshanghaimasters.com/en/media/news/medvedev-jodar-shanghai-2026-saturday",
+      "status": 200,
+      "finding": "Hero is winnerJodar; unsuitable for selectedloserMedvedevcover."
+    },
+    {
+      "type": "AP/TASR",
+      "url": "https://www.teraz.sk/foto-tasr/semifinale-dvojhry-muzov-v-sanghaji/121060981-fotografia.html",
+      "status": 200,
+      "caption_original": "Russia's Daniil Medvedev returns a ball to Spain's Rafael Jodar in the men's singles semifinal match at the Shanghai Masters tennis tournament in Shanghai, China, Saturday, Oct.17,2026.(AP Photo/Andy Wong)",
+      "finding": "Verifiedsame-match APalternative; no photo downloaded because official4800x3200solo already available."
+    }
+  ],
+  "formal_spec_modified": false,
+  "workflow_dispatched": false,
+  "publication_approved": false
+}
