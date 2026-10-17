@@ -1,0 +1,306 @@
+{
+  "edit_id": "iga_break",
+  "sentence": "四比三，斯瓦泰克又拿到破发机会。两个人从底线反复拉锯，谁都不肯先让出这一分。这一次，她要把压力推到老搭档身上。",
+  "word": "发",
+  "char": "发",
+  "at": 12,
+  "intended": "fa1",
+  "wrong": "fa4",
+  "ok_refs": [
+    "発"
+  ],
+  "bad_refs": [
+    "珐"
+  ],
+  "actual_binding": {
+    "edit_id": "iga_break",
+    "text": "四比三，斯瓦泰克又拿到破发机会。两个人从底线反复拉锯，谁都不肯先让出这一分。这一次，她要把压力推到老搭档身上。",
+    "display_text": "四比三，斯瓦泰克又拿到破发机会。两个人从底线反复拉锯，谁都不肯先让出这一分。这一次，她要把压力推到老搭档身上。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "request_id": "15560c5da83a9472e288df5516cc567425f83fa308e93999821b5c900da5de2c",
+    "actual_mp3_sha256": "235f0cb898b53e7fea85e5c8e73d83bb24127fd6d50f0f3388549a6f5923b268",
+    "actual_marks_sha256": "a1ecf932fbcb81ebab71bc22624053ad0f50e253e9227c09c68d2be6b4791d25",
+    "bound_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/iga_break.mp3",
+    "marks_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/iga_break.marks.json",
+    "word_boundary_tokens": [
+      "四比三",
+      "斯瓦泰克",
+      "又",
+      "拿",
+      "到",
+      "破发",
+      "机会",
+      "两个",
+      "人",
+      "从",
+      "底线",
+      "反复",
+      "拉锯",
+      "谁",
+      "都",
+      "不肯",
+      "先",
+      "让出",
+      "这",
+      "一",
+      "分",
+      "这",
+      "一次",
+      "她",
+      "要",
+      "把",
+      "压力",
+      "推",
+      "到",
+      "老搭档",
+      "身上"
+    ]
+  },
+  "kind": "common_polyphone",
+  "reference_policy": "Provisional nonoriginal independent homophones, same-full-sentence LOO calibration required; no dictionary verdict.",
+  "acoustic": {
+    "word": "发",
+    "char": "发",
+    "sentence": "四比三，斯瓦泰克又拿到破发机会。两个人从底线反复拉锯，谁都不肯先让出这一分。这一次，她要把压力推到老搭档身上。",
+    "tts_text": "四比三，斯瓦泰克又拿到破发机会。两个人从底线反复拉锯，谁都不肯先让出这一分。这一次，她要把压力推到老搭档身上。",
+    "intended_refs": [
+      "発"
+    ],
+    "wrong_refs": [
+      "珐"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "low",
+    "verdict_raw": "correct",
+    "score": 0.977,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [],
+    "features": {
+      "spec": {
+        "d_intended": 0.003,
+        "d_wrong": 2.786,
+        "score": 0.998
+      },
+      "f0": {
+        "d_intended": 0.051,
+        "d_wrong": 3.058,
+        "score": 0.967
+      },
+      "comb": {
+        "d_intended": 0.052,
+        "d_wrong": 4.451,
+        "score": 0.977
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.057,
+      "wrong": 4.114
+    },
+    "separation": {
+      "spec": {
+        "within": NaN,
+        "between": 2.766,
+        "separation": null
+      },
+      "f0": {
+        "within": NaN,
+        "between": 2.979,
+        "separation": null
+      },
+      "comb": {
+        "within": NaN,
+        "between": 4.362,
+        "separation": null
+      }
+    },
+    "selftest_loo": {},
+    "selftest_pass": null,
+    "distances_from_orig": {
+      "A:発": {
+        "spec": 0.003,
+        "f0": 0.051,
+        "vmis": 0.0,
+        "frames": 27,
+        "comb": 0.052
+      },
+      "B:珐": {
+        "spec": 2.786,
+        "f0": 3.058,
+        "vmis": 0.222,
+        "frames": 27,
+        "comb": 4.451
+      }
+    },
+    "window_s": [
+      2.242,
+      2.505
+    ],
+    "boundary_token": "破发",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "四比三",
+        "斯瓦泰克",
+        "又",
+        "拿",
+        "到",
+        "破发",
+        "机会",
+        "两个",
+        "人",
+        "从",
+        "底线",
+        "反复",
+        "拉锯",
+        "谁",
+        "都",
+        "不肯",
+        "先",
+        "让出",
+        "这",
+        "一",
+        "分",
+        "这",
+        "一次",
+        "她",
+        "要",
+        "把",
+        "压力",
+        "推",
+        "到",
+        "老搭档",
+        "身上"
+      ],
+      "A:発": [
+        "四比三",
+        "斯瓦泰克",
+        "又",
+        "拿",
+        "到",
+        "破発",
+        "机会",
+        "两个",
+        "人",
+        "从",
+        "底线",
+        "反复",
+        "拉锯",
+        "谁",
+        "都",
+        "不肯",
+        "先",
+        "让出",
+        "这",
+        "一",
+        "分",
+        "这",
+        "一次",
+        "她",
+        "要",
+        "把",
+        "压力",
+        "推",
+        "到",
+        "老搭档",
+        "身上"
+      ],
+      "B:珐": [
+        "四比三",
+        "斯瓦泰克",
+        "又",
+        "拿到",
+        "破珐",
+        "机会",
+        "两",
+        "个",
+        "人",
+        "从",
+        "底线",
+        "反复",
+        "拉锯",
+        "谁",
+        "都",
+        "不肯",
+        "先",
+        "让出",
+        "这",
+        "一",
+        "分",
+        "这",
+        "一次",
+        "她",
+        "要",
+        "把",
+        "压力",
+        "推",
+        "到",
+        "老搭档",
+        "身上"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        0.9,
+        0.0,
+        -2.9,
+        -4.5,
+        -5.0,
+        -3.2,
+        null,
+        null,
+        -2.1,
+        -2.5,
+        -2.4,
+        -2.2,
+        -1.9
+      ],
+      "A:発": [
+        null,
+        0.8,
+        -0.1,
+        -3.0,
+        -4.5,
+        -5.0,
+        -3.3,
+        null,
+        null,
+        -2.2,
+        -2.5,
+        -2.5,
+        -2.2,
+        -2.0
+      ],
+      "B:珐": [
+        11.5,
+        11.0,
+        null,
+        0.1,
+        -3.5,
+        -4.0,
+        -5.6,
+        -6.7,
+        null,
+        null,
+        -4.0,
+        -8.2,
+        -8.5
+      ]
+    },
+    "audio": {
+      "ORIG": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/iga_break.mp3",
+      "A:発": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/ca1f4979df8de948134211d8.mp3",
+      "B:珐": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/272fa566f6d16f0b37e38d77.mp3"
+    }
+  },
+  "measured_at": "2026-10-17T15:03:43.129495+00:00",
+  "human_listening_claimed": false
+}

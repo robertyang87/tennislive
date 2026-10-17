@@ -1,0 +1,346 @@
+{
+  "edit_id": "outro",
+  "sentence": "关注网球时插，时插归我，好球归你。",
+  "word": "插",
+  "char": "插",
+  "at": 5,
+  "intended": "cha1",
+  "wrong": "cha4",
+  "ok_refs": [
+    "锸",
+    "艖"
+  ],
+  "bad_refs": [
+    "岔",
+    "诧"
+  ],
+  "actual_binding": {
+    "edit_id": "outro",
+    "text": "关注网球时插，时插归我，好球归你。",
+    "display_text": "关注网球时差，时差归我，好球归你。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+    "actual_mp3_sha256": "f670f5c51e491614cc5af1669f406f98e6cea5de3e9896c47092952d253b849b",
+    "actual_marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+    "bound_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/outro.mp3",
+    "marks_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/outro.marks.json",
+    "word_boundary_tokens": [
+      "关注",
+      "网球",
+      "时",
+      "插",
+      "时",
+      "插",
+      "归",
+      "我",
+      "好",
+      "球",
+      "归",
+      "你"
+    ]
+  },
+  "kind": "brand_homophone",
+  "reference_policy": "fresh full-sentence single-reading controls; rare controls require self-calibration",
+  "acoustic": {
+    "word": "插",
+    "char": "插",
+    "sentence": "关注网球时插，时插归我，好球归你。",
+    "tts_text": "关注网球时插，时插归我，好球归你。",
+    "intended_refs": [
+      "锸",
+      "艖"
+    ],
+    "wrong_refs": [
+      "岔",
+      "诧"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "unreliable",
+    "confidence": null,
+    "verdict_raw": "correct",
+    "score": 0.288,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.199,
+        "d_wrong": 2.683,
+        "score": 0.099
+      },
+      "f0": {
+        "d_intended": 0.32,
+        "d_wrong": 1.238,
+        "score": 0.59
+      },
+      "comb": {
+        "d_intended": 1.427,
+        "d_wrong": 2.58,
+        "score": 0.288
+      }
+    },
+    "neighbour_shift": {
+      "intended": 1.884,
+      "wrong": 2.384
+    },
+    "separation": {
+      "spec": {
+        "within": 1.62,
+        "between": 2.689,
+        "separation": 1.66
+      },
+      "f0": {
+        "within": 1.146,
+        "between": 1.401,
+        "separation": 1.223
+      },
+      "comb": {
+        "within": 1.956,
+        "between": 2.746,
+        "separation": 1.404
+      }
+    },
+    "selftest_loo": {
+      "锸": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.504
+      },
+      "艖": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.482
+      },
+      "岔": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": 0.072
+      },
+      "诧": {
+        "expect": "misread",
+        "got": "uncertain",
+        "score": 0.037
+      }
+    },
+    "selftest_pass": false,
+    "distances_from_orig": {
+      "A:锸": {
+        "spec": 2.214,
+        "f0": 0.32,
+        "vmis": 0.091,
+        "frames": 33,
+        "comb": 1.427
+      },
+      "A:艖": {
+        "spec": 2.199,
+        "f0": 0.658,
+        "vmis": 0.088,
+        "frames": 34,
+        "comb": 1.757
+      },
+      "B:岔": {
+        "spec": 2.683,
+        "f0": 1.238,
+        "vmis": 0.176,
+        "frames": 34,
+        "comb": 2.58
+      },
+      "B:诧": {
+        "spec": 2.71,
+        "f0": 2.225,
+        "vmis": 0.059,
+        "frames": 34,
+        "comb": 3.58
+      }
+    },
+    "window_s": [
+      0.868,
+      1.172
+    ],
+    "boundary_token": "插",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "关注",
+        "网球",
+        "时",
+        "插",
+        "时",
+        "插",
+        "归",
+        "我",
+        "好",
+        "球",
+        "归",
+        "你"
+      ],
+      "A:锸": [
+        "关注",
+        "网球",
+        "时锸",
+        "时",
+        "插",
+        "归",
+        "我",
+        "好",
+        "球",
+        "归",
+        "你"
+      ],
+      "A:艖": [
+        "关注",
+        "网球",
+        "时艖",
+        "时",
+        "插",
+        "归",
+        "我",
+        "好",
+        "球",
+        "归",
+        "你"
+      ],
+      "B:岔": [
+        "关注",
+        "网球",
+        "时",
+        "岔",
+        "时",
+        "插",
+        "归",
+        "我",
+        "好",
+        "球",
+        "归",
+        "你"
+      ],
+      "B:诧": [
+        "关注",
+        "网球",
+        "时",
+        "诧",
+        "时",
+        "插",
+        "归",
+        "我",
+        "好",
+        "球",
+        "归",
+        "你"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        null,
+        -3.3,
+        -3.2,
+        -3.9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.5,
+        -0.2,
+        -0.9,
+        -1.9,
+        -3.9,
+        -13.9
+      ],
+      "A:锸": [
+        null,
+        null,
+        -4.2,
+        -3.5,
+        -3.4,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -0.4,
+        -1.0,
+        -1.3,
+        -3.5,
+        null
+      ],
+      "A:艖": [
+        null,
+        null,
+        -3.8,
+        -3.0,
+        -3.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -0.0,
+        -0.5,
+        -1.3,
+        -3.1,
+        -4.9,
+        null
+      ],
+      "B:岔": [
+        null,
+        -3.3,
+        -2.7,
+        -2.2,
+        -2.3,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2.0,
+        0.2,
+        0.3,
+        0.5,
+        null,
+        null
+      ],
+      "B:诧": [
+        null,
+        -2.7,
+        -3.1,
+        -2.2,
+        -2.8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.0,
+        -1.7,
+        -6.6,
+        -5.8,
+        -2.4,
+        null
+      ]
+    },
+    "audio": {
+      "ORIG": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/outro.mp3",
+      "A:锸": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/fb34c504e350dc59a0d43335.mp3",
+      "A:艖": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/c94ac02953df749ebf68b001.mp3",
+      "B:岔": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/9dd487520ad4b1cf0b1bb64e.mp3",
+      "B:诧": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/bedfdffe79d31cb0648d56eb.mp3"
+    }
+  },
+  "measured_at": "2026-10-17T15:03:28.487091+00:00",
+  "human_listening_claimed": false
+}

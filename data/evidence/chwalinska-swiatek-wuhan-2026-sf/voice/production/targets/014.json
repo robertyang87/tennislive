@@ -1,0 +1,375 @@
+{
+  "edit_id": "set_points_context",
+  "sentence": "五比三，四十比十五。斯瓦泰克拿到两个连续盘点。距离收下首盘，她只差一分。",
+  "word": "差",
+  "char": "差",
+  "at": 32,
+  "intended": "cha4",
+  "wrong": "cha1",
+  "ok_refs": [
+    "岔",
+    "诧"
+  ],
+  "bad_refs": [
+    "插",
+    "锸"
+  ],
+  "actual_binding": {
+    "edit_id": "set_points_context",
+    "text": "五比三，四十比十五。斯瓦泰克拿到两个连续盘点。距离收下首盘，她只差一分。",
+    "display_text": "五比三，四十比十五。斯瓦泰克拿到两个连续盘点。距离收下首盘，她只差一分。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "request_id": "a7ebdcd354516d7c362a8e64118284b37891219373b4a029fe5c3ca8c57270c5",
+    "actual_mp3_sha256": "0423c6594354965e41a0cf60e36cabe7b0d8b192055d66c9235044240c58255d",
+    "actual_marks_sha256": "aeec8f8f3510c04db0f2ba18cd0cc2af7d0829ff3560521b10bc1992b19a7900",
+    "bound_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/set_points_context.mp3",
+    "marks_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/set_points_context.marks.json",
+    "word_boundary_tokens": [
+      "五比三",
+      "四十比十五",
+      "斯瓦泰克",
+      "拿",
+      "到",
+      "两个",
+      "连续",
+      "盘点",
+      "距离",
+      "收",
+      "下",
+      "首盘",
+      "她",
+      "只",
+      "差",
+      "一",
+      "分"
+    ]
+  },
+  "kind": "common_polyphone",
+  "reference_policy": "Provisional nonoriginal independent homophones, same-full-sentence LOO calibration required; no dictionary verdict.",
+  "acoustic": {
+    "word": "差",
+    "char": "差",
+    "sentence": "五比三，四十比十五。斯瓦泰克拿到两个连续盘点。距离收下首盘，她只差一分。",
+    "tts_text": "五比三，四十比十五。斯瓦泰克拿到两个连续盘点。距离收下首盘，她只差一分。",
+    "intended_refs": [
+      "岔",
+      "诧"
+    ],
+    "wrong_refs": [
+      "插",
+      "锸"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "uncertain",
+    "confidence": null,
+    "verdict_raw": "uncertain",
+    "score": 0.117,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.522,
+        "d_wrong": 2.623,
+        "score": 0.02
+      },
+      "f0": {
+        "d_intended": 0.324,
+        "d_wrong": 0.694,
+        "score": 0.363
+      },
+      "comb": {
+        "d_intended": 1.585,
+        "d_wrong": 2.006,
+        "score": 0.117
+      }
+    },
+    "neighbour_shift": {
+      "intended": 2.033,
+      "wrong": 8.126
+    },
+    "separation": {
+      "spec": {
+        "within": 0.0,
+        "between": 2.678,
+        "separation": 8140563.023
+      },
+      "f0": {
+        "within": 0.035,
+        "between": 2.033,
+        "separation": 58.314
+      },
+      "comb": {
+        "within": 0.035,
+        "between": 3.372,
+        "separation": 96.72
+      }
+    },
+    "selftest_loo": {
+      "岔": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.993
+      },
+      "诧": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.993
+      },
+      "插": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.964
+      },
+      "锸": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.964
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:岔": {
+        "spec": 2.522,
+        "f0": 0.334,
+        "vmis": 0.156,
+        "frames": 32,
+        "comb": 1.595
+      },
+      "A:诧": {
+        "spec": 2.522,
+        "f0": 0.324,
+        "vmis": 0.156,
+        "frames": 32,
+        "comb": 1.585
+      },
+      "B:插": {
+        "spec": 2.623,
+        "f0": 0.721,
+        "vmis": 0.212,
+        "frames": 33,
+        "comb": 2.033
+      },
+      "B:锸": {
+        "spec": 2.623,
+        "f0": 0.694,
+        "vmis": 0.212,
+        "frames": 33,
+        "comb": 2.006
+      }
+    },
+    "window_s": [
+      6.859,
+      7.163
+    ],
+    "boundary_token": "差",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "五比三",
+        "四十比十五",
+        "斯瓦泰克",
+        "拿",
+        "到",
+        "两个",
+        "连续",
+        "盘点",
+        "距离",
+        "收",
+        "下",
+        "首盘",
+        "她",
+        "只",
+        "差",
+        "一",
+        "分"
+      ],
+      "A:岔": [
+        "五比三",
+        "四十比十五",
+        "斯瓦泰克",
+        "拿",
+        "到",
+        "两个",
+        "连续",
+        "盘点",
+        "距离",
+        "收",
+        "下",
+        "首盘",
+        "她",
+        "只",
+        "岔",
+        "一",
+        "分"
+      ],
+      "A:诧": [
+        "五比三",
+        "四十比十五",
+        "斯瓦泰克",
+        "拿",
+        "到",
+        "两个",
+        "连续",
+        "盘点",
+        "距离",
+        "收",
+        "下",
+        "首盘",
+        "她",
+        "只",
+        "诧",
+        "一",
+        "分"
+      ],
+      "B:插": [
+        "五比三",
+        "四十比十五",
+        "斯瓦泰克",
+        "拿",
+        "到",
+        "两个",
+        "连续",
+        "盘点",
+        "距离",
+        "收",
+        "下",
+        "首盘",
+        "她",
+        "只",
+        "插",
+        "一",
+        "分"
+      ],
+      "B:锸": [
+        "五比三",
+        "四十比十五",
+        "斯瓦泰克",
+        "拿",
+        "到",
+        "两个",
+        "连续",
+        "盘点",
+        "距离",
+        "收",
+        "下",
+        "首盘",
+        "她",
+        "只",
+        "锸",
+        "一",
+        "分"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -7.9,
+        -9.1,
+        -9.5,
+        -9.5,
+        -10.4,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        4.4,
+        4.2,
+        3.7,
+        null,
+        null
+      ],
+      "A:岔": [
+        -7.3,
+        -8.8,
+        -9.2,
+        -8.7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        4.5,
+        4.3,
+        3.5,
+        -0.8,
+        -5.4
+      ],
+      "A:诧": [
+        -7.3,
+        -8.9,
+        -9.2,
+        -8.8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        4.5,
+        4.3,
+        3.5,
+        -0.8,
+        -5.4
+      ],
+      "B:插": [
+        -8.1,
+        -9.4,
+        -9.6,
+        -9.7,
+        -9.9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1.4,
+        1.9,
+        2.8,
+        4.2,
+        4.9,
+        5.0
+      ],
+      "B:锸": [
+        -8.0,
+        -9.4,
+        -9.6,
+        -9.6,
+        -9.9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1.4,
+        1.9,
+        2.8,
+        4.3,
+        4.9,
+        5.1
+      ]
+    },
+    "audio": {
+      "ORIG": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/set_points_context.mp3",
+      "A:岔": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/7291819f8e864257a0e8f7cd.mp3",
+      "A:诧": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/586c592f79f8e5eb684ef3b5.mp3",
+      "B:插": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/c2a15cfebb1ab977606eede3.mp3",
+      "B:锸": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/f28ef8b0c12cda20df09e64d.mp3"
+    }
+  },
+  "measured_at": "2026-10-17T15:03:50.134890+00:00",
+  "human_listening_claimed": false
+}

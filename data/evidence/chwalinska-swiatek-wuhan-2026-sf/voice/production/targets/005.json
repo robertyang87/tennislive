@@ -1,0 +1,410 @@
+{
+  "edit_id": "opening",
+  "sentence": "首盘，月亮姐先以三比二领先。斯瓦泰克没有让她把优势拉开，马上反击。比分很接近，两个人都在争取把节奏拿回来。",
+  "word": "没",
+  "char": "没",
+  "at": 18,
+  "intended": "mei2",
+  "wrong": "mo4",
+  "ok_refs": [
+    "枚",
+    "梅"
+  ],
+  "bad_refs": [
+    "寞",
+    "沫"
+  ],
+  "actual_binding": {
+    "edit_id": "opening",
+    "text": "首盘，月亮姐先以三比二领先。斯瓦泰克没有让她把优势拉开，马上反击。比分很接近，两个人都在争取把节奏拿回来。",
+    "display_text": "首盘，月亮姐先以三比二领先。斯瓦泰克没有让她把优势拉开，马上反击。比分很接近，两个人都在争取把节奏拿回来。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "request_id": "5fbce37cd160179689ea281c42c86a40ea64e6b8fb0ef99f919fa021d0020ffe",
+    "actual_mp3_sha256": "6320b50e137f5ed1cce68f0f333f4b28f10f49235a788ea16fb89249691df198",
+    "actual_marks_sha256": "e49a9d932ecfcbe587e626fe2070f46fd383e90127ef23ad03f13ae048aa978c",
+    "bound_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/opening.mp3",
+    "marks_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/opening.marks.json",
+    "word_boundary_tokens": [
+      "首盘",
+      "月亮",
+      "姐",
+      "先",
+      "以",
+      "三比二",
+      "领先",
+      "斯瓦泰克",
+      "没有",
+      "让",
+      "她",
+      "把",
+      "优势",
+      "拉开",
+      "马上",
+      "反击",
+      "比分",
+      "很",
+      "接近",
+      "两个",
+      "人",
+      "都",
+      "在",
+      "争取",
+      "把",
+      "节奏",
+      "拿",
+      "回来"
+    ]
+  },
+  "kind": "common_polyphone",
+  "reference_policy": "Provisional nonoriginal independent homophones, same-full-sentence LOO calibration required; no dictionary verdict.",
+  "acoustic": {
+    "word": "没",
+    "char": "没",
+    "sentence": "首盘，月亮姐先以三比二领先。斯瓦泰克没有让她把优势拉开，马上反击。比分很接近，两个人都在争取把节奏拿回来。",
+    "tts_text": "首盘，月亮姐先以三比二领先。斯瓦泰克没有让她把优势拉开，马上反击。比分很接近，两个人都在争取把节奏拿回来。",
+    "intended_refs": [
+      "枚",
+      "梅"
+    ],
+    "wrong_refs": [
+      "寞",
+      "沫"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "uncertain",
+    "confidence": null,
+    "verdict_raw": "uncertain",
+    "score": 0.035,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": true,
+    "dropped_refs": [
+      "枚"
+    ],
+    "override": null,
+    "selftest_sides": [
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 4.359,
+        "d_wrong": 5.779,
+        "score": 0.14
+      },
+      "f0": {
+        "d_intended": 2.963,
+        "d_wrong": 2.625,
+        "score": -0.06
+      },
+      "comb": {
+        "d_intended": 5.142,
+        "d_wrong": 5.515,
+        "score": 0.035
+      }
+    },
+    "neighbour_shift": {
+      "intended": 6.293,
+      "wrong": 5.595
+    },
+    "separation": {
+      "spec": {
+        "within": 2.58,
+        "between": 5.261,
+        "separation": 2.039
+      },
+      "f0": {
+        "within": 1.244,
+        "between": 3.729,
+        "separation": 2.997
+      },
+      "comb": {
+        "within": 2.534,
+        "between": 6.359,
+        "separation": 2.509
+      }
+    },
+    "selftest_loo": {
+      "寞": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.512
+      },
+      "沫": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.564
+      },
+      "枚": {
+        "expect": "correct",
+        "got": "uncertain",
+        "score": 0.048,
+        "dropped": true
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:枚": {
+        "spec": 1.931,
+        "f0": 0.572,
+        "vmis": 0.0,
+        "frames": 18,
+        "comb": 1.538
+      },
+      "A:梅": {
+        "spec": 4.359,
+        "f0": 2.963,
+        "vmis": 0.341,
+        "frames": 44,
+        "comb": 5.142
+      },
+      "B:寞": {
+        "spec": 5.875,
+        "f0": 2.758,
+        "vmis": 0.41,
+        "frames": 39,
+        "comb": 5.696
+      },
+      "B:沫": {
+        "spec": 5.779,
+        "f0": 2.625,
+        "vmis": 0.359,
+        "frames": 39,
+        "comb": 5.515
+      }
+    },
+    "window_s": [
+      3.71,
+      3.884
+    ],
+    "boundary_token": "没有",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "首盘",
+        "月亮",
+        "姐",
+        "先",
+        "以",
+        "三比二",
+        "领先",
+        "斯瓦泰克",
+        "没有",
+        "让",
+        "她",
+        "把",
+        "优势",
+        "拉开",
+        "马上",
+        "反击",
+        "比分",
+        "很",
+        "接近",
+        "两个",
+        "人",
+        "都",
+        "在",
+        "争取",
+        "把",
+        "节奏",
+        "拿",
+        "回来"
+      ],
+      "A:枚": [
+        "首盘",
+        "月亮",
+        "姐",
+        "先",
+        "以",
+        "三比二",
+        "领先",
+        "斯瓦泰克",
+        "枚有",
+        "让",
+        "她",
+        "把",
+        "优势",
+        "拉开",
+        "马上",
+        "反击",
+        "比分",
+        "很",
+        "接近",
+        "两",
+        "个",
+        "人",
+        "都",
+        "在",
+        "争取",
+        "把",
+        "节奏",
+        "拿",
+        "回来"
+      ],
+      "A:梅": [
+        "首盘",
+        "月亮",
+        "姐",
+        "先",
+        "以",
+        "三比二",
+        "领先",
+        "斯瓦泰克梅",
+        "有",
+        "让",
+        "她",
+        "把",
+        "优势",
+        "拉开",
+        "马上",
+        "反击",
+        "比分",
+        "很",
+        "接近",
+        "两",
+        "个",
+        "人",
+        "都",
+        "在",
+        "争取",
+        "把",
+        "节奏",
+        "拿",
+        "回来"
+      ],
+      "B:寞": [
+        "首盘",
+        "月亮",
+        "姐",
+        "先",
+        "以",
+        "三比二",
+        "领先",
+        "斯瓦泰克寞",
+        "有",
+        "让",
+        "她",
+        "把",
+        "优势",
+        "拉开",
+        "马上",
+        "反击",
+        "比分",
+        "很",
+        "接近",
+        "两个",
+        "人",
+        "都",
+        "在",
+        "争取",
+        "把",
+        "节奏",
+        "拿",
+        "回来"
+      ],
+      "B:沫": [
+        "首盘",
+        "月亮",
+        "姐",
+        "先",
+        "以",
+        "三比二",
+        "领先",
+        "斯瓦泰克沫",
+        "有",
+        "让",
+        "她",
+        "把",
+        "优势",
+        "拉开",
+        "马上",
+        "反击",
+        "比分",
+        "很",
+        "接近",
+        "两个",
+        "人",
+        "都",
+        "在",
+        "争取",
+        "把",
+        "节奏",
+        "拿",
+        "回来"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -0.2,
+        -1.4,
+        -2.1,
+        -2.6,
+        -2.2,
+        -1.6,
+        -0.5,
+        0.3,
+        1.2
+      ],
+      "A:枚": [
+        1.8,
+        1.2,
+        0.1,
+        -0.7,
+        -1.2,
+        -1.7,
+        -1.4,
+        0.3,
+        1.0,
+        1.9
+      ],
+      "A:梅": [
+        1.5,
+        1.2,
+        -0.1,
+        -1.4,
+        -2.2,
+        -3.2,
+        -4.1,
+        -4.8
+      ],
+      "B:寞": [
+        null,
+        -5.3,
+        -7.1,
+        -8.9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.9,
+        -2.2
+      ],
+      "B:沫": [
+        -3.9,
+        -7.1,
+        -8.8,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -2.2
+      ]
+    },
+    "audio": {
+      "ORIG": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/opening.mp3",
+      "A:枚": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/c55c8590db9a2cbeca895a09.mp3",
+      "A:梅": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/f1b6c45515d3884edd61f834.mp3",
+      "B:寞": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/806b35cfe2fac0cc8b36757d.mp3",
+      "B:沫": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/28d537856e3ff600f0b2edc7.mp3"
+    }
+  },
+  "measured_at": "2026-10-17T15:04:27.482760+00:00",
+  "human_listening_claimed": false
+}

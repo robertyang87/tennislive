@@ -1,0 +1,225 @@
+{
+  "schema": "tennislive.production-vs-local-actual-speech-identity.v1",
+  "production_bundle_sha256": "4fd93954a516769557bc460e4ce82622d66def832d936898fc778d92d4d250c4",
+  "local_bundle_sha256": "1c66dcdbbcdccb50d3e793c0635a34ca9b4c26942452fe24dfd05b86bd34dcd8",
+  "rows": [
+    {
+      "edit_id": "intro",
+      "request_identity": {
+        "text": true,
+        "voice": true,
+        "rate": true,
+        "pitch": true
+      },
+      "production_request_id": "f0bdf86452dcf4eb713d3dd78e1f2f8cb285f5ef5d1a0dfc06654f5cfe683b4d",
+      "local_mp3_sha256": "7bc461ad4167e4eeef10f33d337688119980a854379500f8a3f24e11cac1a817",
+      "production_mp3_sha256": "0e25eff3913a31ce54cf25451b674d00596d8835ce8dff8bdd4cef7b609a264f",
+      "local_marks_sha256": "79397795fef3d7a12aa3864b826353baf22c086c494715c286c3f6f768b58ccb",
+      "production_marks_sha256": "638829951dd0ee53298bb9c88325aa67bf0500f4bccec97513d6c501ccf7ef3f",
+      "mp3_identical": false,
+      "marks_identical": false,
+      "decoded_pcm_identical": false,
+      "local_pcm_sha256": "c1c001b6170e502fb084fed0f9e2e639a3b35235aaaecad56c316608d4993082",
+      "production_pcm_sha256": "5bb69570a5fbc61b2fd2d3a9dfc7992704c4d96a3666532797303d7400527352",
+      "local_samples": 251904,
+      "production_samples": 250368
+    },
+    {
+      "edit_id": "opening",
+      "request_identity": {
+        "text": true,
+        "voice": true,
+        "rate": true,
+        "pitch": true
+      },
+      "production_request_id": "5fbce37cd160179689ea281c42c86a40ea64e6b8fb0ef99f919fa021d0020ffe",
+      "local_mp3_sha256": "fd97db5ad100538bb0ac8b0e0263b3ba4495bfdea7690a3b1995d9d36f9356a0",
+      "production_mp3_sha256": "6320b50e137f5ed1cce68f0f333f4b28f10f49235a788ea16fb89249691df198",
+      "local_marks_sha256": "a98deb2b70efee2bea3bdf50d6531dd1effde5f81148cb8625516d6c70055b71",
+      "production_marks_sha256": "e49a9d932ecfcbe587e626fe2070f46fd383e90127ef23ad03f13ae048aa978c",
+      "mp3_identical": false,
+      "marks_identical": false,
+      "decoded_pcm_identical": false,
+      "local_pcm_sha256": "2ccc305f39c23ec40d8f89e7e387a44b21ab8a52f5c92204143fca670a04c432",
+      "production_pcm_sha256": "957db61a32d0874277dea639f99ab33e80a3ff3dd3ba54e5695b2e3405115b50",
+      "local_samples": 170496,
+      "production_samples": 170496
+    },
+    {
+      "edit_id": "iga_break",
+      "request_identity": {
+        "text": true,
+        "voice": true,
+        "rate": true,
+        "pitch": true
+      },
+      "production_request_id": "15560c5da83a9472e288df5516cc567425f83fa308e93999821b5c900da5de2c",
+      "local_mp3_sha256": "ca0fa9afb4810dea5d4f1621b2c136b6614e2df7a00c1514b7d5b1135b0eb02e",
+      "production_mp3_sha256": "235f0cb898b53e7fea85e5c8e73d83bb24127fd6d50f0f3388549a6f5923b268",
+      "local_marks_sha256": "0ef6e8cf30eccecb6edc41208de2e5b39b89b0c418a3a65c965e2ddf49e1ef37",
+      "production_marks_sha256": "a1ecf932fbcb81ebab71bc22624053ad0f50e253e9227c09c68d2be6b4791d25",
+      "mp3_identical": false,
+      "marks_identical": false,
+      "decoded_pcm_identical": false,
+      "local_pcm_sha256": "de4d7d8255ccedbd19f9244a6ef3364c9831af05f60efa09bda7ccada320cc17",
+      "production_pcm_sha256": "cd65796b7acf0ec93dd6bfb259261d60d66d79f5d7786c416b3c8336a075b541",
+      "local_samples": 178944,
+      "production_samples": 179712
+    },
+    {
+      "edit_id": "set_points_context",
+      "request_identity": {
+        "text": true,
+        "voice": true,
+        "rate": true,
+        "pitch": true
+      },
+      "production_request_id": "a7ebdcd354516d7c362a8e64118284b37891219373b4a029fe5c3ca8c57270c5",
+      "local_mp3_sha256": "6f13420e8b55f9ed9c79fbc87b2a821a783844932dd3b1a3e9c9258f35febd00",
+      "production_mp3_sha256": "0423c6594354965e41a0cf60e36cabe7b0d8b192055d66c9235044240c58255d",
+      "local_marks_sha256": "408dd3e15f7cc5b99673e32465925c54bb70a83656234a762c4160df46afb1ca",
+      "production_marks_sha256": "aeec8f8f3510c04db0f2ba18cd0cc2af7d0829ff3560521b10bc1992b19a7900",
+      "mp3_identical": false,
+      "marks_identical": false,
+      "decoded_pcm_identical": false,
+      "local_pcm_sha256": "4c02900e1ff628ea7c5ed68b859e6739b353bec66745dbfaa4a363456115b062",
+      "production_pcm_sha256": "69a25dbc0499379f003bfc244a0054d3167bafd06751d910751a06d4000f7de4",
+      "local_samples": 129792,
+      "production_samples": 132096
+    },
+    {
+      "edit_id": "second_set_point",
+      "request_identity": {
+        "text": true,
+        "voice": true,
+        "rate": true,
+        "pitch": true
+      },
+      "production_request_id": "4875afa0beb7776934bd09a406bd7296022444b712867356a79bf1f66190a87a",
+      "local_mp3_sha256": "6ea894636b0ece10f3de62eb6cfb823a6a06503eac08bc0f063463c83a2998e7",
+      "production_mp3_sha256": "41d3e95dbb53c3c6b326b2a3c7ebf2df4b718ccd843856ca89adef82434a5c06",
+      "local_marks_sha256": "3a83b8828bb181f23ac909109de0ef90f834907e9dd36d471518cc48c3804a1d",
+      "production_marks_sha256": "3a83b8828bb181f23ac909109de0ef90f834907e9dd36d471518cc48c3804a1d",
+      "mp3_identical": false,
+      "marks_identical": true,
+      "decoded_pcm_identical": false,
+      "local_pcm_sha256": "4823eab2172f13ca42b40f4e1f4f8e5fa2c5c18cce98eb226f20eae535c90874",
+      "production_pcm_sha256": "25d2bd0a949a5b0e6353d5086e54b3a8fde34fb4368cd05cadbcb330e300947a",
+      "local_samples": 177408,
+      "production_samples": 177408
+    },
+    {
+      "edit_id": "injury_and_turn",
+      "request_identity": {
+        "text": true,
+        "voice": true,
+        "rate": true,
+        "pitch": true
+      },
+      "production_request_id": "6226436af1d358d9c2789455f1f028e609880a24ba93aed06642a55f0ce7d19b",
+      "local_mp3_sha256": "af2289d71a92dbf0e7a4c2bb5da245fa410d580b552ab4eb96d3ebb97f4ff216",
+      "production_mp3_sha256": "c2ac02b448b93c4f10755e0900923affec0fe1e648500ec21d655b6b88826a3e",
+      "local_marks_sha256": "093514fa3fd110d470172e78197d22c4a6f7cea5673acd82cf22903cd619f85e",
+      "production_marks_sha256": "093514fa3fd110d470172e78197d22c4a6f7cea5673acd82cf22903cd619f85e",
+      "mp3_identical": false,
+      "marks_identical": true,
+      "decoded_pcm_identical": false,
+      "local_pcm_sha256": "3e76d88d113a0c8f4d8a7338c69a9a816f662a92fb2b3ef00b3749e243169aae",
+      "production_pcm_sha256": "d390156b697ab4ee9b0eae10886aa112578f7a1875d924d16e062b4ee612c125",
+      "local_samples": 307200,
+      "production_samples": 307200
+    },
+    {
+      "edit_id": "second_break",
+      "request_identity": {
+        "text": true,
+        "voice": true,
+        "rate": true,
+        "pitch": true
+      },
+      "production_request_id": "e16e4189a9dcabfbd3cf5908638babbc03c0b8bf04fbe6e177ecd362e92fe616",
+      "local_mp3_sha256": "05ab90bd23bba0b6842f9bf426a35c7f7f4413e6d5d91f5ea7e738fcfd963f38",
+      "production_mp3_sha256": "24611fb1965e2fa6bb05c64b8ea54a20108767310ca1fd8996ca36122260c65f",
+      "local_marks_sha256": "86e1ccf3c17fbd749c30411921aef792d4d4a18c92898c99a04e180ab8dac335",
+      "production_marks_sha256": "86e1ccf3c17fbd749c30411921aef792d4d4a18c92898c99a04e180ab8dac335",
+      "mp3_identical": false,
+      "marks_identical": true,
+      "decoded_pcm_identical": false,
+      "local_pcm_sha256": "1acfcaa3764c2542a635787cdaaf59b4e74b8bb123692bcbd48a3464f5b602e6",
+      "production_pcm_sha256": "1a3e889a0b70f5ee1fd5fc55c7a3f37298dc382924197c082ce3b115d69c5d8b",
+      "local_samples": 195456,
+      "production_samples": 195456
+    },
+    {
+      "edit_id": "full_stats",
+      "request_identity": {
+        "text": true,
+        "voice": true,
+        "rate": true,
+        "pitch": true
+      },
+      "production_request_id": "08ac0d9c18e5c1fe00fc8a8257affa1e5f36330656137f7b18a00226521ea92e",
+      "local_mp3_sha256": "64f8bb52f4e5f1fc47aca05dc4d836e5e4c9aa85ebd7d873a58eaa627cb642fb",
+      "production_mp3_sha256": "ef9638daacc8edb4e15dd4cb585d1d65a036bf1ab4cd1b91751403e0f4bb4c5b",
+      "local_marks_sha256": "f111035b7b950c42b37c68f034b43d314deedb1392cdf471f9e47f7461c528b2",
+      "production_marks_sha256": "a20c9e1b4df7fd84562f165e48183ef683f3ad94ccb502201c6e692394ad38b8",
+      "mp3_identical": false,
+      "marks_identical": false,
+      "decoded_pcm_identical": false,
+      "local_pcm_sha256": "78dfc4165563e3a907825269a74c9df809923c3f1898fc70d891c48df487c07c",
+      "production_pcm_sha256": "951832e896daa1975f306242a7b6d798ab81e3d765b2bee12031ca1f05dbc0a4",
+      "local_samples": 215424,
+      "production_samples": 214272
+    },
+    {
+      "edit_id": "outlook",
+      "request_identity": {
+        "text": true,
+        "voice": true,
+        "rate": true,
+        "pitch": true
+      },
+      "production_request_id": "d415a600188b848265cb670ea7c2816dfda5658125167154d04734625c9070cf",
+      "local_mp3_sha256": "60669d974006bfb0dec8ac4b69ecf3a2deb6e9f3a025a0e4ba9a32ed5c359b29",
+      "production_mp3_sha256": "13b494790d369028d1bb8bfce952f48cdb3f2331bf34551ebf1b39f8e8c9ae88",
+      "local_marks_sha256": "bfafa51ef97c63e1b3d619368165c90b2d0fd7daa4c3ceed014864a72821802d",
+      "production_marks_sha256": "548aa7f814121271899f730638dcea0522358c19e6bf392006b7026dca65657a",
+      "mp3_identical": false,
+      "marks_identical": false,
+      "decoded_pcm_identical": false,
+      "local_pcm_sha256": "b04f2f5f8f525d9c757c4575c05f40fb2d5524aafe7e4efe611eb6695ee17f7d",
+      "production_pcm_sha256": "0b3da082b1167012466f4ee6ed553fda89fa69b04cc2d1fca4c994a1075b77e8",
+      "local_samples": 220032,
+      "production_samples": 220032
+    },
+    {
+      "edit_id": "outro",
+      "request_identity": {
+        "text": true,
+        "voice": true,
+        "rate": true,
+        "pitch": true
+      },
+      "production_request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "local_mp3_sha256": "133e25a1ddd57b7cd2adcc510bce961bcd86907623a3aa183fe67843da314260",
+      "production_mp3_sha256": "f670f5c51e491614cc5af1669f406f98e6cea5de3e9896c47092952d253b849b",
+      "local_marks_sha256": "bb371455942874977b3cf9931ffff5c7dc8edb8ad37adc407760e65dfcb2a596",
+      "production_marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "mp3_identical": false,
+      "marks_identical": false,
+      "decoded_pcm_identical": false,
+      "local_pcm_sha256": "c587d72e49a7699e534a667e981b50434d815ffff70d12ab39922742a544285e",
+      "production_pcm_sha256": "586a08f61197557d0ae6b3afcd463a5c51195436849aa20f49dfaee7d02076da",
+      "local_samples": 65664,
+      "production_samples": 65664
+    }
+  ],
+  "conclusion": "All 10 full request texts/voice/rate/pitch identical, but all 10 MP3 and decoded PCM differ; local actual speech verdicts do not establish production audio pronunciation. Production original MP3+native marks are newly bound and remeasured.",
+  "counts": {
+    "items": 10,
+    "identical_mp3": 0,
+    "identical_marks": 3,
+    "identical_decoded_pcm": 0
+  },
+  "human_listening_claimed": false
+}
