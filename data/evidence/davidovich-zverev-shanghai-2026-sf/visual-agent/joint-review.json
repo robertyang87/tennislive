@@ -1,0 +1,33 @@
+{
+  "schema": "tennislive.joint-finite-actual-movie-visual-review.v1",
+  "status": "pass_finite_partitioned_actual_movie_review",
+  "visual_pass": true,
+  "publication_approved": false,
+  "film_sha256": "876f2af99804781e83bb78eea171e1aa79d03be55c9d3165b1f93aa15fff39cb",
+  "film_bytes": 58710666,
+  "native_run_id": 39031880980,
+  "spec_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
+  "ass_sha256": "1c598707d0bfea24eb94d753fd59705d0e86ab46dca150e52d6ea1aa770a0c1e",
+  "render_inputs_sha256": "00397a9736dd2cb0d7ab582282be6a020f7824cef6c83d96ebf4a3e7f10c3353",
+  "native_qc_sha256": "ba186c8ea77f53133f4b745fc26db2d1f245fad1bec17c560d40e0322f1fce5b",
+  "partitions": {
+    "root": {
+      "samples": 71,
+      "walls": 12
+    },
+    "source": {
+      "samples": 94,
+      "walls": 16
+    }
+  },
+  "root_review_sha256": "b0df4f6c9f88801fe6829a687051275281c4d309404c4350aac480050038933a",
+  "independent_source_review_sha256": "9382fda5b3c3d5323c2e86f2d8f1c2fb23163750638c14e260467d43748e787c",
+  "blocking_findings": [],
+  "superseded_blocked_movie_sha256": "55f4513b1bec122679a7fff11c2b3d3662a870ff3de273c2cea392a2df2b6b08",
+  "limitations": [
+    "Actual finite extracted-frame review; does not assert all movie frames viewed or human listening.",
+    "Full-center 3:4 crop retains declared horizontal clipping; no full-horizontal-court claim.",
+    "No loudness/source-gain/PCM/threshold-silence checks.",
+    "Publication additionally requires current-head CI and native unique send receipt."
+  ]
+}

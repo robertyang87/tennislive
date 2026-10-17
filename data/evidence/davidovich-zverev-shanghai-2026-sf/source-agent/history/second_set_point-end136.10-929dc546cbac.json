@@ -1,0 +1,86 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=NKFVL_lELNE",
+  "source_sha256": "ca0f94dbbb70dc2f9318a792af879f25c6da863edd151928e14a43040dc752c4",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source-review agent; actual exact-SHA two canonical whole-source ASR cross-check + uploader captions + finite source frames; no manual listening claimed",
+  "reviewed_at": "2026-10-17T11:40:39.661235+00:00",
+  "status": "complete",
+  "reviewed_from": 106.24,
+  "reviewed_to": 136.28,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 119.44,
+      "end": 123.18,
+      "en": "Oh, it doesn't get any better than that.",
+      "zh": "噢，这一分真是精彩到了极点！",
+      "verification": "Actual exact-SHA two full models and native provider captions reconciled; normalized official names; conservative estimated word edges, no manual listening claim."
+    },
+    {
+      "start": 127.24,
+      "end": 131.66,
+      "en": "What a way for Alejandro Davidovich Fokina",
+      "zh": "达维多维奇·福基纳精彩一击，",
+      "verification": "Actual exact-SHA two full models and native provider captions reconciled; normalized official names; conservative estimated word edges, no manual listening claim."
+    },
+    {
+      "start": 133.46,
+      "end": 135.88,
+      "en": "to take the second set.",
+      "zh": "拿下了第二盘。",
+      "verification": "Actual exact-SHA two full models and native provider captions reconciled; normalized official names; conservative estimated word edges, no manual listening claim."
+    }
+  ],
+  "_edit_id": "second_set_point",
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/source-agent/raw/small.en.json",
+        "sha256": "cec1cc4fa7ab8e947933dd520ce05dba7fde2c848b32e722f09ec911c74d24ac",
+        "model": "small.en",
+        "source_sha256": "ca0f94dbbb70dc2f9318a792af879f25c6da863edd151928e14a43040dc752c4",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/source-agent/raw/medium.en.json",
+        "sha256": "be1239f3b919ef0e10c9766480fbc456025ad76c10037626738679aaef135f74",
+        "model": "medium.en",
+        "source_sha256": "ca0f94dbbb70dc2f9318a792af879f25c6da863edd151928e14a43040dc752c4",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/source-agent/raw/native-provider-captions.txt",
+        "sha256": "4ebfec80cf4aa544b0db12ebd9386c89814d1bd2d179368033de90223ab2a532",
+        "kind": "uploader_auto_captions"
+      },
+      {
+        "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/source-agent/raw/youtube-oembed.json",
+        "sha256": "a57713390a1dab2de58314ba9f04a6b605a2f0b55bbab5def9094ed5f4fde3ba",
+        "kind": "actual_source_uploader_identity"
+      }
+    ],
+    "manual_listening_claimed": false,
+    "source_audio_gain_changes": false,
+    "reconciliation_and_limits": [
+      "Actual unchanged source SHA and actual native full small.en/medium.en JSON were checked. This is finite ASR cross-check, not manual/human listening or exhaustive acoustic certification.",
+      "ASR name misspellings Davidovic/Pekina/Pacina normalized only to official Alejandro Davidovich Fokina, Alexander Zverev; punctuation and semantic display splits added.",
+      "Cold first For has stretched low-speech interval: medium starts142.52, ends143.46; uploader locator143.36. Window142.30 includes all conservative starts. Small incorrectly joins for/the across135.88..143.62; those raw words retained, not treated as six-second continuous speech.",
+      "First-set Another starts small54.24 but medium word54.86 and uploader55.04 locate spoken clause; window54.40 includes earlier conservative context and actual serve setup.",
+      "First-set on serve follows medium + uploader; small answer is a conflicting recognition. Original raw remains unchanged.",
+      "First-set again ends small62.10, but medium extends one word61.66..66.08 across the source cut62.20 and next rally. Caption locator and small support62.10; selected visual end62.16 excludes next rally. No manual phoneme judgment claimed.",
+      "Second-set to word is stretched131.64..134.16; display cue begins133.46 using final0.7 seconds of that word (existing asr_plan MAX_WORD convention), continues through last word135.88. Complete source window includes the entire original clause and the intervening pause.",
+      "Ending And has pause-stretched start; display157.38 follows medium word end158.08 minus MAX_WORD0.7 convention, while whole selected window retains original speech.",
+      "Ending now stops180.16 after complete gathers more pace phrase (wordends179.78/179.86), before next He takes out sentence (earliest181.52). This avoids large final scoreboard181+ and publisher endcard184.68; original full raw transcript retained.",
+      "No loudness/RMS/peak/silence-threshold/gain/PCM analysis. No audio gains or effects changed.",
+      "All four packets conservatively cover native default0.18s audio tail beyond nominal visual end. first_set_close reviewed through62.34 (next English71.62+), ending reviewed through180.34 (next English181.52+). Numeric audio_tail0 is unsupported and removed; ordinary source audio is preserved, with no silence or gain change.",
+      "All four proposed windows are original broadcast with no synthesized narration over English. Root owns spec indices/final plan binding and can adopt these exact immutable packets without changing their conclusions."
+    ]
+  }
+}

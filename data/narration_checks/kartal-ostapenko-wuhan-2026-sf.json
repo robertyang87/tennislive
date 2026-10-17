@@ -1,0 +1,53 @@
+{
+  "slug": "kartal-ostapenko-wuhan-2026-sf",
+  "checked_at": "2026-10-17T12:44:11Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "c181de77b7a6966d": {
+      "segment": 2,
+      "spoken": 16.176,
+      "picture": 18.2
+    },
+    "11bbfc44ef81b143": {
+      "segment": 4,
+      "spoken": 14.712,
+      "picture": 16.5
+    },
+    "818702c8920efe54": {
+      "segment": 6,
+      "spoken": 17.712,
+      "picture": 19.8
+    },
+    "2af9c817970082f8": {
+      "segment": 8,
+      "spoken": 14.352,
+      "picture": 16.1
+    },
+    "d5612515b9894897": {
+      "segment": 10,
+      "spoken": 9.72,
+      "picture": 10.8
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "740745df9923282476238d21db50db1d94100f7726d8e4f493e12e0bd46cc149",
+    "request_count": 6,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-kartal-ostapenko-wuhan-2026-sf-740745df99232824",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-kartal-ostapenko-wuhan-2026-sf-740745df99232824/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39033553476"
+  }
+}

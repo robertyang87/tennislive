@@ -1,0 +1,236 @@
+{
+  "schema": "tennislive.match-fact-packet.v1",
+  "checked_at": "2026-10-17T12:38:32.224573+00:00",
+  "slug": "kartal-ostapenko-wuhan-2026-sf",
+  "official_result": {
+    "BinPacketBase64": null,
+    "CourtID": 1,
+    "DateSeq": 8,
+    "DrawLevelType": "M",
+    "DrawMatchType": "S",
+    "EntryTypeA": "",
+    "EntryTypeB": "",
+    "EventID": "1075",
+    "EventYear": 2026,
+    "LastUpdated": "2026-10-17T11:21:01.73+00:00",
+    "MatchID": "LS003",
+    "MatchState": "F",
+    "MatchTimeStamp": "2026-10-17T08:43:04.57+00:00",
+    "MatchTimeTotal": "02:12:37",
+    "Message": "{11|S. Kartal}",
+    "NumSets": 2,
+    "PlayerCountryA": "GBR",
+    "PlayerCountryA2": "",
+    "PlayerCountryB": "LAT",
+    "PlayerCountryB2": "",
+    "PlayerIDA": "329918",
+    "PlayerIDA2": "",
+    "PlayerIDB": "319939",
+    "PlayerIDB2": "",
+    "PlayerNameFirstA": "Sonay",
+    "PlayerNameFirstA2": "",
+    "PlayerNameFirstB": "Jelena",
+    "PlayerNameFirstB2": "",
+    "PlayerNameLastA": "Kartal",
+    "PlayerNameLastA2": "",
+    "PlayerNameLastB": "Ostapenko",
+    "PlayerNameLastB2": "",
+    "PointA": "",
+    "PointB": "",
+    "ResultString": "S. Kartal d J. Ostapenko 7-6(9),7-6(5)",
+    "RoundID": "S",
+    "ScoreSet1A": "7",
+    "ScoreSet1B": "6",
+    "ScoreSet2A": "7",
+    "ScoreSet2B": "6",
+    "ScoreSet3A": "",
+    "ScoreSet3B": "",
+    "ScoreSet4A": "",
+    "ScoreSet4B": "",
+    "ScoreSet5A": "",
+    "ScoreSet5B": "",
+    "ScoreString": "7-6(9),7-6(5)",
+    "ScoreSys": "1",
+    "ScoreTbSet1": "9",
+    "ScoreTbSet2": "5",
+    "ScoreTbSet3": "",
+    "ScoreTbSet4": "",
+    "SeedA": "",
+    "SeedB": "",
+    "Serve": "",
+    "Winner": "2"
+  },
+  "copyable_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1075_2026_LS003",
+    "flashscore_id": "r1Ik4Fsf",
+    "participants": [
+      "卡尔塔尔",
+      "奥斯塔彭科"
+    ],
+    "set_scores_home_away": [
+      [
+        7,
+        6
+      ],
+      [
+        7,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      [
+        11,
+        9
+      ],
+      [
+        7,
+        5
+      ]
+    ],
+    "winner": "卡尔塔尔",
+    "loser": "奥斯塔彭科",
+    "winner_result": "7-6(9) 7-6(5)",
+    "loser_result": "6-7(9) 6-7(5)",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+    "date": "2026-10-17",
+    "duration": "02:12:37",
+    "daypart": "下午",
+    "_time_note": "官方逐分首点09:08:25Z=北京时间17:08:25，末点11:20:41Z=19:20:41。开场采用下午；metadata08:43不是第一发。",
+    "_match_day_why": "用户点名给定本场WTA官方集锦，2026-10-17武汉半决赛。"
+  },
+  "score_direction": "OfficialA=Kartal,B=Ostapenko;Winner2 encodesA. Final7-6(9)7-6(5), TB11-9/7-5. Cover/result and topbar use winner perspective, statisticala uses storysubjectOstapenko explicitly.",
+  "source_urls": {
+    "match": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+    "pbp": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS003/point-by-point",
+    "stats": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS003/stats",
+    "fs_stats": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_r1Ik4Fsf",
+    "fs_pbp": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_r1Ik4Fsf",
+    "h2h": "https://api.wtatennis.com/tennis/players/319939/headtohead/326408",
+    "cover": "https://www.wuhanopentennis.com/whNews/Pictures?id=1639"
+  },
+  "process": {
+    "set1": "Ostapenko4-1,5-3,6-5; regulationSPat6-5/40-30notconverted. TBownSP8-7/9-8notconverted; Kartal11-9wins.",
+    "set2": "Ostapenko4-1;5-4 receivingSPand6-5 receiving40-15twoSPnotconverted. Kartal7-5TB2ndMP.",
+    "total_missed_setpoints": 6
+  },
+  "pbp_quality": "WTA gameNumber and scoreAfterPoint crosschecked againstFlashscore. WTA TBpointWinner sometimes repeatsA inconsistently with changingpointscore, so do not count individualTBwinners using that field. Setarrays in point records contain finalsetscore; gameprogress derived fromgameNumber&finalgameScore and crosssource.",
+  "stats_crosscheck": {
+    "tour": "wta",
+    "footer_date": "2026-10-17",
+    "footer_venue": "武汉 · 全场",
+    "a": {
+      "aces": 9,
+      "df": 7,
+      "first_in": 51,
+      "first_total": 82,
+      "first_won": 35,
+      "second_total": 31,
+      "second_won": 12,
+      "bp_conv": 4,
+      "bp_chances": 8,
+      "pts_won": 87,
+      "pts_total": 175,
+      "winners": 50,
+      "ue": 41,
+      "headshot": "assets/players/headshots/wta-319939.jpg"
+    },
+    "b": {
+      "aces": 1,
+      "df": 2,
+      "first_in": 53,
+      "first_total": 93,
+      "first_won": 33,
+      "second_total": 40,
+      "second_won": 20,
+      "bp_conv": 4,
+      "bp_chances": 4,
+      "pts_won": 88,
+      "pts_total": 175,
+      "winners": 13,
+      "ue": 13,
+      "headshot": "assets/players/headshots/wta-329918.png"
+    },
+    "_source": "WTA LS003原始A卡/B奥；本片a奥/b卡。W/UE取FS同场Match与两分盘加总交叉。FS发球总分52/46与官方53/47有差异，不采用FS发球总分。",
+    "_winners_ue_evidence": {
+      "provider": "Flashscore",
+      "method": "api",
+      "source_url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_r1Ik4Fsf",
+      "source_path": "data/research/kartal-ostapenko-wuhan-2026-sf/fs-stats.raw",
+      "source_sha256": "c1e3c4ce49aa16f56a9098f1551064aa6077e6667306c45d232922d8b2be240c",
+      "period": "Match",
+      "match_date": "2026-10-17",
+      "checked_at": "2026-10-17T12:26:34.219306+00:00",
+      "winner_result": "7-6(9) 7-6(5)",
+      "matchup": [
+        "Ostapenko",
+        "Kartal"
+      ],
+      "winners": [
+        50,
+        13
+      ],
+      "ue": [
+        41,
+        13
+      ],
+      "notes": "奥24+26=50/20+21=41，卡7+6=13/8+5=13；最终赛果与官方一致。"
+    }
+  },
+  "h2h_summary": [
+    {
+      "isfinal": false,
+      "losses": 0,
+      "opponentid": "326408",
+      "opponentnamefirst": "IGA",
+      "opponentnamelast": "SWIATEK",
+      "playerid": "319939",
+      "playernamefirst": "JELENA",
+      "playernamelast": "OSTAPENKO",
+      "surface": "All",
+      "wins": 6
+    }
+  ],
+  "h2h_meetings": [
+    {
+      "year": "2019",
+      "event": "BIRMINGHAM",
+      "score": "6-0  6-2",
+      "winner": 1
+    },
+    {
+      "year": "2021",
+      "event": "INDIAN WELLS",
+      "score": "6-4  6-3",
+      "winner": 1
+    },
+    {
+      "year": "2022",
+      "event": "DUBAI",
+      "score": "4-6  6-1  7-6(4)",
+      "winner": 1
+    },
+    {
+      "year": "2023",
+      "event": "US OPEN",
+      "score": "3-6  6-3  6-1",
+      "winner": 1
+    },
+    {
+      "year": "2025",
+      "event": "DOHA",
+      "score": "6-3  6-1",
+      "winner": 1
+    },
+    {
+      "year": "2025",
+      "event": "STUTTGART",
+      "score": "6-3  3-6  6-2",
+      "winner": 1
+    }
+  ],
+  "next_round": "Kartal awaits Swiatek/ChwalinskaSFwinner; snapshot12:34ZstillP. Never stateSwiatekalreadyqualified.",
+  "source_sha256": "0bcaea757e8d06944a35b94da6b85eae0474fefc7c35c9a3223967f79b243543",
+  "production_status": "Spec/preflight work; not publication evidence."
+}

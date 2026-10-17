@@ -1,0 +1,47 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=abL2j0xldOc",
+  "source_sha256": "0bcaea757e8d06944a35b94da6b85eae0474fefc7c35c9a3223967f79b243543",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI root; full selected-window 3-ASR lexical/time cross-check and original source-image review; no manual listening claimed",
+  "reviewed_at": "2026-10-17T12:37:50.438268+00:00",
+  "status": "complete",
+  "reviewed_from": 198.92,
+  "reviewed_to": 224.12,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 210.0,
+      "end": 213.82,
+      "en": "Some stunning tennis again from Ostapenko.",
+      "zh": "奥斯塔彭科再次打出了精彩的网球。"
+    },
+    {
+      "start": 222.1,
+      "end": 223.06,
+      "en": "Made it!",
+      "zh": "打进了！"
+    }
+  ],
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/evidence/kartal-ostapenko-wuhan-2026-sf/small.en.json",
+        "sha256": "0a85dc8109be23f8bdadf695951e9b3fb5839dee445d4ae7631f2949eef2f509"
+      },
+      {
+        "path": "data/evidence/kartal-ostapenko-wuhan-2026-sf/medium.en.json",
+        "sha256": "4bdac3c43e950fe4af0394858bf07a82bb9c093e946a17c3bda765c09063ab5b"
+      },
+      {
+        "path": "data/evidence/kartal-ostapenko-wuhan-2026-sf/large-v3-turbo.json",
+        "sha256": "d73ea697664d63ce8dd10ba908e607c3e8b6b792b67fe26fcef75a0b85563b71"
+      },
+      {
+        "path": "data/evidence/kartal-ostapenko-wuhan-2026-sf/resolve-asr.json",
+        "sha256": "936393a327077ebd016bf631e10cef7a425fdd9620275bf5364c41b907aedc99"
+      }
+    ],
+    "limitations": "ASR word times are estimates. Names canonicalized from verified match identity. Ice cool reconciled by full and isolated large-v3-turbo, replacing two smaller models phonetic Nice call error. No ASR score used as a pronunciation or human-listening verdict."
+  }
+}

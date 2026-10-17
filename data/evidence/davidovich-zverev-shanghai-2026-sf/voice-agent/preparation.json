@@ -1,0 +1,41 @@
+{
+  "created_at": "2026-10-17T11:36:17.412554+00:00",
+  "slug": "davidovich-zverev-shanghai-2026-sf",
+  "status": "prepared_awaiting_unique_final_native_bundle",
+  "synthesis_performed": false,
+  "manual_listening_claimed": false,
+  "pronunciation_pass_claimed": false,
+  "actual_audio_scope": [
+    "cover narration if present",
+    "all segment narration",
+    "fixed brand outro"
+  ],
+  "profile": {
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz"
+  },
+  "scratch": "/workspace/scratch/zverev-sf-voice",
+  "commands_after_freeze": [
+    "PYTHONPATH=src:tools python /workspace/scratch/zverev-sf-voice/bind_native_bundle.py --spec specs/reels/davidovich-zverev-shanghai-2026-sf.json --bundle <unique_actual_zip> --sha256 <root_frozen_zip_sha256>",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python /workspace/scratch/zverev-sf-voice/transcribe_native.py",
+    "finite whole-context reference controls, then ASR-assisted native boundary MFCC/F0 two-sided leave-one-out comparison; no tone conclusions from ASR characters"
+  ],
+  "bounded_work": [
+    "one local unprompted base ASR pass over actual unique MP3s",
+    "at most four finite complete-context controls per spoken card; no regeneration of actual speech",
+    "existing complete-outro evidence only on exact whole text/profile/audio/marks SHA identity",
+    "pending uncertain and contrary calibrations retained without passed status"
+  ],
+  "prohibited_operations_not_run": [
+    "loudness",
+    "RMS",
+    "peak",
+    "threshold silence",
+    "gain",
+    "PCM comparison",
+    "render",
+    "dispatch",
+    "publish"
+  ]
+}

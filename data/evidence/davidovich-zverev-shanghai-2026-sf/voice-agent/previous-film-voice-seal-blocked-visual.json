@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-10-17T12:17:15.835949+00:00",
+  "status": "prior_movie_blocked_by_visual_scoreboard_QC_waiting_new_native_movie",
+  "old_film_sha256": "55f4513b1bec122679a7fff11c2b3d3662a870ff3de273c2cea392a2df2b6b08",
+  "old_run_id": 39030349344,
+  "old_voice_archive": "/workspace/scratch/zverev-sf-voice-evidence-final.zip",
+  "old_voice_archive_sha256": "f4f267da3ebd0436e6ecd866324c1750e4fad27ba9a59679bbc9d06782955ca8",
+  "old_voice_archive_publishable": false,
+  "reason_from_root_actual_visual_review": "Native ATP scoreboard mask clipped 30/40 points and retained green rectangular padding at first-set close. The voice-byte seal did not establish final visual quality.",
+  "exact_historical_binding_documents": "/workspace/scratch/zverev-sf-voice/history/run39030349344-film55f4513b1bec-blocked-visual",
+  "next_archive": "/workspace/scratch/zverev-sf-voice-evidence-v2.zip",
+  "review_repeated": false,
+  "TTS_resynthesized": false,
+  "PCM_gain_loudness_operations_performed": false,
+  "pending_required_inputs": [
+    "new actual MP4 path and SHA",
+    "new successful native render run ID",
+    "new native_input_archive and current spec/ASS/render_inputs/QC"
+  ],
+  "final_native_binding_status": "waiting_root_actual_v2_inputs"
+}

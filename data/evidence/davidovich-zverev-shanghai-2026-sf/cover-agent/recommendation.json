@@ -1,0 +1,62 @@
+{
+  "status": "recommended_photo_ready; requires actual branded-cover crop review by parent",
+  "subject": "Alexander Zverev",
+  "event": "Rolex Shanghai Masters 2026",
+  "round": "Semifinal",
+  "date": "2026-10-17",
+  "opponent": "Alejandro Davidovich Fokina",
+  "recommended": {
+    "asset": "assets/reel/davidovich-zverev-shanghai-2026-sf-cover.jpg",
+    "evidence_original": "data/evidence/davidovich-zverev-shanghai-2026-sf/cover-agent/getty-2300060071-original.jpg",
+    "source_url": "https://cdn1.tennishead.net/uploads/106/2026/10/GettyImages-2300060071.jpg",
+    "publisher_page": "https://tennishead.net/alexander-zverev-issues-complaint-after-receiving-latest-time-violation-in-shanghai-semi-final-it-doesnt-matter/",
+    "agency_record": "https://www.gettyimages.com/detail/2300060071",
+    "credit": "Hector RETAMAL / AFP via Getty Images",
+    "dimensions": [
+      5878,
+      3918
+    ],
+    "sha256": "3d52b70258375a39e43782598190a1617c47c0f6ea12a0ef3647eb2237e2d1b7",
+    "identity_evidence": "tools/find_cover_photo.py --getty 2300060071 returned the agency caption explicitly naming Zverev, opponent Davidovich Fokina, Shanghai semifinal and October 17, 2026. Later plain requests GET returned 403; raw failure HTML is retained, not represented as successful page evidence. Photographer credit and Getty ID also bound in original publisher article.",
+    "agency_caption": "Germany's Alexander Zverev hits a return to Spain's Alejandro Davidovich Fokina during their men's singles semi-final match at the Shanghai Masters tennis tournament in Shanghai on October 17, 2026.",
+    "visual_review": "Viewed actual 5878x3918 image. Zverev facing front, both eyes open and in focus, intense mid-return expression, unblocked face. Racket/ball in lower frame; no framegrab.",
+    "crop_recommendation": {
+      "fit": "cover",
+      "focus": 0.56,
+      "focus_y": 0.5,
+      "zoom": 1,
+      "why": "Use full original height; actual CSS object-position56% 50% with cover/zoom1 gives3:4 crop approx x1646..4585,y0..3918. Expected eyes near y275 in1080x1440, so header/subtitle actual branded preview must stay above face. Preserve complete hairline. Do not zoom more."
+    }
+  },
+  "alternates": [
+    {
+      "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/cover-agent/121055822.jpg",
+      "source_page": "https://www.teraz.sk/foto-tasr/semifinale-dvojhry-muzov-v-sanghaji/121055822-fotografia.html",
+      "credit": "AP Photo/Andy Wong, distributed by TASR",
+      "dimensions": [
+        1000,
+        668
+      ],
+      "identity": "Caption explicitly identifies this same semifinal and Zverev leaving after losing.",
+      "quality": "front/open eyes, but source resolution lower and head high in frame; not preferred."
+    },
+    {
+      "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/cover-agent/ap-mainpost-2000.jpg",
+      "source_page": "https://www.mainpost.de/sport/tennis-zverev-verpasst-das-finale-von-shanghai-115515273",
+      "credit": "Andy Wong/AP/dpa",
+      "dimensions": [
+        2000,
+        1125
+      ],
+      "identity": "Same-day loss article caption names Zverev but photo-specific round not proven independently; not approved as same-match candidate.",
+      "quality": "frontal questioning gesture, open eyes; weaker match-identity binding than Getty recommendation."
+    }
+  ],
+  "excluded": [
+    "TASR serve photo121047314: ball overlaps face.",
+    "TASR congratulation121056046: not solo, Zverev face in profile.",
+    "All earlier-round Zverev photos: cannot substitute for current semifinal."
+  ],
+  "scope": "Photo research and asset only; no spec edit, branded cover render or publication.",
+  "reviewed_at_utc": "2026-10-17T11:29:15.538564+00:00"
+}

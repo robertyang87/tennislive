@@ -1,0 +1,28 @@
+{
+  "schema": "tennislive.production-review-status.v1",
+  "created_at": "2026-10-17T13:02:18.319370+00:00",
+  "slug": "kartal-ostapenko-wuhan-2026-sf",
+  "spec_sha256": "5467d2e104b1252ea083650646b6a71ac59119056d640b40512020f7f9e7c542",
+  "film_sha256": "c09c90c1b86df2aab22c1ce46ef206f4bb6e0913e208931e5989bdbab1651fbe",
+  "film_bytes": 66572757,
+  "film_seconds": 235.72,
+  "render_run": 39034169631,
+  "render_commit": "c1bc6bb",
+  "ci_run": 39034171685,
+  "ci_result": "success for render input commit09df374",
+  "native_QC": "pass; actualcanvas1080x1440,25fps,video235.72s/audio235.69s,stream/timing/ending/spec/ASS/hashattestation verified; no loudness checks",
+  "actual_encoded_visual_review": "16finitefull-masterPNG samples actually viewed as contact sheet; fulloriginalframe2250alsoopened. Actualcover/chaptertext/captions/scoreplates/statcard/outro reviewed. Finite sampling, not full-frame or human listening claim.",
+  "current_frozen_tts_sha256": "740745df9923282476238d21db50db1d94100f7726d8e4f493e12e0bd46cc149",
+  "strict_reused": true,
+  "pronunciation_status": "waiting_reliable_actual_voice_review; lexicalASRdoesnotprove tones; oldlocalcontrolresultsnotpromoted to currentbytes",
+  "publication_status": "NOT_SENT; draft PR1286 remains unmerged; no PushPlus request,receipt orpushed.json",
+  "review_copy": {
+    "path": "/workspace/奥斯塔彭科出局-赛场之上-审片版.mp4",
+    "sha256": "933c5e6fb7e35f328b2d3da9e3f3e32b79316867ef12bee14190260e5e23f234",
+    "bytes": 21457552,
+    "scope": "reviewonly720px/96kbpsaudio; originalReleaseHDretained",
+    "download_path": "/workspace/奥斯塔彭科出局-赛场之上-审片版.mp4"
+  },
+  "remaining_blocker": "Existing global owner pronunciation contract cannot be marked pass from dictionaries, ASR, or low/unreliable finite controls. Publication remains blocked.",
+  "actual_local_landed_recheck": "0 failed on exact Release SHA with native sidecars; landed-native.log"
+}
