@@ -1,6 +1,6 @@
 {
   "slug": "davidovich-zverev-shanghai-2026-sf",
-  "checked_at": "2026-10-17T11:43:15Z",
+  "checked_at": "2026-10-17T13:16:59Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -13,43 +13,44 @@
     "862b8f400a78764e": {
       "segment": 2,
       "spoken": 17.784,
-      "picture": 26.0
+      "picture": 19.2
     },
     "07169dab8c460c60": {
       "segment": 4,
       "spoken": 13.56,
-      "picture": 21.0
+      "picture": 14.8
     },
     "7b1e5b021d65f9d7": {
       "segment": 6,
       "spoken": 11.544,
-      "picture": 17.0
+      "picture": 12.8
     },
     "6c81b9199c7213ae": {
       "segment": 8,
       "spoken": 11.544,
-      "picture": 17.0
+      "picture": 13.0
     },
-    "bdecac5665a3a11a": {
+    "71093aada782133e": {
       "segment": 9,
-      "spoken": 14.664,
-      "picture": 19.0
+      "spoken": 11.688,
+      "picture": 13.0
     }
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "728ab30f7e1adf68ad32695723b248b97da61941d7720a6a8ce1daeb07902f03",
+    "bundle_sha256": "224043b9cf2a8e5494807da630b4f4039ad18471e79c9e2def59263cfacf00ae",
     "request_count": 6,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-davidovich-zverev-shanghai-2026-sf-728ab30f7e1adf68/tts_bundle.zip",
-    "bytes": 456829,
-    "release_tag": "reel-tts-davidovich-zverev-shanghai-2026-sf-728ab30f7e1adf68",
+    "release_tag": "reel-tts-davidovich-zverev-shanghai-2026-sf-224043b9cf2a8e54",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-davidovich-zverev-shanghai-2026-sf-224043b9cf2a8e54/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "transport_run_id": 39029814106
+    "bytes": 438420,
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39035986873",
+    "transport_run_id": 39035986873
   },
-  "_picture_window_rebind": "Only nativecard lengths shortened to measured actual voice+1.2–1.5s natural tail; no voice text/profile changed and no resynthesis. Native bundle retained actual captured MP3/WordBoundary."
+  "_picture_window_rebind": "Only updated outlook card16.0→13.0s after actual native11.688s measurement; all six voice requests unchanged from captured bundle224043b9cf2a8e5494807da630b4f4039ad18471e79c9e2def59263cfacf00ae; old five actual MP3/marks remain byte-identical to previous bundle."
 }

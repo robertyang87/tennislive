@@ -1,32 +1,32 @@
 {
-  "scoreboard_qc_sha256": "5ff3303ed2458f61fec5360a22fc9818514230a4921b372ff785c22e14fe9eae",
+  "scoreboard_qc_sha256": "989a4afaaa5520e1d16b7f0c202adcd753a9af076f790ce80b6bf801278cb16c",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "728ab30f7e1adf68ad32695723b248b97da61941d7720a6a8ce1daeb07902f03",
+    "bundle_sha256": "224043b9cf2a8e5494807da630b4f4039ad18471e79c9e2def59263cfacf00ae",
     "request_count": 6,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-davidovich-zverev-shanghai-2026-sf-728ab30f7e1adf68",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-davidovich-zverev-shanghai-2026-sf-728ab30f7e1adf68/tts_bundle.zip",
+    "release_tag": "reel-tts-davidovich-zverev-shanghai-2026-sf-224043b9cf2a8e54",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-davidovich-zverev-shanghai-2026-sf-224043b9cf2a8e54/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39031880980"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39037092351"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 4.554,
   "layout": "full",
-  "segments_seconds": 157.82,
+  "segments_seconds": 154.82,
   "topbar": {
     "line1": "2026 ATP1000 上海 半决赛",
     "line2": "达维多维奇·福基纳 5-7 6-4 6-3 兹维列夫",
     "start": 1.2,
-    "end": 159.02
+    "end": 156.02
   },
-  "film_seconds": 163.6,
+  "film_seconds": 160.6,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -35,7 +35,7 @@
     "3": 13.56,
     "5": 11.544,
     "7": 11.544,
-    "8": 14.664
+    "8": 11.688
   },
   "face_checks": {
     "cover": {
@@ -52,44 +52,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "00397a9736dd2cb0d7ab582282be6a020f7824cef6c83d96ebf4a3e7f10c3353",
+  "render_inputs_sha256": "0646d107fa639dbc91044cc8180ac1d9dfc27732d7ed8c0da7de529c5c3201de",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "davidovich-zverev-shanghai-2026-sf",
-    "received_at": "2026-10-17T12:16:39Z",
-    "artifact_ready_at": "2026-10-17T12:22:35Z",
-    "elapsed_seconds": 356.142,
+    "received_at": "2026-10-17T13:34:07Z",
+    "artifact_ready_at": "2026-10-17T13:38:26Z",
+    "elapsed_seconds": 259.916,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "876f2af99804781e83bb78eea171e1aa79d03be55c9d3165b1f93aa15fff39cb",
-    "spec_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
-    "run_id": "39031880980",
+    "film_sha256": "7f5b967609dc0c8a75a7de23d38876e53ce2bf5d6d7173ae361e691eccbd1260",
+    "spec_sha256": "33da62ac0f7d48ffc4dc020b7a58be620ea7b27ea206e2e5e61eb5d6c5ad75bc",
+    "run_id": "39037092351",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-17T12:20:06Z",
-        "run_id": "39031880980"
+        "at": "2026-10-17T13:35:56Z",
+        "run_id": "39037092351"
       }
     ],
-    "render_seconds": 149.142,
-    "pre_render_seconds": 207.0
+    "render_seconds": 150.916,
+    "pre_render_seconds": 109.0
   },
-  "film_sha256": "876f2af99804781e83bb78eea171e1aa79d03be55c9d3165b1f93aa15fff39cb",
-  "film_bytes": 58710666,
-  "qc_attestation_sha256": "ba186c8ea77f53133f4b745fc26db2d1f245fad1bec17c560d40e0322f1fce5b",
+  "film_sha256": "7f5b967609dc0c8a75a7de23d38876e53ce2bf5d6d7173ae361e691eccbd1260",
+  "film_bytes": 58643858,
+  "qc_attestation_sha256": "99ac74b7dc72fb9a0f6a8d603ca92b7e4cbde7bab2922402bc31f2e48c7f8a59",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-17T12:20:06Z",
-      "run_id": "39031880980"
+      "at": "2026-10-17T13:35:56Z",
+      "run_id": "39037092351"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-17T12:22:38Z",
-      "run_id": "39031880980"
+      "at": "2026-10-17T13:38:29Z",
+      "run_id": "39037092351"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-davidovich-zverev-shanghai-2026-sf/davidovich-zverev-shanghai-2026-sf.mp4",
-  "video_bytes": 58710666
+  "video_bytes": 58643858
 }

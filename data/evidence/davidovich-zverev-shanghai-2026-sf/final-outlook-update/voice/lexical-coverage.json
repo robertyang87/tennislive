@@ -1,0 +1,127 @@
+{
+  "bundle_sha256": "224043b9cf2a8e5494807da630b4f4039ad18471e79c9e2def59263cfacf00ae",
+  "status": "complete_current_raw_lexical_crosscheck_not_tone_or_all_audio_pass",
+  "manual_listening_claimed": false,
+  "method": "Unprompted whole original MP3 ASR; Arabic integer normalization separately within each raw ASR segment (do not merge final 15 and next-segment 20 into fictitious 1520); tone-free pinyin sequence alignment; unresolved spans remain unresolved. No expected-text prompt.",
+  "limitations": [
+    "ASR Chinese words, integers and tone-free matches are lexical assistance only. They cannot prove any realized tone or classify an ASR mismatch as an actual TTS misread.",
+    "Insertions/deletions and lexical ambiguity remain in raw output and differences; this report does not silently correct recognized words."
+  ],
+  "utterances": [
+    {
+      "edit_id": "outlook",
+      "audio_sha256": "cc22c78f92c70dce9f417bac09b24efa06bd594c6f14ce27149f970e62ac24b8",
+      "expected_tts_text": "另一场半决赛，霍达尔两盘淘汰梅德韦杰夫。上海决赛，达维多维奇·福基纳对阵霍达尔。两位西班牙球员会师争冠，你更看好谁？",
+      "raw_unprompted_asr": "另一場半決賽 獲得兩盤淘汰沒得為傑夫傷害決賽 打為多為起 夫妻娜對證獲得兩位西班牙球員會師爭冠 你更看好誰",
+      "normalized_expected": "另一场半决赛霍达尔两盘淘汰梅德韦杰夫上海决赛达维多维奇福基纳对阵霍达尔两位西班牙球员会师争冠你更看好谁",
+      "normalized_asr": "另一場半決賽獲得兩盤淘汰沒得為傑夫傷害決賽打為多為起夫妻娜對證獲得兩位西班牙球員會師爭冠你更看好誰",
+      "tone_free_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "达尔",
+          "asr": "得",
+          "expected_pinyin": [
+            "da",
+            "er"
+          ],
+          "asr_pinyin": [
+            "de"
+          ],
+          "expected_normalized_indices": [
+            7,
+            9
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "基",
+          "asr": "妻",
+          "expected_pinyin": [
+            "ji"
+          ],
+          "asr_pinyin": [
+            "qi"
+          ],
+          "expected_normalized_indices": [
+            28,
+            29
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "阵",
+          "asr": "證",
+          "expected_pinyin": [
+            "zhen"
+          ],
+          "asr_pinyin": [
+            "zheng"
+          ],
+          "expected_normalized_indices": [
+            31,
+            32
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "达尔",
+          "asr": "得",
+          "expected_pinyin": [
+            "da",
+            "er"
+          ],
+          "asr_pinyin": [
+            "de"
+          ],
+          "expected_normalized_indices": [
+            33,
+            35
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "另一场半决赛，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "霍达尔两盘淘汰梅德韦杰夫。",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "上海决赛，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "达维多维奇·福基纳对阵霍达尔。",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "两位西班牙球员会师争冠，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "你更看好谁？",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 1,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 10,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 40,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    }
+  ]
+}

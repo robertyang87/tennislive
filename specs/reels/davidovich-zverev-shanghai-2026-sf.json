@@ -167,7 +167,7 @@
   "push": {
     "auto": true,
     "summary": "先赢一盘兹维列夫出局",
-    "lead": "先赢一盘，却没能走进上海决赛。兹维列夫发出18记ACE，仍被达维多维奇·福基纳以5-7、6-4、6-3逆转。转折发生在第二盘末段：一记奔跑反手穿越扳平盘分，决胜盘开局的双误又让他陷入追赶。年终第一已经锁定，这一站的遗憾，留待下一次弥补。"
+    "lead": "先赢一盘，却没能走进上海决赛。兹维列夫发出18记ACE，仍被达维多维奇·福基纳以5-7、6-4、6-3逆转。转折发生在第二盘末段：一记奔跑反手穿越扳平盘分，决胜盘开局的双误又让他陷入追赶。年终第一已经锁定，这一站的遗憾，留待下一次弥补。另一场半决赛，霍达尔两盘淘汰梅德韦杰夫。决赛确定为达维多维奇·福基纳对阵霍达尔，西班牙内战。"
   },
   "_heat_why": "用户点名世界第2、已锁定年终第1的兹维列夫上海半决赛被逆转；从领先到落败的盘末和决胜盘转折具有明确叙事。",
   "_facts": [
@@ -411,14 +411,22 @@
       "_edit_id": "full_stats"
     },
     {
-      "title_card": "这一站先放下\n下一站再来",
-      "kicker": "期待下一次",
-      "seconds": 16,
-      "narration": "另一场半决赛，梅德韦杰夫对阵霍达尔。胜者，将与达维多维奇·福基纳争冠。兹维列夫，这一站先放下，下一站再来。接下来，你最期待他做出什么改变？",
+      "title_card": "达维多维奇·福基纳\n对阵霍达尔",
+      "kicker": "决赛对阵",
+      "seconds": 13,
+      "narration": "另一场半决赛，霍达尔两盘淘汰梅德韦杰夫。上海决赛，达维多维奇·福基纳对阵霍达尔。两位西班牙球员会师争冠，你更看好谁？",
       "_edit_id": "outlook"
     }
   ],
   "_tts_backend_why": "沿用赛场之上云健zh-CN-YunjianNeural +6% 0Hz原有声音，无情绪风格，Edge足够；本地预检保实际MP3/WordBoundary，正式渲染严格复用同一快照。",
   "_tennistv_trim": "实际上传者ATP Tour，右上ATP台标被固定中心3:4裁出；184.68秒WATCH MORE/SUBSCRIBE开始。结束窗180.16、完整gathers more pace句后切出，下一句He takes out整句未采用，不带发行者片尾。",
-  "_tactics_why": "本期保留的可核关键球路集中在第二盘盘点：达维多维奇奔跑反手穿越，保留完整长回合及原声Oh it does not get any better than that。首盘7秒关盘只见实际发球及结果，不足以推断整盘发球落点/正反手战术；中文用官方9ACE、零破发点、一发得分79%到65%解释。决胜盘开局双误未在指定官方源中收录，用事实卡承接。不能为了两段中文球路数量，在没有可核画面的地方编造线路/站位或把同一回合重复解释。"
+  "_tactics_why": "本期保留的可核关键球路集中在第二盘盘点：达维多维奇奔跑反手穿越，保留完整长回合及原声Oh it does not get any better than that。首盘7秒关盘只见实际发球及结果，不足以推断整盘发球落点/正反手战术；中文用官方9ACE、零破发点、一发得分79%到65%解释。决胜盘开局双误未在指定官方源中收录，用事实卡承接。不能为了两段中文球路数量，在没有可核画面的地方编造线路/站位或把同一回合重复解释。",
+  "_final_outlook_update": {
+    "owner_request": "另一场半决赛梅德韦杰夫出局，把后半部分前瞻更新为已确定的决赛对阵。",
+    "changed_segment_index": 8,
+    "verified_result": "霍达尔6-3 6-4梅德韦杰夫；决赛达维多维奇·福基纳对阵霍达尔",
+    "facts": "data/evidence/davidovich-zverev-shanghai-2026-sf/final-outlook-update/facts/verified-final-outlook.json",
+    "original_spec_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
+    "unchanged_scope": "segments0..7,source,crop,scoreboard,cover,stats,sourceEnglishquotes,brandoutro; changed final titlecard/narration only."
+  }
 }

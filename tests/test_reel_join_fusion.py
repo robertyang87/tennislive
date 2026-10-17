@@ -127,3 +127,21 @@ def test_one_part_uses_the_same_clock_and_finite_video_source():
     assert plan.audio_graph == '[0:a]anull[aout]'
     assert '[0:v]scale=2:2' in plan.clock_graph()
     assert '[2:v]' in plan.final_graph('[0:v][2:v]overlay[out]')
+
+
+@pytest.mark.parametrize('input_range,black,white', [('pc', 0, 255), ('tv', 16, 235)])
+def test_final_bridge_converts_actual_full_range_pixels_and_preserves_limited(
+        input_range, black, white):
+    # Raw known-value pixels catch metadata-only relabelling and double range
+    # conversion. The scale/format options used here are supported by FFmpeg 6.
+    plan, _ = fusion.plan('[0:v]null[vout];[0:a]anull[aout]', 1)
+    y = bytes([black] * 128 + [white] * 128)
+    raw = y + bytes([128] * 512)  # One 16x16 planar YUV444 frame.
+    result = subprocess.run([
+        'ffmpeg', '-v', 'error', '-filter_complex_threads', '1',
+        '-f', 'rawvideo', '-pixel_format', 'yuv444p', '-video_size', '16x16',
+        '-color_range', input_range, '-i', 'pipe:0',
+        '-filter_complex', plan.final_graph('[0:v]null[out]'),
+        '-map', '[out]', '-an', '-frames:v', '1', '-pix_fmt', 'yuv420p',
+        '-f', 'rawvideo', 'pipe:1'], input=raw, capture_output=True, check=True)
+    assert result.stdout == bytes([16] * 128 + [235] * 128 + [128] * 128)

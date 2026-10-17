@@ -1,0 +1,47 @@
+{
+  "reviewer": "Current root OpenAI assistant",
+  "reviewed_at": "2026-10-17T13:24:05.986649+00:00",
+  "status": "finite_actual_spectral_F0_inspection_completed",
+  "bundle_sha256": "224043b9cf2a8e5494807da630b4f4039ad18471e79c9e2def59263cfacf00ae",
+  "plots_actually_viewed": [
+    {
+      "file": "outlook-002-U573A-syllable.png",
+      "sha256": "2df41a588a4d46b3cda70763a01decb51774cf24e7e9a7dc07d691a1e63df42b"
+    },
+    {
+      "file": "outlook-038-U5C14-syllable.png",
+      "sha256": "442439a980915a3a89a0b9a7c0efd04bddfe14cfac0b531bcacf4405752ffc2c"
+    },
+    {
+      "file": "outlook-focused-27-多.png",
+      "sha256": "216bf2d761423813713dd6a61f28091d044714299130bf8f28a06d98d3e068c0"
+    },
+    {
+      "file": "outlook-focused-27-native-token.png",
+      "sha256": "2e1bdec2dc5b62ca92dec2bf69ff471901cef16de58e0dfa403501e05ae8324d"
+    },
+    {
+      "file": "new-outlook-whole-prosody.png",
+      "sha256": "d4c1cc4c3aef34d9dd8c5a55afd78a05fd0c4adc638af37d1f253e4f30328b53"
+    },
+    {
+      "file": "new-outlook-context-spans.png",
+      "sha256": "b85a967e69c5a9d27c41345a63530b6e0e1159f3a949fd37d996139f73082656"
+    }
+  ],
+  "observations": [
+    "场 actual candidate is brief with low sparse F0 around70Hz, closer to positive low references than higher/longer negative windows; candidate-window limits retained.",
+    "末处尔 actual low declining F0 closer to A low contour than B higher onset; no full phoneme/tone certainty inferred.",
+    "多 actual whole-token spectral transitions and plateau/restart closely resemble A1/A2; some A/B F0 overlaps so this is finite direct low-risk support, not mechanical isolated first-tone proof.",
+    "Actual whole-utterance and5context-span plots viewed; final question and争冠 context evident in mapped spans. Lexical correctness and polyphone acceptance require separate agent-controlled current evidence, not plots alone."
+  ],
+  "human_listening_claimed": false,
+  "all_phonetic_or_all_tone_pass_claimed": false,
+  "raw_mechanical_pending_overridden": false,
+  "unchanged_five_requests_reaudited": false,
+  "limitations": [
+    "Finite bounded candidate windows; retains raw mechanical failures and pending labels.",
+    "No loudness/source-gain/threshold-silence/PCM comparison.",
+    "No actual new final movie exists at this time; final input binding remains pending."
+  ]
+}

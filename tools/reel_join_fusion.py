@@ -46,7 +46,10 @@ class FusionPlan:
             return f'[{index + self.parts - 1}:v]'
 
         graph = re.sub(r'\[(\d+):v\]', input_label, native_final)
-        bridge = 'format=yuv420p:color_ranges=tv'
+        # Explicit scale conversion also works before FFmpeg 7, whose format
+        # filter does not yet expose color_ranges. It converts pixels, rather
+        # than merely labelling full-range data as limited range.
+        bridge = 'scale=iw:ih:in_range=auto:out_range=tv,format=yuv420p'
         bridge += f',split={count}' if count > 1 else ',null'
         # Use a real format/range conversion at the removed encoder boundary.
         # Relabeling full-range pixels with setparams changes the image.

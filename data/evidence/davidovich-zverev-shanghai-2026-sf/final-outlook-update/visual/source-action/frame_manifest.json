@@ -1,0 +1,2559 @@
+{
+  "schema": "tennislive.partitioned-final-movie-visual-frame-manifest.v1",
+  "partition": "source_action_segments_0_2_4_6_plus_updated_outlook_8_and_brand_seam",
+  "movie": "/workspace/scratch/zverev-sf-outlook-final/davidovich-zverev-shanghai-2026-sf.mp4",
+  "movie_sha256": "7f5b967609dc0c8a75a7de23d38876e53ce2bf5d6d7173ae361e691eccbd1260",
+  "movie_bytes": 58643858,
+  "spec": "/workspace/tennislive-efficiency/specs/reels/davidovich-zverev-shanghai-2026-sf.json",
+  "spec_file_sha256": "33da62ac0f7d48ffc4dc020b7a58be620ea7b27ea206e2e5e61eb5d6c5ad75bc",
+  "native_spec_sha256": "33da62ac0f7d48ffc4dc020b7a58be620ea7b27ea206e2e5e61eb5d6c5ad75bc",
+  "ass": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/subtitles.ass",
+  "ass_sha256": "a46c5a2945e705e1d6764402678a1b8ed167ad65007eec53173d2fa20df9d028",
+  "render_inputs_sha256": "0646d107fa639dbc91044cc8180ac1d9dfc27732d7ed8c0da7de529c5c3201de",
+  "native_qc_sha256": "99ac74b7dc72fb9a0f6a8d603ca92b7e4cbde7bab2922402bc31f2e48c7f8a59",
+  "source_sha256": {
+    "main": "ca0f94dbbb70dc2f9318a792af879f25c6da863edd151928e14a43040dc752c4"
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "224043b9cf2a8e5494807da630b4f4039ad18471e79c9e2def59263cfacf00ae",
+    "request_count": 6,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-davidovich-zverev-shanghai-2026-sf-224043b9cf2a8e54",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-davidovich-zverev-shanghai-2026-sf-224043b9cf2a8e54/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39037092351"
+  },
+  "fps": 25.0,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "film_seconds": 160.6,
+  "total_movie_frames": 4015,
+  "segments": [
+    {
+      "index": 0,
+      "edit_id": "cold_open",
+      "film_start_s": 1.2,
+      "film_end_s": 11.84,
+      "source_start_s": 142.3,
+      "source_end_s": 152.94,
+      "assigned_to_this_reviewer": true
+    },
+    {
+      "index": 1,
+      "edit_id": "intro",
+      "film_start_s": 11.84,
+      "film_end_s": 31.04,
+      "source_start_s": null,
+      "source_end_s": null,
+      "assigned_to_this_reviewer": false
+    },
+    {
+      "index": 2,
+      "edit_id": "first_set_close",
+      "film_start_s": 31.04,
+      "film_end_s": 38.8,
+      "source_start_s": 54.4,
+      "source_end_s": 62.16,
+      "assigned_to_this_reviewer": true
+    },
+    {
+      "index": 3,
+      "edit_id": "second_set_context",
+      "film_start_s": 38.8,
+      "film_end_s": 53.599999999999994,
+      "source_start_s": null,
+      "source_end_s": null,
+      "assigned_to_this_reviewer": false
+    },
+    {
+      "index": 4,
+      "edit_id": "second_set_point",
+      "film_start_s": 53.599999999999994,
+      "film_end_s": 74.25999999999999,
+      "source_start_s": 106.24,
+      "source_end_s": 126.9,
+      "assigned_to_this_reviewer": true
+    },
+    {
+      "index": 5,
+      "edit_id": "deciding_set_context",
+      "film_start_s": 74.25999999999999,
+      "film_end_s": 87.05999999999999,
+      "source_start_s": null,
+      "source_end_s": null,
+      "assigned_to_this_reviewer": false
+    },
+    {
+      "index": 6,
+      "edit_id": "ending",
+      "film_start_s": 87.05999999999999,
+      "film_end_s": 130.01999999999998,
+      "source_start_s": 137.2,
+      "source_end_s": 180.16,
+      "assigned_to_this_reviewer": true
+    },
+    {
+      "index": 7,
+      "edit_id": "full_stats",
+      "film_start_s": 130.01999999999998,
+      "film_end_s": 143.01999999999998,
+      "source_start_s": null,
+      "source_end_s": null,
+      "assigned_to_this_reviewer": false
+    },
+    {
+      "index": 8,
+      "edit_id": "outlook",
+      "film_start_s": 143.01999999999998,
+      "film_end_s": 156.01999999999998,
+      "source_start_s": null,
+      "source_end_s": null,
+      "assigned_to_this_reviewer": true
+    }
+  ],
+  "assigned_ass_cues": [
+    {
+      "global_cue": 1,
+      "cue_start_s": 1.66,
+      "cue_end_s": 4.54,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}For the second time in his career,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N职业生涯第二次",
+      "segment_index": 0
+    },
+    {
+      "global_cue": 2,
+      "cue_start_s": 5.52,
+      "cue_end_s": 7.9,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Alejandro Davidovich Fokina{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N达维多维奇 福基纳",
+      "segment_index": 0
+    },
+    {
+      "global_cue": 3,
+      "cue_start_s": 7.9,
+      "cue_end_s": 11.64,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is into the final of a Masters 1000.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N打进了大师赛决赛",
+      "segment_index": 0
+    },
+    {
+      "global_cue": 12,
+      "cue_start_s": 31.5,
+      "cue_end_s": 33.1,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Another set point.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N又一个盘点",
+      "segment_index": 2
+    },
+    {
+      "global_cue": 13,
+      "cue_start_s": 36.22,
+      "cue_end_s": 38.74,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Dominant on serve once again.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他的发球再次展现统治力",
+      "segment_index": 2
+    },
+    {
+      "global_cue": 20,
+      "cue_start_s": 66.8,
+      "cue_end_s": 70.53999999999999,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Oh, it doesn't get any better than that.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N噢 这一分真是精彩到了极点！",
+      "segment_index": 4
+    },
+    {
+      "global_cue": 26,
+      "cue_start_s": 92.62,
+      "cue_end_s": 95.5,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}For the second time in his career,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N职业生涯第二次",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 27,
+      "cue_start_s": 96.47999999999999,
+      "cue_end_s": 98.86,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Alejandro Davidovich Fokina{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N达维多维奇 福基纳",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 28,
+      "cue_start_s": 98.86,
+      "cue_end_s": 102.6,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is into the final of a Masters 1000.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N打进了大师赛决赛",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 29,
+      "cue_start_s": 107.24000000000001,
+      "cue_end_s": 110.56,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}And for the second time in his career,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N同时 这也是他职业生涯第二次",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 30,
+      "cue_start_s": 111.2,
+      "cue_end_s": 114.1,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}he gets the better of Alexander Zverev.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N击败亚历山大 兹维列夫",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 31,
+      "cue_start_s": 117.74000000000001,
+      "cue_end_s": 120.18,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}What an Asian swing he's enjoying.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他的亚洲赛季 表现多么出色！",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 32,
+      "cue_start_s": 121.6,
+      "cue_end_s": 123.84,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Champion in Chengdu three weeks ago.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N三周前 他在成都夺冠",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 33,
+      "cue_start_s": 125.24,
+      "cue_end_s": 129.72,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}His unbeaten run on Chinese soil gathers more pace.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他在中国的不败征程 继续向前",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 39,
+      "cue_start_s": 143.07,
+      "cue_end_s": 144.34,
+      "cue_text": "{\\an2}另一场半决赛",
+      "segment_index": 8
+    },
+    {
+      "global_cue": 40,
+      "cue_start_s": 144.34,
+      "cue_end_s": 147.03,
+      "cue_text": "{\\an2}霍达尔两盘淘汰梅德韦杰夫",
+      "segment_index": 8
+    },
+    {
+      "global_cue": 41,
+      "cue_start_s": 147.03,
+      "cue_end_s": 148.02,
+      "cue_text": "{\\an2}上海决赛",
+      "segment_index": 8
+    },
+    {
+      "global_cue": 42,
+      "cue_start_s": 148.02,
+      "cue_end_s": 150.7,
+      "cue_text": "{\\an2}达维多维奇 福基纳对阵霍达尔",
+      "segment_index": 8
+    },
+    {
+      "global_cue": 43,
+      "cue_start_s": 150.7,
+      "cue_end_s": 152.94,
+      "cue_text": "{\\an2}两位西班牙球员会师争冠",
+      "segment_index": 8
+    },
+    {
+      "global_cue": 44,
+      "cue_start_s": 152.94,
+      "cue_end_s": 154.71,
+      "cue_text": "{\\an2}你更看好谁？",
+      "segment_index": 8
+    }
+  ],
+  "other_partition_ass_cues_not_reviewed_here": [
+    {
+      "global_cue": 4,
+      "cue_start_s": 11.89,
+      "cue_end_s": 14.63,
+      "cue_text": "{\\an2}北京时间{\\fs78}2026{\\fs68}年{\\fs78}10{\\fs68}月{\\fs78}17{\\fs68}日下午"
+    },
+    {
+      "global_cue": 5,
+      "cue_start_s": 14.63,
+      "cue_end_s": 16.96,
+      "cue_text": "{\\an2}上海大师赛男单半决赛"
+    },
+    {
+      "global_cue": 6,
+      "cue_start_s": 16.96,
+      "cue_end_s": 19.22,
+      "cue_text": "{\\an2}提前锁定年终第一的兹维列夫"
+    },
+    {
+      "global_cue": 7,
+      "cue_start_s": 19.22,
+      "cue_end_s": 21.51,
+      "cue_text": "{\\an2}对阵达维多维奇 福基纳"
+    },
+    {
+      "global_cue": 8,
+      "cue_start_s": 21.51,
+      "cue_end_s": 22.97,
+      "cue_text": "{\\an2}首盘{\\fs78}9{\\fs68}记{\\fs78}ACE{\\fs68}"
+    },
+    {
+      "global_cue": 9,
+      "cue_start_s": 22.97,
+      "cue_end_s": 25.13,
+      "cue_text": "{\\an2}没给对手一个破发点"
+    },
+    {
+      "global_cue": 10,
+      "cue_start_s": 25.13,
+      "cue_end_s": 27.03,
+      "cue_text": "{\\an2}{\\fs78}5{\\fs68}比{\\fs78}5{\\fs68}之后率先破发"
+    },
+    {
+      "global_cue": 11,
+      "cue_start_s": 27.03,
+      "cue_end_s": 29.62,
+      "cue_text": "{\\an2}他拿到先赢一盘的机会"
+    },
+    {
+      "global_cue": 14,
+      "cue_start_s": 38.85,
+      "cue_end_s": 40.37,
+      "cue_text": "{\\an2}首盘{\\fs78}7{\\fs68}比{\\fs78}5{\\fs68}之后"
+    },
+    {
+      "global_cue": 15,
+      "cue_start_s": 40.37,
+      "cue_end_s": 42.4,
+      "cue_text": "{\\an2}第二盘的压力换边了"
+    },
+    {
+      "global_cue": 16,
+      "cue_start_s": 42.4,
+      "cue_end_s": 44.25,
+      "cue_text": "{\\an2}兹维列夫的一发得分率"
+    },
+    {
+      "global_cue": 17,
+      "cue_start_s": 44.25,
+      "cue_end_s": 47.55,
+      "cue_text": "{\\an2}从{\\fs78}79{\\fs68}%降到{\\fs78}65{\\fs68}%"
+    },
+    {
+      "global_cue": 18,
+      "cue_start_s": 47.55,
+      "cue_end_s": 48.36,
+      "cue_text": "{\\an2}{\\fs78}4{\\fs68}比{\\fs78}5{\\fs68}"
+    },
+    {
+      "global_cue": 19,
+      "cue_start_s": 48.36,
+      "cue_end_s": 52.36,
+      "cue_text": "{\\an2}对手在盘点上打出奔跑中的反手穿越"
+    },
+    {
+      "global_cue": 21,
+      "cue_start_s": 74.31,
+      "cue_end_s": 76.36,
+      "cue_text": "{\\an2}决胜盘开局 一次双误"
+    },
+    {
+      "global_cue": 22,
+      "cue_start_s": 76.36,
+      "cue_end_s": 78.85,
+      "cue_text": "{\\an2}让兹维列夫先丢发球局"
+    },
+    {
+      "global_cue": 23,
+      "cue_start_s": 78.85,
+      "cue_end_s": 81.45,
+      "cue_text": "{\\an2}{\\fs78}2{\\fs68}比{\\fs78}5{\\fs68}落后 他扛过两个赛点"
+    },
+    {
+      "global_cue": 24,
+      "cue_start_s": 81.45,
+      "cue_end_s": 83.02,
+      "cue_text": "{\\an2}追到{\\fs78}3{\\fs68}比{\\fs78}5{\\fs68}"
+    },
+    {
+      "global_cue": 25,
+      "cue_start_s": 83.02,
+      "cue_end_s": 85.8,
+      "cue_text": "{\\an2}可接下来 轮到对手发球"
+    },
+    {
+      "global_cue": 34,
+      "cue_start_s": 130.07,
+      "cue_end_s": 133.0,
+      "cue_text": "{\\an2}全场{\\fs78}18{\\fs68}记{\\fs78}ACE{\\fs68} 没能换来胜利"
+    },
+    {
+      "global_cue": 35,
+      "cue_start_s": 133.0,
+      "cue_end_s": 135.0,
+      "cue_text": "{\\an2}制胜分{\\fs78}28{\\fs68}比{\\fs78}36{\\fs68}"
+    },
+    {
+      "global_cue": 36,
+      "cue_start_s": 135.0,
+      "cue_end_s": 137.52,
+      "cue_text": "{\\an2}非受迫失误{\\fs78}20{\\fs68}比{\\fs78}21{\\fs68}"
+    },
+    {
+      "global_cue": 37,
+      "cue_start_s": 137.52,
+      "cue_end_s": 139.24,
+      "cue_text": "{\\an2}兹维列夫的发球有威力"
+    },
+    {
+      "global_cue": 38,
+      "cue_start_s": 139.24,
+      "cue_end_s": 141.56,
+      "cue_text": "{\\an2}进攻得分却少了{\\fs78}8{\\fs68}个"
+    }
+  ],
+  "samples": [
+    {
+      "frame_index": 36,
+      "film_time_s": 1.44,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 0,
+          "edit_id": "cold_open",
+          "nominal_source_s": 142.54000000000002
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 142.54
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00036.png",
+      "image_sha256": "b9c068ce94d0448c6d0e5fb2bf72b1462fce525a71be161bd07289c9a685d2b0",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 47,
+      "film_time_s": 1.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 143
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00047.png",
+      "image_sha256": "fdafa0b171da9956b3915d668dd1f06887c82ea5041152e34bbd4c83a44074df",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 78,
+      "film_time_s": 3.12,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 1,
+          "cue_start_s": 1.66,
+          "cue_end_s": 4.54,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}For the second time in his career,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N职业生涯第二次",
+          "segment_index": 0
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 144,
+          "coalesced_request_frame_index": 72,
+          "actual_sample_minus_requested_seconds": 0.24
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00078.png",
+      "image_sha256": "a783153ee85db0fdfc0256f2e54ef6c0c3ffdea5466b2b0ce827030372b5d7a0",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 97,
+      "film_time_s": 3.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 145
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00097.png",
+      "image_sha256": "d9a89009e6d1b606f336a71680507f362394c10c4d2a30597025ecfe468c0ad6",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 122,
+      "film_time_s": 4.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 146
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00122.png",
+      "image_sha256": "6b59740c962c850d37c668d9cd7afee6d55b829d9170721bebbac60be0c475eb",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 147,
+      "film_time_s": 5.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 147
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00147.png",
+      "image_sha256": "e348ea242fe52f6446f7d73e2ad44a7cf6ebae548ceb192d1c6dc3db294fe4d3",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 168,
+      "film_time_s": 6.72,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 2,
+          "cue_start_s": 5.52,
+          "cue_end_s": 7.9,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Alejandro Davidovich Fokina{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N达维多维奇 福基纳",
+          "segment_index": 0
+        },
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 0,
+          "edit_id": "cold_open",
+          "nominal_source_s": 147.62,
+          "coalesced_request_frame_index": 163,
+          "actual_sample_minus_requested_seconds": 0.2
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 148,
+          "coalesced_request_frame_index": 172,
+          "actual_sample_minus_requested_seconds": -0.16
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00168.png",
+      "image_sha256": "578b241fc1c9d27d23eb2f909d32250ddc1470162c656c70df99c887d5974231",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 197,
+      "film_time_s": 7.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 149
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00197.png",
+      "image_sha256": "01f58714cd70666486372be3863b0debfb52a518532e0565291cb3cb050bbd3d",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 222,
+      "film_time_s": 8.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 150
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00222.png",
+      "image_sha256": "0ce151a47a2548799149dc626215ec654cde4ff9420ee7958bdc42a853c66ef7",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 244,
+      "film_time_s": 9.76,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 3,
+          "cue_start_s": 7.9,
+          "cue_end_s": 11.64,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is into the final of a Masters 1000.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N打进了大师赛决赛",
+          "segment_index": 0
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 151,
+          "coalesced_request_frame_index": 247,
+          "actual_sample_minus_requested_seconds": -0.12
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00244.png",
+      "image_sha256": "0e5d14f66f2b5cac1c983a21a2f01b9bc9fd6d0cf5710ed31c8a8e497d41c35f",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 287,
+      "film_time_s": 11.48,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 152.6
+        },
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 0,
+          "edit_id": "cold_open",
+          "nominal_source_s": 152.66000000000003,
+          "coalesced_request_frame_index": 289,
+          "actual_sample_minus_requested_seconds": -0.08
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00287.png",
+      "image_sha256": "c9b75400fb919504e8a0c16e301b57a4191b267ecc797d851c85840cf572636d",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 782,
+      "film_time_s": 31.28,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 2,
+          "edit_id": "first_set_close",
+          "nominal_source_s": 54.64
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 54.64
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00782.png",
+      "image_sha256": "0f013c733e65e2786cc015546f982104a3b8ea789a53abeca8ab605686eebe38",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 791,
+      "film_time_s": 31.64,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 55
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00791.png",
+      "image_sha256": "c407c85136fc660bcb3e6041c9fb2295a4946312ec6f6e20e6777635ff07c76c",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 807,
+      "film_time_s": 32.28,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 12,
+          "cue_start_s": 31.5,
+          "cue_end_s": 33.1,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Another set point.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N又一个盘点",
+          "segment_index": 2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00807.png",
+      "image_sha256": "ea60f0c8ff573815cdde2d4991cdf90cdc5f73ce48cdce2e1e1ed3f56472bbce",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 815,
+      "film_time_s": 32.6,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 55.96
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00815.png",
+      "image_sha256": "484d98ab06b6f50e864ada60d0e0d10197525399271d3e8f5621d6546f69898f",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 828,
+      "film_time_s": 33.12,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 56.5
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00828.png",
+      "image_sha256": "5fb437cc321acddf9d3da1ae5bea48f4f2b48f5f08cd4758141019c05ddbce51",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 853,
+      "film_time_s": 34.12,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 57.48
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00853.png",
+      "image_sha256": "f30045faf2b0578a30fc69b017e71e4f730aa512e4783df586bb1973deb3345d",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 865,
+      "film_time_s": 34.6,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 57.96
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00865.png",
+      "image_sha256": "495e37bd1a6ccf3991d187909962cabceae187be1ab84ca5e126fffe9a6736c1",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 873,
+      "film_time_s": 34.92,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 2,
+          "edit_id": "first_set_close",
+          "nominal_source_s": 58.28
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 58.48,
+          "coalesced_request_frame_index": 878,
+          "actual_sample_minus_requested_seconds": -0.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00873.png",
+      "image_sha256": "d98cc220b550417c09bedeb30963572303b59927440ac59e369ed962a60d17ce",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 891,
+      "film_time_s": 35.64,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 59
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00891.png",
+      "image_sha256": "fe9975d40cd7ea2248761e5e26c91f22f19c490388a0ff4140565d3e92f55696",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 928,
+      "film_time_s": 37.12,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 60.5
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00928.png",
+      "image_sha256": "5fcd0de5b0313bed5515e57bb1ab4803f55c26060c792261ca92a68d71c3be2a",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 937,
+      "film_time_s": 37.48,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 13,
+          "cue_start_s": 36.22,
+          "cue_end_s": 38.74,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Dominant on serve once again.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他的发球再次展现统治力",
+          "segment_index": 2
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 60.84
+        },
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 2,
+          "nominal_source_s": 60.84
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00937.png",
+      "image_sha256": "ed7a6a3da3605cb0bc78c533c6b1a7418025663bd6668bd96c2ebdadc929610f",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 963,
+      "film_time_s": 38.52,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 2,
+          "edit_id": "first_set_close",
+          "nominal_source_s": 61.879999999999995
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 61.88
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00963.png",
+      "image_sha256": "5d83d1e0f5d1e82dbe042c66448dc1a717a73cd2ae83e21ca703dc9ee85e36c5",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1346,
+      "film_time_s": 53.84,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 4,
+          "edit_id": "second_set_point",
+          "nominal_source_s": 106.47999999999999
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 106.48
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01346.png",
+      "image_sha256": "7427a61c4cfbbc7dafc21a24fb3eb0d1edc1a7241ecbb7bca29e308894207e18",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1359,
+      "film_time_s": 54.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 107
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01359.png",
+      "image_sha256": "caf1bc318afa0a01f52342b8f1adaadc2db1bd655aaea848af1dea9a2eaca0f7",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1384,
+      "film_time_s": 55.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 108
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01384.png",
+      "image_sha256": "b91c238bb87a9146388c053b1c6add4c290e5206a6a2615c4ada36b2221ff0be",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1409,
+      "film_time_s": 56.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 109
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01409.png",
+      "image_sha256": "23f056035d2fddbf972c30b506674d93bf819017334eac2a3c388d62529073c2",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1434,
+      "film_time_s": 57.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 110
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01434.png",
+      "image_sha256": "3055a9aac09a5020ea52c020fb02b8833799ac29573bc48330d94c8f6d78ab55",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1459,
+      "film_time_s": 58.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 111
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01459.png",
+      "image_sha256": "022b43d069adfa818e3c25f03bc62e8fca5b633e9c542f4034eb8c107fbb167e",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1484,
+      "film_time_s": 59.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 112
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01484.png",
+      "image_sha256": "83ac64434a3f3398d36e8b77434a7bed5fc2636bd720ccaa8ef61959f31f9e30",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1509,
+      "film_time_s": 60.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 113
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01509.png",
+      "image_sha256": "e7a41f4e4c1e8d15aa156e587b61ec7b3628a4a6627b4b7a38e869f4084f334b",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1534,
+      "film_time_s": 61.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 114
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01534.png",
+      "image_sha256": "ef0406429da9b9e744a66a35186c8c79a5de4ed3b700caaac6ffab10a24204d7",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1559,
+      "film_time_s": 62.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 115
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01559.png",
+      "image_sha256": "c3a0269b4d47e08f60a6d1bdd75fc7cd9bc83f435bb35a6610bf1c55273f8b4d",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1584,
+      "film_time_s": 63.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 116
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 116
+        },
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 116
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01584.png",
+      "image_sha256": "07b603f8fa97a8165754d3ffae8aedf6cd8d562dcc3dec690e9eb08dd7a013f9",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 1598,
+      "film_time_s": 63.92,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 4,
+          "edit_id": "second_set_point",
+          "nominal_source_s": 116.57
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01598.png",
+      "image_sha256": "e69475bfa9ff07c589fcbc0ec0bb9b201f26a5e7a0e4248597395946ca7ad8ae",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1609,
+      "film_time_s": 64.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 117
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 117
+        },
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 117
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01609.png",
+      "image_sha256": "1b7cbade7706b5cd43886c55bed4f4111cee814d49737f6aedc49e6aadcc9c5c",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 1634,
+      "film_time_s": 65.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 118
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01634.png",
+      "image_sha256": "36eb941a1257fc33abb36f6a13f98d22a2497b8faa7cc2458ac94074b2ddf467",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1664,
+      "film_time_s": 66.56,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 119.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01664.png",
+      "image_sha256": "bbf875a09a5640502bd62c8e22dfb5c500d0b2f82d1b3ec9560f53421b86e371",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1674,
+      "film_time_s": 66.96,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 119.6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01674.png",
+      "image_sha256": "beb1830cef791fcaf6b5f42e06fb06ad7b8c36f17bb8efe1eb794842e2364884",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1688,
+      "film_time_s": 67.52,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 120.16
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01688.png",
+      "image_sha256": "f280f73a41baf2757516461296926e8c0ecc3c0913143740a8e7aed12c8ed6c5",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1717,
+      "film_time_s": 68.68,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 20,
+          "cue_start_s": 66.8,
+          "cue_end_s": 70.53999999999999,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Oh, it doesn't get any better than that.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N噢 这一分真是精彩到了极点！",
+          "segment_index": 4
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 121.2,
+          "coalesced_request_frame_index": 1714,
+          "actual_sample_minus_requested_seconds": 0.12
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01717.png",
+      "image_sha256": "fb3dc085eba46cdb78fa7eacf84aa69dc981776ca787116727aa99c77c6b27e6",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1734,
+      "film_time_s": 69.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 122
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01734.png",
+      "image_sha256": "52bcfbe6f79ee0b319c8df53b5a40f509e912336cf8a1be562664e1dbaa2606e",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1746,
+      "film_time_s": 69.84,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 122.48
+        },
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 122.48
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01746.png",
+      "image_sha256": "0ee2c49aaee7c12ba309c3e358d0cdb1dc1f9323c9d79b15a1ac141370381a67",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 1759,
+      "film_time_s": 70.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 123
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 123
+        },
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 123
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01759.png",
+      "image_sha256": "52d57472d1d125bdd6a5893d371a6d24e2ca551778f2e3ed43cd8c9d967cfbd3",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 1771,
+      "film_time_s": 70.84,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 123.48
+        },
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 123.48
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01771.png",
+      "image_sha256": "bbdcd615f684466116d1b5fd86e61d01aea18e5572ce9358b188c55802eb4e82",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 1784,
+      "film_time_s": 71.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 124
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01784.png",
+      "image_sha256": "d2e3bdcad1ee2672b0c2fe46c4421f53df291e77d27c8dfc72b29a2851a7d588",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1804,
+      "film_time_s": 72.16,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 124.8
+        },
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 124.8
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 125,
+          "coalesced_request_frame_index": 1809,
+          "actual_sample_minus_requested_seconds": -0.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01804.png",
+      "image_sha256": "537be0c093d33eb1a11ec4fb9b823ed01c3c768992681931fc85ef3061c1f5f5",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 1834,
+      "film_time_s": 73.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 126
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01834.png",
+      "image_sha256": "096a6a124e4ba0512e1b5108cf683a4e98daf8ed04c345bc4e4a0a2e10d6f5d6",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1850,
+      "film_time_s": 74.0,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 126.64
+        },
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 4,
+          "edit_id": "second_set_point",
+          "nominal_source_s": 126.61999999999999,
+          "coalesced_request_frame_index": 1849,
+          "actual_sample_minus_requested_seconds": 0.04
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01850.png",
+      "image_sha256": "18a29a31aefc2285b3521e59f97281a4c06793455362c8f700d36be15d8dc4f2",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1852,
+      "film_time_s": 74.08,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 126.72
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01852.png",
+      "image_sha256": "a8ed8e3b0f8cf1bc9827d95a0281678a8fba91bef1614e086f0c68d6487b34f4",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1854,
+      "film_time_s": 74.16,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 126.8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01854.png",
+      "image_sha256": "5dad9bba0ba1bddfe0a8366bfc50afcb744d84be4cba25bb20a522fc8bc4eb64",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1855,
+      "film_time_s": 74.2,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 126.84
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01855.png",
+      "image_sha256": "1947d2693346a1681382bfa325ae3ec1676a6c2ec376104c5722cd581a3c0270",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2182,
+      "film_time_s": 87.28,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 6,
+          "edit_id": "ending",
+          "nominal_source_s": 137.44
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 137.44,
+          "coalesced_request_frame_index": 2183,
+          "actual_sample_minus_requested_seconds": -0.04
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02182.png",
+      "image_sha256": "d6cda6652af4264b9caf37dc5992d7cd8db560110ebdf2bcae5d1343c06792c4",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2192,
+      "film_time_s": 87.68,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 137.8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02192.png",
+      "image_sha256": "ac58ea95afcd1b13cec7d3f4a72edbe48a7432a574dce802a3e81850444fc0bc",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2202,
+      "film_time_s": 88.08,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 138.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02202.png",
+      "image_sha256": "a10d31679d3dc0e7ed018e01a515ad116f4ea7305eebd86475ce655af88515f8",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2222,
+      "film_time_s": 88.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 139
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02222.png",
+      "image_sha256": "c4430c1748a11849b6b1925fdf940421b15b886c23042fc1cf43567852d244fc",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2232,
+      "film_time_s": 89.28,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 139.4
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02232.png",
+      "image_sha256": "09595f88ac52e915e570c2c51de564a5686872c9691e70721538f5082bfa860b",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2247,
+      "film_time_s": 89.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 140
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02247.png",
+      "image_sha256": "2dfc0f576453297c9815b739d8cf17d491de423e3d0bad979a5ca971a9b82cea",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2261,
+      "film_time_s": 90.44,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 140.6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02261.png",
+      "image_sha256": "6f41f20d4a73e686bc17d7b3522818d9ba110fa303ac895a3a6291b89352823b",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2272,
+      "film_time_s": 90.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 141
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02272.png",
+      "image_sha256": "b36942e47f6c9d312518716265c6f21f7b372124bcac47ed78d4cd3d4930e1d2",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2282,
+      "film_time_s": 91.28,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 141.4
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02282.png",
+      "image_sha256": "0ddc597ca26057f6a70cf013c444e506414a150e4eb51ec7539b24ddc27c335b",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2292,
+      "film_time_s": 91.68,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 141.8
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 142.04,
+          "coalesced_request_frame_index": 2297,
+          "actual_sample_minus_requested_seconds": -0.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02292.png",
+      "image_sha256": "fab66c8d9f74e8523caa41d4725a4b4c7ec1950340247ff3972f4bd63df1e901",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2322,
+      "film_time_s": 92.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 143
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02322.png",
+      "image_sha256": "f6cf179012bd6fd9a0a9d0ba6b0e74181453f3a8ed327d1c8a8f2ea99f654f5e",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2352,
+      "film_time_s": 94.08,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 26,
+          "cue_start_s": 92.62,
+          "cue_end_s": 95.5,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}For the second time in his career,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N职业生涯第二次",
+          "segment_index": 6
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 144,
+          "coalesced_request_frame_index": 2347,
+          "actual_sample_minus_requested_seconds": 0.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02352.png",
+      "image_sha256": "9f20f939fdb65e15a9af7e1f7174fb9a77307727bb65c5d3f8bc38a2a6f6322e",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2397,
+      "film_time_s": 95.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 146
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02397.png",
+      "image_sha256": "4e9c38b8cb2e495c70e5ff4bc8f0563122e8acba64f8a9938ddc7646430ddea9",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2442,
+      "film_time_s": 97.68,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 27,
+          "cue_start_s": 96.47999999999999,
+          "cue_end_s": 98.86,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Alejandro Davidovich Fokina{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N达维多维奇 福基纳",
+          "segment_index": 6
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 148,
+          "coalesced_request_frame_index": 2447,
+          "actual_sample_minus_requested_seconds": -0.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02442.png",
+      "image_sha256": "6d76f21616cf7d17420d353df28cb975d7f9c8eee1084cca632019f4be1db1c6",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 2497,
+      "film_time_s": 99.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 150
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02497.png",
+      "image_sha256": "aa8e17009e4ab770ca3d706f3312ef2c093ea55dfe0dda476f821da800ba3534",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2518,
+      "film_time_s": 100.72,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 28,
+          "cue_start_s": 98.86,
+          "cue_end_s": 102.6,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is into the final of a Masters 1000.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N打进了大师赛决赛",
+          "segment_index": 6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02518.png",
+      "image_sha256": "a10428e6e9ec838cf97dc6fddc7a128ffaa9c411ec8a4048538f1bdc64161e27",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2547,
+      "film_time_s": 101.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 152
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02547.png",
+      "image_sha256": "e6662b42d5d6db17264d57ca6fcb6f5ed5e2ea563088be1d420716b4d1ad4823",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2597,
+      "film_time_s": 103.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 154
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02597.png",
+      "image_sha256": "f076643445857431aa464a7fab4bfc84b0293c8fe1685084b4978198125974e4",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2622,
+      "film_time_s": 104.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 155
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02622.png",
+      "image_sha256": "63e68705ba4c7431e8b1939ca7541468bc86d868e1607828c27d7d20faf2f1ad",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2647,
+      "film_time_s": 105.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 156
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02647.png",
+      "image_sha256": "013506f520eb589bd1b4a970da55170060feb60bbdb24f15607322149ec845ca",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2697,
+      "film_time_s": 107.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 158
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02697.png",
+      "image_sha256": "26eb607db53b3c8ad68ecbf7b97d135f18723da3cd067652a3ebe0d2256ab0a1",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2714,
+      "film_time_s": 108.56,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 6,
+          "edit_id": "ending",
+          "nominal_source_s": 158.67999999999998
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02714.png",
+      "image_sha256": "90328f41a5b4912d5d1fe86715084e7a5cd5366828ce86a04b582cc90ebd23ef",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2722,
+      "film_time_s": 108.88,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 29,
+          "cue_start_s": 107.24000000000001,
+          "cue_end_s": 110.56,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}And for the second time in his career,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N同时 这也是他职业生涯第二次",
+          "segment_index": 6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02722.png",
+      "image_sha256": "965305bb3246c1d69b8e792eac5b8d2873c81e6b9604f3439e6b428b6765b5ea",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2747,
+      "film_time_s": 109.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 160
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02747.png",
+      "image_sha256": "aab591c0812feeb3c7d463161c7346c305c74bec4d60365b44741b6ec448c5f7",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2797,
+      "film_time_s": 111.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 162
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02797.png",
+      "image_sha256": "b9f98148f546d25010fa044a2d9f53ae6d83357ac34083229909987811f68dc0",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2816,
+      "film_time_s": 112.64,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 30,
+          "cue_start_s": 111.2,
+          "cue_end_s": 114.1,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}he gets the better of Alexander Zverev.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N击败亚历山大 兹维列夫",
+          "segment_index": 6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02816.png",
+      "image_sha256": "2a64b24a4f56c55c9d24231bfa5e188c63e0ac2a0e6ab659263b96207b034447",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2847,
+      "film_time_s": 113.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 164
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02847.png",
+      "image_sha256": "bb53f77e1882581c67ed9353de3c08de7778e2054e4c74710eea519c9fe82feb",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2897,
+      "film_time_s": 115.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 166
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02897.png",
+      "image_sha256": "2e244e40b4e3686e6cf6ea317ac6ae3e4ecf48f5175bb886d8bfeaaca511a89d",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2947,
+      "film_time_s": 117.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 168
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02947.png",
+      "image_sha256": "694a8757dce8cf11c2f93bee1d173412f41fe8156f84e2f7ed2ad4899bd5223a",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2974,
+      "film_time_s": 118.96,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 31,
+          "cue_start_s": 117.74000000000001,
+          "cue_end_s": 120.18,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}What an Asian swing he's enjoying.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他的亚洲赛季 表现多么出色！",
+          "segment_index": 6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02974.png",
+      "image_sha256": "93622a42d3c733aa2a40fc413cf63d996d6f73821db9d2377aada1fc8b80e44a",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2997,
+      "film_time_s": 119.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 170
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02997.png",
+      "image_sha256": "3cd43ef357369c0d7941d45caa41083962792c22ef5ae090545af8b8dd7bd183",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3047,
+      "film_time_s": 121.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 172
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03047.png",
+      "image_sha256": "65a0cd7f1874ceffa9c248904f5c2fbfdd9a04c29d8f35e401e34f65d145f85a",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3068,
+      "film_time_s": 122.72,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 32,
+          "cue_start_s": 121.6,
+          "cue_end_s": 123.84,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Champion in Chengdu three weeks ago.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N三周前 他在成都夺冠",
+          "segment_index": 6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03068.png",
+      "image_sha256": "05b5f4373330c4f6b111773728fbe3b7a4b760ba0ead7e35266bdd6979d4364c",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3083,
+      "film_time_s": 123.32,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 173.48
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03083.png",
+      "image_sha256": "cc3c1483636b2ee01d364dca85daa1a567d19e1a734e3fbc61cf8d8e13618641",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3122,
+      "film_time_s": 124.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 175
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03122.png",
+      "image_sha256": "d9e67b79dfe7357b1126a5babd57c42ca31cc9f5a21fd827d823e9a4b9f469e1",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3172,
+      "film_time_s": 126.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 177
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03172.png",
+      "image_sha256": "8335dfa9fef125bf0ed34cde654203cf924f19c928662bb2ddfbd29d37038450",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3187,
+      "film_time_s": 127.48,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 33,
+          "cue_start_s": 125.24,
+          "cue_end_s": 129.72,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}His unbeaten run on Chinese soil gathers more pace.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他在中国的不败征程 继续向前",
+          "segment_index": 6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03187.png",
+      "image_sha256": "0b962663bd698e8508171061351b1062bfa7af2e634e7ac11a8fbc3308290974",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3236,
+      "film_time_s": 129.44,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 179.6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03236.png",
+      "image_sha256": "0189ea8b63f3b4f001d6e841231cde8777849799d061c094516e78c085fad764",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3244,
+      "film_time_s": 129.76,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 6,
+          "nominal_source_s": 179.92
+        },
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 6,
+          "edit_id": "ending",
+          "nominal_source_s": 179.88,
+          "coalesced_request_frame_index": 3243,
+          "actual_sample_minus_requested_seconds": 0.04
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03244.png",
+      "image_sha256": "afafe38bea3858142cba89d4e12023e69bed8e3b82e48113c9f607d104ad9937",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3247,
+      "film_time_s": 129.88,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 6,
+          "nominal_source_s": 180.0
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 179.96,
+          "coalesced_request_frame_index": 3246,
+          "actual_sample_minus_requested_seconds": 0.04
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03247.png",
+      "image_sha256": "59b35d15cc0ddab62e6b19b0903d74ed7ee0d37d089764394eddf42af3c440a4",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3248,
+      "film_time_s": 129.92,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 6,
+          "nominal_source_s": 180.08
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03248.png",
+      "image_sha256": "57e3ad6aea0712ce344b2429924e7038c8462ebb1a39d044e8d719d52968e15d",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3250,
+      "film_time_s": 130.0,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 6,
+          "nominal_source_s": 180.12
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03250.png",
+      "image_sha256": "71e14218189bbbbcc5fa6ff8ad390caaad16c931f2b591f00407ade8dc630938",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3578,
+      "film_time_s": 143.12,
+      "reasons": [
+        {
+          "kind": "updated_outlook_card",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03578.png",
+      "image_sha256": "e12ef4d95203d17877aabb7eafea6558ab822b21f7ceacf87104671d87352ebc",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3593,
+      "film_time_s": 143.72,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 39,
+          "cue_start_s": 143.07,
+          "cue_end_s": 144.34,
+          "cue_text": "{\\an2}另一场半决赛",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03593.png",
+      "image_sha256": "0d3fae7206758292ff1eab1afb0b8eed7fba927248470cd0590a582456e84ae6",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3642,
+      "film_time_s": 145.68,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 40,
+          "cue_start_s": 144.34,
+          "cue_end_s": 147.03,
+          "cue_text": "{\\an2}霍达尔两盘淘汰梅德韦杰夫",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03642.png",
+      "image_sha256": "d407e53180c4a0f28cca6318b5bf01c76760e4b5fd5e5b08f0f35751fd240fda",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3688,
+      "film_time_s": 147.52,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 41,
+          "cue_start_s": 147.03,
+          "cue_end_s": 148.02,
+          "cue_text": "{\\an2}上海决赛",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03688.png",
+      "image_sha256": "0eb7f341fc054cd9267b5ffb9f1f68ae7d330f22fc7294646d3d90dcffd66400",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3734,
+      "film_time_s": 149.36,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 42,
+          "cue_start_s": 148.02,
+          "cue_end_s": 150.7,
+          "cue_text": "{\\an2}达维多维奇 福基纳对阵霍达尔",
+          "segment_index": 8
+        },
+        {
+          "kind": "updated_outlook_card",
+          "segment_index": 8,
+          "coalesced_request_frame_index": 3738,
+          "actual_sample_minus_requested_seconds": -0.16
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03734.png",
+      "image_sha256": "1ce0448602757a90c220f4e475b298de8b8a34d95ade959471a52c5cd1041579",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 3796,
+      "film_time_s": 151.84,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 43,
+          "cue_start_s": 150.7,
+          "cue_end_s": 152.94,
+          "cue_text": "{\\an2}两位西班牙球员会师争冠",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03796.png",
+      "image_sha256": "08574dbf2a8c979415776e161ab08769deaf9950e9edcb8674fbc6d3240474c1",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3846,
+      "film_time_s": 153.84,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 44,
+          "cue_start_s": 152.94,
+          "cue_end_s": 154.71,
+          "cue_text": "{\\an2}你更看好谁？",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03846.png",
+      "image_sha256": "ad1ec9710f034d14ac5e1509a0ce772dcd2b662f73f69766b60303b9d6ea9d84",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 3897,
+      "film_time_s": 155.88,
+      "reasons": [
+        {
+          "kind": "updated_outlook_card",
+          "segment_index": 8
+        },
+        {
+          "kind": "updated_outlook_to_brand_seam",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03897.png",
+      "image_sha256": "b761805c6b7d435db399794bf1f1a9cf9382ff45eb822d37271c01004190feeb",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3899,
+      "film_time_s": 155.96,
+      "reasons": [
+        {
+          "kind": "updated_outlook_to_brand_seam",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03899.png",
+      "image_sha256": "cc91b9f4facce3061d146324376d42e43b872afdc5d138820b56a60ece1dfc95",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3900,
+      "film_time_s": 156.0,
+      "reasons": [
+        {
+          "kind": "updated_outlook_to_brand_seam",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03900.png",
+      "image_sha256": "3e783b4ef36b4e9be7f3518190e7d0bfae8ed3c82af63874337acf6fed67f5aa",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3901,
+      "film_time_s": 156.04,
+      "reasons": [
+        {
+          "kind": "updated_outlook_to_brand_seam",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03901.png",
+      "image_sha256": "600b2b73712a79a712ece7ed1df1a0dbc5e6864f3c62582e4be5be3f2d433899",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3903,
+      "film_time_s": 156.12,
+      "reasons": [
+        {
+          "kind": "updated_outlook_to_brand_seam",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03903.png",
+      "image_sha256": "60e73c19f5627449e842f6f63d986292b8ad0347b1aa1046a140eaa1f57ed3a0",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 3906,
+      "film_time_s": 156.24,
+      "reasons": [
+        {
+          "kind": "updated_outlook_to_brand_seam",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03906.png",
+      "image_sha256": "0e32e388a5ecccb23967c201e46b6e8a6199e8451ad52775b338547fbc15da83",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3912,
+      "film_time_s": 156.48,
+      "reasons": [
+        {
+          "kind": "updated_outlook_to_brand_seam",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03912.png",
+      "image_sha256": "4c929443b84d59466c3f66c1a7081765185f94768c0dda666c1daa1b8b69473e",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3965,
+      "film_time_s": 158.6,
+      "reasons": [
+        {
+          "kind": "final_brand_after_updated_card",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03965.png",
+      "image_sha256": "5f45eb01f38573dfc5045636e9a5c4fe1dc5ce2d95669ce965a79b47e06c4c50",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 4011,
+      "film_time_s": 160.44,
+      "reasons": [
+        {
+          "kind": "final_brand_after_updated_card",
+          "segment_index": 8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-04011.png",
+      "image_sha256": "1a9ac38b60bfb0ddce20e626a7ef811173b911905ce46230afd405b2b9b9ec7d",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    }
+  ],
+  "walls": [
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-01.jpg",
+      "sha256": "a9e5e2bfb2d0e83ccbc0deb192c21c8080d064de927acc25ce52b3a51aa97acd",
+      "frame_indices": [
+        36,
+        47,
+        78,
+        97,
+        122,
+        147
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-02.jpg",
+      "sha256": "d3e333e65846ef3107d81804eb73a91013cb933ba47e4511c13a97d922a6b30c",
+      "frame_indices": [
+        168,
+        197,
+        222,
+        244,
+        287,
+        782
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-03.jpg",
+      "sha256": "87011b007751f04af91cfeab60a52f1ab981ca31b7655c21e15fd86fc7208c77",
+      "frame_indices": [
+        791,
+        807,
+        815,
+        828,
+        853,
+        865
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-04.jpg",
+      "sha256": "216bf92c8f96da75d3b9954ec20402c9cc9275d2fc329512720db0a1481dd804",
+      "frame_indices": [
+        873,
+        891,
+        928,
+        937,
+        963,
+        1346
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-05.jpg",
+      "sha256": "8637563bb8ec014c6fe4190013db6dc9a4c11cbdf04f6f62ac58122106018150",
+      "frame_indices": [
+        1359,
+        1384,
+        1409,
+        1434,
+        1459,
+        1484
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-06.jpg",
+      "sha256": "d154f8181cce95ea2586700eed4bbec866d439363c2952405c256c1adb588f47",
+      "frame_indices": [
+        1509,
+        1534,
+        1559,
+        1584,
+        1598,
+        1609
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-07.jpg",
+      "sha256": "eaf79192624209596ff38e9c0e90836c3de531c58c92d5c168a5f54c75c6406f",
+      "frame_indices": [
+        1634,
+        1664,
+        1674,
+        1688,
+        1717,
+        1734
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-08.jpg",
+      "sha256": "fdb93d1e3f408186a77022e1ebbca76e82a88513512480943215c16708705658",
+      "frame_indices": [
+        1746,
+        1759,
+        1771,
+        1784,
+        1804,
+        1834
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-09.jpg",
+      "sha256": "705464c0362bb9f34ba9e50759c95e593046b998e5fecf6de45e25b55960b711",
+      "frame_indices": [
+        1850,
+        1852,
+        1854,
+        1855,
+        2182,
+        2192
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-10.jpg",
+      "sha256": "e28a1db5d99403ef76d8d0b3e5a6b4b97b5a36f71ea579a8fd23353be0ab6c44",
+      "frame_indices": [
+        2202,
+        2222,
+        2232,
+        2247,
+        2261,
+        2272
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-11.jpg",
+      "sha256": "ef304461b9c22598407502f67fa93bfe176c20692976ff665065242107fbdda3",
+      "frame_indices": [
+        2282,
+        2292,
+        2322,
+        2352,
+        2397,
+        2442
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-12.jpg",
+      "sha256": "cda5a6a2d2a7bee167315624eed9447c33f5a69263dceff619156644be458e91",
+      "frame_indices": [
+        2497,
+        2518,
+        2547,
+        2597,
+        2622,
+        2647
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-13.jpg",
+      "sha256": "e28d26f2aee4d984a12bbc951901984d4574916c62424203937546ad3ae4f4bd",
+      "frame_indices": [
+        2697,
+        2714,
+        2722,
+        2747,
+        2797,
+        2816
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-14.jpg",
+      "sha256": "f224ee75bbf3585f293d2640530a2a67b3d1fab27d6658b3d2c8914373b8a20d",
+      "frame_indices": [
+        2847,
+        2897,
+        2947,
+        2974,
+        2997,
+        3047
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-15.jpg",
+      "sha256": "90ee79f3d90732ccb83b13d10da76042b5f3e17a8192badc23cd90b842fda75f",
+      "frame_indices": [
+        3068,
+        3083,
+        3122,
+        3172,
+        3187,
+        3236
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-16.jpg",
+      "sha256": "8ec071ec210b65992c183be735a204dc135daaa8162334342864a2e4bee6b1be",
+      "frame_indices": [
+        3244,
+        3247,
+        3248,
+        3250,
+        3578,
+        3593
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-17.jpg",
+      "sha256": "250e0bbb9e6ee4e410d61450de909e28864fe9e0b6fb2214c16cd1524f064590",
+      "frame_indices": [
+        3642,
+        3688,
+        3734,
+        3796,
+        3846,
+        3897
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-18.jpg",
+      "sha256": "7a3faedb6a7acaedb8176e6d307afc06ae47c342e2ed9d4e163a2145db770d58",
+      "frame_indices": [
+        3899,
+        3900,
+        3901,
+        3903,
+        3906,
+        3912
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-outlook-final-qc/wall-19.jpg",
+      "sha256": "6a2767cc022df6635f8b6ba924110fd4883897a3415e902277ffde30051a440f",
+      "frame_indices": [
+        3965,
+        4011
+      ],
+      "actually_viewed": true
+    }
+  ],
+  "source_mapping_limit": "Nominal source times only; original final-movie frame index/PNG is authoritative near source cuts. Source/action partition only; root separately reviews cover/statistics/other cards and seams; this partition also samples updatedoutlook8 and its brand seam. No whole-frame or whole-court claim."
+}

@@ -1,0 +1,93 @@
+{
+  "status": "verified_official_final_matchup",
+  "checked_at_utc": "2026-10-17T13:12:53.635938+00:00",
+  "other_semifinal": {
+    "date_local": "2026-10-17",
+    "event_id": "5014",
+    "match_id": "MS003",
+    "match_status": "F",
+    "winner": "Rafael Jodar",
+    "winner_id": "J0DZ",
+    "loser": "Daniil Medvedev",
+    "loser_id": "MM58",
+    "winner_result": "6-3 6-4",
+    "match_duration": "01:44:06",
+    "result_verified": true
+  },
+  "final": {
+    "date_local": "2026-10-18",
+    "timezone": "Asia/Shanghai",
+    "round": "Final",
+    "player_a": "Alejandro Davidovich Fokina",
+    "player_a_id": "DH50",
+    "player_a_seed": 25,
+    "player_b": "Rafael Jodar",
+    "player_b_id": "J0DZ",
+    "player_b_seed": 12,
+    "official_schedule_local": "Not Before16:30",
+    "matchup_officially_confirmed": true,
+    "schedule_is_not_actual_start": true
+  },
+  "safe_narration_zh": "另一场半决赛，霍达尔两盘淘汰梅德韦杰夫。决赛将是他与达维多维奇的西班牙内战。",
+  "notes": [
+    "MS003 is finished and official native data explicitly identifies winner J0DZ and full score.",
+    "Official news and next-day tournament schedule both explicitly confirm final participants.",
+    "Final MS001 API returned HTTP500; do not treat it as unfinished identity/no final, and do not claim API confirmed final."
+  ],
+  "sources": [
+    {
+      "key": "sf-ms003",
+      "url": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms003",
+      "checked_at": "2026-10-17T13:12:26.449950+00:00",
+      "status": 200,
+      "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/final-outlook-update/facts/sf-ms003.json",
+      "bytes": 13147
+    },
+    {
+      "key": "final-ms001",
+      "url": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms001",
+      "checked_at": "2026-10-17T13:12:26.450599+00:00",
+      "status": 500,
+      "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/final-outlook-update/facts/final-ms001.html",
+      "bytes": 1208
+    },
+    {
+      "key": "schedule",
+      "url": "https://en.rolexshanghaimasters.com/en/scores/schedule",
+      "checked_at": "2026-10-17T13:12:26.452476+00:00",
+      "status": 200,
+      "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/final-outlook-update/facts/schedule.html",
+      "bytes": 44171
+    },
+    {
+      "key": "draw",
+      "url": "https://en.rolexshanghaimasters.com/en/scores/draw",
+      "checked_at": "2026-10-17T13:12:26.453589+00:00",
+      "status": 200,
+      "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/final-outlook-update/facts/draw.html",
+      "bytes": 440075
+    },
+    {
+      "key": "news",
+      "url": "https://en.rolexshanghaimasters.com/en/media/news",
+      "checked_at": "2026-10-17T13:12:26.454211+00:00",
+      "status": 200,
+      "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/final-outlook-update/facts/news.html",
+      "bytes": 39719
+    },
+    {
+      "key": "official-sf-news",
+      "url": "https://en.rolexshanghaimasters.com/en/media/news/medvedev-jodar-shanghai-2026-saturday",
+      "checked_at": "2026-10-17T13:12:52.281518+00:00",
+      "status": 200,
+      "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/final-outlook-update/facts/official-sf-news.html",
+      "bytes": 33840
+    }
+  ],
+  "response_sha256": {
+    "sf-ms003.json": "f7718aa28cd007d8ce4fd71d1aa44426ebdbb1e3a77702f6311493caf8aa904d",
+    "official-sf-news.html": "cbea623a84a3211e7908bddac7c0df36aeb9c98b74b466428f2af3a61410c249",
+    "schedule.html": "cded9fe9d5d2e891750fec155643bec3c4d751f3d9f24554cb5c1c23fbf88976",
+    "draw.html": "f2aace0861c3457b1bbd626543c91497c995ff3ce96f3acb9740ba3e13b3ee01"
+  }
+}

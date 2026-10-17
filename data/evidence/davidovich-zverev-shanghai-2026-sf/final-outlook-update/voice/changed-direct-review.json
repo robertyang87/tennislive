@@ -1,0 +1,66 @@
+{
+  "reviewer": "Current OpenAI voice-review agent",
+  "utterance_scope": "new outlook only",
+  "occurrences": [
+    {
+      "edit_id": "outlook",
+      "index": 2,
+      "char": "场",
+      "intended": "chang3",
+      "actual_audio_sha256": "cc22c78f92c70dce9f417bac09b24efa06bd594c6f14ce27149f970e62ac24b8",
+      "status": "direct_current_finite_low_support",
+      "observation": "Actually inspected short current original low/sparse pitch and spectral progression; A1/A2 have low creaky final voicing and similar transition; B references have higher/longer or shifted restarted parts. Finite contextual chang3-side support only, not textbook tone contour proof.",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/zverev-final-outlook-voice/actual-plots-v1/outlook-002-U573A-syllable.png",
+          "sha256": "2df41a588a4d46b3cda70763a01decb51774cf24e7e9a7dc07d691a1e63df42b"
+        }
+      ],
+      "original_mechanical_status": "pending",
+      "human_listening_claimed": false,
+      "full_phonetic_pass_claimed": false
+    },
+    {
+      "edit_id": "outlook",
+      "index": 38,
+      "char": "尔",
+      "intended": "er3",
+      "actual_audio_sha256": "cc22c78f92c70dce9f417bac09b24efa06bd594c6f14ce27149f970e62ac24b8",
+      "status": "direct_current_finite_low_support",
+      "observation": "Actually inspected current final 霍达尔 local vowel: original compact descending low F0 and formant sequence resemble A2 third-tone reference; B sides have higher and differently timed voicing. No full phoneme or canonical third-tone guarantee.",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/zverev-final-outlook-voice/actual-plots-v1/outlook-038-U5C14-syllable.png",
+          "sha256": "442439a980915a3a89a0b9a7c0efd04bddfe14cfac0b531bcacf4405752ffc2c"
+        }
+      ],
+      "original_mechanical_status": "pending",
+      "human_listening_claimed": false,
+      "full_phonetic_pass_claimed": false
+    },
+    {
+      "edit_id": "outlook",
+      "index": 27,
+      "char": "多",
+      "intended": "duo1",
+      "actual_audio_sha256": "cc22c78f92c70dce9f417bac09b24efa06bd594c6f14ce27149f970e62ac24b8",
+      "status": "direct_current_finite_low_support",
+      "observation": "Actually inspected only-one-target-changed current native-token and local views: original/A1/A2 spectral transition locations and low plateau, short dip and 5.35s restart/flat tail closely agree; B views change timing and final continuation. Direct current intended-side finite low only; mechanical calibration remains pending.",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/zverev-final-outlook-voice/actual-plots-v1/outlook-focused-27-多.png",
+          "sha256": "216bf2d761423813713dd6a61f28091d044714299130bf8f28a06d98d3e068c0"
+        },
+        {
+          "path": "/workspace/scratch/zverev-final-outlook-voice/actual-plots-v1/outlook-focused-27-native-token.png",
+          "sha256": "2e1bdec2dc5b62ca92dec2bf69ff471901cef16de58e0dfa403501e05ae8324d"
+        }
+      ],
+      "original_mechanical_status": "pending",
+      "human_listening_claimed": false,
+      "full_phonetic_pass_claimed": false
+    }
+  ],
+  "all_original_mechanical_pending_and_contrary_components_retained": true,
+  "human_listening_claimed": false
+}

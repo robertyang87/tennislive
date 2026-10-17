@@ -1,0 +1,352 @@
+{
+  "status": "complete_raw_independent_lexical_asr_not_tone_proof",
+  "configuration": {
+    "model": "base multilingual",
+    "device": "cpu",
+    "compute_type": "int8",
+    "language": "zh",
+    "beam_size": 5,
+    "vad_filter": false,
+    "initial_prompt": null,
+    "prefix": null,
+    "condition_on_previous_text": false,
+    "temperature": 0.0,
+    "word_timestamps": true
+  },
+  "manual_listening_claimed": false,
+  "bundle_sha256": "224043b9cf2a8e5494807da630b4f4039ad18471e79c9e2def59263cfacf00ae",
+  "method": "transcribe whole actual current frozen MP3 independently, without expected-text prompt",
+  "limitation": "ASR Chinese characters cannot establish tone or prove all numbers/words correct; unresolved mismatches pending.",
+  "utterances": [
+    {
+      "edit_id": "outlook",
+      "actual_mp3": "/workspace/scratch/zverev-final-outlook-voice/native-audio/outlook-cc22c78f92c70dce.mp3",
+      "actual_mp3_sha256": "cc22c78f92c70dce9f417bac09b24efa06bd594c6f14ce27149f970e62ac24b8",
+      "expected_final_tts_text": "另一场半决赛，霍达尔两盘淘汰梅德韦杰夫。上海决赛，达维多维奇·福基纳对阵霍达尔。两位西班牙球员会师争冠，你更看好谁？",
+      "raw_transcription": "另一場半決賽 獲得兩盤淘汰沒得為傑夫傷害決賽 打為多為起 夫妻娜對證獲得兩位西班牙球員會師爭冠 你更看好誰",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 3.46,
+          "text": "另一場半決賽 獲得兩盤淘汰沒得為傑夫",
+          "avg_logprob": -0.36164386171690177,
+          "words": [
+            {
+              "word": "另",
+              "start": 0.0,
+              "end": 0.22,
+              "probability": 0.996192216873169
+            },
+            {
+              "word": "一",
+              "start": 0.22,
+              "end": 0.36,
+              "probability": 0.9976518750190735
+            },
+            {
+              "word": "場",
+              "start": 0.36,
+              "end": 0.46,
+              "probability": 0.8694314956665039
+            },
+            {
+              "word": "半",
+              "start": 0.46,
+              "end": 0.68,
+              "probability": 0.5787047147750854
+            },
+            {
+              "word": "決",
+              "start": 0.68,
+              "end": 0.86,
+              "probability": 0.8865354657173157
+            },
+            {
+              "word": "賽",
+              "start": 0.86,
+              "end": 1.04,
+              "probability": 0.9896915555000305
+            },
+            {
+              "word": " 獲",
+              "start": 1.46,
+              "end": 1.52,
+              "probability": 0.786309003829956
+            },
+            {
+              "word": "得",
+              "start": 1.52,
+              "end": 1.6,
+              "probability": 0.34371697902679443
+            },
+            {
+              "word": "兩",
+              "start": 1.6,
+              "end": 1.82,
+              "probability": 0.4323321282863617
+            },
+            {
+              "word": "盤",
+              "start": 1.82,
+              "end": 2.04,
+              "probability": 0.9819161891937256
+            },
+            {
+              "word": "淘",
+              "start": 2.04,
+              "end": 2.34,
+              "probability": 0.7359438836574554
+            },
+            {
+              "word": "汰",
+              "start": 2.34,
+              "end": 2.54,
+              "probability": 0.9924571514129639
+            },
+            {
+              "word": "沒",
+              "start": 2.54,
+              "end": 2.76,
+              "probability": 0.6506257653236389
+            },
+            {
+              "word": "得",
+              "start": 2.76,
+              "end": 2.94,
+              "probability": 0.8617585897445679
+            },
+            {
+              "word": "為",
+              "start": 2.94,
+              "end": 3.1,
+              "probability": 0.963280200958252
+            },
+            {
+              "word": "傑",
+              "start": 3.1,
+              "end": 3.28,
+              "probability": 0.7008714824914932
+            },
+            {
+              "word": "夫",
+              "start": 3.28,
+              "end": 3.46,
+              "probability": 0.9612436294555664
+            }
+          ]
+        },
+        {
+          "start": 3.9,
+          "end": 7.04,
+          "text": "傷害決賽 打為多為起 夫妻娜對證獲得",
+          "avg_logprob": -0.36164386171690177,
+          "words": [
+            {
+              "word": "傷",
+              "start": 3.9,
+              "end": 4.26,
+              "probability": 0.16714948415756226
+            },
+            {
+              "word": "害",
+              "start": 4.26,
+              "end": 4.4,
+              "probability": 0.9849417209625244
+            },
+            {
+              "word": "決",
+              "start": 4.4,
+              "end": 4.56,
+              "probability": 0.9982144832611084
+            },
+            {
+              "word": "賽",
+              "start": 4.56,
+              "end": 4.76,
+              "probability": 0.9963298439979553
+            },
+            {
+              "word": " 打",
+              "start": 5.08,
+              "end": 5.16,
+              "probability": 0.343832790851593
+            },
+            {
+              "word": "為",
+              "start": 5.16,
+              "end": 5.3,
+              "probability": 0.5708214044570923
+            },
+            {
+              "word": "多",
+              "start": 5.3,
+              "end": 5.42,
+              "probability": 0.9939245581626892
+            },
+            {
+              "word": "為",
+              "start": 5.42,
+              "end": 5.54,
+              "probability": 0.6203575134277344
+            },
+            {
+              "word": "起",
+              "start": 5.54,
+              "end": 5.72,
+              "probability": 0.5107656121253967
+            },
+            {
+              "word": " 夫",
+              "start": 5.92,
+              "end": 5.98,
+              "probability": 0.37721607089042664
+            },
+            {
+              "word": "妻",
+              "start": 5.98,
+              "end": 6.08,
+              "probability": 0.7480624318122864
+            },
+            {
+              "word": "娜",
+              "start": 6.08,
+              "end": 6.2,
+              "probability": 0.5562983378767967
+            },
+            {
+              "word": "對",
+              "start": 6.2,
+              "end": 6.46,
+              "probability": 0.7902144193649292
+            },
+            {
+              "word": "證",
+              "start": 6.46,
+              "end": 6.68,
+              "probability": 0.6664946228265762
+            },
+            {
+              "word": "獲",
+              "start": 6.68,
+              "end": 6.92,
+              "probability": 0.9970016181468964
+            },
+            {
+              "word": "得",
+              "start": 6.92,
+              "end": 7.04,
+              "probability": 0.9363318085670471
+            }
+          ]
+        },
+        {
+          "start": 7.46,
+          "end": 10.8,
+          "text": "兩位西班牙球員會師爭冠 你更看好誰",
+          "avg_logprob": -0.36164386171690177,
+          "words": [
+            {
+              "word": "兩",
+              "start": 7.46,
+              "end": 7.82,
+              "probability": 0.6741781830787659
+            },
+            {
+              "word": "位",
+              "start": 7.82,
+              "end": 8.0,
+              "probability": 0.9970217347145081
+            },
+            {
+              "word": "西",
+              "start": 8.0,
+              "end": 8.18,
+              "probability": 0.9176394939422607
+            },
+            {
+              "word": "班",
+              "start": 8.18,
+              "end": 8.28,
+              "probability": 0.985993504524231
+            },
+            {
+              "word": "牙",
+              "start": 8.28,
+              "end": 8.4,
+              "probability": 0.9964764416217804
+            },
+            {
+              "word": "球",
+              "start": 8.4,
+              "end": 8.58,
+              "probability": 0.8884544372558594
+            },
+            {
+              "word": "員",
+              "start": 8.58,
+              "end": 8.8,
+              "probability": 0.9985867738723755
+            },
+            {
+              "word": "會",
+              "start": 8.8,
+              "end": 9.0,
+              "probability": 0.7677415013313293
+            },
+            {
+              "word": "師",
+              "start": 9.0,
+              "end": 9.2,
+              "probability": 0.1852223128080368
+            },
+            {
+              "word": "爭",
+              "start": 9.2,
+              "end": 9.4,
+              "probability": 0.8028492331504822
+            },
+            {
+              "word": "冠",
+              "start": 9.4,
+              "end": 9.54,
+              "probability": 0.9339452683925629
+            },
+            {
+              "word": " 你",
+              "start": 9.54,
+              "end": 10.04,
+              "probability": 0.8127726912498474
+            },
+            {
+              "word": "更",
+              "start": 10.04,
+              "end": 10.2,
+              "probability": 0.9824322462081909
+            },
+            {
+              "word": "看",
+              "start": 10.2,
+              "end": 10.44,
+              "probability": 0.9823968410491943
+            },
+            {
+              "word": "好",
+              "start": 10.44,
+              "end": 10.62,
+              "probability": 0.9845041036605835
+            },
+            {
+              "word": "誰",
+              "start": 10.62,
+              "end": 10.8,
+              "probability": 0.9943050742149353
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    }
+  ],
+  "elapsed_seconds": 1.5962557792663574
+}
