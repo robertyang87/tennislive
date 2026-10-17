@@ -1,0 +1,980 @@
+{
+  "schema": "tennislive.actual-dual-asr-content-review.v1",
+  "created_at": "2026-10-17T14:51:09.535028+00:00",
+  "bundle_sha256": "1c66dcdbbcdccb50d3e793c0635a34ca9b4c26942452fe24dfd05b86bd34dcd8",
+  "input_wav_sha256": "b7ae677d66a0f4588788139ff27bee42dda66bd447fe31b9511b1b3735e9922a",
+  "utterances": [
+    {
+      "edit_id": "intro",
+      "expected_actual_speakable": "熟悉的两个人，这次只能有一个往前走。北京时间二零二六年十月十七日晚上，武汉一千赛女单半决赛。曾经的青少年双打搭档，赫瓦林斯卡与斯瓦泰克，迎来巡回赛首次交手。",
+      "native_tokens": [
+        "熟悉",
+        "的",
+        "两个",
+        "人",
+        "这次",
+        "只能",
+        "有",
+        "一个",
+        "往前",
+        "走",
+        "北京时间",
+        "二零二六年",
+        "十月",
+        "十七日",
+        "晚上",
+        "武汉",
+        "一千",
+        "赛",
+        "女单",
+        "半决赛",
+        "曾经",
+        "的",
+        "青少年",
+        "双打",
+        "搭档",
+        "赫瓦林斯卡",
+        "与",
+        "斯瓦泰克",
+        "迎来",
+        "巡回赛",
+        "首次",
+        "交手"
+      ],
+      "numbers": [
+        {
+          "text": "两",
+          "at": 3,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 12,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二零二六",
+          "at": 22,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "十",
+          "at": 27,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "十七",
+          "at": 29,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一千",
+          "at": 37,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "names": [
+        {
+          "name": "赫瓦林斯卡",
+          "at": 57,
+          "declared_readings": [
+            "he4",
+            "wa3",
+            "lin2",
+            "si1",
+            "ka3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "斯瓦泰克",
+          "at": 63,
+          "declared_readings": [
+            "si1",
+            "wa3",
+            "tai4",
+            "ke4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "武汉",
+          "at": 35,
+          "declared_readings": [
+            "wu3",
+            "han4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "letters": [],
+      "asr_context": {
+        "small": "熟悉的两个人这次只能有一个往前走北京时间二零二六年十月十七日晚上武汉一千赛女单半决赛曾经的青少年双打搭档赫瓦林斯卡与斯瓦泰克迎来寻回赛首次交手",
+        "large-v3-turbo": "熟悉的两个人,这次只能有一个往前走,北京时间2026年10月17日晚上,武汉一千赛女单半决赛,曾经的青少年双打搭档赫瓦林斯卡与斯瓦泰克迎来巡回赛首次交手。"
+      },
+      "interpretation": "Both actual ASR outputs inspected for recoverable content. Same-sounding character/number normalization differences are retained in the raw transcript. This is not a tone or naturalness verdict."
+    },
+    {
+      "edit_id": "opening",
+      "expected_actual_speakable": "首盘，月亮姐先以三比二领先。斯瓦泰克没有让她把优势拉开，马上反击。比分很接近，两个人都在争取把节奏拿回来。",
+      "native_tokens": [
+        "首盘",
+        "月亮",
+        "姐",
+        "先",
+        "以",
+        "三比二",
+        "领先",
+        "斯瓦泰克",
+        "没有",
+        "让",
+        "她",
+        "把",
+        "优势",
+        "拉开",
+        "马上",
+        "反击",
+        "比分",
+        "很",
+        "接近",
+        "两",
+        "个",
+        "人",
+        "都",
+        "在",
+        "争取",
+        "把",
+        "节奏",
+        "拿",
+        "回来"
+      ],
+      "numbers": [
+        {
+          "text": "三",
+          "at": 8,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二",
+          "at": 10,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "两",
+          "at": 39,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "names": [
+        {
+          "name": "斯瓦泰克",
+          "at": 14,
+          "declared_readings": [
+            "si1",
+            "wa3",
+            "tai4",
+            "ke4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "月亮姐",
+          "at": 3,
+          "declared_readings": [
+            "yue4",
+            "liang4",
+            "jie3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "letters": [],
+      "asr_context": {
+        "small": "手盘月亮姐先以三比二零线斯瓦泰克没有让他把优势拉开马上反击比分很接近两个人都在争取把节奏拿回来",
+        "large-v3-turbo": "首盘,月亮姐先以3比2领线,斯瓦泰克没有让他把优势拉开,马上反击,比分很接近,两个人都在争取把节奏拿回来。"
+      },
+      "interpretation": "Both actual ASR outputs inspected for recoverable content. Same-sounding character/number normalization differences are retained in the raw transcript. This is not a tone or naturalness verdict."
+    },
+    {
+      "edit_id": "iga_break",
+      "expected_actual_speakable": "四比三，斯瓦泰克又拿到破发机会。两个人从底线反复拉锯，谁都不肯先让出这一分。这一次，她要把压力推到老搭档身上。",
+      "native_tokens": [
+        "四比三",
+        "斯瓦泰克",
+        "又",
+        "拿到",
+        "破发",
+        "机会",
+        "两",
+        "个",
+        "人",
+        "从",
+        "底线",
+        "反复",
+        "拉锯",
+        "谁",
+        "都",
+        "不肯",
+        "先",
+        "让出",
+        "这",
+        "一",
+        "分",
+        "这",
+        "一次",
+        "她",
+        "要",
+        "把",
+        "压力",
+        "推",
+        "到",
+        "老搭档",
+        "身上"
+      ],
+      "numbers": [
+        {
+          "text": "四",
+          "at": 0,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "三",
+          "at": 2,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "两",
+          "at": 16,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 35,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 39,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "names": [
+        {
+          "name": "斯瓦泰克",
+          "at": 4,
+          "declared_readings": [
+            "si1",
+            "wa3",
+            "tai4",
+            "ke4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "letters": [],
+      "asr_context": {
+        "small": "四比三四瓦泰克又拿到迫发机会两个人从底线反复拉距谁都不肯先让出这一分这一次他要把压力推到老搭档身上",
+        "large-v3-turbo": "4比3,斯瓦泰克又拿到破发机会两个人从底线反复拉锯谁都不肯先让出这一分这一次,他要把压力推到老搭档身上"
+      },
+      "interpretation": "Both actual ASR outputs inspected for recoverable content. Same-sounding character/number normalization differences are retained in the raw transcript. This is not a tone or naturalness verdict."
+    },
+    {
+      "edit_id": "set_points_context",
+      "expected_actual_speakable": "五比三，四十比十五。斯瓦泰克拿到两个连续盘点。距离收下首盘，她只差一分。",
+      "native_tokens": [
+        "五比三",
+        "四十",
+        "比",
+        "十五",
+        "斯瓦泰克",
+        "拿到",
+        "两",
+        "个",
+        "连续",
+        "盘点",
+        "距离",
+        "收",
+        "下",
+        "首盘",
+        "她",
+        "只",
+        "差",
+        "一",
+        "分"
+      ],
+      "numbers": [
+        {
+          "text": "五",
+          "at": 0,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "三",
+          "at": 2,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "四十",
+          "at": 4,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "十五",
+          "at": 7,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "两",
+          "at": 16,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 33,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "names": [
+        {
+          "name": "斯瓦泰克",
+          "at": 10,
+          "declared_readings": [
+            "si1",
+            "wa3",
+            "tai4",
+            "ke4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "letters": [],
+      "asr_context": {
+        "small": "5比340比15四瓦泰克拿到两个连续盘点距离收下手盘他只差一分",
+        "large-v3-turbo": "5比3,40比15斯瓦泰克拿到两个连续盘点距离收下手盘,他只差一分"
+      },
+      "interpretation": "Both actual ASR outputs inspected for recoverable content. Same-sounding character/number normalization differences are retained in the raw transcript. This is not a tone or naturalness verdict."
+    },
+    {
+      "edit_id": "second_set_point",
+      "expected_actual_speakable": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。落点一次次被拉开，月亮姐还在寻找向场内跟进的机会。",
+      "native_tokens": [
+        "第二个",
+        "盘点",
+        "月亮",
+        "姐",
+        "从",
+        "底线",
+        "把",
+        "球",
+        "分",
+        "向",
+        "两侧",
+        "斯瓦泰克",
+        "横向",
+        "跑动",
+        "回击",
+        "落点",
+        "一次次",
+        "被",
+        "拉开",
+        "月亮",
+        "姐",
+        "还",
+        "在",
+        "寻找",
+        "向",
+        "场",
+        "内",
+        "跟进",
+        "的",
+        "机会"
+      ],
+      "numbers": [
+        {
+          "text": "二",
+          "at": 1,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "两",
+          "at": 16,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 32,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "names": [
+        {
+          "name": "斯瓦泰克",
+          "at": 19,
+          "declared_readings": [
+            "si1",
+            "wa3",
+            "tai4",
+            "ke4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "月亮姐",
+          "at": 6,
+          "declared_readings": [
+            "yue4",
+            "liang4",
+            "jie3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "月亮姐",
+          "at": 39,
+          "declared_readings": [
+            "yue4",
+            "liang4",
+            "jie3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "letters": [],
+      "asr_context": {
+        "small": "第二个盘点月亮姐从底线把球分向两侧四瓦泰克横向跑动回击落点一次次被拉开月亮姐还在寻找向场内跟进的机会。",
+        "large-v3-turbo": "第二个盘点,月亮姐从底线把球分向两侧斯瓦泰克横向跑动回击落点一次次被拉开月亮姐还在寻找向场内跟进的机会"
+      },
+      "interpretation": "Both actual ASR outputs inspected for recoverable content. Same-sounding character/number normalization differences are retained in the raw transcript. This is not a tone or naturalness verdict."
+    },
+    {
+      "edit_id": "injury_and_turn",
+      "expected_actual_speakable": "现行十站一千赛，斯瓦泰克只差武汉的决赛经历。这一次，她没能跨过去。比赛中，她因腿部不适接受医疗暂停。第二盘，月亮姐以二比零开局，连着赢了六局。斯瓦泰克追回一局，却没能挽回走势。",
+      "native_tokens": [
+        "现行",
+        "十",
+        "站",
+        "一千",
+        "赛",
+        "斯瓦泰克",
+        "只",
+        "差",
+        "武汉",
+        "的",
+        "决赛",
+        "经历",
+        "这",
+        "一次",
+        "她",
+        "没",
+        "能",
+        "跨",
+        "过去",
+        "比赛",
+        "中",
+        "她",
+        "因",
+        "腿部",
+        "不适",
+        "接受",
+        "医疗",
+        "暂停",
+        "第二盘",
+        "月亮",
+        "姐",
+        "以",
+        "二比零",
+        "开局",
+        "连着",
+        "赢",
+        "了",
+        "六局",
+        "斯瓦泰克",
+        "追回",
+        "一",
+        "局",
+        "却",
+        "没",
+        "能",
+        "挽回",
+        "走势"
+      ],
+      "numbers": [
+        {
+          "text": "十",
+          "at": 2,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一千",
+          "at": 4,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 23,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二",
+          "at": 51,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二",
+          "at": 58,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "零",
+          "at": 60,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "六",
+          "at": 68,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 77,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "names": [
+        {
+          "name": "斯瓦泰克",
+          "at": 8,
+          "declared_readings": [
+            "si1",
+            "wa3",
+            "tai4",
+            "ke4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "斯瓦泰克",
+          "at": 71,
+          "declared_readings": [
+            "si1",
+            "wa3",
+            "tai4",
+            "ke4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "月亮姐",
+          "at": 54,
+          "declared_readings": [
+            "yue4",
+            "liang4",
+            "jie3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "武汉",
+          "at": 14,
+          "declared_readings": [
+            "wu3",
+            "han4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "letters": [],
+      "asr_context": {
+        "small": "现行实战一签赛,斯瓦泰克只差武汉的决赛经历。这一次,他没能跨过去。比赛中,他因腿部不适,接受医疗暂停。第二盘,月亮姐以2比0开局,连着赢了6局。斯瓦泰克追回一局,却没能挽回走势。",
+        "large-v3-turbo": "现行实战一千赛斯瓦泰克只差武汉的决赛经历这一次他没能跨过去比赛中他因腿部不适接受医疗暂停第二盘月亮姐以2比0开局连着赢了6局斯瓦泰克追回一局却没能挽回走势"
+      },
+      "interpretation": "Both actual ASR outputs inspected for recoverable content. Same-sounding character/number normalization differences are retained in the raw transcript. This is not a tone or naturalness verdict."
+    },
+    {
+      "edit_id": "second_break",
+      "expected_actual_speakable": "一比三，斯瓦泰克又面对破发点。她从底线打进场内，月亮姐左右移动，把打向两侧的球连续救回。斯瓦泰克的进攻，还要再多打一拍。",
+      "native_tokens": [
+        "一比三",
+        "斯瓦泰克",
+        "又",
+        "面对",
+        "破发",
+        "点",
+        "她",
+        "从",
+        "底线",
+        "打",
+        "进场",
+        "内",
+        "月亮姐",
+        "左右",
+        "移动",
+        "把",
+        "打",
+        "向",
+        "两侧",
+        "的",
+        "球",
+        "连续",
+        "救",
+        "回",
+        "斯瓦泰克",
+        "的",
+        "进攻",
+        "还要",
+        "再",
+        "多",
+        "打",
+        "一",
+        "拍"
+      ],
+      "numbers": [
+        {
+          "text": "一",
+          "at": 0,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "三",
+          "at": 2,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "两",
+          "at": 35,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 57,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "names": [
+        {
+          "name": "斯瓦泰克",
+          "at": 4,
+          "declared_readings": [
+            "si1",
+            "wa3",
+            "tai4",
+            "ke4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "斯瓦泰克",
+          "at": 44,
+          "declared_readings": [
+            "si1",
+            "wa3",
+            "tai4",
+            "ke4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "月亮姐",
+          "at": 24,
+          "declared_readings": [
+            "yue4",
+            "liang4",
+            "jie3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "letters": [],
+      "asr_context": {
+        "small": "一比三,斯瓦泰克又面对破发点。他从底线打进场内,月亮节左右移动把打向两侧的球连续救回。斯瓦泰克的进攻,还要再多打一派。",
+        "large-v3-turbo": "1比3斯瓦泰克又面对破发点他从底线打进场内月亮姐左右移动把打向两侧的球连续救回斯瓦泰克的进攻还要再多打一派"
+      },
+      "interpretation": "Both actual ASR outputs inspected for recoverable content. Same-sounding character/number normalization differences are retained in the raw transcript. This is not a tone or naturalness verdict."
+    },
+    {
+      "edit_id": "full_stats",
+      "expected_actual_speakable": "斯瓦泰克三十七个制胜分，也有三十三次非受迫失误。月亮姐十九个制胜分，七次非受迫失误。最后十一局赢下十局，她把首个一千赛决赛握在了手里。",
+      "native_tokens": [
+        "斯瓦泰克",
+        "三十七",
+        "个",
+        "制胜",
+        "分",
+        "也有",
+        "三十三",
+        "次",
+        "非",
+        "受迫",
+        "失误",
+        "月亮姐",
+        "十九",
+        "个",
+        "制胜",
+        "分",
+        "七次",
+        "非",
+        "受迫",
+        "失误",
+        "最后",
+        "十一局",
+        "赢",
+        "下",
+        "十",
+        "局",
+        "她",
+        "把",
+        "首",
+        "个",
+        "一千",
+        "赛",
+        "决赛",
+        "握",
+        "在",
+        "了",
+        "手",
+        "里"
+      ],
+      "numbers": [
+        {
+          "text": "三十七",
+          "at": 4,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "三十三",
+          "at": 14,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "十九",
+          "at": 27,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "七",
+          "at": 34,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "十一",
+          "at": 44,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "十",
+          "at": 49,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一千",
+          "at": 56,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "names": [
+        {
+          "name": "斯瓦泰克",
+          "at": 0,
+          "declared_readings": [
+            "si1",
+            "wa3",
+            "tai4",
+            "ke4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "月亮姐",
+          "at": 24,
+          "declared_readings": [
+            "yue4",
+            "liang4",
+            "jie3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "letters": [],
+      "asr_context": {
+        "small": "斯瓦泰克37个制胜分,也有33次非受迫失误。月亮节19个制胜分,弃次非受迫失误。最后11局赢下10局,他把首个一清赛决赛握在了手里。",
+        "large-v3-turbo": "斯瓦泰克37个制胜分也有33次非受破失误月亮姐19个制胜分7次非受破失误最后11局赢下10局他把首个1000赛决赛握在了手里"
+      },
+      "interpretation": "Both actual ASR outputs inspected for recoverable content. Same-sounding character/number normalization differences are retained in the raw transcript. This is not a tone or naturalness verdict."
+    },
+    {
+      "edit_id": "outlook",
+      "expected_actual_speakable": "网前的拥抱之后，月亮姐要去迎接卡尔塔尔。斯瓦泰克的武汉决赛梦，今天没能完成。愿她尽快恢复。明天，月亮姐能把这次突破，写成冠军吗？",
+      "native_tokens": [
+        "网",
+        "前",
+        "的",
+        "拥抱",
+        "之后",
+        "月亮",
+        "姐",
+        "要",
+        "去",
+        "迎接",
+        "卡尔塔尔",
+        "斯瓦泰克",
+        "的",
+        "武汉",
+        "决赛",
+        "梦",
+        "今天",
+        "没",
+        "能",
+        "完成",
+        "愿",
+        "她",
+        "尽快",
+        "恢复",
+        "明天",
+        "月亮",
+        "姐",
+        "能",
+        "把",
+        "这次",
+        "突破",
+        "写",
+        "成",
+        "冠军",
+        "吗"
+      ],
+      "numbers": [],
+      "names": [
+        {
+          "name": "斯瓦泰克",
+          "at": 20,
+          "declared_readings": [
+            "si1",
+            "wa3",
+            "tai4",
+            "ke4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "卡尔塔尔",
+          "at": 15,
+          "declared_readings": [
+            "ka3",
+            "er3",
+            "ta3",
+            "er3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "月亮姐",
+          "at": 8,
+          "declared_readings": [
+            "yue4",
+            "liang4",
+            "jie3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "月亮姐",
+          "at": 48,
+          "declared_readings": [
+            "yue4",
+            "liang4",
+            "jie3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "武汉",
+          "at": 25,
+          "declared_readings": [
+            "wu3",
+            "han4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "letters": [],
+      "asr_context": {
+        "small": "往前的拥抱之后,月亮节要去迎接卡尔塔尔。司瓦泰克的武汉决赛梦,今天没能完成。愿他尽快恢复。明天,月亮姐能把这次突破,写成冠军吗?",
+        "large-v3-turbo": "往前的拥抱之后月亮姐要去迎接卡尔塔尔斯瓦泰克的武汉决赛梦今天没能完成愿他尽快恢复明天月亮姐能把这次突破写成冠军吗"
+      },
+      "interpretation": "Both actual ASR outputs inspected for recoverable content. Same-sounding character/number normalization differences are retained in the raw transcript. This is not a tone or naturalness verdict."
+    },
+    {
+      "edit_id": "outro",
+      "expected_actual_speakable": "关注网球时插，时插归我，好球归你。",
+      "native_tokens": [
+        "关注",
+        "网球",
+        "时",
+        "插",
+        "时",
+        "插",
+        "归",
+        "我",
+        "好",
+        "球",
+        "归",
+        "你"
+      ],
+      "numbers": [],
+      "names": [
+        {
+          "name": "网球时插",
+          "at": 2,
+          "declared_readings": [
+            "wang3",
+            "qiu2",
+            "shi2",
+            "cha1"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "letters": [],
+      "asr_context": {
+        "small": "关注网球时差,时差归我,好球归你。",
+        "large-v3-turbo": "关注网球时差时差归我好球归你"
+      },
+      "interpretation": "Both actual ASR outputs inspected for recoverable content. Same-sounding character/number normalization differences are retained in the raw transcript. This is not a tone or naturalness verdict."
+    }
+  ],
+  "findings": [
+    {
+      "scope": "intro_names_date",
+      "status": "content_supported_by_both_asr",
+      "detail": "Both models recover 赫瓦林斯卡与斯瓦泰克 and the full date 2026年10月17日晚上; Chinese characters vs digits normalize differently. This does not establish each name syllable tone."
+    },
+    {
+      "scope": "numbers",
+      "status": "finite_content_inspection_complete",
+      "detail": "Date, 3比2,4比3,5比3,40比15,两个盘点,2比0,六局,一局,1比3,37/33/19/7 and最后11局赢下10局 are recoverable across the actual transcripts. small writes 一签赛/一清赛 and 弃次; large-v3-turbo writes 一千赛/1000赛 and7次. These homophonic spellings are preserved, not converted into acoustic pass."
+    },
+    {
+      "scope": "second_break_打进场内",
+      "status": "content_supported_naturalness_unknown",
+      "detail": "Both actual models output 从底线打进场内. Native tokens are 打｜进场｜内. There is no ASR omission evidence; token boundaries alone do not establish an unnatural spoken break."
+    },
+    {
+      "scope": "second_break_多打一拍",
+      "status": "unknown_tone_ambiguity",
+      "detail": "Both models output 多打一派 for expected多打一拍, but actual native tokens are多｜打｜一｜拍. This is a fresh same-syllable/tone ambiguity signal, not a confirmed misread; no reliable independent common pai1 homophone control was available."
+    },
+    {
+      "scope": "outlook_name",
+      "status": "content_supported_by_both_asr",
+      "detail": "Both models output 卡尔塔尔; tone remains outside ASR proof."
+    },
+    {
+      "scope": "brand_outro",
+      "status": "content_supported_by_both_asr_tones_pending",
+      "detail": "Both models output 关注网球时差，时差归我，好球归你。 Actual speakable is 关注网球时插，时插归我，好球归你。 Fresh acoustic controls are recorded separately; no historical sentence result reused."
+    }
+  ],
+  "human_listening_claimed": false,
+  "tone_pass_claimed": false,
+  "naturalness_pass_claimed": false,
+  "pronunciation_release_pass_claimed": false
+}

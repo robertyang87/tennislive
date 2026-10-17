@@ -1,0 +1,422 @@
+{
+  "edit_id": "opening",
+  "sentence": "首盘，月亮姐先以三比二领先。斯瓦泰克没有让她把优势拉开，马上反击。比分很接近，两个人都在争取把节奏拿回来。",
+  "word": "分",
+  "char": "分",
+  "at": 34,
+  "intended": "fen1",
+  "wrong": "fen4",
+  "ok_refs": [
+    "氛",
+    "纷"
+  ],
+  "bad_refs": [
+    "忿",
+    "愤"
+  ],
+  "actual_binding": {
+    "edit_id": "opening",
+    "text": "首盘，月亮姐先以三比二领先。斯瓦泰克没有让她把优势拉开，马上反击。比分很接近，两个人都在争取把节奏拿回来。",
+    "display_text": "首盘，月亮姐先以三比二领先。斯瓦泰克没有让她把优势拉开，马上反击。比分很接近，两个人都在争取把节奏拿回来。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "request_id": "5fbce37cd160179689ea281c42c86a40ea64e6b8fb0ef99f919fa021d0020ffe",
+    "actual_mp3_sha256": "6320b50e137f5ed1cce68f0f333f4b28f10f49235a788ea16fb89249691df198",
+    "actual_marks_sha256": "e49a9d932ecfcbe587e626fe2070f46fd383e90127ef23ad03f13ae048aa978c",
+    "bound_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/opening.mp3",
+    "marks_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/opening.marks.json",
+    "word_boundary_tokens": [
+      "首盘",
+      "月亮",
+      "姐",
+      "先",
+      "以",
+      "三比二",
+      "领先",
+      "斯瓦泰克",
+      "没有",
+      "让",
+      "她",
+      "把",
+      "优势",
+      "拉开",
+      "马上",
+      "反击",
+      "比分",
+      "很",
+      "接近",
+      "两个",
+      "人",
+      "都",
+      "在",
+      "争取",
+      "把",
+      "节奏",
+      "拿",
+      "回来"
+    ]
+  },
+  "kind": "common_polyphone",
+  "reference_policy": "Provisional nonoriginal independent homophones, same-full-sentence LOO calibration required; no dictionary verdict.",
+  "acoustic": {
+    "word": "分",
+    "char": "分",
+    "sentence": "首盘，月亮姐先以三比二领先。斯瓦泰克没有让她把优势拉开，马上反击。比分很接近，两个人都在争取把节奏拿回来。",
+    "tts_text": "首盘，月亮姐先以三比二领先。斯瓦泰克没有让她把优势拉开，马上反击。比分很接近，两个人都在争取把节奏拿回来。",
+    "intended_refs": [
+      "氛",
+      "纷"
+    ],
+    "wrong_refs": [
+      "忿",
+      "愤"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "high",
+    "verdict_raw": "correct",
+    "score": 0.792,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.41,
+        "d_wrong": 2.559,
+        "score": 0.724
+      },
+      "f0": {
+        "d_intended": 0.034,
+        "d_wrong": 0.782,
+        "score": 0.916
+      },
+      "comb": {
+        "d_intended": 0.239,
+        "d_wrong": 2.064,
+        "score": 0.792
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.191,
+      "wrong": 2.066
+    },
+    "separation": {
+      "spec": {
+        "within": 2.031,
+        "between": 2.489,
+        "separation": 1.225
+      },
+      "f0": {
+        "within": 0.213,
+        "between": 0.802,
+        "separation": 3.772
+      },
+      "comb": {
+        "within": 1.228,
+        "between": 2.047,
+        "separation": 1.666
+      }
+    },
+    "selftest_loo": {
+      "氛": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.234
+      },
+      "纷": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.241
+      },
+      "忿": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.252
+      },
+      "愤": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.254
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:氛": {
+        "spec": 2.086,
+        "f0": 0.207,
+        "vmis": 0.043,
+        "frames": 23,
+        "comb": 1.25
+      },
+      "A:纷": {
+        "spec": 0.41,
+        "f0": 0.034,
+        "vmis": 0.0,
+        "frames": 22,
+        "comb": 0.239
+      },
+      "B:忿": {
+        "spec": 2.563,
+        "f0": 0.782,
+        "vmis": 0.038,
+        "frames": 26,
+        "comb": 2.064
+      },
+      "B:愤": {
+        "spec": 2.559,
+        "f0": 0.867,
+        "vmis": 0.037,
+        "frames": 27,
+        "comb": 2.146
+      }
+    },
+    "window_s": [
+      6.75,
+      6.97
+    ],
+    "boundary_token": "比分",
+    "window_anchor": "B:忿",
+    "tokens": {
+      "ORIG": [
+        "首盘",
+        "月亮",
+        "姐",
+        "先",
+        "以",
+        "三比二",
+        "领先",
+        "斯瓦泰克",
+        "没有",
+        "让",
+        "她",
+        "把",
+        "优势",
+        "拉开",
+        "马上",
+        "反击",
+        "比分",
+        "很",
+        "接近",
+        "两个",
+        "人",
+        "都",
+        "在",
+        "争取",
+        "把",
+        "节奏",
+        "拿",
+        "回来"
+      ],
+      "A:氛": [
+        "首盘",
+        "月亮",
+        "姐",
+        "先",
+        "以",
+        "三比二",
+        "领先",
+        "斯瓦泰克",
+        "没有",
+        "让",
+        "她",
+        "把",
+        "优势",
+        "拉开",
+        "马上",
+        "反击",
+        "比氛",
+        "很",
+        "接近",
+        "两",
+        "个",
+        "人",
+        "都",
+        "在",
+        "争取",
+        "把",
+        "节奏",
+        "拿",
+        "回来"
+      ],
+      "A:纷": [
+        "首盘",
+        "月亮",
+        "姐",
+        "先",
+        "以",
+        "三比二",
+        "领先",
+        "斯瓦泰克",
+        "没有",
+        "让",
+        "她",
+        "把",
+        "优势",
+        "拉开",
+        "马上",
+        "反击",
+        "比纷",
+        "很",
+        "接近",
+        "两个",
+        "人",
+        "都",
+        "在",
+        "争取",
+        "把",
+        "节奏",
+        "拿",
+        "回来"
+      ],
+      "B:忿": [
+        "首盘",
+        "月亮",
+        "姐",
+        "先",
+        "以",
+        "三比二",
+        "领先",
+        "斯瓦泰克",
+        "没有",
+        "让",
+        "她",
+        "把",
+        "优势",
+        "拉开",
+        "马上",
+        "反击",
+        "比",
+        "忿",
+        "很",
+        "接近",
+        "两",
+        "个",
+        "人",
+        "都",
+        "在",
+        "争取",
+        "把",
+        "节奏",
+        "拿",
+        "回来"
+      ],
+      "B:愤": [
+        "首盘",
+        "月亮",
+        "姐",
+        "先",
+        "以",
+        "三比二",
+        "领先",
+        "斯瓦泰克",
+        "没有",
+        "让",
+        "她",
+        "把",
+        "优势",
+        "拉开",
+        "马上",
+        "反击",
+        "比",
+        "愤",
+        "很",
+        "接近",
+        "两个",
+        "人",
+        "都",
+        "在",
+        "争取",
+        "把",
+        "节奏",
+        "拿",
+        "回来"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        0.7,
+        1.5,
+        1.9,
+        1.3,
+        -1.6,
+        null,
+        7.0,
+        7.1,
+        7.5,
+        8.1,
+        7.3
+      ],
+      "A:氛": [
+        0.3,
+        1.3,
+        1.8,
+        1.3,
+        -1.9,
+        null,
+        null,
+        6.8,
+        7.1,
+        7.8,
+        7.5
+      ],
+      "A:纷": [
+        0.7,
+        1.5,
+        2.0,
+        1.4,
+        -1.6,
+        null,
+        7.1,
+        7.1,
+        7.5,
+        8.1,
+        7.4
+      ],
+      "B:忿": [
+        0.4,
+        1.5,
+        1.9,
+        1.5,
+        -1.0,
+        null,
+        null,
+        8.6,
+        8.4,
+        7.9,
+        7.0,
+        5.6
+      ],
+      "B:愤": [
+        0.7,
+        2.0,
+        2.2,
+        1.8,
+        -1.4,
+        null,
+        null,
+        8.5,
+        8.4,
+        7.9,
+        6.8,
+        5.4
+      ]
+    },
+    "audio": {
+      "ORIG": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/native-speech/opening.mp3",
+      "A:氛": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/ce2152fa3c9aecc0c2e69262.mp3",
+      "A:纷": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/752501e90de49a1af5cad7b6.mp3",
+      "B:忿": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/5ba256a22198bd89becb18e5.mp3",
+      "B:愤": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/reference-cache/9919dc36d989ed9d99f17324.mp3"
+    }
+  },
+  "measured_at": "2026-10-17T15:04:35.658516+00:00",
+  "human_listening_claimed": false
+}

@@ -1,0 +1,109 @@
+{
+  "slug": "chwalinska-swiatek-wuhan-2026-sf",
+  "review_stage": "pre_render_spec_and_source_evidence_only",
+  "reviewed_at": "2026-10-17T14:46:25.031916+00:00",
+  "status": "no_new_render_blocker_in_reviewed_scope_publication_copy_fix_required",
+  "scope": {
+    "actual_work": [
+      "逐字段读取正式spec与xhs",
+      "读取fact-packet及本场官方赛报事实",
+      "读取完整source-commentary-review和9份source-audio窗口packet",
+      "复核原先实际查看的5张全片墙、逐秒关键点墙和死球逐帧视觉证据",
+      "实算本地源片、FS统计及4份ASR证据文件SHA256",
+      "执行纯读取foreground_audio_gate.require，核计划、9个窗口及25句字幕绑定"
+    ],
+    "not_claimed": [
+      "未实际看或听正式渲染成片",
+      "未在本轮查看最终封面模板；root已有模板实看，不能作为本代理已实看",
+      "未人工听审原声或TTS",
+      "未验证发布播放器、最终Release视频、推送或发布凭据",
+      "未重新下载Release源文件独立比较远端字节"
+    ]
+  },
+  "snapshot": {
+    "spec_path": "specs/reels/chwalinska-swiatek-wuhan-2026-sf.json",
+    "spec_sha256": "36cebf518a0e0094dedea41bf81f351fca8ade81bc6d55cd105c7722f0748c54",
+    "xhs_sha256": "acd4444d4271fe16ac2f66ec2ad7ffe6681e06a6f3fae7d68747b3a729208a3d",
+    "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+    "fs_stats_sha256": "4692075b0906660cb74b859e594846d051053bc1c29afbac8fb1c58b056e7dd7",
+    "audio_plan_sha256": "9ce7887dc4e0b717efa45c812c428366111de9c12ba51fe0cd0d0534851c5a6d"
+  },
+  "render_blockers_found": [],
+  "publication_blockers_found": [
+    {
+      "id": "required_october_tags_missing",
+      "file": "specs/reels/chwalinska-swiatek-wuhan-2026-sf.xhs.txt",
+      "missing": [
+        "#网球中国赛季来了",
+        "#网球时间到"
+      ],
+      "instruction_source": ".claude/skills/tennis-editorial/SKILL.md：截至10月底所有视频正文必带2个指定tag",
+      "action": "发布前补入这2个tag；#网球时差同时建议补齐。此问题不要求重渲视频。"
+    }
+  ],
+  "verified_spec_findings": [
+    {
+      "item": "本场身份和赛果",
+      "finding": "LS002、2026-10-17武汉半决赛，斯瓦泰克5-7 1-6负于赫瓦林斯卡；cover.stats.a=斯、b=赫，topbar赢家结果方向一致；排名9/22与种子7/16区分。"
+    },
+    {
+      "item": "首盘进程",
+      "finding": "opening 29.3–51.2描述月亮姐3-2领先、斯追成3平再4-3，吻合已看记分条；iga_break51.2–85.6是斯瓦泰克4-3接发、她拿破发点并破至5-3，不再出现斯救4BP的倒置。"
+    },
+    {
+      "item": "两盘点",
+      "finding": "first_set_point86.24–98.28完整收第1盘点及包厢解说；second_set_point98.28–115.12完整收第2盘点。5-3、40-15确为斯瓦泰克发球胜盘局两个连续盘点。"
+    },
+    {
+      "item": "两段技战术",
+      "finding": "second_set_point与second_break沿用实际连续墙支持的底线两侧调动、横向回球、进入场内描述，归人准确；未猜旋转或赢分方式。second_break为斯次盘1-3发球，月亮姐再破至4-1。"
+    },
+    {
+      "item": "cold open和结局兑现",
+      "finding": "cold_open250.8晚于已逐帧核的死球250.60，属于赢后；无中文旁白，含完整保留原声及实际拥抱。match_payoff242.24–284.2在正文重新兑现完整赛点和终局。"
+    },
+    {
+      "item": "原声字幕与选窗",
+      "finding": "foreground_audio_gate.require对当前计划、同SHA本地源、9个原声窗口及25句双语字幕绑定通过。这仅证明证据/时码绑定，不等同最终混音或人工听审。"
+    },
+    {
+      "item": "u11比分",
+      "finding": "To lead 5-1是4-1时下一局争取5-1的目标，中文已写争取；不构成5-1现时比分错误。"
+    },
+    {
+      "item": "解说口误及采访",
+      "finding": "末段end284.2排除u20的7-6口误完整句，也排除285.24开始的后续话语；采访硬切299.52远在片外。"
+    },
+    {
+      "item": "斯瓦泰克遗憾",
+      "finding": "通过5-3两个盘点、武汉是当前10站千赛唯一缺少决赛经历之地、腿部不适医疗暂停及终局祝福呈现；未声称伤种、严重程度或已无缘年终。医疗缺口用事实卡说明，未拿别的动作冒充。"
+    },
+    {
+      "item": "最后11局与统计",
+      "finding": "首盘最后4局加次盘6-1共10/11；连赢6局来自首盘末4局与次盘前2局。W/UE斯37/33、赫19/7与事实packet一致，FS原始字节SHA匹配；未用FS不自洽的分盘发球项。"
+    },
+    {
+      "item": "封面最新指令",
+      "finding": "当前subject为赫瓦林斯卡，hook、push和xhs首行均以赢家视角。fact-packet旧cover仍为Iga，已被用户最新指令取代，不把旧packet封面建议当本期锁定。"
+    }
+  ],
+  "editorial_observations_non_blocking": [
+    {
+      "item": "长度与静卡",
+      "finding": "按spec名义窗口合计约324.06秒，约5分24秒；title/stat卡合计89.8秒。所有必要事实齐备但静卡占比较高。不得为了3至4分钟目标删关键回合；实际成片应重点查看20秒intro和22.4秒injury卡是否留出过多空白，若TTS实际占满则按故事需要。"
+    },
+    {
+      "item": "发布短主题",
+      "finding": "检查时data/copy_titles.json未见本slug显式条目；发布前确认最终复制标题含10.17赛场之上前缀、无空白且总计≤20字符。可用19字符10.17赛场之上|月亮姐首进千赛决赛。现有xhs首行可以作为正文句，不能自动证明复制标题已达标。"
+    }
+  ],
+  "final_film_pending": [
+    "中心3:4全屏裁切及比分回贴实样",
+    "字幕实际可读性与主角脸是否被遮挡",
+    "完整发球至死球切点进入最终导出",
+    "TTS真实读音、时长与无原声覆盖",
+    "原声实际字幕与完整句尾",
+    "最终封面采用当前候选且未回退到用户否决照片",
+    "尾卡和发布文案的最后一致性"
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ATsKkPJBY3s/ATsKkPJBY3s.mp4",
+  "original_source_url": "https://www.youtube.com/watch?v=ATsKkPJBY3s",
+  "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI source-audio review agent; personally inspected retained raw transcript evidence and curated every clause before spec.quote was populated; no human listening claimed",
+  "reviewed_at": "2026-10-17T14:41:26.036435+00:00",
+  "status": "complete",
+  "reviewed_from": 250.8,
+  "reviewed_to": 270.4,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 250.9,
+      "end": 252.08,
+      "en": "Oh, Maja!",
+      "zh": "噢赫瓦林斯卡",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 254.88,
+      "end": 256.86,
+      "en": "Magnificence in Wuhan,",
+      "zh": "武汉的精彩一刻",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 256.86,
+      "end": 259.82,
+      "en": "as she topples her fellow Pole, former world number one,",
+      "zh": "她击败同为波兰人的前世界第一",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 259.82,
+      "end": 263.5,
+      "en": "for her first career top-10 win.",
+      "zh": "收获生涯首场对前10球员的胜利",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    }
+  ],
+  "_edit_id": "cold_open",
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/source_asr/ATsKkPJBY3s/small.en.json",
+        "sha256": "5e421cdf6ffda949f1edba6a0ca3a1f1d150fc133349e54ecef6fb000400c72f",
+        "model": "small.en",
+        "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/source_asr/ATsKkPJBY3s/medium.en.json",
+        "sha256": "8cadf1ea2255ed08e058dc79906c4618efeba3cabc67d338139577da06d0a922",
+        "model": "medium.en",
+        "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/captions.txt",
+        "sha256": "f938610cf589d6f185180038c2f5c706802f09b67161d9496e30d21bc1e6dd56",
+        "kind": "Canonical YouTube automatic captions from probe run 39040711967"
+      },
+      {
+        "path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/source-audio-raw/large-v3-turbo-90-100.json",
+        "sha256": "974afc7a85048550e63444be24e93e2e040d5891ea5d5c6bbc7e7b3e4bd2aaf4",
+        "model": "large-v3-turbo",
+        "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+        "clip": [
+          90,
+          100
+        ],
+        "decode": "ffmpeg -ss90 -t10 -f f32le -ac1 -ar16000; no gain/filter effects"
+      }
+    ],
+    "full_source_review_path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/source-commentary-review.json",
+    "full_source_review_sha256": "f7c59e6967a1bf83ef5b84cb930c3be270e610847afd1ca7525927cd9e97290c",
+    "manual_listening_claimed": false,
+    "source_audio_gain_changes": false,
+    "scope_note": "Whole selected window checked against both full-source raw transcripts and canonical automatic captions. Source-level unresolved MTO/interview spans lie outside every selected window. Source-level unknowns were not marked complete."
+  }
+}

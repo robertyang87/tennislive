@@ -1,0 +1,182 @@
+{
+  "slug": "chwalinska-swiatek-wuhan-2026-sf",
+  "reviewed_at": "2026-10-17T15:52:00.705679+00:00",
+  "review_kind": "actual_encoded_latest_cloud_cover_delta_and_body_key_frame_review",
+  "status": "no_blocking_visual_defect_found_in_reviewed_latest_complete_duo_candidate_samples",
+  "publication_approved": false,
+  "film": {
+    "path": "/workspace/scratch/sf-complete-duo-final.mp4",
+    "sha256": "c2ffa0d4666caf744aa2bbed6d524422b36a28ed0e1fe0b1ec809244a952749f",
+    "bytes": 110332783,
+    "duration_seconds": 315.52,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": "25/1",
+    "video_duration_seconds": 315.52,
+    "audio_duration_seconds": 315.514,
+    "is_complete_encoded_film": true,
+    "is_native_still_preview": false,
+    "cloud_run_id": "39046157620"
+  },
+  "scope": {
+    "actual_viewing": [
+      "实际view新版云端视频导出的全部11张高分辨率关键帧：0.6、2、25、65、187.3、193、248、263、288、302、313秒",
+      "确认最新E完整双人封面进入实际片头，并对正文比分/字幕/布局/卡片与前次实际视频抽样所见作差异核查"
+    ],
+    "not_claimed": [
+      "本轮没有重新抽取或实看全片4秒墙，也没有逐帧人工播放315.52秒全部视频",
+      "旧b7fcc8…与新c2ffa0…为不同编码文件；没有声称正文编码字节完全相同",
+      "旧版4墙/17关键帧的全时间范围抽样仅是已审核同正文计划的可追溯证据，不冒充新版全时间范围实际实看",
+      "未人工听审任何音频；用户冻结口播听审另有证据"
+    ]
+  },
+  "latest_cover_instruction": {
+    "verbatim": [
+      "封面不用铺满",
+      "铺满就看不到人物主体了"
+    ],
+    "applied": "片头使用完整横向双人照片与纯深蓝文字承接区；正文继续按14段crop计划铺满。",
+    "static_poster_review_path": "/workspace/tennislive/requests/reels/chwalinska-swiatek-wuhan-2026-sf/qc/final-cover-review.json",
+    "static_poster_review_sha256": "685f4f73da0d17cc5bd02a51b2aa70e16782d2b5d24730fb9216478be1ac8415",
+    "static_poster_sha256": "6817c623666f53c8a48a714a244d502fda7cb9e5226289ab0706ebe9316e67f1",
+    "new_cover_observed_in_actual_encoded_film": true
+  },
+  "key_frame_reviews": [
+    {
+      "film_time": 0.6,
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-0.6.jpg",
+      "sha256": "504aa514f854e549e42f054e1da7500f462cc62e18f9a0ed975433aed54c05f2",
+      "actually_viewed": true,
+      "finding": "E完整双人横向原照已实际入片，双方侧脸五官/下巴及上半身清楚，纯深蓝文字承接区符合最新用户要求；标题/比分/排名可读，未用旧F满幅封面。",
+      "confidence": "high"
+    },
+    {
+      "film_time": 2.0,
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-2.jpg",
+      "sha256": "448af546c270d40f5268bdff7f3cf4288c2a736256dd2be1e553f8b73b21cc10",
+      "actually_viewed": true,
+      "finding": "赢后冷开场与旧版同一源时刻，Oh, Maja!及中文字幕、回贴比分完整；正文保持中心3:4铺满。",
+      "confidence": "high"
+    },
+    {
+      "film_time": 25.0,
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-25.jpg",
+      "sha256": "5d99fcd1472533ef294ad9067d72412db6ad60674287cfc5950a5bf5a0ec4d0f",
+      "actually_viewed": true,
+      "finding": "波兰德比开篇卡与此前同计划：旧日搭档隔网相逢、只有1张决赛门票及北京时间字幕完整。",
+      "confidence": "high"
+    },
+    {
+      "film_time": 65.0,
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-65.jpg",
+      "sha256": "204cd3db81bfcaf75e4c1fca17f5dfcf343ba561c2a0ecf398d86d97625eebf7",
+      "actually_viewed": true,
+      "finding": "首盘4-3、伊加接发Ad及BREAK POINT #3，长回合字幕与回贴板完整，未见封面构图变化扩散至正文。",
+      "confidence": "high"
+    },
+    {
+      "film_time": 187.3,
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-187.3.jpg",
+      "sha256": "2bbc0ade8ca59f9794bf4218c4a0a91856fed109e4138438017c1ff19bfcdf63",
+      "actually_viewed": true,
+      "finding": "首盘稳定大比分图完整，IGA SWIATEK [7] 5和MAJA CHWALINSKA [16] 7全名/比分/绿高亮清楚；未见裁名。",
+      "confidence": "high"
+    },
+    {
+      "film_time": 193.0,
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-193.jpg",
+      "sha256": "44d68dc24f3f45a22d9fd63ca1288ed0c70c1c9944c00b1653e298942fd9db61",
+      "actually_viewed": true,
+      "finding": "斯瓦泰克的遗憾章节卡、首盘领先未能兑现/第二盘被动及中文字幕完整，与旧版相同内容与版式。",
+      "confidence": "high"
+    },
+    {
+      "film_time": 248.0,
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-248.jpg",
+      "sha256": "b866e117686812deecd22347aa59e47c61f9b78a2cfd02f76b11ba553501081a",
+      "actually_viewed": true,
+      "finding": "最终赛点中斯1-5、30-40及MATCH POINT回贴完整，实际赛场画面全屏，未见上下留边。",
+      "confidence": "high"
+    },
+    {
+      "film_time": 263.0,
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-263.jpg",
+      "sha256": "1b740899d8fe2405e2a4e77c46b1c4fb48cef71a8b095e1bbe7d2b7e425a5e01",
+      "actually_viewed": true,
+      "finding": "网前真实拥抱动作及两人清楚，未见字幕/比分残块遮挡。",
+      "confidence": "high"
+    },
+    {
+      "film_time": 288.0,
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-288.jpg",
+      "sha256": "c45e3267e6c51ad8201abcb5352560d4b7653d0421588923acb6c9f6d8af5ec3",
+      "actually_viewed": true,
+      "finding": "统计卡9行全部可读，斯/赫顺序与数值一致：ACE 0/2、双误4/0、制胜分37/19、UE33/7、65%/78%、53%/63%、41%/44%、2/8对6/10、60/74。",
+      "confidence": "high"
+    },
+    {
+      "film_time": 302.0,
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-302.jpg",
+      "sha256": "6cd0beadd48c2fa64a2c96e2654f9e590486ef9366b3ff2227237d9304f6b73f",
+      "actually_viewed": true,
+      "finding": "重逢之后收尾卡和斯瓦泰克武汉决赛梦字幕完整。",
+      "confidence": "high"
+    },
+    {
+      "film_time": 313.0,
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-313.jpg",
+      "sha256": "aa22dcc53b78686e6a4e004202c307e915e0a2cc88fc5e3106c7549e2c6ae41d",
+      "actually_viewed": true,
+      "finding": "独立品牌收尾，网球时差/时差归我好球归你无截断，无赛场板残留。",
+      "confidence": "high"
+    }
+  ],
+  "blocking_visual_findings": [],
+  "minor_findings": [],
+  "body_regression_conclusion": "所复看的10张正文关键帧与此前同时间图的内容、比分回贴、字幕和排版一致，未见封面替换引起正文布局回退或新增裁缺；此为抽样视觉一致，不代表正文编码字节相同。",
+  "prior_body_review_reference": {
+    "path": "/workspace/tennislive/requests/reels/chwalinska-swiatek-wuhan-2026-sf/qc/previous-fullbleed-render-visual-review.json",
+    "sha256": "cd78cf3e59fc0c318c804f507f6d8415e23185cc8928034def7f7896533cba07",
+    "prior_film_sha256": "b7fcc870445141c3d738974104b9ae6f877ae0f222fa83cf2fb3d187671904fb",
+    "prior_run_id": "39044781220",
+    "prior_actual_review_scope": "4张每4秒全时间范围墙（2–314秒，共79缩略样本）及17张高分辨率关键帧",
+    "prior_cover_superseded": true,
+    "body_evidence_retained": true,
+    "use_limit": "保留已审同正文计划证据；当前候选独立绑定本报告c2ffa0…且仅本轮11帧实际view，二者证据范围分别陈述。"
+  },
+  "technical_context": {
+    "file_identity_independently_computed": true,
+    "release_check_path": "/workspace/tennislive/requests/reels/chwalinska-swiatek-wuhan-2026-sf/qc/final-release-check.json",
+    "release_check_sha256": "249faac5ea3a9550baba5f0ccfc21fc3a411ddcacd4afb0bed14fd32aa985273",
+    "release_check_identity_matches_actual_file": true,
+    "root_recorded_native_qc_status": "pass",
+    "root_recorded_body_plan_stats_outro_voice_parameters_unchanged": true,
+    "root_recorded_actual_ASS_identical_to_prior_body_review": true,
+    "root_recorded_strict_frozen_narration_reused": true,
+    "evidence_limit": "本代理读取root独立final-release-check，未重新读取云端QC/ASS原件或运行native QC；这不替代本轮实际图像复看。"
+  },
+  "owner_audio_review_context": {
+    "path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/owner-listening-review.json",
+    "sha256": "02127e80621f2dc2994bbba8aaf850c79500b9e99dc0bc62e645f8b3b4bdc249",
+    "reviewer": "user / account owner",
+    "reply_verbatim": "已听过，读音自然",
+    "duration_seconds": 119.54399999999998,
+    "reviewed_tts_bundle_sha256": "4fd93954a516769557bc460e4ce82622d66def832d936898fc778d92d4d250c4",
+    "matches_local_frozen_bundle": true,
+    "assistant_listening_claimed": false,
+    "note": "这是用户对实际119.54秒口播的听后陈述，本代理只读取该独立证据，不能说本代理听审通过。",
+    "cloud_same_bundle_context": "root说明云端使用相同4fd93954…250c4冻结bundle；用户已听过该bundle全口播并回复读音自然。"
+  },
+  "actions": {
+    "spec_modified": false,
+    "audio_resynthesized": false,
+    "pushed": false
+  },
+  "remaining_release_checks": [
+    "root统一记录本轮视觉报告、完成最终CI/发布与推送凭据；本报告只处理视觉复核，不自行发布。"
+  ]
+}
