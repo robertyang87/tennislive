@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=FtWSTkzN83w",
+  "source_sha256": "a525c6e010503d8602d03b9cf8bfa6831fded9d6cc1a94b179e013b423ce93d3",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T15:10:16.190752+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 233.5,
+  "reviewed_to": 245.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/FtWSTkzN83w/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/FtWSTkzN83w 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 233.5–245.0 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "WTA 官方集锦「Mirra Andreeva vs. Sonay Kartal | 2025 Beijing Round of 16」（FtWSTkzN83w）决胜盘回合：镜头 233.40 切入、261.92 切走；两档转写在 230.78–257.62 无词。比分 7-5 2-6 7-5、她当时世界第 81、安德烈耶娃世界第 5（4 号种子）：集锦解说 284.06 The world number 81 defeats Mirra Andreeva, the number 4 seed＋WTA 武汉半决赛 match notes（2nd career Top 10 win (also d. No.5 Mirra Andreeva at 2025 Beijing)）；生涯最大胜利：DAZN「Sonay Kartal claims biggest career win by beating Mirra Andreeva」＋tennishead。"
+}

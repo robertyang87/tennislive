@@ -1,0 +1,21 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=DEvG7qPY6YY",
+  "source_sha256": "0a5722bcde646812ba9204adcac927ce7a2ad5ab853cc1e64167c0afc3b3e776",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T15:10:16.190752+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 124.0,
+  "reviewed_to": 138.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 129.8,
+      "end": 135.78,
+      "en": "She's done it! Sonay Kartal's dream run continues.",
+      "zh": "她做到了！卡塔尔的梦还在继续。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/DEvG7qPY6YY/small.en.json + medium.en.json",
+  "review_note": "英国网协 LTA 官方频道「Emma & Sonay Into Round Three! | Highlights - Brits Day 3 Wimbledon 2024」（DEvG7qPY6YY）：她第二轮胜布雷尔的赛点回合（112.40–132.44 同一镜头）、包厢起立（132.44）、她挥手致意（135.24）。解说两档一致（medium 129.80–135.78，名字两档都转错，按 LTA 标题写 Sonay Kartal）。段首 124.0 在上一句（118.08）之后，段尾 138.3 让溶解停在 138.60 切点之前。2024 温网第二轮胜布雷尔：LTA 2024-07 稿＋tennismajors。"
+}

@@ -2,19 +2,13 @@
   "source_url": "https://www.youtube.com/watch?v=8u0X2vm7svU",
   "source_sha256": "691e32c0d87ad1ddf27ae5894237619d54715432ede417969b5c20651c704b5b",
   "method": "asr_cross_checked",
-  "reviewed_at": "2026-10-17T13:45:13.665540+00:00",
+  "reviewed_at": "2026-10-17T15:10:16.190752+00:00",
   "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
-  "reviewed_from": 113.7,
+  "reviewed_from": 115.8,
   "reviewed_to": 143.5,
   "status": "complete",
   "uncertain_spans": [],
   "foreground_english": [
-    {
-      "start": 113.92,
-      "end": 115.52,
-      "en": "Tennis is all I've known, right?",
-      "zh": "网球是我唯一熟悉的事，"
-    },
     {
       "start": 116.04,
       "end": 117.64,
@@ -65,5 +59,5 @@
     }
   ],
   "asr_evidence": "data/source_asr/8u0X2vm7svU/small.en.json + medium.en.json",
-  "review_note": "英国网协 LTA 官方频道复出专访「The Comeback is ON | Sonay Kartal's Road Back From Injury」（8u0X2vm7svU，4K）：她坐着讲伤病。两档逐词一致（medium 113.82–143.02；small 114.02–143.00，small 把 all I've known 记成 what I've known、多一个 kind of，按 medium 写）。镜头 40.36 切入、174.72 切走，段首 113.7 在 So you've got those things and（112.20–113.58）之后，段尾 143.5 在主持人下一问（143.66）之前。"
+  "review_note": "英国网协 LTA 官方频道复出专访「The Comeback is ON | Sonay Kartal's Road Back From Injury」（8u0X2vm7svU，4K）：她坐着讲伤病。两档逐词一致（medium 113.82–143.02；small 114.02–143.00，small 把 all I've known 记成 what I've known、多一个 kind of，按 medium 写）。镜头 40.36 切入、174.72 切走，段首 115.8 在 tennis is all I've known, right（113.82–115.52）之后、The past（116.04）之前，段尾 143.5 在主持人下一问（143.66）之前。"
 }

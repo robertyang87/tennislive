@@ -1,0 +1,33 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Dt4dtaULohk",
+  "source_sha256": "a60aff04396aeefd4139268f2775d25a461aacb731c5bbf07ba101670e7f01ca",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T15:10:16.190752+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 169.5,
+  "reviewed_to": 187.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 170.82,
+      "end": 176.1,
+      "en": "And the show does go on, a straight-sets victory,",
+      "zh": "好戏继续，直落两盘，"
+    },
+    {
+      "start": 177.52,
+      "end": 182.18,
+      "en": "into the fourth round of a Grand Slam for the very first time in her career,",
+      "zh": "生涯第一次打进大满贯第四轮，"
+    },
+    {
+      "start": 182.4,
+      "end": 183.84,
+      "en": "and she's done it on the grass of Wimbledon.",
+      "zh": "就在温网的草地上。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/Dt4dtaULohk/small.en.json + medium.en.json",
+  "review_note": "同一条：她举臂（169.48）、包厢（171.84）、网前握手与致意（173.68–187.56）。解说两档一致（medium 170.82–183.84，sense 按语义写 sets）。段尾 187.3 让溶解停在 187.56 切点之前，也在 The first British woman（185.32）这一句里——这一句不收，字幕只收到 183.84。"
+}
