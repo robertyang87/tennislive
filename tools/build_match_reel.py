@@ -104,6 +104,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 import narrated_audio_mode  # noqa: E402
+import reel_cinematic  # noqa: E402
 import reviewed_effects_mode  # noqa: E402
 import reel_source_audio_policy  # noqa: E402
 
@@ -531,7 +532,8 @@ AUDIO_RATE = "48000"
 
 
 def dissolve_filtergraph(lengths: list[float], fade: float,
-                         rate: int = int(AUDIO_RATE)) -> str:
+                         rate: int = int(AUDIO_RATE),
+                         transitions: list[str] | None = None) -> str:
     """把各段**溶解**着接起来的滤镜图（画面 `xfade`，现场声 `acrossfade`）。
 
     ### 长度账——这是这个函数存在的全部理由
@@ -587,7 +589,8 @@ def dissolve_filtergraph(lengths: list[float], fade: float,
         offset += lengths[i - 1]
         vout = "[vout]" if i == n - 1 else f"[vx{i}]"
         aout = "[aout]" if i == n - 1 else f"[ax{i}]"
-        vparts.append(f"{vprev}[{i}:v]xfade=transition=fade:"
+        kind = (transitions[i] if transitions and i < len(transitions) else "dissolve")
+        vparts.append(f"{vprev}[{i}:v]xfade=transition={reel_cinematic.TRANSITIONS[kind]}:"
                       f"duration={fade}:offset={offset:.3f}{vout}")
         # `c1`/`c2` 都用三角曲线：默认那组是等功率的，两条现场声（球场底噪）
         # 叠在一起会在中间鼓一下——底噪不相干，等功率补的那一块是白给的。
@@ -672,6 +675,41 @@ def native_mix_filtergraph(spec: dict, filters: list[str], voice_labels: list[st
         filters, voice_labels, music,
         mute_original=narrated_audio_mode.enabled(spec), reviewed_bed=reviewed_bed,
         preserve_source_audio=reel_source_audio_policy.normal_source_audio(spec))
+
+
+def export_audio_stems(spec: dict, outdir: Path, joined: Path, mixed: Path,
+                       mix_inputs: list[str], filters: list[str],
+                       voice_labels: list[str]) -> dict[str, Path]:
+    """分轨：`<slug>.narration.wav`（只有旁白）、`<slug>.original.wav`（只有拼好的
+    现场原声，增益 1.0、不闪避）、`<slug>.mix.wav`（成片那条混音）。
+
+    给账号所有者后期自己垫 BGM 用（2026-10-17「后续我统一加 bgm」）——默认不带音乐，
+    三条同长、同采样率（48 kHz / 24-bit），时间轴和成片逐样本对齐。
+    """
+    slug = spec.get("slug", "reel")
+    seconds = probe_duration(mixed)
+    # runner 上落到 $RUNNER_TEMP/stems：成片目录有「大文件不许进仓库」的闸（match-reel.yml
+    # 清理步骤），WAV 动辄几十 MB；match-reel.yml 从这里传进 Release。
+    stem_dir = (Path(os.environ["RUNNER_TEMP"]) / "stems") if os.environ.get("RUNNER_TEMP") else outdir
+    stem_dir.mkdir(parents=True, exist_ok=True)
+    out = {k: stem_dir / f"{slug}.{k}.wav" for k in ("narration", "original", "mix")}
+    wav = ["-c:a", "pcm_s24le", "-ar", AUDIO_RATE, "-t", f"{seconds:.3f}"]
+    with stage("分轨导出"):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(joined),
+            "-map", "0:a:0", "-af", "apad", *wav, str(out["original"]))
+        if filters:
+            run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                "-i", str(joined), *mix_inputs, "-filter_complex",
+                f"{';'.join(filters)};{''.join(voice_labels)}"
+                f"amix=inputs={len(filters)}:normalize=0,apad[out]",
+                "-map", "[out]", *wav, str(out["narration"]))
+        else:
+            run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-f", "lavfi",
+                "-i", f"anullsrc=r={AUDIO_RATE}:cl=stereo", *wav, str(out["narration"]))
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(mixed),
+            "-map", "0:a:0", "-af", "apad", *wav, str(out["mix"]))
+    print("[分轨] " + "、".join(p.name for p in out.values()) + f"（{seconds:.2f}s，无音乐）")
+    return out
 
 
 def music_chain(index: int, seconds: float, pct: float = MUSIC_GAIN_PCT) -> str:
@@ -2928,6 +2966,9 @@ class Segment:
     # Keep the dissolve's video continuation, but zero-fill only its audio tail.
     # Explicit opt-in: the reviewed source audio ends at the nominal segment end.
     audio_tail: str = ""
+    # 电影感选项（tools/reel_cinematic.py）：进这一段的接缝转场、段内慢推镜倍数。
+    transition_in: str = "dissolve"
+    push: float = 1.0
 
     @property
     def length(self) -> float:
@@ -3002,6 +3043,24 @@ def _seg_fill_y(s: dict, i: int) -> float | None:
 
 
 CROP_ZOOM_MAX = 2.0
+
+
+def _cine_call(fn, *args):
+    """reel_cinematic 的校验错误统一转成 ReelError（dry-run 当场红）。"""
+    try:
+        return fn(*args)
+    except reel_cinematic.CinematicError as exc:
+        raise ReelError(str(exc)) from None
+
+
+#: render 开头登记：源片路径 → 源键，以及 spec.cinematic（cut_segment 只拿得到 Path）。
+_CINEMA: dict = {"cfg": {}, "keys": {}}
+
+
+def cinematic_prefilter(source: Path) -> str:
+    """逐源拉齐（曝光/白平衡），排在 conform 之后、裁切之前；没开就是空串。"""
+    cfg = _CINEMA["cfg"]
+    return reel_cinematic.source_match_filter(cfg, _CINEMA["keys"].get(Path(source))) if cfg else ""
 
 
 def _seg_crop_zoom(s: dict, i: int) -> float:
@@ -3594,7 +3653,9 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        fill_y=_seg_fill_y(s, i),
                        contain_keep=_seg_contain_keep(s, i),
                        crop_zoom=_seg_crop_zoom(s, i),
-                       visual_image=str(s.get("visual_image") or ""))
+                       visual_image=str(s.get("visual_image") or ""),
+                       transition_in=_cine_call(reel_cinematic.seg_transition, s, i),
+                       push=_cine_call(reel_cinematic.seg_push, s, i))
 
     segments = [replace(_one(s, i), subtitle_bottom=_seg_subtitle_bottom(s, i))
                 for i, s in enumerate(spec["segments"])]
@@ -3886,9 +3947,9 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # `test_真字段表要盖住每条spec里出现过的字段` 拿 `specs/reels/*.json` 里实际
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
-    "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom", "cx", "date", "title",
+    "spec": ("archival", "conform", "conform_sharpen", "cover", "crop_y", "crop_zoom", "cx", "date", "title",
              "layout", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
-             "music", "outro", "push", "rate", "scorebox", "scoreboard_profile", "source_scorebox", "segments",
+             "music", "outro", "push", "rate", "cinematic", "scorebox", "scoreboard_profile", "source_scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_fallbacks", "source_url",
              "original_audio_mode", "owner_approval", "audio_effects_review", "preserve_source_audio", "track",
@@ -3902,7 +3963,8 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "segment": ("audio_tail", "bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "end", "fill_y", "fit", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows", "scorebox",
-                "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
+                "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card", "title_style",
+                "transition_in", "push_in",
                 "kicker", "track", "voice", "subtitle_bottom", "subtitle_bottom_windows", "visual_image"),
 }
 
@@ -4104,10 +4166,14 @@ def _normalize_title_card_segments(spec: dict) -> None:
         from render_title_card import length_problem  # noqa: PLC0415
         if problem := length_problem(text):
             raise ReelError(f"第 {i + 1} 段 title_card：{problem}")
+        if s.get("title_style") not in (None, "chapter", "trailer"):
+            raise ReelError(f"第 {i + 1} 段 title_style 只认 chapter / trailer")
         if "narration" not in s:
             s["narration"] = text
         s["image"] = TITLE_CARD_PREFIX + json.dumps(
-            {"text": text, "kicker": str(s.get("kicker") or "").strip()}, ensure_ascii=False)
+            {"text": text, "kicker": str(s.get("kicker") or "").strip(),
+             **({"style": s["title_style"]} if s.get("title_style") else {})},
+            ensure_ascii=False)
 
 
 def load_spec(path: Path) -> dict:
@@ -4934,7 +5000,10 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                          f"{sp}fps={FPS_EXPR},setsar=1")
     # 认领了 conform 的源：放大裁边前置到这条链最前面，只处理这一段用到的几秒
     # （`conform_sources` 不再落盘整条中间文件）。
-    chain = conform_prefilter(source) + chain
+    chain = (conform_prefilter(source) + cinematic_prefilter(source) + chain
+             + reel_cinematic.look_filter(_CINEMA["cfg"])
+             + reel_cinematic.push_filter(seg.push if LAYOUT != "band" else 1.0,
+                                          seg.length + tail, VIDEO_W, VIDEO_H))
     # 所有 -i 必须排在滤镜/输出选项前面，否则 ffmpeg 会把 -vf 当成下一个输入的
     # 选项直接报错。源片是纯视频轨（人从网盘传来的那份就是），所以补一条静音轨
     # 进去——后面混音那步要求每段都有音频流。
@@ -6643,6 +6712,11 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 同一条片子 2026-10-16：账号所有者「针对这一条内容可以放开用非官方视频」——2017 温网扔硬币
     # 只有个人账号转载的 BBC 转播（手机翻拍，最高 1280×720）。
     "https://www.youtube.com/watch?v=UKZnd1EliAY": 720,
+    # 奥斯塔彭科×斯瓦泰克六战（ostapenko-swiatek-h2h-2026，PR #1278）：账号所有者 2026-10-17
+    # 「不要动画卡」，点名 2021 印第安维尔斯、2022 迪拜两条 WTA 官方集锦（最高 1280×720）
+    # 剪关键分、放大铺满并轻度锐化（conform_sharpen）。
+    "https://www.youtube.com/watch?v=wOsrLbiWZJ4": 720,
+    "https://www.youtube.com/watch?v=vNSSJMmRIBM": 720,
     # 霍达尔上海毛巾风波（jodar-towel-shanghai-2026）：账号所有者 2026-10-14「去找原视频，
     # 否则画面不对」——冲球童喊话与主裁警告官方集锦都没有，唯一完整的是 X @gerebit0 转发的
     # Tennis TV 转播录屏，最高 1206×652。spec 的 source_quality_exceptions 认领了它，这里补上白名单
@@ -7997,6 +8071,9 @@ def x_cdn_source_problem(spec: dict) -> str | None:
 _CONFORM_TARGETS: dict[Path, tuple[int, int]] = {}
 
 
+_CONFORM_SHARPEN: set[Path] = set()
+
+
 def conform_target(source: Path) -> tuple[int, int] | None:
     """这条源认领过 conform 就给基准尺寸，没有就 None。"""
     return _CONFORM_TARGETS.get(Path(source))
@@ -8012,8 +8089,9 @@ def conform_prefilter(source: Path) -> str:
     if not target:
         return ""
     tw, th = target
+    sharpen = ",unsharp=5:5:0.6:5:5:0.0" if Path(source) in _CONFORM_SHARPEN else ""
     return (f"scale={tw}:{th}:force_original_aspect_ratio=increase:flags=lanczos,"
-            f"crop={tw}:{th},")
+            f"crop={tw}:{th}{sharpen},")
 
 
 def conform_vf_args(source: Path) -> tuple[str, ...]:
@@ -8029,6 +8107,31 @@ def effective_size(source: Path) -> tuple[int, int]:
     contain 几何）都要走这儿，别直接 `probe_size`——那量到的是原生的 720p。
     """
     return conform_target(source) or probe_size(source)
+
+
+def check_conform_sharpen(spec: dict | None) -> dict:
+    """`conform_sharpen` 的白名单闸：只给**放大**的低清授权源用。
+
+    三条都要满足：① 键在 `conform` 里（只有被放大的源才需要锐化）；② 理由非空；
+    ③ 这条源的 URL 在 `APPROVED_LOW_RES_SOURCES`（账号所有者按 URL 点过名的低清源）。
+    1080p 源不许锐化——原生清晰的画面再锐化只会出白边和噪点。
+    锐化固定为 `unsharp=5:5:0.6:5:5:0.0`（只锐亮度、轻度），不开放强度。
+    """
+    sharpen = (spec or {}).get("conform_sharpen") or {}
+    if not sharpen:
+        return {}
+    if not isinstance(sharpen, dict) or not all(
+            isinstance(v, str) and v.strip() for v in sharpen.values()):
+        raise ReelError('conform_sharpen 要写成 {"源键": "为什么要锐化"}')
+    conform = (spec or {}).get("conform") or {}
+    srcs = (spec or {}).get("sources") or {}
+    for key in sharpen:
+        if key not in conform:
+            raise ReelError(f"conform_sharpen 的 {key} 没在 conform 里认领放大——只有放大的源才锐化")
+        if srcs.get(key) not in APPROVED_LOW_RES_SOURCES:
+            raise ReelError(f"conform_sharpen 的 {key} 不在低清授权白名单 "
+                            "APPROVED_LOW_RES_SOURCES 里——1080p 源不锐化")
+    return sharpen
 
 
 def conform_sources(paths: dict[str, Path], spec: dict | None) -> None:
@@ -8057,6 +8160,7 @@ def conform_sources(paths: dict[str, Path], spec: dict | None) -> None:
     """
     for path in paths.values():
         _CONFORM_TARGETS.pop(Path(path), None)
+        _CONFORM_SHARPEN.discard(Path(path))
     declared = (spec or {}).get("conform") or {}
     if not declared:
         return
@@ -8067,6 +8171,7 @@ def conform_sources(paths: dict[str, Path], spec: dict | None) -> None:
     missing = sorted(set(declared) - set(paths))
     if missing:
         raise ReelError(f"conform 里的 {missing} 不在 sources 里")
+    sharpen = check_conform_sharpen(spec)
     ref = next((k for k in paths if k not in declared), None)
     if ref is None:
         raise ReelError("conform 不能把所有源都声明进去——总得留一个当尺寸基准")
@@ -8077,6 +8182,8 @@ def conform_sources(paths: dict[str, Path], spec: dict | None) -> None:
             print(f"[conform] {key} 已经是 {tw}×{th}，跳过")
             continue
         _CONFORM_TARGETS[Path(paths[key])] = (tw, th)
+        if key in sharpen:
+            _CONFORM_SHARPEN.add(Path(paths[key]))
         print(f"[conform] {key} {w}×{h} → {tw}×{th}"
               f"（等比放大铺满再中央裁，切到哪几秒做哪几秒，不落盘）——{why}")
 
@@ -9887,6 +9994,8 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
             render_kwargs = {}
             if handle_bottom is not None:
                 render_kwargs["handle_bottom"] = handle_bottom
+            if card.get("style"):
+                render_kwargs["style"] = card["style"]
             renderer(card["text"], out, kicker=card.get("kicker", ""), size=size,
                      **render_kwargs)
             if not out.is_file():
@@ -10008,6 +10117,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         bind_sources(spec, sources, outdir)
     check_native_quality_exceptions(spec, sources)
     conform_sources(sources, spec)
+    _CINEMA["cfg"] = _cine_call(reel_cinematic.config, spec)
+    _CINEMA["keys"] = {Path(p): k for k, p in sources.items()}
     check_sources_match(sources, spec)
     primary = next(iter(sources))
     source = sources[primary]
@@ -10338,7 +10449,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     if outro_enabled:
         lengths.append(outro_secs)
     from reel_join_fusion import plan as plan_join_fusion  # noqa: PLC0415
-    native_join_graph = dissolve_filtergraph(lengths, SEG_FADE)
+    transitions = (["dissolve"] + [seg.transition_in for seg in segments]
+                   + (["dissolve"] if outro_enabled else []))
+    native_join_graph = dissolve_filtergraph(lengths, SEG_FADE, transitions=transitions)
     join_fusion, legacy_reason = plan_join_fusion(native_join_graph, len(lengths))
     if join_fusion is None:
         print(f"[拼接] 保留完整中间视频：{legacy_reason}")
@@ -10468,6 +10581,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "-i", str(silent), "-vn", "-c:a", "aac", "-b:a", "192k",
                 "-ar", AUDIO_RATE, str(mixed))
 
+    if _CINEMA["cfg"].get("stems"):
+        export_audio_stems(spec, outdir, silent, mixed, mix_inputs, filters, voice_labels)
     narrated_audio_mode.seal_mix(spec, outdir, mixed, voices, audio_cue_offsets,
                                 spoken_of, cover_voice, cover_secs, outro_voice, offset,
                                 probe_duration)
@@ -12202,6 +12317,14 @@ def main() -> int:
         segments = validate_spec(spec)
         total = sum(s.length for s in segments)
         print(f"[dry-run] spec 形状没问题：{len(segments)} 段，画面共 {total:.1f}s")
+        cine = _cine_call(reel_cinematic.config, spec)
+        ratio = reel_cinematic.footage_ratio(spec)
+        print(f"[画面占比] 比赛画面 {ratio['footage']:.1f}s / {ratio['total']:.1f}s"
+              f"（{ratio['footage_pct']}%），其中官方 {ratio['official_pct']}%"
+              "——章节卡、预告片卡、数据卡、图片段不算比赛画面")
+        if cine:
+            print("[电影感] " + "，".join(f"{k}={v}" for k, v in cine.items() if k != "match")
+                  + (f"，逐源拉齐 {sorted(cine['match'])}" if cine.get("match") else ""))
         # **选段的机械判据全在 probe.json 里躺着，而这儿原来不看它。**
         #
         # 这句注释原来写的是「裁切越界、frame_at 超出片长这类要等源片，这里

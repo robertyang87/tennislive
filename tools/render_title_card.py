@@ -98,7 +98,8 @@ HANDLE_BOTTOM_MAX = 48
 
 
 def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
-          clear_bottom: int = 0, handle_bottom: int | None = None) -> str:
+          clear_bottom: int = 0, handle_bottom: int | None = None,
+          style: str = "chapter") -> str:
     """品牌默认距卡底 `HANDLE_BOTTOM_PX`（28），落在默认字幕区下方。
 
     `clear_bottom` 只会把品牌再抬高，不根据全片字幕上锚自动抬高。
@@ -129,6 +130,10 @@ def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
     if not lines:
         raise SystemExit("章节卡要有一句话（去掉停顿符后 text 是空的）")
     px = title_px(lines, size)
+    if style == "trailer":
+        return _trailer_html(lines, kicker, size, px)
+    if style != "chapter":
+        raise SystemExit(f"章节卡 style 只认 chapter / trailer，拿到 {style!r}")
     text_html = "<br>".join(html.escape(seg) for seg in lines)
     return f"""<!doctype html><meta charset="utf-8"><style>
 {_font_css()}
@@ -158,15 +163,42 @@ body{{width:{w}px;height:{h}px;overflow:hidden;background:{CARD_BACKGROUND_CSS};
 <div class="handle"><img src="{_data_uri(outro_page.ICON)}">{html.escape(outro_page.HANDLE)}</div>"""
 
 
+def _trailer_html(lines: list[str], kicker: str, size: tuple[int, int], px: int) -> str:
+    """预告片式片头/片尾卡：黑底、上下各一条宽银幕黑边、细金属线、字距拉开。
+
+    只放一句话（＋可选小标题），**不放数据**——它是情绪卡，不是数据卡；
+    在画面占比里和章节卡一样算「非比赛画面」（reel_cinematic.footage_ratio）。
+    """
+    w, h = size
+    bar = round(h * 0.11)
+    kicker_html = (f'<div class="k">{html.escape(kicker)}</div>' if kicker else "")
+    text_html = "<br>".join(html.escape(seg) for seg in lines)
+    return f"""<!doctype html><meta charset="utf-8"><style>
+{_font_css()}
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{width:{w}px;height:{h}px;overflow:hidden;background:radial-gradient(120% 70% at 50% 50%,#1a1d24 0%,#07080b 60%,#000 100%);
+ position:relative;color:#f2efe8;font-family:'TL Display SC','TL Sans SC',sans-serif}}
+.lb{{position:absolute;left:0;right:0;height:{bar}px;background:#000}}
+.wrap{{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+ justify-content:center;text-align:center}}
+.k{{font-family:'TL Score','TL Numeral','TL Sans SC',sans-serif;font-size:30px;letter-spacing:14px;
+ color:#c9b98a;margin-bottom:30px}}
+.rule{{width:220px;height:2px;background:linear-gradient(90deg,transparent,#c9b98a,transparent);margin:30px 0}}
+.t{{font-size:{round(px * 1.05)}px;line-height:1.3;letter-spacing:{max(6, px // 9)}px;white-space:nowrap;
+ text-shadow:0 0 40px rgba(255,220,160,.18),0 6px 30px rgba(0,0,0,.7)}}
+</style><div class="lb" style="top:0"></div><div class="lb" style="bottom:0"></div>
+<div class="wrap">{kicker_html}<div class="rule"></div><div class="t thesis">{text_html}</div><div class="rule"></div></div>"""
+
+
 def render(text: str, out: Path, *, kicker: str = "",
            size: tuple[int, int] = DEFAULT_SIZE, clear_bottom: int = 0,
-           handle_bottom: int | None = None) -> Path:
+           handle_bottom: int | None = None, style: str = "chapter") -> Path:
     from render_stat_card import _launch_browser  # noqa: PLC0415
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
 
     page = out.with_suffix(".html")
     page.write_text(build(text, kicker=kicker, size=size, clear_bottom=clear_bottom,
-                          handle_bottom=handle_bottom),
+                          handle_bottom=handle_bottom, style=style),
                     encoding="utf-8")
     w, h = size
     with sync_playwright() as pw:

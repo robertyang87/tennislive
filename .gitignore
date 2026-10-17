@@ -68,3 +68,8 @@ output/**/segments_local_*.jpg
 # git 仓库。stop hook 看见未跟踪文件会催「请提交并推送」，这一条就是给它的答案：
 # 该忽略，不是该提交。
 .claude/worktrees/
+
+# 分轨 WAV（spec.cinematic.stems）不进 git：只进 Actions artifact／Release
+output/**/*.narration.wav
+output/**/*.original.wav
+output/**/*.mix.wav
