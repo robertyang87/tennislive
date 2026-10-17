@@ -1,0 +1,134 @@
+{
+  "scoreboard_qc_sha256": "6d5a6754b74bdef02ed6e3d25e5c7f713c2a46899c3b229f0c944c328dca8836",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "4fd93954a516769557bc460e4ce82622d66def832d936898fc778d92d4d250c4",
+    "request_count": 10,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-chwalinska-swiatek-wuhan-2026-sf-4fd93954a5167695",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-swiatek-wuhan-2026-sf-4fd93954a5167695/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39044781220"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 309.76,
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 半决赛",
+    "line2": "赫瓦林斯卡 7-5 6-1 斯瓦泰克",
+    "start": 1.2,
+    "end": 310.96
+  },
+  "film_seconds": 315.52,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 15.648,
+    "2": 10.656,
+    "3": 11.232,
+    "4": 8.256,
+    "6": 11.088,
+    "8": 19.2,
+    "9": 12.216,
+    "12": 13.392,
+    "13": 13.752
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 3,
+          "named": "斯瓦泰克",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 4,
+          "named": "斯瓦泰克",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 7,
+          "named": "斯瓦泰克",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 10,
+          "named": "斯瓦泰克",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 8,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "8940e47a05232e2ebce6a8513ca73d27d9f7e722a0dc4f1811b9e95b25de7261",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "chwalinska-swiatek-wuhan-2026-sf",
+    "received_at": "2026-10-17T15:22:53Z",
+    "artifact_ready_at": "2026-10-17T15:31:12Z",
+    "elapsed_seconds": 499.007,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "b7fcc870445141c3d738974104b9ae6f877ae0f222fa83cf2fb3d187671904fb",
+    "spec_sha256": "f4fa5f8d373f16eaaa811614e2f156e90c2bfc51272535074d2819c934ccc994",
+    "request_received_at": "2026-10-17T14:24:00Z",
+    "request_to_artifact_seconds": 4032.007,
+    "run_id": "39044781220",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-17T15:25:30Z",
+        "run_id": "39044781220"
+      }
+    ],
+    "render_seconds": 342.007,
+    "pre_render_seconds": 157.0
+  },
+  "film_sha256": "b7fcc870445141c3d738974104b9ae6f877ae0f222fa83cf2fb3d187671904fb",
+  "film_bytes": 110431345,
+  "qc_attestation_sha256": "28dcdb9c4893c09f3ebc8e39e3d70939136cc2045d0c8019feab534561300407",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-17T15:25:30Z",
+      "run_id": "39044781220"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-17T15:31:17Z",
+      "run_id": "39044781220"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-chwalinska-swiatek-wuhan-2026-sf/chwalinska-swiatek-wuhan-2026-sf.mp4",
+  "video_bytes": 110431345
+}
