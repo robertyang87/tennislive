@@ -1,0 +1,38 @@
+name: tmp-kartal-cover
+# 临时：kartal-story-2026 封面官方实拍检索，把候选原图提交回本分支。合并前删除。
+on:
+  push:
+    branches: [claude/kartal-story-2026]
+    paths: [.github/workflows/tmp-kartal-cover.yml]
+permissions:
+  contents: write
+jobs:
+  cover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -e . 2>&1 | tail -2
+      - name: search
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          python3 tools/find_cover_photo.py --player "Sonay Kartal" --event Wuhan --tour wta \
+            --start 2026-10-17T08:30:00Z --end 2026-10-17T11:40:00Z --tz Asia/Shanghai 2>&1 | tee /tmp/cover.txt
+          echo "########## day 6 broad"
+          python3 tools/find_cover_photo.py --player Kartal --event Wuhan --day 6 2>&1 | tee -a /tmp/cover.txt
+      - name: fetch candidates
+        run: |
+          mkdir -p research/kartal-story-2026/cover
+          grep -oE 'https://photoresources\.wtatennis\.com/[^ )"]+\.(jpg|JPG|jpeg)' /tmp/cover.txt | sort -u | head -16 > research/kartal-story-2026/cover/urls.txt || true
+          grep -oE 'https://[^ )"]*(apnews|ap\.org|assets\.apnews)[^ )"]*' /tmp/cover.txt | sort -u | head -8 >> research/kartal-story-2026/cover/urls.txt || true
+          cat research/kartal-story-2026/cover/urls.txt
+          i=0; while read u; do i=$((i+1)); case "$u" in *photoresources*) v="$u?width=4000";; *) v="$u";; esac
+            curl -sSL -A "Mozilla/5.0" -o research/kartal-story-2026/cover/c$i.jpg "$v" || true; done < research/kartal-story-2026/cover/urls.txt
+          cp /tmp/cover.txt research/kartal-story-2026/cover/search.txt
+          ls -la research/kartal-story-2026/cover
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/kartal-story-2026/cover && git commit -qm "tmp: kartal 封面候选 [skip ci]" && git push -q origin HEAD:claude/kartal-story-2026 || echo nothing
