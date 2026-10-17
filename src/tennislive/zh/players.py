@@ -342,7 +342,7 @@ PLAYER_ZH: dict[str, str] = {
     "Priscilla Hon": "韩天遇",
     "Emerson Jones": "埃默生·琼斯",
     "Katie Boulter": "布尔特",
-    "Sonay Kartal": "卡尔塔尔",
+    "Sonay Kartal": "卡塔尔",  # 账号所有者 2026-10-17：「国内中文媒体都用这个译名」（与国名同字，上下文带人名时不混）
     "Francesca Jones": "弗朗西斯卡·琼斯",
     "Peyton Stearns": "斯特恩斯",
     "Alycia Parks": "帕克斯",
