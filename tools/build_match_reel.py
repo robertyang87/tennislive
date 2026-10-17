@@ -689,7 +689,7 @@ def export_audio_stems(spec: dict, outdir: Path, joined: Path, mixed: Path,
     slug = spec.get("slug", "reel")
     seconds = probe_duration(mixed)
     # runner 上落到 $RUNNER_TEMP/stems：成片目录有「大文件不许进仓库」的闸（match-reel.yml
-    # 清理步骤），WAV 动辄几十 MB；要传 Release 见 docs/patches/match-reel-stems-release.patch。
+    # 清理步骤），WAV 动辄几十 MB；match-reel.yml 从这里传进 Release。
     stem_dir = (Path(os.environ["RUNNER_TEMP"]) / "stems") if os.environ.get("RUNNER_TEMP") else outdir
     stem_dir.mkdir(parents=True, exist_ok=True)
     out = {k: stem_dir / f"{slug}.{k}.wav" for k in ("narration", "original", "mix")}
