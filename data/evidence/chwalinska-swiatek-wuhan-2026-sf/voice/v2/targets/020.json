@@ -1,0 +1,433 @@
+{
+  "edit_id": "second_set_point",
+  "sentence": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。落点一次次被拉开，月亮姐还在寻找向场内跟进的机会。",
+  "word": "被",
+  "char": "被",
+  "at": 35,
+  "intended": "bei4",
+  "wrong": "pi1",
+  "ok_refs": [
+    "备",
+    "惫"
+  ],
+  "bad_refs": [
+    "披",
+    "砒"
+  ],
+  "actual_binding": {
+    "edit_id": "second_set_point",
+    "text": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。落点一次次被拉开，月亮姐还在寻找向场内跟进的机会。",
+    "display_text": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。落点一次次被拉开，月亮姐还在寻找向场内跟进的机会。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "request_id": "4875afa0beb7776934bd09a406bd7296022444b712867356a79bf1f66190a87a",
+    "actual_mp3_sha256": "6ea894636b0ece10f3de62eb6cfb823a6a06503eac08bc0f063463c83a2998e7",
+    "actual_marks_sha256": "3a83b8828bb181f23ac909109de0ef90f834907e9dd36d471518cc48c3804a1d",
+    "bound_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/native-speech/second_set_point.mp3",
+    "marks_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/native-speech/second_set_point.marks.json",
+    "word_boundary_tokens": [
+      "第二个",
+      "盘点",
+      "月亮",
+      "姐",
+      "从",
+      "底线",
+      "把",
+      "球",
+      "分",
+      "向",
+      "两侧",
+      "斯瓦泰克",
+      "横向",
+      "跑动",
+      "回击",
+      "落点",
+      "一次次",
+      "被",
+      "拉开",
+      "月亮",
+      "姐",
+      "还",
+      "在",
+      "寻找",
+      "向",
+      "场",
+      "内",
+      "跟进",
+      "的",
+      "机会"
+    ]
+  },
+  "kind": "common_polyphone",
+  "reference_policy": "Provisional nonoriginal independent homophones, same-full-sentence LOO calibration required; no dictionary verdict.",
+  "acoustic": {
+    "word": "被",
+    "char": "被",
+    "sentence": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。落点一次次被拉开，月亮姐还在寻找向场内跟进的机会。",
+    "tts_text": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。落点一次次被拉开，月亮姐还在寻找向场内跟进的机会。",
+    "intended_refs": [
+      "备",
+      "惫"
+    ],
+    "wrong_refs": [
+      "披",
+      "砒"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "medium",
+    "verdict_raw": "correct",
+    "score": 0.429,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.414,
+        "d_wrong": 4.794,
+        "score": 0.33
+      },
+      "f0": {
+        "d_intended": 0.656,
+        "d_wrong": 2.37,
+        "score": 0.566
+      },
+      "comb": {
+        "d_intended": 1.907,
+        "d_wrong": 4.768,
+        "score": 0.429
+      }
+    },
+    "neighbour_shift": {
+      "intended": 1.38,
+      "wrong": 3.089
+    },
+    "separation": {
+      "spec": {
+        "within": 1.179,
+        "between": 4.737,
+        "separation": 4.016
+      },
+      "f0": {
+        "within": 0.369,
+        "between": 2.368,
+        "separation": 6.42
+      },
+      "comb": {
+        "within": 0.958,
+        "between": 4.736,
+        "separation": 4.941
+      }
+    },
+    "selftest_loo": {
+      "备": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.462
+      },
+      "惫": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.427
+      },
+      "披": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.958
+      },
+      "砒": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.959
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:备": {
+        "spec": 2.501,
+        "f0": 0.656,
+        "vmis": 0.083,
+        "frames": 24,
+        "comb": 1.907
+      },
+      "A:惫": {
+        "spec": 2.414,
+        "f0": 1.344,
+        "vmis": 0.083,
+        "frames": 24,
+        "comb": 2.551
+      },
+      "B:披": {
+        "spec": 4.804,
+        "f0": 2.37,
+        "vmis": 0.111,
+        "frames": 27,
+        "comb": 4.772
+      },
+      "B:砒": {
+        "spec": 4.794,
+        "f0": 2.371,
+        "vmis": 0.111,
+        "frames": 27,
+        "comb": 4.768
+      }
+    },
+    "window_s": [
+      6.8,
+      7.021
+    ],
+    "boundary_token": "被",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "第二个",
+        "盘点",
+        "月亮",
+        "姐",
+        "从",
+        "底线",
+        "把",
+        "球",
+        "分",
+        "向",
+        "两侧",
+        "斯瓦泰克",
+        "横向",
+        "跑动",
+        "回击",
+        "落点",
+        "一次次",
+        "被",
+        "拉开",
+        "月亮",
+        "姐",
+        "还",
+        "在",
+        "寻找",
+        "向",
+        "场",
+        "内",
+        "跟进",
+        "的",
+        "机会"
+      ],
+      "A:备": [
+        "第二个",
+        "盘点",
+        "月亮",
+        "姐",
+        "从",
+        "底线",
+        "把",
+        "球",
+        "分",
+        "向",
+        "两侧",
+        "斯瓦泰克",
+        "横向",
+        "跑动",
+        "回击",
+        "落点",
+        "一次次",
+        "备",
+        "拉开",
+        "月亮",
+        "姐",
+        "还",
+        "在",
+        "寻找",
+        "向",
+        "场",
+        "内",
+        "跟进",
+        "的",
+        "机会"
+      ],
+      "A:惫": [
+        "第二个",
+        "盘点",
+        "月亮",
+        "姐",
+        "从",
+        "底线",
+        "把",
+        "球",
+        "分向",
+        "两侧",
+        "斯瓦泰克",
+        "横向",
+        "跑动",
+        "回击",
+        "落点",
+        "一次次",
+        "惫",
+        "拉开",
+        "月亮",
+        "姐",
+        "还",
+        "在",
+        "寻找",
+        "向",
+        "场内",
+        "跟进",
+        "的",
+        "机会"
+      ],
+      "B:披": [
+        "第二个",
+        "盘点",
+        "月亮",
+        "姐",
+        "从",
+        "底线",
+        "把",
+        "球",
+        "分",
+        "向",
+        "两侧",
+        "斯瓦泰克",
+        "横向",
+        "跑动",
+        "回击",
+        "落点",
+        "一次次",
+        "披",
+        "拉开",
+        "月亮",
+        "姐",
+        "还",
+        "在",
+        "寻找",
+        "向",
+        "场",
+        "内",
+        "跟进",
+        "的",
+        "机会"
+      ],
+      "B:砒": [
+        "第二个",
+        "盘点",
+        "月亮",
+        "姐",
+        "从",
+        "底线",
+        "把",
+        "球",
+        "分",
+        "向",
+        "两侧",
+        "斯瓦泰克",
+        "横向",
+        "跑动",
+        "回击",
+        "落点",
+        "一次次",
+        "砒",
+        "拉开",
+        "月亮",
+        "姐",
+        "还",
+        "在",
+        "寻找",
+        "向",
+        "场",
+        "内",
+        "跟进",
+        "的",
+        "机会"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        null,
+        3.0,
+        1.6,
+        0.3,
+        -3.2,
+        null,
+        null,
+        -0.4,
+        -2.8,
+        -3.8,
+        -4.2,
+        -4.8
+      ],
+      "A:备": [
+        null,
+        null,
+        2.1,
+        0.9,
+        -1.9,
+        -3.5,
+        null,
+        -1.7,
+        -2.4,
+        -3.1,
+        -4.0,
+        -4.3
+      ],
+      "A:惫": [
+        null,
+        null,
+        3.6,
+        2.8,
+        -1.6,
+        -3.0,
+        null,
+        -0.1,
+        -1.4,
+        -2.1,
+        -3.5,
+        -3.9
+      ],
+      "B:披": [
+        null,
+        2.3,
+        0.9,
+        -0.3,
+        -3.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.8,
+        0.4,
+        -0.5
+      ],
+      "B:砒": [
+        null,
+        2.3,
+        0.9,
+        -0.3,
+        -3.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.8,
+        0.4,
+        -0.5
+      ]
+    },
+    "audio": {
+      "ORIG": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/native-speech/second_set_point.mp3",
+      "A:备": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/reference-cache/f00badbab2cc910a9cf2a04e.mp3",
+      "A:惫": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/reference-cache/d33b5fed5eeddcc3993448fe.mp3",
+      "B:披": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/reference-cache/2320221fc0717f05944e18cf.mp3",
+      "B:砒": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/reference-cache/a013cf08f7133006047b371a.mp3"
+    }
+  },
+  "measured_at": "2026-10-17T14:50:36.287024+00:00",
+  "human_listening_claimed": false
+}

@@ -1,0 +1,368 @@
+{
+  "edit_id": "second_set_point",
+  "sentence": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。落点一次次被拉开，月亮姐还在寻找向场内跟进的机会。",
+  "word": "还",
+  "char": "还",
+  "at": 42,
+  "intended": "hai2",
+  "wrong": "huan2",
+  "ok_refs": [
+    "孩"
+  ],
+  "bad_refs": [
+    "桓",
+    "环"
+  ],
+  "actual_binding": {
+    "edit_id": "second_set_point",
+    "text": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。落点一次次被拉开，月亮姐还在寻找向场内跟进的机会。",
+    "display_text": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。落点一次次被拉开，月亮姐还在寻找向场内跟进的机会。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "request_id": "4875afa0beb7776934bd09a406bd7296022444b712867356a79bf1f66190a87a",
+    "actual_mp3_sha256": "6ea894636b0ece10f3de62eb6cfb823a6a06503eac08bc0f063463c83a2998e7",
+    "actual_marks_sha256": "3a83b8828bb181f23ac909109de0ef90f834907e9dd36d471518cc48c3804a1d",
+    "bound_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/native-speech/second_set_point.mp3",
+    "marks_snapshot_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/native-speech/second_set_point.marks.json",
+    "word_boundary_tokens": [
+      "第二个",
+      "盘点",
+      "月亮",
+      "姐",
+      "从",
+      "底线",
+      "把",
+      "球",
+      "分",
+      "向",
+      "两侧",
+      "斯瓦泰克",
+      "横向",
+      "跑动",
+      "回击",
+      "落点",
+      "一次次",
+      "被",
+      "拉开",
+      "月亮",
+      "姐",
+      "还",
+      "在",
+      "寻找",
+      "向",
+      "场",
+      "内",
+      "跟进",
+      "的",
+      "机会"
+    ]
+  },
+  "kind": "common_polyphone",
+  "reference_policy": "Provisional nonoriginal independent homophones, same-full-sentence LOO calibration required; no dictionary verdict.",
+  "acoustic": {
+    "word": "还",
+    "char": "还",
+    "sentence": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。落点一次次被拉开，月亮姐还在寻找向场内跟进的机会。",
+    "tts_text": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。落点一次次被拉开，月亮姐还在寻找向场内跟进的机会。",
+    "intended_refs": [
+      "孩"
+    ],
+    "wrong_refs": [
+      "桓",
+      "环"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "low",
+    "verdict_raw": "correct",
+    "score": 0.344,
+    "margin": 0.2,
+    "near_identical_to": null,
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 2.582,
+        "d_wrong": 6.181,
+        "score": 0.411
+      },
+      "f0": {
+        "d_intended": 0.527,
+        "d_wrong": 0.561,
+        "score": 0.032
+      },
+      "comb": {
+        "d_intended": 1.818,
+        "d_wrong": 3.727,
+        "score": 0.344
+      }
+    },
+    "neighbour_shift": {
+      "intended": 2.32,
+      "wrong": 3.099
+    },
+    "separation": {
+      "spec": {
+        "within": 2.438,
+        "between": 6.018,
+        "separation": 2.469
+      },
+      "f0": {
+        "within": 1.103,
+        "between": 1.31,
+        "separation": 1.189
+      },
+      "comb": {
+        "within": 2.321,
+        "between": 4.319,
+        "separation": 1.861
+      }
+    },
+    "selftest_loo": {
+      "桓": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.378
+      },
+      "环": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.261
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:孩": {
+        "spec": 2.582,
+        "f0": 0.527,
+        "vmis": 0.292,
+        "frames": 24,
+        "comb": 1.818
+      },
+      "B:桓": {
+        "spec": 6.331,
+        "f0": 0.561,
+        "vmis": 0.37,
+        "frames": 27,
+        "comb": 3.727
+      },
+      "B:环": {
+        "spec": 6.181,
+        "f0": 0.772,
+        "vmis": 0.429,
+        "frames": 28,
+        "comb": 3.862
+      }
+    },
+    "window_s": [
+      8.132,
+      8.365
+    ],
+    "boundary_token": "还",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "第二个",
+        "盘点",
+        "月亮",
+        "姐",
+        "从",
+        "底线",
+        "把",
+        "球",
+        "分",
+        "向",
+        "两侧",
+        "斯瓦泰克",
+        "横向",
+        "跑动",
+        "回击",
+        "落点",
+        "一次次",
+        "被",
+        "拉开",
+        "月亮",
+        "姐",
+        "还",
+        "在",
+        "寻找",
+        "向",
+        "场",
+        "内",
+        "跟进",
+        "的",
+        "机会"
+      ],
+      "A:孩": [
+        "第二个",
+        "盘点",
+        "月亮",
+        "姐",
+        "从",
+        "底线",
+        "把",
+        "球",
+        "分",
+        "向",
+        "两侧",
+        "斯瓦泰克",
+        "横向",
+        "跑动",
+        "回击",
+        "落点",
+        "一次次",
+        "被",
+        "拉开",
+        "月亮",
+        "姐",
+        "孩",
+        "在",
+        "寻找",
+        "向",
+        "场",
+        "内",
+        "跟进",
+        "的",
+        "机会"
+      ],
+      "B:桓": [
+        "第二个",
+        "盘点",
+        "月亮",
+        "姐",
+        "从",
+        "底线",
+        "把",
+        "球",
+        "分向",
+        "两侧",
+        "斯瓦泰克",
+        "横向",
+        "跑动",
+        "回击",
+        "落点",
+        "一次次",
+        "被",
+        "拉开",
+        "月亮",
+        "姐桓",
+        "在",
+        "寻找",
+        "向",
+        "场",
+        "内",
+        "跟进",
+        "的",
+        "机会"
+      ],
+      "B:环": [
+        "第二个",
+        "盘点",
+        "月亮",
+        "姐",
+        "从",
+        "底线",
+        "把",
+        "球",
+        "分向",
+        "两侧",
+        "斯瓦泰克",
+        "横向",
+        "跑动",
+        "回击",
+        "落点",
+        "一次次",
+        "被",
+        "拉开",
+        "月亮",
+        "姐",
+        "环",
+        "在",
+        "寻找",
+        "向",
+        "场",
+        "内",
+        "跟进",
+        "的",
+        "机会"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -5.1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1.0,
+        -0.2,
+        2.1,
+        2.8
+      ],
+      "A:孩": [
+        null,
+        -4.9,
+        -7.0,
+        -8.0,
+        -8.9,
+        null,
+        null,
+        null,
+        -1.5,
+        -1.0,
+        1.2,
+        3.0,
+        3.3
+      ],
+      "B:桓": [
+        -6.0,
+        -6.1,
+        -6.4,
+        -6.8,
+        null,
+        null,
+        null,
+        -6.1,
+        -4.5,
+        -1.9,
+        0.4,
+        2.5,
+        3.3
+      ],
+      "B:环": [
+        -5.8,
+        -6.6,
+        -7.8,
+        -8.1,
+        -8.0,
+        null,
+        null,
+        null,
+        -0.0,
+        -1.4,
+        -3.7,
+        -2.1,
+        0.7,
+        2.7,
+        3.8
+      ]
+    },
+    "audio": {
+      "ORIG": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/native-speech/second_set_point.mp3",
+      "A:孩": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/reference-cache/0184f668b5f42e0cc9c655f4.mp3",
+      "B:桓": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/reference-cache/018dc3786fc10eae49a1091c.mp3",
+      "B:环": "/workspace/tennislive/data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/v2/reference-cache/42157615b4cc56c2f874bb3c.mp3"
+    }
+  },
+  "measured_at": "2026-10-17T14:50:34.783925+00:00",
+  "human_listening_claimed": false
+}

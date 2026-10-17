@@ -1,0 +1,1183 @@
+{
+  "schema": "tennislive.source-commentary-review.v1",
+  "slug": "chwalinska-swiatek-wuhan-2026-sf",
+  "source_url": "https://www.youtube.com/watch?v=ATsKkPJBY3s",
+  "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI source-audio review agent; inspected full small.en and medium.en word-level transcripts and canonical YouTube auto-captions; no manual listening claimed",
+  "reviewed_at": "2026-10-17T14:38:46.399678+00:00",
+  "reviewed_from": 0,
+  "reviewed_to": 463.005896,
+  "status": "partial_with_explicit_uncertainties",
+  "manual_listening_claimed": false,
+  "evidence_basis": [
+    {
+      "path": "data/source_asr/ATsKkPJBY3s/small.en.json",
+      "sha256": "5e421cdf6ffda949f1edba6a0ca3a1f1d150fc133349e54ecef6fb000400c72f",
+      "model": "small.en",
+      "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+      "clip": [
+        0.0,
+        null
+      ]
+    },
+    {
+      "path": "data/source_asr/ATsKkPJBY3s/medium.en.json",
+      "sha256": "8cadf1ea2255ed08e058dc79906c4618efeba3cabc67d338139577da06d0a922",
+      "model": "medium.en",
+      "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+      "clip": [
+        0.0,
+        null
+      ]
+    },
+    {
+      "path": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/captions.txt",
+      "sha256": "f938610cf589d6f185180038c2f5c706802f09b67161d9496e30d21bc1e6dd56",
+      "kind": "Canonical YouTube automatic captions from probe run 39040711967"
+    },
+    {
+      "path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/source-audio-raw/large-v3-turbo-90-100.json",
+      "sha256": "974afc7a85048550e63444be24e93e2e040d5891ea5d5c6bbc7e7b3e4bd2aaf4",
+      "model": "large-v3-turbo",
+      "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+      "clip": [
+        90,
+        100
+      ],
+      "decode": "ffmpeg -ss90 -t10 -f f32le -ac1 -ar16000; no gain/filter effects"
+    }
+  ],
+  "foreground_english": [
+    {
+      "id": "u01",
+      "start": 11.5,
+      "end": 15.4,
+      "en": "And already establishing a dominant start for Swiatek. She wants to make sure…",
+      "zh": "斯瓦泰克开场便展现统治力。她要确保……",
+      "status": "source_cut",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            0
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u02",
+      "start": 25.9,
+      "end": 29.08,
+      "en": "Well, she is human. She did lose one point on her…",
+      "zh": "她也是人。她刚才也在自己的……丢了一分。",
+      "status": "source_cut",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            1
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u03",
+      "start": 93.9,
+      "end": 98.08,
+      "en": "Well, so, I’m going to send you a little bit and give you some of your own medicine. How about that?",
+      "zh": "好吧，那我也给你来一点，以其人之道还治其人之身，怎么样？",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            2,
+            3
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            2,
+            3
+          ]
+        },
+        {
+          "model": "large-v3-turbo",
+          "path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/source-audio-raw/large-v3-turbo-90-100.json",
+          "segments": [
+            0,
+            1
+          ]
+        }
+      ],
+      "verification": "small.en plus independent finite-window large-v3-turbo both support Well + so; medium omits so; all three lack okay. Official auto-caption okay is not corroborated. gonna/going to is normal transcription expansion. No manual listening claimed."
+    },
+    {
+      "id": "u04",
+      "start": 156.56,
+      "end": 163.44,
+      "en": "Maja Chwalinska does it, perhaps the unthinkable for some, but not for her, not for her camp.",
+      "zh": "赫瓦林斯卡做到了！有人或许觉得不可思议，但她和她的团队并不这样认为。",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            4,
+            5
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u05",
+      "start": 164.6,
+      "end": 171.64,
+      "en": "Chwalinska hands Iga Swiatek her first dropped set in Wuhan and has the upper hand in semifinal number two.",
+      "zh": "赫瓦林斯卡让斯瓦泰克在本届武汉首次丢盘，在第二场半决赛中占得先机。",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            5,
+            6
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u06",
+      "start": 173.3,
+      "end": 173.96,
+      "en": "Across court.",
+      "zh": "打向斜线。",
+      "status": "source_cut",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            6
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u07",
+      "start": 174.3,
+      "end": 177.18,
+      "en": "And without question.",
+      "zh": "毫无疑问。",
+      "status": "source_cut",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            6,
+            7
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u08",
+      "start": 190.9,
+      "end": 196.08,
+      "en": "[Lead-in unclear] response here. I was going to ask you about… [name unclear] indeed asks for one.",
+      "zh": "……回应。我正想问你关于……[人名待核]确实申请了一次。",
+      "status": "uncertain",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            8,
+            9
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            8,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u09",
+      "start": 204.4,
+      "end": 205.28,
+      "en": "Oh, she’s got it!",
+      "zh": "噢，她拿到了！",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            10
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u10",
+      "start": 205.5,
+      "end": 208.34,
+      "en": "Yeah, she’s got it, all right. And she ends the slide.",
+      "zh": "是的，她拿到了！她终于止住颓势。",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            10
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u11",
+      "start": 228.6,
+      "end": 231.38,
+      "en": "To lead 5-1 in the second set.",
+      "zh": "争取在第二盘以五比一领先。",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            11
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            12
+          ]
+        }
+      ],
+      "verification": "The source scoreboard shows Iga1/Maja4, Maja40 at230s: infinitive To lead5-1 expresses next-point objective. Do not subtitle this as an achieved score."
+    },
+    {
+      "id": "u12",
+      "start": 240.8,
+      "end": 242.2,
+      "en": "Now she’s unrelenting.",
+      "zh": "现在她毫不松劲。",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            12
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u13",
+      "start": 242.6,
+      "end": 244.38,
+      "en": "She knows she’s oh so close.",
+      "zh": "她知道，胜利已经近在咫尺。",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            13
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u14",
+      "start": 244.5,
+      "end": 247.08,
+      "en": "Maja Chwalinska, match point.",
+      "zh": "赫瓦林斯卡来到赛点。",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            14
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u15",
+      "start": 250.9,
+      "end": 252.08,
+      "en": "Oh, Maja!",
+      "zh": "噢，玛雅！",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            15
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u16",
+      "start": 254.88,
+      "end": 263.5,
+      "en": "Magnificence in Wuhan as she topples her fellow Pole, former world number one, for her first career top-10 win.",
+      "zh": "武汉的精彩一刻！她击败同胞、前世界第一，收获生涯首场对前十球员的胜利。",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            16,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u17",
+      "start": 270.78,
+      "end": 276.06,
+      "en": "Well, genuine affection for each other, and you can see the affinity they have.",
+      "zh": "两人之间的情谊真挚，你能看到她们有多亲近。",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            21,
+            22,
+            23
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            15,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u18",
+      "start": 276.8,
+      "end": 283.62,
+      "en": "As undoubtedly Iga says, “Good luck tomorrow, as you vie for your first career title and do so at a WTA 1000 event.”",
+      "zh": "想必伊加在说：祝你明天好运，争取生涯首冠，而且是在WTA一千赛。",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            23,
+            24,
+            25,
+            26
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            16,
+            17,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u19",
+      "start": 285.24,
+      "end": 290.04,
+      "en": "Iga Swiatek was worse for wear, but take nothing away from Maja Chwalinska.",
+      "zh": "斯瓦泰克状态欠佳，但这丝毫不该抹去赫瓦林斯卡的功劳。",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            27,
+            28
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            18,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u20",
+      "start": 291.2,
+      "end": 299.38,
+      "en": "She went out and earned a straight-set victory, 7-6, 6-1, and will vie in the championship tomorrow in Wuhan.",
+      "zh": "她凭表现赢得这场直落两盘的胜利，七比六、六比一，明天将在武汉争夺冠军。",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            28,
+            29
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            20,
+            21
+          ]
+        }
+      ],
+      "source_factual_error": "Commentator says7-6,6-1, while verified match result is7-5,6-1. Preserve raw English in this internal record, never silently change English quote to7-5. Entire u20 excluded from production; production ends284.2."
+    },
+    {
+      "id": "u21",
+      "start": 299.8,
+      "end": 303.52,
+      "en": "Maja, congratulations for the win today, two straight sets.",
+      "zh": "玛雅，恭喜你今天直落两盘获胜。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            30
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            22,
+            23
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u22",
+      "start": 304.6,
+      "end": 308.28,
+      "en": "Your Chinese is pretty good. We don’t mind you start with your Chinese first.",
+      "zh": "你的中文挺好，不妨先说几句中文。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            31,
+            32
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            23,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u23",
+      "start": 309.6,
+      "end": 310.98,
+      "en": "I’m sorry, I didn’t hear you.",
+      "zh": "抱歉，我没听清。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            33
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u24",
+      "start": 311.04,
+      "end": 312.96,
+      "en": "Ni hao. Ni hao.",
+      "zh": "你好。你好。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            34,
+            35
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u25",
+      "start": 316.02,
+      "end": 316.76,
+      "en": "[Uncertain short utterance]",
+      "zh": "[短句待核]",
+      "status": "interview_uncertain_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            36
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u26",
+      "start": 318.24,
+      "end": 322.26,
+      "en": "Obviously, today you are the one for winning this match.",
+      "zh": "今天赢下这场比赛的是你。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            37
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            24,
+            25
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u27",
+      "start": 322.5,
+      "end": 324.38,
+      "en": "Talk about the match, recap a little bit, please.",
+      "zh": "请谈谈这场比赛，简单回顾一下。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            38
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            25
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u28",
+      "start": 325.4,
+      "end": 329.9,
+      "en": "Yeah, it was a very challenging one, very physical.",
+      "zh": "是的，这场比赛很有挑战，也很耗体能。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            39,
+            40
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u29",
+      "start": 330.2,
+      "end": 333.36,
+      "en": "I think we played like one half hour the first set.",
+      "zh": "第一盘我们大概打了一个半小时。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            41
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            26,
+            27
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u30",
+      "start": 334.7,
+      "end": 337.22,
+      "en": "Obviously, I think Iga wasn’t 100% today.",
+      "zh": "我觉得伊加今天的身体状态显然并非百分之百。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            42
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            27
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u31",
+      "start": 337.2,
+      "end": 342.34,
+      "en": "So I wish her all the best, of course. Hope she will be okay soon.",
+      "zh": "所以当然希望她一切都好，也希望她能很快恢复。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            42,
+            43
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            27,
+            28
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u32",
+      "start": 344.2,
+      "end": 350.0,
+      "en": "Yeah, it’s, you know, it’s always tough to play against, I mean, a fellow Polish player.",
+      "zh": "和波兰同胞交手，总是一件很不容易的事。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            44,
+            45
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            28,
+            29
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u33",
+      "start": 350.0,
+      "end": 353.78,
+      "en": "She’s a great champion. I mean, a living legend. She won everything.",
+      "zh": "她是伟大的冠军、活着的传奇，她赢得过一切。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            45,
+            46
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            29
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u34",
+      "start": 353.78,
+      "end": 357.48,
+      "en": "So it was a great honor for me to share the court with her today.",
+      "zh": "今天能与她同场竞技，对我而言是莫大的荣幸。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            47
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u35",
+      "start": 357.48,
+      "end": 361.48,
+      "en": "And I think I still don’t really realize what’s going on.",
+      "zh": "我想我到现在还没完全反应过来。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            48
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            30,
+            31
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u36",
+      "start": 361.48,
+      "end": 365.32,
+      "en": "And the fact that I won against her is actually crazy for me.",
+      "zh": "想到我居然赢了她，我真的觉得不可思议。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            49
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            31,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u37",
+      "start": 398.8,
+      "end": 408.42,
+      "en": "And Maja, you have a remarkable 2026 season, both in Roland Garros, and now you’re through to the WTA 1000 final.",
+      "zh": "玛雅，你的二〇二六赛季表现出色，从法网到如今闯入WTA一千赛决赛。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            50,
+            51
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": []
+        }
+      ]
+    },
+    {
+      "id": "u38",
+      "start": 408.8,
+      "end": 415.36,
+      "en": "What are you expecting tomorrow’s final most, and what can the fans expect from you in tomorrow’s final?",
+      "zh": "你对明天的决赛最期待什么？球迷可以期待你有什么表现？",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            52,
+            53
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": []
+        }
+      ]
+    },
+    {
+      "id": "u39",
+      "start": 417.0,
+      "end": 421.12,
+      "en": "Yeah, for sure, another challenging match.",
+      "zh": "当然，又会是一场很有挑战的比赛。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            54,
+            55
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            35
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u40",
+      "start": 421.12,
+      "end": 428.16,
+      "en": "I mean, [opponent name unclear]. I’m sorry, I don’t know how to pronounce the name. [Opponent name repeated.]",
+      "zh": "[对手名字待核]……抱歉，我不太清楚她的名字该怎么读。[再次重复名字]",
+      "status": "interview_uncertain_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            56
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            35,
+            36
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u41",
+      "start": 429.4,
+      "end": 436.2,
+      "en": "She’s amazing. I saw a few of her matches this week and I was very, very, very impressed.",
+      "zh": "她很出色。这周我看了她几场比赛，留下了非常、非常、非常深刻的印象。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            56,
+            57
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            36
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u42",
+      "start": 436.2,
+      "end": 442.6,
+      "en": "So a great battle, hopefully. Hope you guys will enjoy and support us.",
+      "zh": "希望能有一场精彩的较量，也希望你们看得开心、支持我们。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            57,
+            58
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            36,
+            37
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u43",
+      "start": 442.6,
+      "end": 446.5,
+      "en": "Yeah, we’ll definitely give our best tomorrow.",
+      "zh": "我们明天一定会全力以赴。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            58,
+            59
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            37,
+            38
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u44",
+      "start": 446.5,
+      "end": 452.62,
+      "en": "All right, we’ll see you right here in the same stadium, ladies and gentlemen, from Poland, Maja Chwalinska.",
+      "zh": "好的，明天在这座球场再见。女士们、先生们，来自波兰的赫瓦林斯卡。",
+      "status": "interview_excluded",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            60,
+            61
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            38,
+            39
+          ]
+        }
+      ]
+    }
+  ],
+  "uncertain_spans": [
+    {
+      "start": 190.9,
+      "end": 196.08,
+      "reason": "Lead-in differs (Good response here / The other response) and proper noun Carolina remains semantically uncertain despite both ASR and auto-captions. Do not use this to claim what medical treatment was requested."
+    },
+    {
+      "start": 316.02,
+      "end": 316.76,
+      "reason": "Small-only Thank you Hana; medium and official captions do not corroborate. Interview excluded."
+    },
+    {
+      "start": 421.12,
+      "end": 430.68,
+      "reason": "Interview opponent name rendered Sony by ASR; do not normalize without authoritative identification. Interview excluded."
+    }
+  ],
+  "discarded_asr_artifacts": [
+    {
+      "start": 254.34,
+      "end": 254.94,
+      "model": "small.en",
+      "text": "and a",
+      "reason": "Word probabilities .006/.031, absent medium.en and official captions; single-model hallucination, not a required lead-in."
+    },
+    {
+      "start": 279.68,
+      "end": 279.68,
+      "model": "small.en",
+      "text": "the",
+      "reason": "Zero-duration duplicate before first career title; medium and official captions lack it."
+    },
+    {
+      "start": 389.7,
+      "end": 393.22,
+      "model": "medium.en",
+      "text": "and I am very happy to be here today. I hope to see you again soon.",
+      "reason": "Single-model logprob -1.26, absent small.en and official captions during Chinese translation region; not usable English evidence."
+    }
+  ],
+  "verified_commentary_normalizations": [
+    "Official player spellings Maja Chwalinska and Iga Swiatek replace phonetic ASR variants; spoken Polish names are not new words.",
+    "dropped set: both ASR transcribe drop set and auto-captions drop set; past participle normalized for English spelling only.",
+    "And she ends the slide: small.en and official captions retain And; small.en and auto-captions produce ungrammatical she's ends, medium has She ends. Meaning and action agree.",
+    "285s Iga Swiatek is supported by medium word timestamps and official auto-captions phonetic Iga; small The issue is a name-recognition error.",
+    "276s Iga says is supported by medium and official captions; small he is name-recognition loss. The entire sentence is commentator speculation, not independently audible Iga speech.",
+    "Before 299.45 all identified foreground speech is commentary; first interview question starts at299.84 in medium and300.12 in small. No interview material belongs in this reel."
+  ],
+  "timing_limitations": [
+    "Word edges are ASR estimates, not manually measured acoustic boundaries. In stretched words, the second model and canonical caption onset constrain candidate edit windows.",
+    "medium Oh begins247.08 and magnificence252.08 because words swallow pauses; small Oh250.96 and magnificence254.94 plus official onsets251.36/254.88 support the editorial speech boundaries.",
+    "medium Well begins263.50 because it swallows silence; small Well270.78 and official271.20 place the next sentence after the270.40 cold-open cut.",
+    "English-free windows are based on absence in both full-source ASR transcripts, cross-checked against official captions. They do not assert absence of crowd noise, racket sound, Chinese interpretation, or untranscribed umpire calls."
+  ],
+  "recommended_windows": {
+    "cold_open": {
+      "start": 254.72,
+      "end": 270.4,
+      "utterance_ids": [
+        "u16"
+      ],
+      "status": "ready_for_spec_review",
+      "reason": "Complete independent magnificence exclamation, followed by reaction/embrace. Earlier Oh is outside this selected window; next Well begins after270.78."
+    },
+    "first_set_finish": {
+      "start": 156.3,
+      "end": 172.0,
+      "utterance_ids": [
+        "u04",
+        "u05"
+      ],
+      "status": "ready_for_spec_review"
+    },
+    "ending_max_commentary": {
+      "start": 240.6,
+      "end": 284.2,
+      "utterance_ids": [
+        "u12",
+        "u13",
+        "u14",
+        "u15",
+        "u16",
+        "u17",
+        "u18"
+      ],
+      "status": "ready_for_spec_review",
+      "reason": "Retain final rally, handshake and gestures per visual review; stop beforeu19 and erroneous score summaryu20. Interview299.84 onward excluded."
+    }
+  },
+  "production_notes": [
+    "This is a source-level review, not a segment-index binding and not a foreground_audio_gate pass. Selected-window packets must be independently created from final actual spec and exclude unresolved spans.",
+    "The source ASR contains no English commentary over most first-set set-point rallies. No synthetic English explanation should be attributed to source commentary.",
+    "No source gain adjustment, loudness scan, RMS, peak, or source/final PCM comparison was performed.",
+    "Final intended production ending stops284.2 afteru18 and beforeu19/u20; source summary score error remains visible internally, not used in film."
+  ],
+  "resolved_spans": [
+    {
+      "start": 92.8,
+      "end": 98.08,
+      "method": "three_model_asr_cross_check",
+      "decision": "Canonical foreground wording is Well, so, I am going to... How about that; omit uncorroborated official auto-caption okay. Preserve complete speech93.90–98.08.",
+      "evidence": "All three raw ASR files retained, same source SHA, large-v3-turbo finite source90–100 seconds."
+    }
+  ]
+}

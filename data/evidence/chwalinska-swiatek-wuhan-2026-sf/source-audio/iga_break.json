@@ -1,0 +1,61 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ATsKkPJBY3s/ATsKkPJBY3s.mp4",
+  "original_source_url": "https://www.youtube.com/watch?v=ATsKkPJBY3s",
+  "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI source-audio review agent; personally inspected retained raw transcript evidence and curated every clause before spec.quote was populated; no human listening claimed",
+  "reviewed_at": "2026-10-17T14:41:26.036435+00:00",
+  "status": "complete",
+  "reviewed_from": 51.2,
+  "reviewed_to": 85.6,
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "_edit_id": "iga_break",
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/source_asr/ATsKkPJBY3s/small.en.json",
+        "sha256": "5e421cdf6ffda949f1edba6a0ca3a1f1d150fc133349e54ecef6fb000400c72f",
+        "model": "small.en",
+        "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/source_asr/ATsKkPJBY3s/medium.en.json",
+        "sha256": "8cadf1ea2255ed08e058dc79906c4618efeba3cabc67d338139577da06d0a922",
+        "model": "medium.en",
+        "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/captions.txt",
+        "sha256": "f938610cf589d6f185180038c2f5c706802f09b67161d9496e30d21bc1e6dd56",
+        "kind": "Canonical YouTube automatic captions from probe run 39040711967"
+      },
+      {
+        "path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/source-audio-raw/large-v3-turbo-90-100.json",
+        "sha256": "974afc7a85048550e63444be24e93e2e040d5891ea5d5c6bbc7e7b3e4bd2aaf4",
+        "model": "large-v3-turbo",
+        "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+        "clip": [
+          90,
+          100
+        ],
+        "decode": "ffmpeg -ss90 -t10 -f f32le -ac1 -ar16000; no gain/filter effects"
+      }
+    ],
+    "full_source_review_path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/source-commentary-review.json",
+    "full_source_review_sha256": "f7c59e6967a1bf83ef5b84cb930c3be270e610847afd1ca7525927cd9e97290c",
+    "manual_listening_claimed": false,
+    "source_audio_gain_changes": false,
+    "scope_note": "Whole selected window checked against both full-source raw transcripts and canonical automatic captions. Source-level unresolved MTO/interview spans lie outside every selected window. Source-level unknowns were not marked complete."
+  },
+  "no_foreground_english_reason": "51.20–85.60s: neither whole-source small.en nor medium.en identifies foreground English, canonical auto-captions likewise contain none. All neighboring sentence edges checked; this is an ASR/caption cross-check, not a claim of manual listening or digital silence."
+}
