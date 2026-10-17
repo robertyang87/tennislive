@@ -1,0 +1,125 @@
+{
+  "schema": "tennislive.joint-partitioned-final-movie-visual-review.v1",
+  "reviewed_at_utc": "2026-10-17T14:58:20.379691+00:00",
+  "status": "passed_with_explicit_finite_sampling_limits",
+  "visual_pass": true,
+  "publication_approved": false,
+  "slug": "jodar-medvedev-shanghai-2026-sf",
+  "movie_sha256": "dfffe0da46bfad420f631a8d651f442010be9190ae5651ed45b75adad2c82e32",
+  "movie_bytes": 47545869,
+  "native_spec_sha256": "9e866f0e5dcd092eb1381f26d5f936c71738667b75a46cc9bbf21f46169b29d9",
+  "ass_sha256": "0fb497221b45a4c17c34e007cc585eb6a35ecc825be365992bd710d838dbcde6",
+  "source_sha256": {
+    "main": "1c5459904fb369096020dca00b48dc658db723dd3cf7e49bf88d8387ffebe089"
+  },
+  "render_inputs_sha256": "f7184e81121a8a2cdc99904b6f2cb98470566bb9e929cf48542595cbdd3d8024",
+  "native_qc_sha256": "eb7e841db48574ec93d3a049a362c8e2ee7fb7ba1f8fb2bcf14f0169937fc035",
+  "film_seconds": 156.32,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25.0,
+  "joint_manifest_path": "final-visual-manifest.json",
+  "joint_manifest_sha256": "fad926bfc526ea4351f05120899e26958b93f810ca9ef4cd12371b9253fcdc8b",
+  "scope": {
+    "sample_rows_across_partitions": 98,
+    "unique_movie_frames_actually_viewed": 98,
+    "contact_sheets_actually_viewed_across_partitions": 17,
+    "all_ASS_cue_midpoint_windows_actually_viewed": 37,
+    "full_original_png_viewings": 10,
+    "whole_movie_frame_by_frame_reviewed": false,
+    "audio_listened": false,
+    "human_review_claimed": false,
+    "loudness_gain_RMS_peak_silence_PCM_checks": false
+  },
+  "review_partitions": [
+    {
+      "reviewer": "OpenAI independent visual agent zverev_sf_visual_qc, current Jodar-Medvedev assignment",
+      "partition": "source_action_segments_0_2_4_6",
+      "manifest_path": "source-action/frame_manifest.json",
+      "manifest_sha256": "f83826e40f99170a9624ae44bf05d666a19b43e19f33b8a661ee270ca32e46f4",
+      "review_path": "source-action/source-action-review.json",
+      "review_sha256": "ca7236e3456cad600390fd3c7b103f6be1fb1346f72d73f0ac71489c46eb336b",
+      "sample_rows": 39,
+      "walls": 7,
+      "assigned_cue_indices": [
+        1,
+        2,
+        3,
+        9,
+        16,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "original_pngs_viewed": [
+        1550,
+        2135,
+        2456,
+        2543,
+        2593,
+        2820,
+        3068
+      ],
+      "source_identity_binding": "Explicit source hashes and exact native render_inputs identity",
+      "observations_attribution": "Only the named reviewer claims the recorded viewing."
+    },
+    {
+      "reviewer": "root",
+      "partition": "cover_cards_outro_seams_and_exact_ending_tail",
+      "manifest_path": "root/frame_manifest.json",
+      "manifest_sha256": "d35d925eaef4b50ab81a6ad88ded2b6898e711ef3b245bfeb8186106651817d3",
+      "review_path": "root/root-review.json",
+      "review_sha256": "e5a2dd89b7d761b17372190eb6b9beb9cfc475e90735eaae23bf4a6bd48a7fec",
+      "sample_rows": 59,
+      "walls": 10,
+      "assigned_cue_indices": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "original_pngs_viewed": [
+        15,
+        3361,
+        3616
+      ],
+      "source_identity_binding": "Exact native render_inputs + audio_review_binding identity",
+      "observations_attribution": "Only the named reviewer claims the recorded viewing."
+    }
+  ],
+  "blocking_findings": [],
+  "observations": "Refer to each exact-hash partition report; no extra visual observations inferred by the sealer.",
+  "limitations": [
+    "Finite actual-movie samples only; no full-frame/full-court visibility claim.",
+    "Source speech, pronunciation and fact checking remain separate evidence.",
+    "This seal is not merge, publication or WeChat delivery approval.",
+    "External archive remains pending until a verified service upload receipt."
+  ]
+}

@@ -27,7 +27,7 @@
       "key": "first_set_fifth_set_point",
       "source_start": 138.4,
       "source_end_recommended": 147.76,
-      "current_formal_end": 147.76,
+      "current_formal_end": 147.8,
       "complete_available_action": true,
       "score_before": "5-3 AD Jodar serving",
       "score_after": "6-3 first set",
@@ -94,7 +94,7 @@
     {
       "key": "fourth_matchpoint_and_handshake",
       "source_start": 282.24,
-      "source_end": 303.08,
+      "source_end": 302.92,
       "complete_available_action": true,
       "score_before": "5-4 40-0 Jodar serving",
       "match_finish_approx": 292.3,
@@ -107,17 +107,19 @@
         301.8
       ],
       "love_hold_visual_limit": "40-0 state and winning point shown; preceding three points of the love hold are not all shown.",
-      "evidence": "action-final-1.jpg and -2.jpg"
+      "evidence": "action-final-1.jpg and -2.jpg",
+      "earlier_candidate_end": 303.08
     },
     {
       "key": "recommended_single_climax",
       "source_start": 258.0,
-      "source_end": 303.08,
-      "seconds": 45.08,
+      "source_end": 302.92,
+      "seconds": 44.92,
       "complete_available_action": true,
       "source_is_edited_official_highlights": true,
       "bilingual_cues": "Roll of the dice; It's hanging on by a thread; For just the ninth time...all-Spanish final",
-      "review_packet": "three_saves_and_ending-audio.json"
+      "review_packet": "three_saves_and_ending-audio.json",
+      "earlier_candidate_end": 303.08
     }
   ],
   "retained_source_packet_indices": [
@@ -128,5 +130,47 @@
   ],
   "audio_index": "data/audio_reviews/jodar-medvedev-shanghai-2026-sf.json",
   "no_tts_over_retained_english": true,
-  "word_timing_limits": "ASR edges are estimates. Conservative final word timings and source scene boundaries are documented in the audio packets."
+  "word_timing_limits": "ASR edges are estimates. Conservative final word timings and source scene boundaries are documented in the audio packets.",
+  "latest_formal_consistency": {
+    "checked_at": "2026-10-17T14:43:15.755835+00:00",
+    "spec_sha256": "9e866f0e5dcd092eb1381f26d5f936c71738667b75a46cc9bbf21f46169b29d9",
+    "source_url_matches": true,
+    "current_source_windows": [
+      {
+        "index": 0,
+        "edit_id": "cold_open",
+        "start": 292.04,
+        "end": 301.24
+      },
+      {
+        "index": 2,
+        "edit_id": "first_set_break",
+        "start": 36.96,
+        "end": 52.8
+      },
+      {
+        "index": 4,
+        "edit_id": "first_set_close",
+        "start": 138.4,
+        "end": 147.8
+      },
+      {
+        "index": 6,
+        "edit_id": "three_saves_and_ending",
+        "start": 258.0,
+        "end": 302.92
+      }
+    ],
+    "retained_english_cues_native_gate": 10,
+    "current_canvas_scoreboard": {
+      "x": 0,
+      "y": 1226,
+      "width_max": 476,
+      "height": 146,
+      "bottom_anchor": 1372,
+      "basis": "Root-completed native pre-encode log for actual720 source,73px board scaled2x. Existing source images were already reviewed; no new frames were decoded for this sampling plan.",
+      "why_previous_y1227": "Previous1080-source board was109px high, rendered145px after native scaling/rounding:1372-145=1227. Current73px at2x is146px:1372-146=1226. The bottom anchor is unchanged; this is not a manual board-position change."
+    },
+    "final_movie_review_complete": false
+  }
 }

@@ -1,0 +1,329 @@
+{
+  "schema": "tennislive.partitioned-final-movie-visual-review.v1",
+  "reviewed_at_utc": "2026-10-17T14:57:44.727164+00:00",
+  "reviewer": "OpenAI independent visual agent zverev_sf_visual_qc, current Jodar-Medvedev assignment",
+  "partition": "source_action_segments_0_2_4_6",
+  "status": "passed_with_explicit_finite_sampling_and_fixed_center_limits",
+  "visual_pass": true,
+  "publication_approved": false,
+  "human_review_claimed": false,
+  "movie": "/workspace/scratch/jodar-medvedev-sf-native/jodar-medvedev-shanghai-2026-sf.mp4",
+  "movie_sha256": "dfffe0da46bfad420f631a8d651f442010be9190ae5651ed45b75adad2c82e32",
+  "movie_bytes": 47545869,
+  "native_run_id": 39041935826,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "film_seconds": 156.32,
+  "fps": 25.0,
+  "total_movie_frames": 3908,
+  "spec_file_sha256": "9e866f0e5dcd092eb1381f26d5f936c71738667b75a46cc9bbf21f46169b29d9",
+  "native_spec_sha256": "9e866f0e5dcd092eb1381f26d5f936c71738667b75a46cc9bbf21f46169b29d9",
+  "ass_sha256": "0fb497221b45a4c17c34e007cc585eb6a35ecc825be365992bd710d838dbcde6",
+  "render_inputs_sha256": "f7184e81121a8a2cdc99904b6f2cb98470566bb9e929cf48542595cbdd3d8024",
+  "native_qc_sha256": "eb7e841db48574ec93d3a049a362c8e2ee7fb7ba1f8fb2bcf14f0169937fc035",
+  "source_sha256": {
+    "main": "1c5459904fb369096020dca00b48dc658db723dd3cf7e49bf88d8387ffebe089"
+  },
+  "frame_manifest_sha256": "f83826e40f99170a9624ae44bf05d666a19b43e19f33b8a661ee270ca32e46f4",
+  "scope": {
+    "assigned_source_segments": [
+      0,
+      2,
+      4,
+      6
+    ],
+    "sample_frames_actually_viewed": 39,
+    "contact_walls_actually_viewed": 7,
+    "assigned_ASS_cue_midpoints_actually_viewed": 10,
+    "assigned_ASS_cue_indices": [
+      1,
+      2,
+      3,
+      9,
+      16,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "original_PNG_frame_indices_actually_viewed": [
+      1550,
+      2135,
+      2456,
+      2543,
+      2593,
+      2820,
+      3068
+    ],
+    "all_movie_frames_reviewed": false,
+    "cover_cards_outro_and_all_seams_reviewed_here": false,
+    "audio_listened": false,
+    "loudness_gain_silence_PCM_checks": false,
+    "production_inputs_modified": false,
+    "publication_state_written": false
+  },
+  "blocking_findings": [],
+  "sampled_findings": [
+    {
+      "id": "native-board-contour-and-fixed-anchor",
+      "status": "pass_in_actual_movie_samples",
+      "proof": [
+        {
+          "frame_index": 2135,
+          "film_time_s": 85.4,
+          "image": "/workspace/scratch/jodar-medvedev-sf-final-qc/frames/frame-02135.png",
+          "image_sha256": "a1304d8f7cacaa39bd0ec6090dd41a51d2b432e7fcdfb52daddcf1a7026f6391",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 6,
+              "nominal_source_s": 264.16
+            },
+            {
+              "kind": "protected_Jodar_key_action_or_board",
+              "segment_index": 6,
+              "nominal_source_s": 264.16
+            }
+          ]
+        },
+        {
+          "frame_index": 2593,
+          "film_time_s": 103.72,
+          "image": "/workspace/scratch/jodar-medvedev-sf-final-qc/frames/frame-02593.png",
+          "image_sha256": "e4e08624f24ba5818c632f8e8d82006495718ceb9dd066436ddfa0e9209bb6a1",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 6,
+              "nominal_source_s": 282.48
+            },
+            {
+              "kind": "protected_Jodar_key_action_or_board",
+              "segment_index": 6,
+              "nominal_source_s": 282.48
+            }
+          ]
+        },
+        {
+          "frame_index": 2820,
+          "film_time_s": 112.8,
+          "image": "/workspace/scratch/jodar-medvedev-sf-final-qc/frames/frame-02820.png",
+          "image_sha256": "13bb44ef48179f2b44337be604f235d34310a4ac7446f10b80ae0b5e2e6b7f4e",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 6,
+              "nominal_source_s": 291.56
+            },
+            {
+              "kind": "protected_Jodar_key_action_or_board",
+              "segment_index": 6,
+              "nominal_source_s": 291.56
+            }
+          ]
+        }
+      ],
+      "observation": "Actual final-film full PNGs retain complete JODAR/MEDVEDEV names and all native set/game/point digits, including AD. The 720p source board is restored at x0,y1226,height146,bottom1372; no manual anchor relocation. First/second-set width changes and native score animations are visible without a confirmed extra green rectangle, clipped point digit, or missing point-panel edge in the 39 sampled frames."
+    },
+    {
+      "id": "three-matchpoints-and-fall-recovery",
+      "status": "pass_in_finite_action_samples",
+      "proof": [
+        {
+          "frame_index": 2135,
+          "film_time_s": 85.4,
+          "image": "/workspace/scratch/jodar-medvedev-sf-final-qc/frames/frame-02135.png",
+          "image_sha256": "a1304d8f7cacaa39bd0ec6090dd41a51d2b432e7fcdfb52daddcf1a7026f6391",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 6,
+              "nominal_source_s": 264.16
+            },
+            {
+              "kind": "protected_Jodar_key_action_or_board",
+              "segment_index": 6,
+              "nominal_source_s": 264.16
+            }
+          ]
+        },
+        {
+          "frame_index": 2456,
+          "film_time_s": 98.24,
+          "image": "/workspace/scratch/jodar-medvedev-sf-final-qc/frames/frame-02456.png",
+          "image_sha256": "d6d62d0cb2eb24d3db9485a7e5776fe8989ae2204bc2c77eef85ec9c5800f065",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 6,
+              "nominal_source_s": 277.0
+            },
+            {
+              "kind": "protected_Jodar_key_action_or_board",
+              "segment_index": 6,
+              "nominal_source_s": 277
+            }
+          ]
+        },
+        {
+          "frame_index": 2543,
+          "film_time_s": 101.72,
+          "image": "/workspace/scratch/jodar-medvedev-sf-final-qc/frames/frame-02543.png",
+          "image_sha256": "fa975e003d0009005e806c83e77e603c47aa08d020392343e770e0a25af93dc8",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 6,
+              "nominal_source_s": 280.48
+            },
+            {
+              "kind": "protected_Jodar_key_action_or_board",
+              "segment_index": 6,
+              "nominal_source_s": 280.48
+            },
+            {
+              "kind": "source_segment_start_middle_end",
+              "segment_index": 6,
+              "edit_id": "three_saves_and_ending",
+              "nominal_source_s": 280.46,
+              "coalesced_request_frame_index": 2542,
+              "actual_sample_minus_requested_seconds": 0.04
+            }
+          ]
+        }
+      ],
+      "observation": "Samples include Medvedev serving at5-3 with first match point40-30 and subsequent two AD match points. Source-time258.16/264.16/270.16 serve images are retained; source274.48 shows the net/rally phase; actual original2456 at98.24film/source277.0 shows Jodar falling backward near the far baseline, and original2543 at101.72film/source280.48 shows his recovery/getting-up closeup. The third-match-point fall is not presented as the final match result."
+    },
+    {
+      "id": "final-service-game-pass-and-handshake",
+      "status": "pass_in_finite_action_samples",
+      "proof": [
+        {
+          "frame_index": 2593,
+          "film_time_s": 103.72,
+          "image": "/workspace/scratch/jodar-medvedev-sf-final-qc/frames/frame-02593.png",
+          "image_sha256": "e4e08624f24ba5818c632f8e8d82006495718ceb9dd066436ddfa0e9209bb6a1",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 6,
+              "nominal_source_s": 282.48
+            },
+            {
+              "kind": "protected_Jodar_key_action_or_board",
+              "segment_index": 6,
+              "nominal_source_s": 282.48
+            }
+          ]
+        },
+        {
+          "frame_index": 2820,
+          "film_time_s": 112.8,
+          "image": "/workspace/scratch/jodar-medvedev-sf-final-qc/frames/frame-02820.png",
+          "image_sha256": "13bb44ef48179f2b44337be604f235d34310a4ac7446f10b80ae0b5e2e6b7f4e",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 6,
+              "nominal_source_s": 291.56
+            },
+            {
+              "kind": "protected_Jodar_key_action_or_board",
+              "segment_index": 6,
+              "nominal_source_s": 291.56
+            }
+          ]
+        },
+        {
+          "frame_index": 3068,
+          "film_time_s": 122.72,
+          "image": "/workspace/scratch/jodar-medvedev-sf-final-qc/frames/frame-03068.png",
+          "image_sha256": "86c525ee6d759d6303e545e3809726c5012e76740506dea0a1f8f237ad70d60f",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 6,
+              "nominal_source_s": 301.48
+            },
+            {
+              "kind": "protected_Jodar_key_action_or_board",
+              "segment_index": 6,
+              "nominal_source_s": 301.48
+            }
+          ]
+        }
+      ],
+      "observation": "After Medvedev holds for5-4, actual source282.48 serve and286.0/290.6 rally positions lead to source291.56/292.36 final passing-shot result. Actual full PNG2593 shows Jodar serving with6 5 40 /3 4 0; full PNG2820 shows final net/passing result phase with the same board. The ending then retains winner gesture, both players, and handshake/embrace; full PNG3068 confirms the actual same-match interaction. No substituted third-match-point result is claimed."
+    },
+    {
+      "id": "all-ten-English-actual-ASS-midpoints",
+      "status": "pass_in_all_assigned_midpoints",
+      "proof": [
+        {
+          "frame_index": 1550,
+          "film_time_s": 62.0,
+          "image": "/workspace/scratch/jodar-medvedev-sf-final-qc/frames/frame-01550.png",
+          "image_sha256": "62746dfacdb8c3d46535b0baff7043ac1a633ad2149217738fee451df87900ec",
+          "reasons": [
+            {
+              "kind": "assigned_ass_cue_midpoint",
+              "global_cue": 16,
+              "cue_start_s": 59.64,
+              "cue_end_s": 64.4,
+              "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}The Spaniard it is that wraps up the opening set here.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N这位西班牙球员拿下了首盘",
+              "segment_index": 4
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 145.36
+            },
+            {
+              "kind": "protected_Jodar_key_action_or_board",
+              "segment_index": 4,
+              "nominal_source_s": 145.36
+            },
+            {
+              "kind": "protected_Jodar_key_action_or_board",
+              "segment_index": 4,
+              "nominal_source_s": 145.38
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 145.6,
+              "coalesced_request_frame_index": 1556,
+              "actual_sample_minus_requested_seconds": -0.24
+            }
+          ]
+        }
+      ],
+      "observation": "All10 actual source English cue midpoint frames viewed: global ASS1,2,3,9,16,23,24,25,26,27. English and Chinese are complete and remain above the board. Actual full PNG1550 at62.0film confirms wraps up stays on the first English line and the opening set here stays on the next, resolving the preencode line-layout finding in the actual encoded movie."
+    },
+    {
+      "id": "cold-open-ending-payoff-correspondence",
+      "status": "pass_in_assigned_samples",
+      "observation": "Cold-open and chronological ending show the same real Jodar winner reaction, Medvedev, all-Spanish-final broadcast declaration, and net handshake. All3 cold-open and3 repeated ending declaration cues were separately sampled in this actual movie. Short initial cover dissolve was observed at1.32film, not misidentified as a ghost-board finding."
+    },
+    {
+      "id": "full-canvas-fixed-center",
+      "status": "pass_with_approved_horizontal_limit",
+      "observation": "Assigned source picture fills1080x1440 with the fixed center crop. Horizontal edge chases, rackets and player positions may leave the crop. This review does not claim the full horizontal court or every player position is visible."
+    }
+  ],
+  "provenance_limit": {
+    "receipt": "/workspace/scratch/jodar-medvedev-sf-native/native-public-input-verification.json",
+    "receipt_sha256": "8ab44920493efc69bc895195736190228cd2b261ea2799a232143c81bebafd0f",
+    "statement": "The actual MP4 was obtained from its official public Release delivery URL and matches the stated native movie SHA/bytes. Metadata and25/26 available original archive inputs are verified in the receipt; the original private pre-upload render.json could not be obtained. The inspected render.json is the exact tracked post-upload version, and no full-private-archive-success claim is made here."
+  },
+  "limitations": [
+    "Finite39 actual source-partition frames,7 contact sheets and7 full original PNGs; not every movie frame or exhaustive action-motion inspection.",
+    "All10 assigned actual ASS midpoint frames viewed; speech/ASR evidence and final voice binding are reviewed separately. No human listening is claimed.",
+    "Root independently reviews the other27 ASS cues, cover/statistics/cards/outro and seams. This partition pass alone does not approve publication.",
+    "This review is bound only to this actual MP4/source/spec/ASS identity; it does not certify an unreviewed1080p source replacement.",
+    "No loudness,RMS,peak,threshold-silence,gain or PCM comparison checks were performed."
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "tennislive.finite-root-actual-movie-review.v1",
+  "reviewer": "root",
+  "partition": "cover_cards_outro_seams_and_exact_ending_tail",
+  "reviewed_at": "2026-10-17T14:55:28.949285+00:00",
+  "visual_pass": true,
+  "publication_approved": false,
+  "frame_manifest_sha256": "d35d925eaef4b50ab81a6ad88ded2b6898e711ef3b245bfeb8186106651817d3",
+  "movie_sha256": "dfffe0da46bfad420f631a8d651f442010be9190ae5651ed45b75adad2c82e32",
+  "movie_bytes": 47545869,
+  "spec_sha256": "9e866f0e5dcd092eb1381f26d5f936c71738667b75a46cc9bbf21f46169b29d9",
+  "ass_sha256": "0fb497221b45a4c17c34e007cc585eb6a35ecc825be365992bd710d838dbcde6",
+  "render_inputs_sha256": "f7184e81121a8a2cdc99904b6f2cb98470566bb9e929cf48542595cbdd3d8024",
+  "native_qc_sha256": "eb7e841db48574ec93d3a049a362c8e2ee7fb7ba1f8fb2bcf14f0169937fc035",
+  "fps": 25.0,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "film_seconds": 156.32,
+  "total_movie_frames": 3908,
+  "scope": {
+    "movie_frame_samples_actually_viewed": 59,
+    "contact_sheets_actually_viewed": 10,
+    "assigned_ass_cue_midpoints_actually_viewed": 27,
+    "original_full_movie_pngs_actually_viewed": 3,
+    "intentionally_clean_full_stats_cue_windows": 5,
+    "all_movie_frames_reviewed": false,
+    "audio_listened": false
+  },
+  "observations": [
+    "All10 contact sheets actually viewed, covering59 root samples. All27 assigned actual ASS midpoint windows inspected; full statistics card deliberately omits foreground Chinese subtitles during its5 cue windows.",
+    "Actual cover-original frame15: same-match Medvedev photo and prescribed upper-left round/matchup, correct ranks6/13, winner-first6-3/6-4 scoreboard and1:44 duration; both eyes visible, no text obscures face.",
+    "Actual full statistics-original frame3361: Medvedev-first15/22 winners,21/22UE,2/6vs4/7BP, all percentages and denominators legible; winner-highlighted Jodar, no caption overlap.",
+    "Actual long-name originalframe3616: full 达维多维奇·福基纳 displayed on a single semantic title line, Chinese narration subtitle complete and clear of brand.",
+    "All9 segment boundaries sampled on both sides, plus5 consecutive25fps frames at source6-to-stat boundary124.16s; normal native dissolve with no sampled black/publisher-tail flash.",
+    "Story ending shows confirmed Spanish final, followed by actual original native brand outro and final readable lockup."
+  ],
+  "blocking_findings": [],
+  "human_review_claimed": false,
+  "limitations": [
+    "Actual finite encoded-movie review, not whole-frame-by-frame viewing or human listening. Source action/English/board review belongs to named independent partner.",
+    "Fixedcenter3:4 retains original approved horizontal edge clipping; this does not claim the entire horizontal court is visible.",
+    "Private native archive download was blocked; actual movie came from independently available normal public delivery Release and was hash-matched to native inputs/QC. Full private archive and raw preupload render.json were not obtained."
+  ]
+}

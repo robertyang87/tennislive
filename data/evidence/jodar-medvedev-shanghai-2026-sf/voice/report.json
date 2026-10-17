@@ -1115,7 +1115,7 @@
   "human_listening_claimed": false,
   "all_mechanical_components_passed": false,
   "full_phonetic_or_all_tone_pass_claimed": false,
-  "final_movie_binding_pending": true,
+  "final_movie_binding_pending": false,
   "nonfinite_derived_metadata_encoded_as_null_raw_original_preserved": true,
   "limitations": [
     "Finite acoustic evidence and actual figure interpretation are not human listening or a comprehensive phonetic pass.",
@@ -1124,5 +1124,9 @@
     "ASR supplies recognition/location clues only, never tone labels.",
     "All23 numeral lexical spans supported; every digit tone was not independently contrasted.",
     "No loudness/RMS/peak/gain/threshold-silence/PCM identity scan."
-  ]
+  ],
+  "film_sha256": "dfffe0da46bfad420f631a8d651f442010be9190ae5651ed45b75adad2c82e32",
+  "film_bytes": 47545869,
+  "run_id": 39041935826,
+  "final_film_input_binding": "final-film-input-binding.json"
 }

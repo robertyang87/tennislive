@@ -167,5 +167,47 @@
     ],
     "code_spec_anchor_or_frame_evidence_changed": false,
     "new_scan_or_render_performed": false
+  },
+  "latest_formal_consistency": {
+    "checked_at": "2026-10-17T14:43:15.755835+00:00",
+    "spec_sha256": "9e866f0e5dcd092eb1381f26d5f936c71738667b75a46cc9bbf21f46169b29d9",
+    "source_url_matches": true,
+    "current_source_windows": [
+      {
+        "index": 0,
+        "edit_id": "cold_open",
+        "start": 292.04,
+        "end": 301.24
+      },
+      {
+        "index": 2,
+        "edit_id": "first_set_break",
+        "start": 36.96,
+        "end": 52.8
+      },
+      {
+        "index": 4,
+        "edit_id": "first_set_close",
+        "start": 138.4,
+        "end": 147.8
+      },
+      {
+        "index": 6,
+        "edit_id": "three_saves_and_ending",
+        "start": 258.0,
+        "end": 302.92
+      }
+    ],
+    "retained_english_cues_native_gate": 10,
+    "current_canvas_scoreboard": {
+      "x": 0,
+      "y": 1226,
+      "width_max": 476,
+      "height": 146,
+      "bottom_anchor": 1372,
+      "basis": "Root-completed native pre-encode log for actual720 source,73px board scaled2x. Existing source images were already reviewed; no new frames were decoded for this sampling plan.",
+      "why_previous_y1227": "Previous1080-source board was109px high, rendered145px after native scaling/rounding:1372-145=1227. Current73px at2x is146px:1372-146=1226. The bottom anchor is unchanged; this is not a manual board-position change."
+    },
+    "final_movie_review_complete": false
   }
 }
