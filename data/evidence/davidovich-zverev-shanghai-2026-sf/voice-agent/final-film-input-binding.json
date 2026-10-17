@@ -1,0 +1,117 @@
+{
+  "created_at": "2026-10-17T12:24:02.886756+00:00",
+  "status": "six_actual_reviewed_MP3_and_marks_bound_to_final_native_movie",
+  "bundle_sha256": "728ab30f7e1adf68ad32695723b248b97da61941d7720a6a8ce1daeb07902f03",
+  "film_sha256": "876f2af99804781e83bb78eea171e1aa79d03be55c9d3165b1f93aa15fff39cb",
+  "film_path": "/workspace/scratch/zverev-sf-final-v2/davidovich-zverev-shanghai-2026-sf.mp4",
+  "run_id": 39031880980,
+  "native_input_archive_sha256": "bacbfbc99996ce68ab7b760af8e0e59b25632b7ded797b5eb23e4fdedc94494e",
+  "current_spec_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
+  "current_spec_path": "/workspace/tennislive-efficiency/specs/reels/davidovich-zverev-shanghai-2026-sf.json",
+  "current_text_profile_exact_verified": true,
+  "subtitles_ass_sha256": "1c598707d0bfea24eb94d753fd59705d0e86ab46dca150e52d6ea1aa770a0c1e",
+  "topbar_ass_sha256": "83d5e2daee0745469d2b9817b692be8824f68e50b5aafac00f2bb94a72506603",
+  "render_inputs_sha256": "00397a9736dd2cb0d7ab582282be6a020f7824cef6c83d96ebf4a3e7f10c3353",
+  "native_qc_sha256": "ba186c8ea77f53133f4b745fc26db2d1f245fad1bec17c560d40e0322f1fce5b",
+  "native_qc_status": "pass",
+  "post_upload_render_metadata_identity": {
+    "current_render_metadata_sha256": "d890de0d66f77884f3f15ab225c7fc4b36a5f7908e765637525b6269ec51663f",
+    "native_archive_captured_render_sha256": "3be4525a1c5ede8847ae5f3687565f30ad974e83d8854ca051c5f04731a6d358",
+    "current_matches_native_captured_render_bytes": false,
+    "observation": "Current output render.json is post-upload metadata with added delivery and stage fields; exact original pre-upload render metadata bytes not supplied. Do not claim its byte identity. Native render_inputs, native QC, subtitles ASS and topbar ASS match archive exactly; current render metadata film and strict TTS bundle identities separately validated.",
+    "current_render_archive_name": "actual-native-render/post-upload-render.json"
+  },
+  "render_metadata_sha256": "d890de0d66f77884f3f15ab225c7fc4b36a5f7908e765637525b6269ec51663f",
+  "native_strict_import_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "728ab30f7e1adf68ad32695723b248b97da61941d7720a6a8ce1daeb07902f03",
+    "request_count": 6,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-davidovich-zverev-shanghai-2026-sf-728ab30f7e1adf68",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-davidovich-zverev-shanghai-2026-sf-728ab30f7e1adf68/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39031880980"
+  },
+  "inputs": [
+    {
+      "edit_id": "intro",
+      "output_name": "voice_01.mp3",
+      "marks_name": "voice_01.words.json",
+      "MP3_SHA256": "3452164ca06b4db0c591e59f935d4c642ded5e3bc1615ab65d39975a42fe33d0",
+      "marks_SHA256": "c486ea63c764c05e9e9fd6974e996a95e6fc6b0738f49476c7a3a16be4260e52",
+      "both_match_actual_native_archive": true
+    },
+    {
+      "edit_id": "second_set_context",
+      "output_name": "voice_03.mp3",
+      "marks_name": "voice_03.words.json",
+      "MP3_SHA256": "afae15d8c498d53ae6a696fff56f9538efbe85e1c658cea9cc602a7a1054a912",
+      "marks_SHA256": "6f80e54b018781649b417b71720f5d5964eca1962e072d7208dd1bfb33e72dbe",
+      "both_match_actual_native_archive": true
+    },
+    {
+      "edit_id": "deciding_set_context",
+      "output_name": "voice_05.mp3",
+      "marks_name": "voice_05.words.json",
+      "MP3_SHA256": "1a300545001e5c37036552efcfdcf460007ae88e13d560dd170db317ac64773d",
+      "marks_SHA256": "518ac68ea47399a321bdaedb3de5643296020619482cfd591d872385e025cd08",
+      "both_match_actual_native_archive": true
+    },
+    {
+      "edit_id": "full_stats",
+      "output_name": "voice_07.mp3",
+      "marks_name": "voice_07.words.json",
+      "MP3_SHA256": "c7f8f8e3f24fefd70890c9f7a1ed7101064847d6ae60874dda7bd475f3d287a0",
+      "marks_SHA256": "f1b420d7dd0f21495af5d3af560806720bc1dae787ba361c4315e08b9f761d07",
+      "both_match_actual_native_archive": true
+    },
+    {
+      "edit_id": "outlook",
+      "output_name": "voice_08.mp3",
+      "marks_name": "voice_08.words.json",
+      "MP3_SHA256": "ed066e876440f5c81f5e1a56b811a99f7cec5c084783e7951ce7d9feb99ef7c9",
+      "marks_SHA256": "5feef469b8b2c298fff33ff6f680e192954e415d748e51d718aa3238e107834a",
+      "both_match_actual_native_archive": true
+    },
+    {
+      "edit_id": "outro",
+      "output_name": "voice_outro.mp3",
+      "marks_name": "voice_outro.words.json",
+      "MP3_SHA256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "marks_SHA256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "both_match_actual_native_archive": true
+    }
+  ],
+  "human_listening_claimed": false,
+  "final_mix_listened": false,
+  "all_mechanical_components_passed": false,
+  "method": "SHA and manifest metadata identity only; no decoding, PCM comparison or audio processing",
+  "previous_movie_visual_blocked_history": {
+    "created_at": "2026-10-17T12:17:15.835949+00:00",
+    "status": "completed_new_native_movie_byte_binding_same_existing_voice_review",
+    "old_film_sha256": "55f4513b1bec122679a7fff11c2b3d3662a870ff3de273c2cea392a2df2b6b08",
+    "old_run_id": 39030349344,
+    "old_voice_archive": "/workspace/scratch/zverev-sf-voice-evidence-final.zip",
+    "old_voice_archive_sha256": "f4f267da3ebd0436e6ecd866324c1750e4fad27ba9a59679bbc9d06782955ca8",
+    "old_voice_archive_publishable": false,
+    "reason_from_root_actual_visual_review": "Native ATP scoreboard mask clipped 30/40 points and retained green rectangular padding at first-set close. The voice-byte seal did not establish final visual quality.",
+    "exact_historical_binding_documents": "/workspace/scratch/zverev-sf-voice/history/run39030349344-film55f4513b1bec-blocked-visual",
+    "next_archive": "/workspace/scratch/zverev-sf-voice-evidence-v2.zip",
+    "review_repeated": false,
+    "TTS_resynthesized": false,
+    "PCM_gain_loudness_operations_performed": false,
+    "pending_required_inputs": [
+      "new actual MP4 path and SHA",
+      "new successful native render run ID",
+      "new native_input_archive and current spec/ASS/render_inputs/QC"
+    ],
+    "final_native_binding_status": "bound_actual_v2_movie",
+    "new_film_sha256": "876f2af99804781e83bb78eea171e1aa79d03be55c9d3165b1f93aa15fff39cb",
+    "new_run_id": 39031880980,
+    "new_archive_path": "/workspace/scratch/zverev-sf-voice-evidence-v2.zip"
+  }
+}

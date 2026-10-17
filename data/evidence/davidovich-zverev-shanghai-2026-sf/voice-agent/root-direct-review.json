@@ -1,0 +1,41 @@
+{
+  "schema": "tennislive.finite-independent-voice-plot-observations.v1",
+  "reviewer": "Current root OpenAI assistant",
+  "reviewed_at": "2026-10-17T11:50:08.301691+00:00",
+  "bundle_sha256": "728ab30f7e1adf68ad32695723b248b97da61941d7720a6a8ce1daeb07902f03",
+  "human_listening_claimed": false,
+  "complete_pronunciation_pass": false,
+  "method": "Actual finite image-tool inspection of four native-original/current-reference spectral/F0 plots. No loudness, gain or PCM comparison.",
+  "observations": [
+    {
+      "plot": "/workspace/scratch/zverev-sf-voice/actual-plots-v1/deciding_set_context-word-012-016.png",
+      "sha256": "b18f312063ce701abf1b3ba844b554fe275f35b0c004a52c5a0cd8ff1febbbba",
+      "observation": "ORIG/A1 whole-word relative spectra and local F0 peak/decline/last-onset shape closely match, unlike B references. Supports intended-side only at finite low confidence, not mechanical leave-one-out pass or guarantee of all four phones."
+    },
+    {
+      "plot": "/workspace/scratch/zverev-sf-voice/actual-plots-v1/intro-word-044-049.png",
+      "sha256": "daa486e32b2358d3a90ea0cadae316b13dc6cdb1cef806acbde4a7d6592bf0dc",
+      "observation": "ORIG whole-word relative spectral transitions and mid-to-late peak then descent more resemble A references than B, but absolute F0 and initial tracking differ; weak whole-word supporting evidence only, not an independent syllable-by-syllable pass."
+    },
+    {
+      "plot": "/workspace/scratch/zverev-sf-voice/actual-plots-v1/outlook-027-U5947-syllable.png",
+      "sha256": "4bd0f59d07a2e9f84b576fcb2ee97b9cfe639a1a0a3a05f56022e76ad6ee2d5b",
+      "observation": "After unvoiced central interval, ORIG5.41..5.47s has low F0 slight rise similar to A1/A2; B1/B2 corresponding restarted voicing markedly higher. Supports A-side low, retain conflicting reverse spectral calibration unchanged."
+    },
+    {
+      "plot": "/workspace/scratch/zverev-sf-voice/actual-plots-v1/full_stats-numbers-latin.png",
+      "sha256": "18f007de51fa04801305cb461c6292facf69df92dfd59ed58f72496f83871d12",
+      "observation": "Single original numbers figure lacks confusable controls; root does not infer numeral identities/tones solely from spectrogram or ASR. ACE window has one voiced nucleus followed by unvoiced portion, consistent with English-word handling rather than three isolated letters. No complete digit-tone pass inferred."
+    },
+    {
+      "plot": "/workspace/scratch/zverev-sf-voice/actual-plots-v1/intro-focused-46-native-token.png",
+      "sha256": "d0e88be5f64f0cf43ffb818ece39d7a5055aee62b20d74d71c91e206baa121e8",
+      "observation": "Actually viewed root focused single-character-context control plot: ORIG/A1/A2 relative spectral transition locations and low plateau/re-onset/decline F0 are very close, whereas single-target B controls shift transitions and later contour. Supports intended-side direct finite low for current 多 only. Original pending mechanical calibration remains pending; no guarantee of all name syllables or human listening."
+    },
+    {
+      "plot": "/workspace/scratch/zverev-sf-voice/actual-plots-v1/intro-focused-46-多.png",
+      "sha256": "de2b12119d43e3a90990216c9d088159eb3023c882b1c043003ad7868c665992",
+      "observation": "Actually viewed root focused single-character-context control plot: ORIG/A1/A2 relative spectral transition locations and low plateau/re-onset/decline F0 are very close, whereas single-target B controls shift transitions and later contour. Supports intended-side direct finite low for current 多 only. Original pending mechanical calibration remains pending; no guarantee of all name syllables or human listening."
+    }
+  ]
+}

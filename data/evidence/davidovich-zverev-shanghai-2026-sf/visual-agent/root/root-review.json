@@ -1,0 +1,64 @@
+{
+  "schema": "tennislive.partitioned-actual-final-movie-review.v1",
+  "reviewer": "Current root OpenAI assistant",
+  "reviewed_at": "2026-10-17T12:26:06.590535+00:00",
+  "movie_sha256": "876f2af99804781e83bb78eea171e1aa79d03be55c9d3165b1f93aa15fff39cb",
+  "movie_bytes": 58710666,
+  "spec_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
+  "ass_sha256": "1c598707d0bfea24eb94d753fd59705d0e86ab46dca150e52d6ea1aa770a0c1e",
+  "render_inputs_sha256": "00397a9736dd2cb0d7ab582282be6a020f7824cef6c83d96ebf4a3e7f10c3353",
+  "native_qc_sha256": "ba186c8ea77f53133f4b745fc26db2d1f245fad1bec17c560d40e0322f1fce5b",
+  "status": "pass_finite_root_partition",
+  "visual_pass": true,
+  "publication_approved": false,
+  "human_review_claimed": false,
+  "audio_listened": false,
+  "root_partition": "cover_cards_outro_seams_and_exact_ending_tail",
+  "frame_manifest_sha256": "f4b4bdf263e4188f21bbdc06fb237dc3de4f79a989b75285aa984cffbc8fa621",
+  "scope": {
+    "sampled_frames": 71,
+    "actual_walls_viewed": 12,
+    "all_assigned_ass_midpoint_windows_viewed": 30,
+    "root_original_pngs_viewed": [
+      15,
+      3413
+    ],
+    "exact_ending_tail_distinct_frames_actually_viewed": [
+      3243,
+      3244,
+      3246,
+      3247,
+      3248,
+      3249,
+      3250,
+      3251,
+      3252,
+      3253,
+      3254,
+      3255,
+      3256,
+      3257
+    ],
+    "all_movie_frames_viewed": false,
+    "additional_source_partner_originals_actually_viewed_by_root": [
+      937,
+      1584,
+      1609,
+      1771
+    ]
+  },
+  "observations": [
+    "Actual cover retains same-match Zverev Getty2300060071, readable event/round/both names, two semantic hook lines, clear open eyes and unoccluded face, winner-first score5-7 6-4 6-3 and ranks26/2.",
+    "All four actual native chapter cards use coherent two semantic lines, contextual kicker, navy theme; all30 assigned non-source ASS midpoints, all9 segment seams and three outro frames viewed.",
+    "Full statistics originalPNG3413 checked: Zverev versus ADF,18/5 ACE,2/2DF,28/36W,20/21UE,first71/95 versus68/83,firstwon52/71 versus58/68,second11/24 versus6/15,BP1/3 versus2/6,total82/96. Five stat-card cue midpoints intentionally show clean graphic without duplicate caption per native policy.",
+    "Ending-tail distinct actual frames show source court/player then native .18s dissolve into stats; no publisher endcard/giant final board/unexplained black in those finite frames. Integer rounding of15requested float sample times produced14distinct frames and omitted3245; this review explicitly does not claim15consecutive frames.",
+    "Outro actual navy brand/logo/slogan clear. Fixed-center full canvas geometry and fixed board position retained in observed seams; source-action and repair details independently reviewed by partner.",
+    "Root additionally inspected new actual full PNGs937/1584/1609/1771: green background rectangle removed,30/40 complete, resultboard7 4 /5 6 complete without clothing; x0 y1227 remains fixed. These observations are of current876f2a...film, not preview/old55f451...film."
+  ],
+  "blocking_findings": [],
+  "limitations": [
+    "Finite root partition only; independent source-action report separately attributed.",
+    "No human listening, all-frame, loudness/source-gain/threshold-silence/PCM claims.",
+    "This partition alone is not publication approval; independent source partition/native QC/current-head CI and receipt remain required."
+  ]
+}

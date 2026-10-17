@@ -1,0 +1,1915 @@
+{
+  "status": "complete_raw_independent_lexical_asr_not_tone_proof",
+  "configuration": {
+    "model": "base multilingual",
+    "device": "cpu",
+    "compute_type": "int8",
+    "language": "zh",
+    "beam_size": 5,
+    "vad_filter": false,
+    "initial_prompt": null,
+    "prefix": null,
+    "condition_on_previous_text": false,
+    "temperature": 0.0,
+    "word_timestamps": true
+  },
+  "manual_listening_claimed": false,
+  "bundle_sha256": "728ab30f7e1adf68ad32695723b248b97da61941d7720a6a8ce1daeb07902f03",
+  "method": "transcribe whole actual current frozen MP3 independently, without expected-text prompt",
+  "limitation": "ASR Chinese characters cannot establish tone or prove all numbers/words correct; unresolved mismatches pending.",
+  "utterances": [
+    {
+      "edit_id": "intro",
+      "actual_mp3": "/workspace/scratch/zverev-sf-voice/native-audio/intro-3452164ca06b4db0.mp3",
+      "actual_mp3_sha256": "3452164ca06b4db0c591e59f935d4c642ded5e3bc1615ab65d39975a42fe33d0",
+      "expected_final_tts_text": "北京时间二零二六年十月十七日下午，上海大师赛男单半决赛。提前锁定年终第一的兹维列夫，对阵达维多维奇·福基纳。首盘九记ACE，没给对手一个破发点。五比五之后率先破发，他拿到先赢一盘的机会。",
+      "raw_transcription": "北京時間2026年10月17日下午 上海大施賽南南半決賽提前鎖定年中第一的自衛列夫對鎮搭衛多維起伏擊納手盤9G S 沒給對手一個破發點無比五之後率先破發 她拿到先贏一盤的機會",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 4.64,
+          "text": "北京時間2026年10月17日下午 上海大施賽南南半決賽",
+          "avg_logprob": -0.35777399986982344,
+          "words": [
+            {
+              "word": "北",
+              "start": 0.0,
+              "end": 0.2,
+              "probability": 0.9648362994194031
+            },
+            {
+              "word": "京",
+              "start": 0.2,
+              "end": 0.36,
+              "probability": 0.998138427734375
+            },
+            {
+              "word": "時間",
+              "start": 0.36,
+              "end": 0.6,
+              "probability": 0.8167926073074341
+            },
+            {
+              "word": "20",
+              "start": 0.6,
+              "end": 0.88,
+              "probability": 0.2959541082382202
+            },
+            {
+              "word": "26",
+              "start": 0.88,
+              "end": 1.2,
+              "probability": 0.997494101524353
+            },
+            {
+              "word": "年",
+              "start": 1.2,
+              "end": 1.4,
+              "probability": 0.9869837760925293
+            },
+            {
+              "word": "10",
+              "start": 1.4,
+              "end": 1.62,
+              "probability": 0.9180455207824707
+            },
+            {
+              "word": "月",
+              "start": 1.62,
+              "end": 1.7,
+              "probability": 0.99569171667099
+            },
+            {
+              "word": "17",
+              "start": 1.7,
+              "end": 1.98,
+              "probability": 0.8892492055892944
+            },
+            {
+              "word": "日",
+              "start": 1.98,
+              "end": 2.26,
+              "probability": 0.9931500554084778
+            },
+            {
+              "word": "下",
+              "start": 2.26,
+              "end": 2.36,
+              "probability": 0.9932898879051208
+            },
+            {
+              "word": "午",
+              "start": 2.36,
+              "end": 2.54,
+              "probability": 0.9994847774505615
+            },
+            {
+              "word": " 上",
+              "start": 2.92,
+              "end": 2.98,
+              "probability": 0.8925109505653381
+            },
+            {
+              "word": "海",
+              "start": 2.98,
+              "end": 3.12,
+              "probability": 0.9996985197067261
+            },
+            {
+              "word": "大",
+              "start": 3.12,
+              "end": 3.32,
+              "probability": 0.9978476762771606
+            },
+            {
+              "word": "施",
+              "start": 3.32,
+              "end": 3.44,
+              "probability": 0.6058966219425201
+            },
+            {
+              "word": "賽",
+              "start": 3.44,
+              "end": 3.6,
+              "probability": 0.3319544494152069
+            },
+            {
+              "word": "南",
+              "start": 3.6,
+              "end": 3.84,
+              "probability": 0.25700753927230835
+            },
+            {
+              "word": "南",
+              "start": 3.84,
+              "end": 4.0,
+              "probability": 0.7032572627067566
+            },
+            {
+              "word": "半",
+              "start": 4.0,
+              "end": 4.24,
+              "probability": 0.725347101688385
+            },
+            {
+              "word": "決",
+              "start": 4.24,
+              "end": 4.4,
+              "probability": 0.691744327545166
+            },
+            {
+              "word": "賽",
+              "start": 4.4,
+              "end": 4.64,
+              "probability": 0.9761925339698792
+            }
+          ]
+        },
+        {
+          "start": 4.64,
+          "end": 9.14,
+          "text": "提前鎖定年中第一的自衛列夫對鎮搭衛多維起伏擊納",
+          "avg_logprob": -0.35777399986982344,
+          "words": [
+            {
+              "word": "提",
+              "start": 4.64,
+              "end": 5.32,
+              "probability": 0.9531562328338623
+            },
+            {
+              "word": "前",
+              "start": 5.32,
+              "end": 5.54,
+              "probability": 0.9788114428520203
+            },
+            {
+              "word": "鎖",
+              "start": 5.54,
+              "end": 5.7,
+              "probability": 0.954726497332255
+            },
+            {
+              "word": "定",
+              "start": 5.7,
+              "end": 5.82,
+              "probability": 0.9974410533905029
+            },
+            {
+              "word": "年",
+              "start": 5.82,
+              "end": 5.98,
+              "probability": 0.9057928323745728
+            },
+            {
+              "word": "中",
+              "start": 5.98,
+              "end": 6.14,
+              "probability": 0.9253734946250916
+            },
+            {
+              "word": "第一",
+              "start": 6.14,
+              "end": 6.4,
+              "probability": 0.9421009421348572
+            },
+            {
+              "word": "的",
+              "start": 6.4,
+              "end": 6.56,
+              "probability": 0.7505192756652832
+            },
+            {
+              "word": "自",
+              "start": 6.56,
+              "end": 6.76,
+              "probability": 0.7123250961303711
+            },
+            {
+              "word": "衛",
+              "start": 6.76,
+              "end": 6.86,
+              "probability": 0.6651128530502319
+            },
+            {
+              "word": "列",
+              "start": 6.86,
+              "end": 6.96,
+              "probability": 0.5041550993919373
+            },
+            {
+              "word": "夫",
+              "start": 6.96,
+              "end": 7.16,
+              "probability": 0.7948724627494812
+            },
+            {
+              "word": "對",
+              "start": 7.16,
+              "end": 7.56,
+              "probability": 0.7931498289108276
+            },
+            {
+              "word": "鎮",
+              "start": 7.56,
+              "end": 7.74,
+              "probability": 0.8184136052926382
+            },
+            {
+              "word": "搭",
+              "start": 7.74,
+              "end": 7.94,
+              "probability": 0.6341196447610855
+            },
+            {
+              "word": "衛",
+              "start": 7.94,
+              "end": 8.06,
+              "probability": 0.5895539000630379
+            },
+            {
+              "word": "多",
+              "start": 8.06,
+              "end": 8.2,
+              "probability": 0.8978129029273987
+            },
+            {
+              "word": "維",
+              "start": 8.2,
+              "end": 8.32,
+              "probability": 0.7416843622922897
+            },
+            {
+              "word": "起",
+              "start": 8.32,
+              "end": 8.54,
+              "probability": 0.28726086020469666
+            },
+            {
+              "word": "伏",
+              "start": 8.54,
+              "end": 8.84,
+              "probability": 0.5414721257984638
+            },
+            {
+              "word": "擊",
+              "start": 8.84,
+              "end": 8.96,
+              "probability": 0.5059032440185547
+            },
+            {
+              "word": "納",
+              "start": 8.96,
+              "end": 9.14,
+              "probability": 0.7281958907842636
+            }
+          ]
+        },
+        {
+          "start": 9.56,
+          "end": 12.78,
+          "text": "手盤9G S 沒給對手一個破發點",
+          "avg_logprob": -0.35777399986982344,
+          "words": [
+            {
+              "word": "手",
+              "start": 9.56,
+              "end": 9.96,
+              "probability": 0.37270450592041016
+            },
+            {
+              "word": "盤",
+              "start": 9.96,
+              "end": 10.18,
+              "probability": 0.938011884689331
+            },
+            {
+              "word": "9",
+              "start": 10.18,
+              "end": 10.38,
+              "probability": 0.6282739043235779
+            },
+            {
+              "word": "G",
+              "start": 10.38,
+              "end": 10.56,
+              "probability": 0.7237302660942078
+            },
+            {
+              "word": " S",
+              "start": 10.56,
+              "end": 10.84,
+              "probability": 0.49817007780075073
+            },
+            {
+              "word": " 沒",
+              "start": 11.06,
+              "end": 11.3,
+              "probability": 0.8457123637199402
+            },
+            {
+              "word": "給",
+              "start": 11.3,
+              "end": 11.44,
+              "probability": 0.9924025535583496
+            },
+            {
+              "word": "對",
+              "start": 11.44,
+              "end": 11.6,
+              "probability": 0.9891393780708313
+            },
+            {
+              "word": "手",
+              "start": 11.6,
+              "end": 11.8,
+              "probability": 0.994803249835968
+            },
+            {
+              "word": "一個",
+              "start": 11.8,
+              "end": 12.14,
+              "probability": 0.9808146953582764
+            },
+            {
+              "word": "破",
+              "start": 12.14,
+              "end": 12.36,
+              "probability": 0.9603490829467773
+            },
+            {
+              "word": "發",
+              "start": 12.36,
+              "end": 12.52,
+              "probability": 0.9759351015090942
+            },
+            {
+              "word": "點",
+              "start": 12.52,
+              "end": 12.78,
+              "probability": 0.9970881342887878
+            }
+          ]
+        },
+        {
+          "start": 12.78,
+          "end": 16.9,
+          "text": "無比五之後率先破發 她拿到先贏一盤的機會",
+          "avg_logprob": -0.35777399986982344,
+          "words": [
+            {
+              "word": "無",
+              "start": 12.78,
+              "end": 13.48,
+              "probability": 0.8679492473602295
+            },
+            {
+              "word": "比",
+              "start": 13.48,
+              "end": 13.6,
+              "probability": 0.9641574025154114
+            },
+            {
+              "word": "五",
+              "start": 13.6,
+              "end": 13.76,
+              "probability": 0.372897207736969
+            },
+            {
+              "word": "之後",
+              "start": 13.76,
+              "end": 14.04,
+              "probability": 0.9384458661079407
+            },
+            {
+              "word": "率",
+              "start": 14.04,
+              "end": 14.3,
+              "probability": 0.8795000314712524
+            },
+            {
+              "word": "先",
+              "start": 14.3,
+              "end": 14.52,
+              "probability": 0.9969270825386047
+            },
+            {
+              "word": "破",
+              "start": 14.52,
+              "end": 14.7,
+              "probability": 0.9588987231254578
+            },
+            {
+              "word": "發",
+              "start": 14.7,
+              "end": 14.92,
+              "probability": 0.9819098711013794
+            },
+            {
+              "word": " 她",
+              "start": 15.26,
+              "end": 15.32,
+              "probability": 0.7005120515823364
+            },
+            {
+              "word": "拿",
+              "start": 15.32,
+              "end": 15.5,
+              "probability": 0.9831030368804932
+            },
+            {
+              "word": "到",
+              "start": 15.5,
+              "end": 15.7,
+              "probability": 0.9880726337432861
+            },
+            {
+              "word": "先",
+              "start": 15.7,
+              "end": 15.9,
+              "probability": 0.7964522838592529
+            },
+            {
+              "word": "贏",
+              "start": 15.9,
+              "end": 16.08,
+              "probability": 0.9854718446731567
+            },
+            {
+              "word": "一",
+              "start": 16.08,
+              "end": 16.3,
+              "probability": 0.979300320148468
+            },
+            {
+              "word": "盤",
+              "start": 16.3,
+              "end": 16.44,
+              "probability": 0.9915047585964203
+            },
+            {
+              "word": "的",
+              "start": 16.44,
+              "end": 16.6,
+              "probability": 0.9508684277534485
+            },
+            {
+              "word": "機會",
+              "start": 16.6,
+              "end": 16.9,
+              "probability": 0.997312068939209
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    },
+    {
+      "edit_id": "second_set_context",
+      "actual_mp3": "/workspace/scratch/zverev-sf-voice/native-audio/second_set_context-afae15d8c498d53a.mp3",
+      "actual_mp3_sha256": "afae15d8c498d53ae6a696fff56f9538efbe85e1c658cea9cc602a7a1054a912",
+      "expected_final_tts_text": "首盘七比五之后，第二盘的压力换边了。兹维列夫的一发得分率，从百分之七十九降到百分之六十五。四比五，对手在盘点上打出奔跑中的反手穿越。",
+      "raw_transcription": "手盤7比5之後,第二盤的壓力緩編了思維列夫的一發得分率從79%降到65%4比5對手在盤點上打出奔跑中的反手穿越",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 3.08,
+          "text": "手盤7比5之後,第二盤的壓力緩編了",
+          "avg_logprob": -0.2598099397385822,
+          "words": [
+            {
+              "word": "手",
+              "start": 0.0,
+              "end": 0.32,
+              "probability": 0.8595660328865051
+            },
+            {
+              "word": "盤",
+              "start": 0.32,
+              "end": 0.48,
+              "probability": 0.9108104705810547
+            },
+            {
+              "word": "7",
+              "start": 0.48,
+              "end": 0.72,
+              "probability": 0.8915510177612305
+            },
+            {
+              "word": "比",
+              "start": 0.72,
+              "end": 0.84,
+              "probability": 0.6605612635612488
+            },
+            {
+              "word": "5",
+              "start": 0.84,
+              "end": 0.98,
+              "probability": 0.99591064453125
+            },
+            {
+              "word": "之後,",
+              "start": 0.98,
+              "end": 1.26,
+              "probability": 0.6401142477989197
+            },
+            {
+              "word": "第二",
+              "start": 1.66,
+              "end": 1.82,
+              "probability": 0.9664480686187744
+            },
+            {
+              "word": "盤",
+              "start": 1.82,
+              "end": 2.02,
+              "probability": 0.9941895604133606
+            },
+            {
+              "word": "的",
+              "start": 2.02,
+              "end": 2.18,
+              "probability": 0.9465203881263733
+            },
+            {
+              "word": "壓",
+              "start": 2.18,
+              "end": 2.32,
+              "probability": 0.9900292754173279
+            },
+            {
+              "word": "力",
+              "start": 2.32,
+              "end": 2.48,
+              "probability": 0.9991375207901001
+            },
+            {
+              "word": "緩",
+              "start": 2.48,
+              "end": 2.72,
+              "probability": 0.742425262928009
+            },
+            {
+              "word": "編",
+              "start": 2.72,
+              "end": 2.9,
+              "probability": 0.8830517530441284
+            },
+            {
+              "word": "了",
+              "start": 2.9,
+              "end": 3.08,
+              "probability": 0.9910051822662354
+            }
+          ]
+        },
+        {
+          "start": 3.4799999999999995,
+          "end": 5.22,
+          "text": "思維列夫的一發得分率",
+          "avg_logprob": -0.2598099397385822,
+          "words": [
+            {
+              "word": "思",
+              "start": 3.4799999999999995,
+              "end": 3.84,
+              "probability": 0.4388121962547302
+            },
+            {
+              "word": "維",
+              "start": 3.84,
+              "end": 3.96,
+              "probability": 0.9749071896076202
+            },
+            {
+              "word": "列",
+              "start": 3.96,
+              "end": 4.1,
+              "probability": 0.6113156676292419
+            },
+            {
+              "word": "夫",
+              "start": 4.1,
+              "end": 4.3,
+              "probability": 0.4332709312438965
+            },
+            {
+              "word": "的",
+              "start": 4.3,
+              "end": 4.44,
+              "probability": 0.9838539958000183
+            },
+            {
+              "word": "一",
+              "start": 4.44,
+              "end": 4.6,
+              "probability": 0.6975838541984558
+            },
+            {
+              "word": "發",
+              "start": 4.6,
+              "end": 4.76,
+              "probability": 0.9903164505958557
+            },
+            {
+              "word": "得",
+              "start": 4.76,
+              "end": 4.92,
+              "probability": 0.6381651163101196
+            },
+            {
+              "word": "分",
+              "start": 4.92,
+              "end": 5.08,
+              "probability": 0.9883661866188049
+            },
+            {
+              "word": "率",
+              "start": 5.08,
+              "end": 5.22,
+              "probability": 0.9991727471351624
+            }
+          ]
+        },
+        {
+          "start": 5.22,
+          "end": 8.46,
+          "text": "從79%降到65%",
+          "avg_logprob": -0.2598099397385822,
+          "words": [
+            {
+              "word": "從",
+              "start": 5.22,
+              "end": 5.68,
+              "probability": 0.6026657223701477
+            },
+            {
+              "word": "79",
+              "start": 5.68,
+              "end": 5.9,
+              "probability": 0.9695363640785217
+            },
+            {
+              "word": "%",
+              "start": 5.9,
+              "end": 6.64,
+              "probability": 0.9859241843223572
+            },
+            {
+              "word": "降",
+              "start": 6.64,
+              "end": 7.0,
+              "probability": 0.7677028775215149
+            },
+            {
+              "word": "到",
+              "start": 7.0,
+              "end": 7.2,
+              "probability": 0.9733722805976868
+            },
+            {
+              "word": "65",
+              "start": 7.2,
+              "end": 7.46,
+              "probability": 0.9615415930747986
+            },
+            {
+              "word": "%",
+              "start": 7.46,
+              "end": 8.46,
+              "probability": 0.9650362133979797
+            }
+          ]
+        },
+        {
+          "start": 8.46,
+          "end": 12.72,
+          "text": "4比5對手在盤點上打出奔跑中的反手穿越",
+          "avg_logprob": -0.2598099397385822,
+          "words": [
+            {
+              "word": "4",
+              "start": 8.46,
+              "end": 9.02,
+              "probability": 0.41500478982925415
+            },
+            {
+              "word": "比",
+              "start": 9.02,
+              "end": 9.14,
+              "probability": 0.9814333319664001
+            },
+            {
+              "word": "5",
+              "start": 9.14,
+              "end": 9.32,
+              "probability": 0.9979324340820312
+            },
+            {
+              "word": "對",
+              "start": 9.32,
+              "end": 9.72,
+              "probability": 0.6618108749389648
+            },
+            {
+              "word": "手",
+              "start": 9.72,
+              "end": 9.9,
+              "probability": 0.997919499874115
+            },
+            {
+              "word": "在",
+              "start": 9.9,
+              "end": 10.08,
+              "probability": 0.9835302233695984
+            },
+            {
+              "word": "盤",
+              "start": 10.08,
+              "end": 10.26,
+              "probability": 0.9982183873653412
+            },
+            {
+              "word": "點",
+              "start": 10.26,
+              "end": 10.4,
+              "probability": 0.9949132204055786
+            },
+            {
+              "word": "上",
+              "start": 10.4,
+              "end": 10.68,
+              "probability": 0.9939498901367188
+            },
+            {
+              "word": "打",
+              "start": 10.68,
+              "end": 10.94,
+              "probability": 0.8640502691268921
+            },
+            {
+              "word": "出",
+              "start": 10.94,
+              "end": 11.14,
+              "probability": 0.9972148537635803
+            },
+            {
+              "word": "奔",
+              "start": 11.14,
+              "end": 11.3,
+              "probability": 0.882097989320755
+            },
+            {
+              "word": "跑",
+              "start": 11.3,
+              "end": 11.52,
+              "probability": 0.9921087622642517
+            },
+            {
+              "word": "中",
+              "start": 11.52,
+              "end": 11.72,
+              "probability": 0.9901689291000366
+            },
+            {
+              "word": "的",
+              "start": 11.72,
+              "end": 11.96,
+              "probability": 0.9951569437980652
+            },
+            {
+              "word": "反",
+              "start": 11.96,
+              "end": 12.08,
+              "probability": 0.5617055296897888
+            },
+            {
+              "word": "手",
+              "start": 12.08,
+              "end": 12.36,
+              "probability": 0.9886854887008667
+            },
+            {
+              "word": "穿",
+              "start": 12.36,
+              "end": 12.6,
+              "probability": 0.9731607437133789
+            },
+            {
+              "word": "越",
+              "start": 12.6,
+              "end": 12.72,
+              "probability": 0.9832189679145813
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    },
+    {
+      "edit_id": "deciding_set_context",
+      "actual_mp3": "/workspace/scratch/zverev-sf-voice/native-audio/deciding_set_context-1a300545001e5c37.mp3",
+      "actual_mp3_sha256": "1a300545001e5c37036552efcfdcf460007ae88e13d560dd170db317ac64773d",
+      "expected_final_tts_text": "决胜盘开局，一次双误，让兹维列夫先丢发球局。二比五落后，他扛过两个赛点，追到三比五。可接下来，轮到对手发球。",
+      "raw_transcription": "絕盛盤開局,一次雙誤,讓自衛列夫先丟發球局2比5落後,他扛過兩個賽點,追到3比5可接下來,輪到對手發球",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 4.04,
+          "text": "絕盛盤開局,一次雙誤,讓自衛列夫先丟發球局",
+          "avg_logprob": -0.38009352059591384,
+          "words": [
+            {
+              "word": "絕",
+              "start": 0.0,
+              "end": 0.26,
+              "probability": 0.5164651460945606
+            },
+            {
+              "word": "盛",
+              "start": 0.26,
+              "end": 0.44,
+              "probability": 0.6358475089073181
+            },
+            {
+              "word": "盤",
+              "start": 0.44,
+              "end": 0.58,
+              "probability": 0.6705778688192368
+            },
+            {
+              "word": "開",
+              "start": 0.58,
+              "end": 0.78,
+              "probability": 0.9935036301612854
+            },
+            {
+              "word": "局,",
+              "start": 0.78,
+              "end": 1.0,
+              "probability": 0.9847707152366638
+            },
+            {
+              "word": "一次",
+              "start": 1.32,
+              "end": 1.52,
+              "probability": 0.9668959975242615
+            },
+            {
+              "word": "雙",
+              "start": 1.52,
+              "end": 1.74,
+              "probability": 0.7170654684305191
+            },
+            {
+              "word": "誤,",
+              "start": 1.74,
+              "end": 1.92,
+              "probability": 0.694713220000267
+            },
+            {
+              "word": "讓",
+              "start": 2.16,
+              "end": 2.28,
+              "probability": 0.9873818755149841
+            },
+            {
+              "word": "自",
+              "start": 2.28,
+              "end": 2.48,
+              "probability": 0.6180382370948792
+            },
+            {
+              "word": "衛",
+              "start": 2.48,
+              "end": 2.58,
+              "probability": 0.5586797669529915
+            },
+            {
+              "word": "列",
+              "start": 2.58,
+              "end": 2.7,
+              "probability": 0.5275844931602478
+            },
+            {
+              "word": "夫",
+              "start": 2.7,
+              "end": 2.9,
+              "probability": 0.9337051510810852
+            },
+            {
+              "word": "先",
+              "start": 2.9,
+              "end": 3.28,
+              "probability": 0.9613416790962219
+            },
+            {
+              "word": "丟",
+              "start": 3.28,
+              "end": 3.46,
+              "probability": 0.9827919006347656
+            },
+            {
+              "word": "發",
+              "start": 3.46,
+              "end": 3.66,
+              "probability": 0.9625740051269531
+            },
+            {
+              "word": "球",
+              "start": 3.66,
+              "end": 3.8,
+              "probability": 0.9693716764450073
+            },
+            {
+              "word": "局",
+              "start": 3.8,
+              "end": 4.04,
+              "probability": 0.9926803112030029
+            }
+          ]
+        },
+        {
+          "start": 4.04,
+          "end": 8.24,
+          "text": "2比5落後,他扛過兩個賽點,追到3比5",
+          "avg_logprob": -0.38009352059591384,
+          "words": [
+            {
+              "word": "2",
+              "start": 4.04,
+              "end": 4.78,
+              "probability": 0.39961227774620056
+            },
+            {
+              "word": "比",
+              "start": 4.78,
+              "end": 4.96,
+              "probability": 0.6181568503379822
+            },
+            {
+              "word": "5",
+              "start": 4.96,
+              "end": 5.1,
+              "probability": 0.9782153964042664
+            },
+            {
+              "word": "落",
+              "start": 5.1,
+              "end": 5.24,
+              "probability": 0.9295514822006226
+            },
+            {
+              "word": "後,",
+              "start": 5.24,
+              "end": 5.46,
+              "probability": 0.973450243473053
+            },
+            {
+              "word": "他",
+              "start": 5.72,
+              "end": 5.9,
+              "probability": 0.8246250748634338
+            },
+            {
+              "word": "扛",
+              "start": 5.9,
+              "end": 6.1,
+              "probability": 0.7357809692621231
+            },
+            {
+              "word": "過",
+              "start": 6.1,
+              "end": 6.26,
+              "probability": 0.9879046082496643
+            },
+            {
+              "word": "兩個",
+              "start": 6.26,
+              "end": 6.48,
+              "probability": 0.6311532855033875
+            },
+            {
+              "word": "賽",
+              "start": 6.48,
+              "end": 6.72,
+              "probability": 0.5326929092407227
+            },
+            {
+              "word": "點,",
+              "start": 6.72,
+              "end": 6.96,
+              "probability": 0.9893167614936829
+            },
+            {
+              "word": "追",
+              "start": 7.28,
+              "end": 7.36,
+              "probability": 0.9437094926834106
+            },
+            {
+              "word": "到",
+              "start": 7.36,
+              "end": 7.58,
+              "probability": 0.9365342855453491
+            },
+            {
+              "word": "3",
+              "start": 7.58,
+              "end": 7.84,
+              "probability": 0.9210104942321777
+            },
+            {
+              "word": "比",
+              "start": 7.84,
+              "end": 8.0,
+              "probability": 0.9696266651153564
+            },
+            {
+              "word": "5",
+              "start": 8.0,
+              "end": 8.24,
+              "probability": 0.9976221919059753
+            }
+          ]
+        },
+        {
+          "start": 8.24,
+          "end": 10.64,
+          "text": "可接下來,輪到對手發球",
+          "avg_logprob": -0.38009352059591384,
+          "words": [
+            {
+              "word": "可",
+              "start": 8.24,
+              "end": 8.9,
+              "probability": 0.86173015832901
+            },
+            {
+              "word": "接下來,",
+              "start": 8.9,
+              "end": 9.28,
+              "probability": 0.8722410202026367
+            },
+            {
+              "word": "輪",
+              "start": 9.74,
+              "end": 9.84,
+              "probability": 0.9177410006523132
+            },
+            {
+              "word": "到",
+              "start": 9.84,
+              "end": 9.96,
+              "probability": 0.8823937177658081
+            },
+            {
+              "word": "對",
+              "start": 9.96,
+              "end": 10.12,
+              "probability": 0.9888908863067627
+            },
+            {
+              "word": "手",
+              "start": 10.12,
+              "end": 10.28,
+              "probability": 0.9993268251419067
+            },
+            {
+              "word": "發",
+              "start": 10.28,
+              "end": 10.46,
+              "probability": 0.9977272152900696
+            },
+            {
+              "word": "球",
+              "start": 10.46,
+              "end": 10.64,
+              "probability": 0.9970592260360718
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    },
+    {
+      "edit_id": "full_stats",
+      "actual_mp3": "/workspace/scratch/zverev-sf-voice/native-audio/full_stats-c7f8f8e3f24fefd7.mp3",
+      "actual_mp3_sha256": "c7f8f8e3f24fefd70890c9f7a1ed7101064847d6ae60874dda7bd475f3d287a0",
+      "expected_final_tts_text": "全场十八记ACE，没能换来胜利。制胜分二十八比三十六，非受迫失误二十比二十一。兹维列夫的发球有威力，进攻得分却少了八个。",
+      "raw_transcription": "全場18GS沒能換來勝利支撐分28比36非受迫1520比21思維列夫的發球有威力進攻得分卻少了8個",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 2.46,
+          "text": "全場18GS沒能換來勝利",
+          "avg_logprob": -0.3514893432458242,
+          "words": [
+            {
+              "word": "全",
+              "start": 0.0,
+              "end": 0.28,
+              "probability": 0.9554343223571777
+            },
+            {
+              "word": "場",
+              "start": 0.28,
+              "end": 0.44,
+              "probability": 0.9438374042510986
+            },
+            {
+              "word": "18",
+              "start": 0.44,
+              "end": 0.76,
+              "probability": 0.5263318419456482
+            },
+            {
+              "word": "GS",
+              "start": 0.76,
+              "end": 1.18,
+              "probability": 0.17468568682670593
+            },
+            {
+              "word": "沒",
+              "start": 1.18,
+              "end": 1.66,
+              "probability": 0.8940380811691284
+            },
+            {
+              "word": "能",
+              "start": 1.66,
+              "end": 1.8,
+              "probability": 0.9951090216636658
+            },
+            {
+              "word": "換",
+              "start": 1.8,
+              "end": 1.98,
+              "probability": 0.976139485836029
+            },
+            {
+              "word": "來",
+              "start": 1.98,
+              "end": 2.14,
+              "probability": 0.9685680270195007
+            },
+            {
+              "word": "勝",
+              "start": 2.14,
+              "end": 2.3,
+              "probability": 0.9612312912940979
+            },
+            {
+              "word": "利",
+              "start": 2.3,
+              "end": 2.46,
+              "probability": 0.9637426733970642
+            }
+          ]
+        },
+        {
+          "start": 2.8400000000000007,
+          "end": 4.64,
+          "text": "支撐分28比36",
+          "avg_logprob": -0.3514893432458242,
+          "words": [
+            {
+              "word": "支",
+              "start": 2.8400000000000007,
+              "end": 3.2,
+              "probability": 0.31592652201652527
+            },
+            {
+              "word": "撐",
+              "start": 3.2,
+              "end": 3.3,
+              "probability": 0.8275149464607239
+            },
+            {
+              "word": "分",
+              "start": 3.3,
+              "end": 3.44,
+              "probability": 0.9840565919876099
+            },
+            {
+              "word": "28",
+              "start": 3.44,
+              "end": 3.96,
+              "probability": 0.9679020643234253
+            },
+            {
+              "word": "比",
+              "start": 3.96,
+              "end": 4.16,
+              "probability": 0.8054227232933044
+            },
+            {
+              "word": "36",
+              "start": 4.16,
+              "end": 4.64,
+              "probability": 0.9821220636367798
+            }
+          ]
+        },
+        {
+          "start": 4.64,
+          "end": 5.76,
+          "text": "非受迫15",
+          "avg_logprob": -0.3514893432458242,
+          "words": [
+            {
+              "word": "非",
+              "start": 4.64,
+              "end": 5.2,
+              "probability": 0.14684854447841644
+            },
+            {
+              "word": "受",
+              "start": 5.2,
+              "end": 5.38,
+              "probability": 0.5640475749969482
+            },
+            {
+              "word": "迫",
+              "start": 5.38,
+              "end": 5.54,
+              "probability": 0.9694736301898956
+            },
+            {
+              "word": "15",
+              "start": 5.54,
+              "end": 5.76,
+              "probability": 0.9189046621322632
+            }
+          ]
+        },
+        {
+          "start": 5.76,
+          "end": 6.94,
+          "text": "20比21",
+          "avg_logprob": -0.3514893432458242,
+          "words": [
+            {
+              "word": "20",
+              "start": 5.76,
+              "end": 6.24,
+              "probability": 0.11781269311904907
+            },
+            {
+              "word": "比",
+              "start": 6.24,
+              "end": 6.44,
+              "probability": 0.99413001537323
+            },
+            {
+              "word": "21",
+              "start": 6.44,
+              "end": 6.94,
+              "probability": 0.9795941114425659
+            }
+          ]
+        },
+        {
+          "start": 7.36,
+          "end": 9.0,
+          "text": "思維列夫的發球有威力",
+          "avg_logprob": -0.3514893432458242,
+          "words": [
+            {
+              "word": "思",
+              "start": 7.36,
+              "end": 7.72,
+              "probability": 0.3615121841430664
+            },
+            {
+              "word": "維",
+              "start": 7.72,
+              "end": 7.8,
+              "probability": 0.9812314808368683
+            },
+            {
+              "word": "列",
+              "start": 7.8,
+              "end": 7.92,
+              "probability": 0.6261546015739441
+            },
+            {
+              "word": "夫",
+              "start": 7.92,
+              "end": 8.06,
+              "probability": 0.536043643951416
+            },
+            {
+              "word": "的",
+              "start": 8.06,
+              "end": 8.18,
+              "probability": 0.9743136763572693
+            },
+            {
+              "word": "發",
+              "start": 8.18,
+              "end": 8.36,
+              "probability": 0.9795981049537659
+            },
+            {
+              "word": "球",
+              "start": 8.36,
+              "end": 8.5,
+              "probability": 0.45802733302116394
+            },
+            {
+              "word": "有",
+              "start": 8.5,
+              "end": 8.7,
+              "probability": 0.9916086792945862
+            },
+            {
+              "word": "威",
+              "start": 8.7,
+              "end": 8.86,
+              "probability": 0.9320572912693024
+            },
+            {
+              "word": "力",
+              "start": 8.86,
+              "end": 9.0,
+              "probability": 0.9527155756950378
+            }
+          ]
+        },
+        {
+          "start": 9.0,
+          "end": 10.72,
+          "text": "進攻得分卻少了8個",
+          "avg_logprob": -0.3514893432458242,
+          "words": [
+            {
+              "word": "進",
+              "start": 9.0,
+              "end": 9.4,
+              "probability": 0.8020503520965576
+            },
+            {
+              "word": "攻",
+              "start": 9.4,
+              "end": 9.58,
+              "probability": 0.9733914732933044
+            },
+            {
+              "word": "得",
+              "start": 9.58,
+              "end": 9.68,
+              "probability": 0.8905206918716431
+            },
+            {
+              "word": "分",
+              "start": 9.68,
+              "end": 9.88,
+              "probability": 0.9937129616737366
+            },
+            {
+              "word": "卻",
+              "start": 9.88,
+              "end": 10.1,
+              "probability": 0.9767225682735443
+            },
+            {
+              "word": "少",
+              "start": 10.1,
+              "end": 10.28,
+              "probability": 0.9987255930900574
+            },
+            {
+              "word": "了",
+              "start": 10.28,
+              "end": 10.4,
+              "probability": 0.9769768118858337
+            },
+            {
+              "word": "8",
+              "start": 10.4,
+              "end": 10.58,
+              "probability": 0.9597575068473816
+            },
+            {
+              "word": "個",
+              "start": 10.58,
+              "end": 10.72,
+              "probability": 0.9953110814094543
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    },
+    {
+      "edit_id": "outlook",
+      "actual_mp3": "/workspace/scratch/zverev-sf-voice/native-audio/outlook-ed066e876440f5c8.mp3",
+      "actual_mp3_sha256": "ed066e876440f5c81f5e1a56b811a99f7cec5c084783e7951ce7d9feb99ef7c9",
+      "expected_final_tts_text": "另一场半决赛，梅德韦杰夫对阵霍达尔。胜者，将与达维多维奇·福基纳争冠。兹维列夫，这一站先放下，下一站再来。接下来，你最期待他做出什么改变？",
+      "raw_transcription": "另一場半決賽,梅德維傑夫對鎮獲達爾。剩者,將與達維多維其福基納爭冠。思維列夫,這一戰先放下,下一戰再來。接下來,你最期待他做出什麼改變?",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 3.08,
+          "text": "另一場半決賽,梅德維傑夫對鎮獲達爾。",
+          "avg_logprob": -0.3917783104947635,
+          "words": [
+            {
+              "word": "另",
+              "start": 0.0,
+              "end": 0.22,
+              "probability": 0.9956627488136292
+            },
+            {
+              "word": "一",
+              "start": 0.22,
+              "end": 0.36,
+              "probability": 0.9984405636787415
+            },
+            {
+              "word": "場",
+              "start": 0.36,
+              "end": 0.46,
+              "probability": 0.8071305751800537
+            },
+            {
+              "word": "半",
+              "start": 0.46,
+              "end": 0.66,
+              "probability": 0.5693070292472839
+            },
+            {
+              "word": "決",
+              "start": 0.66,
+              "end": 0.86,
+              "probability": 0.7028522491455078
+            },
+            {
+              "word": "賽,",
+              "start": 0.86,
+              "end": 1.04,
+              "probability": 0.986687958240509
+            },
+            {
+              "word": "梅",
+              "start": 1.38,
+              "end": 1.48,
+              "probability": 0.7279905527830124
+            },
+            {
+              "word": "德",
+              "start": 1.48,
+              "end": 1.58,
+              "probability": 0.9406540393829346
+            },
+            {
+              "word": "維",
+              "start": 1.58,
+              "end": 1.7,
+              "probability": 0.8583733141422272
+            },
+            {
+              "word": "傑",
+              "start": 1.7,
+              "end": 1.9,
+              "probability": 0.6239575743675232
+            },
+            {
+              "word": "夫",
+              "start": 1.9,
+              "end": 2.1,
+              "probability": 0.8958427309989929
+            },
+            {
+              "word": "對",
+              "start": 2.1,
+              "end": 2.38,
+              "probability": 0.9699071645736694
+            },
+            {
+              "word": "鎮",
+              "start": 2.38,
+              "end": 2.6,
+              "probability": 0.7233943492174149
+            },
+            {
+              "word": "獲",
+              "start": 2.6,
+              "end": 2.82,
+              "probability": 0.8655016422271729
+            },
+            {
+              "word": "達",
+              "start": 2.82,
+              "end": 2.92,
+              "probability": 0.06193384528160095
+            },
+            {
+              "word": "爾。",
+              "start": 2.92,
+              "end": 3.08,
+              "probability": 0.8570464849472046
+            }
+          ]
+        },
+        {
+          "start": 3.44,
+          "end": 6.46,
+          "text": "剩者,將與達維多維其福基納爭冠。",
+          "avg_logprob": -0.3917783104947635,
+          "words": [
+            {
+              "word": "剩",
+              "start": 3.44,
+              "end": 3.78,
+              "probability": 0.534926850348711
+            },
+            {
+              "word": "者,",
+              "start": 3.78,
+              "end": 4.0,
+              "probability": 0.9576456546783447
+            },
+            {
+              "word": "將",
+              "start": 4.3,
+              "end": 4.5,
+              "probability": 0.9696453213691711
+            },
+            {
+              "word": "與",
+              "start": 4.5,
+              "end": 4.66,
+              "probability": 0.9523290991783142
+            },
+            {
+              "word": "達",
+              "start": 4.66,
+              "end": 4.8,
+              "probability": 0.7619975209236145
+            },
+            {
+              "word": "維",
+              "start": 4.8,
+              "end": 4.94,
+              "probability": 0.9733288884162903
+            },
+            {
+              "word": "多",
+              "start": 4.94,
+              "end": 5.1,
+              "probability": 0.9568766951560974
+            },
+            {
+              "word": "維",
+              "start": 5.1,
+              "end": 5.22,
+              "probability": 0.9957553744316101
+            },
+            {
+              "word": "其",
+              "start": 5.22,
+              "end": 5.46,
+              "probability": 0.46087348461151123
+            },
+            {
+              "word": "福",
+              "start": 5.46,
+              "end": 5.74,
+              "probability": 0.29697102308273315
+            },
+            {
+              "word": "基",
+              "start": 5.74,
+              "end": 5.92,
+              "probability": 0.39855560660362244
+            },
+            {
+              "word": "納",
+              "start": 5.92,
+              "end": 6.1,
+              "probability": 0.8520324230194092
+            },
+            {
+              "word": "爭",
+              "start": 6.1,
+              "end": 6.3,
+              "probability": 0.6835845410823822
+            },
+            {
+              "word": "冠。",
+              "start": 6.3,
+              "end": 6.46,
+              "probability": 0.9206272959709167
+            }
+          ]
+        },
+        {
+          "start": 7.0,
+          "end": 10.44,
+          "text": "思維列夫,這一戰先放下,下一戰再來。",
+          "avg_logprob": -0.3917783104947635,
+          "words": [
+            {
+              "word": "思",
+              "start": 7.0,
+              "end": 7.26,
+              "probability": 0.6912670135498047
+            },
+            {
+              "word": "維",
+              "start": 7.26,
+              "end": 7.38,
+              "probability": 0.9834192991256714
+            },
+            {
+              "word": "列",
+              "start": 7.38,
+              "end": 7.5,
+              "probability": 0.39583709836006165
+            },
+            {
+              "word": "夫,",
+              "start": 7.5,
+              "end": 7.74,
+              "probability": 0.9909065961837769
+            },
+            {
+              "word": "這一",
+              "start": 8.08,
+              "end": 8.28,
+              "probability": 0.9313029646873474
+            },
+            {
+              "word": "戰",
+              "start": 8.28,
+              "end": 8.48,
+              "probability": 0.8025275468826294
+            },
+            {
+              "word": "先",
+              "start": 8.48,
+              "end": 8.74,
+              "probability": 0.9930150508880615
+            },
+            {
+              "word": "放",
+              "start": 8.74,
+              "end": 8.94,
+              "probability": 0.9943786263465881
+            },
+            {
+              "word": "下,",
+              "start": 8.94,
+              "end": 9.2,
+              "probability": 0.9899349808692932
+            },
+            {
+              "word": "下一",
+              "start": 9.52,
+              "end": 9.84,
+              "probability": 0.9637405872344971
+            },
+            {
+              "word": "戰",
+              "start": 9.84,
+              "end": 10.08,
+              "probability": 0.9975711703300476
+            },
+            {
+              "word": "再來。",
+              "start": 10.08,
+              "end": 10.44,
+              "probability": 0.7878900170326233
+            }
+          ]
+        },
+        {
+          "start": 10.959999999999999,
+          "end": 13.78,
+          "text": "接下來,你最期待他做出什麼改變?",
+          "avg_logprob": -0.3917783104947635,
+          "words": [
+            {
+              "word": "接下來,",
+              "start": 10.959999999999999,
+              "end": 11.36,
+              "probability": 0.9605600237846375
+            },
+            {
+              "word": "你",
+              "start": 11.8,
+              "end": 11.88,
+              "probability": 0.9779666662216187
+            },
+            {
+              "word": "最",
+              "start": 11.88,
+              "end": 12.06,
+              "probability": 0.9939340949058533
+            },
+            {
+              "word": "期",
+              "start": 12.06,
+              "end": 12.3,
+              "probability": 0.9991436004638672
+            },
+            {
+              "word": "待",
+              "start": 12.3,
+              "end": 12.46,
+              "probability": 0.9992868304252625
+            },
+            {
+              "word": "他",
+              "start": 12.46,
+              "end": 12.66,
+              "probability": 0.7094302177429199
+            },
+            {
+              "word": "做",
+              "start": 12.66,
+              "end": 12.96,
+              "probability": 0.9125641584396362
+            },
+            {
+              "word": "出",
+              "start": 12.96,
+              "end": 13.14,
+              "probability": 0.9991814494132996
+            },
+            {
+              "word": "什麼",
+              "start": 13.14,
+              "end": 13.4,
+              "probability": 0.9220098853111267
+            },
+            {
+              "word": "改",
+              "start": 13.4,
+              "end": 13.58,
+              "probability": 0.9982261061668396
+            },
+            {
+              "word": "變?",
+              "start": 13.58,
+              "end": 13.78,
+              "probability": 0.9951299428939819
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    },
+    {
+      "edit_id": "outro",
+      "actual_mp3": "/workspace/scratch/zverev-sf-voice/native-audio/outro-3d7277d26afc569a.mp3",
+      "actual_mp3_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "expected_final_tts_text": "关注网球时插，时插归我，好球归你。",
+      "raw_transcription": "關注網球時差,時差歸我,好求歸你",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 3.24,
+          "text": "關注網球時差,時差歸我,好求歸你",
+          "avg_logprob": -0.27856931799934026,
+          "words": [
+            {
+              "word": "關",
+              "start": 0.0,
+              "end": 0.22,
+              "probability": 0.36147162318229675
+            },
+            {
+              "word": "注",
+              "start": 0.22,
+              "end": 0.38,
+              "probability": 0.905109167098999
+            },
+            {
+              "word": "網",
+              "start": 0.38,
+              "end": 0.54,
+              "probability": 0.6303359866142273
+            },
+            {
+              "word": "球",
+              "start": 0.54,
+              "end": 0.74,
+              "probability": 0.8559666275978088
+            },
+            {
+              "word": "時",
+              "start": 0.74,
+              "end": 0.92,
+              "probability": 0.8157612681388855
+            },
+            {
+              "word": "差,",
+              "start": 0.92,
+              "end": 1.12,
+              "probability": 0.9698207378387451
+            },
+            {
+              "word": "時",
+              "start": 1.4,
+              "end": 1.62,
+              "probability": 0.9563893675804138
+            },
+            {
+              "word": "差",
+              "start": 1.62,
+              "end": 1.84,
+              "probability": 0.9970412850379944
+            },
+            {
+              "word": "歸",
+              "start": 1.84,
+              "end": 1.98,
+              "probability": 0.9580798447132111
+            },
+            {
+              "word": "我,",
+              "start": 1.98,
+              "end": 2.2,
+              "probability": 0.9979477524757385
+            },
+            {
+              "word": "好",
+              "start": 2.52,
+              "end": 2.7,
+              "probability": 0.9863312244415283
+            },
+            {
+              "word": "求",
+              "start": 2.7,
+              "end": 2.88,
+              "probability": 0.7608223557472229
+            },
+            {
+              "word": "歸",
+              "start": 2.88,
+              "end": 3.06,
+              "probability": 0.9867072105407715
+            },
+            {
+              "word": "你",
+              "start": 3.06,
+              "end": 3.24,
+              "probability": 0.9676045775413513
+            }
+          ]
+        }
+      ],
+      "detected_language": "zh",
+      "status": "raw_for_lexical_review_not_tone_pass"
+    }
+  ],
+  "elapsed_seconds": 7.4275877475738525
+}
