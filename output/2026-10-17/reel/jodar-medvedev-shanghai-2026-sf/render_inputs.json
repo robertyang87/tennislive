@@ -1,0 +1,357 @@
+{
+  "version": 2,
+  "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
+  "slug": "jodar-medvedev-shanghai-2026-sf",
+  "written_at": "2026-10-17T14:47:47Z",
+  "code_sha": "0023d34eeff19f12719b4dbcc8b8d98e55bb3f87",
+  "spec_sha256": "9e866f0e5dcd092eb1381f26d5f936c71738667b75a46cc9bbf21f46169b29d9",
+  "film_sha256": "dfffe0da46bfad420f631a8d651f442010be9190ae5651ed45b75adad2c82e32",
+  "film_bytes": 47545869,
+  "projection_sha256": "52eccdc24e24bfac8dff0ac6e97abd3e9855922004012cce0463a97cd48338de",
+  "claims": [
+    [
+      "segments",
+      0,
+      "_ending_payoff_required"
+    ],
+    [
+      "_match"
+    ],
+    [
+      "segments",
+      0,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      2,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      4,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      6,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      0,
+      "_score_inset_why"
+    ],
+    [
+      "segments",
+      2,
+      "_score_inset_why"
+    ],
+    [
+      "segments",
+      4,
+      "_score_inset_why"
+    ],
+    [
+      "segments",
+      6,
+      "_score_inset_why"
+    ],
+    [
+      "_tennistv_trim"
+    ],
+    [
+      "_tts_backend_why"
+    ],
+    [
+      "stats",
+      "_winners_ue_evidence"
+    ]
+  ],
+  "assets": {
+    "assets/players/headshots/atp-J0DZ.png": "691dff218e0530891799a649f7ca61c980a6775d252bf82e6785475d622d38c6",
+    "assets/players/headshots/atp-MM58.png": "c39c671efe7fde8be71541e37d9bb7d79a21bd2ebc65c2922d97973b70c31910",
+    "assets/reel/jodar-medvedev-shanghai-2026-sf-atp-4593558.jpg": "8e28a5175bc75941713f64d89cddfc4a50297e5db85eea882f7dde021462b5e1"
+  },
+  "artifacts": {
+    "audio_review_binding.json": "4955dddd43abc1d9aafd52f81484ae97f8405c5080985a1bcc3d9799c1ba492e",
+    "subtitles.ass": "0fb497221b45a4c17c34e007cc585eb6a35ecc825be365992bd710d838dbcde6",
+    "topbar.ass": "e97131364a6659341d25f27a2951f54b884d996ec0979d3d0425464835e3ff58",
+    "poster.jpg": "ffe2d173d54c768b598574c9f8bdded023710d765091ad344c9b59c28194fb3d",
+    "stat_card.jpg": "fbb3031cc3ffc9b324be1bbbe6d9b65f09ec1dfdef2ec845f2b1017e46c0cf3d",
+    "scoreboard_qc.json": "e385dcb1c82a405fbefd11264326b908dfb091bc4186e9f48af5a66a47982779"
+  },
+  "projection": {
+    "_column": "赛场之上",
+    "tts_backend": "edge",
+    "track": false,
+    "outro": true,
+    "stat_card_full_canvas": true,
+    "preserve_source_audio": true,
+    "slug": "jodar-medvedev-shanghai-2026-sf",
+    "sources": {
+      "main": "https://github.com/robertyang87/tennislive/releases/download/source-shanghai-jodar-medvedev-2026-sf/6407012514112-1c5459904fb36909.mp4"
+    },
+    "primary": "main",
+    "scorebox": [
+      65,
+      613,
+      303,
+      686
+    ],
+    "cover": {
+      "matchup": [
+        {
+          "name": "梅德韦杰夫",
+          "name_en": "Daniil Medvedev",
+          "country": "RUS",
+          "rank": 6
+        },
+        {
+          "name": "霍达尔",
+          "name_en": "Rafael Jodar",
+          "country": "ESP",
+          "rank": 13
+        }
+      ],
+      "winner": "霍达尔",
+      "result": "6-3 6-4",
+      "eyebrow": "赛场之上",
+      "layout": "solo",
+      "subject": "梅德韦杰夫",
+      "topic": "ATP1000 上海 半决赛 · 梅德韦杰夫 VS 霍达尔",
+      "hook": "连救3个赛点\n梅总仍遭两盘淘汰",
+      "hook_accent": "两盘淘汰",
+      "portrait": {
+        "image": "assets/reel/jodar-medvedev-shanghai-2026-sf-atp-4593558.jpg",
+        "fit": "cover",
+        "focus": 0.2,
+        "focus_y": 0.5,
+        "zoom": 1
+      },
+      "scoreboard": {
+        "court": "Stadium Court",
+        "duration_source": {
+          "url": "data:application/json,%7B%22duration%22%3A%20%2201%3A44%3A06%22%2C%20%22field%22%3A%20%22MatchTimeTotal%22%2C%20%22match_id%22%3A%20%22MS003%22%2C%20%22source_url%22%3A%20%22https%3A//en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats%3Fyear%3D2026%26eventId%3D5014%26matchId%3Dms003%22%2C%20%22source_path%22%3A%20%22data/evidence/jodar-medvedev-shanghai-2026-sf/facts/sf-ms003.json%22%2C%20%22source_sha256%22%3A%20%22f7718aa28cd007d8ce4fd71d1aa44426ebdbb1e3a77702f6311493caf8aa904d%22%7D",
+          "field": "duration"
+        }
+      }
+    },
+    "topbar": {
+      "line1": "2026 ATP1000 上海 半决赛",
+      "line2": "霍达尔 6-3 6-4 梅德韦杰夫"
+    },
+    "stats": {
+      "tour": "atp",
+      "footer_date": "2026-10-17",
+      "footer_venue": "上海 · 全场",
+      "a": {
+        "aces": 3,
+        "df": 4,
+        "first_in": 28,
+        "first_total": 50,
+        "first_won": 18,
+        "second_total": 22,
+        "second_won": 9,
+        "bp_conv": 2,
+        "bp_chances": 6,
+        "pts_won": 61,
+        "pts_total": 134,
+        "winners": 15,
+        "ue": 21,
+        "headshot": "assets/players/headshots/atp-MM58.png"
+      },
+      "b": {
+        "aces": 6,
+        "df": 2,
+        "first_in": 58,
+        "first_total": 84,
+        "first_won": 38,
+        "second_total": 26,
+        "second_won": 12,
+        "bp_conv": 4,
+        "bp_chances": 7,
+        "pts_won": 73,
+        "pts_total": 134,
+        "winners": 22,
+        "ue": 22,
+        "headshot": "assets/players/headshots/atp-J0DZ.png"
+      }
+    },
+    "editorial": {
+      "mode": "match_review",
+      "question": "梅总一次次把悬念拉回来，为什么还是没能走进上海决赛？",
+      "thesis": "Follow Medvedev resistance: first-set rebreak and fifth-setpoint close; second-set0-2to3-2then3-5; retain three savedmatchpoints continuously into Jodar final lovehold and handshake; explain outcome with verified chance-conversion stats and close on confirmed final.",
+      "beats": [
+        "actual broadcast win declaration coldopen",
+        "Beijing date evening Shanghai semifinal, formerchampion vs20yearold previous4comebackwinner",
+        "actual firstset break rally",
+        "rebreak+5setpoint context",
+        "actual fifthsetpoint plusreaction",
+        "secondset lead reversals and3savedMP context",
+        "continuous actual 3savedMP through fourthMP+handshake",
+        "full verified stats",
+        "confirmed allSpanishfinal and loser hope"
+      ],
+      "human_context": {
+        "angle": "连救3赛点仍出局的反抗与首次大师赛决赛的突破，双方都保留真实反应。",
+        "facts": [
+          "Medvedev former Shanghai champion/currentrank6",
+          "Jodar20/rank13/four previousround comebacks/first Masters final",
+          "3savedMP before Jodar lovehold final game"
+        ],
+        "sources": [
+          "https://en.rolexshanghaimasters.com/en/media/news/medvedev-jodar-shanghai-2026-saturday"
+        ]
+      }
+    },
+    "segments": [
+      {
+        "source": "main",
+        "start": 292.04,
+        "end": 301.24,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.08,
+            "end": 2.4,
+            "text": "For just the ninth time\n这仅仅是第九次，"
+          },
+          {
+            "at": 2.4,
+            "end": 5.82,
+            "text": "in the history of Masters 1000s,\n在大师赛的历史上，"
+          },
+          {
+            "at": 5.82,
+            "end": 8.9,
+            "text": "we will have an all-Spanish final.\n决赛将是西班牙内战。"
+          }
+        ],
+        "crosses_cut": "Official editorial cuts retained and explicitly treated as separate real points, not continuous matchtime.",
+        "point_end_ok": "Actual finite source-window and original boundaryPNG review confirms complete available action and reactions; official highlightcuts/gaps explicitly recorded in source/keypoint-coverage.json."
+      },
+      {
+        "seconds": 14.0,
+        "title_card": "上海前冠军\n迎战20岁新星",
+        "kicker": "上海半决赛",
+        "narration": "北京时间二零二六年十月十七日晚，上海大师赛男单半决赛。梅德韦杰夫迎战霍达尔。对手前四轮全部逆转过关，这次却先抢到了主动。"
+      },
+      {
+        "source": "main",
+        "start": 36.96,
+        "end": 52.8,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 13.06,
+            "end": 15.36,
+            "text": "And he's got it.\n他拿下了这一分！"
+          }
+        ],
+        "crosses_cut": "Official editorial cuts retained and explicitly treated as separate real points, not continuous matchtime.",
+        "point_end_ok": "Actual finite source-window and original boundaryPNG review confirms complete available action and reactions; official highlightcuts/gaps explicitly recorded in source/keypoint-coverage.json."
+      },
+      {
+        "seconds": 14.8,
+        "title_card": "5个盘点才拿下\n首盘梅总3比6",
+        "kicker": "首盘拉锯",
+        "narration": "首盘，梅德韦杰夫被破发后回破到二比三，可随后又丢了发球局。五比三的发球胜盘局，霍达尔用了五个盘点才拿下。梅总没放手，对手也没让步。"
+      },
+      {
+        "source": "main",
+        "start": 138.4,
+        "end": 147.8,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 4.6,
+            "end": 9.36,
+            "text": "The Spaniard it is that wraps up the opening set here.\n这位西班牙球员拿下了首盘。"
+          }
+        ],
+        "crosses_cut": "Official editorial cuts retained and explicitly treated as separate real points, not continuous matchtime.",
+        "point_end_ok": "Actual finite source-window and original boundaryPNG review confirms complete available action and reactions; official highlightcuts/gaps explicitly recorded in source/keypoint-coverage.json."
+      },
+      {
+        "seconds": 14.8,
+        "title_card": "次盘连救3个赛点\n梅总把悬念留下",
+        "kicker": "最后的反扑",
+        "narration": "第二盘，梅德韦杰夫从零比二追到三比二，又被连拿三局。三比五，他连救三个赛点。第三次，梅总上网截击，霍达尔追球摔坐在地，悬念还没结束。"
+      },
+      {
+        "source": "main",
+        "start": 258.0,
+        "end": 302.92,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 4.42,
+            "end": 5.66,
+            "text": "Roll of the dice.\n放手一搏。"
+          },
+          {
+            "at": 21.84,
+            "end": 24.02,
+            "text": "It's hanging on by a thread.\n悬念只剩一线。"
+          },
+          {
+            "at": 34.12,
+            "end": 36.4,
+            "text": "For just the ninth time\n这仅仅是第九次，"
+          },
+          {
+            "at": 36.4,
+            "end": 39.86,
+            "text": "in the history of Masters 1000s,\n在大师赛的历史上，"
+          },
+          {
+            "at": 39.86,
+            "end": 42.94,
+            "text": "we will have an all-Spanish final.\n决赛将是西班牙内战。"
+          }
+        ],
+        "crosses_cut": "Official editorial cuts retained and explicitly treated as separate real points, not continuous matchtime.",
+        "point_end_ok": "Actual finite source-window and original boundaryPNG review confirms complete available action and reactions; official highlightcuts/gaps explicitly recorded in source/keypoint-coverage.json."
+      },
+      {
+        "seconds": 15.2,
+        "stat_card": true,
+        "narration": "第四个赛点，霍达尔正手穿越得分。制胜分，梅德韦杰夫十五比二十二；非受迫失误，二十一比二十二。六个破发点只兑现两个，坚持没能变成逆转。"
+      },
+      {
+        "seconds": 12.4,
+        "title_card": "达维多维奇·福基纳\n对阵霍达尔",
+        "kicker": "决赛对阵",
+        "narration": "这一站先放下，下一站再来。上海决赛，霍达尔对阵达维多维奇·福基纳。两位西班牙球员会师，谁能把这一周走到最后？"
+      }
+    ],
+    "source_quality_exceptions": {
+      "https://github.com/robertyang87/tennislive/releases/download/source-shanghai-jodar-medvedev-2026-sf/6407012514112-1c5459904fb36909.mp4": {
+        "min_height": 720,
+        "approved_by": "user",
+        "reason": "2026-10-17 owner explicitly approved after actual 3:4 preview: 允许本条用720p长版，保留完整关键过程. Applies only to this official 303.105s source; native 1280x720, no native1080 claim."
+      }
+    }
+  }
+}
