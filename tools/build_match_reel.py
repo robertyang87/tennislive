@@ -6712,6 +6712,11 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 同一条片子 2026-10-16：账号所有者「针对这一条内容可以放开用非官方视频」——2017 温网扔硬币
     # 只有个人账号转载的 BBC 转播（手机翻拍，最高 1280×720）。
     "https://www.youtube.com/watch?v=UKZnd1EliAY": 720,
+    # 奥斯塔彭科×斯瓦泰克六战（ostapenko-swiatek-h2h-2026，PR #1278）：账号所有者 2026-10-17
+    # 「不要动画卡」，点名 2021 印第安维尔斯、2022 迪拜两条 WTA 官方集锦（最高 1280×720）
+    # 剪关键分、放大铺满并轻度锐化（conform_sharpen）。
+    "https://www.youtube.com/watch?v=wOsrLbiWZJ4": 720,
+    "https://www.youtube.com/watch?v=vNSSJMmRIBM": 720,
     # 霍达尔上海毛巾风波（jodar-towel-shanghai-2026）：账号所有者 2026-10-14「去找原视频，
     # 否则画面不对」——冲球童喊话与主裁警告官方集锦都没有，唯一完整的是 X @gerebit0 转发的
     # Tennis TV 转播录屏，最高 1206×652。spec 的 source_quality_exceptions 认领了它，这里补上白名单
