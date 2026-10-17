@@ -37,33 +37,43 @@ S.append(n("sf",213.95,223.3,"武汉一千赛半决赛，卡塔尔连赢两个�
   "回合进行中，旁白不讲这一分；段尾停在切镜头之前。"))
 # 01 从小的对手
 S.append(card("和拉杜卡努\n一起长大","01",7.5,"她在布莱顿长大。从小到大，她最常碰到的对手，叫拉杜卡努。"))
-S.append(n("u10",14.0,28.5,"二〇一一年，英国十岁以下组。两个小女孩，打出了一个停不下来的回合。后来，一个拿了美网冠军，一个还在一场一场地打。",
+S.append(n("u10",14.0,26.0,"二〇一一年，英国十岁以下组。两个小女孩，打出了一个停不下来的回合。后来，一个拿了美网冠军，一个还在一场一场地打。",
   "英国网协 LTA 官方频道「Young Emma Raducanu vs. Sonay Kartal | 2011 U10's Epic Rally」（INkEB95UIa8）：同一个广角机位一镜到底（0–41 秒无切点，41 秒起是 LTA 片尾）。两档转写在 0–24 无词，24.30 和 31.84 两档各报一个 you，画面里没人对着镜头说话，按现场噪声处理。拉杜卡努 2021 美网冠军为公知事实（仓库已有多条）。",
-  "LTA 剪的是一个长回合，段尾 28.5 停在回合进行中、广角无切点——这一段讲的是两个小孩的来路，不是比分。"))
+  "LTA 剪的是一个长回合，段尾 26.0 停在回合进行中、广角无切点——这一段讲的是两个小孩的来路，不是比分。"))
 S.append(q("lta22",51.7,57.1,[(52.02,53.54,"Emma and I, we grew up playing each other,\n我和艾玛从小就是对手，"),(54.12,56.26,"kind of from mini tennis.\n从迷你网球就开始了。")],
   "英国网协 LTA 官方频道 2022 年专访「Getting to know Sonay Kartal」（vqIpczMjb5I）：她对着镜头讲队友。medium 52.02–56.26 一句完整，small 这一段无词（漏转），按 medium 与 LTA 官网同期稿（lta.org.uk/news/2022/april/introducing-sonay：Emma and I, we've grown up playing each other）写。镜头 51.56 切入、76.76 切走，段首 51.7 在 I mean（51.66）之后，段尾 57.1 远早于下一句（76.54）。",
   "采访，不是回合。",kind="ceremony"))
 S.append(q("lta22",92.9,106.9,[(93.16,95.84,"I've got an older brother, he's five years older than me,\n我有个哥哥，比我大五岁，"),(96.48,98.48,"and he used to play just for fun.\n他打球只是为了好玩。"),(99.6,101.5,"And my parents used to take me up to the club,\n爸妈带我去俱乐部，"),(101.76,104.44,"and I used to just sit on the grass and watch him play.\n我就坐在草地上看他打。"),(105.28,106.64,"That's how it all began.\n一切就是这么开始的。")],
   "同一条 LTA 专访：她讲怎么开始打网球。两档逐词一致（medium 93.16–106.64；small 93.30–106.60）。镜头 81.52 切入、112.12 切走，段首 92.9 在上一句（88.82 结束）之后，段尾 106.9 在主持人下一问（106.96）之前。",
   "采访，不是回合。",kind="ceremony"))
-S.append(q("lta22",171.6,181.1,[(172.14,173.84,"I also just want to still love tennis.\n我也想一直热爱网球，"),(174.34,178.48,"I don't want that feeling of enjoying coming on the court to ever disappear\n不想让上场的快乐消失，"),(179.32,180.92,"and almost have to feel like a chore.\n不想让它变成一份苦差。")],
-  "同一条 LTA 2022 专访：主持人问目标，她说进前一百、打满大满贯之后补的这一句。两档逐词一致（medium 172.14–180.92；small 172.16–180.82，small 多一个 like、kind of，按 medium 写）。镜头 165.16 切入、181.32 切走，段首 171.6 在 slams（170.40）之后，段尾 181.1 让溶解（0.18 秒）停在切点之前。LTA 官网同期稿同句：I also still want to love tennis – I don't want that feeling of enjoying coming on the court to ever disappear。",
-  "采访，不是回合。",kind="ceremony"))
-# 02 一场一场打上来
 S.append(card("一场一场\n打上来","02",9.8,"她个子不高，靠的是脚步和耐心，把一个又一个球救回去。她的排名，也是这么一场一场打上来的。"))
 S.append(n("wb24",69.0,81.0,"二〇二四年温网，排名两百九十五的她，从资格赛打进第三轮。二十七年来，英国女子资格赛球员里，她是第一个做到的。",
   "温网官方频道「Sonay Kartal vs Coco Gauff | Highlights | Wimbledon 2024」（mXnEXUPITgg）第三轮回合，戴白帽的是卡塔尔。镜头 68.20 切入、83.52 切走，两档转写在这一段只有 63.58–89.88 一句 Thank you very much（两档都在广角回合上报，画面里没人说话，按幻听处理）。排名 295：维基 Sonay Kartal（In June 2024, ranked No. 295, she qualified）；英国女子资格赛选手 1997 年 Karen Cross 之后第一人：LTA 2024-07 稿＋tennismajors（见 _claims）。",
   "旁白不讲这一分的比分；段尾停在切镜头之前。",label="wb24"))
-S.append(n("iw",190.5,200.4,"后来，她拿到生涯第一个冠军，最高升到世界第四十四。今年三月，背已经开始疼了，她还是逆转了凯斯。",
-  "WTA 官方集锦「Madison Keys vs. Sonay Kartal | 2026 Indian Wells Round 3」（z8Sffkz5m8s）：镜头 189.96 切入、203.60 切走；两档转写在 190.42–200.48 无词。生涯第一冠 2024 莫纳斯提尔、最高世界第 44（2025-07-14）：维基＋NBC；比分 2-6 6-2 6-3、比赛中背已经不适（At times in this match I was in discomfort with my back）：WTA 4465394 Match Reaction＋AOL/BBC。",
+S.append(q("wb24r2",124.0,138.3,[(129.8,135.78,"She's done it! Sonay Kartal's dream run continues.\n她做到了！卡塔尔的梦还在继续。")],
+  "英国网协 LTA 官方频道「Emma & Sonay Into Round Three! | Highlights - Brits Day 3 Wimbledon 2024」（DEvG7qPY6YY）：她第二轮胜布雷尔的赛点回合（112.40–132.44 同一镜头）、包厢起立（132.44）、她挥手致意（135.24）。解说两档一致（medium 129.80–135.78，名字两档都转错，按 LTA 标题写 Sonay Kartal）。段首 124.0 在上一句（118.08）之后，段尾 138.3 让溶解停在 138.60 切点之前。2024 温网第二轮胜布雷尔：LTA 2024-07 稿＋tennismajors。",
+  "赛点在 131 秒前后打完，之后是包厢与致意。",crosses_cut="132.44、135.24 切到包厢起立和她挥手，都是同一个赛点之后。"))
+S.append(n("wb25",159.8,169.3,"那年秋天，她拿到生涯第一个冠军，进了世界前一百。二〇二五年，她又回到温网。",
+  "温网官方频道「Brit ROARED on by home crowd | Diane Parry vs Sonay Kartal | Highlights | Wimbledon 2025」（Dt4dtaULohk）第三轮赛点回合：镜头 159.68 切入、169.48 切到她举臂；两档转写在 164.52–170.82 无词，154.04–164.52 一句是解说低声（that's a no-），旁白压在上面。首冠 2024 莫纳斯提尔、首进前 100：维基＋WTA 4593140（2024 Monastir title run）。",
+  "赛点回合进行中，旁白不讲这一分；段尾停在她举臂之前、切镜头之前。"))
+S.append(q("wb25",169.5,187.3,[(170.82,176.1,"And the show does go on, a straight-sets victory,\n好戏继续，直落两盘，"),(177.52,182.18,"into the fourth round of a Grand Slam for the very first time in her career,\n生涯第一次打进大满贯第四轮，"),(182.4,183.84,"and she's done it on the grass of Wimbledon.\n就在温网的草地上。")],
+  "同一条：她举臂（169.48）、包厢（171.84）、网前握手与致意（173.68–187.56）。解说两档一致（medium 170.82–183.84，sense 按语义写 sets）。段尾 187.3 让溶解停在 187.56 切点之前，也在 The first British woman（185.32）这一句里——这一句不收，字幕只收到 183.84。",
+  "赛点已经打完，这是庆祝与致意。",crosses_cut="171.84、173.68、178.48 切的是同一个赛点之后的包厢、握手与致意。"))
+S.append(q("wb25i",172.4,177.2,[(172.66,174.86,"It doesn't matter if I'm playing number one in the world or 300 in the world,\n不管对面是世界第一还是第三百，"),(175.76,176.9,"I'm still gonna respect that opponent.\n我都会尊重对手。")],
+  "温网官方频道「Great Britain's newest star | Sonay Kartal | Third Round On-court Interview | Wimbledon 2025」（3DFNz_g2_zc）：主持人问她怎么面对外界的热度。两档逐词一致（medium 172.66–176.90），开头 But I I treat, you know 不收。镜头 161.56 切入、207.52 切走，段尾 177.2 在 you know（177.26）之前。",
+  "场上采访，不是回合。",kind="ceremony"))
+S.append(n("bj25",233.5,245.0,"同年秋天的北京，世界第八十一的她，对上世界第五的米拉·安德烈耶娃。三盘打满，这是她生涯最大的一场胜利。",
+  "WTA 官方集锦「Mirra Andreeva vs. Sonay Kartal | 2025 Beijing Round of 16」（FtWSTkzN83w）决胜盘回合：镜头 233.40 切入、261.92 切走；两档转写在 230.78–257.62 无词。比分 7-5 2-6 7-5、她当时世界第 81、安德烈耶娃世界第 5（4 号种子）：集锦解说 284.06 The world number 81 defeats Mirra Andreeva, the number 4 seed＋WTA 武汉半决赛 match notes（2nd career Top 10 win (also d. No.5 Mirra Andreeva at 2025 Beijing)）；生涯最大胜利：DAZN「Sonay Kartal claims biggest career win by beating Mirra Andreeva」＋tennishead。",
+  "决胜盘回合进行中，旁白不讲这一分；段尾停在同一个镜头里。"))
+S.append(q("bj25",265.3,288.1,[(272.26,278.54,"It's out! Sonay Kartal has caused another seismic event in Beijing.\n出界！卡塔尔在北京又掀起一场地震。"),(284.06,287.82,"The world number 81 defeats Mirra Andreeva, the number four seed.\n世界第81击败4号种子安德烈耶娃。")],
+  "同一条：赛点回合（265.20–275.12，安德烈耶娃回球出界）、包厢教练鼓掌（275.12）、看台（279.36）、网前握手。解说两档一致（medium 272.26–291.66，名字两档都转错，按官方标题写 Sonay Kartal、Mirra Andreeva）。段首 265.3 在 265.20 切入之后、so close what a point on match point（257.62–263.58）之后，段尾 288.1 在 The first big seed（288.26）之前。",
+  "赛点在 272 秒打完，之后是庆祝与握手。",crosses_cut="267.40 是同一个赛点的换机位，275.12、279.36 切到包厢与看台，都是这个赛点前后。"))
+S.append(n("iw",55.9,68.4,"今年三月的印第安维尔斯，背已经开始疼了，她还是逆转了凯斯。赛后她说，正是这样的比赛，打出了她身上的斗士。",
+  "同一条印第安维尔斯集锦：镜头 55.84 切入、68.60 切走，段尾 68.4 让溶解停在 68.60 切点之前；两档转写在 52.72–74.12 无词。原话 At times in this match I was in discomfort with my back, so it's a match like today which shows the fighter in me：BBC（AOL 转载）＋LTA 2026-03 稿。",
   "旁白不讲这一分；段尾停在切镜头之前。",label="iw"))
-# 03 停下来的半年
-S.append(n("iw",55.9,64.6,"赢下凯斯那晚，她说比赛里背时不时在疼，可正是这样的比赛，打出了她身上的斗士。",
-  "同一条印第安维尔斯集锦：镜头 55.84 切入、68.60 切走，段尾 64.6 在同一个镜头里；两档转写在 52.72–74.12 无词。原话 At times in this match I was in discomfort with my back, so it's a match like today which shows the fighter in me：BBC（AOL 转载）＋LTA 2026-03 稿。",
-  "旁白不讲这一分；段尾停在切镜头之前。"))
 S.append(card("停下来\n的半年","03",13.0,"两天后的第四轮，她撑不住了，四比六、三比四落后时退赛。背部应力性骨折。四个大满贯，她错过了三个，包括家门口的温网。"))
-S.append(q("doc",113.7,143.5,[(113.82,115.52,"Tennis is all I've known, right?\n网球是我唯一熟悉的事，"),(116.04,117.64,"The past 18 years I've done it every day,\n过去18年我每天都在打，"),(118.12,122.28,"and just not being able to do that,\n突然什么都做不了，"),(122.54,126.88,"and just feeling so like I couldn't do the basic of things.\n连最基本的事都做不到。"),(127.38,132.22,"I couldn't brush my teeth without almost standing back up and just being in agony.\n刷牙都得马上直起腰，疼得要命。"),(132.6,134.44,"So it was definitely a tough injury,\n这真的是一次难熬的伤，"),(135.72,139.28,"but it's definitely made me a stronger person,\n但它让我变得更强大，"),(139.74,140.3,"a better person,\n变成更好的人，"),(140.4,143.02,"and hopefully it'll make me a better tennis player.\n希望也让我成为更好的球员。")],
-  "英国网协 LTA 官方频道复出专访「The Comeback is ON | Sonay Kartal's Road Back From Injury」（8u0X2vm7svU，4K）：她坐着讲伤病。两档逐词一致（medium 113.82–143.02；small 114.02–143.00，small 把 all I've known 记成 what I've known、多一个 kind of，按 medium 写）。镜头 40.36 切入、174.72 切走，段首 113.7 在 So you've got those things and（112.20–113.58）之后，段尾 143.5 在主持人下一问（143.66）之前。",
+S.append(q("doc",115.8,143.5,[(116.04,117.64,"The past 18 years I've done it every day,\n过去18年我每天都在打，"),(118.12,122.28,"and just not being able to do that,\n突然什么都做不了，"),(122.54,126.88,"and just feeling so like I couldn't do the basic of things.\n连最基本的事都做不到。"),(127.38,132.22,"I couldn't brush my teeth without almost standing back up and just being in agony.\n刷牙都得马上直起腰，疼得要命。"),(132.6,134.44,"So it was definitely a tough injury,\n这真的是一次难熬的伤，"),(135.72,139.28,"but it's definitely made me a stronger person,\n但它让我变得更强大，"),(139.74,140.3,"a better person,\n变成更好的人，"),(140.4,143.02,"and hopefully it'll make me a better tennis player.\n希望也让我成为更好的球员。")],
+  "英国网协 LTA 官方频道复出专访「The Comeback is ON | Sonay Kartal's Road Back From Injury」（8u0X2vm7svU，4K）：她坐着讲伤病。两档逐词一致（medium 113.82–143.02；small 114.02–143.00，small 把 all I've known 记成 what I've known、多一个 kind of，按 medium 写）。镜头 40.36 切入、174.72 切走，段首 115.8 在 tennis is all I've known, right（113.82–115.52）之后、The past（116.04）之前，段尾 143.5 在主持人下一问（143.66）之前。",
   "采访，不是回合。",kind="ceremony"))
 S.append(q("doc",395.6,406.0,[(396.24,399.24,"I've been kind of good to go really from kind of US Open time.\n其实美网时我就能复出了，"),(400.5,402.08,"Decided not to play that,\n但我决定不打，"),(402.96,405.6,"to almost just put my body under a bit more stress.\n让身体再多扛一些强度。")],
   "同一条 LTA 专访：主持人问复出时机。两档逐词一致（medium 396.32–415.90；small 396.24–415.88）。镜头 375.80 切入、421.88 切走，段首 395.6 在 choices to make（395.32）之后，段尾 406.0 在 stress（405.28–405.60）之后、下一个词 to（405.60 起，407.54 才接 try）之前，只留前半句。WTA 4593140 同一件事她在武汉的原话：ready to get back kind of end of August time … I didn't rush myself。",
@@ -73,9 +83,6 @@ S.append(card("武汉的\n五场球","04",7.8,"她本可以早点回来。可她
 S.append(n("r2",131.5,147.5,"九月，她在比利·简·金杯总决赛复出。到了武汉，她拿受伤前五十多位的保护排名报名。先赢卡利尼娜和本西奇，又只用六十三分钟，送走了保利尼。",
   "WTA 本西奇那场集锦（1TKV_Ywr8J8）：镜头 131.36 切入、156.12 切走；两档转写在 131.36–153.94 无词。复出在比利·简·金杯总决赛：WTA 4593140＋AOL；保利尼 63 分钟：WTA 视频标题 Kartal routs Paolini in 63 minutes。保护排名：Sky「using a protected injury ranking」、TNT、The Independent；数值 AOL 写 57、账号所有者给的核查材料按 WTA 规则与排名记录推 56，旁白只说「五十多位」。",
   "旁白不讲这一分；段尾停在同一个镜头之内。"))
-S.append(q("r2",279.2,295.3,[(279.4,281.5,"And takes it with a thunderous forehand,\n一记重炮正手拿下，"),(283.04,285.6,"and Sonay Kartal continues her comeback\n卡塔尔继续她的复出之路，"),(285.76,289.08,"from that stress fracture that saw her miss six months of this season.\n这个赛季她因应力性骨折缺席半年。"),(290.7,294.46,"Third round in Beijing is now matched with a third round appearance in Wuhan.\n继北京之后，武汉又进第三轮。")],
-  "WTA 官方集锦「Sonay Kartal vs. Belinda Bencic | 2026 Wuhan Round 2」（1TKV_Ywr8J8）：赛点一拍正手、她握拳、致意。两档逐词一致（medium 279.40–294.46），名字两档都转错，按官方标题写 Sonay Kartal。段首 279.2 在赛点那一拍之前（第一个赛点解说 267.82），段尾 295.3 在 295.56 切镜头之前（溶解 0.18 秒不跨切点）。比分 6-0 7-5：LTA 2026-10 稿。",
-  "赛点在 280 秒打完，之后是庆祝。",crosses_cut="280.88、282.64、285.16、291.00 是赛点那一拍之后的庆祝与致意镜头，都是她本人。"))
 S.append(q("qf",266.5,284.5,[(266.76,271.48,"She's the first Briton ever to make the last four in Wuhan.\n首位打进武汉半决赛的英国人。"),(272.62,273.24,"What a story.\n多好的故事。"),(275.8,277.84,"Out for six months this season,\n这个赛季停了六个月，"),(278.44,283.62,"but now getting to the latter stages of the biggest of events.\n现在却打到了大赛的最后阶段。")],
   "WTA 官方集锦「Elina Svitolina vs. Sonay Kartal | 2026 Wuhan Quarterfinal」（T22a9v9UZuk）：赛后庆祝、握手、致意。两档逐词一致（medium 261.58–283.62；small 264.26–283.71），Briton 按 medium。段首 266.5 在 semi-final（265.02）之后、262.08 那个镜头之内，段尾 284.5 在 It's Kartal in three（285.60）之前。",
   "比赛已经结束，庆祝与致意。",label="qf",crosses_cut="277.72 切的是赛后庆祝、握手与看台，都是同一场比赛结束之后。"))

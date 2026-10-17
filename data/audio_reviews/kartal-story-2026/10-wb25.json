@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Dt4dtaULohk",
+  "source_sha256": "a60aff04396aeefd4139268f2775d25a461aacb731c5bbf07ba101670e7f01ca",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T15:10:16.190752+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 159.8,
+  "reviewed_to": 169.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/Dt4dtaULohk/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/Dt4dtaULohk 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 159.8–169.3 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "温网官方频道「Brit ROARED on by home crowd | Diane Parry vs Sonay Kartal | Highlights | Wimbledon 2025」（Dt4dtaULohk）第三轮赛点回合：镜头 159.68 切入、169.48 切到她举臂；两档转写在 164.52–170.82 无词，154.04–164.52 一句是解说低声（that's a no-），旁白压在上面。首冠 2024 莫纳斯提尔、首进前 100：维基＋WTA 4593140（2024 Monastir title run）。"
+}

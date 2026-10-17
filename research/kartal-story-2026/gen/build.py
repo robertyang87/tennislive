@@ -1,8 +1,8 @@
 import json
 segs=json.load(open('research/kartal-story-2026/gen/segments.json'))
-YT={"sf":"abL2j0xldOc","qf":"T22a9v9UZuk","r16":"LDXqFzdqVVk","r2":"1TKV_Ywr8J8","iw":"z8Sffkz5m8s","u10":"INkEB95UIa8","wb24":"mXnEXUPITgg","doc":"8u0X2vm7svU","lta22":"vqIpczMjb5I"}
+YT={"sf":"abL2j0xldOc","qf":"T22a9v9UZuk","r16":"LDXqFzdqVVk","r2":"1TKV_Ywr8J8","iw":"z8Sffkz5m8s","u10":"INkEB95UIa8","wb24":"mXnEXUPITgg","doc":"8u0X2vm7svU","lta22":"vqIpczMjb5I","wb24r2":"DEvG7qPY6YY","wb25":"Dt4dtaULohk","wb25i":"3DFNz_g2_zc","bj25":"FtWSTkzN83w"}
 INFO={"sf":(1920,1080,"25/1","WTA"),"qf":(1920,1080,"25/1","WTA"),"r16":(1920,1080,"25/1","WTA"),"r2":(1920,1080,"25/1","WTA"),"iw":(1920,1080,"25/1","WTA"),
- "u10":(1920,1080,"24000/1001","LTA（英国网协）"),"wb24":(1920,1080,"25/1","Wimbledon"),"doc":(3840,2160,"25/1","LTA（英国网协）"),"lta22":(1920,1080,"25/1","LTA（英国网协）")}
+ "u10":(1920,1080,"24000/1001","LTA（英国网协）"),"wb24":(1920,1080,"25/1","Wimbledon"),"doc":(3840,2160,"25/1","LTA（英国网协）"),"lta22":(1920,1080,"25/1","LTA（英国网协）"),"wb24r2":(1920,1080,"25/1","LTA（英国网协）"),"wb25":(1920,1080,"25/1","Wimbledon"),"wb25i":(1920,1080,"25/1","Wimbledon"),"bj25":(1920,1080,"25/1","WTA")}
 used={s.get("source") for s in segs if s.get("source")}
 YT={k:v for k,v in YT.items() if k in used}
 sources={k:f"https://www.youtube.com/watch?v={v}" for k,v in YT.items()}

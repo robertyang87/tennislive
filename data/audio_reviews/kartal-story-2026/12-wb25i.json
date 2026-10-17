@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=3DFNz_g2_zc",
+  "source_sha256": "7e0b928557487a3c39cfb6d78d207ec562001e9242612bf2b9b1ab3781654804",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T15:10:16.190752+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 172.4,
+  "reviewed_to": 177.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 172.66,
+      "end": 174.86,
+      "en": "It doesn't matter if I'm playing number one in the world or 300 in the world,",
+      "zh": "不管对面是世界第一还是第三百，"
+    },
+    {
+      "start": 175.76,
+      "end": 176.9,
+      "en": "I'm still gonna respect that opponent.",
+      "zh": "我都会尊重对手。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/3DFNz_g2_zc/small.en.json + medium.en.json",
+  "review_note": "温网官方频道「Great Britain's newest star | Sonay Kartal | Third Round On-court Interview | Wimbledon 2025」（3DFNz_g2_zc）：主持人问她怎么面对外界的热度。两档逐词一致（medium 172.66–176.90），开头 But I I treat, you know 不收。镜头 161.56 切入、207.52 切走，段尾 177.2 在 you know（177.26）之前。"
+}

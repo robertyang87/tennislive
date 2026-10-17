@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=FtWSTkzN83w",
+  "source_sha256": "a525c6e010503d8602d03b9cf8bfa6831fded9d6cc1a94b179e013b423ce93d3",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T15:10:16.190752+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 265.3,
+  "reviewed_to": 288.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 272.26,
+      "end": 278.54,
+      "en": "It's out! Sonay Kartal has caused another seismic event in Beijing.",
+      "zh": "出界！卡塔尔在北京又掀起一场地震。"
+    },
+    {
+      "start": 284.06,
+      "end": 287.82,
+      "en": "The world number 81 defeats Mirra Andreeva, the number four seed.",
+      "zh": "世界第81击败4号种子安德烈耶娃。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/FtWSTkzN83w/small.en.json + medium.en.json",
+  "review_note": "同一条：赛点回合（265.20–275.12，安德烈耶娃回球出界）、包厢教练鼓掌（275.12）、看台（279.36）、网前握手。解说两档一致（medium 272.26–291.66，名字两档都转错，按官方标题写 Sonay Kartal、Mirra Andreeva）。段首 265.3 在 265.20 切入之后、so close what a point on match point（257.62–263.58）之后，段尾 288.1 在 The first big seed（288.26）之前。"
+}
