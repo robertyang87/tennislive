@@ -1,29 +1,54 @@
 {
-  "_en_fixed_why": "待 subs 转写后按双 ASR 分歧逐行校正。",
+  "_en_fixed_why": "双 ASR 分歧 13.3%（small.en 301 词 / medium.en 282 词），超 12% 闸门，主因是福基拉口头禅式磕巴（no 话头、单词重复、半句改口），两份 ASR 对填充词取舍不一。人工逐行裁定：7 删去重复的 like；8『no to to』为 ASR 垃圾，还原 doesn't matter the result（tennis365/ATP 引文交叉）；10 删去重复的 if I；11 删去改口的 I get；12 删去重复的 the；13 删去重复的 and；15 删去重复的 more；17 删去重复的 the 与『know』杂音；18 删去多余的 was；19 删去重复的 I；21『you』为听错、删去重复的 just；33 删去重复的 when you are；34 删去重复的 you；36 保留他真实的 no 话头；38『you at the end』补回 you know；39 删去 no 话头与重复的 to；40 保留原话断句；41 删去 fr 碎片；43 删去重复的 a lot of 与 know 杂音；44 删去重复的 to。其余 no 话头、you know 等真实口头禅保留未动；3『set point』两份 ASR 一致，指第二盘 5-4 破发即盘点，保留。",
   "_facts": [
     "2026-10-17 上海大师赛男单半决赛：福基拉 5-7、6-4、6-3 逆转兹维列夫，晋级决赛（atptour.com/scmp/sportsnet 官方战报）。",
     "用时 2 小时 06 分；福基拉全场 36 个制胜分，一发得分率 82%；两人第 8 次交手，福基拉 2-6（上一次赢是 2023 多伦多）。",
-    "福基拉第 2 次打进大师赛决赛（2022 蒙特卡洛亚军）；在中国 9 连胜（成都夺冠后）；即时排名升至第 15；决赛对阵同胞赫达尔（赫达尔 6-3、6-4 胜梅德韦杰夫）。"
+    "福基拉第 2 次打进大师赛决赛（2022 蒙特卡洛亚军）；在中国 9 连胜（成都夺冠后）；即时排名升至第 15；决赛对阵同胞赫达尔（赫达尔 6-3、6-4 胜梅德韦杰夫）。",
+    "采访引文与 tennis365/ATP/thetennisgazette 引文交叉核实一致。"
   ],
   "_notes": [
     "用户 2026-10-17 指定制作本期赛后开麦（福基拉上海半决赛胜兹维列夫）。",
-    "自动翻译通道已随模型移除；中文为人工逐行翻译。"
+    "自动翻译通道已随模型移除；中文为人工逐行翻译。",
+    "转写已核：47 行，双 ASR 分歧 13.3%（超 12% 闸门，主因口头禅磕巴），人工逐行裁定见 _en_fixed_why。",
+    "lead_in 待补：同场官方集锦赛点→庆祝→解说窗口与双语字幕。"
   ],
-  "_zh_draft_note": "待转写后人工逐行翻译：以双 ASR 转写为证据层逐行对应翻译，未合并、未漏行；对照战报引文核对关键表述。",
+  "_zh_draft_note": "人工逐行翻译：以双 ASR 转写（47 行）为证据层逐行对应翻译，未合并、未漏行；已对照 tennis365/ATP/tennisgazette 战报引文核对关键表述。",
   "asr_model": "small.en",
   "column": "赛后开麦",
   "cover": {
-    "_why": "临时帧：待 cover 扫描 + 终审确定最终帧；自动换帧可改写。",
-    "frame_at": 0.0,
-    "note": "待定",
+    "frame_at": 50.0,
+    "_why": "临时帧：采访中段。待 cover 扫描 + 终审确定最终帧；自动换帧可改写。",
+    "title": [
+      "结果不重要",
+      "只想每一分"
+    ],
     "sub": "福基拉 · 上海大师赛晋级决赛",
     "tag": "2026 上海大师赛 · 赛后开麦",
-    "title": [
-      "PENDING",
-      "PENDING"
-    ]
+    "note": "待定"
   },
-  "en_fixed": {},
+  "en_fixed": {
+    "7": "Well, like every match that I play here,",
+    "8": "doesn't matter the result.",
+    "10": "at the end, I knew that if I stay all match,",
+    "11": "I can have at least one chance.",
+    "12": "So yeah, I took it from the second set.",
+    "13": "and third set.",
+    "15": "I was more excited than him.",
+    "17": "So the early break",
+    "18": "in the third set gave me a lot of power.",
+    "19": "So yeah, I just focus on just keep playing",
+    "21": "No, just enjoy.",
+    "23": "in the Masters final, first time in four years.",
+    "33": "when you're out.",
+    "34": "No, so you have a lot of time to think.",
+    "36": "And at the end you don't realize, no.",
+    "38": "you know, at the end we are very privileged.",
+    "39": "to be here, to play this sport.",
+    "40": "It's very, for me.",
+    "41": "I think before I was not enjoying, I was very",
+    "43": "of thinking,",
+    "44": "to see what I want to do with my future."
+  },
   "end": 104.0,
   "event": "2026 ATP1000 上海 半决赛",
   "featured_player": "福基拉",
@@ -68,17 +93,17 @@
   },
   "push": {
     "auto": true,
-    "event": "",
-    "lead": "PENDING",
     "matchup": "福基拉 vs 兹维列夫",
     "score": "5-7 6-4 6-3",
-    "summary": "PENDING"
+    "event": "",
+    "summary": "结果不重要，只想每一分",
+    "lead": "福基拉 5-7、6-4、6-3 逆转兹维列夫，晋级上海大师赛决赛。赛后他说：结果不重要，只想着每一分。决赛将对阵同胞赫达尔。"
   },
   "requested_content_type": "on_court",
   "slug": "davidovichfokina-zverev-shanghai-2026-sf-interview",
   "source_title": "Alejandro Davidovich Fokina SF Post-Match Interview | Rolex Shanghai Masters 2026",
   "source_verification": {
-    "attestation_sha256": "3eb3d218061adca548e82ee6827f30cbbd0f1f166fa1a8d45509c5a844bafc09",
+    "attestation_sha256": "ee5807b502f16194de677e2a75a4f466a91b41506950780e2db9f3ccccf13080",
     "detected_type": "on_court",
     "evidence": [
       {
@@ -88,6 +113,10 @@
       {
         "kind": "title_match_tags",
         "note": "与本场一致：2026-10-17 上海大师赛男单半决赛，福基拉 5-7、6-4、6-3 逆转兹维列夫（atptour.com/scmp/sportsnet 官方战报交叉核实）；tennis365/ATP 引文的采访原话（\"doesn't matter the result, just thinking about every ball\" 等）与本条采访内容吻合。"
+      },
+      {
+        "kind": "transcript_crosscheck",
+        "note": "内容硬闸已过：双 ASR 转写（small.en 301 词 / medium.en 282 词，分歧 13.3%，主因口头禅磕巴）经人工逐行裁定（见 _en_fixed_why），47 行转写与已核实的场上采访实录逐段吻合——第二盘盘点逆转、体能与兴奋度、伤停两月的心态变化（见 tennis365/atptour 2026-10-17 战报引文）。确为本场赛后场上采访。"
       }
     ],
     "match_id": "2026:shanghai-masters:mens-sf:davidovichfokina-zverev",
@@ -101,13 +130,61 @@
   "start": 0.0,
   "takeaway": {
     "close": {
-      "ask": "PENDING",
-      "point": "PENDING"
+      "point": "结果不重要，只想每一分",
+      "ask": "带着这份松弛打决赛，首个大师赛冠军在招手吗？"
     }
   },
-  "transcript_verified": false,
+  "transcript_verified": true,
   "url": "https://www.youtube.com/watch?v=KHT6c3b6ecw",
   "whisper_model": "medium.en",
   "winner": "福基拉",
-  "zh": []
+  "zh": [
+    "阿莱汉德罗，恭喜。",
+    "哇，这场逆转始于",
+    "那个不可思议的盘点，",
+    "就在第二盘。",
+    "你今天做了什么扭转了局势，",
+    "拿下胜利？",
+    "嗯，就像我在这里打的每一场比赛，",
+    "结果不重要。",
+    "只想着每一分，你知道的，",
+    "最后，我知道只要我整场都咬住，",
+    "至少能等来一次机会。",
+    "对，第二盘我抓住了，",
+    "第三盘也一样。",
+    "我觉得第三盘我的体能更好。",
+    "我比他更兴奋。",
+    "嗯，在拿下第二盘之后。",
+    "所以第三盘开局的破发",
+    "给了我很大的能量。",
+    "所以我就专注于继续打，",
+    "不在乎结果，",
+    "嗯，享受比赛。",
+    "你又回到了",
+    "大师赛决赛，时隔四年。",
+    "你说过这个夏天",
+    "有多艰难，",
+    "你离开巡回赛两个月，",
+    "某种程度上。",
+    "这改变了你吗？",
+    "你是不是以一个不同的自己",
+    "回来了？",
+    "我想你们能看出来。",
+    "嗯，说到底，离开赛场不容易，",
+    "当你远离的时候。",
+    "嗯，所以你有很多时间去思考。",
+    "嗯。",
+    "说到底你意识不到的，嗯，",
+    "当你在巡回赛中，",
+    "你知道的，我们是多么幸运，",
+    "能站在这里打这项运动。",
+    "对我来说，这很重要。",
+    "我觉得以前我不享受比赛，很沮丧，",
+    "而这段时间给了我很多",
+    "思考，",
+    "去想我的未来要做什么。",
+    "说得好，恭喜，",
+    "决赛见。",
+    "谢谢。"
+  ]
 }
