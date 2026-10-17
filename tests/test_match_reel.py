@@ -17749,3 +17749,19 @@ def test_bracket签表图左右各8个签位_高亮只给点名的那一个():
     assert html.count("<rect") >= 16
     with pytest.raises(SystemExit, match="各要 8 个"):
         card.build_html({"kind": "bracket", "left": side[:7], "right": side})
+
+
+def test_kartal_owner_alias_keeps_headshot_identity_and_rejects_swapped_faces(tmp_path):
+    import check_reel_landed as chk
+    from tennislive.zh.players import normalize_player_zh
+    reels = tmp_path / "reels"
+    reels.mkdir()
+    prior = {"cover": {"matchup": [{"name": "卡尔塔尔"}, {"name": "奥斯塔彭科"}]},
+             "stats": {"a": {"headshot": "wta-329918.png"}, "b": {"headshot": "wta-319939.png"}}}
+    (reels / "prior.json").write_text(json.dumps(prior), encoding="utf-8")
+    alias = {**prior, "cover": {"matchup": [{"name": "卡塔尔"}, {"name": "奥斯塔彭科"}]}}
+    assert normalize_player_zh("卡塔尔") == normalize_player_zh("卡尔塔尔")
+    assert chk.stat_card_headshot_problem(alias, reels) is None
+    swapped = {**alias, "stats": {"a": prior["stats"]["b"], "b": prior["stats"]["a"]}}
+    result = chk.stat_card_headshot_problem(swapped, reels)
+    assert result is not None and result[0] is True

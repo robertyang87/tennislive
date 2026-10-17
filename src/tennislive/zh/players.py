@@ -619,6 +619,9 @@ PLAYER_ZH: dict[str, str] = {
 # data/evidence/paolini-bejlek-wuhan-2026-r1/facts/raw/wta-match-row.json。
 # PLAYER_ZH 的规范输出仍是「保利尼」，别名不改已经配音/渲染的显示文案。
 PLAYER_ZH_ALIASES: dict[str, str] = {
+    # Owner explicitly requests 卡塔尔 in Wuhan SF reel; both refer to WTA 329918.
+    "卡塔尔": PLAYER_ZH["Sonay Kartal"],
+    "卡尔塔尔": PLAYER_ZH["Sonay Kartal"],
     "帕奥利尼": PLAYER_ZH["Jasmine Paolini"],
     # 施耐德/施奈德均指 Diana Shnaider（WTA 330482）；官方英文名和 ID 见
     # data/research/ostapenko-shnaider-wuhan-2026-qf/fact-packet.json。
