@@ -621,6 +621,7 @@ PLAYER_ZH: dict[str, str] = {
 PLAYER_ZH_ALIASES: dict[str, str] = {
     # Owner explicitly requests 卡塔尔 in Wuhan SF reel; both refer to WTA 329918.
     "卡塔尔": PLAYER_ZH["Sonay Kartal"],
+    "卡尔塔尔": PLAYER_ZH["Sonay Kartal"],
     "帕奥利尼": PLAYER_ZH["Jasmine Paolini"],
     # 施耐德/施奈德均指 Diana Shnaider（WTA 330482）；官方英文名和 ID 见
     # data/research/ostapenko-shnaider-wuhan-2026-qf/fact-packet.json。
