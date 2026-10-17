@@ -14,8 +14,8 @@
       {
         "role": "takeaway_close",
         "file": "_takeaway_close.mp4",
-        "seconds": 7.51,
-        "peak_db": -8.1
+        "seconds": 7.27,
+        "peak_db": -8.4
       },
       {
         "role": "outro",
@@ -30,45 +30,8 @@
     "transition": "dissolve",
     "dissolve_s": 0.18
   },
-  "film_sha256": "c3ced5480f36a5ed4fdf0665e00dfee9658203722eeca372b48e0b092a76ecc9",
-  "film_seconds": 139.08,
-  "production_sla": {
-    "version": 2,
-    "pipeline": "interview-clip",
-    "slug": "kartal-ostapenko-wuhan-2026-sf-interview",
-    "received_at": "2026-10-17T17:57:24Z",
-    "artifact_ready_at": "2026-10-17T18:00:57Z",
-    "elapsed_seconds": 213.888,
-    "budget_seconds": 600,
-    "met": true,
-    "film_sha256": "c3ced5480f36a5ed4fdf0665e00dfee9658203722eeca372b48e0b092a76ecc9",
-    "spec_sha256": "e02c2ee6541e02ba2355cd6214bff3dd987311981cb9b3bb707ab6e821e070c6",
-    "run_id": "39055983644",
-    "stage_events": [
-      {
-        "stage": "preflight",
-        "at": "2026-10-17T17:58:26Z",
-        "run_id": "39055983644"
-      },
-      {
-        "stage": "cover_audit",
-        "at": "2026-10-17T17:59:36Z",
-        "run_id": "39055983644"
-      },
-      {
-        "stage": "asr_verify",
-        "at": "2026-10-17T17:59:51Z",
-        "run_id": "39055983644"
-      },
-      {
-        "stage": "render",
-        "at": "2026-10-17T17:59:52Z",
-        "run_id": "39055983644"
-      }
-    ],
-    "render_seconds": 65.888,
-    "pre_render_seconds": 148.0
-  },
+  "film_sha256": "af11c90b2a79a739ac905f6e4f7ca2357f3dca0678b1dfc545656b63fbcfcda6",
+  "film_seconds": 138.84,
   "face_checks": {
     "cover": {
       "status": "ok",
@@ -125,37 +88,113 @@
   "production_stage_events": [
     {
       "stage": "preflight",
-      "at": "2026-10-17T17:58:26Z",
-      "run_id": "39055983644"
+      "at": "2026-10-17T18:03:42Z",
+      "run_id": "39056332164"
     },
     {
       "stage": "cover_audit",
-      "at": "2026-10-17T17:59:36Z",
-      "run_id": "39055983644"
+      "at": "2026-10-17T18:04:46Z",
+      "run_id": "39056332164"
     },
     {
       "stage": "asr_verify",
-      "at": "2026-10-17T17:59:51Z",
-      "run_id": "39055983644"
+      "at": "2026-10-17T18:05:10Z",
+      "run_id": "39056332164"
     },
     {
       "stage": "render",
-      "at": "2026-10-17T17:59:52Z",
-      "run_id": "39055983644"
+      "at": "2026-10-17T18:05:11Z",
+      "run_id": "39056332164"
     },
     {
       "stage": "qc",
-      "at": "2026-10-17T18:00:58Z",
-      "run_id": "39055983644"
+      "at": "2026-10-17T18:06:58Z",
+      "run_id": "39056332164"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-17T18:00:58Z",
-      "run_id": "39055983644"
+      "at": "2026-10-17T18:06:58Z",
+      "run_id": "39056332164"
     }
   ],
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-kartal-ostapenko-wuhan-2026-sf-interview/kartal-ostapenko-wuhan-2026-sf-interview.mp4?v=c3ced5480f36a5ed",
-  "video_bytes": 47396171,
-  "release_asset_digest": "sha256:c3ced5480f36a5ed4fdf0665e00dfee9658203722eeca372b48e0b092a76ecc9",
-  "qc_attestation_sha256": "66d2ead4c35c46cd84662137f8e4595ad175b8a1a16915dda358730e9d351c2f"
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-kartal-ostapenko-wuhan-2026-sf-interview/kartal-ostapenko-wuhan-2026-sf-interview.mp4?v=af11c90b2a79a739",
+  "video_bytes": 47350753,
+  "release_asset_digest": "sha256:af11c90b2a79a739ac905f6e4f7ca2357f3dca0678b1dfc545656b63fbcfcda6",
+  "qc_attestation_sha256": "f682c473e81e798add6728f08517cb1fbb2d70369b5565350a23c86fa0836878",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "kartal-ostapenko-wuhan-2026-sf-interview",
+      "received_at": "2026-10-17T17:57:24Z",
+      "artifact_ready_at": "2026-10-17T18:00:57Z",
+      "elapsed_seconds": 213.888,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "c3ced5480f36a5ed4fdf0665e00dfee9658203722eeca372b48e0b092a76ecc9",
+      "spec_sha256": "e02c2ee6541e02ba2355cd6214bff3dd987311981cb9b3bb707ab6e821e070c6",
+      "run_id": "39055983644",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-10-17T17:58:26Z",
+          "run_id": "39055983644"
+        },
+        {
+          "stage": "cover_audit",
+          "at": "2026-10-17T17:59:36Z",
+          "run_id": "39055983644"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-10-17T17:59:51Z",
+          "run_id": "39055983644"
+        },
+        {
+          "stage": "render",
+          "at": "2026-10-17T17:59:52Z",
+          "run_id": "39055983644"
+        }
+      ],
+      "render_seconds": 65.888,
+      "pre_render_seconds": 148.0
+    }
+  ],
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "kartal-ostapenko-wuhan-2026-sf-interview",
+    "received_at": "2026-10-17T17:38:56Z",
+    "artifact_ready_at": "2026-10-17T18:06:56Z",
+    "elapsed_seconds": 1680.843,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "af11c90b2a79a739ac905f6e4f7ca2357f3dca0678b1dfc545656b63fbcfcda6",
+    "spec_sha256": "e02c2ee6541e02ba2355cd6214bff3dd987311981cb9b3bb707ab6e821e070c6",
+    "run_id": "39056332164",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-10-17T18:03:42Z",
+        "run_id": "39056332164"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-10-17T18:04:46Z",
+        "run_id": "39056332164"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-10-17T18:05:10Z",
+        "run_id": "39056332164"
+      },
+      {
+        "stage": "render",
+        "at": "2026-10-17T18:05:11Z",
+        "run_id": "39056332164"
+      }
+    ],
+    "render_seconds": 105.843,
+    "pre_render_seconds": 1575.0
+  }
 }
