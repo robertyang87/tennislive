@@ -7,6 +7,6 @@
 ## 70.0–100.2 秒（片内，30.3 秒；源片 https://youtu.be/ATsKkPJBY3s?t=367）
 
 - 键：`368.0-398.2`
-- 第二份 ASR（small.en）：`women at the event dollar you go back to your shoes you get face on face I'm sure how teen on the beside on that. Yeah, I can now you got in here She's not sure you don't have which the parents you buy that should watch it out. What a day show what? Tongbao e gosh, you may face on Lee had a children you a without a quandary. We're going to see what I'm gonna do She's a fantastic a chunky then down our way and Gaussian season and go in charge it up inside You could come over now. So you may have put it outside fashion So much attention will turn the fish on Gaussian and go for the gee chompy selection Lee`　→ **第一份（YouTube 自动字幕）可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
+- 第二份 ASR（small.en）：`woman at the event dollar you go back to your shoes You got face on face on cell hot in under the side on the day I can now you got in here since last year's one type which the parents you buy that should watch it out with a Show what? Tongbao II got shimmy face on Lee had a children you a without a grand dream Well, I'm gonna see what I'm gonna do. She's gonna check a chunky then down I won't wait on Gaussian season and go in charge is on peace. I take her Couldn't order not only me have put it out there fashion So my attention will turn the fish on Gaussian and go for the gee chompy selection Lee`　→ **第一份（YouTube 自动字幕）可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
 - 已销账：**否**
 
