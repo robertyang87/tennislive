@@ -1,8 +1,11 @@
 {
-  "selected": "F-duo-fullbleed",
+  "selected": "E-duo-complete-subject-latest-user-final",
   "subject": "Maja Chwalinska and Iga Swiatek",
   "user_choice": "双人合照，更有波兰德比的情绪；可以就用这个",
-  "latest_user_instruction": "要铺满画布",
+  "latest_user_instruction": [
+    "封面不用铺满",
+    "铺满就看不到人物主体了"
+  ],
   "source_page": "https://polskieradio24.pl/sport/pojedynek-marzen-w-wuhan-swiatek-vs-chwalinska",
   "source_caption": "Maja Chwalińska i Iga Świątek dziękują sobie za walkę w Wuhan",
   "credit": "Reuters",
@@ -10,7 +13,7 @@
     4480,
     2520
   ],
-  "actual_asset": "assets/reels/chwalinska-swiatek-wuhan-2026-sf/wuhan-sf-duo-reuters-original.jpg",
+  "actual_asset": "assets/reels/chwalinska-swiatek-wuhan-2026-sf/wuhan-sf-duo-cover-canvas.jpg",
   "original_sha256": "db110b1f1ecac2a8da1c166c3ad078be5da92cfacf6f661eb43b3fb171525289",
   "native_canvas": [
     1080,
@@ -20,17 +23,26 @@
   "focus": 0.5,
   "focus_y": 0.5,
   "zoom": 1,
-  "source_crop_xyxy": [
-    1295,
-    0,
-    3185,
-    2520
-  ],
   "operations": [
-    "native_geometric_crop_and_downscale"
+    "uniform_photo_downscale",
+    "solid_navy_editorial_layout"
   ],
-  "no_padding_no_ai_no_warp": true,
   "preview": "cover-final.jpg",
-  "previous_layout_superseded": "E horizontal photograph with navy above/below, superseded by latest full-canvas instruction",
-  "license": "unknown/unverified"
+  "previous_layout_superseded": "F-fullbleed rejected by latest user instruction; restore complete duo photograph",
+  "license": "unknown/unverified",
+  "canvas_dimensions": [
+    2160,
+    2880
+  ],
+  "photo_position": [
+    0,
+    370
+  ],
+  "photo_dimensions": [
+    2160,
+    1215
+  ],
+  "canvas_sha256": "0f689548a40fa81b0c55bcbbc85c9cc807807f30f0e9fd3f05059df4d7703d8b",
+  "no_ai_no_warp": true,
+  "padding": "solid navy editorial text areas above/below photo per explicit user choice"
 }
