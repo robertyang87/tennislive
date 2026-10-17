@@ -139,6 +139,39 @@
   "captions": null,
   "board": {
     "version": 1,
-    "error": "WTA board present but native right boundary cannot be measured"
+    "fps": 5,
+    "start": 125,
+    "stop": 132,
+    "frames": 35,
+    "scans": [
+      {
+        "box": [
+          90,
+          826,
+          550,
+          980
+        ],
+        "frames": 35,
+        "profiles": {
+          "wta": {
+            "present": 35,
+            "unresolved": 0,
+            "runs": [
+              [
+                35,
+                480,
+                480
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "_scope": "Native bounded calibration only, not full source visual approval. Full scan previously raises WTA board boundary RuntimeError; preserve failure in research records.",
+    "t0": 125,
+    "source_window": [
+      125,
+      132
+    ]
   }
 }

@@ -1,0 +1,34 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "slug": "kartal-ostapenko-wuhan-2026-sf",
+  "reviewed_at": "2026-10-17T12:37:50.438268+00:00",
+  "plan_sha256": "4ccb3c85f2613d40dfd84396693efc7c35e843e63314e0e67574ef9861fef515",
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/evidence/kartal-ostapenko-wuhan-2026-sf/source-audio/cold_open.json",
+      "transcript_sha256": "74e8bfa26395449f1e5afca495de100a7940fa66bd0d0478a0bd2085b1337430"
+    },
+    {
+      "index": 2,
+      "transcript_path": "data/evidence/kartal-ostapenko-wuhan-2026-sf/source-audio/first_pressure.json",
+      "transcript_sha256": "8ea5dca60a3a29ae2b0511b5979822ab6ee7f5ce5b9a061e1071286a5962bb77"
+    },
+    {
+      "index": 4,
+      "transcript_path": "data/evidence/kartal-ostapenko-wuhan-2026-sf/source-audio/first_payoff.json",
+      "transcript_sha256": "edaf6d19bf1117b64e9290ad76d493a24c5372f84b7ded6d3702fbec7ab13671"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/evidence/kartal-ostapenko-wuhan-2026-sf/source-audio/second_setpoints.json",
+      "transcript_sha256": "00d0c6c18d3c75829e4f5a986b8365eb0aba8ec4ba5de10d4d3e064ea215fbae"
+    },
+    {
+      "index": 8,
+      "transcript_path": "data/evidence/kartal-ostapenko-wuhan-2026-sf/source-audio/match_payoff.json",
+      "transcript_sha256": "e58005e687a06bbf58949ed8032024d81884862d4955a6d92171ac818c0e40c8"
+    }
+  ],
+  "_review_method": "Actual current selected same-SHA windows: full native small.en/medium.en hypotheses read and independent large-v3-turbo/cropped retries reconciled. Actual source contact sheets and enlarged scoreboard/action sheets reviewed. No human/manual listening claim. Source131.7-132.5 uncertainty excluded with its entire unselected rally, not muted or labelled pass."
+}

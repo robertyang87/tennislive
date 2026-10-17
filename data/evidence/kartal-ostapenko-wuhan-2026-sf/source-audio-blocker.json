@@ -1,0 +1,43 @@
+{
+  "schema": "tennislive.source-audio-blocker.v1",
+  "created_at": "2026-10-17T12:33:31.094810+00:00",
+  "source_url": "https://www.youtube.com/watch?v=abL2j0xldOc",
+  "source_sha256": "0bcaea757e8d06944a35b94da6b85eae0474fefc7c35c9a3223967f79b243543",
+  "status": "resolved_for_current_selected_plan_by_exclusion",
+  "blocking_spans": [
+    {
+      "start": 131.7,
+      "end": 132.5,
+      "native_small": "There is it.",
+      "native_medium": "There is it.",
+      "independent_large_v3_turbo": "There is it.",
+      "narrow_crop_retries": "There is it.",
+      "reason": "Lexically unnatural low-confidence first word; no audio listening capability used, and no pass/translation invented."
+    }
+  ],
+  "resolved_lexical_difference": [
+    {
+      "start": 147.24,
+      "end": 150.78,
+      "small_medium": "Nice call from...",
+      "independent_large_v3_turbo": "Ice cool from...",
+      "status": "candidate Ice cool; needs source-review conclusion before release"
+    }
+  ],
+  "source_asr_run": 39032264103,
+  "probe_run": 39032126473,
+  "render_dispatched": false,
+  "push_sent": false,
+  "human_listening_claimed": false,
+  "resolution": {
+    "excluded_window": [
+      124.88,
+      133.52
+    ],
+    "current_first_payoff": [
+      133.52,
+      170.84
+    ],
+    "reason": "Source131 unclear cry belongs to Kartal7-6 set point saved by Ostapenko, not the two omitted Ostapenko set points. Select complete later10-9 set-ending point; all included speech receives bilingual captions. No uncertain phrase was changed to pass."
+  }
+}
