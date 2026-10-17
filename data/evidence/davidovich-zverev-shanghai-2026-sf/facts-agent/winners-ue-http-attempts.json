@@ -1,0 +1,30 @@
+[
+  {
+    "key": "tnns-day",
+    "url": "https://api.tnnslive.com/v1/matches?date=2026-10-17&web=true",
+    "status": 403,
+    "bytes": 9,
+    "sample": "Forbidden"
+  },
+  {
+    "key": "fs-match-identity",
+    "url": "https://local-global.flashscore.ninja/2/x/feed/df_hh_1_rZ1iEDSa",
+    "status": 200,
+    "bytes": 178623,
+    "sample": "SA÷2¬~KA÷All surfaces¬IS÷¬~KB÷Last matches: Zverev A.¬~KC÷1792226400¬KP÷rZ1iEDSa¬KD÷hard¬KE÷hard¬KF÷Shanghai¬AC÷3¬KG÷52¬KH÷China¬KI÷SHA¬UQ÷dGbUhw9m¬UO"
+  },
+  {
+    "key": "fs-match-stats-raw",
+    "url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_rZ1iEDSa",
+    "status": 200,
+    "bytes": 4027,
+    "sample": "SE÷Match¬~SF÷Service¬~SG÷Aces¬SH÷18¬SI÷5¬~SG÷Double Faults¬SH÷2¬SI÷2¬~SG÷1st serve percentage¬SH÷75%¬SI÷82%¬~SG÷1st serve points won¬SH÷73% (52/71)¬SI"
+  },
+  {
+    "key": "fs-match-summary",
+    "url": "https://local-global.flashscore.ninja/2/x/feed/dc_1_rZ1iEDSa",
+    "status": 200,
+    "bytes": 347,
+    "sample": "DA÷3¬DZ÷3¬DB÷3¬DD÷1792233909¬AW÷1¬DC÷1792226400¬DS÷0¬DE÷1¬DF÷2¬DG÷1¬DH÷2¬DI÷-1¬DK÷1792233918¬DL÷3¬DM÷¬DN÷3¬DO÷6¬DQ÷17¬DP÷14¬DX÷ST,MH,MC,OD,HH,TTS,DR,N"
+  }
+]

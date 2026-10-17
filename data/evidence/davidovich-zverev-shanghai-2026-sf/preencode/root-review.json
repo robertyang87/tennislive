@@ -1,0 +1,79 @@
+{
+  "schema": "tennislive.finite-native-preencode-review.v1",
+  "reviewed_at": "2026-10-17T11:48:50.098733+00:00",
+  "reviewer": "Current root OpenAI assistant",
+  "status": "pass_for_finite_preview_only",
+  "publication_approved": false,
+  "human_review_claimed": false,
+  "spec_sha256": "d713be05c367f4e568a7e74f62a3d383f00f1250521b98360fc946e5b7f12339",
+  "source_sha256": "ca0f94dbbb70dc2f9318a792af879f25c6da863edd151928e14a43040dc752c4",
+  "bundle_sha256": "728ab30f7e1adf68ad32695723b248b97da61941d7720a6a8ce1daeb07902f03",
+  "original_preview_manifest_sha256": "82c152a6408530f01c5adfee2fc02483dec242d4c74628250dcabbb9e96a3eac",
+  "current_trim_manifest_sha256": "8b11f3499cefcdf25169b222389a1268fb83c2c3ba85dfe0ecdbc5d856d0bc80",
+  "current_ass_sha256": "8fb9a4a43c2f27b9ede20af6d6be2d5a6931d7498c6911e7c2cb95f6d975a23c",
+  "actual_original_pngs_viewed": [
+    "group-04-016.png (superseded end136.10 preview)",
+    "group-07-002.png (statistics)"
+  ],
+  "walls_actually_viewed": [
+    {
+      "file": "root-wall-0.jpg",
+      "sha256": "65603bc752696c894be0fa0a797cd0c242d8e5cf776660931bc79eee173e617f"
+    },
+    {
+      "file": "root-wall-1.jpg",
+      "sha256": "ddbe26728180c5d426ccbf74f66b2779aa421ce91a6102e5ca95dcedf0733f81"
+    },
+    {
+      "file": "root-wall-2.jpg",
+      "sha256": "8bd4244f9240f9affb5d86c1c3c3e91bee31c7c9ad4e2d35b8639f7661ac720a"
+    },
+    {
+      "file": "root-wall-3.jpg",
+      "sha256": "205dc5dc03159897e5cf619937344b1f33e7cdedfa81738e17206f9383321cb6"
+    },
+    {
+      "file": "root-wall-4.jpg",
+      "sha256": "5ee29290d30d0c656b2f423f7993d61a25ed82cf79bbb346ca746db8c231e921"
+    },
+    {
+      "file": "root-wall-5.jpg",
+      "sha256": "17876fc6f0390b09234af3ea162e36545356e7b4b6a9a9c2fbd47e1d0e9073bb"
+    },
+    {
+      "file": "root-wall-6.jpg",
+      "sha256": "03a643b455089ac09f2e3cdf8a6d08941f363012cbc3c8b14febf3fbee974a05"
+    },
+    {
+      "file": "root-wall-7.jpg",
+      "sha256": "ab410adcbb14ab927903c339d5c27bb2c0415b6fd280a62bec7c00f0b393c307"
+    },
+    {
+      "file": "root-wall-8.jpg",
+      "sha256": "8adcf272275e71f55d033b5a2272c4bc5467b64994ed67feacbb0e468eec450a"
+    },
+    {
+      "file": "trim-root-trim-wall.jpg",
+      "sha256": "1d245e812896b7ce142ac48e92842c896c2c1b6944afbdd32bd3ec8f3162992f"
+    }
+  ],
+  "findings_closed": [
+    {
+      "finding": "Second-set ending130.48..135.64 contains oversized native resultboard that fullcenter crops, despite standard smallboard mask.",
+      "fix": "End second_set_point126.90 after first whole sentence and result/celebration, before next whole sentence127.24. No formal encode/TTS repeated.",
+      "actual_current_review": "12 changed-segment frame samples on trim-root-trim-wall.jpg actually viewed, complete rally and 6-4 smallboard retained, no oversized board."
+    }
+  ],
+  "observations": [
+    "Full1080x1440fixedcenter fills canvas; remaining left/right outercourt loss documented in actual source image evidence",
+    "All retained English complete, proper name display fits single lines, Chinese shortened meaning unchanged in source review",
+    "Cards coherent2-line navy maintext, contextualkicker and low captions separated frombranding; complete stats aZverev,bADF with correctflag/rank/wholematchdenominators",
+    "Scoreboard same-source same-frame native contour at fixedcanvasx0 y1227, pointcolumn visible; all retainedsourcewindows inspected on finite walls",
+    "Originalpreviewother8segmentslayout unchanged; currentASS includes exact whole-plan time update after9.2s source trim"
+  ],
+  "limitations": [
+    "Native preencode finite sampling only; no finalmaster QC claim",
+    "Not every frame seen; actual final movie gets separate root/independent partitions",
+    "No human listening/loudness/gain/thresholdsilence/PCM checks"
+  ]
+}

@@ -1,0 +1,424 @@
+{
+  "slug": "davidovich-zverev-shanghai-2026-sf",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "track": false,
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "preserve_source_audio": true,
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=NKFVL_lELNE"
+  },
+  "primary": "main",
+  "source_fallbacks": {
+    "main": "https://github.com/robertyang87/tennislive/releases/download/source-NKFVL_lELNE/NKFVL_lELNE-ca0f94dbbb70dc2f.mp4"
+  },
+  "scorebox": [
+    98,
+    920,
+    636,
+    1029
+  ],
+  "_scorebox_why": "实际原PNG55/118/140.20证主板上920下1029左98，首盘右542、次盘589、决胜盘636；bounded138..142s扫描20帧全部识别，采用最大包络由native透明轮廓动态取同源同帧板。",
+  "_crop_why": "用户要求3:4铺满；固定居中x555..1365，比分板原固定画布位置。实际中心场地主机位较稳定，仍会丢外侧双打边线及追向边缘的球员，不称全球场可见。",
+  "_source": "实际ATP Tour/@ATPTour官方上传NKFVL_lELNE，title Alejandro Davidovich Fokina vs Alexander Zverev Highlights | Shanghai 2026 Semi-Final。198.112653s/1920x1080/25fps，sourceSHA ca0f94dbbb70dc2f9318a792af879f25c6da863edd151928e14a43040dc752c4。无采访；184.68秒起publisher endcard，正文只用此之前的实际比赛与赛后。",
+  "_match": {
+    "source": "official_atp_tournament",
+    "source_id": "5014_2026_MS002",
+    "participants": [
+      "达维多维奇·福基纳",
+      "兹维列夫"
+    ],
+    "winner": "达维多维奇·福基纳",
+    "loser": "兹维列夫",
+    "winner_result": "5-7 6-4 6-3",
+    "loser_result": "7-5 4-6 3-6",
+    "date": "2026-10-17",
+    "status": "result_verified",
+    "flashscore_id": "rZ1iEDSa",
+    "set_scores_home_away": [
+      [
+        5,
+        7
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "duration": "02:02:30",
+    "_match_day_why": "用户指定本场官方ATP Tour视频，当前上海半决赛2026-10-17，与官方MS002 F和实际原PNG一致。"
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "兹维列夫",
+        "name_en": "Alexander Zverev",
+        "country": "GER",
+        "rank": 2
+      },
+      {
+        "name": "达维多维奇·福基纳",
+        "name_en": "Alejandro Davidovich Fokina",
+        "country": "ESP",
+        "rank": 26
+      }
+    ],
+    "winner": "达维多维奇·福基纳",
+    "result": "5-7 6-4 6-3",
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "兹维列夫",
+    "topic": "ATP1000 上海 半决赛 · 兹维列夫 VS 达维多维奇·福基纳",
+    "hook": "首盘7比5占先\n兹维列夫遭逆转",
+    "hook_accent": "遭逆转",
+    "_portrait_geometry_owner": "root owns current-match official9433 portrait focus; no guessed geometry",
+    "portrait": {
+      "image": "assets/reel/davidovich-zverev-shanghai-2026-sf-cover.jpg",
+      "fit": "cover",
+      "focus": 0.56,
+      "focus_y": 0.5,
+      "zoom": 1
+    },
+    "scoreboard": {
+      "court": "Stadium Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%2202%3A02%3A30%22%2C%20%22field%22%3A%20%22MatchTimeTotal%22%2C%20%22match_id%22%3A%20%22MS002%22%2C%20%22source_url%22%3A%20%22https%3A//en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats%3Fyear%3D2026%26eventId%3D5014%26matchId%3Dms002%22%2C%20%22source_path%22%3A%20%22data/evidence/davidovich-zverev-shanghai-2026-sf/facts-agent/native-match-stats.json%22%2C%20%22source_sha256%22%3A%20%22a42ca7b799dee4587c2f2e7a2ab230426fe7ecee78e96ad242c01c18475f8ddc%22%7D",
+        "field": "duration"
+      }
+    },
+    "_portrait_why": "用户点名兹维列夫被淘汰，封面用本场2026-10-17半决赛Getty2300060071，正面睁眼、紧绷实战表情；本期未作赛后愤怒心理推断。已实际查看原图与native branded preview，无台头/标题压脸。"
+  },
+  "topbar": {
+    "line1": "2026 ATP1000 上海 半决赛",
+    "line2": "达维多维奇·福基纳 5-7 6-4 6-3 兹维列夫"
+  },
+  "stats": {
+    "tour": "atp",
+    "footer_date": "2026-10-17",
+    "footer_venue": "上海 · 全场",
+    "_source": "官方MS002 SetNumber0完整整数：a兹维列夫（Z355）、b达维多维奇（DH50），列序跟封面对阵而非赢家；Winners/UE取Flashscore rZ1iEDSa Match并逐盘合计自证。",
+    "_winners_ue_evidence": {
+      "provider": "Flashscore",
+      "method": "api",
+      "source_url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_rZ1iEDSa",
+      "source_path": "data/evidence/davidovich-zverev-shanghai-2026-sf/facts-agent/fs-match-stats-raw.raw",
+      "source_sha256": "fbcf992e1050ad7f8a9d429af7e7636ccfe3b71f8d288a8e318e199f8d29f44e",
+      "period": "Match",
+      "match_date": "2026-10-17",
+      "checked_at": "2026-10-17T11:29:54.438707+00:00",
+      "winner_result": "5-7 6-4 6-3",
+      "matchup": [
+        "Zverev",
+        "Davidovich Fokina"
+      ],
+      "winners": [
+        28,
+        36
+      ],
+      "ue": [
+        20,
+        21
+      ],
+      "notes": "rZ1iEDSa; explicit home Zverev A./away Davidovich Fokina A. identity, completed5-7 6-4 6-3 winner DH50 independently bound to officialMS002. W10+12+6=28,14+10+12=36; UE6+8+6=20,11+5+5=21. Whole-match serve denominators/points agree with officialMS002. TNNSdayAPI403 recorded; no claim TNNS supplied the data."
+    },
+    "a": {
+      "aces": 18,
+      "df": 2,
+      "first_in": 71,
+      "first_total": 95,
+      "first_won": 52,
+      "second_total": 24,
+      "second_won": 11,
+      "bp_conv": 1,
+      "bp_chances": 3,
+      "pts_won": 82,
+      "pts_total": 178,
+      "winners": 28,
+      "ue": 20,
+      "headshot": "assets/players/headshots/atp-Z355.png"
+    },
+    "b": {
+      "aces": 5,
+      "df": 2,
+      "first_in": 68,
+      "first_total": 83,
+      "first_won": 58,
+      "second_total": 15,
+      "second_won": 6,
+      "bp_conv": 2,
+      "bp_chances": 6,
+      "pts_won": 96,
+      "pts_total": 178,
+      "winners": 36,
+      "ue": 21,
+      "headshot": "assets/players/headshots/atp-DH50.png"
+    }
+  },
+  "push": {
+    "auto": true,
+    "summary": "先赢一盘兹维列夫出局",
+    "lead": "先赢一盘，却没能走进上海决赛。兹维列夫发出18记ACE，仍被达维多维奇·福基纳以5-7、6-4、6-3逆转。转折发生在第二盘末段：一记奔跑反手穿越扳平盘分，决胜盘开局的双误又让他陷入追赶。年终第一已经锁定，这一站的遗憾，留待下一次弥补。"
+  },
+  "_heat_why": "用户点名世界第2、已锁定年终第1的兹维列夫上海半决赛被逆转；从领先到落败的盘末和决胜盘转折具有明确叙事。",
+  "_facts": [
+    {
+      "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/facts-agent/verified-facts.json",
+      "why": "官方MS002结果及分盘统计、排名、次盘奔跑反手穿越、决胜盘开局双误及2-5两个未兑现赛点，多源冲突已记录。"
+    },
+    {
+      "path": "data/evidence/davidovich-zverev-shanghai-2026-sf/source-identity/source_identity.json",
+      "why": "实际官方ATP Tour上传者/title与源片SHA，匹配同日MS002真实比分。"
+    }
+  ],
+  "_hit_data": [
+    {
+      "label": "18记ACE仍被逆转",
+      "detail": "兹维列夫全场18ACE，第一盘9ACE且未面对BP；一发得分首盘22/28=79%、次盘17/26=65%。",
+      "source": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms002",
+      "used_in": "首盘来路、次盘解释和全场统计。"
+    },
+    {
+      "label": "次盘盘点奔跑反拍穿越",
+      "detail": "实际源104.4后4-5/30-40，ADF接发拿下盘点扳成6-4，转入决胜盘。",
+      "source": "https://en.rolexshanghaimasters.com/en/media/news/zverev-davidovich-fokina-shanghai-2026-saturday",
+      "used_in": "完整关键回合及English原声，不编直线斜线。"
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "兹维列夫先赢一盘，为什么没能守住上海决赛门票？",
+    "thesis": "以用户点名的输家兹维列夫为主角，从首盘发球保护到第二盘盘点反拍穿越，再到决胜盘双误先破和2-5赛点反抗；统计解释机会差异，赛后留真实完整反应，结尾回到下次期待。",
+    "beats": [
+      "真实postwin宣告冷开",
+      "北京时间日期下午上海男单半决赛与年终第一背景、首盘9ACE和0BP",
+      "实际首盘发球拿下7-5",
+      "次盘一发得分79%降65%及4-5压力",
+      "完整次盘盘点长回合与奔跑反手穿越",
+      "native事实卡交代决胜盘开局双误与2-5错失两MP、追3-5",
+      "实际唯一可见终结赛点与完整笑容握手致谢英文",
+      "完整统计a兹b达维多维奇",
+      "下一轮对阵与输家无数据情绪期待问句"
+    ],
+    "human_context": {
+      "angle": "已经锁定年终第一，却没能把首盘领先变成上海决赛门票；这一站先放下，下一站再来。",
+      "facts": [
+        "兹维列夫当前第2，已提前锁定年终第1，不能混称当前第1",
+        "首盘9ACE没有面对破发点；全场18ACE",
+        "盘末反手穿越扳平后，决胜盘开局双误先丢发球局",
+        "2-5错过两个赛点，最终ADF5-7 6-4 6-3胜出"
+      ],
+      "sources": [
+        "https://en.rolexshanghaimasters.com/en/media/news/zverev-davidovich-fokina-shanghai-2026-saturday",
+        "https://www.usopen.org/amp/en_US/news/articles/2026-10-15/alexander_zverev_clinches_year-end_no_1_ranking.html"
+      ]
+    },
+    "_authoring": {
+      "method": "current_assistant_manual",
+      "external_model_pass_claimed": false,
+      "human_listening_claimed": false
+    },
+    "_coverage_limits": "决胜盘开局双误和5-2接发两个赛点未在指定官方源中收录，内部明确记录，用真实结果事实卡承接，不向观众解释素材缺口。"
+  },
+  "segments": [
+    {
+      "source": "main",
+      "start": 142.3,
+      "end": 152.94,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 304,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.46,
+          "end": 3.34,
+          "text": "For the second time in his career,\n职业生涯第二次，"
+        },
+        {
+          "at": 4.32,
+          "end": 6.7,
+          "text": "Alejandro Davidovich Fokina\n达维多维奇·福基纳"
+        },
+        {
+          "at": 6.7,
+          "end": 10.44,
+          "text": "is into the final of a Masters 1000.\n打进了大师赛决赛。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "cold_open",
+      "_fit_why": "用户要求3:4铺满全屏；1920x1080固定中心取x555..1365，输出1080x1440；无动态追踪，球场外侧裁损已在实际PNG中如实记录。",
+      "_source_audio_review_status": "Exact same-MP4 full small.en/medium.en ASR and actual original frames reviewed; no human listening claim.",
+      "_score_inset_why": "实际主板左98上920下1029，随盘数宽542/589/636自动透明轮廓；保持栏目原固定画布位置，不手动移板。",
+      "crosses_cut": "本场官方集锦固有切换，实际PNG与比分核对；不把跳盘跳局冒充连续比赛。",
+      "point_end_ok": "选取真实完整发球至得分结果，赛后窗从已死球后的实际反应开始；精确原PNG证据见source-agent。",
+      "_ending_payoff_required": true,
+      "_cold_open_why": "真实比赛终结后的完整英文胜利宣告；cold与正文最终赛点、笑容、握手的同一事件对应，不用采访和颁奖。"
+    },
+    {
+      "title_card": "年终第一已经锁定\n上海争夺决赛门票",
+      "kicker": "上海半决赛",
+      "seconds": 19.2,
+      "narration": "北京时间二零二六年十月十七日下午，上海大师赛男单半决赛。提前锁定年终第一的兹维列夫，对阵达维多维奇·福基纳。首盘九记ACE，没给对手一个破发点。五比五之后率先破发，他拿到先赢一盘的机会。",
+      "_edit_id": "intro"
+    },
+    {
+      "source": "main",
+      "start": 54.4,
+      "end": 62.16,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 304,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.46,
+          "end": 2.06,
+          "text": "Another set point.\n又一个盘点。"
+        },
+        {
+          "at": 5.18,
+          "end": 7.7,
+          "text": "Dominant on serve once again.\n他的发球再次展现统治力。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "first_set_close",
+      "_fit_why": "用户要求3:4铺满全屏；1920x1080固定中心取x555..1365，输出1080x1440；无动态追踪，球场外侧裁损已在实际PNG中如实记录。",
+      "_source_audio_review_status": "Exact same-MP4 full small.en/medium.en ASR and actual original frames reviewed; no human listening claim.",
+      "_score_inset_why": "实际主板左98上920下1029，随盘数宽542/589/636自动透明轮廓；保持栏目原固定画布位置，不手动移板。",
+      "crosses_cut": "本场官方集锦固有切换，实际PNG与比分核对；不把跳盘跳局冒充连续比赛。",
+      "point_end_ok": "选取真实完整发球至得分结果，赛后窗从已死球后的实际反应开始；精确原PNG证据见source-agent。"
+    },
+    {
+      "title_card": "首盘7比5之后\n次盘4比5遇险",
+      "kicker": "压力换边",
+      "seconds": 14.8,
+      "narration": "首盘七比五之后，第二盘的压力换边了。兹维列夫的一发得分率，从百分之七十九降到百分之六十五。四比五，对手在盘点上打出奔跑中的反手穿越。",
+      "_edit_id": "second_set_context"
+    },
+    {
+      "source": "main",
+      "start": 106.24,
+      "end": 126.9,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 304,
+      "narration": "",
+      "quote": [
+        {
+          "at": 13.2,
+          "end": 16.94,
+          "text": "Oh, it doesn't get any better than that.\n噢，这一分真是精彩到了极点！"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "second_set_point",
+      "_fit_why": "用户要求3:4铺满全屏；1920x1080固定中心取x555..1365，输出1080x1440；无动态追踪，球场外侧裁损已在实际PNG中如实记录。",
+      "_source_audio_review_status": "Exact same-MP4 full small.en/medium.en ASR and actual original frames reviewed; no human listening claim.",
+      "_score_inset_why": "实际主板左98上920下1029，随盘数宽542/589/636自动透明轮廓；保持栏目原固定画布位置，不手动移板。",
+      "crosses_cut": "本场官方集锦固有切换，实际PNG与比分核对；不把跳盘跳局冒充连续比赛。",
+      "point_end_ok": "选取真实完整发球至得分结果，赛后窗从已死球后的实际反应开始；精确原PNG证据见source-agent。",
+      "_source_end_why": "实际native字幕预览发现130.48后巨大盘末结果板被3:4中心截断，整段不采用。126.90结束已完整保Oh...than that至123.18、125.04后6-4小比分与庆祝，+.18音尾到127.08在下一整句What a way127.24之前，不截句。"
+    },
+    {
+      "title_card": "开局丢掉发球局\n兹维列夫未能追回",
+      "kicker": "决胜盘转折",
+      "seconds": 12.8,
+      "narration": "决胜盘开局，一次双误，让兹维列夫先丢发球局。二比五落后，他扛过两个赛点，追到三比五。可接下来，轮到对手发球。",
+      "_edit_id": "deciding_set_context"
+    },
+    {
+      "source": "main",
+      "start": 137.2,
+      "end": 180.16,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 304,
+      "narration": "",
+      "quote": [
+        {
+          "at": 5.56,
+          "end": 8.44,
+          "text": "For the second time in his career,\n职业生涯第二次，"
+        },
+        {
+          "at": 9.42,
+          "end": 11.8,
+          "text": "Alejandro Davidovich Fokina\n达维多维奇·福基纳"
+        },
+        {
+          "at": 11.8,
+          "end": 15.54,
+          "text": "is into the final of a Masters 1000.\n打进了大师赛决赛。"
+        },
+        {
+          "at": 20.18,
+          "end": 23.5,
+          "text": "And for the second time in his career,\n同时，这也是他职业生涯第二次，"
+        },
+        {
+          "at": 24.14,
+          "end": 27.04,
+          "text": "he gets the better of Alexander Zverev.\n击败亚历山大·兹维列夫。"
+        },
+        {
+          "at": 30.68,
+          "end": 33.12,
+          "text": "What an Asian swing he's enjoying.\n他的亚洲赛季，表现多么出色！"
+        },
+        {
+          "at": 34.54,
+          "end": 36.78,
+          "text": "Champion in Chengdu three weeks ago.\n三周前，他在成都夺冠。"
+        },
+        {
+          "at": 38.18,
+          "end": 42.66,
+          "text": "His unbeaten run on Chinese soil gathers more pace.\n他在中国的不败征程，继续向前。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "ending",
+      "_fit_why": "用户要求3:4铺满全屏；1920x1080固定中心取x555..1365，输出1080x1440；无动态追踪，球场外侧裁损已在实际PNG中如实记录。",
+      "_source_audio_review_status": "Exact same-MP4 full small.en/medium.en ASR and actual original frames reviewed; no human listening claim.",
+      "_score_inset_why": "实际主板左98上920下1029，随盘数宽542/589/636自动透明轮廓；保持栏目原固定画布位置，不手动移板。",
+      "crosses_cut": "本场官方集锦固有切换，实际PNG与比分核对；不把跳盘跳局冒充连续比赛。",
+      "point_end_ok": "选取真实完整发球至得分结果，赛后窗从已死球后的实际反应开始；精确原PNG证据见source-agent。"
+    },
+    {
+      "stat_card": true,
+      "seconds": 13,
+      "narration": "全场十八记ACE，没能换来胜利。制胜分二十八比三十六，非受迫失误二十比二十一。兹维列夫的发球有威力，进攻得分却少了八个。",
+      "_edit_id": "full_stats"
+    },
+    {
+      "title_card": "这一站先放下\n下一站再来",
+      "kicker": "期待下一次",
+      "seconds": 16,
+      "narration": "另一场半决赛，梅德韦杰夫对阵霍达尔。胜者，将与达维多维奇·福基纳争冠。兹维列夫，这一站先放下，下一站再来。接下来，你最期待他做出什么改变？",
+      "_edit_id": "outlook"
+    }
+  ],
+  "_tts_backend_why": "沿用赛场之上云健zh-CN-YunjianNeural +6% 0Hz原有声音，无情绪风格，Edge足够；本地预检保实际MP3/WordBoundary，正式渲染严格复用同一快照。",
+  "_tennistv_trim": "实际上传者ATP Tour，右上ATP台标被固定中心3:4裁出；184.68秒WATCH MORE/SUBSCRIBE开始。结束窗180.16、完整gathers more pace句后切出，下一句He takes out整句未采用，不带发行者片尾。",
+  "_tactics_why": "本期保留的可核关键球路集中在第二盘盘点：达维多维奇奔跑反手穿越，保留完整长回合及原声Oh it does not get any better than that。首盘7秒关盘只见实际发球及结果，不足以推断整盘发球落点/正反手战术；中文用官方9ACE、零破发点、一发得分79%到65%解释。决胜盘开局双误未在指定官方源中收录，用事实卡承接。不能为了两段中文球路数量，在没有可核画面的地方编造线路/站位或把同一回合重复解释。"
+}
