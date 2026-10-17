@@ -1,13 +1,13 @@
 {
   "slug": "chwalinska-swiatek-wuhan-2026-sf",
-  "reviewed_at": "2026-10-17T15:38:49.487796+00:00",
-  "review_kind": "actual_encoded_cloud_release_candidate_visual_sampling",
-  "status": "historical_F_fullbleed_movie_sample_review_body_unchanged_new_E_cover_movie_pending",
+  "reviewed_at": "2026-10-17T15:52:00.705679+00:00",
+  "review_kind": "actual_encoded_latest_cloud_cover_delta_and_body_key_frame_review",
+  "status": "no_blocking_visual_defect_found_in_reviewed_latest_complete_duo_candidate_samples",
   "publication_approved": false,
   "film": {
-    "path": "/workspace/scratch/sf-cloud-final.mp4",
-    "sha256": "b7fcc870445141c3d738974104b9ae6f877ae0f222fa83cf2fb3d187671904fb",
-    "bytes": 110431345,
+    "path": "/workspace/scratch/sf-complete-duo-final.mp4",
+    "sha256": "c2ffa0d4666caf744aa2bbed6d524422b36a28ed0e1fe0b1ec809244a952749f",
+    "bytes": 110332783,
     "duration_seconds": 315.52,
     "video_codec": "h264",
     "audio_codec": "aac",
@@ -20,186 +20,144 @@
     "audio_duration_seconds": 315.514,
     "is_complete_encoded_film": true,
     "is_native_still_preview": false,
-    "cloud_run_id": "39044781220"
+    "cloud_run_id": "39046157620"
   },
   "scope": {
     "actual_viewing": [
-      "实际view云端实际成片contact-00..03全4张，每4秒抽样2–314秒，共79张缩略样本，覆盖完整时间范围",
-      "实际view云端全部17张独立高分辨率关键frame图，包括编码后的0.6秒F封面、187.3秒稳定大比分图、263秒拥抱、288秒统计卡和302/313秒最后章节/品牌页"
+      "实际view新版云端视频导出的全部11张高分辨率关键帧：0.6、2、25、65、187.3、193、248、263、288、302、313秒",
+      "确认最新E完整双人封面进入实际片头，并对正文比分/字幕/布局/卡片与前次实际视频抽样所见作差异核查"
     ],
     "not_claimed": [
-      "没有逐帧人工看完315.52秒全部视频",
-      "没有人工听审任何音频；用户同一冻结口播bundle的听审另有独立记录",
-      "抽样没有覆盖所有转场瞬间和每个字幕cue，不将无阻塞结论扩张为全帧绝无缺陷",
-      "本地27eff5…与云端b7fcc8…是不同编码字节，云端结论来自本轮独立实看，不能自动继承本地审核"
+      "本轮没有重新抽取或实看全片4秒墙，也没有逐帧人工播放315.52秒全部视频",
+      "旧b7fcc8…与新c2ffa0…为不同编码文件；没有声称正文编码字节完全相同",
+      "旧版4墙/17关键帧的全时间范围抽样仅是已审核同正文计划的可追溯证据，不冒充新版全时间范围实际实看",
+      "未人工听审任何音频；用户冻结口播听审另有证据"
     ]
   },
-  "contact_sheets": [
-    {
-      "path": "/workspace/scratch/sf-cloud-final-review/contact-00.jpg",
-      "sha256": "b9cb5aebbeee2d89109df5ca684653dab8218bd2697c35e4a8d140b86570e579",
-      "actually_viewed": true
-    },
-    {
-      "path": "/workspace/scratch/sf-cloud-final-review/contact-01.jpg",
-      "sha256": "914141fe600951d811a75894807699649a248d335be12f5092b7545e7a6ad41a",
-      "actually_viewed": true
-    },
-    {
-      "path": "/workspace/scratch/sf-cloud-final-review/contact-02.jpg",
-      "sha256": "94c0ac542bc16fab283c1629ebadefbb0fb6906e70a8b8f28d1252f841aa9ab1",
-      "actually_viewed": true
-    },
-    {
-      "path": "/workspace/scratch/sf-cloud-final-review/contact-03.jpg",
-      "sha256": "484b1b2f3f43b5a34296299781573743574d3c0c235a3f15dc0769d41d7839f0",
-      "actually_viewed": true
-    }
-  ],
+  "latest_cover_instruction": {
+    "verbatim": [
+      "封面不用铺满",
+      "铺满就看不到人物主体了"
+    ],
+    "applied": "片头使用完整横向双人照片与纯深蓝文字承接区；正文继续按14段crop计划铺满。",
+    "static_poster_review_path": "/workspace/tennislive/requests/reels/chwalinska-swiatek-wuhan-2026-sf/qc/final-cover-review.json",
+    "static_poster_review_sha256": "685f4f73da0d17cc5bd02a51b2aa70e16782d2b5d24730fb9216478be1ac8415",
+    "static_poster_sha256": "6817c623666f53c8a48a714a244d502fda7cb9e5226289ab0706ebe9316e67f1",
+    "new_cover_observed_in_actual_encoded_film": true
+  },
   "key_frame_reviews": [
     {
       "film_time": 0.6,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-0.6.jpg",
-      "sha256": "29fbf1d01251e9869be22a16c7bc06c7bd10ea5c76065c2a06a4bd5339c22998",
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-0.6.jpg",
+      "sha256": "504aa514f854e549e42f054e1da7500f462cc62e18f9a0ed975433aed54c05f2",
       "actually_viewed": true,
-      "finding": "最新F本场双人实拍满幅封面进入云端实际编码视频，两张侧脸眼鼻嘴下巴在画内，不压字；7/6对5/1及双方姓名排名可读。"
+      "finding": "E完整双人横向原照已实际入片，双方侧脸五官/下巴及上半身清楚，纯深蓝文字承接区符合最新用户要求；标题/比分/排名可读，未用旧F满幅封面。",
+      "confidence": "high"
     },
     {
       "film_time": 2.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-2.jpg",
-      "sha256": "d51f1450e7d8dd9b3b1335208e1107f8fea7fa2c6628235acc5986df8346bcc0",
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-2.jpg",
+      "sha256": "448af546c270d40f5268bdff7f3cf4288c2a736256dd2be1e553f8b73b21cc10",
       "actually_viewed": true,
-      "finding": "冷开场位于已核死球之后，原声双语字幕完整显示；比分回贴完整，字幕未压脸或比分。"
+      "finding": "赢后冷开场与旧版同一源时刻，Oh, Maja!及中文字幕、回贴比分完整；正文保持中心3:4铺满。",
+      "confidence": "high"
     },
     {
       "film_time": 25.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-25.jpg",
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-25.jpg",
       "sha256": "5d99fcd1472533ef294ad9067d72412db6ad60674287cfc5950a5bf5a0ec4d0f",
       "actually_viewed": true,
-      "finding": "intro原生全屏章节卡及北京时间字幕完整。"
+      "finding": "波兰德比开篇卡与此前同计划：旧日搭档隔网相逢、只有1张决赛门票及北京时间字幕完整。",
+      "confidence": "high"
     },
     {
       "film_time": 65.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-65.jpg",
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-65.jpg",
       "sha256": "204cd3db81bfcaf75e4c1fca17f5dfcf343ba561c2a0ecf398d86d97625eebf7",
       "actually_viewed": true,
-      "finding": "首盘4-3、斯瓦泰克接发破发点板完整；字幕未压脸或比分。"
-    },
-    {
-      "film_time": 97.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-97.jpg",
-      "sha256": "0dc97dca6ec5174c315f57744777a3980a02a512baae8a2755cf9dd6b5ab0a78",
-      "actually_viewed": true,
-      "finding": "首盘5-3及2盘点事实卡完整；字幕仍用两个连续盘点，与原预览相同的轻微数字样式点。"
-    },
-    {
-      "film_time": 109.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-109.jpg",
-      "sha256": "76f0439f89ac556d8d6c6843f8c5165cf37ea985ed47c9327cb9eb244394532e",
-      "actually_viewed": true,
-      "finding": "第1盘点结果附近，5-3/40-15原板完整，球员脸无遮挡；此帧原板尚未翻分，不当40-30证明。"
-    },
-    {
-      "film_time": 119.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-119.jpg",
-      "sha256": "8533e2fdcfe079101653c6f19f0ed847794e12f3353cf3c428ba65133800f700",
-      "actually_viewed": true,
-      "finding": "第2盘点，5-3/40-30及SET POINT #2板完整；斯瓦泰克横向跑动回击字幕与画面吻合。"
-    },
-    {
-      "film_time": 158.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-158.jpg",
-      "sha256": "2d90f4f5ebb6452fb9b53ab43daafa56e8cfeb5461102b5d977ac5a5742fd98c",
-      "actually_viewed": true,
-      "finding": "赫瓦林斯卡6-5盘点准备近景；SET POINT板和姓名无裁缺。"
+      "finding": "首盘4-3、伊加接发Ad及BREAK POINT #3，长回合字幕与回贴板完整，未见封面构图变化扩散至正文。",
+      "confidence": "high"
     },
     {
       "film_time": 187.3,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-187.3.jpg",
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-187.3.jpg",
       "sha256": "2bbc0ade8ca59f9794bf4218c4a0a91856fed109e4138438017c1ff19bfcdf63",
       "actually_viewed": true,
-      "finding": "首盘结束大比分图稳定期，IGA SWIATEK[7]5及MAJA CHWALINSKA[16]7全名/比分/绿高亮完整，在实际crop成片可读；源入场动画误判已闭环。"
+      "finding": "首盘稳定大比分图完整，IGA SWIATEK [7] 5和MAJA CHWALINSKA [16] 7全名/比分/绿高亮清楚；未见裁名。",
+      "confidence": "high"
     },
     {
       "film_time": 193.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-193.jpg",
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-193.jpg",
       "sha256": "44d68dc24f3f45a22d9fd63ca1288ed0c70c1c9944c00b1653e298942fd9db61",
       "actually_viewed": true,
-      "finding": "斯瓦泰克遗憾原生事实卡与字幕完整，没有把其他回合画面冒充医疗暂停。"
-    },
-    {
-      "film_time": 211.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-211.jpg",
-      "sha256": "1f86dd318c089739ca730702cd98b98fd0846b4961376866d7ee93c54baa758f",
-      "actually_viewed": true,
-      "finding": "次盘斯1比3面对破发点与回贴1/3、月亮姐Ad一致；球路旁白段字幕和双方身份对应。"
+      "finding": "斯瓦泰克的遗憾章节卡、首盘领先未能兑现/第二盘被动及中文字幕完整，与旧版相同内容与版式。",
+      "confidence": "high"
     },
     {
       "film_time": 248.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-248.jpg",
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-248.jpg",
       "sha256": "b866e117686812deecd22347aa59e47c61f9b78a2cfd02f76b11ba553501081a",
       "actually_viewed": true,
-      "finding": "完整最终赛点段中的实际回合，5-1/30-40及MATCH POINT板可读，无多余静图或上下补色带。"
+      "finding": "最终赛点中斯1-5、30-40及MATCH POINT回贴完整，实际赛场画面全屏，未见上下留边。",
+      "confidence": "high"
     },
     {
       "film_time": 263.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-263.jpg",
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-263.jpg",
       "sha256": "1b740899d8fe2405e2a4e77c46b1c4fb48cef71a8b095e1bbe7d2b7e425a5e01",
       "actually_viewed": true,
-      "finding": "终局网前拥抱，双方与拥抱动作清楚，无遮挡字幕或比分残块；原视频动作可辨。"
-    },
-    {
-      "film_time": 277.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-277.jpg",
-      "sha256": "29f934c8f13f105bcbae298835d26283fdae0a253b8b5f821098d168b80a163f",
-      "actually_viewed": true,
-      "finding": "赛后致意阶段保留真实解说双语，英文与中文完整；固定中心裁切让头部在右缘部分出画，是前次已记录同一源画面，未擅自改构图。"
+      "finding": "网前真实拥抱动作及两人清楚，未见字幕/比分残块遮挡。",
+      "confidence": "high"
     },
     {
       "film_time": 288.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-288.jpg",
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-288.jpg",
       "sha256": "c45e3267e6c51ad8201abcb5352560d4b7653d0421588923acb6c9f6d8af5ec3",
       "actually_viewed": true,
-      "finding": "全屏统计卡全部9行可读，斯/赫顺序正确；37/19制胜分、33/7UE、0/2ACE、4/0双误、2/8对6/10、60/74等正确，最下英文未裁缺。"
+      "finding": "统计卡9行全部可读，斯/赫顺序与数值一致：ACE 0/2、双误4/0、制胜分37/19、UE33/7、65%/78%、53%/63%、41%/44%、2/8对6/10、60/74。",
+      "confidence": "high"
     },
     {
       "film_time": 302.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-302.jpg",
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-302.jpg",
       "sha256": "6cd0beadd48c2fa64a2c96e2654f9e590486ef9366b3ff2227237d9304f6b73f",
       "actually_viewed": true,
-      "finding": "积极展望片尾卡完整，斯瓦泰克武汉决赛梦字幕无截断。"
+      "finding": "重逢之后收尾卡和斯瓦泰克武汉决赛梦字幕完整。",
+      "confidence": "high"
     },
     {
       "film_time": 313.0,
-      "path": "/workspace/scratch/sf-cloud-final-review/frame-313.jpg",
+      "path": "/workspace/scratch/sf-complete-duo-final-review/frame-313.jpg",
       "sha256": "aa22dcc53b78686e6a4e004202c307e915e0a2cc88fc5e3106c7549e2c6ae41d",
       "actually_viewed": true,
-      "finding": "独立品牌收尾图完整，没有比赛字幕/比分板残留。"
+      "finding": "独立品牌收尾，网球时差/时差归我好球归你无截断，无赛场板残留。",
+      "confidence": "high"
     }
   ],
   "blocking_visual_findings": [],
-  "minor_findings": [
-    {
-      "id": "count_numeral_style",
-      "film_time": 97,
-      "finding": "字幕仍写两个连续盘点，同屏主标题使用2个；不影响事实或可读性。沿用原预览记录，不把它升级成新增画面阻塞。"
-    }
-  ],
-  "sequence_and_layout_findings": [
-    "从4秒墙和关键帧所见，顺序为F封面→赢后冷开场→坐标/背景卡→首盘拉锯/斯瓦泰克5-3→双盘点→赫瓦林斯卡7-5→伤情与次盘转折事实卡→次盘1-3、1-4、最终赛点→拥抱/主裁握手/致意→统计→展望→品牌收尾，未见错接其他比赛或采访。",
-    "比赛样本均为固定中心3:4铺满，未见上下黑边/补蓝条、full_source横图或静止首盘结束替代图进入成片。原生章节卡、统计卡及品牌页本身铺满画布，不将其设计背景误报成黑边。",
-    "样本中的原生回贴比分板保留完整姓名、局分、小分和BREAK/SET/MATCH POINT标签，未见多贴板或拼接残块。源大板入场动画171.46时暂缺文字属于原节目动画；实际187.3秒稳定图完整。",
-    "已看字幕样本与球员脸/比分分离；英文与中文主句可读，统计卡无底行截断。94秒墙中卡片与观众画面重叠为转场取样，后续卡片稳定样本完整。"
-  ],
-  "technical_sidecar_crosscheck": {
-    "cloud_file_identity_independently_computed": true,
-    "cloud_sha256": "b7fcc870445141c3d738974104b9ae6f877ae0f222fa83cf2fb3d187671904fb",
-    "cloud_bytes": 110431345,
-    "cloud_duration_seconds": 315.52,
-    "cloud_stream_duration_difference_seconds": 0.006,
-    "release_and_cloud_qc_match": "root报告该SHA及字节数与Release和云端QC凭证一致；本代理独立计算了本地下载云端文件身份，未在本轮读取Release和云端QC原凭证",
-    "ass_identity_crosscheck": "本轮未独立读取远端ASS；由root继续核对两次渲染ASS身份",
-    "note": "本报告视觉判断绑定实际云端b7fcc8…文件；不把本地native侧车当成云端凭证，也不宣称人工声学审听。"
+  "minor_findings": [],
+  "body_regression_conclusion": "所复看的10张正文关键帧与此前同时间图的内容、比分回贴、字幕和排版一致，未见封面替换引起正文布局回退或新增裁缺；此为抽样视觉一致，不代表正文编码字节相同。",
+  "prior_body_review_reference": {
+    "path": "/workspace/tennislive/requests/reels/chwalinska-swiatek-wuhan-2026-sf/qc/previous-fullbleed-render-visual-review.json",
+    "sha256": "cd78cf3e59fc0c318c804f507f6d8415e23185cc8928034def7f7896533cba07",
+    "prior_film_sha256": "b7fcc870445141c3d738974104b9ae6f877ae0f222fa83cf2fb3d187671904fb",
+    "prior_run_id": "39044781220",
+    "prior_actual_review_scope": "4张每4秒全时间范围墙（2–314秒，共79缩略样本）及17张高分辨率关键帧",
+    "prior_cover_superseded": true,
+    "body_evidence_retained": true,
+    "use_limit": "保留已审同正文计划证据；当前候选独立绑定本报告c2ffa0…且仅本轮11帧实际view，二者证据范围分别陈述。"
+  },
+  "technical_context": {
+    "file_identity_independently_computed": true,
+    "release_check_path": "/workspace/tennislive/requests/reels/chwalinska-swiatek-wuhan-2026-sf/qc/final-release-check.json",
+    "release_check_sha256": "249faac5ea3a9550baba5f0ccfc21fc3a411ddcacd4afb0bed14fd32aa985273",
+    "release_check_identity_matches_actual_file": true,
+    "root_recorded_native_qc_status": "pass",
+    "root_recorded_body_plan_stats_outro_voice_parameters_unchanged": true,
+    "root_recorded_actual_ASS_identical_to_prior_body_review": true,
+    "root_recorded_strict_frozen_narration_reused": true,
+    "evidence_limit": "本代理读取root独立final-release-check，未重新读取云端QC/ASS原件或运行native QC；这不替代本轮实际图像复看。"
   },
   "owner_audio_review_context": {
     "path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/owner-listening-review.json",
@@ -213,242 +171,12 @@
     "note": "这是用户对实际119.54秒口播的听后陈述，本代理只读取该独立证据，不能说本代理听审通过。",
     "cloud_same_bundle_context": "root说明云端使用相同4fd93954…250c4冻结bundle；用户已听过该bundle全口播并回复读音自然。"
   },
-  "remote_render_scope": {
-    "run_id": "39044781220",
-    "reviewed": true,
-    "file_identity_verified": true,
-    "requirement": "本报告主绑定云端b7fcc870445141c3d738974104b9ae6f877ae0f222fa83cf2fb3d187671904fb完整视频；已独立实看4墙和17关键帧，仍是抽样视觉QC。"
+  "actions": {
+    "spec_modified": false,
+    "audio_resynthesized": false,
+    "pushed": false
   },
   "remaining_release_checks": [
-    "root继续核对远端ASS、发布链接、播放器、文案与推送凭据；本代理未push或修改spec"
-  ],
-  "prior_local_render_review": {
-    "slug": "chwalinska-swiatek-wuhan-2026-sf",
-    "reviewed_at": "2026-10-17T15:35:20.585095+00:00",
-    "review_kind": "actual_encoded_local_film_visual_sampling",
-    "status": "no_blocking_visual_defect_found_in_reviewed_actual_film_samples",
-    "publication_approved": false,
-    "film": {
-      "path": "/workspace/scratch/sf-fullbleed-local-render/chwalinska-swiatek-wuhan-2026-sf.mp4",
-      "sha256": "27eff5aea06e8a917c7fa4e40210cb39ae446f4b90dcc0a59809624ed2a61d1a",
-      "bytes": 113890609,
-      "duration_seconds": 315.52,
-      "video_codec": "h264",
-      "audio_codec": "aac",
-      "canvas": [
-        1080,
-        1440
-      ],
-      "fps": "25/1",
-      "is_complete_encoded_film": true,
-      "is_native_still_preview": false
-    },
-    "scope": {
-      "actual_viewing": [
-        "实际view contact-00..03全4张，每4秒抽样2–314秒，共79张缩略样本，覆盖完整时间范围",
-        "实际view全部17张独立高分辨率关键frame图，包括编码后的0.6秒F封面、187.3秒稳定大比分图、统计卡和最后品牌页"
-      ],
-      "not_claimed": [
-        "没有逐帧人工看完315.52秒全部视频",
-        "没有人工听审任何音频",
-        "没有审本轮尚未下载的远端发布视频",
-        "抽样没有覆盖所有转场瞬间和每个字幕cue，不将无阻塞结论扩张为全帧绝无缺陷"
-      ]
-    },
-    "contact_sheets": [
-      {
-        "path": "/workspace/scratch/sf-actual-film-review/contact-00.jpg",
-        "sha256": "647211f67d5da7b0e2122b6af0b4f5bfdc6a9fab6bd2e47f637a52d9a364ada8",
-        "actually_viewed": true
-      },
-      {
-        "path": "/workspace/scratch/sf-actual-film-review/contact-01.jpg",
-        "sha256": "ab69e27d3dd9c55143b3a141e8fe83405818a3f095c70fa8d631c6633a09d403",
-        "actually_viewed": true
-      },
-      {
-        "path": "/workspace/scratch/sf-actual-film-review/contact-02.jpg",
-        "sha256": "185bdfbe31f09132d924ec3f86cb9b5afaa7ea80a4b848a60291139744f6a30a",
-        "actually_viewed": true
-      },
-      {
-        "path": "/workspace/scratch/sf-actual-film-review/contact-03.jpg",
-        "sha256": "9f69c82d049e4687f6f8a96a8e1dc6eb01763c79e74ddbe6ea5f6f0c0a7b81eb",
-        "actually_viewed": true
-      }
-    ],
-    "key_frame_reviews": [
-      {
-        "film_time": 0.6,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-0.6.jpg",
-        "sha256": "35d63685f04127fd550b3cce9497aa05a08cd9313a5dc3068be34432b8a7c843",
-        "actually_viewed": true,
-        "finding": "最新F本场双人实拍满幅封面已进入实际编码视频，两脸眼鼻嘴下巴完整，不压字；7/6对5/1及双方姓名排名可读。"
-      },
-      {
-        "film_time": 2.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-2.jpg",
-        "sha256": "827063de51d79a604101eb581c70b00da20013830aad2bd914a31fbbefc4ce3b",
-        "actually_viewed": true,
-        "finding": "冷开场位于已核死球之后，原声双语字幕完整显示；比分回贴完整，字幕未压脸或比分。"
-      },
-      {
-        "film_time": 25.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-25.jpg",
-        "sha256": "ef842ef25f1befbe41815dd20c883ea90c7017bca3bef2f919209cf80927a6d3",
-        "actually_viewed": true,
-        "finding": "intro原生全屏章节卡及北京时间字幕完整。"
-      },
-      {
-        "film_time": 65.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-65.jpg",
-        "sha256": "babbbbf830544045688fe3187443169d0fe30e3a9b1c20ab716175cbb0236d02",
-        "actually_viewed": true,
-        "finding": "首盘4-3、斯瓦泰克接发破发点板完整；字幕未压脸或比分。"
-      },
-      {
-        "film_time": 97.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-97.jpg",
-        "sha256": "cd34f50dee18c84d76007a7a210be140d227be1c37e51315d5b9486f4d3d2e95",
-        "actually_viewed": true,
-        "finding": "首盘5-3及2盘点事实卡完整；字幕仍用两个连续盘点，与原预览相同的轻微数字样式点。"
-      },
-      {
-        "film_time": 109.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-109.jpg",
-        "sha256": "db1f272b18568757f209b180cfda22876f165e40815f9d9eacd6b229c2c0114c",
-        "actually_viewed": true,
-        "finding": "第1盘点结果附近，5-3/40-15原板完整，球员脸无遮挡；此帧原板尚未翻分，不当40-30证明。"
-      },
-      {
-        "film_time": 119.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-119.jpg",
-        "sha256": "e5af807b5ddc0e863edb9fa28f8d1d1cf8b22aacbd919a5b9f6155c1b09e2e51",
-        "actually_viewed": true,
-        "finding": "第2盘点，5-3/40-30及SET POINT #2板完整；斯瓦泰克横向跑动回击字幕与画面吻合。"
-      },
-      {
-        "film_time": 158.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-158.jpg",
-        "sha256": "6d8426bfede54580923794f6137ff056ad7e02addbf82c364f4f528cdbf72fba",
-        "actually_viewed": true,
-        "finding": "赫瓦林斯卡6-5盘点准备近景；SET POINT板和姓名无裁缺。"
-      },
-      {
-        "film_time": 187.3,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-187.3.jpg",
-        "sha256": "85ece047d33a21bfe7b9e23f3519a8882adcc3396f44a223f4d5f23c509cdc74",
-        "actually_viewed": true,
-        "finding": "首盘结束大比分图稳定期，IGA SWIATEK[7]5及MAJA CHWALINSKA[16]7全名/比分/绿高亮完整，在实际crop成片可读；源入场动画误判已闭环。"
-      },
-      {
-        "film_time": 193.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-193.jpg",
-        "sha256": "8449e7e4b1f2780db33de3915119a70038c68498da0c2d0981c3086284e946c8",
-        "actually_viewed": true,
-        "finding": "斯瓦泰克遗憾原生事实卡与字幕完整，没有把其他回合画面冒充医疗暂停。"
-      },
-      {
-        "film_time": 211.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-211.jpg",
-        "sha256": "02aaadbf75ab26b81c2cde20422a091a059216daa3969cff61c18ee4ba97bfef",
-        "actually_viewed": true,
-        "finding": "次盘斯1比3面对破发点与回贴1/3、月亮姐Ad一致；球路旁白段字幕和双方身份对应。"
-      },
-      {
-        "film_time": 248.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-248.jpg",
-        "sha256": "04bd28a8bb1ade417e1c995589115a3382ee692ac8d65d74ff8b9132424e9154",
-        "actually_viewed": true,
-        "finding": "完整最终赛点段中的实际回合，5-1/30-40及MATCH POINT板可读，无多余静图或上下补色带。"
-      },
-      {
-        "film_time": 263.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-263.jpg",
-        "sha256": "d622e5e1bfbd912a2a32945992722b82b6302dbe9f32d80d822d818e66dea0aa",
-        "actually_viewed": true,
-        "finding": "终局网前拥抱，双方与拥抱动作清楚，字幕/比分残块未遮脸。"
-      },
-      {
-        "film_time": 277.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-277.jpg",
-        "sha256": "7f352c77862e549134da248fb2c885e7208be2a76d27f0f57a8da2d93c1dbe2e",
-        "actually_viewed": true,
-        "finding": "赛后致意阶段保留真实解说双语，英文与中文完整；固定中心裁切让头部在右缘部分出画，是前次已记录同一源画面，未擅自改构图。"
-      },
-      {
-        "film_time": 288.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-288.jpg",
-        "sha256": "933572b96d00fd3527e4b5c238123b8b7290cd2ca83ff86bde43daa8f23224f0",
-        "actually_viewed": true,
-        "finding": "全屏统计卡全部9行可读，斯/赫顺序正确；37/19制胜分、33/7UE、0/2ACE、4/0双误、2/8对6/10、60/74等正确，最下英文未裁缺。"
-      },
-      {
-        "film_time": 302.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-302.jpg",
-        "sha256": "6e887be494c5799ecfabb60f7d4c5fc533033ea793dca2b6586b03f901d2a750",
-        "actually_viewed": true,
-        "finding": "积极展望片尾卡完整，斯瓦泰克武汉决赛梦字幕无截断。"
-      },
-      {
-        "film_time": 313.0,
-        "path": "/workspace/scratch/sf-actual-film-review/frame-313.jpg",
-        "sha256": "d53eac37725419beb411e575ecbc0a26e2e9113523942b1107e83a74efd4ac31",
-        "actually_viewed": true,
-        "finding": "独立品牌收尾图完整，没有比赛字幕/比分板残留。"
-      }
-    ],
-    "blocking_visual_findings": [],
-    "minor_findings": [
-      {
-        "id": "count_numeral_style",
-        "film_time": 97,
-        "finding": "字幕仍写两个连续盘点，同屏主标题使用2个；不影响事实或可读性。沿用原预览记录，不把它升级成新增画面阻塞。"
-      }
-    ],
-    "sequence_and_layout_findings": [
-      "从4秒墙和关键帧所见，顺序为F封面→赢后冷开场→坐标/背景卡→首盘拉锯/斯瓦泰克5-3→双盘点→赫瓦林斯卡7-5→伤情与次盘转折事实卡→次盘1-3、1-4、最终赛点→拥抱/主裁握手/致意→统计→展望→品牌收尾，未见错接其他比赛或采访。",
-      "比赛样本均为固定中心3:4铺满，未见上下黑边/补蓝条、full_source横图或静止首盘结束替代图进入成片。原生章节卡、统计卡及品牌页本身铺满画布，不将其设计背景误报成黑边。",
-      "样本中的原生回贴比分板保留完整姓名、局分、小分和BREAK/SET/MATCH POINT标签，未见多贴板或拼接残块。源大板入场动画171.46时暂缺文字属于原节目动画；实际187.3秒稳定图完整。",
-      "已看字幕样本与球员脸/比分分离；英文与中文主句可读，统计卡无底行截断。94秒墙中卡片与观众画面重叠为转场取样，后续卡片稳定样本完整。"
-    ],
-    "technical_sidecar_crosscheck": {
-      "render_json_path": "/workspace/scratch/sf-fullbleed-local-render/render.json",
-      "render_json_sha256": "c58c744af893beeec1b78c902f76fdbc07e317bcbbbbe645fcd444f53a139218",
-      "qc_attestation_path": "/workspace/scratch/sf-fullbleed-local-render/qc_attestation.json",
-      "qc_attestation_sha256": "75e31c7ec1d53a5299f97f15f2817dfebc43436f6df21436cfbfbf2b7c9bcefd",
-      "attestation_film_sha_matches_actual": true,
-      "attestation_spec_sha256": "f4fa5f8d373f16eaaa811614e2f156e90c2bfc51272535074d2819c934ccc994",
-      "attestation_ass_sha256": "3ac372affca68ff6aac60724a88fe41d8384d08421384d4cafa73692518a9d05",
-      "observed_local_render_layout": "full",
-      "frozen_tts_bundle_sha256": "4fd93954a516769557bc460e4ce82622d66def832d936898fc778d92d4d250c4",
-      "audio_and_video_stream_duration_equal": true,
-      "note": "以上为实际文件与sidecar读取；技术pass字段归属于native检查，不替代本报告人工视觉抽样，也不宣称声学响度复核。"
-    },
-    "owner_audio_review_context": {
-      "path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/owner-listening-review.json",
-      "sha256": "02127e80621f2dc2994bbba8aaf850c79500b9e99dc0bc62e645f8b3b4bdc249",
-      "reviewer": "user / account owner",
-      "reply_verbatim": "已听过，读音自然",
-      "duration_seconds": 119.54399999999998,
-      "reviewed_tts_bundle_sha256": "4fd93954a516769557bc460e4ce82622d66def832d936898fc778d92d4d250c4",
-      "matches_local_frozen_bundle": true,
-      "assistant_listening_claimed": false,
-      "note": "这是用户对实际119.54秒口播的听后陈述，本代理只读取该独立证据，不能说本代理听审通过。"
-    },
-    "remote_render_scope": {
-      "run_id": "39044781220",
-      "reviewed": false,
-      "requirement": "本报告只绑定27eff5…本地实际编码文件。远端视频如SHA不同，须下载并另核身份/关键帧；同源同计划不能自动把本报告转成远端字节已审。"
-    },
-    "remaining_release_checks": [
-      "root下载远端实际视频并对F封面、首盘稳定大板、统计、收尾及关键比分做差异核对",
-      "发布链接、播放器、文案与推送凭据另核；本代理未push或修改spec"
-    ]
-  },
-  "superseded_by_latest_user_cover_instruction": true,
-  "latest_instruction": [
-    "封面不用铺满",
-    "铺满就看不到人物主体了"
+    "root统一记录本轮视觉报告、完成最终CI/发布与推送凭据；本报告只处理视觉复核，不自行发布。"
   ]
 }

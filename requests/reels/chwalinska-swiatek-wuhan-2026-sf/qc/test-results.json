@@ -28,22 +28,23 @@
     "frozen_tts_bundle_request_integrity": "10 requests match production bundle 4fd93954a516769557bc460e4ce82622d66def832d936898fc778d92d4d250c4",
     "pronunciation": "owner_listened_actual_119.54s_all_narration_and_brand_reports_natural; machine_unknowns_retained",
     "final_render": {
-      "status": "completed",
-      "run": 39044781220,
+      "status": "completed_latest_complete_duo_cover",
+      "run": 39046157620,
       "seconds": 315.52,
       "canvas": [
         1080,
         1440
       ],
-      "film_sha256": "b7fcc870445141c3d738974104b9ae6f877ae0f222fa83cf2fb3d187671904fb",
-      "bytes": 110431345,
+      "film_sha256": "c2ffa0d4666caf744aa2bbed6d524422b36a28ed0e1fe0b1ec809244a952749f",
+      "bytes": 110332783,
       "release_download_sha256_verified": true,
       "native_L2_QC": "pass",
       "frozen_bundle_strict_import": true
     },
     "publication_approved": false,
     "local_final_render": "completed_315.52_seconds",
-    "local_structural_QC": "passed"
+    "local_structural_QC": "passed",
+    "visual_review": "actual final candidate 11 key frames plus retained prior identical-plan body review; no blocking visual issue"
   },
   "pre_rebase_branch_ci": {
     "run": 39044773838,
@@ -54,5 +55,6 @@
     "failure_scope": "five over-width Chinese subtitle lines in other interview davidovichfokina-zverev-shanghai-2026-sf-interview",
     "already_fixed_on_main_commit": "b8a8b12c",
     "fresh_rebased_check": "pending"
-  }
+  },
+  "snapshot_note": "Pre-publication validation snapshot; final CI run and durable sent receipt are recorded by GitHub checks and canonical pushed.json."
 }

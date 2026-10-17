@@ -1,0 +1,80 @@
+{
+  "slug": "chwalinska-swiatek-wuhan-2026-sf",
+  "reviewed_at": "2026-10-17T15:46:57.453100+00:00",
+  "review_kind": "actual_final_poster_visual_review",
+  "status": "no_blocking_visual_defect_found_in_latest_complete_duo_cover",
+  "publication_approved": false,
+  "latest_user_instruction": {
+    "verbatim": [
+      "封面不用铺满",
+      "铺满就看不到人物主体了"
+    ],
+    "previous_explicit_choice": "双人合照，更有波兰德比的情绪；可以就用这个",
+    "application": "具体封面构图指令覆盖此前封面铺满要求；正文仍按当前14段crop计划铺满，不因封面要求改动正文。"
+  },
+  "cover": {
+    "path": "/workspace/tennislive/requests/reels/chwalinska-swiatek-wuhan-2026-sf/cover-review/cover-final.jpg",
+    "sha256": "6817c623666f53c8a48a714a244d502fda7cb9e5226289ab0706ebe9316e67f1",
+    "bytes": 330421,
+    "dimensions": [
+      1080,
+      1440
+    ],
+    "selected": "E-complete-duo-final",
+    "actually_viewed": true,
+    "image_display": "original detail, actual final poster"
+  },
+  "asset_identity": {
+    "selection_path": "/workspace/tennislive/requests/reels/chwalinska-swiatek-wuhan-2026-sf/cover-review/selection.json",
+    "selection_sha256": "752764dcce3cb81f6bf7f9798d150af9d7c05633b823c76a181558eff530f5bb",
+    "photo_original": "/workspace/tennislive/assets/reels/chwalinska-swiatek-wuhan-2026-sf/wuhan-sf-duo-reuters-original.jpg",
+    "source_sha256_computed": "db110b1f1ecac2a8da1c166c3ad078be5da92cfacf6f661eb43b3fb171525289",
+    "source_sha256_matches_selection": true,
+    "canvas_path": "/workspace/tennislive/assets/reels/chwalinska-swiatek-wuhan-2026-sf/wuhan-sf-duo-cover-canvas.jpg",
+    "canvas_sha256_computed": "0f689548a40fa81b0c55bcbbc85c9cc807807f30f0e9fd3f05059df4d7703d8b",
+    "canvas_sha256_matches_selection": true,
+    "source_caption_from_selection": "Maja Chwalińska i Iga Świątek dziękują sobie za walkę w Wuhan",
+    "source_page_from_selection": "https://polskieradio24.pl/sport/pojedynek-marzen-w-wuhan-swiatek-vs-chwalinska",
+    "credit_from_selection": "Reuters",
+    "note": "本轮独立计算本地源图及canvas身份，来源同场证据沿用selection及既有封面审查；未重新在线调查来源或授权。"
+  },
+  "visual_findings": [
+    {
+      "item": "subject_composition",
+      "finding": "横向双人原照置于画面上部中间，赫瓦林斯卡左、斯瓦泰克右；两张侧脸五官与下巴可见，两人肩膀/躯干上半身及相向互动清楚。",
+      "confidence": "high"
+    },
+    {
+      "item": "photo_integrity",
+      "finding": "完整横向照片等比缩放，上下纯深蓝承接文字；不再把两张脸推到3:4画面两侧。伊加帽顶接近照片原始上沿，未把帽沿贴边当作人脸被切。",
+      "confidence": "high"
+    },
+    {
+      "item": "text_safety",
+      "finding": "栏目/赛事在照片上方深蓝；波兰德比救回2个盘点、月亮姐首进1000赛决赛在照片下方，文字不压两人脸。",
+      "confidence": "high"
+    },
+    {
+      "item": "result_and_metadata",
+      "finding": "赫瓦林斯卡7、6对斯瓦泰克5、1，排名22/9、波兰国旗、Center Court、2:08完整可读；与当前事实包及前次成片检查一致。",
+      "confidence": "high"
+    }
+  ],
+  "blocking_visual_findings": [],
+  "scope_limits": [
+    "仅实看最新cover-final静态poster，不把它宣称为新云端视频已入片。",
+    "没有修改spec、正文、音频或发布记录；未push。",
+    "本报告不含人工音频听审。"
+  ],
+  "previous_render_review": {
+    "path": "/workspace/tennislive/requests/reels/chwalinska-swiatek-wuhan-2026-sf/qc/previous-fullbleed-render-visual-review.json",
+    "sha256": "cd78cf3e59fc0c318c804f507f6d8415e23185cc8928034def7f7896533cba07",
+    "film_sha256": "b7fcc870445141c3d738974104b9ae6f877ae0f222fa83cf2fb3d187671904fb",
+    "status": "previous_fullbleed_cover_superseded",
+    "body_visual_review_traceable": true
+  },
+  "required_new_render_delta_check": [
+    "取得实际新版云端视频及SHA，核对首帧已进入E完整双人合照封面。",
+    "核对正文14段crop/源/音频index/冻结TTS/ASS等计划身份与已审版本一致后，复看正文关键图；不能把旧b7fcc8字节当成新视频。"
+  ]
+}
