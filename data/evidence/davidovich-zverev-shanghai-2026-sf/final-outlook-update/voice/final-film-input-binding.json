@@ -1,0 +1,91 @@
+{
+  "bound_at": "2026-10-17T13:39:49.177578+00:00",
+  "status": "current_revised_native_movie_bound_to_exact_five_old_and_one_new_reviewed_voice_inputs",
+  "film_sha256": "7f5b967609dc0c8a75a7de23d38876e53ce2bf5d6d7173ae361e691eccbd1260",
+  "film_bytes": 58643858,
+  "run_id": 39037092351,
+  "new_bundle_sha256": "224043b9cf2a8e5494807da630b4f4039ad18471e79c9e2def59263cfacf00ae",
+  "bundle_bytes": 438420,
+  "spec_sha256": "33da62ac0f7d48ffc4dc020b7a58be620ea7b27ea206e2e5e61eb5d6c5ad75bc",
+  "subtitles_ass_sha256": "a46c5a2945e705e1d6764402678a1b8ed167ad65007eec53173d2fa20df9d028",
+  "topbar_ass_sha256": "13e55810dd145218cb9ca943b48ba87bf9fe61a662b196641db3cd36c590873f",
+  "render_inputs_sha256": "0646d107fa639dbc91044cc8180ac1d9dfc27732d7ed8c0da7de529c5c3201de",
+  "native_qc_sha256": "99ac74b7dc72fb9a0f6a8d603ca92b7e4cbde7bab2922402bc31f2e48c7f8a59",
+  "native_input_archive_sha256": "0d7384c566086b931324cec0a00a0fa045512c6f30a7beaf0b7c93c6a32c66f0",
+  "native_qc_status": "pass",
+  "actual_native_voice_inputs": [
+    {
+      "edit_id": "intro",
+      "output_name": "voice_01.mp3",
+      "marks_name": "voice_01.words.json",
+      "audio_sha256": "3452164ca06b4db0c591e59f935d4c642ded5e3bc1615ab65d39975a42fe33d0",
+      "marks_sha256": "c486ea63c764c05e9e9fd6974e996a95e6fc6b0738f49476c7a3a16be4260e52",
+      "matches_actual_native_archive": true,
+      "newly_reviewed": false,
+      "old_exact_whole_request_review_reused": true
+    },
+    {
+      "edit_id": "second_set_context",
+      "output_name": "voice_03.mp3",
+      "marks_name": "voice_03.words.json",
+      "audio_sha256": "afae15d8c498d53ae6a696fff56f9538efbe85e1c658cea9cc602a7a1054a912",
+      "marks_sha256": "6f80e54b018781649b417b71720f5d5964eca1962e072d7208dd1bfb33e72dbe",
+      "matches_actual_native_archive": true,
+      "newly_reviewed": false,
+      "old_exact_whole_request_review_reused": true
+    },
+    {
+      "edit_id": "deciding_set_context",
+      "output_name": "voice_05.mp3",
+      "marks_name": "voice_05.words.json",
+      "audio_sha256": "1a300545001e5c37036552efcfdcf460007ae88e13d560dd170db317ac64773d",
+      "marks_sha256": "518ac68ea47399a321bdaedb3de5643296020619482cfd591d872385e025cd08",
+      "matches_actual_native_archive": true,
+      "newly_reviewed": false,
+      "old_exact_whole_request_review_reused": true
+    },
+    {
+      "edit_id": "full_stats",
+      "output_name": "voice_07.mp3",
+      "marks_name": "voice_07.words.json",
+      "audio_sha256": "c7f8f8e3f24fefd70890c9f7a1ed7101064847d6ae60874dda7bd475f3d287a0",
+      "marks_sha256": "f1b420d7dd0f21495af5d3af560806720bc1dae787ba361c4315e08b9f761d07",
+      "matches_actual_native_archive": true,
+      "newly_reviewed": false,
+      "old_exact_whole_request_review_reused": true
+    },
+    {
+      "edit_id": "outlook",
+      "output_name": "voice_08.mp3",
+      "marks_name": "voice_08.words.json",
+      "audio_sha256": "cc22c78f92c70dce9f417bac09b24efa06bd594c6f14ce27149f970e62ac24b8",
+      "marks_sha256": "e8b63022c2fdd9f5f5906131be8f743fe1ad3d5605d3dc0fa235f05b70430f28",
+      "matches_actual_native_archive": true,
+      "newly_reviewed": true,
+      "old_exact_whole_request_review_reused": false
+    },
+    {
+      "edit_id": "outro",
+      "output_name": "voice_outro.mp3",
+      "marks_name": "voice_outro.words.json",
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "matches_actual_native_archive": true,
+      "newly_reviewed": false,
+      "old_exact_whole_request_review_reused": true
+    }
+  ],
+  "prior_five_review_cross_reference": "unchanged-five-review-reuse.json",
+  "prior_control_archive_embedded": false,
+  "old_five_pronunciation_reaudited": false,
+  "new_outlook_review_repeated_after_render": false,
+  "human_listening_claimed": false,
+  "all_phonetic_or_all_tone_pass_claimed": false,
+  "metadata_identity_only_no_audio_processing": true,
+  "post_upload_render_note": {
+    "post_upload_render_metadata_sha256": "cbcb3c72cfb3cc0ed96107a93d0be9330bb04067c6b399fd69e9a73be688c9ca",
+    "native_captured_render_metadata_sha256": "f925174e970d51a64e6f59c52dbed4cf4c274ab961e7fc7b65ef3529a52b1a16",
+    "same_render_metadata_bytes": false,
+    "scope": "Post-upload render metadata may add delivery/stage fields; exact pre-upload bytes not claimed. Native QC/render_inputs/ASS match archive exactly; actual film and strict imported bundle validated independently."
+  }
+}

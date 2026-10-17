@@ -1,0 +1,372 @@
+{
+  "schema": "tennislive.partitioned-final-movie-visual-review.v1",
+  "reviewed_at_utc": "2026-10-17T13:43:00.983255+00:00",
+  "reviewer": "OpenAI independent visual agent zverev_sf_visual_qc",
+  "partition": "source_action_segments_0_2_4_6_plus_updated_outlook_8_and_brand_seam",
+  "status": "passed_with_explicit_finite_sampling_and_fixed_center_limits",
+  "visual_pass": true,
+  "publication_approved": false,
+  "movie": "/workspace/scratch/zverev-sf-outlook-final/davidovich-zverev-shanghai-2026-sf.mp4",
+  "movie_sha256": "7f5b967609dc0c8a75a7de23d38876e53ce2bf5d6d7173ae361e691eccbd1260",
+  "movie_bytes": 58643858,
+  "native_run_id": 39037092351,
+  "native_output_commit": "f6bca31f",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "film_seconds": 160.6,
+  "fps": 25.0,
+  "spec_file_sha256": "33da62ac0f7d48ffc4dc020b7a58be620ea7b27ea206e2e5e61eb5d6c5ad75bc",
+  "native_spec_sha256": "33da62ac0f7d48ffc4dc020b7a58be620ea7b27ea206e2e5e61eb5d6c5ad75bc",
+  "ass_sha256": "a46c5a2945e705e1d6764402678a1b8ed167ad65007eec53173d2fa20df9d028",
+  "render_inputs_sha256": "0646d107fa639dbc91044cc8180ac1d9dfc27732d7ed8c0da7de529c5c3201de",
+  "native_qc_sha256": "99ac74b7dc72fb9a0f6a8d603ca92b7e4cbde7bab2922402bc31f2e48c7f8a59",
+  "frame_manifest_sha256": "e92e30dcabc12fdbf046df767b1ba8b7e31f190ea0523f2745757ff8fa873a16",
+  "scope": {
+    "assigned_source_segments": [
+      0,
+      2,
+      4,
+      6
+    ],
+    "extra_card_segment": 8,
+    "sample_frames_actually_viewed": 110,
+    "contact_walls_actually_viewed": 19,
+    "assigned_ASS_cue_midpoints_actually_viewed": 20,
+    "source_ASS_cue_indices": [
+      1,
+      2,
+      3,
+      12,
+      13,
+      20,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
+    ],
+    "updated_outlook_ASS_cue_indices": [
+      39,
+      40,
+      41,
+      42,
+      43,
+      44
+    ],
+    "original_PNG_frame_indices_actually_viewed": [
+      937,
+      1584,
+      1609,
+      1746,
+      1759,
+      1771,
+      1804,
+      2442,
+      3734,
+      3846,
+      3903,
+      4011
+    ],
+    "all_movie_frames_reviewed": false,
+    "other_cover_cards_stats_reviewed_here": false,
+    "audio_listened": false,
+    "human_review_claimed": false,
+    "loudness_gain_silence_PCM_checks": false,
+    "production_inputs_modified": false,
+    "publication_state_written": false
+  },
+  "blocking_findings": [],
+  "sampled_findings": [
+    {
+      "id": "scoreboard-regression-protection",
+      "status": "pass_in_actual_new_movie",
+      "proof": [
+        {
+          "frame_index": 937,
+          "film_time_s": 37.48,
+          "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-00937.png",
+          "image_sha256": "ed7a6a3da3605cb0bc78c533c6b1a7418025663bd6668bd96c2ebdadc929610f",
+          "reasons": [
+            {
+              "kind": "assigned_ass_cue_midpoint",
+              "global_cue": 13,
+              "cue_start_s": 36.22,
+              "cue_end_s": 38.74,
+              "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Dominant on serve once again.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他的发球再次展现统治力",
+              "segment_index": 2
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 2,
+              "nominal_source_s": 60.84
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 2,
+              "nominal_source_s": 60.84
+            }
+          ]
+        },
+        {
+          "frame_index": 1584,
+          "film_time_s": 63.36,
+          "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01584.png",
+          "image_sha256": "07b603f8fa97a8165754d3ffae8aedf6cd8d562dcc3dec690e9eb08dd7a013f9",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 116
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 116
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 116
+            }
+          ]
+        },
+        {
+          "frame_index": 1609,
+          "film_time_s": 64.36,
+          "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01609.png",
+          "image_sha256": "1b7cbade7706b5cd43886c55bed4f4111cee814d49737f6aedc49e6aadcc9c5c",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 117
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 117
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 117
+            }
+          ]
+        },
+        {
+          "frame_index": 1746,
+          "film_time_s": 69.84,
+          "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01746.png",
+          "image_sha256": "0ee2c49aaee7c12ba309c3e358d0cdb1dc1f9323c9d79b15a1ac141370381a67",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 122.48
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 122.48
+            }
+          ]
+        },
+        {
+          "frame_index": 1759,
+          "film_time_s": 70.36,
+          "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01759.png",
+          "image_sha256": "52d57472d1d125bdd6a5893d371a6d24e2ca551778f2e3ed43cd8c9d967cfbd3",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 123
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 123
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 123
+            }
+          ]
+        },
+        {
+          "frame_index": 1771,
+          "film_time_s": 70.84,
+          "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01771.png",
+          "image_sha256": "bbdcd615f684466116d1b5fd86e61d01aea18e5572ce9358b188c55802eb4e82",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 123.48
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 123.48
+            }
+          ]
+        },
+        {
+          "frame_index": 1804,
+          "film_time_s": 72.16,
+          "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-01804.png",
+          "image_sha256": "537be0c093d33eb1a11ec4fb9b823ed01c3c768992681931fc85ef3061c1f5f5",
+          "reasons": [
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 124.8
+            },
+            {
+              "kind": "critical_source_cut_or_tail",
+              "segment_index": 4,
+              "nominal_source_s": 124.8
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 4,
+              "nominal_source_s": 125,
+              "coalesced_request_frame_index": 1809,
+              "actual_sample_minus_requested_seconds": -0.2
+            }
+          ]
+        }
+      ],
+      "observation": "All7protected exact new-film original PNGs inspected. First-set board ends cleanly nearx588 with no green-background extension; second-set30/40 both digits complete at116/117source; compact7 4 /5 6board fully present at122.48/123/123.48/124.8. Original x0 anchor unchanged. Native translucent point-panel texture is preserved, no clipped terminal0 or extra external rectangle."
+    },
+    {
+      "id": "all-source-English-captions",
+      "status": "pass_in_all_assigned_midpoints",
+      "proof": [
+        {
+          "frame_index": 2442,
+          "film_time_s": 97.68,
+          "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-02442.png",
+          "image_sha256": "6d76f21616cf7d17420d353df28cb975d7f9c8eee1084cca632019f4be1db1c6",
+          "reasons": [
+            {
+              "kind": "assigned_ass_cue_midpoint",
+              "global_cue": 27,
+              "cue_start_s": 96.47999999999999,
+              "cue_end_s": 98.86,
+              "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Alejandro Davidovich Fokina{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N达维多维奇 福基纳",
+              "segment_index": 6
+            },
+            {
+              "kind": "key_action_or_native_board_sample",
+              "segment_index": 6,
+              "nominal_source_s": 148,
+              "coalesced_request_frame_index": 2447,
+              "actual_sample_minus_requested_seconds": -0.2
+            }
+          ]
+        }
+      ],
+      "observation": "All14source-window actualASS cue midpoints inspected in new encoded movie. English and Chinese lines complete, low placement above board. Actual original2442 confirms the full Alejandro Davidovich Fokina name on one English line and intact Chinese name."
+    },
+    {
+      "id": "complete-source-actions-and-reactions",
+      "status": "pass_with_declared_spatial_limits",
+      "observation": "Finite full source partition rechecked: first-set serve/toss/point result, second-set complete temporal serve/rally/true setpoint result and celebration, final serve/rally/result followed by smile/handshake/umpire/team/crowd. Second-set point is not mislabeled match point. Selection ends before large final resultboard and source publisher endcard."
+    },
+    {
+      "id": "updated-final-outlook-card-and-captions",
+      "status": "pass_in_all6new_assigned_midpoints",
+      "proof": [
+        {
+          "frame_index": 3734,
+          "film_time_s": 149.36,
+          "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03734.png",
+          "image_sha256": "1ce0448602757a90c220f4e475b298de8b8a34d95ade959471a52c5cd1041579",
+          "reasons": [
+            {
+              "kind": "assigned_ass_cue_midpoint",
+              "global_cue": 42,
+              "cue_start_s": 148.02,
+              "cue_end_s": 150.7,
+              "cue_text": "{\\an2}达维多维奇 福基纳对阵霍达尔",
+              "segment_index": 8
+            },
+            {
+              "kind": "updated_outlook_card",
+              "segment_index": 8,
+              "coalesced_request_frame_index": 3738,
+              "actual_sample_minus_requested_seconds": -0.16
+            }
+          ]
+        },
+        {
+          "frame_index": 3846,
+          "film_time_s": 153.84,
+          "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03846.png",
+          "image_sha256": "ad1ec9710f034d14ac5e1509a0ce772dcd2b662f73f69766b60303b9d6ea9d84",
+          "reasons": [
+            {
+              "kind": "assigned_ass_cue_midpoint",
+              "global_cue": 44,
+              "cue_start_s": 152.94,
+              "cue_end_s": 154.71,
+              "cue_text": "{\\an2}你更看好谁？",
+              "segment_index": 8
+            }
+          ]
+        }
+      ],
+      "observation": "Actual new card reads contextual kicker决赛对阵 and two complete centered lines达维多维奇·福基纳 / 对阵霍达尔. New cues39..44 display另一场半决赛 / 霍达尔两盘淘汰梅德韦杰夫 / 上海决赛 / 达维多维奇福基纳对阵霍达尔 / 两位西班牙球员会师争冠 / 你更看好谁. All fit with lower branding separated; longest name cue42 checked in full original3734."
+    },
+    {
+      "id": "updated-card-to-brand-seam",
+      "status": "pass_in_finite_actual_samples",
+      "proof": [
+        {
+          "frame_index": 3903,
+          "film_time_s": 156.12,
+          "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-03903.png",
+          "image_sha256": "60e73c19f5627449e842f6f63d986292b8ad0347b1aa1046a140eaa1f57ed3a0",
+          "reasons": [
+            {
+              "kind": "updated_outlook_to_brand_seam",
+              "segment_index": 8
+            }
+          ]
+        },
+        {
+          "frame_index": 4011,
+          "film_time_s": 160.44,
+          "image": "/workspace/scratch/zverev-sf-outlook-final-qc/frames/frame-04011.png",
+          "image_sha256": "1a9ac38b60bfb0ddce20e626a7ef811173b911905ce46230afd405b2b9b9ec7d",
+          "reasons": [
+            {
+              "kind": "final_brand_after_updated_card",
+              "segment_index": 8
+            }
+          ]
+        }
+      ],
+      "observation": "Seven protected actual samples155.88/155.96/156.00/156.04/156.12/156.24/156.48film inspect expected short native dissolve from final card into navy brand animation. At156.12old/new handles briefly coexist during dissolve, observed as transition; no unexplained black flash or cropped text. Actual final158.60and160.44samples show clear网球时差 title, slogan and single lower handle."
+    },
+    {
+      "id": "full-canvas-fixed-center",
+      "status": "pass_with_approved_spatial_limit",
+      "observation": "Body source picture fills1080x1440 with fixed-center framing. Horizontal edge pursuit/player positions can leave crop; no full horizontal court visibility or tracking claim."
+    }
+  ],
+  "limitations": [
+    "Finite110actual frames/19walls and12full original PNGs; not all-frame visual review or acoustic certification.",
+    "14source English cue midpoints and6updated segment8 cue midpoints directly viewed. ASR/utterance evidence belongs to separate matching source-audio packets; no human listening claimed.",
+    "Root separately reviews cover/statistics/othercards/allseams. This partition pass is not standalone publication approval.",
+    "Previous blocked and v2reports remain unchanged.",
+    "No loudness/RMS/peak/silence-threshold/gain/PCM checks or audio edits."
+  ]
+}

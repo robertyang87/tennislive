@@ -21,7 +21,12 @@
     "full_frame_decoration_and_packet_PTS_reference": "passed existing lossless reference tests"
   },
   "root_code_diff_inspected": true,
-  "new_native_runner_actual_validation": "pending new render; do not infer hosted encode success from local tests",
+  "new_native_runner_actual_validation": {
+    "status": "success",
+    "run_id": 39037092351,
+    "film_sha256": "7f5b967609dc0c8a75a7de23d38876e53ce2bf5d6d7173ae361e691eccbd1260",
+    "native_qc": "pass"
+  },
   "frozen_voice_bundle_unchanged": "224043b9cf2a8e5494807da630b4f4039ad18471e79c9e2def59263cfacf00ae",
   "failed_run_published": false
 }

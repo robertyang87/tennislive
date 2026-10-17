@@ -3742,12 +3742,16 @@
   "human_listening_claimed": false,
   "all_mechanical_components_passed": false,
   "all_phonetic_or_all_tone_pass_claimed": false,
-  "final_new_movie_binding_pending": true,
+  "final_new_movie_binding_pending": false,
   "limitations": [
     "Review is finite acoustic evidence and actual image interpretation, not a human or comprehensive phonetic pass.",
     "Original grouped controls alter neighbouring sounds; single-target controls were bounded to four concrete unresolved positions. Raw reverse/failed components and nonfinite scores remain preserved unchanged in scratch evidence.",
     "ASR provides lexical recognition/location clues only, never proves realized tones.",
     "Unchanged five requests reuse prior finite actual review solely after complete actual request/text/profile/audio/marks identity. Changed outlook never receives a prior-word whitelist exemption.",
     "No loudness/RMS/peak/gain/PCM/threshold silence operations."
-  ]
+  ],
+  "film_sha256": "7f5b967609dc0c8a75a7de23d38876e53ce2bf5d6d7173ae361e691eccbd1260",
+  "film_bytes": 58643858,
+  "run_id": 39037092351,
+  "final_film_input_binding": "final-film-input-binding.json"
 }
