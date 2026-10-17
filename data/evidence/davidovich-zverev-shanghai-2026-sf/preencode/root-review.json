@@ -2,7 +2,7 @@
   "schema": "tennislive.finite-native-preencode-review.v1",
   "reviewed_at": "2026-10-17T11:48:50.098733+00:00",
   "reviewer": "Current root OpenAI assistant",
-  "status": "pass_for_finite_preview_only",
+  "status": "superseded_by_actual_master_visual_blockers",
   "publication_approved": false,
   "human_review_claimed": false,
   "spec_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
@@ -76,5 +76,17 @@
     "Not every frame seen; actual final movie gets separate root/independent partitions",
     "No human listening/loudness/gain/thresholdsilence/PCM checks"
   ],
-  "provenance_comment_correction": "Corrected only nonrendered _portrait_geometry_owner stale template photograph identifier before actual native encoding. Photo bytes, all visible fields, crop, voice and subtitle windows unchanged. Canceled initial native preparation run39030126146 at fontsetup; no final encode or publish occurred."
+  "provenance_comment_correction": "Corrected only nonrendered _portrait_geometry_owner stale template photograph identifier. Photo bytes, all visible fields, crop, voice and subtitle windows unchanged. Requested cancellation of native run39030126146 after observing render-step entry; no completed output/QC/publication accepted from that run. Subsequent run39030349344 produces the corrected-spec actual master. No claim that the canceled runner had not started any segment encoding.",
+  "original_finite_preview_status": "pass_for_finite_preview_only",
+  "later_actual_master_findings": {
+    "movie_sha256": "55f4513b1bec122679a7fff11c2b3d3662a870ff3de273c2cea392a2df2b6b08",
+    "native_run": 39030349344,
+    "visual_blocked": true,
+    "point_column_clipped_frames": [
+      1584,
+      1609
+    ],
+    "green_background_frame": 937,
+    "explanation": "Small preview walls did not establish true digit/court contour; full movie originalPNGs expose native detector issue. Correct native signature and verify unchangedfixedposition before new master."
+  }
 }

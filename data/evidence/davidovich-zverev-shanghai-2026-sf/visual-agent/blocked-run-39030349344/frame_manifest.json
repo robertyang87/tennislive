@@ -1,0 +1,2164 @@
+{
+  "schema": "tennislive.partitioned-final-movie-visual-frame-manifest.v1",
+  "partition": "source_action_segments_0_2_4_6",
+  "movie": "/workspace/scratch/zverev-sf-final/davidovich-zverev-shanghai-2026-sf.mp4",
+  "movie_sha256": "55f4513b1bec122679a7fff11c2b3d3662a870ff3de273c2cea392a2df2b6b08",
+  "movie_bytes": 58941214,
+  "spec": "/workspace/tennislive-efficiency/specs/reels/davidovich-zverev-shanghai-2026-sf.json",
+  "spec_file_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
+  "native_spec_sha256": "5cc274e2b15231cb6809ffdf2922a5e0ae8ba7154fab35a9f8c687731399f980",
+  "ass": "output/2026-10-17/reel/davidovich-zverev-shanghai-2026-sf/subtitles.ass",
+  "ass_sha256": "1c598707d0bfea24eb94d753fd59705d0e86ab46dca150e52d6ea1aa770a0c1e",
+  "render_inputs_sha256": "9a545b6b7f4d3fa9407f2116bfb4197bf14d40757c7fb1f5899a4a8d5ee429ec",
+  "native_qc_sha256": "1e1e54f03e1d781005df07968e14b8c01cfaad8c6af4eee55bad7122f9e20d4e",
+  "source_sha256": {
+    "main": "ca0f94dbbb70dc2f9318a792af879f25c6da863edd151928e14a43040dc752c4"
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "728ab30f7e1adf68ad32695723b248b97da61941d7720a6a8ce1daeb07902f03",
+    "request_count": 6,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-davidovich-zverev-shanghai-2026-sf-728ab30f7e1adf68",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-davidovich-zverev-shanghai-2026-sf-728ab30f7e1adf68/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39030349344"
+  },
+  "fps": 25.0,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "film_seconds": 163.6,
+  "total_movie_frames": 4090,
+  "segments": [
+    {
+      "index": 0,
+      "edit_id": "cold_open",
+      "film_start_s": 1.2,
+      "film_end_s": 11.84,
+      "source_start_s": 142.3,
+      "source_end_s": 152.94,
+      "assigned_to_this_reviewer": true
+    },
+    {
+      "index": 1,
+      "edit_id": "intro",
+      "film_start_s": 11.84,
+      "film_end_s": 31.04,
+      "source_start_s": null,
+      "source_end_s": null,
+      "assigned_to_this_reviewer": false
+    },
+    {
+      "index": 2,
+      "edit_id": "first_set_close",
+      "film_start_s": 31.04,
+      "film_end_s": 38.8,
+      "source_start_s": 54.4,
+      "source_end_s": 62.16,
+      "assigned_to_this_reviewer": true
+    },
+    {
+      "index": 3,
+      "edit_id": "second_set_context",
+      "film_start_s": 38.8,
+      "film_end_s": 53.599999999999994,
+      "source_start_s": null,
+      "source_end_s": null,
+      "assigned_to_this_reviewer": false
+    },
+    {
+      "index": 4,
+      "edit_id": "second_set_point",
+      "film_start_s": 53.599999999999994,
+      "film_end_s": 74.25999999999999,
+      "source_start_s": 106.24,
+      "source_end_s": 126.9,
+      "assigned_to_this_reviewer": true
+    },
+    {
+      "index": 5,
+      "edit_id": "deciding_set_context",
+      "film_start_s": 74.25999999999999,
+      "film_end_s": 87.05999999999999,
+      "source_start_s": null,
+      "source_end_s": null,
+      "assigned_to_this_reviewer": false
+    },
+    {
+      "index": 6,
+      "edit_id": "ending",
+      "film_start_s": 87.05999999999999,
+      "film_end_s": 130.01999999999998,
+      "source_start_s": 137.2,
+      "source_end_s": 180.16,
+      "assigned_to_this_reviewer": true
+    },
+    {
+      "index": 7,
+      "edit_id": "full_stats",
+      "film_start_s": 130.01999999999998,
+      "film_end_s": 143.01999999999998,
+      "source_start_s": null,
+      "source_end_s": null,
+      "assigned_to_this_reviewer": false
+    },
+    {
+      "index": 8,
+      "edit_id": "outlook",
+      "film_start_s": 143.01999999999998,
+      "film_end_s": 159.01999999999998,
+      "source_start_s": null,
+      "source_end_s": null,
+      "assigned_to_this_reviewer": false
+    }
+  ],
+  "assigned_ass_cues": [
+    {
+      "global_cue": 1,
+      "cue_start_s": 1.66,
+      "cue_end_s": 4.54,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}For the second time in his career,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N职业生涯第二次",
+      "segment_index": 0
+    },
+    {
+      "global_cue": 2,
+      "cue_start_s": 5.52,
+      "cue_end_s": 7.9,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Alejandro Davidovich Fokina{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N达维多维奇 福基纳",
+      "segment_index": 0
+    },
+    {
+      "global_cue": 3,
+      "cue_start_s": 7.9,
+      "cue_end_s": 11.64,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is into the final of a Masters 1000.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N打进了大师赛决赛",
+      "segment_index": 0
+    },
+    {
+      "global_cue": 12,
+      "cue_start_s": 31.5,
+      "cue_end_s": 33.1,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Another set point.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N又一个盘点",
+      "segment_index": 2
+    },
+    {
+      "global_cue": 13,
+      "cue_start_s": 36.22,
+      "cue_end_s": 38.74,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Dominant on serve once again.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他的发球再次展现统治力",
+      "segment_index": 2
+    },
+    {
+      "global_cue": 20,
+      "cue_start_s": 66.8,
+      "cue_end_s": 70.53999999999999,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Oh, it doesn't get any better than that.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N噢 这一分真是精彩到了极点！",
+      "segment_index": 4
+    },
+    {
+      "global_cue": 26,
+      "cue_start_s": 92.62,
+      "cue_end_s": 95.5,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}For the second time in his career,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N职业生涯第二次",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 27,
+      "cue_start_s": 96.47999999999999,
+      "cue_end_s": 98.86,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Alejandro Davidovich Fokina{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N达维多维奇 福基纳",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 28,
+      "cue_start_s": 98.86,
+      "cue_end_s": 102.6,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is into the final of a Masters 1000.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N打进了大师赛决赛",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 29,
+      "cue_start_s": 107.24000000000001,
+      "cue_end_s": 110.56,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}And for the second time in his career,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N同时 这也是他职业生涯第二次",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 30,
+      "cue_start_s": 111.2,
+      "cue_end_s": 114.1,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}he gets the better of Alexander Zverev.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N击败亚历山大 兹维列夫",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 31,
+      "cue_start_s": 117.74000000000001,
+      "cue_end_s": 120.18,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}What an Asian swing he's enjoying.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他的亚洲赛季 表现多么出色！",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 32,
+      "cue_start_s": 121.6,
+      "cue_end_s": 123.84,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Champion in Chengdu three weeks ago.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N三周前 他在成都夺冠",
+      "segment_index": 6
+    },
+    {
+      "global_cue": 33,
+      "cue_start_s": 125.24,
+      "cue_end_s": 129.72,
+      "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}His unbeaten run on Chinese soil gathers more pace.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他在中国的不败征程 继续向前",
+      "segment_index": 6
+    }
+  ],
+  "other_partition_ass_cues_not_reviewed_here": [
+    {
+      "global_cue": 4,
+      "cue_start_s": 11.89,
+      "cue_end_s": 14.63,
+      "cue_text": "{\\an2}北京时间{\\fs78}2026{\\fs68}年{\\fs78}10{\\fs68}月{\\fs78}17{\\fs68}日下午"
+    },
+    {
+      "global_cue": 5,
+      "cue_start_s": 14.63,
+      "cue_end_s": 16.96,
+      "cue_text": "{\\an2}上海大师赛男单半决赛"
+    },
+    {
+      "global_cue": 6,
+      "cue_start_s": 16.96,
+      "cue_end_s": 19.22,
+      "cue_text": "{\\an2}提前锁定年终第一的兹维列夫"
+    },
+    {
+      "global_cue": 7,
+      "cue_start_s": 19.22,
+      "cue_end_s": 21.51,
+      "cue_text": "{\\an2}对阵达维多维奇 福基纳"
+    },
+    {
+      "global_cue": 8,
+      "cue_start_s": 21.51,
+      "cue_end_s": 22.97,
+      "cue_text": "{\\an2}首盘{\\fs78}9{\\fs68}记{\\fs78}ACE{\\fs68}"
+    },
+    {
+      "global_cue": 9,
+      "cue_start_s": 22.97,
+      "cue_end_s": 25.13,
+      "cue_text": "{\\an2}没给对手一个破发点"
+    },
+    {
+      "global_cue": 10,
+      "cue_start_s": 25.13,
+      "cue_end_s": 27.03,
+      "cue_text": "{\\an2}{\\fs78}5{\\fs68}比{\\fs78}5{\\fs68}之后率先破发"
+    },
+    {
+      "global_cue": 11,
+      "cue_start_s": 27.03,
+      "cue_end_s": 29.62,
+      "cue_text": "{\\an2}他拿到先赢一盘的机会"
+    },
+    {
+      "global_cue": 14,
+      "cue_start_s": 38.85,
+      "cue_end_s": 40.37,
+      "cue_text": "{\\an2}首盘{\\fs78}7{\\fs68}比{\\fs78}5{\\fs68}之后"
+    },
+    {
+      "global_cue": 15,
+      "cue_start_s": 40.37,
+      "cue_end_s": 42.4,
+      "cue_text": "{\\an2}第二盘的压力换边了"
+    },
+    {
+      "global_cue": 16,
+      "cue_start_s": 42.4,
+      "cue_end_s": 44.25,
+      "cue_text": "{\\an2}兹维列夫的一发得分率"
+    },
+    {
+      "global_cue": 17,
+      "cue_start_s": 44.25,
+      "cue_end_s": 47.55,
+      "cue_text": "{\\an2}从{\\fs78}79{\\fs68}%降到{\\fs78}65{\\fs68}%"
+    },
+    {
+      "global_cue": 18,
+      "cue_start_s": 47.55,
+      "cue_end_s": 48.36,
+      "cue_text": "{\\an2}{\\fs78}4{\\fs68}比{\\fs78}5{\\fs68}"
+    },
+    {
+      "global_cue": 19,
+      "cue_start_s": 48.36,
+      "cue_end_s": 52.36,
+      "cue_text": "{\\an2}对手在盘点上打出奔跑中的反手穿越"
+    },
+    {
+      "global_cue": 21,
+      "cue_start_s": 74.31,
+      "cue_end_s": 76.36,
+      "cue_text": "{\\an2}决胜盘开局 一次双误"
+    },
+    {
+      "global_cue": 22,
+      "cue_start_s": 76.36,
+      "cue_end_s": 78.85,
+      "cue_text": "{\\an2}让兹维列夫先丢发球局"
+    },
+    {
+      "global_cue": 23,
+      "cue_start_s": 78.85,
+      "cue_end_s": 81.45,
+      "cue_text": "{\\an2}{\\fs78}2{\\fs68}比{\\fs78}5{\\fs68}落后 他扛过两个赛点"
+    },
+    {
+      "global_cue": 24,
+      "cue_start_s": 81.45,
+      "cue_end_s": 83.02,
+      "cue_text": "{\\an2}追到{\\fs78}3{\\fs68}比{\\fs78}5{\\fs68}"
+    },
+    {
+      "global_cue": 25,
+      "cue_start_s": 83.02,
+      "cue_end_s": 85.8,
+      "cue_text": "{\\an2}可接下来 轮到对手发球"
+    },
+    {
+      "global_cue": 34,
+      "cue_start_s": 130.07,
+      "cue_end_s": 133.0,
+      "cue_text": "{\\an2}全场{\\fs78}18{\\fs68}记{\\fs78}ACE{\\fs68} 没能换来胜利"
+    },
+    {
+      "global_cue": 35,
+      "cue_start_s": 133.0,
+      "cue_end_s": 135.0,
+      "cue_text": "{\\an2}制胜分{\\fs78}28{\\fs68}比{\\fs78}36{\\fs68}"
+    },
+    {
+      "global_cue": 36,
+      "cue_start_s": 135.0,
+      "cue_end_s": 137.52,
+      "cue_text": "{\\an2}非受迫失误{\\fs78}20{\\fs68}比{\\fs78}21{\\fs68}"
+    },
+    {
+      "global_cue": 37,
+      "cue_start_s": 137.52,
+      "cue_end_s": 139.24,
+      "cue_text": "{\\an2}兹维列夫的发球有威力"
+    },
+    {
+      "global_cue": 38,
+      "cue_start_s": 139.24,
+      "cue_end_s": 141.56,
+      "cue_text": "{\\an2}进攻得分却少了{\\fs78}8{\\fs68}个"
+    },
+    {
+      "global_cue": 39,
+      "cue_start_s": 143.07,
+      "cue_end_s": 144.31,
+      "cue_text": "{\\an2}另一场半决赛"
+    },
+    {
+      "global_cue": 40,
+      "cue_start_s": 144.31,
+      "cue_end_s": 147.32,
+      "cue_text": "{\\an2}梅德韦杰夫对阵霍达尔 胜者"
+    },
+    {
+      "global_cue": 41,
+      "cue_start_s": 147.32,
+      "cue_end_s": 150.05,
+      "cue_text": "{\\an2}将与达维多维奇 福基纳争冠"
+    },
+    {
+      "global_cue": 42,
+      "cue_start_s": 150.05,
+      "cue_end_s": 152.47,
+      "cue_text": "{\\an2}兹维列夫 这一站先放下"
+    },
+    {
+      "global_cue": 43,
+      "cue_start_s": 152.47,
+      "cue_end_s": 154.06,
+      "cue_text": "{\\an2}下一站再来"
+    },
+    {
+      "global_cue": 44,
+      "cue_start_s": 154.06,
+      "cue_end_s": 157.68,
+      "cue_text": "{\\an2}接下来 你最期待他做出什么改变？"
+    }
+  ],
+  "samples": [
+    {
+      "frame_index": 36,
+      "film_time_s": 1.44,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 0,
+          "edit_id": "cold_open",
+          "nominal_source_s": 142.54000000000002
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 142.54
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00036.png",
+      "image_sha256": "a87d4989ff3d4ff5c96bafb4a6c65728cb0adf1b35d92133c4f0a5a8900ff104",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 47,
+      "film_time_s": 1.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 143
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00047.png",
+      "image_sha256": "c7ea62102f018491f2bf79645d3c8f7cd6d018f962b43397554af218b540c771",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 78,
+      "film_time_s": 3.12,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 1,
+          "cue_start_s": 1.66,
+          "cue_end_s": 4.54,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}For the second time in his career,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N职业生涯第二次",
+          "segment_index": 0
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 144,
+          "coalesced_request_frame_index": 72,
+          "actual_sample_minus_requested_seconds": 0.24
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00078.png",
+      "image_sha256": "bbfe3e883af9618d5f9a0a4e59e3d803dad50571622ff52b88f63cf90bd52d46",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 97,
+      "film_time_s": 3.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 145
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00097.png",
+      "image_sha256": "df4f591295f61d45c25d42b666ba117d007aed5bf4e0b392d8ee34e55f4bd351",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 122,
+      "film_time_s": 4.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 146
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00122.png",
+      "image_sha256": "e609acab4b067adeae2cdaadd7543bf4323c10fd5689bc5668f07c3585b8dd89",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 147,
+      "film_time_s": 5.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 147
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00147.png",
+      "image_sha256": "bca57a11e13dea057acfbef32d9b286d52d48a0e87681b15629dd7b2799be70a",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 168,
+      "film_time_s": 6.72,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 2,
+          "cue_start_s": 5.52,
+          "cue_end_s": 7.9,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Alejandro Davidovich Fokina{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N达维多维奇 福基纳",
+          "segment_index": 0
+        },
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 0,
+          "edit_id": "cold_open",
+          "nominal_source_s": 147.62,
+          "coalesced_request_frame_index": 163,
+          "actual_sample_minus_requested_seconds": 0.2
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 148,
+          "coalesced_request_frame_index": 172,
+          "actual_sample_minus_requested_seconds": -0.16
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00168.png",
+      "image_sha256": "06c51b048a0f8fe6be66fbfe4d5057bd568841e5ccf4b72c3d92b339dceb96b6",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 197,
+      "film_time_s": 7.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 149
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00197.png",
+      "image_sha256": "fdfdeb47e7db679af731a295b95017baa9f42209fa45e10471f594dc4b64e926",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 222,
+      "film_time_s": 8.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 150
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00222.png",
+      "image_sha256": "62f0b0e566ac6444c7eec86d4ba88a223bea6c7943cc47d4f7ec3724abd317e0",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 244,
+      "film_time_s": 9.76,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 3,
+          "cue_start_s": 7.9,
+          "cue_end_s": 11.64,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is into the final of a Masters 1000.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N打进了大师赛决赛",
+          "segment_index": 0
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 151,
+          "coalesced_request_frame_index": 247,
+          "actual_sample_minus_requested_seconds": -0.12
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00244.png",
+      "image_sha256": "0d5054529ce93aa9f663f24f6cb0906e0e8c421bd8f429623d5cff1f29c4398f",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 287,
+      "film_time_s": 11.48,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 0,
+          "nominal_source_s": 152.6
+        },
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 0,
+          "edit_id": "cold_open",
+          "nominal_source_s": 152.66000000000003,
+          "coalesced_request_frame_index": 289,
+          "actual_sample_minus_requested_seconds": -0.08
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00287.png",
+      "image_sha256": "8c1a9e15f580e05ca04aae4052bfcbecab2a665245878e1d3c4379de1ca68902",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 782,
+      "film_time_s": 31.28,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 2,
+          "edit_id": "first_set_close",
+          "nominal_source_s": 54.64
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 54.64
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00782.png",
+      "image_sha256": "b374aaace6657a890e9cef30449f60d73a7cf61956457f7de1c92da05620dac6",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 791,
+      "film_time_s": 31.64,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 55
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00791.png",
+      "image_sha256": "d59923fdbeebc22d9d008cd633cb792a579097e62c4c03e62279be5131abafba",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 807,
+      "film_time_s": 32.28,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 12,
+          "cue_start_s": 31.5,
+          "cue_end_s": 33.1,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Another set point.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N又一个盘点",
+          "segment_index": 2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00807.png",
+      "image_sha256": "0952ba22d19ca848d23725f336256f21eaddcba4bfadfc3eae0259f4463af95d",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 815,
+      "film_time_s": 32.6,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 55.96
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00815.png",
+      "image_sha256": "53cf73cf4144dc3ad92741149447b859e339bc0eb0a2e8f5a7d3792ed1637a37",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 828,
+      "film_time_s": 33.12,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 56.5
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00828.png",
+      "image_sha256": "1df02b1b9c0a93821099d6a20eefad15407e64ab1f35edee991bdc3fd72f1ff3",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 853,
+      "film_time_s": 34.12,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 57.48
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00853.png",
+      "image_sha256": "73db2f934e0238d0b90f1e8447f35b202a4b38e1091bbcbe7986fb0bac9d9a19",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 865,
+      "film_time_s": 34.6,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 57.96
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00865.png",
+      "image_sha256": "fb952420117df7b2f84e4a3de5ec4c3e0afe1c7d5a8c65fb1b333038fcad5837",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 873,
+      "film_time_s": 34.92,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 2,
+          "edit_id": "first_set_close",
+          "nominal_source_s": 58.28
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 58.48,
+          "coalesced_request_frame_index": 878,
+          "actual_sample_minus_requested_seconds": -0.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00873.png",
+      "image_sha256": "66f86cfb12757d6e85952e05c585c5cc02dc95ca9b0c7845cdd148082899d7be",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 891,
+      "film_time_s": 35.64,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 59
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00891.png",
+      "image_sha256": "6de78e5d98de30c3408091ea5c5c124107caac70b14ff6ce2ce19d19aa1bbc07",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 928,
+      "film_time_s": 37.12,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 60.5
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00928.png",
+      "image_sha256": "782990748aa0efe54aa055c64c6c4522178a497b20c1b072181cd1950136d54f",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 937,
+      "film_time_s": 37.48,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 13,
+          "cue_start_s": 36.22,
+          "cue_end_s": 38.74,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Dominant on serve once again.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他的发球再次展现统治力",
+          "segment_index": 2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00937.png",
+      "image_sha256": "14d3afcb184e945adb01e0a685df81385df94b4f74243d2271149adcd94b2723",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 963,
+      "film_time_s": 38.52,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 2,
+          "edit_id": "first_set_close",
+          "nominal_source_s": 61.879999999999995
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 2,
+          "nominal_source_s": 61.88
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-00963.png",
+      "image_sha256": "500e1910c6d02f18e5dca85556dce5ed529e43e87b941f1bdc4f5872d35b6af1",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1346,
+      "film_time_s": 53.84,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 4,
+          "edit_id": "second_set_point",
+          "nominal_source_s": 106.47999999999999
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 106.48
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01346.png",
+      "image_sha256": "16c78fe19434830f22dac18d95ac8be708d1a44aa56fa4a2f11db5aafd40c4c5",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1359,
+      "film_time_s": 54.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 107
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01359.png",
+      "image_sha256": "2d7f944c45c9f3030004f99b022a2f99fe18f0b3b9a584918676fbd52a752189",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1384,
+      "film_time_s": 55.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 108
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01384.png",
+      "image_sha256": "716588ce64d22306ce216d00a9e3876987c441a3078d603bdd674b1f581370fa",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1409,
+      "film_time_s": 56.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 109
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01409.png",
+      "image_sha256": "c2039547c4a6d278179e3bfe095755e5e953d5ec109a35d419510cda7c37d401",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1434,
+      "film_time_s": 57.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 110
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01434.png",
+      "image_sha256": "1a94c0d6446388a6f959628250607f03d0eb3c6c9c0ce09cf7b66997a4ce12d5",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1459,
+      "film_time_s": 58.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 111
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01459.png",
+      "image_sha256": "71f4c54efc35bb615fe16bcc09863ff4cda75983c69fc1a0be61575313946b33",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1484,
+      "film_time_s": 59.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 112
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01484.png",
+      "image_sha256": "2e72e3214451a55266b566622cf5672051fa4c059ec0c58dde80790b55edb796",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1509,
+      "film_time_s": 60.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 113
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01509.png",
+      "image_sha256": "6f5918bd8f3a4b4ac6635f27f5378751a9051e99bf19bd262350d64b004ee9fd",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1534,
+      "film_time_s": 61.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 114
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01534.png",
+      "image_sha256": "b2778b6b1f42ac91d5a6a9fd994afbdbed3248f9f58256e1b69e2f36150b2a24",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1559,
+      "film_time_s": 62.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 115
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01559.png",
+      "image_sha256": "f879672d61b61597b22eefac2f71df3e4c0cdb7ce61b2d0af6420cec33f3001b",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1584,
+      "film_time_s": 63.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 116
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01584.png",
+      "image_sha256": "25902ce78f1f21f55352a1a58bd1fce7e9b2e0a741cd66be1daa49c29730f7fd",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 1598,
+      "film_time_s": 63.92,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 4,
+          "edit_id": "second_set_point",
+          "nominal_source_s": 116.57
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01598.png",
+      "image_sha256": "552982f8976cc19bbf57fa6eca9ca163a46eab2396a6f19882ed3e6d39a77e8d",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1609,
+      "film_time_s": 64.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 117
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01609.png",
+      "image_sha256": "4deb283e57e123c7d3dd41c535b87c5ebcf9558fe8f7bc2105d77cace382c40e",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 1634,
+      "film_time_s": 65.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 118
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01634.png",
+      "image_sha256": "56b5b576a2f4f761e1a50fa4bfb1ffcb186f626229ef64b4aad98672414ca6b4",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1664,
+      "film_time_s": 66.56,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 119.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01664.png",
+      "image_sha256": "030945e24f77b865957ec5fd199b2ea0c78ed281cc07545b5881482de954a060",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1674,
+      "film_time_s": 66.96,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 119.6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01674.png",
+      "image_sha256": "f21e4edeb9a3f81e55c039c2e1d3aa9f1f1fe8a36c6f49827ecf4cb5b8325950",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1688,
+      "film_time_s": 67.52,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 120.16
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01688.png",
+      "image_sha256": "d3183bab558264e5f408f5cdf83797dcd047eb98d1e0bd9b2ca019df35d1433a",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1717,
+      "film_time_s": 68.68,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 20,
+          "cue_start_s": 66.8,
+          "cue_end_s": 70.53999999999999,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Oh, it doesn't get any better than that.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N噢 这一分真是精彩到了极点！",
+          "segment_index": 4
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 121.2,
+          "coalesced_request_frame_index": 1714,
+          "actual_sample_minus_requested_seconds": 0.12
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01717.png",
+      "image_sha256": "7c7eca9a7be901f130fd24aa09627242b31eb59fa22f7c351416960c50fe4585",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1734,
+      "film_time_s": 69.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 122
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01734.png",
+      "image_sha256": "21139a803c5ecc957ed1ada3599d3ecff400df8c66764317d1bb0a5324f53859",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1759,
+      "film_time_s": 70.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 123
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01759.png",
+      "image_sha256": "3bd7de79719c2a34a8a574d3a02492c24a95d6db5836deb3e06898a9ee54dfd3",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1784,
+      "film_time_s": 71.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 124
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01784.png",
+      "image_sha256": "9a562bb6f4af71c5ae04e8b538868e4243c7ca6d2c273390914a2b008b161b49",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1809,
+      "film_time_s": 72.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 125
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01809.png",
+      "image_sha256": "19067ca7cf8aa0fa5ddd0a90f8dac9b1ce4808270a351bf244132f7652db7373",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1834,
+      "film_time_s": 73.36,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 4,
+          "nominal_source_s": 126
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01834.png",
+      "image_sha256": "b0e61e5d97cb27f61522f45d95f9fb1365edf299871e5204e7b59eeb3e006acd",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 1850,
+      "film_time_s": 74.0,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 126.64
+        },
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 4,
+          "edit_id": "second_set_point",
+          "nominal_source_s": 126.61999999999999,
+          "coalesced_request_frame_index": 1849,
+          "actual_sample_minus_requested_seconds": 0.04
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01850.png",
+      "image_sha256": "e8e9e337eb634b6c6d83e0d0697ab90f32caeffb770b4cb8d72a8b993558837c",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1852,
+      "film_time_s": 74.08,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 126.72
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01852.png",
+      "image_sha256": "da08a1ce1f179a6cb763dcff9bc38ab5f2cc77110422ec21a80918c43f90d5a4",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1854,
+      "film_time_s": 74.16,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 126.8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01854.png",
+      "image_sha256": "f7b7c56f693658491878f45a7ec9201b726f37397fc4d42dfd58d067d3c1e35d",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 1855,
+      "film_time_s": 74.2,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 4,
+          "nominal_source_s": 126.84
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-01855.png",
+      "image_sha256": "ec342c249056b0e7c69a4eb809ea73f9eba8df044205082e6047a40f9140ef59",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 2182,
+      "film_time_s": 87.28,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 6,
+          "edit_id": "ending",
+          "nominal_source_s": 137.44
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 137.44,
+          "coalesced_request_frame_index": 2183,
+          "actual_sample_minus_requested_seconds": -0.04
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02182.png",
+      "image_sha256": "dc994c6ea69e8b02ee9130d48809528184697872ba42b8ca5401c592c2470bf2",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": true
+    },
+    {
+      "frame_index": 2192,
+      "film_time_s": 87.68,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 137.8
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02192.png",
+      "image_sha256": "bec8a807e7fc4223d1bf22ade25846def6d8416315919708bc38153e442b94fb",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2202,
+      "film_time_s": 88.08,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 138.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02202.png",
+      "image_sha256": "67dd6af94832a7ce60721f3c1c54fb9b7987b4a5dfb6ac6c92cf57b92a7b6458",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2222,
+      "film_time_s": 88.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 139
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02222.png",
+      "image_sha256": "898dcdc2dd3bb455d55892179fe574b1c5be23b227c4ec368b4f995e6bdf0a60",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2232,
+      "film_time_s": 89.28,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 139.4
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02232.png",
+      "image_sha256": "e3a120ff38844f3c51bef14d9fa2a27a94ed2355c26b6787f91eb2d08384d640",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2247,
+      "film_time_s": 89.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 140
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02247.png",
+      "image_sha256": "19505992d0231c0cae3d1b8ee8ce4004164c4e52523267c1a746c3c09907a30b",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2261,
+      "film_time_s": 90.44,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 140.6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02261.png",
+      "image_sha256": "6338322a9db82c6173a6b6b374dbcddd96cdec05919c6c47ef1e5db3c7f15d9e",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2272,
+      "film_time_s": 90.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 141
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02272.png",
+      "image_sha256": "858eaee33d8b746879c188fa0df766041091c00ce0d36e6bb6fa9f5f457d74a8",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2282,
+      "film_time_s": 91.28,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 141.4
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02282.png",
+      "image_sha256": "ee56090b2f3c45cd53cb797cb449cbcc591793c657f20031536bc0da9fe3cd5a",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2292,
+      "film_time_s": 91.68,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 141.8
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 142.04,
+          "coalesced_request_frame_index": 2297,
+          "actual_sample_minus_requested_seconds": -0.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02292.png",
+      "image_sha256": "815810b8af4a56e4a4009453f8136ef6f4e04bacaec10b766a0fcfd92f5225d4",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2322,
+      "film_time_s": 92.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 143
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02322.png",
+      "image_sha256": "00a0186b88a3747615025f6da030d661f73e8aba1eaabecaddbbb244f3303e8b",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2352,
+      "film_time_s": 94.08,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 26,
+          "cue_start_s": 92.62,
+          "cue_end_s": 95.5,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}For the second time in his career,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N职业生涯第二次",
+          "segment_index": 6
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 144,
+          "coalesced_request_frame_index": 2347,
+          "actual_sample_minus_requested_seconds": 0.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02352.png",
+      "image_sha256": "7f58a249c59c9e0cf0785bc5496708409fc5ea3a4b50f662937612d9ddcef483",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2397,
+      "film_time_s": 95.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 146
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02397.png",
+      "image_sha256": "b2762d5d3fbc4a11596b6c1b178340545a3bb1f214f78a68dfaecfd0e7c1e47b",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2442,
+      "film_time_s": 97.68,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 27,
+          "cue_start_s": 96.47999999999999,
+          "cue_end_s": 98.86,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Alejandro Davidovich Fokina{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N达维多维奇 福基纳",
+          "segment_index": 6
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 148,
+          "coalesced_request_frame_index": 2447,
+          "actual_sample_minus_requested_seconds": -0.2
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02442.png",
+      "image_sha256": "58f3f3e496b7928a92d3621109c045337d52ab20151245eb9ccb6a907ffbb4dd",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2497,
+      "film_time_s": 99.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 150
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02497.png",
+      "image_sha256": "846360d6293a66fa365901a673424786fa728c46cbc8a033fccef0b59d377203",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2518,
+      "film_time_s": 100.72,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 28,
+          "cue_start_s": 98.86,
+          "cue_end_s": 102.6,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}is into the final of a Masters 1000.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N打进了大师赛决赛",
+          "segment_index": 6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02518.png",
+      "image_sha256": "b90614b84adba1b96fbf4e74782c5a1ff2ace865d7201fe614f4dec1ad9137aa",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2547,
+      "film_time_s": 101.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 152
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02547.png",
+      "image_sha256": "d580a9cff6038c44993bdeb059869faafdf8f7ffed2ca081eadb7ee86e0a693b",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2597,
+      "film_time_s": 103.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 154
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02597.png",
+      "image_sha256": "095765a854066b248f09536bf8b06781b188f4aa600d5abe2d2635dce0af5054",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2622,
+      "film_time_s": 104.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 155
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02622.png",
+      "image_sha256": "0ef153fdaf9e181b65b23ea2680c0d1bdd55dff66a62a48a08ce87abecfe5a5a",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2647,
+      "film_time_s": 105.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 156
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02647.png",
+      "image_sha256": "dbd6f4a1f87f10b5fa6dced95199a17a23cbe9c2ec31364e4d6577350e7fbffe",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2697,
+      "film_time_s": 107.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 158
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02697.png",
+      "image_sha256": "e4b1c49eca02232ccbd7ea19336e828291f187b694e1524f7723d6fb65743b8e",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2714,
+      "film_time_s": 108.56,
+      "reasons": [
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 6,
+          "edit_id": "ending",
+          "nominal_source_s": 158.67999999999998
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02714.png",
+      "image_sha256": "5ed620e92ea1cce54f46429c6d6575ccf545eeaa7f236ecf4ab41d4527cc5200",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2722,
+      "film_time_s": 108.88,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 29,
+          "cue_start_s": 107.24000000000001,
+          "cue_end_s": 110.56,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}And for the second time in his career,{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N同时 这也是他职业生涯第二次",
+          "segment_index": 6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02722.png",
+      "image_sha256": "965305bb3246c1d69b8e792eac5b8d2873c81e6b9604f3439e6b428b6765b5ea",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2747,
+      "film_time_s": 109.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 160
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02747.png",
+      "image_sha256": "aab591c0812feeb3c7d463161c7346c305c74bec4d60365b44741b6ec448c5f7",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2797,
+      "film_time_s": 111.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 162
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02797.png",
+      "image_sha256": "b9f98148f546d25010fa044a2d9f53ae6d83357ac34083229909987811f68dc0",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2816,
+      "film_time_s": 112.64,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 30,
+          "cue_start_s": 111.2,
+          "cue_end_s": 114.1,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}he gets the better of Alexander Zverev.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N击败亚历山大 兹维列夫",
+          "segment_index": 6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02816.png",
+      "image_sha256": "2a64b24a4f56c55c9d24231bfa5e188c63e0ac2a0e6ab659263b96207b034447",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2847,
+      "film_time_s": 113.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 164
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02847.png",
+      "image_sha256": "bb53f77e1882581c67ed9353de3c08de7778e2054e4c74710eea519c9fe82feb",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2897,
+      "film_time_s": 115.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 166
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02897.png",
+      "image_sha256": "2e244e40b4e3686e6cf6ea317ac6ae3e4ecf48f5175bb886d8bfeaaca511a89d",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2947,
+      "film_time_s": 117.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 168
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02947.png",
+      "image_sha256": "694a8757dce8cf11c2f93bee1d173412f41fe8156f84e2f7ed2ad4899bd5223a",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2974,
+      "film_time_s": 118.96,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 31,
+          "cue_start_s": 117.74000000000001,
+          "cue_end_s": 120.18,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}What an Asian swing he's enjoying.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他的亚洲赛季 表现多么出色！",
+          "segment_index": 6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02974.png",
+      "image_sha256": "93622a42d3c733aa2a40fc413cf63d996d6f73821db9d2377aada1fc8b80e44a",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 2997,
+      "film_time_s": 119.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 170
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-02997.png",
+      "image_sha256": "3cd43ef357369c0d7941d45caa41083962792c22ef5ae090545af8b8dd7bd183",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3047,
+      "film_time_s": 121.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 172
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-03047.png",
+      "image_sha256": "65a0cd7f1874ceffa9c248904f5c2fbfdd9a04c29d8f35e401e34f65d145f85a",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3068,
+      "film_time_s": 122.72,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 32,
+          "cue_start_s": 121.6,
+          "cue_end_s": 123.84,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Champion in Chengdu three weeks ago.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N三周前 他在成都夺冠",
+          "segment_index": 6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-03068.png",
+      "image_sha256": "05b5f4373330c4f6b111773728fbe3b7a4b760ba0ead7e35266bdd6979d4364c",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3083,
+      "film_time_s": 123.32,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 173.48
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-03083.png",
+      "image_sha256": "cc3c1483636b2ee01d364dca85daa1a567d19e1a734e3fbc61cf8d8e13618641",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3122,
+      "film_time_s": 124.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 175
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-03122.png",
+      "image_sha256": "d9e67b79dfe7357b1126a5babd57c42ca31cc9f5a21fd827d823e9a4b9f469e1",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3172,
+      "film_time_s": 126.88,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 177
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-03172.png",
+      "image_sha256": "8335dfa9fef125bf0ed34cde654203cf924f19c928662bb2ddfbd29d37038450",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3187,
+      "film_time_s": 127.48,
+      "reasons": [
+        {
+          "kind": "assigned_ass_cue_midpoint",
+          "global_cue": 33,
+          "cue_start_s": 125.24,
+          "cue_end_s": 129.72,
+          "cue_text": "{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}His unbeaten run on Chinese soil gathers more pace.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N他在中国的不败征程 继续向前",
+          "segment_index": 6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-03187.png",
+      "image_sha256": "0b962663bd698e8508171061351b1062bfa7af2e634e7ac11a8fbc3308290974",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3236,
+      "film_time_s": 129.44,
+      "reasons": [
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 179.6
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-03236.png",
+      "image_sha256": "0189ea8b63f3b4f001d6e841231cde8777849799d061c094516e78c085fad764",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3244,
+      "film_time_s": 129.76,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 6,
+          "nominal_source_s": 179.92
+        },
+        {
+          "kind": "source_segment_start_middle_end",
+          "segment_index": 6,
+          "edit_id": "ending",
+          "nominal_source_s": 179.88,
+          "coalesced_request_frame_index": 3243,
+          "actual_sample_minus_requested_seconds": 0.04
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-03244.png",
+      "image_sha256": "afafe38bea3858142cba89d4e12023e69bed8e3b82e48113c9f607d104ad9937",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3247,
+      "film_time_s": 129.88,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 6,
+          "nominal_source_s": 180.0
+        },
+        {
+          "kind": "key_action_or_native_board_sample",
+          "segment_index": 6,
+          "nominal_source_s": 179.96,
+          "coalesced_request_frame_index": 3246,
+          "actual_sample_minus_requested_seconds": 0.04
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-03247.png",
+      "image_sha256": "59b35d15cc0ddab62e6b19b0903d74ed7ee0d37d089764394eddf42af3c440a4",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3248,
+      "film_time_s": 129.92,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 6,
+          "nominal_source_s": 180.08
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-03248.png",
+      "image_sha256": "57e3ad6aea0712ce344b2429924e7038c8462ebb1a39d044e8d719d52968e15d",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    },
+    {
+      "frame_index": 3250,
+      "film_time_s": 130.0,
+      "reasons": [
+        {
+          "kind": "critical_source_cut_or_tail",
+          "segment_index": 6,
+          "nominal_source_s": 180.12
+        }
+      ],
+      "image": "/workspace/scratch/zverev-sf-final-qc/frames/frame-03250.png",
+      "image_sha256": "71e14218189bbbbcc5fa6ff8ad390caaad16c931f2b591f00407ade8dc630938",
+      "actually_viewed_on_contact_sheet": true,
+      "original_png_actually_viewed": false
+    }
+  ],
+  "walls": [
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-01.jpg",
+      "sha256": "b7926b0bbb8c14cad48389f126edd3ae1a1b9c9f3d24f3431206ea3d1f39b71c",
+      "frame_indices": [
+        36,
+        47,
+        78,
+        97,
+        122,
+        147
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-02.jpg",
+      "sha256": "02e3b6269ad6123534425eb1d04698890de4e806e585977f79bd00e0206846a5",
+      "frame_indices": [
+        168,
+        197,
+        222,
+        244,
+        287,
+        782
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-03.jpg",
+      "sha256": "091e2607087fa39cae6a5caa7b44ae3bdd54b0d233553c8071c9a68a9b9f8cea",
+      "frame_indices": [
+        791,
+        807,
+        815,
+        828,
+        853,
+        865
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-04.jpg",
+      "sha256": "ac419ba00ead83c126f0ea243dba2997172fc3924897e727d8a05fbcf559a7b3",
+      "frame_indices": [
+        873,
+        891,
+        928,
+        937,
+        963,
+        1346
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-05.jpg",
+      "sha256": "d6a7272e650d2cccc6b561482759a913981e164c512cda3a9576655a37739409",
+      "frame_indices": [
+        1359,
+        1384,
+        1409,
+        1434,
+        1459,
+        1484
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-06.jpg",
+      "sha256": "f6301d713081524bcab1f632c0f7705417a85626830d99c72718438ec79c2f46",
+      "frame_indices": [
+        1509,
+        1534,
+        1559,
+        1584,
+        1598,
+        1609
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-07.jpg",
+      "sha256": "1bd09d0239ef7080c07e003a522d013aaf812365df3f7146c8e0799414b3e0e0",
+      "frame_indices": [
+        1634,
+        1664,
+        1674,
+        1688,
+        1717,
+        1734
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-08.jpg",
+      "sha256": "0033b371961da61a567c5137bc2fdd5e7248807c50e8b6a5de39805dc66247a7",
+      "frame_indices": [
+        1759,
+        1784,
+        1809,
+        1834,
+        1850,
+        1852
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-09.jpg",
+      "sha256": "d32dd148f9128e864d762a0f8a2cf7332edbc330ba79fe95da46c7c8d30874ed",
+      "frame_indices": [
+        1854,
+        1855,
+        2182,
+        2192,
+        2202,
+        2222
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-10.jpg",
+      "sha256": "a3e80e020b9da351dc87cda6f3f571c7b3450b14609d770c2a3872e4ab50a581",
+      "frame_indices": [
+        2232,
+        2247,
+        2261,
+        2272,
+        2282,
+        2292
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-11.jpg",
+      "sha256": "72e86ec498c88a67b78337ed7ae2d4c0db2992a97de4984c9999f71f7db7f821",
+      "frame_indices": [
+        2322,
+        2352,
+        2397,
+        2442,
+        2497,
+        2518
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-12.jpg",
+      "sha256": "ddd25031847f2f8870e1f631c8ccc92d833dc805b12ce2427f5cdf3f5d7baa77",
+      "frame_indices": [
+        2547,
+        2597,
+        2622,
+        2647,
+        2697,
+        2714
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-13.jpg",
+      "sha256": "60e8dc03d9cb582e1bca69818f252f6c44b4b523ae51a344373f0b17ca6fe5e5",
+      "frame_indices": [
+        2722,
+        2747,
+        2797,
+        2816,
+        2847,
+        2897
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-14.jpg",
+      "sha256": "da544630c469951b49a3c5b164e5ce31505ccf28b5c8f942ed1fe5ead350b5a7",
+      "frame_indices": [
+        2947,
+        2974,
+        2997,
+        3047,
+        3068,
+        3083
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-15.jpg",
+      "sha256": "4eb7f7ba4063bd14988b304da5407118fe7294597dc8b7db12ad6a5e18fbc9c5",
+      "frame_indices": [
+        3122,
+        3172,
+        3187,
+        3236,
+        3244,
+        3247
+      ],
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/scratch/zverev-sf-final-qc/wall-16.jpg",
+      "sha256": "b837b28a17bd37ffdb8892433c60faa87755ec8c02f1a668c9b662a8e2e6b300",
+      "frame_indices": [
+        3248,
+        3250
+      ],
+      "actually_viewed": true
+    }
+  ],
+  "source_mapping_limit": "Nominal source times only; original final-movie frame index/PNG is authoritative near source cuts. Source/action partition only; root separately reviews cover/cards/outro/seams/publisher tail. No whole-frame or whole-court claim."
+}
