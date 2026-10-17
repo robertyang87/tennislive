@@ -1,0 +1,33 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=8u0X2vm7svU",
+  "source_sha256": "691e32c0d87ad1ddf27ae5894237619d54715432ede417969b5c20651c704b5b",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T12:59:18.870560+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 395.6,
+  "reviewed_to": 406.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 396.24,
+      "end": 399.24,
+      "en": "I've been kind of good to go really from kind of US Open time.",
+      "zh": "其实美网时我就能复出了，"
+    },
+    {
+      "start": 400.5,
+      "end": 402.08,
+      "en": "Decided not to play that,",
+      "zh": "但我决定不打，"
+    },
+    {
+      "start": 402.96,
+      "end": 405.6,
+      "en": "to almost just put my body under a bit more stress.",
+      "zh": "让身体再多扛一些强度。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/8u0X2vm7svU/small.en.json + medium.en.json",
+  "review_note": "同一条 LTA 专访：主持人问复出时机。两档逐词一致（medium 396.32–415.90；small 396.24–415.88）。镜头 375.80 切入、421.88 切走，段首 395.6 在 choices to make（395.32）之后，段尾 406.0 在 stress（405.28–405.60）之后、下一个词 to（405.60 起，407.54 才接 try）之前，只留前半句。WTA 4593140 同一件事她在武汉的原话：ready to get back kind of end of August time … I didn't rush myself。"
+}

@@ -1,0 +1,623 @@
+{
+ "slug": "kartal-story-2026",
+ "date": "2026-10-17",
+ "_column": "网球有故事",
+ "title": "停了半年，回来第三站进了决赛",
+ "cx": 0.5,
+ "track": false,
+ "tts_backend": "edge",
+ "_tts_backend_why": "与 swiatek-chwalinska-story-2026 同一把嗓子（edge 云健），不加情绪风格。",
+ "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +18%。正文各段 pitch +10Hz；不写 style、lead_pause。",
+ "cover": {
+  "eyebrow": "网球有故事",
+  "layout": "solo",
+  "subject": "卡尔塔尔",
+  "hook": "停赛半年掉到170\n复出第3站进决赛",
+  "_hook_why": "第一行是她的来路（背伤停了半年、排名掉到 170），第二行是结果（复出第三站就打进一千赛决赛）。9＋8 字符，零术语，不比总分。",
+  "narration": "停赛半年掉到一百七十，复出第三站进决赛。",
+  "_narration_why": "念的就是海报上那句钩子，数字换成汉字给 TTS。",
+  "topic": "背伤半年后的武汉决赛",
+  "_topic_why": "账号所有者 2026-10-15：「封面的副标题要用这个故事的内容，不要用比赛双方」。10 字。",
+  "portrait": {
+   "image": "assets/reel/kartal-story/cover-wuhan.jpg",
+   "fit": "cover",
+   "focus": 0.53,
+   "focus_y": 0.25,
+   "zoom": 1.0,
+   "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/17/7878daa7-c5c9-466e-b455-084d83d626dc/Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_5-DSC_4105.jpg",
+   "_credit": "WTA 官方图库 photo 4593547「Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_5-DSC_4105」",
+   "_portrait_why": "WTA 照片接口本周的卡尔塔尔实拍（4700×3000，Day 5＝10 月 16 日1/4决赛对斯维托丽娜那天，白色背心、浅绿帽与集锦一致）。正脸、双眼睁开、笑着——本期讲的是她熬过半年伤病回来，这张的情绪对得上「回来了」。同一趟检索里今天半决赛的 Day 6 DSC_7852（4700×3305，EXIF 当地 18:18）是侧头回看，脸不正，次选。",
+   "_search_why": "2026-10-17 12:44Z find_cover_photo（WTA 照片接口、photo-resources、赛后稿头图）跑过：本周卡尔塔尔可用 4 张（R3 Jimmie、QF WZ、Day 5 DSC_4105、Day 6 DSC_7852），AP 被 Cloudflare 挡（未知，不是没有）。"
+  },
+  "scrim": "clear",
+  "_layout_why": "网球有故事讲一个人的来路，solo 版铺满。"
+ },
+ "push": {
+  "auto": true,
+  "_why": "账号所有者 2026-10-13 起所有 spec 默认自动推送；质检通过即合并推送。",
+  "summary": "她没急着回来",
+  "lead": "背伤停了半年、排名掉到 170，卡尔塔尔复出第三站，在武汉打进了生涯第一个一千赛决赛。"
+ },
+ "editorial": {
+  "mode": "match_review",
+  "question": "一个停了半年、排名掉到 170 的人，怎么在复出第三站打进一千赛决赛？",
+  "thesis": "以武汉半决赛赛点为由头，倒回她的来路：和拉杜卡努从小对打、看哥哥打球入门；2024 温网从资格赛打进第三轮、拿到首冠，最高世界第 44；2026 年 3 月背已经疼了还逆转凯斯，两天后退赛，背部应力性骨折停了半年、错过三个大满贯；美网时就能复出但没急；回来第三站，武汉连胜本西奇、保利尼、斯维托丽娜、奥斯塔彭科。",
+  "beats": [
+   "冷开场：半决赛第二个赛点、她举拍、包厢起立，解说原声",
+   "坐标：排名 170，七个月前背伤退赛",
+   "01 和拉杜卡努一起长大：2011 U10 回合、她讲从迷你网球就对打、看哥哥打球入门",
+   "02 一场一场打上来：2024 温网资格赛打进第三轮，首冠、最高第 44，3 月带着背伤逆转凯斯",
+   "03 停下来的半年：退赛、应力性骨折、错过三个大满贯；她自己讲刷牙都疼、本可以美网就回来但没急",
+   "04 武汉的五场球：本西奇、保利尼、斯维托丽娜三段解说原声，半决赛救下六个盘点，赛后她说这是里程碑",
+   "收尾：决赛与排名，一问"
+  ],
+  "human_context": {
+   "angle": "被伤病按下暂停键的人，没急着回来；回来以后，一路打进了决赛。",
+   "facts": [
+    "WTA 4593140：伤停六个月、排名从 54 掉到 170，1/4决赛 6-2 2-6 6-4 胜斯维托丽娜、半决赛 7-6(9) 7-6(5) 胜奥斯塔彭科；本赛季赢下首盘 13 胜 0 负；继康塔之后第二个打进 1000 赛决赛的英国人；八月底就能复出但没急。",
+    "The Independent（Yahoo）与 AOL：两盘都先落后，奥斯塔彭科两次发球胜盘都被破，救下全部 6 个盘点，抢七 11-9、7-5；保护排名；赛后排名升到第 50、成为英国一号。",
+    "Sky Sports、NBC Sports、WTA 武汉第二轮集锦解说：背部应力性骨折，缺席六个月，错过三个大满贯含温网。",
+    "tennismajors／puntodebreak：2026-03-11 印第安维尔斯第四轮对莱巴金娜 4-6 3-4 落后退赛；WTA 4465394：前一轮 2-6 6-2 6-3 逆转凯斯。",
+    "LTA 2022 专访与官网稿：和拉杜卡努从迷你网球就对打；看大五岁的哥哥打球入门。"
+   ],
+   "sources": [
+    "https://www.wtatennis.com/news/4593140/kartals-comeback-gathers-pace-with-landmark-run-to-wuhan-semifinals",
+    "https://uk.sports.yahoo.com/news/sonay-kartal-makes-history-reaching-112128259.html",
+    "https://www.aol.co.uk/articles/sonay-kartal-causes-another-huge-112100000.html",
+    "https://www.skysports.com/tennis/news/13599803/sonay-kartal-brit-breaks-new-ground-by-upsetting-elina-svitolina-to-reach-wuhan-open-semi-finals",
+    "https://www.nbcsports.com/tennis/news/elina-svitolina-loses-to-resurgent-british-player-sonay-kartal-at-wuhan-open",
+    "https://www.tennismajors.com/?p=846471",
+    "https://www.wtatennis.com/news/4465394/kartal-stuns-keys-with-comeback-win-to-reach-indian-wells-fourth-round",
+    "https://www.lta.org.uk/news/2022/april/introducing-sonay/",
+    "https://en.wikipedia.org/wiki/Sonay_Kartal"
+   ]
+  }
+ },
+ "_owner_brief": "账号所有者 2026-10-17 上传 Grok 整理的《卡塔尔（Sonay Kartal）调查与视频清单》，说「改做这个，再详细补充下内容，然后做一期网球有故事视频」。",
+ "_corrections_vs_brief": "①中文名按仓库译名表写卡尔塔尔（材料写的「卡塔尔」是国名）。②「今年赢下首盘 12 胜 0 负」→ WTA 4593140 是 13-0。③「2009 年以来排名最低的 1000 赛决赛选手」只有 The Independent 一家，片中只说排名 170。④土耳其餐馆、LTA 教练邀哥哥上课、2024 年住院、父亲扔下她的比赛去看费德勒练球：检索都没有对得上的出处，不用；纹身只在 LTA 专访里她自己一句玩笑，不进片。⑤出生地：维基写伦敦出生、布莱顿长大，片中只说在布莱顿长大。⑥材料里半决赛只有 WTA X 短视频，现在 WTA 官方 YouTube 集锦（abL2j0xldOc）已经上线。",
+ "_editing_why": "账号所有者 2026-10-17 叙事片口径：主线一句话、原声带情绪、最强对照进前 30 秒、渲前发提纲。冷开场是今天的赛点与包厢，第 2 段字卡就是对照（排名 170、七个月前退赛）。四章：01 从小的对手（LTA 存档回合＋她自己讲）、02 一场一场打上来（温网 2024、印第安维尔斯）、03 停下来的半年（LTA 复出专访里她自己讲伤和没急着回来，两段原声带情绪）、04 武汉五场（三段解说原声，半决赛一段旁白交代过程，赛后采访收住）。印第安维尔斯退赛没有官方画面，用字卡交代。莫纳斯提尔冠军集锦只有 720p，不用画面，一句旁白带过。旁白只放在两档 ASR 都无英文的空当里。",
+ "_claims": {
+  "第一个做到的英国女子资格赛球员": "LTA https://lta.org.uk/fan-zone/wimbledon-championships/news/2024-sonay-kartal-continues-dream-run-to-reach-third-round ；Tennis Majors https://www.tennismajors.com/?p=771267",
+  "英国第一人": "LTA https://lta.org.uk/fan-zone/wimbledon-championships/news/2024-sonay-kartal-continues-dream-run-to-reach-third-round ；Tennis Majors https://www.tennismajors.com/?p=771267"
+ },
+ "_social_checked": "2026-10-17 查了她本人 Instagram 的伤病更新（tennishead、LTA、AOL 转述）：3 月退出比利·简·金杯、4 月放弃红土、6 月放弃温网（this one hurts）都是文字帖或快拍文字，没有她本人开口的视频；她亲口讲伤病的视频是 LTA 官方复出专访（8u0X2vm7svU），片中用它的原声。",
+ "_social_search_why": "不是当事人发声明类的选题：讲的是她公开的比赛与官方采访；当事人亲口的部分全部用 LTA 官方专访与 WTA 场上采访原声。",
+ "sources": {
+  "sf": "https://www.youtube.com/watch?v=abL2j0xldOc",
+  "qf": "https://www.youtube.com/watch?v=T22a9v9UZuk",
+  "r2": "https://www.youtube.com/watch?v=1TKV_Ywr8J8",
+  "iw": "https://www.youtube.com/watch?v=z8Sffkz5m8s",
+  "u10": "https://www.youtube.com/watch?v=INkEB95UIa8",
+  "wb24": "https://www.youtube.com/watch?v=mXnEXUPITgg",
+  "doc": "https://www.youtube.com/watch?v=8u0X2vm7svU",
+  "lta22": "https://www.youtube.com/watch?v=vqIpczMjb5I"
+ },
+ "source_fallbacks": {
+  "sf": "https://github.com/robertyang87/tennislive/releases/download/source-abL2j0xldOc/abL2j0xldOc.mp4",
+  "qf": "https://github.com/robertyang87/tennislive/releases/download/source-T22a9v9UZuk/T22a9v9UZuk.mp4",
+  "r2": "https://github.com/robertyang87/tennislive/releases/download/source-1TKV_Ywr8J8/1TKV_Ywr8J8.mp4",
+  "iw": "https://github.com/robertyang87/tennislive/releases/download/source-z8Sffkz5m8s/z8Sffkz5m8s.mp4",
+  "u10": "https://github.com/robertyang87/tennislive/releases/download/source-INkEB95UIa8/INkEB95UIa8.mp4",
+  "wb24": "https://github.com/robertyang87/tennislive/releases/download/source-mXnEXUPITgg/mXnEXUPITgg.mp4",
+  "doc": "https://github.com/robertyang87/tennislive/releases/download/source-8u0X2vm7svU/8u0X2vm7svU.mp4",
+  "lta22": "https://github.com/robertyang87/tennislive/releases/download/source-vqIpczMjb5I/vqIpczMjb5I.mp4"
+ },
+ "mixed_fps": {
+  "u10": "LTA 存档 23.976 fps，升到 25 fps 每秒补一帧；广角远景、人很小，顿挫不明显"
+ },
+ "conform": {
+  "doc": "LTA 官方复出专访只有 4K（3840×2160）上传，和主源同为 16:9，等比缩到 1920×1080，不裁边、不放大。"
+ },
+ "_no_probe_why": {
+  "sf": {
+   "why": "WTA 官方，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "qf": {
+   "why": "WTA 官方，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "r2": {
+   "why": "WTA 官方，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "iw": {
+   "why": "WTA 官方，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "u10": {
+   "why": "LTA（英国网协） 官方，download-video 存档后本地 ffprobe 1920×1080@24000/1001；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "24000/1001"
+  },
+  "wb24": {
+   "why": "Wimbledon 官方，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "doc": {
+   "why": "LTA（英国网协） 官方，download-video 存档后本地 ffprobe 3840×2160@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 3840,
+   "height": 2160,
+   "fps": "25/1"
+  },
+  "lta22": {
+   "why": "LTA（英国网协） 官方，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  }
+ },
+ "_primary_why": "主源是 sources 的第一个键 sf（WTA 官方 1080p25），输出 25 fps。",
+ "_production_status": "spec_ready_for_render",
+ "_why_sources": "比赛、颁奖和采访画面全部来自官方频道：WTA（abL2j0xldOc、T22a9v9UZuk、LDXqFzdqVVk、1TKV_Ywr8J8、z8Sffkz5m8s）、Wimbledon（mXnEXUPITgg）、LTA 英国网协（INkEB95UIa8、vqIpczMjb5I、8u0X2vm7svU）。照片来自 WTA 官方图库。",
+ "segments": [
+  {
+   "source": "sf",
+   "start": 252.7,
+   "end": 275.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 11.4,
+     "end": 14.25,
+     "text": "Kartal waltzes into the Wuhan final.\n卡尔塔尔闯进了武汉决赛！"
+    },
+    {
+     "at": 14.62,
+     "end": 18.2,
+     "text": "Her big moment in a 1000 arrives.\n她的一千赛高光时刻来了，"
+    },
+    {
+     "at": 20.2,
+     "end": 21.7,
+     "text": "An outstanding victory.\n一场了不起的胜利。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "冷开场：WTA 官方集锦（abL2j0xldOc）第二盘抢七。252.60 切入时记分条是 7 6 6 / 6 6 5（第二个赛点，奥斯塔彭科发球；6-4 那个赛点她用反手制胜分救掉，解说 250.92 Saved in magnificent fashion），奥斯塔彭科这一拍打出边线，262.72 切到卡尔塔尔举拍，265.48 切到包厢起立。解说两档一致（medium 264.10–274.04；small 263.56–273.94，名字两档都转错，按官方标题写 Kartal）。段尾 275.6 在下一句 resilience（276.84）之前。",
+   "point_end_ok": "赛点在 262 秒前后打完，之后是庆祝与包厢。",
+   "crosses_cut": "254.08、256.28 是同一个赛点的发球与回合换机位，262.72、265.48 切到她举拍和包厢：都是同一个赛点前后的镜头。",
+   "_ending_payoff_required": false,
+   "_ending_payoff_why": "网球有故事：冷开场是本期由头（她怎么打进的决赛），正文倒回她的来路，回到武汉这一周时用同一场的第一盘抢七交代过程，最后用她赛后的场上采访收住，不重放赛点。"
+  },
+  {
+   "title_card": "排名第170\n打进决赛",
+   "kicker": "2026 武汉",
+   "seconds": 15.0,
+   "narration": "十月十七号下午，武汉一千赛半决赛。世界排名第一百七十位的卡尔塔尔，连赢两个抢七，淘汰了奥斯塔彭科。七个月前，她因为背伤退赛，然后整整停了半年。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 swiatek-chwalinska-story-2026 同一档）。"
+   }
+  },
+  {
+   "title_card": "和拉杜卡努\n一起长大",
+   "kicker": "01",
+   "seconds": 7.5,
+   "narration": "她在布莱顿长大。从小到大的对手，是后来拿下美网冠军的拉杜卡努。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 swiatek-chwalinska-story-2026 同一档）。"
+   }
+  },
+  {
+   "source": "u10",
+   "start": 15.0,
+   "end": 25.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二〇一一年，英国十岁以下组的比赛，卡尔塔尔对拉杜卡努，两个小女孩打出了一个长回合。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 swiatek-chwalinska-story-2026 同一档）。"
+   },
+   "_why": "英国网协 LTA 官方频道「Young Emma Raducanu vs. Sonay Kartal | 2011 U10's Epic Rally」（INkEB95UIa8）：同一个广角机位一镜到底（0–41 秒无切点，41 秒起是 LTA 片尾）。两档转写在 0–24 无词，24.30 和 31.84 两档各报一个 you，画面里没人对着镜头说话，按现场噪声处理。拉杜卡努 2021 美网冠军为公知事实（仓库已有多条）。",
+   "point_end_ok": "LTA 剪的是一个长回合，段尾 25.5 停在回合进行中、广角无切点——这一段讲的是两个小孩的来路，不是比分。"
+  },
+  {
+   "source": "lta22",
+   "start": 51.7,
+   "end": 57.1,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.32,
+     "end": 1.84,
+     "text": "Emma and I, we grew up playing each other,\n我和艾玛从小就是对手，"
+    },
+    {
+     "at": 2.42,
+     "end": 4.56,
+     "text": "kind of from mini tennis.\n从迷你网球就开始了。"
+    }
+   ],
+   "_quote_kind": "ceremony",
+   "_why": "英国网协 LTA 官方频道 2022 年专访「Getting to know Sonay Kartal」（vqIpczMjb5I）：她对着镜头讲队友。medium 52.02–56.26 一句完整，small 这一段无词（漏转），按 medium 与 LTA 官网同期稿（lta.org.uk/news/2022/april/introducing-sonay：Emma and I, we've grown up playing each other）写。镜头 51.56 切入、76.76 切走，段首 51.7 在 I mean（51.66）之后，段尾 57.1 远早于下一句（76.54）。",
+   "point_end_ok": "采访，不是回合。"
+  },
+  {
+   "source": "lta22",
+   "start": 92.9,
+   "end": 106.9,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.26,
+     "end": 2.94,
+     "text": "I've got an older brother, he's five years older than me,\n我有个哥哥，比我大五岁，"
+    },
+    {
+     "at": 3.58,
+     "end": 5.58,
+     "text": "and he used to play just for fun.\n他打球只是为了好玩。"
+    },
+    {
+     "at": 6.7,
+     "end": 8.6,
+     "text": "And my parents used to take me up to the club,\n爸妈带我去俱乐部，"
+    },
+    {
+     "at": 8.86,
+     "end": 11.54,
+     "text": "and I used to just sit on the grass and watch him play.\n我就坐在草地上看他打。"
+    },
+    {
+     "at": 12.38,
+     "end": 13.74,
+     "text": "That's how it all began.\n一切就是这么开始的。"
+    }
+   ],
+   "_quote_kind": "ceremony",
+   "_why": "同一条 LTA 专访：她讲怎么开始打网球。两档逐词一致（medium 93.16–106.64；small 93.30–106.60）。镜头 81.52 切入、112.12 切走，段首 92.9 在上一句（88.82 结束）之后，段尾 106.9 在主持人下一问（106.96）之前。",
+   "point_end_ok": "采访，不是回合。"
+  },
+  {
+   "title_card": "一场一场\n打上来",
+   "kicker": "02",
+   "seconds": 4.6,
+   "narration": "她的排名，是一场一场打上来的。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 swiatek-chwalinska-story-2026 同一档）。"
+   }
+  },
+  {
+   "source": "wb24",
+   "start": 69.0,
+   "end": 81.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二〇二四年温网，排名两百九十五的她，从资格赛打进第三轮。二十七年来，英国女子资格赛球员里，她是第一个做到的。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 swiatek-chwalinska-story-2026 同一档）。"
+   },
+   "_why": "温网官方频道「Sonay Kartal vs Coco Gauff | Highlights | Wimbledon 2024」（mXnEXUPITgg）第三轮回合，戴白帽的是卡尔塔尔。镜头 68.20 切入、83.52 切走，两档转写在这一段只有 63.58–89.88 一句 Thank you very much（两档都在广角回合上报，画面里没人说话，按幻听处理）。排名 295：维基 Sonay Kartal（In June 2024, ranked No. 295, she qualified）；英国女子资格赛选手 1997 年 Karen Cross 之后第一人：LTA 2024-07 稿＋tennismajors（见 _claims）。",
+   "point_end_ok": "旁白不讲这一分的比分；段尾停在切镜头之前。",
+   "inset": {
+    "image": "assets/reel/kartal-story/label-wb24.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 7.0,
+    "motion": "editorial",
+    "label": {
+     "topic": "资格赛打进第三轮",
+     "date": "2024.07.05",
+     "place": "温网 第三轮",
+     "people": "卡尔塔尔 vs 高芙",
+     "event": "27年来英国第一人"
+    }
+   }
+  },
+  {
+   "source": "iw",
+   "start": 190.5,
+   "end": 200.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "后来，她拿到生涯第一个冠军，最高升到世界第四十四。今年三月，背已经开始疼了，她还是逆转了凯斯。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 swiatek-chwalinska-story-2026 同一档）。"
+   },
+   "_why": "WTA 官方集锦「Madison Keys vs. Sonay Kartal | 2026 Indian Wells Round 3」（z8Sffkz5m8s）：镜头 189.96 切入、203.60 切走；两档转写在 190.42–200.48 无词。生涯第一冠 2024 莫纳斯提尔、最高世界第 44（2025-07-14）：维基＋NBC；比分 2-6 6-2 6-3、比赛中背已经不适（At times in this match I was in discomfort with my back）：WTA 4465394 Match Reaction＋AOL/BBC。",
+   "point_end_ok": "旁白不讲这一分；段尾停在切镜头之前。",
+   "inset": {
+    "image": "assets/reel/kartal-story/label-iw.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 7.0,
+    "motion": "editorial",
+    "label": {
+     "topic": "伤前最后一胜",
+     "date": "2026.03.09",
+     "place": "WTA1000 印第安维尔斯",
+     "people": "卡尔塔尔 vs 凯斯",
+     "score": "2-6 6-2 6-3"
+    }
+   }
+  },
+  {
+   "title_card": "停下来\n的半年",
+   "kicker": "03",
+   "seconds": 16.5,
+   "narration": "两天后的第四轮对莱巴金娜，她四比六、三比四落后时，因为背伤退赛。检查结果是背部应力性骨折。四个大满贯，她错过了三个，包括家门口的温网。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 swiatek-chwalinska-story-2026 同一档）。"
+   }
+  },
+  {
+   "source": "doc",
+   "start": 113.7,
+   "end": 143.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.22,
+     "end": 1.82,
+     "text": "Tennis is all I've known, right?\n网球是我唯一熟悉的事，"
+    },
+    {
+     "at": 2.34,
+     "end": 3.94,
+     "text": "The past 18 years I've done it every day,\n过去18年我每天都在打，"
+    },
+    {
+     "at": 4.42,
+     "end": 8.58,
+     "text": "and just not being able to do that,\n突然什么都做不了，"
+    },
+    {
+     "at": 8.84,
+     "end": 13.18,
+     "text": "and just feeling so like I couldn't do the basic of things.\n连最基本的事都做不到。"
+    },
+    {
+     "at": 13.68,
+     "end": 18.52,
+     "text": "I couldn't brush my teeth without almost standing back up and just being in agony.\n刷牙都得马上直起腰，疼得要命。"
+    },
+    {
+     "at": 18.9,
+     "end": 20.74,
+     "text": "So it was definitely a tough injury,\n这真的是一次难熬的伤，"
+    },
+    {
+     "at": 22.02,
+     "end": 25.58,
+     "text": "but it's definitely made me a stronger person,\n但它让我变得更强大，"
+    },
+    {
+     "at": 26.04,
+     "end": 26.6,
+     "text": "a better person,\n变成更好的人，"
+    },
+    {
+     "at": 26.7,
+     "end": 29.32,
+     "text": "and hopefully it'll make me a better tennis player.\n希望也让我成为更好的球员。"
+    }
+   ],
+   "_quote_kind": "ceremony",
+   "_why": "英国网协 LTA 官方频道复出专访「The Comeback is ON | Sonay Kartal's Road Back From Injury」（8u0X2vm7svU，4K）：她坐着讲伤病。两档逐词一致（medium 113.82–143.02；small 114.02–143.00，small 把 all I've known 记成 what I've known、多一个 kind of，按 medium 写）。镜头 40.36 切入、174.72 切走，段首 113.7 在 So you've got those things and（112.20–113.58）之后，段尾 143.5 在主持人下一问（143.66）之前。",
+   "point_end_ok": "采访，不是回合。"
+  },
+  {
+   "source": "doc",
+   "start": 395.6,
+   "end": 406.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.64,
+     "end": 3.64,
+     "text": "I've been kind of good to go really from kind of US Open time.\n其实美网时我就能复出了，"
+    },
+    {
+     "at": 4.9,
+     "end": 6.48,
+     "text": "Decided not to play that,\n但我决定不打，"
+    },
+    {
+     "at": 7.36,
+     "end": 10.0,
+     "text": "to almost just put my body under a bit more stress.\n让身体再多扛一些强度。"
+    }
+   ],
+   "_quote_kind": "ceremony",
+   "_why": "同一条 LTA 专访：主持人问复出时机。两档逐词一致（medium 396.32–415.90；small 396.24–415.88）。镜头 375.80 切入、421.88 切走，段首 395.6 在 choices to make（395.32）之后，段尾 406.0 在 stress（405.28–405.60）之后、下一个词 to（405.60 起，407.54 才接 try）之前，只留前半句。WTA 4593140 同一件事她在武汉的原话：ready to get back kind of end of August time … I didn't rush myself。",
+   "point_end_ok": "采访，不是回合。"
+  },
+  {
+   "title_card": "武汉的\n五场球",
+   "kicker": "04",
+   "seconds": 15.0,
+   "narration": "九月，她在比利·简·金杯总决赛复出。来武汉之前，她的排名掉到了第一百七十。前三轮，她连赢卡利尼娜和本西奇，又用六十三分钟，送走了保利尼。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 swiatek-chwalinska-story-2026 同一档）。"
+   }
+  },
+  {
+   "source": "r2",
+   "start": 279.2,
+   "end": 295.3,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.22,
+     "end": 2.3,
+     "text": "And takes it with a thunderous forehand,\n一记重炮正手拿下，"
+    },
+    {
+     "at": 3.84,
+     "end": 6.4,
+     "text": "and Sonay Kartal continues her comeback\n卡尔塔尔继续她的复出之路，"
+    },
+    {
+     "at": 6.56,
+     "end": 9.88,
+     "text": "from that stress fracture that saw her miss six months of this season.\n这个赛季她因应力性骨折缺席半年。"
+    },
+    {
+     "at": 11.5,
+     "end": 15.26,
+     "text": "Third round in Beijing is now matched with a third round appearance in Wuhan.\n继北京之后，武汉又进第三轮。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "WTA 官方集锦「Sonay Kartal vs. Belinda Bencic | 2026 Wuhan Round 2」（1TKV_Ywr8J8）：赛点一拍正手、她握拳、致意。两档逐词一致（medium 279.40–294.46），名字两档都转错，按官方标题写 Sonay Kartal。段首 279.2 在赛点那一拍之前（第一个赛点解说 267.82），段尾 295.3 在 295.56 切镜头之前（溶解 0.18 秒不跨切点）。比分 6-0 7-5：LTA 2026-10 稿。",
+   "point_end_ok": "赛点在 280 秒打完，之后是庆祝。",
+   "crosses_cut": "280.88、282.64、285.16、291.00 是赛点那一拍之后的庆祝与致意镜头，都是她本人。"
+  },
+  {
+   "source": "qf",
+   "start": 266.5,
+   "end": 284.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.26,
+     "end": 4.98,
+     "text": "She's the first Briton ever to make the last four in Wuhan.\n首位打进武汉半决赛的英国人。"
+    },
+    {
+     "at": 6.12,
+     "end": 6.74,
+     "text": "What a story.\n多好的故事。"
+    },
+    {
+     "at": 9.3,
+     "end": 11.34,
+     "text": "Out for six months this season,\n这个赛季停了六个月，"
+    },
+    {
+     "at": 11.94,
+     "end": 17.12,
+     "text": "but now getting to the latter stages of the biggest of events.\n现在却打到了大赛的最后阶段。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "WTA 官方集锦「Elina Svitolina vs. Sonay Kartal | 2026 Wuhan Quarterfinal」（T22a9v9UZuk）：赛后庆祝、握手、致意。两档逐词一致（medium 261.58–283.62；small 264.26–283.71），Briton 按 medium。段首 266.5 在 semi-final（265.02）之后、262.08 那个镜头之内，段尾 284.5 在 It's Kartal in three（285.60）之前。",
+   "point_end_ok": "比赛已经结束，庆祝与致意。",
+   "inset": {
+    "image": "assets/reel/kartal-story/label-qf.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 7.0,
+    "motion": "editorial",
+    "label": {
+     "topic": "首进1000赛四强",
+     "date": "2026.10.16",
+     "place": "WTA1000 武汉 1/4决赛",
+     "people": "卡尔塔尔 vs 斯维托丽娜",
+     "score": "6-2 2-6 6-4"
+    }
+   },
+   "crosses_cut": "277.72 切的是赛后庆祝、握手与看台，都是同一场比赛结束之后。"
+  },
+  {
+   "source": "sf",
+   "start": 99.7,
+   "end": 114.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "半决赛对奥斯塔彭科，两盘她都先落后。奥斯塔彭科两次发球胜盘，都被她破了回来。抢七里她又救下两个盘点，十一比九拿下第一盘；第二盘，她再救下三个。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 swiatek-chwalinska-story-2026 同一档）。"
+   },
+   "_why": "WTA 官方集锦（abL2j0xldOc）第一盘抢七：记分条 6 5 / 6 5（99.6–122 逐格读过：第一盘 6 平之后的抢七，5 平），镜头 99.52 切入、122.64 切走；两档转写在 102.76–119.06 无词，100.08–102.76 一句 managed to put her under pressure 和 119.06 so good 是解说低声，旁白压在上面。两次发球胜盘被破、救下 6 个盘点、抢七 11-9：The Independent（Yahoo）与 AOL（Express）赛报，WTA 4593140 比分 7-6(9) 7-6(5)。",
+   "point_end_ok": "抢七回合进行中，旁白不讲这一分的比分；段尾 114.6 在抢七回合之间。",
+   "inset": {
+    "image": "assets/reel/kartal-story/label-sf.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 7.0,
+    "motion": "editorial",
+    "label": {
+     "topic": "救下6个盘点",
+     "date": "2026.10.17",
+     "place": "WTA1000 武汉 半决赛",
+     "people": "卡尔塔尔 vs 奥斯塔彭科",
+     "score": "7-6(9) 7-6(5)"
+    }
+   }
+  },
+  {
+   "source": "sf",
+   "start": 362.0,
+   "end": 374.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.22,
+     "end": 3.82,
+     "text": "I was dreaming of playing this match when I was fully fit before the injury,\n受伤之前，我就梦想打这样的比赛，"
+    },
+    {
+     "at": 4.14,
+     "end": 8.02,
+     "text": "so to be able to come back here in my third event\n复出第三站就能来到这里，"
+    },
+    {
+     "at": 8.36,
+     "end": 12.12,
+     "text": "and to achieve this regardless is a huge milestone for me.\n做到这一步，对我是一座里程碑。"
+    }
+   ],
+   "_quote_kind": "ceremony",
+   "_why": "同一条：赛后场上采访，主持人问排名 170 打进决赛。两档逐词一致（medium 362.04–374.12；small 363.48–374.10），开头 I was I was 的重复按书面去掉。段首 362.0 在主持人问句（360.20）与 Yeah you know（361.68–361.88）之后，段尾 374.4 在 so yeah（374.60）之前。",
+   "point_end_ok": "场上采访，不是回合。"
+  },
+  {
+   "image": "assets/reel/kartal-story/wuhan-qf-smile.jpg",
+   "image_kind": "photo",
+   "seconds": 19.0,
+   "narration": "十月十八号的决赛，对手是另一场半决赛的胜者。打完这一站，她的排名会回到前五十左右，成为新的英国一姐。七个月前，她疼得连刷牙都难。伤好了，她没急着回来。如果是你，你忍得住吗？",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 swiatek-chwalinska-story-2026 同一档）。"
+   },
+   "_why": "WTA 官方图库「Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_5-DSC_4105」（photo 4593547，4700×3000，Day 5＝10 月 16 日 1/4决赛那天，白色背心与 Svitolina 那场集锦一致），裁 2250×3000（3:4，未放大）。排名升到第 50、成为英国一号：The Independent（Yahoo）赛报。",
+   "_photo_source": "https://photoresources.wtatennis.com/wta/photo/2026/10/17/7878daa7-c5c9-466e-b455-084d83d626dc/Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_5-DSC_4105.jpg",
+   "_photo_caption_safety": "她的脸在画面上部 8%–30%，字幕区是球衣，不压脸。"
+  }
+ ]
+}

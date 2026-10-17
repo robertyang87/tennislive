@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=vqIpczMjb5I",
+  "source_sha256": "97117a11416d77648ec13759e83642d51d13bb9f592d6d76551e240cc450b4d9",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T12:59:18.870560+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 51.7,
+  "reviewed_to": 57.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 52.02,
+      "end": 53.54,
+      "en": "Emma and I, we grew up playing each other,",
+      "zh": "我和艾玛从小就是对手，"
+    },
+    {
+      "start": 54.12,
+      "end": 56.26,
+      "en": "kind of from mini tennis.",
+      "zh": "从迷你网球就开始了。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/vqIpczMjb5I/small.en.json + medium.en.json",
+  "review_note": "英国网协 LTA 官方频道 2022 年专访「Getting to know Sonay Kartal」（vqIpczMjb5I）：她对着镜头讲队友。medium 52.02–56.26 一句完整，small 这一段无词（漏转），按 medium 与 LTA 官网同期稿（lta.org.uk/news/2022/april/introducing-sonay：Emma and I, we've grown up playing each other）写。镜头 51.56 切入、76.76 切走，段首 51.7 在 I mean（51.66）之后，段尾 57.1 远早于下一句（76.54）。"
+}

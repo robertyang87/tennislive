@@ -1,0 +1,39 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=T22a9v9UZuk",
+  "source_sha256": "b8b97590cb1b3b47ea72ca1d79f5767bced131a5ed3848ae83d6da41d50fd6f9",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T12:59:18.870560+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 266.5,
+  "reviewed_to": 284.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 266.76,
+      "end": 271.48,
+      "en": "She's the first Briton ever to make the last four in Wuhan.",
+      "zh": "首位打进武汉半决赛的英国人。"
+    },
+    {
+      "start": 272.62,
+      "end": 273.24,
+      "en": "What a story.",
+      "zh": "多好的故事。"
+    },
+    {
+      "start": 275.8,
+      "end": 277.84,
+      "en": "Out for six months this season,",
+      "zh": "这个赛季停了六个月，"
+    },
+    {
+      "start": 278.44,
+      "end": 283.62,
+      "en": "but now getting to the latter stages of the biggest of events.",
+      "zh": "现在却打到了大赛的最后阶段。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/T22a9v9UZuk/small.en.json + medium.en.json",
+  "review_note": "WTA 官方集锦「Elina Svitolina vs. Sonay Kartal | 2026 Wuhan Quarterfinal」（T22a9v9UZuk）：赛后庆祝、握手、致意。两档逐词一致（medium 261.58–283.62；small 264.26–283.71），Briton 按 medium。段首 266.5 在 semi-final（265.02）之后、262.08 那个镜头之内，段尾 284.5 在 It's Kartal in three（285.60）之前。"
+}

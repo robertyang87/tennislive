@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=mXnEXUPITgg",
+  "source_sha256": "c2eb566fcd0ddbde0f6bbaac07f5cd30a8b671f99553d75681ba414917d6bb49",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T12:59:18.870560+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 69.0,
+  "reviewed_to": 81.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/mXnEXUPITgg/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/mXnEXUPITgg 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 69.0–81.0 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "温网官方频道「Sonay Kartal vs Coco Gauff | Highlights | Wimbledon 2024」（mXnEXUPITgg）第三轮回合，戴白帽的是卡尔塔尔。镜头 68.20 切入、83.52 切走，两档转写在这一段只有 63.58–89.88 一句 Thank you very much（两档都在广角回合上报，画面里没人说话，按幻听处理）。排名 295：维基 Sonay Kartal（In June 2024, ranked No. 295, she qualified）；英国女子资格赛选手 1997 年 Karen Cross 之后第一人：LTA 2024-07 稿＋tennismajors（见 _claims）。"
+}
