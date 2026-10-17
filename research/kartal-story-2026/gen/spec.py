@@ -70,8 +70,8 @@ S.append(q("doc",395.6,406.0,[(396.24,399.24,"I've been kind of good to go reall
   "采访，不是回合。",kind="ceremony"))
 # 04 武汉的五场球
 S.append(card("武汉的\n五场球","04",7.8,"她本可以早点回来。可她说，受伤后最好的建议，是别着急。"))
-S.append(n("r2",131.5,143.5,"九月，她在比利·简·金杯总决赛复出。到了武汉，她先赢卡利尼娜和本西奇，又只用六十三分钟，送走了保利尼。",
-  "WTA 本西奇那场集锦（1TKV_Ywr8J8）：镜头 131.36 切入、156.12 切走；两档转写在 131.36–153.94 无词。复出在比利·简·金杯总决赛：WTA 4593140＋AOL；保利尼 63 分钟：WTA 视频标题 Kartal routs Paolini in 63 minutes。",
+S.append(n("r2",131.5,147.5,"九月，她在比利·简·金杯总决赛复出。到了武汉，她拿受伤前五十多位的保护排名报名，先赢卡利尼娜和本西奇，又只用六十三分钟，送走了保利尼。",
+  "WTA 本西奇那场集锦（1TKV_Ywr8J8）：镜头 131.36 切入、156.12 切走；两档转写在 131.36–153.94 无词。复出在比利·简·金杯总决赛：WTA 4593140＋AOL；保利尼 63 分钟：WTA 视频标题 Kartal routs Paolini in 63 minutes。保护排名：Sky「using a protected injury ranking」、TNT、The Independent；数值 AOL 写 57、账号所有者给的核查材料按 WTA 规则与排名记录推 56，旁白只说「五十多位」。",
   "旁白不讲这一分；段尾停在同一个镜头之内。"))
 S.append(q("r2",279.2,295.3,[(279.4,281.5,"And takes it with a thunderous forehand,\n一记重炮正手拿下，"),(283.04,285.6,"and Sonay Kartal continues her comeback\n卡尔塔尔继续她的复出之路，"),(285.76,289.08,"from that stress fracture that saw her miss six months of this season.\n这个赛季她因应力性骨折缺席半年。"),(290.7,294.46,"Third round in Beijing is now matched with a third round appearance in Wuhan.\n继北京之后，武汉又进第三轮。")],
   "WTA 官方集锦「Sonay Kartal vs. Belinda Bencic | 2026 Wuhan Round 2」（1TKV_Ywr8J8）：赛点一拍正手、她握拳、致意。两档逐词一致（medium 279.40–294.46），名字两档都转错，按官方标题写 Sonay Kartal。段首 279.2 在赛点那一拍之前（第一个赛点解说 267.82），段尾 295.3 在 295.56 切镜头之前（溶解 0.18 秒不跨切点）。比分 6-0 7-5：LTA 2026-10 稿。",
@@ -85,8 +85,8 @@ S.append(n("sf",99.7,114.6,"半决赛，对手两次发球胜盘，两次都被�
 S.append(q("sf",362.0,374.4,[(362.04,365.82,"I was dreaming of playing this match when I was fully fit before the injury,\n受伤之前，我就梦想打这样的比赛，"),(366.14,370.02,"so to be able to come back here in my third event\n复出第三站就能来到这里，"),(370.36,374.12,"and to achieve this regardless is a huge milestone for me.\n做到这一步，对我是一座里程碑。")],
   "同一条：赛后场上采访，主持人问排名 170 打进决赛。两档逐词一致（medium 362.04–374.12；small 363.48–374.10），开头 I was I was 的重复按书面去掉。段首 362.0 在主持人问句（360.20）与 Yeah you know（361.68–361.88）之后，段尾 374.4 在 so yeah（374.60）之前。",
   "场上采访，不是回合。",kind="ceremony"))
-S.append(photo("wuhan-qf-smile.jpg",19.0,f"十月十八号的决赛，{OPP}。打完这一站，她会回到世界前五十左右，成为新的英国一姐。七个月前，她疼得连刷牙都难。伤好了，她没有急。如果是你，你等得住吗？这场决赛，你押她吗？",
-  "WTA 官方图库「Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_5-DSC_4105」（photo 4593547，4700×3000，Day 5＝10 月 16 日 1/4决赛那天，白色背心与 Svitolina 那场集锦一致），裁 2250×3000（3:4，未放大）。排名升到第 50、成为英国一号：The Independent（Yahoo）赛报。",QF_PHOTO,
+S.append(photo("wuhan-qf-smile.jpg",23.5,f"一千赛设立十七年，她是排名最低的决赛选手。十月十八号的决赛，{OPP}。打完这一站，她会回到世界前五十左右，成为新的英国一姐。七个月前，她疼得连刷牙都难。伤好了，她没有急。如果是你，你等得住吗？这场决赛，你押她吗？",
+  "WTA 官方图库「Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_5-DSC_4105」（photo 4593547，4700×3000，Day 5＝10 月 16 日 1/4决赛那天，白色背心与 Svitolina 那场集锦一致），裁 2250×3000（3:4，未放大）。排名升到第 50、成为英国一号：The Independent（Yahoo）赛报。排名最低的决赛选手：WTA 半决赛 match notes（1075_SF.pdf：At No.170, she is bidding to become the lowest-ranked WTA 1000 finalist since the format's introduction in 2009 – currently held by No.153 Svetlana Kuznetsova）＋The Independent；2009→2026 是第 17 年。",QF_PHOTO,
   "她的脸在画面上部 8%–30%，字幕区是球衣，不压脸。"))
 json.dump(S,open('research/kartal-story-2026/gen/segments.json','w'),ensure_ascii=False,indent=1)
 print(len(S))
