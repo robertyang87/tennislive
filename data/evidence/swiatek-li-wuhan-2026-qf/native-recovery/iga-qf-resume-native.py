@@ -1,0 +1,72 @@
+from pathlib import Path
+import os,sys,json,subprocess,hashlib,zipfile,stat,shutil,datetime
+sys.path[:0]=['tools','src']
+import compose_native_reel as native
+import render_inputs as ri
+R=Path.cwd();SLUG='swiatek-li-wuhan-2026-qf';RUN=38912186473
+HEAD='a1785b14ec5b18029a20e47e655160888b54db4f'
+ART=12051116916;SIZE=94914058;DIGEST='e001ad1b072e6b104d0da41beea6174e19e4769131c9b5f5e0ed80fa49d84559'
+OUT=R/'output/2026-10-16/reel'/SLUG;SPEC=R/'specs/reels'/f'{SLUG}.json'
+def run(*args):subprocess.run(list(map(str,args)),check=True)
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def write(p,d):p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+record,artifact=native.source_run(SLUG,RUN)
+assert record['head_sha']==HEAD and artifact['id']==ART and artifact['size_in_bytes']==SIZE
+assert artifact['digest']=='sha256:'+DIGEST
+original=native.source_spec(SLUG,HEAD);assert SPEC.read_bytes()==original
+archive=Path('/tmp/iga-qf-original-native-artifact.zip')
+with archive.open('wb')as f:subprocess.run(['gh','api',f'repos/robertyang87/tennislive/actions/artifacts/{ART}/zip'],stdout=f,check=True)
+assert archive.stat().st_size==SIZE and sha(archive)==DIGEST
+temp=Path('/tmp/iga-qf-authenticated-native');temp.mkdir()
+with zipfile.ZipFile(archive)as z:
+ for item in z.infolist():
+  p=Path(item.filename)
+  assert not p.is_absolute() and '..' not in p.parts and not stat.S_ISLNK(item.external_attr>>16)
+ z.extractall(temp)
+candidates=list(temp.rglob('render_inputs.json'));assert len(candidates)==1
+origin=candidates[0].parent
+manifest,meta,binding,film=native.verified_input(SLUG,origin,record,original)
+assert not ri.spec_problems(original,manifest) and not ri.asset_problems(original,manifest,R)
+OUT.mkdir(parents=True,exist_ok=True)
+for p in origin.iterdir():
+ if p.is_dir():shutil.copytree(p,OUT/p.name,dirs_exist_ok=True)
+ else:shutil.copy2(p,OUT/p.name)
+assert sha(OUT/f'{SLUG}.mp4')==manifest['film_sha256']
+native.run('python','tools/production_preflight.py','--spec',SPEC,'--column','赛场之上')
+native.run('python','tools/reel_review_files.py','--slug',SLUG,'--require-review')
+native.run('python','tools/check_polyphones.py','--spec',SPEC)
+native.run('python','tools/probe_sources.py','materialize',SPEC)
+env=os.environ.copy();env['REEL_DRY_RUN_FOR']='render'
+subprocess.run(['python','tools/build_match_reel.py','render','--dry-run','--spec',str(SPEC),'--voice','zh-CN-YunjianNeural','--rate=+6%','--outdir','/tmp/iga-qf-recovery-dryrun'],env=env,check=True)
+native.run('python','tools/check_reel_landed.py','--slug',SLUG,'--spec',SPEC,'--film',OUT/f'{SLUG}.mp4')
+assert sha(OUT/'render_inputs.json')==sha(origin/'render_inputs.json')
+paths=native.native_archive_paths(SLUG,OUT,record,original)
+archive_copy=Path('/tmp/recovered-native-input');archive_copy.mkdir()
+for p in paths:
+ target=archive_copy/p.relative_to(OUT);target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,target)
+shutil.copy2(OUT/'render.json',OUT/'native_archive_render.json')
+provenance={'schema':'tennislive.finite-native-qc-recovery.v1','original_run_id':RUN,'original_run_conclusion':'failure','original_failed_check':'headshot identity exact Chinese transliteration alias only','original_head_sha':HEAD,'original_artifact_id':ART,'original_artifact_zip_sha256':DIGEST,'original_artifact_zip_bytes':SIZE,'original_film_sha256':manifest['film_sha256'],'original_film_bytes':manifest['film_bytes'],'recovery_run_id':int(os.environ['GITHUB_RUN_ID']),'recovery_workflow':'isolated registered frame-grab.yml; NOT a native encoder run','recovery_code_head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'recovery_definition_head':os.environ['GITHUB_SHA'],'checked_at':datetime.datetime.now(datetime.UTC).isoformat(),'same_spec_bytes':True,'same_all_native_input_artifacts':True,'same_original_render_inputs_bytes':True,'same_movie_bytes_no_reencoding':True,'actual_native_qc':'pass','manual_listening_claimed':False,'wechat_sent':False}
+write(OUT/'recovery_provenance.json',provenance)
+shutil.copy2(OUT/'recovery_provenance.json',archive_copy/'recovery_provenance.json')
+tag='reel-'+SLUG
+subprocess.run(['gh','release','view',tag],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode == 0 or native.run('gh','release','create',tag,'--target',HEAD,'--title',SLUG,'--notes','Recovered exact original native movie; no reencoding. Native QC rechecked after verified exact alias correction.','--latest=false')
+native.run('gh','release','upload',tag,OUT/f'{SLUG}.mp4','--repo','robertyang87/tennislive')
+asset=next(a for a in native.api('releases/tags/'+tag)['assets']if a['name']==SLUG+'.mp4')
+assert asset['size']==manifest['film_bytes'] and asset['digest']=='sha256:'+manifest['film_sha256']
+meta=json.loads((OUT/'render.json').read_text());meta.update(video_url=asset['browser_download_url'],video_bytes=asset['size']);write(OUT/'render.json',meta)
+native.run('python','tools/release_tag_note.py','current','--render-json',OUT/'render.json','--run-id',os.environ['GITHUB_RUN_ID'])
+native.run('python','tools/push_reel.py','--stage','page','--outdir',OUT,'--copy',SPEC.with_suffix('.xhs.txt'),'--column','赛场之上')
+actual=native.api('releases/tags/'+tag);write(OUT/'recovery_movie_release_asset.json',next(a for a in actual['assets']if a['name']==SLUG+'.mp4'))
+# The original native archive authenticates pre-transport render.json; retain its exact bytes.
+shutil.copy2(origin/'render.json',OUT/'original_native_render.json')
+shutil.copy2(origin/'render_inputs.json',OUT/'original_native_render_inputs.json')
+small=Path('/tmp/recovered-native-metadata.zip')
+with zipfile.ZipFile(small,'w',zipfile.ZIP_DEFLATED,compresslevel=5)as z:
+ for p in OUT.iterdir():
+  if p.is_file() and (p.suffix.lower()not in {'.mp4','.mkv','.webm','.html'} or p.name=='copy.html') and not p.name.startswith('_'):
+   z.write(p,p.name)
+ for p in (OUT/'score_masks').glob('*'):
+  if p.is_file():z.write(p,'score_masks/'+p.name)
+print('AUTHENTICATED_SAME_NATIVE_MOVIE',manifest['film_sha256'],manifest['film_bytes'],flush=True)
+print('RECOVERY_METADATA',sha(small),small.stat().st_size,flush=True)
+native.run('gh','release','upload',tag,small,'--repo','robertyang87/tennislive')

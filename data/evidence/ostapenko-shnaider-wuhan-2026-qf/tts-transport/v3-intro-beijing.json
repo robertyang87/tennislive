@@ -1,0 +1,77 @@
+{
+  "status": "actual_native_transport_success_service_digest_size_verified",
+  "run_id": 38882567114,
+  "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
+  "bytes": 490751,
+  "asset": {
+    "id": 646869602,
+    "url": "https://api.github.com/repos/robertyang87/tennislive/releases/assets/646869602",
+    "browser_download_url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-ostapenko-shnaider-wuhan-2026-qf-f5b30c57e32b340d/tts_bundle.zip",
+    "state": "uploaded",
+    "size": 490751,
+    "digest": "sha256:f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560"
+  },
+  "capture_proof": {
+    "bundle_path": "/workspace/scratch/osta-tts-v3.zip",
+    "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
+    "bundle_bytes": 490751,
+    "requests": 6,
+    "new_requests": 1,
+    "unchanged_requests_exact_reused": 5,
+    "intro_duration_seconds": 14.352,
+    "intro_card_seconds": 15.1,
+    "all_actual_inputs": [
+      {
+        "output_name": "voice_01.mp3",
+        "request_id": "a5294d0957dfc5a33ea89d49e716e053dee59059aff4b226e945c607a91583e6",
+        "one_actual_new_request": true,
+        "audio_sha256": "7531e01de95e4a6f3a108a208ea86f9571554bc91ae682477adad657864c49ea",
+        "marks_sha256": "572f3b735dd09510b21fe499e4f88149da32597a399b488893a306a811fa8f1c",
+        "duration_seconds": 14.352,
+        "tts_text": "奥斯塔彭科，又朝斯瓦泰克近了一步。北京时间十月十六日上午，武汉四分之一决赛，她七比六、六比一击败施耐德，晋级四强。但首盘，她离丢盘只差一分。"
+      },
+      {
+        "output_name": "voice_02.mp3",
+        "request_id": "96c3567aae72204b95d5b5bd64f4744ffdc79d88d28365994108710691fefb38",
+        "reused_old_exact_audio_and_marks": true,
+        "audio_sha256": "7a8064f0343a94741252821867d34e937ed3c1f0a7deee8df83c2e8a93a2497d",
+        "marks_sha256": "0a7dc914b82f49e2612c6ee9d2d420bcb1b7e7391a5d352730b8c2e0698efc65",
+        "duration_seconds": 15.912
+      },
+      {
+        "output_name": "voice_04.mp3",
+        "request_id": "b9462769ef56615a1589831fb1142fdc6ae6d39e04799d45c82d631a4097d2eb",
+        "reused_old_exact_audio_and_marks": true,
+        "audio_sha256": "72f9493cc1c578782c492d388aad13d636105576c52689942a817f1b2a95973c",
+        "marks_sha256": "b983a8c54f6daf0edefca0b1457fdfcc90780c0234572664ab6adaec05fd5a39",
+        "duration_seconds": 14.52
+      },
+      {
+        "output_name": "voice_06.mp3",
+        "request_id": "f44c1cfb85332899c4afca4997affa75fdd83889e6e9a6d368602f854832d519",
+        "reused_old_exact_audio_and_marks": true,
+        "audio_sha256": "94d158ef85b01ab56575f61e1caec2fcb986374b734cfab2a1f6596877efc22e",
+        "marks_sha256": "2bf5072bc4b1470e50941225815e07f16d116db985528a232c0e99c2e51c296c",
+        "duration_seconds": 12.264
+      },
+      {
+        "output_name": "voice_07.mp3",
+        "request_id": "2a7aa0a16c0211cb844ffa07e2ee5390b34bf222e120c37d06a09a9a0e98f2dd",
+        "reused_old_exact_audio_and_marks": true,
+        "audio_sha256": "09f23e70c756d2297ee3fd28621d399765ba45f31bd3259d157506961b864d34",
+        "marks_sha256": "1859f0be9e40de8f1260df97ba3a9f2c20973936d8d8e1c3cf679cc31676bf45",
+        "duration_seconds": 17.472
+      },
+      {
+        "output_name": "voice_outro.mp3",
+        "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+        "reused_old_exact_audio_and_marks": true,
+        "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+        "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+        "duration_seconds": 4.104
+      }
+    ],
+    "quality_approval": false
+  },
+  "quality_approval": false
+}

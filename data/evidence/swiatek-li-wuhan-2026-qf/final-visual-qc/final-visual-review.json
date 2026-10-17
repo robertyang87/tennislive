@@ -1,0 +1,158 @@
+{
+  "schema": "tennislive.joint-partitioned-final-movie-visual-review.v1",
+  "reviewed_at_utc": "2026-10-16T14:19:26.152590+00:00",
+  "status": "passed_with_explicit_finite_sampling_and_fixed_center_limits",
+  "visual_pass": true,
+  "publication_approved": false,
+  "movie_sha256": "e47e301fe40a6cc56380ca48fdf71474d6e90c4eec9d487f4095bd93f2994387",
+  "movie_bytes": 87833751,
+  "film_seconds": 211.16,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25.0,
+  "native_spec_sha256": "940473eef60a597bf22ae09400877e786b7bbfd0510ef5ca61b846cd6ac4f8a3",
+  "ass_sha256": "7393e7f61348b18a94f46d029cc7934f207ad3234bc6b22d1132d30f5b3f00cd",
+  "render_inputs_sha256": "d4ab1ee041c5ef16a4d62fe68eb5354f0de1f6910330494dd25b033a802c8139",
+  "native_qc_sha256": "f26de1cd37c01cf059c4dbb4db76ff485d3934948d796bbb8c2fe18b5a36190f",
+  "source_sha256": {
+    "main": "dc8e6e9ca8f72a7f6a75e2eb6eac91b0bfe24de9c93f4d75cc8aa1e8189f5862"
+  },
+  "joint_manifest_path": "final-visual-manifest.json",
+  "joint_manifest_sha256": "bdd188f8a92ef8504bd309dae735cb01d77b2e9f037a15a11da04d76ae16f75a",
+  "scope": {
+    "sample_rows_across_partitions": 160,
+    "unique_movie_frames_actually_viewed": 159,
+    "contact_sheets_actually_viewed_across_partitions": 28,
+    "all_ASS_cue_midpoint_windows_actually_viewed": 59,
+    "displayed_caption_midpoint_windows": 55,
+    "intentionally_clean_full_stats_midpoint_windows": 4,
+    "full_original_png_viewings": 6,
+    "whole_movie_frame_by_frame_reviewed": false,
+    "audio_listened": false,
+    "human_review_claimed": false,
+    "loudness_gain_RMS_peak_silence_PCM_checks": false
+  },
+  "review_partitions": [
+    {
+      "reviewer": "source/action agent",
+      "manifest_path": "source-action/frame_manifest.json",
+      "manifest_sha256": "e2b202ad803f3b84d803e8be3d1a8fade6abce2d9f1c8f4e1c5211d9496c47e9",
+      "review_path": "source-action/source-action-review.json",
+      "review_sha256": "a4fc273b23d5979a2570905adefdbb8671c54d37b163619c50a3dee691073423",
+      "sample_rows": 99,
+      "walls": 17,
+      "assigned_cue_indices": [
+        1,
+        2,
+        3,
+        4,
+        10,
+        11,
+        12,
+        13,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "original_pngs_viewed": [
+        1390,
+        3485,
+        1897,
+        4558
+      ]
+    },
+    {
+      "reviewer": "root",
+      "manifest_path": "root/frame_manifest.json",
+      "manifest_sha256": "f3062bbf9b05815db196781e635c1016baad20628245a8bfcad50f618db603db",
+      "review_path": "root/root-review.json",
+      "review_sha256": "61d33d9228026fe5f58c91b2ffabd4963d51314bce125d039171a0427be11940",
+      "sample_rows": 61,
+      "walls": 11,
+      "assigned_cue_indices": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        14,
+        15,
+        16,
+        17,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "original_pngs_viewed": [
+        15,
+        4594
+      ]
+    }
+  ],
+  "blocking_findings": [],
+  "source_action_decision": {
+    "review_sha256": "a4fc273b23d5979a2570905adefdbb8671c54d37b163619c50a3dee691073423",
+    "observations_attribution": "Actual source/action agent inspection only; root does not claim these as personal viewing.",
+    "summary": "All41 assigned caption midpoint windows and99 action/native-board samples passed finite actual-movie inspection; natural fixed scorebody/key-label geometry, large-board caption avoidance and complete semantic names/scores verified in sampled originals."
+  },
+  "root_decision": {
+    "review_sha256": "61d33d9228026fe5f58c91b2ffabd4963d51314bce125d039171a0427be11940",
+    "observations_attribution": "Actual root inspection only; source/action agent does not claim these as personal viewing.",
+    "summary": "All18 other ASS windows, cover/cards/outro and all10 seams passed61-frame finite inspection. Four statistics windows intentionally display clean native full stats. Ending frames4583..4597 inspected continuously at25fps without black flash or source WTA publisher tail in that interval; clean opaque statistics by183.72."
+  },
+  "known_fixed_center_limit": "Source1920x1080 center x555..1365 fills1080x1440. Wide-side players/balls may leave horizontal crop; selected time continuity does not imply complete horizontal court visibility.",
+  "native_provenance": {
+    "original_encoder_run_id": 38912186473,
+    "original_conclusion": "failure",
+    "original_failed_check": "headshot identity exact Chinese transliteration alias only",
+    "recovery_run_id": 38913697827,
+    "recovery_workflow": "isolated registered frame-grab.yml; NOT a native encoder run",
+    "same_movie_bytes_no_reencoding": true,
+    "actual_native_qc": "pass",
+    "recovery_provenance_sha256": "e9f1e13eede727a3952de3c6f3451bbb959674c0835cd41c7284b8c8d38fce5d",
+    "note": "Original alias-only failed native run remains recorded as failure. Correct exact AnnLi alias allowed actual native QC to pass on the authenticated same immutable movie/native-input bytes, with no encoding or TTS regeneration."
+  },
+  "limitations": [
+    "Finite actual-movie sampling by two named partitions; not every5279frame manually reviewed or full-movie audio listening.",
+    "Original source action/facts, frozen pronunciation and source speech review remain separate evidence.",
+    "No GitHub merge/publication/WeChat send/pushed.json claim. External archive service locator remains pending until actual transport receipt is verified."
+  ]
+}

@@ -1,0 +1,350 @@
+{
+  "status": "whole_exact_full_utterance_request_audio_marks_evidence_reused",
+  "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
+  "current_binding": {
+    "segment_index": "outro",
+    "edit_id": "outro",
+    "output_name": "voice_outro.mp3",
+    "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+    "request": {
+      "backend": "edge",
+      "cache_key": "20da8f5468902afbbecb78daefb15d83",
+      "lead_pause": 0.0,
+      "pitch": "+0Hz",
+      "rate": "+6%",
+      "style": "",
+      "styledegree": "",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    "tts_text": "关注网球时插，时插归我，好球归你。",
+    "display_text": "关注网球时差，时差归我，好球归你。",
+    "text_sha256": "580cc47db09b9e3d542f700e95e1c818dce2b50a7d35bf112ca5948ac0aa65be",
+    "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+    "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+    "duration_seconds": 4.104,
+    "native_audio": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/outro-3d7277d26afc569a.mp3",
+    "native_marks": "/workspace/scratch/osta-pronunciation/intro-beijing-v3/native-audio/outro-3d7277d26afc569a.json",
+    "bundle_sha256": "f5b30c57e32b340d1b0c05b97d4604dfa3536b4e06f2faf73299daafd57e3560",
+    "matches_current_spec": true,
+    "wordboundary_exact_native_bytes_preserved": true,
+    "polyphones": [
+      {
+        "index": 12,
+        "char": "好",
+        "word": "好",
+        "intended": "hao3",
+        "live": [
+          "hao3",
+          "hao4"
+        ],
+        "defaults": [
+          "hao3"
+        ],
+        "status": "actual_pending"
+      }
+    ],
+    "proper_names": [],
+    "numbers": [],
+    "abbreviations": [],
+    "actual_wordboundary_tokens": [
+      {
+        "text": "关注",
+        "start_index": 0,
+        "start_seconds": 0.0471659,
+        "end_seconds": 0.3655819,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "网球",
+        "start_index": 2,
+        "start_seconds": 0.377375,
+        "end_seconds": 0.742916,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "时",
+        "start_index": 4,
+        "start_seconds": 0.742916,
+        "end_seconds": 0.907999,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "插",
+        "start_index": 5,
+        "start_seconds": 0.908,
+        "end_seconds": 1.132041,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "时",
+        "start_index": 7,
+        "start_seconds": 1.426875,
+        "end_seconds": 1.615541,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "插",
+        "start_index": 8,
+        "start_seconds": 1.615583,
+        "end_seconds": 1.827833,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "归",
+        "start_index": 9,
+        "start_seconds": 1.827833,
+        "end_seconds": 1.992916,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "我",
+        "start_index": 10,
+        "start_seconds": 1.992916,
+        "end_seconds": 2.228749,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "好",
+        "start_index": 12,
+        "start_seconds": 2.511791,
+        "end_seconds": 2.688666,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "球",
+        "start_index": 13,
+        "start_seconds": 2.688666,
+        "end_seconds": 2.877332,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "归",
+        "start_index": 14,
+        "start_seconds": 2.889166,
+        "end_seconds": 3.113207,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "你",
+        "start_index": 15,
+        "start_seconds": 3.113208,
+        "end_seconds": 3.266499,
+        "status": "boundary_exists_not_pronunciation_proof"
+      }
+    ]
+  },
+  "previous_binding": {
+    "segment_index": "outro",
+    "edit_id": "outro",
+    "output_name": "voice_outro.mp3",
+    "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+    "request": {
+      "backend": "edge",
+      "cache_key": "20da8f5468902afbbecb78daefb15d83",
+      "lead_pause": 0.0,
+      "pitch": "+0Hz",
+      "rate": "+6%",
+      "style": "",
+      "styledegree": "",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    "tts_text": "关注网球时插，时插归我，好球归你。",
+    "display_text": "关注网球时差，时差归我，好球归你。",
+    "text_sha256": "580cc47db09b9e3d542f700e95e1c818dce2b50a7d35bf112ca5948ac0aa65be",
+    "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+    "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+    "duration_seconds": 4.104,
+    "native_audio": "/workspace/scratch/osta-pronunciation/native-audio/outro-3d7277d26afc569a.mp3",
+    "native_marks": "/workspace/scratch/osta-pronunciation/native-audio/outro-3d7277d26afc569a.json",
+    "bundle_sha256": "bc91d1d69f056e97133ad361d161f02d493587c6d4498a524ddfee10c4c17313",
+    "matches_current_spec": true,
+    "wordboundary_exact_native_bytes_preserved": true,
+    "polyphones": [
+      {
+        "index": 12,
+        "char": "好",
+        "word": "好",
+        "intended": "hao3",
+        "live": [
+          "hao3",
+          "hao4"
+        ],
+        "defaults": [
+          "hao3"
+        ],
+        "status": "actual_pending"
+      }
+    ],
+    "proper_names": [],
+    "numbers": [],
+    "abbreviations": [],
+    "actual_wordboundary_tokens": [
+      {
+        "text": "关注",
+        "start_index": 0,
+        "start_seconds": 0.0471659,
+        "end_seconds": 0.3655819,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "网球",
+        "start_index": 2,
+        "start_seconds": 0.377375,
+        "end_seconds": 0.742916,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "时",
+        "start_index": 4,
+        "start_seconds": 0.742916,
+        "end_seconds": 0.907999,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "插",
+        "start_index": 5,
+        "start_seconds": 0.908,
+        "end_seconds": 1.132041,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "时",
+        "start_index": 7,
+        "start_seconds": 1.426875,
+        "end_seconds": 1.615541,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "插",
+        "start_index": 8,
+        "start_seconds": 1.615583,
+        "end_seconds": 1.827833,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "归",
+        "start_index": 9,
+        "start_seconds": 1.827833,
+        "end_seconds": 1.992916,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "我",
+        "start_index": 10,
+        "start_seconds": 1.992916,
+        "end_seconds": 2.228749,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "好",
+        "start_index": 12,
+        "start_seconds": 2.511791,
+        "end_seconds": 2.688666,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "球",
+        "start_index": 13,
+        "start_seconds": 2.688666,
+        "end_seconds": 2.877332,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "归",
+        "start_index": 14,
+        "start_seconds": 2.889166,
+        "end_seconds": 3.113207,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "你",
+        "start_index": 15,
+        "start_seconds": 3.113208,
+        "end_seconds": 3.266499,
+        "status": "boundary_exists_not_pronunciation_proof"
+      }
+    ]
+  },
+  "exact_conditions": {
+    "tts_text": true,
+    "request": true,
+    "audio_sha256": true,
+    "marks_sha256": true
+  },
+  "previous_actual_review_path": "/workspace/scratch/osta-pronunciation/history/superseded-v2-spoken-time-anchor/current-review.json",
+  "previous_actual_review_sha256": "9cbfc0a6e78e239585674b516e5cf71d3e2b4949bfa05335d23935c9e6202d13",
+  "occurrences": [
+    {
+      "edit_id": "outro",
+      "index": 5,
+      "char": "插",
+      "intended": "cha1",
+      "kind": "brand_phonetic",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "status": "correct_low_support",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+          "source_sha256": "6d6ed359b3c60d213418c7cd45eec06feb41a51c9425667fa584bba24cab2f87",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f"
+        }
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "index": 8,
+      "char": "插",
+      "intended": "cha1",
+      "kind": "brand_phonetic",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "status": "correct_low_support",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation/history/v1-e1fe9b7d6cf9/current-review.json",
+          "source_sha256": "6d6ed359b3c60d213418c7cd45eec06feb41a51c9425667fa584bba24cab2f87",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f"
+        }
+      ]
+    },
+    {
+      "edit_id": "outro",
+      "index": 12,
+      "char": "好",
+      "word": "好",
+      "intended": "hao3",
+      "live": [
+        "hao3",
+        "hao4"
+      ],
+      "defaults": [
+        "hao3"
+      ],
+      "status": "correct_low_support",
+      "kind": "polyphone",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "evidence": [
+        {
+          "source": "/workspace/scratch/moon3-pronunciation-qc/independent-review.json",
+          "source_sha256": "8b10dc40bd10fde074106e9f39d77d659cea589fd129fa5a1282ca453abaddd4",
+          "verdict": "correct_low_support",
+          "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f"
+        }
+      ]
+    }
+  ],
+  "confidence": "low",
+  "limitations": [
+    "All conclusions retain finite low confidence. No human listening or strongest-confidence claim.",
+    "The final two cross-negative mechanical LOO failures are preserved. Actual independently located vowel F0 curves, reference character phonology and current syllable evidence support their limited decisions; original failed calibration is not relabelled pass.",
+    "For hui/kuai, current spectral contrast provides low support near the decision boundary; Burg formant component does not independently support the reading and remains explicitly unsupported.",
+    "Single positive-reference cases retain their missing positive-side LOO limitation; actual phonetic identity or independently located tone evidence is recorded separately.",
+    "ASR Chinese characters locate words and numeric values only, never establish tone.",
+    "No source/final loudness/RMS/peak/silence/gain processing or checking. Current pronunciation feature extraction omits MFCC C0 and RMS."
+  ],
+  "manual_listening_claimed": false,
+  "not_new_synthesis": true
+}

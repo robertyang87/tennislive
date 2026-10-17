@@ -619,6 +619,12 @@ PLAYER_ZH: dict[str, str] = {
 # PLAYER_ZH 的规范输出仍是「保利尼」，别名不改已经配音/渲染的显示文案。
 PLAYER_ZH_ALIASES: dict[str, str] = {
     "帕奥利尼": PLAYER_ZH["Jasmine Paolini"],
+    # 施耐德/施奈德均指 Diana Shnaider（WTA 330482）；官方英文名和 ID 见
+    # data/research/ostapenko-shnaider-wuhan-2026-qf/fact-packet.json。
+    "施耐德": PLAYER_ZH["Diana Shnaider"],
+    # Ann Li（WTA 326096）的既有译名；top500表与历史spec写「李吉妮」。
+    # 本期官方身份见 data/evidence/swiatek-li-wuhan-2026-qf/facts/。
+    "李吉妮": PLAYER_ZH["Ann Li"],
 }
 
 

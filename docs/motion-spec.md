@@ -1,61 +1,91 @@
-# 网球时差 · 动效规格（草稿）
+# 动效与电影感出片规格（motion-spec）
 
-> 本文的动效命名与部分参数改编自 **Motion Prompt**（https://github.com/showheyohtaki/motion-prompt），
-> MIT License, Copyright (c) 2026 Shohei Ohtaki。编号 #NNN 对应原库条目。
-> 原许可要求保留版权与许可声明；本文只借用规格文字，不含原库代码。
+> 账号所有者 2026-10-17「加一些出片工具」「同时要有电影或宣传片的质感」。
+> 全部 **opt-in、spec 驱动**：不写就和原来逐字节一致。实现在 `tools/reel_cinematic.py`，
+> 接线在 `tools/build_match_reel.py`，判据在 `tests/test_reel_cinematic.py`。
 
-## 0. 通用约束（所有动效都必须满足）
+## 硬规矩（先看）
 
-- 画布 **1080×1440**、30fps；渲染方式：HTML 页暴露确定性的 `window.renderAt(t)`（只由 t 决定画面，无 CSS transition / requestAnimationFrame / 随机数），Playwright 逐帧截图 → ffmpeg（libx264, yuv420p, crf 16）。
-- 风格：苹果发布会式——深色底 `background #080e1d`，可加一层 `hero-glow #304d76` 低透明径向光；**一屏只一个强调色：黄绿 `#c6f65a`**；正文 `#f4fbf7`，次级 `#cfe6d8`，元信息 `#a9bcb2`，面 `card #15243a`（均出自 `src/tennislive/design_tokens.py`）。
-- 字体：中文与标题用品牌标题同款 `NotoSansSC-Bold-sub.ttf`（正文 Regular）；**只有比分 / 数字**用 `BarlowCondensed-Bold.ttf`（`assets/fonts/`），数字等宽（`tabular-nums`）、右对齐，滚动时不左右抖。
-- 角标（**只用于贴在比赛画面上的叠加字卡**；全屏图表卡 / H2H 交手卡一律不用角标，账号所有者 2026-10-16：「这种字卡是在视频里贴的」）：右上角，距上/右 72px，右侧 8px 黄绿竖条，文字右对齐；行序固定 **主题 / 日期+赛事 / 比分 / 人物**。
-- 比分：每盘胜方局数用黄绿，负方用正文色，抢七小分 `(4)` 用元信息色。
-- 缓动只用三种：`easeOutCubic = 1-(1-p)^3`（进场）、`easeOutQuart = 1-(1-p)^4`（数值）、`spring(u)=1-e^(-7u)·cos(14u)`（弹入）；落定回弹 `1+0.07·e^(-7u)·cos(15u)`。禁止线性进场、禁止 >8% 的超调。
-- 质检：最后一帧上的所有数字必须与 spec / 旁白定稿逐字相等（渲染脚本断言，失败即不出片）。动效不得遮挡官方画面主体超过 0.6 秒。
+- **分一律原速。不慢放、不定格、不变速。**（账号所有者 2026-10-17 明令）`cinematic` 里没有任何变速键；
+  推镜只放大不改帧数。原来的 `speed` 键在正常制作里本来就会被原声闸拦下。
+- **不加配乐、不加音效**（risers / hits / whoosh 一律不做）。成片只有比赛原声＋旁白；BGM 由账号所有者后期自己垫，
+  所以给了分轨导出。
+- **全屏图表卡不做**（2026-10-17「不要动画卡」）。数据只走右上角标准角标。预告片卡只放一句话。
+- 调色、颗粒、暗角**只作用于比赛画面段**：封面、章节卡、片尾、角标、字幕、品牌色都不被染。
 
-## 1. 动效清单
+## 1. 调色（grade）与逐源拉齐（match）
 
-| # | 名称（原库） | 参数 | 何时用 |
-|---|---|---|---|
-| M1 | 角标进场（#004 Line draw + #002 Stagger） | 竖条高度 0→100%，0.05–0.50s，easeOutCubic；四行依次淡入+右移 24px→0，行间隔 0.06s，每行 0.30s | 比赛画面上的右上角叠加字卡（全屏图表卡不用） |
-| M2 | 大数字弹入（#001 Pop-in） | scale 0.85→1 按 spring，opacity 0→1 于前 0.2s；transform-origin 左中 | 「6—0」「150 胜」这类标题数字 |
-| M3 | 列表依次弹入（#002 Stagger） | 每行起点 0.8s + i·0.18s；opacity 0→1（0.18s），translateY 30px→0 按 spring | 交手记录、赛程、名单（≤8 行） |
-| M4 | 数字滚动（#007 Count-up） | 值 = round(目标·easeOutQuart(p))，时长 1.2s；起点晚于所在面板进场 0.2s；千分位、等宽 | 盘数局数、积分、奖金、胜场 |
-| M5 | 落定回弹（#010 Overshoot） | 数到终值瞬间 scale = 1+0.07·e^(-7u)·cos(15u)，约 0.5s 衰减到 1 | 紧接 M4；每屏最多一处 |
-| M6 | 条形生长（#009 Easing） | 宽度 0→目标，0.9s，easeOutCubic；多根时间隔 0.12s；只有关键那根用黄绿，其余 `muted #20324e` | 积分榜、排名、数据对比 |
-| M7 | 遮罩揭示（#005 Mask reveal） | 文字从右向左揭开（clip-path inset），0.45s，easeOutCubic | 比分卡、结论句、引语 |
-| M8 | 扫光（#022 Light sweep） | 45° 白色 18% 透明高光带，宽 120px，0.6s 扫过一次，不循环 | 冠军 / 纪录数字落定后点睛，每片 ≤2 次 |
-| M9 | 定格+比分卡（#040 Freeze frame） | 赛点击球帧定格 0.8–1.2s，叠 M7 比分卡；定格时长计入"官方画面"统计 | 赛场之上的赛点、关键分 |
-| M10 | 变速（#038 Speed ramp） | 1.0x→0.4x 于 0.25s，保持 ≤1.0s，0.25s 回 1.0x；声音保持原速或静音 | 制胜分、救赛点回合 |
-| M11 | 溶解转场（#044 Cross dissolve） | `xfade=fade`，0.3s；旁白不动（沿用 explainer.py 现有实现） | 段落之间；禁止花哨转场 |
-| M12 | 匹配剪辑（#042 Match cut） | 两段同动作 / 同构图硬切，零时长 | 历史与今天对照（如 2019 vs 2025 同一人） |
+```json
+"cinematic": {
+  "grade": "teal_orange",        // teal_orange | moody | neutral
+  "grade_strength": 0.8,         // 0~1，默认 1
+  "match": {"iw21": {"exposure": -0.04, "temperature": 5800, "saturation": 0.95}}
+}
+```
 
-## 2. 参考实现
+- 预设是内建 ffmpeg 滤镜（`colorbalance` + `eq`），BtbN 和沙箱同一套，不依赖 .cube 文件。
+- `match` 先把每条源拉到同一基线（曝光 −0.3~0.3、色温 3000~9000K、饱和 0.6~1.4），再统一上预设——
+  不同赛事、不同转播的白平衡差异先抹平，整片一个色调。
+- 链路顺序：`conform 放大(+锐化)` → `match` → 裁 3:4 → 铺画布 → `grade` → 暗角 → 颗粒 → 推镜 → 角标叠加。
 
-- 试点：`/workspace/motion-pilot/card.html` + `render.py`（奥斯塔彭科对斯瓦泰克六战交手卡，用了 M1–M5）。
-- 接入建议：新建 `src/tennislive/video/motion_frames.py`，供 `explainer.py` 图表屏输出动画片段，其余屏仍走静态截图。
+## 2. 胶片颗粒与暗角
 
-## 3. 质感参数（v2，2026-10-16）
+`"grain": 0~1`（`noise` 时域颗粒，0.3 左右肉眼可见不脏）、`"vignette": 0~1`（`vignette` 角度 0.25~0.98）。
 
-| 项 | 参数 |
-|---|---|
-| 底 | 纵向渐变 #0a1222 → #060a14 → #04060c |
-| 光晕 | 上方 1400×1100 径向 #2c4a78aa→透明，blur 30px，缓慢漂移 ±60px；左下 1100×900 #3a5f9a55，blur 40px |
-| 暗角 | radial 130%×95%，55% 起渐变到 #000000b0 |
-| 颗粒 | 296×384 灰度噪点放大到画布，opacity 0.06，overlay；种子 = 帧号，可复现 |
-| 毛玻璃卡 | 渐变 #ffffff12→#ffffff06，1px #ffffff1c 描边，圆角 28px，内高光 inset 0 1px #ffffff26，阴影 0 2px 6px #0006 + 0 24px 60px #0008，backdrop blur 24px |
-| 字 | 大数字 Barlow Bold 330px、字距 -12px、强调色外发光 0 0 60px #c6f65a40；说明字 NSR 24px、字距 6–8px、#a9bcb2；比分分隔用 84×16 圆角条（55% 白），不用"—"字形 |
-| 进场 | expo-out 1−2^(−10p)，0.7–1.0s；opacity 0→1 + y 12–40px→0 + blur 8–24px→0；层级错开 0.07–0.12s |
-| 扫光 | 6—0 上 110px 宽、−20° 斜、#ffffff55 高光，0.7s ease-in-out 扫一次 |
-| 镜头 | 全舞台 scale 1.00→1.03（ease-in-out，整段时长），原点 50% 38%；画面元素离下边至少 60px，防止推镜后出画 |
-| 运动模糊 | 60fps 渲染，ffmpeg `tmix=frames=2,fps=30` |
-| 结尾 | 数字落定（回弹 1+0.05·e^(−6u)·cos(14u)）后静止 ≥1.2s |
+## 3. 预告片式片头/片尾卡
 
-## 4. H2H 头像（v3）
+段落：`{"title_card": "第七次 你押谁？", "kicker": "武汉", "title_style": "trailer", "seconds": 1.6}`
 
-- 素材：只用 WTA 官方半身抠图（`Surname-Torso_<id>.png`，两人须同一批次），文件名带 WTA ID。
-- 版式：左＝比分在前的一方，右＝对手；圆盘 260px，底 radial #2a3f63→#121c30，内高光 inset 0 2px #ffffff30，外环 1px #ffffff22 + 8px #ffffff08，阴影 0 30px 60px #000a；靠内侧一边加 rim light inset ±6px 18px #cfe6ff66。抠图宽 450px、顶 6px（脸占圆盘约 40%）。
-- 名字在头像下方 34px，下面国家 20px 英文、字距 4px、#8d9e96。
-- 进场：头像 0.3s / 0.42s 起，从两侧各 120px 滑入 + blur 22px→0（expo，1.0s）；比分 1.0s 起落定，必须晚于头像。
-- 全屏 H2H 卡没有角标：头像区顶边 y≈190，表格 640、数字卡 1060，上下留白大致相等（v4）。
+- 黑底、上下宽银幕黑边（各 11%）、金属细线、字距拉开，品牌字体（TL Display SC）。
+- 只许一句话（沿用章节卡 18 字上限）——**它不是数据卡**。
+- 画面占比：和章节卡一样算**非比赛画面**。dry-run 会打印 `[画面占比]`（`reel_cinematic.footage_ratio`）；
+  非官方源在 spec 顶层 `_unofficial: {"源键": "为什么"}` 认领，官方占比不算它。
+- 宽银幕黑边只在这张卡上出现；比赛画面照旧铺满 1080×1440。
+
+## 4. 接缝转场
+
+段落 `"transition_in"`（这一段**进场**那条接缝）：
+
+| 值 | 效果 | xfade |
+|---|---|---|
+| `dissolve`（默认） | 原来的 0.18s 溶解 | `fade` |
+| `cut` | 硬切（在溶解窗正中切） | `custom` |
+| `flash` | 闪白 | `fadewhite` |
+| `whip` | 甩镜模糊 | `hblur` |
+
+- 时长一律沿用 `SEG_FADE`，长度账、旁白 `adelay`、字幕 cue 一处不变。
+- 转场只落在**段与段之间**；段的边界本身已经过「一分打完再切」和「不切断解说」两道硬闸，
+  所以转场不可能切断一分或一句解说。转场窗吃的是前一段的自然延续（tail）。
+- 2×2 融合拼接（`reel_join_fusion`）认得这四种写法，不会掉回慢路。
+
+## 5. 分轨导出（stems）
+
+`"cinematic": {"stems": true}` → 成片目录多出三条 48 kHz/24-bit WAV，和成片逐样本对齐、同长：
+
+- `<slug>.narration.wav`：只有旁白
+- `<slug>.original.wav`：只有拼好的现场原声（增益 1.0，不闪避）
+- `<slug>.mix.wav`：成片那条混音
+
+三条 WAV 被 `.gitignore` 挡在 git 外，跟着 render 的 Actions artifact 走。要它们自动进 Release，需把
+`docs/patches/match-reel-stems-release.patch` 应用到 `.github/workflows/match-reel.yml`（改 workflow 要带
+`workflow` 权限的令牌，本次提交的令牌没有，所以留成补丁）。默认不带任何音乐。
+
+## 6. 低清放大与锐化（白名单）
+
+```json
+"conform": {"iw21": "720p 官方集锦放大铺满"},
+"conform_sharpen": {"iw21": "放大后轻度锐化"},
+"source_quality_exceptions": {"<URL>": {"min_height": 720, "approved_by": "user", "reason": "…"}}
+```
+
+- `conform_sharpen` 三条都要满足：键在 `conform` 里（被放大）、理由非空、URL 在
+  `APPROVED_LOW_RES_SOURCES` 白名单（账号所有者按 URL 点名）。1080p 源不许锐化。
+- 锐化固定 `unsharp=5:5:0.6:5:5:0.0`（只锐亮度、轻度），不开放强度。
+
+## 7. 反应镜头推近（Ken Burns）
+
+段落 `"push_in": 1.0~1.15`：段内从 1.0 匀速推到该倍数，中心不变。
+
+- 只给普通比赛画面段（反应、庆祝、看台）；跟拍、回贴记分条、图片/卡片段写了当场红。
+- 带式版式（band）不推（会把上下带一起推）。
+- 静态放大继续用原来的 `crop_zoom`。

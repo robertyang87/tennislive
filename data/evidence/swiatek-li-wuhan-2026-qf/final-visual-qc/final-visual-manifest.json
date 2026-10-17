@@ -1,0 +1,1383 @@
+{
+  "schema": "tennislive.joint-partitioned-final-movie-visual-manifest.v1",
+  "movie_sha256": "e47e301fe40a6cc56380ca48fdf71474d6e90c4eec9d487f4095bd93f2994387",
+  "movie_bytes": 87833751,
+  "native_spec_sha256": "940473eef60a597bf22ae09400877e786b7bbfd0510ef5ca61b846cd6ac4f8a3",
+  "ass_sha256": "7393e7f61348b18a94f46d029cc7934f207ad3234bc6b22d1132d30f5b3f00cd",
+  "render_inputs_sha256": "d4ab1ee041c5ef16a4d62fe68eb5354f0de1f6910330494dd25b033a802c8139",
+  "native_qc_sha256": "f26de1cd37c01cf059c4dbb4db76ff485d3934948d796bbb8c2fe18b5a36190f",
+  "sample_rows_across_partitions": 160,
+  "unique_movie_frames_sampled": 159,
+  "all_ass_cue_windows": 59,
+  "root_stat_card_windows_intentionally_clean": 4,
+  "all_movie_frames_reviewed": false,
+  "partitions": [
+    {
+      "reviewer": "source/action agent",
+      "manifest_path": "source-action/frame_manifest.json",
+      "manifest_sha256": "e2b202ad803f3b84d803e8be3d1a8fade6abce2d9f1c8f4e1c5211d9496c47e9",
+      "review_path": "source-action/source-action-review.json",
+      "review_sha256": "a4fc273b23d5979a2570905adefdbb8671c54d37b163619c50a3dee691073423",
+      "sample_rows": 99,
+      "walls": 17,
+      "assigned_cue_indices": [
+        1,
+        2,
+        3,
+        4,
+        10,
+        11,
+        12,
+        13,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "original_pngs_viewed": [
+        1390,
+        3485,
+        1897,
+        4558
+      ]
+    },
+    {
+      "reviewer": "root",
+      "manifest_path": "root/frame_manifest.json",
+      "manifest_sha256": "f3062bbf9b05815db196781e635c1016baad20628245a8bfcad50f618db603db",
+      "review_path": "root/root-review.json",
+      "review_sha256": "61d33d9228026fe5f58c91b2ffabd4963d51314bce125d039171a0427be11940",
+      "sample_rows": 61,
+      "walls": 11,
+      "assigned_cue_indices": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        14,
+        15,
+        16,
+        17,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "original_pngs_viewed": [
+        15,
+        4594
+      ]
+    }
+  ],
+  "unique_frame_index": [
+    {
+      "frame_index": 3,
+      "film_time_s": 0.12,
+      "image_sha256": "82fa296fa269557ea3a27b1f97bd9b1ddaae0629db5a57ba67017cd7f7cfc5dc",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 15,
+      "film_time_s": 0.6,
+      "image_sha256": "6b77db37976678e930ac6602af6f2311073edaaa2295ac687f583d76c9963f53",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 27,
+      "film_time_s": 1.08,
+      "image_sha256": "674f5ff73c9c70b61e8ab7dd589c7ecd26d6044994162bba399f4de5863251be",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 36,
+      "film_time_s": 1.44,
+      "image_sha256": "7faad8eb0108531650643b5ad025f85faac8e4a22d4eefd9e1178667280c5ab1",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 66,
+      "film_time_s": 2.64,
+      "image_sha256": "a78912c7d396f58e77e626724cc21d3164b6ff99f6e0bec92f2ab07d255983f3",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 118,
+      "film_time_s": 4.72,
+      "image_sha256": "5e0c4f3ecc1644a0739a6496560b8f011502ef04f1a8c351139ff238afada429",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 191,
+      "film_time_s": 7.64,
+      "image_sha256": "7f46c99a6d933e7cb038283b8fe77886ed7fdbda93a7a0df0af3fdb1058c6159",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 200,
+      "film_time_s": 8.0,
+      "image_sha256": "5577bccd23f182138c8750d040c435859eed31728729ad47707865465791e729",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 292,
+      "film_time_s": 11.68,
+      "image_sha256": "716c0e4708e829fd6335bf6b8ed2c83567a32b079b1059820fd1f6b13a93b573",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 344,
+      "film_time_s": 13.76,
+      "image_sha256": "7f6c4269b48084372c48ec5e7f121e86090402776c5f7e156087c076507af431",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 349,
+      "film_time_s": 13.96,
+      "image_sha256": "a41b97f73c8fe0f937def49988159d014303be9acab984443ccad7766c3ad297",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 352,
+      "film_time_s": 14.08,
+      "image_sha256": "ceb62b2a6c85c8519e19fff6799775474b301507e31ad05e2e86e7deb31fc2eb",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 388,
+      "film_time_s": 15.52,
+      "image_sha256": "1c9600b91288c2df1d62fb370c22e7447c3a9db83b8944f93ce182e93383624f",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 453,
+      "film_time_s": 18.12,
+      "image_sha256": "9623ee4e2d680851df3e1c2a66852517a64c14869eb52834318503d0039c2f4f",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 505,
+      "film_time_s": 20.2,
+      "image_sha256": "e1366ac27f102029ce7f29dee72f174be737274d6bb61b174d790793e75cbf55",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 516,
+      "film_time_s": 20.64,
+      "image_sha256": "3914f357ec25bdb7690f2fb6b4cc4bd5a6f23d8397aeb559b46dbb31060ddfb1",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 548,
+      "film_time_s": 21.92,
+      "image_sha256": "ff42a93a11e78e2c1d3759847a290026e924733060ca0c4e4956155372932a13",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 606,
+      "film_time_s": 24.24,
+      "image_sha256": "41dd6a137a0994efa7628ba44ba2cd9e7b806b03130b70360e4d76ae9d6caf89",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 680,
+      "film_time_s": 27.2,
+      "image_sha256": "0aba1a1cda5067976fe100fc1ebd70ece05c3222e003f5f82ab0231b85278205",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 682,
+      "film_time_s": 27.28,
+      "image_sha256": "6b7067bb4dad26537db2fbf921e667079e24b355a77184beb9d931de57cb7264",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 687,
+      "film_time_s": 27.48,
+      "image_sha256": "c55469f7ad4d6e18b186457b990d4fb726315c2e53cd6a69e65484100c5b7c6e",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 717,
+      "film_time_s": 28.68,
+      "image_sha256": "ca1e080dbbe909ebae1528d0ac29084ff302ba11ca0caf1ceac1f9b0174fcd42",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 751,
+      "film_time_s": 30.04,
+      "image_sha256": "79ef5e781b691381a483e58a5aae18c4346c20e8be4a510ab9817c238a7b136c",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 776,
+      "film_time_s": 31.04,
+      "image_sha256": "3e20543e3dd8a619270486cea1611d425968b36e86e1d30693d65269008418c5",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 821,
+      "film_time_s": 32.84,
+      "image_sha256": "689f56adca197c71940d0650c36019af486cc69375fe9a788e6f17b8dc23bc41",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 844,
+      "film_time_s": 33.76,
+      "image_sha256": "5f6b996eeeca8313a07edb589cc347b444c8736c28bede68609f255cf8619c4d",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 879,
+      "film_time_s": 35.16,
+      "image_sha256": "5c1b563d8a0833c432a891789f866f8b752b582f5b88406df127cf0d5ca75513",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 889,
+      "film_time_s": 35.56,
+      "image_sha256": "5fe4c1148fe279da7b63451f6b6820f4f7bee11a5b1acc0328ffe3e59fe71a01",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 964,
+      "film_time_s": 38.56,
+      "image_sha256": "341394a69f4b62b367850a15b25163827960496aa2b0b9f783fa293778a194ab",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 999,
+      "film_time_s": 39.96,
+      "image_sha256": "f6980cd2db6161451d19f5addcd50eb2bbc2bb3f18993f13c32445ef3a17c219",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1004,
+      "film_time_s": 40.16,
+      "image_sha256": "c2863afad27d7d4a29d9be7efb9ce16e1ed43204da00175827468d8d67c671a0",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 1007,
+      "film_time_s": 40.28,
+      "image_sha256": "12a65eab55a679bb0a107ddc289b1d4a9198e40a9bbcb4375e90c4e34afeda24",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 1046,
+      "film_time_s": 41.84,
+      "image_sha256": "9b14515f9c4836f83323749846ba46ac4371e662009e1304ab678930463faa78",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 1108,
+      "film_time_s": 44.32,
+      "image_sha256": "e4bbf1b02acce5a936389e1c63ad7620e0377ac826628576915247cdbd19293b",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 1166,
+      "film_time_s": 46.64,
+      "image_sha256": "6bc4d0fd6611715fde82e27b559f0481771ad1faf95ec8ae48a0c5dcc7af7d5f",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 1169,
+      "film_time_s": 46.76,
+      "image_sha256": "4c5bcbf1885f8cc6f6284f63bef51853007245177240a7aeed3c746572f45f5f",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 1247,
+      "film_time_s": 49.88,
+      "image_sha256": "df05be0f7d4a6dfd3ace33fa467b13d128645eb4ebdbe4ddbcf691686f1514b4",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 1324,
+      "film_time_s": 52.96,
+      "image_sha256": "b9107c0cd6eb9785cab0fe8c5fc7a700a5d9705e5805fe8828ba1ce1965d22f1",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 1328,
+      "film_time_s": 53.12,
+      "image_sha256": "cf7babde1f2c602b0ff5e8bf09bb9d4754c275fb8e3ca65d6f6232e9a4935730",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 1330,
+      "film_time_s": 53.2,
+      "image_sha256": "83ce6e1de20efd2971583b9cd6df226e244c626624e1a569dc7d11d9662afa8f",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1390,
+      "film_time_s": 55.6,
+      "image_sha256": "08f189ae38909d39adb7d4976a0d3fcbfb82378a50baee2c7fac4ca54f428e22",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1440,
+      "film_time_s": 57.6,
+      "image_sha256": "7bb647515cd12319a4a5f8144874a92495a9e4d2f59ed04b7bba2da1df11fc03",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1490,
+      "film_time_s": 59.6,
+      "image_sha256": "bde923f44e820fdca094e6695b7f441ee725ffdc6018a93d24dddf512124bf4c",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1540,
+      "film_time_s": 61.6,
+      "image_sha256": "a2566e59af1b7355d30062f234a428ca084799f305e707fa8803d9a82bfb5203",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1573,
+      "film_time_s": 62.92,
+      "image_sha256": "a6388940d26056acacb6a76e1f49e752d3241091678c1e09037297f123716ba5",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1580,
+      "film_time_s": 63.2,
+      "image_sha256": "851c039b580212d6e849c77ee9d9ae2aaa3fb6bb8ae41dea5da11712b6189bcb",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1592,
+      "film_time_s": 63.68,
+      "image_sha256": "14589bdcb9181c893b46ad20995389ae8c01cea7b463d9957c19a9ba2788b3ac",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1640,
+      "film_time_s": 65.6,
+      "image_sha256": "2fe36c31b2ec32fe514170df66eb6ba21f7b82cc1c62cd46d6bbd2595af1aeec",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1670,
+      "film_time_s": 66.8,
+      "image_sha256": "7d68b84d66e77ecebdd37468e317cb3ac7b345375ff991cf9f58d031c75c7993",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1690,
+      "film_time_s": 67.6,
+      "image_sha256": "471d3db3f0d70854e9584d9b365268128ce3c168125d9ceaf058fe5128197393",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1734,
+      "film_time_s": 69.36,
+      "image_sha256": "8c1e8faa9dc537f3dabf27c955a127f81dee6641b03d3ef0fe5f0a4f0a7c6738",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1784,
+      "film_time_s": 71.36,
+      "image_sha256": "5200db5ae5f962c196861e4a6c3a14b0a55b537eed34b450280eeefa01e7f518",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1803,
+      "film_time_s": 72.12,
+      "image_sha256": "fac40df7798def87177f37b106a5327de7d339d4e1c5a50e8f41daec1e4f6527",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1839,
+      "film_time_s": 73.56,
+      "image_sha256": "5c79d5796d63a3f133f064e993365c53dde5a3339a232f62fc2098a26c699db4",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1897,
+      "film_time_s": 75.88,
+      "image_sha256": "7761e89dcd6871730d0bd214157cce1c3fc2245a88c2216c29207f6712fa5191",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1968,
+      "film_time_s": 78.72,
+      "image_sha256": "ea649e8b298587ebae34bd5becc4b5961c209e2a90885156ebcbfac62c2501ac",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 1994,
+      "film_time_s": 79.76,
+      "image_sha256": "2ac70184844be701d80675dc819bd9fcf45a6c3f2bd06dcf25f3a38c172c6a7d",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2002,
+      "film_time_s": 80.08,
+      "image_sha256": "27c274fb47a3df721349e9f96cf4da39b22b99462cca7e1c458901c7adc86b3d",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2011,
+      "film_time_s": 80.44,
+      "image_sha256": "6d804e4448e6f17b3eb0fcad2c3eebd6a51be00f2b560e2a350f6d9dc60986e5",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2040,
+      "film_time_s": 81.6,
+      "image_sha256": "e76bfd1bdeebe778789b8e5422e8c0edd2ec7a5677d86b7a6502541516977ddf",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2090,
+      "film_time_s": 83.6,
+      "image_sha256": "3ceab34271dec09280bfc410515cbfdc1a3bfc87408e3787e16dd8ad291a9803",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2140,
+      "film_time_s": 85.6,
+      "image_sha256": "02492dc5dcf0b973c5de2e92171e7da556be64aaac281b81157ab121bcda5dc4",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2171,
+      "film_time_s": 86.84,
+      "image_sha256": "57090239207930f82e88b49cf87353a9de927e8a76fc6e608dd4b46a0a764b09",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2190,
+      "film_time_s": 87.6,
+      "image_sha256": "4e94e063874a6c8976151840366349740a104f25b92f854dc8b26970d1e0e24e",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2260,
+      "film_time_s": 90.4,
+      "image_sha256": "7216274b6d21ed7a57e88a53e7a81305b227d58ad19bdf4e897d947fef281549",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2335,
+      "film_time_s": 93.4,
+      "image_sha256": "c336dfe5f59f306f704865ff3fede6c906cd29cc016505e5490f66d886780889",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2397,
+      "film_time_s": 95.88,
+      "image_sha256": "43b3fc83e43b21c74184a230b1c757d1b0906c488d8c339fe711851cdc3ce641",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2490,
+      "film_time_s": 99.6,
+      "image_sha256": "8cbd07842919d39330d0d757d2050d4a303863f74cf6b6f48f01886f5d3f098c",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2616,
+      "film_time_s": 104.64,
+      "image_sha256": "c028fb6d1c4ce360f4f04c49ce7768dc35252cb89a0266e1b4cc5bd2c9d61c1f",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2716,
+      "film_time_s": 108.64,
+      "image_sha256": "0b226edd8463683f877895e9999a2512b3d8912caebc9965489e01753d46e568",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2770,
+      "film_time_s": 110.8,
+      "image_sha256": "f844505c04b77172fc09ff61b058a0ba97ad0a6f8a6476a23a9074f9ac40ffa9",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2790,
+      "film_time_s": 111.6,
+      "image_sha256": "b03ba5fa2e5a33d8e02d634f83214add7f46ff6039a8a181a2bc72a3efc5b246",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2872,
+      "film_time_s": 114.88,
+      "image_sha256": "736fd2a3fdcb2705b43a7af19cea02057e86ea2fc281d3ce17b9bd12ff105c7d",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2916,
+      "film_time_s": 116.64,
+      "image_sha256": "03d6e6a5fcea8c1e315043f43b6e8d81e575fe7757a2e415259e810eb9b72fb7",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2930,
+      "film_time_s": 117.2,
+      "image_sha256": "16108e89908b00a4fb323368b92f3dd1fd9411a412b3ad2e749f142fa7c7df22",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 2982,
+      "film_time_s": 119.28,
+      "image_sha256": "1a0da4831f7647329e1f2ad210a6c1481577621f6a1f0c96bae2ab60a016ff2f",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3012,
+      "film_time_s": 120.48,
+      "image_sha256": "9149399ee1b5aebc6744d0d8e76f9d03a8089fd8ce9c49262d3b1dcc92821177",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3014,
+      "film_time_s": 120.56,
+      "image_sha256": "d889d8f46e43d521e1efdcea6fa90be894489b81b506d0e24813d78076cf14ce",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 3017,
+      "film_time_s": 120.68,
+      "image_sha256": "a7a40b6ea81ddac924c23840ee78cd368fc939e73592a7660a1bdbe0693ce1c4",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 3021,
+      "film_time_s": 120.84,
+      "image_sha256": "09c5685c775f4904e967b7335949e23692fd42da0b234149c9b3aeab8ee2aa62",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3046,
+      "film_time_s": 121.84,
+      "image_sha256": "0a014e91d6fcf50e5de208331e647fe5cff5eaf5d0d9f754bab6b80081932bdd",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3097,
+      "film_time_s": 123.88,
+      "image_sha256": "6a7599841f8e2421caf18d0d6c279bf02b2c24b27667e8ecfc92e7cceadec86a",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3141,
+      "film_time_s": 125.64,
+      "image_sha256": "84040bf7b988246c8bc1f750c0abda0900eeb8a633d7f0f686f0c79f816e8d1d",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3165,
+      "film_time_s": 126.6,
+      "image_sha256": "d6ccf6aa9b701e45aeb3c362c5a4b05237d3b3db96f933322af8dc9fd73f5616",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3193,
+      "film_time_s": 127.72,
+      "image_sha256": "85f18368d57829c3c3c82c9e74d175c85b182fee097cf0bcbf5d0936020dda9d",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3236,
+      "film_time_s": 129.44,
+      "image_sha256": "b5db0d89ee285efa2df4c1ac5316dd0d3c997b734936ad9bcff91c7fcd8ab583",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3287,
+      "film_time_s": 131.48,
+      "image_sha256": "e58b86e6c591f960efee951a371984bcad244c189ed9376ce88b820d1470815d",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3315,
+      "film_time_s": 132.6,
+      "image_sha256": "94b3b6596864c2729e72f69b5ad6a876b276d61c44107440313eb17111572d01",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3390,
+      "film_time_s": 135.6,
+      "image_sha256": "641feceda7634b20fab310e1da83aecc8f1ae11df317261a4df9f0866e76b7e8",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3440,
+      "film_time_s": 137.6,
+      "image_sha256": "d2416d34dedda1c99229acd8d3b89ac25c61b244d718fadf2684b9b20e81dc74",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3445,
+      "film_time_s": 137.8,
+      "image_sha256": "24fca47a83c210693f34e671db31b41e68af4acccb88b2e27aad9907b5e59818",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 3448,
+      "film_time_s": 137.92,
+      "image_sha256": "5d05740d315b1d4afb54787b9239686156cbfc241c5d0cc3d48e4ede19f7818f",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 3453,
+      "film_time_s": 138.12,
+      "image_sha256": "0712f30a93c29f6cfbb8790de00e0f21f51e061c7a8f60d9208e6cf9ae60b22b",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3485,
+      "film_time_s": 139.4,
+      "image_sha256": "171a595dd823175d26c41a58e2d872625f2d0323a5b8868ce017fa21b0ebcd6b",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3506,
+      "film_time_s": 140.24,
+      "image_sha256": "cef99e0be88d9c8a8aaa231475315b249d62e5cc46d49c4db13d803fdc31f031",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3556,
+      "film_time_s": 142.24,
+      "image_sha256": "c5707e63d0ed51626a0a75f3bbbf671cbcd27aef28ef307c666a423615679717",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3564,
+      "film_time_s": 142.56,
+      "image_sha256": "009abf3a847175a45989230a76bf107b758af26c61f04983559e370dc369acfa",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3584,
+      "film_time_s": 143.36,
+      "image_sha256": "2d6bb1027f0c47523b30c55d144c3fd6ebb54f9baa0f1ecda2de5777e053595e",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3606,
+      "film_time_s": 144.24,
+      "image_sha256": "899231194c0a4476259c10643254fe901925332f7d6240016bf9564746926ccb",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3656,
+      "film_time_s": 146.24,
+      "image_sha256": "6f0a358ca242cb2d9df47d6fafd913fc2340db38e5e3a9879a887ef9fb5d0cb6",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3715,
+      "film_time_s": 148.6,
+      "image_sha256": "1076d37dcf726a1058f9927e01381bf3c779f79875dcce26511bd85c5fb8782b",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3720,
+      "film_time_s": 148.8,
+      "image_sha256": "1209a4b193eb025cebe17a2c2ef7d03e5791c0359492e37d8ff2337cd398132a",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 3723,
+      "film_time_s": 148.92,
+      "image_sha256": "7506ac6e41ed11603c44b411b8bcd8765e818bd94d60c9a65be0281770f7e35b",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 3726,
+      "film_time_s": 149.04,
+      "image_sha256": "dd5e409c4e1eaa03b5b23a67d0343f78c51cfe96c87933ca5ff3034cd18de2b5",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3733,
+      "film_time_s": 149.32,
+      "image_sha256": "4c519fd59a55ae007c52701479bbe4e9b4079ea03da8c0c56b2a697646218dfa",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3741,
+      "film_time_s": 149.64,
+      "image_sha256": "bcb9392ae63729ea11ca601b8dd3c74b36d3007a8b28a9c29996d89492f824f2",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3758,
+      "film_time_s": 150.32,
+      "image_sha256": "13ee0f0e3ac8b38555c6af793ae38c855e530b85dbc0a32c7aaf3e0481dbaf51",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3781,
+      "film_time_s": 151.24,
+      "image_sha256": "dbdad89878d249a83ebbcedae829b238af85780443dae8347c3cb7c0154b0183",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3810,
+      "film_time_s": 152.4,
+      "image_sha256": "0f6f2b3151fa069c72a78d853f5c95c6f0d081895c8f79cb5a7dfe6ccf2fec51",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3856,
+      "film_time_s": 154.24,
+      "image_sha256": "0cc28752259abe95704e135cdf7c0690c5439ea4a398aed08b0310077124a464",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3892,
+      "film_time_s": 155.68,
+      "image_sha256": "b9202f51b57b38065776329b9dc2165a08e7c53a6814506a54801bc16185baf1",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3956,
+      "film_time_s": 158.24,
+      "image_sha256": "25f4af28f4bd018842d5eafcc2179fa8624bf03b087ae932210f9cb84094dbb3",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 3984,
+      "film_time_s": 159.36,
+      "image_sha256": "b3cca78a1b282cfb6c30e0ef5c201c2479af45645d1b142a8f1acdfe2401fcf3",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4056,
+      "film_time_s": 162.24,
+      "image_sha256": "9495d27829a2acf33ab58c35afd78f4719beb1088858318e47543c547be7f180",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4128,
+      "film_time_s": 165.12,
+      "image_sha256": "3209e1dc3f1aa31838e827f0a3fbfa57f8fd8942499e46124b7af134773724a4",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4156,
+      "film_time_s": 166.24,
+      "image_sha256": "ec31bb5aa55986be8009258b4361f194625a837b9012a2eaf4574b06bc2aa248",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4198,
+      "film_time_s": 167.92,
+      "image_sha256": "139727d73dac0570c818a3e1edf843ec230818bf431678dd38fc38aa31426e5c",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4267,
+      "film_time_s": 170.68,
+      "image_sha256": "bd7f1651bbf1fe70099aac8f8573e2403ba4c4c7135dfdf4c4b8a8418d8781b0",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4281,
+      "film_time_s": 171.24,
+      "image_sha256": "ae3b2e972192fd889f433f99fed187d1d5bb55ea75bf6b76fd899e391bec428b",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4330,
+      "film_time_s": 173.2,
+      "image_sha256": "c98128916368adf0ed94879719fa793e09ca57b9d1082d74063419285a92e776",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4381,
+      "film_time_s": 175.24,
+      "image_sha256": "13a0046f5d04a76930635dabe5c8047b492596d0d3588e7aa0dc084135bc4021",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4426,
+      "film_time_s": 177.04,
+      "image_sha256": "22394f17875ff4bcdab8759b343c7d5b0f6e543e1ccf19513c57686e2311fdfa",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4456,
+      "film_time_s": 178.24,
+      "image_sha256": "6fc4f8bc194f7b9dd8b42ba9e780192d4f4122fd69aa0f38f37423cd7216fd41",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4500,
+      "film_time_s": 180.0,
+      "image_sha256": "175341030c94949368417d2b3e8868c23a9929c8fae055cb24255eeec53cecf9",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4531,
+      "film_time_s": 181.24,
+      "image_sha256": "ba25210646361b1c02b9750f3deeef4f79585aa80715c6fad0f1edf38128e309",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4558,
+      "film_time_s": 182.32,
+      "image_sha256": "a853bdb19427a8af4a34694ee9d05ad249cc2f646448d0584af67b6112e61a78",
+      "review_partitions": [
+        "source_action_agent"
+      ]
+    },
+    {
+      "frame_index": 4583,
+      "film_time_s": 183.32,
+      "image_sha256": "f3442dea08e1cfc34b5d97cf96a6af32d400dd9cc17facffa68a92fffbe432f8",
+      "review_partitions": [
+        "source_action_agent",
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4584,
+      "film_time_s": 183.36,
+      "image_sha256": "50015b2a330fe3a84f6e55a5c43e52be0a45764c65227e8e174624eff825af33",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4585,
+      "film_time_s": 183.4,
+      "image_sha256": "29e0d3c969b0073f176a79261e69c1a475cec7c51329087e433df95ed3acfa58",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4586,
+      "film_time_s": 183.44,
+      "image_sha256": "38573d8de5c85b801b7b97ee78aaf448774d434a4cf09143bad656c5ed27b1fe",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4587,
+      "film_time_s": 183.48,
+      "image_sha256": "9493791f81771f21794b7b8a7772545faa5f972ee0859fb06a2e4f18faaac1fc",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4588,
+      "film_time_s": 183.52,
+      "image_sha256": "686019ff2af8bee28feac6d6723657d40ad14f6979c61728d37f5bc2eecbbec9",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4589,
+      "film_time_s": 183.56,
+      "image_sha256": "1645a7522d9668407d1daf6c5df8223ed642b5698afa98fa3869ed0361da9a4b",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4590,
+      "film_time_s": 183.6,
+      "image_sha256": "a9491457b44c941020a3570d32073477c1de5faf6587b89e9f34f508ed5b7bd6",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4591,
+      "film_time_s": 183.64,
+      "image_sha256": "b9a952c34a6a5caf2b9f4c0127bed696dc39349bcf6904af9ed74083173984f7",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4592,
+      "film_time_s": 183.68,
+      "image_sha256": "df5fbf04fbc0d00b521a50679d7627ca169a0d4b04544dc131c58a956bb864a6",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4593,
+      "film_time_s": 183.72,
+      "image_sha256": "01e07f1667dbadd77c176162cbdd4465d5541d3ef9be3dfec23057d1ff80971e",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4594,
+      "film_time_s": 183.76,
+      "image_sha256": "7443410801798b9ca9b6927416fb50abe8736856744a6f744a5490949e7e7aff",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4595,
+      "film_time_s": 183.8,
+      "image_sha256": "37261ef975013f2e94941ccb5ddb4ebbe436ba52dbc749313498a5965a5cee18",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4596,
+      "film_time_s": 183.84,
+      "image_sha256": "06802b2d06569324d37f87018dee4f5c662b5ac62efe24c8f2d9600b275b9fa8",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4597,
+      "film_time_s": 183.88,
+      "image_sha256": "5e0d0e596bb01426e486bf7b1c223fdf57cbfa2506122f876a96e5a7012e32bf",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4614,
+      "film_time_s": 184.56,
+      "image_sha256": "3209b334b010077771709b9fb8c3702fc09c2d409b81a664da8d58c4e3863583",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4673,
+      "film_time_s": 186.92,
+      "image_sha256": "6913e224be99bd25979b4bad64846b6968a09d982eac5d27e3d422f5b44ee3d3",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4727,
+      "film_time_s": 189.08,
+      "image_sha256": "f4e42326b2c5d3416bd09bf438e4c43de0fe2540ffe5c705766d799d2d7c1225",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4729,
+      "film_time_s": 189.16,
+      "image_sha256": "c20a32aeaa1bfab211cb34e95e40d9f6ad45570e21fad89d50a65b202b8a8128",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4788,
+      "film_time_s": 191.52,
+      "image_sha256": "0b7a4ec7d42a8b47b8c7f8a4c408e5ec72b0c723a82c8a143d8b8c4df9ce4e80",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4863,
+      "film_time_s": 194.52,
+      "image_sha256": "4136931e45b1771f5fdee957967e3f681c155c8309de58528f0c64d4af3f81a7",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4866,
+      "film_time_s": 194.64,
+      "image_sha256": "9d85176e8f6f7089a1855be63daeed8320bc9c3cadaef9fb67204da01ed68c91",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4897,
+      "film_time_s": 195.88,
+      "image_sha256": "30b9003aca3edcf33a7babbef1444737e8a96efa33f4a2dd4e07e808117ae31d",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 4953,
+      "film_time_s": 198.12,
+      "image_sha256": "c8101493fb955aed5ef679c7fba5c166deb8ec73f63b18d50edbcbaa6256c5c5",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 5003,
+      "film_time_s": 200.12,
+      "image_sha256": "6ce70a04e725d802b96fa15f06af67c669f2c40f188a814f23f6f4971125eb6e",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 5015,
+      "film_time_s": 200.6,
+      "image_sha256": "fa0bff533d74362a3a587e2125ef3782e6704e3eeef20b653e4f1f98c8b47902",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 5051,
+      "film_time_s": 202.04,
+      "image_sha256": "172aa5c02de6e2d8abc0004f316092b1f1868796e61748468ee2d18741ed73fb",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 5099,
+      "film_time_s": 203.96,
+      "image_sha256": "bb540651d5db4ae115403117535d569e325ab09eaa4e00cefcb89457f54e01f8",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 5163,
+      "film_time_s": 206.52,
+      "image_sha256": "6d9a12b00da9fbef908d373836efe5376367b390c61b6e816cb82ba5c728ba12",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 5166,
+      "film_time_s": 206.64,
+      "image_sha256": "0e41b1de7da3062541110584c6edb6076ed499377cb1f687b5ba68fd077d6b93",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 5179,
+      "film_time_s": 207.16,
+      "image_sha256": "be429a92c96081e3ea5adca5a6298dc9d135e36f2f96466cc546671b65f0fa26",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 5242,
+      "film_time_s": 209.68,
+      "image_sha256": "85ba4e5d516b74612841832ac236d418b09f4d396907d9376c37d60309153033",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    },
+    {
+      "frame_index": 5276,
+      "film_time_s": 211.04,
+      "image_sha256": "6ed5f3fb6195545c42fbb7cf8ae52ab7d45d5b8d3bdbc15ef22eb3ffae74b4b7",
+      "review_partitions": [
+        "root_cover_cards_seams_outro"
+      ]
+    }
+  ],
+  "native_recovery_provenance_sha256": "e9f1e13eede727a3952de3c6f3451bbb959674c0835cd41c7284b8c8d38fce5d"
+}

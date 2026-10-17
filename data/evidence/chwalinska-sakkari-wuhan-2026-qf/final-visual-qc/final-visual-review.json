@@ -1,0 +1,173 @@
+{
+  "schema": "tennislive.independent-final-movie-visual-review.v1",
+  "reviewed_at_utc": "2026-10-16T11:50:52.657441+00:00",
+  "slug": "chwalinska-sakkari-wuhan-2026-qf",
+  "status": "passed_with_explicit_partition_sampling_and_spatial_crop_limits",
+  "visual_pass": true,
+  "publication_approved": false,
+  "review_method": "Joint finite AI inspection. Independent final_visual_qc agent directly viewed contact0..11,19..25 and5original movie PNGs. Root directly viewed contact12..18 and recorded exact SHA/observations; that evidence was verified and referenced, not claimed as independent agent viewing.",
+  "human_review_claimed": false,
+  "movie": "/workspace/scratch/moon-qf-final/chwalinska-sakkari-wuhan-2026-qf.mp4",
+  "movie_sha256": "d876eb0e39d117191c01b8e021f126a4fbd97c143bde9670fba3bd98070ac9b1",
+  "movie_bytes": 105629200,
+  "native_run_id": "38894474664",
+  "native_input_head": "f726d82b0e8ce868dd3111a6dcd0ebe45b43baad",
+  "native_artifact_commit": "77b0fb2c",
+  "spec_sha256": "b4f466f37997b5a5185fc3a9b704eb37bbf87b7fdef451400df04e88ab9cc7c7",
+  "ass_sha256": "e7735aeb1b8545303418846c099532495f3ccfbf98af021ea2314b0c825dbf53",
+  "render_inputs_sha256": "672e358f40caba2820844de6c86254ac58bc88160c887473939c538ede253762",
+  "native_input_archive_sha256": "a34983218bd2eabf9cfb80adb25d8b1aa8173f0437fc41d7136171fd049de09b",
+  "source_sha256": "daf2900ed133d0b9c2b0c4bfd9f678d0b1bd81ff880b01b83061d29f6d5fe70f",
+  "duration_seconds": 317.0,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": "25",
+  "movie_total_frames": 7925,
+  "frame_manifest": "/workspace/scratch/moon-qf-final-visual-qc/actual/frame_manifest.json",
+  "frame_manifest_sha256": "88c89f0d72f8b440563e4e47519870c0a01f57890b856cf8c61802f3ca436296",
+  "scope": {
+    "joint_actual_movie_samples": 154,
+    "independent_contact_samples": 112,
+    "root_contact_samples": 42,
+    "actual_ASS_cue_midpoints_jointly_viewed": 66,
+    "intentionally_clean_stat_card_cue_window_frames": [
+      7214,
+      7300,
+      7372,
+      7437
+    ],
+    "independent_original_movie_PNGs_viewed": 5,
+    "all_movie_frames_manually_viewed": false,
+    "audio_listened": false,
+    "loudness_gain_peak_RMS_PCM_silence_checks_performed": false,
+    "source_fullsurvey_repeated": false,
+    "production_spec_code_changed": false,
+    "publication_upload_or_commit_performed": false
+  },
+  "blocking_findings": [],
+  "observations": [
+    {
+      "topic": "cover",
+      "evidence": [
+        {
+          "movie_frame_index": 15,
+          "movie_seconds": 0.6,
+          "png": "/workspace/scratch/moon-qf-final-visual-qc/actual/frames/f000015.png",
+          "png_sha256": "ea886977d26473e53911014be9eb67c5a5187a7f70926de527441ae0d328d4d7"
+        }
+      ],
+      "finding": "Actual encoded cover: clear open eyes and face, title bands do not obscure face. Exact2semantic lines首盘6比0仍陷苦战 / 月亮姐首进1000赛4强; event/round/opponents intact and6/3/7 versus0/6/5 readable. This was checked in the movie PNG, independently of poster.jpg."
+    },
+    {
+      "topic": "fixed_native_scoreboard_and_prompts",
+      "evidence": [
+        {
+          "movie_frame_index": 6196,
+          "movie_seconds": 247.84,
+          "png": "/workspace/scratch/moon-qf-final-visual-qc/actual/frames/f006196.png",
+          "png_sha256": "82c0ed343e78176306272d30ea87ba25b976209bf957b505c3f9529dfc21e226"
+        }
+      ],
+      "finding": "Complete MATCH POINT header, both native player names/seed, serve icon, three-set scores andAd point shown. BREAK POINT#2/#3, SET POINT/#2 also readable in sampled partitions. Board position fixed atx0; transparent contour does not carry a surrounding-court rectangle. No board movement recommended or performed."
+    },
+    {
+      "topic": "final_result_board_subtitle_clearance",
+      "evidence": [
+        {
+          "movie_frame_index": 7091,
+          "movie_seconds": 283.64,
+          "png": "/workspace/scratch/moon-qf-final-visual-qc/actual/frames/f007091.png",
+          "png_sha256": "eb76afd5ac8bb96cc53f518cc7ed3dd54fea7ef7ff493c0ae396d2b463e1b8d5"
+        },
+        {
+          "movie_frame_index": 7156,
+          "movie_seconds": 286.24,
+          "png": "/workspace/scratch/moon-qf-final-visual-qc/actual/frames/f007156.png",
+          "png_sha256": "f1127d4439db4697d1c9c1353dffa02851e3738b5cc9c7baa2e3367e07bc75f7"
+        }
+      ],
+      "finding": "Both ending bilingual cues above source-native large resultboard; MAJA CHWALINSKA/MARIA SAKKARI,6/3/7 versus0/6/5 and31/52/73 minute rows clear. Local540subtitle window start/end neighbors were checked on exact sampled movieframes7082..7084 and7164..7167. Original resultboard entrance animation briefly reveals partial rows; not misclassified as a native mask defect."
+    },
+    {
+      "topic": "all_caption_and_card_windows",
+      "finding": "All66actualASS cue midpoint windows were jointly inspected. Names, long English captions, Chinese semantic lines and scores readable in sampled frames; no confirmed orphan glyph, name split or board collision. Six navy chapter cards use contextual kickers and separated bottom branding. Date/time context includes北京时间2026年10月16日下午. Narration remains visual-text evidence only."
+    },
+    {
+      "topic": "statistics",
+      "evidence": [
+        {
+          "movie_frame_index": 7214,
+          "movie_seconds": 288.56,
+          "png": "/workspace/scratch/moon-qf-final-visual-qc/actual/frames/f007214.png",
+          "png_sha256": "690576039610ba4314d3b07fbdb1358e44577b5223ce7abbc485f5b0f764b5dd"
+        },
+        {
+          "movie_frame_index": 7300,
+          "movie_seconds": 292.0,
+          "png": "/workspace/scratch/moon-qf-final-visual-qc/actual/frames/f007300.png",
+          "png_sha256": "38d349706bbb50055829c2c637aebeb808bd4749d8b2cb07e6c70f8a1f50a1bd"
+        },
+        {
+          "movie_frame_index": 7372,
+          "movie_seconds": 294.88,
+          "png": "/workspace/scratch/moon-qf-final-visual-qc/actual/frames/f007372.png",
+          "png_sha256": "3925ef85b1841cbdc3590355a3260df16d8230d7f5687a95a4a2c5d7743ddc47"
+        },
+        {
+          "movie_frame_index": 7437,
+          "movie_seconds": 297.48,
+          "png": "/workspace/scratch/moon-qf-final-visual-qc/actual/frames/f007437.png",
+          "png_sha256": "50db98c0984d2ee74be66ebca41b90cde9fa9b53d30eeb1d2b8a8760a5eda6b9"
+        }
+      ],
+      "finding": "Full-canvas statcard is intentionally clean during narration cue windows.25/37 winners,23/35UE and all remaining metric rows readable without subtitle overlay. No listening or sound-level claim."
+    },
+    {
+      "topic": "action_and_payoff",
+      "finding": "Finite actualmovie samples retain retained point preparation/rallies, post-point reaction, crouch, racket kiss, player/umpire greeting and crowd acknowledgment. Root/source review separately establishes missing official third-set intermediate points, explained by factcards; no claim of continuous complete final game or every keypoint action covered."
+    },
+    {
+      "topic": "ending_and_outro",
+      "finding": "Actual source-to-stat and stat-to-finalcard seams, cached navy outro center and final encoded frame viewed; no source black/WTA bumper in sampled ending seam or outro. Source window ends before source299.44black/299.48bumper according to previously reviewed source evidence."
+    }
+  ],
+  "geometry": {
+    "current_actual_policy": "latest user instruction full-screen3:4 fixedcenter crop",
+    "source_crop_xyxy": [
+      555,
+      0,
+      1365,
+      1080
+    ],
+    "track": false,
+    "score_inset": true,
+    "ordinary_source_subtitle_bottom": 304,
+    "ending_subtitle_bottom_window": [
+      52.72,
+      56.0,
+      540
+    ],
+    "limitation": "810px fixedcenter crop loses lateral court/closeup content; do not claim allcourt, allplayer or allracket visibility. Actual movief6731 /269.24s shows Chwalinska partly truncated at the left edge after the handshake; retained temporal sequence is distinct from complete spatial coverage. Earlier1560pxwide preparation is superseded and not approval evidence.",
+    "exact_spatial_crop_example": {
+      "movie_frame_index": 6731,
+      "movie_seconds": 269.24,
+      "png": "/workspace/scratch/moon-qf-final-visual-qc/actual/frames/f006731.png",
+      "png_sha256": "006187b92912297b1d6211c867252e2ffbbcceb3df24779112d85a92aaa1d584"
+    }
+  },
+  "root_evidence": {
+    "partition": "/workspace/tennislive-efficiency/data/evidence/chwalinska-sakkari-wuhan-2026-qf/root-actual-final-visual-partition.json",
+    "partition_sha256": "6c3ebce4d429f192422c5d43a1923f54da8aa8c2821415ad6daa1f7df3ec8d22",
+    "additional_original_PNG_poster_review": "/workspace/tennislive-efficiency/data/evidence/chwalinska-sakkari-wuhan-2026-qf/root-actual-final-visual-review.json",
+    "additional_review_sha256": "58e0e6a79fee6d4a643060df9ffe131136f9d3476af632d57842b4534c7dbb69"
+  },
+  "binding_validation": "Sampler verified actualmovie against render_inputs, render, nativeQC and nativearchive; spec/ASS/audio-review binding hashes match actualrender. Native deterministic QC pass is separate from this finite visual opinion.",
+  "limitations": [
+    "154sampledencodedframes, not all7925frames manually checked.",
+    "Exactmovieframe+PNGhash is authoritative; source mappings near cuts can differ0..1frame.",
+    "No human listening or loudness/gain/RMS/PCM/peak/silence scans.",
+    "No spec/code changes, no upload, no commit, no pushed state."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "tennislive.external-artifact.v1",
+  "status": "archived_exact_bytes_verified",
+  "artifact_kind": "independent_finite_actual_movie_visual_evidence",
+  "film_sha256": "44eb19a5edbc27e9d19f770befd5a8769fad5c8b7b83f9de8d5c3462f416a9f9",
+  "local_path": "/workspace/scratch/osta-final-visual-qc/osta-v3-final-visual-evidence.zip",
+  "sha256": "9084304c87249ec0ff9551c794c3f8e80920078c1094bc0d4c9fc0243d3f57ff",
+  "bytes": 222559501,
+  "quality_review_status": "passed_finite_visual_review",
+  "transport_is_quality_approval": false,
+  "report": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/visual-qc/final-visual-qc.json",
+  "contents": {
+    "current_main_original_pngs": 164,
+    "current_extra_repair_boundary_pngs": 5,
+    "current_contact_sheets": 11,
+    "prior_failed_original_pngs": 6,
+    "prior_failed_source_comparison_pngs": 2,
+    "V2_superseded_intro_original_pngs": 4,
+    "V2_truthful_visual_pass_and_archive_identity_preserved": true,
+    "V2_V3_exact_PNG_comparison": true,
+    "includes_mp4": false
+  },
+  "sealed_at": "2026-10-16T10:00:42.531661+00:00",
+  "release_tag": "reel-review-ostapenko-shnaider-wuhan-2026-qf-f5b30c57e32b340d",
+  "file_name": "visual-qc-evidence.zip",
+  "url": "https://github.com/robertyang87/tennislive/releases/download/reel-review-ostapenko-shnaider-wuhan-2026-qf-f5b30c57e32b340d/visual-qc-evidence.zip",
+  "publication_upload_pending": false,
+  "transport": {
+    "status": "uploaded_exact_bytes_verified",
+    "run_url": "https://github.com/robertyang87/tennislive/actions/runs/38884575552",
+    "asset_api_url": "https://api.github.com/repos/robertyang87/tennislive/releases/assets/646914996",
+    "asset_id": 646914996,
+    "service_digest": "sha256:9084304c87249ec0ff9551c794c3f8e80920078c1094bc0d4c9fc0243d3f57ff",
+    "service_state": "uploaded",
+    "service_size_bytes": 222559501,
+    "quality_approval": false,
+    "note": "Transport verifies exact archive bytes only. Existing editorial/audio/visual review status is preserved."
+  }
+}
