@@ -1,0 +1,124 @@
+
+=== ATP Media 照片接口（tennistv.com 背后那套 CMS；原图 2579~8256px）（按 EXIF 拍摄时刻绑场次；◎＝点名层过了，认人／睁眼／钩子带没查——`cover_upgrade.py --preflight` 判）
+  ⚠️ **这一档没跑**：WTA 的比赛——ATP Media 只收男子
+
+=== WTA 照片接口（content/wta/photo；赢家比赛中那张终场前后几分钟、捧杯 +30~77 分钟）（按 EXIF 拍摄时刻绑场次；◎＝点名层过了，认人／睁眼／钩子带没查——`cover_upgrade.py --preflight` 判）
+  · 筛掉 发布早于开赛 94 张
+     [4593547] Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_5-DSC_4105 · Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_5-DSC_4105.jpg · 4700×3000 · 发布 2026-10-17T11:52:25Z
+       EXIF 拍摄于当地 10-16 15:15:22，不在这场的窗口 当地 10-17 16:25~19:55 里——拍的是别的场
+       ⚠️ 标题／引用里还有别人：dongfeng、voyah、open、dsc——两人同框不用
+       原图 https://photoresources.wtatennis.com/wta/photo/2026/10/17/7878daa7-c5c9-466e-b455-084d83d626dc/Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_5-DSC_4105.jpg
+     [4593540] Sonay_Kartal Dongfeng_Voyah_Wuhan_Open, Day 6 semis · Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_6-DSC_7852.jpg · 4700×3305 · 发布 2026-10-17T11:16:50Z
+       EXIF 拍摄于当地 10-17 18:18:19，落在这场的窗口 当地 10-17 16:25~19:55 里
+       ⚠️ 标题／引用里还有别人：dongfeng、voyah、open、semis——两人同框不用
+       原图 https://photoresources.wtatennis.com/wta/photo/2026/10/17/e80b1c61-deea-45e6-83b9-1610d4dbcc38/Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_6-DSC_7852.jpg
+=== WTA photo-resources（文件名带四要素；Getty 的去查说明）
+  · ⚠️ 没给 --date：赛事不写在文件名里的（`<姓>-<轮次>-<摄影师>.jpg`、没说明的 Getty）别站的也会列出来——逐张核上传日
+  Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_6-DSC_7852.jpg　（上传 2026-10-17）
+     https://photoresources.wtatennis.com/photo-resources/2026/10/17/a193d080-12ff-4af6-abb7-dde0e2aa6eab/Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_6-DSC_7852.jpg?width=4000
+
+=== WTA 赛后稿头图（WTA 内容接口；大满贯也有，原图尺寸接口直接给）
+  · 发稿时刻窗口 2026-10-15 12:37Z ~ 2026-10-17 12:37Z
+  2026-10-16T13:10Z  Wuhan semifinals preview: An all-Polish reunion and a pair of surprise
+     头图说明：maja chwalinska wuhan 2026　5000x3333 铺满不放大　（上传 2026-10-16）　⚠️ **头图是别人**（稿子提到了这个名字）
+     https://photoresources.wtatennis.com/wta/photo/2026/10/16/d1e98d50-907a-4156-bc24-1b5a59388ff2/GettyImages-2300484037.jpg
+     稿子：https://www.wtatennis.com/news/4593246/wuhan-semifinal-preview-iga-swiatek-maja-chwalinska-jelena-ostapenko-sonay-kartal
+  2026-10-16T09:18Z  Kartal’s comeback gathers pace with landmark run to Wuhan final
+     头图说明：Kartal stuns Svitolina in Wuhan to reach first WTA 1000 semifinal　 　（上传 2026-10-16）　⚠️ **头图是别人**（稿子提到了这个名字）
+     https://photoresources.wtatennis.com/wta/photo/2026/10/16/50b717fa-8099-481e-8ec0-1de05230198b/Kartal-QF-WZ.jpg
+     稿子：https://www.wtatennis.com/news/4593140/kartals-comeback-gathers-pace-with-landmark-run-to-wuhan-semifinals
+  2026-10-15T12:42Z  Breaking down the quarterfinal matchups in Wuhan
+     头图说明：elina svitolina wuhan 2026　4440x2721 铺满不放大　（上传 2026-10-15）　⚠️ **头图是别人**（稿子提到了这个名字）
+     https://photoresources.wtatennis.com/wta/photo/2026/10/15/8a1d2e2e-6418-436e-aec3-afb45cdc307b/GettyImages-2299726992.jpg
+     稿子：https://www.wtatennis.com/news/4592844/wuhan-quarterfinal-preview-li-swiatek-chwalinska-sakkari-svitolina-kartal-shnaider-ostapenko
+
+=== AP 通讯社（唯一一条**又高清又跨得过赛事**的，原图 4700~8600px）
+  ⚠️ **这一档没跑**：AP 的搜索页和 tennis 频道页一页都没取到（Cloudflare 人机挑战（HTTP 403，cf-mitigated: challenge）——换 UA／换入口过不去）
+  没有对得上的。⚠️ AP 一天只发几场的图，**「这一场没有」不等于「这条渠道不行」**；隔几小时或换个赛事名再试。
+
+=== 美网官方图片接口　⚠️ **这一档没跑**
+  `--event` 里没有 `US Open`。大满贯不进 WTA/ATP 图库，美网另有自己的接口——查美网请传 --event "US Open"。
+
+=== 当地报纸每日图集　⚠️ **这一档没跑**
+  不知道这一站在哪个城市——`_LOCAL_PAPERS` 里现有 cincinnati、indian wells、phoenix、newport、new york、us open。
+  补一句就有：--paper <报纸域名，如 www.cincinnati.com>；新城市查一次 Gannett／USA TODAY 网络里当地那份，加进 `_LOCAL_PAPERS`。
+
+=== 赛事官网的 WordPress 媒体库　⚠️ **这一档没跑**
+  没给 `--site`，`--event` 也不在 `cover_channels.EVENT_SITES` 里，而它当日实拍最全（原图 2000px 级，去掉 `-scaled` 能到 5541×3694）。
+  补一句就有：--site <赛事域名，如 cincinnatiopen.com> --date <这场球的**当地**日期>
+  ⚠️ 当地日期不是北京日期：夜场（当地 21:00 之后开打）在北京是次日。
+
+=== 中文媒体（搜狗微信／当地网站）　⚠️ **这一档没跑**
+  没给 `--zh <中文名>`。亚洲赛季（成都、杭州、北京、上海、武汉……）组委会的图常常只出现在中文稿里——hu-kopriva / zhang-wong / bu-majchrzak 换上的实拍都出自这一档。
+
+=== 这一趟查了什么
+  跑过：WTA 照片接口、WTA photo-resources、WTA 赛后稿头图
+  ⚠️ **没跑**：ATP Media 照片接口、AP 通讯社、美网官方图片接口、当地报纸每日图集、赛事官网 WordPress 媒体库、中文媒体（搜狗微信／当地网站）——这几档的结果是**未知**，不是「没有」
+  · 没查成的原因：AP 通讯社（Cloudflare 人机挑战（HTTP 403，cf-mitigated: challenge）——换 UA／换入口过不去）
+
+=== ATP Media 照片接口（tennistv.com 背后那套 CMS；原图 2579~8256px）（按 EXIF 拍摄时刻绑场次；◎＝点名层过了，认人／睁眼／钩子带没查——`cover_upgrade.py --preflight` 判）
+  · 筛掉 头像／定妆 1 张
+  没有点名主角和这一站的。⚠️ ATP 那一档终场后中位 28 分钟才有（杭州 +15 分钟～+2 小时 45 分）；WTA 输家基本没有（王欣瑜那场到第二天都是 0）
+
+
+=== WTA 照片接口（content/wta/photo；赢家比赛中那张终场前后几分钟、捧杯 +30~77 分钟）（按 EXIF 拍摄时刻绑场次；◎＝点名层过了，认人／睁眼／钩子带没查——`cover_upgrade.py --preflight` 判）
+  · 筛掉 标题不是这一站 3 张、头像／定妆 6 张、原图铺不满 1080×1440 2 张
+     [4593547] Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_5-DSC_4105 · Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_5-DSC_4105.jpg · 4700×3000 · 发布 2026-10-17T11:52:25Z
+       赛事时区不知道——EXIF 是当地钟点，换算不了
+       ⚠️ 标题／引用里还有别人：sonay、dongfeng、voyah、open、dsc——两人同框不用
+       原图 https://photoresources.wtatennis.com/wta/photo/2026/10/17/7878daa7-c5c9-466e-b455-084d83d626dc/Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_5-DSC_4105.jpg
+     [4593540] Sonay_Kartal Dongfeng_Voyah_Wuhan_Open, Day 6 semis · Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_6-DSC_7852.jpg · 4700×3305 · 发布 2026-10-17T11:16:50Z
+       赛事时区不知道——EXIF 是当地钟点，换算不了
+       ⚠️ 标题／引用里还有别人：sonay、dongfeng、voyah、open、semis——两人同框不用
+       原图 https://photoresources.wtatennis.com/wta/photo/2026/10/17/e80b1c61-deea-45e6-83b9-1610d4dbcc38/Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_6-DSC_7852.jpg
+     [4593098] Sonay Kartal, Wuhan 2026 · Kartal-QF-WZ.jpg · 4431×2954 · 发布 2026-10-16T07:31:17Z
+       赛事时区不知道——EXIF 是当地钟点，换算不了
+       ⚠️ 标题／引用里还有别人：sonay——两人同框不用
+       原图 https://photoresources.wtatennis.com/wta/photo/2026/10/16/50b717fa-8099-481e-8ec0-1de05230198b/Kartal-QF-WZ.jpg
+     [4592773] Sonay Kartal, Wuhan 2026 · Kartal-R3-Jimmie.jpg · 4363×2755 · 发布 2026-10-15T11:06:29Z
+       赛事时区不知道——EXIF 是当地钟点，换算不了
+       ⚠️ 标题／引用里还有别人：sonay——两人同框不用
+       原图 https://photoresources.wtatennis.com/wta/photo/2026/10/15/6f00a80a-9984-4ee6-84e6-2ffeb053afc5/Kartal-R3-Jimmie.jpg
+=== WTA photo-resources（文件名带四要素；Getty 的去查说明）
+  · ⚠️ 没给 --date：赛事不写在文件名里的（`<姓>-<轮次>-<摄影师>.jpg`、没说明的 Getty）别站的也会列出来——逐张核上传日
+  Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_6-DSC_7852.jpg　（上传 2026-10-17）
+     https://photoresources.wtatennis.com/photo-resources/2026/10/17/a193d080-12ff-4af6-abb7-dde0e2aa6eab/Sonay_Kartal_-_Dongfeng_Voyah_Wuhan_Open_-_Day_6-DSC_7852.jpg?width=4000
+
+=== WTA 赛后稿头图（WTA 内容接口；大满贯也有，原图尺寸接口直接给）
+  · 发稿时刻窗口 2026-10-15 12:37Z ~ 2026-10-17 12:37Z
+  2026-10-16T09:18Z  Kartal’s comeback gathers pace with landmark run to Wuhan final
+     头图说明：Kartal stuns Svitolina in Wuhan to reach first WTA 1000 semifinal　 　（上传 2026-10-16）
+     https://photoresources.wtatennis.com/wta/photo/2026/10/16/50b717fa-8099-481e-8ec0-1de05230198b/Kartal-QF-WZ.jpg
+     稿子：https://www.wtatennis.com/news/4593140/kartals-comeback-gathers-pace-with-landmark-run-to-wuhan-semifinals
+  2026-10-16T13:10Z  Wuhan semifinals preview: An all-Polish reunion and a pair of surprise
+     头图说明：maja chwalinska wuhan 2026　5000x3333 铺满不放大　（上传 2026-10-16）　⚠️ **头图是别人**（稿子提到了这个名字）
+     https://photoresources.wtatennis.com/wta/photo/2026/10/16/d1e98d50-907a-4156-bc24-1b5a59388ff2/GettyImages-2300484037.jpg
+     稿子：https://www.wtatennis.com/news/4593246/wuhan-semifinal-preview-iga-swiatek-maja-chwalinska-jelena-ostapenko-sonay-kartal
+  2026-10-15T12:42Z  Breaking down the quarterfinal matchups in Wuhan
+     头图说明：elina svitolina wuhan 2026　4440x2721 铺满不放大　（上传 2026-10-15）　⚠️ **头图是别人**（稿子提到了这个名字）
+     https://photoresources.wtatennis.com/wta/photo/2026/10/15/8a1d2e2e-6418-436e-aec3-afb45cdc307b/GettyImages-2299726992.jpg
+     稿子：https://www.wtatennis.com/news/4592844/wuhan-quarterfinal-preview-li-swiatek-chwalinska-sakkari-svitolina-kartal-shnaider-ostapenko
+
+=== AP 通讯社（唯一一条**又高清又跨得过赛事**的，原图 4700~8600px）
+  ⚠️ **这一档没跑**：AP 的搜索页和 tennis 频道页一页都没取到（Cloudflare 人机挑战（HTTP 403，cf-mitigated: challenge）——换 UA／换入口过不去）
+  没有对得上的。⚠️ AP 一天只发几场的图，**「这一场没有」不等于「这条渠道不行」**；隔几小时或换个赛事名再试。
+
+=== 美网官方图片接口　⚠️ **这一档没跑**
+  `--event` 里没有 `US Open`。大满贯不进 WTA/ATP 图库，美网另有自己的接口——查美网请传 --event "US Open"。
+
+=== 当地报纸每日图集　⚠️ **这一档没跑**
+  不知道这一站在哪个城市——`_LOCAL_PAPERS` 里现有 cincinnati、indian wells、phoenix、newport、new york、us open。
+  补一句就有：--paper <报纸域名，如 www.cincinnati.com>；新城市查一次 Gannett／USA TODAY 网络里当地那份，加进 `_LOCAL_PAPERS`。
+
+=== 赛事官网的 WordPress 媒体库　⚠️ **这一档没跑**
+  没给 `--site`，`--event` 也不在 `cover_channels.EVENT_SITES` 里，而它当日实拍最全（原图 2000px 级，去掉 `-scaled` 能到 5541×3694）。
+  补一句就有：--site <赛事域名，如 cincinnatiopen.com> --date <这场球的**当地**日期>
+  ⚠️ 当地日期不是北京日期：夜场（当地 21:00 之后开打）在北京是次日。
+
+=== 中文媒体（搜狗微信／当地网站）　⚠️ **这一档没跑**
+  没给 `--zh <中文名>`。亚洲赛季（成都、杭州、北京、上海、武汉……）组委会的图常常只出现在中文稿里——hu-kopriva / zhang-wong / bu-majchrzak 换上的实拍都出自这一档。
+
+=== 这一趟查了什么
+  跑过：ATP Media 照片接口、WTA 照片接口、WTA photo-resources、WTA 赛后稿头图
+  ⚠️ **没跑**：AP 通讯社、美网官方图片接口、当地报纸每日图集、赛事官网 WordPress 媒体库、中文媒体（搜狗微信／当地网站）——这几档的结果是**未知**，不是「没有」
+  · 没查成的原因：AP 通讯社（Cloudflare 人机挑战（HTTP 403，cf-mitigated: challenge）——换 UA／换入口过不去）

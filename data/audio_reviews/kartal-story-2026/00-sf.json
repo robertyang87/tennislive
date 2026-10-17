@@ -1,0 +1,33 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=abL2j0xldOc",
+  "source_sha256": "0bcaea757e8d06944a35b94da6b85eae0474fefc7c35c9a3223967f79b243543",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T13:45:13.665540+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 252.7,
+  "reviewed_to": 275.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 264.1,
+      "end": 266.95,
+      "en": "Kartal waltzes into the Wuhan final.",
+      "zh": "卡塔尔闯进了武汉决赛！"
+    },
+    {
+      "start": 267.32,
+      "end": 270.9,
+      "en": "Her big moment in a 1000 arrives.",
+      "zh": "她的一千赛高光时刻来了，"
+    },
+    {
+      "start": 272.9,
+      "end": 274.4,
+      "en": "An outstanding victory.",
+      "zh": "一场了不起的胜利。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/abL2j0xldOc/small.en.json + medium.en.json",
+  "review_note": "冷开场：WTA 官方集锦（abL2j0xldOc）第二盘抢七。252.60 切入时记分条是 7 6 6 / 6 6 5（第二个赛点，奥斯塔彭科发球；6-4 那个赛点她用反手制胜分救掉，解说 250.92 Saved in magnificent fashion），奥斯塔彭科这一拍打出边线，262.72 切到卡塔尔举拍，265.48 切到包厢起立。解说两档一致（medium 264.10–274.04；small 263.56–273.94，名字两档都转错，按官方标题写 Kartal）。段尾 275.6 在下一句 resilience（276.84）之前。"
+}

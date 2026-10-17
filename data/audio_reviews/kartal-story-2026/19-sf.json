@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=abL2j0xldOc",
+  "source_sha256": "0bcaea757e8d06944a35b94da6b85eae0474fefc7c35c9a3223967f79b243543",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T13:45:13.665540+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 99.7,
+  "reviewed_to": 114.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/abL2j0xldOc/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/abL2j0xldOc 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 99.7–114.6 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "WTA 官方集锦（abL2j0xldOc）第一盘抢七：记分条 6 5 / 6 5（99.6–122 逐格读过：第一盘 6 平之后的抢七，5 平），镜头 99.52 切入、122.64 切走；两档转写在 102.76–119.06 无词，100.08–102.76 一句 managed to put her under pressure 和 119.06 so good 是解说低声，旁白压在上面。两次发球胜盘被破、救下 6 个盘点、抢七 11-9：The Independent（Yahoo）与 AOL（Express）赛报，WTA 4593140 比分 7-6(9) 7-6(5)。"
+}

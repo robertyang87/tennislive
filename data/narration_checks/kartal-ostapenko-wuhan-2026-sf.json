@@ -1,6 +1,6 @@
 {
   "slug": "kartal-ostapenko-wuhan-2026-sf",
-  "checked_at": "2026-10-17T12:44:11Z",
+  "checked_at": "2026-10-17T14:26:36Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -10,14 +10,14 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "c181de77b7a6966d": {
+    "2e0017814911a005": {
       "segment": 2,
-      "spoken": 16.176,
+      "spoken": 16.056,
       "picture": 18.2
     },
-    "11bbfc44ef81b143": {
+    "4ac7a2a9d760c8b5": {
       "segment": 4,
-      "spoken": 14.712,
+      "spoken": 14.568,
       "picture": 16.5
     },
     "818702c8920efe54": {
@@ -25,29 +25,34 @@
       "spoken": 17.712,
       "picture": 19.8
     },
-    "2af9c817970082f8": {
+    "f7e3ea0c4ee59e72": {
       "segment": 8,
-      "spoken": 14.352,
+      "spoken": 14.208,
       "picture": 16.1
     },
-    "d5612515b9894897": {
+    "c23ab3ab60b20df8": {
       "segment": 10,
-      "spoken": 9.72,
-      "picture": 10.8
+      "spoken": 3.984,
+      "picture": 5.0
+    },
+    "08268242b7ff145d": {
+      "segment": 11,
+      "spoken": 10.44,
+      "picture": 13.0
     }
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "740745df9923282476238d21db50db1d94100f7726d8e4f493e12e0bd46cc149",
-    "request_count": 6,
+    "bundle_sha256": "29a480f2ebc026400c2757b427e891df37c839f99ea7e313c7c04f2a27eb2d12",
+    "request_count": 7,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-kartal-ostapenko-wuhan-2026-sf-740745df99232824",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-kartal-ostapenko-wuhan-2026-sf-740745df99232824/tts_bundle.zip",
+    "release_tag": "reel-tts-kartal-ostapenko-wuhan-2026-sf-29a480f2ebc02640",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-kartal-ostapenko-wuhan-2026-sf-29a480f2ebc02640/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39033553476"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39040609478"
   }
 }

@@ -148,7 +148,7 @@
       ],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-17/reel/kartal-ostapenko-wuhan-2026-sf/score_masks/segment-01.mkv",
-      "mask_sha256": "cc0a778fab565e900bcece16fdf6affcaa08d1f69f1de8ff14164633ed89667e"
+      "mask_sha256": "b04480c86570dad303a3b28aeb0493c22adf74602f133bdd565cd698e70ea389"
     },
     {
       "segment": 2,
@@ -285,23 +285,14 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-17/reel/kartal-ostapenko-wuhan-2026-sf/score_masks/segment-03.mkv",
-      "mask_sha256": "eb60fbc872f4044b3479d07c4e4fc847f25162c7f6450b2491b2679893025654"
+      "mask_sha256": "1ebd100e67f8da29b7fb7991abe834778e26fe8dba6a05bf9121e2088ff7659f"
     },
     {
-      "segment": 4,
-      "frames": 438,
-      "present_frames": 374,
-      "tag_frames": 367,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         348,
         392
-      ],
-      "right": 392,
-      "source_bounds": [
-        90,
-        828,
-        482,
-        980
       ],
       "body_bounds": [
         [
@@ -364,6 +355,11 @@
           390,
           154
         ]
+      ],
+      "frames": 438,
+      "geometry_origin": [
+        90,
+        826
       ],
       "header_bounds": [
         [
@@ -433,36 +429,31 @@
           45
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "6912ac3de9cd67057123ef0f78bdbf555cd5ccffe7e9ea8cf452b5b040be580b",
       "measured_present_frames": 374,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-17/reel/kartal-ostapenko-wuhan-2026-sf/score_masks/segment-05.mkv",
-      "mask_sha256": "f9f985d5450c5d5d9210aec4bc41fa37aa0519dc98e3dcf50c97de056bc65f35"
-    },
-    {
-      "segment": 6,
-      "frames": 635,
-      "present_frames": 538,
-      "tag_frames": 251,
-      "board_edges": [
-        378,
-        428
-      ],
-      "right": 426,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 374,
+      "right": 392,
+      "segment": 4,
       "source_bounds": [
         90,
         828,
-        516,
+        482,
         980
+      ],
+      "tag_frames": 367,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-17/reel/kartal-ostapenko-wuhan-2026-sf/score_masks/segment-05.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        378,
+        428
       ],
       "body_bounds": [
         [
@@ -537,6 +528,11 @@
           426,
           154
         ]
+      ],
+      "frames": 635,
+      "geometry_origin": [
+        90,
+        826
       ],
       "header_bounds": [
         [
@@ -630,36 +626,36 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "3d26fac8038bfdc03142f5df36f07d4e49d3a3fe1e6e840587b7391d3c010b14",
       "measured_present_frames": 538,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-17/reel/kartal-ostapenko-wuhan-2026-sf/score_masks/segment-07.mkv",
-      "mask_sha256": "5783c481e8a398ad6942588523204245b754e95b364717a68c1edd4854bc9bc5"
-    },
-    {
-      "segment": 8,
-      "frames": 1497,
-      "present_frames": 982,
-      "tag_frames": 965,
-      "board_edges": [
-        398,
-        426
-      ],
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 538,
       "right": 426,
+      "segment": 6,
       "source_bounds": [
         90,
         828,
         516,
         980
+      ],
+      "tag_frames": 251,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-17/reel/kartal-ostapenko-wuhan-2026-sf/score_masks/segment-07.mkv"
+    },
+    {
+      "allowed_source_windows": [
+        [
+          225.0,
+          264.28
+        ]
+      ],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        398,
+        426
       ],
       "body_bounds": [
         [
@@ -752,6 +748,11 @@
           426,
           154
         ]
+      ],
+      "frames": 1497,
+      "geometry_origin": [
+        90,
+        826
       ],
       "header_bounds": [
         [
@@ -977,25 +978,24 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "0f949e344f9733d175c9098e7b060bf6cf61a0e530553ccc684454d4f6daa116",
       "measured_present_frames": 982,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 515,
       "measurement_scope": "reviewed_windows_only",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [
-        [
-          225.0,
-          264.28
-        ]
+      "outside_window_frames_not_scanned": 515,
+      "present_frames": 982,
+      "right": 426,
+      "segment": 8,
+      "source_bounds": [
+        90,
+        828,
+        516,
+        980
       ],
+      "tag_frames": 965,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-17/reel/kartal-ostapenko-wuhan-2026-sf/score_masks/segment-09.mkv",
-      "mask_sha256": "3fdcc98f9b4ac914a95ab93bbf40c69f26d185c895258da0f34f8f6f22f3eefd"
+      "mask": "output/2026-10-17/reel/kartal-ostapenko-wuhan-2026-sf/score_masks/segment-09.mkv"
     }
   ]
 }

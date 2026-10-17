@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=z8Sffkz5m8s",
+  "source_sha256": "a0988717321bb5c75f41a6ed4c36f079fcc6f946898dbac005491ef5fc896698",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T13:45:13.665540+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 55.9,
+  "reviewed_to": 64.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/z8Sffkz5m8s/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/z8Sffkz5m8s 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 55.9–64.6 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "同一条印第安维尔斯集锦：镜头 55.84 切入、68.60 切走，段尾 64.6 在同一个镜头里；两档转写在 52.72–74.12 无词。原话 At times in this match I was in discomfort with my back, so it's a match like today which shows the fighter in me：BBC（AOL 转载）＋LTA 2026-03 稿。"
+}
