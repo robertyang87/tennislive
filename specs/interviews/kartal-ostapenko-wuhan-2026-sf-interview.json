@@ -8,7 +8,7 @@
  "requested_content_type": "on_court",
  "url": "https://www.youtube.com/watch?v=abL2j0xldOc",
  "source_title": "Sonay Kartal vs. Jelena Ostapenko | 2026 Wuhan Semifinal | WTA Match Highlights",
- "start": 297.0,
+ "start": 282.0,
  "end": 408.0,
  "source_verification": {
   "status": "verified",
@@ -19,7 +19,7 @@
   "source_url": "https://www.youtube.com/watch?v=abL2j0xldOc",
   "title": "Sonay Kartal vs. Jelena Ostapenko | 2026 Wuhan Semifinal | WTA Match Highlights",
   "match_id": "2026:wuhan-open:womens-sf:kartal-ostapenko",
-  "attestation_sha256": "704f810a5cb752fd672de325771a65b43974ab66d00df99ec575773bae74b3c4",
+  "attestation_sha256": "2c957db3ad2512fd39c2a5ad34966d481c4d9ae86e9dfc032ee0b4fa5b134fb9",
   "evidence": [
    {
     "kind": "official_channel_title",
@@ -46,7 +46,7 @@
    "卡塔尔",
    "奥斯塔彭科"
   ],
-  "score": "7-6(11-9) 7-6(7-5)"
+  "score": "7-6 7-6"
  },
  "_facts": "2026-10-17 武汉公开赛女单半决赛，英国 Sonay Kartal（No.170）7-6(11-9)、7-6(7-5) 胜 Jelena Ostapenko，两盘均 1-4 落后逆转；生涯首进 WTA1000 决赛，赛制改制以来排名最低的决赛选手；决赛对阵赫瓦林斯卡。采访为官方 WTA 集锦后半段场上采访（4:57-6:48），尾部 WTA logo 已切除。",
  "_notes": "源视频为 WTA 官方集锦，非独立采访视频；采访片段起止经浏览器转录时间轴核实。用户要求去掉尾部赛事 logo，end=408.0 卡在 logo 动画（约6:48）之前。",
@@ -103,7 +103,8 @@
  "transcript_verified": true,
  "opening": {
   "kind": "match_end",
-  "why": "正文为 WTA 官方集锦后半段场上采访；集锦结尾即比赛结束（赛点+庆祝），直接接入采访。"
+  "lead_in": 15.0,
+  "why": "正文为 WTA 官方集锦；282-297s 为比赛结尾（赛点+庆祝），297s 起为场上采访。"
  },
  "takeaway": {
   "close": {
@@ -123,25 +124,8 @@
  "push": {
   "auto": true,
   "matchup": "卡塔尔 vs 奥斯塔彭科",
-  "score": "7-6(11-9) 7-6(7-5)",
+  "score": "7-6 7-6",
   "summary": "从170位到决赛",
   "lead": "卡塔尔 7-6(11-9)、7-6(7-5) 胜奥斯塔彭科，生涯首进WTA1000决赛。赛后她说：这是我职业生涯表现最好的一场之一。决赛对阵赫瓦林斯卡。"
- },
- "lead_in": {
-  "url": "https://www.youtube.com/watch?v=abL2j0xldOc",
-  "start": 282.0,
-  "end": 297.0,
-  "why": "同条 WTA 官方集锦 4:42-4:57：比赛最后一分、庆祝与原声解说，接入场上采访。",
-  "subs": [],
-  "verification": {
-   "match_id": "2026:wuhan-open:womens-sf:kartal-ostapenko",
-   "winner_en": "Sonay Kartal",
-   "loser_en": "Jelena Ostapenko",
-   "event_search": "Wuhan Open",
-   "year": 2026,
-   "method": "official_exact_match_highlight",
-   "height": 1080,
-   "channel": "WTA"
-  }
  }
 }
