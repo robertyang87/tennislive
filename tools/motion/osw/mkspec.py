@@ -88,7 +88,7 @@ spec={"slug":SLUG,"date":"2026-10-16","_column":"网球有故事","title":"奥�
   "portrait":{"image":"assets/reel/osw-h2h-cover.jpg","focus":0.4,"focus_y":0.35,"zoom":1.0,
    "source_url":"https://photoresources.wtatennis.com/wta/photo/2025/02/14/4f4acebe-943d-4d6b-ab64-a4b19e7f81a0/Ostapenko-SF-Karim-Jaafar-AFP.jpg",
    "_portrait_why":"WTA 官网 2025-02-14 多哈半决赛奥斯塔彭科胜斯瓦泰克赛后稿配图（AFP Karim Jaafar），2816×1872，奥斯塔彭科握拳。"}},
- "push":{"auto":False,"_why":"账号所有者尚未批准：只开 PR 审阅，不合并、不推送。","summary":"克星六战全胜","lead":"六次交手，斯瓦泰克一场没赢过奥斯塔彭科。"},
+ "push":{"auto":False,"_no_auto_why":"账号所有者要求只开 PR 审阅：不合并、不推送微信。","_why":"账号所有者尚未批准：只开 PR 审阅，不合并、不推送。","summary":"克星六战全胜","lead":"六次交手，斯瓦泰克一场没赢过奥斯塔彭科。"},
  "editorial":{"mode":"match_review","question":"为什么斯瓦泰克打不过奥斯塔彭科？","thesis":"假设武汉决赛两人相遇：回顾六次交手，奥斯塔彭科6-0领先，盘数12-3、局数83-47，三次决胜盘全胜。",
   "beats":["开场：6-0 克星关系。","主体：2019 伯明翰、2021 印第安维尔斯、2022 迪拜、2023 美网、2025 多哈、2025 斯图加特逐场关键画面。","收尾：武汉只可能决赛相遇，第七次悬念。"],
   "human_context":{"angle":"一边倒的克星关系：抢时间的打法。","facts":["交手 6-0","接发球得分率 52%（matchstat）"],"sources":[
