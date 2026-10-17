@@ -1,0 +1,27 @@
+{
+  "blocking_native_run": 39036559958,
+  "earliest_blocking_stage": "final video encode",
+  "actual_error": "Error applying option color_ranges to filter format: Option not found",
+  "observed_runner_ffmpeg": "6.1.1-3ubuntu5",
+  "original_bridge": "format=yuv420p:color_ranges=tv",
+  "compatible_bridge": "scale=iw:ih:in_range=auto:out_range=tv,format=yuv420p",
+  "change_scope": "Only genuine limited-range video conversion bridge; no source/layout/cut/voice/audio mixing change.",
+  "verification_attributed_to": "OpenAI production agent zverev_sf_scoremask",
+  "verification_results": {
+    "targeted_tests_passed": 7,
+    "test_file": "tests/test_reel_join_fusion.py",
+    "known_pixel_levels": "Fullrange black/white0/255 physically become16/235; limited16/235 retained, not metadata-only relabel.",
+    "local_four_format_outputs_match_original_bridge": [
+      "rgb24",
+      "gbrp",
+      "yuv444p",
+      "yuvj444p"
+    ],
+    "local_ffmpeg": "7.1.5",
+    "full_frame_decoration_and_packet_PTS_reference": "passed existing lossless reference tests"
+  },
+  "root_code_diff_inspected": true,
+  "new_native_runner_actual_validation": "pending new render; do not infer hosted encode success from local tests",
+  "frozen_voice_bundle_unchanged": "224043b9cf2a8e5494807da630b4f4039ad18471e79c9e2def59263cfacf00ae",
+  "failed_run_published": false
+}
