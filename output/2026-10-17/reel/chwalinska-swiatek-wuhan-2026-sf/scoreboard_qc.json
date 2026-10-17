@@ -149,7 +149,7 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-01.mkv",
-      "mask_sha256": "13cd75f06643f8e6cecffd1ae39dfdd80992bb01cb98a556929de5c61937c965"
+      "mask_sha256": "9dd29d4e00b4f5a85ac61afe97ff3cf6e8eee17482d1680512177ec3f014d7db"
     },
     {
       "segment": 2,
@@ -255,23 +255,14 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-03.mkv",
-      "mask_sha256": "663e7fd7f21560998f434b6c168853c060d201471cf428bf19c154123f1881a8"
+      "mask_sha256": "f172c8cb73cbc46d931a9128c1c62e4bdcfc34748196a1d0ebf44fd2644d0105"
     },
     {
-      "segment": 3,
-      "frames": 865,
-      "present_frames": 865,
-      "tag_frames": 850,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         391,
         394
-      ],
-      "right": 394,
-      "source_bounds": [
-        90,
-        828,
-        484,
-        980
       ],
       "body_bounds": [
         [
@@ -299,6 +290,11 @@
           154
         ]
       ],
+      "frames": 865,
+      "geometry_origin": [
+        90,
+        826
+      ],
       "header_bounds": [
         [
           0,
@@ -313,36 +309,31 @@
           45
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "0b8044e194c0e5593ab1cb4ce1dccdf863ab7bc4993bf0bdc725ef09a25a052a",
       "measured_present_frames": 865,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-04.mkv",
-      "mask_sha256": "0b8044e194c0e5593ab1cb4ce1dccdf863ab7bc4993bf0bdc725ef09a25a052a"
-    },
-    {
-      "segment": 5,
-      "frames": 306,
-      "present_frames": 306,
-      "tag_frames": 295,
-      "board_edges": [
-        390,
-        392
-      ],
-      "right": 392,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 865,
+      "right": 394,
+      "segment": 3,
       "source_bounds": [
         90,
         828,
-        482,
+        484,
         980
+      ],
+      "tag_frames": 850,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-04.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        390,
+        392
       ],
       "body_bounds": [
         [
@@ -411,6 +402,11 @@
           392,
           154
         ]
+      ],
+      "frames": 306,
+      "geometry_origin": [
+        90,
+        826
       ],
       "header_bounds": [
         [
@@ -564,36 +560,31 @@
           44
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "d0dc03f5799090f8bd9256b52a05f3056dc89176da097dfca47878ab493362a5",
       "measured_present_frames": 306,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-06.mkv",
-      "mask_sha256": "d0dc03f5799090f8bd9256b52a05f3056dc89176da097dfca47878ab493362a5"
-    },
-    {
-      "segment": 6,
-      "frames": 426,
-      "present_frames": 426,
-      "tag_frames": 426,
-      "board_edges": [
-        391,
-        392
-      ],
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 306,
       "right": 392,
+      "segment": 5,
       "source_bounds": [
         90,
         828,
         482,
         980
+      ],
+      "tag_frames": 295,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-06.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        391,
+        392
       ],
       "body_bounds": [
         [
@@ -608,6 +599,11 @@
           391,
           154
         ]
+      ],
+      "frames": 426,
+      "geometry_origin": [
+        90,
+        826
       ],
       "header_bounds": [
         [
@@ -635,36 +631,31 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "d029c25bcfe1d7b23d3ece1189f7a4d96668b2d73f71cad0229ecc3ab2e189d5",
       "measured_present_frames": 426,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-07.mkv",
-      "mask_sha256": "d029c25bcfe1d7b23d3ece1189f7a4d96668b2d73f71cad0229ecc3ab2e189d5"
-    },
-    {
-      "segment": 7,
-      "frames": 1399,
-      "present_frames": 1025,
-      "tag_frames": 861,
-      "board_edges": [
-        346,
-        392
-      ],
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 426,
       "right": 392,
+      "segment": 6,
       "source_bounds": [
         90,
         828,
         482,
         980
+      ],
+      "tag_frames": 426,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-07.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        346,
+        392
       ],
       "body_bounds": [
         [
@@ -727,6 +718,11 @@
           366,
           154
         ]
+      ],
+      "frames": 1399,
+      "geometry_origin": [
+        90,
+        826
       ],
       "header_bounds": [
         [
@@ -814,36 +810,31 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "4aa337930ca936d651ab13d42a7de723929d30ba8b8aa17a1105fb450f0ecd6b",
       "measured_present_frames": 1025,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-08.mkv",
-      "mask_sha256": "4aa337930ca936d651ab13d42a7de723929d30ba8b8aa17a1105fb450f0ecd6b"
-    },
-    {
-      "segment": 9,
-      "frames": 453,
-      "present_frames": 453,
-      "tag_frames": 448,
-      "board_edges": [
-        426,
-        428
-      ],
-      "right": 428,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 1025,
+      "right": 392,
+      "segment": 7,
       "source_bounds": [
         90,
         828,
-        518,
+        482,
         980
+      ],
+      "tag_frames": 861,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-08.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        426,
+        428
       ],
       "body_bounds": [
         [
@@ -865,6 +856,11 @@
           154
         ]
       ],
+      "frames": 453,
+      "geometry_origin": [
+        90,
+        826
+      ],
       "header_bounds": [
         [
           0,
@@ -879,36 +875,31 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "fb81aeda8a3bc6cb50e006b7d638ce1e913d6eee971a05b996a7d9e0c45a48da",
       "measured_present_frames": 453,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 453,
+      "right": 428,
+      "segment": 9,
+      "source_bounds": [
+        90,
+        828,
+        518,
+        980
+      ],
+      "tag_frames": 448,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-10.mkv",
-      "mask_sha256": "fb81aeda8a3bc6cb50e006b7d638ce1e913d6eee971a05b996a7d9e0c45a48da"
+      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-10.mkv"
     },
     {
-      "segment": 10,
-      "frames": 351,
-      "present_frames": 351,
-      "tag_frames": 0,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         426,
         426
-      ],
-      "right": 426,
-      "source_bounds": [
-        90,
-        868,
-        516,
-        980
       ],
       "body_bounds": [
         [
@@ -918,37 +909,37 @@
           154
         ]
       ],
-      "header_bounds": [],
+      "frames": 351,
       "geometry_origin": [
         90,
         826
       ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "header_bounds": [],
+      "mask_sha256": "a308e4d329b99d59fcb1b05d259dbf7fb1da503c7f2ef216b04a73a3ef978c37",
       "measured_present_frames": 351,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 351,
+      "right": 426,
+      "segment": 10,
+      "source_bounds": [
+        90,
+        868,
+        516,
+        980
+      ],
+      "tag_frames": 0,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-11.mkv",
-      "mask_sha256": "a308e4d329b99d59fcb1b05d259dbf7fb1da503c7f2ef216b04a73a3ef978c37"
+      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-11.mkv"
     },
     {
-      "segment": 11,
-      "frames": 1054,
-      "present_frames": 315,
-      "tag_frames": 221,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         229,
         426
-      ],
-      "right": 426,
-      "source_bounds": [
-        90,
-        826,
-        516,
-        980
       ],
       "body_bounds": [
         [
@@ -1036,6 +1027,11 @@
           154
         ]
       ],
+      "frames": 1054,
+      "geometry_origin": [
+        90,
+        826
+      ],
       "header_bounds": [
         [
           0,
@@ -1116,20 +1112,24 @@
           42
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "b30b3814653c2da85d7036b829d5ebbfb619ab243f5d2a6f85bb5979b541de16",
       "measured_present_frames": 315,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 315,
+      "right": 426,
+      "segment": 11,
+      "source_bounds": [
+        90,
+        826,
+        516,
+        980
+      ],
+      "tag_frames": 221,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-12.mkv",
-      "mask_sha256": "b30b3814653c2da85d7036b829d5ebbfb619ab243f5d2a6f85bb5979b541de16"
+      "mask": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/score_masks/segment-12.mkv"
     }
   ]
 }
