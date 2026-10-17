@@ -1,0 +1,21 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=bDttZof7qXI",
+  "source_sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T00:41:16.235885+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 258.7,
+  "reviewed_to": 264.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 259.1,
+      "end": 263.38,
+      "en": "Sensational, Swiatek takes the title in Toronto.",
+      "zh": "精彩！斯瓦泰克拿下多伦多冠军。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/bDttZof7qXI/small.en.json + medium.en.json",
+  "review_note": "同一条：她举臂、转身走向球网（256–264）。两档一致（medium 259.10–263.38；small 258.88–263.28，名字两档都转错，按画面与官方标题写 Swiatek）。段首 258.7 在冠军点打完之后，段尾 264.2 在 264.44 切镜头之前（溶解 0.18 秒不跨切点），也在下一句 dialed in（268.94）之前。"
+}

@@ -68,9 +68,27 @@ S.append(card("国家队\n队友","2025年联合杯",12.0,"一年后，她回到
 S.append(q("uc25",181.3,195.2,[(181.54,184.34,"I think it's the third year in a row we're making semis or better.\n我们连续三年打进四强以上了。"),(184.74,187.9,"So two years ago it was semis, last year it was a final.\n前年是四强，去年是决赛。"),(188.32,190.72,"So you guys answer the question, what's coming tomorrow.\n明天会怎样，你们来回答吧。"),(191.76,194.66,"Team Poland into the finals. Well done, congratulations!\n波兰队打进决赛，恭喜！")],
   "同一条：齐林斯基接受场边采访，赫瓦林斯卡站在他身旁（186 秒画面）。两档一致（medium 181.54–194.66）。段首 181.3 在上一句（181.04）之后，段尾 195.2 在片尾板（196 秒起）之前。",
   "场边采访，不是回合。",kind="ceremony"))
-S.append(card("巅峰\n相见","03",5.0,"二〇二六年春天，轮到月亮姐往上走了。"))
+S.append(card("各自的\n高光","03",7.0,"二〇二六年，两个人都等来了自己的高光。先是六月的巴黎，轮到月亮姐。"))
 S.append(n("rgsf",976.0,991.0,"世界第一百一十四的她，半决赛赢下施奈德。她成了法网历史上第一个，从资格赛打进决赛的球员。",
   "法网官方半决赛集锦（nuivYz2nq08）：赛点那一分（980–988 广角）。两档转写在 971.64–989.02 都无词；之前 948–971 是看台齐喊加油（两档转写对不上，段首避开）。资格赛、世界第 114：WTA 4511564 标题《Who is Maja Chwalinska? Get to know the World No. 114 in the Roland Garros final》＋维基。","赛点在 988 秒前后打完，段尾 991.0 停在她倒在红土上那一刻。",label="rgsf"))
+S.append(live("rgsf",993.0,1003.6,"同一条：她躺在红土上、起身与施奈德拥抱、向看台挥手（990–1012）。",
+  "这段只有掌声与欢呼：medium 989.02–992.56 一句 Thank you very much, and have a nice day 与 small 987.74–1004.56 的 We will see you in the next match 对不上，画面里没人对着镜头说话，按看台噪声的幻听处理，段首 993.0 避开 medium 那一句；medium 在 992.56–1015.40 无词，段尾 1003.6 在 small 那句幻听（1004.56）之前，后面的庆祝放在开头的闪回里。",
+  "赛点已经打完，这是倒地与庆祝。"))
+S.append(q("rgsfi",4.4,25.6,[(4.68,7.8,"You are in Roland Garros' final. How does it sound?\n你打进法网决赛了，感觉怎么样？"),(12.62,14.98,"I mean, like a dream, honestly.\n说真的，像做梦一样。"),(15.52,16.9,"I don't know what's going on.\n我都不知道发生了什么。"),(19.92,20.9,"I'm just...\n我只是……"),(21.54,23.1,"Yeah, I don't know what to say.\n我不知道该说什么。"),(23.2,24.98,"I'm sorry. I'm just very happy.\n抱歉，我就是太开心了。")],
+  "法网官方频道半决赛场上采访（SdEjFtD4CTU）。两档逐词一致（medium 4.68–24.58；small 4.88–24.54）。段首 4.4 在主持人前半句 The character continues（3.60–4.2，两档转写不一致，不收）之后，段尾 25.6 在 You understand（26.12）之前。",
+  "场上采访，不是回合。",kind="ceremony"))
+S.append(n("rgf",715.0,726.2,"决赛她输给了安德烈耶娃。可这一趟巴黎，让她的排名从第一百一十四升到了第二十一。",
+  "法网官方决赛集锦（WVWjACQ11-Y）：冠军点之后网前握手、安德烈耶娃庆祝。706.8–715.2 是法语场内播报（两档转写对不上，只取其后），726.36 起是播报安德烈耶娃名字，段尾收在之前。排名 114→21：维基 Maja Chwalińska（career-high No. 21 on 8 June 2026）＋仓库 chwalinska-gibson 已核。","比赛已经结束，握手与庆祝。"))
+S.append(q("rgfs",176.6,185.2,[(177.18,180.3,"I will definitely not forget these three weeks.\n这三个星期，我一定不会忘记。"),(181.84,185.3,"Paris will stay forever in my heart. Merci.\n巴黎会永远留在我心里。谢谢。")],
+  "Tennis Channel（法网美国转播方）官方频道「Maja Chwalinska Finalist Speech」（LXRhlHKGKZc）：亚军致辞的最后一句。两档一致（medium 177.18–184.92；small 176.94–184.14）。段首 176.6 在 Thank you so much（171.68–176.56）之后；视频流 185.39 秒结束，段尾 185.2 给溶解留 0.18 秒。",
+  "颁奖致辞，不是回合。",kind="ceremony"))
+S.append(n("tor",245.3,258.6,"两个月后的多伦多，轮到斯瓦泰克。决赛她六比二、六比三赢下莱巴金娜，八个发球局一个没丢，拿到了这个赛季的第一个冠军。",
+  "WTA 官方集锦（bDttZof7qXI，Iga Swiatek vs. Elena Rybakina-Match Highlights）：第二盘最后一局，245 起记分条挂 CHAMPIONSHIP POINT，256 她双臂高举。两档转写在 234.40–258.88 都无词；段首 245.3 是 245.24 切到冠军点那一分的镜头。比分、保发 8/8：WTA 官方接口 LS001 ＋ flashscore OACDWR4j（仓库 swiatek-rybakina-toronto-final 已核）；本赛季第一冠：National Bank Open 官网逐分实录「to clinch her first title of the season」＋ WTA 官方集锦解说。",
+  "冠军点在 255 秒前后打完，段尾 258.6 停在她举臂庆祝、解说开口之前。",label="tor",crosses_cut="247.16、248.44 切近景与回广角，254.76 切庆祝近景：都是同一个冠军点前后的镜头，换镜头前后都是她本人。"))
+S.append(q("tor",258.7,264.2,[(259.1,263.38,"Sensational, Swiatek takes the title in Toronto.\n精彩！斯瓦泰克拿下多伦多冠军。")],
+  "同一条：她举臂、转身走向球网（256–264）。两档一致（medium 259.10–263.38；small 258.88–263.28，名字两档都转错，按画面与官方标题写 Swiatek）。段首 258.7 在冠军点打完之后，段尾 264.2 在 264.44 切镜头之前（溶解 0.18 秒不跨切点），也在下一句 dialed in（268.94）之前。","冠军点已经打完，这是庆祝。"))
+S.append(q("tor",292.5,298.4,[(293.06,297.74,"6-2, 6-3, it's Iga Swiatek, the champion in Canada.\n6比2、6比3，冠军是斯瓦泰克！")],
+  "同一条：终场图形 FINAL 6 6 / 2 3（288–296）。两档一致（medium 293.06–297.74；small 291.82–297.66）。段首 292.5 在上一句 everyone watching（292.34）之后，段尾 298.4 在莱巴金娜开口致辞（298.90）之前。","比赛已经结束，终场图形。"))
 S.append(n("wuhm",194.0,217.2,"这个星期在武汉，月亮姐三盘赢了萨卡里。决胜盘前十一局，两个人都保住了发球局，第十二局她破发拿下比赛。第一次打进一千赛四强，下周一，她还会第一次进入世界前二十。",
   "WTA 官方集锦（0-v-yZvYAk8）决胜盘回合，空当 194.1–225.46（两档都无词）。「首进 1000 赛四强、周一首进前 20」：WTA 4593212。","决胜盘的回合，旁白不讲这一分；段尾在空当之内。",label="wuhm",crosses_cut="208.76 广角切到月亮姐近景：上一分已经打完，换镜头前后都是同一场、她本人。"))
 S.append(n("wuhs",203.1,221.0,"斯瓦泰克也是两盘过关，八个发球局一个没丢，三个破发点全部化解。这样一来，十站一千赛，她每一站都打进过半决赛。",
