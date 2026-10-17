@@ -45,3 +45,35 @@ def test_point_border_survives_backdrop_joining_the_entire_colour_scan():
 def test_removal_does_not_widen_last_contour_with_older_frames():
     frames = [(298, None), (271, None), (244, None), (None, None), (None, None)]
     assert atp.stabilize(frames)[2] == (244, None)
+
+
+@pytest.mark.parametrize('timestamp,expected', [
+    ('60.840', 440),      # Point column withdrawn: blue set cell is the contour.
+    ('116.000', 491),     # 30/40 over the white SHANGHAI court lettering.
+    ('117.000', 491),
+])
+def test_real_bold_names_keep_full_points_without_green_backdrop(timestamp, expected):
+    # NKFVL_lELNE SHA256 ca0f94dbbb70dc2f9318a792af879f25c6da863edd151928e14a43040dc752c4.
+    # Lossless RGB crop=560:109:98:920. Long bold name glyphs leave only
+    # 62–64% navy pixels in the name band; this is still the native two-row
+    # container. Previously the point digits were cut at 456/467, while the
+    # withdrawn column incorrectly retained green background to the cap 538.
+    fixtures = FIXTURES.parent / 'shanghai2026-sf'
+    band = np.asarray(Image.open(fixtures / f'{timestamp}.png').convert('RGB'))
+    assert atp.board_edge(band, cap=538) == expected
+    # A narrower spec remains a hint, and must not cut off the real digits.
+    assert atp.board_edge(band, cap=430) == expected
+
+
+@pytest.mark.parametrize('timestamp,expected', [
+    ('122.48', 438),      # Yellow result glyphs must not truncate the panel.
+    ('123.00', 438),      # White shirt joins the old white-glyph column scan.
+    ('123.48', 440),      # Dark blue jacket resembles the native panel colour.
+    ('124.80', 439),
+])
+def test_real_set_end_contour_excludes_white_and_navy_clothing(timestamp, expected):
+    # Same NKFVL_lELNE source and lossless ROI as the point-column regressions.
+    # The blue set cells have withdrawn, but both names and 7 4 / 5 6 remain.
+    fixtures = FIXTURES.parent / 'shanghai2026-sf'
+    band = np.asarray(Image.open(fixtures / f'{timestamp}.png').convert('RGB'))
+    assert atp.board_edge(band, cap=538) == expected

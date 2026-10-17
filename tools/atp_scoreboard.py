@@ -85,9 +85,16 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
         np.maximum(np.maximum(r, g), b) - np.minimum(np.minimum(r, g), b) < 50)
     h = band.shape[0]
     names = white[:, 20:MIN_BOARD_W]
+    # White name glyphs replace the navy background; long/bold names must not
+    # make a genuine two-row container fail its colour signature. Measure the
+    # background among non-glyph pixels, rather than charging the text against
+    # the navy fraction (which skipped point-container detection altogether).
+    name_background = ~white[:, 4:MIN_BOARD_W]
+    navy_fraction = (navy[:, 4:MIN_BOARD_W].sum()
+                     / max(1, name_background.sum()))
     two_rows = (h >= 24 and names[:h // 2].mean() > 0.02
                 and names[h // 2:].mean() > 0.02
-                and navy[:, 4:MIN_BOARD_W].mean() > 0.65)
+                and navy_fraction > 0.65)
     if blue_cols.sum() < 6 and not two_rows:
         return None
     if two_rows:
@@ -121,9 +128,55 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
         # even when dark background joins the entire colour scan.
     if two_rows and blue_cols.sum() >= 6:
         edge = point_container_edge(band, blue_cols, edge)
+    elif two_rows:
+        edge = opaque_container_edge(band, white, edge)
     anchor = (int(np.flatnonzero(blue_cols).max()) + 1 + POINTS_MAX
               if blue_cols.any() else edge)
     return beyond_hint(edge, cap, anchor)
+
+
+def opaque_container_edge(band: np.ndarray, white: np.ndarray, edge: int) -> int:
+    """Keep a set-end navy panel separate from white shirts or navy jackets.
+
+    After the blue set cell retracts, colour alone can join either backdrop to
+    the panel. Its opaque background still matches the name panel row by row.
+    A genuine translucent point cell (for example AD after a completed set)
+    is retained when sparse point glyphs remain beyond that background edge.
+    """
+    pixels = band.astype(np.int16)
+    h = band.shape[0]
+    # The outer strips contain the matte background, away from names, set
+    # digits and the separator rule. Digits themselves cannot create an edge.
+    top = np.median(pixels[2:7], axis=0)
+    bottom = np.median(pixels[h - 10:h - 3], axis=0)
+    top_ref = np.median(top[4:MIN_BOARD_W], axis=0)
+    bottom_ref = np.median(bottom[4:MIN_BOARD_W], axis=0)
+    background = np.maximum(np.abs(top - top_ref).max(axis=1),
+                            np.abs(bottom - bottom_ref).max(axis=1))
+    for x in range(MIN_BOARD_W, len(background) - 4):
+        if not (background[x:x + 4] > 16).all():
+            continue
+        if abs(edge - x) <= 16:
+            return edge
+        points = white[:, x + 3:min(x + POINTS_MAX, len(background))]
+        rows = (points[:h // 2], points[h // 2:])
+        # A shirt can be white across an entire row; actual point glyphs are
+        # sparse and leave the upper/lower container borders dark.
+        glyphs = any(0.008 < row.mean() < 0.25 for row in rows)
+        borders = np.concatenate((points[:7], points[-7:]))
+        if not glyphs or borders.mean() > 0.1:
+            # Refine a visible vertical contour instead of stopping at its
+            # dark antialias pixels. A jacket may hide that contour, in which
+            # case the measured background transition remains the evidence.
+            steps = [np.diff(strip, axis=0).mean(axis=1) for strip in (top, bottom)]
+            shared = np.maximum(np.minimum(*steps), np.minimum(-steps[0], -steps[1]))
+            lo, hi = max(0, x - 5), min(len(shared), x + 4)
+            contour = lo + int(np.argmax(shared[lo:hi]))
+            if shared[contour] >= 4:
+                return contour + 1
+            return x
+        return edge
+    return edge
 
 
 def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> int:
