@@ -1,0 +1,33 @@
+{
+  "kind": "validation_report_not_publication_approval",
+  "local_full_suite": {
+    "command": "PYTHONPATH=src:tools pytest tests -q -n 4 --dist loadfile",
+    "failed": 29,
+    "passed": 5947,
+    "skipped": 471,
+    "warnings": 71,
+    "subtests_passed": 70,
+    "duration_seconds": 1198.07,
+    "snapshot_note": "Run began before final cover iterations; filtered sparse checkout lacks historical outputs; not a clean final-head pass.",
+    "new_match_slug_appears_in_failure_details": false,
+    "known_environment_failure": "Historical output git-show fetch returned HTTP503 from promisor remote.",
+    "log_local": "/workspace/scratch/sf-full-pytest.log"
+  },
+  "main_ci_baseline": {
+    "run": 39043124168,
+    "head": "710f6fbd44db079cb586c2c6b444620e96e1216d",
+    "failed": 2,
+    "passed": 3049,
+    "skipped": 210,
+    "duration_seconds": 163.56,
+    "failure_scope": "existing interview title font overflow"
+  },
+  "new_match_specific": {
+    "final_spec_dry_run": "passed",
+    "declared_audio_evidence": "10 declared JSON files verified",
+    "frozen_tts_bundle_request_integrity": "10 requests match production bundle 4fd93954a516769557bc460e4ce82622d66def832d936898fc778d92d4d250c4",
+    "pronunciation": "unknown_pending_pronunciation_review",
+    "final_render": "pending",
+    "publication_approved": false
+  }
+}

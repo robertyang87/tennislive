@@ -8,7 +8,7 @@
   "reviewed_at": "2026-10-17T14:41:26.036435+00:00",
   "status": "complete",
   "reviewed_from": 117.24,
-  "reviewed_to": 167.7,
+  "reviewed_to": 173.0,
   "uncertain_spans": [],
   "foreground_english": [
     {
@@ -37,6 +37,13 @@
       "end": 167.7,
       "en": "Chwalinska hands Iga Swiatek her first dropped set in Wuhan",
       "zh": "她让斯瓦泰克在本届武汉首次丢盘",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 167.7,
+      "end": 171.64,
+      "en": "and has the upper hand in semifinal number two.",
+      "zh": "在第2场半决赛中占得先机",
       "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
     }
   ],
@@ -85,15 +92,5 @@
     "manual_listening_claimed": false,
     "source_audio_gain_changes": false,
     "scope_note": "Whole selected window checked against both full-source raw transcripts and canonical automatic captions. Source-level unresolved MTO/interview spans lie outside every selected window. Source-level unknowns were not marked complete."
-  },
-  "derived_partition": {
-    "parent_git_revision": "59b68a7fc8625a1b5138299ba29578dcb9b26224",
-    "parent_packet_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/first_set_finish.json",
-    "parent_packet_sha256": "ab00e61fc35940933ceead776bf7af28acdc2caf922bb9477e2b93ed360d7ee1",
-    "parent_reviewed_from": 117.24,
-    "parent_reviewed_to": 173.0,
-    "split_at": 167.7,
-    "partitioned_at": "2026-10-17T15:13:56.076257+00:00",
-    "method": "Subset partition of existing reviewed evidence at an existing complete subclause boundary; no new ASR or listening, source ranges are contiguous and their union equals the parent window. Original method, reviewer and reviewed_at remain unchanged."
   }
 }

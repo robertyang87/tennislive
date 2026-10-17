@@ -2,7 +2,7 @@
   "slug": "chwalinska-swiatek-wuhan-2026-sf",
   "reviewed_at": "2026-10-17T15:11:31.878987+00:00",
   "review_kind": "native_visual_preview_only",
-  "status": "no_blocking_visual_defect_in_16_viewed_samples_and_selected_cover",
+  "status": "sampled_native_body_and_latest_fullbleed_cover_reviewed_final_movie_pending",
   "publication_approved": false,
   "scope": {
     "manifest": "/workspace/scratch/sf-native-targeted/preview_manifest.json",
@@ -189,11 +189,12 @@
   ],
   "selected_cover": {
     "path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/cover-review/cover-final.jpg",
-    "sha256": "6817c623666f53c8a48a714a244d502fda7cb9e5226289ab0706ebe9316e67f1",
+    "sha256": "0130d3263255c85cd94dcf4561d6a78a5c18292ef713e2a5ab787c8fd82329ee",
     "actually_viewed": true,
-    "user_selection": "E双人合照；双人合照，更有波兰德比的情绪；可以就用这个（root提供的最新用户指令）",
-    "finding": "两张脸成对位于画面中上部，照片内人物身份吻合，眼鼻嘴没有被顶栏、钩子或比分板遮挡。文字在纯深蓝承接区，钩子两行完整，月亮姐行高亮；7/6对5/1、排名22/9、双方POL旗帜及2:08均完整可读。",
-    "override_handling": "用户本期明确选定双人合照和纯深蓝文字承接，覆盖旧solo/单人正脸等默认；不拿旧默认阻塞。"
+    "selection": "F-fullbleed, replaces E navy-band layout",
+    "finding": "原始本场Reuters合照直接铺满3:4。左右两张脸的眼部、鼻子、嘴及下巴均在画布内，顶栏、主标题和比分板均不压脸。两人的发型及帽子接近或超出边缘不记为眼鼻下巴被裁；用户明确选择双人合照并要求满幅。两行钩子及双方姓名、排名22/9、7/6对5/1完整可读。",
+    "user_instruction": "双人合照，更有波兰德比的情绪；可以就用这个；随后明确要铺满画布（root提供最新指令）",
+    "scope": "只评价已实际查看的F封面，不代表正式导出已使用同字节。"
   },
   "prior_findings_followup": {
     "required_october_tags": "本轮读取xhs末行已含两项强制赛季tag及#网球时差，前次标签缺口已修复。",
@@ -201,10 +202,92 @@
     "card_duration": "当前spec卡片已改为16.8/9.2/20.2/14.5/14.8秒；未听音频，不凭单帧评价卡片是否空等。"
   },
   "remaining_final_film_checks": [
-    "补看首盘结束时的大比分总结图，caption-09未抽到该画面。",
     "抽实际成片板宽变化、原声双语最长cue、片头冷开场及首尾字幕边界。",
     "逐个关键回合检查真实起点至死球，特别是次盘210.48开头是否保留完整发球动作。",
-    "确认正式视频开头的封面字节与本次用户确认的cover-final一致。",
-    "核TTS实际发音和现场声完整性；本报告不评价声音。"
-  ]
+    "核TTS实际发音和现场声完整性；本报告不评价声音。",
+    "实际最终成片确认source172.28稳定大板仍完整，且F-fullbleed封面字节进入导出。"
+  ],
+  "addenda": [
+    {
+      "reviewed_at": "2026-10-17T15:20:31.190008+00:00",
+      "subject": "first_set_result_large_board_targeted_recheck",
+      "status": "superseded_by_latest_user_fullbleed_instruction",
+      "original_16_sample_scope_reminder": "原caption-09抽到源164.24秒观众镜头，16帧没有覆盖首盘结束大比分总结板；原样本内无阻塞绝不代表已审全片或已确认大板正确。",
+      "root_initial_concern": "root最初报告source171.46/film186.2的大板姓名被crop截断，曾拆出167.70–173.00共5.3秒，改full_source且字幕bottom180作修复方案。",
+      "actual_recheck": [
+        {
+          "path": "/workspace/scratch/sf-result-fixed/caption-01.png",
+          "sha256": "d18e85cd452911157d3d6fb544f780488a1497fa60c3e073be56e6e402293102",
+          "source_time": 168.46,
+          "actually_viewed": true,
+          "finding": "横版本场源图完整置于深蓝画布；双语字幕位于图下方，长英文及中文均完整，没有压脸。"
+        },
+        {
+          "path": "/workspace/scratch/sf-result-fixed/caption-02.png",
+          "sha256": "08cc29c7bf7cf41ed5f1b5e83e03c2a2cf247c79758ecfc98cb63f62a2a75f01",
+          "source_time": 171.46,
+          "actually_viewed": true,
+          "finding": "大板外框完整但姓名仍显示WIATEK、CHWALINSKA且无5/7小分。这是原图入场动画阶段，不能从本帧判稳定大板是否完整。"
+        },
+        {
+          "path": "/workspace/scratch/sf-result-fixed/caption-stable-17226.png",
+          "sha256": "679ed3ea6a699551e647ed4f769eb91dc5ee633ca3efb2c9f5dbeb20c8f68095",
+          "source_time": 172.26,
+          "actually_viewed": true,
+          "finding": "复用该manifest真实native命令，只将select帧n94改n114。稳定大板IGA SWIATEK[7]5／MAJA CHWALINSKA[16]7全名、分数、双方国旗与绿高亮完整，可读，无额外比分回贴或字幕遮挡。"
+        },
+        {
+          "path": "/workspace/scratch/sf-result-fixed/original-crop-stable17228.png",
+          "sha256": "22f5d4148fb1f46dfa6a1f3605cafc90a69f6a779ca8a927e70fa505e3d7595c",
+          "source_time": 172.28,
+          "actually_viewed": true,
+          "finding": "复用原16帧manifest旧crop真实命令，额外取n1376稳定帧。该帧3:4全屏中的整张大板和双方全名/5对7均完整，未见稳定状态姓名截断。此证据不支持将171.46源动画直接诊断为crop截名。"
+        }
+      ],
+      "source_animation_crosscheck": {
+        "actually_viewed": true,
+        "path": "/workspace/scratch/sf-result-source-original/wall.jpg",
+        "source_times": [
+          171.46,
+          171.8,
+          172.24,
+          172.64,
+          172.96
+        ],
+        "finding": "未经处理原片171.46同样处于姓名擦入且无分数的动画；171.8起两人全名和5/7完整，之后赢家绿高亮。"
+      },
+      "full_source_preview_binding": {
+        "manifest_path": "/workspace/scratch/sf-result-fixed/preview_manifest.json",
+        "manifest_sha256": "ed8202941a4a1f305d2739d6eb5eff56ab762037096bf3d43d39567988b9f775",
+        "spec_file_sha256": "776bcf7cf8065bd1aed1f082db64b50101acad966c2d7ab6f352bd0859c07756",
+        "ass_sha256": "e56a27b3477cb8f50360411e70a7e4568c4ec04917bfb51488e683bf7c96fdc5",
+        "two_manifest_image_hashes_match": true
+      },
+      "latest_instruction": "用户刚明确要铺满画布。root告知full_source上下深蓝方案已弃用，并将封面由E改为原图满幅F；本轮未实看F及新的first_set_result实现。",
+      "applicability": "本追加记录如实保留旧full_source修复验证与源动画诊断；旧方案已被最新用户指令取代，不代表当前spec、F封面或将来成片通过。",
+      "pending": "按实际最终实施版另审first_set_result、满幅F封面与正式导出。"
+    },
+    {
+      "reviewed_at": "2026-10-17T15:21:52.655180+00:00",
+      "subject": "restoration_after_source_animation_diagnosis_and_latest_F_cover",
+      "status": "full_source_attempt_abandoned_original_dynamic_crop_usable_in_viewed_stable_frame",
+      "root_correction": "root已实看original-crop-stable17228.png，确认最初在171.46看入场动画过早；原稳定时刻全名及5/7比分完整，原动态crop可用。",
+      "current_implementation": "root恢复14个原动态crop段与原audioindex/first_set_finish packet，删除分裂result packet；full_source尝试已弃用，不使用其上下深蓝图文方案。",
+      "current_spec_sha256": "f4fa5f8d373f16eaaa811614e2f156e90c2bfc51272535074d2819c934ccc994",
+      "current_segment_count": 14,
+      "actually_viewed_latest_cover": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/cover-review/cover-final.jpg",
+      "latest_cover_sha256": "0130d3263255c85cd94dcf4561d6a78a5c18292ef713e2a5ab787c8fd82329ee",
+      "finding": "F满幅封面两人眼鼻嘴下巴均未被裁或压字，样本内无新增阻塞。",
+      "applicability": "原16帧只审过各样本，首盘大板的额外旧crop稳定帧补齐了本项可读性；仍不把样本结论扩张为最终电影全片通过。",
+      "final_movie_pending": true
+    }
+  ],
+  "previous_selected_cover_review": {
+    "path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/cover-review/cover-final.jpg",
+    "sha256": "6817c623666f53c8a48a714a244d502fda7cb9e5226289ab0706ebe9316e67f1",
+    "actually_viewed": true,
+    "user_selection": "E双人合照；双人合照，更有波兰德比的情绪；可以就用这个（root提供的最新用户指令）",
+    "finding": "两张脸成对位于画面中上部，照片内人物身份吻合，眼鼻嘴没有被顶栏、钩子或比分板遮挡。文字在纯深蓝承接区，钩子两行完整，月亮姐行高亮；7/6对5/1、排名22/9、双方POL旗帜及2:08均完整可读。",
+    "override_handling": "用户本期明确选定双人合照和纯深蓝文字承接，覆盖旧solo/单人正脸等默认；不拿旧默认阻塞。"
+  }
 }

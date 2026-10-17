@@ -1,7 +1,7 @@
 {
   "schema": "tennislive.foreground-audio-review.v1",
   "slug": "chwalinska-swiatek-wuhan-2026-sf",
-  "plan_sha256": "9ff1ef16b762c4a692d37210e561a9ee93eadca79d3885e9430cb5fd6ceeb42c",
+  "plan_sha256": "183c6705624dc1556f11db41d06ac10538a74c2005e8cd6053ce7a91e4f88a7e",
   "reviewed_at": "2026-10-17T14:41:26.036435+00:00",
   "segments": [
     {
@@ -32,33 +32,23 @@
     {
       "index": 7,
       "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/first_set_finish.json",
-      "transcript_sha256": "1ca314c1b229a47d1a0114728a531449b0c313511cbe4cdab7d736cc4d12ce58"
+      "transcript_sha256": "ab00e61fc35940933ceead776bf7af28acdc2caf922bb9477e2b93ed360d7ee1"
     },
     {
-      "index": 8,
-      "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/first_set_result.json",
-      "transcript_sha256": "b6ed3111d7c3f321e81171aa777b974bdafd249ea9b507da8862de282f26405c"
-    },
-    {
-      "index": 10,
+      "index": 9,
       "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/second_break.json",
       "transcript_sha256": "0dee360a38765cf7f51b253edab47ed4623fa1dbd72028736fb54ca45d3b7906"
     },
     {
-      "index": 11,
+      "index": 10,
       "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/second_set_pressure.json",
       "transcript_sha256": "2a4818e52e6c4bdbb129dacf988ec11c189a32ff2164d911e7a3e6c8b6d1e4ec"
     },
     {
-      "index": 12,
+      "index": 11,
       "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/match_payoff.json",
       "transcript_sha256": "7e5e1023338fb79d5b1cb0803f131c113e8e731e2b73934264192f5297ef970c"
     }
   ],
-  "_review_method": "Independently curated same-SHA full two-model ASR plus finite third-model set-point cross-check and canonical automatic captions. Spec.quote was empty before this review. No manual listening claimed.",
-  "derived_partition_binding": {
-    "partitioned_at": "2026-10-17T15:13:56.076257+00:00",
-    "parent_packet_sha256": "ab00e61fc35940933ceead776bf7af28acdc2caf922bb9477e2b93ed360d7ee1",
-    "note": "Only the already reviewed first_set_finish117.24–173 window was split at167.70; video indices following the new first_set_result segment are shifted to the current spec."
-  }
+  "_review_method": "Independently curated same-SHA full two-model ASR plus finite third-model set-point cross-check and canonical automatic captions. Spec.quote was empty before this review. No manual listening claimed."
 }

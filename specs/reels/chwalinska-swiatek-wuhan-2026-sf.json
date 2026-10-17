@@ -147,7 +147,7 @@
       }
     },
     "portrait": {
-      "image": "assets/reels/chwalinska-swiatek-wuhan-2026-sf/wuhan-sf-duo-cover-canvas.jpg",
+      "image": "assets/reels/chwalinska-swiatek-wuhan-2026-sf/wuhan-sf-duo-reuters-original.jpg",
       "source_url": "https://cdn6.polskieradio.pl/cdn/ebda638f-051d-4bb8-8302-e8380a3e64d7/img.jpeg",
       "focus": 0.5,
       "focus_y": 0.5,
@@ -159,7 +159,7 @@
     "scrim": "clear",
     "hook": "波兰德比救回2个盘点\n月亮姐首进1000赛决赛",
     "hook_accent": "首进1000赛决赛",
-    "_portrait_why": "用户2026-10-17先要求人物居中，随后明确选择已展示E双人合照版：双人合照，更有波兰德比的情绪。采用本场Reuters赛后网前相视微笑4480x2520实拍，两脸成对居中且避开字带；按用户选定样稿，以纯深蓝图文版承接上下品牌、标题与比分，不用模糊垫底。2160x2880画布仅排版、照片等比缩小，无AI、锐化、拉伸、换脸或抠拼。该次具体审看选择覆盖旧默认单人满幅偏好。",
+    "_portrait_why": "用户已确认采用本场两人网前相视微笑合照，随后明确要求铺满画布。按最新要求使用Reuters4480x2520原始照片直接fitcover裁切铺满3:4，不留上下色带；两张脸配对居中，双眼至下巴避开台头与标题，无AI、抠拼、锐化或拉伸。最新F满幅原生封面替代先前E横照图文版。",
     "_heat_why": "用户点名波兰德比半决赛；世界第22赫瓦林斯卡击败世界第9斯瓦泰克，首次WTA1000决赛。"
   },
   "topbar": {
@@ -402,7 +402,7 @@
       "_edit_id": "first_set_finish",
       "source": "main",
       "start": 117.24,
-      "end": 167.7,
+      "end": 173.0,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
@@ -427,40 +427,20 @@
         },
         {
           "at": 47.36,
-          "end": 50.459999999999994,
+          "end": 50.46,
           "text": "Chwalinska hands Iga Swiatek her first dropped set in Wuhan\n她让斯瓦泰克在本届武汉首次丢盘"
-        }
-      ],
-      "crosses_cut": "本场官方集锦已有转播切换，窗口按本场源时间取；不把跳过的中间回合说成连续逐分。",
-      "point_end_ok": "实际连续帧与记分条核验完整选中回合，末尾止于死球后或完整原声句界；详见本片visual-review.json。 本段167.70在原声下一完整子句起点衔接同源结果图段，原声连续不丢句。",
-      "_fit_why": "沿用固定中心全屏3:4，cx0.5、trackfalse，原生同帧透明比分板固定左下回贴。",
-      "_quote_kind": "broadcast",
-      "_source_audio_review_status": "complete: same-SHA full small.en/medium.en + canonical automatic captions; finite large-v3-turbo90–100 confirms set-point clause; no manual listening claimed"
-    },
-    {
-      "_edit_id": "first_set_result",
-      "source": "main",
-      "start": 167.7,
-      "end": 173.0,
-      "cx": 0.5,
-      "track": false,
-      "fit": "full_source",
-      "score_inset": false,
-      "subtitle_bottom": 180,
-      "narration": "",
-      "quote": [
+        },
         {
-          "at": 0.0,
-          "end": 3.94,
+          "at": 50.46,
+          "end": 54.4,
           "text": "and has the upper hand in semifinal number two.\n在第2场半决赛中占得先机"
         }
       ],
       "crosses_cut": "本场官方集锦已有转播切换，窗口按本场源时间取；不把跳过的中间回合说成连续逐分。",
       "point_end_ok": "实际连续帧与记分条核验完整选中回合，末尾止于死球后或完整原声句界；详见本片visual-review.json。",
-      "_fit_why": "首盘结束转播的大比分总结图横跨源画面，固定3:4裁切会截断两位球员姓名。仅167.70–173.00秒保留完整原始横幅图形，置于3:4品牌深蓝画布；仍cx0.5/trackfalse，其他比赛回合继续全屏。",
+      "_fit_why": "沿用固定中心全屏3:4，cx0.5、trackfalse，原生同帧透明比分板固定左下回贴。",
       "_quote_kind": "broadcast",
-      "_source_audio_review_status": "complete: same-SHA full small.en/medium.en + canonical automatic captions; finite large-v3-turbo90–100 confirms set-point clause; no manual listening claimed",
-      "_score_inset_why": "完整源画面中的原生大比分总结图直接保留，不二次抠贴；中文字幕放于图形下方深蓝区。"
+      "_source_audio_review_status": "complete: same-SHA full small.en/medium.en + canonical automatic captions; finite large-v3-turbo90–100 confirms set-point clause; no manual listening claimed"
     },
     {
       "_edit_id": "injury_and_turn",
