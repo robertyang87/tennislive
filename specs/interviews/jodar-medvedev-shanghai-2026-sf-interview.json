@@ -1,4 +1,5 @@
 {
+  "_en_fixed_why": "双 ASR 分歧 9.1%（small.en 208 词 / medium.en 196 词），闸门 12% 内，无人工复核告警。人工逐行裁定：3『Denil/hardcore』为 ASR 误听，还原 Daniil/hard-court（梅德韦杰夫 2019 上海夺冠，硬地高手）；7 删去采访者重复起句的 what；13『break point for for』还原 break points（第二份 ASR 作 breakpoints）；14『handle』还原 handled（tennis365/tennishead 引文交叉）；16 删去重复的 in the，保留他『first serve 改口 first set + sorry』的原样；17『return/and and』还原 returned and served（引文交叉）；18『Dan』还原 Daniil；20 删去重复的 my（第二份 ASR 的 be 为连读误听，从引文）；21 删去重复的 to；26 删去重复的 tough；27 删去改口的 as everyone that。其余 very very 等自然强调保留未动。",
   "_facts": [
     "2026-10-17 上海大师赛男单半决赛：霍达尔 6-3、6-4 胜梅德韦杰夫，晋级生涯首个大师赛决赛（tennishead/tennis365/tennistonic/sportstar 战报交叉）。",
     "首盘耗时 56 分钟，霍达尔在第五个盘点上兑现；第二盘第九局梅德韦杰夫挽救 3 个赛点后仍被破发，霍达尔随后发球胜赛（tennisnow.com）。",
@@ -10,10 +11,12 @@
   "_notes": [
     "用户 2026-10-18 指定制作本期赛后开麦（霍达尔上海半决赛胜梅德韦杰夫）。",
     "自动翻译通道已随模型移除；中文为人工逐行翻译。",
-    "end=180.0 为初始占位：待 subs 回报真实片长后收紧到采访内容尾（赛事 logo 画面之前）；片尾只保留网球时差品牌页，去掉赛事 logo 画面（用户 2026-10-18 明确要求）。",
-    "lead_in 待补：同场官方集锦（Rolex Shanghai Masters: Daniil Medvedev vs Rafael Jodar Highlights, aE21b2-ef-Y）赛点→庆祝→解说窗口与双语字幕。",
-    "cover 为临时帧与临时文案：待 subs 后按转写核定 takeaway，cover 扫描 + 终审确定最终帧；自动换帧可改写。"
+    "转写已核：33 行，双 ASR 分歧 9.1%（small.en 208 词 / medium.en 196 词，闸门 12% 内，无人工复核告警），人工逐行裁定见 _en_fixed_why。",
+    "end=64.0：最后一条字幕止于 63.18 秒（Thank you.），64.0 收在采访内容尾、赛事 logo 画面之前；片尾只保留网球时差品牌页，去掉赛事 logo 画面（用户 2026-10-18 明确要求）。",
+    "lead_in 待补：同场官方集锦（Rolex Shanghai Masters: Daniil Medvedev vs Rafael Jodar Highlights, aE21b2-ef-Y，官方频道已核实）赛点→庆祝→解说窗口与双语字幕。",
+    "cover 为临时帧与临时文案：待 cover 扫描 + 终审确定最终帧；自动换帧可改写。"
   ],
+  "_zh_draft_note": "人工逐行翻译：以转写 33 行为证据层逐行对应翻译，未合并、未漏行；已对照 tennis365/tennishead/atptour 战报引文核对关键表述。每行中文 ≤16 字，952px 宽度闸内。",
   "asr_model": "small.en",
   "column": "赛后开麦",
   "cover": {
@@ -27,7 +30,20 @@
       "首进大师赛决赛"
     ]
   },
-  "end": 180.0,
+  "en_fixed": {
+    "13": "break points for me.",
+    "14": "So yeah, super happy how I handled,",
+    "16": "in the first serve, in the first set, sorry.",
+    "17": "And then also how I returned and served.",
+    "18": "And yeah, Daniil is always a very tough player.",
+    "20": "So I have to give my best level",
+    "21": "to beat him.",
+    "26": "Well, it will be another tough game",
+    "27": "as every match",
+    "3": "We knew Daniil is a brilliant hard-court player,",
+    "7": "What did you prepare to go"
+  },
+  "end": 64.0,
   "event": "2026 ATP1000 上海 半决赛",
   "featured_player": "霍达尔",
   "interview_kind": "赛后场上采访",
@@ -54,7 +70,7 @@
   "push": {
     "auto": true,
     "event": "",
-    "lead": "霍达尔 6-3、6-4 胜梅德韦杰夫，晋级上海大师赛决赛——生涯首次打进大师赛决赛。赛后他说：首盘的关键分，我处理得很好。决赛将对阵同胞福基拉。",
+    "lead": "霍达尔 6-3、6-4 胜梅德韦杰夫，晋级上海大师赛决赛——生涯首次打进大师赛决赛。赛后他说：首盘的关键分我处理得很好；丹尼尔今天打得很好，我必须拿出最佳水平。决赛将对阵同胞福基拉。",
     "matchup": "霍达尔 vs 梅德韦杰夫",
     "score": "6-3 6-4",
     "summary": "关键分全拿下，首进大师赛决赛"
@@ -86,11 +102,47 @@
   "start": 0.0,
   "takeaway": {
     "close": {
-      "ask": "带着这份冷静打决赛，首个大师赛冠军在招手吗？",
-      "point": "关键分上更冷静的人赢了"
+      "ask": "决赛对阵同胞福基拉，首个大师赛冠军在招手吗？",
+      "point": "关键分处理得好，首进大师赛决赛"
     }
   },
+  "transcript_verified": true,
   "url": "https://www.youtube.com/watch?v=wPUbqZvPE0g",
   "whisper_model": "medium.en",
-  "winner": "霍达尔"
+  "winner": "霍达尔",
+  "zh": [
+    "拉法，恭喜。",
+    "祝贺你打进生涯首个大师赛决赛。",
+    "我们知道丹尼尔是位出色的硬地高手，",
+    "是他这一代最顶尖的球员之一。",
+    "他以前在这里夺过冠。",
+    "那么，你今天做了什么？",
+    "赛前你做了哪些准备，",
+    "来应对这场比赛？",
+    "嗯，这场比赛确实非常艰难，",
+    "首盘尤其如此。",
+    "每一局都咬得非常紧，",
+    "他有破发机会，",
+    "我也有破发机会。",
+    "所以我很开心，自己处理好了",
+    "那些关键分，",
+    "呃，我是说首盘的关键分，抱歉。",
+    "还有我的接发球和发球。",
+    "丹尼尔一直是个很难打的对手，",
+    "我觉得他今天打得很好，",
+    "所以我必须拿出最佳水平",
+    "才能战胜他。",
+    "明天决赛对阵阿莱汉德罗，",
+    "这将是一场西班牙德比，",
+    "九年来的第一次。",
+    "这会让你感觉更特别吗？",
+    "嗯，这又会是一场硬仗，",
+    "就像我在这里打的",
+    "每一场比赛一样。",
+    "所以我要努力调整到最佳状态，",
+    "明天拼尽全力。",
+    "祝你明天好运。",
+    "谢谢。",
+    "谢谢。"
+  ]
 }
