@@ -1,0 +1,161 @@
+{
+  "assembly": {
+    "parts": [
+      {
+        "role": "cover",
+        "file": "_cover.mp4",
+        "seconds": 2.0
+      },
+      {
+        "role": "body",
+        "file": "_body.mp4",
+        "seconds": 126.0
+      },
+      {
+        "role": "takeaway_close",
+        "file": "_takeaway_close.mp4",
+        "seconds": 7.51,
+        "peak_db": -8.1
+      },
+      {
+        "role": "outro",
+        "file": "_outro.mp4",
+        "seconds": 4.2,
+        "peak_db": -8.5
+      }
+    ]
+  },
+  "seams": {
+    "count": 3,
+    "transition": "dissolve",
+    "dissolve_s": 0.18
+  },
+  "film_sha256": "c3ced5480f36a5ed4fdf0665e00dfee9658203722eeca372b48e0b092a76ecc9",
+  "film_seconds": 139.08,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "kartal-ostapenko-wuhan-2026-sf-interview",
+    "received_at": "2026-10-17T17:57:24Z",
+    "artifact_ready_at": "2026-10-17T18:00:57Z",
+    "elapsed_seconds": 213.888,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "c3ced5480f36a5ed4fdf0665e00dfee9658203722eeca372b48e0b092a76ecc9",
+    "spec_sha256": "e02c2ee6541e02ba2355cd6214bff3dd987311981cb9b3bb707ab6e821e070c6",
+    "run_id": "39055983644",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-10-17T17:58:26Z",
+        "run_id": "39055983644"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-10-17T17:59:36Z",
+        "run_id": "39055983644"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-10-17T17:59:51Z",
+        "run_id": "39055983644"
+      },
+      {
+        "stage": "render",
+        "at": "2026-10-17T17:59:52Z",
+        "run_id": "39055983644"
+      }
+    ],
+    "render_seconds": 65.888,
+    "pre_render_seconds": 148.0
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "卡塔尔",
+        "similarity": {
+          "卡塔尔": 0.5394
+        },
+        "missing": [],
+        "expected": [
+          "卡塔尔"
+        ],
+        "face": [
+          713,
+          180,
+          920,
+          469
+        ],
+        "face_px": 288.6,
+        "reason": "像 卡塔尔（0.54 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2977,
+        "ear_each": [
+          0.3143,
+          0.2811
+        ],
+        "face": [
+          713,
+          180,
+          920,
+          469
+        ],
+        "face_px": 288.6,
+        "reason": "眼睛纵横比 0.30 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "warnings": []
+    },
+    "warnings": []
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-10-17T17:58:26Z",
+      "run_id": "39055983644"
+    },
+    {
+      "stage": "cover_audit",
+      "at": "2026-10-17T17:59:36Z",
+      "run_id": "39055983644"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-10-17T17:59:51Z",
+      "run_id": "39055983644"
+    },
+    {
+      "stage": "render",
+      "at": "2026-10-17T17:59:52Z",
+      "run_id": "39055983644"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-10-17T18:00:58Z",
+      "run_id": "39055983644"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-17T18:00:58Z",
+      "run_id": "39055983644"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-kartal-ostapenko-wuhan-2026-sf-interview/kartal-ostapenko-wuhan-2026-sf-interview.mp4?v=c3ced5480f36a5ed",
+  "video_bytes": 47396171,
+  "release_asset_digest": "sha256:c3ced5480f36a5ed4fdf0665e00dfee9658203722eeca372b48e0b092a76ecc9",
+  "qc_attestation_sha256": "66d2ead4c35c46cd84662137f8e4595ad175b8a1a16915dda358730e9d351c2f"
+}

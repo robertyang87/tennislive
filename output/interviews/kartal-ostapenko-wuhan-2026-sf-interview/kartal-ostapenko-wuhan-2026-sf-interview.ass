@@ -1,0 +1,124 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,44,&H00ECF3E7,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,68,&H00ECF3E7,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00F7FBF4,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:02:06.00,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 WTA1000 武汉 半决赛
+Dialogue: 1,0:00:00.00,0:02:06.00,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}卡塔尔 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}7{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}6 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}7{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}6{\r\fnNoto Sans CJK SC\fs38} 奥斯塔彭科 · 赛后场上采访
+Dialogue: 0,0:00:00.16,0:00:01.12,EN,,0,0,0,,everything today.
+Dialogue: 0,0:00:00.16,0:00:01.12,ZH,,0,0,0,,今天的一切
+Dialogue: 0,0:00:01.12,0:00:05.12,EN,,0,0,0,,She has done all week.
+Dialogue: 0,0:00:01.12,0:00:05.12,ZH,,0,0,0,,她整周都是如此
+Dialogue: 0,0:00:05.12,0:00:08.40,EN,,0,0,0,,into a second ever career final
+Dialogue: 0,0:00:05.12,0:00:08.40,ZH,,0,0,0,,生涯第二个决赛
+Dialogue: 0,0:00:08.40,0:00:11.52,EN,,0,0,0,,and a first at 1,00 level.
+Dialogue: 0,0:00:08.40,0:00:11.52,ZH,,0,0,1186,,首个{\fs78}1000{\fs68}赛决赛
+Dialogue: 0,0:00:11.52,0:00:12.80,EN,,0,0,0,,She crushes the dreams
+Dialogue: 0,0:00:11.52,0:00:12.80,ZH,,0,0,0,,她粉碎了
+Dialogue: 0,0:00:12.80,0:00:15.44,EN,,0,0,0,,of the big hitting Ostapenko.
+Dialogue: 0,0:00:12.80,0:00:15.44,ZH,,0,0,0,,重炮手奥斯塔彭科的梦想
+Dialogue: 0,0:00:15.44,0:00:17.04,EN,,0,0,0,,Huge congratulations
+Dialogue: 0,0:00:15.44,0:00:17.04,ZH,,0,0,0,,太祝贺你了
+Dialogue: 0,0:00:17.04,0:00:19.12,EN,,0,0,0,,on this double tie break.
+Dialogue: 0,0:00:17.04,0:00:19.12,ZH,,0,0,0,,双抢七获胜
+Dialogue: 0,0:00:19.12,0:00:20.56,EN,,0,0,0,,Close. Fantastic win.
+Dialogue: 0,0:00:19.12,0:00:20.56,ZH,,0,0,0,,比分胶着 一场漂亮的胜利
+Dialogue: 0,0:00:20.56,0:00:21.28,EN,,0,0,0,,How pleased
+Dialogue: 0,0:00:20.56,0:00:21.28,ZH,,0,0,0,,对自己的表现
+Dialogue: 0,0:00:21.28,0:00:25.20,EN,,0,0,0,,with you performance just how it is.
+Dialogue: 0,0:00:21.28,0:00:25.20,ZH,,0,0,0,,满意吗？
+Dialogue: 0,0:00:25.20,0:00:26.16,EN,,0,0,0,,Wow.
+Dialogue: 0,0:00:25.20,0:00:26.16,ZH,,0,0,0,,哇
+Dialogue: 0,0:00:26.16,0:00:28.96,EN,,0,0,0,,That was probably one of the toughest
+Dialogue: 0,0:00:26.16,0:00:28.96,ZH,,0,0,0,,这可能是我职业生涯中
+Dialogue: 0,0:00:28.96,0:00:30.08,EN,,0,0,0,,matches I've probably played.
+Dialogue: 0,0:00:28.96,0:00:30.08,ZH,,0,0,0,,最艰难的比赛之一
+Dialogue: 0,0:00:30.08,0:00:32.48,EN,,0,0,0,,you know, I knew exactly how she was going
+Dialogue: 0,0:00:30.08,0:00:32.48,ZH,,0,0,0,,我很清楚她会怎么打
+Dialogue: 0,0:00:32.48,0:00:35.12,EN,,0,0,0,,to play and I just, you know,
+Dialogue: 0,0:00:32.48,0:00:35.12,ZH,,0,0,0,,你知道的
+Dialogue: 0,0:00:35.12,0:00:36.64,EN,,0,0,0,,she at times she's unplayable
+Dialogue: 0,0:00:35.12,0:00:36.64,ZH,,0,0,0,,她有时候简直不可阻挡
+Dialogue: 0,0:00:36.64,0:00:38.00,EN,,0,0,0,,and sometimes you just have to ride
+Dialogue: 0,0:00:36.64,0:00:38.00,ZH,,0,0,0,,有时候只能顺着她的节奏走
+Dialogue: 0,0:00:38.00,0:00:40.24,EN,,0,0,0,,that wave and you know, mentally I think
+Dialogue: 0,0:00:38.00,0:00:40.24,ZH,,0,0,0,,但从心理层面说 我觉得
+Dialogue: 0,0:00:40.24,0:00:41.84,EN,,0,0,0,,this is one of the best performances I've
+Dialogue: 0,0:00:40.24,0:00:41.84,ZH,,0,0,0,,这是我职业生涯
+Dialogue: 0,0:00:41.84,0:00:42.72,EN,,0,0,0,,had in my career.
+Dialogue: 0,0:00:41.84,0:00:42.72,ZH,,0,0,0,,发挥最好的一场之一
+Dialogue: 0,0:00:42.72,0:00:48.20,EN,,0,0,0,,So, yeah, very very proud of that one.
+Dialogue: 0,0:00:42.72,0:00:48.20,ZH,,0,0,0,,所以 真的非常非常自豪
+Dialogue: 0,0:00:59.36,0:01:03.92,EN,,0,0,0,,So several months ago you are sideline
+Dialogue: 0,0:00:59.36,0:01:03.92,ZH,,0,0,0,,几个月前你还因伤缺阵
+Dialogue: 0,0:01:03.92,0:01:07.36,EN,,0,0,0,,with injury and before the Wuhan open start
+Dialogue: 0,0:01:03.92,0:01:07.36,ZH,,0,0,0,,武网开赛前 你
+Dialogue: 0,0:01:07.36,0:01:09.76,EN,,0,0,0,,your single ranking is 170
+Dialogue: 0,0:01:07.36,0:01:09.76,ZH,,0,0,1186,,单打排名只有{\fs78}170{\fs68}位
+Dialogue: 0,0:01:09.76,0:01:11.12,EN,,0,0,0,,and right now you are break
+Dialogue: 0,0:01:09.76,0:01:11.12,ZH,,0,0,0,,而现在你打进了
+Dialogue: 0,0:01:11.12,0:01:13.92,EN,,0,0,0,,into the biggest final in your career.
+Dialogue: 0,0:01:11.12,0:01:13.92,ZH,,0,0,0,,职业生涯最重要的一个决赛
+Dialogue: 0,0:01:13.92,0:01:15.92,EN,,0,0,0,,What are you heading tomorrow
+Dialogue: 0,0:01:13.92,0:01:15.92,ZH,,0,0,0,,明天迎来生涯首个
+Dialogue: 0,0:01:15.92,0:01:19.52,EN,,0,0,0,,into your very first WTA 1000 final?
+Dialogue: 0,0:01:15.92,0:01:19.52,ZH,,0,0,1186,,{\fs78}WTA1000{\fs68}决赛 心情如何？
+Dialogue: 0,0:01:19.52,0:01:20.08,EN,,0,0,0,,Yeah, you know,
+Dialogue: 0,0:01:19.52,0:01:20.08,ZH,,0,0,0,,是的 你知道的
+Dialogue: 0,0:01:20.08,0:01:22.48,EN,,0,0,0,,I was I was dreaming of playing this match
+Dialogue: 0,0:01:20.08,0:01:22.48,ZH,,0,0,0,,受伤前身体健康的时候
+Dialogue: 0,0:01:22.48,0:01:24.40,EN,,0,0,0,,when I was fully fit before the injury.
+Dialogue: 0,0:01:22.48,0:01:24.40,ZH,,0,0,0,,我就梦想着能打这样的比赛
+Dialogue: 0,0:01:24.40,0:01:26.96,EN,,0,0,0,,So, to be able to come back here
+Dialogue: 0,0:01:24.40,0:01:26.96,ZH,,0,0,0,,所以能在这里复出
+Dialogue: 0,0:01:26.96,0:01:28.40,EN,,0,0,0,,in my in my third event
+Dialogue: 0,0:01:26.96,0:01:28.40,ZH,,0,0,0,,这是我复出的第三站
+Dialogue: 0,0:01:28.40,0:01:30.64,EN,,0,0,0,,and to to achieve this regardless
+Dialogue: 0,0:01:28.40,0:01:30.64,ZH,,0,0,0,,能取得这样的成绩
+Dialogue: 0,0:01:30.64,0:01:32.40,EN,,0,0,0,,is a is a huge milestone for me.
+Dialogue: 0,0:01:30.64,0:01:32.40,ZH,,0,0,0,,对我来说是巨大的里程碑
+Dialogue: 0,0:01:32.40,0:01:34.32,EN,,0,0,0,,So, yeah, I'm going to recover
+Dialogue: 0,0:01:32.40,0:01:34.32,ZH,,0,0,0,,我会好好恢复
+Dialogue: 0,0:01:34.32,0:01:36.80,EN,,0,0,0,,and enjoy every second of it tomorrow.
+Dialogue: 0,0:01:34.32,0:01:36.80,ZH,,0,0,0,,明天享受每一秒
+Dialogue: 0,0:01:36.80,0:01:39.52,EN,,0,0,0,,And one more last question for the fans,
+Dialogue: 0,0:01:36.80,0:01:39.52,ZH,,0,0,0,,最后一个问题送给球迷们
+Dialogue: 0,0:01:39.52,0:01:41.68,EN,,0,0,0,,they support you all the way as well.
+Dialogue: 0,0:01:39.52,0:01:41.68,ZH,,0,0,0,,他们一路支持你
+Dialogue: 0,0:01:41.68,0:01:43.60,EN,,0,0,0,,I know some some some of the fans
+Dialogue: 0,0:01:41.68,0:01:43.60,ZH,,0,0,0,,我知道有些球迷
+Dialogue: 0,0:01:43.60,0:01:46.40,EN,,0,0,0,,they might support Alena today
+Dialogue: 0,0:01:43.60,0:01:46.40,ZH,,0,0,0,,今天可能支持奥斯塔彭科的
+Dialogue: 0,0:01:46.40,0:01:49.04,EN,,0,0,0,,but your performance capturing their eyes
+Dialogue: 0,0:01:46.40,0:01:49.04,ZH,,0,0,0,,但你的表现征服了他们
+Dialogue: 0,0:01:49.04,0:01:50.80,EN,,0,0,0,,on all the way go.
+Dialogue: 0,0:01:49.04,0:01:50.80,ZH,,0,0,0,,现场欢呼
+Dialogue: 0,0:01:50.80,0:01:52.80,EN,,0,0,0,,Yeah, this I've said in every interview
+Dialogue: 0,0:01:50.80,0:01:52.80,ZH,,0,0,0,,是的 我每次采访都会说
+Dialogue: 0,0:01:52.80,0:01:54.72,EN,,0,0,0,,this is an unbelievable court to play in.
+Dialogue: 0,0:01:52.80,0:01:54.72,ZH,,0,0,0,,在这打球太不可思议了
+Dialogue: 0,0:01:54.72,0:01:57.44,EN,,0,0,0,,The atmosphere in every single match
+Dialogue: 0,0:01:54.72,0:01:57.44,ZH,,0,0,0,,每一场比赛的现场氛围
+Dialogue: 0,0:01:57.44,0:01:59.44,EN,,0,0,0,,has been has been like
+Dialogue: 0,0:01:57.44,0:01:59.44,ZH,,0,0,0,,都
+Dialogue: 0,0:01:59.44,0:02:01.12,EN,,0,0,0,,the most enjoyable experience for me.
+Dialogue: 0,0:01:59.44,0:02:01.12,ZH,,0,0,0,,是我最享受的体验
+Dialogue: 0,0:02:01.12,0:02:02.72,EN,,0,0,0,,So I appreciate everyone
+Dialogue: 0,0:02:01.12,0:02:02.72,ZH,,0,0,0,,感谢今天
+Dialogue: 0,0:02:02.72,0:02:03.92,EN,,0,0,0,,that was supporting me today
+Dialogue: 0,0:02:02.72,0:02:03.92,ZH,,0,0,0,,支持我的每一个人
+Dialogue: 0,0:02:03.92,0:02:05.44,EN,,0,0,0,,and hopefully they can come out
+Dialogue: 0,0:02:03.92,0:02:05.44,ZH,,0,0,0,,希望明天你们
+Dialogue: 0,0:02:05.44,0:02:07.50,EN,,0,0,0,,and do the same
+Dialogue: 0,0:02:05.44,0:02:07.50,ZH,,0,0,0,,也能来现场继续加油
