@@ -1,0 +1,18 @@
+name: tmp-kartal-notes
+# 临时：核 WTA 武汉半决赛 match notes 里的最低排名决赛纪录。合并前删除。
+on:
+  push:
+    branches: [claude/kartal-story-2026]
+    paths: [.github/workflows/tmp-kartal-notes.yml]
+permissions:
+  contents: read
+jobs:
+  notes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - run: |
+          sudo apt-get -qq install -y poppler-utils >/dev/null 2>&1 || true
+          for u in https://wtafiles.wtatennis.com/pdf/matchnotes/2026/1075_SF.pdf https://wtafiles.wtatennis.com/pdf/matchnotes/2026/1075_F.pdf; do
+            echo "###### $u"; curl -sSL -A "Mozilla/5.0" -o n.pdf "$u" && pdftotext -layout n.pdf - | grep -i -n -B3 -A6 -E 'kartal|lowest|ranked|protected|special|153|kuznetsova' | head -150
+          done
