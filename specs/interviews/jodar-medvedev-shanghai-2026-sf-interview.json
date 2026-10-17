@@ -13,8 +13,8 @@
     "自动翻译通道已随模型移除；中文为人工逐行翻译。",
     "转写已核：33 行，双 ASR 分歧 9.1%（small.en 208 词 / medium.en 196 词，闸门 12% 内，无人工复核告警），人工逐行裁定见 _en_fixed_why。",
     "end=64.0：最后一条字幕止于 63.18 秒（Thank you.），64.0 收在采访内容尾、赛事 logo 画面之前；片尾只保留网球时差品牌页，去掉赛事 logo 画面（用户 2026-10-18 明确要求）。",
-    "lead_in 待补：同场官方集锦（Rolex Shanghai Masters: Daniil Medvedev vs Rafael Jodar Highlights, aE21b2-ef-Y，官方频道已核实）赛点→庆祝→解说窗口与双语字幕。",
-    "cover 为临时帧与临时文案：待 cover 扫描 + 终审确定最终帧；自动换帧可改写。"
+    "cover 为临时帧与临时文案：待 cover 扫描 + 终审确定最终帧；自动换帧可改写。",
+    "lead_in 已补：同场官方集锦 85.0-103.0（18 秒），赛点发球→拿下→庆祝→解说宣布赛果，浏览器实测字幕演进核验，双语字幕人工配写。"
   ],
   "_zh_draft_note": "人工逐行翻译：以转写 33 行为证据层逐行对应翻译，未合并、未漏行；已对照 tennis365/tennishead/atptour 战报引文核对关键表述。每行中文 ≤16 字，952px 宽度闸内。",
   "asr_model": "small.en",
@@ -47,6 +47,48 @@
   "event": "2026 ATP1000 上海 半决赛",
   "featured_player": "霍达尔",
   "interview_kind": "赛后场上采访",
+  "lead_in": {
+    "end": 103.0,
+    "source_captions": [
+      [
+        91.0,
+        "For just the ninth time in the history of Mast's 1000s, we will have an all Spanish final."
+      ]
+    ],
+    "start": 85.0,
+    "subs": [
+      {
+        "a": 91.0,
+        "b": 95.0,
+        "en": "For just the ninth time",
+        "zh": "历史上第九次，"
+      },
+      {
+        "a": 95.0,
+        "b": 99.0,
+        "en": "in the history of Masters 1000s,",
+        "zh": "大师赛历史上，"
+      },
+      {
+        "a": 99.0,
+        "b": 103.0,
+        "en": "we will have an all Spanish final.",
+        "zh": "将迎来全西班牙决赛。"
+      }
+    ],
+    "url": "https://www.youtube.com/watch?v=aE21b2-ef-Y",
+    "verification": {
+      "channel": "Rolex Shanghai Masters",
+      "event_search": "Shanghai Masters",
+      "height": 1080,
+      "loser_en": "Daniil Medvedev",
+      "match_id": "2026:shanghai-masters:mens-sf:jodar-medvedev",
+      "method": "official_exact_match_highlight",
+      "winner_en": "Rafael Jodar",
+      "year": 2026
+    },
+    "why": "同场 Rolex Shanghai Masters 官方集锦 aE21b2-ef-Y（Daniil Medvedev vs Rafael Jodar Highlights | Rolex Shanghai Masters 2026，134 秒，官方频道经 noembed 核实）。窗口 85.0-103.0（18 秒）：85.0 起接发球准备→87.0（1:27）赛点一发（次盘 5-4、40-0）→90.0（1:30）拿下→91.0（1:31）起庆祝与解说宣布赛果（For just the ninth time in the history of Masters 1000s, we will have an all Spanish final）；103.0 收在赛果解说句末（1:43 切下一句）。起点卡在发球前约 2 秒。height 1080：同频道同赛事集锦已实测 1080p。浏览器实测字幕演进核验，Mast's 为自动字幕误识，已订正为 Masters。"
+  },
   "match": {
     "event": "2026 Rolex Shanghai Masters",
     "event_search": "Shanghai Masters",
