@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=0-v-yZvYAk8",
+  "source_sha256": "daf2900ed133d0b9c2b0c4bfd9f678d0b1bd81ff880b01b83061d29f6d5fe70f",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T00:50:12.926366+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 243.3,
+  "reviewed_to": 258.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/0-v-yZvYAk8/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/0-v-yZvYAk8 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 243.3–258.6 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "WTA 官方集锦（0-v-yZvYAk8）决胜盘第十二局：记分条 6 3 6 / 0 6 5（244–258 逐格读过，15-30），萨卡里发球；这一局之后就是冷开场里的赛点（261 起）。镜头 243.20 切入、258.88 切走，段首 243.3、段尾 258.6 都在同一个镜头里。两档转写在 242.32–268.00 都无词（之前是第二盘结束时的解说）。⚠️ 上一版这段旁白垫在 194–217 秒，那里记分条是第二盘 3-5 萨卡里盘点，不是决胜盘——账号所有者要求武汉画面简短时逐格读记分条才发现，换成真正的决胜盘。「首进 1000 赛四强、周一首进前 20」：WTA 4593212。"
+}

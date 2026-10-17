@@ -1,0 +1,17 @@
+{
+  "reviewed_at": "2026-10-16T11:15:07.015777+00:00",
+  "edit_id": "outlook",
+  "number_text": "一",
+  "context": "这一场苦战过后",
+  "actual_audio_sha256": "b8e35adf6432a364ddc87f9fa3bcb1af2dc1b60336e9ee96ef97741d501b6638",
+  "status": "correct_low_support",
+  "method": "finite_actual_vowel_sequence_interpretation_not_ASR_or_marks_as_ground_truth",
+  "rationale": "The actual beginning shows the zhe affrication/central vowel followed by a distinct high-front vowel transition and sustained front-vowel structure around0.17-0.26s before chang frication near0.30s. This is compatible with the weak yi syllable in zhe-yi-chang; it is not treated as proven deletion because the independent ASR writes zhe-chang. WordBoundary only locates the candidate, and cannot by itself prove the syllable. Actual current reference utterances also retain this short front-vowel transition. Low spectral interpretation, not unique phoneme/tone classification.",
+  "original_ASR_omission_preserved": true,
+  "manual_listening_claimed": false,
+  "all_mechanical_components_passed": false,
+  "actually_viewed_image": {
+    "path": "data/evidence/chwalinska-sakkari-wuhan-2026-qf/pronunciation/outlook-zhe-yi-chang-root-stable.png",
+    "sha256": "3f4844bc67db247a4afa5670f47798ba0e83e837bbf6d9171b34d9690b7912ca"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "767b082d747e1b9ce771f2f431e8468498abd1d1dcdb1785a4fd9d25fd0a296e",
+    "request_count": 19,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-swiatek-chwalinska-story-2026-767b082d747e1b9c",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-swiatek-chwalinska-story-2026-767b082d747e1b9c/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38988528713"
+  },
+  "cover_seconds": 4.018,
+  "cover_narrated": true,
+  "outro_seconds": 4.122,
+  "layout": "full",
+  "segments_seconds": 374.0,
+  "topbar": null,
+  "film_seconds": 382.16,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+18%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "3": 8.448,
+    "4": 8.472,
+    "5": 5.304,
+    "9": 11.256,
+    "10": 11.712,
+    "11": 3.216,
+    "12": 8.232,
+    "13": 7.872,
+    "15": 9.744,
+    "17": 6.672,
+    "18": 8.16,
+    "21": 7.344,
+    "23": 9.48,
+    "26": 11.16,
+    "27": 6.072,
+    "28": 15.6,
+    "30": 13.488
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "e50ecd4ee69ea4ab9f4b75301f8359caf6acf6ef2507a34e2aa602ff341c61fe",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "swiatek-chwalinska-story-2026",
+    "received_at": "2026-10-17T00:54:48Z",
+    "artifact_ready_at": "2026-10-17T01:04:58Z",
+    "elapsed_seconds": 610.322,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "672dbb824904fc908c18530c7d466bb61c12afb457af8981923f090699f2f4e7",
+    "spec_sha256": "ba5b436818380ae6eecc6b042388886ff9941541f818a6c2575ed2b9a13ee467",
+    "run_id": "38988528713",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-17T00:58:03Z",
+        "run_id": "38988528713"
+      }
+    ],
+    "render_seconds": 415.322,
+    "pre_render_seconds": 195.0
+  },
+  "film_sha256": "672dbb824904fc908c18530c7d466bb61c12afb457af8981923f090699f2f4e7",
+  "film_bytes": 181859077,
+  "qc_attestation_sha256": "9c1642b07aedd585939fe055f7de6b588abf1f96f12ff651ed7883ef55a959dd",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-17T00:58:03Z",
+      "run_id": "38988528713"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-17T01:05:01Z",
+      "run_id": "38988528713"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-swiatek-chwalinska-story-2026/swiatek-chwalinska-story-2026.mp4",
+  "video_bytes": 181859077
+}

@@ -1,0 +1,427 @@
+{
+  "created_at": "2026-10-16T11:19:08.083162+00:00",
+  "bundle_sha256": "da9c1b7e5c367c8da9e6b251825a1828b8d4691d95f92dd634c54ebb7895378c",
+  "target_count": 11,
+  "occurrences": [
+    {
+      "edit_id": "first_set_card",
+      "index": 20,
+      "rationale": "The native heng/hang decision uses vowel spectral shape, not shared rising tone2. Fixed native-candidate central-half Burg F1/F2 medians are native985/1143Hz, positive 衡845/1104 and 恒950/1164, versus negative 航1082/1310 and 杭1066/1273. The native spectral/formant transitions lie closer to the positive tracks. This supports heng in 横向 at finite low confidence.",
+      "limitations": [
+        "Burg can merge/swap resonances in the creaky male voice; F3 does not independently support the choice.",
+        "Native 横向 and 航向 candidates use equal division, so precise vowel boundaries remain approximate.",
+        "F0 cannot distinguish heng2 from hang2 and is not used for that vowel decision."
+      ],
+      "whole_word": "first_set_card-word-020-022.png",
+      "extra_plot": "first_set_card-020-heng-hang-formants.png",
+      "char": "横",
+      "actual_audio_sha256": "6823923842fde9f1a6a73a28cceea50f08949dccfc1fa8885fe08147e7fc9313",
+      "status": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_pronunciation_agent",
+      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/first_set_card-020-U6A2A-syllable.png",
+          "sha256": "16fbbe82330b528feb16494c5112f2172a0feaf283da37636628e75e7ec5e081",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/first_set_card-020-U6A2A-syllable.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        },
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/first_set_card-word-020-022.png",
+          "sha256": "00bbc03a1b78d8679d311e88b14216e71afd533635d856b7ec48f759cb897f94",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/first_set_card-word-020-022.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        },
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/first_set_card-020-heng-hang-formants.png",
+          "sha256": "8dadf2677f8e1437941a7d153a861126a5747770549842d2ac4e5212b5711165",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/first_set_card-020-heng-hang-formants.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        }
+      ],
+      "prior_mechanical_status": "pending",
+      "prior_mechanical_evidence": [
+        "aligned-current-results.json",
+        "dtw-window-results.json"
+      ],
+      "all_failed_or_contradictory_components_retained": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "first_set_card",
+      "index": 30,
+      "rationale": "The native 的 is a short approximately83ms reduced central-vowel unit resembling the contextual 的 positive. 帝/第 negatives have longer full-i vowel structure, about153/189ms. The viewed spectral transitions support de rather than di in 两侧的球.",
+      "limitations": [
+        "A2 地 is grouped as 地球, not a valid independent de5 positive; this limitation is not hidden.",
+        "Neutral tone is contextual, not necessarily flat. This is a single-context-positive finite interpretation, not two-sided calibrated pass."
+      ],
+      "char": "的",
+      "actual_audio_sha256": "6823923842fde9f1a6a73a28cceea50f08949dccfc1fa8885fe08147e7fc9313",
+      "status": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_pronunciation_agent",
+      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/first_set_card-030-U7684-syllable.png",
+          "sha256": "d084cd4f0be2f995de4fdbed1f3925c6d76df1b8f4c8623d7a3039a23126e772",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/first_set_card-030-U7684-syllable.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        }
+      ],
+      "prior_mechanical_status": "pending",
+      "prior_mechanical_evidence": [
+        "aligned-current-results.json",
+        "dtw-window-results.json"
+      ],
+      "all_failed_or_contradictory_components_retained": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 11,
+      "rationale": "The complete native 萨卡里 first vowel begins high and declines, roughly185 to170Hz before tracking interruption, like 卅/飒 positives. 撒/洒 negatives begin lower. Initial s frication and a-vowel transitions are present. The later low-rate island is not substituted for the first vowel. Finite whole-name context supports sa4.",
+      "limitations": [
+        "Pitch tracking is interrupted and partly octave-ambiguous; no unique full canonical-tone recovery.",
+        "Neighbouring name syllables also change in the controls; low contextual support only."
+      ],
+      "whole_word": "full_stats-word-011-014.png",
+      "char": "萨",
+      "actual_audio_sha256": "d5b527c0c416eb8c0f9fd0928f4e0eee8aec204f0f2f3b4961840e0201348c78",
+      "status": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_pronunciation_agent",
+      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/full_stats-011-U8428-syllable.png",
+          "sha256": "c0c377bf6db161408b9d053c5591e6b657dca55f6104824e384de6a2d6a52bdf",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/full_stats-011-U8428-syllable.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        },
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/full_stats-word-011-014.png",
+          "sha256": "66edc9810c4992e7ba8a7ff7af5b301a94a40791d5da1a7232c2bd3ccaef6c96",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/full_stats-word-011-014.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        }
+      ],
+      "prior_mechanical_status": "pending",
+      "prior_mechanical_evidence": [
+        "aligned-current-results.json",
+        "dtw-window-results.json"
+      ],
+      "all_failed_or_contradictory_components_retained": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 12,
+      "rationale": "The native medial syllable has velar/aspirated ka structure rather than the longer palatal qia transition of 恰/洽. Current local spectral distances are about3.96/3.82 to 咔/佧 versus5.76/6.02 to negatives, consistent with the viewed vowel transitions. The ka-li name sequence permits normal third-tone sandhi; direct contextual phonetic evidence supports the name syllable.",
+      "limitations": [
+        "Coarticulation and tracker low-rate islands make F0 alone inadequate to establish citation ka3.",
+        "咔 is contextual and negatives are qia4 vowel proxies, not exact qia3. No calibrated-pass claim."
+      ],
+      "whole_word": "full_stats-word-011-014.png",
+      "char": "卡",
+      "actual_audio_sha256": "d5b527c0c416eb8c0f9fd0928f4e0eee8aec204f0f2f3b4961840e0201348c78",
+      "status": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_pronunciation_agent",
+      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/full_stats-012-U5361-syllable.png",
+          "sha256": "f58af8ae94b3a61f47ed883eddaa7e8d4a2adabb1fb29a23ad613bf14c79d692",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/full_stats-012-U5361-syllable.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        },
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/full_stats-word-011-014.png",
+          "sha256": "66edc9810c4992e7ba8a7ff7af5b301a94a40791d5da1a7232c2bd3ccaef6c96",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/full_stats-word-011-014.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        }
+      ],
+      "prior_mechanical_status": "pending",
+      "prior_mechanical_evidence": [
+        "aligned-current-results.json",
+        "dtw-window-results.json"
+      ],
+      "all_failed_or_contradictory_components_retained": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 13,
+      "rationale": "Native li begins near115Hz and falls early to a low continuation, resembling 礼/理. Current 利/力 controls have a longer higher/level portion or delayed fall. Whole-name spectral transitions are compatible with li and a reduced/half-third continuation before the next statistic. This is finite support to li3 in context.",
+      "limitations": [
+        "Connected third/fourth contours overlap; slope alone cannot uniquely recover base tone.",
+        "Classifier failures and negative-control variability remain recorded."
+      ],
+      "whole_word": "full_stats-word-011-014.png",
+      "char": "里",
+      "actual_audio_sha256": "d5b527c0c416eb8c0f9fd0928f4e0eee8aec204f0f2f3b4961840e0201348c78",
+      "status": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_pronunciation_agent",
+      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/full_stats-013-U91CC-syllable.png",
+          "sha256": "d63d35764ca516571b55b645e637a99b116bf43d687398748a0aa6e09813257b",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/full_stats-013-U91CC-syllable.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        },
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/full_stats-word-011-014.png",
+          "sha256": "66edc9810c4992e7ba8a7ff7af5b301a94a40791d5da1a7232c2bd3ccaef6c96",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/full_stats-word-011-014.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        }
+      ],
+      "prior_mechanical_status": "pending",
+      "prior_mechanical_evidence": [
+        "aligned-current-results.json",
+        "dtw-window-results.json"
+      ],
+      "all_failed_or_contradictory_components_retained": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "full_stats",
+      "index": 52,
+      "rationale": "The native 了 is approximately83ms with a reduced central-vowel transition, matching contextual 了 and the vowel portion of 嘞. It lacks the fuller initial-i/diphthong transition of 料/廖 negatives, approximately165ms each. Short declining F0 also resembles the reduced positive. Finite evidence supports le in 留在了最后一局.",
+      "limitations": [
+        "嘞 is only a contextual vowel proxy, not a verified neutral-tone reference.",
+        "This is direct sentence-context interpretation, not proof from spelling, ASR or a newly passed classifier."
+      ],
+      "char": "了",
+      "actual_audio_sha256": "d5b527c0c416eb8c0f9fd0928f4e0eee8aec204f0f2f3b4961840e0201348c78",
+      "status": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_pronunciation_agent",
+      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/full_stats-052-U4E86-syllable.png",
+          "sha256": "aa2f9dcb9ae612a59a9ce9a0e530fe4cff8020f01c0fcc74136e4a62668bad88",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/full_stats-052-U4E86-syllable.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        }
+      ],
+      "prior_mechanical_status": "pending",
+      "prior_mechanical_evidence": [
+        "aligned-current-results.json",
+        "dtw-window-results.json"
+      ],
+      "all_failed_or_contradictory_components_retained": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "deciding_set",
+      "index": 20,
+      "rationale": "The native post-frication fa vowel has the short gently declining continuation of current 发/發 positives. Local F0 distances are about1.03/1.04 to positives versus2.30/1.89 to fa4 proxies. The original F0 calibration supports the positive side while its strict spectral-spread guard fails. The actual viewed spectrum/nucleus provides finite direct fa1 support.",
+      "limitations": [
+        "发/發 are written variants, not two independent positive homophone letters.",
+        "The failed CV guard remains failed; this direct low judgment is not relabelled mechanical pass."
+      ],
+      "char": "发",
+      "actual_audio_sha256": "184689d963d572f2bc910cab65a0c637bf094fbeba6483e2481484e70845ef57",
+      "status": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_pronunciation_agent",
+      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/deciding_set-020-U53D1-syllable.png",
+          "sha256": "db462635e6302bfade358ed67ab06e8b8ade3ea4da7d50fbdd01f81da73c2421",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/deciding_set-020-U53D1-syllable.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        }
+      ],
+      "prior_mechanical_status": "pending",
+      "prior_mechanical_evidence": [
+        "aligned-current-results.json",
+        "dtw-window-results.json"
+      ],
+      "all_failed_or_contradictory_components_retained": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "deciding_set",
+      "index": 74,
+      "rationale": "The complete native 全场 spectral sequence resembles 全厂/全昶. Current positive spectral distances2.24/1.66 and F0 distances0.31/0.28 are below both negatives. Expanded-axis plots show short high/octave candidate fragments, so the contrary last-nucleus curve compares unstable partial islands. Whole-word contrast gives finite contextual phonetic support to chang3; it does not uniquely reconstruct citation tone.",
+      "limitations": [
+        "The original calibrated reverse nucleus_curve remains recorded, not relabelled pass.",
+        "Tracker octave candidates and short islands prevent strong canonical-tone claims.",
+        "Word coarticulation and near-positive spectral evidence support only low confidence."
+      ],
+      "whole_word": "deciding_set-word-073-075.png",
+      "char": "场",
+      "actual_audio_sha256": "184689d963d572f2bc910cab65a0c637bf094fbeba6483e2481484e70845ef57",
+      "status": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_pronunciation_agent",
+      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/deciding_set-074-U573A-syllable.png",
+          "sha256": "12b0f3837d9d895f295c328e201b5b3c1c0a93acc7ff238f8bc3ccabf9f2b65b",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/deciding_set-074-U573A-syllable.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        },
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/deciding_set-word-073-075.png",
+          "sha256": "7544a5189dde0bec9c72228d01d285c70b26d6f9282d11e2f5bbb47675c2e83a",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/deciding_set-word-073-075.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        }
+      ],
+      "prior_mechanical_status": "pending",
+      "prior_mechanical_evidence": [
+        "aligned-current-results.json",
+        "dtw-window-results.json"
+      ],
+      "all_failed_or_contradictory_components_retained": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "deciding_set",
+      "index": 48,
+      "rationale": "The complete native 月亮姐 first rounded-vowel peak and descent into the next syllable resemble 岳谅姐/粤晾解. Negative yue1 name sequences have a lower/longer first plateau and later separate peak. Native positive F0 distances1.13/2.22 are below negatives6.69/3.82. The raw reverse slope is an onset/partial-nucleus result, not the complete word contour. Finite whole-name evidence supports yue4.",
+      "limitations": [
+        "Prior calibrated nucleus_slope reverse remains present; direct judgment is separate from calibration.",
+        "Neighbour syllables change too; this is limited name-context support, not independently isolated surface-tone certainty."
+      ],
+      "whole_word": "deciding_set-word-048-051.png",
+      "char": "月",
+      "actual_audio_sha256": "184689d963d572f2bc910cab65a0c637bf094fbeba6483e2481484e70845ef57",
+      "status": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_pronunciation_agent",
+      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/deciding_set-048-U6708-syllable.png",
+          "sha256": "c1901a5f77dd1bb96cdbaa8f1e915142190e5fc491f3e58ad4a18c1aa53c3e6a",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/deciding_set-048-U6708-syllable.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        },
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/deciding_set-word-048-051.png",
+          "sha256": "35d81cce6a1031310e1ec5b4c2565b9b1df8f8b628429a4bd02e802e1e44db2e",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/deciding_set-word-048-051.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        }
+      ],
+      "prior_mechanical_status": "pending",
+      "prior_mechanical_evidence": [
+        "aligned-current-results.json",
+        "dtw-window-results.json"
+      ],
+      "all_failed_or_contradictory_components_retained": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "deciding_set",
+      "index": 49,
+      "rationale": "Native 亮 continues downward from the preceding peak, roughly210 toward130Hz, without the later second-tone recovery in 梁/良 name sequences. Spectral transition and declining continuation are compatible with 谅/晾 and normal reduced/neutral 亮 in 月亮. This supports the intended nickname at finite low confidence.",
+      "limitations": [
+        "Neutral 亮 is allowed, without forcing a liang4 citation contour.",
+        "Adjacent 月/姐 substitutions change prosody; failed classifiers remain unchanged."
+      ],
+      "whole_word": "deciding_set-word-048-051.png",
+      "char": "亮",
+      "actual_audio_sha256": "184689d963d572f2bc910cab65a0c637bf094fbeba6483e2481484e70845ef57",
+      "status": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_pronunciation_agent",
+      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/deciding_set-049-U4EAE-syllable.png",
+          "sha256": "d606095878261acc2adabfbe2eed84d0cbb0f7d4a03c6a55d51071b3ab59ed32",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/deciding_set-049-U4EAE-syllable.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        },
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/deciding_set-word-048-051.png",
+          "sha256": "35d81cce6a1031310e1ec5b4c2565b9b1df8f8b628429a4bd02e802e1e44db2e",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/deciding_set-word-048-051.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        }
+      ],
+      "prior_mechanical_status": "pending",
+      "prior_mechanical_evidence": [
+        "aligned-current-results.json",
+        "dtw-window-results.json"
+      ],
+      "all_failed_or_contradictory_components_retained": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    },
+    {
+      "edit_id": "second_finish_card",
+      "index": 10,
+      "rationale": "After actual j affrication, the native final vowel is low nearly level/weakly falling around90Hz, like 姐 and the lower/falling 解 proxy. 杰/洁 resume higher and rise. Complete nickname also has the positive low-ending pattern. This supports a connected-speech half-third jie3.",
+      "limitations": [
+        "The candidate includes a preceding 亮 tail; the direct judgment uses the post-frication vowel.",
+        "解 is contextual; third tone need not show a full dip-rise in connected speech."
+      ],
+      "whole_word": "second_finish_card-word-008-011.png",
+      "char": "姐",
+      "actual_audio_sha256": "3633aa3b3adb71a07f25bf9c55a3c5789648c9115d1c075cdf1be20c31f7fc5d",
+      "status": "correct_low_support",
+      "confidence": "low",
+      "reviewer": "current_OpenAI_pronunciation_agent",
+      "method": "finite_current_direct_phonetic_interpretation_not_calibrated_classifier",
+      "actually_viewed_images": [
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/second_finish_card-010-U59D0-syllable.png",
+          "sha256": "b9488ea3cd4755faebe7a9576c86154f43724512a98c273e529411ceb68e910a",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/second_finish_card-010-U59D0-syllable.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        },
+        {
+          "path": "/workspace/scratch/moon-qf-pronunciation/direct-viewed-snapshots/second_finish_card-word-008-011.png",
+          "sha256": "02571c9411790d7ac7d0e6a246275e093094aac48a2e130b5ce813f5606450da",
+          "actual_viewed_source_path": "/workspace/scratch/moon-qf-pronunciation/pending-plots/second_finish_card-word-008-011.png",
+          "display_version": "F0_axis_45_to_360_Hz_actual_values_unchanged"
+        }
+      ],
+      "prior_mechanical_status": "pending",
+      "prior_mechanical_evidence": [
+        "aligned-current-results.json",
+        "dtw-window-results.json"
+      ],
+      "all_failed_or_contradictory_components_retained": true,
+      "manual_listening_claimed": false,
+      "human_review_claimed": false,
+      "all_mechanical_components_passed": false
+    }
+  ],
+  "method": "Actual current MP3-derived spectral/F0 figures visually inspected against existing28 current-context MP3 controls. Limited AI phonetic interpretation, no human listening, no new classifier pass.",
+  "no_additional_synthesis": true,
+  "no_audio_processing": true
+}

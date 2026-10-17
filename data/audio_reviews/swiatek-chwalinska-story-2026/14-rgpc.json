@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=1ihxUf32bQk",
+  "source_sha256": "6d4d92f4d37fe9ce78b643a5de97118ec86fbc56f3718d1b020de0debc641e4a",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T00:50:12.926366+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 364.9,
+  "reviewed_to": 374.7,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 365.24,
+      "end": 367.26,
+      "en": "Yeah, I needed to take a break.",
+      "zh": "我需要停下来。"
+    },
+    {
+      "start": 368.26,
+      "end": 374.18,
+      "en": "And I honestly didn't know if I'm gonna come back or not, to be like honest with you.",
+      "zh": "说实话，我不知道还会不会回来。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/1ihxUf32bQk/small.en.json + medium.en.json",
+  "review_note": "法网官方频道 2026 法网八强后的赛后发布会（1ihxUf32bQk）：记者问停赛那段日子，只留她说「不知道还会不会回来」这一句。两档逐词一致（medium 365.24–374.18；small 同），YouTube 自动字幕同。段首 364.9 在上一句 live, I think.（364.58）之后，段尾 374.7 在下一句 Yeah, but after like months（374.96）之前。"
+}

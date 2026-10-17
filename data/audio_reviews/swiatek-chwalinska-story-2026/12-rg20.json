@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=OwKaLdNEjlI",
+  "source_sha256": "c6baf8f35949637a4656b23ada35315bd43c7f620757c54ffc53b97631c31755",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T00:50:12.926366+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 364.5,
+  "reviewed_to": 375.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/OwKaLdNEjlI/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/OwKaLdNEjlI 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 364.5–375.0 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "法网官方决赛集锦（OwKaLdNEjlI）：最后两分与冠军点（366–375）。两档转写在 349–375 没有可对上的英文（small 355.66 一句 Oh, I'm sorry 只有 small 有、画面是回合中无人说话，按幻听处理）；375.2 起是法语场内播报（Jeu, set et match），段尾收在之前。"
+}

@@ -1,0 +1,122 @@
+{
+  "schema": "tennislive.independent-cover-research.v1",
+  "created_at_utc": "2026-10-16T07:59:48.143081+00:00",
+  "reviewer": "current OpenAI agent osta_cover",
+  "match": {
+    "date_local": "2026-10-16",
+    "event": "Wuhan WTA1000",
+    "round": "QF",
+    "match_id": "LS007",
+    "subject": "Jelena Ostapenko",
+    "opponent": "Diana Shnaider",
+    "score": "7-6(6) 6-1",
+    "result_status": "Final current nativecover fields compared exactly with independently assembled official fact-packet copyable_spec.cover; all6identity/result/topic/scoreboard fields matched."
+  },
+  "selected": {
+    "repo_path": "assets/reels/ostapenko-shnaider-wuhan-2026-qf/ostapenko-wuhan-qf-official.jpg",
+    "source_url": "https://bucket-wuwang.hubei-41.zos.ctyun.cn/files/yhk68ewhqwyo7wguqw3mbs1ap.jpg",
+    "width": 5000,
+    "height": 3335,
+    "sha256": "95ab8bb72475553e49a55186de6fbc2745b08e68e8d9a1f350a4564547463b58",
+    "bytes": 822323,
+    "capture_exif": "",
+    "official_album_url": "https://www.wuhanopentennis.com/whNews/Pictures?id=1569",
+    "chinese_match_album_url": "https://www.wuhanopentennis.com/whNews/Pictures?id=1568",
+    "album_title": "MDS Day5 Jelena Ostapenko vs Diana Shnaider",
+    "album_date": "2026-10-16",
+    "album_create_time": "2026-10-16 13:10:11",
+    "file_create_time": "2026-10-16 13:10:09",
+    "copyright": "Wuhan Open official gallery; photographer not named in supplied metadata; no licence grant inferred",
+    "date_binding": "Both official Day5 albums explicitly name this opponent pair and publishDate2026-10-16. English original photo2 fetched200 at declared822323bytes; no EXIF capture timestamp available. Chinese metadata mirror inspected but original not downloaded; no duplicate access claim.",
+    "person_binding": "Actually opened same-match two-photo contact wall and selected5000px original. Photo1 yellow cap/shirt, dark shorts and blue racket is Diana Shnaider. Photo2 recognizable Jelena Ostapenko face, burgundy outfit and green Wilson racket, actual forward stretched hitting action on Wuhan court. Not selected by album order or clothing alone.",
+    "actual_visual_review": "5000px original and exact native1080x1440 portrait preview opened via view_image. Recognizable sharp face with visible eye looking toward ball, no closed-eye blink; far eye less exposed due face angle, not claimed fully frontal. Both hands and arms fully retained in native crop. Head clear of masthead and hook; lower legs partly under original fixed scoreboard.",
+    "native_fill_scale": 0.431784107946027,
+    "low_resolution_exception_required": false,
+    "provisional_portrait": {
+      "focus": 0.45,
+      "focus_y": 0.5,
+      "zoom": 1.0
+    },
+    "portrait_status": "Exact native cover geometry reviewed; final encoded movie needs separate QC.",
+    "candidate_wall": "/workspace/scratch/osta-cover/candidate-wall.jpg"
+  },
+  "rejected": [
+    {
+      "local_path": "/workspace/scratch/osta-cover/official-album-1569-1.jpg",
+      "reason": "Same-match official5000x3335 original but is opponent Diana Shnaider, not Ostapenko."
+    }
+  ],
+  "channels_checked": [
+    {
+      "channel": "Wuhan official gallery",
+      "api_list": "https://www.wuhanopentennis.com/api/portal/document/picture/list",
+      "api_detail": "https://www.wuhanopentennis.com/api/portal/document/picture/detail?id=1569",
+      "result": "Actual live POST list fetched exact Day5 albums1568/1569, both detailJSON saved; both EN originals fetched and viewed. Native same-match5000px official selected; no need to exhaust unrelated galleries after positive current-match high-resolution result."
+    }
+  ],
+  "scope_limitations": [
+    "No final encoded movie QC performed by this cover task.",
+    "Racket head/ball lies beyond left3:4 edge; both arms/hands remain visible. No claim entire original landscape picture or full racket is retained.",
+    "Finalhook follows user angle; factual outlook must explicitly say possible final meeting, not confirmed next match. This report does not approve changed copy or final movie."
+  ],
+  "native_cover_review": {
+    "reviewed_at_utc": "2026-10-16T08:10:37.012880+00:00",
+    "method": "Native build_match_reel.resolve_cover_payload/render_poster (same production renderer) then actual view_image. No alternate illustration or manually moved scoreboard.",
+    "payload_path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/cover/native-cover-payload.json",
+    "payload_sha256": "39ebc118ed4e3941bd71b88d1c9adda3a95ea509880c15a9d92949ef38c6e2de",
+    "preview_path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/cover/native-cover.jpg",
+    "preview_sha256": "8f99bd9eca7aac5d549b648e69c03d50063022bfe2553acf33e7cebcbfb2b6a6",
+    "recommended_portrait": {
+      "focus": 0.45,
+      "focus_y": 0.5,
+      "zoom": 1.0
+    },
+    "hook": "救下2个盘点\n进4强 离斯瓦泰克更近",
+    "hook_accent": "离斯瓦泰克更近",
+    "topic": "WTA1000 武汉 1/4决赛 · 奥斯塔彭科 VS 施耐德",
+    "scoreboard": {
+      "court": "Center Court",
+      "ranks": [
+        34,
+        13
+      ],
+      "winner_result": "7-6(6) 6-1",
+      "display_duration": "1:45",
+      "native_duration_source": "WTA LS007 MatchTimeTotal01:45:20"
+    },
+    "findings": {
+      "identity": "Jelena Ostapenko; selected second photograph, first is opponent.",
+      "eyes": "Visible eye open toward ball, sharp face; far eye not fully frontal.",
+      "head": "Full head and ponytail nearx410–625/y370–535, clear ofmasthead and hook.",
+      "hands": "Both fully visible; stretched racket handx135–185/y675–725; freehandx650–710/y660–730.",
+      "racket": "Grip and shaft visible left; head/ball cropped beyond left edge as honest3:4 tradeoff.",
+      "hook": "Re-rendered directly from current formal spec finalhook: 救下2个盘点 / 进4强 离斯瓦泰克更近. Actual native1080x1440 view_image: both complete lines, no split player name, no orphanchar or clipping; line2 includes result进4强 and accent离斯瓦泰克更近 lime. Head/face/arms and fixedscoreboard unchanged.",
+      "scoreboard": "Original fixed native boardy1122 kept; ranks/flags/score correct, losing tiebreak6 superscript on Shnaider row. Board covers lower shin/feet as existing style.",
+      "subtitle": "Canonical event+quarterfinal+both names in upper-left, completely readable, no story subtitle replacement.",
+      "centering": "0.45 horizontal focus places central torso nearcanvascenter while rightfoot remains inside verticalcrop;1.0 retains maximum nativefullfill content with no extra zoom."
+    },
+    "pass_for_exact_cover_payload": true,
+    "scope": "Only this exact native payload; no final film or changed hook approval.",
+    "hook_preview_history": [
+      {
+        "hook": "救下2个盘点\n奥斯塔彭科挺进4强",
+        "hook_accent": "挺进4强",
+        "payload_sha256": "eaf2c43573ac6f94a4619c323b9ce98ac5885ee1d1daf5779128f3624507846e",
+        "preview_sha256": "1bc41aea78177bcf62bc74c8ab7ee7288443b44535236e5945d2dcae9c49eb6e",
+        "superseded_by_parent_user_angle": true
+      },
+      {
+        "hook": "救下2个盘点进4强\n离斯瓦泰克又近一步",
+        "hook_accent": "又近一步",
+        "payload_sha256": "583339335c3e7b3c9f9f1d16167a3ad1d40c2d98e34e452ef310cd43608fe3e6",
+        "preview_sha256": "f872e64dbb694016cd01e1718dc433744eb7af4fb2c93fee35f1557700b72f37",
+        "superseded_by_final_native_taste_gate_hook": true
+      }
+    ],
+    "fact_packet_binding": {
+      "at": "2026-10-16T08:10:37.012880+00:00",
+      "sha256": "9c613fadbafe3e669873104fb047e33756a3bbddb0ce589654327f1151daa639",
+      "method": "Actual current packet read; compared formal-cover matchup/subject/winner/result/topic/scoreboard exactly with copyable_spec.cover and all6fields matched. Same exactvalues appear in actual nativepreview; no finalmovie claim."
+    }
+  }
+}

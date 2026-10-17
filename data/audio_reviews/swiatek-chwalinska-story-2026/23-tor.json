@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=bDttZof7qXI",
+  "source_sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T00:50:12.926366+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 245.3,
+  "reviewed_to": 258.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/bDttZof7qXI/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/bDttZof7qXI 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 245.3–258.6 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "WTA 官方集锦（bDttZof7qXI，Iga Swiatek vs. Elena Rybakina-Match Highlights）：第二盘最后一局，245 起记分条挂 CHAMPIONSHIP POINT，256 她双臂高举。两档转写在 234.40–258.88 都无词；段首 245.3 是 245.24 切到冠军点那一分的镜头。比分、保发 8/8：WTA 官方接口 LS001 ＋ flashscore OACDWR4j（仓库 swiatek-rybakina-toronto-final 已核）；本赛季第一冠：National Bank Open 官网逐分实录「to clinch her first title of the season」＋ WTA 官方集锦解说。"
+}

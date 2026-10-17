@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=LXRhlHKGKZc",
+  "source_sha256": "d317ffa25027d370e2946559d1a8b48d2af57ca31cb393a11315ca134dc39d26",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T00:50:12.926366+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 176.6,
+  "reviewed_to": 185.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 177.18,
+      "end": 180.3,
+      "en": "I will definitely not forget these three weeks.",
+      "zh": "这三个星期，我一定不会忘记。"
+    },
+    {
+      "start": 181.84,
+      "end": 184.98,
+      "en": "Paris will stay forever in my heart. Merci.",
+      "zh": "巴黎会永远留在我心里。谢谢。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/LXRhlHKGKZc/small.en.json + medium.en.json",
+  "review_note": "Tennis Channel（法网美国转播方）官方频道「Maja Chwalinska Finalist Speech」（LXRhlHKGKZc）：亚军致辞的最后一句。两档一致（medium 177.18–184.92；small 176.94–184.14）。段首 176.6 在 Thank you so much（171.68–176.56）之后；视频流 185.39 秒结束，段尾 185.2 给溶解留 0.18 秒。"
+}

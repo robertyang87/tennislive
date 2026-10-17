@@ -1,0 +1,21 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=bDttZof7qXI",
+  "source_sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T00:50:12.926366+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 292.5,
+  "reviewed_to": 298.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 293.06,
+      "end": 297.74,
+      "en": "6-2, 6-3, it's Iga Swiatek, the champion in Canada.",
+      "zh": "6比2、6比3，冠军是斯瓦泰克！"
+    }
+  ],
+  "asr_evidence": "data/source_asr/bDttZof7qXI/small.en.json + medium.en.json",
+  "review_note": "同一条：终场图形 FINAL 6 6 / 2 3（288–296）。两档一致（medium 293.06–297.74；small 291.82–297.66）。段首 292.5 在上一句 everyone watching（292.34）之后，段尾 298.4 在莱巴金娜开口致辞（298.90）之前。"
+}

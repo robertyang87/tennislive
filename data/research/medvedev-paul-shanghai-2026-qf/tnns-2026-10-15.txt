@@ -1,0 +1,5 @@
+[TNNS] 打开 https://tnnslive.com/
+[TNNS] 页面内取 https://api.tnnslive.com/v1/matches?date=2026-10-15&web=true
+[TNNS] 按 date=2026-10-15 取到 202102 字节、455 场
+[TNNS] 2026-10-15 的赛程里没有 ['Medvedev', 'Paul'] 这一场。
+⚠️ 先分清是哪一种：赛程按**日期**分（跨日的要给 `--date`，注意 TNNS 按 UTC 分日，北京时间夜场算前一天）；名字按 `n` 字段子串匹配，写全姓、别写中文。

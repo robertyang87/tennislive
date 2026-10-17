@@ -1,0 +1,12 @@
+{
+  "failed_run_id": 38893833759,
+  "failed_before_movie_encoding": true,
+  "actual_error": "Frozen bundle locator missing or inconsistent; rerun narration to publish it",
+  "actual_cause": "Producer metadata had the exact release tag, URL and SHA256 but omitted required file_name.",
+  "correction": "Added file_name: tts_bundle.zip; no source, spec, narration text or frozen media bytes changed.",
+  "corrected_head": "f726d82b0e8ce868dd3111a6dcd0ebe45b43baad",
+  "retry_run_id": 38894474664,
+  "frozen_bundle_sha256": "da9c1b7e5c367c8da9e6b251825a1828b8d4691d95f92dd634c54ebb7895378c",
+  "local_exact_restore_check_passed": true,
+  "quality_approval": false
+}

@@ -1,0 +1,97 @@
+{
+  "scoreboard_qc_sha256": "d4c0177ed67a396587524b064213fa065984b4adc4ef5bd509519d325e25857f",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "5d7a2dd36004fd721104f102d9623d6ad2eb941a3a5f52358c6357ee2f74f598",
+    "request_count": 8,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-medvedev-paul-shanghai-2026-qf-5d7a2dd36004fd72",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-medvedev-paul-shanghai-2026-qf-5d7a2dd36004fd72/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/38911896986"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 260.8,
+  "topbar": {
+    "line1": "2026 ATP1000 上海 1/4决赛",
+    "line2": "梅德韦杰夫 6-3 1-6 6-3 保罗",
+    "start": 1.2,
+    "end": 262.0
+  },
+  "film_seconds": 266.56,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 14.328,
+    "3": 13.608,
+    "5": 6.144,
+    "7": 14.664,
+    "10": 14.136,
+    "12": 9.624,
+    "13": 11.472
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "fa23d59ccb007e1889ba1e834503bf20ab8c8343532ca95c74cede6f0fa67a5d",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "medvedev-paul-shanghai-2026-qf",
+    "received_at": "2026-10-16T13:20:00Z",
+    "artifact_ready_at": "2026-10-16T14:03:54Z",
+    "elapsed_seconds": 2634.642,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "b062ab7c83a66b5ba102c0ed96fd71a46b5e410fef0d4e466c4a38e5c439cfcd",
+    "spec_sha256": "24ef98b150fb8177876ab809612f9ceca7d2b8a5be32ae202d7a80af4b0fd74d",
+    "run_id": "38911896986",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-16T14:00:35Z",
+        "run_id": "38911896986"
+      }
+    ],
+    "render_seconds": 199.642,
+    "pre_render_seconds": 2435.0
+  },
+  "film_sha256": "b062ab7c83a66b5ba102c0ed96fd71a46b5e410fef0d4e466c4a38e5c439cfcd",
+  "film_bytes": 63344584,
+  "qc_attestation_sha256": "9a50bd6e46a4734a9bb69d7c2ac1603c02c9a837c2c71cec89c47a774702781c",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-16T14:00:35Z",
+      "run_id": "38911896986"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-16T14:03:57Z",
+      "run_id": "38911896986"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-medvedev-paul-shanghai-2026-qf/medvedev-paul-shanghai-2026-qf.mp4",
+  "video_bytes": 63344584
+}

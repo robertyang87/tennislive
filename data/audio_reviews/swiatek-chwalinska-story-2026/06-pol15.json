@@ -1,0 +1,52 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=-Vsfptr_DC8",
+  "source_sha256": "76fa7cd6005e88a94cbd8b0901162cf3fe18d9b0541acd32e74d46ebe900ca74",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T00:50:12.926366+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small 与 medium 两档波兰语逐词转写交叉核对（language=pl），对照本地抽帧认人；未人工听音",
+  "reviewed_from": 3.3,
+  "reviewed_to": 22.95,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 3.52,
+      "end": 8.18,
+      "en": "Maja Chwalińska, mam 14 lat,",
+      "zh": "我是玛雅·赫瓦林斯卡，14岁，"
+    },
+    {
+      "start": 8.62,
+      "end": 10.48,
+      "en": "mieszkam w Dąbrowie Górniczej",
+      "zh": "住在达布罗瓦古尔尼恰，"
+    },
+    {
+      "start": 10.48,
+      "end": 16.5,
+      "en": "i trenuję od 7 roku życia.",
+      "zh": "7岁开始练球。"
+    },
+    {
+      "start": 16.74,
+      "end": 18.66,
+      "en": "Nazywam się Iga Świątek, mam 14 lat,",
+      "zh": "我叫伊加·斯瓦泰克，14岁，"
+    },
+    {
+      "start": 18.78,
+      "end": 20.52,
+      "en": "trenuję w Warszawskim Klubie Tenisowym Mera,",
+      "zh": "在华沙梅拉网球俱乐部训练，"
+    },
+    {
+      "start": 20.66,
+      "end": 22.73,
+      "en": "trenuje mnie Michał Kaznowski i gram od 8 lat.",
+      "zh": "教练是卡兹诺夫斯基，打球8年了。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/-Vsfptr_DC8/small.pl.json + medium.pl.json",
+  "language_note": "前景原声是波兰语（Polsat Sport 2015 年采访），字段名沿用 foreground_english，原文一行写波兰语、中文一行写译文。",
+  "review_note": "Polsat Sport 官方频道（-Vsfptr_DC8，2015 年两人 14 岁时的采访）。两档波兰语逐词转写（data/source_asr/-Vsfptr_DC8/small.pl.json、medium.pl.json）一致；画面里先是戴发箍的赫瓦林斯卡（5–12 秒），再是站在波兰网协背景板前的斯瓦泰克（18–21 秒）。段尾 22.95 在第三位队友自我介绍（23.06）之前。"
+}

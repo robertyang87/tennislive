@@ -1,0 +1,121 @@
+{
+  "schema": "tennislive.independent-cover-research.v1",
+  "created_at_utc": "2026-10-16T10:37:38.425238+00:00",
+  "reviewer": "current OpenAI agent moon_qf_cover",
+  "match": {
+    "date_local": "2026-10-16",
+    "event": "Wuhan WTA1000",
+    "round": "QF",
+    "match_id": "LS005",
+    "subject": "Maja Chwalinska",
+    "opponent": "Maria Sakkari",
+    "score": "6-0 3-6 7-5",
+    "result_status": "Official match result supplied by parent; this task independently verifies same-match official photo album identity/date, not complete match packet."
+  },
+  "selected": {
+    "repo_path": "assets/reels/chwalinska-sakkari-wuhan-2026-qf/chwalinska-wuhan-qf-official.jpg",
+    "source_url": "https://bucket-wuwang.hubei-41.zos.ctyun.cn/files/idx6lr7vcglhnepdlbo8l7smi.jpg",
+    "width": 5000,
+    "height": 3335,
+    "sha256": "05b972e9233daa1f2be3727940b1e1d45a76451f3dd8b92765fec39fca53956c",
+    "bytes": 915770,
+    "official_album_url": "https://www.wuhanopentennis.com/whNews/Pictures?id=1592",
+    "chinese_match_album_url": "https://www.wuhanopentennis.com/whNews/Pictures?id=1591",
+    "album_title": "MDS Day5 Maja Chwalinska vs Maria Sakkari",
+    "album_date": "2026-10-16",
+    "album_create_time": "2026-10-16 18:29:24",
+    "file_create_time": "2026-10-16 18:29:19",
+    "copyright": "Wuhan Open official gallery; photographer not named in supplied metadata; no licence grant inferred",
+    "date_binding": "Live official list and both detail JSON name this exact opponent pair and date2026-10-16. English original1 fetched200 at declared915770bytes. No EXIF capture time claimed.",
+    "person_binding": "Actual candidate two-photo wall and full original viewed. First photo Maja Chwalinska: face compared directly with WTA325639 official headshot and prior known-person R2/R3 assets, consistent oval/rounded face, eyebrow/eye/nose/mouth geometry and hairline. Black Lacoste top corroborates but is not sole identity criterion. Second photograph is opponent Maria Sakkari, white Adidas top and burgundy skirt; not selected.",
+    "actual_visual_review": "Actually opened5000x3335 original via view_image (viewer downscales). Sharp near-frontal face, both eyes visibly open toward ball, no blink or facial obstruction, expression engaged in double-handed backhand. Face itself sharp; hands/racket/ball show natural movement blur. No added filter, logo overlay or masking. Both hands and head present in full original.",
+    "native_fill_scale": 0.431784107946027,
+    "low_resolution_exception_required": false,
+    "provisional_portrait": {
+      "focus": 0.55,
+      "focus_y": 0.5,
+      "zoom": 1
+    },
+    "portrait_status": "Final exact native cover geometry reviewed for frozen parent hook; unchanged fixed scoreboard. Final film still needs separate actual QC.",
+    "candidate_wall": "/workspace/scratch/moon-qf-cover/candidate-wall.jpg"
+  },
+  "rejected": [
+    {
+      "local_path": "/workspace/scratch/moon-qf-cover/official-album-1592-2.jpg",
+      "reason": "Actual same-match official second photo is Maria Sakkari, the opponent."
+    }
+  ],
+  "reuse_check": {
+    "method": "SHA256 comparison plus actual visual inspection of both previous R2/R3 selected originals; different camera views/actions/background compositions, not a re-encoded old photograph.",
+    "current_sha256": "05b972e9233daa1f2be3727940b1e1d45a76451f3dd8b92765fec39fca53956c",
+    "prior_assets": [
+      {
+        "repo_path": "assets/reels/chwalinska-jovic-wuhan-2026-r3/official-album-1510-1.jpg",
+        "sha256": "f73d3c2228f0c52efa4495a7d83a8f971ecb080d4bf8b754f518f23c972c5ee8",
+        "same_hash": false
+      },
+      {
+        "repo_path": "assets/reels/chwalinska-bouzkova-wuhan-2026-r2/chwalinska-wuhan-official.png",
+        "sha256": "75d8cdf1dc97713c4ce9d3538ee196e3c482c9fbd48ab753daf4585530f3932a",
+        "same_hash": false
+      }
+    ]
+  },
+  "channels_checked": [
+    {
+      "channel": "Wuhan official gallery",
+      "api_list": "https://www.wuhanopentennis.com/api/portal/document/picture/list",
+      "api_detail": "https://www.wuhanopentennis.com/api/portal/document/picture/detail?id=1592",
+      "result": "Actual live list+CN1591/EN1592 detail JSON saved; both EN originals fetched; wall and selected full original actually viewed. Positive same-match5000px result, no need to exhaust unrelated galleries."
+    }
+  ],
+  "topic": "WTA1000 武汉 1/4决赛 · 赫瓦林斯卡 VS 萨卡里",
+  "scope_limitations": [
+    "No final encoded film QC performed by cover stage.",
+    "Racket head and ball largely beyond left3:4edge; some hand top overlaps secondhookline, actual lowerfingers/handle remainvisible.",
+    "Any changedhook or portrait requires exactnativepreview again."
+  ],
+  "native_cover_review": {
+    "reviewed_at_utc": "2026-10-16T10:42:24.994045+00:00",
+    "method": "Native build_match_reel.resolve_cover_payload/render_poster same production renderer, exact supplied frozen hook and current fact-packet.copyable_spec cover/_match/stats; actual view_image original1080x1440 output.",
+    "payload_path": "data/evidence/chwalinska-sakkari-wuhan-2026-qf/cover/native-cover-payload.json",
+    "payload_sha256": "bae451432c09236c3eea584996f1166faf84a7395ed404a18a96381f598d8990",
+    "preview_path": "data/evidence/chwalinska-sakkari-wuhan-2026-qf/cover/native-cover.jpg",
+    "preview_sha256": "f5414acaef25d00599b31bdca9d07ad1343eeddcae0d04948b04e9f7d84661da",
+    "png_path": "data/evidence/chwalinska-sakkari-wuhan-2026-qf/cover/native-cover.png",
+    "png_sha256": "e06e7e82e995dd226ee48cbe258f416e94b4b4667ce3c6604879f1cd4f2d5816",
+    "png_note": "Lossless PNG of decoded exact nativeJPEG; no independent graphics/layout or pixel manipulation.",
+    "recommended_portrait": {
+      "focus": 0.55,
+      "focus_y": 0.5,
+      "zoom": 1
+    },
+    "hook": "首盘6比0仍陷苦战\n月亮姐首进1000赛4强",
+    "hook_accent": "首进1000赛4强",
+    "topic": "WTA1000 武汉 1/4决赛 · 赫瓦林斯卡 VS 萨卡里",
+    "scoreboard": {
+      "court": "Center Court",
+      "ranks": [
+        22,
+        35
+      ],
+      "winner_result": "6-0 3-6 7-5",
+      "display_duration": "2:35",
+      "native_duration_source": "WTA LS005 MatchTimeTotal02:35:09"
+    },
+    "findings": {
+      "identity": "Maja Chwalinska, actualoriginal1 verified separately against WTA325639.",
+      "eyes": "Both clearly open; near-frontal, sharp face with no object/title crossing.",
+      "face_position": "Faceeyes-to-chin approximatelyx420–710/y325–600, safely belowmasthead y50–125 and abovehook y795–1005. Fullhairtop abouty155, no head clipping.",
+      "centering": "Nativefocus.5 actualpreview also inspected; it leftfacecenter~620px. Chosen.55 shiftsfacecenter~565px andtorso nearer540pxcanvascenter, maximizescontent withzoom1.0.",
+      "hands": "Both hands and wrists retained inpicture aroundx200–665/y970–1110; hook secondline touches upperhandzone, but actualfingers/handle largely read belowsecondline. No hand/arm cropping onright.",
+      "racket": "Grip andshaft preserved left ofhands; most rackethead andball falloutsideleft3:4 edge. Not claimingfullracket.",
+      "hook": "Exacttwo complete semanticlines rendered normally atsame nativefont size, no overflow, no orphancharacter or splitplayername. Accent normalone limecolor.",
+      "subtitle": "Event+quarterfinal+both names complete and readable upper-left.",
+      "scoreboard": "Originalnativefixedposition preserved,y1122 onwards. FlagsPOL/GRE,ranks22/35,three-set6-0/3-6/7-5 correct; coverslowerbody only, notface. No extra scrim or movedscoreboard."
+    },
+    "pass_for_exact_cover_payload": true,
+    "scope": "Exact frozenhook+payload andfiniteactualcover only. Doesnotapprove changedcopy or encodedfilm.",
+    "fact_packet_sha256": "a40d0af12018cea9b7f23cd51295a640fc8203533db2ee323ac037145673b5c8"
+  }
+}

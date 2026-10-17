@@ -1,0 +1,52 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=-Vsfptr_DC8",
+  "source_sha256": "76fa7cd6005e88a94cbd8b0901162cf3fe18d9b0541acd32e74d46ebe900ca74",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T00:50:12.926366+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small 与 medium 两档波兰语逐词转写交叉核对（language=pl），对照本地抽帧认人；未人工听音",
+  "reviewed_from": 528.2,
+  "reviewed_to": 551.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 528.52,
+      "end": 531.0,
+      "en": "Nie gram tak jakoś siłowo jak większość dziewczyn,",
+      "zh": "我不像大多数女孩那样靠力量，"
+    },
+    {
+      "start": 531.04,
+      "end": 533.16,
+      "en": "więc gram bardziej tak wszechstronnie,",
+      "zh": "所以打得更全面，"
+    },
+    {
+      "start": 533.24,
+      "end": 536.54,
+      "en": "dużo slice'ów, zmianę rotacji, to jest taka moja gra.",
+      "zh": "切削、变旋转，这就是我的打法。"
+    },
+    {
+      "start": 536.54,
+      "end": 541.46,
+      "en": "I myślę, że w większości meczów to jest kluczem,",
+      "zh": "我觉得很多比赛里，关键在于"
+    },
+    {
+      "start": 541.54,
+      "end": 547.84,
+      "en": "że wygrywam na przykład mecze dzięki temu, że lepiej gram właśnie w takich kluczowych momentach:",
+      "zh": "我能在关键分上打得更好："
+    },
+    {
+      "start": 547.84,
+      "end": 551.26,
+      "en": "slice'y, różne takie zmiany rytmu, a nie tylko bum-bum.",
+      "zh": "切削和节奏变化，不只是砰砰砰。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/-Vsfptr_DC8/small.pl.json + medium.pl.json",
+  "language_note": "前景原声是波兰语（Polsat Sport 2015 年采访），字段名沿用 foreground_english，原文一行写波兰语、中文一行写译文。",
+  "review_note": "Polsat Sport 官方频道（-Vsfptr_DC8，2015 年两人 14 岁时的采访）。两档波兰语逐词转写（data/source_asr/-Vsfptr_DC8/small.pl.json、medium.pl.json）一致；戴发箍的赫瓦林斯卡对着镜头（530–548 秒）。段首 528.2 在上一句（522.0）之后，段尾 551.6 在下一句（553.94）之前。"
+}

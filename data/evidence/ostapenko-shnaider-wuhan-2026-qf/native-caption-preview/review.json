@@ -1,0 +1,115 @@
+{
+  "schema": "tennislive.finite-native-preview-review.v1",
+  "reviewed_at": "2026-10-16T08:20:20.509200+00:00",
+  "reviewer": "Current OpenAI root assistant directly viewed6 contact sheets of47frames, original large-graphic/stat/risky-caption PNGs and2 corrected originalPNG; not human auditory review",
+  "kind": "preencode_visual_preview_only",
+  "publication_approved": false,
+  "status": "superseded_by_actual_final_movie_overlay_failure",
+  "initial_samples": 47,
+  "initial_bilingual_cue_midpoints": 38,
+  "corrected_samples": 2,
+  "corrections": {
+    "batch-01/caption-06.png": "Intro kicker八强赛 changed to1/4决赛; replacementcorrected-caption-01.png",
+    "batch-02/caption-02.png": "70% translation made exact一发得分率; replacementcorrected-caption-02.png"
+  },
+  "initial_raw_manifest_limit": "Initial process held its earlier in-memory spec canonical b2bf7c925954cdb34afcbd0e79888c4a191531789c0ef705fef4c280c7b17b7e while filehash was computed later after edits. Raw manifest fileSHA is not claimed as initial in-memory spec identity. Only these2 pixel changes affected sampled content; corrected preview uses final sourcequote/kicker. Other later edits were explanatory notes only.",
+  "checks": [
+    "Actual1080x1440 native fixedcenter3:4 sourcecrop, fixed nativeboard location",
+    "All38sourcequote midpoints checked on contacts; long names stay together; source first/final fullpanel name rows clear underbottom540",
+    "Native source result graphic entrance/exit animation retained; briefpartial rows near294 are source behavior, not proof generatedoverlaywrong",
+    "Stats winner-first fullcanvas values correct; intentionally no extra CN caption onstats",
+    "Correctedintro round wording and corrected70% originalPNG actually viewed"
+  ],
+  "limits": [
+    "Finite preview excludes finalcompression/dissolves and does not prove everyframe or wholelateralcourt visibility",
+    "Final actualmovie QC and actual voice verification remain required"
+  ],
+  "files": [
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/batch-01-caption-18.png",
+      "sha256": "aeb5ab632fb6545ae649ba47ed0265795d5225c41c0d68a2f7e18ab0dcc54dc2",
+      "bytes": 1647618
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/batch-01-manifest.json",
+      "sha256": "92761cea50ec37c8e73bcbf105f51507959c8f1ab71a9f96dc8f7db3865acd91",
+      "bytes": 89555
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/batch-02-caption-17.png",
+      "sha256": "ffc292fd2c8b3323a921b11e27539285e866b17e8f32dc3673adce8846a57109",
+      "bytes": 1332226
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/batch-02-caption-18.png",
+      "sha256": "824fe4a6ff1c336e3a263ef5ba2b9061e35a735791f4b119798a7c0550ce7dc5",
+      "bytes": 1040598
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/batch-02-caption-22.png",
+      "sha256": "3d8e4b3aacde49c51eebf11b89111e5cc5daeb279013203e12ca115821f72435",
+      "bytes": 647779
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/batch-02-manifest.json",
+      "sha256": "71f6875d52eba0e34bc800304df45541a1bc476c4393dcad08e19cf2f4ee6bb1",
+      "bytes": 86452
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/contact-b1-1.jpg",
+      "sha256": "c69419fed42ab1e79b8428d9f0c0e2537ec7e10b5fa9f7cf64ebd746c06264e9",
+      "bytes": 360507
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/contact-b1-2.jpg",
+      "sha256": "b51e4d6900ab1f1a867342d00ed754bbd9def6ea67d44abc3609ca288c4fb404",
+      "bytes": 400493
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/contact-b1-3.jpg",
+      "sha256": "4277167bb2c8bf9f084184effb665d2818967a66cb040a39eaa591b68cf0078b",
+      "bytes": 200994
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/contact-b2-1.jpg",
+      "sha256": "fde9a89ac0cb62018c186786217e10c7f8c180fcc81f6cb3eff1a4d6b60cf4bd",
+      "bytes": 353114
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/contact-b2-2.jpg",
+      "sha256": "e14e5d598bc425dc1484539668ddf56f5e118454dde1b97660ea801524e368a0",
+      "bytes": 419078
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/contact-b2-3.jpg",
+      "sha256": "2a5eaadacb4a970f13d4ca5c435bb52a88b277b032654fded9c079779efed80b",
+      "bytes": 156282
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/corrected-caption-01.png",
+      "sha256": "2f24deb8d138eafe72fc9f2afba3b0c877dac9b3f1e8402ff06d90996a1963cc",
+      "bytes": 283811
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/corrected-caption-02.png",
+      "sha256": "cde9bc40fd5a783d085c15c75043f36feb96c6b8a4f6f7d1ed1ae4b1e5a4fa98",
+      "bytes": 957370
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/corrected-subtitles.ass",
+      "sha256": "b7d3e56fffc522fa9d16530f2eb71707b22a851cb081f6324416947795588c5f",
+      "bytes": 11097
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/correction-manifest.json",
+      "sha256": "c4ff359f4dcf9daba119e1ce17a558147dfbf027d246f551f2b418b054c1d2b5",
+      "bytes": 7818
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/native-caption-preview/initial-subtitles.ass",
+      "sha256": "ae4ac988f8899b73a7662a7e977ab9f1f7993e5828eae341e1a80d7dc977a02d",
+      "bytes": 11097
+    }
+  ],
+  "actual_movie_correction": "Previous source-animation attribution was wrong: actual source291/293 clean, generatedfinalfilm9a3b... f5592/f5642 has displaced copiedstrip acrossOstapenko name. See visual-qc/history and native-scorewindow-correction. Initial rawbytes andstatement retainedinhistory; no finalQCapproval."
+}

@@ -1,0 +1,30 @@
+{
+  "reviewed_at": "2026-10-16T14:08:19.030991+00:00",
+  "edit_id": "tactic2",
+  "start_index": 0,
+  "number_text": "二比一",
+  "actual_audio_sha256": "9dd313b7ec0e29e9535f5560bbd4f3cf4a9bef15942a13ca48c6d586afa30a77",
+  "status": "correct_low_support",
+  "method": "finite_current_two_originals_vowel_sequence_interpretation_not_ASR_or_marks_truth",
+  "reviewers": [
+    "current pronunciation OpenAI agent",
+    "current root OpenAI agent"
+  ],
+  "rationale": "Both actually viewed unwarped current originals show er lowering, a closure/transition, then a sustained high-front i band. The tactic2 0.44-0.60s posterior i structure is compatible with the actual match_point sequence; that region is not wholly absent. Adjacent bi/yi may coalesce, so this is finite low support to the full score interpretation, not proof of three independent F0 syllables.",
+  "comparison": "current-score-comparison.json",
+  "actually_viewed_images": [
+    {
+      "path": "/workspace/scratch/iga-qf-pronunciation/actual-plots-v1/current-two-original-score-comparison.png",
+      "sha256": "8669b1c69d28e73f22344b673e02e4c87170494613a1b8e2fa4bfda6d2fda5bc"
+    }
+  ],
+  "raw_ASR_preserved": "二鼻",
+  "limitations": [
+    "WordBoundary and donor ASR only locate candidates; neither proves realization.",
+    "Adjacent bi/yi may coalesce; two F0 islands are not a count of pronounced syllables.",
+    "DTW may stretch a vowel, so closeness alone cannot disprove deletion; actual unwarped vowel sequence must be inspected.",
+    "No deletion-negative control was created or assumed. No human listening claim."
+  ],
+  "manual_listening_claimed": false,
+  "all_mechanical_components_passed": false
+}

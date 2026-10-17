@@ -1,0 +1,136 @@
+{
+  "schema": "tennislive.bounded-native-preencode-correction-review.v1",
+  "reviewed_at_utc": "2026-10-16T11:25:16.246263+00:00",
+  "reviewer": "current OpenAI moon_qf_cover agent",
+  "kind": "preencode_preview_only",
+  "publication_approved": false,
+  "result": "bounded_ending_subtitle_overlap_corrected_in_actual_preview",
+  "parent_pending_report": "../review.json",
+  "parent_pending_report_sha256": "2f6cc78918ce48d7ceb61f1f77aa9ab1a30ec778a4ec56d1f64dec10a029bdf5",
+  "resolved_finding": "ending-result-subtitle-overlap",
+  "new_spec_file_sha256": "b4f466f37997b5a5185fc3a9b704eb37bbf87b7fdef451400df04e88ab9cc7c7",
+  "new_ass_sha256": "e7735aeb1b8545303418846c099532495f3ccfbf98af021ea2314b0c825dbf53",
+  "change": "Only ending source295.92..299.20 / local52.72..56.00 subtitle bottom304→540. Source windows, crop, fixed native score inset(0,1104), score mask, voice bytes and editorial text unchanged.",
+  "actual_scope": {
+    "ending_samples_actually_viewed": 15,
+    "contacts_actually_viewed": 4,
+    "original_png_opened_separately": [
+      "caption-47.png",
+      "caption-48.png",
+      "caption-52.png"
+    ],
+    "source_times": {
+      "caption-38.png": 268.91999999999996,
+      "caption-39.png": 272.59999999999997,
+      "caption-40.png": 275.91999999999996,
+      "caption-41.png": 278.12,
+      "caption-42.png": 281.8,
+      "caption-43.png": 284.48,
+      "caption-44.png": 286.88,
+      "caption-45.png": 293.15999999999997,
+      "caption-46.png": 295.0,
+      "caption-47.png": 296.96,
+      "caption-48.png": 298.71999999999997,
+      "caption-49.png": 244.67999999999998,
+      "caption-50.png": 260.2,
+      "caption-51.png": 267.59999999999997,
+      "caption-52.png": 299.08
+    },
+    "source_windows_unchanged": true,
+    "audio_not_evaluated": true
+  },
+  "findings": [
+    {
+      "images": [
+        "caption-47.png",
+        "caption-48.png",
+        "caption-52.png"
+      ],
+      "finding": "Actual corrected originalPNGs viewed: English/Chinese now end aroundy900, above original largepanel topy950; no title/name/score overlap. Both fullnames MAJA CHWALINSKA andMARIA SAKKARI, allsix setdigits6 3 7 /0 6 5 and31/52/73minute labels visible. Left/right panel edges intact. Fixedscoreboard geometry unchanged."
+    },
+    {
+      "images": [
+        "caption-38.png",
+        "caption-39.png",
+        "caption-40.png",
+        "caption-41.png",
+        "caption-42.png",
+        "caption-43.png",
+        "caption-44.png",
+        "caption-45.png",
+        "caption-46.png",
+        "caption-49.png",
+        "caption-50.png",
+        "caption-51.png"
+      ],
+      "finding": "Remaining12ending samples viewed incontacts: unchanged dream-season/handshake/actual celebratorysource, ordinaryboard atsource244.68 andMATCHPOINT triple-setboard at260.20/267.60 remain same fixedposition, all relevantdigitsreadable, no newlayoutfinding."
+    }
+  ],
+  "combined_conclusion": "Current full-screen preencode finite review consists of previous54sample set plus actual15ending correction samples. The single observed result-panel/subtitle overlap is resolved in corrected47/48/52. Prior pendingreport and failedPNGs retained exactly. No additional preencode layout changes recommended; actualfinalnativefilm QC stillrequired.",
+  "limitations": [
+    "No final QC or publication approval",
+    "Interior samples exclude dissolves/final H264",
+    "Audio not produced or evaluated",
+    "Finite sampling does not prove all board-width transitions",
+    "No finalmovie publication approval.",
+    "No claim allcourt/allplayers visible atalltimes; fixedcenter3:4 inherently cropssides.",
+    "Onlyboundedending segment re-rendered for thisfix; untouched54set othersegments remainsseparatefiniteevidence."
+  ],
+  "preserved_artifacts": [
+    {
+      "path": "caption-47.png",
+      "bytes": 1549302,
+      "sha256": "d2bffcfb3ed9f2fdc07c755f9beb222f84f6b0c4220d406c9d585581239d0f27"
+    },
+    {
+      "path": "caption-48.png",
+      "bytes": 1727496,
+      "sha256": "0cc51ee11f401b7d67fc4e7d0bde7271994ccc1a84030ad47a1d09330f2a32c7"
+    },
+    {
+      "path": "caption-52.png",
+      "bytes": 1741487,
+      "sha256": "f6f55a3370cfb6e4f071f12c45d167021d04c79c56a02aef9de053ba741c4ede"
+    },
+    {
+      "path": "contact-01.jpg",
+      "bytes": 142530,
+      "sha256": "440a97d773191f70ca2808768c2b8724071e8bc9c1eb3006c26029eb6682a946"
+    },
+    {
+      "path": "contact-02.jpg",
+      "bytes": 201116,
+      "sha256": "9d0fd6077e0e690d4078c90e36ba99a905b0d4dcb2f867a18c698f47a8d0d10c"
+    },
+    {
+      "path": "contact-03.jpg",
+      "bytes": 208009,
+      "sha256": "2f9cef37e4fc02f7bdefc19a4a28eb092b6864f0bb60469c88b1411a6ece3b30"
+    },
+    {
+      "path": "contact-04.jpg",
+      "bytes": 154742,
+      "sha256": "46743a267b197d90a32790b1fdd8358fdd1e7e4246f2a14107df59cb3b43eaee"
+    },
+    {
+      "path": "preview_manifest.json",
+      "bytes": 62571,
+      "sha256": "0a8f335aeb59ad599ddc8c8c59e173a73ae8eecb5a99c2b067f9d01964818309"
+    },
+    {
+      "path": "preview_topbar.ass",
+      "bytes": 1651,
+      "sha256": "71034fec91a29f9a6d65c7d0821292e810ab1069210539b61cbf9bb636684acf"
+    },
+    {
+      "path": "sample_ending_correction_native_preview.py",
+      "bytes": 4171,
+      "sha256": "d52bd94730348047163cba8ca8c9f90540a7de18955e4db19d00d1b55fa2d8b5"
+    },
+    {
+      "path": "subtitles.ass",
+      "bytes": 10748,
+      "sha256": "e7735aeb1b8545303418846c099532495f3ccfbf98af021ea2314b0c825dbf53"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "schema": "tennislive.actual-source-review.v1",
+  "source_url": "https://www.youtube.com/watch?v=uI4UCjY34b4",
+  "source_sha256": "3288a4c8597d888ecc6139b7fe46abf890c8673f6d90439f54ff008b1a706137",
+  "bytes": 53863049,
+  "duration": 304.460045,
+  "size": [
+    1920,
+    1080
+  ],
+  "fps": 25,
+  "reviewed_at": "2026-10-16T08:04:09.762107+00:00",
+  "method": "Current OpenAI assistant directly viewed complete four-second source walls 0–304 and finite one-second/quarter-second target walls plus original PNGs. No human listening claimed.",
+  "source_asr_run": 38870427855,
+  "oembed_run": 38870595553,
+  "oembed_isolated_branch": "codex/osta-uI4-oembed-transport",
+  "facts": [
+    "Official WTA oembed author/title verified from runner result, Release service digest matches exact local bytes.",
+    "Nearcourt burgundy Ostapenko / farcourt yellow Shnaider during set-point window130.5–140.",
+    "Source130.5/134/140 original PNG boards show Shnaider5–3 and40–30, one saved set point; cannot claim two consecutive SP from these frames.",
+    "Source252–256.75 second match point includes serve preparation, serve, return, ensuing strike and winner raising arms.",
+    "Source264–272 net/umpire handshakes and source289–293 large final result graphic; native source ends294.20 to retain complete final Wow through294.10; finite visual QC must check the short official transition around294, no logo-free image claim."
+  ],
+  "failed_findings_retained": [
+    "Initial tiny wall 40-30 misread as40-15 led to unsupported two-SP inference. Original1920 PNGs disproved it; corrected promptly, no transcript/production pass issued from that finding."
+  ],
+  "limits": [
+    "Four-second walls can miss fast action; finite denser walls/original PNGs were used for described key actions.",
+    "ASR exact lexical words and timings are estimates, not proof of manual hearing or Chinese pronunciation."
+  ],
+  "files": [
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/full-01.jpg",
+      "sha256": "1380a752d64db968657a4c906644264dd52eb4edd350509c3e9affeeae8db45a"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/full-02.jpg",
+      "sha256": "d5658753d4274b7ed68cf76fb3e3d30bbcde1e2210ce14570f2b92aa2cec9900"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/full-03.jpg",
+      "sha256": "ce458b21d6792fb09de3d7690090fd45b24f922c73cbe47cd11c066d70d12c93"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/full-04.jpg",
+      "sha256": "61aed095c1a4ad371b92403bbf0d84808ab6e57cc9eab7cc6c43f584ed19467b"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/mp-tactic-01.jpg",
+      "sha256": "514ca369add41f90228fa911713ac7e0cddc65d630afa66f1cadcd1e78ae1934"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/mp-tactic-02.jpg",
+      "sha256": "c203fcbf5f8d291f7a26655fbd7b582b31ed842b5687e4df2cb299574ea3b0d4"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/payoff-opening.jpg",
+      "sha256": "d858078896c4a05c01501a73e71bf0593cd329476573e7bfd15af86bd7594d86"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/release-asset.json",
+      "sha256": "6adb03b3fe01e7069a1bd241b2a45a7cb4779c08d15123eaf3acae9005095f48"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/source-130.5.png",
+      "sha256": "871ffd0a04d18acaea5074c090b77faa6a54d8ec66f93829596636b7b39f3588"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/source-134.0.png",
+      "sha256": "285b312f20733deec735d6125f3f4e0384308d0ff81e82e496196338508431f8"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/source-140.0.png",
+      "sha256": "9e0e41e45a33d18cf893213a4da4bf6c46d17bba5618801a5ef5d371a1d98905"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/source-252.0.png",
+      "sha256": "0ce96373b424bba977221f914d5d43c1dff597c8894807fb6845d1dbfb7e57f8"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/source-288.8.png",
+      "sha256": "9adf51f4bbdf26d269f940eead6734c8f2ed5fc1ce7b68b8e5975a6aa2eb46ab"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/sp-tactic-01.jpg",
+      "sha256": "a14d34585af126454c0ba8dbae8f26390dfa010bc9bade925f9aeb12e2da2e09"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/sp-tactic-02.jpg",
+      "sha256": "d35ff15cda1524a3803a91c7a83c1d4772d952f1de2e0b774057b8c2e7a07ed4"
+    },
+    {
+      "path": "data/evidence/ostapenko-shnaider-wuhan-2026-qf/source-visual/youtube-oembed.json",
+      "sha256": "bcf24ab4c7d4bf7f597bdb544cd5ddfa4483447174b091aedd055903846e9940"
+    }
+  ]
+}

@@ -402,6 +402,7 @@ PLAYER_ZH: dict[str, str] = {
     "Lulu Sun": "孙璐璐",
     "Erin Routliffe": "劳特利夫",
     "Ons Jabeur": "贾巴尔",
+    "Leonie Küng": "屈恩",  # 2018 温网青少年女单决赛负斯瓦泰克（swiatek-chwalinska-story-2026）
     "Simona Halep": "哈勒普",
     # 2026-09-17 补：`zhang-shuai-story` 讲 2016 澳网，八强对手是她。
     # CLAUDE.md「表里没有的，定下来之后补进表里，别只写在稿子里」。
@@ -619,6 +620,12 @@ PLAYER_ZH: dict[str, str] = {
 # PLAYER_ZH 的规范输出仍是「保利尼」，别名不改已经配音/渲染的显示文案。
 PLAYER_ZH_ALIASES: dict[str, str] = {
     "帕奥利尼": PLAYER_ZH["Jasmine Paolini"],
+    # 施耐德/施奈德均指 Diana Shnaider（WTA 330482）；官方英文名和 ID 见
+    # data/research/ostapenko-shnaider-wuhan-2026-qf/fact-packet.json。
+    "施耐德": PLAYER_ZH["Diana Shnaider"],
+    # Ann Li（WTA 326096）的既有译名；top500表与历史spec写「李吉妮」。
+    # 本期官方身份见 data/evidence/swiatek-li-wuhan-2026-qf/facts/。
+    "李吉妮": PLAYER_ZH["Ann Li"],
 }
 
 

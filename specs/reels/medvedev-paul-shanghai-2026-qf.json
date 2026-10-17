@@ -1,0 +1,487 @@
+{
+  "slug": "medvedev-paul-shanghai-2026-qf",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "沿用同站已发片子的云健声线与语速。",
+  "sources": {
+    "main": "https://www.youtube.com/watch?v=L8RLxDpDFp4"
+  },
+  "primary": "main",
+  "source_fallbacks": {
+    "main": "https://github.com/robertyang87/tennislive/releases/download/source-L8RLxDpDFp4/L8RLxDpDFp4.mp4"
+  },
+  "track": false,
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "preserve_source_audio": true,
+  "scorebox": [
+    98,
+    920,
+    519,
+    1029
+  ],
+  "_scorebox_why": "ATP标准搜索框，本源probe 5fps实扫atp present 810。",
+  "_crop_why": "全片3:4固定居中铺满，cx 0.5，不跟随。",
+  "_tennistv_trim": "源片161.8秒起是WATCH MORE/SUBSCRIBE片尾板，正片两段都收在161.4；固定居中裁切把右上ATP台标裁出画面。",
+  "_source": "用户指定YouTube L8RLxDpDFp4（Daniil Medvedev vs Tommy Paul Highlights | Shanghai 2026 Quarter-Final，1080p 25fps 176秒）；probe已提交，Release存档source-L8RLxDpDFp4。",
+  "_match": {
+    "status": "result_verified",
+    "source": "official_atp",
+    "source_id": "5014_2026_MS007",
+    "participants": [
+      "梅德韦杰夫",
+      "保罗"
+    ],
+    "set_scores_home_away": [
+      [
+        6,
+        3
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null,
+      null
+    ],
+    "winner": "梅德韦杰夫",
+    "loser": "保罗",
+    "winner_result": "6-3 1-6 6-3",
+    "loser_result": "3-6 6-1 3-6",
+    "source_url": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms007",
+    "date": "2026-10-16",
+    "duration": "02:08:23",
+    "daypart": "傍晚",
+    "_match_day_why": "用户直接给的本场官方集锦；官方MS007 Quarterfinal已完赛，官方赛后稿发于10月16日。",
+    "_time_note": "flashscore赛果页AD=1792145400即北京10月16日18:10开赛；官方用时02:08:23。"
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "梅德韦杰夫",
+        "name_en": "Daniil Medvedev",
+        "country": "RUS",
+        "rank": 6
+      },
+      {
+        "name": "保罗",
+        "name_en": "Tommy Paul",
+        "country": "USA",
+        "rank": 18
+      }
+    ],
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "梅德韦杰夫",
+    "winner": "梅德韦杰夫",
+    "result": "6-3 1-6 6-3",
+    "hook": "首盘一局化解7次危机\n梅德韦杰夫闯进半决赛",
+    "hook_accent": "半决赛",
+    "topic": "ATP1000 上海 1/4决赛 · 梅德韦杰夫 VS 保罗",
+    "scrim": "clear",
+    "_rank_why": "赛事官网球员页当周排名：梅德韦杰夫6、保罗18；种子5/15不当排名。",
+    "_subject_why": "本场赢家梅德韦杰夫；ATP Media本场实拍（文件名Daniil-MEDVEDEV-vs-Tommy-PAUL、10月16日上传、蓝色球衣与本场集锦一致）。",
+    "portrait": {
+      "image": "assets/reels/medvedev-paul-shanghai-2026-qf/medvedev-shanghai-qf.jpg",
+      "fit": "cover",
+      "focus": 0.32,
+      "focus_y": 0.3,
+      "zoom": 1,
+      "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/16/c1215235-a423-4fd7-8acd-456477e70a13/Daniil-MEDVEDEV-vs-Tommy-PAUL3862.jpg",
+      "_photo_why": "ATP Media本场实拍2406x1600（无EXIF，身份靠官方文件名与上传日期）；双手反手击球、正脸咬牙、双眼睁开合焦，球在下巴下方不挡脸。"
+    },
+    "scoreboard": {
+      "court": "Stadium Court",
+      "duration_source": {
+        "url": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms007",
+        "field": "MatchTimeTotal",
+        "match_id": "MS007"
+      },
+      "_court_why": "官方MS007 CourtName Stadium Court。"
+    }
+  },
+  "topbar": {
+    "line1": "2026 ATP1000 上海 1/4决赛",
+    "line2": "梅德韦杰夫 6-3 1-6 6-3 保罗"
+  },
+  "stats": {
+    "tour": "atp",
+    "footer_date": "2026-10-16",
+    "footer_venue": "上海 · 全场",
+    "_source": "官方MS007 SetNumber 0全场原始整数（A梅德韦杰夫/B保罗）；制胜分与非受迫失误取TNNS Match列，分盘合计自证一致。",
+    "a": {
+      "aces": 16,
+      "df": 8,
+      "first_in": 58,
+      "first_total": 91,
+      "first_won": 43,
+      "second_total": 33,
+      "second_won": 12,
+      "bp_conv": 4,
+      "bp_chances": 12,
+      "pts_won": 94,
+      "pts_total": 182,
+      "winners": 31,
+      "ue": 33,
+      "headshot": "assets/players/headshots/atp-MM58.png"
+    },
+    "b": {
+      "aces": 7,
+      "df": 1,
+      "first_in": 54,
+      "first_total": 91,
+      "first_won": 37,
+      "second_total": 37,
+      "second_won": 15,
+      "bp_conv": 3,
+      "bp_chances": 14,
+      "pts_won": 88,
+      "pts_total": 182,
+      "winners": 27,
+      "ue": 37,
+      "headshot": "assets/players/headshots/atp-PL56.png"
+    },
+    "_winners_ue_evidence": {
+      "provider": "TNNS Live",
+      "method": "api",
+      "source_url": "https://tnnslive.com/match/75620252",
+      "source_path": "data/research/medvedev-paul-shanghai-2026-qf/tnns-2026-10-16.txt",
+      "source_sha256": "054a895a8ee2dd4a36402930620d58dd48d630255a9f83a6fd9915dcb8c612b8",
+      "period": "Match",
+      "match_date": "2026-10-16",
+      "checked_at": "2026-10-16T13:30:00+00:00",
+      "winner_result": "6-3 1-6 6-3",
+      "matchup": [
+        "Medvedev",
+        "Paul"
+      ],
+      "winners": [
+        31,
+        27
+      ],
+      "ue": [
+        33,
+        37
+      ],
+      "notes": "TNNS id 75620252，列序Medvedev/Paul：W 16+7+8=31、9+11+7=27；UE 13+7+13=33、12+8+17=37。"
+    }
+  },
+  "push": {
+    "auto": true,
+    "matchup": "梅德韦杰夫 VS 保罗",
+    "score": "6-3 1-6 6-3",
+    "event": "2026 ATP1000 上海 1/4决赛",
+    "summary": "一局化解7次危机",
+    "lead": "第一盘3比2，梅德韦杰夫一个发球局救下保罗7个破发点；第二盘1比6丢掉三个发球局，决胜盘开局就破发，第二个赛点收下比赛。6-3 1-6 6-3，他第三次闯进上海半决赛，下一场对霍达尔。"
+  },
+  "_heat_why": "世界第6梅德韦杰夫，上海唯一的前冠军，冲击年终总决赛；用户点名这场。",
+  "_hit_data": [
+    {
+      "label": "一个发球局7个破发点全救",
+      "detail": "第一盘3-2梅德韦杰夫发球局，保罗7次拿到破发点全部没兑现。",
+      "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_zH4GMhet",
+      "used_in": "钩子、第④段字卡与旁白、推送。"
+    },
+    {
+      "label": "16个ACE、救下14个破发点里的11个",
+      "detail": "官方MS007：Aces 16，BreakPointsFacedServing 14、NumberOfTimesBroken 3。",
+      "source": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms007",
+      "used_in": "统计卡旁白。"
+    },
+    {
+      "label": "决胜盘保罗一发47%、17个非受迫失误",
+      "detail": "官方赛后稿；TNNS Set 3 UE 17。",
+      "source": "https://en.rolexshanghaimasters.com/en/media/news/medvedev-paul-shanghai-2026-friday",
+      "used_in": "决胜盘字卡。"
+    }
+  ],
+  "editorial": {
+    "mode": "match_review",
+    "question": "第二盘1比6之后，梅德韦杰夫怎么把比赛拿回来？",
+    "thesis": "首盘一个发球局化解7个破发点，第二盘三个发球局全丢；决胜盘开局就破发、第二个赛点收下，第三次进上海半决赛。",
+    "beats": [
+      "赛后反应冷开场",
+      "上海1/4决赛坐标与前冠军身份",
+      "首盘早段相持",
+      "7个破发点的发球局",
+      "6-3拿下首盘",
+      "第二盘1-6",
+      "决胜盘开局破发",
+      "第二个赛点与握手",
+      "全场统计",
+      "半决赛对霍达尔"
+    ],
+    "human_context": {
+      "angle": "签表里唯一的上海前冠军，在中国四周11胜1负，冲击年终总决赛。",
+      "facts": [
+        "官方赛后稿：第三次进上海半决赛、2019年冠军、交手5-1、中国赛季11胜1负、下一场对霍达尔。",
+        "flashscore逐分：首盘3-2发球局7个破发点全救。",
+        "官方统计：16个ACE，救下14个破发点中的11个。"
+      ],
+      "sources": [
+        "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms007",
+        "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_zH4GMhet",
+        "https://en.rolexshanghaimasters.com/en/media/news/medvedev-paul-shanghai-2026-friday",
+        "https://tnnslive.com/match/75620252",
+        "https://www.protennislive.com/posting/2026/5014/op.pdf"
+      ]
+    }
+  },
+  "segments": [
+    {
+      "source": "main",
+      "start": 148.64,
+      "end": 161.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.54,
+          "end": 6.12,
+          "text": "It's a third Shanghai semi-final for Daniil Medvedev.\n梅德韦杰夫第三次闯进上海半决赛"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "cold_open",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "正文末段从第二个赛点开始完整重放到握手。",
+      "crosses_cut": "赛点之后梅德韦杰夫的近景反应、走向网前握手；无进行中回合。",
+      "point_end_ok": "148.64原生切点时赛点已经结束，本段只有赛后反应与握手，收在Tennis TV片尾板之前。"
+    },
+    {
+      "title_card": "唯一的前冠军\n冲击上海半决赛",
+      "kicker": "北京时间10月16日傍晚 · 上海1/4决赛",
+      "seconds": 15.5,
+      "narration": "北京时间十月十六日傍晚，上海大师赛四分之一决赛。五号种子梅德韦杰夫，对阵十五号种子保罗。签表里拿过上海冠军的，只剩他一个，那是二零一九年。",
+      "_edit_id": "coordinate"
+    },
+    {
+      "source": "main",
+      "start": 0.0,
+      "end": 22.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 20.94,
+          "end": 22.48,
+          "text": "Oh, he just wouldn't go away.\n他就是怎么都打不死"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "set1_early",
+      "crosses_cut": "第一盘一比二梅德韦杰夫发球局三十比十五的一分，从相持到得分完整保留，接梅德韦杰夫近景。",
+      "point_end_ok": "21.56原生切点前这一分已经结束，收在梅德韦杰夫走回底线的近景。"
+    },
+    {
+      "title_card": "一个发球局\n化解7次危机",
+      "kicker": "第一盘3比2 · 梅德韦杰夫发球",
+      "seconds": 15.0,
+      "narration": "第一盘三比二，梅德韦杰夫的发球局。保罗前后拿到七个破发点，一个都没兑现。他占先的这一分，他在底线左右奔跑，压到网前，又被保罗逼回底线救球。",
+      "_edit_id": "seven_bp"
+    },
+    {
+      "source": "main",
+      "start": 22.6,
+      "end": 60.9,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 30.14,
+          "end": 33.9,
+          "text": "Oh, that's incredible!\n太不可思议了！"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "seven_bp_play",
+      "crosses_cut": "三比二梅德韦杰夫发球局：保罗占先的破发点与梅德韦杰夫占先的一分，连续保留到平分，不拿别的回合冒充。",
+      "point_end_ok": "比分已在60.5秒前翻到平分，本段收在这一分结束后的停顿，避开下一句只有单档转写的解说。"
+    },
+    {
+      "title_card": "第2个盘点\n6比3先下一城",
+      "kicker": "第一盘5比3 · 保罗发球",
+      "seconds": 8.0,
+      "narration": "五比三，保罗发球。梅德韦杰夫拿到两个盘点，第二个就兑现。",
+      "_edit_id": "set1_close"
+    },
+    {
+      "source": "main",
+      "start": 63.28,
+      "end": 69.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "_edit_id": "set1_point",
+      "_quote_skip_why": "这几秒解说没有开口，只有现场声；69.70起的发球点评整句让出去。",
+      "crosses_cut": "五比三四十比三十盘点，从发球到梅德韦杰夫得分。",
+      "point_end_ok": "盘点在69.6秒前结束，收在下一句解说开口之前；比分板随后翻到第二盘。"
+    },
+    {
+      "title_card": "第二盘1比6\n三个发球局全丢",
+      "kicker": "第二盘 · 急转直下",
+      "seconds": 15.5,
+      "narration": "第二盘急转直下。第一局十五比三十，两人在底线长时间拉锯，梅德韦杰夫被调得左右来回跑，最后保罗一拍压线。这一局他就被破，三个发球局全丢，一比六。",
+      "_edit_id": "set2"
+    },
+    {
+      "source": "main",
+      "start": 74.9,
+      "end": 111.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 30.22,
+          "end": 35.66,
+          "text": "Oh, he's caught the line… more good work defensively, though.\n压线了…防守又做得很好"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "set2_rally",
+      "crosses_cut": "第二盘第一局十五比三十的一分，长相持到保罗压线得分，接两人近景。",
+      "point_end_ok": "105秒左右保罗的球压线，这一分结束；收在比分翻到十五比四十之后的停顿。"
+    },
+    {
+      "source": "main",
+      "start": 111.68,
+      "end": 119.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "_edit_id": "set2_point",
+      "_quote_skip_why": "这一段解说只有单档转写的半句，现场声为主。",
+      "crosses_cut": "第二盘一比五保罗的盘点，从发球到得分，接保罗近景。",
+      "point_end_ok": "盘点结束后切到保罗近景，收在镜头切换之前。"
+    },
+    {
+      "title_card": "决胜盘开局破发\n第2个赛点收下",
+      "kicker": "决胜盘 · 5比3 保罗发球",
+      "seconds": 15.0,
+      "narration": "决胜盘第一局，梅德韦杰夫就破了保罗的发球局。这一盘保罗一发进球率只有百分之四十七，非受迫失误十七个。五比三，保罗发球，梅德韦杰夫拿到两个赛点。",
+      "_edit_id": "set3"
+    },
+    {
+      "source": "main",
+      "start": 119.6,
+      "end": 161.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [
+        {
+          "at": 29.58,
+          "end": 35.16,
+          "text": "It's a third Shanghai semi-final for Daniil Medvedev.\n梅德韦杰夫第三次闯进上海半决赛"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "match_point",
+      "crosses_cut": "五比三梅德韦杰夫占先的第二个赛点，从发球到得分，再接赛后反应与握手，结局在正文完整兑现。",
+      "point_end_ok": "赛点之后接反应与握手，收在Tennis TV片尾板之前。"
+    },
+    {
+      "stat_card": true,
+      "seconds": 13.0,
+      "_edit_id": "full_stats",
+      "narration": "全场，梅德韦杰夫十六个ACE，面对十四个破发点救下十一个。保罗的非受迫失误三十七个，比他多四个。"
+    },
+    {
+      "title_card": "第3次闯进上海半决赛\n下一个是霍达尔",
+      "kicker": "下一场 · 半决赛",
+      "seconds": 13.0,
+      "narration": "来中国这四周，梅德韦杰夫赢了十一场，只输一场。半决赛，他要迎战二十岁的霍达尔。这一次，他能再拿一座大师赛冠军吗？",
+      "_edit_id": "ending"
+    }
+  ],
+  "_turning_points": [
+    "第一盘3-2梅德韦杰夫发球局7个破发点全救（22.6–60.9）",
+    "第一盘5-3第二个盘点（63.28–69.6）",
+    "第二盘第一局被破（74.9–111.6）与1-5盘点（111.68–119.0）",
+    "决胜盘第一局破发（集锦没有画面，字卡说明）",
+    "决胜盘5-3第二个赛点（119.6–161.4）"
+  ],
+  "_facts": [
+    {
+      "url": "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms007",
+      "type": "verified_match_source",
+      "why": "official_results_and_stats"
+    },
+    {
+      "url": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_zH4GMhet",
+      "type": "verified_match_source",
+      "why": "point_by_point"
+    },
+    {
+      "url": "https://www.flashscore.com/tennis/atp-singles/shanghai/results/",
+      "type": "verified_match_source",
+      "why": "start_time"
+    },
+    {
+      "url": "https://en.rolexshanghaimasters.com/en/media/news/medvedev-paul-shanghai-2026-friday",
+      "type": "verified_match_source",
+      "why": "official_match_report"
+    },
+    {
+      "url": "https://tnnslive.com/match/75620252",
+      "type": "verified_match_source",
+      "why": "full_winners_unforced_errors"
+    },
+    {
+      "url": "https://www.protennislive.com/posting/2026/5014/op.pdf",
+      "type": "verified_match_source",
+      "why": "semifinal_order_of_play"
+    },
+    {
+      "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/16/c1215235-a423-4fd7-8acd-456477e70a13/Daniil-MEDVEDEV-vs-Tommy-PAUL3862.jpg",
+      "type": "verified_match_source",
+      "why": "same_match_photo"
+    }
+  ],
+  "_source_coverage_notes": {
+    "set3_first_game_break": "集锦没有决胜盘第一局画面，用字卡与旁白说明。",
+    "set1_seven_bp": "集锦收了这一局占先与平分的几分，7个破发点的总数来自逐分数据。"
+  },
+  "_tactical_evidence": [
+    {
+      "claim": "三比二梅德韦杰夫占先的一分，他底线左右奔跑、压到网前、又被逼回底线救球，这一分保罗得到",
+      "source": "frame-grab mp-qf 36~56秒逐帧；比分板60.5秒翻到40平；原声Oh, that's incredible两档ASR一致",
+      "limitation": "不判定保罗最后一拍是挑高还是穿越。"
+    },
+    {
+      "claim": "第二盘第一局十五比三十，长时间底线拉锯，梅德韦杰夫左右来回跑，保罗一拍压线得分",
+      "source": "frame-grab mp-qf 74~106秒逐帧；原声105.12 he's caught the line；逐分15-30→15-40",
+      "limitation": "不数拍数、不标正反手。"
+    }
+  ],
+  "_production_timing": {
+    "received_at": "2026-10-16T13:20:00Z"
+  }
+}

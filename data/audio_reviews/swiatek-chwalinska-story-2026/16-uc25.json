@@ -1,0 +1,39 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=15fLzmh_o7A",
+  "source_sha256": "83c0fef1db53e53d0465dedd8122debdf2778aa7644521333eccafa2bccb3a16",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T00:50:12.926366+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 181.3,
+  "reviewed_to": 195.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 181.54,
+      "end": 184.34,
+      "en": "I think it's the third year in a row we're making semis or better.",
+      "zh": "我们连续三年打进四强以上了。"
+    },
+    {
+      "start": 184.74,
+      "end": 187.9,
+      "en": "So two years ago it was semis, last year it was a final.",
+      "zh": "前年是四强，去年是决赛。"
+    },
+    {
+      "start": 188.32,
+      "end": 190.72,
+      "en": "So you guys answer the question, what's coming tomorrow.",
+      "zh": "明天会怎样，你们来回答吧。"
+    },
+    {
+      "start": 191.76,
+      "end": 194.66,
+      "en": "Team Poland into the finals. Well done, congratulations!",
+      "zh": "波兰队打进决赛，恭喜！"
+    }
+  ],
+  "asr_evidence": "data/source_asr/15fLzmh_o7A/small.en.json + medium.en.json",
+  "review_note": "同一条：齐林斯基接受场边采访，赫瓦林斯卡站在他身旁（186 秒画面）。两档一致（medium 181.54–194.66）。段首 181.3 在上一句（181.04）之后，段尾 195.2 在片尾板（196 秒起）之前。"
+}

@@ -1,0 +1,107 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=0-v-yZvYAk8",
+  "source_sha256": "daf2900ed133d0b9c2b0c4bfd9f678d0b1bd81ff880b01b83061d29f6d5fe70f",
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source-review assistant; exact-SHA two-model whole-source ASR and official auto-caption cross-check, no manual listening claimed",
+  "reviewed_at": "2026-10-16T10:50:46.455612+00:00",
+  "status": "complete",
+  "reviewed_from": 51.8,
+  "reviewed_to": 111.73,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 73.1,
+      "end": 75.68,
+      "en": "Maja Chwalinska, statistically,",
+      "zh": "从数据来看，赫瓦林斯卡",
+      "verification": "Exact-SHA full small.en and medium.en word timestamps cross-checked with canonical YouTube automatic captions; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 75.68,
+      "end": 78.18,
+      "en": "one of the best returners on tour in 2026.",
+      "zh": "是今年巡回赛最强接发者之一。",
+      "verification": "Exact-SHA full small.en and medium.en word timestamps cross-checked with canonical YouTube automatic captions; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 90.16,
+      "end": 95.14,
+      "en": "Oh, and the opening set is a runaway train in 30 minutes.",
+      "zh": "首盘势如破竹，只用了30分钟。",
+      "verification": "Exact-SHA full small.en and medium.en word timestamps cross-checked with canonical YouTube automatic captions; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 95.26,
+      "end": 99.9,
+      "en": "Maja Chwalinska leaves Maria Sakkari on the platform all alone.",
+      "zh": "萨卡里像被独自留在站台。",
+      "verification": "Exact-SHA full small.en and medium.en word timestamps cross-checked with canonical YouTube automatic captions; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 100.7,
+      "end": 102.52,
+      "en": "A blistering start for the Pole.",
+      "zh": "波兰姑娘的开局太强势了。",
+      "verification": "Exact-SHA full small.en and medium.en word timestamps cross-checked with canonical YouTube automatic captions; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 104.6,
+      "end": 105.74,
+      "en": "Six-love.",
+      "zh": "6比0！",
+      "verification": "Exact-SHA full small.en and medium.en word timestamps cross-checked with canonical YouTube automatic captions; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 105.74,
+      "end": 108.82,
+      "en": "In the first quarterfinal at a WTA 1000.",
+      "zh": "首次1000赛1/4决赛，",
+      "verification": "Exact-SHA full small.en and medium.en word timestamps cross-checked with canonical YouTube automatic captions; official player spellings normalized. No manual listening claimed."
+    },
+    {
+      "start": 109.34,
+      "end": 111.38,
+      "en": "Maja Chwalinska in the driver's seat.",
+      "zh": "赫瓦林斯卡牢牢掌控局面。",
+      "verification": "Exact-SHA full small.en and medium.en word timestamps cross-checked with canonical YouTube automatic captions; official player spellings normalized. No manual listening claimed."
+    }
+  ],
+  "_edit_id": "first_set",
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/evidence/chwalinska-sakkari-wuhan-2026-qf/source-audio/raw/full/small.en.json",
+        "sha256": "503faa88f39687b2905983ee42607bbfd8dd6ea70c23775f6f67849a86578e13",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-sakkari-wuhan-2026-qf/source-audio/raw/full/medium.en.json",
+        "sha256": "d949ec4cdf06989a4d8efda8cbb5d591f5f7c048d157fca3dd81eef061b8f0b2",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-sakkari-wuhan-2026-qf/source-audio/raw/official-auto-captions.txt",
+        "sha256": "a9a0939b09273d2e1d015165dfea78d5bbcb929a809fea362969c31cad5e2cdb",
+        "kind": "YouTube automatic captions exported by canonical probe 38888658155"
+      }
+    ],
+    "manual_listening_claimed": false,
+    "source_audio_gain_changes": false,
+    "limitations": [
+      "Word edges are conservative ASR estimates, not manually measured acoustic boundaries.",
+      "Official spellings Maja Chwalinska and Maria Sakkari normalize ASR name errors; no player speech invented.",
+      "At73 seconds the two models and automatic captions collapse the lead-in into Amaya; caption normalizes the name Maja without inventing an additional connective.",
+      "At104.6 seconds the preposition at a is supported by small.en and official captions; medium.en of the is preserved in raw.",
+      "The second-set finish starts with And Maria Sakkari completes her mission in medium.en and official captions; small.en omits that low-confidence clause, and all raw remains intact.",
+      "The sentence will have to regroup is supported by small.en and official captions; medium.en omission retained in raw.",
+      "No loudness, RMS, peak, silence-threshold or source-gain comparisons were performed."
+    ]
+  }
+}
