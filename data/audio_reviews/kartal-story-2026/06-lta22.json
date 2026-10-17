@@ -1,0 +1,45 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=vqIpczMjb5I",
+  "source_sha256": "97117a11416d77648ec13759e83642d51d13bb9f592d6d76551e240cc450b4d9",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T13:45:13.665540+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 92.9,
+  "reviewed_to": 106.9,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 93.16,
+      "end": 95.84,
+      "en": "I've got an older brother, he's five years older than me,",
+      "zh": "我有个哥哥，比我大五岁，"
+    },
+    {
+      "start": 96.48,
+      "end": 98.48,
+      "en": "and he used to play just for fun.",
+      "zh": "他打球只是为了好玩。"
+    },
+    {
+      "start": 99.6,
+      "end": 101.5,
+      "en": "And my parents used to take me up to the club,",
+      "zh": "爸妈带我去俱乐部，"
+    },
+    {
+      "start": 101.76,
+      "end": 104.44,
+      "en": "and I used to just sit on the grass and watch him play.",
+      "zh": "我就坐在草地上看他打。"
+    },
+    {
+      "start": 105.28,
+      "end": 106.64,
+      "en": "That's how it all began.",
+      "zh": "一切就是这么开始的。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/vqIpczMjb5I/small.en.json + medium.en.json",
+  "review_note": "同一条 LTA 专访：她讲怎么开始打网球。两档逐词一致（medium 93.16–106.64；small 93.30–106.60）。镜头 81.52 切入、112.12 切走，段首 92.9 在上一句（88.82 结束）之后，段尾 106.9 在主持人下一问（106.96）之前。"
+}

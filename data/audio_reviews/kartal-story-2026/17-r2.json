@@ -1,0 +1,39 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=1TKV_Ywr8J8",
+  "source_sha256": "a2cdb555b5055f79daea4e3dba9448cd3b8b8790598345b31ade2beb700ef286",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T13:45:13.665540+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 279.2,
+  "reviewed_to": 295.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 279.42,
+      "end": 281.5,
+      "en": "And takes it with a thunderous forehand,",
+      "zh": "一记重炮正手拿下，"
+    },
+    {
+      "start": 283.04,
+      "end": 285.6,
+      "en": "and Sonay Kartal continues her comeback",
+      "zh": "卡塔尔继续她的复出之路，"
+    },
+    {
+      "start": 285.76,
+      "end": 289.08,
+      "en": "from that stress fracture that saw her miss six months of this season.",
+      "zh": "这个赛季她因应力性骨折缺席半年。"
+    },
+    {
+      "start": 290.7,
+      "end": 294.46,
+      "en": "Third round in Beijing is now matched with a third round appearance in Wuhan.",
+      "zh": "继北京之后，武汉又进第三轮。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/1TKV_Ywr8J8/small.en.json + medium.en.json",
+  "review_note": "WTA 官方集锦「Sonay Kartal vs. Belinda Bencic | 2026 Wuhan Round 2」（1TKV_Ywr8J8）：赛点一拍正手、她握拳、致意。两档逐词一致（medium 279.40–294.46），名字两档都转错，按官方标题写 Sonay Kartal。段首 279.2 在赛点那一拍之前（第一个赛点解说 267.82），段尾 295.3 在 295.56 切镜头之前（溶解 0.18 秒不跨切点）。比分 6-0 7-5：LTA 2026-10 稿。"
+}

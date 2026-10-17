@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=INkEB95UIa8",
+  "source_sha256": "4b02756b28f02a88d5a53c3f6291fb4c98d40a0d608781d7b90a6af1edb64b11",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-17T13:45:13.665540+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 14.0,
+  "reviewed_to": 28.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/INkEB95UIa8/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/INkEB95UIa8 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 14.0–28.5 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "英国网协 LTA 官方频道「Young Emma Raducanu vs. Sonay Kartal | 2011 U10's Epic Rally」（INkEB95UIa8）：同一个广角机位一镜到底（0–41 秒无切点，41 秒起是 LTA 片尾）。两档转写在 0–24 无词，24.30 和 31.84 两档各报一个 you，画面里没人对着镜头说话，按现场噪声处理。拉杜卡努 2021 美网冠军为公知事实（仓库已有多条）。"
+}
