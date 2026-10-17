@@ -1,6 +1,6 @@
 {
   "slug": "kartal-story-2026",
-  "checked_at": "2026-10-17T13:05:51Z",
+  "checked_at": "2026-10-17T13:16:32Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+18%",
   "backend": "edge-tts",
@@ -10,69 +10,84 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "d4d4069484e0e7c9": {
+    "f1227345b9cfbb35": {
       "segment": 2,
-      "spoken": 14.76,
-      "picture": 18.0
+      "spoken": 5.928,
+      "picture": 7.2
+    },
+    "09b7c5148f4e552b": {
+      "segment": 3,
+      "spoken": 8.088,
+      "picture": 9.35
     },
     "4baec4dccf9a9712": {
-      "segment": 3,
+      "segment": 4,
       "spoken": 5.928,
       "picture": 7.5
     },
     "e4e73822961b9b51": {
-      "segment": 4,
+      "segment": 5,
       "spoken": 10.152,
       "picture": 14.5
     },
     "6942aa8461cee3ed": {
-      "segment": 8,
+      "segment": 9,
       "spoken": 8.208,
       "picture": 9.8
     },
     "1cda23a1e94ed082": {
-      "segment": 9,
+      "segment": 10,
       "spoken": 9.48,
       "picture": 12.0
     },
     "53a4a19008553da0": {
-      "segment": 10,
+      "segment": 11,
       "spoken": 8.424,
       "picture": 9.9
     },
-    "ef749c23e319fafd": {
-      "segment": 11,
-      "spoken": 16.896,
-      "picture": 19.5
+    "bfa509c37cea1e23": {
+      "segment": 12,
+      "spoken": 6.432,
+      "picture": 8.7
     },
-    "71020b7ea57001ae": {
-      "segment": 14,
-      "spoken": 14.76,
-      "picture": 19.5
+    "840710aa49ea33dc": {
+      "segment": 13,
+      "spoken": 10.8,
+      "picture": 13.0
+    },
+    "97df67a435086fcb": {
+      "segment": 16,
+      "spoken": 5.424,
+      "picture": 7.8
+    },
+    "8691f276b47db941": {
+      "segment": 17,
+      "spoken": 8.952,
+      "picture": 12.0
     },
     "618650056af2a452": {
-      "segment": 17,
+      "segment": 20,
       "spoken": 12.792,
       "picture": 14.9
     },
     "c231267ac79c180e": {
-      "segment": 19,
+      "segment": 22,
       "spoken": 18.12,
       "picture": 19.0
     }
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "f84d1d683ee17767c966704c348a2e2221b73753738457471703b92e186f2638",
-    "request_count": 12,
+    "bundle_sha256": "e704f9219efde29924e9382e58791a48abe462c66ff18f11db5340892f3e99fe",
+    "request_count": 15,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-kartal-story-2026-f84d1d683ee17767",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-kartal-story-2026-f84d1d683ee17767/tts_bundle.zip",
+    "release_tag": "reel-tts-kartal-story-2026-e704f9219efde299",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-kartal-story-2026-e704f9219efde299/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39035056375"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39035805723"
   }
 }
