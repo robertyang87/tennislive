@@ -1,0 +1,25 @@
+{
+  "reviewer": "OpenAI root production agent",
+  "reviewed_at": "2026-10-17T14:30:42.511216+00:00",
+  "status": "pass_finite_actual_native_card_preview",
+  "spec_sha256": "e56fdfc711c9c231f200aaf4b6d6c3f803cc35d2dc9b730d44531d27c46782d2",
+  "ass_sha256": "67f76bdb1f2cbf975968f411615a1037e619117009b8846202654c0344684feb",
+  "actually_viewed_frames": 42,
+  "actually_viewed_walls": 7,
+  "originals_viewed": [
+    "caption-49.png",
+    "caption-70.png",
+    "caption-78.png"
+  ],
+  "blocking_findings": [],
+  "observations": [
+    "All five native card titles keep centered semantic two lines, separate from subtitle and brand.",
+    "All actual Chinese cue midpoints included; Beijing date/evening/source matchup and canonical long names remain readable in one line, no orphan characters.",
+    "Full stats correctly Medvedev-first 3-6/4-6,3/6aces,4/2DF,15/22W,21/22UE,2of6/4of7BP,61/73points.",
+    "Second-set caption ties real net volley/fall to third save; outlook correct final ADFvsJodar."
+  ],
+  "limitations": [
+    "Finite actual native preview only, not final encoded-movie QC or human listening.",
+    "Source segments reviewed independently; card stats intentionally uses full native stat layout without overlaying Chinese subtitle on table."
+  ]
+}

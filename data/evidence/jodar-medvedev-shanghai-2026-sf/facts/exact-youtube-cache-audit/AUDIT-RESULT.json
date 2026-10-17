@@ -1,0 +1,56 @@
+{
+  "checked_at": "2026-10-17T14:42:17.021938+00:00",
+  "requested_id": "0gX2hUan9Vc",
+  "requested_url": "https://www.youtube.com/watch?v=0gX2hUan9Vc",
+  "conclusion": "No existing exact-ID complete1080source/probe/native metadata evidence found in scoped GH repository/cache/artifact/release inventory. Do not substitute134s or156s shortversions as5minute requested video.",
+  "available_exact_id_media": null,
+  "scope": {
+    "all_actions_caches_scanned": 67,
+    "exact_id_or_4_urlhash_hits": 0,
+    "recent_releases_scanned": 100,
+    "exact_source_release_http_status": 404,
+    "recent_artifacts_scanned": 100,
+    "repository_artifacts_total": 2240,
+    "recent_artifacts_window": {
+      "newest": "2026-10-17T14:37:58Z",
+      "oldest": "2026-10-17T09:44:44Z"
+    },
+    "recent_runs_scanned": 100,
+    "repo_working_tree_and_scratch_records_searched": true,
+    "one_existing_orchestrator_log_read": {
+      "run_id": "39038576666",
+      "job_id": "117413270412",
+      "relevant_line": "2026-10-17T13:56:40.8085585Z [reel]90分 jodar-medvedev rafael jodar vs daniil medvedev（已做过）"
+    }
+  },
+  "found_related_assets": [
+    {
+      "id": "aE21b2-ef-Y",
+      "duration_seconds": 134.164898,
+      "native_height": 1080,
+      "type": "old existing source cache",
+      "is_requested_id": false
+    },
+    {
+      "id": "6407012514112",
+      "duration_seconds": 303.147,
+      "native_height": 720,
+      "type": "official approved Brightcove sourceRelease",
+      "is_requested_id": false
+    },
+    {
+      "id": "4593566",
+      "duration_seconds": 156,
+      "native_height": 1080,
+      "type": "official TennisTV free short metadata only",
+      "is_requested_id": false
+    }
+  ],
+  "limitations": [
+    "Recent100artifacts inspected by index only, not full2240artifact payloads; no assertion that every historical artifact has been unzipped.",
+    "All67current Actions caches and exact-source release tag checked; cache contents in unrelated entries not individually expanded.",
+    "Text matches of requested ID in workingtree are current user-request/blockedstatus records, not previous acquisition proof.",
+    "Existing Brightcove variants already known720maximum; no repeated blocked-channel or YouTube requests."
+  ],
+  "network_actions": "Read existing GitHub inventory/logs only; no YouTube request, no alternate route, no dispatch, no video download."
+}

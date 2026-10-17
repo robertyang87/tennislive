@@ -1,0 +1,1750 @@
+[
+  {
+    "job": {
+      "edit_id": "second_set_context",
+      "index": 6,
+      "char": "韦",
+      "intended": "wei2",
+      "status": "actual_pending",
+      "kind": "proper_name",
+      "name": "梅德韦杰夫",
+      "reference_key": "韦|wei2",
+      "reference_proxy_limits": [],
+      "reference_readings": [
+        "wei2",
+        "wei4"
+      ]
+    },
+    "actual_orig_mp3_sha256": "7947bf862a5f1504206b9e183e5d848474fcd73d97ffd7c8647f7dc67828bc45",
+    "audio": {
+      "ORIG": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/second_set_context-7947bf862a5f1504.mp3",
+      "A1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/ae603a934fd7ad6bd0517b4c.mp3",
+      "A2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/f7ec4dcbefd1a018e4335cc8.mp3",
+      "B1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/c490f68e2d491e3d592991ef.mp3",
+      "B2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/9c3a9101412f8cd88f1c615c.mp3"
+    },
+    "audio_sha256": {
+      "ORIG": "7947bf862a5f1504206b9e183e5d848474fcd73d97ffd7c8647f7dc67828bc45",
+      "A1": "473e9e4736457af1bcc54a0e83a2be238d02c7201618e7048460f373993b2693",
+      "A2": "1c80c240f80ec5b50842e45df953c261b571aeb43494347e2206c4849d6b2705",
+      "B1": "d564d90e70a545fc26c06d38b8544b82a732743ee9fdbe859eec59c9a5a46e82",
+      "B2": "216f074b6c8faf9d0a3e58e11b55653ccc50e64709002d3e606cf32489738ed5"
+    },
+    "reference_texts": {
+      "ORIG": "第二盘，梅德韦杰夫从零比二追到三比二，又被连拿三局。三比五，他连救三个赛点。第三次，梅总上网截击，霍达尔追球摔坐在地，悬念还没结束。",
+      "A1": "第二盘，梅德围杰夫从零比二追到三比二，又被连拿三局。三比五，他连救三个赛点。第三次，梅总上网截击，霍达尔追球摔坐在地，悬念还没结束。",
+      "A2": "第二盘，梅德帏杰夫从零比二追到三比二，又被连拿三局。三比五，他连救三个赛点。第三次，梅总上网截击，霍达尔追球摔坐在地，悬念还没结束。",
+      "B1": "第二盘，梅德卫杰夫从零比二追到三比二，又被连拿三局。三比五，他连救三个赛点。第三次，梅总上网截击，霍达尔追球摔坐在地，悬念还没结束。",
+      "B2": "第二盘，梅德喂杰夫从零比二追到三比二，又被连拿三局。三比五，他连救三个赛点。第三次，梅总上网截击，霍达尔追球摔坐在地，悬念还没结束。"
+    },
+    "windows": {
+      "ORIG": [
+        1.0850000000000002,
+        1.2349999999999999
+      ],
+      "A1": [
+        1.0650000000000002,
+        1.2149999999999999
+      ],
+      "A2": [
+        1.0850000000000002,
+        1.2349999999999999
+      ],
+      "B1": [
+        1.1150000000000002,
+        1.265
+      ],
+      "B2": [
+        1.1150000000000002,
+        1.285
+      ]
+    },
+    "alignment_notes": {
+      "ORIG": {
+        "native_token": "梅德韦杰夫",
+        "native_equal_split_candidate": [
+          1.1273412,
+          1.2782828
+        ],
+        "anchor": "A1",
+        "anchor_source": "ASR-assisted/native candidate; no single-character positive event available",
+        "anchor_native_token": "梅德围",
+        "anchor_window": [
+          1.07,
+          1.21
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      },
+      "A1": {
+        "native_token": "梅德围",
+        "native_equal_split_candidate": [
+          1.0613190000000001,
+          1.191041
+        ],
+        "anchor": "A1",
+        "anchor_source": "ASR-assisted/native candidate; no single-character positive event available",
+        "anchor_native_token": "梅德围",
+        "anchor_window": [
+          1.07,
+          1.21
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      },
+      "A2": {
+        "native_token": "梅德帏杰夫",
+        "native_equal_split_candidate": [
+          1.1320582,
+          1.2971498000000001
+        ],
+        "anchor": "A1",
+        "anchor_source": "ASR-assisted/native candidate; no single-character positive event available",
+        "anchor_native_token": "梅德围",
+        "anchor_window": [
+          1.07,
+          1.21
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      },
+      "B1": {
+        "native_token": "梅德卫杰夫",
+        "native_equal_split_candidate": [
+          1.1532824000000002,
+          1.3230906
+        ],
+        "anchor": "A1",
+        "anchor_source": "ASR-assisted/native candidate; no single-character positive event available",
+        "anchor_native_token": "梅德围",
+        "anchor_window": [
+          1.07,
+          1.21
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      },
+      "B2": {
+        "native_token": "喂",
+        "native_equal_split_candidate": [
+          1.1085,
+          1.2853750000000002
+        ],
+        "anchor": "A1",
+        "anchor_source": "ASR-assisted/native candidate; no single-character positive event available",
+        "anchor_native_token": "梅德围",
+        "anchor_window": [
+          1.07,
+          1.21
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      }
+    },
+    "nuclei": {
+      "ORIG": {
+        "core": [
+          1.08,
+          1.23
+        ],
+        "values": [
+          3.40200503632262,
+          3.1192622869025333,
+          2.6544843642825176,
+          2.0782924579098006,
+          1.474637290738078,
+          1.1732473403244863,
+          1.001052060413087,
+          0.6064863286899125,
+          0.3147982789317507,
+          0.27019494089537366,
+          0.3206995703458335,
+          0.4260557564353764,
+          0.7420713684146869,
+          1.221715701854904,
+          1.4793148851443845,
+          1.1994961953492296
+        ],
+        "curve": [
+          2.215633268485762,
+          1.9924153084172724,
+          1.6638085638646136,
+          1.2558313677820272,
+          0.7966067163089866,
+          0.3200368474892056,
+          0.06618871733331042,
+          -0.10375352220258172,
+          -0.30991941217845737,
+          -0.6105894443846466,
+          -0.8408694836674059,
+          -0.9020915622984179,
+          -0.8922535814123191,
+          -0.8379468853621974,
+          -0.7436836107709914,
+          -0.4941976013136412,
+          -0.14136713619677127,
+          0.14380674803466897,
+          0.23403391945591526,
+          0.01312442751237164
+        ],
+        "slope": -16.29217231385635,
+        "net_st": -2.2025088409733904
+      },
+      "A1": {
+        "core": [
+          1.06,
+          1.21
+        ],
+        "values": [
+          4.153197797336015,
+          3.8401910084007578,
+          3.4173252849335873,
+          2.638300959797094,
+          1.8126389286850881,
+          1.4067693262678644,
+          1.0937374164590268,
+          0.6900458790013699,
+          0.40288697710684085,
+          0.3635977076797654,
+          0.4863983821704596,
+          1.032766285449386,
+          1.8571566085296873,
+          2.2871176895598944,
+          2.3157525671898944,
+          2.18490273947863
+        ],
+        "curve": [
+          2.318300028728627,
+          2.071189405885003,
+          1.7604762419965871,
+          1.2954185544338075,
+          0.6730355020667581,
+          0.021197056452016638,
+          -0.3213206522297276,
+          -0.5928820790810168,
+          -0.8686418902928839,
+          -1.1750791424370208,
+          -1.4017835386695436,
+          -1.458892923213809,
+          -1.4131313203793987,
+          -1.2047183592582638,
+          -0.7587425187853543,
+          -0.1079080531956429,
+          0.2938132068887456,
+          0.4642767115335592,
+          0.4533074664327669,
+          0.35000497087124227
+        ],
+        "slope": -13.123287919570291,
+        "net_st": -1.9682950578573846
+      },
+      "A2": {
+        "core": [
+          1.08,
+          1.23
+        ],
+        "values": [
+          3.9435911232565193,
+          3.7328378651884995,
+          3.4085894998160136,
+          2.926714803895675,
+          2.2831862931450226,
+          1.6407729985813333,
+          1.1088435492190225,
+          0.8753976960950562,
+          0.8417234413865256,
+          0.9131127292281169,
+          1.0771392578205452,
+          1.5318759880459414,
+          2.0617796508107302,
+          2.5009401135471476,
+          2.6397036314287314,
+          2.5080309204387854
+        ],
+        "curve": [
+          1.7711081512786429,
+          1.6047240001723115,
+          1.3726321553633944,
+          1.058573745130644,
+          0.6526220670624325,
+          0.14457324278560169,
+          -0.3626538432482038,
+          -0.8116728414819697,
+          -1.1373591658506326,
+          -1.3006299342731917,
+          -1.3272148722009791,
+          -1.2819142283839462,
+          -1.181673466048083,
+          -0.975676153571701,
+          -0.6127173174706303,
+          -0.19437232055106035,
+          0.1666611816137485,
+          0.3868838859404641,
+          0.43950008871612967,
+          0.33554794846090896
+        ],
+        "slope": -9.44194171830122,
+        "net_st": -1.4355602028177339
+      },
+      "B1": {
+        "core": [
+          1.11,
+          1.26
+        ],
+        "values": [
+          5.6865563176285585,
+          5.763803081751337,
+          5.61921074931952,
+          5.173476382379088,
+          4.43685691376207,
+          4.238565963604947,
+          4.655563504960923,
+          4.785728653241713,
+          4.534098864933072,
+          3.9491675048263533,
+          3.3616435687473407,
+          2.782071695642255,
+          2.138023717514848,
+          1.5711767997864232,
+          1.0057748165148102,
+          0.5822025275641756
+        ],
+        "curve": [
+          1.3488448789450498,
+          1.4098291664104008,
+          1.3423802927125656,
+          1.1172813859737472,
+          0.7194566065455243,
+          0.1379149207952468,
+          -0.04696364608984485,
+          0.12032691510879395,
+          0.3589568499450319,
+          0.42152986842045265,
+          0.22287477238731504,
+          -0.2038287675076657,
+          -0.666844745684056,
+          -1.12858678391119,
+          -1.5895370050479594,
+          -2.0979959351485435,
+          -2.5576963007866125,
+          -3.004598631853553,
+          -3.4211097356319895,
+          -3.755508911119333
+        ],
+        "slope": -34.561345645259706,
+        "net_st": -5.104353790064383
+      },
+      "B2": {
+        "core": [
+          1.11,
+          1.28
+        ],
+        "values": [
+          4.173173141650971,
+          4.229227744973087,
+          4.256611436464104,
+          4.22827035419592,
+          4.093058421002824,
+          2.7527978524674586,
+          4.321155230876177,
+          4.643136322271515,
+          4.576439355841454,
+          4.440803767624526,
+          4.250085444297047,
+          3.9289203983446193,
+          3.5756590557624195,
+          3.2155742646666843,
+          2.5246692229708776,
+          2.1031830555751068,
+          1.4500744157355,
+          1.0484807004282386
+        ],
+        "curve": [
+          0.0400573603240737,
+          0.09021147908596644,
+          0.11773066745488732,
+          0.10410438832213328,
+          0.016873979967756247,
+          -0.6749176296302989,
+          -0.8025020526035956,
+          0.2727713157059475,
+          0.4994894409819766,
+          0.43618485934524437,
+          0.31482670146694103,
+          0.14708308244290907,
+          -0.11967826562637596,
+          -0.42730780987629874,
+          -0.7469750366674967,
+          -1.2084489026373957,
+          -1.7415474533231055,
+          -2.1674292815074967,
+          -2.7253143882553195,
+          -3.084635080898659
+        ],
+        "slope": -15.186033495699867,
+        "net_st": -3.1246924412227326
+      }
+    },
+    "calibrations": [
+      {
+        "component": "comb",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.3128044179214497
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.3330414434035785
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.2538276547610178
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.2074201015385929
+          }
+        },
+        "selftest_pass": true,
+        "score": 0.322616315361147,
+        "verdict": "correct"
+      },
+      {
+        "component": "spec",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": 0.060455576217175316
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "uncertain",
+            "score": 0.0622301601024542
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": -0.04466997097090972
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": -0.042892098527548654
+          }
+        },
+        "selftest_pass": false,
+        "score": 0.09739689498846522,
+        "verdict": "pending"
+      },
+      {
+        "component": "f0",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.7209796271634216
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.7055741172970764
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.5044542439170874
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.4068605107063461
+          }
+        },
+        "selftest_pass": true,
+        "score": 0.6155450343098005,
+        "verdict": "correct"
+      },
+      {
+        "component": "nucleus_curve",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.7641010851466037
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.7516537774945129
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.2946177520627193
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.34756654740569093
+          }
+        },
+        "selftest_pass": true,
+        "score": 0.5448821438607033,
+        "verdict": "correct"
+      },
+      {
+        "component": "nucleus_slope",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "misread",
+            "score": -0.2817853000727156
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.21884877719190546
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": -0.05054092770174563
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "correct",
+            "score": 0.807562270563553
+          }
+        },
+        "selftest_pass": false,
+        "score": -0.4825109651161452,
+        "verdict": "pending"
+      }
+    ],
+    "actual_distances": {
+      "A1": {
+        "spec": 3.0062923431396484,
+        "f0": 0.49225909699838577,
+        "comb": 1.99540526856821,
+        "voiced_frames": 16
+      },
+      "A2": {
+        "spec": 3.016171932220459,
+        "f0": 0.7460478277702033,
+        "comb": 2.254133793880433,
+        "voiced_frames": 16
+      },
+      "B1": {
+        "spec": 4.094407081604004,
+        "f0": 2.4508316057367194,
+        "comb": 4.498035146538721,
+        "voiced_frames": 16
+      },
+      "B2": {
+        "spec": 3.65509033203125,
+        "f0": 2.0685562958508075,
+        "comb": 3.8961014618664325,
+        "voiced_frames": 18
+      }
+    },
+    "cv_support": true,
+    "cv_actual_positive": 3.0062923431396484,
+    "cv_positive_pair_spread": 2.9572248458862305,
+    "verdict": "correct",
+    "manual_listening_claimed": false,
+    "method": "Already-existing actual native/current audible controls; unprompted ASR single-character times are location hints only, intersected with native token; target-local MFCC DTW; independently recalibrated CV/F0 and nuclei with two-sided LOO; previous failures retained",
+    "limitations": [
+      "Only the one currently unresolved target letter was changed in each full utterance; all neighbours exactly native context.",
+      "Monophonic or explicitly contextual homophones remain TTS-generated lexical controls; no human listening.",
+      "All failed/contrary LOO components remain retained; no forced pass."
+    ],
+    "confidence": "low",
+    "prior_raw_status": "pending",
+    "window_refinement": "native-short-token-to-full-utterance-DTW"
+  },
+  {
+    "job": {
+      "edit_id": "outlook",
+      "index": 25,
+      "char": "多",
+      "intended": "duo1",
+      "status": "actual_pending",
+      "kind": "proper_name",
+      "name": "达维多维奇",
+      "reference_key": "多|duo1",
+      "reference_proxy_limits": [],
+      "reference_readings": [
+        "duo1",
+        "duo4"
+      ]
+    },
+    "actual_orig_mp3_sha256": "cf223c0d0c5919c259ba5e2c4fe06ae6a2cb4f6da164aed2cc9017607cc0003f",
+    "audio": {
+      "ORIG": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/outlook-cf223c0d0c5919c2.mp3",
+      "A1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/51d6b70d9dac94636b30223f.mp3",
+      "A2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/5d4446caf930794cc1498693.mp3",
+      "B1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/0f93241bb3ce024aa7d3d447.mp3",
+      "B2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/255c57339174d9d8355af45a.mp3"
+    },
+    "audio_sha256": {
+      "ORIG": "cf223c0d0c5919c259ba5e2c4fe06ae6a2cb4f6da164aed2cc9017607cc0003f",
+      "A1": "36869184d83c385c567e037f2cac43ff4bae7146f5b2a237fc89720f2507b1ee",
+      "A2": "2a8ab4473a8860125b830a8b24853c07c6948e18b1c675140061515bd7cf964a",
+      "B1": "d48a5763906b6d0b1c5370259f60a726dfacd760e3cebd4f05b3ab7dc5dd6d81",
+      "B2": "8cf21bae2bc1486104de19c8b75ad8d46f6f451684a35e0609bba287f383bf91"
+    },
+    "reference_texts": {
+      "ORIG": "这一站先放下，下一站再来。上海决赛，霍达尔对阵达维多维奇·福基纳。两位西班牙球员会师，谁能把这一周走到最后？",
+      "A1": "这一站先放下，下一站再来。上海决赛，霍达尔对阵达维咄维奇·福基纳。两位西班牙球员会师，谁能把这一周走到最后？",
+      "A2": "这一站先放下，下一站再来。上海决赛，霍达尔对阵达维哆维奇·福基纳。两位西班牙球员会师，谁能把这一周走到最后？",
+      "B1": "这一站先放下，下一站再来。上海决赛，霍达尔对阵达维剁维奇·福基纳。两位西班牙球员会师，谁能把这一周走到最后？",
+      "B2": "这一站先放下，下一站再来。上海决赛，霍达尔对阵达维舵维奇·福基纳。两位西班牙球员会师，谁能把这一周走到最后？"
+    },
+    "windows": {
+      "ORIG": [
+        4.985,
+        5.155
+      ],
+      "A1": [
+        4.985,
+        5.154999999999999
+      ],
+      "A2": [
+        4.985,
+        5.155
+      ],
+      "B1": [
+        5.005,
+        5.155
+      ],
+      "B2": [
+        5.085,
+        5.265
+      ]
+    },
+    "alignment_notes": {
+      "ORIG": {
+        "native_token": "达维多维奇",
+        "native_equal_split_candidate": [
+          5.033033199999999,
+          5.1910498
+        ],
+        "anchor": "A1",
+        "anchor_source": "ASR-assisted/native candidate; no single-character positive event available",
+        "anchor_native_token": "达维咄维奇",
+        "anchor_window": [
+          4.99,
+          5.1499999999999995
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      },
+      "A1": {
+        "native_token": "达维咄维奇",
+        "native_equal_split_candidate": [
+          5.033033199999999,
+          5.1910498
+        ],
+        "anchor": "A1",
+        "anchor_source": "ASR-assisted/native candidate; no single-character positive event available",
+        "anchor_native_token": "达维咄维奇",
+        "anchor_window": [
+          4.99,
+          5.1499999999999995
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      },
+      "A2": {
+        "native_token": "达维哆维奇",
+        "native_equal_split_candidate": [
+          5.033033199999999,
+          5.1910498
+        ],
+        "anchor": "A1",
+        "anchor_source": "ASR-assisted/native candidate; no single-character positive event available",
+        "anchor_native_token": "达维咄维奇",
+        "anchor_window": [
+          4.99,
+          5.1499999999999995
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      },
+      "B1": {
+        "native_token": "达维剁维奇",
+        "native_equal_split_candidate": [
+          5.0283164,
+          5.1839746
+        ],
+        "anchor": "A1",
+        "anchor_source": "ASR-assisted/native candidate; no single-character positive event available",
+        "anchor_native_token": "达维咄维奇",
+        "anchor_window": [
+          4.99,
+          5.1499999999999995
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      },
+      "B2": {
+        "native_token": "达维舵",
+        "native_equal_split_candidate": [
+          5.078610666666666,
+          5.224041
+        ],
+        "anchor": "A1",
+        "anchor_source": "ASR-assisted/native candidate; no single-character positive event available",
+        "anchor_native_token": "达维咄维奇",
+        "anchor_window": [
+          4.99,
+          5.1499999999999995
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      }
+    },
+    "nuclei": {
+      "ORIG": {
+        "core": [
+          4.98,
+          5.15
+        ],
+        "values": [
+          -0.8114410188728263,
+          -0.3769255568727603,
+          -0.07700581498447967,
+          0.009784976004023171,
+          -0.10148095914406419,
+          -0.5954503971233853,
+          2.636122453639219,
+          3.5723671265311854,
+          3.2101054084488645,
+          2.6630214959639957,
+          2.1883117799153418,
+          1.9186059451369886,
+          1.7017441004898863,
+          1.4648083038616377,
+          1.1192869385625883,
+          0.6233096736124981,
+          0.1127968116036504,
+          -0.33193996859234165
+        ],
+        "curve": [
+          -1.6827393249603695,
+          -1.2939623326445209,
+          -1.0114451193642926,
+          -0.8889209482904157,
+          -0.9259304504324127,
+          -1.20676478848497,
+          -0.2761692318773381,
+          2.011204324628509,
+          2.6438696017990653,
+          2.310013212230539,
+          1.8205170800072354,
+          1.3919676395196912,
+          1.1182828587279596,
+          0.9103422634828547,
+          0.7057427435453701,
+          0.4480273176481786,
+          0.09136423301712199,
+          -0.3554650244769071,
+          -0.80531589239926,
+          -1.2032382746798849
+        ],
+        "slope": 1.7856480895642999,
+        "net_st": 0.4795010502804846
+      },
+      "A1": {
+        "core": [
+          4.98,
+          5.15
+        ],
+        "values": [
+          -0.8131723381677802,
+          -0.38903835299902934,
+          -0.08970672070512853,
+          -0.008168687771006766,
+          -0.11440830924701118,
+          -0.5733663192217033,
+          2.649349334649096,
+          3.6104557512301545,
+          3.2300150731856387,
+          2.655756210621255,
+          2.1735489795999756,
+          1.901395053684758,
+          1.6928154483627624,
+          1.4643605934639012,
+          1.113662642782451,
+          0.6150048628192222,
+          0.10679195370840411,
+          -0.33929847240413746
+        ],
+        "curve": [
+          -1.6775060909686168,
+          -1.2980177884492081,
+          -1.0170576592520495,
+          -0.8982512930773555,
+          -0.9340095898474249,
+          -1.1961432246674386,
+          -0.25038377849119353,
+          2.037938323053801,
+          2.6860524176854472,
+          2.335457169723519,
+          1.821646608481702,
+          1.3853532106446043,
+          1.108680755072137,
+          0.9053268133121349,
+          0.7082422982467357,
+          0.45236454563929573,
+          0.09185801209848962,
+          -0.3563210813733648,
+          -0.8044986860516471,
+          -1.203632225204974
+        ],
+        "slope": 1.8433355246284726,
+        "net_st": 0.47387386576364277
+      },
+      "A2": {
+        "core": [
+          4.98,
+          5.15
+        ],
+        "values": [
+          -0.8505364482911513,
+          -0.3942831972851395,
+          -0.08904983244854492,
+          0.0,
+          -0.0661052534716382,
+          -0.6036499875039771,
+          2.565066153672377,
+          3.533396936216749,
+          3.1975483397395816,
+          2.6491139325292092,
+          2.156928802282744,
+          1.873490739997247,
+          1.6687997770748524,
+          1.4457686760386306,
+          1.0877945771126436,
+          0.585774593540827,
+          0.07613995233362036,
+          -0.37008654216351644
+        ],
+        "curve": [
+          -1.6873210336178865,
+          -1.2790944406125075,
+          -0.9900940735303527,
+          -0.8649055850473284,
+          -0.8750560478629469,
+          -1.1575162917610602,
+          -0.2730128366078459,
+          1.9831054584888976,
+          2.643583625130461,
+          2.331898785612301,
+          1.8411943160030202,
+          1.3978576585738716,
+          1.1112951184298532,
+          0.9074276517721575,
+          0.7146304017290529,
+          0.4582581543220057,
+          0.09247736539480844,
+          -0.3583014951979511,
+          -0.8076158429401816,
+          -1.2068711274902517
+        ],
+        "slope": 1.9463620445038374,
+        "net_st": 0.48044990612763483
+      },
+      "B1": {
+        "core": [
+          5.08,
+          5.15
+        ],
+        "values": [
+          2.0969093760263053,
+          1.8864020211754866,
+          1.540495025601036,
+          1.0384838688363196,
+          0.474989539590724,
+          -0.009399869592741972,
+          -0.380520387067357,
+          -0.9672662392323184
+        ],
+        "curve": [
+          1.3401726718127835,
+          1.2626173305519557,
+          1.1850619892911276,
+          1.0932540542699174,
+          0.9658146348477513,
+          0.8383752154255852,
+          0.6780717620686265,
+          0.4931202832605731,
+          0.30816880445251976,
+          0.10380158696629393,
+          -0.10380158696629393,
+          -0.3072413440535067,
+          -0.4857006000684677,
+          -0.6641598560834288,
+          -0.8247345502496242,
+          -0.9614631619507982,
+          -1.098191773651972,
+          -1.291663894482184,
+          -1.5078334189640121,
+          -1.7240029434458402
+        ],
+        "slope": -47.34759456633128,
+        "net_st": -3.0641756152586237
+      },
+      "B2": {
+        "core": [
+          5.17,
+          5.26
+        ],
+        "values": [
+          7.32616315335247,
+          6.711375487287134,
+          5.979843662762324,
+          4.935483957352586,
+          3.6924267034758866,
+          2.661890302875502,
+          1.5817146064542955,
+          0.30188510746141084,
+          -0.7113240295463634,
+          -1.7046870858322611
+        ],
+        "curve": [
+          4.149004650176775,
+          3.8577894399353,
+          3.5665742296938254,
+          3.2262035843115195,
+          2.8796885095366096,
+          2.4179210575935683,
+          1.9232243550310608,
+          1.3657810582158287,
+          0.7769644642742344,
+          0.24407441066851226,
+          -0.24407441066851177,
+          -0.742673610073078,
+          -1.2543357820620704,
+          -1.7975222386676433,
+          -2.403757264506379,
+          -2.981926989083524,
+          -3.4618681592451006,
+          -3.9407647988423675,
+          -4.411305193925162,
+          -4.8818455890079555
+        ],
+        "slope": -106.82483966376117,
+        "net_st": -9.03085023918473
+      }
+    },
+    "calibrations": [
+      {
+        "component": "comb",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.6484061786986625
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.6406611656223236
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "correct",
+            "score": 0.3306479979122533
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": 0.02129830533093171
+          }
+        },
+        "selftest_pass": false,
+        "score": 0.6187240051466668,
+        "verdict": "pending"
+      },
+      {
+        "component": "spec",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.5261312302412656
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.5154502172532072
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": 0.08806919342881667
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": 0.026541419563952652
+          }
+        },
+        "selftest_pass": false,
+        "score": 0.4804579320865425,
+        "verdict": "pending"
+      },
+      {
+        "component": "f0",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9385804244827997
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9373019175377044
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "correct",
+            "score": 0.5516652722939499
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": 0.019407153767726074
+          }
+        },
+        "selftest_pass": false,
+        "score": 0.9737218489533145,
+        "verdict": "pending"
+      },
+      {
+        "component": "nucleus_curve",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9784944218333197
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.978365571366128
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": -0.005570502173640416
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.3155804158873357
+          }
+        },
+        "selftest_pass": false,
+        "score": 0.9885373191701449,
+        "verdict": "pending"
+      },
+      {
+        "component": "nucleus_slope",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9958199127455426
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9958286310885528
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "uncertain",
+            "score": 0.09465802649798381
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.2925499249836438
+          }
+        },
+        "selftest_pass": false,
+        "score": 0.9976545499360348,
+        "verdict": "pending"
+      }
+    ],
+    "actual_distances": {
+      "A1": {
+        "spec": 1.0909638404846191,
+        "f0": 0.01109143921081385,
+        "comb": 0.5565733594531235,
+        "voiced_frames": 18
+      },
+      "A2": {
+        "spec": 1.073779821395874,
+        "f0": 0.027035599422559835,
+        "comb": 0.5639255101204969,
+        "voiced_frames": 18
+      },
+      "B1": {
+        "spec": 3.0597827434539795,
+        "f0": 0.8330653046262196,
+        "comb": 2.3629566763532095,
+        "voiced_frames": 16
+      },
+      "B2": {
+        "spec": 3.4460296630859375,
+        "f0": 2.7137127918320445,
+        "comb": 4.436727623375013,
+        "voiced_frames": 17
+      }
+    },
+    "cv_support": true,
+    "cv_actual_positive": 1.073779821395874,
+    "cv_positive_pair_spread": 0.9690154194831848,
+    "verdict": "pending",
+    "manual_listening_claimed": false,
+    "method": "Already-existing actual native/current audible controls; unprompted ASR single-character times are location hints only, intersected with native token; target-local MFCC DTW; independently recalibrated CV/F0 and nuclei with two-sided LOO; previous failures retained",
+    "limitations": [
+      "Only the one currently unresolved target letter was changed in each full utterance; all neighbours exactly native context.",
+      "Monophonic or explicitly contextual homophones remain TTS-generated lexical controls; no human listening.",
+      "All failed/contrary LOO components remain retained; no forced pass."
+    ],
+    "prior_raw_status": "pending",
+    "window_refinement": "native-short-token-to-full-utterance-DTW",
+    "reason": "No calibrated tone component."
+  },
+  {
+    "job": {
+      "edit_id": "full_stats",
+      "index": 51,
+      "char": "只",
+      "word": "只",
+      "intended": "zhi3",
+      "live": [
+        "zhi3",
+        "zhi1"
+      ],
+      "defaults": [
+        "zhi3",
+        "zhi1"
+      ],
+      "status": "actual_pending",
+      "kind": "polyphone",
+      "reference_key": "只|zhi3",
+      "reference_proxy_limits": [],
+      "reference_readings": [
+        "zhi3",
+        "zhi1"
+      ]
+    },
+    "actual_orig_mp3_sha256": "e4caeb528c2dd683d8ef42a25d2776e9dcf5548dcde705df6795c5b08540d056",
+    "audio": {
+      "ORIG": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/full_stats-e4caeb528c2dd683.mp3",
+      "A1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/a59f0de4ab6610d11fd05877.mp3",
+      "A2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/6d89d154a0a0494d47859394.mp3",
+      "B1": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/b6bcc4956428133325b09e7b.mp3",
+      "B2": "/workspace/scratch/jodar-medvedev-sf-voice/reference-audio/de18a790636a2ae0067cf28b.mp3"
+    },
+    "audio_sha256": {
+      "ORIG": "e4caeb528c2dd683d8ef42a25d2776e9dcf5548dcde705df6795c5b08540d056",
+      "A1": "a093a7629c917d30b37bc548841e5f738c8bc5db77d3477e09957d51f7a7d00c",
+      "A2": "3a10b0f848fe3c72efc8165e11169cd065e315208ce0ccbd6ee51ed0123cbd8e",
+      "B1": "982a5f0ba95d9f011e881db7e1b3afe7dfa34f2bcc64534e302a784854ab4704",
+      "B2": "051982b4eef7fb42988ae4f655cd2564204582558b934cf5b2e6e51ed92cd3b8"
+    },
+    "reference_texts": {
+      "ORIG": "第四个赛点，霍达尔正手穿越得分。制胜分，梅德韦杰夫十五比二十二；非受迫失误，二十一比二十二。六个破发点只兑现两个，坚持没能变成逆转。",
+      "A1": "第四个赛点，霍达尔正手穿越得分。制胜分，梅德韦杰夫十五比二十二；非受迫失误，二十一比二十二。六个破发点咫兑现两个，坚持没能变成逆转。",
+      "A2": "第四个赛点，霍达尔正手穿越得分。制胜分，梅德韦杰夫十五比二十二；非受迫失误，二十一比二十二。六个破发点址兑现两个，坚持没能变成逆转。",
+      "B1": "第四个赛点，霍达尔正手穿越得分。制胜分，梅德韦杰夫十五比二十二；非受迫失误，二十一比二十二。六个破发点卮兑现两个，坚持没能变成逆转。",
+      "B2": "第四个赛点，霍达尔正手穿越得分。制胜分，梅德韦杰夫十五比二十二；非受迫失误，二十一比二十二。六个破发点栀兑现两个，坚持没能变成逆转。"
+    },
+    "windows": {
+      "ORIG": [
+        10.115,
+        10.435
+      ],
+      "A1": [
+        10.053958,
+        10.217249
+      ],
+      "A2": [
+        10.045,
+        10.225000000000001
+      ],
+      "B1": [
+        10.055,
+        10.225000000000001
+      ],
+      "B2": [
+        10.065,
+        10.235000000000001
+      ]
+    },
+    "alignment_notes": {
+      "ORIG": {
+        "native_token": "只",
+        "native_equal_split_candidate": [
+          10.224041,
+          10.412707
+        ],
+        "anchor": "A1",
+        "anchor_source": "exact native one-character positive reference token",
+        "anchor_native_token": "咫",
+        "anchor_window": [
+          10.058958,
+          10.212249
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      },
+      "A1": {
+        "native_token": "咫",
+        "native_equal_split_candidate": [
+          10.058958,
+          10.212249
+        ],
+        "anchor": "A1",
+        "anchor_source": "exact native one-character positive reference token",
+        "anchor_native_token": "咫",
+        "anchor_window": [
+          10.058958,
+          10.212249
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      },
+      "A2": {
+        "native_token": "址",
+        "native_equal_split_candidate": [
+          10.058958,
+          10.212249
+        ],
+        "anchor": "A1",
+        "anchor_source": "exact native one-character positive reference token",
+        "anchor_native_token": "咫",
+        "anchor_window": [
+          10.058958,
+          10.212249
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      },
+      "B1": {
+        "native_token": "卮",
+        "native_equal_split_candidate": [
+          10.058958,
+          10.200458000000001
+        ],
+        "anchor": "A1",
+        "anchor_source": "exact native one-character positive reference token",
+        "anchor_native_token": "咫",
+        "anchor_window": [
+          10.058958,
+          10.212249
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      },
+      "B2": {
+        "native_token": "栀",
+        "native_equal_split_candidate": [
+          10.07075,
+          10.212250000000001
+        ],
+        "anchor": "A1",
+        "anchor_source": "exact native one-character positive reference token",
+        "anchor_native_token": "咫",
+        "anchor_window": [
+          10.058958,
+          10.212249
+        ],
+        "method": "Full-current-utterance MFCC DTW transfers genuine short native token; no synthesis or original byte changes."
+      }
+    },
+    "nuclei": {
+      "ORIG": {
+        "core": [
+          10.370000000000001,
+          10.43
+        ],
+        "values": [
+          -0.8128249810596975,
+          -0.8466197086718257,
+          -0.8575404523486023,
+          -0.783350445572423,
+          -0.5850309784005852,
+          -0.41047935786956335,
+          -0.2710662383818563
+        ],
+        "curve": [
+          -0.029474535487274522,
+          -0.040146554733209744,
+          -0.050818573979144965,
+          -0.06149059322508019,
+          -0.06614314301434394,
+          -0.06959179891227342,
+          -0.07304045481020288,
+          -0.05857105798119425,
+          -0.03514263478871655,
+          -0.011714211596238859,
+          0.03131360007976383,
+          0.09394080023929163,
+          0.1565680003988193,
+          0.21669332196457688,
+          0.2718148863427944,
+          0.32693645072101185,
+          0.38020862030747576,
+          0.4242338159351727,
+          0.46825901156286964,
+          0.5122842071905667
+        ],
+        "slope": 10.90350877005679,
+        "net_st": 0.5417587426778412
+      },
+      "A1": {
+        "core": [
+          10.18,
+          10.21
+        ],
+        "values": [
+          -5.30445614949772,
+          -5.755221522586739,
+          -6.033594113050539,
+          -5.978276985816553
+        ],
+        "curve": [
+          0.5622931047039259,
+          0.49111962474250187,
+          0.41994614478107783,
+          0.34877266481965385,
+          0.27759918485822976,
+          0.20642570489680578,
+          0.13525222493538175,
+          0.08222535367134917,
+          0.03827178675601238,
+          -0.005681780159324412,
+          -0.04963534707466119,
+          -0.09358891398999805,
+          -0.13754248090533477,
+          -0.16393343109973554,
+          -0.1551991478522641,
+          -0.1464648646047927,
+          -0.13773058135732127,
+          -0.1289962981098499,
+          -0.12026201486237846,
+          -0.11152773161490703
+        ],
+        "slope": -25.148976795167933,
+        "net_st": -0.6738208363188329
+      },
+      "A2": {
+        "core": [
+          10.18,
+          10.22
+        ],
+        "values": [
+          -5.308389377299276,
+          -5.759154750388294,
+          -6.037527340852095,
+          -5.982210213618109,
+          -5.892998067056368
+        ],
+        "curve": [
+          0.5846086897570917,
+          0.48971071647519315,
+          0.3948127431932946,
+          0.29991476991139615,
+          0.20501679662949762,
+          0.11919212769629474,
+          0.06058737180917882,
+          0.001982615922062919,
+          -0.056622139965053,
+          -0.11522689585216891,
+          -0.13870641829741262,
+          -0.12706070730078406,
+          -0.11541499630415551,
+          -0.10376928530752697,
+          -0.0921235743108984,
+          -0.0751260181572558,
+          -0.05634451361794186,
+          -0.03756300907862793,
+          -0.018781504539313973,
+          0.0
+        ],
+        "slope": -12.883995202708475,
+        "net_st": -0.5846086897570917
+      },
+      "B1": {
+        "core": [
+          10.18,
+          10.22
+        ],
+        "values": [
+          1.581861548293002,
+          1.7639221030428134,
+          1.9194354772916986,
+          2.058615690410261,
+          2.1473095103593423
+        ],
+        "curve": [
+          -0.33757392899869654,
+          -0.299245391156631,
+          -0.2609168533145655,
+          -0.2225883154724999,
+          -0.18425977763043438,
+          -0.1473284598147334,
+          -0.11458880207812597,
+          -0.08184914434151855,
+          -0.04910948660491114,
+          -0.016369828868303737,
+          0.014650548749322345,
+          0.043951646247967095,
+          0.07325274374661178,
+          0.10255384124525647,
+          0.13185493874390122,
+          0.1531845004789437,
+          0.17185688362611864,
+          0.19052926677329363,
+          0.20920164992046864,
+          0.22787403306764364
+        ],
+        "slope": 14.435439210014783,
+        "net_st": 0.5654479620663402
+      },
+      "B2": {
+        "core": [
+          10.19,
+          10.23
+        ],
+        "values": [
+          1.7634039933048378,
+          1.7849896655254476,
+          1.9318162128277239,
+          2.1832339401146346,
+          2.419566590359194
+        ],
+        "curve": [
+          -0.1684122195228861,
+          -0.16386786747644191,
+          -0.15932351542999776,
+          -0.15477916338355358,
+          -0.15023481133710942,
+          -0.13909883428636702,
+          -0.1081879822227299,
+          -0.0772771301590928,
+          -0.04636627809545568,
+          -0.01545542603181857,
+          0.02646502392493794,
+          0.07939507177481393,
+          0.13232511962468982,
+          0.1852551674745657,
+          0.23818521532444167,
+          0.28873340890447274,
+          0.33848765106122203,
+          0.38824189321797137,
+          0.4379961353747208,
+          0.4877503775314702
+        ],
+        "slope": 18.15813932790915,
+        "net_st": 0.6561625970543563
+      }
+    },
+    "calibrations": [
+      {
+        "component": "comb",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9303484150243282
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9292278223760165
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.7371204549952965
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.7429196522519915
+          }
+        },
+        "selftest_pass": true,
+        "score": -0.27979418915217175,
+        "verdict": "pending"
+      },
+      {
+        "component": "spec",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.7472131689440389
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.7383113297988526
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.2040540561362675
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.24165108263312554
+          }
+        },
+        "selftest_pass": true,
+        "score": -0.05325829361067593,
+        "verdict": "pending"
+      },
+      {
+        "component": "f0",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9897512859735986
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9896484346981546
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.9794286270442549
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.979637868961665
+          }
+        },
+        "selftest_pass": true,
+        "score": -0.39981392726468407,
+        "verdict": "pending"
+      },
+      {
+        "component": "nucleus_curve",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.6717251057622026
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.6341603583500302
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.5352211601684528
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.5764631948122216
+          }
+        },
+        "selftest_pass": true,
+        "score": -0.7368328297438209,
+        "verdict": "pending"
+      },
+      {
+        "component": "nucleus_slope",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.5268997457738178
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.3803126164168431
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.7601517953462527
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.7858353042358733
+          }
+        },
+        "selftest_pass": true,
+        "score": -0.741434585606714,
+        "verdict": "pending"
+      }
+    ],
+    "actual_distances": {
+      "A1": {
+        "spec": 4.889603137969971,
+        "f0": 6.052337150220681,
+        "comb": 8.497138719205665,
+        "voiced_frames": 7
+      },
+      "A2": {
+        "spec": 4.956325054168701,
+        "f0": 5.9927504024913185,
+        "comb": 8.470912929575668,
+        "voiced_frames": 7
+      },
+      "B1": {
+        "spec": 4.395114898681641,
+        "f0": 2.5694595966640597,
+        "comb": 4.76701704600488,
+        "voiced_frames": 7
+      },
+      "B2": {
+        "spec": 4.611896991729736,
+        "f0": 2.7110090706489878,
+        "comb": 5.016957566513856,
+        "voiced_frames": 8
+      }
+    },
+    "cv_support": false,
+    "cv_actual_positive": 4.889603137969971,
+    "cv_positive_pair_spread": 0.659104585647583,
+    "verdict": "pending",
+    "manual_listening_claimed": false,
+    "method": "Already-existing actual native/current audible controls; unprompted ASR single-character times are location hints only, intersected with native token; target-local MFCC DTW; independently recalibrated CV/F0 and nuclei with two-sided LOO; previous failures retained",
+    "limitations": [
+      "Only the one currently unresolved target letter was changed in each full utterance; all neighbours exactly native context.",
+      "Monophonic or explicitly contextual homophones remain TTS-generated lexical controls; no human listening.",
+      "All failed/contrary LOO components remain retained; no forced pass."
+    ],
+    "prior_raw_status": "pending",
+    "window_refinement": "native-short-token-to-full-utterance-DTW",
+    "reason": "Calibrated reverse support remains unresolved.",
+    "contradictory_calibrated_components": [
+      {
+        "component": "comb",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9303484150243282
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9292278223760165
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.7371204549952965
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.7429196522519915
+          }
+        },
+        "selftest_pass": true,
+        "score": -0.27979418915217175,
+        "verdict": "pending"
+      },
+      {
+        "component": "f0",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9897512859735986
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.9896484346981546
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.9794286270442549
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.979637868961665
+          }
+        },
+        "selftest_pass": true,
+        "score": -0.39981392726468407,
+        "verdict": "pending"
+      },
+      {
+        "component": "nucleus_curve",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.6717251057622026
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.6341603583500302
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.5352211601684528
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.5764631948122216
+          }
+        },
+        "selftest_pass": true,
+        "score": -0.7368328297438209,
+        "verdict": "pending"
+      },
+      {
+        "component": "nucleus_slope",
+        "selftest_loo": {
+          "A1": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.5268997457738178
+          },
+          "A2": {
+            "expect": "correct",
+            "got": "correct",
+            "score": 0.3803126164168431
+          },
+          "B1": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.7601517953462527
+          },
+          "B2": {
+            "expect": "misread",
+            "got": "misread",
+            "score": -0.7858353042358733
+          }
+        },
+        "selftest_pass": true,
+        "score": -0.741434585606714,
+        "verdict": "pending"
+      }
+    ]
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "slug": "jodar-medvedev-shanghai-2026-sf",
+  "reviewed_at": "2026-10-17T14:15:33.646863+00:00",
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/evidence/jodar-medvedev-shanghai-2026-sf/source/cold_open-audio.json",
+      "transcript_sha256": "717938a43424a50c4805fc4a6e60760a1f022c2fd0afccce683f21baefed30cc"
+    },
+    {
+      "index": 2,
+      "transcript_path": "data/evidence/jodar-medvedev-shanghai-2026-sf/source/first_set_break-audio.json",
+      "transcript_sha256": "d68ddd695552a6b931060d60c23aa1b0aa6f55af03c95d37b6f1a92dc1251243"
+    },
+    {
+      "index": 4,
+      "transcript_path": "data/evidence/jodar-medvedev-shanghai-2026-sf/source/first_set_close-audio.json",
+      "transcript_sha256": "81838adc9041fd1bb48ecbc43b1b4610fa85c48bcb1e1cb5fb76d2674994d7d2"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/evidence/jodar-medvedev-shanghai-2026-sf/source/three_saves_and_ending-audio.json",
+      "transcript_sha256": "d0c8705e75d281e981fc02f6842a5f106680baa879b31796cd44c0aba5f38169"
+    }
+  ],
+  "plan_sha256": "b0eae6fd9781e22f4918b7dbc4bad57904efb17594a207b3ec2a838ae38789fa",
+  "_review_method": "Actual same-MP4 full small.en/medium.en ASR word cross-check with finite original source PNGs. No human listening claim; source audio unchanged."
+}

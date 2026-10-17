@@ -1,0 +1,52 @@
+{
+  "slug": "jodar-medvedev-shanghai-2026-sf",
+  "checked_at": "2026-10-17T14:27:01Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "4a2ab27bc38083e9": {
+      "segment": 2,
+      "spoken": 12.528,
+      "picture": 14.0
+    },
+    "9456344ee9707ea7": {
+      "segment": 4,
+      "spoken": 13.44,
+      "picture": 14.8
+    },
+    "e7894a62b9d55778": {
+      "segment": 6,
+      "spoken": 13.248,
+      "picture": 14.8
+    },
+    "67d3313ac88e8c13": {
+      "segment": 8,
+      "spoken": 13.632,
+      "picture": 15.2
+    },
+    "c22cf0baaf532880": {
+      "segment": 9,
+      "spoken": 11.016,
+      "picture": 12.4
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "bccd141c75a33ea1e0f43aaddb407994cdb0a8d8dc6ef843ff0cc4f206dd2c66",
+    "request_count": 6,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-jodar-medvedev-shanghai-2026-sf-bccd141c75a33ea1",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-jodar-medvedev-shanghai-2026-sf-bccd141c75a33ea1/tts_bundle.zip",
+    "file_name": "tts_bundle.zip"
+  }
+}

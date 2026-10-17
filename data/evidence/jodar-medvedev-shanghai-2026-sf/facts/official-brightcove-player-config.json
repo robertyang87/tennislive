@@ -1,0 +1,90 @@
+{
+  "account_id": "6057277721001",
+  "autoplay": "play",
+  "compatibility": true,
+  "css": {
+    "controlBarColor": "rgba(0, 0, 0, 0.45)",
+    "controlColor": "white",
+    "progressColor": "rgb(0, 174, 239)"
+  },
+  "debugger": false,
+  "dock": true,
+  "embed_id": "default",
+  "play_button": {
+    "position": "center",
+    "shape": "circle"
+  },
+  "player": {
+    "template": {
+      "locked": false,
+      "name": "single-video-template",
+      "version": "6.67.7"
+    }
+  },
+  "player_id": "xO4H0ZXngd",
+  "player_name": "ATP Tour Web Player",
+  "plugins": [
+    {
+      "injected_version": "3.14.0",
+      "name": "social",
+      "options": {
+        "description": "",
+        "offset": "",
+        "removeDirect": true,
+        "removeEmbed": true,
+        "services": {
+          "facebook": true,
+          "linkedin": false,
+          "pinterest": false,
+          "tumblr": false,
+          "twitter": true
+        },
+        "title": "",
+        "url": ""
+      },
+      "registry_id": "@brightcove/videojs-social",
+      "scripts": [
+        "//players.brightcove.net/videojs-social/3.14.0/videojs-social.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/ar.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/de.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/es.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/fi.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/fr.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/gl.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/ja.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/ko.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/pt.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/sv.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/tr.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/zh-Hans.js",
+        "//players.brightcove.net/videojs-social/3.14.0/lang/zh-Hant.js"
+      ],
+      "stylesheets": [
+        "//players.brightcove.net/videojs-social/3.14.0/videojs-social.css"
+      ],
+      "version": "3.x"
+    }
+  ],
+  "preload": "auto",
+  "skin": "sapphire",
+  "studio_configuration": {
+    "availability": {
+      "countries": [
+      ],
+      "domains": [
+      ],
+      "exclude_countries": "DISABLED",
+      "policy_key": "BCpkADawqM1DZ6UHKcasghAQJv_A-SqbXsPGnJqbXITbVyQSpbN_j-t3ZF-cxR1Y-HJsI_LCKnJtir4AtzQlncu-FfF79OXHkuVMIYlexHWt4QPJ5hF_Pu10C1wEI9SR_Vjs1QJzPt2vLukU"
+    },
+    "player": {
+      "height": 56.25,
+      "responsive": true,
+      "units": "%",
+      "width": 100
+    }
+  },
+  "updated_at": "2026-03-13T15:46:50.199Z",
+  "video_cloud": {
+    "policy_key": "BCpkADawqM1DZ6UHKcasghAQJv_A-SqbXsPGnJqbXITbVyQSpbN_j-t3ZF-cxR1Y-HJsI_LCKnJtir4AtzQlncu-FfF79OXHkuVMIYlexHWt4QPJ5hF_Pu10C1wEI9SR_Vjs1QJzPt2vLukU"
+  }
+}

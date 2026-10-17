@@ -1,0 +1,377 @@
+{
+  "bundle_sha256": "bccd141c75a33ea1e0f43aaddb407994cdb0a8d8dc6ef843ff0cc4f206dd2c66",
+  "status": "complete_current_raw_lexical_crosscheck_not_tone_or_all_audio_pass",
+  "manual_listening_claimed": false,
+  "method": "Unprompted whole original MP3 ASR; Arabic integer normalization separately within each raw ASR segment (do not merge final 15 and next-segment 20 into fictitious 1520); tone-free pinyin sequence alignment; unresolved spans remain unresolved. No expected-text prompt.",
+  "limitations": [
+    "ASR Chinese words, integers and tone-free matches are lexical assistance only. They cannot prove any realized tone or classify an ASR mismatch as an actual TTS misread.",
+    "Insertions/deletions and lexical ambiguity remain in raw output and differences; this report does not silently correct recognized words."
+  ],
+  "utterances": [
+    {
+      "edit_id": "intro",
+      "audio_sha256": "00dfbc6539efe718640563e556015ceee1102570187f9c069efa57a7861a5731",
+      "expected_tts_text": "北京时间二零二六年十月十七日晚，上海大师赛男单半决赛。梅德韦杰夫迎战霍达尔。对手前四轮全部逆转过关，这次却先抢到了主动。",
+      "raw_unprompted_asr": "北京時間二零二六年十月十七日晚 上海大師在南丹辦決賽沒得為傑夫迎戰霍大爾對手前四輪全部逆轉過關 這次卻先搶到了主動",
+      "normalized_expected": "北京时间二零二六年十月十七日晚上海大师赛男单半决赛梅德韦杰夫迎战霍达尔对手前四轮全部逆转过关这次却先抢到了主动",
+      "normalized_asr": "北京時間二零二六年十月十七日晚上海大師在南丹辦決賽沒得為傑夫迎戰霍大爾對手前四輪全部逆轉過關這次卻先搶到了主動",
+      "tone_free_lexical_differences": [
+        {
+          "type": "replace",
+          "expected": "赛",
+          "asr": "在",
+          "expected_pinyin": [
+            "sai"
+          ],
+          "asr_pinyin": [
+            "zai"
+          ],
+          "expected_normalized_indices": [
+            19,
+            20
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "北京时间二零二六年十月十七日晚，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "上海大师赛男单半决赛。",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "梅德韦杰夫迎战霍达尔。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "对手前四轮全部逆转过关，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "这次却先抢到了主动。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 4,
+          "text": "二零二六",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 9,
+          "text": "十",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 11,
+          "text": "十七",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 41,
+          "text": "四",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "first_set_context",
+      "audio_sha256": "164f45bc159bac81943d8a2c951b6b1c71e00d54d77760ee45e02afafa3db082",
+      "expected_tts_text": "首盘，梅德韦杰夫被破发后回破到二比三，可随后又丢了发球局。五比三的发球胜盘局，霍达尔用了五个盘点才拿下。梅总没放手，对手也没让步。",
+      "raw_unprompted_asr": "手盤 沒得為傑夫被破發後回破到2比3可隨後又丟了發球局無比3的發球盛盤局獲答而用了5個盤點才拿下沒總沒放手 對手也沒讓步",
+      "normalized_expected": "首盘梅德韦杰夫被破发后回破到二比三可随后又丢了发球局五比三的发球胜盘局霍达尔用了五个盘点才拿下梅总没放手对手也没让步",
+      "normalized_asr": "手盤沒得為傑夫被破發後回破到二比三可隨後又丟了發球局無比三的發球盛盤局獲答而用了五個盤點才拿下沒總沒放手對手也沒讓步",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "首盘，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "梅德韦杰夫被破发后回破到二比三，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "可随后又丢了发球局。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "五比三的发球胜盘局，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "霍达尔用了五个盘点才拿下。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "梅总没放手，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "对手也没让步。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 15,
+          "text": "二比三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 29,
+          "text": "五比三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 44,
+          "text": "五",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "second_set_context",
+      "audio_sha256": "7947bf862a5f1504206b9e183e5d848474fcd73d97ffd7c8647f7dc67828bc45",
+      "expected_tts_text": "第二盘，梅德韦杰夫从零比二追到三比二，又被连拿三局。三比五，他连救三个赛点。第三次，梅总上网截击，霍达尔追球摔坐在地，悬念还没结束。",
+      "raw_unprompted_asr": "第二盤,梅德維傑夫從0比2追到3比2,又被連拿3局3比5,他連9-3個賽點第3次,梅總上網結積,獲大追求衰做賽地,懸念還沒結束",
+      "normalized_expected": "第二盘梅德韦杰夫从零比二追到三比二又被连拿三局三比五他连救三个赛点第三次梅总上网截击霍达尔追球摔坐在地悬念还没结束",
+      "normalized_asr": "第二盤梅德維傑夫從零比二追到三比二又被連拿三局三比五他連九三個賽點第三次梅總上網結積獲大追求衰做賽地懸念還沒結束",
+      "tone_free_lexical_differences": [
+        {
+          "type": "delete",
+          "expected": "尔",
+          "asr": "",
+          "expected_pinyin": [
+            "er"
+          ],
+          "asr_pinyin": [],
+          "expected_normalized_indices": [
+            44,
+            45
+          ]
+        },
+        {
+          "type": "replace",
+          "expected": "在",
+          "asr": "賽",
+          "expected_pinyin": [
+            "zai"
+          ],
+          "asr_pinyin": [
+            "sai"
+          ],
+          "expected_normalized_indices": [
+            49,
+            50
+          ]
+        }
+      ],
+      "units": [
+        {
+          "expected": "第二盘，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "梅德韦杰夫从零比二追到三比二，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "又被连拿三局。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "三比五，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "他连救三个赛点。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "第三次，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "梅总上网截击，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "霍达尔追球摔坐在地，",
+          "status": "lexical_asr_unresolved_not_confirmed_misread"
+        },
+        {
+          "expected": "悬念还没结束。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 1,
+          "text": "二",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 10,
+          "text": "零比二",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 15,
+          "text": "三比二",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 23,
+          "text": "三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 26,
+          "text": "三比五",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 33,
+          "text": "三",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 39,
+          "text": "三",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "full_stats",
+      "audio_sha256": "e4caeb528c2dd683d8ef42a25d2776e9dcf5548dcde705df6795c5b08540d056",
+      "expected_tts_text": "第四个赛点，霍达尔正手穿越得分。制胜分，梅德韦杰夫十五比二十二；非受迫失误，二十一比二十二。六个破发点只兑现两个，坚持没能变成逆转。",
+      "raw_unprompted_asr": "第四个赛点 获达尔正首穿越得分至剩分 梅德维杰夫15比22飞瘦破15 21比22六个破发点 只兑现两个 坚持没能变成逆转",
+      "normalized_expected": "第四个赛点霍达尔正手穿越得分制胜分梅德韦杰夫十五比二十二非受迫失误二十一比二十二六个破发点只兑现两个坚持没能变成逆转",
+      "normalized_asr": "第四个赛点获达尔正首穿越得分至剩分梅德维杰夫十五比二十二飞瘦破十五二十一比二十二六个破发点只兑现两个坚持没能变成逆转",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "第四个赛点，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "霍达尔正手穿越得分。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "制胜分，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "梅德韦杰夫十五比二十二；",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "非受迫失误，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "二十一比二十二。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "六个破发点只兑现两个，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "坚持没能变成逆转。",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 1,
+          "text": "四",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 25,
+          "text": "十五比二十二",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 38,
+          "text": "二十一比二十二",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 46,
+          "text": "六",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 54,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    },
+    {
+      "edit_id": "outlook",
+      "audio_sha256": "cf223c0d0c5919c259ba5e2c4fe06ae6a2cb4f6da164aed2cc9017607cc0003f",
+      "expected_tts_text": "这一站先放下，下一站再来。上海决赛，霍达尔对阵达维多维奇·福基纳。两位西班牙球员会师，谁能把这一周走到最后？",
+      "raw_unprompted_asr": "這一戰先放下 下一戰再來傷害決賽 霍大爾對鎮搭位多維其福基納兩位西班牙球員會師 誰能把這一週走到最後",
+      "normalized_expected": "这一站先放下下一站再来上海决赛霍达尔对阵达维多维奇福基纳两位西班牙球员会师谁能把这一周走到最后",
+      "normalized_asr": "這一戰先放下下一戰再來傷害決賽霍大爾對鎮搭位多維其福基納兩位西班牙球員會師誰能把這一週走到最後",
+      "tone_free_lexical_differences": [],
+      "units": [
+        {
+          "expected": "这一站先放下，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "下一站再来。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "上海决赛，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "霍达尔对阵达维多维奇·福基纳。",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "两位西班牙球员会师，",
+          "status": "asr_tone_free_lexical_support_only"
+        },
+        {
+          "expected": "谁能把这一周走到最后？",
+          "status": "asr_tone_free_lexical_support_only"
+        }
+      ],
+      "number_spans": [
+        {
+          "start_index": 1,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 8,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 33,
+          "text": "两",
+          "status": "asr_lexical_number_support_only"
+        },
+        {
+          "start_index": 47,
+          "text": "一",
+          "status": "asr_lexical_number_support_only"
+        }
+      ]
+    }
+  ]
+}

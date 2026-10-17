@@ -1,0 +1,123 @@
+{
+  "schema": "tennislive.actual-source-rally-tactics.v1",
+  "source_sha256": "1c5459904fb369096020dca00b48dc658db723dd3cf7e49bf88d8387ffebe089",
+  "source_width": 1280,
+  "source_height": 720,
+  "source_fps": "50/1",
+  "output_fps": "25/1",
+  "reviewed_at": "2026-10-17T14:24:21.446128+00:00",
+  "reviewer": "Current OpenAI source-review assistant",
+  "method": "Actual unchanged source frames decoded at0.12-second intervals around the strokes, plus direct view_image inspection of original1280x720 PNGs and broader action walls. Finite visual observation, not manual listening or a claim of automated exhaustive ball tracking.",
+  "human_listening_claimed": false,
+  "source_audio_analysis_performed": false,
+  "claims": [
+    {
+      "node": "third_matchpoint_saved",
+      "score_state": "Jodar5-3 AD on Medvedev serve; the third match point",
+      "source_window": [
+        270.08,
+        280.5
+      ],
+      "dense_sampling_seconds": 0.12,
+      "full_original_frames": [
+        "rally-original-274.48.png",
+        "rally-original-277.00.png"
+      ],
+      "additional_actual_frame_walls": [
+        "rally-shape-thirdmp-dense-1.jpg",
+        "rally-shape-thirdmp-dense-2.jpg",
+        "rally-shape-thirdmp-2.jpg"
+      ],
+      "observed": "Blue-shirt Medvedev moves inside the near service box toward the net. At274.48 he reaches forward/right for a high forehand-side volley; after the volley, pink-shirt Jodar runs laterally toward the far-court right side. By276.5..277.0 Jodar slides/falls into a seated position. Medvedev wins the point and the board subsequently returns to deuce.",
+      "approved_chinese_copy": "第三个赛点，梅总上网截击，霍达尔追球摔坐在地。",
+      "claim_scope": "Net approach, volley and visible chase/fall only. No unverified exact bounce coordinates, speed, fixed line direction, or injury claim.",
+      "asr_context": {
+        "english": "It's hanging on by a thread.",
+        "source_interval": [
+          279.84,
+          282.02
+        ],
+        "role": "Confirms broadcast context and speech timing; the shot-type identification comes from actual images, not this sentence."
+      }
+    },
+    {
+      "node": "fourth_matchpoint_won",
+      "score_state": "Jodar5-4 40-0 on own serve; fourth match point overall",
+      "source_window": [
+        282.24,
+        293.0
+      ],
+      "decisive_stroke_window": [
+        290.36,
+        291.68
+      ],
+      "dense_sampling_seconds": 0.12,
+      "full_original_frames": [
+        "rally-original-290.60.png",
+        "rally-original-291.08.png",
+        "rally-original-291.56.png"
+      ],
+      "additional_actual_frame_walls": [
+        "rally-shape-final-dense-1.jpg",
+        "rally-shape-final-dense-2.jpg"
+      ],
+      "observed": "At about290.6, pink-shirt Jodar strikes a right-handed forehand from the near baseline. Blue-shirt Medvedev is already near the far side of the net. Subsequent original frames show the ball going past his reach, continuing into the space behind him; no successful return is visible, and the point/match ends.",
+      "approved_chinese_copy": "第四个赛点，霍达尔正手穿越得分。",
+      "claim_scope": "Forehand passing shot and won point only. Do not classify the result as Medvedev forehand/backhand/unforced error; do not assert straight/crosscourt direction or a microscopic racket graze/no-graze judgment between sampled frames.",
+      "asr_context": {
+        "english": "For just the ninth time in the history of Masters 1000s we will have an all-Spanish final.",
+        "source_interval": [
+          292.12,
+          300.94
+        ],
+        "role": "Confirms post-match broadcast context and speech timing, not the specific stroke taxonomy."
+      }
+    }
+  ],
+  "first_set_check": {
+    "source_window": [
+      36.96,
+      52.8
+    ],
+    "observed": "Both players remain around their respective baselines during the selected late-rally exchanges. Jodar is near court and Medvedev far court. No Jodar net finish is visible in the selected point.",
+    "not_approved": "Do not describe Jodar as approaching the net to finish this first-set break point."
+  },
+  "retained_original_frames": [
+    {
+      "path": "data/evidence/jodar-medvedev-shanghai-2026-sf/source/rally-original-274.48.png",
+      "sha256": "88b84415064405a59b2d9591ecff4c5c1ea5511a3a43458c177c9e2210088787",
+      "width": 1280,
+      "height": 720,
+      "lossless_png_from_unchanged_source": true
+    },
+    {
+      "path": "data/evidence/jodar-medvedev-shanghai-2026-sf/source/rally-original-277.00.png",
+      "sha256": "072bc3edda546fa04a87df6c23ba309093d1f7fb9db6cd0594de5507055cd7b8",
+      "width": 1280,
+      "height": 720,
+      "lossless_png_from_unchanged_source": true
+    },
+    {
+      "path": "data/evidence/jodar-medvedev-shanghai-2026-sf/source/rally-original-290.60.png",
+      "sha256": "0c9f9804dfdd0f6204169b506022dfa110f57ad7e8c95ff545f33b6164f2347e",
+      "width": 1280,
+      "height": 720,
+      "lossless_png_from_unchanged_source": true
+    },
+    {
+      "path": "data/evidence/jodar-medvedev-shanghai-2026-sf/source/rally-original-291.08.png",
+      "sha256": "600503f9b184f81ba80c42229b8b68565c33271e31894015118399395acd918b",
+      "width": 1280,
+      "height": 720,
+      "lossless_png_from_unchanged_source": true
+    },
+    {
+      "path": "data/evidence/jodar-medvedev-shanghai-2026-sf/source/rally-original-291.56.png",
+      "sha256": "b8ca699950fa8207a9ab184d202fa7ff5504423ba796e04336a8e18db5d88011",
+      "width": 1280,
+      "height": 720,
+      "lossless_png_from_unchanged_source": true
+    }
+  ],
+  "next_stage": "Root owns final narration adoption, native previews and actual final encoded review; this evidence does not assert final-movie QC."
+}

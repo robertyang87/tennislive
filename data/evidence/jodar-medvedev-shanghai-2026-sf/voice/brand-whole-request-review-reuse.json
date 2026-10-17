@@ -1,0 +1,194 @@
+{
+  "actual_current_outro": {
+    "segment_index": "outro",
+    "edit_id": "outro",
+    "output_name": "voice_outro.mp3",
+    "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+    "request": {
+      "backend": "edge",
+      "cache_key": "20da8f5468902afbbecb78daefb15d83",
+      "lead_pause": 0.0,
+      "pitch": "+0Hz",
+      "rate": "+6%",
+      "style": "",
+      "styledegree": "",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "voice": "zh-CN-YunjianNeural"
+    },
+    "tts_text": "关注网球时插，时插归我，好球归你。",
+    "display_text": "关注网球时差，时差归我，好球归你。",
+    "text_sha256": "580cc47db09b9e3d542f700e95e1c818dce2b50a7d35bf112ca5948ac0aa65be",
+    "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+    "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+    "duration_seconds": 4.104,
+    "native_audio": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/outro-3d7277d26afc569a.mp3",
+    "native_marks": "/workspace/scratch/jodar-medvedev-sf-voice/native-audio/outro-3d7277d26afc569a.json",
+    "bundle_sha256": "bccd141c75a33ea1e0f43aaddb407994cdb0a8d8dc6ef843ff0cc4f206dd2c66",
+    "matches_current_spec": true,
+    "wordboundary_exact_native_bytes_preserved": true,
+    "polyphones": [
+      {
+        "index": 12,
+        "char": "好",
+        "word": "好",
+        "intended": "hao3",
+        "live": [
+          "hao3",
+          "hao4"
+        ],
+        "defaults": [
+          "hao3"
+        ],
+        "status": "actual_pending"
+      }
+    ],
+    "proper_names": [],
+    "numbers": [],
+    "abbreviations": [],
+    "actual_wordboundary_tokens": [
+      {
+        "text": "关注",
+        "start_index": 0,
+        "start_seconds": 0.0471659,
+        "end_seconds": 0.3655819,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "网球",
+        "start_index": 2,
+        "start_seconds": 0.377375,
+        "end_seconds": 0.742916,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "时",
+        "start_index": 4,
+        "start_seconds": 0.742916,
+        "end_seconds": 0.907999,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "插",
+        "start_index": 5,
+        "start_seconds": 0.908,
+        "end_seconds": 1.132041,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "时",
+        "start_index": 7,
+        "start_seconds": 1.426875,
+        "end_seconds": 1.615541,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "插",
+        "start_index": 8,
+        "start_seconds": 1.615583,
+        "end_seconds": 1.827833,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "归",
+        "start_index": 9,
+        "start_seconds": 1.827833,
+        "end_seconds": 1.992916,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "我",
+        "start_index": 10,
+        "start_seconds": 1.992916,
+        "end_seconds": 2.228749,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "好",
+        "start_index": 12,
+        "start_seconds": 2.511791,
+        "end_seconds": 2.688666,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "球",
+        "start_index": 13,
+        "start_seconds": 2.688666,
+        "end_seconds": 2.877332,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "归",
+        "start_index": 14,
+        "start_seconds": 2.889166,
+        "end_seconds": 3.113207,
+        "status": "boundary_exists_not_pronunciation_proof"
+      },
+      {
+        "text": "你",
+        "start_index": 15,
+        "start_seconds": 3.113208,
+        "end_seconds": 3.266499,
+        "status": "boundary_exists_not_pronunciation_proof"
+      }
+    ]
+  },
+  "complete_text_request_profile_MP3_marks_identical": true,
+  "prior_review_path": "/workspace/tennislive-efficiency/data/evidence/davidovich-zverev-shanghai-2026-sf/voice-agent/report.json",
+  "prior_review_sha256": "c3f176aac51959979f914df470a6dd398b42f0f218b75cf69ee35dde14cbbc52",
+  "prior_archive_sha256": "62e251159d925a0d1aae0dbbaab84eb29e78acb9606fba88166499fcfea6f2a7",
+  "prior_archive_bytes": 17470976,
+  "prior_archive_url": "https://github.com/robertyang87/tennislive/releases/download/reel-review-davidovich-zverev-shanghai-2026-sf-728ab30f7e1adf68/pronunciation-evidence.zip",
+  "prior_finite_occurrences": [
+    {
+      "edit_id": "outro",
+      "index": 12,
+      "char": "好",
+      "intended_base": "hao3",
+      "kind": "polyphone",
+      "status": "exact_complete_utterance_prior_finite_low_support",
+      "support_kind": "whole_current_native_request_text_MP3_marks_exact_identity_not_per_word_exemption",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "actual_marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "evidence_file": "outro-reuse-conditions.json",
+      "all_failed_or_contradictory_components_retained": true
+    },
+    {
+      "edit_id": "outro",
+      "index": 5,
+      "char": "插",
+      "intended_base": "cha1",
+      "kind": "mapped_phonetic_correction",
+      "status": "exact_complete_utterance_prior_finite_low_support",
+      "support_kind": "whole_current_native_request_text_MP3_marks_exact_identity_not_per_word_exemption",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "actual_marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "evidence_file": "outro-reuse-conditions.json",
+      "all_failed_or_contradictory_components_retained": true
+    },
+    {
+      "edit_id": "outro",
+      "index": 8,
+      "char": "插",
+      "intended_base": "cha1",
+      "kind": "mapped_phonetic_correction",
+      "status": "exact_complete_utterance_prior_finite_low_support",
+      "support_kind": "whole_current_native_request_text_MP3_marks_exact_identity_not_per_word_exemption",
+      "actual_audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "actual_marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "evidence_file": "outro-reuse-conditions.json",
+      "all_failed_or_contradictory_components_retained": true
+    }
+  ],
+  "prior_review_limitations": [
+    "Original grouped controls change multiple neighbours, so mechanical failure may reflect prosody/reference alignment; all raw failures retained.",
+    "Only four concrete intro positions received a bounded single-target control round; all unchanged native originals are from the one frozen ZIP.",
+    "Finite direct current image interpretation is separate from calibrated mechanical success and cannot guarantee every phoneme/tone.",
+    "ASR supports lexical identities and location candidates only; Chinese spelling is never proof of tones.",
+    "Numeral/English finite inspection does not establish every digit tone or a complete English phonetic pass.",
+    "No human listening, no final-mix listening; no loudness/RMS/peak/threshold silence/gain/PCM comparison."
+  ],
+  "old_control_archive_copied": false,
+  "brand_new_synthesis": false,
+  "brand_new_pronunciation_approval": false,
+  "scope_note": "One initial auxiliary ASR and initial whole-prosody prototype accidentally included exact brand; both preserved under history and excluded from this new5 review and approval. Brand only inherits exact prior whole-request finite evidence."
+}
