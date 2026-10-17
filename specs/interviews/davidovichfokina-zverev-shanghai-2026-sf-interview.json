@@ -10,7 +10,8 @@
     "用户 2026-10-17 指定制作本期赛后开麦（福基拉上海半决赛胜兹维列夫）。",
     "自动翻译通道已随模型移除；中文为人工逐行翻译。",
     "转写已核：47 行，双 ASR 分歧 13.3%（超 12% 闸门，主因口头禅磕巴），人工逐行裁定见 _en_fixed_why。",
-    "lead_in 待补：同场官方集锦赛点→庆祝→解说窗口与双语字幕。"
+    "lead_in 待补：同场官方集锦赛点→庆祝→解说窗口与双语字幕。",
+    "lead_in 已补：同场官方集锦 80.0-96.0（16 秒），赛点→欢呼→解说交代赛果，字幕宽度已用 Inter-SemiBold 46px 本地量过。"
   ],
   "_zh_draft_note": "人工逐行翻译：以双 ASR 转写（47 行）为证据层逐行对应翻译，未合并、未漏行；已对照 tennis365/ATP/tennisgazette 战报引文核对关键表述。",
   "asr_model": "small.en",
@@ -54,22 +55,46 @@
   "featured_player": "福基拉",
   "interview_kind": "赛后场上采访",
   "lead_in": {
-    "end": 0.0,
-    "source_captions": [],
-    "start": 0.0,
-    "subs": [],
     "url": "https://www.youtube.com/watch?v=ruOnZuIYD7Q",
+    "start": 80.0,
+    "end": 96.0,
     "verification": {
-      "channel": "Rolex Shanghai Masters",
-      "event_search": "Shanghai Masters",
-      "height": 1080,
-      "loser_en": "Alexander Zverev",
       "match_id": "2026:shanghai-masters:mens-sf:davidovichfokina-zverev",
-      "method": "official_exact_match_highlight",
       "winner_en": "Alejandro Davidovich Fokina",
-      "year": 2026
+      "loser_en": "Alexander Zverev",
+      "event_search": "Shanghai Masters",
+      "year": 2026,
+      "method": "official_exact_match_highlight",
+      "height": 1080,
+      "channel": "Rolex Shanghai Masters"
     },
-    "why": "同场 Rolex Shanghai Masters 官方集锦（Alexander Zverev vs Alejandro Davidovich Fokina Highlights | Rolex Shanghai Masters 2026）。窗口待定：取赛点→庆祝→解说交代赛果约 10-20 秒。"
+    "subs": [
+      {
+        "a": 83.0,
+        "b": 86.0,
+        "en": "For the second time in his career,",
+        "zh": "职业生涯第二次，"
+      },
+      {
+        "a": 86.0,
+        "b": 89.0,
+        "en": "Alejandro Davidovich Fokina",
+        "zh": "达维多维奇·福基纳"
+      },
+      {
+        "a": 89.0,
+        "b": 93.0,
+        "en": "is into the final of a Masters 1000.",
+        "zh": "打进大师赛决赛。"
+      }
+    ],
+    "source_captions": [
+      [
+        83.0,
+        "For the second time in his career, Alejandro Davidovic Pina is into the final of a Mast's 1000."
+      ]
+    ],
+    "why": "同场 Rolex Shanghai Masters 官方集锦 ruOnZuIYD7Q（Alexander Zverev vs Alejandro Davidovich Fokina Highlights | Rolex Shanghai Masters 2026，130 秒）。窗口 80.0-96.0（16 秒）：80.0 起接最后一分→1:22 现场欢呼→1:23 解说交代赛果（For the second time in his career, Alejandro Davidovich Fokina is into the final of a Masters 1000）；96.0 收在赛果解说句末。起点卡在制胜分前约 2 秒，终点卡在赛果解说说完。"
   },
   "match": {
     "event": "2026 Rolex Shanghai Masters",
