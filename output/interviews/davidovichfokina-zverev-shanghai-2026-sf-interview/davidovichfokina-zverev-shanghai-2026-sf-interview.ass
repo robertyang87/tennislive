@@ -1,0 +1,112 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,44,&H00ECF3E7,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,68,&H00ECF3E7,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00F7FBF4,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:01:44.00,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 ATP1000 上海 半决赛
+Dialogue: 1,0:00:00.00,0:01:44.00,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}福基拉 {\r\fnTL Score\b300\fs40}5{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\c&H8CDC4A&\b1\fs40}7 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}6{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}4 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}6{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}3{\r\fnNoto Sans CJK SC\fs38} 兹维列夫 · 赛后场上采访
+Dialogue: 0,0:00:01.20,0:00:02.88,EN,,0,0,0,,Alejandro, congratulations.
+Dialogue: 0,0:00:01.20,0:00:02.88,ZH,,0,0,0,,阿莱汉德罗 恭喜
+Dialogue: 0,0:00:02.88,0:00:04.88,EN,,0,0,0,,Wow. The turnaround started
+Dialogue: 0,0:00:02.88,0:00:04.88,ZH,,0,0,0,,哇 这场逆转始于
+Dialogue: 0,0:00:04.88,0:00:07.04,EN,,0,0,0,,with this unbelievable set point
+Dialogue: 0,0:00:04.88,0:00:07.04,ZH,,0,0,0,,那个不可思议的盘点
+Dialogue: 0,0:00:07.04,0:00:08.32,EN,,0,0,0,,in the second set.
+Dialogue: 0,0:00:07.04,0:00:08.32,ZH,,0,0,0,,就在第二盘
+Dialogue: 0,0:00:08.32,0:00:10.72,EN,,0,0,0,,What did you do today to turn this around
+Dialogue: 0,0:00:08.32,0:00:10.72,ZH,,0,0,0,,你今天做了什么扭转了局势
+Dialogue: 0,0:00:10.72,0:00:12.00,EN,,0,0,0,,and win?
+Dialogue: 0,0:00:10.72,0:00:12.00,ZH,,0,0,0,,拿下胜利？
+Dialogue: 0,0:00:12.00,0:00:14.32,EN,,0,0,0,,Well, like every match that I play here,
+Dialogue: 0,0:00:12.00,0:00:14.32,ZH,,0,0,0,,嗯 和我在这打的每场一样
+Dialogue: 0,0:00:14.32,0:00:17.84,EN,,0,0,0,,doesn't matter the result.
+Dialogue: 0,0:00:14.32,0:00:17.84,ZH,,0,0,0,,结果不重要
+Dialogue: 0,0:00:17.84,0:00:19.52,EN,,0,0,0,,Just thinking in every ball, you know,
+Dialogue: 0,0:00:17.84,0:00:19.52,ZH,,0,0,0,,只想着每一分 你知道的
+Dialogue: 0,0:00:19.52,0:00:23.84,EN,,0,0,0,,at the end, I knew that if I stay all match,
+Dialogue: 0,0:00:19.52,0:00:23.84,ZH,,0,0,0,,最后 我知道只要全场咬住
+Dialogue: 0,0:00:23.84,0:00:26.72,EN,,0,0,0,,I can have at least one chance.
+Dialogue: 0,0:00:23.84,0:00:26.72,ZH,,0,0,0,,至少能等来一次机会
+Dialogue: 0,0:00:26.72,0:00:28.88,EN,,0,0,0,,So yeah, I took it from the second set.
+Dialogue: 0,0:00:26.72,0:00:28.88,ZH,,0,0,0,,对 第二盘我抓住了
+Dialogue: 0,0:00:28.88,0:00:30.64,EN,,0,0,0,,and third set.
+Dialogue: 0,0:00:28.88,0:00:30.64,ZH,,0,0,0,,第三盘也一样
+Dialogue: 0,0:00:30.64,0:00:33.04,EN,,0,0,0,,I think I was better physically.
+Dialogue: 0,0:00:30.64,0:00:33.04,ZH,,0,0,0,,我觉得第三盘我的体能更好
+Dialogue: 0,0:00:33.04,0:00:35.84,EN,,0,0,0,,I was more excited than him.
+Dialogue: 0,0:00:33.04,0:00:35.84,ZH,,0,0,0,,我比他更兴奋
+Dialogue: 0,0:00:35.84,0:00:37.60,EN,,0,0,0,,No, after the second set.
+Dialogue: 0,0:00:35.84,0:00:37.60,ZH,,0,0,0,,嗯 在拿下第二盘之后
+Dialogue: 0,0:00:37.60,0:00:40.08,EN,,0,0,0,,So the early break
+Dialogue: 0,0:00:37.60,0:00:40.08,ZH,,0,0,0,,所以第三盘开局的破发
+Dialogue: 0,0:00:40.08,0:00:42.80,EN,,0,0,0,,in the third set gave me a lot of power.
+Dialogue: 0,0:00:40.08,0:00:42.80,ZH,,0,0,0,,给了我很大的能量
+Dialogue: 0,0:00:42.80,0:00:47.36,EN,,0,0,0,,So yeah, I just focus on just keep playing
+Dialogue: 0,0:00:42.80,0:00:47.36,ZH,,0,0,0,,所以我就专注于继续打
+Dialogue: 0,0:00:47.36,0:00:48.80,EN,,0,0,0,,and doesn't matter the result.
+Dialogue: 0,0:00:47.36,0:00:48.80,ZH,,0,0,0,,不在乎结果
+Dialogue: 0,0:00:48.80,0:00:50.56,EN,,0,0,0,,No, just enjoy.
+Dialogue: 0,0:00:48.80,0:00:50.56,ZH,,0,0,0,,嗯 享受比赛
+Dialogue: 0,0:00:50.56,0:00:51.04,EN,,0,0,0,,And you're back
+Dialogue: 0,0:00:50.56,0:00:51.04,ZH,,0,0,0,,你又回到了
+Dialogue: 0,0:00:51.04,0:00:53.60,EN,,0,0,0,,in the Masters final, first time in four years.
+Dialogue: 0,0:00:51.04,0:00:53.60,ZH,,0,0,0,,大师赛决赛 时隔四年
+Dialogue: 0,0:00:53.60,0:00:54.88,EN,,0,0,0,,You talked about how tough it
+Dialogue: 0,0:00:53.60,0:00:54.88,ZH,,0,0,0,,你说过这个夏天
+Dialogue: 0,0:00:54.88,0:00:55.92,EN,,0,0,0,,was this summer.
+Dialogue: 0,0:00:54.88,0:00:55.92,ZH,,0,0,0,,有多艰难
+Dialogue: 0,0:00:55.92,0:00:59.28,EN,,0,0,0,,you missed two months from the tour
+Dialogue: 0,0:00:55.92,0:00:59.28,ZH,,0,0,0,,你离开巡回赛两个月
+Dialogue: 0,0:00:59.28,0:01:00.00,EN,,0,0,0,,in some way.
+Dialogue: 0,0:00:59.28,0:01:00.00,ZH,,0,0,0,,某种程度上
+Dialogue: 0,0:01:00.00,0:01:01.20,EN,,0,0,0,,Has that changed you?
+Dialogue: 0,0:01:00.00,0:01:01.20,ZH,,0,0,0,,这改变了你吗？
+Dialogue: 0,0:01:01.20,0:01:03.12,EN,,0,0,0,,Have you come back a different version
+Dialogue: 0,0:01:01.20,0:01:03.12,ZH,,0,0,0,,你是不是以一个不同的自己
+Dialogue: 0,0:01:03.12,0:01:03.84,EN,,0,0,0,,in a way?
+Dialogue: 0,0:01:03.12,0:01:03.84,ZH,,0,0,0,,回来了？
+Dialogue: 0,0:01:03.84,0:01:04.80,EN,,0,0,0,,I think you can see it.
+Dialogue: 0,0:01:03.84,0:01:04.80,ZH,,0,0,0,,我想你们能看出来
+Dialogue: 0,0:01:04.80,0:01:07.04,EN,,0,0,0,,No, at the end it's not easy
+Dialogue: 0,0:01:04.80,0:01:07.04,ZH,,0,0,0,,嗯 说到底 离开不容易
+Dialogue: 0,0:01:07.04,0:01:08.40,EN,,0,0,0,,when you're out.
+Dialogue: 0,0:01:07.04,0:01:08.40,ZH,,0,0,0,,当你远离的时候
+Dialogue: 0,0:01:08.40,0:01:11.28,EN,,0,0,0,,No, so you have a lot of time to think.
+Dialogue: 0,0:01:08.40,0:01:11.28,ZH,,0,0,0,,嗯 你有很多时间思考
+Dialogue: 0,0:01:11.28,0:01:12.40,EN,,0,0,0,,No.
+Dialogue: 0,0:01:11.28,0:01:12.40,ZH,,0,0,0,,嗯
+Dialogue: 0,0:01:12.40,0:01:14.40,EN,,0,0,0,,And at the end you don't realize, no.
+Dialogue: 0,0:01:12.40,0:01:14.40,ZH,,0,0,0,,说到底你意识不到的 嗯
+Dialogue: 0,0:01:14.40,0:01:15.20,EN,,0,0,0,,When you are on tour,
+Dialogue: 0,0:01:14.40,0:01:15.20,ZH,,0,0,0,,当你在巡回赛中
+Dialogue: 0,0:01:15.20,0:01:17.44,EN,,0,0,0,,you know, at the end we are very privileged.
+Dialogue: 0,0:01:15.20,0:01:17.44,ZH,,0,0,0,,你知道的 我们是多么幸运
+Dialogue: 0,0:01:17.44,0:01:21.36,EN,,0,0,0,,to be here, to play this sport.
+Dialogue: 0,0:01:17.44,0:01:21.36,ZH,,0,0,0,,能站在这里打这项运动
+Dialogue: 0,0:01:21.36,0:01:23.36,EN,,0,0,0,,It's very, for me.
+Dialogue: 0,0:01:21.36,0:01:23.36,ZH,,0,0,0,,对我来说 这很重要
+Dialogue: 0,0:01:23.36,0:01:26.24,EN,,0,0,0,,I think before I was not enjoying, I was very
+Dialogue: 0,0:01:23.36,0:01:26.24,ZH,,0,0,0,,我觉得以前不享受 很沮丧
+Dialogue: 0,0:01:26.24,0:01:30.16,EN,,0,0,0,,frustrated and this kind of time gave me a lot
+Dialogue: 0,0:01:26.24,0:01:30.16,ZH,,0,0,0,,而这段时间给了我很多
+Dialogue: 0,0:01:30.16,0:01:31.92,EN,,0,0,0,,of thinking,
+Dialogue: 0,0:01:30.16,0:01:31.92,ZH,,0,0,0,,思考
+Dialogue: 0,0:01:31.92,0:01:35.60,EN,,0,0,0,,to see what I want to do with my future.
+Dialogue: 0,0:01:31.92,0:01:35.60,ZH,,0,0,0,,去想我的未来要做什么
+Dialogue: 0,0:01:35.60,0:01:37.20,EN,,0,0,0,,Beautiful. Congrats and we'll see you
+Dialogue: 0,0:01:35.60,0:01:37.20,ZH,,0,0,0,,说得好 恭喜
+Dialogue: 0,0:01:37.20,0:01:37.84,EN,,0,0,0,,in the final.
+Dialogue: 0,0:01:37.20,0:01:37.84,ZH,,0,0,0,,决赛见
+Dialogue: 0,0:01:37.84,0:01:39.50,EN,,0,0,0,,Thank you.
+Dialogue: 0,0:01:37.84,0:01:39.50,ZH,,0,0,0,,谢谢

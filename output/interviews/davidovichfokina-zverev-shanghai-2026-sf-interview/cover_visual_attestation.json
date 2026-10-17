@@ -1,0 +1,112 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-17T15:59:35Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "福基拉",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at + face model buffalo_s-v0.7 vs official headshot",
+  "spec_sha256": "3a1217367e319d5f56637b0d0f1095d39af60065856c6fcb426b54471e558903",
+  "poster_sha256": "0f29f4fa1f2c5640e91f1cb7ef35f8ef2e1fb9eaa8c455316c61e8847b4b9fd6",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-alt2",
+      "box": [
+        313,
+        304,
+        266,
+        266
+      ],
+      "detected_faces": 1,
+      "eyes": 2,
+      "face_height_ratio": 0.3284,
+      "face_area_ratio": 0.08088,
+      "center_x_ratio": 0.41296,
+      "center_y_ratio": 0.35432,
+      "sharpness": 571.58,
+      "contrast": 149.85
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 50.0,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    },
+    "face_model": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "unknown",
+        "name": null,
+        "similarity": {},
+        "missing": [
+          "福基拉"
+        ],
+        "expected": [
+          "福基拉"
+        ],
+        "face": [
+          299,
+          164,
+          521,
+          454
+        ],
+        "face_px": 289.8,
+        "reason": "没有可比的官方头像：福基拉",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.309,
+        "ear_each": [
+          0.2946,
+          0.3234
+        ],
+        "face": [
+          299,
+          164,
+          521,
+          454
+        ],
+        "face_px": 289.8,
+        "reason": "眼睛纵横比 0.31 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "problems": [],
+      "warnings": [
+        "认人拿不准：没有可比的官方头像：福基拉"
+      ]
+    }
+  },
+  "issues": [],
+  "warnings": [
+    "认人拿不准：没有可比的官方头像：福基拉"
+  ]
+}
