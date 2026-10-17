@@ -66,7 +66,7 @@
 - `<slug>.original.wav`：只有拼好的现场原声（增益 1.0，不闪避）
 - `<slug>.mix.wav`：成片那条混音
 
-三条 WAV 被 `.gitignore` 挡在 git 外，跟着 render 的 Actions artifact 走。要它们自动进 Release，需把
+本地落在成片目录（`.gitignore` 挡在 git 外）；runner 上落在 `$RUNNER_TEMP/stems/`，避开成片目录的大文件闸。要它们自动进 Release，需把
 `docs/patches/match-reel-stems-release.patch` 应用到 `.github/workflows/match-reel.yml`（改 workflow 要带
 `workflow` 权限的令牌，本次提交的令牌没有，所以留成补丁）。默认不带任何音乐。
 

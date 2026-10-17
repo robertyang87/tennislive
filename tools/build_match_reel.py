@@ -688,7 +688,11 @@ def export_audio_stems(spec: dict, outdir: Path, joined: Path, mixed: Path,
     """
     slug = spec.get("slug", "reel")
     seconds = probe_duration(mixed)
-    out = {k: outdir / f"{slug}.{k}.wav" for k in ("narration", "original", "mix")}
+    # runner 上落到 $RUNNER_TEMP/stems：成片目录有「大文件不许进仓库」的闸（match-reel.yml
+    # 清理步骤），WAV 动辄几十 MB；要传 Release 见 docs/patches/match-reel-stems-release.patch。
+    stem_dir = (Path(os.environ["RUNNER_TEMP"]) / "stems") if os.environ.get("RUNNER_TEMP") else outdir
+    stem_dir.mkdir(parents=True, exist_ok=True)
+    out = {k: stem_dir / f"{slug}.{k}.wav" for k in ("narration", "original", "mix")}
     wav = ["-c:a", "pcm_s24le", "-ar", AUDIO_RATE, "-t", f"{seconds:.3f}"]
     with stage("分轨导出"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(joined),

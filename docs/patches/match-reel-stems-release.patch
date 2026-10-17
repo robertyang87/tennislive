@@ -9,7 +9,7 @@ index c9cc6d00f..2f73697de 100644
 +          # 分轨（spec.cinematic.stems）：narration / original / mix 三条 WAV 跟着成片进
 +          # Release，不进 git；没开就一条都没有，这里什么都不做。
 +          for STEM in narration original mix; do
-+            WAV="$OUTDIR/$SLUG.$STEM.wav"
++            WAV="$RUNNER_TEMP/stems/$SLUG.$STEM.wav"
 +            if [ -f "$WAV" ]; then
 +              gh release upload "$TAG" "$WAV" --clobber
 +              echo "分轨可取：https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$SLUG.$STEM.wav"
