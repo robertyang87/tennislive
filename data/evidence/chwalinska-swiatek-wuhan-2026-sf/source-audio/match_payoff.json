@@ -1,0 +1,139 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ATsKkPJBY3s/ATsKkPJBY3s.mp4",
+  "original_source_url": "https://www.youtube.com/watch?v=ATsKkPJBY3s",
+  "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI source-audio review agent; personally inspected retained raw transcript evidence and curated every clause before spec.quote was populated; no human listening claimed",
+  "reviewed_at": "2026-10-17T14:41:26.036435+00:00",
+  "status": "complete",
+  "reviewed_from": 242.24,
+  "reviewed_to": 284.2,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 242.6,
+      "end": 244.38,
+      "en": "She knows she’s oh so close.",
+      "zh": "她知道胜利已经近在咫尺",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 244.5,
+      "end": 247.08,
+      "en": "Maja Chwalinska. Match point.",
+      "zh": "赫瓦林斯卡来到赛点",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 250.9,
+      "end": 252.08,
+      "en": "Oh, Maja!",
+      "zh": "噢玛雅",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 254.88,
+      "end": 256.86,
+      "en": "Magnificence in Wuhan,",
+      "zh": "武汉的精彩一刻",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 256.86,
+      "end": 259.82,
+      "en": "as she topples her fellow Pole, former world number one,",
+      "zh": "她击败同为波兰人的前世界第一",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 259.82,
+      "end": 263.5,
+      "en": "for her first career top-10 win.",
+      "zh": "收获生涯首场对前10球员的胜利",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 270.78,
+      "end": 272.8,
+      "en": "Well, genuine affection for each other,",
+      "zh": "彼此之间有着真挚情谊",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 272.8,
+      "end": 276.06,
+      "en": "and you can see the affinity they have.",
+      "zh": "你能看出她们有多亲近",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 276.8,
+      "end": 278.8,
+      "en": "As undoubtedly Iga says, “Good luck tomorrow,",
+      "zh": "想必伊加在说祝你明天好运",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 278.8,
+      "end": 280.98,
+      "en": "as you vie for your first career title",
+      "zh": "你将为生涯首冠而战",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    },
+    {
+      "start": 280.98,
+      "end": 283.62,
+      "en": "and do so at a WTA 1000 event.”",
+      "zh": "而且是在WTA1000赛",
+      "verification": "Independently curated source clause from inspected same-SHA raw ASR, cross-checked with canonical auto-captions and the full-source commentary review; no manual listening claimed."
+    }
+  ],
+  "_edit_id": "match_payoff",
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/source_asr/ATsKkPJBY3s/small.en.json",
+        "sha256": "5e421cdf6ffda949f1edba6a0ca3a1f1d150fc133349e54ecef6fb000400c72f",
+        "model": "small.en",
+        "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/source_asr/ATsKkPJBY3s/medium.en.json",
+        "sha256": "8cadf1ea2255ed08e058dc79906c4618efeba3cabc67d338139577da06d0a922",
+        "model": "medium.en",
+        "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "output/2026-10-17/reel/chwalinska-swiatek-wuhan-2026-sf/captions.txt",
+        "sha256": "f938610cf589d6f185180038c2f5c706802f09b67161d9496e30d21bc1e6dd56",
+        "kind": "Canonical YouTube automatic captions from probe run 39040711967"
+      },
+      {
+        "path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/source-audio-raw/large-v3-turbo-90-100.json",
+        "sha256": "974afc7a85048550e63444be24e93e2e040d5891ea5d5c6bbc7e7b3e4bd2aaf4",
+        "model": "large-v3-turbo",
+        "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+        "clip": [
+          90,
+          100
+        ],
+        "decode": "ffmpeg -ss90 -t10 -f f32le -ac1 -ar16000; no gain/filter effects"
+      }
+    ],
+    "full_source_review_path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/source-commentary-review.json",
+    "full_source_review_sha256": "f7c59e6967a1bf83ef5b84cb930c3be270e610847afd1ca7525927cd9e97290c",
+    "manual_listening_claimed": false,
+    "source_audio_gain_changes": false,
+    "scope_note": "Whole selected window checked against both full-source raw transcripts and canonical automatic captions. Source-level unresolved MTO/interview spans lie outside every selected window. Source-level unknowns were not marked complete.",
+    "specific_resolution": "As undoubtedly Iga says is commentator inference; Chinese explicitly says想必 and does not claim independently audible Iga speech. Stop284.2 before285s health summary and291s erroneous7-6 score summary."
+  }
+}

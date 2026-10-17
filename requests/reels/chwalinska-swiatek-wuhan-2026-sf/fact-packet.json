@@ -1,0 +1,173 @@
+{
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1075_2026_LS002",
+    "flashscore_id": "GjUtJfr9",
+    "participants": [
+      "斯瓦泰克",
+      "赫瓦林斯卡"
+    ],
+    "set_scores_home_away": [
+      [
+        5,
+        7
+      ],
+      [
+        1,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "winner": "赫瓦林斯卡",
+    "loser": "斯瓦泰克",
+    "winner_result": "7-5 6-1",
+    "loser_result": "5-7 1-6",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+    "date": "2026-10-17",
+    "duration": "02:08:54",
+    "daypart": "晚上",
+    "_time_note": "WTA逐分首点11:44:55Z=北京时间19:44:55，末点13:53:09Z=21:53:09；metadata MatchTimeStamp11:24:29非第一发。",
+    "_match_day_why": "用户点名https://youtu.be/ATsKkPJBY3s，官方2026-10-17武汉女单半决赛。"
+  },
+  "stats": {
+    "tour": "wta",
+    "footer_date": "2026-10-17",
+    "footer_venue": "武汉 · 全场",
+    "a": {
+      "aces": 0,
+      "df": 4,
+      "first_in": 40,
+      "first_total": 62,
+      "first_won": 21,
+      "second_total": 22,
+      "second_won": 9,
+      "bp_conv": 2,
+      "bp_chances": 8,
+      "pts_won": 60,
+      "pts_total": 134,
+      "winners": 37,
+      "ue": 33,
+      "headshot": "assets/players/headshots/wta-326408.jpg"
+    },
+    "b": {
+      "aces": 2,
+      "df": 0,
+      "first_in": 56,
+      "first_total": 72,
+      "first_won": 35,
+      "second_total": 16,
+      "second_won": 7,
+      "bp_conv": 6,
+      "bp_chances": 10,
+      "pts_won": 74,
+      "pts_total": 134,
+      "winners": 19,
+      "ue": 7,
+      "headshot": "assets/players/headshots/wta-325639.jpg"
+    },
+    "_source": "WTA LS002原始A=Swiatek/B=Chwalinska，本片a斯/b赫；W/UE由FS本场Match/Set1/Set2原始喂料交叉。全场基本统计与WTA完全一致；FS分盘发球细项不自洽，不采用。",
+    "_winners_ue_evidence": {
+      "provider": "Flashscore",
+      "method": "api",
+      "source_url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_GjUtJfr9",
+      "source_path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/fact-cover-research/fs-stats.raw",
+      "source_sha256": "4692075b0906660cb74b859e594846d051053bc1c29afbac8fb1c58b056e7dd7",
+      "period": "Match",
+      "match_date": "2026-10-17",
+      "checked_at": "2026-10-17T14:31:07.905250+00:00",
+      "winner_result": "7-5 6-1",
+      "matchup": [
+        "Swiatek",
+        "Chwalinska"
+      ],
+      "winners": [
+        37,
+        19
+      ],
+      "ue": [
+        33,
+        7
+      ],
+      "notes": "SH斯/SI赫；W24+13=37/8+11=19；UE16+17=33/6+1=7。全场ACE0/2、DF4/0、BP2/8对6/10、总分60/74与WTA一致。FS分盘一发分母/得分细项存在自洽缺陷，不采用。"
+    }
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "斯瓦泰克",
+        "name_en": "Iga Swiatek",
+        "country": "POL",
+        "rank": 9
+      },
+      {
+        "name": "赫瓦林斯卡",
+        "name_en": "Maja Chwalinska",
+        "country": "POL",
+        "rank": 22
+      }
+    ],
+    "subject": "斯瓦泰克",
+    "winner": "赫瓦林斯卡",
+    "result": "7-5 6-1",
+    "topic": "WTA1000 武汉 半决赛 · 斯瓦泰克 VS 赫瓦林斯卡",
+    "_rank_why": "WTA官方rankedAt2026-10-12，正式世界排名斯9/赫22；本场种子7/16不能写成排名。",
+    "scoreboard": {
+      "court": "Center Court",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS002"
+      }
+    },
+    "portrait": {
+      "image": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/fact-cover-research/wuhan-sf-photo-1.png",
+      "source_url": "https://bucket-wuwang.hubei-41.zos.ctyun.cn/files/zvyermzgrv9h5794qjndlks81.png",
+      "focus": 0.53,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_photo_why": "武汉官方EN图库1651，标题MDS Day6 Maja Chwalinska vs Iga Swiatek，2026-10-17。实看本场斯紫衣持拍走动、近正面睁眼，前侧大腿贴扎；照片不是失落特写，不给具体心理标签。",
+      "_low_res_why": "武网本场原始发布1600x1067PNG，3:4铺1080x1440需1.35倍放大。本场WTA唯一3718x2493 Maja新上传图IPTC实为10/16对萨卡里QF不能用；Getty本场斯可查5000x3333但公开2048样张有水印，未取得无水印原图；AP tennis/搜索未找到本场大图。使用真实本场官方无水印原字节，不做AI放大。"
+    }
+  },
+  "facts": [
+    "首盘双方前4局互保至2-2；赫第5局先破至3-2。",
+    "斯立即回破并保发、第8局再破至5-3。",
+    "首盘第9局斯5-3发球胜盘局40-15，赫挽救两个连续盘点；赫第2个破发点兑现，追回至4-5。",
+    "赫保发5-5，随后再破至6-5。第12局从15-40救两个破发点，首次盘点兑现，7-5拿下首盘。",
+    "赫连赢6局（首盘最后4局＋次盘前2局）至第二盘2-0；斯保发1-2，之后赫连赢4局，6-1。",
+    "最后11局赫赢10局；斯只赢第二盘第3局。",
+    "次盘赫未面对破发点；全场首个赛点兑现。"
+  ],
+  "swiatek_regret": [
+    "5-3、40-15发球胜盘局未能把首盘拿下，两个连续盘点错失。",
+    "WTA4593251明确：本场若赢，将首次进入武汉决赛，并在当前全部10站WTA1000都有决赛经历；本次未能实现。",
+    "WTA4592850称她入周时年终资格候补区、争取第6年连续入围；本场止步半决赛不能写成已确定无缘年终总决赛。"
+  ],
+  "relationship": [
+    "首次WTA巡回赛级别交手；不能称职业生涯首次交手，2016 Stockholm W10曾斯6-2 6-3胜。",
+    "2015U14、2016U16欧青赛女双冠军；2017澳网青少女双亚军；WTA官方点名childhood friend, former junior doubles partner。",
+    "WTA官方4593251称公开赛年代首次WTA级别波兰女单半决赛内战；稳妥可写首次WTA1000波兰德比半决赛。"
+  ],
+  "injury_wording": "WTA正文称Swiatek took an injury timeout to address a leg injury；只说腿部不适/腿伤接受医疗暂停，不延伸伤种、严重度、病因、具体医疗判断。公开逐分末首盘第11局至第12局约7分39秒空档；仅凭逐分不能确定医疗暂停画面位置。",
+  "next_round": "2026-10-18武汉女单决赛对Sonay Kartal，ESPN赛程10:30Z=北京18:30；两人均首次WTA1000决赛。",
+  "sources": {
+    "match": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+    "stats": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS002/stats",
+    "pbp": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS002/point-by-point",
+    "winners_ue": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_GjUtJfr9",
+    "report": "https://www.wtatennis.com/news/4593577/chwalinska-wins-all-polish-semifinal-to-reach-wuhan-final",
+    "first_1000_finals_goal": "https://api.wtatennis.com/content/wta/news/en/4593251",
+    "yearend_context": "https://api.wtatennis.com/content/wta/news/en/4592850",
+    "relationship": "https://api.wtatennis.com/content/wta/news/en/4593212",
+    "espn": "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard?dates=20261017&limit=100"
+  },
+  "cautions": [
+    "WTA pointWinner在多处平分转换中不符合scoreAfterPoint，不能盲信逐分胜者；逐局比分与Flashscore交叉一致。",
+    "Flashscore分盘一发分母与分盘得分总计不完全自洽，基本统计采用WTA；FS只用双方W/UE且按分盘加总核验。",
+    "WTA photo4593576是10/17上传的10/16 QF图，不能本场封面用。"
+  ]
+}

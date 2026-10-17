@@ -1,0 +1,54 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "slug": "chwalinska-swiatek-wuhan-2026-sf",
+  "plan_sha256": "35d0f6c0865b2d51b103437507af23a48558fb7a1c7bc5c997da69bfa2aae224",
+  "reviewed_at": "2026-10-17T14:41:26.036435+00:00",
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/cold_open.json",
+      "transcript_sha256": "02d8e86e1900f8e27c9ca60fd58f004a1a46b2c359332139aae5ef9d5c591e91"
+    },
+    {
+      "index": 2,
+      "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/opening.json",
+      "transcript_sha256": "426424aa7ed69460c5d8bc0167cc8b70a9963986c824cad35aa56f615adaf287"
+    },
+    {
+      "index": 3,
+      "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/iga_break.json",
+      "transcript_sha256": "b42f6e546543b8f373d7ccac520c78950cd509025c9c1e4cfd507ead10590903"
+    },
+    {
+      "index": 5,
+      "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/first_set_point.json",
+      "transcript_sha256": "6c85ec27b65933772f85544d14c0f82cef810d87cef91c5052df0cbd9784f2b0"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/second_set_point.json",
+      "transcript_sha256": "2078a249cfa34fc9a24c0395c5155b8357b8c53b69f200780fd2ca97dcf27e55"
+    },
+    {
+      "index": 7,
+      "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/first_set_finish.json",
+      "transcript_sha256": "ab00e61fc35940933ceead776bf7af28acdc2caf922bb9477e2b93ed360d7ee1"
+    },
+    {
+      "index": 9,
+      "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/second_break.json",
+      "transcript_sha256": "0dee360a38765cf7f51b253edab47ed4623fa1dbd72028736fb54ca45d3b7906"
+    },
+    {
+      "index": 10,
+      "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/second_set_pressure.json",
+      "transcript_sha256": "2a4818e52e6c4bdbb129dacf988ec11c189a32ff2164d911e7a3e6c8b6d1e4ec"
+    },
+    {
+      "index": 11,
+      "transcript_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/source-audio/match_payoff.json",
+      "transcript_sha256": "1ae73dee7f958e2d1b1195860a7535ca78d18d1fcb4e7eb13ac0088066db6e15"
+    }
+  ],
+  "_review_method": "Independently curated same-SHA full two-model ASR plus finite third-model set-point cross-check and canonical automatic captions. Spec.quote was empty before this review. No manual listening claimed."
+}

@@ -1,0 +1,112 @@
+{
+  "slug": "chwalinska-swiatek-wuhan-2026-sf",
+  "review_type": "source_visual_review_not_final_film_qc",
+  "source": "/workspace/scratch/ATsKkPJBY3s.mp4",
+  "source_metadata": {"width": 1920, "height": 1080, "fps": 25, "duration_seconds": 463.005896},
+  "method": "实际view全部5张4秒整片墙；再实际view本目录的逐秒连续墙、末拍0.25秒墙、赛点0.5秒墙、死球25fps逐帧墙及网前裁切放大墙。原声未做人工听审，不声称字幕或语句已听审通过。",
+  "wall_timestamp_precision": "fps=1/2/4生成的概览墙标注为采样时间桶起点，实际代表帧在该桶内，不用于帧级剪点；opening_score、game8_score使用select按n取帧，deadball系列逐帧/每3帧取样的标签为源绝对秒。scene检测与25fps逐帧结果用于采访和死球剪点。",
+  "identity": {
+    "swiatek": "紫色上衣、白裙、紫色帽；记分条始终上行I. SWIATEK",
+    "chwalinska": "全黑连衣裙、无帽；记分条始终下行M. CHWALINSKA"
+  },
+  "opening_score_correction": {
+    "source_interval": [29.12, 50.4],
+    "visible_progress": [
+      "29–40秒：斯瓦泰克2／赫瓦林斯卡3，赫瓦林斯卡发球，占先；这是第6局后段",
+      "41–51秒：3平，斯瓦泰克发球，40-0；这是第7局后段",
+      "51.2后已是斯瓦泰克4-3领先的下一局"
+    ],
+    "recommended_narration": "首盘，先以三比二领先的是月亮姐。斯瓦泰克随即反击，追成三平，又守住自己的发球局，四比三反超。",
+    "not_visually_covered": "2平到月亮姐3-2的破发过程不在此窗口，不能声称这两球直接展示了那次先破发。",
+    "wall": "opening_score_00.jpg"
+  },
+  "game_eight_correction": {
+    "source_interval": [51.2, 85.6],
+    "visible_score": "斯瓦泰克4 Ad／赫瓦林斯卡3；发球图标在赫瓦林斯卡，BREAK POINT #3",
+    "finding": "这是第8局同一个约34秒长回合，斯瓦泰克拿到自己的第3个破发点，并最终破发至5比3；不是斯瓦泰克救4个破发点，也不是4个回合的集合。",
+    "next_verified_score": "86秒源片已进入斯瓦泰克5-3、40-15的发球盘点",
+    "recommended_narration": "四比三，斯瓦泰克又拿到破发机会。两个人把这一分打成了长回合。斯瓦泰克最终再破一局，五比三，轮到她为首盘发球。",
+    "wall": "game8_score_00.jpg"
+  },
+  "first_set_points": [
+    {
+      "number": 1,
+      "safe_source_window": [86.24, 97.8],
+      "serve_preparation_approx": [86.24, 88.4],
+      "live_point_approx": [88.4, 91.8],
+      "reaction_approx": [91.8, 97.8],
+      "score_before": "斯瓦泰克5-3、40-15，发球",
+      "score_after": "斯瓦泰克5-3、40-30；包厢镜头94–97秒显示SET POINT #2",
+      "coverage": "第1盘点完整动作及结果在片内，随后包厢反应；不必用事实卡替代",
+      "walls": ["first_set_point_00.jpg", "set_points_00.jpg"]
+    },
+    {
+      "number": 2,
+      "safe_source_window": [98.0, 115.1],
+      "serve_preparation_approx": [98.0, 100.3],
+      "live_point_approx": [100.3, 113.5],
+      "reaction_approx": [113.5, 115.1],
+      "score_before": "斯瓦泰克5-3、40-30，SET POINT #2",
+      "score_after": "115–116秒切赫瓦林斯卡接发准备近景，记分条为5-3、平分",
+      "coverage": "完整长回合：赫瓦林斯卡远端全黑，斯瓦泰克近端紫白；双方先在底线相持，斯瓦泰克横向跑动，赫瓦林斯卡后段从底线跟进到场内。末拍具体类型不作断言。",
+      "tactical_narration": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。月亮姐随后跟进场内，把这个盘点也救了回来。",
+      "walls": ["set_points_00.jpg", "second_sp_finish_00.jpg", "second_sp_finish_01.jpg"]
+    }
+  ],
+  "second_set_tactical_point": {
+    "safe_source_window": [209.2, 228.4],
+    "serve_and_point_approx": [210.4, 226.6],
+    "reaction_approx": [226.6, 228.4],
+    "score_before": "斯瓦泰克次盘1-3、平分后赫瓦林斯卡占先；斯瓦泰克发球，BREAK POINT",
+    "score_after": "228.5秒后赫瓦林斯卡发球，记分条斯瓦泰克1／赫瓦林斯卡4",
+    "identity_positions": "斯瓦泰克近端紫白；赫瓦林斯卡远端全黑",
+    "visual_facts": [
+      "斯瓦泰克在近端底线向两侧回击，过程中多次进入底线内",
+      "赫瓦林斯卡在远端左右移动，连续回球，双方打成长回合",
+      "后段双方均进入场内，最后结果为赫瓦林斯卡再次破发至4-1",
+      "不声称该球是截击制胜、反手制胜、放短成功或非受迫失误，未据小球影像作超出证据的赢分归因"
+    ],
+    "tactical_narration": "斯瓦泰克从底线打进场内，月亮姐左右移动，把打向两侧的球连续救回。这个长回合过后，月亮姐又破一局，四比一。",
+    "walls": ["second_set_00.jpg", "second_set_finish_00.jpg", "second_set_finish_01.jpg"]
+  },
+  "final_point_and_cold_open": {
+    "complete_final_point_start_recommendation": 245.52,
+    "last_swiatek_strike_approx": 250.16,
+    "ball_reaches_net": 250.52,
+    "net_contact_frames": [250.56, 250.6],
+    "first_unambiguous_dead_ball_frame": 250.6,
+    "safe_post_point_start": 250.64,
+    "is_251_point_0_still_live": false,
+    "finding": "网前25fps裁切墙可见球在250.56–250.60触网后下落回远侧，斯瓦泰克之后转身。251.0已经死球，可保留原声代理定位约251.36开始的Oh Maja完整句。",
+    "alternative_254_point_8": "视觉自然。约252.28先切赢家包厢，255左右切赫瓦林斯卡走向网前；254.8开始至269秒左右均为比赛终局及反应，无采访。音句是否完整需原声代理核听，不能由此视觉记录代替。",
+    "walls": ["final_point_00.jpg", "final_point_01.jpg", "deadball_early_00.jpg", "deadball_early_01.jpg", "deadball_00.jpg", "deadball_01.jpg", "deadball_02.jpg", "deadball_net_00.jpg"]
+  },
+  "ending_and_interview_boundary": {
+    "coaches_reaction_approx": [252.28, 255.0],
+    "chwalinska_walks_to_net_approx": [255.0, 260.0],
+    "net_meeting_and_conversation_approx": [260.0, 265.0],
+    "embrace_approx": [265.0, 267.5],
+    "separation_and_walk_to_umpire_approx": [267.5, 275.0],
+    "umpire_handshake_approx": [275.0, 277.5],
+    "winner_applause_and_acknowledgement_approx": [279.0, 286.0],
+    "winner_returns_to_chair_and_bag_approx": [286.0, 299.48],
+    "interview_camera_first_frame": 299.52,
+    "boundary_evidence": "ffmpeg scene>0.3检测，在297秒seek后相对2.52秒发生硬切；0.25秒墙显示299.25仍在椅旁，299.5桶已进入采访正面机位。",
+    "reel_hard_end_exclusive": 299.52,
+    "conservative_reel_last_frame": 299.48,
+    "rule": "299.52起采访正面机位一帧不进赛场之上；即便主持人尚未举麦/提问也属于采访准备。音轨如提前进入主持问题，则以原声听审为准更早切断。",
+    "walls": ["ending_00.jpg", "ending_01.jpg", "ending_02.jpg", "interview_boundary_00.jpg"]
+  },
+  "medical_timeout": {
+    "source_visual_coverage": "整片4秒墙和本轮细看中未辨识到可确证的本场医疗暂停画面",
+    "fact_source": "WTA官方赛报确认因腿部伤情接受医疗暂停",
+    "production_action": "内部登记画面缺口；使用原生title_card及忠实旁白说明经核实事实。不拿普通换边、坐椅、另一球或赛后动作冒充治疗，也不自行确定暂停在盘间。",
+    "public_wording": "斯瓦泰克因腿部伤情接受医疗暂停，随后回到场上。"
+  },
+  "limits": [
+    "本报告是源片视觉核验，不是实际成片QC",
+    "球路只写可见移动、底线相持及进入场内，不猜旋转、意图或医学因果",
+    "原声字幕、完整语句及音频边界须由原声听审记录补充",
+    "墙图片为审查证据；大raw逐帧文件留在scratch，不列入Git产物"
+  ]
+}

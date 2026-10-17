@@ -1,0 +1,60 @@
+{
+  "checked_at": "2026-10-17T14:35:36.848343+00:00",
+  "owner_steering": "Use Maja Chwalinska as cover subject per latest user instruction.",
+  "recommended_image": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/fact-cover-research/wuhan-sf-photo-2.png",
+  "image_url": "https://bucket-wuwang.hubei-41.zos.ctyun.cn/files/agw5z1k23ig472by65ssvegyn.png",
+  "official_gallery": "https://www.wuhanopentennis.com/whNews/Pictures?id=1651",
+  "gallery_title": "MDS Day6 Maja Chwalinska vs Iga Swiatek",
+  "gallery_publish_date": "2026-10-17",
+  "native_size": [
+    1600,
+    1067
+  ],
+  "sha256": "83100b06de71fe8e346d879bdc14208eb651d7beb6aab016ba09ce14ae0d8d82",
+  "viewed": true,
+  "visual_audit": {
+    "identity": "Maja Chwalinska; black Lacoste top, no cap, left-handed player captured in a two-handed backhand. Matches official gallery title.",
+    "face": "Near frontal, both eyes open and visible, facial features in focus.",
+    "ball": "Ball overlaps left upper-arm / chest area, does not cover face.",
+    "face_center_approx_source_xy": [
+      735,
+      315
+    ],
+    "recommended_portrait": {
+      "fit": "cover",
+      "focus": 0.42,
+      "focus_y": 0.5,
+      "zoom": 1.0
+    },
+    "equivalent_source_crop_xyxy": [
+      335.895,
+      0,
+      1136.145,
+      1067
+    ],
+    "eye_center_canvas_approx_xy": [
+      539,
+      425
+    ],
+    "scaled_source_to_1080x1440_factor": 1.3495782567947516,
+    "limitation": "Native official image 1600x1067, full-height fill requires 1.3496x scaling; do not describe as a 5000px image."
+  },
+  "official_refresh_results": [
+    {
+      "source": "Wuhan gallery 1651",
+      "result": "Still exactly two photos; image2 is current-match Maja frontal action. EN/CN mirrors same published resolution."
+    },
+    {
+      "source": "Wuhan gallery1653",
+      "result": "Single 3120x4160 postmatch selfie with fans; smiling near frontal but player in bottom-left with face low in frame and many spectators; weaker cover under current brand header/title zones than action photo2."
+    },
+    {
+      "source": "WTA photo API references=TENNIS_PLAYER:325639 latest50",
+      "result": "Newest photo4593576 is same previously rejected 10/16 Sakkari QF image according to embedded IPTC. No newer current-match Maja high-res official image in returned feed."
+    }
+  ],
+  "decision": "Keep officialphoto2 for current cover. No better current-match official celebratory/front-facing image retrieved within refresh window.",
+  "status": "REJECTED BY OWNER; do not use officialphoto2",
+  "owner_rejection": "换一张，这张看不太清楚，前面的拍子感觉和球有点模糊。",
+  "replacement_candidate": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/fact-cover-research/maja-selfie-candidate-3x4.jpg"
+}

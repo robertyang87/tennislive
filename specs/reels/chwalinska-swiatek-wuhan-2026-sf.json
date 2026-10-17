@@ -1,0 +1,587 @@
+{
+  "slug": "chwalinska-swiatek-wuhan-2026-sf",
+  "_column": "赛场之上",
+  "tts_backend": "edge",
+  "_tts_backend_why": "固定云健+6%/0Hz，先冻结实际配音、核验后用于正式渲染。",
+  "sources": {
+    "main": "https://github.com/robertyang87/tennislive/releases/download/source-ATsKkPJBY3s/ATsKkPJBY3s.mp4"
+  },
+  "primary": "main",
+  "track": false,
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "preserve_source_audio": true,
+  "scorebox": [
+    90,
+    826,
+    550,
+    980
+  ],
+  "_official_source": {
+    "url": "https://www.youtube.com/watch?v=ATsKkPJBY3s",
+    "channel": "WTA",
+    "visual_identity": "本场WTA官方集锦，原画WTA标志、球员衣着、对阵比分逐帧核验；Release保留相同源字节供渲染与审查。"
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "official_wta",
+    "source_id": "1075_2026_LS002",
+    "flashscore_id": "GjUtJfr9",
+    "participants": [
+      "斯瓦泰克",
+      "赫瓦林斯卡"
+    ],
+    "set_scores_home_away": [
+      [
+        5,
+        7
+      ],
+      [
+        1,
+        6
+      ]
+    ],
+    "tiebreaks_home_away": [
+      null,
+      null
+    ],
+    "winner": "赫瓦林斯卡",
+    "loser": "斯瓦泰克",
+    "winner_result": "7-5 6-1",
+    "loser_result": "5-7 1-6",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+    "date": "2026-10-17",
+    "duration": "02:08:54",
+    "daypart": "晚上",
+    "_time_note": "WTA逐分首点11:44:55Z=北京时间19:44:55，末点13:53:09Z=21:53:09；metadata MatchTimeStamp11:24:29非第一发。",
+    "_match_day_why": "用户点名https://youtu.be/ATsKkPJBY3s，官方2026-10-17武汉女单半决赛。"
+  },
+  "stats": {
+    "tour": "wta",
+    "footer_date": "2026-10-17",
+    "footer_venue": "武汉 · 全场",
+    "a": {
+      "aces": 0,
+      "df": 4,
+      "first_in": 40,
+      "first_total": 62,
+      "first_won": 21,
+      "second_total": 22,
+      "second_won": 9,
+      "bp_conv": 2,
+      "bp_chances": 8,
+      "pts_won": 60,
+      "pts_total": 134,
+      "winners": 37,
+      "ue": 33,
+      "headshot": "assets/players/headshots/wta-326408.jpg"
+    },
+    "b": {
+      "aces": 2,
+      "df": 0,
+      "first_in": 56,
+      "first_total": 72,
+      "first_won": 35,
+      "second_total": 16,
+      "second_won": 7,
+      "bp_conv": 6,
+      "bp_chances": 10,
+      "pts_won": 74,
+      "pts_total": 134,
+      "winners": 19,
+      "ue": 7,
+      "headshot": "assets/players/headshots/wta-325639.jpg"
+    },
+    "_source": "WTA LS002原始A=Swiatek/B=Chwalinska，本片a斯/b赫；W/UE由FS本场Match/Set1/Set2原始喂料交叉。全场基本统计与WTA完全一致；FS分盘发球细项不自洽，不采用。",
+    "_winners_ue_evidence": {
+      "provider": "Flashscore",
+      "method": "api",
+      "source_url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_GjUtJfr9",
+      "source_path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/fact-cover-research/fs-stats.raw",
+      "source_sha256": "4692075b0906660cb74b859e594846d051053bc1c29afbac8fb1c58b056e7dd7",
+      "period": "Match",
+      "match_date": "2026-10-17",
+      "checked_at": "2026-10-17T14:31:07.905250+00:00",
+      "winner_result": "7-5 6-1",
+      "matchup": [
+        "Swiatek",
+        "Chwalinska"
+      ],
+      "winners": [
+        37,
+        19
+      ],
+      "ue": [
+        33,
+        7
+      ],
+      "notes": "SH斯/SI赫；W24+13=37/8+11=19；UE16+17=33/6+1=7。全场ACE0/2、DF4/0、BP2/8对6/10、总分60/74与WTA一致。FS分盘一发分母/得分细项存在自洽缺陷，不采用。"
+    }
+  },
+  "cover": {
+    "matchup": [
+      {
+        "name": "斯瓦泰克",
+        "name_en": "Iga Swiatek",
+        "country": "POL",
+        "rank": 9
+      },
+      {
+        "name": "赫瓦林斯卡",
+        "name_en": "Maja Chwalinska",
+        "country": "POL",
+        "rank": 22
+      }
+    ],
+    "subject": "赫瓦林斯卡",
+    "winner": "赫瓦林斯卡",
+    "result": "7-5 6-1",
+    "topic": "WTA1000 武汉 半决赛 · 斯瓦泰克 VS 赫瓦林斯卡",
+    "_rank_why": "WTA官方rankedAt2026-10-12，正式世界排名斯9/赫22；本场种子7/16不能写成排名。",
+    "scoreboard": {
+      "court": "Center Court",
+      "duration_source": {
+        "url": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+        "field": "MatchTimeTotal",
+        "match_id": "LS002"
+      }
+    },
+    "portrait": {
+      "image": "assets/reels/chwalinska-swiatek-wuhan-2026-sf/chwalinska-wuhan-sf-official.jpg",
+      "source_url": "https://bucket-wuwang.hubei-41.zos.ctyun.cn/files/bp5331zghc14rxuwvyt5huib3.jpg",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1,
+      "fit": "cover"
+    },
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "scrim": "clear",
+    "hook": "首盘救回2个盘点\n月亮姐首进1000赛决赛",
+    "hook_accent": "首进1000赛决赛",
+    "_portrait_why": "用户指定赫瓦林斯卡，并否决前景拍与球模糊的动作图；本场晋级后武网官方1653自拍原图3120x4160，真实裁切[50,1450,1500,3383]到1450x1933，无放大锐化。实际原生A/B/C三封面供选，默认B更大正面微笑且清晰、眼与下巴避开字带。",
+    "_heat_why": "用户点名波兰德比半决赛；世界第22赫瓦林斯卡击败世界第9斯瓦泰克，首次WTA1000决赛。"
+  },
+  "topbar": {
+    "line1": "2026 WTA1000 武汉 半决赛",
+    "line2": "赫瓦林斯卡 7-5 6-1 斯瓦泰克"
+  },
+  "push": {
+    "auto": true,
+    "summary": "赫瓦林斯卡救盘点晋级",
+    "lead": "首盘3比5、对手40比15，月亮姐把2个连续盘点都救了回来。赫瓦林斯卡7比5、6比1击败斯瓦泰克，首次闯入1000赛决赛。斯瓦泰克错过发球胜盘局，又因腿部不适接受医疗暂停；赫瓦林斯卡则赢下最后11局中的10局。比赛结束，两位昔日搭档在网前相拥。明天，月亮姐将与卡尔塔尔争冠。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "曾经并肩的双打搭档，谁能把武汉的决赛门票握在手里？",
+    "thesis": "斯瓦泰克首盘5-3、40-15错失两个连续盘点，赫瓦林斯卡救盘点后逆转首盘，并赢下最后11局中的10局；既呈现赢家生涯首个1000赛决赛，也给输家的领先、腿部不适与未能完成武汉决赛的遗憾留足空间。",
+    "beats": [
+      "赢后真实原声与网前相拥",
+      "北京时间日期时段赛事轮次及旧搭档背景",
+      "首盘从3-2到斯5-3的完整进程",
+      "两个连续盘点均保留完整回合",
+      "首盘7-5兑现与医疗暂停事实卡",
+      "次盘反击、完整赛点与握手致意",
+      "双方全场统计和积极展望"
+    ],
+    "human_context": {
+      "angle": "曾经一起向前的两个人，这次只能有一个走进决赛；输赢之外，网前还有一个拥抱。",
+      "facts": [
+        "首次WTA巡回赛级别交手；不能称职业生涯首次交手，2016 Stockholm W10曾斯6-2 6-3胜。",
+        "5-3、40-15发球胜盘局未能把首盘拿下，两个连续盘点错失。",
+        "WTA4593251明确：本场若赢，将首次进入武汉决赛，并在当前全部10站WTA1000都有决赛经历；本次未能实现。"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+        "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS002/stats",
+        "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS002/point-by-point",
+        "https://local-global.flashscore.ninja/2/x/feed/df_st_1_GjUtJfr9",
+        "https://www.wtatennis.com/news/4593577/chwalinska-wins-all-polish-semifinal-to-reach-wuhan-final",
+        "https://api.wtatennis.com/content/wta/news/en/4593251",
+        "https://api.wtatennis.com/content/wta/news/en/4592850",
+        "https://api.wtatennis.com/content/wta/news/en/4593212",
+        "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard?dates=20261017&limit=100"
+      ]
+    }
+  },
+  "_facts": [
+    {
+      "path": "requests/reels/chwalinska-swiatek-wuhan-2026-sf/fact-packet.json",
+      "why": "官方LS002赛果、实际首点、逐分与独立交叉结果、双方W/UE、排名、下一轮和伤情措辞。"
+    }
+  ],
+  "_hit_data": [
+    {
+      "label": "最后11局赢下10局",
+      "detail": "首盘3-5后赢首盘最后4局，次盘6-1，共10/11局。",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches/LS002/point-by-point"
+    },
+    {
+      "label": "首次WTA1000决赛",
+      "detail": "官方同场赛报确认。",
+      "source": "https://www.wtatennis.com/news/4593577/chwalinska-wins-all-polish-semifinal-to-reach-wuhan-final"
+    }
+  ],
+  "_source_coverage": {
+    "checked_source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+    "duration": 463.005896,
+    "full_source_contact_sheets_reviewed": "root实际查看4秒墙00–04覆盖完整463秒；视觉代理复核关键回合，属于有限采样，不等同全帧审核。",
+    "key_points": [
+      {
+        "event": "首盘斯4-3接发破至5-3",
+        "coverage": "完整34秒长回合51.2–85.6，主角归属已逐板核验。"
+      },
+      {
+        "event": "首盘斯5-3连续两个盘点",
+        "coverage": "86.24–115.12两球完整保留；第二个盘点配事实球路说明。"
+      },
+      {
+        "event": "赫追回5-5再拿下首盘7-5",
+        "coverage": "117.24–173完整原片选段含关键机会、盘点及完整原声。"
+      },
+      {
+        "event": "医疗暂停与次盘2-0后斯追回1-2",
+        "coverage": "官方现有源未确证治疗画面，查官方报道与图库后用原生事实卡交代；不拿其他回合冒充。"
+      },
+      {
+        "event": "次盘关键破发、首个赛点与拥抱握手",
+        "coverage": "210.48–284.2保留选中完整关键回合及握手致意；284.2后原声报错盘分故整体舍弃，不将错误英语修改成正确比分。"
+      }
+    ],
+    "interview_starts_at": 299.52
+  },
+  "_editing_why": "按官方真实素材讲清两盘过程，旁白只在无英文解说窗口解释，关键原声单独配双语。比赛中治疗通过事实卡叙述；波兰双子星历史专题已有，背景只给必要一句。",
+  "_production": {
+    "received_at": "2026-10-17T14:24:00Z",
+    "event": "Wuhan",
+    "year": 2026,
+    "round": "Semi-finals",
+    "court": "Center Court"
+  },
+  "segments": [
+    {
+      "_edit_id": "cold_open",
+      "source": "main",
+      "start": 250.8,
+      "end": 270.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 360,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.1,
+          "end": 1.28,
+          "text": "Oh, Maja!\n噢玛雅"
+        },
+        {
+          "at": 4.08,
+          "end": 6.06,
+          "text": "Magnificence in Wuhan,\n武汉的精彩一刻"
+        },
+        {
+          "at": 6.06,
+          "end": 9.02,
+          "text": "as she topples her fellow Pole, former world number one,\n她击败同为波兰人的前世界第一"
+        },
+        {
+          "at": 9.02,
+          "end": 12.7,
+          "text": "for her first career top-10 win.\n收获生涯首场对前10球员的胜利"
+        }
+      ],
+      "crosses_cut": "本场官方集锦已有转播切换，窗口按本场源时间取；不把跳过的中间回合说成连续逐分。",
+      "point_end_ok": "实际连续帧与记分条核验完整选中回合，末尾止于死球后或完整原声句界；详见本片visual-review.json。",
+      "_fit_why": "沿用固定中心全屏3:4，cx0.5、trackfalse，原生同帧透明比分板固定左下回贴。",
+      "_quote_kind": "broadcast",
+      "_ending_payoff_required": true,
+      "_source_audio_review_status": "complete: same-SHA full small.en/medium.en + canonical automatic captions; finite large-v3-turbo90–100 confirms set-point clause; no manual listening claimed"
+    },
+    {
+      "_edit_id": "intro",
+      "title_card": "旧日搭档隔网相逢\n只有1张决赛门票",
+      "kicker": "波兰德比",
+      "seconds": 16.8,
+      "narration": "熟悉的两个人，这次只能有一个往前走。北京时间二零二六年十月十七日晚上，武汉一千赛女单半决赛。曾经的青少年双打搭档，赫瓦林斯卡与斯瓦泰克，迎来巡回赛首次交手。"
+    },
+    {
+      "_edit_id": "opening",
+      "source": "main",
+      "start": 29.3,
+      "end": 51.2,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 360,
+      "narration": "首盘，月亮姐先以三比二领先。斯瓦泰克没有让她把优势拉开，马上反击。比分很接近，两个人都在争取把节奏拿回来。",
+      "quote": [],
+      "crosses_cut": "本场官方集锦已有转播切换，窗口按本场源时间取；不把跳过的中间回合说成连续逐分。",
+      "point_end_ok": "实际连续帧与记分条核验完整选中回合，末尾止于死球后或完整原声句界；详见本片visual-review.json。",
+      "_fit_why": "沿用固定中心全屏3:4，cx0.5、trackfalse，原生同帧透明比分板固定左下回贴。",
+      "_source_audio_review_status": "complete: same-SHA full small.en/medium.en + canonical automatic captions; finite large-v3-turbo90–100 confirms set-point clause; no manual listening claimed"
+    },
+    {
+      "_edit_id": "iga_break",
+      "source": "main",
+      "start": 51.2,
+      "end": 85.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 360,
+      "narration": "四比三，斯瓦泰克又拿到破发机会。两个人从底线反复拉锯，谁都不肯先让出这一分。这一次，她要把压力推到老搭档身上。",
+      "quote": [],
+      "crosses_cut": "本场官方集锦已有转播切换，窗口按本场源时间取；不把跳过的中间回合说成连续逐分。",
+      "point_end_ok": "实际连续帧与记分条核验完整选中回合，末尾止于死球后或完整原声句界；详见本片visual-review.json。",
+      "_fit_why": "沿用固定中心全屏3:4，cx0.5、trackfalse，原生同帧透明比分板固定左下回贴。",
+      "_source_audio_review_status": "complete: same-SHA full small.en/medium.en + canonical automatic captions; finite large-v3-turbo90–100 confirms set-point clause; no manual listening claimed"
+    },
+    {
+      "_edit_id": "set_points_context",
+      "title_card": "首盘5比3领先\n斯瓦泰克握2个盘点",
+      "kicker": "胜利曾经很近",
+      "seconds": 9.2,
+      "narration": "五比三，四十比十五。斯瓦泰克拿到两个连续盘点。距离收下首盘，她只差一分。"
+    },
+    {
+      "_edit_id": "first_set_point",
+      "source": "main",
+      "start": 86.24,
+      "end": 98.28,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 360,
+      "narration": "",
+      "quote": [
+        {
+          "at": 7.66,
+          "end": 9.52,
+          "text": "Well, so, I’m going to send you a little bit,\n那我也回敬你一点"
+        },
+        {
+          "at": 9.52,
+          "end": 11.0,
+          "text": "and give you some of your own medicine.\n以其人之道还治其人之身"
+        },
+        {
+          "at": 11.0,
+          "end": 11.84,
+          "text": "How about that?\n怎么样"
+        }
+      ],
+      "crosses_cut": "本场官方集锦已有转播切换，窗口按本场源时间取；不把跳过的中间回合说成连续逐分。",
+      "point_end_ok": "实际连续帧与记分条核验完整选中回合，末尾止于死球后或完整原声句界；详见本片visual-review.json。",
+      "_fit_why": "沿用固定中心全屏3:4，cx0.5、trackfalse，原生同帧透明比分板固定左下回贴。",
+      "_quote_kind": "broadcast",
+      "_source_audio_review_status": "complete: same-SHA full small.en/medium.en + canonical automatic captions; finite large-v3-turbo90–100 confirms set-point clause; no manual listening claimed"
+    },
+    {
+      "_edit_id": "second_set_point",
+      "source": "main",
+      "start": 98.28,
+      "end": 115.12,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 360,
+      "narration": "第二个盘点，月亮姐从底线把球分向两侧，斯瓦泰克横向跑动回击。落点一次次被拉开，月亮姐还在寻找向场内跟进的机会。",
+      "quote": [],
+      "crosses_cut": "本场官方集锦已有转播切换，窗口按本场源时间取；不把跳过的中间回合说成连续逐分。",
+      "point_end_ok": "实际连续帧与记分条核验完整选中回合，末尾止于死球后或完整原声句界；详见本片visual-review.json。",
+      "_fit_why": "沿用固定中心全屏3:4，cx0.5、trackfalse，原生同帧透明比分板固定左下回贴。",
+      "_source_audio_review_status": "complete: same-SHA full small.en/medium.en + canonical automatic captions; finite large-v3-turbo90–100 confirms set-point clause; no manual listening claimed"
+    },
+    {
+      "_edit_id": "first_set_finish",
+      "source": "main",
+      "start": 117.24,
+      "end": 173.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 360,
+      "narration": "",
+      "quote": [
+        {
+          "at": 39.32,
+          "end": 41.84,
+          "text": "Maja Chwalinska does it!\n赫瓦林斯卡做到了"
+        },
+        {
+          "at": 41.84,
+          "end": 43.68,
+          "text": "Perhaps the unthinkable for some,\n或许有人觉得不可思议"
+        },
+        {
+          "at": 43.68,
+          "end": 46.2,
+          "text": "but not for her, not for her camp.\n但她和她的团队并不这样想"
+        },
+        {
+          "at": 47.36,
+          "end": 50.46,
+          "text": "Chwalinska hands Iga Swiatek her first dropped set in Wuhan\n她让斯瓦泰克在本届武汉首次丢盘"
+        },
+        {
+          "at": 50.46,
+          "end": 54.4,
+          "text": "and has the upper hand in semifinal number two.\n在第2场半决赛中占得先机"
+        }
+      ],
+      "crosses_cut": "本场官方集锦已有转播切换，窗口按本场源时间取；不把跳过的中间回合说成连续逐分。",
+      "point_end_ok": "实际连续帧与记分条核验完整选中回合，末尾止于死球后或完整原声句界；详见本片visual-review.json。",
+      "_fit_why": "沿用固定中心全屏3:4，cx0.5、trackfalse，原生同帧透明比分板固定左下回贴。",
+      "_quote_kind": "broadcast",
+      "_source_audio_review_status": "complete: same-SHA full small.en/medium.en + canonical automatic captions; finite large-v3-turbo90–100 confirms set-point clause; no manual listening claimed"
+    },
+    {
+      "_edit_id": "injury_and_turn",
+      "title_card": "首盘领先未能兑现\n第二盘再次陷入被动",
+      "kicker": "斯瓦泰克的遗憾",
+      "seconds": 20.2,
+      "narration": "现行十站一千赛，斯瓦泰克只差武汉的决赛经历。这一次，她没能跨过去。比赛中，她因腿部不适接受医疗暂停。第二盘，月亮姐以二比零开局，连着赢了六局。斯瓦泰克追回一局，却没能挽回走势。"
+    },
+    {
+      "_edit_id": "second_break",
+      "source": "main",
+      "start": 210.48,
+      "end": 228.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 360,
+      "narration": "一比三，斯瓦泰克又面对破发点。她从底线打进场内，月亮姐左右移动，把打向两侧的球连续救回。斯瓦泰克的进攻，还要再多打一拍。",
+      "quote": [],
+      "crosses_cut": "本场官方集锦已有转播切换，窗口按本场源时间取；不把跳过的中间回合说成连续逐分。",
+      "point_end_ok": "实际连续帧与记分条核验完整选中回合，末尾止于死球后或完整原声句界；详见本片visual-review.json。",
+      "_fit_why": "沿用固定中心全屏3:4，cx0.5、trackfalse，原生同帧透明比分板固定左下回贴。",
+      "_source_audio_review_status": "complete: same-SHA full small.en/medium.en + canonical automatic captions; finite large-v3-turbo90–100 confirms set-point clause; no manual listening claimed"
+    },
+    {
+      "_edit_id": "second_set_pressure",
+      "source": "main",
+      "start": 228.4,
+      "end": 242.24,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 360,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.2,
+          "end": 2.98,
+          "text": "To lead 5-1 in the second set.\n争取在第2盘以5比1领先"
+        },
+        {
+          "at": 12.4,
+          "end": 13.8,
+          "text": "Now she’s unrelenting.\n她仍然毫不松劲"
+        }
+      ],
+      "crosses_cut": "本场官方集锦已有转播切换，窗口按本场源时间取；不把跳过的中间回合说成连续逐分。",
+      "point_end_ok": "实际连续帧与记分条核验完整选中回合，末尾止于死球后或完整原声句界；详见本片visual-review.json。",
+      "_fit_why": "沿用固定中心全屏3:4，cx0.5、trackfalse，原生同帧透明比分板固定左下回贴。",
+      "_quote_kind": "broadcast",
+      "_source_audio_review_status": "complete: same-SHA full small.en/medium.en + canonical automatic captions; finite large-v3-turbo90–100 confirms set-point clause; no manual listening claimed"
+    },
+    {
+      "_edit_id": "match_payoff",
+      "source": "main",
+      "start": 242.24,
+      "end": 284.2,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 360,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.36,
+          "end": 2.14,
+          "text": "She knows she’s oh so close.\n她知道胜利已经近在咫尺"
+        },
+        {
+          "at": 2.26,
+          "end": 4.84,
+          "text": "Maja Chwalinska. Match point.\n赫瓦林斯卡来到赛点"
+        },
+        {
+          "at": 8.66,
+          "end": 9.84,
+          "text": "Oh, Maja!\n噢玛雅"
+        },
+        {
+          "at": 12.64,
+          "end": 14.62,
+          "text": "Magnificence in Wuhan,\n武汉的精彩一刻"
+        },
+        {
+          "at": 14.62,
+          "end": 17.58,
+          "text": "as she topples her fellow Pole, former world number one,\n她击败同为波兰人的前世界第一"
+        },
+        {
+          "at": 17.58,
+          "end": 21.26,
+          "text": "for her first career top-10 win.\n收获生涯首场对前10球员的胜利"
+        },
+        {
+          "at": 28.54,
+          "end": 30.56,
+          "text": "Well, genuine affection for each other,\n彼此之间有着真挚情谊"
+        },
+        {
+          "at": 30.56,
+          "end": 33.82,
+          "text": "and you can see the affinity they have.\n你能看出她们有多亲近"
+        },
+        {
+          "at": 34.56,
+          "end": 36.56,
+          "text": "As undoubtedly Iga says, “Good luck tomorrow,\n想必伊加在说祝你明天好运"
+        },
+        {
+          "at": 36.56,
+          "end": 38.74,
+          "text": "as you vie for your first career title\n你将为生涯首冠而战"
+        },
+        {
+          "at": 38.74,
+          "end": 41.38,
+          "text": "and do so at a WTA 1000 event.”\n而且是在WTA1000赛"
+        }
+      ],
+      "crosses_cut": "本场官方集锦已有转播切换，窗口按本场源时间取；不把跳过的中间回合说成连续逐分。",
+      "point_end_ok": "实际连续帧与记分条核验完整选中回合，末尾止于死球后或完整原声句界；详见本片visual-review.json。",
+      "_fit_why": "沿用固定中心全屏3:4，cx0.5、trackfalse，原生同帧透明比分板固定左下回贴。",
+      "_quote_kind": "broadcast",
+      "_source_audio_review_status": "complete: same-SHA full small.en/medium.en + canonical automatic captions; finite large-v3-turbo90–100 confirms set-point clause; no manual listening claimed"
+    },
+    {
+      "_edit_id": "full_stats",
+      "stat_card": true,
+      "seconds": 14.5,
+      "narration": "斯瓦泰克三十七个制胜分，也有三十三次非受迫失误。月亮姐十九个制胜分，七次非受迫失误。最后十一局赢下十局，她把首个一千赛决赛握在了手里。"
+    },
+    {
+      "_edit_id": "outlook",
+      "title_card": "首进1000赛决赛\n祝福留给老搭档",
+      "kicker": "重逢之后",
+      "seconds": 14.8,
+      "narration": "网前的拥抱之后，月亮姐要去迎接卡尔塔尔。斯瓦泰克的武汉决赛梦，今天没能完成。愿她尽快恢复。明天，月亮姐能把这次突破，写成冠军吗？"
+    }
+  ],
+  "_timing_why": "在真实配音审查时移除尚未落地就预报回合结果的句子；完整关键回合保留，不用延长字卡凑时长。字卡按实际冻结MP3+约1秒尾料收紧。"
+}
