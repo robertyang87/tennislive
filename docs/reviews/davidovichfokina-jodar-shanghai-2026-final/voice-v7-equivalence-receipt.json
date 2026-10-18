@@ -1,0 +1,271 @@
+{
+  "status": "same_reviewed_audio_recaptured_under_current_implementation",
+  "old_bundle_sha256": "27893706b78f16cd2a2ae99b1b21b353a49d8a2044aa00d6eb253d5999db47b4",
+  "new_bundle_sha256": "1b66f9c6aad24effb68f123bfb3ec7daa7b496bf1260dbd7ec7a79a113ecd81a",
+  "new_bundle_bytes": 890101,
+  "request_enumerator": "reel.reel_tts_requests(current_formal_spec, zh-CN-YunjianNeural, +6%, +0Hz)",
+  "formal_spec_sha256_at_enumeration": "77cd5785e9b825b55b636a0b7e0e9db0976ad2063b623be315bbdb1631b62bfa",
+  "request_count": 13,
+  "new_synthesis_count": 0,
+  "all13_complete_normalized_requests_equal": true,
+  "all13_MP3_bytes_equal": true,
+  "all13_WordBoundary_bytes_equal": true,
+  "old_and_new_manifest_entries_and_occurrences_identical": true,
+  "current_implementation_strict_validation_passed": true,
+  "strict_import_reexport_ZIP_bytes_equal": true,
+  "old_bundle_unchanged": true,
+  "implementation_old": {
+    "azure_tts.py": "bab46582b80d2fc939250d3238abd97d2a7104bf5cb6523222762e86fad40c51",
+    "pronounce.py": "d8034c0fefa8dc295c6b03c3d42bf2699b4cf38a15c54c7cfff3c72a38677f05",
+    "tts.py": "f8fba13a2be162f7062f5e414f673a75e98e9a9ff43837e6975f22b5307ad8be",
+    "tts_bundle.py": "3fff7073d50533be5746ea7e2112356dbb0b06dde3b51018f1803587ed8f5aef"
+  },
+  "implementation_current": {
+    "tts.py": "f8fba13a2be162f7062f5e414f673a75e98e9a9ff43837e6975f22b5307ad8be",
+    "tts_bundle.py": "3fff7073d50533be5746ea7e2112356dbb0b06dde3b51018f1803587ed8f5aef",
+    "azure_tts.py": "bab46582b80d2fc939250d3238abd97d2a7104bf5cb6523222762e86fad40c51",
+    "pronounce.py": "7091b501fec9d98e6c3621cbe744e4ff7aaa62ba0e584e6d4e7d55cc97275a64"
+  },
+  "implementation_only_changed_file": "pronounce.py",
+  "implementation_exact_delta": {
+    "before": "2026-10-18 云见 +6%/+0Hz 完整回归旁白真实音频：",
+    "after": "2026-10-18 实测：云见 +6%/+0Hz 完整回归旁白真实音频：",
+    "current_file_with_exact_single_reverse_replacement_sha256": "d8034c0fefa8dc295c6b03c3d42bf2699b4cf38a15c54c7cfff3c72a38677f05",
+    "equals_old_manifest_pronounce_sha256": true,
+    "semantics": "Only evidence prose marker added; exact original file SHA reconstructed. Synthesis transform patterns/replacements and complete normalized requests unchanged."
+  },
+  "utterances": [
+    {
+      "edit_id": "landing",
+      "request": {
+        "text": "首盘一比六，第二盘又被破发。福基纳却从这样的开局，拿到了第一座大师赛冠军。这场逆转，究竟是从哪一分开始的？",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "b4c0ca0ff914c9ae8b655ca1ff2ed65f"
+      },
+      "audio_sha256": "17de9aea396273c1fc9cce3c14aeee1db8fd892c4df475b670d7def5b94af83b",
+      "marks_sha256": "36244705a53451d20019f47cd5622d79ecc9e2f88be6089fde29fba1684b4d0e",
+      "duration_seconds": 11.064
+    },
+    {
+      "edit_id": "coordinates",
+      "request": {
+        "text": "北京时间十月十八日下午，上海大师赛男单决赛。达维多维奇·福基纳，对阵霍达尔。一场西班牙球员的冠军争夺。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "2dbc12d7cd3bf29f12a37cf8f8b0129f"
+      },
+      "audio_sha256": "7aaef8458f111fba81a60902dc5ce7587717d2d8996d96b41c0faade0e154b4a",
+      "marks_sha256": "a6e9d9d805fd69741054cdb5e6a78c0fa34aa1a9d506117bca6604d8335b4462",
+      "duration_seconds": 10.224
+    },
+    {
+      "edit_id": "jodar_first_set",
+      "request": {
+        "text": "二十岁的霍达尔，前一天刚淘汰梅德韦杰夫。首盘的底线拉锯，他占了上风。七次超过九拍的常回合，他全部拿下；两个破发点，也都兑现。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "68b2b0cb948e2ca77751747a3097ad75"
+      },
+      "audio_sha256": "4dfcac4cf21b72abaa16e5a7b69165061848795819737bf8c12840c9d80a44f7",
+      "marks_sha256": "9ffbc9ec454bf017c5a820f8c41526aab32ec05ef7efbd26a408ab1166d300ca",
+      "duration_seconds": 12.888
+    },
+    {
+      "edit_id": "deepest_deficit",
+      "request": {
+        "text": "更难的是，第二盘来到二比二，他又丢了发球局。已经落后一盘，还要再追一个破发。冠军还很远，先要把比赛留住。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "c3dc615466f3d723de9e9358589c8354"
+      },
+      "audio_sha256": "0cfda179530139300727a4411a97f04a5644c9589415f657ac38ff3c6b0f175d",
+      "marks_sha256": "3238d7ebbf99f291fd0425ab36b7e5bff433b94d3896873cf6b82f7f02df7af2",
+      "duration_seconds": 10.752
+    },
+    {
+      "edit_id": "five_break_points",
+      "request": {
+        "text": "从底线追到网前，倒地也要把球救回来。这个回破，福基纳靠的是再多打一拍。但追平还不够，随后三个发球局，他又把五个破发点全部救了回来。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "9d0a7b9c2a0edfd8bc869dbeaf48ceea"
+      },
+      "audio_sha256": "1b8f487b71e4bcacc7e2f1863be89aaef9f79d0ba177ea3e2012a9a14fe157c6",
+      "marks_sha256": "2b0f51a0949c633afca44247ef4038848e95d5fa7182f809e7ae7606afad7b90",
+      "duration_seconds": 13.152
+    },
+    {
+      "edit_id": "tiebreak",
+      "request": {
+        "text": "双方来到抢七。前十个小分，各自守住发球分，五比五。福基纳终于抢到接发分，随后再拿一分。七比五！第二盘拿下，冠军的争夺，还要继续。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "48ddb2d4949a728c1a422becf55c1d1e"
+      },
+      "audio_sha256": "4add0c8b2fd18c13a5bbbf35225118144216205e019275684d180e2393739e74",
+      "marks_sha256": "e72438bf539c62c49ac509c4a14bf06d7ef0ec64c643ce07c70274aae3a2a702",
+      "duration_seconds": 14.328
+    },
+    {
+      "edit_id": "decider_rebreak",
+      "request": {
+        "text": "决胜盘，福基纳先破发，可下一局就被回破，双方又回到同一起跑线。好不容易抢来的主动，又被追了回来。要赢，他还得再来一次。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "673449fd9db318c1a4b7aac89cc8cbe8"
+      },
+      "audio_sha256": "5f979fd512ae57dad8c7954bb27025f1d652c313c5d7a2e7be365b57183ab544",
+      "marks_sha256": "e42383684bd2b2c1038b82bc57428a439c72682c4f4f091c58f0ee9db7b9421c",
+      "duration_seconds": 11.784
+    },
+    {
+      "edit_id": "decider_lead",
+      "request": {
+        "text": "二比二，他再次完成破发。三比二，这次他把领先守住了。霍达尔仍在追，比赛也没有立刻结束。最后这几个发球局，一个都不能松。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "c72881623ebc3d55643d6d636e335b79"
+      },
+      "audio_sha256": "b2648fc0bec350708d63c027684b18758b81ffd2d7848c7f6dd02698af2ec961",
+      "marks_sha256": "6037fc3bd952650c91431d7cede2e8969a998802540b2c7fbe618486f6bb162f",
+      "duration_seconds": 12.24
+    },
+    {
+      "edit_id": "serving_for_title",
+      "request": {
+        "text": "从首盘一比六，到抢七扳平，再到五比四的发球胜赛局。福基纳终于把冠军的决定权，握回自己的发球里。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "915e11cddf6c0da617b36d91332a0ba4"
+      },
+      "audio_sha256": "9f297604cdd8f432525854f527f56b493a25a26f0d69ef2152e6afbc5e24a030",
+      "marks_sha256": "6c61a713e71501c6d959b68758f61335960afaa0a4d97090dcbb87b44585b7ee",
+      "duration_seconds": 9.72
+    },
+    {
+      "edit_id": "full_stats",
+      "request": {
+        "text": "一比六，七比六，六比四。两个多小时之后，达维多维奇·福基纳，上海大师赛冠军。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "bfa23593474ff57bb170d85868ab1da4"
+      },
+      "audio_sha256": "e53a7c0d2ce32dd85a50416b317faa2cd1e81456ba7edffea711aca475f9f4f7",
+      "marks_sha256": "c90bdd85e9ea9e9349396ad154dafa1d792fbbd7015c1af0d7243b7d1bcd20b3",
+      "duration_seconds": 7.896
+    },
+    {
+      "edit_id": "return_payoff",
+      "request": {
+        "text": "背伤曾让他缺赛两个月。九月下旬，他在成都回归就夺冠；不到一个月，又在上海捧杯。从成都到上海，忠国赛场十连胜。回归以后，他拿到了生涯级别最高的冠军。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "bcf3c418e5a8858ef8018c93bc8e2949"
+      },
+      "audio_sha256": "ff4390b447f5b6b6a373dc23368d69e91bbd2ad531b8399e49ad49d5f6b3c89c",
+      "marks_sha256": "a02226174b0e1cceebe007b9ea9ded85634a8e43c7e88d9e1533454aeedebbd6",
+      "duration_seconds": 15.36
+    },
+    {
+      "edit_id": "close",
+      "request": {
+        "text": "首盘只赢一局的人，最后赢下了冠军。这场逆转里，哪一分最让你相信，他真的能赢？",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "34e7e307627f0849aa8656a722a4c2bd"
+      },
+      "audio_sha256": "74fac395f7776bf386a57981ad73dae7faf1350305c038f0b850d7e2be34236e",
+      "marks_sha256": "a06556de22d4c46222b9234dd623ef81082ddf1900857a21dd2cbafdb33af275",
+      "duration_seconds": 8.688
+    },
+    {
+      "edit_id": "outro",
+      "request": {
+        "text": "关注网球时插，时插归我，好球归你。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "20da8f5468902afbbecb78daefb15d83"
+      },
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "duration_seconds": 4.104
+    }
+  ],
+  "finite_voice_review_inherited": {
+    "prior_core": "docs/reviews/davidovichfokina-jodar-shanghai-2026-final/voice-v6-finite-adjudication.json",
+    "prior_core_sha256": "3b78f99ce67cc7eb4bb126f1ae1701467040849c2b391a1f9ce87f04ea17bbc0",
+    "supported_inventoried_occurrences": 176,
+    "genuinely_unresolved_inventoried_occurrences": 0,
+    "basis": "All exact complete requests, MP3 and WordBoundary bytes unchanged, not new acoustic assessment or listening.",
+    "human_listening_performed": false,
+    "model_audio_listening_performed": false,
+    "all_phonemes_or_all_tones_certified": false,
+    "publication_approval": false
+  }
+}
