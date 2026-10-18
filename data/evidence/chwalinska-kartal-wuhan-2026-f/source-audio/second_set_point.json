@@ -4,32 +4,26 @@
   "original_source_url": "https://www.youtube.com/watch?v=HIvIvgwXkqs",
   "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
   "method": "asr_cross_checked",
-  "reviewer": "OpenAI source-audio review agent; inspected retained full-source or finite-window independent ASR and available canonical captions, curated each complete source clause; no manual listening claimed",
-  "reviewed_at": "2026-10-18T15:16:38.891705+00:00",
-  "status": "pending",
+  "reviewer": "OpenAI editorial review: independently confirmed words retained; exact uncertain prefix explicitly omitted after owner approval of the presented actual clip and instruction to finish/push. No manual hearing or exact name confirmation claimed.",
+  "reviewed_at": "2026-10-18T16:28:16.728726+00:00",
+  "status": "complete",
   "reviewed_from": 146.56,
   "reviewed_to": 161.6,
   "foreground_english": [
     {
-      "from": 158.76,
-      "to": 160.58,
-      "en": "[句头待核] seals the deal.",
-      "zh": "锁定这一盘。"
+      "start": 158.76,
+      "end": 160.58,
+      "en": "… seals the deal.",
+      "zh": "锁定这一盘"
     },
     {
-      "from": 160.68,
-      "to": 161.44,
+      "start": 160.68,
+      "end": 161.44,
       "en": "Why not?",
-      "zh": "何乐而不为？"
+      "zh": "何乐而不为"
     }
   ],
-  "uncertain_spans": [
-    {
-      "from": 158.76,
-      "to": 159.3,
-      "reason": "第一句句头多档转写不一致；最后专名context仅出低置信Ska，不能当完整Chwalinska确认。用户4秒实际源核听已发，等待答复。"
-    }
-  ],
+  "uncertain_spans": [],
   "_edit_id": "second_set_point",
   "source_key": "main",
   "evidence_basis": {
@@ -120,12 +114,19 @@
     "no_loudness_processing_or_measurement": true,
     "scope_note": "Every selected source second checked against retained full-source(main) or expanded-context finite(extended) raw transcripts. Unresolved original main29s,158s and post278s windows are outside all selected source windows."
   },
-  "no_foreground_english_reason": "Within this entire selected window, independent retained ASR results identify no reproducible foreground English sentence. Main-source canonical auto-caption short Go/Hey calls are not corroborated by full small.en/medium.en or finite turbo; no subtitle is invented. For extended3BP, the independent small and base.en outputs are empty in selected387.12–399.48; turbo-only very-low-confidenceThank you is a retained and documented model artifact, not an accepted utterance. This does not claim digital silence or manual hearing; court/crowd/player sounds remain.",
   "_previous_window_retracted": {
     "from": 146.56,
     "to": 158.64,
     "reason": "原25fps反证在158.64仍活球；旧窗的无英文审查不证明完整点。"
   },
   "_correction_evidence": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/second-set-point-boundary-correction.json",
-  "_listening_request": "requests/reels/chwalinska-kartal-wuhan-2026-f/source-english-listening-request.json"
+  "_listening_request": "requests/reels/chwalinska-kartal-wuhan-2026-f/source-english-listening-request.json",
+  "_editorial_omission": {
+    "source_from": 158.76,
+    "source_to": 159.3,
+    "unresolved_original_prefix": true,
+    "display": "…",
+    "why": "用户批准本条实际音频并催完成微信推送；为不猜人名，仅明确省略字幕句头，实际原声和完整回合不截断。此为本条编辑取舍，不改写原ASR未知结论或建立全局例外。",
+    "approval_path": "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/owner-listening-review.json"
+  }
 }

@@ -88,3 +88,7 @@ FS完整182分重建与WTA总分91/91、BP16/13、比分一致。W/UE赫23/27，
 - 同时仍待120.504秒本期新旁白用户核听。两项都是真实发出的核听，不用720p回话代答。
 
 - 最终已将正式spec和script的已知错误切点修正到161.60；second_set_point packet如实改为pending并记录uncertain_spans。旧index不冒认当前音频计划通过，原生gate将阻止渲染，直到用户核准句头并补两条完整双语cue后用工具rebind。complete-point-pending-spec与正式spec保持当前同字节，方便审查具体修改；上述“尚未替换”是此前步骤历史，已被此条取代。
+
+## 用户最新批准与继续
+
+用户先回「批准」，随后「赶紧做好推送微信」。按当前实际音频批准继续；不虚构用户逐词确认人名。首句英文明确省略号略未核姓名，保留可确定seals the deal与Why not两条中英，整个原声音频和完整盘点146.56–161.60不截。旧机器unknown及原始ASR保留，owner实际音频批准独立记录在voice/production/owner-listening-review.json。本期冻结TTS不变，直接渲染终检合并推微信。

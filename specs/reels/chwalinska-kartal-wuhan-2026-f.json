@@ -395,12 +395,24 @@
       "fit": "crop",
       "score_inset": true,
       "narration": "",
-      "quote": [],
+      "quote": [
+        {
+          "at": 12.2,
+          "end": 14.02,
+          "text": "… seals the deal.\n锁定这一盘"
+        },
+        {
+          "at": 14.12,
+          "end": 14.88,
+          "text": "Why not?\n何乐而不为"
+        }
+      ],
       "crosses_cut": "原官方集锦已经剪辑换机位，按真实分与局分核对，不把跳过的局说成连续逐分。",
       "point_end_ok": "撤回旧158.64完整结论：25fps原帧158.56仍往网前飞、159.12仍卡侧落/飞，160.64已切赢家近景；保留到161.60完成球与反应及两句原声，不靠字幕避截动作。独立反证见caption-preflight/preview-review.json。",
       "_fit_why": "全局固定中心cx0.5/trackfalse铺满3:4，原生主板和短提示条同帧透明轮廓回贴。",
-      "_source_audio_review_status": "pending: 新完整窗包含158.76开始的英文句头，已给用户4秒实际原声核听；seals the deal和Why not已核，句头不能猜Chwalinska。正式渲染和发布必须等原声字幕证据闭合。",
-      "_quote_skip_why": "本窗存在可确认seals the deal及Why not，但首句句头待核；不是无英语窗口。原声音频packet明确pending并含uncertain_spans，核准并配置双语cue前不得渲染或发布。"
+      "_source_audio_review_status": "complete editorial review after owner approval: full point and source audio retained; uncertain name is explicitly omitted with leading ellipsis in English, never guessed; retained words cross-checked across finite ASR; original machine uncertainty remains in correction evidence.",
+      "subtitle_bottom": 360,
+      "_quote_kind": "broadcast"
     },
     {
       "_edit_id": "deciding_set_context",
