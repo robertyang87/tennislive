@@ -1,0 +1,1455 @@
+{
+ "slug": "chwalinska-story-2026",
+ "date": "2026-10-19",
+ "_column": "网球有故事",
+ "title": "赫瓦林斯卡：从排名532到武汉冠军",
+ "cx": 0.5,
+ "track": false,
+ "tts_backend": "edge",
+ "_tts_backend_why": "与 fokina-story-2026、kartal-story-2026 同一把嗓子（edge 云健），不加情绪风格。",
+ "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +18%。正文各段 pitch +10Hz；不写 style、lead_pause。",
+ "cover": {
+  "eyebrow": "网球有故事",
+  "layout": "solo",
+  "story_kind": "person",
+  "subject": "赫瓦林斯卡",
+  "hook": "排名跌到532\n三年后拿下武汉冠军",
+  "_hook_why": "第一行是她最低的那一刻（2023-08-07 世界第 532），第二行是结果（2026-10-18 武汉一千赛冠军）。7＋9 字符，零术语，不比总分。范围写在句子里：跌到 532 是一个时点，三年后是结果。",
+  "narration": "排名跌到五百三十二，三年后拿下武汉冠军。",
+  "_narration_why": "念的就是海报上那句钩子，数字换成汉字给 TTS。",
+  "topic": "赫瓦林斯卡：从排名532到武汉冠军",
+  "_owner_words_topic": "账号所有者 2026-10-18 在两个候选里选了「1 前者」，即「赫瓦林斯卡：从排名532到武汉冠军」，一字不改照用。",
+  "_topic_why": "人物类网球有故事副标题「名字：内容」（2026-10-18 全局规则）。",
+  "portrait": {
+   "image": "assets/reel/chwalinska-story/cover-wuhan.jpg",
+   "fit": "cover",
+   "focus": 0.55,
+   "focus_y": 0.3,
+   "zoom": 1.0,
+   "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/18/be7bb5b7-6ba3-48c0-b608-86336545363b/GettyImages-2300810312.jpg",
+   "_credit": "WTA 官方图库 photo 4594005（Di Yin/Getty Images 2300810312）",
+   "_portrait_why": "武汉决赛颁奖后的官方实拍（6000×4000，EXIF 2026-10-18 22:08 当地，Canon EOS R1）：正脸、双眼睁开、笑着举杯，花环与奖杯都在画里。本期讲她熬过低谷之后夺冠，情绪对得上。chwalinska-kartal-wuhan-2026-f（赛场之上）用的是武汉官方图库另一张亲吻奖杯照，这张没给别的片子当过封面。",
+   "_search_why": "2026-10-18 WTA 照片接口与武汉公开赛官方图库的决赛颁奖照共 4 张（requests/reels/chwalinska-kartal-wuhan-2026-f/photo-credits.json），这张分辨率最高、正脸。"
+  },
+  "scrim": "clear",
+  "_layout_why": "网球有故事讲一个人的来路，solo 版铺满。"
+ },
+ "push": {
+  "auto": true,
+  "_why": "账号所有者 2026-10-13 起所有 spec 默认自动推送；质检通过即合并推送。",
+  "summary": "她从532爬到了武汉冠军",
+  "lead": "2023 年排名跌到 532；法网从资格赛打进决赛之后，又是 4 胜 7 负的低谷。赫瓦林斯卡在武汉连赢斯瓦泰克、卡塔尔，拿下生涯首个巡回赛冠军，就是一千赛。"
+ },
+ "editorial": {
+  "mode": "match_review",
+  "question": "一个排名跌到 532、连床都下不来过的人，怎么走到武汉一千赛的冠军？",
+  "thesis": "以武汉决赛冠军点为由头，倒回她的来路：煤矿城里长大、父亲做过矿上电工；和斯瓦泰克从小搭档；2019 年底心理出问题，2020 年斯瓦泰克夺冠时她问自己「那我在哪里」，2021 年停赛；2022 年膝伤手术、2023 年跌到 532；红土上一站一站打回来；2026 法网从资格赛打进决赛；温网赛点上滑倒，此后到武汉前 4 胜 7 负；武汉连胜斯瓦泰克、卡塔尔夺冠。",
+  "beats": [
+   "冷开场：武汉冠军点、她倒在场上，解说原声",
+   "对照：排名 532 → 武汉冠军",
+   "01 煤矿城的女孩：出身、14 岁自我介绍、和斯瓦泰克的青少年双打",
+   "02 那我在哪里：2019 心理问题、2020 斯瓦泰克夺冠、她自己讲下不了床、2021 停赛复出 346",
+   "03 又摔一次：2022 首进大满贯正赛、公开谈抑郁、膝伤手术、2023 跌到 532",
+   "04 往回爬：红土 WTA125、克鲁日从资格赛打进八强、她自己说的目标",
+   "05 巴黎三周：资格赛三胜、正赛胜郑钦文到决赛、两段她自己的话、亚军致辞",
+   "06 跌回谷底：温网赛点上滑倒、法网后第一胜、她讲体育的残酷、4 胜 7 负",
+   "07 武汉：半决赛救盘点逆转斯瓦泰克、决赛逆转卡塔尔、记录、冠军致辞、一问"
+  ],
+  "human_context": {
+   "angle": "一个总在问「我在哪里」的人，在武汉找到了答案。",
+   "facts": [
+    "WTA 官方逐场与逐周排名（2015–2026）：2021-10 复出 346、2023-08-07 第 532、2026 法网前从没进过前 100，6 月 8 日 114→21；法网决赛到武汉前 4 胜 7 负。",
+    "TVP Sport 原文：2019 年底出现心理问题；斯瓦泰克 2020 年拿法网时她手腕伤，用软海绵球；记者只问伊加；「我们同岁……那我在哪里？」；父亲矿上工作、母亲前台。",
+    "WTA 4528435＋BBC＋路透：温网首轮 6-2 5-2 40-30 发球胜赛的赛点上滑倒伤右踝，2-6 7-5 6-2 被翻盘。",
+    "WTA 4593577＋路透：武汉半决赛 3-5 救两个盘点、5-5 后破到 6-5，斯瓦泰克随后医疗暂停，最后 11 局赢 10 局。",
+    "WTA 4593967：武汉决赛 2-6 6-4 6-2，首冠即一千赛，2009 年以来第四位；「people also were very rough towards me … I'm just a human」。"
+   ],
+   "sources": [
+    "https://www.wtatennis.com/news/4514562/timeline-maja-chwalinskas-10-year-journey-to-the-roland-garros-final",
+    "https://sport.tvp.pl/93574032/maja-chwalinska-i-jej-sztab-to-oni-stoja-za-jej-sukcesem",
+    "https://www.wtatennis.com/news/4528435/sawangkaew-advances-at-wimbledon-after-chwalinska-suffers-slip-on-match-point",
+    "https://www.bbc.com/sport/tennis/articles/c70y1k4lrrko",
+    "https://www.wtatennis.com/news/4593577/chwalinska-wins-all-polish-semifinal-to-reach-wuhan-final",
+    "https://www.wtatennis.com/news/4593967/chwalinska-rallies-past-kartal-for-first-wta-title-in-wuhan",
+    "https://www.bbc.com/sport/tennis/articles/cqm2411vp3dgo",
+    "https://www.wtatennis.com/news/4515742/rankings-watch-chwalinska-soars-93-places-to-no-21-eala-rises",
+    "https://www.bbc.com/sport/tennis/articles/c1dy7grv4y3o",
+    "https://www.wtatennis.com/news/2655194/there-were-dark-thoughts-maja-chwalinska-overcomes-depression-to-make-wimbledon-debut"
+   ]
+  }
+ },
+ "_owner_brief": "账号所有者 2026-10-18 上传 PDF 稿《赫瓦林斯卡：地底的煤，武汉的火》，说「做一期赫瓦林斯卡完整介绍，用网球有故事……要做的文案和视频剪辑，精致且富有感染力」；看过第一版提纲后：「文案和副标题之类的，你可以重新再处理，保证准确」「多讲讲他的过往，武汉的不用太多篇幅」「特别是法网前以及法网后有一段的低谷期」「不用限制时长。首先先要保证内容详实且准确」；副标题在两个候选里选了「从排名532到武汉冠军」。",
+ "_corrections_vs_brief": "①决赛「最后连赢五局」→ 官方逐局是决胜盘 2-2 之后连下最后四局。②半决赛「救下两个盘点，斯瓦泰克随后医疗暂停」→ 实际是救下盘点、追到 5-5、破到 6-5 之后才医疗暂停。③「公开赛年代第二位打进大满贯决赛的资格赛选手」→ 范围补成「大满贯女单」，并加「法网历史上第一位」。④父亲「在矿上工作」→ 煤矿电工（已退休）；母亲体育中心前台、她七岁在那里开始打球。⑤不用「月亮姐」（账号所有者 2026-10-18 武汉决赛那条：不要再用月亮姐的称号）。⑥补上 PDF 没有的法网后低谷全程：多伦多、辛辛那提、蒙特雷、美网、新加坡、北京，4 胜 7 负。",
+ "_editing_why": "账号所有者 2026-10-17 叙事片口径（主线一句话、原声带情绪、对照、渲前提纲）与 2026-10-18 本条要求（多讲过往和两段低谷，武汉简短，不限时长）。七章：01 出身、02 2019–21 心理危机、03 2022–23 伤病与 532、04 往回爬、05 法网、06 法网后的低谷、07 武汉。她自己开口的七段（14 岁自我介绍、法网发布会两段、法网场上采访两段、亚军致辞、辛辛那提专访两段、武汉场上采访、冠军致辞）承担情绪；旁白只放在两档 ASR 都无词的空当里。对照：法网半决赛她倒在红土上（975.8–1003.6）与片头武汉倒在场上。没有官方画面的时刻（郑钦文那一场、温网滑倒、2021–2023 两段）用字卡讲，不拿别的回合冒充，对观众不提素材缺口。",
+ "_claims": {
+  "法网历史上第一位资格赛决赛选手": "rolandgarros.com https://www.rolandgarros.com/en-us/article/2026-edition-chwalinska-shnaider-sf ；BBC https://www.bbc.com/sport/tennis/articles/c1dy7grv4y3o",
+  "公开赛年代第二位资格赛大满贯女单决赛选手": "BBC https://www.bbc.com/sport/tennis/articles/c1dy7grv4y3o ；rolandgarros.com https://www.rolandgarros.com/en-us/article/2026-edition-the-numbers-behind-chwalinskas-stunning-run-",
+  "第一次进入世界前二十": "WTA https://www.wtatennis.com/news/4593967/chwalinska-rallies-past-kartal-for-first-wta-title-in-wuhan ；BBC https://www.bbc.com/sport/tennis/articles/cqm2411vp3dgo",
+  "第一次打进大满贯正赛／半决赛": "WTA https://www.wtatennis.com/news/2655194/there-were-dark-thoughts-maja-chwalinska-overcomes-depression-to-make-wimbledon-debut ；rolandgarros.com https://www.rolandgarros.com/en-us/article/2026-edition-chwalinska-shnaider-sf",
+  "法网之后第一场胜利": "WTA 接口 2026 逐场（https://api.wtatennis.com/tennis/players/325639/matches）；flashscore zieI8WDl（bucsa-chwalinska.json）"
+ },
+ "_social_checked": "2026-10-18 查过她本人的社交账号：没有本人谈低谷的视频；她亲口讲低谷的视频是法网官方发布会、法网场上采访和 Tennis Channel 专访，片中全部用这些原声。",
+ "_social_search_why": "不是当事人发声明类的选题：讲的是她公开的比赛与官方采访。",
+ "sources": {
+  "fin": "https://github.com/robertyang87/tennislive/releases/download/source-HIvIvgwXkqs/HIvIvgwXkqs.mp4",
+  "pol15": "https://github.com/robertyang87/tennislive/releases/download/source--Vsfptr_DC8/-Vsfptr_DC8.mp4",
+  "rg20": "https://github.com/robertyang87/tennislive/releases/download/source-OwKaLdNEjlI/OwKaLdNEjlI.mp4",
+  "rgpc": "https://github.com/robertyang87/tennislive/releases/download/source-1ihxUf32bQk/1ihxUf32bQk.mp4",
+  "cluj": "https://github.com/robertyang87/tennislive/releases/download/source-OSDB-amz5as/OSDB-amz5as.mp4",
+  "rgqf": "https://github.com/robertyang87/tennislive/releases/download/source--ygefQ6dXFc/-ygefQ6dXFc.mp4",
+  "rgsf": "https://github.com/robertyang87/tennislive/releases/download/source-nuivYz2nq08/nuivYz2nq08.mp4",
+  "rgsfi": "https://github.com/robertyang87/tennislive/releases/download/source-pPCiDSCNlpk/pPCiDSCNlpk.mp4",
+  "rgf": "https://github.com/robertyang87/tennislive/releases/download/source-WVWjACQ11-Y/WVWjACQ11-Y.mp4",
+  "rgfs": "https://github.com/robertyang87/tennislive/releases/download/source-LXRhlHKGKZc/LXRhlHKGKZc.mp4",
+  "cin": "https://github.com/robertyang87/tennislive/releases/download/source-l_0G55XaKnU/l_0G55XaKnU.mp4",
+  "tc": "https://github.com/robertyang87/tennislive/releases/download/source-ciGC4PID7T4/ciGC4PID7T4.mp4",
+  "mty": "https://github.com/robertyang87/tennislive/releases/download/source-jHDu6mugTR8/jHDu6mugTR8.mp4",
+  "uso": "https://github.com/robertyang87/tennislive/releases/download/source--fc7s7gPebI/-fc7s7gPebI.mp4",
+  "sgp": "https://github.com/robertyang87/tennislive/releases/download/source-XWfAKjEnQ8U/XWfAKjEnQ8U.mp4",
+  "bj": "https://github.com/robertyang87/tennislive/releases/download/source-12BOGT88OnQ/12BOGT88OnQ.mp4",
+  "wsf": "https://github.com/robertyang87/tennislive/releases/download/source-ATsKkPJBY3s/ATsKkPJBY3s.mp4",
+  "spch": "https://github.com/robertyang87/tennislive/releases/download/source-XjhOB_EL1ok/XjhOB_EL1ok.mp4"
+ },
+ "mixed_fps": {
+  "rg20": "29.97 fps 降到 25 fps 每秒丢约 5 帧；颁奖、慢节奏回合与采访，顿挫不明显",
+  "rgpc": "50 fps 降到 25 fps 隔帧取，整齐",
+  "cluj": "29.97 fps 降到 25 fps 每秒丢约 5 帧；颁奖、慢节奏回合与采访，顿挫不明显",
+  "rgqf": "50 fps 降到 25 fps 隔帧取，整齐",
+  "rgsf": "50 fps 降到 25 fps 隔帧取，整齐",
+  "rgf": "50 fps 降到 25 fps 隔帧取，整齐",
+  "rgfs": "59.94 fps 降到 25 fps；颁奖台／演播室说话的近景，人基本不动",
+  "cin": "29.97 fps 降到 25 fps 每秒丢约 5 帧；颁奖、慢节奏回合与采访，顿挫不明显",
+  "tc": "60 fps 降到 25 fps；演播室说话的近景，人基本不动",
+  "uso": "59.94 fps 降到 25 fps；颁奖台／演播室说话的近景，人基本不动",
+  "spch": "59.94 fps 降到 25 fps；颁奖台／演播室说话的近景，人基本不动"
+ },
+ "_no_probe_why": {
+  "fin": {
+   "why": "WTA 官方「Maja Chwalinska vs. Sonay Kartal | 2026 Wuhan Final | WTA Match Highlights」，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "pol15": {
+   "why": "Polsat Sport 官方（2015 年两人 14 岁时的采访），download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "rg20": {
+   "why": "Roland-Garros 官方 2020 女单决赛，download-video 存档后本地 ffprobe 1920×1080@30000/1001；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "30000/1001"
+  },
+  "rgpc": {
+   "why": "Roland-Garros 官方「Maja Chwalinska | QF Press Conference | Roland-Garros 2026」，download-video 存档后本地 ffprobe 1920×1080@50/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "50/1"
+  },
+  "cluj": {
+   "why": "Transylvania Open 赛事官方「R16/ Maja Chwalinska vs Olga Danilovic /Match highlights #TO2026」，download-video 存档后本地 ffprobe 1920×1080@30000/1001；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "30000/1001"
+  },
+  "rgqf": {
+   "why": "Roland-Garros 官方「Anna Kalinskaya vs Maja Chwalinska | QF Highlights | Roland-Garros 2026」，download-video 存档后本地 ffprobe 1920×1080@50/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "50/1"
+  },
+  "rgsf": {
+   "why": "Roland-Garros 官方「Maja Chwalinska vs Diana Shnaider | Semi-Final Extended Highlights | Roland-Garros 2026」，download-video 存档后本地 ffprobe 1920×1080@50/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "50/1"
+  },
+  "rgsfi": {
+   "why": "Roland-Garros 官方「On-Court Interview: Qualifier Chwalinska reflects on making Roland-Garros final」，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "rgf": {
+   "why": "Roland-Garros 官方「Maja Chwalinska vs Mirra Andreeva | Women's Final Highlights by Emirates | Roland-Garros 2026」，download-video 存档后本地 ffprobe 1920×1080@50/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "50/1"
+  },
+  "rgfs": {
+   "why": "「Maja Chwalinska Finalist Speech | 2026 Roland Garros」（swiatek-chwalinska-story-2026 已用过的同一条），download-video 存档后本地 ffprobe 1920×1080@60000/1001；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "60000/1001"
+  },
+  "cin": {
+   "why": "辛辛那提赛事官方频道 @CincyProTennis「Cristina Bucsa vs Maja Chwalinska | 2026 Cincinnati Open | Round Two」，download-video 存档后本地 ffprobe 1920×1080@30000/1001；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "30000/1001"
+  },
+  "tc": {
+   "why": "Tennis Channel 官方「Maja Chwalinska talks dealing with FAME during breakout season | 2026 Cincinnati」，download-video 存档后本地 ffprobe 1920×1080@60/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "60/1"
+  },
+  "mty": {
+   "why": "WTA 官方「Maja Chwalinska vs. Alycia Parks | 2026 Monterrey Round of 16 | WTA Match Highlights」，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "uso": {
+   "why": "美网官方「Maja Chwalinska vs. Taylor Townsend Highlights | 2026 US Open Round 1」，download-video 存档后本地 ffprobe 1920×1080@60000/1001；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "60000/1001"
+  },
+  "sgp": {
+   "why": "WTA 官方「Leylah Fernandez vs. Maja Chwalinska | 2026 Singapore Semifinal | WTA Match Highlights」，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "bj": {
+   "why": "WTA 官方「Dayana Yastremska vs. Maja Chwalinska | 2026 Beijing Round 2 | WTA Match Highlights」，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "wsf": {
+   "why": "WTA 官方「Iga Swiatek vs. Maja Chwalinska | 2026 Wuhan Semifinal | WTA Match Highlights」，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "spch": {
+   "why": "Tennis TV／WTA 官方「Maja Chwalinská Champion Speech | 2026 Wuhan」（画面右上角 Tennis TV 台标），download-video 存档后本地 ffprobe 1920×1080@60000/1001；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "60000/1001"
+  }
+ },
+ "_primary_why": "主源是 sources 的第一个键 fin（WTA 官方 1080p25），输出 25 fps。",
+ "_production_status": "spec_ready_for_render",
+ "_why_sources": "比赛、颁奖和采访画面全部来自官方频道：WTA、Roland-Garros、美网、辛辛那提与克鲁日赛事官方、Tennis Channel、Tennis TV、Polsat Sport；照片来自 WTA 官方图库与武汉网球公开赛官方图库。",
+ "segments": [
+  {
+   "source": "fin",
+   "start": 186.0,
+   "end": 205.3,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 12.14,
+     "end": 14.88,
+     "text": "She'll get the honors because she earned them.\n荣誉属于她，这是她赢来的。"
+    },
+    {
+     "at": 15.9,
+     "end": 18.64,
+     "text": "She'll receive praise of which she is most deserving.\n她将收获当之无愧的赞美。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "冷开场：WTA 官方武汉决赛集锦。186.0 起是冠军点回合（记分条 CHAMPIONSHIP POINT），195.80 切到她倒在场上，198.08/199.76 看台与包厢，203.32 切到她跪在场上。解说两档转写一致（medium 198.14–204.04，chwalinska-kartal-wuhan-2026-f 第 0、12 段同一句），段尾 205.3 在 Maja Chwalinska's first WTA title（206.24）之前。",
+   "point_end_ok": "冠军点在 195.8 秒打完，之后是庆祝。",
+   "crosses_cut": "195.80、198.08、199.76、203.32 都是同一个冠军点之后的庆祝镜头。",
+   "_ending_payoff_required": false,
+   "_ending_payoff_why": "网球有故事：冷开场是由头，正文倒回她的来路，第 06 章回到武汉时用决赛第二盘与决胜盘的画面交代过程，不重放冠军点。"
+  },
+  {
+   "title_card": "从排名532\n到武汉冠军",
+   "kicker": "2023.08 → 2026.10",
+   "seconds": 9.2,
+   "narration": "三年前，她的世界排名跌到第五百三十二位。这一次，她捧起了武汉一千赛的冠军。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "532：WTA 官方 2023-08-07 排名（她在科泽尔基 WTA125 的入场排名，WTA 接口 rank_1=532）＋ sportowefakty.wp.pl 同周报道；武汉冠军：WTA 4593967、BBC cqm2411vp3dgo。"
+  },
+  {
+   "title_card": "煤矿城里\n长大的女孩",
+   "kicker": "01",
+   "seconds": 18.6,
+   "narration": "她出生在波兰南部的梅胡夫，两岁起，在煤矿城市达布罗瓦古尔尼恰长大。父亲在煤矿当过电工，母亲在当地体育中心做前台。七岁那年，她就在那座体育中心，第一次拿起了球拍。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "出生地梅胡夫、两岁起在达布罗瓦古尔尼恰长大：ebilet.pl 人物稿＋维基；父亲煤矿电工（已退休）、母亲 CSiR 体育与休闲中心前台、七岁在该中心开始打球：jastrzabpost.pl＋ebilet.pl，TVP 原话「tata pracownik kopalni, mama recepcjonistka」。城市宣传片（DhAJaTaKy1I）只有 720p、也没有煤矿镜头，不用。"
+  },
+  {
+   "source": "pol15",
+   "start": 3.75,
+   "end": 16.4,
+   "cx": 0.461,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.0,
+     "end": 4.43,
+     "text": "Maja Chwalińska, mam 14 lat,\n我是玛雅·赫瓦林斯卡，14岁，"
+    },
+    {
+     "at": 4.87,
+     "end": 6.73,
+     "text": "mieszkam w Dąbrowie Górniczej\n住在达布罗瓦古尔尼恰，"
+    },
+    {
+     "at": 6.73,
+     "end": 12.45,
+     "text": "i trenuję od 7 roku życia.\n7岁开始练球。"
+    }
+   ],
+   "_quote_kind": "interview",
+   "frame": "person",
+   "_why": "Polsat Sport 官方 2015 年采访：戴发箍的赫瓦林斯卡对着镜头自我介绍。三句波兰语按两档波兰语转写（data/source_asr/-Vsfptr_DC8/small.pl.json、medium.pl.json）与 swiatek-chwalinska-story-2026 第 7 段同一份译文；段首 3.75 在 3.72 切点之后（之前是球网空镜），段尾 16.4 在斯瓦泰克开口（16.74）之前。",
+   "point_end_ok": "采访，不是回合。",
+   "cx_face": {
+    "samples": [
+     0.4619,
+     0.4611,
+     0.448,
+     0.4589,
+     0.4498,
+     0.4692,
+     0.4581,
+     0.4676,
+     0.4745
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-18T23:20:31+00:00",
+    "median": 0.4611,
+    "spread": 0.0265
+   }
+  },
+  {
+   "image": "assets/reel/swiatek-chwalinska/ao2017-close.jpg",
+   "image_kind": "photo",
+   "seconds": 12.2,
+   "narration": "她和同岁的斯瓦泰克从小搭档，拿过欧洲十四岁组、十六岁组的女双冠军。二〇一七年澳网青少年女双，两个人拿了亚军。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "WTA 官方图库 photo 2655257（说明原文「2017 Australian Open girls' doubles runners-up Maja Chwalinska and Iga Swiatek」），与 swiatek-chwalinska-story-2026 同一张裁图。2015 欧洲 U14、2016 欧洲 U16 女双冠军：WTA 时间线 4514562＋ITF；2017 澳网青少年女双亚军：照片说明＋维基 2017 AO Girls' doubles。来路一句带过，不重讲两人关系那条片子。",
+   "_photo_source": "https://photoresources.wtatennis.com/photo-resources/2022/06/24/4cb6065c-9ea4-437c-ba73-4dc22ffb9f63/Chwalinska-Swiatek-Andreescu-Branstine-AO-2017.jpg",
+   "_photo_caption_safety": "两人的脸在画面上部 20%–35%，字幕区压在奖盘和腰部，不压脸。"
+  },
+  {
+   "title_card": "那我\n在哪里？",
+   "kicker": "02",
+   "seconds": 5.6,
+   "narration": "二〇一九年底，她的心理开始出问题。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   }
+  },
+  {
+   "source": "rg20",
+   "start": 405.0,
+   "end": 415.9,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二〇二〇年十月，同岁的斯瓦泰克拿下法网，成了波兰第一个大满贯单打冠军。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "Roland-Garros 官方 2020 女单决赛集锦的颁奖段：斯瓦泰克捧杯、举杯（405.0–415.9，415.98 片尾板之前收住）。两档转写在 402.6–420.9 无词。2020-10-10 斯瓦泰克 6-4 6-1 胜肯宁夺冠：rolandgarros.com 决赛战报＋WTA；波兰首个大满贯单打冠军：rolandgarros.com＋BBC。",
+   "point_end_ok": "颁奖，不是回合。",
+   "crosses_cut": "都是同一场颁奖的镜头。"
+  },
+  {
+   "title_card": "我们同岁\n那我在哪里？",
+   "kicker": "她对波兰电视台说",
+   "seconds": 15.8,
+   "narration": "那时她手腕受伤，只能用软海绵球和小球拍练球。记者打来电话，问的全是伊加。她后来说：我们同岁，她排得那么高，一直在拿冠军，那我在哪里？",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "TVP Sport 原文（sport.tvp.pl/93574032）：「Gdy wygrała pierwszy Roland Garros, miałam kontuzję nadgarstka. Grałam wtedy miękką gąbką i małą rakietką」「zaczęli do mnie dzwonić dziennikarze. Pytali wyłącznie o nią」「wiedziałam, że jesteśmy w tym samym wieku, a ona jest tak wysoko i wygrywa turnieje... A gdzie ja jestem?」；第二源 TVP World＋Interia 转述同一句。心理问题从 2019 年底开始：TVP 原文「W końcówce 2019 roku pojawiły się u niej problemy mentalne」。"
+  },
+  {
+   "source": "rgpc",
+   "start": 337.0,
+   "end": 354.4,
+   "cx": 0.496,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.1,
+     "end": 1.9,
+     "text": "You know, I pushed at the beginning.\n一开始，我硬撑着。"
+    },
+    {
+     "at": 2.94,
+     "end": 6.2,
+     "text": "I thought that I just need to stay very strong, tough,\n我以为只要够坚强、够硬，"
+    },
+    {
+     "at": 6.38,
+     "end": 7.4,
+     "text": "and just keep practicing.\n一直练下去就行。"
+    },
+    {
+     "at": 8.64,
+     "end": 11.9,
+     "text": "Yeah, but then I just couldn't get out of bed anymore.\n可后来，我连床都下不来了。"
+    },
+    {
+     "at": 12.9,
+     "end": 16.6,
+     "text": "I was just lifeless, to be honest.\n说实话，我整个人都没了生气。"
+    }
+   ],
+   "_quote_kind": "press_conference",
+   "frame": "person",
+   "_why": "法网官方 2026 年 1/4决赛后发布会（1ihxUf32bQk）：记者问停赛那段，她自己讲。两档转写逐词一致（medium 337.10–353.18）。段首 337.0 在上一句 contrast to everything（328.2）之后，段尾 354.4 在 And yeah（355.3）之前。swiatek-chwalinska-story-2026 用的是同一场发布会 364.9–374.7 那几句，这一段不重复。",
+   "point_end_ok": "发布会，不是回合。",
+   "cx_face": {
+    "samples": [
+     0.4889,
+     0.4966,
+     0.4987,
+     0.4965,
+     0.4904,
+     0.4937,
+     0.4913,
+     0.5023,
+     0.4928
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-18T23:20:34+00:00",
+    "median": 0.4937,
+    "spread": 0.0134
+   }
+  },
+  {
+   "title_card": "复出时\n世界第346",
+   "kicker": "2021.10",
+   "seconds": 10.2,
+   "narration": "二〇二一年，她在温网资格赛首轮输球，之后离开了赛场。几个月后回来，世界排名已经掉到第三百四十六。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "2021 温网资格赛首轮 6-7(5) 4-6 负布雷尔、之后停赛：WTA 接口 2021 逐场记录＋WTA 4514562 时间线；2021-10-04 那周在卢莱 ITF 复出、入场排名 346：WTA 接口 rank_1=346＋WTA 时间线（by the time she returned in October … No. 346）。停了多久她自己说的是「几个月」（法网发布会 375.0 after like months），所以不写具体月数。"
+  },
+  {
+   "title_card": "又摔\n一次",
+   "kicker": "03",
+   "seconds": 18.4,
+   "narration": "二〇二二年，她第一次打进大满贯正赛，第一次公开讲自己的抑郁。九月爬到第一百五十三，接着右膝动了手术，赛季提前结束。二〇二三年八月，她的排名跌到第五百三十二。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "2022 温网资格赛三胜、正赛首轮 6-0 7-5 胜西尼亚科娃（首场大满贯正赛胜利）：WTA 接口 2022＋维基；2022-06 首次公开谈抑郁：WTA 2655194「There were dark thoughts」＋ITF 稿；2022-09 第 153、右膝手术（2022-09-17 公布）：WTA 时间线（153 只此一源，片中只说「爬到」，不说生涯最高）；2023-08-07 第 532：WTA 接口＋sportowefakty。"
+  },
+  {
+   "source": "cluj",
+   "start": 128.7,
+   "end": 141.8,
+   "cx": 0.5,
+   "track": false,
+   "narration": "她从更低级别的比赛，一站一站往回打。红土上，她拿了三个 WTA 一二五的冠军。今年二月在克鲁日，她从资格赛一路打进八强。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "Transylvania Open 赛事官方集锦（OSDB-amz5as）：克鲁日 2026 第二轮对 7 号种子达尼洛维奇，决胜盘回合（128.7–134 广角）、换边（136.0 切）、她的近景（140）。两档转写在 128.6–157.1 无词。三个 WTA125 冠军（2024 弗洛里亚诺波利斯、2025 蒙特勒、2026 年 4 月厄瓦拉什）：WTA 接口＋Tennis Asia TV 预测稿里列的成绩；克鲁日以资格赛选手打进 1/4决赛（胜博格丹、达尼洛维奇，负拉杜卡努）：WTA 接口 2026＋tennisabstract／维基（chwalinska-gibson.json _claims 核过）。",
+   "point_end_ok": "段尾停在 141.8，赛点回合从 142 秒的广角开始，属于下一段。",
+   "crosses_cut": "136.00、140 都是同一场比赛决胜盘的换边与近景。"
+  },
+  {
+   "source": "cluj",
+   "start": 141.9,
+   "end": 176.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 15.48,
+     "end": 20.0,
+     "text": "…wins in a row here for the qualifier Maja Chwalinska.\n资格赛选手赫瓦林斯卡连胜继续。"
+    },
+    {
+     "at": 20.22,
+     "end": 24.7,
+     "text": "She has seen off the seventh seed, Olga Danilovic.\n她送走了七号种子达尼洛维奇。"
+    },
+    {
+     "at": 25.58,
+     "end": 26.7,
+     "text": "It's finished here.\n比赛结束。"
+    },
+    {
+     "at": 26.88,
+     "end": 30.7,
+     "text": "6-1, 1-6, 6-2.\n6比1、1比6、6比2。"
+    },
+    {
+     "at": 30.92,
+     "end": 33.4,
+     "text": "Well deserved.\n实至名归。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "同一条克鲁日官方集锦：142–164 是赛点回合（记分条 MATCH POINT），165 起网前握手。解说两档一致（medium 157.38–175.30，名字转错，按标题写 Chwalinska）。比分 6-1 1-6 6-2 与 WTA 接口一致。",
+   "point_end_ok": "赛点在 164 秒前后打完，之后是握手。",
+   "crosses_cut": "166.12、173.37 切到握手和她走回座位，都是赛点之后。"
+  },
+  {
+   "source": "rgpc",
+   "start": 497.4,
+   "end": 505.4,
+   "cx": 0.49,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.28,
+     "end": 2.9,
+     "text": "Well, my goal was to be top 100 this year.\n我今年的目标是进前100，"
+    },
+    {
+     "at": 3.08,
+     "end": 4.0,
+     "text": "That was the main goal.\n这是最主要的目标。"
+    },
+    {
+     "at": 5.24,
+     "end": 7.5,
+     "text": "Coming here, my goal was to qualify.\n来这儿，我的目标是打进正赛。"
+    }
+   ],
+   "_quote_kind": "press_conference",
+   "frame": "person",
+   "_why": "同一场法网 1/4决赛后发布会：记者问「三周前、资格赛开打之前，你的目标是什么」。两档转写一致（medium 497.68–504.28）。2026 年 6 月 8 日之前她从没进过前 100（WTA 接口逐周排名，法网前最高 113）。",
+   "point_end_ok": "发布会，不是回合。",
+   "cx_face": {
+    "samples": [
+     0.4747,
+     0.4883,
+     0.4983,
+     0.5055,
+     0.4984,
+     0.4944,
+     0.4844,
+     0.4926,
+     0.5035
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-18T23:20:37+00:00",
+    "median": 0.4944,
+    "spread": 0.0308
+   }
+  },
+  {
+   "title_card": "资格赛3胜\n正赛6胜",
+   "kicker": "04 · 2026 法网",
+   "seconds": 15.6,
+   "narration": "二〇二六年法网，世界排名第一百一十四的她，先打三轮资格赛。正赛首轮，她六比四、六比零赢了郑钦文，接着又赢了梅尔滕斯、萨卡里、帕里。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "资格赛胜 Ramé 6-0 6-3、Monnet 6-0 6-1、Lamens 7-6(4) 7-5；正赛 R1 胜郑钦文 6-4 6-0、R2 胜梅尔滕斯 6-4 6-0、R3 胜萨卡里 1-6 6-3 6-2、R4 胜帕里：WTA 接口 2026 逐场＋rolandgarros.com 赛报（帕里的比分只有一源，片中不念比分）。赛前排名 114：WTA 4515742＋BBC c1dy7grv4y3o（路透写的是 113，按 WTA 官方）。郑钦文这一场没有找到官方集锦，用字卡讲，不拿别的回合冒充。"
+  },
+  {
+   "source": "rgqf",
+   "start": 0.5,
+   "end": 11.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "一/四决赛，她赢了卡林斯卡娅，第一次打进大满贯半决赛。半决赛，她又赢了施奈德。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "Roland-Garros 官方 1/4决赛集锦：近端黄衣的是赫瓦林斯卡（记分条 KALINSKAYA / CHWALINSKA）。两档转写在 0–40.8 无词。1/4决赛胜卡林斯卡娅、半决赛 7-6(4) 6-4 胜施奈德：rolandgarros.com 赛报＋WTA 接口。",
+   "point_end_ok": "段尾 11.5 停在镜头内；旁白不讲这一分。"
+  },
+  {
+   "source": "rgsf",
+   "start": 975.8,
+   "end": 1003.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_skip_why": "赛点回合与她倒在红土上：只有现场欢呼，没有解说。",
+   "_why": "Roland-Garros 官方半决赛加长集锦：976 她发球，赛点回合打到 990，她倒在红土上（990–1002）。和片头武汉倒在场上是同一个动作，隔了四个月。",
+   "point_end_ok": "赛点在 990 秒打完，之后是她倒地庆祝。",
+   "crosses_cut": "977.98、990.08、992.02、999.22 都是同一个赛点前后的镜头。",
+   "inset": {
+    "image": "assets/reel/chwalinska-story/label-rgsf.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 7.0,
+    "motion": "editorial",
+    "label": {
+     "topic": "资格赛选手进决赛",
+     "date": "2026.06.04",
+     "place": "法网 半决赛",
+     "people": "赫瓦林斯卡 vs 施奈德",
+     "score": "7-6 6-4"
+    }
+   }
+  },
+  {
+   "source": "rgsfi",
+   "start": 33.2,
+   "end": 46.0,
+   "cx": 0.493,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.2,
+     "end": 2.7,
+     "text": "Like a dream, honestly.\n老实说，像做梦一样，"
+    },
+    {
+     "at": 3.06,
+     "end": 4.4,
+     "text": "I don't know what's going on.\n我都不知道发生了什么。"
+    },
+    {
+     "at": 9.14,
+     "end": 10.75,
+     "text": "Yeah, I don't know what to say.\n我不知道该说什么，"
+    },
+    {
+     "at": 10.78,
+     "end": 12.5,
+     "text": "I'm sorry, I'm just very happy.\n抱歉，我就是太开心了。"
+    }
+   ],
+   "_quote_kind": "interview",
+   "frame": "person",
+   "_why": "Roland-Garros 官方半决赛场上采访（pPCiDSCNlpk）。两档转写一致（medium 33.40–45.36）；39.16 那半句 I'm just 没说完，不配字幕。段尾 46.0 在下一个问题（54.7）之前。",
+   "point_end_ok": "场上采访，不是回合。",
+   "cx_face": {
+    "samples": [
+     0.5151,
+     0.4859,
+     0.4893,
+     0.479,
+     0.4382,
+     0.547,
+     0.4891,
+     0.4911,
+     0.4816
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-18T23:20:40+00:00",
+    "median": 0.4891,
+    "spread": 0.1088
+   }
+  },
+  {
+   "source": "rgsfi",
+   "start": 110.9,
+   "end": 130.6,
+   "cx": 0.497,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.12,
+     "end": 2.4,
+     "text": "No, I'm crazy sometimes also.\n不，我有时候也会抓狂。"
+    },
+    {
+     "at": 4.42,
+     "end": 10.0,
+     "text": "But I try to stay composed,\n但我尽量保持镇定，"
+    },
+    {
+     "at": 10.18,
+     "end": 13.4,
+     "text": "it helps me to play my best tennis.\n这样才能打出最好的网球。"
+    },
+    {
+     "at": 14.22,
+     "end": 16.1,
+     "text": "That's what I'm trying to do,\n我一直在这么做，"
+    },
+    {
+     "at": 16.14,
+     "end": 19.4,
+     "text": "but inside there's a storm, believe me.\n可心里是一场风暴，相信我。"
+    }
+   ],
+   "_quote_kind": "interview",
+   "frame": "person",
+   "_why": "同一段场上采访：主持人说「看你打球总是很冷静」，她回答。两档转写一致（medium 111.02–129.90）；中间的口头语（I mean / like / um）按烧字幕规矩去掉。段尾 130.6 在下一个问题（143.38）之前。",
+   "point_end_ok": "场上采访，不是回合。",
+   "cx_face": {
+    "samples": [
+     0.4741,
+     0.5095,
+     0.488,
+     0.4808,
+     0.4755,
+     0.4913,
+     0.4934,
+     0.5197,
+     0.4921
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-18T23:20:42+00:00",
+    "median": 0.4913,
+    "spread": 0.0456
+   }
+  },
+  {
+   "source": "rgf",
+   "start": 13.7,
+   "end": 27.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "她成了法网历史上第一位，从资格赛打进决赛的球员；也是公开赛年代第二位，从资格赛打进大满贯女单决赛的人，第一位是二〇二一年美网的拉杜卡努。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "Roland-Garros 官方决赛集锦开头（13.62 切点之后、跳过片头标版；9.3–42.8 两档转写无词）。法网史上首位资格赛决赛选手、公开赛年代第二位资格赛大满贯女单决赛选手（第一位拉杜卡努 2021 美网）：rolandgarros.com 2026-edition-chwalinska-shnaider-sf＋BBC c1dy7grv4y3o＋WTA。范围写进同一句：法网历史、公开赛年代、大满贯女单。",
+   "point_end_ok": "段尾停在镜头内；旁白不讲这一分。"
+  },
+  {
+   "source": "rgf",
+   "start": 697.5,
+   "end": 709.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "决赛，她三比六、二比六，输给了安德烈耶娃。可这三周，让她的排名从第一百一十四，升到了第二十一。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "同一条决赛集锦的冠军点回合（690–709.8，近端黄衣是她）。两档转写在 671.7–706.8 无词，706.8 起是主裁法语报分。决赛 3-6 2-6：rolandgarros.com＋WTA；6 月 8 日排名 114→21：WTA 4515742 Rankings Watch＋WTA 接口。",
+   "point_end_ok": "冠军点在 709.8 秒打完；段尾停在之前。"
+  },
+  {
+   "source": "rgfs",
+   "start": 151.1,
+   "end": 164.4,
+   "cx": 0.512,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.2,
+     "end": 2.5,
+     "text": "I wish you could see a better match today,\n真希望你们今天能看场更好的球，"
+    },
+    {
+     "at": 2.9,
+     "end": 5.0,
+     "text": "but Mirra was just so good for me.\n可米拉今天打得太好了。"
+    },
+    {
+     "at": 5.12,
+     "end": 6.8,
+     "text": "So I guess it's her fault.\n所以，我想这得怪她。"
+    },
+    {
+     "at": 10.48,
+     "end": 12.9,
+     "text": "Yeah, I tried my best. I'm sorry.\n我尽力了，对不起。"
+    }
+   ],
+   "_quote_kind": "ceremony",
+   "frame": "person",
+   "_why": "法网亚军致辞（LXRhlHKGKZc）。两档转写一致（medium 151.30–163.56）。swiatek-chwalinska-story-2026 用的是同一条致辞 176.6–185.2，这一段不重复。",
+   "point_end_ok": "颁奖致辞，不是回合。",
+   "cx_face": {
+    "samples": [
+     0.5236,
+     0.5236,
+     0.4995,
+     0.516,
+     0.5064,
+     0.5147,
+     0.5171,
+     0.5205
+    ],
+    "frames": 9,
+    "detected": 8,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-18T23:20:46+00:00",
+    "median": 0.5166,
+    "spread": 0.0241
+   }
+  },
+  {
+   "title_card": "赛点上\n滑倒",
+   "kicker": "05 · 2026.06.29 温网首轮",
+   "seconds": 18.8,
+   "narration": "三周后，温网首轮。她六比二、五比二领先，自己发球胜赛，四十比三十，赛点。她在底线滑倒，伤了右脚踝。她没有退赛，最后被资格赛选手翻盘，二比六、七比五、六比二。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "2026-06-29 温网首轮 6-2 5-7 2-6 负资格赛选手 Sawangkaew（排名 164）：WTA 4528435＋BBC c70y1k4lrrko＋路透；6-2 5-2 40-30 她发球胜赛时在赛点上滑倒、右脚踝：BBC／路透（WTA 写右腿治疗）。旁白里按胜者在前念对手的比分。没有找到这一场的官方视频，用字卡讲。"
+  },
+  {
+   "source": "cin",
+   "start": 147.4,
+   "end": 159.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "一个多月后，多伦多的第一场，她又输了。直到八月中旬的辛辛那提，她才赢下法网之后的第一场球。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "辛辛那提赛事官方集锦：赛点回合（129.83–159.53 同一个广角镜头，记分条 MATCH POINT），白衣的是她。两档转写在 116.2–159.6 无词。多伦多 8 月 4 日首轮轮空后 5-7 1-6 负吉布森、8 月 15 日 6-2 6-2 胜布克沙＝法网后第一胜：WTA 接口＋flashscore（bucsa-chwalinska、chwalinska-gibson 两条 spec 核过）。",
+   "point_end_ok": "段尾 159.4 停在赛点回合结束（159.53 切到庆祝）之前。"
+  },
+  {
+   "source": "cin",
+   "start": 159.5,
+   "end": 170.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.12,
+     "end": 1.4,
+     "text": "The ball goes long,\n球出界了。"
+    },
+    {
+     "at": 1.56,
+     "end": 5.4,
+     "text": "and the crowd that have been right behind Maja Chwalinska on court seven\n7号场边一直为她加油的观众，"
+    },
+    {
+     "at": 5.68,
+     "end": 10.1,
+     "text": "are very, very happy to see her go through to the third round.\n看着她晋级第三轮，开心极了。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "同一条辛辛那提集锦：159.53 切到她握拳、走向网前。解说两档一致（medium 159.62–169.36，名字转错，按标题写 Chwalinska）。段尾 170.0 在下一句（169.96 Cristina）开口时收住。",
+   "point_end_ok": "比赛已经结束。",
+   "inset": {
+    "image": "assets/reel/chwalinska-story/label-cin.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 7.0,
+    "motion": "editorial",
+    "label": {
+     "topic": "法网之后第一场胜利",
+     "date": "2026.08.15",
+     "place": "WTA1000 辛辛那提 第二轮",
+     "people": "赫瓦林斯卡 vs 布克沙",
+     "score": "6-2 6-2"
+    }
+   }
+  },
+  {
+   "source": "tc",
+   "start": 94.3,
+   "end": 98.2,
+   "cx": 0.479,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.18,
+     "end": 3.6,
+     "text": "It was definitely a bit frustrating, you know.\n那阵子确实有点憋屈。"
+    }
+   ],
+   "_quote_kind": "interview",
+   "frame": "person",
+   "_why": "Tennis Channel 官方辛辛那提演播室专访（ciGC4PID7T4）：主持人问温网受伤后的恢复。字幕按仓库已审的 output/interviews/chwalinska-cincinnati-2026-studio 逐句时间（1:34.48）。98.27 切到演播室远景，下一段接着说。",
+   "point_end_ok": "演播室采访，不是回合。",
+   "cx_face": {
+    "samples": [
+     0.4819,
+     0.4825,
+     0.4826,
+     0.4849,
+     0.4856,
+     0.4752,
+     0.4728,
+     0.4722,
+     0.4803
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-18T23:20:51+00:00",
+    "median": 0.4819,
+    "spread": 0.0134
+   }
+  },
+  {
+   "source": "tc",
+   "start": 98.35,
+   "end": 106.0,
+   "cx": 0.211,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.05,
+     "end": 1.65,
+     "text": "I had some good momentum going on,\n我本来势头正好，"
+    },
+    {
+     "at": 1.77,
+     "end": 4.15,
+     "text": "but it's just sport, you know.\n但体育就是这样。"
+    },
+    {
+     "at": 4.33,
+     "end": 7.33,
+     "text": "You got to accept that it's brutal sometimes.\n你得接受，它有时候就是很残酷。"
+    }
+   ],
+   "_quote_kind": "interview",
+   "frame": "person",
+   "_why": "同一场专访的演播室远景机位（98.27–123.10）：她站在画面右侧，人物中心另量。逐句时间按已审 ass（1:38.08–1:45.68）。",
+   "point_end_ok": "演播室采访，不是回合。",
+   "cx_face": {
+    "samples": [
+     0.22,
+     0.2195,
+     0.2092,
+     0.2179,
+     0.2082,
+     0.1906,
+     0.2031,
+     0.2181,
+     0.2233
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-18T23:20:56+00:00",
+    "median": 0.2179,
+    "spread": 0.0327
+   }
+  },
+  {
+   "source": "tc",
+   "start": 133.7,
+   "end": 141.8,
+   "cx": 0.485,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.18,
+     "end": 3.0,
+     "text": "Yeah, a lot of attention,\n关注多了很多，"
+    },
+    {
+     "at": 3.1,
+     "end": 5.0,
+     "text": "definitely much more than before.\n比以前多太多了。"
+    },
+    {
+     "at": 5.1,
+     "end": 7.4,
+     "text": "Before, I mean, no one really cared.\n以前，说真的，没人在意。"
+    }
+   ],
+   "_quote_kind": "interview",
+   "frame": "person",
+   "_why": "同一场专访：主持人问法网之后生活有没有变。近景机位（123.10–141.88）。逐句时间按已审 ass（2:13.88–2:21.24）。",
+   "point_end_ok": "演播室采访，不是回合。",
+   "cx_face": {
+    "samples": [
+     0.4899,
+     0.488,
+     0.4945,
+     0.4961,
+     0.4923,
+     0.4925,
+     0.4875,
+     0.4841,
+     0.4735
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-18T23:21:01+00:00",
+    "median": 0.4899,
+    "spread": 0.0226
+   }
+  },
+  {
+   "source": "uso",
+   "start": 25.4,
+   "end": 40.8,
+   "cx": 0.5,
+   "track": false,
+   "narration": "辛辛那提下一轮，她输给施奈德；蒙特雷又是第一场出局。美网首轮，二比六、三比六，输给汤森德。从法网决赛到美网，她一胜五负。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "美网官方集锦第一盘（25.3–47.5 两档转写无词）。辛辛那提第三轮 2-6 6-7(3) 负施奈德、蒙特雷首轮轮空后 6-3 2-6 2-6 负帕克斯、美网首轮 2-6 3-6 负汤森德：WTA 接口＋flashscore（三条 spec 核过）＋WTA matchnotes 1039_QF。一胜五负：WTA 官网（oliynykova-chwalinska-singapore-2026-r2 记过：法网到美网之间 1 胜 5 负）＋WTA 接口逐场。",
+   "point_end_ok": "段尾停在镜头内；旁白不讲这一分。"
+  },
+  {
+   "source": "sgp",
+   "start": 30.1,
+   "end": 43.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "九月，她第一次打亚洲赛季。新加坡，她总算连赢三场，打进半决赛。先赢下一盘之后，又被费尔南德斯翻盘。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "WTA 官方新加坡半决赛集锦第一盘（30.0–56.5 两档转写无词，她 6-1 拿下首盘那一段）。新加坡胜什拉姆科娃、奥利尼科娃、卫冕冠军梅尔滕斯，半决赛 6-1 4-6 2-6 负费尔南德斯：WTA 接口＋WTA 4581751＋tennismajors 863236；职业生涯第一次打亚洲赛季：WTA 集锦说明（oliynykova spec 记过）。",
+   "point_end_ok": "段尾停在镜头内；旁白不讲这一分。"
+  },
+  {
+   "source": "bj",
+   "start": 259.0,
+   "end": 275.3,
+   "cx": 0.5,
+   "track": false,
+   "narration": "十月二日，北京第二轮，三比六、一比六。法网决赛之后，到武汉之前，她四胜七负。她后来说，那段时间外界对她很苛刻，我也只是个普通人。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "WTA 官方北京第二轮集锦第二盘（241.6–275.4 两档转写无词）。北京 R2 3-6 1-6 负亚斯特雷姆斯卡：WTA 接口＋flashscore；法网决赛到武汉之前 4 胜 7 负（胜布克沙、什拉姆科娃、奥利尼科娃、梅尔滕斯；负萨王凯、吉布森、施奈德、帕克斯、汤森德、费尔南德斯、亚斯特雷姆斯卡）：WTA 接口逐场；「people also were very rough towards me … I'm just a human」：WTA 4593967＋法新社（武汉决赛后发布会）。",
+   "point_end_ok": "段尾停在镜头内；旁白不讲这一分。"
+  },
+  {
+   "source": "bj",
+   "start": 275.5,
+   "end": 290.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.24,
+     "end": 4.3,
+     "text": "Back-to-back wins on the tour\n巡回赛取得连胜，"
+    },
+    {
+     "at": 4.44,
+     "end": 9.0,
+     "text": "for the first time since January for Dayana Yastremska,\n亚斯特雷姆斯卡1月以来第一次，"
+    },
+    {
+     "at": 9.2,
+     "end": 11.5,
+     "text": "defeating Maja Chwalinska in straight sets,\n直落两盘击败赫瓦林斯卡，"
+    },
+    {
+     "at": 13.06,
+     "end": 14.3,
+     "text": "6-3, 6-1.\n6比3、6比1。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "同一条北京集锦的赛后段：解说两档一致（medium 275.74–289.56），前两句的窗口与 yastremska-chwalinska 第 17 段同一份已审字幕。",
+   "point_end_ok": "比赛已经结束。"
+  },
+  {
+   "source": "wsf",
+   "start": 103.5,
+   "end": 115.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "两周后，武汉。半决赛，又碰上斯瓦泰克。首盘三比五，斯瓦泰克拿到两个盘点，她一个一个救了回来。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "WTA 官方武汉半决赛集锦：第二个盘点回合（chwalinska-swiatek-wuhan-2026-sf 第 6 段同一窗口，两档转写在 98.1–156.6 无词）。首盘 3-5 救下两个盘点：WTA 4593577＋逐分记录。",
+   "point_end_ok": "盘点回合在 114.96 切走之前打完。"
+  },
+  {
+   "source": "wsf",
+   "start": 142.9,
+   "end": 173.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 13.66,
+     "end": 16.18,
+     "text": "Maja Chwalinska does it!\n赫瓦林斯卡做到了！"
+    },
+    {
+     "at": 16.18,
+     "end": 18.02,
+     "text": "Perhaps the unthinkable for some,\n或许有人觉得不可思议，"
+    },
+    {
+     "at": 18.02,
+     "end": 20.54,
+     "text": "but not for her, not for her camp.\n但她和她的团队并不这样想。"
+    },
+    {
+     "at": 21.7,
+     "end": 24.8,
+     "text": "Chwalinska hands Iga Swiatek her first dropped set in Wuhan\n斯瓦泰克本届武汉第一次丢盘，"
+    },
+    {
+     "at": 24.8,
+     "end": 28.74,
+     "text": "and has the upper hand in semifinal number two.\n在第二场半决赛占得先机。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "同一条半决赛集锦：首盘最后一分与庆祝（chwalinska-swiatek-wuhan-2026-sf 第 7 段 117.24–173.0 的后半段，字幕沿用那条已审的译文，at 按新段首重算）。段首 142.84 是切点。",
+   "point_end_ok": "首盘最后一分在 157 秒前后打完。",
+   "crosses_cut": "157.64、159.96、161.84、166.12 都是首盘结束后的庆祝与看台。"
+  },
+  {
+   "source": "wsf",
+   "start": 216.0,
+   "end": 228.3,
+   "cx": 0.5,
+   "track": false,
+   "narration": "追到五平，她再破发到六比五，斯瓦泰克叫了医疗暂停。从三比五算起，最后十一局，她拿了十局。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "同一条集锦第二盘回合（208.3–228.7 两档转写无词）。5-5 之后破发到 6-5、斯瓦泰克随后因左大腿／腿伤叫医疗暂停：路透＋WTA 逐分记录；从 3-5 起最后 11 局赢 10 局：WTA 4593577。",
+   "point_end_ok": "段尾 228.3 停在 228.40 切点之前。"
+  },
+  {
+   "source": "wsf",
+   "start": 242.3,
+   "end": 270.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.3,
+     "end": 2.08,
+     "text": "She knows she's oh so close.\n她知道胜利已经近在咫尺。"
+    },
+    {
+     "at": 2.2,
+     "end": 4.78,
+     "text": "Maja Chwalinska. Match point.\n赫瓦林斯卡来到赛点。"
+    },
+    {
+     "at": 8.6,
+     "end": 9.78,
+     "text": "Oh, Maja!\n噢，玛雅！"
+    },
+    {
+     "at": 12.58,
+     "end": 14.56,
+     "text": "Magnificence in Wuhan,\n武汉的精彩一刻，"
+    },
+    {
+     "at": 14.56,
+     "end": 17.52,
+     "text": "as she topples her fellow Pole, former world number one,\n她击败同为波兰人的前世界第一，"
+    },
+    {
+     "at": 17.52,
+     "end": 21.2,
+     "text": "for her first career top-10 win.\n生涯第一次赢前10球员。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "同一条集锦的赛点与网前拥抱（chwalinska-swiatek-wuhan-2026-sf 第 11 段 242.24–284.2 的前半段，字幕沿用那条已审的译文，at 按新段首重算）。段尾 270.5 在 Well, genuine affection（270.78）之前。",
+   "point_end_ok": "赛点在 252 秒前后打完。",
+   "crosses_cut": "245.52、252.28 是赛点前后的镜头切换。",
+   "inset": {
+    "image": "assets/reel/chwalinska-story/label-wsf.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.085,
+    "show_for": 7.0,
+    "motion": "editorial",
+    "label": {
+     "topic": "首进1000赛决赛",
+     "date": "2026.10.17",
+     "place": "WTA1000 武汉 半决赛",
+     "people": "赫瓦林斯卡 vs 斯瓦泰克",
+     "score": "7-5 6-1"
+    }
+   }
+  },
+  {
+   "source": "wsf",
+   "start": 343.6,
+   "end": 365.3,
+   "cx": 0.653,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.32,
+     "end": 6.0,
+     "text": "It's always tough to play against a fellow Polish player.\n和同胞交手，总是很难。"
+    },
+    {
+     "at": 6.98,
+     "end": 8.7,
+     "text": "She's a great champion,\n她是伟大的冠军，"
+    },
+    {
+     "at": 8.84,
+     "end": 10.1,
+     "text": "a living legend, she won everything.\n活着的传奇，什么都赢过。"
+    },
+    {
+     "at": 10.6,
+     "end": 13.7,
+     "text": "It was a great honor for me to share the court with her today.\n今天能和她同场，是我的荣幸。"
+    },
+    {
+     "at": 14.86,
+     "end": 17.8,
+     "text": "I still don't really realize what's going on,\n我还没完全反应过来，"
+    },
+    {
+     "at": 18.0,
+     "end": 21.4,
+     "text": "and the fact that I won against her is actually crazy for me.\n赢了她，对我来说太疯狂了。"
+    }
+   ],
+   "_quote_kind": "interview",
+   "frame": "person",
+   "_why": "同一条 WTA 集锦尾部的场上采访（两档转写一致，medium 343.92–364.90）；口头语（I mean / you know）按烧字幕规矩去掉。段尾 365.3 在下一段空白（365.3–389.7）开头。",
+   "point_end_ok": "场上采访，不是回合。",
+   "cx_face": {
+    "samples": [
+     0.6916,
+     0.6951,
+     0.6709,
+     0.6748,
+     0.6409,
+     0.6512,
+     0.6276,
+     0.6251,
+     0.6114
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-18T23:21:05+00:00",
+    "median": 0.6512,
+    "spread": 0.0837
+   }
+  },
+  {
+   "source": "fin",
+   "start": 150.0,
+   "end": 158.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "决赛，她先丢一盘，第二盘又零比二落后。她追了回来，六比四，扳平。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "WTA 官方决赛集锦第二盘（115.7–158.8 两档转写无词）。首盘 2-6、第二盘 0-2 落后后 6-4：WTA 官方 LS001 逐局＋chwalinska-kartal-wuhan-2026-f 的 _match。",
+   "point_end_ok": "段尾 158.6 停在 158.76 解说开口之前；第二盘最后一分在之前打完。"
+  },
+  {
+   "source": "fin",
+   "start": 177.6,
+   "end": 186.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "决胜盘二比二之后，她一局都没再丢，连拿了最后四局。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "同一条集锦决胜盘末段（177.5–198.1 两档转写无词），186.0 接冷开场那一段的冠军点回合之前。决胜盘 2-2 后连下最后四局：WTA 官方逐局（chwalinska-kartal-wuhan-2026-f 第 14 段「决胜盘最后四局，全被赫瓦林斯卡拿下」）。PDF 初稿写的「最后连赢五局」与官方逐局不符，已改。",
+   "point_end_ok": "段尾 186.0 是冠军点回合开始之前的换球间隙。"
+  },
+  {
+   "source": "fin",
+   "start": 203.4,
+   "end": 214.2,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 2.84,
+     "end": 6.5,
+     "text": "Maja Chwalinska's first WTA title is a big one.\n赫瓦林斯卡的首个巡回赛冠军，"
+    },
+    {
+     "at": 7.44,
+     "end": 9.7,
+     "text": "She's a WTA 1000 champion.\n就是一座一千赛冠军。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "正文按时间顺序兑现冷开场：同一条 WTA 决赛集锦，203.32 切到她跪在场上、206.68 包厢里的波兰球迷、209.40 她站起来。解说两档一致（medium 206.24–213.10，与 chwalinska-kartal-wuhan-2026-f 第 12 段同一句）。段尾 214.2 在 214.32 切点之前。",
+   "point_end_ok": "冠军点已经打完，这一段是庆祝。",
+   "crosses_cut": "206.68、209.40 都是冠军点之后的庆祝镜头。"
+  },
+  {
+   "image": "assets/reel/chwalinska-story/wuhan-vsign-official.jpg",
+   "image_kind": "photo",
+   "seconds": 16.2,
+   "narration": "她成了二〇〇九年以来第四位，生涯首个巡回赛冠军，就是一千赛冠军的球员，前三位是大坂直美、安德莱斯库和姆博科。新一周，她会第一次进入世界前二十。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "武汉网球公开赛官方图库决赛颁奖照（竖版剪刀手，1281×1920，裁 3:4 后不放大）。2009 年以来第四位、前三位大坂直美／安德莱斯库／姆博科：WTA 4593967（只一源，chwalinska-kartal-wuhan-2026-f 第 15 段已用过同一说法）；首次进入前 20：WTA 4593967＋BBC cqm2411vp3dgo。",
+   "_photo_source": "https://bucket-wuwang.hubei-41.zos.ctyun.cn/files/dumpsgd4htl72mnoyuytoog5x.jpg",
+   "_photo_caption_safety": "脸在画面上部，字幕区是花环与奖杯，不压脸。"
+  },
+  {
+   "source": "spch",
+   "start": 155.6,
+   "end": 165.0,
+   "cx": 0.439,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.32,
+     "end": 3.2,
+     "text": "And the energy, it means a lot,\n你们的能量，对我意义很大，"
+    },
+    {
+     "at": 3.26,
+     "end": 5.3,
+     "text": "so I really enjoyed my time here.\n我在这里过得特别开心。"
+    },
+    {
+     "at": 5.46,
+     "end": 6.8,
+     "text": "It was my first time as well,\n这是我第一次来，"
+    },
+    {
+     "at": 7.86,
+     "end": 9.2,
+     "text": "definitely not the last.\n但肯定不是最后一次。"
+    }
+   ],
+   "_quote_kind": "ceremony",
+   "frame": "person",
+   "_why": "Tennis TV／WTA 官方武汉冠军致辞（XjhOB_EL1ok）。两档转写一致（medium 155.92–164.56）。段尾 165.0 在 Yeah, and（165.18）之前。",
+   "point_end_ok": "颁奖致辞，不是回合。",
+   "cx_face": {
+    "samples": [
+     0.4405,
+     0.4401,
+     0.4373,
+     0.4385,
+     0.4385,
+     0.4398,
+     0.4398,
+     0.4408,
+     0.4378
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-18T23:21:10+00:00",
+    "median": 0.4398,
+    "spread": 0.0035
+   }
+  },
+  {
+   "image": "assets/reel/chwalinska-story/wuhan-trophy-getty.jpg",
+   "image_kind": "photo",
+   "seconds": 13.0,
+   "narration": "那几年，她一直在问自己：我在哪里？这一次，答案写在了武汉的领奖台上。你也有过，不知道自己在哪里的时候吗？",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与 fokina-story-2026 同一档）。"
+   },
+   "_why": "WTA 官方图库 photo 4594005（Di Yin/Getty Images 2300810312，6000×4000，裁 3:4 后不放大）：和封面是同一张，首尾呼应。收尾回到第 02 章她自己那句「那我在哪里」。",
+   "_photo_source": "https://photoresources.wtatennis.com/wta/photo/2026/10/18/be7bb5b7-6ba3-48c0-b608-86336545363b/GettyImages-2300810312.jpg",
+   "_photo_caption_safety": "脸在画面上部，字幕区是花环与奖杯，不压脸。"
+  }
+ ]
+}
