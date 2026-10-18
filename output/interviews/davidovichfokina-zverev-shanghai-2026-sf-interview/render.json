@@ -35,45 +35,8 @@
     "transition": "dissolve",
     "dissolve_s": 0.18
   },
-  "film_sha256": "ac4a0f616a7c2ba9f2d23ada92455e6ef9e0b86c62f3ec09397df687e220fe79",
+  "film_sha256": "86ea2ae0bd9ef8a5457c0fb63421037130f7a07abcc664b62630ce3dece235f8",
   "film_seconds": 132.4,
-  "production_sla": {
-    "version": 2,
-    "pipeline": "interview-clip",
-    "slug": "davidovichfokina-zverev-shanghai-2026-sf-interview",
-    "received_at": "2026-10-17T15:53:58Z",
-    "artifact_ready_at": "2026-10-17T15:59:34Z",
-    "elapsed_seconds": 336.059,
-    "budget_seconds": 600,
-    "met": true,
-    "film_sha256": "ac4a0f616a7c2ba9f2d23ada92455e6ef9e0b86c62f3ec09397df687e220fe79",
-    "spec_sha256": "3a1217367e319d5f56637b0d0f1095d39af60065856c6fcb426b54471e558903",
-    "run_id": "39047064424",
-    "stage_events": [
-      {
-        "stage": "preflight",
-        "at": "2026-10-17T15:56:23Z",
-        "run_id": "39047064424"
-      },
-      {
-        "stage": "cover_audit",
-        "at": "2026-10-17T15:57:19Z",
-        "run_id": "39047064424"
-      },
-      {
-        "stage": "asr_verify",
-        "at": "2026-10-17T15:57:32Z",
-        "run_id": "39047064424"
-      },
-      {
-        "stage": "render",
-        "at": "2026-10-17T15:57:33Z",
-        "run_id": "39047064424"
-      }
-    ],
-    "render_seconds": 121.059,
-    "pre_render_seconds": 215.0
-  },
   "face_checks": {
     "cover": {
       "status": "ok",
@@ -83,10 +46,10 @@
         "name": null,
         "similarity": {},
         "missing": [
-          "福基拉"
+          "福基纳"
         ],
         "expected": [
-          "福基拉"
+          "福基纳"
         ],
         "face": [
           299,
@@ -95,7 +58,7 @@
           454
         ],
         "face_px": 289.8,
-        "reason": "没有可比的官方头像：福基拉",
+        "reason": "没有可比的官方头像：福基纳",
         "thresholds": {
           "match": 0.34,
           "mismatch": 0.15,
@@ -104,10 +67,10 @@
       },
       "eyes": {
         "verdict": "open",
-        "ear": 0.309,
+        "ear": 0.3088,
         "ear_each": [
-          0.2946,
-          0.3234
+          0.2944,
+          0.3233
         ],
         "face": [
           299,
@@ -124,47 +87,123 @@
         }
       },
       "warnings": [
-        "认人拿不准：没有可比的官方头像：福基拉"
+        "认人拿不准：没有可比的官方头像：福基纳"
       ]
     },
     "warnings": [
-      "认人拿不准：没有可比的官方头像：福基拉"
+      "认人拿不准：没有可比的官方头像：福基纳"
     ]
   },
   "production_stage_events": [
     {
       "stage": "preflight",
-      "at": "2026-10-17T15:56:23Z",
-      "run_id": "39047064424"
+      "at": "2026-10-18T07:17:12Z",
+      "run_id": "39107018323"
     },
     {
       "stage": "cover_audit",
-      "at": "2026-10-17T15:57:19Z",
-      "run_id": "39047064424"
+      "at": "2026-10-18T07:18:36Z",
+      "run_id": "39107018323"
     },
     {
       "stage": "asr_verify",
-      "at": "2026-10-17T15:57:32Z",
-      "run_id": "39047064424"
+      "at": "2026-10-18T07:18:46Z",
+      "run_id": "39107018323"
     },
     {
       "stage": "render",
-      "at": "2026-10-17T15:57:33Z",
-      "run_id": "39047064424"
+      "at": "2026-10-18T07:18:47Z",
+      "run_id": "39107018323"
     },
     {
       "stage": "qc",
-      "at": "2026-10-17T15:59:35Z",
-      "run_id": "39047064424"
+      "at": "2026-10-18T07:20:17Z",
+      "run_id": "39107018323"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-17T15:59:35Z",
-      "run_id": "39047064424"
+      "at": "2026-10-18T07:20:18Z",
+      "run_id": "39107018323"
     }
   ],
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-davidovichfokina-zverev-shanghai-2026-sf-interview/davidovichfokina-zverev-shanghai-2026-sf-interview.mp4?v=ac4a0f616a7c2ba9",
-  "video_bytes": 41045956,
-  "release_asset_digest": "sha256:ac4a0f616a7c2ba9f2d23ada92455e6ef9e0b86c62f3ec09397df687e220fe79",
-  "qc_attestation_sha256": "ae4776dbaa7cf705f19c84aba480852ac0a157847cefb6dd9a4843bed4e50bed"
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-davidovichfokina-zverev-shanghai-2026-sf-interview/davidovichfokina-zverev-shanghai-2026-sf-interview.mp4?v=86ea2ae0bd9ef8a5",
+  "video_bytes": 41037805,
+  "release_asset_digest": "sha256:86ea2ae0bd9ef8a5457c0fb63421037130f7a07abcc664b62630ce3dece235f8",
+  "qc_attestation_sha256": "77f5fd1f0d4e86273eaf8dfc0cf1c51a5f42df66cf87a3253269381cdcf1e33a",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "davidovichfokina-zverev-shanghai-2026-sf-interview",
+      "received_at": "2026-10-17T15:53:58Z",
+      "artifact_ready_at": "2026-10-17T15:59:34Z",
+      "elapsed_seconds": 336.059,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "ac4a0f616a7c2ba9f2d23ada92455e6ef9e0b86c62f3ec09397df687e220fe79",
+      "spec_sha256": "3a1217367e319d5f56637b0d0f1095d39af60065856c6fcb426b54471e558903",
+      "run_id": "39047064424",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-10-17T15:56:23Z",
+          "run_id": "39047064424"
+        },
+        {
+          "stage": "cover_audit",
+          "at": "2026-10-17T15:57:19Z",
+          "run_id": "39047064424"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-10-17T15:57:32Z",
+          "run_id": "39047064424"
+        },
+        {
+          "stage": "render",
+          "at": "2026-10-17T15:57:33Z",
+          "run_id": "39047064424"
+        }
+      ],
+      "render_seconds": 121.059,
+      "pre_render_seconds": 215.0
+    }
+  ],
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "davidovichfokina-zverev-shanghai-2026-sf-interview",
+    "received_at": "2026-10-18T07:16:06Z",
+    "artifact_ready_at": "2026-10-18T07:20:16Z",
+    "elapsed_seconds": 250.834,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "86ea2ae0bd9ef8a5457c0fb63421037130f7a07abcc664b62630ce3dece235f8",
+    "spec_sha256": "b4fe5bb88efd2d3c3ed2918a4aeb9b72de5d61cf8b361ae5339e38a2e5f33bb8",
+    "run_id": "39107018323",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-10-18T07:17:12Z",
+        "run_id": "39107018323"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-10-18T07:18:36Z",
+        "run_id": "39107018323"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-10-18T07:18:46Z",
+        "run_id": "39107018323"
+      },
+      {
+        "stage": "render",
+        "at": "2026-10-18T07:18:47Z",
+        "run_id": "39107018323"
+      }
+    ],
+    "render_seconds": 89.834,
+    "pre_render_seconds": 161.0
+  }
 }
