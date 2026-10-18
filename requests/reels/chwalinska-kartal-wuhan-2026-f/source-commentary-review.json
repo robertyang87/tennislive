@@ -1,0 +1,1085 @@
+{
+  "schema": "tennislive.source-commentary-review.v1",
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "source_key": "youtube-short",
+  "source_url": "https://www.youtube.com/watch?v=HIvIvgwXkqs",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-HIvIvgwXkqs/HIvIvgwXkqs.mp4",
+  "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI source-audio review agent; inspected all whole-source small.en and medium.en segments and word timestamps, canonical auto-captions, plus finite independent cached large-v3-turbo results; no manual listening claimed",
+  "reviewed_at": "2026-10-18T15:01:46.815450+00:00",
+  "reviewed_from": 0,
+  "reviewed_to": 305.295964,
+  "status": "partial_with_explicit_uncertainties",
+  "manual_listening_claimed": false,
+  "evidence_basis": [
+    {
+      "path": "data/source_asr/HIvIvgwXkqs/small.en.json",
+      "sha256": "80e539b8eb1548ef18f3eabf038e70e7fb0df6bce6277deb251f04722f4933d8",
+      "model": "small.en",
+      "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+      "clip": [
+        0.0,
+        null
+      ]
+    },
+    {
+      "path": "data/source_asr/HIvIvgwXkqs/medium.en.json",
+      "sha256": "edebfe27f734926753533e60ecfca10e80cc4c054272cb4cff0684962a9a2f8b",
+      "model": "medium.en",
+      "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+      "clip": [
+        0.0,
+        null
+      ]
+    },
+    {
+      "path": "output/2026-10-18/reel/chwalinska-kartal-wuhan-2026-f/captions.txt",
+      "sha256": "3b26458a7c644503f04ebca41627bcf6a05cbce2c16f64288fbbde40508f6de9",
+      "kind": "Canonical YouTube automatic captions from probe39137783408"
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/large-v3-turbo-125-140.json",
+      "sha256": "30d38777f08a24b9331e21d87fa31464260de58f640102730f721a51a26045f7",
+      "model": "large-v3-turbo",
+      "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+      "clip": [
+        125,
+        140
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/large-v3-turbo-154-180.json",
+      "sha256": "c3943d4fe1da7d8e37fda035f198ea65f9f0e3f2ab99cd5ad72aec02dbe23a1f",
+      "model": "large-v3-turbo",
+      "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+      "clip": [
+        154,
+        180
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/large-v3-turbo-248-296.json",
+      "sha256": "bd5eb138211dd1e1057e772c90b4f184eed8c3eaa1bf7e936114d6a4d7802569",
+      "model": "large-v3-turbo",
+      "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+      "clip": [
+        248,
+        296
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/large-v3-turbo-68-85.json",
+      "sha256": "afc34a6be0200b74be55219323e98670d683f81b6f36dc078d471c1efa152593",
+      "model": "large-v3-turbo",
+      "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+      "clip": [
+        68,
+        85
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/large-v3-turbo-8-35.json",
+      "sha256": "790762996e07c2de8d0ecd9a4ea407134626ae235673a186088f1f52fdfbc4fd",
+      "model": "large-v3-turbo",
+      "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+      "clip": [
+        8,
+        35
+      ]
+    }
+  ],
+  "foreground_english": [
+    {
+      "id": "u01",
+      "start": 29.22,
+      "end": 32.38,
+      "en": "[Lead-in uncertain] it looks like Kartal’s the one who’s indefatigable early.",
+      "zh": "[句头待核]卡尔塔尔开场就显得不知疲倦",
+      "status": "uncertain",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            0,
+            1
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u02",
+      "start": 71.24,
+      "end": 73.22,
+      "en": "A three is a lucky number in China.",
+      "zh": "3在中国是个幸运数字",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            2
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u03",
+      "start": 73.22,
+      "end": 76.46,
+      "en": "And it is indeed the third set point that gets it done for Sonay Kartal.",
+      "zh": "索奈卡尔塔尔确实在第3个盘点上拿下了这一盘",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            2,
+            3
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u04",
+      "start": 76.52,
+      "end": 78.34,
+      "en": "But she’s hoping it won’t have to go three,",
+      "zh": "不过她希望比赛不用打满3盘",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            3
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u05",
+      "start": 78.24,
+      "end": 83.56,
+      "en": "as she finds herself halfway home towards capturing a WTA 1000 crown.",
+      "zh": "距离WTA1000冠军她已经走过半程",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            3,
+            4
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            2,
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u06",
+      "start": 111.46,
+      "end": 115.68,
+      "en": "Not sure what happened here, but to add to her bag of tricks.",
+      "zh": "不太确定刚才怎么回事她又添了一招",
+      "status": "source_fragment",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            5
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u07",
+      "start": 158.76,
+      "end": 160.58,
+      "en": "[Lead-in or player name unclear] seals the deal.",
+      "zh": "[句头或人名待核]锁定这一盘",
+      "status": "uncertain",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            6,
+            7
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u08",
+      "start": 160.52,
+      "end": 161.5,
+      "en": "Why not?",
+      "zh": "何乐而不为呢",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            7
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            6,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u09",
+      "start": 161.68,
+      "end": 164.68,
+      "en": "They’re both vying for a WTA 1000 title,",
+      "zh": "两人都在争夺WTA1000冠军",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            7,
+            8
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u10",
+      "start": 164.68,
+      "end": 167.76,
+      "en": "each seeking all the glory in Wuhan.",
+      "zh": "都想在武汉赢得最后的荣耀",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u11",
+      "start": 167.72,
+      "end": 170.5,
+      "en": "Why not just make it best of one set?",
+      "zh": "何不干脆用1盘定胜负呢",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            10,
+            11
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            8,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u12",
+      "start": 170.44,
+      "end": 172.08,
+      "en": "The Pole has done that.",
+      "zh": "这位波兰姑娘已经做到了",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            11,
+            12
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u13",
+      "start": 172.0,
+      "end": 177.52,
+      "en": "When we come back, we’ll see who emerges as champion of the Wuhan Open.",
+      "zh": "回来后就将见证谁能成为武汉赛冠军",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u14",
+      "start": 198.08,
+      "end": 201.2,
+      "en": "She’ll get the honors because she earned them.",
+      "zh": "她会得到荣誉因为这是她赢来的",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            15
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u15",
+      "start": 201.9,
+      "end": 204.64,
+      "en": "She’ll receive praise of which she is most deserving.",
+      "zh": "她将收获当之无愧的赞美",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            16
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u16",
+      "start": 205.76,
+      "end": 209.92,
+      "en": "Maja Chwalinska’s first WTA title is a big one.",
+      "zh": "赫瓦林斯卡生涯首个WTA冠军就是一个大赛冠军",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            17
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u17",
+      "start": 210.84,
+      "end": 213.1,
+      "en": "She’s a WTA 1000 champion.",
+      "zh": "她成为了WTA1000冠军",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            18
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u18",
+      "start": 217.38,
+      "end": 221.2,
+      "en": "But what a tug of war it turned out to be in two hours and 43 minutes.",
+      "zh": "这场拉锯战打了2小时43分钟",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            19
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u19",
+      "start": 221.72,
+      "end": 225.18,
+      "en": "Poland’s number two player is now the one in Wuhan.",
+      "zh": "波兰的第2号球员如今成为武汉的第1名",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            20
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            17
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u20",
+      "start": 227.1,
+      "end": 228.58,
+      "en": "She ran the gamut.",
+      "zh": "她经历了种种考验",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            21
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u21",
+      "start": 228.96,
+      "end": 235.86,
+      "en": "And everything about the celebration that is about to—she is about to enjoy was well earned.",
+      "zh": "接下来她将享受的这一切庆祝都是凭实力赢来的",
+      "status": "verified_with_source_self_correction",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            22,
+            23
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            18,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u22",
+      "start": 237.88,
+      "end": 242.38,
+      "en": "An error-prone start comes with a final fantastic finish.",
+      "zh": "失误频出的开局最终迎来精彩收官",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            24
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u23",
+      "start": 242.38,
+      "end": 246.42,
+      "en": "And Maja Chwalinska is champion of the Wuhan Open.",
+      "zh": "赫瓦林斯卡成为武汉赛冠军",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            25,
+            26
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            20,
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u24",
+      "start": 249.54,
+      "end": 251.84,
+      "en": "Well, Sophie, we talked about it so much for both women,",
+      "zh": "索菲我们已经多次谈到这两位球员",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            27
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u25",
+      "start": 252.0,
+      "end": 253.64,
+      "en": "and they both deserve an immense amount of credit,",
+      "zh": "她们都值得极大的肯定",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            28
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            22,
+            23
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u26",
+      "start": 253.64,
+      "end": 259.82,
+      "en": "especially Sonay Kartal, for her to be able to even be in the final and be able playing at a high level after the back injury.",
+      "zh": "尤其是卡尔塔尔背部受伤之后还能进入决赛并打出高水平",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            29,
+            30
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            23,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u27",
+      "start": 260.36,
+      "end": 261.66,
+      "en": "You know, kudos to her.",
+      "zh": "确实应该向她致敬",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            31
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u28",
+      "start": 261.56,
+      "end": 266.9,
+      "en": "But for Maja Chwalinska, I mean, that opening set, she was just so ineffective.",
+      "zh": "但赫瓦林斯卡在首盘的表现确实很难奏效",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            31,
+            32
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            24,
+            25
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u29",
+      "start": 266.04,
+      "end": 268.36,
+      "en": "It seemed as if she was going to get run off the court.",
+      "zh": "当时看上去她似乎就要被彻底压垮",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            32
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            25,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u30",
+      "start": 268.36,
+      "end": 271.54,
+      "en": "And here she’ll stand today as champion in Wuhan.",
+      "zh": "但今天她最终以武汉冠军的身份站在这里",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            33
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            26,
+            27
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u31",
+      "start": 271.56,
+      "end": 274.68,
+      "en": "Yeah, I mean, the fact that she came back in this match, we mentioned resilience,",
+      "zh": "是的我们提过韧性她确实在这场比赛中走了回来",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            33,
+            34
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            28
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u32",
+      "start": 274.68,
+      "end": 278.28,
+      "en": "I think it was the key of getting back into that match.",
+      "zh": "我认为这就是她重回比赛的关键",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            35
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            28,
+            29
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u33",
+      "start": 278.28,
+      "end": 284.24,
+      "en": "And the fact that she used that drop-shot [lob?] combo again to her advantage",
+      "zh": "而且她再次利用放短与[高球待核]的组合制造优势",
+      "status": "uncertain",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            35,
+            36
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            29,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u34",
+      "start": 284.24,
+      "end": 286.6,
+      "en": "turned the tide in that second set.",
+      "zh": "扭转了第2盘的局势",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            37
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u35",
+      "start": 286.6,
+      "end": 288.42,
+      "en": "The forehand down the line on the run,",
+      "zh": "还有跑动中的正手直线",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            37
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u36",
+      "start": 288.42,
+      "end": 290.24,
+      "en": "we’ve seen it throughout the whole week,",
+      "zh": "我们在这一整周都见到过",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            37,
+            38
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            31
+          ]
+        }
+      ]
+    },
+    {
+      "id": "u37",
+      "start": 290.24,
+      "end": 295.0,
+      "en": "and then it came, you know, about in this match as well when she needed the most.",
+      "zh": "而在这场比赛最需要的时候她也打出了这一拍",
+      "status": "verified",
+      "asr_references": [
+        {
+          "model": "small.en",
+          "segments": [
+            38
+          ]
+        },
+        {
+          "model": "medium.en",
+          "segments": [
+            31
+          ]
+        }
+      ]
+    }
+  ],
+  "uncertain_spans": [
+    {
+      "start": 29.22,
+      "end": 32.38,
+      "reason": "small says All right well it, medium omits lead-in, turbo Hello it, canonical captions Hey well it. Early phonetic indefatigable is clear in shared into fatigable; opening interjection unresolved. Root elects whole speech window exclusion."
+    },
+    {
+      "start": 158.76,
+      "end": 160.58,
+      "reason": "Three ASR variants And Alaska / Well thats good / I will ask us; canonical captions Now. Likely phonetic Chwalinska, but do not declare the missing first word/name verified. Root elects whole speech window exclusion."
+    },
+    {
+      "start": 278.28,
+      "end": 284.24,
+      "reason": "Three ASR variants drop shot and not combo / drop shot the North combo / drop shot the love combo. Lob is plausible tennis context but not yet fully verified by speech evidence; do not assert exact English lob until resolved."
+    }
+  ],
+  "unconfirmed_short_calls": [
+    {
+      "start": 16.56,
+      "end": 17.2,
+      "caption_token": "go",
+      "reason": "Canonical auto-caption single token; neither full-source ASR nor finite turbo8–35 confirms any word at this time. Possible player/crowd vocalization, not established intelligible foreground English."
+    },
+    {
+      "start": 131.36,
+      "end": 134.8,
+      "caption_tokens": [
+        "Hey",
+        "hey"
+      ],
+      "reason": "Neither whole-source model identifies English here; finite turbo125–140 instead generates isolated low-confidence Thank you126.76–128.36. Source calls remain unconfirmed; no manual listening claim."
+    }
+  ],
+  "discarded_asr_artifacts": [
+    {
+      "start": 126.76,
+      "end": 128.36,
+      "model": "large-v3-turbo",
+      "text": "Thank you.",
+      "reason": "Single finite-model logprob-1.211, first word probability.0245, absent both whole-source models and official captions. Retain raw, do not insert this as verified speech."
+    },
+    {
+      "start": 80.06,
+      "end": 80.1,
+      "model": "small.en",
+      "text": "way",
+      "reason": "Zero-context duplicated way after halfway; word probability.079, absent medium/turbo/captions."
+    }
+  ],
+  "resolved_normalizations": [
+    "Canonical spellings Maja Chwalinska and Sonay Kartal replace phonetic ASR name variants only when shared clause content clearly identifies the player; unresolved158s lead-in is excluded.",
+    "WTA replaces small.en phonetic WJ; medium and canonical captions confirm WTA and the source is a WTA1000 final.",
+    "71.24s A three is... is supported by medium, finite turbo68–85 and official captions; small omits article A.",
+    "111s her bag of tricks is supported by medium and official captions; small our is a pronoun recognition error.",
+    "170s The Pole has done that is supported by finite turbo154–180 and official captions poll; whole-source models ball is a phonetic recognition error.",
+    "249s Well Sophie is supported by finite turbo248–296 and official captions; whole-source models So we/So weve collapse the speaker address.",
+    "274s resilience is supported by small.en, finite turbo248–296 and official captions; medium Rosalia is a recognition error.",
+    "The source speakers self-correction that is about to—she is about to enjoy is genuinely present in both whole-source models; retained in English, translated naturally without inventing extra meaning."
+  ],
+  "timing_limitations": [
+    "Whole-source utterance boundaries can overlap slightly because models split clauses differently; final selected packets and subtitle cues must use a nonoverlapping curated clause timing after root freezes actual windows.",
+    "Timestamp bounds are conservative ASR estimates, not manually measured acoustic edges.",
+    "No digital-silence claim follows from no ASR words: racket/crowd/player sounds remain source audio. No amplitude, RMS, peak, loudness, gain or source/final PCM comparison was performed.",
+    "This report covers only305.295964s YouTube short source SHA f0a8..., not the independent467.68s Brightcove source SHA b12a... . Long-source subtitles/timings require independent evidence."
+  ],
+  "recommended_commentary": [
+    {
+      "source_from": 198.08,
+      "source_to": 213.1,
+      "utterance_ids": [
+        "u14",
+        "u15",
+        "u16",
+        "u17"
+      ],
+      "why": "Four clear standalone championship statements suitable for winning-reaction cold open; root visual preferred195.8–213.4 covers sentence boundaries."
+    },
+    {
+      "source_from": 217.38,
+      "source_to": 225.18,
+      "utterance_ids": [
+        "u18",
+        "u19"
+      ],
+      "why": "Compelling2h43 tug-of-war and Poland2→Wuhan1 wordplay; confirm duration and ranking fact scope against official match evidence before publishing."
+    },
+    {
+      "source_from": 227.1,
+      "source_to": 246.42,
+      "utterance_ids": [
+        "u20",
+        "u21",
+        "u22",
+        "u23"
+      ],
+      "why": "Complete celebration commentary and championship declaration; preserve source self-correction and genuinely earned emotion."
+    },
+    {
+      "source_from": 71.24,
+      "source_to": 83.56,
+      "utterance_ids": [
+        "u02",
+        "u03",
+        "u04",
+        "u05"
+      ],
+      "why": "Third set point wins first set, then ironic wish to avoid three sets; full trio ASR supports article/name normalization."
+    }
+  ],
+  "production_notes": [
+    "User latest wording uses赫瓦林斯卡 throughout this film; no月亮姐 nickname in any new candidate subtitle.",
+    "No native selected-window packets or plan index are created before source/geometry/window freeze.",
+    "Brightcove metadata inspected separately:subtitles{} and automatic_captionsnull, no available text tracks. Root/visual evaluating whether its longer footage adds match points before any additional full ASR.",
+    "All original files stay retained. Remaining uncertain speech is not statuscomplete or pass, and the report is not a foreground_audio_gate attestation."
+  ],
+  "additional_source_reviews": [
+    {
+      "source_key": "extended",
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/extended-source-commentary-review.json",
+      "sha256": "2fbbad4e63beb0fcdc92fcb6d36152f28de348754132a359859f1bb3d9e852c1",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "reviewed_intervals": [
+        [
+          216,
+          226
+        ],
+        [
+          222,
+          266
+        ],
+        [
+          320,
+          338
+        ],
+        [
+          382,
+          404
+        ]
+      ],
+      "status": "finite_candidate_windows_reviewed"
+    }
+  ]
+}

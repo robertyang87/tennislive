@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-10-18T15:00:18.310956+00:00",
+  "goal": "官方补决胜盘2-2后连续4局及胜赛局3BP源片",
+  "outcome": "found_longer_official_brightcove_video_downloaded_pending_parent_content_audit",
+  "sources": [
+    {
+      "url": "https://api.wtatennis.com/content/wta/video/en/?page=0&pageSize=30&sort=publishDate:desc",
+      "result": "本场仅一条video4593997，官方元数据duration468；公开Brightcove可提流467.68秒720p MP4。",
+      "snapshot": "facts-cover/wta-videos.json"
+    },
+    {
+      "url": "https://x.com/WTA/status/2111810790034423894",
+      "result": "WTA官方赛报嵌入本场冠军X；web403，未取得或声画审查；不称已证明含3BP。"
+    },
+    {
+      "query": "site.instagram.com/reel/ Chwalinska Wuhan 2026 final",
+      "result": "无新可验证本场官方reel检索结果。"
+    },
+    {
+      "query": "site.wuhanopentennis.com Chwalinska Kartal final video2026",
+      "result": "本次索引检索未获额外可核官方视频；不能推断平台未发布。"
+    }
+  ],
+  "local_video": "/workspace/scratch/wuhan-final-extended.mp4",
+  "metadata": "extended-source.json"
+}

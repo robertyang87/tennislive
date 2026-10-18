@@ -1,0 +1,278 @@
+{
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "reviewed_at": "2026-10-18T15:59:21.733744+00:00",
+  "review_kind": "independent_read_only_editorial_final_review",
+  "status": "no_blocking_editorial_defect_found_in_reviewed_current_text",
+  "publication_approved": false,
+  "inputs": [
+    {
+      "kind": "spec",
+      "path": "specs/reels/chwalinska-kartal-wuhan-2026-f.json",
+      "sha256": "1b441738f94a70a5c13866838c145de344f086fd1134e4f6a73b72e12552899e",
+      "actually_read": true
+    },
+    {
+      "kind": "script",
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/script.md",
+      "sha256": "43189b524c2f7a5138a68a193fa80e66fa4dcb0e6925ded77523960bdcfe8679",
+      "actually_read": true
+    },
+    {
+      "kind": "xhs",
+      "path": "specs/reels/chwalinska-kartal-wuhan-2026-f.xhs.txt",
+      "sha256": "a9b617a20ddcccebd000d32927feee6063aa3871d34ce50843753c3e7ada9270",
+      "actually_read": true
+    },
+    {
+      "kind": "facts",
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/fact-packet.json",
+      "sha256": "38d90e4cfee00ecfe9e4c9b99e23baa02b1713a1edcda8068d926e8e9f81ad6f",
+      "actually_read": true
+    }
+  ],
+  "scope": {
+    "performed": [
+      "逐段阅读当前spec、script、XHS与已闭合fact-packet，核比分/转折/成就范围/称呼/观众制作措辞/段落长度及重复",
+      "对照脚本全部实际旁白与spec旁白，文本一致",
+      "仅记录当前文字和已存事实，不重新检索已闭合事实"
+    ],
+    "not_performed": [
+      "本轮没有重新视听源片或最终电影",
+      "未独立重测实际MP3长度、听审、字幕可读性或成片语速",
+      "未git switch/stage/commit，未修改spec/script/XHS"
+    ]
+  },
+  "timeline_checks": [
+    {
+      "item": "result_and_coordinate",
+      "finding": "赫瓦林斯卡2-6、6-4、6-2胜卡尔塔尔；2026年10月18日北京时间晚上、武汉WTA1000女单决赛与事实包一致，没有冒认精确开球时间。",
+      "evidence": [
+        "spec._match",
+        "segments.intro",
+        "XHS第2/3段",
+        "fact-packet._match"
+      ]
+    },
+    {
+      "item": "first_set",
+      "finding": "卡尔塔尔4-1领先的底线长回合后接2-5第三盘点，结果2-6在下一事实卡说明；首盘没有被省成只报结果。",
+      "evidence": [
+        "segments.first_set",
+        "segments.first_set_point",
+        "segments.second_set_context"
+      ]
+    },
+    {
+      "item": "second_set",
+      "finding": "0-2落后→第三局第5个BP回破→2-2→3-3第4个BP赫兑现4-3→被回破4-4→连两局6-4。不存在把第4BP写成卡尔塔尔救回的旧误判；4-4具体源改为长版265.12–296.28，与已核边界一致。",
+      "evidence": [
+        "segments.second_set_context",
+        "segments.second_fourth_bp",
+        "segments.second_four_all",
+        "segments.deciding_set_context",
+        "fact-packet.key_turns[0:2]"
+      ]
+    },
+    {
+      "item": "deciding_set",
+      "finding": "2-2破发到3-2，再保/再破5-2；第3个BP在赛点之前，最后完整第3冠军点与倒地/网前握手/团队庆祝按时间顺序兑现。正文没有把前两个BP或冠军点缺画面说成已完整展示。",
+      "evidence": [
+        "segments.deciding_set_context",
+        "segments.deciding_break",
+        "segments.last_game_context",
+        "segments.last_game_third_bp",
+        "segments.match_payoff",
+        "segments.team_celebration",
+        "fact-packet.key_turns[2:4]"
+      ]
+    }
+  ],
+  "achievement_checks": [
+    {
+      "item": "first_tour_singles_title_is_1000",
+      "finding": "实际outlook旁白在同一语义中明确“首个巡回赛单打冠军就是一千赛冠军”；Push与XHS也明确WTA巡回赛单打范围，不会误读为从未拿过WTA125/ITF冠军。",
+      "actual_tts_text": "二零零九年一千赛制引入后，首个巡回赛单打冠军就是一千赛冠军，在她之前，只有大坂直美、安德莱斯库和姆博科做到。现在，赫瓦林斯卡成了第四位。新一周，她还将首次进入世界前二十。这个冠军，会是更大突破的开始吗？",
+      "matches_fact_packet": true
+    },
+    {
+      "item": "fourth_since_2009",
+      "finding": "2009年1000赛制引入后第4位，前三人为大坂直美、安德莱斯库、姆博科；TTS列姓名和第4位，范围已写入同段。用户要求首个巡回赛单打冠军即1000进入文案和TTS，并未要求三人赛事逐一念入视频，故不把额外说明当硬要求。",
+      "matches_fact_packet": true
+    },
+    {
+      "item": "three_predecessor_events_in_publication_copy",
+      "finding": "XHS逐一写2018印第安维尔斯大坂直美、2019印第安维尔斯安德莱斯库、2025蒙特利尔姆博科，与root已核的正文资料口径一致。本轮不重新外查赛事。",
+      "evidence": "XHS倒数第3段；spec.editorial.human_context.facts已记录三场缩写口径。"
+    },
+    {
+      "item": "future_rank",
+      "finding": "仅说新一周首次进入世界前20，没有写未公布确切未来位次；与fact-packet.future_rankings一致。",
+      "matches_fact_packet": true
+    },
+    {
+      "item": "statistics",
+      "finding": "全场赫23制胜分/27非受迫失误，卡32/36与事实包一致；片尾没有只停在数据，另有首冠意义和积极展望问题。",
+      "matches_fact_packet": true
+    }
+  ],
+  "audience_copy_checks": {
+    "scan_scope": "仅观众可见cover/topic/hook/topbar/push、实际title/kicker/narration/quote、script及XHS；不把_注释内引用旧口径误报为对外文案",
+    "forbidden_or_gap_phrase_hits": {
+      "月亮姐": false,
+      "官方集锦没有收录": false,
+      "缺少完整画面": false,
+      "素材缺口": false,
+      "缺少画面": false,
+      "没有收录": false
+    },
+    "old_nickname_absent_from_audience_fields": true,
+    "technical_gap_explanations_absent_from_audience_fields": true,
+    "player_names": "统一赫瓦林斯卡、卡尔塔尔。内部_owner_words引用用户旧昵称禁用要求不属于对外输出。",
+    "result_direction_consistent": true,
+    "xhs_tag_count": 5,
+    "xhs_has_two_required_tags": true
+  },
+  "length_and_repetition_review": {
+    "segments": [
+      {
+        "edit_id": "cold_open",
+        "kind": "source",
+        "duration_seconds": 5.56,
+        "narration_characters_without_punctuation": 0,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "intro",
+        "kind": "title_card",
+        "duration_seconds": 16.56,
+        "narration_characters_without_punctuation": 71,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "first_set",
+        "kind": "source",
+        "duration_seconds": 28.76,
+        "narration_characters_without_punctuation": 61,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "first_set_point",
+        "kind": "source",
+        "duration_seconds": 23.92,
+        "narration_characters_without_punctuation": 0,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "second_set_context",
+        "kind": "title_card",
+        "duration_seconds": 17.04,
+        "narration_characters_without_punctuation": 66,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "second_fourth_bp",
+        "kind": "source",
+        "duration_seconds": 43.04,
+        "narration_characters_without_punctuation": 0,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "second_four_all",
+        "kind": "source",
+        "duration_seconds": 31.16,
+        "narration_characters_without_punctuation": 59,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "second_set_point",
+        "kind": "source",
+        "duration_seconds": 12.08,
+        "narration_characters_without_punctuation": 0,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "deciding_set_context",
+        "kind": "title_card",
+        "duration_seconds": 12.28,
+        "narration_characters_without_punctuation": 50,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "deciding_break",
+        "kind": "source",
+        "duration_seconds": 6.32,
+        "narration_characters_without_punctuation": 0,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "last_game_context",
+        "kind": "title_card",
+        "duration_seconds": 14.0,
+        "narration_characters_without_punctuation": 53,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "last_game_third_bp",
+        "kind": "source",
+        "duration_seconds": 12.36,
+        "narration_characters_without_punctuation": 0,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "match_payoff",
+        "kind": "source",
+        "duration_seconds": 47.16,
+        "narration_characters_without_punctuation": 0,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "team_celebration",
+        "kind": "source",
+        "duration_seconds": 19.6,
+        "narration_characters_without_punctuation": 0,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "full_stats",
+        "kind": "stats",
+        "duration_seconds": 14.36,
+        "narration_characters_without_punctuation": 57,
+        "narration_matches_script": true
+      },
+      {
+        "edit_id": "outlook",
+        "kind": "title_card",
+        "duration_seconds": 22.2,
+        "narration_characters_without_punctuation": 90,
+        "narration_matches_script": true
+      }
+    ],
+    "planned_segments_total_seconds_excluding_cover_outro": 326.4,
+    "title_card_durations_seconds": [
+      16.56,
+      17.04,
+      12.28,
+      14.0,
+      22.2
+    ],
+    "conclusion": "完整43.04秒次盘破发长回合和31.16秒4-4长回合承载真实攻防/反复，不为压时长拆掉；卡片12.28–22.2秒配各段连续旁白，未见靠纯静卡或同一回合反复填时。较长outlook有首冠范围、前例、第4位、Top20及问题，信息量支持该时长。实际语速/卡片余量仍以冻结MP3和成片为准，不能只凭文字给音频pass。",
+    "intentional_repetition": "5.56秒冷开场与完整终局重复属于首尾兑现；首盘结果与转折卡复述承担坐标补充；冠军意义先由真实解说点出、最终TTS再明确范围与历史位置，未见无推进重复。"
+  },
+  "quality_authorization_context": {
+    "accepted_720p_verbatim": "可以用 720如果可以完整展示内容的话",
+    "spec_has_per_url_exception": true,
+    "editorial_effect": "用720官方长版保全关键过程属于本期明确授权；本报告不以清晰度偏好否决已获授权取舍。"
+  },
+  "existing_visual_check_context": {
+    "second_set_point_end_158_64": "root已说明此前完成0.2秒细墙核验末拍死球；本轮未再看，按root证据归属，不将先前保守160停打观察值误作物理落地最早时刻。",
+    "final_movie_review": "仍由实际渲染后视觉/原声/字幕门检查，本报告不冒充最终电影通过。"
+  },
+  "blocking_findings": [],
+  "nonblocking_notes": [],
+  "clarification_log": [
+    {
+      "topic": "三人具体赛事是否必须进入TTS",
+      "resolution": "root澄清用户没有这项要求；当前TTS姓名+第4位与XHS三人赛事均合规，收回将其当缺项的建议。"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "model": "small",
+  "source_key": "extended",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4",
+  "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+  "clip": [
+    216,
+    226
+  ],
+  "timecode_basis": "absolute source seconds, clip offset added to every word and segment",
+  "duration": 10.0,
+  "created_at": "2026-10-18T15:06:06.525202+00:00",
+  "decoded_pcm_sha256": "4b782eab852a857520741b61d31e197f31c0be84d3181f95d9c18015ee154717",
+  "decoder": "ffmpeg16000Hz mono float32; no amplitude, loudness or noise filter",
+  "options": {
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true,
+    "vad_filter": false,
+    "condition_on_previous_text": false
+  },
+  "segments": [
+    {
+      "start": 220.88,
+      "end": 222.0,
+      "text": "That's her bread and butter.",
+      "avg_logprob": -0.5248722016811371,
+      "no_speech_prob": 0.06561775505542755,
+      "words": [
+        {
+          "w": " That's",
+          "s": 220.88,
+          "e": 221.3,
+          "p": 0.7605397999286652
+        },
+        {
+          "w": " her",
+          "s": 221.3,
+          "e": 221.42,
+          "p": 0.7052186131477356
+        },
+        {
+          "w": " bread",
+          "s": 221.42,
+          "e": 221.6,
+          "p": 0.5421217083930969
+        },
+        {
+          "w": " and",
+          "s": 221.6,
+          "e": 221.76,
+          "p": 0.9735486507415771
+        },
+        {
+          "w": " butter.",
+          "s": 221.76,
+          "e": 222.0,
+          "p": 0.9983941912651062
+        }
+      ]
+    }
+  ]
+}

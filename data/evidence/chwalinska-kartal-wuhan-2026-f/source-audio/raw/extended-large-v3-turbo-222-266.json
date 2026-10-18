@@ -1,0 +1,120 @@
+{
+  "model": "large-v3-turbo",
+  "source_key": "extended",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4",
+  "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+  "clip": [
+    222,
+    266
+  ],
+  "timecode_basis": "absolute source seconds, clip offset added to every word and segment",
+  "duration": 44.0,
+  "created_at": "2026-10-18T15:04:41.464132+00:00",
+  "decoded_pcm_sha256": "199897852c1e15ec4f0d287cdfb436f5fbe4f64292c841aea2afe90ffaa9f250",
+  "decoder": "ffmpeg16000Hz mono float32; no amplitude, loudness or noise filter",
+  "options": {
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true,
+    "vad_filter": false,
+    "condition_on_previous_text": false
+  },
+  "segments": [
+    {
+      "start": 222.0,
+      "end": 224.38,
+      "text": "Here we go.",
+      "avg_logprob": -0.6312615701130458,
+      "no_speech_prob": 5.893426805597679e-12,
+      "words": [
+        {
+          "w": " Here",
+          "s": 222.0,
+          "e": 223.62,
+          "p": 0.014742664992809296
+        },
+        {
+          "w": " we",
+          "s": 223.62,
+          "e": 223.64,
+          "p": 0.8653140664100647
+        },
+        {
+          "w": " go.",
+          "s": 223.64,
+          "e": 224.38,
+          "p": 0.9455079436302185
+        }
+      ]
+    },
+    {
+      "start": 260.14,
+      "end": 264.52,
+      "text": "Walenska finally able to exact what she was looking for.",
+      "avg_logprob": -0.4773017205297947,
+      "no_speech_prob": 2.175164779197325e-12,
+      "words": [
+        {
+          "w": " Walenska",
+          "s": 260.14,
+          "e": 260.9,
+          "p": 0.7715994517008463
+        },
+        {
+          "w": " finally",
+          "s": 260.9,
+          "e": 261.44,
+          "p": 0.9692413806915283
+        },
+        {
+          "w": " able",
+          "s": 261.44,
+          "e": 262.12,
+          "p": 0.9911069273948669
+        },
+        {
+          "w": " to",
+          "s": 262.12,
+          "e": 262.28,
+          "p": 0.9922681450843811
+        },
+        {
+          "w": " exact",
+          "s": 262.28,
+          "e": 262.66,
+          "p": 0.9875565767288208
+        },
+        {
+          "w": " what",
+          "s": 262.66,
+          "e": 263.54,
+          "p": 0.9434599280357361
+        },
+        {
+          "w": " she",
+          "s": 263.54,
+          "e": 263.72,
+          "p": 0.9970576763153076
+        },
+        {
+          "w": " was",
+          "s": 263.72,
+          "e": 263.88,
+          "p": 0.9996707439422607
+        },
+        {
+          "w": " looking",
+          "s": 263.88,
+          "e": 264.14,
+          "p": 0.9981335997581482
+        },
+        {
+          "w": " for.",
+          "s": 264.14,
+          "e": 264.52,
+          "p": 0.9986566305160522
+        }
+      ]
+    }
+  ]
+}

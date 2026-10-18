@@ -1,0 +1,996 @@
+{
+  "schema": "tennislive.actual-dual-asr-content-review.v1",
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "created_at": "2026-10-18T15:23:53.929553+00:00",
+  "bundle_sha256": "2414de29cc3083bf79d08dc11e33ef22100671bd96605d8dd0fddc4ab34bf9d9",
+  "input_wav_sha256": "c6eb11d0374aca352aec9bb5cfb2e3803bcc8597f7b31cb7e24e4dc3716ff919",
+  "utterances": [
+    {
+      "edit_id": "intro",
+      "expected_display": "从首盘失利，到躺在地上庆祝，赫瓦林斯卡把这场决赛翻了回来。北京时间二零二六年十月十八日晚上，武汉一千赛女单决赛。她与卡尔塔尔，都在争夺生涯第一座一千赛冠军。",
+      "expected_actual_speakable": "从首盘失利，到躺在地上庆祝，赫瓦林斯卡把这场决赛翻了回来。北京时间二零二六年十月十八日晚上，武汉一千赛女单决赛。她与卡尔塔尔，都在争夺生涯第一座一千赛冠军。",
+      "actual_native_tokens": [
+        "从",
+        "首盘",
+        "失利",
+        "到",
+        "躺",
+        "在",
+        "地上",
+        "庆祝",
+        "赫瓦林斯卡",
+        "把",
+        "这",
+        "场",
+        "决赛",
+        "翻",
+        "了",
+        "回来",
+        "北京时间",
+        "二零二六年",
+        "十月",
+        "十八日",
+        "晚上",
+        "武汉",
+        "一千",
+        "赛",
+        "女单",
+        "决赛",
+        "她",
+        "与",
+        "卡尔塔尔",
+        "都",
+        "在",
+        "争夺",
+        "生涯",
+        "第一",
+        "座",
+        "一千",
+        "赛",
+        "冠军"
+      ],
+      "all_name_occurrences": [
+        {
+          "name": "赫瓦林斯卡",
+          "at": 14,
+          "declared_readings": [
+            "he4",
+            "wa3",
+            "lin2",
+            "si1",
+            "ka3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "卡尔塔尔",
+          "at": 58,
+          "declared_readings": [
+            "ka3",
+            "er3",
+            "ta3",
+            "er3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "武汉",
+          "at": 46,
+          "declared_readings": [
+            "wu3",
+            "han4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "all_number_occurrences": [
+        {
+          "text": "二零二六",
+          "at": 33,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "十",
+          "at": 38,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "十八",
+          "at": 40,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一千",
+          "at": 48,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 70,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一千",
+          "at": 72,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "all_ascii_occurrences": [],
+      "asr_context": {
+        "small": "从手盘失利到躺在地上庆祝赫瓦林斯卡把这场决赛翻了回来北京时间二零二六年十月十八日晚上武汉一千赛女单决赛她与卡尔塔尔都在争夺生涯第一座一千赛冠军",
+        "large-v3-turbo": "从手盘失利到躺在地上庆祝,赫瓦林斯卡把这场决赛翻了回来。北京时间2026年10月18日晚上,武汉一千赛女单决赛,他与卡尔塔尔都在争夺生涯第一座一千赛冠军。"
+      },
+      "content_interpretation": "Actual full ASR outputs inspected for recoverable speech content. Segment-overlap context may include neighboring sentences. ASR orthography/normalization never proves the actual syllable tone."
+    },
+    {
+      "edit_id": "first_set",
+      "expected_display": "第一盘，卡尔塔尔把比分拉到四比一。她在底线不断把球分向两侧，让赫瓦林斯卡追着回击。长回合里，两个人反复争夺落点，谁都没能轻易把对方打穿。",
+      "expected_actual_speakable": "第一盘，卡尔塔尔把比分拉到四比一。她在底线不断把球分向两侧，让赫瓦林斯卡追着回击。常回合里，两个人反复争夺落点，谁都没能轻易把对方打穿。",
+      "actual_native_tokens": [
+        "第一盘",
+        "卡尔塔尔",
+        "把",
+        "比分",
+        "拉",
+        "到",
+        "四比一",
+        "她",
+        "在",
+        "底线",
+        "不断",
+        "把",
+        "球",
+        "分",
+        "向",
+        "两侧",
+        "让",
+        "赫瓦林斯卡",
+        "追",
+        "着",
+        "回击",
+        "常",
+        "回合",
+        "里",
+        "两个",
+        "人",
+        "反复",
+        "争夺",
+        "落点",
+        "谁",
+        "都",
+        "没",
+        "能",
+        "轻易",
+        "把",
+        "对方",
+        "打穿"
+      ],
+      "all_name_occurrences": [
+        {
+          "name": "赫瓦林斯卡",
+          "at": 31,
+          "declared_readings": [
+            "he4",
+            "wa3",
+            "lin2",
+            "si1",
+            "ka3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "卡尔塔尔",
+          "at": 4,
+          "declared_readings": [
+            "ka3",
+            "er3",
+            "ta3",
+            "er3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "all_number_occurrences": [
+        {
+          "text": "一",
+          "at": 1,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "四",
+          "at": 13,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 15,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "两",
+          "at": 27,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "两",
+          "at": 46,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "all_ascii_occurrences": [],
+      "asr_context": {
+        "small": "第一盘,卡尔塔尔把比分拉到四比一她在底线不断把球分向两侧让赫瓦林斯卡追着回击常回合理,两个人反复争夺落点第二盘,谁都没能轻易把对方打穿。",
+        "large-v3-turbo": "第一盘,卡尔塔尔把比分拉到4比1,他在底线不断把球分向两侧,让赫瓦林斯卡追着回击。长回合里,两个人反复争夺落点,谁都没能轻易把对方打穿。"
+      },
+      "content_interpretation": "Actual full ASR outputs inspected for recoverable speech content. Segment-overlap context may include neighboring sentences. ASR orthography/normalization never proves the actual syllable tone."
+    },
+    {
+      "edit_id": "second_set_context",
+      "expected_display": "六比二，卡尔塔尔先下一盘。第二盘，赫瓦林斯卡又以零比二落后。她争到第五个破发点，才追回一局，再保发追成二平。双方又打到三平，比分咬住了，胜负还要继续争。",
+      "expected_actual_speakable": "六比二，卡尔塔尔先下一盘。第二盘，赫瓦林斯卡又以零比二落后。她争到第五个破发点，才追回一局，再保发追成二平。双方又打到三平，比分咬住了，胜负还要继续争。",
+      "actual_native_tokens": [
+        "六比二",
+        "卡尔塔尔",
+        "先",
+        "下",
+        "一",
+        "盘",
+        "第二盘",
+        "赫瓦林斯卡",
+        "又",
+        "以",
+        "零比二",
+        "落后",
+        "她",
+        "争",
+        "到",
+        "第五个",
+        "破发",
+        "点",
+        "才",
+        "追回",
+        "一",
+        "局",
+        "再",
+        "保发",
+        "追",
+        "成",
+        "二",
+        "平",
+        "双方",
+        "又",
+        "打",
+        "到",
+        "三",
+        "平",
+        "比分",
+        "咬住",
+        "了",
+        "胜负",
+        "还要",
+        "继续",
+        "争"
+      ],
+      "all_name_occurrences": [
+        {
+          "name": "赫瓦林斯卡",
+          "at": 17,
+          "declared_readings": [
+            "he4",
+            "wa3",
+            "lin2",
+            "si1",
+            "ka3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "卡尔塔尔",
+          "at": 4,
+          "declared_readings": [
+            "ka3",
+            "er3",
+            "ta3",
+            "er3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "all_number_occurrences": [
+        {
+          "text": "六",
+          "at": 0,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二",
+          "at": 2,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 10,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二",
+          "at": 14,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "零",
+          "at": 24,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二",
+          "at": 26,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "五",
+          "at": 34,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 43,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二",
+          "at": 51,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "三",
+          "at": 59,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "all_ascii_occurrences": [],
+      "asr_context": {
+        "small": "六比二,卡尔塔尔先下一盘。第二盘,赫瓦林斯卡又以零比二落后。他争到第五个破发点,才追回一局,再爆发追成两瓶。双方又打到三瓶,比分咬住了,胜负还要继续争。",
+        "large-v3-turbo": "6比2,卡尔塔尔先下一盘,第二盘,赫瓦林斯卡又以0比2落后,他争到第五个破发点,才追回一局,再爆发追成两平,双方又打到三平,底分咬住了,胜负还要继续争。"
+      },
+      "content_interpretation": "Actual full ASR outputs inspected for recoverable speech content. Segment-overlap context may include neighboring sentences. ASR orthography/normalization never proves the actual syllable tone."
+    },
+    {
+      "edit_id": "second_four_all",
+      "expected_display": "刚破发到四比三，赫瓦林斯卡就被追回来，比分四平。卡尔塔尔把球打向两侧，她一次次横向追赶，把被拉开的球救回。领先被追回，就从下一拍再争。",
+      "expected_actual_speakable": "刚破发到四比三，赫瓦林斯卡就被追回来，比分四平。卡尔塔尔把球打向两侧，她一次次横向追赶，把被拉开的球救回。领先被追回，就从下一拍再争。",
+      "actual_native_tokens": [
+        "刚",
+        "破发",
+        "到",
+        "四比三",
+        "赫瓦林斯卡",
+        "就",
+        "被",
+        "追",
+        "回来",
+        "比分",
+        "四平",
+        "卡尔塔尔",
+        "把",
+        "球",
+        "打",
+        "向",
+        "两侧",
+        "她",
+        "一次次",
+        "横向",
+        "追赶",
+        "把",
+        "被",
+        "拉开",
+        "的",
+        "球",
+        "救",
+        "回",
+        "领先",
+        "被",
+        "追回",
+        "就",
+        "从",
+        "下",
+        "一",
+        "拍",
+        "再",
+        "争"
+      ],
+      "all_name_occurrences": [
+        {
+          "name": "赫瓦林斯卡",
+          "at": 8,
+          "declared_readings": [
+            "he4",
+            "wa3",
+            "lin2",
+            "si1",
+            "ka3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "卡尔塔尔",
+          "at": 24,
+          "declared_readings": [
+            "ka3",
+            "er3",
+            "ta3",
+            "er3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "all_number_occurrences": [
+        {
+          "text": "四",
+          "at": 4,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "三",
+          "at": 6,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "四",
+          "at": 21,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "两",
+          "at": 32,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 36,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 62,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "all_ascii_occurrences": [],
+      "asr_context": {
+        "small": "刚破发到四比三,赫瓦林斯卡就被追回来,比分四瓶。卡尔塔尔把球打向两侧,他一次次横向追赶,把被拉开的球就回领先被追回就从下一拍再争",
+        "large-v3-turbo": "刚破发到4比3,赫瓦林斯卡就被追回来,比分4平,卡尔塔尔把球打向两侧,他一次次横向追赶,把被拉开的球救回,领先被追回就从下一排再争。"
+      },
+      "content_interpretation": "Actual full ASR outputs inspected for recoverable speech content. Segment-overlap context may include neighboring sentences. ASR orthography/normalization never proves the actual syllable tone."
+    },
+    {
+      "edit_id": "deciding_set_context",
+      "expected_display": "四平之后连拿两局，赫瓦林斯卡把比赛拉回同一起点。决胜盘又来到二平，她再次拿到破发机会，继续用接发球给对手施压。",
+      "expected_actual_speakable": "四平之后连拿两局，赫瓦林斯卡把比赛拉回同一起点。决胜盘又来到二平，她再次拿到破发机会，继续用接发球给对手施压。",
+      "actual_native_tokens": [
+        "四平",
+        "之后",
+        "连",
+        "拿",
+        "两局",
+        "赫瓦林斯卡",
+        "把",
+        "比赛",
+        "拉",
+        "回",
+        "同一",
+        "起点",
+        "决胜",
+        "盘",
+        "又",
+        "来到",
+        "二",
+        "平",
+        "她",
+        "再次",
+        "拿",
+        "到",
+        "破发",
+        "机会",
+        "继续",
+        "用",
+        "接",
+        "发球",
+        "给",
+        "对手",
+        "施压"
+      ],
+      "all_name_occurrences": [
+        {
+          "name": "赫瓦林斯卡",
+          "at": 9,
+          "declared_readings": [
+            "he4",
+            "wa3",
+            "lin2",
+            "si1",
+            "ka3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "all_number_occurrences": [
+        {
+          "text": "四",
+          "at": 0,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "两",
+          "at": 6,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 20,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二",
+          "at": 30,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "all_ascii_occurrences": [],
+      "asr_context": {
+        "small": "四兵之后连拿两局赫瓦林斯卡把比赛拉回同一起点决胜盘又来到两瓶他再次拿到破发机会继续用接发球给对手施压",
+        "large-v3-turbo": "四兵之后连拿两局赫瓦林斯卡把比赛拉回同一起点决胜盘又来到两平他再次拿到破发机会继续用接发球给对手施压"
+      },
+      "content_interpretation": "Actual full ASR outputs inspected for recoverable speech content. Segment-overlap context may include neighboring sentences. ASR orthography/normalization never proves the actual syllable tone."
+    },
+    {
+      "edit_id": "last_game_context",
+      "expected_display": "三比二之后，赫瓦林斯卡又保发、再破发，五比二。到了她的发球胜赛局，卡尔塔尔接连拿到破发点。第三次机会，赫瓦林斯卡仍要顶住。",
+      "expected_actual_speakable": "三比二之后，赫瓦林斯卡又保发、再破发，五比二。到了她的发球胜赛局，卡尔塔尔接连拿到破发点。第三次机会，赫瓦林斯卡仍要顶住。",
+      "actual_native_tokens": [
+        "三比二",
+        "之后",
+        "赫瓦林斯卡",
+        "又",
+        "保发",
+        "再",
+        "破发",
+        "五比二",
+        "到",
+        "了",
+        "她",
+        "的",
+        "发球",
+        "胜赛",
+        "局",
+        "卡尔塔尔",
+        "接连",
+        "拿到",
+        "破发点",
+        "第三",
+        "次",
+        "机会",
+        "赫瓦林斯卡",
+        "仍",
+        "要",
+        "顶住"
+      ],
+      "all_name_occurrences": [
+        {
+          "name": "赫瓦林斯卡",
+          "at": 6,
+          "declared_readings": [
+            "he4",
+            "wa3",
+            "lin2",
+            "si1",
+            "ka3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "赫瓦林斯卡",
+          "at": 51,
+          "declared_readings": [
+            "he4",
+            "wa3",
+            "lin2",
+            "si1",
+            "ka3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "卡尔塔尔",
+          "at": 33,
+          "declared_readings": [
+            "ka3",
+            "er3",
+            "ta3",
+            "er3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "all_number_occurrences": [
+        {
+          "text": "三",
+          "at": 0,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二",
+          "at": 2,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "五",
+          "at": 19,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二",
+          "at": 21,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "三",
+          "at": 46,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "all_ascii_occurrences": [],
+      "asr_context": {
+        "small": "三边之后赫瓦林斯卡又爆发再破发5比2到了他的发球胜赛局卡尔塔尔接连拿到破发点第三次机会赫瓦林斯卡仍要顶住。",
+        "large-v3-turbo": "3比2之后赫瓦林斯卡又爆发再破发5比2到了他的发球胜赛局卡尔塔尔接连拿到破发点第三次机会赫瓦林斯卡仍要顶住"
+      },
+      "content_interpretation": "Actual full ASR outputs inspected for recoverable speech content. Segment-overlap context may include neighboring sentences. ASR orthography/normalization never proves the actual syllable tone."
+    },
+    {
+      "edit_id": "full_stats",
+      "expected_display": "赫瓦林斯卡二十三个制胜分，二十七次非受迫失误。卡尔塔尔三十二个制胜分，三十六次非受迫失误。决胜盘最后四局，全被赫瓦林斯卡拿下。",
+      "expected_actual_speakable": "赫瓦林斯卡二十三个制胜分，二十七次非受迫失误。卡尔塔尔三十二个制胜分，三十六次非受迫失误。决胜盘最后四局，全被赫瓦林斯卡拿下。",
+      "actual_native_tokens": [
+        "赫瓦林斯卡",
+        "二十三个",
+        "制胜",
+        "分",
+        "二十七次",
+        "非",
+        "受迫",
+        "失误",
+        "卡尔塔尔",
+        "三十二个",
+        "制胜",
+        "分",
+        "三十六次",
+        "非",
+        "受迫",
+        "失误",
+        "决胜",
+        "盘",
+        "最后",
+        "四局",
+        "全",
+        "被",
+        "赫瓦林斯卡",
+        "拿下"
+      ],
+      "all_name_occurrences": [
+        {
+          "name": "赫瓦林斯卡",
+          "at": 0,
+          "declared_readings": [
+            "he4",
+            "wa3",
+            "lin2",
+            "si1",
+            "ka3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "赫瓦林斯卡",
+          "at": 55,
+          "declared_readings": [
+            "he4",
+            "wa3",
+            "lin2",
+            "si1",
+            "ka3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "卡尔塔尔",
+          "at": 23,
+          "declared_readings": [
+            "ka3",
+            "er3",
+            "ta3",
+            "er3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "all_number_occurrences": [
+        {
+          "text": "二十三",
+          "at": 5,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二十七",
+          "at": 13,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "三十二",
+          "at": 27,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "三十六",
+          "at": 35,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "四",
+          "at": 50,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "all_ascii_occurrences": [],
+      "asr_context": {
+        "small": "赫瓦林斯卡23个智盛分,27次非受迫失误。卡尔塔尔32个智盛分,36次非受迫失误。决胜盘最后4局,全被赫瓦林斯卡拿下。",
+        "large-v3-turbo": "赫瓦林斯卡23个制胜分27次非受破失误卡尔塔尔32个制胜分36次非受魄失误决胜盘最后四局全被赫瓦林斯卡拿下"
+      },
+      "content_interpretation": "Actual full ASR outputs inspected for recoverable speech content. Segment-overlap context may include neighboring sentences. ASR orthography/normalization never proves the actual syllable tone."
+    },
+    {
+      "edit_id": "outlook",
+      "expected_display": "二零零九年一千赛制引入后，首个巡回赛单打冠军就是一千赛冠军，在她之前，只有大坂直美、安德莱斯库和姆博科做到。现在，赫瓦林斯卡成了第四位。新一周，她还将首次进入世界前二十。这个冠军，会是更大突破的开始吗？",
+      "expected_actual_speakable": "二零零九年一千赛制引入后，首个巡回赛单打冠军就是一千赛冠军，在她之前，只有大坂直美、安德莱斯库和姆博科做到。现在，赫瓦林斯卡成了第四位。新一周，她还将首次进入世界前二十。这个冠军，会是更大突破的开始吗？",
+      "actual_native_tokens": [
+        "二零零九年",
+        "一千",
+        "赛制",
+        "引入",
+        "后",
+        "首个",
+        "巡回",
+        "赛",
+        "单打",
+        "冠军",
+        "就",
+        "是",
+        "一千",
+        "赛",
+        "冠军",
+        "在",
+        "她",
+        "之前",
+        "只有",
+        "大坂直美",
+        "安德莱斯库",
+        "和",
+        "姆博科",
+        "做到",
+        "现在",
+        "赫瓦林斯卡",
+        "成",
+        "了",
+        "第四位",
+        "新",
+        "一周",
+        "她",
+        "还",
+        "将",
+        "首次",
+        "进入",
+        "世界",
+        "前",
+        "二十",
+        "这个",
+        "冠军",
+        "会",
+        "是",
+        "更",
+        "大",
+        "突破",
+        "的",
+        "开始",
+        "吗"
+      ],
+      "all_name_occurrences": [
+        {
+          "name": "赫瓦林斯卡",
+          "at": 57,
+          "declared_readings": [
+            "he4",
+            "wa3",
+            "lin2",
+            "si1",
+            "ka3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "大坂直美",
+          "at": 37,
+          "declared_readings": [
+            "da4",
+            "ban3",
+            "zhi2",
+            "mei3"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "安德莱斯库",
+          "at": 42,
+          "declared_readings": [
+            "an1",
+            "de2",
+            "lai2",
+            "si1",
+            "ku4"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        },
+        {
+          "name": "姆博科",
+          "at": 48,
+          "declared_readings": [
+            "mu3",
+            "bo2",
+            "ke1"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "all_number_occurrences": [
+        {
+          "text": "二零零九",
+          "at": 0,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一千",
+          "at": 5,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一千",
+          "at": 24,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "四",
+          "at": 65,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "一",
+          "at": 69,
+          "status": "pending_actual_content_ASR_not_tone"
+        },
+        {
+          "text": "二十",
+          "at": 82,
+          "status": "pending_actual_content_ASR_not_tone"
+        }
+      ],
+      "all_ascii_occurrences": [],
+      "asr_context": {
+        "small": "2009年1000赛制引入后,首个巡回赛单打冠军,就是1000赛冠军,在他之前,只有大阪直美,安德莱斯库和姆伯科做到。現在,荷瓦林斯卡成了第四位。新一周,他還將首次進入世界前二十。這個冠軍會是更大突破的開始嗎?",
+        "large-v3-turbo": "2009年一千赛制引入后首个巡回赛单打冠军就是一千赛冠军在他之前只有大阪直美安德莱斯库和姆伯科做到现在赫瓦林斯卡成了第四位新一周他还将首次进入世界前二十这个冠军会是更大突破的开始吗"
+      },
+      "content_interpretation": "Actual full ASR outputs inspected for recoverable speech content. Segment-overlap context may include neighboring sentences. ASR orthography/normalization never proves the actual syllable tone."
+    },
+    {
+      "edit_id": "outro",
+      "expected_display": "关注网球时差，时差归我，好球归你。",
+      "expected_actual_speakable": "关注网球时插，时插归我，好球归你。",
+      "actual_native_tokens": [
+        "关注",
+        "网球",
+        "时",
+        "插",
+        "时",
+        "插",
+        "归",
+        "我",
+        "好",
+        "球",
+        "归",
+        "你"
+      ],
+      "all_name_occurrences": [
+        {
+          "name": "网球时插",
+          "at": 2,
+          "declared_readings": [
+            "wang3",
+            "qiu2",
+            "shi2",
+            "cha1"
+          ],
+          "status": "pending_actual_content_and_segmentation_ASR_not_tone"
+        }
+      ],
+      "all_number_occurrences": [],
+      "all_ascii_occurrences": [],
+      "asr_context": {
+        "small": "關注網球時差,時差歸我,好球歸你。",
+        "large-v3-turbo": "关注网球时差,时差归我,好球归你"
+      },
+      "content_interpretation": "Actual full ASR outputs inspected for recoverable speech content. Segment-overlap context may include neighboring sentences. ASR orthography/normalization never proves the actual syllable tone."
+    }
+  ],
+  "findings": [
+    {
+      "scope": "intro_coordinates",
+      "status": "content_supported_by_both_asr",
+      "detail": "Both actual models recover北京时间2026年10月18日晚上、武汉一千赛女单决赛 and the two finalists. Chinese digits vs Arabic digits normalize differently. 地上native token is intact; no ASR omission of the celebration context."
+    },
+    {
+      "scope": "first_set_correction",
+      "status": "actual_context_supported",
+      "detail": "Displayed长回合 is actual speakable常回合, native常｜回合; small writes常回合理 and large-v3-turbo长回合里. A fresh actual acoustic contrast is target48, not inherited from an older sentence."
+    },
+    {
+      "scope": "set_scores_and_break_points",
+      "status": "finite_content_inspection_complete",
+      "detail": "Across actual transcripts: 4比1、6比2、0比2、第五个破发点、二平/两平、三平、4比3、4平、3比2、5比2、第三次机会. small has local spellings三边/两瓶/三瓶/四兵; large-v3-turbo restores most score values. Both spellings and raw word times are retained; no tone pass is inferred."
+    },
+    {
+      "scope": "保发",
+      "status": "actual_dual_asr_signal_requires_acoustic_or_owner_review",
+      "detail": "Both models write爆发 at second_set_context再保发 and last_game_context又保发. Native tokens are actual保发 in both places; no fake token爆发. This is a bounded bao3/bao4 signal only, addressed by one fresh actual full-sentence calibrated comparison per occurrence (targets49,50). It is not a confirmed misread from ASR."
+    },
+    {
+      "scope": "last_game_context",
+      "status": "content_supported_by_both_asr",
+      "detail": "Both models recover到了她/他的发球胜赛局、卡尔塔尔接连拿到破发点、第三次机会. Native发球｜胜赛｜局 is a split of the full term, not evidence that a different player served."
+    },
+    {
+      "scope": "full_stats",
+      "status": "numbers_supported_by_both_asr",
+      "detail": "Both actual models recover赫23制胜分/27非受迫失误、卡32制胜分/36非受迫失误、决胜盘最后4局全被赫拿下. 制胜/智盛、受迫/受破/受魄 are raw ASR spellings, not acoustic tone verdicts."
+    },
+    {
+      "scope": "outlook_names_and_scope",
+      "status": "content_supported_by_both_asr_tones_not_proven",
+      "detail": "Both recover2009年一千赛制引入后、首个巡回赛单打冠军就是一千赛冠军、前三人大坂直美/安德莱斯库/姆博科、赫第四位、新一周首次世界前二十 and the final question. Both use大阪直美 and姆伯科 spellings; native tokens are intact大坂直美/安德莱斯库/姆博科. This is name/content evidence, not proof of every name syllable tone."
+    },
+    {
+      "scope": "brand",
+      "status": "owner_confirmation_reused_for_exact_actual_bytes",
+      "detail": "The actual complete brand request, MP3 and raw marks match the earlier owner-confirmed complete utterance. See job.owner_confirmation_reuse; historical machine unknowns remain untouched. This is owner-reported hearing, never assistant hearing."
+    },
+    {
+      "scope": "nickname",
+      "status": "not_present_in_actual_requests",
+      "detail": "No月亮姐 in any actual request; 赫瓦林斯卡 is the displayed and spoken name."
+    }
+  ],
+  "owner_confirmation_reuse": {
+    "edit_id": "outro",
+    "status": "exact_complete_sentence_owner_confirmation_reused",
+    "reviewer": "user / account owner",
+    "reply_verbatim": "已听过，读音自然",
+    "reviewed_at": "2026-10-17T15:31:09.961365+00:00",
+    "source": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/owner-listening-review.json",
+    "owner_review_sha256": "02127e80621f2dc2994bbba8aaf850c79500b9e99dc0bc62e645f8b3b4bdc249",
+    "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+    "actual_mp3_sha256": "f670f5c51e491614cc5af1669f406f98e6cea5de3e9896c47092952d253b849b",
+    "actual_marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+    "assistant_listening_claimed": false
+  },
+  "assistant_listening_claimed": false,
+  "new_utterances_human_listening_claimed": false,
+  "tone_pass_claimed": false,
+  "naturalness_pass_claimed": false,
+  "pronunciation_release_pass_claimed": false
+}

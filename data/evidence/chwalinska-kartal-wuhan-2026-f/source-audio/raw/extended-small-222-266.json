@@ -1,0 +1,138 @@
+{
+  "model": "small",
+  "source_key": "extended",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4",
+  "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+  "clip": [
+    222,
+    266
+  ],
+  "timecode_basis": "absolute source seconds, clip offset added to every word and segment",
+  "duration": 44.0,
+  "created_at": "2026-10-18T15:04:21.921150+00:00",
+  "decoded_pcm_sha256": "199897852c1e15ec4f0d287cdfb436f5fbe4f64292c841aea2afe90ffaa9f250",
+  "decoder": "ffmpeg16000Hz mono float32; no amplitude, loudness or noise filter",
+  "options": {
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true,
+    "vad_filter": false,
+    "condition_on_previous_text": false
+  },
+  "segments": [
+    {
+      "start": 222.0,
+      "end": 223.06,
+      "text": "Here we go.",
+      "avg_logprob": -1.3182498386928014,
+      "no_speech_prob": 0.591097354888916,
+      "words": [
+        {
+          "w": " Here",
+          "s": 222.0,
+          "e": 222.82,
+          "p": 0.012081269174814224
+        },
+        {
+          "w": " we",
+          "s": 222.82,
+          "e": 222.82,
+          "p": 0.1714676469564438
+        },
+        {
+          "w": " go.",
+          "s": 222.82,
+          "e": 223.06,
+          "p": 0.7006664276123047
+        }
+      ]
+    },
+    {
+      "start": 259.68,
+      "end": 264.48,
+      "text": "Oh well let's go finally able to exact what she was looking for.",
+      "avg_logprob": -0.6169617474079132,
+      "no_speech_prob": 0.17590907216072083,
+      "words": [
+        {
+          "w": " Oh",
+          "s": 259.68,
+          "e": 260.32,
+          "p": 0.3720894157886505
+        },
+        {
+          "w": " well",
+          "s": 260.32,
+          "e": 260.54,
+          "p": 0.3255576193332672
+        },
+        {
+          "w": " let's",
+          "s": 260.54,
+          "e": 260.84,
+          "p": 0.572646975517273
+        },
+        {
+          "w": " go",
+          "s": 260.84,
+          "e": 260.94,
+          "p": 0.5181407332420349
+        },
+        {
+          "w": " finally",
+          "s": 260.94,
+          "e": 261.42,
+          "p": 0.8790442943572998
+        },
+        {
+          "w": " able",
+          "s": 261.42,
+          "e": 262.14,
+          "p": 0.9811455607414246
+        },
+        {
+          "w": " to",
+          "s": 262.14,
+          "e": 262.28,
+          "p": 0.9935437440872192
+        },
+        {
+          "w": " exact",
+          "s": 262.28,
+          "e": 262.62,
+          "p": 0.9870873689651489
+        },
+        {
+          "w": " what",
+          "s": 262.62,
+          "e": 263.56,
+          "p": 0.9402610659599304
+        },
+        {
+          "w": " she",
+          "s": 263.56,
+          "e": 263.74,
+          "p": 0.9977682828903198
+        },
+        {
+          "w": " was",
+          "s": 263.74,
+          "e": 263.9,
+          "p": 0.9986742734909058
+        },
+        {
+          "w": " looking",
+          "s": 263.9,
+          "e": 264.12,
+          "p": 0.99565190076828
+        },
+        {
+          "w": " for.",
+          "s": 264.12,
+          "e": 264.48,
+          "p": 0.995273768901825
+        }
+      ]
+    }
+  ]
+}

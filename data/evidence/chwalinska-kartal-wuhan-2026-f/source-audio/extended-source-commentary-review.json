@@ -1,0 +1,339 @@
+{
+  "schema": "tennislive.source-commentary-review.v1",
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "source_key": "extended",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4",
+  "official_source_page": "https://www.wtatennis.com/videos/4593997/chwalinska-rallies-past-kartal-to-claim-first-wta-title-wuhan",
+  "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI source-audio review agent; inspected retained finite small multilingual and large-v3-turbo English-language raw outputs and word timestamps; no manual listening claimed",
+  "reviewed_at": "2026-10-18T15:11:22.103777+00:00",
+  "status": "finite_candidate_windows_reviewed",
+  "reviewed_intervals": [
+    [
+      216,
+      226
+    ],
+    [
+      222,
+      266
+    ],
+    [
+      320,
+      338
+    ],
+    [
+      382,
+      404
+    ]
+  ],
+  "not_reviewed_full_source": true,
+  "duration": 467.68,
+  "native_captions": {
+    "subtitles": {},
+    "automatic_captions": null,
+    "metadata_inspected_path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/extended-metadata-summary.json",
+    "note": "Public Brightcove yt-dlp metadata declares no subtitle or automatic-caption track; no fabricated caption verification.",
+    "metadata_summary_sha256": "51443dd056a5b09799d785a0ea26b1fcdb4285d423f2d3a1f259dc1eba8c73b1"
+  },
+  "evidence_basis": [
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-216-226.json",
+      "sha256": "ffd03d511539752a05c9ca18e831ef1c19b314e32f300d06bedab5ff634d4627",
+      "model": "large-v3-turbo",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        216,
+        226
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-222-266.json",
+      "sha256": "5de708e23d833376b4742fd544784c96754a2939c0d384b30594566c9d3fdf14",
+      "model": "large-v3-turbo",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        222,
+        266
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-320-338.json",
+      "sha256": "2dd8f6f088ce0ab21cd99fa61a971e4620717a9cc3dacec343d5564add814ed5",
+      "model": "large-v3-turbo",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        320,
+        338
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-324-336.json",
+      "sha256": "cff025b566c98d575b2475e3f22c035ff049e868bc9a965e64794b52c19dc47a",
+      "model": "large-v3-turbo",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        324,
+        336
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-382-404.json",
+      "sha256": "38ceebf52c50e8776e45e99608c31be6d28aac63b0a8b2aebd52f04cc603d42f",
+      "model": "large-v3-turbo",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        382,
+        404
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-386-402.json",
+      "sha256": "3bcd1e451fd3d9ba9d7299fb8e015c9e190b790dfd2fa77f597fdc000fbbb1c5",
+      "model": "large-v3-turbo",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        386,
+        402
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-216-226.json",
+      "sha256": "3f87ffc8fd2b1b586a1392016b5ac994de29d93fc1099b548e6250206c91b91f",
+      "model": "small",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        216,
+        226
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-222-266.json",
+      "sha256": "6709b75298be25d1f07fcf238050d6dc2f3bfe3f6dae347af1e92ebd0be6d60d",
+      "model": "small",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        222,
+        266
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-320-338.json",
+      "sha256": "f6fdc125e8dc8f9d976ab850ae6598596d64e9cf9fe8eb86a7d0257cff0b6d30",
+      "model": "small",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        320,
+        338
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-324-336.json",
+      "sha256": "8210eeecc89725b06be7c5044fd995033cd8873663b336636ec08384ed13914e",
+      "model": "small",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        324,
+        336
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-382-404.json",
+      "sha256": "705050719b86d212ce5f26e02a7fd239d4b7ed601396e2c195b7108febd47824",
+      "model": "small",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        382,
+        404
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-386-402.json",
+      "sha256": "ff0378130d9409aaa3f4cd0372b03150e9cb7c1a7aa6cf4809032de9eb87758b",
+      "model": "small",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        386,
+        402
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-base.en-382-404.json",
+      "sha256": "411fa7f2501489b718d67f63c12678346ee1382e340112e270159fae5f537f26",
+      "model": "base.en",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        382,
+        404
+      ]
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-base.en-324-336.json",
+      "sha256": "3ca150508eb3af3e1e8bd4689c7c629744891b12be4da5e60f04b93173263515",
+      "model": "base.en",
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "clip": [
+        324,
+        336
+      ]
+    }
+  ],
+  "foreground_english": [
+    {
+      "id": "e01",
+      "start": 220.84,
+      "end": 222.04,
+      "en": "That’s her bread and butter.",
+      "zh": "这是她的拿手好戏",
+      "status": "verified",
+      "verification": "Both expanded216–226 outputs agree exactly. Earlier222-start window clipped the actual utterance and generated spurious Here we go; the broader-context output supersedes the narrower boundary artifact."
+    },
+    {
+      "id": "e02",
+      "start": 259.68,
+      "end": 264.52,
+      "en": "Chwalinska finally able to exact what she was looking for.",
+      "zh": "赫瓦林斯卡终于得到了她想要的结果",
+      "status": "verified_with_name_normalization",
+      "verification": "Shared content finally able to exact what she was looking for matches nearly identical word edges in both models. Turbo Walenska and small Oh well lets go are phonetic segmentation of the named player Chwalinska. Proper spelling normalized, not an invented player quote. Onset conservative259.68 includes entire possible name lead-in."
+    },
+    {
+      "id": "e03",
+      "start": 328.9,
+      "end": 330.18,
+      "en": "And she gets some help.",
+      "zh": "而且对手送上了帮助",
+      "status": "verified",
+      "verification": "Both models in both324–336 and320–338 outputs agree on complete clause. This can be retained independently if source cut stops before the next name clause."
+    },
+    {
+      "id": "e04",
+      "start": 330.76,
+      "end": 333.52,
+      "en": "Kartal blanks and it could be costly.",
+      "zh": "卡尔塔尔出现失误这可能代价不小",
+      "status": "verified_three_model_lexical_consensus",
+      "verification": "English-onlybase.en324–336 independently givesblanks at331.26–331.64,p=.971, matching bothsmall andturbo in two context lengths. All5 finite results agreeblanks. The earlier hypotheticalblinks is supported by no transcript, so do not substitute a more customary word. NameKartal normalized fromphoneticCartel. No manual listening claimed."
+    }
+  ],
+  "uncertain_spans": [],
+  "resolved_boundary_artifacts": [
+    {
+      "narrow_clip": [
+        222,
+        266
+      ],
+      "raw_words": "Here we go.",
+      "raw_interval": [
+        222,
+        224.38
+      ],
+      "resolution": "Both216–226 outputs instead identify actual220.84–222.04That’s her bread and butter, no later English. The narrow clip started inside the previous utterance, so its spurious boundary phrase is not promoted to a source quote."
+    },
+    {
+      "narrow_clip": [
+        386,
+        402
+      ],
+      "raw_words": "Thank you.",
+      "raw_interval": [
+        386,
+        392.2
+      ],
+      "broader_clip": [
+        382,
+        404
+      ],
+      "broader_interval": [
+        385.84,
+        388.16
+      ],
+      "resolution": "First-word onset was outside the narrow interval; its swallowed pause extends you to392.2. Broader-context timing is preferred for candidate cut planning, but text remains uncertain because small has no speech."
+    }
+  ],
+  "pre_window_context_not_for_production": {
+    "interval": [
+      320,
+      323.98
+    ],
+    "raw_summary": "She continues to play Kartal and get into her mind with the lob shot; models produce lobster and source start320 cuts sentence lead-in.",
+    "status": "context_only_not_a_verified_complete_sentence",
+    "note": "Actual candidate window starts326; do not drag this incomplete preceding commentary into an otherwise clear selected window."
+  },
+  "recommended_decisions": [
+    {
+      "candidate": "second_set_fourth_break_point",
+      "source_from": 222.08,
+      "source_to": 265.12,
+      "english_ids": [
+        "e02"
+      ],
+      "status": "root_frozen_candidate",
+      "note": "Retain complete serve and action. Expanded216–226 confirms preceding sentence ends222.04; freeze starts222.08 without cutting that clause."
+    },
+    {
+      "candidate": "third_set2all_break",
+      "source_from": 325,
+      "source_to": 334.5,
+      "english_ids": [
+        "e03",
+        "e04"
+      ],
+      "status": "ready_for_visual_final_boundary_and_spec_binding",
+      "note": "Three-model lexical consensus confirmsblanks, not inventedblinks. Include completeAnd she gets some help andKartal blanks... through333.52 if visual retains full334.5 reaction; no prior sentence after323.98."
+    },
+    {
+      "candidate": "third_final_game_bp",
+      "source_from": 387.12,
+      "source_to": 399.48,
+      "english_ids": [],
+      "status": "ready_for_frozen_spec_audio_binding",
+      "note": "Complete serve/rally retained. Independent small+base.en identify no English in whole selected387.12–399.48. Turbo-only low-confidenceThank you excluded as uncorroborated template artifact; all three raw results preserved."
+    }
+  ],
+  "limitations": [
+    "All timecodes are absolute seconds of the independent Brightcove source originalSHA; none are migrated from the YouTube source.",
+    "No additional whole-source ASR, loudness processing, volume scan, RMS/peak threshold, source-gain or final-PCM comparison was performed.",
+    "No native foreground-audio index is created before root freezes actual source windows."
+  ],
+  "discarded_asr_artifacts": [
+    {
+      "id": "e05",
+      "start": 385.84,
+      "end": 388.16,
+      "en": "Thank you.",
+      "zh": "谢谢",
+      "status": "discarded_unconfirmed_single_model_phrase",
+      "verification": "Small identifies no English in either386–402 or382–404. Turbo generates Thank you twice, first-word probability.027 in narrow clip and very low confidence; broad context places full phrase385.84–388.16, while clipped narrow interval stretches you to392.20. Neither whole sentence nor all edges independently cross-checked; avoid this possible foreground interval when choosing the3BP window.",
+      "resolution": "Independent English-only base.en382–404 produces only extremely low-probabilityUh382–384.44, outside the selected window, and no words387.12–399.48. Small is also empty in both context lengths. Turbo-onlyThank you is not reproducible across independent models and has first-word probability.027; do not invent a subtitle or cut complete serve/rally because of this single-model template phrase. All raw variants retained."
+    },
+    {
+      "start": 382,
+      "end": 384.44,
+      "model": "base.en",
+      "text": "Uh,",
+      "word_probability": 0.000820457877125591,
+      "resolution": "Low-confidence nonlexical filler before selected387.12–399.48; not an identified foreground English sentence."
+    }
+  ],
+  "selected_no_foreground_english_findings": [
+    {
+      "reviewed_from": 387.12,
+      "reviewed_to": 399.48,
+      "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "method": "asr_cross_checked",
+      "status": "complete",
+      "foreground_english": [],
+      "no_foreground_english_reason": "Two independent models(small multilingual and English-onlybase.en) identify no English in the selected whole window, with expanded382–404 context. Turbo-only low-confidenceThank you is not corroborated by either and matches the model template-artifact pattern seen elsewhere; its divergent raw timing is retained underdiscarded_asr_artifacts. This is honest ASR cross-check evidence, not manual listening, digital silence, or absence of court/crowd/racket sound."
+    }
+  ],
+  "lexical_disagreements_resolved": [
+    {
+      "start": 330.76,
+      "end": 333.52,
+      "hypothesis": "blinks",
+      "raw_consensus": "blanks",
+      "resolution": "Three independently sized/language-model variants and5 finite runs consistently outputblanks; preserve actual ASR-consensus wording, translate the observed error without inventing a psychological diagnosis. All raw remains retained."
+    }
+  ]
+}

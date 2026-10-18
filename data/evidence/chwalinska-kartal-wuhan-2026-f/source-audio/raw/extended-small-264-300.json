@@ -1,0 +1,78 @@
+{
+  "model": "small",
+  "source_key": "extended",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4",
+  "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+  "clip": [
+    264,
+    300
+  ],
+  "timecode_basis": "absolute source seconds, clip offset added to every word and segment",
+  "duration": 36.0,
+  "created_at": "2026-10-18T15:17:59.609708+00:00",
+  "decoded_pcm_sha256": "954985928e8812bf1ea44c7deb641a970c6df5c8d302871147e9639e8b6f95d3",
+  "decoder": "ffmpeg16000Hz mono float32; no amplitude, loudness or noise filter",
+  "options": {
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true,
+    "vad_filter": false,
+    "condition_on_previous_text": false
+  },
+  "segments": [
+    {
+      "start": 264.0,
+      "end": 264.48,
+      "text": "looking for.",
+      "avg_logprob": -0.7041080792744955,
+      "no_speech_prob": 0.6515144109725952,
+      "words": [
+        {
+          "w": " looking",
+          "s": 264.0,
+          "e": 264.2,
+          "p": 0.38890373706817627
+        },
+        {
+          "w": " for.",
+          "s": 264.2,
+          "e": 264.48,
+          "p": 0.9575704336166382
+        }
+      ]
+    },
+    {
+      "start": 297.18,
+      "end": 299.98,
+      "text": "Thank you very much.",
+      "avg_logprob": -1.1660377234220505,
+      "no_speech_prob": 0.5898762941360474,
+      "words": [
+        {
+          "w": " Thank",
+          "s": 297.18,
+          "e": 298.58,
+          "p": 0.005772056523710489
+        },
+        {
+          "w": " you",
+          "s": 298.58,
+          "e": 299.98,
+          "p": 0.9502710700035095
+        },
+        {
+          "w": " very",
+          "s": 299.98,
+          "e": 299.98,
+          "p": 0.09557031840085983
+        },
+        {
+          "w": " much.",
+          "s": 299.98,
+          "e": 299.98,
+          "p": 0.9974837303161621
+        }
+      ]
+    }
+  ]
+}
