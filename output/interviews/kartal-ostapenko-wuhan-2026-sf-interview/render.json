@@ -30,7 +30,7 @@
     "transition": "dissolve",
     "dissolve_s": 0.18
   },
-  "film_sha256": "af11c90b2a79a739ac905f6e4f7ca2357f3dca0678b1dfc545656b63fbcfcda6",
+  "film_sha256": "d0d2aa99a6ef91471e7a4273f36b8415a5abaa0f7c2cfb90f48ca710121deddf",
   "film_seconds": 138.84,
   "face_checks": {
     "cover": {
@@ -88,39 +88,39 @@
   "production_stage_events": [
     {
       "stage": "preflight",
-      "at": "2026-10-17T18:03:42Z",
-      "run_id": "39056332164"
+      "at": "2026-10-18T07:12:28Z",
+      "run_id": "39106728763"
     },
     {
       "stage": "cover_audit",
-      "at": "2026-10-17T18:04:46Z",
-      "run_id": "39056332164"
+      "at": "2026-10-18T07:13:25Z",
+      "run_id": "39106728763"
     },
     {
       "stage": "asr_verify",
-      "at": "2026-10-17T18:05:10Z",
-      "run_id": "39056332164"
+      "at": "2026-10-18T07:13:39Z",
+      "run_id": "39106728763"
     },
     {
       "stage": "render",
-      "at": "2026-10-17T18:05:11Z",
-      "run_id": "39056332164"
+      "at": "2026-10-18T07:14:26Z",
+      "run_id": "39106728763"
     },
     {
       "stage": "qc",
-      "at": "2026-10-17T18:06:58Z",
-      "run_id": "39056332164"
+      "at": "2026-10-18T07:16:10Z",
+      "run_id": "39106728763"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-17T18:06:58Z",
-      "run_id": "39056332164"
+      "at": "2026-10-18T07:16:10Z",
+      "run_id": "39106728763"
     }
   ],
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-kartal-ostapenko-wuhan-2026-sf-interview/kartal-ostapenko-wuhan-2026-sf-interview.mp4?v=af11c90b2a79a739",
-  "video_bytes": 47350753,
-  "release_asset_digest": "sha256:af11c90b2a79a739ac905f6e4f7ca2357f3dca0678b1dfc545656b63fbcfcda6",
-  "qc_attestation_sha256": "f682c473e81e798add6728f08517cb1fbb2d70369b5565350a23c86fa0836878",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-kartal-ostapenko-wuhan-2026-sf-interview/kartal-ostapenko-wuhan-2026-sf-interview.mp4?v=d0d2aa99a6ef9147",
+  "video_bytes": 47344824,
+  "release_asset_digest": "sha256:d0d2aa99a6ef91471e7a4273f36b8415a5abaa0f7c2cfb90f48ca710121deddf",
+  "qc_attestation_sha256": "5a013c625f4504fb95307168d87804308ec5c5f71ea3e2385fa0e7bb1b6ad812",
   "production_sla_history": [
     {
       "version": 2,
@@ -158,43 +158,80 @@
       ],
       "render_seconds": 65.888,
       "pre_render_seconds": 148.0
+    },
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "kartal-ostapenko-wuhan-2026-sf-interview",
+      "received_at": "2026-10-17T17:38:56Z",
+      "artifact_ready_at": "2026-10-17T18:06:56Z",
+      "elapsed_seconds": 1680.843,
+      "budget_seconds": 600,
+      "met": false,
+      "film_sha256": "af11c90b2a79a739ac905f6e4f7ca2357f3dca0678b1dfc545656b63fbcfcda6",
+      "spec_sha256": "e02c2ee6541e02ba2355cd6214bff3dd987311981cb9b3bb707ab6e821e070c6",
+      "run_id": "39056332164",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-10-17T18:03:42Z",
+          "run_id": "39056332164"
+        },
+        {
+          "stage": "cover_audit",
+          "at": "2026-10-17T18:04:46Z",
+          "run_id": "39056332164"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-10-17T18:05:10Z",
+          "run_id": "39056332164"
+        },
+        {
+          "stage": "render",
+          "at": "2026-10-17T18:05:11Z",
+          "run_id": "39056332164"
+        }
+      ],
+      "render_seconds": 105.843,
+      "pre_render_seconds": 1575.0
     }
   ],
   "production_sla": {
     "version": 2,
     "pipeline": "interview-clip",
     "slug": "kartal-ostapenko-wuhan-2026-sf-interview",
-    "received_at": "2026-10-17T17:38:56Z",
-    "artifact_ready_at": "2026-10-17T18:06:56Z",
-    "elapsed_seconds": 1680.843,
+    "received_at": "2026-10-18T07:11:25Z",
+    "artifact_ready_at": "2026-10-18T07:16:09Z",
+    "elapsed_seconds": 284.294,
     "budget_seconds": 600,
-    "met": false,
-    "film_sha256": "af11c90b2a79a739ac905f6e4f7ca2357f3dca0678b1dfc545656b63fbcfcda6",
-    "spec_sha256": "e02c2ee6541e02ba2355cd6214bff3dd987311981cb9b3bb707ab6e821e070c6",
-    "run_id": "39056332164",
+    "met": true,
+    "film_sha256": "d0d2aa99a6ef91471e7a4273f36b8415a5abaa0f7c2cfb90f48ca710121deddf",
+    "spec_sha256": "b51418a75c2dd4413828a0101bd7926bdf37b3c50f71594be4e89f51d4db02db",
+    "run_id": "39106728763",
     "stage_events": [
       {
         "stage": "preflight",
-        "at": "2026-10-17T18:03:42Z",
-        "run_id": "39056332164"
+        "at": "2026-10-18T07:12:28Z",
+        "run_id": "39106728763"
       },
       {
         "stage": "cover_audit",
-        "at": "2026-10-17T18:04:46Z",
-        "run_id": "39056332164"
+        "at": "2026-10-18T07:13:25Z",
+        "run_id": "39106728763"
       },
       {
         "stage": "asr_verify",
-        "at": "2026-10-17T18:05:10Z",
-        "run_id": "39056332164"
+        "at": "2026-10-18T07:13:39Z",
+        "run_id": "39106728763"
       },
       {
         "stage": "render",
-        "at": "2026-10-17T18:05:11Z",
-        "run_id": "39056332164"
+        "at": "2026-10-18T07:14:26Z",
+        "run_id": "39106728763"
       }
     ],
-    "render_seconds": 105.843,
-    "pre_render_seconds": 1575.0
+    "render_seconds": 103.294,
+    "pre_render_seconds": 181.0
   }
 }
