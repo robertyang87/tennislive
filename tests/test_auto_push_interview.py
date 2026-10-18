@@ -566,6 +566,18 @@ def test_发布接受已绑定QC的原生双语开场(repo: Path):
     assert gate.validate_qc(repo, "demo", outdir)
 
 
+def test_稀疏检出下原生双语开场也认得出(repo: Path):
+    """gate 排在「放进稀疏范围」之前，`output/` 那一格的字幕不在工作区。
+
+    2026-10-18 `kartal-ostapenko-wuhan-2026-sf-interview` 点名重推被拦：
+    「原生冷开场双语字幕验证失败（EN 0 / ZH 0）」——不是字幕缺，是读盘读空了。
+    工作区删掉那份 .ass（模拟稀疏检出）、索引里留着，要求照样放行。
+    """
+    outdir = _native_opening(repo)
+    (outdir / "demo.ass").unlink()
+    assert gate.validate_qc(repo, "demo", outdir)
+
+
 @pytest.mark.parametrize("missing_style", ["EN", "ZH"])
 def test_发布拒绝原生开场缺少一种语言(repo: Path, missing_style):
     outdir = _native_opening(repo, missing_style=missing_style)

@@ -250,7 +250,14 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
         if (not tracked(repo, ass_path)
                 or qc.get("ass_sha256") != _sha256_bytes(_tracked_bytes(repo, ass_path))):
             raise Skip(f"{slug}：原生冷开场正文字幕与 QC 字节不一致")
-        native_lead, detail = native_bilingual_lead_ok(outdir, spec)
+        # 稀疏检出下 output/ 不在工作区（gate 排在「放进稀疏范围」之前），
+        # `native_bilingual_lead_ok` 读盘会读成 EN 0 / ZH 0，点名推送就一律被拦
+        # （2026-10-18 kartal-ostapenko 重推撞上）。把刚核过哈希的那份受跟踪字节
+        # 落进临时目录再判，判的仍是 QC 绑定的同一份字幕。
+        import tempfile  # noqa: PLC0415
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / f"{slug}.ass").write_bytes(_tracked_bytes(repo, ass_path))
+            native_lead, detail = native_bilingual_lead_ok(Path(tmp), spec)
         if not native_lead:
             raise Skip(f"{slug}：原生冷开场双语字幕验证失败（{detail}）")
     if not expected_lead and spec.get("requested_content_type") == "ceremony":
