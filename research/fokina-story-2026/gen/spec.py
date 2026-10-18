@@ -31,7 +31,7 @@ c=q("sf",286.6,303.8,[(288.88,292.52,"For the second time in his career,\n职业
 c["_ending_payoff_required"]=False
 c["_ending_payoff_why"]="网球有故事：冷开场是本期由头（他怎么站上上海决赛），正文倒回他五次决赛的来路，回到上海这一周时用同一场 ATP 官方集锦重放赛点之后的解说收住。"
 S.append(c)
-S.append(card("五次决赛\n五次亚军","2022—2025",8.6,"在这之前，他打进过五次决赛，五次都是亚军。五个冠军点，一个都没握住。"))
+S.append(card("前5次决赛\n全是亚军","2022—2025",8.6,"他职业生涯的前五次决赛，全是亚军。五个冠军点，一个都没握住。"))
 # 01 温网少年
 S.append(card("温网\n少年","01",8.8,"二〇一七年，十八岁的他拿下温网青少年冠军，一盘没丢。那一年，他青少年组二十胜一负。"))
 S.append(q("jw",43.5,55.4,[(43.84,49.8,"I started with my father in the beach, in the sand courts in my city,\n我是跟着爸爸在海边开始的，"),(49.8,55.02,"and it was my father who pushed me to play tennis.\n是爸爸推着我去打网球。")],
