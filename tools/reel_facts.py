@@ -746,6 +746,50 @@ def legacy_cover_topic() -> frozenset:
         return frozenset()
 
 
+#: 「网球有故事」封面副标题（`cover.topic`）的类别声明：讲**一个人**的叙事片写 person，
+#: 讲规则、事件、赛事、两人交手的写 other。账号所有者 2026-10-18：「下次再做这种人物类的
+#: 视频的时候，然后在副标题上加上他的名字，然后再加冒号，再加副标题的内容」「然后把这个
+#: 规则定下来，变成全局规则，放在库里做强制要求」。
+STORY_KINDS = ("person", "other")
+STORY_TOPIC_EXAMPLE = "福基纳：从五次亚军走到上海决赛"
+
+
+def story_topic_name_problem(topic: object, kind: object, subject: object) -> str | None:
+    """「网球有故事」的副标题：人物片必须写「<名字>：<内容>」（全角冒号）；合格返回 None。
+
+    `kind` 必须声明成 STORY_KINDS 之一——不声明就判不了是不是人物片，按不合格报，
+    逼写稿的人当场想一下（「判不了」不是「没问题」）。竖版短片和字卡两条线共用这一个函数。
+    """
+    kind = str(kind or "").strip()
+    if kind not in STORY_KINDS:
+        return ("「网球有故事」要在封面上声明 story_kind：讲一个人的叙事片写 \"person\"，"
+                "讲规则、事件、赛事、交手的写 \"other\"（账号所有者 2026-10-18 定的人物片副标题"
+                f"规则要靠它判，例：{STORY_TOPIC_EXAMPLE}）。")
+    if kind != "person":
+        return None
+    topic = str(topic or "").strip()
+    subject = str(subject or "").strip()
+    if not subject:
+        return "人物类「网球有故事」要写 subject（主角中文名，按译名表），副标题以「名字：」开头。"
+    head, sep, rest = topic.partition("：")
+    if head.strip() == subject and sep and rest.strip():
+        return None
+    return (f"人物类「网球有故事」的封面副标题要写成「{subject}：<故事内容>」（全角冒号），"
+            f"现在是「{topic}」。例：{STORY_TOPIC_EXAMPLE}。"
+            "账号所有者 2026-10-18：「在副标题上加上他的名字，然后再加冒号，再加副标题的内容」。")
+
+
+def legacy_story_topic_name(line: str) -> frozenset:
+    """定规矩（2026-10-18）之前的「网球有故事」：`reels` / `explainers` 两张表，只许减不许加。"""
+    import json as _json
+    from pathlib import Path as _Path
+    path = _Path(__file__).resolve().parents[1] / "data" / "legacy_story_topic_name.json"
+    try:
+        return frozenset(_json.loads(path.read_text(encoding="utf-8")).get(line) or ())
+    except FileNotFoundError:
+        return frozenset()
+
+
 #: 全出血的「赛场之上」回贴比分板时，每一家转播都要有一套**按它自己的图形标定过**
 #: 的逐帧判据（`atp_scoreboard` / `wta_scoreboard` / `itf_scoreboard` /
 #: `lavercup_scoreboard`）。

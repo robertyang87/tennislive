@@ -511,6 +511,24 @@ def dated_word_problems(deck: Deck) -> list[str]:
         "（qualifier-ceiling 2756cec3：「北京时间今天，美网正赛开打」）"]
 
 
+def story_topic_name_problems(deck: Deck) -> list[str]:
+    """人物类「网球有故事」副标题「名字：内容」（账号所有者 2026-10-18，全局强制）。
+
+    `_OPENINGS[slug]` 写 `story_kind`（person／other），人物片再写 `subject`。
+    定规矩之前的挂在 data/legacy_story_topic_name.json 的 explainers，只许减不许加。
+    """
+    if deck.slug in reel_facts.legacy_story_topic_name("explainers"):
+        return []
+    try:
+        if E.explainer_column(deck.slug) != "网球有故事":
+            return []
+    except KeyError:
+        return []
+    op = deck.opening
+    problem = reel_facts.story_topic_name_problem(op.get("topic"), op.get("story_kind"), op.get("subject"))
+    return [f"{deck.slug}：{problem}"] if problem else []
+
+
 #: (名字, 判据)。顺序就是报告的顺序；**加一项就要在测试里给它一个会红的例子**。
 CHECKS: tuple[tuple[str, Callable[[Deck], list[str]]], ...] = (
     ("栏目", column_problems),
@@ -520,6 +538,7 @@ CHECKS: tuple[tuple[str, Callable[[Deck], list[str]]], ...] = (
     ("封面首句窗口", hook_budget_problems),
     ("封面一行", cover_one_line_problems),
     ("开场问题卡", cover_question_problems),
+    ("人物片副标题", story_topic_name_problems),
     ("字卡认领", cards_why_problems),
     ("冒号与记号", title_mark_problems),
     ("每屏要点", beat_points_problems),
