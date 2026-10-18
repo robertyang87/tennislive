@@ -1,0 +1,136 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,44,&H00ECF3E7,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,68,&H00ECF3E7,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00F7FBF4,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:04:18.00,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 ATP1000 上海 决赛
+Dialogue: 1,0:00:00.00,0:04:18.00,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}福基纳 {\r\fnTL Score\b300\fs40}1{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\c&H8CDC4A&\b1\fs40}6 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}7{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}6 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}6{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}4{\r\fnNoto Sans CJK SC\fs38} 霍达尔 · 赛后捧杯致辞
+Dialogue: 0,0:00:00.56,0:00:03.04,EN,,0,0,0,,Thank you. First of all,
+Dialogue: 0,0:00:00.56,0:00:03.04,ZH,,0,0,0,,谢谢 首先
+Dialogue: 0,0:00:03.04,0:00:07.92,EN,,0,0,0,,I want to congratulate you,
+Dialogue: 0,0:00:03.04,0:00:07.92,ZH,,0,0,0,,我要祝贺你
+Dialogue: 0,0:00:07.92,0:00:11.76,EN,,0,0,0,,but man, you have a huge future
+Dialogue: 0,0:00:07.92,0:00:11.76,ZH,,0,0,0,,老兄 你前途无量
+Dialogue: 0,0:00:11.76,0:00:14.72,EN,,0,0,0,,you'll be here many more times.
+Dialogue: 0,0:00:11.76,0:00:14.72,ZH,,0,0,0,,未来还会多次站上这里
+Dialogue: 0,0:00:14.72,0:00:18.16,EN,,0,0,0,,You're a great player, a great person.
+Dialogue: 0,0:00:14.72,0:00:18.16,ZH,,0,0,0,,你是出色的球员 人更出色
+Dialogue: 0,0:00:18.16,0:00:19.52,EN,,0,0,0,,So, congrats,
+Dialogue: 0,0:00:18.16,0:00:19.52,ZH,,0,0,0,,祝贺你
+Dialogue: 0,0:00:19.52,0:00:21.36,EN,,0,0,0,,for what you've achieved this year,
+Dialogue: 0,0:00:19.52,0:00:21.36,ZH,,0,0,0,,第一年就有这样的成就
+Dialogue: 0,0:00:21.36,0:00:23.44,EN,,0,0,0,,it's unbelievable.
+Dialogue: 0,0:00:21.36,0:00:23.44,ZH,,0,0,0,,太不可思议了
+Dialogue: 0,0:00:23.44,0:00:24.40,EN,,0,0,0,,And to your father,
+Dialogue: 0,0:00:23.44,0:00:24.40,ZH,,0,0,0,,还有你的父亲
+Dialogue: 0,0:00:24.40,0:00:25.60,EN,,0,0,0,,what you're doing,
+Dialogue: 0,0:00:24.40,0:00:25.60,ZH,,0,0,0,,你们所做的一切
+Dialogue: 0,0:00:25.60,0:00:28.88,EN,,0,0,0,,I can't describe it in words.
+Dialogue: 0,0:00:25.60,0:00:28.88,ZH,,0,0,0,,我无法用言语形容
+Dialogue: 0,0:00:28.88,0:00:31.12,EN,,0,0,0,,Congrats, and for sure you're going
+Dialogue: 0,0:00:28.88,0:00:31.12,ZH,,0,0,0,,祝贺你们 你一定
+Dialogue: 0,0:00:31.12,0:00:36.60,EN,,0,0,0,,to be champion here.
+Dialogue: 0,0:00:31.12,0:00:36.60,ZH,,0,0,0,,会在这里夺冠
+Dialogue: 0,0:01:02.48,0:01:05.92,EN,,0,0,0,,I can't describe moments like this.
+Dialogue: 0,0:01:02.48,0:01:05.92,ZH,,0,0,0,,这样的时刻难以形容
+Dialogue: 0,0:01:05.92,0:01:08.40,EN,,0,0,0,,How do I say this
+Dialogue: 0,0:01:05.92,0:01:08.40,ZH,,0,0,0,,该怎么说呢
+Dialogue: 0,0:01:08.40,0:01:10.88,EN,,0,0,0,,to my team, what we've achieved.
+Dialogue: 0,0:01:08.40,0:01:10.88,ZH,,0,0,0,,对我的团队 我们做到了
+Dialogue: 0,0:01:10.88,0:01:14.24,EN,,0,0,0,,This year
+Dialogue: 0,0:01:10.88,0:01:14.24,ZH,,0,0,0,,这一年
+Dialogue: 0,0:01:14.24,0:01:16.88,EN,,0,0,0,,wasn't easy, many injuries,
+Dialogue: 0,0:01:14.24,0:01:16.88,ZH,,0,0,0,,不容易 伤病不断
+Dialogue: 0,0:01:16.88,0:01:20.64,EN,,0,0,0,,but we kept believing, and you,
+Dialogue: 0,0:01:16.88,0:01:20.64,ZH,,0,0,0,,但我们始终相信 你
+Dialogue: 0,0:01:20.64,0:01:23.60,EN,,0,0,0,,you believed in me all year,
+Dialogue: 0,0:01:20.64,0:01:23.60,ZH,,0,0,0,,整个赛季都相信我
+Dialogue: 0,0:01:23.60,0:01:26.40,EN,,0,0,0,,just keep pushing. You knew
+Dialogue: 0,0:01:23.60,0:01:26.40,ZH,,0,0,0,,不断激励我 你知道
+Dialogue: 0,0:01:26.40,0:01:32.08,EN,,0,0,0,,that I have this potential, and
+Dialogue: 0,0:01:26.40,0:01:32.08,ZH,,0,0,0,,我有这个潜力
+Dialogue: 0,0:01:32.08,0:01:35.36,EN,,0,0,0,,you gave me this mindset.
+Dialogue: 0,0:01:32.08,0:01:35.36,ZH,,0,0,0,,你给了我这样的心态
+Dialogue: 0,0:01:35.36,0:01:38.24,EN,,0,0,0,,So I want to say thanks
+Dialogue: 0,0:01:35.36,0:01:38.24,ZH,,0,0,0,,所以我要谢谢
+Dialogue: 0,0:01:38.24,0:01:42.32,EN,,0,0,0,,to my team, my family, my wife,
+Dialogue: 0,0:01:38.24,0:01:42.32,ZH,,0,0,0,,我的团队 家人和妻子
+Dialogue: 0,0:01:42.32,0:01:44.16,EN,,0,0,0,,for believing in me every day
+Dialogue: 0,0:01:42.32,0:01:44.16,ZH,,0,0,0,,谢谢你们每天相信我
+Dialogue: 0,0:01:44.16,0:01:46.80,EN,,0,0,0,,that I can be one of the best players
+Dialogue: 0,0:01:44.16,0:01:46.80,ZH,,0,0,0,,相信我能成为最顶尖的球员
+Dialogue: 0,0:01:46.80,0:01:50.16,EN,,0,0,0,,in the world. I'm so grateful
+Dialogue: 0,0:01:46.80,0:01:50.16,ZH,,0,0,0,,我非常感激
+Dialogue: 0,0:01:50.16,0:01:53.92,EN,,0,0,0,,for what they do for me.
+Dialogue: 0,0:01:50.16,0:01:53.92,ZH,,0,0,0,,谢谢你们为我做的一切
+Dialogue: 0,0:01:53.92,0:01:58.12,EN,,0,0,0,,So, many thanks.
+Dialogue: 0,0:01:53.92,0:01:58.12,ZH,,0,0,0,,非常感谢
+Dialogue: 0,0:02:25.76,0:02:26.56,EN,,0,0,0,,I want to say
+Dialogue: 0,0:02:25.76,0:02:26.56,ZH,,0,0,0,,我想说
+Dialogue: 0,0:02:26.56,0:02:31.28,EN,,0,0,0,,Last but not least,
+Dialogue: 0,0:02:26.56,0:02:31.28,ZH,,0,0,0,,最后
+Dialogue: 0,0:02:31.28,0:02:33.68,EN,,0,0,0,,this is going to be a memory
+Dialogue: 0,0:02:31.28,0:02:33.68,ZH,,0,0,0,,这将是我一生难忘的记忆
+Dialogue: 0,0:02:33.68,0:02:36.32,EN,,0,0,0,,for the rest of my life, winning
+Dialogue: 0,0:02:33.68,0:02:36.32,ZH,,0,0,0,,赢下首个大师赛冠军
+Dialogue: 0,0:02:36.32,0:02:38.64,EN,,0,0,0,,my first Masters 1000, and
+Dialogue: 0,0:02:36.32,0:02:38.64,ZH,,0,0,0,,你们办了一届很棒的赛事
+Dialogue: 0,0:02:38.64,0:02:42.00,EN,,0,0,0,,you put on a great event here,
+Dialogue: 0,0:02:38.64,0:02:42.00,ZH,,0,0,0,,球员和工作人员都照顾周到
+Dialogue: 0,0:02:42.00,0:02:45.52,EN,,0,0,0,,for all the players and staff.
+Dialogue: 0,0:02:42.00,0:02:45.52,ZH,,0,0,0,,一切都很舒心
+Dialogue: 0,0:02:45.52,0:02:47.28,EN,,0,0,0,,Everything was comfortable.
+Dialogue: 0,0:02:45.52,0:02:47.28,ZH,,0,0,0,,非常感谢你们
+Dialogue: 0,0:02:47.28,0:02:49.84,EN,,0,0,0,,So, many thanks to you guys,
+Dialogue: 0,0:02:47.28,0:02:49.84,ZH,,0,0,0,,这一定会成为我
+Dialogue: 0,0:02:49.84,0:02:52.00,EN,,0,0,0,,this will surely be
+Dialogue: 0,0:02:49.84,0:02:52.00,ZH,,0,0,0,,余生难忘的回忆
+Dialogue: 0,0:02:52.00,0:02:55.84,EN,,0,0,0,,a memory for the rest of my life,
+Dialogue: 0,0:02:52.00,0:02:55.84,ZH,,0,0,0,,我都不知道该说什么
+Dialogue: 0,0:02:55.84,0:02:58.80,EN,,0,0,0,,I don't know what to say.
+Dialogue: 0,0:02:55.84,0:02:58.80,ZH,,0,0,0,,多么珍贵的记忆
+Dialogue: 0,0:02:58.80,0:03:00.40,EN,,0,0,0,,A huge memory.
+Dialogue: 0,0:02:58.80,0:03:00.40,ZH,,0,0,0,,我会想起你们
+Dialogue: 0,0:03:00.40,0:03:03.04,EN,,0,0,0,,I'll think about you
+Dialogue: 0,0:03:00.40,0:03:03.04,ZH,,0,0,0,,一辈子
+Dialogue: 0,0:03:03.04,0:03:07.64,EN,,0,0,0,,all my life.
+Dialogue: 0,0:03:03.04,0:03:07.64,ZH,,0,0,0,,最后 我要
+Dialogue: 0,0:03:38.72,0:03:40.96,EN,,0,0,0,,And last but not least, I want
+Dialogue: 0,0:03:38.72,0:03:40.96,ZH,,0,0,0,,感谢所有工作人员
+Dialogue: 0,0:03:40.96,0:03:46.08,EN,,0,0,0,,to thank the staff,
+Dialogue: 0,0:03:40.96,0:03:46.08,ZH,,0,0,0,,球童 穿线师
+Dialogue: 0,0:03:46.08,0:03:48.80,EN,,0,0,0,,the ball kids, the stringers,
+Dialogue: 0,0:03:46.08,0:03:48.80,ZH,,0,0,0,,还有为我们做饭的师傅们
+Dialogue: 0,0:03:48.80,0:03:53.20,EN,,0,0,0,,everyone who cooked for us.
+Dialogue: 0,0:03:48.80,0:03:53.20,ZH,,0,0,0,,这两周太不可思议了
+Dialogue: 0,0:03:53.20,0:03:55.76,EN,,0,0,0,,It was an unbelievable two weeks.
+Dialogue: 0,0:03:53.20,0:03:55.76,ZH,,0,0,0,,在上海的两周
+Dialogue: 0,0:03:55.76,0:03:57.76,EN,,0,0,0,,here in Shanghai.
+Dialogue: 0,0:03:55.76,0:03:57.76,ZH,,0,0,0,,能这样收官 感觉太棒了
+Dialogue: 0,0:03:57.76,0:04:01.44,EN,,0,0,0,,amazing to finish like this.
+Dialogue: 0,0:03:57.76,0:04:01.44,ZH,,0,0,0,,感谢所有工作人员
+Dialogue: 0,0:04:01.44,0:04:03.20,EN,,0,0,0,,Thanks to all the staff
+Dialogue: 0,0:04:01.44,0:04:03.20,ZH,,0,0,0,,是你们让这届赛事成为可能
+Dialogue: 0,0:04:03.20,0:04:05.92,EN,,0,0,0,,that make this tournament possible
+Dialogue: 0,0:04:03.20,0:04:05.92,ZH,,0,0,0,,还有所有的中国球迷
+Dialogue: 0,0:04:05.92,0:04:07.84,EN,,0,0,0,,and to all the Chinese fans.
+Dialogue: 0,0:04:05.92,0:04:07.84,ZH,,0,0,0,,谢谢你们从第一天起的支持
+Dialogue: 0,0:04:07.84,0:04:13.12,EN,,0,0,0,,Thank you for your support from day one
+Dialogue: 0,0:04:07.84,0:04:13.12,ZH,,0,0,0,,希望明年再见
+Dialogue: 0,0:04:13.12,0:04:16.00,EN,,0,0,0,,and I hope to see you next year.
+Dialogue: 0,0:04:13.12,0:04:16.00,ZH,,0,0,0,,谢谢大家
+Dialogue: 0,0:04:16.00,0:04:17.12,EN,,0,0,0,,Thank you, everyone.
+Dialogue: 0,0:04:16.00,0:04:17.12,ZH,,0,0,0,,谢谢
+Dialogue: 0,0:04:17.12,0:04:18.86,EN,,0,0,0,,Thank you.
+Dialogue: 0,0:04:17.12,0:04:18.86,ZH,,0,0,0,,谢谢

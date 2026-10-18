@@ -1,0 +1,170 @@
+{
+  "assembly": {
+    "parts": [
+      {
+        "role": "cover",
+        "file": "_cover.mp4",
+        "seconds": 2.0
+      },
+      {
+        "role": "lead_in",
+        "file": "_lead.mp4",
+        "seconds": 22.04
+      },
+      {
+        "role": "body",
+        "file": "_body.mp4",
+        "seconds": 258.04
+      },
+      {
+        "role": "takeaway_close",
+        "file": "_takeaway_close.mp4",
+        "seconds": 5.52,
+        "peak_db": -8.5
+      },
+      {
+        "role": "outro",
+        "file": "_outro.mp4",
+        "seconds": 4.2,
+        "peak_db": -8.5
+      }
+    ]
+  },
+  "seams": {
+    "count": 4,
+    "transition": "dissolve",
+    "dissolve_s": 0.18
+  },
+  "film_sha256": "02903c4e0c846ee70385d02a8d6bacbcbccf49e8314f7e561ddf71ba5b11b58c",
+  "film_seconds": 291.0,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "davidovichfokina-jodar-shanghai-2026-f-speech",
+    "received_at": "2026-10-18T18:20:50Z",
+    "artifact_ready_at": "2026-10-18T18:27:52Z",
+    "elapsed_seconds": 422.867,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "02903c4e0c846ee70385d02a8d6bacbcbccf49e8314f7e561ddf71ba5b11b58c",
+    "spec_sha256": "dde6fa1520dff5ed53b106b020f1927116962320e511211b5f0fc1caaa9de482",
+    "run_id": "39153739963",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-10-18T18:22:36Z",
+        "run_id": "39153739963"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-10-18T18:24:16Z",
+        "run_id": "39153739963"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-10-18T18:24:33Z",
+        "run_id": "39153739963"
+      },
+      {
+        "stage": "render",
+        "at": "2026-10-18T18:24:34Z",
+        "run_id": "39153739963"
+      }
+    ],
+    "render_seconds": 198.867,
+    "pre_render_seconds": 224.0
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "unknown",
+        "name": null,
+        "similarity": {},
+        "missing": [
+          "福基纳"
+        ],
+        "expected": [
+          "福基纳"
+        ],
+        "face": [
+          538,
+          194,
+          782,
+          519
+        ],
+        "face_px": 324.3,
+        "reason": "没有可比的官方头像：福基纳",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.261,
+        "ear_each": [
+          0.2453,
+          0.2767
+        ],
+        "face": [
+          538,
+          194,
+          782,
+          519
+        ],
+        "face_px": 324.3,
+        "reason": "眼睛纵横比 0.26 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "warnings": [
+        "认人拿不准：没有可比的官方头像：福基纳"
+      ]
+    },
+    "warnings": [
+      "认人拿不准：没有可比的官方头像：福基纳"
+    ]
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-10-18T18:22:36Z",
+      "run_id": "39153739963"
+    },
+    {
+      "stage": "cover_audit",
+      "at": "2026-10-18T18:24:16Z",
+      "run_id": "39153739963"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-10-18T18:24:33Z",
+      "run_id": "39153739963"
+    },
+    {
+      "stage": "render",
+      "at": "2026-10-18T18:24:34Z",
+      "run_id": "39153739963"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-10-18T18:27:53Z",
+      "run_id": "39153739963"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-18T18:27:54Z",
+      "run_id": "39153739963"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-davidovichfokina-jodar-shanghai-2026-f-speech/davidovichfokina-jodar-shanghai-2026-f-speech.mp4?v=02903c4e0c846ee7",
+  "video_bytes": 64760415,
+  "release_asset_digest": "sha256:02903c4e0c846ee70385d02a8d6bacbcbccf49e8314f7e561ddf71ba5b11b58c",
+  "qc_attestation_sha256": "747263386294722d8c494397ee1e8f8bbe33ba203de3245fcd8d01b3f8e3617a"
+}
