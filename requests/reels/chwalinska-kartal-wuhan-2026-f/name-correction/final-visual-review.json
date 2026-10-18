@@ -1,0 +1,542 @@
+{
+  "schema": "tennislive.independent-final-film-visual-review.v1",
+  "reviewed_at_utc": "2026-10-18T17:34:48.448407+00:00",
+  "reviewer": "match_facts_cover independent visual QA",
+  "decision": "pass",
+  "decision_scope": "Independent sampled visual review of the actual name-corrected final MP4 only. This is not audio approval or publication authorization.",
+  "artifact": {
+    "movie": "/workspace/scratch/wuhan-final-kartal-name-film/chwalinska-kartal-wuhan-2026-f.mp4",
+    "sha256": "a54e03d3b545a62ee300c59e30319fed71f8bfc5ea2574ddeeb33bde2876f9ec",
+    "bytes": 105265998,
+    "duration_seconds": 335.12,
+    "width": 1080,
+    "height": 1440,
+    "fps": 25,
+    "artifact_commit": "8986210e05164281045a0f72f4f7356bed41700a",
+    "spec_sha256": "c567c58adc4915bb3e7602bf09766c5c7ec8464a8444b356e1c7b386725eb74d",
+    "ass_sha256": "8c07c2fb1156940aff40cb1cb193774b0d838941d6eafd91f4c587335a6d5a0e",
+    "identity_verification": {
+      "movie_sha_size": "independently recomputed from local MP4",
+      "spec_ass_commit": "supplied by producing root agent; bound here, not independently rehashed in this visual-only review"
+    }
+  },
+  "sampling": {
+    "manifest": "/workspace/scratch/wuhan-final-kartal-name-film-qa/manifest.json",
+    "manifest_sha256": "4fe133dc7d9217647fd951bb4855193546c4fd7cfd28048c463e3a2d966f6ae7",
+    "regular_frames_count": 84,
+    "contact_sheets_individually_viewed": [
+      {
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/contact-00.jpg",
+        "sha256": "93aaafd8866f0a547331ebc9be52348b20fca654cab1c36c5af3eb25438b7bab"
+      },
+      {
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/contact-01.jpg",
+        "sha256": "7b1e4d19352e4a8baee304ad9bf926a82035aed14f8ce35656fdbbc93b20b4fd"
+      },
+      {
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/contact-02.jpg",
+        "sha256": "0f159da7c4e5db1278a03944e3bf975637e3838c7fc17ae71a033dc52c07873c"
+      },
+      {
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/contact-03.jpg",
+        "sha256": "098bf5c0d3af75d1a88f18dc93bacdb7b7c6408b72b6cd005694e2a7b5e316a1"
+      },
+      {
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/contact-04.jpg",
+        "sha256": "f9a24bb62d9d2cb3790f509a7dc4039f998968a73ffae7f2bd70e4066cff912e"
+      },
+      {
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/contact-05.jpg",
+        "sha256": "2f41158f3adb2ba3e706618838418ec6644bfad882e975959fa8b6ba70a75053"
+      },
+      {
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/contact-06.jpg",
+        "sha256": "6a962f9a0f6ee0728234fdac8c09f59a704d97b53c06200e9c0ce9f732120001"
+      }
+    ],
+    "regular_nominal_times": [
+      2,
+      6,
+      10,
+      14,
+      18,
+      22,
+      26,
+      30,
+      34,
+      38,
+      42,
+      46,
+      50,
+      54,
+      58,
+      62,
+      66,
+      70,
+      74,
+      78,
+      82,
+      86,
+      90,
+      94,
+      98,
+      102,
+      106,
+      110,
+      114,
+      118,
+      122,
+      126,
+      130,
+      134,
+      138,
+      142,
+      146,
+      150,
+      154,
+      158,
+      162,
+      166,
+      170,
+      174,
+      178,
+      182,
+      186,
+      190,
+      194,
+      198,
+      202,
+      206,
+      210,
+      214,
+      218,
+      222,
+      226,
+      230,
+      234,
+      238,
+      242,
+      246,
+      250,
+      254,
+      258,
+      262,
+      266,
+      270,
+      274,
+      278,
+      282,
+      286,
+      290,
+      294,
+      298,
+      302,
+      306,
+      310,
+      314,
+      318,
+      322,
+      326,
+      330,
+      334
+    ],
+    "regular_time_limit": "fps=1/4 representative samples approximately 2+4k seconds; not exact-frame timestamps",
+    "native_png_count": 33,
+    "all_native_pngs_individually_viewed": [
+      {
+        "time": 0.6,
+        "frame_index": 15,
+        "frame_time": 0.6,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-00-0.60.png",
+        "sha256": "690ed85e90b2ee45b4f4bc62fd95db045bf03327176603557db8476f2f7378d5",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 95.0,
+        "frame_index": 2375,
+        "frame_time": 95.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-01-95.00.png",
+        "sha256": "1e1615768e7b6e94f196c338c316021ec7833f42431eaab115da3d0a2e53a9b7",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 120.0,
+        "frame_index": 3000,
+        "frame_time": 120.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-02-120.00.png",
+        "sha256": "8cbc45ce113c8ef0037ba83fe1b9862377fba89c9252aff0924c102c8b8c54e4",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 140.0,
+        "frame_index": 3500,
+        "frame_time": 140.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-03-140.00.png",
+        "sha256": "8f630f3c3d04a6e79ee3484affdf1790a997fc60f8c9bed3d9845a9bd3d7f197",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 155.0,
+        "frame_index": 3875,
+        "frame_time": 155.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-04-155.00.png",
+        "sha256": "56b7b967b798dc3f9194dd096742d6223be04e30775bd16e5b3abbf8cda716ea",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 180.3,
+        "frame_index": 4508,
+        "frame_time": 180.32,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-05-180.30.png",
+        "sha256": "a2ee0260405e636172dcd26e82fcdb6ddeda63c17eddeca3ab976f4fbd9e7750",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 181.8,
+        "frame_index": 4545,
+        "frame_time": 181.8,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-06-181.80.png",
+        "sha256": "a17346053037e0a7c15c6fd25750a5257964205aa5ee1375855a368653cdc5e4",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 195.3,
+        "frame_index": 4883,
+        "frame_time": 195.32,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-07-195.30.png",
+        "sha256": "6de78e088b9d611e86a008fe6d792129f797e1abb02909f93d99c1aafda3063c",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 200.2,
+        "frame_index": 5005,
+        "frame_time": 200.2,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-08-200.20.png",
+        "sha256": "69293c2db7400e63d494052a4acdaac77b738195f71b2e77b7a4166ae655cc70",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 215.8,
+        "frame_index": 5395,
+        "frame_time": 215.8,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-09-215.80.png",
+        "sha256": "25ec4cb95eb594a75f6b9095eca5050a78e9df757213f8f0b94562ef59a4ebd6",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 226.8,
+        "frame_index": 5670,
+        "frame_time": 226.8,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-10-226.80.png",
+        "sha256": "1cba9a2398377d348967e9d83ffac5841f61ddfa13d5e49cba8e0478f6713c7f",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 227.5,
+        "frame_index": 5688,
+        "frame_time": 227.52,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-11-227.50.png",
+        "sha256": "1ca544ca7be8ac2f5c38a182327090534e2f98c50be8ce449c6d94a9c76166cf",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 242.0,
+        "frame_index": 6050,
+        "frame_time": 242.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-12-242.00.png",
+        "sha256": "b6f74209de1a6b37c29e3bb2bdf5ad47735c53fb53b24b77a773985c26c5389e",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 244.0,
+        "frame_index": 6100,
+        "frame_time": 244.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-13-244.00.png",
+        "sha256": "afbb23b86e338af815810763a426412c2be24fd955d4224da52ec9994eced816",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 246.0,
+        "frame_index": 6150,
+        "frame_time": 246.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-14-246.00.png",
+        "sha256": "c3edfb1a5c3600ce962fd9e7c930c6812bff0cbd1abd49c3a8301436f5b67e78",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 254.0,
+        "frame_index": 6350,
+        "frame_time": 254.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-15-254.00.png",
+        "sha256": "a28e8f59d96821e2defebad03cbe40534630675ac6cd17cb6cbc5afb3408634c",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 270.0,
+        "frame_index": 6750,
+        "frame_time": 270.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-16-270.00.png",
+        "sha256": "e0fcefbbfedc930ab7f6f49324a56b4b56e4a54d7d5772b733167fe3da488c99",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 280.0,
+        "frame_index": 7000,
+        "frame_time": 280.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-17-280.00.png",
+        "sha256": "14c6e3fc50c2d8a2c42c59d19bc1731e76fe04c61c229bd261f6dea0c1791eea",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 290.0,
+        "frame_index": 7250,
+        "frame_time": 290.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-18-290.00.png",
+        "sha256": "5abf5b2420d686c10fd4537c4ecac4f57b09d34e71d135299f03d07a876f4725",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 300.0,
+        "frame_index": 7500,
+        "frame_time": 300.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-19-300.00.png",
+        "sha256": "ce72ee6134a76447a773ea0cff959b01a197a61c6a4a17a998c89cac2282c716",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 311.5,
+        "frame_index": 7788,
+        "frame_time": 311.52,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-20-311.50.png",
+        "sha256": "054c7c75a7ab17d8ef01572d512d096666354968f3b0e5a55032587b099d8788",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 317.5,
+        "frame_index": 7938,
+        "frame_time": 317.52,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-21-317.50.png",
+        "sha256": "0a5c3e39895a45d4a07440f4ffde75fb80fe1b41246735cd54c355730297e347",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 325.0,
+        "frame_index": 8125,
+        "frame_time": 325.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-22-325.00.png",
+        "sha256": "80b9d14ac4c6ea73484d9a8fc94968d317a9505b815acb59d7783ec958ae8db7",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 332.0,
+        "frame_index": 8300,
+        "frame_time": 332.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-23-332.00.png",
+        "sha256": "8976e9af085378f0f1084b60827f2c8706dd128cce809cf52b972e5206deac38",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 17.92,
+        "frame_index": 448,
+        "frame_time": 17.92,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-extra-name-1-17.92.png",
+        "sha256": "9cfebb9e104ac6ca88f88424d31c74ce61b72ee0b2d0ddb94663c70dfe5f65de",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 24.96,
+        "frame_index": 624,
+        "frame_time": 24.96,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-extra-name-2-24.96.png",
+        "sha256": "2496a2b8ce62927d9068c9a2680b378e0150d45e8866c26cde96421a3df8d4de",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 66.52,
+        "frame_index": 1663,
+        "frame_time": 66.52,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-extra-name-3-66.52.png",
+        "sha256": "b9662ca10ccbaeedaeffbc9512b8719f21ece1afe36268043da6af4940243742",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 77.28,
+        "frame_index": 1932,
+        "frame_time": 77.28,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-extra-name-4-77.28.png",
+        "sha256": "ef0ccba08f1b3b777d4d4372418caa0458b40374bd24bb721e61040535878a5c",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 141.67999999999998,
+        "frame_index": 3542,
+        "frame_time": 141.68,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-extra-name-5-141.68.png",
+        "sha256": "0a016d8e41c30dc29961ad3fd66fbfffe44341710e22e7a7913823f5f7b09627",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 208.43999999999997,
+        "frame_index": 5211,
+        "frame_time": 208.44,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-extra-name-6-208.44.png",
+        "sha256": "9ad0c850f8b8b66e31b661dca45bab10b0f2f5748b44f42656d41b3d8e04bfb8",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 299.64,
+        "frame_index": 7491,
+        "frame_time": 299.64,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-extra-name-7-299.64.png",
+        "sha256": "fad742bc02a472c2911d3e3568114d03b64887209db30170ee33b919e9577fea",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 133.5,
+        "frame_index": 3338,
+        "frame_time": 133.52,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-extra-bp4-caption-133.50.png",
+        "sha256": "409ac480ccb3f918c4ace5e9a0a64407590a5923633a90e3e3dd2ecead9fa8fc",
+        "independently_viewed": true,
+        "hash_verified": true
+      },
+      {
+        "time": 264.0,
+        "frame_index": 6600,
+        "frame_time": 264.0,
+        "image": "/workspace/scratch/wuhan-final-kartal-name-film-qa/detail-extra-handshake-264.00.png",
+        "sha256": "b7c05a0364dd9c5897570fe12e159e78f6e40f578df48b9d073c86cf457fb088",
+        "independently_viewed": true,
+        "hash_verified": true
+      }
+    ],
+    "all_33_png_hashes_independently_verified": true
+  },
+  "findings": [
+    {
+      "check": "Requested Chinese name",
+      "status": "pass",
+      "observed": "All visible Chinese Kartal names in the seven contact sheets and all 33 native PNGs read 卡塔尔. No 卡尔塔尔 observed within the reviewed pixels. Cover matchup/player row, persistent top score line, card headline, Chinese narration/native commentary captions, and statistics player label are corrected.",
+      "targeted_native_times": [
+        17.92,
+        24.96,
+        66.52,
+        77.28,
+        141.68,
+        208.44,
+        299.64
+      ]
+    },
+    {
+      "check": "BP4 full-source framing and subtitle separation",
+      "status": "pass",
+      "observed": "At 95.00 and 120.00 both players remain inside the complete horizontal source band, including players near opposing lateral margins. The original two-row score panel and right-side point values are intact. The 98–130 regular samples show rally progression and both players rather than the first render's empty center crop. At 133.52 the source itself is a Kartal close-up; bilingual subtitles are below the horizontal source band and do not cover the scoreboard.",
+      "native_times": [
+        95.0,
+        120.0,
+        133.52
+      ]
+    },
+    {
+      "check": "Four supplementary windows scoreboard completeness",
+      "status": "pass",
+      "observed": "BP4 uses intact original panel; 140/155, 195.32/200.20, and 215.80/226.80 show both player rows with full set/game/point columns, no reproduced native-720 mask clipping.",
+      "native_times": [
+        95.0,
+        120.0,
+        140.0,
+        155.0,
+        195.32,
+        200.2,
+        215.8,
+        226.8
+      ]
+    },
+    {
+      "check": "Second-set set-point tail",
+      "status": "pass",
+      "observed": "Regular 170/174/178-second samples retain the set-point rally. At exact 180.32 both players have stopped contesting the ball and are walking; the frame retains the ball after the point, followed by winner close-up at 181.80. Thus the sampled new film includes the dead-ball tail and reaction, unlike the previously rejected source-158.64 cut. The native scoreboard is animating away on the close-up; this is source animation, not the old mask defect.",
+      "native_times": [
+        180.32,
+        181.8
+      ]
+    },
+    {
+      "check": "Match point, fall, greeting, umpire and team reaction",
+      "status": "pass",
+      "observed": "227.52 has championship-point preparation, 242.00/244.00 retain the final rally, 246.00 shows the winner lying down covering her face, 254.00 getting up, 264.00 player net greeting/hand contact, 270.00 umpire handshake, 280.00 turning toward the team and 290.00 smiling amid the surrounding team/cameras. Contact sheets retain this sequence in order.",
+      "native_times": [
+        227.52,
+        242.0,
+        244.0,
+        246.0,
+        254.0,
+        264.0,
+        270.0,
+        280.0,
+        290.0
+      ]
+    },
+    {
+      "check": "Selected cover",
+      "status": "pass",
+      "observed": "0.60-second frame uses the approved 1725-02 winner-and-trophy photo filling the 3:4 canvas; winner face and trophy remain central and inside the frame. The eyes are naturally closed during trophy kiss as in the selected source. 卡塔尔 is readable in both the matchup and player row."
+    },
+    {
+      "check": "Statistics and closing cards",
+      "status": "pass",
+      "observed": "299.64/300.00 native statistics page is complete and readable, with 卡塔尔 and all rows including winners 23/32, unforced errors 27/36 and total points 91/91. 311.52 clearly shows first tour title / 1000 title, 317.52 comparative-name caption, 325.00 Top20 outlook, and 332.00 brand end card; no overflow seen. This checks visual rendering, not new factual research."
+    }
+  ],
+  "blocking_visual_issues": [],
+  "limitations": [
+    "Static sampled visual review: seven contact sheets (84 representative frames) plus 33 individually opened original-size PNGs. No continuous all-frame playback or new motion-boundary audit is claimed.",
+    "No audio listening, loudness, pronunciation, TTS-byte identity or user approval check was performed in this review. The six new TTS sentences remain subject to the current user audio review; the old approval is not transferred.",
+    "No full-film OCR guarantee is claimed; absence of old Chinese name is bounded to the reviewed visible pixels.",
+    "No new fact verification, code/test review, tracked-file mutation, staging or Git commit was performed."
+  ],
+  "approval": {
+    "visual_sample_review_pass": true,
+    "audio_approved_by_this_review": false,
+    "publication_authorization": false,
+    "new_tts_user_approval": "pending per root task; independent of visual pass"
+  },
+  "history_preserved": {
+    "first_render_sha256": "18bf148e131871f764b383163a8d578a39bde760d51063e9281fbb98156129db",
+    "first_render_visual_decision": "fail",
+    "first_render_issue": "BP4 center crop excluded both lateral players. Its failure history is not overwritten.",
+    "previous_layout_fixed_old_name_film_sha256": "a0cb284aa970a2455b5d254bc6da436a6996c53128b98b31e0aca04a4a75b551",
+    "this_review_is_new_artifact_specific": true
+  }
+}
