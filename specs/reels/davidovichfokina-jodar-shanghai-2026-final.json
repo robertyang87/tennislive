@@ -19,7 +19,7 @@
   ],
   "_scorebox_why": "Root actual original430s frame and board crop verified widestthirdset x98..637,y920..1029. Left/top/bottom remain unchanged; firstset right543/second590. Runtime sameframe dynamic present mask retains fixed board position; actualnative verification pending.",
   "_crop_why": "User requests original3:4 full-canvas center-court presentation. cx0.5/trackfalse,1920x1080 center cropx555..1365 then4/3scale to1080x1440. Side court clipping is inherent and must be checked in actual native preview.",
-  "_source": "Exact requested YouTube402fnpRkS3c acquired through existing repository download-video. Actual1920x1080/50,480.211882s,104092732bytes,SHA805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975. Entire0..470.18 tennis/trophy content retained;470.18+publisher promotion excluded.",
+  "_source": "Exact requested YouTube402fnpRkS3c acquired through existingrepositorydownload-video. Actual1920x1080/50,480.211882s,104092732bytes,SHA805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975. Effective0..470.18 retains 447.34s (95.14%);22.84s noncriticalwholeunits omitted as explicit _source_coverage, plus470.18+publisherad. Allkeypointsandfulltrophylift retained, notallframesclaim.",
   "_requested_source": {
     "url": "https://youtu.be/402fnpRkS3c?is=z7GblsVjAcKjmNE3",
     "status": "exact_source_acquired",
@@ -182,7 +182,7 @@
     "lead": "首盘1比6，第二盘又被破发，福基纳怎样把上海冠军抢回来？回破后的三个发球局，他救下五个破发点；抢七扳平后，决胜盘又遭回破。每一次被拉回原点，他都再追一次。背伤停赛两个月后归来，他终于捧起生涯第一座大师赛冠军奖杯。",
     "_no_auto_why": "当前feature审稿，原声与中文口播实际听核仍待完成，禁止自动推送。听核与成片质检完成后按既定授权合并并推送微信，保留唯一回执。"
   },
-  "_heat_why": "User specifically requests championship comeback, all available8minute highlights and actual trophy lift; inspiring contrast grounded in1-6opening, five secondset BPs saved, repeated decider reversal and firstMasters title afterbackinjury.",
+  "_heat_why": "User specifically requests championshipcomeback,尽量利用8minutehighlights andactualtrophylift; inspiringcontrast grounded in1-6opening, five secondsetBPs saved, repeateddeciderreversal andfirstMasters afterbackinjury. Three noncritical sourceunits omittedforcoherentfinishedstory, allkeydecisivepointsandcupretained.",
   "_facts": [
     {
       "path": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/facts/fact-packet.json",
@@ -234,7 +234,7 @@
       "external_model_pass_claimed": false,
       "human_listening_claimed": false
     },
-    "_coverage_limits": "Finite source contact-sheet review; preserves all original0..470.18 content, including originalhighlightcuts. Not a claim of full live match/allpoints/allframes. Third-set foot incident retained without speculative diagnosis; exact English commentary pending ASR and source-window review."
+    "_coverage_limits": "Finite sourcecontact-sheet andactualboundaryframe review, notfull livematch/allpoints/allframes. Retains447.34of470.18effective source seconds; three omittednoncriticalwholeunits are explicit in_source_coverage, notdeclared recognized orsilenced. Keeps majorlongrallies,allavailabledecisivebreaks/setpoint/matchpoint,fallandreplays,handshake andcomplete454.32..470.18trophylift. Footincidentretainedpartialwithoutdiagnosis. Allretainedcaption/actualaudioevidence andfinalencodedvisualQCstillrequirecurrentplanbinding."
   },
   "segments": [
     {
@@ -290,7 +290,7 @@
     {
       "source": "main",
       "start": 0.0,
-      "end": 70.94,
+      "end": 49.18,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
@@ -325,7 +325,33 @@
         }
       ],
       "_quote_kind": "broadcast",
-      "_edit_id": "firstset_opening_highlights",
+      "_edit_id": "firstset_opening_highlights_part1",
+      "_fit_why": "User requests original3:4 full-canvas center-court presentation. cx0.5/trackfalse,1920x1080 center cropx555..1365 then4/3scale to1080x1440. Side court clipping is inherent and must be checked in actual native preview.",
+      "_score_inset_why": "Native original board fixed x0,source-top-scaled yapproximately1226. Auto-present spans must omit replay/closeup/trophy board absence; no manual move.",
+      "crosses_cut": "Original official highlight montage and source cuts retained. Different points/replays are not presented as continuous live match time.",
+      "point_end_ok": "Root actually reviewed original boundary wall /workspace/scratch/fokina-final-assembly/ambiguous-visual-windows.jpg. This edit ends after availablepoint before noncritical reaction/nextordinarypoint/footquestion. Mainkeyactions remain. Nominal end 49.18 plus native0.18s tail stays before ambiguousspeech (49.68/311.36/402.50 respectively). No claim that deleted words were resolved.",
+      "_quote_review_pending": true,
+      "_quote_evidence": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/cues.json"
+    },
+    {
+      "source": "main",
+      "start": 58.0,
+      "end": 70.94,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "subtitle_bottom": 304,
+      "narration": "",
+      "quote": [
+        {
+          "at": 10.69,
+          "end": 11.48,
+          "text": "It's well done.\n这一球处理得很好。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "_edit_id": "firstset_opening_highlights_part2",
       "_fit_why": "User requests original3:4 full-canvas center-court presentation. cx0.5/trackfalse,1920x1080 center cropx555..1365 then4/3scale to1080x1440. Side court clipping is inherent and must be checked in actual native preview.",
       "_score_inset_why": "Native original board fixed x0,source-top-scaled yapproximately1226. Auto-present spans must omit replay/closeup/trophy board absence; no manual move.",
       "crosses_cut": "Original official highlight montage and source cuts retained. Different points/replays are not presented as continuous live match time.",
@@ -368,6 +394,11 @@
           "at": 50.74,
           "end": 53.76,
           "text": "And a flawless set of tennis\n这一盘打得无可挑剔，"
+        },
+        {
+          "at": 54.34,
+          "end": 55.26,
+          "text": "Six games to one.\n六比一。"
         },
         {
           "at": 55.78,
@@ -486,6 +517,11 @@
       "narration": "",
       "quote": [
         {
+          "at": 15.71,
+          "end": 16.66,
+          "text": "Great point.\n精彩的一分。"
+        },
+        {
           "at": 24.14,
           "end": 25.46,
           "text": "Oh!\n噢！"
@@ -499,6 +535,11 @@
           "at": 30.78,
           "end": 32.64,
           "text": "How good that is!\n这一球打得太棒了！"
+        },
+        {
+          "at": 36.74,
+          "end": 37.62,
+          "text": "Right on cue.\n来得正是时候。"
         }
       ],
       "_quote_kind": "broadcast",
@@ -568,7 +609,7 @@
     {
       "source": "main",
       "start": 298.72,
-      "end": 321.46,
+      "end": 311.16,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
@@ -576,23 +617,14 @@
       "narration": "",
       "quote": [],
       "_quote_kind": "broadcast",
-      "_edit_id": "decider_rebreak_and_next_hold",
+      "_edit_id": "decider_actual_rebreak_complete",
       "_fit_why": "User requests original3:4 full-canvas center-court presentation. cx0.5/trackfalse,1920x1080 center cropx555..1365 then4/3scale to1080x1440. Side court clipping is inherent and must be checked in actual native preview.",
       "_score_inset_why": "Native original board fixed x0,source-top-scaled yapproximately1226. Auto-present spans must omit replay/closeup/trophy board absence; no manual move.",
       "crosses_cut": "Original official highlight montage and source cuts retained. Different points/replays are not presented as continuous live match time.",
-      "point_end_ok": "Draft ranges end at ledger scene boundaries after complete available action/reaction. Root still must bind exact cut+audio evidence and review native tail/crossfade. No final all-window approval claimed.",
+      "point_end_ok": "Root actually reviewed original boundary wall /workspace/scratch/fokina-final-assembly/ambiguous-visual-windows.jpg. This edit ends after availablepoint before noncritical reaction/nextordinarypoint/footquestion. Mainkeyactions remain. Nominal end 311.16 plus native0.18s tail stays before ambiguousspeech (49.68/311.36/402.50 respectively). No claim that deleted words were resolved.",
       "_quote_review_pending": true,
       "_quote_evidence": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/cues.json",
-      "_subtitle_review_pending": {
-        "evidence": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/ambiguities.json",
-        "ambiguity_id": "a006",
-        "source_span": [
-          311.62,
-          314.38
-        ],
-        "status": "actual_commentary_present_wording_unresolved_no_skip_or_silent_claim"
-      },
-      "_quote_skip_why": "该段保留完整回合及原声；赛后一句短评多档转写有未确认词，未将猜测烧录。该句不承担关键赛况或转折说明，关键过程由完整画面和紧随其后的决胜盘旁白交代。原始歧义见 data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/ambiguities.json#a006。"
+      "_quote_skip_why": "本段保留完整场上回合及原声；现有独立转写未给出可确认的关键解说。三个已知非关键歧义短评所在源窗整体剪除，不将未知词猜写为字幕，不声明人工听过或全词无歧义。实际保留范围与剪除原因见本spec._source_coverage；原始多档结果由源片复核包保留。"
     },
     {
       "seconds": 12.584,
@@ -641,7 +673,7 @@
     {
       "source": "main",
       "start": 360.64,
-      "end": 413.6,
+      "end": 402.16,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
@@ -650,24 +682,39 @@
       "narration": "",
       "quote": [
         {
-          "at": 43.86,
-          "end": 44.76,
-          "text": "That was my thought.\n我刚才也是这么想的。"
-        },
-        {
-          "at": 44.76,
-          "end": 45.16,
-          "text": "Yeah.\n是的。"
+          "at": 21.42,
+          "end": 22.16,
+          "text": "Game.\n这一局结束。"
         }
       ],
       "_quote_kind": "broadcast",
-      "_edit_id": "decider_keep_lead",
+      "_edit_id": "decider_keep_lead_part1",
+      "_fit_why": "User requests original3:4 full-canvas center-court presentation. cx0.5/trackfalse,1920x1080 center cropx555..1365 then4/3scale to1080x1440. Side court clipping is inherent and must be checked in actual native preview.",
+      "_score_inset_why": "Native original board fixed x0,source-top-scaled yapproximately1226. Auto-present spans must omit replay/closeup/trophy board absence; no manual move.",
+      "crosses_cut": "Original official highlight montage and source cuts retained. Different points/replays are not presented as continuous live match time.",
+      "point_end_ok": "Root actually reviewed original boundary wall /workspace/scratch/fokina-final-assembly/ambiguous-visual-windows.jpg. This edit ends after availablepoint before noncritical reaction/nextordinarypoint/footquestion. Mainkeyactions remain. Nominal end 402.16 plus native0.18s tail stays before ambiguousspeech (49.68/311.36/402.50 respectively). No claim that deleted words were resolved.",
+      "_quote_review_pending": true,
+      "_quote_evidence": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/cues.json"
+    },
+    {
+      "source": "main",
+      "start": 405.88,
+      "end": 413.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "score_inset": true,
+      "narration": "",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "_edit_id": "decider_keep_lead_part2",
       "_fit_why": "User requests original3:4 full-canvas center-court presentation. cx0.5/trackfalse,1920x1080 center cropx555..1365 then4/3scale to1080x1440. Side court clipping is inherent and must be checked in actual native preview.",
       "_score_inset_why": "Native original board fixed x0,source-top-scaled yapproximately1226. Auto-present spans must omit replay/closeup/trophy board absence; no manual move.",
       "crosses_cut": "Original official highlight montage and source cuts retained. Different points/replays are not presented as continuous live match time.",
       "point_end_ok": "Draft ranges end at ledger scene boundaries after complete available action/reaction. Root still must bind exact cut+audio evidence and review native tail/crossfade. No final all-window approval claimed.",
       "_quote_review_pending": true,
-      "_quote_evidence": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/cues.json"
+      "_quote_evidence": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/cues.json",
+      "_quote_skip_why": "本段保留完整场上回合及原声；现有独立转写未给出可确认的关键解说。三个已知非关键歧义短评所在源窗整体剪除，不将未知词猜写为字幕，不声明人工听过或全词无歧义。实际保留范围与剪除原因见本spec._source_coverage；原始多档结果由源片复核包保留。"
     },
     {
       "seconds": 10.52,
@@ -689,6 +736,11 @@
       "subtitle_bottom": 304,
       "narration": "",
       "quote": [
+        {
+          "at": 25.44,
+          "end": 26.72,
+          "text": "Game, set, match.\n比赛结束。"
+        },
         {
           "at": 27.04,
           "end": 30.28,
@@ -773,7 +825,7 @@
     }
   ],
   "_tts_backend_why": "10 unchangedbodyutterances plusbrandoutro preserveexact selectedv2MP3/WordBoundary; jodar_first_set12.888s/five_break_points13.152s capturedas2newv3requests andcardsallow0.8sextra. Voiceactualfinite-reviewpending, noautomaticall-tone/humanlistening claim.",
-  "_tennistv_trim": "Original requested source470.18..480.211882is publisherad; excludesonlythat10.031882s. Full0..470.18 tennis/trophycontent retained in chronologicalorder, plus9.96s postwin coldopenrepeat. Nativefinalsource nominalend470.00+0.18tail=470.18.",
+  "_tennistv_trim": "Publisherad470.18..480.211882excluded. Three noncriticalwholeunits49.18..58.00,311.16..321.46,402.16..405.88 excluded22.84s;447.34s/95.14% ofeffective470.18s retainedinchronologicalorder, plus9.96s postwin coldopenrepeat. Noaudioalteration/mute/falsewordresolution. Finalnominalend470.00+0.18tail reaches470.18 completecup; alloriginaleffectivefootageclaimsupersededbyexplicit_source_coverage.",
   "_hit_data": [
     {
       "label": "次盘五个破发点全救回",
@@ -795,11 +847,25 @@
     "native_ASS_preview_and_fullcanvas_scoreboard": true,
     "final_finite_encoded_movie_visual_QC": true,
     "release_asset_digests_and_WeChat_push_receipt": true,
-    "notes": "This is an editorialassemblydraft, not productionQC authorization. No pending issue is converted into pass.",
-    "source_caption_ambiguities": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/ambiguities.json",
+    "notes": "Reviewrender spec; noqualityapproval inferred from editorialcuts or validJSON. Root/sourceagentown final retainedsource audioevidence. Allrealvoice/finalmovie/pushgatesremain.",
+    "source_caption_ambiguities": "Historicalrawambiguities preserved, with3noncriticalwholeunits removedinstead of guessed. Currentretainedplan requires fresh sourceaudio-reviewbinding.",
     "source_caption_timing_not_acoustically_verified": true,
     "review_only_push_auto_false": true,
-    "tiebreak_card_at_safe_action_boundary_note": "Card nowfollows retainedTB and thirdset openingbreak at298.72.264.46cut wouldinterruptcommentary to264.64;264.84actualframe alreadyshowsserveaction. Root approved this retrospectiveplacement after actual original boundary-frame review; finalnative cut review remains pending."
+    "tiebreak_card_at_safe_action_boundary_note": "Card nowfollows retainedTB and thirdset openingbreak at298.72.264.46cut wouldinterruptcommentary to264.64;264.84actualframe alreadyshowsserveaction. Root approved this retrospectiveplacement after actual original boundary-frame review; finalnative cut review remains pending.",
+    "excluded_noncritical_windows_not_recognized": [
+      [
+        49.18,
+        58.0
+      ],
+      [
+        311.16,
+        321.46
+      ],
+      [
+        402.16,
+        405.88
+      ]
+    ]
   },
   "_shot_evidence": {
     "path": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/source/first-half-ledger.json",
@@ -807,6 +873,119 @@
     "used_in": {
       "jodar_first_set": "Official final article documents all7ralliesover9shots wonbyJodar,2/2BPs; actualfirsthalf source0..128.34longbaseline exchanges reviewed.",
       "five_break_points": "Rootactualmotiongrid167.22..175.00:runningforward172.12/diving172.82/flat173.52,netopponent visible. Pointcounterbreak2-3to3-3, nothold. Narration retrospectivebefore5BPcontext."
+    }
+  },
+  "_source_coverage": {
+    "source_sha256": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+    "effective_source_interval": [
+      0.0,
+      470.18
+    ],
+    "publisher_ad_excluded": [
+      470.18,
+      480.211882
+    ],
+    "retained_nominal_source_intervals": [
+      [
+        0.0,
+        49.18
+      ],
+      [
+        58.0,
+        70.94
+      ],
+      [
+        70.94,
+        167.22
+      ],
+      [
+        167.22,
+        198.3
+      ],
+      [
+        198.3,
+        235.92
+      ],
+      [
+        235.92,
+        298.72
+      ],
+      [
+        298.72,
+        311.16
+      ],
+      [
+        321.46,
+        360.64
+      ],
+      [
+        360.64,
+        402.16
+      ],
+      [
+        405.88,
+        413.6
+      ],
+      [
+        413.6,
+        470.0
+      ]
+    ],
+    "excluded_noncritical_source_intervals": [
+      {
+        "start": 49.18,
+        "end": 58.0,
+        "reason": "Ordinaryfirstsetservicepoint/reaction carryingunstablegenericshortcomment. Majorfirstset30srally70.94..107.56 andsetpoint119.54..123.30 remain."
+      },
+      {
+        "start": 311.16,
+        "end": 321.46,
+        "reason": "Rebreakreaction andordinarynextservicepoint carryinguncertaingenericshortcomment. Actualdecisiverebreak304.22..311.16 remains; uniquehighlight/replay321.46..339.12 remains."
+      },
+      {
+        "start": 402.16,
+        "end": 405.88,
+        "reason": "Finalfootwalk/questionandreplies removedasawhole. Earlierfootsequence384.74..402.16 remains;noinjurydiagnosisoruncertainwordcaptionclaimed."
+      }
+    ],
+    "excluded_noncritical_seconds": 22.84,
+    "retained_effective_source_seconds": 447.34,
+    "retained_effective_percent": 95.1423,
+    "native_tail_seconds": 0.18,
+    "native_tail_limits": {
+      "49.18": 49.36,
+      "311.16": 311.34,
+      "402.16": 402.34,
+      "final470.00": 470.18
+    },
+    "uncertainty_resolution_claimed": false,
+    "source_audio_gain": 1.0,
+    "mute_or_audio_patch": false,
+    "all_decisive_points_and_trophy_kept": true,
+    "final_trophy_interval": [
+      454.32,
+      470.18
+    ],
+    "evidence": "Rootactualoriginalboundarywall /workspace/scratch/fokina-final-assembly/ambiguous-visual-windows.jpg plus first/secondhalf finite sourceledgers. Sourceagentwillbindnewretainedplan audio-reviewpacket separately.",
+    "additional_caption_evidence": {
+      "four_cross_provider_cues": "/workspace/scratch/fokina-final-captions/youtube-cross-provider-additional-candidates.json",
+      "two_independent_youtube_CC_cues": [
+        {
+          "start": 235.04,
+          "end": 235.92,
+          "en": "Right on cue.",
+          "zh": "来得正是时候。",
+          "support": "ActualYouTubeCC tokensRight235.040/on235.280/Q235.519. Q→cue is cleanhomophone normalization. NoWhisperconfirmation claimed."
+        },
+        {
+          "start": 439.04,
+          "end": 440.32,
+          "en": "Game, set, match.",
+          "zh": "比赛结束。",
+          "support": "ActualYouTubeCC tokensGame439.039/set439.520/match439.840. Noand/nameadded, noWhisperconfirmation claimed."
+        }
+      ],
+      "sourceagent_actual_provider_review": "/root/fokina_source_captions confirmed rawCCwordtimestamps; finalactualretainedscopepacketbinding pending, nohumanhearingclaim."
     }
   }
 }
