@@ -1,7 +1,7 @@
 {
  "status": "pass",
  "method": "silero_vad_plus_dual_asr_coverage",
- "sha256": "9ef22aea2813c3430cc133233b3598e172ab7d1e726c8a96b0a400db5256d3f3",
+ "sha256": "796f78107330bf3b1a32c561451bac47d8b1189dc4d32a94ce64477dcdcdc1e6",
  "url": "https://www.youtube.com/watch?v=kUbqV30q1OE",
  "edge_pad_seconds": 0.35,
  "max_speech_seconds": 0.12,
@@ -12,12 +12,20 @@
    "end": 62.48,
    "speech_seconds": 20.078,
    "second_asr_words": [
-    "I"
+    "For",
+    "sure,",
+    "you're",
+    "gonna",
+    "I'm",
+    "gonna",
+    "be",
+    "I",
+    "Cannot"
    ],
-   "transcript_covered": true,
+   "transcript_covered": false,
    "caption_timeline_covered": false,
-   "status": "transcript_covered",
-   "reason": "VAD 测到 20.078s 人声，第二份 ASR（small.en）听到「I」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+   "status": "speech_detected",
+   "reason": "VAD 测到 20.078s 人声，第二份 ASR（medium.en）听到「For sure, you're gonna I'm gonna be I Cannot」——要人听：漏了就补 `en_fixed`，是笑声／掌声就写 `caption_gaps_ok`"
   },
   {
    "key": "119.3-145.8",
@@ -25,12 +33,14 @@
    "end": 145.76,
    "speech_seconds": 23.336,
    "second_asr_words": [
-    "I"
+    "I",
+    "Want",
+    "to"
    ],
    "transcript_covered": true,
    "caption_timeline_covered": false,
    "status": "transcript_covered",
-   "reason": "VAD 测到 23.336s 人声，第二份 ASR（small.en）听到「I」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+   "reason": "VAD 测到 23.336s 人声，第二份 ASR（medium.en）听到「I Want to」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
   },
   {
    "key": "187.6-218.7",
@@ -38,12 +48,18 @@
    "end": 218.72,
    "speech_seconds": 29.59,
    "second_asr_words": [
+    "May",
+    "how",
+    "the",
+    "G",
+    "Cheetah",
+    "Cheetah",
     "And"
    ],
-   "transcript_covered": true,
+   "transcript_covered": false,
    "caption_timeline_covered": false,
-   "status": "transcript_covered",
-   "reason": "VAD 测到 29.590s 人声，第二份 ASR（small.en）听到「And」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+   "status": "speech_detected",
+   "reason": "VAD 测到 29.590s 人声，第二份 ASR（medium.en）听到「May how the G Cheetah Cheetah And」——要人听：漏了就补 `en_fixed`，是笑声／掌声就写 `caption_gaps_ok`"
   }
  ]
 }

@@ -1,78 +1,83 @@
 # 转写交叉校验：davidovichfokina-jodar-shanghai-2026-f-speech
 
 - 第一份：YouTube 自动字幕 **306** 词
-- 第二份：faster-whisper（small.en）**383** 词
-- **对不上 19.6%**（闸门 12%）
+- 第二份：faster-whisper（medium.en）**389** 词
+- **对不上 30.7%**（闸门 12%）
 
 ⚠️ 上面两个词数和分歧率都是**去掉 erm/uh/uhh/um/umm 这类填词之后**算的：这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把「说话人有多磕巴」量成「两份转写对不上」。
 
 ## 分歧逐处（左＝YouTube 自动字幕，右＝第二份）
 
 - `congratulate` → `congrats rafa`
-- `—` → `are 20 years old`
-- `you'll` → `and you're going to`
+- `but` → `are 20 years old`
+- `you'll` → `and you're gonna`
 - `—` → `like`
 - `more` → `—`
-- `you're` → `you are`
-- `—` → `very`
+- `you're a` → `you are very`
 - `a` → `very`
 - `—` → `many`
-- `for what you've achieved this` → `because you are achieving the first`
-- `you're` → `are you`
-- `can't` → `cannot`
-- `it in` → `with`
-- `—` → `so many`
-- `—` → `here at`
-- `here` → `—`
-- `can't` → `cannot`
-- `—` → `these kind of`
-- `like this` → `—`
+- `for` → `because`
+- `you've achieved this` → `you are doing in the first`
+- `you're` → `do what are you`
+- `—` → `it's`
+- `can't describe it in words congrats and` → `—`
+- `going` → `gonna i'm gonna be i cannot describe this kind of moments not how`
+- `be champion here i can't describe moments like this` → `—`
 - `do i` → `to`
 - `this` → `—`
-- `we've` → `we`
-- `—` → `during`
-- `wasn't` → `it was not an`
+- `we've` → `what we`
+- `—` → `no during`
+- `wasn't` → `it was no not an`
 - `—` → `one`
 - `kept` → `keep`
-- `and` → `—`
-- `you believed` → `were believing`
-- `gave` → `give it to`
+- `—` → `no`
+- `believed` → `are you were believing`
+- `—` → `no`
+- `—` → `i have`
+- `gave` → `and you give it to`
+- `—` → `not`
 - `—` → `kind of`
 - `—` → `all`
 - `—` → `to all`
 - `—` → `to`
 - `for` → `just because they are`
-- `—` → `and`
+- `in` → `—`
+- `players` → `place`
+- `—` → `and you know`
 - `so` → `very`
-- `for` → `to know`
-- `do` → `are doing`
+- `for` → `no`
+- `do` → `are or they are doing`
+- `—` → `yeah`
 - `—` → `to them`
 - `last but` → `after`
 - `—` → `michael charles you know`
-- `masters` → `master`
+- `going to` → `gonna`
+- `—` → `now`
+- `masters 1000` → `master thousand`
 - `put on` → `are doing`
-- `for` → `easy to`
-- `and` → `to all the`
-- `—` → `it's`
+- `for` → `no make easy to`
+- `and` → `told the`
+- `—` → `you it's`
 - `was` → `very`
 - `—` → `i want to say`
-- `guys` → `all because for sure`
-- `will surely` → `is going to`
-- `a memory` → `like i don't know what to say`
-- `i don't know what` → `it's going`
-- `say` → `be like`
-- `i'll` → `so i'm going to`
+- `thanks` → `things`
+- `this will surely` → `because for sure there's gonna`
+- `a memory` → `there's gonna be like i don't know what to say like for there`
+- `i don't know what to say` → `no like`
+- `i'll think about you` → `so i'm gonna`
+- `—` → `may how the g cheetah cheetah`
 - `—` → `the`
-- `thank` → `say thanks many thanks to`
+- `thank` → `say thanks many thanks to to`
 - `—` → `to`
 - `kids` → `boys to`
 - `stringers everyone` → `swingers`
-- `cooked` → `were cooking`
-- `an` → `—`
+- `cooked` → `were cooking off`
+- `it was an` → `what's`
 - `—` → `i was spending`
 - `—` → `two weeks already`
 - `—` → `so i felt`
 - `this` → `that i want to say`
+- `staff that` → `stuff`
 - `from` → `for the first`
-- `one` → `—`
-- `—` → `to`
+- `one and i hope to see you next year` → `—`
+- `everyone thank you` → `—`
