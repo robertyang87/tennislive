@@ -1,0 +1,55 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-bj-crowning/bj_crowning.mp4",
+ "official_source_url": "https://x.com/WTA/status/2109274620532572568",
+ "source_sha256": "324d58e82a0c4dc7db622e9d860e2d5d96cda15a71c219afeb1565cb3a87ccfc",
+ "source_bytes": 15807682,
+ "method": "asr_cross_checked",
+ "reviewer": "Grok Bot executor (local faster-whisper small.en + medium.en word-level cross-check, silero VAD gating; no human listening, no tone claim)",
+ "reviewed_at": "2026-10-19T03:38:48+08:00",
+ "status": "complete",
+ "reviewed_from": 2.7,
+ "reviewed_to": 5.5,
+ "selected_from": 2.7,
+ "selected_to": 5.5,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "no_foreground_english_reason": "small.en 与 medium.en 两模型在本窗口都没有转写出被 silero VAD 证实的英文语音；VAD 在 2.70–2.90s 报有人声段，但两模型均未转写出英文（现场欢呼/观众声）；",
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/bj_x-der-bj_crowning-small.en.json",
+   "sha256": "3610299772b2b449618578185149c96e6df9046d78819b4327f95cc10bdf68d5",
+   "model": "small.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     null
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/bj_x-der-bj_crowning-medium.en.json",
+   "sha256": "de26c50ad74081206dfd2b1883507e8f548c183b2ae5b84104a2d8d7e053e484",
+   "model": "medium.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     null
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/silero-vad.json",
+   "sha256": "03fb86eaa0cfb1deff1e16f01debd0dd699e9d7cecab601d15b3695d856751fb",
+   "model": "silero-vad (faster-whisper 1.2.1, threshold 0.5, min_silence 300ms)"
+  }
+ ]
+}

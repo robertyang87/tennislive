@@ -1,0 +1,55 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-cin-trophy1/cin_trophy1.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=aw8XUjIkpio",
+ "source_sha256": "ead71f7dbd089d34140cf5b272d340ffd1860572955336ea1438eab6ddcd6c06",
+ "source_bytes": 11462925,
+ "method": "asr_cross_checked",
+ "reviewer": "Grok Bot executor (local faster-whisper small.en + medium.en word-level cross-check, silero VAD gating; no human listening, no tone claim)",
+ "reviewed_at": "2026-10-19T03:38:48+08:00",
+ "status": "complete",
+ "reviewed_from": 0.1,
+ "reviewed_to": 5.27,
+ "selected_from": 0.1,
+ "selected_to": 5.27,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "no_foreground_english_reason": "small.en 与 medium.en 两模型在本窗口都没有转写出被 silero VAD 证实的英文语音；VAD 在本窗口未检出人声；",
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/cin_t1-der-cin_trophy1-small.en.json",
+   "sha256": "d10e34b256abd6958cea12fbffd6518400f81df3c0be57b4e228bf6a82f67d17",
+   "model": "small.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     null
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/cin_t1-der-cin_trophy1-medium.en.json",
+   "sha256": "09951062068bad48356ac9065f285ff81932f7a9e55cf240e2a24b285c35a648",
+   "model": "medium.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     null
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/silero-vad.json",
+   "sha256": "03fb86eaa0cfb1deff1e16f01debd0dd699e9d7cecab601d15b3695d856751fb",
+   "model": "silero-vad (faster-whisper 1.2.1, threshold 0.5, min_silence 300ms)"
+  }
+ ]
+}

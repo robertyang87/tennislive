@@ -1,0 +1,55 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+ "official_source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+ "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+ "source_bytes": 138288809,
+ "method": "asr_cross_checked",
+ "reviewer": "Grok Bot executor (local faster-whisper small.en + medium.en word-level cross-check, silero VAD gating; no human listening, no tone claim)",
+ "reviewed_at": "2026-10-19T03:38:48+08:00",
+ "status": "complete",
+ "reviewed_from": 206.8,
+ "reviewed_to": 211.08,
+ "selected_from": 206.8,
+ "selected_to": 211.08,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "no_foreground_english_reason": "small.en 与 medium.en 两模型在本窗口都没有转写出被 silero VAD 证实的英文语音；VAD 在本窗口未检出人声；",
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/iw-9qBMhp-2sYk-small.en.json",
+   "sha256": "84ed48cd21ce3bf48cd464f4a1ecd676166c2e05b963e4d4fee6f4d7b07d1cd7",
+   "model": "small.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     300.0
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/iw-9qBMhp-2sYk-medium.en.json",
+   "sha256": "e81ddb6f2c19766f81fb8e43cac7d0047eca28990012385cf6cb1868a3f4fcc2",
+   "model": "medium.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     300.0
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/silero-vad.json",
+   "sha256": "03fb86eaa0cfb1deff1e16f01debd0dd699e9d7cecab601d15b3695d856751fb",
+   "model": "silero-vad (faster-whisper 1.2.1, threshold 0.5, min_silence 300ms)"
+  }
+ ]
+}

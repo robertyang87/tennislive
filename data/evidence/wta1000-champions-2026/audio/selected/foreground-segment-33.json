@@ -1,0 +1,55 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-madrid-backflip/madrid_backflip.mp4",
+ "official_source_url": "https://x.com/MutuaMadridOpen/status/2050627598904852489",
+ "source_sha256": "715be75c856dce651e9e4888d06cb3e90530cae9f83fca13c1d99db9a1c86196",
+ "source_bytes": 6500810,
+ "method": "asr_cross_checked",
+ "reviewer": "Grok Bot executor (local faster-whisper small.en + medium.en word-level cross-check, silero VAD gating; no human listening, no tone claim)",
+ "reviewed_at": "2026-10-19T03:38:48+08:00",
+ "status": "complete",
+ "reviewed_from": 4.75,
+ "reviewed_to": 6.65,
+ "selected_from": 4.75,
+ "selected_to": 6.65,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "no_foreground_english_reason": "small.en 与 medium.en 两模型在本窗口都没有转写出被 silero VAD 证实的英文语音；VAD 在本窗口未检出人声；",
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/madrid_bf-der-madrid_backflip-small.en.json",
+   "sha256": "c67c4f02881cf7363788221c64132fb033833b92be98b9908a7c0bf6e64fd7a6",
+   "model": "small.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     null
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/madrid_bf-der-madrid_backflip-medium.en.json",
+   "sha256": "94483ac496c1010939eb2985d2f696791562a6cbb405f9b75e8b1fca507d3ab0",
+   "model": "medium.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     null
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/silero-vad.json",
+   "sha256": "03fb86eaa0cfb1deff1e16f01debd0dd699e9d7cecab601d15b3695d856751fb",
+   "model": "silero-vad (faster-whisper 1.2.1, threshold 0.5, min_silence 300ms)"
+  }
+ ]
+}

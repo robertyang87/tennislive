@@ -1,0 +1,55 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-madrid-trophy/madrid_trophy.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=Obv_j6l33nQ",
+ "source_sha256": "3eafc927386465f792ca192b962b978fa5f771d00bec0e954401ddab4574d85d",
+ "source_bytes": 46946077,
+ "method": "asr_cross_checked",
+ "reviewer": "Grok Bot executor (local faster-whisper small.en + medium.en word-level cross-check, silero VAD gating; no human listening, no tone claim)",
+ "reviewed_at": "2026-10-19T03:38:48+08:00",
+ "status": "complete",
+ "reviewed_from": 8.5,
+ "reviewed_to": 12.08,
+ "selected_from": 8.5,
+ "selected_to": 12.08,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "no_foreground_english_reason": "small.en 与 medium.en 两模型在本窗口都没有转写出被 silero VAD 证实的英文语音；VAD 在 8.50–9.23s 报有人声段，但两模型均未转写出英文（现场欢呼/观众声）；",
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/madrid_t-der-madrid_trophy-small.en.json",
+   "sha256": "009de0d026f2cb3c49dec4d245b62f464accdabad2bb1922d4dcec2410d235c4",
+   "model": "small.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     null
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/madrid_t-der-madrid_trophy-medium.en.json",
+   "sha256": "fa7fb5a49a61b354f0f6505b27999e31f6b9e3c8f63da9194a3ad8f9cdf14318",
+   "model": "medium.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     null
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/silero-vad.json",
+   "sha256": "03fb86eaa0cfb1deff1e16f01debd0dd699e9d7cecab601d15b3695d856751fb",
+   "model": "silero-vad (faster-whisper 1.2.1, threshold 0.5, min_silence 300ms)"
+  }
+ ]
+}

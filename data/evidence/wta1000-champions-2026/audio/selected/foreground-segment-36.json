@@ -1,0 +1,81 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://www.youtube.com/watch?v=WXNZTi6qd1Y",
+ "official_source_url": "https://www.youtube.com/watch?v=WXNZTi6qd1Y",
+ "source_sha256": "e5aab2e4155d2ebf9ef25e4d31d2e84b6748963d0442c9a5e1818a14e0f904dc",
+ "source_bytes": 185331289,
+ "method": "asr_cross_checked",
+ "reviewer": "Grok Bot executor (local faster-whisper small.en + medium.en word-level cross-check, silero VAD gating; no human listening, no tone claim)",
+ "reviewed_at": "2026-10-19T03:38:48+08:00",
+ "status": "complete",
+ "reviewed_from": 194.2,
+ "reviewed_to": 199.87,
+ "selected_from": 194.2,
+ "selected_to": 199.87,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "no_foreground_english_reason": "small.en 与 medium.en 两模型在本窗口都没有转写出被 silero VAD 证实的英文语音；VAD 在 194.20–194.38s 报有人声段，但两模型均未转写出英文（现场欢呼/观众声）；",
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/rome-WXNZTi6qd1Y-full-small.en.json",
+   "sha256": "45a8c2c421855ecfbca24b60e60203b9f899f2f1479a35e114b696a1fb069565",
+   "model": "small.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     480.0
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/rome-WXNZTi6qd1Y-full-medium.en.json",
+   "sha256": "4179e9de322c993dc68c653302f9a3bcfb5d1297ddd8e17af49aaf95a9912c08",
+   "model": "medium.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     480.0
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/rome-WXNZTi6qd1Y-small.en.json",
+   "sha256": "b9330f4c527149d7876dac3d9ca35b2fc4a6201aa792b097d6b4e0a2a07349e0",
+   "model": "small.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     150.0,
+     480.0
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/rome-WXNZTi6qd1Y-medium.en.json",
+   "sha256": "63b3c3ca4a62510612f5927bcba0d76e483373089ea67fd955e874e3333066b9",
+   "model": "medium.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     150.0,
+     480.0
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/silero-vad.json",
+   "sha256": "03fb86eaa0cfb1deff1e16f01debd0dd699e9d7cecab601d15b3695d856751fb",
+   "model": "silero-vad (faster-whisper 1.2.1, threshold 0.5, min_silence 300ms)"
+  }
+ ]
+}
