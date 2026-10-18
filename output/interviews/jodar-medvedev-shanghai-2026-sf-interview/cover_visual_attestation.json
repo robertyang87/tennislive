@@ -1,0 +1,108 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-18T07:36:20Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "霍达尔",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at + face model buffalo_s-v0.7 vs official headshot",
+  "spec_sha256": "ae43a077398e7edc4c9f3047ed05be783f7af60502181aed970a6e3cf8f29281",
+  "poster_sha256": "ea9acc3467089b40153ceaea5fe715fc0934f901c10f5881c32b8bf69f68f68d",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        484,
+        342,
+        286,
+        286
+      ],
+      "detected_faces": 1,
+      "eyes": 3,
+      "face_height_ratio": 0.35309,
+      "face_area_ratio": 0.0935,
+      "center_x_ratio": 0.58056,
+      "center_y_ratio": 0.41358,
+      "sharpness": 438.82,
+      "contrast": 117.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 50.0,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    },
+    "face_model": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "霍达尔",
+        "similarity": {
+          "霍达尔": 0.5052
+        },
+        "missing": [],
+        "expected": [
+          "霍达尔"
+        ],
+        "face": [
+          533,
+          192,
+          744,
+          484
+        ],
+        "face_px": 291.3,
+        "reason": "像 霍达尔（0.51 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.272,
+        "ear_each": [
+          0.283,
+          0.261
+        ],
+        "face": [
+          533,
+          192,
+          744,
+          484
+        ],
+        "face_px": 291.3,
+        "reason": "眼睛纵横比 0.27 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "problems": [],
+      "warnings": []
+    }
+  },
+  "issues": [],
+  "warnings": []
+}

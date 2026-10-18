@@ -1,0 +1,166 @@
+{
+  "assembly": {
+    "parts": [
+      {
+        "role": "cover",
+        "file": "_cover.mp4",
+        "seconds": 2.0
+      },
+      {
+        "role": "lead_in",
+        "file": "_lead.mp4",
+        "seconds": 18.04
+      },
+      {
+        "role": "body",
+        "file": "_body.mp4",
+        "seconds": 64.04
+      },
+      {
+        "role": "takeaway_close",
+        "file": "_takeaway_close.mp4",
+        "seconds": 6.64,
+        "peak_db": -9.9
+      },
+      {
+        "role": "outro",
+        "file": "_outro.mp4",
+        "seconds": 4.2,
+        "peak_db": -8.5
+      }
+    ]
+  },
+  "seams": {
+    "count": 4,
+    "transition": "dissolve",
+    "dissolve_s": 0.18
+  },
+  "film_sha256": "7ab6693cca951090a530521a5f0694c1f0409e2e0332294993b6b6da2c412e88",
+  "film_seconds": 94.12,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "jodar-medvedev-shanghai-2026-sf-interview",
+    "received_at": "2026-10-18T07:32:35Z",
+    "artifact_ready_at": "2026-10-18T07:36:19Z",
+    "elapsed_seconds": 224.677,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "7ab6693cca951090a530521a5f0694c1f0409e2e0332294993b6b6da2c412e88",
+    "spec_sha256": "ae43a077398e7edc4c9f3047ed05be783f7af60502181aed970a6e3cf8f29281",
+    "run_id": "39108058458",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-10-18T07:33:41Z",
+        "run_id": "39108058458"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-10-18T07:34:39Z",
+        "run_id": "39108058458"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-10-18T07:34:50Z",
+        "run_id": "39108058458"
+      },
+      {
+        "stage": "render",
+        "at": "2026-10-18T07:34:51Z",
+        "run_id": "39108058458"
+      }
+    ],
+    "render_seconds": 88.677,
+    "pre_render_seconds": 136.0
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "霍达尔",
+        "similarity": {
+          "霍达尔": 0.5052
+        },
+        "missing": [],
+        "expected": [
+          "霍达尔"
+        ],
+        "face": [
+          533,
+          192,
+          744,
+          484
+        ],
+        "face_px": 291.3,
+        "reason": "像 霍达尔（0.51 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.272,
+        "ear_each": [
+          0.283,
+          0.261
+        ],
+        "face": [
+          533,
+          192,
+          744,
+          484
+        ],
+        "face_px": 291.3,
+        "reason": "眼睛纵横比 0.27 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "warnings": []
+    },
+    "warnings": []
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-10-18T07:33:41Z",
+      "run_id": "39108058458"
+    },
+    {
+      "stage": "cover_audit",
+      "at": "2026-10-18T07:34:39Z",
+      "run_id": "39108058458"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-10-18T07:34:50Z",
+      "run_id": "39108058458"
+    },
+    {
+      "stage": "render",
+      "at": "2026-10-18T07:34:51Z",
+      "run_id": "39108058458"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-10-18T07:36:20Z",
+      "run_id": "39108058458"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-18T07:36:21Z",
+      "run_id": "39108058458"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-jodar-medvedev-shanghai-2026-sf-interview/jodar-medvedev-shanghai-2026-sf-interview.mp4?v=7ab6693cca951090",
+  "video_bytes": 28590558,
+  "release_asset_digest": "sha256:7ab6693cca951090a530521a5f0694c1f0409e2e0332294993b6b6da2c412e88",
+  "qc_attestation_sha256": "391e66c664194ef4b900eea63a2a15314cf6c6f33e620859add2cf495fa07ad8"
+}
