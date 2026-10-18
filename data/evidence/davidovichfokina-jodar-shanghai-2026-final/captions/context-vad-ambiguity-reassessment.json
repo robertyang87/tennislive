@@ -1,0 +1,945 @@
+{
+  "source_sha256": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+  "review_scope": "13项剩余原声字幕歧义，有限本地无提示VAD识别的证据分型；不是人工耳审或全片音频复核。",
+  "raw_path": "/workspace/scratch/fokina-final-captions/context-vad/raw-all.json",
+  "raw_sha256": "5eeae3a2b65760a633a6c871c98d6c73173ae01e4beeb2f330d01a182fdc4036",
+  "asr_request_count": 18,
+  "settings": {
+    "cpu_threads": 2,
+    "compute_type": "int8",
+    "language": "en",
+    "beam_size": 8,
+    "vad_filter": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": null,
+    "local_files_only": true
+  },
+  "model_families_limit": "small.en/base.en/base均Whisper家族且共享训练偏差；多语base并非真正独立音频感知或人类。",
+  "models_downloaded": false,
+  "production_edited": false,
+  "source_audio_modified_or_muted": false,
+  "complete_packet_created": false,
+  "complete_translation_claimed": false,
+  "conclusion": "3关键句均仍未解决。另68秒短句与可能裁判短声未核。仅Great point获得可用核心文本增证；数字/重复no升级为高度疑似幻觉，不据此宣布全片无漏词或全部翻译通过。",
+  "ambiguities": [
+    {
+      "id": "a001",
+      "source_span": [
+        49.68,
+        53.04
+      ],
+      "classification": "likely_genuine_commentary_unresolved_wording",
+      "qualitative_text_evidence_confidence": "strong_for_82_percent_first_serve_Fokina; insufficient_for_complete_sentence",
+      "reason": "原small+base.en以及新small.en+多语base都在同一时窗识别82%/first serve/福基纳音形；原medium复制前句是失败。究竟of/on/are及统计口径依然不明。",
+      "bounded_new_ASR": {
+        "critical_percentage": [
+          {
+            "model": "small.en",
+            "duration_after_vad": 3.552,
+            "segments": [
+              {
+                "start": 49.66,
+                "end": 52.44,
+                "text": " 82% of first serve the Davidovich Vakina.",
+                "avg_logprob": -0.6686171611150106,
+                "no_speech_prob": 0.007849185727536678,
+                "words": [
+                  {
+                    "w": " 82",
+                    "s": 49.66,
+                    "e": 50.3,
+                    "p": 0.917927622795105
+                  },
+                  {
+                    "w": "%",
+                    "s": 50.3,
+                    "e": 50.7,
+                    "p": 0.7587984800338745
+                  },
+                  {
+                    "w": " of",
+                    "s": 50.7,
+                    "e": 50.88,
+                    "p": 0.7059062123298645
+                  },
+                  {
+                    "w": " first",
+                    "s": 50.88,
+                    "e": 51.12,
+                    "p": 0.4955121874809265
+                  },
+                  {
+                    "w": " serve",
+                    "s": 51.12,
+                    "e": 51.4,
+                    "p": 0.26048389077186584
+                  },
+                  {
+                    "w": " the",
+                    "s": 51.4,
+                    "e": 51.62,
+                    "p": 0.5454329252243042
+                  },
+                  {
+                    "w": " Davidovich",
+                    "s": 51.62,
+                    "e": 52.08,
+                    "p": 0.6032371819019318
+                  },
+                  {
+                    "w": " Vakina.",
+                    "s": 52.08,
+                    "e": 52.44,
+                    "p": 0.5444970925649008
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "model": "base",
+            "duration_after_vad": 3.552,
+            "segments": [
+              {
+                "start": 49.66,
+                "end": 52.5,
+                "text": " 82% of first served at the Veravigfakina.",
+                "avg_logprob": -0.8665952121510225,
+                "no_speech_prob": 0.07163302600383759,
+                "words": [
+                  {
+                    "w": " 82",
+                    "s": 49.66,
+                    "e": 50.24,
+                    "p": 0.804497480392456
+                  },
+                  {
+                    "w": "%",
+                    "s": 50.24,
+                    "e": 50.64,
+                    "p": 0.9375219345092773
+                  },
+                  {
+                    "w": " of",
+                    "s": 50.64,
+                    "e": 50.86,
+                    "p": 0.9489342570304871
+                  },
+                  {
+                    "w": " first",
+                    "s": 50.86,
+                    "e": 51.12,
+                    "p": 0.30552610754966736
+                  },
+                  {
+                    "w": " served",
+                    "s": 51.12,
+                    "e": 51.44,
+                    "p": 0.1081816777586937
+                  },
+                  {
+                    "w": " at",
+                    "s": 51.44,
+                    "e": 51.62,
+                    "p": 0.6989529728889465
+                  },
+                  {
+                    "w": " the",
+                    "s": 51.62,
+                    "e": 51.72,
+                    "p": 0.8818519711494446
+                  },
+                  {
+                    "w": " Veravigfakina.",
+                    "s": 51.72,
+                    "e": 52.5,
+                    "p": 0.3865959346294403
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "recommendation": "不得由82%硬推一发成功率或一发得分率；等待可靠原文或真正听辨。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": false
+    },
+    {
+      "id": "a002",
+      "source_span": [
+        66.74,
+        69.48
+      ],
+      "classification": "likely_short_spoken_phrase_unresolved",
+      "qualitative_text_evidence_confidence": "limited",
+      "reason": "原medium Let's walk up与新small It's well done在68.69..69.48接近时窗出现不同短句，不能确定是否同一句解说/背景/裁判。",
+      "bounded_new_ASR": {
+        "short_66_69": [
+          {
+            "model": "small.en",
+            "duration_after_vad": 2.788,
+            "segments": [
+              {
+                "start": 68.69,
+                "end": 69.43,
+                "text": " It's well done.",
+                "avg_logprob": -0.7613212987780571,
+                "no_speech_prob": 0.2524564564228058,
+                "words": [
+                  {
+                    "w": " It's",
+                    "s": 68.69,
+                    "e": 69.09,
+                    "p": 0.5213399194180965
+                  },
+                  {
+                    "w": " well",
+                    "s": 69.09,
+                    "e": 69.21,
+                    "p": 0.7454676628112793
+                  },
+                  {
+                    "w": " done.",
+                    "s": 69.21,
+                    "e": 69.43,
+                    "p": 0.6975679993629456
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "recommendation": "不可挑听起来更顺的短句烧录。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": false
+    },
+    {
+      "id": "a003",
+      "source_span": [
+        120.66,
+        128.66
+      ],
+      "classification": "supported_main_commentary_with_unresolved_possible_overlapping_umpire",
+      "qualitative_text_evidence_confidence": "strong_for_main_commentary; weak_for_umpire_mix",
+      "reason": "主解说flawless set of tennis for Rafael Jodar已多档支持且原cue保留。原medium Six games to one可能裁判报分但firstword p.003，与the new one for Leeds混串。没有新增此窗识别；此前base.en亦未提供完整裁判句。",
+      "bounded_new_ASR": {},
+      "recommendation": "保留已支持主解说，不能凭比分板生成未确认的裁判逐字字幕。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": false
+    },
+    {
+      "id": "a005",
+      "source_span": [
+        213.24,
+        214.96
+      ],
+      "classification": "new_cross_model_text_supported_short_commentary",
+      "qualitative_text_evidence_confidence": "moderate_text_support",
+      "reason": "原medium Oh great point的great仅p.194，但新small.en独立有限窗口明确识别Great point（214.01..214.91）。可补核心Great point，Oh仍未确认。",
+      "bounded_new_ASR": {
+        "short_213": [
+          {
+            "model": "small.en",
+            "duration_after_vad": 2.952,
+            "segments": [
+              {
+                "start": 214.01,
+                "end": 214.91,
+                "text": " Great point",
+                "avg_logprob": -0.12997255325317383,
+                "no_speech_prob": 0.030019516125321388,
+                "words": [
+                  {
+                    "w": " Great",
+                    "s": 214.01,
+                    "e": 214.57,
+                    "p": 0.8945827484130859
+                  },
+                  {
+                    "w": " point",
+                    "s": 214.57,
+                    "e": 214.91,
+                    "p": 0.959834635257721
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "recommendation": "建议新增候选cue Great point / 精彩的一分，214.01..214.91；本审查未改冻结spec。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": "core_Great_point_only_not_initial_Oh"
+    },
+    {
+      "id": "a006",
+      "source_span": [
+        311.62,
+        314.38
+      ],
+      "classification": "likely_genuine_commentary_unresolved_wording",
+      "qualitative_text_evidence_confidence": "strong_for_couldnt_keep_long_enough; insufficient_for_middle",
+      "reason": "原small/medium/base.en及新small/多语base中间多次冲突：at play/up very/in that play；不能凭习语偏好强写at bay。",
+      "bounded_new_ASR": {
+        "critical_at_play": [
+          {
+            "model": "small.en",
+            "duration_after_vad": 3.496,
+            "segments": [
+              {
+                "start": 311.82,
+                "end": 314.0,
+                "text": " I couldn't keep him at play long enough.",
+                "avg_logprob": -0.48576780465932995,
+                "no_speech_prob": 0.13858692348003387,
+                "words": [
+                  {
+                    "w": " I",
+                    "s": 311.82,
+                    "e": 311.82,
+                    "p": 0.21749995648860931
+                  },
+                  {
+                    "w": " couldn't",
+                    "s": 311.82,
+                    "e": 312.36,
+                    "p": 0.8789948523044586
+                  },
+                  {
+                    "w": " keep",
+                    "s": 312.36,
+                    "e": 312.54,
+                    "p": 0.9474939107894897
+                  },
+                  {
+                    "w": " him",
+                    "s": 312.54,
+                    "e": 312.7,
+                    "p": 0.49958282709121704
+                  },
+                  {
+                    "w": " at",
+                    "s": 312.7,
+                    "e": 312.8,
+                    "p": 0.7332859635353088
+                  },
+                  {
+                    "w": " play",
+                    "s": 312.8,
+                    "e": 312.96,
+                    "p": 0.7082160115242004
+                  },
+                  {
+                    "w": " long",
+                    "s": 312.96,
+                    "e": 313.14,
+                    "p": 0.9884797930717468
+                  },
+                  {
+                    "w": " enough.",
+                    "s": 313.14,
+                    "e": 314.0,
+                    "p": 0.9995589852333069
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "model": "base",
+            "duration_after_vad": 3.496,
+            "segments": [
+              {
+                "start": 311.82,
+                "end": 313.48,
+                "text": " Good for keeping that play along enough",
+                "avg_logprob": -0.6035791039466858,
+                "no_speech_prob": 0.17755818367004395,
+                "words": [
+                  {
+                    "w": " Good",
+                    "s": 311.82,
+                    "e": 312.22,
+                    "p": 0.16420990228652954
+                  },
+                  {
+                    "w": " for",
+                    "s": 312.22,
+                    "e": 312.34,
+                    "p": 0.46099311113357544
+                  },
+                  {
+                    "w": " keeping",
+                    "s": 312.34,
+                    "e": 312.54,
+                    "p": 0.994300365447998
+                  },
+                  {
+                    "w": " that",
+                    "s": 312.54,
+                    "e": 312.76,
+                    "p": 0.26935136318206787
+                  },
+                  {
+                    "w": " play",
+                    "s": 312.76,
+                    "e": 312.94,
+                    "p": 0.5464614629745483
+                  },
+                  {
+                    "w": " along",
+                    "s": 312.94,
+                    "e": 313.12,
+                    "p": 0.3428874909877777
+                  },
+                  {
+                    "w": " enough",
+                    "s": 313.12,
+                    "e": 313.48,
+                    "p": 0.9206421971321106
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "recommendation": "待可靠原文/真实听辨；不出complete标识。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": false
+    },
+    {
+      "id": "a007",
+      "source_span": [
+        359.46,
+        376.46
+      ],
+      "classification": "strong_hallucination_candidate_after_supported_second_break",
+      "qualitative_text_evidence_confidence": "high_as_hallucination_candidate_not_hearing_proof",
+      "reason": "原small独有Nivel's clean和重复no；medium没有对应。新VAD small.en和多语base均仅识别second break，未识别359.46..376.46后续字串。",
+      "bounded_new_ASR": {
+        "noise_359_376": [
+          {
+            "model": "small.en",
+            "duration_after_vad": 2.656,
+            "segments": [
+              {
+                "start": 358.43,
+                "end": 359.45,
+                "text": " A second break.",
+                "avg_logprob": -0.6593995264598301,
+                "no_speech_prob": 0.13626235723495483,
+                "words": [
+                  {
+                    "w": " A",
+                    "s": 358.43,
+                    "e": 358.89,
+                    "p": 0.29967477917671204
+                  },
+                  {
+                    "w": " second",
+                    "s": 358.89,
+                    "e": 359.13,
+                    "p": 0.987913191318512
+                  },
+                  {
+                    "w": " break.",
+                    "s": 359.13,
+                    "e": 359.45,
+                    "p": 0.9822928309440613
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "model": "base",
+            "duration_after_vad": 2.656,
+            "segments": [
+              {
+                "start": 358.43,
+                "end": 359.45,
+                "text": " The second break.",
+                "avg_logprob": -0.7416664021355766,
+                "no_speech_prob": 0.15455982089042664,
+                "words": [
+                  {
+                    "w": " The",
+                    "s": 358.43,
+                    "e": 358.87,
+                    "p": 0.22473326325416565
+                  },
+                  {
+                    "w": " second",
+                    "s": 358.87,
+                    "e": 359.13,
+                    "p": 0.8431175947189331
+                  },
+                  {
+                    "w": " break.",
+                    "s": 359.13,
+                    "e": 359.45,
+                    "p": 0.9590082168579102
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "recommendation": "重复no不应烧录；原声仍保留，不能宣称连续听审已证绝无裁判/背景言语。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": false
+    },
+    {
+      "id": "a008",
+      "source_span": [
+        402.5,
+        404.5
+      ],
+      "classification": "likely_genuine_commentary_and_reply_unresolved_question_wording",
+      "qualitative_text_evidence_confidence": "strong_for_hit_himself_and_reply; insufficient_for_question_object",
+      "reason": "多次均识别he hit himself及后续That was my thought./Yeah，但Did/Then、at/with和record/racket未解。新两档仍record；VAD未解决。",
+      "bounded_new_ASR": {
+        "critical_foot_question": [
+          {
+            "model": "small.en",
+            "duration_after_vad": 3.392,
+            "segments": [
+              {
+                "start": 402.83,
+                "end": 405.67,
+                "text": " Then he hit himself with the record. That was my thought. Yeah",
+                "avg_logprob": -0.3097323810352999,
+                "no_speech_prob": 0.0361633338034153,
+                "words": [
+                  {
+                    "w": " Then",
+                    "s": 402.83,
+                    "e": 403.33,
+                    "p": 0.65382981300354
+                  },
+                  {
+                    "w": " he",
+                    "s": 403.33,
+                    "e": 403.45,
+                    "p": 0.958120584487915
+                  },
+                  {
+                    "w": " hit",
+                    "s": 403.45,
+                    "e": 403.57,
+                    "p": 0.981353759765625
+                  },
+                  {
+                    "w": " himself",
+                    "s": 403.57,
+                    "e": 403.81,
+                    "p": 0.99281245470047
+                  },
+                  {
+                    "w": " with",
+                    "s": 403.81,
+                    "e": 404.07,
+                    "p": 0.4592803120613098
+                  },
+                  {
+                    "w": " the",
+                    "s": 404.07,
+                    "e": 404.15,
+                    "p": 0.8855419754981995
+                  },
+                  {
+                    "w": " record.",
+                    "s": 404.15,
+                    "e": 404.43,
+                    "p": 0.6320374608039856
+                  },
+                  {
+                    "w": " That",
+                    "s": 404.67,
+                    "e": 404.77,
+                    "p": 0.9090659618377686
+                  },
+                  {
+                    "w": " was",
+                    "s": 404.77,
+                    "e": 404.89,
+                    "p": 0.9948270916938782
+                  },
+                  {
+                    "w": " my",
+                    "s": 404.89,
+                    "e": 405.09,
+                    "p": 0.9977816939353943
+                  },
+                  {
+                    "w": " thought.",
+                    "s": 405.09,
+                    "e": 405.39,
+                    "p": 0.9858453273773193
+                  },
+                  {
+                    "w": " Yeah",
+                    "s": 405.67,
+                    "e": 405.67,
+                    "p": 0.9466950297355652
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "model": "base",
+            "duration_after_vad": 3.392,
+            "segments": [
+              {
+                "start": 402.83,
+                "end": 405.61,
+                "text": " Then he hit himself the record. That was my thought. Yeah",
+                "avg_logprob": -0.36092257127165794,
+                "no_speech_prob": 0.25838232040405273,
+                "words": [
+                  {
+                    "w": " Then",
+                    "s": 402.83,
+                    "e": 403.33,
+                    "p": 0.48509544134140015
+                  },
+                  {
+                    "w": " he",
+                    "s": 403.33,
+                    "e": 403.43,
+                    "p": 0.93895024061203
+                  },
+                  {
+                    "w": " hit",
+                    "s": 403.43,
+                    "e": 403.57,
+                    "p": 0.9809547662734985
+                  },
+                  {
+                    "w": " himself",
+                    "s": 403.57,
+                    "e": 403.83,
+                    "p": 0.45878446102142334
+                  },
+                  {
+                    "w": " the",
+                    "s": 403.83,
+                    "e": 404.11,
+                    "p": 0.6123744249343872
+                  },
+                  {
+                    "w": " record.",
+                    "s": 404.11,
+                    "e": 404.47,
+                    "p": 0.7484594583511353
+                  },
+                  {
+                    "w": " That",
+                    "s": 404.47,
+                    "e": 404.73,
+                    "p": 0.9689415693283081
+                  },
+                  {
+                    "w": " was",
+                    "s": 404.73,
+                    "e": 404.87,
+                    "p": 0.9926361441612244
+                  },
+                  {
+                    "w": " my",
+                    "s": 404.87,
+                    "e": 405.09,
+                    "p": 0.9986107349395752
+                  },
+                  {
+                    "w": " thought.",
+                    "s": 405.09,
+                    "e": 405.31,
+                    "p": 0.9819667339324951
+                  },
+                  {
+                    "w": " Yeah",
+                    "s": 405.49,
+                    "e": 405.61,
+                    "p": 0.9698280096054077
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "recommendation": "不得硬写racket或断言砸脚/伤病。已有后续回应字幕准确但问句缺翻译上下文的问题仍存在。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": false
+    },
+    {
+      "id": "a009",
+      "source_span": [
+        320.68,
+        350.66
+      ],
+      "classification": "strong_hallucination_or_misheard_score_call_candidate",
+      "qualitative_text_evidence_confidence": "high_for_unreliable_digits; no_definite_absence_of_speech",
+      "reason": "原medium数1..24并9词零时长，small为15-1/11-30；新small变Oh I'm 30，多语base变两次One two three。词串极不稳定，不能当真实24拍计数。",
+      "bounded_new_ASR": {
+        "noise_320_350": [
+          {
+            "model": "small.en",
+            "duration_after_vad": 3.232,
+            "segments": [
+              {
+                "start": 326.59,
+                "end": 337.9,
+                "text": " Oh, I'm 30!",
+                "avg_logprob": -1.218904389275445,
+                "no_speech_prob": 0.24047274887561798,
+                "words": [
+                  {
+                    "w": " Oh,",
+                    "s": 326.59,
+                    "e": 326.99,
+                    "p": 0.027349738404154778
+                  },
+                  {
+                    "w": " I'm",
+                    "s": 337.6,
+                    "e": 337.7,
+                    "p": 0.7713446617126465
+                  },
+                  {
+                    "w": " 30!",
+                    "s": 337.7,
+                    "e": 337.9,
+                    "p": 0.2990157902240753
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "model": "base",
+            "duration_after_vad": 3.232,
+            "segments": [
+              {
+                "start": 323.02,
+                "end": 326.65,
+                "text": " One, two, three!",
+                "avg_logprob": -0.8664049821741441,
+                "no_speech_prob": 0.3746166527271271,
+                "words": [
+                  {
+                    "w": " One,",
+                    "s": 323.02,
+                    "e": 323.3,
+                    "p": 0.03835185989737511
+                  },
+                  {
+                    "w": " two,",
+                    "s": 323.92,
+                    "e": 323.92,
+                    "p": 0.6363760232925415
+                  },
+                  {
+                    "w": " three!",
+                    "s": 325.91,
+                    "e": 326.65,
+                    "p": 0.9630204439163208
+                  }
+                ]
+              },
+              {
+                "start": 337.2,
+                "end": 338.04,
+                "text": " One, two, three!",
+                "avg_logprob": -0.8664049821741441,
+                "no_speech_prob": 0.3746166527271271,
+                "words": [
+                  {
+                    "w": " One,",
+                    "s": 337.2,
+                    "e": 337.52,
+                    "p": 0.028712542727589607
+                  },
+                  {
+                    "w": " two,",
+                    "s": 337.7,
+                    "e": 337.82,
+                    "p": 0.9194939732551575
+                  },
+                  {
+                    "w": " three!",
+                    "s": 337.94,
+                    "e": 338.04,
+                    "p": 0.9823724627494812
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "recommendation": "禁把数字串或I'm30当确认解说。可能裁判短声仍不能凭空判无；321.46插卡不能用此范围宣称已听验无切句。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": false
+    },
+    {
+      "id": "a010",
+      "source_span": [
+        413.0,
+        431.82
+      ],
+      "classification": "strong_hallucination_candidate_repeated_digits",
+      "qualitative_text_evidence_confidence": "high_as_hallucination_candidate_not_hearing_proof",
+      "reason": "原medium反复1,2,1且首词p.01/.015；原small未识别，新VAD small与多语base都无任何文本。",
+      "bounded_new_ASR": {
+        "noise_413_431": [
+          {
+            "model": "small.en",
+            "duration_after_vad": 0.0,
+            "segments": []
+          },
+          {
+            "model": "base",
+            "duration_after_vad": 0.0,
+            "segments": []
+          }
+        ]
+      },
+      "recommendation": "原声保留不烧录数词；413.60边界无已支持解说cue跨越，但不是听审证明。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": false
+    },
+    {
+      "id": "a011",
+      "source_span": [
+        56.94,
+        58.34
+      ],
+      "classification": "unsupported_low_confidence_short_exclamation",
+      "qualitative_text_evidence_confidence": "weak",
+      "reason": "原small Yeah p.15；medium无；新small扩窗+VAD无文本。",
+      "bounded_new_ASR": {
+        "short_57": [
+          {
+            "model": "small.en",
+            "duration_after_vad": 0.0,
+            "segments": []
+          }
+        ]
+      },
+      "recommendation": "不烧录未经确认的Yeah；保留原声。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": false
+    },
+    {
+      "id": "a012",
+      "source_span": [
+        113.04,
+        113.1
+      ],
+      "classification": "unsupported_or_background_short_call_unresolved",
+      "qualitative_text_evidence_confidence": "weak",
+      "reason": "原medium Oh p.005；原small无；新small在113.97..114.07短到0.1秒识别Thank you，不可视为可靠补证。",
+      "bounded_new_ASR": {
+        "short_113": [
+          {
+            "model": "small.en",
+            "duration_after_vad": 1.132,
+            "segments": [
+              {
+                "start": 113.97,
+                "end": 114.07,
+                "text": " Thank you.",
+                "avg_logprob": -0.9740482767422994,
+                "no_speech_prob": 0.7501627802848816,
+                "words": [
+                  {
+                    "w": " Thank",
+                    "s": 113.97,
+                    "e": 113.97,
+                    "p": 0.01292942464351654
+                  },
+                  {
+                    "w": " you.",
+                    "s": 113.97,
+                    "e": 114.07,
+                    "p": 0.9688658118247986
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "recommendation": "不烧录Oh或Thank you；仍需真实听辨才能断定是否裁判/球员短声。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": false
+    },
+    {
+      "id": "a013",
+      "source_span": [
+        290.68,
+        291.1
+      ],
+      "classification": "unsupported_low_confidence_short_exclamation",
+      "qualitative_text_evidence_confidence": "weak",
+      "reason": "原medium Oh p.004；原small无；新small扩窗+VAD无文本。",
+      "bounded_new_ASR": {
+        "short_290": [
+          {
+            "model": "small.en",
+            "duration_after_vad": 0.0,
+            "segments": []
+          }
+        ]
+      },
+      "recommendation": "不烧录未经确认的Oh；保留原声。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": false
+    },
+    {
+      "id": "a014",
+      "source_span": [
+        383.5,
+        383.98
+      ],
+      "classification": "possible_umpire_call_unresolved_exclamation",
+      "qualitative_text_evidence_confidence": "weak",
+      "reason": "原medium383.50..383.98识别Oh p.013；新small在382.06..382.74识别game，时间与词都不一致。",
+      "bounded_new_ASR": {
+        "short_383": [
+          {
+            "model": "small.en",
+            "duration_after_vad": 1.568,
+            "segments": [
+              {
+                "start": 382.06,
+                "end": 382.74,
+                "text": " game.",
+                "avg_logprob": -0.9947484970092774,
+                "no_speech_prob": 0.4884788990020752,
+                "words": [
+                  {
+                    "w": " game.",
+                    "s": 382.06,
+                    "e": 382.74,
+                    "p": 0.12683096528053284
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "recommendation": "不可把近邻时间game误当原Oh被确认；保留原声，不构造完整裁判报局。",
+      "human_hearing_verified": false,
+      "exact_full_wording_resolved": false
+    }
+  ]
+}

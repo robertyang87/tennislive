@@ -1,0 +1,156 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-402fnpRkS3c/402fnpRkS3c.mp4",
+  "source_sha256": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+  "source_bytes": 104092732,
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source-caption assistant; entire selected-window ASR/independent YouTube text review with finite actual source frames; no human listening claimed",
+  "reviewed_at": "2026-10-18T14:55:41.454307+00:00",
+  "status": "complete",
+  "reviewed_from": 198.3,
+  "reviewed_to": 236.1,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 214.01,
+      "end": 214.96,
+      "en": "Great point.",
+      "zh": "精彩的一分。",
+      "verification": "Actual same-source whole small.en/medium.en, independent YouTube English automatic captions and declared finite bounded models reconciled by current assistant. Cue punctuation and display grouping are editorial; all timings are ASR/CC estimates, not human-measured phoneme boundaries.",
+      "evidence_details": [
+        "YouTube auto en-orig event214.319",
+        "original medium segment18",
+        "small.en context VAD short_213 214.01..214.91"
+      ]
+    },
+    {
+      "start": 222.44,
+      "end": 223.76,
+      "en": "Oh!",
+      "zh": "噢！",
+      "verification": "Actual same-source whole small.en/medium.en, independent YouTube English automatic captions and declared finite bounded models reconciled by current assistant. Cue punctuation and display grouping are editorial; all timings are ASR/CC estimates, not human-measured phoneme boundaries.",
+      "evidence_details": [
+        "small:14",
+        "medium:19"
+      ]
+    },
+    {
+      "start": 227.7,
+      "end": 228.42,
+      "en": "Jaw-dropping!",
+      "zh": "令人瞠目结舌！",
+      "verification": "Actual same-source whole small.en/medium.en, independent YouTube English automatic captions and declared finite bounded models reconciled by current assistant. Cue punctuation and display grouping are editorial; all timings are ASR/CC estimates, not human-measured phoneme boundaries.",
+      "evidence_details": [
+        "small:14",
+        "medium:19"
+      ]
+    },
+    {
+      "start": 229.08,
+      "end": 230.94,
+      "en": "How good that is!",
+      "zh": "这一球打得太棒了！",
+      "verification": "Actual same-source whole small.en/medium.en, independent YouTube English automatic captions and declared finite bounded models reconciled by current assistant. Cue punctuation and display grouping are editorial; all timings are ASR/CC estimates, not human-measured phoneme boundaries.",
+      "evidence_details": [
+        "small:14",
+        "medium:20"
+      ]
+    },
+    {
+      "start": 235.04,
+      "end": 235.92,
+      "en": "Right on cue.",
+      "zh": "来得正是时候。",
+      "verification": "Actual same-source whole small.en/medium.en, independent YouTube English automatic captions and declared finite bounded models reconciled by current assistant. Cue punctuation and display grouping are editorial; all timings are ASR/CC estimates, not human-measured phoneme boundaries.",
+      "evidence_details": [
+        "Actual YouTube Right on. Q.; Q/cue exact homophone clean-verbatim normalization, not a new semantic word."
+      ]
+    }
+  ],
+  "no_foreground_english_reason": null,
+  "_edit_id": "second_set_after_rebreak",
+  "assessment_scope": "Complete retained foreground-semantic speech coverage review, including all declared confirmed court calls; not all-background-word recognition, direct human listening, acoustic certitude or global original-full-source translation complete.",
+  "background_or_nonlexical_candidates": [],
+  "excluded_uncertainties_not_resolved": [
+    {
+      "start": 49.18,
+      "end": 58.0,
+      "unresolved_utterance": [
+        49.66,
+        52.5
+      ],
+      "former_ambiguity": "a001",
+      "status": "actually_excluded_not_resolved",
+      "next_native_tail_before_utterance": 49.36
+    },
+    {
+      "start": 311.16,
+      "end": 321.46,
+      "unresolved_utterance": [
+        311.62,
+        314.38
+      ],
+      "former_ambiguity": "a006",
+      "status": "actually_excluded_not_resolved",
+      "next_native_tail_before_utterance": 311.34
+    },
+    {
+      "start": 402.16,
+      "end": 405.88,
+      "unresolved_utterance": [
+        402.5,
+        405.8
+      ],
+      "former_ambiguity": "a008_and_reply",
+      "status": "actually_excluded_not_resolved",
+      "next_native_tail_before_utterance": 402.34
+    }
+  ],
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/source_asr/402fnpRkS3c/small.en.json",
+        "sha256": "953f6bb4d146dcca0f69e9ca7efba7f4662052e74051c4d465a265830b4fc9ff"
+      },
+      {
+        "path": "data/source_asr/402fnpRkS3c/medium.en.json",
+        "sha256": "e92bac9863c6d8254988cd03f282e8d12926dc2095ca1ba4b206864e9090f24d"
+      },
+      {
+        "path": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/402fnpRkS3c.en-orig.json3",
+        "sha256": "45e32494064a27d5f563c4f291c76734a42115336195cf256ca7efd0b84aa580"
+      },
+      {
+        "path": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/context-vad-raw-all.json",
+        "sha256": "5eeae3a2b65760a633a6c871c98d6c73173ae01e4beeb2f330d01a182fdc4036"
+      },
+      {
+        "path": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/large-v3-turbo-critical-raw.json",
+        "sha256": "e58cd684ba0722872d554fbeee04543d3d164cced3dcc40c48f641120abf2bbb"
+      },
+      {
+        "path": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/candidate-acoustic-comparison-raw.json",
+        "sha256": "606a7a74055bf4a4b77df89485745940b7ead5c25d6467bdf26042505e48f23a"
+      },
+      {
+        "path": "data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/ctc-candidate-comparison-raw.json",
+        "sha256": "a12ef46901a152ed4a0b413b8caa3c95a04d855416fe3f6e3db9b27758018e2d"
+      }
+    ],
+    "reviewed_entire_selected_window_not_only_quotes": true,
+    "original_audio_preserved": true,
+    "manual_listening_claimed": false,
+    "acoustic_every_word_verified": false,
+    "same_Whisper_family_not_independent_human_votes": true,
+    "youtube_en_and_en_orig_one_provider": true,
+    "three_critical_unresolved_utterances_removed_as_complete_windows": true,
+    "native_tail_reviewed": true,
+    "bounds_and_limits": [
+      "Independent YouTube word offsets denote word starts; rolling display duration is not an audio utterance end.",
+      "Three excluded spans are editorial removals, not ASR successes. No new at bay/racket/82% statistic meaning is asserted.",
+      "Common proper-name spelling follows verified exact-match identity; letter Q to cue is an identical-pronunciation clean-verbatim correction, with no extra words invented.",
+      "No RMS/peak/loudness/silence-threshold test or source-audio gain/muting was used. CTC and forced candidate results remain raw failed evidence, not supporting pass for removed words.",
+      "Final native audiovisual/frame/subtitle QC is a separate pending task."
+    ]
+  }
+}

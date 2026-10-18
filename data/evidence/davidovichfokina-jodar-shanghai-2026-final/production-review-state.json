@@ -18,7 +18,7 @@
   ],
   "tts_bundle_sha256": "816d5deffdc351a3011dd8deaed7964cf21af857941271aba1d27304dffa562c",
   "tts_bundle_bytes": 892088,
-  "render_status": "failed_before_encoding_waiting_audio_review",
+  "render_status": "ready_to_dispatch_native_after_retained_scope_audio_gate_passed",
   "quality_approval": false,
   "wechat_pushed": false,
   "audio_review_pending": true,
@@ -27,11 +27,28 @@
   "uncertain_auxiliary_remarks_not_guessed": true,
   "camera_message_media_report": "/workspace/scratch/fokina-camera-media/spanish/REPORT.md",
   "render_run": "https://github.com/robertyang87/tennislive/actions/runs/39134098133",
-  "audio_review_index_missing": true,
+  "audio_review_index_missing": false,
   "whole_source_uncertain_spans_present": true,
   "source_uploader_verified": "Tennis TV",
   "source_captions_retrieved_run": "https://github.com/robertyang87/tennislive/actions/runs/39134401222",
-  "spec_sha256": "9703b1c7d5a325328a43459bfe21ce36b3a5367c74e24e12dbaf9d57e886be3a",
-  "remaining_source_review": "3genuineEnglishutterances unresolved after independentYouTubeautoCC, small.en,medium.en,base.en, multilingualbase andlarge-v3-turbo. Actualhearing required; no completepacket forged.",
-  "audio_review_clips": "/workspace/scratch/fokina-final-captions/listen-needed/三句原声待核.mp3"
+  "spec_sha256": "cd8b08ef15706dde2090ee390c91f2bd51ffc9db8dc530beafc2406ebc912148",
+  "remaining_source_review": "Three unresolved ancillary windows actually omitted aswholeunits; retained12windows passednormalforegroundgatewithactualsourceSHA. Historicaluncertainty preserved as excluded_not_resolved.",
+  "audio_review_clips": "/workspace/scratch/fokina-final-captions/listen-needed/三句原声待核.mp3",
+  "retained_source_uncertain_spans_present": false,
+  "retained_source_gate_passed": true,
+  "removed_source_windows": [
+    [
+      49.18,
+      58.0
+    ],
+    [
+      311.16,
+      321.46
+    ],
+    [
+      402.16,
+      405.88
+    ]
+  ],
+  "source_retained_effective_seconds": 447.34
 }

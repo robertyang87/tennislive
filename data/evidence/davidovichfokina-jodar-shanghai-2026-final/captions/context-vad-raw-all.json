@@ -1,0 +1,842 @@
+{
+  "source_sha256": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+  "settings": {
+    "cpu_threads": 2,
+    "compute_type": "int8",
+    "language": "en",
+    "beam_size": 8,
+    "vad_filter": true,
+    "condition_on_previous_text": false,
+    "initial_prompt": null,
+    "local_files_only": true
+  },
+  "results": [
+    {
+      "model": "small.en",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "window": "critical_percentage",
+      "source_start": 44.68,
+      "source_end": 58.04,
+      "audio_samples": 213760,
+      "audio_sha256": "617e9f4eeccde1dc8d2ffff64ccc15269beae51e3057c654dd3bef2a7d2825bb",
+      "duration_after_vad": 3.552,
+      "segments": [
+        {
+          "start": 49.66,
+          "end": 52.44,
+          "text": " 82% of first serve the Davidovich Vakina.",
+          "avg_logprob": -0.6686171611150106,
+          "no_speech_prob": 0.007849185727536678,
+          "words": [
+            {
+              "w": " 82",
+              "s": 49.66,
+              "e": 50.3,
+              "p": 0.917927622795105
+            },
+            {
+              "w": "%",
+              "s": 50.3,
+              "e": 50.7,
+              "p": 0.7587984800338745
+            },
+            {
+              "w": " of",
+              "s": 50.7,
+              "e": 50.88,
+              "p": 0.7059062123298645
+            },
+            {
+              "w": " first",
+              "s": 50.88,
+              "e": 51.12,
+              "p": 0.4955121874809265
+            },
+            {
+              "w": " serve",
+              "s": 51.12,
+              "e": 51.4,
+              "p": 0.26048389077186584
+            },
+            {
+              "w": " the",
+              "s": 51.4,
+              "e": 51.62,
+              "p": 0.5454329252243042
+            },
+            {
+              "w": " Davidovich",
+              "s": 51.62,
+              "e": 52.08,
+              "p": 0.6032371819019318
+            },
+            {
+              "w": " Vakina.",
+              "s": 52.08,
+              "e": 52.44,
+              "p": 0.5444970925649008
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 2.297
+    },
+    {
+      "model": "small.en",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "window": "critical_at_play",
+      "source_start": 306.62,
+      "source_end": 319.38,
+      "audio_samples": 204160,
+      "audio_sha256": "cddb728ff1367536a012bb75c52439059e3ce30ac7bdca60a94e1b3fbc4bfbe0",
+      "duration_after_vad": 3.496,
+      "segments": [
+        {
+          "start": 311.82,
+          "end": 314.0,
+          "text": " I couldn't keep him at play long enough.",
+          "avg_logprob": -0.48576780465932995,
+          "no_speech_prob": 0.13858692348003387,
+          "words": [
+            {
+              "w": " I",
+              "s": 311.82,
+              "e": 311.82,
+              "p": 0.21749995648860931
+            },
+            {
+              "w": " couldn't",
+              "s": 311.82,
+              "e": 312.36,
+              "p": 0.8789948523044586
+            },
+            {
+              "w": " keep",
+              "s": 312.36,
+              "e": 312.54,
+              "p": 0.9474939107894897
+            },
+            {
+              "w": " him",
+              "s": 312.54,
+              "e": 312.7,
+              "p": 0.49958282709121704
+            },
+            {
+              "w": " at",
+              "s": 312.7,
+              "e": 312.8,
+              "p": 0.7332859635353088
+            },
+            {
+              "w": " play",
+              "s": 312.8,
+              "e": 312.96,
+              "p": 0.7082160115242004
+            },
+            {
+              "w": " long",
+              "s": 312.96,
+              "e": 313.14,
+              "p": 0.9884797930717468
+            },
+            {
+              "w": " enough.",
+              "s": 313.14,
+              "e": 314.0,
+              "p": 0.9995589852333069
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 2.076
+    },
+    {
+      "model": "small.en",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "window": "critical_foot_question",
+      "source_start": 397.5,
+      "source_end": 409.5,
+      "audio_samples": 192000,
+      "audio_sha256": "8620425eb1e14843cb16866a0f79c7fbbec5175d17dbcc665d041f380dec2490",
+      "duration_after_vad": 3.392,
+      "segments": [
+        {
+          "start": 402.83,
+          "end": 405.67,
+          "text": " Then he hit himself with the record. That was my thought. Yeah",
+          "avg_logprob": -0.3097323810352999,
+          "no_speech_prob": 0.0361633338034153,
+          "words": [
+            {
+              "w": " Then",
+              "s": 402.83,
+              "e": 403.33,
+              "p": 0.65382981300354
+            },
+            {
+              "w": " he",
+              "s": 403.33,
+              "e": 403.45,
+              "p": 0.958120584487915
+            },
+            {
+              "w": " hit",
+              "s": 403.45,
+              "e": 403.57,
+              "p": 0.981353759765625
+            },
+            {
+              "w": " himself",
+              "s": 403.57,
+              "e": 403.81,
+              "p": 0.99281245470047
+            },
+            {
+              "w": " with",
+              "s": 403.81,
+              "e": 404.07,
+              "p": 0.4592803120613098
+            },
+            {
+              "w": " the",
+              "s": 404.07,
+              "e": 404.15,
+              "p": 0.8855419754981995
+            },
+            {
+              "w": " record.",
+              "s": 404.15,
+              "e": 404.43,
+              "p": 0.6320374608039856
+            },
+            {
+              "w": " That",
+              "s": 404.67,
+              "e": 404.77,
+              "p": 0.9090659618377686
+            },
+            {
+              "w": " was",
+              "s": 404.77,
+              "e": 404.89,
+              "p": 0.9948270916938782
+            },
+            {
+              "w": " my",
+              "s": 404.89,
+              "e": 405.09,
+              "p": 0.9977816939353943
+            },
+            {
+              "w": " thought.",
+              "s": 405.09,
+              "e": 405.39,
+              "p": 0.9858453273773193
+            },
+            {
+              "w": " Yeah",
+              "s": 405.67,
+              "e": 405.67,
+              "p": 0.9466950297355652
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 2.001
+    },
+    {
+      "model": "small.en",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "window": "noise_359_376",
+      "source_start": 358,
+      "source_end": 377,
+      "audio_samples": 304000,
+      "audio_sha256": "335b588af859c5a727cfe5b114a7de8f25570f3fce6cc831219df3239c2a6699",
+      "duration_after_vad": 2.656,
+      "segments": [
+        {
+          "start": 358.43,
+          "end": 359.45,
+          "text": " A second break.",
+          "avg_logprob": -0.6593995264598301,
+          "no_speech_prob": 0.13626235723495483,
+          "words": [
+            {
+              "w": " A",
+              "s": 358.43,
+              "e": 358.89,
+              "p": 0.29967477917671204
+            },
+            {
+              "w": " second",
+              "s": 358.89,
+              "e": 359.13,
+              "p": 0.987913191318512
+            },
+            {
+              "w": " break.",
+              "s": 359.13,
+              "e": 359.45,
+              "p": 0.9822928309440613
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 1.934
+    },
+    {
+      "model": "small.en",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "window": "noise_320_350",
+      "source_start": 319.68,
+      "source_end": 351.66,
+      "audio_samples": 511680,
+      "audio_sha256": "93f133ad0541cd6b73e85ff93f1fb6e35a572eac3105b2ff9a49cca4ccd14d1b",
+      "duration_after_vad": 3.232,
+      "segments": [
+        {
+          "start": 326.59,
+          "end": 337.9,
+          "text": " Oh, I'm 30!",
+          "avg_logprob": -1.218904389275445,
+          "no_speech_prob": 0.24047274887561798,
+          "words": [
+            {
+              "w": " Oh,",
+              "s": 326.59,
+              "e": 326.99,
+              "p": 0.027349738404154778
+            },
+            {
+              "w": " I'm",
+              "s": 337.6,
+              "e": 337.7,
+              "p": 0.7713446617126465
+            },
+            {
+              "w": " 30!",
+              "s": 337.7,
+              "e": 337.9,
+              "p": 0.2990157902240753
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 6.942
+    },
+    {
+      "model": "small.en",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "window": "noise_413_431",
+      "source_start": 412,
+      "source_end": 432.82,
+      "audio_samples": 333120,
+      "audio_sha256": "6f6e8f69c57ba86ad660dab9ac7e0d9d82ea54875fe32a8cd623ecc850f370cd",
+      "duration_after_vad": 0.0,
+      "segments": [],
+      "elapsed_seconds": 0.06
+    },
+    {
+      "model": "small.en",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "window": "short_66_69",
+      "source_start": 64.74,
+      "source_end": 71.48,
+      "audio_samples": 107840,
+      "audio_sha256": "bc3961758af427a3cfee2cf4677c3f4eb4f0dd6597f2c4c6c2d3d0f053f88830",
+      "duration_after_vad": 2.788,
+      "segments": [
+        {
+          "start": 68.69,
+          "end": 69.43,
+          "text": " It's well done.",
+          "avg_logprob": -0.7613212987780571,
+          "no_speech_prob": 0.2524564564228058,
+          "words": [
+            {
+              "w": " It's",
+              "s": 68.69,
+              "e": 69.09,
+              "p": 0.5213399194180965
+            },
+            {
+              "w": " well",
+              "s": 69.09,
+              "e": 69.21,
+              "p": 0.7454676628112793
+            },
+            {
+              "w": " done.",
+              "s": 69.21,
+              "e": 69.43,
+              "p": 0.6975679993629456
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 1.926
+    },
+    {
+      "model": "small.en",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "window": "short_213",
+      "source_start": 211.24,
+      "source_end": 216.96,
+      "audio_samples": 91520,
+      "audio_sha256": "c1714a860325f73fec976651287e047bb72cfd91480a8566449da0ef468fe629",
+      "duration_after_vad": 2.952,
+      "segments": [
+        {
+          "start": 214.01,
+          "end": 214.91,
+          "text": " Great point",
+          "avg_logprob": -0.12997255325317383,
+          "no_speech_prob": 0.030019516125321388,
+          "words": [
+            {
+              "w": " Great",
+              "s": 214.01,
+              "e": 214.57,
+              "p": 0.8945827484130859
+            },
+            {
+              "w": " point",
+              "s": 214.57,
+              "e": 214.91,
+              "p": 0.959834635257721
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 1.689
+    },
+    {
+      "model": "small.en",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "window": "short_57",
+      "source_start": 54.94,
+      "source_end": 60.34,
+      "audio_samples": 86400,
+      "audio_sha256": "916cd3bab41c7039588345a225b9d0d7613fef688d75c49f1ce6d191a34dfac3",
+      "duration_after_vad": 0.0,
+      "segments": [],
+      "elapsed_seconds": 0.012
+    },
+    {
+      "model": "small.en",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "window": "short_113",
+      "source_start": 111.04,
+      "source_end": 115.1,
+      "audio_samples": 64960,
+      "audio_sha256": "852ceecdbad141a0acdc556e6e344c14f8ff2c199e4bf676c6a58cb6fa45ae47",
+      "duration_after_vad": 1.132,
+      "segments": [
+        {
+          "start": 113.97,
+          "end": 114.07,
+          "text": " Thank you.",
+          "avg_logprob": -0.9740482767422994,
+          "no_speech_prob": 0.7501627802848816,
+          "words": [
+            {
+              "w": " Thank",
+              "s": 113.97,
+              "e": 113.97,
+              "p": 0.01292942464351654
+            },
+            {
+              "w": " you.",
+              "s": 113.97,
+              "e": 114.07,
+              "p": 0.9688658118247986
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 1.935
+    },
+    {
+      "model": "small.en",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "window": "short_290",
+      "source_start": 288.68,
+      "source_end": 293.1,
+      "audio_samples": 70720,
+      "audio_sha256": "0cf86163b2505d34b1c410055b8f549dd923d8c0af8422e93de741b4d6b9b284",
+      "duration_after_vad": 0.0,
+      "segments": [],
+      "elapsed_seconds": 0.01
+    },
+    {
+      "model": "small.en",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-small.en/snapshots/d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "window": "short_383",
+      "source_start": 381.5,
+      "source_end": 385.98,
+      "audio_samples": 71680,
+      "audio_sha256": "949add5f93eee577214a9afe360ec650aca0ea865b15a3ea912666dff221cd58",
+      "duration_after_vad": 1.568,
+      "segments": [
+        {
+          "start": 382.06,
+          "end": 382.74,
+          "text": " game.",
+          "avg_logprob": -0.9947484970092774,
+          "no_speech_prob": 0.4884788990020752,
+          "words": [
+            {
+              "w": " game.",
+              "s": 382.06,
+              "e": 382.74,
+              "p": 0.12683096528053284
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 1.777
+    },
+    {
+      "model": "base",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-base/snapshots/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+      "window": "critical_percentage",
+      "source_start": 44.68,
+      "source_end": 58.04,
+      "audio_samples": 213760,
+      "audio_sha256": "617e9f4eeccde1dc8d2ffff64ccc15269beae51e3057c654dd3bef2a7d2825bb",
+      "duration_after_vad": 3.552,
+      "segments": [
+        {
+          "start": 49.66,
+          "end": 52.5,
+          "text": " 82% of first served at the Veravigfakina.",
+          "avg_logprob": -0.8665952121510225,
+          "no_speech_prob": 0.07163302600383759,
+          "words": [
+            {
+              "w": " 82",
+              "s": 49.66,
+              "e": 50.24,
+              "p": 0.804497480392456
+            },
+            {
+              "w": "%",
+              "s": 50.24,
+              "e": 50.64,
+              "p": 0.9375219345092773
+            },
+            {
+              "w": " of",
+              "s": 50.64,
+              "e": 50.86,
+              "p": 0.9489342570304871
+            },
+            {
+              "w": " first",
+              "s": 50.86,
+              "e": 51.12,
+              "p": 0.30552610754966736
+            },
+            {
+              "w": " served",
+              "s": 51.12,
+              "e": 51.44,
+              "p": 0.1081816777586937
+            },
+            {
+              "w": " at",
+              "s": 51.44,
+              "e": 51.62,
+              "p": 0.6989529728889465
+            },
+            {
+              "w": " the",
+              "s": 51.62,
+              "e": 51.72,
+              "p": 0.8818519711494446
+            },
+            {
+              "w": " Veravigfakina.",
+              "s": 51.72,
+              "e": 52.5,
+              "p": 0.3865959346294403
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 0.796
+    },
+    {
+      "model": "base",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-base/snapshots/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+      "window": "critical_at_play",
+      "source_start": 306.62,
+      "source_end": 319.38,
+      "audio_samples": 204160,
+      "audio_sha256": "cddb728ff1367536a012bb75c52439059e3ce30ac7bdca60a94e1b3fbc4bfbe0",
+      "duration_after_vad": 3.496,
+      "segments": [
+        {
+          "start": 311.82,
+          "end": 313.48,
+          "text": " Good for keeping that play along enough",
+          "avg_logprob": -0.6035791039466858,
+          "no_speech_prob": 0.17755818367004395,
+          "words": [
+            {
+              "w": " Good",
+              "s": 311.82,
+              "e": 312.22,
+              "p": 0.16420990228652954
+            },
+            {
+              "w": " for",
+              "s": 312.22,
+              "e": 312.34,
+              "p": 0.46099311113357544
+            },
+            {
+              "w": " keeping",
+              "s": 312.34,
+              "e": 312.54,
+              "p": 0.994300365447998
+            },
+            {
+              "w": " that",
+              "s": 312.54,
+              "e": 312.76,
+              "p": 0.26935136318206787
+            },
+            {
+              "w": " play",
+              "s": 312.76,
+              "e": 312.94,
+              "p": 0.5464614629745483
+            },
+            {
+              "w": " along",
+              "s": 312.94,
+              "e": 313.12,
+              "p": 0.3428874909877777
+            },
+            {
+              "w": " enough",
+              "s": 313.12,
+              "e": 313.48,
+              "p": 0.9206421971321106
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 0.696
+    },
+    {
+      "model": "base",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-base/snapshots/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+      "window": "critical_foot_question",
+      "source_start": 397.5,
+      "source_end": 409.5,
+      "audio_samples": 192000,
+      "audio_sha256": "8620425eb1e14843cb16866a0f79c7fbbec5175d17dbcc665d041f380dec2490",
+      "duration_after_vad": 3.392,
+      "segments": [
+        {
+          "start": 402.83,
+          "end": 405.61,
+          "text": " Then he hit himself the record. That was my thought. Yeah",
+          "avg_logprob": -0.36092257127165794,
+          "no_speech_prob": 0.25838232040405273,
+          "words": [
+            {
+              "w": " Then",
+              "s": 402.83,
+              "e": 403.33,
+              "p": 0.48509544134140015
+            },
+            {
+              "w": " he",
+              "s": 403.33,
+              "e": 403.43,
+              "p": 0.93895024061203
+            },
+            {
+              "w": " hit",
+              "s": 403.43,
+              "e": 403.57,
+              "p": 0.9809547662734985
+            },
+            {
+              "w": " himself",
+              "s": 403.57,
+              "e": 403.83,
+              "p": 0.45878446102142334
+            },
+            {
+              "w": " the",
+              "s": 403.83,
+              "e": 404.11,
+              "p": 0.6123744249343872
+            },
+            {
+              "w": " record.",
+              "s": 404.11,
+              "e": 404.47,
+              "p": 0.7484594583511353
+            },
+            {
+              "w": " That",
+              "s": 404.47,
+              "e": 404.73,
+              "p": 0.9689415693283081
+            },
+            {
+              "w": " was",
+              "s": 404.73,
+              "e": 404.87,
+              "p": 0.9926361441612244
+            },
+            {
+              "w": " my",
+              "s": 404.87,
+              "e": 405.09,
+              "p": 0.9986107349395752
+            },
+            {
+              "w": " thought.",
+              "s": 405.09,
+              "e": 405.31,
+              "p": 0.9819667339324951
+            },
+            {
+              "w": " Yeah",
+              "s": 405.49,
+              "e": 405.61,
+              "p": 0.9698280096054077
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 0.725
+    },
+    {
+      "model": "base",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-base/snapshots/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+      "window": "noise_359_376",
+      "source_start": 358,
+      "source_end": 377,
+      "audio_samples": 304000,
+      "audio_sha256": "335b588af859c5a727cfe5b114a7de8f25570f3fce6cc831219df3239c2a6699",
+      "duration_after_vad": 2.656,
+      "segments": [
+        {
+          "start": 358.43,
+          "end": 359.45,
+          "text": " The second break.",
+          "avg_logprob": -0.7416664021355766,
+          "no_speech_prob": 0.15455982089042664,
+          "words": [
+            {
+              "w": " The",
+              "s": 358.43,
+              "e": 358.87,
+              "p": 0.22473326325416565
+            },
+            {
+              "w": " second",
+              "s": 358.87,
+              "e": 359.13,
+              "p": 0.8431175947189331
+            },
+            {
+              "w": " break.",
+              "s": 359.13,
+              "e": 359.45,
+              "p": 0.9590082168579102
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 0.735
+    },
+    {
+      "model": "base",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-base/snapshots/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+      "window": "noise_320_350",
+      "source_start": 319.68,
+      "source_end": 351.66,
+      "audio_samples": 511680,
+      "audio_sha256": "93f133ad0541cd6b73e85ff93f1fb6e35a572eac3105b2ff9a49cca4ccd14d1b",
+      "duration_after_vad": 3.232,
+      "segments": [
+        {
+          "start": 323.02,
+          "end": 326.65,
+          "text": " One, two, three!",
+          "avg_logprob": -0.8664049821741441,
+          "no_speech_prob": 0.3746166527271271,
+          "words": [
+            {
+              "w": " One,",
+              "s": 323.02,
+              "e": 323.3,
+              "p": 0.03835185989737511
+            },
+            {
+              "w": " two,",
+              "s": 323.92,
+              "e": 323.92,
+              "p": 0.6363760232925415
+            },
+            {
+              "w": " three!",
+              "s": 325.91,
+              "e": 326.65,
+              "p": 0.9630204439163208
+            }
+          ]
+        },
+        {
+          "start": 337.2,
+          "end": 338.04,
+          "text": " One, two, three!",
+          "avg_logprob": -0.8664049821741441,
+          "no_speech_prob": 0.3746166527271271,
+          "words": [
+            {
+              "w": " One,",
+              "s": 337.2,
+              "e": 337.52,
+              "p": 0.028712542727589607
+            },
+            {
+              "w": " two,",
+              "s": 337.7,
+              "e": 337.82,
+              "p": 0.9194939732551575
+            },
+            {
+              "w": " three!",
+              "s": 337.94,
+              "e": 338.04,
+              "p": 0.9823724627494812
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 0.762
+    },
+    {
+      "model": "base",
+      "snapshot": "/workspace/scratch/whisper-models/models--Systran--faster-whisper-base/snapshots/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+      "window": "noise_413_431",
+      "source_start": 412,
+      "source_end": 432.82,
+      "audio_samples": 333120,
+      "audio_sha256": "6f6e8f69c57ba86ad660dab9ac7e0d9d82ea54875fe32a8cd623ecc850f370cd",
+      "duration_after_vad": 0.0,
+      "segments": [],
+      "elapsed_seconds": 0.04
+    }
+  ]
+}

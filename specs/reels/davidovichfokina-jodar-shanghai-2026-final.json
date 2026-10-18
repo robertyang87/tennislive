@@ -5,7 +5,6 @@
   "outro": true,
   "stat_card_full_canvas": true,
   "preserve_source_audio": true,
-  "_draft": true,
   "slug": "davidovichfokina-jodar-shanghai-2026-final",
   "sources": {
     "main": "https://github.com/robertyang87/tennislive/releases/download/source-402fnpRkS3c/402fnpRkS3c.mp4"
@@ -177,10 +176,10 @@
     }
   },
   "push": {
-    "auto": false,
+    "auto": true,
     "summary": "福基纳逆转夺冠",
     "lead": "首盘1比6，第二盘又被破发，福基纳怎样把上海冠军抢回来？回破后的三个发球局，他救下五个破发点；抢七扳平后，决胜盘又遭回破。每一次被拉回原点，他都再追一次。背伤停赛两个月后归来，他终于捧起生涯第一座大师赛冠军奖杯。",
-    "_no_auto_why": "当前feature审稿，原声与中文口播实际听核仍待完成，禁止自动推送。听核与成片质检完成后按既定授权合并并推送微信，保留唯一回执。"
+    "_delivery_why": "用户要求完整成片并推送微信。feature分支先完成实际成片与审查；全部质检及当前headCI通过后合并，按既有自动门禁推送一次并核回执。"
   },
   "_heat_why": "User specifically requests championshipcomeback,尽量利用8minutehighlights andactualtrophylift; inspiringcontrast grounded in1-6opening, five secondsetBPs saved, repeateddeciderreversal andfirstMasters afterbackinjury. Three noncritical sourceunits omittedforcoherentfinishedstory, allkeydecisivepointsandcupretained.",
   "_facts": [
@@ -538,7 +537,7 @@
         },
         {
           "at": 36.74,
-          "end": 37.62,
+          "end": 37.619999999999976,
           "text": "Right on cue.\n来得正是时候。"
         }
       ],
@@ -847,10 +846,10 @@
     "native_ASS_preview_and_fullcanvas_scoreboard": true,
     "final_finite_encoded_movie_visual_QC": true,
     "release_asset_digests_and_WeChat_push_receipt": true,
-    "notes": "Reviewrender spec; noqualityapproval inferred from editorialcuts or validJSON. Root/sourceagentown final retainedsource audioevidence. Allrealvoice/finalmovie/pushgatesremain.",
+    "notes": "Formalrecipe readyfornativefeature encode; actualvoice/finalmovieQA pending separately. Featurebranch cannotautoWechat. OnlymergeafteractualqualityandCI, thenuserauthorizeddelivery.",
     "source_caption_ambiguities": "Historicalrawambiguities preserved, with3noncriticalwholeunits removedinstead of guessed. Currentretainedplan requires fresh sourceaudio-reviewbinding.",
     "source_caption_timing_not_acoustically_verified": true,
-    "review_only_push_auto_false": true,
+    "review_only_push_auto_false": false,
     "tiebreak_card_at_safe_action_boundary_note": "Card nowfollows retainedTB and thirdset openingbreak at298.72.264.46cut wouldinterruptcommentary to264.64;264.84actualframe alreadyshowsserveaction. Root approved this retrospectiveplacement after actual original boundary-frame review; finalnative cut review remains pending.",
     "excluded_noncritical_windows_not_recognized": [
       [
