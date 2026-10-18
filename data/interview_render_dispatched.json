@@ -77,21 +77,14 @@
   },
   "subs": {
     "davidovichfokina-jodar-shanghai-2026-f-speech": {
-      "at": "2026-10-18T13:55:08Z",
-      "inputs_sha256": "38bc6d699d29b230a54940acd59f3a7d6b652c965e59ec4cb61f0b84a4ccc1e4",
+      "at": "2026-10-18T15:08:06Z",
+      "inputs_sha256": "a65d2ddd103e63772b016010c23cfe13955703e66f2176b26509f572df18f29a",
       "tries": 1
     },
     "davidovich-fokina-shanghai-2026-final-champion-speech": {
       "at": "2026-10-18T14:08:50Z",
       "inputs_sha256": "257229eda21ca4b00a042d680033945ab849c944447d2be89c2bf12d39a82ffa",
       "tries": 1
-    }
-  },
-  "subs_red": {
-    "davidovichfokina-jodar-shanghai-2026-f-speech": {
-      "since": "2026-10-18T14:08:50Z",
-      "inputs_sha256": "38bc6d699d29b230a54940acd59f3a7d6b652c965e59ec4cb61f0b84a4ccc1e4",
-      "why": "预检：转写（subs 在当前转写指纹上量出来的）：第二份 ASR 在当前转写指纹上量到：分歧 19.6% 比认领的 19.6% 还高——认领是钉在当时那次观测上的，现在变差了。重新逐处看过再更新 `transcript_disagree_ok.rate`。"
     }
   }
 }
