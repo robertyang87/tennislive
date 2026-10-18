@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>复制发布文案</title>
+  <style>
+
+:root {
+  --tl-brand-bar: linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);
+  --tl-radius: 10px;
+  --tl-radius-sm: 6px;
+  --tl-radius-md: 8px;
+  --tl-radius-lg: 10px;
+  --tl-radius-xl: 14px;
+  --tl-radius-full: 999px;
+  --tl-radius-hairline: 2px;
+  --tl-text-xs: 12px;
+  --tl-text-sm: 13px;
+  --tl-text-base: 15px;
+  --tl-text-lg: 18px;
+  --tl-text-xl: 22px;
+  --tl-text-2xl: 28px;
+  --tl-font-sans: -apple-system,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif;
+  --tl-duration-press: 120ms;
+  --tl-duration-quick: 150ms;
+  --tl-duration-fast: 250ms;
+  --tl-duration-medium: 350ms;
+  --tl-duration-slow: 400ms;
+  --tl-duration-emphasis: 500ms;
+  --tl-duration-stagger: 40ms;
+  --tl-ease-out: cubic-bezier(0.22,1,0.36,1);
+  --tl-ease-spring: cubic-bezier(0.34,1.35,0.64,1);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --tl-background: #080e1d;
+  --tl-card: #15243a;
+  --tl-muted: #20324e;
+  --tl-hero-glow: #304d76;
+  --tl-foreground: #f4fbf7;
+  --tl-subtitle-foreground: #e7f3ec;
+  --tl-muted-foreground: #cfe6d8;
+  --tl-subtle-foreground: #a9bcb2;
+  --tl-border: #ffffff1a;
+  --tl-input: #ffffff26;
+  --tl-ring: #c6f65a8c;
+  --tl-primary: #c6f65a;
+  --tl-primary-foreground: #080e1d;
+  --tl-secondary: #20324e;
+  --tl-secondary-foreground: #f4fbf7;
+  --tl-link: #cfe6d8;
+  --tl-success: #4adc8c;
+  --tl-warning: #ffd166;
+  --tl-destructive: #ff5a6a;
+  --tl-info: #4bb8ff;
+  --tl-fill: #8fd6a8;
+  --tl-success-chip: #143927;
+  --tl-warning-chip: #2d3722;
+  --tl-destructive-chip: #2d2623;
+  --tl-info-chip: #143437;
+  --tl-chart-1: #c6f65a;
+  --tl-chart-2: #8fd6a8;
+  --tl-chart-3: #8b9892;
+  --tl-chart-4: #5d6b65;
+  --tl-chart-5: #3a4a44;
+  --tl-shadow-card: 0 0 0 1px rgba(255,255,255,.10);
+  --tl-shadow-raised: 0 0 0 1px rgba(255,255,255,.13),0 1px 2px rgba(0,0,0,.2),0 2px 6px rgba(0,0,0,.2);
+  --tl-shadow-overlay: 0 0 0 1px rgba(255,255,255,.15),0 8px 28px rgba(0,0,0,.34);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --tl-background: #f6f7f4;
+  --tl-card: #ffffff;
+  --tl-muted: #eef2ef;
+  --tl-foreground: #17251f;
+  --tl-muted-foreground: #5f6f68;
+  --tl-subtle-foreground: #5f6f68;
+  --tl-border: #e6ebe8;
+  --tl-input: #d8e2dc;
+  --tl-ring: #17251f;
+  --tl-primary: #c6f65a;
+  --tl-primary-foreground: #080e1d;
+  --tl-secondary: #20324e;
+  --tl-secondary-foreground: #ffffff;
+  --tl-link: #5f6f68;
+  --tl-success: #087747;
+  --tl-warning: #846405;
+  --tl-destructive: #c0392b;
+  --tl-info: #0a6ea4;
+  --tl-success-chip: #e1efe9;
+  --tl-warning-chip: #f0ece1;
+  --tl-destructive-chip: #f7e7e6;
+  --tl-info-chip: #e2eef4;
+  --tl-shadow-card: 0 0 0 1px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  --tl-shadow-raised: 0 0 0 1px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.06);
+  --tl-shadow-overlay: 0 4px 42px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.06);
+}
+
+:root:not([data-theme="light"]):not([data-theme="dark"]) {
+  color-scheme: light;
+  --tl-background: #f6f7f4;
+  --tl-card: #ffffff;
+  --tl-muted: #eef2ef;
+  --tl-foreground: #17251f;
+  --tl-muted-foreground: #5f6f68;
+  --tl-subtle-foreground: #5f6f68;
+  --tl-border: #e6ebe8;
+  --tl-input: #d8e2dc;
+  --tl-ring: #17251f;
+  --tl-primary: #c6f65a;
+  --tl-primary-foreground: #080e1d;
+  --tl-secondary: #20324e;
+  --tl-secondary-foreground: #ffffff;
+  --tl-link: #5f6f68;
+  --tl-success: #087747;
+  --tl-warning: #846405;
+  --tl-destructive: #c0392b;
+  --tl-info: #0a6ea4;
+  --tl-success-chip: #e1efe9;
+  --tl-warning-chip: #f0ece1;
+  --tl-destructive-chip: #f7e7e6;
+  --tl-info-chip: #e2eef4;
+  --tl-shadow-card: 0 0 0 1px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  --tl-shadow-raised: 0 0 0 1px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.06);
+  --tl-shadow-overlay: 0 4px 42px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
+    --tl-background: #080e1d;
+    --tl-card: #15243a;
+    --tl-muted: #20324e;
+    --tl-hero-glow: #304d76;
+    --tl-foreground: #f4fbf7;
+    --tl-subtitle-foreground: #e7f3ec;
+    --tl-muted-foreground: #cfe6d8;
+    --tl-subtle-foreground: #a9bcb2;
+    --tl-border: #ffffff1a;
+    --tl-input: #ffffff26;
+    --tl-ring: #c6f65a8c;
+    --tl-primary: #c6f65a;
+    --tl-primary-foreground: #080e1d;
+    --tl-secondary: #20324e;
+    --tl-secondary-foreground: #f4fbf7;
+    --tl-link: #cfe6d8;
+    --tl-success: #4adc8c;
+    --tl-warning: #ffd166;
+    --tl-destructive: #ff5a6a;
+    --tl-info: #4bb8ff;
+    --tl-fill: #8fd6a8;
+    --tl-success-chip: #143927;
+    --tl-warning-chip: #2d3722;
+    --tl-destructive-chip: #2d2623;
+    --tl-info-chip: #143437;
+    --tl-chart-1: #c6f65a;
+    --tl-chart-2: #8fd6a8;
+    --tl-chart-3: #8b9892;
+    --tl-chart-4: #5d6b65;
+    --tl-chart-5: #3a4a44;
+    --tl-shadow-card: 0 0 0 1px rgba(255,255,255,.10);
+    --tl-shadow-raised: 0 0 0 1px rgba(255,255,255,.13),0 1px 2px rgba(0,0,0,.2),0 2px 6px rgba(0,0,0,.2);
+    --tl-shadow-overlay: 0 0 0 1px rgba(255,255,255,.15),0 8px 28px rgba(0,0,0,.34);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --tl-duration-press: .01ms;
+    --tl-duration-quick: .01ms;
+    --tl-duration-fast: .01ms;
+    --tl-duration-medium: .01ms;
+    --tl-duration-slow: .01ms;
+    --tl-duration-emphasis: .01ms;
+    --tl-duration-stagger: .01ms;
+  }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+  </style>
+  <style>
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--tl-background); color: var(--tl-foreground);
+  font-family: var(--tl-font-sans); -webkit-tap-highlight-color: transparent; }
+main { width: min(100%, 680px); margin: 0 auto;
+  padding: 20px max(16px, env(safe-area-inset-right))
+    calc(40px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+h1 { margin: 0 0 6px; font-size: var(--tl-text-xl); font-weight: 600; line-height: 1.3; }
+.sub { margin: 0 0 20px; color: var(--tl-muted-foreground); font-size: var(--tl-text-sm); }
+section { margin-top: 20px; }
+.label { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-bottom: 8px; font-size: var(--tl-text-base); font-weight: 600; }
+button { min-height: 44px; min-width: 104px; padding: 0 16px; border: 0;
+  border-radius: var(--tl-radius-md); background: var(--tl-primary);
+  color: var(--tl-primary-foreground); font: 600 var(--tl-text-base)/1 var(--tl-font-sans);
+  cursor: pointer; touch-action: manipulation;
+  transition: transform var(--tl-duration-press) var(--tl-ease-out),
+    background-color var(--tl-duration-quick) var(--tl-ease-out),
+    color var(--tl-duration-quick) var(--tl-ease-out),
+    box-shadow var(--tl-duration-quick) var(--tl-ease-out); }
+button:active { transform: scale(.97); }
+button.copied { background: var(--tl-muted); color: var(--tl-foreground); }
+button:focus-visible, textarea:focus-visible { outline: 2px solid var(--tl-ring);
+  outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) {
+  button:hover { box-shadow: var(--tl-shadow-raised); }
+}
+textarea { display: block; width: 100%; resize: vertical; border: 1px solid var(--tl-input);
+  border-radius: var(--tl-radius-md); background: var(--tl-card); color: var(--tl-foreground);
+  padding: 12px; font: var(--tl-text-base)/1.7 var(--tl-font-sans); }
+#title { min-height: 76px; }
+.alt { min-height: 52px; }
+#body { min-height: 55vh; }
+#comment { min-height: 118px; }
+#toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom));
+  width: max-content; max-width: calc(100% - 32px); text-align: center;
+  background: var(--tl-foreground); color: var(--tl-background);
+  box-shadow: var(--tl-shadow-overlay); padding: 10px 16px;
+  border-radius: var(--tl-radius-md); font-size: var(--tl-text-base); line-height: 1.5;
+  opacity: 0; pointer-events: none; transform: translate(-50%, 8px);
+  transition: opacity var(--tl-duration-quick) var(--tl-ease-out),
+    transform var(--tl-duration-quick) var(--tl-ease-out); }
+#toast.show { opacity: 1; transform: translate(-50%, 0);
+  transition-duration: var(--tl-duration-fast); }
+@media (prefers-reduced-motion: reduce) {
+  #toast, #toast.show { transform: translate(-50%, 0); }
+  button:active { transform: none; }
+}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>10.18网球有故事|她没急着回来</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>卡塔尔：背伤停了半年、排名掉到170，复出第3站打进武汉决赛
+
+排名第170。这个数字说的不是她的水平，是她停下来的那半年。10月17日下午，武汉1000赛半决赛，卡塔尔两个抢七赢下奥斯塔彭科，打进生涯第一个1000赛决赛，成了继康塔之后第二个打进这一级别决赛的英国球员，也是2009年有1000赛以来排名最低的决赛选手（原纪录是2019年第153位的库兹涅佐娃）。7个月前，她在印第安维尔斯因为背伤退赛。
+
+她在布莱顿长大，从小的对手是后来拿下美网冠军的拉杜卡努。她接触网球，是因为大5岁的哥哥：“爸妈带我去俱乐部，我就坐在草地上看他打，一切就是这么开始的。”
+
+她个子不高，靠的是脚步和耐心，把一个又一个球救回去，排名也是一场一场打上来的。2024年温网，排名295的她从资格赛打进第三轮，27年来第一个做到的英国女子资格赛球员；那年秋天拿到生涯第一冠、进了前100。2025年温网她第一次打进大满贯16强，赛后说：“不管对面是世界第一还是第三百，我都会尊重对手。”同年北京，世界第81的她三盘击败世界第5的安德烈耶娃，生涯最大的一场胜利。
+
+今年3月的印第安维尔斯，她2比6、6比2、6比3逆转凯斯，赛后说比赛里背时不时在疼，“正是这样的比赛，打出了我身上的斗士”。两天后的第四轮对莱巴金娜，她4比6、3比4落后时退赛。背部应力性骨折，4个大满贯她错过3个，包括家门口的温网。她在英国网协的专访里说：“网球是我唯一熟悉的事，过去18年我每天都在打。突然什么都做不了，刷牙都得马上直起腰，疼得要命。”美网时她其实已经能复出了，但她决定不打：“受伤以后听到最好的建议，就是别着急。”
+
+9月她在比利·简·金杯总决赛复出，来武汉时排名掉到第170，靠受伤前五十多位的保护排名报名。这一周她先后赢了卡利尼娜、本西奇，63分钟6比2、6比0送走保利尼，1/4决赛第一次赢下斯维托丽娜。半决赛对奥斯塔彭科，两盘她都先落后，对手两次发球胜盘都被她破回，6个盘点她一个没给。赛后她说：“受伤之前我就梦想打这样的比赛，复出第3站就做到了，这对我是一座里程碑。”
+
+打完这一站，她会回到世界前50左右，成为新的英国一姐。7个月前疼得连刷牙都难的人，伤好了没有急。如果是你，你等得住吗？这场决赛，你押她吗？
+
+#卡塔尔 #武汉网球公开赛 #网球时差 #网球中国赛季来了 #网球时间到</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>如果是你，你等得住吗？这场决赛，你押她吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script>
+const toast = document.getElementById('toast');
+const labels = {body: '正文已复制', comment: '评论已复制'};
+const buttonTimers = new Map();
+let toastTimer = 0;
+function say(text, ms) {
+  toast.textContent = text;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), ms);
+}
+function restore(button) {
+  clearTimeout(buttonTimers.get(button));
+  if (button.dataset.label) button.textContent = button.dataset.label;
+  button.classList.remove('copied');
+}
+function selectAll(field) {
+  field.focus();
+  field.select();
+  try { field.setSelectionRange(0, field.value.length); } catch (_) {}
+}
+async function copyText(id, button) {
+  const field = document.getElementById(id);
+  let ok = false;
+  try {
+    await navigator.clipboard.writeText(field.value);
+    ok = true;
+  } catch (_) {
+    selectAll(field);
+    try { ok = document.execCommand('copy') === true; } catch (_) { ok = false; }
+  }
+  if (!ok) {
+    restore(button);
+    selectAll(field);
+    say('复制失败，已帮你选中，长按拷贝', 2600);
+    return;
+  }
+  if (document.activeElement === field) field.blur();
+  say(labels[id] || '标题已复制', 1400);
+  if (!button.dataset.label) button.dataset.label = button.textContent;
+  button.textContent = '已复制 ✓';
+  button.classList.add('copied');
+  clearTimeout(buttonTimers.get(button));
+  buttonTimers.set(button, setTimeout(() => restore(button), 1400));
+}
+document.querySelectorAll('[data-copy]').forEach((button) => {
+  button.addEventListener('click', () => copyText(button.dataset.copy, button));
+});
+  </script>
+</body>
+</html>
