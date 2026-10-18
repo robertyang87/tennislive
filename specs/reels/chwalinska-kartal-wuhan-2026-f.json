@@ -346,9 +346,9 @@
       "end": 265.12,
       "cx": 0.5,
       "track": false,
-      "fit": "crop",
-      "score_inset": true,
-      "subtitle_bottom": 360,
+      "fit": "full_source",
+      "score_inset": false,
+      "subtitle_bottom": 200,
       "narration": "",
       "quote": [
         {
@@ -364,9 +364,10 @@
       ],
       "crosses_cut": "原官方集锦已经剪辑换机位，按真实分与局分核对，不把跳过的局说成连续逐分。",
       "point_end_ok": "本期视觉报告按1秒/0.2秒细墙核验完整发球或准备、回合死球及反应；原声整句另对照同源字幕包。",
-      "_fit_why": "全局固定中心cx0.5/trackfalse铺满3:4，原生主板和短提示条同帧透明轮廓回贴。",
+      "_fit_why": "本段侧面横向机位，白衣在源x87–330，黑衣969–1190，3:4中央裁切x370–910将两人全裁掉。仅本窗完整保留球场原幅、双方与球路；3:4输出画布、固定中心cx0.5与不跟随保持。依据用户720p可以完整展示内容的条件优先完整关键回合。",
       "_source_audio_review_status": "complete: selected whole window cross-checked against retained same-SHA independent raw ASR; source utterances and captions curated before quote population; no manual listening claimed",
-      "_quote_kind": "broadcast"
+      "_quote_kind": "broadcast",
+      "_score_inset_why": "侧高位横向全场机位，fit=full_source固定中心保留原幅：原生双行比分板完整可见，无需再次回贴。"
     },
     {
       "_edit_id": "second_four_all",
