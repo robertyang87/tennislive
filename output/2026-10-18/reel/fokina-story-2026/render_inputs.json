@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "fokina-story-2026",
-  "written_at": "2026-10-18T01:41:20Z",
-  "code_sha": "dafbb6818692b63fd5e07f2ce90622feb7609491",
-  "spec_sha256": "87b6a41e49aa8ce6d7b62c7e6ddc128283b38eaed092fe73248793505bf2e29b",
-  "film_sha256": "96bdc13dcec2d3abde5f32183f38c03e34b11956a2e384bf91d27fee3286bf3b",
-  "film_bytes": 253450483,
-  "projection_sha256": "8a8830dad76122fda55396772c6ef6c9a8b48b4018f876e9348549e740eb22c7",
+  "written_at": "2026-10-18T07:43:17Z",
+  "code_sha": "895bcade231401ea8d04ab7dac500284fb4d647a",
+  "spec_sha256": "840dfb7551f6412df1f702ec180eda34906514f2ebfe6e6291f72be373708238",
+  "film_sha256": "1125e361d5f66d6a72c5d14105cab30bc14199a34b36bc5c5f3ab40d96bd1a05",
+  "film_bytes": 253816720,
+  "projection_sha256": "5be957930ff1fb066619ec5d0308c3d7022dfbb5cbb38f906b71a38de7903dea",
   "claims": [
     [
       "_claims"
@@ -284,15 +284,15 @@
     "assets/reel/fokina-story/sh-sf-handshake.jpg": "53a3db3d51c99bfb441427d23f6816e8c7fc1f07e84b64e6476988b233c9fc93"
   },
   "artifacts": {
-    "audio_review_binding.json": "1f0043434b77c14c403cb20771004984336d1f774bb9bff0bdc1e54d5d4b36a2",
-    "subtitles.ass": "e26ff6798a9a90b42d041258bfc0273e1676ecab43862cc84a915efea6681fdd",
-    "poster.jpg": "4489d4b179cc954eb002f0f57f7740eff8b7cae6ed7bc8376e8cfd4cf6e6452b"
+    "audio_review_binding.json": "ba80317c094a3b516c39c57960e7a1167f57a47abc25536611b1255b1c11fefe",
+    "subtitles.ass": "aaa4464beacf009bec37c8eda49531e258765ea8e2ebe02731507f2f0638766a",
+    "poster.jpg": "0048f88391332130281040c751ec70e52456d1130e1c5fe97a605817512cfea4"
   },
   "projection": {
     "slug": "fokina-story-2026",
     "date": "2026-10-18",
     "_column": "网球有故事",
-    "title": "五次亚军之后，他站上了大师赛决赛",
+    "title": "前5次决赛全是亚军之后，他站上了大师赛决赛",
     "cx": 0.5,
     "track": false,
     "tts_backend": "edge",
@@ -300,9 +300,10 @@
       "eyebrow": "网球有故事",
       "layout": "solo",
       "subject": "福基纳",
-      "hook": "5次决赛全是亚军\n这次站上大师赛决赛",
-      "narration": "五次决赛全是亚军，这次站上大师赛决赛。",
-      "topic": "从五次亚军走到上海决赛",
+      "story_kind": "person",
+      "hook": "前5次决赛全是亚军\n这次站上大师赛决赛",
+      "narration": "前五次决赛全是亚军，这次站上大师赛决赛。",
+      "topic": "福基纳：从五次亚军走到上海决赛",
       "portrait": {
         "image": "assets/reel/fokina-story/cover-shanghai-sf.jpg",
         "fit": "cover",
@@ -315,11 +316,11 @@
     },
     "editorial": {
       "mode": "match_review",
-      "question": "一个输掉五次决赛、五个冠军点一个没握住的人，怎么一路走到大师赛决赛？",
+      "question": "一个前五次决赛全输、五个冠军点一个没握住的人，怎么一路走到大师赛决赛？",
       "thesis": "以上海半决赛赛点为由头，倒回他的来路：2017 温网青少年冠军；2022 蒙特卡洛破德约九次发球局、首进决赛负西西帕斯（西西帕斯致辞：第一次，但不会是最后一次）；2025 德尔雷海滩握两个冠军点、阿卡普尔科、华盛顿被救三个冠军点、巴塞尔，五次亚军；2026 法网教练短信辞职、马略卡第六次决赛终于夺冠、温网五盘负阿利亚西姆后网前争执、背伤停赛两个多月；成都复出即夺冠、上海连赢蒂亚福和胡尔卡奇的决胜盘抢七、逆转兹维列夫，赛后说停赛让他想清楚了未来。",
       "beats": [
         "冷开场：上海半决赛赛点、他笑着走到网前，解说原声",
-        "坐标：五次决赛五次亚军",
+        "坐标：前五次决赛全是亚军",
         "01 温网少年：2017 青少年冠军发布会原声（跟着爸爸在海边开始）",
         "02 五次亚军：蒙特卡洛胜德约、首个决赛、西西帕斯致辞；德尔雷海滩两个冠军点；阿卡普尔科；华盛顿三个冠军点被救；巴塞尔",
         "03 最乱的夏天：教练短信辞职、马略卡终于夺冠、温网网前争执、背伤停赛",
@@ -420,10 +421,10 @@
         "crosses_cut": "290、292.5、295、297.5、300 切到他笑、他低头、兹维列夫、网前拥抱：都是同一个赛点之后。"
       },
       {
-        "title_card": "五次决赛\n五次亚军",
+        "title_card": "前5次决赛\n全是亚军",
         "kicker": "2022—2025",
         "seconds": 8.6,
-        "narration": "在这之前，他打进过五次决赛，五次都是亚军。五个冠军点，一个都没握住。",
+        "narration": "他职业生涯的前五次决赛，全是亚军。五个冠军点，一个都没握住。",
         "voice": {
           "pitch": "+10Hz"
         }
