@@ -81,5 +81,12 @@
       "inputs_sha256": "63cf8c48ce8bc618d907684e3ac7db7c8feb5bf5f8a83a0cd460cf25663b6c9e",
       "tries": 1
     }
+  },
+  "subs_red": {
+    "davidovichfokina-jodar-shanghai-2026-f-speech": {
+      "since": "2026-10-18T13:37:33Z",
+      "inputs_sha256": "63cf8c48ce8bc618d907684e3ac7db7c8feb5bf5f8a83a0cd460cf25663b6c9e",
+      "why": "预检：转写（subs 在当前转写指纹上量出来的）：第二份 ASR 在当前转写指纹上量到：两份转写对不上 13.9%，超过闸门 12%。**不出片。** 逐处看 output/interviews/davidovichfokina-jodar-shanghai-2026-f-speech/transcript_diff.md，把确认过的写进 spec 的 `en_fixed`。"
+    }
   }
 }
