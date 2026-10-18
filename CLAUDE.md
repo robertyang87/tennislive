@@ -124,6 +124,10 @@
 
 账号所有者原话：「下次再做这种人物类的视频的时候，然后在副标题上加上他的名字，然后再加冒号，再加副标题的内容」「然后把这个规则定下来，变成全局规则，放在库里做强制要求」。「网球有故事」新稿（竖版短片 `cover`、字卡 `_OPENINGS`）必须声明 `story_kind`：讲一个人的写 `person` 并写 `subject`，副标题写「subject：内容」（全角冒号，例「福基纳：从五次亚军走到上海决赛」）；规则、事件、交手写 `other`。闸 `reel_facts.story_topic_name_problem`（`--dry-run` / `explainer_preflight` 就红），存量挂 `data/legacy_story_topic_name.json` 只许减。详见 tennis-owner-taste 同名条目。
 
+## 2026-10-18：采访／发言段按人物中心裁，比赛画面仍是球场中心
+
+账号所有者原话：「人物采访的时候，他那个画面的裁切要以人物的中心做裁切比较好，不然……人物可能会裁偏」，看过对比图后「好的，可以」「比赛的还是以球场中心为弄」。这是「固定居中」全局策略唯一的例外：`_quote_kind` 为 ceremony / interview / press_conference / player_interview 的段，新片必须声明 `frame`——`person` 后跑 `tools/measure_person_center.py` 写回 `cx` 与 `cx_face` 证据（整段一个固定框、不跟随，装下所有采样脸），或 `court` ＋ `_frame_why`。闸 `crop_policy.person_frame_problems`（`--dry-run` 就红），渲染时 `require_fixed_center` 只凭证据放行 cx≠0.5；存量挂 `data/legacy_person_frame.json` 只许减。详见 tennis-owner-taste 同名条目。
+
 ## 发现明确的问题就直接改，别回来问
 
 用户的原话：「发现明确的问题就直接改掉，不用找我确认」「以后都按这个要求」。

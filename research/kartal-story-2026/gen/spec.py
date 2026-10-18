@@ -14,6 +14,8 @@ def n(src,a,b,text,why,ok="不是回合的收尾：画面是局间、近景、�
 EDGE=0.22
 def q(src,a,b,cues,why,ok,label=None,kind="broadcast",crosses_cut=None):
     s={"source":src,"start":a,"end":b,"cx":0.5,"track":False,"narration":"","quote":[{"at":round(max(x-a,EDGE),2),"end":round(min(y-a,(b-a)-EDGE),2),"text":t} for x,y,t in cues],"_quote_kind":kind,"_why":why,"point_end_ok":ok}
+    # 采访／发言段按人物中心裁（账号所有者 2026-10-18）；cx 由 tools/measure_person_center.py 量出来写回
+    if kind=="ceremony": s["frame"]="person"
     if label: s["inset"]=lab(label)
     if crosses_cut: s["crosses_cut"]=crosses_cut
     return s
