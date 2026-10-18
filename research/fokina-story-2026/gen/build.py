@@ -19,7 +19,7 @@ spec={
  "_tts_backend_why":"与 kartal-story-2026 同一把嗓子（edge 云健），不加情绪风格。",
  "_voice_why":"渲染传 --voice zh-CN-YunjianNeural --rate +18%。正文各段 pitch +10Hz；不写 style、lead_pause。",
  "cover":{
-  "eyebrow":"网球有故事","layout":"solo","subject":"福基纳",
+  "eyebrow":"网球有故事","layout":"solo","subject":"福基纳","story_kind":"person",
   "hook":"前5次决赛全是亚军\n这次站上大师赛决赛",
   "_hook_why":"第一行是他的来路（五次决赛五次亚军），第二行是这一站走到哪一步（大师赛决赛）。8＋9 字符，零术语，不比总分，不写排名。",
   "narration":"前五次决赛全是亚军，这次站上大师赛决赛。","_narration_why":"念的就是海报上那句钩子，数字换成汉字给 TTS。",

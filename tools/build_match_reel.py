@@ -3897,7 +3897,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "editorial", "narration_audio_recipe", "scene_edl_recipe", "scoreboard_profile"),
     "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "hook_accent_color", "hook_align", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
-              "score", "scoreboard", "scrim", "split", "sub", "subject",
+              "score", "scoreboard", "scrim", "split", "story_kind", "sub", "subject",
               "tier", "topic", "versus", "winner"),
     "segment": ("audio_tail", "bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "end", "fill_y", "fit", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
@@ -9623,6 +9623,19 @@ def validate_spec(
     card = evidence_card_overlaps_subtitle(spec)
     if card:
         raise ReelError(card)
+    # 人物类「网球有故事」副标题「名字：内容」（账号所有者 2026-10-18，全局强制）。
+    # 定规矩之前的挂在 data/legacy_story_topic_name.json 的 reels，只许减不许加。
+    from reel_facts import legacy_story_topic_name, story_topic_name_problem  # noqa: PLC0415
+    _cover = spec.get("cover") if isinstance(spec.get("cover"), dict) else {}
+    if (str(_cover.get("eyebrow", "")).strip() == "网球有故事"
+            and str(spec.get("slug", "")).strip() not in legacy_story_topic_name("reels")):
+        _problem = story_topic_name_problem(
+            _cover.get("topic"), _cover.get("story_kind"), _cover.get("subject"))
+        if _problem:
+            if (spec.get("_production") or {}).get("status") == "ready_for_render":
+                print(f"[人物片副标题] 自动 spec，只报不拦：{_problem}")
+            else:
+                raise ReelError(_problem)
     segments = parse_segments(spec, urls, next(iter(urls)))
     # quote 的 `at` 落在段外：`explicit_quote_cues` 原来要等十几段全编完、拼接
     # 之后写字幕时才报——zverev-deminaur-laver-cup-2026 第二趟 render 就这么白跑了

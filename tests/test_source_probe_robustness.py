@@ -386,6 +386,8 @@ def test_X直链当主地址的闸接在validate_spec上_手写硬_自动只报(
     spec.update(slug="sinner-x-cdn-gate-probe",
                 _social_search={"x": "@janniksin 9/25 有退赛视频（已用）", "instagram": "只有图文"},
                 _cover_reuse_why="判据回放：同一条片子换 slug")
+    # 换了新 slug 就不在人物片副标题的存量表里了：声明成 other（讲退赛规则，不是人物片）
+    spec["cover"] = {**spec["cover"], "story_kind": "other"}
     cdn = spec["sources"]["xvid"]
     with pytest.raises(reel.ReelError, match="X 的 CDN 直链"):
         reel.validate_spec(spec)

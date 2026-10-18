@@ -114,6 +114,7 @@ _BREAKERS = {
         d, 0, narration="这是一句为了把决定窗口撑爆而写得非常非常非常非常长的封面第一句话吗？"),
     "封面一行": _break_one_line,
     "开场问题卡": lambda d, m: _beat(d, 0, title="这一屏没有问出问题"),
+    "人物片副标题": lambda d, m: (m.setattr(P.reel_facts, "legacy_story_topic_name", lambda line: frozenset()), d)[1],
     "字卡认领": lambda d, m: dataclasses.replace(d, slug="__全新的一条字卡稿__"),
     "冒号与记号": lambda d, m: _beat(d, title="答案：维纳斯说"),
     "每屏要点": lambda d, m: _beat(d, points=("只剩一条",)),
