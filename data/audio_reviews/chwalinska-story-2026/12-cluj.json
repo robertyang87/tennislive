@@ -1,0 +1,39 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-OSDB-amz5as/OSDB-amz5as.mp4",
+  "source_sha256": "67a26e4b2f5773d7d66b8b9e04fb716c010745f8ceb78020d6fc501f7da48149",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 141.9,
+  "reviewed_to": 176.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 157.38,
+      "end": 161.9,
+      "en": "…wins in a row here for the qualifier Maja Chwalinska.",
+      "zh": "资格赛选手赫瓦林斯卡连胜继续。"
+    },
+    {
+      "start": 162.12,
+      "end": 166.6,
+      "en": "She has seen off the seventh seed, Olga Danilovic.",
+      "zh": "她送走了七号种子达尼洛维奇。"
+    },
+    {
+      "start": 167.48,
+      "end": 172.6,
+      "en": "It's finished here. 6-1, 1-6, 6-2.",
+      "zh": "比赛结束，6比1、1比6、6比2。"
+    },
+    {
+      "start": 172.82,
+      "end": 175.3,
+      "en": "Well deserved.",
+      "zh": "实至名归。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/OSDB-amz5as/small.en.json + medium.en.json",
+  "review_note": "同一条克鲁日官方集锦：142–164 是赛点回合（记分条 MATCH POINT），165 起网前握手。解说两档一致（medium 157.38–175.30，名字转错，按标题写 Chwalinska）。比分 6-1 1-6 6-2 与 WTA 接口一致。"
+}

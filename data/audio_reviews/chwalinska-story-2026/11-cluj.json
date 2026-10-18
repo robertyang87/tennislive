@@ -1,0 +1,15 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-OSDB-amz5as/OSDB-amz5as.mp4",
+  "source_sha256": "67a26e4b2f5773d7d66b8b9e04fb716c010745f8ceb78020d6fc501f7da48149",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 128.7,
+  "reviewed_to": 141.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/OSDB-amz5as/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/OSDB-amz5as 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 128.7–141.8 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "Transylvania Open 赛事官方集锦（OSDB-amz5as）：克鲁日 2026 第二轮对 7 号种子达尼洛维奇，决胜盘回合（128.7–134 广角）、换边（136.0 切）、她的近景（140）。两档转写在 128.6–157.1 无词。三个 WTA125 冠军（2024 弗洛里亚诺波利斯、2025 蒙特勒、2026 年 4 月厄瓦拉什）：WTA 接口＋Tennis Asia TV 预测稿里列的成绩；克鲁日以资格赛选手打进 1/4决赛（胜博格丹、达尼洛维奇，负拉杜卡努）：WTA 接口 2026＋tennisabstract／维基（chwalinska-gibson.json _claims 核过）。"
+}

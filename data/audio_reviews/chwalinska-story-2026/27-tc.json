@@ -1,0 +1,33 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ciGC4PID7T4/ciGC4PID7T4.mp4",
+  "source_sha256": "a2e0628535777725cd981146f3b207556e2e916b85de27a89e1c9cbee478d707",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 133.7,
+  "reviewed_to": 141.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 133.88,
+      "end": 136.7,
+      "en": "Yeah, a lot of attention,",
+      "zh": "关注多了很多，"
+    },
+    {
+      "start": 136.8,
+      "end": 138.7,
+      "en": "definitely much more than before.",
+      "zh": "比以前多太多了。"
+    },
+    {
+      "start": 138.8,
+      "end": 141.1,
+      "en": "Before, I mean, no one really cared.",
+      "zh": "以前，说真的，没人在意。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/ciGC4PID7T4/small.en.json + medium.en.json",
+  "review_note": "同一场专访：主持人问法网之后生活有没有变。近景机位（123.10–141.88）。逐句时间按已审 ass（2:13.88–2:21.24）。"
+}

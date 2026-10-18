@@ -1,0 +1,15 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source--ygefQ6dXFc/-ygefQ6dXFc.mp4",
+  "source_sha256": "0e3bebb7718f3e05ccaef73194c0619265bc00bf524fb61c4ed7351464568c67",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 0.5,
+  "reviewed_to": 11.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/-ygefQ6dXFc/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/-ygefQ6dXFc 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 0.5–11.5 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "Roland-Garros 官方 1/4决赛集锦：近端黄衣的是赫瓦林斯卡（记分条 KALINSKAYA / CHWALINSKA）。两档转写在 0–40.8 无词。1/4决赛胜卡林斯卡娅、半决赛 7-6(4) 6-4 胜施奈德：rolandgarros.com 赛报＋WTA 接口。"
+}

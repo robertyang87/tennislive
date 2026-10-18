@@ -1,0 +1,33 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ciGC4PID7T4/ciGC4PID7T4.mp4",
+  "source_sha256": "a2e0628535777725cd981146f3b207556e2e916b85de27a89e1c9cbee478d707",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 98.35,
+  "reviewed_to": 106.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 98.4,
+      "end": 100.0,
+      "en": "I had some good momentum going on,",
+      "zh": "我本来势头正好，"
+    },
+    {
+      "start": 100.12,
+      "end": 102.5,
+      "en": "but it's just sport, you know.",
+      "zh": "但体育就是这样。"
+    },
+    {
+      "start": 102.68,
+      "end": 105.68,
+      "en": "You got to accept that it's brutal sometimes.",
+      "zh": "你得接受，它有时候就是很残酷。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/ciGC4PID7T4/small.en.json + medium.en.json",
+  "review_note": "同一场专访的演播室远景机位（98.27–123.10）：她站在画面右侧，人物中心另量。逐句时间按已审 ass（1:38.08–1:45.68）。"
+}

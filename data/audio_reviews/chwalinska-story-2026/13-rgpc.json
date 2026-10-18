@@ -1,0 +1,33 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-1ihxUf32bQk/1ihxUf32bQk.mp4",
+  "source_sha256": "6d4d92f4d37fe9ce78b643a5de97118ec86fbc56f3718d1b020de0debc641e4a",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 497.4,
+  "reviewed_to": 505.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 497.68,
+      "end": 500.3,
+      "en": "Well, my goal was to be top 100 this year.",
+      "zh": "我今年的目标是进前100，"
+    },
+    {
+      "start": 500.48,
+      "end": 501.4,
+      "en": "That was the main goal.",
+      "zh": "这是最主要的目标。"
+    },
+    {
+      "start": 502.64,
+      "end": 504.9,
+      "en": "Coming here, my goal was to qualify.",
+      "zh": "来这儿，我的目标是打进正赛。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/1ihxUf32bQk/small.en.json + medium.en.json",
+  "review_note": "同一场法网 1/4决赛后发布会：记者问「三周前、资格赛开打之前，你的目标是什么」。两档转写一致（medium 497.68–504.28）。2026 年 6 月 8 日之前她从没进过前 100（WTA 接口逐周排名，法网前最高 113）。"
+}

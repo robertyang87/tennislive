@@ -1,0 +1,27 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-HIvIvgwXkqs/HIvIvgwXkqs.mp4",
+  "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 186.0,
+  "reviewed_to": 205.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 198.14,
+      "end": 200.88,
+      "en": "She'll get the honors because she earned them.",
+      "zh": "荣誉属于她，这是她赢来的。"
+    },
+    {
+      "start": 201.9,
+      "end": 204.64,
+      "en": "She'll receive praise of which she is most deserving.",
+      "zh": "她将收获当之无愧的赞美。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/HIvIvgwXkqs/small.en.json + medium.en.json",
+  "review_note": "冷开场：WTA 官方武汉决赛集锦。186.0 起是冠军点回合（记分条 CHAMPIONSHIP POINT），195.80 切到她倒在场上，198.08/199.76 看台与包厢，203.32 切到她跪在场上。解说两档转写一致（medium 198.14–204.04，chwalinska-kartal-wuhan-2026-f 第 0、12 段同一句），段尾 205.3 在 Maja Chwalinska's first WTA title（206.24）之前。"
+}

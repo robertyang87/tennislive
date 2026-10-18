@@ -1,0 +1,45 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-pPCiDSCNlpk/pPCiDSCNlpk.mp4",
+  "source_sha256": "1e1904b93d14d0997e0903f35edc99d9145ff755ae73fb5f236740701b5a0d9d",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 110.9,
+  "reviewed_to": 130.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 111.02,
+      "end": 113.3,
+      "en": "No, I'm crazy sometimes also.",
+      "zh": "不，我有时候也会抓狂。"
+    },
+    {
+      "start": 115.32,
+      "end": 120.9,
+      "en": "But I try to stay composed,",
+      "zh": "但我尽量保持镇定，"
+    },
+    {
+      "start": 121.08,
+      "end": 124.3,
+      "en": "it helps me to play my best tennis.",
+      "zh": "这样才能打出最好的网球。"
+    },
+    {
+      "start": 125.12,
+      "end": 127.0,
+      "en": "That's what I'm trying to do,",
+      "zh": "我一直在这么做，"
+    },
+    {
+      "start": 127.04,
+      "end": 130.3,
+      "en": "but inside there's a storm, believe me.",
+      "zh": "可心里是一场风暴，相信我。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/pPCiDSCNlpk/small.en.json + medium.en.json",
+  "review_note": "同一段场上采访：主持人说「看你打球总是很冷静」，她回答。两档转写一致（medium 111.02–129.90）；中间的口头语（I mean / like / um）按烧字幕规矩去掉。段尾 130.6 在下一个问题（143.38）之前。"
+}

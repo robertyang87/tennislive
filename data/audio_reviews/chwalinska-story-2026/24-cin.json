@@ -1,0 +1,33 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-l_0G55XaKnU/l_0G55XaKnU.mp4",
+  "source_sha256": "dbd98865a4fe1e86eb892b45c9e3689973b5abac94de57c7a0b96b876924780e",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 159.5,
+  "reviewed_to": 170.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 159.62,
+      "end": 160.9,
+      "en": "The ball goes long,",
+      "zh": "球出界了。"
+    },
+    {
+      "start": 161.06,
+      "end": 164.9,
+      "en": "and the crowd that have been right behind Maja Chwalinska on court seven",
+      "zh": "7号场边一直为她加油的观众，"
+    },
+    {
+      "start": 165.18,
+      "end": 169.6,
+      "en": "are very, very happy to see her go through to the third round.",
+      "zh": "看着她晋级第三轮，开心极了。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/l_0G55XaKnU/small.en.json + medium.en.json",
+  "review_note": "同一条辛辛那提集锦：159.53 切到她握拳、走向网前。解说两档一致（medium 159.62–169.36，名字转错，按标题写 Chwalinska）。段尾 170.0 在下一句（169.96 Cristina）开口时收住。"
+}

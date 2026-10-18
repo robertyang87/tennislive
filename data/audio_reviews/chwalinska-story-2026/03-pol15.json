@@ -1,0 +1,34 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source--Vsfptr_DC8/-Vsfptr_DC8.mp4",
+  "source_sha256": "76fa7cd6005e88a94cbd8b0901162cf3fe18d9b0541acd32e74d46ebe900ca74",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small 与 medium 两档波兰语逐词转写交叉核对（language=pl），对照本地抽帧认人；未人工听音",
+  "reviewed_from": 3.75,
+  "reviewed_to": 16.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 3.75,
+      "end": 8.18,
+      "en": "Maja Chwalińska, mam 14 lat,",
+      "zh": "我是玛雅·赫瓦林斯卡，14岁，"
+    },
+    {
+      "start": 8.62,
+      "end": 10.48,
+      "en": "mieszkam w Dąbrowie Górniczej",
+      "zh": "住在达布罗瓦古尔尼恰，"
+    },
+    {
+      "start": 10.48,
+      "end": 16.2,
+      "en": "i trenuję od 7 roku życia.",
+      "zh": "7岁开始练球。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/-Vsfptr_DC8/small.pl.json + medium.pl.json",
+  "language_note": "前景原声是波兰语（2015 年波兰电视采访），字段名沿用 foreground_english，原文一行写波兰语、中文一行写译文。",
+  "review_note": "Polsat Sport 官方 2015 年采访：戴发箍的赫瓦林斯卡对着镜头自我介绍。三句波兰语按两档波兰语转写（data/source_asr/-Vsfptr_DC8/small.pl.json、medium.pl.json）与 swiatek-chwalinska-story-2026 第 7 段同一份译文；段首 3.75 在 3.72 切点之后（之前是球网空镜），段尾 16.4 在斯瓦泰克开口（16.74）之前。"
+}

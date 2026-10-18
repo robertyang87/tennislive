@@ -1,0 +1,51 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ATsKkPJBY3s/ATsKkPJBY3s.mp4",
+  "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 343.6,
+  "reviewed_to": 365.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 343.92,
+      "end": 349.6,
+      "en": "It's always tough to play against a fellow Polish player.",
+      "zh": "和同胞交手，总是很难。"
+    },
+    {
+      "start": 350.58,
+      "end": 352.3,
+      "en": "She's a great champion,",
+      "zh": "她是伟大的冠军，"
+    },
+    {
+      "start": 352.44,
+      "end": 353.7,
+      "en": "a living legend, she won everything.",
+      "zh": "活着的传奇，什么都赢过。"
+    },
+    {
+      "start": 354.2,
+      "end": 357.3,
+      "en": "It was a great honor for me to share the court with her today.",
+      "zh": "今天能和她同场，是我的荣幸。"
+    },
+    {
+      "start": 358.46,
+      "end": 361.4,
+      "en": "I still don't really realize what's going on,",
+      "zh": "我还没完全反应过来，"
+    },
+    {
+      "start": 361.6,
+      "end": 365.0,
+      "en": "and the fact that I won against her is actually crazy for me.",
+      "zh": "赢了她，对我来说太疯狂了。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/ATsKkPJBY3s/small.en.json + medium.en.json",
+  "review_note": "同一条 WTA 集锦尾部的场上采访（两档转写一致，medium 343.92–364.90）；口头语（I mean / you know）按烧字幕规矩去掉。段尾 365.3 在下一段空白（365.3–389.7）开头。"
+}

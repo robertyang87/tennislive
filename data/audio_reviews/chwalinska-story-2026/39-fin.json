@@ -1,0 +1,27 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-HIvIvgwXkqs/HIvIvgwXkqs.mp4",
+  "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 203.4,
+  "reviewed_to": 214.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 206.24,
+      "end": 209.9,
+      "en": "Maja Chwalinska's first WTA title is a big one.",
+      "zh": "赫瓦林斯卡的首个巡回赛冠军，"
+    },
+    {
+      "start": 210.84,
+      "end": 213.1,
+      "en": "She's a WTA 1000 champion.",
+      "zh": "就是一座一千赛冠军。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/HIvIvgwXkqs/small.en.json + medium.en.json",
+  "review_note": "正文按时间顺序兑现冷开场：同一条 WTA 决赛集锦，203.32 切到她跪在场上、206.68 包厢里的波兰球迷、209.40 她站起来。解说两档一致（medium 206.24–213.10，与 chwalinska-kartal-wuhan-2026-f 第 12 段同一句）。段尾 214.2 在 214.32 切点之前。"
+}

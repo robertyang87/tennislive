@@ -1,0 +1,21 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ciGC4PID7T4/ciGC4PID7T4.mp4",
+  "source_sha256": "a2e0628535777725cd981146f3b207556e2e916b85de27a89e1c9cbee478d707",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 94.3,
+  "reviewed_to": 98.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 94.48,
+      "end": 97.9,
+      "en": "It was definitely a bit frustrating, you know.",
+      "zh": "那阵子确实有点憋屈。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/ciGC4PID7T4/small.en.json + medium.en.json",
+  "review_note": "Tennis Channel 官方辛辛那提演播室专访（ciGC4PID7T4）：主持人问温网受伤后的恢复。字幕按仓库已审的 output/interviews/chwalinska-cincinnati-2026-studio 逐句时间（1:34.48）。98.27 切到演播室远景，下一段接着说。"
+}
