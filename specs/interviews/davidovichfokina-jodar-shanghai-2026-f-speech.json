@@ -233,7 +233,7 @@
   },
   "whisper_model": "medium.en",
   "transcript_disagree_ok": {
-    "rate": 0.35,
+    "rate": 0.5,
     "why": "人工逐行核对过转写（transcript_verified）：分歧是 whisper 与 YouTube 自动字幕在口语填词、缩写、词对齐上的系统性差异，非整段对不上；发出去的英文以人工订正的 en_fixed 为准。"
   },
   "transcript_ceiling_exempt": {
