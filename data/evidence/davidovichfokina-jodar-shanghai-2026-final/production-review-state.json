@@ -16,14 +16,14 @@
     637,
     1029
   ],
-  "tts_bundle_sha256": "816d5deffdc351a3011dd8deaed7964cf21af857941271aba1d27304dffa562c",
-  "tts_bundle_bytes": 892088,
-  "render_status": "ready_to_dispatch_native_after_retained_scope_audio_gate_passed",
+  "tts_bundle_sha256": "bd2137c35394dd9ad9aec92dd4aec128d9d427eb5d43b6b3c4ff72a879774326",
+  "tts_bundle_bytes": 890419,
+  "render_status": "ready_to_dispatch_v4_after_real_source_and_narration_checks",
   "quality_approval": false,
   "wechat_pushed": false,
   "audio_review_pending": true,
   "actual_model_audio_listening_available": false,
-  "critical_quotes_bilingual": 35,
+  "critical_quotes_bilingual": 41,
   "uncertain_auxiliary_remarks_not_guessed": true,
   "camera_message_media_report": "/workspace/scratch/fokina-camera-media/spanish/REPORT.md",
   "render_run": "https://github.com/robertyang87/tennislive/actions/runs/39134098133",
@@ -31,8 +31,8 @@
   "whole_source_uncertain_spans_present": true,
   "source_uploader_verified": "Tennis TV",
   "source_captions_retrieved_run": "https://github.com/robertyang87/tennislive/actions/runs/39134401222",
-  "spec_sha256": "cd8b08ef15706dde2090ee390c91f2bd51ffc9db8dc530beafc2406ebc912148",
-  "remaining_source_review": "Three unresolved ancillary windows actually omitted aswholeunits; retained12windows passednormalforegroundgatewithactualsourceSHA. Historicaluncertainty preserved as excluded_not_resolved.",
+  "spec_sha256": "9e27fa39558fabc0c83847e2915b455d3b62f154231d51b924701f6d896aa7fa",
+  "remaining_source_review": "Current v4 plan normally re-bound after coordinates narration edit; all13 declaredJSON and actualoriginalsourceSHA passed unchanged source packets. Three omitted ancillary units remain excluded_not_resolved.",
   "audio_review_clips": "/workspace/scratch/fokina-final-captions/listen-needed/三句原声待核.mp3",
   "retained_source_uncertain_spans_present": false,
   "retained_source_gate_passed": true,
@@ -50,5 +50,6 @@
       405.88
     ]
   ],
-  "source_retained_effective_seconds": 447.34
+  "source_retained_effective_seconds": 447.34,
+  "voice_review_status": "Actual voice phone/tone and calibrated controls review in progress; coordinates disputed 之间 removed and only that actualutterance resynthesized. No wholevoice/humanlistening approval claimed."
 }
