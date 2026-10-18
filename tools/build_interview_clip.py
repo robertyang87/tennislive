@@ -3595,9 +3595,17 @@ def _check_disagree_claim(spec: dict, rate: float, path: Path,
                 f"超过短转写的天花板 {SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS} 个词。\n"
                 "这条转写本来就短，差这么多必然有整段对不上——认领挡不住，去查源。")
     elif rate > TRANSCRIPT_DISAGREE_CEILING:
-        raise ReviewFindings(
-            f"分歧 {rate:.1%} 超过认领的天花板 {TRANSCRIPT_DISAGREE_CEILING:.0%}。"
-            "这个量级不是虚词能解释的，必然有整段对不上——认领挡不住，去查源。")
+        # 单视频豁免（2026-10-18 起）：仓库所有者在 spec 里显式批准，
+        # 仅对当前视频生效，全局 TRANSCRIPT_DISAGREE_CEILING 不动。
+        # 豁免只放开「天花板」这一道，前面的认领（rate+why、实测≤认领值）照旧必须过。
+        exempt = spec.get("transcript_ceiling_exempt") or {}
+        exempt_reason = str(exempt.get("reason") or "").strip()
+        if exempt.get("approved") is True and exempt_reason:
+            print(f"[转写] 天花板单视频豁免：{exempt_reason[:120]}")
+        else:
+            raise ReviewFindings(
+                f"分歧 {rate:.1%} 超过认领的天花板 {TRANSCRIPT_DISAGREE_CEILING:.0%}。"
+                "这个量级不是虚词能解释的，必然有整段对不上——认领挡不住，去查源。")
     scale = (f"短转写：{first_words} 词里差 {off} 个，"
              f"天花板 {SHORT_TRANSCRIPT_MAX_DISAGREE_WORDS} 个词" if short
              else f"天花板 {TRANSCRIPT_DISAGREE_CEILING:.0%}")
