@@ -1,0 +1,33 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=KHT6c3b6ecw",
+  "source_sha256": "2f26151ac90a41490c9ce643cc0b2e601fec5851d2d79039aa25f53ff485ea21",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 82.2,
+  "reviewed_to": 94.9,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 82.46,
+      "end": 86.64,
+      "en": "For me, I think before I was not enjoying, I was very frustrated,",
+      "zh": "以前我并不享受，总是很沮丧，"
+    },
+    {
+      "start": 87.38,
+      "end": 91.6,
+      "en": "and this kind of time gave me a lot of thinking,",
+      "zh": "这段时间让我想了很多，"
+    },
+    {
+      "start": 91.86,
+      "end": 94.54,
+      "en": "to see what I want to do with my future.",
+      "zh": "想清楚了未来要做什么。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/KHT6c3b6ecw/small.en.json + medium.en.json",
+  "review_note": "同一条采访。medium 82.46–94.54 逐词，small 一致（small 多一个 not，按 medium 写）。段首 82.2 在 very,（81.84）之后。"
+}

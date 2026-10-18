@@ -1,0 +1,45 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=9u2kSI8md88",
+  "source_sha256": "cfaa4c8dffeca303352dc76dcdf6077e831fb5137bead18762b0116587411341",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 441.0,
+  "reviewed_to": 456.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 441.32,
+      "end": 443.2,
+      "en": "But the smile says it all.",
+      "zh": "笑容说明了一切。"
+    },
+    {
+      "start": 444.34,
+      "end": 447.88,
+      "en": "After losing his first five tour level finals,",
+      "zh": "头五次决赛全输之后，"
+    },
+    {
+      "start": 448.38,
+      "end": 450.32,
+      "en": "he's now won two in a row.",
+      "zh": "他现在连赢了两个。"
+    },
+    {
+      "start": 451.26,
+      "end": 453.96,
+      "en": "And this one came having not played a match",
+      "zh": "而这一个冠军之前，"
+    },
+    {
+      "start": 453.96,
+      "end": 455.58,
+      "en": "for two and a half months.",
+      "zh": "他两个半月没打比赛。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/9u2kSI8md88/small.en.json + medium.en.json",
+  "review_note": "同一条：他转身振臂、蹲下捂脸。两档转写（small.en / medium.en）逐词一致（441.32–455.58，按 small 断句）。段首 441.0 在 did you not（440.08）之后，段尾 456.0 在 What a week（455.80）只露半个词，字幕收到 455.58。"
+}

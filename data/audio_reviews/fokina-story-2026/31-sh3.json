@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=x2hTyMZ_k8k",
+  "source_sha256": "d38f0be995343a31c23d9bafac1e7e9adc39431de46283275dfdf8af04f9e2e5",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 100.0,
+  "reviewed_to": 105.9,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/x2hTyMZ_k8k/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/x2hTyMZ_k8k 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 100.0–105.9 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "ATP 官方集锦（x2hTyMZ_k8k）决胜盘抢七：95–110 同一个广角机位。两档转写在 92.3–106.16 无词。救下 1 个赛点：ATP 上海赛前要点 PDF＋ATP 半决赛报道。"
+}

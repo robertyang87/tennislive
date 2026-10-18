@@ -1,0 +1,21 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Vx3B-kCQDTs",
+  "source_sha256": "4657c82265f61db446d664f0281f94a6730ff8577d1f4f77d1c23c74d87b3c20",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 472.4,
+  "reviewed_to": 479.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 473.12,
+      "end": 478.36,
+      "en": "It's heartbreak again for Alejandro Davidovich Fokina.",
+      "zh": "福基纳又一次心碎了。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/Vx3B-kCQDTs/small.en.json + medium.en.json",
+  "review_note": "Tennis TV 官方集锦（Vx3B-kCQDTs）：三月阿卡普尔科决赛，马哈奇戴墨西哥帽捧杯。两档转写（small.en / medium.en）逐词一致（473.12–478.36）。段首 472.4 在 small 那一句 behind it（471.54）之后。"
+}

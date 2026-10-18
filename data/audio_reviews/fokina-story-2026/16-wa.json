@@ -1,0 +1,45 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=56wc7QQEwEw",
+  "source_sha256": "76f845de31c1a1ff176d92d56332b350b086ae3a304530ced81b85c816252cff",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 306.6,
+  "reviewed_to": 322.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 307.76,
+      "end": 309.08,
+      "en": "Oh my gosh!",
+      "zh": "天哪！"
+    },
+    {
+      "start": 311.06,
+      "end": 314.02,
+      "en": "Unbelievably fortunate from De Minaur,",
+      "zh": "德米纳尔运气太好了，"
+    },
+    {
+      "start": 314.02,
+      "end": 315.78,
+      "en": "acknowledges it, but what a time.",
+      "zh": "他也承认，偏偏是这个时候。"
+    },
+    {
+      "start": 316.92,
+      "end": 318.74,
+      "en": "Please, players are ready.",
+      "zh": "请，球员已准备。"
+    },
+    {
+      "start": 319.1,
+      "end": 321.62,
+      "en": "Two hours and 39 minutes on the clock.",
+      "zh": "比赛已经打了两小时三十九分钟。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/56wc7QQEwEw/small.en.json + medium.en.json",
+  "review_note": "同一条：5-4 德米纳尔发球，318 秒打出 CHAMPIONSHIP POINT 字样。两档转写（small.en / medium.en）逐词一致（307.76–321.62；Please, players are ready 是主裁播报，small 转成 These players，按 medium 写）。"
+}

@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=IUIM1yIVFjA",
+  "source_sha256": "0c6c616eb2ee59564d56aefd36fddbfd600a4a631259601037f730b5ec8f616a",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 19.5,
+  "reviewed_to": 27.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/IUIM1yIVFjA/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/IUIM1yIVFjA 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 19.5–27.6 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "Tennis TV 官方「Tsitsipas match point & celebration」（IUIM1yIVFjA）：第二盘抢七的赛点回合，14–29 同一个广角机位。两档转写在 0–27.9 无词。"
+}

@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=7JY8UtZrvFg",
+  "source_sha256": "73376feeb8de3c0f2d8f689abcceb0375413cf1445af305dd75e93be366e592d",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 405.0,
+  "reviewed_to": 410.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/7JY8UtZrvFg/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/7JY8UtZrvFg 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 405.0–410.6 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "Tennis TV 官方集锦（7JY8UtZrvFg）第二盘 5-3 他的发球局：396–410 同一个广角机位，赛点是 407.5 那一发。两档转写在 388.2–410.84 无词。"
+}

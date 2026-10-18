@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=QEq571d-4_Q",
+  "source_sha256": "6621d044d653d2576fc8cc8107e376ec8b0d786fc0def5c7cbe25919f5d29bcc",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 201.0,
+  "reviewed_to": 206.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/QEq571d-4_Q/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/QEq571d-4_Q 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 201.0–206.8 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "Tennis TV 官方集锦（QEq571d-4_Q）决胜盘最后一局：185–207 同一个广角机位，赛点在 205 秒前后打完。两档转写在 185–207.8 只有 196.3 一声 Oh、203.1 一声 Wow（现场惊呼，压在旁白下）。破发九次：ATP 西语简介＋ATP 上海赛前要点 PDF。"
+}

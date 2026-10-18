@@ -1,0 +1,21 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=OSnzyodnKdE",
+  "source_sha256": "9ef7cf0c28ee5484b807862c9439a18b57c47cc43e6d3b4361ed417aa79a9184",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 102.9,
+  "reviewed_to": 107.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 103.12,
+      "end": 106.9,
+      "en": "Oh, what an incredible finish!",
+      "zh": "多么精彩的收尾！"
+    }
+  ],
+  "asr_evidence": "data/source_asr/OSnzyodnKdE/small.en.json + medium.en.json",
+  "review_note": "同一条：抢七最后一分、他蹲下、回放、他振臂。两档转写（small.en / medium.en）逐词一致。段尾 107.6 在 108 切到回放之前。"
+}

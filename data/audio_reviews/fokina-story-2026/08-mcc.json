@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=IUIM1yIVFjA",
+  "source_sha256": "0c6c616eb2ee59564d56aefd36fddbfd600a4a631259601037f730b5ec8f616a",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 27.6,
+  "reviewed_to": 39.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 27.94,
+      "end": 29.18,
+      "en": "It's just wide.",
+      "zh": "出界了。"
+    },
+    {
+      "start": 29.18,
+      "end": 37.4,
+      "en": "And it is mission accomplished in Monte Carlo for Stefanos Tsitsipas.",
+      "zh": "西西帕斯在蒙特卡洛完成了卫冕。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/IUIM1yIVFjA/small.en.json + medium.en.json",
+  "review_note": "同一条：他一拍出界，西西帕斯倒地，他仰头站在网前。两档转写（small.en / medium.en）逐词一致（27.94–37.40）。"
+}

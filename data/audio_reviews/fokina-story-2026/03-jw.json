@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=W98zNwzcSvk",
+  "source_sha256": "95fd6b498f37bfeacb763ded258714669359dbe2bf990c6471adae6e5d5b70cd",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 43.5,
+  "reviewed_to": 55.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 43.84,
+      "end": 49.8,
+      "en": "I started with my father in the beach, in the sand courts in my city,",
+      "zh": "我是跟着爸爸在海边开始的，"
+    },
+    {
+      "start": 49.8,
+      "end": 55.02,
+      "en": "and it was my father who pushed me to play tennis.",
+      "zh": "是爸爸推着我去打网球。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/W98zNwzcSvk/small.en.json + medium.en.json",
+  "review_note": "温网官方频道 2017 年青少年冠军新闻发布会（W98zNwzcSvk）：他坐在发布台前讲怎么开始打球。两档转写（small.en / medium.en）逐词一致（43.84–55.02；small 把 pushed 写成 push、多一个 to，按 medium 与语义写）。段首 43.5 在上一句（42.8 结束）之后，段尾 55.4 在下一句（56.1）之前。"
+}

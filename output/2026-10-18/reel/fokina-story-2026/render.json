@@ -1,0 +1,104 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "46248e4c762faa77677baefdbc68a1c5ceaeff2c4dcf76f39066622ab00d62ac",
+    "request_count": 21,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-fokina-story-2026-46248e4c762faa77",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-fokina-story-2026-46248e4c762faa77/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39086769774"
+  },
+  "cover_seconds": 4.066,
+  "cover_narrated": true,
+  "outro_seconds": 4.146,
+  "layout": "full",
+  "segments_seconds": 459.4,
+  "topbar": null,
+  "film_seconds": 467.64,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+18%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 6.816,
+    "2": 8.064,
+    "4": 5.28,
+    "5": 4.296,
+    "7": 5.064,
+    "10": 8.256,
+    "14": 5.016,
+    "17": 9.144,
+    "21": 7.704,
+    "22": 12.96,
+    "23": 3.96,
+    "25": 9.36,
+    "27": 8.664,
+    "28": 9.888,
+    "30": 4.8,
+    "31": 2.4,
+    "33": 4.656,
+    "35": 3.336,
+    "39": 16.872
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "7a14ca91e4152fabaeaa06bf7589c2e0259734551311b876416be09f62db24f7",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "fokina-story-2026",
+    "received_at": "2026-10-18T01:31:01Z",
+    "artifact_ready_at": "2026-10-18T01:41:21Z",
+    "elapsed_seconds": 620.778,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "96bdc13dcec2d3abde5f32183f38c03e34b11956a2e384bf91d27fee3286bf3b",
+    "spec_sha256": "87b6a41e49aa8ce6d7b62c7e6ddc128283b38eaed092fe73248793505bf2e29b",
+    "run_id": "39086769774",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-18T01:33:56Z",
+        "run_id": "39086769774"
+      }
+    ],
+    "render_seconds": 445.778,
+    "pre_render_seconds": 175.0
+  },
+  "film_sha256": "96bdc13dcec2d3abde5f32183f38c03e34b11956a2e384bf91d27fee3286bf3b",
+  "film_bytes": 253450483,
+  "qc_attestation_sha256": "acc7de76a6d09fbc84b0a150460dee7871459c36608263f58e6d606e26dc77ad",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-18T01:33:56Z",
+      "run_id": "39086769774"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-18T01:41:26Z",
+      "run_id": "39086769774"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-fokina-story-2026/fokina-story-2026.mp4",
+  "video_bytes": 253450483
+}
