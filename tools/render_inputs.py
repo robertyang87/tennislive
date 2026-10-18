@@ -310,8 +310,11 @@ GATE_ANNOTATIONS: dict[str, Gate] = {
     "_photo_source": _gate("parse_segments：全屏照片的来源（要 https）",
                            "_one", "segments[]._photo_source", https_url),
     "_quote_kind": _gate("taste_gates_extra.quote_kind_offenders：赛场之上的原声段只认"
-                         "broadcast／ceremony（dry-run）", "quote_kind_offenders",
+                         "broadcast／ceremony（dry-run）；crop_policy.person_frame_problems："
+                         "采访类段要声明 frame", "quote_kind_offenders person_frame_problems",
                          "segments[]._quote_kind", quote_kind),
+    "_frame_why": _gate("crop_policy.person_frame_problems：采访段 frame=court（不按人物中心裁）的认领"
+                        "（dry-run）", "person_frame_problems", "segments[]._frame_why"),
     "_quote_skip_why": _gate("unvoiced_quote_problem：不配原声字幕的认领",
                              "unvoiced_quote_problem", "segments[]._quote_skip_why"),
     "_rechecked_at": _gate(
