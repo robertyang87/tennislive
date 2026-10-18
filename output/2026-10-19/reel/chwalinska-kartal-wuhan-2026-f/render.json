@@ -1,19 +1,19 @@
 {
-  "scoreboard_qc_sha256": "d6a75f46604eb69964ba7881b25c13ff5063da6e78334463fe2635f2e680ab2a",
+  "scoreboard_qc_sha256": "96477347440c3ee3528969d467c44cc9dffd440c529a2a10eabefc0150a4ba7c",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "2414de29cc3083bf79d08dc11e33ef22100671bd96605d8dd0fddc4ab34bf9d9",
+    "bundle_sha256": "c848a69ebd0ff41bcb7afb4d49a6b7976128661f4fdf664f8ea497dad2765f50",
     "request_count": 9,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-chwalinska-kartal-wuhan-2026-f-2414de29cc3083bf",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-kartal-wuhan-2026-f-2414de29cc3083bf/tts_bundle.zip",
+    "release_tag": "reel-tts-chwalinska-kartal-wuhan-2026-f-c848a69ebd0ff41b",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-kartal-wuhan-2026-f-c848a69ebd0ff41b/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39146494761"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39149271646"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -22,7 +22,7 @@
   "segments_seconds": 329.36,
   "topbar": {
     "line1": "2026 WTA1000 武汉 决赛",
-    "line2": "赫瓦林斯卡 2-6 6-4 6-2 卡尔塔尔",
+    "line2": "赫瓦林斯卡 2-6 6-4 6-2 卡塔尔",
     "start": 1.2,
     "end": 330.56
   },
@@ -31,13 +31,13 @@
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
   "narration_seconds": {
-    "1": 15.336,
-    "2": 13.8,
-    "4": 15.816,
-    "6": 13.464,
+    "1": 15.072,
+    "2": 13.632,
+    "4": 15.624,
+    "6": 13.44,
     "8": 11.064,
-    "10": 12.792,
-    "14": 13.152,
+    "10": 12.456,
+    "14": 13.128,
     "15": 20.976
   },
   "face_checks": {
@@ -55,46 +55,46 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "8ae83e3a32554d3883af961d7041749618eb41b0e78b96d73f3f10523452a999",
+  "render_inputs_sha256": "80fb97782e6b19ab981aadc9c62cee587d24109d6bcf653c68baa41a0efd2a4e",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "chwalinska-kartal-wuhan-2026-f",
-    "received_at": "2026-10-18T16:46:00Z",
-    "artifact_ready_at": "2026-10-18T16:52:52Z",
-    "elapsed_seconds": 412.414,
+    "received_at": "2026-10-18T17:22:23Z",
+    "artifact_ready_at": "2026-10-18T17:29:12Z",
+    "elapsed_seconds": 409.35,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "a0cb284aa970a2455b5d254bc6da436a6996c53128b98b31e0aca04a4a75b551",
-    "spec_sha256": "69c5a26affff36416adb2e76bc4f3a1149c7e5003ccc211f06fa8d6dbaff262a",
+    "film_sha256": "a54e03d3b545a62ee300c59e30319fed71f8bfc5ea2574ddeeb33bde2876f9ec",
+    "spec_sha256": "c567c58adc4915bb3e7602bf09766c5c7ec8464a8444b356e1c7b386725eb74d",
     "request_received_at": "2026-10-18T14:50:21Z",
-    "request_to_artifact_seconds": 7351.414,
-    "run_id": "39146494761",
+    "request_to_artifact_seconds": 9531.35,
+    "run_id": "39149271646",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-18T16:48:28Z",
-        "run_id": "39146494761"
+        "at": "2026-10-18T17:24:52Z",
+        "run_id": "39149271646"
       }
     ],
-    "render_seconds": 264.414,
-    "pre_render_seconds": 148.0
+    "render_seconds": 260.35,
+    "pre_render_seconds": 149.0
   },
-  "film_sha256": "a0cb284aa970a2455b5d254bc6da436a6996c53128b98b31e0aca04a4a75b551",
-  "film_bytes": 105373497,
-  "qc_attestation_sha256": "a0f021228d4f06e8fca50877fc0e5f895e16f676d50bb562a7d67141b9772d93",
+  "film_sha256": "a54e03d3b545a62ee300c59e30319fed71f8bfc5ea2574ddeeb33bde2876f9ec",
+  "film_bytes": 105265998,
+  "qc_attestation_sha256": "a7958a33411bacfef4c512a70d2f71e489301d81b5af4e7edfdad4dd21b2389e",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-18T16:48:28Z",
-      "run_id": "39146494761"
+      "at": "2026-10-18T17:24:52Z",
+      "run_id": "39149271646"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-18T16:52:54Z",
-      "run_id": "39146494761"
+      "at": "2026-10-18T17:29:15Z",
+      "run_id": "39149271646"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-chwalinska-kartal-wuhan-2026-f/chwalinska-kartal-wuhan-2026-f.mp4",
-  "video_bytes": 105373497
+  "video_bytes": 105265998
 }
