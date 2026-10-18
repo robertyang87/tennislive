@@ -1233,7 +1233,7 @@ def test_内容指纹不看注解():
 _NOT_FILM = frozenset({
     "slug", "source_title", "cookies", "push",   # push 按子键另分（PUSH_FILM_KEYS）
     "whisper_model", "whisper_vad_filter", "transcript_verified", "transcript_verification",
-    "transcript_disagree_ok", "suspect", "suspect_ok", "caption_gaps_ok",
+    "transcript_disagree_ok", "transcript_ceiling_exempt", "suspect", "suspect_ok", "caption_gaps_ok",
     "human_quote", "human_quote_ok", "opening", "requested_content_type", "match",
     "source_verification", "featured_player", "interviewee", "max_zh_chars",
     # 顶层 `winner_en` 是写 spec 时留的英文全名备查；出片只读 `match.winner_en`
@@ -1260,6 +1260,7 @@ def test_内容指纹只认会进成片的键():
     for key, value in (("transcript_verified", True), ("caption_gaps_ok", {"1-2": "掌声"}),
                        ("suspect_ok", {"3": "对的"}), ("whisper_model", "large-v3"),
                        ("match", {"id": "m2"}), ("source_verification", {"status": "v"}),
+                       ("transcript_ceiling_exempt", {"approved": True, "reason": "仅转写准入认领"}),
                        ("requested_content_type", "on_court"), ("opening", {"kind": "none"}),
                        ("featured_player", "甲")):
         assert ir.content_sha256({**base, key: value}) == h, f"改 `{key}` 不该算内容"
