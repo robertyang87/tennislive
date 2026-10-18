@@ -1,36 +1,36 @@
 {
-  "slug": "jodar-davidovichfokina-shanghai-2026-f-speech",
-  "url": "https://www.youtube.com/watch?v=EtIkwNuWJw8",
-  "source_title": "Rafael Jodar Finalist Speech | 2026 Shanghai",
+  "asr_model": "whisper-large-v3",
   "column": "赛后开麦",
+  "end": 50.0,
   "event": "2026 ATP1000 上海 决赛",
-  "winner": "福基纳",
-  "loser": "霍达尔",
   "featured_player": "霍达尔",
   "interview_kind": "speech",
-  "requested_content_type": "赛后开麦",
+  "loser": "霍达尔",
   "match": {
-    "winner": "Alejandro Davidovich Fokina",
+    "event": "2026 上海大师赛",
     "loser": "Rafael Jodar",
-    "score": "1-6 7-6(5) 6-4",
     "round": "决赛",
-    "event": "2026 上海大师赛"
+    "score": "1-6 7-6(5) 6-4",
+    "winner": "Alejandro Davidovich Fokina"
   },
-  "source_verification": {
-    "method": "human_visual_verdict",
-    "verdict": "pass",
-    "checked_at": "2026-10-18T21:05:00+08:00",
-    "checker": "assistant",
-    "notes": "Tennis Channel 官方频道；标题 'Rafael Jodar Finalist Speech | 2026 Shanghai'；内容为霍达尔在 2026 上海大师赛决赛（1-6、7-6(5)、6-4 负于福基纳）后的亚军致辞。",
-    "attestation": "64ab4d1f2a0c172f"
-  },
-  "start": 0.0,
-  "end": 120.0,
   "opening": {
     "kind": "none",
     "why": "源片为独立的亚军致辞视频，无比赛画面；致辞本身即为完整内容。"
   },
+  "requested_content_type": "赛后开麦",
+  "slug": "jodar-davidovichfokina-shanghai-2026-f-speech",
+  "source_title": "Rafael Jodar Finalist Speech | 2026 Shanghai",
+  "source_verification": {
+    "attestation": "64ab4d1f2a0c172f",
+    "checked_at": "2026-10-18T21:05:00+08:00",
+    "checker": "assistant",
+    "method": "human_visual_verdict",
+    "notes": "Tennis Channel 官方频道（27.6万订阅）；标题 'Rafael Jodar Finalist Speech | 2026 Shanghai'；时长 0:50；画面为霍达尔在颁奖台麦克风前致辞，背景中国国旗，Tennis Channel LIVE 标识。内容：祝贺 Alex（福基纳）及团队、很高兴西班牙球员夺冠；感谢赛事组织方（Charles、Michael）、全体工作人员；首次来此参赛；感谢到场的父亲。浏览器人工核验通过。",
+    "verdict": "pass"
+  },
+  "start": 0.0,
   "transcript_verified": false,
-  "asr_model": "whisper-large-v3",
-  "whisper_model": "whisper-large-v3"
+  "url": "https://www.youtube.com/watch?v=EtIkwNuWJw8",
+  "whisper_model": "whisper-large-v3",
+  "winner": "福基纳"
 }
