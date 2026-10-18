@@ -431,30 +431,7 @@ jobs:
         env:
           SLUG: ${{ github.event.inputs.slug }}
           DISPATCHED_BY: ${{ github.triggering_actor }}
-        run: |
-          set +e
-          PYTHONPATH=src python tools/interview_preflight.py --slug "$SLUG" --skip-copy --dispatched-by "$DISPATCHED_BY" > /tmp/preflight.log 2>&1
-          CODE=$?
-          cat /tmp/preflight.log
-          echo "PREFLIGHT_EXIT=$CODE" >> /tmp/preflight.log
-          cp /tmp/preflight.log preflight_debug.md
-          exit $CODE
-
-      - name: 上传预检日志
-        if: always() && github.event.inputs.mode == 'render'
-        uses: actions/upload-artifact@v4
-        with:
-          name: preflight-log
-          path: preflight_debug.md
-
-      - name: 提交预检日志到仓库
-        if: always() && github.event.inputs.mode == 'render'
-        run: |
-          git config user.name "tennislive-bot"
-          git config user.email "bot@tennislive.local"
-          git add -f preflight_debug.md || true
-          git commit -m "debug: preflight log for ${{ github.event.inputs.slug }}" || true
-          git push origin HEAD:main || true
+        run: PYTHONPATH=src python tools/interview_preflight.py --slug "$SLUG" --skip-copy --dispatched-by "$DISPATCHED_BY"
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
       # 匹配不上，看起来像「这个视频没有格式」或者「cookie 过期了」。
