@@ -1,0 +1,78 @@
+{
+  "actual_audio_sha256": "ff4390b447f5b6b6a373dc23368d69e91bbd2ad531b8399e49ad49d5f6b3c89c",
+  "observed": {
+    "expected": {
+      "index": 46,
+      "char": "忠",
+      "lexical": "zhong1",
+      "surface": "zhong1",
+      "base": "zhong"
+    },
+    "model_prediction": {
+      "reading": "zhong1",
+      "base": "zhong",
+      "start": 9.5,
+      "end": 9.545,
+      "vowel_start": 9.52,
+      "vowel_end": 9.545,
+      "probability": 0.9917071461677551,
+      "model_tokens": [
+        "zh",
+        "ong1"
+      ],
+      "expected": {
+        "index": 46,
+        "char": "忠",
+        "lexical": "zhong1",
+        "surface": "zhong1",
+        "base": "zhong"
+      },
+      "base_exact": true
+    },
+    "native_token": {
+      "text": "忠国",
+      "start": 9.410375,
+      "end": 9.693375,
+      "char_start": 46,
+      "char_end": 48
+    },
+    "location_checked": true,
+    "status": "located",
+    "expected_surface_matches_model": true
+  },
+  "same_calibrated_A_B_reference_hashes": {
+    "ORIG": "b0f0a2cd1135acbdb06eac21a66c925b84155ab34554d41df3fbe9d555f05995",
+    "A1": "d6cd29efd22ea097199041f48dc89c3b16066a224bc3fc7d6c5fa3b91961393f",
+    "A2": "afe76da2f8352974d0c971d3a36cd9dbed20ffb9117977907571418460f4a439",
+    "B1": "0fa8803ed0533b1189100ecd672441d6ba74e9870c9e1eb1ffded44e61522f3e",
+    "B2": "156cdf36708902bd3f48795d8f7c457ccf4013bb5abe457ffdc97f4e5c269c52"
+  },
+  "calibration": {
+    "A1": {
+      "expected_side": "positive",
+      "score": 0.9806888903006263,
+      "calibrated_side": "positive"
+    },
+    "A2": {
+      "expected_side": "positive",
+      "score": 0.9806421979907342,
+      "calibrated_side": "positive"
+    },
+    "B1": {
+      "expected_side": "negative",
+      "score": -0.8849815031542643,
+      "calibrated_side": "negative"
+    },
+    "B2": {
+      "expected_side": "negative",
+      "score": -0.8805193236661579,
+      "calibrated_side": "negative"
+    }
+  },
+  "old_actual_score": -0.4445533931108544,
+  "new_actual_score": 0.9352962156678206,
+  "fixed_threshold": 0.2,
+  "verdict": "finite_local_support",
+  "scope": "New exact frozen request target46忠 replacing original中 only; this is not whole-request approval",
+  "no_listening_claimed": true
+}
