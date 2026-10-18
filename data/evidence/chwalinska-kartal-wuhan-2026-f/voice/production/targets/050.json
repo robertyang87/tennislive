@@ -1,0 +1,422 @@
+{
+  "edit_id": "last_game_context",
+  "sentence": "三比二之后，赫瓦林斯卡又保发、再破发，五比二。到了她的发球胜赛局，卡尔塔尔接连拿到破发点。第三次机会，赫瓦林斯卡仍要顶住。",
+  "word": "保",
+  "char": "保",
+  "at": 12,
+  "intended": "bao3",
+  "wrong": "bao4",
+  "ok_refs": [
+    "宝",
+    "褓"
+  ],
+  "bad_refs": [
+    "报",
+    "豹"
+  ],
+  "actual_binding": {
+    "edit_id": "last_game_context",
+    "text": "三比二之后，赫瓦林斯卡又保发、再破发，五比二。到了她的发球胜赛局，卡尔塔尔接连拿到破发点。第三次机会，赫瓦林斯卡仍要顶住。",
+    "display_text": "三比二之后，赫瓦林斯卡又保发、再破发，五比二。到了她的发球胜赛局，卡尔塔尔接连拿到破发点。第三次机会，赫瓦林斯卡仍要顶住。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "request_id": "dbff8dc6b8f7e47ffb86800a3883995b9471d7261ae828a4dbb7a9e40a3fb748",
+    "actual_mp3_sha256": "83e9c572d928e0d549f23ad999e5c552bf006c158c440c56dd6c192e94823d41",
+    "actual_marks_sha256": "b6c12e443f62228d18ea5bc8367796fee0191917819b792d00d6a1c575e624de",
+    "bound_snapshot_path": "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/native-speech/last_game_context.mp3",
+    "marks_snapshot_path": "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/native-speech/last_game_context.marks.json",
+    "word_boundary_tokens": [
+      "三比二",
+      "之后",
+      "赫瓦林斯卡",
+      "又",
+      "保发",
+      "再",
+      "破发",
+      "五比二",
+      "到",
+      "了",
+      "她",
+      "的",
+      "发球",
+      "胜赛",
+      "局",
+      "卡尔塔尔",
+      "接连",
+      "拿到",
+      "破发点",
+      "第三",
+      "次",
+      "机会",
+      "赫瓦林斯卡",
+      "仍",
+      "要",
+      "顶住"
+    ]
+  },
+  "kind": "actual_dual_asr_word_tone_signal",
+  "reference_policy": "One bounded fresh full-sentence contrast motivated by actual ASR爆发 spelling; native token保发. ASR itself is not tone proof.",
+  "acoustic": {
+    "word": "保",
+    "char": "保",
+    "sentence": "三比二之后，赫瓦林斯卡又保发、再破发，五比二。到了她的发球胜赛局，卡尔塔尔接连拿到破发点。第三次机会，赫瓦林斯卡仍要顶住。",
+    "tts_text": "三比二之后，赫瓦林斯卡又保发、再破发，五比二。到了她的发球胜赛局，卡尔塔尔接连拿到破发点。第三次机会，赫瓦林斯卡仍要顶住。",
+    "intended_refs": [
+      "宝",
+      "褓"
+    ],
+    "wrong_refs": [
+      "报",
+      "豹"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "high",
+    "verdict_raw": "correct",
+    "score": 0.99,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.048,
+        "d_wrong": 3.015,
+        "score": 0.968
+      },
+      "f0": {
+        "d_intended": 0.001,
+        "d_wrong": 3.424,
+        "score": 0.999
+      },
+      "comb": {
+        "d_intended": 0.025,
+        "d_wrong": 4.931,
+        "score": 0.99
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.001,
+      "wrong": 4.401
+    },
+    "separation": {
+      "spec": {
+        "within": 2.746,
+        "between": 3.053,
+        "separation": 1.112
+      },
+      "f0": {
+        "within": 0.906,
+        "between": 3.588,
+        "separation": 3.96
+      },
+      "comb": {
+        "within": 2.279,
+        "between": 5.114,
+        "separation": 2.244
+      }
+    },
+    "selftest_loo": {
+      "宝": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.43
+      },
+      "褓": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.345
+      },
+      "报": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.338
+      },
+      "豹": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.223
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:宝": {
+        "spec": 0.048,
+        "f0": 0.001,
+        "vmis": 0.0,
+        "frames": 27,
+        "comb": 0.025
+      },
+      "A:褓": {
+        "spec": 2.853,
+        "f0": 0.545,
+        "vmis": 0.179,
+        "frames": 28,
+        "comb": 1.972
+      },
+      "B:报": {
+        "spec": 3.084,
+        "f0": 4.574,
+        "vmis": 0.069,
+        "frames": 29,
+        "comb": 6.116
+      },
+      "B:豹": {
+        "spec": 3.015,
+        "f0": 3.424,
+        "vmis": 0.036,
+        "frames": 28,
+        "comb": 4.931
+      }
+    },
+    "window_s": [
+      2.13,
+      2.4
+    ],
+    "boundary_token": "保发",
+    "window_anchor": "A:褓",
+    "tokens": {
+      "ORIG": [
+        "三比二",
+        "之后",
+        "赫瓦林斯卡",
+        "又",
+        "保发",
+        "再",
+        "破发",
+        "五比二",
+        "到",
+        "了",
+        "她",
+        "的",
+        "发球",
+        "胜赛",
+        "局",
+        "卡尔塔尔",
+        "接连",
+        "拿到",
+        "破发点",
+        "第三",
+        "次",
+        "机会",
+        "赫瓦林斯卡",
+        "仍",
+        "要",
+        "顶住"
+      ],
+      "A:宝": [
+        "三比二",
+        "之后",
+        "赫瓦林斯卡",
+        "又",
+        "宝发",
+        "再",
+        "破发",
+        "五比二",
+        "到",
+        "了",
+        "她",
+        "的",
+        "发球",
+        "胜赛",
+        "局",
+        "卡尔塔尔",
+        "接连",
+        "拿到",
+        "破发点",
+        "第三",
+        "次",
+        "机会",
+        "赫瓦林斯卡",
+        "仍",
+        "要",
+        "顶住"
+      ],
+      "A:褓": [
+        "三比二",
+        "之后",
+        "赫瓦林斯卡",
+        "又",
+        "褓",
+        "发",
+        "再",
+        "破发",
+        "五比二",
+        "到",
+        "了",
+        "她",
+        "的",
+        "发球",
+        "胜",
+        "赛",
+        "局",
+        "卡尔塔尔",
+        "接连",
+        "拿",
+        "到",
+        "破发",
+        "点",
+        "第三次",
+        "机会",
+        "赫瓦林斯卡",
+        "仍",
+        "要",
+        "顶住"
+      ],
+      "B:报": [
+        "三比二",
+        "之后",
+        "赫瓦林斯卡",
+        "又",
+        "报发",
+        "再",
+        "破发",
+        "五比二",
+        "到",
+        "了",
+        "她",
+        "的",
+        "发球",
+        "胜赛",
+        "局",
+        "卡尔塔尔",
+        "接连",
+        "拿到",
+        "破发点",
+        "第三",
+        "次",
+        "机会",
+        "赫瓦林斯卡",
+        "仍",
+        "要",
+        "顶住"
+      ],
+      "B:豹": [
+        "三比二",
+        "之后",
+        "赫瓦林",
+        "斯卡",
+        "又",
+        "豹发",
+        "再",
+        "破发",
+        "五比二",
+        "到",
+        "了",
+        "她",
+        "的",
+        "发球",
+        "胜赛",
+        "局",
+        "卡尔塔尔",
+        "接连",
+        "拿到",
+        "破发点",
+        "第三",
+        "次",
+        "机会",
+        "赫瓦林斯卡",
+        "仍",
+        "要",
+        "顶住"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        6.3,
+        3.9,
+        1.6,
+        -0.8,
+        null,
+        null,
+        null,
+        -9.4,
+        -10.3,
+        -10.4,
+        -10.3,
+        -10.2,
+        -10.2,
+        -5.8
+      ],
+      "A:宝": [
+        6.3,
+        3.9,
+        1.6,
+        -0.8,
+        null,
+        null,
+        null,
+        -9.4,
+        -10.3,
+        -10.4,
+        -10.3,
+        -10.2,
+        -10.3,
+        -5.8
+      ],
+      "A:褓": [
+        5.3,
+        3.2,
+        0.3,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -10.1,
+        -10.3,
+        -10.4,
+        -10.7,
+        -8.4
+      ],
+      "B:报": [
+        0.8,
+        -0.1,
+        -0.7,
+        -3.2,
+        null,
+        null,
+        2.3,
+        1.4,
+        0.8,
+        -3.2,
+        -5.5,
+        -6.5,
+        -8.0,
+        -8.2
+      ],
+      "B:豹": [
+        1.7,
+        0.6,
+        0.0,
+        -0.6,
+        null,
+        null,
+        2.0,
+        -1.4,
+        -2.9,
+        -5.6,
+        -8.0,
+        -8.6,
+        -9.3
+      ]
+    },
+    "audio": {
+      "ORIG": "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/native-speech/last_game_context.mp3",
+      "A:宝": "/workspace/tennislive/data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/reference-cache/869722ad06df8fb406ff9799.mp3",
+      "A:褓": "/workspace/tennislive/data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/reference-cache/52eedb0f1cb32317878d4e9a.mp3",
+      "B:报": "/workspace/tennislive/data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/reference-cache/f0265d460477ef655f9fbb86.mp3",
+      "B:豹": "/workspace/tennislive/data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/reference-cache/ee17b64acca9c3fe322eb22d.mp3"
+    },
+    "acoustic_measurement_attempted": true
+  },
+  "measured_at": "2026-10-18T15:23:01.655144+00:00",
+  "human_listening_claimed": false
+}

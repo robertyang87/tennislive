@@ -1,0 +1,411 @@
+{
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "reviewed_at": "2026-10-18T15:09:09.499851+00:00",
+  "review_kind": "source_visual_evidence_and_editing_windows",
+  "status": "source_coverage_review_complete_not_final_movie_qc",
+  "sources": [
+    {
+      "key": "youtube",
+      "path": "/workspace/scratch/HIvIvgwXkqs.mp4",
+      "url": "https://youtu.be/HIvIvgwXkqs",
+      "sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+      "bytes": 54103112,
+      "duration_seconds": 305.295964,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "fps": "25/1",
+      "fully_sampled_with_contact_sheets": true
+    },
+    {
+      "key": "wta_extended",
+      "path": "/workspace/scratch/wuhan-final-extended.mp4",
+      "url": "https://players.brightcove.net/6041795521001/default_default/index.html?videoId=6407050487112",
+      "sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+      "bytes": 124519618,
+      "duration_seconds": 467.68,
+      "dimensions": [
+        1280,
+        720
+      ],
+      "fps": "25/1",
+      "fully_sampled_with_contact_sheets": true
+    }
+  ],
+  "fact_packet": {
+    "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/fact-packet.json",
+    "sha256": "38d90e4cfee00ecfe9e4c9b99e23baa02b1713a1edcda8068d926e8e9f81ad6f"
+  },
+  "name_instruction": "本片全部称赫瓦林斯卡；对手称卡尔塔尔。用户新指令覆盖昵称偏好。",
+  "review_scope": {
+    "actually_viewed": [
+      "YouTube305.30秒4张4秒墙、全部9张1秒分段墙、两段0.5秒战术末段、0.08秒夺冠末拍/死球墙、0.2秒发球/片尾边界墙、独立原尺寸记分板与场景图",
+      "WTA长版467.68秒6张4秒墙（0–464秒117样本）、7张重点1秒墙、9张0.2秒边界墙、BP4末段原尺寸大图"
+    ],
+    "limits": [
+      "没有逐帧连续播放全部源片，不把抽样当每帧人工审看。",
+      "未人工听审；原声完整句由source_audio代理另核，本报告不处理响度。",
+      "端点是基于上述细墙的可剪建议窗；dead_ball_observed_by是已确认停打的保守时刻，不冒充物理落地最早帧。",
+      "长版720p与主片1080p不同，使用补片前需root处理既有源尺寸/清晰度合同，不将放大称原生1080p。"
+    ]
+  },
+  "player_identity": {
+    "scoreboard_top": "M. CHWALINSKA [16] / 赫瓦林斯卡",
+    "scoreboard_bottom": "S. KARTAL / 卡尔塔尔",
+    "chwalinska_visual": "黑色无袖连衣裙，无帽，发髻",
+    "kartal_visual": "白色背心、深色短裤、白色帽子；不能将白衣球员的近景自动视为winner。"
+  },
+  "scoreboard_geometry_youtube": {
+    "source_canvas": [
+      1920,
+      1080
+    ],
+    "max_main_board_bounds": [
+      90,
+      870,
+      550,
+      980
+    ],
+    "native_prompt_vertical_bounds": [
+      829,
+      870
+    ],
+    "break_point_prompt_right": 224,
+    "championship_point_3_prompt_right": 318,
+    "suggested_search_box": [
+      90,
+      826,
+      550,
+      980
+    ],
+    "note": "搜索框包含球场；回贴蒙版必须主板/短提示分开按原生轮廓透明裁切。只按搜索框整块搬回会贴入球场。"
+  },
+  "youtube_full_point_windows": [
+    {
+      "start": 0,
+      "end": 32.76,
+      "score_before": "首盘赫0-1卡，15-40，卡尔塔尔破发点",
+      "coverage": "源从发球准备开始，长底线相持后卡尔塔尔近景；整点保留。",
+      "dead_ball_observed_by": 31.0
+    },
+    {
+      "start": 32.76,
+      "end": 61.76,
+      "score_before": "首盘赫1-4卡，40-40，赫瓦林斯卡发球",
+      "coverage": "完整发球/底线长相持及随后赫瓦林斯卡近景；不在球未停时跳走。",
+      "dead_ball_observed_by": 60.0
+    },
+    {
+      "start": 61.76,
+      "end": 85.12,
+      "score_before": "首盘赫2-5卡，30-40，SET POINT #3",
+      "coverage": "完整第3盘点、卡尔塔尔近景及首盘2-6原生总结。",
+      "dead_ball_observed_by": 72.0
+    },
+    {
+      "start": 85.12,
+      "end": 113.44,
+      "score_before": "次盘2-2，赫15/卡0，卡尔塔尔发球",
+      "coverage": "完整卡尔塔尔发球、底线长相持、卡尔塔尔进场、死球与观众反应。",
+      "dead_ball_observed_by": 108.0
+    },
+    {
+      "start": 113.44,
+      "end": 146.56,
+      "score_before": "次盘4-4，赫30/卡15，卡尔塔尔发球",
+      "coverage": "含近景发球准备及115.8–116.8完整抛球击球；底线长相持至双方停打。",
+      "dead_ball_observed_by": 146.0
+    },
+    {
+      "start": 146.56,
+      "end": 178.28,
+      "score_before": "次盘赫5-4卡，40-30，SET POINT #2",
+      "coverage": "含赫瓦林斯卡近景发球前准备、完整第2盘点及6-4原生总结。",
+      "dead_ball_observed_by": 160.0
+    },
+    {
+      "start": 178.28,
+      "end": 235.0,
+      "score_before": "决胜赫5-2卡，Ad，CHAMPIONSHIP POINT #3",
+      "coverage": "含第一发及重发、完整最终回合、倒地/看台/网前拥抱/主裁握手/致意。不得180起截掉第一发。",
+      "dead_ball_clearly_observed_by": 194.64
+    }
+  ],
+  "extended_supplement_windows": [
+    {
+      "start": 162.32,
+      "end": 197.52,
+      "score_before": "次盘赫2-3卡，0-0，赫瓦林斯卡发球",
+      "coverage": "完整发球、长相持、194–196赫瓦林斯卡近景；现场大屏可见本分后15-0。不是2-3这一局最后一分。",
+      "dead_ball_observed_by": 194.0
+    },
+    {
+      "start": 197.52,
+      "end": 222.08,
+      "score_before": "次盘3-3，卡尔塔尔发球",
+      "coverage": "完整发球、相持、双方上网及结束；不是第7局破发点本身。",
+      "dead_ball_observed_by": 221.0
+    },
+    {
+      "start": 222.08,
+      "end": 265.12,
+      "score_before": "次盘3-3，赫Ad，卡发球，BREAK POINT #4",
+      "coverage": "含卡尔塔尔近景抛球、溶到顶视机位、完整超长相持、死球及双方近景/观众。",
+      "outcome": "赫瓦林斯卡兑现第4个破发点，到4-3；随后被回破到4-4。",
+      "outcome_basis": "官方WTA/FS逐分事实包；源末段板未翻，近景不能判胜负。",
+      "dead_ball_observed_by": 260.4
+    },
+    {
+      "start": 308.8,
+      "end": 324.16,
+      "score_before": "决胜赫0-1卡，赫发球",
+      "coverage": "完整发球、双方前后移动、点后近景。",
+      "dead_ball_observed_by": 322.0
+    },
+    {
+      "start": 324.16,
+      "end": 334.16,
+      "score_before": "决胜2-2，赫40/卡0，卡发球，BREAK POINT",
+      "coverage": "完整发球→短回合→卡尔塔尔近景。此为赫瓦林斯卡破到3-2的一分，不是4-2局。",
+      "outcome": "赫瓦林斯卡零封破发3-2；具体winner依据官方逐分。",
+      "dead_ball_observed_by": 330.0
+    },
+    {
+      "start": 334.16,
+      "end": 349.84,
+      "score_before": "决胜赫3-2卡，15-30，赫发球",
+      "coverage": "完整发球及底线回合后赫瓦林斯卡近景；这不是本局最后一分，不能把它叫4-2领先时或本分直接保到4-2。",
+      "dead_ball_observed_by": 348.0
+    },
+    {
+      "start": 349.84,
+      "end": 387.12,
+      "score_before": "决胜赫5-2卡，0-15，赫发球",
+      "coverage": "完整长相持；不是救破发点，不能字幕写成3个BP之一。",
+      "dead_ball_observed_by": 386.0
+    },
+    {
+      "start": 387.12,
+      "end": 399.48,
+      "score_before": "决胜赫5-2卡，40-Ad，BREAK POINT #3",
+      "coverage": "387.2近景发球准备，387.6起抛球，388全场，随后网前回合和双方停打/走动。399.6已经跳第三冠军点。",
+      "outcome": "赫瓦林斯卡救回本局第3个破发点。",
+      "outcome_basis": "官方逐分事实＋画面下一段跳冠军点；不声称另两个BP已取得。",
+      "dead_ball_observed_by": 397.4
+    }
+  ],
+  "cold_open": {
+    "source": "youtube",
+    "last_point_start_recommended": 178.28,
+    "dead_ball_clearly_observed_by": 194.64,
+    "earliest_recommended_win_after_start": 194.8,
+    "closeup_safe_start": 195.84,
+    "recommended_original_sound_start": 198.08,
+    "note": "194.64赫瓦林斯卡双手抬起，195.84为已倒地近景；原声198.08句头时间由source_audio独立ASR提供，不能将178.28–194.6活球当赢后冷开。"
+  },
+  "ending_and_exclusions": {
+    "youtube": {
+      "celebration_includes": "倒地、团队看台、网前拥抱、主裁握手、致意、走入团队拥抱和回到球场",
+      "team_celebration_nominal_window": [
+        235,
+        277
+      ],
+      "final_result_graphic": [
+        292.8,
+        295.2
+      ],
+      "safe_source_end_recommended": 295.32,
+      "brand_bumper_seen_by": 295.4,
+      "interview_observed": false,
+      "award_ceremony_observed": false,
+      "trophy_lift_observed": false
+    },
+    "extended": {
+      "celebration_starts_nominal": 414,
+      "ends_at_source_end": 467.68,
+      "interview_observed": false,
+      "award_ceremony_observed": false,
+      "trophy_lift_observed": false
+    },
+    "note": "本源没有捧杯不等于本场未颁奖；若需补官方捧杯，应单独有新源时码证据，不能拿其他比赛替代。"
+  },
+  "footage_gaps_internal_only": [
+    {
+      "turn": "次盘0-2落后、1-2回破、2-2保发",
+      "coverage": "两源均从次盘2-2某分起，没有这些局完整过程；可原生事实卡简明交代，不向观众解释集锦缺片。"
+    },
+    {
+      "turn": "次盘4-3后被回破4-4",
+      "coverage": "长版有4-3之前破发点完整过程，随后跳4-4长回合，没有回破完整局；不能把4-4长回合当被回破一球。"
+    },
+    {
+      "turn": "决胜盘第6/7局收成4-2与5-2",
+      "coverage": "长版有3-2局中15-30一分，随后直接5-2；不是所有关键局结束点都有。"
+    },
+    {
+      "turn": "发球胜赛局3个BP与前2个冠军点",
+      "coverage": "长版完整补到第3个BP；两源均未见BP#1/#2及CP#1/#2。不因画面标签#3就宣称前三次全部视觉覆盖。"
+    }
+  ],
+  "verified_tactics": [
+    {
+      "source": "youtube",
+      "window": [
+        100,
+        108
+      ],
+      "narration": "卡尔塔尔先把赫瓦林斯卡调到右侧，再让她横穿底线追向左侧，自己随后跟进场内。",
+      "visual_basis": [
+        "101.5–102黑衣赫瓦林斯卡在近端右边救球",
+        "104.5–105.5黑衣赫瓦林斯卡移至近端左边",
+        "103.5–108白衣卡尔塔尔从远端底线向发球区跟进"
+      ],
+      "confidence": "high",
+      "not_claimed": "不猜旋转、具体正反手、制胜分方式，也不提前报本分结果。"
+    },
+    {
+      "source": "youtube",
+      "window": [
+        137.5,
+        145
+      ],
+      "narration": "赫瓦林斯卡在底线先追到左侧，回到中路后又追向右侧。两个人用落点把对方拉开，这一分谁也不肯先让。",
+      "visual_basis": [
+        "138赫瓦林斯卡近端左侧",
+        "140赫瓦林斯卡回近端中路",
+        "143.5–144.5赫瓦林斯卡又到近端右侧",
+        "白衣卡尔塔尔同期仍在远端底线左右移动"
+      ],
+      "confidence": "high",
+      "not_claimed": "不猜旋转、赢家动作或斜线末拍，不提前口播该分结果。"
+    }
+  ],
+  "correction_log": [
+    {
+      "issue": "次盘3-3第4BP初判错误",
+      "superseded_statement": "卡尔塔尔救回",
+      "correct_statement": "赫瓦林斯卡兑现，4-3；随后被回破4-4",
+      "cause": "误把卡尔塔尔近景握拳视作赢球反应，且依赖延迟未翻牌记分板。",
+      "resolution": "撤回初判；正式winner以WTA/FS逐分事实包为准。大图复看确认顶视右侧黑衣赫、左侧白衣卡及260.4已停打；小球像素不足，不猜下网/出界方式。"
+    }
+  ],
+  "evidence_images": [
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/yt-contact_00.jpg",
+      "sha256": "cd8626a6d8b41a7612900d2f791ba30075baeeac14e683eef9d3431229e5a0fe",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/yt-contact_01.jpg",
+      "sha256": "2c27af305d74ced21ddf92d22c52d90975900414b79d375ac169d3be19b009c7",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/yt-contact_02.jpg",
+      "sha256": "d29f4857f2b556922b1acfacc4e4ab468d3fa6455d2e583e595656f3d25ec7cb",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/yt-contact_03.jpg",
+      "sha256": "8bac1f183a846598f054fbce94ae60bb46f22714996b251febfee5ae8b3c666c",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/yt-tactic-22-tail.jpg",
+      "sha256": "1250410de4769cdc2143ca90cf865a7a94b387b902d783ae0f570d7ded7d5ba0",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/yt-tactic-44-tail.jpg",
+      "sha256": "5c48a8eb7b543bf61a8e771edbc96e67d5f7f6d88842c9e5c2ca4a1f8ff277c5",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/yt-final-deadball-detail.jpg",
+      "sha256": "d9eb50b0be7629ee654d0592aa77d1d7e6085e49bb66ce7c396f0687309d99df",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/yt-brand-boundary.jpg",
+      "sha256": "af4f1d5c62e7f9eec4dd032c973804d09a136b30cdf00f6774a825e553f903b4",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/yt-score-read.jpg",
+      "sha256": "6471cbaa006516a5bcba22bc4fe11d94d29d4969b4331e2b38e6521179fe3e88",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-contact_00.jpg",
+      "sha256": "d2cd23b0dda24652b485fd136c0c7f7d6fe936769b6c6bffc59be8c06ea63754",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-contact_01.jpg",
+      "sha256": "9be0c13899fd633e7f9fd524b7138fc9e1503e69e4a1dd4c651e869b9ba8e787",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-contact_02.jpg",
+      "sha256": "5c8440945306f978857b8af538335ff177122f3cce10ba050ff9ec5530bfb1b7",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-contact_03.jpg",
+      "sha256": "18607d10a9f4f2a77b5da40d60493472ee40ca34ab747addc61f1167a125b859",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-contact_04.jpg",
+      "sha256": "f90210d06b7febcd16028ed5029eb135f938f116b75c8f54f81c6ada1c6e0cfb",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-contact_05.jpg",
+      "sha256": "c2f1de2bd35eb48e571d86ad8cb87464a88ea3ad7b179752c83076f8a7226a0d",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-s3-bp3-1s.jpg",
+      "sha256": "f7e0983b1d55e0dfbec45ba786bd44360eadb8c439b4a9967624576be6294672",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-bp3-start.jpg",
+      "sha256": "97b9d33953086e3c42809389e9cb4cc685dc16c83e2ac953e2a7a75ef6e21125",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-bp3-end.jpg",
+      "sha256": "5750c179f08283de96a96eab454bfbb5748be24666e75783b2b5f1b8fdb8cf25",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-s2-bp4-1s.jpg",
+      "sha256": "654167d2074f924a5ff5dd7a2c522c86b32d4061c1c6e3fc2b59ba4944d7bc36",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-bp4-start.jpg",
+      "sha256": "832c3dbf73da842b840e91b9dfa8f039c8a1d23e9db5090bdf43947aa277b103",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-bp4-end.jpg",
+      "sha256": "9be1a02c2fa0108c5cf5e4250add606a2a45b96199cb9072ccd5ab5a4b83836f",
+      "actually_viewed": true
+    },
+    {
+      "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-bp4-end-large.jpg",
+      "sha256": "7aaea915bf7538f3be97033fd4d7afd43c5d2efc95ad824a7c39ae58c29392c7",
+      "actually_viewed": true
+    }
+  ],
+  "actions": {
+    "spec_modified": false,
+    "branch_changed": false,
+    "committed": false,
+    "audio_volume_processed": false
+  }
+}

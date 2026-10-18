@@ -1,0 +1,101 @@
+{
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "reviewed_at": "2026-10-18T15:17:31.474980+00:00",
+  "kind": "targeted_cut_boundary_check",
+  "source": "/workspace/scratch/HIvIvgwXkqs.mp4",
+  "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+  "scope": "仅115.40–116.20逐帧（25fps）和60.96–61.92逐帧；不重做其他点/原声/全片QC。",
+  "second_set_44": {
+    "proposed_start": 115.76,
+    "proposal_preserves_complete_serve": false,
+    "first_visible_continuous_serve_initiation_approx": 115.48,
+    "safe_pre_action_visual_start": 115.4,
+    "observations": [
+      "115.40/115.44双手仍持球与拍在前方准备",
+      "115.48–115.60双手下落并起手，已是连续发球动作",
+      "115.64–115.80抛球臂明显上举；115.76球已在胸口高度",
+      "115.84–115.88球离手，116.20仍在后续发球动作中"
+    ],
+    "previous_english_end_from_audio_agent": 115.68,
+    "conflict": "最早连续发球动作约115.48，早于上一句英语结束115.68；从115.76切入会损失起手，不能称完整发球。",
+    "recommendation": "保留发球画面从115.40之前起；若下一TTS须115.76开始，前一原声段画面与它连续接到115.76，可保全英语句尾与发球，不应从视频删除重叠的动作。具体原声/旁白配置由root与audio代理处理，本代理未听审。"
+  },
+  "first_set_boundary": {
+    "proposed_split": 61.2,
+    "safe_for_next_point_serve": true,
+    "observations": [
+      "60.96–61.52仍前一点结束后的赫瓦林斯卡走动近景",
+      "61.56第一次切到首盘2-5、30-40、SET POINT #3的全场，卡尔塔尔仍发球准备",
+      "61.20分段早于下一分全场/抛球，因此32.44–61.20 TTS与61.20–85.12原声连续拼接不会漏下一分发球"
+    ],
+    "note": "没有另核32.44起点或本轮全部原声句；结论仅限61.20局部边界。"
+  },
+  "evidence_images": [
+    {
+      "path": "/workspace/tennislive/requests/reels/chwalinska-kartal-wuhan-2026-f/visual/yt-second-44-toss.jpg",
+      "sha256": "d39fcee37a091c497ce8a0a08fd57c87e0400398d7db084b568a9c37bb093ddd",
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/tennislive/requests/reels/chwalinska-kartal-wuhan-2026-f/visual/yt-second44-init.jpg",
+      "sha256": "611b74e5593ccb62967cb31ff7a561d4b4d917a32850a4140dc3d2b59a4bd437",
+      "actually_viewed": true
+    },
+    {
+      "path": "/workspace/tennislive/requests/reels/chwalinska-kartal-wuhan-2026-f/visual/yt-first-setpoint-start.jpg",
+      "sha256": "73c3c3e9559f242c8a7c3f83ca4b1e67452b3a97c731399e76475fb2b6517b09",
+      "actually_viewed": true
+    }
+  ],
+  "spec_modified": false,
+  "extended_same_point_addendum": {
+    "checked_at": "2026-10-18T15:20:37.602423+00:00",
+    "source_path": "/workspace/scratch/wuhan-final-extended.mp4",
+    "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+    "scope": "实际view265.0–267.6及297.6–299每0.2秒；再逐帧核265.0–265.4及295.6–297.0。仅本点边界。",
+    "proposed_window_rejected": [
+      265.12,
+      298.24
+    ],
+    "recommended_window": [
+      265.12,
+      296.28
+    ],
+    "end_exclusive": true,
+    "start_evidence": [
+      "265.12仍为赫瓦林斯卡近景",
+      "265.16第一帧切到卡尔塔尔发球近景，球仍低于腰，已在连续起手中",
+      "265.24抛球臂明显向上，265.40球已离手；266.2附近击发、266.4进入全场"
+    ],
+    "serve_completeness_limit": "265.12起能保留本源已有的完整上举抛球到触球与后续回合；长版源本身切掉更早持球前摇，不能宣称取得YT113.44起全部发球准备。按源边界取，不再人为截抛球。",
+    "end_evidence": [
+      "295.6–296.24为4-4点已结束后的走动",
+      "296.28首帧切到下一点5-4、SET POINT #2全场准备发球",
+      "297.6–299已经是下一分的活球，298.24终点不可用"
+    ],
+    "offset_warning": "固定151.68不成立；动作阶段观察到YT115.60约对应长265.16（差149.56），但两版剪掉不同准备镜头，不能全段机械平移。",
+    "audio_sentence_conflict_context": "root记录上一完整BP4英语至264.52结束；本代理仅核画面，264–300原声由audio代理核。",
+    "evidence_images": [
+      {
+        "path": "/workspace/tennislive/requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-44-start.jpg",
+        "sha256": "d3d734bed6f51c76d2e36ec042db8a28e324133fd017116e0c9384fcadadec70",
+        "actually_viewed": true
+      },
+      {
+        "path": "/workspace/tennislive/requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-44-end.jpg",
+        "sha256": "84385bd2ec15465eb0434b0971e2e18bd20fb7605e0d2484e69b4dfa8d5301d2",
+        "actually_viewed": true
+      },
+      {
+        "path": "/workspace/tennislive/requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-44-exact-start.jpg",
+        "sha256": "3078b7ae1175f2a514f3907c5cfe532a2a326ca359fa4321a3d6e325e734a014",
+        "actually_viewed": true
+      },
+      {
+        "path": "/workspace/tennislive/requests/reels/chwalinska-kartal-wuhan-2026-f/visual/extended-44-exact-end.jpg",
+        "sha256": "218e0bf3c09d6381d25f9f00fc9b1a37712499ff6ba14df033c7e294a2a0d259",
+        "actually_viewed": true
+      }
+    ]
+  }
+}

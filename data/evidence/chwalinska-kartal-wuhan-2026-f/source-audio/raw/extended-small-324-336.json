@@ -1,0 +1,105 @@
+{
+  "model": "small",
+  "source_key": "extended",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4",
+  "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+  "clip": [
+    324,
+    336
+  ],
+  "timecode_basis": "absolute source seconds, clip offset added to every word and segment",
+  "duration": 12.0,
+  "created_at": "2026-10-18T15:04:24.760954+00:00",
+  "decoded_pcm_sha256": "1e4447a94a0f521221f0ee7104884c3124918ff39cb384763b4dd8a6deca4f77",
+  "decoder": "ffmpeg16000Hz mono float32; no amplitude, loudness or noise filter",
+  "options": {
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true,
+    "vad_filter": false,
+    "condition_on_previous_text": false
+  },
+  "segments": [
+    {
+      "start": 328.94,
+      "end": 333.46,
+      "text": "and she gets some help cartel blanks and it could be costly.",
+      "avg_logprob": -0.4553847908973694,
+      "no_speech_prob": 0.22414632141590118,
+      "words": [
+        {
+          "w": " and",
+          "s": 328.94,
+          "e": 329.42,
+          "p": 0.16821904480457306
+        },
+        {
+          "w": " she",
+          "s": 329.42,
+          "e": 329.54,
+          "p": 0.953423798084259
+        },
+        {
+          "w": " gets",
+          "s": 329.54,
+          "e": 329.7,
+          "p": 0.7293272018432617
+        },
+        {
+          "w": " some",
+          "s": 329.7,
+          "e": 329.92,
+          "p": 0.8722316026687622
+        },
+        {
+          "w": " help",
+          "s": 329.92,
+          "e": 330.16,
+          "p": 0.9933672547340393
+        },
+        {
+          "w": " cartel",
+          "s": 330.16,
+          "e": 331.26,
+          "p": 0.6882428973913193
+        },
+        {
+          "w": " blanks",
+          "s": 331.26,
+          "e": 331.88,
+          "p": 0.9735502898693085
+        },
+        {
+          "w": " and",
+          "s": 331.88,
+          "e": 332.72,
+          "p": 0.7408186197280884
+        },
+        {
+          "w": " it",
+          "s": 332.72,
+          "e": 332.82,
+          "p": 0.9960554838180542
+        },
+        {
+          "w": " could",
+          "s": 332.82,
+          "e": 332.94,
+          "p": 0.9960601925849915
+        },
+        {
+          "w": " be",
+          "s": 332.94,
+          "e": 333.1,
+          "p": 0.9906630516052246
+        },
+        {
+          "w": " costly.",
+          "s": 333.1,
+          "e": 333.46,
+          "p": 0.9496626853942871
+        }
+      ]
+    }
+  ]
+}

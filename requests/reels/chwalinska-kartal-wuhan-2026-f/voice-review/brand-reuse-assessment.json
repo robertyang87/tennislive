@@ -1,0 +1,56 @@
+{
+  "schema": "tennislive.exact-brand-human-review-reuse-assessment.v1",
+  "prepared_at": "2026-10-18T14:54:39.152586+00:00",
+  "new_slug": "chwalinska-kartal-wuhan-2026-f",
+  "status": "conditional_reuse_ready_pending_final_bundle_identity",
+  "exact_request": {
+    "text": "关注网球时插，时插归我，好球归你。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "style": "",
+    "styledegree": "",
+    "lead_pause": 0.0,
+    "backend": "edge",
+    "cache_key": "20da8f5468902afbbecb78daefb15d83"
+  },
+  "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+  "display_text": "关注网球时差，时差归我，好球归你。",
+  "source_bundle_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/frozen-tts.zip",
+  "source_bundle_sha256": "4fd93954a516769557bc460e4ce82622d66def832d936898fc778d92d4d250c4",
+  "current_implementation_matches_source": true,
+  "mp3_sha256": "f670f5c51e491614cc5af1669f406f98e6cea5de3e9896c47092952d253b849b",
+  "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+  "duration_seconds": 4.104,
+  "owner_review_path": "data/evidence/chwalinska-swiatek-wuhan-2026-sf/voice/production/owner-listening-review.json",
+  "owner_review_sha256": "02127e80621f2dc2994bbba8aaf850c79500b9e99dc0bc62e645f8b3b4bdc249",
+  "reviewer": "user / account owner",
+  "owner_reply_verbatim": "已听过，读音自然",
+  "owner_reviewed_at": "2026-10-17T15:31:09.961365+00:00",
+  "owner_confirmation_scope": "Only exact complete brand utterance plus same request and actual MP3/marks bytes; no new sentence, altered prosody, alternative synthesis output or changed implementation is approved.",
+  "historical_machine_unknowns_preserved": [
+    {
+      "char": "插",
+      "at": 5,
+      "verdict": "unreliable"
+    },
+    {
+      "char": "插",
+      "at": 8,
+      "verdict": "correct",
+      "confidence": "low"
+    },
+    {
+      "char": "好",
+      "status": "unknown_no_valid_independent_reference"
+    }
+  ],
+  "isolated_seed_cache_entry": "requests/reels/chwalinska-kartal-wuhan-2026-f/voice-review/tts-seed-cache/20da8f5468902afbbecb78daefb15d83-edge-v2.zip",
+  "isolated_seed_cache_sha256": "034609ff852f0f4cfec242dae983ae03a6397d79fa2a0c0cb034deb8b9e8abc9",
+  "seed_cache_activation": "Set TENNISLIVE_TTS_CACHE to this isolated tts-seed-cache directory for first actual capture; then verify the resulting final bundle brand request and MP3/marks hashes again. Do not import the old whole-episode bundle as the new complete request set.",
+  "new_final_spec_inspected": false,
+  "new_final_bundle_inspected": false,
+  "assistant_listening_claimed": false,
+  "speech_synthesis_performed": false,
+  "global_cache_modified": false
+}

@@ -1,0 +1,163 @@
+{
+  "schema": "tennislive.local-frozen-tts-transfer-audit.v1",
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "transport": {
+    "schema": "tennislive.frozen-tts-transport.v1",
+    "slug": "chwalinska-kartal-wuhan-2026-f",
+    "source_draft_release_ids": [
+      416527520,
+      416527528,
+      416527537,
+      416527548,
+      416527556,
+      416527564,
+      416527571,
+      416527579,
+      416527585,
+      416527590,
+      416527601,
+      416527615,
+      416527621,
+      416527628,
+      416527634,
+      416527642,
+      416527650
+    ],
+    "deleted_draft_release_ids": [
+      416527520,
+      416527528,
+      416527537,
+      416527548,
+      416527556,
+      416527564,
+      416527571,
+      416527579,
+      416527585,
+      416527590,
+      416527601,
+      416527615,
+      416527621,
+      416527628,
+      416527634,
+      416527642,
+      416527650
+    ],
+    "release_id": 416524146,
+    "release_tag": "reel-tts-chwalinska-kartal-wuhan-2026-f-2414de29cc3083bf",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-kartal-wuhan-2026-f-2414de29cc3083bf/tts_bundle.zip",
+    "bundle_sha256": "2414de29cc3083bf79d08dc11e33ef22100671bd96605d8dd0fddc4ab34bf9d9",
+    "bundle_bytes": 751095,
+    "request_count": 9,
+    "audio_decoding_verified": false,
+    "public_download_hash_verified": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "synthesis_performed": false,
+    "run_url": "https://github.com/robertyang87/tennislive/actions/runs/39140882386"
+  },
+  "independent_public_verification": {
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-kartal-wuhan-2026-f-2414de29cc3083bf/tts_bundle.zip",
+    "bytes": 751095,
+    "sha256": "2414de29cc3083bf79d08dc11e33ef22100671bd96605d8dd0fddc4ab34bf9d9",
+    "public_download_verified": true,
+    "quality_approval": false
+  },
+  "draft_cleanup": [
+    {
+      "release_id": 416527520,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527528,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527537,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527548,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527556,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527564,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527571,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527579,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527585,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527590,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527601,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527615,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527621,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527628,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527634,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527642,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416527650,
+      "verified_deleted": true
+    }
+  ],
+  "attempts": {
+    "first_run": {
+      "id": 39140782286,
+      "url": "https://github.com/robertyang87/tennislive/actions/runs/39140782286",
+      "head": "26ca5323c3e453375312c687e7435ce2ea24bd3c",
+      "result": "failure",
+      "cause": "After17parts read and reconstructed ZIP SHA/size passed, unnecessary ffmpeg/ffprobe presence assertion failed. No upload or cleanup performed."
+    },
+    "corrected_run": {
+      "id": 39140882386,
+      "url": "https://github.com/robertyang87/tennislive/actions/runs/39140882386",
+      "head": "95941d27ead43aa94c460cbfb68bfdf384636b7e",
+      "result": "success",
+      "change": "decode_audio=False validates implementation/request/audio/marks SHA; local original bundle separately complete-decoded.",
+      "public_download_sha256": "2414de29cc3083bf79d08dc11e33ef22100671bd96605d8dd0fddc4ab34bf9d9",
+      "all17_drafts_independently_verified_deleted": true
+    },
+    "root_authorized_retry": true,
+    "quality_approval": false,
+    "synthesis_performed": false,
+    "artifact_download_note": "gh run download artifact failed at redirected blob host403; exact transport report recovered from successful run log, no alternate credential used."
+  },
+  "root_independent_verification": {
+    "bytes": 751095,
+    "sha256": "2414de29cc3083bf79d08dc11e33ef22100671bd96605d8dd0fddc4ab34bf9d9",
+    "exact_original_zip_bytes_equal": true
+  },
+  "temporary_bridge_scope": "isolated non-main branch only modified existing download-video workflow, no audio/base64 committed; exact draft-release bodies were temporary transport data; original audio not resynthesized, not a quality gate approval"
+}

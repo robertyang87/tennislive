@@ -1,0 +1,24 @@
+{
+  "schema": "tennislive.caption-preflight-review.v1",
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "status": "needs_scoreboard_conform_fix_before_formal_render",
+  "tts_bundle_sha256": "2414de29cc3083bf79d08dc11e33ef22100671bd96605d8dd0fddc4ab34bf9d9",
+  "actual_views": [
+    "16自动样本整墙及8个手选细节样本整墙",
+    "原尺寸caption13和outlook字幕原尺寸"
+  ],
+  "pass_observations": [
+    "首个巡回赛单打冠军/就是1000赛冠军语义完整分句，实际字幕没有名字拆开、孤字或遮主体",
+    "人名安德莱斯库和姆博科、英文Maja Chwalinska在实际字幕中完整显示",
+    "正文蓝卡为深蓝原生，不压片尾品牌"
+  ],
+  "blocking_visual_finding": {
+    "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+    "film_time": 224.24,
+    "source_time": 399.44,
+    "image_sha256": "c95ca4a016a5d55b3cf317a8b64761aa9ee816d4a355cd2464ff5e6e32c9677e",
+    "observed": "720p补源conform后measurement仍用native坐标，回贴缺卡尔塔尔下排及右侧比分",
+    "expected": "与同一源同帧的完整两排板及数字一致",
+    "final_qc_claimed": false
+  }
+}

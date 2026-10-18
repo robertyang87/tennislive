@@ -1,0 +1,161 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-HIvIvgwXkqs/HIvIvgwXkqs.mp4",
+  "original_source_url": "https://www.youtube.com/watch?v=HIvIvgwXkqs",
+  "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI source-audio review agent; inspected retained full-source or finite-window independent ASR and available canonical captions, curated each complete source clause; no manual listening claimed",
+  "reviewed_at": "2026-10-18T15:16:38.891705+00:00",
+  "status": "complete",
+  "reviewed_from": 227.04,
+  "reviewed_to": 246.64,
+  "foreground_english": [
+    {
+      "start": 227.1,
+      "end": 228.58,
+      "en": "She ran the gamut.",
+      "zh": "她经历了种种考验",
+      "verification": "Independently curated source clausecelebration_1 from inspected retained raw ASR and source-level review, before spec.quote population; no manual listening claimed."
+    },
+    {
+      "start": 228.96,
+      "end": 231.5,
+      "en": "And everything about the celebration",
+      "zh": "接下来的这一切庆祝",
+      "verification": "Independently curated source clausecelebration_2a from inspected retained raw ASR and source-level review, before spec.quote population; no manual listening claimed."
+    },
+    {
+      "start": 231.5,
+      "end": 234.0,
+      "en": "that is about to—she is about to enjoy",
+      "zh": "这些她即将享受的时刻",
+      "verification": "Independently curated source clausecelebration_2b from inspected retained raw ASR and source-level review, before spec.quote population; no manual listening claimed."
+    },
+    {
+      "start": 234.0,
+      "end": 235.86,
+      "en": "was well earned.",
+      "zh": "都是她凭实力赢来的",
+      "verification": "Independently curated source clausecelebration_2c from inspected retained raw ASR and source-level review, before spec.quote population; no manual listening claimed."
+    },
+    {
+      "start": 237.88,
+      "end": 240.34,
+      "en": "An error-prone start comes with",
+      "zh": "失误频出的开局之后",
+      "verification": "Independently curated source clausecelebration_3a from inspected retained raw ASR and source-level review, before spec.quote population; no manual listening claimed."
+    },
+    {
+      "start": 240.34,
+      "end": 242.38,
+      "en": "a final fantastic finish.",
+      "zh": "迎来了精彩收官",
+      "verification": "Independently curated source clausecelebration_3b from inspected retained raw ASR and source-level review, before spec.quote population; no manual listening claimed."
+    },
+    {
+      "start": 242.38,
+      "end": 244.86,
+      "en": "And Maja Chwalinska is champion",
+      "zh": "赫瓦林斯卡成为冠军",
+      "verification": "Independently curated source clausecelebration_4a from inspected retained raw ASR and source-level review, before spec.quote population; no manual listening claimed."
+    },
+    {
+      "start": 244.86,
+      "end": 246.42,
+      "en": "of the Wuhan Open.",
+      "zh": "武汉赛冠军",
+      "verification": "Independently curated source clausecelebration_4b from inspected retained raw ASR and source-level review, before spec.quote population; no manual listening claimed."
+    }
+  ],
+  "uncertain_spans": [],
+  "_edit_id": "team_celebration",
+  "source_key": "main",
+  "evidence_basis": {
+    "source_level_reviews": [
+      {
+        "path": "requests/reels/chwalinska-kartal-wuhan-2026-f/source-commentary-review.json",
+        "sha256": "05144473394b9b8d622a60acb646652ccb25ddc0d3ecb1c4c3a1251ea14570a4"
+      }
+    ],
+    "files": [
+      {
+        "path": "data/source_asr/HIvIvgwXkqs/small.en.json",
+        "sha256": "80e539b8eb1548ef18f3eabf038e70e7fb0df6bce6277deb251f04722f4933d8",
+        "model": "small.en",
+        "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "data/source_asr/HIvIvgwXkqs/medium.en.json",
+        "sha256": "edebfe27f734926753533e60ecfca10e80cc4c054272cb4cff0684962a9a2f8b",
+        "model": "medium.en",
+        "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+        "clip": [
+          0.0,
+          null
+        ]
+      },
+      {
+        "path": "output/2026-10-18/reel/chwalinska-kartal-wuhan-2026-f/captions.txt",
+        "sha256": "3b26458a7c644503f04ebca41627bcf6a05cbce2c16f64288fbbde40508f6de9",
+        "kind": "Canonical YouTube automatic captions from probe39137783408"
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/large-v3-turbo-125-140.json",
+        "sha256": "30d38777f08a24b9331e21d87fa31464260de58f640102730f721a51a26045f7",
+        "model": "large-v3-turbo",
+        "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+        "clip": [
+          125,
+          140
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/large-v3-turbo-154-180.json",
+        "sha256": "c3943d4fe1da7d8e37fda035f198ea65f9f0e3f2ab99cd5ad72aec02dbe23a1f",
+        "model": "large-v3-turbo",
+        "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+        "clip": [
+          154,
+          180
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/large-v3-turbo-248-296.json",
+        "sha256": "bd5eb138211dd1e1057e772c90b4f184eed8c3eaa1bf7e936114d6a4d7802569",
+        "model": "large-v3-turbo",
+        "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+        "clip": [
+          248,
+          296
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/large-v3-turbo-68-85.json",
+        "sha256": "afc34a6be0200b74be55219323e98670d683f81b6f36dc078d471c1efa152593",
+        "model": "large-v3-turbo",
+        "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+        "clip": [
+          68,
+          85
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/large-v3-turbo-8-35.json",
+        "sha256": "790762996e07c2de8d0ecd9a4ea407134626ae235673a186088f1f52fdfbc4fd",
+        "model": "large-v3-turbo",
+        "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+        "clip": [
+          8,
+          35
+        ]
+      }
+    ],
+    "manual_listening_claimed": false,
+    "no_loudness_processing_or_measurement": true,
+    "scope_note": "Every selected source second checked against retained full-source(main) or expanded-context finite(extended) raw transcripts. Unresolved original main29s,158s and post278s windows are outside all selected source windows."
+  }
+}

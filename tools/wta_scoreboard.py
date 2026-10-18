@@ -370,17 +370,29 @@ def frame_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
 
 def scan_geometry(source: Path, box: tuple[int, int, int, int], start: float,
                   seconds: float, fps: str, *,
-                  allowed_windows: tuple[tuple[float, float], ...] = ()) -> tuple[list, int]:
+                  allowed_windows: tuple[tuple[float, float], ...] = (),
+                  decode_transform: dict | None = None) -> tuple[list, int]:
     """Read the search band once and retain each frame's measured alpha geometry."""
     x0, y0, x1, y1 = box
-    sw = int(subprocess.check_output(
-        ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
-         "stream=width", "-of", "csv=p=0", str(source)], text=True).strip().split(",")[0])
+    if decode_transform:
+        sw, sh = decode_transform["size"]
+        prefilter = decode_transform["vf"].rstrip(",") + ","
+    else:
+        sw, sh = map(int, subprocess.check_output(
+            ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+             "stream=width,height", "-of", "csv=p=0", str(source)], text=True
+        ).strip().splitlines()[0].split(",")[:2])
+        prefilter = ""
+    # FFmpeg silently clamps an out-of-frame crop origin. That can produce a
+    # plausible half-board at720p, then falsely label it as1080p geometry.
+    if not (0 <= x0 < x1 <= sw and 0 <= y0 < y1 <= sh):
+        kind = "transformed" if decode_transform else "native"
+        raise RuntimeError(f"WTA scorebox exceeds {kind} source dimensions")
     width, height = min(sw - x0, SCAN_W), y1 - y0
     proc = subprocess.run(
         ["ffmpeg", "-v", "error", "-ss", f"{start:.3f}", "-t", f"{seconds:.3f}",
          "-i", str(source), "-an", "-sn",
-         "-vf", f"format=rgb24,crop={width}:{height}:{x0}:{y0},fps={fps}",
+         "-vf", f"{prefilter}format=rgb24,crop={width}:{height}:{x0}:{y0},fps={fps}",
          "-f", "rawvideo", "-"], capture_output=True, check=False)
     if proc.returncode:
         raise RuntimeError(proc.stderr.decode(errors="replace"))
@@ -453,7 +465,7 @@ def debounce(frames: list, hold: int = 3) -> list:
 
 
 def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
-                  tail: float) -> Path:
+                  tail: float, *, decode_transforms: dict | None = None) -> Path:
     """Measure each frame and crop the container to the visible native graphic union.
 
     Body and BREAK/SET/MATCH POINT header keep the same source coordinates and
@@ -468,6 +480,9 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
         seconds = seg.end - seg.start + tail * seg.speed
         windows = getattr(seg, "score_inset_windows", ())
         scan_options = {"allowed_windows": windows} if windows else {}
+        transform = (decode_transforms or {}).get(seg.source)
+        if transform:
+            scan_options["decode_transform"] = transform
         frames, width = scan_geometry(Path(sources[seg.source]), seg.score_inset,
                                       seg.start, seconds, fps, **scan_options)
         # Presence debounce suppresses isolated false positives; it never expands
@@ -530,6 +545,8 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
                                                    for a, b in windows],
                         "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
                         "mask": str(dest), "mask_sha256": _sha256(dest)})
+        if transform:
+            records[-1]["decode_transform"] = transform
         print(f"[score-mask] 第 {i + 1} 段：板在 {len(live)}/{len(frames)} 帧，"
               f"原生有效外缘 {seg.score_inset}，body/header独立透明蒙版（{rate:g} fps）")
     proof = {"status": "pass", "profile": PROFILE, "segments": records}

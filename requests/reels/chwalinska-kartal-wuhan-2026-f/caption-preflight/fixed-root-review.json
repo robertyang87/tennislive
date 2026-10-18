@@ -1,0 +1,37 @@
+{
+  "schema": "tennislive.caption-fixed-preflight-review.v1",
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "status": "reviewed_native_preview_only",
+  "production_code_commit": "cf92fb3a",
+  "actual_viewed": "root逐张/整墙看16自动样本、8手选字幕样本，修复后12个样本；包括四个补源窗口、字幕长姓名、首冠成就的实际分句、原生封面。",
+  "fixed_manifest_sha256": "d58b4b096fdf98a424604f1201cbe1c2391bac485dfd590c7a3040a5cbfe145f",
+  "resolved_finding": "首次before-fix-exact-frame.png的左半板缺陷已解决；fixed10同一末局BP3现在保留完整两行、2/6/5与6/4/2、Ad及BP#3标签。",
+  "native_dimensions": [
+    1280,
+    720
+  ],
+  "render_canvas": [
+    1080,
+    1440
+  ],
+  "limitations": [
+    "仅离散实际原生ASS/蒙版预览，尚无正式电影压缩及合成衔接的QC声明",
+    "源片158.64的死球边界仍由独立视觉代理按源逐帧核查，不用158.12单帧作已死球证明",
+    "本期实际旁白人类核听仍pending，720p授权不是核听结果"
+  ],
+  "tests": {
+    "match_reel": {
+      "passed": 395,
+      "log": "/workspace/scratch/wuhan-final-match-reel-tests-final.log"
+    },
+    "scoreboard_and_related": {
+      "passed": 119,
+      "log": "/workspace/scratch/scoreboard-conform-tests-final.log"
+    }
+  },
+  "render": {
+    "run_id": 39143852218,
+    "run_url": "https://github.com/robertyang87/tennislive/actions/runs/39143852218",
+    "status_at_recording": "in_progress_not_completion"
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4",
+  "original_source_url": "https://www.wtatennis.com/videos/4593997/chwalinska-rallies-past-kartal-to-claim-first-wta-title-wuhan",
+  "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI source-audio review agent; inspected independent small/turbo264–300 plus small/turbo/base.en292–304 raw words and earlier complete leading-sentence evidence; no manual listening claimed",
+  "reviewed_at": "2026-10-18T15:21:54.667020+00:00",
+  "status": "complete",
+  "reviewed_from": 265.12,
+  "reviewed_to": 296.28,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "_edit_id": "second_four_all",
+  "source_key": "extended",
+  "no_foreground_english_reason": "After the known preceding sentence ends264.54, no English sentence is reproducibly identified. Expanded small is empty; short-window small/turbo and expandedturbo/base produce incompatible low-probability boundary templates, not stable acoustic word timing. They are explicitly retained as artifacts rather than subtitled. This is ASR cross-check evidence, not manual listening or a digital-silence claim.",
+  "evidence_basis": {
+    "source_level_reviews": [
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/second-four-all-extended-source-review.json",
+        "sha256": "bb43374e4c0de7a8d4636214fd767d6e7a0461f4d83644e20dc9e80ddc3c3dec"
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/extended-source-commentary-review.json",
+        "sha256": "2fbbad4e63beb0fcdc92fcb6d36152f28de348754132a359859f1bb3d9e852c1"
+      }
+    ],
+    "files": [
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-264-300.json",
+        "sha256": "6b646871475821c8e3ee5f3536029194a3a58ad18db0697a564b855b3295a1d8",
+        "model": "large-v3-turbo",
+        "clip": [
+          264,
+          300
+        ],
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad"
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-264-300.json",
+        "sha256": "ddd6dfb309f453a1db610bd3ad3e5020795df69418b2f034b71ec1dfd8e54c38",
+        "model": "small",
+        "clip": [
+          264,
+          300
+        ],
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad"
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-base.en-292-304.json",
+        "sha256": "0369b9580a2ae4fc4b8c93d92fdcbad0872f3ff82ab1f6a93edf598725d9ce0e",
+        "model": "base.en",
+        "clip": [
+          292,
+          304
+        ],
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad"
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-292-304.json",
+        "sha256": "e2047b40264b2752e416bf9e73603aa4ed24ed7ca281cf80daf0aea1998d36c0",
+        "model": "large-v3-turbo",
+        "clip": [
+          292,
+          304
+        ],
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad"
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-292-304.json",
+        "sha256": "f087d58eafffa718670c2fbf742d078e6eef6d0b548eb88144e2ffb604078113",
+        "model": "small",
+        "clip": [
+          292,
+          304
+        ],
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad"
+      }
+    ],
+    "discarded_asr_artifacts": [
+      {
+        "clip": [
+          264,
+          300
+        ],
+        "model": "small",
+        "start": 297.18,
+        "end": 299.98,
+        "text": "Thank you very much.",
+        "reason": "Thank probability.0058, very/much atzero-duration299.98, lastword coincides with window edge. Not reproduced by same model with292–304 context."
+      },
+      {
+        "clip": [
+          264,
+          300
+        ],
+        "model": "large-v3-turbo",
+        "start": 297.08,
+        "end": 299.88,
+        "text": "Thank you.",
+        "reason": "Thank probability.0555 andyou stretches toward clip end. With shifted context, same template drifts to294.4–297.2 rather than a stable source utterance."
+      },
+      {
+        "clip": [
+          292,
+          304
+        ],
+        "model": "large-v3-turbo",
+        "start": 294.4,
+        "end": 297.2,
+        "text": "Thank you.",
+        "reason": "Same one-model template, changed source time under overlap context, logprob-1.076; expanded small has no words."
+      },
+      {
+        "clip": [
+          292,
+          304
+        ],
+        "model": "base.en",
+        "start": 293.52,
+        "end": 303.98,
+        "text": "Uh, I’m ready. I’ll see you in a minute.",
+        "reason": "Uh probability.00043; all semantic words collapse into303.82 zero-duration positions at clip end. No stable speech structure; not reproducible in either other model. Must not become manufactured source quotes."
+      }
+    ],
+    "manual_listening_claimed": false,
+    "no_loudness_processing_or_measurement": true,
+    "scope_note": "Only this selected window changes from earlier YouTube source to independent original-SHA official extended source. Prior preceding commentary is complete by264.54, before selected265.12. Preserve full source service preparation, toss, rally and dead-ball reaction; next point296.28excluded."
+  }
+}

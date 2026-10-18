@@ -1,0 +1,190 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4",
+  "original_source_url": "https://www.wtatennis.com/videos/4593997/chwalinska-rallies-past-kartal-to-claim-first-wta-title-wuhan",
+  "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI source-audio review agent; inspected retained full-source or finite-window independent ASR and available canonical captions, curated each complete source clause; no manual listening claimed",
+  "reviewed_at": "2026-10-18T15:16:38.891705+00:00",
+  "status": "complete",
+  "reviewed_from": 387.12,
+  "reviewed_to": 399.48,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "_edit_id": "last_game_third_bp",
+  "source_key": "extended",
+  "evidence_basis": {
+    "source_level_reviews": [
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/extended-source-commentary-review.json",
+        "sha256": "2fbbad4e63beb0fcdc92fcb6d36152f28de348754132a359859f1bb3d9e852c1"
+      }
+    ],
+    "files": [
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-216-226.json",
+        "sha256": "ffd03d511539752a05c9ca18e831ef1c19b314e32f300d06bedab5ff634d4627",
+        "model": "large-v3-turbo",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          216,
+          226
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-222-266.json",
+        "sha256": "5de708e23d833376b4742fd544784c96754a2939c0d384b30594566c9d3fdf14",
+        "model": "large-v3-turbo",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          222,
+          266
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-320-338.json",
+        "sha256": "2dd8f6f088ce0ab21cd99fa61a971e4620717a9cc3dacec343d5564add814ed5",
+        "model": "large-v3-turbo",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          320,
+          338
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-324-336.json",
+        "sha256": "cff025b566c98d575b2475e3f22c035ff049e868bc9a965e64794b52c19dc47a",
+        "model": "large-v3-turbo",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          324,
+          336
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-382-404.json",
+        "sha256": "38ceebf52c50e8776e45e99608c31be6d28aac63b0a8b2aebd52f04cc603d42f",
+        "model": "large-v3-turbo",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          382,
+          404
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-386-402.json",
+        "sha256": "3bcd1e451fd3d9ba9d7299fb8e015c9e190b790dfd2fa77f597fdc000fbbb1c5",
+        "model": "large-v3-turbo",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          386,
+          402
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-216-226.json",
+        "sha256": "3f87ffc8fd2b1b586a1392016b5ac994de29d93fc1099b548e6250206c91b91f",
+        "model": "small",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          216,
+          226
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-222-266.json",
+        "sha256": "6709b75298be25d1f07fcf238050d6dc2f3bfe3f6dae347af1e92ebd0be6d60d",
+        "model": "small",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          222,
+          266
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-320-338.json",
+        "sha256": "f6fdc125e8dc8f9d976ab850ae6598596d64e9cf9fe8eb86a7d0257cff0b6d30",
+        "model": "small",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          320,
+          338
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-324-336.json",
+        "sha256": "8210eeecc89725b06be7c5044fd995033cd8873663b336636ec08384ed13914e",
+        "model": "small",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          324,
+          336
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-382-404.json",
+        "sha256": "705050719b86d212ce5f26e02a7fd239d4b7ed601396e2c195b7108febd47824",
+        "model": "small",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          382,
+          404
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-386-402.json",
+        "sha256": "ff0378130d9409aaa3f4cd0372b03150e9cb7c1a7aa6cf4809032de9eb87758b",
+        "model": "small",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          386,
+          402
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-base.en-382-404.json",
+        "sha256": "411fa7f2501489b718d67f63c12678346ee1382e340112e270159fae5f537f26",
+        "model": "base.en",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          382,
+          404
+        ]
+      },
+      {
+        "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-base.en-324-336.json",
+        "sha256": "3ca150508eb3af3e1e8bd4689c7c629744891b12be4da5e60f04b93173263515",
+        "model": "base.en",
+        "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+        "clip": [
+          324,
+          336
+        ]
+      }
+    ],
+    "manual_listening_claimed": false,
+    "no_loudness_processing_or_measurement": true,
+    "scope_note": "Every selected source second checked against retained full-source(main) or expanded-context finite(extended) raw transcripts. Unresolved original main29s,158s and post278s windows are outside all selected source windows.",
+    "discarded_asr_artifacts": [
+      {
+        "id": "e05",
+        "start": 385.84,
+        "end": 388.16,
+        "en": "Thank you.",
+        "zh": "谢谢",
+        "status": "discarded_unconfirmed_single_model_phrase",
+        "verification": "Small identifies no English in either386–402 or382–404. Turbo generates Thank you twice, first-word probability.027 in narrow clip and very low confidence; broad context places full phrase385.84–388.16, while clipped narrow interval stretches you to392.20. Neither whole sentence nor all edges independently cross-checked; avoid this possible foreground interval when choosing the3BP window.",
+        "resolution": "Independent English-only base.en382–404 produces only extremely low-probabilityUh382–384.44, outside the selected window, and no words387.12–399.48. Small is also empty in both context lengths. Turbo-onlyThank you is not reproducible across independent models and has first-word probability.027; do not invent a subtitle or cut complete serve/rally because of this single-model template phrase. All raw variants retained."
+      },
+      {
+        "start": 382,
+        "end": 384.44,
+        "model": "base.en",
+        "text": "Uh,",
+        "word_probability": 0.000820457877125591,
+        "resolution": "Low-confidence nonlexical filler before selected387.12–399.48; not an identified foreground English sentence."
+      }
+    ]
+  },
+  "no_foreground_english_reason": "Within this entire selected window, independent retained ASR results identify no reproducible foreground English sentence. Main-source canonical auto-caption short Go/Hey calls are not corroborated by full small.en/medium.en or finite turbo; no subtitle is invented. For extended3BP, the independent small and base.en outputs are empty in selected387.12–399.48; turbo-only very-low-confidenceThank you is a retained and documented model artifact, not an accepted utterance. This does not claim digital silence or manual hearing; court/crowd/player sounds remain."
+}

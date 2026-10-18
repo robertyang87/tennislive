@@ -116,7 +116,7 @@ def _implementation(module) -> dict:
                 for tool in ('ffmpeg', 'ffprobe')}}
 
 
-def _recipe(profile, module, sources, segments, fps, tail) -> dict:
+def _recipe(profile, module, sources, segments, fps, tail, decode_transforms=None) -> dict:
     hashes = {}
     per_path = {}
     for name, source in sorted(sources.items()):
@@ -134,7 +134,8 @@ def _recipe(profile, module, sources, segments, fps, tail) -> dict:
     return {'schema': SCHEMA, 'profile': profile, 'native_profile': module.PROFILE,
             'source_sha256': hashes, 'segments': rows, 'fps': str(fps),
             'rate': [Fraction(fps).numerator, Fraction(fps).denominator],
-            'tail': tail, 'implementation': _implementation(module)}
+            'tail': tail, 'decode_transforms': _freeze(decode_transforms or {}),
+            'implementation': _implementation(module)}
 
 
 def _probe(path: Path) -> dict:
@@ -197,7 +198,11 @@ def _atomic_copy(source: Path, dest: Path) -> None:
         staged.unlink(missing_ok=True)
 
 
-def _native(module, profile, sources, segments, outdir, fps, tail, spec_path):
+def _native(module, profile, sources, segments, outdir, fps, tail, spec_path,
+            decode_transforms=None):
+    if decode_transforms:
+        return module.resolve_masks(sources, segments, outdir, fps, tail,
+                                    decode_transforms=decode_transforms)
     if profile == 'us-open':
         return module.resolve_masks(sources, segments, outdir, spec_path, fps, tail)
     return module.resolve_masks(sources, segments, outdir, fps, tail)
@@ -343,16 +348,17 @@ def _scan_peak_bytes(jobs, fps, tail):
 
 
 def _resolve_wta_point(job):
-    index, part, source, partdir, fps, tail, spec_path, root = job
+    index, part, source, partdir, fps, tail, spec_path, root, transforms = job
     proof_path = resolve_masks_cached(
         'wta', {part.source: source}, [part], partdir, fps, tail,
-        spec_path=spec_path, cache_root=root)
+        spec_path=spec_path, cache_root=root, decode_transforms=transforms)
     proof = json.loads(proof_path.read_text())
     record, = proof['segments']
     return index, part, record
 
 
-def _incremental_wta(sources, segments, outdir, fps, tail, spec_path, root):
+def _incremental_wta(sources, segments, outdir, fps, tail, spec_path, root,
+                     decode_transforms=None):
     """Reuse unchanged points after a window edit, with the full bundle validators.
 
     WTA's resolver reads only its segment's source and geometry. Profiles that
@@ -369,7 +375,9 @@ def _incremental_wta(sources, segments, outdir, fps, tail, spec_path, root):
             # reordering and another point's source do not invalidate this point.
             part = copy(segment)
             partdir = Path(temporary) / str(index)
-            jobs.append((index, part, sources[part.source], partdir, fps, tail, spec_path, root))
+            transform = (decode_transforms or {}).get(part.source)
+            jobs.append((index, part, sources[part.source], partdir, fps, tail, spec_path, root,
+                         {part.source: transform} if transform else None))
         workers = point_scan_workers(len(jobs), _scan_peak_bytes(jobs, fps, tail))
         print(f'[score-mask-cache] {workers} bounded WTA scan workers')
         if workers > 1:
@@ -398,40 +406,61 @@ def _incremental_wta(sources, segments, outdir, fps, tail, spec_path, root):
 
 
 def resolve_masks_cached(profile, sources, segments, outdir, fps, tail, *,
-                         spec_path=None, cache_root=None) -> Path:
+                         spec_path=None, cache_root=None, decode_transforms=None) -> Path:
     """Run the exact native resolver on miss; restore its full frame sequence on hit."""
     if profile not in PROFILES:
         raise ValueError(f'Unsupported native mask profile: {profile}')
+    # Geometry is expressed in the same decoded frame as the renderer. Never
+    # silently scan native 720p pixels using a conformed 1080p scorebox.
+    if decode_transforms:
+        if profile != 'wta':
+            raise ValueError(f'{profile} scoreboard masks do not support decode transforms')
+        if set(decode_transforms) - set(sources):
+            raise ValueError('Scoreboard decode transform references an unknown source')
+        for transform in decode_transforms.values():
+            if (not isinstance(transform, dict) or set(transform) != {'vf', 'size'}
+                    or not isinstance(transform['vf'], str) or not transform['vf'].strip()
+                    or not isinstance(transform['size'], (list, tuple))
+                    or len(transform['size']) != 2
+                    or any(type(v) is not int or v <= 0 for v in transform['size'])):
+                raise ValueError('Scoreboard decode transform requires filter and effective size')
+        decode_transforms = {key: {'vf': value['vf'].rstrip(','), 'size': list(value['size'])}
+                             for key, value in decode_transforms.items()}
     module = importlib.import_module(PROFILES[profile])
     outdir = Path(outdir); outdir.mkdir(parents=True, exist_ok=True)
     root = (Path(cache_root) if cache_root is not None else Path(os.environ.get(
         'TENNISLIVE_SCOREBOARD_MASK_CACHE', str(Path.home() / '.cache/tennislive-scoreboard-masks')))).expanduser()
     try:
-        recipe = _recipe(profile, module, sources, segments, fps, tail)
+        recipe = _recipe(profile, module, sources, segments, fps, tail, decode_transforms)
         key = hashlib.sha256(_json(recipe)).hexdigest()
     except (OSError, ValueError, TypeError, subprocess.SubprocessError) as exc:
         # Cache preparation is optional; preserve the native resolver's genuine
         # error behavior for unreadable sources or unrepresentable inputs.
         print(f'[score-mask-cache] preparation failed ({type(exc).__name__}: {exc}); '
               'native per-frame scan required')
-        return _native(module, profile, sources, segments, outdir, fps, tail, spec_path)
+        return _native(module, profile, sources, segments, outdir, fps, tail, spec_path,
+                       decode_transforms)
     entry = root / 'entries' / key
     if entry.is_dir() and not entry.is_symlink():
         try:
             path = _restore(entry, key, recipe, segments, outdir, fps, spec_path,
-                lambda: _recipe(profile, module, sources, segments_input(recipe), fps, tail) == recipe)
+                lambda: _recipe(profile, module, sources, segments_input(recipe), fps, tail,
+                                decode_transforms) == recipe)
             print(f'[score-mask-cache] hit {key[:12]}: complete native per-frame alpha sequence')
             return path
         except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as exc:
             print(f'[score-mask-cache] invalid/incomplete bundle ({type(exc).__name__}: {exc}); '
                   'native per-frame scan required')
     if profile == 'wta' and sum(bool(s.score_inset) for s in segments) > 1:
-        path = _incremental_wta(sources, segments, outdir, fps, tail, spec_path, root)
+        path = _incremental_wta(sources, segments, outdir, fps, tail, spec_path, root,
+                                decode_transforms)
     else:
-        path = _native(module, profile, sources, segments, outdir, fps, tail, spec_path)
+        path = _native(module, profile, sources, segments, outdir, fps, tail, spec_path,
+                       decode_transforms)
     try:
         # Detect source/config changes during the native scan before storing it.
-        if _recipe(profile, module, sources, segments_input(recipe), fps, tail) != recipe:
+        if _recipe(profile, module, sources, segments_input(recipe), fps, tail,
+                   decode_transforms) != recipe:
             raise ValueError('Inputs changed during native mask scan')
         # Concurrent scans may save identical entries or prune the same cache.
         # Serialize commits/pruning; decode, detection and validation on read

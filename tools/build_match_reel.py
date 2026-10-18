@@ -6640,6 +6640,8 @@ def silence_findings(spec: dict, segments, probes: dict,
 # 戴维斯杯的官方影像档案（ITF 频道）highlights 一律只有 720p、没有全场重播，
 # 1930 年代的英国百代新闻片只有 640×480，**这两档「等」也等不出 1080p**。
 APPROVED_LOW_RES_SOURCES: dict[str, int] = {
+    # 2026-10-18: owner approved this Wuhan final official long source: 可以用 720如果可以完整展示内容的话.
+    'https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4': 720,
     # 2026-10-17: owner approved this exact Shanghai semifinal long source after
     # seeing the actual 3:4 720p preview: 允许本条用720p长版，保留完整关键过程.
     'https://github.com/robertyang87/tennislive/releases/download/source-shanghai-jodar-medvedev-2026-sf/6407012514112-1c5459904fb36909.mp4': 720,
@@ -10228,7 +10230,11 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             # retain their original frame timing; score pixels come from source.
             resolve_masks_cached(
                 profile, sources, segments, outdir, FPS_EXPR, SEG_FADE,
-                spec_path=Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json")
+                spec_path=Path(__file__).resolve().parents[1] / "specs" / "reels" / f"{spec['slug']}.json",
+                decode_transforms={key: {"vf": conform_prefilter(path).rstrip(","),
+                                         "size": effective_size(path)}
+                                   for key, path in sources.items() if conform_target(path)
+                                   and any(seg.source == key and seg.score_inset for seg in segments)})
         elif profile == "band-legacy":
             resolve_board_insets(sources, segments)
 

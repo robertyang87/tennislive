@@ -97,7 +97,7 @@ def test_reviewed_windows_gate_real_wuhan_result_before_geometry(monkeypatch):
     good = np.asarray(Image.open(root / "wuhan-175080-setpoint-band.png").convert("RGB"))
     result = np.asarray(Image.open(root / "wuhan-194480-centred-result-band.png").convert("RGB"))
     assert good.shape == result.shape == (155, 760, 3)
-    monkeypatch.setattr(w.subprocess, "check_output", lambda *a, **kw: "1920\n")
+    monkeypatch.setattr(w.subprocess, "check_output", lambda *a, **kw: "1920,1080\n")
     monkeypatch.setattr(w.subprocess, "run", lambda *a, **kw: SimpleNamespace(
         returncode=0, stdout=good.tobytes() + result.tobytes(), stderr=b""))
     with pytest.raises(RuntimeError, match="native body row geometry"):

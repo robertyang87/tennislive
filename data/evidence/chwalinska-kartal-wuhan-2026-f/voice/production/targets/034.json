@@ -1,0 +1,410 @@
+{
+  "edit_id": "full_stats",
+  "sentence": "赫瓦林斯卡二十三个制胜分，二十七次非受迫失误。卡尔塔尔三十二个制胜分，三十六次非受迫失误。决胜盘最后四局，全被赫瓦林斯卡拿下。",
+  "word": "分",
+  "char": "分",
+  "at": 11,
+  "intended": "fen1",
+  "wrong": "fen4",
+  "ok_refs": [
+    "氛",
+    "纷"
+  ],
+  "bad_refs": [
+    "忿",
+    "愤"
+  ],
+  "actual_binding": {
+    "edit_id": "full_stats",
+    "text": "赫瓦林斯卡二十三个制胜分，二十七次非受迫失误。卡尔塔尔三十二个制胜分，三十六次非受迫失误。决胜盘最后四局，全被赫瓦林斯卡拿下。",
+    "display_text": "赫瓦林斯卡二十三个制胜分，二十七次非受迫失误。卡尔塔尔三十二个制胜分，三十六次非受迫失误。决胜盘最后四局，全被赫瓦林斯卡拿下。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "request_id": "30e864073e47de77da2a41d528086769370d94f47dad0fd43e7155d66e141629",
+    "actual_mp3_sha256": "2c4cd44eefa33441f5f7cf24c4ab4b915d6c8d61ac1c0bbf8091cdce252dc0a3",
+    "actual_marks_sha256": "3de90f35a646e6ba986805cf636fc0ca31e020f36d043a9bc02e0e7cfac04a9e",
+    "bound_snapshot_path": "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/native-speech/full_stats.mp3",
+    "marks_snapshot_path": "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/native-speech/full_stats.marks.json",
+    "word_boundary_tokens": [
+      "赫瓦林斯卡",
+      "二十三个",
+      "制胜",
+      "分",
+      "二十七次",
+      "非",
+      "受迫",
+      "失误",
+      "卡尔塔尔",
+      "三十二个",
+      "制胜",
+      "分",
+      "三十六次",
+      "非",
+      "受迫",
+      "失误",
+      "决胜",
+      "盘",
+      "最后",
+      "四局",
+      "全",
+      "被",
+      "赫瓦林斯卡",
+      "拿下"
+    ]
+  },
+  "kind": "common_polyphone",
+  "reference_policy": "Provisional nonoriginal independent homophones, same-full-sentence LOO calibration required; no dictionary verdict.",
+  "acoustic": {
+    "word": "分",
+    "char": "分",
+    "sentence": "赫瓦林斯卡二十三个制胜分，二十七次非受迫失误。卡尔塔尔三十二个制胜分，三十六次非受迫失误。决胜盘最后四局，全被赫瓦林斯卡拿下。",
+    "tts_text": "赫瓦林斯卡二十三个制胜分，二十七次非受迫失误。卡尔塔尔三十二个制胜分，三十六次非受迫失误。决胜盘最后四局，全被赫瓦林斯卡拿下。",
+    "intended_refs": [
+      "氛",
+      "纷"
+    ],
+    "wrong_refs": [
+      "忿",
+      "愤"
+    ],
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "verdict": "correct",
+    "confidence": "high",
+    "verdict_raw": "correct",
+    "score": 0.848,
+    "margin": 0.2,
+    "near_identical_to": "intended",
+    "far_from_both": false,
+    "dropped_refs": [],
+    "override": null,
+    "selftest_sides": [
+      "A",
+      "B"
+    ],
+    "features": {
+      "spec": {
+        "d_intended": 0.486,
+        "d_wrong": 2.892,
+        "score": 0.712
+      },
+      "f0": {
+        "d_intended": 0.071,
+        "d_wrong": 2.38,
+        "score": 0.942
+      },
+      "comb": {
+        "d_intended": 0.314,
+        "d_wrong": 3.826,
+        "score": 0.848
+      }
+    },
+    "neighbour_shift": {
+      "intended": 0.322,
+      "wrong": 1.333
+    },
+    "separation": {
+      "spec": {
+        "within": 2.364,
+        "between": 3.004,
+        "separation": 1.271
+      },
+      "f0": {
+        "within": 0.777,
+        "between": 2.523,
+        "separation": 3.247
+      },
+      "comb": {
+        "within": 1.959,
+        "between": 4.025,
+        "separation": 2.055
+      }
+    },
+    "selftest_loo": {
+      "氛": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.435
+      },
+      "纷": {
+        "expect": "correct",
+        "got": "correct",
+        "score": 0.418
+      },
+      "忿": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.25
+      },
+      "愤": {
+        "expect": "misread",
+        "got": "misread",
+        "score": -0.248
+      }
+    },
+    "selftest_pass": true,
+    "distances_from_orig": {
+      "A:氛": {
+        "spec": 2.324,
+        "f0": 0.447,
+        "vmis": 0.12,
+        "frames": 25,
+        "comb": 1.609
+      },
+      "A:纷": {
+        "spec": 0.486,
+        "f0": 0.071,
+        "vmis": 0.0,
+        "frames": 25,
+        "comb": 0.314
+      },
+      "B:忿": {
+        "spec": 2.892,
+        "f0": 2.38,
+        "vmis": 0.077,
+        "frames": 26,
+        "comb": 3.826
+      },
+      "B:愤": {
+        "spec": 3.009,
+        "f0": 2.51,
+        "vmis": 0.038,
+        "frames": 26,
+        "comb": 4.015
+      }
+    },
+    "window_s": [
+      1.894,
+      2.139
+    ],
+    "boundary_token": "分",
+    "window_anchor": "ORIG",
+    "tokens": {
+      "ORIG": [
+        "赫瓦林斯卡",
+        "二十三个",
+        "制胜",
+        "分",
+        "二十七次",
+        "非",
+        "受迫",
+        "失误",
+        "卡尔塔尔",
+        "三十二个",
+        "制胜",
+        "分",
+        "三十六次",
+        "非",
+        "受迫",
+        "失误",
+        "决胜",
+        "盘",
+        "最后",
+        "四局",
+        "全",
+        "被",
+        "赫瓦林斯卡",
+        "拿下"
+      ],
+      "A:氛": [
+        "赫瓦林斯卡",
+        "二十三",
+        "个",
+        "制胜氛",
+        "二十七",
+        "次",
+        "非",
+        "受迫",
+        "失误",
+        "卡尔塔尔",
+        "三十二",
+        "个",
+        "制胜",
+        "分",
+        "三十六",
+        "次",
+        "非",
+        "受迫",
+        "失误",
+        "决胜",
+        "盘",
+        "最后",
+        "四局",
+        "全",
+        "被",
+        "赫瓦林斯卡",
+        "拿下"
+      ],
+      "A:纷": [
+        "赫瓦林斯卡",
+        "二十三个",
+        "制胜",
+        "纷",
+        "二十七次",
+        "非",
+        "受迫",
+        "失误",
+        "卡尔塔尔",
+        "三十二个",
+        "制胜",
+        "分",
+        "三十六次",
+        "非",
+        "受迫",
+        "失误",
+        "决胜",
+        "盘",
+        "最后",
+        "四局",
+        "全",
+        "被",
+        "赫瓦林斯卡",
+        "拿下"
+      ],
+      "B:忿": [
+        "赫瓦林斯卡",
+        "二十三",
+        "个",
+        "制胜忿",
+        "二十七",
+        "次",
+        "非",
+        "受迫",
+        "失误",
+        "卡尔塔尔",
+        "三十二",
+        "个",
+        "制胜",
+        "分",
+        "三十六",
+        "次",
+        "非",
+        "受迫",
+        "失误",
+        "决胜",
+        "盘",
+        "最后",
+        "四局",
+        "全",
+        "被",
+        "赫瓦林斯卡",
+        "拿下"
+      ],
+      "B:愤": [
+        "赫瓦林斯卡",
+        "二十三",
+        "个",
+        "制",
+        "胜愤",
+        "二十七",
+        "次",
+        "非",
+        "受迫",
+        "失误",
+        "卡尔塔尔",
+        "三十二",
+        "个",
+        "制胜",
+        "分",
+        "三十六",
+        "次",
+        "非",
+        "受迫",
+        "失误",
+        "决胜",
+        "盘",
+        "最后",
+        "四局",
+        "全",
+        "被",
+        "赫瓦林斯卡",
+        "拿下"
+      ]
+    },
+    "f0_semitones_window": {
+      "ORIG": [
+        -5.8,
+        -7.1,
+        -7.9,
+        -7.8,
+        -9.6,
+        null,
+        0.5,
+        -2.0,
+        -2.2,
+        -2.4,
+        -3.1,
+        -5.7,
+        null
+      ],
+      "A:氛": [
+        -6.9,
+        -7.6,
+        -8.0,
+        -8.0,
+        -9.0,
+        null,
+        0.7,
+        -1.8,
+        -2.5,
+        -2.8,
+        -4.1,
+        null,
+        null
+      ],
+      "A:纷": [
+        -5.8,
+        -7.1,
+        -7.9,
+        -7.7,
+        -9.8,
+        null,
+        0.6,
+        -1.9,
+        -2.2,
+        -2.4,
+        -3.0,
+        -5.6,
+        null
+      ],
+      "B:忿": [
+        -6.3,
+        -7.1,
+        -7.7,
+        -7.7,
+        -9.6,
+        null,
+        null,
+        -5.9,
+        -7.8,
+        -11.0,
+        -10.3,
+        null
+      ],
+      "B:愤": [
+        -3.4,
+        -5.0,
+        -6.1,
+        -7.5,
+        -9.6,
+        null,
+        0.4,
+        -3.1,
+        -7.3,
+        -10.4,
+        -9.9
+      ]
+    },
+    "audio": {
+      "ORIG": "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/native-speech/full_stats.mp3",
+      "A:氛": "/workspace/tennislive/data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/reference-cache/66e68dd3fdfcafdaef548939.mp3",
+      "A:纷": "/workspace/tennislive/data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/reference-cache/e227ce030f1ef12de3bc09ab.mp3",
+      "B:忿": "/workspace/tennislive/data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/reference-cache/e90f8eee4ec6c8e927d5242f.mp3",
+      "B:愤": "/workspace/tennislive/data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/reference-cache/1cb4ddedff2f63ad78b3be4d.mp3"
+    },
+    "acoustic_measurement_attempted": true
+  },
+  "measured_at": "2026-10-18T15:22:15.137335+00:00",
+  "human_listening_claimed": false
+}

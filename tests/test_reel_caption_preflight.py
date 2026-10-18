@@ -213,3 +213,30 @@ def test_default_caption_margin_uses_resolved_scoreboard_top(prepared_render, mo
     assert cues and all(int(x.split(',', 9)[7]) == 312 for x in cues)  # Initial: 264.
     assert not (out / 'render.json').exists()
     assert not (out / 'qc_attestation.json').exists()
+
+
+def test_render_passes_source_conform_to_native_mask_scanner(prepared_render, monkeypatch):
+    import scoreboard_mask_cache
+    spec, out, render = prepared_render
+    spec.pop('source_url')
+    spec['sources'] = {'main': 'https://example.com/main.mp4',
+                       'extended': 'https://example.com/extended.mp4'}
+    spec['scorebox'] = [90, 826, 550, 980]
+    spec['segments'][1].update(source='extended', score_inset=True)
+    for key in spec['sources']:
+        (out / f'source_{key}.mp4').write_bytes(b'fixture: adapter is not a decoder test')
+    monkeypatch.setattr(reel, 'scoreboard_profile', lambda *_a, **_k: 'wta')
+    monkeypatch.setattr(reel, 'conform_target', lambda path:
+                        (1920, 1080) if path.name == 'source_extended.mp4' else None)
+    class MaskBoundary(Exception):
+        pass
+    captured = {}
+    def at_mask(*args, **kwargs):
+        captured.update(kwargs)
+        raise MaskBoundary
+    monkeypatch.setattr(scoreboard_mask_cache, 'resolve_masks_cached', at_mask)
+    with pytest.raises(MaskBoundary):
+        render(spec)
+    assert captured['decode_transforms'] == {'extended': {
+        'vf': 'scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos,crop=1920:1080',
+        'size': (1920, 1080)}}

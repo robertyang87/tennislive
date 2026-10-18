@@ -1,0 +1,71 @@
+{
+  "model": "large-v3-turbo",
+  "source_key": "main",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-HIvIvgwXkqs/HIvIvgwXkqs.mp4",
+  "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+  "clip": [
+    154,
+    162
+  ],
+  "timecode_basis": "absolute source seconds, clip offset added to every word and segment",
+  "duration": 8.0,
+  "created_at": "2026-10-18T16:14:40.987197+00:00",
+  "decoded_pcm_sha256": "a76f129a1284c24c696f6e77a007a907aa32ae935f9519e2a61f1d449f9f4d7a",
+  "decoder": "ffmpeg16000Hz mono float32; no amplitude, loudness or noise filter",
+  "options": {
+    "initial_prompt": "Maja Chwalinska. Sonay Kartal.",
+    "context_bias_note": "Only verified source player names supplied; no target utterance or sentence supplied. Context-biased decoding is not an independent confirmation of a name.",
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true,
+    "vad_filter": false,
+    "condition_on_previous_text": false
+  },
+  "segments": [
+    {
+      "start": 159.26,
+      "end": 161.44,
+      "text": "Ska seals the deal. Why not?",
+      "avg_logprob": -0.6736533045768738,
+      "no_speech_prob": 1.0085673962656472e-10,
+      "words": [
+        {
+          "w": " Ska",
+          "s": 159.26,
+          "e": 159.82,
+          "p": 0.24936023948248476
+        },
+        {
+          "w": " seals",
+          "s": 159.82,
+          "e": 160.1,
+          "p": 0.9572168588638306
+        },
+        {
+          "w": " the",
+          "s": 160.1,
+          "e": 160.26,
+          "p": 0.9876623153686523
+        },
+        {
+          "w": " deal.",
+          "s": 160.26,
+          "e": 160.52,
+          "p": 0.9986751675605774
+        },
+        {
+          "w": " Why",
+          "s": 160.7,
+          "e": 161.16,
+          "p": 0.9963045120239258
+        },
+        {
+          "w": " not?",
+          "s": 161.16,
+          "e": 161.44,
+          "p": 0.9966697096824646
+        }
+      ]
+    }
+  ]
+}

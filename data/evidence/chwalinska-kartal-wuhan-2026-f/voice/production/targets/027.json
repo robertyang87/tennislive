@@ -1,0 +1,70 @@
+{
+  "edit_id": "deciding_set_context",
+  "sentence": "四平之后连拿两局，赫瓦林斯卡把比赛拉回同一起点。决胜盘又来到二平，她再次拿到破发机会，继续用接发球给对手施压。",
+  "word": "发",
+  "char": "发",
+  "at": 47,
+  "intended": "fa1",
+  "wrong": "fa4",
+  "ok_refs": [
+    "発"
+  ],
+  "bad_refs": [
+    "珐"
+  ],
+  "actual_binding": {
+    "edit_id": "deciding_set_context",
+    "text": "四平之后连拿两局，赫瓦林斯卡把比赛拉回同一起点。决胜盘又来到二平，她再次拿到破发机会，继续用接发球给对手施压。",
+    "display_text": "四平之后连拿两局，赫瓦林斯卡把比赛拉回同一起点。决胜盘又来到二平，她再次拿到破发机会，继续用接发球给对手施压。",
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "request_id": "c2133885264ff19e020fa6ac68b6827bd7a76092f816efdaef5dde9d71bec464",
+    "actual_mp3_sha256": "efbeaf1a8b63c4b290f107337a77b4858553a437b90301fdc056cec988d0db89",
+    "actual_marks_sha256": "cbc4350e7b9a4057d341e4e7fbfa02dc31a38fcb0776b271b72087f22198acc4",
+    "bound_snapshot_path": "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/native-speech/deciding_set_context.mp3",
+    "marks_snapshot_path": "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/native-speech/deciding_set_context.marks.json",
+    "word_boundary_tokens": [
+      "四平",
+      "之后",
+      "连",
+      "拿",
+      "两局",
+      "赫瓦林斯卡",
+      "把",
+      "比赛",
+      "拉",
+      "回",
+      "同一",
+      "起点",
+      "决胜",
+      "盘",
+      "又",
+      "来到",
+      "二",
+      "平",
+      "她",
+      "再次",
+      "拿",
+      "到",
+      "破发",
+      "机会",
+      "继续",
+      "用",
+      "接",
+      "发球",
+      "给",
+      "对手",
+      "施压"
+    ]
+  },
+  "kind": "common_polyphone",
+  "reference_policy": "Provisional nonoriginal independent homophones, same-full-sentence LOO calibration required; no dictionary verdict.",
+  "acoustic": {
+    "verdict": "insufficient_controls",
+    "acoustic_measurement_attempted": false,
+    "why": "Fewer than two independent same-reading controls on a side; no new synthesis or acoustic pass claimed."
+  },
+  "recorded_at": "2026-10-18T15:21:57.671326+00:00",
+  "human_listening_claimed": false
+}

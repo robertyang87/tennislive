@@ -1,0 +1,23 @@
+{
+  "model": "small",
+  "source_key": "extended",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4",
+  "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+  "clip": [
+    292,
+    304
+  ],
+  "timecode_basis": "absolute source seconds, clip offset added to every word and segment",
+  "duration": 12.0,
+  "created_at": "2026-10-18T15:19:26.909761+00:00",
+  "decoded_pcm_sha256": "3f7d87b549f18f10962295bb7b470955d21e6073dcca0571fa05515cea7de118",
+  "decoder": "ffmpeg16000Hz mono float32; no amplitude, loudness or noise filter",
+  "options": {
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true,
+    "vad_filter": false,
+    "condition_on_previous_text": false
+  },
+  "segments": []
+}

@@ -1,0 +1,74 @@
+{
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "checked_at": "2026-10-18T15:18:39Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "13fa5c93b4c02541": {
+      "segment": 2,
+      "spoken": 15.336,
+      "picture": 18.8
+    },
+    "72eb3a0f7aae5a31": {
+      "segment": 3,
+      "spoken": 13.8,
+      "picture": 28.76
+    },
+    "403e8dd769bab596": {
+      "segment": 5,
+      "spoken": 15.816,
+      "picture": 19.5
+    },
+    "d46ff1abe99fbfa7": {
+      "segment": 7,
+      "spoken": 13.464,
+      "picture": 30.8
+    },
+    "ef600221aa69617c": {
+      "segment": 9,
+      "spoken": 11.064,
+      "picture": 14.5
+    },
+    "ea1874d5c0c9d891": {
+      "segment": 11,
+      "spoken": 12.792,
+      "picture": 16.5
+    },
+    "71de8cb15394c862": {
+      "segment": 15,
+      "spoken": 13.152,
+      "picture": 14.8
+    },
+    "96b2d2471571d73a": {
+      "segment": 16,
+      "spoken": 20.976,
+      "picture": 25.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "2414de29cc3083bf79d08dc11e33ef22100671bd96605d8dd0fddc4ab34bf9d9",
+    "request_count": 9,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-chwalinska-kartal-wuhan-2026-f-2414de29cc3083bf",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-kartal-wuhan-2026-f-2414de29cc3083bf/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39140882386",
+    "capture_origin": "local native --check-narration, exact original ZIP transported without synthesis or re-encoding",
+    "transfer_verification": {
+      "bytes": 751095,
+      "public_sha256": "2414de29cc3083bf79d08dc11e33ef22100671bd96605d8dd0fddc4ab34bf9d9",
+      "original_bytes_equal": true
+    }
+  }
+}

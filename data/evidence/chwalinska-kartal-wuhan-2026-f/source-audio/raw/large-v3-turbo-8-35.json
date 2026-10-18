@@ -1,0 +1,102 @@
+{
+  "model": "large-v3-turbo",
+  "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+  "clip": [
+    8,
+    35
+  ],
+  "duration": 27.0,
+  "created_at": "2026-10-18T14:57:58.307458+00:00",
+  "decoder": "ffmpeg to16000Hz mono float32; no gain/noise/loudness processing",
+  "decoded_pcm_sha256": "d8a309f2d9f1f862ce57498a3b2869d2d6f8e20ce676fb491d7ffcb70d493350",
+  "options": {
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true,
+    "vad_filter": false,
+    "condition_on_previous_text": false
+  },
+  "segments": [
+    {
+      "start": 29.28,
+      "end": 32.3,
+      "text": "Hello, it looks like cartel is the one who's into fatigable early.",
+      "avg_logprob": -0.4849236919766381,
+      "no_speech_prob": 4.910306102695605e-13,
+      "words": [
+        {
+          "w": " Hello,",
+          "s": 29.28,
+          "e": 29.68,
+          "p": 0.709779679775238
+        },
+        {
+          "w": " it",
+          "s": 29.68,
+          "e": 29.82,
+          "p": 0.7674188613891602
+        },
+        {
+          "w": " looks",
+          "s": 29.82,
+          "e": 29.98,
+          "p": 0.9990805387496948
+        },
+        {
+          "w": " like",
+          "s": 29.98,
+          "e": 30.18,
+          "p": 0.9994902610778809
+        },
+        {
+          "w": " cartel",
+          "s": 30.18,
+          "e": 30.6,
+          "p": 0.5730774998664856
+        },
+        {
+          "w": " is",
+          "s": 30.6,
+          "e": 30.7,
+          "p": 0.7431538701057434
+        },
+        {
+          "w": " the",
+          "s": 30.7,
+          "e": 30.8,
+          "p": 0.9861868619918823
+        },
+        {
+          "w": " one",
+          "s": 30.8,
+          "e": 30.9,
+          "p": 0.9955852031707764
+        },
+        {
+          "w": " who's",
+          "s": 30.9,
+          "e": 31.16,
+          "p": 0.8672883212566376
+        },
+        {
+          "w": " into",
+          "s": 31.16,
+          "e": 31.38,
+          "p": 0.52986741065979
+        },
+        {
+          "w": " fatigable",
+          "s": 31.38,
+          "e": 31.92,
+          "p": 0.8838732043902079
+        },
+        {
+          "w": " early.",
+          "s": 31.92,
+          "e": 32.3,
+          "p": 0.9822085499763489
+        }
+      ]
+    }
+  ]
+}
