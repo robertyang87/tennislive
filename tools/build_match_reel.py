@@ -2889,6 +2889,9 @@ class Segment:
     # 用 `{"x2": N}` 手钉的。⭐ 账号所有者 2026-08-29：「不能固定宽度去切，
     # 要自适应」——所以 true 是主路，`x2` 退成「量不准时人来钉」的口子。
     square_pan: tuple[tuple[float, float], ...] = ()
+    # `frame: person` 段的人物中心证据（`{"frame", "cx_face"}`），渲染时
+    # `require_fixed_center` 凭它放行 cx≠0.5；其余段为 None，照旧钉死画面中心。
+    person_frame: dict | None = None
     score_inset_auto: bool = False
     # 这一段里板**真的在画面里**的那几段（段内秒）。`None` ＝ 整段都在，
     # 照旧整段回贴；非空 ＝ 只在这几段回贴（`overlay` 的 `enable`）。
@@ -3591,6 +3594,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        score_inset_auto=s.get("score_inset") is True,
                        score_inset_windows=_seg_score_windows(s, i),
                        square_pan=tuple((float(t), float(cx)) for t, cx in s.get("square_pan", [])),
+                       person_frame=({"frame": "person", "cx_face": s.get("cx_face")}
+                                     if s.get("frame") == "person" else None),
                        fill_y=_seg_fill_y(s, i),
                        contain_keep=_seg_contain_keep(s, i),
                        crop_zoom=_seg_crop_zoom(s, i),
@@ -3899,7 +3904,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "story_kind", "sub", "subject",
               "tier", "topic", "versus", "winner"),
-    "segment": ("audio_tail", "bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "end", "fill_y", "fit", "image", "image_kind",
+    "segment": ("audio_tail", "bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "cx_face", "end", "fill_y", "fit", "frame", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows", "scorebox",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
@@ -4668,7 +4673,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         return dest
     from tennislive.video.crop_policy import require_fixed_center
     require_fixed_center({"cx": seg.cx, "track": seg.track or bool(path),
-                          "square_pan": seg.square_pan}, where="cut_segment")
+                          "square_pan": seg.square_pan, **(seg.person_frame or {})},
+                         where="cut_segment")
     if seg.cx is None:
         seg.cx = 0.5
 
@@ -9636,6 +9642,15 @@ def validate_spec(
                 print(f"[人物片副标题] 自动 spec，只报不拦：{_problem}")
             else:
                 raise ReelError(_problem)
+    # 采访／发言段按人物中心裁（账号所有者 2026-10-18）：新片必须声明 frame，
+    # person 段的 cx 必须由 cx_face 证据算出来。已发的挂 data/legacy_person_frame.json。
+    from tennislive.video.crop_policy import person_frame_problems  # noqa: PLC0415
+    _legacy_frame = json.loads((Path(__file__).resolve().parents[1] / "data" / "legacy_person_frame.json").read_text(encoding="utf-8"))["reels"]
+    if str(spec.get("slug", "")).strip() not in _legacy_frame and (_problems := person_frame_problems(spec)):
+        if (spec.get("_production") or {}).get("status") == "ready_for_render":
+            print("[人物中心裁切] 自动 spec，只报不拦：" + "；".join(_problems))
+        else:
+            raise ReelError("人物中心裁切：\n" + "\n".join(_problems))
     segments = parse_segments(spec, urls, next(iter(urls)))
     # quote 的 `at` 落在段外：`explicit_quote_cues` 原来要等十几段全编完、拼接
     # 之后写字幕时才报——zverev-deminaur-laver-cup-2026 第二趟 render 就这么白跑了
