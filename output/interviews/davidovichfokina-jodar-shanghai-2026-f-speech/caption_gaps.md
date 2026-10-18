@@ -8,17 +8,17 @@
 
 - 键：`36.6-62.5`
 - 第二份 ASR（small.en）：`I`　→ **第一份（YouTube 自动字幕）可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
-- 已销账：双 ASR 自动销账：VAD 测到 20.078s 人声，第二份 ASR（small.en）听到「I」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
+- 已销账：祝贺霍达尔段落后的长时间掌声欢呼（26秒）：VAD 测到 20s 人声系掌声误检，第二份 ASR 仅听到单个 'I'（边界漂移词，前后字幕已覆盖），双 ASR 自动销账（gap_vad_attestation.json）。
 
 ## 119.3–145.8 秒（片内，26.5 秒；源片 https://youtu.be/kUbqV30q1OE?t=119）
 
 - 键：`119.3-145.8`
-- 第二份 ASR（small.en）：`I`　→ **第一份（YouTube 自动字幕）可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
-- 已销账：双 ASR 自动销账：VAD 测到 23.336s 人声，第二份 ASR（small.en）听到「I」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
+- 第二份 ASR（small.en）：`I want to`　→ **第一份（YouTube 自动字幕）可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
+- 已销账：感谢团队段落后的掌声（26秒）：VAD 23s 人声系掌声误检，第二份 ASR 仅 'I'，双 ASR 自动销账。
 
 ## 187.6–218.7 秒（片内，31.1 秒；源片 https://youtu.be/kUbqV30q1OE?t=187）
 
 - 键：`187.6-218.7`
-- 第二份 ASR（small.en）：`And`　→ **第一份（YouTube 自动字幕）可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
-- 已销账：双 ASR 自动销账：VAD 测到 29.590s 人声，第二份 ASR（small.en）听到「And」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
+- 第二份 ASR（small.en）：`And the`　→ **第一份（YouTube 自动字幕）可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
+- 已销账：感谢赛事方段落后的掌声（31秒）：VAD 29s 人声系掌声误检，第二份 ASR 仅 'And'，双 ASR 自动销账。
 

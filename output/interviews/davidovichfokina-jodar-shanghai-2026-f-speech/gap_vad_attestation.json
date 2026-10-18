@@ -1,7 +1,7 @@
 {
  "status": "pass",
  "method": "silero_vad_plus_dual_asr_coverage",
- "sha256": "b276dc7da60871e3f87e2fba76f289b881e593919b0a9f7cac28d507ebd8ca34",
+ "sha256": "9ef22aea2813c3430cc133233b3598e172ab7d1e726c8a96b0a400db5256d3f3",
  "url": "https://www.youtube.com/watch?v=kUbqV30q1OE",
  "edge_pad_seconds": 0.35,
  "max_speech_seconds": 0.12,
@@ -25,12 +25,14 @@
    "end": 145.76,
    "speech_seconds": 23.336,
    "second_asr_words": [
-    "I"
+    "I",
+    "want",
+    "to"
    ],
    "transcript_covered": true,
    "caption_timeline_covered": false,
    "status": "transcript_covered",
-   "reason": "VAD 测到 23.336s 人声，第二份 ASR（small.en）听到「I」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+   "reason": "VAD 测到 23.336s 人声，第二份 ASR（small.en）听到「I want to」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
   },
   {
    "key": "187.6-218.7",
@@ -38,12 +40,13 @@
    "end": 218.72,
    "speech_seconds": 29.59,
    "second_asr_words": [
-    "And"
+    "And",
+    "the"
    ],
    "transcript_covered": true,
    "caption_timeline_covered": false,
    "status": "transcript_covered",
-   "reason": "VAD 测到 29.590s 人声，第二份 ASR（small.en）听到「And」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+   "reason": "VAD 测到 29.590s 人声，第二份 ASR（small.en）听到「And the」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
   }
  ]
 }
