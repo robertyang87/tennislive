@@ -4,30 +4,30 @@
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
-| 1 | 0:00.3 | [▶](https://youtu.be/ATsKkPJBY3s?t=283) | event." | （解说） |  |
-| 2 | 0:02.7 | [▶](https://youtu.be/ATsKkPJBY3s?t=285) | Easi was worse for wear, | 伊加看起来有些疲惫， |  |
-| 3 | 0:04.3 | [▶](https://youtu.be/ATsKkPJBY3s?t=287) | but take nothing away from Maya. | 但玛雅的表现无可挑剔。 |  |
+| 1 | 0:00.3 | [▶](https://youtu.be/ATsKkPJBY3s?t=283) | 1000 event. | （解说） | ✏️ 已订正 |
+| 2 | 0:02.7 | [▶](https://youtu.be/ATsKkPJBY3s?t=285) | Iga Swiatek was worse for wear, | 伊加看起来有些疲惫， | ✏️ 已订正 |
+| 3 | 0:04.3 | [▶](https://youtu.be/ATsKkPJBY3s?t=287) | but take nothing away from Maja. | 但玛雅的表现无可挑剔。 | ✏️ 已订正 |
 | 4 | 0:08.7 | [▶](https://youtu.be/ATsKkPJBY3s?t=291) | She went out | 她打出了一场 |  |
-| 5 | 0:09.2 | [▶](https://youtu.be/ATsKkPJBY3s?t=292) | and earned a straight set victory 761 | 直落两盘的胜利，7-6、1？ |  |
-| 6 | 0:13.1 | [▶](https://youtu.be/ATsKkPJBY3s?t=296) | and will vi in the championship tomorrow | 明天将出战决赛， |  |
+| 5 | 0:09.2 | [▶](https://youtu.be/ATsKkPJBY3s?t=292) | and earned a straight set victory, 7-5, 6-1, | 直落两盘的胜利，7-5、6-1， | ✏️ 已订正 |
+| 6 | 0:13.1 | [▶](https://youtu.be/ATsKkPJBY3s?t=296) | and will vie in the championship tomorrow | 明天将出战决赛， | ✏️ 已订正 |
 | 7 | 0:15.5 | [▶](https://youtu.be/ATsKkPJBY3s?t=298) | in Wuhan. | 在武汉。 |  |
-| 8 | 0:16.9 | [▶](https://youtu.be/ATsKkPJBY3s?t=299) | Maya, congratulations for the win today. | 玛雅，恭喜你今天获胜。 |  |
-| 9 | 0:19.5 | [▶](https://youtu.be/ATsKkPJBY3s?t=302) | Two stray sets. | 直落两盘。 |  |
+| 8 | 0:16.9 | [▶](https://youtu.be/ATsKkPJBY3s?t=299) | Maja, congratulations for the win today. | 玛雅，恭喜你今天获胜。 | ✏️ 已订正 |
+| 9 | 0:19.5 | [▶](https://youtu.be/ATsKkPJBY3s?t=302) | Two straight sets. | 直落两盘。 | ✏️ 已订正 |
 | 10 | 0:20.9 | [▶](https://youtu.be/ATsKkPJBY3s?t=303) | Your Chinese is pretty good. | 你的中文说得很不错。 |  |
 | 11 | 0:23.2 | [▶](https://youtu.be/ATsKkPJBY3s?t=306) | We don't mind you start | 不介意的话， |  |
 | 12 | 0:24.4 | [▶](https://youtu.be/ATsKkPJBY3s?t=307) | with your Chinese first. | 可以先用中文说几句。 |  |
 | 13 | 0:26.8 | [▶](https://youtu.be/ATsKkPJBY3s?t=309) | I'm sorry I didn't hear you. | 不好意思，我没听清。 |  |
-| 14 | 0:28.4 | [▶](https://youtu.be/ATsKkPJBY3s?t=311) | Nih. | 你…… |  |
-| 15 | 0:29.5 | [▶](https://youtu.be/ATsKkPJBY3s?t=312) | Niha. | 你好。 |  |
-| 16 | 0:35.1 | [▶](https://youtu.be/ATsKkPJBY3s?t=318) | Obviously today you are the you | 显然今天赢下比赛的是你， |  |
-| 17 | 0:38.0 | [▶](https://youtu.be/ATsKkPJBY3s?t=321) | are the one for winning this match. | （延续） |  |
+| 14 | 0:28.4 | [▶](https://youtu.be/ATsKkPJBY3s?t=311) | Ni... | 你…… | ✏️ 已订正 |
+| 15 | 0:29.5 | [▶](https://youtu.be/ATsKkPJBY3s?t=312) | Nihao! | 你好。 | ✏️ 已订正 |
+| 16 | 0:35.1 | [▶](https://youtu.be/ATsKkPJBY3s?t=318) | Obviously, today, you are | 显然今天赢下比赛的是你， | ✏️ 已订正 |
+| 17 | 0:38.0 | [▶](https://youtu.be/ATsKkPJBY3s?t=321) | the one for winning this match. | （延续） | ✏️ 已订正 |
 | 18 | 0:39.6 | [▶](https://youtu.be/ATsKkPJBY3s?t=322) | Talk about the match. | 聊聊这场比赛吧， |  |
 | 19 | 0:40.4 | [▶](https://youtu.be/ATsKkPJBY3s?t=323) | Recap a little bit please. | 简单回顾一下。 |  |
 | 20 | 0:42.3 | [▶](https://youtu.be/ATsKkPJBY3s?t=325) | Yeah, it was a very challenging one. | 是的，这场比赛非常艰难， |  |
 | 21 | 0:45.2 | [▶](https://youtu.be/ATsKkPJBY3s?t=328) | very physical. | 身体对抗也很强。 |  |
 | 22 | 0:47.2 | [▶](https://youtu.be/ATsKkPJBY3s?t=330) | I think we played like one half hour | 我觉得光第一盘 |  |
 | 23 | 0:49.6 | [▶](https://youtu.be/ATsKkPJBY3s?t=332) | the first set. | 就打了一个半小时。 |  |
-| 24 | 0:50.8 | [▶](https://youtu.be/ATsKkPJBY3s?t=333) | Obviously I think wasn't 100% today. | 显然伊加今天不在最佳状态， |  |
+| 24 | 0:50.8 | [▶](https://youtu.be/ATsKkPJBY3s?t=333) | Obviously, I think Iga wasn't 100% today. | 显然伊加今天不在最佳状态， | ✏️ 已订正 |
 | 25 | 0:54.5 | [▶](https://youtu.be/ATsKkPJBY3s?t=337) | So I wish her all the best of course. | 所以我当然祝她一切都好， |  |
 | 26 | 0:57.6 | [▶](https://youtu.be/ATsKkPJBY3s?t=340) | Hope she will be okay soon. | 希望她早日康复。 |  |
 | 27 | 0:59.7 | [▶](https://youtu.be/ATsKkPJBY3s?t=342) | Yeah. | 嗯。 |  |
@@ -42,11 +42,11 @@
 | 36 | 1:18.1 | [▶](https://youtu.be/ATsKkPJBY3s?t=361) | going on. | 我还没缓过神来， |  |
 | 37 | 1:18.7 | [▶](https://youtu.be/ATsKkPJBY3s?t=361) | And the fact that I won | 能赢下她这件事， |  |
 | 38 | 1:20.1 | [▶](https://youtu.be/ATsKkPJBY3s?t=363) | against her is actually crazy for me. | 对我来说简直不可思议。 |  |
-| 39 | 1:56.3 | [▶](https://youtu.be/ATsKkPJBY3s?t=399) | and Maya, | 玛雅， |  |
+| 39 | 1:56.3 | [▶](https://youtu.be/ATsKkPJBY3s?t=399) | And Maja, | 玛雅， | ✏️ 已订正 |
 | 40 | 1:57.6 | [▶](https://youtu.be/ATsKkPJBY3s?t=400) | you have a remarkable 2026 season both | 你2026赛季的表现非常惊人， |  |
-| 41 | 2:01.6 | [▶](https://youtu.be/ATsKkPJBY3s?t=404) | in Horang Gallows and now you're | 法网打进决赛， |  |
+| 41 | 2:01.6 | [▶](https://youtu.be/ATsKkPJBY3s?t=404) | in Roland Garros and now you're | 法网打进决赛， | ✏️ 已订正 |
 | 42 | 2:03.2 | [▶](https://youtu.be/ATsKkPJBY3s?t=406) | through to the WTA 1000 final. | 现在又进了WTA1000决赛。 |  |
-| 43 | 2:06.0 | [▶](https://youtu.be/ATsKkPJBY3s?t=408) | What are you expect tomorrow's | 对明天的决赛 |  |
+| 43 | 2:06.0 | [▶](https://youtu.be/ATsKkPJBY3s?t=408) | What are you expecting tomorrow's | 对明天的决赛 | ✏️ 已订正 |
 | 44 | 2:08.0 | [▶](https://youtu.be/ATsKkPJBY3s?t=411) | final most and what other fans | 有什么期待？球迷们 |  |
 | 45 | 2:10.0 | [▶](https://youtu.be/ATsKkPJBY3s?t=413) | can expect you tomorrow's final most? | 能期待看到什么样的你？ |  |
 | 46 | 2:13.4 | [▶](https://youtu.be/ATsKkPJBY3s?t=416) | Yeah | 嗯， |  |

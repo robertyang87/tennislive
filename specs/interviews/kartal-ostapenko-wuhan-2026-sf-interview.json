@@ -105,7 +105,15 @@
   "希望明天你们",
   "也能来现场继续加油。"
  ],
- "en_fixed": {},
+ "_en_fixed_why": "2026-10-18 修 CI 时补：原来标了 transcript_verified 却一处没订（en_fixed 为空），烧进画面的英文里有「1,00 level」「Alena」等明显错。逐行对照仓库里同一源片的两份 whisper 转写（data/source_asr/abL2j0xldOc 的 medium.en / small.en）改了 6 行：#4 1000（两份都是 1000/1,000）、#11 your…how was it（small.en）、#23 had a sideline（small.en）、#26 are back（small.en）、#42 Jelena（主持人说的是对手奥斯塔彭科，中文行本来就写奥斯塔彭科；两份 ASR 分别是 Elena/Alina）、#45 I've said in every interview（small.en）。#28 heading 两份都转成 having，听不出原词，原样留着。",
+ "en_fixed": {
+  "4": "and a first at 1000 level.",
+  "11": "with your performance, just how was it?",
+  "23": "So several months ago you had a sideline",
+  "26": "and right now you are back",
+  "42": "they might support Jelena today",
+  "45": "Yeah, I've said in every interview,"
+ },
  "transcript_verified": true,
  "opening": {
   "kind": "match_end",
