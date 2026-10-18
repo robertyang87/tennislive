@@ -1277,6 +1277,16 @@ def test_内容指纹只认会进成片的键():
         assert ir.content_sha256(changed) != h, changed
 
 
+def test_亚军主体变化会使旧封面内容指纹失效():
+    """封面扫描读取顶层 loser，换采访对象后旧画面核验不能继续复用。"""
+    base = {"slug": "runner-up-speech", "url": "same-source", "start": 0.0,
+            "end": 30.0, "winner": "冠军", "loser": "原亚军",
+            "cover": {"frame_at": 5.0}, "zh": ["谢谢大家"]}
+    before = ir.content_sha256(base)
+    assert ir.content_sha256({**base, "loser": "新亚军"}) != before
+    assert ir.content_sha256({**base, "_note": "只更新编辑备注"}) == before
+
+
 def test_内容指纹白名单盖住出片读的每一个键():
     """`build_interview_clip` 读到的键、全库 spec 里出现过的键，每一个都要被判过：
     进成片（`ir.FILM_KEYS`）或不进（`_NOT_FILM`）。两边都不在＝新字段没人判过。"""
