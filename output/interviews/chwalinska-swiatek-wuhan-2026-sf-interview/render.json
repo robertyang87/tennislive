@@ -30,45 +30,8 @@
     "transition": "dissolve",
     "dissolve_s": 0.18
   },
-  "film_sha256": "1c450d3078384c971f417632a7935e9a2fc0067a0cb1afc6fc8898a73db539fa",
+  "film_sha256": "b54b4d381071c112dfd35a36dfbbe186d9ec6bad8fc4ef74c0b1ede2b191cd07",
   "film_seconds": 176.24,
-  "production_sla": {
-    "version": 2,
-    "pipeline": "interview-clip",
-    "slug": "chwalinska-swiatek-wuhan-2026-sf-interview",
-    "received_at": "2026-10-17T18:22:32Z",
-    "artifact_ready_at": "2026-10-17T18:27:29Z",
-    "elapsed_seconds": 297.664,
-    "budget_seconds": 600,
-    "met": true,
-    "film_sha256": "1c450d3078384c971f417632a7935e9a2fc0067a0cb1afc6fc8898a73db539fa",
-    "spec_sha256": "682a53a7815625a12f8f10bf41b83e9684ea04ace6b316bed3658b8e048420a4",
-    "run_id": "39057808043",
-    "stage_events": [
-      {
-        "stage": "preflight",
-        "at": "2026-10-17T18:23:53Z",
-        "run_id": "39057808043"
-      },
-      {
-        "stage": "cover_audit",
-        "at": "2026-10-17T18:24:55Z",
-        "run_id": "39057808043"
-      },
-      {
-        "stage": "asr_verify",
-        "at": "2026-10-17T18:25:21Z",
-        "run_id": "39057808043"
-      },
-      {
-        "stage": "render",
-        "at": "2026-10-17T18:25:22Z",
-        "run_id": "39057808043"
-      }
-    ],
-    "render_seconds": 127.664,
-    "pre_render_seconds": 170.0
-  },
   "face_checks": {
     "cover": {
       "status": "ok",
@@ -125,37 +88,113 @@
   "production_stage_events": [
     {
       "stage": "preflight",
-      "at": "2026-10-17T18:23:53Z",
-      "run_id": "39057808043"
+      "at": "2026-10-18T07:12:25Z",
+      "run_id": "39106730434"
     },
     {
       "stage": "cover_audit",
-      "at": "2026-10-17T18:24:55Z",
-      "run_id": "39057808043"
+      "at": "2026-10-18T07:13:24Z",
+      "run_id": "39106730434"
     },
     {
       "stage": "asr_verify",
-      "at": "2026-10-17T18:25:21Z",
-      "run_id": "39057808043"
+      "at": "2026-10-18T07:13:40Z",
+      "run_id": "39106730434"
     },
     {
       "stage": "render",
-      "at": "2026-10-17T18:25:22Z",
-      "run_id": "39057808043"
+      "at": "2026-10-18T07:14:27Z",
+      "run_id": "39106730434"
     },
     {
       "stage": "qc",
-      "at": "2026-10-17T18:27:30Z",
-      "run_id": "39057808043"
+      "at": "2026-10-18T07:16:34Z",
+      "run_id": "39106730434"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-17T18:27:31Z",
-      "run_id": "39057808043"
+      "at": "2026-10-18T07:16:35Z",
+      "run_id": "39106730434"
     }
   ],
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-chwalinska-swiatek-wuhan-2026-sf-interview/chwalinska-swiatek-wuhan-2026-sf-interview.mp4?v=1c450d3078384c97",
-  "video_bytes": 60455714,
-  "release_asset_digest": "sha256:1c450d3078384c971f417632a7935e9a2fc0067a0cb1afc6fc8898a73db539fa",
-  "qc_attestation_sha256": "3c2f437100af843b2b9766b9f92945f87a49707ac652dc2e239f521a6aefd5f1"
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-chwalinska-swiatek-wuhan-2026-sf-interview/chwalinska-swiatek-wuhan-2026-sf-interview.mp4?v=b54b4d381071c112",
+  "video_bytes": 60453851,
+  "release_asset_digest": "sha256:b54b4d381071c112dfd35a36dfbbe186d9ec6bad8fc4ef74c0b1ede2b191cd07",
+  "qc_attestation_sha256": "168494d8a2336316e37f9a9b57ceb80d6250424b31acfb32ba6928a616037018",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "chwalinska-swiatek-wuhan-2026-sf-interview",
+      "received_at": "2026-10-17T18:22:32Z",
+      "artifact_ready_at": "2026-10-17T18:27:29Z",
+      "elapsed_seconds": 297.664,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "1c450d3078384c971f417632a7935e9a2fc0067a0cb1afc6fc8898a73db539fa",
+      "spec_sha256": "682a53a7815625a12f8f10bf41b83e9684ea04ace6b316bed3658b8e048420a4",
+      "run_id": "39057808043",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-10-17T18:23:53Z",
+          "run_id": "39057808043"
+        },
+        {
+          "stage": "cover_audit",
+          "at": "2026-10-17T18:24:55Z",
+          "run_id": "39057808043"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-10-17T18:25:21Z",
+          "run_id": "39057808043"
+        },
+        {
+          "stage": "render",
+          "at": "2026-10-17T18:25:22Z",
+          "run_id": "39057808043"
+        }
+      ],
+      "render_seconds": 127.664,
+      "pre_render_seconds": 170.0
+    }
+  ],
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "chwalinska-swiatek-wuhan-2026-sf-interview",
+    "received_at": "2026-10-18T07:11:26Z",
+    "artifact_ready_at": "2026-10-18T07:16:33Z",
+    "elapsed_seconds": 307.664,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "b54b4d381071c112dfd35a36dfbbe186d9ec6bad8fc4ef74c0b1ede2b191cd07",
+    "spec_sha256": "d416f4626215b756b09c9942f9873ea6fabe2e907a58a4201eb0e41776b612d1",
+    "run_id": "39106730434",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-10-18T07:12:25Z",
+        "run_id": "39106730434"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-10-18T07:13:24Z",
+        "run_id": "39106730434"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-10-18T07:13:40Z",
+        "run_id": "39106730434"
+      },
+      {
+        "stage": "render",
+        "at": "2026-10-18T07:14:27Z",
+        "run_id": "39106730434"
+      }
+    ],
+    "render_seconds": 126.664,
+    "pre_render_seconds": 181.0
+  }
 }
