@@ -1,0 +1,90 @@
+{
+  "checked_at": "2026-10-18T13:39:01.615473+00:00",
+  "source": "/workspace/scratch/fokina-requested-source/source.mp4",
+  "source_sha256_actual": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+  "source_bytes": 104092732,
+  "assigned_range_s": [
+    240,
+    480.211882
+  ],
+  "overview_actual_review": {
+    "contact_sheets": [
+      "contact-240.jpg",
+      "contact-270.jpg",
+      "contact-300.jpg",
+      "contact-330.jpg",
+      "contact-360.jpg",
+      "contact-390.jpg",
+      "contact-420.jpg",
+      "contact-450.jpg"
+    ],
+    "sample_period_s": 2,
+    "frames": 120,
+    "all_eight_walls_actually_viewed": true,
+    "timestamp_label_limit": "drawtext labels output grid timestamps; fps resampling can select a frame about1s after nominal label. Use exact source originals and validated scene boundaries for trim."
+  },
+  "fine_review": {
+    "contact_sheets": [
+      "fine-380.jpg",
+      "fine-433.jpg",
+      "fine-451.jpg",
+      "fine-247.jpg"
+    ],
+    "period_s": 0.5,
+    "sample_frames": 148,
+    "all_four_walls_actually_viewed": true,
+    "original_frames_viewed_s": [
+      242,
+      287,
+      314,
+      322,
+      340,
+      360,
+      384,
+      393,
+      436,
+      454,
+      460,
+      466,
+      469.5,
+      470,
+      436.52,
+      436.54,
+      439.22,
+      439.24,
+      454.3,
+      454.32,
+      470.16,
+      470.18
+    ]
+  },
+  "native_trophy": {
+    "exists": true,
+    "start_inclusive": 454.32,
+    "end_exclusive": 470.18,
+    "duration_s": 15.86,
+    "exact_boundary_pair_viewed": true,
+    "do_not_duplicate_x_trophy_in_final": "The independent14.9s X trophy clip is same ceremony shot sequence, retain as backup; original horizontal sequence already fulfills the user request more completely."
+  },
+  "winning_point": {
+    "start": 436.54,
+    "end": 439.24,
+    "board": "Fokina1/7/5/40;Jodar6/6^5/4/15;service dot Fokina",
+    "native_adjacent_boundary_frames_viewed": true,
+    "specific_shot_type_claim": null
+  },
+  "ad_start_inclusive": 470.18,
+  "coverage_recommendation": "Keep essentially the whole240–470.18 continuous source span, with narration fitted into natural non-point intervals or cards. Do not remove the third-set opening deuce rally, immediate rebreak,2-2 highlight and alternate-angle replay,second break,5-3 hold,long final-service point or trophy to force a short target.",
+  "scoring_corrections": [
+    "360–369s is Fokina hold from3-2 to4-2, not a break.",
+    "Early oral415–419s final-point estimate was incorrect; exact final serve436.54–439.24 confirmed.",
+    "At actual242s tiebreak scoreboard is3-3, not5-5;5-5 point starts242.30."
+  ],
+  "limits": [
+    "Finite sampled visual review, not allframes.",
+    "No human audio listening/ASR by this agent.",
+    "Foot/shoe event390.46–405.88 explanation pending exact narration/ASR, do not invent.",
+    "Ledger scene boundaries are useful candidate edit points; only trophy/ad and final-point adjacent native frames are validated to0.02s here. Others preserve full source intervals and must keep both point start and end."
+  ],
+  "ledger_file": "/workspace/scratch/fokina-requested-source/second-half-review/second-half-ledger.json"
+}

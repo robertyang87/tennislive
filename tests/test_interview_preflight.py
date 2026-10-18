@@ -1233,7 +1233,7 @@ def test_内容指纹不看注解():
 _NOT_FILM = frozenset({
     "slug", "source_title", "cookies", "push",   # push 按子键另分（PUSH_FILM_KEYS）
     "whisper_model", "whisper_vad_filter", "transcript_verified", "transcript_verification",
-    "transcript_disagree_ok", "suspect", "suspect_ok", "caption_gaps_ok",
+    "transcript_disagree_ok", "transcript_ceiling_exempt", "suspect", "suspect_ok", "caption_gaps_ok",
     "human_quote", "human_quote_ok", "opening", "requested_content_type", "match",
     "source_verification", "featured_player", "interviewee", "max_zh_chars",
     # 顶层 `winner_en` 是写 spec 时留的英文全名备查；出片只读 `match.winner_en`
@@ -1260,6 +1260,7 @@ def test_内容指纹只认会进成片的键():
     for key, value in (("transcript_verified", True), ("caption_gaps_ok", {"1-2": "掌声"}),
                        ("suspect_ok", {"3": "对的"}), ("whisper_model", "large-v3"),
                        ("match", {"id": "m2"}), ("source_verification", {"status": "v"}),
+                       ("transcript_ceiling_exempt", {"approved": True, "reason": "仅转写准入认领"}),
                        ("requested_content_type", "on_court"), ("opening", {"kind": "none"}),
                        ("featured_player", "甲")):
         assert ir.content_sha256({**base, key: value}) == h, f"改 `{key}` 不该算内容"
@@ -1275,6 +1276,16 @@ def test_内容指纹只认会进成片的键():
                     {**base, "takeaway": {"close": {"point": "另一句"}}},
                     {**base, "en_fixed": {"1": "Hi"}}, {**base, "crop_shift_x": 40}):
         assert ir.content_sha256(changed) != h, changed
+
+
+def test_亚军主体变化会使旧封面内容指纹失效():
+    """封面扫描读取顶层 loser，换采访对象后旧画面核验不能继续复用。"""
+    base = {"slug": "runner-up-speech", "url": "same-source", "start": 0.0,
+            "end": 30.0, "winner": "冠军", "loser": "原亚军",
+            "cover": {"frame_at": 5.0}, "zh": ["谢谢大家"]}
+    before = ir.content_sha256(base)
+    assert ir.content_sha256({**base, "loser": "新亚军"}) != before
+    assert ir.content_sha256({**base, "_note": "只更新编辑备注"}) == before
 
 
 def test_内容指纹白名单盖住出片读的每一个键():

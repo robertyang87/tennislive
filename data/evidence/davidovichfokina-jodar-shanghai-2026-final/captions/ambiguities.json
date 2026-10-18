@@ -1,0 +1,571 @@
+[
+  {
+    "id": "a001",
+    "start": 49.68,
+    "end": 53.04,
+    "issue": "明显两档冲突：medium机械复制26秒的整句话且多个零长词；small语句也有语法/人名问题。",
+    "small_text": "82% are first served at the Dvitovich-Vakina.",
+    "medium_text": "There is again the drop shot, but this is exquisite.",
+    "recommendation": "补核原声/独立可靠识别，不得把percentage统计当已证实事实写入字幕。",
+    "publication_ready": false,
+    "bounded_base_actual": {
+      "id": "percentage",
+      "source_start": 47.68,
+      "source_end": 55.04,
+      "audio_sha256": "a950f115044827c45d50281e531c6698816c9f2f5fe4728f07c60ef542e78bd1",
+      "audio_samples": 117760,
+      "segments": [
+        {
+          "start": 49.78,
+          "end": 52.48,
+          "text": " 82% are first served at the bit of which for Keena.",
+          "avg_logprob": -0.7810059715719784,
+          "no_speech_prob": 0.04965392127633095,
+          "words": [
+            {
+              "w": " 82",
+              "s": 49.78,
+              "e": 50.22,
+              "p": 0.7770141363143921
+            },
+            {
+              "w": "%",
+              "s": 50.22,
+              "e": 50.66,
+              "p": 0.7388025522232056
+            },
+            {
+              "w": " are",
+              "s": 50.66,
+              "e": 50.82,
+              "p": 0.40910738706588745
+            },
+            {
+              "w": " first",
+              "s": 50.82,
+              "e": 51.08,
+              "p": 0.6884760856628418
+            },
+            {
+              "w": " served",
+              "s": 51.08,
+              "e": 51.34,
+              "p": 0.958918035030365
+            },
+            {
+              "w": " at",
+              "s": 51.34,
+              "e": 51.56,
+              "p": 0.9279311299324036
+            },
+            {
+              "w": " the",
+              "s": 51.56,
+              "e": 51.66,
+              "p": 0.9260550141334534
+            },
+            {
+              "w": " bit",
+              "s": 51.66,
+              "e": 51.78,
+              "p": 0.04523667320609093
+            },
+            {
+              "w": " of",
+              "s": 51.78,
+              "e": 51.92,
+              "p": 0.9539619088172913
+            },
+            {
+              "w": " which",
+              "s": 51.92,
+              "e": 52.02,
+              "p": 0.09708855301141739
+            },
+            {
+              "w": " for",
+              "s": 52.02,
+              "e": 52.18,
+              "p": 0.6486013531684875
+            },
+            {
+              "w": " Keena.",
+              "s": 52.18,
+              "e": 52.48,
+              "p": 0.6119223237037659
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "a002",
+    "start": 66.74,
+    "end": 69.48,
+    "issue": "仅medium短句且词概率0.454..0.648；small未识别。",
+    "small_text": null,
+    "medium_text": "1st. / Let's walk up.",
+    "recommendation": "不把可能裁判/背景声猜成解说；音频补核。",
+    "publication_ready": false
+  },
+  {
+    "id": "a003",
+    "start": 120.66,
+    "end": 128.66,
+    "issue": "裁判报分与主解说重叠，ASR混串；中间six games to one可能真实，the new one for Leeds不可信。",
+    "small_text": "And the flawless Cheddar Tennis, the Rafael Hodar.",
+    "medium_text": "Game and a flawless set of tennis / Six games to one, the new one for Leeds. / For Rafael Hoddar.",
+    "recommendation": "已保留跨档主解说共同支持句；裁判报分需听辨后补独立cue。不能单凭比分板反推出原声逐字。",
+    "publication_ready": false,
+    "bounded_base_actual": {
+      "id": "set_close",
+      "source_start": 118.66,
+      "source_end": 130.66,
+      "audio_sha256": "335148d735a1abf2fcb51a20ca777af2db1ab31505cbb18948263a806fa701a8",
+      "audio_samples": 192000,
+      "segments": [
+        {
+          "start": 122.42,
+          "end": 127.96,
+          "text": " I need a flawless set of tennis for Raphael Hodar.",
+          "avg_logprob": -0.7005430698394776,
+          "no_speech_prob": 0.14176532626152039,
+          "words": [
+            {
+              "w": " I",
+              "s": 122.42,
+              "e": 122.94,
+              "p": 0.2434951663017273
+            },
+            {
+              "w": " need",
+              "s": 122.94,
+              "e": 123.1,
+              "p": 0.9636813402175903
+            },
+            {
+              "w": " a",
+              "s": 123.1,
+              "e": 123.2,
+              "p": 0.9452301859855652
+            },
+            {
+              "w": " flawless",
+              "s": 123.2,
+              "e": 123.46,
+              "p": 0.9199145436286926
+            },
+            {
+              "w": " set",
+              "s": 123.46,
+              "e": 124.2,
+              "p": 0.4190284311771393
+            },
+            {
+              "w": " of",
+              "s": 124.2,
+              "e": 124.34,
+              "p": 0.989165723323822
+            },
+            {
+              "w": " tennis",
+              "s": 124.34,
+              "e": 124.6,
+              "p": 0.9801660180091858
+            },
+            {
+              "w": " for",
+              "s": 124.6,
+              "e": 126.8,
+              "p": 0.2269560545682907
+            },
+            {
+              "w": " Raphael",
+              "s": 126.8,
+              "e": 127.06,
+              "p": 0.35208114981651306
+            },
+            {
+              "w": " Hodar.",
+              "s": 127.06,
+              "e": 127.96,
+              "p": 0.5885241776704788
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "a004",
+    "start": 193.98,
+    "end": 198.22,
+    "issue": "medium独有完整一句；nuclear形容词可能识别错误，small漏整句。",
+    "small_text": null,
+    "medium_text": "The nuclear athleticism that is so often associated with this guy.",
+    "recommendation": "可采用新增cue，保留原词nuclear，中文按修辞译惊人的运动能力；来源同Whisper家族，非完全独立耳审。",
+    "publication_ready": "text_supported_with_acoustic_limit",
+    "draft_en": "The [unclear] athleticism that is so often associated with this guy.",
+    "draft_zh": "这位球员一贯展现的惊人运动能力。",
+    "bounded_base_actual": {
+      "id": "athleticism",
+      "source_start": 191.98,
+      "source_end": 200.22,
+      "audio_sha256": "0248236657f17217b510b0fefc8312cd291c47bfd0f8c98f69dc8c6ea49a4531",
+      "audio_samples": 131840,
+      "segments": [
+        {
+          "start": 193.2,
+          "end": 198.04,
+          "text": " The nuclear athleticism is so often associated with this guy.",
+          "avg_logprob": -0.5133230856486729,
+          "no_speech_prob": 0.0886794701218605,
+          "words": [
+            {
+              "w": " The",
+              "s": 193.2,
+              "e": 193.96,
+              "p": 0.1353463977575302
+            },
+            {
+              "w": " nuclear",
+              "s": 193.96,
+              "e": 194.5,
+              "p": 0.9229404926300049
+            },
+            {
+              "w": " athleticism",
+              "s": 194.5,
+              "e": 195.38,
+              "p": 0.8151068687438965
+            },
+            {
+              "w": " is",
+              "s": 195.38,
+              "e": 196.04,
+              "p": 0.5523786544799805
+            },
+            {
+              "w": " so",
+              "s": 196.04,
+              "e": 196.42,
+              "p": 0.9885773658752441
+            },
+            {
+              "w": " often",
+              "s": 196.42,
+              "e": 196.62,
+              "p": 0.39510414004325867
+            },
+            {
+              "w": " associated",
+              "s": 196.62,
+              "e": 196.82,
+              "p": 0.9808775186538696
+            },
+            {
+              "w": " with",
+              "s": 196.82,
+              "e": 197.52,
+              "p": 0.9976094961166382
+            },
+            {
+              "w": " this",
+              "s": 197.52,
+              "e": 197.7,
+              "p": 0.8198853731155396
+            },
+            {
+              "w": " guy.",
+              "s": 197.7,
+              "e": 198.04,
+              "p": 0.9957566857337952
+            }
+          ]
+        }
+      ]
+    },
+    "resolution": "nuclear两档支持（medium与有限base）；已新增两cue。完整原词听审仍不宣称。"
+  },
+  {
+    "id": "a005",
+    "start": 213.24,
+    "end": 214.96,
+    "issue": "medium独有：great词概率0.194；small无。",
+    "small_text": null,
+    "medium_text": "Oh, great point.",
+    "recommendation": "可保留双语草案，但明确待补听，不能据画面自行认定原词。",
+    "publication_ready": false,
+    "draft_en": "Oh, great point.",
+    "draft_zh": "噢，精彩的一分。"
+  },
+  {
+    "id": "a006",
+    "start": 311.62,
+    "end": 314.38,
+    "issue": "共同前后句明确，中间at play/up very冲突；可能网球习语at bay，但未经听辨不得替换。",
+    "small_text": "Couldn't keep him at play long enough.",
+    "medium_text": "Couldn't keep him up very long enough.",
+    "recommendation": "原声补核at bay还是其他词；不可用习语合理性替代证据。",
+    "publication_ready": false,
+    "draft_en": "Couldn't keep him [unclear] long enough.",
+    "draft_zh": "没能让他……坚持得足够久。",
+    "bounded_base_actual": {
+      "id": "at_bay",
+      "source_start": 309.62,
+      "source_end": 316.38,
+      "audio_sha256": "4f42226e4f63f976c84b453b61494c10df72446b6c3297d7e51d6cb3399c17bc",
+      "audio_samples": 108160,
+      "segments": [
+        {
+          "start": 311.36,
+          "end": 313.38,
+          "text": " I couldn't keep in that play long enough.",
+          "avg_logprob": -0.6058316780970647,
+          "no_speech_prob": 0.05453438311815262,
+          "words": [
+            {
+              "w": " I",
+              "s": 311.36,
+              "e": 311.84,
+              "p": 0.1863480806350708
+            },
+            {
+              "w": " couldn't",
+              "s": 311.84,
+              "e": 312.32,
+              "p": 0.8991382718086243
+            },
+            {
+              "w": " keep",
+              "s": 312.32,
+              "e": 312.48,
+              "p": 0.9839641451835632
+            },
+            {
+              "w": " in",
+              "s": 312.48,
+              "e": 312.64,
+              "p": 0.47658368945121765
+            },
+            {
+              "w": " that",
+              "s": 312.64,
+              "e": 312.74,
+              "p": 0.5351620316505432
+            },
+            {
+              "w": " play",
+              "s": 312.74,
+              "e": 312.88,
+              "p": 0.7767065763473511
+            },
+            {
+              "w": " long",
+              "s": 312.88,
+              "e": 313.12,
+              "p": 0.6049395799636841
+            },
+            {
+              "w": " enough.",
+              "s": 313.12,
+              "e": 313.38,
+              "p": 0.9957689046859741
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "a007",
+    "start": 359.46,
+    "end": 376.46,
+    "issue": "small Nivel’s clean与重复no；medium未识别，可能裁判、背景噪音或幻觉。",
+    "small_text": "Nivel's clean. / Game, no, no, no, no, no. / Game, no, no, no, no, no, no.",
+    "medium_text": null,
+    "recommendation": "需补核，暂不生成伪解说。",
+    "publication_ready": false
+  },
+  {
+    "id": "a008",
+    "start": 402.5,
+    "end": 404.5,
+    "issue": "两档均record，但画面脚部事件可能是racket；问句Did/Then及at/with冲突。",
+    "small_text": "Then he hit himself with the record,",
+    "medium_text": "Did he hit himself at the record",
+    "recommendation": "只记录可见脚部/鞋事件；不得先写受伤/砸脚。补听是否Did he hit himself with the racket?，下一回应已双档稳定保留。",
+    "publication_ready": false,
+    "draft_en": "Did he hit himself [unclear]?",
+    "draft_zh": "他是不是碰到自己了？",
+    "bounded_base_actual": {
+      "id": "foot_event",
+      "source_start": 400.5,
+      "source_end": 407.8,
+      "audio_sha256": "e5859207351c650baf41123324999bbfe8fab7125dfdfa1c6348ba49e4edf999",
+      "audio_samples": 116800,
+      "segments": [
+        {
+          "start": 402.88,
+          "end": 404.32,
+          "text": " Did he hit himself at the record?",
+          "avg_logprob": -0.4529636231335727,
+          "no_speech_prob": 0.07567038387060165,
+          "words": [
+            {
+              "w": " Did",
+              "s": 402.88,
+              "e": 403.28,
+              "p": 0.2412501722574234
+            },
+            {
+              "w": " he",
+              "s": 403.28,
+              "e": 403.36,
+              "p": 0.8750208616256714
+            },
+            {
+              "w": " hit",
+              "s": 403.36,
+              "e": 403.54,
+              "p": 0.9954906105995178
+            },
+            {
+              "w": " himself",
+              "s": 403.54,
+              "e": 403.74,
+              "p": 0.9819998741149902
+            },
+            {
+              "w": " at",
+              "s": 403.74,
+              "e": 404.04,
+              "p": 0.6158563494682312
+            },
+            {
+              "w": " the",
+              "s": 404.04,
+              "e": 404.1,
+              "p": 0.9880380630493164
+            },
+            {
+              "w": " record?",
+              "s": 404.1,
+              "e": 404.32,
+              "p": 0.2065722793340683
+            }
+          ]
+        },
+        {
+          "start": 404.64,
+          "end": 405.32,
+          "text": " That was my thought.",
+          "avg_logprob": -0.4529636231335727,
+          "no_speech_prob": 0.07567038387060165,
+          "words": [
+            {
+              "w": " That",
+              "s": 404.64,
+              "e": 404.74,
+              "p": 0.9134983420372009
+            },
+            {
+              "w": " was",
+              "s": 404.74,
+              "e": 404.86,
+              "p": 0.9970043301582336
+            },
+            {
+              "w": " my",
+              "s": 404.86,
+              "e": 405.06,
+              "p": 0.9985108971595764
+            },
+            {
+              "w": " thought.",
+              "s": 405.06,
+              "e": 405.32,
+              "p": 0.79352205991745
+            }
+          ]
+        },
+        {
+          "start": 405.5,
+          "end": 405.58,
+          "text": " Yeah.",
+          "avg_logprob": -0.4529636231335727,
+          "no_speech_prob": 0.07567038387060165,
+          "words": [
+            {
+              "w": " Yeah.",
+              "s": 405.5,
+              "e": 405.58,
+              "p": 0.9096664190292358
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "a009",
+    "start": 320.68,
+    "end": 350.66,
+    "issue": "medium从1数到24且后面9词零长；small为15-1/11-30，严重冲突，均不像稳定解说。",
+    "small_text": "15-1 / 11-30",
+    "medium_text": "1, 2, 3, ... 24",
+    "recommendation": "保留原音，不烧录数字幻觉；若确有裁判报分需独立补听。",
+    "publication_ready": false
+  },
+  {
+    "id": "a010",
+    "start": 413.0,
+    "end": 431.82,
+    "issue": "medium一串3,2,1和反复1,2,1，初词概率0.01..0.015，small无任何对应。",
+    "small_text": null,
+    "medium_text": "3, 2, 1 / 1, 2, 1 / 1, 2, 1 / 1, 2, 1 / 1, 2, 1",
+    "recommendation": "明显数字幻觉候选，不烧录；仍不能声称该区间绝无真实讲话。",
+    "publication_ready": false
+  },
+  {
+    "id": "a011",
+    "start": 56.94,
+    "end": 58.34,
+    "issue": "small独有Yeah且p0.15；medium无。",
+    "small_text": "Yeah.",
+    "medium_text": null,
+    "recommendation": "待声学核实，不假设为解说。",
+    "publication_ready": false
+  },
+  {
+    "id": "a012",
+    "start": 113.04,
+    "end": 113.1,
+    "issue": "medium独有低概率Oh感叹，无small对应。",
+    "small_text": null,
+    "medium_text": "medium:6 Oh",
+    "recommendation": "作为低可信背景感叹记录；补核后可双语保留Oh!/噢！。",
+    "publication_ready": false
+  },
+  {
+    "id": "a013",
+    "start": 290.68,
+    "end": 291.1,
+    "issue": "medium独有低概率Oh感叹，无small对应。",
+    "small_text": null,
+    "medium_text": "medium:24 Oh",
+    "recommendation": "作为低可信背景感叹记录；补核后可双语保留Oh!/噢！。",
+    "publication_ready": false
+  },
+  {
+    "id": "a014",
+    "start": 383.5,
+    "end": 383.98,
+    "issue": "medium独有低概率Oh感叹，无small对应。",
+    "small_text": null,
+    "medium_text": "medium:29 Oh",
+    "recommendation": "作为低可信背景感叹记录；补核后可双语保留Oh!/噢！。",
+    "publication_ready": false
+  }
+]

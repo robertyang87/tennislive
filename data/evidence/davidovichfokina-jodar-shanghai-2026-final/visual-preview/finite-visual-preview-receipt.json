@@ -1,0 +1,300 @@
+{
+  "schema": "tennislive.fokina-native-finite-visual-preview.v1",
+  "created_at": "2026-10-18T15:10:39.510485+00:00",
+  "scope": "10 actual1080x1440 stillPNGs made through nativeASS/layout/crop/filter primitives with bounded5-neighbour ATP masks; not encodedmovieQC",
+  "spec_sha256": "9e27fa39558fabc0c83847e2915b455d3b62f154231d51b924701f6d896aa7fa",
+  "source_sha256": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+  "frozen_voice_context_bundle": "v4",
+  "frozen_voice_context_bundle_sha256": "bd2137c35394dd9ad9aec92dd4aec128d9d427eb5d43b6b3c4ff72a879774326",
+  "native_ass_sha256": "9410a63fb4b007546030c7b397e715c259b7f311a4f41488792d0d9b654da576",
+  "fps": "25",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "original_pngs_unchanged": true,
+  "parent_review": {
+    "reviewer": "/root",
+    "actual_images_viewed": [
+      "caption-01.png",
+      "caption-02.png",
+      "caption-03.png",
+      "caption-04.png",
+      "caption-05.png",
+      "caption-06.png",
+      "caption-07.png",
+      "caption-08.png",
+      "caption-09.png",
+      "caption-10.png"
+    ],
+    "evidence": "Rootmessage confirms actual caption01..10 PNGviewing:fixed3setboard,near/farbaselinesvisible,longbilingualsentencesfit,Englishfullnameunsplit,trophylift/fullbody/finalcloseup,noadvertisingorstaleboardintrophysamples."
+  },
+  "assembly_agent_review": {
+    "reviewer": "/root/fokina_spec_assembly",
+    "actual_images_viewed": [
+      "caption-01.png",
+      "caption-02.png",
+      "caption-03.png",
+      "caption-04.png",
+      "caption-05.png",
+      "caption-06.png",
+      "caption-07.png",
+      "caption-08.png",
+      "caption-09.png",
+      "caption-10.png"
+    ],
+    "observations": [
+      "All10samples fill1080x1440 withfixedcenter3:4crop. Horizontalcourtedgescropbydesign.",
+      "EnglishnameAlejandroDavidovichFokina completeone line;3longbilingualcuesremain centeredandinsidecanvas;longestEnglishwrapsintotwosemanticlines.",
+      "Actualnativeboardoverlaycomputedanchorx0/y1227,rootobservedfirstvisibleedgeapproximatelyy1226;differentsetwidths preserved andthreeboardsamplescompletetwo-playernamesandscorecolumns.",
+      "Trophysamplescontainnocourtboard/ad;fullbodyliftat461.48andfinalsmile469.48visible.",
+      "At463.20closeup longcaption01 crosseslowerface/mouthbecause native304pxbottomanchorisfixed;rootactuallyviewedthisframe. No automaticfail/rerenderdecisionisclaimed."
+    ]
+  },
+  "samples": [
+    {
+      "image": "caption-01.png",
+      "path": "/workspace/scratch/fokina-native-caption-bounded-v2/caption-01.png",
+      "bytes": 1262757,
+      "sha256": "e42f4a856f98a106d368e1766ad087356add4e42fa0f086183e9d2c586e53767",
+      "source_seconds": 463.20000000000005,
+      "film_seconds": 565.2080000000001,
+      "segment_index": 20,
+      "cue_text": "He has worked his way through so many difficult situations,\n他闯过了一个又一个艰难关口",
+      "mask_context": {
+        "bounded_context_start": 463.12000000000006,
+        "context_frames": 5,
+        "sample_index": 2,
+        "edge": null,
+        "tag": null,
+        "box": [
+          98,
+          920,
+          638,
+          1029
+        ]
+      }
+    },
+    {
+      "image": "caption-02.png",
+      "path": "/workspace/scratch/fokina-native-caption-bounded-v2/caption-02.png",
+      "bytes": 1835827,
+      "sha256": "3384d2e8ba70c34d22c532655c3682199439a8eecfbf52600264e9a71e10ea1c",
+      "source_seconds": 262.64,
+      "film_seconds": 327.39599999999996,
+      "segment_index": 11,
+      "cue_text": "Down a set and a break in the final in Shanghai.\n上海决赛 他曾落后一盘和一个破发",
+      "mask_context": {
+        "bounded_context_start": 262.56,
+        "context_frames": 5,
+        "sample_index": 2,
+        "edge": 439,
+        "tag": null,
+        "box": [
+          98,
+          920,
+          540,
+          1029
+        ]
+      }
+    },
+    {
+      "image": "caption-03.png",
+      "path": "/workspace/scratch/fokina-native-caption-bounded-v2/caption-03.png",
+      "bytes": 1010381,
+      "sha256": "e8fc03a9cb8f2cb6ea1528b4b14ee56584c2858b3d522df6d34db37c823d2757",
+      "source_seconds": 447.16,
+      "film_seconds": 7.76,
+      "segment_index": 0,
+      "cue_text": "claims a maiden Masters 1000 title in Shanghai.\n在上海夺得生涯首座大师赛冠军！",
+      "mask_context": {
+        "bounded_context_start": 447.08000000000004,
+        "context_frames": 5,
+        "sample_index": 2,
+        "edge": null,
+        "tag": null,
+        "box": [
+          98,
+          920,
+          638,
+          1029
+        ]
+      }
+    },
+    {
+      "image": "caption-04.png",
+      "path": "/workspace/scratch/fokina-native-caption-bounded-v2/caption-04.png",
+      "bytes": 1731639,
+      "sha256": "76cd4295460ae75a0c940633a9a78523e052100eb5d4f6366d805ec1cf61c092",
+      "source_seconds": 442.24,
+      "film_seconds": 2.84,
+      "segment_index": 0,
+      "cue_text": "Alejandro Davidovich Fokina\n亚历杭德罗 达维多维奇 福基纳",
+      "mask_context": {
+        "bounded_context_start": 442.16,
+        "context_frames": 5,
+        "sample_index": 2,
+        "edge": 486,
+        "tag": null,
+        "box": [
+          98,
+          920,
+          586,
+          1029
+        ]
+      }
+    },
+    {
+      "image": "caption-05.png",
+      "path": "/workspace/scratch/fokina-native-caption-bounded-v2/caption-05.png",
+      "bytes": 1292465,
+      "sha256": "9e4e64868501989b3df68c550d5174bd991f0b3758f7c442ba58ae2bcc92e5c9",
+      "source_seconds": 74.98,
+      "film_seconds": 114.16,
+      "segment_index": 6,
+      "cue_text": null,
+      "mask_context": {
+        "bounded_context_start": 74.9,
+        "context_frames": 5,
+        "sample_index": 2,
+        "edge": 444,
+        "tag": null,
+        "box": [
+          98,
+          920,
+          544,
+          1029
+        ]
+      }
+    },
+    {
+      "image": "caption-06.png",
+      "path": "/workspace/scratch/fokina-native-caption-bounded-v2/caption-06.png",
+      "bytes": 1233235,
+      "sha256": "de1119b53c996bf134d21a3b52fd3f4d207f744046d6a5d56297cfafb4d7830f",
+      "source_seconds": 173.98,
+      "film_seconds": 224.78399999999996,
+      "segment_index": 8,
+      "cue_text": null,
+      "mask_context": {
+        "bounded_context_start": 173.89999999999998,
+        "context_frames": 5,
+        "sample_index": 2,
+        "edge": 491,
+        "tag": null,
+        "box": [
+          98,
+          920,
+          592,
+          1029
+        ]
+      }
+    },
+    {
+      "image": "caption-07.png",
+      "path": "/workspace/scratch/fokina-native-caption-bounded-v2/caption-07.png",
+      "bytes": 1293413,
+      "sha256": "1e1d93f53dfc76a8c1b714da525672066ad8442e1f952ea0fe832cff2a30c90c",
+      "source_seconds": 430.0,
+      "film_seconds": 532.008,
+      "segment_index": 20,
+      "cue_text": null,
+      "mask_context": {
+        "bounded_context_start": 429.92,
+        "context_frames": 5,
+        "sample_index": 2,
+        "edge": 538,
+        "tag": null,
+        "box": [
+          98,
+          920,
+          638,
+          1029
+        ]
+      }
+    },
+    {
+      "image": "caption-08.png",
+      "path": "/workspace/scratch/fokina-native-caption-bounded-v2/caption-08.png",
+      "bytes": 1350003,
+      "sha256": "00ba499c5748fbe8951cc5bab5d8b07531110134a6b500e4f2372b4331c484ff",
+      "source_seconds": 455.48,
+      "film_seconds": 557.488,
+      "segment_index": 20,
+      "cue_text": null,
+      "mask_context": {
+        "bounded_context_start": 455.40000000000003,
+        "context_frames": 5,
+        "sample_index": 2,
+        "edge": null,
+        "tag": null,
+        "box": [
+          98,
+          920,
+          638,
+          1029
+        ]
+      }
+    },
+    {
+      "image": "caption-09.png",
+      "path": "/workspace/scratch/fokina-native-caption-bounded-v2/caption-09.png",
+      "bytes": 1619134,
+      "sha256": "6be11e7ab38a7608ac60ff655f8c4ad03fce23985b634f580a9fe274f2570a9f",
+      "source_seconds": 461.48,
+      "film_seconds": 563.488,
+      "segment_index": 20,
+      "cue_text": null,
+      "mask_context": {
+        "bounded_context_start": 461.40000000000003,
+        "context_frames": 5,
+        "sample_index": 2,
+        "edge": null,
+        "tag": null,
+        "box": [
+          98,
+          920,
+          638,
+          1029
+        ]
+      }
+    },
+    {
+      "image": "caption-10.png",
+      "path": "/workspace/scratch/fokina-native-caption-bounded-v2/caption-10.png",
+      "bytes": 1161887,
+      "sha256": "3b318071abc4046aad8d10323a58922560ce7186f17d80f6e6d6f2af36823fb7",
+      "source_seconds": 469.48,
+      "film_seconds": 571.488,
+      "segment_index": 20,
+      "cue_text": null,
+      "mask_context": {
+        "bounded_context_start": 469.40000000000003,
+        "context_frames": 5,
+        "sample_index": 2,
+        "edge": null,
+        "tag": null,
+        "box": [
+          98,
+          920,
+          638,
+          1029
+        ]
+      }
+    }
+  ],
+  "mosaic": {
+    "path": "/workspace/scratch/fokina-native-caption-bounded-v2/mosaic.jpg",
+    "sha256": "a680ceda39d92eecf7d32d6877445362154536b98c052966cd243387a0f097ab",
+    "bytes": 238974,
+    "kind": "downscaledreviewcontactsheet_only_originalsunchanged"
+  },
+  "limitations": [
+    "Finite10samplepixels only; notallframes/entirepoints/motion/dissolve/finalH264 movieQC.",
+    "Bounded5frame maskcontextdoesnotprove whole-segmentmaximalboardwidthorallpresence transitions; possible1pixelroundingdifferencesfromfullnative maskscan.",
+    "Noaudiohearing/loudness/wholewordsoundapproval. Existingv4marks provideASScontext;later v5returnpayoffphoneticfeedmaydiffer without changing retainedEnglishcueframes.",
+    "No publication orpushapproval;final encodedmovie must receiveactualfreshQC."
+  ],
+  "final_encoded_movie_qc_passed": false,
+  "publication_approved": false
+}

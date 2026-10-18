@@ -1,0 +1,195 @@
+{
+  "schema": "tennislive.fokina-final-cover-source-review.v1",
+  "created_at": "2026-10-18T12:49:34.058426+00:00",
+  "status": "same_final_official_high_resolution_photo_confirmed_manual_visual_review_complete_model_gate_unavailable",
+  "source": {
+    "url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/18/c588421a-7ea8-4c90-9b92-7e41660b95e5/Alejandro-DAVIDOVICH-FOKINA-vs-Rafael-JODAR4175.jpg",
+    "status": 200,
+    "response_headers": {
+      "content-type": "image/jpeg",
+      "content-length": "2700438",
+      "server": "envoy",
+      "date": "Sun, 18 Oct 2026 12:48:24 GMT",
+      "last-modified": "Sun, 18 Oct 2026 12:39:16 GMT",
+      "etag": "\"3f89c4aef80a73ab82e2752c7ab1a1ee\"",
+      "x-amz-server-side-encryption": "AES256",
+      "cache-control": "max-age=31536000, must-revalidate",
+      "content-disposition": "inline",
+      "x-amz-version-id": "ZeC7FUYlSl7yFjAV_z_mzr1Z4DJF81xt",
+      "accept-ranges": "bytes",
+      "x-cache": "Miss from cloudfront",
+      "via": "1.1 af315b6ef3c266f73baf65f36a381a24.cloudfront.net (CloudFront)",
+      "x-amz-cf-pop": "ORD56-P13",
+      "x-amz-cf-id": "qLCU-CxTylgpaXT5eS_1GL6R4LE19BNZbEW1Y44Js2gSaLXzTk4qiQ==",
+      "x-envoy-upstream-service-time": "178"
+    },
+    "path": "/workspace/scratch/fokina-final-20261018-cover/4593956-original.jpg",
+    "bytes": 2700438,
+    "sha256": "9e0f96758a821d481be80f9963360c357f49a537f55f731b9b74bc90e1125c08",
+    "dimensions": [
+      4000,
+      2667
+    ],
+    "metadata": {
+      "taken": "2026:10:18 19:09:13",
+      "offset": "+08:00",
+      "caption": "",
+      "instructions": "",
+      "credit": "ZhouJun",
+      "segments": 9,
+      "texts": []
+    },
+    "restriction": "",
+    "face_models_missing": [
+      "det_500m.onnx",
+      "w600k_mbf.onnx",
+      "2d106det.onnx"
+    ],
+    "onnxruntime_importable": false
+  },
+  "api_item": {
+    "id": 4593956,
+    "accountId": 35,
+    "type": "photo",
+    "title": "2026 Shanghai Davidovich Fokina",
+    "description": null,
+    "date": "2026-10-18T12:39:00Z",
+    "location": null,
+    "coordinates": [
+      0.0,
+      0.0
+    ],
+    "commentsOn": false,
+    "copyright": null,
+    "publishFrom": 1792327155673,
+    "publishTo": 0,
+    "tags": [],
+    "platform": "PULSE_CMS",
+    "language": "en",
+    "additionalInfo": {},
+    "canonicalUrl": "",
+    "references": [
+      {
+        "label": null,
+        "id": -1,
+        "type": "ATP_PLAYER",
+        "sid": "DH50"
+      }
+    ],
+    "related": [],
+    "metadata": {},
+    "titleTranslations": null,
+    "lastModified": 1792327198491,
+    "titleUrlSegment": "2026-shanghai-davidovich-fokina",
+    "visibilityOrder": [],
+    "allowedUserGroups": [],
+    "allowedTerritories": [],
+    "subtitle": null,
+    "onDemandUrl": "https://resources.prod.atpmedia.pulselive.com/photo-resources/2026/10/18/c1c1f829-9db8-458f-b3b8-d03343ac8ff5/Alejandro-DAVIDOVICH-FOKINA-vs-Rafael-JODAR4175.jpg",
+    "originalDetails": {
+      "width": 4000,
+      "height": 2667,
+      "aspectRatio": 1.4998125
+    },
+    "imageUrl": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/18/c588421a-7ea8-4c90-9b92-7e41660b95e5/Alejandro-DAVIDOVICH-FOKINA-vs-Rafael-JODAR4175.jpg"
+  },
+  "fact_packet": {
+    "path": "/workspace/scratch/fokina-final-20261018-facts/fact-packet.json",
+    "sha256": "c10db93d07be0dfee513e37b67a7bc0f8ecf70d15d9445147faad5197af29fbd"
+  },
+  "match_identity": {
+    "event": "2026 Rolex Shanghai Masters",
+    "level": "ATP1000",
+    "round": "Final",
+    "court": "Stadium Court",
+    "date_beijing": "2026-10-18",
+    "winner": "Alejandro Davidovich Fokina",
+    "winner_id": "DH50",
+    "loser": "Rafael Jodar",
+    "loser_id": "J0DZ",
+    "atp_match_id": "MS001",
+    "flashscore_id": "KdnK5SNb",
+    "winner_first_score": [
+      "1-6",
+      "7-6(5)",
+      "6-4"
+    ],
+    "duration": "02:27:38",
+    "winner_seed": 25,
+    "loser_seed": 12,
+    "sources": [
+      "https://en.rolexshanghaimasters.com/-/tournaments/matchStatsApi/MatchStats?year=2026&eventId=5014&matchId=ms001",
+      "https://en.rolexshanghaimasters.com/en/media/news/jodar-davidovich-fokina-shanghai-2026-final",
+      "https://www.flashscore.com/tennis/atp-singles/shanghai/results/"
+    ]
+  },
+  "time_binding": {
+    "function": "official_photo_apis.window_verdict",
+    "bound": true,
+    "reason": "EXIF 拍摄于当地 10-18 19:09:13，落在这场的窗口 当地 10-18 16:35~19:54（决赛：结束后 45 分钟内算颁奖） 里",
+    "taken_utc": "2026-10-18T11:09:13+00:00",
+    "match_recorded_start": "2026-10-18T16:40:00+08:00",
+    "provider_terminal_status_update": "2026-10-18T19:09:25+08:00",
+    "seconds_before_terminal_update": 12.0,
+    "terminal_timestamp_is_not_exact_ball_landing_time": true,
+    "official_schedule_is_lower_bound_and_not_used_as_actual_start": true,
+    "published_utc": "2026-10-18T12:39:15.673000+00:00",
+    "window_final_awards_minutes_after_end": 45
+  },
+  "actual_original_view": {
+    "viewed": true,
+    "view_image_input_dimensions": [
+      4000,
+      2667
+    ],
+    "tool_display_dimensions": [
+      1919,
+      1279
+    ],
+    "player_count_visible": 1,
+    "visual_identity": "Davidovich Fokina: fair short hair and beard, tattoos on left forearm; matches official name/playerDH50 and same-day final trophy reference. No unsupported identity-by-shirt-alone inference.",
+    "eyes": "Both eyes visibly open; face unobscured and in near-frontal three-quarter pose. Manual finite visual observation, no EAR or automated metric claimed.",
+    "emotion": "Arms spread wide with racket raised, restrained resolved expression; interpretable as match-end celebration given EXIF within12s of provider terminal update. No claim about internal thoughts.",
+    "court": "Blue hardcourt and white tennis lines. Court colors alone do not identify event; CMS event/title+player reference+EXIF window establish identity.",
+    "clothing": "Light pink/white Adidas shirt, burgundy shorts and burgundy wrist/forearm band, green HEAD racket, white Adidas headband. Same date action candidates show matching shirt/shorts/racket but dark headband; no inference that headband color must remain constant.",
+    "no_trophy_claim": true
+  },
+  "model_gate": {
+    "status": "unavailable_no_extra_download_authorized",
+    "missing_models": [
+      "det_500m.onnx",
+      "w600k_mbf.onnx",
+      "2d106det.onnx"
+    ],
+    "onnxruntime_importable": false,
+    "no_models_or_packages_downloaded": true,
+    "automatic_identity_eyes_ear_second_face_not_run": true
+  },
+  "portrait_crop_suggestion": {
+    "canvas": [
+      1080,
+      1440
+    ],
+    "native_max_3_4_crop": [
+      2000.25,
+      2667
+    ],
+    "recommended_cx": 0.61,
+    "recommended_cy": 0.5,
+    "native_horizontal_bounds_approx": [
+      1439.875,
+      3440.125
+    ],
+    "scale": 0.5399325084364455,
+    "rationale": "Face and torso clear with right raised hand mostly retained; left extended forearm/racket naturally exit vertical crop. Wide two-arm pose cannot retain both hands in3:4 while filling. Validate actual template title/score overlay before freezing.",
+    "actual_final_cover_rendered": false
+  },
+  "credit": "ZhouJun / ATP Media",
+  "licence": "Unknown or unverified beyond official publication; no claim of unrestricted rights. No territorial limitation detected in full original embedded metadata or CMS record.",
+  "headline_identity_facts": {
+    "first_masters1000_title": true,
+    "third_career_tour_title": true,
+    "confirmed_by_fact_packet_and_official_postmatch_article": true
+  },
+  "production_mutated": false
+}

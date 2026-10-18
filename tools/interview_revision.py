@@ -60,8 +60,9 @@ FILM_KEYS = frozenset({
     # 字幕：取哪份逐词稿、怎么切行、烧进去的中英文
     "asr_model", "segment_budget_px", "word_fix", "en_fixed", "zh", "caption_gap_annotations", "transcript_languages",
     # 顶栏／栏目名（`header_runs`、`topbar_layout`、卡片和封面的 eyebrow）
-    "event", "winner", "interview_kind", "subject", "topbar", "topbar_layout",
+    "event", "winner", "loser", "interview_kind", "subject", "topbar", "topbar_layout",
     "ceremony_subtype", "column",
+    # 顶层 loser 参与封面主体识别；更换亚军后不能复用旧画面核验。
     # 封面、解读卡（含口播）、冷开场和收尾借的那两段
     "cover", "takeaway", "takeaway_voice", "takeaway_rate", "lead_in", "trail_in",
     # 取景和画面处理
