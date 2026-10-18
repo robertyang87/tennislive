@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-18T13:37:30.033129+00:00",
+  "source_sha256": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+  "source_bytes": 104092732,
+  "source_path": "/workspace/scratch/fokina-requested-source/source.mp4",
+  "scope_seconds": [
+    0,
+    240
+  ],
+  "sample_scope_seconds": [
+    0,
+    248
+  ],
+  "sample_spacing_seconds": 2,
+  "sample_count": 125,
+  "contact_sheets_viewed": 5,
+  "additional_board_samples_viewed": 30,
+  "additional_full_resolution_frames_viewed": [
+    174,
+    200
+  ],
+  "all_frames_watched": false,
+  "audio_listened": false,
+  "actual_identity": "DAVIDOVICH FOKINA vs JODAR; Shanghai court/2026 signage; final supported independently by exact extractor title; actual first set1-6 and second set matches claimed final progression",
+  "source_publisher_verified_by_this_review": false,
+  "visible_watermark": "TennisTV; not publisher proof",
+  "board_geometry": {
+    "position": "fixed lower-left",
+    "first_set_approx_bbox": [
+      98,
+      920,
+      543,
+      1029
+    ],
+    "second_set_approx_bbox": [
+      98,
+      920,
+      590,
+      1029
+    ],
+    "note": "Right edge grows for previous-set columns; same left and bottom. Third set is outside this review; measure widest board there. Do not move original scoreboard."
+  },
+  "foreign_match_or_advertising_observed_in_scope": false,
+  "keep_recommendation": "Keep entire 0..240s of original source in order. No packaging/ad source sections observed here. All replay blocks provide explanatory action/emotion, particularly counterbreak/fall, and should remain under user request to use long highlights fully. Chapter/narration insertion should respect listed natural cuts and complete point windows.",
+  "blocks": [
+    {
+      "from": 0,
+      "to": 29.88,
+      "kind": "first_break_and_replay",
+      "visual_observation_zh": "首盘0-1，福基纳发球、霍达尔AD；长回合至结束，霍达尔反应、观众与多角度回放。后续板为0-2。",
+      "priority": "all",
+      "edit_note_zh": "从原片首帧已有发球准备；保留至29.88原生切点。"
+    },
+    {
+      "from": 29.88,
+      "to": 58.0,
+      "kind": "first_set_exchanges",
+      "visual_observation_zh": "0-2、福15-0的一段长回合；47.68反应镜头；49.18..56.62广角动作，板已跳1-3且无小分。",
+      "priority": "all",
+      "edit_note_zh": "原集锦存在跳局；49.18..56.62不能仅凭这一段判定比赛连续或其独立回合结果。保留可避免漏掉动作。"
+    },
+    {
+      "from": 58.0,
+      "to": 70.94,
+      "kind": "jodar_holds_pressure",
+      "visual_observation_zh": "首盘1-3、霍达尔发球40-0，原片提供完整可见回合和反应。下一局板1-4。",
+      "priority": "all",
+      "edit_note_zh": "不虚构整场中间未提供的得分。"
+    },
+    {
+      "from": 70.94,
+      "to": 107.56,
+      "kind": "long_rally_break_to_1_5",
+      "visual_observation_zh": "首盘1-4、福基纳发球30-40；约30秒持续拉锯，随后霍达尔握拳和看台，板进1-5。",
+      "priority": "must_keep",
+      "edit_note_zh": "70.94..100.74回合过程必须整段，100.74..107.56反应连接结果，不能以快切损失这段对抗。"
+    },
+    {
+      "from": 107.56,
+      "to": 128.34,
+      "kind": "first_set_close_1_6",
+      "visual_observation_zh": "霍达尔5-1发球局中15-15的一分；117.14..119.54反应；119.54盘点15-40，123.30后板明确首盘福1、霍6，随后特写。",
+      "priority": "must_keep",
+      "edit_note_zh": "107.56..117.14与119.54..123.30是不同分，禁止拼成一个连续回合。"
+    },
+    {
+      "from": 128.34,
+      "to": 143.74,
+      "kind": "second_set_restart",
+      "visual_observation_zh": "第二盘0-0、福基纳40-30发球局收尾；随后1-1的发球画面。",
+      "priority": "all",
+      "edit_note_zh": "第一盘1-6到第二盘重新守局是叙事必要过渡；避免直接跳到大逆转。"
+    },
+    {
+      "from": 143.74,
+      "to": 156.22,
+      "kind": "second_set_athletic_exchange_and_replay",
+      "visual_observation_zh": "第二盘1-1、福基纳0-15；一段底线/跑动处理球及150.34后的低机位回放。",
+      "priority": "must_keep",
+      "edit_note_zh": "动作和回放都是本场，具体技术名称不在有限静帧证据内强判。"
+    },
+    {
+      "from": 156.22,
+      "to": 167.22,
+      "kind": "jodar_breaks_at_2_2",
+      "visual_observation_zh": "第二盘2-2、福基纳发球，霍达尔AD；下一画面为霍达尔、福基纳反应，板随后2-3。",
+      "priority": "must_keep",
+      "edit_note_zh": "156.22..163.66是该破发分可见过程，163.66..167.22反应。"
+    },
+    {
+      "from": 167.22,
+      "to": 198.3,
+      "kind": "fokina_counterbreak_fall_and_multiview_replay",
+      "visual_observation_zh": "第二盘福基纳2-3、AD破发点，霍达尔发球；福基纳冲网争夺后倒地仰卧，板更新3-3；多角度回放含伸展、倒地、起身。",
+      "priority": "must_keep",
+      "edit_note_zh": "167.22..179.90现场过程与即时反应；179.90..198.30慢放。不能把这分错称保发，也不能把跌倒说成受伤诊断。"
+    },
+    {
+      "from": 198.3,
+      "to": 219.06,
+      "kind": "fokina_holds_to_lead_4_3",
+      "visual_observation_zh": "第二盘3-3、福基纳AD且发球；长回合拿分，214.94后握拳及团队反应，217.54附近板变4-3。",
+      "priority": "must_keep",
+      "edit_note_zh": "198.30..214.94动作完整保留；214.94..219.06情绪兑现。"
+    },
+    {
+      "from": 219.06,
+      "to": 235.92,
+      "kind": "late_second_set_progression",
+      "visual_observation_zh": "第二盘4-3、霍达尔发球0-0的动作与反应；230.36后板跳5-5，包含短发球画面/反应；随后跳抢七。",
+      "priority": "all",
+      "edit_note_zh": "原片自身是关键分集锦，无完整4-3至6-6每局；文案不宣称逐局完整。"
+    },
+    {
+      "from": 235.92,
+      "to": 240.0,
+      "kind": "tiebreak_boundary_overlap",
+      "visual_observation_zh": "第二盘6-6抢七，福基纳3比2、霍达尔发球；回合跨本审查240秒边界。",
+      "priority": "must_keep",
+      "edit_note_zh": "不要在240秒切断；下一原生画面切点240.32为霍达尔特写，由后半审查补上235.92..240.32整分及结果。"
+    }
+  ],
+  "scene_candidates_not_automatic_cuts": [
+    {
+      "pts_seconds": 14.82,
+      "scene_score": 0.52786
+    },
+    {
+      "pts_seconds": 18.78,
+      "scene_score": 0.448859
+    },
+    {
+      "pts_seconds": 20.78,
+      "scene_score": 0.693738
+    },
+    {
+      "pts_seconds": 29.88,
+      "scene_score": 0.473956
+    },
+    {
+      "pts_seconds": 47.68,
+      "scene_score": 0.438876
+    },
+    {
+      "pts_seconds": 49.18,
+      "scene_score": 0.366373
+    },
+    {
+      "pts_seconds": 56.62,
+      "scene_score": 0.60886
+    },
+    {
+      "pts_seconds": 58.0,
+      "scene_score": 0.396042
+    },
+    {
+      "pts_seconds": 69.76,
+      "scene_score": 0.489835
+    },
+    {
+      "pts_seconds": 70.94,
+      "scene_score": 0.42874
+    },
+    {
+      "pts_seconds": 100.74,
+      "scene_score": 0.48864
+    },
+    {
+      "pts_seconds": 103.74,
+      "scene_score": 0.359329
+    },
+    {
+      "pts_seconds": 107.56,
+      "scene_score": 0.644089
+    },
+    {
+      "pts_seconds": 117.14,
+      "scene_score": 0.45258
+    },
+    {
+      "pts_seconds": 119.54,
+      "scene_score": 0.429721
+    },
+    {
+      "pts_seconds": 122.18,
+      "scene_score": 0.471717
+    },
+    {
+      "pts_seconds": 123.3,
+      "scene_score": 0.317247
+    },
+    {
+      "pts_seconds": 128.34,
+      "scene_score": 0.363021
+    },
+    {
+      "pts_seconds": 134.26,
+      "scene_score": 0.474184
+    },
+    {
+      "pts_seconds": 136.7,
+      "scene_score": 0.320226
+    },
+    {
+      "pts_seconds": 138.56,
+      "scene_score": 0.472036
+    },
+    {
+      "pts_seconds": 141.84,
+      "scene_score": 0.40024
+    },
+    {
+      "pts_seconds": 143.74,
+      "scene_score": 0.381349
+    },
+    {
+      "pts_seconds": 150.34,
+      "scene_score": 0.522563
+    },
+    {
+      "pts_seconds": 151.56,
+      "scene_score": 0.379317
+    },
+    {
+      "pts_seconds": 156.22,
+      "scene_score": 0.37141
+    },
+    {
+      "pts_seconds": 163.66,
+      "scene_score": 0.414958
+    },
+    {
+      "pts_seconds": 165.94,
+      "scene_score": 0.26518
+    },
+    {
+      "pts_seconds": 167.22,
+      "scene_score": 0.6874
+    },
+    {
+      "pts_seconds": 175.06,
+      "scene_score": 0.39812
+    },
+    {
+      "pts_seconds": 176.58,
+      "scene_score": 0.477214
+    },
+    {
+      "pts_seconds": 179.9,
+      "scene_score": 0.374238
+    },
+    {
+      "pts_seconds": 198.3,
+      "scene_score": 0.381044
+    },
+    {
+      "pts_seconds": 214.94,
+      "scene_score": 0.554229
+    },
+    {
+      "pts_seconds": 217.54,
+      "scene_score": 0.35126
+    },
+    {
+      "pts_seconds": 219.06,
+      "scene_score": 0.575238
+    },
+    {
+      "pts_seconds": 227.26,
+      "scene_score": 0.421849
+    },
+    {
+      "pts_seconds": 228.9,
+      "scene_score": 0.31474
+    },
+    {
+      "pts_seconds": 230.36,
+      "scene_score": 0.344111
+    },
+    {
+      "pts_seconds": 233.8,
+      "scene_score": 0.431578
+    },
+    {
+      "pts_seconds": 235.92,
+      "scene_score": 0.340325
+    },
+    {
+      "pts_seconds": 240.32,
+      "scene_score": 0.425332
+    }
+  ],
+  "key_semantic_corrections": [
+    "167.22..179.90 fall point is Fokina counterbreak from2-3 to3-3, confirmed by service marker on JODAR row at174s.",
+    "198.30..219.06 following point is Fokina hold from3-3 to4-3, confirmed by service marker on FOKINA row at200s.",
+    "Do not infer unseen intervening game points from montage jumps."
+  ],
+  "limits": [
+    "Finite 2-second visual sample plus boards/keyframes; no frame-by-frame or human audio claim.",
+    "Some noncritical wide-angle action/replay classification remains ambiguous; all kept, no speculative deletion.",
+    "Full-point completeness means all sequence supplied by original highlights, not proof that original editor retained every live match frame."
+  ],
+  "evidence": [
+    {
+      "path": "/workspace/scratch/fokina-requested-source/first-half-review/actual-174.jpg",
+      "bytes": 219552,
+      "sha256": "489706910b21e5726f9a071b01dcdf601a2113b41c857c6e35c87d2ab0828528"
+    },
+    {
+      "path": "/workspace/scratch/fokina-requested-source/first-half-review/actual-200.jpg",
+      "bytes": 223477,
+      "sha256": "8dbb89e423e46d45b0efb2d94ba3c352da5b12f7c1d2f64583503970c81fdf2c"
+    },
+    {
+      "path": "/workspace/scratch/fokina-requested-source/first-half-review/board-174.jpg",
+      "bytes": 13819,
+      "sha256": "6ebf8c3249597049e50825a451d378237dd5950e39daa7b99f97ad374309940e"
+    },
+    {
+      "path": "/workspace/scratch/fokina-requested-source/first-half-review/board-200.jpg",
+      "bytes": 13816,
+      "sha256": "3695f497aef5d9b0d33250ee533475bf5f702ca0064fc2ce40c8d6fb14ce98fc"
+    },
+    {
+      "path": "/workspace/scratch/fokina-requested-source/first-half-review/board-wall-1.jpg",
+      "bytes": 301480,
+      "sha256": "5583293886762e63ad0ebabc8d41ce4bda552b419bfd902d8c4bf821f3ae9f1e"
+    },
+    {
+      "path": "/workspace/scratch/fokina-requested-source/first-half-review/board-wall-2.jpg",
+      "bytes": 283224,
+      "sha256": "8fcae40847922c710b7b698f100477c955e08a60d36e7c6ae88d46336652b7cb"
+    },
+    {
+      "path": "/workspace/scratch/fokina-requested-source/first-half-review/contact-01.jpg",
+      "bytes": 679039,
+      "sha256": "b0c52fea483a18d0e7481033fd003c23ec7acf63ce3b81fb641c15433159a68d"
+    },
+    {
+      "path": "/workspace/scratch/fokina-requested-source/first-half-review/contact-02.jpg",
+      "bytes": 743376,
+      "sha256": "7e504e5aa21ec9f8921035e228a573d28e1c4e14ca88b21b1e2153ad8c2c8a6a"
+    },
+    {
+      "path": "/workspace/scratch/fokina-requested-source/first-half-review/contact-03.jpg",
+      "bytes": 666198,
+      "sha256": "807889e04e68e020e7673c5ffda146283d139fba32a91da9a2085a8aba5c316e"
+    },
+    {
+      "path": "/workspace/scratch/fokina-requested-source/first-half-review/contact-04.jpg",
+      "bytes": 651339,
+      "sha256": "9c77ea48e3222bef6d63ee1caefe0d32ba23e3757894390b2604659a39973e7e"
+    },
+    {
+      "path": "/workspace/scratch/fokina-requested-source/first-half-review/contact-05.jpg",
+      "bytes": 689488,
+      "sha256": "1ec6808bcde39c5f38577568a792d7bda6fa1b3551599dcab096723037e8c76a"
+    }
+  ]
+}

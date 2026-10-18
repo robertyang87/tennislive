@@ -1,0 +1,472 @@
+[
+  {
+    "id": "c001",
+    "start": 13.3,
+    "end": 15.06,
+    "en": "Brilliant start,",
+    "zh": "开局精彩！",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:0",
+      "medium:0"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c002",
+    "start": 15.06,
+    "end": 20.94,
+    "en": "and an early break for the 20-year-old,",
+    "zh": "这位二十岁的小将率先破发，",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:0",
+      "medium:0"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c003",
+    "start": 20.94,
+    "end": 24.5,
+    "en": "appreciated by the two-time former champion.",
+    "zh": "两届赛会冠军也为他鼓掌。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:0-1",
+      "medium:0"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "“two-time former champion”是原解说称呼；字幕不自行补出看台人物姓名。"
+  },
+  {
+    "id": "c004",
+    "start": 26.3,
+    "end": 28.38,
+    "en": "There is again the drop shot,",
+    "zh": "又是一记放短，",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:2",
+      "medium:1"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c005",
+    "start": 28.52,
+    "end": 30.48,
+    "en": "but this is exquisite.",
+    "zh": "处理得真是精妙。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:2",
+      "medium:1"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c006",
+    "start": 100.7,
+    "end": 101.54,
+    "en": "Sensational!",
+    "zh": "太精彩了！",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:5",
+      "medium:5"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "保留两档共同支持的Sensational；不补仅medium识别且低概率的It's。"
+  },
+  {
+    "id": "c007",
+    "start": 104.84,
+    "end": 107.12,
+    "en": "And a second break is secured.",
+    "zh": "再度完成破发。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:6",
+      "medium:5"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c008",
+    "start": 121.68,
+    "end": 124.7,
+    "en": "And a flawless set of tennis",
+    "zh": "这一盘打得无可挑剔，",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:7",
+      "medium:7"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "与后续for Rafael Jodar组成同一句；中间有裁判报分重叠，见a003。"
+  },
+  {
+    "id": "c009",
+    "start": 126.72,
+    "end": 128.66,
+    "en": "for Rafael Jodar.",
+    "zh": "拉斐尔·霍达尔的表现太出色了。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:7",
+      "medium:9"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "人名按已核实的真实对阵规范拼写；不把for改成独立宣布胜者。"
+  },
+  {
+    "id": "c010",
+    "start": 142.5,
+    "end": 144.04,
+    "en": "Outrageous!",
+    "zh": "简直不可思议！",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:8",
+      "medium:10"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c011",
+    "start": 149.04,
+    "end": 150.32,
+    "en": "Yes!",
+    "zh": "好球！",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:9",
+      "medium:11"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c012",
+    "start": 151.96,
+    "end": 153.46,
+    "en": "Don't forget about me,",
+    "zh": "“别忘了，我还在！”",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:10",
+      "medium:12"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c013",
+    "start": 154.66,
+    "end": 156.16,
+    "en": "says Davidovich Fokina.",
+    "zh": "福基纳用表现作出了回应。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:11",
+      "medium:13"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "上一cue是解说代入球员的修辞，并非声称球员真的说出这句话。"
+  },
+  {
+    "id": "c014",
+    "start": 162.28,
+    "end": 166.2,
+    "en": "A disappointing end to the game.",
+    "zh": "这一局的收尾令人失望。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:12",
+      "medium:14"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c015",
+    "start": 173.9,
+    "end": 175.96,
+    "en": "Oh, that is remarkable!",
+    "zh": "噢，太不可思议了！",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:12",
+      "medium:15"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c016",
+    "start": 181.26,
+    "end": 185.58,
+    "en": "What a chase from Davidovich Fokina",
+    "zh": "福基纳这次追球太惊人了，",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:13",
+      "medium:16"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c017",
+    "start": 185.58,
+    "end": 191.46,
+    "en": "to get his first break of the match.",
+    "zh": "拿下了本场第一次破发。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:13",
+      "medium:16"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "采用medium的to词头185.58；该词自动对齐延伸到190.04，保留原始时码并明确长停顿对齐限制，不凭任意秒数伪造真实词头。"
+  },
+  {
+    "start": 193.98,
+    "end": 195.54,
+    "en": "The nuclear athleticism",
+    "zh": "这种惊人的运动能力，",
+    "status": "medium_and_bounded_base_text_supported",
+    "evidence": [
+      "medium:17",
+      "base.en-bounded:athleticism:0"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "nuclear双档文字支持，保留原词；中文按夸张修辞表达惊人，不译作核武器。",
+    "id": "c018"
+  },
+  {
+    "start": 195.54,
+    "end": 198.22,
+    "en": "that is so often associated with this guy.",
+    "zh": "正是这位球员一贯的特点。",
+    "status": "medium_and_bounded_base_text_supported",
+    "evidence": [
+      "medium:17",
+      "base.en-bounded:athleticism:0"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "that来自medium，base直接接is；整句含义双档一致，虚词未人工听辨。",
+    "id": "c019"
+  },
+  {
+    "id": "c020",
+    "start": 222.44,
+    "end": 223.76,
+    "en": "Oh!",
+    "zh": "噢！",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:14",
+      "medium:19"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c021",
+    "start": 227.7,
+    "end": 228.42,
+    "en": "Jaw-dropping!",
+    "zh": "令人瞠目结舌！",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:14",
+      "medium:19"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c022",
+    "start": 229.08,
+    "end": 230.94,
+    "en": "How good that is!",
+    "zh": "这一球打得太棒了！",
+    "status": "cross_asr_context_selection",
+    "evidence": [
+      "small:14",
+      "medium:20"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "small为cute，medium为good；语境与相同含义优先medium，仍非人工听辨。"
+  },
+  {
+    "id": "c023",
+    "start": 253.54,
+    "end": 256.16,
+    "en": "What an effort,",
+    "zh": "多么顽强的拼搏，",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:15",
+      "medium:21"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c024",
+    "start": 256.56,
+    "end": 260.68,
+    "en": "once again from Davidovich Fokina.",
+    "zh": "福基纳再一次做到了。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:15",
+      "medium:21"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c025",
+    "start": 260.68,
+    "end": 264.64,
+    "en": "Down a set and a break in the final in Shanghai.",
+    "zh": "上海决赛中，他一度落后一盘和一个破发。",
+    "status": "cross_asr_context_selection",
+    "evidence": [
+      "small:16",
+      "medium:22"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "small为Down the set；medium为Down a set，采用medium。中文过去情境结合其刚扳回次盘的画面，不虚构眼下仍落后。"
+  },
+  {
+    "id": "c026",
+    "start": 284.96,
+    "end": 286.24,
+    "en": "He's punished him.",
+    "zh": "这一球给了对手有力回击。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:17",
+      "medium:23"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c027",
+    "start": 295.44,
+    "end": 297.56,
+    "en": "This time he converts.",
+    "zh": "这一次，他兑现了破发点。",
+    "status": "cross_asr_context_selection",
+    "evidence": [
+      "small:18",
+      "medium:25"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "破发点由本场原画面第三盘0-0/AD福基纳确认；原词converts。"
+  },
+  {
+    "id": "c028",
+    "start": 358.42,
+    "end": 359.68,
+    "en": "A second break.",
+    "zh": "第二次破发。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:21",
+      "medium:28"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "A/The冠词不一致；共同可确认second break。可改为Second break.避免强断冠词。"
+  },
+  {
+    "id": "c029",
+    "start": 404.5,
+    "end": 405.4,
+    "en": "That was my thought.",
+    "zh": "我刚才也是这么想的。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:25",
+      "medium:30"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "前一问句见a008，尚不能当已解决。"
+  },
+  {
+    "id": "c030",
+    "start": 405.4,
+    "end": 405.8,
+    "en": "Yeah.",
+    "zh": "是的。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:25",
+      "medium:30"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c031",
+    "start": 440.64,
+    "end": 443.88,
+    "en": "Alejandro Davidovich Fokina",
+    "zh": "亚历杭德罗·达维多维奇·福基纳，",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:26",
+      "medium:36"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "人名规范化；与下一cue为一个完整夺冠宣布句，不能在445.5切掉后半句。"
+  },
+  {
+    "id": "c032",
+    "start": 443.88,
+    "end": 450.48,
+    "en": "claims a maiden Masters 1000 title in Shanghai.",
+    "zh": "在上海夺得生涯首座大师赛冠军！",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:26",
+      "medium:36"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c033",
+    "start": 454.5,
+    "end": 458.36,
+    "en": "A week where he has proved his resilience.",
+    "zh": "这一周，他证明了自己的坚韧。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:27",
+      "medium:37"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification",
+    "note": "small起点453.8但A延伸到455.12；medium词起点454.50。采用medium词起点。"
+  },
+  {
+    "id": "c034",
+    "start": 460.68,
+    "end": 465.76,
+    "en": "He has worked his way through so many difficult situations,",
+    "zh": "他闯过了一个又一个艰难关口，",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:28",
+      "medium:38"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  },
+  {
+    "id": "c035",
+    "start": 466.22,
+    "end": 469.98,
+    "en": "but it's a third title of the season.",
+    "zh": "最终拿下了本赛季第三个冠军。",
+    "status": "cross_asr_text_supported",
+    "evidence": [
+      "small:28",
+      "medium:38"
+    ],
+    "timing_method": "existing ASR word timestamps; no acoustic boundary verification"
+  }
+]

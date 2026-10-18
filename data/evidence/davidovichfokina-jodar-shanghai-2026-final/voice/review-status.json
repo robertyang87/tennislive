@@ -1,0 +1,59 @@
+{
+  "status": "v3_draft_inputs_ready_new_two_utterances_pronunciation_pending",
+  "bundle_sha256": "816d5deffdc351a3011dd8deaed7964cf21af857941271aba1d27304dffa562c",
+  "bundle_bytes": 892088,
+  "body_requests": 12,
+  "brand_requests": 1,
+  "new_synthesis_count": 2,
+  "unchanged_exact_parent_audio_marks_count": 11,
+  "parent_bundle_sha256": "e918bceb8e1e258c3dbde186b002ea5a6710d3d68c368bc4a377e75c8962d8b5",
+  "parent_bundle_unchanged": true,
+  "strict_13_request_import_reexport_verified": true,
+  "body_seconds": 138.432,
+  "new_utterances": [
+    {
+      "edit_id": "jodar_first_set",
+      "duration_seconds": 12.888,
+      "display_text": "二十岁的霍达尔，前一天刚淘汰梅德韦杰夫。首盘的底线拉锯，他占了上风。七次超过九拍的长回合，他全部拿下；两个破发点，也都兑现。",
+      "tts_text": "二十岁的霍达尔，前一天刚淘汰梅德韦杰夫。首盘的底线拉锯，他占了上风。七次超过九拍的常回合，他全部拿下；两个破发点，也都兑现。",
+      "audio_sha256": "4dfcac4cf21b72abaa16e5a7b69165061848795819737bf8c12840c9d80a44f7",
+      "marks_sha256": "9ffbc9ec454bf017c5a820f8c41526aab32ec05ef7efbd26a408ab1166d300ca",
+      "status": "actual_pronunciation_pending"
+    },
+    {
+      "edit_id": "five_break_points",
+      "duration_seconds": 13.152,
+      "display_text": "从底线追到网前，倒地也要把球救回来。这个回破，福基纳靠的是再多打一拍。但追平还不够，随后三个发球局，他又把五个破发点全部救了回来。",
+      "tts_text": "从底线追到网前，倒地也要把球救回来。这个回破，福基纳靠的是再多打一拍。但追平还不够，随后三个发球局，他又把五个破发点全部救了回来。",
+      "audio_sha256": "1b8f487b71e4bcacc7e2f1863be89aaef9f79d0ba177ea3e2012a9a14fe157c6",
+      "marks_sha256": "2b0f51a0949c633afca44247ef4038848e95d5fa7182f809e7ae7606afad7b90",
+      "status": "actual_pronunciation_pending"
+    }
+  ],
+  "remaining_unchanged_inherited_target_count": 143,
+  "remaining_unchanged_inherited_pending_count": 54,
+  "parent_pending_original_report_preserved": true,
+  "new_whole_utterance_audio_does_not_inherit_old_pronunciation_pass": true,
+  "no_new_acoustic_control_expansion": true,
+  "all_tones_passed": false,
+  "quality_approval": false,
+  "publication_approval": false,
+  "manual_listening_performed": false,
+  "model_audio_listening_performed": false,
+  "actual_audio_helper_limit": "Root tried audio helper: audio input unsupported. No unsupported listening claim.",
+  "new_long_rally_TTS_mapping": "jodar_first_set display 长回合 is synth-input 常回合 via existing speakable mapping; new complete utterance remains pending.",
+  "actual_production_spec_native_request_check": {
+    "spec_path": "/workspace/tennislive-efficiency/specs/reels/davidovichfokina-jodar-shanghai-2026-final.json",
+    "spec_sha256": "2b9ea87f2e15de1340a9a47f0a861cbdd7e411ab7f44a3fba6b61605ad24f650",
+    "spec_byte_unchanged_during_check": true,
+    "actual_native_CLI_returncode": 1,
+    "actual_native_13_request_check_passed": false,
+    "bundle_sha256": "816d5deffdc351a3011dd8deaed7964cf21af857941271aba1d27304dffa562c",
+    "bundle_bytes": 892088,
+    "bundle_still_frozen_byte_identical": true,
+    "native_check_log": "/workspace/scratch/fokina-final-voice-selected-v3/production-bundle-check.log",
+    "pronunciation_quality_approval": false,
+    "all_tone_pass_claimed": false,
+    "native_error_tail": "[片长] 634.5s = 10 分 34 秒，按实测 12560 kb/s 估 950 MiB —— 成片一律走 Release 附件，不进 git\nTraceback (most recent call last):\n  File \"/workspace/tennislive-efficiency/tools/build_match_reel.py\", line 12519, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/workspace/tennislive-efficiency/tools/build_match_reel.py\", line 12097, in main\n    enforce_spec_wording(spec, Path(args.spec))\n  File \"/workspace/tennislive-efficiency/tools/build_match_reel.py\", line 4033, in enforce_spec_wording\n    raise ReelError(\"会发出去的措辞不合规矩：\\n  - \" + \"\\n  - \".join(problems))\nReelError: 会发出去的措辞不合规矩：\n  - 小红书正文首行一个球员的名字都没有：「福基纳从1比6逆转夺冠」——那一行是**标题**（信息流里缩略图底下唯一被读到的一行），刷到的人得先知道这是谁。封面钩子不写身份是因为海报上印着，而缩略图缩到 170px 时那个名字只剩 8.2px，前提在这儿不成立。把「谁」补进这一行，钩子留在后半句\n"
+  }
+}
