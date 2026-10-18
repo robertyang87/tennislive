@@ -1,8 +1,8 @@
 # 转写交叉校验：davidovichfokina-jodar-shanghai-2026-f-speech
 
 - 第一份：YouTube 自动字幕 **306** 词
-- 第二份：faster-whisper（small.en）**377** 词
-- **对不上 23.5%**（闸门 12%）
+- 第二份：faster-whisper（small.en）**383** 词
+- **对不上 19.6%**（闸门 12%）
 
 ⚠️ 上面两个词数和分歧率都是**去掉 erm/uh/uhh/um/umm 这类填词之后**算的：这些词 whisper 系统性地会丢，跟源可不可信无关，留着只会把「说话人有多磕巴」量成「两份转写对不上」。
 
@@ -10,10 +10,11 @@
 
 - `congratulate` → `congrats rafa`
 - `—` → `are 20 years old`
-- `you'll` → `and you're gonna`
+- `you'll` → `and you're going to`
 - `—` → `like`
 - `more` → `—`
-- `you're a` → `you are very`
+- `you're` → `you are`
+- `—` → `very`
 - `a` → `very`
 - `—` → `many`
 - `for what you've achieved this` → `because you are achieving the first`
@@ -21,14 +22,19 @@
 - `can't` → `cannot`
 - `it in` → `with`
 - `—` → `so many`
-- `going` → `gonna be here champion i cannot describe these kind of moments how`
-- `be champion here i can't describe moments like this how do i` → `—`
+- `—` → `here at`
+- `here` → `—`
+- `can't` → `cannot`
+- `—` → `these kind of`
+- `like this` → `—`
+- `do i` → `to`
 - `this` → `—`
 - `we've` → `we`
 - `—` → `during`
 - `wasn't` → `it was not an`
 - `—` → `one`
 - `kept` → `keep`
+- `and` → `—`
 - `you believed` → `were believing`
 - `gave` → `give it to`
 - `—` → `kind of`
@@ -36,29 +42,26 @@
 - `—` → `to all`
 - `—` → `to`
 - `for` → `just because they are`
-- `in` → `—`
 - `—` → `and`
 - `so` → `very`
 - `for` → `to know`
 - `do` → `are doing`
-- `—` → `yeah`
 - `—` → `to them`
 - `last but` → `after`
 - `—` → `michael charles you know`
-- `going to` → `gonna`
-- `—` → `now`
 - `masters` → `master`
 - `put on` → `are doing`
-- `for` → `make it easy to`
+- `for` → `easy to`
 - `and` → `to all the`
 - `—` → `it's`
 - `was` → `very`
 - `—` → `i want to say`
-- `guys this will surely` → `all because for sure there's gonna`
+- `guys` → `all because for sure`
+- `will surely` → `is going to`
 - `a memory` → `like i don't know what to say`
-- `i don't know what to say` → `not like`
-- `i'll` → `so i'm gonna`
-- `—` → `like`
+- `i don't know what` → `it's going`
+- `say` → `be like`
+- `i'll` → `so i'm going to`
 - `—` → `the`
 - `thank` → `say thanks many thanks to`
 - `—` → `to`

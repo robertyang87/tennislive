@@ -13,12 +13,12 @@
 ## 119.3–145.8 秒（片内，26.5 秒；源片 https://youtu.be/kUbqV30q1OE?t=119）
 
 - 键：`119.3-145.8`
-- 第二份 ASR（small.en）：`I want to`　→ **第一份（YouTube 自动字幕）可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
+- 第二份 ASR（small.en）：`I`　→ **第一份（YouTube 自动字幕）可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
 - 已销账：感谢团队段落后的掌声（26秒）：VAD 23s 人声系掌声误检，第二份 ASR 仅 'I'，双 ASR 自动销账。
 
 ## 187.6–218.7 秒（片内，31.1 秒；源片 https://youtu.be/kUbqV30q1OE?t=187）
 
 - 键：`187.6-218.7`
-- 第二份 ASR（small.en）：`And the`　→ **第一份（YouTube 自动字幕）可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
+- 第二份 ASR（small.en）：`And`　→ **第一份（YouTube 自动字幕）可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
 - 已销账：感谢赛事方段落后的掌声（31秒）：VAD 29s 人声系掌声误检，第二份 ASR 仅 'And'，双 ASR 自动销账。
 
