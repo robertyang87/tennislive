@@ -446,6 +446,15 @@ jobs:
         with:
           name: preflight-log
           path: preflight_debug.md
+
+      - name: 提交预检日志到仓库
+        if: always() && github.event.inputs.mode == 'render'
+        run: |
+          git config user.name "tennislive-bot"
+          git config user.email "bot@tennislive.local"
+          git add -f preflight_debug.md || true
+          git commit -m "debug: preflight log for ${{ github.event.inputs.slug }}" || true
+          git push origin HEAD:main || true
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
       # 匹配不上，看起来像「这个视频没有格式」或者「cookie 过期了」。
