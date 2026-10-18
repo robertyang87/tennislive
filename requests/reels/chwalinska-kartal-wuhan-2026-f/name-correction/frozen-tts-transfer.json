@@ -1,0 +1,175 @@
+{
+  "schema": "tennislive.local-frozen-tts-transfer-audit.v1",
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "revision_reason": "User explicitly corrected Sonay Kartal Chinese displayed and spoken name to 卡塔尔; transport of newly frozen bundle only. Voice review and final narration-check binding handled separately.",
+  "created_at": "2026-10-18T17:19:51.290673+00:00",
+  "original_bundle": {
+    "path": "/workspace/scratch/wuhan-final-kartal-name-tts.zip",
+    "bytes": 744911,
+    "sha256": "c848a69ebd0ff41bcb7afb4d49a6b7976128661f4fdf664f8ea497dad2765f50",
+    "request_count": 9,
+    "metadata": {
+      "kind": "reel_native_tts",
+      "slug": "chwalinska-kartal-wuhan-2026-f"
+    },
+    "all_requests_locally_decoded": true,
+    "bundle_manifest_unchanged": true
+  },
+  "transport": {
+    "schema": "tennislive.frozen-tts-transport.v1",
+    "slug": "chwalinska-kartal-wuhan-2026-f",
+    "source_draft_release_ids": [
+      416588877,
+      416588885,
+      416588892,
+      416588896,
+      416588904,
+      416588912,
+      416588917,
+      416588926,
+      416588940,
+      416588947,
+      416588955,
+      416588966,
+      416588977,
+      416588981,
+      416588991,
+      416588998,
+      416589008
+    ],
+    "deleted_draft_release_ids": [
+      416588877,
+      416588885,
+      416588892,
+      416588896,
+      416588904,
+      416588912,
+      416588917,
+      416588926,
+      416588940,
+      416588947,
+      416588955,
+      416588966,
+      416588977,
+      416588981,
+      416588991,
+      416588998,
+      416589008
+    ],
+    "release_id": 416588674,
+    "release_tag": "reel-tts-chwalinska-kartal-wuhan-2026-f-c848a69ebd0ff41b",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-kartal-wuhan-2026-f-c848a69ebd0ff41b/tts_bundle.zip",
+    "bundle_sha256": "c848a69ebd0ff41bcb7afb4d49a6b7976128661f4fdf664f8ea497dad2765f50",
+    "bundle_bytes": 744911,
+    "request_count": 9,
+    "audio_decoding_verified": false,
+    "public_download_hash_verified": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "synthesis_performed": false,
+    "run_url": "https://github.com/robertyang87/tennislive/actions/runs/39148962783"
+  },
+  "independent_public_verification": {
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-kartal-wuhan-2026-f-c848a69ebd0ff41b/tts_bundle.zip",
+    "bytes": 744911,
+    "sha256": "c848a69ebd0ff41bcb7afb4d49a6b7976128661f4fdf664f8ea497dad2765f50",
+    "exact_original_zip_bytes_equal": true,
+    "public_download_verified": true,
+    "verified_at": "2026-10-18T17:19:16.487893+00:00",
+    "quality_approval": false
+  },
+  "draft_cleanup": [
+    {
+      "release_id": 416588877,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588885,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588892,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588896,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588904,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588912,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588917,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588926,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588940,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588947,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588955,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588966,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588977,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588981,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588991,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416588998,
+      "verified_deleted": true
+    },
+    {
+      "release_id": 416589008,
+      "verified_deleted": true
+    }
+  ],
+  "workflow_scope": {
+    "branch": "codex/wuhan-kartal-name-frozen-tts-transfer",
+    "commit": "35d51edb178e3c492e2ef6cea6543d621e9f932b",
+    "base_main_commit": "30e247b4d405bce2b85a1cbca4e3ec42696b87b4",
+    "only_git_file_changed": ".github/workflows/download-video.yml",
+    "publisher": "tools/reel_tts_release.py publish",
+    "publisher_sha256": "04cbfa1fdd779258ce30a35052243fe435e1f9e9d6c5434e0e5c958a6f17137f",
+    "audio_or_base64_committed": false,
+    "current_production_branch_spec_or_narration_checks_modified_by_transfer": false
+  },
+  "attempts": [
+    {
+      "method": "direct tools/reel_tts_release.py publish",
+      "result": "uploads.github.com HTTP401; created identity-correct release416588674 without asset; no bytes changed"
+    },
+    {
+      "method": "authorized isolated existing-workflow bridge with exact17draft release bodies",
+      "run_url": "https://github.com/robertyang87/tennislive/actions/runs/39148962783",
+      "result": "success; exact ZIP reassembled, existing publishing tool invoked, public download verified, all17drafts deleted and independently confirmed404"
+    }
+  ],
+  "synthesis_performed": false,
+  "quality_approval": false,
+  "no_audio_processing_performed": true
+}
