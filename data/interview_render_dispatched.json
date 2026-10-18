@@ -82,9 +82,16 @@
       "tries": 1
     },
     "davidovich-fokina-shanghai-2026-final-champion-speech": {
-      "at": "2026-10-18T14:08:50Z",
+      "at": "2026-10-18T15:27:25Z",
       "inputs_sha256": "257229eda21ca4b00a042d680033945ab849c944447d2be89c2bf12d39a82ffa",
-      "tries": 1
+      "tries": 2
+    }
+  },
+  "subs_red": {
+    "davidovichfokina-jodar-shanghai-2026-f-speech": {
+      "since": "2026-10-18T15:27:25Z",
+      "inputs_sha256": "a65d2ddd103e63772b016010c23cfe13955703e66f2176b26509f572df18f29a",
+      "why": "预检：转写（subs 在当前转写指纹上量出来的）：第二份 ASR 在当前转写指纹上量到：两份转写对不上 30.7%，超过闸门 12%。**不出片。** 逐处看 output/interviews/davidovichfokina-jodar-shanghai-2026-f-speech/transcript_diff.md，把确认过的写进 spec 的 `en_fixed`。"
     }
   }
 }
