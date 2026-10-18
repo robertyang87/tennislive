@@ -1,0 +1,104 @@
+{
+  "schema": "tennislive.scoreboard-conform-fix-proof.v1",
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "reviewed_at": "2026-10-18T16:09:00.315402+00:00",
+  "root_cause": "The renderer conformed1280x720 extended footage to1920x1080 before its board crop, but native WTA mask scanning decoded unscaled720p with the1080p search box. FFmpeg silently clamped requestedy826 to nativey566, found part of a board, then the resolver incorrectly added originaly826 to that partial geometry. The old cache key omitted the decode transform.",
+  "before": {
+    "observed_source_time": 399.44,
+    "wrong_resolved_scorebox": [
+      90,
+      826,
+      368,
+      914
+    ],
+    "proof_frame": "requests/reels/chwalinska-kartal-wuhan-2026-f/caption-preflight/before-fix-exact-frame.png"
+  },
+  "fix": [
+    "Render passes explicit per-source conform prefilter and effective dimensions only for sources that actually need scoreboard masks.",
+    "WTA applies that exact prefilter before RGB crop/detection. Native and conformed crop bounds are checked against frame dimensions; out-of-frame origins fail instead of allowing FFmpeg clamp.",
+    "Cache recipe snapshots exact filter and dimensions, including incremental per-source workers, warm restoration and post-scan verification. Unchanged sources can reuse their own masks when another source transform changes.",
+    "Profiles without explicit transform support reject a transformed board scan; existing calls without a transform retain their API and native behavior."
+  ],
+  "regression_evidence": {
+    "fixture": "tests/fixtures/wta_scoreboard/wuhan-final-720p-399440.png",
+    "original_source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+    "native_size": [
+      1280,
+      720
+    ],
+    "source_at": 399.44,
+    "measured_conformed_bounds": [
+      90,
+      828,
+      552,
+      980
+    ],
+    "checks": [
+      "Decode real source still into lossless native720p and baseline1080p videos; compare actual decoded alpha masks through cold incremental and warm bundle cache.",
+      "Verify both player name rows, all set-score columns,5/2games,Adpoint score and separateBREAKPOINT#3 tag stay opaque; adjacent court next to tag stays transparent.",
+      "Filter change and effective-dimension change invalidate only the transformed incremental point; same transform hits cache.",
+      "A changed filter during detection cannot store under the original key; two runs must rescan and cache manifests remain absent.",
+      "Native720p with1080p box and transformed out-of-frame boxes explicitly fail.",
+      "Native render adapter passes the correct per-source transformation into mask scanning."
+    ]
+  },
+  "validation": [
+    {
+      "command": "python -m pytest -q tests/test_scoreboard_conform.py tests/test_scoreboard_mask_cache.py tests/test_wta_scoreboard_geometry.py tests/test_wta_scoreboard.py tests/test_reel_caption_preflight.py tests/test_production_test_scopes.py",
+      "result": "119 passed in92.89s",
+      "note": "Suite completed before final new post-scan-mutation test was added; that final test and the rest of the conform regression file then ran below."
+    },
+    {
+      "command": "python -m pytest -q tests/test_scoreboard_conform.py",
+      "result": "6 passed in24.49s",
+      "note": "Includes final filter-change-during-scan cache guard; production code frozen for root fixed preview."
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "files": [
+    {
+      "path": "tools/wta_scoreboard.py",
+      "sha256": "56418dc3eaa08f4959fc5ca2cd916f311099fab1a51a843daaf5e50f50a8281a"
+    },
+    {
+      "path": "tools/scoreboard_mask_cache.py",
+      "sha256": "d96832a3e15dc96c2a5fa6e974b7895ef6560b7d89a26f9c6683792c06af5c52"
+    },
+    {
+      "path": "tools/build_match_reel.py",
+      "sha256": "6bc33a1df2972e0eff4f12ee3afa8b6743a3833402831e2bd1cb091fc51c842b"
+    },
+    {
+      "path": "tools/production_test_scopes.json",
+      "sha256": "3c4106587541d18ea61e0fa9bd3956484a12a4b0a77a704bc908160d7bf61b0f"
+    },
+    {
+      "path": "tests/test_scoreboard_conform.py",
+      "sha256": "a2deeae21f90db199b97e6b6078d35eb3792211a2b3a9f4471df7ed6a4ada94d"
+    },
+    {
+      "path": "tests/test_reel_caption_preflight.py",
+      "sha256": "a1069ab124affbc6090044f9a79be26ee94e66a93407fcee9c37c269122b3b46"
+    },
+    {
+      "path": "tests/test_wta_scoreboard.py",
+      "sha256": "ee6e0b201f84d22057ad0dbad0621b5b04b9270b8217c53ad589d02d2bb66f0f"
+    },
+    {
+      "path": "tests/fixtures/wta_scoreboard/wuhan-final-720p-399440.png",
+      "sha256": "d75d3ade5ec60cf896133c22b643e241de223ee37c1c2c57f41386c1c58046de"
+    },
+    {
+      "path": "tests/fixtures/wta_scoreboard/wuhan-final-720p-399440.json",
+      "sha256": "207cc34752627fa057a17688d43128489de80fdabdccf5d001874ebaad64a613"
+    }
+  ],
+  "fixed_native_preview": "pending root review of actual fixed frames; not claimed passed by this agent",
+  "final_render_and_publication_qc": "not performed by this code-fix task",
+  "manual_listening_claimed": false,
+  "audio_changes": false,
+  "commit_or_stage_performed": false
+}

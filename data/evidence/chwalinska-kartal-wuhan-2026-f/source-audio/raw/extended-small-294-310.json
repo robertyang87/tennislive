@@ -1,0 +1,99 @@
+{
+  "model": "small",
+  "source_key": "extended",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4",
+  "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+  "clip": [
+    294,
+    310
+  ],
+  "timecode_basis": "absolute source seconds, clip offset added to every word and segment",
+  "duration": 16.0,
+  "created_at": "2026-10-18T16:13:41.116740+00:00",
+  "decoded_pcm_sha256": "96743469eae21f4a682dab8b63f772c8f253863bf77aeaa183a3165111e543cb",
+  "decoder": "ffmpeg16000Hz mono float32; no amplitude, loudness or noise filter",
+  "options": {
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true,
+    "vad_filter": false,
+    "condition_on_previous_text": false
+  },
+  "segments": [
+    {
+      "start": 306.44,
+      "end": 309.92,
+      "text": "Let's get seals the deal, why not become more familiar with.",
+      "avg_logprob": -0.6829405391917509,
+      "no_speech_prob": 0.3567751944065094,
+      "words": [
+        {
+          "w": " Let's",
+          "s": 306.44,
+          "e": 306.92,
+          "p": 0.4922192580997944
+        },
+        {
+          "w": " get",
+          "s": 306.92,
+          "e": 307.0,
+          "p": 0.37375667691230774
+        },
+        {
+          "w": " seals",
+          "s": 307.0,
+          "e": 307.28,
+          "p": 0.9277915954589844
+        },
+        {
+          "w": " the",
+          "s": 307.28,
+          "e": 307.48,
+          "p": 0.6951600909233093
+        },
+        {
+          "w": " deal,",
+          "s": 307.48,
+          "e": 307.7,
+          "p": 0.9965318441390991
+        },
+        {
+          "w": " why",
+          "s": 307.88,
+          "e": 308.38,
+          "p": 0.9843204021453857
+        },
+        {
+          "w": " not",
+          "s": 308.38,
+          "e": 308.6,
+          "p": 0.9961153268814087
+        },
+        {
+          "w": " become",
+          "s": 308.6,
+          "e": 309.08,
+          "p": 0.6850218772888184
+        },
+        {
+          "w": " more",
+          "s": 309.08,
+          "e": 309.32,
+          "p": 0.998040497303009
+        },
+        {
+          "w": " familiar",
+          "s": 309.32,
+          "e": 309.66,
+          "p": 0.998847246170044
+        },
+        {
+          "w": " with.",
+          "s": 309.66,
+          "e": 309.92,
+          "p": 0.9918861389160156
+        }
+      ]
+    }
+  ]
+}

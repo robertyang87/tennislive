@@ -1,0 +1,25 @@
+{
+  "schema": "tennislive.pending-edit-proposal.v1",
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "status": "awaiting_actual_source_utterance_review",
+  "target_spec": "specs/reels/chwalinska-kartal-wuhan-2026-f.json",
+  "pending_spec": "requests/reels/chwalinska-kartal-wuhan-2026-f/complete-point-pending-spec.json",
+  "current_cut": {
+    "from": 146.56,
+    "to": 158.64,
+    "status": "rejected_cuts_live_point"
+  },
+  "proposed_cut": {
+    "source": "main",
+    "from": 146.56,
+    "to": 161.6,
+    "length_added": 2.96,
+    "status": "visual_action_complete_audio_sentence_head_pending"
+  },
+  "actual_tts_changed": false,
+  "formal_render_cancelled": 39143852218,
+  "reason_for_not_rebinding_audio_index": "完整新窗的实际句头尚未核准，不把旧146.56–158.64无英文packet挪作新完整窗的通过证据。",
+  "source_listening_request": "requests/reels/chwalinska-kartal-wuhan-2026-f/source-english-listening-request.json",
+  "also_pending": "本期120.504秒新旁白核听，720p授权不能代替。",
+  "formal_spec_action": "已把已知错误158.64修正为161.60；音频packet明确pending+uncertain_spans，旧index不重绑为通过。核准句头后补cue及native rebind再render。"
+}

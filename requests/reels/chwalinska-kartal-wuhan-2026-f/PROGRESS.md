@@ -68,3 +68,23 @@ FS完整182分重建与WTA总分91/91、BP16/13、比分一致。W/UE赫23/27，
 - 用冻结2414包严格复用9段音频，完成16帧自动+8帧手选原生ASS预览；首冠成就语义分句、人名不拆开、蓝卡与封面通过实际视觉检查。
 - 正式render之前发现补源比分板回贴裁成左上半，真实原帧及预览manifest见caption-preflight。根因是WTA蒙版扫描未走conform，FFmpeg将超出native720高度的crop位置静默夹回。交source_audio修实现及缓存transform身份；修后必须重新实际预览补源四窗，不把首轮失败报告覆盖为通过。
 - 本期编辑终审editorial-final-review.json无文稿阻塞；XHS列前三人具体赛事，TTS有三人姓名及第四位，用户并未要求将所有赛事年份也念入视频。
+
+## 当前已提交与正式渲染
+
+- PR https://github.com/robertyang87/tennislive/pull/1300 ，branch codex/wuhan-2026-final-reel，head cf92fb3a。已rebase当时main e6edee1c。
+- WTA/cache/conform适配119测试通过；补齐CI所需历史output文本后完整test_match_reel395通过（首次稀疏检出不足15fail记录保留在scratch，不误称本期制作问题）。
+- 修复后的12帧原生预览完成，root已看四窗完整两行名字与比分、点头提示条。fixed-root-review/manifest/sheet及独立代理报告留caption-preflight，首次失败原帧保留。
+- 正式render已派39143852218、head cf92fb3a、push=false、冻结2414包。当前未完成，不合并或推送，尤其新旁白核听仍pending。
+- 新增fixed预览/修复报告在本地未提交，等runner回写正式产物后一起提交最终审片证据，避免渲染中改变branch。
+
+## 必须优先处理的新反证：盘点原窗截在活球
+
+- 已取消正式run39143852218，GitHub确认completed/cancelled，仍在checkout阶段，未形成电影/发布。
+- 独立原25fps反证：158.64仍在回合末球未落地，旧完整结论明确撤回。见caption-preflight/preview-review.json及boundary-correction原PNG。
+- 最小画面方案保主1080p146.56–161.60，完整SP/死球/赢后反应与两句英语。long同点296.28–308.84可完整保动作，但同样有歧义解说，不能冒充无英文替代。
+- main158.76首句各4档及同源long两档均有不确定句头。末次main154–162只给两人专名context，turbo只出Ska seals the deal. Why not?，不能据此写已核Chwalinska。有限ASR已停止，3新raw+second-set-point-boundary-correction留证。
+- 已对话播放4秒原声157.60–161.60并异步询问用户句头，问题已发不要再问；实际clipSHA/源映射见source-english-listening-request.json。
+- complete-point-pending-spec.json是具体新完整窗草案，尚未替换正式spec/packet/index，避免把未知声音错记pass。原正式spec现已明确被此反证阻止继续render/合并；绝不能派旧spec重渲。等用户核准句头后落准确两条双语cue、更新packet为新完整窗、rebind index，再原生预览和正式render，冻结TTS不变。
+- 同时仍待120.504秒本期新旁白用户核听。两项都是真实发出的核听，不用720p回话代答。
+
+- 最终已将正式spec和script的已知错误切点修正到161.60；second_set_point packet如实改为pending并记录uncertain_spans。旧index不冒认当前音频计划通过，原生gate将阻止渲染，直到用户核准句头并补两条完整双语cue后用工具rebind。complete-point-pending-spec与正式spec保持当前同字节，方便审查具体修改；上述“尚未替换”是此前步骤历史，已被此条取代。

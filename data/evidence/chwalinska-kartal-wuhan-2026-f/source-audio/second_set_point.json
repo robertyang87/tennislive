@@ -6,11 +6,30 @@
   "method": "asr_cross_checked",
   "reviewer": "OpenAI source-audio review agent; inspected retained full-source or finite-window independent ASR and available canonical captions, curated each complete source clause; no manual listening claimed",
   "reviewed_at": "2026-10-18T15:16:38.891705+00:00",
-  "status": "complete",
+  "status": "pending",
   "reviewed_from": 146.56,
-  "reviewed_to": 158.64,
-  "foreground_english": [],
-  "uncertain_spans": [],
+  "reviewed_to": 161.6,
+  "foreground_english": [
+    {
+      "from": 158.76,
+      "to": 160.58,
+      "en": "[句头待核] seals the deal.",
+      "zh": "锁定这一盘。"
+    },
+    {
+      "from": 160.68,
+      "to": 161.44,
+      "en": "Why not?",
+      "zh": "何乐而不为？"
+    }
+  ],
+  "uncertain_spans": [
+    {
+      "from": 158.76,
+      "to": 159.3,
+      "reason": "第一句句头多档转写不一致；最后专名context仅出低置信Ska，不能当完整Chwalinska确认。用户4秒实际源核听已发，等待答复。"
+    }
+  ],
   "_edit_id": "second_set_point",
   "source_key": "main",
   "evidence_basis": {
@@ -101,5 +120,12 @@
     "no_loudness_processing_or_measurement": true,
     "scope_note": "Every selected source second checked against retained full-source(main) or expanded-context finite(extended) raw transcripts. Unresolved original main29s,158s and post278s windows are outside all selected source windows."
   },
-  "no_foreground_english_reason": "Within this entire selected window, independent retained ASR results identify no reproducible foreground English sentence. Main-source canonical auto-caption short Go/Hey calls are not corroborated by full small.en/medium.en or finite turbo; no subtitle is invented. For extended3BP, the independent small and base.en outputs are empty in selected387.12–399.48; turbo-only very-low-confidenceThank you is a retained and documented model artifact, not an accepted utterance. This does not claim digital silence or manual hearing; court/crowd/player sounds remain."
+  "no_foreground_english_reason": "Within this entire selected window, independent retained ASR results identify no reproducible foreground English sentence. Main-source canonical auto-caption short Go/Hey calls are not corroborated by full small.en/medium.en or finite turbo; no subtitle is invented. For extended3BP, the independent small and base.en outputs are empty in selected387.12–399.48; turbo-only very-low-confidenceThank you is a retained and documented model artifact, not an accepted utterance. This does not claim digital silence or manual hearing; court/crowd/player sounds remain.",
+  "_previous_window_retracted": {
+    "from": 146.56,
+    "to": 158.64,
+    "reason": "原25fps反证在158.64仍活球；旧窗的无英文审查不证明完整点。"
+  },
+  "_correction_evidence": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/second-set-point-boundary-correction.json",
+  "_listening_request": "requests/reels/chwalinska-kartal-wuhan-2026-f/source-english-listening-request.json"
 }

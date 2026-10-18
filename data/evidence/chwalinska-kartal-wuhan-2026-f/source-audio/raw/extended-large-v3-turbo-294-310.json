@@ -1,0 +1,126 @@
+{
+  "model": "large-v3-turbo",
+  "source_key": "extended",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4",
+  "source_sha256": "b12a62ce71598faba8b69addc733e5b0682c8dc5f867935674c53b3418b165ad",
+  "clip": [
+    294,
+    310
+  ],
+  "timecode_basis": "absolute source seconds, clip offset added to every word and segment",
+  "duration": 16.0,
+  "created_at": "2026-10-18T16:13:48.435182+00:00",
+  "decoded_pcm_sha256": "96743469eae21f4a682dab8b63f772c8f253863bf77aeaa183a3165111e543cb",
+  "decoder": "ffmpeg16000Hz mono float32; no amplitude, loudness or noise filter",
+  "options": {
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true,
+    "vad_filter": false,
+    "condition_on_previous_text": false
+  },
+  "segments": [
+    {
+      "start": 306.06,
+      "end": 307.72,
+      "text": "I will ask a seal is the deal.",
+      "avg_logprob": -0.6497988246736073,
+      "no_speech_prob": 2.3741718226805153e-12,
+      "words": [
+        {
+          "w": " I",
+          "s": 306.06,
+          "e": 306.54,
+          "p": 0.19977079331874847
+        },
+        {
+          "w": " will",
+          "s": 306.54,
+          "e": 306.7,
+          "p": 0.6055898070335388
+        },
+        {
+          "w": " ask",
+          "s": 306.7,
+          "e": 306.94,
+          "p": 0.994326651096344
+        },
+        {
+          "w": " a",
+          "s": 306.94,
+          "e": 307.06,
+          "p": 0.278283029794693
+        },
+        {
+          "w": " seal",
+          "s": 307.06,
+          "e": 307.3,
+          "p": 0.4992064833641052
+        },
+        {
+          "w": " is",
+          "s": 307.3,
+          "e": 307.4,
+          "p": 0.37824633717536926
+        },
+        {
+          "w": " the",
+          "s": 307.4,
+          "e": 307.48,
+          "p": 0.9841873645782471
+        },
+        {
+          "w": " deal.",
+          "s": 307.48,
+          "e": 307.72,
+          "p": 0.9983453750610352
+        }
+      ]
+    },
+    {
+      "start": 307.92,
+      "end": 309.92,
+      "text": "Why not become more familiar with?",
+      "avg_logprob": -0.6497988246736073,
+      "no_speech_prob": 2.3741718226805153e-12,
+      "words": [
+        {
+          "w": " Why",
+          "s": 307.92,
+          "e": 308.38,
+          "p": 0.9971605539321899
+        },
+        {
+          "w": " not",
+          "s": 308.38,
+          "e": 308.62,
+          "p": 0.9978662133216858
+        },
+        {
+          "w": " become",
+          "s": 308.62,
+          "e": 309.08,
+          "p": 0.8801879286766052
+        },
+        {
+          "w": " more",
+          "s": 309.08,
+          "e": 309.32,
+          "p": 0.9976929426193237
+        },
+        {
+          "w": " familiar",
+          "s": 309.32,
+          "e": 309.68,
+          "p": 0.9976534247398376
+        },
+        {
+          "w": " with?",
+          "s": 309.68,
+          "e": 309.92,
+          "p": 0.9921865463256836
+        }
+      ]
+    }
+  ]
+}

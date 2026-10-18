@@ -1,0 +1,98 @@
+{
+  "schema": "tennislive.source-boundary-correction.v1",
+  "slug": "chwalinska-kartal-wuhan-2026-f",
+  "created_at": "2026-10-18T16:15:34.564492+00:00",
+  "status": "candidate_window_pending_name_confirmation_and_visual_boundary_acceptance",
+  "manual_listening_claimed": false,
+  "spec_or_packet_modified": false,
+  "retraction": {
+    "prior_main_window": [
+      146.56,
+      158.64
+    ],
+    "reason": "Window ends during live second-set set-point action; prior assumption that it retained a complete point is withdrawn. Audio-only empty-foreground finding for this old truncated scope does not establish a visually complete point.",
+    "extended_court_only_proposal_withdrawn": true,
+    "extended_reason": "New finite small and turbo294–310 establish foreground seals the deal around306–307.72. The old292–304 evidence did not cover this point ending."
+  },
+  "recommendation": {
+    "source_key": "main",
+    "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-HIvIvgwXkqs/HIvIvgwXkqs.mp4",
+    "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
+    "start": 146.56,
+    "end": 161.6,
+    "duration_change_seconds": 2.96,
+    "reason": "Retain complete serve and rally plus all of first post-point clause and independent Why not before next main utterance around161.68. Final visual boundary acceptance belongs to visual reviewer.",
+    "foreground_english": [
+      {
+        "start": 158.76,
+        "end": 160.58,
+        "en": "[Unconfirmed lead-in/name] seals the deal.",
+        "zh_candidate": "锁定这一盘",
+        "status": "partial_only_do_not_mark_complete",
+        "note": "No source word is muted or replaced; English subtitle cannot claim reconstructed Chwalinska as independently confirmed."
+      },
+      {
+        "start": 160.52,
+        "end": 161.5,
+        "en": "Why not?",
+        "zh_candidate": "何乐而不为",
+        "status": "cross_checked"
+      }
+    ]
+  },
+  "extended_alternative": {
+    "start": 296.28,
+    "last_point_reaction_sample": 308.8,
+    "next_point_sample": 308.96,
+    "foreground_starts": 306.06,
+    "first_clause_ends": 307.72,
+    "next_clause_starts": 307.88,
+    "reason_rejected_as_court_only": "Both independent finite ASR identify seals the deal, and another English phrase begins before close-up ends. A308.x end cannot be described as speech-free or a complete next sentence."
+  },
+  "name_evidence": {
+    "unprompted_main_variants": [
+      "Well that’s good seals the deal",
+      "And Alaska seals the deal",
+      "I will ask us seals the deal"
+    ],
+    "unprompted_extended_variants": [
+      "Let’s get seals the deal",
+      "I will ask a seal is the deal"
+    ],
+    "names_only_context_result": "Ska seals the deal. Why not?",
+    "names_only_first_word_probability": 0.24936023948248476,
+    "interpretation": "Phonetic variants are compatible with a difficult player name; they do not independently prove a complete exact spelling. Last finite context pass supplied only verified names Maja Chwalinska and Sonay Kartal, not a target sentence. No additional model retries planned."
+  },
+  "evidence_files": [
+    {
+      "path": "data/source_asr/HIvIvgwXkqs/small.en.json",
+      "sha256": "80e539b8eb1548ef18f3eabf038e70e7fb0df6bce6277deb251f04722f4933d8"
+    },
+    {
+      "path": "data/source_asr/HIvIvgwXkqs/medium.en.json",
+      "sha256": "edebfe27f734926753533e60ecfca10e80cc4c054272cb4cff0684962a9a2f8b"
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/large-v3-turbo-154-180.json",
+      "sha256": "c3943d4fe1da7d8e37fda035f198ea65f9f0e3f2ab99cd5ad72aec02dbe23a1f"
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-small-294-310.json",
+      "sha256": "aff190bc2e2a54c8f0516b0627e9266e9308d989e80ec4ab65cc4cb6a75f546a"
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/extended-large-v3-turbo-294-310.json",
+      "sha256": "43ad74e85b6c228a0f7df923d412715e54c968bd92b886ca5c78a4c13a7d7c02"
+    },
+    {
+      "path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/raw/main-large-v3-turbo-154-162-names-context.json",
+      "sha256": "dd2c0b911c6e2e2e017f345b49c5bf30564fbb2f1b6c13ba1a65c153c54e51a7"
+    }
+  ],
+  "required_packet_index_changes_after_root_freezes_window": [
+    "Replace second_set_point source-window packet reviewed_to and include actual foreground clauses plus the unresolved name until independently confirmed; retain source main URL and SHA if recommendation accepted.",
+    "Change only second_set_point quote fields after root instruction; bind new sentence timings relative to146.56.",
+    "Recompute plan hash and index binding for all affected segment indices once spec is frozen; re-run native foreground require with both source SHAs.",
+    "Do not transfer main timecodes to extended or reuse old no-foreground packet as evidence for extended306–308."
+  ]
+}
