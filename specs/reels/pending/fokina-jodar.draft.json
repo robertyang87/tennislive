@@ -18,7 +18,16 @@
       }
     ],
     "winner": "达维多维奇·福基纳",
-    "result": "1-6 7-6(5) 6-4"
+    "result": "1-6 7-6(5) 6-4",
+    "portrait": {
+      "image": "assets/reel/fokina-jodar-cover.jpg",
+      "focus": 0.694,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「alejandro davidovich fokina」「Rolex Shanghai Masters」，日期对上当地 2026-10-18（Asia/Shanghai；日期来源 flashscore dc_1_KdnK5SNb）（放宽：标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 10-18 19:09:13，落在这场的窗口 当地 10-18 16:35~19:54（决赛：结束后 45 分钟内算颁奖） 里（atp-media #4593956））；EXIF 拍摄 2026:10:18 19:09:13+08:00。② 分辨率：4000×2667，zoom 1 铺 1080×1440 是 1.85×（不放大）。③ 认人：最大那张脸像 达维多维奇·福基纳 0.54（≥ 0.34）。④ 睁眼：EAR 0.3197（≥ 0.16）。⑤ 钩子带：脸落在 y509~705，钩子顶边 790。排序：[True, False, True, True, True, 196, 0.5399]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/18/c588421a-7ea8-4c90-9b92-7e41660b95e5/Alejandro-DAVIDOVICH-FOKINA-vs-Rafael-JODAR4175.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/18/c588421a-7ea8-4c90-9b92-7e41660b95e5/Alejandro-DAVIDOVICH-FOKINA-vs-Rafael-JODAR4175.jpg（条目 #4593956，接口发布 2026-10-18T12:39:15Z，EXIF 拍摄 2026:10:18 19:09:13+08:00（UTC 2026-10-18T11:09:13Z），原图 4000×2667），说明原文「2026 Shanghai Davidovich Fokina」，署名 ZhouJun。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -255,5 +264,14 @@
     "技战术资料：no_readable_analysis；未核观点不进入旁白",
     "⚠️ 文案起草已随模型通道移除——钩子/论点/beats/旁白留给终审手写。",
     "⚠️ 封面抓取没成（SystemExit: 2026-10-16–2026-10-18 窗口里扫了 49 场，没有同时出现 ['alejandro davidovich fokina', 'rafael jodar'] 的比赛）——portrait 留空，终审或 render 前再补"
-  ]
+  ],
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "KdnK5SNb",
+      "start_utc": "2026-10-18T08:40:00Z",
+      "end_utc": "2026-10-18T11:09:25Z",
+      "source": "flashscore dc_1_KdnK5SNb（DC／DD）"
+    },
+    "replaced_under": ""
+  }
 }
