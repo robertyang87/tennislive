@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "chwalinska-kartal-wuhan-2026-f",
-  "written_at": "2026-10-18T16:39:06Z",
-  "code_sha": "7c3f4ea3fcc67b1174f8173aad2b493e878aef86",
-  "spec_sha256": "19ad3a5521a4c9afa34d35d9baeb174e4240e5c625c906844e8e93bd342e7726",
-  "film_sha256": "18bf148e131871f764b383163a8d578a39bde760d51063e9281fbb98156129db",
-  "film_bytes": 115501498,
-  "projection_sha256": "5916b4a3c70c75a002556de04473b8d8328f406a26d2604edce265a128e24da8",
+  "written_at": "2026-10-18T16:52:51Z",
+  "code_sha": "7db712e4cd0cd744f16b7b425e11257296018e21",
+  "spec_sha256": "69c5a26affff36416adb2e76bc4f3a1149c7e5003ccc211f06fa8d6dbaff262a",
+  "film_sha256": "a0cb284aa970a2455b5d254bc6da436a6996c53128b98b31e0aca04a4a75b551",
+  "film_bytes": 105373497,
+  "projection_sha256": "77bb8cd08af01ed238238b607fca439cd1c415cd5970032162f141c56ba80126",
   "claims": [
     [
       "segments",
@@ -68,6 +68,11 @@
     ],
     [
       "segments",
+      5,
+      "_score_inset_why"
+    ],
+    [
+      "segments",
       13,
       "_score_inset_why"
     ],
@@ -86,11 +91,11 @@
   },
   "artifacts": {
     "audio_review_binding.json": "2f06cc8f056d5163b773d4c6536cebe03651447ee8358ac35cc7f995dae38044",
-    "subtitles.ass": "872570ebde3c3cf20d39a7b5755fa54ad7e0f478e02673b7f0e77f9fc1e056dd",
+    "subtitles.ass": "b915f37290a9621de7bbe33835cf9ad3f1e04a383b3495ef9a2f63ddc6e4c9e2",
     "topbar.ass": "f7bd8564449a57be200482cca80ca789cf55543fce9532f77242dd5fbfd09e93",
     "poster.jpg": "24992fa737f4e2edd387b467530cff367a92221cafe0163f8367f956149c0dfb",
     "stat_card.jpg": "4a097b10fecc9f7523a4df753ac4378f82d0dde59562844eb513deb7350c9d50",
-    "scoreboard_qc.json": "112d28cf91c0cc22e090493e16c58c7dc6b6701276b861d137f211f583b56dfd"
+    "scoreboard_qc.json": "d6a75f46604eb69964ba7881b25c13ff5063da6e78334463fe2635f2e680ab2a"
   },
   "projection": {
     "slug": "chwalinska-kartal-wuhan-2026-f",
@@ -329,9 +334,9 @@
         "end": 265.12,
         "cx": 0.5,
         "track": false,
-        "fit": "crop",
-        "score_inset": true,
-        "subtitle_bottom": 360,
+        "fit": "full_source",
+        "score_inset": false,
+        "subtitle_bottom": 200,
         "narration": "",
         "quote": [
           {

@@ -149,7 +149,7 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-01.mkv",
-      "mask_sha256": "7483224b166318c829d75fe8d7959001c618a01ae3b213bf3ec50e14be5703e5"
+      "mask_sha256": "a9eb31d2fc64cdcb68481e62a6c2a938ca554edb62152e32956ad6c5abdf9c6a"
     },
     {
       "segment": 2,
@@ -256,23 +256,14 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-03.mkv",
-      "mask_sha256": "961e4e87595ba14b9b68d9b985fd7fbff480cf4569bc057ea26da354c3431ab2"
+      "mask_sha256": "fb38e810a00217193faacc78f28f3d96a4b16d07afba3c48ec4e81488439a92e"
     },
     {
-      "segment": 3,
-      "frames": 603,
-      "present_frames": 330,
-      "tag_frames": 296,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         346,
         652
-      ],
-      "right": 652,
-      "source_bounds": [
-        90,
-        828,
-        742,
-        980
       ],
       "body_bounds": [
         [
@@ -390,6 +381,11 @@
           115
         ]
       ],
+      "frames": 603,
+      "geometry_origin": [
+        90,
+        826
+      ],
       "header_bounds": [
         [
           0,
@@ -452,229 +448,32 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "b405fbc5dc4f41104451974362c4b38de44796cda354c060ca7eecfe2d976229",
       "measured_present_frames": 330,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-04.mkv",
-      "mask_sha256": "b405fbc5dc4f41104451974362c4b38de44796cda354c060ca7eecfe2d976229"
-    },
-    {
-      "segment": 5,
-      "frames": 1081,
-      "present_frames": 1002,
-      "tag_frames": 988,
-      "board_edges": [
-        378,
-        428
-      ],
-      "right": 428,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 330,
+      "right": 652,
+      "segment": 3,
       "source_bounds": [
         90,
         828,
-        518,
+        742,
         980
       ],
-      "body_bounds": [
-        [
-          0,
-          41,
-          425,
-          154
-        ],
-        [
-          0,
-          41,
-          426,
-          154
-        ],
-        [
-          0,
-          43,
-          391,
-          154
-        ],
-        [
-          0,
-          43,
-          425,
-          154
-        ],
-        [
-          0,
-          43,
-          426,
-          154
-        ],
-        [
-          0,
-          44,
-          377,
-          154
-        ],
-        [
-          0,
-          44,
-          398,
-          154
-        ],
-        [
-          0,
-          44,
-          413,
-          154
-        ],
-        [
-          0,
-          44,
-          421,
-          154
-        ],
-        [
-          0,
-          44,
-          425,
-          153
-        ],
-        [
-          0,
-          44,
-          425,
-          154
-        ],
-        [
-          0,
-          44,
-          426,
-          154
-        ],
-        [
-          0,
-          44,
-          427,
-          154
-        ],
-        [
-          0,
-          44,
-          428,
-          154
-        ]
-      ],
-      "header_bounds": [
-        [
-          0,
-          2,
-          162,
-          45
-        ],
-        [
-          0,
-          2,
-          163,
-          44
-        ],
-        [
-          0,
-          2,
-          163,
-          45
-        ],
-        [
-          0,
-          3,
-          163,
-          45
-        ],
-        [
-          0,
-          4,
-          163,
-          45
-        ],
-        [
-          0,
-          6,
-          163,
-          42
-        ],
-        [
-          0,
-          9,
-          163,
-          42
-        ],
-        [
-          0,
-          11,
-          163,
-          44
-        ],
-        [
-          0,
-          14,
-          19,
-          44
-        ],
-        [
-          0,
-          19,
-          28,
-          44
-        ],
-        [
-          0,
-          25,
-          163,
-          44
-        ]
-      ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
-      "measured_present_frames": 1002,
+      "tag_frames": 296,
       "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
-      "measurement_scope": "full_segment",
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-06.mkv",
-      "mask_sha256": "041e8705457ce40a546e635abb26793faf559e2f858f3a45f56e7109f6db71d8",
-      "decode_transform": {
-        "vf": "scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos,crop=1920:1080",
-        "size": [
-          1920,
-          1080
-        ]
-      }
+      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-04.mkv"
     },
     {
-      "segment": 6,
-      "frames": 784,
-      "present_frames": 783,
-      "tag_frames": 5,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         426,
         428
       ],
-      "right": 428,
-      "source_bounds": [
-        90,
-        828,
-        518,
-        980
-      ],
       "body_bounds": [
         [
           0,
@@ -712,6 +511,18 @@
           428,
           154
         ]
+      ],
+      "decode_transform": {
+        "size": [
+          1920,
+          1080
+        ],
+        "vf": "scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos,crop=1920:1080"
+      },
+      "frames": 784,
+      "geometry_origin": [
+        90,
+        826
       ],
       "header_bounds": [
         [
@@ -721,43 +532,31 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
-      "measured_present_frames": 783,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
-      "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-07.mkv",
       "mask_sha256": "d850dffd32b4a8add26c3d3ee7f8fafb7757585d0331b64caf6bda02fe89d9ef",
-      "decode_transform": {
-        "vf": "scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos,crop=1920:1080",
-        "size": [
-          1920,
-          1080
-        ]
-      }
-    },
-    {
-      "segment": 7,
-      "frames": 381,
-      "present_frames": 365,
-      "tag_frames": 354,
-      "board_edges": [
-        377,
-        426
-      ],
-      "right": 426,
+      "measured_present_frames": 783,
+      "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 783,
+      "right": 428,
+      "segment": 6,
       "source_bounds": [
         90,
         828,
-        516,
+        518,
         980
+      ],
+      "tag_frames": 5,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-07.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        377,
+        426
       ],
       "body_bounds": [
         [
@@ -802,6 +601,11 @@
           426,
           154
         ]
+      ],
+      "frames": 381,
+      "geometry_origin": [
+        90,
+        826
       ],
       "header_bounds": [
         [
@@ -871,36 +675,31 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "23d4da3dceeeb223ac0e15ff83ed2ebbd2b46e8651b240140c3381cd8a6077d2",
       "measured_present_frames": 365,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-08.mkv",
-      "mask_sha256": "23d4da3dceeeb223ac0e15ff83ed2ebbd2b46e8651b240140c3381cd8a6077d2"
-    },
-    {
-      "segment": 9,
-      "frames": 163,
-      "present_frames": 163,
-      "tag_frames": 163,
-      "board_edges": [
-        462,
-        462
-      ],
-      "right": 462,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 365,
+      "right": 426,
+      "segment": 7,
       "source_bounds": [
         90,
         828,
-        552,
+        516,
         980
+      ],
+      "tag_frames": 354,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-08.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        462,
+        462
       ],
       "body_bounds": [
         [
@@ -910,6 +709,18 @@
           154
         ]
       ],
+      "decode_transform": {
+        "size": [
+          1920,
+          1080
+        ],
+        "vf": "scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos,crop=1920:1080"
+      },
+      "frames": 163,
+      "geometry_origin": [
+        90,
+        826
+      ],
       "header_bounds": [
         [
           0,
@@ -918,43 +729,31 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
-      "measured_present_frames": 163,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
-      "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-10.mkv",
       "mask_sha256": "d9d88ddfdc64be4f4487909071bfe059645bbada6839540fe73780b8e5fade4e",
-      "decode_transform": {
-        "vf": "scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos,crop=1920:1080",
-        "size": [
-          1920,
-          1080
-        ]
-      }
-    },
-    {
-      "segment": 11,
-      "frames": 314,
-      "present_frames": 314,
-      "tag_frames": 313,
-      "board_edges": [
-        461,
-        462
-      ],
+      "measured_present_frames": 163,
+      "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 163,
       "right": 462,
+      "segment": 9,
       "source_bounds": [
         90,
         828,
         552,
         980
+      ],
+      "tag_frames": 163,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-10.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        461,
+        462
       ],
       "body_bounds": [
         [
@@ -976,6 +775,18 @@
           154
         ]
       ],
+      "decode_transform": {
+        "size": [
+          1920,
+          1080
+        ],
+        "vf": "scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos,crop=1920:1080"
+      },
+      "frames": 314,
+      "geometry_origin": [
+        90,
+        826
+      ],
       "header_bounds": [
         [
           0,
@@ -996,43 +807,31 @@
           45
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
-      "measured_present_frames": 314,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
-      "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-12.mkv",
       "mask_sha256": "1cd0657d4f18e5659c0be27fbfffb4fba25a2aab6089488e50065d3abb256831",
-      "decode_transform": {
-        "vf": "scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos,crop=1920:1080",
-        "size": [
-          1920,
-          1080
-        ]
-      }
+      "measured_present_frames": 314,
+      "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 314,
+      "right": 462,
+      "segment": 11,
+      "source_bounds": [
+        90,
+        828,
+        552,
+        980
+      ],
+      "tag_frames": 313,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-12.mkv"
     },
     {
-      "segment": 12,
-      "frames": 1184,
-      "present_frames": 506,
-      "tag_frames": 457,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         408,
         462
-      ],
-      "right": 462,
-      "source_bounds": [
-        90,
-        826,
-        552,
-        980
       ],
       "body_bounds": [
         [
@@ -1150,6 +949,11 @@
           154
         ]
       ],
+      "frames": 1184,
+      "geometry_origin": [
+        90,
+        826
+      ],
       "header_bounds": [
         [
           0,
@@ -1224,20 +1028,24 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        826
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "5ffb2f4866f73011db8f3a24d8f40692f033a59e8dbdcb98c4730d2151a38826",
       "measured_present_frames": 506,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 506,
+      "right": 462,
+      "segment": 12,
+      "source_bounds": [
+        90,
+        826,
+        552,
+        980
+      ],
+      "tag_frames": 457,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-13.mkv",
-      "mask_sha256": "5ffb2f4866f73011db8f3a24d8f40692f033a59e8dbdcb98c4730d2151a38826"
+      "mask": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/score_masks/segment-13.mkv"
     }
   ]
 }
