@@ -431,9 +431,7 @@ jobs:
         env:
           SLUG: ${{ github.event.inputs.slug }}
           DISPATCHED_BY: ${{ github.triggering_actor }}
-        run: |
-          PYTHONPATH=src python tools/interview_preflight.py --slug "$SLUG" --skip-copy --dispatched-by "$DISPATCHED_BY" 2>&1 | tee /tmp/preflight_out.md; echo "EXIT:$?" | tee -a /tmp/preflight_out.md
-          cp /tmp/preflight_out.md ./preflight_debug.md || true
+        run: PYTHONPATH=src python tools/interview_preflight.py --slug "$SLUG" --skip-copy --dispatched-by "$DISPATCHED_BY"
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
       # 匹配不上，看起来像「这个视频没有格式」或者「cookie 过期了」。
