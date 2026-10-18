@@ -91,7 +91,7 @@
     "davidovichfokina-jodar-shanghai-2026-f-speech": {
       "since": "2026-10-18T14:08:50Z",
       "inputs_sha256": "38bc6d699d29b230a54940acd59f3a7d6b652c965e59ec4cb61f0b84a4ccc1e4",
-      "why": "预检：转写（subs 在当前转写指纹上量出来的）：第二份 ASR 在当前转写指纹上量到：两份转写对不上 23.5%，超过闸门 12%。**不出片。** 逐处看 output/interviews/davidovichfokina-jodar-shanghai-2026-f-speech/transcript_diff.md，把确认过的写进 spec 的 `en_fixed`。"
+      "why": "预检：转写（subs 在当前转写指纹上量出来的）：第二份 ASR 在当前转写指纹上量到：分歧 23.5% 超过认领的天花板 18%。这个量级不是虚词能解释的，必然有整段对不上——认领挡不住，去查源。"
     }
   }
 }
