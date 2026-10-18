@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=vOrKPuPncdg",
+  "source_sha256": "a8f6399cd0a34e284d0b15afd8b80ad488c09824bba72ce567552aa63d204cbb",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 199.4,
+  "reviewed_to": 216.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 201.8,
+      "end": 205.8,
+      "en": "Finally he takes it. And there is the release of the emotion.",
+      "zh": "终于拿下了，情绪一下子释放出来。"
+    },
+    {
+      "start": 210.9,
+      "end": 214.1,
+      "en": "Two prize fighters at the end of 12 rounds.",
+      "zh": "像两个打满十二回合的拳手。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/vOrKPuPncdg/small.en.json + medium.en.json",
+  "review_note": "同一条：第五盘 5-1 阿利亚西姆的赛点、庆祝和网前握手。两档转写（small.en / medium.en）逐词一致（201.8–214.1）。段尾 216.4 在 217.5 转场之前。"
+}

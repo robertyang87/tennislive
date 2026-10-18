@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=NKFVL_lELNE",
+  "source_sha256": "ca0f94dbbb70dc2f9318a792af879f25c6da863edd151928e14a43040dc752c4",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 142.4,
+  "reviewed_to": 164.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 142.62,
+      "end": 152.7,
+      "en": "For the second time in his career, Alejandro Davidovich Fokina is into the final of a Masters 1000.",
+      "zh": "生涯第二次，打进大师赛决赛。"
+    },
+    {
+      "start": 157.2,
+      "end": 164.2,
+      "en": "And for the second time in his career, he gets the better of Alexander Zverev.",
+      "zh": "也是生涯第二次赢下兹维列夫。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/NKFVL_lELNE/small.en.json + medium.en.json",
+  "review_note": "同一条：赛点之后他笑、网前握手、指天、包厢和看台的西班牙国旗。两档转写（small.en / medium.en）逐词一致。段尾 164.8 在下一句（168.3）之前。"
+}

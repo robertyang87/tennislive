@@ -1,0 +1,21 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=56wc7QQEwEw",
+  "source_sha256": "76f845de31c1a1ff176d92d56332b350b086ae3a304530ced81b85c816252cff",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 348.9,
+  "reviewed_to": 356.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 349.12,
+      "end": 354.68,
+      "en": "And that is superb from the Australian, just superb.",
+      "zh": "这位澳大利亚人打得太漂亮了。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/56wc7QQEwEw/small.en.json + medium.en.json",
+  "review_note": "同一条：德米纳尔保发之后。两档转写（small.en / medium.en）逐词一致（348.98–354.68）。"
+}

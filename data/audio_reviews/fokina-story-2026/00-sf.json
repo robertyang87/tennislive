@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=TXmXxVJ3o_M",
+  "source_sha256": "6e5692aec592769cef514db40f6195a150a3e007e124f3e0958f74b71bfa9ad4",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 286.6,
+  "reviewed_to": 303.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 288.88,
+      "end": 292.52,
+      "en": "For the second time in his career,",
+      "zh": "职业生涯第二次，"
+    },
+    {
+      "start": 293.52,
+      "end": 299.66,
+      "en": "Alejandro Davidovich Fokina is into the final of a Masters 1000.",
+      "zh": "福基纳打进了大师赛决赛。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/TXmXxVJ3o_M/small.en.json + medium.en.json",
+  "review_note": "冷开场：Tennis TV 官方集锦（TXmXxVJ3o_M）决胜盘 5-3 赛点、他笑着回头、两人网前拥抱。两档转写（small.en / medium.en）逐词一致（288.88–299.66，名字两档都转错，按官方标题写 Davidovich Fokina）。段尾 303.8 在 Tennis TV 片尾板（304.4 起）之前。"
+}

@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=9u2kSI8md88",
+  "source_sha256": "cfaa4c8dffeca303352dc76dcdf6077e831fb5137bead18762b0116587411341",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 410.0,
+  "reviewed_to": 420.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/9u2kSI8md88/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/9u2kSI8md88 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 410.0–420.8 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "Tennis TV 官方集锦（9u2kSI8md88）第二盘抢七：400–427 同一个广角机位。两档转写在 397.5–421.0 无词。复出首战 6-4 6-4 胜胡安·塞伦多洛（ATP 成都第二轮报道），全场没面对破发点、抢七 3-6 落后：ATP 成都决赛报道＋Tennis Majors。"
+}

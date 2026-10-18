@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=56wc7QQEwEw",
+  "source_sha256": "76f845de31c1a1ff176d92d56332b350b086ae3a304530ced81b85c816252cff",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 334.8,
+  "reviewed_to": 348.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/56wc7QQEwEw/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/56wc7QQEwEw 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 334.8–348.8 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "同一条：德米纳尔发球局的后几分，328.5–348.98 两档转写无词。三个冠军点、16 毫米：ATP 华盛顿决赛报道（ATP 自己的测量）＋Tennis.com；那一局 10 分钟：Eastern Mirror（AFP）。"
+}

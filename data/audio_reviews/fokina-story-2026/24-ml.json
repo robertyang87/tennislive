@@ -1,0 +1,63 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=7JY8UtZrvFg",
+  "source_sha256": "73376feeb8de3c0f2d8f689abcceb0375413cf1445af305dd75e93be366e592d",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 410.6,
+  "reviewed_to": 445.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 410.84,
+      "end": 416.88,
+      "en": "Mission finally accomplished for Alejandro Davidovich Fokina.",
+      "zh": "福基纳终于做到了。"
+    },
+    {
+      "start": 418.22,
+      "end": 422.72,
+      "en": "He's a champion on the ATP tour for the very first time.",
+      "zh": "他第一次拿到巡回赛冠军，"
+    },
+    {
+      "start": 423.76,
+      "end": 426.9,
+      "en": "And he does it on Spanish soil in Mallorca.",
+      "zh": "就在西班牙的马略卡。"
+    },
+    {
+      "start": 429.78,
+      "end": 430.74,
+      "en": "What a moment.",
+      "zh": "多美的时刻。"
+    },
+    {
+      "start": 431.56,
+      "end": 433.92,
+      "en": "It's been a long time coming.",
+      "zh": "这一天等了很久，"
+    },
+    {
+      "start": 434.24,
+      "end": 435.54,
+      "en": "you have to say that.",
+      "zh": "不得不说。"
+    },
+    {
+      "start": 435.54,
+      "end": 439.46,
+      "en": "And the disappointments of finals past",
+      "zh": "过去那些决赛的失落，"
+    },
+    {
+      "start": 439.46,
+      "end": 444.38,
+      "en": "washed away in a wave of emotion.",
+      "zh": "在这一刻全被冲走了。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/7JY8UtZrvFg/small.en.json + medium.en.json",
+  "review_note": "同一条：赛点之后他平静地走到网前握手（420–428），转身怒吼（432.5），看台上的西班牙国旗、包厢（435–447）。medium 410.84–444.38 逐词；small 漏了第一句、其余逐词一致，第一句按 medium 与 ATP 报道写。"
+}

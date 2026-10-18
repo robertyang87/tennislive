@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=vOrKPuPncdg",
+  "source_sha256": "a8f6399cd0a34e284d0b15afd8b80ad488c09824bba72ce567552aa63d204cbb",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 150.0,
+  "reviewed_to": 161.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/vOrKPuPncdg/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/vOrKPuPncdg 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 150.0–161.4 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "温网官方集锦（vOrKPuPncdg）：150–172 记分条第四盘 4-3、5-4（162 起对手 5-4）。两档转写在 149.1–165.5 无词。扭伤脚踝、医疗暂停在对手 5-4 发球胜赛时：The Star（Reuters）＋Tennis Majors。"
+}

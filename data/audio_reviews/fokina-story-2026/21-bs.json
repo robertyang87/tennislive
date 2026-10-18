@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=MLCcQ08dVaU",
+  "source_sha256": "02621a3312f5e2ca42d9ef5f14961b977fd86c2b660e2818660616d1b44acee0",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 459.4,
+  "reviewed_to": 469.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/MLCcQ08dVaU/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/MLCcQ08dVaU 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 459.4–469.6 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "同一条：网前握手、颁奖台上他站在一旁。两档转写在 459.0–485 无词（485.4 Thank you 在片尾）。生涯最高第 14：ATP 西语简介＋ATP 上海赛前要点 PDF。"
+}

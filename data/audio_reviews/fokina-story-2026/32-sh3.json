@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=x2hTyMZ_k8k",
+  "source_sha256": "d38f0be995343a31c23d9bafac1e7e9adc39431de46283275dfdf8af04f9e2e5",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 105.9,
+  "reviewed_to": 116.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 106.16,
+      "end": 112.12,
+      "en": "Oh, he's done it!",
+      "zh": "他做到了！"
+    },
+    {
+      "start": 113.48,
+      "end": 115.84,
+      "en": "What a victory that is!",
+      "zh": "多么漂亮的胜利！"
+    }
+  ],
+  "asr_evidence": "data/source_asr/x2hTyMZ_k8k/small.en.json + medium.en.json",
+  "review_note": "同一条：抢七最后一分、他对着镜头怒吼、网前握手。两档转写（small.en / medium.en）逐词一致（106.16–128.72）。段尾 116.4 在 For Alejandro（119.30）之前。"
+}

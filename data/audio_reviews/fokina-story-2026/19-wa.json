@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=56wc7QQEwEw",
+  "source_sha256": "76f845de31c1a1ff176d92d56332b350b086ae3a304530ced81b85c816252cff",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 455.2,
+  "reviewed_to": 462.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 455.58,
+      "end": 458.84,
+      "en": "It's the other way for Alejandro Davidovich Fokina.",
+      "zh": "福基纳那边，是另一番滋味。"
+    },
+    {
+      "start": 459.02,
+      "end": 462.18,
+      "en": "How will he recover from another setback?",
+      "zh": "又一次挫折，他要怎么走出来？"
+    }
+  ],
+  "asr_evidence": "data/source_asr/56wc7QQEwEw/small.en.json + medium.en.json",
+  "review_note": "同一条：德米纳尔抢七夺冠之后，他坐在场边把头埋进毛巾。medium 455.58–462.52；small 把第二句转成 oh he recovered from another setback，按 medium 与语序写成问句。段尾 462.4 在主持人开口（462.52）之前，字幕收到 462.18。"
+}

@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=MLCcQ08dVaU",
+  "source_sha256": "02621a3312f5e2ca42d9ef5f14961b977fd86c2b660e2818660616d1b44acee0",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 446.6,
+  "reviewed_to": 459.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 446.94,
+      "end": 453.66,
+      "en": "Well, it's the biggest title of Joao Fonseca's very young career so far.",
+      "zh": "这是丰塞卡年轻生涯里最大的冠军，"
+    },
+    {
+      "start": 453.66,
+      "end": 459.0,
+      "en": "As he wins the 500 level event here in Basel.",
+      "zh": "他拿下了巴塞尔的五百赛。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/MLCcQ08dVaU/small.en.json + medium.en.json",
+  "review_note": "Tennis TV 官方集锦（MLCcQ08dVaU）：十月巴塞尔决赛赛点、丰塞卡庆祝与网前握手。两档转写（small.en / medium.en）逐词一致（446.94–459.00；small 头一个词转成 That's，按 medium）。"
+}

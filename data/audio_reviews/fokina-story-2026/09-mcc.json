@@ -1,0 +1,33 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=IUIM1yIVFjA",
+  "source_sha256": "0c6c616eb2ee59564d56aefd36fddbfd600a4a631259601037f730b5ec8f616a",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 133.2,
+  "reviewed_to": 142.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 134.36,
+      "end": 136.36,
+      "en": "Alejandro, first but not last,",
+      "zh": "亚历杭德罗，第一次，"
+    },
+    {
+      "start": 136.36,
+      "end": 137.72,
+      "en": "I'm pretty sure about it.",
+      "zh": "但肯定不是最后一次。"
+    },
+    {
+      "start": 138.72,
+      "end": 142.16,
+      "en": "And I would like to tell you congratulations.",
+      "zh": "我想跟你说声恭喜。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/IUIM1yIVFjA/small.en.json + medium.en.json",
+  "review_note": "同一条：颁奖仪式上西西帕斯拿着话筒对他讲话，138 切到他捧着亚军盘笑。两档转写（small.en / medium.en）逐词一致（134.36–142.16）。"
+}

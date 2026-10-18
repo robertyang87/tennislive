@@ -1,0 +1,27 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=r2K-9DFDzmM",
+  "source_sha256": "b351bdee08020751be87f69f45a7253415c2bf68112e2e05fba3e0f7f1db9db1",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-18T01:26:13.054587+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 459.9,
+  "reviewed_to": 467.7,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 460.28,
+      "end": 464.1,
+      "en": "After match point heartache in one of his previous finals,",
+      "zh": "他在之前一次决赛里痛失赛点，"
+    },
+    {
+      "start": 464.52,
+      "end": 467.28,
+      "en": "this time he saves a couple of match points.",
+      "zh": "这一次，他救下了两个赛点。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/r2K-9DFDzmM/small.en.json + medium.en.json",
+  "review_note": "同一条：凯茨马诺维奇夺冠后的包厢和颁奖。两档转写（small.en / medium.en）逐词一致（460.28–469.02；small 把 match 转成 Matt's，按 medium 与语义写）。段首 459.9 在上一句 Delray Beach（455.70）之后，段尾 467.7 在 Champion, everyone（468.18）之前。"
+}
