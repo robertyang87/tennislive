@@ -5,6 +5,10 @@ production failures. Historical inventory diagnostics are not validation passes;
 see `data/production_history_snapshot.json` and the CI-only tests helper. Actual
 preflight, render and final QC never consult that snapshot.
 
+## Global narration quality (owner update 2026-10-19)
+
+All columns' new or actively revised narration must express meaning through planned emphasis and pauses and resolve polyphonic words in context. Follow the shared [global voice workflow](global-voice-quality.md) from writing and representative samples through review of every actual audio input, scoped repair, frozen reuse and actual final-film seam checks. Backend capability checks must expose unsupported controls; automated recognition, word marks and finite acoustic evidence cannot stand in for a complete listening review. Record the true method, scope and unresolved findings. This requirement does not automatically remake or republish historical films or restore removed loudness/gain checks.
+
 ## Global time wording
 
 All columns use fact-checked date and a natural Beijing-time daypart: 夜里、凌晨、

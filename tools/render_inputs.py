@@ -405,7 +405,7 @@ PUBLISH_FIELDS: dict[str, frozenset[str]] = {
 #: 成片的那一份（凭证本来就钉着它），换过就说明这已经不是那一次渲染的产物了。
 #: 名字和 build_match_reel.POSTER_NAME / STAT_CARD_NAME 对账，判据在测试里。
 ARTIFACTS = ("audio_review_binding.json", "subtitles.ass", "topbar.ass", "poster.jpg", "stat_card.jpg",
-             "scoreboard_qc.json")
+             "scoreboard_qc.json", "voice_quality_inventory.json")
 
 #: spec 里长这样的字符串当成「引用了一个本地文件」：封面照片、整屏证据图、
 #: 背景音乐、抠图……它们的**字节**同样是渲染输入——同一个路径换一张图，

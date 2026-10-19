@@ -41,6 +41,11 @@ def test_missing_published_player_blocks_message_before_send(tmp_path, monkeypat
     from tennislive.cli import cmd_publish_pushplus
     from tennislive.render import pushmsg
     from tennislive.publish import pushplus
+    import voice_quality_gate
+
+    # Isolate the published-player gate; the voice-quality tests separately
+    # verify that an unreviewed video cannot reach network probes or POST.
+    monkeypatch.setattr(voice_quality_gate, "require_publish", lambda *a, **kw: None)
 
     (tmp_path / "push.html").write_text('<a href="https://example.com/watch.html">播放</a>')
     (tmp_path / "watch.html").write_text("approved player page")

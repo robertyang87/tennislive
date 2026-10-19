@@ -66,6 +66,10 @@ def test_actual_check_page_push_retain_identical_prefix(tmp_path, monkeypatch, c
     import sys
 
     monkeypatch.syspath_prepend(str(Path(push_reel.__file__).parent))
+    # Isolate the title's check/page/push contract. Actual voice-review
+    # completeness and send blocking are covered by the voice-quality tests.
+    import voice_quality_gate
+    monkeypatch.setattr(voice_quality_gate, 'require_publish', lambda *a, **kw: None)
     monkeypatch.chdir(tmp_path)
     budget = copy_hook_budget('10.2', column)
     caption = _caption(tmp_path, column, '1' * (budget - 1) + '\u3000?')
@@ -75,7 +79,7 @@ def test_actual_check_page_push_retain_identical_prefix(tmp_path, monkeypatch, c
     (out / push_reel.STAT_CARD_NAME).write_bytes(b'unit-test-stat-card')
     expected = f'10.2{column}|' + '1' * (budget - 1) + '?'
     observed = {}
-    # Only external IO is stubbed; title validation and HTML generation are real.
+    # Title validation and HTML generation remain real; external IO is stubbed.
     monkeypatch.setattr(push_reel, 'wait_for_copy_page',
                         lambda url, expect: observed.setdefault('page_expect', expect))
     monkeypatch.setattr(push_reel, 'wait_for_video', lambda url: None)
