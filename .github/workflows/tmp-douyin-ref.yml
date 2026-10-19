@@ -13,55 +13,40 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-          sparse-checkout: |
-            tools
-            src
-            data
-          sparse-checkout-cone-mode: true
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: search
+      - name: scan
         run: |
-          pip install -q requests pillow numpy
+          pip install -q requests
           mkdir -p out
-          export PYTHONPATH=src:tools
-          for args in "--player Pegula --event Dubai --date 2026-02-21 --days 3" \
-                      "--player Kostyuk --event Madrid --date 2026-05-02 --days 3" \
-                      "--player Zheng --event Beijing --date 2026-10-05 --days 2" \
-                      "--player Chwalinska --event Wuhan --date 2026-10-18 --days 2"; do
-            echo "########## $args" | tee -a out/photo_search.txt
-            timeout 600 python3 tools/find_cover_photo.py $args 2>&1 | tee -a out/photo_search.txt || true
-          done
-          # WTA 照片接口按球员名粗扫（标题含「<名>, <赛事> 2026」）
-          python3 - <<'PY' | tee -a out/photo_search.txt
-          import requests, re, json
+          python3 - <<'PY' | tee out/pegula_scan.txt
+          import requests, time
           H={"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36"}
-          want=[("Pegula","Dubai"),("Kostyuk","Madrid"),("Zheng","Beijing"),("Chwalinska","Wuhan"),("Chwalińska","Wuhan")]
+          # references 按 WTA 球员 id 筛：先从文章接口里找 Pegula 的 id
           hits=[]
-          for page in range(0,120):
-              try:
-                  r=requests.get(f"https://api.wtatennis.com/content/wta/photo/EN/?pageSize=100&page={page}",headers=H,timeout=30)
-                  d=r.json()
-              except Exception as e:
-                  print("page",page,"err",e); break
-              items=d.get("content") or []
-              if not items: break
-              for it in items:
-                  t=(it.get("title") or "")+" "+(it.get("description") or "")+" "+(it.get("imageUrl") or "")
-                  for p,e in want:
-                      if p.lower() in t.lower() and e.lower() in t.lower() and "2026" in t:
-                          od=it.get("originalDetails") or {}
-                          hits.append((p,e,it.get("publishFrom"),od.get("width"),od.get("height"),it.get("title"),(it.get("description") or "")[:200],it.get("imageUrl")))
-              last=items[-1].get("publishFrom")
-              if page%10==0: print("page",page,"last",last)
-              if last and str(last)[:7] < "2026-02": break
-          print("### WTA photo API hits", len(hits))
+          for base in ("photo","text"):
+              for page in range(0,400):
+                  try:
+                      d=requests.get(f"https://api.wtatennis.com/content/wta/{base}/EN/?pageSize=100&page={page}",headers=H,timeout=30).json()
+                  except Exception as e:
+                      print(base,"page",page,"err",e); break
+                  items=d.get("content") or []
+                  if not items: break
+                  for it in items:
+                      ld=it.get("leadMedia") or {}
+                      t=" ".join(str(x) for x in (it.get("title"),it.get("description"),it.get("imageUrl"),ld.get("title"),ld.get("imageUrl")))
+                      tl=t.lower()
+                      if "pegula" in tl and "dubai" in tl and "2026" in tl:
+                          od=it.get("originalDetails") or ld.get("originalDetails") or {}
+                          hits.append((base,it.get("publishFrom"),od.get("width"),od.get("height"),it.get("title"),ld.get("title"),it.get("imageUrl") or ld.get("imageUrl"),it.get("onDemandUrl") or ld.get("onDemandUrl")))
+                  last=items[-1].get("publishFrom") or 0
+                  if page%20==0: print(base,"page",page,"last",time.strftime("%Y-%m-%d",time.gmtime(int(last)/1000)))
+                  if int(last)/1000 < 1771200000: break   # 2026-02-16
+          print("### hits",len(hits))
           for h in hits: print(" | ".join(str(x) for x in h))
           PY
+          curl -sSL -A "Mozilla/5.0" -o out/pegula_dubai_day7.jpg "https://photoresources.wtatennis.com/wta/photo/2026/10/14/c104339b-6014-4a95-9d1f-5aa260bf57f4/Jessica_Pegula_-_Dubai_Duty_Free_Tennis_Championships_2026_-_Day_7-DSC_1112A.jpg"
+          ls -la out
       - name: upload
         if: always()
-        run: gh release upload ref-douyin-7698221105147890959 --clobber out/photo_search.txt
+        run: |
+          cd out; find . -size 0 -delete
+          for f in *; do gh release upload ref-douyin-7698221105147890959 --clobber "$f" || true; done
