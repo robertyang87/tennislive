@@ -12527,6 +12527,13 @@ def main() -> int:
             # ⚠️ 读的是 spec **文件的字节**，不是 load_spec 归一化之后的 dict——
             # 质检凭证钉的也是文件字节，两边必须是同一个东西。
             # ⚠️ 写不成只警告、不打红这一趟（`record_best_effort` 的 docstring）。
+            # Capture actual frozen speech before sealing render inputs. This
+            # records bytes/requests only; it grants no pronunciation/prosody
+            # approval. The separate publication gate requires real review.
+            if tts_bundle_input or tts_bundle_output:
+                from voice_quality_gate import capture_inventory  # noqa: PLC0415
+                capture_inventory(outdir, spec=Path(args.spec),
+                                  bundle=tts_bundle_input or tts_bundle_output)
             import render_inputs  # noqa: PLC0415
             render_inputs.record_best_effort(Path(args.spec), outdir, film,
                                              Path(__file__).resolve().parents[1])

@@ -7,6 +7,10 @@ description: Produce and audit “赛场之上” tennis videos with human-writt
 
 Use this as the production contract shared by the human editor, renderer, QC, and publisher.
 
+## Owner global voice update 2026-10-19
+
+All columns' new narration must plan semantic emphasis and pauses, resolve polyphonic characters in context, and verify the actual delivered audio. Follow [the global voice workflow](../../docs/global-voice-quality.md): script → semantic reading plan → a few representative samples → all actual audio inputs reviewed → scoped rewrites/pronunciation fixes → frozen reuse → final-film seam review. Unsupported required backend controls fail before synthesis; optional degradation must warn explicitly. ASR, word marks and F0 are bounded evidence, never a fabricated full listening approval. Historical published films are not automatically rerendered or resent.
+
 ## Owner update 2026-10-13: remove loudness processing and checks
 
 For ordinary native match reels, preserve source audio at unity and remove automatic gain, ducking and normalization. Do not scan source/final loudness, predict threshold silence, compare source gain/PCM, or repair naturally quiet audio based on those checks. Keep pronunciation review, complete source speech, caption timing, audio-stream presence and duration, visual QC, artifact hashes and unique PushPlus receipts. Historical loudness rules are superseded for this production path; other pipelines and explicitly approved special audio modes retain their own contracts. Do not rerender or resend published movies merely to apply the new rule.

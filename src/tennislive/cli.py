@@ -825,6 +825,22 @@ def cmd_publish_pushplus(args) -> int:
     elif title_f.exists():
         title = title_f.read_text(encoding="utf-8").strip() or title
     html = src.read_text(encoding="utf-8")
+    # Video publication has the same voice gate as push_reel. Still/image
+    # packages keep their existing path; a removed metadata file must not let
+    # a video link bypass the gate. Run before CDN probes or any message POST.
+    if (any((d / name).is_file() for name in ("render.json", "narration.json", "watch.html"))
+            or any(d.glob("*.mp4")) or ".mp4" in html.lower()
+            or "<video" in html.lower() or "/watch.html" in html.lower()):
+        tools_path = str(Path(__file__).resolve().parents[2] / "tools")
+        if tools_path not in sys.path:
+            sys.path.insert(0, tools_path)
+        from voice_quality_gate import require_publish
+
+        try:
+            require_publish(d)
+        except (OSError, ValueError) as exc:
+            console.print(f"[red]{exc}[/red]")
+            return 1
     # 兼容旧模板：去掉图片占位符
     import re
 
