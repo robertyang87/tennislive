@@ -1,0 +1,67 @@
+{
+  "status": "ok",
+  "model": "buffalo_s-v0.7",
+  "identity": {
+    "verdict": "match",
+    "name": "伊埃拉",
+    "similarity": {
+      "伊埃拉": 0.6155,
+      "帕里": 0.0839
+    },
+    "missing": [],
+    "expected": [
+      "伊埃拉",
+      "帕里"
+    ],
+    "face": [
+      305,
+      121,
+      479,
+      331
+    ],
+    "face_px": 209.5,
+    "reason": "像 伊埃拉（0.62 ≥ 0.34）",
+    "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+    },
+    "target": [
+      "伊埃拉"
+    ]
+  },
+  "eyes": {
+    "verdict": "open",
+    "ear": 0.2846,
+    "ear_each": [
+      0.293,
+      0.2763
+    ],
+    "face": [
+      305,
+      121,
+      479,
+      331
+    ],
+    "face_px": 209.5,
+    "reason": "眼睛纵横比 0.28 ≥ 0.16",
+    "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+    }
+  },
+  "problems": [],
+  "warnings": [],
+  "region": [
+    588,
+    0,
+    1398,
+    1080
+  ],
+  "frame": "/workspace/scratch/eala-C3SB38PJjtM-cover/actual-youtube-1080/actual-287.0.png",
+  "frame_at": 287.0,
+  "target": [
+    "伊埃拉"
+  ]
+}

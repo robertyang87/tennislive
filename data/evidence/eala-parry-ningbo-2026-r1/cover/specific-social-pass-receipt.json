@@ -1,0 +1,61 @@
+{
+  "checked_at_utc": "2026-10-19T14:18:44.283310+00:00",
+  "status": "No qualified professional photograph of the actual Eala-Parry Ningbo match obtained",
+  "specific_pass": [
+    {
+      "channel": "GMA current match report1006447",
+      "http": 200,
+      "result": "Actual og:image is AFP__20260924__C99D8G6 TennisSinWta, old Singapore24Sep"
+    },
+    {
+      "channel": "Philstar current match report2564365",
+      "http": 200,
+      "result": "Actual caption explicitly Eala-Prozorova Singapore24Sep / Roslan Rahman AFP"
+    },
+    {
+      "channel": "Tournament Instagram wtaningboopen, ningboopen; player alex.eala",
+      "http": 200,
+      "result": "Public profile metadata fetched; post photos not exposed in logged-out payload. web_profile_info APIs return401 require_login, no genuine media access"
+    },
+    {
+      "channel": "Tournament Weibo uid7859444706",
+      "result": "m.weibo.cn API returns Sina Visitor System challenge; weibo.com ajax returns403. Cannot call this no photos"
+    },
+    {
+      "channel": "Official WeChat account 宁波网球公开赛 specific query",
+      "http": 200,
+      "result": "Search found official17Oct draw and Kostyuk cityvisit posts; no match recap. Other latest19Oct items include official opening ceremony/qualifying posts; no verified Eala-Parry match photograph"
+    },
+    {
+      "channel": "WTA X first-set post2112156805279240571",
+      "http": 200,
+      "result": "Actual syndication JSON contains video only, not photograph"
+    },
+    {
+      "channel": "OneSports X match result2112169458932589021",
+      "http": 200,
+      "result": "Four original1920x1080 images retrieved and visually reviewed. All four explicitly television broadcast screenshots with PremierSports2 LIVE logo, not photographer captures. Useful actualsame-match images but not eligible professional cover"
+    },
+    {
+      "channel": "Tournament Facebook public profile",
+      "http": 200,
+      "result": "Public page shell fetched but no matchpost media; exact-match search only broadcaster/news resultposts, no actual tournament photographer image"
+    }
+  ],
+  "wta_final_refresh": {
+    "http": 200,
+    "latest": [
+      [
+        4594648,
+        "Alexandra Eala, Wuhan 2026",
+        "2026-10-19T13:15:00Z"
+      ],
+      [
+        4588908,
+        "alexandra eala asian games 2026",
+        "2026-10-08T20:24:00Z"
+      ]
+    ]
+  },
+  "production_files_modified": false
+}

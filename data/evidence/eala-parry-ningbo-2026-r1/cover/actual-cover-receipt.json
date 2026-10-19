@@ -1,0 +1,129 @@
+{
+  "schema": "tennislive.actual-source-cover-candidate.v1",
+  "checked_at_utc": "2026-10-19T14:43:58.279753+00:00",
+  "source": "/tmp/eala-source/requested-youtube.mp4",
+  "source_sha256": "959090f738410223efb7fec1abb690962bde354722602640170c5fe826d20469",
+  "source_width": 1920,
+  "source_height": 1080,
+  "source_fps": 25,
+  "source_actual_pts_seconds": 287.0,
+  "global_frame_index_if_cfr_start0": 7175,
+  "chosen_frame": 287.0,
+  "normal_native_path": "resolve_cover_payload -> native actualsource FFmpeg frame -> _gate_cover_face -> render_poster; noapproved_image override",
+  "actual_face_report": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "伊埃拉",
+        "similarity": {
+          "伊埃拉": 0.6199,
+          "帕里": 0.0792
+        },
+        "missing": [],
+        "expected": [
+          "伊埃拉",
+          "帕里"
+        ],
+        "face": [
+          306,
+          122,
+          478,
+          330
+        ],
+        "face_px": 207.6,
+        "reason": "像 伊埃拉（0.62 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        },
+        "target": [
+          "伊埃拉"
+        ]
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2845,
+        "ear_each": [
+          0.2922,
+          0.2769
+        ],
+        "face": [
+          306,
+          122,
+          478,
+          330
+        ],
+        "face_px": 207.6,
+        "reason": "眼睛纵横比 0.28 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "problems": [],
+      "warnings": [],
+      "region": [
+        588,
+        0,
+        1398,
+        1080
+      ],
+      "frame": "/workspace/scratch/eala-C3SB38PJjtM-cover/actual-youtube-1080/normal-native/cover_src/portrait.jpg",
+      "frame_at": 287.0,
+      "target": [
+        "伊埃拉"
+      ],
+      "_key": "68ce84e758ed3d616753b88c3303f827562b7ccabb1e2d3ab9de4c725fea0737"
+    }
+  },
+  "visual_observations": [
+    "Opened actual1080 PNGs286.4,286.8,287.0,287.2,297.0, confirmingdirecttime alignment inthisboundedwindow withthe720reference. No blankettimeline/ad-offset claim.",
+    "Opened finalnormal-native1080x1440poster: Eala visiblefrontthree-quarter, both eyesopen, eyesandchin unobstructed byheader/hook/scoreboard. Handextendsoutsideupperframe.",
+    "Original3:4fill isnativeposter crop focus0.53,focus_y0.5,zoom1. No frameupscaling tofakeanoriginalmaster; usual1080sourceheight ->1440output posterfill occurs.",
+    "Actualposter contains exacthook, WTA500宁波首轮双方topic, PHI/FRA, ranks20/34, sets6-3 6-1 andnormalofficialduration1:17.",
+    "Background contains spectators; theyremainvisible anddo notreplace主角. Thisisactualvideo-frame fallback, notprofessionalphoto."
+  ],
+  "files": [
+    {
+      "path": "/workspace/scratch/eala-C3SB38PJjtM-cover/actual-youtube-1080/actual-287.0.png",
+      "sha256": "690e67a26a4c8e9d82970a138701777a9195c627b34e5c9acaf1bf97c4db14b7",
+      "bytes": 2213159
+    },
+    {
+      "path": "/workspace/scratch/eala-C3SB38PJjtM-cover/actual-youtube-1080/actual-287.0-showinfo.log",
+      "sha256": "13259a781cda3931cdad86e7d63123edcadd84872fe9fe10be9ed08fac2fdc84",
+      "bytes": 2175
+    },
+    {
+      "path": "/workspace/scratch/eala-C3SB38PJjtM-cover/actual-youtube-1080/normal-native/cover_src/portrait.jpg",
+      "sha256": "a67c33fa0154168f9649b6be43036b5aeff72a71ff44d53dfba7d87a7b3190a8",
+      "bytes": 178779
+    },
+    {
+      "path": "/workspace/scratch/eala-C3SB38PJjtM-cover/actual-youtube-1080/normal-native/cover_src/manifest.json",
+      "sha256": "4b2146860062b4fa614ba9db37446ae340fa689870f4d3534a9b525ea37e8c18",
+      "bytes": 124
+    },
+    {
+      "path": "/workspace/scratch/eala-C3SB38PJjtM-cover/actual-youtube-1080/normal-native/resolved-payload.json",
+      "sha256": "a31c818fd42a3745b4843b3a4e33835f6d493e26a04aa339554cc9002b5570fc",
+      "bytes": 946
+    },
+    {
+      "path": "/workspace/scratch/eala-C3SB38PJjtM-cover/actual-youtube-1080/normal-native/native-face-report.json",
+      "sha256": "5c36218f0efcf339efa79d5acf3a9b4e40bdc8ea51c701eb9bfce1c44b2dab2d",
+      "bytes": 1368
+    },
+    {
+      "path": "/workspace/scratch/eala-C3SB38PJjtM-cover/actual-youtube-1080/normal-native/poster.jpg",
+      "sha256": "1ac2cdea584711298ed69d607bff5bf267bc2dab0851ddf3fcc1649af36c44eb",
+      "bytes": 290598
+    }
+  ],
+  "production_files_modified": false,
+  "approval_registration": "Roothandlesstandingauthorizationregistration; nonewuserapprovalclaimed; regularlivephoto-preflightstillrequired"
+}

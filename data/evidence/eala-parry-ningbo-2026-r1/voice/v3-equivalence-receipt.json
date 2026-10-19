@@ -1,0 +1,127 @@
+{
+  "status": "native_zero_synthesis_recapture_same_reviewed_audio",
+  "parent_bundle_sha256": "482790b3733d07a5bad67173909aa34e940bb5e81efb9d221118eb036bcb74ad",
+  "new_bundle_sha256": "a060efb51c1c0602b980fc25b183575c1473e418f9228b1959a4d6fda2032689",
+  "new_bundle_bytes": 518713,
+  "native_metadata": {
+    "kind": "reel_native_tts",
+    "new_synthesis_count": 0,
+    "parent_bundle_sha256": "482790b3733d07a5bad67173909aa34e940bb5e81efb9d221118eb036bcb74ad",
+    "publication_approval": false,
+    "purpose": "Native capture_export of exact previously audited 8 requests, MP3s and WordBoundary after preview editorial freeze; metadata container identity corrected without any audio or implementation change.",
+    "quality_approval": false,
+    "slug": "eala-parry-ningbo-2026-r1",
+    "version": 3
+  },
+  "request_count": 8,
+  "new_synthesis_count": 0,
+  "attempted_synthesis_count": 0,
+  "normal_read_bundle_and_validate_bundle_complete_decode_passed_for_parent_and_new": true,
+  "capture_API_mode": "capture_export",
+  "capture_used_input_path": false,
+  "strict_import_reexport_ZIP_bytes_identical": true,
+  "all8_complete_requests_MP3_WordBoundary_exact_parent_bytes": true,
+  "all_entries_occurrences_and_four_implementation_SHA_unchanged": true,
+  "implementation": {
+    "tts.py": "f8fba13a2be162f7062f5e414f673a75e98e9a9ff43837e6975f22b5307ad8be",
+    "tts_bundle.py": "3fff7073d50533be5746ea7e2112356dbb0b06dde3b51018f1803587ed8f5aef",
+    "azure_tts.py": "bab46582b80d2fc939250d3238abd97d2a7104bf5cb6523222762e86fad40c51",
+    "pronounce.py": "7091b501fec9d98e6c3621cbe744e4ff7aaa62ba0e584e6d4e7d55cc97275a64"
+  },
+  "old_v2_bundle_unchanged": true,
+  "finite_review_inherited": {
+    "path": "/workspace/scratch/eala-C3SB38PJjtM-voice/v2/final-voice-summary.json",
+    "sha256": "4c41d4b90fcee3994696e54379285cb4845ccb8ad59f3eab40050e9e80baec97",
+    "body_targets": 73,
+    "body_finitely_supported": 73,
+    "body_genuinely_unresolved": 0,
+    "brand_finite_targets": 3,
+    "basis": "All 8 complete requests and actual audio/marks remain exactly the reviewed bytes. Container metadata change creates no new acoustic review or hearing."
+  },
+  "utterances": [
+    {
+      "edit_id": "landing",
+      "request_id": "3a418db803f418633f99e26bf5f3446134eeaf949728497c95e708895217e7aa",
+      "complete_normalized_request_equal": true,
+      "audio_sha256": "395d56d3edd7a5e41acdc4c78b7336e002fcbbc53508621c0bdf1bb512443eb9",
+      "marks_sha256": "44b509e40f8ed8bb5e0b06c88c8d1ce6351a1afc9d7199875fbbd5048d40b816",
+      "duration_seconds": 10.8,
+      "audio_bytes_identical": true,
+      "WordBoundary_bytes_identical": true
+    },
+    {
+      "edit_id": "coordinates",
+      "request_id": "066383bdbb453189c11c844627bf77dbd4d357f70765777a6e03e454c3fd19e9",
+      "complete_normalized_request_equal": true,
+      "audio_sha256": "8085e915ad0f9c374945ed63a6c41048fc0f249bc300dd513539922a1c8cf792",
+      "marks_sha256": "f7fb5ba62d3ec6f301574140c30e54520484f8f55d39af482e030772f7368f8d",
+      "duration_seconds": 10.368,
+      "audio_bytes_identical": true,
+      "WordBoundary_bytes_identical": true
+    },
+    {
+      "edit_id": "first_turn",
+      "request_id": "048a78da72bdb4b306fbbbc45e9a8ee0b22d6d23b5fa6a23bbbabd0c6e5efef0",
+      "complete_normalized_request_equal": true,
+      "audio_sha256": "dbf2d5775978ec0c080432849ee6e3df755f00a1e89d59a95a5b5ac173f26928",
+      "marks_sha256": "284c8220b547de65c9c7ece9a5a6ce66ea9349ad6a14c0451f416fdbac1c8ad6",
+      "duration_seconds": 10.872,
+      "audio_bytes_identical": true,
+      "WordBoundary_bytes_identical": true
+    },
+    {
+      "edit_id": "seven_games",
+      "request_id": "d8c1d3e3a9e60837dcce8757f1eb32010f4bcfdfe679a649304b46ecfcd503c0",
+      "complete_normalized_request_equal": true,
+      "audio_sha256": "9d25635740aa290800f40a91c81ae3ba9c7b63222b117dbabc26cb1dc7b28884",
+      "marks_sha256": "e040d3d1d88a3d11a160fe4ecf5195b6afad490b61c341e62c91664dc6d77909",
+      "duration_seconds": 12.984,
+      "audio_bytes_identical": true,
+      "WordBoundary_bytes_identical": true
+    },
+    {
+      "edit_id": "four_one",
+      "request_id": "ed6a2fa12cf94ceb7b0f0b15eefd548ebda265649a80f48e129b232abec3aa7d",
+      "complete_normalized_request_equal": true,
+      "audio_sha256": "994837d4f3ae65455651a6a780d13675eb349def51a2688301decb03b5c3024b",
+      "marks_sha256": "dcb6bb5a1f97dc4091e7cf2343261f6b0955c010a008a0c84d65477f423dc874",
+      "duration_seconds": 11.352,
+      "audio_bytes_identical": true,
+      "WordBoundary_bytes_identical": true
+    },
+    {
+      "edit_id": "full_stats",
+      "request_id": "2d7c8252ae75e61f70d9562981c558a510dcbc93aadc08229c641f478be96493",
+      "complete_normalized_request_equal": true,
+      "audio_sha256": "b187e4aedbe93e53efa80054707803a65a2b9d11f6aeff75321ef311156ef747",
+      "marks_sha256": "1931085fdfcac95fa1f0dcf2a569c6daf4fb0acc9a6751e7bcf3a1330686dace",
+      "duration_seconds": 12.792,
+      "audio_bytes_identical": true,
+      "WordBoundary_bytes_identical": true
+    },
+    {
+      "edit_id": "outlook",
+      "request_id": "38eefed1bb16a0237621b1f06f0035c654d061c42bdc9b963f3be737581431d1",
+      "complete_normalized_request_equal": true,
+      "audio_sha256": "43faad6f293c92c1fa7604539338a36b51e3b54d8e9480615f737ab0530e0208",
+      "marks_sha256": "846ab82cee96640478ee7dd451b4841a5db71f763767d759ccebbd59c014b416",
+      "duration_seconds": 9.696,
+      "audio_bytes_identical": true,
+      "WordBoundary_bytes_identical": true
+    },
+    {
+      "edit_id": "outro",
+      "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "complete_normalized_request_equal": true,
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "duration_seconds": 4.104,
+      "audio_bytes_identical": true,
+      "WordBoundary_bytes_identical": true
+    }
+  ],
+  "human_listening_performed": false,
+  "model_audio_hearing_performed": false,
+  "all_phonemes_or_all_tones_certified": false,
+  "formal_render_QC_or_publication_approval": false
+}

@@ -1,0 +1,121 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-C3SB38PJjtM/C3SB38PJjtM.mp4",
+  "source_sha256": "959090f738410223efb7fec1abb690962bde354722602640170c5fe826d20469",
+  "source_bytes": 47118065,
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source agent and root assistant: actual two independent whole-source ASR plus bounded checks and finite visual/semantic adjudication; no human listening claim",
+  "reviewed_at": "2026-10-19T14:48:43.250377+00:00",
+  "status": "complete",
+  "reviewed_from": 98.54,
+  "reviewed_to": 122.22,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 99.62,
+      "end": 101.06,
+      "en": "Looking like she's going to attack.",
+      "zh": "看样子她准备进攻了。",
+      "verification": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim.",
+      "candidate_id": "yt-cue-13"
+    },
+    {
+      "start": 107.46,
+      "end": 109.02,
+      "en": "The pressure paying off.",
+      "zh": "持续施压见效了。",
+      "verification": "Small.en And prefix107.02; turbo begins107.46. Agreed substantive clause.",
+      "candidate_id": "yt-cue-14"
+    },
+    {
+      "start": 109.88,
+      "end": 111.4,
+      "en": "Parry missing a couple of forehands.",
+      "zh": "帕里几次正拍失误。",
+      "verification": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim.",
+      "candidate_id": "yt-cue-15"
+    },
+    {
+      "start": 111.68,
+      "end": 112.7,
+      "en": "Eala on the prowl again.",
+      "zh": "伊埃拉又在寻找机会。",
+      "verification": "Name normalized from actualsmall.en Yallup; fullturbo begins on the prowl. VisibleEalareturnposition supports subject but no new substantive fact.",
+      "candidate_id": "yt-cue-16"
+    },
+    {
+      "start": 112.84,
+      "end": 114.66,
+      "en": "Just look at her return position.",
+      "zh": "看她的接发站位。",
+      "verification": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim.",
+      "candidate_id": "yt-cue-17"
+    },
+    {
+      "start": 115.62,
+      "end": 118.58,
+      "en": "Parry has noticed it. There's a little double look there.",
+      "zh": "帕里察觉到了，又多看一眼。",
+      "verification": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim.",
+      "candidate_id": "yt-cue-18"
+    },
+    {
+      "start": 119.62,
+      "end": 122.04,
+      "en": "She's got to concentrate on what she can control.",
+      "zh": "专注于自己能掌控的事。",
+      "verification": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim.",
+      "candidate_id": "yt-cue-19"
+    }
+  ],
+  "no_foreground_english_reason": null,
+  "_edit_id": "firstset_break",
+  "assessment_scope": "Complete selectedforegroundsemanticreview only. Actualuncertain19aside+early21.64seconds excluded; retainedgrammaticalfragments displayedwithellipses rather than invented antecedents. ASRtimestampestimates, notallphonemes/backgroundvoices.",
+  "excluded_uncertainties_not_resolved": [
+    {
+      "source_interval": [
+        0,
+        21.64
+      ],
+      "reason": "Root-selected body starts21.64. This intentionally excludes early ordinary points plus whole unresolved19.36..21.42 aside; not a claim those earlypointswerepreserved. Next Parry service toss22.2onward andallrequested2-2,3-3,keypoints retained.",
+      "uncertain_utterance": [
+        19.36,
+        21.42
+      ],
+      "status": "actually_exclude_from_formal_recipe_before_signing"
+    },
+    {
+      "source_interval": [
+        299.44,
+        309.568435
+      ],
+      "reason": "Observedfirstpublisherframe299.48, source299.44mainboundarychosen0.04s conservativemargin. Finalsource6-1ends299.28, so sentence complete."
+    }
+  ],
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/evidence/eala-parry-ningbo-2026-r1/source/asr-small.en.json",
+        "sha256": "3673a79dbf4a33dcb533b94af301082870429328547de355e4df4b2ceeceb579"
+      },
+      {
+        "path": "data/evidence/eala-parry-ningbo-2026-r1/source/asr-turbo.json",
+        "sha256": "ee680d73c70ea7b18122bb7fe5a937f49482392dba923b42218226b008f070e5"
+      },
+      {
+        "path": "data/evidence/eala-parry-ningbo-2026-r1/source/asr-turbo-bounded.json",
+        "sha256": "0f85c89bdb88a6c78a321d002247d9042047b7eef0ebc286e476e4288635348d"
+      },
+      {
+        "path": "data/evidence/eala-parry-ningbo-2026-r1/source/asr-base.en-bounded.json",
+        "sha256": "f8cfc91078800f3c6575cdc1c31d74d81f0cb36c579eb71d38eb2cffb076b53d"
+      }
+    ],
+    "original_audio_preserved": true,
+    "manual_listening_claimed": false,
+    "acoustic_every_word_verified": false,
+    "same_Whisper_family_not_independent_human_votes": true,
+    "native_tail_reviewed_finite_frames": true
+  },
+  "_pending": "Rootmustfinalizespec, adjudicateresidualcuewording,andnormaltoolbindrealindex/planhash. Thispendingstatusmustnotbechangedjusttoappeasegate."
+}

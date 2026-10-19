@@ -1,0 +1,50 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "slug": "eala-parry-ningbo-2026-r1",
+  "reviewed_at": "2026-10-19T14:48:43.250377+00:00",
+  "plan_sha256": "1196b9b8ad32962e59b4c1952889d4b5b0fd66c012d13b5a564503125ea0ecde",
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/evidence/eala-parry-ningbo-2026-r1/source-audio/cold_open.json",
+      "transcript_sha256": "c6c61934b126626aafab4572fdb00c3066b9be08335e81d266f905e9a6ae38b4"
+    },
+    {
+      "index": 3,
+      "transcript_path": "data/evidence/eala-parry-ningbo-2026-r1/source-audio/opening_complete_points.json",
+      "transcript_sha256": "18a766cdb2a1c9d478d4c8d941c8275f760d35a21f710045c831266849a65150"
+    },
+    {
+      "index": 5,
+      "transcript_path": "data/evidence/eala-parry-ningbo-2026-r1/source-audio/firstset_threeall.json",
+      "transcript_sha256": "a5698fb008bceb01d1d31ddab023b6fa867923906255d09608932098d47e29d2"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/evidence/eala-parry-ningbo-2026-r1/source-audio/firstset_break.json",
+      "transcript_sha256": "3bd7f3dfd929d350c43e0510b88a7ade7057232c8097ea367549999061dd700c"
+    },
+    {
+      "index": 7,
+      "transcript_path": "data/evidence/eala-parry-ningbo-2026-r1/source-audio/firstset_closing.json",
+      "transcript_sha256": "9c5dce7549b9789f3d4cb0a053cf30daf8a00eaf9d1591393588ad5573c5a7cc"
+    },
+    {
+      "index": 9,
+      "transcript_path": "data/evidence/eala-parry-ningbo-2026-r1/source-audio/secondset_highlights.json",
+      "transcript_sha256": "3682e2fcf4f0afd94f25fcc339042cf41030379e1acbec2ddb87b43adc75d71c"
+    },
+    {
+      "index": 10,
+      "transcript_path": "data/evidence/eala-parry-ningbo-2026-r1/source-audio/secondset_break.json",
+      "transcript_sha256": "c678bad7a7789e870ddc1fc1f6afd8c921d37de9fbf73e0c91362d9396109831"
+    },
+    {
+      "index": 12,
+      "transcript_path": "data/evidence/eala-parry-ningbo-2026-r1/source-audio/closing_full_matchpoint_and_salute.json",
+      "transcript_sha256": "5751bf045d031391aa3a9dc251752b72aeb217f0f6d166c1fb5d3dc5e04e6253"
+    }
+  ],
+  "_source_sha256": "959090f738410223efb7fec1abb690962bde354722602640170c5fe826d20469",
+  "_review_method": "Whole actualrequestedYT small.en+large-v3-turbo, boundedturbo/base, finiteframes and currentassistantsemanticreview. Not humanlistening. Only selectedretainedforegroundscopecomplete; functionword/editfragmentlimits are retained, unknown19aside actuallyexcluded."
+}

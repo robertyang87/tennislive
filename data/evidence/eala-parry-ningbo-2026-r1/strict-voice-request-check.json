@@ -1,0 +1,165 @@
+{
+  "schema": "tennislive.frozen-tts-bundle.v1",
+  "bundle_sha256": "e8ab17295f287ab9c4d938b7a104a346700d963aaa859c0949ad86fecd9836f9",
+  "request_count": 8,
+  "artifact_kind": "native_tts_inputs",
+  "quality_approval": false,
+  "implementation": {
+    "azure_tts.py": "bab46582b80d2fc939250d3238abd97d2a7104bf5cb6523222762e86fad40c51",
+    "pronounce.py": "7091b501fec9d98e6c3621cbe744e4ff7aaa62ba0e584e6d4e7d55cc97275a64",
+    "tts.py": "f8fba13a2be162f7062f5e414f673a75e98e9a9ff43837e6975f22b5307ad8be",
+    "tts_bundle.py": "3fff7073d50533be5746ea7e2112356dbb0b06dde3b51018f1803587ed8f5aef"
+  },
+  "audio_decoding_verified": false,
+  "validation_level": "integrity_and_requests",
+  "metadata": {
+    "changed_full_requests": [
+      "first_turn"
+    ],
+    "kind": "reel_native_tts",
+    "new_synthesis_count": 1,
+    "parent_bundle_sha256": "98257ba81303e7702faeb758d05829a9638ff5ea16909f139c7479105b10444a",
+    "publication_approval": false,
+    "quality_approval": false,
+    "slug": "eala-parry-ningbo-2026-r1",
+    "version": 5
+  },
+  "entries": [
+    {
+      "audio_sha256": "8085e915ad0f9c374945ed63a6c41048fc0f249bc300dd513539922a1c8cf792",
+      "duration_seconds": 10.368,
+      "marks_sha256": "f7fb5ba62d3ec6f301574140c30e54520484f8f55d39af482e030772f7368f8d",
+      "request": {
+        "backend": "edge",
+        "cache_key": "78e33538b60cb52ea06e656043112dd7",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "北京时间十月十九日晚上，宁波五百赛首轮。伊埃拉对阵帕里。武汉首轮遭逆转后，她来到宁波，重新出发。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "request_id": "066383bdbb453189c11c844627bf77dbd4d357f70765777a6e03e454c3fd19e9"
+    },
+    {
+      "audio_sha256": "b187e4aedbe93e53efa80054707803a65a2b9d11f6aeff75321ef311156ef747",
+      "duration_seconds": 12.792,
+      "marks_sha256": "1931085fdfcac95fa1f0dcf2a569c6daf4fb0acc9a6751e7bcf3a1330686dace",
+      "request": {
+        "backend": "edge",
+        "cache_key": "77a21150e974e1e884b5e5cc468a6f34",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "六比三，六比一。制胜分十二比十一，非受迫失误九比二十五。伊埃拉在对手八个发球局里，拿走六局。接下来的挑战，还在继续。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "request_id": "2d7c8252ae75e61f70d9562981c558a510dcbc93aadc08229c641f478be96493"
+    },
+    {
+      "audio_sha256": "43faad6f293c92c1fa7604539338a36b51e3b54d8e9480615f737ab0530e0208",
+      "duration_seconds": 9.696,
+      "marks_sha256": "846ab82cee96640478ee7dd451b4841a5db71f763767d759ccebbd59c014b416",
+      "request": {
+        "backend": "edge",
+        "cache_key": "a6aa680ef472f8bfdd53bf43bb8f765b",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "从武汉的遗憾，到宁波的胜利。伊埃拉在这一站，已经迈出第一步。下一轮，你看好她继续向前吗？",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "request_id": "38eefed1bb16a0237621b1f06f0035c654d061c42bdc9b963f3be737581431d1"
+    },
+    {
+      "audio_sha256": "395d56d3edd7a5e41acdc4c78b7336e002fcbbc53508621c0bdf1bb512443eb9",
+      "duration_seconds": 10.8,
+      "marks_sha256": "44b509e40f8ed8bb5e0b06c88c8d1ce6351a1afc9d7199875fbbd5048d40b816",
+      "request": {
+        "backend": "edge",
+        "cache_key": "189adecfba6bf32ac6ac6bd28f4081ef",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "首盘三比三，比分还没拉开。伊埃拉随后连赢七局，跨过盘末，把第二盘带到四比零。她在宁波，重返胜利轨道。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "request_id": "3a418db803f418633f99e26bf5f3446134eeaf949728497c95e708895217e7aa"
+    },
+    {
+      "audio_sha256": "5a32dd27b0b2df0b23543d85059ac2ee2586b5a1a5ce41f8e7c38eda2362e8a0",
+      "duration_seconds": 12.984,
+      "marks_sha256": "8088f0d8ab8585f8c2aea85354e1f51a4603275a16eee9cc6869c62e8721a996",
+      "request": {
+        "backend": "edge",
+        "cache_key": "17b2788cb47612392431465a82055635",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "六比三，伊埃拉拿下首盘。进入第二盘，她敢上网，也用正拍斜线耐心相持。跨盘连赢七局，比分来到四比零。可是，领先还不是终点。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "request_id": "8c1d78012a30890d37f47b754dcd88fd2338a6e2f9ef2245606d2a37d3047239"
+    },
+    {
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "duration_seconds": 4.104,
+      "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "request": {
+        "backend": "edge",
+        "cache_key": "20da8f5468902afbbecb78daefb15d83",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "关注网球时插，时插归我，好球归你。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "audio_sha256": "50161b2624ff6a68d2f1cb27ad6dea22001d0fa0d8ab41f1e8e464bf8934d19b",
+      "duration_seconds": 11.688,
+      "marks_sha256": "9ae06a070d8eeed5dd4af9ab87a5e14be43cf14b5a76f15ee56086c6f2ec17ec",
+      "request": {
+        "backend": "edge",
+        "cache_key": "278496c674151fdeab121576e1a74d4b",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "首盘三比三，伊埃拉的接发站位已经压向底线。持续施压之下，帕里连续正拍失误。再次破掉对手的发球局，她拿回了主动。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "request_id": "ecf31d8606dfbe3d7466dfd1a3b8477eb348a3ff42a086fdaf0bb7678b7dbe2c"
+    },
+    {
+      "audio_sha256": "994837d4f3ae65455651a6a780d13675eb349def51a2688301decb03b5c3024b",
+      "duration_seconds": 11.352,
+      "marks_sha256": "dcb6bb5a1f97dc4091e7cf2343261f6b0955c010a008a0c84d65477f423dc874",
+      "request": {
+        "backend": "edge",
+        "cache_key": "87e73f84a02c7c96120fc0a4a708403d",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "第二盘四比零，自己的发球局，四十比十五。伊埃拉却连丢四分，被帕里追回一局。她马上回破，五比一，重新拿稳主动。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "request_id": "ed6a2fa12cf94ceb7b0f0b15eefd548ebda265649a80f48e129b232abec3aa7d"
+    }
+  ]
+}

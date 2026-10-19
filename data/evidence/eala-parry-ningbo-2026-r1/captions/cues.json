@@ -1,0 +1,417 @@
+{
+  "schema": "tennislive.actual-source-bilingual-adjudication.v1",
+  "source": "/tmp/eala-source/requested-youtube.mp4",
+  "source_sha256": "959090f738410223efb7fec1abb690962bde354722602640170c5fe826d20469",
+  "actual_requested_source": true,
+  "review_scope": "Whole actual309.568435s source decoded twice independently unprompted; retainedmainbefore299.44. No720previewpasscopied. Semanticadjudication of finiteEnglishcommentary, propernamesfromverifiedmatch. Residualfunctionword/editedfragmentlimits explicit percue.",
+  "formal_review_packet_created": false,
+  "style": "English above Chinese; eachcue en/zh pair. Long en may neednativeautosplit/ASSfiniteframe review.",
+  "raw_evidence_files": [
+    {
+      "path": "asr-small.en.json",
+      "sha256": "3673a79dbf4a33dcb533b94af301082870429328547de355e4df4b2ceeceb579"
+    },
+    {
+      "path": "asr-turbo.json",
+      "sha256": "ee680d73c70ea7b18122bb7fe5a937f49482392dba923b42218226b008f070e5"
+    },
+    {
+      "path": "asr-turbo-bounded.json",
+      "sha256": "0f85c89bdb88a6c78a321d002247d9042047b7eef0ebc286e476e4288635348d"
+    },
+    {
+      "path": "asr-base.en-bounded.json",
+      "sha256": "f8cfc91078800f3c6575cdc1c31d74d81f0cb36c579eb71d38eb2cffb076b53d"
+    }
+  ],
+  "omitted_unresolved_unit": {
+    "speech_interval": [
+      19.36,
+      21.42
+    ],
+    "hypotheses": [
+      "Actualsmall.en: Beforethat,shewouldntwanttoray",
+      "Actualfullturbo: Beforethat,shewonMonterrey",
+      "Actualboundedturbo: Beforethat,shewononetoray"
+    ],
+    "status": "Unresolved; noMonterreyguessedapproval. Proposedcompleteeffectiveomission18.96..21.64 servescloseup, retainnextwholepoint."
+  },
+  "cues": [
+    {
+      "id": "yt-cue-01",
+      "source_start": 0.0,
+      "source_end": 4.88,
+      "en": "Twenty-one years of age, having to cope with all the outside interest in Eala.",
+      "zh": "21岁的伊埃拉，还要面对场外的各种关注。",
+      "method_notes": "Source opens mid-context; core age and outside-interest wording supported both whole actual ASR. English grammatical join remains candidate; no fabricated antecedent."
+    },
+    {
+      "id": "yt-cue-02",
+      "source_start": 15.22,
+      "source_end": 18.74,
+      "en": "And a couple of examples of the one-handed backhand of Diane Parry.",
+      "zh": "这是帕里单手反拍的几次展示。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-03",
+      "source_start": 29.3,
+      "source_end": 31.5,
+      "en": "Oh, that's so good from Diane Parry!",
+      "zh": "帕里打得太漂亮了！",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-04",
+      "source_start": 31.5,
+      "source_end": 34.38,
+      "en": "On the full stretch, the full run, showing her strength.",
+      "zh": "全速奔跑、奋力伸展，展现实力。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-05",
+      "source_start": 34.64,
+      "source_end": 37.0,
+      "en": "A lot of matches have been played, a lot of highs and lows.",
+      "zh": "比赛打了不少，也历经起伏。",
+      "method_notes": "Small.en hallucinated Jules36.96..37.08; turbo no extra word. Genuine core sentence agreed."
+    },
+    {
+      "id": "yt-cue-06",
+      "source_start": 50.28,
+      "source_end": 53.4,
+      "en": "Oh, this is an opportunity here for Alexandra Eala.",
+      "zh": "伊埃拉迎来了机会。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-07",
+      "source_start": 55.34,
+      "source_end": 57.72,
+      "en": "Struggling for confidence and form.",
+      "zh": "仍苦于找回信心和状态。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-08",
+      "source_start": 63.14,
+      "source_end": 66.36,
+      "en": "Oh, it's a stupendous point! Well done to Eala.",
+      "zh": "这分精彩！伊埃拉打得好！",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim. Adjacent short sentence merged for normal bilingual line group."
+    },
+    {
+      "id": "yt-cue-09",
+      "source_start": 79.66,
+      "source_end": 81.6,
+      "en": "Such a good point from Eala,",
+      "zh": "伊埃拉这分打得真好！",
+      "method_notes": "Actual fullsmall.en onsetOh79.32 vs turboSuch79.66; core words agree."
+    },
+    {
+      "id": "yt-cue-10",
+      "source_start": 81.6,
+      "source_end": 85.36,
+      "en": "And it all started with a fantastic return, didn't it?",
+      "zh": "始于那记精彩接发，对吧？",
+      "method_notes": "Actual independent small.en + turbo both END complete sentence here; neither detects old720p spurious which took. Prior85sdeletion is withdrawn for actual1080."
+    },
+    {
+      "id": "yt-cue-11",
+      "source_start": 93.64,
+      "source_end": 95.64,
+      "en": "Oh, there's nothing she could do about that.",
+      "zh": "这一球，她无能为力。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-12",
+      "source_start": 95.74,
+      "source_end": 98.36,
+      "en": "That is just sumptuous from Diane Parry.",
+      "zh": "帕里这一拍太精妙了。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-13",
+      "source_start": 99.62,
+      "source_end": 101.06,
+      "en": "Looking like she's going to attack.",
+      "zh": "看样子她准备进攻了。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-14",
+      "source_start": 107.46,
+      "source_end": 109.02,
+      "en": "The pressure paying off.",
+      "zh": "持续施压见效了。",
+      "method_notes": "Small.en And prefix107.02; turbo begins107.46. Agreed substantive clause."
+    },
+    {
+      "id": "yt-cue-15",
+      "source_start": 109.88,
+      "source_end": 111.4,
+      "en": "Parry missing a couple of forehands.",
+      "zh": "帕里几次正拍失误。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-16",
+      "source_start": 111.68,
+      "source_end": 112.7,
+      "en": "Eala on the prowl again.",
+      "zh": "伊埃拉又在寻找机会。",
+      "method_notes": "Name normalized from actualsmall.en Yallup; fullturbo begins on the prowl. VisibleEalareturnposition supports subject but no new substantive fact."
+    },
+    {
+      "id": "yt-cue-17",
+      "source_start": 112.84,
+      "source_end": 114.66,
+      "en": "Just look at her return position.",
+      "zh": "看她的接发站位。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-18",
+      "source_start": 115.62,
+      "source_end": 118.58,
+      "en": "Parry has noticed it. There's a little double look there.",
+      "zh": "帕里察觉到了，又多看一眼。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-19",
+      "source_start": 119.62,
+      "source_end": 122.04,
+      "en": "She's got to concentrate on what she can control.",
+      "zh": "专注于自己能掌控的事。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-20",
+      "source_start": 136.36,
+      "source_end": 139.24,
+      "en": "Parry thought about coming forward, and really, with her volley…",
+      "zh": "帕里想上网，以她的截击……",
+      "method_notes": "Actual small.en + turbo + boundedturbo all source ends after volley, NOT old720p she should. Honest edited-source fragment; do not invent absent predicate."
+    },
+    {
+      "id": "yt-cue-21",
+      "source_start": 146.68,
+      "source_end": 150.82,
+      "en": "The first serve percentage has been similar to that of the Filipina,",
+      "zh": "一发成功率与菲律宾球员接近，",
+      "method_notes": "NEW actualYT clause. Boundedturbo The first surf percentage; actualsmall.en whichonesfirstservepercentage; who/possessive prefix not fully lexical-adjudicated. Coherent core servepercentage/similarFilipina supported all3 actualpasses; normalized surf→serve from small.en and tennis context."
+    },
+    {
+      "id": "yt-cue-22",
+      "source_start": 151.14,
+      "source_end": 153.18,
+      "en": "But it's only about two-thirds.",
+      "zh": "但也只有约三分之二。",
+      "method_notes": "NEW actualYT; actualsmall.en/fullturbo/boundedturbo agree substantive fraction."
+    },
+    {
+      "id": "yt-cue-23",
+      "source_start": 155.08,
+      "source_end": 158.44,
+      "en": "Both have won three second-serve points thus far.",
+      "zh": "目前两人二发都赢了三分。",
+      "method_notes": "NEW actualYT; actualsmall.en explicitly second serve, turbo second points, boundedturbo second surf points. Core three secondservepoints both supported finitecrossrecognizer + actualtennisterm. Does not claim matchtotal beyond thusfar."
+    },
+    {
+      "id": "yt-cue-24",
+      "source_start": 167.1,
+      "source_end": 170.36,
+      "en": "That is really unfortunate. First double fault.",
+      "zh": "真遗憾，第一次双误。",
+      "method_notes": "Actualfullturbo + boundedturbo doublefault; actualsmall.en doubleballto garble. Do NOT append old720p ofthematch, absentactualASR."
+    },
+    {
+      "id": "yt-cue-25",
+      "source_start": 171.38,
+      "source_end": 174.28,
+      "en": "…Diana Shnaider, on grass at last year's Wimbledon.",
+      "zh": "……去年温网草地赛的施耐德。",
+      "method_notes": "Actualsmall.en + fullturbo + boundedturbo agree Shnaider/grass/lastyearsWimbledon. Antecedent absent and not invented. Actual171..174 frames show serve toss and contact, so cannot remove full phrase while honestly retaining entire serve."
+    },
+    {
+      "id": "yt-cue-26",
+      "source_start": 179.52,
+      "source_end": 182.44,
+      "en": "That's beautifully done. This time it's Eala coming forward.",
+      "zh": "真漂亮！这次伊埃拉上网。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-27",
+      "source_start": 192.86,
+      "source_end": 193.42,
+      "en": "Oh!",
+      "zh": "噢！",
+      "method_notes": "Actualsmall.en hasisolatedOh; fullturbo group193.74 startsOh before opposite; short exclamationnot meaningfulsilence."
+    },
+    {
+      "id": "yt-cue-28",
+      "source_start": 194.54,
+      "source_end": 196.42,
+      "en": "Quite the opposite after that stunner.",
+      "zh": "那记好球后，局面正好相反。",
+      "method_notes": "Missing prior referent not invented."
+    },
+    {
+      "id": "yt-cue-29",
+      "source_start": 214.0,
+      "source_end": 218.64,
+      "en": "Oh, yes! It's another one for the highlight reel from Diane Parry.",
+      "zh": "好球！帕里又添集锦佳作。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim. Adjacent short sentence merged for normal bilingual line group."
+    },
+    {
+      "id": "yt-cue-30",
+      "source_start": 236.78,
+      "source_end": 238.9,
+      "en": "Oh, it's good patient play from Eala,",
+      "zh": "伊埃拉打得很耐心。",
+      "method_notes": "Actualsmall.en Oh233.14 then3.7secondgap untilits237.36; fullturboOh236.78. Agreed substantive clause times237.3onward."
+    },
+    {
+      "id": "yt-cue-31",
+      "source_start": 239.64,
+      "source_end": 241.68,
+      "en": "Content to go cross-court with the forehand.",
+      "zh": "耐心用正拍打斜线。",
+      "method_notes": "Fullturbo content, small.en couldtend. Content is finite lexicaladjudication via strongercoherentturbo, not directlistening."
+    },
+    {
+      "id": "yt-cue-32",
+      "source_start": 252.18,
+      "source_end": 253.2,
+      "en": "Oh, that's clever!",
+      "zh": "这一拍真聪明！",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-33",
+      "source_start": 253.62,
+      "source_end": 256.5,
+      "en": "Puts the racket down to help balance, change direction.",
+      "zh": "放低球拍稳住平衡，再变向。",
+      "method_notes": "Both actualfullASR supportracketdown/helpabalance/changedirection. Unstressed a/her not resolvable; displayedcore doesnotinsert speculativepronoun."
+    },
+    {
+      "id": "yt-cue-34",
+      "source_start": 266.76,
+      "source_end": 269.36,
+      "en": "A fantastic match from Alexandra Eala.",
+      "zh": "伊埃拉这一场打得太精彩！",
+      "method_notes": "Fullturbo A266.16 includesbreath thenfantastic266.76; small.en start266.76. Actualname normalized verifiedmatch."
+    },
+    {
+      "id": "yt-cue-35",
+      "source_start": 269.36,
+      "source_end": 271.54,
+      "en": "Back to winning ways is the Filipina,",
+      "zh": "菲律宾球员重返胜利轨道。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-36",
+      "source_start": 271.54,
+      "source_end": 275.24,
+      "en": "Having begun this match on a two-match losing skid.",
+      "zh": "她此前遭遇了两连败。",
+      "method_notes": "Both actualindependentASR agreeTWO. Newsfactthreeconflict staysinternal; translateoriginalfaithfully and avoid numericalstreak in originalnarration."
+    },
+    {
+      "id": "yt-cue-37",
+      "source_start": 276.48,
+      "source_end": 279.44,
+      "en": "Diane Parry's losing run moves to five straight, though.",
+      "zh": "不过，帕里已遭遇五连败。",
+      "method_notes": "Sourceclaim faithfullytranscribed, not independentlyexternalfactverified."
+    },
+    {
+      "id": "yt-cue-38",
+      "source_start": 279.44,
+      "source_end": 281.96,
+      "en": "Didn't see the best from the Frenchwoman today,",
+      "zh": "今天法国球员未达最佳水平。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-39",
+      "source_start": 281.96,
+      "source_end": 283.5,
+      "en": "But it was exceptional, wasn't it,",
+      "zh": "但这表现，实在太出色了。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-40",
+      "source_start": 283.5,
+      "source_end": 288.12,
+      "en": "From the twenty-one-year-old superstar of the WTA Tour.",
+      "zh": "来自这位21岁的WTA巨星。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-41",
+      "source_start": 289.42,
+      "source_end": 292.28,
+      "en": "Gets the better of Diane Parry in their first meeting",
+      "zh": "首次交锋，她击败帕里，",
+      "method_notes": "Sourceclaim not independentcareerH2H assertion; continuedhereinChinanextcue."
+    },
+    {
+      "id": "yt-cue-42",
+      "source_start": 292.28,
+      "source_end": 294.4,
+      "en": "Here in China.",
+      "zh": "就在中国的赛场上。",
+      "method_notes": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim."
+    },
+    {
+      "id": "yt-cue-43",
+      "source_start": 295.74,
+      "source_end": 296.86,
+      "en": "She is a victor,",
+      "zh": "她成为了胜者，",
+      "method_notes": "Actualfullturbo + actualboundedturbo victor, small.en bit tough. Actualpoint/resultsupportssemanticvictory, not substituteproof forword."
+    },
+    {
+      "id": "yt-cue-44",
+      "source_start": 296.86,
+      "source_end": 299.28,
+      "en": "Six-three and six-one.",
+      "zh": "六比三、六比一。",
+      "method_notes": "Actualsmall.en + actualfull/boundedturbo agree numbers; actualscreenresult6-3/6-1 too."
+    }
+  ],
+  "cold_open": {
+    "configured_start": 266.0,
+    "configured_end": 275.3,
+    "actual_if_native_tail_0_18": [
+      266.0,
+      275.48
+    ],
+    "next_speech_start": 276.48,
+    "caption_ids": [
+      "yt-cue-34",
+      "yt-cue-35",
+      "yt-cue-36"
+    ]
+  },
+  "actual_main_end": 299.44,
+  "first_publisher_frame": 299.48,
+  "final_sentence_ends": 299.28,
+  "must_not_claim": [
+    "Everyphonemeheard",
+    "Allfunctionwordsindependentlyresolved",
+    "Source19clauseintelligible",
+    "Original720pbyteortimelinematchesthis1080",
+    "Humanlisteningcompleted"
+  ]
+}
