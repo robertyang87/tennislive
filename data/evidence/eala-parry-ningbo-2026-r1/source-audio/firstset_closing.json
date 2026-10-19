@@ -1,0 +1,105 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-C3SB38PJjtM/C3SB38PJjtM.mp4",
+  "source_sha256": "959090f738410223efb7fec1abb690962bde354722602640170c5fe826d20469",
+  "source_bytes": 47118065,
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source agent and root assistant: actual two independent whole-source ASR plus bounded checks and finite visual/semantic adjudication; no human listening claim",
+  "reviewed_at": "2026-10-19T14:48:43.250377+00:00",
+  "status": "complete",
+  "reviewed_from": 122.22,
+  "reviewed_to": 170.54,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 136.36,
+      "end": 139.24,
+      "en": "Parry thought about coming forward, and really, with her volley…",
+      "zh": "帕里想上网，以她的截击……",
+      "verification": "Actual small.en + turbo + boundedturbo all source ends after volley, NOT old720p she should. Honest edited-source fragment; do not invent absent predicate.",
+      "candidate_id": "yt-cue-20"
+    },
+    {
+      "start": 146.68,
+      "end": 150.82,
+      "en": "The first serve percentage has been similar to that of the Filipina,",
+      "zh": "一发成功率与菲律宾球员接近，",
+      "verification": "NEW actualYT clause. Boundedturbo The first surf percentage; actualsmall.en whichonesfirstservepercentage; who/possessive prefix not fully lexical-adjudicated. Coherent core servepercentage/similarFilipina supported all3 actualpasses; normalized surf→serve from small.en and tennis context.",
+      "candidate_id": "yt-cue-21"
+    },
+    {
+      "start": 151.14,
+      "end": 153.18,
+      "en": "But it's only about two-thirds.",
+      "zh": "但也只有约三分之二。",
+      "verification": "NEW actualYT; actualsmall.en/fullturbo/boundedturbo agree substantive fraction.",
+      "candidate_id": "yt-cue-22"
+    },
+    {
+      "start": 155.08,
+      "end": 158.44,
+      "en": "Both have won three second-serve points thus far.",
+      "zh": "目前两人二发都赢了三分。",
+      "verification": "NEW actualYT; actualsmall.en explicitly second serve, turbo second points, boundedturbo second surf points. Core three secondservepoints both supported finitecrossrecognizer + actualtennisterm. Does not claim matchtotal beyond thusfar.",
+      "candidate_id": "yt-cue-23"
+    },
+    {
+      "start": 167.1,
+      "end": 170.36,
+      "en": "That is really unfortunate. First double fault.",
+      "zh": "真遗憾，第一次双误。",
+      "verification": "Actualfullturbo + boundedturbo doublefault; actualsmall.en doubleballto garble. Do NOT append old720p ofthematch, absentactualASR.",
+      "candidate_id": "yt-cue-24"
+    }
+  ],
+  "no_foreground_english_reason": null,
+  "_edit_id": "firstset_closing",
+  "assessment_scope": "Complete selectedforegroundsemanticreview only. Actualuncertain19aside+early21.64seconds excluded; retainedgrammaticalfragments displayedwithellipses rather than invented antecedents. ASRtimestampestimates, notallphonemes/backgroundvoices.",
+  "excluded_uncertainties_not_resolved": [
+    {
+      "source_interval": [
+        0,
+        21.64
+      ],
+      "reason": "Root-selected body starts21.64. This intentionally excludes early ordinary points plus whole unresolved19.36..21.42 aside; not a claim those earlypointswerepreserved. Next Parry service toss22.2onward andallrequested2-2,3-3,keypoints retained.",
+      "uncertain_utterance": [
+        19.36,
+        21.42
+      ],
+      "status": "actually_exclude_from_formal_recipe_before_signing"
+    },
+    {
+      "source_interval": [
+        299.44,
+        309.568435
+      ],
+      "reason": "Observedfirstpublisherframe299.48, source299.44mainboundarychosen0.04s conservativemargin. Finalsource6-1ends299.28, so sentence complete."
+    }
+  ],
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/evidence/eala-parry-ningbo-2026-r1/source/asr-small.en.json",
+        "sha256": "3673a79dbf4a33dcb533b94af301082870429328547de355e4df4b2ceeceb579"
+      },
+      {
+        "path": "data/evidence/eala-parry-ningbo-2026-r1/source/asr-turbo.json",
+        "sha256": "ee680d73c70ea7b18122bb7fe5a937f49482392dba923b42218226b008f070e5"
+      },
+      {
+        "path": "data/evidence/eala-parry-ningbo-2026-r1/source/asr-turbo-bounded.json",
+        "sha256": "0f85c89bdb88a6c78a321d002247d9042047b7eef0ebc286e476e4288635348d"
+      },
+      {
+        "path": "data/evidence/eala-parry-ningbo-2026-r1/source/asr-base.en-bounded.json",
+        "sha256": "f8cfc91078800f3c6575cdc1c31d74d81f0cb36c579eb71d38eb2cffb076b53d"
+      }
+    ],
+    "original_audio_preserved": true,
+    "manual_listening_claimed": false,
+    "acoustic_every_word_verified": false,
+    "same_Whisper_family_not_independent_human_votes": true,
+    "native_tail_reviewed_finite_frames": true
+  },
+  "_pending": "Rootmustfinalizespec, adjudicateresidualcuewording,andnormaltoolbindrealindex/planhash. Thispendingstatusmustnotbechangedjusttoappeasegate."
+}

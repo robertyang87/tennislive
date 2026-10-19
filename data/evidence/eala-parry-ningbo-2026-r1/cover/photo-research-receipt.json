@@ -1,0 +1,72 @@
+{
+  "checked_at_utc": "2026-10-19T14:13:06.949477+00:00",
+  "requested_match": "Alexandra Eala vs Diane Parry, Ningbo R1, 2026-10-19",
+  "status": "no_qualified_same_match_photo_obtained_yet",
+  "excluded_candidates": [
+    {
+      "official_photo_id": 4594648,
+      "source": "WTA photo API and Ningbo match report",
+      "filename": "Alexandra-Eala-Wuhan-2026.jpg",
+      "width": 5000,
+      "height": 3333,
+      "actual_sha256": "2780348cb734028d76c79db00887a65ff322dee836769a29346aa29893e1733e",
+      "actual_exif_datetimeoriginal": "2026:10:12 21:50:49",
+      "offset": "+08:00",
+      "actual_embedded_caption": "WUHAN, CHINA - OCTOBER 12: Alexandra Eala of Philippines celebrates against Shi Han of China on day one of Wuhan Open at Optics Valley International Tennis Center on October 12, 2026 in Wuhan, China. (Photo by Di Yin/Getty Images)",
+      "reason": "Confirmed wrong match/date/event despite latest report republishing it"
+    },
+    {
+      "official_photo_id": 4594637,
+      "width": 1280,
+      "height": 720,
+      "reason": "Brightcove highlight thumbnail, not professional same-match photograph"
+    },
+    {
+      "url": "https://sports.inquirer.net/702350/alex-eala-back-on-track-sweeps-diane-parry-at-ningbo-open",
+      "reason": "Caption explicitly FILE Singapore Open / Marlo Cueto, wrong event"
+    },
+    {
+      "url": "https://www.abs-cbn.com/sports/othersports/2026/10/19/tennis-alex-eala-downs-parry-advances-to-second-round-of-ningbo-open-2059",
+      "reason": "Actual body image caption says Asian Games Nagoya October 1 / POC Media"
+    },
+    {
+      "url": "https://tennisuptodate.com/wta/alexandra-eala-concludes-opening-day-at-ningbo-open-with-diane-parry-win-leylah-fernandez-also-surges-through",
+      "reason": "Hero caption Alex Eala entering Arthur Ashe Stadium; archived US Open photograph"
+    }
+  ],
+  "channels": [
+    {
+      "channel": "WTA photo API TENNIS_PLAYER:330332",
+      "status": "200; fetched all 93 referenced photos; latest genuine professional is Wuhan Oct12"
+    },
+    {
+      "channel": "WTA photo API TENNIS_TOURNAMENTGROUP:2092",
+      "status": "200; current2026 matches 4 professional photos (Fernandez/Sasnovich/Cirstea/Bouzkova), Eala0"
+    },
+    {
+      "channel": "Getty search Eala+Ningbo",
+      "status": "200 substantive result page explicitly 0 images"
+    },
+    {
+      "channel": "Getty search Eala newest",
+      "status": "200 substantive image results latest Oct12 Wuhan"
+    },
+    {
+      "channel": "AP via find_cover_photo",
+      "status": "No matching same-event candidate returned"
+    },
+    {
+      "channel": "Sogou WeChat",
+      "status": "28 unique results; only two within date/title bounds; both pre-match/old-Wuhan topics, mp article fetch403"
+    },
+    {
+      "channel": "Bing/DDG search Chinese and English",
+      "status": "Retrieved actual result pages; all current news inspected so far use archival photos"
+    },
+    {
+      "channel": "guessed Ningbo websites",
+      "status": "ningboopen.com parked domain; ningboopen.cn and ningboopen.com.cn503; nbopen.com98byteempty/unusable; these do not establish absence of a real official gallery"
+    }
+  ],
+  "production_files_modified": false
+}

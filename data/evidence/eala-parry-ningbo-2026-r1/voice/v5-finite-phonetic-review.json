@@ -1,0 +1,2505 @@
+{
+  "scope": "Changed v5 first_turn only; all indexed polyphones and proper-name positions; no old first_turn acoustic approval transferred.",
+  "method": "Actual audio-only phone+tone CTC with original native WordBoundary location crosscheck and context matched A1/A2/B1/B2 controls. Two-sided leave-one-out Hellinger posterior margin +/-0.20 fixed before evaluation.",
+  "model_text_input": null,
+  "bundle_sha256": "e8ab17295f287ab9c4d938b7a104a346700d963aaa859c0949ad86fecd9836f9",
+  "counts": {
+    "body_targets": 11,
+    "supported": 8,
+    "pending": 3
+  },
+  "rows": [
+    {
+      "edit_id": "first_turn",
+      "index": 9,
+      "char": "的",
+      "intended": "de5",
+      "kind": "polyphone",
+      "context": "三比三，伊埃拉的接发站位已经压",
+      "actual_audio_sha256": "50161b2624ff6a68d2f1cb27ad6dea22001d0fa0d8ab41f1e8e464bf8934d19b",
+      "actual_marks_sha256": "9ae06a070d8eeed5dd4af9ab87a5e14be43cf14b5a76f15ee56086c6f2ec17ec",
+      "observations": {
+        "ORIG": {
+          "expected": {
+            "index": 9,
+            "char": "的",
+            "lexical": "de5",
+            "surface": "de5",
+            "base": "de"
+          },
+          "model_prediction": {
+            "reading": "de5",
+            "base": "de",
+            "start": 1.76,
+            "end": 1.805,
+            "vowel_start": 1.78,
+            "vowel_end": 1.805,
+            "probability": 0.9956854581832886,
+            "model_tokens": [
+              "d",
+              "e5"
+            ],
+            "expected": {
+              "index": 9,
+              "char": "的",
+              "lexical": "de5",
+              "surface": "de5",
+              "base": "de"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "的",
+            "start": 1.709916,
+            "end": 1.804249,
+            "char_start": 9,
+            "char_end": 10
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A1": {
+          "expected": {
+            "index": 9,
+            "char": "𠵨",
+            "lexical": "de5",
+            "surface": "de5",
+            "base": "de"
+          },
+          "model_prediction": {
+            "reading": "de5",
+            "base": "de",
+            "start": 1.7,
+            "end": 1.745,
+            "vowel_start": 1.72,
+            "vowel_end": 1.745,
+            "probability": 0.9940820336341858,
+            "model_tokens": [
+              "d",
+              "e5"
+            ],
+            "expected": {
+              "index": 9,
+              "char": "𠵨",
+              "lexical": "de5",
+              "surface": "de5",
+              "base": "de"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "㕇𠵨",
+            "start": 1.497625,
+            "end": 1.74525,
+            "char_start": 8,
+            "char_end": 10
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A2": {
+          "expected": {
+            "index": 9,
+            "char": "的",
+            "lexical": "de5",
+            "surface": "de5",
+            "base": "de"
+          },
+          "model_prediction": {
+            "reading": "de5",
+            "base": "de",
+            "start": 1.72,
+            "end": 1.765,
+            "vowel_start": 1.74,
+            "vowel_end": 1.765,
+            "probability": 0.9970827698707581,
+            "model_tokens": [
+              "d",
+              "e5"
+            ],
+            "expected": {
+              "index": 9,
+              "char": "的",
+              "lexical": "de5",
+              "surface": "de5",
+              "base": "de"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "的",
+            "start": 1.66275,
+            "end": 1.745291,
+            "char_start": 9,
+            "char_end": 10
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B1": {
+          "expected": {
+            "index": 9,
+            "char": "低",
+            "lexical": "di1",
+            "surface": "di1",
+            "base": "di"
+          },
+          "model_prediction": {
+            "reading": "di2",
+            "base": "di",
+            "start": 1.82,
+            "end": 1.865,
+            "vowel_start": 1.84,
+            "vowel_end": 1.865,
+            "probability": 0.34669169783592224,
+            "model_tokens": [
+              "d",
+              "i2"
+            ],
+            "expected": {
+              "index": 9,
+              "char": "低",
+              "lexical": "di1",
+              "surface": "di1",
+              "base": "di"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "低",
+            "start": 1.757083,
+            "end": 1.910374,
+            "char_start": 9,
+            "char_end": 10
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": false
+        },
+        "B2": {
+          "expected": {
+            "index": 9,
+            "char": "滴",
+            "lexical": "di1",
+            "surface": "di1",
+            "base": "di"
+          },
+          "model_prediction": {
+            "reading": "di1",
+            "base": "di",
+            "start": 1.76,
+            "end": 1.805,
+            "vowel_start": 1.78,
+            "vowel_end": 1.805,
+            "probability": 0.49700337648391724,
+            "model_tokens": [
+              "d",
+              "i1"
+            ],
+            "expected": {
+              "index": 9,
+              "char": "滴",
+              "lexical": "di1",
+              "surface": "di1",
+              "base": "di"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "滴",
+            "start": 1.698125,
+            "end": 1.863208,
+            "char_start": 9,
+            "char_end": 10
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        }
+      },
+      "direct_all_four_controls_and_actual_exact_surface": false,
+      "neutral_base_only_not_tone": true,
+      "posterior_leave_one_out_controls": {
+        "A1": 0.9541999004920857,
+        "A2": 0.9543683049833316,
+        "B1": -0.6464853803978206,
+        "B2": -0.6507611202880073
+      },
+      "posterior_controls_pass": true,
+      "actual_posterior_score": 0.9737535303621667,
+      "finite_support": "finite_scoped_support",
+      "reference_proxy_limits": [
+        "positive includes rare single-reading proxy",
+        "positive includes dominant-reading/contextual proxy",
+        "positive has original/contextual letter fallback"
+      ]
+    },
+    {
+      "edit_id": "first_turn",
+      "index": 11,
+      "char": "发",
+      "intended": "fa1",
+      "kind": "polyphone",
+      "context": "三，伊埃拉的接发站位已经压向底",
+      "actual_audio_sha256": "50161b2624ff6a68d2f1cb27ad6dea22001d0fa0d8ab41f1e8e464bf8934d19b",
+      "actual_marks_sha256": "9ae06a070d8eeed5dd4af9ab87a5e14be43cf14b5a76f15ee56086c6f2ec17ec",
+      "observations": {
+        "ORIG": {
+          "expected": {
+            "index": 11,
+            "char": "发",
+            "lexical": "fa1",
+            "surface": "fa1",
+            "base": "fa"
+          },
+          "model_prediction": {
+            "reading": "fa1",
+            "base": "fa",
+            "start": 2.08,
+            "end": 2.125,
+            "vowel_start": 2.1,
+            "vowel_end": 2.125,
+            "probability": 0.9693331122398376,
+            "model_tokens": [
+              "f",
+              "a1"
+            ],
+            "expected": {
+              "index": 11,
+              "char": "发",
+              "lexical": "fa1",
+              "surface": "fa1",
+              "base": "fa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "发",
+            "start": 2.0165,
+            "end": 2.158,
+            "char_start": 11,
+            "char_end": 12
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A1": {
+          "expected": {
+            "index": 11,
+            "char": "彂",
+            "lexical": "fa1",
+            "surface": "fa1",
+            "base": "fa"
+          },
+          "model_prediction": {
+            "reading": "fa1",
+            "base": "fa",
+            "start": 2.0,
+            "end": 2.045,
+            "vowel_start": 2.02,
+            "vowel_end": 2.045,
+            "probability": 0.9478388428688049,
+            "model_tokens": [
+              "f",
+              "a1"
+            ],
+            "expected": {
+              "index": 11,
+              "char": "彂",
+              "lexical": "fa1",
+              "surface": "fa1",
+              "base": "fa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "彂",
+            "start": 1.933958,
+            "end": 2.087249,
+            "char_start": 11,
+            "char_end": 12
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A2": {
+          "expected": {
+            "index": 11,
+            "char": "沷",
+            "lexical": "fa1",
+            "surface": "fa1",
+            "base": "fa"
+          },
+          "model_prediction": {
+            "reading": "fa1",
+            "base": "fa",
+            "start": 2.02,
+            "end": 2.065,
+            "vowel_start": 2.04,
+            "vowel_end": 2.065,
+            "probability": 0.9710620641708374,
+            "model_tokens": [
+              "f",
+              "a1"
+            ],
+            "expected": {
+              "index": 11,
+              "char": "沷",
+              "lexical": "fa1",
+              "surface": "fa1",
+              "base": "fa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "沷",
+            "start": 1.94575,
+            "end": 2.099041,
+            "char_start": 11,
+            "char_end": 12
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B1": {
+          "expected": {
+            "index": 11,
+            "char": "珐",
+            "lexical": "fa4",
+            "surface": "fa4",
+            "base": "fa"
+          },
+          "model_prediction": {
+            "reading": "fa4",
+            "base": "fa",
+            "start": 2.12,
+            "end": 2.165,
+            "vowel_start": 2.14,
+            "vowel_end": 2.165,
+            "probability": 0.5134674906730652,
+            "model_tokens": [
+              "f",
+              "a4"
+            ],
+            "expected": {
+              "index": 11,
+              "char": "珐",
+              "lexical": "fa4",
+              "surface": "fa4",
+              "base": "fa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "珐",
+            "start": 2.063666,
+            "end": 2.216957,
+            "char_start": 11,
+            "char_end": 12
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B2": {
+          "expected": {
+            "index": 11,
+            "char": "㛲",
+            "lexical": "fa4",
+            "surface": "fa4",
+            "base": "fa"
+          },
+          "model_prediction": {
+            "reading": "fa4",
+            "base": "fa",
+            "start": 2.08,
+            "end": 2.125,
+            "vowel_start": 2.1,
+            "vowel_end": 2.125,
+            "probability": 0.5799578428268433,
+            "model_tokens": [
+              "f",
+              "a4"
+            ],
+            "expected": {
+              "index": 11,
+              "char": "㛲",
+              "lexical": "fa4",
+              "surface": "fa4",
+              "base": "fa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "㛲",
+            "start": 2.0165,
+            "end": 2.169791,
+            "char_start": 11,
+            "char_end": 12
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        }
+      },
+      "direct_all_four_controls_and_actual_exact_surface": true,
+      "neutral_base_only_not_tone": false,
+      "posterior_leave_one_out_controls": {
+        "A1": 0.8062741583090977,
+        "A2": 0.8090142745263695,
+        "B1": -0.7586415422290169,
+        "B2": -0.7656312648541735
+      },
+      "posterior_controls_pass": true,
+      "actual_posterior_score": 0.9456224437227503,
+      "finite_support": "finite_scoped_support",
+      "reference_proxy_limits": [
+        "positive includes rare single-reading proxy",
+        "negative includes rare single-reading proxy"
+      ]
+    },
+    {
+      "edit_id": "first_turn",
+      "index": 32,
+      "char": "正",
+      "intended": "zheng4",
+      "kind": "polyphone",
+      "context": "之下，帕里连续正拍失误。再次破",
+      "actual_audio_sha256": "50161b2624ff6a68d2f1cb27ad6dea22001d0fa0d8ab41f1e8e464bf8934d19b",
+      "actual_marks_sha256": "9ae06a070d8eeed5dd4af9ab87a5e14be43cf14b5a76f15ee56086c6f2ec17ec",
+      "observations": {
+        "ORIG": {
+          "expected": {
+            "index": 32,
+            "char": "正",
+            "lexical": "zheng4",
+            "surface": "zheng4",
+            "base": "zheng"
+          },
+          "model_prediction": {
+            "reading": "zheng4",
+            "base": "zheng",
+            "start": 6.36,
+            "end": 6.405,
+            "vowel_start": 6.38,
+            "vowel_end": 6.405,
+            "probability": 0.9901690483093262,
+            "model_tokens": [
+              "zh",
+              "eng4"
+            ],
+            "expected": {
+              "index": 32,
+              "char": "正",
+              "lexical": "zheng4",
+              "surface": "zheng4",
+              "base": "zheng"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "正",
+            "start": 6.285375,
+            "end": 6.485833,
+            "char_start": 32,
+            "char_end": 33
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A1": {
+          "expected": {
+            "index": 32,
+            "char": "证",
+            "lexical": "zheng4",
+            "surface": "zheng4",
+            "base": "zheng"
+          },
+          "model_prediction": {
+            "reading": "zheng4",
+            "base": "zheng",
+            "start": 6.14,
+            "end": 6.185,
+            "vowel_start": 6.16,
+            "vowel_end": 6.185,
+            "probability": 0.9915214776992798,
+            "model_tokens": [
+              "zh",
+              "eng4"
+            ],
+            "expected": {
+              "index": 32,
+              "char": "证",
+              "lexical": "zheng4",
+              "surface": "zheng4",
+              "base": "zheng"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "证",
+            "start": 6.061333,
+            "end": 6.285374,
+            "char_start": 32,
+            "char_end": 33
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A2": {
+          "expected": {
+            "index": 32,
+            "char": "诤",
+            "lexical": "zheng4",
+            "surface": "zheng4",
+            "base": "zheng"
+          },
+          "model_prediction": {
+            "reading": "zheng4",
+            "base": "zheng",
+            "start": 6.3,
+            "end": 6.345,
+            "vowel_start": 6.32,
+            "vowel_end": 6.345,
+            "probability": 0.9899358153343201,
+            "model_tokens": [
+              "zh",
+              "eng4"
+            ],
+            "expected": {
+              "index": 32,
+              "char": "诤",
+              "lexical": "zheng4",
+              "surface": "zheng4",
+              "base": "zheng"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "诤",
+            "start": 6.226416,
+            "end": 6.426874,
+            "char_start": 32,
+            "char_end": 33
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B1": {
+          "expected": {
+            "index": 32,
+            "char": "争",
+            "lexical": "zheng1",
+            "surface": "zheng1",
+            "base": "zheng"
+          },
+          "model_prediction": {
+            "reading": "zheng4",
+            "base": "zheng",
+            "start": 6.46,
+            "end": 6.505,
+            "vowel_start": 6.48,
+            "vowel_end": 6.505,
+            "probability": 0.5775037407875061,
+            "model_tokens": [
+              "zh",
+              "eng4"
+            ],
+            "expected": {
+              "index": 32,
+              "char": "争",
+              "lexical": "zheng1",
+              "surface": "zheng1",
+              "base": "zheng"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "争",
+            "start": 6.403291,
+            "end": 6.603749,
+            "char_start": 32,
+            "char_end": 33
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": false
+        },
+        "B2": {
+          "expected": {
+            "index": 32,
+            "char": "峥",
+            "lexical": "zheng1",
+            "surface": "zheng1",
+            "base": "zheng"
+          },
+          "model_prediction": {
+            "reading": "zheng1",
+            "base": "zheng",
+            "start": 6.32,
+            "end": 6.365,
+            "vowel_start": 6.34,
+            "vowel_end": 6.365,
+            "probability": 0.8664299845695496,
+            "model_tokens": [
+              "zh",
+              "eng1"
+            ],
+            "expected": {
+              "index": 32,
+              "char": "峥",
+              "lexical": "zheng1",
+              "surface": "zheng1",
+              "base": "zheng"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "峥",
+            "start": 6.25,
+            "end": 6.450458,
+            "char_start": 32,
+            "char_end": 33
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        }
+      },
+      "direct_all_four_controls_and_actual_exact_surface": false,
+      "neutral_base_only_not_tone": false,
+      "posterior_leave_one_out_controls": {
+        "A1": 0.9404084349110182,
+        "A2": 0.939903170358485,
+        "B1": -0.11299768522504577,
+        "B2": -0.3655580828603611
+      },
+      "posterior_controls_pass": false,
+      "actual_posterior_score": 0.9226711281271558,
+      "finite_support": "pending_other_actual_method",
+      "reference_proxy_limits": []
+    },
+    {
+      "edit_id": "first_turn",
+      "index": 43,
+      "char": "的",
+      "intended": "de5",
+      "kind": "polyphone",
+      "context": "。再次破掉对手的发球局，她拿回",
+      "actual_audio_sha256": "50161b2624ff6a68d2f1cb27ad6dea22001d0fa0d8ab41f1e8e464bf8934d19b",
+      "actual_marks_sha256": "9ae06a070d8eeed5dd4af9ab87a5e14be43cf14b5a76f15ee56086c6f2ec17ec",
+      "observations": {
+        "ORIG": {
+          "expected": {
+            "index": 43,
+            "char": "的",
+            "lexical": "de5",
+            "surface": "de5",
+            "base": "de"
+          },
+          "model_prediction": {
+            "reading": "de5",
+            "base": "de",
+            "start": 8.86,
+            "end": 8.905,
+            "vowel_start": 8.88,
+            "vowel_end": 8.905,
+            "probability": 0.9835152626037598,
+            "model_tokens": [
+              "d",
+              "e5"
+            ],
+            "expected": {
+              "index": 43,
+              "char": "的",
+              "lexical": "de5",
+              "surface": "de5",
+              "base": "de"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "的",
+            "start": 8.82075,
+            "end": 8.903291,
+            "char_start": 43,
+            "char_end": 44
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A1": {
+          "expected": {
+            "index": 43,
+            "char": "𠵨",
+            "lexical": "de5",
+            "surface": "de5",
+            "base": "de"
+          },
+          "model_prediction": {
+            "reading": "de5",
+            "base": "de",
+            "start": 8.78,
+            "end": 8.825,
+            "vowel_start": 8.8,
+            "vowel_end": 8.825,
+            "probability": 0.5486831665039062,
+            "model_tokens": [
+              "d",
+              "e5"
+            ],
+            "expected": {
+              "index": 43,
+              "char": "𠵨",
+              "lexical": "de5",
+              "surface": "de5",
+              "base": "de"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "𠵨",
+            "start": 8.714625,
+            "end": 8.856125,
+            "char_start": 43,
+            "char_end": 44
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A2": {
+          "expected": {
+            "index": 43,
+            "char": "的",
+            "lexical": "de5",
+            "surface": "de5",
+            "base": "de"
+          },
+          "model_prediction": {
+            "reading": "de5",
+            "base": "de",
+            "start": 8.8,
+            "end": 8.845,
+            "vowel_start": 8.82,
+            "vowel_end": 8.845,
+            "probability": 0.9849969148635864,
+            "model_tokens": [
+              "d",
+              "e5"
+            ],
+            "expected": {
+              "index": 43,
+              "char": "的",
+              "lexical": "de5",
+              "surface": "de5",
+              "base": "de"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "的",
+            "start": 8.75,
+            "end": 8.844333,
+            "char_start": 43,
+            "char_end": 44
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B1": {
+          "expected": {
+            "index": 43,
+            "char": "低",
+            "lexical": "di1",
+            "surface": "di1",
+            "base": "di"
+          },
+          "model_prediction": {
+            "reading": "di4",
+            "base": "di",
+            "start": 9.02,
+            "end": 9.065,
+            "vowel_start": 9.04,
+            "vowel_end": 9.065,
+            "probability": 0.621171236038208,
+            "model_tokens": [
+              "d",
+              "i4"
+            ],
+            "expected": {
+              "index": 43,
+              "char": "低",
+              "lexical": "di1",
+              "surface": "di1",
+              "base": "di"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "低",
+            "start": 8.96225,
+            "end": 9.139125,
+            "char_start": 43,
+            "char_end": 44
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": false
+        },
+        "B2": {
+          "expected": {
+            "index": 43,
+            "char": "滴",
+            "lexical": "di1",
+            "surface": "di1",
+            "base": "di"
+          },
+          "model_prediction": {
+            "reading": "di1",
+            "base": "di",
+            "start": 8.88,
+            "end": 8.925,
+            "vowel_start": 8.9,
+            "vowel_end": 8.925,
+            "probability": 0.5995475649833679,
+            "model_tokens": [
+              "d",
+              "i1"
+            ],
+            "expected": {
+              "index": 43,
+              "char": "滴",
+              "lexical": "di1",
+              "surface": "di1",
+              "base": "di"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "滴",
+            "start": 8.808958,
+            "end": 8.985833,
+            "char_start": 43,
+            "char_end": 44
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        }
+      },
+      "direct_all_four_controls_and_actual_exact_surface": false,
+      "neutral_base_only_not_tone": true,
+      "posterior_leave_one_out_controls": {
+        "A1": 0.34082292950233667,
+        "A2": 0.3451063472551105,
+        "B1": -0.667498997967425,
+        "B2": -0.6710073377934224
+      },
+      "posterior_controls_pass": true,
+      "actual_posterior_score": 0.9771604529621105,
+      "finite_support": "finite_scoped_support",
+      "reference_proxy_limits": [
+        "positive includes rare single-reading proxy",
+        "positive includes dominant-reading/contextual proxy",
+        "positive has original/contextual letter fallback"
+      ]
+    },
+    {
+      "edit_id": "first_turn",
+      "index": 44,
+      "char": "发",
+      "intended": "fa1",
+      "kind": "polyphone",
+      "context": "再次破掉对手的发球局，她拿回了",
+      "actual_audio_sha256": "50161b2624ff6a68d2f1cb27ad6dea22001d0fa0d8ab41f1e8e464bf8934d19b",
+      "actual_marks_sha256": "9ae06a070d8eeed5dd4af9ab87a5e14be43cf14b5a76f15ee56086c6f2ec17ec",
+      "observations": {
+        "ORIG": {
+          "expected": {
+            "index": 44,
+            "char": "发",
+            "lexical": "fa1",
+            "surface": "fa1",
+            "base": "fa"
+          },
+          "model_prediction": {
+            "reading": "fa1",
+            "base": "fa",
+            "start": 8.98,
+            "end": 9.025,
+            "vowel_start": 9.0,
+            "vowel_end": 9.025,
+            "probability": 0.988366425037384,
+            "model_tokens": [
+              "f",
+              "a1"
+            ],
+            "expected": {
+              "index": 44,
+              "char": "发",
+              "lexical": "fa1",
+              "surface": "fa1",
+              "base": "fa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "发球",
+            "start": 8.915083,
+            "end": 9.268874,
+            "char_start": 44,
+            "char_end": 46
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A1": {
+          "expected": {
+            "index": 44,
+            "char": "彂",
+            "lexical": "fa1",
+            "surface": "fa1",
+            "base": "fa"
+          },
+          "model_prediction": {
+            "reading": "fa1",
+            "base": "fa",
+            "start": 8.94,
+            "end": 8.985,
+            "vowel_start": 8.96,
+            "vowel_end": 8.985,
+            "probability": 0.9869909882545471,
+            "model_tokens": [
+              "f",
+              "a1"
+            ],
+            "expected": {
+              "index": 44,
+              "char": "彂",
+              "lexical": "fa1",
+              "surface": "fa1",
+              "base": "fa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "彂",
+            "start": 8.856125,
+            "end": 9.033,
+            "char_start": 44,
+            "char_end": 45
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A2": {
+          "expected": {
+            "index": 44,
+            "char": "沷",
+            "lexical": "fa1",
+            "surface": "fa1",
+            "base": "fa"
+          },
+          "model_prediction": {
+            "reading": "fa1",
+            "base": "fa",
+            "start": 8.92,
+            "end": 8.965,
+            "vowel_start": 8.94,
+            "vowel_end": 8.965,
+            "probability": 0.9805966019630432,
+            "model_tokens": [
+              "f",
+              "a1"
+            ],
+            "expected": {
+              "index": 44,
+              "char": "沷",
+              "lexical": "fa1",
+              "surface": "fa1",
+              "base": "fa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "沷",
+            "start": 8.856125,
+            "end": 9.021208,
+            "char_start": 44,
+            "char_end": 45
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B1": {
+          "expected": {
+            "index": 44,
+            "char": "珐",
+            "lexical": "fa4",
+            "surface": "fa4",
+            "base": "fa"
+          },
+          "model_prediction": {
+            "reading": "fa3",
+            "base": "fa",
+            "start": 9.2,
+            "end": 9.245,
+            "vowel_start": 9.22,
+            "vowel_end": 9.245,
+            "probability": 0.8243564367294312,
+            "model_tokens": [
+              "f",
+              "a3"
+            ],
+            "expected": {
+              "index": 44,
+              "char": "珐",
+              "lexical": "fa4",
+              "surface": "fa4",
+              "base": "fa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "珐",
+            "start": 9.139166,
+            "end": 9.268874,
+            "char_start": 44,
+            "char_end": 45
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": false
+        },
+        "B2": {
+          "expected": {
+            "index": 44,
+            "char": "㛲",
+            "lexical": "fa4",
+            "surface": "fa4",
+            "base": "fa"
+          },
+          "model_prediction": {
+            "reading": "fa3",
+            "base": "fa",
+            "start": 9.02,
+            "end": 9.065,
+            "vowel_start": 9.04,
+            "vowel_end": 9.065,
+            "probability": 0.627804696559906,
+            "model_tokens": [
+              "f",
+              "a3"
+            ],
+            "expected": {
+              "index": 44,
+              "char": "㛲",
+              "lexical": "fa4",
+              "surface": "fa4",
+              "base": "fa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "㛲",
+            "start": 8.985833,
+            "end": 9.115541,
+            "char_start": 44,
+            "char_end": 45
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": false
+        }
+      },
+      "direct_all_four_controls_and_actual_exact_surface": false,
+      "neutral_base_only_not_tone": false,
+      "posterior_leave_one_out_controls": {
+        "A1": 0.9265661683401563,
+        "A2": 0.9265559206807792,
+        "B1": -0.6523404905643068,
+        "B2": -0.5988754873484645
+      },
+      "posterior_controls_pass": true,
+      "actual_posterior_score": 0.9637463964877496,
+      "finite_support": "finite_scoped_support",
+      "reference_proxy_limits": [
+        "positive includes rare single-reading proxy",
+        "negative includes rare single-reading proxy"
+      ]
+    },
+    {
+      "edit_id": "first_turn",
+      "index": 51,
+      "char": "了",
+      "intended": "le5",
+      "kind": "polyphone",
+      "context": "发球局，她拿回了主动。",
+      "actual_audio_sha256": "50161b2624ff6a68d2f1cb27ad6dea22001d0fa0d8ab41f1e8e464bf8934d19b",
+      "actual_marks_sha256": "9ae06a070d8eeed5dd4af9ab87a5e14be43cf14b5a76f15ee56086c6f2ec17ec",
+      "observations": {
+        "ORIG": {
+          "expected": {
+            "index": 51,
+            "char": "了",
+            "lexical": "le5",
+            "surface": "le5",
+            "base": "le"
+          },
+          "model_prediction": {
+            "reading": "le5",
+            "base": "le",
+            "start": 10.36,
+            "end": 10.405,
+            "vowel_start": 10.38,
+            "vowel_end": 10.405,
+            "probability": 0.9710316061973572,
+            "model_tokens": [
+              "l",
+              "e5"
+            ],
+            "expected": {
+              "index": 51,
+              "char": "了",
+              "lexical": "le5",
+              "surface": "le5",
+              "base": "le"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "了",
+            "start": 10.306625,
+            "end": 10.471708,
+            "char_start": 51,
+            "char_end": 52
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A1": {
+          "expected": {
+            "index": 51,
+            "char": "餎",
+            "lexical": "le5",
+            "surface": "le5",
+            "base": "le"
+          },
+          "model_prediction": {
+            "reading": "le4",
+            "base": "le",
+            "start": 10.32,
+            "end": 10.365,
+            "vowel_start": 10.34,
+            "vowel_end": 10.365,
+            "probability": 0.9914183616638184,
+            "model_tokens": [
+              "l",
+              "e4"
+            ],
+            "expected": {
+              "index": 51,
+              "char": "餎",
+              "lexical": "le5",
+              "surface": "le5",
+              "base": "le"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "餎",
+            "start": 10.283,
+            "end": 10.436291,
+            "char_start": 51,
+            "char_end": 52
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": false
+        },
+        "A2": {
+          "expected": {
+            "index": 51,
+            "char": "了",
+            "lexical": "le5",
+            "surface": "le5",
+            "base": "le"
+          },
+          "model_prediction": {
+            "reading": "le5",
+            "base": "le",
+            "start": 10.26,
+            "end": 10.305,
+            "vowel_start": 10.28,
+            "vowel_end": 10.305,
+            "probability": 0.9439029693603516,
+            "model_tokens": [
+              "l",
+              "e5"
+            ],
+            "expected": {
+              "index": 51,
+              "char": "了",
+              "lexical": "le5",
+              "surface": "le5",
+              "base": "le"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "了",
+            "start": 10.200458,
+            "end": 10.365541,
+            "char_start": 51,
+            "char_end": 52
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B1": {
+          "expected": {
+            "index": 51,
+            "char": "㝋",
+            "lexical": "liao3",
+            "surface": "liao2",
+            "base": "liao"
+          },
+          "model_prediction": {
+            "reading": "liao2",
+            "base": "liao",
+            "start": 10.48,
+            "end": 10.525,
+            "vowel_start": 10.5,
+            "vowel_end": 10.525,
+            "probability": 0.8874937891960144,
+            "model_tokens": [
+              "l",
+              "iao2"
+            ],
+            "expected": {
+              "index": 51,
+              "char": "㝋",
+              "lexical": "liao3",
+              "surface": "liao2",
+              "base": "liao"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "㝋",
+            "start": 10.424541,
+            "end": 10.601416,
+            "char_start": 51,
+            "char_end": 52
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B2": {
+          "expected": {
+            "index": 51,
+            "char": "㶫",
+            "lexical": "liao3",
+            "surface": "liao2",
+            "base": "liao"
+          },
+          "model_prediction": {
+            "reading": "liao2",
+            "base": "liao",
+            "start": 10.36,
+            "end": 10.405,
+            "vowel_start": 10.38,
+            "vowel_end": 10.405,
+            "probability": 0.9079487919807434,
+            "model_tokens": [
+              "l",
+              "iao2"
+            ],
+            "expected": {
+              "index": 51,
+              "char": "㶫",
+              "lexical": "liao3",
+              "surface": "liao2",
+              "base": "liao"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "㶫",
+            "start": 10.306625,
+            "end": 10.4835,
+            "char_start": 51,
+            "char_end": 52
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        }
+      },
+      "direct_all_four_controls_and_actual_exact_surface": false,
+      "neutral_base_only_not_tone": true,
+      "posterior_leave_one_out_controls": {
+        "A1": 0.07005503194379176,
+        "A2": 0.04713108025719515,
+        "B1": -0.9266614279511587,
+        "B2": -0.9271901309824071
+      },
+      "posterior_controls_pass": false,
+      "actual_posterior_score": 0.9005648798322963,
+      "finite_support": "finite_scoped_support",
+      "reference_proxy_limits": [
+        "positive includes rare single-reading proxy",
+        "positive includes dominant-reading/contextual proxy",
+        "positive has original/contextual letter fallback",
+        "negative includes rare single-reading proxy"
+      ]
+    },
+    {
+      "edit_id": "first_turn",
+      "index": 6,
+      "char": "伊",
+      "intended": "yi1",
+      "kind": "proper_name",
+      "context": "首盘三比三，伊埃拉的接发站位",
+      "actual_audio_sha256": "50161b2624ff6a68d2f1cb27ad6dea22001d0fa0d8ab41f1e8e464bf8934d19b",
+      "actual_marks_sha256": "9ae06a070d8eeed5dd4af9ab87a5e14be43cf14b5a76f15ee56086c6f2ec17ec",
+      "observations": {
+        "ORIG": {
+          "expected": {
+            "index": 6,
+            "char": "伊",
+            "lexical": "yi1",
+            "surface": "yi1",
+            "base": "yi"
+          },
+          "model_prediction": {
+            "reading": "yi1",
+            "base": "yi",
+            "start": 1.32,
+            "end": 1.345,
+            "vowel_start": 1.32,
+            "vowel_end": 1.345,
+            "probability": 0.7800981998443604,
+            "model_tokens": [
+              "yi1"
+            ],
+            "expected": {
+              "index": 6,
+              "char": "伊",
+              "lexical": "yi1",
+              "surface": "yi1",
+              "base": "yi"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "伊埃拉",
+            "start": 1.226416,
+            "end": 1.709916,
+            "char_start": 6,
+            "char_end": 9
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A1": {
+          "expected": {
+            "index": 6,
+            "char": "咿",
+            "lexical": "yi1",
+            "surface": "yi1",
+            "base": "yi"
+          },
+          "model_prediction": {
+            "reading": "yi1",
+            "base": "yi",
+            "start": 1.32,
+            "end": 1.345,
+            "vowel_start": 1.32,
+            "vowel_end": 1.345,
+            "probability": 0.729665994644165,
+            "model_tokens": [
+              "yi1"
+            ],
+            "expected": {
+              "index": 6,
+              "char": "咿",
+              "lexical": "yi1",
+              "surface": "yi1",
+              "base": "yi"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "咿",
+            "start": 1.238208,
+            "end": 1.379708,
+            "char_start": 6,
+            "char_end": 7
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A2": {
+          "expected": {
+            "index": 6,
+            "char": "漪",
+            "lexical": "yi1",
+            "surface": "yi1",
+            "base": "yi"
+          },
+          "model_prediction": {
+            "reading": "yi1",
+            "base": "yi",
+            "start": 1.28,
+            "end": 1.305,
+            "vowel_start": 1.28,
+            "vowel_end": 1.305,
+            "probability": 0.8628572225570679,
+            "model_tokens": [
+              "yi1"
+            ],
+            "expected": {
+              "index": 6,
+              "char": "漪",
+              "lexical": "yi1",
+              "surface": "yi1",
+              "base": "yi"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "漪",
+            "start": 1.202833,
+            "end": 1.356124,
+            "char_start": 6,
+            "char_end": 7
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B1": {
+          "expected": {
+            "index": 6,
+            "char": "义",
+            "lexical": "yi4",
+            "surface": "yi4",
+            "base": "yi"
+          },
+          "model_prediction": {
+            "reading": "yi4",
+            "base": "yi",
+            "start": 1.38,
+            "end": 1.405,
+            "vowel_start": 1.38,
+            "vowel_end": 1.405,
+            "probability": 0.6925515532493591,
+            "model_tokens": [
+              "yi4"
+            ],
+            "expected": {
+              "index": 6,
+              "char": "义",
+              "lexical": "yi4",
+              "surface": "yi4",
+              "base": "yi"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "义",
+            "start": 1.285375,
+            "end": 1.450458,
+            "char_start": 6,
+            "char_end": 7
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B2": {
+          "expected": {
+            "index": 6,
+            "char": "亦",
+            "lexical": "yi4",
+            "surface": "yi4",
+            "base": "yi"
+          },
+          "model_prediction": {
+            "reading": "yi4",
+            "base": "yi",
+            "start": 1.32,
+            "end": 1.345,
+            "vowel_start": 1.32,
+            "vowel_end": 1.345,
+            "probability": 0.7395561337471008,
+            "model_tokens": [
+              "yi4"
+            ],
+            "expected": {
+              "index": 6,
+              "char": "亦",
+              "lexical": "yi4",
+              "surface": "yi4",
+              "base": "yi"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "亦",
+            "start": 1.226416,
+            "end": 1.391499,
+            "char_start": 6,
+            "char_end": 7
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        }
+      },
+      "direct_all_four_controls_and_actual_exact_surface": true,
+      "neutral_base_only_not_tone": false,
+      "posterior_leave_one_out_controls": {
+        "A1": 0.5029026188079454,
+        "A2": 0.5903548793293653,
+        "B1": -0.8181263929381122,
+        "B2": -0.8314753650989122
+      },
+      "posterior_controls_pass": true,
+      "actual_posterior_score": 0.81005917893439,
+      "finite_support": "finite_scoped_support",
+      "reference_proxy_limits": []
+    },
+    {
+      "edit_id": "first_turn",
+      "index": 7,
+      "char": "埃",
+      "intended": "ai1",
+      "kind": "proper_name",
+      "context": "首盘三比三，伊埃拉的接发站位已",
+      "actual_audio_sha256": "50161b2624ff6a68d2f1cb27ad6dea22001d0fa0d8ab41f1e8e464bf8934d19b",
+      "actual_marks_sha256": "9ae06a070d8eeed5dd4af9ab87a5e14be43cf14b5a76f15ee56086c6f2ec17ec",
+      "observations": {
+        "ORIG": {
+          "expected": {
+            "index": 7,
+            "char": "埃",
+            "lexical": "ai1",
+            "surface": "ai1",
+            "base": "ai"
+          },
+          "model_prediction": {
+            "reading": "ai1",
+            "base": "ai",
+            "start": 1.46,
+            "end": 1.485,
+            "vowel_start": 1.46,
+            "vowel_end": 1.485,
+            "probability": 0.913487434387207,
+            "model_tokens": [
+              "ai1"
+            ],
+            "expected": {
+              "index": 7,
+              "char": "埃",
+              "lexical": "ai1",
+              "surface": "ai1",
+              "base": "ai"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "伊埃拉",
+            "start": 1.226416,
+            "end": 1.709916,
+            "char_start": 6,
+            "char_end": 9
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A1": {
+          "expected": {
+            "index": 7,
+            "char": "哀",
+            "lexical": "ai1",
+            "surface": "ai1",
+            "base": "ai"
+          },
+          "model_prediction": {
+            "reading": "ya4",
+            "base": "ya",
+            "start": 1.42,
+            "end": 1.445,
+            "vowel_start": 1.42,
+            "vowel_end": 1.445,
+            "probability": 0.397676020860672,
+            "model_tokens": [
+              "ya4"
+            ],
+            "expected": {
+              "index": 7,
+              "char": "哀",
+              "lexical": "ai1",
+              "surface": "ai1",
+              "base": "ai"
+            },
+            "base_exact": false
+          },
+          "native_token": {
+            "text": "哀",
+            "start": 1.379708,
+            "end": 1.497624,
+            "char_start": 7,
+            "char_end": 8
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": false
+        },
+        "A2": {
+          "expected": {
+            "index": 7,
+            "char": "哎",
+            "lexical": "ai1",
+            "surface": "ai1",
+            "base": "ai"
+          },
+          "model_prediction": {
+            "reading": "ai1",
+            "base": "ai",
+            "start": 1.42,
+            "end": 1.445,
+            "vowel_start": 1.42,
+            "vowel_end": 1.445,
+            "probability": 0.8857585191726685,
+            "model_tokens": [
+              "ai1"
+            ],
+            "expected": {
+              "index": 7,
+              "char": "哎",
+              "lexical": "ai1",
+              "surface": "ai1",
+              "base": "ai"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "哎",
+            "start": 1.356125,
+            "end": 1.497625,
+            "char_start": 7,
+            "char_end": 8
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B1": {
+          "expected": {
+            "index": 7,
+            "char": "制",
+            "lexical": "zhi4",
+            "surface": "zhi4",
+            "base": "zhi"
+          },
+          "model_prediction": {
+            "reading": "zhi4",
+            "base": "zhi",
+            "start": 1.52,
+            "end": 1.565,
+            "vowel_start": 1.54,
+            "vowel_end": 1.565,
+            "probability": 0.6846064925193787,
+            "model_tokens": [
+              "zh",
+              "i4"
+            ],
+            "expected": {
+              "index": 7,
+              "char": "制",
+              "lexical": "zhi4",
+              "surface": "zhi4",
+              "base": "zhi"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "制",
+            "start": 1.450458,
+            "end": 1.556583,
+            "char_start": 7,
+            "char_end": 8
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B2": {
+          "expected": {
+            "index": 7,
+            "char": "帙",
+            "lexical": "zhi4",
+            "surface": "zhi4",
+            "base": "zhi"
+          },
+          "model_prediction": {
+            "reading": "zhi4",
+            "base": "zhi",
+            "start": 1.46,
+            "end": 1.505,
+            "vowel_start": 1.48,
+            "vowel_end": 1.505,
+            "probability": 0.591935396194458,
+            "model_tokens": [
+              "zh",
+              "i4"
+            ],
+            "expected": {
+              "index": 7,
+              "char": "帙",
+              "lexical": "zhi4",
+              "surface": "zhi4",
+              "base": "zhi"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "帙",
+            "start": 1.3915,
+            "end": 1.497625,
+            "char_start": 7,
+            "char_end": 8
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        }
+      },
+      "direct_all_four_controls_and_actual_exact_surface": false,
+      "neutral_base_only_not_tone": false,
+      "posterior_leave_one_out_controls": {
+        "A1": 0.1624320043656537,
+        "A2": 0.16520198372682168,
+        "B1": -0.7956386790249242,
+        "B2": -0.7956481272111308
+      },
+      "posterior_controls_pass": false,
+      "actual_posterior_score": 0.9005586938552879,
+      "finite_support": "pending_other_actual_method",
+      "reference_proxy_limits": []
+    },
+    {
+      "edit_id": "first_turn",
+      "index": 8,
+      "char": "拉",
+      "intended": "la1",
+      "kind": "proper_name",
+      "context": "盘三比三，伊埃拉的接发站位已经",
+      "actual_audio_sha256": "50161b2624ff6a68d2f1cb27ad6dea22001d0fa0d8ab41f1e8e464bf8934d19b",
+      "actual_marks_sha256": "9ae06a070d8eeed5dd4af9ab87a5e14be43cf14b5a76f15ee56086c6f2ec17ec",
+      "observations": {
+        "ORIG": {
+          "expected": {
+            "index": 8,
+            "char": "拉",
+            "lexical": "la1",
+            "surface": "la1",
+            "base": "la"
+          },
+          "model_prediction": {
+            "reading": "la1",
+            "base": "la",
+            "start": 1.6,
+            "end": 1.645,
+            "vowel_start": 1.62,
+            "vowel_end": 1.645,
+            "probability": 0.9896903038024902,
+            "model_tokens": [
+              "l",
+              "a1"
+            ],
+            "expected": {
+              "index": 8,
+              "char": "拉",
+              "lexical": "la1",
+              "surface": "la1",
+              "base": "la"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "伊埃拉",
+            "start": 1.226416,
+            "end": 1.709916,
+            "char_start": 6,
+            "char_end": 9
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A1": {
+          "expected": {
+            "index": 8,
+            "char": "㕇",
+            "lexical": "la1",
+            "surface": "la1",
+            "base": "la"
+          },
+          "model_prediction": {
+            "reading": "la1",
+            "base": "la",
+            "start": 1.56,
+            "end": 1.605,
+            "vowel_start": 1.58,
+            "vowel_end": 1.605,
+            "probability": 0.5330172777175903,
+            "model_tokens": [
+              "l",
+              "a1"
+            ],
+            "expected": {
+              "index": 8,
+              "char": "㕇",
+              "lexical": "la1",
+              "surface": "la1",
+              "base": "la"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "㕇𠵨",
+            "start": 1.497625,
+            "end": 1.74525,
+            "char_start": 8,
+            "char_end": 10
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A2": {
+          "expected": {
+            "index": 8,
+            "char": "㡴",
+            "lexical": "la1",
+            "surface": "la1",
+            "base": "la"
+          },
+          "model_prediction": {
+            "reading": "la1",
+            "base": "la",
+            "start": 1.56,
+            "end": 1.605,
+            "vowel_start": 1.58,
+            "vowel_end": 1.605,
+            "probability": 0.9747709631919861,
+            "model_tokens": [
+              "l",
+              "a1"
+            ],
+            "expected": {
+              "index": 8,
+              "char": "㡴",
+              "lexical": "la1",
+              "surface": "la1",
+              "base": "la"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "㡴",
+            "start": 1.497625,
+            "end": 1.662708,
+            "char_start": 8,
+            "char_end": 9
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B1": {
+          "expected": {
+            "index": 8,
+            "char": "旯",
+            "lexical": "la2",
+            "surface": "la2",
+            "base": "la"
+          },
+          "model_prediction": {
+            "reading": "la1",
+            "base": "la",
+            "start": 1.62,
+            "end": 1.665,
+            "vowel_start": 1.64,
+            "vowel_end": 1.665,
+            "probability": 0.6874707341194153,
+            "model_tokens": [
+              "l",
+              "a1"
+            ],
+            "expected": {
+              "index": 8,
+              "char": "旯",
+              "lexical": "la2",
+              "surface": "la2",
+              "base": "la"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "旯",
+            "start": 1.568416,
+            "end": 1.757082,
+            "char_start": 8,
+            "char_end": 9
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": false
+        },
+        "B2": {
+          "expected": {
+            "index": 8,
+            "char": "𡉆",
+            "lexical": "la2",
+            "surface": "la2",
+            "base": "la"
+          },
+          "model_prediction": {
+            "reading": "la1",
+            "base": "la",
+            "start": 1.58,
+            "end": 1.625,
+            "vowel_start": 1.6,
+            "vowel_end": 1.625,
+            "probability": 0.7534393668174744,
+            "model_tokens": [
+              "l",
+              "a1"
+            ],
+            "expected": {
+              "index": 8,
+              "char": "𡉆",
+              "lexical": "la2",
+              "surface": "la2",
+              "base": "la"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "𡉆",
+            "start": 1.509416,
+            "end": 1.698082,
+            "char_start": 8,
+            "char_end": 9
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": false
+        }
+      },
+      "direct_all_four_controls_and_actual_exact_surface": false,
+      "neutral_base_only_not_tone": false,
+      "posterior_leave_one_out_controls": {
+        "A1": -0.4721080720168351,
+        "A2": -0.23722169000280505,
+        "B1": -0.43510499508983086,
+        "B2": -0.5088917430437808
+      },
+      "posterior_controls_pass": false,
+      "actual_posterior_score": 0.7488507694570398,
+      "finite_support": "pending_other_actual_method",
+      "reference_proxy_limits": [
+        "positive includes rare single-reading proxy",
+        "negative includes rare single-reading proxy"
+      ]
+    },
+    {
+      "edit_id": "first_turn",
+      "index": 28,
+      "char": "帕",
+      "intended": "pa4",
+      "kind": "proper_name",
+      "context": "持续施压之下，帕里连续正拍失误",
+      "actual_audio_sha256": "50161b2624ff6a68d2f1cb27ad6dea22001d0fa0d8ab41f1e8e464bf8934d19b",
+      "actual_marks_sha256": "9ae06a070d8eeed5dd4af9ab87a5e14be43cf14b5a76f15ee56086c6f2ec17ec",
+      "observations": {
+        "ORIG": {
+          "expected": {
+            "index": 28,
+            "char": "帕",
+            "lexical": "pa4",
+            "surface": "pa4",
+            "base": "pa"
+          },
+          "model_prediction": {
+            "reading": "pa4",
+            "base": "pa",
+            "start": 5.64,
+            "end": 5.685,
+            "vowel_start": 5.66,
+            "vowel_end": 5.685,
+            "probability": 0.8656708598136902,
+            "model_tokens": [
+              "p",
+              "a4"
+            ],
+            "expected": {
+              "index": 28,
+              "char": "帕",
+              "lexical": "pa4",
+              "surface": "pa4",
+              "base": "pa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "帕里",
+            "start": 5.55425,
+            "end": 5.908041,
+            "char_start": 28,
+            "char_end": 30
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A1": {
+          "expected": {
+            "index": 28,
+            "char": "袙",
+            "lexical": "pa4",
+            "surface": "pa4",
+            "base": "pa"
+          },
+          "model_prediction": {
+            "reading": "pa4",
+            "base": "pa",
+            "start": 5.42,
+            "end": 5.465,
+            "vowel_start": 5.44,
+            "vowel_end": 5.465,
+            "probability": 0.7514675855636597,
+            "model_tokens": [
+              "p",
+              "a4"
+            ],
+            "expected": {
+              "index": 28,
+              "char": "袙",
+              "lexical": "pa4",
+              "surface": "pa4",
+              "base": "pa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "袙",
+            "start": 5.330208,
+            "end": 5.554249,
+            "char_start": 28,
+            "char_end": 29
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A2": {
+          "expected": {
+            "index": 28,
+            "char": "𪗔",
+            "lexical": "pa4",
+            "surface": "pa4",
+            "base": "pa"
+          },
+          "model_prediction": {
+            "reading": "pa4",
+            "base": "pa",
+            "start": 5.56,
+            "end": 5.605,
+            "vowel_start": 5.58,
+            "vowel_end": 5.605,
+            "probability": 0.8569872975349426,
+            "model_tokens": [
+              "p",
+              "a4"
+            ],
+            "expected": {
+              "index": 28,
+              "char": "𪗔",
+              "lexical": "pa4",
+              "surface": "pa4",
+              "base": "pa"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "𪗔",
+            "start": 5.459916,
+            "end": 5.683957,
+            "char_start": 28,
+            "char_end": 29
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B1": {
+          "expected": {
+            "index": 28,
+            "char": "寞",
+            "lexical": "mo4",
+            "surface": "mo4",
+            "base": "mo"
+          },
+          "model_prediction": {
+            "reading": "mo4",
+            "base": "mo",
+            "start": 5.68,
+            "end": 5.725,
+            "vowel_start": 5.7,
+            "vowel_end": 5.725,
+            "probability": 0.9240750074386597,
+            "model_tokens": [
+              "m",
+              "o4"
+            ],
+            "expected": {
+              "index": 28,
+              "char": "寞",
+              "lexical": "mo4",
+              "surface": "mo4",
+              "base": "mo"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "寞",
+            "start": 5.613208,
+            "end": 5.790083,
+            "char_start": 28,
+            "char_end": 29
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B2": {
+          "expected": {
+            "index": 28,
+            "char": "沫",
+            "lexical": "mo4",
+            "surface": "mo4",
+            "base": "mo"
+          },
+          "model_prediction": {
+            "reading": "mo4",
+            "base": "mo",
+            "start": 5.58,
+            "end": 5.625,
+            "vowel_start": 5.6,
+            "vowel_end": 5.625,
+            "probability": 0.92833012342453,
+            "model_tokens": [
+              "m",
+              "o4"
+            ],
+            "expected": {
+              "index": 28,
+              "char": "沫",
+              "lexical": "mo4",
+              "surface": "mo4",
+              "base": "mo"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "沫嫠",
+            "start": 5.530666,
+            "end": 5.837249,
+            "char_start": 28,
+            "char_end": 30
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        }
+      },
+      "direct_all_four_controls_and_actual_exact_surface": true,
+      "neutral_base_only_not_tone": false,
+      "posterior_leave_one_out_controls": {
+        "A1": 0.8502102925355135,
+        "A2": 0.8504724640526518,
+        "B1": -0.9807563202432104,
+        "B2": -0.9807667409367695
+      },
+      "posterior_controls_pass": true,
+      "actual_posterior_score": 0.8976757833834795,
+      "finite_support": "finite_scoped_support",
+      "reference_proxy_limits": [
+        "positive includes rare single-reading proxy"
+      ]
+    },
+    {
+      "edit_id": "first_turn",
+      "index": 29,
+      "char": "里",
+      "intended": "li3",
+      "kind": "proper_name",
+      "context": "续施压之下，帕里连续正拍失误。",
+      "actual_audio_sha256": "50161b2624ff6a68d2f1cb27ad6dea22001d0fa0d8ab41f1e8e464bf8934d19b",
+      "actual_marks_sha256": "9ae06a070d8eeed5dd4af9ab87a5e14be43cf14b5a76f15ee56086c6f2ec17ec",
+      "observations": {
+        "ORIG": {
+          "expected": {
+            "index": 29,
+            "char": "里",
+            "lexical": "li3",
+            "surface": "li3",
+            "base": "li"
+          },
+          "model_prediction": {
+            "reading": "li3",
+            "base": "li",
+            "start": 5.82,
+            "end": 5.865,
+            "vowel_start": 5.84,
+            "vowel_end": 5.865,
+            "probability": 0.9422500133514404,
+            "model_tokens": [
+              "l",
+              "i3"
+            ],
+            "expected": {
+              "index": 29,
+              "char": "里",
+              "lexical": "li3",
+              "surface": "li3",
+              "base": "li"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "帕里",
+            "start": 5.55425,
+            "end": 5.908041,
+            "char_start": 28,
+            "char_end": 30
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A1": {
+          "expected": {
+            "index": 29,
+            "char": "娌",
+            "lexical": "li3",
+            "surface": "li3",
+            "base": "li"
+          },
+          "model_prediction": {
+            "reading": "li3",
+            "base": "li",
+            "start": 5.58,
+            "end": 5.625,
+            "vowel_start": 5.6,
+            "vowel_end": 5.625,
+            "probability": 0.9539667963981628,
+            "model_tokens": [
+              "l",
+              "i3"
+            ],
+            "expected": {
+              "index": 29,
+              "char": "娌",
+              "lexical": "li3",
+              "surface": "li3",
+              "base": "li"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "娌",
+            "start": 5.55425,
+            "end": 5.672166,
+            "char_start": 29,
+            "char_end": 30
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "A2": {
+          "expected": {
+            "index": 29,
+            "char": "李",
+            "lexical": "li3",
+            "surface": "li3",
+            "base": "li"
+          },
+          "model_prediction": {
+            "reading": "li3",
+            "base": "li",
+            "start": 5.72,
+            "end": 5.765,
+            "vowel_start": 5.74,
+            "vowel_end": 5.765,
+            "probability": 0.8547107577323914,
+            "model_tokens": [
+              "l",
+              "i3"
+            ],
+            "expected": {
+              "index": 29,
+              "char": "李",
+              "lexical": "li3",
+              "surface": "li3",
+              "base": "li"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "李",
+            "start": 5.683958,
+            "end": 5.801874,
+            "char_start": 29,
+            "char_end": 30
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B1": {
+          "expected": {
+            "index": 29,
+            "char": "喱",
+            "lexical": "li2",
+            "surface": "li2",
+            "base": "li"
+          },
+          "model_prediction": {
+            "reading": "li2",
+            "base": "li",
+            "start": 5.84,
+            "end": 5.885,
+            "vowel_start": 5.86,
+            "vowel_end": 5.885,
+            "probability": 0.8357357382774353,
+            "model_tokens": [
+              "l",
+              "i2"
+            ],
+            "expected": {
+              "index": 29,
+              "char": "喱",
+              "lexical": "li2",
+              "surface": "li2",
+              "base": "li"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "喱",
+            "start": 5.790083,
+            "end": 5.966958,
+            "char_start": 29,
+            "char_end": 30
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        },
+        "B2": {
+          "expected": {
+            "index": 29,
+            "char": "嫠",
+            "lexical": "li2",
+            "surface": "li2",
+            "base": "li"
+          },
+          "model_prediction": {
+            "reading": "li2",
+            "base": "li",
+            "start": 5.74,
+            "end": 5.785,
+            "vowel_start": 5.76,
+            "vowel_end": 5.785,
+            "probability": 0.8295956254005432,
+            "model_tokens": [
+              "l",
+              "i2"
+            ],
+            "expected": {
+              "index": 29,
+              "char": "嫠",
+              "lexical": "li2",
+              "surface": "li2",
+              "base": "li"
+            },
+            "base_exact": true
+          },
+          "native_token": {
+            "text": "沫嫠",
+            "start": 5.530666,
+            "end": 5.837249,
+            "char_start": 28,
+            "char_end": 30
+          },
+          "location_checked": true,
+          "status": "located",
+          "expected_surface_matches_model": true
+        }
+      },
+      "direct_all_four_controls_and_actual_exact_surface": true,
+      "neutral_base_only_not_tone": false,
+      "posterior_leave_one_out_controls": {
+        "A1": 0.6661268048822991,
+        "A2": 0.6452161116809138,
+        "B1": -0.7672493589854495,
+        "B2": -0.7653167069203153
+      },
+      "posterior_controls_pass": true,
+      "actual_posterior_score": 0.9048977601396749,
+      "finite_support": "finite_scoped_support",
+      "reference_proxy_limits": [
+        "negative includes rare single-reading proxy",
+        "negative is alternate-tone proxy, not exact lexical alternate"
+      ]
+    }
+  ],
+  "limitations": [
+    "Finite controlled support is not a guarantee of every phoneme or tone.",
+    "Dictionary only enumerated expected candidates and controls; it is not actual audio evidence.",
+    "Control utterances modify several indexed sites and may alter prosody. Rare or contextual proxies are disclosed.",
+    "Chinese ASR spelling is not tone evidence; no Chinese lexical ASR was used for these verdicts.",
+    "No actual human/model hearing claimed. No final film, production QC or publication approval."
+  ],
+  "quality_approval": false,
+  "publication_approval": false
+}

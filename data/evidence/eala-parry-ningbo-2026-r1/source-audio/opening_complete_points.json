@@ -1,0 +1,105 @@
+{
+  "schema": "tennislive.source-window-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-C3SB38PJjtM/C3SB38PJjtM.mp4",
+  "source_sha256": "959090f738410223efb7fec1abb690962bde354722602640170c5fe826d20469",
+  "source_bytes": 47118065,
+  "method": "asr_cross_checked",
+  "reviewer": "Current OpenAI source agent and root assistant: actual two independent whole-source ASR plus bounded checks and finite visual/semantic adjudication; no human listening claim",
+  "reviewed_at": "2026-10-19T14:48:43.250377+00:00",
+  "status": "complete",
+  "reviewed_from": 21.64,
+  "reviewed_to": 57.9,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 29.3,
+      "end": 31.5,
+      "en": "Oh, that's so good from Diane Parry!",
+      "zh": "帕里打得太漂亮了！",
+      "verification": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim.",
+      "candidate_id": "yt-cue-03"
+    },
+    {
+      "start": 31.5,
+      "end": 34.38,
+      "en": "On the full stretch, the full run, showing her strength.",
+      "zh": "全速奔跑、奋力伸展，展现实力。",
+      "verification": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim.",
+      "candidate_id": "yt-cue-04"
+    },
+    {
+      "start": 34.64,
+      "end": 37.0,
+      "en": "A lot of matches have been played, a lot of highs and lows.",
+      "zh": "比赛打了不少，也历经起伏。",
+      "verification": "Small.en hallucinated Jules36.96..37.08; turbo no extra word. Genuine core sentence agreed.",
+      "candidate_id": "yt-cue-05"
+    },
+    {
+      "start": 50.28,
+      "end": 53.4,
+      "en": "Oh, this is an opportunity here for Alexandra Eala.",
+      "zh": "伊埃拉迎来了机会。",
+      "verification": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim.",
+      "candidate_id": "yt-cue-06"
+    },
+    {
+      "start": 55.34,
+      "end": 57.72,
+      "en": "Struggling for confidence and form.",
+      "zh": "仍苦于找回信心和状态。",
+      "verification": "Actual requestedYT SHA bound whole small.en + whole large-v3-turbo agree substantive wording. Playernames normalized from independentlyverifiedmatch. ASR timestamp boundaries finite, no directlisteningclaim.",
+      "candidate_id": "yt-cue-07"
+    }
+  ],
+  "no_foreground_english_reason": null,
+  "_edit_id": "opening_complete_points",
+  "assessment_scope": "Complete selectedforegroundsemanticreview only. Actualuncertain19aside+early21.64seconds excluded; retainedgrammaticalfragments displayedwithellipses rather than invented antecedents. ASRtimestampestimates, notallphonemes/backgroundvoices.",
+  "excluded_uncertainties_not_resolved": [
+    {
+      "source_interval": [
+        0,
+        21.64
+      ],
+      "reason": "Root-selected body starts21.64. This intentionally excludes early ordinary points plus whole unresolved19.36..21.42 aside; not a claim those earlypointswerepreserved. Next Parry service toss22.2onward andallrequested2-2,3-3,keypoints retained.",
+      "uncertain_utterance": [
+        19.36,
+        21.42
+      ],
+      "status": "actually_exclude_from_formal_recipe_before_signing"
+    },
+    {
+      "source_interval": [
+        299.44,
+        309.568435
+      ],
+      "reason": "Observedfirstpublisherframe299.48, source299.44mainboundarychosen0.04s conservativemargin. Finalsource6-1ends299.28, so sentence complete."
+    }
+  ],
+  "evidence_basis": {
+    "files": [
+      {
+        "path": "data/evidence/eala-parry-ningbo-2026-r1/source/asr-small.en.json",
+        "sha256": "3673a79dbf4a33dcb533b94af301082870429328547de355e4df4b2ceeceb579"
+      },
+      {
+        "path": "data/evidence/eala-parry-ningbo-2026-r1/source/asr-turbo.json",
+        "sha256": "ee680d73c70ea7b18122bb7fe5a937f49482392dba923b42218226b008f070e5"
+      },
+      {
+        "path": "data/evidence/eala-parry-ningbo-2026-r1/source/asr-turbo-bounded.json",
+        "sha256": "0f85c89bdb88a6c78a321d002247d9042047b7eef0ebc286e476e4288635348d"
+      },
+      {
+        "path": "data/evidence/eala-parry-ningbo-2026-r1/source/asr-base.en-bounded.json",
+        "sha256": "f8cfc91078800f3c6575cdc1c31d74d81f0cb36c579eb71d38eb2cffb076b53d"
+      }
+    ],
+    "original_audio_preserved": true,
+    "manual_listening_claimed": false,
+    "acoustic_every_word_verified": false,
+    "same_Whisper_family_not_independent_human_votes": true,
+    "native_tail_reviewed_finite_frames": true
+  },
+  "_pending": "Rootmustfinalizespec, adjudicateresidualcuewording,andnormaltoolbindrealindex/planhash. Thispendingstatusmustnotbechangedjusttoappeasegate."
+}

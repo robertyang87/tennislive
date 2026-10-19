@@ -1,0 +1,63 @@
+{
+  "slug": "eala-parry-ningbo-2026-r1",
+  "checked_at": "2026-10-19T15:04:52Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "090ee67a81109287": {
+      "segment": 2,
+      "spoken": 10.8,
+      "picture": 11.6
+    },
+    "a7cc3fba5573682c": {
+      "segment": 3,
+      "spoken": 10.368,
+      "picture": 11.2
+    },
+    "9237c22afacc206f": {
+      "segment": 5,
+      "spoken": 11.688,
+      "picture": 12.5
+    },
+    "18a4f4c78c68ad09": {
+      "segment": 9,
+      "spoken": 12.984,
+      "picture": 13.8
+    },
+    "2785bdc0dd71ca4c": {
+      "segment": 12,
+      "spoken": 11.352,
+      "picture": 12.2
+    },
+    "adf5a05ce70ab40d": {
+      "segment": 14,
+      "spoken": 12.792,
+      "picture": 13.6
+    },
+    "62e32fbe98224c6f": {
+      "segment": 15,
+      "spoken": 9.696,
+      "picture": 10.5
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "e8ab17295f287ab9c4d938b7a104a346700d963aaa859c0949ad86fecd9836f9",
+    "request_count": 8,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "transport": "repository",
+    "repository_commit": "f2089b5d87d3184d2e39df5e1b8f0caf1257fd82",
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/f2089b5d87d3184d2e39df5e1b8f0caf1257fd82/assets/tts-bundles/eala-parry-ningbo-2026-r1/e8ab17295f287ab9c4d938b7a104a346700d963aaa859c0949ad86fecd9836f9/tts_bundle.zip",
+    "file_name": "tts_bundle.zip"
+  }
+}

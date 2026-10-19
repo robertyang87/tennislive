@@ -1,0 +1,56 @@
+{
+  "schema": "tennislive.native-preview-scoreboard-review.v1",
+  "reviewed_at": "2026-10-19T15:05:59.016620+00:00",
+  "status": "blocked_missing_native_keypoint_headers",
+  "visual_pass": false,
+  "publication_approved": false,
+  "source_sha256": "959090f738410223efb7fec1abb690962bde354722602640170c5fe826d20469",
+  "native_preview_manifest": "/tmp/eala-native-caption-preview-v4/preview_manifest.json",
+  "manifest_sha256": "71ba34801dd6f92d8af9e05d35eb74bb3493c8070562393e7ae758077d98054f",
+  "actual_native_pngs_viewed": [
+    {
+      "image": "caption-01.png",
+      "sha256": "25ecb43a386786cb312c85067868c53c9f55d4e10935e8fb807572bcb35f24aa",
+      "source_time_nominal": 84.97999999999999,
+      "segment_frame": 677
+    },
+    {
+      "image": "caption-02.png",
+      "sha256": "4e11fb21651ceceb7e5c784315401ba50b97426bc64d06e8cac1188511a187b9",
+      "source_time_nominal": 108.5,
+      "segment_frame": 249
+    },
+    {
+      "image": "caption-03.png",
+      "sha256": "1872b168e18641948120aaa176b5df90066cb7ed7e764a9c3b46cd93d3810e86",
+      "source_time_nominal": 155.78,
+      "segment_frame": 839
+    },
+    {
+      "image": "caption-05.png",
+      "sha256": "0a0c5b6f7377a907d6cca8907c3ce209094dc5432044017cde32e1e7db6ba3a2",
+      "source_time_nominal": 257.46000000000004,
+      "segment_frame": 390
+    }
+  ],
+  "finding": {
+    "actual_render_problem": "BREAK POINT #3 / SET POINT #2 / MATCH POINT headers visible in actual same-source original frames are missing from native preview02/03/05. Main point numerals are readable.",
+    "cause": "Current scorebox starts sourcey870, so scan_geometry never receives original header source829..870. resolve_masks does not extend the supplied scorebox upward.",
+    "minimal_fix_direction": "Calibrate this source scorebox top828; retain samex90,right520,bottom982,center555..1365,scale1080/810,native mask algorithm. True sourcebody remains870 or source869 1px fringe; header is independently measured atsource829. No production detector/code/test edit made."
+  },
+  "closed_non_finding": {
+    "id": "85s_native_digit_cut",
+    "status": "not_present_in_actual_native_preview01",
+    "note": "Single original raw85.0 frame geometry right458 was a detector risk only. Actual current native mask segment06 frame677 has alpha exclusive right390 relative tox90, hence source480 and full upper30 visible in exact preview01. Do not promote raw one-frame risk to a current native rendering failure.",
+    "actual_native_mask_frame677_alpha_bounds": [
+      0,
+      0,
+      390,
+      112
+    ]
+  },
+  "limits": [
+    "Pre-encode PNG review only, not final H264 movie approval.",
+    "No claim of entire source-frame or court coverage, actual listening or publication."
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "status": "ok",
+  "model": "buffalo_s-v0.7",
+  "identity": {
+    "verdict": "match",
+    "name": "伊埃拉",
+    "similarity": {
+      "伊埃拉": 0.5343,
+      "帕里": 0.0586
+    },
+    "missing": [],
+    "expected": [
+      "伊埃拉",
+      "帕里"
+    ],
+    "face": [
+      412,
+      122,
+      555,
+      330
+    ],
+    "face_px": 207.5,
+    "reason": "像 伊埃拉（0.53 ≥ 0.34）",
+    "thresholds": {
+      "match": 0.34,
+      "mismatch": 0.15,
+      "min_face_px": 56
+    },
+    "target": [
+      "伊埃拉"
+    ]
+  },
+  "eyes": {
+    "verdict": "open",
+    "ear": 0.3405,
+    "ear_each": [
+      0.3894,
+      0.2915
+    ],
+    "face": [
+      412,
+      122,
+      555,
+      330
+    ],
+    "face_px": 207.5,
+    "reason": "眼睛纵横比 0.34 ≥ 0.16",
+    "thresholds": {
+      "closed": 0.12,
+      "open": 0.16,
+      "min_face_px": 72
+    }
+  },
+  "problems": [],
+  "warnings": [],
+  "region": [
+    538,
+    0,
+    1541,
+    1336
+  ],
+  "frame": "/workspace/scratch/eala-C3SB38PJjtM-cover/ningbo-official-original-008zTqBcly1ii7z24jyfpj31jk114wz4.jpg",
+  "frame_at": null,
+  "target": [
+    "伊埃拉"
+  ]
+}
