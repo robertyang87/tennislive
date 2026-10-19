@@ -272,3 +272,148 @@ exit 99
                             env={**os.environ, 'RUNNER_TEMP': str(tmp_path), 'PATH': f'{bindir}:{os.environ["PATH"]}'})
     assert result.returncode == 1
     assert (tmp_path / 'published').exists()
+
+
+def _repository_transport_fixture(tmp_path):
+    import importlib.util
+    import json
+    spec = importlib.util.spec_from_file_location('repository_tts_transport', ROOT / 'tools/reel_tts_release.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    bundle = tmp_path / 'native-input.zip'
+    _transport_bundle(bundle)
+    sha = module.digest(bundle)
+    commit = 'a' * 40
+    record = {'schema': module.SCHEMA, 'artifact_kind': 'native_tts_inputs',
+              'quality_approval': False, 'bundle_sha256': sha, 'request_count': 1,
+              'transport': 'repository', 'repository_commit': commit, 'file_name': module.ASSET,
+              'url': f'https://raw.githubusercontent.com/{module.REPO}/{commit}/assets/tts-bundles/test-reel/{sha}/{module.ASSET}'}
+    metadata = tmp_path / 'record.json'
+    metadata.write_text(json.dumps({'tts_bundle': record}))
+    return module, bundle, record, metadata
+
+
+class _RepositoryResponse:
+    def __init__(self, raw, url, length=None):
+        self.raw = raw
+        self.url = url
+        self.headers = {} if length is None else {'Content-Length': str(length)}
+        self.read_limits = []
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        pass
+
+    def geturl(self):
+        return self.url
+
+    def read(self, limit):
+        self.read_limits.append(limit)
+        return self.raw[:limit]
+
+
+def test_repository_capsule_restores_exact_native_bytes_once(tmp_path, monkeypatch):
+    module, bundle, record, metadata = _repository_transport_fixture(tmp_path)
+    response = _RepositoryResponse(bundle.read_bytes(), record['url'], bundle.stat().st_size)
+    calls = []
+
+    def fetch(request, *, timeout):
+        calls.append((request.full_url, timeout))
+        return response
+
+    monkeypatch.setattr(module, 'repository_open', fetch)
+    monkeypatch.setattr(module, 'gh', lambda *a: pytest.fail('Repository restore must not use Release APIs'))
+    output = tmp_path / 'restored.zip'
+    assert module.restore('test-reel', metadata, output)
+    assert output.read_bytes() == bundle.read_bytes()
+    assert calls == [(record['url'], 30)]
+    assert response.read_limits == [module.REPOSITORY_BUNDLE_LIMIT + 1]
+    assert module.restore('test-reel', metadata, output)
+    assert len(calls) == 1
+
+
+@pytest.mark.parametrize('change', [
+    {'repository_commit': 'main'}, {'repository_commit': 'a' * 39},
+    {'repository_commit': 'g' * 40}, {'request_count': True},
+    {'release_tag': 'fake-release'}, {'file_name': 'other.zip'},
+    {'url': 'https://evil.example/native.zip'},
+    {'url': 'https://raw.githubusercontent.com/evil/repo/' + 'a' * 40 + '/tts_bundle.zip'},
+    {'url': 'https://raw.githubusercontent.com/robertyang87/tennislive/main/tts_bundle.zip'},
+    {'url': 'https://raw.githubusercontent.com/robertyang87/tennislive/' + 'a' * 40 + '/assets/tts-bundles/../tts_bundle.zip'},
+    {'transport': 'unrecognized'},
+])
+def test_repository_capsule_rejects_unpinned_or_foreign_locators_before_network(tmp_path, monkeypatch, change):
+    import json
+    module, bundle, record, metadata = _repository_transport_fixture(tmp_path)
+    record.update(change)
+    metadata.write_text(json.dumps({'tts_bundle': record}))
+    monkeypatch.setattr(module, 'repository_open', lambda *a, **k: pytest.fail('Invalid locator reached network'))
+    monkeypatch.setattr(module, 'gh', lambda *a: pytest.fail('Invalid locator reached Release API'))
+    output = tmp_path / 'restored.zip'
+    with pytest.raises(ValueError):
+        module.restore('test-reel', metadata, output)
+    assert not output.exists()
+
+
+@pytest.mark.parametrize('failure', ['declared_size', 'actual_size', 'hash', 'redirect', 'request_count', 'slug', 'preview_kind'])
+def test_repository_capsule_size_bytes_and_producer_checks_fail_closed(tmp_path, monkeypatch, failure):
+    import json
+    import zipfile
+    module, bundle, record, metadata = _repository_transport_fixture(tmp_path)
+    if failure in {'slug', 'preview_kind'}:
+        with zipfile.ZipFile(bundle) as z:
+            members = {n: z.read(n) for n in z.namelist()}
+        manifest = json.loads(members['manifest.json'])
+        manifest['metadata']['slug' if failure == 'slug' else 'kind'] = 'other-reel' if failure == 'slug' else 'reel_native_tts_preview'
+        members['manifest.json'] = json.dumps(manifest).encode()
+        with zipfile.ZipFile(bundle, 'w') as z:
+            for n, data in members.items():
+                z.writestr(n, data)
+        record['bundle_sha256'] = module.digest(bundle)
+        record['url'] = f'https://raw.githubusercontent.com/{module.REPO}/{record["repository_commit"]}/assets/tts-bundles/test-reel/{record["bundle_sha256"]}/{module.ASSET}'
+    if failure == 'request_count':
+        record['request_count'] = 2
+    metadata.write_text(json.dumps({'tts_bundle': record}))
+    raw = b'bad actual bytes' if failure == 'hash' else bundle.read_bytes()
+    if failure == 'actual_size':
+        raw = b'x' * (module.REPOSITORY_BUNDLE_LIMIT + 1)
+    response = _RepositoryResponse(raw, 'https://foreign.example/' if failure == 'redirect' else record['url'],
+                                   module.REPOSITORY_BUNDLE_LIMIT + 1 if failure == 'declared_size' else None)
+    monkeypatch.setattr(module, 'repository_open', lambda *a, **k: response)
+    output = tmp_path / 'restored.zip'
+    with pytest.raises(ValueError):
+        module.restore('test-reel', metadata, output)
+    assert not output.exists()
+
+
+def test_repository_capsule_cannot_follow_redirects():
+    from tools.reel_tts_release import _NoRepositoryRedirect
+    with pytest.raises(ValueError, match='redirect'):
+        _NoRepositoryRedirect().redirect_request(None, None, 302, '', {}, 'https://foreign.example/')
+
+
+def test_publishing_repository_capsule_replaces_locator_with_real_release(tmp_path, monkeypatch):
+    import json
+    module, bundle, record, metadata = _repository_transport_fixture(tmp_path)
+    uploaded = {}
+
+    def gh(*args):
+        if args[:2] == ('release', 'view'):
+            return json.dumps({'assets': [{'name': module.ASSET}] if uploaded else []})
+        if args[:2] == ('release', 'upload'):
+            uploaded['bytes'] = Path(args[3]).read_bytes()
+        if args[:2] == ('release', 'download'):
+            folder = Path(args[args.index('--dir') + 1])
+            (folder / module.ASSET).write_bytes(uploaded['bytes'])
+        return ''
+
+    monkeypatch.setattr(module, 'gh', gh)
+    result = module.publish('test-reel', bundle, metadata)
+    assert 'transport' not in result and 'repository_commit' not in result
+    assert result['release_tag'].startswith('reel-tts-test-reel-')
+    assert result['url'].startswith('https://github.com/robertyang87/tennislive/releases/download/')
+    output = tmp_path / 'release-restored.zip'
+    assert module.restore('test-reel', metadata, output)
+    assert output.read_bytes() == bundle.read_bytes()
