@@ -6,20 +6,59 @@ on:
 permissions:
   contents: write
 jobs:
-  check:
+  fullmatch:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 60
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - name: meta
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: deps
         run: |
-          pip install -q -U "yt-dlp[default]"
+          pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
+          sudo apt-get -qq update >/dev/null && sudo apt-get -qq install -y ffmpeg >/dev/null
+          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 25); do curl -sf http://127.0.0.1:4416/ping >/dev/null && break; sleep 2; done
+      - name: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt.txt"; fi
+      - name: search
+        run: |
           mkdir -p out
-          yt-dlp --skip-download --print "%(id)s | %(channel)s | %(uploader_id)s | %(duration)s | %(width)sx%(height)s | %(upload_date)s | %(title)s" "https://www.youtube.com/watch?v=8-YxB5kn8qA" 2>&1 | tee out/gemini_check.txt
-          echo "### Dubai channel recent (flat, 80)" | tee -a out/gemini_check.txt
-          yt-dlp --flat-playlist --playlist-end 80 --print "%(id)s | %(duration)s | %(title)s" "https://www.youtube.com/@DubaiDutyFreeTennisChampionships/videos" 2>/dev/null | grep -iE "pegula|champion|trophy|final|2026" | tee -a out/gemini_check.txt || true
-          yt-dlp --flat-playlist --playlist-end 80 --print "%(id)s | %(duration)s | %(title)s" "https://www.youtube.com/@DubaiDutyFreeTennisChampionships/shorts" 2>/dev/null | grep -iE "pegula|champion|trophy|final|2026" | tee -a out/gemini_check.txt || true
+          A=(--js-runtimes node); [ -s "$RUNNER_TEMP/yt.txt" ] && A+=(--cookies "$RUNNER_TEMP/yt.txt")
+          while IFS='|' read -r key q; do
+            [ -n "$key" ] || continue
+            echo "### $key :: $q" | tee -a out/fullmatch.txt
+            yt-dlp "${A[@]}" --flat-playlist --print "%(id)s | %(channel)s | %(duration)s | %(title)s" "ytsearch12:$q" 2>/dev/null | tee -a out/fullmatch.txt | awk -F' [|] ' -v k="$key" '$2=="WTA" && $3>2400 {print k" "$1" "$3}' | head -1 >> out/picks.txt || true
+          done <<'Q'
+          dubai|Pegula Svitolina 2026 Dubai Final WTA Full Match
+          beijing|Zheng Andreeva 2026 Beijing Final WTA Full Match
+          wuhan|Chwalinska Kartal 2026 Wuhan Final WTA Full Match
+          miami|Sabalenka Gauff 2026 Miami Final WTA Full Match
+          Q
+          echo "### picks"; cat out/picks.txt | tee -a out/fullmatch.txt
+      - name: tail
+        run: |
+          A=(--js-runtimes node); [ -s "$RUNNER_TEMP/yt.txt" ] && A+=(--cookies "$RUNNER_TEMP/yt.txt")
+          while read -r key id dur; do
+            [ -n "$id" ] || continue
+            from=$(( ${dur%.*} - 900 ))
+            yt-dlp "${A[@]}" -f "bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080]" --merge-output-format mp4 \
+              --download-sections "*${from}-inf" --force-keyframes-at-cuts -o "out/tail_${key}_${id}.mp4" "https://www.youtube.com/watch?v=$id" 2>&1 | tail -3 || true
+            ls -la out/ | grep "$id" || true
+            echo "$key $id $dur from=$from" >> out/fullmatch.txt
+          done < out/picks.txt
       - name: upload
-        run: gh release upload ref-douyin-7698221105147890959 --clobber out/gemini_check.txt
+        if: always()
+        run: |
+          cd out
+          gh release create ref-trophy-fullmatch --prerelease --title "WTA 官方决赛全场录像末尾 15 分钟（找颁奖，仅内部剪辑核对）" --notes "tmp" 2>/dev/null || true
+          for f in *; do [ -s "$f" ] && gh release upload ref-trophy-fullmatch --clobber "$f" || true; done
