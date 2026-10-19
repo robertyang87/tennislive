@@ -2,50 +2,50 @@
   "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ATsKkPJBY3s/ATsKkPJBY3s.mp4",
   "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
   "method": "asr_cross_checked",
-  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewed_at": "2026-10-19T00:08:10.761573+00:00",
   "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
-  "reviewed_from": 242.3,
-  "reviewed_to": 270.5,
+  "reviewed_from": 343.6,
+  "reviewed_to": 365.3,
   "status": "complete",
   "uncertain_spans": [],
   "foreground_english": [
     {
-      "start": 242.6,
-      "end": 244.38,
-      "en": "She knows she's oh so close.",
-      "zh": "她知道胜利已经近在咫尺。"
+      "start": 343.92,
+      "end": 349.6,
+      "en": "It's always tough to play against a fellow Polish player.",
+      "zh": "和同胞交手，总是很难。"
     },
     {
-      "start": 244.5,
-      "end": 247.08,
-      "en": "Maja Chwalinska. Match point.",
-      "zh": "赫瓦林斯卡来到赛点。"
+      "start": 350.58,
+      "end": 352.3,
+      "en": "She's a great champion,",
+      "zh": "她是伟大的冠军，"
     },
     {
-      "start": 250.9,
-      "end": 252.08,
-      "en": "Oh, Maja!",
-      "zh": "噢，玛雅！"
+      "start": 352.44,
+      "end": 353.7,
+      "en": "a living legend, she won everything.",
+      "zh": "活着的传奇，什么都赢过。"
     },
     {
-      "start": 254.88,
-      "end": 256.86,
-      "en": "Magnificence in Wuhan,",
-      "zh": "武汉的精彩一刻，"
+      "start": 354.2,
+      "end": 357.3,
+      "en": "It was a great honor for me to share the court with her today.",
+      "zh": "今天能和她同场，是我的荣幸。"
     },
     {
-      "start": 256.86,
-      "end": 259.82,
-      "en": "as she topples her fellow Pole, former world number one,",
-      "zh": "她击败同为波兰人的前世界第一，"
+      "start": 358.46,
+      "end": 361.4,
+      "en": "I still don't really realize what's going on,",
+      "zh": "我还没完全反应过来，"
     },
     {
-      "start": 259.82,
-      "end": 263.5,
-      "en": "for her first career top-10 win.",
-      "zh": "生涯第一次赢前10球员。"
+      "start": 361.6,
+      "end": 365.0,
+      "en": "and the fact that I won against her is actually crazy for me.",
+      "zh": "赢了她，对我来说太疯狂了。"
     }
   ],
   "asr_evidence": "data/source_asr/ATsKkPJBY3s/small.en.json + medium.en.json",
-  "review_note": "同一条集锦的赛点与网前拥抱（chwalinska-swiatek-wuhan-2026-sf 第 11 段 242.24–284.2 的前半段，字幕沿用那条已审的译文，at 按新段首重算）。段尾 270.5 在 Well, genuine affection（270.78）之前。"
+  "review_note": "同一条 WTA 集锦尾部的场上采访（两档转写一致，medium 343.92–364.90）；口头语（I mean / you know）按烧字幕规矩去掉。段尾 365.3 在下一段空白（365.3–389.7）开头。"
 }

@@ -2,7 +2,7 @@
   "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-12BOGT88OnQ/12BOGT88OnQ.mp4",
   "source_sha256": "dbd8c4a9704f5af69ce4bac301f748341719b284f5516b2161c1b4fb890b0b7c",
   "method": "asr_cross_checked",
-  "reviewed_at": "2026-10-18T23:46:40.580186+00:00",
+  "reviewed_at": "2026-10-19T00:08:10.761573+00:00",
   "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
   "reviewed_from": 259.0,
   "reviewed_to": 275.3,
@@ -11,5 +11,5 @@
   "foreground_english": [],
   "asr_evidence": "data/source_asr/12BOGT88OnQ/small.en.json + medium.en.json",
   "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/12BOGT88OnQ 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 259.0–275.3 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
-  "review_note": "WTA 官方北京第二轮集锦第二盘（241.6–275.4 两档转写无词）。北京 R2 3-6 1-6 负亚斯特雷姆斯卡：WTA 接口＋flashscore；法网决赛到武汉之前 4 胜 7 负（胜布克沙、什拉姆科娃、奥利尼科娃、梅尔滕斯；负萨王凯、吉布森、施奈德、帕克斯、汤森德、费尔南德斯、亚斯特雷姆斯卡）：WTA 接口逐场；「people also were very rough towards me … I'm just a human」：WTA 4593967＋法新社（武汉决赛后发布会）。"
+  "review_note": "WTA 官方北京第二轮集锦第二盘（241.6–275.4 两档转写无词）。北京 R2 3-6 1-6 负亚斯特雷姆斯卡：WTA 接口＋flashscore；法网决赛到武汉之前 4 胜 7 负（胜布克沙、什拉姆科娃、奥利尼科娃、梅尔滕斯；负萨王凯、吉布森、施奈德、帕克斯、汤森德、费尔南德斯、亚斯特雷姆斯卡）：WTA 接口逐场；「people also were very rough towards me … I'm just a human」：WTA 4593967＋法新社（武汉决赛后发布会）。 原来紧跟的赛后解说段（275.5–290.0）删了：283.4 秒起 WTA 赛果大图压在字幕位置上，而解说那一句一直说到 289.9 秒，切不开。"
 }
