@@ -48,7 +48,10 @@
   "cin": "https://www.youtube.com/watch?v=Z2_awLHqcww",
   "cin_t1": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-cin-trophy1/cin_trophy1.mp4",
   "bj": "https://www.youtube.com/watch?v=Vq_UC0n5DKQ",
-  "wuhan": "https://www.youtube.com/watch?v=HIvIvgwXkqs"
+  "wuhan": "https://www.youtube.com/watch?v=HIvIvgwXkqs",
+  "wh_tr": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-wuhan-trophy-lift/wuhan_trophy_lift.mp4",
+  "bj_tr": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-bj-trophy/bj_trophy.mp4",
+  "madrid_k": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-madrid-kiss/madrid_kiss.mp4"
  },
  "primary": "bj_x",
  "editorial": {
@@ -214,7 +217,10 @@
   "miami_t": "https://www.youtube.com/watch?v=GD7MQNp4PZA — WTA 官方 YouTube 决赛全场（1:47:00 起分段下载）657.62–664.0s，24→25fps",
   "madrid_bf": "https://x.com/MutuaMadridOpen/status/2050627598904852489 — 马德里赛事官方 X 1080×1350 0–8.9s，居中裁 3:4 置于中央 810×1080",
   "tor_t": "https://www.youtube.com/watch?v=5Xj5JorwU6M — Tennis Canada 官方 YouTube 颁奖 322.5–343.0s",
-  "cin_t1": "https://www.youtube.com/watch?v=aw8XUjIkpio — 辛辛那提赛事官方 YouTube 颁奖 13.1–24.0s，29.97→25fps"
+  "cin_t1": "https://www.youtube.com/watch?v=aw8XUjIkpio — 辛辛那提赛事官方 YouTube 颁奖 13.1–24.0s，29.97→25fps",
+  "wh_tr": "https://www.youtube.com/shorts/C87Ikp6xUN4 — WTA 官方 Shorts 8.10–15.80s，720×1280 取 y=176 的 720×960，放大到 810×1080 置于 1920×1080 中央，30→25fps",
+  "madrid_k": "madrid_t（https://www.youtube.com/watch?v=Obv_j6l33nQ 894.0–919.5s）再取 15.12–18.04s，x=900 起 810×1080 原尺寸置于 1920×1080 中央，25fps",
+  "bj_tr": "https://www.youtube.com/shorts/dDxlsgH6UJg — WTA 官方 Shorts 9.80–13.90s（y=160）＋16.45–19.50s（y=300），各取 720×960 放大到 810×1080 置于 1920×1080 中央、接成一条，30→25fps"
  },
  "segments": [
   {
@@ -482,6 +488,19 @@
    "narration": "",
    "_why": "冠军点：佩古拉 ACE 结束比赛，原声。",
    "_quote_skip_why": "small.en/medium.en 两模型转写＋VAD 复核：这几秒解说没开口，只有球场现场声和观众声，没有可译的解说。"
+  },
+  {
+   "image": "assets/reel/wta1000-2026/dubai-trophy.jpg",
+   "image_kind": "photo",
+   "seconds": 2.6,
+   "narration": "这一次，奖杯是她的。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "迪拜站捧杯：WTA 官方图库（文件名 Pegula-trophy-Jimmie.jpg，2026-02-22 发布，标题「Jessica Pegula, Dubai 2026」），佩古拉抱着迪拜冠军奖杯。原图 4700×3177（取 ?width=4000 的 4000×2704），按画布 3:4 预裁 2028×2704，人居中。",
+   "_photo_source": "https://photoresources.wtatennis.com/photo-resources/2026/02/22/2c68af62-120d-417d-a889-2844379a288a/Pegula-trophy-Jimmie.jpg",
+   "_photo_caption_safety": "旁白字幕压在下部奖杯底座一带，脸在画面上部 15%–35%，不压脸。"
   },
   {
    "source": "iw",
@@ -863,6 +882,17 @@
    "narration": "",
    "_why": "马德里官方 X：科斯秋克后空翻庆祝，原声。",
    "_quote_skip_why": "small.en/medium.en 两模型转写＋VAD 复核：这几秒解说没开口，只有球场现场声和观众声，没有可译的解说。"
+  },
+  {
+   "source": "madrid_k",
+   "start": 0.08,
+   "end": 2.88,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "mute": true,
+   "_why": "马德里站捧杯：赛事官方颁奖源（冷开场那条 madrid_t）15.12–18.04 这一镜派生，科斯秋克亲吻奖杯近景；人在画面右侧，居中的 3:4 会切掉脸，所以派生时取 x=900 的窗口置中。冷开场用的是 8.5–12.08 的举杯，不重复。",
+   "_quote_skip_why": "颁奖台广播在讲话（两档转写对不上，像是把西语当英语转错了），译不出可靠的字幕，这一段静音不出原声。"
   },
   {
    "source": "rome",
@@ -1381,6 +1411,28 @@
    }
   },
   {
+   "source": "bj_tr",
+   "start": 0.0,
+   "end": 4.05,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "mute": true,
+   "_why": "北京站捧杯：WTA 官方 Shorts dDxlsgH6UJg 9.80–13.90 派生，郑钦文坐在场上抱着奖杯。720×1280 源，账号所有者 2026-10-19「1 可以用」批准。",
+   "_quote_skip_why": "源片音轨是 WTA 短片的背景歌曲（转写出来是歌词），没有解说；mute: true。"
+  },
+  {
+   "source": "bj_tr",
+   "start": 4.15,
+   "end": 7.1,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "mute": true,
+   "_why": "北京站捧杯：同一条 WTA 官方 Shorts 16.45–19.50 派生，郑钦文在网前举着奖杯。",
+   "_quote_skip_why": "源片音轨是背景歌曲，没有解说；mute: true。"
+  },
+  {
    "source": "wuhan",
    "start": 33.0,
    "end": 38.12,
@@ -1470,14 +1522,15 @@
   {
    "source": "wuhan",
    "start": 178.5,
-   "end": 180.48,
+   "end": 181.2,
    "cx": 0.5,
    "track": false,
-   "narration": "最后连赢五局。",
+   "narration": "决胜盘连下最后四局。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高。语速走 --rate +18%，音高逐段写在这里。"
-   }
+   },
+   "_why": "官方逐局：决胜盘 2-2 之后赫瓦林斯卡连下最后四局（与 chwalinska-story-2026 第 37 段同一口径）。第一版写的「最后连赢五局」与官方逐局不符，第二版改正。新句比原窗口长，段尾从 180.48 延到 181.2（178.36 之后到 184 没有切点，两档转写 177.2–192 无词），所以这一段重新审听。"
   },
   {
    "source": "wuhan",
@@ -1515,6 +1568,28 @@
    }
   },
   {
+   "source": "wh_tr",
+   "start": 0.05,
+   "end": 3.45,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "mute": true,
+   "_why": "武汉站捧杯：WTA 官方 Shorts C87Ikp6xUN4 8.10–15.80 派生，赫瓦林斯卡在彩带里双手把奖杯举过头顶。720×1280 源，账号所有者 2026-10-19「1 可以用」批准。",
+   "_quote_skip_why": "源片音轨是背景歌曲（转写出来是歌词），没有解说；mute: true。"
+  },
+  {
+   "source": "wh_tr",
+   "start": 3.55,
+   "end": 7.65,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "mute": true,
+   "_why": "武汉站捧杯：同一条派生源第二镜，她抱着奖杯比 V 字。",
+   "_quote_skip_why": "源片音轨是背景歌曲，没有解说；mute: true。"
+  },
+  {
    "source": "cin_t2",
    "start": 9.0,
    "end": 11.7,
@@ -1544,7 +1619,7 @@
    "end": 13.36,
    "cx": 0.5,
    "track": false,
-   "narration": "今年没有谁能一手遮天。年终总决赛，谁会笑到最后？",
+   "narration": "今年没有谁能一手遮天。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高。语速走 --rate +18%，音高逐段写在这里。"
@@ -1556,11 +1631,13 @@
    "end": 18.49,
    "cx": 0.5,
    "track": false,
-   "narration": "你心里最燃的是哪一冠？评论区告诉我。",
+   "narration": "十站决赛，你心里最好看的是哪一场？",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高。语速走 --rate +18%，音高逐段写在这里。"
-   }
+   },
+   "_why": "结尾只留一个问题（第二版：原来两问「年终总决赛谁会笑到最后／你心里最燃的是哪一冠」并成一个好答的单选）。"
   }
- ]
+ ],
+ "_v2_why": "第二版（2026-10-19）：账号所有者看过同题抖音（体坛叙说）后要求补捧杯镜头；补迪拜、马德里、北京、武汉四站捧杯，改正武汉「最后连赢五局」→「决胜盘连下最后四局」，结尾两问并成一问。北京、武汉的 WTA 官方 Shorts 为 720×1280，账号所有者 2026-10-19 回复「1 可以用」。"
 }

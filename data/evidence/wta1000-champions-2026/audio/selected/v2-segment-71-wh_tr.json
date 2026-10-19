@@ -1,0 +1,15 @@
+{
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-wuhan-trophy-lift/wuhan_trophy_lift.mp4",
+ "source_sha256": "9d230c718dd35998cbaba3ae962ae05c19809a4d4f9ed9f038a7e6603de27e08",
+ "method": "asr_cross_checked",
+ "reviewed_at": "2026-10-19T17:03:41.769636+00:00",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+ "reviewed_from": 3.55,
+ "reviewed_to": 7.65,
+ "status": "complete",
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "no_foreground_english_reason": "源片音轨是 WTA 短片的背景歌曲：small.en 转出的是连续歌词（Thank you for sunshine… It's a beautiful day），medium.en 只标出 🎶 Music；没有解说、采访或球员人声。本段 mute: true，不出原声。",
+ "asr_evidence": "data/source_asr/C87Ikp6xUN4/（原片 8.10–15.80s 对应派生 0–7.70s）",
+ "review_note": "武汉站捧杯：同一条派生源第二镜，她抱着奖杯比 V 字。"
+}

@@ -1,14 +1,14 @@
 {
  "schema": "tennislive.foreground-audio-review.v1",
  "slug": "wta1000-champions-2026",
- "plan_sha256": "99c9c957933696620d05d406c4b5cc00fb318276caadc75b252951105fb999f3",
+ "plan_sha256": "6f3acc7ae95f52d9dff93f900142789081e89d2e005f8ba3e3df4d41e30e1b37",
  "reviewed_at": "2026-10-19T03:38:48+08:00",
  "method": "asr_cross_checked",
  "fresh_actual_asr_runs": true,
  "human_listening_claimed": false,
  "actual_listening_performed": false,
  "tone_verified": false,
- "note": "Bound to the current spec and the exact source bytes (release assets). Local small.en/medium.en ASR cross-check gated by silero VAD; not a human listening certificate.",
+ "note": "Bound to the current spec and the exact source bytes (release assets). Local small.en/medium.en ASR cross-check gated by silero VAD; not a human listening certificate. 第二版（2026-10-19）：原有窗口沿用原审听包、只重新编号；新增捧杯窗口的审听包见 v2-segment-*.json（Claude 会话写）。",
  "segments": [
   {
    "index": 0,
@@ -81,282 +81,307 @@
    "transcript_sha256": "2fabea236358829edb2b410264981f689505fa946e4485273e2723fe6bc41940"
   },
   {
-   "index": 14,
+   "index": 15,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-14.json",
    "transcript_sha256": "19b5804193e31a52c131c498cd0dde0d98e512d784a30206eb4c49bfc9db0921"
   },
   {
-   "index": 15,
+   "index": 16,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-15.json",
    "transcript_sha256": "2fe388ac1e867c77c770f2e2d975ebe3071f72aaf742958fbb2f0e4581789887"
   },
   {
-   "index": 16,
+   "index": 17,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-16.json",
    "transcript_sha256": "00ce89204776a0e0f613d8d270f3dfbf0587ebb7d766e20b9fa76a0383ac7e4b"
   },
   {
-   "index": 17,
+   "index": 18,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-17.json",
    "transcript_sha256": "d0b108ed0c0d072e4250f30ca470cfa146c1df358db1bcd97a125b40845842dd"
   },
   {
-   "index": 18,
+   "index": 19,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-18.json",
    "transcript_sha256": "62381833cfc42b010cc5eb813bc8d54698867d97c609ee46a05bcc2bb4232cce"
   },
   {
-   "index": 19,
+   "index": 20,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-19.json",
    "transcript_sha256": "1e8fd9aea61887ff190047797952100332096ac00fcda9b5baecad748a9ff4cb"
   },
   {
-   "index": 20,
+   "index": 21,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-20.json",
    "transcript_sha256": "cc697c427e54e567f1595158b955eb8ae0756803f691fbed3408578d43ad71c1"
   },
   {
-   "index": 21,
+   "index": 22,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-21.json",
    "transcript_sha256": "63584b82de9cc201647376923bd5dca8fce3eadd230185a900b8bb5a2befb901"
   },
   {
-   "index": 22,
+   "index": 23,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-22.json",
    "transcript_sha256": "4ad72cc5c0ae7b72051f823d51b15ce94f6694eaa321efb1271d9c48bf3089ea"
   },
   {
-   "index": 23,
+   "index": 24,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-23.json",
    "transcript_sha256": "6233823548a61a04cab0175aa77ebfca238b9ce4473105fa272378c859048d35"
   },
   {
-   "index": 24,
+   "index": 25,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-24.json",
    "transcript_sha256": "efcdf7d473bcc5d3ba822da97e51b2ab9e3a52f28d70a425fbdd1ff9f9dadc75"
   },
   {
-   "index": 25,
+   "index": 26,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-25.json",
    "transcript_sha256": "b03be24a1e01f966962d29fcf4fc6615fff29b3e64c4e1d06d73013fa4a73b89"
   },
   {
-   "index": 26,
+   "index": 27,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-26.json",
    "transcript_sha256": "289392552a92e48c32ca1bd64cee74740ebff11f660ecec19da58c5b1c9bc9cb"
   },
   {
-   "index": 27,
+   "index": 28,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-27.json",
    "transcript_sha256": "b40b902723c055e0c1cb931d297a60b99281a56834825571c23f6daf1378ea09"
   },
   {
-   "index": 28,
+   "index": 29,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-28.json",
    "transcript_sha256": "56cf5b56a11d90e8cb0c661f4384538992de8c4418b8e3238c6f3f6dfd36b443"
   },
   {
-   "index": 29,
+   "index": 30,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-29.json",
    "transcript_sha256": "dd6e71bfad115d143b436e2e449831f19e1c7c59c13894b7c49d1009dda95743"
   },
   {
-   "index": 30,
+   "index": 31,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-30.json",
    "transcript_sha256": "f2f99768a6015e8624159b51eb0f10c6e9372a3d5de7ba5950f2c29c8c6f8d98"
   },
   {
-   "index": 31,
+   "index": 32,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-31.json",
    "transcript_sha256": "9ae9a2287f2d1891ded233c93369a377a9fc35c4189fd28807a3f819ec5e0f36"
   },
   {
-   "index": 32,
+   "index": 33,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-32.json",
    "transcript_sha256": "461174908e25967f1056662b84acd643b9b7788d25777eb5b85c8a26edf52c59"
   },
   {
-   "index": 33,
+   "index": 34,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-33.json",
    "transcript_sha256": "7308e1c198843c132fb31fe064467ca6824accefb14d3660f4943a9351cdc432"
   },
   {
-   "index": 34,
+   "index": 35,
+   "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/v2-segment-35-madrid_k.json",
+   "transcript_sha256": "63d03dc43a1033b4f6973554d599028ecb3d25e328f096862f55beff396eb928"
+  },
+  {
+   "index": 36,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-34.json",
    "transcript_sha256": "50342d0068e3d9c546449a7c901b6bad00857cbd9a4be08767d7ba1d1ab9b9ed"
   },
   {
-   "index": 35,
+   "index": 37,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-35.json",
    "transcript_sha256": "68f44737febcd6588670afc2dc30097f26dc7991132f628693e8398f0b9d81e4"
   },
   {
-   "index": 36,
+   "index": 38,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-36.json",
    "transcript_sha256": "2266ad31aef0c9f7eae0ea4a38ecf4ebfc778e164ee99bcdde1896d3d2637044"
   },
   {
-   "index": 37,
+   "index": 39,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-37.json",
    "transcript_sha256": "7d54a60dc3195e160bd6813ace17322112b8626ecaeaae52a309903c8938d141"
   },
   {
-   "index": 38,
+   "index": 40,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-38.json",
    "transcript_sha256": "dd9aa5a23a87f60d7cfbd4d6237927184c5c4ad34baa010ccaec8525b21af39b"
   },
   {
-   "index": 39,
+   "index": 41,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-39.json",
    "transcript_sha256": "162464b9ffc233cb0218f222b68f7ed3a81334924b383c6d541bfc899c03f5b0"
   },
   {
-   "index": 40,
+   "index": 42,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-40.json",
    "transcript_sha256": "580246fe19ca51eb96d23730d2e66aaf2b74bc725e1b4a0cd82a86a1f6e3302a"
   },
   {
-   "index": 41,
+   "index": 43,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-41.json",
    "transcript_sha256": "db8283171fef937a8efd1c7517a0e875c82a2d4beb1fac8ada173388ee2b6b3f"
   },
   {
-   "index": 42,
+   "index": 44,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-42.json",
    "transcript_sha256": "287b1ac72b79480de742a2e94b894c88d29eee91c5cb190e779a686289b4dbda"
   },
   {
-   "index": 43,
+   "index": 45,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-43.json",
    "transcript_sha256": "4da53af5423d97a5a3e89209572cf6b33697e11912ccae3a2738385304532deb"
   },
   {
-   "index": 44,
+   "index": 46,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-44.json",
    "transcript_sha256": "de565a9ea95c47068086b0cd61607b1a102b797651127a729de27e49b7b12cce"
   },
   {
-   "index": 45,
+   "index": 47,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-45.json",
    "transcript_sha256": "19a83edcad3edb7619fe5ffccc8ff09ab4afb21fdd81a2a8a708906c63a27623"
   },
   {
-   "index": 46,
+   "index": 48,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-46.json",
    "transcript_sha256": "3ffc3fb9ee960528b390030745d79cbc6d6413f2a01ef38c53b3a048f204ca69"
   },
   {
-   "index": 47,
+   "index": 49,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-47.json",
    "transcript_sha256": "9f750d16a0fd04e4195b9139e5c767d1c47972a6821c8d12c030d1c1e51f0dbf"
   },
   {
-   "index": 48,
+   "index": 50,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-48.json",
    "transcript_sha256": "ee9d9d5157fab92a72618ca75702d2f3a619ed8683edb815b9195a66b474c853"
   },
   {
-   "index": 49,
+   "index": 51,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-49.json",
    "transcript_sha256": "ecb53b0ead625e88630ffe22bb59b6ee991924bcf2a64d7a8c487711d317db2c"
   },
   {
-   "index": 50,
+   "index": 52,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-50.json",
    "transcript_sha256": "4f9fcade8fbceb8c65ef5689177299d6b77378b4c49b07dec77a2a1529a0dff9"
   },
   {
-   "index": 51,
+   "index": 53,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-51.json",
    "transcript_sha256": "2955cb4c851de5d62f753dbb66fb23805548fd4a8f88d6fab0b2bd2d70499a97"
   },
   {
-   "index": 52,
+   "index": 54,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-52.json",
    "transcript_sha256": "067b12ca424c0947de1a8715d4311364057ec5390e31b47955eba2977f9cf46f"
   },
   {
-   "index": 53,
+   "index": 55,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-53.json",
    "transcript_sha256": "ab98eba71d7d2106b4659b12530d490fa015dbf0644f83ccc4948ee152109783"
   },
   {
-   "index": 54,
+   "index": 56,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-54.json",
    "transcript_sha256": "35266bf71a55fcebf0c22f2c5e246d5de0ee6440c6e48f85f9325268f9ecc5c3"
   },
   {
-   "index": 55,
+   "index": 57,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-55.json",
    "transcript_sha256": "c1723b2b98ef87158ee6c4068b451c88bf0d3ef557d1404ac234f175f608260f"
   },
   {
-   "index": 56,
+   "index": 58,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-56.json",
    "transcript_sha256": "3714d73451c8a55f39da444f9fc5506bf0937d8df23b7810300ee95e1569f53c"
   },
   {
-   "index": 57,
+   "index": 59,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-57.json",
    "transcript_sha256": "8b468bd45f4436917de43fa293fd62d69cb41ff8e54978e956511f26fbc50477"
   },
   {
-   "index": 58,
+   "index": 60,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-58.json",
    "transcript_sha256": "86767c02b5ca75952703f80740813feceb09b5578f8d37c812e310a0d30037ce"
   },
   {
-   "index": 59,
+   "index": 61,
+   "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/v2-segment-61-bj_tr.json",
+   "transcript_sha256": "5caad427ce3611feb9428aa34524a55236bcdc3b7ade5802ebdc269a6803d4fb"
+  },
+  {
+   "index": 62,
+   "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/v2-segment-62-bj_tr.json",
+   "transcript_sha256": "f55157e91cf6957511f9f6bf72d25e9d94f13fad51edad3a5b8d7329c0657d14"
+  },
+  {
+   "index": 63,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-59.json",
    "transcript_sha256": "7ebf4457e5b38a6087a9960646a7980fc951aa230ff9eae8b9aa4675769c8567"
   },
   {
-   "index": 60,
+   "index": 64,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-60.json",
    "transcript_sha256": "f56a586e5a08f0af1437cb9e2cdf2271fdf9f0bb973bb6d6e15555584b6090d3"
   },
   {
-   "index": 61,
+   "index": 65,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-61.json",
    "transcript_sha256": "75474c9d08ae45d1c4074c03d4187a7b8b392d8f791648f10aca527b6202ae7b"
   },
   {
-   "index": 62,
-   "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-62.json",
-   "transcript_sha256": "d2dc797267845017c78b45bb259335f44fabb6508000cdb442c06942f251cbd8"
+   "index": 66,
+   "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/v2-segment-66-wuhan.json",
+   "transcript_sha256": "f803aeef271a9af9c86c619186869c75ca59f3b2d4cd52334af1a083938f10f9"
   },
   {
-   "index": 63,
+   "index": 67,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-63.json",
    "transcript_sha256": "be73a3703f53f100e6cb9dcef7faa0c1841453a8a0540623b8c721ef761ae0ee"
   },
   {
-   "index": 64,
+   "index": 68,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-64.json",
    "transcript_sha256": "08cc9ab18217f7a6dd1fc76091ef75596af7140dd8b2f39736a2efa698c62ec3"
   },
   {
-   "index": 65,
+   "index": 69,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-65.json",
    "transcript_sha256": "b508814bfa2ea06e7b877156907040bbcecda395d2db9ecc72408541167b208d"
   },
   {
-   "index": 66,
+   "index": 70,
+   "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/v2-segment-70-wh_tr.json",
+   "transcript_sha256": "b1fecaf917bdad72e4b5bdca1a53217c18ffc080ad55e00577bddf8860ef55d2"
+  },
+  {
+   "index": 71,
+   "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/v2-segment-71-wh_tr.json",
+   "transcript_sha256": "412a747be8cfd8d2dbe9664d880a6527f9b3dd0424fcc10c586e75b200f8df77"
+  },
+  {
+   "index": 72,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-66.json",
    "transcript_sha256": "822343eaa4924026167abe416c9ff6a9225213e3c08cdb4f2a890a2891b2b62e"
   },
   {
-   "index": 67,
+   "index": 73,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-67.json",
    "transcript_sha256": "8f6233a82c37b715337eacda84be0e51d74ac7dfdccfa44fce2d3f22fb260e26"
   },
   {
-   "index": 68,
+   "index": 74,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-68.json",
    "transcript_sha256": "cd04d902a7febd047027991e7985c94d72ae0d0744bb986edecebad5e9200ff5"
   },
   {
-   "index": 69,
+   "index": 75,
    "transcript_path": "data/evidence/wta1000-champions-2026/audio/selected/foreground-segment-69.json",
    "transcript_sha256": "cf5ee37a2b59fc0ca114cc768f9aca717812a7d6f68762646e3ed645a76b4ef4"
   }
