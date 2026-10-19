@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "3eebad640ffd39079c939c4ddc64394776ac05e6de56ba25aa9ddaf6a9edee68",
+  "scoreboard_qc_sha256": "c9b32be4d482d13d79360e0b03b8398dacdbe36d6875ee1853d64f92b7335904",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-eala-parry-ningbo-2026-r1-e8ab17295f287ab9",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-eala-parry-ningbo-2026-r1-e8ab17295f287ab9/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39286580769"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39291173232"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -54,44 +54,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "f7a8b6ccaf17c46c33fa0db9c85ad42c2ea7479219da2add1d35d3a7fe9e5af5",
+  "render_inputs_sha256": "48263bad27006b6a661546bc882a56ff84f12160dfd167299b71137153b134fe",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "eala-parry-ningbo-2026-r1",
-    "received_at": "2026-10-19T16:34:45Z",
-    "artifact_ready_at": "2026-10-19T16:41:32Z",
-    "elapsed_seconds": 407.728,
+    "received_at": "2026-10-19T17:05:36Z",
+    "artifact_ready_at": "2026-10-19T17:14:10Z",
+    "elapsed_seconds": 514.035,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "749b42984ff2d20d781e1c97039deeb4e5e7fbdbbde1ac7b7e2670281664ab29",
-    "spec_sha256": "c49be90e9c43f6e9351b836f81787496b96a68a289b21b71d9cdadc09dcc3966",
-    "run_id": "39286580769",
+    "film_sha256": "c025f547ea4827996de5f32c5c6d9c2d6c1ff202ed2c6275c89adf59c2c3a7f8",
+    "spec_sha256": "6625dc0f169429977132b3094a13bfcff68f9dc23964832191e992ff7f510120",
+    "run_id": "39291173232",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-19T16:37:07Z",
-        "run_id": "39286580769"
+        "at": "2026-10-19T17:08:18Z",
+        "run_id": "39291173232"
       }
     ],
-    "render_seconds": 265.728,
-    "pre_render_seconds": 142.0
+    "render_seconds": 352.035,
+    "pre_render_seconds": 162.0
   },
-  "film_sha256": "749b42984ff2d20d781e1c97039deeb4e5e7fbdbbde1ac7b7e2670281664ab29",
-  "film_bytes": 135238115,
-  "qc_attestation_sha256": "40c7d68c9316c285f535c49d01141dbf6f77b63d2b65231060d87dc68f7566c6",
+  "film_sha256": "c025f547ea4827996de5f32c5c6d9c2d6c1ff202ed2c6275c89adf59c2c3a7f8",
+  "film_bytes": 135201320,
+  "qc_attestation_sha256": "eb30bff0a9862ab216e141f21ff9aae33c378b131dd79bc89785fe9b59b26020",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-19T16:37:07Z",
-      "run_id": "39286580769"
+      "at": "2026-10-19T17:08:18Z",
+      "run_id": "39291173232"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-19T16:41:36Z",
-      "run_id": "39286580769"
+      "at": "2026-10-19T17:14:13Z",
+      "run_id": "39291173232"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-eala-parry-ningbo-2026-r1/eala-parry-ningbo-2026-r1.mp4",
-  "video_bytes": 135238115
+  "video_bytes": 135201320
 }

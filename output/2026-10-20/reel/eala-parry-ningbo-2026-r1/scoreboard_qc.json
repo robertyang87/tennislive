@@ -161,7 +161,7 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-01.mkv",
-      "mask_sha256": "9fe531f369f2884177a9d7d14fcc1cc69256b6b8defa99bf242aa7f257f106a1"
+      "mask_sha256": "6ab05a144a5d9c26deb0688f4e1cf58b74aef8f696b69d47a4ebae35b5f9723a"
     },
     {
       "segment": 3,
@@ -333,23 +333,14 @@
       "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
       "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-04.mkv",
-      "mask_sha256": "e3af275ea8535be189a68f8247f6977e7288b1b73b49ba85a0ffcc2e8a36e47c"
+      "mask_sha256": "e7e764473c752874c188d6fa6f89cb9da4f206b74698e68292f984831d79e793"
     },
     {
-      "segment": 5,
-      "frames": 1017,
-      "present_frames": 1017,
-      "tag_frames": 330,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         357,
         394
-      ],
-      "right": 394,
-      "source_bounds": [
-        90,
-        828,
-        484,
-        982
       ],
       "body_bounds": [
         [
@@ -449,6 +440,11 @@
           153
         ]
       ],
+      "frames": 1017,
+      "geometry_origin": [
+        90,
+        828
+      ],
       "header_bounds": [
         [
           0,
@@ -475,36 +471,31 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        828
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "56ed4ce44a026d12785569098ac8ee46405bd1773cba9f00692b6860e52ebc13",
       "measured_present_frames": 1017,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-06.mkv",
-      "mask_sha256": "56ed4ce44a026d12785569098ac8ee46405bd1773cba9f00692b6860e52ebc13"
-    },
-    {
-      "segment": 6,
-      "frames": 593,
-      "present_frames": 576,
-      "tag_frames": 299,
-      "board_edges": [
-        347,
-        393
-      ],
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 1017,
       "right": 394,
+      "segment": 5,
       "source_bounds": [
         90,
         828,
         484,
         982
+      ],
+      "tag_frames": 330,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-06.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        347,
+        393
       ],
       "body_bounds": [
         [
@@ -586,6 +577,11 @@
           153
         ]
       ],
+      "frames": 593,
+      "geometry_origin": [
+        90,
+        828
+      ],
       "header_bounds": [
         [
           0,
@@ -660,36 +656,31 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        828
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "3bcb9291b227a8727b901f94fc8edb27d5c251f21c5cf1d6ccd651bf6eebcde9",
       "measured_present_frames": 576,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-07.mkv",
-      "mask_sha256": "3bcb9291b227a8727b901f94fc8edb27d5c251f21c5cf1d6ccd651bf6eebcde9"
-    },
-    {
-      "segment": 7,
-      "frames": 1209,
-      "present_frames": 1209,
-      "tag_frames": 778,
-      "board_edges": [
-        391,
-        426
-      ],
-      "right": 426,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 576,
+      "right": 394,
+      "segment": 6,
       "source_bounds": [
         90,
         828,
-        516,
+        484,
         982
+      ],
+      "tag_frames": 299,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-07.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        391,
+        426
       ],
       "body_bounds": [
         [
@@ -789,6 +780,11 @@
           153
         ]
       ],
+      "frames": 1209,
+      "geometry_origin": [
+        90,
+        828
+      ],
       "header_bounds": [
         [
           0,
@@ -881,36 +877,31 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        828
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "5f7c61575e6e0850df881110e7a57f1051060679114b5309712a90f41e17e4a5",
       "measured_present_frames": 1209,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 1209,
+      "right": 426,
+      "segment": 7,
+      "source_bounds": [
+        90,
+        828,
+        516,
+        982
+      ],
+      "tag_frames": 778,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-08.mkv",
-      "mask_sha256": "5f7c61575e6e0850df881110e7a57f1051060679114b5309712a90f41e17e4a5"
+      "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-08.mkv"
     },
     {
-      "segment": 9,
-      "frames": 1208,
-      "present_frames": 1208,
-      "tag_frames": 0,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         426,
         430
-      ],
-      "right": 430,
-      "source_bounds": [
-        90,
-        866,
-        520,
-        982
       ],
       "body_bounds": [
         [
@@ -1034,37 +1025,37 @@
           153
         ]
       ],
-      "header_bounds": [],
+      "frames": 1208,
       "geometry_origin": [
         90,
         828
       ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "header_bounds": [],
+      "mask_sha256": "924522938be180051048ab03972070c170b2282c195655875a3fb54de59ffea9",
       "measured_present_frames": 1208,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 1208,
+      "right": 430,
+      "segment": 9,
+      "source_bounds": [
+        90,
+        866,
+        520,
+        982
+      ],
+      "tag_frames": 0,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-10.mkv",
-      "mask_sha256": "924522938be180051048ab03972070c170b2282c195655875a3fb54de59ffea9"
+      "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-10.mkv"
     },
     {
-      "segment": 10,
-      "frames": 577,
-      "present_frames": 575,
-      "tag_frames": 559,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         366,
         428
-      ],
-      "right": 428,
-      "source_bounds": [
-        90,
-        828,
-        518,
-        982
       ],
       "body_bounds": [
         [
@@ -1170,6 +1161,11 @@
           153
         ]
       ],
+      "frames": 577,
+      "geometry_origin": [
+        90,
+        828
+      ],
       "header_bounds": [
         [
           0,
@@ -1268,36 +1264,31 @@
           42
         ]
       ],
-      "geometry_origin": [
-        90,
-        828
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "49fb627e054d49719945c916d8e70e2ddcc6dc6ae228d080e781d5b12e7d77fb",
       "measured_present_frames": 575,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-11.mkv",
-      "mask_sha256": "49fb627e054d49719945c916d8e70e2ddcc6dc6ae228d080e781d5b12e7d77fb"
-    },
-    {
-      "segment": 12,
-      "frames": 1441,
-      "present_frames": 686,
-      "tag_frames": 308,
-      "board_edges": [
-        364,
-        428
-      ],
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 575,
       "right": 428,
+      "segment": 10,
       "source_bounds": [
         90,
         828,
         518,
         982
+      ],
+      "tag_frames": 559,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-11.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        364,
+        428
       ],
       "body_bounds": [
         [
@@ -1385,6 +1376,11 @@
           153
         ]
       ],
+      "frames": 1441,
+      "geometry_origin": [
+        90,
+        828
+      ],
       "header_bounds": [
         [
           0,
@@ -1465,20 +1461,24 @@
           43
         ]
       ],
-      "geometry_origin": [
-        90,
-        828
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "15ff64536265ac26daa035bc8b82d146e85b3ac019a27ee6b61f2f93a2c5cf53",
       "measured_present_frames": 686,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 686,
+      "right": 428,
+      "segment": 12,
+      "source_bounds": [
+        90,
+        828,
+        518,
+        982
+      ],
+      "tag_frames": 308,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-13.mkv",
-      "mask_sha256": "15ff64536265ac26daa035bc8b82d146e85b3ac019a27ee6b61f2f93a2c5cf53"
+      "mask": "output/2026-10-20/reel/eala-parry-ningbo-2026-r1/score_masks/segment-13.mkv"
     }
   ]
 }
