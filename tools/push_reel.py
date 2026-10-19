@@ -973,6 +973,14 @@ def main() -> int:
                 or args.lead or args.title_prefix
                 or Path(args.copy).resolve() != (revision_repo / "specs/reels" / f"{outdir.name}.xhs.txt").resolve()):
             raise SystemExit("消息修订不允许临时覆盖已经绑定的标题、正文或导语")
+    # A verified message-only revision keeps the already published immutable
+    # film; resolve_revision/validate_qc above must succeed before this exception.
+    if revision is None:
+        from voice_quality_gate import VoiceQualityError, require_publish
+        try:
+            require_publish(outdir)
+        except VoiceQualityError as exc:
+            raise SystemExit(f"waiting_voice_quality_review: {exc}") from exc
     stat_name = revision.stat_card_name if revision else STAT_CARD_NAME
 
     # 走了 Release 的片子**不在仓库里**，所以先问 render.json 再找文件。
@@ -1021,6 +1029,13 @@ def main() -> int:
         resolve_revision(revision_repo, outdir.name, outdir, film_hash,
                          phase="send", run_url=run_url)
         claim_post(revision, run_url, Path(os.environ["RUNNER_TEMP"]))
+    else:
+        # Revalidate after network waits: byte identity may have changed while
+        # Pages/CDN deployed. This still performs no synthesis or approval.
+        try:
+            require_publish(outdir)
+        except VoiceQualityError as exc:
+            raise SystemExit(f"waiting_voice_quality_review: {exc}") from exc
     receipt = push(f"{args.title_prefix}{title}", body, asset_dir=outdir)
     if args.receipt_out:
         # 流水号和消息网页一起落：「记下已推送」那一步把它写进 pushed.json，

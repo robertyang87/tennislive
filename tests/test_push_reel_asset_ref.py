@@ -121,6 +121,10 @@ def _delivery_server(respond):
 
 
 def _sender(monkeypatch, tmp_path, mod, *, text="正文", card=True):
+    # These cases isolate CDN/copy ordering. Actual voice completeness and
+    # network-before-review failures are exercised by test_voice_quality_gate.
+    import voice_quality_gate
+    monkeypatch.setattr(voice_quality_gate, "require_publish", lambda *a, **kw: None)
     import publication_revision
     monkeypatch.setattr(publication_revision, "has_revision", lambda *a: False)
     outdir = tmp_path / "film"
