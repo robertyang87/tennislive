@@ -3847,8 +3847,15 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         width = float(ins.get("width", 0) or 0)
         show_for = float(ins.get("show_for", 0) or 0)
         pad = float(ins.get("pad", 0) or 0)
+        carry = str(ins.get("carry", "") or "")
+        if carry not in ("", "start", "mid", "end"):
+            bad_story_text.append(i + 1)
+            continue
+        if carry in ("start", "mid"):
+            # 跨镜头连挂的前几镜不在本段淡出，show_for 不起作用。
+            show_for = max(show_for, 2.8)
         if (not 0.48 <= width <= 0.60
-                or not 2.8 <= show_for <= 8.0
+                or not (2.8 if carry != "end" else 1.0) <= show_for <= 8.0
                 or pad < 0.065
                 or str(ins.get("motion", "")) != "editorial"):
             bad_story_text.append(i + 1)
@@ -4444,6 +4451,9 @@ def track_shots(sources: dict[str, Path], segments: list["Segment"],
     return tracks
 
 
+CARRY_OUT_SECS = 0.5
+
+
 def _overlay_chain(base: str, ins: dict) -> str:
     """把角标压上去。没有角标时只是把 `[base]` 改名成 `[vout]`。
 
@@ -4485,8 +4495,23 @@ def _overlay_chain(base: str, ins: dict) -> str:
     d = EDITORIAL_IN_SECS if editorial else INSET_IN_SECS
     rise = EDITORIAL_RISE_PX if editorial else INSET_RISE_PX
     show_for = float(ins.get("show_for", 0) or 0)
+    # `carry`：同一张角标跨几个硬切镜头连着挂（账号所有者 2026-10-19：「角标
+    # 停留时间要更长，至少八秒左右，柔和淡入淡出」，而单个镜头只有 1.5~4 秒）。
+    # start＝只淡入、挂到段尾；mid＝不淡入不淡出；end＝不淡入、show_for 处淡出。
+    # 位置、宽度一致，切点上角标纹丝不动，只有第一镜淡入、最后一镜淡出。
+    carry = str(ins.get("carry", "") or "")
+    if carry in ("mid", "end"):
+        fade_out = ""
+        if carry == "end" and show_for > 0.5:
+            out_d = CARRY_OUT_SECS
+            fade_out = f",fade=t=out:st={show_for - out_d:.3f}:d={out_d:.3f}:alpha=1"
+        return (f"{base};[1:v]scale={width}:-2,loop=loop=-1:size=1,format=rgba"
+                f"{fade_out or ',null'}[ins];"
+                f"[base][ins]overlay={x}:{y}[vout]")
+    if carry == "start":
+        d = max(d, CARRY_OUT_SECS)
     fade_out = ""
-    if show_for > d:
+    if show_for > d and carry != "start":
         out_d = min(0.35, max(0.15, show_for - d))
         fade_out = f",fade=t=out:st={show_for - out_d:.3f}:d={out_d:.3f}:alpha=1"
     y_expr = f"'if(lt(t,{d}),{y}+{rise}*pow(1-t/{d},2),{y})'"

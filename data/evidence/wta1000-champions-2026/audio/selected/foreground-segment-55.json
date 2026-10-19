@@ -1,0 +1,81 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://www.youtube.com/watch?v=Vq_UC0n5DKQ",
+ "official_source_url": "https://www.youtube.com/watch?v=Vq_UC0n5DKQ",
+ "source_sha256": "21524862c53c4629e64615179c5345b03209bff7406ec7977ea268367598f451",
+ "source_bytes": 84463635,
+ "method": "asr_cross_checked",
+ "reviewer": "Grok Bot executor (local faster-whisper small.en + medium.en word-level cross-check, silero VAD gating; no human listening, no tone claim)",
+ "reviewed_at": "2026-10-19T03:38:48+08:00",
+ "status": "complete",
+ "reviewed_from": 266.15,
+ "reviewed_to": 268.1,
+ "selected_from": 266.15,
+ "selected_to": 268.1,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "no_foreground_english_reason": "small.en 与 medium.en 两模型在本窗口都没有转写出被 silero VAD 证实的英文语音；VAD 在本窗口未检出人声；",
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/bj-Vq_UC0n5DKQ-full-small.en.json",
+   "sha256": "361d634c0e253e6ffe5bd1a0d8e0a21a3a5c876a8caff8d17418f94aa4a38426",
+   "model": "small.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     320.0
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/bj-Vq_UC0n5DKQ-full-medium.en.json",
+   "sha256": "ac2c4c6ebe9d593b7dae7b6e575c132c0825219cbe3b9fa716e06c3d8f16e9ab",
+   "model": "medium.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     320.0
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/bj-Vq_UC0n5DKQ-small.en.json",
+   "sha256": "de35d8893eb2fdf893bbf4d05bb2b6e5171fe1c654b838367148132811e664ae",
+   "model": "small.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     130.0,
+     320.0
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/bj-Vq_UC0n5DKQ-medium.en.json",
+   "sha256": "65672da96d6cd1e6ac42988bf8d62186dbfe872bb8cd3e85e3a208b085d6e0c5",
+   "model": "medium.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     130.0,
+     320.0
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/silero-vad.json",
+   "sha256": "03fb86eaa0cfb1deff1e16f01debd0dd699e9d7cecab601d15b3695d856751fb",
+   "model": "silero-vad (faster-whisper 1.2.1, threshold 0.5, min_silence 300ms)"
+  }
+ ]
+}

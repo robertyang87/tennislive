@@ -1,0 +1,55 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-doha-trophy/doha_trophy.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=OnSvhjK9_mk",
+ "source_sha256": "bdca12630bc01c293e6bc421859afd47df395bc2e92ee998f13b59eb4288c458",
+ "source_bytes": 7532272,
+ "method": "asr_cross_checked",
+ "reviewer": "Grok Bot executor (local faster-whisper small.en + medium.en word-level cross-check, silero VAD gating; no human listening, no tone claim)",
+ "reviewed_at": "2026-10-19T03:38:48+08:00",
+ "status": "complete",
+ "reviewed_from": 5.5,
+ "reviewed_to": 7.35,
+ "selected_from": 5.5,
+ "selected_to": 7.35,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "no_foreground_english_reason": "small.en 与 medium.en 两模型在本窗口都没有转写出被 silero VAD 证实的英文语音；VAD 在 5.50–5.94s 报有人声段，但两模型均未转写出英文（现场欢呼/观众声）；",
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/doha_t-der-doha_trophy-small.en.json",
+   "sha256": "c5b182169cb63da78a5835f2e4c2e612d80970b489d454e7bd336cc28942b075",
+   "model": "small.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     null
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/doha_t-der-doha_trophy-medium.en.json",
+   "sha256": "c6edd0d3e64a257d495f77ca7b7132ad3a8708dfc647ddad70bff144449f6ebc",
+   "model": "medium.en",
+   "vad_filter": false,
+   "run_status": "complete",
+   "windows": [
+    [
+     0.0,
+     null
+    ]
+   ]
+  },
+  {
+   "path": "data/evidence/wta1000-champions-2026/audio/raw/silero-vad.json",
+   "sha256": "03fb86eaa0cfb1deff1e16f01debd0dd699e9d7cecab601d15b3695d856751fb",
+   "model": "silero-vad (faster-whisper 1.2.1, threshold 0.5, min_silence 300ms)"
+  }
+ ]
+}
