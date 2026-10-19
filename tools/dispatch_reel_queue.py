@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate one newly-added reel queue file, then dispatch ``match-reel`` runs.
+"""Validate one added production request and dispatch its fixed workflow.
 
 This is deliberately a narrow bridge from a reviewed file on ``main`` to
 ``workflow_dispatch``.  The queue file is discovered from the push diff rather
@@ -10,6 +10,7 @@ validated before the first run is dispatched.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import stat
@@ -30,6 +31,9 @@ BEIJING_TZ = timezone(timedelta(hours=8), name="Asia/Shanghai")
 MAX_SLUGS = 8
 MAX_SLUG_LENGTH = 80
 MAX_QUEUE_BYTES = 64 * 1024
+DOWNLOAD_KEYS = frozenset({"version", "mode", "ref", "expected_date", "url"})
+YOUTUBE_URL_RE = re.compile(r"https://www\.youtube\.com/watch\?v=[A-Za-z0-9_-]{11}\Z")
+DOWNLOAD_RECEIPT_DIR = Path("data/reel-source-dispatch-receipts")
 
 Run = Callable[..., subprocess.CompletedProcess]
 
@@ -44,6 +48,28 @@ class QueueRequest:
     ref: str
     expected_date: str
     slugs: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class DownloadRequest:
+    """One public YouTube source archive, never a render or publish request."""
+    mode: str
+    ref: str
+    expected_date: str
+    url: str
+
+    @property
+    def slugs(self) -> tuple[str, ...]:
+        return ()
+
+
+def validate_download(request: DownloadRequest, *, today: date | None = None) -> None:
+    if request.mode != "download" or request.ref != "main":
+        raise QueueError("download requests are fixed to mode=download and ref=main")
+    if request.expected_date != (today or beijing_today()).isoformat():
+        raise QueueError("download expected_date must equal the current Beijing date")
+    if not isinstance(request.url, str) or not YOUTUBE_URL_RE.fullmatch(request.url):
+        raise QueueError("download url must be exactly https://www.youtube.com/watch?v=<11-character video ID>")
 
 
 def beijing_today(now: datetime | None = None) -> date:
@@ -89,12 +115,24 @@ def load_queue(
     *,
     repo_root: Path = ROOT,
     today: date | None = None,
-) -> QueueRequest:
-    """Load and fully validate one queue file and all referenced reel specs."""
+) -> QueueRequest | DownloadRequest:
+    """Validate a source-only v2 request or the existing v1 reel/spec contract."""
     relative, full = _queue_path(path, repo_root)
     payload = _read_json(full, label="queue")
     if not isinstance(payload, dict):
         raise QueueError(f"queue payload must be a JSON object: {relative}")
+
+    # Version 1 remains the unchanged render/publish contract. Version 2 is
+    # deliberately source-only and accepts neither slugs nor workflow names.
+    if payload.get("mode") == "download":
+        if set(payload) != DOWNLOAD_KEYS:
+            raise QueueError("download queue keys must be exactly version, mode, ref, expected_date, url")
+        if type(payload["version"]) is not int or payload["version"] != 2:
+            raise QueueError("download queue version must be the integer 2")
+        request = DownloadRequest(payload["mode"], payload["ref"],
+                                  payload["expected_date"], payload["url"])
+        validate_download(request, today=today)
+        return request
 
     keys = set(payload)
     missing = sorted(QUEUE_KEYS - keys)
@@ -211,7 +249,7 @@ def discover_queue_file(
     return Path(fields[1])
 
 
-def verify_event_inputs(queue_file: Path, request: QueueRequest, after: str,
+def verify_event_inputs(queue_file: Path, request: QueueRequest | DownloadRequest, after: str,
                         *, repo_root: Path = ROOT, run: Run = subprocess.run) -> None:
     """Latest-main checkout may contain receipts, but must not change event authority."""
     paths = [queue_file]
@@ -275,6 +313,59 @@ def dispatch(
         run(command, check=True, shell=False)
 
 
+def dispatch_download(request: DownloadRequest, *, origin: str, repo_root: Path = ROOT,
+                      run: Run = subprocess.run, checkpoint=None,
+                      today: date | None = None) -> Path:
+    """Persist a reservation before API submission; never replay an uncertain call.
+
+    An accepted receipt means API acceptance only, not successful acquisition.
+    A crash while reserved must be investigated or followed by a new reviewed
+    request, rather than automatically submitting the same call twice.
+    """
+    validate_download(request, today=today)
+    payload = {"mode": request.mode, "ref": request.ref,
+               "expected_date": request.expected_date, "url": request.url}
+    identity = hashlib.sha256(json.dumps({"origin": origin, "request": payload},
+                                        sort_keys=True).encode()).hexdigest()
+    path = repo_root / DOWNLOAD_RECEIPT_DIR / f"{identity}.json"
+    if checkpoint is None:
+        from reel_dispatch_outbox import persist
+        checkpoint = lambda p: persist(p, root=repo_root)
+    if path.exists():
+        record = _read_json(path, label="download receipt")
+        if (not isinstance(record, dict) or record.get("request") != payload
+                or record.get("origin") != origin or record.get("version") != 1):
+            raise QueueError("download receipt identity mismatch")
+        if record.get("status") == "accepted":
+            print("[download] API submission already accepted; not resubmitting")
+            return path
+        raise QueueError("download submission was reserved or failed; investigate its run before a new reviewed request")
+    record = {"version": 1, "origin": origin, "request": payload,
+              "status": "reserved", "reserved_at": datetime.now(timezone.utc).isoformat()}
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    def save():
+        temporary = path.with_suffix(".tmp")
+        temporary.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n")
+        temporary.replace(path)
+        checkpoint(path)
+
+    save()
+    command = ["gh", "workflow", "run", "download-video.yml", "--ref", "main",
+               "-f", f"url={request.url}"]
+    try:
+        run(command, check=True, shell=False)
+    except (subprocess.CalledProcessError, OSError):
+        record["status"] = "failed"
+        record["failed_at"] = datetime.now(timezone.utc).isoformat()
+        save()
+        raise
+    record["status"] = "accepted"
+    record["accepted_at"] = datetime.now(timezone.utc).isoformat()
+    save()
+    return path
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n", 1)[0])
     parser.add_argument("--before", required=True, help="github.event.before commit SHA")
@@ -288,6 +379,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         queue_file = discover_queue_file(args.before, args.after)
         request = load_queue(queue_file)
         verify_event_inputs(queue_file, request, args.after)
+        if isinstance(request, DownloadRequest):
+            dispatch_download(request, origin=f"queue/{args.after}/{queue_file}")
+            return 0
         from reel_dispatch_outbox import drain, enqueue, persist
 
         intent = enqueue(request, origin=f"queue/{args.after}/{queue_file}")

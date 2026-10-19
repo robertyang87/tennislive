@@ -290,3 +290,163 @@ def test_render质检落库后自动派push_only且本趟不直接发送():
     send = send[: send.index("- name: ", 10)]
     assert "inputs.mode == 'push'" in send and "mode == 'render'" not in send, (
         "render 本趟又直接 POST，会和 push-only 重复发送；本趟只负责质检落库和派发")
+
+
+def _download_queue(tmp_path, **changes):
+    repo = tmp_path / "download-repo"
+    path = Path("data/reel-dispatch-queue/2026-10-19-eala-source.json")
+    (repo / path).parent.mkdir(parents=True)
+    payload = {"version": 2, "mode": "download", "ref": "main",
+               "expected_date": "2026-10-19",
+               "url": "https://www.youtube.com/watch?v=C3SB38PJjtM"}
+    payload.update(changes)
+    (repo / path).write_text(json.dumps(payload))
+    return repo, path
+
+
+def test_download_queue_needs_no_spec_and_has_a_separate_exact_schema(tmp_path):
+    repo, path = _download_queue(tmp_path)
+    request = queue.load_queue(path, repo_root=repo, today=date(2026, 10, 19))
+    assert isinstance(request, queue.DownloadRequest)
+    assert request.slugs == ()
+    assert request.url == "https://www.youtube.com/watch?v=C3SB38PJjtM"
+
+
+@pytest.mark.parametrize("changes", [
+    {"version": 1}, {"version": True}, {"ref": "feature"},
+    {"expected_date": "2026-10-18"}, {"slugs": ["eala-parry"]},
+    {"workflow": "arbitrary.yml"}, {"push": True},
+    {"url": "https://youtube.com.evil.example/watch?v=C3SB38PJjtM"},
+    {"url": "https://www.youtube.com@evil.example/watch?v=C3SB38PJjtM"},
+    {"url": "https://www.youtube.com/watch?v=C3SB38PJjtM&list=evil"},
+    {"url": "https://www.youtube.com/watch?v=C3SB38PJjtM\n$(whoami)"},
+    {"url": "http://127.0.0.1/private"}, {"url": "file:///etc/passwd"},
+    {"url": "--help"}, {"url": ["C3SB38PJjtM"]},
+])
+def test_download_queue_rejects_extra_fields_stale_dates_and_unsafe_urls(tmp_path, changes):
+    repo, path = _download_queue(tmp_path, **changes)
+    with pytest.raises(queue.QueueError):
+        queue.load_queue(path, repo_root=repo, today=date(2026, 10, 19))
+
+
+def test_download_dispatch_reserves_then_records_api_acceptance_and_does_not_replay(tmp_path):
+    repo, path = _download_queue(tmp_path)
+    request = queue.load_queue(path, repo_root=repo, today=date(2026, 10, 19))
+    states, calls = [], []
+
+    def checkpoint(receipt):
+        states.append(json.loads(receipt.read_text())["status"])
+
+    def submit(command, **kwargs):
+        assert states == ["reserved"]
+        calls.append((command, kwargs))
+        return subprocess.CompletedProcess(command, 0)
+
+    kwargs = dict(origin="queue/" + "a" * 40 + "/" + str(path), repo_root=repo,
+                  run=submit, checkpoint=checkpoint, today=date(2026, 10, 19))
+    receipt = queue.dispatch_download(request, **kwargs)
+    assert states == ["reserved", "accepted"]
+    assert calls == [(["gh", "workflow", "run", "download-video.yml", "--ref", "main",
+                      "-f", "url=https://www.youtube.com/watch?v=C3SB38PJjtM"],
+                     {"check": True, "shell": False})]
+    assert json.loads(receipt.read_text())["status"] == "accepted"
+    assert queue.dispatch_download(request, **kwargs) == receipt
+    assert len(calls) == 1
+
+
+def test_download_uncertain_api_call_is_not_automatically_replayed(tmp_path):
+    repo, path = _download_queue(tmp_path)
+    request = queue.load_queue(path, repo_root=repo, today=date(2026, 10, 19))
+    calls = []
+
+    def interrupted(command, **kwargs):
+        calls.append(command)
+        raise KeyboardInterrupt()
+
+    kwargs = dict(origin="event", repo_root=repo, run=interrupted,
+                  checkpoint=lambda _: None, today=date(2026, 10, 19))
+    with pytest.raises(KeyboardInterrupt):
+        queue.dispatch_download(request, **kwargs)
+    with pytest.raises(queue.QueueError, match="reserved or failed"):
+        queue.dispatch_download(request, **kwargs)
+    assert len(calls) == 1
+
+
+def test_download_does_not_submit_if_reservation_cannot_be_persisted(tmp_path):
+    repo, path = _download_queue(tmp_path)
+    request = queue.load_queue(path, repo_root=repo, today=date(2026, 10, 19))
+    calls = []
+
+    def broken(_):
+        raise RuntimeError("persistence failed")
+
+    with pytest.raises(RuntimeError, match="persistence failed"):
+        queue.dispatch_download(request, origin="event", repo_root=repo,
+                                run=lambda *a, **k: calls.append(a), checkpoint=broken,
+                                today=date(2026, 10, 19))
+    assert calls == []
+
+
+def test_download_event_only_binds_the_original_queue_file(tmp_path):
+    repo, path = _download_queue(tmp_path)
+    request = queue.load_queue(path, repo_root=repo, today=date(2026, 10, 19))
+    original = (repo / path).read_bytes()
+    calls = []
+
+    def show(command, **kwargs):
+        calls.append(command)
+        return subprocess.CompletedProcess(command, 0, stdout=original)
+
+    queue.verify_event_inputs(path, request, "a" * 40, repo_root=repo, run=show)
+    assert len(calls) == 1
+    (repo / path).write_text("{}")
+    with pytest.raises(queue.QueueError, match="changed since triggering event"):
+        queue.verify_event_inputs(path, request, "a" * 40, repo_root=repo, run=show)
+
+
+def test_download_failed_submission_records_failure_without_blind_retry(tmp_path):
+    repo, path = _download_queue(tmp_path)
+    request = queue.load_queue(path, repo_root=repo, today=date(2026, 10, 19))
+    states, calls = [], []
+
+    def submit(command, **kwargs):
+        calls.append(command)
+        raise subprocess.CalledProcessError(1, command)
+
+    kwargs = dict(origin="event", repo_root=repo, run=submit,
+                  checkpoint=lambda p: states.append(json.loads(p.read_text())["status"]),
+                  today=date(2026, 10, 19))
+    with pytest.raises(subprocess.CalledProcessError):
+        queue.dispatch_download(request, **kwargs)
+    assert states == ["reserved", "failed"]
+    with pytest.raises(queue.QueueError, match="reserved or failed"):
+        queue.dispatch_download(request, **kwargs)
+    assert len(calls) == 1
+
+
+def test_download_main_routes_only_to_source_dispatch(monkeypatch):
+    path = Path("data/reel-dispatch-queue/one.json")
+    request = queue.DownloadRequest("download", "main", "2026-10-19",
+                                    "https://www.youtube.com/watch?v=C3SB38PJjtM")
+    calls = []
+    monkeypatch.setattr(queue, "discover_queue_file", lambda *_: path)
+    monkeypatch.setattr(queue, "load_queue", lambda *_: request)
+    monkeypatch.setattr(queue, "verify_event_inputs", lambda *a: calls.append("verified"))
+    monkeypatch.setattr(queue, "dispatch_download", lambda r, **k: calls.append((r, k)))
+    assert queue.main(["--before", "a" * 40, "--after", "b" * 40]) == 0
+    assert calls == ["verified", (request, {"origin": "queue/" + "b" * 40 + "/" + str(path)})]
+
+
+def test_download_queue_shares_bounded_file_and_single_addition_guards(tmp_path):
+    repo, path = _download_queue(tmp_path)
+    (repo / path).write_bytes(b" " * (queue.MAX_QUEUE_BYTES + 1))
+    with pytest.raises(queue.QueueError, match="too large"):
+        queue.load_queue(path, repo_root=repo, today=date(2026, 10, 19))
+
+    def two_added(command, **kwargs):
+        return subprocess.CompletedProcess(command, 0, stdout=(
+            "A\0data/reel-dispatch-queue/a.json\0"
+            "A\0data/reel-dispatch-queue/b.json\0"))
+
+    with pytest.raises(queue.QueueError, match="exactly one"):
+        queue.discover_queue_file("a" * 40, "b" * 40, repo_root=repo, run=two_added)
