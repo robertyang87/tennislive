@@ -122,6 +122,15 @@ spec['sources']['wh_tr'] = SRC['wh_tr'][1]
 spec['sources']['bj_tr'] = SRC['bj_tr'][1]
 spec['sources']['madrid_k'] = SRC['madrid_k'][1]
 spec['sources']['dbi_tr'] = SRC['dbi_tr'][1]
+npw = spec.setdefault('_no_probe_why', {})
+_TAIL = '，窗口按 small.en/medium.en 双模型转写＋VAD、ffmpeg scene 切点（0.35）和逐段缩略图定，不另跑 probe。'
+for _k, _d in {
+    'wh_tr': '派生片段（WTA 官方 YouTube Shorts 武汉捧杯 720p，居中裁 3:4 放大置于 1920×1080 中央 810×1080，25fps）',
+    'bj_tr': '派生片段（WTA 官方 YouTube Shorts 北京捧杯 720p，居中裁 3:4 放大置于 1920×1080 中央 810×1080，25fps）',
+    'madrid_k': '派生片段（马德里赛事官方 YouTube 颁奖亲吻奖杯近景，按脸 x=900 裁 3:4 置于 1920×1080 中央 810×1080，25fps）',
+    'dbi_tr': '派生片段（WTA 官方 YouTube 迪拜决赛全场录像末尾颁奖举杯，1920×1080 25fps 原画幅截出）',
+}.items():
+    npw[_k] = {'why': _d + _TAIL, 'width': 1920, 'height': 1080, 'fps': '25/1'}
 ds = spec.setdefault('_derived_sources', {})
 ds['wh_tr'] = 'https://www.youtube.com/shorts/C87Ikp6xUN4 — WTA 官方 Shorts 8.10–15.80s，720×1280 取 y=176 的 720×960，放大到 810×1080 置于 1920×1080 中央，30→25fps'
 ds['dbi_tr'] = 'https://www.youtube.com/watch?v=s6m8ZjbKOOY（WTA 官方决赛全场）末尾 900s 段 882.0–889.0s → 原片约 4046–4053s，24→25fps'
