@@ -6,32 +6,62 @@ on:
 permissions:
   contents: write
 jobs:
-  search:
+  photos:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |
+            tools
+            src
+            data
+          sparse-checkout-cone-mode: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
       - name: search
         run: |
-          pip install -q -U "yt-dlp[default]"
+          pip install -q requests pillow numpy
           mkdir -p out
-          while IFS= read -r q; do
-            [ -n "$q" ] || continue
-            echo "### $q" | tee -a out/trophy_search2.txt
-            yt-dlp --flat-playlist --print "%(id)s | %(channel)s | %(duration)s | %(title)s" "ytsearch12:$q" 2>/dev/null | tee -a out/trophy_search2.txt || true
-          done <<'Q'
-          Chwalinska lifts trophy Wuhan 2026
-          Chwalinska kisses trophy Wuhan Open
-          Wuhan Open 2026 trophy ceremony Chwalinska WTA
-          Pegula lifts trophy Dubai 2026
-          Kostyuk lifts trophy Madrid 2026
-          Sabalenka lifts trophy Miami 2026
-          Svitolina lifts trophy Rome 2026
-          WTA champion trophy moments 2026 shorts
-          Q
-          echo "### WTA channel shorts (latest 150)" | tee -a out/trophy_search2.txt
-          yt-dlp --flat-playlist --playlist-end 150 --print "%(id)s | %(duration)s | %(title)s" "https://www.youtube.com/@WTA/shorts" 2>/dev/null | grep -iE "troph|champion|lift|🏆|kiss|title" | tee -a out/trophy_search2.txt || true
+          export PYTHONPATH=src:tools
+          for args in "--player Pegula --event Dubai --date 2026-02-21 --days 3" \
+                      "--player Kostyuk --event Madrid --date 2026-05-02 --days 3" \
+                      "--player Zheng --event Beijing --date 2026-10-05 --days 2" \
+                      "--player Chwalinska --event Wuhan --date 2026-10-18 --days 2"; do
+            echo "########## $args" | tee -a out/photo_search.txt
+            timeout 600 python3 tools/find_cover_photo.py $args 2>&1 | tee -a out/photo_search.txt || true
+          done
+          # WTA 照片接口按球员名粗扫（标题含「<名>, <赛事> 2026」）
+          python3 - <<'PY' | tee -a out/photo_search.txt
+          import requests, re, json
+          H={"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36"}
+          want=[("Pegula","Dubai"),("Kostyuk","Madrid"),("Zheng","Beijing"),("Chwalinska","Wuhan"),("Chwalińska","Wuhan")]
+          hits=[]
+          for page in range(0,120):
+              try:
+                  r=requests.get(f"https://api.wtatennis.com/content/wta/photo/EN/?pageSize=100&page={page}",headers=H,timeout=30)
+                  d=r.json()
+              except Exception as e:
+                  print("page",page,"err",e); break
+              items=d.get("content") or []
+              if not items: break
+              for it in items:
+                  t=(it.get("title") or "")+" "+(it.get("description") or "")+" "+(it.get("imageUrl") or "")
+                  for p,e in want:
+                      if p.lower() in t.lower() and e.lower() in t.lower() and "2026" in t:
+                          od=it.get("originalDetails") or {}
+                          hits.append((p,e,it.get("publishFrom"),od.get("width"),od.get("height"),it.get("title"),(it.get("description") or "")[:200],it.get("imageUrl")))
+              last=items[-1].get("publishFrom")
+              if page%10==0: print("page",page,"last",last)
+              if last and str(last)[:7] < "2026-02": break
+          print("### WTA photo API hits", len(hits))
+          for h in hits: print(" | ".join(str(x) for x in h))
+          PY
       - name: upload
-        run: gh release upload ref-douyin-7698221105147890959 --clobber out/trophy_search2.txt
+        if: always()
+        run: gh release upload ref-douyin-7698221105147890959 --clobber out/photo_search.txt
