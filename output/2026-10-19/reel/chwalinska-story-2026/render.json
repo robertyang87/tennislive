@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-chwalinska-story-2026-d9b311787f85ce3a",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-story-2026-d9b311787f85ce3a/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39179507025"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39182062362"
   },
   "cover_seconds": 4.906,
   "cover_narrated": true,
@@ -66,44 +66,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "8935181cf2040e0e3f70af33940679a0bdc80c5bf1b2c8fb313c07e4ee794ac6",
+  "render_inputs_sha256": "f6b0eccfb48b145959e06b1e51c781a7c281bd78e796a8fde8bb18c60fbffa1f",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "chwalinska-story-2026",
-    "received_at": "2026-10-19T00:09:42Z",
-    "artifact_ready_at": "2026-10-19T00:23:50Z",
-    "elapsed_seconds": 848.668,
+    "received_at": "2026-10-19T00:43:40Z",
+    "artifact_ready_at": "2026-10-19T00:55:57Z",
+    "elapsed_seconds": 737.687,
     "budget_seconds": 600,
     "met": false,
-    "film_sha256": "7b6e38be0111794686c76fb96d18cb70cd4c6db615d71fa87eeca0bb6a99e02a",
-    "spec_sha256": "021325944d0057d99a9e8f9943d16367e5963de572c2f731cd25b9114c1eab18",
-    "run_id": "39179507025",
+    "film_sha256": "12df59d4861018042fed4108cb88f164f5880bfd488eaef66741457769173230",
+    "spec_sha256": "86216ddefbd9dbfd28987f1b82b2fe96b4aeb2f0386356e3c4f6685809130dce",
+    "run_id": "39182062362",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-19T00:14:01Z",
-        "run_id": "39179507025"
+        "at": "2026-10-19T00:48:13Z",
+        "run_id": "39182062362"
       }
     ],
-    "render_seconds": 589.668,
-    "pre_render_seconds": 259.0
+    "render_seconds": 464.687,
+    "pre_render_seconds": 273.0
   },
-  "film_sha256": "7b6e38be0111794686c76fb96d18cb70cd4c6db615d71fa87eeca0bb6a99e02a",
-  "film_bytes": 232284730,
-  "qc_attestation_sha256": "cecfc54a75f5da607f8aba0ac6d65a05c617abf1d44cdf4ada90e1d46a1fe135",
+  "film_sha256": "12df59d4861018042fed4108cb88f164f5880bfd488eaef66741457769173230",
+  "film_bytes": 232334956,
+  "qc_attestation_sha256": "85effcef1aeb504a1024d4abcbdffe9209961826d62c78089fdc530639070dc8",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-19T00:14:01Z",
-      "run_id": "39179507025"
+      "at": "2026-10-19T00:48:13Z",
+      "run_id": "39182062362"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-19T00:23:54Z",
-      "run_id": "39179507025"
+      "at": "2026-10-19T00:56:02Z",
+      "run_id": "39182062362"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-chwalinska-story-2026/chwalinska-story-2026.mp4",
-  "video_bytes": 232284730
+  "video_bytes": 232334956
 }
