@@ -187,6 +187,7 @@ def test_preview_validates_every_spec_before_dispatch(tmp_path):
 def test_queue_uses_normal_render_outbox_and_replays_only_pending_slugs(
     tmp_path, monkeypatch, mode, push_value,
 ):
+    monkeypatch.syspath_prepend(str(ROOT / "tools"))
     import reel_dispatch_outbox as outbox
 
     repo, path, payload = _preview_queue(tmp_path)
