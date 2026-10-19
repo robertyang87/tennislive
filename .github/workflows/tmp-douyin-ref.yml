@@ -19,22 +19,19 @@ jobs:
           mkdir -p out
           while IFS= read -r q; do
             [ -n "$q" ] || continue
-            echo "### $q" | tee -a out/trophy_search.txt
-            yt-dlp --flat-playlist --print "%(id)s | %(channel)s | %(duration)s | %(upload_date)s | %(title)s" "ytsearch10:$q" 2>/dev/null | tee -a out/trophy_search.txt || true
+            echo "### $q" | tee -a out/trophy_search2.txt
+            yt-dlp --flat-playlist --print "%(id)s | %(channel)s | %(duration)s | %(title)s" "ytsearch12:$q" 2>/dev/null | tee -a out/trophy_search2.txt || true
           done <<'Q'
-          Pegula Dubai 2026 trophy ceremony
-          Pegula Dubai 2026 champion
-          Kostyuk Madrid 2026 trophy ceremony
-          Kostyuk Madrid Open 2026 champion trophy
-          Sabalenka Miami Open 2026 trophy ceremony
-          Zheng Qinwen China Open 2026 trophy ceremony
-          郑钦文 中网 2026 颁奖
-          Zheng Qinwen Beijing 2026 champion trophy
-          Chwalinska Wuhan 2026 trophy ceremony
-          Chwalinska Wuhan Open 2026 champion speech
-          WTA 2026 Dubai final highlights Pegula Svitolina
+          Chwalinska lifts trophy Wuhan 2026
+          Chwalinska kisses trophy Wuhan Open
+          Wuhan Open 2026 trophy ceremony Chwalinska WTA
+          Pegula lifts trophy Dubai 2026
+          Kostyuk lifts trophy Madrid 2026
+          Sabalenka lifts trophy Miami 2026
+          Svitolina lifts trophy Rome 2026
+          WTA champion trophy moments 2026 shorts
           Q
+          echo "### WTA channel shorts (latest 150)" | tee -a out/trophy_search2.txt
+          yt-dlp --flat-playlist --playlist-end 150 --print "%(id)s | %(duration)s | %(title)s" "https://www.youtube.com/@WTA/shorts" 2>/dev/null | grep -iE "troph|champion|lift|🏆|kiss|title" | tee -a out/trophy_search2.txt || true
       - name: upload
-        run: |
-          TAG="ref-douyin-7698221105147890959"
-          gh release upload "$TAG" --clobber out/trophy_search.txt
+        run: gh release upload ref-douyin-7698221105147890959 --clobber out/trophy_search2.txt
