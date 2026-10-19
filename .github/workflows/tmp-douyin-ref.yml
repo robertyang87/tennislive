@@ -6,22 +6,35 @@ on:
 permissions:
   contents: write
 jobs:
-  derive:
+  asr:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - name: derive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: asr
         run: |
-          set -euxo pipefail
-          sudo apt-get -qq update >/dev/null && sudo apt-get -qq install -y ffmpeg >/dev/null
+          pip install -q faster-whisper
           mkdir -p out
-          curl -sSL -o tail.mp4 https://github.com/robertyang87/tennislive/releases/download/ref-trophy-fullmatch/tail_dubai_s6m8ZjbKOOY.mp4
-          # WTA 官方决赛全场 s6m8ZjbKOOY（4064s）末尾 900s 段（自 3164s 起）的 884.0–889.0 → 原片约 4048–4053s：佩古拉在烟花里举起迪拜冠军奖杯
-          ffmpeg -y -ss 884.0 -to 889.0 -i tail.mp4 -vf "fps=25,setsar=1" -c:v libx264 -preset medium -crf 16 -pix_fmt yuv420p -r 25 -c:a aac -b:a 160k -ar 48000 -movflags +faststart out/dubai_trophy_lift.mp4
-          ffprobe -v error -show_entries stream=codec_type,width,height,r_frame_rate:format=duration -of compact out/dubai_trophy_lift.mp4
+          curl -sSL -o clip.mp4 https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-dubai-trophy-lift/dubai_trophy_lift.mp4
+          python3 - <<'PY'
+          import json, hashlib
+          from faster_whisper import WhisperModel
+          sha = hashlib.sha256(open('clip.mp4','rb').read()).hexdigest()
+          for m in ('small.en','medium.en'):
+              model = WhisperModel(m, device='cpu', compute_type='int8')
+              segs, info = model.transcribe('clip.mp4', language='en', word_timestamps=True, vad_filter=False)
+              words = []
+              for s in segs:
+                  for w in (s.words or []):
+                      words.append({'w': w.word, 's': round(w.start, 2), 'e': round(w.end, 2)})
+              json.dump({'model': m, 'source_sha256': sha, 'duration': info.duration, 'words': words},
+                        open(f'out/dubai_trophy_lift-{m}.json','w'), ensure_ascii=False, indent=1)
+              print(m, len(words), ' '.join(f"{w['w']}@{w['s']}" for w in words))
+          PY
       - name: upload
-        run: |
-          gh release create source-wta1000-2026-dubai-trophy-lift --title "WTA 官方决赛全场 s6m8ZjbKOOY 末尾派生：迪拜佩古拉举杯（1920×1080 25fps）" --notes "https://www.youtube.com/watch?v=s6m8ZjbKOOY （WTA，A Milestone Match | Jessica Pegula vs. Elina Svitolina 2026 Dubai Final | WTA Full Match）末尾 900s 段 884.0–889.0s（原片约 4048–4053s），24→25fps" out/dubai_trophy_lift.mp4
+        run: for f in out/*; do gh release upload source-wta1000-2026-dubai-trophy-lift --clobber "$f"; done
