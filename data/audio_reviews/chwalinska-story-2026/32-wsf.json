@@ -1,0 +1,45 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ATsKkPJBY3s/ATsKkPJBY3s.mp4",
+  "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-19T00:08:10.761573+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 142.9,
+  "reviewed_to": 173.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 156.56,
+      "end": 159.08,
+      "en": "Maja Chwalinska does it!",
+      "zh": "赫瓦林斯卡做到了！"
+    },
+    {
+      "start": 159.08,
+      "end": 160.92,
+      "en": "Perhaps the unthinkable for some,",
+      "zh": "或许有人觉得不可思议，"
+    },
+    {
+      "start": 160.92,
+      "end": 163.44,
+      "en": "but not for her, not for her camp.",
+      "zh": "但她和她的团队并不这样想。"
+    },
+    {
+      "start": 164.6,
+      "end": 167.7,
+      "en": "Chwalinska hands Iga Swiatek her first dropped set in Wuhan",
+      "zh": "斯瓦泰克本届武汉第一次丢盘，"
+    },
+    {
+      "start": 167.7,
+      "end": 171.64,
+      "en": "and has the upper hand in semifinal number two.",
+      "zh": "在第二场半决赛占得先机。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/ATsKkPJBY3s/small.en.json + medium.en.json",
+  "review_note": "同一条半决赛集锦：首盘最后一分与庆祝（chwalinska-swiatek-wuhan-2026-sf 第 7 段 117.24–173.0 的后半段，字幕沿用那条已审的译文，at 按新段首重算）。段首 142.84 是切点。"
+}

@@ -1,0 +1,15 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ATsKkPJBY3s/ATsKkPJBY3s.mp4",
+  "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-19T00:08:10.761573+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 216.0,
+  "reviewed_to": 228.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/ATsKkPJBY3s/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/ATsKkPJBY3s 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 216.0–228.3 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "同一条集锦第二盘回合（208.3–228.7 两档转写无词）。5-5 之后破发到 6-5、斯瓦泰克随后因左大腿／腿伤叫医疗暂停：路透＋WTA 逐分记录；从 3-5 起最后 11 局赢 10 局：WTA 4593577。"
+}

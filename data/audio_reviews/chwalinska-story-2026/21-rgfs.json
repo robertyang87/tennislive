@@ -1,0 +1,39 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-LXRhlHKGKZc/LXRhlHKGKZc.mp4",
+  "source_sha256": "d317ffa25027d370e2946559d1a8b48d2af57ca31cb393a11315ca134dc39d26",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-19T00:08:10.761573+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 151.1,
+  "reviewed_to": 164.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 151.3,
+      "end": 153.6,
+      "en": "I wish you could see a better match today,",
+      "zh": "真希望你们今天能看场更好的球，"
+    },
+    {
+      "start": 154.0,
+      "end": 156.1,
+      "en": "but Mirra was just so good for me.",
+      "zh": "可米拉今天打得太好了。"
+    },
+    {
+      "start": 156.22,
+      "end": 157.9,
+      "en": "So I guess it's her fault.",
+      "zh": "所以，我想这得怪她。"
+    },
+    {
+      "start": 161.58,
+      "end": 164.0,
+      "en": "Yeah, I tried my best. I'm sorry.",
+      "zh": "我尽力了，对不起。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/LXRhlHKGKZc/small.en.json + medium.en.json",
+  "review_note": "法网亚军致辞（LXRhlHKGKZc）。两档转写一致（medium 151.30–163.56）。swiatek-chwalinska-story-2026 用的是同一条致辞 176.6–185.2，这一段不重复。"
+}

@@ -1,0 +1,15 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-l_0G55XaKnU/l_0G55XaKnU.mp4",
+  "source_sha256": "dbd98865a4fe1e86eb892b45c9e3689973b5abac94de57c7a0b96b876924780e",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-19T00:08:10.761573+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 147.4,
+  "reviewed_to": 159.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": "data/source_asr/l_0G55XaKnU/small.en.json + medium.en.json",
+  "no_foreground_english_reason": "这一段是中文旁白或只留现场声。窗口按 data/source_asr/l_0G55XaKnU 的 small.en 与 medium.en 两份逐词英文转写交叉核对：两份转写在 147.4–159.0 秒内没有可对上的英文句子（窗口边界避开了最近的词）。",
+  "review_note": "辛辛那提赛事官方集锦：赛点回合（129.83–159.53 同一个广角镜头，记分条 MATCH POINT），白衣的是她。两档转写在 116.2–159.6 无词。多伦多 8 月 4 日首轮轮空后 5-7 1-6 负吉布森、8 月 15 日 6-2 6-2 胜布克沙＝法网后第一胜：WTA 接口＋flashscore（bucsa-chwalinska、chwalinska-gibson 两条 spec 核过）。"
+}

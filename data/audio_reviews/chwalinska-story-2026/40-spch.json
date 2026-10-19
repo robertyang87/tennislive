@@ -1,0 +1,39 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-XjhOB_EL1ok/XjhOB_EL1ok.mp4",
+  "source_sha256": "fa415aaf2dcad08a320a10105cdc687f6cab23c8e7b9b2b9bb68570f1d181672",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-19T00:08:10.761573+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 155.6,
+  "reviewed_to": 165.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 155.92,
+      "end": 158.8,
+      "en": "And the energy, it means a lot,",
+      "zh": "你们的能量，对我意义很大，"
+    },
+    {
+      "start": 158.86,
+      "end": 160.9,
+      "en": "so I really enjoyed my time here.",
+      "zh": "我在这里过得特别开心。"
+    },
+    {
+      "start": 161.06,
+      "end": 162.4,
+      "en": "It was my first time as well,",
+      "zh": "这是我第一次来，"
+    },
+    {
+      "start": 163.46,
+      "end": 164.8,
+      "en": "definitely not the last.",
+      "zh": "但肯定不是最后一次。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/XjhOB_EL1ok/small.en.json + medium.en.json",
+  "review_note": "Tennis TV／WTA 官方武汉冠军致辞（XjhOB_EL1ok）。两档转写一致（medium 155.92–164.56）。段尾 165.0 在 Yeah, and（165.18）之前。"
+}

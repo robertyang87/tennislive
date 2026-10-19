@@ -1,0 +1,45 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-1ihxUf32bQk/1ihxUf32bQk.mp4",
+  "source_sha256": "6d4d92f4d37fe9ce78b643a5de97118ec86fbc56f3718d1b020de0debc641e4a",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-19T00:08:10.761573+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 337.0,
+  "reviewed_to": 354.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 337.1,
+      "end": 338.9,
+      "en": "You know, I pushed at the beginning.",
+      "zh": "一开始，我硬撑着。"
+    },
+    {
+      "start": 339.94,
+      "end": 343.2,
+      "en": "I thought that I just need to stay very strong, tough,",
+      "zh": "我以为只要够坚强、够硬，"
+    },
+    {
+      "start": 343.38,
+      "end": 344.4,
+      "en": "and just keep practicing.",
+      "zh": "一直练下去就行。"
+    },
+    {
+      "start": 345.64,
+      "end": 348.9,
+      "en": "Yeah, but then I just couldn't get out of bed anymore.",
+      "zh": "可后来，我连床都下不来了。"
+    },
+    {
+      "start": 349.9,
+      "end": 353.6,
+      "en": "I was just lifeless, to be honest.",
+      "zh": "说实话，我整个人都没了生气。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/1ihxUf32bQk/small.en.json + medium.en.json",
+  "review_note": "法网官方 2026 年 1/4决赛后发布会（1ihxUf32bQk）：记者问停赛那段，她自己讲。两档转写逐词一致（medium 337.10–353.18）。段首 337.0 在上一句 contrast to everything（328.2）之后，段尾 354.4 在 And yeah（355.3）之前。swiatek-chwalinska-story-2026 用的是同一场发布会 364.9–374.7 那几句，这一段不重复。"
+}

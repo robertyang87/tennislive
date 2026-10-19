@@ -1,0 +1,39 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-pPCiDSCNlpk/pPCiDSCNlpk.mp4",
+  "source_sha256": "1e1904b93d14d0997e0903f35edc99d9145ff755ae73fb5f236740701b5a0d9d",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-19T00:08:10.761573+00:00",
+  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+  "reviewed_from": 33.2,
+  "reviewed_to": 46.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 33.4,
+      "end": 35.9,
+      "en": "Like a dream, honestly.",
+      "zh": "老实说，像做梦一样，"
+    },
+    {
+      "start": 36.26,
+      "end": 37.6,
+      "en": "I don't know what's going on.",
+      "zh": "我都不知道发生了什么。"
+    },
+    {
+      "start": 42.34,
+      "end": 43.95,
+      "en": "Yeah, I don't know what to say.",
+      "zh": "我不知道该说什么，"
+    },
+    {
+      "start": 43.98,
+      "end": 45.7,
+      "en": "I'm sorry, I'm just very happy.",
+      "zh": "抱歉，我就是太开心了。"
+    }
+  ],
+  "asr_evidence": "data/source_asr/pPCiDSCNlpk/small.en.json + medium.en.json",
+  "review_note": "Roland-Garros 官方半决赛场上采访（pPCiDSCNlpk）。两档转写一致（medium 33.40–45.36）；39.16 那半句 I'm just 没说完，不配字幕。段尾 46.0 在下一个问题（54.7）之前。"
+}
