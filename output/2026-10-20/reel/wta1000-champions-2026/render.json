@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-wta1000-champions-2026-b4043740b26a5f43",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-wta1000-champions-2026-b4043740b26a5f43/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39311498818"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39314908187"
   },
   "cover_seconds": 3.082,
   "cover_narrated": true,
@@ -96,45 +96,45 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "eddb972c49b761ac884af3ba2947f9297fcd61b9db32097de1d9685077e88a8e",
+  "render_inputs_sha256": "dedcd639b37ac870916e438b21d2f32bce65f03aece0fde7869a7f97eebe674a",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "wta1000-champions-2026",
-    "received_at": "2026-10-19T19:30:11Z",
-    "artifact_ready_at": "2026-10-19T19:36:54Z",
-    "elapsed_seconds": 403.956,
+    "received_at": "2026-10-19T19:54:56Z",
+    "artifact_ready_at": "2026-10-19T20:04:03Z",
+    "elapsed_seconds": 547.906,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "67b22c441dc59af0dc0514b541c7d334d1763ae7270960fc0b905e8d171c95d1",
+    "film_sha256": "f4a13758cf53727426c63473be10c4782b61ca88a74aff800eac6f88b5ee994d",
     "spec_sha256": "a4317c72b631092b30263c77af2b8904e2f8fb1017a60e23d63ef878ec63ac5a",
-    "run_id": "39311498818",
+    "run_id": "39314908187",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-19T19:33:02Z",
-        "run_id": "39311498818"
+        "at": "2026-10-19T19:58:00Z",
+        "run_id": "39314908187"
       }
     ],
-    "render_seconds": 232.956,
-    "pre_render_seconds": 171.0
+    "render_seconds": 363.906,
+    "pre_render_seconds": 184.0
   },
-  "film_sha256": "67b22c441dc59af0dc0514b541c7d334d1763ae7270960fc0b905e8d171c95d1",
-  "film_bytes": 176729683,
-  "qc_attestation_sha256": "00b31dd44ee7d171df025a5ca3e321b818337850d75b0a1e3a691a98fa3a656a",
+  "film_sha256": "f4a13758cf53727426c63473be10c4782b61ca88a74aff800eac6f88b5ee994d",
+  "film_bytes": 176712229,
+  "qc_attestation_sha256": "7c161f6d3774120ad19662bd778d25d567e5c7c8d0e1fba19a699be4c5f60d5e",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-19T19:33:02Z",
-      "run_id": "39311498818"
+      "at": "2026-10-19T19:58:00Z",
+      "run_id": "39314908187"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-19T19:36:58Z",
-      "run_id": "39311498818"
+      "at": "2026-10-19T20:04:08Z",
+      "run_id": "39314908187"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wta1000-champions-2026/wta1000-champions-2026.mp4",
-  "video_bytes": 176729683,
-  "_release_tag_note": "2026-10-19T19:37:07Z run 39311498818 把这一份（video_bytes 176729683）传上 tag `reel-wta1000-champions-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-19/reel/wta1000-champions-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+  "video_bytes": 176712229,
+  "_release_tag_note": "2026-10-19T20:04:16Z run 39314908187 把这一份（video_bytes 176712229）传上 tag `reel-wta1000-champions-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-19/reel/wta1000-champions-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
 }
