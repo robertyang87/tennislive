@@ -72,7 +72,7 @@ segs = old['segments']
 assert segs[62]['narration'] == '最后连赢五局。'
 assert segs[68]['narration'].startswith('今年没有谁能一手遮天') and sum(x.get('narration') in RETEXT for x in segs) == len(RETEXT) and segs[69]['narration'].startswith('你心里最燃')
 
-skip = "这几秒解说没开口；源片音轨是现场音乐／颁奖台广播，本段 `mute: true` 不出原声，靠前后段的现场声接住。"
+skip = "这几秒解说没开口；源片音轨是现场音乐／颁奖台广播，按正常制作规则原样保留源片原声，不静音、不调音量。"
 new = {
     'dubai': {"source": "dbi_tr", "start": 2.10, "end": 6.90, "cx": 0.5, "track": False, "narration": "",
               "quote": [{"at": 0.12, "end": 0.64, "text": "Ladies and gentlemen,\n女士们，先生们，"},
@@ -81,21 +81,21 @@ new = {
               "frame": "court",
               "_frame_why": "颁奖转播是正面机位，佩古拉在 1920×1080 画面正中（抽帧看过 1.2／2.5／4.0s，居中 3:4 窗口里脸和奖杯都完整），固定居中即可，不需要人物中心偏移。",
               "_why": "迪拜站捧杯：WTA 官方决赛全场录像 s6m8ZjbKOOY 末尾派生（原片约 4046–4053s）。颁奖台广播「Ladies and gentlemen, your winner once again, Jessica Pegula」，2.96s 切到她在烟花里举起奖杯；6.96s 之后是 WTA 片尾标，段尾收在 6.90。上一句「All right, thank you so much, Jesse」到 2.04s 结束，段首 2.10 不切句。"},
-    'madrid': {"source": "madrid_k", "start": 0.08, "end": 2.88, "cx": 0.5, "track": False, "narration": "", "mute": True,
+    'madrid': {"source": "madrid_k", "start": 0.08, "end": 2.88, "cx": 0.5, "track": False, "narration": "",
                "_why": "马德里站捧杯：赛事官方颁奖源（冷开场那条 madrid_t）15.12–18.04 这一镜派生，科斯秋克亲吻奖杯近景；人在画面右侧，居中的 3:4 会切掉脸，所以派生时取 x=900 的窗口置中。冷开场用的是 8.5–12.08 的举杯，不重复。",
                "_quote_skip_why": "颁奖台广播在讲话（两档转写对不上，像是把西语当英语转错了），译不出可靠的字幕，这一段静音不出原声。"},
-    'bj1': {"source": "bj_tr", "start": 0.0, "end": 4.05, "cx": 0.5, "track": False, "narration": "", "mute": True,
+    'bj1': {"source": "bj_tr", "start": 0.0, "end": 4.05, "cx": 0.5, "track": False, "narration": "",
             "_why": "北京站捧杯：WTA 官方 Shorts dDxlsgH6UJg 9.80–13.90 派生，郑钦文坐在场上抱着奖杯。720×1280 源，账号所有者 2026-10-19「1 可以用」批准。",
-            "_quote_skip_why": "源片音轨是 WTA 短片的背景歌曲（转写出来是歌词），没有解说；mute: true。"},
-    'bj2': {"source": "bj_tr", "start": 4.15, "end": 7.1, "cx": 0.5, "track": False, "narration": "", "mute": True,
+            "_quote_skip_why": "源片音轨是 WTA 短片的背景歌曲（转写出来是歌词），没有解说；原样保留源片原声（正常制作不静音、不调音量）。"},
+    'bj2': {"source": "bj_tr", "start": 4.15, "end": 7.1, "cx": 0.5, "track": False, "narration": "",
             "_why": "北京站捧杯：同一条 WTA 官方 Shorts 16.45–19.50 派生，郑钦文在网前举着奖杯。",
-            "_quote_skip_why": "源片音轨是背景歌曲，没有解说；mute: true。"},
-    'wh1': {"source": "wh_tr", "start": 0.05, "end": 3.45, "cx": 0.5, "track": False, "narration": "", "mute": True,
+            "_quote_skip_why": "源片音轨是背景歌曲，没有解说；原样保留源片原声（正常制作不静音、不调音量）。"},
+    'wh1': {"source": "wh_tr", "start": 0.05, "end": 3.45, "cx": 0.5, "track": False, "narration": "",
             "_why": "武汉站捧杯：WTA 官方 Shorts C87Ikp6xUN4 8.10–15.80 派生，赫瓦林斯卡在彩带里双手把奖杯举过头顶。720×1280 源，账号所有者 2026-10-19「1 可以用」批准。",
-            "_quote_skip_why": "源片音轨是背景歌曲（转写出来是歌词），没有解说；mute: true。"},
-    'wh2': {"source": "wh_tr", "start": 3.55, "end": 7.65, "cx": 0.5, "track": False, "narration": "", "mute": True,
+            "_quote_skip_why": "源片音轨是背景歌曲（转写出来是歌词），没有解说；原样保留源片原声（正常制作不静音、不调音量）。"},
+    'wh2': {"source": "wh_tr", "start": 3.55, "end": 7.65, "cx": 0.5, "track": False, "narration": "",
             "_why": "武汉站捧杯：同一条派生源第二镜，她抱着奖杯比 V 字。",
-            "_quote_skip_why": "源片音轨是背景歌曲，没有解说；mute: true。"},
+            "_quote_skip_why": "源片音轨是背景歌曲，没有解说；原样保留源片原声（正常制作不静音、不调音量）。"},
 }
 
 out = []
@@ -162,9 +162,9 @@ for ni, (s, oi) in enumerate(zip(out, origin)):
            'madrid_k': 'data/evidence/wta1000-champions-2026/audio/raw/madrid_t-der-madrid_trophy-{small,medium}.en.json（madrid_t 15.12–18.04s 对应派生 0–2.92s）',
            'wuhan': 'data/source_asr/HIvIvgwXkqs/small.en.json + medium.en.json',
            'dbi_tr': 'data/evidence/wta1000-champions-2026/audio/raw/dbi_tr-der-dubai_trophy_lift2-{small,medium}.en.json'}[k]
-    reason = {'wh_tr': '源片音轨是 WTA 短片的背景歌曲：small.en 转出的是连续歌词（Thank you for sunshine… It\'s a beautiful day），medium.en 只标出 🎶 Music；没有解说、采访或球员人声。本段 mute: true，不出原声。',
-              'bj_tr': '源片音轨是 WTA 短片的背景音乐：small/medium 两档在这两段窗口里都没有转出任何词（只在片尾 26s 之后有「Thanks for watching」类误转）；没有解说或人声。本段 mute: true，不出原声。',
-              'madrid_k': '颁奖台广播在 madrid_t 12–25s 讲话，small.en 与 medium.en 在对应的 15.2–18.0s 转出的词互不相同（「…that Marta will be」对「…which is called the Cielo de Madrid」），判断为西语广播被误转成英语，译不出可靠字幕；本段 mute: true，不出原声。',
+    reason = {'wh_tr': '源片音轨是 WTA 短片的背景歌曲：small.en 转出的是连续歌词（Thank you for sunshine… It\'s a beautiful day），medium.en 只标出 🎶 Music；没有解说、采访或球员人声。按正常制作规则原样保留源片原声（不静音、不调音量），不配字幕。',
+              'bj_tr': '源片音轨是 WTA 短片的背景音乐：small/medium 两档在这两段窗口里都没有转出任何词（只在片尾 26s 之后有「Thanks for watching」类误转）；没有解说或人声。按正常制作规则原样保留源片原声（不静音、不调音量），不配字幕。',
+              'madrid_k': '颁奖台广播在 madrid_t 12–25s 讲话，small.en 与 medium.en 在对应的 15.2–18.0s 转出的词互不相同（「…that Marta will be」对「…which is called the Cielo de Madrid」），判断为西语广播被误转成英语，译不出可靠字幕；按正常制作规则原样保留源片原声（不静音、不调音量），不配字幕。',
               'dbi_tr': '',
               'wuhan': '官方武汉决赛集锦，178.5–181.2s：small.en 与 medium.en 两档在 177.2s（「…of the Wuhan Open.」）之后到 192s 都没有转出任何词，这个窗口没有前景英文；本段是中文旁白。'}[k]
     utts = [{"start": round(s['start'] + c['at'], 2), "end": round(s['start'] + c['end'], 2),

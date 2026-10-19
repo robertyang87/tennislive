@@ -2,7 +2,7 @@
  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-madrid-kiss/madrid_kiss.mp4",
  "source_sha256": "993969969469362ad1cd2e35bb09d059ba758e4127072fc2907be1f2cf00a516",
  "method": "asr_cross_checked",
- "reviewed_at": "2026-10-19T19:14:11.734050+00:00",
+ "reviewed_at": "2026-10-19T19:25:00.033077+00:00",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
  "reviewed_from": 0.08,
  "reviewed_to": 2.88,
@@ -11,5 +11,5 @@
  "foreground_english": [],
  "asr_evidence": "data/evidence/wta1000-champions-2026/audio/raw/madrid_t-der-madrid_trophy-{small,medium}.en.json（madrid_t 15.12–18.04s 对应派生 0–2.92s）",
  "review_note": "马德里站捧杯：赛事官方颁奖源（冷开场那条 madrid_t）15.12–18.04 这一镜派生，科斯秋克亲吻奖杯近景；人在画面右侧，居中的 3:4 会切掉脸，所以派生时取 x=900 的窗口置中。冷开场用的是 8.5–12.08 的举杯，不重复。",
- "no_foreground_english_reason": "颁奖台广播在 madrid_t 12–25s 讲话，small.en 与 medium.en 在对应的 15.2–18.0s 转出的词互不相同（「…that Marta will be」对「…which is called the Cielo de Madrid」），判断为西语广播被误转成英语，译不出可靠字幕；本段 mute: true，不出原声。"
+ "no_foreground_english_reason": "颁奖台广播在 madrid_t 12–25s 讲话，small.en 与 medium.en 在对应的 15.2–18.0s 转出的词互不相同（「…that Marta will be」对「…which is called the Cielo de Madrid」），判断为西语广播被误转成英语，译不出可靠字幕；按正常制作规则原样保留源片原声（不静音、不调音量），不配字幕。"
 }
