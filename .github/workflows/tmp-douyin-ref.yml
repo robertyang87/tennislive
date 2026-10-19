@@ -8,7 +8,7 @@ permissions:
 jobs:
   derive:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 20
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
@@ -18,22 +18,12 @@ jobs:
         run: |
           set -euxo pipefail
           sudo apt-get -qq update >/dev/null && sudo apt-get -qq install -y ffmpeg >/dev/null
-          mkdir -p w out && cd w
-          curl -sSL -o c87.mp4 "$R/source-C87Ikp6xUN4/C87Ikp6xUN4.mp4"
-          curl -sSL -o ddx.mp4 "$R/source-dDxlsgH6UJg/dDxlsgH6UJg.mp4"
-          ENC="-c:v libx264 -preset medium -crf 16 -pix_fmt yuv420p -r 25 -c:a aac -b:a 160k -ar 48000 -movflags +faststart"
-          # 武汉：WTA 官方 Shorts C87Ikp6xUN4 8.10–15.80（举杯＋抱杯两镜），竖版 720×1280 取 y=176 起 720×960 的 3:4，放大到 810×1080 置于 1920×1080 中央
-          ffmpeg -y -ss 8.10 -to 15.80 -i c87.mp4 -vf "crop=720:960:0:176,scale=810:1080:flags=lanczos,pad=1920:1080:555:0:black,setsar=1,fps=25" $ENC ../out/wuhan_trophy_lift.mp4
-          # 北京：WTA 官方 Shorts dDxlsgH6UJg 9.80–13.90（坐地抱杯，y=160）＋ 16.45–19.50（网前抱杯，y=300），接成一条
-          ffmpeg -y -i ddx.mp4 -filter_complex "[0:v]trim=9.80:13.90,setpts=PTS-STARTPTS,crop=720:960:0:160,scale=810:1080:flags=lanczos,pad=1920:1080:555:0:black,setsar=1,fps=25[v1];[0:a]atrim=9.80:13.90,asetpts=PTS-STARTPTS[a1];[0:v]trim=16.45:19.50,setpts=PTS-STARTPTS,crop=720:960:0:300,scale=810:1080:flags=lanczos,pad=1920:1080:555:0:black,setsar=1,fps=25[v2];[0:a]atrim=16.45:19.50,asetpts=PTS-STARTPTS[a2];[v1][a1][v2][a2]concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" $ENC ../out/bj_trophy.mp4
-          cd ../out
-          curl -sSL -A "Mozilla/5.0" -o pegula_trophy_jimmie.jpg "https://photoresources.wtatennis.com/wta/photo/2026/02/22/57cd6cb3-6fa6-4aea-96d3-76ed27d320b5/Pegula-trophy-Jimmie.jpg" || true
-          [ -s pegula_trophy_jimmie.jpg ] && [ $(stat -c%s pegula_trophy_jimmie.jpg) -gt 100000 ] || curl -sSL -A "Mozilla/5.0" -o pegula_trophy_jimmie.jpg "https://photoresources.wtatennis.com/photo-resources/2026/02/22/2c68af62-120d-417d-a889-2844379a288a/Pegula-trophy-Jimmie.jpg?width=4000"
-          ls -la
-          for f in *.mp4; do ffprobe -v error -show_entries stream=codec_type,width,height,r_frame_rate:format=duration -of compact "$f"; done
+          mkdir -p out
+          curl -sSL -o mt.mp4 "$R/source-wta1000-2026-madrid-trophy/madrid_trophy.mp4"
+          # 马德里赛事官方颁奖（madrid_t，本身是 Obv_j6l33nQ 894.0–919.5 截出）15.12–18.04 那一镜：科斯秋克亲吻奖杯，人在画面右侧，
+          # 取 x=900 起 810×1080 的 3:4 窗口，原尺寸置于 1920×1080 中央（不缩放）
+          ffmpeg -y -ss 15.12 -to 18.04 -i mt.mp4 -vf "crop=810:1080:900:0,pad=1920:1080:555:0:black,setsar=1,fps=25" -c:v libx264 -preset medium -crf 16 -pix_fmt yuv420p -r 25 -c:a aac -b:a 160k -ar 48000 -movflags +faststart out/madrid_kiss.mp4
+          ffprobe -v error -show_entries stream=codec_type,width,height,r_frame_rate:format=duration -of compact out/madrid_kiss.mp4
       - name: upload
         run: |
-          cd out
-          gh release create source-wta1000-2026-wuhan-trophy-lift --title "WTA 官方 Shorts C87Ikp6xUN4 8.10–15.80 派生（3:4 置中 1920×1080 25fps）" --notes "https://www.youtube.com/shorts/C87Ikp6xUN4 · 武汉 2026 赫瓦林斯卡举杯/抱杯 · 竖版 720×1280 取 y=176 的 720×960，放大 1.125 倍置于 1920×1080 中央" wuhan_trophy_lift.mp4
-          gh release create source-wta1000-2026-bj-trophy --title "WTA 官方 Shorts dDxlsgH6UJg 9.80–13.90 + 16.45–19.50 派生（3:4 置中 1920×1080 25fps）" --notes "https://www.youtube.com/shorts/dDxlsgH6UJg · 北京 2026 郑钦文抱杯 · 两镜分别取 y=160 / y=300 的 720×960，放大 1.125 倍置于 1920×1080 中央" bj_trophy.mp4
-          gh release upload ref-douyin-7698221105147890959 --clobber pegula_trophy_jimmie.jpg
+          gh release create source-wta1000-2026-madrid-kiss --title "马德里官方颁奖 madrid_trophy 15.12–18.04 派生（右移 3:4 窗口置中 1920×1080 25fps）" --notes "https://www.youtube.com/watch?v=Obv_j6l33nQ 894.0–919.5s 截出的 madrid_trophy.mp4 再取 15.12–18.04s：科斯秋克亲吻奖杯近景；取 x=900 的 810×1080，原尺寸置中" out/madrid_kiss.mp4
