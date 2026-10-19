@@ -1,0 +1,62 @@
+name: tmp-douyin-ref
+on:
+  push:
+    branches: [claude/tmp-douyin-ref]
+    paths: [.github/workflows/tmp-douyin-ref.yml]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      SHORT: https://v.douyin.com/bdXAjyWXi1s/
+      IPHONE: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
+      SPIDER: "Mozilla/5.0 (compatible; Bytespider; spider-feedback@bytedance.com)"
+    steps:
+      - name: fetch
+        run: |
+          set -x
+          mkdir -p out && cd out
+          LAND=$(curl -sSL -A "$IPHONE" -o land.html -w '%{url_effective}' "$SHORT" || true)
+          echo "landing=$LAND"
+          ID=$(echo "$LAND" | grep -oE '(video|note)/[0-9]+' | grep -oE '[0-9]+' | head -1)
+          [ -n "$ID" ] || ID=$(grep -oE '/video/[0-9]{15,}' land.html | grep -oE '[0-9]+' | head -1)
+          echo "id=$ID"; echo "$ID" > id.txt; echo "$LAND" > landing.txt
+          curl -sSL -A "$IPHONE" -o share_iphone.html "https://www.iesdouyin.com/share/video/$ID/" || true
+          curl -sSL -A "$SPIDER" -o share_spider.html "https://www.iesdouyin.com/share/video/$ID/" || true
+          curl -sSL -A "$IPHONE" -o comments.json "https://www.iesdouyin.com/web/api/v2/comment/list/?aweme_id=$ID&cursor=0&count=50" || true
+          python3 - <<'PY'
+          import re,json,urllib.parse
+          urls=[]
+          for f in ("share_iphone.html","share_spider.html","land.html"):
+              try: t=open(f,encoding="utf-8",errors="ignore").read()
+              except Exception: continue
+              for m in re.finditer(r'https?:(?:\\u002F|\\/|/){2}[^"\s]*?(?:playwm|play)[^"\s]*', t):
+                  u=m.group(0).replace('\\u002F','/').replace('\\/','/')
+                  urls.append(u)
+              m=re.search(r'window\._ROUTER_DATA\s*=\s*(\{.*?\})</script>',t,re.S)
+              if m: open("router_"+f+".json","w").write(m.group(1))
+          seen=[];[seen.append(u) for u in urls if u not in seen]
+          open("play_urls.txt","w").write("\n".join(seen))
+          print(len(seen)); print("\n".join(seen[:5]))
+          PY
+          n=0
+          while read -r u; do
+            for v in "${u/playwm/play}" "$u"; do
+              curl -sSL -A "$IPHONE" -e "https://www.douyin.com/" -o ref.mp4 "$v" || true
+              if [ -s ref.mp4 ] && [ $(stat -c%s ref.mp4) -gt 200000 ]; then n=1; break 2; fi
+            done
+          done < play_urls.txt
+          if [ $n = 0 ]; then pip install -q "yt-dlp[default]" && yt-dlp -o ref.mp4 "https://www.douyin.com/video/$ID" || true; fi
+          ls -la
+      - name: upload
+        if: always()
+        run: |
+          cd out
+          ID=$(cat id.txt)
+          TAG="ref-douyin-${ID:-unknown}"
+          gh release create "$TAG" --prerelease --title "参考片（抖音 $ID，仅内部分析）" --notes "tmp" 2>/dev/null || true
+          gh release upload "$TAG" --clobber ./* || true
