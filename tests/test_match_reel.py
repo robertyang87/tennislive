@@ -17765,3 +17765,25 @@ def test_kartal_owner_alias_keeps_headshot_identity_and_rejects_swapped_faces(tm
     swapped = {**alias, "stats": {"a": prior["stats"]["b"], "b": prior["stats"]["a"]}}
     result = chk.stat_card_headshot_problem(swapped, reels)
     assert result is not None and result[0] is True
+
+
+def test_角标carry跨镜头连挂只在首镜淡入末镜淡出():
+    """角标 `carry`：同一张角标跨几个硬切镜头连挂（≥8 秒），只在第一镜淡入、最后一镜淡出。"""
+    import build_match_reel as reel  # noqa: PLC0415
+
+    base = "[0:v]null[base]"
+
+    def ins(**kw):
+        d = {"corner": "tr", "width": 0.6, "pad": 0.085, "motion": "editorial", "show_for": 4.2}
+        d.update(kw)
+        return d
+
+    plain = reel._overlay_chain(base, ins())
+    assert "fade=t=in" in plain and "fade=t=out" in plain
+    start = reel._overlay_chain(base, ins(carry="start"))
+    assert "fade=t=in" in start and "fade=t=out" not in start
+    mid = reel._overlay_chain(base, ins(carry="mid"))
+    assert "fade=" not in mid and "if(lt(t" not in mid
+    end = reel._overlay_chain(base, ins(carry="end", show_for=3.0))
+    assert "fade=t=in" not in end
+    assert f"fade=t=out:st={3.0 - reel.CARRY_OUT_SECS:.3f}" in end
