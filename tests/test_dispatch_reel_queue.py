@@ -132,6 +132,111 @@ def test_render_queue_accepts_multiple_existing_slugs(tmp_path):
     assert request.slugs == ("fritz-oconnell", second_slug)
 
 
+def _preview_queue(tmp_path, *, push=None):
+    repo, path, payload = _repo(tmp_path)
+    payload["mode"] = "preview"
+    (repo / path).write_text(json.dumps(payload), encoding="utf-8")
+    spec = {"slug": "fritz-oconnell", "push": push if push is not None else {
+        "auto": False,
+        "_no_auto_why": "先检查实际完整成片，确认后通过原有推送队列发布。",
+    }}
+    (repo / "specs/reels/fritz-oconnell.json").write_text(json.dumps(spec))
+    return repo, path, payload
+
+
+def test_preview_requires_the_formal_spec_to_disable_automatic_publication(tmp_path):
+    repo, path, _ = _preview_queue(tmp_path)
+    request = queue.load_queue(path, repo_root=repo, today=date(2026, 8, 21))
+    assert request.mode == "preview" and request.slugs == ("fritz-oconnell",)
+
+
+@pytest.mark.parametrize("auto", [True, None, 0, "false"])
+def test_preview_rejects_auto_true_missing_and_false_lookalikes(tmp_path, auto):
+    push = {"_no_auto_why": "先检查实际完整成片，然后通过推送队列发布。"}
+    if auto is not None:
+        push["auto"] = auto
+    repo, path, _ = _preview_queue(tmp_path, push=push)
+    with pytest.raises(queue.QueueError, match="push.auto to be exactly false"):
+        queue.load_queue(path, repo_root=repo, today=date(2026, 8, 21))
+
+
+@pytest.mark.parametrize("why", [None, False, "", " \n\t ", "先看看", "TODO fill in reason later"])
+def test_preview_requires_an_explanation_in_the_formal_spec(tmp_path, why):
+    push = {"auto": False}
+    if why is not None:
+        push["_no_auto_why"] = why
+    repo, path, _ = _preview_queue(tmp_path, push=push)
+    with pytest.raises(queue.QueueError, match="meaningful push._no_auto_why"):
+        queue.load_queue(path, repo_root=repo, today=date(2026, 8, 21))
+
+
+def test_preview_validates_every_spec_before_dispatch(tmp_path):
+    repo, path, payload = _preview_queue(tmp_path)
+    second = "second-player"
+    (repo / f"specs/reels/{second}.json").write_text(json.dumps({
+        "slug": second, "push": {"auto": True},
+    }))
+    (repo / f"specs/reels/{second}.xhs.txt").write_text("copy")
+    payload["slugs"].append(second)
+    (repo / path).write_text(json.dumps(payload))
+    with pytest.raises(queue.QueueError, match="exactly false: second-player"):
+        queue.load_queue(path, repo_root=repo, today=date(2026, 8, 21))
+
+
+@pytest.mark.parametrize(("mode", "push_value"), [("preview", "false"), ("render", "true")])
+def test_queue_uses_normal_render_outbox_and_replays_only_pending_slugs(
+    tmp_path, monkeypatch, mode, push_value,
+):
+    import reel_dispatch_outbox as outbox
+
+    repo, path, payload = _preview_queue(tmp_path)
+    payload["mode"] = mode
+    payload["slugs"].append("second-player")
+    (repo / path).write_text(json.dumps(payload))
+    first_spec = repo / "specs/reels/fritz-oconnell.json"
+    second_spec = json.loads(first_spec.read_text())
+    second_spec["slug"] = "second-player"
+    (repo / "specs/reels/second-player.json").write_text(json.dumps(second_spec))
+    (repo / "specs/reels/second-player.xhs.txt").write_text("copy")
+    load = queue.load_queue
+    enqueue, drain = outbox.enqueue, outbox.drain
+    monkeypatch.setattr(queue, "discover_queue_file", lambda *_: path)
+    monkeypatch.setattr(queue, "load_queue", lambda p: load(p, repo_root=repo, today=date(2026, 8, 21)))
+    monkeypatch.setattr(queue, "verify_event_inputs", lambda *a: None)
+    monkeypatch.setattr(outbox, "enqueue", lambda request, **kw: enqueue(request, root=repo, **kw))
+    saved, calls = [], []
+
+    def checkpoint(intent):
+        saved.append(json.loads(intent.read_text()))
+
+    def submit(command, **kwargs):
+        # Intent is durable before the first API call. Native workflow inputs
+        # stay render/push; preview never becomes a new workflow input.
+        assert saved and saved[-1]["request"]["mode"] == "render"
+        assert saved[-1]["request"]["push"] is (push_value == "true")
+        assert "mode=render" in command and f"push={push_value}" in command
+        assert command[:6] == ["gh", "workflow", "run", "match-reel.yml", "--ref", "main"]
+        assert kwargs == {"check": True, "shell": False}
+        calls.append(command)
+        if "slug=second-player" in command and len(calls) == 2:
+            raise subprocess.CalledProcessError(1, command)
+
+    monkeypatch.setattr(outbox, "persist", checkpoint)
+    monkeypatch.setattr(outbox, "drain", lambda intent: drain(
+        intent, root=repo, run=submit, checkpoint=checkpoint,
+    ))
+    argv = ["--before", "a" * 40, "--after", "b" * 40]
+    assert queue.main(argv) == 1
+    assert len(calls) == 2
+    assert queue.main(argv) == 0
+    assert len(calls) == 3 and "slug=second-player" in calls[-1]
+    assert [a for a in calls[1] if a.startswith("received_at=")] == [
+        a for a in calls[2] if a.startswith("received_at=")
+    ]
+    assert set(saved[-1]["dispatched"]) == {"fritz-oconnell", "second-player"}
+    assert len(list((repo / outbox.DIRECTORY).glob("*.json"))) == 1
+
+
 def test_push_diff_must_contain_exactly_one_added_queue_file(tmp_path):
     calls = []
 

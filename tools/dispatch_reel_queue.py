@@ -24,7 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE_DIR = Path("data/reel-dispatch-queue")
 QUEUE_KEYS = frozenset({"version", "mode", "ref", "expected_date", "slugs"})
-MODES = frozenset({"render", "push"})
+MODES = frozenset({"render", "push", "preview"})
 SLUG_RE = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
 SHA_RE = re.compile(r"[0-9a-f]{40}\Z")
 BEIJING_TZ = timezone(timedelta(hours=8), name="Asia/Shanghai")
@@ -122,7 +122,8 @@ def load_queue(
     if not isinstance(payload, dict):
         raise QueueError(f"queue payload must be a JSON object: {relative}")
 
-    # Version 1 remains the unchanged render/publish contract. Version 2 is
+    # Version 1 keeps production render/publish and adds a non-publishing preview.
+    # Version 2 is
     # deliberately source-only and accepts neither slugs nor workflow names.
     if payload.get("mode") == "download":
         if set(payload) != DOWNLOAD_KEYS:
@@ -194,6 +195,20 @@ def load_queue(
             raise QueueError(
                 f"spec slug mismatch for {spec_path.relative_to(repo_root)}: {got!r}"
             )
+        if mode == "preview":
+            push_config = spec_payload.get("push")
+            if not isinstance(push_config, dict) or push_config.get("auto") is not False:
+                raise QueueError(
+                    f"preview requires push.auto to be exactly false: {slug}"
+                )
+            why = push_config.get("_no_auto_why")
+            if (not isinstance(why, str)
+                    or len("".join(why.split())) < 8
+                    or re.search(r"\b(?:TODO|TBD|FIXME)\b", why, re.IGNORECASE)):
+                raise QueueError(
+                    f"preview requires a meaningful push._no_auto_why "
+                    f"(at least 8 non-whitespace characters, no TODO/TBD/FIXME): {slug}"
+                )
 
     return QueueRequest(
         mode=mode,
@@ -384,7 +399,15 @@ def main(argv: Sequence[str] | None = None) -> int:
             return 0
         from reel_dispatch_outbox import drain, enqueue, persist
 
-        intent = enqueue(request, origin=f"queue/{args.after}/{queue_file}")
+        # Preview is a queue-only intent, not another workflow or render path.
+        # The formal spec also disables push.auto above, because match-reel can
+        # fan out a publish run even when its form input is push=false.
+        preview = request.mode == "preview"
+        if preview:
+            request = QueueRequest("render", request.ref, request.expected_date,
+                                   request.slugs)
+        intent = enqueue(request, origin=f"queue/{args.after}/{queue_file}",
+                         push=not preview)
         # Persist intent before API calls, receipts after each accepted slug.
         persist(intent)
         if drain(intent):
