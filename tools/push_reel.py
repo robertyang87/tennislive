@@ -1029,6 +1029,13 @@ def main() -> int:
         resolve_revision(revision_repo, outdir.name, outdir, film_hash,
                          phase="send", run_url=run_url)
         claim_post(revision, run_url, Path(os.environ["RUNNER_TEMP"]))
+    else:
+        # Revalidate after network waits: byte identity may have changed while
+        # Pages/CDN deployed. This still performs no synthesis or approval.
+        try:
+            require_publish(outdir)
+        except VoiceQualityError as exc:
+            raise SystemExit(f"waiting_voice_quality_review: {exc}") from exc
     receipt = push(f"{args.title_prefix}{title}", body, asset_dir=outdir)
     if args.receipt_out:
         # 流水号和消息网页一起落：「记下已推送」那一步把它写进 pushed.json，

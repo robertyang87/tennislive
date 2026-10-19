@@ -61,3 +61,26 @@ def test_image_package_keeps_existing_sender(tmp_path, monkeypatch):
                         lambda *args, **kwargs: sent.append(args) or "fixture")
     assert cli.cmd_publish_pushplus(SimpleNamespace(dir=str(tmp_path))) == 0
     assert len(sent) == 1
+
+
+def test_video_changed_during_delivery_wait_is_blocked(tmp_path, monkeypatch):
+    import voice_quality_gate
+
+    (tmp_path / "push.html").write_text('<a href="https://example.test/film.mp4">play</a>')
+    checks = []
+
+    def review(outdir):
+        checks.append(outdir)
+        if len(checks) == 2:
+            raise ValueError("actual movie changed during deployment wait")
+
+    monkeypatch.setattr(voice_quality_gate, "require_publish", review)
+    monkeypatch.setattr("tennislive.render.pushmsg.drop_dead_copy_button",
+                        lambda html, **kwargs: (html, None))
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("changed movie reached POST")
+
+    monkeypatch.setattr("tennislive.publish.pushplus.push", forbidden)
+    assert cli.cmd_publish_pushplus(SimpleNamespace(dir=str(tmp_path))) == 1
+    assert len(checks) == 2

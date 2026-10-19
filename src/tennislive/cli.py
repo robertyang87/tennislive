@@ -828,9 +828,11 @@ def cmd_publish_pushplus(args) -> int:
     # Video publication has the same voice gate as push_reel. Still/image
     # packages keep their existing path; a removed metadata file must not let
     # a video link bypass the gate. Run before CDN probes or any message POST.
-    if (any((d / name).is_file() for name in ("render.json", "narration.json", "watch.html"))
-            or any(d.glob("*.mp4")) or ".mp4" in html.lower()
-            or "<video" in html.lower() or "/watch.html" in html.lower()):
+    voice_review_required = (
+        any((d / name).is_file() for name in ("render.json", "narration.json", "watch.html"))
+        or any(d.glob("*.mp4")) or ".mp4" in html.lower()
+        or "<video" in html.lower() or "/watch.html" in html.lower())
+    if voice_review_required:
         tools_path = str(Path(__file__).resolve().parents[2] / "tools")
         if tools_path not in sys.path:
             sys.path.insert(0, tools_path)
@@ -872,6 +874,14 @@ def cmd_publish_pushplus(args) -> int:
             expect=player.read_text(encoding="utf-8"),
         ):
             console.print("[red]封面播放页尚未部署完成，本次未发送[/red]")
+            return 1
+    # CDN/player waits can be long. Do not send a replacement movie or altered
+    # review that appeared while those probes were running.
+    if voice_review_required:
+        try:
+            require_publish(d)
+        except (OSError, ValueError) as exc:
+            console.print(f"[red]{exc}[/red]")
             return 1
     try:
         receipt = push(title, html, asset_dir=d)
