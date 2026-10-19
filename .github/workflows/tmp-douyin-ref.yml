@@ -6,9 +6,9 @@ on:
 permissions:
   contents: write
 jobs:
-  asr:
+  derive:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
@@ -16,25 +16,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: asr
+      - name: derive+asr
         run: |
+          set -eux
+          sudo apt-get -qq update >/dev/null && sudo apt-get -qq install -y ffmpeg >/dev/null
           pip install -q faster-whisper
           mkdir -p out
-          curl -sSL -o clip.mp4 https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-dubai-trophy-lift/dubai_trophy_lift.mp4
+          curl -sSL -o tail.mp4 https://github.com/robertyang87/tennislive/releases/download/ref-trophy-fullmatch/tail_dubai_s6m8ZjbKOOY.mp4
+          ffmpeg -y -ss 882.0 -to 889.0 -i tail.mp4 -vf "fps=25,setsar=1" -c:v libx264 -preset medium -crf 16 -pix_fmt yuv420p -r 25 -c:a aac -b:a 160k -ar 48000 -movflags +faststart out/dubai_trophy_lift2.mp4
           python3 - <<'PY'
           import json, hashlib
           from faster_whisper import WhisperModel
-          sha = hashlib.sha256(open('clip.mp4','rb').read()).hexdigest()
+          sha = hashlib.sha256(open('out/dubai_trophy_lift2.mp4','rb').read()).hexdigest()
           for m in ('small.en','medium.en'):
               model = WhisperModel(m, device='cpu', compute_type='int8')
-              segs, info = model.transcribe('clip.mp4', language='en', word_timestamps=True, vad_filter=False)
-              words = []
-              for s in segs:
-                  for w in (s.words or []):
-                      words.append({'w': w.word, 's': round(w.start, 2), 'e': round(w.end, 2)})
+              segs, info = model.transcribe('out/dubai_trophy_lift2.mp4', language='en', word_timestamps=True, vad_filter=False)
+              words = [{'w': w.word, 's': round(w.start, 2), 'e': round(w.end, 2)} for s in segs for w in (s.words or [])]
               json.dump({'model': m, 'source_sha256': sha, 'duration': info.duration, 'words': words},
-                        open(f'out/dubai_trophy_lift-{m}.json','w'), ensure_ascii=False, indent=1)
-              print(m, len(words), ' '.join(f"{w['w']}@{w['s']}" for w in words))
+                        open(f'out/dubai_trophy_lift2-{m}.json','w'), ensure_ascii=False, indent=1)
+              print(m, ' '.join(f"{w['w']}@{w['s']}-{w['e']}" for w in words))
           PY
       - name: upload
-        run: for f in out/*; do gh release upload source-wta1000-2026-dubai-trophy-lift --clobber "$f"; done
+        run: |
+          gh release create source-wta1000-2026-dubai-trophy-lift2 --title "WTA 官方决赛全场 s6m8ZjbKOOY 末尾派生：迪拜颁奖广播＋佩古拉举杯（1920×1080 25fps）" --notes "https://www.youtube.com/watch?v=s6m8ZjbKOOY 末尾 900s 段（自 3164s 起）882.0–889.0s → 原片约 4046–4053s，24→25fps；附 small.en/medium.en 逐词转写" out/*
