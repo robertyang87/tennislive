@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from tools.pipeline_health import (
     DEFAULT_WORKFLOWS,
     WorkflowHealth,
@@ -7,6 +9,20 @@ from tools.pipeline_health import (
     notification_transition,
     render_report,
 )
+
+
+@pytest.fixture(autouse=True)
+def _isolate_interview_dispatch_state(monkeypatch, tmp_path):
+    """Health tests use synthetic runs, never the changing live interview queue.
+
+    Keep the real alert readers active against an empty per-test fixture; tests
+    exercising parked interviews can populate this file explicitly.
+    """
+    import tools.pipeline_health as ph
+
+    state = tmp_path / "interview-render-dispatched.json"
+    state.write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(ph, "INTERVIEW_DISPATCH_STATE", state)
 
 
 def test_elapsed_uses_real_timestamps():
@@ -776,3 +792,20 @@ def test_采访停着的几栏只收关键字():
     params = inspect.signature(render_report).parameters
     for name in ("feed_stuck", "parked_subs", "parked_covers", "subs_red"):
         assert params[name].kind is inspect.Parameter.KEYWORD_ONLY, name
+
+
+def test_main_uses_explicit_parked_interview_fixture_without_hiding_alerts(tmp_path, monkeypatch):
+    """Isolation removes ambient production data, not the parked-subs alert path."""
+    import json
+    import tools.pipeline_health as ph
+
+    ph.INTERVIEW_DISPATCH_STATE.write_text(json.dumps({"subs": {
+        "fixture-champion-speech": {"parked": True, "tries": 3,
+                                    "at": "2026-10-19T12:00:00Z"}
+    }}), encoding="utf-8")
+    got, report = _main_out(ph, monkeypatch, tmp_path, [])
+    assert got["notify"] == "true"
+    assert "fixture-champion-speech" in got["message"]
+    assert "采访 subs 停着" in report
+    state = json.loads((tmp_path / "state.json").read_text())
+    assert state["active_keys"] == ["interview-subs:fixture-champion-speech"]
