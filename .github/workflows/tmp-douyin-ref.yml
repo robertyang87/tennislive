@@ -6,59 +6,22 @@ on:
 permissions:
   contents: write
 jobs:
-  fullmatch:
+  derive:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 20
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-      - name: deps
+      - name: derive
         run: |
-          pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
+          set -euxo pipefail
           sudo apt-get -qq update >/dev/null && sudo apt-get -qq install -y ffmpeg >/dev/null
-          docker run --name bgutil-pot -d -p 4416:4416 brainicism/bgutil-ytdlp-pot-provider
-          for i in $(seq 1 25); do curl -sf http://127.0.0.1:4416/ping >/dev/null && break; sleep 2; done
-      - name: cookies
-        env:
-          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
-        run: |
-          if [ -n "$YT_COOKIES_TXT" ]; then printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt.txt"; fi
-      - name: search
-        run: |
           mkdir -p out
-          A=(--js-runtimes node); [ -s "$RUNNER_TEMP/yt.txt" ] && A+=(--cookies "$RUNNER_TEMP/yt.txt")
-          while IFS='|' read -r key q; do
-            [ -n "$key" ] || continue
-            echo "### $key :: $q" | tee -a out/fullmatch.txt
-            yt-dlp "${A[@]}" --flat-playlist --print "%(id)s | %(channel)s | %(duration)s | %(title)s" "ytsearch12:$q" 2>/dev/null | tee -a out/fullmatch.txt | awk -F' [|] ' -v k="$key" '$2=="WTA" && $3>2400 {print k" "$1" "$3}' | head -1 >> out/picks.txt || true
-          done <<'Q'
-          dubai|Pegula Svitolina 2026 Dubai Final WTA Full Match
-          beijing|Zheng Andreeva 2026 Beijing Final WTA Full Match
-          wuhan|Chwalinska Kartal 2026 Wuhan Final WTA Full Match
-          miami|Sabalenka Gauff 2026 Miami Final WTA Full Match
-          Q
-          echo "### picks"; cat out/picks.txt | tee -a out/fullmatch.txt
-      - name: tail
-        run: |
-          A=(--js-runtimes node); [ -s "$RUNNER_TEMP/yt.txt" ] && A+=(--cookies "$RUNNER_TEMP/yt.txt")
-          while read -r key id dur; do
-            [ -n "$id" ] || continue
-            from=$(( ${dur%.*} - 900 ))
-            yt-dlp "${A[@]}" -f "bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080]" --merge-output-format mp4 \
-              --download-sections "*${from}-inf" --force-keyframes-at-cuts -o "out/tail_${key}_${id}.mp4" "https://www.youtube.com/watch?v=$id" 2>&1 | tail -3 || true
-            ls -la out/ | grep "$id" || true
-            echo "$key $id $dur from=$from" >> out/fullmatch.txt
-          done < out/picks.txt
+          curl -sSL -o tail.mp4 https://github.com/robertyang87/tennislive/releases/download/ref-trophy-fullmatch/tail_dubai_s6m8ZjbKOOY.mp4
+          # WTA 官方决赛全场 s6m8ZjbKOOY（4064s）末尾 900s 段（自 3164s 起）的 884.0–889.0 → 原片约 4048–4053s：佩古拉在烟花里举起迪拜冠军奖杯
+          ffmpeg -y -ss 884.0 -to 889.0 -i tail.mp4 -vf "fps=25,setsar=1" -c:v libx264 -preset medium -crf 16 -pix_fmt yuv420p -r 25 -c:a aac -b:a 160k -ar 48000 -movflags +faststart out/dubai_trophy_lift.mp4
+          ffprobe -v error -show_entries stream=codec_type,width,height,r_frame_rate:format=duration -of compact out/dubai_trophy_lift.mp4
       - name: upload
-        if: always()
         run: |
-          cd out
-          gh release create ref-trophy-fullmatch --prerelease --title "WTA 官方决赛全场录像末尾 15 分钟（找颁奖，仅内部剪辑核对）" --notes "tmp" 2>/dev/null || true
-          for f in *; do [ -s "$f" ] && gh release upload ref-trophy-fullmatch --clobber "$f" || true; done
+          gh release create source-wta1000-2026-dubai-trophy-lift --title "WTA 官方决赛全场 s6m8ZjbKOOY 末尾派生：迪拜佩古拉举杯（1920×1080 25fps）" --notes "https://www.youtube.com/watch?v=s6m8ZjbKOOY （WTA，A Milestone Match | Jessica Pegula vs. Elina Svitolina 2026 Dubai Final | WTA Full Match）末尾 900s 段 884.0–889.0s（原片约 4048–4053s），24→25fps" out/dubai_trophy_lift.mp4
