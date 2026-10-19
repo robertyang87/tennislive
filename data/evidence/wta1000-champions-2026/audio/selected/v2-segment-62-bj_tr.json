@@ -1,0 +1,15 @@
+{
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-bj-trophy/bj_trophy.mp4",
+ "source_sha256": "9fa9823fc0f442f6d8e09b2d0d8e6bcac54ed19e10d95d4dd5cd337bcdcfe116",
+ "method": "asr_cross_checked",
+ "reviewed_at": "2026-10-19T19:29:48.764536+00:00",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+ "reviewed_from": 4.15,
+ "reviewed_to": 6.95,
+ "status": "complete",
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "asr_evidence": "data/source_asr/dDxlsgH6UJg/（原片 9.80–13.90 / 16.45–19.50s 对应派生 0–4.10 / 4.10–7.15s）",
+ "review_note": "北京站捧杯：同一条 WTA 官方 Shorts 16.45–19.50 派生，郑钦文在网前举着奖杯。",
+ "no_foreground_english_reason": "源片音轨是 WTA 短片的背景音乐：small/medium 两档在这两段窗口里都没有转出任何词（只在片尾 26s 之后有「Thanks for watching」类误转）；没有解说或人声。按正常制作规则原样保留源片原声（不静音、不调音量），不配字幕。"
+}
