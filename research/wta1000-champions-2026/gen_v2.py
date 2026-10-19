@@ -1,6 +1,6 @@
 """wta1000-champions-2026 第二版（2026-10-19，账号所有者「2 要」）：
 
-- 补四站捧杯：迪拜（WTA 官方图 Pegula-trophy-Jimmie）、马德里（同一条官方颁奖源 15.12–18.04 的亲吻奖杯近景）、
+- 补四站捧杯：迪拜（WTA 官方决赛全场录像末尾的颁奖举杯）、马德里（同一条官方颁奖源 15.12–18.04 的亲吻奖杯近景）、
   北京、武汉（WTA 官方 Shorts 派生，账号所有者「1 可以用」批准 720p 源）
 - 武汉旁白「最后连赢五局」→「决胜盘连下最后四局」（官方逐局：决胜盘 2-2 之后连下四局）
 - 结尾只留一个问题
@@ -22,6 +22,7 @@ SRC = {  # 新加的派生源：本地字节，用来写 source_sha256
     'bj_tr': ('/tmp/claude-0/dy/d/bj_trophy.mp4', f'{REL}/source-wta1000-2026-bj-trophy/bj_trophy.mp4'),
     'madrid_k': ('/tmp/claude-0/dy/d/madrid_kiss.mp4', f'{REL}/source-wta1000-2026-madrid-kiss/madrid_kiss.mp4'),
     'wuhan': ('/tmp/claude-0/cw/src/HIvIvgwXkqs.mp4', None),
+    'dbi_tr': ('/tmp/claude-0/dy/d/dubai_trophy_lift2.mp4', f'{REL}/source-wta1000-2026-dubai-trophy-lift2/dubai_trophy_lift2.mp4'),
 }
 VOICE = {"pitch": "+10Hz", "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高。语速走 --rate +18%，音高逐段写在这里。"}
 REV = "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音"
@@ -73,11 +74,13 @@ assert segs[68]['narration'].startswith('今年没有谁能一手遮天') and su
 
 skip = "这几秒解说没开口；源片音轨是现场音乐／颁奖台广播，本段 `mute: true` 不出原声，靠前后段的现场声接住。"
 new = {
-    'dubai': {"image": "assets/reel/wta1000-2026/dubai-trophy.jpg", "image_kind": "photo", "seconds": 2.6,
-              "narration": "这一次，奖杯是她的。", "voice": VOICE,
-              "_why": "迪拜站捧杯：WTA 官方图库（文件名 Pegula-trophy-Jimmie.jpg，2026-02-22 发布，标题「Jessica Pegula, Dubai 2026」），佩古拉抱着迪拜冠军奖杯。原图 4700×3177（取 ?width=4000 的 4000×2704），按画布 3:4 预裁 2028×2704，人居中。",
-              "_photo_source": "https://photoresources.wtatennis.com/photo-resources/2026/02/22/2c68af62-120d-417d-a889-2844379a288a/Pegula-trophy-Jimmie.jpg",
-              "_photo_caption_safety": "旁白字幕压在下部奖杯底座一带，脸在画面上部 15%–35%，不压脸。"},
+    'dubai': {"source": "dbi_tr", "start": 2.10, "end": 6.90, "cx": 0.5, "track": False, "narration": "",
+              "quote": [{"at": 0.12, "end": 0.64, "text": "Ladies and gentlemen,\n女士们，先生们，"},
+                        {"at": 0.84, "end": 2.78, "text": "your winner once again, Jessica Pegula.\n再一次，冠军是杰西卡·佩古拉！"}],
+              "_quote_kind": "ceremony",
+              "frame": "court",
+              "_frame_why": "颁奖转播是正面机位，佩古拉在 1920×1080 画面正中（抽帧看过 1.2／2.5／4.0s，居中 3:4 窗口里脸和奖杯都完整），固定居中即可，不需要人物中心偏移。",
+              "_why": "迪拜站捧杯：WTA 官方决赛全场录像 s6m8ZjbKOOY 末尾派生（原片约 4046–4053s）。颁奖台广播「Ladies and gentlemen, your winner once again, Jessica Pegula」，2.96s 切到她在烟花里举起奖杯；6.96s 之后是 WTA 片尾标，段尾收在 6.90。上一句「All right, thank you so much, Jesse」到 2.04s 结束，段首 2.10 不切句。"},
     'madrid': {"source": "madrid_k", "start": 0.08, "end": 2.88, "cx": 0.5, "track": False, "narration": "", "mute": True,
                "_why": "马德里站捧杯：赛事官方颁奖源（冷开场那条 madrid_t）15.12–18.04 这一镜派生，科斯秋克亲吻奖杯近景；人在画面右侧，居中的 3:4 会切掉脸，所以派生时取 x=900 的窗口置中。冷开场用的是 8.5–12.08 的举杯，不重复。",
                "_quote_skip_why": "颁奖台广播在讲话（两档转写对不上，像是把西语当英语转错了），译不出可靠的字幕，这一段静音不出原声。"},
@@ -118,8 +121,10 @@ spec['segments'] = out
 spec['sources']['wh_tr'] = SRC['wh_tr'][1]
 spec['sources']['bj_tr'] = SRC['bj_tr'][1]
 spec['sources']['madrid_k'] = SRC['madrid_k'][1]
+spec['sources']['dbi_tr'] = SRC['dbi_tr'][1]
 ds = spec.setdefault('_derived_sources', {})
 ds['wh_tr'] = 'https://www.youtube.com/shorts/C87Ikp6xUN4 — WTA 官方 Shorts 8.10–15.80s，720×1280 取 y=176 的 720×960，放大到 810×1080 置于 1920×1080 中央，30→25fps'
+ds['dbi_tr'] = 'https://www.youtube.com/watch?v=s6m8ZjbKOOY（WTA 官方决赛全场）末尾 900s 段 882.0–889.0s → 原片约 4046–4053s，24→25fps'
 ds['madrid_k'] = 'madrid_t（https://www.youtube.com/watch?v=Obv_j6l33nQ 894.0–919.5s）再取 15.12–18.04s，x=900 起 810×1080 原尺寸置于 1920×1080 中央，25fps'
 ds['bj_tr'] = 'https://www.youtube.com/shorts/dDxlsgH6UJg — WTA 官方 Shorts 9.80–13.90s（y=160）＋16.45–19.50s（y=300），各取 720×960 放大到 810×1080 置于 1920×1080 中央、接成一条，30→25fps'
 spec['_v2_why'] = ('第二版（2026-10-19）：账号所有者看过同题抖音（体坛叙说）后要求补捧杯镜头；补迪拜、马德里、北京、武汉四站捧杯，'
@@ -146,14 +151,20 @@ for ni, (s, oi) in enumerate(zip(out, origin)):
     asr = {'wh_tr': 'data/source_asr/C87Ikp6xUN4/（原片 8.10–15.80s 对应派生 0–7.70s）',
            'bj_tr': 'data/source_asr/dDxlsgH6UJg/（原片 9.80–13.90 / 16.45–19.50s 对应派生 0–4.10 / 4.10–7.15s）',
            'madrid_k': 'data/evidence/wta1000-champions-2026/audio/raw/madrid_t-der-madrid_trophy-{small,medium}.en.json（madrid_t 15.12–18.04s 对应派生 0–2.92s）',
-           'wuhan': 'data/source_asr/HIvIvgwXkqs/small.en.json + medium.en.json'}[k]
+           'wuhan': 'data/source_asr/HIvIvgwXkqs/small.en.json + medium.en.json',
+           'dbi_tr': 'data/evidence/wta1000-champions-2026/audio/raw/dbi_tr-der-dubai_trophy_lift2-{small,medium}.en.json'}[k]
     reason = {'wh_tr': '源片音轨是 WTA 短片的背景歌曲：small.en 转出的是连续歌词（Thank you for sunshine… It\'s a beautiful day），medium.en 只标出 🎶 Music；没有解说、采访或球员人声。本段 mute: true，不出原声。',
               'bj_tr': '源片音轨是 WTA 短片的背景音乐：small/medium 两档在这两段窗口里都没有转出任何词（只在片尾 26s 之后有「Thanks for watching」类误转）；没有解说或人声。本段 mute: true，不出原声。',
               'madrid_k': '颁奖台广播在 madrid_t 12–25s 讲话，small.en 与 medium.en 在对应的 15.2–18.0s 转出的词互不相同（「…that Marta will be」对「…which is called the Cielo de Madrid」），判断为西语广播被误转成英语，译不出可靠字幕；本段 mute: true，不出原声。',
+              'dbi_tr': '',
               'wuhan': '官方武汉决赛集锦，178.5–181.2s：small.en 与 medium.en 两档在 177.2s（「…of the Wuhan Open.」）之后到 192s 都没有转出任何词，这个窗口没有前景英文；本段是中文旁白。'}[k]
+    utts = [{"start": round(s['start'] + c['at'], 2), "end": round(s['start'] + c['end'], 2),
+             "en": c['text'].split('\n', 1)[0], "zh": c['text'].split('\n', 1)[1]} for c in s.get('quote') or []]
     pkt = {"source_url": url, "source_sha256": sha(local), "method": "asr_cross_checked", "reviewed_at": now, "reviewer": REV,
            "reviewed_from": s['start'], "reviewed_to": s['end'], "status": "complete", "uncertain_spans": [],
-           "foreground_english": [], "no_foreground_english_reason": reason, "asr_evidence": asr, "review_note": s['_why']}
+           "foreground_english": utts, "asr_evidence": asr, "review_note": s['_why']}
+    if not utts:
+        pkt["no_foreground_english_reason"] = reason
     p = d / f'v2-segment-{ni:02d}-{k}.json'
     p.write_text(json.dumps(pkt, ensure_ascii=False, indent=1) + '\n')
     entries.append({"index": ni, "transcript_path": p.as_posix(), "transcript_sha256": sha(p)})

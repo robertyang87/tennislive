@@ -51,7 +51,8 @@
   "wuhan": "https://www.youtube.com/watch?v=HIvIvgwXkqs",
   "wh_tr": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-wuhan-trophy-lift/wuhan_trophy_lift.mp4",
   "bj_tr": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-bj-trophy/bj_trophy.mp4",
-  "madrid_k": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-madrid-kiss/madrid_kiss.mp4"
+  "madrid_k": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-madrid-kiss/madrid_kiss.mp4",
+  "dbi_tr": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-dubai-trophy-lift2/dubai_trophy_lift2.mp4"
  },
  "primary": "bj_x",
  "editorial": {
@@ -219,6 +220,7 @@
   "tor_t": "https://www.youtube.com/watch?v=5Xj5JorwU6M — Tennis Canada 官方 YouTube 颁奖 322.5–343.0s",
   "cin_t1": "https://www.youtube.com/watch?v=aw8XUjIkpio — 辛辛那提赛事官方 YouTube 颁奖 13.1–24.0s，29.97→25fps",
   "wh_tr": "https://www.youtube.com/shorts/C87Ikp6xUN4 — WTA 官方 Shorts 8.10–15.80s，720×1280 取 y=176 的 720×960，放大到 810×1080 置于 1920×1080 中央，30→25fps",
+  "dbi_tr": "https://www.youtube.com/watch?v=s6m8ZjbKOOY（WTA 官方决赛全场）末尾 900s 段 882.0–889.0s → 原片约 4046–4053s，24→25fps",
   "madrid_k": "madrid_t（https://www.youtube.com/watch?v=Obv_j6l33nQ 894.0–919.5s）再取 15.12–18.04s，x=900 起 810×1080 原尺寸置于 1920×1080 中央，25fps",
   "bj_tr": "https://www.youtube.com/shorts/dDxlsgH6UJg — WTA 官方 Shorts 9.80–13.90s（y=160）＋16.45–19.50s（y=300），各取 720×960 放大到 810×1080 置于 1920×1080 中央、接成一条，30→25fps"
  },
@@ -490,17 +492,28 @@
    "_quote_skip_why": "small.en/medium.en 两模型转写＋VAD 复核：这几秒解说没开口，只有球场现场声和观众声，没有可译的解说。"
   },
   {
-   "image": "assets/reel/wta1000-2026/dubai-trophy.jpg",
-   "image_kind": "photo",
-   "seconds": 2.6,
-   "narration": "这一次，奖杯是她的。",
-   "voice": {
-    "pitch": "+10Hz",
-    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高。语速走 --rate +18%，音高逐段写在这里。"
-   },
-   "_why": "迪拜站捧杯：WTA 官方图库（文件名 Pegula-trophy-Jimmie.jpg，2026-02-22 发布，标题「Jessica Pegula, Dubai 2026」），佩古拉抱着迪拜冠军奖杯。原图 4700×3177（取 ?width=4000 的 4000×2704），按画布 3:4 预裁 2028×2704，人居中。",
-   "_photo_source": "https://photoresources.wtatennis.com/photo-resources/2026/02/22/2c68af62-120d-417d-a889-2844379a288a/Pegula-trophy-Jimmie.jpg",
-   "_photo_caption_safety": "旁白字幕压在下部奖杯底座一带，脸在画面上部 15%–35%，不压脸。"
+   "source": "dbi_tr",
+   "start": 2.1,
+   "end": 6.9,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.12,
+     "end": 0.64,
+     "text": "Ladies and gentlemen,\n女士们，先生们，"
+    },
+    {
+     "at": 0.84,
+     "end": 2.78,
+     "text": "your winner once again, Jessica Pegula.\n再一次，冠军是杰西卡·佩古拉！"
+    }
+   ],
+   "_quote_kind": "ceremony",
+   "frame": "court",
+   "_frame_why": "颁奖转播是正面机位，佩古拉在 1920×1080 画面正中（抽帧看过 1.2／2.5／4.0s，居中 3:4 窗口里脸和奖杯都完整），固定居中即可，不需要人物中心偏移。",
+   "_why": "迪拜站捧杯：WTA 官方决赛全场录像 s6m8ZjbKOOY 末尾派生（原片约 4046–4053s）。颁奖台广播「Ladies and gentlemen, your winner once again, Jessica Pegula」，2.96s 切到她在烟花里举起奖杯；6.96s 之后是 WTA 片尾标，段尾收在 6.90。上一句「All right, thank you so much, Jesse」到 2.04s 结束，段首 2.10 不切句。"
   },
   {
    "source": "iw",

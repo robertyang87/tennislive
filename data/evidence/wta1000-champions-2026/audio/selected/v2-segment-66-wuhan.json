@@ -2,14 +2,14 @@
  "source_url": "https://www.youtube.com/watch?v=HIvIvgwXkqs",
  "source_sha256": "f0a8d9d5262a63af26695207e345a2e62f32cc3604e05490d9208925c61af8c3",
  "method": "asr_cross_checked",
- "reviewed_at": "2026-10-19T17:24:53.736887+00:00",
+ "reviewed_at": "2026-10-19T19:06:46.268869+00:00",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
  "reviewed_from": 178.5,
  "reviewed_to": 181.2,
  "status": "complete",
  "uncertain_spans": [],
  "foreground_english": [],
- "no_foreground_english_reason": "官方武汉决赛集锦，178.5–181.2s：small.en 与 medium.en 两档在 177.2s（「…of the Wuhan Open.」）之后到 192s 都没有转出任何词，这个窗口没有前景英文；本段是中文旁白。",
  "asr_evidence": "data/source_asr/HIvIvgwXkqs/small.en.json + medium.en.json",
- "review_note": "官方逐局：决胜盘 2-2 之后赫瓦林斯卡连下最后四局（与 chwalinska-story-2026 第 37 段同一口径）。第一版写的「最后连赢五局」与官方逐局不符，第二版改正。新句比原窗口长，段尾从 180.48 延到 181.2（178.36 之后到 184 没有切点，两档转写 177.2–192 无词），所以这一段重新审听。"
+ "review_note": "官方逐局：决胜盘 2-2 之后赫瓦林斯卡连下最后四局（与 chwalinska-story-2026 第 37 段同一口径）。第一版写的「最后连赢五局」与官方逐局不符，第二版改正。新句比原窗口长，段尾从 180.48 延到 181.2（178.36 之后到 184 没有切点，两档转写 177.2–192 无词），所以这一段重新审听。",
+ "no_foreground_english_reason": "官方武汉决赛集锦，178.5–181.2s：small.en 与 medium.en 两档在 177.2s（「…of the Wuhan Open.」）之后到 192s 都没有转出任何词，这个窗口没有前景英文；本段是中文旁白。"
 }

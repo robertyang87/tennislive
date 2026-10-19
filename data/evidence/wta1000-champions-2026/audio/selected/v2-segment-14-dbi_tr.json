@@ -1,0 +1,27 @@
+{
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-dubai-trophy-lift2/dubai_trophy_lift2.mp4",
+ "source_sha256": "5b9e5a03ec05fb084f97327ecbfd94ed0970c62349d8db8c012d91731a1a7914",
+ "method": "asr_cross_checked",
+ "reviewed_at": "2026-10-19T19:06:46.268869+00:00",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐词转写交叉核对，并对照本地抽帧；未人工听音",
+ "reviewed_from": 2.1,
+ "reviewed_to": 6.9,
+ "status": "complete",
+ "uncertain_spans": [],
+ "foreground_english": [
+  {
+   "start": 2.22,
+   "end": 2.74,
+   "en": "Ladies and gentlemen,",
+   "zh": "女士们，先生们，"
+  },
+  {
+   "start": 2.94,
+   "end": 4.88,
+   "en": "your winner once again, Jessica Pegula.",
+   "zh": "再一次，冠军是杰西卡·佩古拉！"
+  }
+ ],
+ "asr_evidence": "data/evidence/wta1000-champions-2026/audio/raw/dbi_tr-der-dubai_trophy_lift2-{small,medium}.en.json",
+ "review_note": "迪拜站捧杯：WTA 官方决赛全场录像 s6m8ZjbKOOY 末尾派生（原片约 4046–4053s）。颁奖台广播「Ladies and gentlemen, your winner once again, Jessica Pegula」，2.96s 切到她在烟花里举起奖杯；6.96s 之后是 WTA 片尾标，段尾收在 6.90。上一句「All right, thank you so much, Jesse」到 2.04s 结束，段首 2.10 不切句。"
+}
