@@ -6,73 +6,35 @@ on:
 permissions:
   contents: write
 jobs:
-  fetch:
+  search:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
-      ID: "7698221105147890959"
-      IPHONE: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
-      DESK: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
-      ANDROID: "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36"
     steps:
-      - name: fetch
+      - name: search
         run: |
-          mkdir -p out && cd out
-          J=cookies.txt
-          curl -sS -c $J -b $J -A "$DESK" -o /dev/null "https://www.douyin.com/" || true
-          curl -sS -c $J -b $J -A "$DESK" -H 'Content-Type: application/json' \
-            -d '{"region":"cn","aid":1768,"needFid":false,"service":"www.ixigua.com","migrate_info":{"ticket":"","source":"node"},"cbUrlProtocol":"https","union":true}' \
-            -o ttwid.json "https://ttwid.bytedance.com/ttwid/union/register/" || true
-          cat ttwid.json | head -c 400; echo
-          curl -sS -c $J -b $J -A "$DESK" -o /dev/null "https://www.douyin.com/video/$ID" || true
-          echo "--- cookies"; cut -f6 $J | tr '\n' ' '; echo
-          for u in "https://m.douyin.com/share/video/$ID/" "https://www.iesdouyin.com/share/video/$ID/" ; do
-            for ua in "$IPHONE" "$ANDROID"; do
-              f="p_$(echo -n "$u$ua" | md5sum | cut -c1-6).html"
-              curl -sSL -c $J -b $J -A "$ua" -o "$f" "$u" || true
-              echo "$f $(stat -c%s "$f") $u"
-            done
-          done
-          curl -sSL -b $J -A "$IPHONE" -o iteminfo.json "https://www.iesdouyin.com/web/api/v2/aweme/iteminfo/?item_ids=$ID&a_bogus=" || true
-          head -c 300 iteminfo.json; echo
-          python3 - <<'PY'
-          import re,glob,json
-          urls=[]
-          for f in glob.glob("*.html")+glob.glob("*.json"):
-              t=open(f,encoding="utf-8",errors="ignore").read()
-              t2=t.replace('\\u002F','/').replace('\\/','/')
-              for m in re.finditer(r'https?://[^"\s\']*?(?:playwm|/play/|video/tos|douyinvod)[^"\s\']*', t2):
-                  urls.append(m.group(0))
-              m=re.search(r'_ROUTER_DATA\s*=\s*(\{.*?\})\s*</script>',t,re.S)
-              if m: print(f, "ROUTER", m.group(1)[:600])
-              for k in ("play_addr","uri","\"desc\""):
-                  i=t2.find(k)
-                  if i>=0: print(f,k,t2[i:i+200].replace("\n"," "))
-          seen=list(dict.fromkeys(urls))
-          open("play_urls.txt","w").write("\n".join(seen)+"\n")
-          print("urls",len(seen)); print("\n".join(seen[:6]))
-          PY
-          while read -r u; do
-            [ -n "$u" ] || continue
-            for v in "${u/playwm/play}" "$u"; do
-              curl -sSL -b $J -A "$IPHONE" -e "https://www.douyin.com/" -o ref.mp4 "$v" || true
-              if [ -s ref.mp4 ] && [ $(stat -c%s ref.mp4) -gt 200000 ]; then echo "got $v"; break 2; fi
-              rm -f ref.mp4
-            done
-          done < play_urls.txt
-          if [ ! -s ref.mp4 ]; then
-            pip install -q -U "yt-dlp[default]"
-            yt-dlp --cookies $J -o ref.mp4 "https://www.douyin.com/video/$ID" 2>&1 | tail -5 || true
-          fi
-          rm -f $J
-          ls -la
+          pip install -q -U "yt-dlp[default]"
+          mkdir -p out
+          while IFS= read -r q; do
+            [ -n "$q" ] || continue
+            echo "### $q" | tee -a out/trophy_search.txt
+            yt-dlp --flat-playlist --print "%(id)s | %(channel)s | %(duration)s | %(upload_date)s | %(title)s" "ytsearch10:$q" 2>/dev/null | tee -a out/trophy_search.txt || true
+          done <<'Q'
+          Pegula Dubai 2026 trophy ceremony
+          Pegula Dubai 2026 champion
+          Kostyuk Madrid 2026 trophy ceremony
+          Kostyuk Madrid Open 2026 champion trophy
+          Sabalenka Miami Open 2026 trophy ceremony
+          Zheng Qinwen China Open 2026 trophy ceremony
+          郑钦文 中网 2026 颁奖
+          Zheng Qinwen Beijing 2026 champion trophy
+          Chwalinska Wuhan 2026 trophy ceremony
+          Chwalinska Wuhan Open 2026 champion speech
+          WTA 2026 Dubai final highlights Pegula Svitolina
+          Q
       - name: upload
-        if: always()
         run: |
-          cd out
-          find . -type f -size 0 -delete
-          TAG="ref-douyin-$ID"
-          gh release create "$TAG" --prerelease --title "参考片（抖音 $ID，仅内部分析）" --notes "tmp" 2>/dev/null || true
-          for f in ./*; do gh release upload "$TAG" --clobber "$f" || true; done
+          TAG="ref-douyin-7698221105147890959"
+          gh release upload "$TAG" --clobber out/trophy_search.txt
