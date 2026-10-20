@@ -61,8 +61,8 @@ def test_多音字目标跳过换字表已换掉的字位():
 
 
 def test_非默认读音是A档_点名字落在默认读音是B档():
-    tiers = {t["char"]: t["tier"] for t in auto.poly_targets("今天他重新发球。")}
-    assert tiers["重"] == "A" and tiers["发"] == "B"
+    tiers = {t["char"]: t["tier"] for t in auto.poly_targets("他的头发很长，银行门口。")}
+    assert tiers["发"] == "A" and tiers["行"] == "A" and tiers["长"] == "B"
 
 
 def test_B档只有高置信错读才红_A档量不出也红():
