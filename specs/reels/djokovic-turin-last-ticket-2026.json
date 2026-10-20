@@ -77,7 +77,8 @@
   "jsf": "https://github.com/robertyang87/tennislive/releases/download/source-shanghai-jodar-medvedev-2026-sf/6407012514112-1c5459904fb36909.mp4",
   "jf": "https://github.com/robertyang87/tennislive/releases/download/source-402fnpRkS3c/402fnpRkS3c.mp4",
   "uso": "https://www.youtube.com/watch?v=C1rEik4aV2M",
-  "bsl09": "https://www.tennistv.com/videos/3741523/basel-2009-final-djokovic-federer-highlights"
+  "bsl09": "https://www.tennistv.com/videos/3741523/basel-2009-final-djokovic-federer-highlights",
+  "aof": "https://www.youtube.com/watch?v=QeH0tLAWKbw"
  },
  "mixed_fps": false,
  "_no_probe_why": {
@@ -89,6 +90,12 @@
   },
   "shr2": {
    "why": "本期新源（Tennis TV 上海 R2 集锦 4:00），probe 首跑生成 probe.json 后此条作废；暂按常见规格填。",
+   "width": 1280,
+   "height": 720,
+   "fps": 25
+  },
+  "aof": {
+   "why": "本期新源（澳网官方决赛集锦），probe 生成 probe.json 后此条作废；暂按常见规格填。",
    "width": 1280,
    "height": 720,
    "fps": 25
@@ -216,17 +223,30 @@
    "_why": "霍达尔上海亚军 +650 分升至 3,159。窗口取 6407012514112 无英文间隙（109–128.9）内 111–126s。"
   },
   {
-   "source": "uso",
-   "start": 124.5,
-   "end": 141.3,
+   "source": "aof",
+   "start": 60.0,
+   "end": 74.0,
    "cx": 0.5,
    "track": false,
-   "narration": "其实这一整年，都不像他。一月澳网决赛，他输给阿尔卡拉斯；美网首轮出局——他二十年没在大满贯第一轮输过球。世界排名，掉到了第十二。",
+   "narration": "其实这一整年，都不像他。一月澳网决赛，他先赢一盘，还是输给了阿尔卡拉斯——墨尔本的决赛，他十一次进来，第一次空手而归。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
    },
-   "_why": "第四章·这一年：澳网决赛负阿尔卡拉斯、美网首轮负纳沃内（2006 澳网以来大满贯最早出局）、排名第 12，均已核。窗口沿 djokovic-navone-us-open-2026-r1 已验旁白窗口 124.5–141.3。"
+   "_why": "第四章·这一年（上）：澳网决赛 2-6 6-2 6-3 7-5 负阿尔卡拉斯；德约此前澳网决赛 10 战全胜、这是第 11 次进决赛首次失手，均已核（ausopen.com）。窗口 provisional，probe 转写后校准。用户 2026-10-20 要求：今年关键情节都要有今年的视频支撑，故拆段补澳网官方集锦。"
+  },
+  {
+   "source": "uso",
+   "start": 124.5,
+   "end": 134.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "美网首轮出局——他二十年没在大满贯第一轮输过球。世界排名，掉到了第十二。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "_why": "第四章·这一年（下）：美网首轮负纳沃内（2006 澳网以来大满贯最早出局）、10-19 排名第 12，已核。窗口沿 djokovic-navone-us-open-2026-r1 已验旁白窗口 124.5–141.3 内取前 10s。"
   },
   {
    "title_card": "「还要不要\n打下去」",
@@ -275,5 +295,5 @@
    "_why": "结尾金句（原创对照，不可替换）＋未决一问（管线品味闸）：7 次总决赛冠军为历史最多；若入围将是第 17 次参赛。"
   }
  ],
- "_production_status": "probe 前：feat 两处原声窗口与 bjf/shr2/bsl09 旁白窗口为 provisional，probe 生成转写后校准再走 narration。"
+ "_production_status": "probe 前：feat 两处原声窗口与 bjf/shr2/bsl09/aof 旁白窗口为 provisional，probe 生成转写后校准再走 narration。2026-10-20 按所有者要求补澳网决赛源与段落（充实度：关键情节都要有今年视频支撑）。"
 }
