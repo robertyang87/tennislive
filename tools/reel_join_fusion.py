@@ -57,6 +57,9 @@ class FusionPlan:
                 + ';[fusion_joined]' + bridge + ''.join(labels) + ';' + graph)
 
 
+from reel_cinematic import _XFADE_RE  # noqa: E402  转场名单只写一处
+
+
 def plan(native_graph: str, parts: int) -> tuple[FusionPlan | None, str]:
     """Preselect legacy for unrecognized native graphs before any join encode."""
     if not isinstance(parts, int) or parts < 1:
@@ -70,7 +73,7 @@ def plan(native_graph: str, parts: int) -> tuple[FusionPlan | None, str]:
     for chain in chains:
         if 'xfade=' in chain:
             if not re.fullmatch(
-                    r'\[(?:0:v|vx\d+)\]\[\d+:v\]xfade=transition=fade:'
+                    r'\[(?:0:v|vx\d+)\]\[\d+:v\]xfade=transition=(?:' + _XFADE_RE + r'):'
                     r'duration=[0-9.]+:offset=[0-9.]+\[(?:vout|vx\d+)\]', chain):
                 return None, 'unrecognized video dissolve operation'
             videos.append(chain)
