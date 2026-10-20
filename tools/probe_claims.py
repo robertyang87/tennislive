@@ -91,16 +91,20 @@ _TTV = re.compile(r"tennistv\.com/videos/(\d+)")
 #: download-video.yml 存档的那份：`releases/download/source-<id>/<id>.mp4`——同一条片子，同一个键
 #: （probe 有存档就改用它，`tools/release_source.py`；不认的话去重和认领会把它当成另一条源片）
 _REL = re.compile(r"/releases/download/source-([A-Za-z0-9_-]{11})/")
+#: download-video 给非 YouTube 源建的存档：tag 是人读的 slug、文件名是 `<数字 id>-<十六进制 hash>.mp4`
+#: ——键取文件名里的数字 id（转写目录 `data/source_asr/<数字 id>/` 就是按它建的）。
+_REL_HASHED = re.compile(r"/releases/download/source-[^/]+/(\d{6,})-[0-9a-f]{8,}\.mp4")
 _PROBE = re.compile(r"^output/(\d{4}-\d{2}-\d{2})/reel/([^/]+)/probe\.json$")
 
 
 def video_key(url: str | None) -> str | None:
-    """源片的稳定键：YouTube 取 11 位 id，Tennis TV 取 `tennistv-<数字>`。
+    """源片的稳定键：YouTube 取 11 位 id，Tennis TV 取 `tennistv-<数字>`，
+    Release 存档取 tag（11 位 id 形式）或文件名里的数字 id（slug tag 形式）。
 
     认不出的（brightcove、x.com、直链）返回 None——**不认领、不去重**，
     别拿整条 URL 当键：同一条片子带不带 `&t=`、`?si=` 是两个串。
     """
-    m = _YT.search(url or "") or _REL.search(url or "")
+    m = _YT.search(url or "") or _REL.search(url or "") or _REL_HASHED.search(url or "")
     if m:
         return m.group(1)
     m = _TTV.search(url or "")
