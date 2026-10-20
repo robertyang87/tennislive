@@ -70,7 +70,6 @@
   }
  },
  "sources": {
-  "feat": "https://www.tennistv.com/videos/4589285/novak-djokovics-incredible-2026-beijing-title-run",
   "bjf": "https://www.youtube.com/watch?v=8Dc6BvkUEZM",
   "bjsf": "https://github.com/robertyang87/tennislive/releases/download/source-LgRD3TLoxr0/LgRD3TLoxr0.mp4",
   "shr2": "https://www.youtube.com/watch?v=0CHXX3rZUoY",
@@ -78,16 +77,11 @@
   "jf": "https://github.com/robertyang87/tennislive/releases/download/source-402fnpRkS3c/402fnpRkS3c.mp4",
   "uso": "https://www.youtube.com/watch?v=C1rEik4aV2M",
   "bsl09": "https://www.tennistv.com/videos/3741523/basel-2009-final-djokovic-federer-highlights",
-  "aof": "https://www.youtube.com/watch?v=QeH0tLAWKbw"
+  "aof": "https://www.youtube.com/watch?v=QeH0tLAWKbw",
+  "speech": "https://www.youtube.com/watch?v=HVOmbuNoC1E"
  },
  "mixed_fps": false,
  "_no_probe_why": {
-  "feat": {
-   "why": "本期新源（Tennis TV 北京夺冠路专题 25:59），probe 首跑生成 probe.json 后此条作废；暂按 Tennis TV 网页播放器常见规格填，渲染前以 probe 实测为准。",
-   "width": 1280,
-   "height": 720,
-   "fps": 25
-  },
   "shr2": {
    "why": "本期新源（Tennis TV 上海 R2 集锦 4:00），probe 首跑生成 probe.json 后此条作废；暂按常见规格填。",
    "width": 1280,
@@ -103,21 +97,15 @@
  },
  "segments": [
   {
-   "source": "feat",
-   "start": 1440.0,
-   "end": 1452.0,
-   "cx": 0.5,
-   "track": false,
-   "narration": "",
-   "quote": [
-    {
-     "at": 0.5,
-     "end": 11.5,
-     "text": "Many times I have questioned whether I want to keep on playing.\n今年很多次，我问过自己：还要不要打下去。"
-    }
-   ],
-   "_quote_kind": "interview",
-   "_why": "冷开场原声（球员原话，金句位·开头）：德约北京夺冠后 ATP 场上采访。窗口为 provisional——probe 生成 feat 转写后按原句时间戳校准（目标原句：'Many times I have questioned whether I want to keep on playing'）。"
+   "title_card": "他的答案\n再抢一次",
+   "kicker": "10月16日 · 巴塞尔外卡",
+   "seconds": 11,
+   "narration": "所以那句『还要不要打下去』，不是退役预告。十天之后，他给了自己答案。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "_why": "冷开场金句位（引言卡）：原句 'Many times I have questioned whether I want to keep on playing' 经 AAP/Tennis TourTalk/tenniswatcher 多家逐字核实，为德约北京夺冠后原话；其音频载体（Tennis TV 专题片）在管线端被 entitlement 401 挡住，故以引言卡呈现并标出处，不冒充原声。"
   },
   {
    "title_card": "都灵，只剩\n最后一张门票",
@@ -170,31 +158,53 @@
    "_why": "北京 SF 取消资格（击球打到球迷）与决赛退赛（7-6(3) 0-1，内收肌）均已核。窗口取 LgRD3TLoxr0 无英文间隙（46.3–72.1）内 48–60s。"
   },
   {
-   "source": "feat",
-   "start": 1380.0,
-   "end": 1406.0,
+   "source": "speech",
+   "start": 55.3,
+   "end": 66.2,
    "cx": 0.5,
    "track": false,
    "narration": "",
    "quote": [
     {
-     "at": 0.5,
-     "end": 9.0,
-     "text": "I want to celebrate, because I've played one of the best weeks in the last couple of years.\n我想庆祝，这几周是我这两年打得最好的。"
+     "at": 0.36,
+     "end": 5.42,
+     "text": "I know that when I'm feeling well and striking the ball well, I can still compete at the highest level.\n我知道，只要感觉对、击球对，我还能在最高水平竞争。"
     },
     {
-     "at": 9.5,
-     "end": 19.0,
-     "text": "At the same time, he retired at the beginning of the second, so it doesn't feel right to jump around and be joyful.\n但他第二盘刚开始就退赛了，跳起来欢呼，不太对劲。"
-    },
-    {
-     "at": 19.5,
-     "end": 25.5,
-     "text": "But deep inside, I'm very proud of this achievement.\n但内心深处，我很骄傲。"
+     "at": 6.16,
+     "end": 10.56,
+     "text": "This week has been an evidence to that. To be honest, I'm very proud.\n这一周证明了这一点。说实话，我很骄傲。"
     }
    ],
    "_quote_kind": "interview",
-   "_why": "原声位 1（球员原话）：北京夺冠采访。窗口 provisional——probe 后按转写校准（目标原句见简报事实底盘）。"
+   "_why": "原声位 1（球员原话）：北京颁奖仪式发言（Tennis Channel 官方视频 HVOmbuNoC1E），窗口与字幕按仓库双模型转写实测（55.66–65.86）。"
+  },
+  {
+   "source": "speech",
+   "start": 77.9,
+   "end": 89.7,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.44,
+     "end": 6.92,
+     "text": "This trophy means much more than one trophy, one tournament for all of us.\n这座奖杯对我们所有人来说，远不止一座奖杯。"
+    },
+    {
+     "at": 6.92,
+     "end": 8.68,
+     "text": "So very, very happy for that.\n所以真的特别开心。"
+    },
+    {
+     "at": 10.08,
+     "end": 11.44,
+     "text": "That's very emotional.\n很动情。"
+    }
+   ],
+   "_quote_kind": "interview",
+   "_why": "原声位 2（球员原话）：同上发言后段（转写实测 78.34–89.34），情绪落点。"
   },
   {
    "source": "shr2",
@@ -249,10 +259,10 @@
    "_why": "第四章·这一年（下）：美网首轮负纳沃内（2006 澳网以来大满贯最早出局）、10-19 排名第 12，已核。窗口沿 djokovic-navone-us-open-2026-r1 已验旁白窗口 124.5–141.3 内取前 10s。"
   },
   {
-   "title_card": "「还要不要\n打下去」",
-   "kicker": "德约 · 北京夺冠后",
+   "title_card": "他的答案\n再抢一次",
+   "kicker": "10月16日 · 巴塞尔外卡",
    "seconds": 10,
-   "narration": "所以北京那句话，不是客套。今年很多次，他问过自己：还要不要打下去。",
+   "narration": "所以那句『还要不要打下去』，不是退役预告。十天之后，他给了自己答案。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
@@ -295,5 +305,5 @@
    "_why": "结尾金句（原创对照，不可替换）＋未决一问（管线品味闸）：7 次总决赛冠军为历史最多；若入围将是第 17 次参赛。"
   }
  ],
- "_production_status": "probe 前：feat 两处原声窗口与 bjf/shr2/bsl09/aof 旁白窗口为 provisional，probe 生成转写后校准再走 narration。2026-10-20 按所有者要求补澳网决赛源与段落（充实度：关键情节都要有今年视频支撑）。"
+ "_production_status": "2026-10-20 改版：feat（Tennis TV 专题片）因管线端 entitlement 401 弃用；原声改走 Tennis Channel 颁奖发言 HVOmbuNoC1E（已 probe、转写在仓库）；冷开场金句改引言卡。待补 probe 的源：bjf/shr2/uso/aof（YouTube）与 bsl09（Tennis TV，待测）。"
 }
