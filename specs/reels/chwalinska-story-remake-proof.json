@@ -161,6 +161,11 @@
      "text": "I don't know what's going on.\n我都不知道发生了什么。"
     },
     {
+     "at": 5.96,
+     "end": 6.9,
+     "text": "I'm just…\n我只是……"
+    },
+    {
      "at": 9.14,
      "end": 10.75,
      "text": "Yeah, I don't know what to say.\n我不知道该说什么，"
@@ -197,7 +202,8 @@
     "measured_at": "2026-10-18T23:26:26+00:00",
     "median": 0.4891,
     "spread": 0.1088
-   }
+   },
+   "_asr_fix_why": "本地 asr_plan check（双档转写）报 39.16–40.10s 有一句未被字幕盖住的 I'm just（两档一致）——她答话中的停顿碎句。原版 seg 17 的字幕漏了这一句；重制版补一条碎句字幕，忠实呈现，不改其他字幕。"
   },
   {
    "title_card": "你只需要比所有人\n多打回去一拍",
