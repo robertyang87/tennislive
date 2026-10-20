@@ -34,4 +34,4 @@ jobs:
           time python tools/voice_auto_review.py --outdir "$OUT" --bundle /tmp/b.zip --report-only --workers 4 | tee /tmp/sum.txt
           mkdir -p research/voice-auto-calib && cp "$OUT/voice_auto_review.json" research/voice-auto-calib/wta1000.json && cp /tmp/sum.txt research/voice-auto-calib/wta1000.txt
           git config user.name Claude; git config user.email noreply@anthropic.com
-          git add research/voice-auto-calib && git commit -qm "calib: voice auto review wta1000" && git push origin HEAD:${GITHUB_REF_NAME}
+          git add research/voice-auto-calib && git commit -qm "calib: voice auto review wta1000" && git pull -q --rebase origin ${GITHUB_REF_NAME} && git push origin HEAD:${GITHUB_REF_NAME}

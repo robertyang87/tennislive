@@ -58,3 +58,20 @@ def test_多音字目标跳过换字表已换掉的字位():
     chars = {t["char"] for t in targets}
     assert "重" in chars and "发" in chars
     assert all(t["wrong"] for t in targets)
+
+
+def test_非默认读音是A档_点名字落在默认读音是B档():
+    tiers = {t["char"]: t["tier"] for t in auto.poly_targets("今天他重新发球。")}
+    assert tiers["重"] == "A" and tiers["发"] == "B"
+
+
+def test_B档只有高置信错读才红_A档量不出也红():
+    a = {"tier": "A", "verdict": "uncertain", "runs": []}
+    b_unc = {"tier": "B", "verdict": "uncertain", "runs": []}
+    b_bad = {"tier": "B", "verdict": "misread", "runs": [{"verdict": "misread", "confidence": "high"}]}
+    assert not auto.poly_ok(a) and auto.poly_ok(b_unc) and not auto.poly_ok(b_bad)
+
+
+def test_转写里的阿拉伯数字按读数或逐位都认():
+    assert auto.compare_transcript("二零二六赛季，WTA一千赛全部收官。", "2026赛季,WTA1000赛全部收官。")["ok"]
+    assert auto.compare_transcript("决赛七十五分钟横扫莱巴金娜。", "决赛75分钟,横扫来8斤。")["ok"]

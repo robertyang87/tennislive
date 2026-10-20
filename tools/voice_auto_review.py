@@ -104,26 +104,66 @@ def load_bundle(path: Path, workdir: Path) -> list[dict]:
 
 
 # ---------------------------------------------------------------- 1 完整
-def _syllables(text: str) -> list[str]:
-    from pypinyin import lazy_pinyin
-    from tennislive.video.explainer import arabic_numerals  # noqa: F401  (保持依赖面一致)
-    out: list[str] = []
-    for chunk in re.findall(r"[㐀-鿿]+|[A-Za-z]+|\d+", text):
-        if _HAN.match(chunk):
-            out += lazy_pinyin(chunk)
-        elif chunk.isdigit():
-            out += lazy_pinyin(_digits_zh(chunk))
-        else:
-            out.append(chunk.lower())
+_DIG = "零一二三四五六七八九"
+
+
+def _num_zh(n: int) -> str:
+    """整数按读数念（1000→一千、75→七十五、16→十六）。"""
+    if n == 0:
+        return "零"
+    out, units, s = "", ["", "十", "百", "千"], str(n)
+    if n >= 10000:
+        hi, lo = divmod(n, 10000)
+        rest = _num_zh(lo) if lo else ""
+        return _num_zh(hi) + "万" + ("零" + rest if lo and lo < 1000 else rest)
+    zero = False
+    for k, ch in enumerate(s):
+        d, u = int(ch), units[len(s) - 1 - k]
+        if d == 0:
+            zero = True
+            continue
+        if zero:
+            out += "零"
+            zero = False
+        out += ("" if (d == 1 and u == "十" and k == 0) else _DIG[d]) + u
     return out
 
 
-def _digits_zh(s: str) -> str:
-    return "".join("零一二三四五六七八九"[int(c)] for c in s)
+def _num_readings(s: str) -> list[str]:
+    """转写出来的阿拉伯数字可能是读数（七十五）也可能是逐位（二零二六），两种都给。"""
+    forms = ["".join(_DIG[int(c)] for c in s)]
+    if len(s) <= 8 and not (len(s) > 1 and s[0] == "0"):
+        forms.insert(0, _num_zh(int(s)))
+    return list(dict.fromkeys(forms))
+
+
+def _py(text: str) -> list[str]:
+    from pypinyin import lazy_pinyin
+    return lazy_pinyin(text) if text else []
+
+
+def _syllables(text: str, ref: list[str] | None = None) -> list[str]:
+    """拼音音节（不带声调）。外文词不计：转写对英文缩写和 Ace 一类太不稳。
+
+    给了 `ref` 时，转写里的数字挑和参考对得最好的那种念法。"""
+    text = re.sub(r"(\d+)%", lambda m: "百分之" + m.group(1), text)
+    out: list[str] = []
+    for chunk in re.findall(r"[㐀-鿿]+|\d+", text):
+        if not chunk.isdigit():
+            out += _py(chunk)
+            continue
+        forms = [_py(f) for f in _num_readings(chunk)]
+        if ref is None:
+            out += forms[0]
+        else:
+            out += max(forms, key=lambda f: difflib.SequenceMatcher(
+                a=ref, b=out + f, autojunk=False).ratio())
+    return out
 
 
 def compare_transcript(text: str, hyp: str) -> dict:
-    ref, got = _syllables(text), _syllables(hyp)
+    ref = _syllables(text)
+    got = _syllables(hyp, ref)
     sm = difflib.SequenceMatcher(a=ref, b=got, autojunk=False)
     dele = ins = sub = worst = 0
     for op, i1, i2, j1, j2 in sm.get_opcodes():
@@ -147,39 +187,62 @@ def compare_transcript(text: str, hyp: str) -> dict:
             "transcript": hyp}
 
 
-def run_asr(entries: list[dict], model_name: str) -> dict[str, str]:
+def run_asr(entries: list[dict], model_name: str, names: list[str]) -> dict[str, str]:
+    """转写。提示里只给人名（帮转写认出外文译名），**不给原句**——给原句等于让它照抄。"""
     from faster_whisper import WhisperModel
     model = WhisperModel(model_name, device="cpu", compute_type="int8")
+    prompt = "以下是普通话的网球解说。" + ("人名：" + "、".join(names[:20]) + "。" if names else "")
     out = {}
     for e in entries:
         segs, _ = model.transcribe(str(e["mp3"]), language="zh", beam_size=5,
                                    vad_filter=False, condition_on_previous_text=False,
-                                   initial_prompt="以下是普通话的网球解说。")
+                                   initial_prompt=prompt)
         out[e["id"]] = "".join(s.text for s in segs).strip()
     return out
 
 
 # ---------------------------------------------------------------- 2 多音字
+#: 账号所有者点过名的多音字（docs/global-voice-quality.md 那张表）——
+#: 就算这儿的读音是默认读音，也拿实际音频量一次（第二档，见 `poly_targets`）。
+WATCH = set("重发还长得行种落")
+
+
 def poly_targets(text: str) -> list[dict]:
-    """送进合成器那份文字里每一处要量的多音字。"""
+    """要量的多音字，分两档（2026-10-20 拿 wta1000 的 56 条实际配音校准）：
+
+    - **A 档**＝`check_polyphones.analyze` 报的风险处（这儿的读音不是该字的默认读音，
+      或者量过读对的词换了句子）。必须量出 correct，量不出也红。
+    - **B 档**＝`WATCH` 里的字落在默认读音上。只在量出**高置信的错读**时红。
+
+    其余默认读音的多音字**不量**：校准那一轮把 137 处全量了一遍，默认读音上大半是
+    uncertain／找不到参考字（的 de、了 le、给 gěi……），还有几处「错读」其实是
+    读音推断本身错了（「两冠」「夺冠」的冠是 guàn，推断成了 guān）——全量只会
+    红成一片，没人读（「判据宁可窄，不可宽」）。
+    """
     import check_polyphones as cp
     from tennislive.video import pronounce
+    risks, _ok, _notes = cp.analyze(cp.Spoken("voice", text, ""))
+    out = [{"index": r.index, "char": r.char, "word": r.word, "intended": r.intended,
+            "wrong": r.others[:2], "tier": "A"} for r in risks if r.others]
+    seen = {x["index"] for x in out}
     reading, word, _lex, _ = cp._readings(text)
     covered = pronounce.covered_positions(text)
-    out = []
     for i, ch in enumerate(text):
-        want = reading[i]
-        if want is None or i in covered:
+        if ch not in WATCH or i in seen or i in covered or reading[i] is None:
             continue
-        is_poly, _defaults, live = cp.poly_info(ch)
-        if not is_poly:
-            continue
-        wrong = [r for r in live if r != want and not r.endswith("5")]
-        if not wrong:
-            continue
-        out.append({"index": i, "char": ch, "word": word[i] or ch,
-                    "intended": want, "wrong": wrong[:2]})
+        _poly, _defaults, live = cp.poly_info(ch)
+        wrong = [r for r in live if r != reading[i] and not r.endswith("5")]
+        if wrong:
+            out.append({"index": i, "char": ch, "word": word[i] or ch,
+                        "intended": reading[i], "wrong": wrong[:2], "tier": "B"})
     return out
+
+
+def poly_ok(m: dict) -> bool:
+    if m["tier"] == "A":
+        return m["verdict"] == "correct"
+    return not (m["verdict"] == "misread" and any(
+        r.get("verdict") == "misread" and r.get("confidence") == "high" for r in m.get("runs", [])))
 
 
 def measure_target(e: dict, t: dict) -> dict:
@@ -283,7 +346,8 @@ def _names(spec: dict) -> list[str]:
 
 
 # ---------------------------------------------------------------- 汇总
-def review(outdir: Path, bundle: Path, *, model: str = "small", workers: int = 4,
+def review(outdir: Path, bundle: Path, *, model: str = "small", second_model: str = "medium",
+           workers: int = 4,
            report_only: bool = False, asr: dict | None = None) -> dict:
     import voice_quality_gate as g
     outdir = Path(outdir).resolve()
@@ -301,7 +365,18 @@ def review(outdir: Path, bundle: Path, *, model: str = "small", workers: int = 4
     with tempfile.TemporaryDirectory() as tmp:
         entries = load_bundle(bundle, Path(tmp))
         by_audio = {e["audio_sha256"]: e for e in entries}
-        transcripts = asr if asr is not None else run_asr(list(by_audio.values()), model)
+        uniq = list(by_audio.values())
+        transcripts = asr if asr is not None else run_asr(uniq, model, names)
+        if asr is None and second_model:
+            # 第一遍没对上的再用大一号的模型听一遍，哪一遍对上都算（转写本身会错，
+            # 校准那一轮 small 把「八分之一」转成「1%」、「莱巴金娜」转成「来8斤」）
+            again = [e for e in uniq if not compare_transcript(
+                e["request"]["text"], transcripts.get(e["id"], ""))["ok"]]
+            if again:
+                second = run_asr(again, second_model, names)
+                for e in again:
+                    if compare_transcript(e["request"]["text"], second[e["id"]])["ok"]:
+                        transcripts[e["id"]] = second[e["id"]]
         targets = [(e, t) for e in by_audio.values() for t in poly_targets(e["request"]["text"])]
         with ThreadPoolExecutor(max_workers=workers) as pool:
             measured = list(pool.map(lambda et: (et[0]["id"], measure_target(*et)), targets))
@@ -310,7 +385,7 @@ def review(outdir: Path, bundle: Path, *, model: str = "small", workers: int = 4
             comp = compare_transcript(e["request"]["text"], transcripts.get(e["id"], ""))
             ps = pause_and_speed(e, names)
             polys = [m for k, m in measured if k == e["id"]]
-            bad_poly = [m for m in polys if m["verdict"] != "correct"]
+            bad_poly = [m for m in polys if not poly_ok(m)]
             checks = {"completeness": comp["ok"], "polyphones": not bad_poly,
                       "pauses": ps["pause_ok"], "speed": ps["speed_ok"]}
             per[e["audio_sha256"]] = {"id": e["id"], "text": e["request"]["text"],
@@ -376,8 +451,8 @@ def summary_lines(ev: dict) -> list[str]:
         if not a["checks"]["completeness"]:
             lines.append(f"    完整：漏 {c['deleted']} 多 {c['inserted']} 替 {c['substituted']}，转写「{c['transcript']}」")
         for p in a["polyphones"]:
-            if p["verdict"] != "correct":
-                lines.append(f"    多音字「{p['word']}」的「{p['char']}」应读 {p['intended']}：{p['verdict']}"
+            if not poly_ok(p):
+                lines.append(f"    多音字（{p['tier']} 档）「{p['word']}」的「{p['char']}」应读 {p['intended']}：{p['verdict']}"
                              + (f"（{p.get('why')}）" if p.get("why") else ""))
         ps = a["pauses"]
         for x in ps["inner_pauses"]:
@@ -396,10 +471,12 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--outdir", type=Path, required=True)
     ap.add_argument("--bundle", type=Path, required=True)
     ap.add_argument("--model", default="small")
+    ap.add_argument("--second-model", default="medium", help="第一遍没对上时复听用；空串＝不复听")
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--report-only", action="store_true")
     args = ap.parse_args(argv)
-    ev = review(args.outdir, args.bundle, model=args.model, workers=args.workers,
+    ev = review(args.outdir, args.bundle, model=args.model, second_model=args.second_model,
+                workers=args.workers,
                 report_only=args.report_only)
     print("\n".join(summary_lines(ev)))
     return 0 if ev["pass"] else 1
