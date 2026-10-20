@@ -161,7 +161,7 @@
    "source": "speech",
    "start": 45.25,
    "end": 66.2,
-   "cx": 0.5,
+   "cx": 0.453,
    "track": false,
    "narration": "",
    "quote": [
@@ -187,7 +187,27 @@
     }
    ],
    "_quote_kind": "interview",
-   "_why": "原声位 1（球员原话）：北京颁奖仪式发言（Tennis Channel 官方视频 HVOmbuNoC1E），窗口与字幕按仓库双模型转写实测（55.66–65.86）。"
+   "_why": "原声位 1（球员原话）：北京颁奖仪式发言（Tennis Channel 官方视频 HVOmbuNoC1E），窗口与字幕按仓库双模型转写实测（55.66–65.86）。",
+   "frame": "person",
+   "cx_face": {
+    "samples": [
+     0.4875,
+     0.419,
+     0.467,
+     0.481,
+     0.47
+    ],
+    "frames": 5,
+    "detected": 5,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "median": 0.47,
+    "spread": 0.0685,
+    "measured_with": "逐帧目检脸部 bbox（visual grounding，5 帧 46/54/58/61/64s；insightface 在本机不可用，口径与 measure_person_center.py 一致：极值中点＋夹边）",
+    "measured_at": "2026-10-20T16:19:19+00:00"
+   }
   },
   {
    "source": "speech",
@@ -214,7 +234,9 @@
     }
    ],
    "_quote_kind": "interview",
-   "_why": "原声位 2（球员原话）：同上发言后段（转写实测 78.34–89.34），情绪落点。"
+   "_why": "原声位 2（球员原话）：同上发言后段（转写实测 78.34–89.34），情绪落点。",
+   "frame": "court",
+   "_frame_why": "窗口 78.34–89.34 内含颁奖嘉宾席切镜（团队席全景），与德约双人镜交叉出现，人物中心追踪会乱跳；该段用画面中心（账号所有者 2026-10-18：采访按人物中心裁，画面不稳时退回画面中心）。"
   },
   {
    "source": "shr2",
