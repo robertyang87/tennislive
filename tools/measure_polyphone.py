@@ -369,9 +369,15 @@ def missing_deps() -> list[str]:
 
 def measure(word: str, sentence: str, ok: list[str], bad: list[str], voice: str,
             rate: str, char: str | None = None, margin: float = 0.2,
-            orig_override: str | None = None, at: int | None = None) -> dict:
+            orig_override: str | None = None, at: int | None = None,
+            pitch: str = "+0Hz",
+            orig_audio: tuple[Path, list[dict]] | None = None) -> dict:
     """`at`：多音字在 `sentence` 里的字位。同一个词在句子里出现两次时必须给，
-    否则按第一次出现的位置量（原来就是这样）。"""
+    否则按第一次出现的位置量（原来就是这样）。
+
+    `orig_audio`：(mp3, WordBoundary) —— 拿**要发布的那份实际配音字节**当 ORIG，
+    不重新合成（`tools/voice_auto_review.py` 用它把结论绑在实际音频上）。
+    `pitch` 要和那份实际请求一致，参考句才和它是同一把嗓子。"""
     if word not in sentence:
         raise ValueError(f"word {word!r} not in sentence")
     if char is None:
@@ -414,7 +420,10 @@ def measure(word: str, sentence: str, ok: list[str], bad: list[str], voice: str,
         texts[f"B:{c}"] = sub(c)
     audio, marks, feats, own = {}, {}, {}, {}
     for k, t in texts.items():
-        audio[k], marks[k] = synth(t, voice, rate)
+        if k == "ORIG" and orig_audio is not None and orig_override is None:
+            audio[k], marks[k] = orig_audio
+        else:
+            audio[k], marks[k] = synth(t, voice, rate, pitch)
         feats[k] = features(load_wav(audio[k]))
         own[k] = char_window(t, marks[k], idx, n)          # (s, e, token)
     # one standardisation for every variant, from speech frames only

@@ -1,0 +1,37 @@
+name: tmp-voice-auto-calib
+on:
+  push:
+    branches: [claude/voice-auto-review]
+    paths: [".github/workflows/tmp-voice-auto-calib.yml", "tools/voice_auto_review.py", "tools/measure_polyphone.py"]
+permissions:
+  contents: write
+jobs:
+  calib:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: |
+          source tools/ci_apt_install.sh && ensure_ffmpeg
+          pip install -q -e ".[polyphone]" faster-whisper
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            ~/.cache/tennislive/polyphone
+          key: voice-auto-${{ runner.os }}-v1-${{ github.run_id }}
+          restore-keys: voice-auto-${{ runner.os }}-v1-
+      - run: |
+          OUT=output/2026-10-20/reel/wta1000-champions-2026
+          curl -sSL -o /tmp/b.zip "$(python -c "import json;print(json.load(open('$OUT/render.json'))['tts_bundle']['url'])")"
+          set +e
+          time python tools/voice_auto_review.py --outdir "$OUT" --bundle /tmp/b.zip --report-only --workers 4 | tee /tmp/sum.txt
+          mkdir -p research/voice-auto-calib && cp "$OUT/voice_auto_review.json" research/voice-auto-calib/wta1000.json && cp /tmp/sum.txt research/voice-auto-calib/wta1000.txt
+          git config user.name Claude; git config user.email noreply@anthropic.com
+          git add research/voice-auto-calib && git commit -qm "calib: voice auto review wta1000" && git push origin HEAD:${GITHUB_REF_NAME}
