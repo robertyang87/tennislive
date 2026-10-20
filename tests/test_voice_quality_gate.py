@@ -172,3 +172,72 @@ def test_nonfinite_pause_is_rejected(episode,pause):
     request['lead_pause']=pause
     with pytest.raises(gate.VoiceQualityError,match='lead_pause'):
         gate._request(request)
+
+
+# ---- 2026-10-20 自动五项检查（tools/voice_auto_review.py）作为第二种放行方法 ----
+def auto_approve(episode, *, passed=True, splits=None, fail_index=None):
+    import voice_auto_review as auto
+    root, out, _, _ = episode
+    review = json.loads((out/gate.REVIEW).read_text())
+    inventory = json.loads((out/gate.INVENTORY).read_text())
+    rows = [{'id': e['id'], 'audio_sha256': e['audio_sha256'],
+             'pass': not (fail_index is not None and i == fail_index)}
+            for i, e in enumerate(inventory['entries'])]
+    evidence = {'schema': auto.SCHEMA, 'method': gate.AUTOMATED, 'identity': review['identity'],
+                'reviewed_at': '2026-10-20T08:00:00+00:00', 'pass': passed,
+                'sentence_splits': splits or [], 'seams': 'fixture', 'entries': rows, 'audio': []}
+    write(out/gate.AUTO_EVIDENCE, evidence)
+    (out/gate.REVIEW).unlink()
+    auto.write_approval(out, evidence)
+    return root, out
+
+
+def test_自动五项全过可以放行_记录写的是自动不是真人(episode):
+    root, out = auto_approve(episode)
+    assert gate.require_publish(out, root=root)['film_sha256']
+    review = json.loads((out/gate.REVIEW).read_text())
+    assert review['film_review']['method'] == gate.AUTOMATED
+    assert '非真人' in review['film_review']['reviewer']
+
+
+def test_自动放行之后改了证据文件就不认(episode):
+    root, out = auto_approve(episode)
+    ev = json.loads((out/gate.AUTO_EVIDENCE).read_text())
+    ev['seams'] = 'edited'
+    write(out/gate.AUTO_EVIDENCE, ev)
+    with pytest.raises(gate.VoiceQualityError, match='does not match its evidence'):
+        gate.require_publish(out, root=root)
+
+
+@pytest.mark.parametrize('kw', [{'passed': False}, {'splits': [{'segment': 1}]}])
+def test_自动检查没过或整句被拆不放行(episode, kw):
+    root, out = auto_approve(episode, **kw)
+    with pytest.raises(gate.VoiceQualityError, match='did not pass'):
+        gate.require_publish(out, root=root)
+
+
+def test_自动检查有一条配音没过就不放行(episode):
+    root, out = auto_approve(episode, fail_index=0)
+    with pytest.raises(gate.VoiceQualityError, match='pending'):
+        gate.require_publish(out, root=root)
+
+
+def test_写了自动放行却没有证据文件不认(episode):
+    root, out = auto_approve(episode)
+    (out/gate.AUTO_EVIDENCE).unlink()
+    with pytest.raises(gate.VoiceQualityError, match='needs its passing evidence'):
+        gate.require_publish(out, root=root)
+
+
+def test_证据身份不是当前这一版不认(episode):
+    root, out = auto_approve(episode)
+    ev = json.loads((out/gate.AUTO_EVIDENCE).read_text())
+    ev['identity'] = {**ev['identity'], 'film_sha256': '0' * 64}
+    write(out/gate.AUTO_EVIDENCE, ev)
+    review = json.loads((out/gate.REVIEW).read_text())
+    sha = digest(out/gate.AUTO_EVIDENCE)
+    for s in [review['film_review']] + [r[k] for r in review['entries'] for k in ('phonetics', 'prosody')]:
+        s['evidence_sha256'] = sha
+    write(out/gate.REVIEW, review)
+    with pytest.raises(gate.VoiceQualityError, match='stale'):
+        gate.require_publish(out, root=root)
