@@ -76,7 +76,7 @@
   "jsf": "https://github.com/robertyang87/tennislive/releases/download/source-shanghai-jodar-medvedev-2026-sf/6407012514112-1c5459904fb36909.mp4",
   "jf": "https://github.com/robertyang87/tennislive/releases/download/source-402fnpRkS3c/402fnpRkS3c.mp4",
   "uso": "https://www.youtube.com/watch?v=C1rEik4aV2M",
-  "bsl09": "https://www.tennistv.com/videos/3741523/basel-2009-final-djokovic-federer-highlights",
+  "bsl09": "https://github.com/robertyang87/tennislive/releases/download/source-RcX0huQSiog/RcX0huQSiog.mp4",
   "aof": "https://www.youtube.com/watch?v=QeH0tLAWKbw",
   "speech": "https://www.youtube.com/watch?v=HVOmbuNoC1E"
  },
@@ -283,8 +283,8 @@
   },
   {
    "source": "bsl09",
-   "start": 10.0,
-   "end": 29.0,
+   "start": 4.0,
+   "end": 23.0,
    "cx": 0.5,
    "track": false,
    "narration": "上海输完，他说接下来只打巴黎。十月十六号，他改主意了：接下巴塞尔的外卡。那是他十五年没去过的球场——二〇〇九年，他在那儿的决赛里，赢了费德勒。",
@@ -292,7 +292,7 @@
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
    },
-   "_why": "第五章·决定：巴塞尔外卡 10-16 宣布（AP/Reuters）、2011 年后首次、2009 决赛胜费德勒，均已核。Tennis TV 管线端 entitlement 401（2026-10-20 两探皆败）；按所有者『先想办法拿源、不默认降格字卡』规则保留视频段，所有者正提供 m3u8；源到手后补 probe、重校窗口。窗口沿 21-seasons 已验旁白段 12–25s 前后扩展，待校准。"
+   "_why": "第五章·决定：巴塞尔外卡 10-16 宣布（AP/Reuters）、2011 年后首次、2009 决赛胜费德勒，均已核。Tennis TV 管线端 entitlement 401 已弃；源已换成 Tennis TV 官方 YouTube 同片（RcX0huQSiog，Release 存档 source-RcX0huQSiog），与原 tennistv 版同内容（±5s）。窗口按新片转写（medium.en）第一无语音间隙 3.3–25.8s 取 4.0–23.0s（旁白约 19s），两端各留白，无英文压线。"
   },
   {
    "title_card": "巴塞尔 500 分\n319 的坑填了",
@@ -317,5 +317,5 @@
    "_why": "结尾金句（原创对照，不可替换）＋未决一问（管线品味闸）：7 次总决赛冠军为历史最多；若入围将是第 17 次参赛。"
   }
  ],
- "_production_status": "2026-10-20 改版：feat（Tennis TV 专题片）因管线端 entitlement 401 弃用；原声改走 Tennis Channel 颁奖发言 HVOmbuNoC1E（已 probe、转写在仓库）；冷开场钩子卡保留、回环卡按所有者规矩改回北京捧杯画面旁白。bsl09（Tennis TV 巴塞尔 2009）管线端 401，保留视频段占位，所有者正提供 m3u8，源到手前不渲染。待补 probe 的 YouTube 源：bjf/shr2/uso/aof。"
+ "_production_status": "2026-10-20 23:47：seg12 源换成 Tennis TV 官方 YouTube 版 Release 存档（source-RcX0huQSiog），窗口按转写校准 4.0–23.0s；feat 原声恢复计划取消（转写无目标句），继续用 Tennis Channel speech 两段原声。"
 }
