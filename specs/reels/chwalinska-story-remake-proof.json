@@ -131,7 +131,7 @@
   {
    "source": "wsf",
    "start": 216.0,
-   "end": 228.3,
+   "end": 228.48,
    "cx": 0.5,
    "track": false,
    "narration": "武汉半决赛打斯瓦泰克，对手轰出三十七个制胜分，她全场只失误七次。她从不跟你拼谁打得重，她拼谁先失去耐心。",
@@ -139,8 +139,27 @@
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与原版 chwalinska-story-2026 同一档）。"
    },
-   "_why": "AP 官方数据：斯瓦泰克 37 制胜分/33 失误，赫瓦林斯卡 19 制胜分/7 失误。窗口为原版 seg 33 同窗口（武汉半决赛第二盘画面，与旁白同场）。",
-   "point_end_ok": "原版 seg 33 已验窗口。"
+   "_why": "AP 官方数据：斯瓦泰克 37 制胜分/33 失误，赫瓦林斯卡 19 制胜分/7 失误。窗口为原版 seg 33 同窗口（武汉半决赛第二盘画面，与旁白同场）。（窗口尾段按选段闸实测从 228.3 延到 231.6。）（按审听闸：旁白段收到英文开口前 228.48，翻牌与解说由紧接的原声段收尾。）",
+   "point_end_ok": "与下一段同一条源连续相接（228.48–231.6 解说原声段），整分在相接段里记分条 230.32 翻牌后收尾。"
+  },
+  {
+   "source": "wsf",
+   "start": 228.48,
+   "end": 231.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.2,
+     "end": 2.68,
+     "text": "To lead 5-1 in the second set.\n第二盘，她 5 比 1 领先。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "_why": "与上一段连续：这一分打完，记分条 230.32 翻牌；解说这一句由双档转写听到（228.68–231.16），配双语字幕。第二盘她 6-1 取胜（WTA 4593577），5-1 是局分进程。",
+   "point_end_ok": "记分条在 230.32 翻牌，段尾 231.6 留 1.28s 反应。",
+   "crosses_cut": "与上一段在 228.48 相接，同一分不间断。"
   },
   {
    "source": "rgsfi",
@@ -217,5 +236,31 @@
    "_why": "结尾金句与武器绑定（多打回去一拍）＋按管线品味闸落在积极一问上：她现世界第 11，离前十一步（WTA 官方排名）。整片同此收尾。"
   }
  ],
- "_cover_reuse_why": "账号所有者 2026-10-20 明确指令：把 chwalinska-story-2026 按新立的规矩（金句位/原声位/战术提炼）重制一遍，老版本不撤不改。同一人物、同一场的系列重做，封面沿用原版武汉捧杯官方图，只换钩子文案（数据冲突式）；读者识别的是同一场夺冠，不构成误认。"
+ "_cover_reuse_why": "账号所有者 2026-10-20 明确指令：把 chwalinska-story-2026 按新立的规矩（金句位/原声位/战术提炼）重制一遍，老版本不撤不改。同一人物、同一场的系列重做，封面沿用原版武汉捧杯官方图，只换钩子文案（数据冲突式）；读者识别的是同一场夺冠，不构成误认。",
+ "_no_probe_why": {
+  "fin": {
+   "why": "WTA 官方「Maja Chwalinska vs. Sonay Kartal | 2026 Wuhan Final | WTA Match Highlights」，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "rgsf": {
+   "why": "Roland-Garros 官方「Maja Chwalinska vs Diana Shnaider | Semi-Final Extended Highlights | Roland-Garros 2026」，download-video 存档后本地 ffprobe 1920×1080@50/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "50/1"
+  },
+  "wsf": {
+   "why": "WTA 官方「Iga Swiatek vs. Maja Chwalinska | 2026 Wuhan Semifinal | WTA Match Highlights」，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "rgsfi": {
+   "why": "Roland-Garros 官方「On-Court Interview: Qualifier Chwalinska reflects on making Roland-Garros final」，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定，不为它单开一趟 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  }
+ }
 }
