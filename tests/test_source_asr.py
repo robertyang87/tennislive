@@ -26,7 +26,10 @@ def test_probe用上存档就并行派发转写_不在probe里跑模型():
     assert step.get("continue-on-error") is True, "派不出去不许让 probe 红"
     assert "gh workflow run source-asr.yml" in step["run"]
     assert "data/source_asr/$KEY/medium.en.json" in step["run"], "已有转写不重跑"
-    body = "\n".join(s.get("run") or "" for s in steps)
+    # 配音自动听审（2026-10-20）在 render 里转写的是**我们自己的配音**，不是源片解说，
+    # 那一步单独认领；源片转写仍然不许回到 match-reel 里。
+    body = "\n".join(s.get("run") or "" for s in steps
+                     if "voice_auto_review.py" not in (s.get("run") or ""))
     assert "faster-whisper" not in body and "source_asr.py" not in body
 
 

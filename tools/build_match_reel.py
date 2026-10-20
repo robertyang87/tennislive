@@ -12494,6 +12494,17 @@ def main() -> int:
               f"\n  PYTHONPATH=src python3 tools/preview_segments_local.py "
               f"--slug {Path(args.spec).stem}"
               "\n  （本地，几秒钟；改了哪几段就 `--seg 3,7` 只看那几段）")
+        # **一句话不许拆进两段分开合成**（2026-10-19 全局配音要求；判据和 render 之后
+        # 那道配音自动听审是同一个函数）。每段单独合成，上一段不知道下一段还要接着说，
+        # 句中的逗号就被念成了句末——观众那句「重音不对，停顿也不对」。在这儿红比
+        # 渲完十分钟再在自动听审红便宜。改法：把整句并进同一段，或者在段尾收成一句。
+        import voice_auto_review  # noqa: PLC0415
+        splits = voice_auto_review.split_sentences(spec)
+        if splits:
+            print("[dry-run] 有整句被拆进两段分开合成（配音自动听审会红）：")
+            for s in splits:
+                print(f"  第 {s['segment']} 段「…{s['end']}」接第 {s['next']} 段「{s['continues']}…」")
+            hard = True
         # **选段那几条硬伤也要让退出码认账。** 只打印不返回非零的话，
         # 「查出来了」和「没问题」在调用方眼里一模一样——而这条命令的用处
         # 就是在写 spec 那一刻把返工挡住。

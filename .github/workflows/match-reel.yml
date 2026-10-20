@@ -1650,6 +1650,31 @@ jobs:
           fi
           rm -f "$REEL"
 
+      # **配音自动听审**（账号所有者 2026-10-20 同意：不再等人听）。拿这一趟真正
+      # 封进成片的冻结小包逐条查五项（转写完整、多音字声学比对、人名比分内停顿、
+      # 语速、整句不拆段），全过才写 `voice_quality_review.json`（method 写
+      # `automated_voice_suite`，不冒充真人）；没过就红在这儿，原话进日志，
+      # 推送那道 `voice_quality_gate` 拿不到放行记录也发不出去。
+      # 排在 Release 之后：render.json 到这儿才定稿，放行记录绑的是它的哈希。
+      - name: 缓存配音自动听审的模型与参考音
+        if: github.event.inputs.mode == 'render'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            ~/.cache/tennislive/polyphone
+          key: voice-auto-${{ runner.os }}-v1-${{ github.run_id }}
+          restore-keys: voice-auto-${{ runner.os }}-v1-
+      - name: 配音自动听审（实际配音字节，五项全过才放行）
+        if: github.event.inputs.mode == 'render'
+        run: |
+          set -o pipefail
+          pip install -q -e ".[polyphone]" faster-whisper
+          python tools/voice_auto_review.py \
+            --outdir "${{ steps.paths.outputs.outdir }}" \
+            --bundle "$RUNNER_TEMP/${{ github.event.inputs.slug }}-tts.zip" \
+            2>&1 | tee -a /tmp/render-findings.log
+
       # ⚠️ **mode=push 不许走这一步。** push 那条路一个中间物都不产（复制页 +
       # 发微信而已），而它的 OUTDIR 是按 slug 反查出来的**历史日期目录**——
       # 2026-08-13 之前发的片子成片还在 git 里（存量不动，只改增量），稀疏检出

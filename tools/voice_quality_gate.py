@@ -20,6 +20,11 @@ ROOT = Path(__file__).resolve().parents[1]
 INVENTORY = 'voice_quality_inventory.json'
 REVIEW = 'voice_quality_review.json'
 SCHEMA = 'tennislive.voice-quality.v1'
+#: 真人完整听审，和 2026-10-20 账号所有者同意加的自动五项检查（`tools/voice_auto_review.py`）。
+#: 后者只在证据文件和当前影片/库存哈希绑死、五项全过时才算放行，记录里如实写自动。
+LISTENED = 'full_audio_listening'
+AUTOMATED = 'automated_voice_suite'
+AUTO_EVIDENCE = 'voice_auto_review.json'
 REQUEST_FIELDS = {'text', 'voice', 'rate', 'pitch', 'style', 'styledegree',
                   'lead_pause', 'backend', 'cache_key'}
 
@@ -249,6 +254,35 @@ def prepare(outdir, *, root=ROOT, bundle=None):
     return review_path
 
 
+def _auto_evidence(outdir, identity, review):
+    """自动五项检查的证据：存在、哈希对得上放行记录、身份是当前这一版、全过。"""
+    path = outdir / AUTO_EVIDENCE
+    if not path.is_file():
+        return None
+    claimed = {s.get('evidence_sha256') for s in [review.get('film_review') or {}] + [
+        r.get(k) or {} for r in review.get('entries') or [] for k in ('phonetics', 'prosody')]
+        if s.get('method') == AUTOMATED}
+    if not claimed:
+        return None
+    digest = _file_sha(path)
+    if claimed != {digest}:
+        raise VoiceQualityError('Automated approval does not match its evidence file')
+    evidence = _read(path)
+    if (evidence.get('method') != AUTOMATED or evidence.get('identity') != identity
+            or evidence.get('pass') is not True or evidence.get('sentence_splits')):
+        raise VoiceQualityError('Automated voice evidence is stale or did not pass')
+    rows = evidence.get('entries') or []
+    failed = {r.get('audio_sha256') for r in rows if r.get('pass') is not True}
+    passed = {r.get('audio_sha256') for r in rows if r.get('pass') is True} - failed
+    return {'passed_audio': passed}
+
+
+def _methods(scope, auto):
+    if scope.get('method') == AUTOMATED and auto is None:
+        raise VoiceQualityError('Automated approval needs its passing evidence file')
+    return {LISTENED, AUTOMATED} if auto else {LISTENED}
+
+
 def require_publish(outdir, *, root=ROOT):
     """Read-only, fail closed; never fetch, synthesize or manufacture approval."""
     outdir, root = Path(outdir).resolve(), Path(root).resolve()
@@ -283,8 +317,9 @@ def require_publish(outdir, *, root=ROOT):
     if review.get('schema') != SCHEMA or review.get('identity') != identity:
         raise VoiceQualityError('Voice approval is stale for current spec/render/film/inventory')
     film_review = review.get('film_review') or {}
+    auto = _auto_evidence(outdir, identity, review)
     if (film_review.get('status') != 'pass'
-            or film_review.get('method') != 'full_audio_listening'
+            or film_review.get('method') not in _methods(film_review, auto)
             or film_review.get('whole_narration_and_seams') is not True
             or film_review.get('film_sha256') != identity['film_sha256']
             or not str(film_review.get('reviewer') or '').strip()
@@ -304,7 +339,9 @@ def require_publish(outdir, *, root=ROOT):
         _request(entry['request'])
         for name in ('phonetics', 'prosody'):
             scope = approvals[key].get(name) or {}
-            if (scope.get('status') != 'pass' or scope.get('method') != 'full_audio_listening'
+            if (scope.get('status') != 'pass' or scope.get('method') not in _methods(scope, auto)
+                    or (scope.get('method') == AUTOMATED
+                        and entry['audio_sha256'] not in auto['passed_audio'])
                     or scope.get('whole_audio') is not True
                     or scope.get('audio_sha256') != entry['audio_sha256']
                     or not str(scope.get('reviewer') or '').strip()
