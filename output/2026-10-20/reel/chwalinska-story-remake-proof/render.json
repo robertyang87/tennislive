@@ -1,0 +1,89 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "b1f64c59d1008fe3b088e9e971e638b46f91010bda7f535c74c31c7811951648",
+    "request_count": 6,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-chwalinska-story-remake-proof-b1f64c59d1008fe3",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-story-remake-proof-b1f64c59d1008fe3/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39417972358"
+  },
+  "cover_seconds": 4.042,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 80.6,
+  "topbar": null,
+  "film_seconds": 89.24,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 7.992,
+    "2": 8.496,
+    "3": 10.128,
+    "6": 12.408
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "a6063b9887e9fe24d478aeadc17bd910dce8ab1d572cef795f074cd8b40da836",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "chwalinska-story-remake-proof",
+    "received_at": "2026-10-20T11:51:45Z",
+    "artifact_ready_at": "2026-10-20T11:55:51Z",
+    "elapsed_seconds": 246.357,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "34f1514a39b363bc9d9e6d30177d906083825a28689857fe910e37a6c40bd299",
+    "spec_sha256": "b10e0f04a3496ecf8c90351be9666c7e4d0961e38086bacbddc710bb9f44cdb2",
+    "run_id": "39417972358",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-20T11:54:40Z",
+        "run_id": "39417972358"
+      }
+    ],
+    "render_seconds": 71.357,
+    "pre_render_seconds": 175.0
+  },
+  "film_sha256": "34f1514a39b363bc9d9e6d30177d906083825a28689857fe910e37a6c40bd299",
+  "film_bytes": 28492298,
+  "qc_attestation_sha256": "a7ad171e06c9de50f2d42bed8ce694a5dfdd6596c09f8a46766982a927ce86ee",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-20T11:54:40Z",
+      "run_id": "39417972358"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-20T11:55:53Z",
+      "run_id": "39417972358"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-chwalinska-story-remake-proof/chwalinska-story-remake-proof.mp4",
+  "video_bytes": 28492298
+}

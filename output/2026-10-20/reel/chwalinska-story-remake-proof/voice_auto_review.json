@@ -1,0 +1,392 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "407abe0ff5ea7eb2c45b6cba992b053b8e39f7a7006e45337d50b63ddc4c5517",
+    "render_inputs_sha256": "a6063b9887e9fe24d478aeadc17bd910dce8ab1d572cef795f074cd8b40da836",
+    "spec_sha256": "b10e0f04a3496ecf8c90351be9666c7e4d0961e38086bacbddc710bb9f44cdb2",
+    "film_sha256": "34f1514a39b363bc9d9e6d30177d906083825a28689857fe910e37a6c40bd299",
+    "inventory_sha256": "cd25bbe671c98fa467654e3b7757099de7e22027bbbb180a2f4c917a71a414a9"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-20T11:57:31+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:11883aaf713b0f0a8f42b39a7614b4f3e76249b293e825d7adaa82a67b0a03f3",
+      "audio_sha256": "fcc483c8795ed71c40e20f66e7c6a264cfd81c90ae48c829fbf4da9bf984aa4e",
+      "pass": true,
+      "result_of": "bundle:11883aaf713b0f0a8f42b39a7614b4f3e76249b293e825d7adaa82a67b0a03f3"
+    },
+    {
+      "id": "bundle:36dfdf825ee4fb570d9479d64008ee863cb2d6ab27f717416d40e15caed41ac1",
+      "audio_sha256": "fe74460ee27f504f20f906bebf13b048f52305432a911cf7c1b45ede02a6fc63",
+      "pass": true,
+      "result_of": "bundle:36dfdf825ee4fb570d9479d64008ee863cb2d6ab27f717416d40e15caed41ac1"
+    },
+    {
+      "id": "bundle:ad9d5e13e9d8f48ee080ab83d5c3c3a53a695287d55a33452c70b5c6180d7ee2",
+      "audio_sha256": "e42d9ab9805acc4f2770b0e0f74e6a5a9c7d281ce4c30a821d1541664958223e",
+      "pass": true,
+      "result_of": "bundle:ad9d5e13e9d8f48ee080ab83d5c3c3a53a695287d55a33452c70b5c6180d7ee2"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "eb9e15861855c607922715710190019fe211f3869120e56df284be0d0c5f287f",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:bf0c0eae34926a8850804b86f2533618b232cc63b3d86f71afc747385ff13969",
+      "audio_sha256": "bd0a828752acbbea36e55d38811f4e401a2a5d8b1c243ec86a20dc6d46f74c62",
+      "pass": true,
+      "result_of": "bundle:bf0c0eae34926a8850804b86f2533618b232cc63b3d86f71afc747385ff13969"
+    },
+    {
+      "id": "bundle:f2438834962253fb681063dd6a3ba3eeba740b26abf10f6b967a745bd5a08261",
+      "audio_sha256": "4d0417cb1a422e7dca8f1828010e4652050c2e1a429cede55313ad5c231ff001",
+      "pass": true,
+      "result_of": "bundle:f2438834962253fb681063dd6a3ba3eeba740b26abf10f6b967a745bd5a08261"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "fcc483c8795ed71c40e20f66e7c6a264cfd81c90ae48c829fbf4da9bf984aa4e",
+      "pass": true,
+      "result_of": "bundle:11883aaf713b0f0a8f42b39a7614b4f3e76249b293e825d7adaa82a67b0a03f3"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "fe74460ee27f504f20f906bebf13b048f52305432a911cf7c1b45ede02a6fc63",
+      "pass": true,
+      "result_of": "bundle:36dfdf825ee4fb570d9479d64008ee863cb2d6ab27f717416d40e15caed41ac1"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "bd0a828752acbbea36e55d38811f4e401a2a5d8b1c243ec86a20dc6d46f74c62",
+      "pass": true,
+      "result_of": "bundle:bf0c0eae34926a8850804b86f2533618b232cc63b3d86f71afc747385ff13969"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "e42d9ab9805acc4f2770b0e0f74e6a5a9c7d281ce4c30a821d1541664958223e",
+      "pass": true,
+      "result_of": "bundle:ad9d5e13e9d8f48ee080ab83d5c3c3a53a695287d55a33452c70b5c6180d7ee2"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "4d0417cb1a422e7dca8f1828010e4652050c2e1a429cede55313ad5c231ff001",
+      "pass": true,
+      "result_of": "bundle:f2438834962253fb681063dd6a3ba3eeba740b26abf10f6b967a745bd5a08261"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "eb9e15861855c607922715710190019fe211f3869120e56df284be0d0c5f287f",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:11883aaf713b0f0a8f42b39a7614b4f3e76249b293e825d7adaa82a67b0a03f3",
+      "text": "三年前，她的世界排名跌到第五百三十二位。这一次，她捧起了武汉一千赛的冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "三年前,他的世界排名跌到第532位,这一次他捧起了武汉1000赛的冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 7.111,
+        "cps": 4.64,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三年 ｜ 前 ｜ 她 ｜ 的 ｜ 世界 ｜ 排名 ｜ 跌 ｜ 到 ｜ 第五百三十二位 ｜ 这 ｜ 一次 ｜ 她 ｜ 捧 ｜ 起 ｜ 了 ｜ 武汉 ｜ 一千 ｜ 赛 ｜ 的 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:36dfdf825ee4fb570d9479d64008ee863cb2d6ab27f717416d40e15caed41ac1",
+      "text": "她的武器，是被很多人看不上的月亮球：高弧线、大上旋，落点压得极深，再掺上小球换节奏。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他的武器是被很多人看不上的月亮球、高弧线、大上旋、落点压的极身在摻上小球换节奏。"
+      },
+      "polyphones": [
+        {
+          "index": 26,
+          "char": "落",
+          "word": "落点",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.352,
+              "confidence": "medium",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.348,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 29,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 7.642,
+        "cps": 4.71,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 的 ｜ 武器 ｜ 是 ｜ 被 ｜ 很多 ｜ 人 ｜ 看不上 ｜ 的 ｜ 月亮 ｜ 球 ｜ 高 ｜ 弧线 ｜ 大 ｜ 上旋 ｜ 落点 ｜ 压 ｜ 得 ｜ 极 ｜ 深 ｜ 再 ｜ 掺 ｜ 上 ｜ 小球 ｜ 换 ｜ 节奏"
+      }
+    },
+    {
+      "id": "bundle:ad9d5e13e9d8f48ee080ab83d5c3c3a53a695287d55a33452c70b5c6180d7ee2",
+      "text": "从五百三十二，到十一，她用了三年。你不必比所有人都有力量，你只需要比所有人，多打回去一拍。离世界前十只差一步，她会迈过去吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 54,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从532到11,他用了三年,你不必比所有人都有力量,你只需要比所有人多打回去一拍,离世界前十只差一步,他会迈过去吗?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 54,
+        "speech_s": 11.509,
+        "cps": 4.69,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 五百三十二 ｜ 到 ｜ 十一 ｜ 她 ｜ 用 ｜ 了 ｜ 三年 ｜ 你 ｜ 不必 ｜ 比 ｜ 所有 ｜ 人 ｜ 都 ｜ 有 ｜ 力量 ｜ 你 ｜ 只 ｜ 需要 ｜ 比 ｜ 所有 ｜ 人 ｜ 多 ｜ 打 ｜ 回去 ｜ 一 ｜ 拍 ｜ 离 ｜ 世界 ｜ 前十只 ｜ 差 ｜ 一 ｜ 步 ｜ 她 ｜ 会 ｜ 迈 ｜ 过去 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:bf0c0eae34926a8850804b86f2533618b232cc63b3d86f71afc747385ff13969",
+      "text": "武汉半决赛打斯瓦泰克，对手轰出三十七个制胜分，她全场只失误七次。她从不跟你拼谁打得重，她拼谁先失去耐心。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 47,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.021,
+        "longest_deletion": 0,
+        "transcript": "武汉半决赛打斯瓦泰克,对手轰出37个制成分,他全场只失武7次。他从不跟你拼谁打得中,他拼谁先失去耐心。"
+      },
+      "polyphones": [
+        {
+          "index": 40,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 41,
+          "char": "重",
+          "word": "重",
+          "intended": "zhong4",
+          "wrong": [
+            "chong2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "chong2",
+              "verdict": "correct",
+              "score": 0.996,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "仲众"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 47,
+        "speech_s": 9.245,
+        "cps": 5.08,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "武汉 ｜ 半决赛 ｜ 打 ｜ 斯瓦泰克 ｜ 对手 ｜ 轰 ｜ 出 ｜ 三十七个 ｜ 制胜 ｜ 分 ｜ 她 ｜ 全场 ｜ 只 ｜ 失误 ｜ 七次 ｜ 她 ｜ 从不 ｜ 跟 ｜ 你 ｜ 拼 ｜ 谁 ｜ 打 ｜ 得 ｜ 重 ｜ 她 ｜ 拼 ｜ 谁 ｜ 先 ｜ 失去 ｜ 耐心"
+      }
+    },
+    {
+      "id": "bundle:f2438834962253fb681063dd6a3ba3eeba740b26abf10f6b967a745bd5a08261",
+      "text": "轰出三十七个制胜分，还是输给了她。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "洪出37个制胜分,还是输给了他。"
+      },
+      "polyphones": [
+        {
+          "index": 10,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.597,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 2.913,
+        "cps": 5.15,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "轰 ｜ 出 ｜ 三十七个 ｜ 制胜 ｜ 分 ｜ 还是 ｜ 输 ｜ 给 ｜ 了 ｜ 她"
+      }
+    }
+  ]
+}
