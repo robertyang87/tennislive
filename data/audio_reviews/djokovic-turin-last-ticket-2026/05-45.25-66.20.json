@@ -1,0 +1,38 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=HVOmbuNoC1E",
+  "source_sha256": "a2371dfad2aaae0b8f3fa9d39421c0bfdfc3e5f25282008258df11ece6242907",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-20T14:51:23+00:00",
+  "reviewed_from": 45.25,
+  "reviewed_to": 66.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 45.25,
+      "end": 50.24,
+      "en": "lots of ups and downs and, you know, physical and health issues, etc.",
+      "zh": "这一年起起落落，身体和健康都出了状况。"
+    },
+    {
+      "start": 50.72,
+      "end": 55.64,
+      "en": "so I was just trying to find a good feeling on the court",
+      "zh": "所以我只是一直在场上，努力找回好的感觉。"
+    },
+    {
+      "start": 55.66,
+      "end": 60.72,
+      "en": "I know that when I'm feeling well and striking the ball well, I can still compete at the highest level.",
+      "zh": "我知道，只要感觉对、击球对，我还能在最高水平竞争。"
+    },
+    {
+      "start": 61.46,
+      "end": 65.86,
+      "en": "This week has been an evidence to that. To be honest, I'm very proud.",
+      "zh": "这一周证明了这一点。说实话，我很骄傲。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 a2371dfad2aaae0b8f3fa9d39421c0bfdfc3e5f25282008258df11ece6242907，存于 data/source_asr/HVOmbuNoC1E/small.en.json 与 data/source_asr/HVOmbuNoC1E/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
