@@ -1,185 +1,424 @@
 {
   "slug": "djokovic-turin-last-ticket-2026",
-  "date": "2026-10-20",
+  "date": "2026-10-21",
   "_column": "网球有故事",
-  "title": "39岁的德约，要去抢最后一张门票",
+  "title": "拿过7座总决赛奖杯，39岁的德约今年还在门外",
   "cx": 0.5,
   "track": false,
   "tts_backend": "edge",
   "_tts_backend_why": "与账号故事条同一把嗓子（edge 云健），不加情绪风格。",
   "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +18%。正文各段 pitch +10Hz；不写 style、lead_pause。",
-  "_cover_reuse_why": "封面沿用 djokovic-china-open-unbeaten-34 的北京决赛 Reuters 举杯原图资产：同一位球员、同一亚洲赛季，本期故事正由这座北京冠军起笔（第二章），钩子文案全新（世界第12/抢门票），不构成误认；新拍的上海失利照无同等分辨率可靠来源。",
   "cover": {
     "eyebrow": "网球有故事",
     "layout": "solo",
     "story_kind": "person",
     "subject": "德约科维奇",
-    "hook": "世界第12\n去抢最后一张门票",
-    "_hook_why": "数字事实式封面（金句位·封面）：世界排名第 12 为 2026-10-19 官方榜；与举杯图的反差就是本期故事。",
-    "narration": "世界第十二，去抢最后一张门票。",
+    "hook": "拿过7座总决赛奖杯\n今年还在门外",
+    "_hook_why": "第一行是他的来路（年终总决赛 7 冠，历史最多），第二行是眼下的局面（Race 排在入围线外）。9＋6 字符，零术语，不比总分。",
+    "narration": "拿过七座总决赛奖杯，今年还在门外。",
     "_narration_why": "念的就是海报上那句钩子，数字换成汉字给 TTS。",
     "topic": "德约科维奇：都灵最后一张门票",
     "portrait": {
-      "image": "assets/reel/djokovic-china-open-unbeaten-34/cover-reuters.jpg",
-      "focus": 0.82,
-      "focus_y": 1.0,
-      "zoom": 1.3,
-      "source_url": "https://www.aljazeera.com/wp-content/uploads/2026/10/reuters_6ac4f2e0-1791292128.jpg",
-      "_credit": "Reuters/Tingshu Wang（Al Jazeera 刊载原图 6000×4000）",
-      "_portrait_why": "2026-10-06 北京决赛第七冠举杯正脸原图，本期第二章正是这座冠军；复用声明见顶层 _cover_reuse_why。"
+      "image": "assets/reel/djokovic-turin-last-ticket-2026/cover-turin-2023-trophy.jpg",
+      "fit": "cover",
+      "focus": 0.42,
+      "focus_y": 0.0,
+      "zoom": 1.0,
+      "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2023/11/19/9d52724c-4dcf-4446-a4d6-1206f75aab06/DUB_5008.JPG",
+      "_credit": "ATP Media 官方图库 photo 3790059「2023 Turin Djokovic」（DUB_5008，原图 6605×4403，存档缩到 3000 长边）",
+      "_portrait_why": "账号所有者 2026-10-21：「封面最好用 2023 年总决赛捧杯的照片」。2023 都灵决赛（11-19）颁奖：正脸、笑、双手捧年终总决赛奖杯、彩带与烟火；绿色外套与 BO9S2WB8I64 集锦颁奖镜头一致（2022 年他穿白外套）。同批 3790342/3790343 是与辛纳或嘉宾同框，3790040 是赛中怒吼，都不如这一张对题。",
+      "_search_why": "2026-10-21 在 runner 上按 references=ATP_PLAYER:D643 翻 ATP Media 照片接口（沙箱代理挡 api.prod.atpmedia.pulselive.com），2023-11-19/20 发布的都灵决赛实拍 9 张逐张打开看过；原图无 EXIF，场次按接口标题、发布日期与画面（奖杯、服装）认定。"
     }
   },
   "push": {
-    "auto": false,
-    "summary": "德约抢最后一张门票",
-    "lead": "霍达尔守门，德约差319分，巴塞尔见。",
-    "_why": "本期为所有者 2026-10-20 指令立项的新规验证片（来龙去脉→话题性→充实度→手法）；先渲后审，push.auto=false，推送等所有者点头。",
-    "_no_auto_why": "本期为所有者 2026-10-20 指令立项的新规验证片（来龙去脉→话题性→充实度→手法）；先渲后审，push.auto=false，推送等所有者点头。"
+    "auto": true,
+    "_why": "账号所有者 2026-10-13 起所有 spec 默认自动推送；质检通过即合并推送。重做版按 09-22「一般都要重推」重推。",
+    "summary": "7冠王今年还在门外",
+    "lead": "辛纳报销后，都灵的入围线降到第9：20岁的霍达尔3159分坐在门里，德约差319分。拿过7座总决赛奖杯的他，接下巴塞尔外卡，要抢第19张门票。"
   },
   "editorial": {
     "mode": "match_review",
-    "question": "七届年终总决赛冠军、历史第一人，为什么要在 39 岁去抢最后一张入场券？这张门票的数学题怎么解？",
-    "thesis": "用积分讲命运：北京 +500 回春、上海 +10 坠落、霍达尔 +650 抢位——门票不认名字，只认积分。",
+    "question": "拿过 7 座总决赛奖杯、18 次入围的历史第一人，为什么 39 岁还要去抢最后一张门票？",
+    "thesis": "用他的总决赛历史给这张门票称重：7 冠、18 次入围都是历史第一；三个星期里北京第 102 冠、上海 10 分、霍达尔 650 分，门里门外换了人；巴塞尔、巴黎决定他能不能拿到第 19 张。",
     "beats": [
-      "辛纳伤退，线降至第 9；霍达尔 3,159 守门，德约 −319。",
-      "北京第 102 冠的别扭捧杯（SF 取消资格、F 退赛）与他的原话。",
-      "上海 +10 vs 霍达尔 +650，门里门外互换。",
-      "巴塞尔外卡：15 年重返、2009 赢过费德勒、霍达尔同场。",
-      "巴黎 1000 分收官，未决一问收尾。"
+      "冷开场：2023 都灵第七冠",
+      "落点：三年后站在门外，霍达尔 3159，差 319",
+      "01 门票的分量：2008 首冠、伦敦四连冠、2022/2023 都灵、18 次入围、2024/25 退出",
+      "02 北京：第 102 冠、救破发点神球、他的原话",
+      "03 上海：胡尔卡奇第一次赢他、霍达尔打进决赛拿 650 分",
+      "04 这一年：澳网决赛第一次输、美网首轮出局",
+      "05 巴塞尔：外卡、2009 赢费德勒、霍达尔同签",
+      "收尾：第 19 张门票一问"
     ],
     "chapters": [
-      "门里门外\n319分",
-      "北京捧杯\n上海坠落",
-      "巴塞尔\n最后一搏"
+      "门票的分量",
+      "北京",
+      "上海",
+      "这一年",
+      "巴塞尔"
     ],
     "human_context": {
-      "angle": "把 Race 积分做成命运刻度：同一个亚洲赛季里，39 岁的历史第一人被 20 岁的新人挤出门外，又用一张外卡把自己塞回牌桌。",
+      "angle": "拿过最多年终总决赛冠军的人，39 岁被一个 20 岁的新人挡在门外，又自己去敲门。",
       "facts": [
         "2026-10-19 Race：霍达尔 3,159（第 9，门内最后）、德米纳尔 2,880、德约 2,840；辛纳 7,950 因膝伤赛季报销，入围线实际降至第 9。",
         "北京决赛德约 7-6(3) 拿下首盘，德米纳尔第二盘 0-1 时因内收肌伤退赛；德约第 102 冠、北京 34-0、39 岁为 1977 年罗斯沃尔后最年长冠军。",
         "上海 R2 德约 6-4 6-3 负胡尔卡奇，仅 +10 分；霍达尔上海亚军 +650 分。",
         "德约 2026 美网首轮负纳沃内，为 2006 澳网以来大满贯最早出局；10-19 世界排名第 12。",
-        "巴塞尔外卡 2026-10-16 宣布，德约 2011 年后首次参赛；2009 年巴塞尔决赛胜费德勒；赛期 10-26–11-1，巴黎大师赛 11-2–11-8。"
+        "巴塞尔外卡 2026-10-16 宣布，德约 2011 年后首次参赛；2009 年巴塞尔决赛胜费德勒；赛期 10-26–11-1，巴黎大师赛 11-2–11-8。",
+        "年终总决赛 7 冠（2008、2012–2015、2022、2023）为历史最多，费德勒 6 冠；2022 年 35 岁、2023 年 36 岁先后成为最年长冠军（CBS Sports、ATP）。",
+        "2007–2016、2018–2025 共 18 次入围，与费德勒并列最多；2024、2025 入围后退出（nittoatpfinals.com 官方历史统计与 2025 入围稿；tennis.com）。",
+        "上海负胡尔卡奇后原话 I am planning on only playing in Paris（AP）；胡尔卡奇此前对他 0-8（tennismajors）。",
+        "上海决赛霍达尔 6-1 先赢、第二盘双破领先、抢七 5-5 离冠军两分，1-6 7-6(5) 6-4 负达维多维奇·福基纳（Khaleej Times/AFP、ATP）。"
       ],
       "sources": [
         "https://aapnews.aap.com.au/news/demon-slips-out-of-great-eight-in-race-for-atp-finals",
         "https://lastwordonsports.com/tennis/2026/10/18/race-to-atp-finals/",
         "https://tennistourtalk.com/138010/djokovic-wins-seventh-china-open-crown-after-de-minaur-retires",
         "https://www.nbcsports.com/tennis/news/novak-djokovic-will-play-at-the-upcoming-swiss-indoors-after-accepting-a-wild-card-invitation",
-        "https://www.flashscore.ca/news/djokovic-receives-wildcard-for-basel-in-pursuit-of-atp-finals-qualification/4xHdvmNk/"
+        "https://www.flashscore.ca/news/djokovic-receives-wildcard-for-basel-in-pursuit-of-atp-finals-qualification/4xHdvmNk/",
+        "https://www.nittoatpfinals.com/en/news/djokovic-nitto-atp-finals-2025-qualification",
+        "https://www.nittoatpfinals.com/en/heritage/historical-stats",
+        "https://www.cbssports.com/tennis/news/novak-djokovic-breaks-roger-federers-record-with-seventh-atp-finals-title",
+        "https://www.cbssports.com/tennis/news/novak-djokovic-ties-roger-federers-record-with-sixth-atp-finals-title-defeats-casper-ruud-in-straight-sets",
+        "https://tennismajors.com/atp/hurkacz-ends-eight-match-losing-run-against-djokovic-to-storm-into-shanghai-third-round-862876.html",
+        "https://www.khaleejtimes.com/sports/tennis/davidovich-fokina-beats-rising-star-jodar-to-win-shanghai-masters-3",
+        "https://www.arabnews.com/tennis/djokovic-crashes-out-of-shanghai-masters-in-his-first-match-3005505"
       ]
     }
   },
+  "_editing_why": "账号所有者 2026-10-21：「内容太单薄，且视频画面也很单调，也没有高燃镜头和精彩文案」「还有历史信息也要讲清楚」「文案也要有吸引力和爆点，视频内容数量和质量都要丰富和准确」。重做：字卡从 4 张整屏改成 5 张短章节卡，正片全是官方比赛画面；留 7 段解说原声（2023/2008 都灵上海冠军点、北京救破发点、上海胡尔卡奇、澳网、2009 巴塞尔）；新增 01 章总决赛历史；首尾同一场 2023 都灵。旁白只放在两档 ASR 都无英文的空当里。",
+  "_social_checked": "2026-10-21 查过：巴塞尔外卡与上海后行程只有赛事公告和 AP 引语，没有他本人开口的社媒视频；本人原声用北京颁奖发言。",
+  "_social_search_why": "不是当事人发声明类的选题：讲的是公开的积分、比赛与官方采访。",
+  "_claims": {},
   "sources": {
+    "fin23": "https://github.com/robertyang87/tennislive/releases/download/source-BO9S2WB8I64/BO9S2WB8I64.mp4",
+    "fin08": "https://github.com/robertyang87/tennislive/releases/download/source-K21S0hxp05M/K21S0hxp05M.mp4",
+    "fin22": "https://github.com/robertyang87/tennislive/releases/download/source-IadXjfx1ZUA/IadXjfx1ZUA.mp4",
+    "jf": "https://github.com/robertyang87/tennislive/releases/download/source-402fnpRkS3c/402fnpRkS3c.mp4",
     "bjf": "https://github.com/robertyang87/tennislive/releases/download/source-8Dc6BvkUEZM/8Dc6BvkUEZM.mp4",
-    "bjsf": "https://github.com/robertyang87/tennislive/releases/download/source-LgRD3TLoxr0/LgRD3TLoxr0.mp4",
+    "speech": "https://github.com/robertyang87/tennislive/releases/download/source-HVOmbuNoC1E/HVOmbuNoC1E.mp4",
     "shr2": "https://github.com/robertyang87/tennislive/releases/download/source-0CHXX3rZUoY/0CHXX3rZUoY.mp4",
     "jsf": "https://github.com/robertyang87/tennislive/releases/download/source-0gX2hUan9Vc/0gX2hUan9Vc.mp4",
-    "jf": "https://github.com/robertyang87/tennislive/releases/download/source-402fnpRkS3c/402fnpRkS3c.mp4",
-    "uso": "https://github.com/robertyang87/tennislive/releases/download/source-C1rEik4aV2M/C1rEik4aV2M.mp4",
-    "bsl09": "https://github.com/robertyang87/tennislive/releases/download/source-RcX0huQSiog/RcX0huQSiog.mp4",
     "aof": "https://github.com/robertyang87/tennislive/releases/download/source-QeH0tLAWKbw/QeH0tLAWKbw.mp4",
-    "speech": "https://github.com/robertyang87/tennislive/releases/download/source-HVOmbuNoC1E/HVOmbuNoC1E.mp4"
+    "uso": "https://github.com/robertyang87/tennislive/releases/download/source-C1rEik4aV2M/C1rEik4aV2M.mp4",
+    "bsl09": "https://github.com/robertyang87/tennislive/releases/download/source-RcX0huQSiog/RcX0huQSiog.mp4"
   },
   "mixed_fps": {
-    "uso": "29.97fps（30000/1001）；美网官方集锦原生帧率，无同内容 25fps 版本；窗口仅 10s、旁白主导，接受重采样到 25。",
-    "bsl09": "30fps；Tennis TV 官方 2009 巴塞尔决赛集锦，是本段唯一官方 1080p 来源（2026-10-20 选源时已确认），无同内容 25fps 版本，接受重采样到 25。",
-    "speech": "29.97fps（30000/1001）；两段均为北京夺冠致辞的领奖台静态说话头、定镜画面，重采样到 25 无感。"
+    "jf": "50/1 源片落到 25 fps 输出，按时间重采样，广角回合与颁奖镜头看不出顿挫",
+    "bjf": "50/1 源片落到 25 fps 输出，按时间重采样，广角回合与颁奖镜头看不出顿挫",
+    "speech": "60000/1001 源片落到 25 fps 输出，按时间重采样，广角回合与颁奖镜头看不出顿挫",
+    "shr2": "50/1 源片落到 25 fps 输出，按时间重采样，广角回合与颁奖镜头看不出顿挫",
+    "jsf": "50/1 源片落到 25 fps 输出，按时间重采样，广角回合与颁奖镜头看不出顿挫",
+    "uso": "60000/1001 源片落到 25 fps 输出，按时间重采样，广角回合与颁奖镜头看不出顿挫",
+    "bsl09": "60/1 源片落到 25 fps 输出，按时间重采样，广角回合与颁奖镜头看不出顿挫"
   },
-  "_no_probe_why": {},
+  "_no_probe_why": {
+    "fin23": {
+      "why": "Tennis TV（ATP 官方） 官方，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    },
+    "fin08": {
+      "why": "Tennis TV（ATP 官方） 官方，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    },
+    "fin22": {
+      "why": "Tennis TV（ATP 官方） 官方，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    },
+    "jf": {
+      "why": "Tennis TV（ATP 官方） 官方，download-video 存档后本地 ffprobe 1920×1080@50/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
+    },
+    "bjf": {
+      "why": "Tennis TV（ATP 官方） 官方，download-video 存档后本地 ffprobe 1920×1080@50/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
+    },
+    "speech": {
+      "why": "Tennis Channel 官方 官方，download-video 存档后本地 ffprobe 1920×1080@60000/1001；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "60000/1001"
+    },
+    "shr2": {
+      "why": "Tennis TV（ATP 官方） 官方，download-video 存档后本地 ffprobe 1920×1080@50/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
+    },
+    "jsf": {
+      "why": "Tennis TV（ATP 官方） 官方，download-video 存档后本地 ffprobe 1920×1080@50/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
+    },
+    "aof": {
+      "why": "Australian Open 官方 官方，download-video 存档后本地 ffprobe 1920×1080@25/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    },
+    "uso": {
+      "why": "US Open 官方 官方，download-video 存档后本地 ffprobe 1920×1080@60000/1001；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "60000/1001"
+    },
+    "bsl09": {
+      "why": "Tennis TV（ATP 官方） 官方，download-video 存档后本地 ffprobe 1920×1080@60/1；网球有故事按讲解剪片，窗口按两档 ASR 的静默区和本地抽帧定。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "60/1"
+    }
+  },
+  "_primary_why": "主源是 sources 的第一个键 fin23（Tennis TV 官方 1080p25），输出 25 fps。",
+  "_why_sources": "比赛、颁奖与采访画面全部来自官方频道：Tennis TV（BO9S2WB8I64、K21S0hxp05M、IadXjfx1ZUA、402fnpRkS3c、8Dc6BvkUEZM、0CHXX3rZUoY、0gX2hUan9Vc、RcX0huQSiog）、Tennis Channel（HVOmbuNoC1E）、澳网官方（QeH0tLAWKbw）、美网官方（C1rEik4aV2M）；均为 download-video 存档到 Release 的字节。2015 伦敦决赛官方集锦只有 720p，未用。",
+  "_production_status": "2026-10-21：重做版，提纲已发账号所有者（追加历史与爆点要求后开写）。",
   "segments": [
     {
-      "title_card": "他的答案\n再抢一次",
-      "kicker": "10月16日 · 巴塞尔外卡",
-      "seconds": 11,
-      "narration": "美网首轮出局的那个晚上，所有人都在问。所以那句『还要不要打下去』，不是退役预告。十天之后，他给了自己答案。",
-      "voice": {
-        "pitch": "+10Hz",
-        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
-      },
-      "_why": "冷开场金句位（引言卡）：原句 'Many times I have questioned whether I want to keep on playing' 经 AAP/Tennis TourTalk/tenniswatcher 多家逐字核实，为德约北京夺冠后原话；其音频载体（Tennis TV 专题片）在管线端被 entitlement 401 挡住，故以引言卡呈现并标出处，不冒充原声。"
-    },
-    {
-      "title_card": "都灵，只剩\n最后一张门票",
-      "kicker": "ATP 年终总决赛 · 11月15日开赛",
-      "seconds": 11,
-      "narration": "年终总决赛，一年只收八个人。辛纳膝伤、赛季报销，这条线掉到了第九名。",
-      "voice": {
-        "pitch": "+10Hz",
-        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
-      },
-      "_why": "第一章·门：规则与门槛。数字均为 2026-10-19 ATP Race 官方榜（AAP/LWOS 核对）。"
+      "source": "fin23",
+      "start": 434.6,
+      "end": 453.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "quote": [
+        {
+          "at": 1.8,
+          "end": 8.6,
+          "text": "It is another historic night for Novak Djokovic,\n德约科维奇又一个历史之夜"
+        },
+        {
+          "at": 8.86,
+          "end": 12.3,
+          "text": "he is the champion for a record seventh time.\n第七次夺冠，创下纪录"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "point_end_ok": "冠军点在 438 秒前后打完（439 张开双臂），段尾是赛后握手与看台。",
+      "_ending_payoff_required": false,
+      "_ending_payoff_why": "网球有故事：冷开场是本期的历史由头（7 座总决赛奖杯），片尾回到同一场颁奖烟火收住。",
+      "_why": "冷开场：2023 都灵决赛（Tennis TV 官方 BO9S2WB8I64）冠军点、张开双臂、网前握手。解说原句两档转写一致（436.34–446.9）。434.6 起是这一分开始之前，453.5 在下一句解说（454.54）之前。"
     },
     {
       "source": "jf",
-      "start": 71.0,
-      "end": 89.0,
+      "start": 58.0,
+      "end": 75.6,
       "cx": 0.5,
       "track": false,
-      "narration": "现在坐在门里的第九名，是二十岁的霍达尔，三千一百五十九分。门外站着两个人：德米纳尔，差二百七十九分；德约科维奇，差三百一十九分。兹维列夫锁定席位，辛纳赛季报销，入围线降到第九。",
+      "narration": "七座年终总决赛冠军，历史最多。三年后，三十九岁的他，站在了门外。辛纳伤停报销，入围线降到第九。坐在门里最后一个位置的，是二十岁的霍达尔，三千一百五十九分。德约，差三百一十九。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "_why": "积分卡章：霍达尔上海决赛画面。窗口取 402fnpRkS3c 双模型转写无英文间隙（69.5–99.7）内 71–89s。"
+      "_why": "落点＋门槛：霍达尔上海决赛（Tennis TV 官方 402fnpRkS3c）回合，窗口在两档转写的无英文空当 57.84–100.0 内。积分为 2026-10-19 Live Race（AAP / puntodebreak / tennisnerd 三源一致）。"
+    },
+    {
+      "title_card": "一年只请\n8个人",
+      "kicker": "01 · 门票的分量",
+      "seconds": 9.4,
+      "narration": "年终总决赛，一年只请积分最高的八个人。二〇〇八年，上海，二十一岁的他，第一次站上最高处。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      }
+    },
+    {
+      "source": "fin08",
+      "start": 256.5,
+      "end": 279.6,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.38,
+          "end": 3.66,
+          "text": "And there it is,\n拿下了！"
+        },
+        {
+          "at": 3.66,
+          "end": 15.7,
+          "text": "it was a very accomplished performance this afternoon,\n今天下午打得非常老练"
+        },
+        {
+          "at": 15.7,
+          "end": 22.2,
+          "text": "faltered ever so slightly in that second set.\n只在第二盘稍微晃了一下"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "point_end_ok": "冠军点在 258 秒落地，之后全是庆祝镜头。",
+      "_why": "2008 上海大师杯决赛（Tennis TV 官方 K21S0hxp05M，6-1 7-5 胜达维登科）冠军点之后：举双臂、网前拥抱、握拳怒吼。解说句两档一致，段尾 279.6 在下一句（279.94）之前。"
+    },
+    {
+      "source": "fin22",
+      "start": 440.0,
+      "end": 446.9,
+      "cx": 0.5,
+      "track": false,
+      "narration": "二〇一二到二〇一五年，伦敦四连冠。七年之后，二〇二二年，都灵。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "冠军点 446 秒前后落地（448 张开双臂在下一段）。",
+      "_why": "2022 都灵决赛（Tennis TV 官方 IadXjfx1ZUA）冠军点前他的近景到冠军点，窗口在两档转写空当 430.06–447.56 内。"
+    },
+    {
+      "source": "fin22",
+      "start": 446.9,
+      "end": 460.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.4,
+          "end": 7.4,
+          "text": "Djokovic is the champion in Turin,\n德约科维奇在都灵夺冠"
+        },
+        {
+          "at": 7.4,
+          "end": 12.1,
+          "text": "it is a sixth Nitto ATP Finals title for the Serb.\n这是他第六个年终总决赛冠军"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "point_end_ok": "段首就是冠军点之后的庆祝。",
+      "_why": "2022 都灵冠军点后张开双臂、网前握手；解说两档一致（447.3–459.1）。"
+    },
+    {
+      "source": "fin22",
+      "start": 498.3,
+      "end": 505.9,
+      "cx": 0.5,
+      "track": false,
+      "narration": "三十五岁，他又一次站上最高处。第六座，追平了费德勒。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "颁奖典礼，画面里没有记分条；量到的「翻牌」是烟火亮度变化，不是比分。",
+      "_why": "2022 都灵颁奖：接过奖杯、烟火举杯；段尾 505.9 在 Tennis TV 片尾板（506.2 起，逐 0.2 秒核过）之前。"
+    },
+    {
+      "source": "fin23",
+      "start": 473.4,
+      "end": 484.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "二〇二三年，第七座，比费德勒多一座，历史第一。三十六岁，他把最年长冠军的纪录又刷新了一次。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "颁奖典礼，画面里没有记分条；量到的「翻牌」是烟火与彩带的亮度变化，不是比分。",
+      "_why": "2023 都灵颁奖烟火与举杯（两档转写空当 473.24–497.36 内）。7 座为历史最多、36 岁为最年长冠军：CBS Sports 两篇 + ATP 赛报。"
+    },
+    {
+      "source": "fin23",
+      "start": 299.4,
+      "end": 318.6,
+      "cx": 0.5,
+      "track": false,
+      "narration": "从二〇〇七年起，十九个赛季，他十八次拿到这张门票，只缺了肘伤的二〇一七年。十八次，和费德勒并列历史最多。可二〇二四、二〇二五年，他入围了，又都退了出来。今年，他想再回去一次。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "_why": "2023 都灵决赛回合（两档转写空当 299.16–341.18 内）。18 次入围并列费德勒最多、2024/25 入围后退出：nittoatpfinals.com 官方历史统计与 2025 入围稿 + tennis.com。"
+    },
+    {
+      "title_card": "39岁\n还在拼",
+      "kicker": "02 · 北京",
+      "seconds": 11.4,
+      "narration": "三个星期前在北京，他三十四战全胜，拿下生涯第一百零二冠。只是这一冠赢得不痛快：半决赛，对手被取消了资格。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      }
     },
     {
       "source": "bjf",
-      "start": 111.0,
-      "end": 128.7,
+      "start": 70.6,
+      "end": 79.4,
       "cx": 0.5,
       "track": false,
-      "narration": "三个星期前，他刚在北京拿到第一百零二个冠军。他在北京三十四战全胜，三十九岁——上一个这么大年纪还能夺冠的人，是一九七七年的罗斯沃尔。决赛首盘抢七 7 比 3，第二盘德米纳尔伤退。",
+      "narration": "可他的球，一点没打折扣。决赛第一盘二比二，他的发球局，被逼到了破发点。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "_why": "第二章·北京：102 冠/34-0/最年长夺冠（1977 罗斯沃尔 43 岁香港）均已核（Tennis TourTalk/TennisNow/AP）。窗口待 probe 转写校准。"
+      "_why": "北京决赛（Tennis TV 官方 8Dc6BvkUEZM）第一盘回合，窗口在两档转写空当 63.68–86.26 内；接下一段那一分（记分条逐格读过：2-2、德约发球、30-40）。"
     },
     {
-      "source": "bjsf",
-      "start": 48.0,
-      "end": 60.0,
+      "source": "bjf",
+      "start": 79.6,
+      "end": 97.0,
       "cx": 0.5,
       "track": false,
-      "narration": "只是这个冠军赢得并不痛快：半决赛，梅德韦杰夫被取消资格；决赛，德米纳尔打了一盘就伤退。",
+      "narration": "",
+      "quote": [
+        {
+          "at": 10.62,
+          "end": 12.8,
+          "text": "Oh, you are kidding me!\n噢，开什么玩笑！"
+        },
+        {
+          "at": 13.76,
+          "end": 16.3,
+          "text": "How has he made that?\n这球他是怎么救回来的？"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "point_end_ok": "这一分 91.5 秒前后打完，92~96 是他的反应镜头。",
+      "_why": "北京决赛第一盘 2-2、他的发球局 30-40 被逼到破发点（记分条逐格读过：发球点在德约一侧），这一分他救下；解说原句两档一致（90.22–95.76）。"
+    },
+    {
+      "source": "bjf",
+      "start": 286.0,
+      "end": 300.6,
+      "cx": 0.5,
+      "track": false,
+      "narration": "第二盘刚开局，德米纳尔大腿受伤，只打了一局就退赛。三十九岁夺冠，比他年纪更大的冠军，要追到一九七七年，四十三岁的罗斯沃尔在香港登顶。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "_why": "北京 SF 取消资格（击球打到球迷）与决赛退赛（7-6(3) 0-1，内收肌）均已核。窗口取 LgRD3TLoxr0 无英文间隙（46.3–72.1）内 48–60s。"
+      "point_end_ok": "这一分在 299.5 秒前后打完，300 秒切到他走回底线。",
+      "_why": "北京决赛第二盘 0-0 开局那一分（记分条 7 0 30-15，两档转写空当 285.22–308.12 内），300 秒切到他走位；之后 310 秒起是德米纳尔伤退的镜头。退赛（7-6(3) 0-1，内收肌）与 1977 罗斯沃尔之后最年长冠军：Tennis TourTalk、TennisNow、AP。上一版这里用的 472.5–479.8 其实是 Tennis TV 片尾二维码板（473 秒起），已弃。"
     },
     {
       "source": "speech",
-      "start": 45.25,
+      "start": 55.5,
       "end": 66.2,
       "cx": 0.453,
       "track": false,
       "narration": "",
       "quote": [
         {
-          "at": 0.05,
-          "end": 4.99,
-          "text": "lots of ups and downs and, you know, physical and health issues, etc.\n这一年起起落落，身体出了状况。"
-        },
-        {
-          "at": 5.47,
-          "end": 10.39,
-          "text": "so I was just trying to find a good feeling on the court\n我一直在场上，努力找回感觉。"
-        },
-        {
-          "at": 10.41,
-          "end": 15.47,
+          "at": 0.22,
+          "end": 5.22,
           "text": "I know that when I'm feeling well and striking the ball well, I can still compete at the highest level.\n状态对了，我还能在最高水平竞争。"
         },
         {
-          "at": 16.21,
-          "end": 20.61,
+          "at": 5.96,
+          "end": 10.36,
           "text": "This week has been an evidence to that. To be honest, I'm very proud.\n这一周证明了这点，说实话我很骄傲。"
         }
       ],
       "_quote_kind": "interview",
-      "_why": "原声位 1（球员原话）：北京颁奖仪式发言（Tennis Channel 官方视频 HVOmbuNoC1E），窗口与字幕按仓库双模型转写实测（55.66–65.86）。",
+      "_why": "他的原话：北京颁奖仪式发言（Tennis Channel 官方 HVOmbuNoC1E），窗口与字幕沿用上一版两档转写实测。",
       "frame": "person",
       "cx_face": {
         "samples": [
@@ -202,137 +441,200 @@
       }
     },
     {
-      "source": "speech",
-      "start": 77.9,
-      "end": 89.7,
+      "title_card": "门里门外\n换了人",
+      "kicker": "03 · 上海",
+      "seconds": 3.6,
+      "narration": "三天后，上海。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      }
+    },
+    {
+      "source": "shr2",
+      "start": 81.3,
+      "end": 96.2,
+      "cx": 0.5,
+      "track": false,
+      "narration": "第二轮，胡尔卡奇。此前八次交手，德约全胜。这一次，四比六、三比六，一盘都没拿到。上海四冠王，这回只带走十个积分。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "_why": "上海第二轮（Tennis TV 官方 0CHXX3rZUoY）：80 秒他蹲在场边，之后是回合，窗口在两档转写空当 81.2–102.66 内。此前 0-8：tennismajors「ends eight-match losing run」；上海 4 冠（2012/13/15/18）。"
+    },
+    {
+      "source": "shr2",
+      "start": 215.5,
+      "end": 229.9,
       "cx": 0.5,
       "track": false,
       "narration": "",
       "quote": [
         {
-          "at": 0.44,
-          "end": 6.92,
-          "text": "This trophy means much more than one trophy, one tournament for all of us.\n这座奖杯对我们，远不止一座奖杯。"
+          "at": 3.8,
+          "end": 8.8,
+          "text": "Hurkacz takes out Djokovic for the first time.\n胡尔卡奇第一次赢了德约。"
         },
         {
-          "at": 6.92,
-          "end": 8.68,
-          "text": "So very, very happy for that.\n所以真的特别开心。"
-        },
-        {
-          "at": 10.08,
-          "end": 11.44,
-          "text": "That's very emotional.\n很动情。"
+          "at": 10.1,
+          "end": 12.1,
+          "text": "First time in nine meetings.\n九次交手，这是第一次。"
         }
       ],
-      "_quote_kind": "interview",
-      "_why": "原声位 2（球员原话）：同上发言后段（转写实测 78.34–89.34），情绪落点。",
-      "frame": "court",
-      "_frame_why": "窗口 78.34–89.34 内含颁奖嘉宾席切镜（团队席全景），与德约双人镜交叉出现，人物中心追踪会乱跳；该段用画面中心（账号所有者 2026-10-18：采访按人物中心裁，画面不稳时退回画面中心）。"
+      "_quote_kind": "broadcast",
+      "point_end_ok": "赛点在 212 秒前后打完（215 胡尔卡奇握拳），段内全是赛后镜头。",
+      "_why": "上海第二轮赛点、胡尔卡奇握拳、德约闭眼、网前握手；解说两档一致（219.3–227.5）。"
     },
     {
-      "source": "shr2",
-      "start": 51.0,
-      "end": 67.5,
-      "point_end_ok": "缩略图墙核查：记分牌在 65.4s 翻牌（15-0→30-0，该分已判死），67.5s 切点在翻牌后 2.1s；68.18s 起英文解说，窗口收在此前。",
+      "source": "jf",
+      "start": 384.4,
+      "end": 401.6,
       "cx": 0.5,
       "track": false,
-      "narration": "三天后，上海。他第二轮连丢两盘，输给了胡尔卡奇。这项赛事他拿过四次冠军，之前最差也是四分之一决赛。这一回，他只拿到十分。比分是 6 比 4、6 比 3。",
+      "narration": "同一个上海，二十岁的霍达尔一路打进决赛。他先赢一盘，离冠军只差两分，还是被达维多维奇·福基纳逆转。可这个亚军，值六百五十分。北京之后还坐在门里的德约，就这样被挤到了门外。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "_why": "第三章·上海：R2 6-4 6-3 负胡尔卡奇、仅 +10 Race 分，已核（TNT/Flashscore）。窗口待 probe 校准。[2026-10-21 dry-run 修] probe 已补（实测 1920×1080@25）；逐帧核查源片 64–69s：原 end 65.0 切在回合中途，该分约 68.5s 才结束（69.0s 双方收拍、观众鼓掌），end 延到 70.0（完整一分＋反应）。"
+      "_why": "上海决赛后段（Tennis TV 官方 402fnpRkS3c），窗口在两档转写空当 384.18–402.3 内。1-6 7-6(5) 6-4、第二盘抢七 5-5 离冠军两分：Khaleej Times（AFP）＋ ATP 赛后稿；650 分升至 Race 第 9：tennis365。"
     },
     {
-      "source": "jsf",
-      "start": 211.0,
-      "end": 229.9,
-      "point_end_ok": "逐帧核查源片 228.5–232.0s：该分约 229.8s 已结束（230.0s 双方收拍走位），切点 229.9 在一分结束之后；230.00s 起英文解说，窗口收在此前。dry-run 两趟量出的翻牌点（231.0／232.7s）互相矛盾，是猜的记分条框的滞后读数。",
-      "cx": 0.5,
-      "track": false,
-      "narration": "同一个上海，霍达尔半决赛赢了梅德韦杰夫，一路打进决赛，一趟拿到六百五十分。北京结束时还坐在门里的德约，就这样被挤到了门外。决赛他输给了福基拉，但六百五十分，已经把他送进了都灵的门里。",
+      "title_card": "这一年\n不像他",
+      "kicker": "04 · 2026",
+      "seconds": 3.4,
+      "narration": "其实这一整年，都不像他。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
-      },
-      "_why": "霍达尔上海亚军 +650 分升至 3,159。窗口取 6407012514112 无英文间隙（109–128.9）内 111–126s。 [换源 2026-10-21] 原 Bilibili 存档仅 720p 被分辨率闸拦下，换 Tennis TV 官方同场集锦（0gX2hUan9Vc，1080p）；窗口按新源双模型转写取双静音段 208.0–229.3 内的 209.5–225.0。 [2026-10-21 修] 窗口按记分条翻牌规则重定：probe 在 227.8s 测到翻牌，end 取 229.0（≥翻牌后 1.2s），start 取 211.0（避开 208.9 切点）；旁白订正事实错误：霍达尔是上海亚军（决赛负福基拉），非冠军。 [2026-10-21 dry-run 修] dry-run 用猜的记分条框量出翻牌在 231.00s（probe point_ends_guess 同时含 227.8/231.0），按翻牌规则保守取 end=232.2（≥231.0+1.2s）。"
+      }
     },
     {
       "source": "aof",
-      "start": 17.0,
-      "end": 31.0,
-      "point_end_ok": "逐帧核查源片 30–32s：31.0s 时该分已结束、德约正握拳庆祝（第一盘盘点，5-2、40-15）；dry-run 量的 32.4s 是记分牌换算盘分的版式切换，不是分未打完。切点在一分结束之后。",
+      "start": 13.5,
+      "end": 24.5,
       "cx": 0.5,
       "track": false,
-      "narration": "其实这一整年，都不像他。一月澳网决赛，他先赢一盘，还是输给了阿尔卡拉斯。墨尔本的决赛，他十一次进来，第一次空手而归。",
+      "narration": "一月澳网决赛，他先赢一盘，还是输给了阿尔卡拉斯。墨尔本十一次进决赛，前十次全胜，这是第一次输。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "_why": "第四章·这一年（上）：澳网决赛 2-6 6-2 6-3 7-5 负阿尔卡拉斯；德约此前澳网决赛 10 战全胜、这是第 11 次进决赛首次失手，均已核（ausopen.com）。窗口 provisional，probe 转写后校准。用户 2026-10-20 要求：今年关键情节都要有今年的视频支撑，故拆段补澳网官方集锦。 [2026-10-21 dry-run 修] 断句：一句 4 个逗号，破折号处改句号断成两句（TTS 停顿只来自标点）。"
+      "_why": "2026 澳网决赛（澳网官方 QeH0tLAWKbw）第一盘他领先的回合，窗口在两档转写空当 13.3–32.76 内。2-6 6-2 6-3 7-5；此前澳网决赛 10-0：ausopen.com ＋ puntodebreak。"
+    },
+    {
+      "source": "aof",
+      "start": 218.0,
+      "end": 228.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "quote": [
+        {
+          "at": 2.4,
+          "end": 6.84,
+          "text": "He is congratulated by the greatest of all time.\n史上最伟大的人，向他道贺。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "point_end_ok": "冠军点在 199 秒前后打完，段内是网前拥抱与看台。",
+      "_why": "赛后他走过去拥抱阿尔卡拉斯；解说两档一致（220.32–224.84）。"
     },
     {
       "source": "uso",
-      "start": 113.5,
-      "end": 123.5,
+      "start": 173.0,
+      "end": 182.4,
       "cx": 0.5,
       "track": false,
-      "narration": "美网首轮出局——他二十年没在大满贯第一轮输过球。世界排名，掉到了第十二。",
+      "narration": "九月美网，第一轮出局。上次大满贯首轮输球，还是二〇〇六年。世界排名，掉到了第十二。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "_why": "第四章·这一年（下）：美网首轮负纳沃内（2006 澳网以来大满贯最早出局）、10-19 排名第 12，已核。窗口沿 djokovic-navone-us-open-2026-r1 已验旁白窗口 124.5–141.3 内取前 10s。"
+      "_why": "2026 美网首轮负纳沃内（美网官方 C1rEik4aV2M）末段，窗口在两档转写空当 146.08–182.58 内。2006 澳网以来大满贯最早出局：AP / Reuters；10-19 世界第 12：ATP 排名。"
     },
     {
-      "source": "bjf",
-      "start": 472.35,
-      "end": 480.3,
-      "cx": 0.5,
-      "track": false,
-      "narration": "所以那句『还要不要打下去』，不是退役预告。十天之后，他给了自己答案。",
+      "title_card": "最后\n一搏",
+      "kicker": "05 · 巴塞尔",
+      "seconds": 7.6,
+      "narration": "上海输完，他说接下来只打巴黎。十月十六号，他改了主意，接下巴塞尔的外卡。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
-      },
-      "_why": "2026-10-20 所有者立规：有视频就用视频、尽量少用字卡——回环卡改回北京捧杯画面旁白，冷开场钩子卡保留。窗口已按 bjf 转写校准到捧杯后干净间隙 472.0–480.3；此前 provisional 438–450 实为颁奖发言英文连续区（两档转写一致），已弃用。"
+      }
     },
     {
       "source": "bsl09",
-      "start": 4.0,
-      "end": 23.0,
+      "start": 787.5,
+      "end": 797.0,
       "cx": 0.5,
       "track": false,
-      "narration": "上海输完，他说接下来只打巴黎。十月十六号，他改主意，接下巴塞尔外卡。那是他十五年没去过的球场——二〇〇九年，他在那儿的决赛赢了费德勒。巴塞尔 500 分，拿下冠军，319 分的坑就填上了。",
+      "narration": "那是他十五年没去过的赛场。二〇〇九年，就在费德勒的家乡，他在决赛赢了费德勒。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "_why": "第五章·决定：巴塞尔外卡 10-16 宣布（AP/Reuters）、2011 年后首次、2009 决赛胜费德勒，均已核。Tennis TV 管线端 entitlement 401 已弃；源已换成 Tennis TV 官方 YouTube 同片（RcX0huQSiog，Release 存档 source-RcX0huQSiog），与原 tennistv 版同内容（±5s）。窗口按新片转写（medium.en）第一无语音间隙 3.3–25.8s 取 4.0–23.0s（旁白约 19s），两端各留白，无英文压线。"
+      "_why": "2009 巴塞尔决赛（Tennis TV 官方 RcX0huQSiog）决胜盘末段，窗口在两档转写都无英文的 780.2–797.6 内。「I am planning on only playing in Paris」：AP（ghanaiantimes/arabnews 转载）；外卡 10-16 宣布、2011 年后首次：ATP 官网＋France 24。"
     },
     {
-      "title_card": "巴塞尔 500 分\n319 的坑填了",
-      "kicker": "10.26–11.08 · 巴塞尔 / 维也纳 / 巴黎",
-      "seconds": 13.5,
-      "narration": "下周巴塞尔，霍达尔也在签表里。追的人和被追的人，同一块场地算账。德米纳尔去维也纳抢分，最后巴黎一千分收官。",
-      "voice": {
-        "pitch": "+10Hz",
-        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
-      },
-      "_why": "赛程数学卡：巴塞尔/维也纳 500 分站 10-26–11-1，巴黎大师赛 11-2–11-8 冠军 1000 分。霍达尔在巴塞尔名单（yardbarker，待签表复核，成片前若未证实则旁白此句删）。"
+      "source": "bsl09",
+      "start": 798.0,
+      "end": 818.3,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.64,
+          "end": 3.9,
+          "text": "It was a pretty average match, to be perfectly honest,\n说实话，这场打得一般"
+        },
+        {
+          "at": 3.9,
+          "end": 7.3,
+          "text": "but Novak Djokovic was able to get the job done.\n但德约科维奇把比赛拿下了"
+        },
+        {
+          "at": 7.54,
+          "end": 13.44,
+          "text": "It's the Serb who rains on Roger's parade,\n这位塞尔维亚人搅了罗杰的局"
+        },
+        {
+          "at": 13.44,
+          "end": 17.9,
+          "text": "finally putting an end to Federer's stronghold at this event.\n终结了费德勒在这里的统治"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "point_end_ok": "冠军点在 798 秒前后落地，之后全是庆祝。",
+      "_why": "2009 巴塞尔冠军点之后：他握拳、网前与费德勒握手、包厢、举臂；解说两档一致（798.64–815.9）。reigns 按俚语 rain on someone's parade 写作 rains（两档都听成同音的 reign）。"
     },
     {
-      "title_card": "门票不认名字\n只认积分",
-      "kicker": "11月8日 · 巴黎落幕",
-      "seconds": 15.0,
-      "narration": "七次年终冠军，历史第一人。现在，他必须先抢一张入场券。门票不认名字，只认积分。巴黎落幕那天——三十九岁的他，还在不在门里？",
+      "source": "jf",
+      "start": 270.0,
+      "end": 281.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "霍达尔，也在巴塞尔的签表里。追的人和被追的人，同一周，同一块场地。巴塞尔冠军五百分，最后一站巴黎，一千分。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "_why": "结尾金句（原创对照，不可替换）＋未决一问（管线品味闸）：7 次总决赛冠军为历史最多；若入围将是第 17 次参赛。"
+      "_why": "霍达尔上海决赛回合（两档转写空当 264.18–284.76）。巴塞尔签表含霍达尔：tennis365 参赛名单＋维基 2026 Swiss Indoors；巴黎大师赛冠军 1000 分。"
+    },
+    {
+      "source": "fin23",
+      "start": 484.0,
+      "end": 495.6,
+      "cx": 0.5,
+      "track": false,
+      "narration": "七座奖杯，没有一张门票是送的。门票不认名字，只认积分。十一月八号巴黎落幕，三十九岁的他，还能不能拿到第十九张？",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "颁奖典礼，画面里没有记分条；量到的「翻牌」是烟火与彩带的亮度变化，不是比分。",
+      "_why": "结尾回到 2023 都灵：亲吻奖杯、笑。两档转写空当 473.24–497.36 内，段尾 495.6 在片尾板（497.0 起）之前，逐帧核过。"
     }
-  ],
-  "_production_status": "2026-10-20 23:47：seg12 源换成 Tennis TV 官方 YouTube 版 Release 存档（source-RcX0huQSiog），窗口按转写校准 4.0–23.0s；feat 原声恢复计划取消（转写无目标句），继续用 Tennis Channel speech 两段原声。"
+  ]
 }
