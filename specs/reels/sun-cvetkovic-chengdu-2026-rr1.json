@@ -178,7 +178,7 @@
     "first_set_g10": "779.5-799.7原声：第10局末（对手发球胜盘局被破），解说复盘首盘走势",
     "first_set_tiebreak": "1088-1110原声：抢七对手发球分连丢、胜利在望；抢七全程在源片835-1115",
     "second_set_breaks": "1460-1480原声：第5局破发点长回合后对手占先区出界，反超三比二；第7局再破由旁白交代",
-    "ending": "1629.5-1654.5冷开场（赛点）+ 1655-1706.5收尾原声：赛果播报、解说复盘；1706.5为视觉切点，不接采访"
+    "ending": "冷开场1629.5-1654.5（赛点）；收尾段1629.5-1706.5完整重放冷开场并续赛果播报、握手、解说复盘；1706.5为视觉切点，不接采访"
   },
   "_tts_backend_why": "本条无专用情绪风格；采用edge（YunxiNeural +6%），seconds待runner mode=narration实测复核。",
   "segments": [
@@ -410,7 +410,7 @@
     },
     {
       "source": "main",
-      "start": 1655.0,
+      "start": 1629.5,
       "end": 1706.5,
       "cx": 0.5,
       "track": false,
@@ -418,45 +418,60 @@
       "narration": "",
       "score_inset": true,
       "bed": "high",
-      "point_end_ok": "收尾：赛果播报 + 解说复盘全场（首盘一比三、次盘零比二两度落后翻盘）；1706.5 为视觉切点，不接采访。",
-      "crosses_cut": "收尾：赛果播报 + 解说复盘全场（首盘一比三、次盘零比二两度落后翻盘）；1706.5 为视觉切点，不接采访。",
-      "_why": "收尾：赛果播报 + 解说复盘全场（首盘一比三、次盘零比二两度落后翻盘）；1706.5 为视觉切点，不接采访。",
+      "point_end_ok": "收尾完整重放冷开场：赛点兑现、赛果播报、握手与解说复盘全场（首盘一比三、次盘零比二两度落后翻盘）；1706.5 为视觉切点，不接采访。",
+      "crosses_cut": "收尾完整重放冷开场：赛点兑现、赛果播报、握手与解说复盘全场（首盘一比三、次盘零比二两度落后翻盘）；1706.5 为视觉切点，不接采访。",
+      "_why": "收尾完整重放冷开场：赛点兑现、赛果播报、握手与解说复盘全场（首盘一比三、次盘零比二两度落后翻盘）；1706.5 为视觉切点，不接采访。",
       "_quote_kind": "broadcast",
       "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/663661/，源片 sha256 与 Release 资产一致；人名按官方拼写整理（ASR 念歪：Xunran/Shinran-san→Xinran Sun，Kvitkovic/Petkovic→Cvetkovic）",
       "quote": [
         {
           "at": 0.1,
-          "end": 7.0,
+          "end": 10.0,
+          "text": "The player is staying fairly central there — the tape from behind the baseline,\n球员站位保持居中\n球擦网带而过"
+        },
+        {
+          "at": 10.1,
+          "end": 15.0,
+          "text": "And it is match point for Xinran Sun.\n这是孙心然的赛点"
+        },
+        {
+          "at": 15.1,
+          "end": 25.0,
+          "text": "She's got two of them, and executes on the first.\n两个赛点，第一个就兑现"
+        },
+        {
+          "at": 25.6,
+          "end": 32.5,
           "text": "Game, set and match to Xinran Sun, 7-6, 6-2,\n比赛结束\n孙心然七比六、六比二获胜"
         },
         {
-          "at": 7.1,
-          "end": 12.9,
+          "at": 32.6,
+          "end": 38.4,
           "text": "and the result she might have scarcely believed\n这个结果连她自己都难以置信"
         },
         {
-          "at": 13.0,
-          "end": 21.0,
+          "at": 38.5,
+          "end": 46.5,
           "text": "in herself, when she was receiving treatment to her right knee from the physio,\n首盘一比三落后时\n她的右膝接受了理疗师治疗"
         },
         {
-          "at": 21.1,
-          "end": 31.0,
+          "at": 46.6,
+          "end": 56.5,
           "text": "three games to one down in the opening set — from there, she roared back,\n从那时起她强势反弹"
         },
         {
-          "at": 31.1,
-          "end": 38.6,
+          "at": 56.6,
+          "end": 64.1,
           "text": "and found herself two games down at the start of the second set as well.\n第二盘开局又零比二落后"
         },
         {
-          "at": 38.7,
-          "end": 44.0,
+          "at": 64.2,
+          "end": 69.5,
           "text": "It looked like Cvetkovic might mount a comeback — but that was as far as it went.\n对手看似要起势\n但也就到此为止"
         },
         {
-          "at": 44.1,
-          "end": 51.5,
+          "at": 69.6,
+          "end": 77.0,
           "text": "Sun would once again rally, winning six consecutive games to take her opening match.\n孙心然再度反弹\n连赢六局拿下首胜"
         }
       ]
