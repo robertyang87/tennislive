@@ -8,6 +8,12 @@ description: Produce and audit the Chinese tennis post-match video series “赛
 把这套规则当作生产合同，不是写作风格建议。任何无法证明的项目都停在 waiting，
 不得用模型自信、工作流绿灯或通用网球常识替代证据。
 
+## 2026-10-21：全局文案与原声补充
+
+所有栏目写稿、改稿和审稿执行[共享口味规则](../../.claude/skills/tennis-owner-taste/SKILL.md)的10-21「文案、姓名读音与原声对应」及[写稿指南](../../.claude/skills/tennis-editorial/SKILL.md)的当前口径：比赛说轮次；个人成绩从8强起说8强、4强、亚军、冠军，较早出局说实际第几轮。费塞特的「塞」按用户指定读sai，显示姓名不改，声调不擅自补定。精彩原声保留完整语意并逐句配中英文字幕；旁白指向具体赛后发言时核对应采访，缺失只记内部待补，不能冒称已经采用。文案、转场以因果和时间连贯衔接，让真实原声承接情绪。
+
+规则同步不代表当期音频、字幕或采访已修复；必须分别记录实际完成状态，不能继承改稿前的配音审批或成片QC。
+
 ## 1. 先锁定产品与来源
 
 - L0 认六种内容（`tools/interview_source_gate.py` 的 `REQUESTED_KINDS`）：赛后场上采访
