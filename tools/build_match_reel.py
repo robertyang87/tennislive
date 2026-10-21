@@ -84,6 +84,8 @@ render 每一步都记时间，末尾按耗时排一张表（`report_timings()`�
 
 from __future__ import annotations
 
+from render_story_info_band import STORY_LABEL_MAX_SECONDS, STORY_LABEL_PAD
+
 import argparse
 import json
 import math
@@ -3837,32 +3839,32 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     # A story-text lock-up has a narrower contract than a generic sticker.
     # These limits keep it out of the platform chrome, stop it becoming a
     # second subtitle block, and make the intended quiet motion non-optional.
-    # show_for 上限 2026-10-16 从 4.2 放到 8.0：账号所有者看完
-    # medvedev-not-villain-2026 说「字卡停留时间再长一些」。
+    # 2026-10-21: 最多15秒；所属片段先结束，字卡也随之结束。
+    # 历史 carry 字段可读，但 story_text 渲染不再跨片段续挂。
     bad_story_text = []
     for i, seg in enumerate(segments):
         ins = seg.inset or {}
         if str(ins.get("kind", "")) != "story_text":
             continue
         width = float(ins.get("width", 0) or 0)
-        show_for = float(ins.get("show_for", 0) or 0)
-        pad = float(ins.get("pad", 0) or 0)
+        show_for = float(ins.get("show_for", STORY_LABEL_MAX_SECONDS) or STORY_LABEL_MAX_SECONDS)
+        pad = float(ins.get("pad", STORY_LABEL_PAD) or 0)
         carry = str(ins.get("carry", "") or "")
         if carry not in ("", "start", "mid", "end"):
             bad_story_text.append(i + 1)
             continue
         if carry in ("start", "mid"):
-            # 跨镜头连挂的前几镜不在本段淡出，show_for 不起作用。
+            # 兼容历史短 carry 声明的预检；story_text 渲染仍按本段15秒上限。
             show_for = max(show_for, 2.8)
         if (not 0.48 <= width <= 0.60
-                or not (2.8 if carry != "end" else 1.0) <= show_for <= 8.0
-                or pad < 0.065
+                or not (2.8 if carry != "end" else 1.0) <= show_for <= STORY_LABEL_MAX_SECONDS
+                or pad < STORY_LABEL_PAD
                 or str(ins.get("motion", "")) != "editorial"):
             bad_story_text.append(i + 1)
     if bad_story_text:
         raise ReelError(
             f"第 {bad_story_text} 段的 story_text 不符合屏幕文案设计合同："
-            "width 0.48~0.60、show_for 2.8~8.0、pad>=0.065，"
+            "width 0.48~0.60、show_for 2.8~15.0、pad>=0.043，"
             "且 motion 必须为 editorial")
     # 2026-10-12：角标是全局默认。右上角、右缘短轨、文字右对齐。
     # 已发的左轨片在 data/legacy_corner_label.json，只许减不许加。
@@ -4485,21 +4487,28 @@ def _overlay_chain(base: str, ins: dict) -> str:
     # 纯机械可加的一档。克制版——不做「跳出来」，和一屏一个强调色同一个审美。
     # 静态图要先 loop 成连续流 fade 才有帧可淡；scale 放 loop 前面，
     # 缩一次再复制帧比每帧都缩便宜。
+    story_label = str(ins.get("kind", "")) == "story_text"
+    default_hold = STORY_LABEL_MAX_SECONDS if story_label else 0
+    show_for = float(ins.get("show_for", default_hold) or default_hold)
+    if story_label:
+        show_for = min(show_for, STORY_LABEL_MAX_SECONDS)
+    # The encoder bounds every segment by seg.length; do not pad a short clip.
+    # An explicit overlay limit also applies when animation is disabled.
+    limit = f":enable='lt(t,{show_for:.3f})'" if story_label else ""
     if ins.get("animate", True) is False:
         return (f"{base};[1:v]scale={width}:-2[ins];"
-                f"[base][ins]overlay={x}:{y}[vout]")
+                f"[base][ins]overlay={x}:{y}{limit}[vout]")
     # `motion: editorial` is the story-information typography system: a
     # 0.28-second, 14px lift.  Beat/stat stickers keep the more visible legacy
     # motion.  Do not silently make every old inset adopt the new personality.
     editorial = str(ins.get("motion", "")) == "editorial"
     d = EDITORIAL_IN_SECS if editorial else INSET_IN_SECS
     rise = EDITORIAL_RISE_PX if editorial else INSET_RISE_PX
-    show_for = float(ins.get("show_for", 0) or 0)
     # `carry`：同一张角标跨几个硬切镜头连着挂（账号所有者 2026-10-19：「角标
     # 停留时间要更长，至少八秒左右，柔和淡入淡出」，而单个镜头只有 1.5~4 秒）。
     # start＝只淡入、挂到段尾；mid＝不淡入不淡出；end＝不淡入、show_for 处淡出。
     # 位置、宽度一致，切点上角标纹丝不动，只有第一镜淡入、最后一镜淡出。
-    carry = str(ins.get("carry", "") or "")
+    carry = "" if story_label else str(ins.get("carry", "") or "")
     if carry in ("mid", "end"):
         fade_out = ""
         if carry == "end" and show_for > 0.5:
@@ -4507,7 +4516,7 @@ def _overlay_chain(base: str, ins: dict) -> str:
             fade_out = f",fade=t=out:st={show_for - out_d:.3f}:d={out_d:.3f}:alpha=1"
         return (f"{base};[1:v]scale={width}:-2,loop=loop=-1:size=1,format=rgba"
                 f"{fade_out or ',null'}[ins];"
-                f"[base][ins]overlay={x}:{y}[vout]")
+                f"[base][ins]overlay={x}:{y}{limit}[vout]")
     if carry == "start":
         d = max(d, CARRY_OUT_SECS)
     fade_out = ""
@@ -4517,7 +4526,7 @@ def _overlay_chain(base: str, ins: dict) -> str:
     y_expr = f"'if(lt(t,{d}),{y}+{rise}*pow(1-t/{d},2),{y})'"
     return (f"{base};[1:v]scale={width}:-2,loop=loop=-1:size=1,format=rgba,"
             f"fade=t=in:st=0:d={d}:alpha=1{fade_out}[ins];"
-            f"[base][ins]overlay={x}:{y_expr}[vout]")
+            f"[base][ins]overlay={x}:{y_expr}{limit}[vout]")
 
 
 from tennislive.design_tokens import DARK as _EVIDENCE_TOKENS

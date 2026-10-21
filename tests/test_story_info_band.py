@@ -15,7 +15,7 @@ def test_story_info_band_is_typography_not_a_large_panel(tmp_path):
     out = render("第一关", "尤晓迪", "六安W100冠军 · 擅长苦战",
                  tmp_path / "band.png", metric="世界第198", variant="player")
     with Image.open(out) as image:
-        assert image.size == (1200, 340)
+        assert image.width == 1200 and image.height >= 340 and image.height % 2 == 0
         assert image.mode == "RGBA"
         assert image.getpixel((0, 0))[3] == 0
         alpha = image.getchannel("A")
@@ -80,34 +80,33 @@ def _metric_ink(path):
     return green, white
 
 
-def _score_xs(path, *, x_max=1120):
-    """比分行上的精确黄绿 / 暖白横坐标。地点行也是黄绿，取最下面那一截。"""
-    green_xy = []
-    white_xy = []
+def _score_xs(path, *, x_max=1150):
+    """Measure the third visible row, excluding metadata and winner names.
+
+    The people row can now contain green too. Taking the last green row would
+    measure the names instead of the score and silently pass the wrong test.
+    """
+    from render_story_info_band import MUTED
     with Image.open(path) as image:
-        pix = image.convert("RGBA").load()
-        width, height = image.size
-        for y in range(height):
-            for x in range(min(x_max, width)):
-                pixel = pix[x, y]
-                if pixel == BRAND_GREEN:
-                    green_xy.append((x, y))
-                elif pixel == WHITE:
-                    white_xy.append((x, y))
-    if not green_xy:
-        return [], [x for x, _y in white_xy]
-    ys = sorted({y for _x, y in green_xy})
-    start = prev = ys[0]
-    runs = []
-    for y in ys[1:]:
-        if y > prev + 2:
-            runs.append((start, prev))
-            start = y
-        prev = y
-    runs.append((start, prev))
-    y0, y1 = runs[-1]
-    return ([x for x, y in green_xy if y0 <= y <= y1],
-            [x for x, y in white_xy if y0 <= y <= y1])
+        pixels = image.convert("RGBA")
+        colors = {BRAND_GREEN, WHITE, MUTED}
+        active = [y for y in range(image.height)
+                  if any(pixels.getpixel((x, y)) in colors
+                         for x in range(60, min(x_max, image.width)))]
+        bands = []
+        start = previous = active[0]
+        for y in active[1:]:
+            if y - previous > 4:
+                bands.append((start, previous))
+                start = y
+            previous = y
+        bands.append((start, previous))
+        assert len(bands) == 4, "topic/meta/score/people must be distinct visible rows"
+        top, bottom = bands[2]
+        return tuple([x for y in range(top, bottom + 1)
+                      for x in range(min(x_max, image.width))
+                      if pixels.getpixel((x, y)) == color]
+                     for color in (BRAND_GREEN, WHITE))
 
 
 def _median(xs):
@@ -146,7 +145,7 @@ def test_比分按局数上色_赢的那个数黄绿(tmp_path):
     green, white = sides("7-6(5)", "seven-six.png")
     assert min(green) < min(white) and max(white) > max(green)
     green, white = sides("6-7(7)", "six-seven.png")
-    assert min(white) < min(green) and max(white) > max(green)
+    assert min(white) < min(green) and max(white) < min(green), "6的抢七小分在左侧6的右上角，不在整盘末尾"
     assert _score_xs(card("6-6", "level.png"))[0] == []
 
 

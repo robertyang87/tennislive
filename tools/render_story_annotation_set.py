@@ -11,7 +11,9 @@ import argparse
 import json
 from pathlib import Path
 
-from render_story_info_band import render
+from render_story_info_band import (
+    STORY_LABEL_MAX_SECONDS, STORY_LABEL_PAD, STORY_LABEL_WIDTH, render,
+)
 
 ROLES = {"context": "timeline", "number": "stat", "translation": "chapter"}
 
@@ -34,8 +36,8 @@ def build(manifest: Path, outdir: Path) -> list[dict]:
                metric=item.get("metric", ""), variant=ROLES[role])
         output.append({"name": name, "role": role, "placement_verified": False,
                        "inset": {"image": path.as_posix(), "kind": "story_text",
-                                 "corner": "tr", "width": 0.60, "pad": 0.085,
-                                 "show_for": 3.8, "motion": "editorial"}})
+                                 "corner": "tr", "width": STORY_LABEL_WIDTH, "pad": STORY_LABEL_PAD,
+                                 "show_for": STORY_LABEL_MAX_SECONDS, "motion": "editorial"}})
     (outdir / "insets.json").write_text(
         json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return output
