@@ -24,66 +24,38 @@
   ],
   "previous_background_proposal": "rejected by user: 不要加背景 / 很丑",
   "current_proposal": {
-    "image": "card-subtitle-effect-v8-comparison.jpg",
+    "image": "card-original-font-v9-comparison.jpg",
+    "font": "Original Smiley Sans Oblique / 得意黑 retained; TL Score retained",
+    "font_changes": false,
     "background": "none",
-    "font": "Noto Sans CJK SC, bold; score remains TL Score",
-    "outline": 4,
-    "shadow": 1,
-    "effect_source": "actual published subtitles.ass TL style",
-    "text_colors": "unchanged; winner name brand green, loser name original title white",
-    "date": "2026.09.07 · 美网第四轮",
-    "sizes": {
-      "topic": 84,
-      "meta": 60,
-      "score": 92,
-      "people": 60
+    "outline_px": 4,
+    "outline_color": "#141e18",
+    "shadow_px": 1,
+    "text_color": {
+      "topic": "#f4fbf7",
+      "date": "#d5e2db",
+      "place": "#c6f65a",
+      "winner_name": "#c6f65a",
+      "loser_name": "#f4fbf7"
     },
-    "meta_scale_x": 85,
-    "alignment": "right; text edge992, rail edge1023",
-    "rows": [
-      {
-        "row": 0,
-        "box": [
-          579,
-          122,
-          992,
-          187
-        ]
-      },
-      {
-        "row": 1,
-        "box": [
-          569,
-          193,
-          992,
-          242
-        ]
-      },
-      {
-        "row": 2,
-        "box": [
-          775,
-          246,
-          992,
-          305
-        ]
-      },
-      {
-        "row": 3,
-        "box": [
-          631,
-          311,
-          992,
-          361
-        ]
-      }
-    ],
-    "scope": "Single-frame static preview only. No video rendered or published."
+    "date_format": "2026.09.07 · 美网第四轮",
+    "sizes_native_px": {
+      "topic": 58,
+      "date_place": 44,
+      "score": 72,
+      "people": 44
+    },
+    "visible_glyph_gaps_native_px": 12,
+    "right_shift_px": 44,
+    "text_right_native_px": 992,
+    "rail_right_native_px": 1023,
+    "scope": "Only a static sample, not a new movie or QC approval"
   },
   "superseded_proposals": {
     "background": "explicitly rejected by user",
     "abbreviated_date": "explicitly rejected by user",
     "dark_loser_name": "superseded by latest instruction to preserve original font colors",
-    "v5_line_spacing": "rejected: date/event line touched score"
+    "v5_line_spacing": "rejected: date/event line touched score",
+    "Noto Sans CJK font change": "rejected: 不要改字体啊"
   }
 }
