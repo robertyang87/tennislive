@@ -1,6 +1,6 @@
 {
   "slug": "swiatek-season-end-2026",
-  "status": "editorial_spec_and_official_media_prepared",
+  "status": "native_recipe_prepared",
   "videos": {
     "ao": {
       "id": "dZkaebnWG-0",
@@ -21,7 +21,13 @@
         "bytes": 25501297,
         "sha256": "3cd611c57b6667c949d9da37fc5cbd55d90ad752310d0881b946aade6cf10286"
       },
-      "selected_windows": [],
+      "selected_windows": [
+        {
+          "start": 157.0,
+          "end": 159.8,
+          "native_segment": 3
+        }
+      ],
       "candidate_windows": [
         {
           "id": "ao-1",
@@ -31,13 +37,14 @@
           "status": "finite_visual_samples_checked_exact_trim_and_audio_pending"
         }
       ],
-      "asr_review_status": "not_started_this_task",
+      "asr_review_status": "asr_cross_checked_bound_to_exact_source_bytes",
       "visual_review_status": "finite_contact_sheet_review",
       "contact_sheets": [
         "research/swiatek-season-end-2026/contact-sheets/dZkaebnWG-0-full.jpg",
         "research/swiatek-season-end-2026/contact-sheets/dZkaebnWG-0-payoff.jpg"
       ],
-      "download_run": "https://github.com/robertyang87/tennislive/actions/runs/39603149412"
+      "download_run": "https://github.com/robertyang87/tennislive/actions/runs/39603149412",
+      "review_file": "data/audio_reviews/swiatek-season-end-2026.json"
     },
     "miami": {
       "url": "https://www.youtube.com/watch?v=cXfHQNqILsg",
@@ -45,8 +52,19 @@
       "discovery_status": "official_source_downloaded_and_probed",
       "downloaded_this_task": true,
       "probe_verified_this_task": true,
-      "selected_windows": [],
-      "asr_review_status": "not_started_this_task",
+      "selected_windows": [
+        {
+          "start": 113.1,
+          "end": 121.8,
+          "native_segment": 5
+        },
+        {
+          "start": 249.05,
+          "end": 262.95,
+          "native_segment": 6
+        }
+      ],
+      "asr_review_status": "asr_cross_checked_bound_to_exact_source_bytes",
       "visual_review_status": "finite_contact_sheet_review",
       "id": "cXfHQNqILsg",
       "title": "Magda Linette vs. Iga Swiatek | 2026 Miami Open Round 2 | WTA Match Highlights",
@@ -89,7 +107,8 @@
         "research/swiatek-season-end-2026/contact-sheets/cXfHQNqILsg-full.jpg",
         "research/swiatek-season-end-2026/contact-sheets/cXfHQNqILsg-payoff.jpg"
       ],
-      "download_run": "https://github.com/robertyang87/tennislive/actions/runs/39603128165"
+      "download_run": "https://github.com/robertyang87/tennislive/actions/runs/39603128165",
+      "review_file": "data/audio_reviews/swiatek-season-end-2026.json"
     },
     "rg": {
       "url": "https://www.youtube.com/watch?v=Z33qZSof7AQ",
@@ -97,8 +116,14 @@
       "discovery_status": "official_source_downloaded_and_probed",
       "downloaded_this_task": true,
       "probe_verified_this_task": true,
-      "selected_windows": [],
-      "asr_review_status": "not_started_this_task",
+      "selected_windows": [
+        {
+          "start": 135.5,
+          "end": 149.0,
+          "native_segment": 9
+        }
+      ],
+      "asr_review_status": "asr_cross_checked_bound_to_exact_source_bytes",
       "visual_review_status": "finite_contact_sheet_review",
       "id": "Z33qZSof7AQ",
       "title": "Marta Kostyuk vs Iga Swiatek | Round 4 Highlights | Roland-Garros 2026",
@@ -126,7 +151,8 @@
         "research/swiatek-season-end-2026/contact-sheets/Z33qZSof7AQ-full.jpg",
         "research/swiatek-season-end-2026/contact-sheets/Z33qZSof7AQ-payoff.jpg"
       ],
-      "download_run": "https://github.com/robertyang87/tennislive/actions/runs/39603132922"
+      "download_run": "https://github.com/robertyang87/tennislive/actions/runs/39603132922",
+      "review_file": "data/audio_reviews/swiatek-season-end-2026.json"
     },
     "wimbledon": {
       "url": "https://www.youtube.com/watch?v=KUVh-Jflv_Q",
@@ -134,8 +160,19 @@
       "discovery_status": "official_source_downloaded_and_probed",
       "downloaded_this_task": true,
       "probe_verified_this_task": true,
-      "selected_windows": [],
-      "asr_review_status": "not_started_this_task",
+      "selected_windows": [
+        {
+          "start": 405.0,
+          "end": 416.3,
+          "native_segment": 10
+        },
+        {
+          "start": 435.7,
+          "end": 449.4,
+          "native_segment": 11
+        }
+      ],
+      "asr_review_status": "asr_cross_checked_bound_to_exact_source_bytes",
       "visual_review_status": "finite_contact_sheet_review",
       "id": "KUVh-Jflv_Q",
       "title": "HISTORIC WIN! 🇵🇭 | Alexandra Eala vs Iga Swiatek | Extended Highlights | Wimbledon 2026",
@@ -164,7 +201,8 @@
         "research/swiatek-season-end-2026/contact-sheets/KUVh-Jflv_Q-418-455.jpg",
         "research/swiatek-season-end-2026/contact-sheets/KUVh-Jflv_Q-full.jpg"
       ],
-      "download_run": "https://github.com/robertyang87/tennislive/actions/runs/39603139819"
+      "download_run": "https://github.com/robertyang87/tennislive/actions/runs/39603139819",
+      "review_file": "data/audio_reviews/swiatek-season-end-2026.json"
     },
     "toronto": {
       "url": "https://www.youtube.com/watch?v=bDttZof7qXI",
@@ -172,8 +210,24 @@
       "discovery_status": "official_source_downloaded_and_probed",
       "downloaded_this_task": true,
       "probe_verified_this_task": true,
-      "selected_windows": [],
-      "asr_review_status": "not_started_this_task",
+      "selected_windows": [
+        {
+          "start": 237.4,
+          "end": 245.2,
+          "native_segment": 2
+        },
+        {
+          "start": 207.5,
+          "end": 217.1,
+          "native_segment": 14
+        },
+        {
+          "start": 245.3,
+          "end": 264.2,
+          "native_segment": 15
+        }
+      ],
+      "asr_review_status": "asr_cross_checked_bound_to_exact_source_bytes",
       "visual_review_status": "finite_contact_sheet_review",
       "existing_spec": "specs/reels/swiatek-chwalinska-story-2026.json",
       "existing_release_source": "https://github.com/robertyang87/tennislive/releases/download/source-bDttZof7qXI/bDttZof7qXI.mp4",
@@ -209,7 +263,8 @@
       "contact_sheets": [
         "research/swiatek-season-end-2026/contact-sheets/bDttZof7qXI-full.jpg",
         "research/swiatek-season-end-2026/contact-sheets/bDttZof7qXI-payoff.jpg"
-      ]
+      ],
+      "review_file": "data/audio_reviews/swiatek-season-end-2026.json"
     },
     "uso": {
       "url": "https://www.youtube.com/watch?v=Md8vyWg60fI",
@@ -217,8 +272,19 @@
       "discovery_status": "official_source_downloaded_and_probed",
       "downloaded_this_task": true,
       "probe_verified_this_task": true,
-      "selected_windows": [],
-      "asr_review_status": "not_started_this_task",
+      "selected_windows": [
+        {
+          "start": 44.6,
+          "end": 59.0,
+          "native_segment": 17
+        },
+        {
+          "start": 151.7,
+          "end": 163.4,
+          "native_segment": 18
+        }
+      ],
+      "asr_review_status": "asr_cross_checked_bound_to_exact_source_bytes",
       "visual_review_status": "finite_contact_sheet_review",
       "existing_spec": "specs/reels/zheng-swiatek-us-open-2026-r4.json",
       "id": "Md8vyWg60fI",
@@ -284,7 +350,8 @@
       "download_run": "https://github.com/robertyang87/tennislive/actions/runs/39603145203",
       "alignment_notes": [
         "集锦没有已确认的5-0记分条镜头；5-0领先事实用官方报道支持的短卡说明，不能用2-0画面冒充。"
-      ]
+      ],
+      "review_file": "data/audio_reviews/swiatek-season-end-2026.json"
     },
     "wuhan": {
       "url": "https://www.youtube.com/watch?v=ATsKkPJBY3s",
@@ -292,8 +359,19 @@
       "discovery_status": "official_source_downloaded_and_probed",
       "downloaded_this_task": true,
       "probe_verified_this_task": true,
-      "selected_windows": [],
-      "asr_review_status": "not_started_this_task",
+      "selected_windows": [
+        {
+          "start": 98.5,
+          "end": 115.35,
+          "native_segment": 20
+        },
+        {
+          "start": 231.7,
+          "end": 240.55,
+          "native_segment": 21
+        }
+      ],
+      "asr_review_status": "asr_cross_checked_bound_to_exact_source_bytes",
       "visual_review_status": "finite_contact_sheet_review",
       "existing_spec": "specs/reels/chwalinska-swiatek-wuhan-2026-sf.json",
       "existing_release_source": "https://github.com/robertyang87/tennislive/releases/download/source-ATsKkPJBY3s/ATsKkPJBY3s.mp4",
@@ -333,7 +411,8 @@
       "exclusions": [
         "未确认医疗暂停或治疗现场，不标注任何候选镜头为治疗画面",
         "284.2秒后存在不采用的错误比分解说；299.52秒后采访对象是赫瓦林斯卡，不能冒作斯瓦泰克"
-      ]
+      ],
+      "review_file": "data/audio_reviews/swiatek-season-end-2026.json"
     }
   },
   "social_search": {
@@ -347,7 +426,17 @@
         "sha256": "14eac394425b22ddf1120ff661137bf13eb5347b9f6567be251102688ff41667",
         "review": "visually inspected: @iga.swiatek header, player photo, authentic season-end caption; image is a browser screenshot, no synthetic quote"
       },
-      "attribution_boundary": "左大腿持续数周出自宁波退赛声明；结束赛季IG帖谈休息恢复与下半年进步，不能混称IG写了左大腿伤情。"
+      "attribution_boundary": "左大腿持续数周出自宁波退赛声明；结束赛季IG帖谈休息恢复与下半年进步，不能混称IG写了左大腿伤情。",
+      "mobile_screenshots": {
+        "evidence": "research/swiatek-season-end-2026/instagram-mobile-evidence.json",
+        "viewport": [
+          430,
+          932
+        ],
+        "scale": 3,
+        "source_page": "https://www.instagram.com/p/Det8eWQiW9m/embed/captioned/",
+        "note": "真实原帖网页按手机宽度重排；不是原生App截图；视频使用上下两个原图区域，正文未重写。"
+      }
     },
     "x": {
       "account": "@iga_swiatek",
@@ -383,12 +472,9 @@
     }
   },
   "remaining": [
-    "逐段连续回看和精确入出点，保留完整关键回合",
-    "原声ASR、逐句听核、双语字幕时间轴",
-    "多伦多本人采访本次独立听核与字幕对齐",
-    "封面实际版式、裁切预览",
-    "按实际TTS时长调整预算，完成自动五项配音检查",
-    "生成可执行spec后运行taste_preflight和dry-run；尚未渲染"
+    "正式渲染",
+    "成片自动五项配音检查与实际字幕/裁切/转场QC",
+    "GitHub交付与按既有流程发布"
   ],
   "editorial_references": [
     {
@@ -446,7 +532,7 @@
         "zh": "我现在的状态确实不一样了。我觉得自己能打出自己的网球，法网那次我做不到。"
       },
       "context_label": "2026年8月多伦多1/8决赛赛后；不能标作5月法网赛后采访",
-      "audio_review_this_task": false,
+      "audio_review_this_task": "two_model_words_cross_checked_plus_base_core_sentence; not human listening",
       "title": "Marta Kostyuk vs. Iga Swiatek | 2026 Toronto Round of 16 | WTA Match Highlights",
       "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-dFFU9hkTyfk/dFFU9hkTyfk.mp4",
       "local_path": "research/swiatek-season-end-2026/sources/videos/dFFU9hkTyfk.mp4",
@@ -476,5 +562,6 @@
       "page_evidence": "research/swiatek-season-end-2026/sources/rg-presser-page.html",
       "use": "仅为补充候选；未获得视频及核句前不承诺使用本人原声"
     }
-  }
+  },
+  "native_recipe": "specs/reels/swiatek-season-end-2026.json"
 }

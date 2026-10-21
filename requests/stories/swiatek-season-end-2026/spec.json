@@ -1,8 +1,8 @@
 {
   "schema": "tennis-story-editorial-spec/v1",
   "slug": "swiatek-season-end-2026",
-  "stage": "editorial_and_media_preparation",
-  "render_ready": false,
+  "stage": "native_recipe_prepared",
+  "render_ready": true,
   "column": "网球有故事",
   "story_kind": "person",
   "subject": "斯瓦泰克",
@@ -262,5 +262,9 @@
     "按实际TTS时长调整预算，完成自动五项配音检查",
     "生成可执行spec后运行taste_preflight和dry-run；尚未渲染"
   ],
-  "request": "requests/stories/swiatek-season-end-2026.json"
+  "request": "requests/stories/swiatek-season-end-2026.json",
+  "runtime_spec": "specs/reels/swiatek-season-end-2026.json",
+  "render_ready_meaning": "native spec and source evidence ready; film and full final QC not yet produced",
+  "narration_request_count": 20,
+  "actual_audio_precheck": "research/swiatek-season-end-2026/voice-precheck.json"
 }

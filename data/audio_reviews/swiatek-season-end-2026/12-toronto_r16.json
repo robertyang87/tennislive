@@ -1,0 +1,55 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=dFFU9hkTyfk",
+  "source_sha256": "daa7c450ec73cad30fe161ba9082c8cfba8642154b3989e33346429355a2451e",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-21T14:14:36.988981+00:00",
+  "reviewer": "Codex：核对实际small.en/medium.en逐词结果；争议处追加base多语种；没有冒称真人听审",
+  "reviewed_from": 315.3,
+  "reviewed_to": 325.75,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 315.46,
+      "end": 319.08,
+      "en": "Well, I'm in a different place for sure, so, you know,",
+      "zh": "我现在的状态确实不一样了。"
+    },
+    {
+      "start": 319.12,
+      "end": 320.42,
+      "en": "I feel like I can play my game,",
+      "zh": "我能打出自己的网球了。"
+    },
+    {
+      "start": 320.46,
+      "end": 322.68,
+      "en": "and I couldn't really do that on French.",
+      "zh": "法网那次，我没能做到。"
+    },
+    {
+      "start": 322.78,
+      "end": 325.64,
+      "en": "So, yeah, I knew what to do.",
+      "zh": "所以，我知道该怎么做了。"
+    }
+  ],
+  "asr_results": [
+    {
+      "model": "small.en",
+      "path": "data/source_asr/dFFU9hkTyfk/small.en.json",
+      "sha256": "58cfb057d9b257ef899add53f4beda68b7c85cbf9bce4560a4b1f6749dfde97e"
+    },
+    {
+      "model": "medium.en",
+      "path": "data/source_asr/dFFU9hkTyfk/medium.en.json",
+      "sha256": "cbb8dc5aa36ce586cba3b8424b38534f8454dfc6ead4c9d046d3a1b8fa2a799d"
+    },
+    {
+      "model": "base.multilingual",
+      "path": "data/evidence/swiatek-season-end-2026/source-asr/dFFU9hkTyfk.json",
+      "sha256": "c3962ebef51f06196d6105ed94da1c97d72e6ac4e7cf8f72e64edf8dc48633e1"
+    }
+  ],
+  "review_note": "small.en与medium.en逐词一致，base独立复核本人核心句；保留至So, yeah, I knew what to do结束，按语义拆四条双语字幕；audio_tail=silence仅剪除名义结束后的转场尾料，避免325.8下一句泄漏。"
+}

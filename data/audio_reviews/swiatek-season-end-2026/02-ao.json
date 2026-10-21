@@ -1,0 +1,26 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=dZkaebnWG-0",
+  "source_sha256": "3cd611c57b6667c949d9da37fc5cbd55d90ad752310d0881b946aade6cf10286",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-21T14:14:36.553746+00:00",
+  "reviewer": "Codex：核对实际small.en/medium.en逐词结果；争议处追加base多语种；没有冒称真人听审",
+  "reviewed_from": 157.0,
+  "reviewed_to": 159.98,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_results": [
+    {
+      "model": "small.en",
+      "path": "data/source_asr/dZkaebnWG-0/small.en.json",
+      "sha256": "4726da6c4abccd39e6baa6ccc4aac43dacd0fb4b4b62d39ce68f8f2667c3bd5e"
+    },
+    {
+      "model": "medium.en",
+      "path": "data/source_asr/dZkaebnWG-0/medium.en.json",
+      "sha256": "d08168b9306580f136f13c1d52d8821081f4a5311a6152f20994b39b16ff4fdc"
+    }
+  ],
+  "review_note": "157–159.8为球员反应和场内声，双模型的终场评论在160.02/160.24以后开口；转场尾料至159.98仍未碰该句。",
+  "no_foreground_english_reason": "157–159.8为球员反应和场内声，双模型的终场评论在160.02/160.24以后开口；转场尾料至159.98仍未碰该句。"
+}

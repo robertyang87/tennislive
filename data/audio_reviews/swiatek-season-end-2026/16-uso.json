@@ -1,0 +1,26 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Md8vyWg60fI",
+  "source_sha256": "5755e806b3a23013f08396d731efb0b1caaa1790a9a8009aba18c31c7b1ee2e9",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-21T14:14:37.230361+00:00",
+  "reviewer": "Codex：核对实际small.en/medium.en逐词结果；争议处追加base多语种；没有冒称真人听审",
+  "reviewed_from": 44.6,
+  "reviewed_to": 59.18,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_results": [
+    {
+      "model": "small.en",
+      "path": "data/source_asr/Md8vyWg60fI/small.en.json",
+      "sha256": "da208250627433ff30458e30f18f2507d32eb3a6074a8b83863f6a2e0c9785f2"
+    },
+    {
+      "model": "medium.en",
+      "path": "data/source_asr/Md8vyWg60fI/medium.en.json",
+      "sha256": "a6a23a271af63bb4b76de00bfc23db16c4b436cb39efbe021fea2704a89cff05"
+    }
+  ],
+  "review_note": "44.6–59和151.7–163.4两模型逐词均未检出前景英文；终场总结在163.82后才开口。首盘5-0用报道支持的原生卡，避免字幕把源片5-3错称5-0。",
+  "no_foreground_english_reason": "44.6–59和151.7–163.4两模型逐词均未检出前景英文；终场总结在163.82后才开口。首盘5-0用报道支持的原生卡，避免字幕把源片5-3错称5-0。"
+}
