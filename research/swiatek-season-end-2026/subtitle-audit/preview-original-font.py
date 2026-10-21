@@ -7,7 +7,7 @@ parser=argparse.ArgumentParser()
 parser.add_argument("--score",default="5-7 3-6")
 parser.add_argument("--layout-test",action="store_true")
 args=parser.parse_args()
-variant=("v13-tiebreak-five-set" if len(args.score.split())==5 else "v13-tiebreak") if args.layout_test else "v13"
+variant=("v14-tiebreak-five-set" if len(args.score.split())==5 else "v14-tiebreak") if args.layout_test else "v14"
 R=Path(__file__).resolve().parents[3];out=R/'research/swiatek-season-end-2026/subtitle-audit';out.mkdir(exist_ok=True)
 F=lambda n:ImageFont.truetype(str(R/'assets/fonts/SmileySans-Oblique.ttf'),n)
 S=lambda n:ImageFont.truetype(str(R/'assets/fonts/TLScore-Bold.ttf'),n)
@@ -24,7 +24,8 @@ row_box=f.getbbox(left+right,anchor='ls');row_baseline=y-row_box[1]
 for text,color,xx in [(left,MUTED,x),(right,GREEN,x+w1)]:
  d.text((xx+1,row_baseline+1),text,font=f,fill=(0,0,0,255),anchor='ls',stroke_width=4,stroke_fill=(0,0,0,255))
  d.text((xx,row_baseline),text,font=f,fill=color,anchor='ls',stroke_width=4,stroke_fill=INK)
-y+=row_box[3]-row_box[1]+12
+SCORE_GAP=10
+y+=row_box[3]-row_box[1]+SCORE_GAP
 score_text=args.score
 max_score_width=max(d.textlength('领先之后被逆转',font=F(58)),w1+w2,d.textlength('斯瓦泰克 vs 郑钦文',font=F(44)))
 def score_layout(text,size):
@@ -48,7 +49,7 @@ def score_layout(text,size):
   if tie is not None and b=='6':
    cursor+=1;add(tie,small,WHITE,raise_baseline,2);cursor+=2
  return runs,cursor
-score_size=66
+score_size=69
 runs,total=score_layout(score_text,score_size)
 while total>max_score_width:
  score_size-=1;runs,total=score_layout(score_text,score_size)
@@ -60,7 +61,7 @@ for t,font,color,dx,dy,stroke in runs:
  xx=RIGHT-total+dx
  d.text((xx+1,baseline+dy+1),t,font=font,fill=(0,0,0,255),anchor='ls',stroke_width=stroke,stroke_fill=(0,0,0,255))
  d.text((xx,baseline+dy),t,font=font,fill=color,anchor='ls',stroke_width=stroke,stroke_fill=INK)
-y+=score_slot_height+12
+y+=score_slot_height+SCORE_GAP
 f=F(44);people_chunks=[('斯瓦泰克',WHITE),(' vs ',MUTED),('郑钦文',GREEN)];tw=sum(d.textlength(t,font=f) for t,c in people_chunks);xx=RIGHT-tw
 # Center the shorter Latin vs on the visible vertical center of both names.
 name_bounds=[f.getbbox(t) for t,c in people_chunks if t.strip()!='vs']
@@ -78,27 +79,27 @@ layer=layer.resize((round(layer.width*SCALE),round(layer.height*SCALE)),Image.Re
 new.alpha_composite(layer,(round(1023*(1-SCALE)),round(122*(1-SCALE))))
 new=new.convert('RGB');
 if not args.layout_test:new.save(out/f'card-original-font-{variant}-full.jpg',quality=95)
-previous=Image.open(out/'card-original-font-v12-full.jpg').convert('RGB')
+previous=Image.open(out/'card-original-font-v13-full.jpg').convert('RGB')
 canvas=Image.new('RGB',(840,588),'#eef1f4');cd=ImageDraw.Draw(canvas)
-cd.text((28,16),'上一版',font=F(24),fill='#142a3f');cd.text((448,16),('五盘含抢七 · 排版示意' if len(args.score.split())==5 else '抢七上标 · 非本场赛果') if args.layout_test else '赢盘粗体 · 输盘细体',font=F(24),fill='#142a3f')
+cd.text((28,16),'上一版',font=F(24),fill='#142a3f');cd.text((448,16),('五盘含抢七 · 排版示意' if len(args.score.split())==5 else '抢七上标 · 非本场赛果') if args.layout_test else '比分略放大 · 上下收紧',font=F(24),fill='#142a3f')
 canvas.paste(previous.resize((390,520),Image.Resampling.LANCZOS),(15,56));canvas.paste(new.resize((390,520),Image.Resampling.LANCZOS),(435,56));canvas.save(out/f'card-original-font-{variant}-comparison.jpg',quality=95)
 if args.layout_test:
  detail=Image.new('RGB',(920,320),'#eef1f4');dd=ImageDraw.Draw(detail)
  dd.text((20,12),'实际两盘比分 · 输盘细体',font=F(24),fill='#142a3f')
  dd.text((480,12),'上标与字重示意 · 非本场赛果',font=F(24),fill='#142a3f')
- for xx,frame in [(10,Image.open(out/'card-original-font-v13-full.jpg')),(470,new)]:
+ for xx,frame in [(10,Image.open(out/'card-original-font-v14-full.jpg')),(470,new)]:
   crop=frame.crop((580,105,1040,350));detail.paste(crop,(xx,60))
  detail.save(out/f'card-original-font-{variant}-detail.jpg',quality=95)
  print(json.dumps({'layout_test_only':True,'score':score_text,'font_size_before_group_scale':score_size,'width_before_group_scale':total,'max_width_before_group_scale':max_score_width},ensure_ascii=False));raise SystemExit(0)
 p=out/'card-readability-analysis.json';r=json.loads(p.read_text());current=r['current_proposal']
-current.update({'image':'card-original-font-v13-comparison.jpg','scale_from_v9':SCALE,'font_changes':False,'scale_scope':'entire card including all four text rows, spacing, outline/shadow and accent rail; top-right anchored','sizes_native_px':{k:round(v*SCALE,1) for k,v in {'topic':58,'date_place':44,'score':score_size,'people':44}.items()},'outline_px':4*SCALE,'shadow_px':SCALE,'visible_glyph_gaps_native_px':12*SCALE,'right_shift_px':44,'text_right_native_px':round(1023+(992-1023)*SCALE),'rail_right_native_px':1023})
+current.update({'image':'card-original-font-v14-comparison.jpg','scale_from_v9':SCALE,'font_changes':False,'scale_scope':'entire card including all four text rows, spacing, outline/shadow and accent rail; top-right anchored','sizes_native_px':{k:round(v*SCALE,1) for k,v in {'topic':58,'date_place':44,'score':score_size,'people':44}.items()},'outline_px':4*SCALE,'shadow_px':SCALE,'visible_glyph_gaps_native_px':{'title_to_date':12*SCALE,'score_row_padding_top_bottom':SCORE_GAP*SCALE},'right_shift_px':44,'text_right_native_px':round(1023+(992-1023)*SCALE),'rail_right_native_px':1023})
 current['score_weights']='Per set: larger game count TL Score Bold + brand yellow-green; smaller game count TL Score Light + white; separators and superscript use Light. Same font family retained.'
 current['tiebreak']='Bare small digit at upper right of losing game count6, 48% of main score font; includes superscript width in five-set fit; static only'
-current['score_fit']='Maximum font size66 before 90% group scale; shrink only score until entire one-line score fits the widest text row. Static prototype only.'
-current['score_adjustment']={'previous_font_px_before_group_scale':72,'font_px_before_group_scale':score_size,'scale_from_previous':score_size/72,'placement':'right aligned and vertically centered in unchanged score row; all other text and rail positions retained'}
+current['score_fit']='Maximum font size69 before 90% group scale; shrink only score until entire one-line score fits the widest text row. Static prototype only.'
+current['score_adjustment']={'previous_font_px_before_group_scale':66,'font_px_before_group_scale':score_size,'scale_from_previous':score_size/66,'placement':'right aligned; score row spacing above/below reduced from12 to10; title/date positions and vs alignment retained'}
 current['vs_alignment']='Visible glyph center aligned vertically with player names; original spacing and font retained'
 current['date_event_alignment']='Shared alphabetic baseline; full-row glyph bounds determine following score position'
 current['date_event_baseline_fix_native_px']=6*SCALE
 r['superseded_proposals']['v9_size']='User: 对比度够了，但感觉字号有点大 / 整体都要缩小; V10 scales complete card to 90%'
 p.write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n')
-print('Created V13 static preview: winning digits bold, losing digits light; bare tiebreak superscripts; adaptive five-set fit')
+print('Created V14 static preview: score enlarged66 to69; score gaps12 to10; per-set weights and superscripts retained')

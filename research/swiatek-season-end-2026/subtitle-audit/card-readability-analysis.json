@@ -24,7 +24,7 @@
   ],
   "previous_background_proposal": "rejected by user: 不要加背景 / 很丑",
   "current_proposal": {
-    "image": "card-original-font-v13-comparison.jpg",
+    "image": "card-original-font-v14-comparison.jpg",
     "font": "Original Smiley Sans Oblique / 得意黑 retained; TL Score retained",
     "font_changes": false,
     "background": "none",
@@ -42,10 +42,13 @@
     "sizes_native_px": {
       "topic": 52.2,
       "date_place": 39.6,
-      "score": 59.4,
+      "score": 62.1,
       "people": 39.6
     },
-    "visible_glyph_gaps_native_px": 10.8,
+    "visible_glyph_gaps_native_px": {
+      "title_to_date": 10.8,
+      "score_row_padding_top_bottom": 9.0
+    },
     "right_shift_px": 44,
     "text_right_native_px": 995,
     "rail_right_native_px": 1023,
@@ -56,12 +59,12 @@
     "date_event_baseline_fix_native_px": 5.4,
     "vs_alignment": "Visible glyph center aligned vertically with player names; original spacing and font retained",
     "score_adjustment": {
-      "previous_font_px_before_group_scale": 72,
-      "font_px_before_group_scale": 66,
-      "scale_from_previous": 0.9166666666666666,
-      "placement": "right aligned and vertically centered in unchanged score row; all other text and rail positions retained"
+      "previous_font_px_before_group_scale": 66,
+      "font_px_before_group_scale": 69,
+      "scale_from_previous": 1.0454545454545454,
+      "placement": "right aligned; score row spacing above/below reduced from12 to10; title/date positions and vs alignment retained"
     },
-    "score_fit": "Maximum font size66 before 90% group scale; shrink only score until entire one-line score fits the widest text row. Static prototype only.",
+    "score_fit": "Maximum font size69 before 90% group scale; shrink only score until entire one-line score fits the widest text row. Static prototype only.",
     "tiebreak": "Bare small digit at upper right of losing game count6, 48% of main score font; includes superscript width in five-set fit; static only",
     "score_weights": "Per set: larger game count TL Score Bold + brand yellow-green; smaller game count TL Score Light + white; separators and superscript use Light. Same font family retained."
   },
