@@ -1,0 +1,20 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-0swz2rTLxaM/0swz2rTLxaM.mp4",
+  "source_sha256": "7e92e44f0e287acad252dd6705ea07e992cd1ce6ac951b2a70ae48cb45dd92a5",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-21T20:15:57+00:00",
+  "reviewed_from": 146.7,
+  "reviewed_to": 150.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 146.76,
+      "end": 149.96,
+      "en": "This day, I will remember for the rest of my life,",
+      "zh": "这一天，我会铭记一生，"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 7e92e44f0e287acad252dd6705ea07e992cd1ce6ac951b2a70ae48cb45dd92a5，存于 data/source_asr/0swz2rTLxaM/small.en.json 与 data/source_asr/0swz2rTLxaM/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
