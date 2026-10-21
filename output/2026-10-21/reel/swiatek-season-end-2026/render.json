@@ -13,15 +13,15 @@
     "release_tag": "reel-tts-swiatek-season-end-2026-3ca4c415f639d4c8",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-swiatek-season-end-2026-3ca4c415f639d4c8/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39615334865"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39617141816"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 4.602,
   "layout": "full",
-  "segments_seconds": 240.45,
+  "segments_seconds": 246.45,
   "topbar": null,
-  "film_seconds": 246.28,
+  "film_seconds": 252.28,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -61,44 +61,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "91ecf4e62ea00cbec50782f47026ed6daf3ff11ae76261a5bc160211e0f63525",
+  "render_inputs_sha256": "5cfb62f92b6d107702f16cf9b1619990a9d5d57cfafaa9de82ae9a67a9f88152",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "swiatek-season-end-2026",
-    "received_at": "2026-10-21T14:15:55Z",
-    "artifact_ready_at": "2026-10-21T14:21:12Z",
-    "elapsed_seconds": 317.773,
+    "received_at": "2026-10-21T14:28:54Z",
+    "artifact_ready_at": "2026-10-21T14:35:19Z",
+    "elapsed_seconds": 385.72,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "15e081057d7320059d91eba9760a8c07227ca9e3709c4940cda507ab806c7fe9",
-    "spec_sha256": "107d3329427b3a4f9f384cd64129d4572b8c98ea6f2d6964ec1f1e0454c24817",
-    "run_id": "39615334865",
+    "film_sha256": "af2793a29042de5a636c3f2c1e3429e7e704e1669ca3ab24db646a7d9d516b68",
+    "spec_sha256": "33f6549d36ee8fae862ccc15687c64b96ae32ed64c267324b50fe9e3afb4c37c",
+    "run_id": "39617141816",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-21T14:18:45Z",
-        "run_id": "39615334865"
+        "at": "2026-10-21T14:31:31Z",
+        "run_id": "39617141816"
       }
     ],
-    "render_seconds": 147.773,
-    "pre_render_seconds": 170.0
+    "render_seconds": 228.72,
+    "pre_render_seconds": 157.0
   },
-  "film_sha256": "15e081057d7320059d91eba9760a8c07227ca9e3709c4940cda507ab806c7fe9",
-  "film_bytes": 75532701,
-  "qc_attestation_sha256": "7c60f1f2a76b1aadb28f1a770ea599997fee9c02d17ced1dbf352311ddb700c6",
+  "film_sha256": "af2793a29042de5a636c3f2c1e3429e7e704e1669ca3ab24db646a7d9d516b68",
+  "film_bytes": 77800252,
+  "qc_attestation_sha256": "fac7ff996c9d08857085098885d5b3041ece5c69ba4e5355e9bb513787efb4f4",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-21T14:18:45Z",
-      "run_id": "39615334865"
+      "at": "2026-10-21T14:31:31Z",
+      "run_id": "39617141816"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-21T14:21:15Z",
-      "run_id": "39615334865"
+      "at": "2026-10-21T14:35:22Z",
+      "run_id": "39617141816"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-swiatek-season-end-2026/swiatek-season-end-2026.mp4",
-  "video_bytes": 75532701
+  "video_bytes": 77800252
 }

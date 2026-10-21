@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "1af41b52c5c8a2be6d527eab618e9ddfa20780f74f0a6596bdd8de47a198438c",
-    "render_inputs_sha256": "91ecf4e62ea00cbec50782f47026ed6daf3ff11ae76261a5bc160211e0f63525",
-    "spec_sha256": "107d3329427b3a4f9f384cd64129d4572b8c98ea6f2d6964ec1f1e0454c24817",
-    "film_sha256": "15e081057d7320059d91eba9760a8c07227ca9e3709c4940cda507ab806c7fe9",
+    "render_sha256": "5c5cbec2930f45a347eb37e0aa8d3fdf3260bbf1a740d7a99234ded4f0ef65d5",
+    "render_inputs_sha256": "5cfb62f92b6d107702f16cf9b1619990a9d5d57cfafaa9de82ae9a67a9f88152",
+    "spec_sha256": "33f6549d36ee8fae862ccc15687c64b96ae32ed64c267324b50fe9e3afb4c37c",
+    "film_sha256": "af2793a29042de5a636c3f2c1e3429e7e704e1669ca3ab24db646a7d9d516b68",
     "inventory_sha256": "0871247964ee11631d75bbf00e47b1b82ee27218426659be6669ce7294a5b6b1"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-21T14:22:33+00:00",
+  "reviewed_at": "2026-10-21T14:37:09+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -499,7 +499,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "距离拿下这一盘只差一局,随后却连丢七局,最终止步第四轮。四战大满冠,最好成绩仍是年初傲往四分之一决赛。"
+        "transcript": "距离拿下这一盘只差一局,随后却连丢七局,最终止步第四轮。四战大满冠,最好成绩仍是年初傲网四分之一决赛。"
       },
       "polyphones": [],
       "pauses": {
@@ -563,7 +563,7 @@
         "substituted": 1,
         "sub_ratio": 0.026,
         "longest_deletion": 0,
-        "transcript": "接下来,是他四次夺冠的巴黎,5月31日,25岁生日,他却止步第四轮,再后,他谈到紧张。"
+        "transcript": "接下来,是他四次夺冠的巴黎。5月31日,25岁生日,他却止步第四轮。再后,他谈到紧张。"
       },
       "polyphones": [],
       "pauses": {
@@ -831,7 +831,7 @@
         "substituted": 1,
         "sub_ratio": 0.042,
         "longest_deletion": 0,
-        "transcript": "七十三战首战连胜就此终结。四天后,他与费瑟特结束合作。"
+        "transcript": "七十三战首战连胜就此终结。四天后,他与废色特结束合作。"
       },
       "polyphones": [],
       "pauses": {
@@ -895,7 +895,7 @@
         "substituted": 1,
         "sub_ratio": 0.028,
         "longest_deletion": 0,
-        "transcript": "这一年留下的失利,也留下了一座奖杯。等他恢复健康,你最期待他在哪片球场找回自己。"
+        "transcript": "这一年留下的失利,也留下了一座奖杯。等他恢复健康,你最期待他在哪片球场,找回自己。"
       },
       "polyphones": [],
       "pauses": {
