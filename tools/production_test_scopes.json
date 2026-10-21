@@ -158,6 +158,8 @@
       "tests/test_match_feed_tools.py",
       "tests/test_match_reel.py",
       "tests/test_match_reel_optional_int_inputs.py",
+      "tests/test_match_reel_source_crop.py",
+      "tests/test_match_reel_story_inset_delay.py",
       "tests/test_mcp_stats.py",
       "tests/test_name_match.py",
       "tests/test_narrated_audio_mode.py",
@@ -305,7 +307,8 @@
       "tests/test_outro_push.py",
       "tests/test_outro_render.py",
       "tests/test_source_story_cards.py",
-      "tests/test_story_info_band.py"
+      "tests/test_story_info_band.py",
+      "tests/test_story_info_band_match_decider.py"
     ],
     "news": [
       "tests/test_news_brief.py",
