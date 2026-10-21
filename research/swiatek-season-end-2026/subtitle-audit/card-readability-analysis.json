@@ -24,7 +24,7 @@
   ],
   "previous_background_proposal": "rejected by user: 不要加背景 / 很丑",
   "current_proposal": {
-    "image": "card-original-font-v12-comparison.jpg",
+    "image": "card-original-font-v13-comparison.jpg",
     "font": "Original Smiley Sans Oblique / 得意黑 retained; TL Score retained",
     "font_changes": false,
     "background": "none",
@@ -61,7 +61,9 @@
       "scale_from_previous": 0.9166666666666666,
       "placement": "right aligned and vertically centered in unchanged score row; all other text and rail positions retained"
     },
-    "score_fit": "Maximum font size66 before 90% group scale; shrink only score until entire one-line score fits the widest text row. Static prototype only."
+    "score_fit": "Maximum font size66 before 90% group scale; shrink only score until entire one-line score fits the widest text row. Static prototype only.",
+    "tiebreak": "Bare small digit at upper right of losing game count6, 48% of main score font; includes superscript width in five-set fit; static only",
+    "score_weights": "Per set: larger game count TL Score Bold + brand yellow-green; smaller game count TL Score Light + white; separators and superscript use Light. Same font family retained."
   },
   "superseded_proposals": {
     "background": "explicitly rejected by user",
