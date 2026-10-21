@@ -2,40 +2,8 @@
   "schema": "tennislive.pre-render-voice-findings.v1",
   "slug": "muchova-finals-2026",
   "final_film_approval": false,
-  "method": "Actual frozen v2 bundle bytes: only2 changed audio SHAs rechecked with exported five-check suite;20 unchanged exact-SHA findings reused verbatim. ASR uses ffmpeg16kHz float32 ndarray to avoid PyAV metadata_errors incompatibility; no human listening or final-film approval claim.",
+  "method": "User-cut v3 frozen bundle actual-byte verification only: all21 MP3 SHAs match existing v2 audio findings, reused verbatim. No new audio, ASR, pronunciation measurements, or other per-audio checks were run.",
   "audio": [
-    {
-      "text": "八月回到纽约，她先和门西克一起，拿下美网混双冠军。",
-      "audio_sha256": "76d21afe5cbdf49066c7829f24fa28f7f8d4be0178fc83328944f240143ca8c3",
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "asr": "8月回到纽约,他先和门西克一起拿下美网混双冠军。",
-      "comparison": {
-        "ok": true,
-        "ref_syllables": 22,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "8月回到纽约,他先和门西克一起拿下美网混双冠军。"
-      },
-      "timing": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 22,
-        "speech_s": 4.682,
-        "cps": 4.7,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "八月 ｜ 回到 ｜ 纽约 ｜ 她 ｜ 先 ｜ 和 ｜ 门西克 ｜ 一起 ｜ 拿下 ｜ 美 ｜ 网 ｜ 混双 ｜ 冠军"
-      },
-      "polyphones": []
-    },
     {
       "text": "四千七百三十五分，她把这个起伏的赛季，带到了总决赛。你最期待她打出怎样的网球？",
       "audio_sha256": "57b7fb3cf5cfc5358a1156d01cb5f9a788b4fc31277547e482c43e03889dd155",
@@ -760,28 +728,26 @@
   "sentence_splits": [],
   "pass": true,
   "incremental_recheck": {
-    "bundle_path": "/tmp/muchova-finals-2026-tts-v2.zip",
-    "bundle_sha256": "8d89ac230a0e3375c9067d81582ebf2255ab409ff04c689352b0b299bbcd44fa",
-    "previous_findings_sha256": "f80d1b26adba0c49e7cf2f7fbef178ba27ee6fc6333da5e8490efd666d71b0fa",
-    "checked_at": "2026-10-21T17:49:50.293773+00:00",
-    "only_changed_rechecked": true,
-    "changed_audio_count": 2,
-    "exact_byte_reused_count": 20,
-    "changed_audio_sha256": [
-      "843a4f9af125fe3f6bd6e7a97b890062c69e6031ab7f2a1d61c2b5ea71aea103",
-      "9442e183bf8decba68d7c695f5913d8a9800b85b24d929ae87e4ddbc248d09f7"
-    ],
+    "scope": "usercut_no_new_audio",
+    "bundle_path": "/tmp/muchova-finals-2026-tts-v3.zip",
+    "bundle_sha256": "571cdb7deeeeff89c7060361eada0599e968fe7fb51e25ebfd2575a944f6da48",
+    "previous_findings_sha256": "c36887612522c22de94c1adf9aef8bfcf9418f778ca068e93d929859a32ab26d",
+    "checked_at": "2026-10-21T18:09:03.882700+00:00",
+    "new_audio_count": 0,
+    "rechecked_audio_count": 0,
+    "exact_byte_reused_count": 21,
     "exact_byte_reused_sha256": [
-      "76d21afe5cbdf49066c7829f24fa28f7f8d4be0178fc83328944f240143ca8c3",
       "57b7fb3cf5cfc5358a1156d01cb5f9a788b4fc31277547e482c43e03889dd155",
       "14b2e92910865f75f7840f1b4ea416eab6a005fbaafccfdbe095cb1045bea17f",
       "f482b2416110e65886a4a34fc7098ce9eee25298d96935c5575cb257b6d1999a",
+      "843a4f9af125fe3f6bd6e7a97b890062c69e6031ab7f2a1d61c2b5ea71aea103",
       "1a2390722c5c91ab4560a961f99ebffcc5ad9515d5bc4435d32ac158ce063ab3",
       "257c56a4e9b45396a2d3dcdfde44217d6a4f9e6ab9973c52604a1efb2a9800f8",
       "6e3993717d96cac3acbbc8610b802aed6a0e8d465909be4d10da03b289a8a21a",
       "115c9c476ee89d085c4d62006c7bcb5c5c52d9fb53a6d94520fd87b021d77f1c",
       "4aa66a6100bf57b4adab66db0843802ad04ecd41846f6563df05439bf1157df4",
       "7e7ce942d0b734aff4a14fbc7f738a86bf4cb829bb82be41fc055e666f3d9f4d",
+      "9442e183bf8decba68d7c695f5913d8a9800b85b24d929ae87e4ddbc248d09f7",
       "85df6d11e08de080e56fb2ea3fa1a4cd9c897fb3fb4bd4f8b0c24511986e1c31",
       "69fc587a3da1839da22cebf16dbe2f6ca8e6d86481dce71defe340105d00efec",
       "acbfe5b9356b7b8cf70b3a7ee918c77fea19bc2740557a539899e4db9b86d7f1",
@@ -793,7 +759,48 @@
       "5e0ed0c889351c063f575fa1a42ff3f9529475cef0cf8e07c9989707049f4810",
       "d3a311bb660aca68f4001aeccea2e91ffc797684b4b2ff4f2322b2c9af18f70a"
     ],
+    "removed_audio_sha256": "76d21afe5cbdf49066c7829f24fa28f7f8d4be0178fc83328944f240143ca8c3",
+    "removed_text": "八月回到纽约，她先和门西克一起，拿下美网混双冠军。",
     "reused_rows_unchanged": true,
-    "sentence_boundary_check": "Current whole narration plan checked for split sentences; audio analysis rerun on changed requests only."
-  }
+    "no_asr_or_polyphone_rerun": true
+  },
+  "incremental_history": [
+    {
+      "bundle_path": "/tmp/muchova-finals-2026-tts-v2.zip",
+      "bundle_sha256": "8d89ac230a0e3375c9067d81582ebf2255ab409ff04c689352b0b299bbcd44fa",
+      "previous_findings_sha256": "f80d1b26adba0c49e7cf2f7fbef178ba27ee6fc6333da5e8490efd666d71b0fa",
+      "checked_at": "2026-10-21T17:49:50.293773+00:00",
+      "only_changed_rechecked": true,
+      "changed_audio_count": 2,
+      "exact_byte_reused_count": 20,
+      "changed_audio_sha256": [
+        "843a4f9af125fe3f6bd6e7a97b890062c69e6031ab7f2a1d61c2b5ea71aea103",
+        "9442e183bf8decba68d7c695f5913d8a9800b85b24d929ae87e4ddbc248d09f7"
+      ],
+      "exact_byte_reused_sha256": [
+        "76d21afe5cbdf49066c7829f24fa28f7f8d4be0178fc83328944f240143ca8c3",
+        "57b7fb3cf5cfc5358a1156d01cb5f9a788b4fc31277547e482c43e03889dd155",
+        "14b2e92910865f75f7840f1b4ea416eab6a005fbaafccfdbe095cb1045bea17f",
+        "f482b2416110e65886a4a34fc7098ce9eee25298d96935c5575cb257b6d1999a",
+        "1a2390722c5c91ab4560a961f99ebffcc5ad9515d5bc4435d32ac158ce063ab3",
+        "257c56a4e9b45396a2d3dcdfde44217d6a4f9e6ab9973c52604a1efb2a9800f8",
+        "6e3993717d96cac3acbbc8610b802aed6a0e8d465909be4d10da03b289a8a21a",
+        "115c9c476ee89d085c4d62006c7bcb5c5c52d9fb53a6d94520fd87b021d77f1c",
+        "4aa66a6100bf57b4adab66db0843802ad04ecd41846f6563df05439bf1157df4",
+        "7e7ce942d0b734aff4a14fbc7f738a86bf4cb829bb82be41fc055e666f3d9f4d",
+        "85df6d11e08de080e56fb2ea3fa1a4cd9c897fb3fb4bd4f8b0c24511986e1c31",
+        "69fc587a3da1839da22cebf16dbe2f6ca8e6d86481dce71defe340105d00efec",
+        "acbfe5b9356b7b8cf70b3a7ee918c77fea19bc2740557a539899e4db9b86d7f1",
+        "c7cc000ed5417d50c52a5939e15995a69aacbe145850bc5cd85839aec688932c",
+        "11f1f115ffd62567d1dcf3e2451490003c1506dc543c6d448fbf352b1e581170",
+        "7d1dbe2cf1d20b006d1b0e1de01f3fc616b46359e6262b29b483d7cb0af3d1d8",
+        "0dc2c0751858674b14ae10d906b44ebb2bd55dd99aa6291eba9a3ec8c4e3affc",
+        "074b7f7d26f36f02cac7f7b073c2b61363ba5ad30350817a7caba9fdfe4a8cc5",
+        "5e0ed0c889351c063f575fa1a42ff3f9529475cef0cf8e07c9989707049f4810",
+        "d3a311bb660aca68f4001aeccea2e91ffc797684b4b2ff4f2322b2c9af18f70a"
+      ],
+      "reused_rows_unchanged": true,
+      "sentence_boundary_check": "Current whole narration plan checked for split sentences; audio analysis rerun on changed requests only."
+    }
+  ]
 }

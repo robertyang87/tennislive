@@ -90,9 +90,7 @@
     "ao_r16": "https://www.youtube.com/watch?v=ZCkYFYyJlK8",
     "uso_r32": "https://www.youtube.com/watch?v=EUk-bMVXRa4",
     "doha_trophy_clean": "https://x.com/WTA/status/2022719051408052453",
-    "rg_r32": "https://x.com/rolandgarros/status/2060369494891978888",
-    "uso_mixed_final": "https://www.youtube.com/watch?v=og_Ex5oDa-4",
-    "bjk_cup_final": "https://www.youtube.com/watch?v=jSp_UwE-_co"
+    "rg_r32": "https://x.com/rolandgarros/status/2060369494891978888"
   },
   "source_fallbacks": {
     "doha": "https://github.com/robertyang87/tennislive/releases/download/source-DMpp-l1vBaA/DMpp-l1vBaA.mp4",
@@ -104,8 +102,6 @@
     "uso_r32": "https://github.com/robertyang87/tennislive/releases/download/source-EUk-bMVXRa4/EUk-bMVXRa4.mp4",
     "doha_trophy_clean": "https://github.com/robertyang87/tennislive/releases/download/source-2022719030826504193/2022719030826504193.mp4",
     "rg_r32": "https://github.com/robertyang87/tennislive/releases/download/source-2060367806730776578/2060367806730776578.mp4",
-    "uso_mixed_final": "https://github.com/robertyang87/tennislive/releases/download/source-og_Ex5oDa-4/og_Ex5oDa-4.mp4",
-    "bjk_cup_final": "https://github.com/robertyang87/tennislive/releases/download/source-jSp_UwE-_co/jSp_UwE-_co.mp4",
     "miami": "https://github.com/robertyang87/tennislive/releases/download/source-SL35StEiNXE/SL35StEiNXE.mp4",
     "bad_homburg": "https://github.com/robertyang87/tennislive/releases/download/source-6399578560112/6399578560112.mp4",
     "bad_homburg_feature": "https://github.com/robertyang87/tennislive/releases/download/source-6399808507112/6399808507112.mp4"
@@ -182,18 +178,6 @@
       "width": 1080,
       "height": 1920,
       "fps": "30/1"
-    },
-    "uso_mixed_final": {
-      "why": "本期已实际下载核验几何和来源身份，原始probe/哈希见grand-slam-video-candidates及audio-window-review；不是最终成片QC。",
-      "width": 1920,
-      "height": 1080,
-      "fps": "60000/1001"
-    },
-    "bjk_cup_final": {
-      "why": "本期重新下载官方ITF同场源，实际ffprobe 1920×1080、25fps；source_sha25613835d470cd69a3429f11116a4601d77a25b363885d9ad6356ed6b520418b0bc，458–497双模型调查。",
-      "width": 1920,
-      "height": 1080,
-      "fps": "25/1"
     }
   },
   "_heat_why": "用户直接指定穆霍娃2026年10月21日锁定年终最后席位的人物故事，WTA官宣及完整赛季积分有证据。",
@@ -974,67 +958,6 @@
       "_why": "WTA官方真实手机宽度报道截图；只说小手术和缺席北美硬地热身，不猜身体部位/病因。 实测旁白6.67s，证据展示8.5s。"
     },
     {
-      "_id": "uso_mixed_intro",
-      "_timeline_date": "2026-08-26",
-      "title_card": "回到纽约\n先收获混双冠军",
-      "seconds": 7,
-      "narration": "八月回到纽约，她先和门西克一起，拿下美网混双冠军。",
-      "voice": {
-        "pitch": "+0Hz",
-        "_why": "云健自然音高，完整句原速；真实TTS字节和时长由主线程冻结。"
-      },
-      "kicker": "八月 · 美网混双"
-    },
-    {
-      "_id": "uso_mixed_title",
-      "_timeline_date": "2026-08-26",
-      "source": "uso_mixed_final",
-      "start": 670,
-      "end": 683.6,
-      "cx": 0.5,
-      "track": false,
-      "narration": "",
-      "voice": {
-        "pitch": "+0Hz",
-        "_why": "云健自然音高，完整句原速；真实TTS字节和时长由主线程冻结。"
-      },
-      "_why": "当地8月26日混双最后冠军点，门西克发球、穆霍娃庆祝拥抱；保留两句完整终局原声，不计单打Race分。",
-      "quote": [
-        {
-          "at": 4.54,
-          "end": 8,
-          "text": "It's checkmate in New York.\n纽约，胜负已定。"
-        },
-        {
-          "at": 9.2,
-          "end": 13.38,
-          "text": "As Muchova and Mensik claim the mixed doubles title.\n穆霍娃和门西克拿下了混双冠军。"
-        }
-      ],
-      "_quote_kind": "broadcast",
-      "_audio_evidence": "research/muchova-finals-2026/audio-window-review.json",
-      "_audio_review_state": "actual_source_small_medium_findings_integrated_final_plan_binding_and_mix_review_pending",
-      "inset": {
-        "image": "assets/reel/muchova-finals-2026/context-uso_mixed_final.png",
-        "kind": "story_text",
-        "corner": "tr",
-        "width": 0.6,
-        "pad": 0.043,
-        "show_for": 15.0,
-        "motion": "editorial",
-        "label": {
-          "topic": "美网混双冠军",
-          "date": "2026.08.26",
-          "place": "美网混双决赛",
-          "people": "穆霍娃 / 门西克 vs 本西奇 / 科博利",
-          "score": "6-3 1-6 [10-6]"
-        },
-        "show_after": 5.0
-      },
-      "fit": "crop",
-      "_inset_timing_why": "右上V14保持主线样式；真实原生预览发现远端球员被字卡挡住，将信息延后至完整末分打完后的反应镜头，最多15秒且本片段结束立即消失。"
-    },
-    {
       "_id": "uso_context",
       "_timeline_date": "2026-09-04",
       "source": "uso_r32",
@@ -1108,56 +1031,8 @@
         "pitch": "+0Hz",
         "_why": "云健自然音高，完整句原速；真实TTS字节和时长由主线程冻结。"
       },
-      "_why": "旁白说明最终团体荣誉；随后真实镜头是决赛第一场单打，不暗示这一分直接赢得团队冠军。"
-    },
-    {
-      "_id": "bjk_first_rubber_final_point",
-      "_timeline_date": "2026-09-27",
-      "source": "bjk_cup_final",
-      "start": 458.5,
-      "end": 475.6,
-      "cx": 0.5,
-      "track": false,
-      "narration": "",
-      "voice": {
-        "pitch": "+0Hz",
-        "_why": "云健自然音高，完整句原速；真实TTS字节和时长由主线程冻结。"
-      },
-      "_quote_kind": "broadcast",
-      "_why": "真实团体决赛第一场单打：458发球前准备、460–468完整末分、470本人反应。明确此分让捷克先拿一分，团体最终冠军由前卡简短TTS概括。",
-      "_audio_evidence": "research/muchova-finals-2026/audio-window-review.json",
-      "_audio_review_state": "actual_small_medium_source_word_times_integrated_final_release_binding_pending",
-      "quote": [
-        {
-          "at": 8.84,
-          "end": 13.88,
-          "text": "A magical and masterful performance from Karolina Muchova.\n穆霍娃的表现神奇，掌控全场。"
-        },
-        {
-          "at": 14.18,
-          "end": 16.88,
-          "text": "Pressure? What pressure?\n压力？哪有什么压力？"
-        }
-      ],
-      "_clause_packet": "research/muchova-finals-2026/runtime-clause-packet.json",
-      "inset": {
-        "image": "assets/reel/muchova-finals-2026/context-bjk_cup_final.png",
-        "kind": "story_text",
-        "corner": "tr",
-        "width": 0.6,
-        "pad": 0.043,
-        "show_for": 15.0,
-        "motion": "editorial",
-        "label": {
-          "topic": "先为捷克拿下一分",
-          "date": "2026.09.27",
-          "place": "金杯决赛首场单打",
-          "people": "穆霍娃 vs 卡利尼娜",
-          "score": "6-2 6-3"
-        }
-      },
-      "point_end_ok": "同SHA实际逐2秒抽帧和本库已核原片记录已确认：468.24秒最后一球落地，470秒穆霍娃握拳，472–474秒捷克替补席鼓掌，476秒已进入网前握手。本段458.5–475.6完整保留发球、最后回合、结果与超过7秒的真实反应，也保留467.34–475.38完整两句解说；信息卡标明首场单打6-2 6-3。476.48是自动记分条变化候选，本片此时已在比赛结束后，不能将它当作回合仍在进行。478.62开始下一句，故在它之前自然结束。实际证据见research/muchova-finals-2026/contact-sheets/bjk-final-end.jpg。",
-      "fit": "crop"
+      "_why": "用户最新指示金杯仅一句话带过，复用已核完整旁白，不再展开金杯比赛视频。",
+      "kicker": "团体赛冠军不计单打积分"
     },
     {
       "_id": "asia_swing",
@@ -1169,7 +1044,7 @@
         "pitch": "+0Hz",
         "_why": "云健自然音高，完整句原速；真实TTS字节和时长由主线程冻结。"
       },
-      "kicker": "混双与团体赛冠军不计单打积分"
+      "kicker": "三站单打 · 130 + 215 + 120"
     },
     {
       "_id": "race_condition_oct20",
@@ -1215,8 +1090,7 @@
   ],
   "mixed_fps": {
     "uso_r32": "US Open官方原片60000/1001，输出按主源25fps取样，不变速；实际音画/运动连续性仍需原生预览。",
-    "rg_r32": "真实30fps竖屏官方素材，输出25fps等时长取样，不加速。",
-    "uso_mixed_final": "真实60000/1001，输出25fps等时长取样，不改播放速度。"
+    "rg_r32": "真实30fps竖屏官方素材，输出25fps等时长取样，不加速。"
   },
   "archival": {
     "bad_homburg": "WTA官方Champions Reel当前真实1280×720；用户明确要求所有视频铺满画布，按真实720p独立裁切后输出，不标为原生1080p。",
@@ -1235,8 +1109,8 @@
     "person_measurement": "/tmp/muchova-person-measure.json; copied actual segment0.cx and cx_face"
   },
   "_runtime_budget": {
-    "body_seconds_excluding_cover_outro_and_transitions": 344.8,
-    "note": "约5分50秒，严格时间线；完整关键回合和本人原声不提速，最终时长以正式渲染为准。"
+    "body_seconds_excluding_cover_outro_and_transitions": 307.1,
+    "note": "按最新指示删除美网混双全段和金杯比赛视频，金杯仅一句既有旁白；含封面片尾约5分13秒，四GS止步轮视频全保留。"
   },
   "preserve_source_audio": true,
   "_native_dry_run": {

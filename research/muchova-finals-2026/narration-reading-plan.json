@@ -238,22 +238,6 @@
     },
     {
       "index": 26,
-      "id": "uso_mixed_intro",
-      "display_text": "八月回到纽约，她先和门西克一起，拿下美网混双冠军。",
-      "reading_plan": "回到纽约、混双冠军；强调混双。",
-      "semantic_pauses": [
-        "，",
-        "，",
-        "。"
-      ],
-      "window_seconds": 7,
-      "voice": "zh-CN-YunjianNeural",
-      "rate": "+6%",
-      "pitch": "+0Hz",
-      "controls": "Edge：整句语法和标点；未声称支持SSML、emphasis或style。"
-    },
-    {
-      "index": 28,
       "id": "uso_context",
       "display_text": "随后的美网单打，她在第三轮输给纳瓦罗。",
       "reading_plan": "随后、单打、第三轮。",
@@ -268,7 +252,7 @@
       "controls": "Edge：整句语法和标点；未声称支持SSML、emphasis或style。"
     },
     {
-      "index": 30,
+      "index": 28,
       "id": "bjk_intro",
       "display_text": "九月，她又帮助捷克队赢下金杯。",
       "reading_plan": "帮助捷克、金杯；画面是第一场单打。",
@@ -283,7 +267,7 @@
       "controls": "Edge：整句语法和标点；未声称支持SSML、emphasis或style。"
     },
     {
-      "index": 32,
+      "index": 29,
       "id": "asia_swing",
       "display_text": "在北京打进8强，在武汉止步第三轮。温网之后的三站单打，只增加四百六十五分，最后的资格还没有确定。",
       "reading_plan": "北京8强、武汉第三轮、三站单打四百六十五分；资格尚未确定。",
@@ -302,7 +286,7 @@
       "actual_audio_sha256": "9442e183bf8decba68d7c695f5913d8a9800b85b24d929ae87e4ddbc248d09f7"
     },
     {
-      "index": 33,
+      "index": 30,
       "id": "race_condition_oct20",
       "display_text": "十月二十日，斯瓦泰克结束赛季。科斯秋克必须打进宁波决赛，才能保留争夺资格的机会。",
       "reading_plan": "必须、才能、保留机会；必要条件。",
@@ -319,7 +303,7 @@
       "controls": "Edge：整句语法和标点；未声称支持SSML、emphasis或style。"
     },
     {
-      "index": 34,
+      "index": 31,
       "id": "ningbo_trigger_oct21",
       "display_text": "一天后，她在宁波首盘结束后退赛。穆霍娃，就此锁定最后一个席位。",
       "reading_plan": "一天后、首盘结束退赛、锁定。",
@@ -336,7 +320,7 @@
       "controls": "Edge：整句语法和标点；未声称支持SSML、emphasis或style。"
     },
     {
-      "index": 35,
+      "index": 32,
       "id": "qualification_payoff",
       "display_text": "四千七百三十五分，她把这个起伏的赛季，带到了总决赛。你最期待她打出怎样的网球？",
       "reading_plan": "4735分、起伏、总决赛；自然提问。",
@@ -354,12 +338,12 @@
     }
   ],
   "incremental_update": {
-    "changed_ids": [
-      "chapter_01",
-      "asia_swing"
+    "scope": "usercut_no_new_audio",
+    "removed_ids": [
+      "uso_mixed_intro"
     ],
-    "bundle_sha256": "8d89ac230a0e3375c9067d81582ebf2255ab409ff04c689352b0b299bbcd44fa",
+    "bundle_sha256": "571cdb7deeeeff89c7060361eada0599e968fe7fb51e25ebfd2575a944f6da48",
     "voice_findings": "research/muchova-finals-2026/voice-pre-render-findings.json",
-    "method": "Only the two requested narration texts and their semantic reading plans changed;20 unchanged exact-byte voice findings reused."
+    "method": "Removed the mixed-doubles intro reading plan and updated segment indices after the user cut. All21 retained actual audio bytes reuse the existing v2 findings without re-transcription or measurement."
   }
 }
