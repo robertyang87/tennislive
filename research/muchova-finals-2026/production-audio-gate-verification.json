@@ -1,13 +1,13 @@
 {
   "schema": "tennislive.foreground-audio-gate-verification.v1",
-  "checked_at": "2026-10-21T17:00:07.486562+00:00",
-  "spec_sha256": "06f6eeb1c8baab7a247a021d2c9e11fb016d23cfeebd0003df4fc71df815776a",
-  "plan_sha256": "179be5d50f116580a19709e6a1a611bc902175f59a9d2d8deae973d7443bf1df",
-  "previous_plan_sha256": "5f843300531ab703d4797523567eb84844a51122d82310b244a273706b7837ba",
-  "index_sha256": "0cf591edf7ed09e303d0e6634e0c4c299a0075abd1c19cb3632870c87dc1cc5e",
+  "checked_at": "2026-10-21T18:00:11.337469+00:00",
+  "spec_sha256": "af043bfca91a981e6cee2a7d8ae66fab0b5961f8b77a03d42b07d43f1ce12844",
+  "plan_sha256": "6370ff9c2b7effbaada9fb8fff236781242dcb2e922494fb680a61527ca53cdc",
+  "index_sha256": "c7c835884093baeddaf5b329a625c09a1388a194827845236cb7aa9a6c43136b",
   "selected_windows": 20,
-  "required_bilingual_clauses": 33,
+  "required_bilingual_clauses": 32,
   "actual_source_bytes_checked": true,
+  "result": "gate.inspect passed",
   "required_clauses": [
     {
       "segment": 1,
@@ -60,15 +60,15 @@
     },
     {
       "segment": 9,
-      "start": 8.73999999999998,
-      "end": 13.119999999999976,
+      "start": 7.160000000000025,
+      "end": 14.100000000000023,
       "en": "Oh, that's magnificent from Karolina Muchova.",
       "zh": "穆霍娃打得太精彩了。"
     },
     {
       "segment": 9,
-      "start": 14.280000000000001,
-      "end": 16.799999999999983,
+      "start": 14.779999999999973,
+      "end": 17.819999999999993,
       "en": "What a point, and what a win.",
       "zh": "精彩的一分，精彩的胜利。"
     },
@@ -109,15 +109,8 @@
     },
     {
       "segment": 18,
-      "start": 0.0800000000000125,
-      "end": 4.340000000000003,
-      "en": "But, you know, always trying to just keep the feet on the ground and still work.",
-      "zh": "但我还是想脚踏实地，继续努力。"
-    },
-    {
-      "segment": 18,
-      "start": 4.88000000000001,
-      "end": 8.66000000000001,
+      "start": 0.060000000000002274,
+      "end": 3.8400000000000034,
       "en": "And keep myself as healthy as possible and play those matches.",
       "zh": "尽量保持健康，继续打这些比赛。"
     },
@@ -241,7 +234,5 @@
       "zh": "压力？哪有什么压力？"
     }
   ],
-  "result": "gate.inspect passed",
-  "rebind_note": "Final assets and runtime-only shortening of previously speech-free RG (4–14 to4–12.5) and US singles context (179.5–189.8 to181.5–189.8), plus shorter surgery card, were rebound using gate.rebind_plan. All selected actual source windows remain entirely within immutable reviewed packet coverage; retained English cue wording/timing, source identity, and audio conclusions are unchanged.",
-  "method_limits": "This is the deterministic gate plus actual-byte ASR cross-check, not human listening, final film mix review, or render QC."
+  "method_limits": "actual-byte source-window ASR and deterministic gate; not human listening or final movie approval"
 }

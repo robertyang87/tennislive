@@ -3922,6 +3922,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     bad_story_text = []
     for i, seg in enumerate(segments):
         ins = seg.inset or {}
+        _story_inset_show_after(ins)
         if str(ins.get("kind", "")) != "story_text":
             continue
         width = float(ins.get("width", 0) or 0)
@@ -4534,6 +4535,18 @@ def track_shots(sources: dict[str, Path], segments: list["Segment"],
 CARRY_OUT_SECS = 0.5
 
 
+def _story_inset_show_after(ins: dict) -> float:
+    """Optional clip-relative delay, only for the independently timed story label."""
+    if "show_after" not in ins:
+        return 0.
+    value = ins["show_after"]
+    if (str(ins.get("kind", "")) != "story_text"
+            or type(value) not in (int, float)
+            or not math.isfinite(value) or value < 0):
+        raise ReelError("inset.show_after 只用于story_text，须为有限且>=0的秒数")
+    return float(value)
+
+
 def _overlay_chain(base: str, ins: dict) -> str:
     """把角标压上去。没有角标时只是把 `[base]` 改名成 `[vout]`。
 
@@ -4566,6 +4579,7 @@ def _overlay_chain(base: str, ins: dict) -> str:
     # 静态图要先 loop 成连续流 fade 才有帧可淡；scale 放 loop 前面，
     # 缩一次再复制帧比每帧都缩便宜。
     story_label = str(ins.get("kind", "")) == "story_text"
+    show_after = _story_inset_show_after(ins)
     default_hold = STORY_LABEL_MAX_SECONDS if story_label else 0
     show_for = float(ins.get("show_for", default_hold) or default_hold)
     if story_label:
@@ -4573,6 +4587,8 @@ def _overlay_chain(base: str, ins: dict) -> str:
     # The encoder bounds every segment by seg.length; do not pad a short clip.
     # An explicit overlay limit also applies when animation is disabled.
     limit = f":enable='lt(t,{show_for:.3f})'" if story_label else ""
+    if show_after:
+        limit = f":enable='gte(t,{show_after:.3f})*lt(t,{show_after + show_for:.3f})'"
     if ins.get("animate", True) is False:
         return (f"{base};[1:v]scale={width}:-2[ins];"
                 f"[base][ins]overlay={x}:{y}{limit}[vout]")
@@ -4600,10 +4616,14 @@ def _overlay_chain(base: str, ins: dict) -> str:
     fade_out = ""
     if show_for > d and carry != "start":
         out_d = min(0.35, max(0.15, show_for - d))
-        fade_out = f",fade=t=out:st={show_for - out_d:.3f}:d={out_d:.3f}:alpha=1"
+        fade_out = f",fade=t=out:st={show_after + show_for - out_d:.3f}:d={out_d:.3f}:alpha=1"
     y_expr = f"'if(lt(t,{d}),{y}+{rise}*pow(1-t/{d},2),{y})'"
+    if show_after:
+        y_expr = (f"'if(lt(t,{show_after + d:.3f}),"
+                  f"{y}+{rise}*pow(1-(t-{show_after:.3f})/{d},2),{y})'")
+    fade_in_start = f"{show_after:.3f}" if show_after else "0"
     return (f"{base};[1:v]scale={width}:-2,loop=loop=-1:size=1,format=rgba,"
-            f"fade=t=in:st=0:d={d}:alpha=1{fade_out}[ins];"
+            f"fade=t=in:st={fade_in_start}:d={d}:alpha=1{fade_out}[ins];"
             f"[base][ins]overlay={x}:{y_expr}{limit}[vout]")
 
 

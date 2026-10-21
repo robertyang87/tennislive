@@ -559,7 +559,8 @@
           "place": "斯图加特决赛",
           "people": "穆霍娃 vs 莱巴金娜",
           "score": "5-7 1-6"
-        }
+        },
+        "show_after": 5.4
       },
       "quote": [
         {
@@ -571,7 +572,8 @@
       "_quote_kind": "broadcast",
       "_audio_evidence": "research/muchova-finals-2026/audio-window-review.json",
       "_audio_review_state": "actual_source_small_medium_findings_integrated_final_plan_binding_and_mix_review_pending",
-      "fit": "crop"
+      "fit": "crop",
+      "_inset_timing_why": "右上V14保持主线样式；真实原生预览发现远端球员被字卡挡住，将信息延后至完整末分打完后的反应镜头，最多15秒且本片段结束立即消失。"
     },
     {
       "_id": "rg_context",
@@ -772,7 +774,7 @@
         "corner": "tr",
         "width": 0.6,
         "pad": 0.043,
-        "show_for": 15.0,
+        "show_for": 6.0,
         "motion": "editorial",
         "label": {
           "topic": "首次温网单打决赛",
@@ -780,7 +782,8 @@
           "place": "温网半决赛",
           "people": "穆霍娃 vs 高芙",
           "score": "6-2 1-6 7-6"
-        }
+        },
+        "show_after": 36.5
       },
       "quote": [
         {
@@ -823,7 +826,8 @@
       "_audio_evidence": "research/muchova-finals-2026/audio-window-review.json",
       "_audio_review_state": "actual_source_small_medium_findings_integrated_final_plan_binding_and_mix_review_pending",
       "_clause_packet": "research/muchova-finals-2026/runtime-clause-packet.json",
-      "fit": "crop"
+      "fit": "crop",
+      "_inset_timing_why": "右上V14保持主线样式；真实原生预览发现远端球员被字卡挡住，将信息延后至完整末分打完后的反应镜头，最多15秒且本片段结束立即消失。"
     },
     {
       "_id": "wimbledon_sf_quote",
@@ -1024,9 +1028,11 @@
           "place": "美网混双决赛",
           "people": "穆霍娃 / 门西克 vs 本西奇 / 科博利",
           "score": "6-3 1-6 [10-6]"
-        }
+        },
+        "show_after": 5.0
       },
-      "fit": "crop"
+      "fit": "crop",
+      "_inset_timing_why": "右上V14保持主线样式；真实原生预览发现远端球员被字卡挡住，将信息延后至完整末分打完后的反应镜头，最多15秒且本片段结束立即消失。"
     },
     {
       "_id": "uso_context",
@@ -1219,7 +1225,7 @@
   },
   "_integration_state": "full_canvas_crop_revision_integrated_pending_native_preview_and_final_render_qc",
   "_render_blockers": [
-    "最新满画布裁切实际原生字幕预览与成片QC待完成。"
+    "完整成片编码与最终质量检查待完成；预渲样帧不当成成片验收。"
   ],
   "_integration_provenance": {
     "frozen_candidate": "requests/stories/muchova-finals-2026/native-spec.candidate.json",
@@ -1236,7 +1242,7 @@
   "_native_dry_run": {
     "command": "python tools/build_match_reel.py render --spec specs/reels/muchova-finals-2026.json --outdir /tmp/muchova-native-final-dryrun --dry-run",
     "exit_code": 0,
-    "scope": "正式原生spec形状、措辞、字幕行宽、11个真实inset、真实person证据、archival/contain、fps声明通过；不是TTS/完整成片/人工听审通过。"
+    "scope": "native source_crop geometry, explicit crop for20videos, maina70615c wording,11V14 assets, fixed person center, source-fps declarations and current audio-plan passed; not final film QC"
   },
   "_story_label_style": "2026-10-21 main V14 confirmed style, at most 15 seconds and bounded by its segment; actual PNGs regenerated from current renderer.",
   "source_crop": {

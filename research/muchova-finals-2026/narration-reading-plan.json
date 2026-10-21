@@ -18,8 +18,8 @@
     {
       "index": 0,
       "id": "chapter_01",
-      "display_text": "年初布里斯班半决赛后，澳网第四轮，她输给高芙。",
-      "reading_plan": "澳网第四轮；年初受阻，平实。",
+      "display_text": "年初打进布里斯班4强后，澳网第四轮，她输给高芙。",
+      "reading_plan": "年初布里斯班4强、澳网第四轮；时间与轮次清楚。",
       "semantic_pauses": [
         "，",
         "，",
@@ -29,7 +29,8 @@
       "voice": "zh-CN-YunjianNeural",
       "rate": "+6%",
       "pitch": "+0Hz",
-      "controls": "Edge：整句语法和标点；未声称支持SSML、emphasis或style。"
+      "controls": "Edge：整句语法和标点；未声称支持SSML、emphasis或style。",
+      "actual_audio_sha256": "843a4f9af125fe3f6bd6e7a97b890062c69e6031ab7f2a1d61c2b5ea71aea103"
     },
     {
       "index": 2,
@@ -284,8 +285,8 @@
     {
       "index": 32,
       "id": "asia_swing",
-      "display_text": "北京四分之一决赛，武汉第三轮。温网之后的三站单打，只增加四百六十五分，最后的资格还没有确定。",
-      "reading_plan": "三站单打、四百六十五分、尚未确定。",
+      "display_text": "在北京打进8强，在武汉止步第三轮。温网之后的三站单打，只增加四百六十五分，最后的资格还没有确定。",
+      "reading_plan": "北京8强、武汉第三轮、三站单打四百六十五分；资格尚未确定。",
       "semantic_pauses": [
         "，",
         "。",
@@ -297,7 +298,8 @@
       "voice": "zh-CN-YunjianNeural",
       "rate": "+6%",
       "pitch": "+0Hz",
-      "controls": "Edge：整句语法和标点；未声称支持SSML、emphasis或style。"
+      "controls": "Edge：整句语法和标点；未声称支持SSML、emphasis或style。",
+      "actual_audio_sha256": "9442e183bf8decba68d7c695f5913d8a9800b85b24d929ae87e4ddbc248d09f7"
     },
     {
       "index": 33,
@@ -350,5 +352,14 @@
       "pitch": "+0Hz",
       "controls": "Edge：整句语法和标点；未声称支持SSML、emphasis或style。"
     }
-  ]
+  ],
+  "incremental_update": {
+    "changed_ids": [
+      "chapter_01",
+      "asia_swing"
+    ],
+    "bundle_sha256": "8d89ac230a0e3375c9067d81582ebf2255ab409ff04c689352b0b299bbcd44fa",
+    "voice_findings": "research/muchova-finals-2026/voice-pre-render-findings.json",
+    "method": "Only the two requested narration texts and their semantic reading plans changed;20 unchanged exact-byte voice findings reused."
+  }
 }
