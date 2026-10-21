@@ -1,0 +1,56 @@
+name: import-sun-cvetkovic-source-rename
+
+# 一次性：把 source-staylive663661 的附件改成 video_key 认的
+# `<数字 id>-<hash>.mp4` 形式（tools/probe_claims.py _REL_HASHED 口径），
+# 否则 source-asr / asr_plan check / render 的认领全红。
+# 流程：先传新名附件并验 URL 可下载，再删旧附件；任意一步失败都不动旧附件。
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-sun-cvetkovic-source-rename
+  cancel-in-progress: false
+
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      TAG: source-staylive663661
+      OLD: staylive663661.mp4
+    steps:
+      - name: 下载旧附件
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/src
+          gh release download "$TAG" -p "$OLD" -D /tmp/src --clobber
+          ls -la /tmp/src/
+      - name: 改名并重传
+        id: up
+        run: |
+          set -euo pipefail
+          SHA8=$(sha256sum "/tmp/src/$OLD" | cut -c1-8)
+          NEW="663661-${SHA8}.mp4"
+          mv "/tmp/src/$OLD" "/tmp/src/$NEW"
+          echo "new=$NEW" >> "$GITHUB_OUTPUT"
+          gh release upload "$TAG" "/tmp/src/$NEW" --clobber
+          echo "已上传 $NEW"
+      - name: 验新附件可下载
+        run: |
+          set -euo pipefail
+          NEW="${{ steps.up.outputs.new }}"
+          URL="https://github.com/${{ github.repository }}/releases/download/$TAG/$NEW"
+          curl -sSL --fail -o /dev/null -r 0-1023 "$URL"
+          echo "新附件可下载：$URL"
+      - name: 删旧附件
+        run: |
+          set -euo pipefail
+          AID=$(gh release view "$TAG" --json assets -q '.assets[] | select(.name=="staylive663661.mp4") | .id')
+          test -n "$AID" || { echo "旧附件已不在，无需删除"; exit 0; }
+          gh release delete-asset "$AID" -y
+          echo "已删旧附件 staylive663661.mp4 (id=$AID)"
