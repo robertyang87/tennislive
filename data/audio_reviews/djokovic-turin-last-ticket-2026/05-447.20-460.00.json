@@ -1,0 +1,26 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-IadXjfx1ZUA/IadXjfx1ZUA.mp4",
+  "source_sha256": "e9e9a4e9df80f9c3e3781b984ea65337354e334056cde24fa91bfe6feb285d94",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-21T06:45:33+00:00",
+  "reviewed_from": 447.2,
+  "reviewed_to": 460.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 447.3,
+      "end": 454.3,
+      "en": "Djokovic is the champion in Turin,",
+      "zh": "德约科维奇在都灵夺冠"
+    },
+    {
+      "start": 454.3,
+      "end": 459.0,
+      "en": "it is a sixth Nitto ATP Finals title for the Serb.",
+      "zh": "这是他第六个年终总决赛冠军"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 e9e9a4e9df80f9c3e3781b984ea65337354e334056cde24fa91bfe6feb285d94，存于 data/source_asr/IadXjfx1ZUA/small.en.json 与 data/source_asr/IadXjfx1ZUA/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
