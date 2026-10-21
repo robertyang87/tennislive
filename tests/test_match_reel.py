@@ -3924,6 +3924,12 @@ def test_失败时的artifact不许带源片(workflow, job, outdir, must_drop, m
     steps = [s for s in spec["jobs"][job]["steps"]
              if "actions/upload-artifact" in str(s.get("uses", ""))
              and (workflow != WORKFLOW or s.get("name") == "上传 artifact")]
+    # The separate preflight log contains one text file, not the media folder.
+    logs = [s for s in steps if s.get("with", {}).get("name") == "preflight-log"]
+    for log in logs:
+        assert str(log["with"]["path"]).strip() == "preflight_debug.md"
+        assert "always()" in str(log.get("if", ""))
+    steps = [s for s in steps if s not in logs]
     assert len(steps) == 1, f"{workflow} 里上传 artifact 的步骤有 {len(steps)} 个"
     step = steps[0]
     assert "always()" in str(step.get("if", ""))

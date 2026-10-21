@@ -18,8 +18,12 @@ def test_media_artifacts_skip_recompression(name):
                if s.get('uses', '').startswith('actions/upload-artifact@')]
     assert uploads
     for step in uploads:
-        assert step['with']['compression-level'] == 0
         assert step['with']['path']  # 禁止以不传产物的方式节省时间。
+        if step['with'].get('name') == 'preflight-log':
+            # Text logs may use ZIP compression; never exempt a media path.
+            assert str(step['with']['path']).strip() == 'preflight_debug.md'
+        else:
+            assert step['with']['compression-level'] == 0
 
 
 @pytest.mark.parametrize('name,consumer', [

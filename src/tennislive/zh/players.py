@@ -619,7 +619,8 @@ PLAYER_ZH: dict[str, str] = {
 # data/evidence/paolini-bejlek-wuhan-2026-r1/facts/raw/wta-match-row.json。
 # PLAYER_ZH 的规范输出仍是「保利尼」，别名不改已经配音/渲染的显示文案。
 PLAYER_ZH_ALIASES: dict[str, str] = {
-    # Owner explicitly requests 卡塔尔 in Wuhan SF reel; both refer to WTA 329918.
+    # Owner reconfirmed 2026-10-18: Sonay Kartal is displayed/spoken as 卡塔尔.
+    # The legacy spelling below is accepted only as input, then normalized to 卡塔尔 (WTA 329918).
     "卡塔尔": PLAYER_ZH["Sonay Kartal"],
     "卡尔塔尔": PLAYER_ZH["Sonay Kartal"],
     "帕奥利尼": PLAYER_ZH["Jasmine Paolini"],

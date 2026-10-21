@@ -1,0 +1,256 @@
+{
+  "schema": "tennislive.kartal-name-correction-formal-audio-input-review.v1",
+  "checked_at": "2026-10-18T17:32:09.127769+00:00",
+  "status": "formal_input_reuse_verified_new_six_audio_approval_still_pending",
+  "artifact_git_head": "8986210e05164281045a0f72f4f7356bed41700a",
+  "render_source_code_sha": "6a4e4ea05b347e9338257159b6a3182994fd41ab",
+  "render_run_url": "https://github.com/robertyang87/tennislive/actions/runs/39149271646",
+  "metadata": {
+    "render": {
+      "path": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/render.json",
+      "sha256": "3635c71153813ade986c0dafd02da059753c767de1eb406b18fe1e67e1cfde2a"
+    },
+    "render_inputs": {
+      "path": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/render_inputs.json",
+      "sha256": "80fb97782e6b19ab981aadc9c62cee587d24109d6bcf653c68baa41a0efd2a4e"
+    },
+    "qc_attestation": {
+      "path": "output/2026-10-19/reel/chwalinska-kartal-wuhan-2026-f/qc_attestation.json",
+      "sha256": "a7958a33411bacfef4c512a70d2f71e489301d81b5af4e7edfdad4dd21b2389e"
+    }
+  },
+  "spec_sha256": "c567c58adc4915bb3e7602bf09766c5c7ec8464a8444b356e1c7b386725eb74d",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "c848a69ebd0ff41bcb7afb4d49a6b7976128661f4fdf664f8ea497dad2765f50",
+    "request_count": 9,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-chwalinska-kartal-wuhan-2026-f-c848a69ebd0ff41b",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-chwalinska-kartal-wuhan-2026-f-c848a69ebd0ff41b/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39149271646"
+  },
+  "verified_local_original_bundle_sha256": "c848a69ebd0ff41bcb7afb4d49a6b7976128661f4fdf664f8ea497dad2765f50",
+  "verified_bundle_bytes": 744911,
+  "full_nine_request_set_and_order_equal": true,
+  "captured_and_current_voice_inputs_equal": true,
+  "changed_six": [
+    "intro",
+    "first_set",
+    "second_set_context",
+    "second_four_all",
+    "last_game_context",
+    "full_stats"
+  ],
+  "exact_reused_three": [
+    "deciding_set_context",
+    "outlook",
+    "outro"
+  ],
+  "requests": [
+    {
+      "edit_id": "intro",
+      "request_id": "a16bb08a0000a9440f40826e9b6c52d16bed4adbc0be88311917e007ea2aa0cb",
+      "mp3_sha256": "5d2079907a577c646ce28926ceb0c8d48224dcca8788e05e0e86cbebf05a1115",
+      "raw_marks_sha256": "4354509875f3ce5b7c800629abaf3d5bb018dcafd964ca6fdb52353f87ca51de",
+      "relation_to_old": "changed_new_complete_utterance_requires_new_approval"
+    },
+    {
+      "edit_id": "first_set",
+      "request_id": "11a6b1852c2e711d3c0da1a50ee3cab852aea830b939975dff93eb492a095f55",
+      "mp3_sha256": "807e11a435973907bac4e04b98367ae64a0a8f34ac17c0f16380476153778cbc",
+      "raw_marks_sha256": "38a3e20755a3370ac3821e42ac23d748a3fc9fa3126c967f76dd26e281bbfdfc",
+      "relation_to_old": "changed_new_complete_utterance_requires_new_approval"
+    },
+    {
+      "edit_id": "second_set_context",
+      "request_id": "0118b2fa09783594d245a4069ceae3223ba1eea6c8062331bf3c9b023fbef79f",
+      "mp3_sha256": "3442f7aab836d962a7d2e613fbe3c005b6afa258efc62e343bff66a1590ab134",
+      "raw_marks_sha256": "9d395c748c0b84e713f2d782aab0933429faa1b819eddb16f7b9eb47c5d16a45",
+      "relation_to_old": "changed_new_complete_utterance_requires_new_approval"
+    },
+    {
+      "edit_id": "second_four_all",
+      "request_id": "82c8c04a14dcb07a7a31cd41a6f8efabf71c66851321bf88a6ca71afa8bca388",
+      "mp3_sha256": "b642d0fe4649bc5d092cae44f566862cf4a7972dc660ca651184f20437c1ce4f",
+      "raw_marks_sha256": "6b0963557dd01a378a6adea10e41573e543195bed4e6ac840f2de2e7e9f71a45",
+      "relation_to_old": "changed_new_complete_utterance_requires_new_approval"
+    },
+    {
+      "edit_id": "deciding_set_context",
+      "request_id": "c2133885264ff19e020fa6ac68b6827bd7a76092f816efdaef5dde9d71bec464",
+      "mp3_sha256": "efbeaf1a8b63c4b290f107337a77b4858553a437b90301fdc056cec988d0db89",
+      "raw_marks_sha256": "cbc4350e7b9a4057d341e4e7fbfa02dc31a38fcb0776b271b72087f22198acc4",
+      "relation_to_old": "exact_complete_utterance_reuses_recorded_approval"
+    },
+    {
+      "edit_id": "last_game_context",
+      "request_id": "70d5967cac6e4b23f39f45ba604bc5c23463e09096e105dacb0699f97aa86819",
+      "mp3_sha256": "af16d3e2af4d05eb511297b43cd3aab59edce5d4f31dafed0c344b8b3f5ed78b",
+      "raw_marks_sha256": "b7d2425826f1727c9d2121dc56c2b6b6ac61aaa97cbffa17931a75ee0de18a59",
+      "relation_to_old": "changed_new_complete_utterance_requires_new_approval"
+    },
+    {
+      "edit_id": "full_stats",
+      "request_id": "c0cf09263c62b670fa6dd340cdc6de156bcfff9fcb408125342f19b168f9d1ac",
+      "mp3_sha256": "0b7bbc677e233f596fe0d517b2fbd4ab6089ffb9379baa68c1c4bf60dcfdb459",
+      "raw_marks_sha256": "bf498187331b4a4f151550229a1e7ea8eeab727744ef07262dfb0f8cbf45d042",
+      "relation_to_old": "changed_new_complete_utterance_requires_new_approval"
+    },
+    {
+      "edit_id": "outlook",
+      "request_id": "4c0019432284ce01148be7e66f0036d84cbaadd5e04b36fa812e486cee8c48b4",
+      "mp3_sha256": "639414142866aa72d2e6676adefae7d8ca4175acf5828bcf22a510a1dfedcb13",
+      "raw_marks_sha256": "6a25c5042a2933a7a2bd57bc959384703f54c509df07a5765810cac5cb503526",
+      "relation_to_old": "exact_complete_utterance_reuses_recorded_approval"
+    },
+    {
+      "edit_id": "outro",
+      "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "mp3_sha256": "f670f5c51e491614cc5af1669f406f98e6cea5de3e9896c47092952d253b849b",
+      "raw_marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "relation_to_old": "exact_complete_utterance_reuses_recorded_approval"
+    }
+  ],
+  "source_audio_policy": "unity_no_loudness_v1",
+  "qc_loudness_checks": "removed_by_owner",
+  "actual_ass": {
+    "subtitles.ass": {
+      "sha256": "8c07c2fb1156940aff40cb1cb193774b0d838941d6eafd91f4c587335a6d5a0e",
+      "old_name_occurrences": 0,
+      "corrected_name_occurrences": 7
+    },
+    "topbar.ass": {
+      "sha256": "5a3367c58e609ec797559857cb030b8b15bd7c74d67377cadcdf0a77feb63428",
+      "old_name_occurrences": 0,
+      "corrected_name_occurrences": 1
+    }
+  },
+  "corrected_name_events": [
+    {
+      "ass": "subtitles.ass",
+      "start": "0:00:17.43",
+      "end": "0:00:18.41",
+      "text": "她与卡塔尔"
+    },
+    {
+      "ass": "subtitles.ass",
+      "start": "0:00:23.37",
+      "end": "0:00:26.62",
+      "text": "第一盘 卡塔尔把比分拉到4比1"
+    },
+    {
+      "ass": "subtitles.ass",
+      "start": "0:01:05.76",
+      "end": "0:01:07.34",
+      "text": "that gets it done for Sonay Kartal.卡塔尔拿下首盘"
+    },
+    {
+      "ass": "subtitles.ass",
+      "start": "0:01:16.05",
+      "end": "0:01:18.56",
+      "text": "6比2 卡塔尔先下一盘"
+    },
+    {
+      "ass": "subtitles.ass",
+      "start": "0:02:20.82",
+      "end": "0:02:22.54",
+      "text": "卡塔尔把球打向两侧"
+    },
+    {
+      "ass": "subtitles.ass",
+      "start": "0:03:27.37",
+      "end": "0:03:29.54",
+      "text": "卡塔尔接连拿到破发点"
+    },
+    {
+      "ass": "subtitles.ass",
+      "start": "0:04:58.68",
+      "end": "0:05:00.65",
+      "text": "卡塔尔32个制胜分"
+    },
+    {
+      "ass": "topbar.ass",
+      "start": "0:00:01.20",
+      "end": "0:05:30.56",
+      "text": "赫瓦林斯卡 2-6 6-4 6-2 卡塔尔"
+    }
+  ],
+  "changed_six_narration_name_coverage": {
+    "intro": [
+      {
+        "ass": "subtitles.ass",
+        "start": "0:00:17.43",
+        "end": "0:00:18.41",
+        "text": "她与卡塔尔"
+      }
+    ],
+    "first_set": [
+      {
+        "ass": "subtitles.ass",
+        "start": "0:00:23.37",
+        "end": "0:00:26.62",
+        "text": "第一盘 卡塔尔把比分拉到4比1"
+      }
+    ],
+    "second_set_context": [
+      {
+        "ass": "subtitles.ass",
+        "start": "0:01:16.05",
+        "end": "0:01:18.56",
+        "text": "6比2 卡塔尔先下一盘"
+      }
+    ],
+    "second_four_all": [
+      {
+        "ass": "subtitles.ass",
+        "start": "0:02:20.82",
+        "end": "0:02:22.54",
+        "text": "卡塔尔把球打向两侧"
+      }
+    ],
+    "last_game_context": [
+      {
+        "ass": "subtitles.ass",
+        "start": "0:03:27.37",
+        "end": "0:03:29.54",
+        "text": "卡塔尔接连拿到破发点"
+      }
+    ],
+    "full_stats": [
+      {
+        "ass": "subtitles.ass",
+        "start": "0:04:58.68",
+        "end": "0:05:00.65",
+        "text": "卡塔尔32个制胜分"
+      }
+    ]
+  },
+  "actual_ass_identity_matches_render_inputs_and_qc": true,
+  "film_sha256": "a54e03d3b545a62ee300c59e30319fed71f8bfc5ea2574ddeeb33bde2876f9ec",
+  "film_bytes": 105265998,
+  "film_seconds": 335.12,
+  "film_identity_basis": "Metadata/render_inputs/QC agree; root downloaded and rehashed movie. No movie download/rehash repeated in this step.",
+  "new_six_audio_approval": "pending reply to the actually presented83.352s corrected-six clip; metadata validation is not hearing or approval",
+  "changed_six_preview_sha256": "29d8e1b2aef12e2ed3f72e88353d0ed02f135a6ca7a03e06c65f17d1c9045def",
+  "old_approval_reuse_scope": "Only three exact unchanged complete requests, MP3 and raw marks; never extended to the six changed utterances.",
+  "assistant_listening_claimed": false,
+  "new_pronunciation_pass_claimed": false,
+  "old_history_sha256": {
+    "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/voice-review.json": "706cd2d7bdc4209915363231065fde4e106ab63ab331c752d42f5c3cfef09a06",
+    "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/final-audio-input-review.json": "ac57b7ff82b4afa4fd0cef4d06ec4625e155e1a350c5e3b0fe6cf0cb86780fe8",
+    "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/production/owner-listening-review.json": "3744768a69a26afad385f8383e0260f64106665889f034fe3ebd77dd09f9b9f1",
+    "data/evidence/chwalinska-kartal-wuhan-2026-f/voice/kartal-name-correction/voice-review.json": "9ee7369eebdaaae9d4853e9c13bdf960d3c3903ab3796a773feab89ab74c1b42"
+  },
+  "old_production_modified": false,
+  "old_machine_unknowns_modified": false,
+  "new_network_download": false,
+  "new_synthesis": false,
+  "new_acoustic_measurement": false,
+  "loudness_or_gain_checks": false,
+  "tracked_files_modified": false
+}

@@ -1,7 +1,7 @@
 {
   "schema": "tennislive.foreground-audio-review.v1",
   "slug": "chwalinska-kartal-wuhan-2026-f",
-  "plan_sha256": "eead500784ec7d94bd39855f17933d4ae588f46c5c2063e93708e58185257361",
+  "plan_sha256": "57b9779e48fb33e2a0caa9976d06eac7fcaabd3db174239016e48fdf0d70178b",
   "reviewed_at": "2026-10-18T15:16:38.891705+00:00",
   "segments": [
     {
@@ -17,7 +17,7 @@
     {
       "index": 3,
       "transcript_path": "data/evidence/chwalinska-kartal-wuhan-2026-f/source-audio/first_set_point.json",
-      "transcript_sha256": "20d874b8a41d72da158c4786c5abdd4c408a175332702520a9cc8cc943ecb1d8"
+      "transcript_sha256": "2a518f1da5c3ff50cf4ac10b7fc77353b69ecbcd31c9d035de2778f9ce5b4b77"
     },
     {
       "index": 5,
@@ -56,5 +56,6 @@
     }
   ],
   "_review_method": "Main-source complete small.en/medium.en plus official automatic captions and finite turbo; independent extended original-SHA finite small/turbo plus base.en artifact cross-check; no manual listening claimed",
-  "_updated_packet_reason": "Second set point extended to preserve complete play; new confirmed-word captions explicitly omit unresolved prefix after owner approval. Only this packet re-reviewed and hash refreshed; unchanged other nine packets retained."
+  "_updated_packet_reason": "Second set point extended to preserve complete play; new confirmed-word captions explicitly omit unresolved prefix after owner approval. Only this packet re-reviewed and hash refreshed; unchanged other nine packets retained.",
+  "_name_correction": "Only first-set-point Chinese translation corrects Kartal→卡塔尔; source/English unchanged. Current plan rebind is validated natively."
 }

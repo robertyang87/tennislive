@@ -1,0 +1,22 @@
+{
+  "schema": "tennislive.ci-integration-repair.v1",
+  "failed_run": 39149817084,
+  "scope": "Current main added a separate interview preflight-log artifact after branch creation; two older tests incorrectly counted/compressed every artifact as a movie archive.",
+  "prior_result": {
+    "passed": 6294,
+    "failed": 2,
+    "skipped": 229
+  },
+  "repair": "Only exact preflight_debug.md is treated as text log; media source exclusions, artifact root and compression-level0 assertions remain unchanged.",
+  "local_verification": {
+    "real_current_main_workflow": "30e247b4 preflight log step plus original media upload",
+    "targeted_tests_passed": 13,
+    "negative_controls": [
+      "Log pointing to source.mp4 rejected",
+      "Log plus media path rejected",
+      "Media compression6 rejected"
+    ]
+  },
+  "movie_inputs_changed": false,
+  "rerender_needed": false
+}
