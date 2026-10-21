@@ -30,7 +30,9 @@
     "都要按着时间线来",
     "WTA官方快剪可以参考但不是我们的风格；我们更希望讲故事的方式",
     "封面钩子第一行更吸引人",
-    "左上角副标题：穆霍娃：锁定最后一张总决赛门票"
+    "左上角副标题：穆霍娃：锁定最后一张总决赛门票",
+    "同步主线最新右上信息字卡样式",
+    "封面钩子第二行加总决赛"
   ],
   "interview_policy": "优先2–3段本人赛后采访/颁奖经典原话，保留完整意思，约8–15秒每段，准确中英字幕；具体原句与时间码经实际源音频核验后定稿。",
   "outline_review": {
@@ -68,5 +70,12 @@
   "cover_revision": "requests/stories/muchova-finals-2026/cover-user-revision.json",
   "actual_tts": "data/narration_checks/muchova-finals-2026.json",
   "native_preview": "research/muchova-finals-2026/native-preview-review.json",
-  "voice_pre_render_checks": "research/muchova-finals-2026/voice-pre-render-findings.json"
+  "voice_pre_render_checks": "research/muchova-finals-2026/voice-pre-render-findings.json",
+  "style_update": {
+    "main_commit": "81dd5af",
+    "template_commit": "b0f8a42",
+    "native_preview": "research/muchova-finals-2026/native-preview-v2-review.json",
+    "hold_seconds_max": 15,
+    "clip_end_stops_label": true
+  }
 }

@@ -111,8 +111,42 @@ _SCORE_RUN = re.compile(r"\d[\d\-–:./]*\d|\d")
 # 「决胜盘 1-5」这种「这一刻的局分」也当成整场比分去按盘上色，而那一档
 # 没有「赢没赢」可言。
 _SET_TOKEN = re.compile(r"^(\d+)-(\d+)(?:\((\d+)\))?$")
+# 整场决胜抢十单独记号；不能当成普通一盘末尾的上标小分。
+_MATCH_DECIDER_TOKEN = re.compile(r"\[(\d+)-(\d+)\]")
 #: 按盘画时两盘之间的间隔（整场比分走 advance 宽度，不走墨迹框）。
 _SET_GAP = 18
+
+
+@dataclass(frozen=True)
+class _ScoreToken:
+    left: str
+    right: str
+    tiebreak: str | None = None
+    match_decider: bool = False
+
+
+def _parse_set_token(token: str) -> _ScoreToken | None:
+    """Ordinary set/tiebreak or a bracketed match decider, never the same notation."""
+    matched = _SET_TOKEN.fullmatch(token)
+    if matched:
+        return _ScoreToken(*matched.groups())
+    matched = _MATCH_DECIDER_TOKEN.fullmatch(token)
+    if matched:
+        return _ScoreToken(*matched.groups(), match_decider=True)
+    return None
+
+
+def _parse_score_tokens(metric: str) -> list[_ScoreToken] | None:
+    tokens = metric.split()
+    if not tokens:
+        return None
+    parsed: list[_ScoreToken] = []
+    for token in tokens:
+        item = _parse_set_token(token)
+        if item is None:
+            return None
+        parsed.append(item)
+    return parsed
 
 
 @dataclass(frozen=True)
@@ -172,20 +206,22 @@ def set_number_runs(token: str) -> list[tuple[str, bool]] | None:
 
     `6-4` → 6 黄绿、连字符白、4 白。`2-6` 反过来。`7-6(5)` 里括号连同
     小分整段留白，不因为括号里的数更大就涂绿。平局两个局数都白。
-    不是 `6-3` / `7-6(5)` 这种整盘就返回 None。
+    `[10-6]` 是整场决胜抢十，方括号保持白色，两个分数各自按大小上色。
+    不是这些完整比分 token 就返回 None。
     """
-    matched = _SET_TOKEN.match(token)
-    if not matched:
+    parsed = _parse_set_token(token)
+    if parsed is None:
         return None
-    left = int(matched.group(1))
-    right = int(matched.group(2))
+    left, right = int(parsed.left), int(parsed.right)
     runs = [
-        (matched.group(1), left > right),
+        (parsed.left, left > right),
         ("-", False),
-        (matched.group(2), right > left),
+        (parsed.right, right > left),
     ]
-    if matched.group(3) is not None:
-        runs.append((f"({matched.group(3)})", False))
+    if parsed.tiebreak is not None:
+        runs.append((f"({parsed.tiebreak})", False))
+    if parsed.match_decider:
+        runs = [("[", False), *runs, ("]", False)]
     return runs
 
 
@@ -212,16 +248,10 @@ def set_score_wins(metric: str) -> list[bool] | None:
     ⚠️ 认得窄是故意的：`决胜盘 1-5 赛点` 这种「画面上这一刻的局分」必须
     落回老路径（整块一个强调色），按局数上色对它没有意义。
     """
-    tokens = metric.split()
-    if not tokens:
+    parsed = _parse_score_tokens(metric)
+    if parsed is None:
         return None
-    wins: list[bool] = []
-    for token in tokens:
-        matched = _SET_TOKEN.match(token)
-        if not matched:
-            return None
-        wins.append(int(matched.group(1)) > int(matched.group(2)))
-    return wins
+    return [int(token.left) > int(token.right) for token in parsed]
 
 
 def display_units(text: str) -> float:
@@ -426,6 +456,7 @@ def _corner_score_runs(metric: str, size: int) -> list[CornerRun]:
 
     Parentheses remain an input notation only. Tiebreak points sit above the
     losing game count, including when that 6 is on the left of the hyphen.
+    Match deciders retain square brackets and both baseline point counts.
     The same runs are measured and drawn, so five sets include superscripts.
     """
     bold, light = _font(SCORE, size), _font(SCORE_LIGHT, size)
@@ -438,18 +469,20 @@ def _corner_score_runs(metric: str, size: int) -> list[CornerRun]:
         runs.append(CornerRun(text, font, color, cursor, dy, stroke))
         cursor += font.getlength(text)
 
-    if score_number_colors(metric) is None:
+    parsed = _parse_score_tokens(metric)
+    if parsed is None:
         for text, numeric in metric_runs(metric):
             add(text, bold if numeric else _font(LABEL_FONT, size), BRAND_GREEN)
         return runs
     raised = (bold.getbbox("6", anchor="ls")[1] - 5
               - small.getbbox("5", anchor="ls")[1])
-    for index, token in enumerate(metric.split()):
-        match = _SET_TOKEN.fullmatch(token)
-        left, right, tie = match.groups()
+    for index, token in enumerate(parsed):
+        left, right, tie = token.left, token.right, token.tiebreak
         if index:
             cursor += max(30, size * 0.3)
         a, b = int(left), int(right)
+        if token.match_decider:
+            add("[", light, WHITE)
         add(left, bold if a > b else light, BRAND_GREEN if a > b else WHITE)
         if tie is not None and a < b:
             cursor += 2
@@ -461,21 +494,22 @@ def _corner_score_runs(metric: str, size: int) -> list[CornerRun]:
             cursor += 2
             add(tie, small, WHITE, raised, 3)
             cursor += 3
+        if token.match_decider:
+            add("]", light, WHITE)
     return runs
 
 
 def _corner_people_runs(detail: str, metric: str, size: int) -> list[CornerRun]:
     font = _font(LABEL_FONT, size)
     match = re.fullmatch(r"(.+?)(\s+[vV][sS]\s+)(.+)", detail)
-    parsed = score_number_colors(metric)
+    parsed = _parse_score_tokens(metric)
     if not match:
         return [CornerRun(detail, font, WHITE)]
     left, versus, right = match.groups()
     # A non-score event, or equal set count, provides no match winner.
     winner = None
     if parsed is not None:
-        games = [tuple(map(int, _SET_TOKEN.fullmatch(t).groups()[:2]))
-                 for t in metric.split()]
+        games = [(int(token.left), int(token.right)) for token in parsed]
         left_sets = sum(a > b for a, b in games)
         right_sets = sum(b > a for a, b in games)
         if left_sets != right_sets:

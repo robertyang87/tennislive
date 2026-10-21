@@ -13,7 +13,7 @@
     "layout": "solo",
     "story_kind": "person",
     "subject": "穆霍娃",
-    "hook": "穆霍娃熬过了什么？\n锁定最后一张门票",
+    "hook": "穆霍娃熬过了什么？\n锁定总决赛最后一票",
     "topic": "穆霍娃：锁定最后一张总决赛门票",
     "portrait": {
       "image": "assets/reel/muchova-finals-2026/cover-source.jpg",
@@ -26,7 +26,8 @@
       "_portrait_why": "本季官方高清实拍，偏正面、双眼睁开、手扶胸口感谢看台；本片为整季人物故事，不冒称今天晋级现场。来源7/11文章，EXIF实际7/9，已核。"
     },
     "scrim": "clear",
-    "_owner_words": "穆霍娃：锁定最后一张总决赛门票（用户指定副标题，保留原话不缩写）。"
+    "_owner_words": "穆霍娃：锁定最后一张总决赛门票（用户指定副标题，保留原话不缩写）。",
+    "_owner_revision": "用户要求第二行加入“总决赛”；为保留原有大字号，将第二行收为“锁定总决赛最后一票”，总决赛与最后席位的意思不变。"
   },
   "push": {
     "auto": true,
@@ -253,8 +254,8 @@
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
-        "pad": 0.085,
-        "show_for": 8.0,
+        "pad": 0.043,
+        "show_for": 15.0,
         "motion": "editorial",
         "label": {
           "topic": "澳网第四轮",
@@ -317,8 +318,8 @@
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
-        "pad": 0.085,
-        "show_for": 8.0,
+        "pad": 0.043,
+        "show_for": 15.0,
         "motion": "editorial",
         "label": {
           "topic": "久违的冠军",
@@ -447,8 +448,8 @@
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
-        "pad": 0.085,
-        "show_for": 8.0,
+        "pad": 0.043,
+        "show_for": 15.0,
         "motion": "editorial",
         "label": {
           "topic": "首次迈阿密半决赛",
@@ -540,8 +541,8 @@
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
-        "pad": 0.085,
-        "show_for": 8.0,
+        "pad": 0.043,
+        "show_for": 15.0,
         "motion": "editorial",
         "label": {
           "topic": "红土上再进决赛",
@@ -581,8 +582,8 @@
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
-        "pad": 0.085,
-        "show_for": 8.0,
+        "pad": 0.043,
+        "show_for": 15.0,
         "motion": "editorial",
         "label": {
           "topic": "法网止步第三轮",
@@ -642,8 +643,8 @@
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
-        "pad": 0.085,
-        "show_for": 8.0,
+        "pad": 0.043,
+        "show_for": 15.0,
         "motion": "editorial",
         "label": {
           "topic": "草地首冠·对手退赛",
@@ -765,8 +766,8 @@
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
-        "pad": 0.085,
-        "show_for": 8.0,
+        "pad": 0.043,
+        "show_for": 15.0,
         "motion": "editorial",
         "label": {
           "topic": "首次温网单打决赛",
@@ -913,8 +914,8 @@
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
-        "pad": 0.085,
-        "show_for": 8.0,
+        "pad": 0.043,
+        "show_for": 15.0,
         "motion": "editorial",
         "label": {
           "topic": "温网亚军",
@@ -1006,15 +1007,15 @@
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
-        "pad": 0.085,
-        "show_for": 8.0,
+        "pad": 0.043,
+        "show_for": 15.0,
         "motion": "editorial",
         "label": {
           "topic": "美网混双冠军",
           "date": "2026.08.26",
           "place": "美网混双决赛",
           "people": "穆霍娃 / 门西克 vs 本西奇 / 科博利",
-          "event": "6-3 1-6 [10-6]"
+          "score": "6-3 1-6 [10-6]"
         }
       }
     },
@@ -1037,8 +1038,8 @@
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
-        "pad": 0.085,
-        "show_for": 8.0,
+        "pad": 0.043,
+        "show_for": 15.0,
         "motion": "editorial",
         "label": {
           "topic": "美网止步第三轮",
@@ -1127,8 +1128,8 @@
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
-        "pad": 0.085,
-        "show_for": 8.0,
+        "pad": 0.043,
+        "show_for": 15.0,
         "motion": "editorial",
         "label": {
           "topic": "先为捷克拿下一分",
@@ -1227,5 +1228,6 @@
     "command": "python tools/build_match_reel.py render --spec specs/reels/muchova-finals-2026.json --outdir /tmp/muchova-native-final-dryrun --dry-run",
     "exit_code": 0,
     "scope": "正式原生spec形状、措辞、字幕行宽、11个真实inset、真实person证据、archival/contain、fps声明通过；不是TTS/完整成片/人工听审通过。"
-  }
+  },
+  "_story_label_style": "2026-10-21 main V14 confirmed style, at most 15 seconds and bounded by its segment; actual PNGs regenerated from current renderer."
 }
