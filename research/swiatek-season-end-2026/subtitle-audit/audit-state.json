@@ -25,7 +25,7 @@
     "Obtain RG post-match interview for the nerves remark",
     "费塞特: 塞 pronounced sai",
     "Event rounds vs personal results terminology",
-    "Longer-lasting cards; duration proposal12–15s remains provisional"
+    "Card hold target15 seconds approved by user; same-event continuity, replace on event change"
   ],
   "final_card_preferences": [
     "No background or bottom strip",
@@ -44,5 +44,13 @@
     "Each set winning game count bold, losing game count TL Score Light; retain font family",
     "Tiebreak losing points as small bare superscript at upper right of6, no parentheses; include width in fit"
   ],
-  "five_set_layout_test": "card-original-font-v14-tiebreak-five-set-comparison.jpg; sample score only, not this match result"
+  "five_set_layout_test": "card-original-font-v14-tiebreak-five-set-comparison.jpg; sample score only, not this match result",
+  "card_review_decision": {
+    "style": "Keep current V14 style, including adaptive five-set scores",
+    "duration_target_seconds": 15,
+    "user_quote": "好吧先保持这样，时间停留建议15秒可以么？",
+    "scope": "This episode; no global hard duration threshold inferred",
+    "continuity": "Continue across cuts within the same event; replace on event change; do not pad footage solely to meet duration",
+    "implementation": "Recorded for next revision; production spec and renderer unchanged; no render/publication dispatched"
+  }
 }
