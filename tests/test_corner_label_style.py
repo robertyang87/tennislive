@@ -316,7 +316,8 @@ def test_按字段渲贴图_事件和主题同一句时不另起比分行(tmp_pa
         render_label({}, tmp_path / "nope.png")
 
 
-def test_确认版角标同基线居中并按盘区分粗细和抢七上标(tmp_path, monkeypatch):
+@pytest.mark.parametrize("metric", ["6-2 6-3", "7-6(5) 6-7(8) 7-5 4-6 6-4"])
+def test_确认版角标同基线居中并按盘区分粗细和抢七上标(tmp_path, monkeypatch, metric):
     """Exercise the production drawing calls, including both tiebreak orientations."""
     from PIL import ImageDraw
     import render_story_info_band as band
@@ -330,7 +331,6 @@ def test_确认版角标同基线居中并按盘区分粗细和抢七上标(tmp_
         return original(self, xy, text, *args, **kwargs)
 
     monkeypatch.setattr(ImageDraw.ImageDraw, "text", capture)
-    metric = "7-6(5) 6-7(8) 7-5 4-6 6-4"
     out = render("2026.09.07", "领先之后被逆转", "斯瓦泰克 vs 郑钦文",
                  tmp_path / "five.png", highlight="美网第四轮", metric=metric)
     date = next(c for c in calls if c[1] == "2026.09.07")
@@ -348,7 +348,7 @@ def test_确认版角标同基线居中并按盘区分粗细和抢七上标(tmp_
     assert people[2][2]["fill"] == WHITE
     digits = [c for c in calls if c[1].isdigit()]
     main_size = max(c[2]["font"].size for c in digits)
-    assert main_size < band.CORNER_SCORE_SIZE, "五盘必须按完整宽度适配"
+    assert main_size == band.CORNER_SCORE_SIZE == 98, "两盘和五盘必须保持确认的同一字号"
     for xy, text, kw in digits:
         expected = "TLScore-Bold.ttf" if kw["fill"] == BRAND_GREEN else "TLScore-Light.ttf"
         assert Path(kw["font"].path).name == expected
@@ -359,7 +359,11 @@ def test_确认版角标同基线居中并按盘区分粗细和抢七上标(tmp_
     for xy, text, kw in digits:
         box = kw["font"].getbbox(text, anchor="ls")
         digit_boxes.append((xy[0] + box[0], xy[0] + box[2]))
-    assert max(b[1] for b in digit_boxes) - min(b[0] for b in digit_boxes) <= band.CORNER_LANE
+    score_width = max(b[1] for b in digit_boxes) - min(b[0] for b in digit_boxes)
+    assert score_width <= band.CORNER_SCORE_LANE
+    if len(metric.split()) == 5:
+        assert score_width > band.CORNER_LANE, "五盘应向左展开，不能仍挤在原窄列里"
+    assert min(b[0] for b in digit_boxes) >= 66, "展开后也不能裁掉左侧数字"
     assert png_corner_label_problem(out) is None
     def ink_y(call):
         xy, text, kw = call
@@ -373,6 +377,14 @@ def test_确认版角标同基线居中并按盘区分粗细和抢七上标(tmp_
     people_top = min(ink_y(c)[0] for c in people)
     assert meta_bottom + band.CORNER_STROKE + band.CORNER_SHADOW_OFFSET < score_top - band.CORNER_STROKE
     assert score_bottom + band.CORNER_STROKE + band.CORNER_SHADOW_OFFSET < people_top - band.CORNER_STROKE
+
+
+def test_固定字号比分超出画布必须报错而非缩小(tmp_path):
+    # A deliberately oversized, otherwise parseable layout fixture.
+    metric = " ".join(["7-6(100)"] * 5)
+    with pytest.raises(SystemExit, match="比分固定字号超出画布"):
+        render("2026.09.07", "排版示意", "球员甲 vs 球员乙",
+               tmp_path / "overflow.png", highlight="美网男单决赛", metric=metric)
 
 
 def test_新字卡默认15秒并允许向右靠_超过上限仍拒绝(tmp_path):

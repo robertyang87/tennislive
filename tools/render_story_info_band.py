@@ -30,8 +30,9 @@ There are four semantic variants, but they share one grid and one palette:
 2026-10-21 confirmed V14: original fonts, subtitle-style outline/shadow,
 no panel, winner names green and loser names white, shared date/event baseline,
 centered vs, won-set digits bold and lost-set digits light. Tiebreak points are
-bare small superscripts by the losing game count. Full five-set scores fit by
-actual glyph width. Default hold is at most15s, bounded by the associated clip.
+bare small superscripts by the losing game count. The final follow-up fixes
+all full-match scores at the same98px source size: five sets extend left
+instead of shrinking. Default hold is at most15s, bounded by the associated clip.
 
 The PNG is intentionally rendered near 2x its final display width. The reel
 pipeline scales it down with Lanczos so Chinese strokes stay crisp.
@@ -90,6 +91,8 @@ CORNER_GAP, CORNER_SCORE_GAP = 20, 17
 # 0.60 * 1080 = 648px in the finished reel. 1200px therefore gives a crisp
 # source while leaving enough room for the longest opponent name.
 WIDTH, HEIGHT = 1200, 340
+# Score rows may extend left beyond the text lane, preserving the fixed font size.
+CORNER_SCORE_LANE = WIDTH - 2 * 66
 # 比分独立一行时多留一行高度；默认同行画布保持原样。
 SPLIT_METRIC_HEIGHT = 440
 
@@ -534,6 +537,23 @@ def _fit_corner_runs(builder, preferred: int) -> list[CornerRun]:
     raise SystemExit("角标文字过长，无法在右侧安全宽度内清晰显示；请缩短文字")
 
 
+def _corner_metric_runs(metric: str) -> list[CornerRun]:
+    """Full-match scores keep the same size for two through five sets.
+
+    Only this row may extend left into the wider transparent canvas. Textual
+    events keep their existing lane; an overwide score fails rather than
+    silently shrinking the digits or clipping a superscript.
+    """
+    if _parse_score_tokens(metric) is None:
+        return _fit_corner_runs(
+            lambda size: _corner_score_runs(metric, size), CORNER_SCORE_SIZE)
+    runs = _corner_score_runs(metric, CORNER_SCORE_SIZE)
+    bounds = _corner_bounds(runs)
+    if bounds[2] - bounds[0] > CORNER_SCORE_LANE:
+        raise SystemExit("比分固定字号超出画布安全宽度；请调整布局，不自动缩小比分")
+    return runs
+
+
 def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
                    metric: str, align: str, highlight: str) -> Path:
     """Confirmed V14 typography: transparent, original fonts, one shared baseline.
@@ -559,8 +579,7 @@ def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
 
     rows.append(("meta", _fit_corner_runs(meta_runs, CORNER_META_SIZE)))
     if metric:
-        rows.append(("score", _fit_corner_runs(
-            lambda size: _corner_score_runs(metric, size), CORNER_SCORE_SIZE)))
+        rows.append(("score", _corner_metric_runs(metric)))
     rows.append(("people", _fit_corner_runs(
         lambda size: _corner_people_runs(detail, metric, size), CORNER_PEOPLE_SIZE)))
     bounds = [_corner_bounds(runs) for _kind, runs in rows]
