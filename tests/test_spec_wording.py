@@ -95,7 +95,7 @@ def test_明确最好成绩句不被当成比赛轮次():
     for text in ("今年大满贯最好成绩是澳网8强。", "她最好成绩仍是法网4强。"):
         assert not strength_round_hits(text)
         spec = {"segments": [{"narration": text}]}
-        assert not any("轮次名" in p for p in check_spec_wording(spec, "new-story"))
+        assert not check_spec_wording(spec, "new-story")
     # 成绩提示不能跨句放行后面的比赛轮次名。
     assert strength_round_hits("最好成绩是冠军。接着看澳网8强的比赛。")
     assert strength_round_hits("澳网8强的比赛。")
