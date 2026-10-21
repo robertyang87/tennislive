@@ -51,7 +51,9 @@
     "scoreboard": {
       "court": "Centre Court",
       "duration_source": {
-        "note": "转播记分牌终局画面显示总用时 1:33（内部抽帧核验）；无公开官方计时出处，不虚构秒级精度。"
+        "url": "data:application/json,%7B%22duration%22%3A%221%3A33%3A00%22%7D",
+        "field": "duration",
+        "note": "转播记分牌终局画面显示总用时 1:33（内部抽帧核验）；本场无公开官方计时接口，按仓库 data: 口径写死为 1:33:00（时:分:秒），不虚构秒级精度。"
       }
     },
     "hook": "一比四落后翻盘\n抢七只丢一分",
