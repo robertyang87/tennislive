@@ -1,0 +1,1302 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "faff8eb20925fcff9dc07f22f2d7f8f6d845f93e9be139ab0758168b5d190ea6",
+    "render_inputs_sha256": "3c6422ac038cd1377821dcc272c7a8fd1ca587b8f3a08c8d8e82a7bfe130b1b2",
+    "spec_sha256": "65aa0b8e407e7970e3d08cae6e8e53d0449bc1e4237065c32fb41c8426f3ae4c",
+    "film_sha256": "ce4bbca02e4822c673e1ec0252b1ff23f10abfe5754687d1ad265d63c44d3505",
+    "inventory_sha256": "4ddd6fbdd482b5c3bfb8f446529a07adfac141a7130cc12e39d735c7a795215f"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-21T19:51:51+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:14d5200a045d15f05522e522299c981595820a1313fc19de6be35e55cadf9854",
+      "audio_sha256": "9587b9e0e2afa78417e58962cb9b37d1ca94a5c6d7bc716bece7df1b2007b726",
+      "pass": true,
+      "result_of": "bundle:14d5200a045d15f05522e522299c981595820a1313fc19de6be35e55cadf9854"
+    },
+    {
+      "id": "bundle:23883bc1ccf01252f5024dff2833d7fb5f17ce9f3a39db46b9a3082f7bd592be",
+      "audio_sha256": "93aac652521723bbf0a6748635cd33eb4f5a1a7ed2e412653ac701773a94d6c7",
+      "pass": true,
+      "result_of": "bundle:23883bc1ccf01252f5024dff2833d7fb5f17ce9f3a39db46b9a3082f7bd592be"
+    },
+    {
+      "id": "bundle:314214bd5cee05f2b53b98d83d8809c0fb051a3642c7197da8fc22bf175c00ef",
+      "audio_sha256": "94f3fb2acee469db84885e745d06fdc0663ecbdd85d9755d1927a3a191c1ec8d",
+      "pass": true,
+      "result_of": "bundle:314214bd5cee05f2b53b98d83d8809c0fb051a3642c7197da8fc22bf175c00ef"
+    },
+    {
+      "id": "bundle:4d2dfebc4d6c7f1865a0a28e1d27c12855c2c46bde0d48424c361455a5e9b52b",
+      "audio_sha256": "5a6af8259d5670b53ff6dc36aaf6f9d5f69af3ccdf351a70929300cab5b57b44",
+      "pass": true,
+      "result_of": "bundle:4d2dfebc4d6c7f1865a0a28e1d27c12855c2c46bde0d48424c361455a5e9b52b"
+    },
+    {
+      "id": "bundle:5e49bfb9fa8db7cbe58c52d3e6c3cbd8d6910c364f00bc786c5b130884dd610e",
+      "audio_sha256": "9e5187c54985448235fb294f382f55628b0886b25dc904db0a01b0ef750d293a",
+      "pass": true,
+      "result_of": "bundle:5e49bfb9fa8db7cbe58c52d3e6c3cbd8d6910c364f00bc786c5b130884dd610e"
+    },
+    {
+      "id": "bundle:620e0d6500c0c4d25650983de7a5b51080bd4532e215cdfdf4ab9a6ef5f64346",
+      "audio_sha256": "91e15b6fd83070858dc9b54955bd9c40ed70f3911ee590cc91ec1061077010d7",
+      "pass": true,
+      "result_of": "bundle:620e0d6500c0c4d25650983de7a5b51080bd4532e215cdfdf4ab9a6ef5f64346"
+    },
+    {
+      "id": "bundle:68a4576e30fb7b4e85206d0fd7bb226d8c66ec163a10d4b58235616d5e30a7bc",
+      "audio_sha256": "263d4c4d49d2401a69a491d57f5c84d640b4d31bfd364c0bfc63e28b04a9211a",
+      "pass": true,
+      "result_of": "bundle:68a4576e30fb7b4e85206d0fd7bb226d8c66ec163a10d4b58235616d5e30a7bc"
+    },
+    {
+      "id": "bundle:83734f4af6636954ce7bc19bdee3435d4665eb156d8ea17b5cada4ee1718de71",
+      "audio_sha256": "66b6620cbe4d793fe0c8fd62c89c85cad2d0c915c40b13ca5b6389d81380327f",
+      "pass": true,
+      "result_of": "bundle:83734f4af6636954ce7bc19bdee3435d4665eb156d8ea17b5cada4ee1718de71"
+    },
+    {
+      "id": "bundle:9089685b07778f44fc27fe60437bdb446bc38628b5f71400f45cff1c31427bdf",
+      "audio_sha256": "ab28d533ebd6f33879a3a76d8fb1500c883a1be4601bb87441304a3e2c7637d8",
+      "pass": true,
+      "result_of": "bundle:9089685b07778f44fc27fe60437bdb446bc38628b5f71400f45cff1c31427bdf"
+    },
+    {
+      "id": "bundle:9356f151327eb0dac7213571b9ea42e96c97919415604e7704a906c90fdc4372",
+      "audio_sha256": "50cb04ba03a6bdaa517aee12e9789df81c1e6ad06f736a2b701b5b8fe89e26b5",
+      "pass": true,
+      "result_of": "bundle:9356f151327eb0dac7213571b9ea42e96c97919415604e7704a906c90fdc4372"
+    },
+    {
+      "id": "bundle:97bedccedcf5d63968ef01bc9ac97c11214ab98a97e9746180ebd5ec936678f5",
+      "audio_sha256": "4695ebb89240a5db9c56ee6f3f760b17e3323e817009883f0b105096bdb0e5cb",
+      "pass": true,
+      "result_of": "bundle:97bedccedcf5d63968ef01bc9ac97c11214ab98a97e9746180ebd5ec936678f5"
+    },
+    {
+      "id": "bundle:9fb7e4d76c0408b32c44a3517dfa90038eeb4496a9e77a6b1085458534df97b1",
+      "audio_sha256": "51bc387f5f91de23164b89d72c0edf0011977fc1fb1a456113d38a7602c77690",
+      "pass": true,
+      "result_of": "bundle:9fb7e4d76c0408b32c44a3517dfa90038eeb4496a9e77a6b1085458534df97b1"
+    },
+    {
+      "id": "bundle:aff8d006a75f242b5e6032f6adf8e8011f98652d550697010d41b575cd9606d5",
+      "audio_sha256": "7d63acb17c76cafceccf463e0bbfb1bc2c14738a41fa44d96f4ee80beb1280c6",
+      "pass": true,
+      "result_of": "bundle:aff8d006a75f242b5e6032f6adf8e8011f98652d550697010d41b575cd9606d5"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "f538ba882508d606e6d0694a6c517c166dc225a682361bedc382c128258133db",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:ba547d416f1c84bc06d28ad0de3bac1a021ebeaed68a3d777f2434002ce93512",
+      "audio_sha256": "ac0afabfd709ac20d62ff71497a4fbecf09a6ebad882c67805dac45190acb4df",
+      "pass": true,
+      "result_of": "bundle:ba547d416f1c84bc06d28ad0de3bac1a021ebeaed68a3d777f2434002ce93512"
+    },
+    {
+      "id": "bundle:cb479f86421ec3a565e39ab326494510a2156d85359047b3caaf8f79b48b6339",
+      "audio_sha256": "8b7664680fb04a49061e276ca358add0d302d9483614b558290d3687a073ea21",
+      "pass": true,
+      "result_of": "bundle:cb479f86421ec3a565e39ab326494510a2156d85359047b3caaf8f79b48b6339"
+    },
+    {
+      "id": "bundle:cfefc19a3f047531d6a02719a27bea0a1da16c64344db8bfb234b716d7fc1e84",
+      "audio_sha256": "2089c583d628f844196df51a06d5a97a4cd79c79ff304f0eeea3c5c5d65fc92d",
+      "pass": true,
+      "result_of": "bundle:cfefc19a3f047531d6a02719a27bea0a1da16c64344db8bfb234b716d7fc1e84"
+    },
+    {
+      "id": "bundle:dad972487a0fa6edcb4867b4404a962b817559f4418b83026ead1dde611d0086",
+      "audio_sha256": "7ca4174c2b75887f5d0d9ef3548746eb6997fe4ea57e71260d95da89a1027b88",
+      "pass": true,
+      "result_of": "bundle:dad972487a0fa6edcb4867b4404a962b817559f4418b83026ead1dde611d0086"
+    },
+    {
+      "id": "bundle:dbfc9247cb76f718b031c0b804b4873b300a4e72676a21df003d9bed69587b5d",
+      "audio_sha256": "ae9f782c2194f06c9f26d9e139bbe2324cbc61c2e92c57d7bf669d383fded10a",
+      "pass": true,
+      "result_of": "bundle:dbfc9247cb76f718b031c0b804b4873b300a4e72676a21df003d9bed69587b5d"
+    },
+    {
+      "id": "bundle:ded27f16f9b7db1d9534a1347784b7fcaf473865a6459aba03dc56dbb48c16cd",
+      "audio_sha256": "5c7e230c3b4355743c884f510ada02b29b34af5d39ceed59326005b5d8f7bcf0",
+      "pass": true,
+      "result_of": "bundle:ded27f16f9b7db1d9534a1347784b7fcaf473865a6459aba03dc56dbb48c16cd"
+    },
+    {
+      "id": "bundle:e7a3935cec200e51bf2db252e04a2dad62d3c2fbcecd9a7ce101aa9936a19298",
+      "audio_sha256": "1a976206d6d98c41533ce1d5efa864e4af4b0f4f1766f381a051f83778a07a58",
+      "pass": true,
+      "result_of": "bundle:e7a3935cec200e51bf2db252e04a2dad62d3c2fbcecd9a7ce101aa9936a19298"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "66b6620cbe4d793fe0c8fd62c89c85cad2d0c915c40b13ca5b6389d81380327f",
+      "pass": true,
+      "result_of": "bundle:83734f4af6636954ce7bc19bdee3435d4665eb156d8ea17b5cada4ee1718de71"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "7d63acb17c76cafceccf463e0bbfb1bc2c14738a41fa44d96f4ee80beb1280c6",
+      "pass": true,
+      "result_of": "bundle:aff8d006a75f242b5e6032f6adf8e8011f98652d550697010d41b575cd9606d5"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "1a976206d6d98c41533ce1d5efa864e4af4b0f4f1766f381a051f83778a07a58",
+      "pass": true,
+      "result_of": "bundle:e7a3935cec200e51bf2db252e04a2dad62d3c2fbcecd9a7ce101aa9936a19298"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "ac0afabfd709ac20d62ff71497a4fbecf09a6ebad882c67805dac45190acb4df",
+      "pass": true,
+      "result_of": "bundle:ba547d416f1c84bc06d28ad0de3bac1a021ebeaed68a3d777f2434002ce93512"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "4695ebb89240a5db9c56ee6f3f760b17e3323e817009883f0b105096bdb0e5cb",
+      "pass": true,
+      "result_of": "bundle:97bedccedcf5d63968ef01bc9ac97c11214ab98a97e9746180ebd5ec936678f5"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "94f3fb2acee469db84885e745d06fdc0663ecbdd85d9755d1927a3a191c1ec8d",
+      "pass": true,
+      "result_of": "bundle:314214bd5cee05f2b53b98d83d8809c0fb051a3642c7197da8fc22bf175c00ef"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "9e5187c54985448235fb294f382f55628b0886b25dc904db0a01b0ef750d293a",
+      "pass": true,
+      "result_of": "bundle:5e49bfb9fa8db7cbe58c52d3e6c3cbd8d6910c364f00bc786c5b130884dd610e"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "91e15b6fd83070858dc9b54955bd9c40ed70f3911ee590cc91ec1061077010d7",
+      "pass": true,
+      "result_of": "bundle:620e0d6500c0c4d25650983de7a5b51080bd4532e215cdfdf4ab9a6ef5f64346"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "5a6af8259d5670b53ff6dc36aaf6f9d5f69af3ccdf351a70929300cab5b57b44",
+      "pass": true,
+      "result_of": "bundle:4d2dfebc4d6c7f1865a0a28e1d27c12855c2c46bde0d48424c361455a5e9b52b"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "8b7664680fb04a49061e276ca358add0d302d9483614b558290d3687a073ea21",
+      "pass": true,
+      "result_of": "bundle:cb479f86421ec3a565e39ab326494510a2156d85359047b3caaf8f79b48b6339"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "2089c583d628f844196df51a06d5a97a4cd79c79ff304f0eeea3c5c5d65fc92d",
+      "pass": true,
+      "result_of": "bundle:cfefc19a3f047531d6a02719a27bea0a1da16c64344db8bfb234b716d7fc1e84"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "ab28d533ebd6f33879a3a76d8fb1500c883a1be4601bb87441304a3e2c7637d8",
+      "pass": true,
+      "result_of": "bundle:9089685b07778f44fc27fe60437bdb446bc38628b5f71400f45cff1c31427bdf"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "263d4c4d49d2401a69a491d57f5c84d640b4d31bfd364c0bfc63e28b04a9211a",
+      "pass": true,
+      "result_of": "bundle:68a4576e30fb7b4e85206d0fd7bb226d8c66ec163a10d4b58235616d5e30a7bc"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "ae9f782c2194f06c9f26d9e139bbe2324cbc61c2e92c57d7bf669d383fded10a",
+      "pass": true,
+      "result_of": "bundle:dbfc9247cb76f718b031c0b804b4873b300a4e72676a21df003d9bed69587b5d"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "50cb04ba03a6bdaa517aee12e9789df81c1e6ad06f736a2b701b5b8fe89e26b5",
+      "pass": true,
+      "result_of": "bundle:9356f151327eb0dac7213571b9ea42e96c97919415604e7704a906c90fdc4372"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "5c7e230c3b4355743c884f510ada02b29b34af5d39ceed59326005b5d8f7bcf0",
+      "pass": true,
+      "result_of": "bundle:ded27f16f9b7db1d9534a1347784b7fcaf473865a6459aba03dc56dbb48c16cd"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "93aac652521723bbf0a6748635cd33eb4f5a1a7ed2e412653ac701773a94d6c7",
+      "pass": true,
+      "result_of": "bundle:23883bc1ccf01252f5024dff2833d7fb5f17ce9f3a39db46b9a3082f7bd592be"
+    },
+    {
+      "id": "voice_21.mp3",
+      "audio_sha256": "51bc387f5f91de23164b89d72c0edf0011977fc1fb1a456113d38a7602c77690",
+      "pass": true,
+      "result_of": "bundle:9fb7e4d76c0408b32c44a3517dfa90038eeb4496a9e77a6b1085458534df97b1"
+    },
+    {
+      "id": "voice_24.mp3",
+      "audio_sha256": "7ca4174c2b75887f5d0d9ef3548746eb6997fe4ea57e71260d95da89a1027b88",
+      "pass": true,
+      "result_of": "bundle:dad972487a0fa6edcb4867b4404a962b817559f4418b83026ead1dde611d0086"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "9587b9e0e2afa78417e58962cb9b37d1ca94a5c6d7bc716bece7df1b2007b726",
+      "pass": true,
+      "result_of": "bundle:14d5200a045d15f05522e522299c981595820a1313fc19de6be35e55cadf9854"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "f538ba882508d606e6d0694a6c517c166dc225a682361bedc382c128258133db",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:14d5200a045d15f05522e522299c981595820a1313fc19de6be35e55cadf9854",
+      "text": "一分定生死，球员骂了五十年。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "一分定生死,球员骂了50年。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.359,
+        "cps": 5.09,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一 ｜ 分 ｜ 定 ｜ 生死 ｜ 球员 ｜ 骂 ｜ 了 ｜ 五十年"
+      }
+    },
+    {
+      "id": "bundle:23883bc1ccf01252f5024dff2833d7fb5f17ce9f3a39db46b9a3082f7bd592be",
+      "text": "这之后，规矩终于改了：二零一九年，温网启用决胜盘十二平抢七；澳网走得更远，决胜盘六平之后直接抢十。二零二二年，四大满贯统一：决胜盘打到六比六，抢十定胜负，领先两分。打不完的比赛，从规则上被判了死刑。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 86,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.012,
+        "longest_deletion": 0,
+        "transcript": "这时候,规矩终于改了。2019年,温王启用决胜盘十二平抢七,澳王走得更远,决胜盘六平之后直接抢十。2022年,四大满冠统一,决胜盘打到六比六,抢十定胜负领先两分。打不完的比赛,从规则上被判了死刑。"
+      },
+      "polyphones": [
+        {
+          "index": 33,
+          "char": "得",
+          "word": "得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "unreliable",
+              "score": 0.565,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 86,
+        "speech_s": 19.245,
+        "cps": 4.47,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 之后 ｜ 规矩 ｜ 终于 ｜ 改 ｜ 了 ｜ 二零一九年 ｜ 温 ｜ 网 ｜ 启用 ｜ 决胜 ｜ 盘 ｜ 十二 ｜ 平 ｜ 抢 ｜ 七 ｜ 澳 ｜ 网 ｜ 走 ｜ 得 ｜ 更 ｜ 远 ｜ 决胜 ｜ 盘 ｜ 六 ｜ 平 ｜ 之后 ｜ 直接 ｜ 抢 ｜ 十 ｜ 二零二二年 ｜ 四 ｜ 大满贯 ｜ 统一 ｜ 决胜 ｜ 盘 ｜ 打 ｜ 到 ｜ 六比六 ｜ 抢 ｜ 十 ｜ 定 ｜ 胜负 ｜ 领先 ｜ 两分 ｜ 打 ｜ 不 ｜ 完 ｜ 的 ｜ 比赛 ｜ 从 ｜ 规则 ｜ 上 ｜ 被 ｜ 判 ｜ 了 ｜ 死刑"
+      }
+    },
+    {
+      "id": "bundle:314214bd5cee05f2b53b98d83d8809c0fb051a3642c7197da8fc22bf175c00ef",
+      "text": "他力推的版本叫突然死亡，其实就是今天抢七的骨架。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "她力推的版本叫《突然死亡》,其实就是今天抢期的股价。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.304,
+        "cps": 5.11,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "他 ｜ 力推 ｜ 的 ｜ 版本 ｜ 叫 ｜ 突然 ｜ 死亡 ｜ 其实 ｜ 就 ｜ 是 ｜ 今天 ｜ 抢 ｜ 七 ｜ 的 ｜ 骨架"
+      }
+    },
+    {
+      "id": "bundle:4d2dfebc4d6c7f1865a0a28e1d27c12855c2c46bde0d48424c361455a5e9b52b",
+      "text": "球员和观众都爱这个版本：够狠、够快。可拉沃他们几个大牌偏说不行，赢两分才算赢球，这是网球的规矩。于是有了第二个版本：先到七分、领先两分。范·阿伦气坏了，给它起名叫久拖之死。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 74,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "球员和观众都爱这个版本,够狠,够快。可拉握他们几个大牌偏说不行,赢两分才算赢球,这是网球的规矩。于是有了第二个版本,先到七分,领先两分。范阿伦气坏了,给他起名叫《九托之死》。"
+      },
+      "polyphones": [
+        {
+          "index": 30,
+          "char": "行",
+          "word": "不行",
+          "intended": "xing2",
+          "wrong": [
+            "hang2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "hang2",
+              "verdict": "correct",
+              "score": 0.36,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "刑型形"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 74,
+        "speech_s": 16.403,
+        "cps": 4.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "球员 ｜ 和 ｜ 观众 ｜ 都 ｜ 爱 ｜ 这个 ｜ 版本 ｜ 够 ｜ 狠 ｜ 够 ｜ 快 ｜ 可 ｜ 拉沃 ｜ 他们 ｜ 几个 ｜ 大牌 ｜ 偏 ｜ 说 ｜ 不行 ｜ 赢 ｜ 两分 ｜ 才 ｜ 算 ｜ 赢 ｜ 球 ｜ 这是 ｜ 网球 ｜ 的 ｜ 规矩 ｜ 于是 ｜ 有 ｜ 了 ｜ 第二个 ｜ 版本 ｜ 先 ｜ 到 ｜ 七分 ｜ 领先 ｜ 两分 ｜ 范 ｜ 阿伦 ｜ 气 ｜ 坏 ｜ 了 ｜ 给 ｜ 它 ｜ 起名 ｜ 叫 ｜ 久拖 ｜ 之 ｜ 死"
+      }
+    },
+    {
+      "id": "bundle:5e49bfb9fa8db7cbe58c52d3e6c3cbd8d6910c364f00bc786c5b130884dd610e",
+      "text": "局分六比六之后，不再一局一局打，改打一个小局定胜负。小局里先到五分就赢。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "局分6比6之后,不再一局一局打,该打一个小局定胜负,小局里先到5分就赢。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 6.545,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "局 ｜ 分 ｜ 六比六 ｜ 之后 ｜ 不再 ｜ 一 ｜ 局 ｜ 一 ｜ 局 ｜ 打 ｜ 改 ｜ 打 ｜ 一个 ｜ 小局 ｜ 定 ｜ 胜负 ｜ 小 ｜ 局 ｜ 里 ｜ 先 ｜ 到 ｜ 五分 ｜ 就 ｜ 赢"
+      }
+    },
+    {
+      "id": "bundle:620e0d6500c0c4d25650983de7a5b51080bd4532e215cdfdf4ab9a6ef5f64346",
+      "text": "最狠的一条是：打到四比四，最后一分定生死，接发球的人还能选从哪边接。也就是说，这一分可能是发球方的赛点，也可能是接发方的赛点——双赛点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 59,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.017,
+        "longest_deletion": 0,
+        "transcript": "最狠的一条是：打到4比4,最后一分定生死,接发球的人还能选从哪连界。也就是说,这一分可能是发球方的赛点,也可能是接发方的赛点、双赛点。"
+      },
+      "polyphones": [
+        {
+          "index": 22,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 26,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.105,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 45,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 57,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 59,
+        "speech_s": 12.17,
+        "cps": 4.85,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最 ｜ 狠 ｜ 的 ｜ 一条 ｜ 是 ｜ 打 ｜ 到 ｜ 四比四 ｜ 最后 ｜ 一 ｜ 分 ｜ 定 ｜ 生死 ｜ 接 ｜ 发球 ｜ 的 ｜ 人 ｜ 还 ｜ 能 ｜ 选 ｜ 从 ｜ 哪边 ｜ 接 ｜ 也就是说 ｜ 这 ｜ 一 ｜ 分 ｜ 可能 ｜ 是 ｜ 发球 ｜ 方 ｜ 的 ｜ 赛点 ｜ 也 ｜ 可能 ｜ 是 ｜ 接 ｜ 发 ｜ 方 ｜ 的 ｜ 赛点 ｜ 双 ｜ 赛点"
+      }
+    },
+    {
+      "id": "bundle:68a4576e30fb7b4e85206d0fd7bb226d8c66ec163a10d4b58235616d5e30a7bc",
+      "text": "你数一下：麦肯罗在这一个抢七里，救了五个冠军点，自己浪费了七个盘点，最后十八比十六拿下。整个抢七打了二十分钟，全场起立。可博格第五盘还是八比六赢了，五连冠到手。王者的区别不在顺风球，在这种分上。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 86,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "你属一下,麦肯罗在这一个抢七里,救了五个冠军点,自己浪费了七个盘点,最后是八比十六拿下。整个抢七达了二十分钟,全场起立。可伯格第五盘还是八比六赢了,五连冠到手。王者的区别不再顺风球,在这种分上。"
+      },
+      "polyphones": [
+        {
+          "index": 66,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.313,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 93,
+          "char": "种",
+          "word": "种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.153,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 86,
+        "speech_s": 18.526,
+        "cps": 4.64,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "你 ｜ 数 ｜ 一下 ｜ 麦肯罗 ｜ 在 ｜ 这 ｜ 一个 ｜ 抢 ｜ 七 ｜ 里 ｜ 救 ｜ 了 ｜ 五个 ｜ 冠军 ｜ 点 ｜ 自己 ｜ 浪费 ｜ 了 ｜ 七 ｜ 个 ｜ 盘点 ｜ 最后 ｜ 十八 ｜ 比 ｜ 十六 ｜ 拿下 ｜ 整个 ｜ 抢 ｜ 七 ｜ 打 ｜ 了 ｜ 二十 ｜ 分钟 ｜ 全场 ｜ 起立 ｜ 可 ｜ 博格 ｜ 第五盘 ｜ 还是 ｜ 八 ｜ 比 ｜ 六 ｜ 赢 ｜ 了 ｜ 五 ｜ 连冠 ｜ 到手 ｜ 王者 ｜ 的 ｜ 区别 ｜ 不在 ｜ 顺风 ｜ 球 ｜ 在 ｜ 这种 ｜ 分上"
+      }
+    },
+    {
+      "id": "bundle:83734f4af6636954ce7bc19bdee3435d4665eb156d8ea17b5cada4ee1718de71",
+      "text": "这一分，她们打了三十一分钟还没打完。这已经是网球最快的决胜方式了。抢七被发明出来，就是为了让比赛赶紧结束。它没被发明之前，网球是另一副样子。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 63,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这一分,他们打了31分钟还没打完。这已经是网球最快的决胜方式了。抢期被发明出来,就是为了让比赛赶紧结束。他们没被发明之前,网球是另一副样子。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.186,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 36,
+          "char": "发",
+          "word": "发明",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 56,
+          "char": "发",
+          "word": "发明",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 63,
+        "speech_s": 13.019,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 一 ｜ 分 ｜ 她们 ｜ 打 ｜ 了 ｜ 三十一分钟 ｜ 还 ｜ 没 ｜ 打 ｜ 完 ｜ 这 ｜ 已经 ｜ 是 ｜ 网球 ｜ 最 ｜ 快 ｜ 的 ｜ 决胜 ｜ 方式 ｜ 了 ｜ 抢 ｜ 七 ｜ 被 ｜ 发明 ｜ 出来 ｜ 就 ｜ 是 ｜ 为了 ｜ 让 ｜ 比赛 ｜ 赶紧 ｜ 结束 ｜ 它 ｜ 没 ｜ 被 ｜ 发明 ｜ 之前 ｜ 网球 ｜ 是 ｜ 另 ｜ 一 ｜ 副 ｜ 样子"
+      }
+    },
+    {
+      "id": "bundle:9089685b07778f44fc27fe60437bdb446bc38628b5f71400f45cff1c31427bdf",
+      "text": "四年后的一九八零年温网决赛，博格对麦肯罗。第四盘抢七，网球史上最著名的一个：博格先拿到冠军点，麦肯罗救了；麦肯罗拿到盘点，博格又顶住。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 59,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "四年后的1980年温网决赛,伯格对麦肯罗。第四盘抢期,网球史上最著名的一个,伯格先拿到冠军点,麦肯罗就了。麦肯罗拿到盘点,伯格又顶住。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 59,
+        "speech_s": 13.09,
+        "cps": 4.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四年 ｜ 后 ｜ 的 ｜ 一九八零年 ｜ 温 ｜ 网 ｜ 决赛 ｜ 博格 ｜ 对 ｜ 麦肯罗 ｜ 第四盘 ｜ 抢 ｜ 七 ｜ 网球 ｜ 史 ｜ 上 ｜ 最 ｜ 著名 ｜ 的 ｜ 一个 ｜ 博格 ｜ 先 ｜ 拿 ｜ 到 ｜ 冠军 ｜ 点 ｜ 麦肯罗 ｜ 救 ｜ 了 ｜ 麦肯罗 ｜ 拿 ｜ 到 ｜ 盘点 ｜ 博格 ｜ 又 ｜ 顶住"
+      }
+    },
+    {
+      "id": "bundle:9356f151327eb0dac7213571b9ea42e96c97919415604e7704a906c90fdc4372",
+      "text": "记分牌被打到没法显示，两个人最后是站着合影的。整场十一个小时五分钟，跨了三天。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.029,
+        "longest_deletion": 0,
+        "transcript": "气氛排被打到没法显示,两个人最后是站着合影的。整场11个小时五分钟,跨了三天。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 7.04,
+        "cps": 4.97,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "记分牌 ｜ 被 ｜ 打 ｜ 到 ｜ 没法 ｜ 显示 ｜ 两 ｜ 个 ｜ 人 ｜ 最后 ｜ 是 ｜ 站 ｜ 着 ｜ 合影 ｜ 的 ｜ 整 ｜ 场 ｜ 十一 ｜ 个 ｜ 小时 ｜ 五分钟 ｜ 跨 ｜ 了 ｜ 三 ｜ 天"
+      }
+    },
+    {
+      "id": "bundle:97bedccedcf5d63968ef01bc9ac97c11214ab98a97e9746180ebd5ec936678f5",
+      "text": "范·阿伦拿出了他的方案。一九六五年，他自掏腰包，在纽波特办了场试验赛，请拉沃、罗斯维尔这些大牌来试新计分。可他没想到，真正救网球的，是他最看不上的那个版本。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 68,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "范阿伦拿出了他的方案。1965年,他自掏腰包,在纽波特办了场试验赛,请拉握,罗斯威尔这些大牌来是新级分。可他没想到,真正就网球的是他最看不上的那个版本。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 68,
+        "speech_s": 14.092,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "范 ｜ 阿伦 ｜ 拿 ｜ 出 ｜ 了 ｜ 他 ｜ 的 ｜ 方案 ｜ 一九六五年 ｜ 他 ｜ 自 ｜ 掏腰包 ｜ 在 ｜ 纽波特 ｜ 办 ｜ 了 ｜ 场 ｜ 试验赛 ｜ 请 ｜ 拉沃 ｜ 罗斯维尔 ｜ 这些 ｜ 大牌 ｜ 来 ｜ 试 ｜ 新 ｜ 计分 ｜ 可 ｜ 他 ｜ 没 ｜ 想到 ｜ 真正 ｜ 救 ｜ 网球 ｜ 的 ｜ 是 ｜ 他 ｜ 最 ｜ 看 ｜ 不 ｜ 上 ｜ 的 ｜ 那个 ｜ 版本"
+      }
+    },
+    {
+      "id": "bundle:9fb7e4d76c0408b32c44a3517dfa90038eeb4496a9e77a6b1085458534df97b1",
+      "text": "而抢十最有名的一场，就是开头那场。二零二四年澳网，布林科娃对莱巴金娜。决胜盘抢十打到二十二比二十，她错过九个赛点，又救了六个赛点。四十二分，三分钟——不对，三十一分钟，才决出胜负。这是大满贯历史上最长的抢七。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 90,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.011,
+        "longest_deletion": 0,
+        "transcript": "而抢师最有名的一场,就是开头那场。2024年傲网,布林科娃对莱巴金娜。决胜盘抢师达到22比20,他错过9个赛典,又救了6个赛典。42分、3分钟,不对,31分钟,才决出胜负。这是大满冠历史上最长的抢戏。"
+      },
+      "polyphones": [
+        {
+          "index": 99,
+          "char": "长",
+          "word": "长",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "correct",
+              "score": 0.362,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "偿尝常"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 90,
+        "speech_s": 20.377,
+        "cps": 4.42,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "而 ｜ 抢 ｜ 十 ｜ 最 ｜ 有名 ｜ 的 ｜ 一 ｜ 场 ｜ 就 ｜ 是 ｜ 开头 ｜ 那 ｜ 场 ｜ 二零二四年 ｜ 澳 ｜ 网 ｜ 布林科娃 ｜ 对 ｜ 莱巴金娜 ｜ 决胜 ｜ 盘 ｜ 抢 ｜ 十 ｜ 打 ｜ 到 ｜ 二十二 ｜ 比 ｜ 二十 ｜ 她 ｜ 错过 ｜ 九个 ｜ 赛点 ｜ 又 ｜ 救 ｜ 了 ｜ 六个 ｜ 赛点 ｜ 四十二分 ｜ 三分钟 ｜ 不对 ｜ 三十一分钟 ｜ 才 ｜ 决出 ｜ 胜负 ｜ 这是 ｜ 大满贯 ｜ 历史 ｜ 上 ｜ 最 ｜ 长 ｜ 的 ｜ 抢 ｜ 七"
+      }
+    },
+    {
+      "id": "bundle:aff8d006a75f242b5e6032f6adf8e8011f98652d550697010d41b575cd9606d5",
+      "text": "发明它的人叫吉米·范·阿伦，美国人，网球名人堂就是他创办的。这个人有个执念：网球什么都好，就是打不完。一场势均力敌的比赛，能从下午打到天黑，第二天接着打。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 66,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "发明她的人叫吉米、范阿伦、美国人、网球名人堂就是她创办的。这个人有个执念,网球什么都好,就是打不完。一场势军力敌的比赛,能从下午打到天黑,第二天接着打。"
+      },
+      "polyphones": [
+        {
+          "index": 0,
+          "char": "发",
+          "word": "发明",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 66,
+        "speech_s": 15.0,
+        "cps": 4.4,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "发明 ｜ 它 ｜ 的 ｜ 人 ｜ 叫 ｜ 吉米 ｜ 范 ｜ 阿伦 ｜ 美国人 ｜ 网球 ｜ 名人堂 ｜ 就 ｜ 是 ｜ 他 ｜ 创办 ｜ 的 ｜ 这个 ｜ 人 ｜ 有 ｜ 个 ｜ 执念 ｜ 网球 ｜ 什么 ｜ 都 ｜ 好 ｜ 就是 ｜ 打 ｜ 不 ｜ 完 ｜ 一 ｜ 场 ｜ 势均力敌 ｜ 的 ｜ 比赛 ｜ 能 ｜ 从 ｜ 下午 ｜ 打 ｜ 到 ｜ 天黑 ｜ 第二 ｜ 天 ｜ 接着 ｜ 打"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:ba547d416f1c84bc06d28ad0de3bac1a021ebeaed68a3d777f2434002ce93512",
+      "text": "五小时十二分，跨了两天，还没分出胜负。所有人都看明白了：这么打下去，电视别排期了，球员先累死在场上。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "五小时十二分,跨了两天,还没分出胜负。所有人都看明白了,这么打下去,电视别排气了,球员先累死在场上。"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.452,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 9.234,
+        "cps": 4.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "五小时十二分 ｜ 跨 ｜ 了 ｜ 两天 ｜ 还 ｜ 没 ｜ 分出 ｜ 胜负 ｜ 所有 ｜ 人 ｜ 都 ｜ 看 ｜ 明白 ｜ 了 ｜ 这么 ｜ 打 ｜ 下去 ｜ 电视 ｜ 别 ｜ 排 ｜ 期 ｜ 了 ｜ 球员 ｜ 先 ｜ 累死 ｜ 在 ｜ 场 ｜ 上"
+      }
+    },
+    {
+      "id": "bundle:cb479f86421ec3a565e39ab326494510a2156d85359047b3caaf8f79b48b6339",
+      "text": "比赛在两个版本之间摇摆了几年。一九七零年美网第一次用上抢七，升起红旗，全场就知道：决胜负的时候到了。赛事总监塔尔伯特把话说透了：球员不买票，买票的是观众。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 69,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "比赛在两个版本之间摇摆了几年。1970年,没往第一次用上抢期,升起红旗,全场就知道,绝胜负的时候到了。赛事总监塔尔伯特把话说透了,球员不买票,买票的是观众。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 69,
+        "speech_s": 14.752,
+        "cps": 4.68,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "比赛 ｜ 在 ｜ 两个 ｜ 版本 ｜ 之间 ｜ 摇摆 ｜ 了 ｜ 几年 ｜ 一九七零年 ｜ 美 ｜ 网 ｜ 第一次 ｜ 用 ｜ 上 ｜ 抢 ｜ 七 ｜ 升起 ｜ 红旗 ｜ 全场 ｜ 就 ｜ 知道 ｜ 决 ｜ 胜负 ｜ 的 ｜ 时候到了 ｜ 赛事 ｜ 总监 ｜ 塔尔伯特 ｜ 把 ｜ 话 ｜ 说 ｜ 透 ｜ 了 ｜ 球员 ｜ 不 ｜ 买票 ｜ 买票 ｜ 的 ｜ 是 ｜ 观众"
+      }
+    },
+    {
+      "id": "bundle:cfefc19a3f047531d6a02719a27bea0a1da16c64344db8bfb234b716d7fc1e84",
+      "text": "一九七五年，美网倒向十二分那一边。先到七分、领先两分的版本活了下来，就是今天的标准抢七。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.026,
+        "longest_deletion": 0,
+        "transcript": "1975年,梅王倒向十二分那一遍。先到七分,领先两分的版本活得下来,就是今天的标准抢七。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 8.078,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一九七五年 ｜ 美 ｜ 网 ｜ 倒 ｜ 向 ｜ 十二分 ｜ 那 ｜ 一边 ｜ 先 ｜ 到 ｜ 七分 ｜ 领先 ｜ 两分 ｜ 的 ｜ 版本 ｜ 活 ｜ 了 ｜ 下来 ｜ 就 ｜ 是 ｜ 今天 ｜ 的 ｜ 标准 ｜ 抢 ｜ 七"
+      }
+    },
+    {
+      "id": "bundle:dad972487a0fa6edcb4867b4404a962b817559f4418b83026ead1dde611d0086",
+      "text": "抢七七十三年。从红旗升起的突然死亡，到二十二比二十的抢十，它救了网球的排期，没救得了网球的争论。决胜盘抢十，你觉得是进步，还是网球丢掉了它最后的浪漫？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 67,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "抢七七十三年。从红旗生起的突然死亡,到二十二比二十的抢十,他救了网球的排期,没救得了网球的争论。决胜盘抢十,你觉得是进步,还是网球丢掉了他最后的浪漫。"
+      },
+      "polyphones": [
+        {
+          "index": 40,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 56,
+          "char": "得",
+          "word": "觉得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "uncertain",
+              "score": 0.127,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        },
+        {
+          "index": 61,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.427,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 67,
+        "speech_s": 14.08,
+        "cps": 4.76,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "抢 ｜ 七七十三年 ｜ 从 ｜ 红旗 ｜ 升起 ｜ 的 ｜ 突然 ｜ 死亡 ｜ 到 ｜ 二十二比 ｜ 二十 ｜ 的 ｜ 抢 ｜ 十 ｜ 它 ｜ 救 ｜ 了 ｜ 网球 ｜ 的 ｜ 排 ｜ 期 ｜ 没救 ｜ 得了 ｜ 网球 ｜ 的 ｜ 争论 ｜ 决胜 ｜ 盘 ｜ 抢 ｜ 十 ｜ 你 ｜ 觉得 ｜ 是 ｜ 进步 ｜ 还是 ｜ 网球 ｜ 丢掉 ｜ 了 ｜ 它 ｜ 最后 ｜ 的 ｜ 浪漫"
+      }
+    },
+    {
+      "id": "bundle:dbfc9247cb76f718b031c0b804b4873b300a4e72676a21df003d9bed69587b5d",
+      "text": "抢七治好了拖延症，可它治不了一个地方：决胜盘。很长一段时间，四大满贯的决胜盘不设抢七，必须领先两局。一场球最极端的样子，出现在二零一零年温网：伊斯内尔对马胡特，决胜盘打到七十比六十八。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 82,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.012,
+        "longest_deletion": 0,
+        "transcript": "抢妻治好的拖延症可他治不了一个地方——绝胜盘。很长一段时间,四大满冠的绝胜盘不设抢妻必须领先两局。一场球最极端的样子,出现在2010年温网,伊斯内尔对马胡特,绝胜盘打到70比68。"
+      },
+      "polyphones": [
+        {
+          "index": 24,
+          "char": "长",
+          "word": "长",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "correct",
+              "score": 0.993,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "偿尝常"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 82,
+        "speech_s": 17.017,
+        "cps": 4.82,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "抢 ｜ 七 ｜ 治 ｜ 好 ｜ 了 ｜ 拖延 ｜ 症 ｜ 可 ｜ 它 ｜ 治 ｜ 不了 ｜ 一个地方 ｜ 决胜 ｜ 盘 ｜ 很 ｜ 长 ｜ 一段 ｜ 时间 ｜ 四 ｜ 大满贯 ｜ 的 ｜ 决胜 ｜ 盘 ｜ 不 ｜ 设 ｜ 抢 ｜ 七 ｜ 必须 ｜ 领先 ｜ 两局 ｜ 一 ｜ 场 ｜ 球 ｜ 最 ｜ 极端 ｜ 的 ｜ 样子 ｜ 出现 ｜ 在 ｜ 二零一零年 ｜ 温网 ｜ 伊斯内尔 ｜ 对 ｜ 马胡特 ｜ 决胜 ｜ 盘 ｜ 打 ｜ 到 ｜ 七十比 ｜ 六十八"
+      }
+    },
+    {
+      "id": "bundle:ded27f16f9b7db1d9534a1347784b7fcaf473865a6459aba03dc56dbb48c16cd",
+      "text": "八年后，还是温网。安德森和伊斯内尔的半决赛，决胜盘打到二十六比二十四，六个半小时。安德森赛后直接开炮：再这么打下去，是拿球员的职业生涯开玩笑。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 63,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "八年后,还是温王。安德森和伊斯内尔的半决赛,决胜盘达到26比24,6个半小时。安德森赛后直接开炮,再这么打下去,是拿球员的职业生涯开玩笑。"
+      },
+      "polyphones": [
+        {
+          "index": 4,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.262,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 63,
+        "speech_s": 13.561,
+        "cps": 4.65,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "八年 ｜ 后 ｜ 还是 ｜ 温网 ｜ 安德森 ｜ 和 ｜ 伊斯内尔 ｜ 的 ｜ 半决赛 ｜ 决胜 ｜ 盘打 ｜ 到 ｜ 二十六 ｜ 比 ｜ 二十四 ｜ 六 ｜ 个 ｜ 半 ｜ 小时 ｜ 安德 ｜ 森 ｜ 赛 ｜ 后 ｜ 直接 ｜ 开炮 ｜ 再 ｜ 这么 ｜ 打 ｜ 下去 ｜ 是 ｜ 拿 ｜ 球员 ｜ 的 ｜ 职业 ｜ 生涯 ｜ 开玩笑"
+      }
+    },
+    {
+      "id": "bundle:e7a3935cec200e51bf2db252e04a2dad62d3c2fbcecd9a7ce101aa9936a19298",
+      "text": "一九六九年温网，四十一岁的冈萨雷斯和帕萨雷尔，打了一场一百一十二局的比赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "1969年温网,41岁的钢萨雷斯和帕萨雷尔,打了一场112局的比赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 6.038,
+        "cps": 5.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一九六九年 ｜ 温网 ｜ 四十一 ｜ 岁 ｜ 的 ｜ 冈萨雷斯 ｜ 和 ｜ 帕萨雷尔 ｜ 打 ｜ 了 ｜ 一 ｜ 场 ｜ 一百一十二 ｜ 局 ｜ 的 ｜ 比赛"
+      }
+    }
+  ]
+}
