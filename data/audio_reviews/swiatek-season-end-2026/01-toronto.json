@@ -1,0 +1,26 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=bDttZof7qXI",
+  "source_sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-21T14:27:36.435280+00:00",
+  "reviewer": "Codex：核对实际small.en/medium.en逐词结果；争议处追加base多语种；没有冒称真人听审",
+  "reviewed_from": 237.4,
+  "reviewed_to": 245.38,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_results": [
+    {
+      "model": "small.en",
+      "path": "data/source_asr/bDttZof7qXI/small.en.json",
+      "sha256": "a5153939d5db303e5c3046f9bd034921bb7fb4eb63278692662889c88f7da363"
+    },
+    {
+      "model": "medium.en",
+      "path": "data/source_asr/bDttZof7qXI/medium.en.json",
+      "sha256": "52d4497fa9358021d939277d72bdf0889aaae1784987e78423cc3abab66004fa"
+    }
+  ],
+  "review_note": "同一原片SHA与仓库已审的多伦多夺冠素材一致。用两档逐词时间排除232秒、258.88秒等解说；夺冠原声两模型一致，纠正按官方身份拼写的Swiatek。",
+  "no_foreground_english_reason": "同一原片SHA与仓库已审的多伦多夺冠素材一致。用两档逐词时间排除232秒、258.88秒等解说；夺冠原声两模型一致，纠正按官方身份拼写的Swiatek。"
+}

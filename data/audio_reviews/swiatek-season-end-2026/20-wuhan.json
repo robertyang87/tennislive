@@ -1,0 +1,26 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=ATsKkPJBY3s",
+  "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-21T14:27:37.305414+00:00",
+  "reviewer": "Codex：核对实际small.en/medium.en逐词结果；争议处追加base多语种；没有冒称真人听审",
+  "reviewed_from": 231.7,
+  "reviewed_to": 240.73,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_results": [
+    {
+      "model": "small.en",
+      "path": "data/source_asr/ATsKkPJBY3s/small.en.json",
+      "sha256": "5e421cdf6ffda949f1edba6a0ca3a1f1d150fc133349e54ecef6fb000400c72f"
+    },
+    {
+      "model": "medium.en",
+      "path": "data/source_asr/ATsKkPJBY3s/medium.en.json",
+      "sha256": "8cadf1ea2255ed08e058dc79906c4618efeba3cabc67d338139577da06d0a922"
+    }
+  ],
+  "review_note": "同一原片SHA与已有武汉半决赛一致；98.5–115.35位于两模型98.08至156.56的无英文区，231.7–240.55位于231.38后至240.88前。当前窗口没有治疗镜头，不为治疗事实造画面。",
+  "no_foreground_english_reason": "同一原片SHA与已有武汉半决赛一致；98.5–115.35位于两模型98.08至156.56的无英文区，231.7–240.55位于231.38后至240.88前。当前窗口没有治疗镜头，不为治疗事实造画面。"
+}

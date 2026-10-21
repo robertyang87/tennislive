@@ -1,0 +1,31 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=cXfHQNqILsg",
+  "source_sha256": "cb31b4ce9e4fd52e6f4802509c532acfe697967cfc3d092a0b9dff82262d5512",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-21T14:27:36.501276+00:00",
+  "reviewer": "Codex：核对实际small.en/medium.en逐词结果；争议处追加base多语种；没有冒称真人听审",
+  "reviewed_from": 113.1,
+  "reviewed_to": 121.98,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_results": [
+    {
+      "model": "small.en",
+      "path": "data/source_asr/cXfHQNqILsg/small.en.json",
+      "sha256": "5fb5bc408d676b03087fa76fe177e12a688cf0df946c04a52183082f5c8a6db1"
+    },
+    {
+      "model": "medium.en",
+      "path": "data/source_asr/cXfHQNqILsg/medium.en.json",
+      "sha256": "a1c56c6b32c32d19a5c68200bb48b81b4aa9a36ab0571948a59c2235dfcadddd"
+    },
+    {
+      "model": "base.multilingual",
+      "path": "data/evidence/swiatek-season-end-2026/source-asr/cXfHQNqILsg.json",
+      "sha256": "73c5b57827a111c3f7e876dedc1efff251bea602939028193d7de6f7242dcd2d"
+    }
+  ],
+  "review_note": "旁白仅用113.1–121.8，两模型均无前景词。最后赛点用249.05–262.95：small.en没有句子，medium.en把Hong Kong中的一个词拖成15.7秒；独立base只检出赛点前的Hold on和263秒后Remarkable performance，没有Hong Kong。保留完整赛点，到第一句真实终场总结前结束；不把中档解码假词烧成字幕。",
+  "no_foreground_english_reason": "旁白仅用113.1–121.8，两模型均无前景词。最后赛点用249.05–262.95：small.en没有句子，medium.en把Hong Kong中的一个词拖成15.7秒；独立base只检出赛点前的Hold on和263秒后Remarkable performance，没有Hong Kong。保留完整赛点，到第一句真实终场总结前结束；不把中档解码假词烧成字幕。"
+}

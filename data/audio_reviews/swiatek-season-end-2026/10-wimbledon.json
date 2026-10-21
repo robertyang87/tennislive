@@ -1,0 +1,37 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=KUVh-Jflv_Q",
+  "source_sha256": "30077c7f374f8e30c2f43cd073c975d9d3837f06cfa78b194fa3cd37d7d90be0",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-21T14:27:36.771177+00:00",
+  "reviewer": "Codex：核对实际small.en/medium.en逐词结果；争议处追加base多语种；没有冒称真人听审",
+  "reviewed_from": 435.7,
+  "reviewed_to": 449.58,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 444.66,
+      "end": 449.12,
+      "en": "The champion is beaten.",
+      "zh": "卫冕冠军出局了。"
+    }
+  ],
+  "asr_results": [
+    {
+      "model": "small.en",
+      "path": "data/source_asr/KUVh-Jflv_Q/small.en.json",
+      "sha256": "dafa9b9bdcbb7e7d9e01240950c2b95a0001baf67524736e6cc66d015812e37f"
+    },
+    {
+      "model": "medium.en",
+      "path": "data/source_asr/KUVh-Jflv_Q/medium.en.json",
+      "sha256": "dc8da25d9377cc03d51bf3da75112e4d538426f2a5a3276ee9838d9e9b9e7039"
+    },
+    {
+      "model": "base.multilingual",
+      "path": "data/evidence/swiatek-season-end-2026/source-asr/KUVh-Jflv_Q.json",
+      "sha256": "fd4fa7820e0d7298963ee4734951be472616713aa9a9fbb22412d66041fcf489"
+    }
+  ],
+  "review_note": "405–416.3两模型没有前景英文；完整末点中The champion is beaten三模型支持（base把beaten误成big，结合small/medium一致的beaten采用）。字幕保守覆盖444.66–449.12，449.4退出下一句之前。"
+}

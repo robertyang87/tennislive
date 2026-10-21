@@ -1,0 +1,46 @@
+{
+  "slug": "swiatek-season-end-2026",
+  "column": "网球有故事",
+  "created_at": "2026-10-21",
+  "base_commit": "03b6aba",
+  "state": "rendered_qc_pass",
+  "user_brief": "斯瓦泰克无缘年终总决赛，回顾一年来相对低迷的几个时间点及最后结束赛季的帖子，提炼关键时刻制作视频。",
+  "story_kind": "person",
+  "subject": "斯瓦泰克",
+  "angle": "一段低谷不会抹去她已经取得的成就；反复尝试之后，她决定给自己恢复的时间。",
+  "target_duration_seconds": 252.28,
+  "storyboard": "research/swiatek-season-end-2026/storyboard.md",
+  "facts": "research/swiatek-season-end-2026/fact-packet.json",
+  "source_manifest": "research/swiatek-season-end-2026/source-manifest.json",
+  "render_dispatched": true,
+  "push_sent": false,
+  "outline_review": {
+    "required": true,
+    "received": true,
+    "basis": "用户在提纲及事实核验后回复：好的，那你把这个 spec 的内容整理清楚，同时去找相应的视频。",
+    "scope": "继续整理spec和准备素材；先完成实际字幕、声音、裁切及现行质检再渲染。"
+  },
+  "user_reference": {
+    "url": "https://x.com/miki29144352964/status/2112854807958454461?s=46",
+    "review": "research/swiatek-season-end-2026/user-reference-review.md",
+    "scope": "official embed opening and attached image inspected; long note full text unavailable",
+    "received_as": "editorial steering, not explicit outline approval"
+  },
+  "editorial_spec": "requests/stories/swiatek-season-end-2026/spec.json",
+  "readable_spec": "research/swiatek-season-end-2026/production-spec.md",
+  "latest_user_instruction": "开始做成片；转场和文案更有质感，连接自然；结束赛季原帖使用手机屏幕显示宽度截图。；右上角信息卡延长至约8秒，澳网短镜头相应延长。",
+  "runtime_spec": "specs/reels/swiatek-season-end-2026.json",
+  "pull_request": "https://github.com/robertyang87/tennislive/pull/1314",
+  "previous_render_run": "https://github.com/robertyang87/tennislive/actions/runs/39615334865",
+  "render_run": "https://github.com/robertyang87/tennislive/actions/runs/39617141816",
+  "revision": {
+    "change": "右上角赛事信息卡延长至约8秒；澳网选段延长至8.8秒",
+    "source_audio_cross_check": "14个实际窗口重新绑定，6句双语原声不变",
+    "tts": "复用原20条冻结配音，不重合成",
+    "preflight": "原生dry-run、口味预检通过",
+    "film_qc": "正式渲染252.28秒；成片与配音五项检查通过；实际成片8张信息卡在起点后7.1秒逐张目检仍可见"
+  },
+  "final_verification": "research/swiatek-season-end-2026/final-verification.json",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-swiatek-season-end-2026/swiatek-season-end-2026.mp4",
+  "film_sha256": "af2793a29042de5a636c3f2c1e3429e7e704e1669ca3ab24db646a7d9d516b68"
+}

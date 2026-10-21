@@ -1,0 +1,31 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Z33qZSof7AQ",
+  "source_sha256": "69981fb98f49e3cdffd5fb5edc9a57a7464ac76f8129daae6c1c4015cbaf6499",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-21T14:27:36.588827+00:00",
+  "reviewer": "Codex：核对实际small.en/medium.en逐词结果；争议处追加base多语种；没有冒称真人听审",
+  "reviewed_from": 135.5,
+  "reviewed_to": 149.18,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_results": [
+    {
+      "model": "small.en",
+      "path": "data/source_asr/Z33qZSof7AQ/small.en.json",
+      "sha256": "b971a6e23f06f195a645e2fbb65c885afc3cce119fed04efeeb20420aa16232f"
+    },
+    {
+      "model": "medium.en",
+      "path": "data/source_asr/Z33qZSof7AQ/medium.en.json",
+      "sha256": "d1703e3fb3bae9e5da0e4bca27675b420b4416ffee8f7d43d42ba0ac2e99af98"
+    },
+    {
+      "model": "base.multilingual",
+      "path": "data/evidence/swiatek-season-end-2026/source-asr/Z33qZSof7AQ.json",
+      "sha256": "f9b956184f4e9e025fa527b8dc4ea9c2ec1230c495ecec33067fb6828b0d4684"
+    }
+  ],
+  "review_note": "两英文模型对球场欢呼不一致：small.en出现重复Thank you very much，medium.en只有Oh；独立base多语种模型+VAD在100–156秒未检出任何语言段。135.5–149保留球声和欢呼，无可核对的前景英文句子，拒绝生成感谢语字幕。",
+  "no_foreground_english_reason": "两英文模型对球场欢呼不一致：small.en出现重复Thank you very much，medium.en只有Oh；独立base多语种模型+VAD在100–156秒未检出任何语言段。135.5–149保留球声和欢呼，无可核对的前景英文句子，拒绝生成感谢语字幕。"
+}
