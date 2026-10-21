@@ -1,0 +1,83 @@
+{
+  "method": "diagnostic ASR; no VAD, no no-speech rejection; results require review, not approval",
+  "model": "small.multilingual",
+  "source_sha256": "5755e806b3a23013f08396d731efb0b1caaa1790a9a8009aba18c31c7b1ee2e9",
+  "source": "uso",
+  "selected_window": [
+    151.7,
+    163.4
+  ],
+  "context_window": [
+    150.2,
+    164.4
+  ],
+  "film_window": [
+    174.65,
+    186.35
+  ],
+  "segments": [
+    {
+      "start": 160.08,
+      "end": 161.1,
+      "text": " He's dead.",
+      "avg_logprob": -0.9752504072691265,
+      "no_speech_prob": 0.6334146857261658,
+      "words": [
+        {
+          "w": " He's",
+          "s": 160.08,
+          "e": 161.1,
+          "p": 0.32580149360001087
+        },
+        {
+          "w": " dead.",
+          "s": 161.1,
+          "e": 161.1,
+          "p": 0.14399205148220062
+        }
+      ]
+    },
+    {
+      "start": 161.8,
+      "end": 162.5,
+      "text": " He's dead.",
+      "avg_logprob": -0.9752504072691265,
+      "no_speech_prob": 0.6334146857261658,
+      "words": [
+        {
+          "w": " He's",
+          "s": 161.8,
+          "e": 162.38,
+          "p": 0.6801511198282242
+        },
+        {
+          "w": " dead.",
+          "s": 162.38,
+          "e": 162.5,
+          "p": 0.8852958083152771
+        }
+      ]
+    },
+    {
+      "start": 162.94,
+      "end": 163.76,
+      "text": " He's dead.",
+      "avg_logprob": -0.9752504072691265,
+      "no_speech_prob": 0.6334146857261658,
+      "words": [
+        {
+          "w": " He's",
+          "s": 162.94,
+          "e": 163.62,
+          "p": 0.7451965510845184
+        },
+        {
+          "w": " dead.",
+          "s": 163.62,
+          "e": 163.76,
+          "p": 0.8476572036743164
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "method": "diagnostic ASR; no VAD, no no-speech rejection; results require review, not approval",
+  "model": "small.multilingual",
+  "source_sha256": "30077c7f374f8e30c2f43cd073c975d9d3837f06cfa78b194fa3cd37d7d90be0",
+  "source": "wimbledon",
+  "selected_window": [
+    435.7,
+    449.4
+  ],
+  "context_window": [
+    434.2,
+    450.4
+  ],
+  "film_window": [
+    95.1,
+    108.8
+  ],
+  "segments": [
+    {
+      "start": 446.38,
+      "end": 448.76,
+      "text": " The champion is beaten.",
+      "avg_logprob": -1.0019346475601196,
+      "no_speech_prob": 0.5842036604881287,
+      "words": [
+        {
+          "w": " The",
+          "s": 446.38,
+          "e": 447.34,
+          "p": 0.518233597278595
+        },
+        {
+          "w": " champion",
+          "s": 447.34,
+          "e": 447.88,
+          "p": 0.8056995272636414
+        },
+        {
+          "w": " is",
+          "s": 447.88,
+          "e": 448.34,
+          "p": 0.9581981301307678
+        },
+        {
+          "w": " beaten.",
+          "s": 448.34,
+          "e": 448.76,
+          "p": 0.3901873528957367
+        }
+      ]
+    }
+  ]
+}

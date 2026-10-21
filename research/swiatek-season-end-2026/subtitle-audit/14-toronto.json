@@ -1,0 +1,71 @@
+{
+  "method": "diagnostic ASR; no VAD, no no-speech rejection; results require review, not approval",
+  "model": "small.multilingual",
+  "source_sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979",
+  "source": "toronto",
+  "selected_window": [
+    245.3,
+    264.2
+  ],
+  "context_window": [
+    243.8,
+    265.2
+  ],
+  "film_window": [
+    133.55,
+    152.45
+  ],
+  "segments": [
+    {
+      "start": 259.02,
+      "end": 263.08,
+      "text": " Sensationals Fjonteck takes the title in Toronto.",
+      "avg_logprob": -0.9314017184078693,
+      "no_speech_prob": 0.296162486076355,
+      "words": [
+        {
+          "w": " Sensationals",
+          "s": 259.02,
+          "e": 260.1,
+          "p": 0.48606567333141965
+        },
+        {
+          "w": " Fjonteck",
+          "s": 260.1,
+          "e": 260.9,
+          "p": 0.373546727001667
+        },
+        {
+          "w": " takes",
+          "s": 260.9,
+          "e": 261.84,
+          "p": 0.8716471791267395
+        },
+        {
+          "w": " the",
+          "s": 261.84,
+          "e": 262.16,
+          "p": 0.9987333416938782
+        },
+        {
+          "w": " title",
+          "s": 262.16,
+          "e": 262.54,
+          "p": 0.9936729669570923
+        },
+        {
+          "w": " in",
+          "s": 262.54,
+          "e": 262.78,
+          "p": 0.9783938527107239
+        },
+        {
+          "w": " Toronto.",
+          "s": 262.78,
+          "e": 263.08,
+          "p": 0.9799277782440186
+        }
+      ]
+    }
+  ]
+}

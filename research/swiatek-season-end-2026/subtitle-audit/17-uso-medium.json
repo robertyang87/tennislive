@@ -1,0 +1,92 @@
+{
+  "method": "diagnostic ASR with context; no VAD/no no-speech rejection; not approval",
+  "model": "medium.en",
+  "source_sha256": "5755e806b3a23013f08396d731efb0b1caaa1790a9a8009aba18c31c7b1ee2e9",
+  "source": "uso",
+  "selected_window": [
+    151.7,
+    163.4
+  ],
+  "context_window": [
+    148.7,
+    166.4
+  ],
+  "film_window": [
+    174.65,
+    186.35
+  ],
+  "segments": [
+    {
+      "start": 148.7,
+      "end": 152.14,
+      "text": " that makes things interesting",
+      "avg_logprob": -0.924743302166462,
+      "no_speech_prob": 0.14748626947402954,
+      "words": [
+        {
+          "w": " that",
+          "s": 148.7,
+          "e": 148.9,
+          "p": 0.6821500658988953
+        },
+        {
+          "w": " makes",
+          "s": 148.9,
+          "e": 149.24,
+          "p": 0.9208462238311768
+        },
+        {
+          "w": " things",
+          "s": 149.24,
+          "e": 149.5,
+          "p": 0.9954233765602112
+        },
+        {
+          "w": " interesting",
+          "s": 149.5,
+          "e": 152.14,
+          "p": 0.9982062578201294
+        }
+      ]
+    },
+    {
+      "start": 163.18,
+      "end": 165.76,
+      "text": " jane quinoa is into the",
+      "avg_logprob": -0.924743302166462,
+      "no_speech_prob": 0.14748626947402954,
+      "words": [
+        {
+          "w": " jane",
+          "s": 163.18,
+          "e": 163.9,
+          "p": 0.04914468852803111
+        },
+        {
+          "w": " quinoa",
+          "s": 163.9,
+          "e": 164.32,
+          "p": 0.4745092839002609
+        },
+        {
+          "w": " is",
+          "s": 164.32,
+          "e": 165.26,
+          "p": 0.8369059562683105
+        },
+        {
+          "w": " into",
+          "s": 165.26,
+          "e": 165.62,
+          "p": 0.9970647692680359
+        },
+        {
+          "w": " the",
+          "s": 165.62,
+          "e": 165.76,
+          "p": 0.997283935546875
+        }
+      ]
+    }
+  ]
+}

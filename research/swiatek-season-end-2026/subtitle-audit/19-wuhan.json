@@ -1,0 +1,53 @@
+{
+  "method": "diagnostic ASR; no VAD, no no-speech rejection; results require review, not approval",
+  "model": "small.multilingual",
+  "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+  "source": "wuhan",
+  "selected_window": [
+    98.5,
+    115.35
+  ],
+  "context_window": [
+    97.0,
+    116.35
+  ],
+  "film_window": [
+    190.15,
+    207.0
+  ],
+  "segments": [
+    {
+      "start": 97.0,
+      "end": 97.9,
+      "text": " Listen, how about that?",
+      "avg_logprob": -0.6032133632236056,
+      "no_speech_prob": 0.24766969680786133,
+      "words": [
+        {
+          "w": " Listen,",
+          "s": 97.0,
+          "e": 97.28,
+          "p": 0.18587198853492737
+        },
+        {
+          "w": " how",
+          "s": 97.4,
+          "e": 97.5,
+          "p": 0.9712076783180237
+        },
+        {
+          "w": " about",
+          "s": 97.5,
+          "e": 97.68,
+          "p": 0.9290550351142883
+        },
+        {
+          "w": " that?",
+          "s": 97.68,
+          "e": 97.9,
+          "p": 0.9975294470787048
+        }
+      ]
+    }
+  ]
+}

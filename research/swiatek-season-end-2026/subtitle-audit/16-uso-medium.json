@@ -1,0 +1,74 @@
+{
+  "method": "diagnostic ASR with context; no VAD/no no-speech rejection; not approval",
+  "model": "medium.en",
+  "source_sha256": "5755e806b3a23013f08396d731efb0b1caaa1790a9a8009aba18c31c7b1ee2e9",
+  "source": "uso",
+  "selected_window": [
+    44.6,
+    59.0
+  ],
+  "context_window": [
+    41.6,
+    62.0
+  ],
+  "film_window": [
+    160.25,
+    174.65
+  ],
+  "segments": [
+    {
+      "start": 41.6,
+      "end": 42.46,
+      "text": " Huge.",
+      "avg_logprob": -0.702914263520922,
+      "no_speech_prob": 0.14710071682929993,
+      "words": [
+        {
+          "w": " Huge.",
+          "s": 41.6,
+          "e": 42.46,
+          "p": 0.06609677523374557
+        }
+      ]
+    },
+    {
+      "start": 57.58,
+      "end": 59.42,
+      "text": " And that's a great angle.",
+      "avg_logprob": -0.702914263520922,
+      "no_speech_prob": 0.14710071682929993,
+      "words": [
+        {
+          "w": " And",
+          "s": 57.58,
+          "e": 58.68,
+          "p": 0.46565794944763184
+        },
+        {
+          "w": " that's",
+          "s": 58.68,
+          "e": 58.92,
+          "p": 0.7387294918298721
+        },
+        {
+          "w": " a",
+          "s": 58.92,
+          "e": 59.0,
+          "p": 0.7453727722167969
+        },
+        {
+          "w": " great",
+          "s": 59.0,
+          "e": 59.14,
+          "p": 0.987756609916687
+        },
+        {
+          "w": " angle.",
+          "s": 59.14,
+          "e": 59.42,
+          "p": 0.9992238283157349
+        }
+      ]
+    }
+  ]
+}

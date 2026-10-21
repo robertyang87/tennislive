@@ -1,0 +1,53 @@
+{
+  "method": "diagnostic ASR with context; no VAD/no no-speech rejection; not approval",
+  "model": "medium.en",
+  "source_sha256": "3cd611c57b6667c949d9da37fc5cbd55d90ad752310d0881b946aade6cf10286",
+  "source": "ao",
+  "selected_window": [
+    151.0,
+    159.8
+  ],
+  "context_window": [
+    148.0,
+    162.8
+  ],
+  "film_window": [
+    16.2,
+    25.0
+  ],
+  "segments": [
+    {
+      "start": 148.0,
+      "end": 162.78,
+      "text": " Thank you for watching!",
+      "avg_logprob": -0.9861805737018585,
+      "no_speech_prob": 0.3532252311706543,
+      "words": [
+        {
+          "w": " Thank",
+          "s": 148.0,
+          "e": 148.0,
+          "p": 0.0010143740801140666
+        },
+        {
+          "w": " you",
+          "s": 148.0,
+          "e": 162.14,
+          "p": 0.9418511986732483
+        },
+        {
+          "w": " for",
+          "s": 162.14,
+          "e": 162.78,
+          "p": 0.04115510359406471
+        },
+        {
+          "w": " watching!",
+          "s": 162.78,
+          "e": 162.78,
+          "p": 0.7048595547676086
+        }
+      ]
+    }
+  ]
+}

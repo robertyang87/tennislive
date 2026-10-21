@@ -1,0 +1,59 @@
+{
+  "method": "diagnostic ASR with context; no VAD/no no-speech rejection; not approval",
+  "model": "medium.en",
+  "source_sha256": "cb31b4ce9e4fd52e6f4802509c532acfe697967cfc3d092a0b9dff82262d5512",
+  "source": "miami",
+  "selected_window": [
+    249.05,
+    262.95
+  ],
+  "context_window": [
+    246.05,
+    265.95
+  ],
+  "film_window": [
+    37.3,
+    51.2
+  ],
+  "segments": [
+    {
+      "start": 263.37,
+      "end": 265.93,
+      "text": " And now, it's your turn.",
+      "avg_logprob": -1.2886891961097717,
+      "no_speech_prob": 0.2674311697483063,
+      "words": [
+        {
+          "w": " And",
+          "s": 263.37,
+          "e": 264.77,
+          "p": 0.008794480003416538
+        },
+        {
+          "w": " now,",
+          "s": 264.77,
+          "e": 264.77,
+          "p": 0.059196289628744125
+        },
+        {
+          "w": " it's",
+          "s": 264.77,
+          "e": 264.77,
+          "p": 0.2571350112557411
+        },
+        {
+          "w": " your",
+          "s": 264.77,
+          "e": 265.93,
+          "p": 0.04981895163655281
+        },
+        {
+          "w": " turn.",
+          "s": 265.93,
+          "e": 265.93,
+          "p": 0.9313656091690063
+        }
+      ]
+    }
+  ]
+}

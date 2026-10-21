@@ -1,0 +1,71 @@
+{
+  "method": "diagnostic ASR; no VAD, no no-speech rejection; results require review, not approval",
+  "model": "small.multilingual",
+  "source_sha256": "cb31b4ce9e4fd52e6f4802509c532acfe697967cfc3d092a0b9dff82262d5512",
+  "source": "miami",
+  "selected_window": [
+    113.1,
+    121.8
+  ],
+  "context_window": [
+    111.6,
+    122.8
+  ],
+  "film_window": [
+    28.6,
+    37.3
+  ],
+  "segments": [
+    {
+      "start": 121.38,
+      "end": 122.78,
+      "text": " I'll see you in the next video.",
+      "avg_logprob": -1.2322550316651661,
+      "no_speech_prob": 0.6382761597633362,
+      "words": [
+        {
+          "w": " I'll",
+          "s": 121.38,
+          "e": 122.78,
+          "p": 0.024323996622115374
+        },
+        {
+          "w": " see",
+          "s": 122.78,
+          "e": 122.78,
+          "p": 0.37610867619514465
+        },
+        {
+          "w": " you",
+          "s": 122.78,
+          "e": 122.78,
+          "p": 0.91729736328125
+        },
+        {
+          "w": " in",
+          "s": 122.78,
+          "e": 122.78,
+          "p": 0.2352251559495926
+        },
+        {
+          "w": " the",
+          "s": 122.78,
+          "e": 122.78,
+          "p": 0.30673712491989136
+        },
+        {
+          "w": " next",
+          "s": 122.78,
+          "e": 122.78,
+          "p": 0.6863716244697571
+        },
+        {
+          "w": " video.",
+          "s": 122.78,
+          "e": 122.78,
+          "p": 0.6735896468162537
+        }
+      ]
+    }
+  ]
+}

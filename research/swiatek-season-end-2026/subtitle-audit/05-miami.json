@@ -1,0 +1,41 @@
+{
+  "method": "diagnostic ASR; no VAD, no no-speech rejection; results require review, not approval",
+  "model": "small.multilingual",
+  "source_sha256": "cb31b4ce9e4fd52e6f4802509c532acfe697967cfc3d092a0b9dff82262d5512",
+  "source": "miami",
+  "selected_window": [
+    249.05,
+    262.95
+  ],
+  "context_window": [
+    247.55,
+    263.95
+  ],
+  "film_window": [
+    37.3,
+    51.2
+  ],
+  "segments": [
+    {
+      "start": 247.55,
+      "end": 263.93,
+      "text": " Thank you.",
+      "avg_logprob": -1.3883220156033833,
+      "no_speech_prob": 0.7015395164489746,
+      "words": [
+        {
+          "w": " Thank",
+          "s": 247.55,
+          "e": 247.55,
+          "p": 0.002548098098486662
+        },
+        {
+          "w": " you.",
+          "s": 247.55,
+          "e": 263.93,
+          "p": 0.9274306893348694
+        }
+      ]
+    }
+  ]
+}

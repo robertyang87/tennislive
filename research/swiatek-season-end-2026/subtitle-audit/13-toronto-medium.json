@@ -1,0 +1,47 @@
+{
+  "method": "diagnostic ASR with context; no VAD/no no-speech rejection; not approval",
+  "model": "medium.en",
+  "source_sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979",
+  "source": "toronto",
+  "selected_window": [
+    207.5,
+    217.1
+  ],
+  "context_window": [
+    204.5,
+    220.1
+  ],
+  "film_window": [
+    123.95,
+    133.55
+  ],
+  "segments": [
+    {
+      "start": 218.86,
+      "end": 219.9,
+      "text": " Emphatically put away.",
+      "avg_logprob": -0.5189676284790039,
+      "no_speech_prob": 0.21926012635231018,
+      "words": [
+        {
+          "w": " Emphatically",
+          "s": 218.86,
+          "e": 219.38,
+          "p": 0.8632818261782328
+        },
+        {
+          "w": " put",
+          "s": 219.38,
+          "e": 219.58,
+          "p": 0.9961600303649902
+        },
+        {
+          "w": " away.",
+          "s": 219.58,
+          "e": 219.9,
+          "p": 0.9934453964233398
+        }
+      ]
+    }
+  ]
+}

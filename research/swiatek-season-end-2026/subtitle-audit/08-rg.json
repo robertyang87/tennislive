@@ -1,0 +1,53 @@
+{
+  "method": "diagnostic ASR; no VAD, no no-speech rejection; results require review, not approval",
+  "model": "small.multilingual",
+  "source_sha256": "69981fb98f49e3cdffd5fb5edc9a57a7464ac76f8129daae6c1c4015cbaf6499",
+  "source": "rg",
+  "selected_window": [
+    135.5,
+    149.0
+  ],
+  "context_window": [
+    134.0,
+    150.0
+  ],
+  "film_window": [
+    70.3,
+    83.8
+  ],
+  "segments": [
+    {
+      "start": 134.0,
+      "end": 149.98,
+      "text": " Thank you very much.",
+      "avg_logprob": -1.3316544145345688,
+      "no_speech_prob": 0.2107829451560974,
+      "words": [
+        {
+          "w": " Thank",
+          "s": 134.0,
+          "e": 134.0,
+          "p": 0.0017450235318392515
+        },
+        {
+          "w": " you",
+          "s": 134.0,
+          "e": 149.98,
+          "p": 0.952545702457428
+        },
+        {
+          "w": " very",
+          "s": 149.98,
+          "e": 149.98,
+          "p": 0.17901729047298431
+        },
+        {
+          "w": " much.",
+          "s": 149.98,
+          "e": 149.98,
+          "p": 0.9954771399497986
+        }
+      ]
+    }
+  ]
+}

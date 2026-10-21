@@ -1,0 +1,53 @@
+{
+  "method": "diagnostic ASR; no VAD, no no-speech rejection; results require review, not approval",
+  "model": "small.multilingual",
+  "source_sha256": "5755e806b3a23013f08396d731efb0b1caaa1790a9a8009aba18c31c7b1ee2e9",
+  "source": "uso",
+  "selected_window": [
+    44.6,
+    59.0
+  ],
+  "context_window": [
+    43.1,
+    60.0
+  ],
+  "film_window": [
+    160.25,
+    174.65
+  ],
+  "segments": [
+    {
+      "start": 58.26,
+      "end": 59.36,
+      "text": " That's a great angle.",
+      "avg_logprob": -0.6725915802849664,
+      "no_speech_prob": 0.3476370573043823,
+      "words": [
+        {
+          "w": " That's",
+          "s": 58.26,
+          "e": 58.9,
+          "p": 0.6367415636777878
+        },
+        {
+          "w": " a",
+          "s": 58.9,
+          "e": 59.06,
+          "p": 0.9513047337532043
+        },
+        {
+          "w": " great",
+          "s": 59.06,
+          "e": 59.06,
+          "p": 0.7867642641067505
+        },
+        {
+          "w": " angle.",
+          "s": 59.06,
+          "e": 59.36,
+          "p": 0.9984341263771057
+        }
+      ]
+    }
+  ]
+}

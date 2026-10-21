@@ -1,0 +1,47 @@
+{
+  "method": "diagnostic ASR with context; no VAD/no no-speech rejection; not approval",
+  "model": "medium.en",
+  "source_sha256": "cb31b4ce9e4fd52e6f4802509c532acfe697967cfc3d092a0b9dff82262d5512",
+  "source": "miami",
+  "selected_window": [
+    113.1,
+    121.8
+  ],
+  "context_window": [
+    110.1,
+    124.8
+  ],
+  "film_window": [
+    28.6,
+    37.3
+  ],
+  "segments": [
+    {
+      "start": 122.62,
+      "end": 124.3,
+      "text": " Just tease that.",
+      "avg_logprob": -0.8335148436682565,
+      "no_speech_prob": 0.1739908903837204,
+      "words": [
+        {
+          "w": " Just",
+          "s": 122.62,
+          "e": 123.52,
+          "p": 0.6371333003044128
+        },
+        {
+          "w": " tease",
+          "s": 123.52,
+          "e": 123.96,
+          "p": 0.41626089811325073
+        },
+        {
+          "w": " that.",
+          "s": 123.96,
+          "e": 124.3,
+          "p": 0.976586639881134
+        }
+      ]
+    }
+  ]
+}

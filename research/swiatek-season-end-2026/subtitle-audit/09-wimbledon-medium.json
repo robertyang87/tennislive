@@ -1,0 +1,53 @@
+{
+  "method": "diagnostic ASR with context; no VAD/no no-speech rejection; not approval",
+  "model": "medium.en",
+  "source_sha256": "30077c7f374f8e30c2f43cd073c975d9d3837f06cfa78b194fa3cd37d7d90be0",
+  "source": "wimbledon",
+  "selected_window": [
+    405.0,
+    416.3
+  ],
+  "context_window": [
+    402.0,
+    419.3
+  ],
+  "film_window": [
+    83.8,
+    95.1
+  ],
+  "segments": [
+    {
+      "start": 415.9,
+      "end": 418.72,
+      "text": " Thank you very much.",
+      "avg_logprob": -0.9291127622127533,
+      "no_speech_prob": 0.48411738872528076,
+      "words": [
+        {
+          "w": " Thank",
+          "s": 415.9,
+          "e": 417.02,
+          "p": 0.017659442499279976
+        },
+        {
+          "w": " you",
+          "s": 417.02,
+          "e": 418.14,
+          "p": 0.9742087721824646
+        },
+        {
+          "w": " very",
+          "s": 418.14,
+          "e": 418.7,
+          "p": 0.22826224565505981
+        },
+        {
+          "w": " much.",
+          "s": 418.7,
+          "e": 419.26,
+          "p": 0.9930277466773987
+        }
+      ]
+    }
+  ]
+}

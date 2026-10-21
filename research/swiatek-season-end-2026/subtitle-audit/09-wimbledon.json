@@ -1,0 +1,41 @@
+{
+  "method": "diagnostic ASR; no VAD, no no-speech rejection; results require review, not approval",
+  "model": "small.multilingual",
+  "source_sha256": "30077c7f374f8e30c2f43cd073c975d9d3837f06cfa78b194fa3cd37d7d90be0",
+  "source": "wimbledon",
+  "selected_window": [
+    405.0,
+    416.3
+  ],
+  "context_window": [
+    403.5,
+    417.3
+  ],
+  "film_window": [
+    83.8,
+    95.1
+  ],
+  "segments": [
+    {
+      "start": 414.48,
+      "end": 417.28,
+      "text": " Thank you.",
+      "avg_logprob": -1.0573066274325054,
+      "no_speech_prob": 0.714231014251709,
+      "words": [
+        {
+          "w": " Thank",
+          "s": 414.48,
+          "e": 415.88,
+          "p": 0.01624869741499424
+        },
+        {
+          "w": " you.",
+          "s": 415.88,
+          "e": 417.28,
+          "p": 0.9507016539573669
+        }
+      ]
+    }
+  ]
+}

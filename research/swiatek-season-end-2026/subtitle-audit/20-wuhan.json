@@ -1,0 +1,41 @@
+{
+  "method": "diagnostic ASR; no VAD, no no-speech rejection; results require review, not approval",
+  "model": "small.multilingual",
+  "source_sha256": "b28e2edc6963e26d7c3b8d850fb58b521925f26049507763216222e1d7d9b4fb",
+  "source": "wuhan",
+  "selected_window": [
+    231.7,
+    240.55
+  ],
+  "context_window": [
+    230.2,
+    241.55
+  ],
+  "film_window": [
+    207.0,
+    215.85
+  ],
+  "segments": [
+    {
+      "start": 230.2,
+      "end": 232.98,
+      "text": " second set.",
+      "avg_logprob": -0.9791017572085062,
+      "no_speech_prob": 0.3066266179084778,
+      "words": [
+        {
+          "w": " second",
+          "s": 230.2,
+          "e": 232.98,
+          "p": 0.16785836219787598
+        },
+        {
+          "w": " set.",
+          "s": 232.98,
+          "e": 232.98,
+          "p": 0.9393854737281799
+        }
+      ]
+    }
+  ]
+}
