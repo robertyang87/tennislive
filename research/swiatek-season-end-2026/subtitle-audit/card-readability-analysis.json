@@ -24,7 +24,7 @@
   ],
   "previous_background_proposal": "rejected by user: 不要加背景 / 很丑",
   "current_proposal": {
-    "image": "card-original-font-v11-comparison.jpg",
+    "image": "card-original-font-v12-comparison.jpg",
     "font": "Original Smiley Sans Oblique / 得意黑 retained; TL Score retained",
     "font_changes": false,
     "background": "none",
@@ -42,7 +42,7 @@
     "sizes_native_px": {
       "topic": 52.2,
       "date_place": 39.6,
-      "score": 64.8,
+      "score": 59.4,
       "people": 39.6
     },
     "visible_glyph_gaps_native_px": 10.8,
@@ -54,7 +54,14 @@
     "scale_scope": "entire card including all four text rows, spacing, outline/shadow and accent rail; top-right anchored",
     "date_event_alignment": "Shared alphabetic baseline; full-row glyph bounds determine following score position",
     "date_event_baseline_fix_native_px": 5.4,
-    "vs_alignment": "Visible glyph center aligned vertically with player names; original spacing and font retained"
+    "vs_alignment": "Visible glyph center aligned vertically with player names; original spacing and font retained",
+    "score_adjustment": {
+      "previous_font_px_before_group_scale": 72,
+      "font_px_before_group_scale": 66,
+      "scale_from_previous": 0.9166666666666666,
+      "placement": "right aligned and vertically centered in unchanged score row; all other text and rail positions retained"
+    },
+    "score_fit": "Maximum font size66 before 90% group scale; shrink only score until entire one-line score fits the widest text row. Static prototype only."
   },
   "superseded_proposals": {
     "background": "explicitly rejected by user",
