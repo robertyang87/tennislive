@@ -8,7 +8,6 @@
   "tts_backend": "edge",
   "_tts_backend_why": "与账号故事条同一把嗓子（edge 云健），不加情绪风格。",
   "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +18%。正文各段 pitch +10Hz；不写 style、lead_pause。",
-  "_cover_reuse_why": "封面沿用 djokovic-china-open-unbeaten-34 的北京决赛 Reuters 举杯原图资产：同一位球员、同一亚洲赛季，本期故事正由这座北京冠军起笔（第二章），钩子文案全新（世界第12/抢门票），不构成误认；新拍的上海失利照无同等分辨率可靠来源。",
   "cover": {
     "eyebrow": "网球有故事",
     "layout": "solo",
@@ -20,13 +19,15 @@
     "_narration_why": "念的就是海报上那句钩子，数字换成汉字给 TTS。",
     "topic": "德约科维奇：都灵最后一张门票",
     "portrait": {
-      "image": "assets/reel/djokovic-china-open-unbeaten-34/cover-reuters.jpg",
-      "focus": 0.82,
-      "focus_y": 1.0,
-      "zoom": 1.3,
-      "source_url": "https://www.aljazeera.com/wp-content/uploads/2026/10/reuters_6ac4f2e0-1791292128.jpg",
-      "_credit": "Reuters/Tingshu Wang（Al Jazeera 刊载原图 6000×4000）",
-      "_portrait_why": "2026-10-06 北京决赛第七冠举杯正脸原图，本期第二章正是这座冠军；复用声明见顶层 _cover_reuse_why。"
+      "image": "assets/reel/djokovic-turin-last-ticket-2026/cover-turin-2023-trophy.jpg",
+      "fit": "cover",
+      "focus": 0.42,
+      "focus_y": 0.0,
+      "zoom": 1.0,
+      "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2023/11/19/9d52724c-4dcf-4446-a4d6-1206f75aab06/DUB_5008.JPG",
+      "_credit": "ATP Media 官方图库 photo 3790059「2023 Turin Djokovic」（DUB_5008，原图 6605×4403，存档缩到 3000 长边）",
+      "_portrait_why": "账号所有者 2026-10-21：「封面最好用 2023 年总决赛捧杯的照片」。2023 都灵决赛（11-19）颁奖：正脸、笑、双手捧年终总决赛奖杯、彩带与烟火；绿色外套与 BO9S2WB8I64 集锦颁奖镜头一致（2022 年他穿白外套）。同批 3790342/3790343 是与辛纳或嘉宾同框，3790040 是赛中怒吼，都不如这一张对题。",
+      "_search_why": "2026-10-21 在 runner 上按 references=ATP_PLAYER:D643 翻 ATP Media 照片接口（沙箱代理挡 api.prod.atpmedia.pulselive.com），2023-11-19/20 发布的都灵决赛实拍 9 张逐张打开看过；原图无 EXIF，场次按接口标题、发布日期与画面（奖杯、服装）认定。"
     }
   },
   "push": {
@@ -99,6 +100,10 @@
         "年终总决赛 7 冠（2008、2012–2015、2022、2023）为历史最多，费德勒 6 冠；2022 年 35 岁、2023 年 36 岁先后成为最年长冠军（CBS Sports、ATP）。",
         "2007–2016、2018–2025 共 18 次入围，与费德勒并列最多；2024、2025 入围后退出（nittoatpfinals.com 官方历史统计与 2025 入围稿；tennis.com）。",
         "上海负胡尔卡奇后原话 I am planning on only playing in Paris（AP）；胡尔卡奇此前对他 0-8（tennismajors）。",
+        "上海决赛霍达尔 6-1 先赢、第二盘双破领先、抢七 5-5 离冠军两分，1-6 7-6(5) 6-4 负达维多维奇·福基纳（Khaleej Times/AFP、ATP）。",
+        "年终总决赛 7 冠（2008、2012–2015、2022、2023）为历史最多，费德勒 6 冠；2022 年 35 岁、2023 年 36 岁先后成为最年长冠军（CBS Sports、ATP）。",
+        "2007–2016、2018–2025 共 18 次入围，与费德勒并列最多；2024、2025 入围后退出（nittoatpfinals.com 官方历史统计与 2025 入围稿；tennis.com）。",
+        "上海负胡尔卡奇后原话 I am planning on only playing in Paris（AP）；胡尔卡奇此前对他 0-8（tennismajors）。",
         "上海决赛霍达尔 6-1 先赢、第二盘双破领先、抢七 5-5 离冠军两分，1-6 7-6(5) 6-4 负达维多维奇·福基纳（Khaleej Times/AFP、ATP）。"
       ],
       "sources": [
@@ -107,6 +112,13 @@
         "https://tennistourtalk.com/138010/djokovic-wins-seventh-china-open-crown-after-de-minaur-retires",
         "https://www.nbcsports.com/tennis/news/novak-djokovic-will-play-at-the-upcoming-swiss-indoors-after-accepting-a-wild-card-invitation",
         "https://www.flashscore.ca/news/djokovic-receives-wildcard-for-basel-in-pursuit-of-atp-finals-qualification/4xHdvmNk/",
+        "https://www.nittoatpfinals.com/en/news/djokovic-nitto-atp-finals-2025-qualification",
+        "https://www.nittoatpfinals.com/en/heritage/historical-stats",
+        "https://www.cbssports.com/tennis/news/novak-djokovic-breaks-roger-federers-record-with-seventh-atp-finals-title",
+        "https://www.cbssports.com/tennis/news/novak-djokovic-ties-roger-federers-record-with-sixth-atp-finals-title-defeats-casper-ruud-in-straight-sets",
+        "https://tennismajors.com/atp/hurkacz-ends-eight-match-losing-run-against-djokovic-to-storm-into-shanghai-third-round-862876.html",
+        "https://www.khaleejtimes.com/sports/tennis/davidovich-fokina-beats-rising-star-jodar-to-win-shanghai-masters-3",
+        "https://www.arabnews.com/tennis/djokovic-crashes-out-of-shanghai-masters-in-his-first-match-3005505",
         "https://www.nittoatpfinals.com/en/news/djokovic-nitto-atp-finals-2025-qualification",
         "https://www.nittoatpfinals.com/en/heritage/historical-stats",
         "https://www.cbssports.com/tennis/news/novak-djokovic-breaks-roger-federers-record-with-seventh-atp-finals-title",
