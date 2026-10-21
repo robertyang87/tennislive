@@ -24,13 +24,13 @@
   ],
   "previous_background_proposal": "rejected by user: 不要加背景 / 很丑",
   "current_proposal": {
-    "image": "card-original-font-v9-comparison.jpg",
+    "image": "card-original-font-v10-comparison.jpg",
     "font": "Original Smiley Sans Oblique / 得意黑 retained; TL Score retained",
     "font_changes": false,
     "background": "none",
-    "outline_px": 4,
+    "outline_px": 3.6,
     "outline_color": "#141e18",
-    "shadow_px": 1,
+    "shadow_px": 0.9,
     "text_color": {
       "topic": "#f4fbf7",
       "date": "#d5e2db",
@@ -40,22 +40,25 @@
     },
     "date_format": "2026.09.07 · 美网第四轮",
     "sizes_native_px": {
-      "topic": 58,
-      "date_place": 44,
-      "score": 72,
-      "people": 44
+      "topic": 52.2,
+      "date_place": 39.6,
+      "score": 64.8,
+      "people": 39.6
     },
-    "visible_glyph_gaps_native_px": 12,
+    "visible_glyph_gaps_native_px": 10.8,
     "right_shift_px": 44,
-    "text_right_native_px": 992,
+    "text_right_native_px": 995,
     "rail_right_native_px": 1023,
-    "scope": "Only a static sample, not a new movie or QC approval"
+    "scope": "Only a static sample, not a new movie or QC approval",
+    "scale_from_v9": 0.9,
+    "scale_scope": "entire card including all four text rows, spacing, outline/shadow and accent rail; top-right anchored"
   },
   "superseded_proposals": {
     "background": "explicitly rejected by user",
     "abbreviated_date": "explicitly rejected by user",
     "dark_loser_name": "superseded by latest instruction to preserve original font colors",
     "v5_line_spacing": "rejected: date/event line touched score",
-    "Noto Sans CJK font change": "rejected: 不要改字体啊"
+    "Noto Sans CJK font change": "rejected: 不要改字体啊",
+    "v9_size": "User: 对比度够了，但感觉字号有点大 / 整体都要缩小; V10 scales complete card to 90%"
   }
 }
