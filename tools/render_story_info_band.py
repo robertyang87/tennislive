@@ -27,6 +27,12 @@ There are four semantic variants, but they share one grid and one palette:
 ``chapter``
     A structural turn such as "three rounds, three gates".
 
+2026-10-21 confirmed V14: original fonts, subtitle-style outline/shadow,
+no panel, winner names green and loser names white, shared date/event baseline,
+centered vs, won-set digits bold and lost-set digits light. Tiebreak points are
+bare small superscripts by the losing game count. Full five-set scores fit by
+actual glyph width. Default hold is at most15s, bounded by the associated clip.
+
 The PNG is intentionally rendered near 2x its final display width. The reel
 pipeline scales it down with Lanczos so Chinese strokes stay crisp.
 
@@ -68,6 +74,18 @@ LABEL_FONT = DISPLAY
 # 角标上其余每一行（主题、地点、日期、人物、罚款）走 LABEL_FONT，
 # 和左上角「网球时差 · 栏目」是同一个文件。
 SCORE = REPO / "assets" / "fonts" / "TLScore-Bold.ttf"
+SCORE_LIGHT = REPO / "assets" / "fonts" / "TLScore-Light.ttf"
+
+# Confirmed 2026-10-21: at 0.60 video width these source sizes reproduce V14.
+STORY_LABEL_WIDTH = 0.60
+STORY_LABEL_PAD = 0.043
+STORY_LABEL_MAX_SECONDS = 15.0
+CORNER_TOPIC_SIZE, CORNER_META_SIZE, CORNER_SCORE_SIZE = 97, 73, 115
+CORNER_PEOPLE_SIZE = 73
+CORNER_LANE = 637
+CORNER_OUTLINE = (20, 30, 24, 255)
+CORNER_STROKE, CORNER_SHADOW_OFFSET = 7, 2
+CORNER_GAP, CORNER_SCORE_GAP = 20, 17
 
 # 0.60 * 1080 = 648px in the finished reel. 1200px therefore gives a crisp
 # source while leaving enough room for the longest opponent name.
@@ -256,6 +274,11 @@ def _validate(kicker: str, headline: str, detail: str, metric: str,
                "metric": 11.0, "detail": 23.0}
     for field, value in (("kicker", kicker), ("headline", headline),
                          ("metric", metric), ("detail", detail)):
+        if field == "metric" and score_number_colors(value) is not None:
+            if len(value.split()) > 5:
+                raise SystemExit("整场比分最多5盘")
+            # Full scores are measured in pixels, not the prose character budget.
+            continue
         if value and display_units(value) > budgets[field]:
             raise SystemExit(
                 f"{field} 太长（{display_units(value):.1f}>{budgets[field]}）："
@@ -380,107 +403,157 @@ _STROKE_HEAD, _STROKE_SMALL = 2, 1
 _SHADOW_BLUR = 7
 
 
+@dataclass(frozen=True)
+class CornerRun:
+    text: str
+    font: ImageFont.FreeTypeFont
+    fill: tuple[int, ...]
+    x: float = 0
+    dy: float = 0
+    stroke: int = CORNER_STROKE
+
+
+def _corner_bounds(runs: Sequence[CornerRun]) -> tuple[float, float, float, float]:
+    boxes = [r.font.getbbox(r.text, anchor="ls") for r in runs]
+    return (min(r.x + b[0] for r, b in zip(runs, boxes)),
+            min(r.dy + b[1] for r, b in zip(runs, boxes)),
+            max(r.x + b[2] for r, b in zip(runs, boxes)),
+            max(r.dy + b[3] for r, b in zip(runs, boxes)))
+
+
+def _corner_score_runs(metric: str, size: int) -> list[CornerRun]:
+    """One font family, won games bold/green, lost games light/white.
+
+    Parentheses remain an input notation only. Tiebreak points sit above the
+    losing game count, including when that 6 is on the left of the hyphen.
+    The same runs are measured and drawn, so five sets include superscripts.
+    """
+    bold, light = _font(SCORE, size), _font(SCORE_LIGHT, size)
+    small = _font(SCORE_LIGHT, round(size * 0.48))
+    cursor = 0.0
+    runs: list[CornerRun] = []
+
+    def add(text, font, color, dy=0, stroke=CORNER_STROKE):
+        nonlocal cursor
+        runs.append(CornerRun(text, font, color, cursor, dy, stroke))
+        cursor += font.getlength(text)
+
+    if score_number_colors(metric) is None:
+        for text, numeric in metric_runs(metric):
+            add(text, bold if numeric else _font(LABEL_FONT, size), BRAND_GREEN)
+        return runs
+    raised = (bold.getbbox("6", anchor="ls")[1] - 5
+              - small.getbbox("5", anchor="ls")[1])
+    for index, token in enumerate(metric.split()):
+        match = _SET_TOKEN.fullmatch(token)
+        left, right, tie = match.groups()
+        if index:
+            cursor += max(30, size * 0.3)
+        a, b = int(left), int(right)
+        add(left, bold if a > b else light, BRAND_GREEN if a > b else WHITE)
+        if tie is not None and a < b:
+            cursor += 2
+            add(tie, small, WHITE, raised, 3)
+            cursor += 3
+        add("-", light, MUTED)
+        add(right, bold if b > a else light, BRAND_GREEN if b > a else WHITE)
+        if tie is not None and b < a:
+            cursor += 2
+            add(tie, small, WHITE, raised, 3)
+            cursor += 3
+    return runs
+
+
+def _corner_people_runs(detail: str, metric: str, size: int) -> list[CornerRun]:
+    font = _font(LABEL_FONT, size)
+    match = re.fullmatch(r"(.+?)(\s+[vV][sS]\s+)(.+)", detail)
+    parsed = score_number_colors(metric)
+    if not match:
+        return [CornerRun(detail, font, WHITE)]
+    left, versus, right = match.groups()
+    # A non-score event, or equal set count, provides no match winner.
+    winner = None
+    if parsed is not None:
+        games = [tuple(map(int, _SET_TOKEN.fullmatch(t).groups()[:2]))
+                 for t in metric.split()]
+        left_sets = sum(a > b for a, b in games)
+        right_sets = sum(b > a for a, b in games)
+        if left_sets != right_sets:
+            winner = 0 if left_sets > right_sets else 1
+    name_boxes = [font.getbbox(name, anchor="ls") for name in (left, right)]
+    vs_box = font.getbbox(versus, anchor="ls")
+    center = (min(b[1] for b in name_boxes) + max(b[3] for b in name_boxes)) / 2
+    vs_dy = center - (vs_box[1] + vs_box[3]) / 2
+    left_width, vs_width = font.getlength(left), font.getlength(versus)
+    return [CornerRun(left, font, BRAND_GREEN if winner == 0 else WHITE),
+            CornerRun(versus, font, MUTED, left_width, vs_dy),
+            CornerRun(right, font, BRAND_GREEN if winner == 1 else WHITE,
+                      left_width + vs_width)]
+
+
+def _fit_corner_runs(builder, preferred: int) -> list[CornerRun]:
+    for size in range(preferred, 27, -1):
+        runs = builder(size)
+        bounds = _corner_bounds(runs)
+        if bounds[2] - bounds[0] <= CORNER_LANE:
+            return runs
+    raise SystemExit("角标文字过长，无法在右侧安全宽度内清晰显示；请缩短文字")
+
+
 def _render_corner(kicker: str, headline: str, detail: str, out: Path, *,
                    metric: str, align: str, highlight: str) -> Path:
-    """右轨、右对齐。主题独占第一行，日期和地点同一行，然后比分、人物。
+    """Confirmed V14 typography: transparent, original fonts, one shared baseline.
 
-    日期在前，地点在后，中间是 `` · ``。没有主题时从这一行起排。除比分数字外
-    每一行都是左上角品牌标题那一支得意黑。比分数字仍是 TL Score，按局数上色。
-    行数变多时画布往下长，至少 340，取偶数。
+    Sizes are measured at the final 648px overlay width, rather than making
+    a 1200px PNG look readable only before downscaling. Visible glyph bounds
+    determine row spacing, including CJK, score superscripts and outlines.
     """
     out.parent.mkdir(parents=True, exist_ok=True)
-    probe = ImageDraw.Draw(Image.new("RGBA", (WIDTH, 8), (0, 0, 0, 0)))
-    x = 66
-    lane = WIDTH - x - 28
-
-    def block_h(text: str, font: ImageFont.FreeTypeFont, stroke: int) -> int:
-        box = probe.textbbox((0, 0), text, font=font, stroke_width=stroke)
-        return max(1, box[3] - box[1])
-
-    # (kind, payload, font_or_size, fill, stroke, height)
-    rows: list[tuple] = []
+    rows: list[tuple[str, list[CornerRun]]] = []
     if headline:
-        font = _fit_font(LABEL_FONT, 58, 40, headline, lane, stroke=_STROKE_HEAD)
-        rows.append(("text", headline, font, WHITE, _STROKE_HEAD,
-                     block_h(headline, font, _STROKE_HEAD)))
-    meta_text = f"{kicker}{META_SEP}{highlight}" if highlight else kicker
-    meta_font = _fit_font(LABEL_FONT, 46, 32, meta_text, lane, stroke=_STROKE_SMALL)
-    rows.append(("meta", (kicker, highlight), meta_font, None, _STROKE_SMALL,
-                 block_h(meta_text, meta_font, _STROKE_SMALL)))
+        rows.append(("topic", _fit_corner_runs(
+            lambda size: [CornerRun(headline, _font(LABEL_FONT, size), WHITE)],
+            CORNER_TOPIC_SIZE)))
+
+    def meta_runs(size):
+        font = _font(LABEL_FONT, size)
+        runs = [CornerRun(kicker, font, MUTED)]
+        if highlight:
+            runs.append(CornerRun(META_SEP + highlight, font, BRAND_GREEN,
+                                  font.getlength(kicker)))
+        return runs
+
+    rows.append(("meta", _fit_corner_runs(meta_runs, CORNER_META_SIZE)))
     if metric:
-        metric_size = _fit_metric_size(probe, metric, 56, 44, lane,
-                                       stroke=_STROKE_SMALL)
-        cjk, score = _metric_fonts(metric_size)
-        sample_h = block_h("8(5)", score, _STROKE_SMALL)
-        if score_number_colors(metric) is None:
-            sample_h = max(sample_h, block_h("字", cjk, _STROKE_SMALL))
-        rows.append(("score", metric, metric_size, None, _STROKE_SMALL, sample_h))
-    font = _fit_font(LABEL_FONT, 40, 28, detail, lane, stroke=_STROKE_SMALL)
-    rows.append(("text", detail, font, MUTED, _STROKE_SMALL,
-                 block_h(detail, font, _STROKE_SMALL)))
-
-    gap = 12
-    pad = 32
-    content = sum(row[5] for row in rows) + gap * (len(rows) - 1)
-    height = max(HEIGHT, content + pad * 2)
-    if height % 2:
-        height += 1
-
+        rows.append(("score", _fit_corner_runs(
+            lambda size: _corner_score_runs(metric, size), CORNER_SCORE_SIZE)))
+    rows.append(("people", _fit_corner_runs(
+        lambda size: _corner_people_runs(detail, metric, size), CORNER_PEOPLE_SIZE)))
+    bounds = [_corner_bounds(runs) for _kind, runs in rows]
+    gaps = [CORNER_SCORE_GAP if "score" in (rows[i][0], rows[i + 1][0])
+            else CORNER_GAP for i in range(len(rows) - 1)]
+    content = sum(b[3] - b[1] for b in bounds) + sum(gaps)
+    height = max(HEIGHT, int(content + 64 + 1) // 2 * 2)
     image = Image.new("RGBA", (WIDTH, height), (0, 0, 0, 0))
-    rail_layer = Image.new("RGBA", image.size, (0, 0, 0, 0))
-    rail_box = ((20, 34, 34, height - 34) if align == "left"
-                else (WIDTH - 34, 34, WIDTH - 20, height - 34))
-    ImageDraw.Draw(rail_layer).rounded_rectangle(rail_box, radius=7,
-                                                 fill=BRAND_GREEN)
-    image.alpha_composite(rail_layer.filter(ImageFilter.GaussianBlur(10)))
-    image.alpha_composite(rail_layer)
-
-    shadow = Image.new("RGBA", image.size, (0, 0, 0, 0))
-    text_layer = Image.new("RGBA", image.size, (0, 0, 0, 0))
-    y = (height - content) // 2
-
-    right_rows: list[tuple[Image.Image, Image.Image]] = []
-
-    def row_canvas():
-        if align == "left":
-            return ImageDraw.Draw(text_layer), shadow
-        row = Image.new("RGBA", image.size, (0, 0, 0, 0))
-        row_shadow = Image.new("RGBA", image.size, (0, 0, 0, 0))
-        right_rows.append((row, row_shadow))
-        return ImageDraw.Draw(row), row_shadow
-
-    for kind, payload, font_or_size, fill, stroke, row_h in rows:
-        draw, row_shadow = row_canvas()
-        if kind == "score":
-            _draw_colored_score(draw, row_shadow, (x, y), payload, font_or_size,
-                                stroke, "la")
-        elif kind == "meta":
-            date, place = payload
-            _draw_text(draw, (x, y), date, font=font_or_size, fill=MUTED,
-                       stroke=stroke, shadow_layer=row_shadow)
-            cursor = x + round(draw.textlength(date, font=font_or_size))
-            if place:
-                _draw_text(draw, (cursor, y), META_SEP, font=font_or_size,
-                           fill=MUTED, stroke=stroke, shadow_layer=row_shadow)
-                cursor += round(draw.textlength(META_SEP, font=font_or_size))
-                _draw_text(draw, (cursor, y), place, font=font_or_size,
-                           fill=BRAND_GREEN, stroke=stroke, shadow_layer=row_shadow)
-        else:
-            _draw_text(draw, (x, y), payload, font=font_or_size, fill=fill,
-                       stroke=stroke, shadow_layer=row_shadow)
-        y += row_h + gap
-
-    if align == "right":
-        for row, row_shadow in right_rows:
-            bounds = row.getbbox()
-            if bounds:
-                # 每行实际墨迹右缘统一为 1134；右轨左缘 1166，留 32px。
-                dx = WIDTH - x - bounds[2]
-                text_layer.alpha_composite(row, (dx, 0))
-                shadow.alpha_composite(row_shadow, (dx, 0))
-
-    image.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(_SHADOW_BLUR)))
-    image.alpha_composite(text_layer)
+    draw = ImageDraw.Draw(image)
+    rail = ((22, 34, 32, height - 34) if align == "left"
+            else (WIDTH - 32, 34, WIDTH - 22, height - 34))
+    draw.rounded_rectangle(rail, radius=5, fill=BRAND_GREEN)
+    y = (height - content) / 2
+    for index, ((_kind, runs), box) in enumerate(zip(rows, bounds)):
+        offset = 66 - box[0] if align == "left" else WIDTH - 66 - box[2]
+        baseline = y - box[1]
+        # Paint all shadows first so a later run cannot cover an adjacent fill.
+        for run in runs:
+            draw.text((offset + run.x + CORNER_SHADOW_OFFSET,
+                       baseline + run.dy + CORNER_SHADOW_OFFSET), run.text,
+                      font=run.font, fill=(0, 0, 0, 255), anchor="ls",
+                      stroke_width=run.stroke, stroke_fill=(0, 0, 0, 255))
+        for run in runs:
+            draw.text((offset + run.x, baseline + run.dy), run.text, font=run.font,
+                      fill=run.fill, anchor="ls", stroke_width=run.stroke,
+                      stroke_fill=CORNER_OUTLINE)
+        y += box[3] - box[1] + (gaps[index] if index < len(gaps) else 0)
     image.save(out)
     return out
 
@@ -713,6 +786,8 @@ def label_fields_problem(label: object) -> str | None:
         return "date 写成 2026.10.11"
     if score and score_number_colors(score) is None:
         return f"score「{score}」不是整场比分；说明写进 event"
+    if score and len(score.split()) > 5:
+        return "整场比分最多5盘"
     budgets = {"topic": 10.5, "place": 12.0, "people": 23.0, "score": 11.0}
     for field, value in (("topic", topic), ("place", place),
                          ("people", people), ("score", score)):
@@ -720,6 +795,8 @@ def label_fields_problem(label: object) -> str | None:
             continue
         if "\n" in value or "｜" in value or "|" in value:
             return f"{field} 只能一行，不要用竖线拼字段"
+        if field == "score":
+            continue  # Complete five-set scores fit by measured glyph width.
         if display_units(value) > budgets[field]:
             return (f"{field} 太长（{display_units(value):.1f}>{budgets[field]}）："
                     "一屏只留一个记忆点")

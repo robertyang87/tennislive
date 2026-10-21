@@ -1,0 +1,84 @@
+{
+  "scope": "Approved V14 corner-label style and per-clip hold only; no episode rerender or publication",
+  "renderer": "tools/render_story_info_band.py",
+  "preview": "native-preview.jpg",
+  "preview_note": "Five-set score is a layout sample, not this match result; still composite from native PNGs, not a new film",
+  "timing": {
+    "maximum_seconds": 15,
+    "actual": "min(15, associated clip duration)",
+    "extends_clip": false,
+    "cross_clip_carry": false,
+    "animate_false_still_limited": true
+  },
+  "spec_diff_check": "Only inset.pad and inset.show_for changed; all other spec data identical to main baseline",
+  "source_video_or_audio_changed": false,
+  "native_label_assets": [
+    {
+      "image": "assets/reel/swiatek-season-end-2026/context-01.png",
+      "sha256": "9c38e80e13fdd3d2cd8d21fcea3d943e69e823b3922e007a9a10aa046b13ae26",
+      "hold_seconds": 7.799999999999983
+    },
+    {
+      "image": "assets/reel/swiatek-season-end-2026/context-02.png",
+      "sha256": "c5bbc01f68eb04b1242a781318f954cb748ccc9310f21f52356713b117e5ada9",
+      "hold_seconds": 8.800000000000011
+    },
+    {
+      "image": "assets/reel/swiatek-season-end-2026/context-04.png",
+      "sha256": "f1526ec845679d0db3f26b533ac9fe8a19c35c49437e63e1dbed916894592997",
+      "hold_seconds": 8.700000000000003
+    },
+    {
+      "image": "assets/reel/swiatek-season-end-2026/context-08.png",
+      "sha256": "e099e59e42a248e705b50ce5fc021f7a8938e43b4af95c1239ba3a69159963d6",
+      "hold_seconds": 13.5
+    },
+    {
+      "image": "assets/reel/swiatek-season-end-2026/context-09.png",
+      "sha256": "feecfc80223bd31887ac11074703f2f8d197a19cc74e7b33046a118ab1b5a4e3",
+      "hold_seconds": 11.300000000000011
+    },
+    {
+      "image": "assets/reel/swiatek-season-end-2026/context-13.png",
+      "sha256": "63715389282bef3fc99e2bfbd620af8c5886f0be5dbdd9555889e903f1cc0c94",
+      "hold_seconds": 9.599999999999994
+    },
+    {
+      "image": "assets/reel/swiatek-season-end-2026/context-16.png",
+      "sha256": "ec040bb76d8c77762aed81cca4b845bb6a41a84276114f09a3bf34104b9c3391",
+      "hold_seconds": 14.399999999999999
+    },
+    {
+      "image": "assets/reel/swiatek-season-end-2026/context-19.png",
+      "sha256": "08aa5bf543bbc69d3ee7c8d20831d13faaa1c086f7b2667b79d668eaed6fdac8",
+      "hold_seconds": 15
+    }
+  ],
+  "checks": {
+    "native_target_suite": "32 passed",
+    "final_corner_and_match_inset": "15 passed",
+    "episode_spec_dry_run": "passed",
+    "negative_controls": [
+      "hold limit reverted to8: targeted test fails",
+      "vs forced to top alignment: targeted test fails",
+      "five-set fitting removed: targeted test fails"
+    ],
+    "isolated_package_import_and_hold": "3 passed after moving the sibling import below existing sys.path setup",
+    "workflow_cache_and_import": "Targeted existing workflow cache contracts and isolated package import passed after cache fix"
+  },
+  "ci": "Pending at commit creation; exact PR head status is authoritative, not this local record",
+  "ci_first_run": {
+    "run_id": 39635416352,
+    "result": "6400 passed, 1 failed, 225 skipped",
+    "failure": "Clean package import failed because new sibling import preceded sys.path setup",
+    "fix": "Moved the import below the existing path initialization; exact failed contract now passes locally",
+    "current_head_ci": "Must pass on the follow-up commit before merge"
+  },
+  "ci_second_run": {
+    "run_id": 39637046462,
+    "result": "6399 passed, 2 failed, 225 skipped",
+    "failure": "Upstream newly added import-sun-cvetkovic-source workflow lacked apt cache restore/save, failing two shared workflow contracts",
+    "fix": "Merge current main, add standard restore before ensure_ffmpeg and dirty-only save afterward",
+    "current_head_ci": "Must pass after the workflow cache fix before merge"
+  }
+}

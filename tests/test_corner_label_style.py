@@ -314,3 +314,86 @@ def test_按字段渲贴图_事件和主题同一句时不另起比分行(tmp_pa
         assert image.size[1] >= 340 and image.size[1] % 2 == 0
     with pytest.raises(SystemExit, match="label"):
         render_label({}, tmp_path / "nope.png")
+
+
+def test_确认版角标同基线居中并按盘区分粗细和抢七上标(tmp_path, monkeypatch):
+    """Exercise the production drawing calls, including both tiebreak orientations."""
+    from PIL import ImageDraw
+    import render_story_info_band as band
+
+    calls = []
+    original = ImageDraw.ImageDraw.text
+
+    def capture(self, xy, text, *args, **kwargs):
+        if kwargs.get("fill") in {WHITE, MUTED, BRAND_GREEN}:
+            calls.append((xy, text, kwargs))
+        return original(self, xy, text, *args, **kwargs)
+
+    monkeypatch.setattr(ImageDraw.ImageDraw, "text", capture)
+    metric = "7-6(5) 6-7(8) 7-5 4-6 6-4"
+    out = render("2026.09.07", "领先之后被逆转", "斯瓦泰克 vs 郑钦文",
+                 tmp_path / "five.png", highlight="美网第四轮", metric=metric)
+    date = next(c for c in calls if c[1] == "2026.09.07")
+    place = next(c for c in calls if c[1] == " · 美网第四轮")
+    assert date[0][1] == place[0][1], "日期和赛事必须共用基线"
+    people = [next(c for c in calls if c[1] == t)
+              for t in ("斯瓦泰克", " vs ", "郑钦文")]
+    centers = []
+    for xy, text, kw in people:
+        box = kw["font"].getbbox(text, anchor=kw["anchor"])
+        centers.append(xy[1] + (box[1] + box[3]) / 2)
+        assert Path(kw["font"].path).name == "SmileySans-Oblique.ttf"
+    assert max(centers) - min(centers) <= 1
+    assert people[0][2]["fill"] == BRAND_GREEN  # left wins 3 sets to 2
+    assert people[2][2]["fill"] == WHITE
+    digits = [c for c in calls if c[1].isdigit()]
+    main_size = max(c[2]["font"].size for c in digits)
+    assert main_size < band.CORNER_SCORE_SIZE, "五盘必须按完整宽度适配"
+    for xy, text, kw in digits:
+        expected = "TLScore-Bold.ttf" if kw["fill"] == BRAND_GREEN else "TLScore-Light.ttf"
+        assert Path(kw["font"].path).name == expected
+        if kw["font"].size < main_size:
+            assert xy[1] < max(c[0][1] for c in digits), "小分必须上移"
+    assert not any("(" in text or ")" in text for _xy, text, _kw in calls)
+    digit_boxes = []
+    for xy, text, kw in digits:
+        box = kw["font"].getbbox(text, anchor="ls")
+        digit_boxes.append((xy[0] + box[0], xy[0] + box[2]))
+    assert max(b[1] for b in digit_boxes) - min(b[0] for b in digit_boxes) <= band.CORNER_LANE
+    assert png_corner_label_problem(out) is None
+    def ink_y(call):
+        xy, text, kw = call
+        box = kw["font"].getbbox(text, anchor="ls")
+        return xy[1] + box[1], xy[1] + box[3]
+
+    # Include outlines and the shadow, not just configured row padding.
+    meta_bottom = max(ink_y(c)[1] for c in (date, place))
+    score_top = min(ink_y(c)[0] for c in digits)
+    score_bottom = max(ink_y(c)[1] for c in digits)
+    people_top = min(ink_y(c)[0] for c in people)
+    assert meta_bottom + band.CORNER_STROKE + band.CORNER_SHADOW_OFFSET < score_top - band.CORNER_STROKE
+    assert score_bottom + band.CORNER_STROKE + band.CORNER_SHADOW_OFFSET < people_top - band.CORNER_STROKE
+
+
+def test_新字卡默认15秒并允许向右靠_超过上限仍拒绝(tmp_path):
+    import build_match_reel as reel
+    import render_story_info_band as band
+
+    path = render_label(_OK_LABEL, tmp_path / "label.png")
+    inset = {"image": str(path), "kind": "story_text", "corner": "tr",
+             "width": band.STORY_LABEL_WIDTH, "pad": band.STORY_LABEL_PAD,
+             "motion": "editorial", "label": dict(_OK_LABEL)}
+    spec = {"cover": {}, "segments": [{"source": "r", "start": 0, "end": 2,
+                                         "inset": inset}]}
+    segments = reel.parse_segments(spec, {"r": Path("source.mp4")}, "r")
+    assert segments[0].length == 2
+    assert "lt(t,15.000)" in reel._overlay_chain("[0:v]null[base]", segments[0].inset)
+    inset["show_for"] = 15.01
+    with pytest.raises(reel.ReelError, match="story_text"):
+        reel.parse_segments(spec, {"r": Path("source.mp4")}, "r")
+
+
+def test_完整五盘比分不套解释文案字数上限():
+    five = {**_OK_LABEL, "score": "7-6(5) 6-7(8) 7-5 4-6 6-4"}
+    assert label_fields_problem(five) is None
+    assert "最多5盘" in label_fields_problem({**five, "score": five["score"] + " 6-4"})
