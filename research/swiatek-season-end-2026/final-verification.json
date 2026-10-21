@@ -1,0 +1,132 @@
+{
+  "film_sha256": "af2793a29042de5a636c3f2c1e3429e7e704e1669ca3ab24db646a7d9d516b68",
+  "film_seconds": 252.28,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "audio_stream": true,
+  "native_qc": "pass",
+  "cards": [
+    {
+      "segment_index": 1,
+      "film_start": 8.4,
+      "segment_seconds": 7.8,
+      "card_show_for": 7.8,
+      "sample_time": 15.5,
+      "label": {
+        "topic": "这一年也曾捧杯",
+        "date": "2026.08.13",
+        "place": "多伦多决赛",
+        "people": "斯瓦泰克 vs 莱巴金娜",
+        "score": "6-2 6-3"
+      }
+    },
+    {
+      "segment_index": 2,
+      "film_start": 16.2,
+      "segment_seconds": 8.8,
+      "card_show_for": 8.0,
+      "sample_time": 23.3,
+      "label": {
+        "topic": "年初的失利",
+        "date": "2026.01.28",
+        "place": "澳网1/4决赛",
+        "people": "斯瓦泰克 vs 莱巴金娜",
+        "score": "5-7 1-6"
+      }
+    },
+    {
+      "segment_index": 4,
+      "film_start": 28.6,
+      "segment_seconds": 8.7,
+      "card_show_for": 8.0,
+      "sample_time": 35.7,
+      "label": {
+        "topic": "首战纪录止步",
+        "date": "2026.03.19",
+        "place": "迈阿密第二轮",
+        "people": "斯瓦泰克 vs 里内特",
+        "score": "6-1 5-7 3-6"
+      }
+    },
+    {
+      "segment_index": 8,
+      "film_start": 70.3,
+      "segment_seconds": 13.5,
+      "card_show_for": 8.0,
+      "sample_time": 77.4,
+      "label": {
+        "topic": "生日这天出局",
+        "date": "2026.05.31",
+        "place": "法网第四轮",
+        "people": "斯瓦泰克 vs 科斯秋克",
+        "score": "5-7 1-6"
+      }
+    },
+    {
+      "segment_index": 9,
+      "film_start": 83.8,
+      "segment_seconds": 11.3,
+      "card_show_for": 8.0,
+      "sample_time": 90.9,
+      "label": {
+        "topic": "卫冕止步",
+        "date": "2026.07.04",
+        "place": "温网第三轮",
+        "people": "斯瓦泰克 vs 伊埃拉",
+        "score": "6-7(9) 2-6"
+      }
+    },
+    {
+      "segment_index": 13,
+      "film_start": 123.95,
+      "segment_seconds": 9.6,
+      "card_show_for": 8.0,
+      "sample_time": 131.05,
+      "label": {
+        "topic": "本季唯一单打冠军",
+        "date": "2026.08.13",
+        "place": "多伦多决赛",
+        "people": "斯瓦泰克 vs 莱巴金娜",
+        "score": "6-2 6-3"
+      }
+    },
+    {
+      "segment_index": 16,
+      "film_start": 160.25,
+      "segment_seconds": 14.4,
+      "card_show_for": 8.0,
+      "sample_time": 167.35,
+      "label": {
+        "topic": "领先之后被逆转",
+        "date": "2026.09.07",
+        "place": "美网第四轮",
+        "people": "斯瓦泰克 vs 郑钦文",
+        "score": "5-7 3-6"
+      }
+    },
+    {
+      "segment_index": 19,
+      "film_start": 190.15,
+      "segment_seconds": 16.85,
+      "card_show_for": 8.0,
+      "sample_time": 197.25,
+      "label": {
+        "topic": "带伤打完比赛",
+        "date": "2026.10.17",
+        "place": "武汉半决赛",
+        "people": "斯瓦泰克 vs 赫瓦林斯卡",
+        "score": "5-7 1-6"
+      }
+    }
+  ],
+  "visual_review": "实际新版成片在8个赛事镜头起点后7.1秒抽帧，Codex逐张目检：8张信息卡均仍可见，赛事/日期/双方/比分与相应画面对应。方法为静态抽帧目检，不冒称真人完整视听。",
+  "spec_sha256": "33f6549d36ee8fae862ccc15687c64b96ae32ed64c267324b50fe9e3afb4c37c",
+  "render_run": "https://github.com/robertyang87/tennislive/actions/runs/39617141816",
+  "review_copy": {
+    "path": "/workspace/artifacts/swiatek-season-end-2026-审片版.mp4",
+    "bytes": 26273683,
+    "purpose": "对话审片，正式发布仍用1080x1440成片"
+  }
+}
