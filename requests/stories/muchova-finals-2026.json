@@ -87,7 +87,7 @@
     "clip_end_stops_label": true
   },
   "final_movie_review_finding": "首个完整成片唯一阻塞：温网F末尾源224.48起出现诺斯科娃冠军盘，已将该段end收224.24并依据新双模型紧校末词，保持完整分与解说；其他片段不变。",
-  "status": "film_complete_publication_blocked_by_main_ci",
+  "status": "publication_authorized_in_progress",
   "final_render": {
     "run_id": 39655048234,
     "conclusion": "success",
@@ -102,7 +102,7 @@
     "seam_visual_review": "research/muchova-finals-2026/final-corrected-seam-visual-qc.json"
   },
   "publication_gate": {
-    "status": "blocked",
+    "status": "single_user_authorized_unrelated_ci_exception",
     "ci_run_id": 39654940663,
     "known_prior_failures": 15,
     "prior_failure_scope": "unrelated concurrent main spec sun-cvetkovic-chengdu-2026-rr1; not waived or modified",
@@ -115,6 +115,18 @@
     "ci_url": "https://github.com/robertyang87/tennislive/actions/runs/39654940663",
     "rule_source": "CLAUDE.md:274",
     "rule": "发布操作要求当前 head 的 CI 所选范围通过; no bypass or unrelated production mutation",
-    "latest_main_note": "The tiebreak XHS failure was fixed by upstream main b05ee0d at18:51Z after CI checkout; original15 Sun failures remain unresolved. No bypass or modification to that active production."
+    "latest_main_note": "The tiebreak XHS failure was fixed by upstream main b05ee0d at18:51Z after CI checkout; original15 Sun failures remain unresolved. No bypass or modification to that active production.",
+    "user_exception": {
+      "authorized": true,
+      "user_reply": "同意",
+      "question": "本片成片质检、配音和画面验收均通过。是否允许本次跳过另一稿件造成的 CI 失败，直接完成微信推送？",
+      "recorded_at_utc": "2026-10-21T19:02:33.141146+00:00",
+      "scope": "Single Muchova publication only; unrelated draft CI failures waived. Native film QC, source/audio evidence, frozen TTS, voice publication identity and persistent unique-send ledger all remain required. No other spec changed."
+    },
+    "prepublish_rechecks": {
+      "native_film_qc": "0 issues on actual downloaded de8eac8a film after main merge",
+      "voice_quality_gate": "pass",
+      "auto_push_gate": "this film selected; no prior sent ledger"
+    }
   }
 }
