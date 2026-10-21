@@ -25,7 +25,7 @@
     "Obtain RG post-match interview for the nerves remark",
     "费塞特: 塞 pronounced sai",
     "Event rounds vs personal results terminology",
-    "Card hold target15 seconds approved by user; same-event continuity, replace on event change"
+    "Card hold maximum15 seconds, clipped to the associated video segment end; no cross-segment persistence"
   ],
   "final_card_preferences": [
     "No background or bottom strip",
@@ -47,10 +47,13 @@
   "five_set_layout_test": "card-original-font-v14-tiebreak-five-set-comparison.jpg; sample score only, not this match result",
   "card_review_decision": {
     "style": "Keep current V14 style, including adaptive five-set scores",
-    "duration_target_seconds": 15,
     "user_quote": "好吧先保持这样，时间停留建议15秒可以么？",
     "scope": "This episode; no global hard duration threshold inferred",
-    "continuity": "Continue across cuts within the same event; replace on event change; do not pad footage solely to meet duration",
-    "implementation": "Recorded for next revision; production spec and renderer unchanged; no render/publication dispatched"
+    "continuity": "End the card when its associated video segment ends, even if under15 seconds; do not extend or loop footage or carry the card across segments",
+    "implementation": "Recorded for next revision; production spec and renderer unchanged; no render/publication dispatched",
+    "duration_max_seconds": 15,
+    "duration_rule": "min(15 seconds, remaining associated video segment duration from card appearance)",
+    "user_clarification": "如果视频片段不够15秒，播完了就没了",
+    "superseded": "Prior assistant proposal to persist across cuts within the same event is withdrawn"
   }
 }
