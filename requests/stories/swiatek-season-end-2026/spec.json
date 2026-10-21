@@ -1,0 +1,266 @@
+{
+  "schema": "tennis-story-editorial-spec/v1",
+  "slug": "swiatek-season-end-2026",
+  "stage": "editorial_and_media_preparation",
+  "render_ready": false,
+  "column": "网球有故事",
+  "story_kind": "person",
+  "subject": "斯瓦泰克",
+  "title": "斯瓦泰克：提前结束的赛季",
+  "angle": "一段低谷不会抹去她已经取得的成就；反复尝试之后，她决定给自己恢复的时间。",
+  "as_of_date": "2026-10-21",
+  "format": {
+    "width": 1080,
+    "height": 1440,
+    "fps": 30,
+    "target_seconds": 236,
+    "chapter_cards": [
+      "01 熟悉的胜利开始变难",
+      "02 她确实回来过",
+      "03 这一次，先停下"
+    ],
+    "chapter_card_style": "品牌深蓝短卡，约1秒，计入各段预算",
+    "burned_in_background_music": false,
+    "court_crop": {
+      "center_x": 0.5,
+      "track": false
+    },
+    "interview_crop": "按实测人物中心固定裁切，不沿用球场中心",
+    "original_audio_captions": "完整原句，中英双语，核验后写入时间轴",
+    "narration_and_original_audio": "原声关键句与完整回合时旁白让位；现场声不冒充球员原话"
+  },
+  "fact_packet": "research/swiatek-season-end-2026/fact-packet.json",
+  "source_manifest": "research/swiatek-season-end-2026/source-manifest.json",
+  "source_window_unit": "seconds in original downloaded source; candidates only, not final trims",
+  "duration_policy": "236秒是叙事预算；完整回合、原声整句和自然语速优先。合成后按实测时长调整，禁止靠加速或硬截句塞入。",
+  "cover": {
+    "topic": "斯瓦泰克：提前结束的赛季",
+    "hook": [
+      "无缘总决赛",
+      "她决定先停下"
+    ],
+    "image": "research/swiatek-season-end-2026/cover-source.jpg",
+    "status": "photo_selected_layout_and_safe_zones_pending"
+  },
+  "scenes": [
+    {
+      "id": "opening",
+      "timeline_budget": {
+        "start": 0,
+        "end": 18,
+        "duration": 18
+      },
+      "heading": "冷开场：她决定先停下",
+      "fact_ids": [
+        "season_end",
+        "career_and_2026_slams"
+      ],
+      "media_refs": [
+        "instagram",
+        "toronto-2"
+      ],
+      "narration_zh": "10月20日，斯瓦泰克宣布提前结束赛季，无缘年终总决赛。6座大满贯的得主，今年没能再添1座。但这一年，她也曾重新捧杯。",
+      "original_audio_budget_seconds": 2,
+      "visual_and_alignment": "原帖账号、日期和短句；闪回多伦多奖杯，明确是8月。图文由旁白转述。",
+      "trim_status": "pending_continuous_review",
+      "audio_status": "pending_this_task",
+      "narration_status": "editorial_copy_not_synthesized"
+    },
+    {
+      "id": "early",
+      "timeline_budget": {
+        "start": 18,
+        "end": 48,
+        "duration": 30
+      },
+      "heading": "01 熟悉的胜利开始变难",
+      "fact_ids": [
+        "ao",
+        "miami",
+        "coach"
+      ],
+      "media_refs": [
+        "ao-1",
+        "miami-2",
+        "miami-3"
+      ],
+      "narration_zh": "年初澳网，她止步8强。迈阿密首战，先赢6比1，仍被里内特逆转。连续73站赛事首战获胜的纪录，就此结束。几天后，她宣布与教练费塞特结束合作。",
+      "original_audio_budget_seconds": 8,
+      "visual_and_alignment": "澳网只作约5秒坐标，重心为迈阿密终场和本人反应；换帅用有来源的简短信息，不暗示单一因果。",
+      "trim_status": "pending_continuous_review",
+      "audio_status": "pending_this_task",
+      "narration_status": "editorial_copy_not_synthesized"
+    },
+    {
+      "id": "rg",
+      "timeline_budget": {
+        "start": 48,
+        "end": 83,
+        "duration": 35
+      },
+      "heading": "巴黎，25岁生日这一天",
+      "fact_ids": [
+        "rg"
+      ],
+      "media_refs": [
+        "rg-1"
+      ],
+      "narration_zh": "巴黎是她4次夺冠的地方。5月31日，25岁生日这一天，她以5比7、1比6输给科斯秋克，止步法网第四轮。她赛后谈到紧张。这个红土赛季，她没有冠军。",
+      "original_audio_budget_seconds": 7,
+      "visual_and_alignment": "末段比赛与本人离场。未拿到法网发布会视频时，旁白转述官方赛报，不伪造本人发言。",
+      "trim_status": "pending_continuous_review",
+      "audio_status": "pending_this_task",
+      "narration_status": "editorial_copy_not_synthesized"
+    },
+    {
+      "id": "wimbledon",
+      "timeline_budget": {
+        "start": 83,
+        "end": 111,
+        "duration": 28
+      },
+      "heading": "卫冕之旅止步第三轮",
+      "fact_ids": [
+        "wimbledon"
+      ],
+      "media_refs": [
+        "wimbledon-1"
+      ],
+      "narration_zh": "7月，她以卫冕冠军身份回到温网。对伊埃拉，首盘曾有两个盘点，却没能兑现。最终6比7、2比6，止步第三轮。",
+      "original_audio_budget_seconds": 10,
+      "visual_and_alignment": "保留一个完整末段回合及反应；盘点事实用赛报支持的文字，不把终场回合标成盘点。",
+      "trim_status": "pending_continuous_review",
+      "audio_status": "pending_this_task",
+      "narration_status": "editorial_copy_not_synthesized"
+    },
+    {
+      "id": "toronto",
+      "timeline_budget": {
+        "start": 111,
+        "end": 146,
+        "duration": 35
+      },
+      "heading": "02 她确实回来过",
+      "fact_ids": [
+        "toronto",
+        "toronto_r16_recovery"
+      ],
+      "media_refs": [
+        "toronto_r16_interview",
+        "toronto-1",
+        "toronto-2"
+      ],
+      "narration_zh": "但她也确实回来过。8月的多伦多，她这样回顾自己的变化。几天后，她6比2、6比3击败莱巴金娜。这是她今年唯一的巡回赛单打冠军。",
+      "original_audio_budget_seconds": 19,
+      "visual_and_alignment": "先标明8月1/8决赛赛后，留本人回顾法网的完整一句；再到决赛冠军点和捧杯，不把两天说成同一天。若采访未通过，改用已下载冠军点及颁奖画面。",
+      "trim_status": "pending_continuous_review",
+      "audio_status": "pending_this_task",
+      "narration_status": "editorial_copy_not_synthesized"
+    },
+    {
+      "id": "uso",
+      "timeline_budget": {
+        "start": 146,
+        "end": 176,
+        "duration": 30
+      },
+      "heading": "5比0之后，优势流失",
+      "fact_ids": [
+        "uso",
+        "career_and_2026_slams"
+      ],
+      "media_refs": [
+        "uso-1",
+        "uso-3",
+        "uso-4",
+        "uso-6"
+      ],
+      "narration_zh": "美网第四轮，她首盘5比0领先郑钦文，却连丢7局。最后5比7、3比6出局。2026年的4站大满贯，她走得最远的一次，是年初澳网8强。",
+      "original_audio_budget_seconds": 10,
+      "visual_and_alignment": "5比0领先用约2秒事实卡；随后以真实盘点或完整赛点承接。人物重心留在斯瓦泰克。",
+      "trim_status": "pending_continuous_review",
+      "audio_status": "pending_this_task",
+      "narration_status": "editorial_copy_not_synthesized"
+    },
+    {
+      "id": "wuhan",
+      "timeline_budget": {
+        "start": 176,
+        "end": 200,
+        "duration": 24
+      },
+      "heading": "03 这一次，先停下",
+      "fact_ids": [
+        "wuhan"
+      ],
+      "media_refs": [
+        "wuhan-1",
+        "wuhan-2"
+      ],
+      "narration_zh": "武汉半决赛，首盘5比3时，她又错过两个盘点。比赛中，她因腿伤接受处理，仍坚持打完，最终5比7、1比6落败。",
+      "original_audio_budget_seconds": 7,
+      "visual_and_alignment": "比赛末段、双方致意和本人反应。治疗信息用官方赛报支持的短卡，不能拿其他动作代替治疗。",
+      "trim_status": "pending_continuous_review",
+      "audio_status": "pending_this_task",
+      "narration_status": "editorial_copy_not_synthesized"
+    },
+    {
+      "id": "statement",
+      "timeline_budget": {
+        "start": 200,
+        "end": 222,
+        "duration": 22
+      },
+      "heading": "回到10月20日本人声明",
+      "fact_ids": [
+        "season_end"
+      ],
+      "media_refs": [
+        "instagram"
+      ],
+      "narration_zh": "3天后，她退出宁波，说明左大腿的问题已持续数周。随后，她宣布结束赛季，把时间留给休息和恢复。她也写到，对下半年的付出和进步感到自豪。",
+      "original_audio_budget_seconds": 0,
+      "visual_and_alignment": "展示真实IG截图及短句“I’ve decided to end my season here”；左大腿细节注明来自宁波退赛声明。保留阅读停顿。",
+      "trim_status": "pending_continuous_review",
+      "audio_status": "pending_this_task",
+      "narration_status": "editorial_copy_not_synthesized"
+    },
+    {
+      "id": "ending",
+      "timeline_budget": {
+        "start": 222,
+        "end": 236,
+        "duration": 14
+      },
+      "heading": "恢复之后，继续向前",
+      "fact_ids": [
+        "season_end"
+      ],
+      "media_refs": [
+        "instagram"
+      ],
+      "narration_zh": "低谷不会抹掉她走过的路。等她恢复健康，你最期待她在哪片球场找回自己？关注网球时差，时差归我，好球归你。",
+      "original_audio_budget_seconds": 0,
+      "visual_and_alignment": "原帖本人照片或已核近景，接固定品牌片尾。不给康复日期和成绩保证。",
+      "trim_status": "pending_continuous_review",
+      "audio_status": "pending_this_task",
+      "narration_status": "editorial_copy_not_synthesized"
+    }
+  ],
+  "exclusions": [
+    "未经证实的2026年15万美元候补邀请与拒绝",
+    "将9月罗迪克评论包装成10月结束赛季的回应",
+    "用持续数周的腿伤解释全年赛果",
+    "退役、抑郁、永久告别、保证复出巅峰",
+    "口径未统一的全年胜负和首次无缘总决赛年份"
+  ],
+  "remaining_before_runtime_spec": [
+    "逐段连续回看和精确入出点，保留完整关键回合",
+    "原声ASR、逐句听核、双语字幕时间轴",
+    "多伦多本人采访本次独立听核与字幕对齐",
+    "封面实际版式、裁切预览",
+    "按实际TTS时长调整预算，完成自动五项配音检查",
+    "生成可执行spec后运行taste_preflight和dry-run；尚未渲染"
+  ],
+  "request": "requests/stories/swiatek-season-end-2026.json"
+}

@@ -3,7 +3,7 @@
   "column": "网球有故事",
   "created_at": "2026-10-21",
   "base_commit": "03b6aba",
-  "state": "awaiting_outline_review",
+  "state": "editorial_spec_and_media_prepared",
   "user_brief": "斯瓦泰克无缘年终总决赛，回顾一年来相对低迷的几个时间点及最后结束赛季的帖子，提炼关键时刻制作视频。",
   "story_kind": "person",
   "subject": "斯瓦泰克",
@@ -16,14 +16,17 @@
   "push_sent": false,
   "outline_review": {
     "required": true,
-    "received": false,
-    "instruction": ".claude/skills/tennis-owner-taste/SKILL.md:34; checklist C5",
-    "reason": "用户要求制作，但尚未看过本次具体分段提纲。确认后继续既有制作和质检发布流程。"
+    "received": true,
+    "basis": "用户在提纲及事实核验后回复：好的，那你把这个 spec 的内容整理清楚，同时去找相应的视频。",
+    "scope": "继续整理spec和准备素材；先完成实际字幕、声音、裁切及现行质检再渲染。"
   },
   "user_reference": {
     "url": "https://x.com/miki29144352964/status/2112854807958454461?s=46",
     "review": "research/swiatek-season-end-2026/user-reference-review.md",
     "scope": "official embed opening and attached image inspected; long note full text unavailable",
     "received_as": "editorial steering, not explicit outline approval"
-  }
+  },
+  "editorial_spec": "requests/stories/swiatek-season-end-2026/spec.json",
+  "readable_spec": "research/swiatek-season-end-2026/production-spec.md",
+  "latest_user_instruction": "好的，那你把这个 spec 的内容整理清楚，同时去找相应的视频"
 }
