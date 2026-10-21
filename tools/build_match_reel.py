@@ -84,8 +84,6 @@ render 每一步都记时间，末尾按耗时排一张表（`report_timings()`�
 
 from __future__ import annotations
 
-from render_story_info_band import STORY_LABEL_MAX_SECONDS, STORY_LABEL_PAD
-
 import argparse
 import json
 import math
@@ -104,6 +102,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from render_story_info_band import STORY_LABEL_MAX_SECONDS, STORY_LABEL_PAD  # noqa: E402
 
 import narrated_audio_mode  # noqa: E402
 import reviewed_effects_mode  # noqa: E402

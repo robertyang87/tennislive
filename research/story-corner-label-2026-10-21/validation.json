@@ -62,7 +62,15 @@
       "hold limit reverted to8: targeted test fails",
       "vs forced to top alignment: targeted test fails",
       "five-set fitting removed: targeted test fails"
-    ]
+    ],
+    "isolated_package_import_and_hold": "3 passed after moving the sibling import below existing sys.path setup"
   },
-  "ci": "Pending at commit creation; exact PR head status is authoritative, not this local record"
+  "ci": "Pending at commit creation; exact PR head status is authoritative, not this local record",
+  "ci_first_run": {
+    "run_id": 39635416352,
+    "result": "6400 passed, 1 failed, 225 skipped",
+    "failure": "Clean package import failed because new sibling import preceded sys.path setup",
+    "fix": "Moved the import below the existing path initialization; exact failed contract now passes locally",
+    "current_head_ci": "Must pass on the follow-up commit before merge"
+  }
 }
