@@ -63,7 +63,8 @@
       "vs forced to top alignment: targeted test fails",
       "five-set fitting removed: targeted test fails"
     ],
-    "isolated_package_import_and_hold": "3 passed after moving the sibling import below existing sys.path setup"
+    "isolated_package_import_and_hold": "3 passed after moving the sibling import below existing sys.path setup",
+    "workflow_cache_and_import": "Targeted existing workflow cache contracts and isolated package import passed after cache fix"
   },
   "ci": "Pending at commit creation; exact PR head status is authoritative, not this local record",
   "ci_first_run": {
@@ -72,5 +73,12 @@
     "failure": "Clean package import failed because new sibling import preceded sys.path setup",
     "fix": "Moved the import below the existing path initialization; exact failed contract now passes locally",
     "current_head_ci": "Must pass on the follow-up commit before merge"
+  },
+  "ci_second_run": {
+    "run_id": 39637046462,
+    "result": "6399 passed, 2 failed, 225 skipped",
+    "failure": "Upstream newly added import-sun-cvetkovic-source workflow lacked apt cache restore/save, failing two shared workflow contracts",
+    "fix": "Merge current main, add standard restore before ensure_ffmpeg and dirty-only save afterward",
+    "current_head_ci": "Must pass after the workflow cache fix before merge"
   }
 }

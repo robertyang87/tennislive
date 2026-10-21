@@ -32,11 +32,31 @@ jobs:
           sparse-checkout: tools/ci_apt_install.sh
           sparse-checkout-cone-mode: false
 
+      - name: 恢复 apt 缓存
+        id: apt_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-import-sun-source-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-import-sun-source-v1-
+
       - name: 安装 ffmpeg
         timeout-minutes: 15
         run: |
           source tools/ci_apt_install.sh
           ensure_ffmpeg
+
+      - name: 回写 apt 缓存
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
 
       - name: 按锚点表剪 13 段并拼接
         run: |
