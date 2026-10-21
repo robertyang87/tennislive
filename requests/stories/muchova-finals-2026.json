@@ -1,0 +1,69 @@
+{
+  "slug": "muchova-finals-2026",
+  "column": "网球有故事",
+  "created_at": "2026-10-21",
+  "state": "preparing_native_edit_from_user_revisions",
+  "story_kind": "person",
+  "subject": "穆霍娃",
+  "user_brief": "调查2026年10月21日锁定年终总决赛最后席位的原因；按照用户提供的五站官方积分图寻找对应比赛及捧杯视频，按时间线剪辑，参考刚做的斯瓦泰克赛季回顾；新增总分、跨年对比与晋级海报参考。",
+  "angle": "最后的资格确认来自竞争者的赛果，站到这个位置靠的是穆霍娃整个赛季的积累。",
+  "target_duration_seconds": 310,
+  "storyboard": "research/muchova-finals-2026/storyboard.md",
+  "editorial_spec": "requests/stories/muchova-finals-2026/spec.json",
+  "facts": "research/muchova-finals-2026/fact-packet.json",
+  "source_manifest": "research/muchova-finals-2026/source-manifest.json",
+  "reference_slug": "swiatek-season-end-2026",
+  "reference_scope": [
+    "人物叙事章节",
+    "约8秒赛事信息卡",
+    "自然衔接",
+    "完整关键回合及原声",
+    "捧杯画面"
+  ],
+  "latest_user_instructions": [
+    "最好也有一些赛后采访",
+    "节选经典段落",
+    "还有四大满贯也要提下么？以及温网以后没什么大分，你帮我详细调研一下",
+    "可以通过tts文案带过，高光部分配视频",
+    "大满贯我觉得都要配视频",
+    "配她止步的那轮视频",
+    "都要按着时间线来",
+    "WTA官方快剪可以参考但不是我们的风格；我们更希望讲故事的方式",
+    "封面钩子第一行更吸引人",
+    "左上角副标题：穆霍娃：锁定最后一张总决赛门票"
+  ],
+  "interview_policy": "优先2–3段本人赛后采访/颁奖经典原话，保留完整意思，约8–15秒每段，准确中英字幕；具体原句与时间码经实际源音频核验后定稿。",
+  "outline_review": {
+    "required": true,
+    "received": false,
+    "basis": ".claude/skills/tennis-owner-taste/SKILL.md 2026-10-17 第6条及清单C5：叙事长片发render前先发一页提纲，他看过再渲。",
+    "scope": "批准前继续完成事实、官方素材下载、证据检查和可审阅分段编辑稿；不派发render或push。",
+    "presented_in_conversation": true,
+    "user_response": "我想调整提纲",
+    "latest_steering": "补充四大满贯和温网后完整赛果/积分/原因的详细调研",
+    "status": "user_directed_revision_incorporated",
+    "initial_outline_approved": false,
+    "revision_basis": "用户看过初稿后连续明确四大满贯止步轮次配视频、其他小成绩可TTS、高光配视频、严格时间线、故事体裁。按其指示修订，不将初稿标为已获批准。",
+    "revised_storyboard": "research/muchova-finals-2026/storyboard.md",
+    "render_preconditions": "先将修订叙事呈现在对话；完成素材、字幕、配音、取景与现行预检，方可render。"
+  },
+  "render_dispatched": false,
+  "push_sent": false,
+  "source_preparation_notes": [
+    "五站官方比赛源已取得；斯图加特决赛补充中。",
+    "多哈及巴特洪堡实际捧杯画面已有限抽样确认。",
+    "按用户新增要求查找并核验本人赛后经典采访。"
+  ],
+  "grand_slam_video_policy": {
+    "required": true,
+    "rounds": [
+      "Australian Open R16 vs Coco Gauff",
+      "Roland Garros R32 vs Jil Teichmann",
+      "Wimbledon final vs Linda Noskova",
+      "US Open R32 vs Emma Navarro"
+    ],
+    "timeline": "strict chronological"
+  },
+  "native_spec": "specs/reels/muchova-finals-2026.json",
+  "cover_revision": "requests/stories/muchova-finals-2026/cover-user-revision.json"
+}

@@ -1,0 +1,196 @@
+{
+  "slug": "muchova-finals-2026",
+  "updated_at": "2026-10-21",
+  "state": "classic_excerpt_candidates_two_models_prepared_final_trim_and_subtitles_pending",
+  "selection_policy": "只节选有完整意思、情绪或转场作用的本人原话；不凑每站一段，不以感谢名单占时长；先选2–3段。",
+  "preferred_keys": [
+    "bad_homburg_wimbledon",
+    "wimbledon_semi_shaking"
+  ],
+  "candidates": [
+    {
+      "key": "bad_homburg_free",
+      "priority": 3,
+      "date": "2026-06-27",
+      "event": "巴特洪堡夺冠后的官方Winner’s Feature",
+      "speaker": "Karolina Muchova",
+      "source_url": "https://www.wtatennis.com/videos/4528760/this-is-how-i-won-bad-homburg-karolina-muchova-on-a-memorable-week",
+      "publisher": "WTA",
+      "media_id": "6399808507112",
+      "local_path": "research/muchova-finals-2026/sources/videos/bad-homburg-winners-feature.mp4",
+      "candidate_source_window": [
+        30.0,
+        37.7
+      ],
+      "window_status": "two_model_candidate_core_meaning_agrees_not_final_trim",
+      "quote_en_candidate": "I just try to always, you know, feel free on the court.",
+      "quote_zh_candidate": "我只是一直努力，让自己在场上打得自在。",
+      "purpose": "用她自己的话解释打法与人的状态；可接硬地转红土、草地，不替她虚构心理。",
+      "visual_status": "同一官方专题含本人对镜采访与比赛B-roll，选定窗口实际画面仍待逐帧核",
+      "asr_status": "small.en与medium.en对同一实际源片交叉核验，核心句义一致；仍需最后剪点/双语字幕/实际混音验收",
+      "asr_evidence": [
+        "evidence/bad-homburg-interview-small.en.json",
+        "evidence/bad-homburg-interview-medium.en.json"
+      ],
+      "source_sha256": "fbdf2f1c540d553b4c073e380ee3e0ce196573e7bd3bca22d43f87a2da6f4235",
+      "preferred_short_source_window": [
+        29.98,
+        33.4
+      ]
+    },
+    {
+      "key": "bad_homburg_wimbledon",
+      "priority": 2,
+      "date": "2026-06-27",
+      "event": "巴特洪堡夺冠后的官方Winner’s Feature",
+      "speaker": "Karolina Muchova",
+      "source_url": "https://www.wtatennis.com/videos/4528760/this-is-how-i-won-bad-homburg-karolina-muchova-on-a-memorable-week",
+      "publisher": "WTA",
+      "media_id": "6399808507112",
+      "local_path": "research/muchova-finals-2026/sources/videos/bad-homburg-winners-feature.mp4",
+      "candidate_source_window": [
+        140.8,
+        164.8
+      ],
+      "window_status": "two_model_candidate_core_meaning_agrees_not_final_trim",
+      "quote_en_candidate": "Definitely gives me some confidence to have these good matches under the belt.",
+      "quote_zh_candidate": "这些高质量的比赛，确实给了我一些信心。",
+      "purpose": "最推荐作为巴特洪堡→温网的自然连接：先留这一完整句，再视时长补她谈温网即将开始的后续。",
+      "visual_status": "全片已有限采样，候选窗口画面需逐帧核",
+      "asr_status": "small.en与medium.en对同一实际源片交叉核验，核心句义一致；仍需最后剪点/双语字幕/实际混音验收",
+      "asr_evidence": [
+        "evidence/bad-homburg-interview-small.en.json",
+        "evidence/bad-homburg-interview-medium.en.json"
+      ],
+      "source_sha256": "fbdf2f1c540d553b4c073e380ee3e0ce196573e7bd3bca22d43f87a2da6f4235",
+      "preferred_short_source_window": [
+        141.1,
+        146.1
+      ]
+    },
+    {
+      "key": "wimbledon_semi_shaking",
+      "priority": 1,
+      "date": "2026-07-09",
+      "event": "温网半决赛战胜高芙后的场上采访",
+      "speaker": "Karolina Muchova",
+      "source_url": "https://www.youtube.com/watch?v=5OOvRkrKDF4",
+      "publisher": "Wimbledon",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-5OOvRkrKDF4/5OOvRkrKDF4.mp4",
+      "local_path": "research/muchova-finals-2026/sources/videos/5OOvRkrKDF4.mp4",
+      "candidate_source_window": [
+        47.7,
+        64.1
+      ],
+      "window_status": "two_model_candidate_core_meaning_agrees_not_final_trim",
+      "quote_en_candidate": "I don't even know what I'm saying.",
+      "quote_zh_candidate": "我甚至不知道自己在说什么了。",
+      "adjacent_content_summary": "两模型都支持她实际说kind of shaking及trying to sink it in；不照标题删改口语结构，atmosphere后形容词拼写需最终确认。",
+      "purpose": "最推荐的情绪峰值：接完整赛点、拥抱之后；保留笑声、喘息与停顿，中文旁白不盖住。",
+      "visual_status": "30秒实帧已目检为穆霍娃本人持温网话筒；完整窗口逐帧与固定人物中心裁切待做",
+      "visual_evidence": "contact-sheets/5OOvRkrKDF4-speaker.jpg",
+      "asr_status": "small.en实际全片及medium.en目标窗口交叉核验完成；核心语义及绝大部分实词一致，最终字幕拼写与剪点待验收",
+      "asr_evidence": [
+        "evidence/5OOvRkrKDF4-small.en.json",
+        "evidence/5OOvRkrKDF4-medium.en.json"
+      ],
+      "download_run": "https://github.com/robertyang87/tennislive/actions/runs/39631323263",
+      "identity_evidence": "当日Guardian真实iframe指向同一ID，标题为半决赛本人采访；原片画面、日期及温网报道交叉吻合。YouTube频道元数据待正式渲前补落档。",
+      "source_sha256": "8fe59a93ab876fd26a613f4cd113a4220df057f47e899aae1c178e83a759f7fc",
+      "preferred_short_source_window": [
+        53.94,
+        61.4
+      ],
+      "preferred_emotional_source_window": [
+        49.25,
+        63.7
+      ],
+      "timing_note": "medium.en 49.42–53.94为紧张到不知所云；54.04–61.26为发抖及现场氛围；61.42–63.52感谢支持。"
+    },
+    {
+      "key": "wimbledon_final_ex_friend",
+      "priority": 4,
+      "date": "2026-07-11",
+      "event": "温网决赛负于诺斯科娃后的本人亚军发言",
+      "speaker": "Karolina Muchova",
+      "source_url": "https://www.youtube.com/watch?v=3I1Dd6XTDNI",
+      "publisher": "Wimbledon",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-3I1Dd6XTDNI/3I1Dd6XTDNI.mp4",
+      "local_path": "research/muchova-finals-2026/sources/videos/3I1Dd6XTDNI.mp4",
+      "candidate_source_window": [
+        52.2,
+        76.6
+      ],
+      "window_status": "two_model_candidate_core_meaning_agrees_not_final_trim",
+      "quote_en_candidate": "It's really tough to find any words, but I'll start with Linda, my ex-friend.",
+      "quote_zh_candidate": "真的很难找到语言来表达，但我先从琳达，我的“前朋友”说起。",
+      "adjacent_content_summary": "接观众笑声，再保留她“当然是在开玩笑，有一点吧”的澄清；不单摘“前朋友”制造真实不和。",
+      "purpose": "作为失利中仍保留幽默与尊重的备选；24秒预算较长，优先级低于SF发抖与草地信心段。",
+      "visual_status": "30秒实帧已目检为穆霍娃本人持温网话筒，不是冠军诺斯科娃；完整窗口与人物中心裁切待做",
+      "visual_evidence": "contact-sheets/3I1Dd6XTDNI-speaker.jpg",
+      "asr_status": "small.en实际全片和medium.en目标窗口交叉核验完成；玩笑主句及澄清一致，正式字幕与剪点待验收",
+      "asr_evidence": [
+        "evidence/3I1Dd6XTDNI-small.en.json",
+        "evidence/3I1Dd6XTDNI-medium.en.json"
+      ],
+      "download_run": "https://github.com/robertyang87/tennislive/actions/runs/39631329468",
+      "identity_evidence": "Guardian当日页真实iframe指向本ID；WTA官方4533986嵌入Wimbledon2076000535295963181同段亚军玩笑；实帧本人确认，频道元数据待正式渲前补落档。",
+      "source_sha256": "a7663890a5617e249ce73842f634e0e8e50608c04f469fa416710995b93c89c2"
+    },
+    {
+      "key": "doha_trophy_speech",
+      "priority": 5,
+      "date": "2026-02-14",
+      "event": "多哈夺冠颁奖发言",
+      "speaker": "Karolina Muchova",
+      "source_url": "https://www.wtatennis.com/news/4450588/muchova-reigns-in-doha-for-first-wta-1000-first-title-since-2019",
+      "publisher": "WTA",
+      "candidate_source_window": null,
+      "window_status": "official_written_quote_only_no_verified_speech_video",
+      "quote_en_candidate": "It's been a while since I won a tournament. So it's just nice to get that feeling again.",
+      "quote_zh_candidate": "我已经很久没有赢过一站比赛了。能再次感受到这一切，真的很好。",
+      "purpose": "内容非常贴题，但仅核到官方文字；不能放合成声音冒充本人采访。若实际视频仍未取得，旁白转述并使用真实捧杯画面。",
+      "asr_status": "未取得对应官方采访视频，无音频核验",
+      "notes": "WTA官稿嵌入的2022719051408052453是11.354秒捧杯短片、2022724749906895281是23.466秒冠军瞬间竖片，都不能标为采访。"
+    },
+    {
+      "key": "wimbledon_final_fighting",
+      "priority": 4,
+      "date": "2026-07-11",
+      "event": "温网亚军本人发言末段",
+      "speaker": "Karolina Muchova",
+      "source_url": "https://www.youtube.com/watch?v=3I1Dd6XTDNI",
+      "publisher": "Wimbledon",
+      "local_path": "research/muchova-finals-2026/sources/videos/3I1Dd6XTDNI.mp4",
+      "candidate_source_window": [
+        231.0,
+        242.7
+      ],
+      "window_status": "two_models_agree_on_core_but_one_material_word_needs_resolution",
+      "quote_en_candidate": "I'll be fighting. I'll be fighting more.",
+      "quote_zh_candidate": "我会继续战斗，继续拼下去。",
+      "unresolved_audio_word": {
+        "seconds": [
+          235.18,
+          235.6
+        ],
+        "small.en": "won",
+        "medium.en": "won",
+        "official_wimbledon_written_report": "want",
+        "editorial_risk": "若字幕误写won会变成声称赢得冠军奖杯，和本场亚军事实冲突。不能因双模型一致就直接放行，也不把官网文字当音频听审。"
+      },
+      "purpose": "可作为继续向前的情绪落点；只限7月温网失利当时的心态，不能拿来解释8–10月赛果或身体状态。",
+      "asr_status": "双模型目标窗口完成；235秒争议词及句末未说完处待第三证据或真实审听，不列正式可用完整原句",
+      "asr_evidence": [
+        "evidence/3I1Dd6XTDNI-small.en.json",
+        "evidence/3I1Dd6XTDNI-medium.en.json"
+      ],
+      "notes": "不为绕开争议词将一句话强切成无上下文碎片；若本片只需两段经典原声，优先已核的SF发抖和Bad Homburg草地信心。"
+    }
+  ],
+  "source_notes": [
+    "全部源窗口是原片秒数，不是成片时轴；单模型结果不是最终字幕或人工听审。",
+    "实际下载和片段ASR不等同正式渲染、字幕放行、人物裁切放行。",
+    "温网决赛采访是穆霍娃亚军发言；冠军诺斯科娃的致辞与捧盘不代替她。"
+  ]
+}

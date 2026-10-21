@@ -1,0 +1,55 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=jSp_UwE-_co",
+  "source_sha256": "13835d470cd69a3429f11116a4601d77a25b363885d9ad6356ed6b520418b0bc",
+  "source_key": "bjk_cup_final",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 458.5,
+  "reviewed_to": 475.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 467.34,
+      "end": 472.38,
+      "en": "A magical and masterful performance from Karolina Muchova.",
+      "zh": "穆霍娃的表现神奇，掌控全场。"
+    },
+    {
+      "start": 472.68,
+      "end": 475.38,
+      "en": "Pressure? What pressure?",
+      "zh": "压力？哪有什么压力？"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bjk-context-458-497-small.en.json",
+      "sha256": "d8ac659b1a08d65a74f535e8b8b9fbf47cef53c081cca0c37219ef2670fb4525",
+      "model": "small.en",
+      "from": 458,
+      "to": 497,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bjk-context-458-497-medium.en.json",
+      "sha256": "3650f2c1faf2c1c681fe5a11c24e1adca12e20e2636445d5b8628ca4fab445d7",
+      "model": "medium.en",
+      "from": 458,
+      "to": 497,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": "research/muchova-finals-2026/runtime-clause-packet.json",
+    "runtime_clause_packet_sha256": "7835d536071d6357c6bda6a70c3d163ffd2f15f030374b52acb4e35190f60056",
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  }
+}

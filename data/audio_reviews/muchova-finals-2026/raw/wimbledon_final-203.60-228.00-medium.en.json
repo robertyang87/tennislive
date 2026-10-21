@@ -1,0 +1,63 @@
+{
+  "source": "wimbledon_final",
+  "source_url": "https://www.youtube.com/watch?v=XfE9M6__724",
+  "source_sha256": "39e3e2b5d0d5e21037fa6f593c6a5db0b7ee1d23152b1aeec151c5fa8e5aaf1e",
+  "start": 203.6,
+  "end": 228.0,
+  "selected": [
+    {
+      "index": 21,
+      "source": "wimbledon_final",
+      "start": 206.6,
+      "end": 214.8,
+      "narration": "决赛三盘失利。温网亚军的一千三百分，是她本季最大的一笔单打积分。",
+      "quote": null
+    },
+    {
+      "index": 22,
+      "source": "wimbledon_final",
+      "start": 214.8,
+      "end": 225.0,
+      "narration": "",
+      "quote": null
+    }
+  ],
+  "model": "medium.en",
+  "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode",
+  "vad_filter": false,
+  "segments": [
+    {
+      "start": 220.72,
+      "end": 224.32,
+      "text": "It's over and out.",
+      "avg_logprob": -0.832,
+      "no_speech_prob": 0.205,
+      "words": [
+        {
+          "w": " It's",
+          "s": 220.72,
+          "e": 222.12,
+          "p": 0.4412
+        },
+        {
+          "w": " over",
+          "s": 222.12,
+          "e": 222.7,
+          "p": 0.9295
+        },
+        {
+          "w": " and",
+          "s": 222.7,
+          "e": 223.4,
+          "p": 0.4567
+        },
+        {
+          "w": " out.",
+          "s": 223.4,
+          "e": 224.32,
+          "p": 0.9888
+        }
+      ]
+    }
+  ]
+}

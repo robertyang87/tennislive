@@ -1,0 +1,112 @@
+{
+  "source": "miami",
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6391563293112",
+  "source_sha256": "b6117cb922680965f0eb5331d706396b2de4fe79ba8db7b8c8bcbf8c0d20327e",
+  "start": 192.0,
+  "end": 209.5,
+  "selected": [
+    {
+      "index": 6,
+      "source": "miami",
+      "start": 195.0,
+      "end": 206.5,
+      "narration": "印第安韦尔斯止步第四轮后，她在迈阿密再次战胜姆博科，打进半决赛。",
+      "quote": null
+    }
+  ],
+  "model": "medium.en",
+  "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode",
+  "vad_filter": false,
+  "segments": [
+    {
+      "start": 192.0,
+      "end": 194.3,
+      "text": "Did it cut the line? It did.",
+      "avg_logprob": -0.575,
+      "no_speech_prob": 0.048,
+      "words": [
+        {
+          "w": " Did",
+          "s": 192.0,
+          "e": 192.92,
+          "p": 0.3035
+        },
+        {
+          "w": " it",
+          "s": 192.92,
+          "e": 193.08,
+          "p": 0.983
+        },
+        {
+          "w": " cut",
+          "s": 193.08,
+          "e": 193.32,
+          "p": 0.1761
+        },
+        {
+          "w": " the",
+          "s": 193.32,
+          "e": 193.52,
+          "p": 0.9947
+        },
+        {
+          "w": " line?",
+          "s": 193.52,
+          "e": 193.7,
+          "p": 0.996
+        },
+        {
+          "w": " It",
+          "s": 193.94,
+          "e": 193.94,
+          "p": 0.6315
+        },
+        {
+          "w": " did.",
+          "s": 193.94,
+          "e": 194.3,
+          "p": 0.996
+        }
+      ]
+    },
+    {
+      "start": 203.2,
+      "end": 205.02,
+      "text": "Boco gambled on the return.",
+      "avg_logprob": -0.575,
+      "no_speech_prob": 0.048,
+      "words": [
+        {
+          "w": " Boco",
+          "s": 203.2,
+          "e": 203.8,
+          "p": 0.6962
+        },
+        {
+          "w": " gambled",
+          "s": 203.8,
+          "e": 204.3,
+          "p": 0.9927
+        },
+        {
+          "w": " on",
+          "s": 204.3,
+          "e": 204.44,
+          "p": 0.9977
+        },
+        {
+          "w": " the",
+          "s": 204.44,
+          "e": 204.56,
+          "p": 0.998
+        },
+        {
+          "w": " return.",
+          "s": 204.56,
+          "e": 205.02,
+          "p": 0.9989
+        }
+      ]
+    }
+  ]
+}

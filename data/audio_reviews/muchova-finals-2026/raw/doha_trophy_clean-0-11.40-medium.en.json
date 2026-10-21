@@ -1,0 +1,63 @@
+{
+  "source": "doha_trophy_clean",
+  "source_url": "https://x.com/WTA/status/2022719051408052453",
+  "source_sha256": "fe508add2f980e8ce1440d844acd6b47dfe70e6bc6084bbb69dc4bc2639be44d",
+  "start": 0,
+  "end": 11.401,
+  "model": "medium.en",
+  "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode",
+  "vad_filter": false,
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 5.22,
+      "text": "Qatar Total Energy's open champion, Karolina Mukova.",
+      "avg_logprob": -0.8931877772013347,
+      "no_speech_prob": 0.021106954663991928,
+      "words": [
+        {
+          "w": " Qatar",
+          "s": 0.0,
+          "e": 0.48,
+          "p": 0.01787588931620121
+        },
+        {
+          "w": " Total",
+          "s": 0.48,
+          "e": 0.96,
+          "p": 0.47099101543426514
+        },
+        {
+          "w": " Energy's",
+          "s": 0.96,
+          "e": 1.64,
+          "p": 0.7746380269527435
+        },
+        {
+          "w": " open",
+          "s": 1.64,
+          "e": 1.92,
+          "p": 0.46532511711120605
+        },
+        {
+          "w": " champion,",
+          "s": 1.92,
+          "e": 2.74,
+          "p": 0.9764357209205627
+        },
+        {
+          "w": " Karolina",
+          "s": 3.86,
+          "e": 4.46,
+          "p": 0.8891208469867706
+        },
+        {
+          "w": " Mukova.",
+          "s": 4.46,
+          "e": 5.22,
+          "p": 0.4002980515360832
+        }
+      ]
+    }
+  ]
+}

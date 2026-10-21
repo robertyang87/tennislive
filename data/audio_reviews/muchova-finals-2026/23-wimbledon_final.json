@@ -1,0 +1,49 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=XfE9M6__724",
+  "source_sha256": "39e3e2b5d0d5e21037fa6f593c6a5db0b7ee1d23152b1aeec151c5fa8e5aaf1e",
+  "source_key": "wimbledon_final",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 214.8,
+  "reviewed_to": 225.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 220.72,
+      "end": 224.32,
+      "en": "It's over and out.",
+      "zh": "比赛结束了。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_final-203.60-228.00-small.en.json",
+      "sha256": "28eba732cf77ef012127eaa850fadca1473b5955ac11265335a4feada862d7b1",
+      "model": "small.en",
+      "from": 203.6,
+      "to": 228.0,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_final-203.60-228.00-medium.en.json",
+      "sha256": "d5d807be248010e1e539b5bba31b2a4991fe49b05df883a5f6248dd00156aa89",
+      "model": "medium.en",
+      "from": 203.6,
+      "to": 228.0,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": null,
+    "runtime_clause_packet_sha256": null,
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  }
+}

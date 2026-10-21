@@ -1,0 +1,58 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6391563293112",
+  "source_sha256": "b6117cb922680965f0eb5331d706396b2de4fe79ba8db7b8c8bcbf8c0d20327e",
+  "source_key": "miami",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 195.0,
+  "reviewed_to": 203.05,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "small.en/medium.en覆盖192–209.5：上一句擦线评论在194.24/194.30之前结束，下一句Mboko gambled on the return在203.20/203.26开始；195–203.05内没有可识别前景英文。",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/miami-220.40-240.80-medium.en.json",
+      "sha256": "d8cdaa6083d1a2438e0f66d9444f92e2f1af89a3a4225c521c0f87f0f20eea36",
+      "model": "medium.en",
+      "from": 220.4,
+      "to": 240.8,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/miami-192.00-209.50-small.en.json",
+      "sha256": "f7eba6abf481845a350319467358d4e1768d6b7fac4ee583be6ba4564f5af2e2",
+      "model": "small.en",
+      "from": 192.0,
+      "to": 209.5,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/miami-220.40-240.80-small.en.json",
+      "sha256": "70a44bfaa73cd00b2579be170e49beab6d713c709b77abfe897b13c25855e419",
+      "model": "small.en",
+      "from": 220.4,
+      "to": 240.8,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/miami-192.00-209.50-medium.en.json",
+      "sha256": "f55fbcfae9cea5738fe5c2586ce7a0b39aebaa272f74d7984080c6256d3111e9",
+      "model": "medium.en",
+      "from": 192.0,
+      "to": 209.5,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": null,
+    "runtime_clause_packet_sha256": null,
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=og_Ex5oDa-4",
+  "source_sha256": "e443434bb210837f021d4e0401081b3123265b06ea10c008eafa6571442b57e5",
+  "source_key": "uso_mixed_final",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 670.0,
+  "reviewed_to": 683.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 674.54,
+      "end": 678.0,
+      "en": "It's checkmate in New York.",
+      "zh": "纽约，胜负已定。"
+    },
+    {
+      "start": 679.2,
+      "end": 683.38,
+      "en": "As Muchova and Mensik claim the mixed doubles title.",
+      "zh": "穆霍娃和门西克拿下了混双冠军。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/uso_mixed-context-667-687-medium.en.json",
+      "sha256": "7b118c4ec937f4971c73bddd786dded621298f9e74afcdfa7d0ff59e082aa775",
+      "model": "medium.en",
+      "from": 667,
+      "to": 687,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/uso_mixed-context-667-687-small.en.json",
+      "sha256": "6d17daf1cdc925f73f84ce7de2cab0c7e59dc7066ac178bca79362bc54a33182",
+      "model": "small.en",
+      "from": 667,
+      "to": 687,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": null,
+    "runtime_clause_packet_sha256": null,
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  }
+}

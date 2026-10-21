@@ -1,0 +1,37 @@
+{
+  "schema": "tennislive.source-manifest-review.v1",
+  "checked_at": "2026-10-21T16:51:06.821715+00:00",
+  "status": "source_binding_checks_passed_not_render_or_audio_release",
+  "manifest_sha256": "264ef47d1b0d44f26bf321863cbc353026f37ccad308b16c851cf7f1e588ec80",
+  "local_map_sha256": "d929ba9dc293dde98179ea1f4cc9be0c91fa4621aeeda55c878d858298c00e98",
+  "formal_spec_sha256": "c7bfc24133e8c53508e4b12e29a6665e570a648757e0a245662b2a4d33af1e1c",
+  "checks": {
+    "all_current_formal_source_keys_bound": [
+      "doha",
+      "miami",
+      "stuttgart_final",
+      "bad_homburg",
+      "bad_homburg_feature",
+      "wimbledon_sf",
+      "wimbledon_sf_interview",
+      "wimbledon_final",
+      "ao_r16",
+      "uso_r32",
+      "doha_trophy_clean",
+      "rg_r32",
+      "uso_mixed_final"
+    ],
+    "all_source_map_files_exist": true,
+    "official_origins_match_current_spec": true,
+    "canonical_release_assets_uploaded_and_sizes_match": true,
+    "retired_doha_not_in_source_map": true,
+    "known_wrong_sources_not_in_source_map": true,
+    "rg_only_teichmann_result_limitation_preserved": true,
+    "bc_three_canonical_byte_equal": "see evidence/bc-canonical-comparison.json",
+    "bjk_actual_sha_matches_parent_and_local_probe": true
+  },
+  "limitations": [
+    "This is source binding integrity, not final audio/subtitle/crop/render QC.",
+    "Final spec can still change; rerun binding review after any source identity changes."
+  ]
+}
