@@ -1,0 +1,534 @@
+{
+  "reviewer": "independent fact_check agent",
+  "reviewed_at_utc": "2026-10-21T18:35:39.194437+00:00",
+  "film": "/tmp/muchova-delivered/muchova-finals-2026.mp4",
+  "film_sha256": "f15a31851fd8a233e58a44b4750e15b3c6a72421253099325e6aca4d2a81225f",
+  "duration_seconds_reported": 322.28,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "review_type": "bounded visual examination of exact-frame contact sheets with selected original PNG inspection; no audio listening; not every-frame review",
+  "status": "BLOCKED_one_visual_identity_and_award_context_error",
+  "review_scope": {
+    "contact_sheets": [
+      "/tmp/muchova-delivered-review/page-06.jpg",
+      "/tmp/muchova-delivered-review/page-07.jpg",
+      "/tmp/muchova-delivered-review/page-08.jpg",
+      "/tmp/muchova-delivered-review/page-09.jpg"
+    ],
+    "sample_numbers": [
+      61,
+      108
+    ],
+    "sample_count": 48,
+    "film_times_seconds": [
+      157.4,
+      318.92
+    ],
+    "original_pngs_opened": [
+      77,
+      78,
+      79,
+      80,
+      84,
+      99,
+      100
+    ],
+    "excluded": "AO and RG actual rendered images fall in part1; their source completeness was checked separately in spec, not visually certified by this part2. No motion continuity, complete utterance or acoustic claims."
+  },
+  "blockers": [
+    {
+      "id": "wimbledon_champion_plate_mislabeled_runner_up_context",
+      "severity": "must_fix",
+      "frame_sample_number": 77,
+      "frame_index": 5794,
+      "film_time_seconds": 231.76,
+      "image": "/tmp/muchova-delivered-review/frames/frame-077.png",
+      "image_sha256": "87510ccab0a2e65a086286b509d6fb5022e5f1f20b9dcb462264bf19246e2a76",
+      "observation": "Actual image shows Noskova wearing a white Yonex visor holding the large Wimbledon champion plate. The rendered top-right overlay still reads 温网亚军 / 2026.07.11·温网决赛 / 2-6 7-5 3-6 / 穆霍娃vs诺斯科娃. This mismatches visible award recipient and Muchova runner-up framing.",
+      "why_it_blocks": "Immediately before the added Muchova runner-up presentation, the large champion plate can be wrongly attributed to Muchova. The user explicitly requested the actual runner-up plate and correct winner identity.",
+      "fix": "End the final-point segment before the Noskova champion-presentation shot, then join to the actual Muchova runner-up presentation. Alternatively explicitly identify the champion shot as Noskova, but trimming is cleaner within this player story. Exact safe cut needs source-frame inspection; no unobserved cut time is invented.",
+      "adjacent_correct_samples": [
+        {
+          "number": 78,
+          "frame_index": 5814,
+          "film_time": 232.56,
+          "image": "/tmp/muchova-delivered-review/frames/frame-078.png",
+          "image_sha256": "9037809b7c001a8a739934a38341044a7f5a40b2555f5a7c07eada5004eab8fa"
+        },
+        {
+          "number": 79,
+          "frame_index": 5921,
+          "film_time": 236.84,
+          "image": "/tmp/muchova-delivered-review/frames/frame-079.png",
+          "image_sha256": "cc11f4d4ed02da63868fdc45428baf30762da06e38205856ec59de53451f2de5"
+        },
+        {
+          "number": 80,
+          "frame_index": 6029,
+          "film_time": 241.16,
+          "image": "/tmp/muchova-delivered-review/frames/frame-080.png",
+          "image_sha256": "98913bc67cb0b8062bcf3ecc0001f685e9b06b08d7985f1a33d6e112cd02c4e9"
+        }
+      ]
+    }
+  ],
+  "passed_bounded_observations": [
+    {
+      "samples": [
+        61,
+        71
+      ],
+      "finding": "Wimbledon semifinal intro -> actual match -> Muchova celebration -> same-match emotional interview is chronological. Visible score 6-2 1-6 7-6 and first Wimbledon final wording are accurate; bilingual subtitle lines are readable in samples. Speech boundaries and sound were not heard."
+    },
+    {
+      "samples": [
+        72,
+        76
+      ],
+      "finding": "Wimbledon finalist +1300 official card precedes actual final court footage; final scoreboard/inset gives 2-6 7-5 3-6 and runner-up accurately. The later champion plate mismatch is separately blocked."
+    },
+    {
+      "samples": [
+        78,
+        80
+      ],
+      "finding": "Added runner-up presentation correctly shows Muchova in Adidas headband and white jacket receiving her plate. It follows the final; these specific images do not show her holding the large champion Venus Rosewater dish."
+    },
+    {
+      "samples": [
+        81,
+        86
+      ],
+      "finding": "Post-Wimbledon pause chapter -> real WTA small-surgery text excerpt -> missed North American warmups subtitles are chronological and fact-bound. No body part or invented cause appears. The excerpt is not visually claimed as the original Instagram post."
+    },
+    {
+      "samples": [
+        87,
+        92
+      ],
+      "finding": "US Open third-round footage and handshake show Muchova/Navarro with 3-6 5-7; no mixed doubles footage or text appears in these samples."
+    },
+    {
+      "samples": [
+        93,
+        95
+      ],
+      "finding": "BJK is only the title card and one-sentence narration subtitle helping Czechia win the Cup. Kicker states team results do not count toward singles points. No BJK match video appears in these reviewed samples."
+    },
+    {
+      "samples": [
+        96,
+        98
+      ],
+      "finding": "Post-Wimbledon title explicitly 465; kicker 130+215+120; Beijing8强 wording matches 10-21 owner wording. The three singles events are not confused with mixed/team results."
+    },
+    {
+      "samples": [
+        99,
+        104
+      ],
+      "finding": "10/20 Swiatek season end and Ningbo-final necessary condition precede 10/21 first-set retirement and last berth confirmation. Visible text does not call a completed Kostyuk match victory, give Muchova new same-day points, or assert first career qualification."
+    },
+    {
+      "samples": [
+        105,
+        108
+      ],
+      "finding": "Official4735 card and final audience question close before brand end-card. No mixed doubles/men partner or BJK competition video appears in these bounded late-film samples."
+    }
+  ],
+  "all_examined_samples": [
+    {
+      "index": 3935,
+      "reason": "wimbledon_sf_intro",
+      "segment": 19,
+      "image": "/tmp/muchova-delivered-review/frames/frame-061.png",
+      "image_sha256": "9bbb2659d2b78fb2dde68fd76c9f248fef3c12c1347a3ecfc218e6e7921e0432",
+      "film_time": 157.4
+    },
+    {
+      "index": 3991,
+      "reason": "wimbledon_sf_intro",
+      "segment": 19,
+      "image": "/tmp/muchova-delivered-review/frames/frame-062.png",
+      "image_sha256": "8564b8fda7623a0256a5aea1cc3befcd467fd3484295daf25ff788c990fddaf4",
+      "film_time": 159.64
+    },
+    {
+      "index": 4047,
+      "reason": "wimbledon_sf_intro",
+      "segment": 19,
+      "image": "/tmp/muchova-delivered-review/frames/frame-063.png",
+      "image_sha256": "b7803eaa20ffb2a39d62dc5024080c055011ba56df9f230b763953fc9d8b25de",
+      "film_time": 161.88
+    },
+    {
+      "index": 4067,
+      "reason": "wimbledon_sf_final_point",
+      "segment": 20,
+      "image": "/tmp/muchova-delivered-review/frames/frame-064.png",
+      "image_sha256": "b954db2aa11ead7d62e64aa6d88e16e49a24c7e1c956435e3784040a6da8cb0c",
+      "film_time": 162.68
+    },
+    {
+      "index": 4122,
+      "reason": "label-delay-check wimbledon_sf_final_point",
+      "segment": 20,
+      "image": "/tmp/muchova-delivered-review/frames/frame-065.png",
+      "image_sha256": "1d3865c43436a6f770279ccf1ac4b0653e893e40ec4b7786e73169e9fe73b4f9",
+      "film_time": 164.88
+    },
+    {
+      "index": 4591,
+      "reason": "wimbledon_sf_final_point",
+      "segment": 20,
+      "image": "/tmp/muchova-delivered-review/frames/frame-066.png",
+      "image_sha256": "b1fc65e2ad8edcf34b6c68687d79b85b626c8cc28413b31bea0a111de738105a",
+      "film_time": 183.64
+    },
+    {
+      "index": 4987,
+      "reason": "label-delay-check wimbledon_sf_final_point",
+      "segment": 20,
+      "image": "/tmp/muchova-delivered-review/frames/frame-067.png",
+      "image_sha256": "e50202ecb0b9e1dbfffe376ffb06e4c52b0b0c29647e936a87d736df31dbbc4e",
+      "film_time": 199.48
+    },
+    {
+      "index": 5115,
+      "reason": "wimbledon_sf_final_point",
+      "segment": 20,
+      "image": "/tmp/muchova-delivered-review/frames/frame-068.png",
+      "image_sha256": "f5faefebb291bbfe02e9a1c3031f0ac87e2184ea282e9c060edacdd6b91b27dc",
+      "film_time": 204.6
+    },
+    {
+      "index": 5135,
+      "reason": "wimbledon_sf_quote",
+      "segment": 21,
+      "image": "/tmp/muchova-delivered-review/frames/frame-069.png",
+      "image_sha256": "226bf42bff26d71512c85ff5e0b9969ce658da2c78b9d07681ffa09a96548d14",
+      "film_time": 205.4
+    },
+    {
+      "index": 5218,
+      "reason": "wimbledon_sf_quote",
+      "segment": 21,
+      "image": "/tmp/muchova-delivered-review/frames/frame-070.png",
+      "image_sha256": "fe2b02e854657e02a24d6077944aeda0f160750a1f45a9cd91da64947296b688",
+      "film_time": 208.72
+    },
+    {
+      "index": 5301,
+      "reason": "wimbledon_sf_quote",
+      "segment": 21,
+      "image": "/tmp/muchova-delivered-review/frames/frame-071.png",
+      "image_sha256": "44f30b8c3a851a0a1067f65b5713bf91918c7c68dd67c508abdc494f0432cfd4",
+      "film_time": 212.04
+    },
+    {
+      "index": 5321,
+      "reason": "wimbledon_final_context",
+      "segment": 22,
+      "image": "/tmp/muchova-delivered-review/frames/frame-072.png",
+      "image_sha256": "32f59d79d1bca95a269bc8ea32f4d257039641d8810c47f148746257fbc892c7",
+      "film_time": 212.84
+    },
+    {
+      "index": 5430,
+      "reason": "wimbledon_final_context",
+      "segment": 22,
+      "image": "/tmp/muchova-delivered-review/frames/frame-073.png",
+      "image_sha256": "63cc4dbd9e81ba4ddb4138e020d0826b5111c18103251a2281520b28ef8466f9",
+      "film_time": 217.2
+    },
+    {
+      "index": 5539,
+      "reason": "wimbledon_final_context",
+      "segment": 22,
+      "image": "/tmp/muchova-delivered-review/frames/frame-074.png",
+      "image_sha256": "39552a565a7bd422f70681c8a8b39b8b73a25038bcfcdac02d27c68f1298a972",
+      "film_time": 221.56
+    },
+    {
+      "index": 5559,
+      "reason": "wimbledon_final_last_point",
+      "segment": 23,
+      "image": "/tmp/muchova-delivered-review/frames/frame-075.png",
+      "image_sha256": "e6d24918c4331b5527df1efd494fb75682458826802cb4e3e741a50db566df6f",
+      "film_time": 222.36
+    },
+    {
+      "index": 5676,
+      "reason": "wimbledon_final_last_point",
+      "segment": 23,
+      "image": "/tmp/muchova-delivered-review/frames/frame-076.png",
+      "image_sha256": "d04da9b6da03db0727174b3863fba3a0ab46e0375730f01db6c235a3b4cc2d74",
+      "film_time": 227.04
+    },
+    {
+      "index": 5794,
+      "reason": "wimbledon_final_last_point",
+      "segment": 23,
+      "image": "/tmp/muchova-delivered-review/frames/frame-077.png",
+      "image_sha256": "87510ccab0a2e65a086286b509d6fb5022e5f1f20b9dcb462264bf19246e2a76",
+      "film_time": 231.76
+    },
+    {
+      "index": 5814,
+      "reason": "wimbledon_runnerup_plate",
+      "segment": 24,
+      "image": "/tmp/muchova-delivered-review/frames/frame-078.png",
+      "image_sha256": "9037809b7c001a8a739934a38341044a7f5a40b2555f5a7c07eada5004eab8fa",
+      "film_time": 232.56
+    },
+    {
+      "index": 5921,
+      "reason": "wimbledon_runnerup_plate",
+      "segment": 24,
+      "image": "/tmp/muchova-delivered-review/frames/frame-079.png",
+      "image_sha256": "cc11f4d4ed02da63868fdc45428baf30762da06e38205856ec59de53451f2de5",
+      "film_time": 236.84
+    },
+    {
+      "index": 6029,
+      "reason": "wimbledon_runnerup_plate",
+      "segment": 24,
+      "image": "/tmp/muchova-delivered-review/frames/frame-080.png",
+      "image_sha256": "98913bc67cb0b8062bcf3ecc0001f685e9b06b08d7985f1a33d6e112cd02c4e9",
+      "film_time": 241.16
+    },
+    {
+      "index": 6049,
+      "reason": "chapter_03",
+      "segment": 25,
+      "image": "/tmp/muchova-delivered-review/frames/frame-081.png",
+      "image_sha256": "57685201a988562c24cb69bcae90940ca1866776f1a51f5249363d1b7be2bd6e",
+      "film_time": 241.96
+    },
+    {
+      "index": 6089,
+      "reason": "chapter_03",
+      "segment": 25,
+      "image": "/tmp/muchova-delivered-review/frames/frame-082.png",
+      "image_sha256": "b7004d22f10c80b9dfda7708a8d867a5c27bfeb4d26f1eb90a1037daf980d166",
+      "film_time": 243.56
+    },
+    {
+      "index": 6129,
+      "reason": "chapter_03",
+      "segment": 25,
+      "image": "/tmp/muchova-delivered-review/frames/frame-083.png",
+      "image_sha256": "ec504d3d4ab0cb21a8d16dbfe2d030019b31ca71ae155d4a8cfa13cfce9b8762",
+      "film_time": 245.16
+    },
+    {
+      "index": 6149,
+      "reason": "surgery",
+      "segment": 26,
+      "image": "/tmp/muchova-delivered-review/frames/frame-084.png",
+      "image_sha256": "f03290733642f96a89498010545232a793fb081961dd24a2b1486fa2b02ae404",
+      "film_time": 245.96
+    },
+    {
+      "index": 6245,
+      "reason": "surgery",
+      "segment": 26,
+      "image": "/tmp/muchova-delivered-review/frames/frame-085.png",
+      "image_sha256": "c423528603be17aebfcf03f82c094524c7637532e2acc7c276b2d354ce466be4",
+      "film_time": 249.8
+    },
+    {
+      "index": 6341,
+      "reason": "surgery",
+      "segment": 26,
+      "image": "/tmp/muchova-delivered-review/frames/frame-086.png",
+      "image_sha256": "2a0672121c0e8fed1f398a1438250da94095c1014af685c8a3b6749e1da13e3c",
+      "film_time": 253.64
+    },
+    {
+      "index": 6361,
+      "reason": "uso_context",
+      "segment": 27,
+      "image": "/tmp/muchova-delivered-review/frames/frame-087.png",
+      "image_sha256": "26f8ea9b066aab982299c79fff67b7b793d347b65144d9626181b759f63d5820",
+      "film_time": 254.44
+    },
+    {
+      "index": 6455,
+      "reason": "uso_context",
+      "segment": 27,
+      "image": "/tmp/muchova-delivered-review/frames/frame-088.png",
+      "image_sha256": "ee9577dcc650926bb61eed29e1ec56869ee81f38a7ee12868d6563e6e16f6b41",
+      "film_time": 258.2
+    },
+    {
+      "index": 6549,
+      "reason": "uso_context",
+      "segment": 27,
+      "image": "/tmp/muchova-delivered-review/frames/frame-089.png",
+      "image_sha256": "3e0a9d06121c222228c80ed5d3a15b8622d5517f459a8a51763676f14460189a",
+      "film_time": 261.96
+    },
+    {
+      "index": 6569,
+      "reason": "uso_handshake_comment",
+      "segment": 28,
+      "image": "/tmp/muchova-delivered-review/frames/frame-090.png",
+      "image_sha256": "3150c8c6027d2e726f79c36d8143c7bfc8f5173fe16132d856575360c20557e2",
+      "film_time": 262.76
+    },
+    {
+      "index": 6609,
+      "reason": "uso_handshake_comment",
+      "segment": 28,
+      "image": "/tmp/muchova-delivered-review/frames/frame-091.png",
+      "image_sha256": "665bdde1204fa93d0cf7ee628cef1b75af8d31bcc5bf13d528f4dfdb5a1d347e",
+      "film_time": 264.36
+    },
+    {
+      "index": 6650,
+      "reason": "uso_handshake_comment",
+      "segment": 28,
+      "image": "/tmp/muchova-delivered-review/frames/frame-092.png",
+      "image_sha256": "7f94fcddf7e71c03d45bf09fb70b2415dea7edbed18b204cc53d687f8e2ff53b",
+      "film_time": 266.0
+    },
+    {
+      "index": 6670,
+      "reason": "bjk_intro",
+      "segment": 29,
+      "image": "/tmp/muchova-delivered-review/frames/frame-093.png",
+      "image_sha256": "97bbb390359f583ac2d8920464566033c6467f7160c689907d5ac9a39c10d7f0",
+      "film_time": 266.8
+    },
+    {
+      "index": 6729,
+      "reason": "bjk_intro",
+      "segment": 29,
+      "image": "/tmp/muchova-delivered-review/frames/frame-094.png",
+      "image_sha256": "8041259b49c42414590e1984870ab1f12e3b82c4fdef3432b9dcea480965e289",
+      "film_time": 269.16
+    },
+    {
+      "index": 6788,
+      "reason": "bjk_intro",
+      "segment": 29,
+      "image": "/tmp/muchova-delivered-review/frames/frame-095.png",
+      "image_sha256": "c1a93773c6665046df6e54c09ea375e603fb4d975509ce5c84fd93d7d83d650b",
+      "film_time": 271.52
+    },
+    {
+      "index": 6808,
+      "reason": "asia_swing",
+      "segment": 30,
+      "image": "/tmp/muchova-delivered-review/frames/frame-096.png",
+      "image_sha256": "7062d9fba6baaaa477b7b6fc900350ff7c0be822ca6b945b6ba8ac8c0dd8ad8d",
+      "film_time": 272.32
+    },
+    {
+      "index": 6958,
+      "reason": "asia_swing",
+      "segment": 30,
+      "image": "/tmp/muchova-delivered-review/frames/frame-097.png",
+      "image_sha256": "e3dbaeb47701af7700bc22a3633cec528750245af2f94204c4accf637eafc36e",
+      "film_time": 278.32
+    },
+    {
+      "index": 7108,
+      "reason": "asia_swing",
+      "segment": 30,
+      "image": "/tmp/muchova-delivered-review/frames/frame-098.png",
+      "image_sha256": "c908150b2e010b6cafbf0d0ce27d70cc29bfa244dafbd94d258786115ad2e0bc",
+      "film_time": 284.32
+    },
+    {
+      "index": 7128,
+      "reason": "race_condition_oct20",
+      "segment": 31,
+      "image": "/tmp/muchova-delivered-review/frames/frame-099.png",
+      "image_sha256": "c7f13b66302e7374629cefbf60bc494904636af18af7f340f8bbff1336cb4a40",
+      "film_time": 285.12
+    },
+    {
+      "index": 7270,
+      "reason": "race_condition_oct20",
+      "segment": 31,
+      "image": "/tmp/muchova-delivered-review/frames/frame-100.png",
+      "image_sha256": "b4e75fe207dcbb5c20317a919a69d4b201ed52ac804fb2152d74ac8b8b2661f2",
+      "film_time": 290.8
+    },
+    {
+      "index": 7413,
+      "reason": "race_condition_oct20",
+      "segment": 31,
+      "image": "/tmp/muchova-delivered-review/frames/frame-101.png",
+      "image_sha256": "b458abbb759ede77a47b37fb0515a683c984257640ea32ece9c0605e99663dec",
+      "film_time": 296.52
+    },
+    {
+      "index": 7432,
+      "reason": "ningbo_trigger_oct21",
+      "segment": 32,
+      "image": "/tmp/muchova-delivered-review/frames/frame-102.png",
+      "image_sha256": "79958cc8fc60e078a802ef52391cf8c16bcf4bb61578868ffa75d1b800015818",
+      "film_time": 297.28
+    },
+    {
+      "index": 7539,
+      "reason": "ningbo_trigger_oct21",
+      "segment": 32,
+      "image": "/tmp/muchova-delivered-review/frames/frame-103.png",
+      "image_sha256": "315244d6037813688eb23ef4b821812780e24dde739c888e59d124899c511798",
+      "film_time": 301.56
+    },
+    {
+      "index": 7645,
+      "reason": "ningbo_trigger_oct21",
+      "segment": 32,
+      "image": "/tmp/muchova-delivered-review/frames/frame-104.png",
+      "image_sha256": "236bddf209664ba3200e895f5c19eb5a81b919cd84ab4dc938ec1b2f39f474b9",
+      "film_time": 305.8
+    },
+    {
+      "index": 7665,
+      "reason": "qualification_payoff",
+      "segment": 33,
+      "image": "/tmp/muchova-delivered-review/frames/frame-105.png",
+      "image_sha256": "883ee145dba2f0c7db5f97c4d88663e794ca5b14b2e7c73ef8fb5f401f52be79",
+      "film_time": 306.6
+    },
+    {
+      "index": 7799,
+      "reason": "qualification_payoff",
+      "segment": 33,
+      "image": "/tmp/muchova-delivered-review/frames/frame-106.png",
+      "image_sha256": "f3272d48e5bb6a338afbccf73182489a68bc930feb08f337ec848573c06f8369",
+      "film_time": 311.96
+    },
+    {
+      "index": 7933,
+      "reason": "qualification_payoff",
+      "segment": 33,
+      "image": "/tmp/muchova-delivered-review/frames/frame-107.png",
+      "image_sha256": "bcf55b63a9072b8c208a755b50de3d3e0a16be87bbaf48512bbced693ce1d012",
+      "film_time": 317.32
+    },
+    {
+      "index": 7973,
+      "reason": "outro",
+      "segment": null,
+      "image": "/tmp/muchova-delivered-review/frames/frame-108.png",
+      "image_sha256": "679399c801212a53ec5ee8b7ae190347de70a88fcbd82805879400d32a09af36",
+      "film_time": 318.92
+    }
+  ],
+  "limitations": [
+    "48 sampled exact frames do not certify every intervening frame.",
+    "No human audio listening or continuous video playback was performed.",
+    "Current film SHA is blocked; any trim produces a new SHA requiring fresh exact-frame verification around the repaired join."
+  ]
+}

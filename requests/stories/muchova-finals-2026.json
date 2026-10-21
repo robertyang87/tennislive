@@ -2,7 +2,7 @@
   "slug": "muchova-finals-2026",
   "column": "网球有故事",
   "created_at": "2026-10-21",
-  "state": "latest_user_cut_runnerup_plate_native_preview",
+  "state": "single_bounded_tailfix_rerender",
   "story_kind": "person",
   "subject": "穆霍娃",
   "user_brief": "调查2026年10月21日锁定年终总决赛最后席位的原因；按照用户提供的五站官方积分图寻找对应比赛及捧杯视频，按时间线剪辑，参考刚做的斯瓦泰克赛季回顾；新增总分、跨年对比与晋级海报参考。",
@@ -56,7 +56,7 @@
     "revised_storyboard": "research/muchova-finals-2026/storyboard.md",
     "render_preconditions": "先将修订叙事呈现在对话；完成素材、字幕、配音、取景与现行预检，方可render。"
   },
-  "render_dispatched": false,
+  "render_dispatched": true,
   "push_sent": false,
   "source_preparation_notes": [
     "正式13条官方源、19个视频段；全部铺满画布裁切。",
@@ -85,5 +85,6 @@
     "native_preview": "research/muchova-finals-2026/native-preview-v2-review.json",
     "hold_seconds_max": 15,
     "clip_end_stops_label": true
-  }
+  },
+  "final_movie_review_finding": "首个完整成片唯一阻塞：温网F末尾源224.48起出现诺斯科娃冠军盘，已将该段end收224.24并依据新双模型紧校末词，保持完整分与解说；其他片段不变。"
 }

@@ -1,0 +1,88 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=XfE9M6__724",
+  "source_sha256": "39e3e2b5d0d5e21037fa6f593c6a5db0b7ee1d23152b1aeec151c5fa8e5aaf1e",
+  "source_key": "wimbledon_final",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 214.8,
+  "reviewed_to": 224.24,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 220.72,
+      "end": 223.94,
+      "en": "It's over and out.",
+      "zh": "比赛结束了。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_final-203.60-228.00-small.en.json",
+      "sha256": "28eba732cf77ef012127eaa850fadca1473b5955ac11265335a4feada862d7b1",
+      "model": "small.en",
+      "from": 203.6,
+      "to": 228.0,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_final-203.60-228.00-medium.en.json",
+      "sha256": "d5d807be248010e1e539b5bba31b2a4991fe49b05df883a5f6248dd00156aa89",
+      "model": "medium.en",
+      "from": 203.6,
+      "to": 228.0,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_final_tailfix-context-220-225-small.en.json",
+      "sha256": "72d1ff1ef4bdcbfa925dea34a74d1ecc62815c45ea7caf6ac7647bd4c5018727",
+      "model": "small.en",
+      "from": 220,
+      "to": 225,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_final_tailfix-context-220-225-medium.en.json",
+      "sha256": "77c3c0f62d403960c4144413a9c43c4b3178450a08852f148ff16c2299fa2f6c",
+      "model": "medium.en",
+      "from": 220,
+      "to": 225,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    }
+  ],
+  "review_scope": "Original complete final-point window was reviewed214.8–225; the selected source now narrows to214.8–224.24. Complete source English sentence retained, with final-word offset corrected by two additional actual-byte target-window model runs. Original source sound, speed and gain remain unchanged.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": null,
+    "runtime_clause_packet_sha256": null,
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  },
+  "boundary_correction": {
+    "kind": "bound_correction_not_new_human_listening",
+    "corrected_at": "2026-10-21T18:39:44.026123+00:00",
+    "original_packet": "data/audio_reviews/muchova-finals-2026/23-wimbledon_final.json",
+    "original_packet_sha256": "ef9f03e0a11d043abf1ba99c25b822edb2177ab17559be558ba5e85df0f35ba2",
+    "original_reviewed_from": 214.8,
+    "original_reviewed_to": 225.0,
+    "original_reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+    "old_quote_end": 224.32,
+    "new_quote_end": 223.94,
+    "new_source_end": 224.24,
+    "small_en_out_word": [
+      223.44,
+      223.9
+    ],
+    "medium_en_out_word": [
+      223.46,
+      223.94
+    ],
+    "reason": "The independent targeted220–225 actual-byte models both retain the entire It's over and out sentence and align out to223.90/223.94 with probability>.99, resolving broad-context trailing alignment224.20/224.32. Only the final cue boundary is corrected; existing onset220.72 and exact final bilingual wording remain unchanged. Full-window original review evidence remains valid; this is not a new human listening claim.",
+    "visual_bound": "Independent original-PTS visual review:224.44 retains final-match reaction;224.48 is first Noskova champion large-plate frame. Source end224.24 plus native0.18 continuation reaches224.42, whose last25fps frame224.40 precedes the unrelated champion plate.",
+    "visual_evidence": "research/muchova-finals-2026/contact-sheets/wim-final-champion-plate-cut-boundary.jpg"
+  }
+}
