@@ -2,12 +2,12 @@
   "slug": "muchova-finals-2026",
   "column": "网球有故事",
   "created_at": "2026-10-21",
-  "state": "preparing_native_edit_from_user_revisions",
+  "state": "native_preflight_passed_ready_for_render",
   "story_kind": "person",
   "subject": "穆霍娃",
   "user_brief": "调查2026年10月21日锁定年终总决赛最后席位的原因；按照用户提供的五站官方积分图寻找对应比赛及捧杯视频，按时间线剪辑，参考刚做的斯瓦泰克赛季回顾；新增总分、跨年对比与晋级海报参考。",
   "angle": "最后的资格确认来自竞争者的赛果，站到这个位置靠的是穆霍娃整个赛季的积累。",
-  "target_duration_seconds": 310,
+  "target_duration_seconds": 355,
   "storyboard": "research/muchova-finals-2026/storyboard.md",
   "editorial_spec": "requests/stories/muchova-finals-2026/spec.json",
   "facts": "research/muchova-finals-2026/fact-packet.json",
@@ -37,10 +37,10 @@
     "required": true,
     "received": false,
     "basis": ".claude/skills/tennis-owner-taste/SKILL.md 2026-10-17 第6条及清单C5：叙事长片发render前先发一页提纲，他看过再渲。",
-    "scope": "批准前继续完成事实、官方素材下载、证据检查和可审阅分段编辑稿；不派发render或push。",
+    "scope": "用户连续生产修订已纳；最终提纲已呈现，继续实际制作、成片质检，合格后按仓库流程发布。",
     "presented_in_conversation": true,
     "user_response": "我想调整提纲",
-    "latest_steering": "补充四大满贯和温网后完整赛果/积分/原因的详细调研",
+    "latest_steering": "严格时间线、四GS止步轮、两次捧杯及本人经典采访已纳；最终约6分钟分段表已发对话，用户封面改稿已纳。",
     "status": "user_directed_revision_incorporated",
     "initial_outline_approved": false,
     "revision_basis": "用户看过初稿后连续明确四大满贯止步轮次配视频、其他小成绩可TTS、高光配视频、严格时间线、故事体裁。按其指示修订，不将初稿标为已获批准。",
@@ -65,5 +65,8 @@
     "timeline": "strict chronological"
   },
   "native_spec": "specs/reels/muchova-finals-2026.json",
-  "cover_revision": "requests/stories/muchova-finals-2026/cover-user-revision.json"
+  "cover_revision": "requests/stories/muchova-finals-2026/cover-user-revision.json",
+  "actual_tts": "data/narration_checks/muchova-finals-2026.json",
+  "native_preview": "research/muchova-finals-2026/native-preview-review.json",
+  "voice_pre_render_checks": "research/muchova-finals-2026/voice-pre-render-findings.json"
 }
