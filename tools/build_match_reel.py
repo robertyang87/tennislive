@@ -1952,8 +1952,77 @@ def archival_claims(spec: dict | None) -> dict[str, str]:
     return {k: v.strip() for k, v in declared.items()}
 
 
+_MUCHOVA_NATIVE_720_CROP_URLS = frozenset({
+    "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399578560112",
+    "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6391563293112",
+    "https://x.com/WTA/status/2022719051408052453",
+})
+
+
+def source_crop_claims(spec: dict) -> dict[str, dict]:
+    """Opt in to each source's native crop geometry, without conforming its pixels.
+
+    The native short side must remain >=1080, except the exact 720p sources the
+    owner authorized for this Muchova episode. Archival contain stays the default.
+    """
+    declared = spec.get("source_crop") or {}
+    if not isinstance(declared, dict):
+        raise ReelError("source_crop 必须按源键写 reason、fill_y、min_height")
+    if not declared:
+        return {}
+    urls = spec_sources(spec)
+    if set(declared) - set(urls):
+        raise ReelError("source_crop 的源键不在 sources 里")
+    if spec.get("layout", "full") not in (None, "full"):
+        raise ReelError("source_crop 只支持铺满画布的 full 版式")
+    if set(declared) & set(spec.get("conform") or {}):
+        raise ReelError("同一源不能同时声明 source_crop 和 conform")
+    primary = next(iter(urls))
+    for key, claim in declared.items():
+        if (not isinstance(claim, dict)
+                or set(claim) - {"reason", "fill_y", "min_height", "approved_by"}
+                or not isinstance(claim.get("reason"), str)
+                or not claim["reason"].strip()):
+            raise ReelError("source_crop 每源要有非空 reason，只认 fill_y、min_height、approved_by")
+        fy = claim.get("fill_y", .5)
+        floor = claim.get("min_height", 1080)
+        if (type(fy) not in (int, float) or not math.isfinite(fy) or not 0 <= fy <= 1
+                or type(floor) is not int or floor not in (720, 1080)):
+            raise ReelError("source_crop fill_y 要在0~1，min_height 只认1080或明确授权的720")
+        if floor == 720 and not (
+                spec.get("slug") == "muchova-finals-2026"
+                and urls[key] in _MUCHOVA_NATIVE_720_CROP_URLS
+                and claim.get("approved_by") == "user"):
+            raise ReelError("source_crop 720p裁切仅限本集用户按精确URL明确授权的源")
+        uses = [s for s in spec.get("segments", [])
+                if not (s.get("image") or s.get("title_card") or s.get("stat_card"))
+                and s.get("source", primary) == key]
+        if not uses or any(s.get("fit", "crop") != "crop" or s.get("track")
+                           or s.get("square_pan") or s.get("score_inset")
+                           or s.get("visual_image") for s in uses):
+            raise ReelError("source_crop 源必须有实际fit=crop视频段，不跟随、不回贴记分条")
+    return declared
+
+
+def native_source_crop_window(width: int, height: int, *, cx: float = .5,
+                              fill_y: float = .5, zoom: float = 1.) -> tuple[int, int, int, int]:
+    """Return an even native (w,h,x,y) crop; never read or overwrite global geometry."""
+    if width * VIDEO_H >= height * VIDEO_W:
+        ch = height // 2 * 2
+        cw = int(ch * VIDEO_W / VIDEO_H) // 2 * 2
+    else:
+        cw = width // 2 * 2
+        ch = int(cw * VIDEO_H / VIDEO_W) // 2 * 2
+    cw, ch = max(2, int(cw / zoom) // 2 * 2), max(2, int(ch / zoom) // 2 * 2)
+    x = max(0, min(width - cw, round(cx * width - cw / 2))) // 2 * 2
+    y = max(0, min(height - ch, round((height - ch) * fill_y))) // 2 * 2
+    return cw, ch, x, y
+
+
 def check_archival_fit(spec: dict, segments: list["Segment"]) -> None:
     """认领了低清的源，它的段必须 `fit: "contain"`。
+
+    只有经过 source_crop 按集/精确URL验证的明确授权，才独立按原生几何裁切。
 
     3:4 裁切从 854×480 里取的是 360×480，放到 1080×1440 是**放大 3 倍**——
     正是 `resolve_crop` 那句报错说的「糊得没法看」。contain 那条路整幅铺，
@@ -1962,6 +2031,7 @@ def check_archival_fit(spec: dict, segments: list["Segment"]) -> None:
     **闸排在下载之前**：这是 spec 的形状问题，`--dry-run` 就该红，
     不该等几百 MB 下完、渲到第一段切片才发现。
     """
+    native = source_crop_claims(spec)
     claimed = archival_claims(spec)
     if not claimed:
         return
@@ -1970,7 +2040,8 @@ def check_archival_fit(spec: dict, segments: list["Segment"]) -> None:
     if unknown:
         raise ReelError(f"archival 里的 {unknown} 不在 sources 里")
     bad = [i + 1 for i, s in enumerate(segments)
-           if not s.image and s.source in claimed and s.fit != "contain"]
+           if not s.image and s.source in claimed and s.fit != "contain"
+           and s.source not in native]
     if bad:
         raise ReelError(
             f"第 {bad} 段取自认领过的低清源（{sorted(claimed)}），"
@@ -1978,7 +2049,8 @@ def check_archival_fit(spec: dict, segments: list["Segment"]) -> None:
             "854×480 裁成 3:4 只有 360×480，放到 1080×1440 是放大 3 倍；"
             "整幅铺进来（`\"fit\": \"contain\"`）只放大 1.26 倍。\n"
             "存档素材一律 contain——纪录片就是这么放老画面的。")
-    print(f"[存档] 认领低清源片 {sorted(claimed)}，这些段一律整幅铺")
+    print(f"[存档] contain源 {sorted(set(claimed) - set(native))}；"
+          f"用户明确授权原生裁切源 {sorted(set(claimed) & set(native))}")
 
 
 def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None,
@@ -2933,6 +3005,9 @@ class Segment:
     # Keep the dissolve's video continuation, but zero-fill only its audio tail.
     # Explicit opt-in: the reviewed source audio ends at the nominal segment end.
     audio_tail: str = ""
+    # Explicit top-level source_crop claim, copied at parse time. Native geometry,
+    # not an upscale/conform declaration and not a per-segment spec field.
+    native_crop: dict | None = None
 
     @property
     def length(self) -> float:
@@ -3454,6 +3529,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     真人看下来的结论就是「固定中心的感觉更好」，所以横摇改成**按段显式打开**
     （`"track": true`），只留给主机位的宽景回合。
     """
+    native_crops = source_crop_claims(spec)
+
     def _seg_score_inset(s: dict, i: int) -> tuple[int, int, int, int] | None:
         raw = s.get("score_inset")
         if "scorebox" in s:
@@ -3601,7 +3678,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        fill_y=_seg_fill_y(s, i),
                        contain_keep=_seg_contain_keep(s, i),
                        crop_zoom=_seg_crop_zoom(s, i),
-                       visual_image=str(s.get("visual_image") or ""))
+                       visual_image=str(s.get("visual_image") or ""),
+                       native_crop=native_crops.get(str(s.get("source", primary))))
 
     segments = [replace(_one(s, i), subtitle_bottom=_seg_subtitle_bottom(s, i))
                 for i, s in enumerate(spec["segments"])]
@@ -3900,7 +3978,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # `test_真字段表要盖住每条spec里出现过的字段` 拿 `specs/reels/*.json` 里实际
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
-    "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom", "cx", "date", "title",
+    "spec": ("archival", "conform", "source_crop", "cover", "crop_y", "crop_zoom", "cx", "date", "title",
              "layout", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
              "music", "outro", "push", "rate", "scorebox", "scoreboard_profile", "source_scorebox", "segments",
              "silent_source",
@@ -4752,6 +4830,22 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             f"[bgb][fgs]overlay=0:{(VIDEO_H-VIDEO_W)//2},{sp}fps={FPS_EXPR},setsar=1"
         )
         labeled = True
+    elif seg.native_crop:
+        if (seg.fit != "crop" or path or seg.track or seg.square_pan or seg.score_inset
+                or LAYOUT != "full" or conform_target(source)):
+            raise ReelError("source_crop 要用原生full裁切，不能与conform/跟随/记分回贴混用")
+        native_w, native_h = probe_size(source)
+        floor = seg.native_crop.get("min_height", 1080)
+        if min(native_w, native_h) < floor:
+            raise ReelError(f"source_crop 原生 {native_w}×{native_h} 短边低于授权{floor}，缩放不能补源细节")
+        fy = (seg.native_crop.get("fill_y", .5) if seg.fill_y is None else seg.fill_y)
+        cw, ch, x, y = native_source_crop_window(
+            native_w, native_h, cx=seg.cx, fill_y=fy, zoom=seg.crop_zoom)
+        chain = (f"crop={cw}:{ch}:{x}:{y},"
+                 f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
+                 f"{sp}fps={FPS_EXPR},setsar=1")
+        print(f"    [原生裁切] {seg.source} {native_w}×{native_h} → "
+              f"{cw}×{ch}+{x}+{y} → {VIDEO_W}×{VIDEO_H}；展示缩放不增加源细节")
     elif seg.fit in ("contain", "full_source"):
         native_w, native_h = effective_size(source)
         # 整幅铺进来会只占屏高的三成（1080 宽的 16:9 才 608 高），上下两条死黑，
@@ -8100,6 +8194,7 @@ def conform_sources(paths: dict[str, Path], spec: dict | None) -> None:
     `test_conform声明的源要真的被统一到基准尺寸`：切出来的帧和落盘那条老路
     逐像素对得上，而目录里一个 `*_conform.mp4` 都没有。
     """
+    source_crop_claims(spec or {})
     for path in paths.values():
         _CONFORM_TARGETS.pop(Path(path), None)
     declared = (spec or {}).get("conform") or {}
@@ -8131,8 +8226,8 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None,
                         ) -> None:
     """多源要对得上，不一致就在这儿报，别渲到一半。**两样的严重程度不同：**
 
-    - **尺寸**：裁切窗口按源片宽高算（`resolve_crop`），对不上就是**裁错**。
-      没有出路，一律红
+    - **尺寸**：默认共享主源裁切窗口，尺寸对不上就是裁错。source_crop 显式认领
+      的源才按自身原生几何独立裁切，且仍检查真实短边下限，不走 conform。
     - **帧率**：成片跟**主源**走（`FPS`），别的源会被 `fps=` 重采样。这有代价，
       但代价随内容差得很远：50 → 25 是整齐地隔帧丢，看不出来；30 → 25 是
       六帧丢一帧，**静态说话头几乎无感，回合镜头一眼能看出一顿一顿**
@@ -8149,13 +8244,17 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None,
     却要编一句"重采样看不出来"）。`tiafoe-story` 的 qf2026（"25"）对 sf2026
     （"25/1"）就撞过这个假阳性。
     """
-    if len(paths) < 2:
+    native_crops = source_crop_claims(spec or {})
+    if len(paths) < 2 and not native_crops:
         return
     # 尺寸按 `effective_size`：认领了 conform 的源在滤镜链里就是基准尺寸。
     # `dims` 是 `--dry-run` 那条入口：宽高帧率从 probe.json 读（probe_sources），
     # **规则还是这一份**——7 趟几何红全在源片下完之后才红（run 36260393395 等）。
     seen = dims if dims is not None else {
         k: (*effective_size(p), *resolve_fps(p)) for k, p in paths.items()}
+    for key, claim in native_crops.items():
+        if key in seen and min(seen[key][:2]) < claim.get("min_height", 1080):
+            raise ReelError(f"source_crop 源{key}原生短边低于声明下限，不能用缩放冒充源画质")
     ref_key = next(iter(seen))
     rw, rh, rf, rfv = seen[ref_key]
     rows = "\n  ".join(f"{k or '(主源)'}: {w}×{h} @ {f}"
@@ -8178,7 +8277,7 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None,
                 s.get("fit") == "contain" for s in uses):
             native_archives.add(key)
     bad_size = [k for k, (w, h, _, _) in seen.items()
-                if (w, h) != (rw, rh) and k not in native_archives]
+                if (w, h) != (rw, rh) and k not in native_archives and k not in native_crops]
     if bad_size:
         raise ReelError(
             f"这些源片和主源 {ref_key or '(主源)'} 的尺寸对不上，裁切会静默裁错："

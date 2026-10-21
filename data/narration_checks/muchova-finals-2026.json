@@ -1,6 +1,6 @@
 {
   "slug": "muchova-finals-2026",
-  "checked_at": "2026-10-21T16:58:25Z",
+  "checked_at": "2026-10-21T17:47:26Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -10,9 +10,9 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "75c7856b3c5a8a8b": {
+    "16f91a6ec9ca6c16": {
       "segment": 1,
-      "spoken": 5.016,
+      "spoken": 5.352,
       "picture": 7.8
     },
     "77d352cde4c00e61": {
@@ -28,12 +28,12 @@
     "d0739c53e99dac87": {
       "segment": 8,
       "spoken": 3.672,
-      "picture": 6.1
+      "picture": 5.9
     },
     "77f5d715e436c97a": {
       "segment": 9,
       "spoken": 6.504,
-      "picture": 8.05
+      "picture": 8.0
     },
     "487792e2f817bb6d": {
       "segment": 11,
@@ -48,7 +48,7 @@
     "08096a4334748fce": {
       "segment": 14,
       "spoken": 4.68,
-      "picture": 10.0
+      "picture": 8.5
     },
     "034596c22d0bf536": {
       "segment": 15,
@@ -78,7 +78,7 @@
     "7333cbf354e63619": {
       "segment": 26,
       "spoken": 6.672,
-      "picture": 11.5
+      "picture": 8.5
     },
     "72a8b4b68bc54d91": {
       "segment": 27,
@@ -88,16 +88,16 @@
     "22029db3755328f7": {
       "segment": 29,
       "spoken": 4.512,
-      "picture": 10.3
+      "picture": 8.3
     },
     "0ba7ead3df36a69b": {
       "segment": 31,
       "spoken": 3.504,
       "picture": 5.5
     },
-    "7c8923d664ca58bc": {
+    "2d17d51c1ce59ed1": {
       "segment": 33,
-      "spoken": 9.288,
+      "spoken": 9.864,
       "picture": 12.8
     },
     "534aa09438bf49f4": {
@@ -118,16 +118,12 @@
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "2fb24e1e716a049246b7ff478d1828ea4b8e2436502db0ea3f11b76ef2b1fd42",
+    "bundle_sha256": "8d89ac230a0e3375c9067d81582ebf2255ab409ff04c689352b0b299bbcd44fa",
     "request_count": 22,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
-    "audio_decoding_verified": true,
-    "transport": "repository",
-    "repository_commit": "b75fad3b3f2a6e17e876fd3bd0b257258b06da45",
-    "file_name": "tts_bundle.zip",
-    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/b75fad3b3f2a6e17e876fd3bd0b257258b06da45/assets/tts-bundles/muchova-finals-2026/2fb24e1e716a049246b7ff478d1828ea4b8e2436502db0ea3f11b76ef2b1fd42/tts_bundle.zip"
+    "audio_decoding_verified": true
   }
 }

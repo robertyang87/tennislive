@@ -1,7 +1,7 @@
 {
   "slug": "muchova-finals-2026",
-  "updated_at": "2026-10-21T16:50:37.173026+00:00",
-  "state": "canonical_sources_prepared_formal_spec_selection_snapshot_not_render_qc",
+  "updated_at": "2026-10-21T17:45:52.464895+00:00",
+  "state": "source_bindings_frozen_for_current_formal_spec_not_render_qc",
   "items": [
     {
       "key": "doha",
@@ -171,60 +171,55 @@
     },
     {
       "key": "miami",
-      "official_page": "https://www.wtatennis.com/videos/4475905/muchova-edges-past-mboko-in-two-tight-sets-to-reach-first-miami-semifinal",
       "publisher": "WTA",
-      "event_date": "2026-03-24",
-      "local_path": "research/muchova-finals-2026/sources/videos/miami-muchova-mboko.mp4",
-      "sha256": "b6117cb922680965f0eb5331d706396b2de4fe79ba8db7b8c8bcbf8c0d20327e",
-      "probe": {
-        "programs": [],
-        "stream_groups": [],
-        "streams": [
-          {
-            "codec_type": "video",
-            "width": 1280,
-            "height": 720,
-            "r_frame_rate": "25/1"
-          },
-          {
-            "codec_type": "audio",
-            "r_frame_rate": "0/0"
-          }
-        ],
-        "format": {
-          "duration": "244.960000",
-          "size": "65315829"
-        }
-      },
-      "state": "downloaded_limited_visual_review",
-      "review": "Correct WTA website metadata names Muchova and Mboko, Miami quarterfinal; video downloaded. Tail contact sheet from195s every3s confirms V.MBOKO/K.MUCHOVA scoreboard, Muchova white Adidas/orange headband matching user official picture, match point, win celebration and handshake. No interview in sampled tail.",
-      "audio_review": "pending",
-      "final_cut_bounds": "pending",
-      "brightcove_media_id": "6391563293112",
-      "stable_player_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6391563293112",
+      "source_id": "SL35StEiNXE",
+      "official_page": "https://www.youtube.com/watch?v=SL35StEiNXE",
+      "official_origin": "https://www.youtube.com/watch?v=SL35StEiNXE",
+      "canonical_release_tag": "source-SL35StEiNXE",
+      "canonical_archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-SL35StEiNXE/SL35StEiNXE.mp4",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-SL35StEiNXE/SL35StEiNXE.mp4",
+      "canonical_asset_name": "SL35StEiNXE.mp4",
+      "canonical_asset_bytes": 47971486,
+      "archive_asset_state": "uploaded",
+      "archive_title": "Victoria Mboko vs. Karolina Muchova | 2026 Miami Open Quarterfinals | WTA Match Highlights",
+      "local_path": "research/muchova-finals-2026/sources/videos/SL35StEiNXE.mp4",
+      "sha256": "068d68331c24d4ec6608cb779d606116d343ff98941e8d327f6948519d6ac6d4",
       "actual": {
-        "duration": 244.96,
-        "bytes": 65315829,
-        "width": 1280,
-        "height": 720,
+        "duration": 308.616417,
+        "bytes": 47971486,
+        "width": 1920,
+        "height": 1080,
         "fps": "25/1",
-        "video_codec": "h264",
+        "codec": "av1",
         "audio": true
       },
-      "source_id": "6391563293112",
-      "canonical_release_tag": "source-6391563293112",
-      "canonical_archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-6391563293112/6391563293112.mp4",
-      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-6391563293112/6391563293112.mp4",
-      "canonical_asset_name": "6391563293112.mp4",
-      "canonical_asset_bytes": 65315829,
-      "archive_asset_state": "uploaded",
-      "archive_title": "Muchova edges past Mboko in two tight sets to reach first Miami semifinal",
-      "archive_size_matches_local": true,
-      "archive_binding": "Local file originated from this release or independently downloaded identical official source; current uploaded asset size matches. Three BC source hashes additionally re-downloaded and byte-for-byte compared in bc-canonical-comparison.json.",
+      "state": "downloaded_identity_verified_selected_native1080",
+      "review": "Correct2026 Miami QF: MBOKO/MUCHOVA scoreboard; Muchova white Adidas/orange headband, Mboko pink dress; real final point and handshake. Context245–253 is same-match rally VO background. Root accepts261.50–279.45 safe final-point window with brief Muchova close-up before last serve. Earlier rough261.52/262.5 annotations are not exact serve timestamps.",
       "use_status": "selected_in_current_formal_spec",
-      "official_origin": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6391563293112",
-      "canonical_byte_equality_verified": true,
-      "canonical_equality_evidence": "research/muchova-finals-2026/evidence/bc-canonical-comparison.json"
+      "audio_review": "Interview agent double-model review245–298: context245–253 usable; finish end279.45 keeps both complete English comments, next speech begins280.72. Final reviewed packet belongs to interview_excerpts.",
+      "event_date": "2026-03-24",
+      "round": "Quarterfinal",
+      "opponent": "Victoria Mboko",
+      "muchova_score": "7-5 7-6(5)",
+      "replaces": "miami_bc_720_legacy",
+      "native_geometry": "1920x1080 native decoded source; not an upscaled720 rendition",
+      "visual_candidate_windows": [
+        {
+          "start": 245,
+          "end": 253,
+          "purpose": "Same-match rally as narration background; start is mid-rally and not described as complete key point."
+        },
+        {
+          "start": 261.5,
+          "end": 279.45,
+          "purpose": "Root-approved safe window: includes short Muchova close-up then complete final serve/rally/victory and both complete commentary lines. Do not assert261.52 is serve start."
+        }
+      ],
+      "contact_sheets": [
+        "contact-sheets/miami-1080-qf-tail.jpg",
+        "contact-sheets/miami-1080-final-point-240.jpg",
+        "contact-sheets/miami-1080-serve-boundary.jpg"
+      ]
     },
     {
       "key": "stuttgart_sf",
@@ -343,7 +338,10 @@
       "use_status": "selected_in_current_formal_spec",
       "official_origin": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399578560112",
       "canonical_byte_equality_verified": true,
-      "canonical_equality_evidence": "research/muchova-finals-2026/evidence/bc-canonical-comparison.json"
+      "canonical_equality_evidence": "research/muchova-finals-2026/evidence/bc-canonical-comparison.json",
+      "current_geometry_decision": "Keep real1280x720 official Champions Reel for true Osaka retirement and dynamic elephant-trophy raise/kiss. User requested full-canvas fitcrop, not native1080; root explicitly accepted retaining native720. Render fitcrop, disclose720 only in production evidence, never call it native1080.",
+      "rendition_audit_evidence": "research/muchova-finals-2026/evidence/720p-bc-rendition-audit.json",
+      "public_source_max_resolution_verified": "MP4,HLS master andDASH all max1280x720 for media6399578560112"
     },
     {
       "key": "wimbledon_sf",
@@ -690,7 +688,8 @@
       "use_status": "selected_in_current_formal_spec",
       "official_origin": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399808507112",
       "canonical_byte_equality_verified": true,
-      "canonical_equality_evidence": "research/muchova-finals-2026/evidence/bc-canonical-comparison.json"
+      "canonical_equality_evidence": "research/muchova-finals-2026/evidence/bc-canonical-comparison.json",
+      "supplemental_visual_1080": "Source108–141 has true final footage and Osaka retirement/handshake, but foreground player retrospective audio; cannot use with VO by muting it. Does not replace known dynamic trophy raise. End160s抱杯 is composited/static, not dynamic ceremony."
     },
     {
       "key": "stuttgart_final",
@@ -835,7 +834,8 @@
       "archive_size_matches_local": true,
       "archive_binding": "Local file originated from this release or independently downloaded identical official source; current uploaded asset size matches. Three BC source hashes additionally re-downloaded and byte-for-byte compared in bc-canonical-comparison.json.",
       "use_status": "selected_in_current_formal_spec",
-      "official_origin": "https://x.com/rolandgarros/status/2060369494891978888"
+      "official_origin": "https://x.com/rolandgarros/status/2060369494891978888",
+      "current_geometry_decision": "Retain actual1080x1920 portrait official same-round Teichmann victory reaction; full-canvas fitcrop. Do not describe Teichmann as Muchova."
     },
     {
       "key": "uso_r32",
@@ -1027,7 +1027,8 @@
       "archive_size_matches_local": true,
       "archive_binding": "Local file originated from this release or independently downloaded identical official source; current uploaded asset size matches. Three BC source hashes additionally re-downloaded and byte-for-byte compared in bc-canonical-comparison.json.",
       "use_status": "selected_in_current_formal_spec",
-      "official_origin": "https://x.com/WTA/status/2022719051408052453"
+      "official_origin": "https://x.com/WTA/status/2022719051408052453",
+      "current_geometry_decision": "Retain official X1280x720; full-canvas fitcrop requested. Original complete announcement0–5.22 and speech-free VO trophy segment5.3–11.4 remain usable. Do not replace with1080 reserve that has continuous commentary."
     },
     {
       "key": "uso_mixed_final",
@@ -1170,8 +1171,130 @@
       "archive_title": "Anhelina Kalinina (UKR) vs Karolina Muchova (CZE) | 2026 Billie Jean King Cup Finals | Highlights",
       "archive_size_matches_local": true,
       "archive_binding": "Local file originated from this release or independently downloaded identical official source; current uploaded asset size matches. Three BC source hashes additionally re-downloaded and byte-for-byte compared in bc-canonical-comparison.json.",
-      "use_status": "prepared_for_bjk_insert",
+      "use_status": "selected_in_current_formal_spec",
       "official_origin": "https://www.youtube.com/watch?v=jSp_UwE-_co"
+    },
+    {
+      "key": "miami_bc_720_legacy",
+      "official_page": "https://www.wtatennis.com/videos/4475905/muchova-edges-past-mboko-in-two-tight-sets-to-reach-first-miami-semifinal",
+      "publisher": "WTA",
+      "event_date": "2026-03-24",
+      "local_path": "research/muchova-finals-2026/sources/videos/miami-muchova-mboko.mp4",
+      "sha256": "b6117cb922680965f0eb5331d706396b2de4fe79ba8db7b8c8bcbf8c0d20327e",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "244.960000",
+          "size": "65315829"
+        }
+      },
+      "state": "downloaded_limited_visual_review",
+      "review": "Correct WTA website metadata names Muchova and Mboko, Miami quarterfinal; video downloaded. Tail contact sheet from195s every3s confirms V.MBOKO/K.MUCHOVA scoreboard, Muchova white Adidas/orange headband matching user official picture, match point, win celebration and handshake. No interview in sampled tail.",
+      "audio_review": "pending",
+      "final_cut_bounds": "pending",
+      "brightcove_media_id": "6391563293112",
+      "stable_player_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6391563293112",
+      "actual": {
+        "duration": 244.96,
+        "bytes": 65315829,
+        "width": 1280,
+        "height": 720,
+        "fps": "25/1",
+        "video_codec": "h264",
+        "audio": true
+      },
+      "source_id": "6391563293112",
+      "canonical_release_tag": "source-6391563293112",
+      "canonical_archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-6391563293112/6391563293112.mp4",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-6391563293112/6391563293112.mp4",
+      "canonical_asset_name": "6391563293112.mp4",
+      "canonical_asset_bytes": 65315829,
+      "archive_asset_state": "uploaded",
+      "archive_title": "Muchova edges past Mboko in two tight sets to reach first Miami semifinal",
+      "archive_size_matches_local": true,
+      "archive_binding": "Local file originated from this release or independently downloaded identical official source; current uploaded asset size matches. Three BC source hashes additionally re-downloaded and byte-for-byte compared in bc-canonical-comparison.json.",
+      "use_status": "retained_historical_replaced_by_native_1080_miami",
+      "official_origin": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6391563293112",
+      "canonical_byte_equality_verified": true,
+      "canonical_equality_evidence": "research/muchova-finals-2026/evidence/bc-canonical-comparison.json",
+      "historical_key": "miami",
+      "replacement_key": "miami",
+      "archive_preserved": true
+    },
+    {
+      "key": "doha_champions_1080_reserve",
+      "publisher": "WTA",
+      "source_id": "OnSvhjK9_mk",
+      "official_page": "https://www.youtube.com/watch?v=OnSvhjK9_mk",
+      "official_origin": "https://www.youtube.com/watch?v=OnSvhjK9_mk",
+      "canonical_release_tag": "source-OnSvhjK9_mk",
+      "canonical_archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-OnSvhjK9_mk/OnSvhjK9_mk.mp4",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-OnSvhjK9_mk/OnSvhjK9_mk.mp4",
+      "canonical_asset_name": "OnSvhjK9_mk.mp4",
+      "canonical_asset_bytes": 63851956,
+      "archive_asset_state": "uploaded",
+      "archive_title": "How Karolina Muchova Won Doha 2026 | WTA Champions Reel",
+      "local_path": "research/muchova-finals-2026/sources/videos/OnSvhjK9_mk.mp4",
+      "sha256": "8227284ca37343b0ae70ff32ee88286f012a2abc3902fa0479dd666acd54c710",
+      "actual": {
+        "duration": 575.901315,
+        "bytes": 63851956,
+        "width": 1920,
+        "height": 1080,
+        "fps": "25/1",
+        "codec": "av1"
+      },
+      "state": "downloaded_limited_visual_identity_review",
+      "review": "Actual Muchova/Mboko Doha final and trophy ceremony verified by536s +2s contact sheet: trophy raise around554, gold falcon close-ups556–562, stage564, outro566+. Full official source fixes legacy derived clip boundary, but no appropriate silent VO trophy window.",
+      "use_status": "retained_reserve_not_selected",
+      "audio_review": "Interview agent double-model evidence542.82–565.16 continuous foreground English; no >=4s speech-free actual trophy VO window. Root decided not to replace current clean X720 source.",
+      "event_date": "2026-02-14",
+      "contact_sheet": "contact-sheets/doha-1080-trophy-full-source.jpg",
+      "reason_not_selected": "Root2026-10-21 final source decision: keep original WTA X720 doha_trophy_clean complete announcement then trophy with narration. Native1080 alone does not justify overlapping commentary, muting it, or dropping story context."
+    },
+    {
+      "key": "bad_homburg_aftermovie_1080_reserve",
+      "publisher": "Bad Homburg Open",
+      "source_id": "2Xl3VQ4Ob5I",
+      "official_page": "https://www.youtube.com/watch?v=2Xl3VQ4Ob5I",
+      "official_origin": "https://www.youtube.com/watch?v=2Xl3VQ4Ob5I",
+      "canonical_release_tag": "source-2Xl3VQ4Ob5I",
+      "canonical_archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-2Xl3VQ4Ob5I/2Xl3VQ4Ob5I.mp4",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-2Xl3VQ4Ob5I/2Xl3VQ4Ob5I.mp4",
+      "canonical_asset_name": "2Xl3VQ4Ob5I.mp4",
+      "canonical_asset_bytes": 12518341,
+      "archive_asset_state": "uploaded",
+      "archive_title": "Bad Homburg Open powered by Solarwatt Aftermovie 2026",
+      "local_path": "research/muchova-finals-2026/sources/videos/2Xl3VQ4Ob5I.mp4",
+      "sha256": "f1b4d20ecc2f6ab51a4c7be93ef840cbc8dfc37af3519ea7a51a4b7675a4d636",
+      "actual": {
+        "duration": 60.116463,
+        "bytes": 12518341,
+        "width": 1920,
+        "height": 1080,
+        "fps": "25/1",
+        "codec": "av1"
+      },
+      "state": "downloaded_limited_visual_identity_review",
+      "review": "Official tournament home page embeds exact YouTubeID; actual60.116s/1080p video every3s samples show venue/fans/training and trophy still life, no verified Muchova dynamic trophy raise or Osaka retirement sequence. Do not substitute it for required moment.",
+      "use_status": "retained_reserve_not_selected",
+      "audio_review": "Pending final source-window evidence binding by interview_excerpts; do not copy old source SHA or timestamps.",
+      "identity_evidence": "research/muchova-finals-2026/evidence/badhomburg-official-home-2026-aftermovie.html",
+      "contact_sheet": "contact-sheets/bad-homburg-official-aftermovie.jpg",
+      "reason_not_selected": "No verified required dynamic trophy moment. Some native letterboxing baked into source; do not call whole file full-canvas composition."
     }
   ],
   "interview_sources": "interview-candidates.json",
@@ -1216,8 +1339,8 @@
   "push_sent": false,
   "schema": "tennislive.source-manifest.v2",
   "formal_spec_path": "specs/reels/muchova-finals-2026.json",
-  "formal_spec_sha256_snapshot": "5f7a27dec529dea4c0f4941ff1ff00e05d16ee7757b35eb3dcbea6b53f81c8ba",
-  "source_geometry_policy": "Use actual native dimensions and fps.720p sources are natively720p; do not claim native1080p. Portrait RG source is1080x1920. Normalization and person/court framing belong to measured production recipe.",
+  "formal_spec_sha256_snapshot": "647ce87ff9a70ac4cc710e04bbf85de6c972c95cb6b458acb795f8da04fbceca",
+  "source_geometry_policy": "User latest instruction: every video fills canvas with fitcrop. Native geometry remains recorded accurately;1080 source is preferred where usable, but root explicitly retains720 DohaX andBadHomburg true trophy footage. Do not upscale and claim native1080.",
   "canonical_consistency_evidence": "research/muchova-finals-2026/evidence/bc-canonical-comparison.json",
   "audio_review_index": "research/muchova-finals-2026/audio-window-review.json",
   "historical_retrieval_attempts": {
@@ -1271,5 +1394,13 @@
       }
     ]
   },
-  "local_source_map": "research/muchova-finals-2026/local-source-map.json"
+  "local_source_map": "research/muchova-finals-2026/local-source-map.json",
+  "latest_source_decisions": {
+    "miami": "Native1080 SL35StEiNXE adopted; VO245–253 and safe complete final-point window261.50–279.45; no exact serve-start assertion.",
+    "doha_trophy_clean": "keep original official X720; full1080 OnSvhjK9_mk reserve only due continuous foreground speech",
+    "bad_homburg": "keep original official720 for true retirement and dynamic trophy raise",
+    "rg_r32": "keep official portrait1080x1920 same-round Teichmann reaction"
+  },
+  "native_1080_retrieval_evidence": "research/muchova-finals-2026/evidence/1080-replacement-probes.json",
+  "rendition_audit_evidence": "research/muchova-finals-2026/evidence/720p-bc-rendition-audit.json"
 }

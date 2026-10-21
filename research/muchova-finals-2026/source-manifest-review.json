@@ -1,10 +1,10 @@
 {
   "schema": "tennislive.source-manifest-review.v1",
-  "checked_at": "2026-10-21T16:51:06.821715+00:00",
-  "status": "source_binding_checks_passed_not_render_or_audio_release",
-  "manifest_sha256": "264ef47d1b0d44f26bf321863cbc353026f37ccad308b16c851cf7f1e588ec80",
-  "local_map_sha256": "d929ba9dc293dde98179ea1f4cc9be0c91fa4621aeeda55c878d858298c00e98",
-  "formal_spec_sha256": "c7bfc24133e8c53508e4b12e29a6665e570a648757e0a245662b2a4d33af1e1c",
+  "checked_at": "2026-10-21T17:45:52.464895+00:00",
+  "status": "source_bindings_frozen_checks_passed_not_final_render_audio_or_crop_qc",
+  "manifest_sha256": "ca53869c25cb5221efafbc262ca58b9b92c8a7b16300eb03a347ec02faacb4fb",
+  "local_map_sha256": "b6e671394b93f3c5001d816b312ffb8fde6de267f14c7cc4aa7cf0411ef1c11d",
+  "formal_spec_sha256": "647ce87ff9a70ac4cc710e04bbf85de6c972c95cb6b458acb795f8da04fbceca",
   "checks": {
     "all_current_formal_source_keys_bound": [
       "doha",
@@ -19,7 +19,8 @@
       "uso_r32",
       "doha_trophy_clean",
       "rg_r32",
-      "uso_mixed_final"
+      "uso_mixed_final",
+      "bjk_cup_final"
     ],
     "all_source_map_files_exist": true,
     "official_origins_match_current_spec": true,
@@ -28,10 +29,20 @@
     "known_wrong_sources_not_in_source_map": true,
     "rg_only_teichmann_result_limitation_preserved": true,
     "bc_three_canonical_byte_equal": "see evidence/bc-canonical-comparison.json",
-    "bjk_actual_sha_matches_parent_and_local_probe": true
+    "bjk_actual_sha_matches_parent_and_local_probe": true,
+    "doha720_retained_per_latest_audio_evidence": true,
+    "bad_homburg720_real_dynamic_trophy_retained_per_root": true,
+    "miami_native1080_new_source_and_root_approved_safe_window": true
   },
   "limitations": [
     "This is source binding integrity, not final audio/subtitle/crop/render QC.",
     "Final spec can still change; rerun binding review after any source identity changes."
-  ]
+  ],
+  "latest_source_decisions": {
+    "miami": "Native1080 SL35StEiNXE adopted; VO245–253 and safe complete final-point window261.50–279.45; no exact serve-start assertion.",
+    "doha_trophy_clean": "keep original official X720; full1080 OnSvhjK9_mk reserve only due continuous foreground speech",
+    "bad_homburg": "keep original official720 for true retirement and dynamic trophy raise",
+    "rg_r32": "keep official portrait1080x1920 same-round Teichmann reaction"
+  },
+  "native1080_source_review": "research/muchova-finals-2026/evidence/1080-replacement-review.json"
 }
