@@ -1,0 +1,679 @@
+{
+ "_claims": [],
+ "_column": "网球有故事",
+ "_no_probe_why": {
+  "blink": {
+   "fps": "50/1",
+   "height": 1080,
+   "why": "全场 2 小时 18 分，probe 的缩略图墙 job 仍在跑（run 39637136926）；几何用本地下载的 Release 存档实测：1920×1080、50fps、8295.1 秒，与存档字节一致（1,747,673,728 字节）。认领文件 data/probe_claims/PVEtpE4mkOM.json 已在仓库。",
+   "width": 1920
+  }
+ },
+ "_primary_why": "冷开场与第五章主源：澳网官方全场 1920×1080@50fps（本地下载存档 ffprobe 实测 50/1）。出片 50fps，其余 25fps 源逐帧复制升格。",
+ "_tts_backend_why": "本地制作环境没有 Azure Speech 钥匙。网球有故事近期成片用云健 Yunjian、语速 +6%，不另加音高。",
+ "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +6%（网球有故事既定口径，code-violation-point-penalty-2026 / swiatek-season-end-2026 同）。顶层 voice/rate 没有代码读，不写。",
+ "conform": {
+  "w80": "1980 集锦是 4:3 SD 内容装进 1920×1080 画框（左右柱式黑边）：3:4 裁切窗只在中央 4:3 画面区内取（源帧横向 240–1680），cx 保持 0.5，不碰黑边，不另行放大。"
+ },
+ "cover": {
+  "eyebrow": "网球有故事",
+  "hook": "一分定生死\n球员骂了50年",
+  "layout": "solo",
+  "narration": "一分定生死，球员骂了五十年。",
+  "portrait": {
+   "_credit": "Wimbledon 官方频道 1980 年温网男单决赛延长集锦（本片源片）1250.5 秒帧：麦肯罗接发站位特写，红头带条纹衫，当场实拍画面。",
+   "_portrait_why": "账号所有者 A 案定版（2026-10-21）：1980 麦肯罗冲突/情绪特写做封面。免费图库只有 612px comp 不达高清口径，按所有者同日定的「优先源抽帧」从已过闸的 1080 集锦源抽当场帧：源为 4:3 SD 内容装进 1080 画框，已裁掉左右黑边只留 4:3 画面区（1440×1080），封面再按 3:4 铺满。",
+   "fit": "cover",
+   "focus": 0.52,
+   "focus_y": 0.42,
+   "image": "assets/reel/tiebreak-history-2026/cover-mcenroe-1980.jpg",
+   "source_url": "https://www.youtube.com/watch?v=G6PW9pNevIg",
+   "zoom": 1.0,
+   "_low_res_why": "1980 年温网决赛无合规高清实拍图源：免费图库只有 612px comp（带水印预览更不合规），账号所有者定 A 案时明确以「从已过闸的 1080 集锦源抽当场帧」替代（2026-10-21 裁决）。底图为源片 4:3 画面区 1440×1080，铺满 1080×1440 需放大 1.33 倍——历史独家时刻，按 CLAUDE.md「精准优先于清晰」认领此取舍，放大倍数在此写明。"
+  },
+  "story_kind": "other",
+  "subject": "麦肯罗",
+  "topic": "抢七 · 从突然死亡到决胜盘抢十"
+ },
+ "cx": 0.5,
+ "date": "2026-10-22",
+ "editorial": {
+  "beats": [
+   "冷开场：2024 澳网布林科娃–莱巴金娜决胜盘抢十的最后几分原声——最快的决胜方式，打了 31 分钟还没完。",
+   "第一章 范·阿伦其人：名人堂创始人、执念是「打不完」；1969 年 112 局比赛把问题摆上台面；1965 年纽波特自费试验赛。",
+   "第二章 一分定生死：9 分突然死亡（先到 5 分、4–4 一分决胜、接方选边、双赛点）输给 12 分制（先到 7 分领先 2 分）；1970 美网红旗、塔尔伯特「球员不买票」；1975 美网倒向 12 分制。",
+   "第三章 1980 封神：温网决赛第四盘抢七 18–16，麦肯罗在抢七内挽救 5 个冠军点、拿到 7 个盘点；博格第五盘 8–6 五连冠。抢七高潮段整段原声回放。",
+   "第四章 决胜盘投降：2010 年 70–68（11 小时 5 分）与 2018 年 26–24（安德森左手名场面原声）逼出改革；2019 温网 12–12、澳网抢十，2022 四大满贯统一决胜盘 6–6 抢十。2019 按所有者定案只旁白一句、无画面。",
+   "第五章 回到 2024：布林科娃 22–20、错过 9 个赛点又救了 6 个、大满贯最长抢七；她的赛后原话作结，再抛问题给观众。"
+  ],
+  "chapters": [
+   "冷开场 · 31分钟的抢十",
+   "第一章 · 范·阿伦其人",
+   "第二章 · 一分定生死",
+   "第三章 · 1980封神之战",
+   "第四章 · 决胜盘的投降",
+   "第五章 · 最长的抢七"
+  ],
+  "human_context": {
+   "angle": "不从规则条文讲起，从「被一场打不完的比赛逼出来的」这个因果讲：每个规则节点都对应一场具体的、打到失控的比赛。金句「抢七，是被一场打不完的比赛逼出来的」占封面钩子（结尾问句回环）与标题，满足两处占位。",
+   "facts": [
+    "范·阿伦（Jimmy Van Alen）1950 年代提出流线型计分构想；他是国际网球名人堂创始人。构想年份有「1950 年代初」与 1958 两说，旁白只说「他的方案」，不钉年份。",
+    "1965 年范·阿伦在纽波特 Casino 自费办职业邀请赛试验新计分，拉沃、罗斯维尔、冈萨雷斯等参赛；试验的具体形式有两种口径，旁白不展开。",
+    "1969 温网首轮：冈萨雷斯（41 岁）胜帕萨雷尔 22–24, 1–6, 16–14, 6–3, 11–9，112 局、5 小时 12 分（主流口径，另有 5 小时 20 分说）、跨两天、挽救 7 个赛点。",
+    "9 分突然死亡：先到 5 分；4–4 时一分决胜，接发方选边，双方可同时握赛点。12 分制：先到 7 分、领先 2 分，范·阿伦讥称 lingering death（久拖之死），拉沃等人倡导。",
+    "1970 美网首次在大满贯用抢七（9 分制），球场升红旗示意；赛事总监塔尔伯特语「球员不买票（买票的是观众）」。1975 年美网改用 12 分制，即今天的标准抢七。",
+    "1980 温网决赛：博格胜麦肯罗 1–6, 7–5, 6–3, 6–7(16–18), 8–6。第四盘抢七约 20 分钟：麦肯罗在抢七内挽救 5 个冠军点、自己拿到 7 个盘点；全场他共挽救 7 个冠军点（另 2 个在第四盘 5–4 局）。本片只用「抢七内 5 个」口径，计数卡与旁白一致。",
+    "2010 温网首轮：伊斯内尔胜马胡特 6–4, 3–6, 6–7(7), 7–6(3), 70–68；11 小时 5 分、183 局、跨三天；赛后两人在 18 号场记分牌前合影（本片图段即源片该帧）。",
+    "2018 温网半决赛：安德森胜伊斯内尔 7–6(8), 6–7(5), 6–7(9), 6–4, 26–24，6 小时 36 分；安德森赛后呼吁改制（「拿球员职业生涯开玩笑」为其赛后批评的中文转述）。左手回球名场面在决胜盘。",
+    "2019 年温网启用决胜盘 12–12 抢七、澳网启用决胜盘抢十；2022 年四大满贯统一：决胜盘 6–6 后 10 分抢七（领先 2 分）。",
+    "2024 澳网第二轮：布林科娃胜莱巴金娜 6–4, 4–6, 7–6(22–20)；决胜盘抢十 22–20、共 42 分、约 31 分钟，大满贯单打最长抢七；她错过 9 个赛点、挽救 6 个赛点。",
+    "布林科娃赛后场地采访原话（本片源片转写两档一致，146.76–159.46 秒）：「This day, I will remember for the rest of my life... It is the best day of my life so far.」"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=G6PW9pNevIg",
+    "https://www.youtube.com/watch?v=J9M-XwUhYH4",
+    "https://www.youtube.com/watch?v=j2Yjch3BKpY",
+    "https://www.youtube.com/watch?v=PVEtpE4mkOM",
+    "https://www.youtube.com/watch?v=0swz2rTLxaM",
+    "https://www.loc.gov/item/2014684157/"
+   ]
+  },
+  "mode": "match_review",
+  "question": "抢七是被谁、被什么逼出来的？为什么球员骂了它五十年，它还是活了下来，还接管了决胜盘？",
+  "thesis": "抢七不是设计出来的，是被一场 112 局、5 小时 12 分的比赛逼出来的：范·阿伦力推的 9 分突然死亡输给了他讥称「久拖之死」的 12 分制；1980 年 18–16 的抢七证明它能造出最伟大的场面，2010 年 70–68 和 2018 年 26–24 又证明决胜盘没有它不行；到 2024 年，连抢十都能打 42 分——它救了排期，没救得了争论。"
+ },
+ "mixed_fps": {
+  "and": "25fps（温网官方短片，probe.json 实测），同上。",
+  "ao": "25fps（澳网官方采访，probe.json 实测），同上。",
+  "w10": "25fps（温网官方集锦，probe.json 实测），同上。",
+  "w80": "25fps（温网官方集锦，probe.json 实测），50 是整数倍，逐帧复制无顿挫。"
+ },
+ "primary": "blink",
+ "push": {
+  "_why": "账号所有者：质检通过即推送微信，不用问。标题整句「10.22网球有故事|抢七是被逼出来的」19 字 ≤20；首行与标题不重复。",
+  "auto": true,
+  "lead": "2024 年澳网，一场抢十打了 31 分钟还没打完——而抢七被发明出来，恰恰是为了让比赛赶紧结束。发明它的人叫范·阿伦，他最看不上的那个版本，最后救了网球。",
+  "summary": "抢七是被逼出来的"
+ },
+ "segments": [
+  {
+   "_quote_kind": "broadcast",
+   "cx": 0.5,
+   "end": 8161.0,
+   "point_end_ok": "布林科娃赛点（20–19）的一分整分原声：发球、相持、观众惊呼，不剪",
+   "quote": [
+    {
+     "at": 0.05,
+     "end": 8.16,
+     "text": "It's been 30 minutes in this tiebreak alone.\n光这一个抢十，就打了三十分钟。"
+    },
+    {
+     "at": 16.93,
+     "end": 18.99,
+     "text": "Let her serve.\n让她发球。"
+    }
+   ],
+   "source": "blink",
+   "start": 8126.2,
+   "track": false,
+   "_quote_why": "冷开场原声（后段高光、非结局）：8126 解说「光抢十就打了 30 分钟」（两档边界取并集），其后是布林科娃 20–19 的赛点整分；8144 主裁「让她发球」两档时间不一致，cue 按并集覆盖。本段不含结果：这分她没能兑现，结局在第五章正文兑现，故 _ending_payoff_required=false。",
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/tiebreak-history-2026/label-ao24.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2024.01.18",
+     "people": "布林科娃 vs 莱巴金娜",
+     "place": "澳网 第二轮",
+     "score": "6-4 4-6 7-6(20)",
+     "topic": "大满贯最长抢七"
+    },
+    "motion": "editorial",
+    "pad": 0.085,
+    "show_for": 3.8,
+    "width": 0.6
+   },
+   "_inset_why": "本场第一次出现（含冷开场），按 §6 贴合同 A 角标，右上角、右缘品牌绿短轨、文字右对齐（2026-10-12 全局默认版式，render_story_info_band V14 渲染）。",
+   "_ending_payoff_required": false
+  },
+  {
+   "_window_why": "small.en 转写空档 7022.1–7074.4（抢十 7–9 分段的局间与对拉，画面为双方与教练席的紧张特写）；medium.en 落地后以全量 check 复核。",
+   "cx": 0.5,
+   "end": 7040,
+   "narration": "这一分，她们打了三十一分钟还没打完。这已经是网球最快的决胜方式了。抢七被发明出来，就是为了让比赛赶紧结束。它没被发明之前，网球是另一副样子。",
+   "source": "blink",
+   "start": 7024,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_visual_why": "范·阿伦的试验场就是纽波特 Casino；这张 1915 年前后（LOC 记录）的 Casino 草地球场公有领域照片是本章唯一合规高清图（5760px master 导出），1969 年比赛无任何过闸影像，按所有者定案只旁白带过、不用低清档案画面。",
+   "image": "assets/reel/tiebreak-history-2026/newport-casino.jpg",
+   "image_kind": "photo",
+   "narration": "发明它的人叫吉米·范·阿伦，美国人，网球名人堂就是他创办的。这个人有个执念：网球什么都好，就是打不完。一场势均力敌的比赛，能从下午打到天黑，第二天接着打。",
+   "seconds": 17,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "_photo_source": "https://www.loc.gov/item/2014684157/",
+   "_photo_caption_safety": "全景球场照片：主体是球场纵深与远处球员，画面下缘为草地与看台暗部，底部字幕不遮挡任何主体（已目视本图）。"
+  },
+  {
+   "kicker": "温网 · 一场打了112局的比赛",
+   "narration": "一九六九年温网，四十一岁的冈萨雷斯和帕萨雷尔，打了一场一百一十二局的比赛。",
+   "seconds": 8,
+   "title_card": "1969",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "image": "assets/reel/tiebreak-history-2026/newport-detail.jpg",
+   "image_kind": "photo",
+   "narration": "五小时十二分，跨了两天，还没分出胜负。所有人都看明白了：这么打下去，电视别排期了，球员先累死在场上。",
+   "seconds": 12,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "_photo_source": "https://www.loc.gov/item/2014684157/",
+   "_photo_caption_safety": "全景球场照片：主体是球场纵深与远处球员，画面下缘为草地与看台暗部，底部字幕不遮挡任何主体（已目视本图）。"
+  },
+  {
+   "_visual_why": "与第一张同为纽波特 Casino 照片（全幅），本段讲的正是发生在这片场地的试验赛；全章照片段已用两张不同景别（全幅/裁切）交替。",
+   "image": "assets/reel/tiebreak-history-2026/newport-casino.jpg",
+   "image_kind": "photo",
+   "narration": "范·阿伦拿出了他的方案。一九六五年，他自掏腰包，在纽波特办了场试验赛，请拉沃、罗斯维尔这些大牌来试新计分。可他没想到，真正救网球的，是他最看不上的那个版本。",
+   "seconds": 17,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "_photo_source": "https://www.loc.gov/item/2014684157/",
+   "_photo_caption_safety": "全景球场照片：主体是球场纵深与远处球员，画面下缘为草地与看台暗部，底部字幕不遮挡任何主体（已目视本图）。"
+  },
+  {
+   "kicker": "抢七的第一个版本",
+   "narration": "他力推的版本叫突然死亡，其实就是今天抢七的骨架。",
+   "seconds": 6,
+   "title_card": "一分定生死",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_window_why": "源片两档转写空档 389.2–416.4（集锦第四盘前段对拉），旁白不压英文。画面为抢七时代的实际对拉，作规则讲解的示意画面；9 分制本体规则由角标与旁白承载。",
+   "cx": 0.5,
+   "end": 408,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/tiebreak-history-2026/card-sudden.png",
+    "kind": "story_text",
+    "label": {
+     "date": "1970.09.02",
+     "event": "先到5分",
+     "people": "范·阿伦力推 · 4-4一分决胜",
+     "place": "美网 首用抢七",
+     "topic": "突然死亡"
+    },
+    "motion": "editorial",
+    "pad": 0.085,
+    "show_for": 3.8,
+    "width": 0.6
+   },
+   "narration": "局分六比六之后，不再一局一局打，改打一个小局定胜负。小局里先到五分就赢。",
+   "source": "w80",
+   "start": 400,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_window_why": "两档转写空档 563.1–589.9（第四盘抢七早段对拉），旁白不压英文。",
+   "cx": 0.5,
+   "end": 579,
+   "narration": "最狠的一条是：打到四比四，最后一分定生死，接发球的人还能选从哪边接。也就是说，这一分可能是发球方的赛点，也可能是接发方的赛点——双赛点。",
+   "source": "w80",
+   "start": 565,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_window_why": "两档转写共同空档 697.7–720.1（抢七中段对拉），旁白不压英文。",
+   "cx": 0.5,
+   "end": 718,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/tiebreak-history-2026/card-standard.png",
+    "kind": "story_text",
+    "label": {
+     "date": "1975.08.25",
+     "event": "先到7分",
+     "people": "拉沃等倡导 · 领先2分",
+     "place": "美网 改用12分制",
+     "topic": "久拖之死"
+    },
+    "motion": "editorial",
+    "pad": 0.085,
+    "show_for": 3.8,
+    "width": 0.6
+   },
+   "narration": "球员和观众都爱这个版本：够狠、够快。可拉沃他们几个大牌偏说不行，赢两分才算赢球，这是网球的规矩。于是有了第二个版本：先到七分、领先两分。范·阿伦气坏了，给它起名叫久拖之死。",
+   "source": "w80",
+   "start": 699,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_window_why": "两档转写共同空档 773.5–797.8，旁白不压英文。",
+   "cx": 0.5,
+   "end": 793,
+   "narration": "比赛在两个版本之间摇摆了几年。一九七〇年美网第一次用上抢七，升起红旗，全场就知道：决胜负的时候到了。赛事总监塔尔伯特把话挑明了：球员不买票，买票的是观众。",
+   "source": "w80",
+   "start": 775,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_window_why": "两档转写共同空档 807.7–825.1，旁白不压英文。",
+   "cx": 0.5,
+   "end": 821,
+   "narration": "一九七五年，美网倒向十二分那一边。先到七分、领先两分的版本活了下来，就是今天的标准抢七。",
+   "source": "w80",
+   "start": 809,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_inset_why": "本场第一次出现，按 §6 贴合同 A 角标，右上角、右缘品牌绿短轨、文字右对齐（2026-10-12 全局默认版式，render_story_info_band V14 渲染）。",
+   "_window_why": "两档转写空档 443.1–486.0（抢七早段对拉），旁白不压英文。角标按 docs/short-video-text-overlay-system.md §6.1 合同 A 填：完整日期·赛事轮次｜主题｜整场比分（博格视角，赢盘局数上色）｜对阵。",
+   "cx": 0.5,
+   "end": 464,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/tiebreak-history-2026/label-w80.png",
+    "kind": "story_text",
+    "label": {
+     "date": "1980.07.05",
+     "people": "博格 vs 麦肯罗",
+     "place": "温网 决赛",
+     "score": "1-6 7-5 6-3 6-7(16) 8-6",
+     "topic": "史上最著名抢七"
+    },
+    "motion": "editorial",
+    "pad": 0.085,
+    "show_for": 3.8,
+    "width": 0.6
+   },
+   "narration": "四年后的一九八〇年温网决赛，博格对麦肯罗。第四盘抢七，网球史上最著名的一个：博格先拿到冠军点，麦肯罗救了；麦肯罗拿到盘点，博格又顶住。",
+   "source": "w80",
+   "start": 450,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_quote_kind": "broadcast",
+   "_quote_why": "源片两档转写锚定：1179.95 主裁/解说报十六平，1204.81 解说第七个盘点，1208.51 主裁请安静，约 1213 最后一分落地，1214.75 解说「两盘打平」。窗口止于 1220.5，避开 1221.71 起的纪录片旁白。中文行均 ≤16 字。",
+   "cx": 0.5,
+   "end": 1220.5,
+   "point_end_ok": "抢七最后三分整分回放：16 平、博格穿越出界、麦肯罗第七个盘点兑现，解说原声不剪",
+   "quote": [
+    {
+     "at": 0.67,
+     "end": 2.65,
+     "text": "The calmest man in the place.\n全场最冷静的人。"
+    },
+    {
+     "at": 3.92,
+     "end": 4.54,
+     "text": "Sixteen all.\n十六平。"
+    },
+    {
+     "at": 14.3,
+     "end": 16.24,
+     "text": "Just, just out.\n就出界了一点点。"
+    },
+    {
+     "at": 17.67,
+     "end": 24.59,
+     "text": "That was a winner, of course. McEnroe was absolutely nowhere near it, but it just missed.\n这本该是制胜分，麦肯罗根本够不着，\n可球就偏了那么一点点。"
+    },
+    {
+     "at": 28.81,
+     "end": 31.39,
+     "text": "And of course it's set point number seven for McEnroe.\n麦肯罗的第七个盘点。"
+    },
+    {
+     "at": 32.51,
+     "end": 33.71,
+     "text": "Quiet please.\n请安静。"
+    },
+    {
+     "at": 38.75,
+     "end": 39.95,
+     "text": "Yes — two sets all!\n拿下了，两盘打平！"
+    }
+   ],
+   "source": "w80",
+   "start": 1176,
+   "track": false
+  },
+  {
+   "_window_why": "两档转写共同空档 1382.5–1424.4（第五盘决胜局对拉），旁白不压英文。计数口径只算抢七内：救 5 个冠军点（全场 7 个，另 2 个在第四盘 5–4 局，不入卡）。",
+   "cx": 0.5,
+   "end": 1407,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/tiebreak-history-2026/card-count.png",
+    "kind": "story_text",
+    "label": {
+     "date": "1980.07.05",
+     "event": "救下5个冠军点",
+     "people": "麦肯罗 · 浪费7个盘点",
+     "place": "温网 决赛",
+     "topic": "麦肯罗一个抢七"
+    },
+    "motion": "editorial",
+    "pad": 0.085,
+    "show_for": 3.8,
+    "width": 0.6
+   },
+   "narration": "你数一下：麦肯罗在这一个抢七里，救了五个冠军点，自己浪费了七个盘点，最后十八比十六拿下。整个抢七打了二十分钟，全场起立。可博格第五盘还是八比六赢了，五连冠到手。王者的区别不在顺风球，在这种分上。",
+   "source": "w80",
+   "start": 1384,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_inset_why": "本场第一次出现，按 §6 贴合同 A 角标，右上角（2026-10-12 全局默认版式）。",
+   "_window_why": "两档转写共同空档 474.0–500.1（决胜盘中段对拉），旁白不压英文。角标合同 A：日期取完赛日 2010.06.24（比赛 6 月 22–24 日跨三天）。",
+   "cx": 0.5,
+   "end": 495.0,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/tiebreak-history-2026/label-w10.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2010.06.24",
+     "people": "伊斯内尔 vs 马胡特",
+     "place": "温网 第一轮",
+     "score": "6-4 3-6 6-7(7) 7-6(3) 70-68",
+     "topic": "三天还没打完"
+    },
+    "motion": "editorial",
+    "pad": 0.085,
+    "show_for": 3.8,
+    "width": 0.6
+   },
+   "narration": "抢七治好了拖延症，可它治不了一个地方：决胜盘。很长一段时间，四大满贯的决胜盘不设抢七，必须领先两局。一场球最极端的样子，出现在二〇一〇年温网：伊斯内尔对马胡特，决胜盘打到七十比六十八。",
+   "source": "w10",
+   "start": 476.5,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_quote_kind": "broadcast",
+   "_quote_why": "两档转写锚定：1361.54 解说第五个赛点；约 1394–1402 最后一分（抽帧验位：1380 记分牌赛点 69–68/40-30，1404 伊斯内尔已庆祝）。1384–1400 间小模型另有几句被欢呼盖住的碎片（两档不一致），以审听包复核为准。",
+   "cx": 0.5,
+   "end": 1406,
+   "point_end_ok": "第五个赛点起的最后两分整分回放，含制胜分与全场起立，解说原声不剪",
+   "quote": [
+    {
+     "at": 1.8,
+     "end": 10.8,
+     "text": "That sets up his fifth match point, and can he make it?\n第五个赛点，他能拿下吗？"
+    },
+    {
+     "at": 24.3,
+     "end": 26.8,
+     "text": "How will Mahut respond?\n马胡特会如何回应？"
+    },
+    {
+     "at": 27.36,
+     "end": 30.0,
+     "text": "Thank you, thank you. 30, 40.\n谢谢，谢谢。三十比四十。"
+    },
+    {
+     "at": 30.5,
+     "end": 35.68,
+     "text": "How will he cope with the enormity of this situation?\n他要怎么扛住这一刻？"
+    },
+    {
+     "at": 39.92,
+     "end": 40.54,
+     "text": "How will he cope with the enormity of this situation?\n他要怎么扛住这一刻？"
+    }
+   ],
+   "source": "w10",
+   "start": 1360,
+   "track": false
+  },
+  {
+   "_visual_why": "源片 1541 秒原帧：18 号场记分牌（马胡特 2 盘 68 局 / 伊斯内尔 3 盘 70 局）与两人合影——就是旁白说的这一刻本身，当场实拍帧作图段。",
+   "image": "assets/reel/tiebreak-history-2026/frame-isner-mahut-scoreboard.jpg",
+   "image_kind": "photo",
+   "narration": "记分牌被打到没法显示，两个人最后是站着合影的。整场十一个小时五分钟，跨了三天。",
+   "seconds": 10,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "_photo_source": "https://www.youtube.com/watch?v=J9M-XwUhYH4",
+   "_photo_caption_safety": "记分牌居左上、两名球员居右，底部字幕带落在草地与台阶区域，不遮记分牌数字与人物（已目视本帧）。"
+  },
+  {
+   "_visual_why": "2018 半决赛的过闸画面只有下一段 39 秒名场面短片，本段旁白先行用伊斯内尔画面衔接，人物不错位。",
+   "_window_why": "两档转写共同空档 267.8–294.0。画面是伊斯内尔本人（2018 半决赛的另一方正是他），下一段即切 2018 名场面原声；2018 比赛标识由下一段角标承载。",
+   "cx": 0.5,
+   "end": 285,
+   "narration": "八年后，还是温网。安德森和伊斯内尔的半决赛，决胜盘打到二十六比二十四，六个半小时。安德森赛后直接开炮：再这么打下去，是拿球员的职业生涯开玩笑。",
+   "source": "w10",
+   "start": 270,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_inset_why": "本场第一次出现，按 §6 贴合同 A 角标，右上角（2026-10-12 全局默认版式）。",
+   "_quote_kind": "broadcast",
+   "_quote_why": "短片两档转写锚定：4.26–6.5 解说左手惊呼，12.52–14.02 「We've seen it all!」。窗口止于 17 秒，避开 20.18 起的回放段解说。",
+   "cx": 0.5,
+   "end": 17,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/tiebreak-history-2026/label-w18.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2018.07.13",
+     "people": "安德森 vs 伊斯内尔",
+     "place": "温网 半决赛",
+     "score": "7-6(8) 6-7(5) 6-7(9) 6-4 26-24",
+     "topic": "决胜盘打到26-24"
+    },
+    "motion": "editorial",
+    "pad": 0.085,
+    "show_for": 3.8,
+    "width": 0.6
+   },
+   "point_end_ok": "安德森跌倒后左手回球整分原声，含解说惊呼，不剪",
+   "quote": [
+    {
+     "at": 3.86,
+     "end": 5.48,
+     "text": "Lefty, it's in!\n左手回球，进了！"
+    },
+    {
+     "at": 5.78,
+     "end": 6.0,
+     "text": "It's in!\n确实进了！"
+    },
+    {
+     "at": 12.12,
+     "end": 13.52,
+     "text": "We've seen it all!\n这场面，真是见所未见！"
+    }
+   ],
+   "source": "and",
+   "start": 0.5,
+   "track": false
+  },
+  {
+   "_window_why": "small.en 转写空档 6311.9–6343.4（第三盘中段对拉）；medium.en 落地后复核。2019 按所有者定案无画面、仅旁白，本段不挂任何 2019 源。",
+   "cx": 0.5,
+   "end": 6335,
+   "narration": "这之后，规矩终于改了：二〇一九年，温网启用决胜盘十二平抢七；澳网走得更远，决胜盘六平之后直接抢十。二〇二二年，四大满贯统一：决胜盘打到六比六，抢十定胜负，领先两分。打不完的比赛，从规则上被判了死刑。",
+   "source": "blink",
+   "start": 6315,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_window_why": "两档转写共同空档 7453.3–7480.4（抢十中段对拉）；7419–7444 段 medium.en 有观众助威声（logprob -0.8 不算幻听），已避开。本场角标已在冷开场段贴过（合同 A），按「同一事实不反复出现」本段不再贴。",
+   "cx": 0.5,
+   "end": 7478.5,
+   "narration": "而抢十最有名的一场，就是开头那场。二〇二四年澳网，布林科娃对莱巴金娜。决胜盘抢十打到二十二比二十，她错过九个赛点，又救了六个赛点。四十二分，三分钟——不对，三十一分钟，才分出胜负。这是大满贯历史上最长的抢七。",
+   "source": "blink",
+   "start": 7457,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "_payoff_why": "正文兑现段：第五章讲完 22–20 的来龙去脉后，把赛末全场沸腾与解说定性原声完整放一次（与冷开场的中段赛点高光首尾呼应），随后接采访与收束旁白。",
+   "_quote_kind": "broadcast",
+   "_quote_why": "赛末解说三句定性（两档转写核对：medium 8226.95/8240.43/8248.43 三句；small 同处边界不同，cue 按并集覆盖）。small 在 8203.82–8228.96 有一句低置信 crowd 糊音（avg_logprob -2.17），其尾段与本窗重叠的 2 秒由第一条 cue 覆盖。第一条 cue at=0.05。",
+   "cx": 0.5,
+   "end": 8254.5,
+   "point_end_ok": "抢十最后一分已在窗前约 8223 落地，本段是全场沸腾与解说定性原声（整段不剪）",
+   "quote": [
+    {
+     "at": 0.05,
+     "end": 13.53,
+     "text": "The grit, the will of Anna Blinkova is really something else.\n布林科娃的这股韧劲和意志，\n真是太特别了。"
+    },
+    {
+     "at": 13.53,
+     "end": 21.1,
+     "text": "And Elena Rybakina equals her in just that.\n而莱巴金娜在这一点上，丝毫不输。"
+    },
+    {
+     "at": 21.53,
+     "end": 26.93,
+     "text": "And is now the longest ever women's singles tiebreak at a Grand Slam event.\n这是大满贯史上最长的女单抢七。"
+    }
+   ],
+   "source": "blink",
+   "start": 8226.9,
+   "track": false
+  },
+  {
+   "_frame_why": "measure_person_center：脸的横向散开 0.551 超过一个框装得下的 0.2619，人物中心不稳，退回画面中心。",
+   "_quote_kind": "interview",
+   "_quote_why": "采访源两档转写逐句一致（146.76–159.46）：三句原话完整。中文行均 ≤16 字。",
+   "cx": 0.5,
+   "end": 159.8,
+   "frame": "court",
+   "point_end_ok": "赛后场地采访原声整句不剪",
+   "quote": [
+    {
+     "at": 0.36,
+     "end": 3.56,
+     "text": "This day, I will remember for the rest of my life,\n这一天，我会铭记一生，"
+    },
+    {
+     "at": 3.78,
+     "end": 10.54,
+     "text": "Especially on this court, with this crowd, I will never forget it.\n在这个球场、这片观众面前，\n我永远不会忘记。"
+    },
+    {
+     "at": 10.78,
+     "end": 13.06,
+     "text": "It's the best day of my life so far.\n是我迄今最美好的一天。"
+    }
+   ],
+   "source": "ao",
+   "start": 146.4,
+   "track": false
+  },
+  {
+   "_window_why": "赛后段：两档在 8253.8–8271.6 无解说句（medium 8271.65 起有一句报分，已避开）；画面为结果图形、走向球网、落泪特写与握手。结尾问句回环金句后半。",
+   "cx": 0.5,
+   "end": 8271.0,
+   "narration": "抢七七十三年。从红旗升起的突然死亡，到二十二比二十的抢十，它救了网球的排期，没救得了网球的争论。决胜盘抢十，你觉得是进步，还是网球丢掉了它最后的浪漫？",
+   "source": "blink",
+   "start": 8255,
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  }
+ ],
+ "slug": "tiebreak-history-2026",
+ "sources": {
+  "and": "https://github.com/robertyang87/tennislive/releases/download/source-j2Yjch3BKpY/j2Yjch3BKpY.mp4",
+  "ao": "https://github.com/robertyang87/tennislive/releases/download/source-0swz2rTLxaM/0swz2rTLxaM.mp4",
+  "blink": "https://github.com/robertyang87/tennislive/releases/download/source-PVEtpE4mkOM/PVEtpE4mkOM.mp4",
+  "w10": "https://github.com/robertyang87/tennislive/releases/download/source-J9M-XwUhYH4/J9M-XwUhYH4.mp4",
+  "w80": "https://github.com/robertyang87/tennislive/releases/download/source-G6PW9pNevIg/G6PW9pNevIg.mp4"
+ },
+ "title": "抢七，是被一场打不完的比赛逼出来的",
+ "title_card_handle_bottom": 28,
+ "track": false,
+ "tts_backend": "edge"
+}

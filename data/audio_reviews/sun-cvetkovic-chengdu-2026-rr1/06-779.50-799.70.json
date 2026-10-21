@@ -1,0 +1,26 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-staylive663661/663661-9f57421c.mp4",
+  "source_sha256": "9f57421c24c81b38e9bd6fc84bffdc212c9eab8ae8688f42988f99e8438671a1",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-21T18:20:13+00:00",
+  "reviewed_from": 779.5,
+  "reviewed_to": 799.7,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 780.2,
+      "end": 790.5,
+      "en": "Sun has grown stronger and stronger in this first set since the visit of the physio.",
+      "zh": "暂停过后\n孙心然越打越强"
+    },
+    {
+      "start": 790.6,
+      "end": 799.7,
+      "en": "Something was clearly not right in those opening games, when she was broken twice.",
+      "zh": "开局连丢两个发球局时\n她的状态明显不对"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 9f57421c24c81b38e9bd6fc84bffdc212c9eab8ae8688f42988f99e8438671a1，存于 data/source_asr/663661/small.en.json 与 data/source_asr/663661/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}

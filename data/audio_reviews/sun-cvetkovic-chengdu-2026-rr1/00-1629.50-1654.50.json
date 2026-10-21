@@ -1,0 +1,32 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-staylive663661/663661-9f57421c.mp4",
+  "source_sha256": "9f57421c24c81b38e9bd6fc84bffdc212c9eab8ae8688f42988f99e8438671a1",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-21T18:20:13+00:00",
+  "reviewed_from": 1629.5,
+  "reviewed_to": 1654.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 1629.6,
+      "end": 1639.5,
+      "en": "The player is staying fairly central there — the tape from behind the baseline,",
+      "zh": "球员站位保持居中\n球擦网带而过"
+    },
+    {
+      "start": 1639.6,
+      "end": 1644.5,
+      "en": "And it is match point for Xinran Sun.",
+      "zh": "这是孙心然的赛点"
+    },
+    {
+      "start": 1644.6,
+      "end": 1654.5,
+      "en": "She's got two of them, and executes on the first.",
+      "zh": "两个赛点，第一个就兑现"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 9f57421c24c81b38e9bd6fc84bffdc212c9eab8ae8688f42988f99e8438671a1，存于 data/source_asr/663661/small.en.json 与 data/source_asr/663661/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
