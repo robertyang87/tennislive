@@ -12,7 +12,7 @@ B=R/'research/swiatek-season-end-2026';P=R/'specs/reels/swiatek-season-end-2026.
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 notes={
  'toronto':'同一原片SHA与仓库已审的多伦多夺冠素材一致。用两档逐词时间排除232秒、258.88秒等解说；夺冠原声两模型一致，纠正按官方身份拼写的Swiatek。',
- 'ao':'157–159.8为球员反应和场内声，双模型的终场评论在160.02/160.24以后开口；转场尾料至159.98仍未碰该句。',
+ 'ao':'151–159.8为末次发球、完整末点及球员反应和场内声，双模型的终场评论在160.02/160.24以后开口；转场尾料至159.98仍未碰该句。',
  'miami':'旁白仅用113.1–121.8，两模型均无前景词。最后赛点用249.05–262.95：small.en没有句子，medium.en把Hong Kong中的一个词拖成15.7秒；独立base只检出赛点前的Hold on和263秒后Remarkable performance，没有Hong Kong。保留完整赛点，到第一句真实终场总结前结束；不把中档解码假词烧成字幕。',
  'rg':'两英文模型对球场欢呼不一致：small.en出现重复Thank you very much，medium.en只有Oh；独立base多语种模型+VAD在100–156秒未检出任何语言段。135.5–149保留球声和欢呼，无可核对的前景英文句子，拒绝生成感谢语字幕。',
  'wimbledon':'405–416.3两模型没有前景英文；完整末点中The champion is beaten三模型支持（base把beaten误成big，结合small/medium一致的beaten采用）。字幕保守覆盖444.66–449.12，449.4退出下一句之前。',
