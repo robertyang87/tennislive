@@ -1,0 +1,72 @@
+name: import-sun-cvetkovic-source
+run-name: "import-sun-cvetkovic-source · staylive663661"
+
+# 一次性：孙心然 vs Cvetkovic（2026-10-21 成都青少年年终总决赛 RR1）
+# 的「赛场之上」源存档。官方回放只在 Staylive（video 663661，
+# Centre Court Day 1 全天回放），本地已用 720p 通看标好锚点
+# （截取坐标 0 点 = 回放 3:28:00 = 母流 12480 秒）。
+# 本工作流在 runner 上按同一锚点表从 1080p 档剪 13 段关键球+
+# 精彩球集合，拼好后直传已建好的 Release source-staylive663661。
+# 本地直传 uploads.github.com 被凭据 401 挡住，故走 runner。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-sun-cvetkovic-source
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools/ci_apt_install.sh
+          sparse-checkout-cone-mode: false
+
+      - name: 安装 ffmpeg
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+
+      - name: 按锚点表剪 13 段并拼接
+        run: |
+          set -euo pipefail
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+          URL=$(curl -s "https://api.staylive.tv/videos/663661" -H "Accept: application/json" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('playback_url') or d['message']['playback_url'])")
+          test -n "$URL"
+          BASE=12480
+          mkdir -p win seg
+          SEGS=(
+          "570 830 s1g1" "1600 1750 s1g5a" "2080 2130 s1g5b" "2130 2320 s1g6"
+          "2985 3020 s1g9r" "3210 3360 s1g10" "3845 4125 s1tb" "4710 4795 s2g2"
+          "4800 4920 s2g3" "5160 5340 s2g5" "5560 5590 s2g6r" "5850 6030 s2fin"
+          "6050 6270 interview"
+          )
+          : > seg/concat.txt
+          i=0
+          for s in "${SEGS[@]}"; do
+            read -r a b name <<< "$s"
+            i=$((i+1))
+            base=$(printf "%02d_%s" "$i" "$name")
+            ffmpeg -hide_banner -loglevel error -user_agent "$UA" -ss $((BASE + a - 15)) -i "$URL" -t $((b - a + 30)) -map 0:v:4 -map 0:a:4 -c copy "win/${base}.mp4" -y
+            ffmpeg -hide_banner -loglevel error -ss 15 -to $((15 + b - a)) -i "win/${base}.mp4" -c:v libx264 -crf 21 -preset veryfast -c:a aac -b:a 128k "seg/${base}.mp4" -y
+            echo "file '${base}.mp4'" >> seg/concat.txt
+            echo "done $base"
+          done
+          ffmpeg -hide_banner -loglevel error -f concat -safe 0 -i seg/concat.txt -c copy staylive663661.mp4 -y
+          ffprobe -v error -show_entries format=duration,size -of default=nw=1 staylive663661.mp4
+
+      - name: 上传到 Release source-staylive663661
+        run: |
+          gh release upload source-staylive663661 staylive663661.mp4 --clobber
+          gh release view source-staylive663661 --json assets --jq '.assets[] | "\(.name) \(.size)"'
