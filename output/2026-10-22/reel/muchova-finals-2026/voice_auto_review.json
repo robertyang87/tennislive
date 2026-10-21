@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "25022f7d2ff505cf832422b847a6ba86eef12ecc707d2d213a208c384286537a",
-    "render_inputs_sha256": "66afdf1b418b8a12a4f1d3dae3a5566e368c8d91867ea28f3bfb1750f65e70d2",
-    "spec_sha256": "ac4e0bf1eb304bc7f0713550d527efad2326be1fb9d21fc64207411f06509c4f",
-    "film_sha256": "f15a31851fd8a233e58a44b4750e15b3c6a72421253099325e6aca4d2a81225f",
+    "render_sha256": "5349662da2ed47000a064d99bd20b4f1d8c85d4a74ea44e02d2a0ab5b356b37c",
+    "render_inputs_sha256": "8be66ef86f5325976ad23057051a1bcb880bc21605499b67aa63425feb65a875",
+    "spec_sha256": "82222f3c9edf3e8a1f68adae951b32464a1b15420ac64f5c8fa349698375b100",
+    "film_sha256": "de8eac8adabfd6af7e98332f2c17812b8c32e3df7a5f50b62af75ed8dc2c7c98",
     "inventory_sha256": "e675cbb30e40de511e1abadd6aac9d4e122420dc2cc83fd7b641b09e0553e680"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-21T18:32:05+00:00",
+  "reviewed_at": "2026-10-21T18:51:43+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -422,7 +422,7 @@
         "substituted": 1,
         "sub_ratio": 0.071,
         "longest_deletion": 0,
-        "transcript": "六年多后再次蓬佩,第一座千分罐。"
+        "transcript": "六年多后,再次蓬佩,第一座千分罐。"
       },
       "polyphones": [],
       "pauses": {
@@ -454,7 +454,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "来到巴特红宝,大板阴脚伤退赛,他收获首个草地单打冠军。"
+        "transcript": "来到巴特红宝、大板阴脚伤退赛,他收获首个草地单打冠军。"
       },
       "polyphones": [],
       "pauses": {
@@ -518,7 +518,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "10月20日,斯瓦泰克结束赛季,科斯秋克必须打进宁波决赛,才能保留争夺资格的机会。"
+        "transcript": "10月20日,斯瓦泰克结束赛季。科斯秋克必须打进宁波决赛,才能保留争夺资格的机会。"
       },
       "polyphones": [],
       "pauses": {
@@ -582,7 +582,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "伴绝赛又是高福,他再次止步。"
+        "transcript": "班决赛又是高福。他再次止步。"
       },
       "polyphones": [],
       "pauses": {
@@ -665,10 +665,10 @@
         "ref_syllables": 26,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.038,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2月来到多哈,他上一次拿到循徊赛单打冠军还是2019年。"
+        "transcript": "2月来到多哈,他上一次拿到巡迴赛单打冠军还是2019年。"
       },
       "polyphones": [
         {
@@ -722,7 +722,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "斯圖加特﹑他现在四分之一决赛﹑首次击败高福﹑最终收获雅军。"
+        "transcript": "斯圖加特﹑他现在四分之一决赛,首次击败高福,最终收获雅军。"
       },
       "polyphones": [],
       "pauses": {
@@ -818,7 +818,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "罗马首战出局,罚网又在第三轮赋予泰希曼。"
+        "transcript": "罗马首战出局,法网又在第三轮赋予泰希曼。"
       },
       "polyphones": [],
       "pauses": {
@@ -914,7 +914,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "印第安威尔斯,止步第四輪后,来到迈阿密四分之一决赛,对面又是姆博科。"
+        "transcript": "印第安威尔斯止步第四轮后,来到迈阿密四分之一决赛,对面又是姆伯科。"
       },
       "polyphones": [],
       "pauses": {
@@ -946,7 +946,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "温网决赛三盘布迪诺斯科娃,1300分仍是他全年最大的单战收获。"
+        "transcript": "温网决赛三盘不敌诺斯科娃,1300分仍是她全年最大的单战收获。"
       },
       "polyphones": [],
       "pauses": {
@@ -978,7 +978,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "她接受了一次小手术。恢复期间,缺席了整个北美应抵热身赛季。"
+        "transcript": "她接受了一次小手术,恢复期间缺席了整个北美应抵热身赛季。"
       },
       "polyphones": [],
       "pauses": {
