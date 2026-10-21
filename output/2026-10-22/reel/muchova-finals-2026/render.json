@@ -1,0 +1,105 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "571cdb7deeeeff89c7060361eada0599e968fe7fb51e25ebfd2575a944f6da48",
+    "request_count": 21,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-muchova-finals-2026-571cdb7deeeeff89",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-muchova-finals-2026-571cdb7deeeeff89/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39655048234"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 315.74,
+  "topbar": null,
+  "film_seconds": 321.52,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 5.352,
+    "2": 6.408,
+    "3": 4.728,
+    "7": 3.672,
+    "8": 6.504,
+    "10": 4.2,
+    "11": 5.856,
+    "13": 4.68,
+    "14": 3.264,
+    "15": 5.856,
+    "19": 4.056,
+    "22": 7.08,
+    "25": 3.384,
+    "26": 6.672,
+    "27": 4.512,
+    "29": 3.504,
+    "30": 9.864,
+    "31": 8.232,
+    "32": 6.912,
+    "33": 8.28
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "8be66ef86f5325976ad23057051a1bcb880bc21605499b67aa63425feb65a875",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "muchova-finals-2026",
+    "received_at": "2026-10-21T18:42:00Z",
+    "artifact_ready_at": "2026-10-21T18:49:54Z",
+    "elapsed_seconds": 474.136,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "de8eac8adabfd6af7e98332f2c17812b8c32e3df7a5f50b62af75ed8dc2c7c98",
+    "spec_sha256": "82222f3c9edf3e8a1f68adae951b32464a1b15420ac64f5c8fa349698375b100",
+    "run_id": "39655048234",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-21T18:44:28Z",
+        "run_id": "39655048234"
+      }
+    ],
+    "render_seconds": 326.136,
+    "pre_render_seconds": 148.0
+  },
+  "film_sha256": "de8eac8adabfd6af7e98332f2c17812b8c32e3df7a5f50b62af75ed8dc2c7c98",
+  "film_bytes": 143213525,
+  "qc_attestation_sha256": "594dc53419b79a9b5b9cb2e6c6ed9e41aaa700bc653cdc986cf180a6b833db9a",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-21T18:44:28Z",
+      "run_id": "39655048234"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-21T18:49:57Z",
+      "run_id": "39655048234"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-muchova-finals-2026/muchova-finals-2026.mp4",
+  "video_bytes": 143213525
+}

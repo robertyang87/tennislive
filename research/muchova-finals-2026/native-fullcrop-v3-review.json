@@ -1,0 +1,446 @@
+{
+  "schema": "tennislive.independent-native-sample-visual-review.v1",
+  "created_at": "2026-10-21T17:54:15.625446+00:00",
+  "reviewer": "visual_assets",
+  "status": "sampled_video_review_with_overlay_followups",
+  "publication_approved": false,
+  "fullfilm_qc_passed": false,
+  "source_preview_manifest": "research/muchova-finals-2026/native-preview-v3-manifest.json",
+  "source_preview_manifest_sha256": "5ea7e8ec137c0de07d64e7452c6a07dfed2d813a43bcf307eb1a510a51166c20",
+  "source_spec_sha256": "647ce87ff9a70ac4cc710e04bbf85de6c972c95cb6b458acb795f8da04fbceca",
+  "latest_spec_sha256_at_review": "77bab6ae76c53d3e0ca779fe727b62469698e9052242db2c9dd894a8eb375e44",
+  "video_only_scope": true,
+  "latest_copy_requires_fresh_card_preview": true,
+  "sample_count": 22,
+  "video_sample_count": 21,
+  "chapter_card_sample_count": 1,
+  "all_sample_hashes_verified": true,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "observations": {
+    "no_contain_letterbox_in_video_samples": true,
+    "RG_source_border": "approximately3px left and2px right dark encoded border in caption10; measured outer columns mostly <=12 RGB, image beginsatx3/4 and endsaround1077. This is a source narrow border, not a contain layout.",
+    "subtitle_eye_mouth_obstruction_in_sampled_frames": false,
+    "V14_material_player_obstruction_samples": [
+      "caption-09.png",
+      "caption-16.png",
+      "caption-19.png"
+    ],
+    "required_followup": "Root to render adjusted native Stuttgart delay; root to assess Wimbledon SF and mixed far-player overlay overlap. Latest chapter copy needs fresh card previews."
+  },
+  "samples": [
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-01.png",
+      "image_sha256": "f2626e649aca9b16bcc78e407586310662b45f4bfb08713f6ec1e4ffd2faf64c",
+      "segment": 1,
+      "source": "ao_r16",
+      "source_time": 165.7,
+      "film_time": 11.6,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "澳网侧脸眼口清楚；TR覆盖后侧头带/发际部分，未压眼口。左下有被全幅裁切后的原转播记分条碎边。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-02.png",
+      "image_sha256": "c9ef264f4b9575fca531ffdb5c07a7dede7f0510296d204ec2316d5f0700d780",
+      "segment": 3,
+      "source": "doha",
+      "source_time": 240.7,
+      "film_time": 33.2,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "多哈双方击球位置可见；TR未遮本采样球员，字幕在底部空场。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-03.png",
+      "image_sha256": "6336d0010c3fddd27ea5b258c0a95a7dab4b6d322335bffc25efb6becc967169",
+      "segment": 4,
+      "source": "doha",
+      "source_time": 248.18,
+      "film_time": 40.68,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "多哈获胜背影/步行动作完整；双语字幕在脚下，未挡头脸。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-04.png",
+      "image_sha256": "1e7912589dea36baa0e4748b767231e18451fa766a5117d42c71b024bb0d8bee",
+      "segment": 5,
+      "source": "doha",
+      "source_time": 252.6,
+      "film_time": 45.0,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "多哈比赛球员与击球动作可见，无TR；无字幕的合法cue间隙。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-05.png",
+      "image_sha256": "65f918695d1071a81370a79f3155278e1ef6700552c2f89592817376974d1f86",
+      "segment": 6,
+      "source": "doha_trophy_clean",
+      "source_time": 2.6,
+      "film_time": 59.300000000000004,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "720p多哈烟火捧杯实景全幅，无新增黑边；烟火烟雾本身遮部分头/杯，不是叠字遮挡，举杯手臂动作可辨。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-06.png",
+      "image_sha256": "494ea1bbaf30840566724bdcae1eb5db6f5f8c1957113cfb3a854c295a8791f6",
+      "segment": 7,
+      "source": "doha_trophy_clean",
+      "source_time": 7.9,
+      "film_time": 64.6,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "720p多哈第二烟火采样全幅；烟雾实景遮脸/杯细节，举杯姿态可辨，底部字幕未挡头或杯。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-07.png",
+      "image_sha256": "13713376e239057efb8a4b32ba47b7a091f2d6db63b2e439d580a57122af6195",
+      "segment": 8,
+      "source": "miami",
+      "source_time": 247.6,
+      "film_time": 70.5,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "迈阿密双方与击球动作可见；TR位于右上，本采样未挡两名球员。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-08.png",
+      "image_sha256": "965224526524144ddb0e897d17040d3a3b002cca19fcfd4fee39d538bd3c8c67",
+      "segment": 9,
+      "source": "miami",
+      "source_time": 264.1,
+      "film_time": 78.5,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "迈阿密比赛全幅，无TR，本采样双方动作可见。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-09.png",
+      "image_sha256": "86a0ad25a5bb8a96d092789c2287cf95b3db1e4bdc0fc5a604030389b5f78880",
+      "segment": 12,
+      "source": "stuttgart_final",
+      "source_time": 263.6,
+      "film_time": 111.45,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "needs_overlay_followup",
+      "observation": "斯图加特263.6：TR score/name覆盖远端穆霍娃头/准备手及上身；近端莱巴金娜发球动作完整。需最小修复后原生复验。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-10.png",
+      "image_sha256": "678992dd08bfdc22134539eafa5127bf51843a7ff005e3d146d6c3f33c633d06",
+      "segment": 13,
+      "source": "rg_r32",
+      "source_time": 6.6,
+      "film_time": 121.85000000000001,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "法网竖源人物跪地反应、头脸和球拍清楚；TR与字幕均不挡。左右约2–3px源边框，非contain大留黑。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-11.png",
+      "image_sha256": "c8c537cebb46f42b853bc7777b697cf42f3436599ca94747dac9acdbb686c05b",
+      "segment": 16,
+      "source": "bad_homburg",
+      "source_time": 475.8,
+      "film_time": 143.15,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "巴特洪堡退赛实景：穆霍娃头脸/拿毛巾动作清楚，TR在头上方，字幕在车盖区域。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-12.png",
+      "image_sha256": "1f21d6510c4071b95360971d6e854fecc02dd21fb363926deda07f4cb1feee1b",
+      "segment": 17,
+      "source": "bad_homburg",
+      "source_time": 498.7,
+      "film_time": 150.85,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "巴特洪堡动态举杯：脸、双手和象形奖杯主体清楚；奖杯底座右侧触画边，未损害举杯动作辨识。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-13.png",
+      "image_sha256": "78ce39c812180a16ba45398692c14c5442174c455cf4e2a0a3b056917d3c3436",
+      "segment": 18,
+      "source": "bad_homburg_feature",
+      "source_time": 109.88,
+      "film_time": 155.01000000000002,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "107.92健康原声窗口本帧109.88：中心满裁保头部/坐下动作；双语字幕在下方，无TR压人。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-14.png",
+      "image_sha256": "9af738358f92e4072934f5b32cb23bfaee86e185d0e9fc88772c912bc87af79a",
+      "segment": 18,
+      "source": "bad_homburg_feature",
+      "source_time": 111.2,
+      "film_time": 156.33,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "健康原声111.2观众B-roll全幅；字幕可读，未虚构本人对口画面。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-15.png",
+      "image_sha256": "c648109f324147dd735990bf5909283c8306a638b48b35c5dca4517df35fc6e5",
+      "segment": 19,
+      "source": "doha",
+      "source_time": null,
+      "film_time": 159.43,
+      "scope": "old_chapter_card_requires_fresh_preview",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "not_current_copy_validation",
+      "observation": "旧版温网章节卡，非video；本轮不为最新修改后的章节文案背书，需新卡预览。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-16.png",
+      "image_sha256": "0673060ccb39b612b58f4187c30d61faf4dc2b89a751592ab758ca1b53bb3004",
+      "segment": 20,
+      "source": "wimbledon_sf",
+      "source_time": 609.1,
+      "film_time": 164.89000000000001,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "needs_overlay_followup",
+      "observation": "温网半决赛609.1：TR score/name盖住远端穆霍娃头及上身，近端高芙完整，需主线程决定最小遮挡修复并原生复验。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-17.png",
+      "image_sha256": "f5beaa33f03b262afb14a7654824fe156c6061bf7c3b415040e26a3307744dd4",
+      "segment": 21,
+      "source": "wimbledon_sf_interview",
+      "source_time": 56.54,
+      "film_time": 207.59,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "温网采访本人正脸完整；英文/中文字幕在胸前，未挡眼口；顶部品牌不压眼口。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-18.png",
+      "image_sha256": "8c80c6b45497474d2276b870775bb5fb02006dfc72d3813fd32fa7fb484df43c",
+      "segment": 23,
+      "source": "wimbledon_final",
+      "source_time": 217.4,
+      "film_time": 224.55,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "温网决赛217.4：远端发球动作清楚，TR未压发球者；近端球员在裁切左下仅露部分，属满幅固定中心的画面取舍，不能称双方全身全程完整。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-19.png",
+      "image_sha256": "8c19c2cd89319401492845df07f7872ca17a59e56a14f260e8a2ce8bfd41a46f",
+      "segment": 27,
+      "source": "uso_mixed_final",
+      "source_time": 672.6,
+      "film_time": 254.25,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "needs_overlay_followup",
+      "observation": "美网混双672.6：近端门西克发球与穆霍娃网前蹲位可辨；TR覆盖远端右侧接发球员头/躯干，需主线程决定最小遮挡修复并原生复验。抢十[10-6]基线/粗细/赢家绿色正确。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-20.png",
+      "image_sha256": "da93ece4b0c34b6f1b8a6b1a7e5a3d65b1f636c5f347adc57f16a1d8b8380ffb",
+      "segment": 28,
+      "source": "uso_r32",
+      "source_time": 184.1,
+      "film_time": 267.85,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "美网第三轮本人正脸清楚；TR靠右上未压眼口；字幕在胸前。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-21.png",
+      "image_sha256": "fde5f64fcd7b4ad1d36577176326a03eee8974399cc1ea4370dd69c357a9c8d3",
+      "segment": 29,
+      "source": "uso_r32",
+      "source_time": 191.8,
+      "film_time": 275.55,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "美网赛后友好互动本人脸与抬臂清楚，握手接触点落画面左边缘之外，不能以单帧证明双方握手全貌。"
+    },
+    {
+      "image": "/tmp/muchova-native-preview-v3/caption-22.png",
+      "image_sha256": "69bfef0f12bb6135fde5f641a24b9b4634545dd09e53d68e5e88173ace61b4ab",
+      "segment": 31,
+      "source": "bjk_cup_final",
+      "source_time": 461.1,
+      "film_time": 285.70000000000005,
+      "scope": "video_only_scope",
+      "inspected_full_resolution_png": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "contain_letterbox_detected_visually": false,
+      "status": "sample_no_new_blocking_geometry_issue",
+      "observation": "金杯比赛发球者与接发者动作可见；TR未压本帧球员，字幕cue间隙合法。"
+    }
+  ],
+  "limitations": [
+    "Only the22 provided actual PNGs were reviewed, plus explicit Stuttgart source investigation; no whole-video approval.",
+    "Samples exclude transitions and final compression; continuous motion may reveal additional overlaps.",
+    "No audio listened or assessed in this visual task.",
+    "Source/geometry/quote frame scope is valid only to the extent root states unchanged after the old preview spec; latest two chapter text changes are not validated by old card."
+  ],
+  "pending_fixes": [
+    {
+      "sample": "caption-09.png",
+      "source": "stuttgart_final",
+      "show_after": 5.4,
+      "source_display_start": 266.4,
+      "state": "pending_native_after_fix_verification",
+      "source_sample_opinion": "Source266.4,266.8,267,268,269,270,271.2 checked with matching V14 dimensions; no eyes/mouth or racket action blocked after this delay. Cap/hair at269+may overlap right upper label; no facial feature obstruction. Source266.4 is court after final stroke and266.8+winner Rybakina reaction.",
+      "source_evidence_sheet": "research/muchova-finals-2026/contact-sheets/stuttgart-v14-overlap/delayed-label-266.4-onward.jpg"
+    },
+    {
+      "sample": "caption-16.png",
+      "source": "wimbledon_sf",
+      "show_after": 36.5,
+      "source_display_start": 643.0,
+      "state": "final_source_window_verified_pending_native_one_frame",
+      "source_sample_opinion": "Checked627–649 rough scene scan then642.5–648.9 at0.4s full1080x1440 center crops with actual648px V14 label. At642.9+wide shot, Muchova head and upper body are in center/lower image below label. Source643.0–649.0 is a safe6-second window; preserves all source/quotes timings. Do not use prior624.7 delay.",
+      "show_for": 6.0,
+      "source_display_end": 649.0,
+      "source_evidence_sheet": "research/muchova-finals-2026/contact-sheets/wim-sf-label-safe-window.jpg"
+    },
+    {
+      "sample": "caption-19.png",
+      "source": "uso_mixed_final",
+      "show_after": 5.0,
+      "source_display_start": 675.0,
+      "state": "pending_native_after_fix_verification",
+      "source_sample_opinion": "Not independently checked delayed range in this task; root to verify new actual native images."
+    }
+  ],
+  "followup_latest": "Wimbledon SF v5 source625.78 label still overlapped raised-arm reaction; shifted recommended display window643.0–649.0, root to render final native sample. No repeated review of unaffected23 frames."
+}

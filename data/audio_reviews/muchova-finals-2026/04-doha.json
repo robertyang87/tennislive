@@ -1,0 +1,74 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=DMpp-l1vBaA",
+  "source_sha256": "ab7f764269cf4eb4e7613e0bfb66671d379713124b961d85a9d2c41ceaee8384",
+  "source_key": "doha",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 246.5,
+  "reviewed_to": 249.9,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 246.68,
+      "end": 249.82,
+      "en": "Such a good finish.",
+      "zh": "这记收尾打得真漂亮。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha-targeted-235.10-267.30-small.en.json",
+      "sha256": "4007cd2c1b6e78e1069e006ebbcbbcd50d8a41c6a85f6239f5081e5d95b9d95c",
+      "model": "small.en",
+      "from": 235.1,
+      "to": 267.3,
+      "method": "targeted_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha-context-243-276-medium.en.json",
+      "sha256": "ede418208c5412a8721b8700ad265d2aec59255d7d13cde7688fc0a9ec89d73d",
+      "model": "medium.en",
+      "from": 243,
+      "to": 276,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha-235.10-267.30-medium.en.json",
+      "sha256": "1d93c63419dd28682f33bf4e4634d0b21848de7c6e36c3950669db054166cf62",
+      "model": "medium.en",
+      "from": 235.1,
+      "to": 267.3,
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha-235.10-267.30-small.en.json",
+      "sha256": "6d4c627bc02f3e3347ecbe0237150a74fdd60e2feb02a5dcbf0f27584913eaa2",
+      "model": "small.en",
+      "from": 235.1,
+      "to": 267.3,
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha-context-243-276-small.en.json",
+      "sha256": "a865b3faa37157382e53af2e55697f3769b7222b72cd162894da067d4717509a",
+      "model": "small.en",
+      "from": 243,
+      "to": 276,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": null,
+    "runtime_clause_packet_sha256": null,
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  },
+  "cross_model_notes": "Original whole-source small.en missed commentary. Additional focused target runs establish the meaningful English; isolated full-source It token without stable focused corroboration is excluded as crowd/noise hallucination."
+}

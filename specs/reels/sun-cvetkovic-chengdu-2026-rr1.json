@@ -1,0 +1,494 @@
+{
+  "slug": "sun-cvetkovic-chengdu-2026-rr1",
+  "_column": "赛场之上",
+  "date": "2026-10-21",
+  "sources": {
+    "main": "https://github.com/robertyang87/tennislive/releases/download/source-staylive663661/663661-9f57421c.mp4"
+  },
+  "primary": "main",
+  "tts_backend": "edge",
+  "track": false,
+  "scorebox": [
+    60,
+    880,
+    500,
+    1060
+  ],
+  "_scorebox_why": "本源转播原生记分牌在左下（1080p 实帧量取约 x60-500、y880-1060）；probe 的 scorebox 输入将进一步实测死球时刻几何。",
+  "outro": true,
+  "stat_card_full_canvas": true,
+  "topbar": {
+    "line1": "2026 青少年年终总决赛 成都 · A组小组赛",
+    "line2": "孙心然 7-6(1) 6-2 茨维特科维奇"
+  },
+  "push": {
+    "auto": false,
+    "summary": "成都主场开门红",
+    "lead": "首盘一比四落后，孙心然在成都翻了回来：对手发球胜盘局一分没让，抢七七比一，次盘六比二。十六岁，青少年世界第一，主场总决赛首秀开门红。小组赛还有两场，你觉得她在成都，能走多远？",
+    "_no_auto_why": "渲染QC与main CI状态确认后显式mode=push+push=true派发，防重复发送。"
+  },
+  "cover": {
+    "eyebrow": "赛场之上",
+    "winner": "孙心然",
+    "result": "7-6(1) 6-2",
+    "subject": "孙心然",
+    "layout": "solo",
+    "matchup": [
+      {
+        "name": "孙心然",
+        "name_en": "Xinran Sun",
+        "country": "CHN",
+        "rank": 1
+      },
+      {
+        "name": "茨维特科维奇",
+        "name_en": "Anastasija Cvetkovic",
+        "country": "SRB",
+        "rank": 6
+      }
+    ],
+    "_matchup_why": "rank 口径为本届青少年年终总决赛种子顺位（官方 Order of Play 核验：孙心然1号、茨维特科维奇6号）；孙心然另为 ITF 青少年世界第1（2026年6月登顶，中国第五位青少年世界第一）。",
+    "scoreboard": {
+      "court": "Centre Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%221%3A33%3A00%22%7D",
+        "field": "duration",
+        "note": "转播记分牌终局画面显示总用时 1:33（内部抽帧核验）；本场无公开官方计时接口，按仓库 data: 口径写死为 1:33:00（时:分:秒），不虚构秒级精度。"
+      }
+    },
+    "hook": "首盘一比四落后\n孙心然逆转拿下",
+    "hook_accent": "开门红",
+    "topic": "青少年年终总决赛 成都 · A组小组赛 · 孙心然 VS 茨维特科维奇",
+    "portrait": {
+      "image": "assets/reel/sun-lys-beijing-2026-r1.jpg",
+      "focus": 0.5,
+      "focus_y": 0.35,
+      "zoom": 1,
+      "fit": "cover",
+      "source_url": "仓库既有资产 assets/reel/sun-lys-beijing-2026-r1.jpg（2026中网首轮官方实拍，入库时来源见该资产提交记录）",
+      "_portrait_why": "仓库既有孙心然官方高清实拍：2026中网首轮赛后握拳庆祝，正脸清晰，竖构图适配 solo 版式；本场（成都青少年年终总决赛）官方无水印大图在制作时点尚未取得。",
+      "_different_round_why": "本图为2026中网首轮（WTA1000北京）实拍，非本场比赛；封面为人物solo版式，以面部特写为主，不呈现可辨识的本场比分或场景信息，不冒充本场瞬间。"
+    },
+    "_subject_why": "用户点名制作本场，聚焦孙心然；采用官方高清人物实拍作人物封面，非截帧。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "十六岁的孙心然，主场总决赛首秀一比四翻盘，你觉得她在成都能走多远？",
+    "thesis": "首盘一比四落后：开局连救三个破发点、第三第五局两度被破（一比三落后时右膝接受了理疗师的治疗）；第六局立刻回破、第十局在对手发球胜盘局连下四分破发至零；抢七七比一，对手四个发球分全丢。第二盘零比二开局后立刻回破，第五局、第七局两度破发，六比二。青少年世界第一的主场首秀，小组赛开门红。",
+    "beats": [
+      "成都主场、A组首轮；四个月前法网青少年八强曾六比零、六比二胜过同一对手",
+      "首盘第一局连救三个破发点（原声定调），第三、五局两度被破，一比三时右膝接受理疗师治疗，一比四",
+      "第六局立刻回破；第十局对手发球胜盘局连下四分破发至零（原声收尾段）",
+      "抢七七比一，对手发球分连丢；胜利在望（原声）",
+      "第二盘零比二后立刻回破；第五局破发点长回合反超三比二（原声）",
+      "第七局再破，五比二；完整赛点、赛果播报与解说复盘（原声）"
+    ],
+    "human_context": {
+      "angle": "一比四的坑里，十六岁的头号种子用两次立刻回破和一局破发至零，把主场首秀翻了回来",
+      "facts": [
+        "孙心然16岁，ITF青少年世界第1（2026年6月登顶）、本届1号种子，2026美网青少年女单冠军",
+        "四个月前法网青少年八强，孙心然6-0、6-2胜茨维特科维奇；本场是四个月内第二次交手",
+        "首盘1-4落后：第3、5局两度被破；第6局立刻回破；第10局对手发球胜盘局连下四分破发至零；抢七7-1，对手4个发球分全丢",
+        "官方解说证实：首盘1-3落后时，孙心然右膝接受了理疗师的治疗（两档ASR一致：receiving treatment to her right knee from the physio / since the visit of the physio）",
+        "第二盘0-2开局后立刻回破，第5、7局破发，6-2；转播记分牌总用时1:33",
+        "本场为2026世界网联青少年年终总决赛（10/21-25，成都四川国际网球中心室外硬地）女子A组第1轮；A组另有普什卡列娃、叶弗列莫娃"
+      ],
+      "sources": [
+        "https://www.itftennis.com/en/news-and-media/articles/what-are-the-world-tennis-tour-junior-finals/",
+        "https://www.itftennis.com/en/tournament/2026-world-tennis-tour-junior-finals/chn/2026/j-jm-chn-2026-001/media-and-resources/",
+        "https://video.worldtennistourjuniors.com/en/wtt-junior-finals",
+        "https://www.wtatennis.com/news/4591059/rankings-watch-zheng-returns-to-top-30-andreeva-makes-top-3-debut"
+      ]
+    }
+  },
+  "_match": {
+    "status": "result_verified",
+    "source": "world_tennis_official",
+    "source_url": "https://video.worldtennistourjuniors.com/en/wtt-junior-finals",
+    "date": "2026-10-21",
+    "winner": "孙心然",
+    "loser": "茨维特科维奇",
+    "participants": [
+      "孙心然",
+      "茨维特科维奇"
+    ],
+    "winner_result": "7-6(1) 6-2",
+    "set_scores_home_away": [
+      [
+        7,
+        6
+      ],
+      [
+        6,
+        2
+      ]
+    ],
+    "date_time_copy": "北京时间2026年10月21日下午（中央球场，不早于13:00开赛）",
+    "court": "Centre Court",
+    "venue": "成都 · 四川国际网球中心（室外硬地）",
+    "round": "女子A组小组赛第1轮",
+    "duration": "1:33",
+    "_duration_note": "转播记分牌终局画面显示1:33（内部抽帧核验）；无公开官方计时出处。",
+    "_match_day_why": "用户点名制作：孙心然成都青少年年终总决赛跟踪线（goal-8）首战，小组赛开门红。"
+  },
+  "_facts": [
+    {
+      "url": "https://www.itftennis.com/en/news-and-media/articles/what-are-the-world-tennis-tour-junior-finals/",
+      "type": "official_event_explainer",
+      "why": "赛事身份：18岁以下青少年版年终总决赛；2026年10/21-25成都；男女各8人、两组单循环、前二进半决赛；冠军最高1000青少年积分"
+    },
+    {
+      "url": "https://www.itftennis.com/en/tournament/2026-world-tennis-tour-junior-finals/chn/2026/j-jm-chn-2026-001/media-and-resources/",
+      "type": "official_tournament_page",
+      "why": "赛事官方页：成都四川国际网球中心，室外硬地"
+    },
+    {
+      "url": "https://video.worldtennistourjuniors.com/en/wtt-junior-finals",
+      "type": "official_streaming_platform",
+      "why": "官方流媒体平台；Full Replays『Centre Court: Day 1 in Chengdu』，本场为当日第3场（约北京时间15:00后）；赛果7-6(1) 6-2与官方IG赛果帖一致，终局记分牌实帧核验"
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4591059/rankings-watch-zheng-returns-to-top-30-andreeva-makes-top-3-debut",
+      "type": "official_rankings",
+      "why": "孙心然2026年6月登顶ITF青少年世界第1（中国第五位青少年世界第一）"
+    }
+  ],
+  "_source_provenance": {
+    "publisher": "World Tennis（ITF）官方流媒体平台（Staylive承运）",
+    "canonical_url": "https://video.worldtennistourjuniors.com/en/wtt-junior-finals",
+    "title": "Centre Court: Day 1 in Chengdu（整日回放）→ 本场关键球+精彩球集合（13段，32:10）",
+    "platform_video_id": 663661,
+    "release_tag": "source-staylive663661",
+    "asset": "663661-9f57421c.mp4",
+    "bytes": 955431351,
+    "sha256": "9f57421c24c81b38e9bd6fc84bffdc212c9eab8ae8688f42988f99e8438671a1",
+    "width": 1920,
+    "height": 1080,
+    "avg_frame_rate": "50/1",
+    "duration_seconds": 1930.08,
+    "_cut_note": "集合由官方回放1080p档按13个锚点窗口精剪（锚点=720p侦察版时间戳+12480s偏移），本地抽帧逐段对位验证；母版2.39GB，上传版955MB。"
+  },
+  "_production_timing": {
+    "received_at": "2026-10-21T17:26:23Z"
+  },
+  "_heat_why": "用户点名制作：孙心然成都青少年年终总决赛首战（goal-8跟踪线），小组赛开门红。",
+  "_key_point_coverage": {
+    "first_set_g1": "195-228原声：第1局保发收尾（对手击球出界懊恼）；0-40连救三破发点的前段由旁白交代",
+    "first_set_1_4": "585-653.5原声：第6局回破（两个破发点、破发兑现）；第3、5局被破与中段停顿由旁白交代",
+    "first_set_g10": "779.5-799.7原声：第10局末（对手发球胜盘局被破），解说复盘首盘走势",
+    "first_set_tiebreak": "1088-1110原声：抢七对手发球分连丢、胜利在望；抢七全程在源片835-1115",
+    "second_set_breaks": "1460-1480原声：第5局破发点长回合后对手占先区出界，反超三比二；第7局再破由旁白交代",
+    "ending": "冷开场1629.5-1654.5（赛点）；收尾段1629.5-1706.5完整重放冷开场并续赛果播报、握手、解说复盘；1706.5为视觉切点，不接采访"
+  },
+  "_tts_backend_why": "本条无专用情绪风格；采用edge（YunxiNeural +6%），seconds待runner mode=narration实测复核。",
+  "segments": [
+    {
+      "source": "main",
+      "start": 1629.5,
+      "end": 1654.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": false,
+      "bed": "high",
+      "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不做比分板回贴；原生记分牌烧录于画面左下，成片照常可见。",
+      "point_end_ok": "冷开场：赛点（40-15 双赛点）至得分；以制胜执行收束，接标题卡。",
+      "crosses_cut": "冷开场：赛点（40-15 双赛点）至得分；以制胜执行收束，接标题卡。",
+      "_why": "冷开场：赛点（40-15 双赛点）至得分；以制胜执行收束，接标题卡。",
+      "_quote_kind": "broadcast",
+      "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/663661/，源片 sha256 与 Release 资产一致；人名按官方拼写整理（ASR 念歪：Xunran/Shinran-san→Xinran Sun，Kvitkovic/Petkovic→Cvetkovic）",
+      "quote": [
+        {
+          "at": 0.1,
+          "end": 10.0,
+          "text": "The player is staying fairly central there — the tape from behind the baseline,\n球员站位保持居中\n球擦网带而过"
+        },
+        {
+          "at": 10.1,
+          "end": 15.0,
+          "text": "And it is match point for Xinran Sun.\n这是孙心然的赛点"
+        },
+        {
+          "at": 15.1,
+          "end": 25.0,
+          "text": "She's got two of them, and executes on the first.\n两个赛点，第一个就兑现"
+        }
+      ],
+      "_ending_payoff_required": true
+    },
+    {
+      "title_card": "一度一比四落后\n抢七只丢一分",
+      "kicker": "成都 · 总决赛首战",
+      "seconds": 13.05,
+      "narration": "十月二十一号，成都，世界网联青少年年终总决赛。女子A组第一轮，十六岁的孙心然，迎战塞尔维亚的茨维特科维奇。",
+      "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
+    },
+    {
+      "source": "main",
+      "start": 195.0,
+      "end": 228.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": false,
+      "bed": "high",
+      "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不做比分板回贴；原生记分牌烧录于画面左下，成片照常可见。",
+      "point_end_ok": "第1局：平分球长回合后保发收尾，对手击球出界的懊恼瞬间；0-40 连救三破发点的前段由旁白交代。",
+      "crosses_cut": "第1局：平分球长回合后保发收尾，对手击球出界的懊恼瞬间；0-40 连救三破发点的前段由旁白交代。",
+      "_why": "第1局：平分球长回合后保发收尾，对手击球出界的懊恼瞬间；0-40 连救三破发点的前段由旁白交代。",
+      "_quote_kind": "broadcast",
+      "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/663661/，源片 sha256 与 Release 资产一致；人名按官方拼写整理（ASR 念歪：Xunran/Shinran-san→Xinran Sun，Kvitkovic/Petkovic→Cvetkovic）",
+      "quote": [
+        {
+          "at": 18.1,
+          "end": 30.7,
+          "text": "Cvetkovic firing her shot long, slapping the ball away in frustration.\n茨维特科维奇击球出界\n懊恼地拍了一下球"
+        }
+      ]
+    },
+    {
+      "title_card": "两度被破发\n她掉进一比四的坑",
+      "kicker": "首盘中段",
+      "seconds": 16.58,
+      "narration": "第一局，孙心然在零比四十落后时连救三个破发点，保发拿下。但第三局、第五局，她两度被破发。第一盘一比三落后时，她的右膝接受了理疗师的治疗。",
+      "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
+    },
+    {
+      "source": "main",
+      "start": 585.0,
+      "end": 653.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": false,
+      "bed": "high",
+      "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不做比分板回贴；原生记分牌烧录于画面左下，成片照常可见。",
+      "point_end_ok": "第6局回破：两个破发点、破发兑现（对手直线出界）至二比四；解说提及开局前漫长等待。",
+      "crosses_cut": "第6局回破：两个破发点、破发兑现（对手直线出界）至二比四；解说提及开局前漫长等待。",
+      "_why": "第6局回破：两个破发点、破发兑现（对手直线出界）至二比四；解说提及开局前漫长等待。",
+      "_quote_kind": "broadcast",
+      "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/663661/，源片 sha256 与 Release 资产一致；人名按官方拼写整理（ASR 念歪：Xunran/Shinran-san→Xinran Sun，Kvitkovic/Petkovic→Cvetkovic）",
+      "quote": [
+        {
+          "at": 1.9,
+          "end": 14.5,
+          "text": "Two break points for Xinran Sun.\n孙心然拿到两个破发点"
+        },
+        {
+          "at": 14.6,
+          "end": 20.8,
+          "text": "Cvetkovic had to wait a long time to begin this game — just getting under her skin.\n开局前等了太久\n她的心态受了影响"
+        },
+        {
+          "at": 29.4,
+          "end": 33.8,
+          "text": "Disappointing to let that chance go — but she still has a break point.\n错失良机有些可惜\n但她还有一个破发点"
+        },
+        {
+          "at": 45.4,
+          "end": 56.0,
+          "text": "And we'll see it through — here's Cvetkovic, wide down the line,\n茨维特科维奇直线回球出界"
+        },
+        {
+          "at": 56.1,
+          "end": 68.5,
+          "text": "and she will serve two games to four down. Now, the apology comes from the Serbian.\n二比四，她的发球局\n举手致歉"
+        }
+      ]
+    },
+    {
+      "title_card": "对手发球胜盘\n她一分没让",
+      "kicker": "全场转折",
+      "seconds": 17.05,
+      "narration": "第六局，破发点上，茨维特科维奇一记直线回球出界，孙心然立刻回破，把比分追到二比四。第九局顶住压力保发。第十局，轮到茨维特科维奇为这一盘发球。",
+      "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
+    },
+    {
+      "source": "main",
+      "start": 779.5,
+      "end": 799.7,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": false,
+      "bed": "high",
+      "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不做比分板回贴；原生记分牌烧录于画面左下，成片照常可见。",
+      "point_end_ok": "第10局末：对手发球胜盘局被破发至零，解说复盘首盘走势（暂停后越打越强）。",
+      "crosses_cut": "第10局末：对手发球胜盘局被破发至零，解说复盘首盘走势（暂停后越打越强）。",
+      "_why": "第10局末：对手发球胜盘局被破发至零，解说复盘首盘走势（暂停后越打越强）。",
+      "_quote_kind": "broadcast",
+      "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/663661/，源片 sha256 与 Release 资产一致；人名按官方拼写整理（ASR 念歪：Xunran/Shinran-san→Xinran Sun，Kvitkovic/Petkovic→Cvetkovic）",
+      "quote": [
+        {
+          "at": 0.7,
+          "end": 11.0,
+          "text": "Sun has grown stronger and stronger in this first set since the visit of the physio.\n暂停过后\n孙心然越打越强"
+        },
+        {
+          "at": 11.1,
+          "end": 20.2,
+          "text": "Something was clearly not right in those opening games, when she was broken twice.\n开局连丢两个发球局时\n她的状态明显不对"
+        }
+      ]
+    },
+    {
+      "title_card": "抢七七比一\n对手发球分全丢",
+      "kicker": "首盘决胜",
+      "seconds": 12.82,
+      "narration": "这一局，孙心然连下四分，破发至零。茨维特科维奇一个发球胜盘局，一分都没拿到。五比五，比赛回到同一起跑线。",
+      "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
+    },
+    {
+      "source": "main",
+      "start": 1088.0,
+      "end": 1110.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": false,
+      "bed": "high",
+      "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不做比分板回贴；原生记分牌烧录于画面左下，成片照常可见。",
+      "point_end_ok": "抢七中段至末段：对手两个发球分连丢，5-1 附近解说点出首盘胜利在望。",
+      "crosses_cut": "抢七中段至末段：对手两个发球分连丢，5-1 附近解说点出首盘胜利在望。",
+      "_why": "抢七中段至末段：对手两个发球分连丢，5-1 附近解说点出首盘胜利在望。",
+      "_quote_kind": "broadcast",
+      "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/663661/，源片 sha256 与 Release 资产一致；人名按官方拼写整理（ASR 念歪：Xunran/Shinran-san→Xinran Sun，Kvitkovic/Petkovic→Cvetkovic）",
+      "quote": [
+        {
+          "at": 0.5,
+          "end": 8.8,
+          "text": "Both service points from Cvetkovic in this tiebreak go the way of her opponent.\n抢七她的两个发球分\n又都送给了对手"
+        },
+        {
+          "at": 14.0,
+          "end": 18.5,
+          "text": "You can see her way to victory in this first set now.\n她离拿下首盘不远了"
+        }
+      ]
+    },
+    {
+      "title_card": "次盘又先被破\n回破只等了一局",
+      "kicker": "第二盘",
+      "seconds": 10.47,
+      "narration": "第二盘，剧本重演：孙心然又是零比二开局。但这一次，第三局她立刻回破，没有给对手机会。",
+      "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
+    },
+    {
+      "source": "main",
+      "start": 1460.0,
+      "end": 1480.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": false,
+      "bed": "high",
+      "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不做比分板回贴；原生记分牌烧录于画面左下，成片照常可见。",
+      "point_end_ok": "第5局：破发点长回合后对手占先区出界，破发反超三比二。",
+      "crosses_cut": "第5局：破发点长回合后对手占先区出界，破发反超三比二。",
+      "_why": "第5局：破发点长回合后对手占先区出界，破发反超三比二。",
+      "_quote_kind": "broadcast",
+      "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/663661/，源片 sha256 与 Release 资产一致；人名按官方拼写整理（ASR 念歪：Xunran/Shinran-san→Xinran Sun，Kvitkovic/Petkovic→Cvetkovic）",
+      "quote": [
+        {
+          "at": 4.4,
+          "end": 10.0,
+          "text": "And there it is — Cvetkovic wide on the ad side.\n茨维特科维奇占先区回球出界"
+        },
+        {
+          "at": 10.1,
+          "end": 19.8,
+          "text": "Sun leading three games to two, serving next — and already a set up.\n孙心然三比二领先\n接下来她的发球局\n已先下一盘"
+        }
+      ]
+    },
+    {
+      "title_card": "接发接管全场\n五比二再下一城",
+      "kicker": "拉开比分",
+      "seconds": 17.99,
+      "narration": "第五局，孙心然在破发点上和对手相持了十八秒，茨维特科维奇占先区一侧回球出界，破发反超，三比二。第七局再破，五比二。这一盘，对手四个发球局，丢了三个。",
+      "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
+    },
+    {
+      "source": "main",
+      "start": 1629.5,
+      "end": 1706.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "score_inset": false,
+      "bed": "high",
+      "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不做比分板回贴；原生记分牌烧录于画面左下，成片照常可见。",
+      "point_end_ok": "收尾完整重放冷开场：赛点兑现、赛果播报、握手与解说复盘全场（首盘一比三、次盘零比二两度落后翻盘）；1706.5 为视觉切点，不接采访。",
+      "crosses_cut": "收尾完整重放冷开场：赛点兑现、赛果播报、握手与解说复盘全场（首盘一比三、次盘零比二两度落后翻盘）；1706.5 为视觉切点，不接采访。",
+      "_why": "收尾完整重放冷开场：赛点兑现、赛果播报、握手与解说复盘全场（首盘一比三、次盘零比二两度落后翻盘）；1706.5 为视觉切点，不接采访。",
+      "_quote_kind": "broadcast",
+      "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/663661/，源片 sha256 与 Release 资产一致；人名按官方拼写整理（ASR 念歪：Xunran/Shinran-san→Xinran Sun，Kvitkovic/Petkovic→Cvetkovic）",
+      "quote": [
+        {
+          "at": 0.1,
+          "end": 10.0,
+          "text": "The player is staying fairly central there — the tape from behind the baseline,\n球员站位保持居中\n球擦网带而过"
+        },
+        {
+          "at": 10.1,
+          "end": 15.0,
+          "text": "And it is match point for Xinran Sun.\n这是孙心然的赛点"
+        },
+        {
+          "at": 15.1,
+          "end": 25.0,
+          "text": "She's got two of them, and executes on the first.\n两个赛点，第一个就兑现"
+        },
+        {
+          "at": 25.6,
+          "end": 32.5,
+          "text": "Game, set and match to Xinran Sun, 7-6, 6-2,\n比赛结束\n孙心然七比六、六比二获胜"
+        },
+        {
+          "at": 32.6,
+          "end": 38.4,
+          "text": "and the result she might have scarcely believed\n这个结果连她自己都难以置信"
+        },
+        {
+          "at": 38.5,
+          "end": 46.5,
+          "text": "in herself, when she was receiving treatment to her right knee from the physio,\n首盘一比三落后时\n她的右膝接受了理疗师治疗"
+        },
+        {
+          "at": 46.6,
+          "end": 56.5,
+          "text": "three games to one down in the opening set — from there, she roared back,\n从那时起她强势反弹"
+        },
+        {
+          "at": 56.6,
+          "end": 64.1,
+          "text": "and found herself two games down at the start of the second set as well.\n第二盘开局又零比二落后"
+        },
+        {
+          "at": 64.2,
+          "end": 69.5,
+          "text": "It looked like Cvetkovic might mount a comeback — but that was as far as it went.\n对手看似要起势\n但也就到此为止"
+        },
+        {
+          "at": 69.6,
+          "end": 77.0,
+          "text": "Sun would once again rally, winning six consecutive games to take her opening match.\n孙心然再度反弹\n连赢六局拿下首胜"
+        }
+      ]
+    },
+    {
+      "title_card": "小组赛开门红\n成都之夜属于她",
+      "kicker": "把胜利带走",
+      "seconds": 21.98,
+      "narration": "七比六、六比二，孙心然拿下小组赛开门红。首盘一比四落后都能翻回来，抢七一个发球分都不给对手。十六岁，青少年世界第一，主场首秀的第一份答卷。小组赛还有两场，你觉得，她在成都，能走多远？",
+      "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
+    }
+  ]
+}

@@ -1,0 +1,254 @@
+{
+  "status": "suggested_mapping_only_not_applied",
+  "base_file": "requests/stories/muchova-finals-2026/native-spec.candidate.json",
+  "base_file_sha256_at_read": "ab351ec91a23e66158e186833faa57afaf8005cf104584b25e22d99a006dae98",
+  "index_convention": "zero_based_original_31_segment_candidate",
+  "principle": "严格时间线；高芙线仅在真实赛事时段建立对照；回合与本人原声优先；小成绩不逐站读积分；不新增素材要求或引语。",
+  "timing_note": "字数仅作初步长度比较，不代表实测TTS。主线程依据冻结音频及完整原声句边界取舍，不因文案改动统一提速。",
+  "fact_sources": [
+    "research/muchova-finals-2026/fact-packet.json",
+    "research/muchova-finals-2026/season-results.json",
+    "research/muchova-finals-2026/independent-fact-check.md",
+    "research/muchova-finals-2026/post-wimbledon-official-statements.md",
+    "https://www.wtatennis.com/news/4489465"
+  ],
+  "suggestions": [
+    {
+      "segment_index_zero_based": 0,
+      "segment_id": "chapter_01",
+      "timeline_date": "2026-01-10",
+      "old_narration": "年初，穆霍娃从布里斯班半决赛起步。",
+      "new_narration": "年初，穆霍娃从布里斯班半决赛起步。",
+      "reason": "保留简短年初坐标，不在开头预告今天结果。",
+      "old_chars": 17,
+      "new_chars": 17
+    },
+    {
+      "segment_index_zero_based": 1,
+      "segment_id": "ao_context",
+      "timeline_date": "2026-01-25",
+      "old_narration": "到了澳网，她在第四轮输给高芙。扳回一盘，仍然没能继续向前。",
+      "new_narration": "澳网第四轮，她输给高芙。年初的大满贯之旅，到此为止。",
+      "reason": "压缩失利过程，用高芙作为随后迈阿密、斯图加特、温网的年内对照；不靠反应画面复盘逐分。",
+      "old_chars": 29,
+      "new_chars": 26
+    },
+    {
+      "segment_index_zero_based": 2,
+      "segment_id": "doha_setup",
+      "timeline_date": "2026-02-14",
+      "old_narration": "二月，多哈。穆霍娃上一次赢下巡回赛单打冠军，还是二〇一九年。",
+      "new_narration": "二月来到多哈。她上一次拿到巡回赛单打冠军，还是二〇一九年。",
+      "reason": "保留久违冠军的等待，不在完整冠军点之前先报结果。",
+      "old_chars": 30,
+      "new_chars": 29
+    },
+    {
+      "segment_index_zero_based": 3,
+      "segment_id": "doha_final_context",
+      "timeline_date": "2026-02-14",
+      "old_narration": "二月的这场决赛，她又走到了最后。对面，是姆博科。",
+      "new_narration": "现在，她又走到决赛。对面，是姆博科。",
+      "reason": "让决赛对手与随后完整冠军点承接，压掉重复二月地点。",
+      "old_chars": 24,
+      "new_chars": 18
+    },
+    {
+      "segment_index_zero_based": 5,
+      "segment_id": "doha_trophy",
+      "timeline_date": "2026-02-14",
+      "old_narration": "六年多后再次捧杯，也是她的第一座千分冠。",
+      "new_narration": "六年多的等待，在这一刻结束。她的第一座千分冠。",
+      "reason": "奖杯真正出现时兑现结果；2019年9月至2026年2月用六年多，不用六年半。",
+      "old_chars": 20,
+      "new_chars": 23
+    },
+    {
+      "segment_index_zero_based": 6,
+      "segment_id": "miami_quarterfinal_context",
+      "timeline_date": "2026-03-24",
+      "old_narration": "印第安韦尔斯止步第四轮后，她在迈阿密再次战胜姆博科，打进半决赛。",
+      "new_narration": "印第安韦尔斯止步第四轮后，来到迈阿密八强战，对面又是姆博科。",
+      "reason": "先交代此前小成绩，再把真实四分之一决赛画面接回多哈对手；胜利交给随后的完整回合兑现。",
+      "old_chars": 32,
+      "new_chars": 30
+    },
+    {
+      "segment_index_zero_based": 8,
+      "segment_id": "miami_result",
+      "timeline_date": "2026-03-26",
+      "old_narration": "随后不敌高芙，这一站留下三百九十分。",
+      "new_narration": "半决赛，她又输给高芙。这个名字，又一次挡在前面。",
+      "reason": "去掉机械报390分，承接澳网对照，并为斯图加特首次获胜留叙事空间。",
+      "old_chars": 18,
+      "new_chars": 24
+    },
+    {
+      "segment_index_zero_based": 9,
+      "segment_id": "stuttgart_final_context",
+      "timeline_date": "2026-04-19",
+      "old_narration": "换到红土，穆霍娃又打进了斯图加特决赛。",
+      "new_narration": "这场决赛之前，她已在四分之一决赛首次击败高芙。",
+      "reason": "明确所讲胜高芙是此前4月17日QF，当前画面仍为4月19日F；斯图加特与决赛轮次由真实赛事标签承载。",
+      "old_chars": 19,
+      "new_chars": 23,
+      "visual_sync_requirement": "当前4/19决赛画面/标签必须真实保留；旁白明确是此前QF，不贴成高芙对阵画面。如实际TTS过长，改为“此前首次击败高芙，她再进斯图加特决赛。”"
+    },
+    {
+      "segment_index_zero_based": 10,
+      "segment_id": "stuttgart_final_end",
+      "timeline_date": "2026-04-19",
+      "old_narration": "她最后不敌莱巴金娜，收获亚军。",
+      "new_narration": "最后，她不敌莱巴金娜，收获斯图加特亚军。",
+      "reason": "落回当前真实决赛，不能让4月19日F画面冒充4月17日QF。",
+      "old_chars": 15,
+      "new_chars": 20
+    },
+    {
+      "segment_index_zero_based": 11,
+      "segment_id": "rg_context",
+      "timeline_date": "2026-05-29",
+      "old_narration": "罗马首战输球后，法网第三轮，她又两盘不敌泰希曼。",
+      "new_narration": "罗马首战出局，法网又在第三轮负于泰希曼。",
+      "reason": "简短交代两站失利，四大满贯重点仍由对应止步轮视频承载。",
+      "old_chars": 24,
+      "new_chars": 20
+    },
+    {
+      "segment_index_zero_based": 13,
+      "segment_id": "chapter_02",
+      "timeline_date": "2026-06-18",
+      "old_narration": "换到草地，她又往前走。",
+      "new_narration": "进入草地，故事又有了转折。",
+      "reason": "保留三章节转换，短句留足草地高光和本人原声。",
+      "old_chars": 11,
+      "new_chars": 13
+    },
+    {
+      "segment_index_zero_based": 14,
+      "segment_id": "bad_homburg_final",
+      "timeline_date": "2026-06-27",
+      "old_narration": "柏林止步第二轮后，她在巴特洪堡迎来决赛。",
+      "new_narration": "柏林第二轮出局后，她在巴特洪堡再次迎来决赛。",
+      "reason": "带过小成绩，再进入真正展示高光的赛事，不口播每站积分。",
+      "old_chars": 20,
+      "new_chars": 22
+    },
+    {
+      "segment_index_zero_based": 15,
+      "segment_id": "bad_homburg_retirement",
+      "timeline_date": "2026-06-27",
+      "old_narration": "六比一、一比零，大坂因脚伤退赛。穆霍娃拿到首个草地巡回赛单打冠军。",
+      "new_narration": "决赛因大坂脚伤退赛结束，她拿到了首个草地巡回赛单打冠军。",
+      "reason": "比分已有赛事标签，不必TTS逐项复读；明确退赛，不虚构最后冠军点。",
+      "old_chars": 33,
+      "new_chars": 28
+    },
+    {
+      "segment_index_zero_based": 18,
+      "segment_id": "wimbledon_sf_intro",
+      "timeline_date": "2026-07-09",
+      "old_narration": "七月，她第一次走到了温网决赛。",
+      "new_narration": "温网半决赛，又是高芙挡在决赛门前。",
+      "reason": "在完整关键回合前只设局，由胜利原声和随后本人采访兑现首次温网决赛；串起年内高芙线。",
+      "old_chars": 15,
+      "new_chars": 17,
+      "visual_sync_requirement": "此段不提前口播结果，随后7/9SF完整回合与本人采访必须连在一起，SF标签标明首次温网决赛。"
+    },
+    {
+      "segment_index_zero_based": 21,
+      "segment_id": "wimbledon_final_context",
+      "timeline_date": "2026-07-11",
+      "old_narration": "决赛三盘失利。温网亚军的一千三百分，是她本季最大的一笔单打积分。",
+      "new_narration": "温网决赛三盘不敌诺斯科娃。一千三百分，仍是她全年最大的单站收获。",
+      "reason": "完整交代决赛对手与止步轮，积分只用于说明本季高峰，不逐站读数。",
+      "old_chars": 32,
+      "new_chars": 32
+    },
+    {
+      "segment_index_zero_based": 23,
+      "segment_id": "chapter_03",
+      "timeline_date": "2026-07-20",
+      "old_narration": "可在温网之后，赛季暂时停了下来。",
+      "new_narration": "温网之后，她的赛季出现了停顿。",
+      "reason": "从高峰进入真实缺赛事实，避免在章节句和下一段重复手术细节。",
+      "old_chars": 16,
+      "new_chars": 15
+    },
+    {
+      "segment_index_zero_based": 24,
+      "segment_id": "surgery",
+      "timeline_date": "2026-07-20",
+      "old_narration": "温网之后，穆霍娃接受了一次小手术。恢复期，让她错过了整个北美硬地热身。",
+      "new_narration": "她接受了一次小手术。恢复期间，缺席了整个北美硬地热身赛季。",
+      "reason": "只用官方已确认的小手术与缺赛范围；不猜部位，不把后续单打失利归因于手术。",
+      "old_chars": 35,
+      "new_chars": 29
+    },
+    {
+      "segment_index_zero_based": 25,
+      "segment_id": "uso_mixed_title",
+      "timeline_date": "2026-08-26",
+      "old_narration": "回到纽约，她先和门希克拿到了美网混双冠军。",
+      "new_narration": "八月回到纽约，她先和门希克一起，拿下美网混双冠军。",
+      "reason": "保留当地8月26日混双先于9月4日单打出局的真实时间顺序。",
+      "old_chars": 21,
+      "new_chars": 25
+    },
+    {
+      "segment_index_zero_based": 26,
+      "segment_id": "uso_context",
+      "timeline_date": "2026-09-04",
+      "old_narration": "回到美网单打，她前两轮只丢四局，第三轮却输给纳瓦罗。",
+      "new_narration": "随后的美网单打，她在第三轮输给纳瓦罗。",
+      "reason": "按用户要求用止步轮实际视频，不无画面复盘前两轮只丢四局的反差。",
+      "old_chars": 26,
+      "new_chars": 19
+    },
+    {
+      "segment_index_zero_based": 27,
+      "segment_id": "bjk_title",
+      "timeline_date": "2026-09-27",
+      "old_narration": "九月，她又帮助捷克队赢下比利·简·金杯团体冠军。",
+      "new_narration": "九月，她随捷克队捧起比利·简·金杯。",
+      "reason": "简洁呈现团体荣誉，继续按9月27日顺序，不暗示增加单打Race积分。",
+      "old_chars": 24,
+      "new_chars": 18
+    },
+    {
+      "segment_index_zero_based": 28,
+      "segment_id": "asia_swing",
+      "timeline_date": "2026-10-15",
+      "old_narration": "来到亚洲，她在北京打进八强，又在武汉止步第三轮。加上美网，温网之后的单打积分增加了四百六十五分。",
+      "new_narration": "北京八强，武汉第三轮。温网之后的三站单打，只增加四百六十五分，最后的资格还没有确定。",
+      "reason": "一段说明温网后单打推进变慢，已展示的混双/团体冠军不与Race混算。美网130、北京215、武汉120之和465；不把三站都判作完全没成绩。",
+      "old_chars": 48,
+      "new_chars": 42
+    },
+    {
+      "segment_index_zero_based": 29,
+      "segment_id": "ningbo_trigger",
+      "timeline_date": "2026-10-21",
+      "old_narration": "十月二十日，斯瓦泰克提前结束赛季。一天后，科斯秋克在宁波首盘结束后退赛，穆霍娃锁定最后一个单打席位。",
+      "new_narration": "十月二十日，斯瓦泰克结束赛季。次日，科斯秋克在宁波首盘后退赛，失去追赶机会。穆霍娃，锁定最后一个席位。",
+      "reason": "把资格确认明确落到追赶者机会消失，不虚构穆霍娃今天赢球或新增积分。科斯秋克原须宁波至少进决赛才能保留机会，建议同时以事实短字幕呈现，避免口播挤占原声。",
+      "old_chars": 50,
+      "new_chars": 51,
+      "suggested_fact_caption": "科斯秋克须打进宁波决赛，才能保留争夺机会"
+    },
+    {
+      "segment_index_zero_based": 30,
+      "segment_id": "qualification_payoff",
+      "timeline_date": "2026-10-21",
+      "old_narration": "四千七百三十五分。这个赛季有冠军，有停顿，也有重新出发。你最期待她在年终总决赛打出怎样的网球？",
+      "new_narration": "四千七百三十五分，她把这个起伏的赛季，带到了总决赛。你最期待她打出怎样的网球？",
+      "reason": "以人物的整季经历收束，少重复逐站细节，保留自然互动句；不称第一次入围，避免混淆2023曾获资格但伤退。",
+      "old_chars": 47,
+      "new_chars": 39
+    }
+  ],
+  "character_budget": {
+    "old": 606,
+    "new": 580
+  }
+}

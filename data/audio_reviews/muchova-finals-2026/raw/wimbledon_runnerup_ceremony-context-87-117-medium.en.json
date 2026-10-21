@@ -1,0 +1,38 @@
+{
+  "source": "wimbledon_runnerup_ceremony",
+  "source_url": "https://www.youtube.com/watch?v=M_jeYnQCwQg",
+  "source_sha256": "037d3196bb3324cc596a190c928b00aeb9dad40c13529f3a50a57548fb25b5cd",
+  "start": 87,
+  "end": 117,
+  "model": "medium.en",
+  "method": "context_faster_whisper_int8_ffmpeg_16khz_float32",
+  "segments": [
+    {
+      "start": 87.0,
+      "end": 88.96,
+      "text": "Republic, Karolina Mukavar.",
+      "avg_logprob": -0.8076730099591342,
+      "no_speech_prob": 0.08145403116941452,
+      "words": [
+        {
+          "w": " Republic,",
+          "s": 87.0,
+          "e": 87.54,
+          "p": 0.36401620507240295
+        },
+        {
+          "w": " Karolina",
+          "s": 87.8,
+          "e": 88.28,
+          "p": 0.8371751308441162
+        },
+        {
+          "w": " Mukavar.",
+          "s": 88.28,
+          "e": 88.96,
+          "p": 0.35500138252973557
+        }
+      ]
+    }
+  ]
+}

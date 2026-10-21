@@ -1,0 +1,141 @@
+{
+  "slug": "muchova-finals-2026",
+  "column": "网球有故事",
+  "created_at": "2026-10-21",
+  "state": "single_bounded_tailfix_rerender",
+  "story_kind": "person",
+  "subject": "穆霍娃",
+  "user_brief": "调查2026年10月21日锁定年终总决赛最后席位的原因；按照用户提供的五站官方积分图寻找对应比赛及捧杯视频，按时间线剪辑，参考刚做的斯瓦泰克赛季回顾；新增总分、跨年对比与晋级海报参考。",
+  "angle": "最后的资格确认来自竞争者的赛果，站到这个位置靠的是穆霍娃整个赛季的积累。",
+  "target_duration_seconds": 322,
+  "storyboard": "research/muchova-finals-2026/storyboard.md",
+  "editorial_spec": "requests/stories/muchova-finals-2026/spec.json",
+  "facts": "research/muchova-finals-2026/fact-packet.json",
+  "source_manifest": "research/muchova-finals-2026/source-manifest.json",
+  "reference_slug": "swiatek-season-end-2026",
+  "reference_scope": [
+    "人物叙事章节",
+    "约8秒赛事信息卡",
+    "自然衔接",
+    "完整关键回合及原声",
+    "捧杯画面"
+  ],
+  "latest_user_instructions": [
+    "最好也有一些赛后采访",
+    "节选经典段落",
+    "还有四大满贯也要提下么？以及温网以后没什么大分，你帮我详细调研一下",
+    "可以通过tts文案带过，高光部分配视频",
+    "大满贯我觉得都要配视频",
+    "配她止步的那轮视频",
+    "都要按着时间线来",
+    "WTA官方快剪可以参考但不是我们的风格；我们更希望讲故事的方式",
+    "封面钩子第一行更吸引人",
+    "左上角副标题：穆霍娃：锁定最后一张总决赛门票",
+    "同步主线最新右上信息字卡样式",
+    "封面钩子第二行加总决赛",
+    "都要用铺满画布的视频裁切",
+    "加速多个agent并行协同快速完成",
+    "继续同步主线文案要求更新",
+    "删除美网混双整段",
+    "金杯可以一句话带过，去掉比赛视频",
+    "温网决赛后加捧起亚军奖盘画面",
+    "已确认半决赛与采访、决赛、亚军奖盘搭配可以"
+  ],
+  "interview_policy": "优先2–3段本人赛后采访/颁奖经典原话，保留完整意思，约8–15秒每段，准确中英字幕；具体原句与时间码经实际源音频核验后定稿。",
+  "outline_review": {
+    "required": true,
+    "received": false,
+    "basis": ".claude/skills/tennis-owner-taste/SKILL.md 2026-10-17 第6条及清单C5：叙事长片发render前先发一页提纲，他看过再渲。",
+    "scope": "用户连续生产修订已纳；最终提纲已呈现，继续实际制作、成片质检，合格后按仓库流程发布。",
+    "presented_in_conversation": true,
+    "user_response": "我想调整提纲",
+    "latest_steering": "严格时间线、四GS止步轮、五站积分图、两次动态捧杯及两段本人原声；同步主线V14、封面第二行总决赛，所有视频铺满画布裁切。",
+    "status": "user_directed_revision_incorporated",
+    "initial_outline_approved": false,
+    "revision_basis": "用户看过初稿后连续明确四大满贯止步轮次配视频、其他小成绩可TTS、高光配视频、严格时间线、故事体裁。按其指示修订，不将初稿标为已获批准。",
+    "revised_storyboard": "research/muchova-finals-2026/storyboard.md",
+    "render_preconditions": "先将修订叙事呈现在对话；完成素材、字幕、配音、取景与现行预检，方可render。"
+  },
+  "render_dispatched": true,
+  "push_sent": true,
+  "source_preparation_notes": [
+    "正式13条官方源、19个视频段；全部铺满画布裁切。",
+    "四GS止步轮视频全保留；温网SF与采访、F、100.6–110.0真接亚军盘按时间顺接。",
+    "美网混双删除；金杯仅一句旧TTS与说明卡，不展开比赛视频。",
+    "21份配音实际SHA全部复用既有核验，无新增配音。"
+  ],
+  "grand_slam_video_policy": {
+    "required": true,
+    "rounds": [
+      "Australian Open R16 vs Coco Gauff",
+      "Roland Garros R32 vs Jil Teichmann",
+      "Wimbledon final vs Linda Noskova",
+      "US Open R32 vs Emma Navarro"
+    ],
+    "timeline": "strict chronological"
+  },
+  "native_spec": "specs/reels/muchova-finals-2026.json",
+  "cover_revision": "requests/stories/muchova-finals-2026/cover-user-revision.json",
+  "actual_tts": "data/narration_checks/muchova-finals-2026.json",
+  "native_preview": "research/muchova-finals-2026/native-preview-review.json",
+  "voice_pre_render_checks": "research/muchova-finals-2026/voice-pre-render-findings.json",
+  "style_update": {
+    "main_commit": "a70615c",
+    "template_commit": "b0f8a42",
+    "native_preview": "research/muchova-finals-2026/native-preview-v2-review.json",
+    "hold_seconds_max": 15,
+    "clip_end_stops_label": true
+  },
+  "final_movie_review_finding": "首个完整成片唯一阻塞：温网F末尾源224.48起出现诺斯科娃冠军盘，已将该段end收224.24并依据新双模型紧校末词，保持完整分与解说；其他片段不变。",
+  "status": "complete_pushed_to_wechat",
+  "final_render": {
+    "run_id": 39655048234,
+    "conclusion": "success",
+    "film_sha256": "de8eac8adabfd6af7e98332f2c17812b8c32e3df7a5f50b62af75ed8dc2c7c98",
+    "duration_seconds": 321.52,
+    "render_commit": "a25ca5d",
+    "native_qc": "pass",
+    "voice_suite": "pass",
+    "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-muchova-finals-2026/muchova-finals-2026.mp4",
+    "review_copy": "/workspace/review-copies/muchova-finals-2026-审片版.mp4",
+    "visual_review": "research/muchova-finals-2026/final-corrected-visual-review.json",
+    "seam_visual_review": "research/muchova-finals-2026/final-corrected-seam-visual-qc.json"
+  },
+  "publication_gate": {
+    "status": "sent_after_user_authorized_unrelated_ci_exception",
+    "ci_run_id": 39654940663,
+    "known_prior_failures": 15,
+    "prior_failure_scope": "unrelated concurrent main spec sun-cvetkovic-chengdu-2026-rr1; not waived or modified",
+    "push_sent": false,
+    "ci_conclusion": "failure",
+    "failed": 16,
+    "passed": 6405,
+    "skipped": 225,
+    "failure_scope": "15 checks in unrelated main sun-cvetkovic-chengdu-2026-rr1; 1 missing XHS file for unrelated main tiebreak-history-2026",
+    "ci_url": "https://github.com/robertyang87/tennislive/actions/runs/39654940663",
+    "rule_source": "CLAUDE.md:274",
+    "rule": "发布操作要求当前 head 的 CI 所选范围通过; no bypass or unrelated production mutation",
+    "latest_main_note": "The tiebreak XHS failure was fixed by upstream main b05ee0d at18:51Z after CI checkout; original15 Sun failures remain unresolved. No bypass or modification to that active production.",
+    "user_exception": {
+      "authorized": true,
+      "user_reply": "同意",
+      "question": "本片成片质检、配音和画面验收均通过。是否允许本次跳过另一稿件造成的 CI 失败，直接完成微信推送？",
+      "recorded_at_utc": "2026-10-21T19:02:33.141146+00:00",
+      "scope": "Single Muchova publication only; unrelated draft CI failures waived. Native film QC, source/audio evidence, frozen TTS, voice publication identity and persistent unique-send ledger all remain required. No other spec changed."
+    },
+    "prepublish_rechecks": {
+      "native_film_qc": "0 issues on actual downloaded de8eac8a film after main merge",
+      "voice_quality_gate": "pass",
+      "auto_push_gate": "this film selected; no prior sent ledger"
+    }
+  },
+  "publication_receipt": {
+    "at": "2026-10-21T19:06:04Z",
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/39658176810",
+    "pushplus_receipt": "5b1b8d618ef045ed8136897743514aed",
+    "message_url": "https://www.pushplus.plus/shortMessage/5b1b8d618ef045ed8136897743514aed",
+    "ledger_status": "sent",
+    "unique_attempts": 1,
+    "film_sha256": "de8eac8adabfd6af7e98332f2c17812b8c32e3df7a5f50b62af75ed8dc2c7c98"
+  }
+}

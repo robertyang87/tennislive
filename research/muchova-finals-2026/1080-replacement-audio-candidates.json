@@ -1,0 +1,83 @@
+{
+  "schema": "tennislive.1080-source-window-candidates.v1",
+  "created_at": "2026-10-21T17:40:33.409145+00:00",
+  "status": "source-window recommendations only; no runtime or production review mutation",
+  "method": "Paired independent small.en and medium.en actual MP4 ASR, preserving absolute word axes. No human listening claim.",
+  "doha_1080": {
+    "source": "https://www.youtube.com/watch?v=OnSvhjK9_mk",
+    "sha256": "8227284ca37343b0ae70ff32ee88286f012a2abc3902fa0479dd666acd54c710",
+    "reviewed": [
+      539,
+      571
+    ],
+    "decision": "Do not substitute for the clean-X ceremony+VO pair because continuous meaningful commentary542.82–565.16 leaves no4s genuine trophy footage window for frozen narration. Retain existing clean official X source in fullcrop.",
+    "not_selected_transcript": "It's Muchova's magical night. The trophy drought is over. Six and a half years after her last title. But Mboko simply had no answer. Unable to think of a way back. [And] the falcon is Karolina Muchova's.",
+    "lexical_limit": "Models disagree on And before the final sentence and normalize proper names from verified source identity. Unselected excerpt, not a finalized subtitle."
+  },
+  "miami_1080": {
+    "source": "https://www.youtube.com/watch?v=SL35StEiNXE",
+    "sha256": "068d68331c24d4ec6608cb779d606116d343ff98941e8d327f6948519d6ac6d4",
+    "reviewed": [
+      245,
+      298
+    ],
+    "vo_candidate": [
+      245,
+      253
+    ],
+    "vo_note": "Neither model identifies foreground English245–268.66; selected screen action needs independent visual confirmation.",
+    "highlight_end_candidate": 279.45,
+    "highlight_start": "261.50; independent source agent full-file originalPTS decode locates lead-in close-up scene boundary261.52; the complete final service follows",
+    "quotes": [
+      {
+        "start": 268.66,
+        "end": 275.6,
+        "en": "Oh, that's magnificent from Karolina Muchova.",
+        "zh": "穆霍娃打得太精彩了。"
+      },
+      {
+        "start": 276.28,
+        "end": 279.32,
+        "en": "What a point, and what a win.",
+        "zh": "精彩的一分，精彩的胜利。"
+      }
+    ],
+    "boundary_limit": "small.en places the next It onset at280.72; medium assigns its initial word a stretched279.32–280.8 range across inter-sentence silence. Recommended279.45 source end preserves previous win and avoids the next phrase according to the more granular small.en onset. This is ASR word alignment evidence, not a claim of human listening.",
+    "highlight_start_candidate": 261.5,
+    "visual_confirmation": "Corrected from seek-based coarse262.3 guess: full-file frame decode preserves source PTS3347456/timebase1/12800, placing the lead-in Muchova close-up edit at261.52. Choose261.50 to preserve complete service toss.245–253 is correctly identified same-match rally used only for narration background."
+  },
+  "evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/1080-replacement-raw/miami_1080-context-245-298-small.en.json",
+      "sha256": "e72640d9fe4c8bdff59c35b1a7a5610a4dafb7e6bfe32b4578c1d956da6ba9b1"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/1080-replacement-raw/miami_1080-context-245-298-medium.en.json",
+      "sha256": "8867aebf9999f71a2917c0a22850c4499d1230b8a210704ec6cf8295f0e62ab4"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/1080-replacement-raw/bad_feature_confidence-140.9-146.1-medium.en.json",
+      "sha256": "41a758242e92d90d1fe854daa449d55f7add834dbc209a6a5c35ee682b2c2a0b"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/1080-replacement-raw/bad_feature_team-87.9-98.85-small.en.json",
+      "sha256": "ef78ec91ded32d73202ca9a3bc8afdcbe2bba6ebc34bc4da1029bed9095252fb"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/1080-replacement-raw/doha_trophy_1080-context-539-571-small.en.json",
+      "sha256": "839bb6b4e6a1473fbe871b95f04ae797f982ca54919a81b3467464d8acd03194"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/1080-replacement-raw/doha_trophy_1080-context-539-571-medium.en.json",
+      "sha256": "9aebded0dd3e4a3256ac43ae618c682c56c35a1198e411a9e7c6f1ca54192b51"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/1080-replacement-raw/bad_feature_confidence-140.9-146.1-small.en.json",
+      "sha256": "a4476f24b9dda27c446c919f6776058630fc7c3fac9a7aed2a03f9bd9c7e4a27"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/1080-replacement-raw/bad_feature_team-87.9-98.85-medium.en.json",
+      "sha256": "cfa339b4d82c69ec42056a072c1ff4d4e9270bdd02972b18d04edd063005811c"
+    }
+  ]
+}

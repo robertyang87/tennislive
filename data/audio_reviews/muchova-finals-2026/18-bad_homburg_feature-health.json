@@ -1,0 +1,75 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399808507112",
+  "source_sha256": "fbdf2f1c540d553b4c073e380ee3e0ce196573e7bd3bca22d43f87a2da6f4235",
+  "source_key": "bad_homburg_feature",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 107.92,
+  "reviewed_to": 111.86,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 107.98,
+      "end": 111.76,
+      "en": "And keep myself as healthy as possible and play those matches.",
+      "zh": "尽量保持健康，继续打这些比赛。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg_feature-103.10-111.95-medium.en.json",
+      "sha256": "8cc4c7b64bc57dfe1f9fd0a81c52e9040af1b33ba78a686463c063807f95015d",
+      "model": "medium.en",
+      "from": 103.1,
+      "to": 111.95,
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg_feature-138.10-149.10-small.en.json",
+      "sha256": "d84f824dc56c1b026107f2e1ae78e453ff31fab742edfc318fd9b3d001fe848a",
+      "model": "small.en",
+      "from": 138.1,
+      "to": 149.1,
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg_feature-103.10-111.95-small.en.json",
+      "sha256": "96c533428aa92dab592dd0eeaf0cfe44f628c7054857a92cadbd7643b9640f54",
+      "model": "small.en",
+      "from": 103.1,
+      "to": 111.95,
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg_feature-138.10-149.10-medium.en.json",
+      "sha256": "edbbf888814dafdd932d434117912fa6753377322a4a5e4ab23684cd9ed79994",
+      "model": "medium.en",
+      "from": 138.1,
+      "to": 149.1,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": null,
+    "runtime_clause_packet_sha256": null,
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement.",
+    "window_findings_note": "Final runtime narrowed to the single complete health statement; actual original raw paired-model evidence103.1–111.95 covers the entire narrower window."
+  },
+  "scope_narrowed_at": "2026-10-21T17:43:07.612594+00:00",
+  "scope_narrowed_from": {
+    "path": "data/audio_reviews/muchova-finals-2026/18-bad_homburg_feature.json",
+    "sha256": "e64e080808bb1b9349196ab93acca930cf7ec0194dc284851f33881ea0bb5b12",
+    "reviewed_from": 103.1,
+    "reviewed_to": 111.95,
+    "reviewed_at": "2026-10-21T16:57:30.151899+00:00"
+  },
+  "scope_narrowing_method": "A strict subset of the existing actual-byte paired-model review. Original reviewed_at and underlying raw evidence remain unchanged; this is no new listening or model run. The earlier grounded-work sentence is no longer selected, and the complete selected health sentence107.98–111.76 is preserved within107.92–111.86."
+}

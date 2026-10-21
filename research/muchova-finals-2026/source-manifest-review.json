@@ -1,0 +1,51 @@
+{
+  "schema": "tennislive.source-manifest-review.v1",
+  "checked_at": "2026-10-21T18:16:11.193325+00:00",
+  "status": "previous_source_bindings_valid_new_runnerup_plate_source_prepared_for_runtime_insert_audio_and_visual_checks_pending",
+  "manifest_sha256": "edc48fffb0335da1d9f778b14376008889bde8d0f81ddf5c1f3552217572edc6",
+  "local_map_sha256": "2f495248a744c833cd030d28fb600942ce30c3d99bb19abfb2d6d55603771e15",
+  "formal_spec_sha256": "647ce87ff9a70ac4cc710e04bbf85de6c972c95cb6b458acb795f8da04fbceca",
+  "checks": {
+    "all_current_formal_source_keys_bound": [
+      "doha",
+      "miami",
+      "stuttgart_final",
+      "bad_homburg",
+      "bad_homburg_feature",
+      "wimbledon_sf",
+      "wimbledon_sf_interview",
+      "wimbledon_final",
+      "ao_r16",
+      "uso_r32",
+      "doha_trophy_clean",
+      "rg_r32",
+      "uso_mixed_final",
+      "bjk_cup_final"
+    ],
+    "all_source_map_files_exist": true,
+    "official_origins_match_current_spec": true,
+    "canonical_release_assets_uploaded_and_sizes_match": true,
+    "retired_doha_not_in_source_map": true,
+    "known_wrong_sources_not_in_source_map": true,
+    "rg_only_teichmann_result_limitation_preserved": true,
+    "bc_three_canonical_byte_equal": "see evidence/bc-canonical-comparison.json",
+    "bjk_actual_sha_matches_parent_and_local_probe": true,
+    "doha720_retained_per_latest_audio_evidence": true,
+    "bad_homburg720_real_dynamic_trophy_retained_per_root": true,
+    "miami_native1080_new_source_and_root_approved_safe_window": true
+  },
+  "limitations": [
+    "This is source binding integrity, not final audio/subtitle/crop/render QC.",
+    "Final spec can still change; rerun binding review after any source identity changes."
+  ],
+  "latest_source_decisions": {
+    "miami": "Native1080 SL35StEiNXE adopted; VO245–253 and safe complete final-point window261.50–279.45; no exact serve-start assertion.",
+    "doha_trophy_clean": "keep original official X720; full1080 OnSvhjK9_mk reserve only due continuous foreground speech",
+    "bad_homburg": "keep original official720 for true retirement and dynamic trophy raise",
+    "rg_r32": "keep official portrait1080x1920 same-round Teichmann reaction"
+  },
+  "native1080_source_review": "research/muchova-finals-2026/evidence/1080-replacement-review.json",
+  "new_source_key": "wimbledon_runnerup_plate",
+  "new_source_sha256": "037d3196bb3324cc596a190c928b00aeb9dad40c13529f3a50a57548fb25b5cd",
+  "new_source_canonical_archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-M_jeYnQCwQg/M_jeYnQCwQg.mp4"
+}

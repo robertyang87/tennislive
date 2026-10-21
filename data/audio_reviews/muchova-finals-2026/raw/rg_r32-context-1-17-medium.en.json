@@ -1,0 +1,46 @@
+{
+  "source": "rg_r32",
+  "source_url": "https://x.com/rolandgarros/status/2060369494891978888",
+  "source_sha256": "0790d25ee1ff4cf613f4307abcfdf2d399143f7580087bc261f2bd070eaba1bc",
+  "start": 1,
+  "end": 17,
+  "model": "medium.en",
+  "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode",
+  "vad_filter": false,
+  "segments": [
+    {
+      "start": 1.0,
+      "end": 16.92,
+      "text": "Thank you very much.",
+      "avg_logprob": -0.87132778018713,
+      "no_speech_prob": 0.48641759157180786,
+      "words": [
+        {
+          "w": " Thank",
+          "s": 1.0,
+          "e": 1.74,
+          "p": 0.014526952989399433
+        },
+        {
+          "w": " you",
+          "s": 1.74,
+          "e": 9.28,
+          "p": 0.9812278151512146
+        },
+        {
+          "w": " very",
+          "s": 9.28,
+          "e": 9.6,
+          "p": 0.18153095245361328
+        },
+        {
+          "w": " much.",
+          "s": 9.6,
+          "e": 16.92,
+          "p": 0.9892650842666626
+        }
+      ]
+    }
+  ],
+  "source_url_label_correction": "Corrected media ID mistaken as post ID; actual video bytes and ASR unchanged."
+}

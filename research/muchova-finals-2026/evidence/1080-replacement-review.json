@@ -1,0 +1,92 @@
+{
+  "schema": "tennislive.native-1080-replacement-source-review.v1",
+  "updated_at": "2026-10-21T17:45:52.464895+00:00",
+  "scope": "Source research and finite visual identity check only; final runtime/audio/subtitle gate belongs to parent and interview_excerpts. No render or push dispatched.",
+  "user_instruction": "All video fills the canvas with fitcrop. User did not require native1080.",
+  "sources": {
+    "OnSvhjK9_mk": {
+      "local_path": "research/muchova-finals-2026/sources/videos/OnSvhjK9_mk.mp4",
+      "sha256": "8227284ca37343b0ae70ff32ee88286f012a2abc3902fa0479dd666acd54c710",
+      "duration": 575.901315,
+      "bytes": 63851956,
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "codec": "av1"
+    },
+    "SL35StEiNXE": {
+      "local_path": "research/muchova-finals-2026/sources/videos/SL35StEiNXE.mp4",
+      "sha256": "068d68331c24d4ec6608cb779d606116d343ff98941e8d327f6948519d6ac6d4",
+      "duration": 308.616417,
+      "bytes": 47971486,
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "codec": "av1"
+    },
+    "2Xl3VQ4Ob5I": {
+      "local_path": "research/muchova-finals-2026/sources/videos/2Xl3VQ4Ob5I.mp4",
+      "sha256": "f1b4d20ecc2f6ab51a4c7be93ef840cbc8dfc37af3519ea7a51a4b7675a4d636",
+      "duration": 60.116463,
+      "bytes": 12518341,
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "codec": "av1"
+    }
+  },
+  "decisions": {
+    "miami": {
+      "use": "Native1080 official WTA YouTube SL35StEiNXE replaces actual720 BC source under existing keymiami.",
+      "official_url": "https://www.youtube.com/watch?v=SL35StEiNXE",
+      "release_url": "https://github.com/robertyang87/tennislive/releases/download/source-SL35StEiNXE/SL35StEiNXE.mp4",
+      "workflow_run": 39645016188,
+      "visual_identity": "Muchova white Adidas/orange headband; Mboko pink dress; MBOKO/MUCHOVA score, Miami court, exact QF win and handshake. Wrongm_tBjmZeVqs stays excluded.",
+      "narration_background_window": [
+        245,
+        253
+      ],
+      "background_caveat": "Mid-rally background, not claimed complete key point. Court-center fitcrop requested; final rendered crop visual QC still needed.",
+      "complete_last_point_and_commentary_window": [
+        261.5,
+        279.45
+      ],
+      "serve_boundary_evidence": {
+        "method": "Root-approved conservative window after full source identity/tail and finite frame inspection",
+        "window_start": 261.5,
+        "coverage": "Brief Muchova close-up precedes full last serve/rally and victory; no half-rally start.",
+        "correction": "Earlier261.52 rawPTS scene detector identified transition into Muchova close-up, not serve. Rough input-seek contact timestamps also not exact. No exact serve-start timestamp is claimed.",
+        "contact_sheets": [
+          "contact-sheets/miami-1080-final-point-240.jpg",
+          "contact-sheets/miami-1080-serve-boundary.jpg",
+          "contact-sheets/miami-1080-serve-exact-pts.jpg"
+        ]
+      },
+      "audio_evidence_owner": "interview_excerpts: double-model245–298, foreground starts268.66, full comments end279.32, next words280.72. Formal raw evidence in agent packet."
+    },
+    "doha_trophy": {
+      "use": "Keep original officialWTA X720 underdoha_trophy_clean; full native1080 OnSvhjK9_mk reserve only.",
+      "reserve_official_url": "https://www.youtube.com/watch?v=OnSvhjK9_mk",
+      "reserve_release_url": "https://github.com/robertyang87/tennislive/releases/download/source-OnSvhjK9_mk/OnSvhjK9_mk.mp4",
+      "workflow_run": 39644901625,
+      "visual_identity": "Actual Muchova/Mboko Doha final and real gold falcon trophy: stage554, close-ups556–562, stage564, outro566+.",
+      "audio_reason_not_selected": "Two-model context542.82–565.16 has continuous foreground English; no >=4s clean trophy narration window. Root revised provisional1080 switch and retained X720, with full ceremony announcement then trophy VO. Do not mute speech to force replacement.",
+      "history": "Old10s derived remains retired due source-boundary incomplete sentence. Full1080 fixes source duration but has different narration coverage constraint."
+    },
+    "bad_homburg": {
+      "use": "Keep true1280x720 official Champions Reel for Osaka retirement and dynamic elephant trophy raise/kiss; fitcrop. Root explicitly accepted real720 over losing correct moment.",
+      "rendition_audit": "evidence/720p-bc-rendition-audit.json",
+      "public_renditions": "MP4,HLS andDASH max1280x720 for media6399578560112; Miami oldBC6391563293112 same max.",
+      "existing1080_feature": "Media6399808507112, actual1920x1080:108–141s real final/retirement/handshake, retrospective spoken audio; end160s trophy is static/composited. Not a dynamic ceremony replacement.",
+      "official_aftermovie": "Tournament own homepage embedsYouTube2Xl3VQ4Ob5I, retrieved native1080 but every3s samples show atmosphere/training/empty trophy, no verified Muchova dynamic trophy. Not selected.",
+      "aftermovie_workflow_run": 39645196236,
+      "homepage_evidence": "evidence/badhomburg-official-home-2026-aftermovie.html"
+    },
+    "rg": "Keep genuine official1080x1920 portrait same-round Teichmann victory reaction; full-canvas fitcrop. Do not relabel as Muchova reaction."
+  },
+  "extra_source_search": "Stopped after parent accepted720 real BadHomburg dynamic trophy. No uploader-only unofficial candidates used.",
+  "manifest": "source-manifest.json",
+  "local_map": "local-source-map.json",
+  "no_commit_by_child": true,
+  "status": "frozen_parent_approved_source_decisions_no_further_search"
+}

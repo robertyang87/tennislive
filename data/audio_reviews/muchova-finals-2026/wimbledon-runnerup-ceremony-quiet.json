@@ -1,0 +1,34 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=M_jeYnQCwQg",
+  "source_sha256": "037d3196bb3324cc596a190c928b00aeb9dad40c13529f3a50a57548fb25b5cd",
+  "source_key": "wimbledon_runnerup_plate",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex independent small.en and medium.en actual-byte source-window ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-21T18:17:13.506305+00:00",
+  "reviewed_from": 96.6,
+  "reviewed_to": 114.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "Both independent ASR models decode actual source87–117: the host announcement ends88.96/89.04. medium.en identifies no further English through117; small.en only supplies the non-dialogue sound label CHEERING AND APPLAUSE at93.7–96.5, with no English words after. Reviewed96.60–114.80 lies after that sound label and contains audience applause with no stable foreground English identified by either model.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_runnerup_ceremony-context-87-117-small.en.json",
+      "sha256": "7e37347e40decd1510a538b8f96fc298393d206e0b7663183aa40f733568dce7",
+      "model": "small.en",
+      "from": 87,
+      "to": 117,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_runnerup_ceremony-context-87-117-medium.en.json",
+      "sha256": "802d6099becf9903bbb5760aa08268e04de91522b307c5f1017716f71c12e2dc",
+      "model": "medium.en",
+      "from": 87,
+      "to": 117,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    }
+  ],
+  "review_scope": "Complete paired-model actual-byte review of the selected quiet ceremony range96.60–114.80. Final4–10second visual runner-up-plate window must be a subset of this range. Original scene sound retained; no muting, gain adjustment, silence trimming, speed change or new narration. No human-listening or final-film-mix claim."
+}

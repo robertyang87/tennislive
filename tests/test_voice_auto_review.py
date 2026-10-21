@@ -1,4 +1,10 @@
-"""配音自动听审的纯函数判据（不合成、不转写；runner 上的实测在 research/voice-auto-calib）。"""
+"""配音自动判据及真实音频解码兼容性（不下载模型、不合成语音）。"""
+import shutil
+import subprocess
+import sys
+import types
+import wave
+
 import pytest
 
 pytest.importorskip("pypinyin")
@@ -75,3 +81,53 @@ def test_B档只有高置信错读才红_A档量不出也红():
 def test_转写里的阿拉伯数字按读数或逐位都认():
     assert auto.compare_transcript("二零二六赛季，WTA一千赛全部收官。", "2026赛季,WTA1000赛全部收官。")["ok"]
     assert auto.compare_transcript("决赛七十五分钟横扫莱巴金娜。", "决赛75分钟,横扫来8斤。")["ok"]
+
+
+@pytest.mark.skipif(not shutil.which("ffmpeg"), reason="ffmpeg required")
+def test_asr_decodes_real_stereo_mp3_without_pyav_path_adapter(tmp_path, monkeypatch):
+    np = pytest.importorskip("numpy")
+    # Distinct tones in the two channels reveal accidental stereo flattening,
+    # incorrect sample-rate handling, or dropping one input channel.
+    t = np.arange(22050) / 44100
+    stereo = np.column_stack((0.15 * np.sin(2 * np.pi * 440 * t),
+                              0.10 * np.sin(2 * np.pi * 880 * t)))
+    wav = tmp_path / "stereo.wav"
+    with wave.open(str(wav), "wb") as f:
+        f.setnchannels(2)
+        f.setsampwidth(2)
+        f.setframerate(44100)
+        f.writeframes((stereo * 32767).astype("<i2").tobytes())
+    mp3 = tmp_path / "actual.mp3"
+    subprocess.run(["ffmpeg", "-nostdin", "-v", "error", "-i", str(wav),
+                    "-b:a", "96k", str(mp3)], check=True)
+    calls = []
+
+    class FakeWhisper:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def transcribe(self, audio, **kwargs):
+            # Passing a path here would hit the incompatible PyAV API.
+            assert isinstance(audio, np.ndarray)
+            assert audio.dtype == np.float32 and audio.ndim == 1
+            assert 7920 <= len(audio) <= 8080  # 0.5 seconds at 16 kHz
+            assert np.isfinite(audio).all()
+            spectrum = np.abs(np.fft.rfft(audio))
+            frequency = np.fft.rfftfreq(len(audio), 1 / 16000)
+            peaks = frequency[np.argsort(spectrum)[-2:]]
+            assert sorted(peaks) == pytest.approx([440, 880], abs=3)
+            assert 0.04 < float(np.sqrt(np.mean(audio ** 2))) < 0.11
+            assert kwargs["language"] == "zh" and kwargs["beam_size"] == 5
+            assert not kwargs["vad_filter"] and not kwargs["condition_on_previous_text"]
+            assert "穆霍娃" in kwargs["initial_prompt"]
+            assert "不能把这句原文塞进提示" not in kwargs["initial_prompt"]
+            calls.append(audio)
+            return iter([types.SimpleNamespace(text="第一句。"),
+                         types.SimpleNamespace(text=" 第二句。")]), None
+
+    monkeypatch.setitem(sys.modules, "faster_whisper", types.SimpleNamespace(WhisperModel=FakeWhisper))
+    result = auto.run_asr([{"id": "actual", "mp3": mp3,
+                            "request": {"text": "不能把这句原文塞进提示"}}],
+                          "small", ["穆霍娃"])
+    assert result == {"actual": "第一句。 第二句。"}
+    assert len(calls) == 1

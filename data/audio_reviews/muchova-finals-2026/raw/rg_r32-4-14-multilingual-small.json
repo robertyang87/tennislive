@@ -1,0 +1,134 @@
+{
+  "source": "rg_r32",
+  "source_url": "https://x.com/rolandgarros/status/2060369494891978888",
+  "source_sha256": "0790d25ee1ff4cf613f4307abcfdf2d399143f7580087bc261f2bd070eaba1bc",
+  "start": 4,
+  "end": 14,
+  "model": "small_multilingual",
+  "detected_language": "en",
+  "detected_language_probability": 0.6427693963050842,
+  "method": "faster_whisper_int8_ffmpeg_16khz_float32_auto_language_no_vad",
+  "segments": [
+    {
+      "start": 4.0,
+      "end": 4.24,
+      "text": " Yeah!",
+      "no_speech_prob": 0.5304102897644043,
+      "avg_logprob": -0.873728663833053,
+      "words": [
+        {
+          "w": " Yeah!",
+          "s": 4.0,
+          "e": 4.24,
+          "p": 0.016412785276770592
+        }
+      ]
+    },
+    {
+      "start": 5.0,
+      "end": 6.859999999999999,
+      "text": " We are number seven.",
+      "no_speech_prob": 0.5304102897644043,
+      "avg_logprob": -0.873728663833053,
+      "words": [
+        {
+          "w": " We",
+          "s": 5.0,
+          "e": 5.28,
+          "p": 0.045926257967948914
+        },
+        {
+          "w": " are",
+          "s": 5.28,
+          "e": 5.34,
+          "p": 0.20965231955051422
+        },
+        {
+          "w": " number",
+          "s": 5.34,
+          "e": 5.68,
+          "p": 0.30664852261543274
+        },
+        {
+          "w": " seven.",
+          "s": 5.68,
+          "e": 6.859999999999999,
+          "p": 0.3827989101409912
+        }
+      ]
+    },
+    {
+      "start": 8.620000000000001,
+      "end": 10.0,
+      "text": " We are number seven.",
+      "no_speech_prob": 0.5304102897644043,
+      "avg_logprob": -0.873728663833053,
+      "words": [
+        {
+          "w": " We",
+          "s": 8.620000000000001,
+          "e": 9.219999999999999,
+          "p": 0.3582304120063782
+        },
+        {
+          "w": " are",
+          "s": 9.219999999999999,
+          "e": 9.379999999999999,
+          "p": 0.7399442791938782
+        },
+        {
+          "w": " number",
+          "s": 9.379999999999999,
+          "e": 9.74,
+          "p": 0.9855626821517944
+        },
+        {
+          "w": " seven.",
+          "s": 9.74,
+          "e": 10.040000000000001,
+          "p": 0.9218981862068176
+        }
+      ]
+    },
+    {
+      "start": 10.58,
+      "end": 11.9,
+      "text": " Please come and sit down.",
+      "no_speech_prob": 0.5304102897644043,
+      "avg_logprob": -0.873728663833053,
+      "words": [
+        {
+          "w": " Please",
+          "s": 10.58,
+          "e": 10.84,
+          "p": 0.3851431906223297
+        },
+        {
+          "w": " come",
+          "s": 10.84,
+          "e": 11.14,
+          "p": 0.7611371278762817
+        },
+        {
+          "w": " and",
+          "s": 11.14,
+          "e": 11.36,
+          "p": 0.539065420627594
+        },
+        {
+          "w": " sit",
+          "s": 11.36,
+          "e": 11.6,
+          "p": 0.1392754763364792
+        },
+        {
+          "w": " down.",
+          "s": 11.6,
+          "e": 11.9,
+          "p": 0.32411134243011475
+        }
+      ]
+    }
+  ],
+  "source_url_label_correction": "Corrected media ID mistaken as post ID; actual video bytes and ASR unchanged."
+}

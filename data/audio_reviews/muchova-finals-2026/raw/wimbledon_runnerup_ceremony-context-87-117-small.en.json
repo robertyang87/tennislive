@@ -1,0 +1,65 @@
+{
+  "source": "wimbledon_runnerup_ceremony",
+  "source_url": "https://www.youtube.com/watch?v=M_jeYnQCwQg",
+  "source_sha256": "037d3196bb3324cc596a190c928b00aeb9dad40c13529f3a50a57548fb25b5cd",
+  "start": 87,
+  "end": 117,
+  "model": "small.en",
+  "method": "context_faster_whisper_int8_ffmpeg_16khz_float32",
+  "segments": [
+    {
+      "start": 87.0,
+      "end": 89.04,
+      "text": "Republic, Carolina Mukavab.",
+      "avg_logprob": -0.7408366420052268,
+      "no_speech_prob": 0.09611116349697113,
+      "words": [
+        {
+          "w": " Republic,",
+          "s": 87.0,
+          "e": 87.5,
+          "p": 0.5737847089767456
+        },
+        {
+          "w": " Carolina",
+          "s": 87.88,
+          "e": 88.14,
+          "p": 0.6992924213409424
+        },
+        {
+          "w": " Mukavab.",
+          "s": 88.14,
+          "e": 89.04,
+          "p": 0.501765102148056
+        }
+      ]
+    },
+    {
+      "start": 93.7,
+      "end": 96.5,
+      "text": "CHEERING AND APPLAUSE",
+      "avg_logprob": -0.6085169315338135,
+      "no_speech_prob": 0.05498650297522545,
+      "words": [
+        {
+          "w": " CHEERING",
+          "s": 93.7,
+          "e": 95.1,
+          "p": 0.6932980370038422
+        },
+        {
+          "w": " AND",
+          "s": 95.1,
+          "e": 96.5,
+          "p": 0.9218987226486206
+        },
+        {
+          "w": " APPLAUSE",
+          "s": 96.5,
+          "e": 96.5,
+          "p": 0.9928642312685648
+        }
+      ]
+    }
+  ]
+}

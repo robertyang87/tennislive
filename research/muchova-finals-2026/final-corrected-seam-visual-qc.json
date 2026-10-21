@@ -1,0 +1,331 @@
+{
+  "schema": "tennislive.final-corrected-seam-bounded-visual-qc.v1",
+  "created_at": "2026-10-21T18:54:32.236406+00:00",
+  "reviewer": "visual_assets",
+  "movie": "/tmp/muchova-delivered-final/muchova-finals-2026.mp4",
+  "movie_sha256": "de8eac8adabfd6af7e98332f2c17812b8c32e3df7a5f50b62af75ed8dc2c7c98",
+  "movie_sha256_independently_verified": true,
+  "duration_seconds": 321.52,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "verdict": "pass_for_reviewed_seam_and_receipt_samples",
+  "previous_champion_plate_issue": "closed_in_reviewed_boundary",
+  "scope": "Actual encoded final movie; every frame n5770–5797 (230.80–231.88) plus six receipt samples. Bounded visual sampling, not wholemovie/allframe approval, and no human audio listening.",
+  "every_movie_frame_reviewed": false,
+  "human_audio_listened": false,
+  "publication_approved": false,
+  "boundary_contiguous_frames": {
+    "first": 5770,
+    "last": 5797,
+    "inclusive_count": 28,
+    "first_time": 230.8,
+    "last_time": 231.88
+  },
+  "additional_receipt_frame_indices": [
+    5810,
+    5840,
+    5870,
+    5920,
+    5970,
+    6010
+  ],
+  "all34_original_png_sha256_verified": true,
+  "observations": [
+    {
+      "frame_indices": [
+        5770,
+        5771,
+        5772,
+        5773,
+        5774,
+        5775,
+        5776,
+        5777,
+        5778,
+        5779,
+        5780,
+        5781,
+        5782,
+        5783,
+        5784,
+        5785
+      ],
+      "observation": "Ends on Noskova lying on grass after match; no champion dish appears. Match result overlay stays on outgoing shot, subtitles are clear and away from visible player face."
+    },
+    {
+      "frame_indices": [
+        5786,
+        5787,
+        5788
+      ],
+      "observation": "Expected short dissolve blends outgoing on-court reaction into actual Muchova receiving runner-up plate. No intermediate Noskova champion-plate shot, black frame, contain border or corrupt pixel block observed."
+    },
+    {
+      "frame_indices": [
+        5789,
+        5790,
+        5791,
+        5792,
+        5793,
+        5794,
+        5795,
+        5796,
+        5797
+      ],
+      "observation": "Fully on real Muchova/Kate receipt wide shot; no result inset or subtitle covers Muchova face or plate. Both people and plate are inside fullcanvas crop."
+    },
+    {
+      "frame_indices": [
+        5810,
+        5840
+      ],
+      "observation": "Actual runner-up handover/holding is visible with Muchova correctly identified by white adidas jacket and white headband, with Kate in red."
+    },
+    {
+      "frame_indices": [
+        5870
+      ],
+      "observation": "Source audience applause cut inside ceremony, intentional source shot rather than blank/failed crop."
+    },
+    {
+      "frame_indices": [
+        5920,
+        5970,
+        6010
+      ],
+      "observation": "Muchova held-plate closeup has clear face/eyes/mouth. Plate lies partly at bottom crop in closeup; complete handover plate was already visible in preceding wide shot. No overhead lift is asserted."
+    }
+  ],
+  "sample_images": [
+    {
+      "frame_index": 5770,
+      "film_time": 230.8,
+      "image": "/tmp/muchova-final-seam-review/frame-001.png",
+      "image_sha256": "8fcdfee212d42fd8627b905896ebde9ebb733821a6e2070df4f1b761899757b9"
+    },
+    {
+      "frame_index": 5771,
+      "film_time": 230.84,
+      "image": "/tmp/muchova-final-seam-review/frame-002.png",
+      "image_sha256": "ec2fc63094bea2f776b5e92039701ab3a1d89b09714dd6f6c9fa56bc7fa60ca7"
+    },
+    {
+      "frame_index": 5772,
+      "film_time": 230.88,
+      "image": "/tmp/muchova-final-seam-review/frame-003.png",
+      "image_sha256": "c2433a1acb5117be17313518de0033bb47513c20d9c3a0d232c5ed99df722f4a"
+    },
+    {
+      "frame_index": 5773,
+      "film_time": 230.92,
+      "image": "/tmp/muchova-final-seam-review/frame-004.png",
+      "image_sha256": "cb73e13bdf2800c7d0870379ea58e6756688ec219d45dcce0efba966730a9231"
+    },
+    {
+      "frame_index": 5774,
+      "film_time": 230.96,
+      "image": "/tmp/muchova-final-seam-review/frame-005.png",
+      "image_sha256": "aefb81975972f955e5422ad4a33b9de450527b20dc4e07b40c5f23186d90123b"
+    },
+    {
+      "frame_index": 5775,
+      "film_time": 231.0,
+      "image": "/tmp/muchova-final-seam-review/frame-006.png",
+      "image_sha256": "0a036eda0320c0c024720b7cb4390ea45412b5f75136956bde845d7d5fe56844"
+    },
+    {
+      "frame_index": 5776,
+      "film_time": 231.04,
+      "image": "/tmp/muchova-final-seam-review/frame-007.png",
+      "image_sha256": "a28e5373e10d3b437d820d172a56c9875ee3111b2ce665efd7608b30c9244dd3"
+    },
+    {
+      "frame_index": 5777,
+      "film_time": 231.08,
+      "image": "/tmp/muchova-final-seam-review/frame-008.png",
+      "image_sha256": "d0a297202cb48784ecd2c73f9bdad9ff2c3b12c6ee1ea807e1635b18b21045b7"
+    },
+    {
+      "frame_index": 5778,
+      "film_time": 231.12,
+      "image": "/tmp/muchova-final-seam-review/frame-009.png",
+      "image_sha256": "3b5778ba8780578979d41f4aba1172c041fe5a0529c0846a3ba2f3133c7626ca"
+    },
+    {
+      "frame_index": 5779,
+      "film_time": 231.16,
+      "image": "/tmp/muchova-final-seam-review/frame-010.png",
+      "image_sha256": "b7e9e44700761d76f2cbfd0aff70c14b37050aa8b26467a5491a08f4f7c22d1f"
+    },
+    {
+      "frame_index": 5780,
+      "film_time": 231.2,
+      "image": "/tmp/muchova-final-seam-review/frame-011.png",
+      "image_sha256": "1e216374877f0338e229d17bb503fa9e49ebd211eba41c3f117ac016ce8dc75c"
+    },
+    {
+      "frame_index": 5781,
+      "film_time": 231.24,
+      "image": "/tmp/muchova-final-seam-review/frame-012.png",
+      "image_sha256": "0fd814370e51894aec3e10c0e08de5d6dff20883ab8f734736acf72183dfa746"
+    },
+    {
+      "frame_index": 5782,
+      "film_time": 231.28,
+      "image": "/tmp/muchova-final-seam-review/frame-013.png",
+      "image_sha256": "5be5dd0fe99814546e951f755f282c4e72d3c224f7a51ba9e1b17a2a11052a5e"
+    },
+    {
+      "frame_index": 5783,
+      "film_time": 231.32,
+      "image": "/tmp/muchova-final-seam-review/frame-014.png",
+      "image_sha256": "688ec4e12862eb80b91c6721630fe4e133c3b83707da3d407568678135ba068c"
+    },
+    {
+      "frame_index": 5784,
+      "film_time": 231.36,
+      "image": "/tmp/muchova-final-seam-review/frame-015.png",
+      "image_sha256": "c522bc1f56530d9c82e427145f20165b0fecb87eeb09129398660fca351bec0b"
+    },
+    {
+      "frame_index": 5785,
+      "film_time": 231.4,
+      "image": "/tmp/muchova-final-seam-review/frame-016.png",
+      "image_sha256": "9be5079a6dc595ab330f81c392687dc6ec6a0aad7246dcd5d739408a1b4a289c"
+    },
+    {
+      "frame_index": 5786,
+      "film_time": 231.44,
+      "image": "/tmp/muchova-final-seam-review/frame-017.png",
+      "image_sha256": "58a99d4822738f18bedc8f779a8377942f41b9764e3f20dc9a960ea544196f02"
+    },
+    {
+      "frame_index": 5787,
+      "film_time": 231.48,
+      "image": "/tmp/muchova-final-seam-review/frame-018.png",
+      "image_sha256": "af70fdda4f9bb1ee51ba81bed6c0a155f37becf5be1ff8dfb48aa67227bde0b6"
+    },
+    {
+      "frame_index": 5788,
+      "film_time": 231.52,
+      "image": "/tmp/muchova-final-seam-review/frame-019.png",
+      "image_sha256": "82e97a499ec182afdeeba912396d10723b441da30096bcb0b7fd315234588561"
+    },
+    {
+      "frame_index": 5789,
+      "film_time": 231.56,
+      "image": "/tmp/muchova-final-seam-review/frame-020.png",
+      "image_sha256": "0299195bf968a40bf6f5bda732744e75259880e252c6904df827f8d0c338bcdc"
+    },
+    {
+      "frame_index": 5790,
+      "film_time": 231.6,
+      "image": "/tmp/muchova-final-seam-review/frame-021.png",
+      "image_sha256": "1fb19ea090da71d4fc3ed690d72205e0dfe68a2788bfc341d6e7ffac29ddad8e"
+    },
+    {
+      "frame_index": 5791,
+      "film_time": 231.64,
+      "image": "/tmp/muchova-final-seam-review/frame-022.png",
+      "image_sha256": "4bdacf91df11df29503b37549b81cca945dabed52d900442aad2d77ee3e88472"
+    },
+    {
+      "frame_index": 5792,
+      "film_time": 231.68,
+      "image": "/tmp/muchova-final-seam-review/frame-023.png",
+      "image_sha256": "a72a9b0dd666e02ef5c77f022e1772ceeb866ca7a6a85ec70ddca20e02e20eeb"
+    },
+    {
+      "frame_index": 5793,
+      "film_time": 231.72,
+      "image": "/tmp/muchova-final-seam-review/frame-024.png",
+      "image_sha256": "805f9dbda1dca844ffcbda09e1fc80af2bd831b394119a4dd120a376b98dfc43"
+    },
+    {
+      "frame_index": 5794,
+      "film_time": 231.76,
+      "image": "/tmp/muchova-final-seam-review/frame-025.png",
+      "image_sha256": "ef099d07487ac876bb4bfa7e10b504bc3521f60267d002dd48b6bf668ee2e516"
+    },
+    {
+      "frame_index": 5795,
+      "film_time": 231.8,
+      "image": "/tmp/muchova-final-seam-review/frame-026.png",
+      "image_sha256": "c3017e0fd085648ade976559e22949547ebf6427b82a264240933b1be8adfc0d"
+    },
+    {
+      "frame_index": 5796,
+      "film_time": 231.84,
+      "image": "/tmp/muchova-final-seam-review/frame-027.png",
+      "image_sha256": "fcd98007501029dbce774226f1d17c27d2daf50303ad5d44365232093855cae0"
+    },
+    {
+      "frame_index": 5797,
+      "film_time": 231.88,
+      "image": "/tmp/muchova-final-seam-review/frame-028.png",
+      "image_sha256": "e86a9ef20998bc6fb726f8b49795c52b418a6137aea19acc36f58949ad63d1b3"
+    },
+    {
+      "frame_index": 5810,
+      "film_time": 232.4,
+      "image": "/tmp/muchova-final-seam-review/frame-029.png",
+      "image_sha256": "d632abb604d76ae2c817d5274def78fcd8d0d7230d94a5f7fdf20f48dd5bf6d9"
+    },
+    {
+      "frame_index": 5840,
+      "film_time": 233.6,
+      "image": "/tmp/muchova-final-seam-review/frame-030.png",
+      "image_sha256": "85fa588b20c77bd0963f0955e04ea09f5290ec02d317ad2518a5287a514b4b5f"
+    },
+    {
+      "frame_index": 5870,
+      "film_time": 234.8,
+      "image": "/tmp/muchova-final-seam-review/frame-031.png",
+      "image_sha256": "a0b3ae49513a3333dbc6f395cc249b1c4e332f624a0f2febbd470f16fb2d55db"
+    },
+    {
+      "frame_index": 5920,
+      "film_time": 236.8,
+      "image": "/tmp/muchova-final-seam-review/frame-032.png",
+      "image_sha256": "1594721072d1cb73cadb7a3adf04eb236a1f7244e4b4f7a45d025ba2fdd47469"
+    },
+    {
+      "frame_index": 5970,
+      "film_time": 238.8,
+      "image": "/tmp/muchova-final-seam-review/frame-033.png",
+      "image_sha256": "7bb1309ec398dbc6cc3a3fc25653943110015c14a2e5e776dd441972aa5b311b"
+    },
+    {
+      "frame_index": 6010,
+      "film_time": 240.4,
+      "image": "/tmp/muchova-final-seam-review/frame-034.png",
+      "image_sha256": "deb80eca0b8a4948b157f6dda61d83b0081cf99bc8097a6d047fe7ef2d40818c"
+    }
+  ],
+  "full_resolution_detail_views": [
+    5784,
+    5787,
+    5789,
+    5840,
+    5920
+  ],
+  "contact_sheets": [
+    {
+      "path": "research/muchova-finals-2026/contact-sheets/final-corrected-seam-boundary.jpg",
+      "sha256": "f39a0eaa56770357d1f84f64298f3b11da1daacea771639000dea9d9b7440f61"
+    },
+    {
+      "path": "research/muchova-finals-2026/contact-sheets/final-corrected-seam-receipt.jpg",
+      "sha256": "18028115fcb93a54633db7a60e0341083b1c45555eb0528ae0d1ed0b10ce271c"
+    }
+  ],
+  "source_reference": "Original final highlights first champion-dish frame source224.48 / native relative n242 at -ss214.8; corrected declared source end224.24 with native0.18s tail ending224.42 avoids it. Final movie pixels above verify that no such dish frame remains in reviewed seam.",
+  "limitations": [
+    "No claim about unreviewed earlier/later movie frames or complete receipt continuous motion between the six later samples.",
+    "No audio listening claim; full sentence/voice evidence belongs to separate audio audit.",
+    "No spec or renderer changed during this review."
+  ]
+}
