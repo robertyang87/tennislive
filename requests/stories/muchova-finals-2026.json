@@ -57,7 +57,7 @@
     "render_preconditions": "先将修订叙事呈现在对话；完成素材、字幕、配音、取景与现行预检，方可render。"
   },
   "render_dispatched": true,
-  "push_sent": false,
+  "push_sent": true,
   "source_preparation_notes": [
     "正式13条官方源、19个视频段；全部铺满画布裁切。",
     "四GS止步轮视频全保留；温网SF与采访、F、100.6–110.0真接亚军盘按时间顺接。",
@@ -87,7 +87,7 @@
     "clip_end_stops_label": true
   },
   "final_movie_review_finding": "首个完整成片唯一阻塞：温网F末尾源224.48起出现诺斯科娃冠军盘，已将该段end收224.24并依据新双模型紧校末词，保持完整分与解说；其他片段不变。",
-  "status": "publication_authorized_in_progress",
+  "status": "complete_pushed_to_wechat",
   "final_render": {
     "run_id": 39655048234,
     "conclusion": "success",
@@ -102,7 +102,7 @@
     "seam_visual_review": "research/muchova-finals-2026/final-corrected-seam-visual-qc.json"
   },
   "publication_gate": {
-    "status": "single_user_authorized_unrelated_ci_exception",
+    "status": "sent_after_user_authorized_unrelated_ci_exception",
     "ci_run_id": 39654940663,
     "known_prior_failures": 15,
     "prior_failure_scope": "unrelated concurrent main spec sun-cvetkovic-chengdu-2026-rr1; not waived or modified",
@@ -128,5 +128,14 @@
       "voice_quality_gate": "pass",
       "auto_push_gate": "this film selected; no prior sent ledger"
     }
+  },
+  "publication_receipt": {
+    "at": "2026-10-21T19:06:04Z",
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/39658176810",
+    "pushplus_receipt": "5b1b8d618ef045ed8136897743514aed",
+    "message_url": "https://www.pushplus.plus/shortMessage/5b1b8d618ef045ed8136897743514aed",
+    "ledger_status": "sent",
+    "unique_attempts": 1,
+    "film_sha256": "de8eac8adabfd6af7e98332f2c17812b8c32e3df7a5f50b62af75ed8dc2c7c98"
   }
 }
