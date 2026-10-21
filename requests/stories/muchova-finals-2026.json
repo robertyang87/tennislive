@@ -86,5 +86,35 @@
     "hold_seconds_max": 15,
     "clip_end_stops_label": true
   },
-  "final_movie_review_finding": "首个完整成片唯一阻塞：温网F末尾源224.48起出现诺斯科娃冠军盘，已将该段end收224.24并依据新双模型紧校末词，保持完整分与解说；其他片段不变。"
+  "final_movie_review_finding": "首个完整成片唯一阻塞：温网F末尾源224.48起出现诺斯科娃冠军盘，已将该段end收224.24并依据新双模型紧校末词，保持完整分与解说；其他片段不变。",
+  "status": "film_complete_publication_blocked_by_main_ci",
+  "final_render": {
+    "run_id": 39655048234,
+    "conclusion": "success",
+    "film_sha256": "de8eac8adabfd6af7e98332f2c17812b8c32e3df7a5f50b62af75ed8dc2c7c98",
+    "duration_seconds": 321.52,
+    "render_commit": "a25ca5d",
+    "native_qc": "pass",
+    "voice_suite": "pass",
+    "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-muchova-finals-2026/muchova-finals-2026.mp4",
+    "review_copy": "/workspace/review-copies/muchova-finals-2026-审片版.mp4",
+    "visual_review": "research/muchova-finals-2026/final-corrected-visual-review.json",
+    "seam_visual_review": "research/muchova-finals-2026/final-corrected-seam-visual-qc.json"
+  },
+  "publication_gate": {
+    "status": "blocked",
+    "ci_run_id": 39654940663,
+    "known_prior_failures": 15,
+    "prior_failure_scope": "unrelated concurrent main spec sun-cvetkovic-chengdu-2026-rr1; not waived or modified",
+    "push_sent": false,
+    "ci_conclusion": "failure",
+    "failed": 16,
+    "passed": 6405,
+    "skipped": 225,
+    "failure_scope": "15 checks in unrelated main sun-cvetkovic-chengdu-2026-rr1; 1 missing XHS file for unrelated main tiebreak-history-2026",
+    "ci_url": "https://github.com/robertyang87/tennislive/actions/runs/39654940663",
+    "rule_source": "CLAUDE.md:274",
+    "rule": "发布操作要求当前 head 的 CI 所选范围通过; no bypass or unrelated production mutation",
+    "latest_main_note": "The tiebreak XHS failure was fixed by upstream main b05ee0d at18:51Z after CI checkout; original15 Sun failures remain unresolved. No bypass or modification to that active production."
+  }
 }
