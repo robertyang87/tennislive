@@ -7,6 +7,12 @@ description: Produce and audit “赛场之上” tennis videos with human-writt
 
 Use this as the production contract shared by the human editor, renderer, QC, and publisher.
 
+## 2026-10-21：全局文案与原声补充
+
+所有栏目写稿、改稿和审稿执行[共享口味规则](../../.claude/skills/tennis-owner-taste/SKILL.md)的10-21「文案、姓名读音与原声对应」及[写稿指南](../../.claude/skills/tennis-editorial/SKILL.md)的当前口径：比赛说轮次；个人成绩从8强起说8强、4强、亚军、冠军，较早出局说实际第几轮。费塞特的「塞」按用户指定读sai，显示姓名不改，声调不擅自补定。精彩原声保留完整语意并逐句配中英文字幕；旁白指向具体赛后发言时核对应采访，缺失只记内部待补，不能冒称已经采用。文案、转场以因果和时间连贯衔接，让真实原声承接情绪。
+
+规则同步不代表当期音频、字幕或采访已修复；必须分别记录实际完成状态，不能继承改稿前的配音审批或成片QC。
+
 ## Owner global voice update 2026-10-19
 
 All columns' new narration must plan semantic emphasis and pauses, resolve polyphonic characters in context, and verify the actual delivered audio. Follow [the global voice workflow](../../docs/global-voice-quality.md): script → semantic reading plan → a few representative samples → all actual audio inputs reviewed → scoped rewrites/pronunciation fixes → frozen reuse → final-film seam review. Unsupported required backend controls fail before synthesis; optional degradation must warn explicitly. ASR, word marks and F0 are bounded evidence, never a fabricated full listening approval. Historical published films are not automatically rerendered or resent.

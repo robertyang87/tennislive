@@ -89,6 +89,18 @@ def test_打进N强是成绩不许被轮次那道闸拦下():
         assert not strength_round_hits(innocent), f"误伤了：{innocent}"
 
 
+def test_明确最好成绩句不被当成比赛轮次():
+    from tools.spec_wording import strength_round_hits
+
+    for text in ("今年大满贯最好成绩是澳网8强。", "她最好成绩仍是法网4强。"):
+        assert not strength_round_hits(text)
+        spec = {"segments": [{"narration": text}]}
+        assert not check_spec_wording(spec, "new-story")
+    # 成绩提示不能跨句放行后面的比赛轮次名。
+    assert strength_round_hits("最好成绩是冠军。接着看澳网8强的比赛。")
+    assert strength_round_hits("澳网8强的比赛。")
+
+
 def test_文案里不许挂来源注脚():
     """账号所有者 2026-09-03：「文案里不要再出现数据来源及后面的内容」。
 
