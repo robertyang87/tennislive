@@ -76,11 +76,11 @@ LABEL_FONT = DISPLAY
 SCORE = REPO / "assets" / "fonts" / "TLScore-Bold.ttf"
 SCORE_LIGHT = REPO / "assets" / "fonts" / "TLScore-Light.ttf"
 
-# Confirmed 2026-10-21: at 0.60 video width these source sizes reproduce V14.
+# 2026-10-21 follow-up: topic and score reduced about8%; metadata/people unchanged.
 STORY_LABEL_WIDTH = 0.60
 STORY_LABEL_PAD = 0.043
 STORY_LABEL_MAX_SECONDS = 15.0
-CORNER_TOPIC_SIZE, CORNER_META_SIZE, CORNER_SCORE_SIZE = 97, 73, 115
+CORNER_TOPIC_SIZE, CORNER_META_SIZE, CORNER_SCORE_SIZE = 89, 73, 106
 CORNER_PEOPLE_SIZE = 73
 CORNER_LANE = 637
 CORNER_OUTLINE = (20, 30, 24, 255)
