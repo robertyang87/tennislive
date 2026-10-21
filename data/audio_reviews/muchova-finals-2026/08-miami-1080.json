@@ -1,0 +1,39 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=SL35StEiNXE",
+  "source_sha256": "068d68331c24d4ec6608cb779d606116d343ff98941e8d327f6948519d6ac6d4",
+  "source_key": "miami",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex paired actual-byte small.en/medium.en source-window cross-check; not human listening",
+  "reviewed_at": "2026-10-21T17:42:42.075165+00:00",
+  "reviewed_from": 245.0,
+  "reviewed_to": 253.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "Independent small.en and medium.en decode actual source245–298. Both identify no foreground English245–268.66; selected245–253 is within that speech-free interval and uses only same-match rally as narration background.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/1080-replacement-raw/miami_1080-context-245-298-small.en.json",
+      "sha256": "e72640d9fe4c8bdff59c35b1a7a5610a4dafb7e6bfe32b4578c1d956da6ba9b1",
+      "model": "small.en",
+      "from": 245,
+      "to": 298,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/1080-replacement-raw/miami_1080-context-245-298-medium.en.json",
+      "sha256": "8867aebf9999f71a2917c0a22850c4499d1230b8a210704ec6cf8295f0e62ab4",
+      "model": "medium.en",
+      "from": 245,
+      "to": 298,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    }
+  ],
+  "review_scope": "Selected original-source window retained at original speed and gain. This new native1080 source is independently bound and does not reuse the old720 source timecodes or SHA.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/1080-replacement-audio-candidates.json",
+    "window_findings_sha256": "c740acb6cca4f62d557e5439c64df612531bc585b6cef66296e7f4871d3daaa9",
+    "translation_note": "Final exact production bilingual text. Karolina Muchova normalized from verified official match identity rather than ASR proper-name misspellings."
+  }
+}

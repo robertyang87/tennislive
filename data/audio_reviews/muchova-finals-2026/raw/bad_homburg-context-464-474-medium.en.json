@@ -1,0 +1,44 @@
+{
+  "source": "bad_homburg",
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399578560112",
+  "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+  "start": 464,
+  "end": 474,
+  "model": "medium.en",
+  "method": "context_faster_whisper_int8_ffmpeg_16khz_float32",
+  "segments": [
+    {
+      "start": 468.24,
+      "end": 471.18,
+      "text": "And Mukova, again, fine.",
+      "avg_logprob": -1.2539470195770264,
+      "no_speech_prob": 0.2638929486274719,
+      "words": [
+        {
+          "w": " And",
+          "s": 468.24,
+          "e": 469.2,
+          "p": 0.13385897874832153
+        },
+        {
+          "w": " Mukova,",
+          "s": 469.2,
+          "e": 469.68,
+          "p": 0.37338247150182724
+        },
+        {
+          "w": " again,",
+          "s": 470.6,
+          "e": 470.78,
+          "p": 0.9796202778816223
+        },
+        {
+          "w": " fine.",
+          "s": 471.0,
+          "e": 471.18,
+          "p": 0.902625322341919
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,265 @@
+{
+  "checked_at_utc": "2026-10-21T16:04:51.654638+00:00",
+  "scope": "Official source retrieval and limited visual identity review; not final production/QC approval.",
+  "items": [
+    {
+      "key": "miami",
+      "official_page": "https://www.wtatennis.com/videos/4475905/muchova-edges-past-mboko-in-two-tight-sets-to-reach-first-miami-semifinal",
+      "publisher": "WTA",
+      "event_date": "2026-03-24",
+      "local_path": "research/muchova-finals-2026/sources/videos/miami-muchova-mboko.mp4",
+      "sha256": "b6117cb922680965f0eb5331d706396b2de4fe79ba8db7b8c8bcbf8c0d20327e",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "244.960000",
+          "size": "65315829"
+        }
+      },
+      "state": "downloaded_limited_visual_review",
+      "review": "Correct WTA website metadata names Muchova and Mboko, Miami quarterfinal; video downloaded. Tail contact sheet from195s every3s confirms V.MBOKO/K.MUCHOVA scoreboard, Muchova white Adidas/orange headband matching user official picture, match point, win celebration and handshake. No interview in sampled tail.",
+      "audio_review": "pending",
+      "final_cut_bounds": "pending",
+      "brightcove_media_id": "6391563293112",
+      "stable_player_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6391563293112"
+    },
+    {
+      "key": "stuttgart_sf",
+      "official_page": "https://www.youtube.com/watch?v=2uXyDSE58NU",
+      "publisher": "WTA",
+      "event_date": "2026-04-18",
+      "local_path": "research/muchova-finals-2026/sources/videos/2uXyDSE58NU.mp4",
+      "sha256": "f7dcae686627a0e384e93ddbcc97745e6ace8ef51dcb2ada8c72501170f60b73",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "310.032834",
+          "size": "35226881"
+        }
+      },
+      "state": "downloaded_limited_visual_review",
+      "review": "Downloaded; end scoreboard visually confirms Svitolina 4-6 6-2 4-6 vs Muchova and Porsche Stuttgart court. No interview in sampled tail.",
+      "audio_review": "pending",
+      "final_cut_bounds": "pending",
+      "archive_run": "https://github.com/robertyang87/tennislive/actions/runs/39630787553",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-2uXyDSE58NU/2uXyDSE58NU.mp4"
+    },
+    {
+      "key": "bad_homburg",
+      "official_page": "https://www.wtatennis.com/videos/4527848/champions-reel_-how-karolina-muchova-won-bad-homburg-2026",
+      "publisher": "WTA",
+      "event_date": "2026-06-27",
+      "local_path": "research/muchova-finals-2026/sources/videos/bad-homburg-champions.mp4",
+      "sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "501.120000",
+          "size": "133424471"
+        }
+      },
+      "state": "downloaded_limited_visual_review",
+      "review": "Downloaded; tail samples show Muchova/Osaka scoreboard and actual elephant trophy presentation. Exact editorial cuts and audio pending.",
+      "audio_review": "pending",
+      "final_cut_bounds": "pending",
+      "brightcove_media_id": "6399578560112",
+      "stable_player_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399578560112",
+      "visual_candidate_windows": [
+        {
+          "start": 486,
+          "end": 500.5,
+          "purpose": "trophy receiving and raise/kiss",
+          "basis": "480s-relative 1fps contact sheet; raise begins near494s, kiss near498s; not final cut approval"
+        }
+      ]
+    },
+    {
+      "key": "wimbledon_sf",
+      "official_page": "https://www.youtube.com/watch?v=dHmXLHG5hQc",
+      "publisher": "Wimbledon",
+      "event_date": "2026-07-09",
+      "local_path": "research/muchova-finals-2026/sources/videos/dHmXLHG5hQc.mp4",
+      "sha256": "ae70c854c394e515ee7146110ee1a350226b5c7f05fb0bbe21c03e267cdd332d",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "666.830658",
+          "size": "87297081"
+        }
+      },
+      "state": "downloaded_limited_visual_review",
+      "review": "Official Wimbledon verified search metadata; downloaded; scoreboard Muchova/Gauff and match point/embrace visually confirmed. No interview in sampled tail.",
+      "audio_review": "pending",
+      "final_cut_bounds": "pending",
+      "archive_run": "https://github.com/robertyang87/tennislive/actions/runs/39630896814",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-dHmXLHG5hQc/dHmXLHG5hQc.mp4"
+    },
+    {
+      "key": "wimbledon_final",
+      "official_page": "https://www.youtube.com/watch?v=XfE9M6__724",
+      "publisher": "Wimbledon",
+      "event_date": "2026-07-11",
+      "local_path": "research/muchova-finals-2026/sources/videos/XfE9M6__724.mp4",
+      "sha256": "39e3e2b5d0d5e21037fa6f593c6a5db0b7ee1d23152b1aeec151c5fa8e5aaf1e",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "255.396281",
+          "size": "28385105"
+        }
+      },
+      "state": "downloaded_limited_visual_review",
+      "review": "Official Wimbledon verified search metadata; downloaded; scoreboard Muchova/Noskova and Noskova champion trophy visually confirmed. Noskova trophy must not be labelled Muchova champion. No Muchova interview in sampled tail.",
+      "audio_review": "pending",
+      "final_cut_bounds": "pending",
+      "archive_run": "https://github.com/robertyang87/tennislive/actions/runs/39630794095",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-XfE9M6__724/XfE9M6__724.mp4"
+    },
+    {
+      "key": "bad_homburg_winner_feature",
+      "official_page": "https://www.wtatennis.com/videos/4528760/this-is-how-i-won-bad-homburg-karolina-muchova-on-a-memorable-week",
+      "publisher": "WTA",
+      "event_date": "2026-06-29",
+      "local_path": "research/muchova-finals-2026/sources/videos/bad-homburg-winners-feature.mp4",
+      "sha256": "fbdf2f1c540d553b4c073e380ee3e0ce196573e7bd3bca22d43f87a2da6f4235",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "165.280000",
+          "size": "76219109"
+        }
+      },
+      "state": "downloaded_limited_visual_review",
+      "review": "Downloaded; 10-second samples show actual Muchova sitting by trophy around90s plus retrospective match images. Interview wording, cue times, ASR cross-check and bilingual subtitles pending with interview_excerpts agent.",
+      "audio_review": "pending",
+      "final_cut_bounds": "pending",
+      "brightcove_media_id": "6399808507112",
+      "stable_player_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399808507112"
+    },
+    {
+      "key": "stuttgart_final",
+      "official_page": "https://www.youtube.com/watch?v=cu2BtcEjWww",
+      "publisher": "WTA",
+      "event_date": "2026-04-19",
+      "local_path": "research/muchova-finals-2026/sources/videos/cu2BtcEjWww.mp4",
+      "sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "309.754195",
+          "size": "44115808"
+        }
+      },
+      "state": "downloaded_limited_visual_review",
+      "review": "Actual archive title is Elena Rybakina vs. Karolina Muchova | 2026 Stuttgart Final | WTA Match Highlights. Tail contact sheet from250s every3s confirms E.RYBAKINA/K.MUCHOVA scoreboard, championship point, 7-5 6-1 final score. Some short reaction/court cutaways in tail show a light-blue opponent/outfit inconsistent with final main camera, so do not blindly use whole tail as continuous final; selected window requires frame-by-frame review.",
+      "audio_review": "pending",
+      "final_cut_bounds": "pending",
+      "archive_run": "https://github.com/robertyang87/tennislive/actions/runs/39631791182",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-cu2BtcEjWww/cu2BtcEjWww.mp4"
+    }
+  ],
+  "excluded": [
+    {
+      "url": "https://www.youtube.com/watch?v=m_tBjmZeVqs",
+      "local_path": "research/muchova-finals-2026/sources/videos/m_tBjmZeVqs.mp4",
+      "state": "excluded_wrong_match",
+      "reason": "Tennis Canada Muchova-Mboko article embeds this video, but actual GitHub runner title is Mirra Andreeva vs. Victoria Mboko | 2026 Miami Open Round of 16 | WTA Match Highlights. Visual scoreboard and players match Andreeva/Mboko, not Muchova. Official article embed alone is insufficient proof.",
+      "archive_run": "https://github.com/robertyang87/tennislive/actions/runs/39630779519"
+    }
+  ],
+  "archive_attempts": {
+    "direct_local_bc_upload": "Failed HTTP401 at uploads.github.com. Verified zero attached assets, then deleted only the three newly created empty source-bc-ID release metadata records; no existing valid releases touched.",
+    "fallback": "Three subsequently dispatched Brightcove archive-only runs39631945067/39631952772/39631960429 cancelled on parent instruction. Three WTA Brightcove original MP4s remain local and stable official player URLs remain available. No successful BC release asset claimed."
+  }
+}

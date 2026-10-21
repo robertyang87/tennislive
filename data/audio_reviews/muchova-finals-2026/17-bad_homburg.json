@@ -1,0 +1,88 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399578560112",
+  "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+  "source_key": "bad_homburg",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 496.5,
+  "reviewed_to": 501.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 496.64,
+      "end": 498.02,
+      "en": "Holds it aloft.",
+      "zh": "她高高举起奖杯。"
+    },
+    {
+      "start": 498.6,
+      "end": 500.64,
+      "en": "Job well done this week.",
+      "zh": "这一周，干得漂亮。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-459.80-483.00-medium.en.json",
+      "sha256": "91b0ff5c92dbde401fa485da7e58774f5eda792e0f155e932b62a21851f9a067",
+      "model": "medium.en",
+      "from": 459.8,
+      "to": 483.0,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-context-464-474-small.en.json",
+      "sha256": "8d8d3ea83fa4b92a5d22eeb77a481e7967d013e5617255718505049605e1cb0e",
+      "model": "small.en",
+      "from": 464,
+      "to": 474,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-491.00-501.12-medium.en.json",
+      "sha256": "f381c305610d703152c324d1fd0c6898abcad868648c2c79e1a9b9653494e812",
+      "model": "medium.en",
+      "from": 491.0,
+      "to": 501.12,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-491.00-501.12-small.en.json",
+      "sha256": "78ca96f877d6c202707d6fd5589089368d3c2259da43a2822c0aa095771fc296",
+      "model": "small.en",
+      "from": 491.0,
+      "to": 501.12,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-context-464-474-medium.en.json",
+      "sha256": "0707a42f8e45ad483b81467ad86b621485aeafd8e0cd2e30b62da50f45df7a41",
+      "model": "medium.en",
+      "from": 464,
+      "to": 474,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-459.80-483.00-small.en.json",
+      "sha256": "89abcaa49d985a3eb1917d6242e60269cf05ad3d36f4880f8d48a5f1aeead41c",
+      "model": "small.en",
+      "from": 459.8,
+      "to": 483.0,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": null,
+    "runtime_clause_packet_sha256": null,
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  },
+  "cross_model_notes": "Holds it aloft is clear in small.en and matches the trophy action; medium.en renders homophonic Haunted aloft. Two-model semantics plus actual visual source used; no literal model-unanimity claim."
+}

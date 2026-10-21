@@ -1,0 +1,62 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=5OOvRkrKDF4",
+  "source_sha256": "8fe59a93ab876fd26a613f4cd113a4220df057f47e899aae1c178e83a759f7fc",
+  "source_key": "wimbledon_sf_interview",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 53.94,
+  "reviewed_to": 61.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 54.04,
+      "end": 55.62,
+      "en": "I'm really kind of shaking",
+      "zh": "我真的还有些发抖。"
+    },
+    {
+      "start": 55.62,
+      "end": 57.36,
+      "en": "and trying to sink it in,",
+      "zh": "还在试着消化这一切。"
+    },
+    {
+      "start": 57.44,
+      "end": 61.26,
+      "en": "but the atmosphere here, undescribable.",
+      "zh": "这里的氛围，难以形容。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf_interview-50.94-64.40-small.en.json",
+      "sha256": "f93c8773cc5691b38ad05ee1ed1671401f67cc1cc0957cfc6b7db2c97f67a321",
+      "model": "small.en",
+      "from": 50.94,
+      "to": 64.4,
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf_interview-50.94-64.40-medium.en.json",
+      "sha256": "5f4ab68e12b2d213d79252bc3ec42732f2342a93f6f65c695b2851fac70d90ed",
+      "model": "medium.en",
+      "from": 50.94,
+      "to": 64.4,
+      "method": "reuse_same_sha_exact_coverage"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": "research/muchova-finals-2026/runtime-clause-packet.json",
+    "runtime_clause_packet_sha256": "7835d536071d6357c6bda6a70c3d163ffd2f15f030374b52acb4e35190f60056",
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  },
+  "cross_model_notes": "Both models support kind of shaking/trying to sink it in. Final subtitle keeps actual oral undescribable rather than rewriting the statement from a news paraphrase."
+}

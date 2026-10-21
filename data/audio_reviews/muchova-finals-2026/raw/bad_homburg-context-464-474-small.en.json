@@ -1,0 +1,44 @@
+{
+  "source": "bad_homburg",
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399578560112",
+  "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+  "start": 464,
+  "end": 474,
+  "model": "small.en",
+  "method": "context_faster_whisper_int8_ffmpeg_16khz_float32",
+  "segments": [
+    {
+      "start": 467.76,
+      "end": 471.18,
+      "text": "And Mukuva again, fine.",
+      "avg_logprob": -1.0031962394714355,
+      "no_speech_prob": 0.3789450228214264,
+      "words": [
+        {
+          "w": " And",
+          "s": 467.76,
+          "e": 469.16,
+          "p": 0.14138327538967133
+        },
+        {
+          "w": " Mukuva",
+          "s": 469.16,
+          "e": 469.72,
+          "p": 0.39114952087402344
+        },
+        {
+          "w": " again,",
+          "s": 469.72,
+          "e": 470.72,
+          "p": 0.7166894674301147
+        },
+        {
+          "w": " fine.",
+          "s": 470.94,
+          "e": 471.18,
+          "p": 0.9250922799110413
+        }
+      ]
+    }
+  ]
+}

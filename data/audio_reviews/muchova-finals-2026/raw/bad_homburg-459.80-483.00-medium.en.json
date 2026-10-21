@@ -1,0 +1,111 @@
+{
+  "source": "bad_homburg",
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399578560112",
+  "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+  "start": 459.8,
+  "end": 483.0,
+  "selected": [
+    {
+      "index": 14,
+      "source": "bad_homburg",
+      "start": 462.8,
+      "end": 471.2,
+      "narration": "柏林止步第二轮后，她在巴特洪堡迎来决赛。",
+      "quote": null
+    },
+    {
+      "index": 15,
+      "source": "bad_homburg",
+      "start": 471.2,
+      "end": 480.0,
+      "narration": "六比一、一比零，大坂因脚伤退赛。穆霍娃拿到首个草地巡回赛单打冠军。",
+      "quote": null
+    }
+  ],
+  "model": "medium.en",
+  "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode",
+  "vad_filter": false,
+  "segments": [
+    {
+      "start": 473.42,
+      "end": 480.48,
+      "text": "I think this might be it yeah oh what a desperate shame",
+      "avg_logprob": -0.642,
+      "no_speech_prob": 0.256,
+      "words": [
+        {
+          "w": " I",
+          "s": 473.42,
+          "e": 474.26,
+          "p": 0.1234
+        },
+        {
+          "w": " think",
+          "s": 474.26,
+          "e": 475.1,
+          "p": 0.979
+        },
+        {
+          "w": " this",
+          "s": 475.1,
+          "e": 475.34,
+          "p": 0.9839
+        },
+        {
+          "w": " might",
+          "s": 475.34,
+          "e": 475.64,
+          "p": 0.9798
+        },
+        {
+          "w": " be",
+          "s": 475.64,
+          "e": 475.88,
+          "p": 0.9977
+        },
+        {
+          "w": " it",
+          "s": 475.88,
+          "e": 476.28,
+          "p": 0.9818
+        },
+        {
+          "w": " yeah",
+          "s": 476.28,
+          "e": 477.78,
+          "p": 0.1098
+        },
+        {
+          "w": " oh",
+          "s": 477.78,
+          "e": 478.88,
+          "p": 0.2806
+        },
+        {
+          "w": " what",
+          "s": 478.88,
+          "e": 479.08,
+          "p": 0.9809
+        },
+        {
+          "w": " a",
+          "s": 479.08,
+          "e": 479.52,
+          "p": 0.9982
+        },
+        {
+          "w": " desperate",
+          "s": 479.52,
+          "e": 479.92,
+          "p": 0.983
+        },
+        {
+          "w": " shame",
+          "s": 479.92,
+          "e": 480.48,
+          "p": 0.9919
+        }
+      ]
+    }
+  ]
+}

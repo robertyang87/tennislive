@@ -49,6 +49,7 @@ import difflib
 import hashlib
 import json
 import re
+import subprocess
 import sys
 import tempfile
 import zipfile
@@ -197,12 +198,21 @@ def compare_transcript(text: str, hyp: str) -> dict:
 
 def run_asr(entries: list[dict], model_name: str, names: list[str]) -> dict[str, str]:
     """转写。提示里只给人名（帮转写认出外文译名），**不给原句**——给原句等于让它照抄。"""
+    import numpy as np
     from faster_whisper import WhisperModel
     model = WhisperModel(model_name, device="cpu", compute_type="int8")
     prompt = "以下是普通话的网球解说。" + ("人名：" + "、".join(names[:20]) + "。" if names else "")
     out = {}
     for e in entries:
-        segs, _ = model.transcribe(str(e["mp3"]), language="zh", beam_size=5,
+        # Decode actual bytes independently of faster-whisper's PyAV adapter:
+        # PyAV 19 rejects its metadata_errors argument. ndarray input is already
+        # 16 kHz mono; no gain, silence trimming or other audio processing here.
+        pcm = subprocess.check_output([
+            "ffmpeg", "-nostdin", "-v", "error", "-i", str(e["mp3"]),
+            "-f", "f32le", "-ar", "16000", "-ac", "1", "pipe:1",
+        ])
+        audio = np.frombuffer(pcm, dtype="<f4")
+        segs, _ = model.transcribe(audio, language="zh", beam_size=5,
                                    vad_filter=False, condition_on_previous_text=False,
                                    initial_prompt=prompt)
         out[e["id"]] = "".join(s.text for s in segs).strip()

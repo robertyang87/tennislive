@@ -1,0 +1,81 @@
+{
+  "schema": "tennislive.source-ceremony-window-review.v1",
+  "reviewed_at": "2026-10-21T18:19:02.710226+00:00",
+  "source_key": "wimbledon_runnerup_plate",
+  "source_path": "research/muchova-finals-2026/sources/videos/M_jeYnQCwQg.mp4",
+  "source_sha256": "037d3196bb3324cc596a190c928b00aeb9dad40c13529f3a50a57548fb25b5cd",
+  "source_url": "https://www.youtube.com/watch?v=M_jeYnQCwQg",
+  "source_size": [
+    1920,
+    1080
+  ],
+  "source_fps": "25/1",
+  "recommendation": {
+    "start": 100.6,
+    "end": 110.0,
+    "seconds": 9.4,
+    "cx": 0.5,
+    "track": false,
+    "fit": "crop",
+    "frame": "court",
+    "narration": "",
+    "quote": [],
+    "inset": null
+  },
+  "rendered_geometry": {
+    "source_crop_box": [
+      555,
+      0,
+      1365,
+      1080
+    ],
+    "canvas": [
+      1080,
+      1440
+    ],
+    "scale": "Lanczos",
+    "contain": false
+  },
+  "observed_shots": [
+    {
+      "source_range": [
+        100.6,
+        103.2
+      ],
+      "observation": "Mu白衣白头带，Kate红裙，完整递接较小亚军盘，双方全身/脸/盘在中心裁切内。100.6–103.0每0.4秒密抽检查。"
+    },
+    {
+      "source_range": [
+        103.4,
+        105.5
+      ],
+      "observation": "亲友鼓掌切镜，非人物交接动作。"
+    },
+    {
+      "source_range": [
+        106,
+        110
+      ],
+      "observation": "Mu与Kate近景，Mu抱盘微笑，脸清楚；盘底有画边裁切，完整盘已在此前递接全景可见。"
+    }
+  ],
+  "identity_statement": "Actual Muchova receiving runner-up plate; not Noskova holding the larger champion dish. No overhead lift observed; describe as receiving and holding runner-up plate.",
+  "speech_statement": "No narration or quote proposed. Interview agent small/medium evidence87–117 found no foreground intelligible English after about89.04; final100.6–110.0 lies within existing quiet ceremony packet96.6–114.8. Ambient applause retained.",
+  "face_track_statement": "Montage ceremony source with no quoted speech, fixed center court crop; no invented cx_face or nine-frame speaker tracking.",
+  "evidence_contact_sheets": [
+    {
+      "path": "research/muchova-finals-2026/contact-sheets/wimbledon-runnerup-plate-native-crop.jpg",
+      "sha256": "4ab4ba5abbdfacf7a53c877fcb3a46a33a9df92ee9fc87849f77a358ee988995"
+    },
+    {
+      "path": "research/muchova-finals-2026/contact-sheets/wimbledon-runnerup-receipt-dense.jpg",
+      "sha256": "bf4ab548fb40fda398fea07d8e91c4be5d9c8a2e2ed3af5ceecd1ad95700327b"
+    }
+  ],
+  "status": "source_window_and_native_crop_samples_verified_pending_root_final_native_overlay_preview",
+  "limitations": [
+    "Raw-source fullcanvas crop samples only; final branding/subtitles not rendered here.",
+    "9.4-second selected window includes an audience cut; actual receipt is100.6–103.2 and subsequent holding closeup106–110.",
+    "No fullfilm or publication approval."
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://x.com/rolandgarros/status/2060369494891978888",
+  "source_sha256": "0790d25ee1ff4cf613f4307abcfdf2d399143f7580087bc261f2bd070eaba1bc",
+  "source_key": "rg_r32",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 4.0,
+  "reviewed_to": 14.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "两档强制英语ASR在欢呼上产生Thank you变体，词轴被拉满16秒且首词概率0.0095/0.0145，作为噪声幻觉排除而不编造成真实对话。另multilingual small VAD诊断只有3.38–3.98的Yeah在本窗之外；本窗音频事件分类以人群、欢呼、掌声为主，未识别出可稳定对齐的前景英文。此为有限机器证据交叉核验，不宣称人工听审或绝对无音乐。",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/rg_r32-context-1-17-medium.en.json",
+      "sha256": "56fb83950e77996b98ab9d1bfd5008fb411011ef8f4a0d6aee2945047a143e59",
+      "model": "medium.en",
+      "from": 1,
+      "to": 17,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/rg_r32-context-1-17-small.en.json",
+      "sha256": "4224bc1908477f89e350673b60efc3e2001c947254d7acb660c1515503d2e7e9",
+      "model": "small.en",
+      "from": 1,
+      "to": 17,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": null,
+    "runtime_clause_packet_sha256": null,
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  },
+  "diagnostic_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/rg_r32-4-14-audio-classification.json",
+      "sha256": "0ae43cac6594388e751226e8d0d332bd8dedbedf9d7a8a4ceb4a60f88402a440"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/rg_r32-4-14-multilingual-small.json",
+      "sha256": "44d6b9f16c3e7e02be66ff2801f6dd3e57f065c104cb19bb76427808acb952c6"
+    },
+    {
+      "path": "research/muchova-finals-2026/evidence/rg-multilingual-audio-diagnostic.json",
+      "sha256": "1a04ac6ca34ca28adfb98e5001bce262da68fbcd5a1c401d14ad50aa57ad15f7"
+    }
+  ],
+  "rejected_asr_noise_outputs": {
+    "small.en": "Thank you. with first token probability0.0095 and words spread across1–16.98s",
+    "medium.en": "Thank you very much. with first token probability0.0145 and incompatible long word durations",
+    "reason": "No coherent timed foreground utterance across independent/diagnostic models; crowd/applause soundscape, not promoted to subtitles."
+  },
+  "audio_event_classification_limit": "YAMNet Music mean0.0068/max0.0359 over4–14s; supports no detected soundtrack, not proof of absolute absence of all music."
+}

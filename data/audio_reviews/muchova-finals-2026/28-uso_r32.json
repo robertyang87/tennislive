@@ -1,0 +1,43 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=EUk-bMVXRa4",
+  "source_sha256": "b1c2cf6ee5f12921961897e5e4b502be5836a086ff43f1dd1cfe80006bd1f70f",
+  "source_key": "uso_r32",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 179.5,
+  "reviewed_to": 189.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "两档ASR覆盖176.5–193.7，唯一可识别前景语句始于189.98/190.04；本窗189.8之前为终场反应与人群现场声，没有可识别前景英文。",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/uso_r32-176.50-193.70-small.en.json",
+      "sha256": "e3a4d2a6f5e500cae5fa6164b5f7f2503e5ded511972b48f2fb6dc2e76dc1da1",
+      "model": "small.en",
+      "from": 176.5,
+      "to": 193.7,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/uso_r32-176.50-193.70-medium.en.json",
+      "sha256": "5ff6903fe8f478fd24536f5cb99cf7c660ad55f9b7610ddb0e09a7de89c7d22c",
+      "model": "medium.en",
+      "from": 176.5,
+      "to": 193.7,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": null,
+    "runtime_clause_packet_sha256": null,
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  },
+  "cross_model_notes": "It's/That's and battle/battled minor lexical variants resolved to the final faithful subtitle; no difference in referent or match facts."
+}

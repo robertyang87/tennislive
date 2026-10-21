@@ -1,0 +1,381 @@
+{
+  "spec": "specs/reels/muchova-finals-2026.json",
+  "spec_sha256": "310d14607e7a5bfa384ebdec06e7104fc006a7a8b4f8d2602c31166624bccbb1",
+  "state": "handed_to_parent_no_further_native_agent_changes",
+  "body_seconds_budget": 355.71,
+  "segments": 36,
+  "preserve_source_audio": true,
+  "native_dry_run": {
+    "command": "python tools/build_match_reel.py render --spec specs/reels/muchova-finals-2026.json --outdir /tmp/muchova-native-final-dryrun --dry-run",
+    "exit_code": 0,
+    "scope": "正式原生spec形状、措辞、字幕行宽、11个真实inset、真实person证据、archival/contain、fps声明通过；不是TTS/完整成片/人工听审通过。"
+  },
+  "chronology": [
+    {
+      "index_zero_based": 0,
+      "id": "chapter_01",
+      "date": "2026-01-10",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": null,
+      "narration": "年初布里斯班半决赛后，澳网第四轮，她输给高芙。"
+    },
+    {
+      "index_zero_based": 1,
+      "id": "ao_context",
+      "date": "2026-01-25",
+      "source": "ao_r16",
+      "source_start": 163.1,
+      "source_end": 175.9,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 2,
+      "id": "doha_setup",
+      "date": "2026-02-14",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": null,
+      "narration": "二月来到多哈。她上一次拿到巡回赛单打冠军，还是二〇一九年。"
+    },
+    {
+      "index_zero_based": 3,
+      "id": "doha_final_context",
+      "date": "2026-02-14",
+      "source": "doha",
+      "source_start": 238.1,
+      "source_end": 246.5,
+      "image": null,
+      "narration": "现在，她又走到决赛。对面，是姆博科。"
+    },
+    {
+      "index_zero_based": 4,
+      "id": "doha_finish_comment",
+      "date": "2026-02-14",
+      "source": "doha",
+      "source_start": 246.5,
+      "source_end": 249.9,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 5,
+      "id": "doha_championship_point",
+      "date": "2026-02-14",
+      "source": "doha",
+      "source_start": 250,
+      "source_end": 264.3,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 6,
+      "id": "doha_trophy_announcement",
+      "date": "2026-02-14",
+      "source": "doha_trophy_clean",
+      "source_start": 0,
+      "source_end": 5.3,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 7,
+      "id": "doha_trophy",
+      "date": "2026-02-14",
+      "source": "doha_trophy_clean",
+      "source_start": 5.3,
+      "source_end": 11.4,
+      "image": null,
+      "narration": "六年多后再次捧杯，第一座千分冠。"
+    },
+    {
+      "index_zero_based": 8,
+      "id": "miami_quarterfinal_context",
+      "date": "2026-03-24",
+      "source": "miami",
+      "source_start": 195,
+      "source_end": 203.05,
+      "image": null,
+      "narration": "印第安韦尔斯止步第四轮后，来到迈阿密四分之一决赛，对面又是姆博科。"
+    },
+    {
+      "index_zero_based": 9,
+      "id": "miami_finish",
+      "date": "2026-03-24",
+      "source": "miami",
+      "source_start": 223.8,
+      "source_end": 240.8,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 10,
+      "id": "miami_result",
+      "date": "2026-03-26",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": "assets/reel/muchova-finals-2026/evidence-miami-390-canvas.png",
+      "narration": "半决赛，又是高芙。她再次止步。"
+    },
+    {
+      "index_zero_based": 11,
+      "id": "stuttgart_pre_final_bridge",
+      "date": "2026-04-19",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": "assets/reel/muchova-finals-2026/evidence-stuttgart-325-canvas.png",
+      "narration": "斯图加特，她先在四分之一决赛首次击败高芙，最终收获亚军。"
+    },
+    {
+      "index_zero_based": 12,
+      "id": "stuttgart_final_end",
+      "date": "2026-04-19",
+      "source": "stuttgart_final",
+      "source_start": 261,
+      "source_end": 271.4,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 13,
+      "id": "rg_context",
+      "date": "2026-05-29",
+      "source": "rg_r32",
+      "source_start": 4,
+      "source_end": 14,
+      "image": null,
+      "narration": "罗马首战出局，法网又在第三轮负于泰希曼。"
+    },
+    {
+      "index_zero_based": 14,
+      "id": "chapter_02",
+      "date": "2026-06-18",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": null,
+      "narration": "草地赛季，柏林第二轮出局。"
+    },
+    {
+      "index_zero_based": 15,
+      "id": "bad_homburg_bridge",
+      "date": "2026-06-27",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": "assets/reel/muchova-finals-2026/evidence-bad-homburg-500-canvas.png",
+      "narration": "来到巴特洪堡，大坂因脚伤退赛，她收获首个草地单打冠军。"
+    },
+    {
+      "index_zero_based": 16,
+      "id": "bad_homburg_retirement",
+      "date": "2026-06-27",
+      "source": "bad_homburg",
+      "source_start": 473.2,
+      "source_end": 481.3,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 17,
+      "id": "bad_homburg_trophy",
+      "date": "2026-06-27",
+      "source": "bad_homburg",
+      "source_start": 496.5,
+      "source_end": 501.1,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 18,
+      "id": "bad_homburg_quote",
+      "date": "2026-06-27",
+      "source": "bad_homburg_feature",
+      "source_start": 103.1,
+      "source_end": 111.95,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 19,
+      "id": "wimbledon_sf_intro",
+      "date": "2026-07-09",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": null,
+      "narration": "温网半决赛，又是高芙挡在决赛门前。"
+    },
+    {
+      "index_zero_based": 20,
+      "id": "wimbledon_sf_final_point",
+      "date": "2026-07-09",
+      "source": "wimbledon_sf",
+      "source_start": 606.5,
+      "source_end": 649.2,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 21,
+      "id": "wimbledon_sf_quote",
+      "date": "2026-07-09",
+      "source": "wimbledon_sf_interview",
+      "source_start": 53.94,
+      "source_end": 61.4,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 22,
+      "id": "wimbledon_final_context",
+      "date": "2026-07-11",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": "assets/reel/muchova-finals-2026/evidence-wimbledon-1300-canvas.png",
+      "narration": "温网决赛三盘不敌诺斯科娃。一千三百分，仍是她全年最大的单站收获。"
+    },
+    {
+      "index_zero_based": 23,
+      "id": "wimbledon_final_last_point",
+      "date": "2026-07-11",
+      "source": "wimbledon_final",
+      "source_start": 214.8,
+      "source_end": 225,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 24,
+      "id": "chapter_03",
+      "date": "2026-07-20",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": null,
+      "narration": "温网之后，她的赛季出现了停顿。"
+    },
+    {
+      "index_zero_based": 25,
+      "id": "surgery",
+      "date": "2026-07-20",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": "assets/reel/muchova-finals-2026/surgery-wta-mobile-excerpt.png",
+      "narration": "她接受了一次小手术。恢复期间，缺席了整个北美硬地热身赛季。"
+    },
+    {
+      "index_zero_based": 26,
+      "id": "uso_mixed_intro",
+      "date": "2026-08-26",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": null,
+      "narration": "八月回到纽约，她先和门西克一起，拿下美网混双冠军。"
+    },
+    {
+      "index_zero_based": 27,
+      "id": "uso_mixed_title",
+      "date": "2026-08-26",
+      "source": "uso_mixed_final",
+      "source_start": 670,
+      "source_end": 683.6,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 28,
+      "id": "uso_context",
+      "date": "2026-09-04",
+      "source": "uso_r32",
+      "source_start": 179.5,
+      "source_end": 189.8,
+      "image": null,
+      "narration": "随后的美网单打，她在第三轮输给纳瓦罗。"
+    },
+    {
+      "index_zero_based": 29,
+      "id": "uso_handshake_comment",
+      "date": "2026-09-04",
+      "source": "uso_r32",
+      "source_start": 189.8,
+      "source_end": 193.85,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 30,
+      "id": "bjk_intro",
+      "date": "2026-09-27",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": null,
+      "narration": "九月，她又帮助捷克队赢下金杯。"
+    },
+    {
+      "index_zero_based": 31,
+      "id": "bjk_first_rubber_final_point",
+      "date": "2026-09-27",
+      "source": "bjk_cup_final",
+      "source_start": 458.5,
+      "source_end": 475.6,
+      "image": null,
+      "narration": ""
+    },
+    {
+      "index_zero_based": 32,
+      "id": "asia_swing",
+      "date": "2026-10-15",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": null,
+      "narration": "北京四分之一决赛，武汉第三轮。温网之后的三站单打，只增加四百六十五分，最后的资格还没有确定。"
+    },
+    {
+      "index_zero_based": 33,
+      "id": "race_condition_oct20",
+      "date": "2026-10-20",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": null,
+      "narration": "十月二十日，斯瓦泰克结束赛季。科斯秋克必须打进宁波决赛，才能保留争夺资格的机会。"
+    },
+    {
+      "index_zero_based": 34,
+      "id": "ningbo_trigger_oct21",
+      "date": "2026-10-21",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": null,
+      "narration": "一天后，她在宁波首盘结束后退赛。穆霍娃，就此锁定最后一个席位。"
+    },
+    {
+      "index_zero_based": 35,
+      "id": "qualification_payoff",
+      "date": "2026-10-21",
+      "source": null,
+      "source_start": null,
+      "source_end": null,
+      "image": "assets/reel/muchova-finals-2026/evidence-total-4735-canvas.png",
+      "narration": "四千七百三十五分，她把这个起伏的赛季，带到了总决赛。你最期待她打出怎样的网球？"
+    }
+  ],
+  "remaining": [
+    "真实TTS冻结与五项声音检查、production audio reviews最终plan/SHA/clausepacket/cues绑定尚未完成；preserve_source_audio:true保持原声unity，不以旧响度/噪音扫描阻塞。",
+    "muchova-finals-2026.xhs.txt复制页尚未创建，正式render写复制页时需要。",
+    "taste、完整回合帧级剪点、实际字幕与11个赛事角标避让、成片全QC尚未完成；source probe未认领，有限抽样与ASR不冒充人工听审。"
+  ],
+  "note": "独立事实QC已通过事实与时间线；资产像素保留证据见inset-assets.json。candidate仍冻结未改，主线程接管后本代理不再改变音频计划。"
+}

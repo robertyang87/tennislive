@@ -1,0 +1,42 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://x.com/WTA/status/2022719051408052453",
+  "source_sha256": "fe508add2f980e8ce1440d844acd6b47dfe70e6bc6084bbb69dc4bc2639be44d",
+  "source_key": "doha_trophy_clean",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 5.3,
+  "reviewed_to": 11.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "同一实际官方X视频两档ASR完整覆盖0–11.401，颁奖报幕在0–5.22结束；5.3–11.4只有捧杯现场声，没有可识别前景英文。",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha_trophy_clean-0-11.40-small.en.json",
+      "sha256": "4930072a2098b2db01f46ce9f404a917b0516c0c7947885012cf1d70bcdd4409",
+      "model": "small.en",
+      "from": 0,
+      "to": 11.401,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha_trophy_clean-0-11.40-medium.en.json",
+      "sha256": "162ff57c692896193627391354067dec6f9f586164d5f2f1d884648d0b8893bb",
+      "model": "medium.en",
+      "from": 0,
+      "to": 11.401,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": null,
+    "runtime_clause_packet_sha256": null,
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  }
+}

@@ -1,0 +1,1296 @@
+{
+  "schema": "tennislive.audio-window-investigation.v1",
+  "slug": "muchova-finals-2026",
+  "created_at": "2026-10-21T16:43:56.930448+00:00",
+  "reviewer": "Codex ASR cross-check of actual source bytes; no human listening claimed",
+  "method": "asr_cross_checked",
+  "status": "window_findings_prepared_final_spec_and_subtitle_integration_required",
+  "candidate_path": "requests/stories/muchova-finals-2026/native-spec.candidate.json",
+  "candidate_sha256": "ab351ec91a23e66158e186833faa57afaf8005cf104584b25e22d99a006dae98",
+  "notes": [
+    "这是实际窗口调查与中译草案，不是data/audio_reviews/muchova-finals-2026.json主发布审查索引，不冒充原声门禁已通过。",
+    "所有时间为原片绝对秒；原始证据记录模型、源SHA、实际转写区间与词级时轴。",
+    "有真实前景英文的旁白窗口必须拆开；未决碎片不能填quote_skip或空数组。",
+    "BC三条canonical Release已经source代理逐字节复核相同，见research/muchova-finals-2026/evidence/bc-canonical-comparison.json。",
+    "拼写与字幕争议已如实列出；生产整合时绑定最终source_url、SHA、源窗、双语cue、当前plan。"
+  ],
+  "segments": [
+    {
+      "candidate_index": 1,
+      "source": "ao_r16",
+      "source_url": "https://www.youtube.com/watch?v=ZCkYFYyJlK8",
+      "source_sha256": "895d1ccb993e6a447f70c5a0476b9f591871ffdc6f65d4cdbcf6085af06b8b66",
+      "candidate_start": 164.8,
+      "candidate_end": 175.2,
+      "candidate_has_narration": true,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "candidate_start_cuts_sentence",
+          "candidate_end_cuts_sentence",
+          "narration_overlaps_foreground_english"
+        ],
+        "suggested_window": [
+          163.1,
+          175.9
+        ],
+        "utterances": [
+          {
+            "start": 163.24,
+            "end": 175.74,
+            "en": "It's three in a row for Coco, a hat-trick of consecutive Australian Open quarter-finals, but boy did she have to work hard for it.",
+            "zh": "高芙连续第3次打进澳网1/4决赛，但这场胜利赢得可真不容易。"
+          }
+        ],
+        "notes": [
+          "small.en漏掉句首，medium.en完整；可用独立双语原声段，不让当前中文旁白覆盖。",
+          "原声说的是获胜的高芙，不能把“三次”贴给穆霍娃。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/ao_r16-161.80-178.20-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/ao_r16-161.80-178.20-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 3,
+      "source": "doha",
+      "source_url": "https://www.youtube.com/watch?v=DMpp-l1vBaA",
+      "source_sha256": "ab7f764269cf4eb4e7613e0bfb66671d379713124b961d85a9d2c41ceaee8384",
+      "candidate_start": 238.1,
+      "candidate_end": 248.7,
+      "candidate_has_narration": true,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "narration_overlaps_foreground_english"
+        ],
+        "suggested_split": [
+          {
+            "start": 238.1,
+            "end": 246.5,
+            "role": "narration_no_transcribed_foreground_english"
+          },
+          {
+            "start": 246.5,
+            "end": 249.9,
+            "role": "bilingual_source_audio"
+          }
+        ],
+        "utterances": [
+          {
+            "start": 246.68,
+            "end": 249.82,
+            "en": "Such a good finish.",
+            "zh": "这记收尾打得真漂亮。"
+          }
+        ],
+        "notes": [
+          "small.en在句首识别出It's，medium.en只有Such；语义一致，最终字幕词首可再核。",
+          "两个目标ASR对句尾静音分配有约1.2秒差别，保留到249.9更稳。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/doha-235.10-267.30-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/doha-235.10-267.30-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/doha-context-243-276-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/doha-context-243-276-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/doha-targeted-235.10-267.30-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 4,
+      "source": "doha",
+      "source_url": "https://www.youtube.com/watch?v=DMpp-l1vBaA",
+      "source_sha256": "ab7f764269cf4eb4e7613e0bfb66671d379713124b961d85a9d2c41ceaee8384",
+      "candidate_start": 250.0,
+      "candidate_end": 264.3,
+      "candidate_has_narration": false,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "core_utterances_complete_inside_candidate"
+        ],
+        "utterances": [
+          {
+            "start": 257.64,
+            "end": 260.42,
+            "en": "It's Muchova's magical night.",
+            "zh": "这是属于穆霍娃的梦幻之夜。"
+          },
+          {
+            "start": 261.48,
+            "end": 263.82,
+            "en": "The trophy drought is over.",
+            "zh": "冠军荒结束了。"
+          }
+        ],
+        "notes": [
+          "原全片small.en漏听，已用235.1–267.3及243–276目标small.en重核；medium.en与目标small.en核心句义一致。",
+          "下一句Six and a half years after her last title从约265.28开始，在原end264.3之外；原窗没有切它。",
+          "人名ASR写Mukova/Mokova，按官方身份归一Muchova。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/doha-235.10-267.30-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/doha-235.10-267.30-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/doha-context-243-276-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/doha-context-243-276-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/doha-targeted-235.10-267.30-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 5,
+      "source": "doha_trophy",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wta1000-2026-doha-trophy/doha_trophy.mp4",
+      "source_sha256": "bdca12630bc01c293e6bc421859afd47df395bc2e92ee998f13b59eb4288c458",
+      "candidate_start": 3.0,
+      "candidate_end": 9.5,
+      "candidate_has_narration": true,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "source_is_previously_derived_clip",
+          "source_sentence_incomplete_or_unresolved",
+          "candidate_cuts_original_sentence_both_ends",
+          "narration_overlaps_foreground_english"
+        ],
+        "utterances": [
+          {
+            "start": 0.0,
+            "end": 10.08,
+            "en": "But Mboko simply had no answer, unable to think of a way back, and the falcon is…",
+            "zh": "但姆博科没能找到答案，也没能想出扭转局面的办法……"
+          }
+        ],
+        "notes": [
+          "不是可直接使用的完整引语；两个模型均未给出可信句末。",
+          "即取整个0–10.16也不能证明完整句子；不复用旧片quote_skip。",
+          "建议换已归档WTA X2022719030826504193实际媒体，并按新片源重绑。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/doha_trophy-0.00-10.16-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/doha_trophy-0.00-10.16-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 6,
+      "source": "miami",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6391563293112",
+      "source_sha256": "b6117cb922680965f0eb5331d706396b2de4fe79ba8db7b8c8bcbf8c0d20327e",
+      "candidate_start": 195.0,
+      "candidate_end": 206.5,
+      "candidate_has_narration": true,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "narration_overlaps_foreground_english"
+        ],
+        "suggested_split": [
+          {
+            "start": 195.0,
+            "end": 203.05,
+            "role": "narration_no_transcribed_foreground_english"
+          },
+          {
+            "start": 203.05,
+            "end": 206.5,
+            "role": "bilingual_source_audio"
+          }
+        ],
+        "utterances": [
+          {
+            "start": 203.2,
+            "end": 205.02,
+            "en": "Mboko gambled on the return.",
+            "zh": "姆博科在这次接发上冒了险。"
+          }
+        ],
+        "notes": [
+          "上一句关于擦线的评论192–194.3在原start195之前，原窗没有切它。",
+          "Mboko两模型有Boko/Boco拼写差异，按本场官方对阵归一。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/miami-192.00-209.50-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/miami-192.00-209.50-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/miami-220.40-240.80-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/miami-220.40-240.80-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 7,
+      "source": "miami",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6391563293112",
+      "source_sha256": "b6117cb922680965f0eb5331d706396b2de4fe79ba8db7b8c8bcbf8c0d20327e",
+      "candidate_start": 223.4,
+      "candidate_end": 237.8,
+      "candidate_has_narration": false,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "candidate_start_may_cut_previous_comment_tail"
+        ],
+        "suggested_window": [
+          223.8,
+          240.8
+        ],
+        "utterances": [
+          {
+            "start": 232.54,
+            "end": 236.92,
+            "en": "Oh, that's magnificent from Karolina Muchova.",
+            "zh": "穆霍娃打得太精彩了。"
+          },
+          {
+            "start": 238.08,
+            "end": 240.6,
+            "en": "What a point, and what a win.",
+            "zh": "多么精彩的一分，多么精彩的一场胜利。"
+          }
+        ],
+        "notes": [
+          "small.en在220.4–223.68还识别到上一句That is super shot,sir尾，medium.en漏听该句；start223.8可避开，但须视觉确认仍在末点发球之前。",
+          "原end237.8不切下一句，延到240.8是保留精彩终场解说的可选增强。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/miami-192.00-209.50-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/miami-192.00-209.50-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/miami-220.40-240.80-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/miami-220.40-240.80-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 9,
+      "source": "stuttgart_final",
+      "source_url": "https://www.youtube.com/watch?v=cu2BtcEjWww",
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b",
+      "candidate_start": 252.1,
+      "candidate_end": 260.5,
+      "candidate_has_narration": true,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "narration_overlaps_foreground_english"
+        ],
+        "utterances": [
+          {
+            "start": 255.82,
+            "end": 260.02,
+            "en": "But then Rybakina's forehand can also be pretty brutal.",
+            "zh": "不过，莱巴金娜的正手同样很有杀伤力。"
+          }
+        ],
+        "notes": [
+          "先安排旁白再留完整英语句，或将中文解释移到事实卡；不得同时叠TTS和双语原声。",
+          "两模型对But then/人名拼写有细微差异，人名按官方对阵归一。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-249.10-274.40-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-249.10-274.40-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-context-269-284-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-context-269-284-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 10,
+      "source": "stuttgart_final",
+      "source_url": "https://www.youtube.com/watch?v=cu2BtcEjWww",
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b",
+      "candidate_start": 261,
+      "candidate_end": 271.4,
+      "candidate_has_narration": true,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "narration_overlaps_foreground_english",
+          "core_utterance_complete_inside_candidate"
+        ],
+        "utterances": [
+          {
+            "start": 265.54,
+            "end": 270.16,
+            "en": "It is a second Stuttgart title for Elena Rybakina.",
+            "zh": "莱巴金娜第2次在斯图加特夺冠。"
+          }
+        ],
+        "notes": [
+          "原end271.4位于下一句She just loves it when she comes here起点271.6之前，因此不必为保句而延长。",
+          "说的是冠军莱巴金娜，画面与中文必须保持穆霍娃亚军事实；不误配给Mu。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-249.10-274.40-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-249.10-274.40-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-context-269-284-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-context-269-284-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 14,
+      "source": "bad_homburg",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399578560112",
+      "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+      "candidate_start": 462.8,
+      "candidate_end": 471.2,
+      "candidate_has_narration": true,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "source_editorial_cut_may_truncate_sentence",
+          "narration_overlaps_foreground_english",
+          "uncertain_spoken_fragment"
+        ],
+        "utterances": [
+          {
+            "start": 467.76,
+            "end": 471.18,
+            "en": "And Muchova again finds…",
+            "zh": "穆霍娃又一次……"
+          }
+        ],
+        "notes": [
+          "small.en与medium.en短窗口都只能识别到fine/finds，源合集似乎在这里切换，未取得完整宾语。",
+          "该碎片不能当作完整字幕放行；可从别的官方完整窗口补、或在语句开始前调整剪点且保住关键动作。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-459.80-483.00-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-459.80-483.00-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-491.00-501.12-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-491.00-501.12-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-context-464-474-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-context-464-474-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 15,
+      "source": "bad_homburg",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399578560112",
+      "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+      "candidate_start": 471.2,
+      "candidate_end": 480.0,
+      "candidate_has_narration": true,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "candidate_end_cuts_sentence",
+          "narration_overlaps_foreground_english"
+        ],
+        "suggested_window": [
+          473.2,
+          480.7
+        ],
+        "utterances": [
+          {
+            "start": 473.42,
+            "end": 476.0,
+            "en": "I think this might be it.",
+            "zh": "恐怕比赛就要到这里结束了。"
+          },
+          {
+            "start": 476.0,
+            "end": 480.48,
+            "en": "Yeah. Oh, what a desperate shame.",
+            "zh": "是的。太令人遗憾了。"
+          }
+        ],
+        "notes": [
+          "两句之间精确分界需按词时轴细化，整体473.42–480.48已两模型支持。",
+          "原end480.0切掉shame句尾；须留至480.7，取消该窗TTS而配真实中英字幕。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-459.80-483.00-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-459.80-483.00-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-491.00-501.12-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-491.00-501.12-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-context-464-474-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-context-464-474-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 16,
+      "source": "bad_homburg",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399578560112",
+      "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+      "candidate_start": 494.0,
+      "candidate_end": 500.4,
+      "candidate_has_narration": false,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "candidate_start_cuts_necklace_comment",
+          "candidate_end_cuts_closing_comment"
+        ],
+        "suggested_window": [
+          496.5,
+          501.1
+        ],
+        "utterances": [
+          {
+            "start": 496.64,
+            "end": 498.02,
+            "en": "Holds it aloft.",
+            "zh": "她高高举起奖杯。"
+          },
+          {
+            "start": 498.6,
+            "end": 500.64,
+            "en": "Job well done this week.",
+            "zh": "这一周，干得漂亮。"
+          }
+        ],
+        "notes": [
+          "原start494切在491起的A little necklace as well from Kerber中间；建议从496.5新独立句开始。",
+          "medium.en将Holds it aloft误写为Haunted aloft，small.en更合语义与举杯画面；此句词形仍标需最终复核，不能裸写双模逐字一致。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-459.80-483.00-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-459.80-483.00-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-491.00-501.12-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-491.00-501.12-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-context-464-474-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-context-464-474-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 17,
+      "source": "bad_homburg_feature",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6399808507112",
+      "source_sha256": "fbdf2f1c540d553b4c073e380ee3e0ce196573e7bd3bca22d43f87a2da6f4235",
+      "candidate_start": 103.1,
+      "candidate_end": 111.95,
+      "candidate_has_narration": false,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "two_complete_semantic_clauses_inside_candidate"
+        ],
+        "utterances": [
+          {
+            "start": 103.18,
+            "end": 107.44,
+            "en": "But, you know, always trying to just keep the feet on the ground and still work.",
+            "zh": "但我还是想脚踏实地，继续努力。"
+          },
+          {
+            "start": 107.98,
+            "end": 111.76,
+            "en": "And keep myself as healthy as possible and play those matches.",
+            "zh": "尽量保持健康，继续打这些比赛。"
+          }
+        ],
+        "notes": [
+          "已按native_spec最新103.1–111.95重绑：两模型实际同SHA证据均覆盖该范围。",
+          "原141.1–146.1信心句已被剪辑方案替换；原始窗口证据仍保留但不冒称当前保留。",
+          "这是6月27日回顾，不作为温网后手术或秋季成绩原因证据。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg_feature-103.10-111.95-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/bad_homburg_feature-103.10-111.95-medium.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 19,
+      "source": "wimbledon_sf",
+      "source_url": "https://www.youtube.com/watch?v=dHmXLHG5hQc",
+      "source_sha256": "ae70c854c394e515ee7146110ee1a350226b5c7f05fb0bbe21c03e267cdd332d",
+      "candidate_start": 606.5,
+      "candidate_end": 634.5,
+      "candidate_has_narration": false,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "candidate_end_cuts_substantive_injury_sentence"
+        ],
+        "suggested_window": [
+          606.5,
+          649.2
+        ],
+        "utterances": [
+          {
+            "start": 624.48,
+            "end": 629.14,
+            "en": "Karolina Muchova is a Wimbledon finalist.",
+            "zh": "卡罗琳娜·穆霍娃闯进了温网决赛。"
+          },
+          {
+            "start": 631.54,
+            "end": 641.92,
+            "en": "After all the injury setbacks in her career, she knew that if she could get herself to the start line fit and healthy, she could let her tennis do the talking.",
+            "zh": "经历职业生涯多次伤病挫折后，她知道，只要能健康地站上球场，就能用网球为自己证明。"
+          },
+          {
+            "start": 642.64,
+            "end": 645.66,
+            "en": "And she has been utterly brilliant.",
+            "zh": "她的表现，实在太精彩了。"
+          },
+          {
+            "start": 647.74,
+            "end": 648.98,
+            "en": "What a match.",
+            "zh": "多么精彩的一场比赛。"
+          }
+        ],
+        "notes": [
+          "补622–651上下文后small.en/medium.en句义一致；两模型对人名有识别拼写错误，按源片本人/对阵归一。",
+          "建议保留这些精彩解说而非在634.5截掉句子；时长可以服从故事。",
+          "长句字幕需要按自然从句分屏，原声整体保全，不在句中换源。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf-603.50-637.50-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf-603.50-637.50-small.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf-context-622-651-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf-context-622-651-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 20,
+      "source": "wimbledon_sf_interview",
+      "source_url": "https://www.youtube.com/watch?v=5OOvRkrKDF4",
+      "source_sha256": "8fe59a93ab876fd26a613f4cd113a4220df057f47e899aae1c178e83a759f7fc",
+      "candidate_start": 53.94,
+      "candidate_end": 61.4,
+      "candidate_has_narration": false,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "complete_selected_interview_sentence"
+        ],
+        "utterances": [
+          {
+            "start": 54.04,
+            "end": 61.26,
+            "en": "I'm really kind of shaking and trying to sink it in, but the atmosphere here, undescribable.",
+            "zh": "我真的还有些发抖，想慢慢消化这一切。这里的氛围，难以形容。"
+          }
+        ],
+        "notes": [
+          "两模型都支持实际口语kind of shaking与trying to sink it in；不按新闻改成另一套原话。",
+          "undescribable/indescribable拼写需最终字幕定稿，不能把拼写差异掩盖成逐字无争议。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf_interview-50.94-64.40-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf_interview-50.94-64.40-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 21,
+      "source": "wimbledon_final",
+      "source_url": "https://www.youtube.com/watch?v=XfE9M6__724",
+      "source_sha256": "39e3e2b5d0d5e21037fa6f593c6a5db0b7ee1d23152b1aeec151c5fa8e5aaf1e",
+      "candidate_start": 206.6,
+      "candidate_end": 214.8,
+      "candidate_has_narration": true,
+      "analysis": {
+        "findings": [
+          "no_foreground_english_transcribed_in_selected_window"
+        ],
+        "utterances": [],
+        "notes": [
+          "两模型203.6–228上下文仅从220.72开始有前景英文，原206.6–214.8内均无英语转写；可留现有中文旁白。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/wimbledon_final-203.60-228.00-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/wimbledon_final-203.60-228.00-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 22,
+      "source": "wimbledon_final",
+      "source_url": "https://www.youtube.com/watch?v=XfE9M6__724",
+      "source_sha256": "39e3e2b5d0d5e21037fa6f593c6a5db0b7ee1d23152b1aeec151c5fa8e5aaf1e",
+      "candidate_start": 214.8,
+      "candidate_end": 225.0,
+      "candidate_has_narration": false,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "complete_selected_source_sentence"
+        ],
+        "utterances": [
+          {
+            "start": 220.72,
+            "end": 224.32,
+            "en": "It's over and out.",
+            "zh": "比赛结束了。"
+          }
+        ],
+        "notes": [
+          "两模型语句一致，原214.8–225覆盖完整句；保留现场原声与双语字幕。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/wimbledon_final-203.60-228.00-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/wimbledon_final-203.60-228.00-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    },
+    {
+      "candidate_index": 26,
+      "source": "uso_r32",
+      "source_url": "https://www.youtube.com/watch?v=EUk-bMVXRa4",
+      "source_sha256": "b1c2cf6ee5f12921961897e5e4b502be5836a086ff43f1dd1cfe80006bd1f70f",
+      "candidate_start": 179.5,
+      "candidate_end": 190.7,
+      "candidate_has_narration": true,
+      "analysis": {
+        "findings": [
+          "foreground_english_present",
+          "candidate_end_cuts_sentence",
+          "narration_overlaps_foreground_english"
+        ],
+        "suggested_split": [
+          {
+            "start": 179.5,
+            "end": 189.8,
+            "role": "narration_no_transcribed_foreground_english"
+          },
+          {
+            "start": 189.8,
+            "end": 193.85,
+            "role": "bilingual_source_audio"
+          }
+        ],
+        "utterances": [
+          {
+            "start": 189.98,
+            "end": 193.68,
+            "en": "That's a nice moment between these two because they battled hard in difficult conditions.",
+            "zh": "两人之间这一幕很温暖，她们刚刚在艰难条件下激烈较量。"
+          }
+        ],
+        "notes": [
+          "small.en首词It's、medium.en为That's，battle/battled词尾亦待最终字幕定稿；核心句义一致。",
+          "目前原窗179.5–190.7在旁白末尾仍含约0.7秒前景英语，不能记quote_skip；建议拆开并延到193.85。"
+        ]
+      },
+      "raw_evidence": [
+        "data/audio_reviews/muchova-finals-2026/raw/uso_r32-176.50-193.70-medium.en.json",
+        "data/audio_reviews/muchova-finals-2026/raw/uso_r32-176.50-193.70-small.en.json"
+      ],
+      "status": "editorial_audio_findings_not_production_release"
+    }
+  ],
+  "new_doha_trophy_source": {
+    "source_url": "https://x.com/WTA/status/2022719051408052453",
+    "media_id": "2022719030826504193",
+    "source_sha256": "fe508add2f980e8ce1440d844acd6b47dfe70e6bc6084bbb69dc4bc2639be44d",
+    "duration": 11.401,
+    "foreground_english": [
+      {
+        "start": 0,
+        "end": 5.22,
+        "en": "Qatar TotalEnergies Open champion, Karolina Muchova.",
+        "zh": "卡塔尔公开赛冠军，卡罗琳娜·穆霍娃。"
+      }
+    ],
+    "suggested_split": [
+      {
+        "start": 0,
+        "end": 5.3,
+        "role": "bilingual_ceremony_announcement"
+      },
+      {
+        "start": 5.3,
+        "end": 11.4,
+        "role": "trophy_with_narration_no_transcribed_foreground_english"
+      }
+    ],
+    "evidence": [
+      "data/audio_reviews/muchova-finals-2026/raw/doha_trophy_clean-0-11.40-medium.en.json",
+      "data/audio_reviews/muchova-finals-2026/raw/doha_trophy_clean-0-11.40-small.en.json"
+    ],
+    "notes": [
+      "不是整条无英语：报幕在前5.22秒。后半5.3–11.4两模型均无英语转写，可配六年半/首座千分冠的旁白。",
+      "新源720p须由主线程按当前源画质/归一政策处理，不能假称1080p原生。"
+    ]
+  },
+  "raw_model_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bjk-context-458-497-small.en.json",
+      "sha256": "d8ac659b1a08d65a74f535e8b8b9fbf47cef53c081cca0c37219ef2670fb4525",
+      "source": "bjk",
+      "source_sha256": "13835d470cd69a3429f11116a4601d77a25b363885d9ad6356ed6b520418b0bc",
+      "from": 458,
+      "to": 497,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf_interview-50.94-64.40-small.en.json",
+      "sha256": "f93c8773cc5691b38ad05ee1ed1671401f67cc1cc0957cfc6b7db2c97f67a321",
+      "source": "wimbledon_sf_interview",
+      "source_sha256": "8fe59a93ab876fd26a613f4cd113a4220df057f47e899aae1c178e83a759f7fc",
+      "from": 50.94,
+      "to": 64.4,
+      "model": "small.en",
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bjk-context-458-497-medium.en.json",
+      "sha256": "3650f2c1faf2c1c681fe5a11c24e1adca12e20e2636445d5b8628ca4fab445d7",
+      "source": "bjk",
+      "source_sha256": "13835d470cd69a3429f11116a4601d77a25b363885d9ad6356ed6b520418b0bc",
+      "from": 458,
+      "to": 497,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha_trophy_clean-0-11.40-small.en.json",
+      "sha256": "4930072a2098b2db01f46ce9f404a917b0516c0c7947885012cf1d70bcdd4409",
+      "source": "doha_trophy_clean",
+      "source_sha256": "fe508add2f980e8ce1440d844acd6b47dfe70e6bc6084bbb69dc4bc2639be44d",
+      "from": 0,
+      "to": 11.401,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha_trophy_clean-0-11.40-medium.en.json",
+      "sha256": "162ff57c692896193627391354067dec6f9f586164d5f2f1d884648d0b8893bb",
+      "source": "doha_trophy_clean",
+      "source_sha256": "fe508add2f980e8ce1440d844acd6b47dfe70e6bc6084bbb69dc4bc2639be44d",
+      "from": 0,
+      "to": 11.401,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf_interview-50.94-64.40-medium.en.json",
+      "sha256": "5f4ab68e12b2d213d79252bc3ec42732f2342a93f6f65c695b2851fac70d90ed",
+      "source": "wimbledon_sf_interview",
+      "source_sha256": "8fe59a93ab876fd26a613f4cd113a4220df057f47e899aae1c178e83a759f7fc",
+      "from": 50.94,
+      "to": 64.4,
+      "model": "medium.en",
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-459.80-483.00-medium.en.json",
+      "sha256": "91b0ff5c92dbde401fa485da7e58774f5eda792e0f155e932b62a21851f9a067",
+      "source": "bad_homburg",
+      "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+      "from": 459.8,
+      "to": 483.0,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha_trophy-0.00-10.16-small.en.json",
+      "sha256": "76c405472706e5237370de87024548abf73179d05cdef3c83a27af0559bb8b26",
+      "source": "doha_trophy",
+      "source_sha256": "bdca12630bc01c293e6bc421859afd47df395bc2e92ee998f13b59eb4288c458",
+      "from": 0.0,
+      "to": 10.16,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/rg_r32-context-1-17-medium.en.json",
+      "sha256": "56fb83950e77996b98ab9d1bfd5008fb411011ef8f4a0d6aee2945047a143e59",
+      "source": "rg_r32",
+      "source_sha256": "0790d25ee1ff4cf613f4307abcfdf2d399143f7580087bc261f2bd070eaba1bc",
+      "from": 1,
+      "to": 17,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/ao_r16-161.80-178.20-medium.en.json",
+      "sha256": "c01bcfb36e149a7546ce554e90fedcebe665724ab7e1327ee074f74560652acf",
+      "source": "ao_r16",
+      "source_sha256": "895d1ccb993e6a447f70c5a0476b9f591871ffdc6f65d4cdbcf6085af06b8b66",
+      "from": 161.8,
+      "to": 178.2,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-context-464-474-small.en.json",
+      "sha256": "8d8d3ea83fa4b92a5d22eeb77a481e7967d013e5617255718505049605e1cb0e",
+      "source": "bad_homburg",
+      "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+      "from": 464,
+      "to": 474,
+      "model": "small.en",
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/uso_r32-176.50-193.70-small.en.json",
+      "sha256": "e3a4d2a6f5e500cae5fa6164b5f7f2503e5ded511972b48f2fb6dc2e76dc1da1",
+      "source": "uso_r32",
+      "source_sha256": "b1c2cf6ee5f12921961897e5e4b502be5836a086ff43f1dd1cfe80006bd1f70f",
+      "from": 176.5,
+      "to": 193.7,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg_feature-103.10-111.95-medium.en.json",
+      "sha256": "8cc4c7b64bc57dfe1f9fd0a81c52e9040af1b33ba78a686463c063807f95015d",
+      "source": "bad_homburg_feature",
+      "source_sha256": "fbdf2f1c540d553b4c073e380ee3e0ce196573e7bd3bca22d43f87a2da6f4235",
+      "from": 103.1,
+      "to": 111.95,
+      "model": "medium.en",
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha-targeted-235.10-267.30-small.en.json",
+      "sha256": "4007cd2c1b6e78e1069e006ebbcbbcd50d8a41c6a85f6239f5081e5d95b9d95c",
+      "source": "doha",
+      "source_sha256": "ab7f764269cf4eb4e7613e0bfb66671d379713124b961d85a9d2c41ceaee8384",
+      "from": 235.1,
+      "to": 267.3,
+      "model": "small.en",
+      "method": "targeted_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-491.00-501.12-medium.en.json",
+      "sha256": "f381c305610d703152c324d1fd0c6898abcad868648c2c79e1a9b9653494e812",
+      "source": "bad_homburg",
+      "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+      "from": 491.0,
+      "to": 501.12,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_final-203.60-228.00-small.en.json",
+      "sha256": "28eba732cf77ef012127eaa850fadca1473b5955ac11265335a4feada862d7b1",
+      "source": "wimbledon_final",
+      "source_sha256": "39e3e2b5d0d5e21037fa6f593c6a5db0b7ee1d23152b1aeec151c5fa8e5aaf1e",
+      "from": 203.6,
+      "to": 228.0,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/miami-220.40-240.80-medium.en.json",
+      "sha256": "d8cdaa6083d1a2438e0f66d9444f92e2f1af89a3a4225c521c0f87f0f20eea36",
+      "source": "miami",
+      "source_sha256": "b6117cb922680965f0eb5331d706396b2de4fe79ba8db7b8c8bcbf8c0d20327e",
+      "from": 220.4,
+      "to": 240.8,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/rg_r32-4-14-audio-classification.json",
+      "sha256": "0ae43cac6594388e751226e8d0d332bd8dedbedf9d7a8a4ceb4a60f88402a440",
+      "source": null,
+      "source_sha256": "0790d25ee1ff4cf613f4307abcfdf2d399143f7580087bc261f2bd070eaba1bc",
+      "from": null,
+      "to": null,
+      "model": null,
+      "method": "YAMNet TFLite pretrained AudioSet classifier in fixed 15600-sample frames, not human listening"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/uso_mixed-context-667-687-medium.en.json",
+      "sha256": "7b118c4ec937f4971c73bddd786dded621298f9e74afcdfa7d0ff59e082aa775",
+      "source": "uso_mixed",
+      "source_sha256": "e443434bb210837f021d4e0401081b3123265b06ea10c008eafa6571442b57e5",
+      "from": 667,
+      "to": 687,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha-context-243-276-medium.en.json",
+      "sha256": "ede418208c5412a8721b8700ad265d2aec59255d7d13cde7688fc0a9ec89d73d",
+      "source": "doha",
+      "source_sha256": "ab7f764269cf4eb4e7613e0bfb66671d379713124b961d85a9d2c41ceaee8384",
+      "from": 243,
+      "to": 276,
+      "model": "medium.en",
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-249.10-274.40-small.en.json",
+      "sha256": "49ea23984ac272ce130bd254ec3f748b4360d8961dbd0fee5a6e38be96977120",
+      "source": "stuttgart_final",
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b",
+      "from": 249.1,
+      "to": 274.4,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-249.10-274.40-medium.en.json",
+      "sha256": "7e6c6b34ba1f65f57038c573b84e00ee9519fd7b47d5d37d0d1aa4cf2ee748bf",
+      "source": "stuttgart_final",
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b",
+      "from": 249.1,
+      "to": 274.4,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/uso_r32-176.50-193.70-medium.en.json",
+      "sha256": "5ff6903fe8f478fd24536f5cb99cf7c660ad55f9b7610ddb0e09a7de89c7d22c",
+      "source": "uso_r32",
+      "source_sha256": "b1c2cf6ee5f12921961897e5e4b502be5836a086ff43f1dd1cfe80006bd1f70f",
+      "from": 176.5,
+      "to": 193.7,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/miami-192.00-209.50-small.en.json",
+      "sha256": "f7eba6abf481845a350319467358d4e1768d6b7fac4ee583be6ba4564f5af2e2",
+      "source": "miami",
+      "source_sha256": "b6117cb922680965f0eb5331d706396b2de4fe79ba8db7b8c8bcbf8c0d20327e",
+      "from": 192.0,
+      "to": 209.5,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/miami-220.40-240.80-small.en.json",
+      "sha256": "70a44bfaa73cd00b2579be170e49beab6d713c709b77abfe897b13c25855e419",
+      "source": "miami",
+      "source_sha256": "b6117cb922680965f0eb5331d706396b2de4fe79ba8db7b8c8bcbf8c0d20327e",
+      "from": 220.4,
+      "to": 240.8,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg_feature-138.10-149.10-small.en.json",
+      "sha256": "d84f824dc56c1b026107f2e1ae78e453ff31fab742edfc318fd9b3d001fe848a",
+      "source": "bad_homburg_feature",
+      "source_sha256": "fbdf2f1c540d553b4c073e380ee3e0ce196573e7bd3bca22d43f87a2da6f4235",
+      "from": 138.1,
+      "to": 149.1,
+      "model": "small.en",
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_final-203.60-228.00-medium.en.json",
+      "sha256": "d5d807be248010e1e539b5bba31b2a4991fe49b05df883a5f6248dd00156aa89",
+      "source": "wimbledon_final",
+      "source_sha256": "39e3e2b5d0d5e21037fa6f593c6a5db0b7ee1d23152b1aeec151c5fa8e5aaf1e",
+      "from": 203.6,
+      "to": 228.0,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-context-269-284-small.en.json",
+      "sha256": "9eb1f963d55cbebf5fa22e0d6b1327d4dd735a8e901c8638849241fa3e74dc41",
+      "source": "stuttgart_final",
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b",
+      "from": 269,
+      "to": 284,
+      "model": "small.en",
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-491.00-501.12-small.en.json",
+      "sha256": "78ca96f877d6c202707d6fd5589089368d3c2259da43a2822c0aa095771fc296",
+      "source": "bad_homburg",
+      "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+      "from": 491.0,
+      "to": 501.12,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg_feature-103.10-111.95-small.en.json",
+      "sha256": "96c533428aa92dab592dd0eeaf0cfe44f628c7054857a92cadbd7643b9640f54",
+      "source": "bad_homburg_feature",
+      "source_sha256": "fbdf2f1c540d553b4c073e380ee3e0ce196573e7bd3bca22d43f87a2da6f4235",
+      "from": 103.1,
+      "to": 111.95,
+      "model": "small.en",
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/rg_r32-context-1-17-small.en.json",
+      "sha256": "4224bc1908477f89e350673b60efc3e2001c947254d7acb660c1515503d2e7e9",
+      "source": "rg_r32",
+      "source_sha256": "0790d25ee1ff4cf613f4307abcfdf2d399143f7580087bc261f2bd070eaba1bc",
+      "from": 1,
+      "to": 17,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf-603.50-637.50-small.en.json",
+      "sha256": "89ff2d4a94375d9048eaa4cbe6019921ef9301fd97108e6053192773aa4c79e8",
+      "source": "wimbledon_sf",
+      "source_sha256": "ae70c854c394e515ee7146110ee1a350226b5c7f05fb0bbe21c03e267cdd332d",
+      "from": 603.5,
+      "to": 637.5,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/uso_mixed-context-667-687-small.en.json",
+      "sha256": "6d17daf1cdc925f73f84ce7de2cab0c7e59dc7066ac178bca79362bc54a33182",
+      "source": "uso_mixed",
+      "source_sha256": "e443434bb210837f021d4e0401081b3123265b06ea10c008eafa6571442b57e5",
+      "from": 667,
+      "to": 687,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha-235.10-267.30-medium.en.json",
+      "sha256": "1d93c63419dd28682f33bf4e4634d0b21848de7c6e36c3950669db054166cf62",
+      "source": "doha",
+      "source_sha256": "ab7f764269cf4eb4e7613e0bfb66671d379713124b961d85a9d2c41ceaee8384",
+      "from": 235.1,
+      "to": 267.3,
+      "model": "medium.en",
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf-context-622-651-medium.en.json",
+      "sha256": "4cb5fa7b83c12951205b980fca1fc88ab697895fc3f071c5dc50b56c728ec521",
+      "source": "wimbledon_sf",
+      "source_sha256": "ae70c854c394e515ee7146110ee1a350226b5c7f05fb0bbe21c03e267cdd332d",
+      "from": 622,
+      "to": 651,
+      "model": "medium.en",
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf-603.50-637.50-medium.en.json",
+      "sha256": "f685b5cff2b8c060ff596da58ebb1f9fbdedffbed9367443e47cca355112fcc9",
+      "source": "wimbledon_sf",
+      "source_sha256": "ae70c854c394e515ee7146110ee1a350226b5c7f05fb0bbe21c03e267cdd332d",
+      "from": 603.5,
+      "to": 637.5,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf-context-622-651-small.en.json",
+      "sha256": "c99261b5a26ee51cf6503411285139679325e1bd67983c7c12adc685c42247b4",
+      "source": "wimbledon_sf",
+      "source_sha256": "ae70c854c394e515ee7146110ee1a350226b5c7f05fb0bbe21c03e267cdd332d",
+      "from": 622,
+      "to": 651,
+      "model": "small.en",
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha_trophy-0.00-10.16-medium.en.json",
+      "sha256": "a35a57c21cd063eb9a6ef5eed6bcfe85de96e66c203c9d5ba8f77d450b3e59a1",
+      "source": "doha_trophy",
+      "source_sha256": "bdca12630bc01c293e6bc421859afd47df395bc2e92ee998f13b59eb4288c458",
+      "from": 0.0,
+      "to": 10.16,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/ao_r16-161.80-178.20-small.en.json",
+      "sha256": "db422fca3a42838d1bb21ffd6d8892be24ca46d7f2b7d3d230ed7ae77e73133d",
+      "source": "ao_r16",
+      "source_sha256": "895d1ccb993e6a447f70c5a0476b9f591871ffdc6f65d4cdbcf6085af06b8b66",
+      "from": 161.8,
+      "to": 178.2,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/miami-192.00-209.50-medium.en.json",
+      "sha256": "f55fbcfae9cea5738fe5c2586ce7a0b39aebaa272f74d7984080c6256d3111e9",
+      "source": "miami",
+      "source_sha256": "b6117cb922680965f0eb5331d706396b2de4fe79ba8db7b8c8bcbf8c0d20327e",
+      "from": 192.0,
+      "to": 209.5,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg_feature-138.10-149.10-medium.en.json",
+      "sha256": "edbbf888814dafdd932d434117912fa6753377322a4a5e4ab23684cd9ed79994",
+      "source": "bad_homburg_feature",
+      "source_sha256": "fbdf2f1c540d553b4c073e380ee3e0ce196573e7bd3bca22d43f87a2da6f4235",
+      "from": 138.1,
+      "to": 149.1,
+      "model": "medium.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha-235.10-267.30-small.en.json",
+      "sha256": "6d4c627bc02f3e3347ecbe0237150a74fdd60e2feb02a5dcbf0f27584913eaa2",
+      "source": "doha",
+      "source_sha256": "ab7f764269cf4eb4e7613e0bfb66671d379713124b961d85a9d2c41ceaee8384",
+      "from": 235.1,
+      "to": 267.3,
+      "model": "small.en",
+      "method": "reuse_same_sha_exact_coverage"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-context-464-474-medium.en.json",
+      "sha256": "0707a42f8e45ad483b81467ad86b621485aeafd8e0cd2e30b62da50f45df7a41",
+      "source": "bad_homburg",
+      "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+      "from": 464,
+      "to": 474,
+      "model": "medium.en",
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-context-269-284-medium.en.json",
+      "sha256": "67fe8582e14907b355ca050e3c49f49bd789a5f9bd6f92b04f7098dd30a28f1b",
+      "source": "stuttgart_final",
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b",
+      "from": 269,
+      "to": 284,
+      "model": "medium.en",
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/doha-context-243-276-small.en.json",
+      "sha256": "a865b3faa37157382e53af2e55697f3769b7222b72cd162894da067d4717509a",
+      "source": "doha",
+      "source_sha256": "ab7f764269cf4eb4e7613e0bfb66671d379713124b961d85a9d2c41ceaee8384",
+      "from": 243,
+      "to": 276,
+      "model": "small.en",
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/bad_homburg-459.80-483.00-small.en.json",
+      "sha256": "89abcaa49d985a3eb1917d6242e60269cf05ad3d36f4880f8d48a5f1aeead41c",
+      "source": "bad_homburg",
+      "source_sha256": "b9d5d240edc28dbee579f57993faf0433adc2724d4f9d9c1973dc2759667cad3",
+      "from": 459.8,
+      "to": 483.0,
+      "model": "small.en",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/rg_r32-4-14-multilingual-small.json",
+      "sha256": "44d6b9f16c3e7e02be66ff2801f6dd3e57f065c104cb19bb76427808acb952c6",
+      "source": "rg_r32",
+      "source_sha256": "0790d25ee1ff4cf613f4307abcfdf2d399143f7580087bc261f2bd070eaba1bc",
+      "from": 4,
+      "to": 14,
+      "model": "small_multilingual",
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_auto_language_no_vad"
+    }
+  ],
+  "new_uso_mixed_source": {
+    "source_url": "https://www.youtube.com/watch?v=og_Ex5oDa-4",
+    "source_sha256": "e443434bb210837f021d4e0401081b3123265b06ea10c008eafa6571442b57e5",
+    "reviewed_context": [
+      667,
+      687
+    ],
+    "suggested_window": [
+      670,
+      683.6
+    ],
+    "foreground_english_draft": [
+      {
+        "start": 674.54,
+        "end": 678,
+        "en": "It's checkmate in New York.",
+        "zh": "纽约，胜负已定。"
+      },
+      {
+        "start": 679.2,
+        "end": 683.38,
+        "en": "As Muchova and Mensik claim the mixed doubles title.",
+        "zh": "穆霍娃和门西克拿下了混双冠军。"
+      }
+    ],
+    "notes": [
+      "若采用670–681会截断第二句，应延至683.6；前一句667–669在建议start670之前。",
+      "两个模型都把姓名拼写错，按官方本场身份归一；checkmate/Czech-mate同音双关，最终英文拼写可与官方字幕再核。",
+      "独立原声段不叠中文旁白；需明确混双，不将其计入单打年终积分。"
+    ],
+    "evidence": [
+      "data/audio_reviews/muchova-finals-2026/raw/uso_mixed-context-667-687-medium.en.json",
+      "data/audio_reviews/muchova-finals-2026/raw/uso_mixed-context-667-687-small.en.json"
+    ],
+    "status": "new_candidate_context_reviewed_not_yet_in_runtime_spec"
+  },
+  "updated_at": "2026-10-21T16:53:27.665846+00:00",
+  "new_bjk_source": {
+    "source_url": "https://www.youtube.com/watch?v=jSp_UwE-_co",
+    "reviewed_context": [
+      458,
+      497
+    ],
+    "selected_window": [
+      458.5,
+      475.6
+    ],
+    "foreground_english_draft": [
+      {
+        "start": 467.34,
+        "end": 472.38,
+        "en": "A magical and masterful performance from Karolina Muchova.",
+        "zh": "穆霍娃的表现堪称神奇，掌控全场。"
+      },
+      {
+        "start": 472.68,
+        "end": 475.38,
+        "en": "Pressure? What pressure?",
+        "zh": "压力？哪有什么压力？"
+      }
+    ],
+    "notes": [
+      "此片是决赛第一场单打，不能声称该一分直接赢下团队冠军；478.62起Czechia 1-up句在选窗之外。",
+      "两模型人名拼写错误按官方本场身份纠正；medium的but零时长插词不强加字幕。"
+    ],
+    "evidence": [
+      "data/audio_reviews/muchova-finals-2026/raw/bjk-context-458-497-small.en.json",
+      "data/audio_reviews/muchova-finals-2026/raw/bjk-context-458-497-medium.en.json"
+    ]
+  },
+  "new_rg_source": {
+    "source_url": "https://x.com/rolandgarros/status/2060369494891978888",
+    "selected_window": [
+      4,
+      14
+    ],
+    "foreground_english": [],
+    "classification": "background_crowd_applause_no_identifiable_foreground_english",
+    "music_evidence": "YAMNet fixed15600sample frames over entire 4–14s: Music mean0.0068 max0.0359, applause dominant. Classifier evidence, not absolute proof of no music.",
+    "asr_hallucination_exclusion": "Forced English small.en/medium.en produce Thank you variants stretched across almost entire16s context; first token probabilities0.0095/0.0145, incompatible word timing and different additional multilingual result. Do not promote these noise hallucinations to source dialogue.",
+    "additional_diagnostic": "Root multilingual small VAD=True over1–17s only Yeah3.38–3.98 outside selection; see evidence/rg-multilingual-audio-diagnostic.json.",
+    "method": "asr_cross_checked_with_multilingual_VAD_and_audio_event_classification_not_human_listening",
+    "evidence": [
+      "data/audio_reviews/muchova-finals-2026/raw/rg_r32-context-1-17-small.en.json",
+      "data/audio_reviews/muchova-finals-2026/raw/rg_r32-context-1-17-medium.en.json",
+      "data/audio_reviews/muchova-finals-2026/raw/rg_r32-4-14-multilingual-small.json",
+      "data/audio_reviews/muchova-finals-2026/raw/rg_r32-4-14-audio-classification.json",
+      "research/muchova-finals-2026/evidence/rg-multilingual-audio-diagnostic.json"
+    ]
+  }
+}

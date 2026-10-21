@@ -1,0 +1,118 @@
+{
+  "source": "miami",
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6391563293112",
+  "source_sha256": "b6117cb922680965f0eb5331d706396b2de4fe79ba8db7b8c8bcbf8c0d20327e",
+  "start": 192.0,
+  "end": 209.5,
+  "selected": [
+    {
+      "index": 6,
+      "source": "miami",
+      "start": 195.0,
+      "end": 206.5,
+      "narration": "印第安韦尔斯止步第四轮后，她在迈阿密再次战胜姆博科，打进半决赛。",
+      "quote": null
+    }
+  ],
+  "model": "small.en",
+  "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode",
+  "vad_filter": false,
+  "segments": [
+    {
+      "start": 192.0,
+      "end": 194.24,
+      "text": "Oh, did it click the line? It did.",
+      "avg_logprob": -0.647,
+      "no_speech_prob": 0.28,
+      "words": [
+        {
+          "w": " Oh,",
+          "s": 192.0,
+          "e": 192.0,
+          "p": 0.1604
+        },
+        {
+          "w": " did",
+          "s": 192.76,
+          "e": 192.94,
+          "p": 0.867
+        },
+        {
+          "w": " it",
+          "s": 192.94,
+          "e": 193.08,
+          "p": 0.9905
+        },
+        {
+          "w": " click",
+          "s": 193.08,
+          "e": 193.34,
+          "p": 0.5883
+        },
+        {
+          "w": " the",
+          "s": 193.34,
+          "e": 193.5,
+          "p": 0.9898
+        },
+        {
+          "w": " line?",
+          "s": 193.5,
+          "e": 193.68,
+          "p": 0.9928
+        },
+        {
+          "w": " It",
+          "s": 194.04,
+          "e": 194.04,
+          "p": 0.5226
+        },
+        {
+          "w": " did.",
+          "s": 194.04,
+          "e": 194.24,
+          "p": 0.9917
+        }
+      ]
+    },
+    {
+      "start": 203.26,
+      "end": 204.96,
+      "text": "Boko gambled on the return.",
+      "avg_logprob": -0.647,
+      "no_speech_prob": 0.28,
+      "words": [
+        {
+          "w": " Boko",
+          "s": 203.26,
+          "e": 203.78,
+          "p": 0.1746
+        },
+        {
+          "w": " gambled",
+          "s": 203.78,
+          "e": 204.24,
+          "p": 0.8969
+        },
+        {
+          "w": " on",
+          "s": 204.24,
+          "e": 204.44,
+          "p": 0.9926
+        },
+        {
+          "w": " the",
+          "s": 204.44,
+          "e": 204.52,
+          "p": 0.9951
+        },
+        {
+          "w": " return.",
+          "s": 204.52,
+          "e": 204.96,
+          "p": 0.9997
+        }
+      ]
+    }
+  ]
+}

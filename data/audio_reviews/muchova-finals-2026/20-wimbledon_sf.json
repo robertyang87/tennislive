@@ -1,0 +1,101 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=dHmXLHG5hQc",
+  "source_sha256": "ae70c854c394e515ee7146110ee1a350226b5c7f05fb0bbe21c03e267cdd332d",
+  "source_key": "wimbledon_sf",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 606.5,
+  "reviewed_to": 649.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 625.22,
+      "end": 629.04,
+      "en": "Karolina Muchova is a Wimbledon finalist.",
+      "zh": "穆霍娃闯进了温网决赛。"
+    },
+    {
+      "start": 631.8,
+      "end": 635.28,
+      "en": "After all the injury setbacks in her career,",
+      "zh": "经历职业生涯一次次伤病挫折，"
+    },
+    {
+      "start": 635.28,
+      "end": 638.1,
+      "en": "she knew that if she could get herself",
+      "zh": "她知道，只要自己能"
+    },
+    {
+      "start": 638.1,
+      "end": 639.92,
+      "en": "to the start line fit and healthy,",
+      "zh": "健康地站上球场，"
+    },
+    {
+      "start": 639.92,
+      "end": 642.04,
+      "en": "she could let her tennis do the talking.",
+      "zh": "就能让网球替自己说话。"
+    },
+    {
+      "start": 642.04,
+      "end": 645.76,
+      "en": "And she has been utterly brilliant.",
+      "zh": "她的表现，实在太精彩了。"
+    },
+    {
+      "start": 647.92,
+      "end": 649.02,
+      "en": "What a match.",
+      "zh": "多么精彩的一场比赛。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf-603.50-637.50-small.en.json",
+      "sha256": "89ff2d4a94375d9048eaa4cbe6019921ef9301fd97108e6053192773aa4c79e8",
+      "model": "small.en",
+      "from": 603.5,
+      "to": 637.5,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf-context-622-651-medium.en.json",
+      "sha256": "4cb5fa7b83c12951205b980fca1fc88ab697895fc3f071c5dc50b56c728ec521",
+      "model": "medium.en",
+      "from": 622,
+      "to": 651,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf-603.50-637.50-medium.en.json",
+      "sha256": "f685b5cff2b8c060ff596da58ebb1f9fbdedffbed9367443e47cca355112fcc9",
+      "model": "medium.en",
+      "from": 603.5,
+      "to": 637.5,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/wimbledon_sf-context-622-651-small.en.json",
+      "sha256": "c99261b5a26ee51cf6503411285139679325e1bd67983c7c12adc685c42247b4",
+      "model": "small.en",
+      "from": 622,
+      "to": 651,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": "research/muchova-finals-2026/runtime-clause-packet.json",
+    "runtime_clause_packet_sha256": "7835d536071d6357c6bda6a70c3d163ffd2f15f030374b52acb4e35190f60056",
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  }
+}
