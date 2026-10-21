@@ -1,0 +1,32 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-j2Yjch3BKpY/j2Yjch3BKpY.mp4",
+  "source_sha256": "bb545b7f24f99109e4ccbaf60f0281da258009c11849d56463d661485571d57a",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-21T18:33:17+00:00",
+  "reviewed_from": 0.5,
+  "reviewed_to": 17.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 4.36,
+      "end": 5.98,
+      "en": "Lefty, it's in!",
+      "zh": "左手回球，进了！"
+    },
+    {
+      "start": 6.28,
+      "end": 6.5,
+      "en": "It's in!",
+      "zh": "确实进了！"
+    },
+    {
+      "start": 12.62,
+      "end": 14.02,
+      "en": "We've seen it all!",
+      "zh": "这场面，真是见所未见！"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 bb545b7f24f99109e4ccbaf60f0281da258009c11849d56463d661485571d57a，存于 data/source_asr/j2Yjch3BKpY/small.en.json 与 data/source_asr/j2Yjch3BKpY/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
