@@ -24,7 +24,7 @@
   ],
   "previous_background_proposal": "rejected by user: 不要加背景 / 很丑",
   "current_proposal": {
-    "image": "card-original-font-v10-comparison.jpg",
+    "image": "card-original-font-v11-comparison.jpg",
     "font": "Original Smiley Sans Oblique / 得意黑 retained; TL Score retained",
     "font_changes": false,
     "background": "none",
@@ -51,7 +51,10 @@
     "rail_right_native_px": 1023,
     "scope": "Only a static sample, not a new movie or QC approval",
     "scale_from_v9": 0.9,
-    "scale_scope": "entire card including all four text rows, spacing, outline/shadow and accent rail; top-right anchored"
+    "scale_scope": "entire card including all four text rows, spacing, outline/shadow and accent rail; top-right anchored",
+    "date_event_alignment": "Shared alphabetic baseline; full-row glyph bounds determine following score position",
+    "date_event_baseline_fix_native_px": 5.4,
+    "vs_alignment": "Visible glyph center aligned vertically with player names; original spacing and font retained"
   },
   "superseded_proposals": {
     "background": "explicitly rejected by user",
