@@ -1,0 +1,31 @@
+{
+  "schema": "noskova.final-source-readiness.v1",
+  "rendering_spec_sha256": "157b79dfb5b0c4f5c03e36831c40905cead2237c34cfee7736e979064b351dfd",
+  "immutable_bundle": {
+    "commit": "6c80c174da778850168b64b2bdb15d39a0b092ca",
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/6c80c174da778850168b64b2bdb15d39a0b092ca/assets/reel/noskova-finals-2026/frozen-tts.zip",
+    "bytes": 618398,
+    "sha256": "a04395bd3f08b66d1d6fbc3265879624c3918aa1577987f565b526e23b7d735f",
+    "method": "Actual remote immutable raw URL bytes downloaded and matched local ZIP byte-for-byte, not HEAD-only metadata."
+  },
+  "gates": {
+    "full_taste_exit_code": 0,
+    "full_taste_pass_marks": 47,
+    "global_historical_evidence_restoration": "46 missing tracked text +898 tracked *probe.json restored byte-identically fromHEAD aftermainmerge; no source/spec/test or historicalasset edits.",
+    "source_bound_audio": {
+      "windows": 8,
+      "cues": 46,
+      "status": "pass"
+    },
+    "strict_frozen_tts": {
+      "requests": 12,
+      "actual_input_bundle_match": true,
+      "actual_voice_preflight": "pass12",
+      "not_final_mix_QC": true
+    },
+    "native_sampled_visual": "105actualframes viewed;103currentvalid/2superseded; fournewMadrid frames finalSHA bound,99equivalentvisual frames prior5c01 explicitly recorded."
+  },
+  "expected_duration_seconds": 301.524,
+  "formal_render": "Root dispatch only, not yet claimed by child.",
+  "actual_movie_QC": "Pending actual formalrender MP4; no human listening claim."
+}
