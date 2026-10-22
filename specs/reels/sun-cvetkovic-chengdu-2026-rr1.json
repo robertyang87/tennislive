@@ -299,7 +299,7 @@
       "title_card": "一度一比四落后\n抢七只丢一分",
       "kicker": "成都 · 总决赛首战",
       "seconds": 13.05,
-      "narration": "十月二十一号，成都，世界网联青少年年终总决赛。女子A组第一轮，十六岁的孙心然，迎战塞尔维亚的茨维特科维奇。",
+      "narration": "北京时间十月二十一号下午，成都，世界网联青少年年终总决赛。女子A组第一轮，十六岁的孙心然，迎战塞尔维亚的茨维特科维奇。",
       "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
     },
     {
@@ -567,6 +567,30 @@
       "seconds": 21.98,
       "narration": "七比六、六比二，孙心然拿下小组赛开门红。首盘一比四落后都能翻回来，抢七一个发球分都不给对手。十六岁，青少年世界第一，主场首秀的第一份答卷。小组赛还有两场，你觉得，她在成都，能走多远？",
       "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
+    }
+  ],
+  "_hit_data": [
+    {
+      "detail": "抢七所选片段中，茨维特科维奇这一轮的两个发球分都由孙心然拿下。",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-staylive663661/663661-9f57421c.mp4",
+      "source_window": [
+        1088.0,
+        1110.0
+      ],
+      "foreground_packet": "data/audio_reviews/sun-cvetkovic-chengdu-2026-rr1/08-1088.00-1110.00.json",
+      "evidence": "官方转播解说：Both service points from Cvetkovic in this tiebreak go the way of her opponent. 对照data/source_asr/663661/small.en.json（1088.48–1096.44）和medium.en.json（1089.15–1095.79起）；两档均有both service points、once again、go the way of her opponent，专名按官方参赛身份校正。",
+      "scope": "只认领解说明确说出的这一轮两个发球分；不由7-1终分反推抢七全部发球分。"
+    },
+    {
+      "detail": "第二盘开局落后两局后，孙心然连赢六局拿下首战。",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-staylive663661/663661-9f57421c.mp4",
+      "source_window": [
+        1686.0,
+        1706.5
+      ],
+      "foreground_packet": "data/audio_reviews/sun-cvetkovic-chengdu-2026-rr1/12-1629.50-1706.50.json",
+      "evidence": "官方转播赛后回顾：第二盘开局落后两局；Sun would once again rally, winning six consecutive games to take her opening match. 两档ASR：small.en 1693.40–1705.58、medium.en 1694.19–1712.25，均有win six consecutive games；前置落后两局在medium.en 1678.35–1686.45及既有packet内。",
+      "scope": "这是解说明确给出的次盘逐局走势，未填未取得的UE、Winner或总得分。"
     }
   ]
 }

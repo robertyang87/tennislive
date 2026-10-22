@@ -3526,6 +3526,25 @@ _LEGACY_USO_FULLBLEED = frozenset({
 })
 
 
+def _validate_segment_kinds(spec: dict) -> None:
+    """An explicit quote scene means original video/audio, never a TTS card.
+
+    Published story recipes already use this optional discriminator. Validate
+    it instead of silently accepting an unused public field. Spoken captions
+    remain optional: the foreground-audio gate separately verifies a documented
+    window containing only court/crowd sound.
+    """
+    for index, row in enumerate(spec.get("segments") or [], 1):
+        if not isinstance(row, dict) or "kind" not in row:
+            continue
+        if row["kind"] != "quote":
+            raise ReelError(f"第 {index} 段 kind 只支持 quote 原声视频")
+        if (not {"start", "end"}.issubset(row)
+                or str(row.get("narration") or "").strip()
+                or any(row.get(key) for key in ("image", "title_card", "stat_card", "mute"))):
+            raise ReelError(f"第 {index} 段 kind=quote 须为保留原声的视频窗口，不能配TTS、静图或静音")
+
+
 def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     """spec 的 `segments` → `Segment` 列表，顺带把两条互斥/引用的规矩拦在这儿。
 
@@ -3541,6 +3560,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     真人看下来的结论就是「固定中心的感觉更好」，所以横摇改成**按段显式打开**
     （`"track": true`），只留给主机位的宽景回合。
     """
+    _validate_segment_kinds(spec)
     native_crops = source_crop_claims(spec)
 
     def _seg_score_inset(s: dict, i: int) -> tuple[int, int, int, int] | None:
@@ -4008,7 +4028,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows", "scorebox",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
-                "kicker", "track", "voice", "subtitle_bottom", "subtitle_bottom_windows", "visual_image"),
+                "kind", "kicker", "track", "voice", "subtitle_bottom", "subtitle_bottom_windows", "visual_image"),
 }
 
 

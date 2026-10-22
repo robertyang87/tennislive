@@ -1,0 +1,21 @@
+{
+  "ci_run": 39708311877,
+  "head": "86362b18939b08b847f7e617ab75362a8d956718",
+  "results": {
+    "failed": 4,
+    "passed": 6423,
+    "skipped": 225
+  },
+  "failure_scope": "Existing upstream main films Sun/Cvetkovic and tiebreak, not current Rybakina content.",
+  "details": [
+    "Sun opening missing Beijing timezone/verified time period.",
+    "Sun has no hit-data declaration.",
+    "Sun Cvetkovic and tiebreak Talbert/Rosewall names mismatch canonical table.",
+    "Tiebreak quote segment has unused kind field not recognized by real-field table."
+  ],
+  "fix_current_film": "Rybakina Charaeva/Polina canonical names corrected; no Rybakina name errors in this run.",
+  "policy": "CLAUDE.md274: publishing requires current head selected CI scope pass. Owner tasteD1 same requirement.",
+  "action": "No merge or WeChat send while required CI is not green. Do not claim another film-specific exception.",
+  "current_final_render": "39709566884",
+  "current_final_ci": "39709571254"
+}
