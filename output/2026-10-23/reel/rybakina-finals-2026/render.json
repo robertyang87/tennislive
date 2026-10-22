@@ -1,0 +1,104 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "176e539e1e5177ad5c6a963de3a30eb3543a9eb046a1231e9f08575ca5729db6",
+    "request_count": 19,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-rybakina-finals-2026-176e539e1e5177ad",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-rybakina-finals-2026-176e539e1e5177ad/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39812880330"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 313.4,
+  "topbar": null,
+  "film_seconds": 319.16,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 8.856,
+    "3": 6.6,
+    "4": 7.272,
+    "6": 10.08,
+    "10": 9.432,
+    "12": 8.256,
+    "14": 9.288,
+    "16": 7.224,
+    "17": 7.896,
+    "18": 6.84,
+    "22": 7.08,
+    "23": 6.216,
+    "24": 4.488,
+    "25": 7.008,
+    "27": 6.432,
+    "28": 7.032,
+    "29": 3.912,
+    "30": 5.832
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "4159d8091b06feb0b98377aee7b2fb05fca3c4d628f0267866faf6c7444779bf",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "rybakina-finals-2026",
+    "received_at": "2026-10-22T16:18:24Z",
+    "artifact_ready_at": "2026-10-22T16:25:48Z",
+    "elapsed_seconds": 444.255,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "9a883885880dbf00af34fc1a7c9e2527d7d13bd39794648178e6edbef3ef93bb",
+    "spec_sha256": "dc19933b3804ce8d66a0fad6ff9a94c8aae104ba53e8c5ce59ac385969790dea",
+    "run_id": "39812880330",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-22T16:20:51Z",
+        "run_id": "39812880330"
+      }
+    ],
+    "render_seconds": 297.255,
+    "pre_render_seconds": 147.0
+  },
+  "film_sha256": "9a883885880dbf00af34fc1a7c9e2527d7d13bd39794648178e6edbef3ef93bb",
+  "film_bytes": 103843112,
+  "qc_attestation_sha256": "6aec46942fd077824cb27e1ef9f651d20ab07c42caf52da8047818124f639b01",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-22T16:20:51Z",
+      "run_id": "39812880330"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-22T16:25:51Z",
+      "run_id": "39812880330"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-rybakina-finals-2026/rybakina-finals-2026.mp4",
+  "video_bytes": 103843112,
+  "_release_tag_note": "2026-10-22T16:25:55Z run 39812880330 把这一份（video_bytes 103843112）传上 tag `reel-rybakina-finals-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-22/reel/rybakina-finals-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+}
