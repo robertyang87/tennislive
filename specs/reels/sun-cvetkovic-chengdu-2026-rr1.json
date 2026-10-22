@@ -187,7 +187,27 @@
     },
     "_source": "ITF 官方记分组件（matchscorerlive）ACE/双误计数 + 全场录像逐分制表复核（总分/破发/发球计数，两组独立核对记分牌）；官方总分占比 58/42、茨破发 3/8 与制表一致，孙破发机会官方记 6 次、录像逐分实数 7 次，卡面取实测值。",
     "_headshot_why": "两人 WTA 官方头像 blob（wtafiles.blob.core.windows.net/images/headshots/）按 ID 查均无图：孙心然 335958、茨维特科维奇 333724 的 .jpg/.png 均 404（2026-10-22 实测）；Sofascore 403 挑战墙、ITF 站 Incapsula 挡直连抓图。孙沿用仓库已认领的北京站比赛图裁切 wta-335958-match-LS041.jpg（sun-bucsa-beijing-2026-r2 已用同一张）；茨用本场官方转播集合片 301.5s 正脸特写帧裁切（白衣者即茨维特科维奇，记分牌上下文核对无误）。",
-    "_winners_ue_why": "本场（ITF 青少年赛事）无任何公开源提供制胜分/非受迫失误：ITF 官方记分组件只有百分比汇总（无 winners/UE），转播无统计牌，逐分制表未记制胜分。按 render_stat_card 的 OPTIONAL_FIELDS 口径留空不画这两行，绝不零填。"
+    "_winners_ue_why": "本场制胜分/非受迫失误在全部可采信来源查空（见 _winners_ue_check）：ITF 官方记分组件只有百分比、TNNS 三天赛程无此场、MCP 未标注、转播无统计牌。按 tools/winners_ue_gate.py 的硬闸：新片省略这两行须账号所有者单片批准（批准名单写在闸内），本片未获批准——两行留空且不出片，等所有者拍板，绝不零填或编造。",
+    "_winners_ue_check": {
+      "sources": {
+        "official_stats": {
+          "status": "percentages_only_no_winners_ue",
+          "note": "ITF 官方记分组件（matchscorerlive）只有百分比汇总，无制胜分/非受迫失误计数，2026-10-22 逐行复核到底。"
+        },
+        "tnns": {
+          "status": "match_not_in_schedule",
+          "note": "tnns-stats 工作流三趟（run 39703023996 / 39703295807 / 39703298488）：2026-10-20/21/22 三天赛程（559/566/402 场）均无 Sun-Cvetkovic 这一场。"
+        },
+        "mcp": {
+          "status": "not_charted",
+          "note": "Match Charting Project 索引 18413 条全扫：Cvetkovic 零标注；Sun 有 5 场（北京 3 场、温网/法网青少年决赛）但不含本场。"
+        },
+        "broadcast": {
+          "status": "no_stats_board_in_full_match",
+          "note": "本场官方转播全场 60 秒间隔扫帧（106 帧）复核：只有 VS 对阵卡与比分图形，无任何技术统计牌。"
+        }
+      }
+    }
   },
   "_facts": [
     {
