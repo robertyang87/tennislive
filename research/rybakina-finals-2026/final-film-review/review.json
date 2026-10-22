@@ -1,0 +1,26 @@
+{
+  "schema": "tennislive.actual-native-film-visual-review.v1",
+  "film_sha256": "efbd37cfb5dbcbdde16d201a702a749dcecf14b1e0437157f86302b53ae11f21",
+  "film_bytes": 104264833,
+  "film_seconds": 325.08,
+  "source_run": 39709566884,
+  "reviewed_at": "2026-10-22T02:23:30.212835+00:00",
+  "method": "Actual native final-film sampled-frame inspection plus native automated audio/structure checks; no human full-film listening claim.",
+  "samples": "frames.json (39 frames), contact01–04 and3 additional actual Beijing frames",
+  "findings": {
+    "full_canvas_video": "All13 video clips use crop/full canvas; no contain video segments.",
+    "person_interviews": "Stuttgart andUS press actual start/mid/end samples preserve centered full face and eyes.",
+    "latest_main_labels": "All8 generated from main fixed98score/89topic renderer; superscripts and winner-name colors inspected.",
+    "beijing_correction": "Actual film282.65 coach has no card;284.95 and287.7 later card clears eyes.",
+    "complete_scope": "Film continues through qualification,worldNo1,BJK withdrawal,Beijing,Wuhan withdrawal,Ningbo pre-match cutoff.",
+    "audio": "Native suite automated_voice_suite passes on exact frozen19-request bundle; native stream/ending QC pass.",
+    "no_music": true
+  },
+  "limitations": [
+    "Frame sampling is not a claim of watching every frame.",
+    "Native archive documents three real720p sources; display scaling adds no detail.",
+    "AO original broadcast contains a brief audience pan."
+  ],
+  "status": "sampled_visual_review_pass",
+  "publication": "Await required current-head CI; no send claimed."
+}

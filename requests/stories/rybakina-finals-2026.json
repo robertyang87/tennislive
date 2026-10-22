@@ -22,7 +22,7 @@
     "outline": "research/rybakina-finals-2026/outline.md",
     "scope": "Approved the presented approximately 5m40s chronological season film including Asian-season follow-up."
   },
-  "state": "native_preflight",
+  "state": "native_rendered_and_reviewed_awaiting_ci",
   "native_spec": "specs/reels/rybakina-finals-2026.json",
   "source_manifest": "research/rybakina-finals-2026/source-candidates.json",
   "latest_user_steering": [
@@ -30,7 +30,7 @@
     "用户2026-10-22原话：都说过要用铺满画布的方式裁切呀。如果是人物的话，就是以人物为中心做裁切，就是人物采访的片段，以人物中心做裁切。",
     "这次主线的那个右上角的信息字卡的样式已经更新了，你同步一下。然后更新一下当前视频的字卡样式"
   ],
-  "synced_main": "427da7e",
+  "synced_main": "d47c660aeced51ee2fed3e7cae95612e7a485f11",
   "actual_selected_windows": 13,
   "original_audio_method": "asr_cross_checked_not_human_listening",
   "tts_requests": 19,
@@ -40,5 +40,10 @@
     "interviews": "measured_fixed_person_center",
     "matches": "fixed_court_center",
     "source_floor_720_approval": "Current film, only three exact official URLs in native crop policy; actual720p disclosed internally."
-  }
+  },
+  "final_render_run": 39709566884,
+  "film_sha256": "efbd37cfb5dbcbdde16d201a702a749dcecf14b1e0437157f86302b53ae11f21",
+  "film_seconds": 325.08,
+  "native_voice_suite": "pass_automated_voice_suite",
+  "final_visual_review": "research/rybakina-finals-2026/final-film-review/review.json"
 }
