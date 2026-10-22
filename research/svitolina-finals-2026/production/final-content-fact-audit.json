@@ -1,0 +1,173 @@
+{
+  "schema": "svitolina.final-content-fact-audit.v1",
+  "measured_utc": "2026-10-22T13:46:57.497482+00:00",
+  "spec_sha256": "da92f8e74eff09c6dc4c48c57258c638a958261eea8a86cdf1c6ac453110a1bc",
+  "source_plan": "8fullterminalmatchpoints,0extr rallies,1sameRomeceremonyutteranceafterMPonce",
+  "labels": [
+    {
+      "id": "auckland-final",
+      "label": {
+        "topic": "冠军·250分",
+        "date": "2026.01.11",
+        "place": "奥克兰决赛",
+        "people": "斯维托丽娜 vs 王欣瑜",
+        "score": "6-3 7-6(6)"
+      },
+      "source_window": [
+        258.68,
+        275.12
+      ],
+      "card_window": [
+        270.9,
+        274.4
+      ],
+      "points_meaning": "final tournament gross result points, not weeklyRace net increase"
+    },
+    {
+      "id": "ao-sf",
+      "label": {
+        "topic": "止步4强·780分",
+        "date": "2026.01.29",
+        "place": "澳网半决赛",
+        "people": "斯维托丽娜 vs 萨巴伦卡",
+        "score": "2-6 3-6"
+      },
+      "source_window": [
+        450.52,
+        472.4
+      ],
+      "card_window": [
+        468.6,
+        472.24
+      ],
+      "points_meaning": "final tournament gross result points, not weeklyRace net increase"
+    },
+    {
+      "id": "dubai-final",
+      "label": {
+        "topic": "亚军·650分",
+        "date": "2026.02.21",
+        "place": "迪拜决赛",
+        "people": "斯维托丽娜 vs 佩古拉",
+        "score": "2-6 4-6"
+      },
+      "source_window": [
+        239.2,
+        251.76
+      ],
+      "card_window": [
+        239.68,
+        243.08
+      ],
+      "points_meaning": "final tournament gross result points, not weeklyRace net increase"
+    },
+    {
+      "id": "rome-final",
+      "label": {
+        "topic": "冠军·1000分",
+        "date": "2026.05.16",
+        "place": "罗马决赛",
+        "people": "斯维托丽娜 vs 高芙",
+        "score": "6-4 6-7 6-2"
+      },
+      "source_window": [
+        219.92,
+        255.52
+      ],
+      "card_window": [
+        232.2,
+        235.4
+      ],
+      "points_meaning": "final tournament gross result points, not weeklyRace net increase"
+    },
+    {
+      "id": "rg-qf",
+      "label": {
+        "topic": "止步8强·430分",
+        "date": "2026.06.02",
+        "place": "法网1/4决赛",
+        "people": "斯维托丽娜 vs 科斯秋克",
+        "score": "3-6 6-2 2-6"
+      },
+      "source_window": [
+        228.0,
+        245.52
+      ],
+      "card_window": [
+        237.0,
+        240.4
+      ],
+      "points_meaning": "final tournament gross result points, not weeklyRace net increase"
+    },
+    {
+      "id": "wimbledon-r1",
+      "label": {
+        "topic": "第1轮·10分",
+        "date": "2026.06.30",
+        "place": "温网第一轮",
+        "people": "斯维托丽娜 vs 斯尼古尔",
+        "score": "5-7 2-6"
+      },
+      "source_window": [
+        363.32,
+        383.28
+      ],
+      "card_window": [
+        377.8,
+        383.0
+      ],
+      "points_meaning": "final tournament gross result points, not weeklyRace net increase"
+    },
+    {
+      "id": "toronto-sf",
+      "label": {
+        "topic": "止步4强·390分",
+        "date": "2026.08.12",
+        "place": "多伦多半决赛",
+        "people": "斯维托丽娜 vs 斯瓦泰克",
+        "score": "3-6 6-1 3-6"
+      },
+      "source_window": [
+        249.32,
+        271.8
+      ],
+      "card_window": [
+        264.3,
+        269.2
+      ],
+      "points_meaning": "final tournament gross result points, not weeklyRace net increase"
+    },
+    {
+      "id": "us-r3",
+      "label": {
+        "topic": "第3轮·130分",
+        "date": "2026.09.04",
+        "place": "美网第三轮",
+        "people": "斯维托丽娜 vs 卡林斯卡娅",
+        "score": "3-6 6-2 3-6"
+      },
+      "source_window": [
+        168.8,
+        185.6
+      ],
+      "card_window": [
+        181.8,
+        185.5
+      ],
+      "points_meaning": "final tournament gross result points, not weeklyRace net increase"
+    }
+  ],
+  "season_scope": "19tourparticipatedevents,63played48W15L;13BYE/2WOseparate;3RETplayed. BJK4matches2W2Lseparate.",
+  "official_qualification": "2026-10-17 WTA4592816 date11:46UTC/19:46BJT; date precision not independently proven firstpublicsecond; CMS10/15notpublicclinch. Fourthappearance,last2019,2018champion.",
+  "latest": "Beijing/WuhanQF; noNingbo participation, Tokyoofficialwithdraw; exactwithdrawaldate/reasonnotasserted; nofutureFinalsresult/season-endedclaim.",
+  "conflicts_retained": [
+    "RomeQF2-6/6-4/4-2interimAPIsnapshot correctedagainstofficialcompleted2-6/6-4/6-4, Sviwinner.",
+    "RomeFofficialAPITB3vsnewsTB5unresolved;film6-4/6-7/6-2omitsTBsuperscript.",
+    "Gross5239vsRace5229difference10notattributedwithoutindividualcounted-eventproof.",
+    "BJKPaoliniwrongofficialsummary6-3/6-4retainedconflict; actualofficialmatchData/live/presser6-2/6-2.",
+    "Profile46/14behind63played48/15; no invented cacheinternalcause."
+  ],
+  "narration_scope": "13wholeparagraphs actualnaturalYunjian+6%/+0Hz; fullASRall5checks13exactbytesreused+onechangedparagraphfreshpass;14requestswithoutro.",
+  "foreground_audio": "31EN/ZHcues; sourceSHAandpairedlocalASRrawbound; nohumanlistening. RG onlydistantFrenchPA, unreliablefulltranscriptretainedoriginalsound,nofabricatedEnglish/Frenchsubs.",
+  "no_publication_or_final_film_qc_claim": true
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=efGsU1vRZc8",
+  "source_sha256": "b75c4fa4809dcfa7a7e949d8b733752853260cfe40c36c5ea5329f02df8978ac",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex local source-bound paired ASR with source frames; no human listening",
+  "reviewed_at": "2026-10-22T12:58:20.628420+00:00",
+  "reviewed_from": 325,
+  "reviewed_to": 397,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 367.38,
+      "end": 368.02,
+      "en": "There it is.",
+      "zh": "拿下来了"
+    },
+    {
+      "start": 368.02,
+      "end": 374.18,
+      "en": "Snigur takes the biggest win of her career,",
+      "zh": "斯尼古尔拿下生涯最大胜利"
+    },
+    {
+      "start": 374.18,
+      "end": 378.04,
+      "en": "defeating fellow Ukrainian Elina Svitolina",
+      "zh": "击败同胞斯维托丽娜"
+    },
+    {
+      "start": 378.04,
+      "end": 381.2,
+      "en": "in straight sets on No. 2 Court,",
+      "zh": "在2号球场直落两盘"
+    },
+    {
+      "start": 381.2,
+      "end": 383.06,
+      "en": "and in some style.",
+      "zh": "而且赢得漂亮"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": [
+    "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+    "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed.",
+    "Medium skips noisy368–374 call; small/turbo and independent multilingual large-v3 consistently support biggest win/career meaning. Snigur and Elina canonical spelling; male his from large-v3 is obvious ASR gender error for the visibly identified woman, normalized to her. All raw variants retained. No human ear confirmation claimed."
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/wimbledon-r1-8f07355325-wimbledon-r1-small.en.json",
+      "sha256": "8f07355325bb414d54fa9cca20fc9380acf104b2bb4909c140a919827313123b",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/wimbledon-r1-da9fcef512-wimbledon-r1-medium.en.json",
+      "sha256": "da9fcef51286e4ea30c5491a55024f068c4b164d440c66ff06fc066805a2903b",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/wimbledon-r1-e03b1014be-wimbledon-terminal-turbo-en.json",
+      "sha256": "e03b1014be7771d2ed068e49fef0203f437191c02341c3849463f72bcbcb0c36",
+      "model": "turbo"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/wimbledon-r1-388a40905e-wimbledon-call-large-large-v3-en.json",
+      "sha256": "388a40905efa6c2f96d4ce44ecb6c4b69581d9d9b9ce9bde58e169abe714fe8f",
+      "model": "large-v3"
+    }
+  ]
+}

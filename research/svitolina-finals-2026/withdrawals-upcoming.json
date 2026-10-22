@@ -1,0 +1,73 @@
+{
+  "schema": "svitolina-withdrawals-upcoming.v1",
+  "retrieved_utc": "2026-10-22T13:01:32.401906+00:00",
+  "withdrawals": [
+    {
+      "event": "巴特洪堡",
+      "event_id": 2017,
+      "status": "quarterfinal_walkover_withdrawal",
+      "date_source_article": "2026-06-24T17:02:00Z",
+      "date_source_article_beijing": "2026-06-25T01:02:00+08:00",
+      "decision_time": null,
+      "reason": "right hip injury / 右髋伤",
+      "source": "https://www.wtatennis.com/news/4526191",
+      "counts_in_WL": false,
+      "note": "已在本站实际打球，仍计一站；W/O本人负条目不计实际负场。"
+    },
+    {
+      "event": "辛辛那提",
+      "event_id": 1017,
+      "status": "third_round_walkover_withdrawal",
+      "date_source_article": "2026-08-18T17:12:00Z",
+      "date_source_article_beijing": "2026-08-19T01:12:00+08:00",
+      "decision_time": null,
+      "reason": "right ankle injury / 右踝伤",
+      "source": "https://www.wtatennis.com/news/4561997",
+      "counts_in_WL": false,
+      "note": "先已实际赢第二轮，救7赛点有官方正文；第三轮未打，不计负场。"
+    },
+    {
+      "event": "宁波",
+      "event_id": 2092,
+      "status": "initial_entry_then_absent_from_final_draw_no_played_match",
+      "official_initial_entry_source": "https://www.wtatennis.com/news/4581231",
+      "official_latest_sources": [
+        "https://wtafiles.wtatennis.com/pdf/draws/2026/2092/MDS.pdf",
+        "https://api.wtatennis.com/tennis/tournaments/2092/2026/players",
+        "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches"
+      ],
+      "exact_withdrawal_day": null,
+      "reason": null,
+      "counts_in_WL": false,
+      "safe_narration": "此后未参加宁波。",
+      "note": "二手报道明确退出；官方当前签表与赛事接口无她。没找到原退出公告时不虚构准确日期或原因。"
+    },
+    {
+      "event": "东京",
+      "event_id": 1056,
+      "status": "official_tournament_website_explicit_withdrawal",
+      "latest_check_utc": "2026-10-22T13:01:32.401906+00:00",
+      "official_latest_source": "https://www.toray-ppo.com/player/",
+      "official_verbatim": "Elina Svitolina（withdraw） / エリナ・スビトリナ（欠場）",
+      "exact_withdrawal_day": null,
+      "reason": null,
+      "counts_in_WL": false,
+      "upcoming_event_dates": [
+        "2026-10-26",
+        "2026-11-01"
+      ],
+      "safe_narration": "她也退出了东京站。",
+      "conflict": "WTA players API仍含316738，赛事自站明确withdraw为当前状态依据；不因此预写后续结果或个人原因。"
+    }
+  ],
+  "upcoming": [
+    {
+      "event": "WTA Finals Indian Wells",
+      "status": "qualified_not_started",
+      "sources": [
+        "https://www.wtatennis.com/news/4592816/elina-svitolina-secures-seventh-singles-spot-for-wta-finals-indian-wells-one-place-remains"
+      ],
+      "safe_narration": "年终资格已确认，年终战绩尚未发生。"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=FiwiyGycgs4",
+  "source_sha256": "cf39b9f03d58401873b3f43286145ddde2c9c1a9811f8b903180e92d67dcbac3",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex local source-bound paired ASR with source frames; no human listening",
+  "reviewed_at": "2026-10-22T12:58:20.636760+00:00",
+  "reviewed_from": 140,
+  "reviewed_to": 202,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 173.32,
+      "end": 174.48,
+      "en": "She's done it.",
+      "zh": "她做到了"
+    },
+    {
+      "start": 174.48,
+      "end": 177.8,
+      "en": "Anna Kalinskaya is into the last 16 in New York",
+      "zh": "卡林斯卡娅闯进美网第四轮"
+    },
+    {
+      "start": 177.8,
+      "end": 182.02,
+      "en": "for the first time in her career.",
+      "zh": "这是她职业生涯的第一次"
+    },
+    {
+      "start": 182.1,
+      "end": 185.5,
+      "en": "What a crazy, crazy roller coaster!",
+      "zh": "真是一场疯狂的过山车"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": [
+    "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+    "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed."
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/us-r3-51eae8902c-us-r3-small.en.json",
+      "sha256": "51eae8902c05f08ab8d79178c80b1318e6bea5ec858271f023de6bb812bfd3da",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/us-r3-00f1bfaadb-us-r3-medium.en.json",
+      "sha256": "00f1bfaadb7eb897a3f5b76bad29e12b2625fd08371fe83a4427cb76c7c94d4b",
+      "model": "medium.en"
+    }
+  ]
+}

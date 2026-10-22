@@ -1,0 +1,47 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=W7vJsxli0p0",
+  "source_sha256": "6a8aefd56f0fe579586e8390a566de130767fdcb54ec3377bcac65664bc8d359",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex local source-bound paired ASR with source frames; no human listening",
+  "reviewed_at": "2026-10-22T12:58:20.622511+00:00",
+  "reviewed_from": 195,
+  "reviewed_to": 266,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "No intelligible foreground English. Original court ambience includes distant French chair/PA; English-only model outputs are French-to-English hallucinations, not English captions. Three French-capable model attempts fail to give a reliable full French transcription. Original sound is retained, and no French transcript/listening pass is claimed. Parent authorized this honest English-only foreground scope on2026-10-22.",
+  "review_notes": [
+    "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+    "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed.",
+    "Non-English background PA transcription remains unverified; this packet is complete only for the required foreground-English inventory, not a French speech audit. No fabricated French subtitles and no muted source."
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/rg-qf-7d12850638-rg-qf-small.en.json",
+      "sha256": "7d12850638ef56e3738a06a1e9533cdf9817a99e60bb3d072fc2caf18de18585",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/rg-qf-24f66d5d61-rg-qf-medium.en.json",
+      "sha256": "24f66d5d6175499ef421af1237d4220d3be8d9eb50d1dc088f8e2ce0df58c569",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/rg-qf-8fa7a3bd54-rg-fr-small-fr.json",
+      "sha256": "8fa7a3bd54576972cb31cb10763d359f0bc0d879783cf4d66439a6cb0fe4c7d5",
+      "model": "small"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/rg-qf-201703ad77-rg-fr-turbo-fr.json",
+      "sha256": "201703ad779fb236ecbe4a41ce267922597bf0a85fef87b5ecf5f7efe4e2a30f",
+      "model": "turbo"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/rg-qf-9f442a4659-rg-pa-large-large-v3-fr.json",
+      "sha256": "9f442a4659822fef08f7d6a7c5488671958a2fa8b67c2cbc7bac8402092dfc41",
+      "model": "large-v3"
+    }
+  ],
+  "non_english_background_status": "French PA full text unresolved; explicitly not approved as transcribed speech."
+}

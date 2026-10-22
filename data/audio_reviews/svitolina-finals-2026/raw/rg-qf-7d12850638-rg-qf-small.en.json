@@ -1,0 +1,91 @@
+{
+  "source_key": "rg-qf",
+  "source_file": "/workspace/svitolina-finals-production/media/sources/rg-qf.mp4",
+  "source_sha256": "6a8aefd56f0fe579586e8390a566de130767fdcb54ec3377bcac65664bc8d359",
+  "source_url": "https://www.youtube.com/watch?v=W7vJsxli0p0",
+  "model": "small.en",
+  "range": [
+    195,
+    266
+  ],
+  "method": "actual_faster_whisper_cpu_int8_beam5_vad_false_word_times_no_prompt",
+  "human_listening_claimed": false,
+  "created_utc": "2026-10-22T12:35:17.048801+00:00",
+  "segments": [
+    {
+      "start": 214.12,
+      "end": 224.88,
+      "text": " CHEERING AND APPLAUSE",
+      "avg_logprob": -0.7107551531358198,
+      "no_speech_prob": 0.49460095167160034,
+      "words": [
+        {
+          "word": " CHEERING",
+          "start": 214.12,
+          "end": 215.52,
+          "probability": 0.7429203794163186
+        },
+        {
+          "word": " AND",
+          "start": 215.52,
+          "end": 215.64,
+          "probability": 0.4471133351325989
+        },
+        {
+          "word": " APPLAUSE",
+          "start": 215.64,
+          "end": 224.88,
+          "probability": 0.9923022389411926
+        }
+      ]
+    },
+    {
+      "start": 234.06,
+      "end": 254.98,
+      "text": " Thank you very much.",
+      "avg_logprob": -1.3942041397094727,
+      "no_speech_prob": 0.3097016513347626,
+      "words": [
+        {
+          "word": " Thank",
+          "start": 234.06,
+          "end": 235.46,
+          "probability": 0.011478448286652565
+        },
+        {
+          "word": " you",
+          "start": 235.46,
+          "end": 236.14,
+          "probability": 0.9704985618591309
+        },
+        {
+          "word": " very",
+          "start": 236.14,
+          "end": 240.7,
+          "probability": 0.2751588821411133
+        },
+        {
+          "word": " much.",
+          "start": 240.7,
+          "end": 254.98,
+          "probability": 0.9820004105567932
+        }
+      ]
+    },
+    {
+      "start": 260.28,
+      "end": 261.68,
+      "text": " You",
+      "avg_logprob": -0.922236442565918,
+      "no_speech_prob": 0.5117494463920593,
+      "words": [
+        {
+          "word": " You",
+          "start": 260.28,
+          "end": 261.68,
+          "probability": 0.01762460172176361
+        }
+      ]
+    }
+  ]
+}

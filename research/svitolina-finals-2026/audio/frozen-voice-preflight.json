@@ -1,0 +1,526 @@
+{
+  "schema": "svitolina.frozen-voice-preflight.v1",
+  "method": "native voice_auto_review individual functions on actual frozen bytes; not render-bound release approval; no human listening",
+  "bundle_sha256": "b4bfc7dab36b36078603b83d53bf807a97107d25147ce75552e97a9e1a0ebb91",
+  "spec_sha256": "dc37901be2e893d0b489e558fc8dc85d2d3d4c96b0bcd67c3e91ccd8e4b543af",
+  "requests": 14,
+  "prior_evidence_sha256": "a866af83b66f6c8fca0364f9748302e25e403214701775b44fb1c8957634a04c",
+  "reused_exact_audio_count": 13,
+  "fresh_audio_count": 1,
+  "pass": true,
+  "sentence_splits": [],
+  "audio": [
+    {
+      "id": "bundle:55d530acb379ba1b6c802b3b514c1a0cc1f14b5f1820438eea91b455a47edd6b",
+      "audio_sha256": "e30306ccd35e1718410cead39bf1bf0c0f8e4fe4afa2860a9314975631daeffa",
+      "text": "从开年捧杯，到温网首轮失利，斯维托丽娜的这一季，最终走回了阔别七年的年终舞台。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从开年捧碑到温王手轮失利,思维托丽娜的这一季,最终走回了扩别七年的年终舞台。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 7.04,
+        "cps": 4.97,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 开年 ｜ 捧杯 ｜ 到 ｜ 温 ｜ 网 ｜ 首轮 ｜ 失利 ｜ 斯维托丽娜 ｜ 的 ｜ 这 ｜ 一 ｜ 季 ｜ 最终 ｜ 走 ｜ 回 ｜ 了 ｜ 阔别 ｜ 七年 ｜ 的 ｜ 年终 ｜ 舞台"
+      },
+      "reused_exact_audio_sha256_pass": true
+    },
+    {
+      "id": "bundle:5d74e12131458ff76ab1f0222db4b128f7235ba6766f3d92ef17024411b7780f",
+      "audio_sha256": "de969275c9788f2ae51b58c96e402610cb630529b6be9a49f64eed989af548bf",
+      "text": "华盛顿止步八强，多伦多再进四强。面对斯瓦泰克，她用六比一扳回一盘，却还是在决胜盘败下阵来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "华盛顿只部八强,多伦多在近四强。面对斯瓦泰克,他用6比1搬回一盘,却还是在决胜盘败下阵来。"
+      },
+      "polyphones": [
+        {
+          "index": 34,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.078,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 40,
+        "speech_s": 9.104,
+        "cps": 4.39,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "华盛顿 ｜ 止步 ｜ 八 ｜ 强 ｜ 多伦多 ｜ 再 ｜ 进 ｜ 四 ｜ 强 ｜ 面对 ｜ 斯瓦泰克 ｜ 她 ｜ 用 ｜ 六比一 ｜ 扳回 ｜ 一 ｜ 盘 ｜ 却 ｜ 还是 ｜ 在 ｜ 决胜 ｜ 盘 ｜ 败 ｜ 下 ｜ 阵 ｜ 来"
+      },
+      "reused_exact_audio_sha256_pass": true
+    },
+    {
+      "id": "bundle:6c9f514e46ea4bd4f564c0b61f0a2a9afb69f6d738701a45b611bbd65d7ca281",
+      "audio_sha256": "2a8b752ed2156d5cdd394647082d34453629a27bc7317d1738eb83dd8eb266e1",
+      "text": "她的二零二六年，从奥克兰冠军开始。决赛两盘战胜王欣瑜，先把上一季末的四连败，换成了开年的五连胜。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.023,
+        "longest_deletion": 0,
+        "transcript": "他的二零二六年从奥克兰冠军开始,决在两盘战胜王欣瑜,先把上一季末的四连败换成了开年的五连胜。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 9.269,
+        "cps": 4.64,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 的 ｜ 二零二六年 ｜ 从 ｜ 奥克兰 ｜ 冠军 ｜ 开始 ｜ 决赛 ｜ 两盘 ｜ 战胜 ｜ 王欣瑜 ｜ 先 ｜ 把 ｜ 上 ｜ 一 ｜ 季末 ｜ 的 ｜ 四 ｜ 连 ｜ 败 ｜ 换 ｜ 成 ｜ 了 ｜ 开年 ｜ 的 ｜ 五 ｜ 连胜"
+      },
+      "reused_exact_audio_sha256_pass": true
+    },
+    {
+      "id": "bundle:7e9e02cb4d5673a20c16bcd3d59fccc5deb038a27ec683c3600993c2d7409e58",
+      "audio_sha256": "61833f653999c923209a41feb012daa94dd9fe9141116fde41fce98b1a1ca125",
+      "text": "九月，乌克兰首次打进比利简金杯决赛，她也是其中一员。随后北京、武汉，连续两站打进八强。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "9月,乌克兰首次打进比利减金杯决赛,他也是其中一员。随后北京、武汉连续两战打进八墙。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 8.255,
+        "cps": 4.48,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "九月 ｜ 乌克兰 ｜ 首次 ｜ 打 ｜ 进 ｜ 比利简金 ｜ 杯 ｜ 决赛 ｜ 她 ｜ 也是 ｜ 其中 ｜ 一 ｜ 员 ｜ 随后 ｜ 北京 ｜ 武汉 ｜ 连续 ｜ 两站 ｜ 打 ｜ 进 ｜ 八 ｜ 强"
+      }
+    },
+    {
+      "id": "bundle:7f70d8238cc26054f2a8809e72bfdcbb02db6a2619919c3844c527196824b414",
+      "audio_sha256": "fcc7754646b5f8c82b1328635e7c4937122d03c9a5539c937b2cbb0f83aeab6b",
+      "text": "辛辛那提，她挽救七个赛点闯过首战，随后因右踝伤退出第三轮。到了美网，决胜盘三比二领先，最后四局全被卡林斯卡娅拿走，止步第三轮。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 56,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.018,
+        "longest_deletion": 0,
+        "transcript": "辛希那提,他挽救七个赛典闯过手战,随后因有怀伤退出第三轮。到了眉网,爵盛盘3比2领先,最后四局全被卡林斯卡娅拿走,止步第三轮。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 56,
+        "speech_s": 12.559,
+        "cps": 4.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "辛 ｜ 辛那提 ｜ 她 ｜ 挽救 ｜ 七个 ｜ 赛点 ｜ 闯 ｜ 过 ｜ 首战 ｜ 随后 ｜ 因 ｜ 右 ｜ 踝 ｜ 伤 ｜ 退出 ｜ 第三轮 ｜ 到 ｜ 了 ｜ 美 ｜ 网 ｜ 决胜 ｜ 盘 ｜ 三比二 ｜ 领先 ｜ 最后 ｜ 四局 ｜ 全 ｜ 被 ｜ 卡林斯卡娅 ｜ 拿 ｜ 走 ｜ 止步 ｜ 第三轮"
+      },
+      "reused_exact_audio_sha256_pass": true
+    },
+    {
+      "id": "bundle:97cfe3cf81606dc112637e00de0eb87ecf69990a5f37db843fa5bcf8b3733a61",
+      "audio_sha256": "18470918640be2aedd3444a6daadea159b2347ba7f434ff49f21f1501eb4e09a",
+      "text": "赛季尾声，她没有参加宁波，也退出了东京。再回年终，你期待斯维托丽娜走到哪一步？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "赛季卫生﹑他没有参加宁波﹑也退出了东京。再回年中﹑你期待斯维托丽娜﹑走到哪一步?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.771,
+        "cps": 4.38,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "赛季 ｜ 尾声 ｜ 她 ｜ 没有 ｜ 参加 ｜ 宁波 ｜ 也 ｜ 退出 ｜ 了 ｜ 东京 ｜ 再 ｜ 回 ｜ 年终 ｜ 你 ｜ 期待 ｜ 斯维托丽娜 ｜ 走 ｜ 到 ｜ 哪 ｜ 一 ｜ 步"
+      },
+      "reused_exact_audio_sha256_pass": true
+    },
+    {
+      "id": "bundle:9be832d9fbf9c2e47453c338c5b8333f3870529387f01f5222a0eafc7a1d70b7",
+      "audio_sha256": "04bd711f1a171bf3bf8bfe547f4d942d07df961c571b101a49ecb9a5f035847c",
+      "text": "伯林打到八强后，她因右髋伤退出巴特洪堡四分之一决赛。温网首轮，一度四比零领先首盘，最终却两盘输给斯尼古尔。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 48,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.042,
+        "longest_deletion": 0,
+        "transcript": "波林达到八强后,他应有宽伤退出巴特红宝四分之一决赞。温王手轮,一度4比0领先手盘,最终却两盘输给斯尼古尔。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 48,
+        "speech_s": 10.767,
+        "cps": 4.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "伯林 ｜ 打 ｜ 到 ｜ 八 ｜ 强 ｜ 后 ｜ 她 ｜ 因 ｜ 右 ｜ 髋 ｜ 伤 ｜ 退出 ｜ 巴特洪堡 ｜ 四分之一 ｜ 决赛 ｜ 温网 ｜ 首轮 ｜ 一度 ｜ 四比零 ｜ 领先 ｜ 首盘 ｜ 最终 ｜ 却 ｜ 两盘 ｜ 输 ｜ 给 ｜ 斯尼古尔"
+      },
+      "reused_exact_audio_sha256_pass": true
+    },
+    {
+      "id": "bundle:ab51a13894522efd5d169847c9e9a9eb8831d68ace43dc70b6b12adf1df3578e",
+      "audio_sha256": "63f23d2a1f01ab42e50aca04fe9371b90e325c9b4a2dc1c31a0f1b6863c88f5d",
+      "text": "带着罗马冠军来到巴黎，她打进八强。同胞科斯秋克用三盘赢下这场较量，斯维托丽娜的法网停在这里。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "带着罗马冠军来到巴黎,他打进八墙。同胞科斯秋克,用三盘赢下这场较量,斯维托丽娜的罚网停在这里。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 8.774,
+        "cps": 4.79,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "带 ｜ 着 ｜ 罗马 ｜ 冠军 ｜ 来到 ｜ 巴黎 ｜ 她 ｜ 打 ｜ 进 ｜ 八 ｜ 强 ｜ 同胞 ｜ 科斯秋克 ｜ 用 ｜ 三盘 ｜ 赢 ｜ 下 ｜ 这 ｜ 场 ｜ 较量 ｜ 斯维托丽娜 ｜ 的 ｜ 法网 ｜ 停 ｜ 在 ｜ 这里"
+      },
+      "reused_exact_audio_sha256_pass": true
+    },
+    {
+      "id": "bundle:b53eab81eed838c44e1f67c48043fbdccdde044fc99e6437705c434642a629da",
+      "audio_sha256": "8d1848e279440031ae7029799f6de26f0dc1dc5db828537599b9791041ce5265",
+      "text": "这股势头延续到墨尔本。连胜安德烈娃、高芙，她第一次闯进澳网四强；再往前一步，萨巴伦卡挡住了她。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.024,
+        "longest_deletion": 0,
+        "transcript": "这股势头延续到莫尔本,连圣安德烈瓦、高福,他第一次闯见澳网四墙,再往前一步萨巴伦卡挡住了他。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 9.092,
+        "cps": 4.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 股 ｜ 势头 ｜ 延续 ｜ 到 ｜ 墨尔本 ｜ 连胜 ｜ 安德烈娃 ｜ 高芙 ｜ 她 ｜ 第一次 ｜ 闯进 ｜ 澳 ｜ 网 ｜ 四 ｜ 强 ｜ 再 ｜ 往前 ｜ 一 ｜ 步 ｜ 萨巴伦卡 ｜ 挡住 ｜ 了 ｜ 她"
+      },
+      "reused_exact_audio_sha256_pass": true
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "7a3a0a50808c47121774d198c34f84ccc9670bff740e06aacde9ed15be30987f",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      },
+      "reused_exact_audio_sha256_pass": true
+    },
+    {
+      "id": "bundle:c1e6320751add21c5c987b76dcc782592eb64e40d9d9e81eebe94e543749c915",
+      "audio_sha256": "8ad96d5ebd3d33ac79cf940beeb48717378e06a68d47269ad63ecf0e83b5b80d",
+      "text": "罗马连续三场，击败莱巴金娜、斯瓦泰克和高芙。决赛丢掉第二盘后，她用六比二拿下决胜盘。第三座罗马奖杯，也是职业生涯第二十冠。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 54,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "罗马连续三场,几百来巴金娜、斯瓦泰克和高福。决赛丢掉第二盘后,他用6比2拿下决胜盘。第三座罗马奖杯,也是职业生涯第二使冠。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 54,
+        "speech_s": 12.005,
+        "cps": 4.5,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "罗马 ｜ 连续 ｜ 三场 ｜ 击败 ｜ 莱巴金娜 ｜ 斯瓦泰克 ｜ 和 ｜ 高芙 ｜ 决赛 ｜ 丢掉 ｜ 第二盘 ｜ 后 ｜ 她 ｜ 用 ｜ 六比二 ｜ 拿下 ｜ 决胜 ｜ 盘 ｜ 第三座 ｜ 罗马 ｜ 奖杯 ｜ 也是 ｜ 职业 ｜ 生涯 ｜ 第二十 ｜ 冠"
+      },
+      "reused_exact_audio_sha256_pass": true
+    },
+    {
+      "id": "bundle:cbda583df0e32e6cd48f430c9630d95374b9d7d8bfe019c53911129a5bf068e6",
+      "audio_sha256": "4bdab8df4cc33eb658169cddf5e71b784bb605b63d7457ddd808bcb2b85ef8e2",
+      "text": "十月十七日，WTA正式确认她获得年终资格。这是她第四次入围，距离上一次，已经过去七年。二零一八年的年终冠军，又回到了这个舞台。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 53,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 1,
+        "sub_ratio": 0.019,
+        "longest_deletion": 0,
+        "transcript": "10月17日,WTA正式确认他获得年中资格。这是他第四次入围,距离上一次,已经过去七年。2018年的年中冠军,又回到了这个舞台。"
+      },
+      "polyphones": [
+        {
+          "index": 15,
+          "char": "得",
+          "word": "获得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 53,
+        "speech_s": 11.863,
+        "cps": 4.47,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十月十七日 ｜ WTA ｜ 正式 ｜ 确认 ｜ 她 ｜ 获得 ｜ 年终 ｜ 资格 ｜ 这是 ｜ 她 ｜ 第四次 ｜ 入围 ｜ 距离 ｜ 上 ｜ 一次 ｜ 已经 ｜ 过去 ｜ 七年 ｜ 二零一八 ｜ 年 ｜ 的 ｜ 年终 ｜ 冠军 ｜ 又 ｜ 回到 ｜ 了 ｜ 这个 ｜ 舞台"
+      },
+      "reused_exact_audio_sha256_pass": true
+    },
+    {
+      "id": "bundle:dc28388414b406f60582e479cfff9932c1792b9658f4b305c4eb23f6010916f0",
+      "audio_sha256": "1a36320154e84c7766491df8776a5743b629007f20ac55d0f8c1c5a0678e992b",
+      "text": "印第安维尔斯和斯图加特，都打进四强；迈阿密第三轮、马德里第二轮出局。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "印第安威尔斯和斯圖加特都打进四墙。迈阿弥第三轮,马德里第二轮出局。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.097,
+        "cps": 4.92,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "印第安维尔斯 ｜ 和 ｜ 斯图加特 ｜ 都 ｜ 打 ｜ 进 ｜ 四 ｜ 强 ｜ 迈阿密 ｜ 第三轮 ｜ 马德里 ｜ 第二轮 ｜ 出局"
+      },
+      "reused_exact_audio_sha256_pass": true
+    },
+    {
+      "id": "bundle:eee3b2eeff209a497dc9d4ee923fc3abe51529647392b980c5437cbd5053aa66",
+      "audio_sha256": "9534cccec2b0ef672b41a0c7e55c8ddb6021d0d8933350698e95b03428ce2dca",
+      "text": "多哈第三轮止步，迪拜又走到决赛。半决赛和高芙打满三盘，最后的冠军战，她两盘负于佩古拉。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "多哈第三轮止步,迪拜又走到决赛。半决赛和高福打满三盘,最后的冠军战,他两盘赴于佩古拉。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.526,
+        "cps": 4.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "多哈 ｜ 第三轮 ｜ 止步 ｜ 迪拜 ｜ 又 ｜ 走 ｜ 到 ｜ 决赛 ｜ 半决赛 ｜ 和 ｜ 高芙 ｜ 打 ｜ 满 ｜ 三盘 ｜ 最后 ｜ 的 ｜ 冠军 ｜ 战 ｜ 她 ｜ 两盘 ｜ 负 ｜ 于 ｜ 佩古拉"
+      },
+      "reused_exact_audio_sha256_pass": true
+    }
+  ],
+  "measured_utc": "2026-10-22T13:25:11.189520+00:00"
+}

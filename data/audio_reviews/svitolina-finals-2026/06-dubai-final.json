@@ -1,0 +1,49 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=n8N7tGMhsQA",
+  "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex local source-bound paired ASR with source frames; no human listening",
+  "reviewed_at": "2026-10-22T12:58:20.617806+00:00",
+  "reviewed_from": 232.0,
+  "reviewed_to": 253.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 241.14,
+      "end": 245.72,
+      "en": "It is a dream debut Dubai title",
+      "zh": "梦幻般的迪拜首冠"
+    },
+    {
+      "start": 245.72,
+      "end": 247.48,
+      "en": "for Jessica Pegula,",
+      "zh": "属于杰西卡·佩古拉"
+    },
+    {
+      "start": 247.48,
+      "end": 251.6,
+      "en": "and she seals it in style with an ace.",
+      "zh": "她用一记ACE漂亮收官"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": [
+    "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+    "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed."
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/dubai-final-7d724c0a2e-dubai-terminal-small.en-en.json",
+      "sha256": "7d724c0a2ee73031199e2026c2e3fa448ebe4426e50376326cb30e20c31de634",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/dubai-final-9b9d18b685-dubai-terminal-medium.en-en.json",
+      "sha256": "9b9d18b685d3cd7f08ae4e58af2c1481be4a36be2ec76ecee895882a8b17fd8c",
+      "model": "medium.en"
+    }
+  ]
+}
