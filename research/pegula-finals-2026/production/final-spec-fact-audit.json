@@ -1,0 +1,1663 @@
+{
+  "schema": "tennislive.final-spec-fact-audit.v1",
+  "created_utc": "2026-10-22T08:31:55.256495+00:00",
+  "spec": {
+    "path": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+    "sha256": "01c253007a27030a124d4e29d68b1ee6eb914ea5f74907c8a3001cc37bf1077f"
+  },
+  "reference_bindings": [
+    {
+      "path": "/workspace/pegula-finals-production/facts/season-audit/canonical.json",
+      "sha256": "c56420fd157f96fb358117e9414dc90a9250c8807ca03904c1d8133b2357e996"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/facts/late-season-audit.json",
+      "sha256": "9a096c043dad60be2bfee2b0fdf15364f698f6a684621d62831ae984f534e2a8"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/facts/withdrawals-upcoming.json",
+      "sha256": "40f2d6a3577b5e9383e07bd839cd2adad79707b5ddbad401e155e9b2b86aeab2"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/media/cover-photo-candidates.json",
+      "sha256": "de9bd6332f0bc26f9ccd73d8d9696337b2b03bc9e24a3965c705bd007decccb1"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/north-selections.json",
+      "sha256": "0b8d0d4589fd04b92a2b5db5a0a1d2f5a9cdbbb1e80d37c8bc1eaa3ae5353863"
+    },
+    {
+      "path": "/workspace/tennislive/research/pegula-finals-2026/data-audit/raw/player-profile.html",
+      "sha256": "46b2bab962d2874802e96db95e43ea4689a49f36cd827ad10efa27ea661ab977"
+    },
+    {
+      "path": "/workspace/tennislive/research/pegula-finals-2026/data-audit/raw/pegula-2024-matches-history.json",
+      "sha256": "3025c4c241b4bf1dd8e51bb243d4a80e634479ce380dcac284f2a1ed1816f159"
+    }
+  ],
+  "method": "Independent exhaustive text/structured fact comparison plus deterministic date/score/identity/placement checks; no new media search, no shared spec or Git changes.",
+  "scope": "14 narration paragraphs; 11 live information labels with all five fields; cover/title/push text; 16 actual-event coverage; season count/date/round/qualification/withdrawal distinctions. Not native visual, audio pronunciation or final encoded-film QC.",
+  "recomputed_season_totals": {
+    "entries": 76,
+    "played": 64,
+    "wins": 50,
+    "losses": 14,
+    "byes": 12,
+    "events": 16,
+    "titles": 2,
+    "finals": 5,
+    "event_points": 5835
+  },
+  "narration_audit": [
+    {
+      "segment_index": 1,
+      "segment_id": "card-intro",
+      "text": "二〇二四年，她也拿过辛辛那提亚军。今年两座冠军、三次亚军，佩古拉也经历过法网首轮出局。她的这张年终门票，要从一月说起。",
+      "checked_claims": "本季两冠、三次亚军；法网首轮出局；2024辛辛那提亚军另绑官方profile及独立2024API。",
+      "match_evidence": [
+        {
+          "event": "迪拜",
+          "round": "F",
+          "tourn_round": "6",
+          "opponent": "Elina Svitolina",
+          "result": "W",
+          "score_player": "6-2, 6-4",
+          "date_start_local": "2026-02-21",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-02-21",
+          "match_id": "LS001",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/718/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-718-matches.json"
+        },
+        {
+          "event": "查尔斯顿",
+          "round": "F",
+          "tourn_round": "6",
+          "opponent": "Yuliia Starodubtseva",
+          "result": "W",
+          "score_player": "6-2, 6-2",
+          "date_start_local": "2026-04-05",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-04-06",
+          "match_id": "LS001",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/804/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-804-matches.json"
+        },
+        {
+          "event": "柏林",
+          "round": "F",
+          "tourn_round": "5",
+          "opponent": "Linda Noskova",
+          "result": "L",
+          "score_player": "4-6, 6-4, 3-6",
+          "date_start_local": "2026-06-21",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-06-21",
+          "match_id": "LS001",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/2012/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-2012-matches.json"
+        },
+        {
+          "event": "华盛顿",
+          "round": "F",
+          "tourn_round": "5",
+          "opponent": "Alexandra Eala",
+          "result": "L",
+          "score_player": "6-4, 4-6, 0-6",
+          "date_start_local": "2026-08-02",
+          "date_completion_local": "2026-08-03",
+          "date_start_bjt": "2026-08-02",
+          "match_id": "LS001",
+          "date_source": "https://www.wtatennis.com/news/4553195",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/washington-final-news-4553195.json"
+        },
+        {
+          "event": "辛辛那提",
+          "round": "F",
+          "tourn_round": "7",
+          "opponent": "Coco Gauff",
+          "result": "L",
+          "score_player": "2-6, 4-6",
+          "date_start_local": "2026-08-23",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-08-24",
+          "match_id": "LS001",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-1017-matches.json"
+        },
+        {
+          "event": "法网",
+          "round": "R128",
+          "tourn_round": "1",
+          "opponent": "Kimberly Birrell",
+          "result": "L",
+          "score_player": "6-1, 3-6, 3-6",
+          "date_start_local": "2026-05-26",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-05-27",
+          "match_id": "LS71642238",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/903/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-903-matches.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": []
+    },
+    {
+      "segment_index": 2,
+      "segment_id": "card-january",
+      "text": "布里斯班打进4强，澳网也进4强。墨尔本，她连胜凯斯和阿尼西莫娃，半决赛两盘负于莱巴金娜。",
+      "checked_claims": "布里斯班4强、澳网4强；澳网连续击败凯斯及阿尼西莫娃后两盘负莱巴金娜。",
+      "match_evidence": [
+        {
+          "event": "布里斯班",
+          "round": "S",
+          "tourn_round": "5",
+          "opponent": "Marta Kostyuk",
+          "result": "L",
+          "score_player": "0-6, 3-6",
+          "date_start_local": "2026-01-10",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-01-10",
+          "match_id": "LS003",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/800/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-800-matches.json"
+        },
+        {
+          "event": "澳网",
+          "round": "R16",
+          "tourn_round": "4",
+          "opponent": "Madison Keys",
+          "result": "W",
+          "score_player": "6-3, 6-4",
+          "date_start_local": "2026-01-26",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-01-26",
+          "match_id": "LS67664746",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/901/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-901-matches.json"
+        },
+        {
+          "event": "澳网",
+          "round": "Q",
+          "tourn_round": "5",
+          "opponent": "Amanda Anisimova",
+          "result": "W",
+          "score_player": "6-2, 7-6(1)",
+          "date_start_local": "2026-01-28",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-01-28",
+          "match_id": "LS67664766",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/901/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-901-matches.json"
+        },
+        {
+          "event": "澳网",
+          "round": "S",
+          "tourn_round": "6",
+          "opponent": "Elena Rybakina",
+          "result": "L",
+          "score_player": "3-6, 6-7(7)",
+          "date_start_local": "2026-01-29",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-01-29",
+          "match_id": "LS67664712",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/901/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-901-matches.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": []
+    },
+    {
+      "segment_index": 4,
+      "segment_id": "card-dubai",
+      "text": "二月来到迪拜。半决赛先丢一盘，她连追两盘击败阿尼西莫娃。决赛六比二、六比四战胜斯维托丽娜，拿到本赛季第一冠。",
+      "checked_claims": "迪拜半决赛先失一盘后逆转阿尼西莫娃；决赛6-2 6-4胜斯维托丽娜，本季首冠。",
+      "match_evidence": [
+        {
+          "event": "迪拜",
+          "round": "S",
+          "tourn_round": "5",
+          "opponent": "Amanda Anisimova",
+          "result": "W",
+          "score_player": "1-6, 6-4, 6-3",
+          "date_start_local": "2026-02-20",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-02-20",
+          "match_id": "LS003",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/718/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-718-matches.json"
+        },
+        {
+          "event": "迪拜",
+          "round": "F",
+          "tourn_round": "6",
+          "opponent": "Elina Svitolina",
+          "result": "W",
+          "score_player": "6-2, 6-4",
+          "date_start_local": "2026-02-21",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-02-21",
+          "match_id": "LS001",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/718/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-718-matches.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": []
+    },
+    {
+      "segment_index": 7,
+      "segment_id": "card-sunshine",
+      "text": "印第安维尔斯、迈阿密，她都打进8强，也都输给莱巴金娜。算上澳网，这是她今年第三次输给这个对手。",
+      "checked_claims": "IW与Miami均8强并负莱巴金娜；Miami结束时本季第三次负她（澳网、IW、Miami）。",
+      "match_evidence": [
+        {
+          "event": "澳网",
+          "round": "S",
+          "tourn_round": "6",
+          "opponent": "Elena Rybakina",
+          "result": "L",
+          "score_player": "3-6, 6-7(7)",
+          "date_start_local": "2026-01-29",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-01-29",
+          "match_id": "LS67664712",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/901/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-901-matches.json"
+        },
+        {
+          "event": "印第安维尔斯",
+          "round": "Q",
+          "tourn_round": "5",
+          "opponent": "Elena Rybakina",
+          "result": "L",
+          "score_player": "1-6, 6-7(4)",
+          "date_start_local": "2026-03-12",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-03-13",
+          "match_id": "LS006",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/609/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-609-matches.json"
+        },
+        {
+          "event": "迈阿密",
+          "round": "Q",
+          "tourn_round": "5",
+          "opponent": "Elena Rybakina",
+          "result": "L",
+          "score_player": "6-2, 3-6, 4-6",
+          "date_start_local": "2026-03-25",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-03-26",
+          "match_id": "LS005",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/902/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-902-matches.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": []
+    },
+    {
+      "segment_index": 9,
+      "segment_id": "card-charleston",
+      "text": "到了查尔斯顿，她连打四场三盘，撑进决赛。决赛六比二、六比二击败斯塔罗杜布采娃，拿到本赛季第二冠。",
+      "checked_claims": "决赛之前连续四场完整三盘胜；决赛6-2 6-2胜斯塔罗杜布采娃，本季第二冠。",
+      "match_evidence": [
+        {
+          "event": "查尔斯顿",
+          "round": "R32",
+          "tourn_round": "2",
+          "opponent": "Yulia Putintseva",
+          "result": "W",
+          "score_player": "4-6, 6-4, 7-5",
+          "date_start_local": "2026-04-01",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-04-02",
+          "match_id": "LS016",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/804/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-804-matches.json"
+        },
+        {
+          "event": "查尔斯顿",
+          "round": "R16",
+          "tourn_round": "3",
+          "opponent": "Elisabetta Cocciaretto",
+          "result": "W",
+          "score_player": "1-6, 6-1, 7-6(1)",
+          "date_start_local": "2026-04-02",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-04-03",
+          "match_id": "LS008",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/804/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-804-matches.json"
+        },
+        {
+          "event": "查尔斯顿",
+          "round": "Q",
+          "tourn_round": "4",
+          "opponent": "Diana Shnaider",
+          "result": "W",
+          "score_player": "3-6, 6-3, 6-2",
+          "date_start_local": "2026-04-03",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-04-03",
+          "match_id": "LS004",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/804/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-804-matches.json"
+        },
+        {
+          "event": "查尔斯顿",
+          "round": "S",
+          "tourn_round": "5",
+          "opponent": "Iva Jovic",
+          "result": "W",
+          "score_player": "6-4, 5-7, 6-3",
+          "date_start_local": "2026-04-04",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-04-05",
+          "match_id": "LS002",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/804/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-804-matches.json"
+        },
+        {
+          "event": "查尔斯顿",
+          "round": "F",
+          "tourn_round": "6",
+          "opponent": "Yuliia Starodubtseva",
+          "result": "W",
+          "score_player": "6-2, 6-2",
+          "date_start_local": "2026-04-05",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-04-06",
+          "match_id": "LS001",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/804/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-804-matches.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": []
+    },
+    {
+      "segment_index": 11,
+      "segment_id": "card-clay",
+      "text": "马德里第三轮出局，罗马止步8强。到了法网，先以六比一拿下首盘，她却被比勒尔连追两盘，首轮出局。",
+      "checked_claims": "马德里实际第三轮、罗马8强；法网首轮先6-1胜首盘后负比勒尔。",
+      "match_evidence": [
+        {
+          "event": "马德里",
+          "round": "R32",
+          "tourn_round": "3",
+          "opponent": "Marta Kostyuk",
+          "result": "L",
+          "score_player": "1-6, 4-6",
+          "date_start_local": "2026-04-26",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-04-26",
+          "match_id": "LS024",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/1038/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-1038-matches.json"
+        },
+        {
+          "event": "罗马",
+          "round": "Q",
+          "tourn_round": "5",
+          "opponent": "Iga Swiatek",
+          "result": "L",
+          "score_player": "1-6, 2-6",
+          "date_start_local": "2026-05-13",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-05-13",
+          "match_id": "LS006",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/709/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-709-matches.json"
+        },
+        {
+          "event": "法网",
+          "round": "R128",
+          "tourn_round": "1",
+          "opponent": "Kimberly Birrell",
+          "result": "L",
+          "score_player": "6-1, 3-6, 3-6",
+          "date_start_local": "2026-05-26",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-05-27",
+          "match_id": "LS71642238",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/903/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-903-matches.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": []
+    },
+    {
+      "segment_index": 12,
+      "segment_id": "card-berlin",
+      "text": "草地赛季，她在柏林半决赛的决胜盘送给萨巴伦卡一个六比零。决赛负于诺斯科娃，取得亚军。",
+      "checked_claims": "柏林半决赛决胜盘6-0胜萨巴伦卡；决赛负诺斯科娃获亚军。",
+      "match_evidence": [
+        {
+          "event": "柏林",
+          "round": "S",
+          "tourn_round": "4",
+          "opponent": "Aryna Sabalenka",
+          "result": "W",
+          "score_player": "6-4, 6-7(4), 6-0",
+          "date_start_local": "2026-06-20",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-06-20",
+          "match_id": "LS002",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/2012/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-2012-matches.json"
+        },
+        {
+          "event": "柏林",
+          "round": "F",
+          "tourn_round": "5",
+          "opponent": "Linda Noskova",
+          "result": "L",
+          "score_player": "4-6, 6-4, 3-6",
+          "date_start_local": "2026-06-21",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-06-21",
+          "match_id": "LS001",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/2012/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-2012-matches.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": []
+    },
+    {
+      "segment_index": 14,
+      "segment_id": "card-summer",
+      "text": "温网止步8强，她先赢一盘，仍被高芙逆转。华盛顿，今年第四次进入决赛，最终又在先赢一盘后负于伊埃拉。",
+      "checked_claims": "温网先赢一盘后负高芙止步8强；华盛顿是本季第四次决赛，先赢一盘后负伊埃拉。",
+      "match_evidence": [
+        {
+          "event": "温网",
+          "round": "Q",
+          "tourn_round": "5",
+          "opponent": "Coco Gauff",
+          "result": "L",
+          "score_player": "6-4, 3-6, 3-6",
+          "date_start_local": "2026-07-07",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-07-07",
+          "match_id": "LS72320476",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/904/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-904-matches.json"
+        },
+        {
+          "event": "华盛顿",
+          "round": "F",
+          "tourn_round": "5",
+          "opponent": "Alexandra Eala",
+          "result": "L",
+          "score_player": "6-4, 4-6, 0-6",
+          "date_start_local": "2026-08-02",
+          "date_completion_local": "2026-08-03",
+          "date_start_bjt": "2026-08-02",
+          "match_id": "LS001",
+          "date_source": "https://www.wtatennis.com/news/4553195",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/washington-final-news-4553195.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": []
+    },
+    {
+      "segment_index": 16,
+      "segment_id": "card-cincy",
+      "text": "多伦多第四轮出局之后，她在辛辛那提连续赢下三场三盘，依次过了科斯蒂亚、阿尼西莫娃和斯瓦泰克。赛季第五次决赛，她又负于高芙。",
+      "checked_claims": "多伦多实际第四轮；辛辛那提连续三场三盘依次胜科斯蒂亚、阿尼西莫娃、斯瓦泰克；本季第五次决赛负高芙。",
+      "match_evidence": [
+        {
+          "event": "多伦多",
+          "round": "R16",
+          "tourn_round": "4",
+          "opponent": "Diana Shnaider",
+          "result": "L",
+          "score_player": "3-6, 3-6",
+          "date_start_local": "2026-08-08",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-08-09",
+          "match_id": "LS010",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-806-matches.json"
+        },
+        {
+          "event": "辛辛那提",
+          "round": "R16",
+          "tourn_round": "4",
+          "opponent": "Sorana Cirstea",
+          "result": "W",
+          "score_player": "6-2, 4-6, 7-5",
+          "date_start_local": "2026-08-19",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-08-20",
+          "match_id": "LS013",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-1017-matches.json"
+        },
+        {
+          "event": "辛辛那提",
+          "round": "Q",
+          "tourn_round": "5",
+          "opponent": "Amanda Anisimova",
+          "result": "W",
+          "score_player": "6-4, 2-6, 7-6(4)",
+          "date_start_local": "2026-08-20",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-08-21",
+          "match_id": "LS006",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-1017-matches.json"
+        },
+        {
+          "event": "辛辛那提",
+          "round": "S",
+          "tourn_round": "6",
+          "opponent": "Iga Swiatek",
+          "result": "W",
+          "score_player": "7-5, 4-6, 6-4",
+          "date_start_local": "2026-08-22",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-08-23",
+          "match_id": "LS003",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-1017-matches.json"
+        },
+        {
+          "event": "辛辛那提",
+          "round": "F",
+          "tourn_round": "7",
+          "opponent": "Coco Gauff",
+          "result": "L",
+          "score_player": "2-6, 4-6",
+          "date_start_local": "2026-08-23",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-08-24",
+          "match_id": "LS001",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-1017-matches.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": []
+    },
+    {
+      "segment_index": 19,
+      "segment_id": "card-us-open",
+      "text": "美网，她逆转费尔南德斯和纳瓦罗，今年第二次拿到大满贯4强。赢下纳瓦罗后，她谈到那些消极的念头。",
+      "checked_claims": "美网先失首盘后分别逆转费尔南德斯、纳瓦罗，继澳网后本季第二次大满贯4强；采访确为胜纳瓦罗后。",
+      "match_evidence": [
+        {
+          "event": "美网",
+          "round": "R32",
+          "tourn_round": "3",
+          "opponent": "Leylah Fernandez",
+          "result": "W",
+          "score_player": "1-6, 6-4, 6-3",
+          "date_start_local": "2026-09-04",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-09-04",
+          "match_id": "LS73992496",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-905-matches.json"
+        },
+        {
+          "event": "美网",
+          "round": "Q",
+          "tourn_round": "5",
+          "opponent": "Emma Navarro",
+          "result": "W",
+          "score_player": "3-6, 6-4, 6-3",
+          "date_start_local": "2026-09-08",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-09-09",
+          "match_id": "LS73992554",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-905-matches.json"
+        },
+        {
+          "event": "澳网",
+          "round": "S",
+          "tourn_round": "6",
+          "opponent": "Elena Rybakina",
+          "result": "L",
+          "score_player": "3-6, 6-7(7)",
+          "date_start_local": "2026-01-29",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-01-29",
+          "match_id": "LS67664712",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/901/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-901-matches.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": []
+    },
+    {
+      "segment_index": 23,
+      "segment_id": "card-us-semi",
+      "text": "半决赛，五比七、二比六负于萨巴伦卡。今年大满贯最好成绩是4强，分别在澳网和美网。",
+      "checked_claims": "美网半决赛5-7 2-6负萨巴伦卡；本季大满贯最好4强，澳网和美网。",
+      "match_evidence": [
+        {
+          "event": "澳网",
+          "round": "S",
+          "tourn_round": "6",
+          "opponent": "Elena Rybakina",
+          "result": "L",
+          "score_player": "3-6, 6-7(7)",
+          "date_start_local": "2026-01-29",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-01-29",
+          "match_id": "LS67664712",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/901/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-901-matches.json"
+        },
+        {
+          "event": "法网",
+          "round": "R128",
+          "tourn_round": "1",
+          "opponent": "Kimberly Birrell",
+          "result": "L",
+          "score_player": "6-1, 3-6, 3-6",
+          "date_start_local": "2026-05-26",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-05-27",
+          "match_id": "LS71642238",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/903/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-903-matches.json"
+        },
+        {
+          "event": "温网",
+          "round": "Q",
+          "tourn_round": "5",
+          "opponent": "Coco Gauff",
+          "result": "L",
+          "score_player": "6-4, 3-6, 3-6",
+          "date_start_local": "2026-07-07",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-07-07",
+          "match_id": "LS72320476",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/904/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-904-matches.json"
+        },
+        {
+          "event": "美网",
+          "round": "S",
+          "tourn_round": "6",
+          "opponent": "Aryna Sabalenka",
+          "result": "L",
+          "score_player": "5-7, 2-6",
+          "date_start_local": "2026-09-10",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-09-11",
+          "match_id": "LS73992544",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-905-matches.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": []
+    },
+    {
+      "segment_index": 25,
+      "segment_id": "card-asia",
+      "text": "美网之后，她退出新加坡和北京。回到武汉，首战先赢一盘，第二盘抢七还拿到三个赛点，最终却被奥斯塔彭科逆转。",
+      "checked_claims": "美网后新加坡/北京赛前退赛；武汉轮空后首战为第二轮，先赢首盘、次盘抢七持三赛点后负奥斯塔彭科。",
+      "match_evidence": [
+        {
+          "event": "武汉",
+          "round": "R32",
+          "tourn_round": "2",
+          "opponent": "Jelena Ostapenko",
+          "result": "L",
+          "score_player": "6-2, 6-7(7), 3-6",
+          "date_start_local": "2026-10-14",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-10-14",
+          "match_id": "LS031",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-1075-matches.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": [
+        "/workspace/pegula-finals-production/facts/late-season-audit.json",
+        "/workspace/pegula-finals-production/facts/withdrawals-upcoming.json"
+      ]
+    },
+    {
+      "segment_index": 28,
+      "segment_id": "card-qualification",
+      "text": "十月十四日，WTA正式确认她连续第五年入围年终。门票来自一整年的积累，武汉这一场失利，也留在她的赛季记录里。",
+      "checked_claims": "10月14日官方确认连续第五年入围；不将武汉失利当获胜锁定，不声称最早数学锁定时刻。",
+      "match_evidence": [
+        {
+          "event": "武汉",
+          "round": "R32",
+          "tourn_round": "2",
+          "opponent": "Jelena Ostapenko",
+          "result": "L",
+          "score_player": "6-2, 6-7(7), 3-6",
+          "date_start_local": "2026-10-14",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-10-14",
+          "match_id": "LS031",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-1075-matches.json"
+        }
+      ],
+      "status": "verified",
+      "additional_sources": [
+        "/workspace/pegula-finals-production/facts/late-season-audit.json",
+        "/workspace/pegula-finals-production/facts/withdrawals-upcoming.json"
+      ]
+    },
+    {
+      "segment_index": 29,
+      "segment_id": "card-ending",
+      "text": "此后，她又退出宁波。连续第五年走进年终，这一次，你期待她走到哪一步？",
+      "checked_claims": "官方10月16日宁波赛事指南列退赛；本季第五年连续年终资格；不预写年终成绩。",
+      "match_evidence": [],
+      "status": "verified",
+      "additional_sources": [
+        "/workspace/pegula-finals-production/facts/late-season-audit.json",
+        "/workspace/pegula-finals-production/facts/withdrawals-upcoming.json"
+      ]
+    }
+  ],
+  "label_audit": [
+    {
+      "segment_index": 3,
+      "segment_id": "ao",
+      "label": {
+        "topic": "止步澳网4强",
+        "date": "2026.01.29",
+        "place": "澳网半决赛",
+        "people": "佩古拉 vs 莱巴金娜",
+        "score": "3-6 6-7(7)"
+      },
+      "display_window": {
+        "show_after": 13.75,
+        "show_for": 3.0,
+        "source_start": 451.35,
+        "source_end": 454.35
+      },
+      "checked": {
+        "date": true,
+        "place": true,
+        "people": true,
+        "fullscore": true,
+        "topic": true,
+        "actual_video_only": true,
+        "within_segment_and_15s": true
+      },
+      "topic_evidence": "半决赛失利=个人成绩4强",
+      "date_basis": "Official event-local match start calendar date; not claimed exact finish date.",
+      "match_evidence": [
+        {
+          "event": "澳网",
+          "round": "S",
+          "tourn_round": "6",
+          "opponent": "Elena Rybakina",
+          "result": "L",
+          "score_player": "3-6, 6-7(7)",
+          "date_start_local": "2026-01-29",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-01-29",
+          "match_id": "LS67664712",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/901/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-901-matches.json"
+        }
+      ],
+      "status": "verified"
+    },
+    {
+      "segment_index": 5,
+      "segment_id": "dubai-final",
+      "label": {
+        "topic": "本季第一冠",
+        "date": "2026.02.21",
+        "place": "迪拜决赛",
+        "people": "佩古拉 vs 斯维托丽娜",
+        "score": "6-2 6-4"
+      },
+      "display_window": {
+        "show_after": 0.35,
+        "show_for": 3.2,
+        "source_start": 239.85,
+        "source_end": 243.04999999999998
+      },
+      "checked": {
+        "date": true,
+        "place": true,
+        "people": true,
+        "fullscore": true,
+        "topic": true,
+        "actual_video_only": true,
+        "within_segment_and_15s": true
+      },
+      "topic_evidence": "本季首个冠军",
+      "date_basis": "Official event-local match start calendar date; not claimed exact finish date.",
+      "match_evidence": [
+        {
+          "event": "迪拜",
+          "round": "F",
+          "tourn_round": "6",
+          "opponent": "Elina Svitolina",
+          "result": "W",
+          "score_player": "6-2, 6-4",
+          "date_start_local": "2026-02-21",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-02-21",
+          "match_id": "LS001",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/718/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-718-matches.json"
+        }
+      ],
+      "status": "verified"
+    },
+    {
+      "segment_index": 8,
+      "segment_id": "miami-qf",
+      "label": {
+        "topic": "先赢一盘仍落败",
+        "date": "2026.03.25",
+        "place": "迈阿密四分之一决赛",
+        "people": "佩古拉 vs 莱巴金娜",
+        "score": "6-2 3-6 4-6"
+      },
+      "display_window": {
+        "show_after": 8.32,
+        "show_for": 3.2,
+        "source_start": 272.32,
+        "source_end": 275.52
+      },
+      "checked": {
+        "date": true,
+        "place": true,
+        "people": true,
+        "fullscore": true,
+        "topic": true,
+        "actual_video_only": true,
+        "within_segment_and_15s": true
+      },
+      "topic_evidence": "首盘6-2胜，后两盘负",
+      "date_basis": "Official event-local match start calendar date; not claimed exact finish date.",
+      "match_evidence": [
+        {
+          "event": "迈阿密",
+          "round": "Q",
+          "tourn_round": "5",
+          "opponent": "Elena Rybakina",
+          "result": "L",
+          "score_player": "6-2, 3-6, 4-6",
+          "date_start_local": "2026-03-25",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-03-26",
+          "match_id": "LS005",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/902/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-902-matches.json"
+        }
+      ],
+      "status": "verified"
+    },
+    {
+      "segment_index": 10,
+      "segment_id": "charleston-final",
+      "label": {
+        "topic": "本季第二冠",
+        "date": "2026.04.05",
+        "place": "查尔斯顿决赛",
+        "people": "佩古拉 vs 斯塔罗杜布采娃",
+        "score": "6-2 6-2"
+      },
+      "display_window": {
+        "show_after": 10.4,
+        "show_for": 3.8,
+        "source_start": 272.59999999999997,
+        "source_end": 276.4
+      },
+      "checked": {
+        "date": true,
+        "place": true,
+        "people": true,
+        "fullscore": true,
+        "topic": true,
+        "actual_video_only": true,
+        "within_segment_and_15s": true
+      },
+      "topic_evidence": "迪拜后本季第二冠",
+      "date_basis": "Official event-local match start calendar date; not claimed exact finish date.",
+      "match_evidence": [
+        {
+          "event": "查尔斯顿",
+          "round": "F",
+          "tourn_round": "6",
+          "opponent": "Yuliia Starodubtseva",
+          "result": "W",
+          "score_player": "6-2, 6-2",
+          "date_start_local": "2026-04-05",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-04-06",
+          "match_id": "LS001",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/804/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-804-matches.json"
+        }
+      ],
+      "status": "verified"
+    },
+    {
+      "segment_index": 13,
+      "segment_id": "berlin-sf",
+      "label": {
+        "topic": "决胜盘6比0过关",
+        "date": "2026.06.20",
+        "place": "柏林半决赛",
+        "people": "佩古拉 vs 萨巴伦卡",
+        "score": "6-4 6-7(4) 6-0"
+      },
+      "display_window": {
+        "show_after": 4.0,
+        "show_for": 2.8,
+        "source_start": 261.4,
+        "source_end": 264.2
+      },
+      "checked": {
+        "date": true,
+        "place": true,
+        "people": true,
+        "fullscore": true,
+        "topic": true,
+        "actual_video_only": true,
+        "within_segment_and_15s": true
+      },
+      "topic_evidence": "决胜盘6-0获胜",
+      "date_basis": "Official event-local match start calendar date; not claimed exact finish date.",
+      "match_evidence": [
+        {
+          "event": "柏林",
+          "round": "S",
+          "tourn_round": "4",
+          "opponent": "Aryna Sabalenka",
+          "result": "W",
+          "score_player": "6-4, 6-7(4), 6-0",
+          "date_start_local": "2026-06-20",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-06-20",
+          "match_id": "LS002",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/2012/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-2012-matches.json"
+        }
+      ],
+      "status": "verified"
+    },
+    {
+      "segment_index": 15,
+      "segment_id": "dc-final",
+      "label": {
+        "topic": "本季第四次决赛",
+        "date": "2026.08.03",
+        "place": "华盛顿决赛",
+        "people": "佩古拉 vs 伊埃拉",
+        "score": "6-4 4-6 0-6"
+      },
+      "display_window": {
+        "show_after": 0.32,
+        "show_for": 2.8,
+        "source_start": 235.04,
+        "source_end": 237.84
+      },
+      "checked": {
+        "date": true,
+        "place": true,
+        "people": true,
+        "fullscore": true,
+        "topic": true,
+        "actual_video_only": true,
+        "within_segment_and_15s": true
+      },
+      "topic_evidence": "此前迪拜、查尔斯顿、柏林三次决赛，DC第四次",
+      "date_basis": "Independently reported local completion Monday Aug3; scheduled Sunday/start Aug2 not used.",
+      "match_evidence": [
+        {
+          "event": "华盛顿",
+          "round": "F",
+          "tourn_round": "5",
+          "opponent": "Alexandra Eala",
+          "result": "L",
+          "score_player": "6-4, 4-6, 0-6",
+          "date_start_local": "2026-08-02",
+          "date_completion_local": "2026-08-03",
+          "date_start_bjt": "2026-08-02",
+          "match_id": "LS001",
+          "date_source": "https://www.wtatennis.com/news/4553195",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/washington-final-news-4553195.json"
+        }
+      ],
+      "status": "verified"
+    },
+    {
+      "segment_index": 17,
+      "segment_id": "cincy-sf",
+      "label": {
+        "topic": "本季第五次进决赛",
+        "date": "2026.08.22",
+        "place": "辛辛那提半决赛",
+        "people": "佩古拉 vs 斯瓦泰克",
+        "score": "7-5 4-6 6-4"
+      },
+      "display_window": {
+        "show_after": 1.4,
+        "show_for": 2.8,
+        "source_start": 264.12,
+        "source_end": 266.92
+      },
+      "checked": {
+        "date": true,
+        "place": true,
+        "people": true,
+        "fullscore": true,
+        "topic": true,
+        "actual_video_only": true,
+        "within_segment_and_15s": true
+      },
+      "topic_evidence": "本场胜出后，继DC第四次决赛后进入本季第五次决赛",
+      "date_basis": "Official event-local match start calendar date; not claimed exact finish date.",
+      "match_evidence": [
+        {
+          "event": "辛辛那提",
+          "round": "S",
+          "tourn_round": "6",
+          "opponent": "Iga Swiatek",
+          "result": "W",
+          "score_player": "7-5, 4-6, 6-4",
+          "date_start_local": "2026-08-22",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-08-23",
+          "match_id": "LS003",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-1017-matches.json"
+        }
+      ],
+      "status": "verified"
+    },
+    {
+      "segment_index": 18,
+      "segment_id": "cincy-final",
+      "label": {
+        "topic": "辛辛那提亚军",
+        "date": "2026.08.23",
+        "place": "辛辛那提决赛",
+        "people": "佩古拉 vs 高芙",
+        "score": "2-6 4-6"
+      },
+      "display_window": {
+        "show_after": 18.76,
+        "show_for": 2.8,
+        "source_start": 255.35999999999999,
+        "source_end": 258.15999999999997
+      },
+      "checked": {
+        "date": true,
+        "place": true,
+        "people": true,
+        "fullscore": true,
+        "topic": true,
+        "actual_video_only": true,
+        "within_segment_and_15s": true
+      },
+      "topic_evidence": "决赛失利=亚军",
+      "date_basis": "Official event-local match start calendar date; not claimed exact finish date.",
+      "match_evidence": [
+        {
+          "event": "辛辛那提",
+          "round": "F",
+          "tourn_round": "7",
+          "opponent": "Coco Gauff",
+          "result": "L",
+          "score_player": "2-6, 4-6",
+          "date_start_local": "2026-08-23",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-08-24",
+          "match_id": "LS001",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-1017-matches.json"
+        }
+      ],
+      "status": "verified"
+    },
+    {
+      "segment_index": 20,
+      "segment_id": "us-qf",
+      "label": {
+        "topic": "逆转晋级4强",
+        "date": "2026.09.08",
+        "place": "美网四分之一决赛",
+        "people": "佩古拉 vs 纳瓦罗",
+        "score": "3-6 6-4 6-3"
+      },
+      "display_window": {
+        "show_after": 6.1,
+        "show_for": 2.8,
+        "source_start": 156.6,
+        "source_end": 159.4
+      },
+      "checked": {
+        "date": true,
+        "place": true,
+        "people": true,
+        "fullscore": true,
+        "topic": true,
+        "actual_video_only": true,
+        "within_segment_and_15s": true
+      },
+      "topic_evidence": "首盘3-6负，后两盘胜，进入4强",
+      "date_basis": "Official event-local match start calendar date; not claimed exact finish date.",
+      "match_evidence": [
+        {
+          "event": "美网",
+          "round": "Q",
+          "tourn_round": "5",
+          "opponent": "Emma Navarro",
+          "result": "W",
+          "score_player": "3-6, 6-4, 6-3",
+          "date_start_local": "2026-09-08",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-09-09",
+          "match_id": "LS73992554",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-905-matches.json"
+        }
+      ],
+      "status": "verified"
+    },
+    {
+      "segment_index": 24,
+      "segment_id": "us-sf",
+      "label": {
+        "topic": "止步美网4强",
+        "date": "2026.09.10",
+        "place": "美网半决赛",
+        "people": "佩古拉 vs 萨巴伦卡",
+        "score": "5-7 2-6"
+      },
+      "display_window": {
+        "show_after": 6.88,
+        "show_for": 2.8,
+        "source_start": 23.8,
+        "source_end": 26.6
+      },
+      "checked": {
+        "date": true,
+        "place": true,
+        "people": true,
+        "fullscore": true,
+        "topic": true,
+        "actual_video_only": true,
+        "within_segment_and_15s": true
+      },
+      "topic_evidence": "半决赛失利=个人成绩4强",
+      "date_basis": "Official event-local match start calendar date; not claimed exact finish date.",
+      "match_evidence": [
+        {
+          "event": "美网",
+          "round": "S",
+          "tourn_round": "6",
+          "opponent": "Aryna Sabalenka",
+          "result": "L",
+          "score_player": "5-7, 2-6",
+          "date_start_local": "2026-09-10",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-09-11",
+          "match_id": "LS73992544",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-905-matches.json"
+        }
+      ],
+      "status": "verified"
+    },
+    {
+      "segment_index": 26,
+      "segment_id": "wuhan-mp3",
+      "label": {
+        "topic": "三个赛点未兑现",
+        "date": "2026.10.14",
+        "place": "武汉第二轮",
+        "people": "佩古拉 vs 奥斯塔彭科",
+        "score": "6-2 6-7(7) 3-6"
+      },
+      "display_window": {
+        "show_after": 4.2,
+        "show_for": 6.0,
+        "source_start": 174.79999999999998,
+        "source_end": 180.79999999999998
+      },
+      "checked": {
+        "date": true,
+        "place": true,
+        "people": true,
+        "fullscore": true,
+        "topic": true,
+        "actual_video_only": true,
+        "within_segment_and_15s": true
+      },
+      "topic_evidence": "官方赛报明确次盘抢七三个赛点均未兑现",
+      "date_basis": "Official event-local match start calendar date; not claimed exact finish date.",
+      "match_evidence": [
+        {
+          "event": "武汉",
+          "round": "R32",
+          "tourn_round": "2",
+          "opponent": "Jelena Ostapenko",
+          "result": "L",
+          "score_player": "6-2, 6-7(7), 3-6",
+          "date_start_local": "2026-10-14",
+          "date_completion_local": null,
+          "date_start_bjt": "2026-10-14",
+          "match_id": "LS031",
+          "date_source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+          "date_snapshot": "/workspace/pegula-finals-production/facts/season-audit/raw/tournament-1075-matches.json"
+        }
+      ],
+      "status": "verified"
+    }
+  ],
+  "all_16_actual_events_covered": [
+    {
+      "event": "布里斯班",
+      "event_id": 800,
+      "finish": "4强",
+      "actual_round": "S",
+      "tourn_round": "5",
+      "narration_segments": [
+        "card-january"
+      ],
+      "played": 4,
+      "wl": "3-1",
+      "points": 195
+    },
+    {
+      "event": "澳网",
+      "event_id": 901,
+      "finish": "4强",
+      "actual_round": "S",
+      "tourn_round": "6",
+      "narration_segments": [
+        "card-january",
+        "card-sunshine",
+        "card-us-semi"
+      ],
+      "played": 6,
+      "wl": "5-1",
+      "points": 780
+    },
+    {
+      "event": "迪拜",
+      "event_id": 718,
+      "finish": "冠军",
+      "actual_round": "F",
+      "tourn_round": "6",
+      "narration_segments": [
+        "card-dubai"
+      ],
+      "played": 5,
+      "wl": "5-0",
+      "points": 1000
+    },
+    {
+      "event": "印第安维尔斯",
+      "event_id": 609,
+      "finish": "8强",
+      "actual_round": "Q",
+      "tourn_round": "5",
+      "narration_segments": [
+        "card-sunshine"
+      ],
+      "played": 4,
+      "wl": "3-1",
+      "points": 215
+    },
+    {
+      "event": "迈阿密",
+      "event_id": 902,
+      "finish": "8强",
+      "actual_round": "Q",
+      "tourn_round": "5",
+      "narration_segments": [
+        "card-sunshine"
+      ],
+      "played": 4,
+      "wl": "3-1",
+      "points": 215
+    },
+    {
+      "event": "查尔斯顿",
+      "event_id": 804,
+      "finish": "冠军",
+      "actual_round": "F",
+      "tourn_round": "6",
+      "narration_segments": [
+        "card-charleston"
+      ],
+      "played": 5,
+      "wl": "5-0",
+      "points": 500
+    },
+    {
+      "event": "马德里",
+      "event_id": 1038,
+      "finish": "第三轮",
+      "actual_round": "R32",
+      "tourn_round": "3",
+      "narration_segments": [
+        "card-clay"
+      ],
+      "played": 2,
+      "wl": "1-1",
+      "points": 65
+    },
+    {
+      "event": "罗马",
+      "event_id": 709,
+      "finish": "8强",
+      "actual_round": "Q",
+      "tourn_round": "5",
+      "narration_segments": [
+        "card-clay"
+      ],
+      "played": 4,
+      "wl": "3-1",
+      "points": 215
+    },
+    {
+      "event": "法网",
+      "event_id": 903,
+      "finish": "第一轮",
+      "actual_round": "R128",
+      "tourn_round": "1",
+      "narration_segments": [
+        "card-intro",
+        "card-clay"
+      ],
+      "played": 1,
+      "wl": "0-1",
+      "points": 10
+    },
+    {
+      "event": "柏林",
+      "event_id": 2012,
+      "finish": "亚军",
+      "actual_round": "F",
+      "tourn_round": "5",
+      "narration_segments": [
+        "card-berlin"
+      ],
+      "played": 4,
+      "wl": "3-1",
+      "points": 325
+    },
+    {
+      "event": "温网",
+      "event_id": 904,
+      "finish": "8强",
+      "actual_round": "Q",
+      "tourn_round": "5",
+      "narration_segments": [
+        "card-summer"
+      ],
+      "played": 5,
+      "wl": "4-1",
+      "points": 430
+    },
+    {
+      "event": "华盛顿",
+      "event_id": 1045,
+      "finish": "亚军",
+      "actual_round": "F",
+      "tourn_round": "5",
+      "narration_segments": [
+        "card-summer"
+      ],
+      "played": 4,
+      "wl": "3-1",
+      "points": 325
+    },
+    {
+      "event": "多伦多",
+      "event_id": 806,
+      "finish": "第四轮",
+      "actual_round": "R16",
+      "tourn_round": "4",
+      "narration_segments": [
+        "card-cincy"
+      ],
+      "played": 3,
+      "wl": "2-1",
+      "points": 120
+    },
+    {
+      "event": "辛辛那提",
+      "event_id": 1017,
+      "finish": "亚军",
+      "actual_round": "F",
+      "tourn_round": "7",
+      "narration_segments": [
+        "card-intro",
+        "card-cincy"
+      ],
+      "played": 6,
+      "wl": "5-1",
+      "points": 650
+    },
+    {
+      "event": "美网",
+      "event_id": 905,
+      "finish": "4强",
+      "actual_round": "S",
+      "tourn_round": "6",
+      "narration_segments": [
+        "card-us-open",
+        "card-us-semi",
+        "card-asia"
+      ],
+      "played": 6,
+      "wl": "5-1",
+      "points": 780
+    },
+    {
+      "event": "武汉",
+      "event_id": 1075,
+      "finish": "第二轮",
+      "actual_round": "R32",
+      "tourn_round": "2",
+      "narration_segments": [
+        "card-asia",
+        "card-qualification"
+      ],
+      "played": 1,
+      "wl": "0-1",
+      "points": 10
+    }
+  ],
+  "scope_and_ambiguity_checks": [
+    {
+      "claim": "本季两冠五次决赛 / 今年两座冠军三次亚军",
+      "status": "verified",
+      "evidence": "16 actual events: Dubai/Charleston champions; Berlin/DC/Cincinnati runners-up; scope explicitly 本季/今年/赛季."
+    },
+    {
+      "claim": "辛辛那提本人 I have two of these now",
+      "status": "verified",
+      "evidence": "Intro explicitly says 二〇二四年, excludes the false consecutive-season interpretation and false two trophies from same current season. Official profile2024 Finalist Cincinnati and independent2024 player history confirm prior trophy."
+    },
+    {
+      "claim": "武汉首战与第二轮",
+      "status": "verified",
+      "evidence": "First round BYE is not played and not a win. Played R32 has tourn_round2 and result L."
+    },
+    {
+      "claim": "赛前退赛与未来状态",
+      "status": "verified",
+      "evidence": "Singapore/Beijing/Ningbo are not among16 actual events and add zero played losses; no Tokyo result/illness/season-ending claim."
+    },
+    {
+      "claim": "年终资格日期与数学锁定",
+      "status": "verified",
+      "evidence": "Oct14 official announced date; fifth consecutive appearance, not asserted earliest mathematical clinch or victory in Wuhan."
+    },
+    {
+      "claim": "个人成绩口径",
+      "status": "verified",
+      "evidence": "8强/4强/亚军/冠军; Madrid第三轮、Toronto第四轮、RG首轮; no early-round16强/32强 finish descriptions."
+    },
+    {
+      "claim": "官方Race18站字段",
+      "status": "verified_internal_scope",
+      "evidence": "Spec says actual16站; official tournamentsPlayed18 remains unexplained in canonical. Film does not assign a cause or count withdrawals as played."
+    }
+  ],
+  "cover_push_audit": {
+    "title": "佩古拉：起伏中的年终之路",
+    "cover_hook": "本季两冠五次决赛\n连续第五年进年终",
+    "cover_topic": "佩古拉：起伏中的年终之路",
+    "push": {
+      "auto": true,
+      "summary": "佩古拉年终之路",
+      "lead": "迪拜、查尔斯顿两冠，五次赛季决赛；也有法网首轮失利与亚洲赛季的波折。10月14日正式确认连续第五年入围之后，时间线继续至宁波退赛。"
+    },
+    "status": "verified",
+    "checks": [
+      "Hook 本季 two titles/five finals matches canonical; fifth consecutive Finals matches official announcement.",
+      "Person subtitle starts 佩古拉：.",
+      "Push explicitly separates titles/finals, RG first-round loss and later pre-event Ningbo withdrawal.",
+      "No fabricated injury, clinch trigger or future Finals result.",
+      "Actual cover asset exact SHA equals preserved2026 Charleston official photo manifest; correct tournament/year/credit."
+    ],
+    "cover_photo_binding": {
+      "path": "/workspace/tennislive/assets/reel/pegula-finals-2026/cover-charleston.jpg",
+      "sha256": "4337f258a403a01dd09bd961feb3aa85c59bf0acbdb6490ab880ce637fede45e"
+    },
+    "cover_photo_source_article": "https://www.wtatennis.com/news/4482273"
+  },
+  "information_card_placement": {
+    "verified_count": 11,
+    "all_actual_video": true,
+    "static_segment_label_count": 0,
+    "title_card_story_label_count": 0,
+    "static_qualification_evidence_note": "card-qualification is a native official-announcement evidence image with narration and no information-label inset; this is not a prohibited label on a static card."
+  },
+  "concrete_issues": [],
+  "pending_evidence": [],
+  "status": "verified_no_fact_mismatch_found",
+  "historical_2024_evidence": {
+    "claim": "Pegula runner-up at Cincinnati2024; two trophies refer to 2024 and2026, not consecutive seasons or two2026 finals at same event.",
+    "official_profile": {
+      "path": "/workspace/tennislive/research/pegula-finals-2026/data-audit/raw/player-profile.html",
+      "sha256": "46b2bab962d2874802e96db95e43ea4689a49f36cd827ad10efa27ea661ab977"
+    },
+    "official_profile_url": "https://www.wtatennis.com/players/316956/jessica-pegula",
+    "profile_anchor_lines": [
+      3296,
+      3303,
+      3333
+    ],
+    "independent_official_history": {
+      "path": "/workspace/tennislive/research/pegula-finals-2026/data-audit/raw/pegula-2024-matches-history.json",
+      "sha256": "3025c4c241b4bf1dd8e51bb243d4a80e634479ce380dcac284f2a1ed1816f159"
+    },
+    "official_history_url": "https://api.wtatennis.com/tennis/players/316956/matches?year=2024&type=S&page=0&pageSize=200&sort=desc",
+    "official_history_retrieved_utc": "2026-10-22T08:28:36.695730+00:00",
+    "historical_final": {
+      "Country": "OH, UNITED STATES",
+      "DrawSizes": "64M/32Q/32D",
+      "PrizeMoney": 3211715,
+      "PrizeWon": 308320.0,
+      "StartDate": "2024-08-13T00:00:00+00:00",
+      "Surface": "HARD",
+      "TournamentLevel": "PM",
+      "TournamentName": "CINCINNATI",
+      "TournamentType": "VS",
+      "city": "CINCINNATI",
+      "entry_rank_1": null,
+      "entry_rank_2": null,
+      "entry_type_1": " ",
+      "entry_type_2": " ",
+      "opponent": {
+        "id": 320760,
+        "firstName": "Aryna",
+        "lastName": "Sabalenka",
+        "fullName": "Aryna Sabalenka",
+        "countryCode": "BLR",
+        "dateOfBirth": "1998-05-05",
+        "metadata": null
+      },
+      "opponent_partner": null,
+      "partner": null,
+      "player_1": "316956",
+      "player_2": "320760",
+      "player_3": "",
+      "player_4": "",
+      "points_1": 650,
+      "points_2": null,
+      "points_bonus_1": null,
+      "points_bonus_2": null,
+      "points_champ_1": 650,
+      "points_champ_2": null,
+      "qpm_flag": "M",
+      "rank_1": 6,
+      "rank_2": 3,
+      "rank_code_1": null,
+      "rank_code_2": null,
+      "reason_code": "W",
+      "round_name": "F",
+      "s_d_flag": "S",
+      "scores": "6-3  7-5",
+      "seed_1": 6,
+      "seed_2": 3,
+      "spc_rank_1": null,
+      "spc_rank_2": null,
+      "team_name_1": "SABALENKA,  ARYNA  BLR",
+      "team_name_2": "PEGULA,  JESSICA  USA",
+      "tourn_nbr": "1017",
+      "tourn_round": "6",
+      "tourn_year": "2024",
+      "tournament": {
+        "tournamentGroup": {
+          "id": 1017,
+          "name": "CINCINNATI",
+          "level": "WTA 1000",
+          "metadata": {}
+        },
+        "year": 2024,
+        "title": "Cincinnati Open - Cincinnati, OH, USA",
+        "startDate": "2024-08-13",
+        "endDate": "2024-08-19",
+        "surface": "Hard",
+        "inOutdoor": "O",
+        "city": "CINCINNATI",
+        "country": "OH, UNITED STATES",
+        "singlesDrawSize": 56,
+        "doublesDrawSize": 28,
+        "prizeMoney": 3211715,
+        "prizeMoneyCurrency": "USD",
+        "liveScoringId": "1017",
+        "winners": [],
+        "status": null,
+        "level": "WTA 1000",
+        "announcements": {
+          "players": null,
+          "draws": null
+        }
+      },
+      "winner": 2
+    },
+    "score_perspective_note": "API scores6-3 7-5 are winner-perspective; winner2 is opponentSabalenka. Pegula lost3-6 5-7."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "pegula-finals-2026",
+  "column": "网球有故事",
+  "player": "Jessica Pegula",
+  "season": 2026,
+  "request_zh": "接着做佩古拉",
+  "reference_slug": "sabalenka-finals-2026",
+  "approval_state": "outline_approved",
+  "outline": "research/pegula-finals-2026/outline.md",
+  "duration_target_seconds": 335,
+  "scope": "Complete2026 singles season through latest verified results and post-USOpen withdrawals; exact official qualification day; no future results.",
+  "outline_review": {
+    "received": true,
+    "response": "继续，信息字卡不要在转场卡片上",
+    "recorded_at_utc": "2026-10-22T07:46:52.756807+00:00",
+    "constraint": "Never place information labels on transition or title cards; only actual competition/interview videos."
+  },
+  "framing": {
+    "canvas": "1080x1440",
+    "videos": "crop_full_canvas",
+    "interviews": "measured_fixed_person_center",
+    "matches": "fixed_court_center"
+  },
+  "story_label_style": {
+    "template": "current_main_transparent_upper_right",
+    "topic_font_size": 89,
+    "score_font_size": 98,
+    "metadata_and_names_font_size": 73,
+    "max_seconds": 15,
+    "bounded_by_source_segment": true,
+    "allowed_on": "actual_video_only",
+    "forbidden_on": "title_card,transition_card,static_image"
+  },
+  "state": "native_production_in_progress",
+  "season_data": "research/pegula-finals-2026/season-results.json",
+  "workbook": "research/pegula-finals-2026/佩古拉2026赛季全数据.xlsx"
+}
