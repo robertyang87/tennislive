@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-tiebreak-history-2026-736178868193bd83",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-tiebreak-history-2026-736178868193bd83/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39674891936"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39705801010"
   },
   "cover_seconds": 3.49,
   "cover_narrated": true,
@@ -59,44 +59,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "dfc31fe30ca3df0e75983ea3b677adef491c8a76cc4ba2a8bd75eed96864e65e",
+  "render_inputs_sha256": "6c1339f113257eec88af2db7bcef95d712ad910dc7e53c8a09fc217ca9bb3137",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "tiebreak-history-2026",
-    "received_at": "2026-10-21T20:58:29Z",
-    "artifact_ready_at": "2026-10-21T21:07:02Z",
-    "elapsed_seconds": 513.653,
+    "received_at": "2026-10-22T01:27:46Z",
+    "artifact_ready_at": "2026-10-22T01:37:42Z",
+    "elapsed_seconds": 596.212,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "339ce04f972d37b75dae7bcfe163c9829e3b082f2e293718196c51094c876536",
+    "film_sha256": "b446f9d711d4baf2fcf5f43719801fc354761c297bf16ba105807e057cc57faa",
     "spec_sha256": "3d4e276a6d716ae0fd262960b9f43395b3f58a4bfcf17920148182fb20c7f175",
-    "run_id": "39674891936",
+    "run_id": "39705801010",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-21T21:02:00Z",
-        "run_id": "39674891936"
+        "at": "2026-10-22T01:31:20Z",
+        "run_id": "39705801010"
       }
     ],
-    "render_seconds": 302.653,
-    "pre_render_seconds": 211.0
+    "render_seconds": 382.212,
+    "pre_render_seconds": 214.0
   },
-  "film_sha256": "339ce04f972d37b75dae7bcfe163c9829e3b082f2e293718196c51094c876536",
-  "film_bytes": 157071341,
-  "qc_attestation_sha256": "8942cf9ae6cd23be18048b3c688ae58df0bb3155d9a3635e0c59e7d3f3de7a9d",
+  "film_sha256": "b446f9d711d4baf2fcf5f43719801fc354761c297bf16ba105807e057cc57faa",
+  "film_bytes": 157120096,
+  "qc_attestation_sha256": "1ad0292a4ac130bf70ca8dce427e409ba6d371421ebc7e327d872cdc6aa95b23",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-21T21:02:00Z",
-      "run_id": "39674891936"
+      "at": "2026-10-22T01:31:20Z",
+      "run_id": "39705801010"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-21T21:07:06Z",
-      "run_id": "39674891936"
+      "at": "2026-10-22T01:37:45Z",
+      "run_id": "39705801010"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-tiebreak-history-2026/tiebreak-history-2026.mp4",
-  "video_bytes": 157071341
+  "video_bytes": 157120096
 }

@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "870408d38a352375dc9c235e4a2bffafc8bc965fde89e9fe4aee8bd05c6cf282",
-    "render_inputs_sha256": "dfc31fe30ca3df0e75983ea3b677adef491c8a76cc4ba2a8bd75eed96864e65e",
+    "render_sha256": "e4b5e6bb4b23997f52e18a0f4b04b19a5a1cfaaa29acf558d98d60b9a9c1f1b5",
+    "render_inputs_sha256": "6c1339f113257eec88af2db7bcef95d712ad910dc7e53c8a09fc217ca9bb3137",
     "spec_sha256": "3d4e276a6d716ae0fd262960b9f43395b3f58a4bfcf17920148182fb20c7f175",
-    "film_sha256": "339ce04f972d37b75dae7bcfe163c9829e3b082f2e293718196c51094c876536",
+    "film_sha256": "b446f9d711d4baf2fcf5f43719801fc354761c297bf16ba105807e057cc57faa",
     "inventory_sha256": "36ee4845b0fe713d88fb82766acf7b8423aef13cf15267fb93129e9106e3be94"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-21T21:09:03+00:00",
+  "reviewed_at": "2026-10-22T01:40:19+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -357,7 +357,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "而抢师最有名的一场,就是开头那场。2024年傲网,布林科娃对莱巴金娜。决胜盘抢师达到22比20,他错过9个赛典,又救了6个赛典。42分、3分钟,不对,31分钟,才决出胜负。"
+        "transcript": "而抢师最有名的一场就是开头那场。2024年澳王,布林科娃队来巴金娜。决胜盘抢师达到22比20,他错过9个赛典,又救了6个赛典。42分、3分钟,不对,31分钟,才决出胜负。"
       },
       "polyphones": [],
       "pauses": {
@@ -421,7 +421,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "球员和观众都爱这个版本,够狠,够快。可拉握他们几个大牌偏说不行,赢两分才算赢球,这是网球的规矩。于是有了第二个版本,先到七分,领先两分。范阿伦气坏了,给他起名叫《九托之死》。"
+        "transcript": "球员和观众都爱这个版本,够狠,够快。可拉握他们几个大牌偏说不行,赢两分才算赢球,这是网球的规矩。于是有了第二个版本,先到七分,领先两分。范阿伦弃坏了,给他起名叫《九托之死》。"
       },
       "polyphones": [
         {
@@ -541,7 +541,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "局分6比6之后,不再一局一局打,该打一个小局定胜负,小局里先到5分就赢。"
+        "transcript": "局分6比6之后,不再一局一局打,该打一个小局定胜负。小局里先到5分就赢。"
       },
       "polyphones": [],
       "pauses": {
@@ -573,7 +573,7 @@
         "substituted": 1,
         "sub_ratio": 0.017,
         "longest_deletion": 0,
-        "transcript": "最狠的一条是,打到4比4,最后一分定生死,接发球的人还能选从哪连界。也就是说,这一分可能是发球方的赛点,也可能是接发方的赛点、双赛点。"
+        "transcript": "最狠的一条是：打到4比4,最后一分定生死,接发球的人还能选从哪连界。也就是说,这一分可能是发球方的赛点,也可能是接发方的赛点,双赛点。"
       },
       "polyphones": [
         {
@@ -663,7 +663,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "四年后的1980年温网决赛,伯格对麦肯罗。第四盘抢期,网球史上最著名的一个,伯格先拿到冠军点,麦肯罗救了。麦肯罗拿到盘点,伯格又顶住。"
+        "transcript": "四年后的1980年温网决赛,博格对麦肯罗。第四盘抢期,网球史上最著名的一个,博格先拿到冠军点,麦肯罗救了。麦肯罗拿到盘点,博格又顶住。"
       },
       "polyphones": [],
       "pauses": {
@@ -759,7 +759,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "发明她的人叫吉米、范阿伦、美国人、网球名人堂就是她创办的。这个人有个执念,网球什么都好,就是打不完。一场势军力敌的比赛,能从下午打到天黑,第二天接着打。"
+        "transcript": "发明她的人叫吉米、范阿伦、美国人,网球名人堂就是她创办的。这个人有个执念,网球什么都好,就是打不完。一场势军力敌的比赛,能从下午打到天黑,第二天接着打。"
       },
       "polyphones": [
         {
@@ -836,7 +836,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "五小时十二分,跨了两天,还没分出胜负。所有人都看明白了,这么打下去,电视别排气了,球员先累死在场上。"
+        "transcript": "五小时十二分,跨了两天还没分出胜负。所有人都看明白了,这么打下去,电视别排气了,球员先累死在场上。"
       },
       "polyphones": [
         {
@@ -976,7 +976,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "抢七七十三年。从红旗生起的突然死亡,到二十二比二十的抢十,他就了网球的排期,没就得了网球的争论。决胜盘抢十,你觉得是进步,还是网球丢掉了他最后的浪漫。"
+        "transcript": "抢七七十三年。从红旗升起的突然死亡,到二十二比二十的抢十,他救了网球的排期,没救得了网球的争论。决胜盘抢十,你觉得是进步,还是网球丢掉了他最后的浪漫。"
       },
       "polyphones": [
         {
@@ -1065,7 +1065,7 @@
         "substituted": 1,
         "sub_ratio": 0.012,
         "longest_deletion": 0,
-        "transcript": "抢妻治好的托严证可他治不了一个地方——决胜盘。很长一段时间,四大满冠的决胜盘不设抢妻必须领先两局。一场球最极端的样子,出现在2010年温网,伊斯内尔对马胡特,决胜盘打到70比68。"
+        "transcript": "抢妻治好的托严证可他治不了一个地方——绝胜盘。很长一段时间,四大满冠的绝胜盘不设抢妻必须领先两局。一场球最极端的样子,出现在2010年温网,伊斯内尔对马胡特,绝胜盘打到70比68。"
       },
       "polyphones": [
         {
@@ -1119,7 +1119,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "1969年温网,41岁的钢萨雷斯和帕萨雷尔达了一场112局的比赛。"
+        "transcript": "1969年温网,41岁的钢萨雷斯和帕萨雷尔,打了一场112局的比赛。"
       },
       "polyphones": [],
       "pauses": {
