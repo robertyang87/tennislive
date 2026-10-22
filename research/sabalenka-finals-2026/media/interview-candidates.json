@@ -1,0 +1,185 @@
+{
+  "player": "Aryna Sabalenka",
+  "season": 2026,
+  "candidates": [
+    {
+      "id": "us-runnerup-speaking-is-hard",
+      "source_id": "mDNM6E47Wqc",
+      "source": "/workspace/sabalenka-finals-production/staging/us-runnerup-speech.mp4",
+      "start": 54.05,
+      "end": 62.05,
+      "duration": 8.0,
+      "quote_en": "That's the last thing I can... I want to do right now is give speech, but I'll try my very best. Thank you everyone.",
+      "meaning_zh": "现在最不想做的就是发表感言，但她会尽力说完，并感谢大家。",
+      "captions": [
+        {
+          "start": 54.16,
+          "end": 56.4,
+          "en": "That's the last thing I can...",
+          "zh": "现在我最不想做的，"
+        },
+        {
+          "start": 56.44,
+          "end": 58.02,
+          "en": "I want to do right now is give speech,",
+          "zh": "就是发表感言。"
+        },
+        {
+          "start": 58.02,
+          "end": 59.45,
+          "en": "but I'll try my very best.",
+          "zh": "但我会尽我所能。"
+        },
+        {
+          "start": 60.7,
+          "end": 61.9,
+          "en": "Thank you everyone.",
+          "zh": "谢谢大家。"
+        }
+      ],
+      "asr_files": [
+        "asr/us-runnerup-small.en.json",
+        "asr/us-runnerup-medium.en.json"
+      ],
+      "asr_cross_check": "Both models agree on words and self-correction I can / I want. Exact spoken article before speech is not independently resolved; both output give speech. Preserve source disfluency, do not claim human listening.",
+      "visual_evidence": "us-runnerup-speech-interview-contacts.jpg",
+      "actual_frames_viewed": [
+        54.1,
+        56.5,
+        58,
+        59.6,
+        61.8
+      ],
+      "visual_result": "Sabalenka visible throughout sampled first-window frames; starts hands behind head, then tearful speech and slight smile. Eye/mouth unobstructed. Sampled frames only, not frame-by-frame final-film approval.",
+      "emotion": "Trying to speak while visibly upset after losing final",
+      "recommended_priority": 1,
+      "verification_method": "actual_source_bytes + independent small.en/medium.en ASR cross-check + actual sampled source frames",
+      "human_listened": false,
+      "approved_for_render": false,
+      "status": "source_backed_editorial_candidate_pending_final_audio_edges_and_crop"
+    },
+    {
+      "id": "rg-mental-recovery",
+      "source_id": "CnL-mKOT9C8",
+      "source": "/workspace/sabalenka-finals-production/staging/rg-qf-presser.mp4",
+      "start": 44.3,
+      "end": 60.5,
+      "duration": 16.2,
+      "quote_en": "And I feel like mentally I couldn't really recover after second set. And that really... yeah, I think that was the biggest mistake from me.",
+      "meaning_zh": "第二盘之后，她在心理上没能恢复；她认为这是自己最大的错误。",
+      "captions": [
+        {
+          "start": 44.66,
+          "end": 47.44,
+          "en": "And I feel like mentally,",
+          "zh": "我觉得在心理上，"
+        },
+        {
+          "start": 47.44,
+          "end": 49.12,
+          "en": "I couldn't really recover",
+          "zh": "我始终没能缓过来，"
+        },
+        {
+          "start": 49.12,
+          "end": 50.42,
+          "en": "after second set.",
+          "zh": "在第二盘结束之后。"
+        },
+        {
+          "start": 50.42,
+          "end": 54.8,
+          "en": "And that really... yeah,",
+          "zh": "而这真的……是的，"
+        },
+        {
+          "start": 54.8,
+          "end": 56.14,
+          "en": "I think that was",
+          "zh": "我认为这就是"
+        },
+        {
+          "start": 56.14,
+          "end": 60.28,
+          "en": "the biggest mistake from me.",
+          "zh": "我犯下的最大错误。"
+        }
+      ],
+      "asr_files": [
+        "asr/rg-qf-presser-small.en.json",
+        "asr/rg-qf-presser-medium.en.json"
+      ],
+      "asr_cross_check": "Both models agree on substantive statement and final complete sentence. Small inserts low-confidence her after after, medium omits it; primary WTA4513629 quote agrees with medium after second set. Leading and timing differs44.20–44.66;44.30 start is candidate and needs final source-edge playback before approval. Next interviewer starts60.98 in small;60.50 end leaves0.48s.",
+      "primary_article": "https://www.wtatennis.com/news/4513629",
+      "visual_evidence": "rg-qf-presser-interview-contacts.jpg",
+      "actual_frames_viewed": [
+        36.2,
+        41.4,
+        44.4,
+        47,
+        50.4,
+        54.5,
+        57,
+        60.4
+      ],
+      "visual_result": "Same press room and red shirt, face unobstructed, leaning chin on hand; face remains centered in all sampled frames. Not a frame-by-frame final-film approval.",
+      "emotion": "Quiet, exhausted admission of mental collapse",
+      "recommended_priority": 1,
+      "optional_full_answer_window": [
+        36.1,
+        60.5
+      ],
+      "optional_full_answer_note": "Adds opportunities in second set and own mistake before crediting opponent; about24.4s. Both models say I screw up, while published article normalizes tense to screwed. Do not silently call exact transcript human-verified.",
+      "verification_method": "actual_source_bytes + independent small.en/medium.en ASR cross-check + actual sampled source frames",
+      "human_listened": false,
+      "approved_for_render": false,
+      "status": "source_backed_editorial_candidate_pending_final_audio_edges_and_crop"
+    },
+    {
+      "id": "us-next-year-alternative",
+      "source_id": "mDNM6E47Wqc",
+      "source": "/workspace/sabalenka-finals-production/staging/us-runnerup-speech.mp4",
+      "start": 112.2,
+      "end": 119.5,
+      "duration": 7.3,
+      "quote_en": "I wish I could perform a little bit better. But I guess next year.",
+      "captions": [
+        {
+          "start": 112.34,
+          "end": 115.48,
+          "en": "I wish I could perform a little bit better.",
+          "zh": "我希望自己能表现得更好。"
+        },
+        {
+          "start": 117.8,
+          "end": 119.3,
+          "en": "But I guess next year.",
+          "zh": "但愿明年吧。"
+        }
+      ],
+      "asr_files": [
+        "asr/us-runnerup-small.en.json",
+        "asr/us-runnerup-medium.en.json"
+      ],
+      "asr_cross_check": "Both models agree, word times112.34–115.46 and117.84–119.22.",
+      "visual_evidence": "us-runnerup-speech-interview-contacts.jpg",
+      "actual_frames_viewed": [
+        112.2,
+        115.5,
+        119.4
+      ],
+      "visual_result": "112.2 and115.5 show team/crowd; returns to Sabalenka by119.4. Authentic own voice but not continuous own-face interview. Use only if camera cut is editorially acceptable.",
+      "emotion": "Regret followed by next-year resolve",
+      "recommended_priority": 2,
+      "verification_method": "actual_source_bytes + independent small.en/medium.en ASR cross-check + actual sampled source frames",
+      "human_listened": false,
+      "approved_for_render": false,
+      "status": "source_backed_editorial_candidate_pending_final_audio_edges_and_crop"
+    }
+  ],
+  "limitations": [
+    "ASR cross-check is not human listening.",
+    "No finalized face center/crop measurements, no final native caption-fit check, no render approval.",
+    "Core match-video windows in manifest are coarse visual search ranges; complete rally/commentary verification remains separate."
+  ]
+}

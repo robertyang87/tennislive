@@ -1,0 +1,663 @@
+{
+  "schema_version": 1,
+  "player": "Aryna Sabalenka",
+  "season": 2026,
+  "prepared_at_utc": "2026-10-22",
+  "scope": "Official source preparation only; no render or shared spec changes",
+  "sources": [
+    {
+      "name": "brisbane-final",
+      "id": "gGpXEkR5BBs",
+      "source_url": "https://www.youtube.com/watch?v=gGpXEkR5BBs",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-gGpXEkR5BBs/gGpXEkR5BBs.mp4",
+      "status": "actual_bytes_and_ffprobe",
+      "local_file": "/workspace/sabalenka-finals-production/staging/brisbane-final.mp4",
+      "bytes": 50694080,
+      "sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57",
+      "duration": 309.916735,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "av1",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1",
+          "sample_rate": null,
+          "channels": null
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "r_frame_rate": "0/0",
+          "sample_rate": "44100",
+          "channels": 2
+        }
+      ],
+      "archive_run": {
+        "id": 39716312289,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39716312289"
+      },
+      "publisher": "WTA",
+      "title": "Aryna Sabalenka vs. Marta Kostyuk | 2026 Brisbane Final | WTA Match Highlights",
+      "published_date": "2026-01-11",
+      "emotion": "confident title defence",
+      "suggested_source_windows": [
+        [
+          235,
+          255
+        ],
+        [
+          265,
+          297
+        ]
+      ],
+      "window_status": "coarse_visual_candidates_not_final_edits",
+      "notes": "Contact frames show late final points, wave and walk; exact complete-rally cut remains pending.",
+      "official_identity_evidence": "Official publisher channel verified in web result, title and upload ID match. Actual downloaded bytes independently probed.",
+      "probe_file": "/workspace/sabalenka-finals-production/research/media/brisbane-final-actual-probe.json",
+      "actual_dimensions": [
+        [
+          1920,
+          1080
+        ]
+      ]
+    },
+    {
+      "name": "wimbledon-r4",
+      "id": "RpL5S1vtiAw",
+      "source_url": "https://www.youtube.com/watch?v=RpL5S1vtiAw",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-RpL5S1vtiAw/RpL5S1vtiAw.mp4",
+      "status": "actual_bytes_and_ffprobe",
+      "local_file": "/workspace/sabalenka-finals-production/staging/wimbledon-r4.mp4",
+      "bytes": 41297032,
+      "sha256": "a30bae4c685bda47d61509b50f85ea887e4a5cd43721ce633e707d115e2e268b",
+      "duration": 341.426213,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "av1",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1",
+          "sample_rate": null,
+          "channels": null
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "r_frame_rate": "0/0",
+          "sample_rate": "44100",
+          "channels": 2
+        }
+      ],
+      "archive_run": {
+        "id": 39716315050,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39716315050"
+      },
+      "publisher": "Wimbledon",
+      "title": "A magical showdown 🪄 | Aryna Sabalenka vs Naomi Osaka | Extended Highlights | Wimbledon 2026",
+      "published_date": "2026-07-05",
+      "emotion": "defeat and disappointment",
+      "suggested_source_windows": [
+        [
+          275,
+          320
+        ]
+      ],
+      "window_status": "coarse_visual_candidates_not_final_edits",
+      "notes": "Late rallies, Sabalenka close-up at305, net handshake around315; complete rally boundaries not yet approved.",
+      "official_identity_evidence": "Official publisher channel verified in web result, title and upload ID match. Actual downloaded bytes independently probed.",
+      "probe_file": "/workspace/sabalenka-finals-production/research/media/wimbledon-r4-actual-probe.json",
+      "actual_dimensions": [
+        [
+          1920,
+          1080
+        ]
+      ]
+    },
+    {
+      "name": "us-runnerup-speech",
+      "id": "mDNM6E47Wqc",
+      "source_url": "https://www.youtube.com/watch?v=mDNM6E47Wqc",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-mDNM6E47Wqc/mDNM6E47Wqc.mp4",
+      "status": "actual_bytes_and_ffprobe",
+      "local_file": "/workspace/sabalenka-finals-production/staging/us-runnerup-speech.mp4",
+      "bytes": 51277427,
+      "sha256": "9627d6c18e0bc9bf967d65ade1a03b3902102743ab878bdd32959275a3a6cf9d",
+      "duration": 139.226848,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "av1",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "60000/1001",
+          "sample_rate": null,
+          "channels": null
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "r_frame_rate": "0/0",
+          "sample_rate": "44100",
+          "channels": 2
+        }
+      ],
+      "archive_run": {
+        "id": 39716317963,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39716317963"
+      },
+      "publisher": "US Open Tennis Championships",
+      "title": "Aryna Sabalenka On-Court Interview | 2026 US Open Final",
+      "published_date": null,
+      "emotion": "tearful, disappointed but trying to smile",
+      "suggested_source_windows": [
+        [
+          54.05,
+          59.6
+        ],
+        [
+          112.2,
+          119.5
+        ]
+      ],
+      "window_status": "coarse_visual_candidates_not_final_edits",
+      "notes": "Both ASR models agree on these complete semantic statements. At112s camera shows team, not speaker face; do not claim uninterrupted lip sync.",
+      "official_identity_evidence": "Official publisher channel verified in web result, title and upload ID match. Actual downloaded bytes independently probed.",
+      "probe_file": "/workspace/sabalenka-finals-production/research/media/us-runnerup-speech-actual-probe.json",
+      "actual_dimensions": [
+        [
+          1920,
+          1080
+        ]
+      ]
+    },
+    {
+      "name": "rg-qf",
+      "id": "sRg1EOAg0FA",
+      "source_url": "https://www.youtube.com/watch?v=sRg1EOAg0FA",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-sRg1EOAg0FA/sRg1EOAg0FA.mp4",
+      "status": "actual_bytes_and_ffprobe",
+      "local_file": "/workspace/sabalenka-finals-production/staging/rg-qf.mp4",
+      "bytes": 50344434,
+      "sha256": "9c14c330f674ed371ed23c0febedfae6e943dc37ce9c60a30c6c26e4052c5bab",
+      "duration": 228.252154,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "av1",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "50/1",
+          "sample_rate": null,
+          "channels": null
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "r_frame_rate": "0/0",
+          "sample_rate": "44100",
+          "channels": 2
+        }
+      ],
+      "archive_run": {
+        "id": 39716479441,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39716479441"
+      },
+      "publisher": "Roland-Garros",
+      "title": "Aryna Sabalenka vs Diana Shnaider | QF Highlights | Roland-Garros 2026",
+      "published_date": "2026-06-03",
+      "emotion": "loss after huge lead",
+      "suggested_source_windows": [
+        [
+          150,
+          213
+        ]
+      ],
+      "window_status": "coarse_visual_candidates_not_final_edits",
+      "notes": "Official RG page embeds exact YouTube ID; sampled late match only. Never say she had a match point.",
+      "official_identity_evidence": "Official publisher channel verified in web result, title and upload ID match. Actual downloaded bytes independently probed.",
+      "official_page": "https://www.rolandgarros.com/en-us/video/2026-edition-highlights-sabalenka-vs-shnaider-q4",
+      "probe_file": "/workspace/sabalenka-finals-production/research/media/rg-qf-actual-probe.json",
+      "actual_dimensions": [
+        [
+          1920,
+          1080
+        ]
+      ]
+    },
+    {
+      "id": "nj76Dn9Vu5E",
+      "local_file": "/workspace/sabalenka-finals-production/staging/miami-final.mp4",
+      "bytes": 139464021,
+      "sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+      "duration": 309.963175,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "vp9",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1",
+          "sample_rate": null,
+          "channels": null
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "r_frame_rate": "0/0",
+          "sample_rate": "44100",
+          "channels": 2
+        }
+      ],
+      "name": "miami-final",
+      "status": "actual_bytes_and_ffprobe",
+      "source_url": "https://www.youtube.com/watch?v=nj76Dn9Vu5E",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-nj76Dn9Vu5E/nj76Dn9Vu5E.mp4",
+      "publisher": "WTA",
+      "title": "Aryna Sabalenka vs. Coco Gauff | 2026 Miami Open Final | WTA Match Highlights",
+      "published_date": "2026-03-28",
+      "emotion": "relief and Sunshine Double joy",
+      "suggested_source_windows": [
+        [
+          240,
+          282
+        ]
+      ],
+      "window_status": "coarse_visual_candidates_not_final_edits",
+      "notes": "Sampled actual footage: late final rally, championship point near260 and relief near270; avoid WTA tailboard near300.",
+      "official_identity_evidence": "Official publisher channel verified in web result, title and upload ID match. Actual downloaded bytes independently probed.",
+      "probe_file": "/workspace/sabalenka-finals-production/research/media/miami-final-actual-probe.json",
+      "actual_dimensions": [
+        [
+          1920,
+          1080
+        ]
+      ]
+    },
+    {
+      "name": "rg-qf-presser",
+      "id": "CnL-mKOT9C8",
+      "source_url": "https://www.youtube.com/watch?v=CnL-mKOT9C8",
+      "local_file": "/workspace/sabalenka-finals-production/staging/rg-qf-presser.mp4",
+      "bytes": 64158429,
+      "sha256": "fbca6f1dcf5bbd9d1f8bb11b2cbd1f2377cd71a55683e0f780de6adcea0ae39e",
+      "duration": 489.546304,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "av1",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "50/1",
+          "sample_rate": null
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "r_frame_rate": "0/0",
+          "sample_rate": "44100"
+        }
+      ],
+      "status": "actual_bytes_and_ffprobe",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-CnL-mKOT9C8/CnL-mKOT9C8.mp4",
+      "archive_run": {
+        "id": 39716651879,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39716651879"
+      },
+      "publisher": "Roland-Garros",
+      "title": "Aryna Sabalenka | QF Press Conference | Roland-Garros 2026",
+      "published_date": "2026-06-03",
+      "emotion": "frank self-examination",
+      "suggested_source_windows": [
+        [
+          44.3,
+          60.5
+        ],
+        [
+          36.1,
+          60.5
+        ]
+      ],
+      "window_status": "coarse_visual_candidates_not_final_edits",
+      "notes": "Two real ASR models cross-checked. See interview-candidates.json for exact candidate text, punctuation/disfluencies and remaining boundary limitation.",
+      "official_identity_evidence": "Official publisher channel verified in web result, title and upload ID match. Actual downloaded bytes independently probed.",
+      "official_page": "https://www.rolandgarros.com/en-us/video/2026-edition-press-conference-sabalenka-qf",
+      "probe_file": "/workspace/sabalenka-finals-production/research/media/rg-qf-presser-actual-probe.json",
+      "actual_dimensions": [
+        [
+          1920,
+          1080
+        ]
+      ]
+    },
+    {
+      "name": "ao-final-highlights",
+      "id": "7CeEeluu9Q4",
+      "kind": "youtube_candidate",
+      "publisher": "Australian Open",
+      "title": "Aryna Sabalenka v Elena Rybakina Highlights | Australian Open 2026 Final",
+      "source_url": "https://www.youtube.com/watch?v=7CeEeluu9Q4",
+      "discovery_page": "https://ausopen.com/articles/news/resilient-rybakina-beats-sabalenka-ao-2026-title",
+      "publisher_evidence": "official_AO_article_embeds_confirmed",
+      "status": "actual_bytes_and_ffprobe",
+      "actual_bytes_acquired": true,
+      "probe": null,
+      "full_visual_qc": false,
+      "asr_transcript_verified": false,
+      "selected_quotes": [],
+      "selected_timecodes": [],
+      "local_file": "/workspace/rybakina-finals-production/sources/ao-highlights.mp4",
+      "bytes": 26262507,
+      "sha256": "4924c2c0bdb20c257a482b66d924bbbf950f206c7afecf8585a76adc0dc94063",
+      "duration": 217.733515,
+      "probe_file": "/workspace/sabalenka-finals-production/research/media/ao-final-highlights-actual-probe.json",
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "av1",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1",
+          "sample_rate": null,
+          "channels": null
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "r_frame_rate": "0/0",
+          "sample_rate": "44100",
+          "channels": 2
+        }
+      ],
+      "reuse_from": "rybakina-finals-production",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-7CeEeluu9Q4/7CeEeluu9Q4.mp4",
+      "actual_dimensions": [
+        [
+          1920,
+          1080
+        ]
+      ]
+    },
+    {
+      "name": "indian-wells-final",
+      "kind": "youtube_archive",
+      "id": "9qBMhp-2sYk",
+      "status": "actual_bytes_and_ffprobe",
+      "source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+      "local_file": "/workspace/rybakina-finals-production/sources/indian-wells-final.mp4",
+      "bytes": 138288809,
+      "sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+      "duration": 308.987937,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "vp9",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1",
+          "sample_rate": null,
+          "channels": null
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "r_frame_rate": "0/0",
+          "sample_rate": "44100",
+          "channels": 2
+        }
+      ],
+      "publisher": "WTA",
+      "title": "Aryna Sabalenka vs. Elena Rybakina | 2026 Indian Wells Final | WTA Match Highlights",
+      "date": "2026-03-15",
+      "role": "final_vs_Sabalenka",
+      "official_page": "https://www.wtatennis.com/videos/4470020/sabalenka-saves-match-point-to-beat-rybakina-in-indian-wells-final",
+      "actual_bytes_acquired": true,
+      "full_visual_qc": false,
+      "asr_transcript_verified": false,
+      "selected_quotes": [],
+      "selected_timecodes": [],
+      "probe_file": "/workspace/sabalenka-finals-production/research/media/indian-wells-final-actual-probe.json",
+      "reuse_from": "rybakina-finals-production",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-9qBMhp-2sYk/9qBMhp-2sYk.mp4",
+      "actual_dimensions": [
+        [
+          1920,
+          1080
+        ]
+      ]
+    },
+    {
+      "name": "us-final-highlights",
+      "id": "YCAQnmJBJIk",
+      "kind": "youtube_candidate",
+      "publisher": "US Open Tennis Championships",
+      "title": "Aryna Sabalenka vs. Elena Rybakina Highlights | 2026 US Open Final",
+      "source_url": "https://www.youtube.com/watch?v=YCAQnmJBJIk",
+      "discovery_page": "https://www.youtube.com/watch?v=YCAQnmJBJIk",
+      "publisher_evidence": "web_search_official_channel_result",
+      "status": "actual_bytes_and_ffprobe",
+      "actual_bytes_acquired": true,
+      "probe": null,
+      "full_visual_qc": false,
+      "asr_transcript_verified": false,
+      "selected_quotes": [],
+      "selected_timecodes": [],
+      "local_file": "/workspace/rybakina-finals-production/sources/us-final.mp4",
+      "bytes": 79822438,
+      "sha256": "2583a83d9c85843e33e38b8df9664d73a2dbe66ba565f637eae334be43b2ca20",
+      "duration": 214.273741,
+      "probe_file": "/workspace/sabalenka-finals-production/research/media/us-final-highlights-actual-probe.json",
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "av1",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "60000/1001",
+          "sample_rate": null,
+          "channels": null
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "r_frame_rate": "0/0",
+          "sample_rate": "44100",
+          "channels": 2
+        }
+      ],
+      "reuse_from": "rybakina-finals-production",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-YCAQnmJBJIk/YCAQnmJBJIk.mp4",
+      "actual_dimensions": [
+        [
+          1920,
+          1080
+        ]
+      ]
+    }
+  ],
+  "candidates_without_actual_bytes": [
+    {
+      "event": "Madrid",
+      "status": "official_metadata_candidate_no_actual_bytes",
+      "publisher": "WTA",
+      "identity_evidence": "Saved WTA official content API metadata; no downloaded media or resolution assertion.",
+      "title": "Baptiste saves six match points to stun Sabalenka in Madrid",
+      "published_date": "2026-04-28T20:56:00Z",
+      "official_page": "https://www.wtatennis.com/videos/4495319/baptistes-saves-six-match-points-to-stun-sabalenka-in-madrid",
+      "brightcove_id": "6394110082112",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6394110082112",
+      "metadata_evidence": "/workspace/sabalenka-finals-production/research/media/wta-sab-videos.json",
+      "bytes": null,
+      "sha256": null,
+      "local_file": null,
+      "actual_dimensions": null,
+      "recommended_window": null,
+      "native_1080_search_status": "WTA YouTube preferred before Brightcove download; link candidate only.",
+      "youtube_candidate": {
+        "id": "5dJSS-Vb-Ts",
+        "url": "https://www.youtube.com/watch?v=5dJSS-Vb-Ts",
+        "title": "Aryna Sabalenka vs. Hailey Baptiste | 2026 Madrid Quarterfinals | WTA Match Highlights",
+        "identity_status": "Search result title and WTA subscription description found; actual channel identity and native resolution not independently retrieved. Candidate only; do not dispatch as verified official yet."
+      }
+    },
+    {
+      "event": "Rome",
+      "status": "official_metadata_candidate_no_actual_bytes",
+      "publisher": "WTA",
+      "identity_evidence": "Saved WTA official content API metadata; no downloaded media or resolution assertion.",
+      "title": "Cirstea scores first win over a No. 1 in Rome stunner against Sabalenka",
+      "published_date": "2026-05-09T16:29:00Z",
+      "official_page": "https://www.wtatennis.com/videos/4501045/cirstea-scores-first-win-over-a-no-1-in-rome-stunner-against-sabalenka",
+      "brightcove_id": "6395071282112",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6395071282112",
+      "metadata_evidence": "/workspace/sabalenka-finals-production/research/media/wta-sab-videos.json",
+      "bytes": null,
+      "sha256": null,
+      "local_file": null,
+      "actual_dimensions": null,
+      "recommended_window": null,
+      "native_1080_search_status": "WTA YouTube preferred before Brightcove download; link candidate only."
+    },
+    {
+      "event": "Berlin",
+      "status": "official_metadata_candidate_no_actual_bytes",
+      "publisher": "WTA",
+      "identity_evidence": "Saved WTA official content API metadata; no downloaded media or resolution assertion.",
+      "title": "Sabalenka rallies from 6-2, 4-0 down against Bartunkova to make Berlin semis",
+      "published_date": "2026-06-19T16:21:00Z",
+      "official_page": "https://www.wtatennis.com/videos/4522484/sabalenka-rallies-from-6-2-4-0-down-against-bartunkova-to-reach-berlin-semis",
+      "brightcove_id": "6398869262112",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6398869262112",
+      "metadata_evidence": "/workspace/sabalenka-finals-production/research/media/wta-sab-videos.json",
+      "bytes": null,
+      "sha256": null,
+      "local_file": null,
+      "actual_dimensions": null,
+      "recommended_window": null,
+      "native_1080_search_status": "WTA YouTube preferred before Brightcove download; link candidate only.",
+      "youtube_candidate": {
+        "id": "Il6cKvP4qAw",
+        "url": "https://www.youtube.com/watch?v=Il6cKvP4qAw",
+        "title": "Aryna Sabalenka vs. Jessica Pegula | 2026 Berlin Semifinal | WTA Match Highlights",
+        "identity_status": "Search result title and WTA subscription description found; actual channel identity and native resolution not independently retrieved. Candidate only; do not dispatch as verified official yet."
+      }
+    },
+    {
+      "event": "Toronto",
+      "status": "official_metadata_candidate_no_actual_bytes",
+      "publisher": "WTA",
+      "identity_evidence": "Saved WTA official content API metadata; no downloaded media or resolution assertion.",
+      "title": "Sabalenka locks in late to put away Zhang in tight Toronto third-round clash",
+      "published_date": "2026-08-07T01:02:00Z",
+      "official_page": "https://www.wtatennis.com/videos/4555563/sabalenka-locks-in-late-to-put-away-zhang-in-tight-toronto-third-round-clash",
+      "brightcove_id": "6402962587112",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6402962587112",
+      "metadata_evidence": "/workspace/sabalenka-finals-production/research/media/wta-sab-videos.json",
+      "bytes": null,
+      "sha256": null,
+      "local_file": null,
+      "actual_dimensions": null,
+      "recommended_window": null,
+      "native_1080_search_status": "WTA YouTube preferred before Brightcove download; link candidate only."
+    },
+    {
+      "event": "Cincinnati",
+      "status": "official_metadata_candidate_no_actual_bytes",
+      "publisher": "WTA",
+      "identity_evidence": "Saved WTA official content API metadata; no downloaded media or resolution assertion.",
+      "title": "Bejlek upsets No. 1 Sabalenka to advance to first WTA 1000 quarterfinal in Cincinnati",
+      "published_date": "2026-08-20T04:24:00Z",
+      "official_page": "https://www.wtatennis.com/videos/4563163/bejlek-upsets-no-1-sabalenka-to-advance-to-first-wta-1000-quarterfinal-in-cincinnati",
+      "brightcove_id": "6403747308112",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6403747308112",
+      "metadata_evidence": "/workspace/sabalenka-finals-production/research/media/wta-sab-videos.json",
+      "bytes": null,
+      "sha256": null,
+      "local_file": null,
+      "actual_dimensions": null,
+      "recommended_window": null,
+      "native_1080_search_status": "WTA YouTube preferred before Brightcove download; link candidate only.",
+      "youtube_candidate": {
+        "id": "4xU-gVFzfPY",
+        "url": "https://www.youtube.com/watch?v=4xU-gVFzfPY",
+        "title": "Aryna Sabalenka vs. Sara Bejlek | 2026 Cincinnati Round of 16 | WTA Match Highlights",
+        "identity_status": "Search result title and WTA subscription description found; actual channel identity and native resolution not independently retrieved. Candidate only; do not dispatch as verified official yet."
+      }
+    },
+    {
+      "event": "Beijing",
+      "status": "official_metadata_candidate_no_actual_bytes",
+      "publisher": "WTA",
+      "identity_evidence": "Saved WTA official content API metadata; no downloaded media or resolution assertion.",
+      "title": "Bartunkova upsets Sabalenka in Beijing for first career Top 3 win",
+      "published_date": "2026-10-04T05:52:00Z",
+      "official_page": "https://www.wtatennis.com/videos/4586350/bartunkova-upsets-sabalenka-in-beijing-for-first-career-top-3-win",
+      "brightcove_id": "6406199305112",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406199305112",
+      "metadata_evidence": "/workspace/sabalenka-finals-production/research/media/wta-sab-videos.json",
+      "bytes": null,
+      "sha256": null,
+      "local_file": null,
+      "actual_dimensions": null,
+      "recommended_window": null,
+      "native_1080_search_status": "WTA YouTube preferred before Brightcove download; link candidate only."
+    },
+    {
+      "event": "Wuhan",
+      "status": "official_metadata_candidate_no_actual_bytes",
+      "publisher": "WTA",
+      "identity_evidence": "Saved WTA official content API metadata; no downloaded media or resolution assertion.",
+      "title": "Finally! On 10th match point, Li completes upset of Sabalenka at the Wuhan Open",
+      "published_date": "2026-10-14T14:24:00Z",
+      "official_page": "https://www.wtatennis.com/videos/4592365/li-converts-10th-match-point-to-complete-sabalenka-upset-in-wuhan",
+      "brightcove_id": "6406853454112",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406853454112",
+      "metadata_evidence": "/workspace/sabalenka-finals-production/research/media/wta-sab-videos.json",
+      "bytes": null,
+      "sha256": null,
+      "local_file": null,
+      "actual_dimensions": null,
+      "recommended_window": null,
+      "native_1080_search_status": "WTA YouTube preferred before Brightcove download; link candidate only."
+    }
+  ],
+  "photo_manifest": "/workspace/sabalenka-finals-production/research/media/cover-candidates.json",
+  "cover_primary": "/workspace/sabalenka-finals-production/staging/photos/wta-photo-4478910.jpg",
+  "cover_secondary": "/workspace/sabalenka-finals-production/staging/photos/wta-photo-4574953.jpg",
+  "cover_warning": "Primary is actual Miami trophy photo. WTA photo title mistakenly says Indian Wells; do not propagate the event mislabel. All11 candidates inspected in contact sheet;3 full originals inspected.",
+  "interview_candidates": "/workspace/sabalenka-finals-production/research/media/interview-candidates.json",
+  "pending": [
+    "All interview candidates have two real ASR files and sampled visual evidence. Final audio-edge playback/crop and native caption checks pending; none approved for render.",
+    "Match-highlight windows remain coarse candidates, not final complete rally edits."
+  ],
+  "coverage_note": "All14 played events have either actual official media or official WTA metadata footage candidates. Toronto candidate is third-round win vs Zhang, not final-round loss vs Alexandrova; Berlin candidate is QF comeback vs Bartunkova, with unverified-channel SF YouTube candidate also listed."
+}

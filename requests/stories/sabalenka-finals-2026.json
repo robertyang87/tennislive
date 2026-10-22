@@ -1,0 +1,50 @@
+{
+  "slug": "sabalenka-finals-2026",
+  "column": "网球有故事",
+  "player": "Aryna Sabalenka",
+  "season": 2026,
+  "request_zh": "那继续做萨巴伦卡的",
+  "reference_slug": "rybakina-finals-2026",
+  "approval_state": "outline_pending_review",
+  "outline": "research/sabalenka-finals-2026/outline.md",
+  "duration_target_seconds": 310,
+  "scope": "2026 singles season through latest verified post-US Open results; official Finals qualification announcement date, season highs and lows, all events separately tabulated.",
+  "research_state": "fresh_official_results_checked_source_preparation_in_progress",
+  "season_data": "research/sabalenka-finals-2026/season-results.json",
+  "synced_main": "e9b59b0",
+  "framing": {
+    "canvas": "1080x1440",
+    "videos": "crop_full_canvas",
+    "interviews": "measured_fixed_person_center",
+    "matches": "fixed_court_center"
+  },
+  "story_label_style": {
+    "template": "current_main_transparent_upper_right",
+    "topic_font_size": 89,
+    "score_font_size": 98,
+    "metadata_and_names_font_size": 73,
+    "max_seconds": 15,
+    "bounded_by_source_segment": true
+  },
+  "do_not_invent": [
+    "earliest mathematical qualification time",
+    "future match results or season-ending status",
+    "explanation for profile win-loss discrepancy",
+    "Roland Garros quarterfinal match points held by Sabalenka",
+    "player quotations or timecodes before actual source verification"
+  ],
+  "outline_review": {
+    "received": false,
+    "rule": ".claude/skills/tennis-owner-taste/SKILL.md C5; show one-page outline before rendering narrative feature."
+  },
+  "source_manifest": "research/sabalenka-finals-2026/media/source-manifest.json",
+  "source_preparation": {
+    "acquired_official_1080_sources": 9,
+    "official_candidates_not_downloaded": 7,
+    "interview_candidate_windows": 3,
+    "method": "small.en_medium.en_cross_checked; not human listening or final render approval"
+  },
+  "workbook": "research/sabalenka-finals-2026/萨巴伦卡2026赛季全数据.xlsx",
+  "data_verification": "14 event APIs,58 completed matches,12 local-date corrections; 47W11L;6560Race points",
+  "state": "research_ready_outline_approval_pending"
+}
