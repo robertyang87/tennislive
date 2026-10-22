@@ -120,6 +120,20 @@ _MATCH_DECIDER_TOKEN = re.compile(r"\[(\d+)-(\d+)\]")
 _SET_GAP = 18
 
 
+def info_round_notation(text: str) -> str:
+    """All information labels use 1/4决赛 and 1/8决赛 (owner 2026-10-22).
+
+    Do not infer a draw's last sixteen from 第四轮 or alter personal results
+    such as 8强; those are different facts, and narration is outside this renderer.
+    """
+    def replace(match: re.Match) -> str:
+        raw = match.group(1)
+        denominator = "4" if raw == "四分之一" or raw.rstrip().endswith("4") else "8"
+        return f"1/{denominator}决赛"
+
+    return re.sub(r"(四分之一|八分之一|1\s*[/／]\s*[48])\s*决赛", replace, text)
+
+
 @dataclass(frozen=True)
 class _ScoreToken:
     left: str
@@ -615,6 +629,10 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
            metric: str = "", variant: str = "timeline", align: str = "right",
            split_metric: bool = False, layout: str = "corner",
            highlight: str = "", sets: Sequence[SetScore] | None = None) -> Path:
+    kicker, headline, detail, metric, highlight = (
+        info_round_notation(text) if isinstance(text, str) else text
+        for text in (kicker, headline, detail, metric, highlight)
+    )
     if sets is not None:
         formatted = score_line(sets)
         if metric.strip() and metric.strip() != formatted:
@@ -827,12 +845,12 @@ def label_fields_problem(label: object) -> str | None:
                if not str(label.get(key) or "").strip()]
     if missing:
         return f"label 缺 {', '.join(missing)}"
-    topic = str(label["topic"]).strip()
+    topic = info_round_notation(str(label["topic"]).strip())
     date = str(label["date"]).strip()
-    place = str(label["place"]).strip()
-    people = str(label["people"]).strip()
+    place = info_round_notation(str(label["place"]).strip())
+    people = info_round_notation(str(label["people"]).strip())
     score = str(label.get("score") or "").strip()
-    event = str(label.get("event") or "").strip()
+    event = info_round_notation(str(label.get("event") or "").strip())
     if not score and not event:
         return "label 要有 score 或 event"
     if not _DATE.match(date):
@@ -867,8 +885,8 @@ def metric_from_label(label: dict) -> str:
     score = str(label.get("score") or "").strip()
     if score:
         return score
-    event = str(label.get("event") or "").strip()
-    topic = str(label.get("topic") or "").strip()
+    event = info_round_notation(str(label.get("event") or "").strip())
+    topic = info_round_notation(str(label.get("topic") or "").strip())
     if event and event != topic:
         return event
     return ""
