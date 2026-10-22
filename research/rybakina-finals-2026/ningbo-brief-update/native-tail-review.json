@@ -1,0 +1,48 @@
+{
+  "status": "pass_native_tail_sample_scope",
+  "spec_sha256": "dc19933b3804ce8d66a0fad6ff9a94c8aae104ba53e8c5ce59ac385969790dea",
+  "native_manifest_sha256": "32dea07ee67ecf2dfe9178722c67404399d993549be1a4e6932d948f66d01f18",
+  "baseline_published_film_sha256": "efbd37cfb5dbcbdde16d201a702a749dcecf14b1e0437157f86302b53ae11f21",
+  "first_29_segments_exactly_equal": true,
+  "protected_source_crop_label_cover_fields_exactly_equal": [
+    "sources",
+    "source_fallbacks",
+    "cover",
+    "cx",
+    "track",
+    "tts_backend",
+    "mixed_fps",
+    "archival",
+    "source_crop",
+    "preserve_source_audio",
+    "_story_label_style"
+  ],
+  "two_utterances": [
+    "十月，她回到宁波，继续为年终备战。",
+    "门票早已在手。年终总决赛，你最期待她怎样的表现？"
+  ],
+  "selected_seconds": [
+    4.6,
+    6.5
+  ],
+  "actual_audio_seconds": [
+    3.912,
+    5.832
+  ],
+  "body_seconds": 313.4,
+  "estimated_total_seconds": 319.154,
+  "sample_count": 10,
+  "actual_viewed": [
+    "all10 contact frames",
+    "caption-03.png native1080x1440",
+    "caption-08.png native1080x1440"
+  ],
+  "observed": "宁波卡标题与新完整旁白清楚；结尾资格官图沿用既有静态证据构图，问题字幕清楚，未出现7502/宁波对手/赛前状态。未见字形溢出或与品牌重叠；静态卡未新增赛事信息inset。",
+  "limitations": [
+    "Native interior preview, not final film QC or final dissolve verification",
+    "No human listening claim; two changed actual voices checked by existing automated suite",
+    "All original source windows and three film-specific720 approvals remain unchanged"
+  ],
+  "old_pushed_deleted": true,
+  "historical_sent_ledger_preserved": true
+}

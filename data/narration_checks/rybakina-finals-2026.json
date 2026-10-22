@@ -1,6 +1,6 @@
 {
   "slug": "rybakina-finals-2026",
-  "checked_at": "2026-10-22T01:43:39Z",
+  "checked_at": "2026-10-22T16:13:23Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -90,29 +90,29 @@
       "spoken": 7.032,
       "picture": 8.0
     },
-    "9a406f105c892581": {
+    "6201000b71273686": {
       "segment": 30,
-      "spoken": 8.376,
-      "picture": 9.0
+      "spoken": 3.912,
+      "picture": 4.6
     },
-    "25dc4c3a981de8ec": {
+    "69b9bfd6e8a8943b": {
       "segment": 31,
-      "spoken": 7.392,
-      "picture": 8.0
+      "spoken": 5.832,
+      "picture": 6.5
     }
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "195886eaf503f894f583dde1699a5144e6e1079d6584979b71208aed95644a0d",
+    "bundle_sha256": "176e539e1e5177ad5c6a963de3a30eb3543a9eb046a1231e9f08575ca5729db6",
     "request_count": 19,
-    "mode": "capture_export",
-    "strict_reused": false,
+    "mode": "strict_import",
+    "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-rybakina-finals-2026-195886eaf503f894",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-rybakina-finals-2026-195886eaf503f894/tts_bundle.zip",
+    "transport": "repository",
+    "repository_commit": "4a8e416d531548b0978deb21f9fefe594529e58e",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39707104507"
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/4a8e416d531548b0978deb21f9fefe594529e58e/assets/tts-bundles/rybakina-finals-2026/176e539e1e5177ad5c6a963de3a30eb3543a9eb046a1231e9f08575ca5729db6/tts_bundle.zip"
   }
 }
