@@ -1,0 +1,91 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=5dJSS-Vb-Ts",
+  "source_sha256": "624ba89d4f391110ff85511651a534ebb01437303658fd2fbb2214f6420ec6b1",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review and paired ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T04:24:32.429826+00:00",
+  "reviewed_from": 250.2,
+  "reviewed_to": 273.38,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 259.06,
+      "end": 260.98,
+      "en": "Moments that can become",
+      "zh": "这样的时刻，能够",
+      "relative_start": 8.86,
+      "relative_end": 10.78
+    },
+    {
+      "start": 260.98,
+      "end": 262.2,
+      "en": "career-building,",
+      "zh": "成就一个人的职业生涯，",
+      "relative_start": 10.78,
+      "relative_end": 12.0
+    },
+    {
+      "start": 262.8,
+      "end": 264.05,
+      "en": "career-defining,",
+      "zh": "甚至定义整个生涯。",
+      "relative_start": 12.6,
+      "relative_end": 13.85
+    },
+    {
+      "start": 264.05,
+      "end": 268.15,
+      "en": "knocking off the world number one",
+      "zh": "击败世界第一，",
+      "relative_start": 13.85,
+      "relative_end": 17.95
+    },
+    {
+      "start": 269.38,
+      "end": 271.4,
+      "en": "to earn your spot in your first",
+      "zh": "赢下自己的首个",
+      "relative_start": 19.18,
+      "relative_end": 21.2
+    },
+    {
+      "start": 271.4,
+      "end": 273.32,
+      "en": "WTA 1000 semifinal.",
+      "zh": "WTA1000四强席位。",
+      "relative_start": 21.2,
+      "relative_end": 23.12
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/madrid-6bd492d340-madrid-qf-small.en.json",
+      "sha256": "6bd492d34095f86c836e80029938897bef55f71cd40657f01189f981b64df4de",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/madrid-8e566a664e-madrid-qf-medium.en.json",
+      "sha256": "8e566a664e272ec9b9d030990b0edd8d95c1b29ce690e5fe50273c1e0bb369b3",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/madrid-7ea7d7f720-madrid-qf-turbo.json",
+      "sha256": "7ea7d7f72021ebb22296d14cb41984fa6291bc27172e635444e874b08947b5fd",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/madrid-8f49828fde-madrid-qf-edge-small.en.json",
+      "sha256": "8f49828fde49dff71a7875071afe3588d53638185cca090175951952af359fc7",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/madrid-50fec4dd27-madrid-qf-edge-medium.en.json",
+      "sha256": "50fec4dd27620c25bb75dab8dde1256490c91091ab251cb892f54a1eb03d9b9b",
+      "model": "medium.en"
+    }
+  ]
+}

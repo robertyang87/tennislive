@@ -1,0 +1,44 @@
+{
+  "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/55429c9c-ae73-4044-a0b8-8c0784b9eb88.mp4",
+  "source_sha256": "8682acab809a54fbeb21e4b9d0fe7510e6ee9789f2659bb34bc3ba1754792605",
+  "method": "asr_cross_checked",
+  "reviewer": "Actual small.en + medium.en source-bound ASR cross-check and sampled source-frame inspection; not human listening",
+  "reviewed_at": "2026-10-22T03:48:54.353612+00:00",
+  "reviewed_from": 0.0,
+  "reviewed_to": 19.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 6.62,
+      "end": 11.08,
+      "en": "And a tournament that has already produced headlines in its opening three days,",
+      "zh": "赛事前三天已经新闻不断，"
+    },
+    {
+      "start": 11.08,
+      "end": 13.98,
+      "en": "Ann Li produces the biggest of them all,",
+      "zh": "安·李制造了最大的新闻，"
+    },
+    {
+      "start": 13.98,
+      "end": 17.12,
+      "en": "in all capital letters above the fold.",
+      "zh": "用醒目的大字，登上头版。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/wuhan-bde54ce6e8-wuhan29-small.en.json",
+      "sha256": "bde54ce6e8b23547abc125a2d56af04d0b397bbb17ea25c1d6316a960bb4d88e",
+      "model": null
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/wuhan-1605e21568-wuhan29-medium.en.json",
+      "sha256": "1605e215682788238e5bb3f642fcf58f34e84cd9a3eb71cb522f67d410f918d4",
+      "model": null
+    }
+  ],
+  "review_notes": "Small and medium agree on entire6.6–17.1 commentary with only Ann Li phonetic and/Lee normalized to official identity. Initial And a tournament preserved as both ASRs, without editorial grammar invention. Small shows next distinct Three-time champion... at20.06; medium stretches an anticipatory Three token across17.12–20.10, a word-alignment silence artifact. End19.8 retains final point, victory, and handshake while avoiding next sentence; final mix must confirm this boundary. No human listening claim."
+}

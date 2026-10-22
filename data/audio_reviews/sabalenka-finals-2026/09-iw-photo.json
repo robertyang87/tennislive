@@ -1,0 +1,46 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_key": "indian_wells",
+  "source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+  "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame inspection and source-bound multiple-ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T03:53:24.210699+00:00",
+  "reviewed_from": 245.6,
+  "reviewed_to": 262.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 251.06,
+      "end": 255.48,
+      "en": "Third time is a charm for Aryna Sabalenka.",
+      "zh": "第三次，萨巴伦卡终于如愿。"
+    },
+    {
+      "start": 258.34,
+      "end": 261.26,
+      "en": "As revenge is served.",
+      "zh": "她完成了复仇。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/iw-photo-541e7453dd-iw-champion-small.en.json",
+      "sha256": "541e7453ddc7b6681f6e87e099d450d3fee939e5c5c1b5da46bdf3f8ee64610b",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/iw-photo-b46edc1560-iw-champion-medium.en.json",
+      "sha256": "b46edc1560febee0c0e167ee285298aa787e3822c50b34eebff2ca1cc1dd1a12",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/iw-photo-4ef5ab5696-iw-champion-selected-small.en.json",
+      "sha256": "4ef5ab5696ef607056f6a4a4e34dc471cbd66b9a9c45d6087ec47c5f61a6150f",
+      "model": "small.en"
+    }
+  ],
+  "review_scope": "Entire selected actual source window; coherent identifiable English retained with bilingual captions; machine review, not human listening.",
+  "review_notes": "Reused exact actual source bytes and actual existing paired ASR evidence, not another episode voice approval. Prior Not done yet ends245.28 before245.6. Two complete foreground clauses retained. Next She finally gets the better sentence begins263.04 after262. Names normalized to verified player identity; no human-listening claim."
+}

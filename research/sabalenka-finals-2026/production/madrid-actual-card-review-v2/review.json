@@ -1,0 +1,59 @@
+{
+  "result": "passed_sampled_local_native_inset_geometry",
+  "scope": "Actual Madrid PNG and native build_match_reel._overlay_chain, including fade/lift timing and fixed3:4 court-center crop. This is a local sampled geometry check, not full-film QC or audio approval.",
+  "source_window": [
+    267.1,
+    273.3
+  ],
+  "relative_window": [
+    16.9,
+    23.1
+  ],
+  "width_px": 648,
+  "right_padding_px": 46,
+  "top_clear_y_px": 151,
+  "native_fps": 30,
+  "card_original_dimensions": [
+    1200,
+    414
+  ],
+  "card_rendered_dimensions": [
+    648,
+    224
+  ],
+  "source_sha256": "624ba89d4f391110ff85511651a534ebb01437303658fd2fbb2214f6420ec6b1",
+  "card_sha256": "1a313d61017caeeb86c3eb053adbf241b244d9b308b79abb8f66c94b0543c4f3",
+  "spec_sha256": "a1548cf9cbc8f28d36615be6a060e1edd0d228a1d20e8465493894bcc4529575",
+  "actual_source_times_reviewed": [
+    267.033,
+    267.133,
+    267.233,
+    267.4,
+    267.6,
+    268.133,
+    269.133,
+    270.133,
+    271.133,
+    272.133,
+    273.0,
+    273.233,
+    273.333
+  ],
+  "contact": "/workspace/sabalenka-finals-production/research/production/madrid-actual-card-review-v2/contact.jpg",
+  "full_resolution_images_individually_viewed": [
+    "actual-card-06.png",
+    "actual-card-09.png"
+  ],
+  "findings": [
+    "All13contact frames actually viewed, including pre-entry267.033, fade-in267.133/267.233, hold and fade-out273.00/273.233, post-exit273.333.",
+    "No player face/eyes or hitting action covered in observed actual-PNG native overlays. Sabalenka and Baptiste handshake/hug remain below or left of card; later Baptiste face remains clearly below card.",
+    "Date/round line and player names fit, tiebreak superscript6 visibly separated from adjacent7, winning Baptiste name correctly green.",
+    "This interval shows net handshake/reaction/walk to umpire, not continuous court-wide play; shared spec _label_window_why should describe this accurately if updated by root."
+  ],
+  "safe_adjustment_needed": false,
+  "approved_for_full_film": false,
+  "invalidated_diagnostic": {
+    "path": "/workspace/sabalenka-finals-production/research/production/madrid-actual-card-review/INVALIDATED.json",
+    "reason": "Initial diagnostic mixed30fps frame indices with explicit25fps filter; all labels were invalid. Corrected v2 uses native30fps consistently. Do not use v1 images as evidence."
+  }
+}

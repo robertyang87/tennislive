@@ -1,0 +1,123 @@
+{
+  "model": "large-v3-turbo",
+  "method": "actual_source_audio_multilingual_or_channel_diagnostic",
+  "source_file": "/workspace/sabalenka-finals-production/staging/wimbledon-r4.mp4",
+  "source_sha256": "a30bae4c685bda47d61509b50f85ea887e4a5cd43721ce633e707d115e2e268b",
+  "extracted_audio_sha256": "eda2a86fca64da910d32e2fee175f5cebf3b5a4accb7da92ae0927632fc6acf3",
+  "channel": null,
+  "language_requested": "en",
+  "language_detected": "en",
+  "language_probability": 1,
+  "clip": [
+    290.5,
+    308
+  ],
+  "duration": 17.5,
+  "segments": [
+    {
+      "start": 296.08,
+      "end": 297.76,
+      "text": " Again, 7th match, Osaka.",
+      "no_speech_prob": 4.693547286938049e-11,
+      "avg_logprob": -0.7930376274245126,
+      "words": [
+        {
+          "w": " Again,",
+          "s": 296.08,
+          "e": 296.68,
+          "p": 0.04299571365118027
+        },
+        {
+          "w": " 7th",
+          "s": 296.68,
+          "e": 297.28,
+          "p": 0.3956260085105896
+        },
+        {
+          "w": " match,",
+          "s": 297.28,
+          "e": 297.3,
+          "p": 0.6332548260688782
+        },
+        {
+          "w": " Osaka.",
+          "s": 297.4,
+          "e": 297.76,
+          "p": 0.9213147759437561
+        }
+      ]
+    },
+    {
+      "start": 299.0,
+      "end": 300.36,
+      "text": " 2 cents to more.",
+      "no_speech_prob": 4.693547286938049e-11,
+      "avg_logprob": -0.7930376274245126,
+      "words": [
+        {
+          "w": " 2",
+          "s": 299.0,
+          "e": 299.6,
+          "p": 0.45744588971138
+        },
+        {
+          "w": " cents",
+          "s": 299.6,
+          "e": 299.88,
+          "p": 0.5962292551994324
+        },
+        {
+          "w": " to",
+          "s": 299.88,
+          "e": 300.34,
+          "p": 0.5942763090133667
+        },
+        {
+          "w": " more.",
+          "s": 300.34,
+          "e": 300.36,
+          "p": 0.07729590684175491
+        }
+      ]
+    },
+    {
+      "start": 300.36,
+      "end": 302.28,
+      "text": " 6-2, 7-6.",
+      "no_speech_prob": 4.693547286938049e-11,
+      "avg_logprob": -0.7930376274245126,
+      "words": [
+        {
+          "w": " 6",
+          "s": 300.36,
+          "e": 300.56,
+          "p": 0.689167320728302
+        },
+        {
+          "w": "-2,",
+          "s": 300.56,
+          "e": 301.04,
+          "p": 0.7925165593624115
+        },
+        {
+          "w": " 7",
+          "s": 301.24,
+          "e": 302.02,
+          "p": 0.9720979928970337
+        },
+        {
+          "w": "-6.",
+          "s": 302.02,
+          "e": 302.28,
+          "p": 0.9966004192829132
+        }
+      ]
+    }
+  ],
+  "parameters": {
+    "no_speech_threshold": null,
+    "log_prob_threshold": null,
+    "beam_size": 5,
+    "condition_on_previous_text": false
+  }
+}

@@ -1,0 +1,306 @@
+{
+  "player": "Aryna Sabalenka",
+  "season": 2026,
+  "selections": [
+    {
+      "id": "madrid-final-match-point",
+      "source_name": "madrid-qf",
+      "selected_for_main_edit": true,
+      "start": 250.2,
+      "end": 273.38,
+      "complete_point": "At250.50 actual wide shot shows Baptiste preparing to serve at third-set tiebreak7–6, MATCH POINT banner; serve, full rally and point outcome are retained before her reaction257.5. No replay used as live point.",
+      "quote_en": "Moments that can become career-building, career-defining, knocking off the world number one to earn your spot in your first WTA 1000 semifinal.",
+      "captions": [
+        {
+          "start": 259.06,
+          "end": 260.98,
+          "en": "Moments that can become",
+          "zh": "这样的时刻，能够",
+          "relative_start": 8.86,
+          "relative_end": 10.78
+        },
+        {
+          "start": 260.98,
+          "end": 262.2,
+          "en": "career-building,",
+          "zh": "成就一个人的职业生涯，",
+          "relative_start": 10.78,
+          "relative_end": 12.0
+        },
+        {
+          "start": 262.8,
+          "end": 264.05,
+          "en": "career-defining,",
+          "zh": "甚至定义整个生涯。",
+          "relative_start": 12.6,
+          "relative_end": 13.85
+        },
+        {
+          "start": 264.05,
+          "end": 268.15,
+          "en": "knocking off the world number one",
+          "zh": "击败世界第一，",
+          "relative_start": 13.85,
+          "relative_end": 17.95
+        },
+        {
+          "start": 269.38,
+          "end": 271.4,
+          "en": "to earn your spot in your first",
+          "zh": "赢下自己的首个",
+          "relative_start": 19.18,
+          "relative_end": 21.2
+        },
+        {
+          "start": 271.4,
+          "end": 273.32,
+          "en": "WTA 1000 semifinal.",
+          "zh": "WTA1000四强席位。",
+          "relative_start": 21.2,
+          "relative_end": 23.12
+        }
+      ],
+      "asr_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/asr/madrid-qf-small.en.json",
+        "/workspace/sabalenka-finals-production/research/production/asr/madrid-qf-medium.en.json",
+        "/workspace/sabalenka-finals-production/research/production/asr/madrid-qf-turbo.json",
+        "/workspace/sabalenka-finals-production/research/production/asr/madrid-qf-edge-small.en.json",
+        "/workspace/sabalenka-finals-production/research/production/asr/madrid-qf-edge-medium.en.json"
+      ],
+      "asr_resolution": "Use medium.en transcript. small.en agrees can but hallucinates low-confidence leading phrase257.48–258.52(p0.001–0.14), unsupported by both medium and turbo, so that phrase is not captioned. medium plus turbo agree Moments and WTA1000; turbo says could instead of can (p0.60); both primary small/medium say can (medium p0.735). This is an explicitly recorded ASR editorial resolution, not human listening.",
+      "boundary_note": "Main medium last semifinal ends273.32, small273.28,turbo273.20; focused medium assigns273.42 and next ten starts273.42, focused small joins both utterances. End273.38 is source-edge candidate based on majority word end; final audio-edge QC should ensure final l is retained and next ten is not leaked. Original273.55 proposal is superseded.",
+      "score_evidence": {
+        "files": [
+          "madrid-score-evidence.jpg",
+          "madrid-native-250.5.png",
+          "madrid-native-257.0.png",
+          "madrid-native-258.0.png"
+        ],
+        "visually_read": "A.Sabalenka6,2,6 with tiebreak6; H.Baptiste2,6,6 with tiebreak7; MATCH POINT banner. The still score at258 retains old7–6 before graphic refresh. This selected point is Baptiste match point; do NOT call it one of Sabalenka six unconverted match points.",
+        "final_match_score_from_official_record_sabalenka_pov": "6-2 2-6 6-7(6)"
+      },
+      "visual_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/evidence/madrid-qf-tail-contact.jpg",
+        "/workspace/sabalenka-finals-production/research/production/evidence/madrid-qf-edge-contact.jpg",
+        "/workspace/sabalenka-finals-production/research/production/evidence/madrid-placeholder-overlay-contact.jpg",
+        "/workspace/sabalenka-finals-production/research/production/evidence/madrid-late-placeholder-contact.jpg"
+      ],
+      "inset_safe_window": {
+        "source_start": 267.1,
+        "source_end": 273.3,
+        "relative_start": 16.9,
+        "relative_end": 23.1,
+        "duration": 6.2,
+        "scene": "net handshake, embrace, walk toward umpire; not continuous court-wide shot",
+        "geometry_checked": {
+          "placeholder_image": "/workspace/tennislive/assets/reel/rybakina-finals-2026/context-ao_final.png",
+          "original_card_size": [
+            1200,
+            426
+          ],
+          "rendered_card_width": 648,
+          "rendered_canvas": [
+            1080,
+            1440
+          ],
+          "card_top": 151,
+          "card_right_padding": 46,
+          "crop_source_x": [
+            555,
+            1365
+          ]
+        },
+        "actual_source_frames_overlaid": [
+          267,
+          268,
+          269,
+          270,
+          271,
+          272,
+          273
+        ],
+        "result": "No player face or hitting action covered in seven actual source-frame overlays using SAME-TEMPLATE PLACEHOLDER card. Must recheck actual Sabalenka Madrid PNG before claiming final native-card approval.",
+        "final_card_approved": false,
+        "actual_card_geometry_result": "passed_sampled_native_inset_geometry",
+        "actual_card_review": "/workspace/sabalenka-finals-production/research/production/madrid-actual-card-review-v2/review.json",
+        "actual_card_contact": "/workspace/sabalenka-finals-production/research/production/madrid-actual-card-review-v2/contact.jpg",
+        "actual_card_sha256": "1a313d61017caeeb86c3eb053adbf241b244d9b308b79abb8f66c94b0543c4f3",
+        "final_card_approval_scope": "Actual native inset sampled local geometry passed; final-film/render approval remains separate."
+      },
+      "inset_rejected_window": {
+        "source_start": 250.5,
+        "source_end": 253.5,
+        "reason": "Far Sabalenka source x1147–1240,y175–271 is behind fixed top-right card. Actual source frame plus transparent overlay demonstrate obstruction. Later254.5–257.0 is safe but too short for requested4s."
+      },
+      "source": "/workspace/sabalenka-finals-production/staging/extra/madrid-qf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=5dJSS-Vb-Ts",
+      "source_sha256": "624ba89d4f391110ff85511651a534ebb01437303658fd2fbb2214f6420ec6b1",
+      "duration": 23.18,
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "approved_for_render": false,
+      "status": "editorial_candidate"
+    },
+    {
+      "id": "berlin-final-match-point",
+      "source_name": "berlin-sf",
+      "selected_for_main_edit": false,
+      "start": 256.5,
+      "end": 270.95,
+      "quote_en": "Jessica Pegula, the 2024 winner in Berlin, is into another final.",
+      "captions": [
+        {
+          "start": 264.78,
+          "end": 266.95,
+          "en": "Jessica Pegula,",
+          "zh": "杰西卡·佩古拉，",
+          "relative_start": 8.28,
+          "relative_end": 10.45
+        },
+        {
+          "start": 267.64,
+          "end": 269.42,
+          "en": "the 2024 winner in Berlin,",
+          "zh": "这位2024年柏林冠军，",
+          "relative_start": 11.14,
+          "relative_end": 12.92
+        },
+        {
+          "start": 269.42,
+          "end": 270.78,
+          "en": "is into another final.",
+          "zh": "再次闯进决赛。",
+          "relative_start": 12.92,
+          "relative_end": 14.28
+        }
+      ],
+      "asr_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/asr/berlin-sf-small.en.json",
+        "/workspace/sabalenka-finals-production/research/production/asr/berlin-sf-medium.en.json"
+      ],
+      "asr_resolution": "Both models agree substantive full sentence; Pegula spelling normalized against official title. Prior First one saved nicely saved ends256.34 latest; start256.50 avoids that sentence. Next As... starts271.90 earliest, after chosen window.",
+      "visual_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/evidence/berlin-sf-tail-contact.jpg",
+        "/workspace/sabalenka-finals-production/research/production/evidence/berlin-sf-edge-contact.jpg"
+      ],
+      "complete_point": "Candidate last serve and rally257–265 followed by Pegula fist. Sampled source frames only; final per-frame score/crop not completed because parent chose fact card.",
+      "inset_safe_window": null,
+      "source": "/workspace/sabalenka-finals-production/staging/extra/berlin-sf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=Il6cKvP4qAw",
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "duration": 14.45,
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "approved_for_render": false,
+      "status": "not_used_fact_card_selected_by_parent"
+    },
+    {
+      "id": "cincinnati-final-match-point",
+      "source_name": "cincinnati-r4",
+      "selected_for_main_edit": false,
+      "start": 253.6,
+      "end": 265.72,
+      "quote_en": "Sara Bejlek has match point. The biggest win of her career.",
+      "captions": [
+        {
+          "start": 253.78,
+          "end": 257.0,
+          "en": "Sara Bejlek has match point.",
+          "zh": "萨拉·贝莱克拿到赛点。",
+          "relative_start": 0.18,
+          "relative_end": 3.4
+        },
+        {
+          "start": 264.0,
+          "end": 265.52,
+          "en": "The biggest win of her career.",
+          "zh": "她职业生涯最重要的一胜。",
+          "relative_start": 10.4,
+          "relative_end": 11.92
+        }
+      ],
+      "asr_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/asr/cincinnati-r4-small.en.json",
+        "/workspace/sabalenka-finals-production/research/production/asr/cincinnati-r4-medium.en.json"
+      ],
+      "asr_resolution": "Both models agree name phonetically and second complete commentator exclamation. Name normalized to official Sara Bejlek. Small plural match points vs medium singular match point; singular candidate uses medium, final number needs final QC if used. Next Sara Bejlek defeats... starts266.68 earliest, outside chosen window.",
+      "visual_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/evidence/cincinnati-r4-tail-contact.jpg",
+        "/workspace/sabalenka-finals-production/research/production/evidence/cincinnati-r4-edge-contact.jpg"
+      ],
+      "complete_point": "Candidate serve preparation, last serve/point and arms-raised celebration about255–261. No final per-frame score/crop approval because parent chose fact card.",
+      "inset_safe_window": null,
+      "source": "/workspace/sabalenka-finals-production/staging/extra/cincinnati-r4.mp4",
+      "source_url": "https://www.youtube.com/watch?v=4xU-gVFzfPY",
+      "source_sha256": "f49a44d3aa5f27d6694d6bbe0def6f033047cb8434418d400125c1e66196abc2",
+      "duration": 12.12,
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "approved_for_render": false,
+      "status": "not_used_fact_card_selected_by_parent"
+    },
+    {
+      "id": "rome-final-match-point",
+      "source_name": "rome-r3",
+      "selected_for_main_edit": false,
+      "start": 278.0,
+      "end": 298.65,
+      "quote_en": null,
+      "captions": [],
+      "asr_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/asr/rome-r3-small.en.json",
+        "/workspace/sabalenka-finals-production/research/production/asr/rome-r3-context-small.en.json",
+        "/workspace/sabalenka-finals-production/research/production/asr/rome-r3-medium.en.json"
+      ],
+      "asr_resolution": "Both models transcribe Yeah well played really found some good angles there, then incomplete The verge of being knocked out across actual final-serve preparation, and render Cirstea phonetically as Castella. Cannot certify complete first sentence from existing ASR; left unapproved, parent chose fact card and stopped further diagnostics. Do not use placeholder exact captions.",
+      "visual_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/evidence/rome-r3-tail-contact.jpg",
+        "/workspace/sabalenka-finals-production/research/production/evidence/rome-r3-edge-contact.jpg"
+      ],
+      "complete_point": "Candidate278–298.65 includes prior-point commentary leading into final serve around284–285 and actual final point. Longer than target; not approved.",
+      "inset_safe_window": null,
+      "source": "/workspace/sabalenka-finals-production/staging/extra/rome-r3.mp4",
+      "source_url": "https://www.youtube.com/watch?v=t6TwqVMycLQ",
+      "source_sha256": "b3f07da0d8e810f741c553fb2ef67c853d3e94e1779fd168b2c2d37bc7ddbcea",
+      "duration": 20.65,
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "approved_for_render": false,
+      "status": "not_used_fact_card_selected_by_parent"
+    },
+    {
+      "id": "toronto-final-match-point",
+      "source_name": "toronto-r4",
+      "selected_for_main_edit": false,
+      "start": 279.5,
+      "end": 299.95,
+      "quote_en": null,
+      "captions": [],
+      "asr_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/asr/toronto-r4-context-small.en.json",
+        "/workspace/sabalenka-finals-production/research/production/asr/toronto-r4-medium.en.json"
+      ],
+      "asr_resolution": "Both models hear This time she misses it and...most difficult years for Ekaterina Alexandrova, followed by full She has played the best tennis of the season to beat Sabalenka for the fifth time ending299.64–299.72. Connecting and/in grammar remains uncertain; no invented exact caption. Parent chose fact card and stopped further diagnostics.",
+      "visual_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/evidence/toronto-r4-match-locator.jpg",
+        "/workspace/sabalenka-finals-production/research/production/evidence/toronto-r4-final-contact.jpg"
+      ],
+      "complete_point": "Actual final wide shot around280–282 followed by Alexandrova then Sabalenka reaction and handshake. Candidate start279.50 retains receiver ready before last serve. No final per-frame score/crop approval.",
+      "inset_safe_window": null,
+      "source": "/workspace/sabalenka-finals-production/staging/extra/toronto-r4.mp4",
+      "source_url": "https://www.youtube.com/watch?v=Ydiz_GpM8_A",
+      "source_sha256": "17cb89d0815a373bf6360c7bfed7aa25493f854860b2436f9f53a7270171ba10",
+      "duration": 20.45,
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "approved_for_render": false,
+      "status": "not_used_fact_card_selected_by_parent"
+    }
+  ],
+  "main_edit_recommendation": "Use Madrid complete last point+commentary23.18s; Rome/Berlin/Toronto/Cincinnati fact cards by parent production decision.",
+  "limitations": [
+    "Actual independent small.en/medium.en ASR and sampled native source frames used; no claimed human listening.",
+    "Madrid card safe interval checked with same-template placeholder, actual final-card overlay pending.",
+    "No shared spec or git changes; no render or publication performed."
+  ]
+}

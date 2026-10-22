@@ -1,0 +1,311 @@
+{
+  "schema": "sabalenka-slam-loss-selections.v1",
+  "prepared_at_utc": "2026-10-22T03:56:44.799731+00:00",
+  "status": "complete_three_selected_windows_asr_cross_checked_not_human_listening",
+  "selections": [
+    {
+      "source_name": "ao-highlights",
+      "source": "ao_final",
+      "source_url": "https://www.youtube.com/watch?v=7CeEeluu9Q4",
+      "source_file": "/workspace/rybakina-finals-production/sources/ao-highlights.mp4",
+      "source_sha256": "4924c2c0bdb20c257a482b66d924bbbf950f206c7afecf8585a76adc0dc94063",
+      "start": 163.35,
+      "end": 179.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "captions": [
+        {
+          "at": 6.03,
+          "end": 10.75,
+          "text": "Rybakina. It's Elena Rybakina who moves ahead in this final.\n莱巴金娜在决赛中取得领先。"
+        },
+        {
+          "at": 10.95,
+          "end": 16.11,
+          "text": "She gets the important break and leads 4-3. Final set.\n关键破发，决胜盘四比三领先。"
+        }
+      ],
+      "utterances": [
+        {
+          "start": 169.38,
+          "end": 174.1,
+          "en": "Rybakina. It's Elena Rybakina who moves ahead in this final.",
+          "zh": "莱巴金娜在决赛中取得领先。"
+        },
+        {
+          "start": 174.3,
+          "end": 179.46,
+          "en": "She gets the important break and leads 4-3. Final set.",
+          "zh": "关键破发，决胜盘四比三领先。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "reviewer": "Codex actual source-bound frame review and ASR cross-check; not human listening",
+      "reviewed_at": "2026-10-22T03:56:44.799731+00:00",
+      "reviewed_from": 163.35,
+      "reviewed_to": 179.6,
+      "status": "complete",
+      "uncertain_spans": [],
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/slam-loss/reused-ao-highlights-end-small.en.json",
+          "sha256": "b02d462cf866effd9f181197f11ce1eeff36babd501406c2c8120b2fd7eada58",
+          "model": "small.en",
+          "source_sha256": "4924c2c0bdb20c257a482b66d924bbbf950f206c7afecf8585a76adc0dc94063",
+          "clip": [
+            160.0,
+            217.7
+          ]
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/slam-loss/reused-ao-break-medium.en.json",
+          "sha256": "22dbaa2522b166dd8b1b463abd20566ec14e46084b2eaad152b5fc0e744486f9",
+          "model": "medium.en",
+          "source_sha256": "4924c2c0bdb20c257a482b66d924bbbf950f206c7afecf8585a76adc0dc94063",
+          "clip": [
+            156.0,
+            180.0
+          ]
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/slam-loss/reused-ao-highlights-call-diagnostic.json",
+          "sha256": "11c25289ccace60e2c670fba9733aecfb3cb26a5675824a01d715522b1f78e2f",
+          "model": "large-v3-turbo",
+          "source_sha256": "4924c2c0bdb20c257a482b66d924bbbf950f206c7afecf8585a76adc0dc94063",
+          "clip": [
+            168.7,
+            171.4
+          ]
+        }
+      ],
+      "visual_evidence": "Same2026 AO final, deciding set3-3, Sabalenka serving30-40. Source163.35 starts before serve; original source call confirms decisive break and4-3. Complete point and Rybakina reaction. Not the championship point. Native cx0.5 samples163.6,165,168,172,178 reviewed; near-side returner partially outside crop while waiting at163.6, visible at actual return165 and remainder of rally. Do not label winner Rybakina close-ups as Sabalenka reaction.",
+      "label_safe_interval": {
+        "from": 163.6,
+        "to": 168.6,
+        "seconds": 5.0,
+        "show_after": 0.25,
+        "show_for": 5.0,
+        "reason": "Continuous wide court before winner close-up; stops before169+ reaction/call; no face overlay."
+      },
+      "audio_review_notes": "Explicitly reuses exact same actual MP4 SHA and exact163.35–179.60 already verified source window. All3 retained prior ASR JSON file hashes verified and copied unchanged. User/parent has accepted this key-break alternative. Final4-6,6-4,4-6 result belongs to preceding narration/full-match label, not this rally.",
+      "same_match_identity": {
+        "event": "澳网决赛",
+        "date": "2026-01-31",
+        "people": "萨巴伦卡 vs 莱巴金娜",
+        "score_sabalenka": "4-6 6-4 4-6",
+        "point_score_before": "决胜盘3-3，萨巴伦卡发球30-40",
+        "point_score_after": "莱巴金娜破发，决胜盘4-3领先"
+      },
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/slam-loss/ao_final-audio-packet.json"
+    },
+    {
+      "source_name": "rg-qf",
+      "source": "rg_qf",
+      "source_url": "https://www.youtube.com/watch?v=sRg1EOAg0FA",
+      "source_file": "/workspace/sabalenka-finals-production/staging/rg-qf.mp4",
+      "source_sha256": "9c14c330f674ed371ed23c0febedfae6e943dc37ce9c60a30c6c26e4052c5bab",
+      "start": 185.6,
+      "end": 201.5,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "captions": [],
+      "utterances": [],
+      "method": "asr_cross_checked",
+      "reviewer": "Codex actual source-bound frame review and ASR cross-check; not human listening",
+      "reviewed_at": "2026-10-22T03:56:44.799731+00:00",
+      "reviewed_from": 185.6,
+      "reviewed_to": 201.5,
+      "status": "complete",
+      "uncertain_spans": [],
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/slam-loss/rg-qf-small.en.json",
+          "sha256": "7161d45d489bc0a7a38eedb75a9d09393e1ae28e08ffbee1df5d60fcfebcbad6",
+          "model": "small.en",
+          "source_sha256": "9c14c330f674ed371ed23c0febedfae6e943dc37ce9c60a30c6c26e4052c5bab",
+          "clip": [
+            160.0,
+            227.0
+          ]
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/slam-loss/rg-qf-medium.en.json",
+          "sha256": "a324fd25c376546939f9b0ab64c2a2eff076cd88ce4d8b6432fb460571c81887",
+          "model": "medium.en",
+          "source_sha256": "9c14c330f674ed371ed23c0febedfae6e943dc37ce9c60a30c6c26e4052c5bab",
+          "clip": [
+            160.0,
+            227.0
+          ]
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/slam-loss/rg-multilingual-turbo.json",
+          "sha256": "c07870fbb352f963cccad5cb4a75bf821dde118cdf46b37182b063974d5d0259",
+          "model": "large-v3-turbo",
+          "source_sha256": "9c14c330f674ed371ed23c0febedfae6e943dc37ce9c60a30c6c26e4052c5bab",
+          "clip": [
+            188,
+            205
+          ]
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/slam-loss/rg-french-small.json",
+          "sha256": "4fd77aca795e7a3bca6a56cf4370ccdd832b9b735c4ae811871a5753cfcab05c",
+          "model": "small",
+          "source_sha256": "9c14c330f674ed371ed23c0febedfae6e943dc37ce9c60a30c6c26e4052c5bab",
+          "clip": [
+            188,
+            205
+          ]
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/slam-loss/rg-french-turbo.json",
+          "sha256": "6b9410aa38c61da54a72f135886d1aee7cef1a33fb1713f0b8bcde7517a9325b",
+          "model": "large-v3-turbo",
+          "source_sha256": null,
+          "clip": null
+        }
+      ],
+      "visual_evidence": "Actual last point of RG quarterfinal: Sabalenka6-3,5-7,0-5,30-40 before last serve.185.6–186.5 Sabalenka pre-point close-up starts after penultimate-rally cut,187–188.6 receiver Shnaider face,188.8+ Sabalenka service-toss court view,189–192 complete point,193–201 Shnaider winner celebration. Winner emotion is Shnaider, not Sabalenka. Native cx0.5 images185,189,191,194,200 inspected; face crops remain visible.",
+      "label_safe_interval": {
+        "from": 188.9,
+        "to": 192.1,
+        "seconds": 3.2,
+        "show_after": 3.3,
+        "show_for": 3.2,
+        "reason": "Only continuous last-point wide view, ends before winner close-up. No4-second window claimed."
+      },
+      "audio_review_notes": "Selected track is retained unchanged. All2English ASR passes and3diagnostics compared: English hypotheses are contradictory and uncorroborated (small:That is what I thought; medium:Ladies and Gentlemen/thank you; multilingual:Woo/Yay/7-6; forced French:bonne soiree versus classic hallucinationSous-titrage Societe Radio-Canada). These are not reliable source captions. Distant PA/umpire result call is non-English or indistinct under crowd; no coherently identifiable foreground English sentence. This is a limited foreground-language classification, not a French transcription or proof of no speech. No invented English translation is burned, original crowd/court/PA kept.",
+      "no_foreground_english_reason": "Selected track is retained unchanged. All2English ASR passes and3diagnostics compared: English hypotheses are contradictory and uncorroborated (small:That is what I thought; medium:Ladies and Gentlemen/thank you; multilingual:Woo/Yay/7-6; forced French:bonne soiree versus classic hallucinationSous-titrage Societe Radio-Canada). These are not reliable source captions. Distant PA/umpire result call is non-English or indistinct under crowd; no coherently identifiable foreground English sentence. This is a limited foreground-language classification, not a French transcription or proof of no speech. No invented English translation is burned, original crowd/court/PA kept.",
+      "non_english_or_background_speech": {
+        "status": "indistinct_not_transcribed",
+        "language": "not_reliably_identified_possible_French_PA",
+        "scope": "Background result announcement under crowd, not a clear English commentator sentence",
+        "translated_caption": false,
+        "muted": false
+      },
+      "same_match_identity": {
+        "event": "法网四分之一决赛",
+        "date": "2026-06-03",
+        "people": "萨巴伦卡 vs 施耐德",
+        "score_sabalenka": "6-3 5-7 0-6",
+        "point_score_before": "萨巴伦卡决胜盘0-5，30-40面对赛点"
+      },
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/slam-loss/rg_qf-audio-packet.json"
+    },
+    {
+      "source_name": "wimbledon-r4",
+      "source": "wimbledon_r4",
+      "source_url": "https://www.youtube.com/watch?v=RpL5S1vtiAw",
+      "source_file": "/workspace/sabalenka-finals-production/staging/wimbledon-r4.mp4",
+      "source_sha256": "a30bae4c685bda47d61509b50f85ea887e4a5cd43721ce633e707d115e2e268b",
+      "start": 290.5,
+      "end": 307.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "captions": [
+        {
+          "at": 5.24,
+          "end": 7.4,
+          "text": "Game, set and match, Osaka.\n比赛结束，大坂直美获胜。"
+        },
+        {
+          "at": 8.5,
+          "end": 11.92,
+          "text": "Two sets to love, six-two, seven-six.\n盘分二比零，六比二、七比六。"
+        }
+      ],
+      "utterances": [
+        {
+          "start": 295.74,
+          "end": 297.9,
+          "en": "Game, set and match, Osaka.",
+          "zh": "比赛结束，大坂直美获胜。"
+        },
+        {
+          "start": 299.0,
+          "end": 302.42,
+          "en": "Two sets to love, six-two, seven-six.",
+          "zh": "盘分二比零，六比二、七比六。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "reviewer": "Codex actual source-bound frame review and ASR cross-check; not human listening",
+      "reviewed_at": "2026-10-22T03:56:44.799731+00:00",
+      "reviewed_from": 290.5,
+      "reviewed_to": 307.0,
+      "status": "complete",
+      "uncertain_spans": [],
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/slam-loss/wimbledon-r4-small.en.json",
+          "sha256": "d0ce30a9adf879a34d17063bbc11f2e47c7b2f858a95e9c5fa04e723b3be7065",
+          "model": "small.en",
+          "source_sha256": "a30bae4c685bda47d61509b50f85ea887e4a5cd43721ce633e707d115e2e268b",
+          "clip": [
+            250.0,
+            335.0
+          ]
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/slam-loss/wimbledon-r4-medium.en.json",
+          "sha256": "0766934f58508971fb0a6f81e9248e1d397b6841470860c56ad024e13fdacf85",
+          "model": "medium.en",
+          "source_sha256": "a30bae4c685bda47d61509b50f85ea887e4a5cd43721ce633e707d115e2e268b",
+          "clip": [
+            250.0,
+            335.0
+          ]
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/slam-loss/wim-selected-turbo.json",
+          "sha256": "67cd7081b1cb3e3b67891412eed9411dcdf8211070e54e253b528fbe98e5c73d",
+          "model": "large-v3-turbo",
+          "source_sha256": "a30bae4c685bda47d61509b50f85ea887e4a5cd43721ce633e707d115e2e268b",
+          "clip": [
+            290.5,
+            308
+          ]
+        }
+      ],
+      "visual_evidence": "Actual Wimbledon fourth-round last point.290.5 shows Sabalenka serving preparation,291–293 toss and full service motion,293–296.2 last rally/result,297+ winner Osaka celebration,304–307 Sabalenka actual loss reaction. Native cx0.5 samples291,293,295,300,305 inspected and both match movement and actual Sabalenka face remain visible. Osaka celebration is not attributed to Sabalenka.",
+      "label_safe_interval": {
+        "from": 291.05,
+        "to": 295.85,
+        "seconds": 4.8,
+        "show_after": 0.55,
+        "show_for": 4.8,
+        "reason": "Continuous wide court during complete point; ends before match finish/cut to winner face."
+      },
+      "audio_review_notes": "Both standard small.en and medium.en were actually run. Medium misses most distant court-call words; actual selected-window third-model diagnostic recovers recognizable Osaka/two-sets/six-two/seven-six sequence and matches small phonetic sequence. Standard court call normalized from repeated Game/set/match phonetics and verified official result; no extra commentary sentence invented from low-confidenceAgain/Oh artifacts. Caption scope is court umpire announcement; not a verbatim claim of every ASR-character agreement. Bound raw diagnostics retain all differences.",
+      "same_match_identity": {
+        "event": "温网第四轮",
+        "date": "2026-07-05",
+        "people": "萨巴伦卡 vs 大坂直美",
+        "score_sabalenka": "2-6 6-7(2)",
+        "point_score_before": "第二盘抢七，萨巴伦卡2-6落后，发球面对赛点"
+      },
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/slam-loss/wimbledon_r4-audio-packet.json"
+    }
+  ],
+  "internal_not_for_publication": [
+    {
+      "source_name": "ao-highlights",
+      "window": [
+        180,
+        192
+      ],
+      "role": "actual_championship_point_and_Sabalenka_reaction",
+      "status": "not_selected_unresolved_exact_first_commentary_clause",
+      "details": "Actual full final service/ace present and189–191 Sabalenka face. First clause smallwin-at-ice/turboCesar-with-an-ace and mediumomission not resolved. Do not turn guessedSeals-it/Finishes-with-an-ace into a verified quote. All actual diagnostics retained; selected prior4-3 full key break instead."
+    }
+  ],
+  "native_crop_evidence": "/workspace/sabalenka-finals-production/research/production/slam-loss/native-cx05-contact.jpg",
+  "rendered_or_published": false
+}

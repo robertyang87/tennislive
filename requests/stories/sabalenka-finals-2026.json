@@ -5,11 +5,11 @@
   "season": 2026,
   "request_zh": "那继续做萨巴伦卡的",
   "reference_slug": "rybakina-finals-2026",
-  "approval_state": "outline_pending_review",
+  "approval_state": "outline_approved",
   "outline": "research/sabalenka-finals-2026/outline.md",
   "duration_target_seconds": 310,
   "scope": "2026 singles season through latest verified post-US Open results; official Finals qualification announcement date, season highs and lows, all events separately tabulated.",
-  "research_state": "fresh_official_results_checked_source_preparation_in_progress",
+  "research_state": "complete_official_results_and_selected_source_evidence",
   "season_data": "research/sabalenka-finals-2026/season-results.json",
   "synced_main": "e9b59b0",
   "framing": {
@@ -34,17 +34,23 @@
     "player quotations or timecodes before actual source verification"
   ],
   "outline_review": {
-    "received": false,
-    "rule": ".claude/skills/tennis-owner-taste/SKILL.md C5; show one-page outline before rendering narrative feature."
+    "received": true,
+    "response": "好的",
+    "recorded_at_utc": "2026-10-22T03:37:40.771799+00:00",
+    "outline": "research/sabalenka-finals-2026/outline.md",
+    "scope": "Approved the presented approximately5-minute 2026 season film through Beijing/Wuhan, full-canvas/person-centered crop and latest main labels."
   },
   "source_manifest": "research/sabalenka-finals-2026/media/source-manifest.json",
   "source_preparation": {
-    "acquired_official_1080_sources": 9,
-    "official_candidates_not_downloaded": 7,
+    "acquired_official_1080_sources": 23,
+    "official_candidates_not_downloaded": 0,
     "interview_candidate_windows": 3,
-    "method": "small.en_medium.en_cross_checked; not human listening or final render approval"
+    "method": "small.en_medium.en_cross_checked; not human listening or final render approval",
+    "selected_original_audio_windows": 17,
+    "bilingual_cues": 41
   },
   "workbook": "research/sabalenka-finals-2026/萨巴伦卡2026赛季全数据.xlsx",
   "data_verification": "14 event APIs,58 completed matches,12 local-date corrections; 47W11L;6560Race points",
-  "state": "research_ready_outline_approval_pending"
+  "state": "native_production_in_progress",
+  "duration_actual_expected_seconds": 343.72
 }

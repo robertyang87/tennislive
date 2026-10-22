@@ -1,0 +1,243 @@
+{
+  "schema": "sabalenka.late-season-selections.v1",
+  "recorded_utc": "2026-10-22T03:48:54.353852+00:00",
+  "method": "actual_source_bytes_and_frames_plus_independent_small_en_medium_en_ASR_cross_check",
+  "human_listening_claimed": false,
+  "shared_spec_or_git_changed": false,
+  "selections": [
+    {
+      "key": "us_final_loss",
+      "source_key": "us_final",
+      "source_file": "/workspace/rybakina-finals-production/sources/us-final.mp4",
+      "source_url": "https://www.youtube.com/watch?v=YCAQnmJBJIk",
+      "source_sha256": "2583a83d9c85843e33e38b8df9664d73a2dbe66ba565f637eae334be43b2ca20",
+      "start": 169.0,
+      "end": 182.5,
+      "duration": 13.5,
+      "method": "asr_cross_checked",
+      "human_listening_claimed": false,
+      "foreground_packet": "/workspace/sabalenka-finals-production/research/production/late-season/packets/us_final_loss.json",
+      "foreground_packet_sha256": "b6f3c264c3e34d97b9b8c510d563a17e83656330ed16bf4862cb35700ffb189b",
+      "captions_absolute": [
+        {
+          "start": 175.12,
+          "end": 177.82,
+          "en": "Game, set, match for Rybakina.",
+          "zh": "比赛结束，莱巴金娜获胜。"
+        },
+        {
+          "start": 178.76,
+          "end": 182.3,
+          "en": "Two sets to one, 6-4, 5-7, 6-2.",
+          "zh": "总盘分二比一：六比四、五比七、六比二。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 6.12,
+          "end": 8.82,
+          "text": "Game, set, match for Rybakina.\n比赛结束，莱巴金娜获胜。"
+        },
+        {
+          "at": 9.76,
+          "end": 13.3,
+          "text": "Two sets to one, 6-4, 5-7, 6-2.\n总盘分二比一：六比四、五比七、六比二。"
+        }
+      ],
+      "visual_evidence": {
+        "identity": "2026US Open final; Sabalenka orange, Rybakina yellow. Sabalenka is loser.",
+        "point": "169–171.3 Rybakina pre-serve;171.5 wide court before full service motion;172–175 final rally;175.3 point complete;176–178 Rybakina real celebration;178.7–182.5 Sabalenka real losing reaction, walking/bending and lifting head.",
+        "why_final_point": "Burned scoreboard explicitlyCHAMPIONSHIP POINT#2, Rybakina5-2/40-30 serving. Final point wins match6-4,5-7,6-2. This is championship point, unlike previous4-2break retained in Rybakina film."
+      },
+      "visible_score": "Before point: Sabalenka4 7 2 /30; Rybakina6 5 5 /40; Championship Point#2. Eventual Sabalenka4-6 7-5 2-6.",
+      "actual_frame_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/late-season/us-final-contact.jpg",
+        "/workspace/sabalenka-finals-production/research/production/late-season/us-boundary.jpg"
+      ],
+      "audio_boundary_notes": "Broad167–201 ASR contaminated court call with the separate commentator sentence after182.58. Exact169–182.5 rerun with proper-name-only prompt gives small Game7forRybakina,who sets..., medium Game set match for Rybakina,who sets..., and score6-4,5-7,6-2. Both actual models identify winner and score; independent pre-existing source-SHA-matched turbo169–187 resolves Game set match for Rybakina / Two sets to one, same6-4,5-7,6-2. Normalize phonetic7→set/match and who sets the one→Two sets to one based on medium+turbo and direct score context; no invented player quote. End182.5 is after scorecall182.30 with0.20s margin, before next distinct commentary at182.58, which is not included. Channel/bandpass WAVs only used diagnostically; selected source retains original stereo and speed. No human listening claimed.",
+      "render_approval": false,
+      "scope": "Source window selection evidence; final native geometry, subtitle timings, actual mix and output still require final QC.",
+      "card_safe_continuous_wide": {
+        "source_start": 171.45,
+        "source_end": 175.45,
+        "duration": 4.0,
+        "relative_at": 2.45,
+        "relative_end": 6.45,
+        "evidence": "/workspace/sabalenka-finals-production/research/production/late-season/card-safe-us.jpg",
+        "scope": "Continuous source court-wide camera window, sampled boundary frames inspected; native overlay geometry still requires output QC."
+      }
+    },
+    {
+      "key": "beijing_third_round_loss",
+      "source_key": "beijing",
+      "source_file": "/workspace/sabalenka-finals-production/staging/extra/beijing-r3.mp4",
+      "source_url": "https://www.youtube.com/watch?v=s3mqDeV5E_w",
+      "source_sha256": "ce7320181adea751842fe58f500e6fa5f788e1c547fe064d11a775d0292a5efd",
+      "start": 258.0,
+      "end": 271.8,
+      "duration": 13.8,
+      "method": "asr_cross_checked",
+      "human_listening_claimed": false,
+      "foreground_packet": "/workspace/sabalenka-finals-production/research/production/late-season/packets/beijing_third_round_loss.json",
+      "foreground_packet_sha256": "b13bb51c4e802eb87c060e357ef403d41252d434eb179480cce0224af5e6843e",
+      "captions_absolute": [
+        {
+          "start": 263.72,
+          "end": 266.78,
+          "en": "And Nikola Bartunkova gets it done.",
+          "zh": "巴尔通科娃赢下了比赛。"
+        },
+        {
+          "start": 268.16,
+          "end": 271.62,
+          "en": "The number two seed, the number two player in the world is out.",
+          "zh": "二号种子、世界第二，出局了。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 5.72,
+          "end": 8.78,
+          "text": "And Nikola Bartunkova gets it done.\n巴尔通科娃赢下了比赛。"
+        },
+        {
+          "at": 10.16,
+          "end": 13.62,
+          "text": "The number two seed, the number two player in the world is out.\n二号种子、世界第二，出局了。"
+        }
+      ],
+      "visual_evidence": {
+        "identity": "2026 China Open third round, Sabalenka near-side burgundy/pink, Bartunkova far-side white.",
+        "point": "258.0–258.4 pre-serve Sabalenka close-up;258.8 wide-court service setup;259.2 toss/full serve through260;260–266 rally/outcome;267 onward Bartunkova actual win reaction.",
+        "why_not_258_88": "258.88 is already at wide-court service motion. Start258.0 includes preparation before the toss. End271.8 retains both complete victory sentences and winner reaction, before next sentence272.22."
+      },
+      "visible_score": "Bartunkova6 5 /40; Sabalenka4 3 /30, MATCH POINT. Eventual Sabalenka4-6 3-6.",
+      "actual_frame_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/late-season/beijing-contact.jpg",
+        "/workspace/sabalenka-finals-production/research/production/late-season/beijing-serve-detail.jpg"
+      ],
+      "audio_boundary_notes": "Small and medium agree on both substantive clauses at263.72/263.76–266.78 and268.16/268.26–271.62; normalize surname phonetics to official Nikola Bartunkova. Previous independent utterance Nice pickup from Sabalenka there ends257.08, before start258.0. Next Nikola...the biggest win... starts272.22, after end271.8. No narration over these clauses; original speed/audio retained.",
+      "render_approval": false,
+      "scope": "Source window selection evidence; final native geometry, subtitle timings, actual mix and output still require final QC.",
+      "card_safe_continuous_wide": {
+        "source_start": 259.0,
+        "source_end": 266.0,
+        "duration": 7.0,
+        "relative_at": 1.0,
+        "relative_end": 8.0,
+        "evidence": "/workspace/sabalenka-finals-production/research/production/late-season/card-safe-beijing.jpg",
+        "scope": "Continuous source court-wide camera window, sampled boundary frames inspected; native overlay geometry still requires output QC."
+      },
+      "source_fallback": "https://github.com/robertyang87/tennislive/releases/download/source-s3mqDeV5E_w/s3mqDeV5E_w.mp4",
+      "source_identity_binding": {
+        "canonical_official_url": "https://www.youtube.com/watch?v=s3mqDeV5E_w",
+        "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-s3mqDeV5E_w/s3mqDeV5E_w.mp4",
+        "same_original_source_sha256": "ce7320181adea751842fe58f500e6fa5f788e1c547fe064d11a775d0292a5efd",
+        "basis": "Official media manifest and actual local source SHA256; URL identity update does not change source bytes."
+      }
+    },
+    {
+      "key": "wuhan_second_round_loss",
+      "source_key": "wuhan_final",
+      "source_file": "/workspace/sabalenka-finals-production/staging/extra/wuhan-wsc-29-00.mp4",
+      "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/55429c9c-ae73-4044-a0b8-8c0784b9eb88.mp4",
+      "source_sha256": "8682acab809a54fbeb21e4b9d0fe7510e6ee9789f2659bb34bc3ba1754792605",
+      "start": 0.0,
+      "end": 19.8,
+      "duration": 19.8,
+      "method": "asr_cross_checked",
+      "human_listening_claimed": false,
+      "foreground_packet": "/workspace/sabalenka-finals-production/research/production/late-season/packets/wuhan_second_round_loss.json",
+      "foreground_packet_sha256": "1a743a61e88be29284bf93ecfe343c0e2b0006ee4f25198f7bce3a43c96748cf",
+      "captions_absolute": [
+        {
+          "start": 6.62,
+          "end": 11.08,
+          "en": "And a tournament that has already produced headlines in its opening three days,",
+          "zh": "赛事前三天已经新闻不断，"
+        },
+        {
+          "start": 11.08,
+          "end": 13.98,
+          "en": "Ann Li produces the biggest of them all,",
+          "zh": "安·李制造了最大的新闻，"
+        },
+        {
+          "start": 13.98,
+          "end": 17.12,
+          "en": "in all capital letters above the fold.",
+          "zh": "用醒目的大字，登上头版。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 6.62,
+          "end": 11.08,
+          "text": "And a tournament that has already produced headlines in its opening three days,\n赛事前三天已经新闻不断，"
+        },
+        {
+          "at": 11.08,
+          "end": 13.98,
+          "text": "Ann Li produces the biggest of them all,\n安·李制造了最大的新闻，"
+        },
+        {
+          "at": 13.98,
+          "end": 17.12,
+          "text": "in all capital letters above the fold.\n用醒目的大字，登上头版。"
+        }
+      ],
+      "visual_evidence": {
+        "identity": "2026 Wuhan R2; Ann Li blue top/black skirt serving far-side; Sabalenka purple/pink near-side.",
+        "point": "0–2 Ann Li preparation/full toss;3–6.7 full final service rally;7–10 winner real fist-pump;11–12 playerbox;13–17 Ann Li reaction;17.5–18.5 handshake;19.7 Sabalenka real exit reaction in foreground.",
+        "scoreboard": "First frame clearlyMATCH POINT#10. Tiebreak Ann Li6/Sabalenka5; final point ends match7-6(5) in deciding set.",
+        "ninth_save_warning": "This selected point is conversion of Ann Li10th matchpoint, not Sabalenka ninth saved point. Available WSC28 first frame explicitlyMATCH POINT#8 at tiebreak6-3, so it must not be falsely labelled ninth save."
+      },
+      "visible_score": "Opening: Sabalenka6 4 6 /5, Ann Li3 6 6 /6, MATCH POINT#10. Final Sabalenka6-3 4-6 6-7(5).",
+      "actual_frame_evidence": [
+        "/workspace/sabalenka-finals-production/research/production/late-season/wuhan29-contact.jpg",
+        "/workspace/sabalenka-finals-production/research/production/late-season/wuhan-final-detail.jpg"
+      ],
+      "audio_boundary_notes": "Small and medium agree on entire6.6–17.1 commentary with only Ann Li phonetic and/Lee normalized to official identity. Initial And a tournament preserved as both ASRs, without editorial grammar invention. Small shows next distinct Three-time champion... at20.06; medium stretches an anticipatory Three token across17.12–20.10, a word-alignment silence artifact. End19.8 retains final point, victory, and handshake while avoiding next sentence; final mix must confirm this boundary. No human listening claim.",
+      "render_approval": false,
+      "scope": "Source window selection evidence; final native geometry, subtitle timings, actual mix and output still require final QC.",
+      "card_safe_continuous_wide": {
+        "source_start": 2.8,
+        "source_end": 7.2,
+        "duration": 4.4,
+        "relative_at": 2.8,
+        "relative_end": 7.2,
+        "evidence": "/workspace/sabalenka-finals-production/research/production/late-season/card-safe-wuhan.jpg",
+        "scope": "Continuous source court-wide camera window, sampled boundary frames inspected; native overlay geometry still requires output QC."
+      }
+    }
+  ],
+  "required_narration_facts": {
+    "us": "美网女单决赛输莱巴金娜4-6,7-5,2-6，亚军。冠军分画面不是她夺冠；她的失落反应由真实橙衣镜头承担。",
+    "beijing": "中网第三轮，4-6,3-6负巴尔通科娃，全场5个破发点0兑现。",
+    "wuhan": "先赢首盘，次盘4-2领先后被逆转；决胜盘2-5落后，挽救9个赛点追进抢七，但Ann Li第10个赛点终结比赛。ninth saved point不由此终局窗证明，只由官方赛报支撑；不假称九个救赛点都在片中。",
+    "wuhan_official_article": "https://www.wtatennis.com/news/4592337/li-converts-10th-match-point-to-upset-sabalenka-earn-career-best-win-in-wuhan",
+    "name_policy": "Ann Li当前规范为安·李；李吉妮仅旧译别名。"
+  },
+  "cold_open": {
+    "key": "cold_us_loss",
+    "standalone_4_to_6_second_candidate": null,
+    "why": "US源中唯一连续明显萨巴失落镜头在178.7–184.5，和正片末分候选重叠，且叠加完整盘分播报及下一句解说。没有强剪成4–6秒或拿莱巴庆祝冒充她。",
+    "body_interview_plan": "Mainline US uses final point169–182.5 only, then qualification; no70–91 interview and no repeat of54.05–62.05.",
+    "decision": "Parent selected already audited US runner-up speech54.05–62.05; no repeated interview in body.",
+    "selected_parent_audited_window": {
+      "source": "Parent/media agent already audited US runner-up speech",
+      "start": 54.05,
+      "end": 62.05,
+      "duration": 8.0,
+      "key": "cold_us_loss",
+      "verification_scope": "采用主线程已有双ASR证据；本任务没有重复验证该采访源。"
+    }
+  },
+  "integration_notes": [
+    "本文件只交付源窗与原声证据，不批准任何成片/混音/裁切。",
+    "所有caption的start/end是源片绝对秒；quote_relative对应段起点。",
+    "完整关键回合不靠变速或静音；旁白置于原声窗之间。",
+    "最终native预览须复核裁切是否保留双方每次击球，不让图例在回合中遮人。",
+    "US若接受本轮medium+turbo交叉校正，使用精确169–182.5窗，不能改回含182.58后不稳定评论的长窗。"
+  ]
+}

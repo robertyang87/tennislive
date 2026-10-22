@@ -1,0 +1,50 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=sRg1EOAg0FA",
+  "source_sha256": "9c14c330f674ed371ed23c0febedfae6e943dc37ce9c60a30c6c26e4052c5bab",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-bound frame review and ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T03:56:44.799731+00:00",
+  "reviewed_from": 185.6,
+  "reviewed_to": 201.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/rg-7161d45d48-rg-qf-small.en.json",
+      "sha256": "7161d45d489bc0a7a38eedb75a9d09393e1ae28e08ffbee1df5d60fcfebcbad6",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/rg-a324fd25c3-rg-qf-medium.en.json",
+      "sha256": "a324fd25c376546939f9b0ab64c2a2eff076cd88ce4d8b6432fb460571c81887",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/rg-c07870fbb3-rg-multilingual-turbo.json",
+      "sha256": "c07870fbb352f963cccad5cb4a75bf821dde118cdf46b37182b063974d5d0259",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/rg-4fd77aca79-rg-french-small.json",
+      "sha256": "4fd77aca795e7a3bca6a56cf4370ccdd832b9b735c4ae811871a5753cfcab05c",
+      "model": "small"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/rg-6b9410aa38-rg-french-turbo.json",
+      "sha256": "6b9410aa38c61da54a72f135886d1aee7cef1a33fb1713f0b8bcde7517a9325b",
+      "model": "large-v3-turbo"
+    }
+  ],
+  "source_key": "rg_qf",
+  "foreground_english": [],
+  "no_foreground_english_reason": "Selected track is retained unchanged. All2English ASR passes and3diagnostics compared: English hypotheses are contradictory and uncorroborated (small:That is what I thought; medium:Ladies and Gentlemen/thank you; multilingual:Woo/Yay/7-6; forced French:bonne soiree versus classic hallucinationSous-titrage Societe Radio-Canada). These are not reliable source captions. Distant PA/umpire result call is non-English or indistinct under crowd; no coherently identifiable foreground English sentence. This is a limited foreground-language classification, not a French transcription or proof of no speech. No invented English translation is burned, original crowd/court/PA kept.",
+  "review_notes": "Selected track is retained unchanged. All2English ASR passes and3diagnostics compared: English hypotheses are contradictory and uncorroborated (small:That is what I thought; medium:Ladies and Gentlemen/thank you; multilingual:Woo/Yay/7-6; forced French:bonne soiree versus classic hallucinationSous-titrage Societe Radio-Canada). These are not reliable source captions. Distant PA/umpire result call is non-English or indistinct under crowd; no coherently identifiable foreground English sentence. This is a limited foreground-language classification, not a French transcription or proof of no speech. No invented English translation is burned, original crowd/court/PA kept.",
+  "non_english_or_background_speech": {
+    "status": "indistinct_not_transcribed",
+    "language": "not_reliably_identified_possible_French_PA",
+    "scope": "Background result announcement under crowd, not a clear English commentator sentence",
+    "translated_caption": false,
+    "muted": false
+  }
+}

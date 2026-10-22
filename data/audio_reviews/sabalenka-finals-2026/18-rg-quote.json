@@ -1,0 +1,94 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=CnL-mKOT9C8",
+  "source_sha256": "fbca6f1dcf5bbd9d1f8bb11b2cbd1f2377cd71a55683e0f780de6adcea0ae39e",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review and paired ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T04:24:32.512268+00:00",
+  "reviewed_from": 36.1,
+  "reviewed_to": 60.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 36.5,
+      "end": 37.1,
+      "en": "I feel like",
+      "zh": "我觉得，"
+    },
+    {
+      "start": 37.1,
+      "end": 40.16,
+      "en": "I had very decent opportunities",
+      "zh": "我原本有很好的机会，"
+    },
+    {
+      "start": 40.16,
+      "end": 41.28,
+      "en": "in the second set.",
+      "zh": "就在第二盘。"
+    },
+    {
+      "start": 41.44,
+      "end": 43.14,
+      "en": "I screw up, and then she stepped in,",
+      "zh": "我没把握好，她掌握了主动，"
+    },
+    {
+      "start": 43.2,
+      "end": 44.18,
+      "en": "and she played great.",
+      "zh": "她打得非常好。"
+    },
+    {
+      "start": 44.66,
+      "end": 47.44,
+      "en": "And I feel like mentally,",
+      "zh": "我觉得在心理上，"
+    },
+    {
+      "start": 47.44,
+      "end": 49.12,
+      "en": "I couldn't really recover",
+      "zh": "我始终没能缓过来，"
+    },
+    {
+      "start": 49.12,
+      "end": 50.42,
+      "en": "after second set.",
+      "zh": "在第二盘结束之后。"
+    },
+    {
+      "start": 50.42,
+      "end": 54.8,
+      "en": "And that really... yeah,",
+      "zh": "而这真的……是的，"
+    },
+    {
+      "start": 54.8,
+      "end": 56.14,
+      "en": "I think that was",
+      "zh": "我认为这就是"
+    },
+    {
+      "start": 56.14,
+      "end": 60.28,
+      "en": "the biggest mistake from me.",
+      "zh": "我犯下的最大错误。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Both models agree on substantive statement and final complete sentence. Small inserts low-confidence her after after, medium omits it; primary WTA4513629 quote agrees with medium after second set. Leading and timing differs44.20–44.66;44.30 start is candidate and needs final source-edge playback before approval. Next interviewer starts60.98 in small;60.50 end leaves0.48s.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/rg-quote-0c7e8ef865-rg-qf-presser-small.en.json",
+      "sha256": "0c7e8ef865a261b12208f43a02ab0614fcdc0b93d48945be796f075c5812913f",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/rg-quote-bda32720ec-rg-qf-presser-medium.en.json",
+      "sha256": "bda32720ec3188de3aca1f7360ddf39aa899ea5c59f880331c0b490bd97870ae",
+      "model": "medium.en"
+    }
+  ]
+}

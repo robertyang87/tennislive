@@ -1,0 +1,35 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_key": "miami_final",
+  "source_url": "https://www.youtube.com/watch?v=nj76Dn9Vu5E",
+  "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame inspection and source-bound multiple-ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T03:53:24.503148+00:00",
+  "reviewed_from": 262.08,
+  "reviewed_to": 266.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 262.16,
+      "end": 266.56,
+      "en": "The Sunshine Double belongs to Aryna Sabalenka.",
+      "zh": "阳光双冠属于萨巴伦卡。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/cold-miami-56bb9372b5-miami-final-small.en.json",
+      "sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/cold-miami-223aaa306b-miami-final-medium.en.json",
+      "sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+      "model": "medium.en"
+    }
+  ],
+  "review_scope": "Entire selected actual source window; coherent identifiable English retained with bilingual captions; machine review, not human listening.",
+  "review_notes": "Both actual small and medium agree on complete Sunshine Double clause; normalize only verified Aryna spelling. Exact non-overlap: main point253–262.08, cold262.08–266.80, main aftermath267.12–274.88. No reused picture interval. End266.80 preserves full surname ending266.56; next clause starts267.44 later. No artificial speed or muting."
+}

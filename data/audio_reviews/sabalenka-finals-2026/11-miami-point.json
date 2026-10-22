@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_key": "miami_final",
+  "source_url": "https://www.youtube.com/watch?v=nj76Dn9Vu5E",
+  "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame inspection and source-bound multiple-ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T03:53:24.309037+00:00",
+  "reviewed_from": 253.0,
+  "reviewed_to": 262.08,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/miami-point-56bb9372b5-miami-final-small.en.json",
+      "sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/miami-point-223aaa306b-miami-final-medium.en.json",
+      "sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+      "model": "medium.en"
+    }
+  ],
+  "review_scope": "Entire selected actual source window; coherent identifiable English retained with bilingual captions; machine review, not human listening.",
+  "review_notes": "Both actual small210–310 and medium252–275.5 identify no foreground English in253–262.08. Previous She makes it ends252.04 before253, next The Sunshine Double belongs... starts262.16/262.32 after262.08. Preserve impact/crowd and early winner reaction without muting. This selection does not cut an utterance; complete next clause is retained once in cold_miami.",
+  "no_foreground_english_reason": "Both actual small210–310 and medium252–275.5 identify no foreground English in253–262.08. Previous She makes it ends252.04 before253, next The Sunshine Double belongs... starts262.16/262.32 after262.08. Preserve impact/crowd and early winner reaction without muting. This selection does not cut an utterance; complete next clause is retained once in cold_miami."
+}

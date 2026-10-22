@@ -1,0 +1,38 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=s3mqDeV5E_w",
+  "source_sha256": "ce7320181adea751842fe58f500e6fa5f788e1c547fe064d11a775d0292a5efd",
+  "method": "asr_cross_checked",
+  "reviewer": "Actual small.en + medium.en source-bound ASR cross-check and sampled source-frame inspection; not human listening",
+  "reviewed_at": "2026-10-22T03:48:54.328894+00:00",
+  "reviewed_from": 258.0,
+  "reviewed_to": 271.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 263.72,
+      "end": 266.78,
+      "en": "And Nikola Bartunkova gets it done.",
+      "zh": "巴尔通科娃赢下了比赛。"
+    },
+    {
+      "start": 268.16,
+      "end": 271.62,
+      "en": "The number two seed, the number two player in the world is out.",
+      "zh": "二号种子、世界第二，出局了。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/beijing-dde64be8fc-beijing-small.en.json",
+      "sha256": "dde64be8fca775bbf2327f7c4e801c7ccbcc7749438c4006a9559e2b1ba05435",
+      "model": null
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/beijing-4dc658f81a-beijing-medium.en.json",
+      "sha256": "4dc658f81afb4564faa87f469227342b8f0babc9b01242b6204e9ef9e5fe43ee",
+      "model": null
+    }
+  ],
+  "review_notes": "Small and medium agree on both substantive clauses at263.72/263.76–266.78 and268.16/268.26–271.62; normalize surname phonetics to official Nikola Bartunkova. Previous independent utterance Nice pickup from Sabalenka there ends257.08, before start258.0. Next Nikola...the biggest win... starts272.22, after end271.8. No narration over these clauses; original speed/audio retained."
+}

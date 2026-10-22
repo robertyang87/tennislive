@@ -1,0 +1,1028 @@
+{
+  "schema": "sabalenka-core-win-selections.v1",
+  "player": "Aryna Sabalenka",
+  "season": 2026,
+  "prepared_at": "2026-10-22T03:53:24.503363+00:00",
+  "status": "complete_source_windows_and_machine_audio_cross_check_native_overlay_pending",
+  "selected_segments": [
+    {
+      "key": "brisbane_champion",
+      "_id": "brisbane_champion",
+      "source_name": "brisbane-final",
+      "source": "brisbane_final",
+      "source_url": "https://www.youtube.com/watch?v=gGpXEkR5BBs",
+      "source_file": "/workspace/sabalenka-finals-production/staging/brisbane-final.mp4",
+      "source_sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57",
+      "start": 240.0,
+      "end": 254.6,
+      "seconds": 14.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 7.5,
+          "end": 11.08,
+          "text": "Mission accomplished for Aryna Sabalenka.\n萨巴伦卡如愿以偿。"
+        },
+        {
+          "at": 11.5,
+          "end": 14.38,
+          "text": "She's the champion once again in Brisbane.\n她再次成为布里斯班冠军。"
+        }
+      ],
+      "captions_absolute": [
+        {
+          "start": 247.5,
+          "end": 251.08,
+          "en": "Mission accomplished for Aryna Sabalenka.",
+          "zh": "萨巴伦卡如愿以偿。"
+        },
+        {
+          "start": 251.5,
+          "end": 254.38,
+          "en": "She's the champion once again in Brisbane.",
+          "zh": "她再次成为布里斯班冠军。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-small.en.json",
+          "sha256": "826bdcc342c9ee90319c359a7f20f48fe6f8869286f8a4047f5752ecaf878616",
+          "model": "small.en",
+          "clip": [
+            210.0,
+            310.0
+          ],
+          "source_sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-selected-small.en.json",
+          "sha256": "2b5991393926644858967cb074bf7ff088a8d13fa1db0a11cc4115539c198ee1",
+          "model": "small.en",
+          "clip": [
+            240.0,
+            255.5
+          ],
+          "source_sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-medium.en.json",
+          "sha256": "b8b795f625cd5028cff3212f59bb0e342ce1634070350a5200c1fe81d307a8c6",
+          "model": "medium.en",
+          "clip": [
+            239.0,
+            255.5
+          ],
+          "source_sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-turbo-diagnostic.json",
+          "sha256": "908dc6ccedb8397b0602f7055e5c94cec21fcb752bb48a3aea4918aa978b301a",
+          "model": "large-v3-turbo",
+          "clip": [
+            246,
+            255.5
+          ],
+          "source_sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57"
+        }
+      ],
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane_champion-audio-packet.json",
+      "audio_review_packet_sha256": "b74ec02e128d26cb0e77fbc9da944c2c62525355ac93436fc78601a393fd04d0",
+      "audio_review_state": "complete_machine_cross_check_not_human_listening",
+      "visual_review": "Same2026 Brisbane final vs Marta Kostyuk. Match-point banner and scoreboard show Sabalenka6-4,5-3 at40-30.240–243 serve preparation;244 serve/toss, full final rally through247.4, racket/face/kiss reaction248–250 and both players aftermath through254.6. Actual champion result6-4,6-3.",
+      "info_band_source_candidates": [
+        {
+          "from": 244.0,
+          "to": 247.6,
+          "duration": 3.6,
+          "kind": "actual wide court only; approximately4s, do not extend into reaction close-up after247.7"
+        },
+        {
+          "from": 242.32,
+          "to": 247.56,
+          "duration": 5.24,
+          "kind": "secondary candidate includes pre-serve close-up; only if native rendered overlay demonstrably stays above face"
+        }
+      ],
+      "info_band_caveat": "These are actual shot-type candidates, not a claim that the native overlay has already been rendered and checked. Main thread must inspect actual native samples and avoid faces/critical action.",
+      "crop_limitations": [],
+      "dynamic_trophy_lift": false,
+      "uncertain_spans": []
+    },
+    {
+      "key": "iw_save_matchpoint",
+      "_id": "iw_save_matchpoint",
+      "source_name": "indian-wells-final",
+      "source": "indian_wells",
+      "source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+      "source_file": "/workspace/rybakina-finals-production/sources/indian-wells-final.mp4",
+      "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+      "start": 235.6,
+      "end": 245.36,
+      "seconds": 9.76,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 6.58,
+          "end": 9.68,
+          "text": "Oh, not done yet.\n哦，还没结束。"
+        }
+      ],
+      "captions_absolute": [
+        {
+          "start": 242.18,
+          "end": 245.28,
+          "en": "Oh, not done yet.",
+          "zh": "哦，还没结束。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/indian-wells-save-small.en.json",
+          "sha256": "d23437bf3cd8e3fca7ea096b2edda1e0910a95eb6253b699fec9200267ff6d50",
+          "model": "small.en",
+          "clip": [
+            180.0,
+            245.5
+          ],
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/indian-wells-save-medium.en.json",
+          "sha256": "0300133707cc1a5385f3e8abf42948c102e8ffece4285dfc505451a28a15bb6a",
+          "model": "medium.en",
+          "clip": [
+            235.0,
+            245.6
+          ],
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-medium.en.json",
+          "sha256": "b46edc1560febee0c0e167ee285298aa787e3822c50b34eebff2ca1cc1dd1a12",
+          "model": "medium.en",
+          "clip": [
+            240.0,
+            309.0
+          ],
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        }
+      ],
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/core-asr/iw_save_matchpoint-audio-packet.json",
+      "audio_review_packet_sha256": "da1b255d94adaf86fae981623cd21ad1e8833ebfc6218dd3c97d8ff868e9b18a",
+      "audio_review_state": "complete_machine_cross_check_not_human_listening",
+      "visual_review": "Same2026 Indian Wells final. Deciding tiebreak scoreboard shows Sabalenka5,Rybakina6 and CHAMPIONSHIP POINT banner.235.6 short crowd shot then wide court235.92; Rybakina near-side serve preparation/serve236–239, whole rally through242–243, Sabalenka far-side backhand recovery around240 and her walking reaction244–245.36. This is the saved Rybakina championship point, not the final championship point.",
+      "info_band_source_candidates": [
+        {
+          "from": 235.92,
+          "to": 243.48,
+          "duration": 7.56,
+          "kind": "wide court shot; prefer moving this event label to iw_champion to avoid obscuring Sabalenka far-side backhand"
+        }
+      ],
+      "info_band_caveat": "These are actual shot-type candidates, not a claim that the native overlay has already been rendered and checked. Main thread must inspect actual native samples and avoid faces/critical action.",
+      "crop_limitations": [
+        "Actual fixed-court-center3:4 crops show Rybakina briefly outside left edge around241–241.5. Sabalenka far-side backhand remains visible; do not claim both players remain visible every frame. Full temporal point retained. Main thread has been told and must inspect native preview."
+      ],
+      "dynamic_trophy_lift": false,
+      "uncertain_spans": []
+    },
+    {
+      "key": "iw_champion",
+      "_id": "iw_champion",
+      "source_name": "indian-wells-final",
+      "source": "indian_wells",
+      "source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+      "source_file": "/workspace/rybakina-finals-production/sources/indian-wells-final.mp4",
+      "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+      "start": 245.6,
+      "end": 262.0,
+      "seconds": 16.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 5.46,
+          "end": 9.88,
+          "text": "Third time is a charm for Aryna Sabalenka.\n第三次，萨巴伦卡终于如愿。"
+        },
+        {
+          "at": 12.74,
+          "end": 15.66,
+          "text": "As revenge is served.\n她完成了复仇。"
+        }
+      ],
+      "captions_absolute": [
+        {
+          "start": 251.06,
+          "end": 255.48,
+          "en": "Third time is a charm for Aryna Sabalenka.",
+          "zh": "第三次，萨巴伦卡终于如愿。"
+        },
+        {
+          "start": 258.34,
+          "end": 261.26,
+          "en": "As revenge is served.",
+          "zh": "她完成了复仇。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-small.en.json",
+          "sha256": "541e7453ddc7b6681f6e87e099d450d3fee939e5c5c1b5da46bdf3f8ee64610b",
+          "model": "small.en",
+          "clip": [
+            240.0,
+            309.0
+          ],
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-medium.en.json",
+          "sha256": "b46edc1560febee0c0e167ee285298aa787e3822c50b34eebff2ca1cc1dd1a12",
+          "model": "medium.en",
+          "clip": [
+            240.0,
+            309.0
+          ],
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-selected-small.en.json",
+          "sha256": "4ef5ab5696ef607056f6a4a4e34dc471cbd66b9a9c45d6087ec47c5f61a6150f",
+          "model": "small.en",
+          "clip": [
+            245.6,
+            262.0
+          ],
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        }
+      ],
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/core-asr/iw_champion-audio-packet.json",
+      "audio_review_packet_sha256": "19ccba661b8fb1a88b2cfe8bc5f5671753c9fe02586b73d8ccae80e769d0bd53",
+      "audio_review_state": "complete_machine_cross_check_not_human_listening",
+      "visual_review": "Same actual source bytes as previously audited Rybakina episode.245.6 begins full-court before Sabalenka near-side serve/toss246–247; final point248–251, winner racket-raised reaction252–255 and face reaction through262. Actual result3-6,6-3,7-6(6). Dynamic racket celebration, not trophy lifting.",
+      "info_band_source_candidates": [
+        {
+          "from": 245.6,
+          "to": 251.4,
+          "duration": 5.8,
+          "kind": "actual wide service and last rally, before winner close-up"
+        }
+      ],
+      "info_band_caveat": "These are actual shot-type candidates, not a claim that the native overlay has already been rendered and checked. Main thread must inspect actual native samples and avoid faces/critical action.",
+      "crop_limitations": [],
+      "dynamic_trophy_lift": false,
+      "uncertain_spans": []
+    },
+    {
+      "key": "miami_champion_point",
+      "_id": "miami_champion_point",
+      "source_name": "miami-final",
+      "source": "miami_final",
+      "source_url": "https://www.youtube.com/watch?v=nj76Dn9Vu5E",
+      "source_file": "/workspace/sabalenka-finals-production/staging/miami-final.mp4",
+      "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+      "start": 253.0,
+      "end": 262.08,
+      "seconds": 9.08,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [],
+      "captions_absolute": [],
+      "_quote_kind": "broadcast",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-small.en.json",
+          "sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+          "model": "small.en",
+          "clip": [
+            210.0,
+            310.0
+          ],
+          "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-medium.en.json",
+          "sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+          "model": "medium.en",
+          "clip": [
+            252.0,
+            275.5
+          ],
+          "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57"
+        }
+      ],
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/core-asr/miami_champion_point-audio-packet.json",
+      "audio_review_packet_sha256": "9d1c60a05565156b37dee2151178c7d775b2fbf50b5a418a08cea2be6fdcf370",
+      "audio_review_state": "complete_machine_cross_check_not_human_listening",
+      "visual_review": "Same2026 Miami final vs Coco Gauff.253 side/receiver preparation;254–255 receiver close-up;255.28 wide court before Gauff far-side serve, complete final rally256–260.8, Sabalenka reaction/opening arms261–262.08. Actual full result6-2,4-6,6-3. This championship point is shown once; main window ends exactly where distinct cold_miami begins.",
+      "info_band_source_candidates": [
+        {
+          "from": 255.28,
+          "to": 261.44,
+          "duration": 6.16,
+          "kind": "actual full-court last service/rally; stop before celebration close-up"
+        }
+      ],
+      "info_band_caveat": "These are actual shot-type candidates, not a claim that the native overlay has already been rendered and checked. Main thread must inspect actual native samples and avoid faces/critical action.",
+      "crop_limitations": [],
+      "dynamic_trophy_lift": false,
+      "uncertain_spans": []
+    },
+    {
+      "key": "miami_aftermath",
+      "_id": "miami_aftermath",
+      "source_name": "miami-final",
+      "source": "miami_final",
+      "source_url": "https://www.youtube.com/watch?v=nj76Dn9Vu5E",
+      "source_file": "/workspace/sabalenka-finals-production/staging/miami-final.mp4",
+      "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+      "start": 267.12,
+      "end": 274.88,
+      "seconds": 7.76,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.32,
+          "end": 3.22,
+          "text": "She is the champion in Miami again.\n她再次成为迈阿密冠军。"
+        },
+        {
+          "at": 3.22,
+          "end": 7.56,
+          "text": "To add to the title she won in Indian Wells a couple of weeks ago.\n加上两周前的印第安维尔斯冠军。"
+        }
+      ],
+      "captions_absolute": [
+        {
+          "start": 267.44,
+          "end": 270.34,
+          "en": "She is the champion in Miami again.",
+          "zh": "她再次成为迈阿密冠军。"
+        },
+        {
+          "start": 270.34,
+          "end": 274.68,
+          "en": "To add to the title she won in Indian Wells a couple of weeks ago.",
+          "zh": "加上两周前的印第安维尔斯冠军。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-small.en.json",
+          "sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+          "model": "small.en",
+          "clip": [
+            210.0,
+            310.0
+          ],
+          "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-medium.en.json",
+          "sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+          "model": "medium.en",
+          "clip": [
+            252.0,
+            275.5
+          ],
+          "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57"
+        }
+      ],
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/core-asr/miami_aftermath-audio-packet.json",
+      "audio_review_packet_sha256": "309d16adab121177c2fd31b2e616ee00ca558d3addb38ba69630bef1e95bf698",
+      "audio_review_state": "complete_machine_cross_check_not_human_listening",
+      "visual_review": "Continuation after the separate cold-open celebration: Sabalenka face/wipe gesture267–271, Gauff close-up272, real winner/runner-up net handshake/hug273–274.88. Not a trophy ceremony. No frames overlap cold262.08–266.80 or main point253–262.08.",
+      "info_band_source_candidates": [],
+      "info_band_caveat": "These are actual shot-type candidates, not a claim that the native overlay has already been rendered and checked. Main thread must inspect actual native samples and avoid faces/critical action.",
+      "crop_limitations": [],
+      "dynamic_trophy_lift": false,
+      "uncertain_spans": []
+    }
+  ],
+  "cold_miami": {
+    "key": "cold_miami",
+    "_id": "cold_miami",
+    "source_name": "miami-final",
+    "source": "miami_final",
+    "source_url": "https://www.youtube.com/watch?v=nj76Dn9Vu5E",
+    "source_file": "/workspace/sabalenka-finals-production/staging/miami-final.mp4",
+    "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+    "start": 262.08,
+    "end": 266.8,
+    "seconds": 4.72,
+    "cx": 0.5,
+    "track": false,
+    "fit": "crop",
+    "narration": "",
+    "quote": [
+      {
+        "at": 0.08,
+        "end": 4.48,
+        "text": "The Sunshine Double belongs to Aryna Sabalenka.\n阳光双冠属于萨巴伦卡。"
+      }
+    ],
+    "captions_absolute": [
+      {
+        "start": 262.16,
+        "end": 266.56,
+        "en": "The Sunshine Double belongs to Aryna Sabalenka.",
+        "zh": "阳光双冠属于萨巴伦卡。"
+      }
+    ],
+    "_quote_kind": "broadcast",
+    "method": "asr_cross_checked",
+    "asr_evidence": [
+      {
+        "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-small.en.json",
+        "sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+        "model": "small.en",
+        "clip": [
+          210.0,
+          310.0
+        ],
+        "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57"
+      },
+      {
+        "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-medium.en.json",
+        "sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+        "model": "medium.en",
+        "clip": [
+          252.0,
+          275.5
+        ],
+        "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57"
+      }
+    ],
+    "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/core-asr/cold_miami-audio-packet.json",
+    "audio_review_packet_sha256": "c120aac3fbcd95f010108ee7832eb538f7bae85992aed6be2aafb9641aef7dae",
+    "audio_review_state": "complete_machine_cross_check_not_human_listening",
+    "visual_review": "Actual post-championship Sabalenka celebration: arms open and head tilted back262–264, smiling/looking down265–266.8. Pure real champion reaction, no trophy present. Intended only for approved opening peak/valley contrast.",
+    "info_band_source_candidates": [],
+    "info_band_caveat": "These are actual shot-type candidates, not a claim that the native overlay has already been rendered and checked. Main thread must inspect actual native samples and avoid faces/critical action.",
+    "crop_limitations": [],
+    "dynamic_trophy_lift": false,
+    "uncertain_spans": []
+  },
+  "all_segments": [
+    {
+      "key": "brisbane_champion",
+      "_id": "brisbane_champion",
+      "source_name": "brisbane-final",
+      "source": "brisbane_final",
+      "source_url": "https://www.youtube.com/watch?v=gGpXEkR5BBs",
+      "source_file": "/workspace/sabalenka-finals-production/staging/brisbane-final.mp4",
+      "source_sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57",
+      "start": 240.0,
+      "end": 254.6,
+      "seconds": 14.6,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 7.5,
+          "end": 11.08,
+          "text": "Mission accomplished for Aryna Sabalenka.\n萨巴伦卡如愿以偿。"
+        },
+        {
+          "at": 11.5,
+          "end": 14.38,
+          "text": "She's the champion once again in Brisbane.\n她再次成为布里斯班冠军。"
+        }
+      ],
+      "captions_absolute": [
+        {
+          "start": 247.5,
+          "end": 251.08,
+          "en": "Mission accomplished for Aryna Sabalenka.",
+          "zh": "萨巴伦卡如愿以偿。"
+        },
+        {
+          "start": 251.5,
+          "end": 254.38,
+          "en": "She's the champion once again in Brisbane.",
+          "zh": "她再次成为布里斯班冠军。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-small.en.json",
+          "sha256": "826bdcc342c9ee90319c359a7f20f48fe6f8869286f8a4047f5752ecaf878616",
+          "model": "small.en",
+          "clip": [
+            210.0,
+            310.0
+          ],
+          "source_sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-selected-small.en.json",
+          "sha256": "2b5991393926644858967cb074bf7ff088a8d13fa1db0a11cc4115539c198ee1",
+          "model": "small.en",
+          "clip": [
+            240.0,
+            255.5
+          ],
+          "source_sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-medium.en.json",
+          "sha256": "b8b795f625cd5028cff3212f59bb0e342ce1634070350a5200c1fe81d307a8c6",
+          "model": "medium.en",
+          "clip": [
+            239.0,
+            255.5
+          ],
+          "source_sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-turbo-diagnostic.json",
+          "sha256": "908dc6ccedb8397b0602f7055e5c94cec21fcb752bb48a3aea4918aa978b301a",
+          "model": "large-v3-turbo",
+          "clip": [
+            246,
+            255.5
+          ],
+          "source_sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57"
+        }
+      ],
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane_champion-audio-packet.json",
+      "audio_review_packet_sha256": "b74ec02e128d26cb0e77fbc9da944c2c62525355ac93436fc78601a393fd04d0",
+      "audio_review_state": "complete_machine_cross_check_not_human_listening",
+      "visual_review": "Same2026 Brisbane final vs Marta Kostyuk. Match-point banner and scoreboard show Sabalenka6-4,5-3 at40-30.240–243 serve preparation;244 serve/toss, full final rally through247.4, racket/face/kiss reaction248–250 and both players aftermath through254.6. Actual champion result6-4,6-3.",
+      "info_band_source_candidates": [
+        {
+          "from": 244.0,
+          "to": 247.6,
+          "duration": 3.6,
+          "kind": "actual wide court only; approximately4s, do not extend into reaction close-up after247.7"
+        },
+        {
+          "from": 242.32,
+          "to": 247.56,
+          "duration": 5.24,
+          "kind": "secondary candidate includes pre-serve close-up; only if native rendered overlay demonstrably stays above face"
+        }
+      ],
+      "info_band_caveat": "These are actual shot-type candidates, not a claim that the native overlay has already been rendered and checked. Main thread must inspect actual native samples and avoid faces/critical action.",
+      "crop_limitations": [],
+      "dynamic_trophy_lift": false,
+      "uncertain_spans": []
+    },
+    {
+      "key": "iw_save_matchpoint",
+      "_id": "iw_save_matchpoint",
+      "source_name": "indian-wells-final",
+      "source": "indian_wells",
+      "source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+      "source_file": "/workspace/rybakina-finals-production/sources/indian-wells-final.mp4",
+      "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+      "start": 235.6,
+      "end": 245.36,
+      "seconds": 9.76,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 6.58,
+          "end": 9.68,
+          "text": "Oh, not done yet.\n哦，还没结束。"
+        }
+      ],
+      "captions_absolute": [
+        {
+          "start": 242.18,
+          "end": 245.28,
+          "en": "Oh, not done yet.",
+          "zh": "哦，还没结束。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/indian-wells-save-small.en.json",
+          "sha256": "d23437bf3cd8e3fca7ea096b2edda1e0910a95eb6253b699fec9200267ff6d50",
+          "model": "small.en",
+          "clip": [
+            180.0,
+            245.5
+          ],
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/indian-wells-save-medium.en.json",
+          "sha256": "0300133707cc1a5385f3e8abf42948c102e8ffece4285dfc505451a28a15bb6a",
+          "model": "medium.en",
+          "clip": [
+            235.0,
+            245.6
+          ],
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-medium.en.json",
+          "sha256": "b46edc1560febee0c0e167ee285298aa787e3822c50b34eebff2ca1cc1dd1a12",
+          "model": "medium.en",
+          "clip": [
+            240.0,
+            309.0
+          ],
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        }
+      ],
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/core-asr/iw_save_matchpoint-audio-packet.json",
+      "audio_review_packet_sha256": "da1b255d94adaf86fae981623cd21ad1e8833ebfc6218dd3c97d8ff868e9b18a",
+      "audio_review_state": "complete_machine_cross_check_not_human_listening",
+      "visual_review": "Same2026 Indian Wells final. Deciding tiebreak scoreboard shows Sabalenka5,Rybakina6 and CHAMPIONSHIP POINT banner.235.6 short crowd shot then wide court235.92; Rybakina near-side serve preparation/serve236–239, whole rally through242–243, Sabalenka far-side backhand recovery around240 and her walking reaction244–245.36. This is the saved Rybakina championship point, not the final championship point.",
+      "info_band_source_candidates": [
+        {
+          "from": 235.92,
+          "to": 243.48,
+          "duration": 7.56,
+          "kind": "wide court shot; prefer moving this event label to iw_champion to avoid obscuring Sabalenka far-side backhand"
+        }
+      ],
+      "info_band_caveat": "These are actual shot-type candidates, not a claim that the native overlay has already been rendered and checked. Main thread must inspect actual native samples and avoid faces/critical action.",
+      "crop_limitations": [
+        "Actual fixed-court-center3:4 crops show Rybakina briefly outside left edge around241–241.5. Sabalenka far-side backhand remains visible; do not claim both players remain visible every frame. Full temporal point retained. Main thread has been told and must inspect native preview."
+      ],
+      "dynamic_trophy_lift": false,
+      "uncertain_spans": []
+    },
+    {
+      "key": "iw_champion",
+      "_id": "iw_champion",
+      "source_name": "indian-wells-final",
+      "source": "indian_wells",
+      "source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+      "source_file": "/workspace/rybakina-finals-production/sources/indian-wells-final.mp4",
+      "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+      "start": 245.6,
+      "end": 262.0,
+      "seconds": 16.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 5.46,
+          "end": 9.88,
+          "text": "Third time is a charm for Aryna Sabalenka.\n第三次，萨巴伦卡终于如愿。"
+        },
+        {
+          "at": 12.74,
+          "end": 15.66,
+          "text": "As revenge is served.\n她完成了复仇。"
+        }
+      ],
+      "captions_absolute": [
+        {
+          "start": 251.06,
+          "end": 255.48,
+          "en": "Third time is a charm for Aryna Sabalenka.",
+          "zh": "第三次，萨巴伦卡终于如愿。"
+        },
+        {
+          "start": 258.34,
+          "end": 261.26,
+          "en": "As revenge is served.",
+          "zh": "她完成了复仇。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-small.en.json",
+          "sha256": "541e7453ddc7b6681f6e87e099d450d3fee939e5c5c1b5da46bdf3f8ee64610b",
+          "model": "small.en",
+          "clip": [
+            240.0,
+            309.0
+          ],
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-medium.en.json",
+          "sha256": "b46edc1560febee0c0e167ee285298aa787e3822c50b34eebff2ca1cc1dd1a12",
+          "model": "medium.en",
+          "clip": [
+            240.0,
+            309.0
+          ],
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-selected-small.en.json",
+          "sha256": "4ef5ab5696ef607056f6a4a4e34dc471cbd66b9a9c45d6087ec47c5f61a6150f",
+          "model": "small.en",
+          "clip": [
+            245.6,
+            262.0
+          ],
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        }
+      ],
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/core-asr/iw_champion-audio-packet.json",
+      "audio_review_packet_sha256": "19ccba661b8fb1a88b2cfe8bc5f5671753c9fe02586b73d8ccae80e769d0bd53",
+      "audio_review_state": "complete_machine_cross_check_not_human_listening",
+      "visual_review": "Same actual source bytes as previously audited Rybakina episode.245.6 begins full-court before Sabalenka near-side serve/toss246–247; final point248–251, winner racket-raised reaction252–255 and face reaction through262. Actual result3-6,6-3,7-6(6). Dynamic racket celebration, not trophy lifting.",
+      "info_band_source_candidates": [
+        {
+          "from": 245.6,
+          "to": 251.4,
+          "duration": 5.8,
+          "kind": "actual wide service and last rally, before winner close-up"
+        }
+      ],
+      "info_band_caveat": "These are actual shot-type candidates, not a claim that the native overlay has already been rendered and checked. Main thread must inspect actual native samples and avoid faces/critical action.",
+      "crop_limitations": [],
+      "dynamic_trophy_lift": false,
+      "uncertain_spans": []
+    },
+    {
+      "key": "miami_champion_point",
+      "_id": "miami_champion_point",
+      "source_name": "miami-final",
+      "source": "miami_final",
+      "source_url": "https://www.youtube.com/watch?v=nj76Dn9Vu5E",
+      "source_file": "/workspace/sabalenka-finals-production/staging/miami-final.mp4",
+      "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+      "start": 253.0,
+      "end": 262.08,
+      "seconds": 9.08,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [],
+      "captions_absolute": [],
+      "_quote_kind": "broadcast",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-small.en.json",
+          "sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+          "model": "small.en",
+          "clip": [
+            210.0,
+            310.0
+          ],
+          "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-medium.en.json",
+          "sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+          "model": "medium.en",
+          "clip": [
+            252.0,
+            275.5
+          ],
+          "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57"
+        }
+      ],
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/core-asr/miami_champion_point-audio-packet.json",
+      "audio_review_packet_sha256": "9d1c60a05565156b37dee2151178c7d775b2fbf50b5a418a08cea2be6fdcf370",
+      "audio_review_state": "complete_machine_cross_check_not_human_listening",
+      "visual_review": "Same2026 Miami final vs Coco Gauff.253 side/receiver preparation;254–255 receiver close-up;255.28 wide court before Gauff far-side serve, complete final rally256–260.8, Sabalenka reaction/opening arms261–262.08. Actual full result6-2,4-6,6-3. This championship point is shown once; main window ends exactly where distinct cold_miami begins.",
+      "info_band_source_candidates": [
+        {
+          "from": 255.28,
+          "to": 261.44,
+          "duration": 6.16,
+          "kind": "actual full-court last service/rally; stop before celebration close-up"
+        }
+      ],
+      "info_band_caveat": "These are actual shot-type candidates, not a claim that the native overlay has already been rendered and checked. Main thread must inspect actual native samples and avoid faces/critical action.",
+      "crop_limitations": [],
+      "dynamic_trophy_lift": false,
+      "uncertain_spans": []
+    },
+    {
+      "key": "miami_aftermath",
+      "_id": "miami_aftermath",
+      "source_name": "miami-final",
+      "source": "miami_final",
+      "source_url": "https://www.youtube.com/watch?v=nj76Dn9Vu5E",
+      "source_file": "/workspace/sabalenka-finals-production/staging/miami-final.mp4",
+      "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+      "start": 267.12,
+      "end": 274.88,
+      "seconds": 7.76,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.32,
+          "end": 3.22,
+          "text": "She is the champion in Miami again.\n她再次成为迈阿密冠军。"
+        },
+        {
+          "at": 3.22,
+          "end": 7.56,
+          "text": "To add to the title she won in Indian Wells a couple of weeks ago.\n加上两周前的印第安维尔斯冠军。"
+        }
+      ],
+      "captions_absolute": [
+        {
+          "start": 267.44,
+          "end": 270.34,
+          "en": "She is the champion in Miami again.",
+          "zh": "她再次成为迈阿密冠军。"
+        },
+        {
+          "start": 270.34,
+          "end": 274.68,
+          "en": "To add to the title she won in Indian Wells a couple of weeks ago.",
+          "zh": "加上两周前的印第安维尔斯冠军。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-small.en.json",
+          "sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+          "model": "small.en",
+          "clip": [
+            210.0,
+            310.0
+          ],
+          "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-medium.en.json",
+          "sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+          "model": "medium.en",
+          "clip": [
+            252.0,
+            275.5
+          ],
+          "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57"
+        }
+      ],
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/core-asr/miami_aftermath-audio-packet.json",
+      "audio_review_packet_sha256": "309d16adab121177c2fd31b2e616ee00ca558d3addb38ba69630bef1e95bf698",
+      "audio_review_state": "complete_machine_cross_check_not_human_listening",
+      "visual_review": "Continuation after the separate cold-open celebration: Sabalenka face/wipe gesture267–271, Gauff close-up272, real winner/runner-up net handshake/hug273–274.88. Not a trophy ceremony. No frames overlap cold262.08–266.80 or main point253–262.08.",
+      "info_band_source_candidates": [],
+      "info_band_caveat": "These are actual shot-type candidates, not a claim that the native overlay has already been rendered and checked. Main thread must inspect actual native samples and avoid faces/critical action.",
+      "crop_limitations": [],
+      "dynamic_trophy_lift": false,
+      "uncertain_spans": []
+    },
+    {
+      "key": "cold_miami",
+      "_id": "cold_miami",
+      "source_name": "miami-final",
+      "source": "miami_final",
+      "source_url": "https://www.youtube.com/watch?v=nj76Dn9Vu5E",
+      "source_file": "/workspace/sabalenka-finals-production/staging/miami-final.mp4",
+      "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+      "start": 262.08,
+      "end": 266.8,
+      "seconds": 4.72,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.08,
+          "end": 4.48,
+          "text": "The Sunshine Double belongs to Aryna Sabalenka.\n阳光双冠属于萨巴伦卡。"
+        }
+      ],
+      "captions_absolute": [
+        {
+          "start": 262.16,
+          "end": 266.56,
+          "en": "The Sunshine Double belongs to Aryna Sabalenka.",
+          "zh": "阳光双冠属于萨巴伦卡。"
+        }
+      ],
+      "_quote_kind": "broadcast",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-small.en.json",
+          "sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+          "model": "small.en",
+          "clip": [
+            210.0,
+            310.0
+          ],
+          "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-medium.en.json",
+          "sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+          "model": "medium.en",
+          "clip": [
+            252.0,
+            275.5
+          ],
+          "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57"
+        }
+      ],
+      "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/core-asr/cold_miami-audio-packet.json",
+      "audio_review_packet_sha256": "c120aac3fbcd95f010108ee7832eb538f7bae85992aed6be2aafb9641aef7dae",
+      "audio_review_state": "complete_machine_cross_check_not_human_listening",
+      "visual_review": "Actual post-championship Sabalenka celebration: arms open and head tilted back262–264, smiling/looking down265–266.8. Pure real champion reaction, no trophy present. Intended only for approved opening peak/valley contrast.",
+      "info_band_source_candidates": [],
+      "info_band_caveat": "These are actual shot-type candidates, not a claim that the native overlay has already been rendered and checked. Main thread must inspect actual native samples and avoid faces/critical action.",
+      "crop_limitations": [],
+      "dynamic_trophy_lift": false,
+      "uncertain_spans": []
+    }
+  ],
+  "runtime_summary": {
+    "brisbane_seconds": 14.6,
+    "iw_save_and_championship_seconds": 26.16,
+    "miami_main_seconds": 16.84,
+    "cold_miami_seconds": 4.72
+  },
+  "source_metadata": [
+    {
+      "source_name": "brisbane-final",
+      "source": "brisbane_final",
+      "source_url": "https://www.youtube.com/watch?v=gGpXEkR5BBs",
+      "path": "/workspace/sabalenka-finals-production/staging/brisbane-final.mp4",
+      "sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57",
+      "width": 1920,
+      "height": 1080,
+      "fps": 25
+    },
+    {
+      "source_name": "indian-wells-final",
+      "source": "indian_wells",
+      "source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+      "path": "/workspace/rybakina-finals-production/sources/indian-wells-final.mp4",
+      "sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+      "width": 1920,
+      "height": 1080,
+      "fps": 25
+    },
+    {
+      "source_name": "miami-final",
+      "source": "miami_final",
+      "source_url": "https://www.youtube.com/watch?v=nj76Dn9Vu5E",
+      "path": "/workspace/sabalenka-finals-production/staging/miami-final.mp4",
+      "sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+      "width": 1920,
+      "height": 1080,
+      "fps": 25
+    }
+  ],
+  "limitations": [
+    "No actual dynamic trophy lift is present in these three match-highlight source tails. Racket raise/arms-open celebration and handshake are accurately described; any trophy shot requires a separately verified source.",
+    "Native branded overlays have not been rendered by this agent. Shot candidates are supplied; main thread must check actual label placement and final full-canvas crop.",
+    "IW saved-point fixed center briefly loses the near-side opponent at the left edge; actual key far-side Sabalenka backhand remains visible.",
+    "All audio conclusions use real source-bound ASR cross-checks, explicitly not human listening. No shared spec, git state, or publication modified."
+  ],
+  "visual_evidence": [
+    "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-detail.jpg",
+    "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-overview.jpg",
+    "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-last-precise.jpg",
+    "/workspace/sabalenka-finals-production/research/production/core-asr/iw-fixed-center-review.jpg",
+    "/workspace/sabalenka-finals-production/research/production/core-asr/iw-save-detail.jpg",
+    "/workspace/sabalenka-finals-production/research/production/core-asr/iw-save-last-precise.jpg",
+    "/workspace/sabalenka-finals-production/research/production/core-asr/iw-save-overview.jpg",
+    "/workspace/sabalenka-finals-production/research/production/core-asr/iw-save-scoreboard.jpg",
+    "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-detail.jpg",
+    "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-overview.jpg",
+    "/workspace/sabalenka-finals-production/research/production/core-asr/miami-last-precise.jpg"
+  ]
+}

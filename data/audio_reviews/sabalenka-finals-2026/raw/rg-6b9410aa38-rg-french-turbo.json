@@ -1,0 +1,49 @@
+{
+  "model": "large-v3-turbo",
+  "method": "actual_audio_channel_or_french_diagnostic",
+  "audio_path": "/workspace/sabalenka-finals-production/research/production/slam-loss/rg-multilingual.wav",
+  "audio_sha256": "35c417bd0962ef7076b927cfbf1714c10c400f268a70a0cc3dacdd7eb24ee7f8",
+  "source_offset": 188,
+  "language": "fr",
+  "segments": [
+    {
+      "start": 192.4,
+      "end": 194.24,
+      "text": " Sous-titrage Société Radio-Canada",
+      "no_speech_prob": 6.147628933694804e-11,
+      "avg_logprob": -0.426343817796026,
+      "words": [
+        {
+          "w": " Sous",
+          "s": 192.4,
+          "e": 193.48,
+          "p": 0.48342764284461737
+        },
+        {
+          "w": "-titrage",
+          "s": 193.48,
+          "e": 194.02,
+          "p": 0.952017585436503
+        },
+        {
+          "w": " Société",
+          "s": 194.02,
+          "e": 194.24,
+          "p": 0.7286483347415924
+        },
+        {
+          "w": " Radio",
+          "s": 194.24,
+          "e": 194.24,
+          "p": 0.9986082911491394
+        },
+        {
+          "w": "-Canada",
+          "s": 194.24,
+          "e": 194.24,
+          "p": 0.9993082682291666
+        }
+      ]
+    }
+  ]
+}

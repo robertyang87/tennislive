@@ -1,0 +1,469 @@
+{
+  "schema": "sabalenka-independent-editorial-review.v2",
+  "reviewed_at_utc": "2026-10-22T04:27:46.680652+00:00",
+  "result": "pass_editorial_only",
+  "editorial_review_passed": true,
+  "final_film_qc_passed": false,
+  "render_approval": false,
+  "publication_approval": false,
+  "scope": "Current31segments all narration/cards/labels/EN-ZHquotes and entireXHS5tags re-read against same audited primary facts. Includes six labels moved to native chapter cards, IW continuous original source-audio bounds under official still photo. Editorial/source-identity review only.",
+  "inputs": {
+    "spec": "/workspace/tennislive/specs/reels/sabalenka-finals-2026.json",
+    "spec_sha256": "6001cdebf0c9cf0a03487146e6864d3f7d4d4bc7cc7aaddcc6c3c9c3b9720bf5",
+    "xhs": "/workspace/tennislive/specs/reels/sabalenka-finals-2026.xhs.txt",
+    "xhs_sha256": "f3863cc85e29978c1159d4c788ee613b39d17f38e91584b484c684f88600d50c",
+    "season_results": "/workspace/tennislive/research/sabalenka-finals-2026/season-results.json",
+    "season_results_sha256": "d7ee3f59f5b449d93b6777779e6d4564181144a9075a58648cbad9d981672b3d"
+  },
+  "blocking_issues": [],
+  "nonblocking_editorial_issues": [],
+  "checks": {
+    "event_coverage": {
+      "result": "pass",
+      "events": 14,
+      "mapping": {
+        "布里斯班": [
+          "card-brisbane",
+          "brisbane"
+        ],
+        "澳网": [
+          "card-ao",
+          "ao"
+        ],
+        "印第安维尔斯": [
+          "card-iw",
+          "iw-save",
+          "iw-final",
+          "iw-photo"
+        ],
+        "迈阿密": [
+          "cold-miami",
+          "card-miami",
+          "miami-point",
+          "miami-reaction-reprise",
+          "miami-after"
+        ],
+        "马德里": [
+          "card-madrid",
+          "madrid"
+        ],
+        "罗马": [
+          "card-rg.narration第一句"
+        ],
+        "法网": [
+          "card-rg",
+          "rg",
+          "rg-quote"
+        ],
+        "柏林": [
+          "card-berlin"
+        ],
+        "温网": [
+          "card-wimbledon",
+          "wimbledon"
+        ],
+        "多伦多": [
+          "card-hardcourt.narration第一句"
+        ],
+        "辛辛那提": [
+          "card-hardcourt.narration第一句"
+        ],
+        "美网": [
+          "us-quote",
+          "card-us",
+          "us"
+        ],
+        "中网/北京": [
+          "card-beijing",
+          "beijing"
+        ],
+        "武汉": [
+          "card-wuhan",
+          "wuhan"
+        ]
+      },
+      "note": "Rome/Toronto/Cincinnati are verbal transitions within broader cards; no claim every station has its own matchvideo."
+    },
+    "timeline": {
+      "result": "pass",
+      "cold_open": [
+        "Miami March28champion reaction",
+        "USOpen September12runner-up speech"
+      ],
+      "main_body_order": "January Brisbane→AO→MarchIW→Miami→Madrid→Rome→RG→Berlin→Wimbledon→Toronto→Cincinnati→USOpen→September29qualification→OctoberBeijing→Wuhan",
+      "note": "Cold contrast explicitly authorized and followed by January reset; qualification date not moved to USfinal."
+    },
+    "titles_and_major_finals": {
+      "result": "pass",
+      "titles": [
+        "布里斯班",
+        "印第安维尔斯",
+        "迈阿密"
+      ],
+      "grand_slam_runner_ups": [
+        "澳网负莱巴金娜",
+        "美网负莱巴金娜"
+      ],
+      "other_slam_finishes": [
+        "法网8强负施耐德",
+        "温网第四轮负大坂直美"
+      ],
+      "source": "season-results.events and original official qualification press release"
+    },
+    "all_on_screen_score_dates": {
+      "result": "pass",
+      "label_count": 10,
+      "video_insets": 4,
+      "chapter_card_labels": 6,
+      "comparisons": [
+        {
+          "index_0_based": 3,
+          "segment_id": "brisbane",
+          "location": "video_inset",
+          "event": "布里斯班",
+          "date": "2026.01.11",
+          "score": "6-4 6-3",
+          "people": "萨巴伦卡 vs 科斯秋克",
+          "result": "matches_official_season_record"
+        },
+        {
+          "index_0_based": 5,
+          "segment_id": "ao",
+          "location": "video_inset",
+          "event": "澳网",
+          "date": "2026.01.31",
+          "score": "4-6 6-4 4-6",
+          "people": "萨巴伦卡 vs 莱巴金娜",
+          "result": "matches_official_season_record"
+        },
+        {
+          "index_0_based": 6,
+          "segment_id": "card-iw",
+          "location": "chapter_card",
+          "event": "印第安维尔斯",
+          "date": "2026.03.15",
+          "score": "3-6 6-3 7-6(6)",
+          "people": "萨巴伦卡 vs 莱巴金娜",
+          "result": "matches_official_season_record"
+        },
+        {
+          "index_0_based": 10,
+          "segment_id": "card-miami",
+          "location": "chapter_card",
+          "event": "迈阿密",
+          "date": "2026.03.28",
+          "score": "6-2 4-6 6-3",
+          "people": "萨巴伦卡 vs 高芙",
+          "result": "matches_official_season_record"
+        },
+        {
+          "index_0_based": 15,
+          "segment_id": "madrid",
+          "location": "video_inset",
+          "event": "马德里",
+          "date": "2026.04.28",
+          "score": "6-2 2-6 6-7(6)",
+          "people": "萨巴伦卡 vs 巴普蒂斯特",
+          "result": "matches_official_season_record"
+        },
+        {
+          "index_0_based": 16,
+          "segment_id": "card-rg",
+          "location": "chapter_card",
+          "event": "法网",
+          "date": "2026.06.03",
+          "score": "6-3 5-7 0-6",
+          "people": "萨巴伦卡 vs 施耐德",
+          "result": "matches_official_season_record"
+        },
+        {
+          "index_0_based": 21,
+          "segment_id": "wimbledon",
+          "location": "video_inset",
+          "event": "温网",
+          "date": "2026.07.05",
+          "score": "2-6 6-7(2)",
+          "people": "萨巴伦卡 vs 大坂直美",
+          "result": "matches_official_season_record"
+        },
+        {
+          "index_0_based": 23,
+          "segment_id": "card-us",
+          "location": "chapter_card",
+          "event": "美网",
+          "date": "2026.09.12",
+          "score": "4-6 7-5 2-6",
+          "people": "萨巴伦卡 vs 莱巴金娜",
+          "result": "matches_official_season_record"
+        },
+        {
+          "index_0_based": 26,
+          "segment_id": "card-beijing",
+          "location": "chapter_card",
+          "event": "中网/北京",
+          "date": "2026.10.04",
+          "score": "4-6 3-6",
+          "people": "萨巴伦卡 vs 巴尔通科娃",
+          "result": "matches_official_season_record"
+        },
+        {
+          "index_0_based": 28,
+          "segment_id": "card-wuhan",
+          "location": "chapter_card",
+          "event": "武汉",
+          "date": "2026.10.14",
+          "score": "6-3 4-6 6-7(5)",
+          "people": "萨巴伦卡 vs 安·李",
+          "result": "matches_official_season_record"
+        }
+      ],
+      "exact_metadata_retained": "Scores/dates/people identical to original audited labels; six moved without making complete key point serve/rally use an obstructing right-hand label."
+    },
+    "critical_facts": [
+      {
+        "segment_ids": [
+          "card-madrid",
+          "madrid"
+        ],
+        "result": "pass",
+        "finding": "Six unconverted match points and15-match win streak ended supported byWTA4495314. Selected last rally is Baptiste match point, not falsely identified as one of Sabalenka six; source scoreboard6–7TB shown."
+      },
+      {
+        "segment_ids": [
+          "card-rg",
+          "rg",
+          "rg-quote"
+        ],
+        "result": "pass",
+        "finding": "6-3/4-1lead,10straightgameslostfrom5-3 andQFfinish supported byWTA4513532. Script andXHS never claim RGmatchpoint existed."
+      },
+      {
+        "segment_ids": [
+          "card-wuhan",
+          "wuhan"
+        ],
+        "result": "pass",
+        "finding": "Second-set4-2lead and9saved matchpoints supported byWTA4592337. Selected WSC29 isAnnLi10thconvertedmatchpoint and final score6-3/4-6/6-7(5); neither caption nor narration calls selected point ninthsave."
+      },
+      {
+        "segment_ids": [
+          "card-beijing",
+          "beijing",
+          "card-ending"
+        ],
+        "result": "pass",
+        "finding": "Beijing won openerthenR3loss0/5breakpoints; WuhanR2openingloss. Asian1win/2losses counts3playedmatches, not byes. No fabricated withdrawal or season-end declaration."
+      }
+    ],
+    "qualification": {
+      "result": "pass",
+      "spec_pointer": "/segments/25/narration",
+      "text": "北京时间九月二十九日，WTA正式确认：萨巴伦卡，连续第六年入围年终总决赛。",
+      "primary_cms_utc": "2026-09-28T18:27:00Z",
+      "converted_beijing": "2026-09-29T02:27:00+08:00",
+      "official_x_utc": "2026-09-29T15:01:54.000Z",
+      "official_x_beijing": "2026-09-29T23:01:54+08:00",
+      "note": "Announcement date explicitlyBJT, not asserted earliest mathematicalclinch; sixthconsecutiveseason stated in official rawbody."
+    },
+    "psychological_claims": {
+      "result": "pass",
+      "finding": "No invented medical diagnosis, motive, giving-up or psychological cause for later matches. RGmental recovery sentence comes from sameQF official pressconference CnL-mKOT9C8/36.10–60.50 with actualdoubleASR; USdifficulty speaking comes from samefinal runner-up speechmDNM6E47Wqc/54.05–62.05. Cover遗憾 is supported by actual outcome and own reaction, not invented diary."
+    },
+    "four_grand_slam_same_round_media": {
+      "result": "pass_editorial_identity",
+      "sources": [
+        {
+          "segment_id": "ao",
+          "round": "2026AOFinalvsRybakina",
+          "window": [
+            163.35,
+            179.6
+          ],
+          "note": "Actual deciding-set3-3/30-40servicepoint, break toRybakina4-3. This is keybreak, NOTchampionshippoint; originalEnglish/ZH accurately saysimportantbreakand4-3."
+        },
+        {
+          "segment_id": "rg",
+          "round": "2026RGQFvsShnaider",
+          "window": [
+            185.6,
+            201.5
+          ],
+          "note": "Sabalenka visible before lastserve and winnerShnaiderreaction correctly contextualized as Sabalenka loss."
+        },
+        {
+          "segment_id": "wimbledon",
+          "round": "2026WimbledonR4vsOsaka",
+          "window": [
+            290.5,
+            307.0
+          ],
+          "note": "Lastserve/rally plusOsaka win and actualSabalenka losingreaction. Game-set-match and6-2/7-6call matchwinnerperspective."
+        },
+        {
+          "segment_id": "us",
+          "round": "2026USOpenFinalvsRybakina",
+          "window": [
+            169,
+            182.5
+          ],
+          "note": "Rybakina serves actualchampionshippoint#2, completepoint and Sabalenkaorangeoutfit losingreaction; winner-perspective courtcall6-4/5-7/6-2 consistent withSabalenka label4-6/7-5/2-6."
+        }
+      ]
+    },
+    "repetition": {
+      "result": "pass_authorized_contract",
+      "exact_duplicate_windows": [
+        {
+          "source": "miami-final",
+          "window": [
+            262.08,
+            266.8
+          ],
+          "count": 2
+        }
+      ],
+      "miami_repeat_seconds": 4.72,
+      "note": "ColdMiami reaction repeated once after bodychampionshippoint per authorized native ending-payoff. USspeech occurs exactlyonce; no additional sourcewindow duplicates."
+    },
+    "xhs": {
+      "result": "pass",
+      "finding": "Completecopy reviewed; all claims trackspec and officialfacts.3titles,2GSrunnerups,14stationtimeline,qualifiedBJT9/29,postUSOpenBeijing/Wuhan and9savedpoints consistent. No47/10profile conflict repeated, no claimedseasonalreadyfinished.",
+      "tag_count": 5,
+      "tags": [
+        "#萨巴伦卡",
+        "#WTA年终总决赛",
+        "#网球时差",
+        "#网球中国赛季来了",
+        "#网球时间到"
+      ]
+    },
+    "native_chapter_label_moves": {
+      "result": "pass_editorial_structure",
+      "moves": [
+        {
+          "card": "card-iw",
+          "following_video": "iw-final"
+        },
+        {
+          "card": "card-miami",
+          "following_video": "miami-point"
+        },
+        {
+          "card": "card-rg",
+          "following_video": "rg"
+        },
+        {
+          "card": "card-us",
+          "following_video": "us"
+        },
+        {
+          "card": "card-beijing",
+          "following_video": "beijing"
+        },
+        {
+          "card": "card-wuhan",
+          "following_video": "wuhan"
+        }
+      ],
+      "geometry_scope": "Native chapter-card design output still requires final pixel QC; this review confirms exact editorial metadata and absence of video inset."
+    },
+    "iw_photo_split": {
+      "result": "pass_editorial_and_source_bounds",
+      "complete_point_source_window": [
+        245.6,
+        251.04
+      ],
+      "photo_over_original_audio_source_window": [
+        251.04,
+        262.0
+      ],
+      "audio_source_key": "indian-wells-final",
+      "union_source_window": [
+        245.6,
+        262.0
+      ],
+      "gap_seconds": 0,
+      "overlap_seconds": 0,
+      "unchanged_complete_original_quotes": [
+        {
+          "start": 251.06,
+          "end": 255.48,
+          "text": "Third time is a charm for Aryna Sabalenka.\n第三次，萨巴伦卡终于如愿。"
+        },
+        {
+          "start": 258.34,
+          "end": 261.26,
+          "text": "As revenge is served.\n她完成了复仇。"
+        }
+      ],
+      "visual_image": "assets/reel/sabalenka-finals-2026/iw-champion-canvas.jpg",
+      "official_photo_primary_page": "https://bnpparibasopen.com/champions",
+      "original_photo_sha256": "e7cd9eebdec44cc53ff8e2b4780932be8e07e582caccaac945f3700f6c5b13e2",
+      "credit": "Jared Wickerham / Wick Photography, via BNP Paribas Open",
+      "date": "2026-03-15",
+      "identity": "Actual2026IndianWellswinnerSabalenka trophy portrait from official event2026champions page, not Miami mislabeled photo; no simulated lip-sync.",
+      "limitation": "Spec-level source-clock continuity is established. Actual encoded join/mix must still pass final audioQC."
+    },
+    "same_interview_sources_unchanged": {
+      "result": "pass",
+      "us_runnerup_speech": {
+        "segment_id": "us-quote",
+        "source": "us-runnerup-speech",
+        "window": [
+          54.05,
+          62.05
+        ],
+        "count": 1
+      },
+      "rg_own_presser": {
+        "segment_id": "rg-quote",
+        "source": "rg-qf-presser",
+        "window": [
+          36.1,
+          60.5
+        ]
+      },
+      "note": "Both remain same-event actual Sabalenka original statements; no invented psychological or medical explanation added."
+    }
+  },
+  "evidence_read": [
+    "/workspace/tennislive/research/sabalenka-finals-2026/season-results.json",
+    "/workspace/sabalenka-finals-production/research/spring/facts-audit.json",
+    "/workspace/sabalenka-finals-production/research/spring/article-4592337.txt",
+    "/workspace/sabalenka-finals-production/research/post-usopen/post-usopen-facts.json",
+    "/workspace/sabalenka-finals-production/research/post-usopen/beijing-loss.json",
+    "/workspace/sabalenka-finals-production/research/post-usopen/qualification-audit.json",
+    "/workspace/sabalenka-finals-production/research/post-usopen/qualification.json",
+    "/workspace/sabalenka-finals-production/research/post-usopen/qualifying-official-x-syndication.json",
+    "/workspace/rybakina-finals-production/research/ao-final.html",
+    "/workspace/sabalenka-finals-production/research/production/slam-loss-selections.json",
+    "/workspace/sabalenka-finals-production/research/production/late-season-selections.json",
+    "/workspace/sabalenka-finals-production/research/production/core-win-selections.json",
+    "/workspace/sabalenka-finals-production/research/media/interview-candidates.json",
+    "/workspace/sabalenka-finals-production/research/production/transitions-selections.json"
+  ],
+  "actual_contacts_viewed": [
+    "/workspace/sabalenka-finals-production/research/production/slam-loss/ao-final-contact.jpg",
+    "/workspace/sabalenka-finals-production/research/production/slam-loss/native-cx05-contact.jpg",
+    "/workspace/sabalenka-finals-production/research/production/slam-loss/rg-qf-precise-contact.jpg",
+    "/workspace/sabalenka-finals-production/research/production/slam-loss/wimbledon-r4-precise-contact.jpg",
+    "/workspace/sabalenka-finals-production/research/production/late-season/us-final-contact.jpg"
+  ],
+  "primary_urls": [
+    "https://www.wtatennis.com/news/4469923",
+    "https://www.wtatennis.com/news/4478182",
+    "https://www.wtatennis.com/news/4495314",
+    "https://www.wtatennis.com/news/4513532",
+    "https://www.wtatennis.com/news/4513629",
+    "https://www.wtatennis.com/news/4583238",
+    "https://x.com/WTA/status/2104949796649705950",
+    "https://www.wtatennis.com/news/4586336",
+    "https://www.wtatennis.com/news/4592337"
+  ],
+  "limits": [
+    "Editorial/source-identity approval only; no human listening, full-film playback, finalmix, crop, nativecaption/collision or publicationproof claimed.",
+    "Actual encoded IW seam and existing Madrid273.38/Wuhan19.8 source-edge notes remain finalaudioQC responsibilities. This review does not silently clear those notes.",
+    "Previous30segment inputSHA is superseded by this31segment source-bound review."
+  ],
+  "segment_count": 31
+}
