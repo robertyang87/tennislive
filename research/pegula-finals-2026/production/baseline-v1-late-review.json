@@ -1,0 +1,1242 @@
+{
+  "schema": "tennislive.independent-actual-film-visual-review.v1",
+  "created_utc": "2026-10-22T09:05:01.372152+00:00",
+  "reviewer": "independent_agent_rybakina_post_usopen",
+  "scope": {
+    "segment_indices": [
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "film_time_samples_seconds": [
+      288.04,
+      412.28
+    ],
+    "method": "Actual encoded master MP4 frames: all six 12-frame contacts inspected,30 key full-size JPGs including all17 English/Chinese foreground subtitle cues,plus5 actual drop-shot crop frames and17 actual final-point sequence samples.",
+    "whole_film_frame_by_frame_watched": false,
+    "human_listening_performed": false
+  },
+  "bindings": {
+    "film_path": "/workspace/pegula-finals-production/delivery/master/pegula-finals-2026.mp4",
+    "film_sha256": "5d0e4ef77394a8178647611629927944b1939fb58fffc03ef06dda81778017f4",
+    "film_bytes": 181993222,
+    "film_duration_seconds": 417.2,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": "25/1",
+    "spec_path": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+    "spec_sha256": "54122025aaed2692091df6ddfae0255275d5d225e7831837cdf60b47cabc5bbf",
+    "render_json_path": "/workspace/tennislive/output/2026-10-22/reel/pegula-finals-2026/render.json",
+    "render_json_sha256": "c9826be91aa9d6955f4a8496ebe8fb48808a2ee6183c9ff67379565a198c2269",
+    "sample_manifest_path": "/workspace/pegula-finals-production/final-film-review-late/manifest.json",
+    "sample_manifest_sha256": "3c04de73828096b5cfa2bef430554cfd415c19a1798794f0377c68c17cf6706a",
+    "all_independently_verified": true
+  },
+  "result": "baseline_pass_for_reviewed_actual_film_visual_scope_with_fixed_crop_limitations",
+  "blocking_issues": [],
+  "findings": [
+    {
+      "segment_ids": [
+        "us-qf-reaction",
+        "us-qf-interview"
+      ],
+      "result": "pass",
+      "details": "Pegula identity preserved. Interview face centered, cap and microphone retained. All seven interview cues and both reaction commentary cues inspected at full size: English/Chinese complete and within canvas, no text cut at sides/bottom. No information inset on interview/reaction."
+    },
+    {
+      "segment_ids": [
+        "us-sf",
+        "wuhan-mp3"
+      ],
+      "result": "pass",
+      "details": "Actual encoded labels sampled before/first/middle/last/after. Text/score readable, label does not cover striking player or face. After-label frames clear; no previous overlay residue. USSF5-7,2-6;Wuhan6-2,6-7(7),3-6 displayed consistently with selected source result."
+    },
+    {
+      "segment_ids": [
+        "wuhan-mp3"
+      ],
+      "result": "pass_with_fixed_crop_limit",
+      "details": "Shown point is the independently identified third Pegula match point; the label states three total missed match points without pretending all three are shown. Actual extra samples retain the drop shot, Pegula sprint and failed low reach. After the reach her body approaches/exits right crop edge; see nonblocking limitations."
+    },
+    {
+      "segment_ids": [
+        "wuhan-final"
+      ],
+      "result": "pass",
+      "details": "Actual3fps sequence368.24–373.57 shows final-point action,ball outcome andOstapenko reaction. Later actual master frames preserve player handshake/umpire handshake and six complete bilingual commentary cues. Final and they proved so costly. appears fully within canvas. No information overlay carried into this segment."
+    },
+    {
+      "segment_ids": [
+        "card-us-semi",
+        "card-asia",
+        "card-qualification",
+        "card-ending"
+      ],
+      "result": "pass",
+      "details": "Static body and join samples have no right-top information label. Expected chapter heading appears during the dissolve; no live information card is attached. Official poster is fully retained, including WTA FINALS/INDIAN WELLS,2026 wording,QUALIFIED andJESSICA PEGULA,with bottom Chinese subtitle separate below. Ending question remains readable and separate from bottom subtitle/brand."
+    },
+    {
+      "segment_ids": [
+        "us-qf-reaction",
+        "us-qf-interview",
+        "card-us-semi",
+        "us-sf",
+        "card-asia",
+        "wuhan-mp3",
+        "wuhan-final",
+        "card-qualification",
+        "card-ending"
+      ],
+      "result": "pass",
+      "details": "All sampled joins are expected short dissolves,with no black-frame gap or former live information label residue observed."
+    }
+  ],
+  "nonblocking_fixed_crop_limitations": [
+    {
+      "id": "wuhan_mp3_right_edge_aftermath",
+      "film_time_seconds": [
+        362.8,
+        363.6
+      ],
+      "approx_source_time_seconds": [
+        184.6,
+        185.4
+      ],
+      "description": "Fixedcenter3:4 crop retains Pegula bent low during the failed reach at approxsource184.6,but she reaches the right edge at185.0 and most of her body is outside the crop at185.4 while the ball is visible. This is the already documented fixedcx=.5 edge limitation,not a label obstruction or a temporal cut. Do not claim the entire original16:9 frame or entire player movement is preserved.",
+      "evidence_files": [
+        "wuhan-crop-source-182.60.jpg",
+        "wuhan-crop-source-183.80.jpg",
+        "wuhan-crop-source-184.60.jpg",
+        "wuhan-crop-source-185.00.jpg",
+        "wuhan-crop-source-185.40.jpg"
+      ]
+    },
+    {
+      "id": "left_source_scoreboard_cropped",
+      "description": "Original broadcast scoreboxes at far left are partly outside the fixedcourt crop in some US frames. Native upper-right information text remains legible. Do not claim full original broadcast graphics are retained.",
+      "evidence_files": [
+        "frame-024.jpg",
+        "frame-029.jpg"
+      ]
+    },
+    {
+      "id": "us_reaction_close_detail",
+      "film_time_seconds": [
+        298.52,
+        298.52
+      ],
+      "description": "Reaction segment includes a close detail of arm/racket with face outside the crop at298.52; adjacent reaction frames retain Pegula and interview consistently centers face. Do not claim face visible in every reaction frame.",
+      "evidence_files": [
+        "frame-006.jpg"
+      ]
+    }
+  ],
+  "viewed_contacts": [
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-late/contact-00.jpg",
+      "sha256": "599989912f872ecc13b22ffaa75a679d382c33574695d6aea1553e465a1fabf7"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-late/contact-01.jpg",
+      "sha256": "f360a3e76d54c3153935586ce2c21bbdfd7cb7d98edfc22877b01a706d985216"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-late/contact-02.jpg",
+      "sha256": "4f4bf186c42a21ac6d82f9f6f98ce65a8a03e14fa3473c67e266cb59333d5627"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-late/contact-03.jpg",
+      "sha256": "fd4128b9bacb6302b240b2adb5b2166553a2fceb23db31f77fddb4e78e55faaf"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-late/contact-04.jpg",
+      "sha256": "2b1b1a7310dc3956900ab9d42c5a83bbfb34496d49c059587b04863610d03b37"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-late/contact-05.jpg",
+      "sha256": "4a7aab1e2e9ffab93da758bc1e4d797482e5acc921b3b7fedfaa9bd52f8917f6"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-late/wuhan-final-sequence-contact.jpg",
+      "sha256": "c1e2ed74f5af0dd6e204893d99808f42b240c848d421dd3f8f3a3efc3ad0e905"
+    }
+  ],
+  "manifest_sample_images": [
+    {
+      "index": 21,
+      "id": "us-qf-reaction",
+      "film_frame": 7212,
+      "film_time": 288.48,
+      "why": "body-first",
+      "source_time": 191.05,
+      "file": "frame-000.jpg",
+      "image_sha256": "28c37ce8f4f54652de40cdb96fa50146d4f250f4011328f44218c11588bb6d92",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 21,
+      "id": "us-qf-reaction",
+      "film_frame": 7359,
+      "film_time": 294.36,
+      "why": "body-middle",
+      "source_time": 196.93,
+      "file": "frame-001.jpg",
+      "image_sha256": "0d536d64966bead9b476011a2cc4844af2e264c85696938e70f0994ff9c83817",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 21,
+      "id": "us-qf-reaction",
+      "film_frame": 7507,
+      "film_time": 300.28,
+      "why": "body-last",
+      "source_time": 202.84999999999997,
+      "file": "frame-002.jpg",
+      "image_sha256": "c9e228c5397e91e07987f6936a0a43d4e8c6d634f70f8253656c2bb03f8675d0",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 21,
+      "id": "us-qf-reaction",
+      "film_frame": 7201,
+      "film_time": 288.04,
+      "why": "before-join",
+      "source_time": 190.61,
+      "file": "frame-003.jpg",
+      "image_sha256": "2ede0e605f800c2906288f1a46a48658ee84b3d3c987bd6ebe944d39558aef5d",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 21,
+      "id": "us-qf-reaction",
+      "film_frame": 7205,
+      "film_time": 288.2,
+      "why": "during-join",
+      "source_time": 190.76999999999998,
+      "file": "frame-004.jpg",
+      "image_sha256": "67123a3d415e021de7d57bb8731693c40c352bbbb8a52a0c9d53a45854e14f9c",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 21,
+      "id": "us-qf-reaction",
+      "film_frame": 7227,
+      "film_time": 289.08,
+      "why": "actual-bilingual-cue",
+      "source_time": 191.64999999999998,
+      "file": "frame-005.jpg",
+      "image_sha256": "3b36e84e2608e82c8feb23f15c34dcd444c851a9566da37921831fa6ef85af26",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 21,
+      "id": "us-qf-reaction",
+      "film_frame": 7463,
+      "film_time": 298.52,
+      "why": "actual-bilingual-cue",
+      "source_time": 201.08999999999997,
+      "file": "frame-006.jpg",
+      "image_sha256": "31665c0bdd8fcca339995f1a7621aa821dfa09d8127c4ad4721de66341fffe9d",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 22,
+      "id": "us-qf-interview",
+      "film_frame": 7524,
+      "film_time": 300.96,
+      "why": "body-first",
+      "source_time": 57.72999999999998,
+      "file": "frame-007.jpg",
+      "image_sha256": "f05b95296d7ffe9706c1a1af51150225053f1b06946725e375bbfa9ab33e4dd4",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 22,
+      "id": "us-qf-interview",
+      "film_frame": 7732,
+      "film_time": 309.28,
+      "why": "body-middle",
+      "source_time": 66.04999999999998,
+      "file": "frame-008.jpg",
+      "image_sha256": "c4b4fa29a55aa31424220149d31ac5a2039d2da4990f3b4716b4fd5727c9a42c",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 22,
+      "id": "us-qf-interview",
+      "film_frame": 7940,
+      "film_time": 317.6,
+      "why": "body-last",
+      "source_time": 74.37000000000003,
+      "file": "frame-009.jpg",
+      "image_sha256": "0f0e58f33b68fd59052c19ee9b665eedabe67392e25c6b3df9c50d3c48d5f515",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 22,
+      "id": "us-qf-interview",
+      "film_frame": 7513,
+      "film_time": 300.52,
+      "why": "before-join",
+      "source_time": 57.289999999999985,
+      "file": "frame-010.jpg",
+      "image_sha256": "1ac9bad4791df5c8589b47721d8b8340aef9da67467159e3c5dfecc0343947fb",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 22,
+      "id": "us-qf-interview",
+      "film_frame": 7517,
+      "film_time": 300.68,
+      "why": "during-join",
+      "source_time": 57.45000000000001,
+      "file": "frame-011.jpg",
+      "image_sha256": "984c6161bc1287b8e3e646e52339e1decfdedc3c13e59e50d7c6a87416707556",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 22,
+      "id": "us-qf-interview",
+      "film_frame": 7553,
+      "film_time": 302.12,
+      "why": "actual-bilingual-cue",
+      "source_time": 58.89000000000001,
+      "file": "frame-012.jpg",
+      "image_sha256": "63d0a5493afa550ed482b3bfa8e167e74192176563baa24674da17fae194e4a6",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 22,
+      "id": "us-qf-interview",
+      "film_frame": 7620,
+      "film_time": 304.8,
+      "why": "actual-bilingual-cue",
+      "source_time": 61.570000000000014,
+      "file": "frame-013.jpg",
+      "image_sha256": "3333904faee5b7059b61b1726f7e08699f36c1fd5114c182f02cd12d19981970",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 22,
+      "id": "us-qf-interview",
+      "film_frame": 7695,
+      "film_time": 307.8,
+      "why": "actual-bilingual-cue",
+      "source_time": 64.57000000000002,
+      "file": "frame-014.jpg",
+      "image_sha256": "e251ad77e9562bc7e2f0bc92035d0b4fc65558f4b651882753f7786db8fe7539",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 22,
+      "id": "us-qf-interview",
+      "film_frame": 7757,
+      "film_time": 310.28,
+      "why": "actual-bilingual-cue",
+      "source_time": 67.04999999999998,
+      "file": "frame-015.jpg",
+      "image_sha256": "7a6607d5a28f4d6655778334bc6e8bbc350def30b5a8236d6d335d221524a8e4",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 22,
+      "id": "us-qf-interview",
+      "film_frame": 7796,
+      "film_time": 311.84,
+      "why": "actual-bilingual-cue",
+      "source_time": 68.60999999999999,
+      "file": "frame-016.jpg",
+      "image_sha256": "d749b73c3aeac7a8b0d12c0fd1bc00a00aeb889ddf1a7722130ac52f3a8190f7",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 22,
+      "id": "us-qf-interview",
+      "film_frame": 7848,
+      "film_time": 313.92,
+      "why": "actual-bilingual-cue",
+      "source_time": 70.69000000000003,
+      "file": "frame-017.jpg",
+      "image_sha256": "bb7657fd18feee0a9efa15ad38566133818993d5d9b2f5b764de003b167087c0",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 22,
+      "id": "us-qf-interview",
+      "film_frame": 7916,
+      "film_time": 316.64,
+      "why": "actual-bilingual-cue",
+      "source_time": 73.41,
+      "file": "frame-018.jpg",
+      "image_sha256": "e2a5ad9c6419d57596c661d5480082fc5cfd24ed43b185b35bb476ff2d290bea",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 23,
+      "id": "card-us-semi",
+      "film_frame": 7957,
+      "film_time": 318.28,
+      "why": "body-first",
+      "source_time": null,
+      "file": "frame-019.jpg",
+      "image_sha256": "068d22e88c74ed0f276b3ffc61205f1a851109952c1221da96da555552202179",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 23,
+      "id": "card-us-semi",
+      "film_frame": 8061,
+      "film_time": 322.44,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-020.jpg",
+      "image_sha256": "59e4a9d804c3cebd74f925aa6c0ceec8c760e2a673fcaf25aaea49ff1c706f10",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 23,
+      "id": "card-us-semi",
+      "film_frame": 8165,
+      "film_time": 326.6,
+      "why": "body-last",
+      "source_time": null,
+      "file": "frame-021.jpg",
+      "image_sha256": "1a7bdfdb6e5b512e7a9fc3fd7378ee44351fb7677425791828ef8d0856a2ab9f",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 23,
+      "id": "card-us-semi",
+      "film_frame": 7946,
+      "film_time": 317.84,
+      "why": "before-join",
+      "source_time": null,
+      "file": "frame-022.jpg",
+      "image_sha256": "6f03a15b1f189343df24bcc86d1d8501d35b016b5aacf0161677417ca56165a0",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 23,
+      "id": "card-us-semi",
+      "film_frame": 7950,
+      "film_time": 318.0,
+      "why": "during-join",
+      "source_time": null,
+      "file": "frame-023.jpg",
+      "image_sha256": "e0d4022ec9d9a867a79b614220787dd2f404dccd25babc5df73940d3d77a9b9b",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 24,
+      "id": "us-sf",
+      "film_frame": 8182,
+      "film_time": 327.28,
+      "why": "body-first",
+      "source_time": 17.249999999999986,
+      "file": "frame-024.jpg",
+      "image_sha256": "8391199bf8b3052ca0fee2e6af0fa242631c0d4ec5b983c5487f186df651f894",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 24,
+      "id": "us-sf",
+      "film_frame": 8304,
+      "film_time": 332.16,
+      "why": "body-middle",
+      "source_time": 22.130000000000038,
+      "file": "frame-025.jpg",
+      "image_sha256": "6f6aa2fee213a399d6079cfe184c196b8345133933813a02edf6af84ea0adba5",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 24,
+      "id": "us-sf",
+      "film_frame": 8427,
+      "film_time": 337.08,
+      "why": "body-last",
+      "source_time": 27.049999999999997,
+      "file": "frame-026.jpg",
+      "image_sha256": "cb68009323a20550e90279afdfca71bbc5632794b06d68c4ff2658a53243a9f1",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 24,
+      "id": "us-sf",
+      "film_frame": 8171,
+      "film_time": 326.84,
+      "why": "before-join",
+      "source_time": 16.809999999999988,
+      "file": "frame-027.jpg",
+      "image_sha256": "935ba57ddf4b26aeebc312c391032b03c8dbed1dc28e074e4e32b448e84347bd",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 24,
+      "id": "us-sf",
+      "film_frame": 8175,
+      "film_time": 327.0,
+      "why": "during-join",
+      "source_time": 16.970000000000013,
+      "file": "frame-028.jpg",
+      "image_sha256": "9f2d1a9664a462f5853c8c6901d821084fe8e9148c4800902c5548c85072e8e9",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 24,
+      "id": "us-sf",
+      "film_frame": 8396,
+      "film_time": 335.84,
+      "why": "actual-bilingual-cue",
+      "source_time": 25.809999999999988,
+      "file": "frame-029.jpg",
+      "image_sha256": "28f3ded677c1703e80f6c7f12e02cc860721ffb600ccd9e267d5e50e7d8edf02",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 24,
+      "id": "us-sf",
+      "film_frame": 8342,
+      "film_time": 333.68,
+      "why": "before-label",
+      "source_time": 23.65000000000002,
+      "file": "frame-030.jpg",
+      "image_sha256": "441c79b942da6b42f6ddef1c1bc9278dee366444788ee76616f234f79d520d7d",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 24,
+      "id": "us-sf",
+      "film_frame": 8361,
+      "film_time": 334.44,
+      "why": "visible-label-first",
+      "source_time": 24.41000000000001,
+      "file": "frame-031.jpg",
+      "image_sha256": "d1fef29c875167c80f53d8eb22c152e8762494c00ca7741f20c6723f1dd1d9ac",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 24,
+      "id": "us-sf",
+      "film_frame": 8380,
+      "film_time": 335.2,
+      "why": "visible-label-middle",
+      "source_time": 25.17,
+      "file": "frame-032.jpg",
+      "image_sha256": "bc4224dd9c260ebbfe140171c6d16f19cc9484c46c3d84454fdfca481d6de71a",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 24,
+      "id": "us-sf",
+      "film_frame": 8406,
+      "film_time": 336.24,
+      "why": "visible-label-last",
+      "source_time": 26.210000000000022,
+      "file": "frame-033.jpg",
+      "image_sha256": "62237bf71bcfa66dc248a76a794628d10b8edb8e710f823db01f4f988ad154fe",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 24,
+      "id": "us-sf",
+      "film_frame": 8421,
+      "film_time": 336.84,
+      "why": "after-label",
+      "source_time": 26.809999999999988,
+      "file": "frame-034.jpg",
+      "image_sha256": "39ef0d91cd61da572ff5f1dd4fed415450c030d3e75745efd5a64e2a2103754f",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 25,
+      "id": "card-asia",
+      "film_frame": 8444,
+      "film_time": 337.76,
+      "why": "body-first",
+      "source_time": null,
+      "file": "frame-035.jpg",
+      "image_sha256": "e89177c0ef9f49bf23ffbcc43ce50c3801e1d1ded47deb92c4596d8461585774",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 25,
+      "id": "card-asia",
+      "film_frame": 8578,
+      "film_time": 343.12,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-036.jpg",
+      "image_sha256": "54f0f4c0bf2e5df9f1262c2ed2c0846bbfada9f6d5aa08c35c310f749729af6a",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 25,
+      "id": "card-asia",
+      "film_frame": 8712,
+      "film_time": 348.48,
+      "why": "body-last",
+      "source_time": null,
+      "file": "frame-037.jpg",
+      "image_sha256": "6bb3e42eb2414ce2a705b604e02829f0cbfdb36b613e18c03be71269453e1366",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 25,
+      "id": "card-asia",
+      "film_frame": 8433,
+      "film_time": 337.32,
+      "why": "before-join",
+      "source_time": null,
+      "file": "frame-038.jpg",
+      "image_sha256": "358389cd4094563843845feb355995fd836db73b77e6a1b608d33edecb4c4e42",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 25,
+      "id": "card-asia",
+      "film_frame": 8437,
+      "film_time": 337.48,
+      "why": "during-join",
+      "source_time": null,
+      "file": "frame-039.jpg",
+      "image_sha256": "f427dd25632387aff6455b5c14d8126df7494969a7e5a359aef51e71ecfc1a8e",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 26,
+      "id": "wuhan-mp3",
+      "film_frame": 8729,
+      "film_time": 349.16,
+      "why": "body-first",
+      "source_time": 170.93000000000004,
+      "file": "frame-040.jpg",
+      "image_sha256": "3324f1ba4f8ce9235bc14e709c5d48495f9f28cf56c4ca853053d110be1953c5",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 26,
+      "id": "wuhan-mp3",
+      "film_frame": 8938,
+      "film_time": 357.52,
+      "why": "body-middle",
+      "source_time": 179.29,
+      "file": "frame-041.jpg",
+      "image_sha256": "621a7e7361220dc2471075ae8d98e2e1b85e2946c07c247e8b0391763daaf3fd",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 26,
+      "id": "wuhan-mp3",
+      "film_frame": 9148,
+      "film_time": 365.92,
+      "why": "body-last",
+      "source_time": 187.69000000000003,
+      "file": "frame-042.jpg",
+      "image_sha256": "d8e44eecba5a6bb08402ef27e60d384daf892e841ea22c1a31793fcd83633350",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 26,
+      "id": "wuhan-mp3",
+      "film_frame": 8718,
+      "film_time": 348.72,
+      "why": "before-join",
+      "source_time": 170.49000000000004,
+      "file": "frame-043.jpg",
+      "image_sha256": "6bb3e42eb2414ce2a705b604e02829f0cbfdb36b613e18c03be71269453e1366",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 26,
+      "id": "wuhan-mp3",
+      "film_frame": 8722,
+      "film_time": 348.88,
+      "why": "during-join",
+      "source_time": 170.65,
+      "file": "frame-044.jpg",
+      "image_sha256": "95a83b5110fb9010fc39c294289d3170231fe08b0ce7b2214036a8625be15628",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 26,
+      "id": "wuhan-mp3",
+      "film_frame": 9124,
+      "film_time": 364.96,
+      "why": "actual-bilingual-cue",
+      "source_time": 186.73,
+      "file": "frame-045.jpg",
+      "image_sha256": "608291fbe1d249a4f70da9475fb8fcc296220bdeb2e8568356edb02a839a6393",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 26,
+      "id": "wuhan-mp3",
+      "film_frame": 8822,
+      "film_time": 352.88,
+      "why": "before-label",
+      "source_time": 174.65,
+      "file": "frame-046.jpg",
+      "image_sha256": "39791519740b6e628b9d4dbf04b07507c5b14ce6f2924b13aa695007abd36788",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 26,
+      "id": "wuhan-mp3",
+      "film_frame": 8841,
+      "film_time": 353.64,
+      "why": "visible-label-first",
+      "source_time": 175.41,
+      "file": "frame-047.jpg",
+      "image_sha256": "c4ae430db6dfe6f3d20f2014dd81cafe7e5fd50b4b09df285c03f6b9344adbd6",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 26,
+      "id": "wuhan-mp3",
+      "film_frame": 8900,
+      "film_time": 356.0,
+      "why": "visible-label-middle",
+      "source_time": 177.77,
+      "file": "frame-048.jpg",
+      "image_sha256": "b7b3e12d1a86ca5273906c88c023c55847c001a1f7210a232408703d13da92af",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 26,
+      "id": "wuhan-mp3",
+      "film_frame": 8966,
+      "film_time": 358.64,
+      "why": "visible-label-last",
+      "source_time": 180.41,
+      "file": "frame-049.jpg",
+      "image_sha256": "accf492c25a88981b3c5a572163a2b78fae74353a88832291721f6b5ff0b21f8",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 26,
+      "id": "wuhan-mp3",
+      "film_frame": 8981,
+      "film_time": 359.24,
+      "why": "after-label",
+      "source_time": 181.01000000000002,
+      "file": "frame-050.jpg",
+      "image_sha256": "b11dfdf0c8fb992ba692a8a26967e2279faef2ce3c37db0533388903e582f2cb",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 27,
+      "id": "wuhan-final",
+      "film_frame": 9165,
+      "film_time": 366.6,
+      "why": "body-first",
+      "source_time": 257.97,
+      "file": "frame-051.jpg",
+      "image_sha256": "c0aa264ae2a487d8a6adc8b30c8d35dd92855dafa2aca6f5b7ce65a787de2fe4",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 27,
+      "id": "wuhan-final",
+      "film_frame": 9491,
+      "film_time": 379.64,
+      "why": "body-middle",
+      "source_time": 271.01,
+      "file": "frame-052.jpg",
+      "image_sha256": "da5873d6a0aee58235bbb772dfca5321c9656a9e2c1e9ef2c7afc633f82f1c47",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 27,
+      "id": "wuhan-final",
+      "film_frame": 9817,
+      "film_time": 392.68,
+      "why": "body-last",
+      "source_time": 284.05,
+      "file": "frame-053.jpg",
+      "image_sha256": "20ce60bfa11b57a76c7ac3d39e25e387e4784dc56d788184fa6b5c5dca2d6250",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 27,
+      "id": "wuhan-final",
+      "film_frame": 9154,
+      "film_time": 366.16,
+      "why": "before-join",
+      "source_time": 257.53000000000003,
+      "file": "frame-054.jpg",
+      "image_sha256": "60a40b3e67e70cab3a41fa9f75df253997082f289e753df2504961db5eed3b2d",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 27,
+      "id": "wuhan-final",
+      "film_frame": 9158,
+      "film_time": 366.32,
+      "why": "during-join",
+      "source_time": 257.69,
+      "file": "frame-055.jpg",
+      "image_sha256": "c2639843b22a598461c1bc5e068b452768b7f25c5c84848be0a1902a570b93bb",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 27,
+      "id": "wuhan-final",
+      "film_frame": 9371,
+      "film_time": 374.84,
+      "why": "actual-bilingual-cue",
+      "source_time": 266.21,
+      "file": "frame-056.jpg",
+      "image_sha256": "2f88ba444249c88f485e075a60d598b4d9b3a2e9d0e2f1247c2807b2f700de04",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 27,
+      "id": "wuhan-final",
+      "film_frame": 9480,
+      "film_time": 379.2,
+      "why": "actual-bilingual-cue",
+      "source_time": 270.57,
+      "file": "frame-057.jpg",
+      "image_sha256": "eb12a43ad456a775ba00a90685dbcdff653a7d99ada2794ef2af785cf0a54b8a",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 27,
+      "id": "wuhan-final",
+      "film_frame": 9575,
+      "film_time": 383.0,
+      "why": "actual-bilingual-cue",
+      "source_time": 274.37,
+      "file": "frame-058.jpg",
+      "image_sha256": "44e1399e00c2b1cbc60bad4b24bab3e6c5791d0bcd9951b37f851e863f5082f1",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 27,
+      "id": "wuhan-final",
+      "film_frame": 9659,
+      "film_time": 386.36,
+      "why": "actual-bilingual-cue",
+      "source_time": 277.73,
+      "file": "frame-059.jpg",
+      "image_sha256": "835e61a098879000b7432cd02d76b9c031f6bc64b071337298284be8d8b8425a",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 27,
+      "id": "wuhan-final",
+      "film_frame": 9723,
+      "film_time": 388.92,
+      "why": "actual-bilingual-cue",
+      "source_time": 280.29,
+      "file": "frame-060.jpg",
+      "image_sha256": "d8d76ac2b22dbc81ba7cd25e9bd025da5487285f7ea89c3f8ddc94ea08e8671a",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 27,
+      "id": "wuhan-final",
+      "film_frame": 9786,
+      "film_time": 391.44,
+      "why": "actual-bilingual-cue",
+      "source_time": 282.81,
+      "file": "frame-061.jpg",
+      "image_sha256": "967778ca6a92733142a845091222b40db6c8bb6d53c6b1a4ea888095976924c9",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 28,
+      "id": "card-qualification",
+      "film_frame": 9834,
+      "film_time": 393.36,
+      "why": "body-first",
+      "source_time": null,
+      "file": "frame-062.jpg",
+      "image_sha256": "1f1a9dc7b470ddcbf7167f996da347edc21ebf6461746fbbc356664e2fb09348",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 28,
+      "id": "card-qualification",
+      "film_frame": 9973,
+      "film_time": 398.92,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-063.jpg",
+      "image_sha256": "5a16b1f9fc2bb82c922ff5a94cd2eabbcff75302ce776eaaf3d011a471805506",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 28,
+      "id": "card-qualification",
+      "film_frame": 10112,
+      "film_time": 404.48,
+      "why": "body-last",
+      "source_time": null,
+      "file": "frame-064.jpg",
+      "image_sha256": "2bd5c5d735584cfce7b162db0421a5b400d353ee5f481b671f5ec3f7f186926f",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 28,
+      "id": "card-qualification",
+      "film_frame": 9823,
+      "film_time": 392.92,
+      "why": "before-join",
+      "source_time": null,
+      "file": "frame-065.jpg",
+      "image_sha256": "d242c06cda9e24541e1bc8b5a8830ed655b9d8d5bb35c7629685d3649f056826",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 28,
+      "id": "card-qualification",
+      "film_frame": 9827,
+      "film_time": 393.08,
+      "why": "during-join",
+      "source_time": null,
+      "file": "frame-066.jpg",
+      "image_sha256": "a9808519a52dd8d95bd9f497690c7c41f7d719b88e06f2392e1202ce42d171f8",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 29,
+      "id": "card-ending",
+      "film_frame": 10129,
+      "film_time": 405.16,
+      "why": "body-first",
+      "source_time": null,
+      "file": "frame-067.jpg",
+      "image_sha256": "d6a47219a6cf6a09cd8f14ce36746d3d6dd063182cab30db5f40b37c87f36d44",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 29,
+      "id": "card-ending",
+      "film_frame": 10218,
+      "film_time": 408.72,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-068.jpg",
+      "image_sha256": "f0fe82b52f282b80a6409c07d4871765e29e0c58a83ca9e9aa98477bcefbe748",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 29,
+      "id": "card-ending",
+      "film_frame": 10307,
+      "film_time": 412.28,
+      "why": "body-last",
+      "source_time": null,
+      "file": "frame-069.jpg",
+      "image_sha256": "f547d0134a30f57efd976cdad0f0ded29dd1a33aeecbef028ebfc56ac47969f0",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    },
+    {
+      "index": 29,
+      "id": "card-ending",
+      "film_frame": 10118,
+      "film_time": 404.72,
+      "why": "before-join",
+      "source_time": null,
+      "file": "frame-070.jpg",
+      "image_sha256": "5a362254516d52be5401b50fac5386232a1c97a9039f300224199acb69251d82",
+      "viewed_on_contact": true,
+      "viewed_full_size": false
+    },
+    {
+      "index": 29,
+      "id": "card-ending",
+      "film_frame": 10122,
+      "film_time": 404.88,
+      "why": "during-join",
+      "source_time": null,
+      "file": "frame-071.jpg",
+      "image_sha256": "3846ec15e9202c8afbd142ecd699213d4647ba419ad84b4d4f254a49acf713fb",
+      "viewed_on_contact": true,
+      "viewed_full_size": true
+    }
+  ],
+  "all_foreground_caption_cues_full_size_count": 17,
+  "full_size_master_sample_count": 30,
+  "extra_crop_images": [
+    {
+      "film_time": 360.8,
+      "source_time_approx": 182.6,
+      "file": "wuhan-crop-source-182.60.jpg",
+      "sha256": "dfa0172e29be3e0b88b3a8e1e96eb8610aa6ede1b86e0dfa269b33083310b698",
+      "viewed_full_size": true
+    },
+    {
+      "film_time": 362.0,
+      "source_time_approx": 183.8,
+      "file": "wuhan-crop-source-183.80.jpg",
+      "sha256": "a527dc004847cd6c3cfd4223f68ef8c9b962045f08edb8d529548375fc22f1f1",
+      "viewed_full_size": true
+    },
+    {
+      "film_time": 362.8,
+      "source_time_approx": 184.6,
+      "file": "wuhan-crop-source-184.60.jpg",
+      "sha256": "1d5db39bdb4cb6b03584380fbb121c671ec456aba8eba15c6e35bf7cdc674e2d",
+      "viewed_full_size": true
+    },
+    {
+      "film_time": 363.2,
+      "source_time_approx": 185.0,
+      "file": "wuhan-crop-source-185.00.jpg",
+      "sha256": "38990bec9b37587b70f2f7c6dd3b03b9c687740e202d9ab099af8df8b5231f01",
+      "viewed_full_size": true
+    },
+    {
+      "film_time": 363.6,
+      "source_time_approx": 185.4,
+      "file": "wuhan-crop-source-185.40.jpg",
+      "sha256": "c51130b9c7fea0c0870bc016ba09adb2807d05f410a264f2eb051c032adfe397",
+      "viewed_full_size": true
+    }
+  ],
+  "extra_final_point_sequence": [
+    {
+      "file": "wuhan-final-sequence-01.jpg",
+      "sha256": "b6530ac72f705f4d9a3a8a50ba22154f3b05461c2c9cfdbd1ccce400ddd7c668",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 1,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-02.jpg",
+      "sha256": "b6be1ee7c2448fe537fc4ecce23b3fb780c052c199e947d9e048bdfeacd54749",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 2,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-03.jpg",
+      "sha256": "e0462298c8f0e7a1a0470ab1a93a0a3503b247da8df8ed22cc297cc1de4d8bb1",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 3,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-04.jpg",
+      "sha256": "e600a02ceb728c31039e8ddaed6e2e23a17ae7a9565215955558244fa94c6395",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 4,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-05.jpg",
+      "sha256": "8cadfafd415efe50d7891031ccd638efae399643a5e24e402a248a6247b3061b",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 5,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-06.jpg",
+      "sha256": "a40955e07488f31ff69f9894d74f17217264f2761174b1a6e98db6b4a8b618dd",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 6,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-07.jpg",
+      "sha256": "0ae398837a52d6297f033e0f9d0e9d266352066dc6f119958c371d8d0d49c2d9",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 7,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-08.jpg",
+      "sha256": "29c02d88fc83ca146b324a3311e99cfc6c0fd25d12df628d290a10916992a6ee",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 8,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-09.jpg",
+      "sha256": "728070311b414c1ebcc375612ab029a9da612309e4c970b3dd896a30dca4444a",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 9,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-10.jpg",
+      "sha256": "d9733ebeb0f0262cf32bfde71208d8acff778c62e6bb6dddd24af25f90605693",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 10,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-11.jpg",
+      "sha256": "7cca1e884f595f82aabb1f5f5742bb6920ee55b67e9555f93d050e9d1d51d60b",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 11,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-12.jpg",
+      "sha256": "3de1d974c7ddb88ab4bae840d7836b957416f6471fe9c1665149e41b77f233c5",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 12,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-13.jpg",
+      "sha256": "c60b44ee42007fa31e90a86b66e015fa113817e663205f37fcc040aab506a4c7",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 13,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-14.jpg",
+      "sha256": "1f521ffbf3bafe7803d5b8c9741fa169806496264fbf0b50dc817e6ad6d7efac",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 14,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-15.jpg",
+      "sha256": "d70fea24d0c08cae76143623aa82f75c9b50652dd4664e8d999f1fcc631bba8e",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 15,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-16.jpg",
+      "sha256": "151e9033508f4bc4feb467e714a27ee01332cfc668500a912394371085be8c88",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 16,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-17.jpg",
+      "sha256": "83d0115e3cd3e24bf87c87f10a970de287bc20b500e0e23f924c21cb2bfdc24c",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 17,
+      "viewed_on_contact": true
+    },
+    {
+      "file": "wuhan-final-sequence-contact.jpg",
+      "sha256": "c1e2ed74f5af0dd6e204893d99808f42b240c848d421dd3f8f3a3efc3ad0e905",
+      "requested_film_start": 368.24,
+      "fps_extraction": 3,
+      "sequence_index": 18,
+      "viewed_on_contact": true
+    }
+  ],
+  "limitations": [
+    "Visual inspection of specified actual-master samples only;not every encoded frame or other segment indices.",
+    "No human ear listening, no independent new mixed-audio ASR in this task. Existing automatic audio passes are outside this visual review.",
+    "This is an independent late-section visual QC result; publication authorization and whole-film approval remain with parent workflow."
+  ],
+  "repository_or_spec_modified": false,
+  "git_operations_performed": false,
+  "baseline_only": true,
+  "supersession_note": "User requested numeric1/4 and1/8 round wording after this review. This review applies only to the exact old film/spec/render/manifest hashes bound above. It is not approval of the forthcoming rerender,even where source windows/narration remain unchanged.",
+  "next_render_required_checks": [
+    "Bind and verify the new film/spec/render hashes.",
+    "Inspect actual changed Miami/USQF information labels for numeric round wording and safe placement.",
+    "Compare unchanged segments against this baseline; do not transfer whole-film approval automatically."
+  ],
+  "stable_baseline_render_metadata": {
+    "path": "/workspace/pegula-finals-production/final-metadata/render.json",
+    "exists": true,
+    "sha256": "c9826be91aa9d6955f4a8496ebe8fb48808a2ee6183c9ff67379565a198c2269"
+  }
+}

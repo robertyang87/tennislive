@@ -16,18 +16,21 @@ voice={'pitch':'+0Hz','_why':'自然云健+6%/+0Hz；完整语义整段合成，
 labels={
 'ao':('止步澳网4强','2026.01.29','澳网半决赛','佩古拉 vs 莱巴金娜','3-6 6-7(7)'),
 'dubai-final':('本季第一冠','2026.02.21','迪拜决赛','佩古拉 vs 斯维托丽娜','6-2 6-4'),
-'iw-qf':('止步8强','2026.03.12','印第安维尔斯四分之一决赛','佩古拉 vs 莱巴金娜','1-6 6-7(4)'),
-'miami-qf':('先赢一盘仍落败','2026.03.25','迈阿密四分之一决赛','佩古拉 vs 莱巴金娜','6-2 3-6 4-6'),
+'iw-qf':('止步8强','2026.03.12','印第安维尔斯1/4决赛','佩古拉 vs 莱巴金娜','1-6 6-7(4)'),
+'miami-qf':('先赢一盘仍落败','2026.03.25','迈阿密1/4决赛','佩古拉 vs 莱巴金娜','6-2 3-6 4-6'),
 'charleston-final':('本季第二冠','2026.04.05','查尔斯顿决赛','佩古拉 vs 斯塔罗杜布采娃','6-2 6-2'),
 'berlin-sf':('决胜盘6比0过关','2026.06.20','柏林半决赛','佩古拉 vs 萨巴伦卡','6-4 6-7(4) 6-0'),
 'berlin-final':('柏林亚军','2026.06.21','柏林决赛','佩古拉 vs 诺斯科娃','4-6 6-4 3-6'),
 'dc-final':('本季第四次决赛','2026.08.03','华盛顿决赛','佩古拉 vs 伊埃拉','6-4 4-6 0-6'),
 'cincy-sf':('本季第五次进决赛','2026.08.22','辛辛那提半决赛','佩古拉 vs 斯瓦泰克','7-5 4-6 6-4'),
 'cincy-final':('辛辛那提亚军','2026.08.23','辛辛那提决赛','佩古拉 vs 高芙','2-6 4-6'),
-'us-qf':('逆转晋级4强','2026.09.08','美网四分之一决赛','佩古拉 vs 纳瓦罗','3-6 6-4 6-3'),
+'us-qf':('逆转晋级4强','2026.09.08','美网1/4决赛','佩古拉 vs 纳瓦罗','3-6 6-4 6-3'),
 'us-sf':('止步美网4强','2026.09.10','美网半决赛','佩古拉 vs 萨巴伦卡','5-7 2-6'),
 'wuhan-mp3':('三个赛点未兑现','2026.10.14','武汉第二轮','佩古拉 vs 奥斯塔彭科','6-2 6-7(7) 3-6'),
 }
+# Keep reserve information PNGs in the same current template and round notation.
+for key,(topic,date,place,people,score) in labels.items():
+ render_label(dict(topic=topic,date=date,place=place,people=people,score=score),REPO/ASSETS/f'context-{key}.png')
 # All labels belong to actual video segments. No static/title/transition label fallback.
 segments=[];pending=[]
 def card(key):

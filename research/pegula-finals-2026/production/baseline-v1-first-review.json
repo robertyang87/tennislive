@@ -1,0 +1,1485 @@
+{
+  "schema": "tennislive.actual-final-film-independent-visual-review.v1",
+  "reviewed_at": "2026-10-22T09:07:08.674297+00:00",
+  "reviewer": "Codex independent early-section visual reviewer",
+  "status": "baseline_sampled_visual_review_complete_not_new_revision_approval",
+  "scope": {
+    "segment_indices_inclusive": [
+      0,
+      10
+    ],
+    "actual_sample_count": 97,
+    "actual_film_time_sample_range": [
+      1.12,
+      136.92
+    ],
+    "contact_sheets_actually_viewed": 9,
+    "all_bilingual_cues_visually_reviewed": 23,
+    "full_native_resolution_detailed_frame_count": 17,
+    "method": "Actual final MP4 samples, all nine contact sheets covering97 frames; seventeen native-size critical JPGs separately viewed; every23 original-audio cue caption region enlarged and read; all source-image SHA verified. Sparse actual-film visual inspection, not continuous playback/hearing."
+  },
+  "binding": {
+    "film_path": "/workspace/pegula-finals-production/delivery/master/pegula-finals-2026.mp4",
+    "film_sha256": "5d0e4ef77394a8178647611629927944b1939fb58fffc03ef06dda81778017f4",
+    "film_bytes": 181993222,
+    "film_duration_seconds": 417.2,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": "25/1",
+    "baseline_spec_sha256": "54122025aaed2692091df6ddfae0255275d5d225e7831837cdf60b47cabc5bbf",
+    "render_json_path": "/workspace/pegula-finals-production/final-metadata/render.json",
+    "render_json_sha256": "c9826be91aa9d6955f4a8496ebe8fb48808a2ee6183c9ff67379565a198c2269",
+    "manifest_path": "/workspace/pegula-finals-production/final-film-review-first/manifest.json",
+    "manifest_sha256": "4ce62d1ad9a751fcf94744fe6ca125c3cf94db2724365b1e676ecb4268119ebc",
+    "actual_film_sha_recomputed": true,
+    "all97_image_shas_verified": true
+  },
+  "revision_notice": {
+    "user_new_requirement": "Information-card tournament-round line must use numeric1/4 or1/8 finals notation. Parent is updating Miami/USQF(+unusedIW) PNG/spec and rerendering.",
+    "consequence": "This is evidence for SHA5d0e4ef... baseline only. It MUST NOT be treated as visual approval of changed PNG/spec/new MP4, even if source windows and voice stay the same. No more sampling after parent pause instruction."
+  },
+  "visual_blocking_findings_for_this_baseline_scope": [],
+  "user_fixed_crop_boundaries": [
+    {
+      "severity": "user_fixed_crop_boundary",
+      "file": "frame-085.jpg",
+      "film_time": 112.48,
+      "description": "Near receiver partly beyond left fixed-center crop in Charleston saved-point prelude. No added bar and no information-card obstruction."
+    },
+    {
+      "severity": "user_fixed_crop_boundary",
+      "file": "frame-096.jpg",
+      "film_time": 126.08,
+      "description": "Pegula reaction close-up approaches/exits left fixed-center crop; part of left face/body outside frame. Same known source-geometry limitation; label is already absent. Not falsely classified fully uncut subject framing."
+    }
+  ],
+  "observed_checks": {
+    "static_or_chapter_insets": "All five chapter-card indices1,2,4,7,9 body and before/during joins show no right information inset. Actual live-scene insets do not persist onto these cards in reviewed samples.",
+    "label_open_middle_last_closed": [
+      {
+        "index": 3,
+        "id": "ao",
+        "actual_sample_phases": [
+          {
+            "file": "frame-027.jpg",
+            "film_time": 43.88,
+            "why": "before-label"
+          },
+          {
+            "file": "frame-028.jpg",
+            "film_time": 44.64,
+            "why": "visible-label-first"
+          },
+          {
+            "file": "frame-029.jpg",
+            "film_time": 45.48,
+            "why": "visible-label-middle"
+          },
+          {
+            "file": "frame-030.jpg",
+            "film_time": 46.64,
+            "why": "visible-label-last"
+          },
+          {
+            "file": "frame-031.jpg",
+            "film_time": 47.24,
+            "why": "after-label"
+          }
+        ],
+        "observation": "In actual final MP4 frames label appears only on live scene, not over focal eyes/action, text fits canvas, and absent in actual after-label sample. Miami before-label state covered by actual-bilingual-cue69 at96.28s before first visible71 at97.04s."
+      },
+      {
+        "index": 5,
+        "id": "dubai-final",
+        "actual_sample_phases": [
+          {
+            "file": "frame-045.jpg",
+            "film_time": 59.84,
+            "why": "before-label"
+          },
+          {
+            "file": "frame-046.jpg",
+            "film_time": 60.6,
+            "why": "visible-label-first"
+          },
+          {
+            "file": "frame-047.jpg",
+            "film_time": 61.56,
+            "why": "visible-label-middle"
+          },
+          {
+            "file": "frame-048.jpg",
+            "film_time": 62.8,
+            "why": "visible-label-last"
+          },
+          {
+            "file": "frame-049.jpg",
+            "film_time": 63.4,
+            "why": "after-label"
+          }
+        ],
+        "observation": "In actual final MP4 frames label appears only on live scene, not over focal eyes/action, text fits canvas, and absent in actual after-label sample. Miami before-label state covered by actual-bilingual-cue69 at96.28s before first visible71 at97.04s."
+      },
+      {
+        "index": 8,
+        "id": "miami-qf",
+        "actual_sample_phases": [
+          {
+            "file": "frame-071.jpg",
+            "film_time": 97.04,
+            "why": "visible-label-first"
+          },
+          {
+            "file": "frame-072.jpg",
+            "film_time": 98.0,
+            "why": "visible-label-middle"
+          },
+          {
+            "file": "frame-073.jpg",
+            "film_time": 99.24,
+            "why": "visible-label-last"
+          },
+          {
+            "file": "frame-074.jpg",
+            "film_time": 99.84,
+            "why": "after-label"
+          }
+        ],
+        "observation": "In actual final MP4 frames label appears only on live scene, not over focal eyes/action, text fits canvas, and absent in actual after-label sample. Miami before-label state covered by actual-bilingual-cue69 at96.28s before first visible71 at97.04s."
+      },
+      {
+        "index": 10,
+        "id": "charleston-final",
+        "actual_sample_phases": [
+          {
+            "file": "frame-092.jpg",
+            "film_time": 121.92,
+            "why": "before-label"
+          },
+          {
+            "file": "frame-093.jpg",
+            "film_time": 122.68,
+            "why": "visible-label-first"
+          },
+          {
+            "file": "frame-094.jpg",
+            "film_time": 123.96,
+            "why": "visible-label-middle"
+          },
+          {
+            "file": "frame-095.jpg",
+            "film_time": 125.48,
+            "why": "visible-label-last"
+          },
+          {
+            "file": "frame-096.jpg",
+            "film_time": 126.08,
+            "why": "after-label"
+          }
+        ],
+        "observation": "In actual final MP4 frames label appears only on live scene, not over focal eyes/action, text fits canvas, and absent in actual after-label sample. Miami before-label state covered by actual-bilingual-cue69 at96.28s before first visible71 at97.04s."
+      }
+    ],
+    "interview_person_center": "Cold interview sampled at first/middle/last +four cues and joins; Dubai own speech likewise first/middle/last +three cues and join. Whole focal face visible in sampled interview frames, no subtitle over eyes/mouth. Natural microphone/cap and source action not classified as graphics obstruction.",
+    "subtitle_text_and_bottom": "All23 bilingual source-cue burned-text regions reviewed and readable. English line wrap in Miami and Charleston fits canvas; no bottom-clipped glyphs or crop/face overlap seen. Captions reflect visible baseline text; this visual task does not reassert listening/semantic source-audio approval.",
+    "chapter_narration_captions": "All sampled chapter Chinese captions and footer remain within canvas; no unwanted information inset.",
+    "joins": "All22 before/during joins inspected in contact sheets. Normal cover→speech, speech→chapter, chapter→match and original broadcast dissolves visible; no black/contain frames or right metadata lingering on chapter cards in sampled joins.",
+    "canvas_fill": "Actual rendered1080x1440 samples show crop-fill footage or full native chapter background, with no added letterbox/contain bars."
+  },
+  "actual_contacts_viewed": [
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/contact-00.jpg",
+      "sha256": "a20a6e9f22d05f114e487fe75e1554ac23661b8e598c55e0b8925a1b816e777f"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/contact-01.jpg",
+      "sha256": "8d7490fe3c2d439a4824023ee6324c2922cc23ef4d3d14b2fb19dcd7a32389b7"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/contact-02.jpg",
+      "sha256": "ab9d24a0b21dff720b566b308914a48b54fd58f81d90fdf514198ad3082eb0d9"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/contact-03.jpg",
+      "sha256": "63b3324e9f73489754e8eb2019375b87157abc71170b7830f42d426b9b762113"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/contact-04.jpg",
+      "sha256": "8e32e5dd61d69a47800df2df7fc4a1664aeb5a5261dac54bcf2a878124eb48b7"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/contact-05.jpg",
+      "sha256": "7f232c256de0275aad02d9a831633fce13885e1ee9be3f4f234bf18c137b4967"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/contact-06.jpg",
+      "sha256": "34ac48eccb358ab357402ad8f82666c5c14ae6a00459161a25ed900d18b494d6"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/contact-07.jpg",
+      "sha256": "aabcf6145e4a4ac7160764c56b3fac876bc066f4b934ad843b25884e9b6e45b5"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/contact-08.jpg",
+      "sha256": "f1634cfb36d62cc5dc4b95ae5137bf94a7ab4158c45bfba7d44c8018fbd35f08"
+    }
+  ],
+  "native_size_detail_frames_viewed": [
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-001.jpg",
+      "sha256": "d50beae330149db0949f2401a4ee96b9f5fc5b328a7c043bc97d713426084cc2"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-019.jpg",
+      "sha256": "f5d9602bb16e9e73670436530903006eed5e25561038fc98f93aa6df4f933717"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-047.jpg",
+      "sha256": "295666d1e4d028eafa6fd64b1074cdde555756d5e568f3aaa24c8f629784b11d"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-050.jpg",
+      "sha256": "3f99a423c76f5ae1e36c8fd2882cfe7bc22d59cb563ecbc3b4d4da4c433479d6"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-070.jpg",
+      "sha256": "ed01871926101914cc1ba85c52f14403087565b4cfea7a579e0a4a008017c357"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-085.jpg",
+      "sha256": "a7083f7e460bbdee279e2ca719bbbd00eb8297e8584d3a41b178b900a819d5df"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-090.jpg",
+      "sha256": "1ba09955da1b7cdd6a81204ca5ffc14396abccbdcd0263e99fbf7d932d00b514"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-029.jpg",
+      "sha256": "6852dd2ef74ea158e6daa556abfcc082e1a5dc8c63da12d6390c0e08065c274b"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-031.jpg",
+      "sha256": "ceea73b067d62a8b5916ebcbe36b6ed6725effc6c63aec39fd86444578ca3f61"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-045.jpg",
+      "sha256": "a5f1f89137cccb46cd3756b18d93c0378219d4e2340a5adbf54d0305f9419d4d"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-049.jpg",
+      "sha256": "d098c9c485db799f9fa6a542f12129624e64e10ec1d15a079bca3c817307af40"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-071.jpg",
+      "sha256": "82fa0aec71b4ff708d93a0d88bf22867712e0c5c293e728084152986c359924e"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-073.jpg",
+      "sha256": "93fad7e7e60e0d2262c637ab71ff00b43a623878b2261269d2c786fbad8ca96a"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-074.jpg",
+      "sha256": "ec9895f3bbf383638627bc9800ab55fe8e9cac842483e10e429592b7f5a5e86f"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-093.jpg",
+      "sha256": "7a08c8b0272949543a39c83fb66216568039d22fd70c54cd7fb85373c059de6c"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-095.jpg",
+      "sha256": "22457cce65926eda261a6c808d9ab350feca429cf336bba413de3ef09d028fbb"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-096.jpg",
+      "sha256": "8068c343fee653f0650144454a505adeab4bdfbbef54c39768a1774697c1e468"
+    }
+  ],
+  "bilingual_caption_detail_sheets_viewed": [
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/subtitle-detail-00.jpg",
+      "sha256": "8ab9aa658980c3ec9878afcfee6f4fa571902e732ae44697629c0ddf1d35bf73"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/subtitle-detail-01.jpg",
+      "sha256": "6a86d2af06e602356414eb3f5dc2db25d168555c43df5022e763d2ae768d2cc6"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-first/subtitle-detail-02.jpg",
+      "sha256": "34f1bafd31b21de247d43901b5942d08421a45d555091c0498885dcb69eb8fbf"
+    }
+  ],
+  "actual_samples_covered": [
+    {
+      "index": 0,
+      "id": "cold-quote",
+      "film_frame": 39,
+      "film_time": 1.56,
+      "why": "body-first",
+      "source_time": 52.6,
+      "file": "frame-000.jpg",
+      "image_sha256": "322477e45f2a38ae5e935c8655918afea03b89063c0d99f9e691e53bd8ace472",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-000.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 0,
+      "id": "cold-quote",
+      "film_frame": 110,
+      "film_time": 4.4,
+      "why": "body-middle",
+      "source_time": 55.440000000000005,
+      "file": "frame-001.jpg",
+      "image_sha256": "d50beae330149db0949f2401a4ee96b9f5fc5b328a7c043bc97d713426084cc2",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-001.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 0,
+      "id": "cold-quote",
+      "film_frame": 183,
+      "film_time": 7.32,
+      "why": "body-last",
+      "source_time": 58.36,
+      "file": "frame-002.jpg",
+      "image_sha256": "ac1ffa6d0a514ee4b26145e177cb005123ff78d0a45098edf1b34f1011fb73ef",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-002.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 0,
+      "id": "cold-quote",
+      "film_frame": 28,
+      "film_time": 1.12,
+      "why": "before-join",
+      "source_time": 52.160000000000004,
+      "file": "frame-003.jpg",
+      "image_sha256": "ab856bb0bb9cbcbd00a4b5b2e79bfb2e2893b81a0c04796a06036be9a1d158d0",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-003.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 0,
+      "id": "cold-quote",
+      "film_frame": 32,
+      "film_time": 1.28,
+      "why": "during-join",
+      "source_time": 52.32,
+      "file": "frame-004.jpg",
+      "image_sha256": "1b8559ce6607d20fecbb8e864cbb57000823ff24f3be5fb0d5e3282a4fb4f34e",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-004.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 0,
+      "id": "cold-quote",
+      "film_frame": 47,
+      "film_time": 1.88,
+      "why": "actual-bilingual-cue",
+      "source_time": 52.92,
+      "file": "frame-005.jpg",
+      "image_sha256": "fd3e1c1f7e30a20ec7862165d482489327ecbc296a881e2042bcc76810969011",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-005.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 0,
+      "id": "cold-quote",
+      "film_frame": 75,
+      "film_time": 3.0,
+      "why": "actual-bilingual-cue",
+      "source_time": 54.04,
+      "file": "frame-006.jpg",
+      "image_sha256": "0ceb3552a07083241c69376a92bc9895b39cca0d1f12c8f20a53be54ba37d93d",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-006.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 0,
+      "id": "cold-quote",
+      "film_frame": 120,
+      "film_time": 4.8,
+      "why": "actual-bilingual-cue",
+      "source_time": 55.84,
+      "file": "frame-007.jpg",
+      "image_sha256": "f168a3154ed9772123ec8d1e5c62a7641c04aa64f66bf157a8056eec538c67ab",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-007.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 0,
+      "id": "cold-quote",
+      "film_frame": 169,
+      "film_time": 6.76,
+      "why": "actual-bilingual-cue",
+      "source_time": 57.800000000000004,
+      "file": "frame-008.jpg",
+      "image_sha256": "8487949cf881c3702a1a704706b88cda24ddc0c4857457acc117eae0ce2d7093",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-008.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 1,
+      "id": "card-intro",
+      "film_frame": 200,
+      "film_time": 8.0,
+      "why": "body-first",
+      "source_time": null,
+      "file": "frame-009.jpg",
+      "image_sha256": "b54da0d6ae536f03dbeeec66299a808ac059617a4e4730361fe75e8c36fddad7",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-009.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 1,
+      "id": "card-intro",
+      "film_frame": 351,
+      "film_time": 14.04,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-010.jpg",
+      "image_sha256": "093dc31e281695a9b821175fd2790771de7301a0b230281a1fe93172cb4fdb94",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-010.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 1,
+      "id": "card-intro",
+      "film_frame": 503,
+      "film_time": 20.12,
+      "why": "body-last",
+      "source_time": null,
+      "file": "frame-011.jpg",
+      "image_sha256": "234211ceb650b54fccbd0cf024c360240d0b1a8cba85aca1cd2c946c0b7ead9f",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-011.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 1,
+      "id": "card-intro",
+      "film_frame": 189,
+      "film_time": 7.56,
+      "why": "before-join",
+      "source_time": null,
+      "file": "frame-012.jpg",
+      "image_sha256": "0820c6b0832a47e07046ddd8d3d37d556dc56a7b41117bfd792fed692a4e107a",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-012.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 1,
+      "id": "card-intro",
+      "film_frame": 193,
+      "film_time": 7.72,
+      "why": "during-join",
+      "source_time": null,
+      "file": "frame-013.jpg",
+      "image_sha256": "b7509a2a65014a0da73d45a6fdc78906e1bf0f55c18bd1a7e7a5cc28566508ad",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-013.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 2,
+      "id": "card-january",
+      "film_frame": 520,
+      "film_time": 20.8,
+      "why": "body-first",
+      "source_time": null,
+      "file": "frame-014.jpg",
+      "image_sha256": "cccd03d2027064d62a819b2390e5c55992ac776d22fb84efa2ef61a471c0b6c2",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-014.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 2,
+      "id": "card-january",
+      "film_frame": 634,
+      "film_time": 25.36,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-015.jpg",
+      "image_sha256": "9421f40a899b5d958854be98a65600625a173cb462a7cc3b17b8f776bf3e573e",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-015.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 2,
+      "id": "card-january",
+      "film_frame": 748,
+      "film_time": 29.92,
+      "why": "body-last",
+      "source_time": null,
+      "file": "frame-016.jpg",
+      "image_sha256": "e3dbe0c1c32ad01aadf80144228e48055791877a7dc14360ef5b5624fe8caf51",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-016.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 2,
+      "id": "card-january",
+      "film_frame": 509,
+      "film_time": 20.36,
+      "why": "before-join",
+      "source_time": null,
+      "file": "frame-017.jpg",
+      "image_sha256": "a38cf26a55470d3953ffdce09223b50808f5f6c5b4d61484043c6a5733b4d8af",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-017.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 2,
+      "id": "card-january",
+      "film_frame": 513,
+      "film_time": 20.52,
+      "why": "during-join",
+      "source_time": null,
+      "file": "frame-018.jpg",
+      "image_sha256": "bf8e4f85ba2c74557311fcfec03f65c6097837798365802215da2e42d6d5145b",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-018.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 765,
+      "film_time": 30.6,
+      "why": "body-first",
+      "source_time": 437.94,
+      "file": "frame-019.jpg",
+      "image_sha256": "f5d9602bb16e9e73670436530903006eed5e25561038fc98f93aa6df4f933717",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-019.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 975,
+      "film_time": 39.0,
+      "why": "body-middle",
+      "source_time": 446.34000000000003,
+      "file": "frame-020.jpg",
+      "image_sha256": "56558799c2427fc2a3868ae4b944e0b84071e9b6353f0286ff2248cbab45e2ba",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-020.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 1187,
+      "film_time": 47.48,
+      "why": "body-last",
+      "source_time": 454.82,
+      "file": "frame-021.jpg",
+      "image_sha256": "36c51f42342cca0d2e742baad7ab45955752bc29444ee09f6d7f0cf800370999",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-021.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 754,
+      "film_time": 30.16,
+      "why": "before-join",
+      "source_time": 437.5,
+      "file": "frame-022.jpg",
+      "image_sha256": "c762870643c4683fcfba9df9b203e0387e3b8fc27803b14e1f0ee0a58950661d",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-022.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 758,
+      "film_time": 30.32,
+      "why": "during-join",
+      "source_time": 437.66,
+      "file": "frame-023.jpg",
+      "image_sha256": "b14586dfff3adb6e4513b14e98f2c72a41783762eabbb77afce8fff7776bda4e",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-023.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 957,
+      "film_time": 38.28,
+      "why": "actual-bilingual-cue",
+      "source_time": 445.62,
+      "file": "frame-024.jpg",
+      "image_sha256": "757c692d4b13988f088deb7e6c6b0829a787eb098953783b7fb48136d222fae4",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-024.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 1039,
+      "film_time": 41.56,
+      "why": "actual-bilingual-cue",
+      "source_time": 448.90000000000003,
+      "file": "frame-025.jpg",
+      "image_sha256": "3e9e9d85daf2e138fec95d481afc301da7f4d95de6c170d15f78284c4672b212",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-025.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 1128,
+      "film_time": 45.12,
+      "why": "actual-bilingual-cue",
+      "source_time": 452.46000000000004,
+      "file": "frame-026.jpg",
+      "image_sha256": "a4cc4846ec562ae31bd5af35b317ae07024263c75545f040ebf98e6a528efff7",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-026.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 1097,
+      "film_time": 43.88,
+      "why": "before-label",
+      "source_time": 451.22,
+      "file": "frame-027.jpg",
+      "image_sha256": "95125c079ac5521e9b0f339f3c5d501271d9c6e32334ed742138d68d76379ba7",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-027.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 1116,
+      "film_time": 44.64,
+      "why": "visible-label-first",
+      "source_time": 451.98,
+      "file": "frame-028.jpg",
+      "image_sha256": "750f069fec74781e76c2c1575cbb27364dd67e0509fe850f5495abb5fa200fe4",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-028.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 1137,
+      "film_time": 45.48,
+      "why": "visible-label-middle",
+      "source_time": 452.82,
+      "file": "frame-029.jpg",
+      "image_sha256": "6852dd2ef74ea158e6daa556abfcc082e1a5dc8c63da12d6390c0e08065c274b",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-029.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 1166,
+      "film_time": 46.64,
+      "why": "visible-label-last",
+      "source_time": 453.98,
+      "file": "frame-030.jpg",
+      "image_sha256": "f38ec7fabc6a4c7d0b0563b7909e187a25db90d485eec951d153594f183b1103",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-030.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 3,
+      "id": "ao",
+      "film_frame": 1181,
+      "film_time": 47.24,
+      "why": "after-label",
+      "source_time": 454.58000000000004,
+      "file": "frame-031.jpg",
+      "image_sha256": "ceea73b067d62a8b5916ebcbe36b6ed6725effc6c63aec39fd86444578ca3f61",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-031.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 4,
+      "id": "card-dubai",
+      "film_frame": 1204,
+      "film_time": 48.16,
+      "why": "body-first",
+      "source_time": null,
+      "file": "frame-032.jpg",
+      "image_sha256": "68253466736bd36ed10fd9534bb56a80634ea7bbfb8c6088c82dba43369bd4f0",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-032.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 4,
+      "id": "card-dubai",
+      "film_frame": 1342,
+      "film_time": 53.68,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-033.jpg",
+      "image_sha256": "ef34a682f3706ce1f70046cf04a95253d353b76d0cde6ffb39d50a7cfb7ae34c",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-033.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 4,
+      "id": "card-dubai",
+      "film_frame": 1482,
+      "film_time": 59.28,
+      "why": "body-last",
+      "source_time": null,
+      "file": "frame-034.jpg",
+      "image_sha256": "f621b381b9662110bfd1dc3bef2461ce7b8b4257f2612bfaf61879b9d36af5e0",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-034.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 4,
+      "id": "card-dubai",
+      "film_frame": 1193,
+      "film_time": 47.72,
+      "why": "before-join",
+      "source_time": null,
+      "file": "frame-035.jpg",
+      "image_sha256": "4f413ca6f1435cfa23a938a907e651e2cb0919765d1c50983f4e8c0c9e21aae7",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-035.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 4,
+      "id": "card-dubai",
+      "film_frame": 1197,
+      "film_time": 47.88,
+      "why": "during-join",
+      "source_time": null,
+      "file": "frame-036.jpg",
+      "image_sha256": "2d3829a2a65526202dca81cb9bc81a80c6586fc1ecd73d4dc887bdb3b4fa5421",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-036.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1499,
+      "film_time": 59.96,
+      "why": "body-first",
+      "source_time": 239.85,
+      "file": "frame-037.jpg",
+      "image_sha256": "ab85d4ba034c057cf223fc95d55c1a1bce222542c7dad1c3752ff5b0ced4e0b4",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-037.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1643,
+      "film_time": 65.72,
+      "why": "body-middle",
+      "source_time": 245.61,
+      "file": "frame-038.jpg",
+      "image_sha256": "d8cd7bc056be61110b239a818fea992254a818e9e0c0ec3f5691b6c9e1a81ae0",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-038.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1788,
+      "film_time": 71.52,
+      "why": "body-last",
+      "source_time": 251.41,
+      "file": "frame-039.jpg",
+      "image_sha256": "f6b2a880add6dbdde8333fbf5275a095e25fa6452d54b37695d060758773a459",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-039.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1488,
+      "film_time": 59.52,
+      "why": "before-join",
+      "source_time": 239.41,
+      "file": "frame-040.jpg",
+      "image_sha256": "8454c26e644b86335d559b8617a0914010e578f5292d5c36f3fceefc1c84b70d",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-040.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1492,
+      "film_time": 59.68,
+      "why": "during-join",
+      "source_time": 239.57,
+      "file": "frame-041.jpg",
+      "image_sha256": "9a4d7aa0e2473f9c2053d47cc220aed3015961a3c05c711b39878db25cd15ddb",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-041.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1603,
+      "film_time": 64.12,
+      "why": "actual-bilingual-cue",
+      "source_time": 244.01,
+      "file": "frame-042.jpg",
+      "image_sha256": "f1a0ba74f27d71002c0276c12fb0acb460597ebbf866c62108570af2f25cf417",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-042.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1668,
+      "film_time": 66.72,
+      "why": "actual-bilingual-cue",
+      "source_time": 246.61,
+      "file": "frame-043.jpg",
+      "image_sha256": "535e2258f51f26774d23886bfb013a9c7eecef313de37299263522a482f439f3",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-043.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1740,
+      "film_time": 69.6,
+      "why": "actual-bilingual-cue",
+      "source_time": 249.49,
+      "file": "frame-044.jpg",
+      "image_sha256": "77e7e8d82d3f8a0f589052aae8cd38463fa8fbe483de0654d0604d7c98e421fb",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-044.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1496,
+      "film_time": 59.84,
+      "why": "before-label",
+      "source_time": 239.73000000000002,
+      "file": "frame-045.jpg",
+      "image_sha256": "a5f1f89137cccb46cd3756b18d93c0378219d4e2340a5adbf54d0305f9419d4d",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-045.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1515,
+      "film_time": 60.6,
+      "why": "visible-label-first",
+      "source_time": 240.49,
+      "file": "frame-046.jpg",
+      "image_sha256": "b5687e71e24853f0ea85eca449bac6c5b9e93d78e14d19694d609bc2cb3bfbff",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-046.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1539,
+      "film_time": 61.56,
+      "why": "visible-label-middle",
+      "source_time": 241.45,
+      "file": "frame-047.jpg",
+      "image_sha256": "295666d1e4d028eafa6fd64b1074cdde555756d5e568f3aaa24c8f629784b11d",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-047.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1570,
+      "film_time": 62.8,
+      "why": "visible-label-last",
+      "source_time": 242.69,
+      "file": "frame-048.jpg",
+      "image_sha256": "2f7fdd64099f0769a7c1bbc9f6e8616d62df495e8e809613f294c6d46ea860d3",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-048.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 5,
+      "id": "dubai-final",
+      "film_frame": 1585,
+      "film_time": 63.4,
+      "why": "after-label",
+      "source_time": 243.29,
+      "file": "frame-049.jpg",
+      "image_sha256": "d098c9c485db799f9fa6a542f12129624e64e10ec1d15a079bca3c817307af40",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-049.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 6,
+      "id": "dubai-speech",
+      "film_frame": 1805,
+      "film_time": 72.2,
+      "why": "body-first",
+      "source_time": 28.940000000000005,
+      "file": "frame-050.jpg",
+      "image_sha256": "3f99a423c76f5ae1e36c8fd2882cfe7bc22d59cb563ecbc3b4d4da4c433479d6",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-050.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 6,
+      "id": "dubai-speech",
+      "film_frame": 1869,
+      "film_time": 74.76,
+      "why": "body-middle",
+      "source_time": 31.500000000000007,
+      "file": "frame-051.jpg",
+      "image_sha256": "d94c916f8a39f1b625e5a55d45711a65710f3eef2dd6c2abecd5b94948f160d2",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-051.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 6,
+      "id": "dubai-speech",
+      "film_frame": 1934,
+      "film_time": 77.36,
+      "why": "body-last",
+      "source_time": 34.1,
+      "file": "frame-052.jpg",
+      "image_sha256": "14d85f2b61eb89e0ec6ee7e0a79016134e8e78015e0cdb1fa558c583f281cad2",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-052.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 6,
+      "id": "dubai-speech",
+      "film_frame": 1794,
+      "film_time": 71.76,
+      "why": "before-join",
+      "source_time": 28.500000000000007,
+      "file": "frame-053.jpg",
+      "image_sha256": "e615049e13951bdf3184f5668fa26820f7fa9593e98bd6d3cfd2ea24b929fc18",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-053.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 6,
+      "id": "dubai-speech",
+      "film_frame": 1798,
+      "film_time": 71.92,
+      "why": "during-join",
+      "source_time": 28.660000000000004,
+      "file": "frame-054.jpg",
+      "image_sha256": "c6d549b4323de6ae38b5c83e114fb9f03a70e25c65cf78979bf9a0e2e8758d7e",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-054.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 6,
+      "id": "dubai-speech",
+      "film_frame": 1818,
+      "film_time": 72.72,
+      "why": "actual-bilingual-cue",
+      "source_time": 29.46,
+      "file": "frame-055.jpg",
+      "image_sha256": "8999de3365ff8a24e3df14815c35ad2b88f305ea23b1b9a95e659ee2bdefe536",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-055.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 6,
+      "id": "dubai-speech",
+      "film_frame": 1853,
+      "film_time": 74.12,
+      "why": "actual-bilingual-cue",
+      "source_time": 30.860000000000007,
+      "file": "frame-056.jpg",
+      "image_sha256": "8aa75db2d00a645fc401e734d4e7dd3ee05a1113a0a6f66214049a861711b990",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-056.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 6,
+      "id": "dubai-speech",
+      "film_frame": 1917,
+      "film_time": 76.68,
+      "why": "actual-bilingual-cue",
+      "source_time": 33.42000000000001,
+      "file": "frame-057.jpg",
+      "image_sha256": "348db3271d574d47665eac3d7acd5d33ad5f9f358c14a72065d22e603900c1a4",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-057.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 7,
+      "id": "card-sunshine",
+      "film_frame": 1951,
+      "film_time": 78.04,
+      "why": "body-first",
+      "source_time": null,
+      "file": "frame-058.jpg",
+      "image_sha256": "4ab570f39eb58250ab2cb3baf880b97221328727f241d5d10c0474182d08c9a2",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-058.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 7,
+      "id": "card-sunshine",
+      "film_frame": 2072,
+      "film_time": 82.88,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-059.jpg",
+      "image_sha256": "e3e701012e9c889ebdf734e7d41a839cf9dd5f3959698970a6ef9807853c74ae",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-059.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 7,
+      "id": "card-sunshine",
+      "film_frame": 2194,
+      "film_time": 87.76,
+      "why": "body-last",
+      "source_time": null,
+      "file": "frame-060.jpg",
+      "image_sha256": "55e51c379a153bb62757a9260d4a683bb76c1cf503548c77986e35cafbe58af7",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-060.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 7,
+      "id": "card-sunshine",
+      "film_frame": 1940,
+      "film_time": 77.6,
+      "why": "before-join",
+      "source_time": null,
+      "file": "frame-061.jpg",
+      "image_sha256": "108ef88c91260a3ccd36dc8deac6b1adc99f9f5bb2ebc597dfe7ab1a110976ee",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-061.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 7,
+      "id": "card-sunshine",
+      "film_frame": 1944,
+      "film_time": 77.76,
+      "why": "during-join",
+      "source_time": null,
+      "file": "frame-062.jpg",
+      "image_sha256": "76b3d107420162db8c6cd0eee383fbfe77dd9dd8bb2495e8d0b79bed748ca581",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-062.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 8,
+      "id": "miami-qf",
+      "film_frame": 2211,
+      "film_time": 88.44,
+      "why": "body-first",
+      "source_time": 264.33,
+      "file": "frame-063.jpg",
+      "image_sha256": "156d06230e68f95bf32e2c5672562965aade877c5a9b2e3b750d3314066c0117",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-063.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 8,
+      "id": "miami-qf",
+      "film_frame": 2364,
+      "film_time": 94.56,
+      "why": "body-middle",
+      "source_time": 270.45,
+      "file": "frame-064.jpg",
+      "image_sha256": "11e80782282ebbde7cfa327fce1d87aa90be0123f7338a74c91d12e4797bd1d6",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-064.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 8,
+      "id": "miami-qf",
+      "film_frame": 2518,
+      "film_time": 100.72,
+      "why": "body-last",
+      "source_time": 276.61,
+      "file": "frame-065.jpg",
+      "image_sha256": "3d91a992224e091ad17b17d68ece685f091b3d7398fe0b448da147aadfa73939",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-065.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 8,
+      "id": "miami-qf",
+      "film_frame": 2200,
+      "film_time": 88.0,
+      "why": "before-join",
+      "source_time": 263.89,
+      "file": "frame-066.jpg",
+      "image_sha256": "0ca8c9503f2bea83124bae1343fe413225d765d78080f379173636202ab484f9",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-066.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 8,
+      "id": "miami-qf",
+      "film_frame": 2204,
+      "film_time": 88.16,
+      "why": "during-join",
+      "source_time": 264.05,
+      "file": "frame-067.jpg",
+      "image_sha256": "f60ea9a3ab311765f3046fa47fe3c690da4f81bd33fe9516df194fd2ad013a63",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-067.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 8,
+      "id": "miami-qf",
+      "film_frame": 2339,
+      "film_time": 93.56,
+      "why": "actual-bilingual-cue",
+      "source_time": 269.45,
+      "file": "frame-068.jpg",
+      "image_sha256": "63d5ccbeb23222b895d46ec01162d657dc79b3dec20ff342634324e2ee503507",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-068.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 8,
+      "id": "miami-qf",
+      "film_frame": 2407,
+      "film_time": 96.28,
+      "why": "actual-bilingual-cue",
+      "source_time": 272.17,
+      "file": "frame-069.jpg",
+      "image_sha256": "89685b06d0e1511610d2f73924c53d23b60d5673d5fa7285492a323608bcee4a",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-069.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 8,
+      "id": "miami-qf",
+      "film_frame": 2469,
+      "film_time": 98.76,
+      "why": "actual-bilingual-cue",
+      "source_time": 274.65,
+      "file": "frame-070.jpg",
+      "image_sha256": "ed01871926101914cc1ba85c52f14403087565b4cfea7a579e0a4a008017c357",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-070.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 8,
+      "id": "miami-qf",
+      "film_frame": 2426,
+      "film_time": 97.04,
+      "why": "visible-label-first",
+      "source_time": 272.93,
+      "file": "frame-071.jpg",
+      "image_sha256": "82fa0aec71b4ff708d93a0d88bf22867712e0c5c293e728084152986c359924e",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-071.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 8,
+      "id": "miami-qf",
+      "film_frame": 2450,
+      "film_time": 98.0,
+      "why": "visible-label-middle",
+      "source_time": 273.89,
+      "file": "frame-072.jpg",
+      "image_sha256": "c79f2494c33427a8b92f9cc9cb703e46155dc9ac20aa1164963c0e8f5ae53a17",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-072.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 8,
+      "id": "miami-qf",
+      "film_frame": 2481,
+      "film_time": 99.24,
+      "why": "visible-label-last",
+      "source_time": 275.13,
+      "file": "frame-073.jpg",
+      "image_sha256": "93fad7e7e60e0d2262c637ab71ff00b43a623878b2261269d2c786fbad8ca96a",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-073.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 8,
+      "id": "miami-qf",
+      "film_frame": 2496,
+      "film_time": 99.84,
+      "why": "after-label",
+      "source_time": 275.73,
+      "file": "frame-074.jpg",
+      "image_sha256": "ec9895f3bbf383638627bc9800ab55fe8e9cac842483e10e429592b7f5a5e86f",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-074.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 9,
+      "id": "card-charleston",
+      "film_frame": 2535,
+      "film_time": 101.4,
+      "why": "body-first",
+      "source_time": null,
+      "file": "frame-075.jpg",
+      "image_sha256": "306eb1831b37c15c0683e3b1d6f2ec09128f30aac91d0cb2e73b7bf0d5f1cd56",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-075.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 9,
+      "id": "card-charleston",
+      "film_frame": 2659,
+      "film_time": 106.36,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-076.jpg",
+      "image_sha256": "c5bdcb1a5d0094264fd9ce5195c598f7fbfebd0d979cda15a3df857a9aacdd33",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-076.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 9,
+      "id": "card-charleston",
+      "film_frame": 2783,
+      "film_time": 111.32,
+      "why": "body-last",
+      "source_time": null,
+      "file": "frame-077.jpg",
+      "image_sha256": "1474dfa4c2b681e01105b0c37b5e46d1a744530eac8ef142a65bab69c2127655",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-077.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 9,
+      "id": "card-charleston",
+      "film_frame": 2524,
+      "film_time": 100.96,
+      "why": "before-join",
+      "source_time": null,
+      "file": "frame-078.jpg",
+      "image_sha256": "e9ebe8517c781ce6de40eacbe408b17e6143c87fdf8a449da2a24f642bebc59e",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-078.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 9,
+      "id": "card-charleston",
+      "film_frame": 2528,
+      "film_time": 101.12,
+      "why": "during-join",
+      "source_time": null,
+      "file": "frame-079.jpg",
+      "image_sha256": "6b68ed946a133eb30e9e1e3f2073765f6fd7888f93be02007ddbb0eb7eb4e01f",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-079.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 2800,
+      "film_time": 112.0,
+      "why": "body-first",
+      "source_time": 262.53,
+      "file": "frame-080.jpg",
+      "image_sha256": "3702d8e05c0e323c7fcddcb27d80ed16d78504df312951148303865461b8a6ef",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-080.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 3111,
+      "film_time": 124.44,
+      "why": "body-middle",
+      "source_time": 274.97,
+      "file": "frame-081.jpg",
+      "image_sha256": "8f500cab03b807d7ddefed34534b8c85c5f023c35d7f5c607cdf09d66224f54f",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-081.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 3423,
+      "film_time": 136.92,
+      "why": "body-last",
+      "source_time": 287.45,
+      "file": "frame-082.jpg",
+      "image_sha256": "86011a8d3f27aaf024c7d1ac84dbe9f33df33bba92c47b39f887ea3c856fc1a6",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-082.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 2789,
+      "film_time": 111.56,
+      "why": "before-join",
+      "source_time": 262.09000000000003,
+      "file": "frame-083.jpg",
+      "image_sha256": "e2e7124982da5dcdb346075b11eb75c1d32685c7da35e9a5743b9ea21e623aca",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-083.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 2793,
+      "film_time": 111.72,
+      "why": "during-join",
+      "source_time": 262.25,
+      "file": "frame-084.jpg",
+      "image_sha256": "8a4e0fe8df6daa8d851765a43d1d9bdc33a532d0d635c4061e40d4ba9578be0f",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-084.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 2812,
+      "film_time": 112.48,
+      "why": "actual-bilingual-cue",
+      "source_time": 263.01,
+      "file": "frame-085.jpg",
+      "image_sha256": "a7083f7e460bbdee279e2ca719bbbd00eb8297e8584d3a41b178b900a819d5df",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-085.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 2876,
+      "film_time": 115.04,
+      "why": "actual-bilingual-cue",
+      "source_time": 265.57,
+      "file": "frame-086.jpg",
+      "image_sha256": "d1e161c892be7b333f8ad320f9dee5b9ec7a42ce7b1e1324a1637f41e501cf5a",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-086.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 2941,
+      "film_time": 117.64,
+      "why": "actual-bilingual-cue",
+      "source_time": 268.17,
+      "file": "frame-087.jpg",
+      "image_sha256": "dd215776a67736dcda1324ad207bec0f29dc7b34144158e181583b1d7c5517c1",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-087.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 3073,
+      "film_time": 122.92,
+      "why": "actual-bilingual-cue",
+      "source_time": 273.45,
+      "file": "frame-088.jpg",
+      "image_sha256": "5771f4ef3dccbb0fa2e247f01e1cbd834189f64a23003b5fe9dc54fb3efda625",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-088.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 3170,
+      "film_time": 126.8,
+      "why": "actual-bilingual-cue",
+      "source_time": 277.33,
+      "file": "frame-089.jpg",
+      "image_sha256": "2139f5f4d15a0ff43aec54d1b375e9642f89970f2031496a3ded745da5736ff5",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-089.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 3310,
+      "film_time": 132.4,
+      "why": "actual-bilingual-cue",
+      "source_time": 282.93,
+      "file": "frame-090.jpg",
+      "image_sha256": "1ba09955da1b7cdd6a81204ca5ffc14396abccbdcd0263e99fbf7d932d00b514",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-090.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 3384,
+      "film_time": 135.36,
+      "why": "actual-bilingual-cue",
+      "source_time": 285.89,
+      "file": "frame-091.jpg",
+      "image_sha256": "07d55e063aed1a892bcb544ddb7b5619b94b3d6a00299af10614dbceaa68d6eb",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-091.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 3048,
+      "film_time": 121.92,
+      "why": "before-label",
+      "source_time": 272.45,
+      "file": "frame-092.jpg",
+      "image_sha256": "a1fa7ab487aca265c82ce0d94608e2b0bc7113d76962b9d92b1d25d138948da8",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-092.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 3067,
+      "film_time": 122.68,
+      "why": "visible-label-first",
+      "source_time": 273.21000000000004,
+      "file": "frame-093.jpg",
+      "image_sha256": "7a08c8b0272949543a39c83fb66216568039d22fd70c54cd7fb85373c059de6c",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-093.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 3099,
+      "film_time": 123.96,
+      "why": "visible-label-middle",
+      "source_time": 274.49,
+      "file": "frame-094.jpg",
+      "image_sha256": "0c4493c1b6a1b322065bbbe354d44f10b1beb3b4ab69664c7e1a4e6f1b088c79",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-094.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 3137,
+      "film_time": 125.48,
+      "why": "visible-label-last",
+      "source_time": 276.01,
+      "file": "frame-095.jpg",
+      "image_sha256": "22457cce65926eda261a6c808d9ab350feca429cf336bba413de3ef09d028fbb",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-095.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    },
+    {
+      "index": 10,
+      "id": "charleston-final",
+      "film_frame": 3152,
+      "film_time": 126.08,
+      "why": "after-label",
+      "source_time": 276.61,
+      "file": "frame-096.jpg",
+      "image_sha256": "8068c343fee653f0650144454a505adeab4bdfbbef54c39768a1774697c1e468",
+      "path": "/workspace/pegula-finals-production/final-film-review-first/frame-096.jpg",
+      "view_scope": "All97 actual frames viewed in nine contact sheets; detailed subset and all23 bilingual-cue subtitle regions separately reviewed."
+    }
+  ],
+  "scope_limits": [
+    "Baseline actual MP4 visual review for indices0–10 only; not a full417.2s per-frame validation or indices11–29 approval.",
+    "No human-ear listening, full-mix, TTS-quality or new automatic-voice-suite claim. Parent’s automatic15-voice report is separate evidence.",
+    "No source windows, repo/spec/Git operations or render dispatch changed by this reviewer.",
+    "New requested numeric round-card revision requires new exact-byte evidence; this baseline report does not approve it."
+  ]
+}

@@ -6,7 +6,11 @@ for i,seg in enumerate(s['segments']):
 samples=[]
 def add(key,relative,why):
  offset,length,seg=rows[key];relative=max(.05,min(length-.06,relative));samples.append({'id':key,'film_time':round(offset+relative,3),'why':why})
-if group=='early':
+if group=='fraction':
+ for key in ['miami-qf','us-qf']:
+  _,_,seg=rows[key];a=seg['inset'];lo=a['show_after'];hi=lo+a['show_for']
+  for t,why in [(lo-.08,'before-label'),((lo+hi)/2,'label-middle'),(hi-.08,'label-last'),(hi+.08,'after-label')]:add(key,t,why)
+elif group=='early':
  for key in ['ao','dubai-final','miami-qf','charleston-final','berlin-sf']:
   _,_,seg=rows[key];a=seg['inset'];lo=a['show_after'];hi=lo+a['show_for']
   for t,why in [(lo-.08,'before-label'),((lo+hi)/2,'label-middle'),(hi-.08,'label-last'),(hi+.08,'after-label')]:add(key,t,why)
