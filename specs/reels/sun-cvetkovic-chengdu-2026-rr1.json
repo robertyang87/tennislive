@@ -97,6 +97,7 @@
   "_match": {
     "status": "result_verified",
     "source": "world_tennis_official",
+    "source_id": "ITF-2026-3454",
     "source_url": "https://video.worldtennistourjuniors.com/en/wtt-junior-finals",
     "date": "2026-10-21",
     "winner": "孙心然",
@@ -187,7 +188,19 @@
     },
     "_source": "ITF 官方记分组件（matchscorerlive）ACE/双误计数 + 全场录像逐分制表复核（总分/破发/发球计数，两组独立核对记分牌）；官方总分占比 58/42、茨破发 3/8 与制表一致，孙破发机会官方记 6 次、录像逐分实数 7 次，卡面取实测值。",
     "_headshot_why": "两人 WTA 官方头像 blob（wtafiles.blob.core.windows.net/images/headshots/）按 ID 查均无图：孙心然 335958、茨维特科维奇 333724 的 .jpg/.png 均 404（2026-10-22 实测）；Sofascore 403 挑战墙、ITF 站 Incapsula 挡直连抓图。孙沿用仓库已认领的北京站比赛图裁切 wta-335958-match-LS041.jpg（sun-bucsa-beijing-2026-r2 已用同一张）；茨用本场官方转播集合片 301.5s 正脸特写帧裁切（白衣者即茨维特科维奇，记分牌上下文核对无误）。",
-    "_winners_ue_why": "本场制胜分/非受迫失误在全部可采信来源查空（见 _winners_ue_check）：ITF 官方记分组件只有百分比、TNNS 三天赛程无此场、MCP 未标注、转播无统计牌。按 tools/winners_ue_gate.py 的硬闸：新片省略这两行须账号所有者单片批准（批准名单写在闸内），本片未获批准——两行留空且不出片，等所有者拍板，绝不零填或编造。",
+    "_winners_ue_omission": {
+      "slug": "sun-cvetkovic-chengdu-2026-rr1",
+      "source_id": "ITF-2026-3454",
+      "match_date": "2026-10-21",
+      "winner_result": "7-6(1) 6-2",
+      "fields": [
+        "winners",
+        "ue"
+      ],
+      "decision": "omit_both_rows_for_this_film_only",
+      "authorization": "owner-approved-single-film-omission-2026-10-22"
+    },
+    "_winners_ue_why": "本场制胜分/非受迫失误在全部可采信来源查空（见 _winners_ue_check）：ITF 官方记分组件只有百分比、TNNS 三天赛程无此场、MCP 未标注、转播无统计牌。按 tools/winners_ue_gate.py 的硬闸，新片省略这两行须账号所有者单片批准（批准名单写在闸内）。所有者已于 2026-10-22 明示批准本片单片省略这两行（批准记录已写入闸内 APPROVED_WUE_OMISSIONS，authorization=owner-approved-single-film-omission-2026-10-22），stats._winners_ue_omission 与闸内记录逐字一致；绝不零填或编造。",
     "_winners_ue_check": {
       "sources": {
         "official_stats": {
