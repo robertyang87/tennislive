@@ -1,0 +1,50 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=nOrIoX5vUUM",
+  "source_sha256": "2b835cd0fc86187a9e692d4fd67873af3874ee974c16fb267ebc787a338d69c7",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual-source paired localASR/wordtime cross-check, no human-listening claim",
+  "reviewed_at": "2026-10-22T13:27:22.593706+00:00",
+  "reviewed_from": 158.76,
+  "reviewed_to": 183.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 174.56,
+      "end": 179.98,
+      "en": "It was tricky circumstances for her today.",
+      "zh": "她今天面对的局面相当棘手。"
+    },
+    {
+      "start": 179.98,
+      "end": 182.72,
+      "en": "Challenging conditions.",
+      "zh": "条件充满挑战。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/ao-r3-a1a3ad0e26-ao-r3-initial-small.en.json",
+      "sha256": "a1a3ad0e26163a298447f2be8d74c8f2e0505c859f9f98fa13207bb4e86df66a",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/ao-r3-f04bd5c154-ao-r3-initial-medium.en.json",
+      "sha256": "f04bd5c15438d9d020f3afeb1e6e176712c1eabbc7ec58f111ce33c77e69dc1b",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/ao-r3-9fba888eca-ao-terminal-context-large-v3-turbo.json",
+      "sha256": "9fba888eca60ed09652ab14b5fad0241c2f383fc57698ea619fc34a214fb3b4d",
+      "model": "large-v3-turbo"
+    }
+  ],
+  "review_notes": "Actual source bytes and independent local unprompted word-level ASR checked. English proper names normalized from official player identities; phrase cues split only at actual word boundaries, complete original commentary retained across cues. Not human listening. Medium initial unsupported leading for-the-first-time phrase begins probability.051 and spans silence/cheers; independent small.en and unprompted large-v3-turbo both identify no such phrase and agree actual commentary begins174.56. Rejected model insertion retained in raw, not silently overwritten.",
+  "outgoing_tail": {
+    "default_seconds": 0.25,
+    "padding_policy": "actual paired ASR context beyond selected end covers +.25; next sentence not intersected"
+  },
+  "raw_conflicts_retained": true
+}

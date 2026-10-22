@@ -1,0 +1,59 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=XfE9M6__724",
+  "source_sha256": "39e3e2b5d0d5e21037fa6f593c6a5db0b7ee1d23152b1aeec151c5fa8e5aaf1e",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual-source paired localASR/wordtime cross-check, no human-listening claim",
+  "reviewed_at": "2026-10-22T13:27:22.598485+00:00",
+  "reviewed_from": 215.08,
+  "reviewed_to": 224.24,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 220.72,
+      "end": 223.94,
+      "en": "It's over and out.",
+      "zh": "比赛结束了。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/wimbledon-final-a9f4399e19-wimbledon-final-initial-small.en.json",
+      "sha256": "a9f4399e19e0592c0a3e6672ec20cafa10eaa77d0a33313c03d466548b82e4e0",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/wimbledon-final-c535e1cc06-wimbledon-final-initial-medium.en.json",
+      "sha256": "c535e1cc067470ec85e235e816dbb98cf49f20d0a86f3d0cb650875b0591d6d1",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/wimbledon-final-28eba732cf-wimbledon_final-203.60-228.00-small.en.json",
+      "sha256": "28eba732cf77ef012127eaa850fadca1473b5955ac11265335a4feada862d7b1",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/wimbledon-final-d5d807be24-wimbledon_final-203.60-228.00-medium.en.json",
+      "sha256": "d5d807be248010e1e539b5bba31b2a4991fe49b05df883a5f6248dd00156aa89",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/wimbledon-final-72d1ff1ef4-wimbledon_final_tailfix-context-220-225-small.en.json",
+      "sha256": "72d1ff1ef4bdcbfa925dea34a74d1ecc62815c45ea7caf6ac7647bd4c5018727",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/wimbledon-final-77c3c0f62d-wimbledon_final_tailfix-context-220-225-medium.en.json",
+      "sha256": "77c3c0f62d403960c4144413a9c43c4b3178450a08852f148ff16c2299fa2f6c",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "Actual source bytes and independent local unprompted word-level ASR checked. English proper names normalized from official player identities; phrase cues split only at actual word boundaries, complete original commentary retained across cues. Not human listening. Exact sourceSHA matches prior Muchova actual-byte paired context evidence; targeted out ends223.90/223.94. Whole distinct post224.48 champion montage not selected. New broad-context invented firstwords and posthistory conflicts remain raw but lie outside final body.",
+  "outgoing_tail": {
+    "default_seconds": 0.25,
+    "padding_policy": "silence outside selected body"
+  },
+  "raw_conflicts_retained": true
+}

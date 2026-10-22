@@ -1,0 +1,121 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=6D6839Xw9eo",
+  "source_sha256": "49858a1298eecc578ab1c93b369d079d5c7fe117128ef62f06795c860c8fa407",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual-source paired localASR/wordtime cross-check, no human-listening claim",
+  "reviewed_at": "2026-10-22T13:27:22.597639+00:00",
+  "reviewed_from": 5977.8,
+  "reviewed_to": 6029.65,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 5987.08,
+      "end": 5990.74,
+      "en": "A spectacular week in Berlin",
+      "zh": "精彩绝伦的柏林一周，"
+    },
+    {
+      "start": 5990.74,
+      "end": 5995.18,
+      "en": "ends with tears of joy for Linda Noskova.",
+      "zh": "以诺斯科娃喜极而泣收尾。"
+    },
+    {
+      "start": 5996.76,
+      "end": 5997.88,
+      "en": "It's been a bit of a wait",
+      "zh": "这场等待，有些漫长，"
+    },
+    {
+      "start": 5997.88,
+      "end": 5999.58,
+      "en": "for her second career title,",
+      "zh": "她的生涯第二冠终于到来，"
+    },
+    {
+      "start": 5999.58,
+      "end": 6002.46,
+      "en": "but she gets it on the grass in Germany",
+      "zh": "她在德国的草地上夺冠，"
+    },
+    {
+      "start": 6002.46,
+      "end": 6005.84,
+      "en": "at the expense of the former champion Jessica Pegula.",
+      "zh": "击败的是前冠军佩古拉。"
+    },
+    {
+      "start": 6005.84,
+      "end": 6008.14,
+      "en": "Another classic between these two.",
+      "zh": "两人又奉献了一场经典。"
+    },
+    {
+      "start": 6008.14,
+      "end": 6011.54,
+      "en": "But in the end, it's the serve and first-strike tennis",
+      "zh": "最终，是发球和第一拍进攻，"
+    },
+    {
+      "start": 6011.54,
+      "end": 6014.14,
+      "en": "of Linda Noskova that gets her home.",
+      "zh": "让诺斯科娃笑到最后。"
+    },
+    {
+      "start": 6015.6,
+      "end": 6018.18,
+      "en": "What a relief she will feel,",
+      "zh": "她一定会感到如释重负，"
+    },
+    {
+      "start": 6018.18,
+      "end": 6023.76,
+      "en": "after those almost-but-not-quite moments of last year,",
+      "zh": "去年，她曾多次功亏一篑，"
+    },
+    {
+      "start": 6023.76,
+      "end": 6026.44,
+      "en": "when she made three finals but couldn't get it done.",
+      "zh": "三次进决赛，却都没能夺冠。"
+    },
+    {
+      "start": 6028.36,
+      "end": 6029.4,
+      "en": "She has here.",
+      "zh": "这一次，她做到了。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/berlin-final-a0157567fb-berlin-mp-small.en.json",
+      "sha256": "a0157567fb57d677f881bcc48ffd1d38273de6622f20d814018ddf378da7f4c9",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/berlin-final-e8a796464d-berlin-mp-medium.en.json",
+      "sha256": "e8a796464d8260f6557b9a931ac1ead3a61e5b0bcf55f05c85a806b37db992f4",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/berlin-final-f1a09f5ba3-berlin-mp-tail-small.en.json",
+      "sha256": "f1a09f5ba397f5fc3b45b99621d95012be6cbfe7632a54ee53627f96627d2a47",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/berlin-final-93bba4b319-berlin-mp-tail-medium.en.json",
+      "sha256": "93bba4b31947c41c79d11e4c2f28c84585c973a459574e4452a396947c51b198",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "Actual source bytes and independent local unprompted word-level ASR checked. English proper names normalized from official player identities; phrase cues split only at actual word boundaries, complete original commentary retained across cues. Not human listening.",
+  "outgoing_tail": {
+    "default_seconds": 0.25,
+    "padding_policy": "silence outside selected body"
+  },
+  "raw_conflicts_retained": true
+}
