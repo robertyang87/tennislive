@@ -3,25 +3,25 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "736178868193bd83c4e6164edd1f32e54de79f504c60619ccaa52350e28d0cb9",
+    "bundle_sha256": "e5cc6d3c6a66fea2eb28257c6d6b92c24152d87eb3eea94b37cb9f8f2bae073e",
     "request_count": 19,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-tiebreak-history-2026-736178868193bd83",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-tiebreak-history-2026-736178868193bd83/tts_bundle.zip",
+    "release_tag": "reel-tts-tiebreak-history-2026-e5cc6d3c6a66fea2",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-tiebreak-history-2026-e5cc6d3c6a66fea2/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39705801010"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39748641404"
   },
-  "cover_seconds": 3.49,
+  "cover_seconds": 3.946,
   "cover_narrated": true,
   "outro_seconds": 4.554,
   "layout": "full",
   "segments_seconds": 328.37,
   "topbar": null,
-  "film_seconds": 336.44,
+  "film_seconds": 336.88,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -59,44 +59,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "6c1339f113257eec88af2db7bcef95d712ad910dc7e53c8a09fc217ca9bb3137",
+  "render_inputs_sha256": "0fe1f4f9bf079d991aaf899290139d3d6f663041648fa7402c8e75aac05d7803",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "tiebreak-history-2026",
-    "received_at": "2026-10-22T01:27:46Z",
-    "artifact_ready_at": "2026-10-22T01:37:42Z",
-    "elapsed_seconds": 596.212,
+    "received_at": "2026-10-22T08:33:41Z",
+    "artifact_ready_at": "2026-10-22T08:42:54Z",
+    "elapsed_seconds": 553.672,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "b446f9d711d4baf2fcf5f43719801fc354761c297bf16ba105807e057cc57faa",
-    "spec_sha256": "3d4e276a6d716ae0fd262960b9f43395b3f58a4bfcf17920148182fb20c7f175",
-    "run_id": "39705801010",
+    "film_sha256": "91c1ab118af8588aeaf07df91ef0d1a085b86bbcda3004675d77272c8fe31f8f",
+    "spec_sha256": "74f739a7a2a6750aff80ccc18f0ad2fec49bb3d0285bf8c38fd907df731db945",
+    "run_id": "39748641404",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-22T01:31:20Z",
-        "run_id": "39705801010"
+        "at": "2026-10-22T08:36:31Z",
+        "run_id": "39748641404"
       }
     ],
-    "render_seconds": 382.212,
-    "pre_render_seconds": 214.0
+    "render_seconds": 383.672,
+    "pre_render_seconds": 170.0
   },
-  "film_sha256": "b446f9d711d4baf2fcf5f43719801fc354761c297bf16ba105807e057cc57faa",
-  "film_bytes": 157120096,
-  "qc_attestation_sha256": "1ad0292a4ac130bf70ca8dce427e409ba6d371421ebc7e327d872cdc6aa95b23",
+  "film_sha256": "91c1ab118af8588aeaf07df91ef0d1a085b86bbcda3004675d77272c8fe31f8f",
+  "film_bytes": 156811132,
+  "qc_attestation_sha256": "d1c3b16a001e62b3d3653f3ae48665a929e6bc3f16d1daf5b85f3492fca51769",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-22T01:31:20Z",
-      "run_id": "39705801010"
+      "at": "2026-10-22T08:36:31Z",
+      "run_id": "39748641404"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-22T01:37:45Z",
-      "run_id": "39705801010"
+      "at": "2026-10-22T08:42:58Z",
+      "run_id": "39748641404"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-tiebreak-history-2026/tiebreak-history-2026.mp4",
-  "video_bytes": 157120096
+  "video_bytes": 156811132
 }
