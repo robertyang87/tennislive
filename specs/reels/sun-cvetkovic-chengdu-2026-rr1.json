@@ -50,7 +50,7 @@
       }
     },
     "hook": "首盘一比四落后\n孙心然逆转拿下",
-    "hook_accent": "开门红",
+    "hook_accent": "逆转拿下",
     "topic": "青少年年终总决赛 成都 · A组小组赛 · 孙心然 VS 茨维特科维奇",
     "portrait": {
       "image": "assets/reel/sun-bucsa-beijing-2026-r2-serve.jpg",
@@ -97,6 +97,7 @@
   "_match": {
     "status": "result_verified",
     "source": "world_tennis_official",
+    "source_id": "ITF-2026-3454",
     "source_url": "https://video.worldtennistourjuniors.com/en/wtt-junior-finals",
     "date": "2026-10-21",
     "winner": "孙心然",
@@ -187,7 +188,19 @@
     },
     "_source": "ITF 官方记分组件（matchscorerlive）ACE/双误计数 + 全场录像逐分制表复核（总分/破发/发球计数，两组独立核对记分牌）；官方总分占比 58/42、茨破发 3/8 与制表一致，孙破发机会官方记 6 次、录像逐分实数 7 次，卡面取实测值。",
     "_headshot_why": "两人 WTA 官方头像 blob（wtafiles.blob.core.windows.net/images/headshots/）按 ID 查均无图：孙心然 335958、茨维特科维奇 333724 的 .jpg/.png 均 404（2026-10-22 实测）；Sofascore 403 挑战墙、ITF 站 Incapsula 挡直连抓图。孙沿用仓库已认领的北京站比赛图裁切 wta-335958-match-LS041.jpg（sun-bucsa-beijing-2026-r2 已用同一张）；茨用本场官方转播集合片 301.5s 正脸特写帧裁切（白衣者即茨维特科维奇，记分牌上下文核对无误）。",
-    "_winners_ue_why": "本场制胜分/非受迫失误在全部可采信来源查空（见 _winners_ue_check）：ITF 官方记分组件只有百分比、TNNS 三天赛程无此场、MCP 未标注、转播无统计牌。按 tools/winners_ue_gate.py 的硬闸：新片省略这两行须账号所有者单片批准（批准名单写在闸内），本片未获批准——两行留空且不出片，等所有者拍板，绝不零填或编造。",
+    "_winners_ue_omission": {
+      "slug": "sun-cvetkovic-chengdu-2026-rr1",
+      "source_id": "ITF-2026-3454",
+      "match_date": "2026-10-21",
+      "winner_result": "7-6(1) 6-2",
+      "fields": [
+        "winners",
+        "ue"
+      ],
+      "decision": "omit_both_rows_for_this_film_only",
+      "authorization": "owner-approved-single-film-omission-2026-10-22"
+    },
+    "_winners_ue_why": "本场制胜分/非受迫失误在全部可采信来源查空（见 _winners_ue_check）：ITF 官方记分组件只有百分比、TNNS 三天赛程无此场、MCP 未标注、转播无统计牌。按 tools/winners_ue_gate.py 的硬闸，新片省略这两行须账号所有者单片批准（批准名单写在闸内）。所有者已于 2026-10-22 明示批准本片单片省略这两行（批准记录已写入闸内 APPROVED_WUE_OMISSIONS，authorization=owner-approved-single-film-omission-2026-10-22），stats._winners_ue_omission 与闸内记录逐字一致；绝不零填或编造。",
     "_winners_ue_check": {
       "sources": {
         "official_stats": {
@@ -269,7 +282,6 @@
       "fit": "full_source",
       "narration": "",
       "score_inset": false,
-      "bed": "high",
       "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不能回贴；本段 fit=full_source 整幅保留，原生记分牌（画面左下）随全幅画面可见，不需回贴。",
       "point_end_ok": "冷开场：赛点（40-15 双赛点）至得分；以制胜执行收束，接标题卡。",
       "crosses_cut": "冷开场：赛点（40-15 双赛点）至得分；以制胜执行收束，接标题卡。",
@@ -299,7 +311,7 @@
       "title_card": "一度一比四落后\n抢七只丢一分",
       "kicker": "成都 · 总决赛首战",
       "seconds": 13.05,
-      "narration": "北京时间十月二十一号下午，成都，世界网联青少年年终总决赛。女子A组第一轮，十六岁的孙心然，迎战塞尔维亚的茨维特科维奇。",
+      "narration": "北京时间十月二十一号下午，成都，世界网联青年组年终总决赛。女子A组第一轮，十六岁的孙心然，迎战塞尔维亚的茨维特科维奇。",
       "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
     },
     {
@@ -311,7 +323,6 @@
       "fit": "full_source",
       "narration": "",
       "score_inset": false,
-      "bed": "high",
       "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不能回贴；本段 fit=full_source 整幅保留，原生记分牌（画面左下）随全幅画面可见，不需回贴。",
       "point_end_ok": "第1局：平分球长回合后保发收尾，对手击球出界的懊恼瞬间；0-40 连救三破发点的前段由旁白交代。",
       "crosses_cut": "第1局：平分球长回合后保发收尾，对手击球出界的懊恼瞬间；0-40 连救三破发点的前段由旁白交代。",
@@ -342,7 +353,6 @@
       "fit": "full_source",
       "narration": "",
       "score_inset": false,
-      "bed": "high",
       "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不能回贴；本段 fit=full_source 整幅保留，原生记分牌（画面左下）随全幅画面可见，不需回贴。",
       "point_end_ok": "第6局回破：两个破发点、破发兑现（对手直线出界）至二比四；解说提及开局前漫长等待。",
       "crosses_cut": "第6局回破：两个破发点、破发兑现（对手直线出界）至二比四；解说提及开局前漫长等待。",
@@ -393,7 +403,6 @@
       "fit": "full_source",
       "narration": "",
       "score_inset": false,
-      "bed": "high",
       "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不能回贴；本段 fit=full_source 整幅保留，原生记分牌（画面左下）随全幅画面可见，不需回贴。",
       "point_end_ok": "第10局末：对手发球胜盘局被破发至零，解说复盘首盘走势（暂停后越打越强）。",
       "crosses_cut": "第10局末：对手发球胜盘局被破发至零，解说复盘首盘走势（暂停后越打越强）。",
@@ -429,7 +438,6 @@
       "fit": "full_source",
       "narration": "",
       "score_inset": false,
-      "bed": "high",
       "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不能回贴；本段 fit=full_source 整幅保留，原生记分牌（画面左下）随全幅画面可见，不需回贴。",
       "point_end_ok": "抢七中段至末段：对手两个发球分连丢，5-1 附近解说点出首盘胜利在望。",
       "crosses_cut": "抢七中段至末段：对手两个发球分连丢，5-1 附近解说点出首盘胜利在望。",
@@ -465,7 +473,6 @@
       "fit": "full_source",
       "narration": "",
       "score_inset": false,
-      "bed": "high",
       "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不能回贴；本段 fit=full_source 整幅保留，原生记分牌（画面左下）随全幅画面可见，不需回贴。",
       "point_end_ok": "第5局：破发点长回合后对手占先区出界，破发反超三比二。",
       "crosses_cut": "第5局：破发点长回合后对手占先区出界，破发反超三比二。",
@@ -489,7 +496,7 @@
       "title_card": "接发接管全场\n五比二再下一城",
       "kicker": "拉开比分",
       "seconds": 17.99,
-      "narration": "第五局，孙心然在破发点上和对手相持了十八秒，茨维特科维奇占先区一侧回球出界，破发反超，三比二。第七局再破，五比二。这一盘，对手四个发球局，丢了三个。",
+      "narration": "第五局，破发点上，两人底线相持，茨维特科维奇占先区一侧回球出界，孙心然破发反超，三比二。第七局再破，五比二。这一盘，对手四个发球局，丢了三个。",
       "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
     },
     {
@@ -501,7 +508,6 @@
       "fit": "full_source",
       "narration": "",
       "score_inset": false,
-      "bed": "high",
       "_score_inset_why": "本源为 ITF 青少年年终总决赛转播，未在 SCOREBOARD_PROFILES 标定之列，不能回贴；本段 fit=full_source 整幅保留，原生记分牌（画面左下）随全幅画面可见，不需回贴。",
       "point_end_ok": "收尾完整重放冷开场：赛点兑现、赛果播报、握手与解说复盘全场（首盘一比三、次盘零比二两度落后翻盘）；1706.5 为视觉切点，不接采访。",
       "crosses_cut": "收尾完整重放冷开场：赛点兑现、赛果播报、握手与解说复盘全场（首盘一比三、次盘零比二两度落后翻盘）；1706.5 为视觉切点，不接采访。",
@@ -565,7 +571,7 @@
       "title_card": "小组赛开门红\n成都之夜属于她",
       "kicker": "把胜利带走",
       "seconds": 21.98,
-      "narration": "七比六、六比二，孙心然拿下小组赛开门红。首盘一比四落后都能翻回来，抢七一个发球分都不给对手。十六岁，青少年世界第一，主场首秀的第一份答卷。小组赛还有两场，你觉得，她在成都，能走多远？",
+      "narration": "七比六、六比二，孙心然拿下小组赛开门红。首盘一比四落后都能翻回来，抢七一个发球分都不给对手。十六岁，青年世界第一，主场首秀的第一份答卷。小组赛还有两场，你觉得，她在成都，能走多远？",
       "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
     }
   ],
