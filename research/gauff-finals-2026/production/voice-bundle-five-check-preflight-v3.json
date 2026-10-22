@@ -1,0 +1,423 @@
+{
+  "schema": "gauff-frozen-bundle-five-check-preflight/v1",
+  "method": "actual existing voice_auto_review functions applied directly to real frozen byte inventory before any movie exists",
+  "human_listened": false,
+  "generated_at": "2026-10-22T13:35:40.932391+00:00",
+  "bundle_sha256": "87d4b09c3467f3bbd0818e9857c4090222ac6eeb9f26d8f1b44c63673f96dd1f",
+  "spec_sha256_at_check": "7a41205793d896368db17d70150736a46c19008fbd8683b59d5623f73001c30c",
+  "quality_approval": false,
+  "final_movie_qc": false,
+  "asr_model": "small",
+  "sentence_splits": [],
+  "all_five_checks_pass": true,
+  "entries": [
+    {
+      "id": "bundle:0b9e40b27a7a75d861805ac053ddf4edea195188d427516cfd2854b4144b1ec6",
+      "audio_sha256": "a4c5e9f3042991183e4eefa68d25685c75b7c9dbec399a427ca5ec8238389c2e",
+      "text": "去年，她在辛辛那提的停车场哭。今年，首冠终于在同一站到来。",
+      "actual_transcript": "去年,她在辛辛那提的停车场哭。今年,手冠终于在同一站到来。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "去年,她在辛辛那提的停车场哭。今年,手冠终于在同一站到来。"
+      },
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 5.967,
+        "cps": 4.19,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "去年 ｜ 她 ｜ 在 ｜ 辛辛那提 ｜ 的 ｜ 停车场 ｜ 哭 ｜ 今年 ｜ 首冠 ｜ 终于 ｜ 在 ｜ 同一 ｜ 站 ｜ 到来"
+      },
+      "polyphones": []
+    },
+    {
+      "id": "bundle:274811abce337a17a0e88e32d7c2600b5c753913b7e3f628da0ac22ed622226b",
+      "audio_sha256": "d5265fd5f3c5e0248ca9f72e05f81f4f8ffdcaef2e245948861b6c667a5b2a9e",
+      "text": "伯林首战出局，温网却拼到半决赛抢十。穆霍娃拿走了最后两分。",
+      "actual_transcript": "柏林守占出局,温网却拼到半决赛抢时,穆霍娃拿走了最后两分。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "柏林守占出局,温网却拼到半决赛抢时,穆霍娃拿走了最后两分。"
+      },
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 6.038,
+        "cps": 4.31,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "伯林 ｜ 首战 ｜ 出局 ｜ 温 ｜ 网 ｜ 却 ｜ 拼 ｜ 到 ｜ 半决赛 ｜ 抢 ｜ 十 ｜ 穆霍娃 ｜ 拿 ｜ 走 ｜ 了 ｜ 最后 ｜ 两分"
+      },
+      "polyphones": []
+    },
+    {
+      "id": "bundle:4c9e65e8d722e242a87de61568fdf89efb485eb0e6926b56147ac865905d41a8",
+      "audio_sha256": "885cf3de1638bc528467ff13b057431ece7379cd238e649e075cbfdefae0211f",
+      "text": "多哈首战出局、迪拜打进四强，再到印第安维尔斯赛中退赛。迈阿密，终于打进本季首场决赛。",
+      "actual_transcript": "多哈首战出局,迪拜打进四墙,再到印第安威尔斯赛中退赛。迈阿弥终于打进本季首场决赛。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "多哈首战出局,迪拜打进四墙,再到印第安威尔斯赛中退赛。迈阿弥终于打进本季首场决赛。"
+      },
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 7.972,
+        "cps": 4.64,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "多哈 ｜ 首战 ｜ 出局 ｜ 迪拜 ｜ 打 ｜ 进 ｜ 四 ｜ 强 ｜ 再 ｜ 到 ｜ 印第安维尔斯 ｜ 赛 ｜ 中 ｜ 退赛 ｜ 迈阿密 ｜ 终于 ｜ 打 ｜ 进 ｜ 本 ｜ 季 ｜ 首场 ｜ 决赛"
+      },
+      "polyphones": []
+    },
+    {
+      "id": "bundle:73486127aac97afa1cb7046bf875399f520de0e3c31fe4e81e7061b9e2520834",
+      "audio_sha256": "0e85232813eaf176dc71f6e2da21e3c472e3b02f8677ab43241f2a8d423d3955",
+      "text": "一冠两亚，两次打进大满贯四强。年终，你期待她再往前走几步？",
+      "actual_transcript": "一贯两压,两次打尽大满贯四强。年中,你期待她再往前走几步。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "一贯两压,两次打尽大满贯四强。年中,你期待她再往前走几步。"
+      },
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 6.109,
+        "cps": 4.09,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一 ｜ 冠 ｜ 两 ｜ 亚 ｜ 两次 ｜ 打 ｜ 进 ｜ 大满贯 ｜ 四 ｜ 强 ｜ 年终 ｜ 你 ｜ 期待 ｜ 她 ｜ 再 ｜ 往前 ｜ 走 ｜ 几步"
+      },
+      "polyphones": []
+    },
+    {
+      "id": "bundle:79451d621b2a34105293201f3b0c755f3e0943a8dfafc042cf00742cdea5a235",
+      "audio_sha256": "9a2d1507b6fb7057546c3075763221f6f96a7fe0c29c337f9dfaa9d0bdd77bc4",
+      "text": "斯图加特止步八强，马德里止步第四轮。罗马再拿亚军。两场1000赛决赛，都没能赢。",
+      "actual_transcript": "斯图加特指部八强、马德里指部第四轮。罗马在拿亚军,两场一千赛决赛,都没能赢。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "斯图加特指部八强、马德里指部第四轮。罗马在拿亚军,两场一千赛决赛,都没能赢。"
+      },
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 8.243,
+        "cps": 4.25,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "斯图加特 ｜ 止步 ｜ 八 ｜ 强 ｜ 马德里 ｜ 止步 ｜ 第四轮 ｜ 罗马 ｜ 再 ｜ 拿 ｜ 亚军 ｜ 两场 ｜ 1000 ｜ 赛 ｜ 决赛 ｜ 都 ｜ 没 ｜ 能 ｜ 赢"
+      },
+      "polyphones": []
+    },
+    {
+      "id": "bundle:8a2a1f558dc619f07247cf130c19977c7a9a58078262575af91d5e2feab7efcd",
+      "audio_sha256": "58cb9633eb991a48f135401c2e3b9bf4b850285d4eaf9ed89851f5713a3e7fd9",
+      "text": "北京第四轮出局后退出武汉。十月十四日，WTA公布她连续第五年入围年终。",
+      "actual_transcript": "北京第四轮出局后退出武汉。10月14日,WTA公布它连续第五年入围年中。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京第四轮出局后退出武汉。10月14日,WTA公布它连续第五年入围年中。"
+      },
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 6.439,
+        "cps": 4.5,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京 ｜ 第四轮 ｜ 出局 ｜ 后 ｜ 退出 ｜ 武汉 ｜ 十月十四日 ｜ WTA ｜ 公布 ｜ 她 ｜ 连续 ｜ 第五年 ｜ 入围 ｜ 年终"
+      },
+      "polyphones": []
+    },
+    {
+      "id": "bundle:91412e2af48d5930ad431c5b472cdf96ebd1cdfa93b2901438ee507d945bd57e",
+      "audio_sha256": "433fb36974ab0aa877bae7ec807e4a7bb819d72dd84695aa342e23a0f52c41cb",
+      "text": "美网四分之一决赛，她救下两个赛点，逆转安德烈耶娃。不留遗憾，是她赢球后给出的答案。",
+      "actual_transcript": "美网四分之一决赛,他就下两个赛点,逆转安德列耶瓦。不留遗憾,是他赢球后给出的答案。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "美网四分之一决赛,他就下两个赛点,逆转安德列耶瓦。不留遗憾,是他赢球后给出的答案。"
+      },
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 7.288,
+        "cps": 4.94,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "美 ｜ 网 ｜ 四分之一 ｜ 决赛 ｜ 她 ｜ 救 ｜ 下 ｜ 两个 ｜ 赛点 ｜ 逆转 ｜ 安德烈耶娃 ｜ 不 ｜ 留 ｜ 遗憾 ｜ 是 ｜ 她 ｜ 赢 ｜ 球 ｜ 后 ｜ 给 ｜ 出 ｜ 的 ｜ 答案"
+      },
+      "polyphones": []
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "7a3a0a50808c47121774d198c34f84ccc9670bff740e06aacde9ed15be30987f",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "actual_transcript": "关注网球时差,时差归我,好球归你。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      },
+      "polyphones": []
+    },
+    {
+      "id": "bundle:dce5070d379c0118ddc03600e7f608c050c1a68c4f532af59e623d9e9214d80c",
+      "audio_sha256": "68523047831e586c8b9a7cac27e7b6ad64b51484cf73e988ada731b4b87e349c",
+      "text": "多伦多止步四强后，辛辛那提终于等来首冠。先丢本届首盘，随后连赢十二盘。",
+      "actual_transcript": "多伦多只不四强后,新西纳提终于等来手冠。先丢本介绍盘,随后联营十二盘。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.065,
+        "longest_deletion": 0,
+        "transcript": "多伦多只不四强后,新西纳提终于等来手冠。先丢本介绍盘,随后联营十二盘。"
+      },
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 6.934,
+        "cps": 4.47,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "多伦多 ｜ 止步 ｜ 四 ｜ 强 ｜ 后 ｜ 辛辛那提 ｜ 终于 ｜ 等 ｜ 来 ｜ 首冠 ｜ 先 ｜ 丢 ｜ 本届 ｜ 首盘 ｜ 随后 ｜ 连 ｜ 赢 ｜ 十二盘"
+      },
+      "polyphones": []
+    },
+    {
+      "id": "bundle:df6d7b263b453d52c002a30b44b57caf01a10d0ef6bf70886befc13a4ba07d43",
+      "audio_sha256": "6d522d6847bee2ff10bddda800e579b26a6cc2d55eee44281e8c369069690d71",
+      "text": "卫冕之旅止于第三轮：先赢一盘，仍被波塔波娃逆转。",
+      "actual_transcript": "未免之旅只于第三轮,先赢一盘,仍被波塔波娃逆转。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "未免之旅只于第三轮,先赢一盘,仍被波塔波娃逆转。"
+      },
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 4.623,
+        "cps": 4.54,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "卫冕 ｜ 之 ｜ 旅 ｜ 止 ｜ 于 ｜ 第三轮 ｜ 先 ｜ 赢 ｜ 一 ｜ 盘 ｜ 仍 ｜ 被 ｜ 波塔波娃 ｜ 逆转"
+      },
+      "polyphones": []
+    },
+    {
+      "id": "bundle:f07fca32ad796b2f174553d4fa535c3c5babd564da23f786d6b5923f8e4ecb2b",
+      "audio_sha256": "9859959c068441ab36d3f243cc30cf73161768b57e37bc003b34f78918fea4fa",
+      "text": "半决赛先赢一盘，又被莱巴金娜逆转。温网、美网，两次止步四强。",
+      "actual_transcript": "半决在先赢一盘,又被来巴金娜逆转。温网、梅网,两次只不四强。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.04,
+        "longest_deletion": 0,
+        "transcript": "半决在先赢一盘,又被来巴金娜逆转。温网、梅网,两次只不四强。"
+      },
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 6.156,
+        "cps": 4.06,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "半决赛 ｜ 先 ｜ 赢 ｜ 一 ｜ 盘 ｜ 又 ｜ 被 ｜ 莱巴金娜 ｜ 逆转 ｜ 温网 ｜ 美 ｜ 网 ｜ 两次 ｜ 止步 ｜ 四 ｜ 强"
+      },
+      "polyphones": []
+    },
+    {
+      "id": "bundle:fc44a0b8d6061dc8a0c77341ffb3da4314e9319d2b2f2e744a63f6f55051846a",
+      "audio_sha256": "84966847d4c54a883474f25c35df9d30d1d73dd9f93ec8a47994356a5b66c368",
+      "text": "联合杯单打三胜一负开局。澳网连赢四场，四分之一决赛却以一比六、二比六负于斯维托丽娜。",
+      "actual_transcript": "联合碑单打三胜一副开局,欧网连营四场,四分之一决赛却以1比6,2比6赋予斯维托丽娜。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.026,
+        "longest_deletion": 0,
+        "transcript": "联合碑单打三胜一副开局,欧网连营四场,四分之一决赛却以1比6,2比6赋予斯维托丽娜。"
+      },
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 7.972,
+        "cps": 4.77,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "联合 ｜ 杯 ｜ 单打 ｜ 三胜 ｜ 一 ｜ 负 ｜ 开局 ｜ 澳 ｜ 网 ｜ 连 ｜ 赢 ｜ 四场 ｜ 四分之一 ｜ 决赛 ｜ 却 ｜ 以 ｜ 一比六 ｜ 二比六 ｜ 负 ｜ 于 ｜ 斯维托丽娜"
+      },
+      "polyphones": []
+    }
+  ]
+}

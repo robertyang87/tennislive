@@ -1,0 +1,52 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=q2BG1_A699A",
+  "source_sha256": "4313381dfcc8947f1615b58ff1a10f78cc6305dce07741480674160a99093d3d",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review plus paired local ASR and targeted third-model disambiguation; not human listening",
+  "human_listened": false,
+  "reviewed_at": "2026-10-22T13:59:18.529742+00:00",
+  "reviewed_from": 155.6,
+  "reviewed_to": 184.84,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 174.66,
+      "end": 179.72,
+      "en": "She takes advantage of an out-of-sorts Coco Gauff,",
+      "zh": "她击败了状态失常的高芙，"
+    },
+    {
+      "start": 179.84,
+      "end": 182.62,
+      "en": "a long way off her best.",
+      "zh": "高芙远未发挥最佳水准。"
+    },
+    {
+      "start": 182.62,
+      "end": 184.58,
+      "en": "Not even an hour!",
+      "zh": "还不到1小时！"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Full genuine terminal matchpoint from155.60 before serve to victory/reaction and entire post-result commentary. Raw models phonetic Coco name normalized against known official identity, never reconstructed umpire phrase. small first SHE172.26 p=.034 is rejected as unreliable timing; medium174.66 and independent large174.96 support corrected subtitle onset174.66. Targeted large isolated semi-final171–172 is absent from both context English models and has high no-speech probability; not asserted a stable additional foreground sentence or reconstructed into a standard call. Last HOUR supported medium and final scoreboard57min, not invented different speech.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/ao-qf-884d40276a-ao-qf-small.en.json",
+      "sha256": "884d40276a1968b0c3efd9de85e08bff13d8753bd80a6ef23f467bc7ec2b9ec9",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/ao-qf-627b445d08-ao-qf-medium.en.json",
+      "sha256": "627b445d08f0810d2e28c697e6573500be9ed78103441a476afb690a81d6f1fc",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/ao-qf-af414ace0c-ao-qf-targeted-171-large-v3.json",
+      "sha256": "af414ace0c77db8310755d5e0f878b9fe2b8f06785ab4a484ace8dc13781af23",
+      "model": "large-v3"
+    }
+  ]
+}

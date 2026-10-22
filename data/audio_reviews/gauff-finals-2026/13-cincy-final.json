@@ -1,0 +1,57 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=Z2_awLHqcww",
+  "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review plus paired local ASR and targeted third-model disambiguation; not human listening",
+  "human_listened": false,
+  "reviewed_at": "2026-10-22T13:59:19.177488+00:00",
+  "reviewed_from": 236.6,
+  "reviewed_to": 260.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 246.7,
+      "end": 250.02,
+      "en": "It is the first title of the year for Coco Gauff.",
+      "zh": "这是高芙今年的首冠。"
+    },
+    {
+      "start": 250.62,
+      "end": 252.72,
+      "en": "It is her second in Cincinnati,",
+      "zh": "她第二次在辛辛那提夺冠，"
+    },
+    {
+      "start": 253.54,
+      "end": 258.2,
+      "en": "and it is the 12th singles title of her tremendous career.",
+      "zh": "也是她生涯第12座单打冠军。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Exact reused source bytes and full source-bound commentary; full terminal serve/rally/celebration. Next sentence261.86 leaves body+.25 clear.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/cincy-final-0bf125b1fc-cincy-final-small.en.json",
+      "sha256": "0bf125b1fcd2129f9b2177d7665d781a51fb3046149fc14b960b98901066daf9",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/cincy-final-44adb58455-cincy-final-medium.en.json",
+      "sha256": "44adb58455542d949db0c5a0cd1bbafb0fe5113da5fa1ffd2bbcdb00d7f2b7e0",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/cincy-final-1873b237ef-cincy-final-close-small.en.json",
+      "sha256": "1873b237efcb26174bcecce58d373929635f54105ec8ca81b3531aa3a0b91a86",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/cincy-final-da2162c9eb-cincy-final-close-medium.en.json",
+      "sha256": "da2162c9eb0b56450489a878885633c940a1344b4911a42fd4c5f05f143c63e4",
+      "model": "medium.en"
+    }
+  ]
+}

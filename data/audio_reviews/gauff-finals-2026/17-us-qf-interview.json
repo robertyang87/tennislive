@@ -1,0 +1,35 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=gy3k_t65oak",
+  "source_sha256": "da4594bda7cc2e639c3bf5e4799e6b8ebe91875cb89692545ef8c30882325449",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review plus paired local ASR and targeted third-model disambiguation; not human listening",
+  "human_listened": false,
+  "reviewed_at": "2026-10-22T13:59:19.438290+00:00",
+  "reviewed_from": 48.25,
+  "reviewed_to": 52.52,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 48.28,
+      "end": 52.48,
+      "en": "So honestly, I was just trying to literally leave the court with no regrets.",
+      "zh": "我只想不留遗憾地离开球场。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Actual USOpen QF winning on-court interview. Selected one complete independent answer sentence, no claim after semifinal loss. Next new sentence52.62 occurs inside outgoing .25s: outside-body audio_tail silence only. Whole answer context retained in raw evidence.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-qf-interview-9160c8bdaa-us-qf-interview-small.en.json",
+      "sha256": "9160c8bdaa31940a27d99a13fe8f0d4181af89a35e6e9a0542a2df9af89f2ce2",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-qf-interview-bee28e3830-us-qf-interview-medium.en.json",
+      "sha256": "bee28e38308b54a7d2340d04104a3776c8616e25aaed10ba38cde75a641a6ecc",
+      "model": "medium.en"
+    }
+  ]
+}

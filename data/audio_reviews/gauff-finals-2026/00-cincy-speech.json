@@ -1,0 +1,41 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=aw8XUjIkpio",
+  "source_sha256": "7bf45b5f4eb9f770e2d4e8690663b841b00b7483cd89dc188345d36b900d02ac",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review plus paired local ASR and targeted third-model disambiguation; not human listening",
+  "human_listened": false,
+  "reviewed_at": "2026-10-22T13:59:18.499814+00:00",
+  "reviewed_from": 144.42,
+  "reviewed_to": 148.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 144.42,
+      "end": 146.64,
+      "en": "So it's, it's a big difference what a year can make.",
+      "zh": "一年真能带来很大改变。"
+    },
+    {
+      "start": 146.64,
+      "end": 148.8,
+      "en": "So I thank Him for pulling me through.",
+      "zh": "感谢上帝带我走过来。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Exact144.40 frame already actual Coco close shot. Prior parking-lot sentence is accurately paraphrased in next narration, not borrowed into this shorter quote. Next new conjunction AND begins148.80: outgoing .25s silence outside selected body only.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/cincy-speech-67721d62f4-cincy-speech-small.en.json",
+      "sha256": "67721d62f42f9d3e86d03e530bf7354a005432768f5df77c4af1e28b53e183fd",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/cincy-speech-07f01aa041-cincy-speech-medium.en.json",
+      "sha256": "07f01aa041d6f818235f389557d77a3f607eb9d84e47483a0f103dba5231531a",
+      "model": "medium.en"
+    }
+  ]
+}

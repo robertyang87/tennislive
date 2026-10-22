@@ -1,0 +1,52 @@
+{
+  "schema": "gauff-label-source-glyph-review/v1",
+  "status": "pass_on_actual_sampled_pixels",
+  "actual_viewed_all_8_contacts": true,
+  "frame_count": 72,
+  "manifest_sha256": "88cf7b72cbadc330488518320433b4c0159223cc154b98012e95f8a6a67c7af7",
+  "source_intervals": {
+    "ao-qf": {
+      "source_start": 172.0,
+      "source_end": 174.8
+    },
+    "miami-final": {
+      "source_start": 262.3,
+      "source_end": 265.1
+    },
+    "rome-final": {
+      "source_start": 232.4,
+      "source_end": 235.2
+    },
+    "rg-r3": {
+      "source_start": 177.7,
+      "source_end": 180.5
+    },
+    "wimbledon-sf": {
+      "source_start": 602.7,
+      "source_end": 605.5
+    },
+    "cincy-final": {
+      "source_start": 255.36,
+      "source_end": 258.16
+    },
+    "us-qf": {
+      "source_start": 146.0,
+      "source_end": 148.8
+    },
+    "us-sf": {
+      "source_start": 147.0,
+      "source_end": 149.8
+    }
+  },
+  "checks": [
+    "Actual transparent final89/98/73 source PNGs, native648w x386/top151",
+    "All8 labels at9 samples, current numeric rounds1/4 and per-event finalpoints",
+    "No actual glyph overlaps players faces or hit-action in these selected safe intervals",
+    "No infoinset on static cards; native film not yet encoded"
+  ],
+  "limits": [
+    "Fixed-center courtcrop may omit lateral court action and parts of reaction bodies/faces at cut edge, not labeled allstrokes visible",
+    "Nine sampled source frames plus continuous-motion judgment do not replace final encoded native QC"
+  ],
+  "native_final_QC": false
+}

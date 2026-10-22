@@ -1,0 +1,46 @@
+{
+  "model": "medium.en",
+  "source_sha256": "8f818ec74bca319d66d5be408a02b1b2144d7b3c98996b35851bb8f4f314c5c0",
+  "clip": [
+    133,
+    144
+  ],
+  "method": "actual_faster_whisper_cpu1_int8_unprompted_beam1_noVAD",
+  "human_listened": false,
+  "generated_at": "2026-10-22T13:21:40.726769+00:00",
+  "segments": [
+    {
+      "start": 135.34,
+      "end": 139.42,
+      "text": " And we're backing up.",
+      "avg_logprob": -0.5106728871663412,
+      "no_speech_prob": 0.4410683214664459,
+      "words": [
+        {
+          "w": " And",
+          "s": 135.34,
+          "e": 136.74,
+          "p": 0.35823607444763184
+        },
+        {
+          "w": " we're",
+          "s": 136.74,
+          "e": 138.14,
+          "p": 0.802107959985733
+        },
+        {
+          "w": " backing",
+          "s": 138.14,
+          "e": 138.4,
+          "p": 0.9394326210021973
+        },
+        {
+          "w": " up.",
+          "s": 138.4,
+          "e": 139.42,
+          "p": 0.9455701112747192
+        }
+      ]
+    }
+  ]
+}

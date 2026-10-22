@@ -1,0 +1,79 @@
+{
+  "schema": "independent-native-frame-qc/v1",
+  "reviewed_at_utc": "2026-10-22T13:48:14.628301+00:00",
+  "player": "Coco Gauff",
+  "status": "baseline_sample_review_complete_current_equivalence_pending",
+  "baseline_spec_sha256": "7a41205793d896368db17d70150736a46c19008fbd8683b59d5623f73001c30c",
+  "baseline_canonical_spec_sha256": "36814e3d396c60ec23d2bd9bd170932ad78396c9a7c2ca2df4bdae2348742760",
+  "baseline_snapshot": "/workspace/finals-remaining-2026/independent-qc/gauff-native-frames/baseline-spec-snapshot.json",
+  "samples": 90,
+  "batches": [
+    24,
+    24,
+    24,
+    18
+  ],
+  "inventory_file": "/workspace/finals-remaining-2026/independent-qc/gauff-native-frames/inventory.json",
+  "hash_checks": {
+    "all90_actual_image_sha_match_original_manifest": true,
+    "all90_canvas_1080x1440": true
+  },
+  "actual_visual_review": {
+    "fullframe_overviews": "Opened all 90 actual frames in four indexed overview sheets; no unreviewed fourth-batch tail.",
+    "subtitle_readability": "Opened native-width bottom 300-pixel crops of all 90 actual frames in 23 labelled four-frame strips. No detected clipped characters, text outside canvas, orphan character lines or illegible overlaps in sampled subtitles.",
+    "top_labels": "Opened native-width top 450-pixel crops for all eight full-opacity information labels: B1c15,c23; B2c07,c14,c22; B3c08,c16; B4c15. Dates/scores/names legible. No sampled label/ball/active-player face collision.",
+    "full_native_additional": [
+      "B1c01 cold personal center",
+      "B1c11 AO bilingual/raw scoreboard region",
+      "B2c04 Rome real reaction",
+      "B2c22 Wimbledon information label and receiving player",
+      "B3c13 USQF same-match bent reaction",
+      "B3c16 USQF label during rally",
+      "B3c20 official source dark endcard",
+      "B4c04 same-match on-court interview center",
+      "B4c13 fixed-court cropped reaction",
+      "B4c15 USSF label during rally"
+    ],
+    "person_center": "Cold Cincy speech and USQF on-court interview actual head/face remain inside canvas; subtitles below face. No letterbox bars in sampled actual video frames.",
+    "subtitle_source_accuracy": "Not assessed; no ASR or listening approval claimed."
+  },
+  "actual_observations": [
+    {
+      "id": "miami-old-start",
+      "file": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-18.png",
+      "image_sha256": "407efd76a9b2c425e5b932a0d9c2ed2e743b0902787bd4c09f4b80988e5cec11",
+      "observation": "Old Miami source253.80 closeup badly off-center/cropped face. Owner replacing old start with actual255.36 wide point preparation.",
+      "status": "old-sample-superseded-await-fresh-focused-native-frame"
+    },
+    {
+      "id": "us-sf-fixed-court-reaction",
+      "file": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-13.png",
+      "image_sha256": "8e81e850252da0aefd3cf6280e904c1d331f1638b1d1abf65db6d67327cd3a7d",
+      "source_time": 167.62,
+      "observation": "Actual same-match Gauff reaction face is partly cut at right by fixed court-center crop. Real limitation; do not claim every face is complete.",
+      "status": "owner reports root explicitly chose to preserve fixed court .5 real reaction and record limitation; no independently invented recrop or photo replacement"
+    },
+    {
+      "id": "us-qf-source-endcard-near-tail",
+      "file": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-20.png",
+      "image_sha256": "93d67dccf412874b5931c222e60598b5ad5b78f288f97ecfd9b38e9b06c54908",
+      "source_time": 199.32,
+      "observation": "Actual interior preview shows very dark original USOpen FOLLOW US ON SOCIAL MEDIA endcard just before outgoing segment end199.50.",
+      "status": "Final encoded dissolve seam must be checked. Preview does not model dissolve, so this is not a claim that final movie contains a black flash. Owner says full commentary sentence ends199.24 and cannot cut at198.44 mid-cue."
+    }
+  ],
+  "pending_for_current": [
+    "Fresh Miami prep focused native set",
+    "Fresh closing narration with explicit 本季 and current TTS/caption binding",
+    "Owner exact per-field equivalence map for remaining baseline samples and all shifted timeline times",
+    "Fresh AO first cue onset native frame, source172.26→174.66; old B1c15 at173.4 no longer equivalent",
+    "Fresh Wimbledon cue onset native frame, source624.48→625.10; audio window unchanged"
+  ],
+  "limitations": [
+    "Only actual sampled native PNG visual geometry/text/canvas; no full continuous movie playback.",
+    "No audio/ASR/source transcript fidelity approval.",
+    "Interior samples exclude transitions and final H.264 encoding; no final film or publish approval.",
+    "No proof all rally frames or ball trajectories remain in cropped canvas between samples; fixed court geometry can clip lateral movement.",
+    "Original broadcast scoreboard partial clipping remains visible in actual court-center crop; do not describe full original board as restored."
+  ]
+}

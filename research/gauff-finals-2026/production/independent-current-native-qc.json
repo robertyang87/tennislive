@@ -1,0 +1,52 @@
+{
+  "schema": "independent-current-native-frame-qc/v1",
+  "reviewed_at_utc": "2026-10-22T14:03:35.671123+00:00",
+  "player": "Coco Gauff",
+  "status": "pass_current_native_sample_visual_scope",
+  "exact_current_spec_sha256": "ae04fb9a5a8d11f05b017e339eaf2f6e37e44f874916a752829609a5a9a1cd66",
+  "spec_snapshot": "/workspace/finals-remaining-2026/independent-qc/gauff-native-frames/current-spec-snapshot.json",
+  "sample_scope": {
+    "baseline_reviewed": 90,
+    "baseline_retained_at_current": 85,
+    "baseline_explicitly_superseded": 5,
+    "f39e_focused_reviewed_and_current_equivalent": 16,
+    "current_supplemental_actual_reviewed": 2
+  },
+  "baseline_report": "/workspace/finals-remaining-2026/independent-qc/gauff-native-frames/baseline-qc.json",
+  "focused_report": "/workspace/finals-remaining-2026/independent-qc/gauff-native-frames/focused-f39e-qc.json",
+  "current_equivalence_proof": "/workspace/finals-remaining-2026/independent-qc/gauff-native-frames/independent-equivalence-proof-current.json",
+  "owner_map_immutable_snapshot": "/workspace/finals-remaining-2026/independent-qc/gauff-native-frames/current-owner-equivalence-snapshot.json",
+  "supplemental_manifest": "/workspace/gauff-finals-production/production/native-preview-supplemental-final/preview_manifest.json",
+  "supplemental_manifest_sha256": "0a045f4cf1a094d67c578eaa01ae1fcaf3e6a6cc9d74419f0e0e5f41a0aafcb4",
+  "supplemental_images": [
+    {
+      "file": "/workspace/gauff-finals-production/production/native-preview-supplemental-final/caption-01.png",
+      "sha256": "78452c4eea71acf0e9f6b9a49f537c2b3d68135305f4afbc7dcc452cf336a9c5",
+      "film_time": 126.28000000000003,
+      "segment": 10
+    },
+    {
+      "file": "/workspace/gauff-finals-production/production/native-preview-supplemental-final/caption-02.png",
+      "sha256": "351ddd3ec93001f85dada2d1c0790b4f95e077b312ce6de898f6a948b2ee1d10",
+      "film_time": 301.00000000000006,
+      "segment": 21
+    }
+  ],
+  "actual_supplemental_visual_checks": {
+    "wimbledon_card": "Opened full actual1080x1440: central 拼到决胜盘抢十, bottom 穆霍娃赢下最后两个小分; full semantic phrase, no orphan characters, no clipping/overflow, lower brand separated, no match information inset on static chapter card.",
+    "closing_question": "Opened full actual1080x1440 at301.0: 年终 你期待她再往前走几步？ entirely readable within horizontal margins; bottom brand clear and separate.",
+    "canvas_fullbleed": true
+  },
+  "overall_sample_findings": "No unresolved subtitle overflow, clipped letters, sampled caption/label face or ball obstruction, or letterbox bars in inspected actual current-equivalent samples. Prior Miami bad prep and USQF source endcard sample are explicitly excluded by new source bounds; no claim full continuous video verified.",
+  "accepted_real_limitations": [
+    "USSF Gauff reaction167.62 partly cropped at right by required fixed court .5; root explicitly retained this authentic shot.",
+    "Court-center3:4 crop leaves original broadcast scoreboards partially cut; no claim full original board restoration.",
+    "Samples do not prove every lateral shot/ball position, dissolve seam, encoded quality or all temporal frames."
+  ],
+  "material_unresolved_sample_visual_issues": [],
+  "approval_scope": "Exact current-spec native sampled visual geometry/text only. Future source/crop/text/renderer/spec changes need scoped equivalence or fresh actual samples; no automatic full-current-spec/movie provenance inheritance.",
+  "source_asr_review": false,
+  "human_audio_listening": false,
+  "final_encoded_film_qc": false,
+  "publication_approved": false
+}

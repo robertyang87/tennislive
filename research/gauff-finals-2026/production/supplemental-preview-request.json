@@ -1,0 +1,39 @@
+{
+  "spec_sha256": "ae04fb9a5a8d11f05b017e339eaf2f6e37e44f874916a752829609a5a9a1cd66",
+  "film_times": [
+    126.30000000000005,
+    301.0000000000001
+  ],
+  "cmd": [
+    "python",
+    "/workspace/tennislive-gauff/tools/preview_reel_captions.py",
+    "--spec",
+    "/workspace/tennislive-gauff/specs/reels/gauff-finals-2026.json",
+    "--outdir",
+    "/workspace/gauff-finals-production/production/native-preview-supplemental-final",
+    "--max-frames",
+    "24",
+    "--at",
+    "126.30000000000005,301.0000000000001",
+    "--source",
+    "miami-final=/workspace/gauff-finals-production/sources/miami-final.mp4",
+    "--source",
+    "cincy-final=/workspace/gauff-finals-production/sources/cincy-final.mp4",
+    "--source",
+    "wimbledon-sf=/workspace/gauff-finals-production/sources/wimbledon-sf.mp4",
+    "--source",
+    "ao-qf=/workspace/gauff-finals-production/sources/q2BG1_A699A.mp4",
+    "--source",
+    "rg-r3=/workspace/gauff-finals-production/sources/VN2JfiUe-Cw.mp4",
+    "--source",
+    "us-qf=/workspace/gauff-finals-production/sources/eBTlK8A4IDE.mp4",
+    "--source",
+    "us-sf=/workspace/gauff-finals-production/sources/Uokrq2th_Ew.mp4",
+    "--source",
+    "cincy-speech=/workspace/gauff-finals-production/sources/aw8XUjIkpio.mp4",
+    "--source",
+    "us-qf-interview=/workspace/gauff-finals-production/sources/gy3k_t65oak.mp4",
+    "--source",
+    "rome-final=/workspace/gauff-finals-production/sources/WXNZTi6qd1Y.mp4"
+  ]
+}
