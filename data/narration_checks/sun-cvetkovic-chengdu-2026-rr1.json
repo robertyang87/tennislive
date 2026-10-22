@@ -1,0 +1,63 @@
+{
+  "slug": "sun-cvetkovic-chengdu-2026-rr1",
+  "checked_at": "2026-10-22T02:24:38Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "b082e94240731a64": {
+      "segment": 2,
+      "spoken": 11.064,
+      "picture": 13.05
+    },
+    "57cd3952be3750b9": {
+      "segment": 4,
+      "spoken": 14.088,
+      "picture": 16.58
+    },
+    "d070e64b1e0a568d": {
+      "segment": 6,
+      "spoken": 14.136,
+      "picture": 17.05
+    },
+    "95a4a5c3dc2e2e88": {
+      "segment": 8,
+      "spoken": 11.904,
+      "picture": 14.46
+    },
+    "19573b0c161f8ea0": {
+      "segment": 10,
+      "spoken": 8.712,
+      "picture": 10.47
+    },
+    "543080870cce3ae8": {
+      "segment": 12,
+      "spoken": 15.624,
+      "picture": 17.99
+    },
+    "26e0ccf1914efc44": {
+      "segment": 14,
+      "spoken": 18.672,
+      "picture": 21.98
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "bb884c553a1cfbb7f8016883ec5dfafb62c013c97a3d236081d1163c7633de5c",
+    "request_count": 8,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-sun-cvetkovic-chengdu-2026-rr1-bb884c553a1cfbb7",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-sun-cvetkovic-chengdu-2026-rr1-bb884c553a1cfbb7/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39710995869"
+  }
+}
