@@ -1,0 +1,258 @@
+{
+  "schema": "pegula.native-v3-preview-request.v1",
+  "group": "new-gs",
+  "tag": "fresh-v3",
+  "spec_path": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+  "spec_sha256": "95919b489fc9f56b0ea94978daf9b8daabb472174e0d6a7988d3cc30928ed94c",
+  "cover_seconds": 1.2,
+  "sample_count": 16,
+  "batch_sizes": [
+    16
+  ],
+  "clock_note": "Film offsets use final spec seconds/end-start. Native renderer resolves its own source FPS; requested times are NOT quantized to 30fps.",
+  "publication_approved": false,
+  "final_encoded_film_qc": false,
+  "samples": [
+    {
+      "id": "rg-r1",
+      "segment_index": 12,
+      "film_time": 161.21,
+      "segment_time_requested": 0.16,
+      "source_time_requested": 693.36,
+      "reasons": [
+        {
+          "why": "new-full-matchpoint-first",
+          "requested_segment_time": 0.16,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "rg-r1",
+      "segment_index": 12,
+      "film_time": 168.53,
+      "segment_time_requested": 7.479999999999961,
+      "source_time_requested": 700.6800000000001,
+      "reasons": [
+        {
+          "why": "new-full-matchpoint-middle",
+          "requested_segment_time": 7.479999999999961,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "rg-r1",
+      "segment_index": 12,
+      "film_time": 175.85,
+      "segment_time_requested": 14.799999999999923,
+      "source_time_requested": 708.0,
+      "reasons": [
+        {
+          "why": "new-full-matchpoint-last",
+          "requested_segment_time": 14.799999999999923,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "rg-r1",
+      "segment_index": 12,
+      "film_time": 172.17,
+      "segment_time_requested": 11.12,
+      "source_time_requested": 704.32,
+      "reasons": [
+        {
+          "why": "before-label-start",
+          "requested_segment_time": 11.12,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "rg-r1",
+      "segment_index": 12,
+      "film_time": 172.33,
+      "segment_time_requested": 11.28,
+      "source_time_requested": 704.48,
+      "reasons": [
+        {
+          "why": "after-label-start",
+          "requested_segment_time": 11.28,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "rg-r1",
+      "segment_index": 12,
+      "film_time": 175.17,
+      "segment_time_requested": 14.12,
+      "source_time_requested": 707.32,
+      "reasons": [
+        {
+          "why": "before-label-end",
+          "requested_segment_time": 14.12,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "rg-r1",
+      "segment_index": 12,
+      "film_time": 175.33,
+      "segment_time_requested": 14.28,
+      "source_time_requested": 707.48,
+      "reasons": [
+        {
+          "why": "after-label-end",
+          "requested_segment_time": 14.28,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "wimbledon-qf",
+      "segment_index": 16,
+      "film_time": 211.07,
+      "segment_time_requested": 0.16,
+      "source_time_requested": 187.52,
+      "reasons": [
+        {
+          "why": "new-full-matchpoint-first",
+          "requested_segment_time": 0.16,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "wimbledon-qf",
+      "segment_index": 16,
+      "film_time": 223.43,
+      "segment_time_requested": 12.519999999999996,
+      "source_time_requested": 199.88,
+      "reasons": [
+        {
+          "why": "new-full-matchpoint-middle",
+          "requested_segment_time": 12.519999999999996,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "wimbledon-qf",
+      "segment_index": 16,
+      "film_time": 235.79,
+      "segment_time_requested": 24.879999999999992,
+      "source_time_requested": 212.24,
+      "reasons": [
+        {
+          "why": "new-full-matchpoint-last",
+          "requested_segment_time": 24.879999999999992,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "wimbledon-qf",
+      "segment_index": 16,
+      "film_time": 224.93,
+      "segment_time_requested": 14.02,
+      "source_time_requested": 201.38000000000002,
+      "reasons": [
+        {
+          "why": "full-bilingual-cue-1-middle",
+          "requested_segment_time": 14.02,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "wimbledon-qf",
+      "segment_index": 16,
+      "film_time": 228.9,
+      "segment_time_requested": 17.990000000000002,
+      "source_time_requested": 205.35000000000002,
+      "reasons": [
+        {
+          "why": "full-bilingual-cue-2-middle",
+          "requested_segment_time": 17.990000000000002,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "wimbledon-qf",
+      "segment_index": 16,
+      "film_time": 218.55,
+      "segment_time_requested": 7.64,
+      "source_time_requested": 195.0,
+      "reasons": [
+        {
+          "why": "before-label-start",
+          "requested_segment_time": 7.64,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "wimbledon-qf",
+      "segment_index": 16,
+      "film_time": 218.71,
+      "segment_time_requested": 7.8,
+      "source_time_requested": 195.16000000000003,
+      "reasons": [
+        {
+          "why": "after-label-start",
+          "requested_segment_time": 7.8,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "wimbledon-qf",
+      "segment_index": 16,
+      "film_time": 221.35,
+      "segment_time_requested": 10.44,
+      "source_time_requested": 197.8,
+      "reasons": [
+        {
+          "why": "before-label-end",
+          "requested_segment_time": 10.44,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "wimbledon-qf",
+      "segment_index": 16,
+      "film_time": 221.51,
+      "segment_time_requested": 10.6,
+      "source_time_requested": 197.96,
+      "reasons": [
+        {
+          "why": "after-label-end",
+          "requested_segment_time": 10.6,
+          "boundary_clamped": false
+        }
+      ]
+    }
+  ],
+  "source_paths_file": "/workspace/pegula-finals-production/revision-v3-scope/native-source-paths-v3.json",
+  "source_paths_sha256": "362d4001022f68de64f3005e506b8f94a627eda2ffcabbe4b4bb2fa35c76bea5",
+  "source_paths": {
+    "ao-sf": "/workspace/pegula-finals-production/sources/ao-sf.mp4",
+    "berlin-sf-sabalenka": "/workspace/sabalenka-finals-production/staging/extra/berlin-sf.mp4",
+    "charleston-final": "/workspace/pegula-finals-production/sources/charleston-final.mp4",
+    "cincy-final": "/workspace/pegula-finals-production/audio/sources/cincy-final.mp4",
+    "cincy-runnerup": "/workspace/pegula-finals-production/audio/sources/cincy-runnerup.mp4",
+    "cincy-sf": "/workspace/pegula-finals-production/audio/sources/cincy-sf.mp4",
+    "dubai-champion-speech": "/workspace/pegula-finals-production/sources/dubai-champion-speech.mp4",
+    "dubai-final": "/workspace/pegula-finals-production/sources/dubai-final.mp4",
+    "rg-r1": "/workspace/pegula-finals-production/revision-v3-scope/rg/rg-r1-hoh-08EHKHtS6hg.mp4",
+    "us-qf": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+    "us-qf-interview": "/workspace/pegula-finals-production/audio/sources/us-qf-interview.mp4",
+    "us-sf": "/workspace/pegula-finals-production/audio/sources/us-sf.mp4",
+    "wimbledon-qf": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/2rtc9kSjmPM.mp4"
+  }
+}

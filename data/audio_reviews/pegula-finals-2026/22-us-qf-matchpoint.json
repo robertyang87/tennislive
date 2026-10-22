@@ -1,0 +1,56 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+  "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual source-bound small.en/medium.en full selected-window and broad-context machine cross-check; no human listening claim",
+  "reviewed_at": "2026-10-22T09:44:09.582431+00:00",
+  "status": "complete",
+  "reviewed_from": 168.84,
+  "reviewed_to": 173.04,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/us-qf-matchpoint-00cef4b626-selected-point-small.en.json",
+      "sha256": "00cef4b6264b7388a590cd4828a4f8b2783ecdb6f224743780a34254d634e014",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/us-qf-matchpoint-665281bd5b-selected-point-medium.en.json",
+      "sha256": "665281bd5b4baa43464895687228e35aa9452debc665b6e63c6749eb49637937",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/us-qf-matchpoint-a9e4621d24-us-qf-small.en.json",
+      "sha256": "a9e4621d249f55fbca6e92471938b7858796aafd401f338d3d641a3b91af0ca9",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/us-qf-matchpoint-b87a919b3d-us-qf-medium.en.json",
+      "sha256": "b87a919b3d0c998ca6a58be991874bac3158bcb0b80d7a8f4416bd6f9b6a24c4",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/us-qf-matchpoint-7779c36006-us-qf-turbo-diagnostic.json",
+      "sha256": "7779c36006da564cf78e3ae0527b92fcdf804493d7ced710454186ba4658d484",
+      "model": "large-v3-turbo"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/us-qf-matchpoint-fb201e5eb0-bandpass-call-turbo.json",
+      "sha256": "fb201e5eb0c667b450a91363a506478293738dacef02705dd3552b5189abd45e",
+      "model": "turbo"
+    }
+  ],
+  "human_listened": false,
+  "no_foreground_english_reason": "Actual source-bound small.en context168.40–173.35 emits no words. medium.en same context emits only Thank you for watching171.92–173.32, with Thank probability.0162, no_speech.706, and you/for/watching all zero-duration at173.32. This short-window generic decoder fragment is not stable identifiable foreground English: original broad small.en/medium.en166–205 also contain no words during the selected service/return point. Actual court/crowd sound is preserved through173.04. The separate complete PA result announcement is deliberately outside this selected editorial window; no claim it was absent from the source or heard clearly. Existing unprompted diagnostic first non-leading Game word evidence starts173.40 or173.54; leading173.10 low-probability intervals include preceding silence and do not prove word onset. Outgoing.25s is conservatively zero-padded only outside body via audio_tail:silence to exclude any incipient PA.",
+  "review_notes": "Actual source-bound small.en context168.40–173.35 emits no words. medium.en same context emits only Thank you for watching171.92–173.32, with Thank probability.0162, no_speech.706, and you/for/watching all zero-duration at173.32. This short-window generic decoder fragment is not stable identifiable foreground English: original broad small.en/medium.en166–205 also contain no words during the selected service/return point. Actual court/crowd sound is preserved through173.04. The separate complete PA result announcement is deliberately outside this selected editorial window; no claim it was absent from the source or heard clearly. Existing unprompted diagnostic first non-leading Game word evidence starts173.40 or173.54; leading173.10 low-probability intervals include preceding silence and do not prove word onset. Outgoing.25s is conservatively zero-padded only outside body via audio_tail:silence to exclude any incipient PA.",
+  "tail_audit": {
+    "interval": [
+      173.04,
+      173.29
+    ],
+    "action": "audio_tail:silence",
+    "body_sound_unchanged": true,
+    "reason": "Selected body ends after complete point outcome but before complete PA declaration. Conservatively prevent any new PA onset in native extra.25s; zero padding only outside selected body."
+  }
+}

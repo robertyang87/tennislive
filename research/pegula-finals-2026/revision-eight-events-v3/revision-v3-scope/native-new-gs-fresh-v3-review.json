@@ -1,0 +1,392 @@
+{
+  "schema": "pegula.native-preview-visual-review.v1",
+  "reviewed_at_utc": "2026-10-22T11:21:29.696124+00:00",
+  "scope": "new-gs historical first v3 sample run: RG and Wimbledon only; all16 native PNG individually inspected",
+  "status": "blocked_rg_terminal_point_window_incomplete",
+  "spec_sha256": "95919b489fc9f56b0ea94978daf9b8daabb472174e0d6a7988d3cc30928ed94c",
+  "native_manifest": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/preview_manifest.json",
+  "native_manifest_sha256": "3e60cc2024f7788041577bea3c909ef4b9bbb6b435ff266e1a9f2c21d0358d0c",
+  "request_manifest": "/workspace/pegula-finals-production/revision-v3-scope/preview-new-gs-fresh-v3-requested.json",
+  "request_manifest_sha256": "140995a53be5a0e33c152c36310c5790f1454276f242c130e798015f60acd4bd",
+  "batch_index": "/workspace/pegula-finals-production/revision-v3-scope/preview-new-gs-fresh-v3-index.json",
+  "batch_index_sha256": "98b051fc6c38b8153abc3ff922be8b21ce089bd9826eff4afc35874102f1e10b",
+  "actual_native_fps": "25/1",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "actual_samples_reviewed": 16,
+  "all16_native_pngs_actually_viewed": true,
+  "all_requested_samples_dispatched": true,
+  "actual_time_check": "Actual manifest source_time matches requested source_time to native25fps quantization (Wim201.38→201.36,205.35→205.32). No cumulative chapter/TTS clock offset found. PNG is consistent with existing raw rg/end-boundary-708.00.png, so first concern was not a helper timing defect.",
+  "findings": [
+    {
+      "severity": "blocking",
+      "id": "RG_INCOMPLETE_TERMINAL_RESULT",
+      "segment_id": "rg-r1",
+      "window": [
+        693.2,
+        708.16
+      ],
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-03.png",
+      "actual_source_time": 708.0,
+      "evidence": "Native late sample does not establish full point outcome and reaction before selected end. Root reported source agent retracted ready status and is extending actual terminal point/PA/reaction. This historical spec must not be called a complete-terminal-matchpoint pass.",
+      "required_next_step": "Source agent supplies corrected longer end plus complete actual foreground-language packet; root rebuilds spec and supplies newSHA; rerun new-gs with fresh tag. No guessed English/French captions or proposed exact end are approved here."
+    }
+  ],
+  "wimbledon_sampled_findings": [],
+  "label_scope": "New-gs covers each label start/end interior/exterior, including fade pixels. It does not by itself sample the fully opaque label midpoint (labels-early/late separate groups cover that). No claim of exhaustive full-opacity/swept-frame label audit.",
+  "crop_limitations": [
+    "RG near-side player partly exits/clips right fixed .5 crop near707.32–707.48; mandated spatial crop is not full-width action coverage.",
+    "Wimbledon original top-left scoreboard is partially outside fixed .5 crop; native final-score live label is separate.",
+    "Wimbledon raised winner arm exceeds top edge in reaction sample; face/head remain visible. Final net approach partly clips near left torso; faces remain visible."
+  ],
+  "subtitle_findings": "Both Wimbledon EN/ZH cue midpoints readable, unclipped, and below faces. RG has no English cue in this historical selected window; that omission is not independently revalidated by this visual review and will be superseded by corrected source/PA package.",
+  "contact": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/all16-contact.jpg",
+  "contact_sha256": "df7c84319cc358b158b72aa767c6a031ea316f2bb215e904ced093aa62879388",
+  "samples": [
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-01.png",
+      "image_sha256": "b0d5518f444e1c70566996d5beee9a3f47f55a5f869b4d85a7e81e361e6c2dd0",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "rg-r1",
+      "actual_source_time": 693.36,
+      "actual_film_time": 161.20999999999998,
+      "source_sha256": "d4a53903e603dc459f0d49b2bad23a5876a66afd80758e392a6faa3d281121ca",
+      "requested_reasons": [
+        {
+          "why": "new-full-matchpoint-first",
+          "requested_segment_time": 0.16,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "Opening receiver close-up, face and head remain in canvas; full canvas."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-02.png",
+      "image_sha256": "c4d21c8f6a8eb06aa8c05db0d19ae0ffdc573966dc358071d47173f5c9d32139",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "rg-r1",
+      "actual_source_time": 700.6800000000001,
+      "actual_film_time": 168.52999999999997,
+      "source_sha256": "d4a53903e603dc459f0d49b2bad23a5876a66afd80758e392a6faa3d281121ca",
+      "requested_reasons": [
+        {
+          "why": "new-full-matchpoint-middle",
+          "requested_segment_time": 7.479999999999961,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "Court view; both selected players visible, no caption/label."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-03.png",
+      "image_sha256": "395290d05d072e7b4a1de39ce002871271e0cfc4fa2276f5222a77915a9bb38f",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "rg-r1",
+      "actual_source_time": 708.0,
+      "actual_film_time": 175.85,
+      "source_sha256": "d4a53903e603dc459f0d49b2bad23a5876a66afd80758e392a6faa3d281121ca",
+      "requested_reasons": [
+        {
+          "why": "new-full-matchpoint-last",
+          "requested_segment_time": 14.799999999999923,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "Last requested source708.00 remains pre-completion court action; does not establish complete terminal outcome/reaction."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-04.png",
+      "image_sha256": "10fed6137c1f6fa8d53f2c498a1e0c01f77928a5e76012150a8da6c4ee1517bc",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "rg-r1",
+      "actual_source_time": 704.32,
+      "actual_film_time": 172.17,
+      "source_sha256": "d4a53903e603dc459f0d49b2bad23a5876a66afd80758e392a6faa3d281121ca",
+      "requested_reasons": [
+        {
+          "why": "before-label-start",
+          "requested_segment_time": 11.12,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "Before RG label begins: no label glyphs over player."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-05.png",
+      "image_sha256": "80a52c903c956a26561dd04ba6242ca40e80bc484f74de87d71cfcd19399fbd5",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "rg-r1",
+      "actual_source_time": 704.48,
+      "actual_film_time": 172.32999999999998,
+      "source_sha256": "d4a53903e603dc459f0d49b2bad23a5876a66afd80758e392a6faa3d281121ca",
+      "requested_reasons": [
+        {
+          "why": "after-label-start",
+          "requested_segment_time": 11.28,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "RG label fade-in; text does not cover visible player face in this sample."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-06.png",
+      "image_sha256": "30c42198aa413b5498a5a29b1f44c7040031bf801b03fab0bc4ad1632aa58c2a",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "rg-r1",
+      "actual_source_time": 707.32,
+      "actual_film_time": 175.17,
+      "source_sha256": "d4a53903e603dc459f0d49b2bad23a5876a66afd80758e392a6faa3d281121ca",
+      "requested_reasons": [
+        {
+          "why": "before-label-end",
+          "requested_segment_time": 14.12,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "RG label fade-out; near player clips right fixed-crop edge; no new label-face overlap."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-07.png",
+      "image_sha256": "8d572740ef6a4eea33ef3629ea3c611aaf2cf043d0a34930647c5a9a01d9147c",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "rg-r1",
+      "actual_source_time": 707.48,
+      "actual_film_time": 175.32999999999998,
+      "source_sha256": "d4a53903e603dc459f0d49b2bad23a5876a66afd80758e392a6faa3d281121ca",
+      "requested_reasons": [
+        {
+          "why": "after-label-end",
+          "requested_segment_time": 14.28,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "After RG label: no label glyphs; near player still approaches/clips right fixed-crop edge."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-08.png",
+      "image_sha256": "b41ff822fbce1cadb4fd5af8ffd9f1fece63491a6da7af0dcef721fa085f84eb",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "wimbledon-qf",
+      "actual_source_time": 187.52,
+      "actual_film_time": 211.07,
+      "source_sha256": "778a63d5407088ee6c385212ad3cc7335b0ac7df66f2c50c2f3b409268208e04",
+      "requested_reasons": [
+        {
+          "why": "new-full-matchpoint-first",
+          "requested_segment_time": 0.16,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "Wimbledon opening serve preparation; both players visible; original scoreboard cropped at left by mandated fixed court crop."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-09.png",
+      "image_sha256": "e15b6150f5c8d4f5e9d972a7b79b915acea2a6f7332726f7253a542917e5d971",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "wimbledon-qf",
+      "actual_source_time": 199.88000000000002,
+      "actual_film_time": 223.43,
+      "source_sha256": "778a63d5407088ee6c385212ad3cc7335b0ac7df66f2c50c2f3b409268208e04",
+      "requested_reasons": [
+        {
+          "why": "new-full-matchpoint-middle",
+          "requested_segment_time": 12.519999999999996,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "Gauff winner reaction; complete EN/ZH cue visible, no face coverage; raised arm extends beyond top edge."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-10.png",
+      "image_sha256": "8ed346c7ccb05e983452268683a750171aebe1eee640901a27dc52a0a76f2872",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "wimbledon-qf",
+      "actual_source_time": 212.24,
+      "actual_film_time": 235.79,
+      "source_sha256": "778a63d5407088ee6c385212ad3cc7335b0ac7df66f2c50c2f3b409268208e04",
+      "requested_reasons": [
+        {
+          "why": "new-full-matchpoint-last",
+          "requested_segment_time": 24.879999999999992,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "Net approach/players reaction; faces visible, near left torso partly cropped by fixed court view; no subtitle remaining."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-11.png",
+      "image_sha256": "35a8c56fe54f5b33dfb195bbfc0b113bae9696fcc1691c6719b18c664621a5d9",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "wimbledon-qf",
+      "actual_source_time": 201.36,
+      "actual_film_time": 224.91,
+      "source_sha256": "778a63d5407088ee6c385212ad3cc7335b0ac7df66f2c50c2f3b409268208e04",
+      "requested_reasons": [
+        {
+          "why": "full-bilingual-cue-1-middle",
+          "requested_segment_time": 14.02,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "Bilingual comeback-queen cue complete/readable; player face clear."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-12.png",
+      "image_sha256": "bc59ad88e15fd8787562941d7d3ea7f28ce22b86f20de52ae73eebe0d59b64b7",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "wimbledon-qf",
+      "actual_source_time": 205.32000000000002,
+      "actual_film_time": 228.87,
+      "source_sha256": "778a63d5407088ee6c385212ad3cc7335b0ac7df66f2c50c2f3b409268208e04",
+      "requested_reasons": [
+        {
+          "why": "full-bilingual-cue-2-middle",
+          "requested_segment_time": 17.990000000000002,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "Bilingual score cue complete/readable; original face covered only by player own hand, not subtitle/label."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-13.png",
+      "image_sha256": "6d0f1966ff2536052e690e1f9bae52095790dbedb0440583e933cebd4c04bbee",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "wimbledon-qf",
+      "actual_source_time": 195.0,
+      "actual_film_time": 218.54999999999998,
+      "source_sha256": "778a63d5407088ee6c385212ad3cc7335b0ac7df66f2c50c2f3b409268208e04",
+      "requested_reasons": [
+        {
+          "why": "before-label-start",
+          "requested_segment_time": 7.64,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "Before Wimbledon label: court action visible, no label yet."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-14.png",
+      "image_sha256": "447566ec5fab1aecb988bd21c4ba07937be1d9c44a66c5be270ada70070ad3d7",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "wimbledon-qf",
+      "actual_source_time": 195.16000000000003,
+      "actual_film_time": 218.71,
+      "source_sha256": "778a63d5407088ee6c385212ad3cc7335b0ac7df66f2c50c2f3b409268208e04",
+      "requested_reasons": [
+        {
+          "why": "after-label-start",
+          "requested_segment_time": 7.8,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "Wimbledon label fade-in; no player/ball contact hidden by glyphs in sample."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-15.png",
+      "image_sha256": "06bf5ebf3bef2fad0de3654cd16c70da738e4792440b489c1d739bf12d734643",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "wimbledon-qf",
+      "actual_source_time": 197.8,
+      "actual_film_time": 221.35,
+      "source_sha256": "778a63d5407088ee6c385212ad3cc7335b0ac7df66f2c50c2f3b409268208e04",
+      "requested_reasons": [
+        {
+          "why": "before-label-end",
+          "requested_segment_time": 10.44,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "Wimbledon label fade-out; no player face/racket hidden by glyphs in sample."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-new-gs-fresh-v3/caption-16.png",
+      "image_sha256": "af424639a40ddd59abd109449adf83e0b62ca717e8f2d3f209d9c0a300a042b4",
+      "actually_viewed_individually": true,
+      "canvas": [
+        1080,
+        1440
+      ],
+      "segment_id": "wimbledon-qf",
+      "actual_source_time": 197.96,
+      "actual_film_time": 221.51,
+      "source_sha256": "778a63d5407088ee6c385212ad3cc7335b0ac7df66f2c50c2f3b409268208e04",
+      "requested_reasons": [
+        {
+          "why": "after-label-end",
+          "requested_segment_time": 10.6,
+          "boundary_clamped": false
+        }
+      ],
+      "observation": "After Wimbledon label: no label glyphs; fixed court view, players visible."
+    }
+  ],
+  "publication_approved": false,
+  "final_encoded_film_qc": false,
+  "limitations": [
+    "Interior PNG samples only; no final H264/dissolves/audio evaluation.",
+    "No new ASR/model search performed by visual reviewer.",
+    "Blocking old report retained as history; cannot bind a corrected spec until rerendered."
+  ]
+}

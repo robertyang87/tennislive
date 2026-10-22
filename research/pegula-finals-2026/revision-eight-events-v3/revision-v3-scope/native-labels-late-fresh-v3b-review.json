@@ -1,0 +1,769 @@
+{
+  "schema": "tennislive.independent-native-labels-late-review.v1",
+  "created_utc": "2026-10-22T11:27:36.366053+00:00",
+  "status": "passed_current_bound23sampled_native_visuals",
+  "baseline_only": false,
+  "bound_spec_file_sha256": "121faea658074e82492e168f735295e0acd9625fe34c6a6cdcc8f1e92fb33f6c",
+  "current_spec_file_sha256_at_report": "121faea658074e82492e168f735295e0acd9625fe34c6a6cdcc8f1e92fb33f6c",
+  "bound_spec_path": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+  "native_manifest": {
+    "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/preview_manifest.json",
+    "sha256": "4acbd936c1400bfbf1c76b913e1e5738428dcc90745ad22154b0fe5b0e068fd5"
+  },
+  "native_preview_index": {
+    "path": "/workspace/pegula-finals-production/revision-v3-scope/preview-labels-late-fresh-v3b-index.json",
+    "sha256": "a61d9f97e790ef07b833171ed6c5ee21513fea697f30cf13db6a25bb4935d806"
+  },
+  "requested_samples": {
+    "path": "/workspace/pegula-finals-production/revision-v3-scope/preview-labels-late-fresh-v3b-requested.json",
+    "sha256": "91eadc4d07503ff5e7af3c3b67a9e4261bb7f02f9de2160e459b2fc7a957360b"
+  },
+  "source_map": {
+    "path": "/workspace/pegula-finals-production/revision-v3-scope/native-source-paths-v3.json",
+    "sha256": "362d4001022f68de64f3005e506b8f94a627eda2ffcabbe4b4bb2fa35c76bea5"
+  },
+  "native_fps": "25/1",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "sample_count": 23,
+  "batch_sizes": [
+    23
+  ],
+  "native_exit_code": 0,
+  "blocking_issues_in_bound_samples": [],
+  "final_encoded_film_qc_passed": false,
+  "publication_approved": false,
+  "human_listened": false,
+  "all23_actual_native_PNGs_visually_inspected": true,
+  "contacts_actually_viewed": [
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/review-contact-01.jpg",
+      "sha256": "5c0594271fbde1cb9d7fabc7a4907531517c0ec2f73fb4a5596ca804a31e4580"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/review-contact-02.jpg",
+      "sha256": "070ed5a214f7e26faf9e0d996006724d2ec2f7285ca9f88a9eba943c0c8302f0"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/review-contact-03.jpg",
+      "sha256": "dcf15b0ebbefd2417c5157c3ee43880448b55d22a950dedb3aab384b33c61c09"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/review-contact-04.jpg",
+      "sha256": "cee1d618922774960ca5d17a8c5c159e2be542f5b7d29311f20bd7e66759791b"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/review-contact-05.jpg",
+      "sha256": "7bc7fcf1ce1b967597d19d1dc5e7ddbbf3625f7e172a0e7759a3427794c0948f"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/review-contact-06.jpg",
+      "sha256": "88ca66f1845f3c30edebc531fa3b1061ac0bec756ba91b63a1bd0d17fa428805"
+    }
+  ],
+  "additional_full_size_pngs_actually_opened": [
+    "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-02.png",
+    "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-18.png",
+    "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-21.png",
+    "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-23.png"
+  ],
+  "images": [
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-01.png",
+      "sha256": "6d0f1966ff2536052e690e1f9bae52095790dbedb0440583e933cebd4c04bbee",
+      "segment_id": "wimbledon-qf",
+      "source_time": 195.0,
+      "film_time": 224.58999999999997,
+      "sample_reasons": [
+        {
+          "why": "before-label",
+          "requested_segment_time": 7.64,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-02.png",
+      "sha256": "6aa04490f1444bcc523692ff5189c46a270d3aab19a654947599617289938dea",
+      "segment_id": "wimbledon-qf",
+      "source_time": 196.48000000000002,
+      "film_time": 226.07,
+      "sample_reasons": [
+        {
+          "why": "label-middle",
+          "requested_segment_time": 9.12,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": true,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-03.png",
+      "sha256": "06bf5ebf3bef2fad0de3654cd16c70da738e4792440b489c1d739bf12d734643",
+      "segment_id": "wimbledon-qf",
+      "source_time": 197.8,
+      "film_time": 227.39,
+      "sample_reasons": [
+        {
+          "why": "label-last",
+          "requested_segment_time": 10.44,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-04.png",
+      "sha256": "af424639a40ddd59abd109449adf83e0b62ca717e8f2d3f209d9c0a300a042b4",
+      "segment_id": "wimbledon-qf",
+      "source_time": 197.96,
+      "film_time": 227.54999999999998,
+      "sample_reasons": [
+        {
+          "why": "after-label",
+          "requested_segment_time": 10.6,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-05.png",
+      "sha256": "fb29de045347545a261deac089c80292104e51ac3192c35f23096227e623f304",
+      "segment_id": "cincy-sf",
+      "source_time": 264.04,
+      "film_time": 254.30999999999997,
+      "sample_reasons": [
+        {
+          "why": "before-label",
+          "requested_segment_time": 1.3199999999999998,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-06.png",
+      "sha256": "b75a29941287050893578d57b2ed9cc190b66235aef696668910fe1bcdc3f386",
+      "segment_id": "cincy-sf",
+      "source_time": 265.52000000000004,
+      "film_time": 255.79,
+      "sample_reasons": [
+        {
+          "why": "label-middle",
+          "requested_segment_time": 2.8,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-07.png",
+      "sha256": "8003a3cdfe66a2cb9ab11f7780baafba892504bc94aeb17ed6dc860aebbc79d4",
+      "segment_id": "cincy-sf",
+      "source_time": 266.84000000000003,
+      "film_time": 257.10999999999996,
+      "sample_reasons": [
+        {
+          "why": "label-last",
+          "requested_segment_time": 4.119999999999999,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-08.png",
+      "sha256": "d08f4697500ab703956cc0d38134bff8a864ed10c1137b51ab04422029ff4c81",
+      "segment_id": "cincy-sf",
+      "source_time": 267.0,
+      "film_time": 257.27,
+      "sample_reasons": [
+        {
+          "why": "after-label",
+          "requested_segment_time": 4.279999999999999,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-09.png",
+      "sha256": "a6c974ddbfc6150d47f810011c916d627f64afc816be438bfd53b4ab1eaed9bf",
+      "segment_id": "cincy-final",
+      "source_time": 255.28,
+      "film_time": 284.34999999999997,
+      "sample_reasons": [
+        {
+          "why": "before-label",
+          "requested_segment_time": 18.680000000000003,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-10.png",
+      "sha256": "1fd8ac4f37d48d305fa234a767cdc5fa22d7848488c8e6d966ea8a4a5d907a26",
+      "segment_id": "cincy-final",
+      "source_time": 256.76,
+      "film_time": 285.83,
+      "sample_reasons": [
+        {
+          "why": "label-middle",
+          "requested_segment_time": 20.160000000000004,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-11.png",
+      "sha256": "82e849b3fabdaa67119e6d5967f87fbe266abb8e56523a682f785a898d440f3b",
+      "segment_id": "cincy-final",
+      "source_time": 258.08,
+      "film_time": 287.15,
+      "sample_reasons": [
+        {
+          "why": "label-last",
+          "requested_segment_time": 21.480000000000004,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-12.png",
+      "sha256": "3148a758cc4fe0b344a641c55b43822045973a0adcf24873926583ab22864b6d",
+      "segment_id": "cincy-final",
+      "source_time": 258.24,
+      "film_time": 287.30999999999995,
+      "sample_reasons": [
+        {
+          "why": "after-label",
+          "requested_segment_time": 21.64,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-13.png",
+      "sha256": "1f6d7a0b52dcbd9a7b3d2bc42bd0ee3071da8772175daaae93a076686b41270c",
+      "segment_id": "us-qf",
+      "source_time": 156.5,
+      "film_time": 305.9699999999999,
+      "sample_reasons": [
+        {
+          "why": "before-label",
+          "requested_segment_time": 6.02,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-14.png",
+      "sha256": "48ee3a09d84b77f76f545a4edd997c09822174cb74514f2448c0b428f6861274",
+      "segment_id": "us-qf",
+      "source_time": 157.98,
+      "film_time": 307.44999999999993,
+      "sample_reasons": [
+        {
+          "why": "label-middle",
+          "requested_segment_time": 7.499999999999999,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-15.png",
+      "sha256": "419d5fa949d145482bec2941c58ef1e68f0f16c0a2ab345557e9c8c38d60b6e1",
+      "segment_id": "us-qf",
+      "source_time": 159.3,
+      "film_time": 308.7699999999999,
+      "sample_reasons": [
+        {
+          "why": "label-last",
+          "requested_segment_time": 8.819999999999999,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-16.png",
+      "sha256": "bb9f78567b45295944fb356c85c8b604275d812b9713700de269af0743492db3",
+      "segment_id": "us-qf",
+      "source_time": 159.46,
+      "film_time": 308.9299999999999,
+      "sample_reasons": [
+        {
+          "why": "after-label",
+          "requested_segment_time": 8.979999999999999,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-17.png",
+      "sha256": "722c6639e14e93e44a53b88ef775bed2e69e9e535042704cb7efbcb97e39df37",
+      "segment_id": "us-sf",
+      "source_time": 23.720000000000002,
+      "film_time": 374.8299999999999,
+      "sample_reasons": [
+        {
+          "why": "before-label",
+          "requested_segment_time": 6.8,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-18.png",
+      "sha256": "edc5df938a874ecf8baf33386ac978c237a6ab1dcb998d2c2f110215b904ecb0",
+      "segment_id": "us-sf",
+      "source_time": 25.200000000000003,
+      "film_time": 376.3099999999999,
+      "sample_reasons": [
+        {
+          "why": "label-middle",
+          "requested_segment_time": 8.28,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": true,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-19.png",
+      "sha256": "b4041b053fde8e621b644f374139f38de2abd718da5818fd6e2da886bb774ded",
+      "segment_id": "us-sf",
+      "source_time": 26.520000000000003,
+      "film_time": 377.62999999999994,
+      "sample_reasons": [
+        {
+          "why": "label-last",
+          "requested_segment_time": 9.6,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-20.png",
+      "sha256": "5da0d5b4232b3ad97c10eb4b4cba8194b309bccfc1792b5efae26f5bc5c75f82",
+      "segment_id": "us-sf",
+      "source_time": 26.68,
+      "film_time": 377.7899999999999,
+      "sample_reasons": [
+        {
+          "why": "after-label",
+          "requested_segment_time": 9.76,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-21.png",
+      "sha256": "86dc3c663a1137b2519a9cff245783d048e803d015390ab40c8f0d3e0ea92acc",
+      "segment_id": "us-qf-interview",
+      "source_time": 57.559999999999995,
+      "film_time": 341.86999999999995,
+      "sample_reasons": [
+        {
+          "why": "actual-person-interview-first",
+          "requested_segment_time": 0.16,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": true,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-22.png",
+      "sha256": "e20db05f6066df0c0251de746553f48cbc3a70474f9a111ef5a1d89960c2df43",
+      "segment_id": "us-qf-interview",
+      "source_time": 66.03999999999999,
+      "film_time": 350.3499999999999,
+      "sample_reasons": [
+        {
+          "why": "actual-person-interview-middle",
+          "requested_segment_time": 8.66,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": false,
+      "result": "no blocking sampled native visual issue"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-labels-late-fresh-v3b/caption-23.png",
+      "sha256": "ef4a710a327c8f3a7a15e03b218a24c07773c0a10f496cbb6e6788f2be3e1290",
+      "segment_id": "us-qf-interview",
+      "source_time": 74.56,
+      "film_time": 358.86999999999995,
+      "sample_reasons": [
+        {
+          "why": "actual-person-interview-last",
+          "requested_segment_time": 17.16,
+          "boundary_clamped": false
+        }
+      ],
+      "visually_inspected_in_fresh_contact": true,
+      "additionally_fresh_full_size_opened": true,
+      "result": "no blocking sampled native visual issue"
+    }
+  ],
+  "label_results": [
+    {
+      "segment": "wimbledon-qf",
+      "sample_images": [
+        "caption-01.png",
+        "caption-02.png",
+        "caption-03.png",
+        "caption-04.png"
+      ],
+      "source_times": [
+        195,
+        196.48,
+        197.8,
+        197.96
+      ],
+      "observations": "Before:absent;middle:opaque;last:expectedfade;after:absent. Topic止步温网8强/date2026.07.07/place温网1/4决赛/people佩古拉vs高芙/score6-4 3-6 3-6arecompleteandreadable. Inbothvisiblelabel samplesfarGauffisleftofglyphs; noface/bodyocclusion. Actualnativeagreeswithprior9-source-overlayproof."
+    },
+    {
+      "segment": "cincy-sf",
+      "sample_images": [
+        "caption-05.png",
+        "caption-06.png",
+        "caption-07.png",
+        "caption-08.png"
+      ],
+      "source_times": [
+        264.04,
+        265.52,
+        266.84,
+        267.0
+      ],
+      "observations": "Labelabsent/opaque/fading/absentasselected. 本季第五次进决赛/2026.08.22/辛辛那提半决赛/佩古拉vs斯瓦泰克/7-5 4-6 6-4complete. FarSwiatekstaysleftofthetext;nearPegulaserve/rallybodyclear. Nativeglyphsnotcutright."
+    },
+    {
+      "segment": "cincy-final",
+      "sample_images": [
+        "caption-09.png",
+        "caption-10.png",
+        "caption-11.png",
+        "caption-12.png"
+      ],
+      "source_times": [
+        255.28,
+        256.76,
+        258.08,
+        258.24
+      ],
+      "observations": "BeforecloseGauff:labelabsent;opaquephaseonemptyupperrightabovecrowd;fadinglabelabovenetgreeting;afterlabelgone. 辛辛那提亚军/2026.08.23/辛辛那提决赛/佩古拉vs高芙/2-6 4-6complete. Doesnotcovereitherplayersheadfaceinnetgreeting. CurrentlongEnglishcaptionwrapstwoEnglishlinesplusoneChinese,nobottomclipping."
+    },
+    {
+      "segment": "us-qf",
+      "sample_images": [
+        "caption-13.png",
+        "caption-14.png",
+        "caption-15.png",
+        "caption-16.png"
+      ],
+      "source_times": [
+        156.5,
+        157.98,
+        159.3,
+        159.46
+      ],
+      "observations": "Allfourlabelstatescorrect. 逆转晋级4强/2026.09.08/美网1/4决赛/佩古拉vs纳瓦罗/3-6 6-4 6-3readable, numericquarterfinalnotationpreserved. FarNavarroleftofglyphs,noocclusion. NearPegulalateralexitlimitationnotedbelow."
+    },
+    {
+      "segment": "us-sf",
+      "sample_images": [
+        "caption-17.png",
+        "caption-18.png",
+        "caption-19.png",
+        "caption-20.png"
+      ],
+      "source_times": [
+        23.72,
+        25.2,
+        26.52,
+        26.68
+      ],
+      "observations": "Allfourlabelstatescorrect. 止步美网4强/2026.09.10/美网半决赛/佩古拉vs萨巴伦卡/5-7 2-6readable. MiddlelabelclearoffarPegulaandnearSabalenka. LastfadeonSabalenkareaction:herheadisleftandbelowtext,doesnotcoverface. Oh,whatasave!/哦救得真漂亮！completeandwithinbottommargin."
+    }
+  ],
+  "interview_result": {
+    "segment": "us-qf-interview",
+    "source_times": [
+      57.56,
+      66.04,
+      74.56
+    ],
+    "images": [
+      "caption-21.png",
+      "caption-22.png",
+      "caption-23.png"
+    ],
+    "observations": "AllthreeactualnativeframeskeepPegulacap/head/chininsideframe,facecenteredandclear. Brandabovehead;noinformationinset. FirstandlastlongEnglishcueswrap/fitfully,Chinesecompleteinsideframeandabovecanvasbottom. MiddleIjusthavetotellallthenegativemeandChinesecomplete. Theseare3caption/facegeometrysamples,notproofall7interviewcuesoraudiohavebeencheckedinthisrun."
+  },
+  "fixed_court_limitations": [
+    "Wimbledonwideframesretainonlyoriginalscoreboard30/40sliveratupperleft;USQFandUSSFalsoretainpartialoriginalboardatleftedge. Fulloriginalscoreboardisnotclaimedreadable;generatedinformationlabelsprovidefullresultduringreviewedwindows.",
+    "AtUSQF159.30–159.46nearPegulareachesrightcropedgeandpartofherlateralbody/racketcanexit. Thisisfixedcx.5restriction,notoverlaycoveringher. Samplingdoesnotproveeverycontactwithincrop.",
+    "Native previews areinteriorframes,notfinaldissolvesorH.264compression;shownlabel-lastframesintentionallycapturefadeandarelessopaquethanmiddlesamples.",
+    "Only5latevideo labelwindowsand3interviewsamplesarevisualscope. RGending714.20isoutside thisgroupandisnotclaimedcheckedbythisreview."
+  ],
+  "no_spec_git_or_sharedasset_edits_by_reviewer": true,
+  "honest_native_tool_limits": [
+    "No final QC or publication approval",
+    "Interior segment samples exclude dissolves and final H.264 compression",
+    "Audio is not produced or evaluated",
+    "Geometry sets without timestamps do not prove all board-width transitions were sampled"
+  ],
+  "fresh_current_run_command": "python revision-v3-scope/run_native_preview_v3.py labels-late fresh-v3b --expect-spec-sha256 121faea658074e82492e168f735295e0acd9625fe34c6a6cdcc8f1e92fb33f6c",
+  "fresh_timeline_rebind": {
+    "old_historical_spec_sha256": "95919b489fc9f56b0ea94978daf9b8daabb472174e0d6a7988d3cc30928ed94c",
+    "reason": "RGendcorrected708.16to714.20; allrequestedlatefilmoffsets+6.04seconds",
+    "all23_fresh_native_frames_regenerated": true,
+    "all23_fresh_native_images_manually_reinspected": true,
+    "all23_png_bytes_identical_to_prior_relative_compositions": true,
+    "comparisons": [
+      {
+        "image": "caption-01.png",
+        "old_film_time": 218.55,
+        "new_film_time": 224.59,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-02.png",
+        "old_film_time": 220.03,
+        "new_film_time": 226.07,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-03.png",
+        "old_film_time": 221.35,
+        "new_film_time": 227.39,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-04.png",
+        "old_film_time": 221.51,
+        "new_film_time": 227.55,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-05.png",
+        "old_film_time": 248.27,
+        "new_film_time": 254.31,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-06.png",
+        "old_film_time": 249.75,
+        "new_film_time": 255.79,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-07.png",
+        "old_film_time": 251.07,
+        "new_film_time": 257.11,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-08.png",
+        "old_film_time": 251.23,
+        "new_film_time": 257.27,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-09.png",
+        "old_film_time": 278.31,
+        "new_film_time": 284.35,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-10.png",
+        "old_film_time": 279.79,
+        "new_film_time": 285.83,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-11.png",
+        "old_film_time": 281.11,
+        "new_film_time": 287.15,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-12.png",
+        "old_film_time": 281.27,
+        "new_film_time": 287.31,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-13.png",
+        "old_film_time": 299.95,
+        "new_film_time": 305.99,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-14.png",
+        "old_film_time": 301.43,
+        "new_film_time": 307.47,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-15.png",
+        "old_film_time": 302.75,
+        "new_film_time": 308.79,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-16.png",
+        "old_film_time": 302.91,
+        "new_film_time": 308.95,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-17.png",
+        "old_film_time": 368.79,
+        "new_film_time": 374.83,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-18.png",
+        "old_film_time": 370.27,
+        "new_film_time": 376.31,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-19.png",
+        "old_film_time": 371.59,
+        "new_film_time": 377.63,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-20.png",
+        "old_film_time": 371.75,
+        "new_film_time": 377.79,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-21.png",
+        "old_film_time": 335.83,
+        "new_film_time": 341.87,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-22.png",
+        "old_film_time": 344.33,
+        "new_film_time": 350.37,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      },
+      {
+        "image": "caption-23.png",
+        "old_film_time": 352.83,
+        "new_film_time": 358.87,
+        "film_delta_seconds": 6.04,
+        "source_time_unchanged": true,
+        "fresh_generated_PNG_bytes_identical_to_prior_relative_frame": true
+      }
+    ]
+  },
+  "scope_limited_preview_only": true
+}

@@ -1,0 +1,230 @@
+{
+  "schema": "pegula.native-v3-preview-request.v1",
+  "group": "new-narration",
+  "tag": "fresh-v3",
+  "spec_path": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+  "spec_sha256": "95919b489fc9f56b0ea94978daf9b8daabb472174e0d6a7988d3cc30928ed94c",
+  "cover_seconds": 1.2,
+  "sample_count": 14,
+  "batch_sizes": [
+    14
+  ],
+  "clock_note": "Film offsets use final spec seconds/end-start. Native renderer resolves its own source FPS; requested times are NOT quantized to 30fps.",
+  "publication_approved": false,
+  "final_encoded_film_qc": false,
+  "samples": [
+    {
+      "id": "card-sunshine",
+      "segment_index": 7,
+      "film_time": 77.87,
+      "segment_time_requested": 0.16,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "new-narration-chapter-first",
+          "requested_segment_time": 0.16,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-sunshine",
+      "segment_index": 7,
+      "film_time": 80.96,
+      "segment_time_requested": 3.25,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "new-narration-chapter-middle",
+          "requested_segment_time": 3.25,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-sunshine",
+      "segment_index": 7,
+      "film_time": 84.05,
+      "segment_time_requested": 6.34,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "new-narration-chapter-last",
+          "requested_segment_time": 6.34,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-wimbledon",
+      "segment_index": 15,
+      "film_time": 205.57,
+      "segment_time_requested": 0.16,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "new-narration-chapter-first",
+          "requested_segment_time": 0.16,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-wimbledon",
+      "segment_index": 15,
+      "film_time": 208.16,
+      "segment_time_requested": 2.75,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "new-narration-chapter-middle",
+          "requested_segment_time": 2.75,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-wimbledon",
+      "segment_index": 15,
+      "film_time": 210.75,
+      "segment_time_requested": 5.34,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "new-narration-chapter-last",
+          "requested_segment_time": 5.34,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-cincy",
+      "segment_index": 17,
+      "film_time": 236.11,
+      "segment_time_requested": 0.16,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "new-narration-chapter-first",
+          "requested_segment_time": 0.16,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-cincy",
+      "segment_index": 17,
+      "film_time": 241.45,
+      "segment_time_requested": 5.5,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "new-narration-chapter-middle",
+          "requested_segment_time": 5.5,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-cincy",
+      "segment_index": 17,
+      "film_time": 246.79,
+      "segment_time_requested": 10.84,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "new-narration-chapter-last",
+          "requested_segment_time": 10.84,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-asia",
+      "segment_index": 28,
+      "film_time": 379.69,
+      "segment_time_requested": 0.16,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "new-narration-chapter-first",
+          "requested_segment_time": 0.16,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-asia",
+      "segment_index": 28,
+      "film_time": 384.03,
+      "segment_time_requested": 4.5,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "new-narration-chapter-middle",
+          "requested_segment_time": 4.5,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-asia",
+      "segment_index": 28,
+      "film_time": 388.37,
+      "segment_time_requested": 8.84,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "new-narration-chapter-last",
+          "requested_segment_time": 8.84,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-qualification",
+      "segment_index": 29,
+      "film_time": 394.43,
+      "segment_time_requested": 5.9,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "qualification-poster-or-ending-middle",
+          "requested_segment_time": 5.9,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "card-ending",
+      "segment_index": 30,
+      "film_time": 404.23,
+      "segment_time_requested": 3.9,
+      "source_time_requested": null,
+      "reasons": [
+        {
+          "why": "qualification-poster-or-ending-middle",
+          "requested_segment_time": 3.9,
+          "boundary_clamped": false
+        }
+      ]
+    }
+  ],
+  "source_paths_file": "/workspace/pegula-finals-production/revision-v3-scope/native-source-paths-v3.json",
+  "source_paths_sha256": "362d4001022f68de64f3005e506b8f94a627eda2ffcabbe4b4bb2fa35c76bea5",
+  "source_paths": {
+    "ao-sf": "/workspace/pegula-finals-production/sources/ao-sf.mp4",
+    "berlin-sf-sabalenka": "/workspace/sabalenka-finals-production/staging/extra/berlin-sf.mp4",
+    "charleston-final": "/workspace/pegula-finals-production/sources/charleston-final.mp4",
+    "cincy-final": "/workspace/pegula-finals-production/audio/sources/cincy-final.mp4",
+    "cincy-runnerup": "/workspace/pegula-finals-production/audio/sources/cincy-runnerup.mp4",
+    "cincy-sf": "/workspace/pegula-finals-production/audio/sources/cincy-sf.mp4",
+    "dubai-champion-speech": "/workspace/pegula-finals-production/sources/dubai-champion-speech.mp4",
+    "dubai-final": "/workspace/pegula-finals-production/sources/dubai-final.mp4",
+    "rg-r1": "/workspace/pegula-finals-production/revision-v3-scope/rg/rg-r1-hoh-08EHKHtS6hg.mp4",
+    "us-qf": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+    "us-qf-interview": "/workspace/pegula-finals-production/audio/sources/us-qf-interview.mp4",
+    "us-sf": "/workspace/pegula-finals-production/audio/sources/us-sf.mp4",
+    "wimbledon-qf": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/2rtc9kSjmPM.mp4"
+  }
+}
