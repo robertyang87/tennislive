@@ -1,0 +1,53 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=Z-erh7o_zvI",
+  "source_sha256": "f7a431ec9cd83435345e90ddf0bf5348d7561b6e927d2f49dadff5ac16ad8a7d",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review and paired ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T13:17:32.110840+00:00",
+  "reviewed_from": 234,
+  "reviewed_to": 290,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 264.04,
+      "end": 266.4,
+      "en": "It's Andreeva's title in Adelaide.",
+      "zh": "安德烈耶娃在阿德莱德夺冠"
+    },
+    {
+      "start": 267.9,
+      "end": 271.62,
+      "en": "A ruthless demolition job on the world number 17.",
+      "zh": "对世界第17的彻底压制"
+    },
+    {
+      "start": 272.5,
+      "end": 274.24,
+      "en": "And Mboko was struggling physically,",
+      "zh": "而姆博科身体状况不佳"
+    },
+    {
+      "start": 274.24,
+      "end": 277.72,
+      "en": "but she has been well and truly put to the sword.",
+      "zh": "但她也被对手彻底击溃"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/adelaide-final-b940e6d968-adelaide-final-small.en.json",
+      "sha256": "b940e6d968e68c5b9e47fbafa868a85a4497cd6aabbecec306d0675a4130b018",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/adelaide-final-255782ca5a-adelaide-final-medium.en.json",
+      "sha256": "255782ca5aee642edf1426c9decd1daca763f2ecfeae1adbf12f389e54af3581",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "Actual paired primary localASR cross-check. Proper nouns normalized only to independently verified official participant spelling; raw misspellings/timing differences retained. Selected complete first post-point sentence(s); following independent new analysis is outside editorial scope, never cut mid-word to evade subtitles. No human listening. 256.90 after crowd cut,257.20–258.40 Mirra same-point bounce/prep;258.80 wide full serve;260 return,~262 result;264 same Mirra arms-up actual win reaction. Native source scoreboard6 5 40 /3 1 30; final6-3 6-1."
+}

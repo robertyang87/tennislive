@@ -1,0 +1,51 @@
+{
+  "schema": "independent-native-cover-visual-qc/v1",
+  "reviewed_at_utc": "2026-10-22T13:43:52.120413+00:00",
+  "player": "Mirra Andreeva",
+  "status": "pass_actual_native_jpeg_visual_qc_with_placement_notes",
+  "actual_file": "/workspace/andreeva-finals-production/production/cover-native/poster.jpg",
+  "actual_format": "JPEG",
+  "actual_size": [
+    1080,
+    1440
+  ],
+  "actual_sha256": "9bee1834475ca9573e4b31e3f955811e8a9f0ccb7e7afc2c8a7bcc84065bab9c",
+  "png_file": null,
+  "current_spec": "/workspace/tennislive-andreeva/specs/reels/andreeva-finals-2026.json",
+  "current_spec_sha256_at_review": "0b2d2aa51933349069ed050913c052ce333d9138f7c42704277a93e9f710f8e5",
+  "spec_snapshot": "/workspace/finals-remaining-2026/independent-qc/native-covers/andreeva-spec-at-review.json",
+  "cover_fields_sha256_canonical_utf8": "e469bf2f6b50c930701ff4bd22bcb5b9e7383ccd9768bdc5b76ea05486a118bf",
+  "render_input_original_spec_hash_recorded": false,
+  "binding_limit": "Exact current cover fields visually match actual poster. Snapshot is current review input context, not historical whole-spec render provenance or movie approval. Later cover/source/text/crop/renderer/poster-byte changes require fresh actual review.",
+  "portrait_asset": "/workspace/tennislive-andreeva/assets/reel/andreeva-finals-2026/cover-roland-garros.jpg",
+  "portrait_asset_sha256": "09a48239cd1dc2faae22211a5222ed31de96a8395258419e4f2e921a0a0bcb29",
+  "renderer_at_review": "/workspace/tennislive-andreeva/tools/versus_poster.py",
+  "renderer_sha256_at_review": "455b86f276a93c26f3df33e7017c2d7a1e090df6ab25743c47017613ceae53d9",
+  "actual_viewed": true,
+  "checks": {
+    "1080x1440": true,
+    "correct_person": "Actual Mirra Andreeva, official same-year Roland Garros champion photograph",
+    "front_face_eyes_open": true,
+    "head_and_face_complete": true,
+    "full_bleed": true,
+    "subtitle": "安德烈耶娃：从巴黎冠军到单打年终",
+    "subtitle_name_colon": true,
+    "hook_actual_lines": [
+      "19岁首夺大满贯",
+      "首次入围单打年终"
+    ],
+    "hook_semantic_break": true,
+    "hook_scope": "First Finals is explicitly singles, preserving prior 2025 doubles participation distinction.",
+    "text_clear_and_no_clipping": true,
+    "face_unobscured": true,
+    "trophy_recognizable_visual_focal_point": "Cup lid, full bowl, handles and emblem are clearly visible with player. Hook crosses trophy stem and base; not claimed to be entirely text-free.",
+    "brand_safe_area": "Brand/logo inset from upper/left edge and face fully below text. Long subtitle extends partly over upper-left visor/cap fabric, with no face or eyes occlusion and no clipped text.",
+    "scrim": "Actual face and trophy remain clear; native top/bottom readability gradient retained, no extra radial full-photo wash visible."
+  },
+  "visible_limitations": [
+    "Subtitle crosses a small area of upper-left visor/cap fabric, not facial features.",
+    "Two-line hook overlaps lower trophy stem/base; lid, handles, bowl and main emblem remain fully recognizable."
+  ],
+  "material_issues": [],
+  "final_encoded_film_qc": false
+}

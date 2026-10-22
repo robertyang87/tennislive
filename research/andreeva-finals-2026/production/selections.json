@@ -1,0 +1,677 @@
+{
+  "selections": {
+    "cold-quote": {
+      "key": "cold-quote",
+      "source_name": "rg-press",
+      "source_file": "/workspace/andreeva-finals-production/sources/rg-press.mp4",
+      "source_url": "https://www.youtube.com/watch?v=Af1ROgyYF6Q",
+      "source_sha256": "5f0ec82813e3cfd21db37b1a030061d92756c712fc40dc16dc2218a17bcaa1a9",
+      "start": 20.0,
+      "end": 36.7,
+      "frame": "person",
+      "cx": 0.514,
+      "cx_face": {
+        "samples": [
+          0.5113,
+          0.5075,
+          0.5049,
+          0.5253,
+          0.5138,
+          0.5226,
+          0.517,
+          0.5305,
+          0.4975
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T13:25:50+00:00",
+        "median": 0.5138,
+        "spread": 0.033
+      },
+      "_frame_why": "本次源片20.30–36.40九个实际帧经仓库buffalo_s量脸，固定人物中心，不跟踪；采样原图已实际打开进行视觉复核，原生字幕另验。",
+      "captions": [
+        {
+          "start": 20.1,
+          "end": 22.62,
+          "en": "Yeah, of course. I still cannot believe",
+          "zh": "当然。我还是不敢相信"
+        },
+        {
+          "start": 22.62,
+          "end": 26.4,
+          "en": "that I'm doing a press conference with a Grand Slam trophy by my side.",
+          "zh": "带着大满贯奖杯开发布会"
+        },
+        {
+          "start": 26.4,
+          "end": 30.68,
+          "en": "And it's been one of my biggest dreams in my life.",
+          "zh": "这一直是我人生最大的梦想之一"
+        },
+        {
+          "start": 30.68,
+          "end": 34.76,
+          "en": "And I'm just super happy that I was able to give my best",
+          "zh": "很开心我能拼尽全力"
+        },
+        {
+          "start": 34.76,
+          "end": 36.5,
+          "en": "and win the match and win this tournament.",
+          "zh": "赢下比赛，赢下这个赛事"
+        }
+      ],
+      "audio_review_packet": "/workspace/andreeva-finals-production/production/cold-quote-packet.json",
+      "asr_evidence": [
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/rg-press-small.en.json",
+          "sha256": "33b725b18b595de81df81ee8bcc43502857feb114ee548b9d9ebf028224c559d",
+          "model": "small.en",
+          "actual_reviewed_range": [
+            14,
+            92
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/rg-press-medium.en.json",
+          "sha256": "6557481fa95d59fdfacf594bd670a42d66d672d046f6898a0cc3b7dbb2991d81",
+          "model": "medium.en",
+          "actual_reviewed_range": [
+            14,
+            92
+          ]
+        }
+      ],
+      "method": "asr_cross_checked",
+      "status": "complete_asr_cross_checked_not_human_listening",
+      "uncertain": false,
+      "quote_kind": "interview",
+      "notes": "Same-event RG2026 champion actual whole first answer; shown once at cold, following narration rewinds to January. No invented trophy speech.",
+      "person_crop_evidence": {
+        "manifest": "/workspace/andreeva-finals-production/production/cold-nine/manifest.json",
+        "contact": "/workspace/andreeva-finals-production/production/cold-nine/rg-press-contact.jpg",
+        "times": [
+          20.08,
+          22.15,
+          24.21,
+          26.28,
+          28.35,
+          30.42,
+          32.48,
+          34.55,
+          36.62
+        ],
+        "face_cx_normalized": [
+          0.5,
+          0.498,
+          0.501,
+          0.501,
+          0.5,
+          0.5,
+          0.499,
+          0.501,
+          0.501
+        ],
+        "method": "Visual measurements from nine actual source frames, approximate normalized face-center; no automated tracker."
+      }
+    },
+    "adelaide-final": {
+      "start": 256.9,
+      "end": 278.0,
+      "label_safe_window": [
+        268.9,
+        271.8
+      ],
+      "captions": [
+        {
+          "start": 264.04,
+          "end": 266.4,
+          "en": "It's Andreeva's title in Adelaide.",
+          "zh": "安德烈耶娃在阿德莱德夺冠"
+        },
+        {
+          "start": 267.9,
+          "end": 271.62,
+          "en": "A ruthless demolition job on the world number 17.",
+          "zh": "对世界第17的彻底压制"
+        },
+        {
+          "start": 272.5,
+          "end": 274.24,
+          "en": "And Mboko was struggling physically,",
+          "zh": "而姆博科身体状况不佳"
+        },
+        {
+          "start": 274.24,
+          "end": 277.72,
+          "en": "but she has been well and truly put to the sword.",
+          "zh": "但她也被对手彻底击溃"
+        }
+      ],
+      "point_evidence": "256.90 after crowd cut,257.20–258.40 Mirra same-point bounce/prep;258.80 wide full serve;260 return,~262 result;264 same Mirra arms-up actual win reaction. Native source scoreboard6 5 40 /3 1 30; final6-3 6-1.",
+      "key": "adelaide-final",
+      "source_name": "adelaide-final",
+      "source_file": "/workspace/andreeva-finals-production/sources/adelaide-final.mp4",
+      "source_url": "https://www.youtube.com/watch?v=Z-erh7o_zvI",
+      "source_sha256": "f7a431ec9cd83435345e90ddf0bf5348d7561b6e927d2f49dadff5ac16ad8a7d",
+      "frame": "court",
+      "cx": 0.5,
+      "fit": "crop",
+      "track": false,
+      "audio_review_packet": "/workspace/andreeva-finals-production/production/adelaide-final-packet.json",
+      "asr_evidence": [
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/adelaide-final-small.en.json",
+          "sha256": "b940e6d968e68c5b9e47fbafa868a85a4497cd6aabbecec306d0675a4130b018",
+          "model": "small.en",
+          "actual_reviewed_range": [
+            234,
+            290
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/adelaide-final-medium.en.json",
+          "sha256": "255782ca5aee642edf1426c9decd1daca763f2ecfeae1adbf12f389e54af3581",
+          "model": "medium.en",
+          "actual_reviewed_range": [
+            234,
+            290
+          ]
+        }
+      ],
+      "method": "asr_cross_checked",
+      "status": "ready_for_native_integration",
+      "uncertain": false,
+      "quote_kind": "broadcast",
+      "notes": "Actual paired primary localASR cross-check. Proper nouns normalized only to independently verified official participant spelling; raw misspellings/timing differences retained. Selected complete first post-point sentence(s); following independent new analysis is outside editorial scope, never cut mid-word to evade subtitles. No human listening. 256.90 after crowd cut,257.20–258.40 Mirra same-point bounce/prep;258.80 wide full serve;260 return,~262 result;264 same Mirra arms-up actual win reaction. Native source scoreboard6 5 40 /3 1 30; final6-3 6-1. Last complete cue274.24–277.72 moved as whole tobottom520(y920) because original TV final board enters source276.5 nativeapproxy973–1333; words/audio/crop/time unchanged.",
+      "label_window_why": "First actualnative25fps alpha-label preview found old rally window overlay onfarplayer. This moved live-only interval is source-frame alpha-previewed post-result reaction /clearcourt (US), fixedcx.5 unchanged; exact repaired native first/middle/last/after still required. No static fallback.",
+      "visual_evidence": [
+        "/workspace/andreeva-finals-production/production/terminal/adelaide-final-contact.jpg"
+      ],
+      "subtitle_bottom_windows": [
+        [
+          17.34,
+          20.82,
+          520
+        ]
+      ]
+    },
+    "linz-final": {
+      "start": 243.15,
+      "end": 273.05,
+      "label_safe_window": [
+        269.8,
+        272.8
+      ],
+      "captions": [
+        {
+          "start": 243.28,
+          "end": 246.06,
+          "en": "For the second time.",
+          "zh": "第二次冠军点机会。"
+        },
+        {
+          "start": 251.4,
+          "end": 254.48,
+          "en": "The top seed, the world number 10,",
+          "zh": "头号种子，世界第10，"
+        },
+        {
+          "start": 254.48,
+          "end": 261.3,
+          "en": "has just been able to claim her fifth WTA title.",
+          "zh": "拿下了第五座WTA冠军。"
+        },
+        {
+          "start": 263.88,
+          "end": 267.32,
+          "en": "And how hard that Andreeva has had to work,",
+          "zh": "安德烈耶娃付出了多少努力，"
+        },
+        {
+          "start": 267.32,
+          "end": 269.56,
+          "en": "not just today, but throughout the week.",
+          "zh": "不仅今天，更是整个星期。"
+        }
+      ],
+      "point_evidence": "243.15 starts after previous rally, correct same AD readying receiver close-up;246.64 wide server Potapova hands low;246.76+ toss then serve and whole rally,~254 end;256 Mirra own reaction. ChampionshipPoint#2 scoreboardMirra1 6 5 AD /Potapova6 4 3. FirstFor begins243.28 not244.60, retained whole utterance.",
+      "key": "linz-final",
+      "source_name": "linz-final",
+      "source_file": "/workspace/andreeva-finals-production/sources/linz-final.mp4",
+      "source_url": "https://www.youtube.com/watch?v=SAzG0MU3Ums",
+      "source_sha256": "0222e3483da383550e627a34478a4f07c4946d400fff78f1ea921e5980334c7f",
+      "frame": "court",
+      "cx": 0.5,
+      "fit": "crop",
+      "track": false,
+      "audio_review_packet": "/workspace/andreeva-finals-production/production/linz-final-packet.json",
+      "asr_evidence": [
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/linz-final-small.en.json",
+          "sha256": "fb81b2afab8143fe64b11e5cb04427d63a0932d9e4f3ec9f47d8bbcb7ffab0db",
+          "model": "small.en",
+          "actual_reviewed_range": [
+            236,
+            292
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/linz-final-medium.en.json",
+          "sha256": "37286cf553cb3ca134bfb39bbc59d78154cede41c2ac61b3910d3260aacdf35a",
+          "model": "medium.en",
+          "actual_reviewed_range": [
+            236,
+            292
+          ]
+        }
+      ],
+      "method": "asr_cross_checked",
+      "status": "ready_for_native_integration",
+      "uncertain": false,
+      "quote_kind": "broadcast",
+      "notes": "Actual paired primary localASR cross-check. Proper nouns normalized only to independently verified official participant spelling; raw misspellings/timing differences retained. Selected complete first post-point sentence(s); following independent new analysis is outside editorial scope, never cut mid-word to evade subtitles. No human listening. 243.15 starts after previous rally, correct same AD readying receiver close-up;246.64 wide server Potapova hands low;246.76+ toss then serve and whole rally,~254 end;256 Mirra own reaction. ChampionshipPoint#2 scoreboardMirra1 6 5 AD /Potapova6 4 3. FirstFor begins243.28 not244.60, retained whole utterance. Retain subsequent whole directly relevant sentence about her work today and throughout week, not artificial duration padding. Ends273.05 after genuine net/chair handshake and turn, before next independent analysis275.02; .25tailclear.",
+      "label_window_why": "Two actual native previews blocked earlier rally/net-face locations. Exact actual PNG alpha source previews269.8–272.8 show genuine postmatch net/chair handshake with both faces clear; fixedcx.5 unchanged. Extend real reaction to273.05 before next independent analysis275.02; reviewed ASR236–292. Final native labels rerun required.",
+      "visual_evidence": [
+        "/workspace/andreeva-finals-production/production/terminal/linz-final-contact.jpg"
+      ]
+    },
+    "madrid-final": {
+      "start": 247.35,
+      "end": 271.12,
+      "label_safe_window": [
+        264.0,
+        267.0
+      ],
+      "captions": [
+        {
+          "start": 263.5,
+          "end": 267.8,
+          "en": "A spectacular display of dialed-in determination",
+          "zh": "极其专注而坚定的表现，"
+        },
+        {
+          "start": 267.8,
+          "end": 270.92,
+          "en": "yields a new queen of the clay in Madrid.",
+          "zh": "成就了马德里新红土女王。"
+        }
+      ],
+      "point_evidence": "247.35 Kostyuk ball-in-hand prep on same championshippoint#3;248.50 wide lower arm then full toss/serve/rally;262+ dead and Kostyuk lies down. Main subject Mirra losing, winner reaction never attributed to Mirra. ScoreMirra3 5 30 /Kostyuk6 6 40.",
+      "key": "madrid-final",
+      "source_name": "madrid-final",
+      "source_file": "/workspace/andreeva-finals-production/sources/madrid-final.mp4",
+      "source_url": "https://www.youtube.com/watch?v=FTTBcO6RWic",
+      "source_sha256": "b9594d1803e11690c148be7c131f6f7df1bdf96b2e25309d203fc24b59756682",
+      "frame": "court",
+      "cx": 0.5,
+      "fit": "crop",
+      "track": false,
+      "audio_review_packet": "/workspace/andreeva-finals-production/production/madrid-final-packet.json",
+      "asr_evidence": [
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/madrid-final-small.en.json",
+          "sha256": "380e42fe28b001c30e31616fb20b17916fa5ac99801156954b8d7ff38936ef13",
+          "model": "small.en",
+          "actual_reviewed_range": [
+            237,
+            292
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/madrid-final-medium.en.json",
+          "sha256": "d9d64987af68ee3693f15350d871da1dff6ca83fc823bc207fd4caba74ebb186",
+          "model": "medium.en",
+          "actual_reviewed_range": [
+            237,
+            292
+          ]
+        }
+      ],
+      "method": "asr_cross_checked",
+      "status": "ready_for_native_integration",
+      "uncertain": false,
+      "quote_kind": "broadcast",
+      "notes": "Actual paired primary localASR cross-check. Proper nouns normalized only to independently verified official participant spelling; raw misspellings/timing differences retained. Selected complete first post-point sentence(s); following independent new analysis is outside editorial scope, never cut mid-word to evade subtitles. No human listening. 247.35 Kostyuk ball-in-hand prep on same championshippoint#3;248.50 wide lower arm then full toss/serve/rally;262+ dead and Kostyuk lies down. Main subject Mirra losing, winner reaction never attributed to Mirra. ScoreMirra3 5 30 /Kostyuk6 6 40.",
+      "label_window_why": "First actualnative25fps alpha-label preview found old rally window overlay onfarplayer. This moved live-only interval is source-frame alpha-previewed post-result reaction /clearcourt (US), fixedcx.5 unchanged; exact repaired native first/middle/last/after still required. No static fallback.",
+      "visual_evidence": [
+        "/workspace/andreeva-finals-production/production/terminal/madrid-final-contact.jpg"
+      ]
+    },
+    "beijing-final": {
+      "start": 263.44,
+      "end": 277.4,
+      "label_safe_window": [
+        266.4,
+        270.3
+      ],
+      "captions": [
+        {
+          "start": 269.76,
+          "end": 273.88,
+          "en": "And the ultimate exclamation point",
+          "zh": "用最有力的惊叹号，"
+        },
+        {
+          "start": 273.88,
+          "end": 276.2,
+          "en": "to conquer the China Open.",
+          "zh": "征服中国网球公开赛。"
+        }
+      ],
+      "point_evidence": "263.44 hard cut to same championshippoint#1 Zheng ball-in-hand prep;266.40 wide and whole toss/serve ace;271 dead;272+ Zheng lies down. Actual lossMirra5-7 4-6. SourceboardZheng7 5 40 /Mirra5 4 30.",
+      "key": "beijing-final",
+      "source_name": "beijing-final",
+      "source_file": "/workspace/andreeva-finals-production/sources/beijing-final.mp4",
+      "source_url": "https://www.youtube.com/watch?v=Vq_UC0n5DKQ",
+      "source_sha256": "21524862c53c4629e64615179c5345b03209bff7406ec7977ea268367598f451",
+      "frame": "court",
+      "cx": 0.5,
+      "fit": "crop",
+      "track": false,
+      "audio_review_packet": "/workspace/andreeva-finals-production/production/beijing-final-packet.json",
+      "asr_evidence": [
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/beijing-final-small.en.json",
+          "sha256": "6480d7b73053d8c89ed3a1f57ebda43e3e8bb7a1ec274ab5caab8c4931f474f8",
+          "model": "small.en",
+          "actual_reviewed_range": [
+            258,
+            303
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/beijing-final-medium.en.json",
+          "sha256": "cb187d52177706e9fe6038fbf58f5b79062105772d42282e67e2dfc7ef3c6db0",
+          "model": "medium.en",
+          "actual_reviewed_range": [
+            258.0,
+            303.0
+          ]
+        }
+      ],
+      "method": "asr_cross_checked",
+      "status": "ready_for_native_integration",
+      "uncertain": false,
+      "quote_kind": "broadcast",
+      "notes": "Actual paired primary localASR cross-check. Proper nouns normalized only to independently verified official participant spelling; raw misspellings/timing differences retained. Selected complete first post-point sentence(s); following independent new analysis is outside editorial scope, never cut mid-word to evade subtitles. No human listening. 263.44 hard cut to same championshippoint#1 Zheng ball-in-hand prep;266.40 wide and whole toss/serve ace;271 dead;272+ Zheng lies down. Actual lossMirra5-7 4-6. SourceboardZheng7 5 40 /Mirra5 4 30.",
+      "label_window_why": "Actual source court-only candidate interval; alpha-accurate native1080×1440 label preview required before render. No static-card fallback.",
+      "visual_evidence": [
+        "/workspace/andreeva-finals-production/production/terminal/beijing-final-contact.jpg"
+      ]
+    },
+    "rg-final": {
+      "start": 1040.1,
+      "end": 1069.5,
+      "label_safe_window": [
+        1066.2,
+        1069.1
+      ],
+      "captions": [
+        {
+          "start": 1053.98,
+          "end": 1057.98,
+          "en": "The teenager becomes a champion.",
+          "zh": "这位少女成为了冠军。"
+        }
+      ],
+      "point_evidence": "Independent50fps dense source1040.16 far Chwalinska same point hands/ball low;1041.60–1043.04 entire toss/serve;1050.48–1050.96 dead;1051.20–1053.36 Mirra kneels. Own terminal1047 court,1054 face;1064+ real handshake. Final6-3 6-2. English-only transcript; original nonEnglish PA retained. The medium And1049.98(p=.108)/The timing p=.011 overlap French PA, not accepted as English extra word. Bounded turbo source1048–1076 misdecodes FrenchPA as IknowthematchAndrejeva followed by actual English sentence and score6-3 6-2. French opening phonemes not claimed transcribed; complete PA retained through1069.5 before separate1071.54 name call.",
+      "key": "rg-final",
+      "source_name": "rg-final",
+      "source_file": "/workspace/andreeva-finals-production/sources/rg-final.mp4",
+      "source_url": "https://www.youtube.com/watch?v=WN-TlTb8-aA",
+      "source_sha256": "42fcbca7282ccf3b05cb44bcb2277e4fae77462ecf43da6ae4a93f6c1c26ca47",
+      "frame": "court",
+      "cx": 0.5,
+      "fit": "crop",
+      "track": false,
+      "audio_review_packet": "/workspace/andreeva-finals-production/production/rg-final-packet.json",
+      "asr_evidence": [
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/rg-final-small.en.json",
+          "sha256": "0f6705b05c251188e771c13811c371d1a2bd8cd951025825424183de67dc48b5",
+          "model": "small.en",
+          "actual_reviewed_range": [
+            1040,
+            1133
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/rg-final-medium.en.json",
+          "sha256": "909b629b5527c643deb297c5acc35cf6c4e102d29ffd44f14bdd87d8684d7fef",
+          "model": "medium.en",
+          "actual_reviewed_range": [
+            1040,
+            1133
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/rg-final-short-turbo.json",
+          "sha256": "f6c3d51ba9510f9aca70d5e3fcd490415127109456229cea7baddce2d55b1a08",
+          "model": "large-v3-turbo",
+          "role": "diagnostic only; raw alternative words retained"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "status": "ready_for_native_integration",
+      "uncertain": false,
+      "quote_kind": "broadcast",
+      "notes": "Actual paired primary localASR cross-check. Proper nouns normalized only to independently verified official participant spelling; raw misspellings/timing differences retained. Selected complete first post-point sentence(s); following independent new analysis is outside editorial scope, never cut mid-word to evade subtitles. No human listening. Independent50fps dense source1040.16 far Chwalinska same point hands/ball low;1041.60–1043.04 entire toss/serve;1050.48–1050.96 dead;1051.20–1053.36 Mirra kneels. Own terminal1047 court,1054 face;1064+ real handshake. Final6-3 6-2. English-only transcript; original nonEnglish PA retained. The medium And1049.98(p=.108)/The timing p=.011 overlap French PA, not accepted as English extra word. Bounded turbo source1048–1076 misdecodes FrenchPA as IknowthematchAndrejeva followed by actual English sentence and score6-3 6-2. French opening phonemes not claimed transcribed; complete PA retained through1069.5 before separate1071.54 name call.",
+      "label_window_why": "First actualnative25fps alpha-label preview found old rally window overlay onfarplayer. This moved live-only interval is source-frame alpha-previewed post-result reaction /clearcourt (US), fixedcx.5 unchanged; exact repaired native first/middle/last/after still required. No static fallback.",
+      "visual_evidence": [
+        "/workspace/andreeva-finals-production/production/terminal/rg-final-contact.jpg"
+      ]
+    },
+    "us-qf": {
+      "start": 138.2,
+      "end": 166.9,
+      "audio_tail": "silence",
+      "audio_tail_why": "Outgoing .25s only is silence: selected body ends166.90; first reliably recovered independent PA starts167.18. No change to actual body or victory sound.",
+      "label_safe_window": [
+        146,
+        148.8
+      ],
+      "captions": [
+        {
+          "start": 138.32,
+          "end": 140.82,
+          "en": "Second match point now for Gauff.",
+          "zh": "现在是高芙的第二个赛点。"
+        }
+      ],
+      "notes": "Actual same-point Gauff ball-in-hand prep138.4–140.0;wide140.5 before full toss/serve and entire long rally;~164dead and actual Gauff victory reaction166.0. Main subjectMirra loses; never assign winner emotion to her. Stop after complete point and real reaction, before separate post-matchPA167.18; no artificial Game/set/match statement. Paired full-range outputs agree initial commentary, proper noungolf corrected to verifiedGauff. Single cropped medium hallucinated Iamverynervous/Thegameisover during point; full-range primary and large diagnostics do not confirm these words, rejected as literal foreground quotes. Body original audio wholly retained. Not a claim all distant crowd/PA is lexically recovered.",
+      "key": "us-qf",
+      "source_name": "us-qf",
+      "source_file": "/workspace/andreeva-finals-production/sources/us-qf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=eBTlK8A4IDE",
+      "source_sha256": "43ca94013f9fdae50f409c99eec182f3a417a7cf210d0255403bb0cc06890018",
+      "frame": "court",
+      "cx": 0.5,
+      "fit": "crop",
+      "track": false,
+      "audio_review_packet": "/workspace/andreeva-finals-production/production/us-qf-packet.json",
+      "asr_evidence": [
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/us-qf-small.en.json",
+          "sha256": "c9bce52365ddcfaa0d86f9179cbe71007167fe2d7c20fa379595f9607ff2e5b7",
+          "model": "small.en",
+          "actual_reviewed_range": [
+            136,
+            197
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/us-qf-medium.en.json",
+          "sha256": "48b4647fc196c4d6fed7465af67a87f3b04b73a74df7c7c74c4856ec18cf03a0",
+          "model": "medium.en",
+          "actual_reviewed_range": [
+            136,
+            197
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/us-qf-short-turbo.json",
+          "sha256": "40e7f332f3ea9b4252998b19571f404c10de9667ff9d1ef3664a382f5f966ebd",
+          "model": "large-v3-turbo",
+          "actual_reviewed_range": [
+            164,
+            178
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/us-qf-ump-context-small.en.json",
+          "sha256": "f5d9ad9d62c7f4cac6bc194b58fac855a7cff9e173867fe0617afa5fe99aa1f4",
+          "model": "small.en",
+          "actual_reviewed_range": [
+            161,
+            178
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/us-qf-ump-context-medium.en.json",
+          "sha256": "038b864efea5b7955a010f440e601103df5d127159809377a65ce399d5e06dbd",
+          "model": "medium.en",
+          "actual_reviewed_range": [
+            161,
+            178
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/us-qf-ump-context-large-v3-turbo.json",
+          "sha256": "071f0fb293798824dad036c0afba83ae83257213c5b67385d38143afa1361fc6",
+          "model": "large-v3-turbo",
+          "actual_reviewed_range": [
+            161,
+            178
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/us-qf-last-short-large-v3.json",
+          "sha256": "7d8f255a840af30eaaa92065dfed30c6126c9b752da0d0a57b509cef66391f69",
+          "model": "large-v3",
+          "actual_reviewed_range": [
+            162,
+            175.4
+          ]
+        }
+      ],
+      "method": "asr_cross_checked",
+      "status": "ready_for_native_integration",
+      "uncertain": false,
+      "quote_kind": "broadcast",
+      "label_window_why": "First actualnative25fps alpha-label preview found old rally window overlay onfarplayer. This moved live-only interval is source-frame alpha-previewed post-result reaction /clearcourt (US), fixedcx.5 unchanged; exact repaired native first/middle/last/after still required. No static fallback."
+    },
+    "wimbledon-r2": {
+      "start": 0.0,
+      "end": 32.3,
+      "audio_tail": "silence",
+      "audio_tail_why": "Outgoing .25s only silent. Whole selected main-commentary sentence ends32.02 at latest primary timing; next independent analysis starts32.80 at earliest. Original body unchanged.",
+      "label_safe_window": [
+        25.2,
+        28.1
+      ],
+      "captions": [
+        {
+          "start": 0,
+          "end": 3.96,
+          "en": "Krejcikova has earned herself another match point.",
+          "zh": "克雷吉茨科娃又拿到赛点。"
+        },
+        {
+          "start": 21.2,
+          "end": 23.26,
+          "en": "It's that net cord again",
+          "zh": "又是这次擦网，"
+        },
+        {
+          "start": 23.26,
+          "end": 25.56,
+          "en": "that does for Andreeva.",
+          "zh": "让安德烈耶娃败下阵来。"
+        },
+        {
+          "start": 25.56,
+          "end": 28.76,
+          "en": "The former champion inspired and helped",
+          "zh": "这位前冠军再次受到鼓舞，"
+        },
+        {
+          "start": 28.76,
+          "end": 32.02,
+          "en": "by Centre Court once again.",
+          "zh": "并得到中央球场的助力。"
+        }
+      ],
+      "notes": "Replacement official87.655s native1920x1080 source, exactsha11d264f1..., NOT old YouTube highlights. Mirra near-end server (ANDREEVA serving arrow and actual face/outfit), Krejcikova far receiver; correct old role error. Source0–3 same-point readiness,2.75 ball still in Mirra hand/racket low,3.4+ full toss/serve/rally,~21dead then Krejcikova genuine win reaction. Main subjectMirra loses. Main foreground commentary transcribed whole three semantic utterances throughCentreCourt onceagain; proper names/net cord standardized from paired phonetics, spelling and actual net-contact end. Overlapping distant umpPA is not reliably word-complete: large-v3 hearsTwo sets to one4-6 7-5 6-4 while bothprimary models foreground main commentator. Do not template-inventGame/set/match declaration; no overlay of two competing subtitle streams. Full raw original PA retained and diagnostic disagreement explicitly archived. Background lexical certainty not claimed; not human listening. Final bounded large-v3 names-only prompt independently recovers full main sentence through31.30, with no presumed umpire wording prompt. FillerOh/Yeah differs; subtitle begins at the complete main clauseIts21.20 instead of asserting uncertain overlapping filler. No lexical claim all backgroundPA recovered.",
+      "key": "wimbledon-r2",
+      "source_name": "wimbledon-r2",
+      "source_file": "/workspace/andreeva-finals-production/wimbledon-helper/Krejcikova+match+point+and+celebration-1-AVS.mp4",
+      "source_url": "https://www.wimbledon.com/en_GB/video/KrejcikovaMatchPointCelebration",
+      "source_sha256": "11d264f1c0fa010432b666d88641dc21d0d98052f24e3f17f2f3b1224d197668",
+      "frame": "court",
+      "cx": 0.5,
+      "fit": "crop",
+      "track": false,
+      "audio_review_packet": "/workspace/andreeva-finals-production/production/wimbledon-r2-packet.json",
+      "asr_evidence": [
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/wimbledon-r2-small.en.json",
+          "sha256": "be10146e923d81292796807498b3aeb01f55e30ce554b95895dfcbb05a2cc8fa",
+          "model": "small.en",
+          "actual_reviewed_range": [
+            0,
+            42
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/wimbledon-r2-medium.en.json",
+          "sha256": "c6e715bdb258b10106a11db0f829f64506175d1c848fefae64ff8017d56f43b5",
+          "model": "medium.en",
+          "actual_reviewed_range": [
+            0,
+            42
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/wimbledon-r2-last-short-large-v3.json",
+          "sha256": "0153169c04ad67bcb39ae99b3e2a0adac57e78cdd011fb89aa84b45d748ebafc",
+          "model": "large-v3",
+          "actual_reviewed_range": [
+            0,
+            32
+          ]
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/wimbledon-r2-overlap-large-v3-names-only.json",
+          "sha256": "12f02f4dd19572af499dd2b452010edc135ecbe615641884994de4380351765c",
+          "model": "large-v3",
+          "actual_reviewed_range": [
+            20,
+            32.6
+          ],
+          "role": "bounded names-only prompt diagnostic; no ump formula supplied"
+        },
+        {
+          "path": "/workspace/andreeva-finals-production/production/asr/wimbledon-r2-opening-large-v3-names-only.json",
+          "sha256": "2a76a84fd96ab55de3d146d91b524ca3d422deac2b3bf7f4addff0241cd2e030",
+          "model": "large-v3",
+          "actual_reviewed_range": [
+            0,
+            4.5
+          ],
+          "role": "bounded names-only prompt diagnostic; no ump formula supplied"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "status": "ready_for_native_integration",
+      "uncertain": false,
+      "quote_kind": "broadcast",
+      "label_window_why": "First actualnative25fps alpha-label preview found old rally window overlay onfarplayer. This moved live-only interval is source-frame alpha-previewed post-result reaction /clearcourt (US), fixedcx.5 unchanged; exact repaired native first/middle/last/after still required. No static fallback."
+    }
+  }
+}

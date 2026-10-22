@@ -1,0 +1,76 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.wimbledon.com/en_GB/video/KrejcikovaMatchPointCelebration",
+  "source_sha256": "11d264f1c0fa010432b666d88641dc21d0d98052f24e3f17f2f3b1224d197668",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review and paired primary localASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T13:29:16.611192+00:00",
+  "reviewed_from": 0,
+  "reviewed_to": 42,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 0,
+      "end": 3.96,
+      "en": "Krejcikova has earned herself another match point.",
+      "zh": "克雷吉茨科娃又拿到赛点。"
+    },
+    {
+      "start": 21.2,
+      "end": 23.26,
+      "en": "It's that net cord again",
+      "zh": "又是这次擦网，"
+    },
+    {
+      "start": 23.26,
+      "end": 25.56,
+      "en": "that does for Andreeva.",
+      "zh": "让安德烈耶娃败下阵来。"
+    },
+    {
+      "start": 25.56,
+      "end": 28.76,
+      "en": "The former champion inspired and helped",
+      "zh": "这位前冠军再次受到鼓舞，"
+    },
+    {
+      "start": 28.76,
+      "end": 32.02,
+      "en": "by Centre Court once again.",
+      "zh": "并得到中央球场的助力。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/wimbledon-r2-be10146e92-wimbledon-r2-small.en.json",
+      "sha256": "be10146e923d81292796807498b3aeb01f55e30ce554b95895dfcbb05a2cc8fa",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/wimbledon-r2-c6e715bdb2-wimbledon-r2-medium.en.json",
+      "sha256": "c6e715bdb258b10106a11db0f829f64506175d1c848fefae64ff8017d56f43b5",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/wimbledon-r2-0153169c04-wimbledon-r2-last-short-large-v3.json",
+      "sha256": "0153169c04ad67bcb39ae99b3e2a0adac57e78cdd011fb89aa84b45d748ebafc",
+      "model": "large-v3"
+    },
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/wimbledon-r2-12f02f4dd1-wimbledon-r2-overlap-large-v3-names-only.json",
+      "sha256": "12f02f4dd19572af499dd2b452010edc135ecbe615641884994de4380351765c",
+      "model": "large-v3"
+    },
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/wimbledon-r2-2a76a84fd9-wimbledon-r2-opening-large-v3-names-only.json",
+      "sha256": "2a76a84fd96ab55de3d146d91b524ca3d422deac2b3bf7f4addff0241cd2e030",
+      "model": "large-v3"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "transcript_scope": "Selected main foreground English commentary, not a claim every background PA/crowd word is intelligible.",
+  "background_disagreements_preserved": true,
+  "review_notes": "Replacement official87.655s native1920x1080 source, exactsha11d264f1..., NOT old YouTube highlights. Mirra near-end server (ANDREEVA serving arrow and actual face/outfit), Krejcikova far receiver; correct old role error. Source0–3 same-point readiness,2.75 ball still in Mirra hand/racket low,3.4+ full toss/serve/rally,~21dead then Krejcikova genuine win reaction. Main subjectMirra loses. Main foreground commentary transcribed whole three semantic utterances throughCentreCourt onceagain; proper names/net cord standardized from paired phonetics, spelling and actual net-contact end. Overlapping distant umpPA is not reliably word-complete: large-v3 hearsTwo sets to one4-6 7-5 6-4 while bothprimary models foreground main commentator. Do not template-inventGame/set/match declaration; no overlay of two competing subtitle streams. Full raw original PA retained and diagnostic disagreement explicitly archived. Background lexical certainty not claimed; not human listening. Final bounded large-v3 names-only prompt independently recovers full main sentence through31.30, with no presumed umpire wording prompt. FillerOh/Yeah differs; subtitle begins at the complete main clauseIts21.20 instead of asserting uncertain overlapping filler. No lexical claim all backgroundPA recovered."
+}
