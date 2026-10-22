@@ -3,25 +3,25 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "a147ad7a6e446c80b61b25780b10689cd8ed1e0ce7b413d9f56c197529325034",
+    "bundle_sha256": "915aed28bab4b67e35a79c6a1f9789cf5ff247a848083f93f0e805ebb4a33e65",
     "request_count": 15,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-pegula-finals-2026-a147ad7a6e446c80",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-pegula-finals-2026-a147ad7a6e446c80/tts_bundle.zip",
+    "release_tag": "reel-tts-pegula-finals-2026-915aed28bab4b67e",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-pegula-finals-2026-915aed28bab4b67e/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39749943985"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39770888142"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 4.554,
   "layout": "full",
-  "segments_seconds": 411.43,
+  "segments_seconds": 412.97,
   "topbar": null,
-  "film_seconds": 417.2,
+  "film_seconds": 418.76,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -29,17 +29,17 @@
     "1": 12.384,
     "2": 9.432,
     "4": 11.736,
-    "7": 9.36,
-    "9": 10.08,
+    "7": 5.736,
+    "8": 10.08,
     "11": 10.08,
-    "12": 8.736,
-    "14": 10.512,
-    "16": 12.336,
-    "19": 9.624,
-    "23": 8.712,
-    "25": 10.896,
-    "28": 10.8,
-    "29": 7.68
+    "13": 8.736,
+    "15": 5.04,
+    "17": 9.84,
+    "20": 9.624,
+    "25": 8.712,
+    "28": 7.656,
+    "29": 10.8,
+    "30": 7.68
   },
   "face_checks": {
     "cover": {
@@ -56,44 +56,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "e02afbde7ccb779a45eb7568a10618646470a74f5f928343a18fbb60707170b6",
+  "render_inputs_sha256": "531540bbe3ba3c5ea74ae3ee3068559a1f5f6f9d8c42199806eca18ce754cd24",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "pegula-finals-2026",
-    "received_at": "2026-10-22T08:44:04Z",
-    "artifact_ready_at": "2026-10-22T08:53:22Z",
-    "elapsed_seconds": 558.138,
+    "received_at": "2026-10-22T11:28:56Z",
+    "artifact_ready_at": "2026-10-22T11:35:58Z",
+    "elapsed_seconds": 422.354,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "5d0e4ef77394a8178647611629927944b1939fb58fffc03ef06dda81778017f4",
-    "spec_sha256": "54122025aaed2692091df6ddfae0255275d5d225e7831837cdf60b47cabc5bbf",
-    "run_id": "39749943985",
+    "film_sha256": "255e3e99790f3a2c683ac86273d7c38558c7c4329fde5e5976f297951026bfaf",
+    "spec_sha256": "121faea658074e82492e168f735295e0acd9625fe34c6a6cdcc8f1e92fb33f6c",
+    "run_id": "39770888142",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-22T08:46:13Z",
-        "run_id": "39749943985"
+        "at": "2026-10-22T11:31:00Z",
+        "run_id": "39770888142"
       }
     ],
-    "render_seconds": 429.138,
-    "pre_render_seconds": 129.0
+    "render_seconds": 298.354,
+    "pre_render_seconds": 124.0
   },
-  "film_sha256": "5d0e4ef77394a8178647611629927944b1939fb58fffc03ef06dda81778017f4",
-  "film_bytes": 181993222,
-  "qc_attestation_sha256": "321aeaa8b55e6b71404b4b77d88c34bd644d5c35d1abdf527f6d14bc7943ccbc",
+  "film_sha256": "255e3e99790f3a2c683ac86273d7c38558c7c4329fde5e5976f297951026bfaf",
+  "film_bytes": 189196210,
+  "qc_attestation_sha256": "652c1503f71bae28338c55c1a3f20f067380a2fef9f1d41a61495adfb0a61538",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-22T08:46:13Z",
-      "run_id": "39749943985"
+      "at": "2026-10-22T11:31:00Z",
+      "run_id": "39770888142"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-22T08:53:26Z",
-      "run_id": "39749943985"
+      "at": "2026-10-22T11:36:02Z",
+      "run_id": "39770888142"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-pegula-finals-2026/pegula-finals-2026.mp4",
-  "video_bytes": 181993222
+  "video_bytes": 189196210
 }
