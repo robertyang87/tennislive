@@ -1,0 +1,75 @@
+{
+  "schema": "independent-native-cover-visual-qc/v1",
+  "reviewed_at_utc": "2026-10-22T14:33:50.806395+00:00",
+  "player": "Mirra Andreeva",
+  "status": "pass_fresh_official_photo_actual_native_jpeg_qc",
+  "actual_file": "/workspace/andreeva-finals-production/production/cover-native-fresh-jb1-exact/poster.jpg",
+  "actual_format": "JPEG",
+  "actual_size": [
+    1080,
+    1440
+  ],
+  "actual_sha256": "f6b44b6331045d883b4b2a60c4d955ef7b1eea1eea53482d06ef41dec30f12b3",
+  "png_file": null,
+  "current_spec": "/workspace/tennislive-andreeva/specs/reels/andreeva-finals-2026.json",
+  "current_spec_sha256_at_review": "55e8e7273e023cfc599b2cb1130552a8bdb3cd4b3922bfe23de87423c3cadc26",
+  "spec_snapshot": "/workspace/finals-remaining-2026/independent-qc/native-covers/andreeva-fresh-spec-at-review.json",
+  "cover_fields_sha256_canonical_utf8": "400a1588dd23c6cd1b33be3827c34b8fe0cff54bda9db94e01c74ca62d6a5936",
+  "historical_rejected_cover_qc": "/workspace/finals-remaining-2026/independent-qc/native-covers/andreeva-reused-photo-historical-qc.json",
+  "reuse_rejection_resolved_by": "Different original official RG/FFT photograph JB1_2805, not resize/re-encode/crop of old DSC8506A.",
+  "portrait_asset": "/workspace/tennislive-andreeva/assets/reel/andreeva-finals-2026/cover-rg-2026-jb1-2805.jpg",
+  "portrait_asset_sha256": "05983bfa704583e94c7d0213484883cb1a8c03172e7e84317591fe87caa46c61",
+  "original_size": [
+    3000,
+    2000
+  ],
+  "source_manifest": "/workspace/finals-remaining-2026/covers/mirra-andreeva/fresh-alternatives/candidate-JB1_2805-manifest.json",
+  "source_url": "https://www.rolandgarros.com/en-us/photo-gallery/2026-edition-gallery-photos-champions-finalists-roland-garros-2026",
+  "credit": "Jean-Baptiste Autissier / FFT",
+  "renderer": "/workspace/tennislive-andreeva/tools/versus_poster.py",
+  "renderer_sha256": "455b86f276a93c26f3df33e7017c2d7a1e090df6ab25743c47017613ceae53d9",
+  "native_log": "/workspace/andreeva-finals-production/production/cover-native-fresh-jb1-exact-log.txt",
+  "native_exact_source_window": [
+    210,
+    0,
+    1710,
+    2000
+  ],
+  "global_duplicate_check": {
+    "repository": "/workspace/tennislive",
+    "HEAD": "6228fe53228b6c7816072fdb2315a59d41706e80",
+    "candidate_git_blob": "22a390089580bb270785ec2d87c3d5a0d4d94da9",
+    "all_tracked_HEAD_assets_reel_entries_compared": 785,
+    "exact_blob_matches": [],
+    "specific_filename_and_prismic_id_in_HEAD_specs": "No match when searched before owner new spec ingestion",
+    "evidence": "/workspace/finals-remaining-2026/covers/mirra-andreeva/fresh-alternatives/candidate-JB1_2805-global-dedup.json",
+    "large_assets_restored": false,
+    "limit": "Checks exact bytes globally and unique original photo URL/id across tracked HEAD specs; does not assert exhaustive perceptual matching of undocumented transformed images."
+  },
+  "actual_viewed": true,
+  "checks": {
+    "correct_person_front_facing_eyes_open": true,
+    "full_head_and_cap_complete": true,
+    "face_unobscured": true,
+    "full_bleed": true,
+    "subtitle_name_colon": "安德烈耶娃：从巴黎冠军到单打年终",
+    "subtitle_clear_and_above_head": true,
+    "hook_actual_lines": [
+      "19岁首夺大满贯",
+      "首次入围单打年终"
+    ],
+    "hook_complete_semantic_lines": true,
+    "hook_correct_singles_scope": true,
+    "no_text_overflow_or_clipping": true,
+    "trophy": "Actual cup lid/bowl/main emblem/two handles/stem/base and both holding hands within image; no foreground person across cup. Tiny potential text/left-handle edge vicinity is not exaggerated into a zero-overlap rule; main cup features remain fully readable.",
+    "brand_safe_area": "Top-left logo/brand/subtitle inset; no clipping or overlap with Mirra face/cap; top colorline retained.",
+    "scrim": "No extra radial/full-photo wash; native top/bottom readability gradient retained."
+  },
+  "visible_limitations": [
+    "Original photograph includes finalist Maja to right. Native crop removes her facial features, while a little hair and arm remain at far-right edge. Do not describe original as a one-person photograph or claim background fully free of other people."
+  ],
+  "material_issues": [],
+  "approval_scope": "Exact actual JPEG and current cover fields only; historical visual pass of reused photo is rejected and not carried. Later cover/source/crop/text/renderer/poster-byte changes require scoped equivalence or fresh actual review. No whole final movie approval.",
+  "final_encoded_film_qc": false,
+  "publication_approved": false
+}

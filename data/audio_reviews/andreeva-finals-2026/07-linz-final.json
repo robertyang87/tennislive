@@ -1,0 +1,59 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=SAzG0MU3Ums",
+  "source_sha256": "0222e3483da383550e627a34478a4f07c4946d400fff78f1ea921e5980334c7f",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review and paired ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T13:17:32.116519+00:00",
+  "reviewed_from": 236,
+  "reviewed_to": 292,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 243.28,
+      "end": 246.06,
+      "en": "For the second time.",
+      "zh": "第二次冠军点机会。"
+    },
+    {
+      "start": 251.4,
+      "end": 254.48,
+      "en": "The top seed, the world number 10,",
+      "zh": "头号种子，世界第10，"
+    },
+    {
+      "start": 254.48,
+      "end": 261.3,
+      "en": "has just been able to claim her fifth WTA title.",
+      "zh": "拿下了第五座WTA冠军。"
+    },
+    {
+      "start": 263.88,
+      "end": 267.32,
+      "en": "And how hard that Andreeva has had to work,",
+      "zh": "安德烈耶娃付出了多少努力，"
+    },
+    {
+      "start": 267.32,
+      "end": 269.56,
+      "en": "not just today, but throughout the week.",
+      "zh": "不仅今天，更是整个星期。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/linz-final-fb81b2afab-linz-final-small.en.json",
+      "sha256": "fb81b2afab8143fe64b11e5cb04427d63a0932d9e4f3ec9f47d8bbcb7ffab0db",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/linz-final-37286cf553-linz-final-medium.en.json",
+      "sha256": "37286cf553cb3ca134bfb39bbc59d78154cede41c2ac61b3910d3260aacdf35a",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "Actual paired primary localASR cross-check. Proper nouns normalized only to independently verified official participant spelling; raw misspellings/timing differences retained. Selected complete first post-point sentence(s); following independent new analysis is outside editorial scope, never cut mid-word to evade subtitles. No human listening. 243.15 starts after previous rally, correct same AD readying receiver close-up;246.64 wide server Potapova hands low;246.76+ toss then serve and whole rally,~254 end;256 Mirra own reaction. ChampionshipPoint#2 scoreboardMirra1 6 5 AD /Potapova6 4 3. FirstFor begins243.28 not244.60, retained whole utterance. Retain subsequent whole directly relevant sentence about her work today and throughout week, not artificial duration padding. Ends269.8 before next independent analysis275.02; .25tailclear."
+}

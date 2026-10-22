@@ -1,0 +1,41 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=FTTBcO6RWic",
+  "source_sha256": "b9594d1803e11690c148be7c131f6f7df1bdf96b2e25309d203fc24b59756682",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review and paired ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T13:17:32.117752+00:00",
+  "reviewed_from": 237,
+  "reviewed_to": 292,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 263.5,
+      "end": 267.8,
+      "en": "A spectacular display of dialed-in determination",
+      "zh": "极其专注而坚定的表现，"
+    },
+    {
+      "start": 267.8,
+      "end": 270.92,
+      "en": "yields a new queen of the clay in Madrid.",
+      "zh": "成就了马德里新红土女王。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/madrid-final-380e42fe28-madrid-final-small.en.json",
+      "sha256": "380e42fe28b001c30e31616fb20b17916fa5ac99801156954b8d7ff38936ef13",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/madrid-final-d9d64987af-madrid-final-medium.en.json",
+      "sha256": "d9d64987af68ee3693f15350d871da1dff6ca83fc823bc207fd4caba74ebb186",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "Actual paired primary localASR cross-check. Proper nouns normalized only to independently verified official participant spelling; raw misspellings/timing differences retained. Selected complete first post-point sentence(s); following independent new analysis is outside editorial scope, never cut mid-word to evade subtitles. No human listening. 247.35 Kostyuk ball-in-hand prep on same championshippoint#3;248.50 wide lower arm then full toss/serve/rally;262+ dead and Kostyuk lies down. Main subject Mirra losing, winner reaction never attributed to Mirra. ScoreMirra3 5 30 /Kostyuk6 6 40."
+}

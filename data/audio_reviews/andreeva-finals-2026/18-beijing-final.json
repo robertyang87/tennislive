@@ -1,0 +1,48 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=Vq_UC0n5DKQ",
+  "source_sha256": "21524862c53c4629e64615179c5345b03209bff7406ec7977ea268367598f451",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review and paired ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T13:17:32.121464+00:00",
+  "reviewed_from": 258,
+  "reviewed_to": 303,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 269.76,
+      "end": 273.88,
+      "en": "And the ultimate exclamation point",
+      "zh": "用最有力的惊叹号，"
+    },
+    {
+      "start": 273.88,
+      "end": 276.2,
+      "en": "to conquer the China Open.",
+      "zh": "征服中国网球公开赛。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/beijing-final-6480d7b730-beijing-final-small.en.json",
+      "sha256": "6480d7b73053d8c89ed3a1f57ebda43e3e8bb7a1ec274ab5caab8c4931f474f8",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/beijing-final-cb187d5217-beijing-final-medium.en.json",
+      "sha256": "cb187d52177706e9fe6038fbf58f5b79062105772d42282e67e2dfc7ef3c6db0",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "Actual paired primary localASR cross-check. Proper nouns normalized only to independently verified official participant spelling; raw misspellings/timing differences retained. Selected complete first post-point sentence(s); following independent new analysis is outside editorial scope, never cut mid-word to evade subtitles. No human listening. 263.44 hard cut to same championshippoint#1 Zheng ball-in-hand prep;266.40 wide and whole toss/serve ace;271 dead;272+ Zheng lies down. Actual lossMirra5-7 4-6. SourceboardZheng7 5 40 /Mirra5 4 30. Existing paired reviewed258–303 includes tail277.40+.25=277.65. First independent nextEnglish281.70small/281.74medium, so retained body/tail contains no unselected nextword.",
+  "tail_boundary_evidence": {
+    "selected_end": 277.4,
+    "native_outgoing_pad_end": 277.65,
+    "primary_small_next_word": 281.7,
+    "primary_medium_next_word": 281.74,
+    "method": "actual paired localASR context258–303, unchanged originalsource bytes; not human listening"
+  }
+}

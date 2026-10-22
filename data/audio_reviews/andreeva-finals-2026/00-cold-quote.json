@@ -1,0 +1,59 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=Af1ROgyYF6Q",
+  "source_sha256": "5f0ec82813e3cfd21db37b1a030061d92756c712fc40dc16dc2218a17bcaa1a9",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex paired actual local ASR cross-check and source-frame review; no human listening",
+  "reviewed_at": "2026-10-22T13:10:18.300009+00:00",
+  "reviewed_from": 14,
+  "reviewed_to": 92,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 20.1,
+      "end": 22.62,
+      "en": "Yeah, of course. I still cannot believe",
+      "zh": "当然。我还是不敢相信"
+    },
+    {
+      "start": 22.62,
+      "end": 26.4,
+      "en": "that I'm doing a press conference with a Grand Slam trophy by my side.",
+      "zh": "带着大满贯奖杯开发布会"
+    },
+    {
+      "start": 26.4,
+      "end": 30.68,
+      "en": "And it's been one of my biggest dreams in my life.",
+      "zh": "这一直是我人生最大的梦想之一"
+    },
+    {
+      "start": 30.68,
+      "end": 34.76,
+      "en": "And I'm just super happy that I was able to give my best",
+      "zh": "很开心我能拼尽全力"
+    },
+    {
+      "start": 34.76,
+      "end": 36.5,
+      "en": "and win the match and win this tournament.",
+      "zh": "赢下比赛，赢下这个赛事"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/cold-quote-33b725b18b-rg-press-small.en.json",
+      "sha256": "33b725b18b595de81df81ee8bcc43502857feb114ee548b9d9ebf028224c559d",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026/raw/cold-quote-6557481fa9-rg-press-medium.en.json",
+      "sha256": "6557481fa95d59fdfacf594bd670a42d66d672d046f6898a0cc3b7dbb2991d81",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "Full first answer20.1–36.5, including all coordinating clauses, retained once as flash-forward cold. Paired outputs agree all content; small.en omits determiner this before tournament whereas medium.en has this and granular word timings; adopted medium.en wording. Small.en misses moderator37.26 onward and compresses39–54 into erroneous words; these are OUTSIDE selected20.0–36.70 and kept in raw, not trusted. Actual outgoing36.70+.25=36.95 precedes first model moderator37.26; no next word leakage claimed within reviewed ASR resolution. Not human listening or final film QC."
+}

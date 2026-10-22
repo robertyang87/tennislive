@@ -1,0 +1,48 @@
+{
+  "schema": "andreeva.final-repair-equivalence.v1",
+  "baseline_spec_sha256": "70533f7aa66fb90243c3e1bc7ad1b2c8ac5cb199c2d976be1a48e2a1dc61368f",
+  "current_spec_sha256": "55e8e7273e023cfc599b2cb1130552a8bdb3cd4b3922bfe23de87423c3cadc26",
+  "segments": 20,
+  "all_body_paint_audio_fields_identical": true,
+  "ignored_segment_annotations": [
+    "underscore editorial fields",
+    "point_end_ok actual-end gate evidence"
+  ],
+  "unchanged_core_fields": [
+    "sources",
+    "source_fallbacks",
+    "primary",
+    "cx",
+    "track",
+    "tts_backend",
+    "preserve_source_audio",
+    "mixed_fps"
+  ],
+  "actual_changed_visual": "cover only: new official same2026RG distinct originalJB1_2805 vs reusedDSC8506A; focus.14; completeposter actualseen",
+  "current_cover_portrait": {
+    "image": "assets/reel/andreeva-finals-2026/cover-rg-2026-jb1-2805.jpg",
+    "fit": "cover",
+    "focus": 0.14,
+    "focus_y": 0.5,
+    "zoom": 1.0,
+    "source_url": "https://www.rolandgarros.com/en-us/photo-gallery/2026-edition-gallery-photos-champions-finalists-roland-garros-2026",
+    "_credit": "Jean-Baptiste Autissier / FFT",
+    "_portrait_why": "2026法网官方Champions图库JB1_2805实际3000×2000原图，横向裁切取Mirra与本人奖杯；原图已实际查看，fresh JPEG全HEADblob/原图URL去重通过；原生封面仍需实核。"
+  },
+  "current_poster": "/workspace/andreeva-finals-production/production/cover-native-fresh-jb1-exact/poster.jpg",
+  "current_poster_sha256": "f6b44b6331045d883b4b2a60c4d955ef7b1eea1eea53482d06ef41dec30f12b3",
+  "tts_bundle_sha256": "d50ae5bd6906a26a4a49533d15b7b7318c86c56f43a233d66e4c6d3f44b75fe2",
+  "actual_empty_restore_verified": {
+    "path": "/workspace/andreeva-finals-production/andreeva-restore-proof-3kp1ujna",
+    "verified_empty_before_restore": true,
+    "output": "/workspace/andreeva-finals-production/andreeva-restore-proof-3kp1ujna/tts_bundle.zip",
+    "returncode": 0,
+    "bytes": 469801,
+    "sha256": "d50ae5bd6906a26a4a49533d15b7b7318c86c56f43a233d66e4c6d3f44b75fe2"
+  },
+  "prior_body_native_samples_usable": 91,
+  "sample_scope_note": "Baseline89included1supersededAdelaidecueposition;88unchanged+3correctednativefinal705samples. All20body paint/audio fields nowexactlyequivalent to705, so these bodyframe observations carry forward only with this explicit proof; no PNG manifest claims newSHA. Freshcover actual native55e8 image is separate.",
+  "formal_first_run_rejected": 39792798531,
+  "no_validator_or_otherfilm_change": true,
+  "final_encoded_movie_qc": false
+}

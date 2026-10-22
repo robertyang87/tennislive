@@ -1,0 +1,72 @@
+[片长] 268.8s = 4 分 28 秒，按实测 12560 kb/s 估 402 MiB —— 成片一律走 Release 附件，不进 git
+[TTS] spec 认领 tts_backend=edge，这一趟不走 Azure：完整句自然云健+6%/+0Hz，实际TTS冻结，不用外部模型API。
+[多音字] 没有换字表管不到的非常用读音（329 字、13 段查过）
+  另 1 处落在量过读对的词上（check_polyphones.MEASURED_OK），不逐条报
+  静态筛选不是声学通过；词典和历史词条不能证明本次整句读对。本次 13 段仍须按实际嗓音、语速逐段声学复核，含封面、旁白和片尾。
+
+[dry-run] spec 形状没问题：20 段，画面共 267.6s
+[fps] rg-final 是 50/1，重采样到主源的 25/1——实测原生50/1按实际时长转换主片25fps，不改变速度。
+[fps] rg-press 是 50/1，重采样到主源的 25/1——实测原生50/1按实际时长转换主片25fps，不改变速度。
+[fps] us-qf 是 30000/1001，重采样到主源的 25/1——实测原生60000/1001按实际时长转换主片25fps，不改变速度。
+
+[查选段] 认领到 2 份 probe.json，**没查成的源：['adelaide-final', 'linz-final', 'madrid-final', 'rg-final', 'rg-press', 'wimbledon-r2']**
+
+[查选段] 4 处窗口中途换了镜头（**只报不拦**，离边界不到 0.15s 的已经滤掉——那是窗口对齐了源片自己的镜头边界，本来就该那样）。越靠段落中间越可疑，按这个排的：
+  第 16 段 138.20–166.90s 里第 163.33s 换了镜头（离最近的边界 3.57s）：「Second match point now…」
+  第 19 段 263.44–277.40s 里第 266.12s 换了镜头（离最近的边界 2.68s）：「And the ultimate excla…」
+  第 16 段 138.20–166.90s 里第 140.02s 换了镜头（离最近的边界 1.82s）：「Second match point now…」
+  第 19 段 263.44–277.40s 里第 275.60s 换了镜头（离最近的边界 1.80s）：「And the ultimate excla…」
+  拿缩略图墙对一眼：两边还是同一个人就没事，写一句 `"crosses_cut": "<为什么>"` 挂账；**换了人就是整句旁白压在别人身上**，那要改窗口。
+
+[查选段] 另外这几条也只报不拦：
+  源 adelaide-final（https://www.youtube.com/watch?v=Z-erh7o_zvI）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方实际源已下载实测并校SHA256 f7a431ec9cd83435345e90ddf0bf5348d7561b6e927d2f49dadff5ac16ad8a7d；非最终成片QC。
+  源 linz-final（https://www.youtube.com/watch?v=SAzG0MU3Ums）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方实际源已下载实测并校SHA256 0222e3483da383550e627a34478a4f07c4946d400fff78f1ea921e5980334c7f；非最终成片QC。
+  源 madrid-final（https://www.youtube.com/watch?v=FTTBcO6RWic）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方实际源已下载实测并校SHA256 b9594d1803e11690c148be7c131f6f7df1bdf96b2e25309d203fc24b59756682；非最终成片QC。
+  源 rg-final（https://www.youtube.com/watch?v=WN-TlTb8-aA）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方实际源已下载实测并校SHA256 42fcbca7282ccf3b05cb44bcb2277e4fae77462ecf43da6ae4a93f6c1c26ca47；非最终成片QC。
+  源 rg-press（https://www.youtube.com/watch?v=Af1ROgyYF6Q）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方实际源已下载实测并校SHA256 5f0ec82813e3cfd21db37b1a030061d92756c712fc40dc16dc2218a17bcaa1a9；非最终成片QC。
+  源 wimbledon-r2（https://www.wimbledon.com/en_GB/video/KrejcikovaMatchPointCelebration）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方实际源已下载实测并校SHA256 11d264f1c0fa010432b666d88641dc21d0d98052f24e3f17f2f3b1224d197668；非最终成片QC。
+  第 19 段 end=277.40s 切在一分打完之前——记分条在 279.36s 才翻牌，观众看不出这分归谁；end 至少要挪到 280.6s（翻牌后再留 1.2s 反应）
+    已认领 point_end_ok：实际密集样帧核对同源SHA21524862c53c4629e64615179c5345b03209bff7406ec7977ea268367598f451：264–265.44发球准备、266+完整发球，269.28–269.76死球，270–275.52郑钦文倒地庆祝，275.76后观众欢呼；277.40结束已保留完整赛点及真实结果反应。probe279.36变牌判定落在观众镜头，不是未完成一分。证据research/andreeva-finals-2026/production/beijing-actual-end-review.json及密集图SHA6212caee0cba8b38b50c4518fd21646982bae3721a4120ce20ea826cefec8e37、d525e0d2a8b304fd35f7bef5fb2df374b82fca3d833c8a352ed6d6552cea0818。
+  源 us-qf：死球时刻还没量过——probe 猜过 --scorebox 104,888,616,978，还没有人拿它重跑一轮 probe 确认（老 probe；新 probe 会按猜的框自己量一遍）
+  ⚠️ 这几条源片的切点没查成：['adelaide-final', 'linz-final', 'madrid-final', 'rg-final', 'rg-press', 'wimbledon-r2']
+  选段这一层没有硬伤（片长、分辨率、几何；响度校验按用户要求移除）。**挑段仍然要看缩略图墙**——「近端是谁」「情绪对不对题」机器判不了。
+[dry-run] 文案 andreeva-finals-2026.xhs.txt：正文 455 字（上限 1000）、tag 5 个（上限 5）
+[官方上传] spec 里认不出英文名（cover.matchup[].name_en）——要列官方上传就给 --who <姓>,<姓>
+
+[估旁白] 12 段有旁白（离线估，误差 ±2.2s）
+  第  2 段 画面   7.7s 估旁白  7.03s 余量 +0.69s ← 悬，跑一次 mode=narration
+  第  3 段 画面   5.8s 估旁白  5.23s 余量 +0.61s ← 悬，跑一次 mode=narration
+  第  5 段 画面   4.1s 估旁白  3.58s 余量 +0.54s ← 悬，跑一次 mode=narration
+  第  6 段 画面   4.3s 估旁白  3.41s 余量 +0.87s ← 悬，跑一次 mode=narration
+  第  7 段 画面   5.6s 估旁白  5.23s 余量 +0.41s ← 悬，跑一次 mode=narration
+  第  9 段 画面   4.3s 估旁白  3.75s 余量 +0.53s ← 悬，跑一次 mode=narration
+  第 11 段 画面   8.4s 估旁白  7.36s 余量 +1.00s ← 悬，跑一次 mode=narration
+  第 13 段 画面   5.6s 估旁白  4.90s 余量 +0.70s ← 悬，跑一次 mode=narration
+  第 15 段 画面   5.2s 估旁白  5.23s 余量 +0.01s ← 悬，跑一次 mode=narration
+  第 17 段 画面   7.9s 估旁白  6.88s 余量 +1.04s ← 悬，跑一次 mode=narration
+  第 18 段 画面   3.9s 估旁白  3.40s 余量 +0.48s ← 悬，跑一次 mode=narration
+  第 20 段 画面   8.8s 估旁白  7.36s 余量 +1.48s ← 悬，跑一次 mode=narration
+
+[估旁白] 误差带里这几段已经拿真 TTS 量过（data/narration_checks/andreeva-finals-2026.json）：
+  第 2 段：真 TTS 量过 7.58s，余量 +0.14s
+  第 3 段：真 TTS 量过 5.71s，余量 +0.13s
+  第 5 段：真 TTS 量过 3.98s，余量 +0.14s
+  第 6 段：真 TTS 量过 4.13s，余量 +0.15s
+  第 7 段：真 TTS 量过 5.52s，余量 +0.12s
+  第 9 段：真 TTS 量过 4.15s，余量 +0.13s
+  第 11 段：真 TTS 量过 8.23s，余量 +0.13s
+  第 13 段：真 TTS 量过 5.45s，余量 +0.15s
+  第 15 段：真 TTS 量过 5.11s，余量 +0.13s
+  第 17 段：真 TTS 量过 7.80s，余量 +0.12s
+  第 18 段：真 TTS 量过 3.74s，余量 +0.14s
+  第 20 段：真 TTS 量过 8.71s，余量 +0.13s
+
+[看画面] 这一条只查数。要看**每一段窗口里到底是什么画面**：
+  PYTHONPATH=src python3 tools/preview_segments_local.py --slug andreeva-finals-2026
+  （本地，几秒钟；改了哪几段就 `--seg 3,7` 只看那几段）

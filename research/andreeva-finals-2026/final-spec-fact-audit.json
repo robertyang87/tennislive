@@ -1,0 +1,240 @@
+{
+  "kind": "fact_audit_not_final_movie_qc",
+  "spec_sha256": "55e8e7273e023cfc599b2cb1130552a8bdb3cd4b3922bfe23de87423c3cadc26",
+  "summary": {
+    "player": "Mirra Andreeva",
+    "cn": "米拉·安德烈耶娃",
+    "pid": 331809,
+    "year": 2026,
+    "events": 19,
+    "entries": 81,
+    "played": 66,
+    "wins": 50,
+    "losses": 16,
+    "byes": 14,
+    "walkovers": 1,
+    "retirements": 0,
+    "titles": [
+      "阿德莱德",
+      "林茨",
+      "法网"
+    ],
+    "finals": 5,
+    "event_points_total": 6372,
+    "race_official": {
+      "player": {
+        "id": 331809,
+        "firstName": "Mirra",
+        "lastName": "Andreeva",
+        "fullName": "Mirra Andreeva",
+        "countryCode": "RUS",
+        "dateOfBirth": "2007-04-29",
+        "metadata": null
+      },
+      "ranking": 3,
+      "points": 6306,
+      "tournamentsPlayed": 20,
+      "movement": 0,
+      "rankedAt": "2026-10-19T00:00:00Z"
+    },
+    "profile_stats": {
+      "ytd": {
+        "singles": {
+          "rank": "3",
+          "titles": 3,
+          "winLoss": "50 / 16"
+        },
+        "doubles": {
+          "rank": "42",
+          "titles": 1,
+          "winLoss": "13 / 4"
+        },
+        "prizeMoney": "7152615"
+      },
+      "career": {
+        "singles": {
+          "rank": 3,
+          "titles": 6,
+          "highRankDate": "12 Oct 26",
+          "winLoss": "199 / 66"
+        },
+        "doubles": {
+          "rank": 12,
+          "titles": 3,
+          "highRankDate": "15 Sep 25",
+          "winLoss": "58 / 35"
+        },
+        "prizeMoney": "14697747"
+      }
+    },
+    "race_boundary": "Race tournamentsPlayed20 versus actual19 events preserved, reason unknown.19 event points compared to6306; no invented missing event or zero penalty."
+  },
+  "narration_claims": [
+    {
+      "id": "intro",
+      "claim": "十九岁、本季三冠、首夺大满贯",
+      "evidence": "canonical.json + raw/article-4515090.json",
+      "status": "verified"
+    },
+    {
+      "id": "january",
+      "claim": "Adelaide0-3后连赢9局赛季首冠",
+      "evidence": "raw/article-4435881.json",
+      "status": "verified"
+    },
+    {
+      "id": "ao",
+      "claim": "1/25澳网第四轮2-6 4-6负Svitolina",
+      "evidence": "canonical.json + raw/article-4439253.json",
+      "status": "verified"
+    },
+    {
+      "id": "spring",
+      "claim": "Doha/Dubai/IW/Miami四站均未到4强",
+      "evidence": "events.csv",
+      "status": "verified"
+    },
+    {
+      "id": "linz",
+      "claim": "1-6后逆转Potapova第二冠",
+      "evidence": "raw/article-4486392.json",
+      "status": "verified"
+    },
+    {
+      "id": "madrid",
+      "claim": "5/2MadridRU科斯秋克3-6 5-7",
+      "evidence": "raw/article-4497140.json",
+      "status": "verified"
+    },
+    {
+      "id": "rg",
+      "claim": "RomeQF,RGSF胜Kostyuk,RGF胜Chwalinska首GS",
+      "evidence": "raw/article-4514107.json + raw/article-4515090.json",
+      "status": "verified"
+    },
+    {
+      "id": "grass",
+      "claim": "7/1温网先赢一盘第二轮被Krej逆转",
+      "evidence": "raw/article-4529431.json",
+      "status": "verified"
+    },
+    {
+      "id": "us",
+      "claim": "9/9USQF第二盘2MP未兑现后输Gauff",
+      "evidence": "raw/article-4574376.json",
+      "status": "verified"
+    },
+    {
+      "id": "asia",
+      "claim": "10/9首次单打资格、10/11北京今年第5场决赛",
+      "evidence": "qualification.json + raw/article-4590546.json",
+      "status": "verified"
+    },
+    {
+      "id": "beijing",
+      "claim": "5-7 4-6北京亚军650",
+      "evidence": "canonical.json + raw/article-4590546.json",
+      "status": "verified"
+    },
+    {
+      "id": "ending",
+      "claim": "世界第三、武汉调整赛程退出、下一站年终",
+      "evidence": "raw/article-4591059.json + raw/article-4590575.json + raw/article-4591278.json",
+      "status": "verified"
+    }
+  ],
+  "live_labels": [
+    {
+      "id": "adelaide-final",
+      "label": {
+        "topic": "冠军·500分",
+        "date": "2026.01.17",
+        "place": "阿德莱德决赛",
+        "people": "安德烈耶娃 vs 姆博科",
+        "score": "6-3 6-1"
+      },
+      "date_verified": "terminal official report local date",
+      "points_scope": "single final event points, not weekly Race delta"
+    },
+    {
+      "id": "linz-final",
+      "label": {
+        "topic": "冠军·500分",
+        "date": "2026.04.12",
+        "place": "林茨决赛",
+        "people": "安德烈耶娃 vs 波塔波娃",
+        "score": "1-6 6-4 6-3"
+      },
+      "date_verified": "terminal official report local date",
+      "points_scope": "single final event points, not weekly Race delta"
+    },
+    {
+      "id": "madrid-final",
+      "label": {
+        "topic": "亚军·650分",
+        "date": "2026.05.02",
+        "place": "马德里决赛",
+        "people": "安德烈耶娃 vs 科斯秋克",
+        "score": "3-6 5-7"
+      },
+      "date_verified": "terminal official report local date",
+      "points_scope": "single final event points, not weekly Race delta"
+    },
+    {
+      "id": "rg-final",
+      "label": {
+        "topic": "冠军·2000分",
+        "date": "2026.06.06",
+        "place": "法网决赛",
+        "people": "安德烈耶娃 vs 赫瓦林斯卡",
+        "score": "6-3 6-2"
+      },
+      "date_verified": "terminal official report local date",
+      "points_scope": "single final event points, not weekly Race delta"
+    },
+    {
+      "id": "wimbledon-r2",
+      "label": {
+        "topic": "第二轮·70分",
+        "date": "2026.07.01",
+        "place": "温网第二轮",
+        "people": "安德烈耶娃 vs 克雷吉茨科娃",
+        "score": "6-4 5-7 4-6"
+      },
+      "date_verified": "terminal official report local date",
+      "points_scope": "single final event points, not weekly Race delta"
+    },
+    {
+      "id": "us-qf",
+      "label": {
+        "topic": "8强·430分",
+        "date": "2026.09.09",
+        "place": "美网1/4决赛",
+        "people": "安德烈耶娃 vs 高芙",
+        "score": "6-2 6-7(7) 2-6"
+      },
+      "date_verified": "terminal official report local date",
+      "points_scope": "single final event points, not weekly Race delta"
+    },
+    {
+      "id": "beijing-final",
+      "label": {
+        "topic": "亚军·650分",
+        "date": "2026.10.11",
+        "place": "北京决赛",
+        "people": "安德烈耶娃 vs 郑钦文",
+        "score": "5-7 4-6"
+      },
+      "date_verified": "terminal official report local date",
+      "points_scope": "single final event points, not weekly Race delta"
+    }
+  ],
+  "static_info_insets": 0,
+  "qualification_before_beijing_final": true,
+  "no_unplayed_loss": true,
+  "unknowns": [
+    "Gross6372 versus officialRace6306 difference66 unresolved; not explained in narration.",
+    "Exact earliest mathematical clinch/public social second not independently established; official announcement day10/9 used."
+  ],
+  "issues": []
+}

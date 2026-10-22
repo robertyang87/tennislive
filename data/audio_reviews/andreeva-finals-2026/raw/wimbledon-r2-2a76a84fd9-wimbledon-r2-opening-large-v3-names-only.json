@@ -1,0 +1,62 @@
+{
+  "model": "large-v3",
+  "clip": [
+    0,
+    4.5
+  ],
+  "source_sha256": "11d264f1c0fa010432b666d88641dc21d0d98052f24e3f17f2f3b1224d197668",
+  "initial_prompt": "Krejcikova, Andreeva, Wimbledon, Centre Court.",
+  "prompt_scope": "proper names only; no presumed umpire declaration or score text supplied",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 3.78,
+      "text": "Csíkova has earned herself another match point.",
+      "words": [
+        {
+          "w": " Csíkova",
+          "s": 0.0,
+          "e": 0.44,
+          "p": 0.466
+        },
+        {
+          "w": " has",
+          "s": 0.44,
+          "e": 2.5,
+          "p": 0.861
+        },
+        {
+          "w": " earned",
+          "s": 2.5,
+          "e": 2.7,
+          "p": 0.996
+        },
+        {
+          "w": " herself",
+          "s": 2.7,
+          "e": 2.92,
+          "p": 0.991
+        },
+        {
+          "w": " another",
+          "s": 2.92,
+          "e": 3.22,
+          "p": 0.996
+        },
+        {
+          "w": " match",
+          "s": 3.22,
+          "e": 3.48,
+          "p": 0.966
+        },
+        {
+          "w": " point.",
+          "s": 3.48,
+          "e": 3.78,
+          "p": 0.975
+        }
+      ]
+    }
+  ],
+  "human_listened": false
+}
