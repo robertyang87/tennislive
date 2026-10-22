@@ -1,0 +1,73 @@
+[片长] 296.6s = 4 分 56 秒，按实测 12560 kb/s 估 444 MiB —— 成片一律走 Release 附件，不进 git
+[TTS] spec 认领 tts_backend=edge，这一趟不走 Azure：系列自然云健+6%/+0Hz；本地原生TTS实字节冻结，不调用外部AI内容服务。
+[多音字] 没有换字表管不到的非常用读音（449 字、12 段查过）
+  另 1 处落在量过读对的词上（check_polyphones.MEASURED_OK），不逐条报
+  静态筛选不是声学通过；词典和历史词条不能证明本次整句读对。本次 12 段仍须按实际嗓音、语速逐段声学复核，含封面、旁白和片尾。
+
+[dry-run] spec 形状没问题：19 段，画面共 295.4s
+[fps] berlin-final 是 24/1，重采样到主源的 25/1——官方源原生24/1fps按真实时长输出25fps，音轨/比赛速度不改变。
+[fps] us-qf 是 30000/1001，重采样到主源的 25/1——官方源原生60000/1001fps按真实时长输出25fps，音轨/比赛速度不改变。
+
+[查选段] 认领到 1 份 probe.json，**没查成的源：['ao-r3', 'berlin-final', 'iw-sf', 'madrid-r16', 'wimbledon-dinner', 'wimbledon-final']**
+
+[查选段] 5 处窗口中途换了镜头（**只报不拦**，离边界不到 0.15s 的已经滤掉——那是窗口对齐了源片自己的镜头边界，本来就该那样）。越靠段落中间越可疑，按这个排的：
+  第 15 段 162.36–195.72s 里第 179.46s 换了镜头（离最近的边界 16.26s）：「The world number one,
+…」
+  第 15 段 162.36–195.72s 里第 176.99s 换了镜头（离最近的边界 14.63s）：「The world number one,
+…」
+  第 15 段 162.36–195.72s 里第 169.97s 换了镜头（离最近的边界 7.61s）：「The world number one,
+…」
+  第 15 段 162.36–195.72s 里第 166.67s 换了镜头（离最近的边界 4.31s）：「The world number one,
+…」
+  第 15 段 162.36–195.72s 里第 192.41s 换了镜头（离最近的边界 3.31s）：「The world number one,
+…」
+  拿缩略图墙对一眼：两边还是同一个人就没事，写一句 `"crosses_cut": "<为什么>"` 挂账；**换了人就是整句旁白压在别人身上**，那要改窗口。
+
+[查选段] 另外这几条也只报不拦：
+  源 ao-r3（https://www.youtube.com/watch?v=nOrIoX5vUUM）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方实际下载字节已ffprobe1920x1080。SHA256 2b835cd0fc86187a9e692d4fd67873af3874ee974c16fb267ebc787a338d69c7；原声与实际帧选段证据均source-bound。
+  源 berlin-final（https://www.youtube.com/watch?v=6D6839Xw9eo）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方实际下载字节已ffprobe1920x1080。SHA256 49858a1298eecc578ab1c93b369d079d5c7fe117128ef62f06795c860c8fa407；原声与实际帧选段证据均source-bound。
+  源 iw-sf（https://www.youtube.com/watch?v=5K3oWYO0ZqU）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方实际下载字节已ffprobe1920x1080。SHA256 6416446164e9ecd30ccd59eb11df0ad72b4bcbed18b027a23cf7ac623860efc4；原声与实际帧选段证据均source-bound。
+  源 madrid-r16（https://www.youtube.com/watch?v=_4WYCZn0rBQ）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方实际下载字节已ffprobe1920x1080。SHA256 6b03e570d38d44eb455bf0643669c54c1db3cb018e50d3131967bdb4399e33b4；原声与实际帧选段证据均source-bound。
+  源 wimbledon-dinner（https://www.youtube.com/watch?v=UBho6XdEcUo）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方实际下载字节已ffprobe1920x1080。SHA256 6f9d56b6e079846e27c297a19840e3135c3edd876e0dd7c9a8a80d815864f16a；原声与实际帧选段证据均source-bound。
+  源 wimbledon-final（https://www.youtube.com/watch?v=XfE9M6__724）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方实际下载字节已ffprobe1920x1080。SHA256 39e3e2b5d0d5e21037fa6f593c6a5db0b7ee1d23152b1aeec151c5fa8e5aaf1e；原声与实际帧选段证据均source-bound。
+  源 us-qf：死球时刻还没量过——probe 猜过 --scorebox 104,862,653,978，还没有人拿它重跑一轮 probe 确认（老 probe；新 probe 会按猜的框自己量一遍）
+  ⚠️ 这几条源片的切点没查成：['ao-r3', 'berlin-final', 'iw-sf', 'madrid-r16', 'wimbledon-dinner', 'wimbledon-final']
+  选段这一层没有硬伤（片长、分辨率、几何；响度校验按用户要求移除）。**挑段仍然要看缩略图墙**——「近端是谁」「情绪对不对题」机器判不了。
+[dry-run] 文案 noskova-finals-2026.xhs.txt：正文 289 字（上限 1000）、tag 5 个（上限 5）
+[官方上传] spec 里认不出英文名（cover.matchup[].name_en）——要列官方上传就给 --who <姓>,<姓>
+
+[估旁白] 11 段有旁白（离线估，误差 ±2.2s）
+  第  2 段 画面   7.2s 估旁白  6.38s 余量 +0.85s ← 悬，跑一次 mode=narration
+  第  3 段 画面   8.6s 估旁白  7.67s 余量 +0.88s ← 悬，跑一次 mode=narration
+  第  5 段 画面   7.3s 估旁白  6.38s 余量 +0.88s ← 悬，跑一次 mode=narration
+  第  7 段 画面   8.0s 估旁白  6.86s 余量 +1.09s ← 悬，跑一次 mode=narration
+  第  9 段 画面  10.3s 估旁白  9.33s 余量 +0.93s ← 悬，跑一次 mode=narration
+  第 10 段 画面   9.2s 估旁白  8.35s 余量 +0.87s ← 悬，跑一次 mode=narration
+  第 12 段 画面  11.9s 估旁白 10.49s 余量 +1.45s ← 悬，跑一次 mode=narration
+  第 14 段 画面  12.7s 估旁白 10.99s 余量 +1.71s ← 悬，跑一次 mode=narration
+  第 16 段 画面  13.6s 估旁白 11.82s 余量 +1.75s ← 悬，跑一次 mode=narration
+  第 17 段 画面   4.3s 估旁白  3.91s 余量 +0.42s ← 悬，跑一次 mode=narration
+  第 19 段 画面   3.8s 估旁白  3.41s 余量 +0.34s ← 悬，跑一次 mode=narration
+
+[估旁白] 误差带里这几段已经拿真 TTS 量过（data/narration_checks/noskova-finals-2026.json）：
+  第 2 段：真 TTS 量过 7.03s，余量 +0.20s
+  第 3 段：真 TTS 量过 8.35s，余量 +0.20s
+  第 5 段：真 TTS 量过 7.06s，余量 +0.20s
+  第 7 段：真 TTS 量过 7.75s，余量 +0.20s
+  第 9 段：真 TTS 量过 10.06s，余量 +0.20s
+  第 10 段：真 TTS 量过 9.02s，余量 +0.20s
+  第 12 段：真 TTS 量过 11.74s，余量 +0.20s
+  第 14 段：真 TTS 量过 12.50s，余量 +0.20s
+  第 16 段：真 TTS 量过 13.37s，余量 +0.20s
+  第 17 段：真 TTS 量过 4.13s，余量 +0.20s
+  第 19 段：真 TTS 量过 3.55s，余量 +0.20s
+
+[看画面] 这一条只查数。要看**每一段窗口里到底是什么画面**：
+  PYTHONPATH=src python3 tools/preview_segments_local.py --slug noskova-finals-2026
+  （本地，几秒钟；改了哪几段就 `--seg 3,7` 只看那几段）

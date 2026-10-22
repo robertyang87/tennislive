@@ -1,0 +1,103 @@
+{
+  "schema": "noskova.necessary-revision-postmerge-ready.v1",
+  "checked_head_before_report_commit": "7119b431f572d7c5c46f9be181e979fa4c797185",
+  "integrated_main": "c4b36b65 publicationreceipt descendantofSvi merge; no tools/src difference from originalrender",
+  "spec_sha256": "6a5f7213e88e500ce90cb1f3ba531f068e7d8965c62875fbb1180cbf4e6c99e9",
+  "restored_exact_HEAD_text": 46,
+  "restored_exact_HEAD_probejson": 898,
+  "actual_probes_present": 930,
+  "checks": [
+    {
+      "name": "real-canonical-restore",
+      "command": [
+        "python",
+        "tools/reel_tts_release.py",
+        "restore",
+        "--slug",
+        "noskova-finals-2026",
+        "--metadata",
+        "data/narration_checks/noskova-finals-2026.json",
+        "--output",
+        "/workspace/noskova-finals-production/revision-madrid-tail/postmerge-gates/actual-empty-target-restored.zip"
+      ],
+      "exit_code": 0,
+      "log_sha256": "beda6ba9f747d282b03ba9b769c4cbda74b79d5f292d00d7435c4f437752052b"
+    },
+    {
+      "name": "strict12requests",
+      "command": [
+        "python",
+        "tools/build_match_reel.py",
+        "render",
+        "--spec",
+        "/workspace/tennislive-noskova/specs/reels/noskova-finals-2026.json",
+        "--tts-bundle-in",
+        "/workspace/noskova-finals-production/revision-madrid-tail/postmerge-gates/actual-empty-target-restored.zip",
+        "--check-tts-bundle"
+      ],
+      "exit_code": 0,
+      "log_sha256": "d6df3aea87bd830c9472ce52b3f9072c3cae713180024b0a9aef5391a60ffaa6"
+    },
+    {
+      "name": "native-full-probe-dryrun",
+      "command": [
+        "python",
+        "tools/build_match_reel.py",
+        "render",
+        "--spec",
+        "/workspace/tennislive-noskova/specs/reels/noskova-finals-2026.json",
+        "--dry-run",
+        "--outdir",
+        "/workspace/noskova-finals-production/revision-madrid-tail/postmerge-gates/dryrun"
+      ],
+      "exit_code": 0,
+      "log_sha256": "fa7dcf9932a68dfb4aaafd4c7e7db7c0987884873a6d4df79b8fff4d2c181996"
+    },
+    {
+      "name": "workflow-publish",
+      "command": [
+        "python",
+        "tools/production_preflight.py",
+        "--spec",
+        "/workspace/tennislive-noskova/specs/reels/noskova-finals-2026.json",
+        "--column",
+        "赛场之上"
+      ],
+      "exit_code": 0,
+      "log_sha256": "45281c03346a5921c7ff61dc9c10419206bb51fc771609c1d6f6a6ccb544bd2f"
+    },
+    {
+      "name": "full-taste19",
+      "command": [
+        "python",
+        "tools/taste_preflight.py",
+        "--slug",
+        "noskova-finals-2026"
+      ],
+      "exit_code": 0,
+      "log_sha256": "2913d21ca6cf260d8ee0ed435475cdf60cb46fb08719523d8229d44636e8dce4"
+    }
+  ],
+  "full_taste_pass_checks": 19,
+  "voice_bundle_restored_actual_bytes": 618423,
+  "voice_bundle_sha256": "26d32fbdf9b1e64dfaf42a8f2e50066bf18be1a5b21f8d969a53cfa111d014ba",
+  "voice_transport": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "26d32fbdf9b1e64dfaf42a8f2e50066bf18be1a5b21f8d969a53cfa111d014ba",
+    "request_count": 12,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "transport": "repository",
+    "repository_commit": "e61796de133e52d4f205bd0a8a7ae3c5d563ac4d",
+    "file_name": "tts_bundle.zip",
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/e61796de133e52d4f205bd0a8a7ae3c5d563ac4d/assets/tts-bundles/noskova-finals-2026/26d32fbdf9b1e64dfaf42a8f2e50066bf18be1a5b21f8d969a53cfa111d014ba/tts_bundle.zip"
+  },
+  "targeted_native_join": "40actual.04grid framesclean; completeEnglishscorebothmodels andChinese随后fullnextsentence; machineestimated33–53msedgeoverlapretainedhonestly, no lostwords observedbyASR. Not humanlistening.",
+  "same_voice_payloads": true,
+  "expected_seconds": 301.164,
+  "formal_retry": "Onlyroot,childdidnotdispatch",
+  "old_movie": "ddb10faa… supersededbynecessarytitle/endfix, notpublishable"
+}

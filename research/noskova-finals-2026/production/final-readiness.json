@@ -1,6 +1,6 @@
 {
   "schema": "noskova.final-source-readiness.v1",
-  "rendering_spec_sha256": "157b79dfb5b0c4f5c03e36831c40905cead2237c34cfee7736e979064b351dfd",
+  "rendering_spec_sha256": "6a5f7213e88e500ce90cb1f3ba531f068e7d8965c62875fbb1180cbf4e6c99e9",
   "immutable_bundle": {
     "commit": "e61796de133e52d4f205bd0a8a7ae3c5d563ac4d",
     "url": "https://raw.githubusercontent.com/robertyang87/tennislive/e61796de133e52d4f205bd0a8a7ae3c5d563ac4d/assets/tts-bundles/noskova-finals-2026/26d32fbdf9b1e64dfaf42a8f2e50066bf18be1a5b21f8d969a53cfa111d014ba/tts_bundle.zip",
@@ -22,12 +22,14 @@
       "actual_voice_preflight": "pass12",
       "not_final_mix_QC": true
     },
-    "native_sampled_visual": "105actualframes viewed;103currentvalid/2superseded; fournewMadrid frames finalSHA bound,99equivalentvisual frames prior5c01 explicitly recorded.",
+    "native_sampled_visual": "Current3nativefullframes+40actualencodedjoinframeschecked for necessarytitle/endfix; priorwhole-scope previews retainedasbaseline,notnewwholemovieapproval.",
     "full_taste_pass_checks": 19,
     "full_taste_failed_checks": 0
   },
-  "expected_duration_seconds": 301.524,
-  "formal_render": "Root dispatch only, not yet claimed by child.",
+  "expected_duration_seconds": 301.164,
+  "formal_render": "Root rerender only; oldfilmddb10… superseded/notpublishable, actualnewmovieQC pending.",
   "actual_movie_QC": "Pending actual formalrender MP4; no human listening claim.",
-  "canonical_transport_fix_report": "canonical-transport-fix/transport-fix-report.json"
+  "canonical_transport_fix_report": "canonical-transport-fix/transport-fix-report.json",
+  "necessary_revision_report": "necessary-title-tail-revision/revision-review.json",
+  "postmerge_current_gates": "necessary-title-tail-revision/postmerge-gates/ready.json"
 }
