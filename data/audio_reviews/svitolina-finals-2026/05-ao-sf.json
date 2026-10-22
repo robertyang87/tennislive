@@ -1,0 +1,43 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=g-co4fMMjnc",
+  "source_sha256": "464421ecf66067c3e1542f9b8d6d6989385883fdae29ca4d81fa1326809767cb",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex local source-bound paired ASR with source frames; no human listening",
+  "reviewed_at": "2026-10-22T12:58:20.615618+00:00",
+  "reviewed_from": 425,
+  "reviewed_to": 490,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 462.28,
+      "end": 466.72,
+      "en": "So impressive from the world No. 1.",
+      "zh": "世界第一 表现太出色了"
+    },
+    {
+      "start": 466.72,
+      "end": 472.1,
+      "en": "Sabalenka moves through to the final once again in Melbourne.",
+      "zh": "萨巴伦卡再次闯进墨尔本决赛"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": [
+    "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+    "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed."
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/ao-sf-0a25523430-ao-sf-small.en.json",
+      "sha256": "0a255234308f6acac8c17e3250e898fe2b24e1a843f44663e6ab7b3601c81864",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/ao-sf-87441bbddc-ao-sf-medium.en.json",
+      "sha256": "87441bbddc49ee91282a37cf796703095e0d212e95b88fc896eb1b0d5bfedd05",
+      "model": "medium.en"
+    }
+  ]
+}

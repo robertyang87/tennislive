@@ -1,0 +1,25 @@
+{
+  "spec_sha256": "6c1ecd8e1c4ec09d382e54159f21ebadf1bdad1955dedcda5ce6dd2aa0dc8f31",
+  "expected_seconds": 317.794,
+  "native_sampled_review": "production/native-production-ready-review.json",
+  "native_sampled_count": 89,
+  "native_independent_report": "production/svi-native-v7-independent-qc.json",
+  "taste_gates_pass": 19,
+  "actual_probe_closure": 870,
+  "foreground_source_windows": 9,
+  "foreground_bilingual_cues": 31,
+  "tts_frozen_bundle_sha256": "b4bfc7dab36b36078603b83d53bf807a97107d25147ce75552e97a9e1a0ebb91",
+  "tts_actual_request_count": 14,
+  "tts_bundle_repository_commit": "b8c50616fe364e38d86f1e1336b13fe19464f64c",
+  "actual_frozen_voice_preflight_all_five_pass": true,
+  "formal_render_dispatched": false,
+  "actual_encoded_film_qc": "pending root formalrender",
+  "created_utc": "2026-10-22T13:56:46.521130+00:00",
+  "prior_preview_spec_sha256": "da92f8e74eff09c6dc4c48c57258c638a958261eea8a86cdf1c6ac453110a1bc",
+  "evidence_path_repair": {
+    "report": "research/svitolina-finals-2026/production/identity-evidence-path-fix.json",
+    "render_geometry_and_media_unchanged": true,
+    "conservative_native_projection_hash_changed": true,
+    "89_sample_reuse_scope": "Exact rendering values/media unchanged; only two non-displayed identity proof path strings moved, original proof bytes identical."
+  }
+}

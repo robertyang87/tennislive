@@ -1,0 +1,72 @@
+{
+  "match": "2026 Rome final: Elina Svitolina defeats Coco Gauff6-4 6-7 6-2",
+  "source": "/workspace/gauff-finals-production/sources/WXNZTi6qd1Y.mp4",
+  "source_url": "https://www.youtube.com/watch?v=WXNZTi6qd1Y",
+  "sha256": "e5aab2e4155d2ebf9ef25e4d31d2e84b6748963d0442c9a5e1818a14e0f904dc",
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 25,
+    "duration": 685.545941
+  },
+  "matchpoint_visual_verdict": "PASS full terminal championship point#3 is present",
+  "recommended_start": 219.9,
+  "recommended_minimum_visual_end": 235.0,
+  "with_handshake_visual_end": 238.0,
+  "end_note": "Actual commentary semantic end must be determined by owner ASR; no ASR repeated. Video end suggestions are visual-only.",
+  "event_seconds_approx": {
+    "previous_unsuccessful_championship_point_2_tail": [
+      219.0,
+      219.72
+    ],
+    "championship_point_3_closeup_preparation": [
+      219.96,
+      221.64
+    ],
+    "court_preparation": [
+      221.88,
+      222.36
+    ],
+    "toss_and_serve": [
+      222.6,
+      223.8
+    ],
+    "whole_rally": [
+      223.8,
+      231.48
+    ],
+    "dead_ball_and_winner_raises_arms": [
+      231.48,
+      231.96
+    ],
+    "actual_winner_reaction": [
+      232.2,
+      234.6
+    ],
+    "handshake": [
+      235,
+      238
+    ]
+  },
+  "sampling": "Actual source decoded every6 frames=0.24s over219–243; no frame-exact claim beyond sampling interval",
+  "evidence": [
+    "rome-mp3-dense-first10.jpg",
+    "rome-mp3-dense-next10.jpg",
+    "rome-score-212.png",
+    "rome-score-226.png"
+  ],
+  "tiebreak_conflict": {
+    "verdict": "UNRESOLVED_BY_THIS_VIDEO",
+    "reason": "Second-set tiebreak visible at178,184,188s has Gauff2/Svitolina1. Highlights skip tothirdset by196s. Final result card291–297s displays4/7/2 vs6/6/6 with no tiebreak superscript. Cannot claim actual source verifies either3 or5 for losing tiebreak score.",
+    "evidence": [
+      "rome-score-178.png",
+      "rome-score-184.png",
+      "rome-score-188.png",
+      "rome-score-200.png",
+      "rome-native-292.png",
+      "rome-finalcard-score-292.png"
+    ],
+    "required_next": "Owner reconcile with primary official score/report oranother source displaying final secondset tiebreak. Do not turn source silence into proof."
+  },
+  "scope": "Read-only independent source QC; no owner worktree edited; no ASR repeated."
+}

@@ -1,0 +1,110 @@
+{
+  "source_key": "wimbledon-r1",
+  "source_file": "/workspace/svitolina-finals-production/media/sources/wimbledon-r1.mp4",
+  "source_sha256": "b75c4fa4809dcfa7a7e949d8b733752853260cfe40c36c5ea5329f02df8978ac",
+  "source_url": "https://www.youtube.com/watch?v=efGsU1vRZc8",
+  "model": "large-v3",
+  "range": [
+    366.1,
+    376.4
+  ],
+  "language": "en",
+  "method": "actual_faster_whisper_int8_cpu_beam5_vad_false_no_prompt",
+  "human_listening_claimed": false,
+  "created_utc": "2026-10-22T12:51:43.611648+00:00",
+  "segments": [
+    {
+      "start": 366.1,
+      "end": 375.54,
+      "text": " There it is, Snigir takes the biggest win of his career, defeating fellow Ukrainian.",
+      "avg_logprob": -0.40567181598056445,
+      "no_speech_prob": 0.4039061367511749,
+      "words": [
+        {
+          "word": " There",
+          "start": 366.1,
+          "end": 367.36,
+          "probability": 0.5100005865097046
+        },
+        {
+          "word": " it",
+          "start": 367.36,
+          "end": 367.52,
+          "probability": 0.9896522164344788
+        },
+        {
+          "word": " is,",
+          "start": 367.52,
+          "end": 367.88,
+          "probability": 0.9925810098648071
+        },
+        {
+          "word": " Snigir",
+          "start": 367.96,
+          "end": 368.4,
+          "probability": 0.6681067645549774
+        },
+        {
+          "word": " takes",
+          "start": 368.4,
+          "end": 369.7,
+          "probability": 0.314327597618103
+        },
+        {
+          "word": " the",
+          "start": 369.7,
+          "end": 370.08,
+          "probability": 0.9943333864212036
+        },
+        {
+          "word": " biggest",
+          "start": 370.08,
+          "end": 370.26,
+          "probability": 0.9956566095352173
+        },
+        {
+          "word": " win",
+          "start": 370.26,
+          "end": 370.56,
+          "probability": 0.7326236367225647
+        },
+        {
+          "word": " of",
+          "start": 370.56,
+          "end": 370.74,
+          "probability": 0.9671486020088196
+        },
+        {
+          "word": " his",
+          "start": 370.74,
+          "end": 370.86,
+          "probability": 0.6985839009284973
+        },
+        {
+          "word": " career,",
+          "start": 370.86,
+          "end": 371.8,
+          "probability": 0.9751107692718506
+        },
+        {
+          "word": " defeating",
+          "start": 371.9,
+          "end": 374.24,
+          "probability": 0.9632128477096558
+        },
+        {
+          "word": " fellow",
+          "start": 374.24,
+          "end": 375.1,
+          "probability": 0.9897288084030151
+        },
+        {
+          "word": " Ukrainian.",
+          "start": 375.1,
+          "end": 375.54,
+          "probability": 0.5788968801498413
+        }
+      ]
+    }
+  ]
+}

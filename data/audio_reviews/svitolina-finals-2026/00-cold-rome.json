@@ -1,0 +1,77 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=WXNZTi6qd1Y",
+  "source_sha256": "e5aab2e4155d2ebf9ef25e4d31d2e84b6748963d0442c9a5e1818a14e0f904dc",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex local source-bound paired ASR with source frames; no human listening",
+  "reviewed_at": "2026-10-22T12:58:20.599557+00:00",
+  "reviewed_from": 470.0,
+  "reviewed_to": 665.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 526.79,
+      "end": 528.45,
+      "en": "I told my coach that would be nice",
+      "zh": "我跟教练说 这样挺好"
+    },
+    {
+      "start": 528.45,
+      "end": 532.25,
+      "en": "before I finish my career to have a round number.",
+      "zh": "生涯结束前 能凑个整数"
+    },
+    {
+      "start": 532.25,
+      "end": 534.95,
+      "en": "So he told me that hopefully",
+      "zh": "他就说 希望"
+    },
+    {
+      "start": 534.95,
+      "end": 536.38,
+      "en": "we're gonna get this this year.",
+      "zh": "今年就能做到"
+    },
+    {
+      "start": 536.38,
+      "end": 537.42,
+      "en": "So I'm glad.",
+      "zh": "所以我很高兴"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": [
+    "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+    "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed.",
+    "The broad medium speech pass conflates the final so I am glad with the later very happy after applause; focused same-byte534.8–541.8 small.en and medium.en both agree so I am glad ending537.40/537.42. Small hallucinates cheering as Whoa after537.4; medium yields no additional foreground speech. Start at526.76 lies at independently estimated I onset526.74–526.80, after preceding20th clause."
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/cold-rome-058ab5d919-rome-svi-speech-small.en-en.json",
+      "sha256": "058ab5d919dab324da460057e399dc538c64ed4dea8d817bf8d98536c3a0c37d",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/cold-rome-5bce5c3b7d-rome-svi-speech-medium.en-en.json",
+      "sha256": "5bce5c3b7dce0d03eb6575779924ff79d326f2c5dba2c83fd6ce968e9d59782b",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/cold-rome-d7fbfde0b7-cold-rome-turbo-en.json",
+      "sha256": "d7fbfde0b7d456fa41cc739ac704c8ab8c67574a736f936458f684f6ebd493b1",
+      "model": "turbo"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/cold-rome-04d24fd676-cold-tail-small.en-en.json",
+      "sha256": "04d24fd676a1d5e2bf8b31e7aca87bcaab210a76705e8f7a66338e5d43eb76e3",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/cold-rome-0313fd3d18-cold-tail-medium.en-en.json",
+      "sha256": "0313fd3d18ff3b9c52c3005db2943b3e852ddb9b3b4d635e750a6d5a5621325e",
+      "model": "medium.en"
+    }
+  ]
+}
