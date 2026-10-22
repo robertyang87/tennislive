@@ -1,0 +1,681 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "4221061ad0859a2dc5925d4bcee743f01646d42c7e1fe5cf190d75ee8a2e8bc7",
+    "render_inputs_sha256": "3313da0df664078525c6fc78d8bddf8ffc63860dfed637dff896c4f4e51859ea",
+    "spec_sha256": "8733c0972cd35825b8b32e364fdf560b4248793d24e599d827bc449d34b503bc",
+    "film_sha256": "022bd584d418f38d8c138ce4f42c876188944dd74cf8fb359f883416a6fe7cec",
+    "inventory_sha256": "c5ca828ca3f67b3e778bf5370e002ef629c7b316ed05141b5a03f88539c2e549"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-22T05:15:59+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:3754742ebdd29832f9f25e745f3a7714c800d78d15f6f1b38a5e2edaa6d994a4",
+      "audio_sha256": "061daf08e5fec1daad290605ff1d7caf6892b5dbb143353f0c3b9b6c17e7059d",
+      "pass": true,
+      "result_of": "bundle:3754742ebdd29832f9f25e745f3a7714c800d78d15f6f1b38a5e2edaa6d994a4"
+    },
+    {
+      "id": "bundle:4e41a77064539758f71e3c92556751c79a8b23c15f9d0149f299386616841582",
+      "audio_sha256": "db3f7371c174a26e5c7a76276e463d4ef3adf9428c4611d3413d6020535fa713",
+      "pass": true,
+      "result_of": "bundle:4e41a77064539758f71e3c92556751c79a8b23c15f9d0149f299386616841582"
+    },
+    {
+      "id": "bundle:8f3daa3fd719d385b97ee3a2a61565a58c1bebb495324cb7a39b9347b9a2feb9",
+      "audio_sha256": "c1aa1a721bc4b142d8bf3d63554bf42920bb8a2456ff9ae2083754a9618b6635",
+      "pass": true,
+      "result_of": "bundle:8f3daa3fd719d385b97ee3a2a61565a58c1bebb495324cb7a39b9347b9a2feb9"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "b4b3b7f20c25446f0bbcd22f9d8d7884ca1fdc5939deaef7d129c24a297d7d79",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:bc953293bd7edee654e7000b68f88d1aafa2ce0c967377feda9666ed5dafc240",
+      "audio_sha256": "8ecf4a05f06c8c9dd31786aacbce77a0958a92a04038a09315ad12478b8aac29",
+      "pass": true,
+      "result_of": "bundle:bc953293bd7edee654e7000b68f88d1aafa2ce0c967377feda9666ed5dafc240"
+    },
+    {
+      "id": "bundle:c9c84702903db41961830e278b6e67b967ad31edb7b26a0ddf076bd23b766da3",
+      "audio_sha256": "d08aa5a6517ddedd6cd54c7d75089000373afc1cd09a169dc27a39939486dc5c",
+      "pass": true,
+      "result_of": "bundle:c9c84702903db41961830e278b6e67b967ad31edb7b26a0ddf076bd23b766da3"
+    },
+    {
+      "id": "bundle:dc57df6dae034d07f91162347ad92d60e48007d436b9dfe3a61e99f467d6d3b7",
+      "audio_sha256": "efe778c433d09f021b44a2e54cc9225bca8f1d0058a253d1386b284ac0b54974",
+      "pass": true,
+      "result_of": "bundle:dc57df6dae034d07f91162347ad92d60e48007d436b9dfe3a61e99f467d6d3b7"
+    },
+    {
+      "id": "bundle:ddca979a95cfe2873ffc5f758023fc5fff5eb4d800a47d888fc50480e4e728cc",
+      "audio_sha256": "2d00b09d4b6c035788905b12b25eced01e46581ac96eb2aa1120cb9f053f99ac",
+      "pass": true,
+      "result_of": "bundle:ddca979a95cfe2873ffc5f758023fc5fff5eb4d800a47d888fc50480e4e728cc"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "2d00b09d4b6c035788905b12b25eced01e46581ac96eb2aa1120cb9f053f99ac",
+      "pass": true,
+      "result_of": "bundle:ddca979a95cfe2873ffc5f758023fc5fff5eb4d800a47d888fc50480e4e728cc"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "efe778c433d09f021b44a2e54cc9225bca8f1d0058a253d1386b284ac0b54974",
+      "pass": true,
+      "result_of": "bundle:dc57df6dae034d07f91162347ad92d60e48007d436b9dfe3a61e99f467d6d3b7"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "d08aa5a6517ddedd6cd54c7d75089000373afc1cd09a169dc27a39939486dc5c",
+      "pass": true,
+      "result_of": "bundle:c9c84702903db41961830e278b6e67b967ad31edb7b26a0ddf076bd23b766da3"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "8ecf4a05f06c8c9dd31786aacbce77a0958a92a04038a09315ad12478b8aac29",
+      "pass": true,
+      "result_of": "bundle:bc953293bd7edee654e7000b68f88d1aafa2ce0c967377feda9666ed5dafc240"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "061daf08e5fec1daad290605ff1d7caf6892b5dbb143353f0c3b9b6c17e7059d",
+      "pass": true,
+      "result_of": "bundle:3754742ebdd29832f9f25e745f3a7714c800d78d15f6f1b38a5e2edaa6d994a4"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "c1aa1a721bc4b142d8bf3d63554bf42920bb8a2456ff9ae2083754a9618b6635",
+      "pass": true,
+      "result_of": "bundle:8f3daa3fd719d385b97ee3a2a61565a58c1bebb495324cb7a39b9347b9a2feb9"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "db3f7371c174a26e5c7a76276e463d4ef3adf9428c4611d3413d6020535fa713",
+      "pass": true,
+      "result_of": "bundle:4e41a77064539758f71e3c92556751c79a8b23c15f9d0149f299386616841582"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "b4b3b7f20c25446f0bbcd22f9d8d7884ca1fdc5939deaef7d129c24a297d7d79",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:3754742ebdd29832f9f25e745f3a7714c800d78d15f6f1b38a5e2edaa6d994a4",
+      "text": "第二盘，剧本重演：孙心然又是零比二开局。但这一次，第三局她立刻回破，没有给对手机会。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘,剧本重演,孙心然又是0比2开局。但这一次,第三局他立刻回破,没有给对手机会。"
+      },
+      "polyphones": [
+        {
+          "index": 6,
+          "char": "重",
+          "word": "重演",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.532,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "崇虫"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 7.818,
+        "cps": 4.6,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 剧本 ｜ 重演 ｜ 孙心然 ｜ 又是 ｜ 零比二 ｜ 开局 ｜ 但 ｜ 这 ｜ 一次 ｜ 第三局 ｜ 她 ｜ 立刻 ｜ 回 ｜ 破 ｜ 没有 ｜ 给 ｜ 对手 ｜ 机会"
+      }
+    },
+    {
+      "id": "bundle:4e41a77064539758f71e3c92556751c79a8b23c15f9d0149f299386616841582",
+      "text": "七比六、六比二，孙心然拿下小组赛开门红。首盘一比四落后都能翻回来，抢七一个发球分都不给对手。十六岁，青年世界第一，主场首秀的第一份答卷。小组赛还有两场，你觉得，她在成都，能走多远？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 78,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.013,
+        "longest_deletion": 0,
+        "transcript": "7比6﹑6比2﹑孙心然拿下小组赛开门红。手盘1比4落后都能翻回来,抢7一个发球分都不给对手。16岁,青年世界第一足场手秀的第一份答卷。小组赛还有两场,你觉得,他在成都能走多远?"
+      },
+      "polyphones": [
+        {
+          "index": 25,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.237,
+              "confidence": "low",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "unreliable",
+              "score": 0.17,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 37,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 71,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.431,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 78,
+          "char": "得",
+          "word": "觉得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "unreliable",
+              "score": 0.059,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 78,
+        "speech_s": 17.759,
+        "cps": 4.39,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "七比六 ｜ 六 ｜ 比 ｜ 二 ｜ 孙心然 ｜ 拿下 ｜ 小组 ｜ 赛 ｜ 开门红 ｜ 首盘 ｜ 一 ｜ 比 ｜ 四 ｜ 落后 ｜ 都 ｜ 能 ｜ 翻 ｜ 回来 ｜ 抢 ｜ 七 ｜ 一个 ｜ 发球 ｜ 分 ｜ 都 ｜ 不 ｜ 给 ｜ 对手 ｜ 十六 ｜ 岁 ｜ 青年 ｜ 世界 ｜ 第一 ｜ 主场 ｜ 首秀 ｜ 的 ｜ 第一 ｜ 份 ｜ 答卷 ｜ 小组 ｜ 赛 ｜ 还有 ｜ 两场 ｜ 你 ｜ 觉得 ｜ 她 ｜ 在 ｜ 成都 ｜ 能 ｜ 走 ｜ 多 ｜ 远"
+      }
+    },
+    {
+      "id": "bundle:8f3daa3fd719d385b97ee3a2a61565a58c1bebb495324cb7a39b9347b9a2feb9",
+      "text": "第五局，破发点上，两人底线相持，茨维特科维奇占先区一侧回球出界，孙心然破发反超，三比二。第七局再破，五比二。这一盘，对手四个发球局，丢了三个。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 60,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 1,
+        "transcript": "第五局 破发点上 两人底线相持 茨维特科维奇 战先区一侧回球出界 孙心然 破发反超 3比2第七局再破 5比2 这盘 对手四个发球局丢了三个"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 36,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 62,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 60,
+        "speech_s": 14.009,
+        "cps": 4.28,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第五局 ｜ 破发点 ｜ 上 ｜ 两 ｜ 人 ｜ 底线 ｜ 相持 ｜ 茨维特科维奇 ｜ 占先区 ｜ 一侧 ｜ 回 ｜ 球 ｜ 出界 ｜ 孙心 ｜ 然 ｜ 破发 ｜ 反 ｜ 超 ｜ 三比二 ｜ 第七局 ｜ 再 ｜ 破 ｜ 五比二 ｜ 这 ｜ 一 ｜ 盘 ｜ 对手 ｜ 四个 ｜ 发球局 ｜ 丢 ｜ 了 ｜ 三个"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:bc953293bd7edee654e7000b68f88d1aafa2ce0c967377feda9666ed5dafc240",
+      "text": "这一局，孙心然连拿三分，逼出破发点。第一个被救掉，第二个，她兑现了。对手的发球胜盘局被破，五比五，比赛回到同一起跑线。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 50,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.02,
+        "longest_deletion": 0,
+        "transcript": "这一局,孙心然连拿三分,逼出破发点。第一个被救掉,第二个,他对线了。对手的发球圣盘局被拓,5比5,比赛回到同一气跑线。"
+      },
+      "polyphones": [
+        {
+          "index": 15,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 37,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 50,
+        "speech_s": 11.026,
+        "cps": 4.53,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 一 ｜ 局 ｜ 孙心然 ｜ 连 ｜ 拿 ｜ 三分 ｜ 逼 ｜ 出 ｜ 破发 ｜ 点 ｜ 第一个 ｜ 被 ｜ 救 ｜ 掉 ｜ 第二个 ｜ 她 ｜ 兑现 ｜ 了 ｜ 对手 ｜ 的 ｜ 发球 ｜ 胜 ｜ 盘 ｜ 局 ｜ 被 ｜ 破 ｜ 五比五 ｜ 比赛 ｜ 回到 ｜ 同一 ｜ 起跑线"
+      }
+    },
+    {
+      "id": "bundle:c9c84702903db41961830e278b6e67b967ad31edb7b26a0ddf076bd23b766da3",
+      "text": "第六局，破发点上，茨维特科维奇一记直线回球出界，孙心然立刻回破，把比分追到二比四。第九局顶住压力保发。第十局，轮到茨维特科维奇为这一盘发球。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 62,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第六局﹑破发点上,茨维特科维奇一技直线回球初戒。孙心然立刻回破,把比分追到2比4。第九局﹑顶住压力爆发。第十局﹑轮到茨维特科维奇为这一盘发球。"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 49,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 67,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 62,
+        "speech_s": 13.255,
+        "cps": 4.68,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第六局 ｜ 破发 ｜ 点 ｜ 上 ｜ 茨维特科维奇 ｜ 一 ｜ 记 ｜ 直线 ｜ 回球 ｜ 出界 ｜ 孙心然 ｜ 立刻 ｜ 回 ｜ 破 ｜ 把 ｜ 比分 ｜ 追 ｜ 到 ｜ 二比四 ｜ 第九局 ｜ 顶住 ｜ 压力 ｜ 保 ｜ 发 ｜ 第十局 ｜ 轮 ｜ 到 ｜ 茨维特科维奇 ｜ 为 ｜ 这 ｜ 一 ｜ 盘 ｜ 发球"
+      }
+    },
+    {
+      "id": "bundle:dc57df6dae034d07f91162347ad92d60e48007d436b9dfe3a61e99f467d6d3b7",
+      "text": "第一局，孙心然在零比四十落后时连救三个破发点，保发拿下。但第三局、第五局，她两度被破发。第一盘一比三落后时，她的右膝接受了理疗师的治疗。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 60,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第一局,孙心然在0比40落后时连就三个破发点,爆发拿下。但第三局,第五局,他两度被破发。第一盘1比3落后时,他的右膝接受了理疗师的治疗。"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.216,
+              "confidence": "low",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "uncertain",
+              "score": 0.152,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 20,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 24,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 42,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 50,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": -0.038,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "uncertain",
+              "score": 0.004,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 60,
+        "speech_s": 13.208,
+        "cps": 4.54,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第一局 ｜ 孙心然 ｜ 在 ｜ 零 ｜ 比四十 ｜ 落后 ｜ 时 ｜ 连 ｜ 救 ｜ 三个 ｜ 破发 ｜ 点 ｜ 保 ｜ 发 ｜ 拿下 ｜ 但 ｜ 第三局 ｜ 第五局 ｜ 她 ｜ 两度 ｜ 被 ｜ 破发 ｜ 第一盘 ｜ 一比 ｜ 三落后 ｜ 时 ｜ 她 ｜ 的 ｜ 右 ｜ 膝 ｜ 接受 ｜ 了 ｜ 理疗师 ｜ 的 ｜ 治疗"
+      }
+    },
+    {
+      "id": "bundle:ddca979a95cfe2873ffc5f758023fc5fff5eb4d800a47d888fc50480e4e728cc",
+      "text": "北京时间十月二十一号下午，成都，世界网联青年组年终总决赛。女子A组第一轮，十六岁的孙心然，迎战塞尔维亚的茨维特科维奇。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 52,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间10月21号下午,成都,世界网连青年组年中总决赛。女子A组第一轮,16岁的孙心然,迎战塞尔维亚的茨维特科维奇。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 52,
+        "speech_s": 10.165,
+        "cps": 5.12,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十月二十一号 ｜ 下午 ｜ 成都 ｜ 世界网联 ｜ 青年 ｜ 组 ｜ 年终 ｜ 总决赛 ｜ 女子 ｜ A ｜ 组 ｜ 第一轮 ｜ 十六岁 ｜ 的 ｜ 孙心然 ｜ 迎战 ｜ 塞尔维亚 ｜ 的 ｜ 茨维特科维奇"
+      }
+    }
+  ]
+}
