@@ -12,7 +12,7 @@ def video(k):
  if 'audio_tail' in x:s['_audio_tail_why']=x['audio_tail_why']
  if x['frame']=='court':s.update(_frame_why='用户固定球场中心3:4 cropfill；比赛真实时间完整保留，不跟踪不contain。固定裁切边缘跑动与赛后近景空间限制已在source proof记录。',_match_id=k,_point_role='match_point',_point_evidence=x['point_evidence']);label=labels[k];im=A/f'context-{k}.png';render_label(label,P/im);safe=x['label_safe_window'];s['inset']={'image':str(im),'kind':'story_text','corner':'tr','width':.6,'pad':.043,'show_after':round(safe[0]-x['start'],3),'show_for':round(safe[1]-safe[0],3),'motion':'editorial','label':label};s['_label_window_why']=x['label_window_why']
  else:s['_band_skip_why']='本人真实发言，人物中心按身份指定Linda的9样本人脸实测；本段不挂比赛信息卡。'
- if k=='madrid-r16':s['subtitle_bottom_windows']=[[29.52,35.28,550]];s['_subtitle_window_why']='Actual native tail296.10 broadcaster result board avoided; complete final cue above board, source/audio/words unchanged.'
+ if k=='madrid-r16':s['subtitle_bottom_windows']=[[29.52,round(x['end']-x['start'],3),550]];s['_subtitle_window_why']='Actual native tail296.10 broadcaster result board avoided; complete final cue above board, source/audio/words unchanged.'
  if k=='cold-mother':s['_ending_payoff_required']=True;s['_cold_open_reprise']='Complete first sentence4.42s cold open explicitly reprises within final full15.72s same dinner answer as ending payoff. Not a second interview or new October statement.'
  if k=='mother-full':s['_timeline_date']='2026-07-12';s['_source_context']='7/12 Wimbledon Champions Dinner; source uploaded7/19. Prior spoken chapter explicitly returns to July dinner, not chronological October interview.'
  segments.append(s)

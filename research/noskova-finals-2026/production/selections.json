@@ -163,7 +163,7 @@
       "source_url": "https://www.youtube.com/watch?v=_4WYCZn0rBQ",
       "source_sha256": "6b03e570d38d44eb455bf0643669c54c1db3cb018e50d3131967bdb4399e33b4",
       "start": 261.12,
-      "end": 296.4,
+      "end": 296.04,
       "frame": "court",
       "cx": 0.5,
       "quote_kind": "broadcast",
@@ -224,7 +224,7 @@
         },
         {
           "start": 290.64,
-          "end": 296.14,
+          "end": 296.0,
           "en": "to move through, 6-4, 1-6, 7-6.",
           "zh": "以6比4、1比6、7比6晋级。"
         }
@@ -239,6 +239,16 @@
         {
           "path": "/workspace/noskova-finals-production/production/asr/madrid-r16-initial-medium.en.json",
           "sha256": "0a537687199ec6a83ca0f35666edc649f3c2ed3b95cd0fffbf3195e7db34c318",
+          "model": "medium.en"
+        },
+        {
+          "path": "/workspace/noskova-finals-production/revision-madrid-tail/tail-small.en.json",
+          "sha256": "bc98b3feb45610a5121382cb0770ae43424c8fd048effdffd66e4f214bd14e54",
+          "model": "small.en"
+        },
+        {
+          "path": "/workspace/noskova-finals-production/revision-madrid-tail/tail-medium.en.json",
+          "sha256": "40a434034993a53ff75d672d0aa32696c4e532de7bae26a5ff44f37e029f8c9b",
           "model": "medium.en"
         }
       ],
@@ -262,7 +272,8 @@
       "visual_contacts": [
         "/workspace/noskova-finals-production/production/visual/madrid-r16-dead-contact.jpg",
         "/workspace/noskova-finals-production/production/visual/madrid-r16-crop-contact.jpg"
-      ]
+      ],
+      "natural_tail_review": "NativeSEG_FADE0.18 natural audio/video handle retained through296.22, lastactualcleanframe296.20 before296.24black/296.28green. Shortfullclause ASR smallends295.84/medium296.00, finalcueends296.00, bodyend296.04; oldlongmedium296.14 conservative speech range remains in naturalaudiohandle. No silence, freeze, newsegment, or renderer change. Actualjoinedmix targeted review required."
     },
     "berlin-final": {
       "key": "berlin-final",
