@@ -3642,6 +3642,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         return tuple(result)
 
     def _one(s: dict, i: int) -> Segment:
+        if "title_card_story_label" in s and not s.get("title_card"):
+            raise ReelError(f"第 {i + 1} 段 title_card_story_label 只能用于 title_card 段")
         if s.get("visual_image"):
             if s.get("image") or s.get("inset") or s.get("score_inset"):
                 raise ReelError("visual_image must be the sole full-canvas visual")
@@ -3656,8 +3658,9 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             s = {k: v for k, v in s.items() if k != "stat_card"}
         if s.get("title_card"):
             s = dict(s)
-            _normalize_title_card_segments({"segments": [s]})
-            s = {k: v for k, v in s.items() if k not in ("title_card", "kicker")}
+            _normalize_title_card_segments({"segments": [s], "layout": spec.get("layout")})
+            s = {k: v for k, v in s.items()
+                 if k not in ("title_card", "kicker", "title_card_story_label")}
         if s.get("image"):
             image_kind = s.get("image_kind", "evidence")
             if image_kind not in ("evidence", "photo"):
@@ -4027,7 +4030,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "segment": ("audio_tail", "bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "cx_face", "end", "fill_y", "fit", "frame", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows", "scorebox",
-                "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card",
+                "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card", "title_card_story_label",
                 "kind", "kicker", "track", "voice", "subtitle_bottom", "subtitle_bottom_windows", "visual_image"),
 }
 
@@ -4209,6 +4212,8 @@ def _normalize_title_card_segments(spec: dict) -> None:
     现场声就显式写 `"narration": ""` 并按 image 段的规矩自己担哑场。
     """
     for i, s in enumerate(spec.get("segments") or []):
+        if isinstance(s, dict) and "title_card_story_label" in s and not s.get("title_card"):
+            raise ReelError(f"第 {i + 1} 段 title_card_story_label 只能用于 title_card 段")
         if not (isinstance(s, dict) and s.get("title_card")):
             continue
         text = str(s["title_card"]).strip()
@@ -4218,6 +4223,11 @@ def _normalize_title_card_segments(spec: dict) -> None:
         if img and not str(img).startswith(TITLE_CARD_PREFIX):
             raise ReelError(f"第 {i + 1} 段 title_card 和 image 二选一——"
                             "章节卡就是这一段的图，别再给一张")
+        if "title_card_story_label" in s:
+            seconds = s.get("seconds")
+            if (type(seconds) not in (int, float) or not math.isfinite(seconds)
+                    or not 0 < seconds <= STORY_LABEL_MAX_SECONDS):
+                raise ReelError(f"第 {i + 1} 段 title_card_story_label 的 seconds 必须是 >0 且 ≤15 秒")
         if not float(s.get("seconds") or 0) > 0:
             raise ReelError(
                 f"第 {i + 1} 段（title_card）要写 seconds（>0）：章节卡停多久由你定，"
@@ -4231,8 +4241,14 @@ def _normalize_title_card_segments(spec: dict) -> None:
             raise ReelError(f"第 {i + 1} 段 title_card：{problem}")
         if "narration" not in s:
             s["narration"] = text
-        s["image"] = TITLE_CARD_PREFIX + json.dumps(
-            {"text": text, "kicker": str(s.get("kicker") or "").strip()}, ensure_ascii=False)
+        card = {"text": text, "kicker": str(s.get("kicker") or "").strip()}
+        if "title_card_story_label" in s:
+            from render_title_card import story_label_problem  # noqa: PLC0415
+            size = (VIDEO_W, BAND_PIC_H) if spec.get("layout") == "band" else (VIDEO_W, VIDEO_H)
+            if problem := story_label_problem(s["title_card_story_label"], text=text, size=size):
+                raise ReelError(f"第 {i + 1} 段 title_card_story_label：{problem}")
+            card["story_label"] = dict(s["title_card_story_label"])
+        s["image"] = TITLE_CARD_PREFIX + json.dumps(card, ensure_ascii=False)
 
 
 def load_spec(path: Path) -> dict:
@@ -9429,6 +9445,12 @@ def evidence_card_overlaps_subtitle(spec: dict) -> str:
         # provenance and pre-cropped canvas geometry before rendering.
         if seg.get("image_kind") == "photo":
             continue
+        # Native generated cards have no filesystem path until materialization.
+        # Their payload may exceed a filesystem component's length; do not stat
+        # the JSON as a filename. Their own renderer owns title/label geometry.
+        if (seg["image"] == STAT_CARD_PLACEHOLDER
+                or str(seg["image"]).startswith(TITLE_CARD_PREFIX)):
+            continue
         path = Path(str(seg["image"]))
         if not path.is_file():
             continue          # 图不在归 parse_segments 报，别在这儿抢
@@ -10103,6 +10125,13 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
             card = json.loads(s.image[len(TITLE_CARD_PREFIX):])
             out = outdir / f"title_card_{i + 1:02d}.jpg"
             render_kwargs = {}
+            if "story_label" in card:
+                from render_title_card import story_label_problem  # noqa: PLC0415
+                if problem := story_label_problem(card["story_label"], text=card["text"], size=size):
+                    raise ReelError(f"第 {i + 1} 段 title_card_story_label：{problem}")
+                if not 0 < s.length <= STORY_LABEL_MAX_SECONDS:
+                    raise ReelError(f"第 {i + 1} 段 title_card_story_label 只能停留 >0 且 ≤15 秒")
+                render_kwargs["story_label"] = card["story_label"]
             if handle_bottom is not None:
                 render_kwargs["handle_bottom"] = handle_bottom
             renderer(card["text"], out, kicker=card.get("kicker", ""), size=size,

@@ -23,6 +23,7 @@ import argparse
 import html
 import re
 import sys
+import tempfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -96,9 +97,36 @@ def length_problem(text: str) -> str | None:
 HANDLE_BOTTOM_MIN = 20
 HANDLE_BOTTOM_MAX = 48
 
+# Native story corner geometry: 0.60 × 1080, 0.043 × 1080 rounded,
+# and the story watermark's two-line clearance (see inset_top_clear_y).
+STORY_LABEL_WIDTH_PX = 648
+STORY_LABEL_RIGHT_PX = 46
+STORY_LABEL_TOP_PX = 151
+STORY_LABEL_FIELDS = frozenset({"topic", "date", "place", "people", "score", "event"})
+
+
+def story_label_problem(label: object, *, text: str,
+                        size: tuple[int, int] = DEFAULT_SIZE) -> str | None:
+    """New static labels use the same semantic contract and PNG as live labels."""
+    from render_story_info_band import label_fields_problem  # noqa: PLC0415
+
+    if problem := label_fields_problem(label):
+        return problem
+    extra = set(label) - STORY_LABEL_FIELDS
+    if extra:
+        return f"title_card_story_label 不认字段 {sorted(map(str, extra))}；只接受 label 语义字段"
+    if any(not isinstance(value, str) for value in label.values()):
+        return "title_card_story_label 的字段必须是字符串"
+    if size != DEFAULT_SIZE:
+        return "title_card_story_label 只支持 1080×1440 全画布，不支持 band 几何"
+    if len(semantic_lines(text)) > 2:
+        return "带 story_label 的章节标题最多两行，给右上角标留出安全区"
+    return None
+
 
 def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
-          clear_bottom: int = 0, handle_bottom: int | None = None) -> str:
+          clear_bottom: int = 0, handle_bottom: int | None = None,
+          story_label: dict | None = None) -> str:
     """品牌默认距卡底 `HANDLE_BOTTOM_PX`（28），落在默认字幕区下方。
 
     `clear_bottom` 只会把品牌再抬高，不根据全片字幕上锚自动抬高。
@@ -130,6 +158,20 @@ def build(text: str, *, kicker: str = "", size: tuple[int, int] = DEFAULT_SIZE,
         raise SystemExit("章节卡要有一句话（去掉停顿符后 text 是空的）")
     px = title_px(lines, size)
     text_html = "<br>".join(html.escape(seg) for seg in lines)
+    label_html = ""
+    if story_label is not None:
+        if problem := story_label_problem(story_label, text=text, size=size):
+            raise SystemExit(problem)
+        from render_story_info_band import render_label  # noqa: PLC0415
+
+        # Embed the existing renderer's PNG bytes, including its alpha, fonts,
+        # score colouring and right rail. No second typography implementation.
+        with tempfile.TemporaryDirectory(prefix="title-story-label-") as temp:
+            label_path = render_label(story_label, Path(temp) / "label.png")
+            label_html = (f'<img class="story-label" src="{_data_uri(label_path)}" '
+                          f'style="position:absolute;top:{STORY_LABEL_TOP_PX}px;'
+                          f'right:{STORY_LABEL_RIGHT_PX}px;width:{STORY_LABEL_WIDTH_PX}px;'
+                          'height:auto" alt="">')
     return f"""<!doctype html><meta charset="utf-8"><style>
 {_font_css()}
 *{{margin:0;padding:0;box-sizing:border-box}}
@@ -154,19 +196,20 @@ body{{width:{w}px;height:{h}px;overflow:hidden;background:{CARD_BACKGROUND_CSS};
  letter-spacing:3px;color:{outro_page.SUB};opacity:.72}}
 .handle img{{width:40px;height:40px}}
 </style><div class="bar"></div><div class="glow"></div>
+{label_html}
 <div class="wrap">{kicker_html}<div class="thesis">{text_html}</div></div>
 <div class="handle"><img src="{_data_uri(outro_page.ICON)}">{html.escape(outro_page.HANDLE)}</div>"""
 
 
 def render(text: str, out: Path, *, kicker: str = "",
            size: tuple[int, int] = DEFAULT_SIZE, clear_bottom: int = 0,
-           handle_bottom: int | None = None) -> Path:
+           handle_bottom: int | None = None, story_label: dict | None = None) -> Path:
     from render_stat_card import _launch_browser  # noqa: PLC0415
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
 
     page = out.with_suffix(".html")
     page.write_text(build(text, kicker=kicker, size=size, clear_bottom=clear_bottom,
-                          handle_bottom=handle_bottom),
+                          handle_bottom=handle_bottom, story_label=story_label),
                     encoding="utf-8")
     w, h = size
     with sync_playwright() as pw:
@@ -181,6 +224,15 @@ def render(text: str, out: Path, *, kicker: str = "",
         if tab.eval_on_selector(".thesis", "el => el.scrollWidth > el.clientWidth + 1"):
             browser.close()
             raise SystemExit("章节卡实际渲染超出版心：请简化文案并按完整意思显式换行")
+        if story_label is not None and tab.evaluate("""() => {
+            const label = document.querySelector('.story-label').getBoundingClientRect();
+            return [...document.querySelectorAll('.thesis,.kicker')].some(el => {
+                const box = el.getBoundingClientRect();
+                return box.top < label.bottom + 24;
+            });
+        }"""):
+            browser.close()
+            raise SystemExit("章节卡右上角标与章节标题安全区冲突：请缩短标题或 kicker")
         tab.screenshot(path=str(out), type="jpeg", quality=95)
         browser.close()
     page.unlink(missing_ok=True)

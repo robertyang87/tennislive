@@ -27,6 +27,121 @@ def _spec(seg_extra=None, **top):
     return d
 
 
+def _story_label():
+    return {"topic": "法网八强", "date": "2026.06.02", "place": "巴黎",
+            "people": "萨巴伦卡 vs 施耐德", "score": "4-6 6-2 4-6"}
+
+
+def test_章节卡角标通过归一解析落图_没有变成实景贴图(tmp_path, monkeypatch):
+    label = {**_story_label(), "topic": "法网女单四分之一决赛", "place": "法国巴黎罗兰加洛斯",
+             "people": "阿丽娜萨巴伦卡 vs 戴安娜施耐德"}
+    spec = _spec({"title_card_story_label": label, "seconds": 15})
+    path = tmp_path / "spec.json"
+    path.write_text(json.dumps(spec, ensure_ascii=False))
+    loaded = reel.load_spec(path)
+    card = loaded["segments"][1]
+    assert card["title_card_story_label"] == label
+    expected = {"text": card["title_card"], "kicker": "01", "story_label": label}
+    assert json.loads(card["image"][len(reel.TITLE_CARD_PREFIX):]) == expected
+    assert len(card["image"].encode("utf-8")) > 255
+    assert reel.evidence_card_overlaps_subtitle(loaded) == ""
+    reel._normalize_title_card_segments(loaded)
+    segs = reel.parse_segments(loaded, {"": 1}, "")
+    assert segs[1].inset is None and segs[1].length == 15
+    calls = []
+
+    def fake(text, out, *, kicker="", size=None, story_label=None):
+        calls.append((text, kicker, size, story_label))
+        out.write_bytes(b"jpg")
+
+    monkeypatch.setattr(reel, "LAYOUT", "full")
+    landed = reel._materialize_title_cards(loaded, segs, tmp_path, renderer=fake)
+    assert calls == [(card["title_card"], "01", (1080, 1440), label)]
+    assert landed[1].full_bleed and not landed[1].image.startswith(reel.TITLE_CARD_PREFIX)
+    # A loaded full-canvas placeholder cannot sneak into an unsupported band.
+    monkeypatch.setattr(reel, "LAYOUT", "band")
+    with pytest.raises(reel.ReelError, match="band"):
+        reel._materialize_title_cards(loaded, segs, tmp_path, renderer=fake)
+
+
+def test_原生占位卡不走文件闸_真实证据卡照旧检查字幕重叠(tmp_path):
+    from PIL import Image  # noqa: PLC0415
+
+    evidence = tmp_path / "tall.png"
+    Image.new("RGB", (1080, 1440)).save(evidence)
+    assert "字幕会压在卡上" in reel.evidence_card_overlaps_subtitle(
+        {"subtitle_top": 1000, "segments": [{"image": str(evidence)}]})
+
+
+@pytest.mark.parametrize("seconds", [0, -1, 15.01, float("inf"), float("nan"), True, "8", None])
+def test_章节角标静态停留严格有界(seconds):
+    with pytest.raises(reel.ReelError, match="seconds"):
+        reel._normalize_title_card_segments(_spec({"title_card_story_label": _story_label(),
+                                                   "seconds": seconds}))
+
+
+@pytest.mark.parametrize("label", [None, {}, {**_story_label(), "date": "六月二日"},
+                                    {**_story_label(), "score": "决胜盘1-4"},
+                                    {**_story_label(), "width": .4},
+                                    {**_story_label(), "place": ["巴黎"]}])
+def test_章节角标复用字段闸_不吞空值或几何覆盖(label):
+    with pytest.raises(reel.ReelError, match="title_card_story_label"):
+        reel._normalize_title_card_segments(_spec({"title_card_story_label": label}))
+
+
+def test_章节角标不能挂在视频_带式_或下划线死字段():
+    bad = {"segments": [{"start": 0, "end": 5, "title_card_story_label": _story_label()}]}
+    for consume in (reel._normalize_title_card_segments,
+                    lambda spec: reel.parse_segments(spec, {"": 1}, "")):
+        with pytest.raises(reel.ReelError, match="只能用于 title_card"):
+            consume(bad)
+    with pytest.raises(reel.ReelError, match="band"):
+        reel.parse_segments(_spec({"title_card_story_label": _story_label()}, layout="band"), {"": 1}, "")
+    with pytest.raises(reel.ReelError, match="title_card_story_label"):
+        reel._reject_underscored_fields(_spec({"_title_card_story_label": _story_label()}))
+    with pytest.raises(SystemExit, match="两行"):
+        tc.build("第一\n第二\n第三", story_label=_story_label())
+    with pytest.raises(SystemExit, match="band"):
+        tc.build("两盘出局", story_label=_story_label(), size=(1080, 960))
+
+
+def test_章节角标原PNG字节原样嵌入_原生位置且避开居中论点(tmp_path):
+    import base64  # noqa: PLC0415
+    import re  # noqa: PLC0415
+
+    from PIL import Image  # noqa: PLC0415
+    from playwright.sync_api import sync_playwright  # noqa: PLC0415
+    from render_stat_card import _launch_browser  # noqa: PLC0415
+    from render_story_info_band import render_label  # noqa: PLC0415
+
+    label = _story_label()
+    text = "反扑机会落空\n两盘出局"
+    built = tc.build(text, kicker="错失机会", story_label=label)
+    uri = re.search(r'class="story-label" src="data:image/png;base64,([^"]+)"', built)
+    assert uri, "需要内嵌实际 PNG，不依赖临时文件或重画 HTML 字体"
+    original = render_label(label, tmp_path / "label.png")
+    assert base64.b64decode(uri[1]) == original.read_bytes()
+    with sync_playwright() as pw:
+        browser = _launch_browser(pw)
+        page = browser.new_page(viewport={"width": 1080, "height": 1440})
+        page.set_content(built)
+        page.evaluate("document.fonts.ready")
+        page.wait_for_function("[...document.images].every(i => i.complete && i.naturalWidth)")
+        boxes = page.evaluate("""() => {
+            const box = selector => {
+                const r = document.querySelector(selector).getBoundingClientRect();
+                return {x:r.x,y:r.y,width:r.width,height:r.height,bottom:r.bottom}; };
+            return {label:box('.story-label'), title:box('.thesis'), kicker:box('.kicker')};
+        }""")
+        browser.close()
+    assert boxes["label"]["x"] == 386 and boxes["label"]["y"] == 151
+    assert boxes["label"]["width"] == 648
+    assert boxes["label"]["height"] == pytest.approx(Image.open(original).height * 648 / 1200, abs=.02)
+    assert boxes["label"]["bottom"] + 24 < boxes["kicker"]["y"] < boxes["title"]["y"]
+    rendered = tc.render(text, tmp_path / "native.jpg", kicker="错失机会", story_label=label)
+    assert Image.open(rendered).size == (2160, 2880)
+
+
 def test_章节卡段解析成整屏段_旁白缺省就是卡上那句():
     """章节卡不能是一段死寂：QC 的数字静音闸 1 秒就红，账号所有者定过「卡要有配音」。"""
     segs = reel.parse_segments(_spec(), {"": 1}, "")
