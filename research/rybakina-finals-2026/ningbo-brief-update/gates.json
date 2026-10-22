@@ -1,0 +1,52 @@
+[
+  {
+    "name": "strict-bundle",
+    "command": [
+      "python",
+      "tools/build_match_reel.py",
+      "render",
+      "--check-tts-bundle",
+      "--spec",
+      "specs/reels/rybakina-finals-2026.json",
+      "--tts-bundle-in",
+      "/workspace/rybakina-finals-production/ningbo-brief-update/tts-bundle.zip"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "dry-run",
+    "command": [
+      "python",
+      "tools/build_match_reel.py",
+      "render",
+      "--spec",
+      "specs/reels/rybakina-finals-2026.json",
+      "--outdir",
+      "/workspace/rybakina-finals-production/ningbo-brief-update/dry-run",
+      "--dry-run"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "workflow-preflight",
+    "command": [
+      "python",
+      "tools/production_preflight.py",
+      "--spec",
+      "specs/reels/rybakina-finals-2026.json",
+      "--column",
+      "赛场之上"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "taste-preflight",
+    "command": [
+      "python",
+      "tools/taste_preflight.py",
+      "--slug",
+      "rybakina-finals-2026"
+    ],
+    "exit_code": 0
+  }
+]
