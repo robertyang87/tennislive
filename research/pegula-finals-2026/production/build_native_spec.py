@@ -39,7 +39,7 @@ def video(key,optional=False):
  if key not in selected:
   if not optional:pending.append(key)
   return
- r=selected[key];seg={k:r[k] for k in ['start','end','cx','frame','cx_face','_frame_why','visual_image','audio_tail'] if k in r}
+ r=selected[key];seg={k:r[k] for k in ['start','end','cx','frame','cx_face','_frame_why','visual_image','audio_tail','point_end_ok'] if k in r}
  seg.update(_id=key,source=r['source_name'],narration='',voice=voice,fit='crop',track=False,cx=r.get('cx',.5),_quote_kind=r.get('quote_kind','broadcast'),_why=r.get('visual_review',r.get('notes','Actual same-match official source; complete selected temporal window.')))
  if seg.get('frame')=='court':seg['_frame_why']=r.get('_frame_why') or '实际比赛及同场赛后比赛反应；按用户要求固定球场中心cx=.5，不跟踪、不改为人物取景。'
  caps=r.get('captions',[])

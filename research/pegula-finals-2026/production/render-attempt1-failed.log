@@ -1,0 +1,183 @@
+reel	dry-run — 先把 spec 的形状错拦在编码之前	﻿2026-10-22T08:37:18.6425599Z ##[group]Run # tee 进 /tmp/render-findings.log：render 红了之后人工修 spec 时
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6426282Z [36;1m# tee 进 /tmp/render-findings.log：render 红了之后人工修 spec 时[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6426575Z [36;1m# 拿这份**确定性的原话**当输入。[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6426839Z [36;1m# pipefail 不能省——GitHub 的 bash -e 默认不带它，tee 会把失败吞成绿。[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6427104Z [36;1mset -o pipefail[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6427317Z [36;1mSLUG="pegula-finals-2026"[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6427575Z [36;1mSPEC="specs/reels/${SLUG}.json"[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6427843Z [36;1mtest -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6428140Z [36;1mpython tools/check_polyphones.py --spec "$SPEC"[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6428450Z [36;1m# dry-run 的 probe 层按**源片 URL** 认领 output/*/reel/*/probe.json，[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6428742Z [36;1m# 而稀疏检出把 output/ 挡在外面（554 MB）——不拉回来的话这一层是哑的，[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6429001Z [36;1m# 「没查」和「查过没问题」在日志上长得一模一样。只 add 这条 slug 自己[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6429283Z [36;1m# 的那几格（probe.json 连着缩略图墙，几 MB），别把整棵 output/ 抬回来。[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6429618Z [36;1m# ⚠️ grep 零命中退 1，在 pipefail + bash -e 下会把整步打死——下面那个[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6429896Z [36;1m# 专门处理「还没有 probe」的 else 分支就永远走不到（自动链总是先 probe[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6430179Z [36;1m# 后 render，从没有 slug 走过无 probe 这条路，2026-08-27 手建 spec 直接[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6430458Z [36;1m# render 才第一次踩到）。`|| true` 让零命中如实落进 else。[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6430760Z [36;1mDIRS=$({ git ls-tree -r --name-only HEAD -- output 2>/dev/null \[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6431118Z [36;1m  | grep -E "^output/[^/]+/reel/${SLUG}/probe\.json$" || true; } \[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6431408Z [36;1m  | xargs -r -n1 dirname | sort -u)[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6431642Z [36;1mif [ -n "$DIRS" ]; then[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6431866Z [36;1m  git sparse-checkout add $DIRS[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6432099Z [36;1m  echo "拉回 probe 产物：$DIRS"[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6432310Z [36;1melse[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6432546Z [36;1m  echo "::warning::仓库里还没有 output/*/reel/${SLUG}/probe.json——"[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6432885Z [36;1m  echo "::warning::dry-run 的 probe 层（切点/死球/片长）这趟是哑的，先跑一趟 mode=probe"[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6433157Z [36;1mfi[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6433358Z [36;1m# 抽帧封面的认人／睁眼：dry-run 查的是这条 slug **已经抓好的那一帧**[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6433648Z [36;1m# （`cover_src/`，一张 jpg 加一份 manifest）。`--outdir` 是 /tmp/dryrun，[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6433954Z [36;1m# 不把它拉回来的话这一步在 runner 上**永远是空的**（评审 2026-09-27 nit 3）。[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6453865Z [36;1mCOVER_DIRS=$({ git ls-tree -r --name-only HEAD -- output 2>/dev/null \[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6454256Z [36;1m  | grep -E "^output/[^/]+/reel/${SLUG}/cover_src/manifest\.json$" || true; } \[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6454699Z [36;1m  | xargs -r -n1 dirname | sort -u)[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6455048Z [36;1mif [ -n "$COVER_DIRS" ]; then[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6455412Z [36;1m  git sparse-checkout add $COVER_DIRS[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6455936Z [36;1m  echo "拉回封面帧（dry-run 先查认人／睁眼）：$COVER_DIRS"[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6456296Z [36;1mfi[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6456679Z [36;1m# 多源片子的源常常 probe 在**别的 slug 目录**下（hsieh-chan-uso3、proz-mia25、[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6457158Z [36;1m# quiet-src-*……）——上面按本 slug 拉不回来，7 趟几何红的 runner dry-run 因此[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6457614Z [36;1m# 全是「一份 probe.json 都没认领上」。按源片 URL 把它们的 probe.json 落盘[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6458086Z [36;1m# （只取 probe.json，不拉缩略图墙；一趟批量 fetch），见 tools/probe_sources.py。[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6458542Z [36;1m# ⚠️ 这一步必须排在**所有** `git sparse-checkout add` 之后：add 会把稀疏范围[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6458838Z [36;1m# 之外、没被跟踪修改的落盘文件清掉（评审实测），落好的 probe.json 就没了。[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6459119Z [36;1m# 取失败了**要往下传**（REEL_PROBES_MATERIALIZE_FAILED）：这一趟「认领不到[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6459407Z [36;1m# probe」可能只是没拉回来，覆盖那道闸降成只报，别拿「先跑一趟 mode=probe」误导人。[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6459711Z [36;1mif ! python tools/probe_sources.py materialize "$SPEC"; then[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6460023Z [36;1m  echo "::warning::按 URL 认领 probe.json 失败——这一趟覆盖那道闸只报不拦"[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6460305Z [36;1m  export REEL_PROBES_MATERIALIZE_FAILED=1[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6460823Z [36;1mfi[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6461042Z [36;1m# 覆盖那道闸只在 mode=render 硬：cover／narration 这两趟用不到 probe，[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6461309Z [36;1m# 时效第一、封面排最前，别让一条还没 probe 的源挡住出封面。[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6461549Z [36;1mexport REEL_DRY_RUN_FOR="render"[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6461839Z [36;1m# --voice／--rate 和 narration、render 两步传同一对表单值：误差带那道闸拿它们比账头[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6462144Z [36;1m# （`narration_record_mismatch`），不传就恒比 CLI 默认值——表单上换了音色，[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6462471Z [36;1m# narration 量的账和 dry-run 的期望各说各的。判据 `test_runner三步传同一对音色语速`。[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6462781Z [36;1mpython tools/build_match_reel.py render --dry-run \[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6463043Z [36;1m  --spec "$SPEC" \[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6463271Z [36;1m  --voice "zh-CN-YunjianNeural" \[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6463505Z [36;1m  --rate "+6%" \[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6463767Z [36;1m  --outdir /tmp/dryrun 2>&1 | tee -a /tmp/render-findings.log[0m
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6508623Z shell: /usr/bin/bash -e {0}
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6508871Z env:
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6509107Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6509435Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6509752Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6510046Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6510349Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6510645Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6510899Z   AZURE_SPEECH_KEY: 
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6511089Z   AZURE_SPEECH_REGION: 
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:18.6511289Z ##[endgroup]
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.0389961Z [多音字] 没有换字表管不到的非常用读音（695 字、15 段查过）
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.0390427Z   另 1 处落在量过读对的词上（check_polyphones.MEASURED_OK），不逐条报
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.0390839Z   静态筛选不是声学通过；词典和历史词条不能证明本次整句读对。本次 15 段仍须按实际嗓音、语速逐段声学复核，含封面、旁白和片尾。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.1761426Z ##[warning]仓库里还没有 output/*/reel/pegula-finals-2026/probe.json——
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.1769046Z ##[warning]dry-run 的 probe 层（切点/死球/片长）这趟是哑的，先跑一趟 mode=probe
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.3154308Z 按 URL 认领到 9 份 probe.json（spec 有 14 条源）：
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.3154892Z   output/2026-08-04/reel/eala-pegula-final/probe.json
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.3155393Z   output/2026-08-23/reel/pegula-swiatek-cincinnati-2026-sf/probe.json
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.3156102Z   output/2026-08-24/reel/gauff-pegula-cincinnati-2026-final/probe.json
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.3157068Z   output/2026-09-09/reel/pegula-usopen-2026-qf/probe.json
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.3157577Z   output/2026-09-11/reel/sabalenka-pegula-us-open-2026-sf/probe.json
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.3158046Z   output/2026-09-11/reel/sabalenka-pegula/probe.json
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.3158532Z   output/2026-09-19/reel/asian-games-vs-china-open-src-ealadc/probe.json
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.3159050Z   output/2026-09-27/reel/china-withdrawals-eala-source/probe.json
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:19.3159492Z   output/2026-10-14/reel/video-l9gd5ksrsvm/probe.json
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3009186Z [片长] 412.6s = 6 分 52 秒，按实测 12560 kb/s 估 618 MiB —— 成片一律走 Release 附件，不进 git
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3010943Z [TTS] spec 认领 tts_backend=edge，这一趟不走 Azure：沿用系列已定自然云健+6%/+0Hz，完整句合成，冻结实际字节并自动五项验收。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3011597Z [多音字] 没有换字表管不到的非常用读音（695 字、15 段查过）
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3012142Z   另 1 处落在量过读对的词上（check_polyphones.MEASURED_OK），不逐条报
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3012746Z   静态筛选不是声学通过；词典和历史词条不能证明本次整句读对。本次 15 段仍须按实际嗓音、语速逐段声学复核，含封面、旁白和片尾。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3013093Z 
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3013565Z [口味] 只报：给人看的字里的数字写成了汉字：钩子「五次决」——账号所有者 2026-09-16「给用户看的文案里的数字不要用汉字，就用 2025 之类的阿拉伯数字」（TTS 底稿照旧写汉字；序数、抢七、万不换）。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3014146Z [dry-run] spec 形状没问题：30 段，画面共 411.4s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3014793Z [fps] cincy-runnerup 是 30000/1001，重采样到主源的 25/1——原生30000/1001fps按实际时长转为主片25fps，不改变声音或比赛速度。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3015505Z [fps] us-qf 是 30000/1001，重采样到主源的 25/1——原生60000/1001fps按实际时长转为主片25fps，不改变声音或比赛速度。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3016350Z [fps] us-qf-interview 是 60000/1001，重采样到主源的 25/1——原生60000/1001fps按实际时长转为主片25fps，不改变声音或比赛速度。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3017095Z [fps] us-sf 是 30000/1001，重采样到主源的 25/1——原生60000/1001fps按实际时长转为主片25fps，不改变声音或比赛速度。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3017435Z 
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3018190Z [查选段] 认领到 6 份 probe.json，**没查成的源：['ao-sf', 'berlin-sf-sabalenka', 'charleston-final', 'cincy-runnerup', 'dubai-champion-speech', 'dubai-final', 'miami-qf', 'us-qf-interview']**
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3018862Z 
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3019250Z [查选段] 15 处窗口中途换了镜头（**只报不拦**，离边界不到 0.15s 的已经滤掉——那是窗口对齐了源片自己的镜头边界，本来就该那样）。越靠段落中间越可疑，按这个排的：
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3019955Z   第 28 段 257.64–284.40s 里第 271.08s 换了镜头（离最近的边界 13.32s）：「Ostapenko packs a powe…」
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3020596Z   第 28 段 257.64–284.40s 里第 268.48s 换了镜头（离最近的边界 10.84s）：「Ostapenko packs a powe…」
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3021231Z   第 16 段 234.72–260.50s 里第 244.96s 换了镜头（离最近的边界 10.24s）：「It's Eala's magical mo…」
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3021862Z   第 19 段 236.60–260.50s 里第 246.72s 换了镜头（离最近的边界 10.12s）：「It is the first title …」
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3022541Z   第 28 段 257.64–284.40s 里第 263.80s 换了镜头（离最近的边界 6.16s）：「Ostapenko packs a powe…」
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3023201Z   第 19 段 236.60–260.50s 里第 255.64s 换了镜头（离最近的边界 4.86s）：「It is the first title …」
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3023828Z   第 18 段 262.72–275.40s 里第 267.12s 换了镜头（离最近的边界 4.40s）：「She needs the first on…」
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3024445Z   第 16 段 234.72–260.50s 里第 258.04s 换了镜头（离最近的边界 2.46s）：「It's Eala's magical mo…」
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3024924Z   …另有 7 处更靠边的
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3025906Z   拿缩略图墙对一眼：两边还是同一个人就没事，写一句 `"crosses_cut": "<为什么>"` 挂账；**换了人就是整句旁白压在别人身上**，那要改窗口。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3026234Z 
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3026409Z [查选段] 另外这几条也只报不拦：
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3027128Z   源 ao-sf（https://www.youtube.com/watch?v=qMezbjE3Nu4）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3028171Z     已认领 _no_probe_why：实际官方源字节已下载并ffprobe；SHA256 480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c。全片取景和原声须逐段验收。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3029198Z   源 berlin-sf-sabalenka（https://www.youtube.com/watch?v=Il6cKvP4qAw）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3030468Z     已认领 _no_probe_why：实际官方源字节已下载并ffprobe；SHA256 231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48。全片取景和原声须逐段验收。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3031471Z   源 charleston-final（https://www.youtube.com/watch?v=Zwi_zjefnh0）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3032497Z     已认领 _no_probe_why：实际官方源字节已下载并ffprobe；SHA256 b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a。全片取景和原声须逐段验收。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3033513Z   源 cincy-runnerup（https://www.youtube.com/watch?v=pIRDCAcGpz0）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3034525Z     已认领 _no_probe_why：实际官方源字节已下载并ffprobe；SHA256 40e516cbaccdd6ea10131b00316a91b17a807dd289e7f60ed314b8d0b8907de9。全片取景和原声须逐段验收。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3035559Z   源 dubai-champion-speech（https://www.youtube.com/watch?v=kuICNiB--fE）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3036733Z     已认领 _no_probe_why：实际官方源字节已下载并ffprobe；SHA256 b81c05eee0406d4816be14870a933bc2504af15401f14caa3b8408ee1652c918。全片取景和原声须逐段验收。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3037721Z   源 dubai-final（https://www.youtube.com/watch?v=n8N7tGMhsQA）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3038715Z     已认领 _no_probe_why：实际官方源字节已下载并ffprobe；SHA256 f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35。全片取景和原声须逐段验收。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3039674Z   源 miami-qf（https://www.youtube.com/watch?v=Fah2i0vwBVU）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3040913Z     已认领 _no_probe_why：实际官方源字节已下载并ffprobe；SHA256 240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28。全片取景和原声须逐段验收。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3041903Z   源 us-qf-interview（https://www.youtube.com/watch?v=2FI5qs9EXNs）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3042907Z     已认领 _no_probe_why：实际官方源字节已下载并ffprobe；SHA256 39828758dc1c8d1f40ec1389a66825395b93c2d8e91cda27b5728b5de96eaea7。全片取景和原声须逐段验收。
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3043905Z   源 cincy-sf：死球时刻还没量过——probe 猜过 --scorebox 1352,518,1476,550，还没有人拿它重跑一轮 probe 确认（老 probe；新 probe 会按猜的框自己量一遍）
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3044797Z   源 cincy-final：死球时刻还没量过——probe 猜过 --scorebox 90,870,415,980，还没有人拿它重跑一轮 probe 确认（老 probe；新 probe 会按猜的框自己量一遍）
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3045638Z   源 us-qf：死球时刻还没量过——probe 猜过 --scorebox 104,888,653,978，还没有人拿它重跑一轮 probe 确认（老 probe；新 probe 会按猜的框自己量一遍）
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3046588Z   源 us-sf：死球时刻还没量过——probe 猜过 --scorebox 104,888,579,978，还没有人拿它重跑一轮 probe 确认（老 probe；新 probe 会按猜的框自己量一遍）
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3047663Z   ⚠️ 这几条源片的切点没查成：['ao-sf', 'berlin-sf-sabalenka', 'charleston-final', 'cincy-runnerup', 'dubai-champion-speech', 'dubai-final', 'miami-qf', 'us-qf-interview']
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3048319Z 
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3048489Z [查选段] 下面这些**过不去**：
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3049089Z   第 16 段 end=260.50s 切在一分打完之前——记分条在 261.04s 才翻牌（按猜的记分条框量的），观众看不出这分归谁；end 至少要挪到 262.2s（翻牌后再留 1.2s 反应）
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3049778Z     这是硬闸（账号所有者四次重申「完整一分结束再切」）：改 end，或看过缩略图墙后写 `"point_end_ok": "<为什么>"` 认领
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3050411Z [dry-run] 文案 pegula-finals-2026.xhs.txt：正文 432 字（上限 1000）、tag 5 个（上限 5）
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3051276Z [官方上传] spec 里认不出英文名（cover.matchup[].name_en）——要列官方上传就给 --who <姓>,<姓>
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3051591Z 
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3051781Z [估旁白] 14 段有旁白（离线估，误差 ±2.2s）
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3052249Z   第  2 段 画面  12.8s 估旁白 11.32s 余量 +1.48s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3052788Z   第  3 段 画面   9.8s 估旁白  8.52s 余量 +1.28s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3053312Z   第  5 段 画面  11.8s 估旁白 10.34s 余量 +1.46s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3053853Z   第  8 段 画面  10.4s 估旁白  9.18s 余量 +1.22s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3173364Z   第 10 段 画面  10.6s 估旁白  9.34s 余量 +1.26s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3174044Z   第 12 段 画面  10.4s 估旁白  9.18s 余量 +1.22s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3174532Z   第 13 段 画面   9.4s 估旁白  8.04s 余量 +1.36s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3175010Z   第 15 段 画面  10.8s 估旁白  9.51s 余量 +1.29s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3175482Z   第 17 段 画面  13.2s 估旁白 11.50s 余量 +1.70s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3176162Z   第 20 段 画面  10.4s 估旁白  9.02s 余量 +1.38s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3176701Z   第 24 段 画面   9.0s 估旁白  7.86s 余量 +1.14s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3177171Z   第 26 段 画面  11.4s 估旁白 10.01s 余量 +1.39s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3177630Z   第 29 段 画面  11.8s 估旁白 10.18s 余量 +1.62s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3178094Z   第 30 段 画面   7.8s 估旁白  6.86s 余量 +0.94s ← 悬，跑一次 mode=narration
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3178666Z 
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3179013Z [估旁白] 误差带里这几段已经拿真 TTS 量过（data/narration_checks/pegula-finals-2026.json）：
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3179498Z   第 2 段：真 TTS 量过 12.38s，余量 +0.42s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3179879Z   第 3 段：真 TTS 量过 9.43s，余量 +0.37s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3180244Z   第 5 段：真 TTS 量过 11.74s，余量 +0.06s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3180605Z   第 8 段：真 TTS 量过 9.36s，余量 +1.04s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3180967Z   第 10 段：真 TTS 量过 10.08s，余量 +0.52s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3181339Z   第 12 段：真 TTS 量过 10.08s，余量 +0.32s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3181709Z   第 13 段：真 TTS 量过 8.74s，余量 +0.66s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3182252Z   第 15 段：真 TTS 量过 10.51s，余量 +0.29s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3182612Z   第 17 段：真 TTS 量过 12.34s，余量 +0.86s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3182971Z   第 20 段：真 TTS 量过 9.62s，余量 +0.78s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3183327Z   第 24 段：真 TTS 量过 8.71s，余量 +0.29s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3183694Z   第 26 段：真 TTS 量过 10.90s，余量 +0.50s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3184053Z   第 29 段：真 TTS 量过 10.80s，余量 +1.00s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3184414Z   第 30 段：真 TTS 量过 7.68s，余量 +0.12s
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3184636Z 
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3184884Z [断句] 2 个子句宽过一行字幕（16 格），只能硬切——加个逗号断在该断的地方：
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3185289Z   （下面印的是**它现在会被切成什么样**）
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3185682Z   第 13 段（21 格）「她在柏林半决赛的决胜盘送 ｜ 给萨巴伦卡一个6比0」
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3186235Z   第 29 段（16 格）「WTA正式确认她连续 ｜ 第五年入围年终」
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3186444Z 
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3186637Z [看画面] 这一条只查数。要看**每一段窗口里到底是什么画面**：
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3187147Z   PYTHONPATH=src python3 tools/preview_segments_local.py --slug pegula-finals-2026
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.3187709Z   （本地，几秒钟；改了哪几段就 `--seg 3,7` 只看那几段）
+reel	dry-run — 先把 spec 的形状错拦在编码之前	2026-10-22T08:37:20.4454892Z ##[error]Process completed with exit code 1.

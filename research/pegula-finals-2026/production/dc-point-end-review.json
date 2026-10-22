@@ -1,0 +1,321 @@
+{
+  "created_at": "2026-10-22T08:43:19.412849+00:00",
+  "status": "point_end_confirmed_actual_visual_evidence_automatic_late_guess_rejected",
+  "source_name": "dc-final",
+  "source_url": "https://www.youtube.com/watch?v=OvjNXy1mQjY",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/dc-final.mp4",
+  "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+  "source_fps": "25/1",
+  "selected_window": [
+    234.72,
+    260.5
+  ],
+  "recommendation": "Retain existing selected end260.50 and evidence-bound point_end_ok; no source-body/audio/spec edits by this reviewer.",
+  "point_end_ok": "Actual 25fps source-frame review confirms the second championship point is already over by244.40: Pegula last ball travels unreturned through the near-right doubles alley/outside singles court, Eala releases her racket and raises her hands;245.20 she covers her face and begins kneeling,247–252 kneels in champion reaction,259.00–260.48 the players embrace at the net. The selected234.72–260.50 window preserves the complete service/rally, resolved outcome, extended winner reaction and full three-sentence original commentary through260.24. The television score graphic is absent in250–262 frames;261.04 is post-embrace separation with a background stadium screen showing final scores, not a new point ending or a television-score flip. Retain260.50; do not extend to262.20, which would enter the next commentator sentence starting261.86/262.10.",
+  "point_end_confirmed_before_or_at": 244.4,
+  "precision_note": "243.60–244.68 inspected at every native.04s frame. The terminal ball trajectory and no further return are visible; by244.40 Eala is already celebrating. This report does not invent a first physical ground-contact millisecond or claim an audible umpire call was human-listened. It uses the conservative definitive visual outcome and subsequent champion reaction rather than a score-overlay timing proxy.",
+  "observed_milestones": [
+    {
+      "time": 243.0,
+      "observation": "Real rally underway; source TV score reads CHAMPIONSHIP POINT #2, Pegula6/4/0 points15, Eala4/6/5 points40.",
+      "evidence": {
+        "source_time": 243,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-243.00.png",
+        "sha256": "d838fcc5de74dfbb79949e8211916ba4b6d5aadafb4f6d0129aefd76edaf498e"
+      }
+    },
+    {
+      "time": 244.0,
+      "observation": "Pegula terminal ball on near-right doubles-alley trajectory outside singles boundary; Eala makes no return.",
+      "evidence": {
+        "source_time": 244,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-244.00.png",
+        "sha256": "8feffcbdc393fd9b10ea240ee3747105a3ee2a75df33d0c0bc415a1d12ac5129"
+      }
+    },
+    {
+      "time": 244.4,
+      "observation": "Eala has released racket and raises hands. Terminal ball beyond right edge of singles court; point is resolved. TV graphic still retains old5/40, showing that graphics lag real outcome.",
+      "evidence": {
+        "source_time": 244.4,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-244.40.png",
+        "sha256": "288533df3c04e5868f661e14f0648647162c60bbdc20f51ed0bcfa306231e3fa"
+      }
+    },
+    {
+      "time": 245.2,
+      "observation": "Eala hands over face, lowering to knees; crowd visibly applauds.",
+      "evidence": {
+        "source_time": 245.2,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-245.20.png",
+        "sha256": "9f131b5a49322b07d81222b325600712880269521ceba50d55649e81fd2e1e73"
+      }
+    },
+    {
+      "time": 245.6,
+      "observation": "Eala kneeling; old championship-point TV score still remains, not flipped.",
+      "evidence": {
+        "source_time": 245.6,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-245.60.png",
+        "sha256": "536bf5d695157009f06648945f72cc1a7523b1206bc2d5d21a514f9e1266a652"
+      }
+    },
+    {
+      "time": 246.0,
+      "observation": "TV old score still visible while Eala already kneels, championship banner disappearing.",
+      "evidence": {
+        "source_time": 246,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-246.00.png",
+        "sha256": "ec3a913eb0e5e457635919c0aa98926b40f20a7e84cb952e8a9d38b798cc3ec8"
+      }
+    },
+    {
+      "time": 247.0,
+      "observation": "TV score gone; winner kneeling.",
+      "evidence": {
+        "source_time": 247,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-247.00.png",
+        "sha256": "38c7c0d96ed64a80128778e33e4c48f37dc03ed036e0efa02d353d7400adc4fb"
+      }
+    },
+    {
+      "time": 250.0,
+      "observation": "Winner kneels; no television score overlay.",
+      "evidence": {
+        "source_time": 250,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-250.00.png",
+        "sha256": "4d218a80a689b1f57dbfaf1c8b4fe60e55a3c54bbe9ab60827d41932380341fb"
+      }
+    },
+    {
+      "time": 253.0,
+      "observation": "Winner rises after kneeling; no new rally.",
+      "evidence": {
+        "source_time": 253,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-253.00.png",
+        "sha256": "5e34a8917a644eb2b3b092157704743e2eae2b0994ee1d89c80ee25b78763593"
+      }
+    },
+    {
+      "time": 259.0,
+      "observation": "Players meet and embrace across net.",
+      "evidence": {
+        "source_time": 259,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-259.00.png",
+        "sha256": "876b1cff3b1cb70dac3f4420590b1783ab547d512f74d07c5eab6f63de0ae1d9"
+      }
+    },
+    {
+      "time": 260.48,
+      "observation": "Last native frame before selected260.50 end: net embrace; complete point result and extended reaction already retained.",
+      "evidence": {
+        "source_time": 260.48,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-260.48.png",
+        "sha256": "3c0da3f279e87e6716a911b22086303e86a088b86601b19ab52f043d32793b5a"
+      }
+    },
+    {
+      "time": 261.04,
+      "observation": "After selected body, players separate. Stadium large screen behind them displays final6/4/0 vs4/6/6, not a TV score strip or new point.",
+      "evidence": {
+        "source_time": 261.04,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-261.04.png",
+        "sha256": "015a133362fe6900ecf8f3ef044bff60282610a25a97c91993df7b384d474557"
+      }
+    },
+    {
+      "time": 262.2,
+      "observation": "Players move away after handshake; no new point. Extending here enters the next original-English sentence.",
+      "evidence": {
+        "source_time": 262.2,
+        "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-source-262.20.png",
+        "sha256": "1b2b755d0057d40637e2eda7b771a74e40be894cb4c5e1c7dfd26a816b661a20"
+      }
+    }
+  ],
+  "contacts": [
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/terminal-ball-native-contact.jpg",
+      "sha256": "ea5808e01fdcf37b1d154dcd8dcee678c562e970e503b3f629aa8c61162ab5b7"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/result-transition-native-contact.jpg",
+      "sha256": "b1816d691717979dc164e3f893b0080c6a0a24eba6c2bb27c086f20bd20ff81c"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/reaction-250-262-contact.jpg",
+      "sha256": "a118421f6cbfae47abd32ee18a4052e3e0cb2bcdb06c66346626f4d01e01ee01"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/timeline-contact.jpg",
+      "sha256": "3df0a75c966d4b3ea76d134173c7b76da2658313e1066a8ae4f1eba201de5a36"
+    }
+  ],
+  "terminal_native_frame_evidence": [
+    {
+      "source_time": 243.6,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-243.60.png",
+      "sha256": "5e9876ecdbf57be36caf0aaf9d74587f7c320d5f1b07ce06271f2bbf56ca5868"
+    },
+    {
+      "source_time": 243.64,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-243.64.png",
+      "sha256": "2049684556846cd2c29250da1a29bc256f7947aa6c0cee43fcb85a62a42b85cd"
+    },
+    {
+      "source_time": 243.68,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-243.68.png",
+      "sha256": "fc83f05985706c96074438528843cd5d8be28cfec629f1e2dd38061ab810b5b5"
+    },
+    {
+      "source_time": 243.72,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-243.72.png",
+      "sha256": "a923853518b99864035d01a619fb3f68b97cc832e5a7f81584df5eefefec4cc6"
+    },
+    {
+      "source_time": 243.76,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-243.76.png",
+      "sha256": "d9f2ff4d6ac7046154975f664eacb4eafa69a4d437c7f5588a799abb6374babf"
+    },
+    {
+      "source_time": 243.8,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-243.80.png",
+      "sha256": "6c159d69cc6d68c4f229386fd07adcc83736b4317d8d7e48a3d60d772816938e"
+    },
+    {
+      "source_time": 243.84,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-243.84.png",
+      "sha256": "426740d8138468023172f5100d20f5d84072d9edd17703a2a62a5a9b178db2a5"
+    },
+    {
+      "source_time": 243.88,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-243.88.png",
+      "sha256": "57d9f01d9dacb5088ae49860f3006f92c764b45f1809a8d10a4852e1e3343acf"
+    },
+    {
+      "source_time": 243.92,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-243.92.png",
+      "sha256": "4619480ebb156916740d83d353819ff8eaa18f572a7f79e54f554091f42fb8f9"
+    },
+    {
+      "source_time": 243.96,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-243.96.png",
+      "sha256": "c6790f88f1a77e56dfcb67cfb3186edeeb11a0bca034c75017419c36077610e2"
+    },
+    {
+      "source_time": 244.0,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.00.png",
+      "sha256": "8feffcbdc393fd9b10ea240ee3747105a3ee2a75df33d0c0bc415a1d12ac5129"
+    },
+    {
+      "source_time": 244.04,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.04.png",
+      "sha256": "12887ad9ecc2ff1b591db061d68a74d7d00a502ff045157ce6cd4e4935e58002"
+    },
+    {
+      "source_time": 244.08,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.08.png",
+      "sha256": "de1600be605e639552e2ea9a2f2b0bd96a431dfa5dd62792dff5fd4d6f3972d0"
+    },
+    {
+      "source_time": 244.12,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.12.png",
+      "sha256": "1d6d47ec63dd6da7fcbd9e4746590a1c023f67d4990b5ef493949a3e771efbbf"
+    },
+    {
+      "source_time": 244.16,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.16.png",
+      "sha256": "1d12e3435fb6a467c08458abc619367ecf65555278a41a1771afe69571c84779"
+    },
+    {
+      "source_time": 244.2,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.20.png",
+      "sha256": "85cfc1a6576bd451a088a1a6c023390d03c6e735b963064a42fd08e29b655da4"
+    },
+    {
+      "source_time": 244.24,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.24.png",
+      "sha256": "41296d125512df2fd591d4973baf799362f00377337280f766696e3d4ae4af43"
+    },
+    {
+      "source_time": 244.28,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.28.png",
+      "sha256": "ae8c22ac7bcd32db4e6940663e2f730af9cb4b10dc1815ae369207bfc4318af3"
+    },
+    {
+      "source_time": 244.32,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.32.png",
+      "sha256": "c8b4fb8b81fc98f0fdad6ec6ebd7cf0e53992fb5c4c6ffab432a220eec61e0d9"
+    },
+    {
+      "source_time": 244.36,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.36.png",
+      "sha256": "53367b94a17de71a87cb0ea74e1c53dadd2bdc34c0dd8cfb73c58a45d3008919"
+    },
+    {
+      "source_time": 244.4,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.40.png",
+      "sha256": "288533df3c04e5868f661e14f0648647162c60bbdc20f51ed0bcfa306231e3fa"
+    },
+    {
+      "source_time": 244.44,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.44.png",
+      "sha256": "d47567a528885420e7258a86fdd92d19eca855c8b003f3662fc40da9e95c4171"
+    },
+    {
+      "source_time": 244.48,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.48.png",
+      "sha256": "35fdf28f5cdad4858d5d378226a77be585f3deed37ef1904049d2a5e73c3760f"
+    },
+    {
+      "source_time": 244.52,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.52.png",
+      "sha256": "c277e94a6a94d1fad8158bbb7a82233d292b362d5eca011d07b12b3bc9b62112"
+    },
+    {
+      "source_time": 244.56,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.56.png",
+      "sha256": "e9e2e8cec8211f7a3b831c04e97eebdb9c0135178695fe4018d25089c4a84698"
+    },
+    {
+      "source_time": 244.6,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.60.png",
+      "sha256": "7df621093ced736e4cc9db7070a26b3107a1bd537810de631c7c559a212ecc76"
+    },
+    {
+      "source_time": 244.64,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.64.png",
+      "sha256": "57771f82a52a37f598f954a41153464ce737f6706ca9090fe19eba162495e8a8"
+    },
+    {
+      "source_time": 244.68,
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-point-end/dc-native-244.68.png",
+      "sha256": "d3b61c6c696cc752f74d4e5914bf9f8df519df245d9f8b9b3c3b3ff76100d331"
+    }
+  ],
+  "audio_boundary": {
+    "method": "Existing actual source-bound small.en/medium.en evidence; no new ASR required or fabricated.",
+    "selected_commentary_end": 260.24,
+    "selected_end": 260.5,
+    "outgoing_tail_end": 260.75,
+    "next_foreground_word": "500",
+    "next_onsets": [
+      261.86,
+      262.1
+    ],
+    "safe_tail": true,
+    "asr_evidence": [
+      {
+        "path": "/workspace/pegula-finals-production/audio/dc-final-small.en.json",
+        "sha256": "36ced28b8d75f130c65aec06a44268e17b2de7865cff4a20560963539f38732a"
+      },
+      {
+        "path": "/workspace/pegula-finals-production/audio/dc-final-medium.en.json",
+        "sha256": "238ab5306ea054bc935c116fcad038c0c1d7b7a4f2d2d9d1084e8f4523cec165"
+      }
+    ]
+  },
+  "human_listened": false,
+  "spec_modified": false,
+  "native_final_or_encoded_film_QC_claim": false
+}
