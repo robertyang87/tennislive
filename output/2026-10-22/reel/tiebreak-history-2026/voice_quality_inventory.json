@@ -1,25 +1,8 @@
 {
   "schema": "tennislive.voice-quality.v1.inventory",
-  "bundle_sha256": "736178868193bd83c4e6164edd1f32e54de79f504c60619ccaa52350e28d0cb9",
+  "bundle_sha256": "e5cc6d3c6a66fea2eb28257c6d6b92c24152d87eb3eea94b37cb9f8f2bae073e",
   "bundle_request_count": 19,
   "entries": [
-    {
-      "id": "bundle:14d5200a045d15f05522e522299c981595820a1313fc19de6be35e55cadf9854",
-      "request_id": "14d5200a045d15f05522e522299c981595820a1313fc19de6be35e55cadf9854",
-      "request": {
-        "backend": "edge",
-        "cache_key": "281fede29e8c99a059650ae3dcfaef43",
-        "lead_pause": 0.0,
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "style": "",
-        "styledegree": "",
-        "text": "一分定生死，球员骂了五十年。",
-        "voice": "zh-CN-YunjianNeural"
-      },
-      "audio_sha256": "9587b9e0e2afa78417e58962cb9b37d1ca94a5c6d7bc716bece7df1b2007b726",
-      "words_sha256": "5ca90d718b350960eb06fae12e2dd5911d6e2bbe5809fd6c63e03212eaf8dca4"
-    },
     {
       "id": "bundle:23883bc1ccf01252f5024dff2833d7fb5f17ce9f3a39db46b9a3082f7bd592be",
       "request_id": "23883bc1ccf01252f5024dff2833d7fb5f17ce9f3a39db46b9a3082f7bd592be",
@@ -36,6 +19,23 @@
       },
       "audio_sha256": "93aac652521723bbf0a6748635cd33eb4f5a1a7ed2e412653ac701773a94d6c7",
       "words_sha256": "486a2585ea5bfff4dfa3d7f5b320920c9c823a22b28765476ed588c779a0deb8"
+    },
+    {
+      "id": "bundle:27c0e9d4ad5d584cd3020bcced812601009b83e0401f96b5d042b32aa1d7f06e",
+      "request_id": "27c0e9d4ad5d584cd3020bcced812601009b83e0401f96b5d042b32aa1d7f06e",
+      "request": {
+        "backend": "edge",
+        "cache_key": "8e5716e8b16631c333a1eb7f29e42375",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "抢七，是被一场打不完的比赛逼出来的。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "030b229697478f4d6913ce5f885c286708717136255b0b823f8f5d47d500deab",
+      "words_sha256": "d020e3383549ebcbb73f1836ff8ba61ede8ee0ea6d49692d6117cd87f83d64e8"
     },
     {
       "id": "bundle:28b5a74120d7a8df8445651b371823e40fcc66af125b4b9b095b79f961b5914b",
@@ -617,18 +617,18 @@
     },
     {
       "id": "voice_cover.mp3",
-      "audio_sha256": "9587b9e0e2afa78417e58962cb9b37d1ca94a5c6d7bc716bece7df1b2007b726",
-      "words_sha256": "5ca90d718b350960eb06fae12e2dd5911d6e2bbe5809fd6c63e03212eaf8dca4",
+      "audio_sha256": "030b229697478f4d6913ce5f885c286708717136255b0b823f8f5d47d500deab",
+      "words_sha256": "d020e3383549ebcbb73f1836ff8ba61ede8ee0ea6d49692d6117cd87f83d64e8",
       "words_path": "voice_cover.words.json",
       "request": {
         "backend": "edge",
-        "cache_key": "281fede29e8c99a059650ae3dcfaef43",
+        "cache_key": "8e5716e8b16631c333a1eb7f29e42375",
         "lead_pause": 0.0,
         "pitch": "+0Hz",
         "rate": "+6%",
         "style": "",
         "styledegree": "",
-        "text": "一分定生死，球员骂了五十年。",
+        "text": "抢七，是被一场打不完的比赛逼出来的。",
         "voice": "zh-CN-YunjianNeural"
       }
     },
