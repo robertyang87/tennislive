@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "46231ee76080654e0dc06387c92b5db387c2f6affae305e9cb8e0c9f465f7b38",
-    "render_inputs_sha256": "7df693ea69089029473725f326c65f956125687045d52899451a68a6b7113a82",
-    "spec_sha256": "f5656a848567ed1da5b4b0beaf456200c53e1bdf11d11c3912aafd4d76fa6daa",
-    "film_sha256": "a4e2488dc60e54db8a891484e7775a93a436b21df7e891328eec52831f30b154",
+    "render_sha256": "7e1377c238e3b51acb9d4a065f0b2fbc4eb49bb9dd4286822b75117942e6b6d8",
+    "render_inputs_sha256": "2a19a396b77784ea729a46fd46f145be16c6996ea5f7d1242a6f0ae6e1991a7c",
+    "spec_sha256": "86205a3113df704186f8aa70b98d03249fc275f16732e992b6c271103fdf4f35",
+    "film_sha256": "efbd37cfb5dbcbdde16d201a702a749dcecf14b1e0437157f86302b53ae11f21",
     "inventory_sha256": "8bafe6cd7f909f935450c2e2e0ab9bf3687102f275ef78a146c12c4509cc3b7f"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-22T02:01:24+00:00",
+  "reviewed_at": "2026-10-22T02:16:55+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -270,7 +270,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "年初,她止步布里斯班巴强。奥网决赛,决胜盘零比三落后,她却以六比四逆转赢下冠军。"
+        "transcript": "年初,他止步布里斯班巴强。奥网决赛,决胜盘0比3落后,他却以6比4逆转赢下冠军。"
       },
       "polyphones": [
         {
@@ -364,7 +364,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "10月,他回到宁波,付出手战,对手是波利娜·库德梅托娃,比赛仍带开打。"
+        "transcript": "10月,他回到宁波,付出手战,对手是波利娜·库德梅托娃,比赛仍待开打。"
       },
       "polyphones": [],
       "pauses": {
@@ -396,7 +396,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "莱巴金娜握有冠军点,却没能拿下。决胜盘抢七六比八,他输给萨巴伦卡。"
+        "transcript": "莱巴金娜握有冠军点,却没能拿下。爵声盘强七六比八,他输给萨巴伦卡。"
       },
       "polyphones": [],
       "pauses": {
@@ -460,7 +460,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "7502分,门票早已在手。年中总决赛,你最期待他怎样的表现。"
+        "transcript": "7502分,门票早已在手。年终总决赛,你最期待他怎样的表现。"
       },
       "polyphones": [],
       "pauses": {
@@ -620,7 +620,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "马德里第四轮出局,罗马止步八强。来到法网,他先赢一盘,却输掉绝胜盘抢七,止步第二轮。"
+        "transcript": "马德里第四轮出局,罗马止步八强。来到法网,他先赢一盘,却输掉决胜盘抢七,止步第二轮。"
       },
       "polyphones": [],
       "pauses": {
@@ -652,7 +652,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "也是这一天他正式登上世界第一,但这个赛季还没有结束。"
+        "transcript": "也是这一天他正式登上世界第一, 但这个赛季还没有结束。"
       },
       "polyphones": [
         {
@@ -738,7 +738,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "先赢一盘再丢两盘,中网第二轮成了他这一战的终点。"
+        "transcript": "先赢一盘再丢两盘。中网第二轮成了他这一战的终点。"
       },
       "polyphones": [],
       "pauses": {
@@ -834,7 +834,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "9月18日,她因医疗原因退出金杯总决赛。"
+        "transcript": "9月18日,他因医疗原因退出金杯总决赛。"
       },
       "polyphones": [],
       "pauses": {
@@ -863,10 +863,10 @@
         "ref_syllables": 43,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.023,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "梅阿弥伴决赛、萨巴伦卡再次让他止步。4月的斯图加特,他先挽救两个赛点过关,最终在决赛击败穆霍娃。"
+        "transcript": "迈阿弥半决赛,萨巴伦卡再次让他止步。4月的斯图加特,他先挽救两个赛典过关,最终在决赛击败穆霍娃。"
       },
       "polyphones": [],
       "pauses": {
@@ -898,7 +898,7 @@
         "substituted": 1,
         "sub_ratio": 0.036,
         "longest_deletion": 0,
-        "transcript": "辛希娜提四分之一决赛,两人又相遇,手盘一比四,来巴金娜阴伤退赛。"
+        "transcript": "新西纳提四分之一决赛,两人又相遇,手盘一比四,来巴金娜阴伤退赛。"
       },
       "polyphones": [],
       "pauses": {
