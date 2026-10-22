@@ -1,0 +1,57 @@
+{
+  "schema": "noskova.necessary-title-tail-revision.v1",
+  "status": "passed_targeted_native_join_machine_crosscheck_not_finalfilm_QC",
+  "base_actual_movie_sha256": "ddb10faa24da4eb9c22d6190d3953be2f9a84fddc3e045529823b501b210efc9",
+  "spec_sha256": "6a5f7213e88e500ce90cb1f3ba531f068e7d8965c62875fbb1180cbf4e6c99e9",
+  "only_material_changes": [
+    "seg9 title草地带来第一座冠军→草地带来本季首冠 (Prague2024prior title; narration already本季首冠、生涯第二冠 unchanged)",
+    "Madrid end296.40→296.04, finalcue296.14→296.00, bottomwindow upperbound clipped to newlength34.92; captions words and source start/point untouched",
+    "Natural native0.18video/audiohandle preserved; no audio_tail:silence,freeze,newsegment,renderer,TTS,voice,pause changes.",
+    "Source-bound packet/index/cue end and actual short-ASR evidence updates only."
+  ],
+  "source_boundary": {
+    "last_clean_source_frame": 296.2,
+    "first_black_frame": 296.24,
+    "first_green_WTA_frame": 296.28,
+    "body_end": 296.04,
+    "natural_handle_until": 296.22
+  },
+  "ASR_variants_preserved": {
+    "old_long_context": {
+      "small.en": 295.88,
+      "medium.en": 296.14
+    },
+    "new_full_final_clause": {
+      "small.en": 295.84,
+      "medium.en": 296.0
+    },
+    "actual_native_mixed_join": {
+      "small.en_final_score_end_mini": 7.86,
+      "medium.en_final_score_end_mini": 7.92,
+      "English_complete_words_both": true,
+      "Chinese_small_entire_next_sentence": true
+    }
+  },
+  "audio_precision_boundary": {
+    "join_time_mini": 7.84,
+    "native_frozen_Chinese_first_wordmark": 7.8871659,
+    "conservative_oldEnglishend_mini": 7.94,
+    "estimated_edge_overlap_ms": [
+      33,
+      53
+    ],
+    "note": "Not claimed zero overlap or human listened. BothEnglishmodels recovercompletefinalscore andChinese ASR recovers随后andentirefollowing sentence; no actualwordloss observedbyautomatedtranscription. Root accepted existing0.18triangularfade semantics without newTTS/pause."
+  },
+  "actual_visuals_viewed": {
+    "native_frame_preview": 3,
+    "actual_encoded_join_grid": 40,
+    "grid_spacing": 0.04,
+    "grid_scope": "lastfull1s tofirst0.44s afterjoin +Chineseafterward samples",
+    "black_or_green_WTA_seen": false,
+    "new_title_fits": true,
+    "no_info_label_on_static_chapter": true
+  },
+  "same_frozen_voice_bundle_sha256": "26d32fbdf9b1e64dfaf42a8f2e50066bf18be1a5b21f8d969a53cfa111d014ba",
+  "expected_seconds": 301.164,
+  "remaining": "Root formal rerender and actualnewmovie QC; old movie notpublishable."
+}

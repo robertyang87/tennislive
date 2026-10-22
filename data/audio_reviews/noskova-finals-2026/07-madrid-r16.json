@@ -1,0 +1,119 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=_4WYCZn0rBQ",
+  "source_sha256": "6b03e570d38d44eb455bf0643669c54c1db3cb018e50d3131967bdb4399e33b4",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual-source paired localASR/wordtime cross-check, no human-listening claim",
+  "reviewed_at": "2026-10-22T13:27:22.596893+00:00",
+  "reviewed_from": 261.12,
+  "reviewed_to": 296.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 268.94,
+      "end": 270.66,
+      "en": "Put it in the books.",
+      "zh": "记下这一胜。"
+    },
+    {
+      "start": 270.66,
+      "end": 272.94,
+      "en": "A dozen top-ten wins",
+      "zh": "第十二次击败世界前十，"
+    },
+    {
+      "start": 272.94,
+      "end": 276.68,
+      "en": "earns the 21-year-old from Czechia a spot",
+      "zh": "让二十一岁的捷克姑娘，"
+    },
+    {
+      "start": 276.68,
+      "end": 279.0,
+      "en": "in her 21st WTA quarterfinal,",
+      "zh": "第21次进入巡回赛8强，"
+    },
+    {
+      "start": 279.0,
+      "end": 280.9,
+      "en": "and her first in Madrid.",
+      "zh": "这也是她首进马德里8强。"
+    },
+    {
+      "start": 282.34,
+      "end": 283.7,
+      "en": "as Linda Noskova knocks off",
+      "zh": "诺斯科娃击败了"
+    },
+    {
+      "start": 283.7,
+      "end": 285.3,
+      "en": "last year's runner-up Coco Gauff,",
+      "zh": "去年的亚军高芙，"
+    },
+    {
+      "start": 285.3,
+      "end": 287.8,
+      "en": "in three dynamic sets,",
+      "zh": "三盘激战之后，"
+    },
+    {
+      "start": 287.8,
+      "end": 290.64,
+      "en": "holding on to her one-set lead",
+      "zh": "她守住先赢一盘的优势，"
+    },
+    {
+      "start": 290.64,
+      "end": 296.0,
+      "en": "to move through, 6-4, 1-6, 7-6.",
+      "zh": "以6比4、1比6、7比6晋级。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/madrid-r16-8eb3649018-madrid-r16-initial-small.en.json",
+      "sha256": "8eb3649018201c09ee5c880683bd4ddc895a32ad9f7db97d5858168e6ef6f7a5",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/madrid-r16-0a53768719-madrid-r16-initial-medium.en.json",
+      "sha256": "0a537687199ec6a83ca0f35666edc649f3c2ed3b95cd0fffbf3195e7db34c318",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/madrid-r16-bc98b3feb4-tail-small.en.json",
+      "sha256": "bc98b3feb45610a5121382cb0770ae43424c8fd048effdffd66e4f214bd14e54",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/madrid-r16-40a4340349-tail-medium.en.json",
+      "sha256": "40a434034993a53ff75d672d0aa32696c4e532de7bae26a5ff44f37e029f8c9b",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "Actual source bytes and independent local unprompted word-level ASR checked. English proper names normalized from official player identities; phrase cues split only at actual word boundaries, complete original commentary retained across cues. Not human listening.",
+  "outgoing_tail": {
+    "default_seconds": 0.25,
+    "padding_policy": "actual paired ASR context beyond selected end covers +.25; next sentence not intersected"
+  },
+  "raw_conflicts_retained": true,
+  "tail_review_revision": {
+    "original_long_context_end": {
+      "small.en": 295.88,
+      "medium.en": 296.14
+    },
+    "short_complete_clause_end": {
+      "small.en": 295.84,
+      "medium.en": 296.0
+    },
+    "selected_body_end": 296.04,
+    "natural_handle_until": 296.22,
+    "first_source_black": 296.24,
+    "first_source_green": 296.28,
+    "note": "NativeSEG_FADE0.18 natural audio/video handle retained through296.22, lastactualcleanframe296.20 before296.24black/296.28green. Shortfullclause ASR smallends295.84/medium296.00, finalcueends296.00, bodyend296.04; oldlongmedium296.14 conservative speech range remains in naturalaudiohandle. No silence, freeze, newsegment, or renderer change. Actualjoinedmix targeted review required.",
+    "not_human_listening": true
+  }
+}

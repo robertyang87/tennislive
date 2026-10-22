@@ -1,0 +1,39 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=UBho6XdEcUo",
+  "source_sha256": "6f9d56b6e079846e27c297a19840e3135c3edd876e0dd7c9a8a80d815864f16a",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual-source paired localASR/wordtime cross-check, no human-listening claim",
+  "reviewed_at": "2026-10-22T13:27:22.599796+00:00",
+  "reviewed_from": 133.7,
+  "reviewed_to": 138.12,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 133.78,
+      "end": 137.8,
+      "en": "I think she was the main ingredient, you know.",
+      "zh": "我想，她才是最重要的力量。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/cold-mother-2f7f3952d7-wimbledon-dinner-small.en.json",
+      "sha256": "2f7f3952d77a89111fb7cf1a02e393bf5e324b48bc4244ef5835217d807747b5",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/cold-mother-3c9aaf6a1e-dinner-mother-medium.en.json",
+      "sha256": "3c9aaf6a1e71a35650d1d7ec3b9bf6a0715c30f36c38e7f806d0b4168a0e052e",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "Actual source bytes and independent local unprompted word-level ASR checked. English proper names normalized from official player identities; phrase cues split only at actual word boundaries, complete original commentary retained across cues. Not human listening. Original7/12 champion dinner, uploaded7/19; mother context established by preceding same-source host question and officialWimbledon title. Generic-largest host face rejected; Linda identity-aware9samples used. Cold is4.42s subset replayed within full ending15.72s as explicit ending payoff.",
+  "outgoing_tail": {
+    "default_seconds": 0.25,
+    "padding_policy": "silence outside selected body"
+  },
+  "raw_conflicts_retained": true
+}

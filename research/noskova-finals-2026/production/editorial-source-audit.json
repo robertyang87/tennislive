@@ -1,0 +1,189 @@
+{
+  "schema": "noskova.editorial-source-self-audit.v1",
+  "status": "passed_for_root_formal_render_preparation",
+  "spec_sha256": "157b79dfb5b0c4f5c03e36831c40905cead2237c34cfee7736e979064b351dfd",
+  "scope": "Source-bound editorial, facts, point coverage and machine ASR self-audit only; not independent editorial approval or actual final film QC.",
+  "season": {
+    "official_tour_events": 17,
+    "played": 50,
+    "wins": 35,
+    "losses": 15,
+    "byes": 8,
+    "walkovers": 1,
+    "retirements": 0,
+    "event_points_total": 4354,
+    "titles": [
+      "Berlin500",
+      "Wimbledon2000"
+    ],
+    "BJK_separate": {
+      "played": 5,
+      "wins": 5,
+      "losses": 0,
+      "team_title": true,
+      "personal_title": false,
+      "race_points": 0
+    }
+  },
+  "source_video": {
+    "actual_displayed_matches": 6,
+    "complete_terminal_matchpoints": 6,
+    "extra_rallies": 0,
+    "featured_RG": "Accurate factual R1 loss to Sakkari5-7 6-7(3), no match video; official native1080 fullMP could not be acquired after bounded source search. No substitute match used.",
+    "source_1080_verified": true,
+    "court_cx": 0.5,
+    "proof": "production/exact-point-proofs/manifest.json + six dense terminal contacts; source results visible in actual originals. Nine sparse frames alone not treated as proof terminal point had ended."
+  },
+  "matches": [
+    {
+      "source_name": "ao-r3",
+      "source_url": "https://www.youtube.com/watch?v=nOrIoX5vUUM",
+      "source_sha256": "2b835cd0fc86187a9e692d4fd67873af3874ee974c16fb267ebc787a338d69c7",
+      "start": 158.76,
+      "end": 183.0,
+      "cx": 0.5,
+      "point_evidence": {
+        "score_before": "Noskova5 4 30 /Wang7 5 40",
+        "serve_preparation": 158.8,
+        "serve_toss": 160.4,
+        "dead_by": 167.1,
+        "score_updates_by": 168.14,
+        "winner_closeup": 169.2,
+        "notes": "30-40 second match point; Wang wins; source earlier15-40 point excluded."
+      }
+    },
+    {
+      "source_name": "iw-sf",
+      "source_url": "https://www.youtube.com/watch?v=5K3oWYO0ZqU",
+      "source_sha256": "6416446164e9ecd30ccd59eb11df0ad72b4bcbed18b027a23cf7ac623860efc4",
+      "start": 260.72,
+      "end": 285.7,
+      "cx": 0.5,
+      "point_evidence": {
+        "score_before": "Sabalenka6 5 40 /Noskova3 4 30",
+        "serve_preparation": 260.72,
+        "serve_toss": 261.333,
+        "dead_by": 266.84,
+        "winner_closeup": 268.24,
+        "notes": "Third matchpoint; earlier saved matchpoints excluded. Fixed crop has near-court Linda left-edge excursion at263–264; temporal rally preserved, no claim all lateral space retained."
+      }
+    },
+    {
+      "source_name": "madrid-r16",
+      "source_url": "https://www.youtube.com/watch?v=_4WYCZn0rBQ",
+      "source_sha256": "6b03e570d38d44eb455bf0643669c54c1db3cb018e50d3131967bdb4399e33b4",
+      "start": 261.12,
+      "end": 296.4,
+      "cx": 0.5,
+      "point_evidence": {
+        "score_before": "Noskova6 1 6 TB6 /Gauff4 6 6 TB5",
+        "serve_preparation": 261.12,
+        "serve_toss": 263.2,
+        "dead_by": 269.17,
+        "winner_closeup": 270.08,
+        "notes": "R16 win earns quarterfinal; not the QF loss to Kostyuk. Fixed crop loses Gauff lateral extremity briefly, preserves source time."
+      }
+    },
+    {
+      "source_name": "berlin-final",
+      "source_url": "https://www.youtube.com/watch?v=6D6839Xw9eo",
+      "source_sha256": "49858a1298eecc578ab1c93b369d079d5c7fe117128ef62f06795c860c8fa407",
+      "start": 5977.8,
+      "end": 6029.65,
+      "cx": 0.5,
+      "point_evidence": {
+        "score_before": "Pegula4 6 3 15 /Noskova6 4 5 40",
+        "serve_preparation": 5977.8,
+        "serve_toss": 5982.7,
+        "dead_by": 5986.75,
+        "winner_closeup": 5987.0,
+        "notes": "Championshippoint2; Linda far-court serves and near-court Pegula returns; source full match, not rejected720BCV. Full serve/return/rally/result plus grass collapse and handshake. Source large frontal postcloseup briefly clipped at6001–6004 under fixedcourt; reported boundary."
+      }
+    },
+    {
+      "source_name": "wimbledon-final",
+      "source_url": "https://www.youtube.com/watch?v=XfE9M6__724",
+      "source_sha256": "39e3e2b5d0d5e21037fa6f593c6a5db0b7ee1d23152b1aeec151c5fa8e5aaf1e",
+      "start": 215.08,
+      "end": 224.24,
+      "cx": 0.5,
+      "point_evidence": {
+        "score_before": "Muchova2 7 3 15 /Noskova6 5 5 40",
+        "serve_preparation": 215.08,
+        "serve_toss": 215.32,
+        "dead_by": 219.55,
+        "winner_closeup": 220.45,
+        "notes": "Championshippoint; Linda far court serving, Muchova near court returning/dive. Source includes complete terminal and Linda grass collapse. Near return dive crosses right fixed crop. Whole independent post224.48 montage omitted; no guessed next history clause and no partial iconic-trophy line retained."
+      }
+    },
+    {
+      "source_name": "us-qf",
+      "source_url": "https://www.youtube.com/watch?v=ChIOgR3JpVQ",
+      "source_sha256": "a880e26b2bb56d96114a30d1c0082ffc32a2549713a9c4995c2ef3f692e38ac9",
+      "start": 162.36,
+      "end": 195.72,
+      "cx": 0.5,
+      "point_evidence": {
+        "score_before": "Sabalenka7 3 6 TB9 /Noskova6 6 6 TB7",
+        "serve_preparation": 162.36,
+        "serve_toss": 166.6,
+        "dead_by": 169.79,
+        "winner_closeup": 170.01,
+        "loser_closeup": 178.4,
+        "notes": "Final-set10pointtiebreak9-7 becomes10-7; actual6-7(1)6-3 6-7(7) Linda perspective. Service routine then complete short rally, Sabrelief, Lindareaction, handshake and all complete commentary."
+      }
+    }
+  ],
+  "qualification": {
+    "article": "https://www.wtatennis.com/news/4586608",
+    "published_utc": "2026-10-09T00:50:00Z",
+    "published_bjt": "2026-10-09T08:50:00+08:00",
+    "not_CMS_publishFrom": true,
+    "mechanism": "Assured Top7 or highest-ranked not-yet-qualified Grand Slam champion in Race8–20; do not assert allTop8 automatic or Wimbledon-day clinch."
+  },
+  "late_season": {
+    "BJK_team_title": "2026-09-27",
+    "Beijing_exit": "fourth round 2026-10-06",
+    "Wuhan": "left calf withdrawal before first match, official2026-10-11T08:49Z; no played loss"
+  },
+  "original_audio": {
+    "windows": 8,
+    "complete_bilingual_cues": 46,
+    "method": "actual local paired word-level ASR cross-check, raw conflicts retained; no human listening",
+    "interview": "Same actual7/12 Wimbledon dinner answer; cold first complete sentence intentionally reprises at ending within full answer. Not newOctober statement.",
+    "Wimbledon": "Complete final point + full It is over and out result sentence. Entire independent montage after224.48 omitted, including uncertain history and separate iconic-trophies paragraph, not mid-sentence cut."
+  },
+  "labels": {
+    "topics": [
+      "第三轮·130分",
+      "止步4强·390分",
+      "本站215分",
+      "冠军·500分",
+      "冠军·2000分",
+      "止步8强·430分"
+    ],
+    "numeric_rounds": true,
+    "only_actual_video": true,
+    "no_static_inset": true
+  },
+  "narration": {
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "actual_frozen_requests": 12,
+    "voice_preflight": "all12 actual inputs pass; final mixed movie automated voice QC remains required",
+    "earlier_personal_exits": "Rome,Cincinnati,Beijing officialR16 ordinal4 narrated第四轮, not16强"
+  },
+  "cover": {
+    "identity": "Actual Wimbledon champion photo, AELTC/BenQueenborough",
+    "actual_date": "2026-07-12 Royal Box",
+    "not_claimed_final_day": "2026-07-11"
+  },
+  "expected_runtime_seconds": 301.524,
+  "limits": [
+    "Fixed centered3:4 crops can lose lateral limbs/opponent or post-match closeup edges; full source time retained, no contain/no720 exception.",
+    "US source begins intrinsic broadcast dissolve at162.36 before actualMP preparation, not an extra complete rally.",
+    "Embedded Wimbledon serve_toss215.32 is coarse source-setup marker; actual toss visible around217.0. Window215.08 retains full preparation/service/terminal result/reaction; phase-marker timestamps not frame-accurate."
+  ],
+  "formal_render": "Root only; no actual MP4 rendered by this child."
+}

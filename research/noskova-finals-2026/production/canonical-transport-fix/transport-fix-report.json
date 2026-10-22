@@ -1,0 +1,62 @@
+{
+  "schema": "noskova.canonical-producer-transport-fix.v1",
+  "failed_formal_run": 39792659238,
+  "earliest_blocker": "Invalid immutable repository bundle locator before source downloads/encoding; actual canonicalrestore further exposed missing producerkind. Both repaired without relaxingvalidator.",
+  "spec_sha256": "157b79dfb5b0c4f5c03e36831c40905cead2237c34cfee7736e979064b351dfd",
+  "asset_commit": "e61796de133e52d4f205bd0a8a7ae3c5d563ac4d",
+  "url": "https://raw.githubusercontent.com/robertyang87/tennislive/e61796de133e52d4f205bd0a8a7ae3c5d563ac4d/assets/tts-bundles/noskova-finals-2026/26d32fbdf9b1e64dfaf42a8f2e50066bf18be1a5b21f8d969a53cfa111d014ba/tts_bundle.zip",
+  "bundle_sha256": "26d32fbdf9b1e64dfaf42a8f2e50066bf18be1a5b21f8d969a53cfa111d014ba",
+  "bytes": 618423,
+  "old_bundle_preserved_sha256": "a04395bd3f08b66d1d6fbc3265879624c3918aa1577987f565b526e23b7d735f",
+  "actual_empty_path_restore": {
+    "command": "python tools/reel_tts_release.py restore --slug noskova-finals-2026 --metadata data/narration_checks/noskova-finals-2026.json --output <initially absent restored-correct-kind.zip>",
+    "exit_code": 0,
+    "downloaded_remote_bytes_sha256": "26d32fbdf9b1e64dfaf42a8f2e50066bf18be1a5b21f8d969a53cfa111d014ba",
+    "producer_manifest_verified": true
+  },
+  "checks": [
+    {
+      "name": "strict-canonical",
+      "command": [
+        "python",
+        "tools/build_match_reel.py",
+        "render",
+        "--spec",
+        "/workspace/tennislive-noskova/specs/reels/noskova-finals-2026.json",
+        "--tts-bundle-in",
+        "/workspace/noskova-finals-production/production/canonical-transport-verification/restored-correct-kind.zip",
+        "--check-tts-bundle"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "dry-run",
+      "command": [
+        "python",
+        "tools/build_match_reel.py",
+        "render",
+        "--spec",
+        "/workspace/tennislive-noskova/specs/reels/noskova-finals-2026.json",
+        "--dry-run",
+        "--outdir",
+        "/workspace/noskova-finals-production/production/canonical-transport-verification/dry-run"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "publish-preflight",
+      "command": [
+        "python",
+        "tools/production_preflight.py",
+        "--spec",
+        "/workspace/tennislive-noskova/specs/reels/noskova-finals-2026.json",
+        "--column",
+        "赛场之上"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "audio_reuse": "All12requests and24audio/marks members byte-identical per repack-proof.json; native sameimplementation, allmanifest exceptmetadata.kind identical. Existing12actualvoicepreflight and nativevisual proof reused by exactpayload/spec identity; not freshASR/preview claims.",
+  "global_probe_closure": "46missing historicaltext +898tracked *probe.json restored fromHEAD afterlastmainmerge; no historicaledits.",
+  "no_formal_retry_by_child": true
+}

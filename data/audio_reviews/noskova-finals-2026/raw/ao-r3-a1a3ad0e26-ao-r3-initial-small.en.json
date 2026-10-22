@@ -1,0 +1,84 @@
+{
+  "model": "small.en",
+  "source_sha256": "2b835cd0fc86187a9e692d4fd67873af3874ee974c16fb267ebc787a338d69c7",
+  "clip": [
+    157.0,
+    184.0
+  ],
+  "duration": 27.0,
+  "segments": [
+    {
+      "start": 174.56,
+      "end": 179.9,
+      "text": "It was tricky circumstances for her today.",
+      "avg_logprob": -0.745,
+      "no_speech_prob": 0.515,
+      "words": [
+        {
+          "w": " It",
+          "s": 174.56,
+          "e": 175.96,
+          "p": 0.047
+        },
+        {
+          "w": " was",
+          "s": 175.96,
+          "e": 177.36,
+          "p": 0.962
+        },
+        {
+          "w": " tricky",
+          "s": 177.36,
+          "e": 177.66,
+          "p": 0.997
+        },
+        {
+          "w": " circumstances",
+          "s": 177.66,
+          "e": 178.38,
+          "p": 0.982
+        },
+        {
+          "w": " for",
+          "s": 178.38,
+          "e": 179.18,
+          "p": 0.96
+        },
+        {
+          "w": " her",
+          "s": 179.18,
+          "e": 179.42,
+          "p": 0.989
+        },
+        {
+          "w": " today.",
+          "s": 179.42,
+          "e": 179.9,
+          "p": 0.989
+        }
+      ]
+    },
+    {
+      "start": 179.9,
+      "end": 182.72,
+      "text": "challenging conditions",
+      "avg_logprob": -0.701,
+      "no_speech_prob": 0.181,
+      "words": [
+        {
+          "w": " challenging",
+          "s": 179.9,
+          "e": 181.8,
+          "p": 0.641
+        },
+        {
+          "w": " conditions",
+          "s": 181.8,
+          "e": 182.72,
+          "p": 0.991
+        }
+      ]
+    }
+  ],
+  "method": "actual local word-level ASR, independent unprompted models; not human listening"
+}

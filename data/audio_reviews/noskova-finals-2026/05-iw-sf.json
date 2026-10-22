@@ -1,0 +1,69 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=5K3oWYO0ZqU",
+  "source_sha256": "6416446164e9ecd30ccd59eb11df0ad72b4bcbed18b027a23cf7ac623860efc4",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual-source paired localASR/wordtime cross-check, no human-listening claim",
+  "reviewed_at": "2026-10-22T13:27:22.596290+00:00",
+  "reviewed_from": 260.72,
+  "reviewed_to": 285.7,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 266.54,
+      "end": 268.96,
+      "en": "For the third time in her career,",
+      "zh": "这是她生涯第三次，"
+    },
+    {
+      "start": 268.96,
+      "end": 272.36,
+      "en": "Aryna Sabalenka is in the Indian Wells final.",
+      "zh": "萨巴伦卡打进印第安维尔斯决赛。"
+    },
+    {
+      "start": 275.02,
+      "end": 277.18,
+      "en": "And she's done it in back-to-back years.",
+      "zh": "而且连续两年做到。"
+    },
+    {
+      "start": 277.18,
+      "end": 280.8,
+      "en": "Still yet to drop a set in this tournament.",
+      "zh": "本届比赛，她仍未丢一盘。"
+    },
+    {
+      "start": 281.48,
+      "end": 283.48,
+      "en": "Another emphatic performance,",
+      "zh": "又一场强势的表现，"
+    },
+    {
+      "start": 283.48,
+      "end": 285.42,
+      "en": "full of power and precision.",
+      "zh": "充满力量与精准。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/iw-sf-3f6d21f84a-iw-sf-initial-small.en.json",
+      "sha256": "3f6d21f84aa51bd4d66240975f95fe0b0a9d0cc088fb62de214faa55e6d0b680",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/iw-sf-551a8c13b5-iw-sf-initial-medium.en.json",
+      "sha256": "551a8c13b5652bef0140fa03530def0c7e4f1455c02ef6431251f2ec459bab1a",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "Actual source bytes and independent local unprompted word-level ASR checked. English proper names normalized from official player identities; phrase cues split only at actual word boundaries, complete original commentary retained across cues. Not human listening.",
+  "outgoing_tail": {
+    "default_seconds": 0.25,
+    "padding_policy": "actual paired ASR context beyond selected end covers +.25; next sentence not intersected"
+  },
+  "raw_conflicts_retained": true
+}

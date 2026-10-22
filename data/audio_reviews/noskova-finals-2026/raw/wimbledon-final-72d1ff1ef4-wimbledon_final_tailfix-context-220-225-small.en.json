@@ -1,0 +1,44 @@
+{
+  "source": "wimbledon_final_tailfix",
+  "source_url": "https://www.youtube.com/watch?v=XfE9M6__724",
+  "source_sha256": "39e3e2b5d0d5e21037fa6f593c6a5db0b7ee1d23152b1aeec151c5fa8e5aaf1e",
+  "start": 220,
+  "end": 225,
+  "model": "small.en",
+  "method": "context_faster_whisper_int8_ffmpeg_16khz_float32",
+  "segments": [
+    {
+      "start": 221.22,
+      "end": 223.9,
+      "text": "It's over, and out.",
+      "avg_logprob": -0.5886631786823273,
+      "no_speech_prob": 0.19514219462871552,
+      "words": [
+        {
+          "w": " It's",
+          "s": 221.22,
+          "e": 222.18,
+          "p": 0.8158388137817383
+        },
+        {
+          "w": " over,",
+          "s": 222.18,
+          "e": 222.68,
+          "p": 0.9285703301429749
+        },
+        {
+          "w": " and",
+          "s": 223.04,
+          "e": 223.44,
+          "p": 0.8816562294960022
+        },
+        {
+          "w": " out.",
+          "s": 223.44,
+          "e": 223.9,
+          "p": 0.9917792677879333
+        }
+      ]
+    }
+  ]
+}

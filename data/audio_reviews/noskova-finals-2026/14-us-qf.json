@@ -1,0 +1,75 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=ChIOgR3JpVQ",
+  "source_sha256": "a880e26b2bb56d96114a30d1c0082ffc32a2549713a9c4995c2ef3f692e38ac9",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual-source paired localASR/wordtime cross-check, no human-listening claim",
+  "reviewed_at": "2026-10-22T13:27:22.598981+00:00",
+  "reviewed_from": 162.36,
+  "reviewed_to": 195.72,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 170.26,
+      "end": 173.38,
+      "en": "The world number one,",
+      "zh": "世界第一，"
+    },
+    {
+      "start": 173.38,
+      "end": 176.36,
+      "en": "stretched to the limit in New York,",
+      "zh": "在纽约被逼到了极限，"
+    },
+    {
+      "start": 176.36,
+      "end": 179.72,
+      "en": "but eventually prevails",
+      "zh": "但最终还是胜出，"
+    },
+    {
+      "start": 179.72,
+      "end": 185.34,
+      "en": "to take out the Wimbledon champion.",
+      "zh": "淘汰了温网冠军。"
+    },
+    {
+      "start": 185.34,
+      "end": 188.96,
+      "en": "It's 18 straight wins now in the Big Apple",
+      "zh": "她在纽约已取得十八连胜，"
+    },
+    {
+      "start": 188.96,
+      "end": 191.26,
+      "en": "for Aryna Sabalenka,",
+      "zh": "她是萨巴伦卡，"
+    },
+    {
+      "start": 191.26,
+      "end": 195.48,
+      "en": "who returns once more to the last four.",
+      "zh": "又一次回到了美网4强。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/us-qf-9ba682bfef-us-qf-initial-small.en.json",
+      "sha256": "9ba682bfef1e23838bf0771e4fe4e9c243c08906406d3bb2d4f8526cf5627424",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/noskova-finals-2026/raw/us-qf-48edca5d09-us-qf-initial-medium.en.json",
+      "sha256": "48edca5d0907ec3bbcc2f885d81ad6ff02dc2778e49ad98954d412273b04760d",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "Actual source bytes and independent local unprompted word-level ASR checked. English proper names normalized from official player identities; phrase cues split only at actual word boundaries, complete original commentary retained across cues. Not human listening.",
+  "outgoing_tail": {
+    "default_seconds": 0.25,
+    "padding_policy": "actual paired ASR context beyond selected end covers +.25; next sentence not intersected"
+  },
+  "raw_conflicts_retained": true
+}
