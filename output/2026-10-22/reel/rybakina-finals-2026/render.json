@@ -1,0 +1,103 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "195886eaf503f894f583dde1699a5144e6e1079d6584979b71208aed95644a0d",
+    "request_count": 19,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-rybakina-finals-2026-195886eaf503f894",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-rybakina-finals-2026-195886eaf503f894/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39708308383"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 319.3,
+  "topbar": null,
+  "film_seconds": 325.08,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 8.856,
+    "3": 6.6,
+    "4": 7.272,
+    "6": 10.08,
+    "10": 9.432,
+    "12": 8.256,
+    "14": 9.288,
+    "16": 7.224,
+    "17": 7.896,
+    "18": 6.84,
+    "22": 7.08,
+    "23": 6.216,
+    "24": 4.488,
+    "25": 7.008,
+    "27": 6.432,
+    "28": 7.032,
+    "29": 8.376,
+    "30": 7.392
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "7df693ea69089029473725f326c65f956125687045d52899451a68a6b7113a82",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "rybakina-finals-2026",
+    "received_at": "2026-10-22T01:53:53Z",
+    "artifact_ready_at": "2026-10-22T02:00:06Z",
+    "elapsed_seconds": 373.829,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "a4e2488dc60e54db8a891484e7775a93a436b21df7e891328eec52831f30b154",
+    "spec_sha256": "f5656a848567ed1da5b4b0beaf456200c53e1bdf11d11c3912aafd4d76fa6daa",
+    "run_id": "39708308383",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-22T01:56:49Z",
+        "run_id": "39708308383"
+      }
+    ],
+    "render_seconds": 197.829,
+    "pre_render_seconds": 176.0
+  },
+  "film_sha256": "a4e2488dc60e54db8a891484e7775a93a436b21df7e891328eec52831f30b154",
+  "film_bytes": 104326967,
+  "qc_attestation_sha256": "616e871b7a2f87c2c6cd3fa89d60bb1c4e21938bfb777eda655a47bd9c32ba97",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-22T01:56:49Z",
+      "run_id": "39708308383"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-22T02:00:10Z",
+      "run_id": "39708308383"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-rybakina-finals-2026/rybakina-finals-2026.mp4",
+  "video_bytes": 104326967
+}
