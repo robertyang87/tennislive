@@ -1,0 +1,68 @@
+{
+  "cx": 0.47,
+  "frame": "person",
+  "cx_face": {
+    "samples": [
+      0.4494,
+      0.4911,
+      0.4672,
+      0.4802,
+      0.4686
+    ],
+    "frames": 9,
+    "detected": 5,
+    "source_size": [
+      1920,
+      1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s） + actual nine-frame subject-identity visual screening; non-Svitolina team faces excluded",
+    "measured_at": "2026-10-22T13:05:40+00:00",
+    "median": 0.4686,
+    "spread": 0.0417,
+    "subject_identity_screening": {
+      "subject": "Elina Svitolina",
+      "actual_subject_sample_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "excluded_non_subject_sample_indices": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "excluded_reason": "Original source camera cuts to her team reacting; largest coach face is not the speaking player.",
+      "review_images": "research/svitolina-finals-2026/cold-person-identity-contact.jpg",
+      "independent_root_images": "research/svitolina-finals-2026/cold-person-independent-contact.jpg"
+    },
+    "source_sha256": "e5aab2e4155d2ebf9ef25e4d31d2e84b6748963d0442c9a5e1818a14e0f904dc"
+  },
+  "raw_generic_result": {
+    "samples": [
+      0.4494,
+      0.4911,
+      0.4672,
+      0.4802,
+      0.4686,
+      0.9048,
+      0.9008,
+      0.9003,
+      0.8964
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+      1920,
+      1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-22T13:05:40+00:00",
+    "median": 0.4911,
+    "spread": 0.4554
+  },
+  "generic_failure_reason": "Generic nine-largest-face spread included four original team cutaway faces; identity screen follows actual subject, no fabricated detections.",
+  "full_window_fixed_crop": true
+}
