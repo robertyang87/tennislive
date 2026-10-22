@@ -55,30 +55,40 @@
       "source_url": "https://www.youtube.com/watch?v=HhnEOFJMcsU",
       "source_file": "/workspace/rybakina-finals-production/sources/rg-r2.mp4",
       "source_sha256": "4923c86a1048ed4c404e5deaa53d18ebb70a7789394f8e3ba26f053ab48d9afb",
-      "start": 165.35,
-      "end": 179.55,
+      "start": 2.0,
+      "end": 14.3,
       "cx": 0.5,
       "track": false,
       "narration": "",
       "fit": "crop",
       "quote": [],
       "_quote_kind": "broadcast",
-      "_why": "Frame inspection: score shows deciding tiebreak9-4 after165.35; near-side Rybakina prepares and serves before167; point continues through178.1, followed by Starodubtseva visible fist-pump178.5–179.55. End before new PA/umpire announcement at180.0, not mid-utterance. Entire final service point retained.",
-      "audio_review_packet": "research/rybakina-finals-2026/points/rg-r2-selected-audio-review.json",
+      "_why": "Actual same Roland-Garros R2 first-set early point. Rybakina leads2-0 and serves; scoreboard after rally shows2-0,15-0. Original footage includes service preparation around2.0–2.15, toss and serve2.15–3.4, full rally through11.2, and winning-player reaction/aftermath12.0–14.3. This is not the match-ending point. No final-result or deciding-tiebreak action is claimed by this clip.",
+      "audio_review_packet": "data/audio_reviews/rybakina-finals-2026/11-rg_r2.json",
       "asr_evidence": [
         {
-          "path": "research/rybakina-finals-2026/points/rg-r2-small.en.json",
-          "sha256": "43d866de72da2e651d680241bf7546f940b0f643ab4dbe67a889081941ea7d75",
-          "model": "small.en"
+          "path": "data/audio_reviews/rybakina-finals-2026/raw/rg_r2-629ef96649-rg-opening-small.en.json",
+          "model": "small.en",
+          "sha256": "629ef966491c740ac2a87031952065048f244dfd119266b3f18dfc80ba3fa52c",
+          "source_sha256": "4923c86a1048ed4c404e5deaa53d18ebb70a7789394f8e3ba26f053ab48d9afb",
+          "clip": [
+            0.0,
+            26.0
+          ]
         },
         {
-          "path": "research/rybakina-finals-2026/points/rg-r2-medium.en.json",
-          "sha256": "430cd6bbaacd1bf82e69f5e3f214602dd22dfda2ff338ab2e95267512f2b6ad7",
-          "model": "medium.en"
+          "path": "data/audio_reviews/rybakina-finals-2026/raw/rg_r2-89712a84f6-rg-opening-medium.en.json",
+          "model": "medium.en",
+          "sha256": "89712a84f6cbe85fb0a3a3c7d259a64aa1824110a7337c12df596f7b1400d09d",
+          "source_sha256": "4923c86a1048ed4c404e5deaa53d18ebb70a7789394f8e3ba26f053ab48d9afb",
+          "clip": [
+            0.0,
+            26.0
+          ]
         }
       ],
       "audio_review_state": "complete_asr_cross_checked_not_human_listening",
-      "visual_evidence": "Frame inspection: score shows deciding tiebreak9-4 after165.35; near-side Rybakina prepares and serves before167; point continues through178.1, followed by Starodubtseva visible fist-pump178.5–179.55. End before new PA/umpire announcement at180.0, not mid-utterance. Entire final service point retained.",
+      "visual_evidence": "Actual fixed-center crops at4,6,8,10,12,14 seconds preserve service/rally actions near center; this replaces the previous176–178 right-edge reach. Opening2.00–2.15 has a very brief same-match close-up before wide service shot; court/rally remains fixed center, no interview/person-crop assertion.",
       "method": "asr_cross_checked",
       "uncertain_spans": []
     },

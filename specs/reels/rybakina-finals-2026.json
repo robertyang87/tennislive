@@ -383,8 +383,8 @@
       "kicker": "四月底至五月"
     },
     {
-      "start": 165.35,
-      "end": 179.55,
+      "start": 2.0,
+      "end": 14.3,
       "cx": 0.5,
       "fit": "crop",
       "track": false,
@@ -396,7 +396,7 @@
         "pitch": "+0Hz",
         "_why": "沿用穆霍娃自然云健+6%，完整句合成；不靠临时提速挤入时窗。"
       },
-      "_why": "Frame inspection: score shows deciding tiebreak9-4 after165.35; near-side Rybakina prepares and serves before167; point continues through178.1, followed by Starodubtseva visible fist-pump178.5–179.55. End before new PA/umpire announcement at180.0, not mid-utterance. Entire final service point retained.",
+      "_why": "Actual same Roland-Garros R2 first-set early point. Rybakina leads2-0 and serves; scoreboard after rally shows2-0,15-0. Original footage includes service preparation around2.0–2.15, toss and serve2.15–3.4, full rally through11.2, and winning-player reaction/aftermath12.0–14.3. This is not the match-ending point. No final-result or deciding-tiebreak action is claimed by this clip.",
       "_audio_evidence": "research/rybakina-finals-2026/source-window-selections.json",
       "_audio_review_state": "actual_dual_asr_cross_checked_not_human_listening",
       "quote": [],
@@ -418,7 +418,19 @@
           "score": "6-3 1-6 6-7(4)"
         }
       },
-      "_full_canvas_review": "按用户最新明确要求改为3:4铺满，主线程另核同轮中央完整回合以避免近端右侧动作被裁。"
+      "_full_canvas_review": "Actual fixed-center crops at4,6,8,10,12,14 seconds preserve service/rally actions near center; this replaces the previous176–178 right-edge reach. Opening2.00–2.15 has a very brief same-match close-up before wide service shot; court/rally remains fixed center, no interview/person-crop assertion.",
+      "_clip_context": {
+        "round": "2026 Roland-Garros R2 vs Yuliia Starodubtseva",
+        "stage": "First set, Rybakina leads2-0, serving; wins opening point of next game for15-0",
+        "not_championship_point": true,
+        "not_match_point": true,
+        "safe_caption_context_zh": "法网第二轮，莱巴金娜曾先赢一盘，最终三盘出局。",
+        "not_to_claim": [
+          "Do not call this the final point",
+          "Do not present this as deciding-tiebreak9-4",
+          "Do not say Starodubtseva wins this particular rally"
+        ]
+      }
     },
     {
       "_id": "grass_results",
@@ -777,7 +789,7 @@
       "_timeline_date": "2026-10-03",
       "title_card": "世界第一的\n第一场比赛",
       "seconds": 8.0,
-      "narration": "十月三日，北京。她以世界第一身份出战的首场比赛，对手是查拉耶娃。",
+      "narration": "十月三日，北京。她以世界第一身份出战的首场比赛，对手是恰拉耶娃。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "沿用穆霍娃自然云健+6%，完整句合成；不靠临时提速挤入时窗。"
@@ -805,7 +817,7 @@
         {
           "at": 5.71,
           "end": 11.03,
-          "text": "And Alina Charaeva manufactures a lifelong dream in real time.\n查拉耶娃此刻实现毕生梦想。"
+          "text": "And Alina Charaeva manufactures a lifelong dream in real time.\n恰拉耶娃此刻实现毕生梦想。"
         },
         {
           "at": 11.55,
@@ -826,7 +838,7 @@
           "topic": "中网首战出局",
           "date": "2026.10.03",
           "place": "北京第二轮",
-          "people": "莱巴金娜 vs 查拉耶娃",
+          "people": "莱巴金娜 vs 恰拉耶娃",
           "score": "6-3 4-6 3-6"
         },
         "show_after": 6.0
@@ -862,7 +874,7 @@
       "_timeline_date": "2026-10-22",
       "title_card": "来到宁波\n复出首战待开打",
       "seconds": 9.0,
-      "narration": "十月，她回到宁波。复出首战，对手是波琳娜·库德梅托娃。比赛仍待开打。",
+      "narration": "十月，她回到宁波。复出首战，对手是波利娜·库德梅托娃。比赛仍待开打。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "沿用穆霍娃自然云健+6%，完整句合成；不靠临时提速挤入时窗。"
@@ -951,7 +963,7 @@
         "澳网决胜盘0-3后6-4逆转；IW抢七6-5冠军点未拿下、6-8输；斯图加特四分之一决赛挽救2赛点。",
         "本赛季三次决赛对萨巴伦卡，另有迈阿密半决赛，因此不称第三次交手。",
         "9月14日WTA正式官宣首位单打入围者，世界第一同日生效；不称美网夺冠当日官宣。",
-        "9月18日金杯medical reasons退出；10月3日北京R2负查拉耶娃，4日退出武汉。",
+        "9月18日金杯medical reasons退出；10月3日北京R2负恰拉耶娃，4日退出武汉。",
         "当前17站实打49-14，Race7502；本站积分每站仅计一次。",
         "宁波10月22日第二轮当前未开赛，渲染/发布前重新核实。"
       ]
@@ -1085,7 +1097,7 @@
   },
   "_heat_why": "用户指定2026年终系列首条人物片，官方年终名单、赛季双满贯与亚洲赛季恢复构成当前故事。",
   "preserve_source_audio": true,
-  "_story_label_style": "用户2026-10-22追加同步主线：在244bfef上从当前render_story_info_band.py重新生成确认V14，无底板，width0.60/pad0.043/max15s且随段结束。",
+  "_story_label_style": "同步主线641a18e775816c5f5d972e4f1ffcc9af9963e073；原生V14右上透明字卡，width0.60/pad0.043，最长15秒且随片段结束。",
   "_outline_review": {
     "approved": true,
     "user_response": "好的",
@@ -1095,7 +1107,7 @@
   "_render_blockers": [],
   "_integration_state": "ready_for_native_preflight",
   "_runtime_budget": {
-    "body_seconds": 321.2,
+    "body_seconds": 319.3,
     "note": "参考约5分40秒；最终服从实际完整关键分/原声语意，不人为截句或提速。美网后独立保留亚洲赛季。"
   },
   "_latest_framing_instruction": "用户2026-10-22原话：都说过要用铺满画布的方式裁切呀。如果是人物的话，就是以人物为中心做裁切，就是人物采访的片段，以人物中心做裁切。"
