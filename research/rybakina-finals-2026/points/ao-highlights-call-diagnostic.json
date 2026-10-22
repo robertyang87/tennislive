@@ -1,0 +1,32 @@
+{
+  "model": "large-v3-turbo",
+  "source_sha256": "4924c2c0bdb20c257a482b66d924bbbf950f206c7afecf8585a76adc0dc94063",
+  "clip": [
+    168.7,
+    171.4
+  ],
+  "initial_prompt": "Tennis. Elena Rybakina. Aryna Sabalenka.",
+  "segments": [
+    {
+      "start": 168.7,
+      "end": 170.88,
+      "text": " Dan Rybakina.",
+      "avg_logprob": -0.2838721200823784,
+      "words": [
+        {
+          "w": " Dan",
+          "s": 168.7,
+          "e": 169.94,
+          "p": 0.3679206371307373
+        },
+        {
+          "w": " Rybakina.",
+          "s": 169.94,
+          "e": 170.88,
+          "p": 0.10933375800595968
+        }
+      ]
+    }
+  ],
+  "purpose": "Independent short-window name/score call diagnosis; no human listening."
+}

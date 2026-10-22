@@ -1,0 +1,42 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=bDttZof7qXI",
+  "source_sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual-source video-frame review and paired ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T01:08:11.993113+00:00",
+  "reviewed_from": 248.0,
+  "reviewed_to": 264.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/rybakina-finals-production/research/spring/toronto-point-small.en.json",
+      "sha256": "0b1a86947e15f5e5626fe4f6c8395282788b55dbefba3af38c70f5567e53e92d",
+      "model": "small.en",
+      "from": 238.0,
+      "to": 283.0,
+      "source_sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979"
+    },
+    {
+      "path": "/workspace/rybakina-finals-production/research/spring/toronto-point-medium.en.json",
+      "sha256": "caea643921e98ae2f8b76fb3a1474094d2cbec98416bf7698adec31df71684d1",
+      "model": "medium.en",
+      "from": 238.0,
+      "to": 283.0,
+      "source_sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979"
+    }
+  ],
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_key": "toronto_final",
+  "foreground_english": [
+    {
+      "start": 258.88,
+      "end": 263.38,
+      "en": "Sensational Swiatek takes the title in Toronto.",
+      "zh": "斯瓦泰克表现惊艳，拿下多伦多冠军。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_scope": "Complete selected actual source window; original English preserved with phrase-complete bilingual subtitles. Machine cross-check, not human listening.",
+  "visual_review": "Actual 1-second contact frames:248s Swiatek pre-serve close-up;249s wide championship-point serve preparation/motion;250–254 rally;255s arms raised winner reaction. Retains original final point and entire first championship call. Next real commentary begins268.90 in medium; small has low-confidence0.009 hallucinated So at263.34 followed5.4s silence, not independently corroborated. End264.00 leaves0.62s after completed Toronto word and4.9s before next corroborated phrase. The350–476s region is ceremony and is not selected."
+}

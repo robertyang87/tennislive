@@ -1,0 +1,26 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=HhnEOFJMcsU",
+  "source_sha256": "4923c86a1048ed4c404e5deaa53d18ebb70a7789394f8e3ba26f053ab48d9afb",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual small.en + medium.en source-bound transcription cross-check and source-frame inspection, not human listening",
+  "reviewed_at": "2026-10-22T01:13:10.010546+00:00",
+  "status": "complete",
+  "reviewed_from": 165.35,
+  "reviewed_to": 179.55,
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/rg_r2-43d866de72-rg-r2-small.en.json",
+      "sha256": "43d866de72da2e651d680241bf7546f940b0f643ab4dbe67a889081941ea7d75",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/rg_r2-430cd6bbaa-rg-r2-medium.en.json",
+      "sha256": "430cd6bbaacd1bf82e69f5e3f214602dd22dfda2ff338ab2e95267512f2b6ad7",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "Actual small.en and medium.en outputs contain no identifiable foreground English within165.35–179.55. Small model isolated tokens at153.52/162.68 are outside selection; medium gibberish starts180.00 after selection, and multilingual diagnostic places score announcement181.00 onward. Kept interval contains tennis impacts, crowd and true winner reaction; no human listening claimed.",
+  "no_foreground_english_reason": "Actual small.en and medium.en outputs contain no identifiable foreground English within165.35–179.55. Small model isolated tokens at153.52/162.68 are outside selection; medium gibberish starts180.00 after selection, and multilingual diagnostic places score announcement181.00 onward. Kept interval contains tennis impacts, crowd and true winner reaction; no human listening claimed."
+}

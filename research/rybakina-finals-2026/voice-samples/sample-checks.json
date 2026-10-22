@@ -1,0 +1,117 @@
+{
+  "method": "automatic_sample_check_not_human_listening",
+  "checks": [
+    {
+      "id": "opening",
+      "hyp": "年初,她止步布里斯班巴强。奥网决赛,决胜盘0比3落后,她却以6比4逆转赢下冠军。",
+      "transcript": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "年初,她止步布里斯班巴强。奥网决赛,决胜盘0比3落后,她却以6比4逆转赢下冠军。"
+      },
+      "pause_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 7.972,
+        "cps": 4.39,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "年初 ｜ 她 ｜ 止步 ｜ 布里斯班 ｜ 8 ｜ 强 ｜ 澳 ｜ 网 ｜ 决赛 ｜ 决胜 ｜ 盘 ｜ 零比 ｜ 三落后 ｜ 她 ｜ 却 ｜ 以 ｜ 六比四 ｜ 逆转 ｜ 赢 ｜ 下 ｜ 冠军"
+      },
+      "poly_targets": [
+        {
+          "index": 24,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B"
+        }
+      ]
+    },
+    {
+      "id": "turn",
+      "hyp": "4月,在斯圖加特,他先挽救两个赛典过关,最终在决赛击白穆霍娃。",
+      "transcript": {
+        "ok": true,
+        "ref_syllables": 27,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "4月,在斯圖加特,他先挽救两个赛典过关,最终在决赛击白穆霍娃。"
+      },
+      "pause_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 27,
+        "speech_s": 5.743,
+        "cps": 4.7,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四月 ｜ 在 ｜ 斯图加特 ｜ 她 ｜ 先 ｜ 挽救 ｜ 两个 ｜ 赛点 ｜ 过关 ｜ 最终 ｜ 在 ｜ 决赛 ｜ 击败 ｜ 穆霍娃"
+      },
+      "poly_targets": []
+    },
+    {
+      "id": "name",
+      "hyp": "10月,她回到宁波,截止制作时对波琳娜、库德梅托娃的首场比赛仍未开打。",
+      "transcript": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "10月,她回到宁波,截止制作时对波琳娜、库德梅托娃的首场比赛仍未开打。"
+      },
+      "pause_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 7.288,
+        "cps": 4.12,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十月 ｜ 她 ｜ 回到 ｜ 宁波 ｜ 截止 ｜ 制作 ｜ 时 ｜ 对 ｜ 波琳娜 ｜ 库德梅托娃 ｜ 的 ｜ 首场 ｜ 比赛 ｜ 仍 ｜ 未 ｜ 开打"
+      },
+      "poly_targets": []
+    },
+    {
+      "id": "ending",
+      "hyp": "7502分, 门票早已在手。你最期待他在总决赛打出怎样的网球。",
+      "transcript": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "7502分, 门票早已在手。你最期待他在总决赛打出怎样的网球。"
+      },
+      "pause_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 6.533,
+        "cps": 4.44,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "七千五百零二分 ｜ 门票 ｜ 早已 ｜ 在 ｜ 手 ｜ 你 ｜ 最 ｜ 期待 ｜ 她 ｜ 在 ｜ 总决赛 ｜ 打 ｜ 出 ｜ 怎样 ｜ 的 ｜ 网球"
+      },
+      "poly_targets": []
+    }
+  ]
+}

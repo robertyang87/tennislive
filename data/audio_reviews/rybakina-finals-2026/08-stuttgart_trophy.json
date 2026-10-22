@@ -1,0 +1,34 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6393459104112",
+  "source_sha256": "7798b05c8ed72bf79be1a981f17114e661d78ec356d6bfc3887a3dc7c6d4076c",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source frame and dual-ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T01:12:17.473376+00:00",
+  "reviewed_from": 481.3,
+  "reviewed_to": 485.72,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 481.48,
+      "end": 485.72,
+      "en": "I mean, it's a very attractive tournament in every sense of the word.",
+      "zh": "这项赛事各方面都很有吸引力。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Actual481.3–485.72 trophy lift and smile. Small ASR481.48–485.72 exact sentence; medium spans480.72–485.4 confirms every substantive word, with preceding at the end and following next sentence outside selected window. Exclude subsequent nearly40years commentary because it is not useful season context. No source mute or speed change.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/stuttgart_trophy-8f1f92d8c7-stuttgart-trophy-small.en.json",
+      "sha256": "8f1f92d8c780396628e60a7282b45c3ef87b193d0902ab1c1d6a207633634bae",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/stuttgart_trophy-320895aa1d-stuttgart-trophy-medium.en.json",
+      "sha256": "320895aa1d1be168046096a4de72d7ff782e20adbe358d8d90b65850a35cf0c0",
+      "model": "medium.en"
+    }
+  ]
+}

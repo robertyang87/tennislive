@@ -1,0 +1,250 @@
+{
+  "schema": "rybakina-spring-point-selections.v1",
+  "updated_at_utc": "2026-10-22T01:08:11.993113+00:00",
+  "state": "complete_three_selected_windows",
+  "selections": [
+    {
+      "source_name": "stuttgart-final",
+      "source": "stuttgart_final",
+      "source_url": "https://www.youtube.com/watch?v=cu2BtcEjWww",
+      "local_file": "/workspace/rybakina-finals-production/sources/stuttgart-final.mp4",
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b",
+      "start": 261,
+      "end": 271.4,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 4.54,
+          "end": 9.16,
+          "text": "It is a second Stuttgart title for Elena Rybakina.\n莱巴金娜第2次在斯图加特夺冠。"
+        }
+      ],
+      "utterances": [
+        {
+          "start": 265.54,
+          "end": 270.16,
+          "en": "It is a second Stuttgart title for Elena Rybakina.",
+          "zh": "莱巴金娜第2次在斯图加特夺冠。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "reviewer": "Codex actual-source video-frame review and paired ASR cross-check; not human listening",
+      "reviewed_at": "2026-10-22T01:06:33.804779+00:00",
+      "reviewed_from": 261,
+      "reviewed_to": 271.4,
+      "status": "complete",
+      "uncertain_spans": [],
+      "asr_evidence": [
+        {
+          "path": "/workspace/rybakina-finals-production/research/spring/reused-stuttgart/stuttgart_final-249.10-274.40-small.en.json",
+          "sha256": "49ea23984ac272ce130bd254ec3f748b4360d8961dbd0fee5a6e38be96977120",
+          "model": "small.en",
+          "from": 249.1,
+          "to": 274.4,
+          "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode",
+          "reused_source_path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-249.10-274.40-small.en.json",
+          "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b"
+        },
+        {
+          "path": "/workspace/rybakina-finals-production/research/spring/reused-stuttgart/stuttgart_final-249.10-274.40-medium.en.json",
+          "sha256": "7e6c6b34ba1f65f57038c573b84e00ee9519fd7b47d5d37d0d1aa4cf2ee748bf",
+          "model": "medium.en",
+          "from": 249.1,
+          "to": 274.4,
+          "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode",
+          "reused_source_path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-249.10-274.40-medium.en.json",
+          "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b"
+        },
+        {
+          "path": "/workspace/rybakina-finals-production/research/spring/reused-stuttgart/stuttgart_final-context-269-284-small.en.json",
+          "sha256": "9eb1f963d55cbebf5fa22e0d6b1327d4dd735a8e901c8638849241fa3e74dc41",
+          "model": "small.en",
+          "from": 269,
+          "to": 284,
+          "method": "context_faster_whisper_int8_ffmpeg_16khz_float32",
+          "reused_source_path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-context-269-284-small.en.json",
+          "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b"
+        },
+        {
+          "path": "/workspace/rybakina-finals-production/research/spring/reused-stuttgart/stuttgart_final-context-269-284-medium.en.json",
+          "sha256": "67fe8582e14907b355ca050e3c49f49bd789a5f9bd6f92b04f7098dd30a28f1b",
+          "model": "medium.en",
+          "from": 269,
+          "to": 284,
+          "method": "context_faster_whisper_int8_ffmpeg_16khz_float32",
+          "reused_source_path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-context-269-284-medium.en.json",
+          "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b"
+        },
+        {
+          "path": "/workspace/rybakina-finals-production/research/spring/stuttgart-focused-small.en.json",
+          "sha256": "d843fed14b86d475cdc6c09ce4f04d1d5aee912970cc9308dc7da58b9da18c3b",
+          "model": "small.en",
+          "from": 261.0,
+          "to": 272.0,
+          "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b"
+        },
+        {
+          "path": "/workspace/rybakina-finals-production/research/spring/stuttgart-final-medium.en.json",
+          "sha256": "58f0d5c208e310d42740087a8a456779640111d48fc2275f79b049a471f409d5",
+          "model": "medium.en",
+          "from": 245.0,
+          "to": 280.0,
+          "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b"
+        }
+      ],
+      "visual_review": "Actual 2-second contact and existing identical-byte window: 262s Rybakina pre-serve face, 264s court serve, 266s live championship rally, 268–272 winner reaction. End271.4 preserves complete championship call, avoids274s subsequent mixed cut. Same SHA and exact prior window verified against4 retained ASR files; focused current small ASR independently agrees except normalized proper name."
+    },
+    {
+      "source_name": "indian-wells-final",
+      "source": "indian_wells",
+      "source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+      "local_file": "/workspace/rybakina-finals-production/sources/indian-wells-final.mp4",
+      "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+      "start": 245.6,
+      "end": 262,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 5.46,
+          "end": 9.88,
+          "text": "Third time is a charm for Aryna Sabalenka.\n第三次，萨巴伦卡终于做到了。"
+        },
+        {
+          "at": 12.74,
+          "end": 15.66,
+          "text": "As revenge is served.\n她完成了复仇。"
+        }
+      ],
+      "utterances": [
+        {
+          "start": 251.06,
+          "end": 255.48,
+          "en": "Third time is a charm for Aryna Sabalenka.",
+          "zh": "第三次，萨巴伦卡终于做到了。"
+        },
+        {
+          "start": 258.34,
+          "end": 261.26,
+          "en": "As revenge is served.",
+          "zh": "她完成了复仇。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "reviewer": "Codex actual-source video-frame review and paired ASR cross-check; not human listening",
+      "reviewed_at": "2026-10-22T01:06:33.804779+00:00",
+      "reviewed_from": 245.6,
+      "reviewed_to": 262,
+      "status": "complete",
+      "uncertain_spans": [],
+      "asr_evidence": [
+        {
+          "path": "/workspace/rybakina-finals-production/research/spring/indian-wells-final-small.en.json",
+          "sha256": "541e7453ddc7b6681f6e87e099d450d3fee939e5c5c1b5da46bdf3f8ee64610b",
+          "model": "small.en",
+          "from": 240.0,
+          "to": 309.0,
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        },
+        {
+          "path": "/workspace/rybakina-finals-production/research/spring/indian-wells-final-medium.en.json",
+          "sha256": "b46edc1560febee0c0e167ee285298aa787e3822c50b34eebff2ca1cc1dd1a12",
+          "model": "medium.en",
+          "from": 240.0,
+          "to": 309.0,
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        },
+        {
+          "path": "/workspace/rybakina-finals-production/research/spring/iw-selected-small.en.json",
+          "sha256": "4ef5ab5696ef607056f6a4a4e34dc471cbd66b9a9c45d6087ec47c5f61a6150f",
+          "model": "small.en",
+          "from": 245.6,
+          "to": 262.0,
+          "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c"
+        }
+      ],
+      "visual_review": "Actual 0.5s/1s frame contact:245s Sabalenka near-side close-up;245.5–246s wide serve preparation/toss;247–251 live final rally;252s racket-raised winner reaction. Prior utterance Not done yet ends245.28 before selected245.60; subsequent She finally gets... begins263.04 after selected262.00. Last point and2 complete reaction clauses retained; no TTS."
+    },
+    {
+      "source_name": "toronto-final",
+      "source": "toronto_final",
+      "source_url": "https://www.youtube.com/watch?v=bDttZof7qXI",
+      "local_file": "/workspace/rybakina-finals-production/sources/toronto-final.mp4",
+      "source_sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979",
+      "start": 248.0,
+      "end": 264.0,
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "narration": "",
+      "quote": [
+        {
+          "at": 10.88,
+          "end": 15.38,
+          "text": "Sensational Swiatek takes the title in Toronto.\n斯瓦泰克表现惊艳，拿下多伦多冠军。"
+        }
+      ],
+      "utterances": [
+        {
+          "start": 258.88,
+          "end": 263.38,
+          "en": "Sensational Swiatek takes the title in Toronto.",
+          "zh": "斯瓦泰克表现惊艳，拿下多伦多冠军。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "reviewer": "Codex actual-source video-frame review and paired ASR cross-check; not human listening",
+      "reviewed_at": "2026-10-22T01:08:11.993113+00:00",
+      "reviewed_from": 248.0,
+      "reviewed_to": 264.0,
+      "status": "complete",
+      "uncertain_spans": [],
+      "asr_evidence": [
+        {
+          "path": "/workspace/rybakina-finals-production/research/spring/toronto-point-small.en.json",
+          "sha256": "0b1a86947e15f5e5626fe4f6c8395282788b55dbefba3af38c70f5567e53e92d",
+          "model": "small.en",
+          "from": 238.0,
+          "to": 283.0,
+          "source_sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979"
+        },
+        {
+          "path": "/workspace/rybakina-finals-production/research/spring/toronto-point-medium.en.json",
+          "sha256": "caea643921e98ae2f8b76fb3a1474094d2cbec98416bf7698adec31df71684d1",
+          "model": "medium.en",
+          "from": 238.0,
+          "to": 283.0,
+          "source_sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979"
+        }
+      ],
+      "visual_review": "Actual 1-second contact frames:248s Swiatek pre-serve close-up;249s wide championship-point serve preparation/motion;250–254 rally;255s arms raised winner reaction. Retains original final point and entire first championship call. Next real commentary begins268.90 in medium; small has low-confidence0.009 hallucinated So at263.34 followed5.4s silence, not independently corroborated. End264.00 leaves0.62s after completed Toronto word and4.9s before next corroborated phrase. The350–476s region is ceremony and is not selected.",
+      "audio_diagnostics": [
+        "Both models agree first complete sentence, proper name normalized from official draw/source identity.",
+        "Focused medium suppresses small low-confidence So token; no use of uncorroborated filler as subtitle."
+      ],
+      "context": {
+        "event": "多伦多决赛",
+        "date_local": "2026-08-13",
+        "people": "莱巴金娜 vs 斯瓦泰克",
+        "score_rybakina_perspective": "2-6 3-6"
+      }
+    }
+  ],
+  "excluded": [
+    {
+      "name": "cincinnati-retirement",
+      "reason": "Actual video is Swiatek post-match interview, not Rybakina retirement scene; parent chose native official-fact card instead. Do not use as Rybakina speech."
+    }
+  ],
+  "limitations": [
+    "ASR cross-check is not human audio listening. Official proper names normalized from verified source identity."
+  ],
+  "notes": [
+    "IW first cue starts251.06 from focused-small word timing; medium broad first word251.64. Cue starts at the earlier supported word onset; source cut unchanged."
+  ]
+}

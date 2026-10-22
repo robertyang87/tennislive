@@ -1,0 +1,45 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+  "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual-source video-frame review and paired ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T01:06:33.804779+00:00",
+  "reviewed_from": 245.6,
+  "reviewed_to": 262.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 251.06,
+      "end": 255.48,
+      "en": "Third time is a charm for Aryna Sabalenka.",
+      "zh": "第三次，萨巴伦卡终于做到了。"
+    },
+    {
+      "start": 258.34,
+      "end": 261.26,
+      "en": "As revenge is served.",
+      "zh": "她完成了复仇。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Actual 0.5s/1s frame contact:245s Sabalenka near-side close-up;245.5–246s wide serve preparation/toss;247–251 live final rally;252s racket-raised winner reaction. Prior utterance Not done yet ends245.28 before selected245.60; subsequent She finally gets... begins263.04 after selected262.00. Last point and2 complete reaction clauses retained; no TTS.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/indian_wells-541e7453dd-indian-wells-final-small.en.json",
+      "sha256": "541e7453ddc7b6681f6e87e099d450d3fee939e5c5c1b5da46bdf3f8ee64610b",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/indian_wells-b46edc1560-indian-wells-final-medium.en.json",
+      "sha256": "b46edc1560febee0c0e167ee285298aa787e3822c50b34eebff2ca1cc1dd1a12",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/indian_wells-4ef5ab5696-iw-selected-small.en.json",
+      "sha256": "4ef5ab5696ef607056f6a4a4e34dc471cbd66b9a9c45d6087ec47c5f61a6150f",
+      "model": "small.en"
+    }
+  ]
+}

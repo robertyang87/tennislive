@@ -1,0 +1,58 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=MRtswtjRIiM",
+  "source_sha256": "6f3da08be08986e02e204ca602baeda0f3154d77c7e2ac9242c8ee20ac422331",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-media research agent; real small.en + medium.en outputs inspected; no human-listening claim",
+  "reviewed_at": "2026-10-22T01:10:24.611722+00:00",
+  "reviewed_from": 29.45,
+  "reviewed_to": 43.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 29.84,
+      "end": 30.93,
+      "en": "It feels amazing.",
+      "zh": "感觉太棒了。"
+    },
+    {
+      "start": 31.1,
+      "end": 34.47,
+      "en": "It's still so difficult to process what happened.",
+      "zh": "我现在还是很难消化这一切。"
+    },
+    {
+      "start": 34.76,
+      "end": 39.3,
+      "en": "Too many achievements these few weeks.",
+      "zh": "这几周取得的成就太多了。"
+    },
+    {
+      "start": 39.43,
+      "end": 40.65,
+      "en": "I'm super happy.",
+      "zh": "我特别开心。"
+    },
+    {
+      "start": 40.75,
+      "end": 43.27,
+      "en": "Very proud of all the work.",
+      "zh": "也为付出的所有努力感到自豪。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "small.en has a repeated/to filler at34.28; medium identifies separate Too many. Subtitles preserve substantive words and do not add grammatical repair. Selected window starts0.35s after interviewer ends29.1.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/us_press-7554eb707e-us-press-small.en.json",
+      "sha256": "7554eb707e666c2c4562fd5d8c60be3b1617d3ff1f50f988527e8432a2b2ab98",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/us_press-60ac6ff39e-us-press-quote-medium.en.json",
+      "sha256": "60ac6ff39e22de82237836d9dfe0ff2b90991a8769822b63c85c372027e3f1aa",
+      "model": "medium.en"
+    }
+  ]
+}

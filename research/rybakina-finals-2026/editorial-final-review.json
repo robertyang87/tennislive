@@ -1,0 +1,587 @@
+{
+  "reviewer": "independent_story_and_fact_review",
+  "reviewed_draft": "/workspace/rybakina-finals-production/narration-draft.md",
+  "reviewed_utc": "2026-10-22T01:03:59.105142+00:00",
+  "overall_verdict": "事实主体通过；原稿无硬性事实错误。建议补真实关键转折，修章节时间范围，并防范旧数据日期与宁波状态。",
+  "must_fix_before_final": [
+    "04章标题五月至七月改为四月底至七月，因为马德里末场当地4月27日。",
+    "任何沿用normalized.json的逐场日历标注须使用本文件跨时区更正，尤其多伦多/辛辛那提/美网。当前旁白只讲月份，不需加入未核具体日期。",
+    "宁波LS008在本轮核验仍U未开赛。发布渲染前重取状态；不要写成复出首战已经完成。",
+    "不把每行比赛的points重复相加。它是本站最终积分，必须每站仅计一次。"
+  ],
+  "headline_checks": {
+    "three_2026_finals_against_sabalenka": {
+      "verdict": "正确",
+      "events": [
+        "Australian Open final: W 6-4 4-6 6-4",
+        "Indian Wells final: L 6-3 3-6 6-7(6)",
+        "US Open final: W 6-4 5-7 6-2"
+      ],
+      "wording": "这是两人本赛季第三次在决赛相遇。",
+      "do_not_say": "本赛季第三次交手（实际包括迈阿密半决赛，共四次）。"
+    },
+    "three_titles": {
+      "verdict": "正确",
+      "titles": [
+        "Australian Open",
+        "Stuttgart",
+        "US Open"
+      ],
+      "source": "latest_player_stats"
+    },
+    "49_14": {
+      "verdict": "正确，截至宁波尚未开赛",
+      "derivation": "最新官方player matches有76条，62条winner1、14条winner2；扣除13条BYE即49胜14负。实际出场63次，3次场上退赛计入胜负；未开赛退赛不计。",
+      "source": "latest_player_matches"
+    },
+    "race_7502": {
+      "verdict": "正确，截至官方2026-10-19周榜及当前宁波未开赛",
+      "source": [
+        "race_standings",
+        "race_pdf"
+      ],
+      "caveat": "切勿将Race和滚动52周世界排名积分混淆；年终资格官宣日为9/14，7502是后续10/19现状，不是官宣当日积分。"
+    },
+    "gross_17_station_total_equals_race": {
+      "verdict": "本球员本时点一致",
+      "calculation": "108+2000+215+120+650+390+500+120+215+70+108+1+130+650+215+2000+10 = 7502",
+      "rules_application": {
+        "four_majors": 4200,
+        "best_six_combined_1000": 2240,
+        "best_one_noncombined_1000": 215,
+        "other_results": [
+          "Stuttgart500",
+          "Dubai120",
+          "Brisbane108",
+          "Queens108",
+          "Beijing10",
+          "Berlin1"
+        ],
+        "other_results_sum": 847,
+        "total": 7502
+      },
+      "rules_limit": "这是按规则分桶后可保留的结果与gross恰好一致，不是Race对每个人都直接累加全年所有积分。Race Year还可包含2025年年终前一周的比赛；不含2025WTA Finals或125/ITF；零分义务位和替换会影响别人的净变化。",
+      "count_warning": "网页tournaments=18、资格参与PDF计数=13，均不能拿来否定实际17站已出场；零分位具体归属未从官方明细确认，不擅自编造。"
+    }
+  },
+  "station_review": [
+    {
+      "event": "布里斯班",
+      "event_id": 800,
+      "date_range_venue": "2026-01-04 / 2026-01-11",
+      "actual_match_record": "2-1",
+      "finish_for_narration": "八强",
+      "final_station_points": 108,
+      "gross_cumulative_once_per_station": 108,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/800/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-800-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "澳网",
+      "event_id": 901,
+      "date_range_venue": "2026-01-18 / 2026-02-01",
+      "actual_match_record": "7-0",
+      "finish_for_narration": "冠军",
+      "final_station_points": 2000,
+      "gross_cumulative_once_per_station": 2108,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/901/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-901-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "多哈",
+      "event_id": 1003,
+      "date_range_venue": "2026-02-08 / 2026-02-14",
+      "actual_match_record": "2-1",
+      "finish_for_narration": "八强",
+      "final_station_points": 215,
+      "gross_cumulative_once_per_station": 2323,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/1003/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-1003-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "迪拜",
+      "event_id": 718,
+      "date_range_venue": "2026-02-15 / 2026-02-21",
+      "actual_match_record": "1-1",
+      "finish_for_narration": "第三轮",
+      "final_station_points": 120,
+      "gross_cumulative_once_per_station": 2443,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/718/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-718-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "印第安维尔斯",
+      "event_id": 609,
+      "date_range_venue": "2026-03-04 / 2026-03-15",
+      "actual_match_record": "5-1",
+      "finish_for_narration": "亚军",
+      "final_station_points": 650,
+      "gross_cumulative_once_per_station": 3093,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/609/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-609-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "迈阿密",
+      "event_id": 902,
+      "date_range_venue": "2026-03-17 / 2026-03-29",
+      "actual_match_record": "4-1",
+      "finish_for_narration": "四强",
+      "final_station_points": 390,
+      "gross_cumulative_once_per_station": 3483,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/902/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-902-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "斯图加特",
+      "event_id": 1051,
+      "date_range_venue": "2026-04-13 / 2026-04-19",
+      "actual_match_record": "4-0",
+      "finish_for_narration": "冠军",
+      "final_station_points": 500,
+      "gross_cumulative_once_per_station": 3983,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/1051/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-1051-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "马德里",
+      "event_id": 1038,
+      "date_range_venue": "2026-04-21 / 2026-05-03",
+      "actual_match_record": "2-1",
+      "finish_for_narration": "第四轮",
+      "final_station_points": 120,
+      "gross_cumulative_once_per_station": 4103,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/1038/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-1038-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "罗马",
+      "event_id": 709,
+      "date_range_venue": "2026-05-05 / 2026-05-17",
+      "actual_match_record": "3-1",
+      "finish_for_narration": "八强",
+      "final_station_points": 215,
+      "gross_cumulative_once_per_station": 4318,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/709/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-709-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "法网",
+      "event_id": 903,
+      "date_range_venue": "2026-05-24 / 2026-06-07",
+      "actual_match_record": "1-1",
+      "finish_for_narration": "第二轮",
+      "final_station_points": 70,
+      "gross_cumulative_once_per_station": 4388,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/903/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-903-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "女王杯",
+      "event_id": 1111,
+      "date_range_venue": "2026-06-08 / 2026-06-14",
+      "actual_match_record": "1-1",
+      "finish_for_narration": "八强",
+      "final_station_points": 108,
+      "gross_cumulative_once_per_station": 4496,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/1111/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-1111-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "柏林",
+      "event_id": 2012,
+      "date_range_venue": "2026-06-15 / 2026-06-21",
+      "actual_match_record": "0-1",
+      "finish_for_narration": "第二轮",
+      "final_station_points": 1,
+      "gross_cumulative_once_per_station": 4497,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/2012/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-2012-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "温网",
+      "event_id": 904,
+      "date_range_venue": "2026-06-29 / 2026-07-12",
+      "actual_match_record": "2-1",
+      "finish_for_narration": "第三轮",
+      "final_station_points": 130,
+      "gross_cumulative_once_per_station": 4627,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/904/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-904-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "多伦多",
+      "event_id": 806,
+      "date_range_venue": "2026-08-02 / 2026-08-13",
+      "actual_match_record": "5-1",
+      "finish_for_narration": "亚军",
+      "final_station_points": 650,
+      "gross_cumulative_once_per_station": 5277,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-806-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "辛辛那提",
+      "event_id": 1017,
+      "date_range_venue": "2026-08-13 / 2026-08-23",
+      "actual_match_record": "3-1",
+      "finish_for_narration": "八强",
+      "final_station_points": 215,
+      "gross_cumulative_once_per_station": 5492,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-1017-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "美网",
+      "event_id": 905,
+      "date_range_venue": "2026-08-30 / 2026-09-13",
+      "actual_match_record": "7-0",
+      "finish_for_narration": "冠军",
+      "final_station_points": 2000,
+      "gross_cumulative_once_per_station": 7492,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-905-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    },
+    {
+      "event": "中网/北京",
+      "event_id": 1020,
+      "date_range_venue": "2026-09-30 / 2026-10-11",
+      "actual_match_record": "0-1",
+      "finish_for_narration": "第二轮",
+      "final_station_points": 10,
+      "gross_cumulative_once_per_station": 7502,
+      "result_source": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+      "official_result_snapshot": "/workspace/rybakina-finals-production/research/sources/editorial-audit-1020-matches.json",
+      "result_review": "通过；见独立抓取的逐站比赛快照。"
+    }
+  ],
+  "date_policy": {
+    "narration": "使用月份、赛事和轮次即可；需要日历时写赛事当地日期。",
+    "source_timestamp_warning": "WTA MatchTimeStamp通常为UTC；日期不能直接截取UTC日当当地日。它也不一定是比赛结束时间。",
+    "corrections": [
+      {
+        "event": "印第安维尔斯",
+        "opponent": "Marta Kostyuk",
+        "existing_normalized_date": "2026-03-10",
+        "official_timestamp_utc": "2026-03-10T04:12:12.227+00:00",
+        "venue_local_date": "2026-03-09",
+        "source": "https://api.wtatennis.com/tennis/tournaments/609/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "印第安维尔斯",
+        "opponent": "Sonay Kartal",
+        "existing_normalized_date": "2026-03-12",
+        "official_timestamp_utc": "2026-03-11T22:57:06.137+00:00",
+        "venue_local_date": "2026-03-11",
+        "source": "https://api.wtatennis.com/tennis/tournaments/609/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "印第安维尔斯",
+        "opponent": "Jessica Pegula",
+        "existing_normalized_date": "2026-03-13",
+        "official_timestamp_utc": "2026-03-12T23:49:00.63+00:00",
+        "venue_local_date": "2026-03-12",
+        "source": "https://api.wtatennis.com/tennis/tournaments/609/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "印第安维尔斯",
+        "opponent": "Elina Svitolina",
+        "existing_normalized_date": "2026-03-14",
+        "official_timestamp_utc": "2026-03-14T00:43:51.827+00:00",
+        "venue_local_date": "2026-03-13",
+        "source": "https://api.wtatennis.com/tennis/tournaments/609/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "迈阿密",
+        "opponent": "Yulia Putintseva",
+        "existing_normalized_date": "2026-03-21",
+        "official_timestamp_utc": "2026-03-21T02:05:51.893+00:00",
+        "venue_local_date": "2026-03-20",
+        "source": "https://api.wtatennis.com/tennis/tournaments/902/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "迈阿密",
+        "opponent": "Talia Gibson",
+        "existing_normalized_date": "2026-03-24",
+        "official_timestamp_utc": "2026-03-24T00:48:51.167+00:00",
+        "venue_local_date": "2026-03-23",
+        "source": "https://api.wtatennis.com/tennis/tournaments/902/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "迈阿密",
+        "opponent": "Aryna Sabalenka",
+        "existing_normalized_date": "2026-03-27",
+        "official_timestamp_utc": "2026-03-27T00:22:51.28+00:00",
+        "venue_local_date": "2026-03-26",
+        "source": "https://api.wtatennis.com/tennis/tournaments/902/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "多伦多",
+        "opponent": "Naomi Osaka",
+        "existing_normalized_date": "2026-08-12",
+        "official_timestamp_utc": "2026-08-11T23:20:27.363+00:00",
+        "venue_local_date": "2026-08-11",
+        "source": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "多伦多",
+        "opponent": "Coco Gauff",
+        "existing_normalized_date": "2026-08-13",
+        "official_timestamp_utc": "2026-08-13T02:36:47.863+00:00",
+        "venue_local_date": "2026-08-12",
+        "source": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "多伦多",
+        "opponent": "Iga Swiatek",
+        "existing_normalized_date": "2026-08-14",
+        "official_timestamp_utc": "2026-08-13T21:44:22.427+00:00",
+        "venue_local_date": "2026-08-13",
+        "source": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "辛辛那提",
+        "opponent": "Iga Swiatek",
+        "existing_normalized_date": "2026-08-21",
+        "official_timestamp_utc": "2026-08-20T22:49:30.453+00:00",
+        "venue_local_date": "2026-08-20",
+        "source": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "美网",
+        "opponent": "Jessica Bouzas Maneiro",
+        "existing_normalized_date": "2026-09-04",
+        "official_timestamp_utc": "2026-09-04T01:50:00+00:00",
+        "venue_local_date": "2026-09-03",
+        "source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "美网",
+        "opponent": "Yuliia Starodubtseva",
+        "existing_normalized_date": "2026-09-06",
+        "official_timestamp_utc": "2026-09-06T01:05:00+00:00",
+        "venue_local_date": "2026-09-05",
+        "source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      },
+      {
+        "event": "美网",
+        "opponent": "Coco Gauff",
+        "existing_normalized_date": "2026-09-11",
+        "official_timestamp_utc": "2026-09-11T00:55:00+00:00",
+        "venue_local_date": "2026-09-10",
+        "source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches",
+        "action": "旁白只讲月份/比赛轮次；若画面写日历日期，改用venue_local_date并明确口径。"
+      }
+    ]
+  },
+  "injury_review": {
+    "dubai": "因病退赛准确；官方更具体为gastrointestinal issues，不能写成脚伤。",
+    "cincinnati": "首盘1-4因伤退赛准确；当站WTA稿4563969题为left ankle injury。后续WTA武汉稿泛称lower leg and foot injury。不要跨时间当成完全相同且已知诊断。",
+    "bjkc": "官方只说medical reasons，当前稿准确。",
+    "wuhan": "因伤退赛准确；勿说参加了武汉比赛或计入一负。",
+    "ningbo": "签表回归和到场活动不证明完全康复。"
+  },
+  "draft_editorial_flags": [
+    {
+      "severity": "recommended",
+      "location": "01",
+      "issue": "澳网只有决赛概述，缺关键逆转。",
+      "repair": "补决胜盘0-3落后后6-4逆转，给关键分与原声留空间。"
+    },
+    {
+      "severity": "recommended",
+      "location": "02",
+      "issue": "IW只写输抢七，未体现冠军点的差距。",
+      "repair": "补抢七6-5握冠军点后连丢三分；若素材覆盖有限可缩成曾握冠军点。"
+    },
+    {
+      "severity": "recommended",
+      "location": "03",
+      "issue": "斯图加特只说决赛，漏了整站最大险境。",
+      "repair": "补八强挽救两个赛点战胜费尔南德斯。"
+    },
+    {
+      "severity": "optional",
+      "location": "07",
+      "issue": "“截止制作时”有制作说明感，“健康和比赛状态寻找答案”略抽象。",
+      "repair": "宁波当前状态移资料卡；旁白落在伤后回到赛场和年终前状态的真实悬念。"
+    }
+  ],
+  "suggested_concise_narration_sections": [
+    {
+      "id": "01",
+      "suggested_narration_zh": "新赛季，莱巴金娜从布里斯班八强起步。来到澳网，她接连击败斯瓦泰克和佩古拉，又一次在决赛面对萨巴伦卡。决胜盘零比三落后，她没有让比赛就此结束。最终六比四，冠军属于莱巴金娜。赛季第一冠，就是一座大满贯。",
+      "optional_card": "澳网冠军 +2000 / 赛季累计2108",
+      "why": "加回0-3落后的真实转折；避免只有名单和结果。"
+    },
+    {
+      "id": "02",
+      "suggested_narration_zh": "但冠军之后，也会遇到波折。多哈八强，迪拜第三轮因病退赛。印第安维尔斯决赛，她曾在决胜盘抢七握有冠军点，却最终以六比八丢掉抢七。来到迈阿密，她又在半决赛输给萨巴伦卡。",
+      "why": "原稿事实正确；补冠军点让低谷具体，不把6-8写成整盘局分。"
+    },
+    {
+      "id": "03",
+      "suggested_narration_zh": "四月的斯图加特，她先在八强战挽救两个赛点，闯过费尔南德斯这一关。决赛面对年初击败过自己的穆霍娃，她以七比五、六比一拿下比赛。本赛季第二座冠军，到手了。",
+      "why": "补八强险境到决赛夺冠的完整弧线；若缺关键画面用事实卡，不冒充已覆盖。"
+    },
+    {
+      "id": "04",
+      "suggested_narration_zh": "接下来，成绩又起伏起来。马德里第四轮，罗马八强；法网第二轮，她先赢一盘，却在决胜盘抢七输给斯塔罗杜布采娃。转到草地，女王杯八强、柏林第二轮。温网第三轮，她又输给梅尔滕斯。澳网之后的两站大满贯，她都没能进入第二周。",
+      "why": "17站全保留；章节范围改为四月底至七月。"
+    },
+    {
+      "id": "05",
+      "suggested_narration_zh": "北美硬地赛季，她在多伦多接连逆转大坂直美和高芙，打进决赛，最终负于斯瓦泰克。到了辛辛那提八强，两人再次相遇。这一次，比赛没能打完。首盘一比四落后时，莱巴金娜因伤退赛。",
+      "why": "不报混用时区的逐场日期；因伤有官方支持，具体部位需采用当站官方左踝表述，不混成后续统一诊断。"
+    },
+    {
+      "id": "06",
+      "suggested_narration_zh": "带着伤情疑问来到美网，她却再次走到了最后。八强对郑钦文，半决赛对高芙，都是先丢一盘，再完成逆转。决赛，又是萨巴伦卡。这是两人本赛季第三次在决赛相遇。六比四、五比七、六比二，她在纽约拿下第二座赛季大满贯。",
+      "why": "第三次决赛正确，全年交手共四场含迈阿密半决赛；“赛季大满贯”如朗读不顺改“本赛季第二座大满贯冠军”。"
+    },
+    {
+      "id": "07",
+      "suggested_narration_zh": "九月十四日，她正式登上世界第一。也是这一天，WTA宣布：莱巴金娜成为本届年终第一位确认入围的单打球员。但拿到门票，赛季并没有结束。退出金杯之后，她在中网第二轮先赢一盘，却被查拉耶娃逆转。随后，她因伤退出武汉。十月，她以卫冕冠军身份回到宁波。年终门票早已在手，接下来，她会带着怎样的状态走上年终的球场？",
+      "why": "延伸到北京、武汉、宁波；不播生产状态说明“截止制作时”。宁波具体对阵和未开赛状态放带明确截止时间的资料卡，渲染前重查。"
+    }
+  ],
+  "media_notes": {
+    "usable_confirmed_metadata": [
+      {
+        "url": "https://x.com/wtaningboopen/status/2112085658399551586",
+        "publisher": "Ningbo Open official",
+        "event_date": "2026-10-19",
+        "type": "Tianyi Pavilion Library official photos",
+        "status": "官方帖身份可由多家独立嵌入核实；原帖403尚未取得原图，不宣称可直接入剪。"
+      }
+    ],
+    "additional_trace_lead": [
+      {
+        "url": "https://www.sports.kz/news/elena-ryibakina-pribyila-vninbo-ivyishla-nakort-pered-zaschitoy-titula-video",
+        "date": "2026-10-17",
+        "description": "文章嵌@InsightNingbo到场/训练视频并标Weibo来源；尚未追溯到赛事Weibo原帖，不能直接标赛事官方比赛素材。"
+      }
+    ],
+    "dont_use": "2025宁波冠军集锦若无清楚2025回顾语境不能冒充2026宁波参赛画面；其他球员的当站对局不能充莱巴金娜当站实战。"
+  },
+  "sources": {
+    "latest_player_stats": {
+      "url": "https://www.wtatennis.com/players/324166/elena-rybakina",
+      "local": "/workspace/rybakina-finals-production/research/sources/rybakina-player-latest.html",
+      "supports": "当前YTD singles titles=3, winLoss=49 / 14"
+    },
+    "latest_player_matches": {
+      "url": "https://api.wtatennis.com/tennis/players/324166/matches?year=2026&type=S&page=0&pageSize=200&sort=desc",
+      "local": "/workspace/rybakina-finals-production/research/sources/latest-rybakina-matches.json",
+      "supports": "76条=63次实际出场+13次轮空；49胜14负。"
+    },
+    "race_standings": {
+      "url": "https://www.wtatennis.com/rankings/race-singles",
+      "local": "/workspace/rybakina-finals-production/research/sources/race-standings.html",
+      "ranking_date": "2026-10-19",
+      "supports": "Rybakina 7,502, rank1, qualified；页面tournaments列为18，不能直接当本年度实际出场站数。"
+    },
+    "race_pdf": {
+      "url": "https://wtafiles.wtatennis.com/pdf/rankings/Championship_Leaders.pdf",
+      "local": "/workspace/rybakina-finals-production/research/sources/race-leaderboard.pdf",
+      "ranking_date": "2026-10-19",
+      "supports": "7,502；Number of Tournaments Played列13，指满足资格参与义务的赛事数，与17站总参赛不是同口径。"
+    },
+    "race_rules": {
+      "url": "https://wtafiles.wtatennis.com/pdf/rankings/RaceRules.pdf",
+      "local": "/workspace/rybakina-finals-production/research/sources/race-rules.pdf",
+      "supports": "2026 Race Year、18结果分桶、缺赛/义务0分、125和ITF不计；WTA年终本身不计入下一年Race。"
+    },
+    "dubai_illness": {
+      "url": "https://www.wtatennis.com/news/4452853/ruzic-advances-to-face-svitolina-after-rybakina-retirement",
+      "local": "/workspace/rybakina-finals-production/research/sources/dubai-retirement.html",
+      "supports": "第三轮决胜盘0-1时因胃肠道问题退赛。"
+    },
+    "ao_final_turn": {
+      "url": "https://www.wtatennis.com/news/4442160/rybakina-earns-place-among-games-elites-with-first-australian-open-second-major-title",
+      "supports": "决胜盘0-3落后后逆转赢6-4。"
+    },
+    "iw_final_turn": {
+      "url": "https://www.wtatennis.com/news/4469923/aryna-sabalenka-solves-elena-rybakina-to-win-first-indian-wells-23rd-wta-title",
+      "supports": "她先赢一盘，决胜盘抢七握冠军点，最终6-8输抢七。"
+    },
+    "stuttgart_quarter": {
+      "url": "https://www.wtatennis.com/news/4489605/by-the-numbers-rybakina-survives-fernandez-in-three-hour-stuttgart-thriller",
+      "supports": "挽救两个赛点，三盘逆转费尔南德斯。"
+    },
+    "stuttgart_final": {
+      "url": "https://www.wtatennis.com/news/4490060/rybakina-outshines-muchova-in-stuttgart-for-first-repeat-title-13th-overall",
+      "supports": "7-5,6-1胜穆霍娃，赛季第二冠。"
+    },
+    "us_final": {
+      "url": "https://www.wtatennis.com/news/4575707/rybakina-halts-sabalenkas-three-peat-bid-to-capture-first-us-open-title",
+      "supports": "6-4,5-7,6-2胜萨巴伦卡，本赛季第二个大满贯、生涯第三个。"
+    },
+    "ningbo_match": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches",
+      "local": "/workspace/rybakina-finals-production/research/sources/latest-ningbo-matches.json",
+      "supports": "LS008 U，10月22日当地不早于19:00。"
+    },
+    "post_usopen": {
+      "local": "/workspace/rybakina-finals-production/research/post-usopen-facts.json",
+      "supports": "9月14资格官宣、9月18金杯退赛、10月3北京失利、10月4武汉退赛的完整一手来源和安全措辞。"
+    }
+  },
+  "audit_data_file": "/workspace/rybakina-finals-production/research/editorial-match-audit-data.json",
+  "ningbo_latest_official_snapshot": {
+    "CourtName": "Center Court",
+    "DrawLevelType": "M",
+    "DrawMatchType": "S",
+    "EntryTypeA": "",
+    "EntryTypeB": "Q",
+    "EventID": "2092",
+    "EventYear": 2026,
+    "FreeText": "",
+    "MatchID": "LS008",
+    "MatchState": "U",
+    "MatchTimeStamp": "2026-10-22T19:00+08:00",
+    "NotBefore": "Not before 7:00 PM",
+    "NotBeforeISOTime": "19:00+0800",
+    "NotBeforeText": "Not before",
+    "PlayerCountryA": "KAZ",
+    "PlayerCountryB": "UZB",
+    "PlayerIDA": "324166",
+    "PlayerIDB": "328897",
+    "PlayerNameFirstA": "Elena",
+    "PlayerNameFirstB": "Polina",
+    "PlayerNameLastA": "Rybakina",
+    "PlayerNameLastB": "Kudermetova",
+    "RoundID": 4,
+    "SeedA": "1",
+    "SeedB": "",
+    "isEstimatedStartTime": null
+  }
+}

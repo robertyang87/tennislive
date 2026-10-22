@@ -1,0 +1,634 @@
+{
+  "player": "Elena Rybakina",
+  "season": 2026,
+  "scope": "Post-US Open through Ningbo pre-match on 2026-10-22",
+  "research_written_utc": "2026-10-22T00:35:29.736653+00:00",
+  "fact_cutoff_utc": "2026-10-22T00:40:00Z",
+  "critical_editorial_warning": "宁波10月22日LS008尚未开始，发布或渲染前重查；不要在美网结束就截断赛季，也不要编造宁波战绩。",
+  "sources": {
+    "qualification": {
+      "url": "https://www.wtatennis.com/news/4575967/defending-wta-finals-champion-elena-rybakina-becomes-first-singles-qualifier",
+      "official": true,
+      "publisher": "WTA",
+      "article_id": 4575967,
+      "title": "Defending WTA Finals champion Elena Rybakina becomes first singles qualifier",
+      "published_utc": "2026-09-14T06:28:00Z",
+      "local_snapshot": "/workspace/rybakina-finals-production/research/sources/qualifier.json",
+      "api_url": "https://api.wtatennis.com/content/wta/text/EN/4575967"
+    },
+    "beijing_loss": {
+      "url": "https://www.wtatennis.com/news/4586105/charaeva-upsets-new-world-no-1-rybakina-in-beijing-second-round",
+      "official": true,
+      "publisher": "WTA",
+      "article_id": 4586105,
+      "title": "Charaeva upsets new World No. 1 Rybakina in Beijing second round",
+      "published_utc": "2026-10-03T14:41:00Z",
+      "local_snapshot": "/workspace/rybakina-finals-production/research/sources/beijing-loss.json",
+      "api_url": "https://api.wtatennis.com/content/wta/text/EN/4586105"
+    },
+    "wuhan_withdrawal": {
+      "url": "https://www.wtatennis.com/news/4586442/elena-rybakina-withdraws-from-wuhan-after-early-china-open-exit",
+      "official": true,
+      "publisher": "WTA",
+      "article_id": 4586442,
+      "title": "Rybakina withdraws from Wuhan after early China Open exit",
+      "published_utc": "2026-10-04T11:00:00Z",
+      "local_snapshot": "/workspace/rybakina-finals-production/research/sources/withdrawal.json",
+      "api_url": "https://api.wtatennis.com/content/wta/text/EN/4586442"
+    },
+    "ningbo_preview": {
+      "url": "https://www.wtatennis.com/news/4593595/ningbo-draw-rybakina-returns-kostyuk-swiatek-still-in-wta-finals-hunt",
+      "official": true,
+      "publisher": "WTA",
+      "article_id": 4593595,
+      "title": "Ningbo draw: Rybakina returns; Kostyuk, Swiatek still in WTA Finals hunt",
+      "published_utc": "2026-10-17T15:38:00Z",
+      "local_snapshot": "/workspace/rybakina-finals-production/research/sources/ningbo-preview.json",
+      "api_url": "https://api.wtatennis.com/content/wta/text/EN/4593595"
+    },
+    "bjkc_withdrawal": {
+      "url": "https://www.billiejeankingcup.com/en/news/team-nominations-confirmed-for-2026-billie-jean-king-cup-finals",
+      "official": true,
+      "publisher": "Billie Jean King Cup",
+      "local_snapshot": "/workspace/rybakina-finals-production/research/sources/bjkc-nominations.html",
+      "evidence_type": "Server HTML contains escaped Contentful article rich text",
+      "exact_supporting_text": "*Elena Rybakina withdrew on September 18 due to medical reasons"
+    },
+    "ningbo_matches": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches",
+      "official": true,
+      "publisher": "WTA",
+      "last_updated_utc": "2026-10-21T13:34:47.33+00:00",
+      "local_snapshot": "/workspace/rybakina-finals-production/research/sources/ningbo-matches.json"
+    },
+    "ningbo_oop": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/2092/2026/oop",
+      "official": true,
+      "publisher": "WTA",
+      "local_snapshot": "/workspace/rybakina-finals-production/research/sources/ningbo-oop.json"
+    },
+    "player_matches": {
+      "url": "https://api.wtatennis.com/tennis/players/324166/matches?year=2026&type=S&page=0&pageSize=200&sort=desc",
+      "official": true,
+      "publisher": "WTA",
+      "local_snapshot": "/workspace/rybakina-finals-production/research/sources/rybakina-matches.json"
+    },
+    "beijing_matches": {
+      "url": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+      "official": true,
+      "publisher": "WTA",
+      "local_snapshot": "/workspace/rybakina-finals-production/research/sources/beijing-matches.json"
+    }
+  },
+  "timeline": [
+    {
+      "id": "formal_finals_qualification",
+      "date": "2026-09-14",
+      "kind": "qualification_announcement",
+      "status": "confirmed",
+      "facts_zh": [
+        "WTA正式宣布她成为2026年WTA年终总决赛首位单打入围球员。",
+        "她以2025年年终冠军身份，连续第四年入围。",
+        "官宣日同为她正式登上世界第一的周一。"
+      ],
+      "sources": [
+        "qualification"
+      ],
+      "safe_narration_zh": "9月14日，WTA正式确认：莱巴金娜成为本届年终首位单打入围者。",
+      "limits": [
+        "这是正式官宣日期。没有据此证明她最早在数学上锁定资格的精确时刻。",
+        "9月9日锁定登顶、9月12日美网夺冠、9月14日排名生效及入围官宣，不要混成同一天。"
+      ]
+    },
+    {
+      "id": "bjkc_withdrawal",
+      "date": "2026-09-18",
+      "kind": "team_event_withdrawal",
+      "status": "confirmed",
+      "facts_zh": [
+        "官方队伍名单注明她9月18日因医疗原因退出金杯总决赛。"
+      ],
+      "sources": [
+        "bjkc_withdrawal"
+      ],
+      "safe_narration_zh": "美网之后，9月18日，她因医疗原因退出金杯总决赛。",
+      "limits": [
+        "官方此页只写medical reasons，不据此补写跟腱炎、撕裂等诊断。",
+        "团体赛退赛不记作一场巡回赛单打失利，不增加Race积分。"
+      ]
+    },
+    {
+      "id": "beijing_second_round_loss",
+      "date": "2026-10-03",
+      "kind": "completed_match",
+      "status": "confirmed",
+      "tournament": "China Open / 北京中网",
+      "wta_tournament_id": 1020,
+      "match_id": "LS032",
+      "round": "Second round",
+      "player_opening_match_after_bye": true,
+      "opponent": "Alina Charaeva",
+      "opponent_rank_article": 118,
+      "result_player_perspective": "L 6-3 4-6 3-6",
+      "duration_article": "2h11m",
+      "sources": [
+        "beijing_loss",
+        "player_matches",
+        "beijing_matches"
+      ],
+      "facts_zh": [
+        "首轮轮空后的中网第二轮，她先赢一盘，被查拉耶娃逆转。",
+        "这是她成为世界第一后的首场正式比赛。",
+        "赛后WTA文字报道引用她提到比赛尾声脚部不适，需要休息。"
+      ],
+      "safe_narration_zh": "10月3日，中网第二轮，她先赢一盘，却以6比3、4比6、3比6负于查拉耶娃。世界第一身份的首秀，以失利结束。",
+      "limits": [
+        "个人叙事称第二轮，避免用64强代替实际轮次。",
+        "脚部不适是赛后自述，不把伤病写成此役失利的唯一原因。",
+        "报道中的Rybakina引语是文字出处；尚未获得本人该段讲话的原始录音。"
+      ],
+      "match_timestamp_utc": "2026-10-03T12:24:16.1+00:00",
+      "race_points_player_api": 10
+    },
+    {
+      "id": "wuhan_withdrawal",
+      "date": "2026-10-04",
+      "kind": "pre_tournament_withdrawal",
+      "status": "confirmed",
+      "tournament": "Wuhan Open",
+      "sources": [
+        "wuhan_withdrawal"
+      ],
+      "facts_zh": [
+        "WTA报道称赛事官方社交宣布她因伤退出武汉。",
+        "WTA转述她Instagram story：将休息和恢复，感谢支持。",
+        "WTA称过去数月有持续的lower leg and foot injury，曾导致辛辛那提八强退赛。"
+      ],
+      "safe_narration_zh": "一天后，她因伤退出武汉，把时间留给休息和恢复。",
+      "safe_injury_terms_zh": [
+        "因伤退出武汉",
+        "脚部伤情",
+        "下肢与脚部伤情（引用WTA的范围）"
+      ],
+      "limits": [
+        "没有武汉出场，不记一场失利，不写武汉第二轮退赛。",
+        "不能据此说重伤、跟腱撕裂、已彻底痊愈或伤病将持续多久。",
+        "本人Instagram story原始素材未取到；WTA文字稿是已确认的官方转述。"
+      ]
+    },
+    {
+      "id": "ningbo_title_defence_preparation",
+      "date": "2026-10-17",
+      "kind": "draw_preview",
+      "status": "confirmed_pre_event",
+      "tournament": "Ningbo Open",
+      "sources": [
+        "ningbo_preview"
+      ],
+      "facts_zh": [
+        "宁波签表稿确认她以2025年卫冕冠军、现世界第一身份回归。",
+        "她首轮轮空，已提前获得2026年年终资格。"
+      ],
+      "safe_narration_zh": "来到宁波，她带着卫冕冠军的身份回归。这一次，年终门票已经在手。",
+      "limits": [
+        "卫冕指2025年宁波冠军；不能写已拿2026年宁波冠军。",
+        "准备复出、出现在签表，不等于比赛已经打完，也不等于身体100%恢复。"
+      ]
+    },
+    {
+      "id": "ningbo_second_round_scheduled",
+      "date": "2026-10-22",
+      "kind": "scheduled_match",
+      "status": "not_started_at_research_cutoff",
+      "tournament": "Ningbo Open",
+      "wta_tournament_id": 2092,
+      "match_id": "LS008",
+      "round": "Second round / last 16",
+      "opponent": "Polina Kudermetova",
+      "opponent_player_id": "328897",
+      "opponent_country_official": "UZB",
+      "scheduled_local": "2026-10-22T19:00:00+08:00",
+      "scheduled_utc": "2026-10-22T11:00:00Z",
+      "schedule_qualifier": "Not before 7:00 PM",
+      "court": "Center Court",
+      "official_match_state": "U",
+      "sources": [
+        "ningbo_matches",
+        "ningbo_oop"
+      ],
+      "facts_zh": [
+        "截至本次核验，官方比赛接口MatchState为U，尚未开始。",
+        "赛程为中国时间10月22日不早于19时，不是04:00 UTC。",
+        "对手为资格赛球员波琳娜·库德梅托娃，非维罗妮卡。"
+      ],
+      "safe_narration_zh": "截至10月22日开赛前，她的宁波首战，是对阵资格赛球员波琳娜·库德梅托娃。",
+      "limits": [
+        "此场没有已确认比分和胜负。",
+        "渲染前必须重查官方状态；如已开打或结束，更新叙事及截止时间。",
+        "赛程是not before，可能延迟，不写成精确准点开球。"
+      ],
+      "official_snapshot": {
+        "CourtName": "Center Court",
+        "DrawLevelType": "M",
+        "DrawMatchType": "S",
+        "EntryTypeA": "",
+        "EntryTypeB": "Q",
+        "EventID": "2092",
+        "EventYear": 2026,
+        "FreeText": "",
+        "MatchID": "LS008",
+        "MatchState": "U",
+        "MatchTimeStamp": "2026-10-22T19:00+08:00",
+        "NotBefore": "Not before 7:00 PM",
+        "NotBeforeISOTime": "19:00+0800",
+        "NotBeforeText": "Not before",
+        "PlayerCountryA": "KAZ",
+        "PlayerCountryB": "UZB",
+        "PlayerIDA": "324166",
+        "PlayerIDB": "328897",
+        "PlayerNameFirstA": "Elena",
+        "PlayerNameFirstB": "Polina",
+        "PlayerNameLastA": "Rybakina",
+        "PlayerNameLastB": "Kudermetova",
+        "RoundID": 4,
+        "SeedA": "1",
+        "SeedB": "",
+        "isEstimatedStartTime": null
+      }
+    }
+  ],
+  "media": [
+    {
+      "id": "qualification_graphic",
+      "role": "official_qualification_fact_card",
+      "publisher": "WTA",
+      "official": true,
+      "source_url": "https://www.wtatennis.com/news/4575967/defending-wta-finals-champion-elena-rybakina-becomes-first-singles-qualifier",
+      "cms_photo": {
+        "id": 4576297,
+        "accountId": 29,
+        "type": "photo",
+        "title": "Rybakina qualification",
+        "description": null,
+        "date": "2026-09-14T12:19:00Z",
+        "location": null,
+        "coordinates": [
+          0.0,
+          0.0
+        ],
+        "commentsOn": false,
+        "copyright": null,
+        "publishFrom": 1789388384743,
+        "publishTo": 0,
+        "tags": [],
+        "platform": "PULSE_CMS",
+        "language": "en",
+        "additionalInfo": {},
+        "canonicalUrl": "",
+        "references": [],
+        "related": [],
+        "metadata": {
+          "credit": "WTA"
+        },
+        "titleTranslations": null,
+        "lastModified": 1789388402532,
+        "titleUrlSegment": "wtaf-indian-wells_qualified_singles_rybakina-16x9",
+        "visibilityOrder": [],
+        "allowedUserGroups": [],
+        "allowedTerritories": [],
+        "subtitle": null,
+        "onDemandUrl": "https://photoresources.wtatennis.com/photo-resources/2026/09/14/928d21c4-9e77-4eed-8504-8eb349667e4d/WTAF-Indian-Wells_Qualified_Singles_Rybakina-16x9.png",
+        "originalDetails": {
+          "width": 1920,
+          "height": 1080,
+          "aspectRatio": 1.7777778
+        },
+        "imageUrl": "https://photoresources.wtatennis.com/wta/photo/2026/09/14/28bfbc6d-87ba-4661-8559-2e1a54d05265/WTAF-Indian-Wells_Qualified_Singles_Rybakina-16x9.png"
+      },
+      "status": "official_metadata_confirmed_not_downloaded",
+      "limits": [
+        "是入围官宣图，不是比赛现场照。"
+      ]
+    },
+    {
+      "id": "beijing_official_highlights",
+      "role": "match_highlights",
+      "publisher": "WTA",
+      "official": true,
+      "source_url": "https://www.wtatennis.com/videos/4586120/beijing-stunner-charaeva-spoils-rybakinas-debut-as-world-no-1",
+      "cms_video_id": 4586120,
+      "brightcove_account": "6041795521001",
+      "brightcove_media_id": "6406171767112",
+      "duration_seconds": 365,
+      "cms_video": {
+        "id": 4586120,
+        "accountId": 29,
+        "type": "video",
+        "title": "Beijing stunner: Charaeva spoils Rybakina's debut as World No. 1",
+        "description": null,
+        "date": "2026-10-03T15:49:00Z",
+        "location": null,
+        "coordinates": [
+          0.0,
+          0.0
+        ],
+        "commentsOn": false,
+        "copyright": null,
+        "publishFrom": 1791042432556,
+        "publishTo": 0,
+        "tags": [
+          {
+            "id": 4976,
+            "label": "topic:highlights"
+          },
+          {
+            "id": 5003,
+            "label": "singles"
+          },
+          {
+            "id": 4977,
+            "label": "videos"
+          }
+        ],
+        "platform": "BRIGHTCOVE",
+        "language": "en",
+        "additionalInfo": {
+          "deliveryType": "dynamic_origin",
+          "bc_thumbnail_url": "https://cf-images.us-east-1.prod.boltdns.net/v1/jit/6041795521001/771548d3-9473-411c-aa0f-77e0d0ee3f3e/main/1280x720/3m2s218ms/match/image.jpg"
+        },
+        "canonicalUrl": "",
+        "references": [
+          {
+            "label": null,
+            "id": 324166,
+            "type": "TENNIS_PLAYER",
+            "sid": "324166"
+          },
+          {
+            "label": null,
+            "id": 329198,
+            "type": "TENNIS_PLAYER",
+            "sid": "329198"
+          },
+          {
+            "label": null,
+            "id": 1020,
+            "type": "TENNIS_TOURNAMENTGROUP",
+            "sid": "1020"
+          }
+        ],
+        "related": [],
+        "metadata": {},
+        "titleTranslations": null,
+        "lastModified": 1791042935589,
+        "titleUrlSegment": "beijing-stunner-charaeva-spoils-rybakinas-debut-as-world-no-1",
+        "visibilityOrder": [],
+        "allowedUserGroups": [],
+        "allowedTerritories": [],
+        "thumbnailUrl": "https://photoresources.wtatennis.com/photo-resources/2026/10/03/b76b6f2c-5b7e-4c21-92ef-a364a0a49559/GettyImages-2297805290.jpg?width=1280",
+        "duration": 365,
+        "variants": [
+          {
+            "aspectRatio": 0.0,
+            "displayAspectRatio": null,
+            "bitRate": 0,
+            "codec": null,
+            "duration": 365,
+            "format": null,
+            "frameRate": 0.0,
+            "height": 0,
+            "mediaId": "6406171767112",
+            "tags": [],
+            "width": 0
+          }
+        ],
+        "thumbnail": {
+          "id": 4586117,
+          "accountId": 29,
+          "type": "photo",
+          "title": "Alina Charaeva, Beijing 2026",
+          "description": null,
+          "date": "2026-10-03T15:45:00Z",
+          "location": null,
+          "coordinates": [
+            0.0,
+            0.0
+          ],
+          "commentsOn": false,
+          "copyright": null,
+          "publishFrom": 1791042353592,
+          "publishTo": 0,
+          "tags": [],
+          "platform": "PULSE_CMS",
+          "language": "en",
+          "additionalInfo": {},
+          "canonicalUrl": "",
+          "references": [
+            {
+              "label": null,
+              "id": 329198,
+              "type": "TENNIS_PLAYER",
+              "sid": "329198"
+            },
+            {
+              "label": null,
+              "id": 1020,
+              "type": "TENNIS_TOURNAMENTGROUP",
+              "sid": "1020"
+            }
+          ],
+          "related": [],
+          "metadata": {
+            "credit": "Robert Prange/Getty Images"
+          },
+          "titleTranslations": null,
+          "lastModified": 1791042397062,
+          "titleUrlSegment": "gettyimages-2297805290",
+          "visibilityOrder": [],
+          "allowedUserGroups": [],
+          "allowedTerritories": [],
+          "subtitle": null,
+          "onDemandUrl": "https://photoresources.wtatennis.com/photo-resources/2026/10/03/b76b6f2c-5b7e-4c21-92ef-a364a0a49559/GettyImages-2297805290.jpg",
+          "originalDetails": {
+            "width": 3710,
+            "height": 2304,
+            "aspectRatio": 1.6102431
+          },
+          "imageUrl": "https://photoresources.wtatennis.com/wta/photo/2026/10/03/60ce91ab-05eb-4044-933f-f10a91c738f3/GettyImages-2297805290.jpg"
+        },
+        "mediaId": "6406171767112",
+        "mediaGuid": "6406171767112",
+        "subtitle": null,
+        "closedCaptioned": false,
+        "hotlinkUrl": null,
+        "views": 0,
+        "imageUrl": "https://photoresources.wtatennis.com/wta/photo/2026/10/03/60ce91ab-05eb-4044-933f-f10a91c738f3/GettyImages-2297805290.jpg",
+        "onDemandUrl": "https://photoresources.wtatennis.com/photo-resources/2026/10/03/b76b6f2c-5b7e-4c21-92ef-a364a0a49559/GettyImages-2297805290.jpg"
+      },
+      "status": "official_metadata_confirmed_not_downloaded_not_viewed",
+      "limits": [
+        "必须下载观看后才确定可用原声句、画面切点和字幕。",
+        "缩略图是查拉耶娃，不可误当莱巴金娜封面。"
+      ]
+    },
+    {
+      "id": "beijing_official_x_matchpoint",
+      "role": "same_match_social_clip",
+      "publisher": "WTA @WTA",
+      "official": true,
+      "source_url": "https://x.com/WTA/status/2106402799198027829",
+      "status": "official_article_embed_confirmed_media_not_downloaded",
+      "context": "BELIEVE IT, ALINA / Beijing win over Rybakina"
+    },
+    {
+      "id": "beijing_official_x_second_set",
+      "role": "same_match_social_clip",
+      "publisher": "WTA @WTA",
+      "official": true,
+      "source_url": "https://x.com/WTA/status/2106387079919714635",
+      "status": "official_article_embed_confirmed_media_not_downloaded",
+      "context": "Charaeva takes second set 6-4"
+    },
+    {
+      "id": "beijing_official_x_charaeva_interview",
+      "role": "opponent_oncourt_interview",
+      "publisher": "WTA @WTA",
+      "official": true,
+      "source_url": "https://x.com/WTA/status/2106404103165223094",
+      "status": "official_article_embed_confirmed_media_not_downloaded",
+      "context": "Charaeva post-win interview, not Rybakina speech"
+    },
+    {
+      "id": "wuhan_withdrawal_official_photo",
+      "role": "same_recent_beijing_photo_for_withdrawal_fact_card",
+      "publisher": "WTA",
+      "official": true,
+      "source_url": "https://www.wtatennis.com/news/4586442/elena-rybakina-withdraws-from-wuhan-after-early-china-open-exit",
+      "cms_photo": {
+        "id": 4586444,
+        "accountId": 29,
+        "type": "photo",
+        "title": "Elena Rybakina, China Open day 4",
+        "description": null,
+        "date": "2026-10-04T10:47:00Z",
+        "location": null,
+        "coordinates": [
+          0.0,
+          0.0
+        ],
+        "commentsOn": false,
+        "copyright": null,
+        "publishFrom": 1791110837377,
+        "publishTo": 0,
+        "tags": [],
+        "platform": "PULSE_CMS",
+        "language": "en",
+        "additionalInfo": {},
+        "canonicalUrl": "",
+        "references": [],
+        "related": [],
+        "metadata": {
+          "credit": "Jimmie48/WTA"
+        },
+        "titleTranslations": null,
+        "lastModified": 1791110869576,
+        "titleUrlSegment": "elena_rybakina_-_china_open_2026_-_day_4-dsc_9726a",
+        "visibilityOrder": [],
+        "allowedUserGroups": [],
+        "allowedTerritories": [],
+        "subtitle": null,
+        "onDemandUrl": "https://photoresources.wtatennis.com/photo-resources/2026/10/04/c92a128c-dbd8-4672-a289-ddb1781b78af/Elena_Rybakina_-_China_Open_2026_-_Day_4-DSC_9726A.jpg",
+        "originalDetails": {
+          "width": 4700,
+          "height": 3218,
+          "aspectRatio": 1.4605345
+        },
+        "imageUrl": "https://photoresources.wtatennis.com/wta/photo/2026/10/04/249020f2-23d4-41a4-a19f-96e9c38d9d8a/Elena_Rybakina_-_China_Open_2026_-_Day_4-DSC_9726A.jpg"
+      },
+      "status": "official_metadata_confirmed_not_downloaded",
+      "limits": [
+        "照片标题明确China Open day4，不能当作武汉到场或退赛现场。"
+      ]
+    },
+    {
+      "id": "rybakina_wuhan_instagram_story",
+      "role": "athlete_injury_statement",
+      "publisher": "Elena Rybakina Instagram",
+      "official": true,
+      "source_url": null,
+      "status": "official_wta_text_transcription_confirmed_original_story_not_recovered",
+      "exact_print_quote": "I'm very sorry to the fans who were looking forward to seeing me play. I'll take some time to rest and recover. Thank you for your understanding and continued support. See you next year.",
+      "quoted_by": "https://www.wtatennis.com/news/4586442/elena-rybakina-withdraws-from-wuhan-after-early-china-open-exit",
+      "limits": [
+        "不把新闻文字稿包装为拿到了本人原声。",
+        "若原始story无法恢复，可用已核事实卡，不替本人生成引语语音。"
+      ]
+    },
+    {
+      "id": "ningbo_official_cultural_visit_photos",
+      "role": "optional_event_broll_still",
+      "publisher": "Ningbo Open @wtaningboopen",
+      "official": true,
+      "source_url": "https://x.com/wtaningboopen/status/2112085658399551586",
+      "published_date": "2026-10-19",
+      "status": "same_official_post_embedded_in_two_independent_reprints_original_403_not_downloaded",
+      "context": "Tianyi Pavilion Library visit; social caption praises new look",
+      "limits": [
+        "不是比赛或赛前发布会画面。",
+        "需取得原帖图片并检查身份、画质后再用。"
+      ]
+    },
+    {
+      "id": "ningbo_press_conference_trace_candidate",
+      "role": "research_lead_only",
+      "publisher": "@sebsharfam2 (nonofficial repost)",
+      "official": false,
+      "source_url": "https://x.com/sebsharfam2/status/2111785720603959696",
+      "published_date": "2026-10-19",
+      "status": "secondary_embed_only_not_authorized_as_official_primary_media",
+      "context": "Reported Ningbo press conference about health and year-end No.1 goal",
+      "reprint_url": "https://www.puntodebreak.com/en/2026/10/19/elena-rybakinas-big-goal-at-the-end-of-the-season",
+      "limits": [
+        "仅追溯官方宁波源的线索，不可直接当官方采访源。",
+        "不能把争取年终第一写成已经锁定年终第一。"
+      ]
+    }
+  ],
+  "social_search_log": {
+    "x": {
+      "accounts_searched": [
+        "@WTA",
+        "@lenarybakina",
+        "@wtaningboopen",
+        "Wuhan Open official"
+      ],
+      "results": "找到WTA北京官方嵌入短片、宁波天一阁活动官方帖；未恢复武汉退赛的赛事原始官宣帖。"
+    },
+    "instagram": {
+      "accounts_searched": [
+        "@lenarybakina",
+        "WTA official Instagram",
+        "Wuhan Open official Instagram",
+        "Ningbo Open official Instagram"
+      ],
+      "results": "WTA官方稿明确引自本人Instagram story，未取得原始story或稳定官方post/reel URL。"
+    },
+    "fallback_rule": "可使用官方文章支持的伤情与退赛事实卡。此素材缺口只记内部研究，不在成片对观众解释。"
+  },
+  "ending_options_zh": [
+    {
+      "use_when": "宁波比赛仍未开始",
+      "text": "9月14日，她第一个拿到年终门票。中网失利、因伤退出武汉之后，她又回到宁波。门票早已在手，2026赛季的故事还在继续。"
+    },
+    {
+      "use_when": "强调与2025反差；不替代2026宁波赛果",
+      "text": "去年，她最后一个拿到门票，最终却捧走了冠军。今年，她成为第一个入围的人。接下来，她要带着这个赛季的高光，也带着身体的考验，走向印第安维尔斯。"
+    }
+  ],
+  "pre_render_recheck": [
+    "GET宁波matches与oop，确认LS008状态、比分及真实开赛时间；如结束补齐结果。",
+    "確認画面年份与赛事，别把2025宁波冠军集锦当2026宁波赛果。",
+    "确认入围官宣文字是2026-09-14；争取年终No.1不等于已锁定。",
+    "官方视频下载、观看、ASR核对后方可写准确切点；本研究未观看以上视频。"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=tZp5mhbvVHY",
+  "source_sha256": "1b54d5fc352689a6c2adbfa4a933c01f91e2a8529ad8fa443127274660502fcb",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-media research agent; real small.en + medium.en outputs inspected; no human-listening claim",
+  "reviewed_at": "2026-10-22T01:10:24.612778+00:00",
+  "reviewed_from": 576.5,
+  "reviewed_to": 584.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 578.2,
+      "end": 583.3,
+      "en": "What a year to finish with two Grand Slam trophies.",
+      "zh": "这一年，以两座大满贯奖杯收尾。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/us_trophy-ef67d0f7a2-us-trophy-lift-small.en.json",
+      "sha256": "ef67d0f7a24d2dbc9efe1e50313add2fc2733f7a2c69adc467f515de48133134",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/us_trophy-d01696e060-us-trophy-lift-medium.en.json",
+      "sha256": "d01696e060ea660d6ddd522e94c6d389382db714b8abe11c41536ac72ea5f33e",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/us_trophy-ce025cbece-us-trophy-trophy-second.jpg",
+      "sha256": "ce025cbece2612fbe0c03551c32f2374b003dc76a48b2c9a4d06c10f9d5e7d7c",
+      "model": "small.en"
+    }
+  ]
+}

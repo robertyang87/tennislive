@@ -1,0 +1,444 @@
+{
+  "method": "writing_plan_not_audio_quality_pass",
+  "samples": "research/rybakina-finals-2026/voice-samples/sample-checks.json",
+  "entries": [
+    {
+      "segment": 0,
+      "id": "opening",
+      "display": "年初，她止步布里斯班8强。澳网决赛，决胜盘零比三落后，她却以六比四逆转，赢下冠军。",
+      "actual_tts_input": "年初，她止步布里斯班8强。澳网决赛，决胜盘零比三落后，她却以六比四逆转，赢下冠军。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "，",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 10.0,
+      "polyphone_occurrences": [
+        {
+          "index": 24,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B"
+        }
+      ]
+    },
+    {
+      "segment": 3,
+      "id": "february",
+      "display": "多哈止步8强，迪拜因病退赛。来到印第安维尔斯，她又打进决赛。",
+      "actual_tts_input": "多哈止步8强，迪拜因病退赛。来到印第安维尔斯，她又打进决赛。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 7.5,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 4,
+      "id": "iw_matchpoint",
+      "display": "莱巴金娜握有冠军点，却没能拿下。决胜盘抢七六比八，她输给萨巴伦卡。",
+      "actual_tts_input": "莱巴金娜握有冠军点，却没能拿下。决胜盘抢七六比八，她输给萨巴伦卡。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 8.0,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 6,
+      "id": "miami_stuttgart",
+      "display": "迈阿密半决赛，萨巴伦卡再次让她止步。四月的斯图加特，她先挽救两个赛点过关，最终在决赛击败穆霍娃。",
+      "actual_tts_input": "迈阿密半决赛，萨巴伦卡再次让她止步。四月的斯图加特，她先挽救两个赛点过关，最终在决赛击败穆霍娃。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 11.5,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 10,
+      "id": "clay_results",
+      "display": "马德里第四轮出局，罗马止步8强。来到法网，她先赢一盘，却输掉决胜盘抢七，止步第二轮。",
+      "actual_tts_input": "马德里第四轮出局，罗马止步8强。来到法网，她先赢一盘，却输掉决胜盘抢七，止步第二轮。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "，",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 10.3,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 12,
+      "id": "grass_results",
+      "display": "草地赛季，女王杯打进8强，柏林第二轮出局。回到温网，她在第三轮输给梅尔滕斯。",
+      "actual_tts_input": "草地赛季，女王杯打进8强，伯林第二轮出局。回到温网，她在第三轮输给梅尔滕斯。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "，",
+        "。",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 9.1,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 14,
+      "id": "toronto_return",
+      "display": "八月，多伦多。莱巴金娜连续逆转大坂直美和高芙，再次走进决赛。最后，她输给斯瓦泰克。",
+      "actual_tts_input": "八月，多伦多。莱巴金娜连续逆转大坂直美和高芙，再次走进决赛。最后，她输给斯瓦泰克。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "。",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 10.0,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 16,
+      "id": "cincinnati_retirement",
+      "display": "辛辛那提四分之一决赛，两人又相遇。首盘一比四，莱巴金娜因伤退赛。",
+      "actual_tts_input": "辛辛那提四分之一决赛，两人又相遇。首盘一比四，莱巴金娜因伤退赛。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 8.0,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 17,
+      "id": "us_open_run",
+      "display": "到了纽约，对郑钦文、对高芙，她都是先丢一盘后逆转。决赛，又是萨巴伦卡。",
+      "actual_tts_input": "到了纽约，对郑钦文、对高芙，她都是先丢一盘后逆转。决赛，又是萨巴伦卡。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "，",
+        "。",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 8.5,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 18,
+      "id": "us_open_final",
+      "display": "今年第三次在决赛相遇，莱巴金娜用三盘胜利，拿下本赛季第二座大满贯。",
+      "actual_tts_input": "今年第三次在决赛相遇，莱巴金娜用三盘胜利，拿下本赛季第二座大满贯。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 8.0,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 22,
+      "id": "qualification",
+      "display": "九月十四日，WTA正式确认：莱巴金娜，是本届年终的首位单打入围者。",
+      "actual_tts_input": "九月十四日，WTA正式确认：莱巴金娜，是本届年终的首位单打入围者。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "：",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 9.0,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 23,
+      "id": "number_one",
+      "display": "也是这一天，她正式登上世界第一。但这个赛季，还没有结束。",
+      "actual_tts_input": "也是这一天，她正式登上世界第一。但这个赛季，还没有结束。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 7.0,
+      "polyphone_occurrences": [
+        {
+          "index": 22,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B"
+        }
+      ]
+    },
+    {
+      "segment": 24,
+      "id": "bjk_withdrawal",
+      "display": "九月十八日，她因医疗原因，退出金杯总决赛。",
+      "actual_tts_input": "九月十八日，她因医疗原因，退出金杯总决赛。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 5.5,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 25,
+      "id": "beijing_entry",
+      "display": "十月三日，北京。她以世界第一身份出战的首场比赛，对手是查拉耶娃。",
+      "actual_tts_input": "十月三日，北京。她以世界第一身份出战的首场比赛，对手是查拉耶娃。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 8.0,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 27,
+      "id": "beijing_exit",
+      "display": "先赢一盘，再丢两盘。中网第二轮，成了她这一站的终点。",
+      "actual_tts_input": "先赢一盘，再丢两盘。中网第二轮，成了她这一站的终点。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 7.3,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 28,
+      "id": "wuhan_withdrawal",
+      "display": "第二天，她又因伤退出武汉。两座大满贯，也不能替她免去恢复的时间。",
+      "actual_tts_input": "第二天，她又因伤退出武汉。两座大满贯，也不能替她免去恢复的时间。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 8.0,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 29,
+      "id": "ningbo_return",
+      "display": "十月，她回到宁波。复出首战，对手是波琳娜·库德梅托娃。比赛仍待开打。",
+      "actual_tts_input": "十月，她回到宁波。复出首战，对手是波琳娜·库德梅托娃。比赛仍待开打。",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "。",
+        "。"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 9.0,
+      "polyphone_occurrences": []
+    },
+    {
+      "segment": 30,
+      "id": "ending",
+      "display": "七千五百零二分，门票早已在手。年终总决赛，你最期待她怎样的表现？",
+      "actual_tts_input": "七千五百零二分，门票早已在手。年终总决赛，你最期待她怎样的表现？",
+      "intent": "按实际时间交代本段新增结果，并为下一段原声留出空间。",
+      "emphasis": "将时间、转折后的结果作为语义落点；不对每个字机械重读。",
+      "pause_plan": [
+        "，",
+        "。",
+        "，",
+        "？"
+      ],
+      "sentence_integrity": "同一完整句在同一请求内合成，不跨段拆句。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "style_control": "Edge不支持额外情绪/SSML；通过完整口语句、语序和标点表达，不声称实现逐字重音。",
+      "expected_max_seconds": 8.0,
+      "polyphone_occurrences": []
+    },
+    {
+      "id": "brand_outro",
+      "display": "关注网球时差，时差归我，好球归你。",
+      "actual_tts_input": "关注网球时插，时插归我，好球归你。",
+      "backend": "edge",
+      "voice": "zh-CN-YunjianNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "intent": "既有统一品牌片尾，使用原生真实请求。",
+      "polyphone_occurrences": []
+    }
+  ]
+}

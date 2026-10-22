@@ -1,0 +1,38 @@
+{
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406171767112",
+  "source_sha256": "521a2948180718bdadb8b0b18951f6b0b4f4a65cb89889cc46e634bbb2fe0c1c",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual small.en + medium.en source-bound transcription cross-check and source-frame inspection, not human listening",
+  "reviewed_at": "2026-10-22T01:13:10.106969+00:00",
+  "status": "complete",
+  "reviewed_from": 323.45,
+  "reviewed_to": 339.2,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 329.16,
+      "end": 334.48,
+      "en": "And Alina Charaeva manufactures a lifelong dream in real time.",
+      "zh": "查拉耶娃此刻实现毕生梦想。"
+    },
+    {
+      "start": 335.0,
+      "end": 339.06,
+      "en": "Achieves a majestic, career-defining victory in Beijing.",
+      "zh": "她在北京赢下生涯标志性胜利。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/beijing-4c1bf6ea3b-beijing-charaeva-small.en.json",
+      "sha256": "4c1bf6ea3bff89445b02c6b95e5250012f0abef28cb1a264e79ed910bbfc3e02",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/beijing-f159c9db0f-beijing-charaeva-medium.en.json",
+      "sha256": "f159c9db0f70c44eb603d4bd58623e38d5e78945c8b7291e159e6edeef36d0c2",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "Actual small.en and medium.en strongly agree on the two selected complete commentary clauses; player surname normalized to official match identity Charaeva from phonetic ASR variants. Previous utterance finishes323.38, selected window starts323.45; second selected clause finishes339.06 and window ends339.20, before next sentence342.46. No human listening claimed."
+}

@@ -1,0 +1,72 @@
+{
+  "source": "stuttgart-champions-reel",
+  "source_name": "stuttgart-champions-reel",
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6393459104112",
+  "local_file": "/workspace/rybakina-finals-production/sources/stuttgart-champions-reel.mp4",
+  "source_sha256": "7798b05c8ed72bf79be1a981f17114e661d78ec356d6bfc3887a3dc7c6d4076c",
+  "start": 481.3,
+  "end": 485.72,
+  "frame": "court",
+  "cx": 0.5,
+  "verification": "asr_cross_checked",
+  "status": "complete",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source frame and dual-ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T01:12:17.473376+00:00",
+  "reviewed_from": 481.3,
+  "reviewed_to": 485.72,
+  "captions": [
+    {
+      "start": 481.48,
+      "end": 485.72,
+      "en": "I mean, it's a very attractive tournament in every sense of the word.",
+      "zh": "这项赛事各方面都很有吸引力。"
+    }
+  ],
+  "utterances": [
+    {
+      "start": 481.48,
+      "end": 485.72,
+      "en": "I mean, it's a very attractive tournament in every sense of the word.",
+      "zh": "这项赛事各方面都很有吸引力。"
+    }
+  ],
+  "uncertain_spans": [],
+  "notes": "Actual481.3–485.72 trophy lift and smile. Small ASR481.48–485.72 exact sentence; medium spans480.72–485.4 confirms every substantive word, with preceding at the end and following next sentence outside selected window. Exclude subsequent nearly40years commentary because it is not useful season context. No source mute or speed change.",
+  "asr_evidence": [
+    {
+      "path": "/workspace/rybakina-finals-production/research/asr/stuttgart-trophy-small.en.json",
+      "sha256": "8f1f92d8c780396628e60a7282b45c3ef87b193d0902ab1c1d6a207633634bae",
+      "model": "small.en"
+    },
+    {
+      "path": "/workspace/rybakina-finals-production/research/asr/stuttgart-trophy-medium.en.json",
+      "sha256": "320895aa1d1be168046096a4de72d7ff782e20adbe358d8d90b65850a35cf0c0",
+      "model": "medium.en"
+    }
+  ],
+  "person_measurement_diagnostic": {
+    "samples": [
+      0.2586,
+      0.4414,
+      0.3811,
+      0.3519,
+      0.4032,
+      0.5136,
+      0.521,
+      0.5073,
+      0.5344
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+      1280,
+      720
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-22T01:12:17+00:00",
+    "median": 0.4414,
+    "spread": 0.2758
+  },
+  "_frame_why": "动态捧杯包含颁奖主持人与本人，最大脸采样在两人间跳动；这里不是本人讲话，采用固定画面中心保本人和奖杯，原生预览复核。"
+}

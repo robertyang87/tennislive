@@ -1,0 +1,38 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=fWfn-EgR68Q",
+  "source_sha256": "3fb20aefc4d5d812ebd823d6e4c3fbead3920b41c1cd649ad1ca8d4e609d5bd8",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual small.en + medium.en source-bound transcription cross-check and source-frame inspection, not human listening",
+  "reviewed_at": "2026-10-22T01:13:10.037555+00:00",
+  "status": "complete",
+  "reviewed_from": 179.4,
+  "reviewed_to": 194.5,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 185.24,
+      "end": 188.74,
+      "en": "The world number two is out.",
+      "zh": "世界第二出局了。"
+    },
+    {
+      "start": 188.96,
+      "end": 194.28,
+      "en": "A huge upset here on Number One Court.",
+      "zh": "一号球场爆出大冷门。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "research/rybakina-finals-2026/points/wimbledon-r3-small.en.json",
+      "sha256": "8a59932ed58c6435c6cc5d829c2b20342d5e79ce57aa5f2de686e11fed299e68",
+      "model": "small.en"
+    },
+    {
+      "path": "research/rybakina-finals-2026/points/wimbledon-r3-medium.en.json",
+      "sha256": "8b139f3551e72084adfe06f388c4ddbcb0d3350d98aaaa0c7b179b02fb711add",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "Small and medium actual source ASR cross-check: small preserves world-number-two line185.24–188.74; medium resolves here on Number One Court188.96–194.28 where small had phonetic errors. End194.5 after full Court sentence and before next distinct fragment The biggest win beginning197.5. Proper court designation normalized; no human-listening claim."
+}
