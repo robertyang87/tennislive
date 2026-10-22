@@ -1958,12 +1958,25 @@ _MUCHOVA_NATIVE_720_CROP_URLS = frozenset({
     "https://x.com/WTA/status/2022719051408052453",
 })
 
+# 2026-10-22: the owner explicitly reiterated full-canvas crops for this
+# Rybakina film, with measured person centers for its interviews. Keep the
+# exception bound to this episode and the three actual official 720p sources;
+# it does not relax the native floor or archival defaults for other films.
+_NATIVE_720_CROP_URLS_BY_EPISODE = {
+    "muchova-finals-2026": _MUCHOVA_NATIVE_720_CROP_URLS,
+    "rybakina-finals-2026": frozenset({
+        "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406171767112",
+        "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6393472230112",
+        "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6393459104112",
+    }),
+}
+
 
 def source_crop_claims(spec: dict) -> dict[str, dict]:
     """Opt in to each source's native crop geometry, without conforming its pixels.
 
     The native short side must remain >=1080, except the exact 720p sources the
-    owner authorized for this Muchova episode. Archival contain stays the default.
+    owner authorized for the named episode. Archival contain stays the default.
     """
     declared = spec.get("source_crop") or {}
     if not isinstance(declared, dict):
@@ -1990,10 +2003,9 @@ def source_crop_claims(spec: dict) -> dict[str, dict]:
                 or type(floor) is not int or floor not in (720, 1080)):
             raise ReelError("source_crop fill_y 要在0~1，min_height 只认1080或明确授权的720")
         if floor == 720 and not (
-                spec.get("slug") == "muchova-finals-2026"
-                and urls[key] in _MUCHOVA_NATIVE_720_CROP_URLS
+                urls[key] in _NATIVE_720_CROP_URLS_BY_EPISODE.get(spec.get("slug"), ())
                 and claim.get("approved_by") == "user"):
-            raise ReelError("source_crop 720p裁切仅限本集用户按精确URL明确授权的源")
+            raise ReelError("source_crop 720p裁切仅限用户按本集和精确URL明确授权的源")
         uses = [s for s in spec.get("segments", [])
                 if not (s.get("image") or s.get("title_card") or s.get("stat_card"))
                 and s.get("source", primary) == key]

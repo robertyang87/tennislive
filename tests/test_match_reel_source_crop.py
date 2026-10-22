@@ -1,5 +1,6 @@
 """Explicit native source geometry must fill the canvas without disguising 720p."""
 import copy
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -64,6 +65,49 @@ def test_archival_default_stays_contain_and_720_crop_is_episode_url_bound():
         reel.check_archival_fit(spec, reel.parse_segments(spec, paths, "main"))
     spec["segments"][0]["fit"] = "contain"
     reel.check_archival_fit(spec, reel.parse_segments(spec, paths, "main"))
+
+
+@pytest.mark.parametrize("video_id", ["6406171767112", "6393472230112", "6393459104112"])
+def test_rybakina_owner_full_canvas_approval_stays_episode_and_url_bound(video_id):
+    spec = _spec("archive", 720)
+    spec["slug"] = "rybakina-finals-2026"
+    url = ("https://players.brightcove.net/6041795521001/te01Hqw71_default/"
+           f"index.html?videoId={video_id}")
+    spec["sources"]["archive"] = url
+    spec["archival"] = {"archive": "实际720p，用户本集要求铺满；不声称原生1080p"}
+    paths = {key: Path(key + ".mp4") for key in spec["sources"]}
+    reel.check_archival_fit(spec, reel.parse_segments(spec, paths, "main"))
+    dims = {"main": (1920, 1080, "25/1", 25.), "archive": (1280, 720, "25/1", 25.)}
+    reel.check_sources_match(paths, spec, dims)
+    for slug, source in (("another-episode", url), ("muchova-finals-2026", url),
+                         ("rybakina-finals-2026", BAD_URL)):
+        wrong = copy.deepcopy(spec)
+        wrong["slug"], wrong["sources"]["archive"] = slug, source
+        with pytest.raises(reel.ReelError, match="精确URL"):
+            reel.source_crop_claims(wrong)
+    wrong = copy.deepcopy(spec)
+    del wrong["source_crop"]["archive"]["approved_by"]
+    with pytest.raises(reel.ReelError, match="精确URL"):
+        reel.source_crop_claims(wrong)
+    dims["archive"] = (1138, 640, "25/1", 25.)
+    with pytest.raises(reel.ReelError, match="原生短边"):
+        reel.check_sources_match(paths, spec, dims)
+
+
+def test_rybakina_season_film_uses_full_canvas_and_measured_interview_centers():
+    path = Path(__file__).resolve().parents[1] / "specs/reels/rybakina-finals-2026.json"
+    spec = json.loads(path.read_text())
+    for seg in spec["segments"]:
+        if "source" not in seg:
+            continue
+        assert seg["fit"] == "crop", "本片用户已明确要求所有视频铺满，不许回退contain"
+        if seg.get("_quote_kind") == "player_interview":
+            assert seg["frame"] == "person"
+            from tennislive.video.crop_policy import person_center_problem
+            assert person_center_problem(seg) is None
+    for source in spec["archival"]:
+        assert spec["source_crop"][source]["min_height"] == 720
+        assert spec["source_crop"][source]["approved_by"] == "user"
 
 
 @pytest.mark.parametrize("width,height,box,floor", [

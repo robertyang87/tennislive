@@ -25,10 +25,19 @@
   "state": "native_preflight",
   "native_spec": "specs/reels/rybakina-finals-2026.json",
   "source_manifest": "research/rybakina-finals-2026/source-candidates.json",
-  "latest_user_steering": "同步主线最新代码，用最新的右上角字卡样式。",
+  "latest_user_steering": [
+    "同步主线最新代码，用最新的右上角字卡样式。",
+    "用户2026-10-22原话：都说过要用铺满画布的方式裁切呀。如果是人物的话，就是以人物为中心做裁切，就是人物采访的片段，以人物中心做裁切。"
+  ],
   "synced_main": "244bfefdb0cff3d66097926d6fd70f3ca65e977f",
   "actual_selected_windows": 13,
   "original_audio_method": "asr_cross_checked_not_human_listening",
   "tts_requests": 19,
-  "post_us_open_seconds": 77.55
+  "post_us_open_seconds": 77.55,
+  "framing": {
+    "all_video_fit": "crop_full_canvas",
+    "interviews": "measured_fixed_person_center",
+    "matches": "fixed_court_center",
+    "source_floor_720_approval": "Current film, only three exact official URLs in native crop policy; actual720p disclosed internally."
+  }
 }
