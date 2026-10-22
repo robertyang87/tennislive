@@ -1,0 +1,99 @@
+{
+  "schema": "sabalenka.chapter-card-independent-qc.v1",
+  "reviewed_at": "2026-10-22T04:28:46.644881+00:00",
+  "spec_file_sha256": "6001cdebf0c9cf0a03487146e6864d3f7d4d4bc7cc7aaddcc6c3c9c3b9720bf5",
+  "preview_spec_file_sha256": "6001cdebf0c9cf0a03487146e6864d3f7d4d4bc7cc7aaddcc6c3c9c3b9720bf5",
+  "exact_current_spec_bytes_match_preview": true,
+  "shared_revision": "eb9ab94828eb96f97c9852aacb4b193c2fd8545d",
+  "reviewed_code_sha256": {
+    "tools/render_title_card.py": "e286fd40f1ac14b9421ece03694711ffb45c5c0f55d6c6ea017227fda1c6c39e",
+    "tools/build_match_reel.py": "fa447348776e4c0c3b1991c6289c6d1a8a2f07f4c757ffcc96d60d906b8c8b26",
+    "tests/test_title_card.py": "4d7c8bad4ba71ba27ef597e978ccf3d44738725c4ad9616e165be0be1548318c"
+  },
+  "code_contract_review": {
+    "blocking_issues": [],
+    "checks": [
+      "title_card_story_label declared in real segment key inventory and consumed, not underscore bypass",
+      "non-title-card rejected in normalize and parse",
+      "label_fields_problem reused plus explicit six semantic key whitelist and string-only values; width/pad/carry/show_for etc rejected",
+      "full1080×1440 only; band rejected at normalize/parse and materialize",
+      "explicit seconds finite numeric not bool, >0≤15s; actual segment.length rechecked during materialize",
+      "static label lifetime is exactly the title-card segment; no across-segment carry or extension",
+      "same render_label PNG bytes embedded; same font files/source fonts89/73/98/73, colours, outline, shadow, rail",
+      "native label x386/y151/width648/right46; static card title<=2 semantic lines and real-browser24px collision clearance",
+      "legacy renderer kwargs/payload unchanged when label absent; independently rendered old HEAD vs new unlabeled card has exact identical JPEG pixels",
+      "generated title-card prefix bypasses filesystem existence/overlap probing only until materialization; actual evidence image overlap gate remains"
+    ],
+    "scaling_precision": "HTML uses natural aspect height228.95px for a424px-high/1200px-wide PNG atwidth648. Live FFmpeg scale=648:-2 uses228px even height. Same source PNG/style; under1px vertical quantization difference explicitly recorded, no claim of identical live-vs-HTML scaled pixels."
+  },
+  "found_and_resolved_test_issue": {
+    "issue": "Long-path regression fixture asserted >255 UTF8 bytes but original fixture was207bytes",
+    "resolution": "Spring expanded actual semantic label fields within budgets; kept >255 assertion strict, did not weaken gate"
+  },
+  "legacy_pixel_evidence": "/workspace/chapter-label-independent-qc/legacy-pixel-comparison.json",
+  "native_review": {
+    "manifest": "/workspace/sabalenka-finals-production/native-preview-chapter-labels/preview_manifest.json",
+    "contact": "/workspace/sabalenka-finals-production/native-preview-chapter-labels/contact-all.jpg",
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": "25/1",
+    "samples": [
+      {
+        "id": "card-iw",
+        "image": "caption-01.png",
+        "film_time": 66.0,
+        "image_sha256": "f3df220553051db72d324ff03ca202cfcec0284e7dcc03008161fbd1049ebe2e"
+      },
+      {
+        "id": "iw-photo",
+        "image": "caption-02.png",
+        "film_time": 91.20000000000002,
+        "image_sha256": "c5a9166bd98b6c06acfd39603b818333046acc635f06e0de0ba80832b33110a3"
+      },
+      {
+        "id": "card-miami",
+        "image": "caption-03.png",
+        "film_time": 101.28,
+        "image_sha256": "dbc989965be1330a10e0ada57821e19dd579b22d2fd10b8370fb3efc2700f6e9"
+      },
+      {
+        "id": "card-rg",
+        "image": "caption-04.png",
+        "film_time": 163.04000000000002,
+        "image_sha256": "2add0aca626b8d2d1019633dd8708eb17f04ef55eee3d5b220c1a1339d68c1d3"
+      },
+      {
+        "id": "card-us",
+        "image": "caption-05.png",
+        "film_time": 250.92000000000004,
+        "image_sha256": "37aa07b12a762bffcc3c68b3a835246e7ed0fcc07f830aad73b736e22e4b07ca"
+      },
+      {
+        "id": "card-beijing",
+        "image": "caption-06.png",
+        "film_time": 281.62000000000006,
+        "image_sha256": "776a62cf5285e3d1a3d0b3a42dcf33b91777e4527924496fc524b987c1ec8f6b"
+      },
+      {
+        "id": "card-wuhan",
+        "image": "caption-07.png",
+        "film_time": 304.0200000000001,
+        "image_sha256": "e0c23a12417efbde5638245f96f78c64d58434ca3656c62185b7095740131515"
+      }
+    ],
+    "blocking_issues": [],
+    "six_chapters": "All six actual samples show readable original-style upper-right labels on deepblue; label avoids center heading/kicker and independent lower subtitles, no clip/player underneath static chapter label. Score direction correct. No cut baseline or bottom subtitles.",
+    "iw_photo": "Actual original official photograph fills1080×1440; face, head and full trophy inside frame; top-left watermark clear of subject. This sampled instant has no foreground quote cue; no added narration/quote inferred."
+  },
+  "tests": {
+    "agent_spring_report": "tests/test_title_card.py32passed21.04s",
+    "independent_final_run": "python -m pytest -q tests/test_title_card.py:32 passed,1 existing Pillow deprecation warning in20.41s",
+    "git_diff_check": "clean"
+  },
+  "shared_files_spec_git_modified_by_reviewer": false,
+  "scope": "Code contract and7native interior preview images only; no whole-film render, audio audit, transition or publication approval",
+  "publication_approved": false,
+  "last_current_spec_sha256": "6001cdebf0c9cf0a03487146e6864d3f7d4d4bc7cc7aaddcc6c3c9c3b9720bf5"
+}

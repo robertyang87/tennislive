@@ -53,12 +53,13 @@ def video(key):
     if key not in selected:
         pending.append(key); return
     row = selected[key]
-    seg = {k: row[k] for k in ['start','end','frame','cx','cx_face','_frame_why','visual_image'] if k in row}
+    seg = {k: row[k] for k in ['start','end','frame','cx','cx_face','_frame_why','visual_image','audio_tail'] if k in row}
     seg.update({'_id':key,'source':row['source_name'],'narration':'','voice':voice,
                 'fit':'crop','cx':row.get('cx',.5),'track':False,
                 '_quote_kind':row.get('quote_kind','broadcast'),
                 '_audio_review_state':'actual_asr_cross_checked_not_human_listening',
                 '_why':row.get('visual_review',row.get('notes','Actual same-match official source; exact evidence in research production selections.'))})
+    if row.get('audio_tail_why'):seg['_audio_tail_why']=row['audio_tail_why']
     if key=='cold-miami':seg['_ending_payoff_required']=True
     captions = row.get('captions',row.get('utterances',[]))
     if captions:

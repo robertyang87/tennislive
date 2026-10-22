@@ -427,6 +427,7 @@
     {
       "start": 250.2,
       "end": 273.38,
+      "audio_tail": "silence",
       "_id": "madrid",
       "source": "madrid-qf",
       "narration": "",
@@ -440,6 +441,7 @@
       "_quote_kind": "broadcast",
       "_audio_review_state": "actual_asr_cross_checked_not_human_listening",
       "_why": "['/workspace/sabalenka-finals-production/research/production/evidence/madrid-qf-tail-contact.jpg', '/workspace/sabalenka-finals-production/research/production/evidence/madrid-qf-edge-contact.jpg', '/workspace/sabalenka-finals-production/research/production/evidence/madrid-placeholder-overlay-contact.jpg', '/workspace/sabalenka-finals-production/research/production/evidence/madrid-late-placeholder-contact.jpg']",
+      "_audio_tail_why": "Native dissolve extends picture beyond nominal reviewed window. Pad only outgoing audio tail with silence so next unselected commentary beginning is not leaked; preserve every reviewed body sample at unity gain.",
       "quote": [
         {
           "at": 8.86,
@@ -733,6 +735,7 @@
     {
       "start": 169.0,
       "end": 182.5,
+      "audio_tail": "silence",
       "_id": "us",
       "source": "us-final-highlights",
       "narration": "",
@@ -746,6 +749,7 @@
       "_quote_kind": "broadcast",
       "_audio_review_state": "actual_asr_cross_checked_not_human_listening",
       "_why": "{'identity': '2026US Open final; Sabalenka orange, Rybakina yellow. Sabalenka is loser.', 'point': '169–171.3 Rybakina pre-serve;171.5 wide court before full service motion;172–175 final rally;175.3 point complete;176–178 Rybakina real celebration;178.7–182.5 Sabalenka real losing reaction, walking/bending and lifting head.', 'why_final_point': 'Burned scoreboard explicitlyCHAMPIONSHIP POINT#2, Rybakina5-2/40-30 serving. Final point wins match6-4,5-7,6-2. This is championship point, unlike previous4-2break retained in Rybakina film.'}",
+      "_audio_tail_why": "Native dissolve extends picture beyond nominal reviewed window. Pad only outgoing audio tail with silence so next unselected commentary beginning is not leaked; preserve every reviewed body sample at unity gain.",
       "quote": [
         {
           "at": 6.12,

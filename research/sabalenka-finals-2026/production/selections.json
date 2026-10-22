@@ -564,7 +564,9 @@
         "to_zh": "二比一，六比四、五比七、六比二。",
         "why": "精简中文报分前的冗余“总盘分”，保留全部比分含义，确保单行不溢出；英语原句、时码、音频字节不变。"
       }
-    ]
+    ],
+    "audio_tail": "silence",
+    "audio_tail_why": "Native dissolve extends picture beyond nominal reviewed window. Pad only outgoing audio tail with silence so next unselected commentary beginning is not leaked; preserve every reviewed body sample at unity gain."
   },
   "beijing": {
     "key": "beijing_third_round_loss",
@@ -897,7 +899,9 @@
       267.1,
       273.3
     ],
-    "visual_review": "['/workspace/sabalenka-finals-production/research/production/evidence/madrid-qf-tail-contact.jpg', '/workspace/sabalenka-finals-production/research/production/evidence/madrid-qf-edge-contact.jpg', '/workspace/sabalenka-finals-production/research/production/evidence/madrid-placeholder-overlay-contact.jpg', '/workspace/sabalenka-finals-production/research/production/evidence/madrid-late-placeholder-contact.jpg']"
+    "visual_review": "['/workspace/sabalenka-finals-production/research/production/evidence/madrid-qf-tail-contact.jpg', '/workspace/sabalenka-finals-production/research/production/evidence/madrid-qf-edge-contact.jpg', '/workspace/sabalenka-finals-production/research/production/evidence/madrid-placeholder-overlay-contact.jpg', '/workspace/sabalenka-finals-production/research/production/evidence/madrid-late-placeholder-contact.jpg']",
+    "audio_tail": "silence",
+    "audio_tail_why": "Native dissolve extends picture beyond nominal reviewed window. Pad only outgoing audio tail with silence so next unselected commentary beginning is not leaked; preserve every reviewed body sample at unity gain."
   },
   "iw-save": {
     "key": "iw_save_matchpoint",
