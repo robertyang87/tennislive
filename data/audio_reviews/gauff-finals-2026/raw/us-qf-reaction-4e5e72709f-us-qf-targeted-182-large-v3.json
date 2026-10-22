@@ -1,0 +1,46 @@
+{
+  "model": "large-v3",
+  "source_sha256": "43ca94013f9fdae50f409c99eec182f3a417a7cf210d0255403bb0cc06890018",
+  "clip": [
+    182,
+    186.4
+  ],
+  "method": "actual_faster_whisper_cpu1_int8_unprompted_beam1_noVAD",
+  "human_listened": false,
+  "generated_at": "2026-10-22T13:23:48.107707+00:00",
+  "segments": [
+    {
+      "start": 184.36,
+      "end": 185.48,
+      "text": " Somehow she did it.",
+      "avg_logprob": -0.4950941503047943,
+      "no_speech_prob": 0.26844653487205505,
+      "words": [
+        {
+          "w": " Somehow",
+          "s": 184.36,
+          "e": 184.8,
+          "p": 0.5554492473602295
+        },
+        {
+          "w": " she",
+          "s": 184.8,
+          "e": 185.06,
+          "p": 0.8498835563659668
+        },
+        {
+          "w": " did",
+          "s": 185.06,
+          "e": 185.28,
+          "p": 0.9967527985572815
+        },
+        {
+          "w": " it.",
+          "s": 185.28,
+          "e": 185.48,
+          "p": 0.9963834285736084
+        }
+      ]
+    }
+  ]
+}

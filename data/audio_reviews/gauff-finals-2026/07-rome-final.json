@@ -1,0 +1,35 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=WXNZTi6qd1Y",
+  "source_sha256": "e5aab2e4155d2ebf9ef25e4d31d2e84b6748963d0442c9a5e1818a14e0f904dc",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review plus paired local ASR and targeted third-model disambiguation; not human listening",
+  "human_listened": false,
+  "reviewed_at": "2026-10-22T13:59:18.919500+00:00",
+  "reviewed_from": 219.9,
+  "reviewed_to": 240.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 235.84,
+      "end": 240.06,
+      "en": "Elina Svitolina is a Roman champion once again.",
+      "zh": "斯维托丽娜再度称霸罗马。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Genuine terminal championship point#3 (219.90 prep; serve222.60–223.80; deadball231.48–231.96; celebration232+; handshake235+). Entire first result sentence retained. Next separate2 poetic sentences about Svitolina Roman trilogy retained in shared research and Svitolina episode, omitted here for Coco main-character relevance (root editorial decision), not transcription difficulty. Next new THE240.36 lies within outgoing.25 so outside-body tail silence only. API second-set TB3 conflicts officialarticle TB5; omit smallscore, keep conflict.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/rome-final-27fbaf0ba7-rome-terminal-small.en-en.json",
+      "sha256": "27fbaf0ba714892a6a2cca1e63fab841ec54c947ba4da220ce666e90a7de8e2e",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/rome-final-d03692a541-rome-terminal-medium.en-en.json",
+      "sha256": "d03692a541b90b6e791789a87a66e63dc20c3bc35973c9515fdab9b02b3a9c9d",
+      "model": "medium.en"
+    }
+  ]
+}

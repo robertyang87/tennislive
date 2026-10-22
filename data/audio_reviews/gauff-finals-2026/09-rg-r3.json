@@ -1,0 +1,33 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=VN2JfiUe-Cw",
+  "source_sha256": "16af07c890392cd1ec56cd7f87fd331434d782270e12bd654cfcdf774adf2470",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review plus paired local ASR and targeted third-model disambiguation; not human listening",
+  "human_listened": false,
+  "reviewed_at": "2026-10-22T13:59:18.974707+00:00",
+  "reviewed_from": 170.9,
+  "reviewed_to": 183.24,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "Paired unprompted small.en/medium.en on160–218 show no stable intelligible foreground English170.90–183.24; French PA begins177.6 and finishes182.96, corroborated actual multilingual small French ASR176–187. Preserved sound is not claimed silent. No reconstruction from malformed English-model approximations.",
+  "review_notes": "Actual complete matchpoint serve/rally/deadball/Potapova falls to clay/Coco reaction, plus complete French umpire result announcement. Both English models produce unstable non-English approximations not valid English; multilingual French short-ASR confirms deux manches à une,4-6 7-6 6-4 ending182.96. No invented English captions or fake human listening. Independent French announcement is kept audible in full; all bilingual cue obligation applies to intelligible English, none reliably decoded in selected window.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/rg-r3-1b09e61e18-rg-r3-small.en.json",
+      "sha256": "1b09e61e181018bc6a75d14bdc65f4af66013bb82a310cf534cfcf1e529d11de",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/rg-r3-ed702edcf5-rg-r3-medium.en.json",
+      "sha256": "ed702edcf545484f06b3ec591418d6b475d6c6e5c88cdcf8f3f8f98a62d9b7b4",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/rg-r3-a308988bfc-rg-r3-french-boundary-small.json",
+      "sha256": "a308988bfcdc1c33adc8249871ff97c1740be7663a23ffc146629d7c8bb21cf6",
+      "model": "small"
+    }
+  ]
+}

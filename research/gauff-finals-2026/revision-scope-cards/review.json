@@ -1,0 +1,62 @@
+{
+  "schema": "gauff-two-scoped-card-preflight/v1",
+  "generated_utc": "2026-10-22T14:51:21.171351+00:00",
+  "status": "ready_for_root_rerender_after_actual_native_sample_review",
+  "old_actual_film_sha256": "e6f91ef1482b011c9c6da98b0dcc6b124277fe089061c876521aed2002503dc0",
+  "old_actual_film_spec_sha256": "ae04fb9a5a8d11f05b017e339eaf2f6e37e44f874916a752829609a5a9a1cd66",
+  "current_spec_sha256": "febb8932a84d31bbde524f62ba0766181038abf833bd1e8b09e74a65178320a7",
+  "only_two_render_field_changes": [
+    {
+      "index": 4,
+      "key": "title_card",
+      "old": "第一次打到决赛",
+      "new": "本季首次打进决赛"
+    },
+    {
+      "index": 18,
+      "key": "title_card",
+      "old": "两次打进大满贯4强",
+      "new": "本季两进大满贯4强"
+    }
+  ],
+  "all12voice_requests_same": true,
+  "all11_original_source_packets_and_raw_asr_same": true,
+  "all_source_windows_cues_seconds_cx_insets_same": true,
+  "source_packet_plan_index_rebound_only": true,
+  "native_manifest": "/workspace/gauff-finals-production/revision-scope-cards/native-preview-v3/preview_manifest.json",
+  "native_manifest_sha256": "015c6c6f761d658f66b9780402a0b28b66b32e219710c6794bab8864f5af14af",
+  "native_samples": 14,
+  "actual_viewed_all14_contact_and_two_fullsize_changed_cards": true,
+  "native_visual_findings": [
+    "本季首次打进决赛 fits nativeframe without clipping, no stale career-first phrase.",
+    "本季两进大满贯4强 fits nativeframe without clipping, countscope explicit.",
+    "All sampled adjacent source-frame/card edges fill1080x1440 and main captions readable; no info inset on staticcards."
+  ],
+  "native_contact": "/workspace/gauff-finals-production/revision-scope-cards/native-contact.jpg",
+  "native_contact_sha256": "8916dba35d401211be96016d734202b7cd8d37b65332512a7ad155649f613a16",
+  "native_limitations": "Tool frames are actual native segment/ASS samples, not finalencodedmovie or composited final dissolve proof; full final joins still require the rerender actualfilm.",
+  "real_current_locator_restore": {
+    "checked_utc": "2026-10-22T14:48:37.902426+00:00",
+    "actual_empty_directory_start": true,
+    "actual_current_metadata_restore_exit": 0,
+    "restored_bytes": 554323,
+    "restored_sha256": "895493bdabf7511d02fa8dd4b77705de0f09f2cdf50b4582abbb9b7b3b3fefcc",
+    "current_spec_strict12request_binding_exit": 0,
+    "spec_sha256": "febb8932a84d31bbde524f62ba0766181038abf833bd1e8b09e74a65178320a7",
+    "new_synthesis": false,
+    "voice_or_source_changes": false
+  },
+  "all_current_tracked_probes_history_present": {
+    "tracked_probes": 868,
+    "restored_missing_probes": 0,
+    "restored_missing_history": 46,
+    "all_present": true,
+    "historyHEADbytes_equal": true
+  },
+  "taste_checks_pass": 19,
+  "production_preflight_exit": 0,
+  "dry_run_exit": 0,
+  "formal_dispatch_by_this_agent": false,
+  "new_encoded_film_qc": false,
+  "human_listened": false
+}

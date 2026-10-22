@@ -1,0 +1,1383 @@
+{
+  "schema": "gauff-native-source-time-equivalence/v1",
+  "generated_utc": "2026-10-22T14:02:11.684589+00:00",
+  "baseline_spec_sha256": "7a41205793d896368db17d70150736a46c19008fbd8683b59d5623f73001c30c",
+  "current_spec_sha256": "ae04fb9a5a8d11f05b017e339eaf2f6e37e44f874916a752829609a5a9a1cd66",
+  "baseline_manifests": [
+    {
+      "path": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "input_spec_sha256": "7a41205793d896368db17d70150736a46c19008fbd8683b59d5623f73001c30c"
+    },
+    {
+      "path": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "input_spec_sha256": "7a41205793d896368db17d70150736a46c19008fbd8683b59d5623f73001c30c"
+    },
+    {
+      "path": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "input_spec_sha256": "7a41205793d896368db17d70150736a46c19008fbd8683b59d5623f73001c30c"
+    },
+    {
+      "path": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "input_spec_sha256": "7a41205793d896368db17d70150736a46c19008fbd8683b59d5623f73001c30c"
+    }
+  ],
+  "changed_segment_fields": [
+    {
+      "index": 3,
+      "id": "ao-qf",
+      "changed_fields": {
+        "quote": {
+          "baseline": [
+            {
+              "at": 16.66,
+              "end": 24.12,
+              "text": "She takes advantage of an out-of-sorts Coco Gauff,\n她击败了状态失常的高芙，"
+            },
+            {
+              "at": 24.24,
+              "end": 27.02,
+              "text": "a long way off her best.\n高芙远未发挥最佳水准。"
+            },
+            {
+              "at": 27.02,
+              "end": 28.98,
+              "text": "Not even an hour!\n还不到1小时！"
+            }
+          ],
+          "current": [
+            {
+              "at": 19.06,
+              "end": 24.12,
+              "text": "She takes advantage of an out-of-sorts Coco Gauff,\n她击败了状态失常的高芙，"
+            },
+            {
+              "at": 24.24,
+              "end": 27.02,
+              "text": "a long way off her best.\n高芙远未发挥最佳水准。"
+            },
+            {
+              "at": 27.02,
+              "end": 28.98,
+              "text": "Not even an hour!\n还不到1小时！"
+            }
+          ]
+        },
+        "_why": {
+          "baseline": "Full genuine terminal matchpoint from155.60 before serve to victory/reaction and entire post-result commentary. Raw models phonetic Coco name normalized against known official identity, never reconstructed umpire phrase. small first SHE timestamp low-confidence vs medium174.66; wide subtitle starts earlier to encompass both model boundaries. Last HOUR supported medium and final scoreboard57min, not invented different speech.",
+          "current": "Full genuine terminal matchpoint from155.60 before serve to victory/reaction and entire post-result commentary. Raw models phonetic Coco name normalized against known official identity, never reconstructed umpire phrase. small first SHE172.26 p=.034 is rejected as unreliable timing; medium174.66 and independent large174.96 support corrected subtitle onset174.66. Targeted large isolated semi-final171–172 is absent from both context English models and has high no-speech probability; not asserted a stable additional foreground sentence or reconstructed into a standard call. Last HOUR supported medium and final scoreboard57min, not invented different speech."
+        }
+      }
+    },
+    {
+      "index": 5,
+      "id": "miami-final",
+      "changed_fields": {
+        "inset": {
+          "baseline": {
+            "image": "assets/reel/gauff-finals-2026/context-miami-final.png",
+            "kind": "story_text",
+            "corner": "tr",
+            "width": 0.6,
+            "pad": 0.043,
+            "show_after": 8.7,
+            "show_for": 2.8,
+            "motion": "editorial",
+            "label": {
+              "topic": "亚军·650分",
+              "date": "2026.03.28",
+              "place": "迈阿密决赛",
+              "people": "高芙 vs 萨巴伦卡",
+              "score": "2-6 6-4 3-6"
+            }
+          },
+          "current": {
+            "image": "assets/reel/gauff-finals-2026/context-miami-final.png",
+            "kind": "story_text",
+            "corner": "tr",
+            "width": 0.6,
+            "pad": 0.043,
+            "show_after": 6.94,
+            "show_for": 2.8,
+            "motion": "editorial",
+            "label": {
+              "topic": "亚军·650分",
+              "date": "2026.03.28",
+              "place": "迈阿密决赛",
+              "people": "高芙 vs 萨巴伦卡",
+              "score": "2-6 6-4 3-6"
+            }
+          }
+        },
+        "start": {
+          "baseline": 253.6,
+          "current": 255.36
+        },
+        "quote": {
+          "baseline": [
+            {
+              "at": 8.56,
+              "end": 12.96,
+              "text": "The Sunshine Double belongs to Aryna Sabalenka.\n阳光双冠属于萨巴伦卡。"
+            }
+          ],
+          "current": [
+            {
+              "at": 6.8,
+              "end": 11.2,
+              "text": "The Sunshine Double belongs to Aryna Sabalenka.\n阳光双冠属于萨巴伦卡。"
+            }
+          ]
+        },
+        "_why": {
+          "baseline": "Full actual championship point prep/serve/rally/outcome/reaction and complete first commentary sentence. Next sentence starts267.44 beyond .25 outgoing tail. Fixed courtcenter spatial limits to document, no claim all lateral strokes fit.",
+          "current": "Full actual championship point prep/serve/rally/outcome/reaction and complete first commentary sentence. Exact25fps source frame255.28 is still bad receiver closeup;255.32 first wide;255.36 confirmed Gauff ball in hand well before toss256+, so omit bad nonessential receiver closeup. Next sentence starts267.44 beyond .25 outgoing tail. Fixed courtcenter spatial limits to document, no claim all lateral strokes fit."
+        }
+      }
+    },
+    {
+      "index": 10,
+      "id": "card-wimbledon",
+      "changed_fields": {
+        "narration": {
+          "baseline": "柏林首战出局，温网却拼到半决赛抢十。穆霍娃拿走了最后两分。",
+          "current": "柏林首战出局，温网却拼到半决赛抢十。穆霍娃赢下最后两个小分。"
+        }
+      }
+    },
+    {
+      "index": 11,
+      "id": "wimbledon-sf",
+      "changed_fields": {
+        "quote": {
+          "baseline": [
+            {
+              "at": 21.83,
+              "end": 26.49,
+              "text": "Karolina Muchova is a Wimbledon finalist.\n穆霍娃闯进温网决赛。"
+            }
+          ],
+          "current": [
+            {
+              "at": 22.45,
+              "end": 26.49,
+              "text": "Karolina Muchova is a Wimbledon finalist.\n穆霍娃闯进温网决赛。"
+            }
+          ]
+        },
+        "_why": {
+          "baseline": "Actual MP12–10 terminal deadball623.08–623.56, never622. First result sentence complete. Separate next sentence631.54 starts Muchova injury biography rather than Coco season; entire separate biography omitted for editorial relevance. Opening audio600–606 paired short-ASR confirms previous independent phrase THAT IS OUT OF THIS WORLD finishes602.18 before our602.65 start. No foreground English remains until terminal result sentence624.48.",
+          "current": "Actual MP12–10 terminal deadball623.08–623.56, never622. First result sentence complete. Separate next sentence631.54 starts Muchova injury biography rather than Coco season; entire separate biography omitted for editorial relevance. Opening audio600–606 paired short-ASR confirms previous independent phrase THAT IS OUT OF THIS WORLD finishes602.18 before our602.65 start. No foreground English remains until terminal result sentence; contextual paired onset625.10/625.22 supersedes broad-window small624.48, with no audio edit."
+        }
+      }
+    },
+    {
+      "index": 16,
+      "id": "us-qf-reaction",
+      "changed_fields": {
+        "_why": {
+          "baseline": "Authentic same-match later reaction/commentary after ordinary edit omitting complete PA/crowd interval. Entire original commentary184.18–199.24 retained. SOMEHOW independently medium+large-v3 agree versus small low-probability SOMETIMES; targeted small haha182.82–183.36 is low-probability nonlexical chuckle, not invented English. Gauff propername normalized against known identity. No human listening claim.",
+          "current": "Authentic same-match later reaction/commentary after ordinary edit omitting complete PA/crowd interval. Entire original commentary184.18–199.24 retained. End199.28 retains full lastword199.24; previous199.50 had actual official endcard at199.32, now removed. Nativefinal actual join still to check. SOMEHOW independently medium+large-v3 agree versus small low-probability SOMETIMES; targeted small haha182.82–183.36 is low-probability nonlexical chuckle, not invented English. Gauff propername normalized against known identity. No human listening claim."
+        },
+        "end": {
+          "baseline": 199.5,
+          "current": 199.28
+        }
+      }
+    },
+    {
+      "index": 21,
+      "id": "card-ending",
+      "changed_fields": {
+        "seconds": {
+          "baseline": 7.4,
+          "current": 8.0
+        },
+        "narration": {
+          "baseline": "一冠两亚，两次打进大满贯四强。年终，你期待她再往前走几步？",
+          "current": "本季一冠两亚，两次打进大满贯四强。年终，你期待她再往前走几步？"
+        }
+      }
+    }
+  ],
+  "sample_count": 90,
+  "retained_equivalent": 85,
+  "superseded": 5,
+  "samples": [
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-01.png",
+      "image_sha256": "96ab68f6cb2ab1228bf0654bd0fb8df0045572b66e80e2c1151e178fd02be6e8",
+      "segment": 0,
+      "id": "cold-quote",
+      "source_time": 144.61999999999998,
+      "baseline_film_time": 1.4,
+      "current_mapped_film_time": 1.3999999999999773,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-02.png",
+      "image_sha256": "b4d4c3301d0e43b2d12a4d381d997e25505481516e5c4f09d42e4be50270b754",
+      "segment": 0,
+      "id": "cold-quote",
+      "source_time": 146.57999999999998,
+      "baseline_film_time": 3.3600000000000003,
+      "current_mapped_film_time": 3.359999999999985,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-03.png",
+      "image_sha256": "e5b4608c14e0977397ef17db4a7845b961c8dab6336649897a66b3b55a50c135",
+      "segment": 0,
+      "id": "cold-quote",
+      "source_time": 148.61999999999998,
+      "baseline_film_time": 5.4,
+      "current_mapped_film_time": 5.399999999999977,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-04.png",
+      "image_sha256": "97cb747c8fd604f6df04aad4c485bc98fa259c91919d90a7d6126f8aea168a1d",
+      "segment": 0,
+      "id": "cold-quote",
+      "source_time": 145.5,
+      "baseline_film_time": 2.2800000000000002,
+      "current_mapped_film_time": 2.280000000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-05.png",
+      "image_sha256": "56c5ec63e6c9dd9565bf18a43a99944f3c8e6a98b195ca23d299ef362cfdeac2",
+      "segment": 0,
+      "id": "cold-quote",
+      "source_time": 147.7,
+      "baseline_film_time": 4.4799999999999995,
+      "current_mapped_film_time": 4.47999999999999,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-06.png",
+      "image_sha256": "7d7e92c5f682d0274bc53165d58b8c75f9d9ec93a8261e1966d6ba2792b1eab4",
+      "segment": 1,
+      "id": "card-intro",
+      "source_time": null,
+      "baseline_film_time": 9.26,
+      "current_mapped_film_time": 9.260000000000025,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-07.png",
+      "image_sha256": "6a6489f6869d194ec45152c8f960d5b3d727fe31a435546657b9712986369178",
+      "segment": 2,
+      "id": "card-ao",
+      "source_time": null,
+      "baseline_film_time": 17.66,
+      "current_mapped_film_time": 17.660000000000025,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-08.png",
+      "image_sha256": "dcad2b51c8e091f963e0aeb691cc98ae059f7da65b35f6c8d0b81eefd9afe4c6",
+      "segment": 3,
+      "id": "ao-qf",
+      "source_time": 155.79999999999998,
+      "baseline_film_time": 22.580000000000002,
+      "current_mapped_film_time": 22.580000000000013,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-09.png",
+      "image_sha256": "835625703ff0d659050bb56299d086c3865916697c4a4ea57d6254ce3d0aa180",
+      "segment": 3,
+      "id": "ao-qf",
+      "source_time": 170.2,
+      "baseline_film_time": 36.980000000000004,
+      "current_mapped_film_time": 36.98000000000002,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-10.png",
+      "image_sha256": "d9b7d045253fbc44368e7ad836941e472f03d670d85c14b569c7c7036d0ebb6a",
+      "segment": 3,
+      "id": "ao-qf",
+      "source_time": 184.68,
+      "baseline_film_time": 51.46,
+      "current_mapped_film_time": 51.460000000000036,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-11.png",
+      "image_sha256": "bab197a076197f210279fce179c803f605105c1039ddc7d212defe4e77f3fb3f",
+      "segment": 3,
+      "id": "ao-qf",
+      "source_time": 175.95999999999998,
+      "baseline_film_time": 42.74,
+      "current_mapped_film_time": 42.74000000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-12.png",
+      "image_sha256": "b1fbc7dad7cd831e353193f25e65f40b734e60540625966491964bdf1033705f",
+      "segment": 3,
+      "id": "ao-qf",
+      "source_time": 181.2,
+      "baseline_film_time": 47.980000000000004,
+      "current_mapped_film_time": 47.98000000000002,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-13.png",
+      "image_sha256": "c2b4f95c7e0443b503c8f5a1b9812632a80fec8b3a66e61d55750e38cec6f94a",
+      "segment": 3,
+      "id": "ao-qf",
+      "source_time": 183.6,
+      "baseline_film_time": 50.38,
+      "current_mapped_film_time": 50.380000000000024,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-14.png",
+      "image_sha256": "1da554ee1a9d9b8c21712661a08f234f5e6cfd2686a4ae6f1fd5e6051c6d2d98",
+      "segment": 3,
+      "id": "ao-qf",
+      "source_time": 172.04,
+      "baseline_film_time": 38.82000000000001,
+      "current_mapped_film_time": 38.82000000000002,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-15.png",
+      "image_sha256": "6aec9d613f9fb0768750385ea1c659074708fcf2dbaea878a45ec4c720a09de4",
+      "segment": 3,
+      "id": "ao-qf",
+      "source_time": 173.4,
+      "baseline_film_time": 40.18000000000001,
+      "current_mapped_film_time": 40.180000000000035,
+      "status": "superseded",
+      "reason": "caption onset corrected; old active caption no longer current"
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-16.png",
+      "image_sha256": "26b51412fac4099720db0e37279c395b2760d104c9f8e550b1ecf73eef592ef0",
+      "segment": 3,
+      "id": "ao-qf",
+      "source_time": 174.76,
+      "baseline_film_time": 41.540000000000006,
+      "current_mapped_film_time": 41.54000000000002,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-17.png",
+      "image_sha256": "74bfd796ef3ae35b88066cf4914d181c1085a65f40401857818649229ff97115",
+      "segment": 4,
+      "id": "card-spring",
+      "source_time": null,
+      "baseline_film_time": 56.300000000000004,
+      "current_mapped_film_time": 56.30000000000003,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-18.png",
+      "image_sha256": "407efd76a9b2c425e5b932a0d9c2ed2e743b0902787bd4c09f4b80988e5cec11",
+      "segment": 5,
+      "id": "miami-final",
+      "source_time": 253.79999999999998,
+      "baseline_film_time": 61.220000000000006,
+      "current_mapped_film_time": 59.45999999999998,
+      "status": "superseded",
+      "reason": "source time omitted from current window"
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-19.png",
+      "image_sha256": "d9f12f6b39629ccd1e723d305529c45a201d0e979800bc08ad2bc3248297f7d5",
+      "segment": 5,
+      "id": "miami-final",
+      "source_time": 260.2,
+      "baseline_film_time": 67.62,
+      "current_mapped_film_time": 65.86000000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-20.png",
+      "image_sha256": "007f5cd3383fc43e432ae62008ed916f9bc5883b50dfbfa1f4b9ba5ba34f3f06",
+      "segment": 5,
+      "id": "miami-final",
+      "source_time": 266.64,
+      "baseline_film_time": 74.06,
+      "current_mapped_film_time": 72.30000000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-21.png",
+      "image_sha256": "2a2f619e7ba48fcab169610acd857da3253921aeb56ecae8a7b3e309b5cc6db4",
+      "segment": 5,
+      "id": "miami-final",
+      "source_time": 264.36,
+      "baseline_film_time": 71.78,
+      "current_mapped_film_time": 70.02000000000004,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-22.png",
+      "image_sha256": "e6835ba162f7ddc713ee9eb3611068beb2ba1b8192684e4a656420a8b782944d",
+      "segment": 5,
+      "id": "miami-final",
+      "source_time": 262.32,
+      "baseline_film_time": 69.74000000000001,
+      "current_mapped_film_time": 67.98000000000002,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-23.png",
+      "image_sha256": "62699758b29264b70e65af8728d6cce1c7688616a2cc733c67031f4eb49e6ed5",
+      "segment": 5,
+      "id": "miami-final",
+      "source_time": 263.68,
+      "baseline_film_time": 71.10000000000001,
+      "current_mapped_film_time": 69.34000000000003,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-1/preview_manifest.json",
+      "baseline_manifest_sha256": "fc7793e20a3d2c2cc7f1e5be871a1fbb9b62a89d172c4ab9b5f6a35204c05803",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-1/caption-24.png",
+      "image_sha256": "6f8e8078f9f9f26a4c7996ca917a870a8ea5b36cf2afb027732fdcfb00829eb6",
+      "segment": 5,
+      "id": "miami-final",
+      "source_time": 265.04,
+      "baseline_film_time": 72.46000000000001,
+      "current_mapped_film_time": 70.70000000000005,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-01.png",
+      "image_sha256": "b0ff6e169930b5e01149db273fb30b92c264a67d93cd836a9b97e9c609a0d8c6",
+      "segment": 6,
+      "id": "card-rome",
+      "source_time": null,
+      "baseline_film_time": 79.42,
+      "current_mapped_film_time": 77.66000000000004,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-02.png",
+      "image_sha256": "86cdee878a49314245d3f882b14d8ca4bee828bbac764bb0ac8afd677ccd3c4d",
+      "segment": 7,
+      "id": "rome-final",
+      "source_time": 220.1,
+      "baseline_film_time": 84.82000000000001,
+      "current_mapped_film_time": 83.06000000000003,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-03.png",
+      "image_sha256": "473dd1faf590e176d69984bf07fa7caf9c566188190f4a61de06d5460bdf524d",
+      "segment": 7,
+      "id": "rome-final",
+      "source_time": 230.1,
+      "baseline_film_time": 94.82000000000001,
+      "current_mapped_film_time": 93.06000000000003,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-04.png",
+      "image_sha256": "d437f2c91b5d7c49de940dd30b35ac6a8c376ca32e6c7f743f569447a43d1065",
+      "segment": 7,
+      "id": "rome-final",
+      "source_time": 240.14000000000001,
+      "baseline_film_time": 104.86,
+      "current_mapped_film_time": 103.10000000000005,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-05.png",
+      "image_sha256": "a77bdb8c6f0369bb6a5013aeabcb27dca541134539c0c974e0e2e7f296addf07",
+      "segment": 7,
+      "id": "rome-final",
+      "source_time": 237.94,
+      "baseline_film_time": 102.66,
+      "current_mapped_film_time": 100.90000000000006,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-06.png",
+      "image_sha256": "3bba6367e5b6c4620414dc0a8bfc35e9ba243b081803ca0f19ccc7e4614c4063",
+      "segment": 7,
+      "id": "rome-final",
+      "source_time": 232.42000000000002,
+      "baseline_film_time": 97.14,
+      "current_mapped_film_time": 95.38000000000008,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-07.png",
+      "image_sha256": "2dcd957281ecc8a5dc5e02d596553f499a3ab139d0b625bcbfcebbb825cb32b0",
+      "segment": 7,
+      "id": "rome-final",
+      "source_time": 233.78,
+      "baseline_film_time": 98.5,
+      "current_mapped_film_time": 96.74000000000004,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-08.png",
+      "image_sha256": "c9f0c8bdfc0e3234d6ee28b48d8ab0ec20651e1cc902de75c9ac1e0a409219a2",
+      "segment": 7,
+      "id": "rome-final",
+      "source_time": 235.14000000000001,
+      "baseline_film_time": 99.86,
+      "current_mapped_film_time": 98.10000000000005,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-09.png",
+      "image_sha256": "61fe8fc0e76f4d6c73498a3aa3b5899b5bdd5518bcb4128200a7a0e95d8e3fe2",
+      "segment": 8,
+      "id": "card-rg",
+      "source_time": null,
+      "baseline_film_time": 108.02000000000001,
+      "current_mapped_film_time": 106.26000000000005,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-10.png",
+      "image_sha256": "2992b65730358ab09e5f55411a3bec0901b134946a090cd8ca74f03135e9a931",
+      "segment": 9,
+      "id": "rg-r3",
+      "source_time": 171.1,
+      "baseline_film_time": 111.22000000000001,
+      "current_mapped_film_time": 109.46000000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-11.png",
+      "image_sha256": "ffa059364c616200e045b9eb868c885ae56e6d2e997580833e40b7023493b86c",
+      "segment": 9,
+      "id": "rg-r3",
+      "source_time": 177.06,
+      "baseline_film_time": 117.18,
+      "current_mapped_film_time": 115.42000000000004,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-12.png",
+      "image_sha256": "6c3b79a7926172c9eedc4c8fbb43bc1c0d30a62e03f87828f08c46ff2389a1f9",
+      "segment": 9,
+      "id": "rg-r3",
+      "source_time": 183.06,
+      "baseline_film_time": 123.18,
+      "current_mapped_film_time": 121.42000000000004,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-13.png",
+      "image_sha256": "1d84e9c9de56d834d9d0090350881b32c6353a801e0407e18e8f26a591911667",
+      "segment": 9,
+      "id": "rg-r3",
+      "source_time": 177.74,
+      "baseline_film_time": 117.86000000000001,
+      "current_mapped_film_time": 116.10000000000005,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-14.png",
+      "image_sha256": "25052d2d4f11614d86e55f414522c975649a8a563e609e5ffe9575613ebc7c6b",
+      "segment": 9,
+      "id": "rg-r3",
+      "source_time": 179.1,
+      "baseline_film_time": 119.22000000000001,
+      "current_mapped_film_time": 117.46000000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-15.png",
+      "image_sha256": "77f29a2e8a104dd0eb941d2dafb479a2811a1063d009618bd95792c4f66d65a7",
+      "segment": 9,
+      "id": "rg-r3",
+      "source_time": 180.46,
+      "baseline_film_time": 120.58000000000001,
+      "current_mapped_film_time": 118.82000000000002,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-16.png",
+      "image_sha256": "b694013ebaba263d652172e2089b6e6a1b202b6d9339e8594e7c939b00bd9f90",
+      "segment": 10,
+      "id": "card-wimbledon",
+      "source_time": null,
+      "baseline_film_time": 127.04000000000002,
+      "current_mapped_film_time": 125.28000000000006,
+      "status": "superseded",
+      "reason": "closing narration/duration changed; replaced by actual current native focused samples"
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-17.png",
+      "image_sha256": "f703bf99dc64b806ca265ac37f91f971fecd314793b9817330044393597a7909",
+      "segment": 11,
+      "id": "wimbledon-sf",
+      "source_time": 602.85,
+      "baseline_film_time": 130.96,
+      "current_mapped_film_time": 129.20000000000016,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-18.png",
+      "image_sha256": "3d0bbeb114d8573490387b3c240aec45864ef77c574be5d7c485d07be0e5ad79",
+      "segment": 11,
+      "id": "wimbledon-sf",
+      "source_time": 616.29,
+      "baseline_film_time": 144.40000000000003,
+      "current_mapped_film_time": 142.64,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-19.png",
+      "image_sha256": "81a4366a5bad03dd16135bb992d0d7fea638b56afe19e2d314a8384e45e6ff15",
+      "segment": 11,
+      "id": "wimbledon-sf",
+      "source_time": 629.85,
+      "baseline_film_time": 157.96,
+      "current_mapped_film_time": 156.20000000000016,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-20.png",
+      "image_sha256": "903d28b2ddccd9565af56897d9fa1035e41e71f4937dd38266c7285140a37b64",
+      "segment": 11,
+      "id": "wimbledon-sf",
+      "source_time": 626.81,
+      "baseline_film_time": 154.92000000000002,
+      "current_mapped_film_time": 153.15999999999997,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-21.png",
+      "image_sha256": "eefa1c9537934245451e957db4b4bdde4d868807f660b4a4b587617a85e74995",
+      "segment": 11,
+      "id": "wimbledon-sf",
+      "source_time": 602.73,
+      "baseline_film_time": 130.84000000000003,
+      "current_mapped_film_time": 129.08000000000004,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-22.png",
+      "image_sha256": "e7efcaa217ae130f6c88c1eb6855b9f98e27c5e586c07a1ce9dcb2976ccd5249",
+      "segment": 11,
+      "id": "wimbledon-sf",
+      "source_time": 604.09,
+      "baseline_film_time": 132.20000000000002,
+      "current_mapped_film_time": 130.44000000000017,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-23.png",
+      "image_sha256": "e28e844eb0281a37cb8ecf3852ea43596bcf3ea1b8f42d4951171493d4ff9e2f",
+      "segment": 11,
+      "id": "wimbledon-sf",
+      "source_time": 605.4499999999999,
+      "baseline_film_time": 133.56000000000003,
+      "current_mapped_film_time": 131.80000000000007,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-2/preview_manifest.json",
+      "baseline_manifest_sha256": "b53ddb48926e0819e999c5d7575c85d5376afda9c600effe609c0dc06f327539",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-2/caption-24.png",
+      "image_sha256": "af8679bd1c627d4ace27f3682606b2e8effd107d10f9324df9eb041e7f33cf24",
+      "segment": 12,
+      "id": "card-cincy",
+      "source_time": null,
+      "baseline_film_time": 162.19000000000003,
+      "current_mapped_film_time": 160.4300000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-01.png",
+      "image_sha256": "960528f8d6c5ed0f4306d7f439c8e9e01adc206fcdc19b30d44cc469ddc0a84d",
+      "segment": 13,
+      "id": "cincy-final",
+      "source_time": 236.79999999999998,
+      "baseline_film_time": 166.51,
+      "current_mapped_film_time": 164.75000000000003,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-02.png",
+      "image_sha256": "d7a12430535c1f1b8527284ec206e45e0c4c74c8edbfd1a1baeeb6d43e7f9e22",
+      "segment": 13,
+      "id": "cincy-final",
+      "source_time": 248.51999999999998,
+      "baseline_film_time": 178.23,
+      "current_mapped_film_time": 176.47000000000006,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-03.png",
+      "image_sha256": "00b6b32161235a8d07846e5f75f7bb0470caea9f1da2cecb2b3b29b76c4d2639",
+      "segment": 13,
+      "id": "cincy-final",
+      "source_time": 260.32,
+      "baseline_film_time": 190.03,
+      "current_mapped_film_time": 188.27000000000007,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-04.png",
+      "image_sha256": "913f8a0ce9cc7e949699a84b70e827c8d757708cb37bee7422bd68c183a39762",
+      "segment": 13,
+      "id": "cincy-final",
+      "source_time": 248.35999999999999,
+      "baseline_film_time": 178.07,
+      "current_mapped_film_time": 176.3100000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-05.png",
+      "image_sha256": "007febcdbd88803772a743dc505ecb3df48f7685cc45360290c8bf8295efc128",
+      "segment": 13,
+      "id": "cincy-final",
+      "source_time": 251.64,
+      "baseline_film_time": 181.35,
+      "current_mapped_film_time": 179.59000000000006,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-06.png",
+      "image_sha256": "d61905b96d15f64495b64aaecd8c1274699f3e452c61a7c8b91a334e783b5826",
+      "segment": 13,
+      "id": "cincy-final",
+      "source_time": 255.84,
+      "baseline_film_time": 185.55,
+      "current_mapped_film_time": 183.7900000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-07.png",
+      "image_sha256": "a9e44d0a8439931d6ebeb5f2aeb0021445ea1ab38db3283673ef21d83c74574e",
+      "segment": 13,
+      "id": "cincy-final",
+      "source_time": 255.4,
+      "baseline_film_time": 185.11,
+      "current_mapped_film_time": 183.35000000000005,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-08.png",
+      "image_sha256": "8e194fff3b0b25657091fe13ea8d9028d934543b8919c4302cc411436db3b7e9",
+      "segment": 13,
+      "id": "cincy-final",
+      "source_time": 256.76,
+      "baseline_film_time": 186.47,
+      "current_mapped_film_time": 184.71000000000006,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-09.png",
+      "image_sha256": "a7034a90138b2191503e90f46c60bc64c566b88be1738adaf8a1df57ab76c476",
+      "segment": 13,
+      "id": "cincy-final",
+      "source_time": 258.12,
+      "baseline_film_time": 187.83,
+      "current_mapped_film_time": 186.07000000000008,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-10.png",
+      "image_sha256": "9fd62717ba022ff1e664b08efd626900f83c174956aaaf2ef0b534923051427b",
+      "segment": 14,
+      "id": "card-us-qf",
+      "source_time": null,
+      "baseline_film_time": 194.53,
+      "current_mapped_film_time": 192.77000000000007,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-11.png",
+      "image_sha256": "a635e4f43c56a9e15306e9dba1e06c31550235283f3e0926a55a3ce77e2f141a",
+      "segment": 15,
+      "id": "us-qf-matchpoint",
+      "source_time": 138.28,
+      "baseline_film_time": 199.10999999999999,
+      "current_mapped_film_time": 197.35000000000005,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-12.png",
+      "image_sha256": "b05f2edc5b8a33239a90992ad584aa17f6490be8454d9fa644132585d3cb28ed",
+      "segment": 15,
+      "id": "us-qf-matchpoint",
+      "source_time": 152.48000000000002,
+      "baseline_film_time": 213.31,
+      "current_mapped_film_time": 211.5500000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-13.png",
+      "image_sha256": "c79510b9e72f1cead9f04a8a92c1e6feb1efbfffac2b98ebbcc542abcaad81b9",
+      "segment": 15,
+      "id": "us-qf-matchpoint",
+      "source_time": 166.72000000000003,
+      "baseline_film_time": 227.55,
+      "current_mapped_film_time": 225.7900000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-14.png",
+      "image_sha256": "60cfbe190875a99ed9d4b78078f385cb592b115bc8f2f348f56e40fe51861dc6",
+      "segment": 15,
+      "id": "us-qf-matchpoint",
+      "source_time": 139.24,
+      "baseline_film_time": 200.07,
+      "current_mapped_film_time": 198.3100000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-15.png",
+      "image_sha256": "15ae4d9e2ddc56158f8949b1ea21f5725aa1e76dd2541b071186dbef9f696849",
+      "segment": 15,
+      "id": "us-qf-matchpoint",
+      "source_time": 146.04000000000002,
+      "baseline_film_time": 206.87,
+      "current_mapped_film_time": 205.11000000000004,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-16.png",
+      "image_sha256": "3a0d580927598f2547bcce71b65b6d2c0d783da3a7c98d654de91f062fc76b9a",
+      "segment": 15,
+      "id": "us-qf-matchpoint",
+      "source_time": 147.4,
+      "baseline_film_time": 208.23,
+      "current_mapped_film_time": 206.47000000000006,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-17.png",
+      "image_sha256": "a166a8dcaeca38a35166ea67bb38db667f712a7b29a9171c651d78a310e2065e",
+      "segment": 15,
+      "id": "us-qf-matchpoint",
+      "source_time": 148.76000000000002,
+      "baseline_film_time": 209.59,
+      "current_mapped_film_time": 207.83000000000007,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-18.png",
+      "image_sha256": "3510aca2ffddf3f95e35b12eaf94c669e988a7ce24afd5f00d2a6b419c66c4a4",
+      "segment": 16,
+      "id": "us-qf-reaction",
+      "source_time": 183.39999999999998,
+      "baseline_film_time": 227.92999999999998,
+      "current_mapped_film_time": 226.17000000000002,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-19.png",
+      "image_sha256": "3b3af77561f11a5fb1763466fd2a557ae5fb916bec93c443c589da520c78e1c0",
+      "segment": 16,
+      "id": "us-qf-reaction",
+      "source_time": 191.32,
+      "baseline_film_time": 235.85,
+      "current_mapped_film_time": 234.0900000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-20.png",
+      "image_sha256": "93d67dccf412874b5931c222e60598b5ad5b78f288f97ecfd9b38e9b06c54908",
+      "segment": 16,
+      "id": "us-qf-reaction",
+      "source_time": 199.32,
+      "baseline_film_time": 243.85,
+      "current_mapped_film_time": 242.0900000000001,
+      "status": "superseded",
+      "reason": "source time omitted from current window"
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-21.png",
+      "image_sha256": "5ace75498261be9e4c96cd1c64cea0b853e224d903ba490dd606842699314f4f",
+      "segment": 16,
+      "id": "us-qf-reaction",
+      "source_time": 185.07999999999998,
+      "baseline_film_time": 229.60999999999999,
+      "current_mapped_film_time": 227.85000000000008,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-22.png",
+      "image_sha256": "7127987537f18520ad9b9f8ca851f00999e1ef2e7ee89a692c06dfa8020f24f0",
+      "segment": 16,
+      "id": "us-qf-reaction",
+      "source_time": 186.76,
+      "baseline_film_time": 231.29,
+      "current_mapped_film_time": 229.53000000000003,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-23.png",
+      "image_sha256": "0068571c54cb6f05198f197b6ea82024e76e2ef6f9d623cbf1c671880da7c77a",
+      "segment": 16,
+      "id": "us-qf-reaction",
+      "source_time": 188.16,
+      "baseline_film_time": 232.69,
+      "current_mapped_film_time": 230.93000000000006,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-3/preview_manifest.json",
+      "baseline_manifest_sha256": "41e4ef8ea4b669b3755a8a006dd54b08798af96f9a93ac8cae2a2257942195cc",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-3/caption-24.png",
+      "image_sha256": "48f427d1480c5dd485799e4eeb39d829aac90400892fecdfdaa65fdf50393a61",
+      "segment": 16,
+      "id": "us-qf-reaction",
+      "source_time": 190.51999999999998,
+      "baseline_film_time": 235.04999999999998,
+      "current_mapped_film_time": 233.29000000000002,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-01.png",
+      "image_sha256": "4b97743abbcda7b277661ad5344df7d6f21361bd13c21d712d7b929911cb1b18",
+      "segment": 16,
+      "id": "us-qf-reaction",
+      "source_time": 193.6,
+      "baseline_film_time": 238.13,
+      "current_mapped_film_time": 236.37000000000006,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-02.png",
+      "image_sha256": "167568259670383250c14bf0217e6b79b086d33d7fe8d1518fa361d05e4ba0bd",
+      "segment": 16,
+      "id": "us-qf-reaction",
+      "source_time": 196.39999999999998,
+      "baseline_film_time": 240.92999999999998,
+      "current_mapped_film_time": 239.17000000000002,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-03.png",
+      "image_sha256": "6603518c30b661291b1c3acb1bca60cc6fd1dc2aa12dd7565a2f956da6a54fe1",
+      "segment": 16,
+      "id": "us-qf-reaction",
+      "source_time": 198.44,
+      "baseline_film_time": 242.97,
+      "current_mapped_film_time": 241.2100000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-04.png",
+      "image_sha256": "d2d095c42f20d7352b537dd2cca8de50bac67964801c42d32afce0cb62ce9bfa",
+      "segment": 17,
+      "id": "us-qf-interview",
+      "source_time": 48.45,
+      "baseline_film_time": 244.23,
+      "current_mapped_film_time": 242.25000000000006,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-05.png",
+      "image_sha256": "3ebd151cf2ff296d9e6793a33189373cb4f5efa487d9483123d276eb24295ed5",
+      "segment": 17,
+      "id": "us-qf-interview",
+      "source_time": 50.37,
+      "baseline_film_time": 246.15,
+      "current_mapped_film_time": 244.17000000000007,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-06.png",
+      "image_sha256": "945f8b12fdb478bf1b8a232c51d18db85079edf2928bcb6d82a613c6b59a4de3",
+      "segment": 17,
+      "id": "us-qf-interview",
+      "source_time": 52.37,
+      "baseline_film_time": 248.15,
+      "current_mapped_film_time": 246.17000000000007,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-07.png",
+      "image_sha256": "9a1526c640e5053d2116185fd5ea6cf1bbd70cf1cd62576e6782bded0f8a2f06",
+      "segment": 18,
+      "id": "card-us-sf",
+      "source_time": null,
+      "baseline_film_time": 252.18,
+      "current_mapped_film_time": 250.20000000000007,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-08.png",
+      "image_sha256": "993ecfa4130533bdef731073a327083dcd45423aed89d998e7e9aaa0953ce5bc",
+      "segment": 19,
+      "id": "us-sf",
+      "source_time": 139.82,
+      "baseline_film_time": 256.3,
+      "current_mapped_film_time": 254.32000000000005,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-09.png",
+      "image_sha256": "ac43e2c591458e5436be3c1eebdcb899dcc54de9ff6bde11586b620819e7d004",
+      "segment": 19,
+      "id": "us-sf",
+      "source_time": 156.3,
+      "baseline_film_time": 272.78000000000003,
+      "current_mapped_film_time": 270.80000000000007,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-10.png",
+      "image_sha256": "786d9648c8a5c9aa78c39b91da34354db89229112a06a508e5b426907d8371f6",
+      "segment": 19,
+      "id": "us-sf",
+      "source_time": 172.82,
+      "baseline_film_time": 289.3,
+      "current_mapped_film_time": 287.32000000000005,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-11.png",
+      "image_sha256": "a70626224153430bd0bdef6086972a2323c23d10e9bea94db1330339855d137c",
+      "segment": 19,
+      "id": "us-sf",
+      "source_time": 162.3,
+      "baseline_film_time": 278.78000000000003,
+      "current_mapped_film_time": 276.80000000000007,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-12.png",
+      "image_sha256": "6858a10197312d6d51c87a900f131535042954f8fbad3cdc2d742ab2ead8cf81",
+      "segment": 19,
+      "id": "us-sf",
+      "source_time": 164.58,
+      "baseline_film_time": 281.06,
+      "current_mapped_film_time": 279.0800000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-13.png",
+      "image_sha256": "8e81e850252da0aefd3cf6280e904c1d331f1638b1d1abf65db6d67327cd3a7d",
+      "segment": 19,
+      "id": "us-sf",
+      "source_time": 167.62,
+      "baseline_film_time": 284.1,
+      "current_mapped_film_time": 282.1200000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-14.png",
+      "image_sha256": "9ffd3bd3818302bd2270d47ea2b8467f47bd03fd27bd30cea9fe248190fa305c",
+      "segment": 19,
+      "id": "us-sf",
+      "source_time": 147.02,
+      "baseline_film_time": 263.5,
+      "current_mapped_film_time": 261.5200000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-15.png",
+      "image_sha256": "a2469eadf67f5e207c41ec99ce24ffaa6d071d14ce40e1bfc8b315ea160f9c75",
+      "segment": 19,
+      "id": "us-sf",
+      "source_time": 148.38,
+      "baseline_film_time": 264.86,
+      "current_mapped_film_time": 262.8800000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-16.png",
+      "image_sha256": "cb9dcd6104d612b5fcbc5d2ffec686840d4843be27459f7bb15d2b20feecb4cd",
+      "segment": 19,
+      "id": "us-sf",
+      "source_time": 149.74,
+      "baseline_film_time": 266.22,
+      "current_mapped_film_time": 264.2400000000001,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-17.png",
+      "image_sha256": "c9a4d27adb1f535697cce2cb6a27bd5f81a28ad6c7c79c3852765826a561b0c5",
+      "segment": 20,
+      "id": "card-asia",
+      "source_time": null,
+      "baseline_film_time": 293.40000000000003,
+      "current_mapped_film_time": 291.42000000000013,
+      "status": "source_time_rendering_equivalent",
+      "reason": "Same actual source SHA/still, same fixed crop geometry and active native bilingual caption/transparent label at mapped source clock; film-time shift is explicitly mapped. This is source-time preview equivalence, not new encoding or final-film QC."
+    },
+    {
+      "baseline_manifest": "/workspace/gauff-finals-production/production/native-preview-batch-4/preview_manifest.json",
+      "baseline_manifest_sha256": "1316d97974bd98b5a6f54fc3f00678d6b9a0f3b3092852419cf2e6f51c2b672b",
+      "image": "/workspace/gauff-finals-production/production/native-preview-batch-4/caption-18.png",
+      "image_sha256": "351ddd3ec93001f85dada2d1c0790b4f95e077b312ce6de898f6a948b2ee1d10",
+      "segment": 21,
+      "id": "card-ending",
+      "source_time": null,
+      "baseline_film_time": 301.06,
+      "current_mapped_film_time": 299.0800000000001,
+      "status": "superseded",
+      "reason": "closing narration/duration changed; replaced by actual current native focused samples"
+    }
+  ],
+  "final_film_qc": false,
+  "human_listened": false
+}

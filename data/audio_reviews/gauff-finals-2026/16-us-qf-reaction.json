@@ -1,0 +1,81 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=eBTlK8A4IDE",
+  "source_sha256": "43ca94013f9fdae50f409c99eec182f3a417a7cf210d0255403bb0cc06890018",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review plus paired local ASR and targeted third-model disambiguation; not human listening",
+  "human_listened": false,
+  "reviewed_at": "2026-10-22T13:59:19.365468+00:00",
+  "reviewed_from": 183.2,
+  "reviewed_to": 199.28,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 184.18,
+      "end": 186.0,
+      "en": "Somehow she did it.",
+      "zh": "她还是做到了。"
+    },
+    {
+      "start": 186.48,
+      "end": 187.04,
+      "en": "Yeah.",
+      "zh": "是的。"
+    },
+    {
+      "start": 187.6,
+      "end": 188.72,
+      "en": "Took a lot of heart.",
+      "zh": "这需要很大的勇气。"
+    },
+    {
+      "start": 190.3,
+      "end": 190.8,
+      "en": "A lot.",
+      "zh": "很大的勇气。"
+    },
+    {
+      "start": 192.58,
+      "end": 194.64,
+      "en": "So far from her best,",
+      "zh": "她远未打出最佳状态，"
+    },
+    {
+      "start": 195.2,
+      "end": 197.66,
+      "en": "and Coco Gauff still figures out a way",
+      "zh": "高芙依然找到了办法，"
+    },
+    {
+      "start": 197.66,
+      "end": 199.24,
+      "en": "to get out of her own way.",
+      "zh": "跨过自己这一关。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Authentic same-match later reaction/commentary after ordinary edit omitting complete PA/crowd interval. Entire original commentary184.18–199.24 retained. End199.28 retains full lastword199.24; previous199.50 had actual official endcard at199.32, now removed. Nativefinal actual join still to check. SOMEHOW independently medium+large-v3 agree versus small low-probability SOMETIMES; targeted small haha182.82–183.36 is low-probability nonlexical chuckle, not invented English. Gauff propername normalized against known identity. No human listening claim.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-qf-reaction-fa8058bd30-us-qf-small.en.json",
+      "sha256": "fa8058bd30b2b009a5ac89f8ae66d17b64317145828f29e705b08f931fdeb7ed",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-qf-reaction-a1bdade3ee-us-qf-medium.en.json",
+      "sha256": "a1bdade3ee4f9660be5290f15fb9dd662120a13adb41a1709a6bc93492fa6644",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-qf-reaction-2c8b1d07a1-us-qf-reaction-targeted-small.en.json",
+      "sha256": "2c8b1d07a136c2340e1219db1e38d2854fbdcb1c57bde4660dc0ebe7deee3c8d",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-qf-reaction-4e5e72709f-us-qf-targeted-182-large-v3.json",
+      "sha256": "4e5e72709fdb83ed4b1bfc7c614a15f8adf1e6658767f1c8ccaaf0e42ce2a9b7",
+      "model": "large-v3"
+    }
+  ]
+}

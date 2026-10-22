@@ -1,0 +1,55 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=dHmXLHG5hQc",
+  "source_sha256": "ae70c854c394e515ee7146110ee1a350226b5c7f05fb0bbe21c03e267cdd332d",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review plus paired local ASR and targeted third-model disambiguation; not human listening",
+  "human_listened": false,
+  "reviewed_at": "2026-10-22T13:59:19.080273+00:00",
+  "reviewed_from": 602.65,
+  "reviewed_to": 630.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 625.1,
+      "end": 629.14,
+      "en": "Karolina Muchova is a Wimbledon finalist.",
+      "zh": "穆霍娃闯进温网决赛。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Actual MP12–10 terminal deadball623.08–623.56, never622. First result sentence complete. Separate next sentence631.54 starts Muchova injury biography rather than Coco season; entire separate biography omitted for editorial relevance. Opening audio600–606 paired short-ASR confirms previous independent phrase THAT IS OUT OF THIS WORLD finishes602.18 before our602.65 start. No foreground English remains until terminal result sentence; contextual paired onset625.10/625.22 supersedes broad-window small624.48, with no audio edit.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/wimbledon-sf-89ff2d4a94-wimbledon_sf-603.50-637.50-small.en.json",
+      "sha256": "89ff2d4a94375d9048eaa4cbe6019921ef9301fd97108e6053192773aa4c79e8",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/wimbledon-sf-f685b5cff2-wimbledon_sf-603.50-637.50-medium.en.json",
+      "sha256": "f685b5cff2b8c060ff596da58ebb1f9fbdedffbed9367443e47cca355112fcc9",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/wimbledon-sf-c99261b5a2-wimbledon_sf-context-622-651-small.en.json",
+      "sha256": "c99261b5a26ee51cf6503411285139679325e1bd67983c7c12adc685c42247b4",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/wimbledon-sf-4cb5fa7b83-wimbledon_sf-context-622-651-medium.en.json",
+      "sha256": "4cb5fa7b83c12951205b980fca1fc88ab697895fc3f071c5dc50b56c728ec521",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/wimbledon-sf-b68d8482be-wimbledon-sf-opening-small.en.json",
+      "sha256": "b68d8482bed63a86d07d3a3261d936f4afca0dce84de58a69f861af03901f008",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/wimbledon-sf-8abf6aaec6-wimbledon-sf-opening-medium.en.json",
+      "sha256": "8abf6aaec6059f24019a279e921e3502b25d3b7379a6c993903eff35a9d977b5",
+      "model": "medium.en"
+    }
+  ]
+}

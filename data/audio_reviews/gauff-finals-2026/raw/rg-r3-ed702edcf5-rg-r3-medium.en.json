@@ -1,0 +1,97 @@
+{
+ "schema": "source-asr-context/v1",
+ "model": "medium.en",
+ "source_sha256": "16af07c890392cd1ec56cd7f87fd331434d782270e12bd654cfcdf774adf2470",
+ "source": "/workspace/gauff-finals-production/sources/VN2JfiUe-Cw.mp4",
+ "clip": [
+  160,
+  218
+ ],
+ "duration": 58.0,
+ "method": "actual_faster_whisper_int8_cpu3_ffmpeg_16khz_float32_unprompted_noVAD_beam5",
+ "human_listened": false,
+ "generated_at": "2026-10-22T13:14:44.158298+00:00",
+ "segments": [
+  {
+   "start": 160.0,
+   "end": 161.78,
+   "text": "Oh",
+   "avg_logprob": -1.1260687021108775,
+   "no_speech_prob": 0.40171122550964355,
+   "words": [
+    {
+     "w": " Oh",
+     "s": 160.0,
+     "e": 161.78,
+     "p": 0.006571658421307802
+    }
+   ]
+  },
+  {
+   "start": 177.6,
+   "end": 182.82,
+   "text": "The motion catsy sets is Cisco",
+   "avg_logprob": -1.1260687021108775,
+   "no_speech_prob": 0.40171122550964355,
+   "words": [
+    {
+     "w": " The",
+     "s": 177.6,
+     "e": 179.0,
+     "p": 0.0009928324725478888
+    },
+    {
+     "w": " motion",
+     "s": 179.0,
+     "e": 180.4,
+     "p": 0.29298365116119385
+    },
+    {
+     "w": " catsy",
+     "s": 180.4,
+     "e": 181.28,
+     "p": 0.2449164241552353
+    },
+    {
+     "w": " sets",
+     "s": 181.28,
+     "e": 181.76,
+     "p": 0.3877805173397064
+    },
+    {
+     "w": " is",
+     "s": 181.76,
+     "e": 182.36,
+     "p": 0.5716821551322937
+    },
+    {
+     "w": " Cisco",
+     "s": 182.36,
+     "e": 182.82,
+     "p": 0.2793949544429779
+    }
+   ]
+  },
+  {
+   "start": 200.02,
+   "end": 202.82,
+   "text": "Anastasia Potapova!",
+   "avg_logprob": -0.7143628120422363,
+   "no_speech_prob": 0.3641115725040436,
+   "words": [
+    {
+     "w": " Anastasia",
+     "s": 200.02,
+     "e": 201.42,
+     "p": 0.8942113518714905
+    },
+    {
+     "w": " Potapova!",
+     "s": 201.42,
+     "e": 202.82,
+     "p": 0.8759658535321554
+    }
+   ]
+  }
+ ]
+}

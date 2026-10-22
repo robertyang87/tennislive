@@ -1,0 +1,555 @@
+{
+  "schema": "source-bound-gauff-candidates/v1",
+  "generated_at": "2026-10-22T13:55:49.928089+00:00",
+  "final_render_ready": false,
+  "selections": [
+    {
+      "source_name": "cincy-speech",
+      "source_url": "https://www.youtube.com/watch?v=aw8XUjIkpio",
+      "source_sha256": "7bf45b5f4eb9f770e2d4e8690663b841b00b7483cd89dc188345d36b900d02ac",
+      "start": 144.42,
+      "end": 148.8,
+      "frame": "person",
+      "cx": 0.593,
+      "quote_kind": "ceremony",
+      "captions": [
+        {
+          "start": 144.42,
+          "end": 146.64,
+          "en": "So it's, it's a big difference what a year can make.",
+          "zh": "一年真能带来很大改变。"
+        },
+        {
+          "start": 146.64,
+          "end": 148.8,
+          "en": "So I thank Him for pulling me through.",
+          "zh": "感谢上帝带我走过来。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "notes": "Exact144.40 frame already actual Coco close shot. Prior parking-lot sentence is accurately paraphrased in next narration, not borrowed into this shorter quote. Next new conjunction AND begins148.80: outgoing .25s silence outside selected body only.",
+      "asr_evidence": [
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/cincy-speech-small.en.json",
+          "sha256": "67721d62f42f9d3e86d03e530bf7354a005432768f5df77c4af1e28b53e183fd"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/cincy-speech-medium.en.json",
+          "sha256": "07f01aa041d6f818235f389557d77a3f607eb9d84e47483a0f103dba5231531a"
+        }
+      ],
+      "status": "cross_checked_source_bound_candidate_native_visual_pending",
+      "cx_face": {
+        "samples": [
+          0.5971,
+          0.5935,
+          0.5965,
+          0.5968,
+          0.5882,
+          0.596,
+          0.5981,
+          0.5948,
+          0.5956
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T13:12:05+00:00",
+        "median": 0.596,
+        "spread": 0.0099
+      },
+      "audio_tail": "silence"
+    },
+    {
+      "source_name": "miami-final",
+      "source_url": "https://www.youtube.com/watch?v=nj76Dn9Vu5E",
+      "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+      "start": 255.36,
+      "end": 266.8,
+      "frame": "court",
+      "cx": 0.5,
+      "quote_kind": "broadcast",
+      "captions": [
+        {
+          "start": 262.16,
+          "end": 266.56,
+          "en": "The Sunshine Double belongs to Aryna Sabalenka.",
+          "zh": "阳光双冠属于萨巴伦卡。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "notes": "Full actual championship point prep/serve/rally/outcome/reaction and complete first commentary sentence. Exact25fps source frame255.28 is still bad receiver closeup;255.32 first wide;255.36 confirmed Gauff ball in hand well before toss256+, so omit bad nonessential receiver closeup. Next sentence starts267.44 beyond .25 outgoing tail. Fixed courtcenter spatial limits to document, no claim all lateral strokes fit.",
+      "asr_evidence": [
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/miami-final-small.en.json",
+          "sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/miami-final-medium.en.json",
+          "sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4"
+        }
+      ],
+      "status": "cross_checked_source_bound_candidate_native_visual_pending"
+    },
+    {
+      "source_name": "cincy-final",
+      "source_url": "https://www.youtube.com/watch?v=Z2_awLHqcww",
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "start": 236.6,
+      "end": 260.5,
+      "frame": "court",
+      "cx": 0.5,
+      "quote_kind": "broadcast",
+      "captions": [
+        {
+          "start": 246.7,
+          "end": 250.02,
+          "en": "It is the first title of the year for Coco Gauff.",
+          "zh": "这是高芙今年的首冠。"
+        },
+        {
+          "start": 250.62,
+          "end": 252.72,
+          "en": "It is her second in Cincinnati,",
+          "zh": "她第二次在辛辛那提夺冠，"
+        },
+        {
+          "start": 253.54,
+          "end": 258.2,
+          "en": "and it is the 12th singles title of her tremendous career.",
+          "zh": "也是她生涯第12座单打冠军。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "notes": "Exact reused source bytes and full source-bound commentary; full terminal serve/rally/celebration. Next sentence261.86 leaves body+.25 clear.",
+      "asr_evidence": [
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/cincy-final-small.en.json",
+          "sha256": "0bf125b1fcd2129f9b2177d7665d781a51fb3046149fc14b960b98901066daf9"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/cincy-final-medium.en.json",
+          "sha256": "44adb58455542d949db0c5a0cd1bbafb0fe5113da5fa1ffd2bbcdb00d7f2b7e0"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/cincy-final-close-small.en.json",
+          "sha256": "1873b237efcb26174bcecce58d373929635f54105ec8ca81b3531aa3a0b91a86"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/cincy-final-close-medium.en.json",
+          "sha256": "da2162c9eb0b56450489a878885633c940a1344b4911a42fd4c5f05f143c63e4"
+        }
+      ],
+      "status": "cross_checked_source_bound_candidate_native_visual_pending"
+    },
+    {
+      "source_name": "wimbledon-sf",
+      "source_url": "https://www.youtube.com/watch?v=dHmXLHG5hQc",
+      "source_sha256": "ae70c854c394e515ee7146110ee1a350226b5c7f05fb0bbe21c03e267cdd332d",
+      "start": 602.65,
+      "end": 630.0,
+      "frame": "court",
+      "cx": 0.5,
+      "quote_kind": "broadcast",
+      "captions": [
+        {
+          "start": 625.1,
+          "end": 629.14,
+          "en": "Karolina Muchova is a Wimbledon finalist.",
+          "zh": "穆霍娃闯进温网决赛。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "notes": "Actual MP12–10 terminal deadball623.08–623.56, never622. First result sentence complete. Separate next sentence631.54 starts Muchova injury biography rather than Coco season; entire separate biography omitted for editorial relevance. Opening audio600–606 paired short-ASR confirms previous independent phrase THAT IS OUT OF THIS WORLD finishes602.18 before our602.65 start. No foreground English remains until terminal result sentence; contextual paired onset625.10/625.22 supersedes broad-window small624.48, with no audio edit.",
+      "asr_evidence": [
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/wimbledon_sf-603.50-637.50-small.en.json",
+          "sha256": "89ff2d4a94375d9048eaa4cbe6019921ef9301fd97108e6053192773aa4c79e8"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/wimbledon_sf-603.50-637.50-medium.en.json",
+          "sha256": "f685b5cff2b8c060ff596da58ebb1f9fbdedffbed9367443e47cca355112fcc9"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/wimbledon_sf-context-622-651-small.en.json",
+          "sha256": "c99261b5a26ee51cf6503411285139679325e1bd67983c7c12adc685c42247b4"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/wimbledon_sf-context-622-651-medium.en.json",
+          "sha256": "4cb5fa7b83c12951205b980fca1fc88ab697895fc3f071c5dc50b56c728ec521"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/wimbledon-sf-opening-small.en.json",
+          "sha256": "b68d8482bed63a86d07d3a3261d936f4afca0dce84de58a69f861af03901f008"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/wimbledon-sf-opening-medium.en.json",
+          "sha256": "8abf6aaec6059f24019a279e921e3502b25d3b7379a6c993903eff35a9d977b5"
+        }
+      ],
+      "status": "cross_checked_source_bound_candidate_native_visual_pending"
+    },
+    {
+      "source_name": "rome-final",
+      "source_url": "https://www.youtube.com/watch?v=WXNZTi6qd1Y",
+      "source_sha256": "e5aab2e4155d2ebf9ef25e4d31d2e84b6748963d0442c9a5e1818a14e0f904dc",
+      "start": 219.9,
+      "end": 240.3,
+      "frame": "court",
+      "cx": 0.5,
+      "quote_kind": "broadcast",
+      "captions": [
+        {
+          "start": 235.84,
+          "end": 240.06,
+          "en": "Elina Svitolina is a Roman champion once again.",
+          "zh": "斯维托丽娜再度称霸罗马。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "notes": "Genuine terminal championship point#3 (219.90 prep; serve222.60–223.80; deadball231.48–231.96; celebration232+; handshake235+). Entire first result sentence retained. Next separate2 poetic sentences about Svitolina Roman trilogy retained in shared research and Svitolina episode, omitted here for Coco main-character relevance (root editorial decision), not transcription difficulty. Next new THE240.36 lies within outgoing.25 so outside-body tail silence only. API second-set TB3 conflicts officialarticle TB5; omit smallscore, keep conflict.",
+      "asr_evidence": [
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/rome-terminal-small.en-en.json",
+          "sha256": "27fbaf0ba714892a6a2cca1e63fab841ec54c947ba4da220ce666e90a7de8e2e"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/rome-terminal-medium.en-en.json",
+          "sha256": "d03692a541b90b6e791789a87a66e63dc20c3bc35973c9515fdab9b02b3a9c9d"
+        }
+      ],
+      "status": "cross_checked_source_bound_candidate_native_visual_pending",
+      "audio_tail": "silence"
+    },
+    {
+      "source_name": "ao-qf",
+      "source_url": "https://www.youtube.com/watch?v=q2BG1_A699A",
+      "source_sha256": "4313381dfcc8947f1615b58ff1a10f78cc6305dce07741480674160a99093d3d",
+      "start": 155.6,
+      "end": 184.84,
+      "frame": "court",
+      "cx": 0.5,
+      "quote_kind": "broadcast",
+      "captions": [
+        {
+          "start": 174.66,
+          "end": 179.72,
+          "en": "She takes advantage of an out-of-sorts Coco Gauff,",
+          "zh": "她击败了状态失常的高芙，"
+        },
+        {
+          "start": 179.84,
+          "end": 182.62,
+          "en": "a long way off her best.",
+          "zh": "高芙远未发挥最佳水准。"
+        },
+        {
+          "start": 182.62,
+          "end": 184.58,
+          "en": "Not even an hour!",
+          "zh": "还不到1小时！"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "notes": "Full genuine terminal matchpoint from155.60 before serve to victory/reaction and entire post-result commentary. Raw models phonetic Coco name normalized against known official identity, never reconstructed umpire phrase. small first SHE172.26 p=.034 is rejected as unreliable timing; medium174.66 and independent large174.96 support corrected subtitle onset174.66. Targeted large isolated semi-final171–172 is absent from both context English models and has high no-speech probability; not asserted a stable additional foreground sentence or reconstructed into a standard call. Last HOUR supported medium and final scoreboard57min, not invented different speech.",
+      "asr_evidence": [
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/ao-qf-small.en.json",
+          "sha256": "884d40276a1968b0c3efd9de85e08bff13d8753bd80a6ef23f467bc7ec2b9ec9"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/ao-qf-medium.en.json",
+          "sha256": "627b445d08f0810d2e28c697e6573500be9ed78103441a476afb690a81d6f1fc"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/ao-qf-targeted-171-large-v3.json",
+          "sha256": "af414ace0c77db8310755d5e0f878b9fe2b8f06785ab4a484ace8dc13781af23"
+        }
+      ],
+      "status": "cross_checked_source_bound_candidate_native_visual_pending"
+    },
+    {
+      "source_name": "us-qf-interview",
+      "source_url": "https://www.youtube.com/watch?v=gy3k_t65oak",
+      "source_sha256": "da4594bda7cc2e639c3bf5e4799e6b8ebe91875cb89692545ef8c30882325449",
+      "start": 48.25,
+      "end": 52.52,
+      "frame": "person",
+      "cx": 0.34,
+      "quote_kind": "on_court",
+      "captions": [
+        {
+          "start": 48.28,
+          "end": 52.48,
+          "en": "So honestly, I was just trying to literally leave the court with no regrets.",
+          "zh": "我只想不留遗憾地离开球场。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "notes": "Actual USOpen QF winning on-court interview. Selected one complete independent answer sentence, no claim after semifinal loss. Next new sentence52.62 occurs inside outgoing .25s: outside-body audio_tail silence only. Whole answer context retained in raw evidence.",
+      "asr_evidence": [
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-qf-interview-small.en.json",
+          "sha256": "9160c8bdaa31940a27d99a13fe8f0d4181af89a35e6e9a0542a2df9af89f2ce2"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-qf-interview-medium.en.json",
+          "sha256": "bee28e38308b54a7d2340d04104a3776c8616e25aaed10ba38cde75a641a6ecc"
+        }
+      ],
+      "status": "cross_checked_source_bound_candidate_native_visual_pending",
+      "cx_face": {
+        "samples": [
+          0.3644,
+          0.341,
+          0.2997,
+          0.3045,
+          0.3025,
+          0.3129,
+          0.3576,
+          0.3777,
+          0.3793
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T13:12:35+00:00",
+        "median": 0.341,
+        "spread": 0.0796
+      },
+      "audio_tail": "silence"
+    },
+    {
+      "source_name": "rg-r3",
+      "source_url": "https://www.youtube.com/watch?v=VN2JfiUe-Cw",
+      "source_sha256": "16af07c890392cd1ec56cd7f87fd331434d782270e12bd654cfcdf774adf2470",
+      "start": 170.9,
+      "end": 183.24,
+      "frame": "court",
+      "cx": 0.5,
+      "quote_kind": "broadcast",
+      "captions": [],
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "notes": "Actual complete matchpoint serve/rally/deadball/Potapova falls to clay/Coco reaction, plus complete French umpire result announcement. Both English models produce unstable non-English approximations not valid English; multilingual French short-ASR confirms deux manches à une,4-6 7-6 6-4 ending182.96. No invented English captions or fake human listening. Independent French announcement is kept audible in full; all bilingual cue obligation applies to intelligible English, none reliably decoded in selected window.",
+      "asr_evidence": [
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/rg-r3-small.en.json",
+          "sha256": "1b09e61e181018bc6a75d14bdc65f4af66013bb82a310cf534cfcf1e529d11de"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/rg-r3-medium.en.json",
+          "sha256": "ed702edcf545484f06b3ec591418d6b475d6c6e5c88cdcf8f3f8f98a62d9b7b4"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/rg-r3-french-boundary-small.json",
+          "sha256": "a308988bfcdc1c33adc8249871ff97c1740be7663a23ffc146629d7c8bb21cf6"
+        }
+      ],
+      "status": "cross_checked_source_bound_candidate_native_visual_pending",
+      "no_foreground_english_reason": "Paired unprompted small.en/medium.en on160–218 show no stable intelligible foreground English170.90–183.24; French PA begins177.6 and finishes182.96, corroborated actual multilingual small French ASR176–187. Preserved sound is not claimed silent. No reconstruction from malformed English-model approximations."
+    },
+    {
+      "source_name": "us-qf",
+      "source_url": "https://www.youtube.com/watch?v=eBTlK8A4IDE",
+      "source_sha256": "43ca94013f9fdae50f409c99eec182f3a417a7cf210d0255403bb0cc06890018",
+      "start": 138.08,
+      "end": 166.9,
+      "frame": "court",
+      "cx": 0.5,
+      "quote_kind": "broadcast",
+      "captions": [
+        {
+          "start": 138.2,
+          "end": 140.32,
+          "en": "Second match point now for Gauff.",
+          "zh": "现在是高芙的第2个赛点。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "notes": "True terminal MP#2 at third-set5-2,40-30. Full prep/serve/rally/deadball/initialcelebration; second-matchpoint call included intact (independent context135–147, onset138.20–138.32). Boundary138.08 includes leadbefore speech. Separate later PA is omitted as a whole ordinary editorial gap, full excellent commentary184+ kept in next reaction window. Inconsistent numeric-model noise167.12+ lies outside selected body; outgoing.25 silence only to eliminate possible next-word leak.",
+      "asr_evidence": [
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-qf-small.en.json",
+          "sha256": "fa8058bd30b2b009a5ac89f8ae66d17b64317145828f29e705b08f931fdeb7ed"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-qf-medium.en.json",
+          "sha256": "a1bdade3ee4f9660be5290f15fb9dd662120a13adb41a1709a6bc93492fa6644"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-qf-opening-full-small.en.json",
+          "sha256": "c763181e384fce46d5b0fbafb273179277c02127a4fe2f1ae46f0ff7f1c8ac6a"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-qf-opening-full-medium.en.json",
+          "sha256": "e4f5e444ea663a7622039e64e578af5c9365d5a8a9c5568192d169f8677de251"
+        }
+      ],
+      "status": "cross_checked_source_bound_candidate_native_visual_pending",
+      "audio_tail": "silence",
+      "key": "us-qf-matchpoint"
+    },
+    {
+      "source_name": "us-qf",
+      "source_url": "https://www.youtube.com/watch?v=eBTlK8A4IDE",
+      "source_sha256": "43ca94013f9fdae50f409c99eec182f3a417a7cf210d0255403bb0cc06890018",
+      "start": 183.2,
+      "end": 199.28,
+      "frame": "court",
+      "cx": 0.5,
+      "quote_kind": "broadcast",
+      "captions": [
+        {
+          "start": 184.18,
+          "end": 186.0,
+          "en": "Somehow she did it.",
+          "zh": "她还是做到了。"
+        },
+        {
+          "start": 186.48,
+          "end": 187.04,
+          "en": "Yeah.",
+          "zh": "是的。"
+        },
+        {
+          "start": 187.6,
+          "end": 188.72,
+          "en": "Took a lot of heart.",
+          "zh": "这需要很大的勇气。"
+        },
+        {
+          "start": 190.3,
+          "end": 190.8,
+          "en": "A lot.",
+          "zh": "很大的勇气。"
+        },
+        {
+          "start": 192.58,
+          "end": 194.64,
+          "en": "So far from her best,",
+          "zh": "她远未打出最佳状态，"
+        },
+        {
+          "start": 195.2,
+          "end": 197.66,
+          "en": "and Coco Gauff still figures out a way",
+          "zh": "高芙依然找到了办法，"
+        },
+        {
+          "start": 197.66,
+          "end": 199.24,
+          "en": "to get out of her own way.",
+          "zh": "跨过自己这一关。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "notes": "Authentic same-match later reaction/commentary after ordinary edit omitting complete PA/crowd interval. Entire original commentary184.18–199.24 retained. End199.28 retains full lastword199.24; previous199.50 had actual official endcard at199.32, now removed. Nativefinal actual join still to check. SOMEHOW independently medium+large-v3 agree versus small low-probability SOMETIMES; targeted small haha182.82–183.36 is low-probability nonlexical chuckle, not invented English. Gauff propername normalized against known identity. No human listening claim.",
+      "asr_evidence": [
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-qf-small.en.json",
+          "sha256": "fa8058bd30b2b009a5ac89f8ae66d17b64317145828f29e705b08f931fdeb7ed"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-qf-medium.en.json",
+          "sha256": "a1bdade3ee4f9660be5290f15fb9dd662120a13adb41a1709a6bc93492fa6644"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-qf-reaction-targeted-small.en.json",
+          "sha256": "2c8b1d07a136c2340e1219db1e38d2854fbdcb1c57bde4660dc0ebe7deee3c8d"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-qf-targeted-182-large-v3.json",
+          "sha256": "4e5e72709fdb83ed4b1bfc7c614a15f8adf1e6658767f1c8ccaaf0e42ce2a9b7"
+        }
+      ],
+      "status": "cross_checked_source_bound_candidate_native_visual_pending",
+      "key": "us-qf-reaction"
+    },
+    {
+      "source_name": "us-sf",
+      "source_url": "https://www.youtube.com/watch?v=Uokrq2th_Ew",
+      "source_sha256": "8f818ec74bca319d66d5be408a02b1b2144d7b3c98996b35851bb8f4f314c5c0",
+      "start": 139.62,
+      "end": 173.0,
+      "frame": "court",
+      "cx": 0.5,
+      "quote_kind": "broadcast",
+      "captions": [
+        {
+          "start": 161.22,
+          "end": 163.38,
+          "en": "It's Elena Rybakina",
+          "zh": "是莱巴金娜，"
+        },
+        {
+          "start": 163.38,
+          "end": 165.84,
+          "en": "that books her ticket",
+          "zh": "拿到了决赛门票，"
+        },
+        {
+          "start": 165.84,
+          "end": 169.42,
+          "en": "to a first US Open final.",
+          "zh": "首次闯进美网决赛。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "notes": "Full terminal serve point, outcome and reaction/handshake. Previous independent line AND WE ARE BACKING UP ends by139.42; start139.62 still before actual serve/prep close shot, never cuts wordtail. Targeted medium+large-v3 agree ITS ELENA RYBAKINA THAT BOOKS HER TICKET TO A FIRST USOPEN FINAL; phonetic name normalized by official identity. Small THANKYOU/WINMATCH and full-medium backing-up repetition around161 are unstable competing decodes, not additional stable foreground statements. Full first result sentence retained. Next independent topic174.84 about top2 final is omitted entirely for Coco relevance, safely after173+.25.",
+      "asr_evidence": [
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-sf-small.en.json",
+          "sha256": "315cbf4967c323d25f31893067567a9bb74d4bb1c2d1e37757a7e390b0192df8"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-sf-medium.en.json",
+          "sha256": "963408963ca0481ebef5c1c232e76b97d3e7baf16d1705ac611c242ca1950fe4"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-sf-targeted-133-small.en.json",
+          "sha256": "d5dfc6e4a1f136c083821c6e74fe4e2a2f660c3a8bc69ac06277c0cbe709608c"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-sf-targeted-133-medium.en.json",
+          "sha256": "a90a37ac33232a2eb02b3e22351bf2e3e36c24a44880245735c1fd12cd16b8b7"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-sf-targeted-160-small.en.json",
+          "sha256": "4303f54725115cf80192afbd2fe7068333c7c7f9ee48fad85b84f3d9cd391ad0"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-sf-targeted-160-medium.en.json",
+          "sha256": "e4281bc12d7750bc0a122f854f34237b540763f5d04ab029c7eda1650bdfa81b"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-sf-targeted-133-large-v3.json",
+          "sha256": "1c3e5735e82cfff41eba153b45ff2d1ddf6467a8f27c31769155e9e89077b143"
+        },
+        {
+          "path": "/workspace/gauff-finals-production/audio/evidence/us-sf-targeted-159.5-large-v3.json",
+          "sha256": "3af2ddea2bd3105e7e00e4d8af9a09d7956fce5ebaea6a494d3183051d59b02f"
+        }
+      ],
+      "status": "cross_checked_source_bound_candidate_native_visual_pending"
+    }
+  ]
+}

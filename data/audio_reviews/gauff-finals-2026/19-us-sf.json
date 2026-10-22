@@ -1,0 +1,77 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=Uokrq2th_Ew",
+  "source_sha256": "8f818ec74bca319d66d5be408a02b1b2144d7b3c98996b35851bb8f4f314c5c0",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review plus paired local ASR and targeted third-model disambiguation; not human listening",
+  "human_listened": false,
+  "reviewed_at": "2026-10-22T13:59:19.548131+00:00",
+  "reviewed_from": 139.62,
+  "reviewed_to": 173.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 161.22,
+      "end": 163.38,
+      "en": "It's Elena Rybakina",
+      "zh": "是莱巴金娜，"
+    },
+    {
+      "start": 163.38,
+      "end": 165.84,
+      "en": "that books her ticket",
+      "zh": "拿到了决赛门票，"
+    },
+    {
+      "start": 165.84,
+      "end": 169.42,
+      "en": "to a first US Open final.",
+      "zh": "首次闯进美网决赛。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Full terminal serve point, outcome and reaction/handshake. Previous independent line AND WE ARE BACKING UP ends by139.42; start139.62 still before actual serve/prep close shot, never cuts wordtail. Targeted medium+large-v3 agree ITS ELENA RYBAKINA THAT BOOKS HER TICKET TO A FIRST USOPEN FINAL; phonetic name normalized by official identity. Small THANKYOU/WINMATCH and full-medium backing-up repetition around161 are unstable competing decodes, not additional stable foreground statements. Full first result sentence retained. Next independent topic174.84 about top2 final is omitted entirely for Coco relevance, safely after173+.25.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-sf-315cbf4967-us-sf-small.en.json",
+      "sha256": "315cbf4967c323d25f31893067567a9bb74d4bb1c2d1e37757a7e390b0192df8",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-sf-963408963c-us-sf-medium.en.json",
+      "sha256": "963408963ca0481ebef5c1c232e76b97d3e7baf16d1705ac611c242ca1950fe4",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-sf-d5dfc6e4a1-us-sf-targeted-133-small.en.json",
+      "sha256": "d5dfc6e4a1f136c083821c6e74fe4e2a2f660c3a8bc69ac06277c0cbe709608c",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-sf-a90a37ac33-us-sf-targeted-133-medium.en.json",
+      "sha256": "a90a37ac33232a2eb02b3e22351bf2e3e36c24a44880245735c1fd12cd16b8b7",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-sf-4303f54725-us-sf-targeted-160-small.en.json",
+      "sha256": "4303f54725115cf80192afbd2fe7068333c7c7f9ee48fad85b84f3d9cd391ad0",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-sf-e4281bc12d-us-sf-targeted-160-medium.en.json",
+      "sha256": "e4281bc12d7750bc0a122f854f34237b540763f5d04ab029c7eda1650bdfa81b",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-sf-1c3e5735e8-us-sf-targeted-133-large-v3.json",
+      "sha256": "1c3e5735e82cfff41eba153b45ff2d1ddf6467a8f27c31769155e9e89077b143",
+      "model": "large-v3"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/us-sf-3af2ddea2b-us-sf-targeted-159.5-large-v3.json",
+      "sha256": "3af2ddea2bd3105e7e00e4d8af9a09d7956fce5ebaea6a494d3183051d59b02f",
+      "model": "large-v3"
+    }
+  ]
+}

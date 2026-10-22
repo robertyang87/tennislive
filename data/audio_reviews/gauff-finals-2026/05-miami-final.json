@@ -1,0 +1,35 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=nj76Dn9Vu5E",
+  "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review plus paired local ASR and targeted third-model disambiguation; not human listening",
+  "human_listened": false,
+  "reviewed_at": "2026-10-22T13:59:18.690634+00:00",
+  "reviewed_from": 255.36,
+  "reviewed_to": 266.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 262.16,
+      "end": 266.56,
+      "en": "The Sunshine Double belongs to Aryna Sabalenka.",
+      "zh": "阳光双冠属于萨巴伦卡。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Full actual championship point prep/serve/rally/outcome/reaction and complete first commentary sentence. Exact25fps source frame255.28 is still bad receiver closeup;255.32 first wide;255.36 confirmed Gauff ball in hand well before toss256+, so omit bad nonessential receiver closeup. Next sentence starts267.44 beyond .25 outgoing tail. Fixed courtcenter spatial limits to document, no claim all lateral strokes fit.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/miami-final-56bb9372b5-miami-final-small.en.json",
+      "sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/gauff-finals-2026/raw/miami-final-223aaa306b-miami-final-medium.en.json",
+      "sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+      "model": "medium.en"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "gauff-production-ready-preflight/v1",
+  "spec_sha256": "ae04fb9a5a8d11f05b017e339eaf2f6e37e44f874916a752829609a5a9a1cd66",
+  "expected_seconds": 307.954,
+  "segments": 22,
+  "full_terminal_matchpoints": 8,
+  "extra_rallies": 0,
+  "bilingual_cues": 23,
+  "voice_requests": 12,
+  "frozen_bundle": {
+    "repository_commit": "a4b402a027c8046247f9ec2d1c903e11896445cd",
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/a4b402a027c8046247f9ec2d1c903e11896445cd/assets/tts-bundles/gauff-finals-2026/895493bdabf7511d02fa8dd4b77705de0f09f2cdf50b4582abbb9b7b3b3fefcc/tts_bundle.zip",
+    "sha256": "895493bdabf7511d02fa8dd4b77705de0f09f2cdf50b4582abbb9b7b3b3fefcc",
+    "bytes": 554323,
+    "http_status": 200,
+    "actual_remote_bytes_checked": true
+  },
+  "foreground_all_actual_source_sha_bound": true,
+  "strict_bundle_integrity_and_current_requests_pass": true,
+  "dry_run_exit_code": 0,
+  "taste_preflight_exit_code": 0,
+  "actual_fivecheck_bundle_preflight": true,
+  "current_native_preview_review": "/workspace/gauff-finals-production/production/native-final-review.json",
+  "current_native_preview_review_sha256": "2861de6fb787308d74fe5dd7cb4aa04d07a8cffd071d6343086500df806f3645",
+  "actual_outline_pdf": "/workspace/gauff-finals-production/delivery/高芙2026年终之路_五分钟提纲.pdf",
+  "outline_pdf_sha256": "cd73f54d47d172806fa9ea06fc9dd5e0c962640ada5f83d865ffe137500a19cf",
+  "initial_outline_actually_shown_by_root": true,
+  "formal_render_dispatched": false,
+  "final_film_qc": false,
+  "human_listened": false,
+  "next_action": "Root coordinates formal render with exact frozen v5 bundle; actual encoded-film review and currentHEAD CI required before merge/publication.",
+  "workflow_production_preflight": {
+    "command": "PYTHONPATH=src python tools/production_preflight.py --spec specs/reels/gauff-finals-2026.json --column 赛场之上",
+    "exit_code": 0,
+    "log_sha256": "07f63c05cc4481b0b2928a78039ae380f7b77e188431e5684307aa7b2e9981ce"
+  },
+  "independent_native_preview_review": {
+    "path": "/workspace/finals-remaining-2026/independent-qc/gauff-native-frames/current-native-qc.json",
+    "sha256": "e655fa94af7993f4a1b1dd9ce411e3c25ea5fac6aa6123a9d8277b62417d13d8"
+  },
+  "taste_gate_checks": 19,
+  "actual_outline_proof_viewed": true,
+  "outline_proof_sha256": "d904bb97a49d95ced3926c05587d5ded3ca217f37116e9506d400c1c883b2d92"
+}
