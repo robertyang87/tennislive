@@ -1,0 +1,98 @@
+{
+  "model": "medium.en",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-sf.mp4",
+  "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+  "clip": [
+    135.95,
+    157.08
+  ],
+  "method": "actual_faster_whisper_cpu_int8_beam5_vadfalse_word_timestamps_no_prompt",
+  "human_listened": false,
+  "created_utc": "2026-10-22T09:59:55.031836+00:00",
+  "segments": [
+    {
+      "start": 152.51,
+      "end": 152.99,
+      "text": " Oh",
+      "avg_logprob": -0.2677212841808796,
+      "no_speech_prob": 0.39082399010658264,
+      "words": [
+        {
+          "word": " Oh",
+          "start": 152.51,
+          "end": 152.99,
+          "probability": 0.5460160374641418
+        }
+      ]
+    },
+    {
+      "start": 152.99,
+      "end": 157.05,
+      "text": " Can you believe an extraordinary error to end the set",
+      "avg_logprob": -0.2677212841808796,
+      "no_speech_prob": 0.39082399010658264,
+      "words": [
+        {
+          "word": " Can",
+          "start": 152.99,
+          "end": 153.57,
+          "probability": 0.19328708946704865
+        },
+        {
+          "word": " you",
+          "start": 153.57,
+          "end": 153.81,
+          "probability": 0.9973980188369751
+        },
+        {
+          "word": " believe",
+          "start": 153.81,
+          "end": 154.49,
+          "probability": 0.9980440139770508
+        },
+        {
+          "word": " an",
+          "start": 154.49,
+          "end": 154.71,
+          "probability": 0.729689359664917
+        },
+        {
+          "word": " extraordinary",
+          "start": 154.71,
+          "end": 155.81,
+          "probability": 0.9985741376876831
+        },
+        {
+          "word": " error",
+          "start": 155.81,
+          "end": 156.19,
+          "probability": 0.8146758675575256
+        },
+        {
+          "word": " to",
+          "start": 156.19,
+          "end": 156.39,
+          "probability": 0.973427414894104
+        },
+        {
+          "word": " end",
+          "start": 156.39,
+          "end": 156.63,
+          "probability": 0.9336219429969788
+        },
+        {
+          "word": " the",
+          "start": 156.63,
+          "end": 156.83,
+          "probability": 0.9951275587081909
+        },
+        {
+          "word": " set",
+          "start": 156.83,
+          "end": 157.05,
+          "probability": 0.8231883645057678
+        }
+      ]
+    }
+  ]
+}

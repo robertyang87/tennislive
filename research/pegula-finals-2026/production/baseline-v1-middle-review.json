@@ -1,0 +1,546 @@
+{
+  "schema": "tennislive.actual-final-film-visual-review.v1",
+  "reviewed_at": "2026-10-22T09:04:39.858310+00:00",
+  "reviewer": "Codex independent middle-section visual reviewer; actual encoded MP4 frames, no human-listening claim",
+  "status": "baseline_pass_for_bound_old_film_revised_round_label_render_pending",
+  "scope_indices": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "film": "/workspace/pegula-finals-production/delivery/master/pegula-finals-2026.mp4",
+  "film_sha256": "5d0e4ef77394a8178647611629927944b1939fb58fffc03ef06dda81778017f4",
+  "film_bytes": 181993222,
+  "film_duration_seconds": 417.2,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": "25/1",
+  "spec_path": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+  "spec_sha256": "54122025aaed2692091df6ddfae0255275d5d225e7831837cdf60b47cabc5bbf",
+  "render_json_path": "/workspace/tennislive/output/2026-10-22/reel/pegula-finals-2026/render.json",
+  "render_json_sha256": "c9826be91aa9d6955f4a8496ebe8fb48808a2ee6183c9ff67379565a198c2269",
+  "render_run_id": "39749943985",
+  "manifest_path": "/workspace/pegula-finals-production/final-film-review-middle/manifest.json",
+  "manifest_sha256": "f1f1f5594957a42532f26911bb2d9676cc299a6978e803ff5909effcad70eeed",
+  "all_manifest_image_shas_verified": true,
+  "sample_count": 86,
+  "contacts_reviewed": [
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-middle/contact-00.jpg",
+      "sha256": "48a0060a8641d5ac6bc95c0a54215ea98b68b45a219178a752c3f085a23258a0"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-middle/contact-01.jpg",
+      "sha256": "f8f667d0d95b2066750259ac4e0b568dddff3c7e7df80c8511f11359fa4a96b2"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-middle/contact-02.jpg",
+      "sha256": "99a8a15a479e5de4ec34a92f03439bbcd3dd6e98852ee5bbdf640092f455dbc6"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-middle/contact-03.jpg",
+      "sha256": "04c41441711cb45665a2cc1f4edb59da344d9b9fb92bcb887d95c18bfc71f8a0"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-middle/contact-04.jpg",
+      "sha256": "ac85712f679431bcdcd078f1ee68dad4305333ec43c4d9c4c702c6b3a6dfed4e"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-middle/contact-05.jpg",
+      "sha256": "dffb65ce15120349011a3c947e9e88a61846a2abd547fb603ced62dfe4ec7894"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-middle/contact-06.jpg",
+      "sha256": "5e8a09e41bf50b57b62fb01be4f160dd5d1cda4b0bdeb607c436b70208daf34c"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/final-film-review-middle/contact-07.jpg",
+      "sha256": "de4ca2c85baebb529767a58fd373d24a947f288559d8aa1a50d7294ab670e671"
+    }
+  ],
+  "all_86_manifest_frames_visually_inspected_via_actual_contacts": true,
+  "full_size_frames_individually_inspected": [
+    {
+      "index": 13,
+      "id": "berlin-sf",
+      "film_frame": 4187,
+      "film_time": 167.48,
+      "why": "actual-bilingual-cue",
+      "source_time": 267.80999999999995,
+      "file": "frame-015.jpg",
+      "image_sha256": "70990388a6cf8715f257eb8c1e0cb75acb63a5eaee6e0849144f63a24d6c393b"
+    },
+    {
+      "index": 13,
+      "id": "berlin-sf",
+      "film_frame": 4358,
+      "film_time": 174.32,
+      "why": "actual-bilingual-cue",
+      "source_time": 274.65,
+      "file": "frame-016.jpg",
+      "image_sha256": "fa9a44d1365bd26eba4e9df9eb510ed54bcb34ec6422f1a2b394200fe352cd68"
+    },
+    {
+      "index": 15,
+      "id": "dc-final",
+      "film_frame": 5047,
+      "film_time": 201.88,
+      "why": "actual-bilingual-cue",
+      "source_time": 248.73,
+      "file": "frame-032.jpg",
+      "image_sha256": "5878f4c19059ce8d61e86d72bd832245dfb25e974aa326d2be33bb0cb8080fae"
+    },
+    {
+      "index": 15,
+      "id": "dc-final",
+      "film_frame": 5154,
+      "film_time": 206.16,
+      "why": "actual-bilingual-cue",
+      "source_time": 253.01,
+      "file": "frame-033.jpg",
+      "image_sha256": "982063310bc355d8ff77f5236cdd27817003a70e6384f08f4bb4a47095586277"
+    },
+    {
+      "index": 15,
+      "id": "dc-final",
+      "film_frame": 5277,
+      "film_time": 211.08,
+      "why": "actual-bilingual-cue",
+      "source_time": 257.93,
+      "file": "frame-034.jpg",
+      "image_sha256": "c09aaa2cdd7013d14fe5a83848eb0acf0c6dec141fbb91d809e8775ac33d06ef"
+    },
+    {
+      "index": 17,
+      "id": "cincy-sf",
+      "film_frame": 5815,
+      "film_time": 232.6,
+      "why": "actual-bilingual-cue",
+      "source_time": 268.47,
+      "file": "frame-050.jpg",
+      "image_sha256": "d5b71775e4696c6000be71f7636d9d518792c6e5c5e9f3dce588e5c5e4b8e186"
+    },
+    {
+      "index": 17,
+      "id": "cincy-sf",
+      "film_frame": 5883,
+      "film_time": 235.32,
+      "why": "actual-bilingual-cue",
+      "source_time": 271.19000000000005,
+      "file": "frame-051.jpg",
+      "image_sha256": "0b5ae53a02717a110f454aa394b4ca2313e6c84e80040994abdf5e5f846c9649"
+    },
+    {
+      "index": 17,
+      "id": "cincy-sf",
+      "film_frame": 5955,
+      "film_time": 238.2,
+      "why": "actual-bilingual-cue",
+      "source_time": 274.07000000000005,
+      "file": "frame-052.jpg",
+      "image_sha256": "803d68b0ecc3f147fb17f28c0a07a88057aa427f401e2c718e452d1516bfb7d9"
+    },
+    {
+      "index": 18,
+      "id": "cincy-final",
+      "film_frame": 6282,
+      "film_time": 251.28,
+      "why": "actual-bilingual-cue",
+      "source_time": 248.35,
+      "file": "frame-063.jpg",
+      "image_sha256": "578e64333d9d913c1b3672f1c4c1be6ab58b94898bea16ef83182051e328ec80"
+    },
+    {
+      "index": 18,
+      "id": "cincy-final",
+      "film_frame": 6365,
+      "film_time": 254.6,
+      "why": "actual-bilingual-cue",
+      "source_time": 251.67,
+      "file": "frame-064.jpg",
+      "image_sha256": "fd7b418e5b63ca5a9e4c10eb3a5092504cf53851524c766750f3030cd56be8dc"
+    },
+    {
+      "index": 18,
+      "id": "cincy-final",
+      "film_frame": 6470,
+      "film_time": 258.8,
+      "why": "actual-bilingual-cue",
+      "source_time": 255.87,
+      "file": "frame-065.jpg",
+      "image_sha256": "a069b1907c24efb6baab082812d7e55f85bb0a24fc3b5b04e09e41236beae57e"
+    },
+    {
+      "index": 15,
+      "id": "dc-final",
+      "film_frame": 5333,
+      "film_time": 213.32,
+      "why": "body-last",
+      "source_time": 260.16999999999996,
+      "file": "frame-029.jpg",
+      "image_sha256": "a72b6595147a67edb0c7cb23023478f8b1094d82aa4a060987aad9b5b35ef775"
+    },
+    {
+      "index": 13,
+      "id": "berlin-sf",
+      "film_frame": 4061,
+      "film_time": 162.44,
+      "why": "visible-label-middle",
+      "source_time": 262.77,
+      "file": "frame-019.jpg",
+      "image_sha256": "7440cf848365b2f5592128fa18bfd1d3e924e5e91001affb5f604a0f2e517616"
+    },
+    {
+      "index": 15,
+      "id": "dc-final",
+      "film_frame": 4720,
+      "film_time": 188.8,
+      "why": "visible-label-first",
+      "source_time": 235.65,
+      "file": "frame-036.jpg",
+      "image_sha256": "9364616af6544b8d1f68aa7058db2b30ffa03f111b43ee481cb8a68ef764d4df"
+    },
+    {
+      "index": 17,
+      "id": "cincy-sf",
+      "film_frame": 5722,
+      "film_time": 228.88,
+      "why": "visible-label-first",
+      "source_time": 264.75,
+      "file": "frame-054.jpg",
+      "image_sha256": "c94548f95980d98bc069fc6f8091cd678ba1c541e878a798a77f2dc46830337e"
+    },
+    {
+      "index": 18,
+      "id": "cincy-final",
+      "film_frame": 6518,
+      "film_time": 260.72,
+      "why": "visible-label-last",
+      "source_time": 257.79,
+      "file": "frame-069.jpg",
+      "image_sha256": "296cd0b101a718fffe8f9857590b4fad3c2ddb996a2ddbd38f1280ed5664cd26"
+    },
+    {
+      "index": 20,
+      "id": "us-qf",
+      "film_frame": 7033,
+      "film_time": 281.32,
+      "why": "visible-label-middle",
+      "source_time": 157.99,
+      "file": "frame-083.jpg",
+      "image_sha256": "74daf59bdf27068a201419a5526cf78a16f8901637cbbf75c098b1e25d952911"
+    },
+    {
+      "index": 11,
+      "id": "card-clay",
+      "film_frame": 3561,
+      "film_time": 142.44,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-001.jpg",
+      "image_sha256": "f4319a35be5de00cf0e62e3fc9b8b462daa5709cf02762114fb82d80d7bc8df1"
+    },
+    {
+      "index": 12,
+      "id": "card-berlin",
+      "film_frame": 3809,
+      "film_time": 152.36,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-006.jpg",
+      "image_sha256": "98ca173f88195a02bfd210339a279232120da1865aa4d6c6ef5f59e647d63e42"
+    },
+    {
+      "index": 14,
+      "id": "card-summer",
+      "film_frame": 4561,
+      "film_time": 182.44,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-023.jpg",
+      "image_sha256": "19f4b9334f10a5cfbacd4d97a7c54d15ddec2c9e6f2ae6750280cff8992f0fa3"
+    },
+    {
+      "index": 16,
+      "id": "card-cincy",
+      "film_frame": 5506,
+      "film_time": 220.24,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-041.jpg",
+      "image_sha256": "d777f4deefcabddaebc54b697f857d20f5914b96fa3b9691d2d286f8898dd678"
+    },
+    {
+      "index": 19,
+      "id": "card-us-open",
+      "film_frame": 6715,
+      "film_time": 268.6,
+      "why": "body-middle",
+      "source_time": null,
+      "file": "frame-072.jpg",
+      "image_sha256": "40f8d9fa903147190344f4c472a42240df3c0b7c3f9b43aae5ecac91b27bfe00"
+    }
+  ],
+  "all_11_bilingual_cues_full_size_checked": true,
+  "supplementary_actual_master_point_stream": {
+    "manifest": "/workspace/pegula-finals-production/final-film-review-middle/point-stream/manifest.json",
+    "manifest_sha256": "25a5d9c79f98d5a1e39b926d0a3f9ddd7b5c790cb521ea59d36328a8b856f76d",
+    "samples": 61,
+    "all_image_shas_verified": true,
+    "contacts_inspected": [
+      "/workspace/pegula-finals-production/final-film-review-middle/point-stream/dc-point-contact.jpg",
+      "/workspace/pegula-finals-production/final-film-review-middle/point-stream/cincy-sf-point-contact.jpg",
+      "/workspace/pegula-finals-production/final-film-review-middle/point-stream/cincy-final-point-contact.jpg",
+      "/workspace/pegula-finals-production/final-film-review-middle/point-stream/us-qf-point-contact.jpg"
+    ]
+  },
+  "segments": [
+    {
+      "index": 11,
+      "id": "card-clay",
+      "samples_reviewed": 5,
+      "film_sample_range": [
+        137.16,
+        147.32
+      ],
+      "status": "pass_visual_samples",
+      "checks": [
+        "body-first/middle/last and incoming before/during join inspected in actual film contacts",
+        "Full-bleed static chapter scene; no added match information overlay; narration captions contained and readable."
+      ]
+    },
+    {
+      "index": 12,
+      "id": "card-berlin",
+      "samples_reviewed": 5,
+      "film_sample_range": [
+        147.56,
+        156.72
+      ],
+      "status": "pass_visual_samples",
+      "checks": [
+        "body-first/middle/last and incoming before/during join inspected in actual film contacts",
+        "Full-bleed static chapter scene; no added match information overlay; narration captions contained and readable."
+      ]
+    },
+    {
+      "index": 13,
+      "id": "berlin-sf",
+      "samples_reviewed": 12,
+      "film_sample_range": [
+        156.96,
+        176.72
+      ],
+      "status": "pass_visual_samples",
+      "checks": [
+        "body-first/middle/last and incoming before/during join inspected in actual film contacts",
+        "Actual live card before/first/middle/last/after inspected; real letters do not cover player faces or action at sampled times.",
+        "Full 1080x1440 fill; fixed requested court center; lateral spatial limits documented separately.",
+        "Every retained bilingual cue represented by actual mid-cue frame and inspected full-size; all English/Chinese visible with safe margins."
+      ]
+    },
+    {
+      "index": 14,
+      "id": "card-summer",
+      "samples_reviewed": 5,
+      "film_sample_range": [
+        176.96,
+        187.52
+      ],
+      "status": "pass_visual_samples",
+      "checks": [
+        "body-first/middle/last and incoming before/during join inspected in actual film contacts",
+        "Full-bleed static chapter scene; no added match information overlay; narration captions contained and readable."
+      ]
+    },
+    {
+      "index": 15,
+      "id": "dc-final",
+      "samples_reviewed": 13,
+      "film_sample_range": [
+        187.76,
+        213.32
+      ],
+      "status": "pass_visual_samples",
+      "checks": [
+        "body-first/middle/last and incoming before/during join inspected in actual film contacts",
+        "Actual live card before/first/middle/last/after inspected; real letters do not cover player faces or action at sampled times.",
+        "Full 1080x1440 fill; fixed requested court center; lateral spatial limits documented separately.",
+        "Every retained bilingual cue represented by actual mid-cue frame and inspected full-size; all English/Chinese visible with safe margins.",
+        "Actual master point stream shows service/rally, Eala racket release197.56, face-covering/kneeling198.4–199.2; full reaction and complete final commentator sentence through net embrace213.32. No forced extension to later score-screen guess."
+      ]
+    },
+    {
+      "index": 16,
+      "id": "card-cincy",
+      "samples_reviewed": 5,
+      "film_sample_range": [
+        213.56,
+        226.52
+      ],
+      "status": "pass_visual_samples",
+      "checks": [
+        "body-first/middle/last and incoming before/during join inspected in actual film contacts",
+        "Full-bleed static chapter scene; no added match information overlay; narration captions contained and readable."
+      ]
+    },
+    {
+      "index": 17,
+      "id": "cincy-sf",
+      "samples_reviewed": 13,
+      "film_sample_range": [
+        226.76,
+        239.2
+      ],
+      "status": "pass_visual_samples",
+      "checks": [
+        "body-first/middle/last and incoming before/during join inspected in actual film contacts",
+        "Actual live card before/first/middle/last/after inspected; real letters do not cover player faces or action at sampled times.",
+        "Full 1080x1440 fill; fixed requested court center; lateral spatial limits documented separately.",
+        "Every retained bilingual cue represented by actual mid-cue frame and inspected full-size; all English/Chinese visible with safe margins."
+      ]
+    },
+    {
+      "index": 18,
+      "id": "cincy-final",
+      "samples_reviewed": 13,
+      "film_sample_range": [
+        239.44,
+        263.08
+      ],
+      "status": "pass_visual_samples",
+      "checks": [
+        "body-first/middle/last and incoming before/during join inspected in actual film contacts",
+        "Actual live card before/first/middle/last/after inspected; real letters do not cover player faces or action at sampled times.",
+        "Full 1080x1440 fill; fixed requested court center; lateral spatial limits documented separately.",
+        "Every retained bilingual cue represented by actual mid-cue frame and inspected full-size; all English/Chinese visible with safe margins."
+      ]
+    },
+    {
+      "index": 19,
+      "id": "card-us-open",
+      "samples_reviewed": 5,
+      "film_sample_range": [
+        263.32,
+        273.48
+      ],
+      "status": "pass_visual_samples",
+      "checks": [
+        "body-first/middle/last and incoming before/during join inspected in actual film contacts",
+        "Full-bleed static chapter scene; no added match information overlay; narration captions contained and readable."
+      ]
+    },
+    {
+      "index": 20,
+      "id": "us-qf",
+      "samples_reviewed": 10,
+      "film_sample_range": [
+        273.72,
+        287.8
+      ],
+      "status": "pass_visual_samples",
+      "checks": [
+        "body-first/middle/last and incoming before/during join inspected in actual film contacts",
+        "Actual live card before/first/middle/last/after inspected; real letters do not cover player faces or action at sampled times.",
+        "Full 1080x1440 fill; fixed requested court center; lateral spatial limits documented separately.",
+        "A saved break point, not match point: full actual service and rally then Pegula fist/walking reaction; no invented foreground English subtitle."
+      ]
+    }
+  ],
+  "blocking_findings": [],
+  "documented_geometry_limits": [
+    {
+      "severity": "documented_requested_geometry_limit_not_label_bug",
+      "segment": 15,
+      "id": "dc-final",
+      "film_sample_times": [
+        188.8,
+        189.0,
+        189.8,
+        190.6,
+        196.2,
+        197.56
+      ],
+      "source_sample_times": [
+        235.65,
+        235.85,
+        236.65,
+        237.45,
+        243.05,
+        244.41
+      ],
+      "description": "Near-side Eala/right or left lateral recovery is partly/briefly out of frame in fixed center3:4; at197.56 the terminal ball to the near-right alley is outside the portrait view while Eala racket release/result is visible. Full official-source wide evidence confirms the point outcome before the retained kneeling/embrace. Do not claim every stroke/ball bounce is visible in this portrait film.",
+      "evidence": [
+        "frame-036.jpg",
+        "point-stream/dc-point-189.00.jpg",
+        "point-stream/dc-point-189.80.jpg",
+        "point-stream/dc-point-196.20.jpg",
+        "point-stream/dc-point-197.56.jpg"
+      ]
+    },
+    {
+      "severity": "documented_requested_geometry_limit_not_label_bug",
+      "segment": 18,
+      "id": "cincy-final",
+      "film_sample_times": [
+        245.6
+      ],
+      "source_sample_times": [
+        242.67
+      ],
+      "description": "Far-side Gauff lateral movement reaches/clips the right portrait edge during the complete final point. No live information card at this time; fixed center requested geometry causes the spatial limit.",
+      "evidence": [
+        "point-stream/cincy-final-point-245.60.jpg"
+      ]
+    },
+    {
+      "severity": "documented_requested_geometry_limit_not_label_bug",
+      "segment": 20,
+      "id": "us-qf",
+      "film_sample_times": [
+        274.4,
+        283.2
+      ],
+      "source_sample_times": [
+        151.07,
+        159.87
+      ],
+      "description": "Near-side Navarro briefly reaches left/right portrait boundary during receiving/rally. Far-side Pegula service, break-point-save result and reaction remain temporally complete. No all-strokes-visible claim.",
+      "evidence": [
+        "point-stream/us-qf-point-274.40.jpg",
+        "point-stream/us-qf-point-283.20.jpg"
+      ]
+    }
+  ],
+  "overall_checks": {
+    "full_canvas_no_contain_or_letterbox_in_reviewed_frames": true,
+    "information_cards_only_on_real_live_footage": true,
+    "no_live_info_overlay_on_static_chapter_cards": true,
+    "live_labels_first_mid_last_and_off_state_normal": true,
+    "bilingual_and_narration_captions_within_canvas": true,
+    "labels_do_not_cover_player_faces_in_reviewed_samples": true,
+    "actual_dc_point_outcome_and_extended_champion_reaction_retained": true,
+    "joins_show_expected_short_crossfade_not_persistent_duplicate_frames": true
+  },
+  "audio_scope": "Visual subtitle/frame QC only. Existing source-bound ASR and root-reported15-voice automatic suite are separate evidence; this reviewer did not claim human listening or rerun audio approval.",
+  "limits": "Sampled actual-film visual review, not a claim of continuous human video playback or every frame/all-strokes visibility. Full-frame fill and fixed court center follow user mandate. No tracking/contain/workaround requested.",
+  "repo_or_spec_edits": false,
+  "baseline_only_after_user_round_notation_change": true,
+  "baseline_result": "pass_requested_geometry_with_documented_action_out_of_frame",
+  "new_user_requirement": {
+    "change": "Information-card round notation uses1/4 or1/8决赛; parent replacing Miami/USQF actual PNG and rerendering.",
+    "old_bound_film_only": true,
+    "new_film_approval": false,
+    "next_review": "Inspect revised USQF actual card in new encoded film and new binding; compare unchanged actual frame pixels/visuals to baseline. Source windows and narration remain unchanged per parent.",
+    "sampling_stopped": true
+  }
+}

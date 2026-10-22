@@ -1,0 +1,190 @@
+{
+  "status": "umpire_unresolved_not_approved",
+  "human_listened": false,
+  "no_leading_prompt": true,
+  "all_trials": [
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-medium.en.json",
+      "model": "medium.en",
+      "filter": "pan=mono|c0=0.5*c0+0.5*c1",
+      "segments": [
+        {
+          "start": 149.7,
+          "end": 155.78,
+          "text": " And in the second match of the weekend, Biko Sestanov goes 7-5-16."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-right-medium.en.json",
+      "model": "medium.en",
+      "filter": "pan=mono|c0=c1",
+      "segments": [
+        {
+          "start": 150.38,
+          "end": 155.84,
+          "text": " And in the second match, Summer Lincoln, by 2-0, 0-5, 0-16."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-band-large-v3.json",
+      "model": "large-v3",
+      "filter": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-band.wav",
+      "segments": [
+        {
+          "start": 149.7,
+          "end": 155.54,
+          "text": " Game 7 of Sabalenka by Krzysztof 75-16."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-large-v3-turbo.json",
+      "model": "large-v3-turbo",
+      "filter": "pan=mono|c0=0.5*c0+0.5*c1",
+      "segments": [
+        {
+          "start": 149.7,
+          "end": 155.64,
+          "text": " Again, 7-match Sabalenka by Kresistela, 7-5, 16."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-left-medium.en.json",
+      "model": "medium.en",
+      "filter": "pan=mono|c0=c0",
+      "segments": [
+        {
+          "start": 150.3,
+          "end": 155.76,
+          "text": " And then, in the second match, Shyamalan can bike to system level 75-60."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-band-medium.en.json",
+      "model": "medium.en",
+      "filter": "pan=mono|c0=0.5*c0+0.5*c1,highpass=f=250,lowpass=f=3500,afftdn=nf=-25",
+      "segments": [
+        {
+          "start": 150.44,
+          "end": 152.9,
+          "text": " And then, the second match of the weekend."
+        },
+        {
+          "start": 153.66,
+          "end": 155.76,
+          "text": " By Christmas, the line goes 7-5-16."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-right-large-v3-turbo.json",
+      "model": "large-v3-turbo",
+      "filter": "pan=mono|c0=c1",
+      "segments": [
+        {
+          "start": 149.7,
+          "end": 155.64,
+          "text": " And winning the 7-match Sabalenken by Kresistela, 7-5, 16."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-right-small.json",
+      "model": "small",
+      "filter": "pan=mono|c0=c1",
+      "segments": [
+        {
+          "start": 150.4,
+          "end": 155.62,
+          "text": " And the second match, Saber-Lenke, by Krzysztof Nagar, 7-5, 16."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-left-large-v3-turbo.json",
+      "model": "large-v3-turbo",
+      "filter": "pan=mono|c0=c0",
+      "segments": [
+        {
+          "start": 149.7,
+          "end": 155.64,
+          "text": " And during the Southern match, Sabalenka, back to Systema, 7-5, 16."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-small.json",
+      "model": "small",
+      "filter": "pan=mono|c0=0.5*c0+0.5*c1",
+      "segments": [
+        {
+          "start": 150.46,
+          "end": 152.62,
+          "text": " And game, 7-match, summer length down."
+        },
+        {
+          "start": 153.5,
+          "end": 155.86,
+          "text": " Bikers is tonight at 7-5, it's 6-0."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-left-small.json",
+      "model": "small",
+      "filter": "pan=mono|c0=c0",
+      "segments": [
+        {
+          "start": 150.32,
+          "end": 155.96,
+          "text": " And the second match, Sabalenka by Krusos, the 9th, 7th, 5th, 16th."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-band-large-v3-turbo.json",
+      "model": "large-v3-turbo",
+      "filter": "pan=mono|c0=0.5*c0+0.5*c1,highpass=f=250,lowpass=f=3500,afftdn=nf=-25",
+      "segments": [
+        {
+          "start": 149.7,
+          "end": 155.66,
+          "text": " Again, 7th Sabalenka, by Cisestana, 7-5, 16."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-large-v3.json",
+      "model": "large-v3",
+      "filter": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid.wav",
+      "segments": [
+        {
+          "start": 149.7,
+          "end": 152.32,
+          "text": " And the game is at the match of the weekend."
+        },
+        {
+          "start": 152.92,
+          "end": 155.52,
+          "text": " The system is 7-5-16."
+        }
+      ]
+    },
+    {
+      "file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-band-small.json",
+      "model": "small",
+      "filter": "pan=mono|c0=0.5*c0+0.5*c1,highpass=f=250,lowpass=f=3500,afftdn=nf=-25",
+      "segments": [
+        {
+          "start": 150.48,
+          "end": 155.84,
+          "text": " The game is second match summer like that by Christmas the level is 7-5, it's 6-2."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,604 @@
+{
+  "schema": "tennislive.independent-native-frame-review.v1",
+  "created_utc": "2026-10-22T08:28:26.779119+00:00",
+  "reviewer": "independent_agent_rybakina_post_usopen",
+  "scope": "Pegula late-season 24 actual native rendered PNGs. Visual pre-render check only; no final-film/audio/publication approval.",
+  "spec_file": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+  "spec_file_sha256": "01c5dc7138ef0d3c7aa96740d8459bbc1c492ae930000a4d37847f4203a3bddd",
+  "manifest_file": "/workspace/pegula-finals-production/native-preview-late/preview_manifest.json",
+  "manifest_sha256": "d7653264cd0973952abb3f185479bd669ac972b2450b9a1e500854c90059a11d",
+  "manifest_spec_file_sha256": "01c5dc7138ef0d3c7aa96740d8459bbc1c492ae930000a4d37847f4203a3bddd",
+  "binding_matches_current_spec": true,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": "25/1",
+  "result": "sampled_native_frames_no_visible_blocker; animated_label_tail_coverage_incomplete",
+  "blocking_visual_defects_observed": [],
+  "sample_coverage_gap": {
+    "severity": "unverified_interval_not_observed_defect",
+    "description": "The requested first/middle/last coverage is not achieved for every newly expanded label. Some nominal first samples precede appearance, and five North American label near-tail times are absent. No claim of whole-window safety is made.",
+    "windows": [
+      {
+        "segment": 15,
+        "segment_id": "dc-final",
+        "label_interval_segment_seconds": [
+          0.08,
+          2.88
+        ],
+        "label_interval_source_seconds": [
+          234.8,
+          237.6
+        ],
+        "sampled_segment_seconds": [
+          0.28,
+          1.8
+        ],
+        "coverage_note": "Samples include label onset or pre-onset and interior; do not prove the entire animated window. Near-tail frame not sampled.",
+        "suggested_near_tail_source_time": 237.4,
+        "suggested_near_tail_segment_time": 2.68
+      },
+      {
+        "segment": 17,
+        "segment_id": "cincy-sf",
+        "label_interval_segment_seconds": [
+          1.4,
+          4.199999999999999
+        ],
+        "label_interval_source_seconds": [
+          264.12,
+          266.92
+        ],
+        "sampled_segment_seconds": [
+          0.08,
+          1.6,
+          3.12
+        ],
+        "coverage_note": "Samples include label onset or pre-onset and interior; do not prove the entire animated window. Near-tail frame not sampled.",
+        "suggested_near_tail_source_time": 266.72,
+        "suggested_near_tail_segment_time": 4.0
+      },
+      {
+        "segment": 18,
+        "segment_id": "cincy-final",
+        "label_interval_segment_seconds": [
+          18.76,
+          21.560000000000002
+        ],
+        "label_interval_source_seconds": [
+          255.35999999999999,
+          258.15999999999997
+        ],
+        "sampled_segment_seconds": [
+          17.44,
+          18.96,
+          20.48
+        ],
+        "coverage_note": "Samples include label onset or pre-onset and interior; do not prove the entire animated window. Near-tail frame not sampled.",
+        "suggested_near_tail_source_time": 257.96,
+        "suggested_near_tail_segment_time": 21.36
+      },
+      {
+        "segment": 20,
+        "segment_id": "us-qf",
+        "label_interval_segment_seconds": [
+          6.1,
+          8.899999999999999
+        ],
+        "label_interval_source_seconds": [
+          156.6,
+          159.4
+        ],
+        "sampled_segment_seconds": [
+          4.76,
+          6.28,
+          7.8
+        ],
+        "coverage_note": "Samples include label onset or pre-onset and interior; do not prove the entire animated window. Near-tail frame not sampled.",
+        "suggested_near_tail_source_time": 159.2,
+        "suggested_near_tail_segment_time": 8.7
+      },
+      {
+        "segment": 24,
+        "segment_id": "us-sf",
+        "label_interval_segment_seconds": [
+          6.52,
+          9.32
+        ],
+        "label_interval_source_seconds": [
+          23.44,
+          26.240000000000002
+        ],
+        "sampled_segment_seconds": [
+          5.2,
+          6.72,
+          8.24
+        ],
+        "coverage_note": "Samples include label onset or pre-onset and interior; do not prove the entire animated window. Near-tail frame not sampled.",
+        "suggested_near_tail_source_time": 26.04,
+        "suggested_near_tail_segment_time": 9.12
+      },
+      {
+        "segment": 26,
+        "segment_id": "wuhan-mp3",
+        "label_interval_segment_seconds": [
+          4.2,
+          10.2
+        ],
+        "label_interval_source_seconds": [
+          174.79999999999998,
+          180.79999999999998
+        ],
+        "sampled_segment_seconds": [
+          2.88,
+          6.0,
+          9.12
+        ],
+        "coverage_note": "Samples include label onset or pre-onset and interior; do not prove the entire animated window. Near-tail frame not sampled.",
+        "suggested_near_tail_source_time": 180.6,
+        "suggested_near_tail_segment_time": 10.0
+      }
+    ]
+  },
+  "visual_findings": [
+    {
+      "topic": "live_information_labels",
+      "images": [
+        "caption-02.png",
+        "caption-03.png",
+        "caption-05.png",
+        "caption-06.png",
+        "caption-08.png",
+        "caption-09.png",
+        "caption-11.png",
+        "caption-12.png",
+        "caption-14.png",
+        "caption-15.png",
+        "caption-17.png",
+        "caption-18.png"
+      ],
+      "finding": "Native labels remain at upper right, readable, with correct visible round/score/topic. In sampled frames neither the striking player nor face is covered. CF label lies over background alongside Gauff close-up; no face overlap observed."
+    },
+    {
+      "topic": "interview_person_and_bilingual",
+      "images": [
+        "caption-19.png",
+        "caption-20.png"
+      ],
+      "finding": "Pegula face and full cap are retained near horizontal center; both English and Chinese captions readable within canvas, above bottom edge. No information label on interview. The two samples do not prove every subtitle cue or every intermediate person position."
+    },
+    {
+      "topic": "US_reaction",
+      "images": [
+        "caption-21.png"
+      ],
+      "finding": "Actual Pegula reaction footage fills canvas; cap/face retained, no information label."
+    },
+    {
+      "topic": "official_qualification_poster",
+      "images": [
+        "caption-22.png"
+      ],
+      "finding": "Full poster visible on deep blue evidence composition. WTA FINALS / INDIAN WELLS,2026 WTA FINALS INDIAN WELLS,QUALIFIED and JESSICA PEGULA visible and uncropped. Bottom subtitle 第五年入围年终 is separate below poster. Top branding does not cover poster. No right-top information inset."
+    },
+    {
+      "topic": "chapter_and_ending_cards",
+      "images": [
+        "caption-01.png",
+        "caption-23.png"
+      ],
+      "finding": "Sampled summer chapter and ending have heading/brand/subtitle only; no information inset. All other static/title segments checked structurally without claiming unsampled native pixels."
+    },
+    {
+      "topic": "Wuhan_final",
+      "images": [
+        "caption-24.png"
+      ],
+      "finding": "Real handshake aftermath visible, no live information label; English and Chinese caption stay within frame and do not cover face."
+    }
+  ],
+  "static_card_contract_check": [
+    {
+      "segment": 1,
+      "segment_id": "card-intro",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": false
+    },
+    {
+      "segment": 2,
+      "segment_id": "card-january",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": false
+    },
+    {
+      "segment": 4,
+      "segment_id": "card-dubai",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": false
+    },
+    {
+      "segment": 7,
+      "segment_id": "card-sunshine",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": false
+    },
+    {
+      "segment": 9,
+      "segment_id": "card-charleston",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": false
+    },
+    {
+      "segment": 11,
+      "segment_id": "card-clay",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": false
+    },
+    {
+      "segment": 12,
+      "segment_id": "card-berlin",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": false
+    },
+    {
+      "segment": 14,
+      "segment_id": "card-summer",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": true
+    },
+    {
+      "segment": 16,
+      "segment_id": "card-cincy",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": false
+    },
+    {
+      "segment": 19,
+      "segment_id": "card-us-open",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": false
+    },
+    {
+      "segment": 23,
+      "segment_id": "card-us-semi",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": false
+    },
+    {
+      "segment": 25,
+      "segment_id": "card-asia",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": false
+    },
+    {
+      "segment": 28,
+      "segment_id": "card-qualification",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": true
+    },
+    {
+      "segment": 29,
+      "segment_id": "card-ending",
+      "information_inset": false,
+      "title_card_story_label": false,
+      "actual_native_sample_present": true
+    }
+  ],
+  "viewed_pngs": [
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-01.png",
+      "sha256": "9b5500cc2d9a2c8bfae50833615e586b254279f13f2b37da5516d3eea4f7e9d4",
+      "segment": 14,
+      "segment_id": "card-summer",
+      "film_time": 186.70999999999998,
+      "source": "ao-sf",
+      "source_time": null,
+      "segment_time": 9.64,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-02.png",
+      "sha256": "67820b2cf6434c1b7152d4207f46b5155eb2a11fe6f54c4221ca8a73f96b04e1",
+      "segment": 15,
+      "segment_id": "dc-final",
+      "film_time": 188.15,
+      "source": "dc-final",
+      "source_time": 235.0,
+      "segment_time": 0.28,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-03.png",
+      "sha256": "95a5407c58b76e76c6e02e434023869459177ec1571b28660b32e7c7b609bba5",
+      "segment": 15,
+      "segment_id": "dc-final",
+      "film_time": 189.67000000000002,
+      "source": "dc-final",
+      "source_time": 236.52,
+      "segment_time": 1.8,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-04.png",
+      "sha256": "ce1bedaa0136a660a7da6781e3c503d5ba92ffce56af9af8b6eeff717bca98dd",
+      "segment": 17,
+      "segment_id": "cincy-sf",
+      "film_time": 226.93,
+      "source": "cincy-sf",
+      "source_time": 262.8,
+      "segment_time": 0.08,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-05.png",
+      "sha256": "425cd4907647e703830c503e67ef164bf2faf7a99dcd6ce33b3b614a9cf57414",
+      "segment": 17,
+      "segment_id": "cincy-sf",
+      "film_time": 228.45,
+      "source": "cincy-sf",
+      "source_time": 264.32000000000005,
+      "segment_time": 1.6,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-06.png",
+      "sha256": "6c5d3c333bb650273d56ab6995b46e7b014b7c00b6e289956d6170cc85055968",
+      "segment": 17,
+      "segment_id": "cincy-sf",
+      "film_time": 229.97,
+      "source": "cincy-sf",
+      "source_time": 265.84000000000003,
+      "segment_time": 3.12,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-07.png",
+      "sha256": "bc783e7206e37c108aa36f4d7f8f93e4d08b22f57dc2e55bd870c23e74b1a81b",
+      "segment": 18,
+      "segment_id": "cincy-final",
+      "film_time": 256.97,
+      "source": "cincy-final",
+      "source_time": 254.04,
+      "segment_time": 17.44,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-08.png",
+      "sha256": "97419e7c63ee6bcbea4d30f41dff0558dbb6b628d42a46722a6cf5242a2ca0ae",
+      "segment": 18,
+      "segment_id": "cincy-final",
+      "film_time": 258.49,
+      "source": "cincy-final",
+      "source_time": 255.56,
+      "segment_time": 18.96,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-09.png",
+      "sha256": "0a8fe61d2122ec63625d935e4b7193db75ee558a3a16eda102d324771ecfac5e",
+      "segment": 18,
+      "segment_id": "cincy-final",
+      "film_time": 260.01,
+      "source": "cincy-final",
+      "source_time": 257.08,
+      "segment_time": 20.48,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-10.png",
+      "sha256": "4f10505446de216f61ca2f749e1f82e9f7338e55567725e71af69be0f05f27f9",
+      "segment": 20,
+      "segment_id": "us-qf",
+      "film_time": 278.59,
+      "source": "us-qf",
+      "source_time": 155.26,
+      "segment_time": 4.76,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-11.png",
+      "sha256": "ee7bced9bffb421a307fab06ce4470adb3a6c2eac887bd7996c729e37ffafe2c",
+      "segment": 20,
+      "segment_id": "us-qf",
+      "film_time": 280.10999999999996,
+      "source": "us-qf",
+      "source_time": 156.78,
+      "segment_time": 6.28,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-12.png",
+      "sha256": "f31c8e17508b69e97204fdca3442f0f60a595b7df779f3aee27aa3b8cbbd5cd5",
+      "segment": 20,
+      "segment_id": "us-qf",
+      "film_time": 281.63,
+      "source": "us-qf",
+      "source_time": 158.3,
+      "segment_time": 7.8,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-13.png",
+      "sha256": "c9e58865d7a4df4301aa7861842770ca47992f1d436c4076456203963656d203",
+      "segment": 24,
+      "segment_id": "us-sf",
+      "film_time": 332.15,
+      "source": "us-sf",
+      "source_time": 22.12,
+      "segment_time": 5.2,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-14.png",
+      "sha256": "5a08a78796f2ca0c67d3146f1ecf11235e06bc808453b61a23fb485b79b1af21",
+      "segment": 24,
+      "segment_id": "us-sf",
+      "film_time": 333.67,
+      "source": "us-sf",
+      "source_time": 23.64,
+      "segment_time": 6.72,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-15.png",
+      "sha256": "d34f0ebc64ef15b95af6c2221e6020943789acea5bf27b59356d729e4faca78f",
+      "segment": 24,
+      "segment_id": "us-sf",
+      "film_time": 335.19,
+      "source": "us-sf",
+      "source_time": 25.160000000000004,
+      "segment_time": 8.24,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-16.png",
+      "sha256": "e4155693bfe726ec9551ddbb43e93826088c1ab591104f1321a5d6ab24686411",
+      "segment": 26,
+      "segment_id": "wuhan-mp3",
+      "film_time": 351.71,
+      "source": "wuhan-r2",
+      "source_time": 173.48,
+      "segment_time": 2.88,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-17.png",
+      "sha256": "72cb30a3398d032c35e13dcd3babcce63d12c8320d8b08111f35341f011f813a",
+      "segment": 26,
+      "segment_id": "wuhan-mp3",
+      "film_time": 354.83,
+      "source": "wuhan-r2",
+      "source_time": 176.6,
+      "segment_time": 6.0,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-18.png",
+      "sha256": "b3e65f98c96c85a1a032aa3fc040594b9e005b404fc029fc0d7f44333c00d6aa",
+      "segment": 26,
+      "segment_id": "wuhan-mp3",
+      "film_time": 357.95,
+      "source": "wuhan-r2",
+      "source_time": 179.72,
+      "segment_time": 9.12,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-19.png",
+      "sha256": "feca48ee4a25aa2125065765d77b38ed0bd77bcb96c838ea7ea6930cbf2de827",
+      "segment": 22,
+      "segment_id": "us-qf-interview",
+      "film_time": 301.43,
+      "source": "us-qf-interview",
+      "source_time": 58.199999999999996,
+      "segment_time": 0.8,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-20.png",
+      "sha256": "6fec94606c920dfa4b5eed39a56e883b180d12ea96194b549728138c292a1847",
+      "segment": 22,
+      "segment_id": "us-qf-interview",
+      "film_time": 311.43,
+      "source": "us-qf-interview",
+      "source_time": 68.2,
+      "segment_time": 10.8,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-21.png",
+      "sha256": "3e28e2aeb54c39f98ff9bb8197c1e760768b2add3f366b99fa3f616d3d552f5c",
+      "segment": 21,
+      "segment_id": "us-qf-reaction",
+      "film_time": 292.93,
+      "source": "us-qf",
+      "source_time": 195.5,
+      "segment_time": 4.8,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-22.png",
+      "sha256": "4af5c6b7badbe37f08ac1647d63b6555134c5d5093eea4f35a0d40a0b4c3e4a2",
+      "segment": 28,
+      "segment_id": "card-qualification",
+      "film_time": 396.83,
+      "source": "ao-sf",
+      "source_time": null,
+      "segment_time": 3.8,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-23.png",
+      "sha256": "bc794aae2f1df7bcffd7fa99db86028539c5d3576789f76ce90d9893787df6e8",
+      "segment": 29,
+      "segment_id": "card-ending",
+      "film_time": 407.63,
+      "source": "ao-sf",
+      "source_time": null,
+      "segment_time": 2.8,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-late/caption-24.png",
+      "sha256": "1368df994cb902309c5cc97a9e5f4b53034fa8ec58960e10832b5ccf050094a2",
+      "segment": 27,
+      "segment_id": "wuhan-final",
+      "film_time": 383.07,
+      "source": "wuhan-r2",
+      "source_time": 274.44,
+      "segment_time": 16.8,
+      "viewed_individually_full_resolution": true,
+      "result": "No visible blocking defect in this sampled native frame."
+    }
+  ],
+  "viewed_contacts": [
+    "/workspace/pegula-finals-production/native-preview-late/qc-contact-1.jpg",
+    "/workspace/pegula-finals-production/native-preview-late/qc-contact-2.jpg",
+    "/workspace/pegula-finals-production/native-preview-late/qc-contact-3.jpg",
+    "/workspace/pegula-finals-production/native-preview-late/qc-contact-4.jpg"
+  ],
+  "limitations": [
+    "Interior samples exclude transitions/dissolves and final H.264 compression.",
+    "Audio was neither produced nor heard in this review; no human listening or ASR conclusion is made here.",
+    "No final-film QC, full-window visual approval, or publication approval.",
+    "Only sampled static title cards have actual native visual proof; remaining static cards inspected structurally."
+  ],
+  "shared_files_modified": false
+}

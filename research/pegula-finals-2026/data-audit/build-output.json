@@ -1,0 +1,242 @@
+{
+  "stats": {
+    "entries": 76,
+    "played": 64,
+    "wins": 50,
+    "losses": 14,
+    "events": 16,
+    "byes": 12,
+    "retirements": 1,
+    "walkovers": 0,
+    "titles": 2,
+    "finals": 5,
+    "top10_wins": 7,
+    "three_set_completed_matches": 25,
+    "three_set_wins": 19,
+    "three_set_losses": 6,
+    "three_set_scope": "仅reason_code=W且确有3盘比分的正常完赛单打，不含RET/BYE/W/O。",
+    "three_set_by_event": {
+      "布里斯班": {
+        "played": 2,
+        "wins": 2,
+        "losses": 0
+      },
+      "迪拜": {
+        "played": 2,
+        "wins": 2,
+        "losses": 0
+      },
+      "印第安维尔斯": {
+        "played": 2,
+        "wins": 2,
+        "losses": 0
+      },
+      "迈阿密": {
+        "played": 1,
+        "wins": 0,
+        "losses": 1
+      },
+      "查尔斯顿": {
+        "played": 4,
+        "wins": 4,
+        "losses": 0
+      },
+      "法网": {
+        "played": 1,
+        "wins": 0,
+        "losses": 1
+      },
+      "柏林": {
+        "played": 2,
+        "wins": 1,
+        "losses": 1
+      },
+      "温网": {
+        "played": 2,
+        "wins": 1,
+        "losses": 1
+      },
+      "华盛顿": {
+        "played": 2,
+        "wins": 1,
+        "losses": 1
+      },
+      "多伦多": {
+        "played": 1,
+        "wins": 1,
+        "losses": 0
+      },
+      "辛辛那提": {
+        "played": 3,
+        "wins": 3,
+        "losses": 0
+      },
+      "美网": {
+        "played": 2,
+        "wins": 2,
+        "losses": 0
+      },
+      "武汉": {
+        "played": 1,
+        "wins": 0,
+        "losses": 1
+      }
+    },
+    "gross_event_points": 5835,
+    "surfaces": {
+      "Clay": {
+        "wins": 9,
+        "losses": 3
+      },
+      "Grass": {
+        "wins": 7,
+        "losses": 2
+      },
+      "Hard": {
+        "wins": 34,
+        "losses": 9
+      }
+    }
+  },
+  "checks": {
+    "entry_count_76": true,
+    "played_count_64": true,
+    "win_loss_50_14": true,
+    "events_16": true,
+    "byes_12": true,
+    "one_ret_no_walkover": true,
+    "titles_2_finals_5": true,
+    "all_64_official_dates": true,
+    "no_invented_bye_dates": true,
+    "no_result_score_state_discrepancy": true,
+    "old_raw_critical_fields_unchanged": true,
+    "all_points_champ_equal_history_points": true,
+    "gross_points_equal_5835_and_official_race": true,
+    "all_observed_tiebreak_loser_points_confirmed": true,
+    "three_set_19_6_25": true,
+    "no_duplicate_player_records": true
+  },
+  "date_changes": [
+    {
+      "kind": "match_local_date",
+      "event_id": 905,
+      "event": "美网",
+      "round": "S",
+      "opponent": "Aryna Sabalenka",
+      "field": "date",
+      "old": "2026-09-11",
+      "canonical": "2026-09-10",
+      "date_bjt": "2026-09-11",
+      "source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches",
+      "match_id": "LS73992544"
+    },
+    {
+      "kind": "match_local_date",
+      "event_id": 905,
+      "event": "美网",
+      "round": "Q",
+      "opponent": "Emma Navarro",
+      "field": "date",
+      "old": "2026-09-09",
+      "canonical": "2026-09-08",
+      "date_bjt": "2026-09-09",
+      "source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches",
+      "match_id": "LS73992554"
+    },
+    {
+      "kind": "match_local_date",
+      "event_id": 905,
+      "event": "美网",
+      "round": "R16",
+      "opponent": "Sorana Cirstea",
+      "field": "date",
+      "old": "2026-09-07",
+      "canonical": "2026-09-06",
+      "date_bjt": "2026-09-07",
+      "source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches",
+      "match_id": "LS73992586"
+    },
+    {
+      "kind": "match_local_date",
+      "event_id": 1017,
+      "event": "辛辛那提",
+      "round": "F",
+      "opponent": "Coco Gauff",
+      "field": "date",
+      "old": "2026-08-24",
+      "canonical": "2026-08-23",
+      "date_bjt": "2026-08-24",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches",
+      "match_id": "LS001"
+    },
+    {
+      "kind": "match_local_date",
+      "event_id": 1017,
+      "event": "辛辛那提",
+      "round": "R32",
+      "opponent": "Emma Navarro",
+      "field": "date",
+      "old": "2026-08-18",
+      "canonical": "2026-08-17",
+      "date_bjt": "2026-08-18",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches",
+      "match_id": "LS027"
+    },
+    {
+      "kind": "match_local_date",
+      "event_id": 609,
+      "event": "印第安维尔斯",
+      "round": "Q",
+      "opponent": "Elena Rybakina",
+      "field": "date",
+      "old": "2026-03-13",
+      "canonical": "2026-03-12",
+      "date_bjt": "2026-03-13",
+      "source": "https://api.wtatennis.com/tennis/tournaments/609/2026/matches",
+      "match_id": "LS006"
+    },
+    {
+      "kind": "match_local_date",
+      "event_id": 609,
+      "event": "印第安维尔斯",
+      "round": "R64",
+      "opponent": "Donna Vekic",
+      "field": "date",
+      "old": "2026-03-08",
+      "canonical": "2026-03-07",
+      "date_bjt": "2026-03-08",
+      "source": "https://api.wtatennis.com/tennis/tournaments/609/2026/matches",
+      "match_id": "LS048"
+    }
+  ],
+  "event_date_changes": [
+    {
+      "kind": "event_field",
+      "event_id": 609,
+      "event": "印第安维尔斯",
+      "field": "final_date",
+      "old": "2026-03-13",
+      "canonical": "2026-03-12",
+      "source": "https://api.wtatennis.com/tennis/tournaments/609/2026/matches"
+    },
+    {
+      "kind": "event_field",
+      "event_id": 1017,
+      "event": "辛辛那提",
+      "field": "final_date",
+      "old": "2026-08-24",
+      "canonical": "2026-08-23",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1017/2026/matches"
+    },
+    {
+      "kind": "event_field",
+      "event_id": 905,
+      "event": "美网",
+      "field": "final_date",
+      "old": "2026-09-11",
+      "canonical": "2026-09-10",
+      "source": "https://api.wtatennis.com/tennis/tournaments/905/2026/matches"
+    }
+  ],
+  "issues": []
+}

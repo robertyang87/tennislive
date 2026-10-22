@@ -1,0 +1,417 @@
+{
+  "schema": "tennislive.independent-native-extra-middle-review.v1",
+  "created_utc": "2026-10-22T10:08:13.121018+00:00",
+  "scope": "Four added middle-season extra rallies only; 22 actual native-composite stills. Not final H.264 film, no audio playback or human listening.",
+  "status": "passed_sampled_native_visual_review_with_fixed_crop_limitations",
+  "blocking_issues": [],
+  "final_film_qc_passed": false,
+  "publication_approved": false,
+  "spec": {
+    "path": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+    "sha256": "644ea74d2c45639f43cd83aaf91804666a50e60bafa3983307867d3bc672ccfc"
+  },
+  "native_manifest": {
+    "path": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/preview_manifest.json",
+    "sha256": "34ba13002b7c5384887841f85d54655eddeff778f0ac38ee5c97a43b5c428793"
+  },
+  "spec_canonical_sha256": "4fa9b53af5884b1fd0a6cb504fe48db6649cdac8cd27117106613f555349bb97",
+  "requested_samples": {
+    "path": "/workspace/pegula-finals-production/preview-extra-middle-fullpoints-v2-requested.json",
+    "sha256": "3435d8723884414100bc15ee11c1a94310ced12b546a072705935b11a2730627"
+  },
+  "native_preview_log": {
+    "path": "/workspace/pegula-finals-production/preview-extra-middle-fullpoints-v2.txt",
+    "sha256": "61e640c0d438bdad1cb4e3020b38e01c50caccacd1b373561ed21bdd8ce3a810"
+  },
+  "preview_command": "python /workspace/pegula-finals-production/run_native_preview.py extra-middle fullpoints-v2",
+  "preview_exit_code": 0,
+  "native_canvas": [
+    1080,
+    1440
+  ],
+  "native_fps": "25/1",
+  "all_requested_stills_present_sha_verified_and_visually_inspected": true,
+  "contacts_actually_viewed": [
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/review-contact-01.jpg",
+      "sha256": "e819690f21ab109c3429547a9a73bdb892f290c4fc314dc3324f390666fae4be"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/review-contact-02.jpg",
+      "sha256": "a8b49a56a30a659e912729cf3280efdbb8a12249a51bd61e52164d4c819aef20"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/review-contact-03.jpg",
+      "sha256": "72d25b49b52e5fcb58a929b887f19211b795b906dae0e8635fe7bc9ec5d50796"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/review-contact-04.jpg",
+      "sha256": "a538189d8894f77943938ec4961659da0e181a655dbd41ff2e3d92caafb8ed99"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/review-contact-05.jpg",
+      "sha256": "a6c7a9f24027323851c2cac93a01780898b3ea3e4c7433b38df17e75940f8ef8"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/review-contact-06.jpg",
+      "sha256": "9fc1f8f8bf3e0319328fc7a75e8163e0847de7a44089c3c6c1ff6bec45aada64"
+    }
+  ],
+  "full_size_additional_images_actually_viewed": [
+    "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-04.png",
+    "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-06.png",
+    "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-07.png",
+    "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-08.png",
+    "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-12.png",
+    "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-18.png",
+    "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-22.png"
+  ],
+  "images": [
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-01.png",
+      "image_sha256": "ca0cd1be974df4a2cbeb83624de1522129d6b6583acc8bc81b23d5df26a18b51",
+      "segment_id": "berlin-sf-extra",
+      "sampling_purpose": "new-window-first",
+      "film_time": 254.18999999999997,
+      "source_time": 209.56,
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-02.png",
+      "image_sha256": "d9ee0f20e1a604e4f6f9d8aaf48cb7c76c0480b143de5cc4b989b6b277c033d4",
+      "segment_id": "berlin-sf-extra",
+      "sampling_purpose": "new-window-middle",
+      "film_time": 264.30999999999995,
+      "source_time": 219.68,
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-03.png",
+      "image_sha256": "6c4e27b96131fb40bb012a104f28942b76bb23307988b4113cbc61d4685a9515",
+      "segment_id": "berlin-sf-extra",
+      "sampling_purpose": "new-window-last",
+      "film_time": 274.46999999999997,
+      "source_time": 229.84,
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-04.png",
+      "image_sha256": "a93144fc06099f7e28c7a3102f6f4e69b873a1ee8502cf3bfe6cd61264e80a2f",
+      "segment_id": "berlin-sf-extra",
+      "sampling_purpose": "new-bilingual-cue",
+      "film_time": 260.22999999999996,
+      "source_time": 215.6,
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": true,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-05.png",
+      "image_sha256": "6d40b417dc2d4a462efe00725a11b0ef75cd605450c4fe53257c1843aff7363e",
+      "segment_id": "berlin-sf-extra",
+      "sampling_purpose": "new-bilingual-cue",
+      "film_time": 262.42999999999995,
+      "source_time": 217.8,
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-06.png",
+      "image_sha256": "6ced4f237146e0ab4b47b910467729ba187538e1b4dcdb613a09f9cd337ba43a",
+      "segment_id": "berlin-sf-extra",
+      "sampling_purpose": "new-bilingual-cue",
+      "film_time": 265.63,
+      "source_time": 221.0,
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": true,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-07.png",
+      "image_sha256": "1719f3d05bc62a7d724b039f17965005c0738954499a5d415f0bc8b89b767e75",
+      "segment_id": "berlin-sf-extra",
+      "sampling_purpose": "new-bilingual-cue",
+      "film_time": 270.34999999999997,
+      "source_time": 225.72,
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": true,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-08.png",
+      "image_sha256": "646d7bdc311f2d57a970ec081eeeac215e41dcfdf2224887240510514c04b428",
+      "segment_id": "berlin-sf-extra",
+      "sampling_purpose": "new-bilingual-cue",
+      "film_time": 273.59,
+      "source_time": 228.96,
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": true,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-09.png",
+      "image_sha256": "8440e1222ca18ed1bd227f008de5cec849a254de2b0a739aaa2ba237984479bf",
+      "segment_id": "dc-final-extra",
+      "sampling_purpose": "new-window-first",
+      "film_time": 305.59000000000003,
+      "source_time": 156.35999999999999,
+      "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-10.png",
+      "image_sha256": "bd3407373d944f7ceae875fa881c87e3bdcc57543610e9197d7707516d6cab4a",
+      "segment_id": "dc-final-extra",
+      "sampling_purpose": "new-window-middle",
+      "film_time": 317.23,
+      "source_time": 168.0,
+      "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-11.png",
+      "image_sha256": "66d8d8664eb27823bd0a4e9e30e56a59a0e5bd0ab91da21ff748c37d728ef34a",
+      "segment_id": "dc-final-extra",
+      "sampling_purpose": "new-window-last",
+      "film_time": 328.87,
+      "source_time": 179.64,
+      "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-12.png",
+      "image_sha256": "625214c29e344b8bd146654e7c63732ffcfadbaab2c044dd1198d14321985928",
+      "segment_id": "dc-final-extra",
+      "sampling_purpose": "new-bilingual-cue",
+      "film_time": 319.43,
+      "source_time": 170.2,
+      "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": true,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-13.png",
+      "image_sha256": "801423b52087f691481769a872fb4e01375fa936902c885309ed3d54cf829527",
+      "segment_id": "dc-final-extra",
+      "sampling_purpose": "new-bilingual-cue",
+      "film_time": 322.95,
+      "source_time": 173.72,
+      "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-14.png",
+      "image_sha256": "d2c935de85baf8924e14a0e49084fc4757a6fec07f5077d18da0393f6807134d",
+      "segment_id": "dc-final-extra",
+      "sampling_purpose": "new-bilingual-cue",
+      "film_time": 326.75,
+      "source_time": 177.51999999999998,
+      "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-15.png",
+      "image_sha256": "aa8529f9a14ef81f38ba538894db46ca7833e1d8d2909417d2dc3b94c631320d",
+      "segment_id": "cincy-sf-extra",
+      "sampling_purpose": "new-window-first",
+      "film_time": 368.1700000000001,
+      "source_time": 172.07999999999998,
+      "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-16.png",
+      "image_sha256": "1c74092f97ce2f1d5ba8459da3742f405302b252f0b14f245bd011c8f4b3183c",
+      "segment_id": "cincy-sf-extra",
+      "sampling_purpose": "new-window-middle",
+      "film_time": 374.89000000000004,
+      "source_time": 178.79999999999998,
+      "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-17.png",
+      "image_sha256": "5ce0b0700fcd3c43293f184aa6e97ff658a2a9203da87c7c9e47a64a4015a08f",
+      "segment_id": "cincy-sf-extra",
+      "sampling_purpose": "new-window-last",
+      "film_time": 381.65000000000003,
+      "source_time": 185.56,
+      "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-18.png",
+      "image_sha256": "2b293746fa7f71c52f64a3867f8b580f8319b8ca8c4f3619941c4855c1ba905b",
+      "segment_id": "cincy-sf-extra",
+      "sampling_purpose": "new-bilingual-cue",
+      "film_time": 379.53000000000003,
+      "source_time": 183.44,
+      "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": true,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-19.png",
+      "image_sha256": "b4efa54e1763b8d10e8e7852b5b78cd55b84ea3d4ce8055c008e6a11ec04b697",
+      "segment_id": "cincy-final-extra",
+      "sampling_purpose": "new-window-first",
+      "film_time": 394.6500000000001,
+      "source_time": 175.06,
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-20.png",
+      "image_sha256": "41c1685995253c2be29bbba3cc61bcbd6a4d4bad3300e0b7f52fde9cf44a0d80",
+      "segment_id": "cincy-final-extra",
+      "sampling_purpose": "new-window-middle",
+      "film_time": 401.57000000000005,
+      "source_time": 181.98000000000002,
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-21.png",
+      "image_sha256": "ce1c2e4aef48a43ee36d78c457ca98cf18ed77e625183a2f2697fbde96823598",
+      "segment_id": "cincy-final-extra",
+      "sampling_purpose": "new-window-last",
+      "film_time": 408.5300000000001,
+      "source_time": 188.94,
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": false,
+      "result": "no blocking native composition issue in this sample"
+    },
+    {
+      "image": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-22.png",
+      "image_sha256": "015ab5651e8037663eb420e93d3c74ff207e39bbd254d0d66dc83ee0f5e24c04",
+      "segment_id": "cincy-final-extra",
+      "sampling_purpose": "new-bilingual-cue",
+      "film_time": 407.8500000000001,
+      "source_time": 188.26,
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "inspection": "actually visually inspected in labeled contact sheet",
+      "full_size_individually_opened": true,
+      "result": "no blocking native composition issue in this sample"
+    }
+  ],
+  "segment_results": [
+    {
+      "segment_id": "berlin-sf-extra",
+      "source_window": [
+        209.4,
+        230.0
+      ],
+      "actual_png_count": 8,
+      "bilingual_cues_seen": 5,
+      "result": "All five English/Chinese cue samples are readable and within frame. Sabalenka close-ups retain her face; final original broadcast scoreboard remains legible above/beside subtitle area. Native source fills1080x1440; no added information inset.",
+      "limitations": "Fixed cx.5 loses side-court context and ordinary original small scoreboard from wide shots. Underlying source nine-frame review showed Pegula approaching right edge around214.55; three generic window samples are not continuous rally proof."
+    },
+    {
+      "segment_id": "dc-final-extra",
+      "source_window": [
+        156.2,
+        179.8
+      ],
+      "actual_png_count": 6,
+      "bilingual_cues_seen": 3,
+      "result": "Three cue samples show complete readable English/Chinese with bottom margin; window first/middle/last fill canvas without bars, no extra information inset.",
+      "limitations": "At native170.20(caption12), Eala head is above source top edge. Exact1920x1080 original170.20 independently extracted and visually compared: it already cuts her head; native crop does not introduce vertical clipping. It is a broadcast camera transition after the point. Near Pegula can approach left edge during rally around165.05 from source nine-frame audit."
+    },
+    {
+      "segment_id": "cincy-sf-extra",
+      "source_window": [
+        171.92,
+        185.72
+      ],
+      "actual_png_count": 4,
+      "bilingual_cues_seen": 1,
+      "result": "Confirmed replacement source window171.92–185.72, not rejected135.95–157.20. First/mid window source172.08/178.80retain both players; end185.56and cue183.44show Swiatek reaction, full face/head. Full comment wraps into two English lines plus one Chinese line, all glyphs readable with bottom margin, no collision with face or brand and no information inset.",
+      "limitations": "This is Swiatek saving Pegula break point at second-set1-1, not Pegula winning set point. Fixed court may crop lateral extremities outside sampled instants; no tracking/fit-contain used."
+    },
+    {
+      "segment_id": "cincy-final-extra",
+      "source_window": [
+        174.9,
+        189.1
+      ],
+      "actual_png_count": 4,
+      "bilingual_cues_seen": 1,
+      "result": "First/mid samples retain both players and court; last and Beautiful cue show actual Pegula reaction. Beautiful!/漂亮！is complete and legible, no bottom clipping or information inset.",
+      "limitations": "Fixed cx.5 can partly lose near Gauff at far-right movement around178.45/183.78in prior nine-frame source review. This is a highlighted rally, not a set point or claimed comeback."
+    }
+  ],
+  "source_crop_proof": {
+    "path": "/workspace/pegula-finals-production/production/middle-extra-point-selections.json",
+    "sha256": "3a7d07c98201b2aa4b310c73fbbfcf2a08e1262f28d7fefe584fcacf9ec16c20"
+  },
+  "inherited_source_limitation_evidence": [
+    {
+      "source_time": 170.2,
+      "source_file": "/workspace/pegula-finals-production/audio/sources/dc-final.mp4",
+      "raw_original_frame": {
+        "path": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/dc-source-170.20.jpg",
+        "sha256": "1102b91cda4e8e50b024c70f29c705fc5ab160b033f0ec657b58be9c7077bde2"
+      },
+      "native_comparison": {
+        "path": "/workspace/pegula-finals-production/native-preview-extra-middle-fullpoints-v2/caption-12.png",
+        "sha256": "625214c29e344b8bd146654e7c63732ffcfadbaab2c044dd1198d14321985928"
+      },
+      "finding": "Face/head already outside top of original source; fullsourceheight is retained by native 3:4 center crop."
+    }
+  ],
+  "checks": {
+    "all22_native_PNGs_actual_review": true,
+    "all10_foreground_bilingual_cue_samples_seen": true,
+    "all_four_first_middle_last_samples_seen": true,
+    "no_added_information_cards_on_these_four_extra_segments": true,
+    "all_source_canvas_filled_in_samples": true,
+    "no_visible_subtitle_bottom_or_side_clipping_in_samples": true,
+    "no_shared_spec_or_git_changes_by_reviewer": true
+  },
+  "honest_limits": [
+    "No final QC or publication approval",
+    "Interior segment samples exclude dissolves and final H.264 compression",
+    "Audio is not produced or evaluated",
+    "Geometry sets without timestamps do not prove all board-width transitions were sampled",
+    "No final film/dissolve/encoding validation. Native preview does not produce audio; earlier dual ASR evidence is separate and not a claim of human listening.",
+    "Sampling cannot prove every racket contact or lateral player movement remains inside fixed crop. Other37segments, chapter/static cards and poster are outside this four-extra review."
+  ]
+}

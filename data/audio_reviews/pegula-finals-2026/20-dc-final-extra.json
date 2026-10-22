@@ -1,0 +1,44 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=OvjNXy1mQjY",
+  "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+  "method": "asr_cross_checked",
+  "reviewer": "Actual independent small.en and medium.en ASR plus sampled source-frame inspection; not human listening",
+  "reviewed_at": "2026-10-22T09:56:49.540596+00:00",
+  "reviewed_from": 156.2,
+  "reviewed_to": 179.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 168.14,
+      "end": 172.32,
+      "en": "A second break for Eala",
+      "zh": "伊埃拉第二次破发，"
+    },
+    {
+      "start": 172.66,
+      "end": 174.84,
+      "en": "delivers the second set.",
+      "zh": "拿下了第二盘。"
+    },
+    {
+      "start": 175.74,
+      "end": 179.36,
+      "en": "We are off to three in the DC final.",
+      "zh": "华盛顿决赛进入决胜盘。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/dc-final-extra-06127e76bb-candidate-small.en.json",
+      "sha256": "06127e76bb9a84233d40a919782d294518450b3c570ed9407140b37c0b8880cd",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/dc-final-extra-0836d8d7f6-candidate-medium.en.json",
+      "sha256": "0836d8d7f6849924c81071a712ac8cddd326e228befc5df8fdebc1f232727759",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "One complete live rally followed by a replay of the same point, not a second complete live rally. Prior utterance ends156.00; next new utterance begins180.54/180.76, outside179.80+.25. Name Eala agrees in both selected-window ASR."
+}

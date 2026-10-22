@@ -1,0 +1,328 @@
+{
+  "schema": "tennislive.wimbledon-terminal-point-selection.v1",
+  "created_utc": "2026-10-22T11:02:45.090727+00:00",
+  "selections": [
+    {
+      "key": "wimbledon-qf",
+      "source_name": "wimbledon-qf",
+      "source_key": "wimbledon-qf",
+      "source_file": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/2rtc9kSjmPM.mp4",
+      "source_url": "https://www.youtube.com/watch?v=2rtc9kSjmPM",
+      "source_sha256": "778a63d5407088ee6c385212ad3cc7335b0ac7df66f2c50c2f3b409268208e04",
+      "start": 187.36,
+      "end": 212.4,
+      "frame": "court",
+      "cx": 0.5,
+      "fit": "crop",
+      "track": false,
+      "audio_tail": "silence",
+      "captions": [
+        {
+          "start": 199.08,
+          "end": 203.68,
+          "en": "And once again, Coco is the comeback queen.",
+          "zh": "又一次，高芙成为逆转女王。"
+        },
+        {
+          "start": 203.68,
+          "end": 207.02,
+          "en": "Four six, six three, six three.",
+          "zh": "四比六，六比三，六比三。"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "start": 11.72,
+          "end": 16.32,
+          "en": "And once again, Coco is the comeback queen.",
+          "zh": "又一次，高芙成为逆转女王。"
+        },
+        {
+          "start": 16.32,
+          "end": 19.66,
+          "en": "Four six, six three, six three.",
+          "zh": "四比六，六比三，六比三。"
+        }
+      ],
+      "audio_review_packet": {
+        "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/foreground-packet.json",
+        "sha256": "f785c440cf33e3d27c3ed6a1ff829ab8b348d6a96297bc6c2dd6c72d47ac94b2"
+      },
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/tail-context-small.en.json",
+          "sha256": "933adb38e96828b1f6851cb15ae1839b2ff7948d754d26ea9473da7e6fa90b0b",
+          "model": "small.en",
+          "actual_reviewed_range": [
+            158.0,
+            238.46
+          ],
+          "role": "raw independent ASR, all variants retained"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/tail-context-medium.en.json",
+          "sha256": "ecaa2ea7b86ca2c30be2f46515c57af2db36675b55439df286e86de50d21a720",
+          "model": "medium.en",
+          "actual_reviewed_range": [
+            158.0,
+            238.46
+          ],
+          "role": "raw independent ASR, all variants retained"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/final-context-small.en.json",
+          "sha256": "04a172cae46890f43d2236253e8763cf883fbd9d361424925cbd3b4c3e6b1a98",
+          "model": "small.en",
+          "actual_reviewed_range": [
+            180.0,
+            215.0
+          ],
+          "role": "raw independent ASR, all variants retained"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/final-context-medium.en.json",
+          "sha256": "ffcb6251fa66c0136f3687c234305935d8961e55b13e10841ce26056c3ee47a1",
+          "model": "medium.en",
+          "actual_reviewed_range": [
+            180.0,
+            215.0
+          ],
+          "role": "raw independent ASR, all variants retained"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/quote-resolution-small.en.json",
+          "sha256": "8a6cdfee7f1d5983edaf7d496208297810917d9078ce230cd8b4239fc36d4245",
+          "model": "small.en",
+          "actual_reviewed_range": [
+            194.0,
+            210.0
+          ],
+          "role": "raw independent ASR, all variants retained"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/quote-resolution-medium.en.json",
+          "sha256": "a2ff680bc2d418dad3099804a772eb3123262efef016d833afc87247cedbf8b9",
+          "model": "medium.en",
+          "actual_reviewed_range": [
+            194.0,
+            210.0
+          ],
+          "role": "raw independent ASR, all variants retained"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/final-resolution-large-v3-turbo.json",
+          "sha256": "7b5e857d67023249b36e060b4ac99ec02c054845f69930878056a2757d23499d",
+          "model": "large-v3-turbo",
+          "actual_reviewed_range": [
+            194.0,
+            212.0
+          ],
+          "role": "raw independent ASR, all variants retained"
+        }
+      ],
+      "label_safe_window": [
+        195.08,
+        197.88
+      ],
+      "label": {
+        "topic": "止步温网8强",
+        "date": "2026.07.07",
+        "place": "温网1/4决赛",
+        "people": "佩古拉 vs 高芙",
+        "score": "6-4 3-6 3-6"
+      },
+      "label_geometry": {
+        "x": 386,
+        "y": 151,
+        "width": 648,
+        "height": 228,
+        "right_pad": 46
+      },
+      "label_evidence": {
+        "kind": "actual_source_crop_plus_actual_render_label_advisory_not_native_final_composition",
+        "label_png": {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/wimbledon-info-label.png",
+          "sha256": "f6c900aa2df02f97a887d22235cc2c8e13db240a1503c2b0a70299b1f53ebfb3"
+        },
+        "manifest": {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/label-window-proof/manifest.json",
+          "sha256": "0b162a58318926ce75ebc4eb1e877e628f7d150ce2d442283caaabe1f87693fa"
+        },
+        "contact_actually_visually_inspected": {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/label-window-proof/contact.jpg",
+          "sha256": "0a669c766b44474c2e5dbb8b67a04e3b76ea690cefc89f9c14473474ea1fd59a"
+        },
+        "all_nine_label_overlay_frames_actually_visually_inspected": true,
+        "finding": "All9actualsamples195.08–197.88(2.8s)showfarGauffleftofright-alignedglyphs, nocoveringherhead/body. Actualrender_labelgeneratedexactdate/round/resultPNG,resized648x228andplaced386,151. Rootmustverifyactualnativecomposite,includingon/offanimation."
+      },
+      "complete_terminal_matchpoint": true,
+      "complete_extra_rallies": 0,
+      "point_identity": {
+        "event": "2026Wimbledon ladies singles quarterfinal",
+        "date": "2026-07-07",
+        "server": "Jessica Pegula",
+        "receiver": "Coco Gauff",
+        "pre_point_score_player": "Pegula6-4,3-6,3-5,30-40",
+        "terminal_result_winner": "Gauff4-6,6-3,6-3",
+        "serve_preparation_frame": 187.36,
+        "toss_frame": 188.0,
+        "live_point_ends_around": 198.5,
+        "winner_reaction_frame": 199.0,
+        "loser_reaction_frame": 206.0,
+        "net_embrace_frame": 210.0,
+        "score_evidence": [
+          {
+            "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/final-evidence/source-0188.00.jpg",
+            "sha256": "ed0ccc4fbcbfbe0f309740de46acf798725a8942cfae83a722913ed0e5b5a13a"
+          },
+          {
+            "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/final-evidence/source-0200.00.jpg",
+            "sha256": "d59276dd4d84b22fc6db29d81bdc30bc104e2f16418eef3dcd53e175e129c116"
+          }
+        ],
+        "correction": "Coarse-firstmessagewronglysaidGauffserving; actualfullscoreboardwhitearrowbesidePegulaandnearPegulacapidentifyPegulaserving. FinalpackagecorrectsitasPegula."
+      },
+      "crop_proof": {
+        "manifest": {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/crop-proof/manifest.json",
+          "sha256": "8620b334a902d585d0ce6c8d66b88a3eb43fece081f3be3f6fdfbc5da13ec17b"
+        },
+        "contact_actually_visually_inspected": {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/crop-proof/contact.jpg",
+          "sha256": "f25b001d0fbfe809476a3ab6cd8d9696bbdfdd2651f4b972db2ee5099326037f"
+        },
+        "all9_actual_fixed_crops_visually_inspected": true,
+        "samples": [
+          {
+            "source_time": 187.36,
+            "file": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/crop-proof/crop-00.jpg",
+            "sha256": "0ca3762de5c539688647762d6609ac5dfc6f6a751f2da4236fb43253b87373b9"
+          },
+          {
+            "source_time": 190.49,
+            "file": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/crop-proof/crop-01.jpg",
+            "sha256": "fb1d65ca2f33532f2b09c151f62c6e25f3c2afdea467fcc86911a4413e0f7f9b"
+          },
+          {
+            "source_time": 193.62,
+            "file": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/crop-proof/crop-02.jpg",
+            "sha256": "a4c5f8380a4d85a363127d821c97e27ebd4a06aee5830eb28c9875c529f1fd6d"
+          },
+          {
+            "source_time": 196.75,
+            "file": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/crop-proof/crop-03.jpg",
+            "sha256": "a5b0d9536276ab14755958a030e1d9ede974795f673794179d6c8e0731ad1061"
+          },
+          {
+            "source_time": 199.88,
+            "file": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/crop-proof/crop-04.jpg",
+            "sha256": "9a7b69052f8be45c602d3bca75c9b217472d8c34516844c4a43da1adbcf52a29"
+          },
+          {
+            "source_time": 203.01,
+            "file": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/crop-proof/crop-05.jpg",
+            "sha256": "50940aacf649245067f8a9786874104dda25ef930f6f9d554bc67ce345b749b6"
+          },
+          {
+            "source_time": 206.14,
+            "file": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/crop-proof/crop-06.jpg",
+            "sha256": "9958da89d80faff53e6d94aea7bcc7df58446b1427a2fa273c4d451b9d8ad110"
+          },
+          {
+            "source_time": 209.27,
+            "file": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/crop-proof/crop-07.jpg",
+            "sha256": "dceaadcc37070603a672a7a47870b9e05176551a382e5192e0ba1499ea70a44a"
+          },
+          {
+            "source_time": 212.4,
+            "file": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/crop-proof/crop-08.jpg",
+            "sha256": "999b0c251bb1e3ead63748ac45ddc8c71f55d00dcebc0baa2b8214838424d8c6"
+          }
+        ],
+        "fixed_geometry": {
+          "source_crop": [
+            555,
+            0,
+            810,
+            1080
+          ],
+          "output": [
+            1080,
+            1440
+          ]
+        },
+        "limitations": [
+          "Originalscoreboard atupperleftiscroppedintoathin30/40sliverinwidecourtshots; donotclaimoriginalboardfullyreadable. Informationlabelre-establishesfullresultinitsreviewedwindow.",
+          "Fixedcourtkeepsbothtemporalserve/rally/end/reaction,butcannotpromiseeverylateralbodyandracketcontactstaysinframe. Pegulaapproachesleftcropedgeby197.18; at209.27arrivingPegulaisleftofcropbeforeactualnetembrace210.0.",
+          "Thissource-overlayproofhasneithernativewatermarknorfinalsubtitlecomposition; rootnativepreviewrequired."
+        ]
+      },
+      "notes": "Actual independent small.en/medium.en, plus third large-v3-turbo, no human-listening claim. Selected comeback queen supported by final-context-small.en199.18–203.68, tail-context-medium.en199.60–206.66, quote-resolution-medium.en199.42–206.64and large-v3-turbo199.62–206.56. Othercontext rawvariantsco-host/copyright/ScottishQueenare retained, not misrepresented as unanimous. Score spoken Four six, six three, six three: rawFull/forphoneticstandard court-score normalization; originalfinalscoreboard200.00andofficial2026resultconfirm4-6,6-3,6-3winnerperspective. Previous retained-outsidecomment Not an easy volley ends187.16both final-contextmodels; selectedstart187.36afteritandbeforetoss188.00. Finalspoken score ends206.56–207.02, selectedend212.40retains wholeutterance plusPegulareactionandnetembrace. No confirmedforegroundafter207.02before212.40; mediumshortcontext Thankyou213.20andmusic-scanhallucinationsoutsidewindoware notincluded. End+.25=212.65stillbefore213.20. audio_tail:silenceonlyoutsidewindow.",
+      "status": "ready_for_native_integration",
+      "human_listened": false
+    }
+  ],
+  "sources": [
+    {
+      "key": "wimbledon-qf",
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/2rtc9kSjmPM.mp4",
+      "canonical_url": "https://www.youtube.com/watch?v=2rtc9kSjmPM",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-2rtc9kSjmPM/2rtc9kSjmPM.mp4",
+      "sha256": "778a63d5407088ee6c385212ad3cc7335b0ac7df66f2c50c2f3b409268208e04",
+      "bytes": 44898728,
+      "width": 1920,
+      "height": 1080,
+      "fps": "60/1",
+      "duration": 238.468934,
+      "video_codec": "av1",
+      "audio_codec": "aac",
+      "official_publisher": "Wimbledon",
+      "title": "Stunning comeback! 👏 | Jessica Pegula v Coco Gauff | Highlights | Wimbledon 2026",
+      "published_date": "2026-07-07",
+      "official_identity_evidence": {
+        "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/official-youtube-discovery.json",
+        "sha256": "3621d7b60046500b6968a49dc84d119beb51a611b1a953b427391870fc1422d2"
+      },
+      "archive_workflow": {
+        "id": 39766165601,
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39766165601",
+        "result": {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/archive-run-result.json",
+          "sha256": "21fffc6c59c6cb2c78a0cc25fd3183095c91cd73b7fb15da4d67432fa608d250"
+        },
+        "release_metadata": {
+          "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/archive-release.json",
+          "sha256": "1fe0e554087eb707d51aa5be825c58759988c04e9ca954b848f69a07f5b6cd0a"
+        }
+      },
+      "ffprobe": {
+        "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/ffprobe.json",
+        "sha256": "f0a9f81fb0a44f72101e8c29c8abed1738489b91100aca1a0bee1fb705d5a24f"
+      },
+      "approval": "Source bytes and selected-window research checked, not final native composition or film approval"
+    }
+  ],
+  "scope": "Exactlyonecomplete2026WimbledonQFterminalpointandrealreactions,noextra rally. No sharedspec/Git edits.",
+  "source_cache_search": "AvailableworkspaceJSON/JSONL/text/source-indexsnapshotsandhomecache searchedIDandmatchnames; canonicalIDabsentbeforearchive.Release source-IDreturnednotfoundbeforeauthorizeddownloadworkflowdispatch. No unpublishedglobaldatabase falselyclaimedsearched.",
+  "official_result_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/official-youtube-discovery.json",
+      "sha256": "3621d7b60046500b6968a49dc84d119beb51a611b1a953b427391870fc1422d2"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/official-wimbledon-results-day9.json",
+      "sha256": "df9d4c1cbdcd021c72ba5f81ed7a21780735fad889a3a4315427e9ed0125a446"
+    }
+  ],
+  "visual_evidence_fullsource_contacts": [
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/final-evidence/contact-1.jpg",
+      "sha256": "cff5ab3c023b238b2a1e993b3bc9d8067236b5cb9a1d396f825a57cedf5390b8"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/final-evidence/contact-2.jpg",
+      "sha256": "3d379ee0cb35a79915c959f9fecdc5892f556e0c6165e8341c274a39de4b2a5e"
+    }
+  ],
+  "approval": "Research/selection/sourceintegrityonly; notfinalnativefilmQC orpublicationapproval"
+}

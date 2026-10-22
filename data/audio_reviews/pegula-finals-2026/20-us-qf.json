@@ -1,0 +1,43 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+  "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual source-bound small.en/medium.en machine cross-check, with explicitly identified third-model diagnostics. No human listening claim.",
+  "reviewed_at": "2026-10-22T08:07:18.627132+00:00",
+  "status": "complete",
+  "reviewed_from": 150.5,
+  "reviewed_to": 164.8,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/us-qf-5b721b6547-us-qf-bpsave-small.en.json",
+      "sha256": "5b721b654754bf6941d0c847ce9f5ecca1901611b8cc4029c3356985572f98e8",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/us-qf-eb9428a4bf-us-qf-bpsave-medium.en.json",
+      "sha256": "eb9428a4bfd22f5f81c29f4b3e6aa2d2de04df5c1d5e61f3f0c985d6df3e042e",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/us-qf-e4df180c31-us-qf-selected-turbo.json",
+      "sha256": "e4df180c31649bcf99a44463b15d4c1b1408fea9227cd793bb43b761d2ddcdf6",
+      "model": "large-v3-turbo"
+    }
+  ],
+  "review_notes": "Actual source-bound three-model evidence covers the selected150.50–164.80 body and outgoing164.80–165.05: medium.en134–167.20 contains no English in this body. small.en hallucinates Thank you very much159.38–166.90, with Thank probability.004, very.117 and final much zero duration; targeted large-v3-turbo150–167.20 moves Thank you to155.76–158.56 with initial Thank probability.0249. This unstable low-probability background/decoder fragment is not stable identifiable foreground English. Actual crowd/court sound is preserved; this is not silence, not a claim that the umpire was heard clearly, and not reconstruction of a standard court call. No new clear word is established in164.80–165.05.",
+  "tail_audit": {
+    "interval": [
+      164.8,
+      165.05
+    ],
+    "new_word_leak": false,
+    "next_word": null,
+    "next_onsets": null,
+    "asr_context_end": 167.2,
+    "notes": "Three actual decoders reviewed across164.80–165.05; no new stable identifiable foreground English. No audio-tail silence needed."
+  },
+  "human_listened": false,
+  "no_foreground_english_reason": "Actual source-bound three-model evidence covers the selected150.50–164.80 body and outgoing164.80–165.05: medium.en134–167.20 contains no English in this body. small.en hallucinates Thank you very much159.38–166.90, with Thank probability.004, very.117 and final much zero duration; targeted large-v3-turbo150–167.20 moves Thank you to155.76–158.56 with initial Thank probability.0249. This unstable low-probability background/decoder fragment is not stable identifiable foreground English. Actual crowd/court sound is preserved; this is not silence, not a claim that the umpire was heard clearly, and not reconstruction of a standard court call. No new clear word is established in164.80–165.05."
+}

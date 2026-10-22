@@ -1,0 +1,1000 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-22T08:04:46.518073+00:00",
+  "scope": "Pegula2026 AO/Dubai/Charleston core early windows; production selection and foreground subtitle packets only",
+  "user_latest_constraint": "Information labels exclusively on actual match/interview footage; never chapter/title/transition cards.",
+  "source_index_sha256": "aea99637fbea66dde28909620cc592ca15937e1640fc65452071c56e4afc1ed4",
+  "selections": [
+    {
+      "source_name": "ao-sf",
+      "source_key": "ao-sf",
+      "source": "ao-sf",
+      "source_url": "https://www.youtube.com/watch?v=qMezbjE3Nu4",
+      "source_file": "/workspace/pegula-finals-production/sources/ao-sf.mp4",
+      "source_sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+      "start": 437.6,
+      "end": 455.15,
+      "duration": 17.55,
+      "quote_kind": "commentary",
+      "use": "primary",
+      "frame": "court",
+      "crop_policy": "cropfill",
+      "cx": 0.5,
+      "cx_face": null,
+      "captions": [
+        {
+          "start": 444.18,
+          "end": 447.1,
+          "en": "Makes no mistake of it this time,",
+          "zh": "这一次她没有再失手"
+        },
+        {
+          "start": 447.78,
+          "end": 450.06,
+          "en": "and it's Elena Rybakina",
+          "zh": "莱巴金娜"
+        },
+        {
+          "start": 450.06,
+          "end": 454.9,
+          "en": "moving into the Australian Open final of 2026.",
+          "zh": "闯进2026年澳网决赛"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 6.58,
+          "end": 9.5,
+          "text": "Makes no mistake of it this time,\n这一次她没有再失手"
+        },
+        {
+          "at": 10.18,
+          "end": 12.46,
+          "text": "and it's Elena Rybakina\n莱巴金娜"
+        },
+        {
+          "at": 12.46,
+          "end": 17.3,
+          "text": "moving into the Australian Open final of 2026.\n闯进2026年澳网决赛"
+        }
+      ],
+      "foreground_packet": "/workspace/pegula-finals-production/production/evidence/ao-sf-foreground-packet.json",
+      "foreground_packet_sha256": "4acc2a91665ca5e372897bf828f609c4ec72996a486199ac0bab7fcc6fda2693",
+      "audio_review_method": "asr_cross_checked",
+      "audio_tail": "default",
+      "default_outgoing_tail_checked_through": 455.4,
+      "point_time_bounds": [
+        437.96,
+        443.88
+      ],
+      "scoreboard_identity": "Pegula3-6,6-7(7)Rybakina; end scoreboard7-9TB",
+      "visual_review_status": "actual source frame/geometry preselection; final episode PNG/native renderer review pending",
+      "visual_limitations": "Full time-domain final point preserved, including serve/crossfade into court, rally, Rybakina win and Pegula reaction/handshake. Center3:4 sampled final-point action remains in frame; camera reaction cropping is fixed court center. No assertion of final native crop QC.",
+      "live_label_window": {
+        "source_start": 451.35,
+        "source_end": 454.35,
+        "segment_relative_start": 13.75,
+        "segment_relative_end": 16.75,
+        "show_after": 13.75,
+        "show_for": 3.0,
+        "placement": "Actual match/interview footage only; never title_card/chapter/transition",
+        "native_geometry": {
+          "canvas": [
+            1080,
+            1440
+          ],
+          "inset_width_fraction": 0.6,
+          "inset_scaled_width": 648,
+          "native_card_reference_size": [
+            1200,
+            424
+          ],
+          "conservative_outer_bounds": [
+            386,
+            151,
+            1034,
+            383
+          ],
+          "actual_png_original_size": [
+            1200,
+            430
+          ],
+          "actual_scaled_png_size": [
+            648,
+            232
+          ]
+        },
+        "evidence": "/workspace/pegula-finals-production/production/evidence/ao-sf-live-label-zone-refine.jpg",
+        "status": "actual_episode_png_alpha_over_actual_frames_nine_samples_clear_pending_full_native_validation",
+        "reason": "High-angle actual handshake: both players under card outer bounds. End before reaction close-up.",
+        "actual_png_review": {
+          "source_key": "ao-sf",
+          "source_sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+          "start": 451.35,
+          "end": 454.35,
+          "relative_start": 13.75,
+          "relative_end": 16.75,
+          "label_file": "/workspace/tennislive/assets/reel/pegula-finals-2026/context-ao.png",
+          "label_sha256": "014fe7e57beb3f67cfee9857c0d8fc2f89bdbc099247283dd8a0f80c3e302fe5",
+          "label_original_size": [
+            1200,
+            430
+          ],
+          "label_original_alpha_bounds": [
+            503,
+            25,
+            1179,
+            406
+          ],
+          "native_canvas": [
+            1080,
+            1440
+          ],
+          "source_crop": [
+            555,
+            0,
+            1365,
+            1080
+          ],
+          "overlay_xy": [
+            386,
+            151
+          ],
+          "overlay_scaled_size": [
+            648,
+            232
+          ],
+          "samples_source_seconds": [
+            451.35,
+            451.725,
+            452.1,
+            452.475,
+            452.85,
+            453.225,
+            453.6,
+            453.975,
+            454.35
+          ],
+          "contact": "/workspace/pegula-finals-production/production/evidence/ao-sf-actual-label-contact.jpg",
+          "native_frames": [
+            "/workspace/pegula-finals-production/production/evidence/ao-sf-actual-label-451.350.png",
+            "/workspace/pegula-finals-production/production/evidence/ao-sf-actual-label-452.850.png",
+            "/workspace/pegula-finals-production/production/evidence/ao-sf-actual-label-454.350.png"
+          ],
+          "scope": "Actual this-episode PNG alpha composite over actual source frames with native local geometry. Partial still review only; no entire native film/motion/subtitle/voice/ending QC claim.",
+          "reviewed_at": "2026-10-22T08:09:47.861289+00:00",
+          "reviewer": "Codex actual image inspection, nine actual alpha composites per source",
+          "verdict": "No focal face/eyes, serve/contact action or player silhouette is obscured by actual nontransparent glyphs in nine inspected samples; keep selected live window for final native validation.",
+          "findings": "Nine frames451.35–454.35: ink in empty upper-right court. Both players lower while approaching/handshaking. Last frame broadcast dissolve starts but neither focal face is near actual glyph ink; no chapter card involved.",
+          "label_sha_verified": true
+        },
+        "required_for_primary_event_label": true
+      },
+      "actual_point_identity": {
+        "match_round": "Australian Open2026SF",
+        "server": "Jessica Pegula",
+        "receiver": "Elena Rybakina",
+        "score_before_point": "Pegula3-6,6-6,tiebreak7-8",
+        "onscreen_marker": "MATCH POINT#4",
+        "result": "Rybakina wins point/match; NOT a championship final point"
+      },
+      "source_scoreboard_evidence": {
+        "path": "/workspace/pegula-finals-production/production/evidence/ao-sf-scoreboard-identity.jpg",
+        "sha256": "c3ed4630f4b0443316971c2629358d7d7a53cde6c0438825174c8bf8ea76c640"
+      }
+    },
+    {
+      "source_name": "dubai-sf",
+      "source_key": "dubai-sf",
+      "source": "dubai-sf",
+      "source_url": "https://www.youtube.com/watch?v=L7tpXYiUH9c",
+      "source_file": "/workspace/pegula-finals-production/sources/dubai-sf.mp4",
+      "source_sha256": "79c8a34c1486229d088196808b2ddb1f8d785648d4c08c6b09a9f2dc3511f619",
+      "start": 258.7,
+      "end": 299.45,
+      "duration": 40.75,
+      "quote_kind": "commentary",
+      "use": "complete_backup_parent_may_omit_entire_segment_for_pacing",
+      "frame": "court",
+      "crop_policy": "cropfill",
+      "cx": 0.5,
+      "cx_face": null,
+      "captions": [
+        {
+          "start": 269.62,
+          "end": 270.85,
+          "en": "She's done it again.",
+          "zh": "她又做到了"
+        },
+        {
+          "start": 272.12,
+          "end": 275.27,
+          "en": "Jessica Pegula gets the better of Amanda Anisimova",
+          "zh": "佩古拉击败阿尼西莫娃"
+        },
+        {
+          "start": 275.27,
+          "end": 276.88,
+          "en": "for the fifth time in succession,",
+          "zh": "连续第五次战胜对手"
+        },
+        {
+          "start": 276.88,
+          "end": 278.58,
+          "en": "for the second time this year,",
+          "zh": "也是今年的第二次"
+        },
+        {
+          "start": 279.04,
+          "end": 280.51,
+          "en": "and she puts herself in a final",
+          "zh": "她闯进了决赛"
+        },
+        {
+          "start": 280.51,
+          "end": 282.16,
+          "en": "for the first time this season,",
+          "zh": "本赛季的第一次"
+        },
+        {
+          "start": 282.16,
+          "end": 285.02,
+          "en": "coming from a set down on this occasion",
+          "zh": "今天先丢一盘后逆转"
+        },
+        {
+          "start": 285.02,
+          "end": 288.28,
+          "en": "to work her way past the younger American.",
+          "zh": "闯过这位年轻美国选手"
+        },
+        {
+          "start": 288.76,
+          "end": 292.28,
+          "en": "1-6, 6-4, 6-3.",
+          "zh": "1比6 6比4 6比3"
+        },
+        {
+          "start": 293.0,
+          "end": 295.76,
+          "en": "Very well done indeed after a difficult start,",
+          "zh": "开局艰难 她还是做到了"
+        },
+        {
+          "start": 295.9,
+          "end": 299.25,
+          "en": "but delight now in her moment of victory.",
+          "zh": "此刻尽享胜利的喜悦"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 10.92,
+          "end": 12.15,
+          "text": "She's done it again.\n她又做到了"
+        },
+        {
+          "at": 13.42,
+          "end": 16.57,
+          "text": "Jessica Pegula gets the better of Amanda Anisimova\n佩古拉击败阿尼西莫娃"
+        },
+        {
+          "at": 16.57,
+          "end": 18.18,
+          "text": "for the fifth time in succession,\n连续第五次战胜对手"
+        },
+        {
+          "at": 18.18,
+          "end": 19.88,
+          "text": "for the second time this year,\n也是今年的第二次"
+        },
+        {
+          "at": 20.34,
+          "end": 21.81,
+          "text": "and she puts herself in a final\n她闯进了决赛"
+        },
+        {
+          "at": 21.81,
+          "end": 23.46,
+          "text": "for the first time this season,\n本赛季的第一次"
+        },
+        {
+          "at": 23.46,
+          "end": 26.32,
+          "text": "coming from a set down on this occasion\n今天先丢一盘后逆转"
+        },
+        {
+          "at": 26.32,
+          "end": 29.58,
+          "text": "to work her way past the younger American.\n闯过这位年轻美国选手"
+        },
+        {
+          "at": 30.06,
+          "end": 33.58,
+          "text": "1-6, 6-4, 6-3.\n1比6 6比4 6比3"
+        },
+        {
+          "at": 34.3,
+          "end": 37.06,
+          "text": "Very well done indeed after a difficult start,\n开局艰难 她还是做到了"
+        },
+        {
+          "at": 37.2,
+          "end": 40.55,
+          "text": "but delight now in her moment of victory.\n此刻尽享胜利的喜悦"
+        }
+      ],
+      "foreground_packet": "/workspace/pegula-finals-production/production/evidence/dubai-sf-foreground-packet.json",
+      "foreground_packet_sha256": "cbc3b2328c9c456670a7e0ad5b1835f2070ea800348bc0a2f223cbfb13bcc009",
+      "audio_review_method": "asr_cross_checked",
+      "audio_tail": "default",
+      "default_outgoing_tail_checked_through": 299.7,
+      "point_time_bounds": [
+        258.9,
+        268.84
+      ],
+      "scoreboard_identity": "Pegula1-6,6-4,6-3Anisimova; match point5-3 in third",
+      "visual_review_status": "actual source frame/geometry preselection; final episode PNG/native renderer review pending",
+      "visual_limitations": "Full time-domain last serve/rally/outcome, reaction, handshake and complete victory commentary. Pegula runs outside right fixed-center crop around265.0–266.2; temporal preservation is NOT spatially complete action approval. This is an explicit edge-motion limitation; do not change to contain or claim crop-safe. Card not on court259–264 because far player is under footprint, nor286 closeup which covers Anisimova eyes.",
+      "live_label_window": {
+        "source_start": 287.5,
+        "source_end": 290.5,
+        "segment_relative_start": 28.8,
+        "segment_relative_end": 31.8,
+        "show_after": 28.8,
+        "show_for": 3.0,
+        "placement": "Actual match/interview footage only; never title_card/chapter/transition",
+        "native_geometry": {
+          "canvas": [
+            1080,
+            1440
+          ],
+          "inset_width_fraction": 0.6,
+          "inset_scaled_width": 648,
+          "native_card_reference_size": [
+            1200,
+            424
+          ],
+          "conservative_outer_bounds": [
+            386,
+            151,
+            1034,
+            380
+          ]
+        },
+        "evidence": "/workspace/pegula-finals-production/production/evidence/dubai-sf-live-label-zone-final.jpg",
+        "status": "sampled_conservative_native_footprint_preselected_not_actual_episode_png_approval",
+        "reason": "Pegula walking beside net: face/eyes below box. Explicitly avoid earlier269–286 focal-eye conflicts.",
+        "required_for_primary_event_label": false
+      },
+      "actual_point_identity": {
+        "match_round": "Dubai2026SF",
+        "server": "Jessica Pegula",
+        "receiver": "Amanda Anisimova",
+        "score_before_point": "Pegula1-6,6-4,5-3,40-0",
+        "onscreen_marker": "MATCH POINT",
+        "result": "Pegula wins point/match"
+      },
+      "source_scoreboard_evidence": {
+        "path": "/workspace/pegula-finals-production/production/evidence/dubai-sf-scoreboard-identity.jpg",
+        "sha256": "f532da8cb49550241ed323e15573173da6e0d5b14ca8309be6f843c8e4389d66"
+      }
+    },
+    {
+      "source_name": "dubai-final",
+      "source_key": "dubai-final",
+      "source": "dubai-final",
+      "source_url": "https://www.youtube.com/watch?v=n8N7tGMhsQA",
+      "source_file": "/workspace/pegula-finals-production/sources/dubai-final.mp4",
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "start": 239.5,
+      "end": 251.75,
+      "duration": 12.25,
+      "quote_kind": "commentary",
+      "use": "primary",
+      "frame": "court",
+      "crop_policy": "cropfill",
+      "cx": 0.5,
+      "cx_face": null,
+      "captions": [
+        {
+          "start": 242.28,
+          "end": 245.8,
+          "en": "It is a dream debut Dubai title",
+          "zh": "梦幻般的迪拜首冠"
+        },
+        {
+          "start": 245.8,
+          "end": 247.46,
+          "en": "for Jessica Pegula,",
+          "zh": "属于杰西卡·佩古拉"
+        },
+        {
+          "start": 247.46,
+          "end": 251.52,
+          "en": "and she seals it in style with an ace.",
+          "zh": "她用一记ACE漂亮收官"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 2.78,
+          "end": 6.3,
+          "text": "It is a dream debut Dubai title\n梦幻般的迪拜首冠"
+        },
+        {
+          "at": 6.3,
+          "end": 7.96,
+          "text": "for Jessica Pegula,\n属于杰西卡·佩古拉"
+        },
+        {
+          "at": 7.96,
+          "end": 12.02,
+          "text": "and she seals it in style with an ace.\n她用一记ACE漂亮收官"
+        }
+      ],
+      "foreground_packet": "/workspace/pegula-finals-production/production/evidence/dubai-final-foreground-packet.json",
+      "foreground_packet_sha256": "5995e4a0cbaa5b3a511261b785db1cfa82e088ffd353dcfe663beb6110db5aa8",
+      "audio_review_method": "asr_cross_checked",
+      "audio_tail": "default",
+      "default_outgoing_tail_checked_through": 252.0,
+      "point_time_bounds": [
+        239.6,
+        242.45
+      ],
+      "scoreboard_identity": "Pegula6-2,6-4Svitolina; actual CHAMPIONSHIP POINT#3 scoreboard6-2,5-4,40-15 at239.9",
+      "visual_review_status": "actual source frame/geometry preselection; final episode PNG/native renderer review pending",
+      "visual_limitations": "Actual ace championship point starts from serve toss/contact and ends with receiver unable to return, then real Pegula victory reaction. Pegula server/action remains in fixed-center frame. Far receiver Svitolina briefly reaches/exits left crop near241.6–242.2, explicitly retained rather than changing crop geometry. First full terminal commentary sentence ends251.50; separate later analysis beginning252.8 is outside selection.",
+      "live_label_window": {
+        "source_start": 239.85,
+        "source_end": 243.05,
+        "segment_relative_start": 0.35,
+        "segment_relative_end": 3.55,
+        "show_after": 0.35,
+        "show_for": 3.2,
+        "placement": "Actual match/interview footage only; never title_card/chapter/transition",
+        "native_geometry": {
+          "canvas": [
+            1080,
+            1440
+          ],
+          "inset_width_fraction": 0.6,
+          "inset_scaled_width": 648,
+          "native_card_reference_size": [
+            1200,
+            424
+          ],
+          "conservative_outer_bounds": [
+            386,
+            151,
+            1034,
+            381
+          ],
+          "actual_png_original_size": [
+            1200,
+            426
+          ],
+          "actual_scaled_png_size": [
+            648,
+            230
+          ]
+        },
+        "evidence": "/workspace/pegula-finals-production/production/evidence/dubai-final-live-label-zone.jpg",
+        "status": "actual_episode_png_alpha_over_actual_frames_nine_samples_clear_pending_full_native_validation",
+        "reason": "Far receiver is left of box through ace point; server action below. Fade before243.4 close-up.",
+        "actual_png_review": {
+          "source_key": "dubai-final",
+          "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+          "start": 239.85,
+          "end": 243.05,
+          "relative_start": 0.35,
+          "relative_end": 3.55,
+          "label_file": "/workspace/tennislive/assets/reel/pegula-finals-2026/context-dubai-final.png",
+          "label_sha256": "790cbd6fd5f214ea855388ed66e20a61b61e342173dcadb5eee0e7568a3d00eb",
+          "label_original_size": [
+            1200,
+            426
+          ],
+          "label_original_alpha_bounds": [
+            567,
+            25,
+            1179,
+            402
+          ],
+          "native_canvas": [
+            1080,
+            1440
+          ],
+          "source_crop": [
+            555,
+            0,
+            1365,
+            1080
+          ],
+          "overlay_xy": [
+            386,
+            151
+          ],
+          "overlay_scaled_size": [
+            648,
+            230
+          ],
+          "samples_source_seconds": [
+            239.85,
+            240.25,
+            240.65,
+            241.05,
+            241.45,
+            241.85,
+            242.25,
+            242.65,
+            243.05
+          ],
+          "contact": "/workspace/pegula-finals-production/production/evidence/dubai-final-actual-label-contact.jpg",
+          "native_frames": [
+            "/workspace/pegula-finals-production/production/evidence/dubai-final-actual-label-239.850.png",
+            "/workspace/pegula-finals-production/production/evidence/dubai-final-actual-label-241.450.png",
+            "/workspace/pegula-finals-production/production/evidence/dubai-final-actual-label-243.050.png"
+          ],
+          "scope": "Actual this-episode PNG alpha composite over actual source frames with native local geometry. Partial still review only; no entire native film/motion/subtitle/voice/ending QC claim.",
+          "reviewed_at": "2026-10-22T08:09:47.861305+00:00",
+          "reviewer": "Codex actual image inspection, nine actual alpha composites per source",
+          "verdict": "No focal face/eyes, serve/contact action or player silhouette is obscured by actual nontransparent glyphs in nine inspected samples; keep selected live window for final native validation.",
+          "findings": "Nine frames239.85–243.05: actual label sits above/right of far receiver; both focal player faces/action remain outside glyph ink. Court source has no camera cut until after this window. Far receiver eventually leaves fixed3:4 left edge; this is crop limitation, not label obscuration.",
+          "label_sha_verified": true
+        },
+        "required_for_primary_event_label": true
+      },
+      "actual_point_identity": {
+        "match_round": "Dubai2026Final",
+        "server": "Jessica Pegula",
+        "receiver": "Elina Svitolina",
+        "score_before_point": "Pegula6-2,5-4,40-15",
+        "onscreen_marker": "CHAMPIONSHIP POINT#3",
+        "result": "Pegula ace, wins title"
+      },
+      "source_scoreboard_evidence": {
+        "path": "/workspace/pegula-finals-production/production/evidence/dubai-final-scoreboard-identity.jpg",
+        "sha256": "135cf5b6352c1d7bde06e55e872b59de767a05cedf711ed880b53ebb5bfa4aa3"
+      }
+    },
+    {
+      "source_name": "charleston-final",
+      "source_key": "charleston-final",
+      "source": "charleston-final",
+      "source_url": "https://www.youtube.com/watch?v=Zwi_zjefnh0",
+      "source_file": "/workspace/pegula-finals-production/sources/charleston-final.mp4",
+      "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+      "start": 262.2,
+      "end": 287.8,
+      "duration": 25.6,
+      "quote_kind": "commentary",
+      "use": "primary",
+      "frame": "court",
+      "crop_policy": "cropfill",
+      "cx": 0.5,
+      "cx_face": null,
+      "captions": [
+        {
+          "start": 262.42,
+          "end": 263.6,
+          "en": "So good.",
+          "zh": "太棒了"
+        },
+        {
+          "start": 264.8,
+          "end": 266.38,
+          "en": "She saved the match points.",
+          "zh": "对手此前救下那些冠军点"
+        },
+        {
+          "start": 266.84,
+          "end": 269.55,
+          "en": "And now a fourth championship point.",
+          "zh": "现在来到第四个冠军点"
+        },
+        {
+          "start": 273.0,
+          "end": 273.95,
+          "en": "What a week!",
+          "zh": "多么精彩的一周"
+        },
+        {
+          "start": 275.4,
+          "end": 279.3,
+          "en": "The defending champion claims the title again in Charleston.",
+          "zh": "卫冕冠军再度称霸查尔斯顿"
+        },
+        {
+          "start": 281.68,
+          "end": 284.24,
+          "en": "And no one has won more matches this year",
+          "zh": "论本赛季WTA胜场数"
+        },
+        {
+          "start": 284.24,
+          "end": 287.58,
+          "en": "on the WTA Tour than Jess Pegula.",
+          "zh": "还无人超过佩古拉"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 0.22,
+          "end": 1.4,
+          "text": "So good.\n太棒了"
+        },
+        {
+          "at": 2.6,
+          "end": 4.18,
+          "text": "She saved the match points.\n对手此前救下那些冠军点"
+        },
+        {
+          "at": 4.64,
+          "end": 7.35,
+          "text": "And now a fourth championship point.\n现在来到第四个冠军点"
+        },
+        {
+          "at": 10.8,
+          "end": 11.75,
+          "text": "What a week!\n多么精彩的一周"
+        },
+        {
+          "at": 13.2,
+          "end": 17.1,
+          "text": "The defending champion claims the title again in Charleston.\n卫冕冠军再度称霸查尔斯顿"
+        },
+        {
+          "at": 19.48,
+          "end": 22.04,
+          "text": "And no one has won more matches this year\n论本赛季WTA胜场数"
+        },
+        {
+          "at": 22.04,
+          "end": 25.38,
+          "text": "on the WTA Tour than Jess Pegula.\n还无人超过佩古拉"
+        }
+      ],
+      "foreground_packet": "/workspace/pegula-finals-production/production/evidence/charleston-final-foreground-packet.json",
+      "foreground_packet_sha256": "62cc9448dfb90b3dd1d30c04fabc04b26813de3ca94ce458f16c0de3bb29b634",
+      "audio_review_method": "asr_cross_checked",
+      "audio_tail": "default",
+      "default_outgoing_tail_checked_through": 288.05,
+      "point_time_bounds": [
+        267.68,
+        272.48
+      ],
+      "scoreboard_identity": "Pegula6-2,6-2Starodubtseva; actual CHAMPIONSHIP POINT#4 scoreboard6-2,5-2,40-0 at267.0",
+      "visual_review_status": "actual source frame/geometry preselection; final episode PNG/native renderer review pending",
+      "visual_limitations": "Selection includes complete spoken prelude “So good. She saved the match points. And now a fourth championship point”, actual fourth championship point with serve, rally, result and real winner reaction. The she in saved the match points refers to opponent Starodubtseva, NOT Pegula; Chinese explicitly says opponent. Prior saved point is only retrospectively referenced; not falsely claimed fully shown. Near receiver briefly outside left fixed-center crop around269.4–270.4; full time-domain point retained with this spatial limitation. Title-again and current-season wins commentary preserved as full sentences. Avoid next independent opponent-focused commentary at288.54.",
+      "live_label_window": {
+        "source_start": 272.6,
+        "source_end": 276.4,
+        "segment_relative_start": 10.4,
+        "segment_relative_end": 14.2,
+        "show_after": 10.4,
+        "show_for": 3.8,
+        "placement": "Actual match/interview footage only; never title_card/chapter/transition",
+        "native_geometry": {
+          "canvas": [
+            1080,
+            1440
+          ],
+          "inset_width_fraction": 0.6,
+          "inset_scaled_width": 648,
+          "native_card_reference_size": [
+            1200,
+            424
+          ],
+          "conservative_outer_bounds": [
+            386,
+            151,
+            1034,
+            375
+          ],
+          "actual_png_original_size": [
+            1200,
+            414
+          ],
+          "actual_scaled_png_size": [
+            648,
+            224
+          ]
+        },
+        "evidence": "/workspace/pegula-finals-production/production/evidence/charleston-final-live-label-zone-refine.jpg",
+        "status": "actual_episode_png_alpha_over_actual_frames_nine_samples_clear_pending_full_native_validation",
+        "reason": "Actual Pegula champion reaction: cap may approach box, eyes below/left of box; no label on earlier far-side player.",
+        "actual_png_review": {
+          "source_key": "charleston-final",
+          "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+          "start": 272.6,
+          "end": 276.4,
+          "relative_start": 10.4,
+          "relative_end": 14.2,
+          "label_file": "/workspace/tennislive/assets/reel/pegula-finals-2026/context-charleston-final.png",
+          "label_sha256": "ae7ed6c624ce3a8e8617e70d6b8a0585be8f0da739bfaea168718e7f90d8d172",
+          "label_original_size": [
+            1200,
+            414
+          ],
+          "label_original_alpha_bounds": [
+            497,
+            25,
+            1179,
+            390
+          ],
+          "native_canvas": [
+            1080,
+            1440
+          ],
+          "source_crop": [
+            555,
+            0,
+            1365,
+            1080
+          ],
+          "overlay_xy": [
+            386,
+            151
+          ],
+          "overlay_scaled_size": [
+            648,
+            224
+          ],
+          "samples_source_seconds": [
+            272.6,
+            273.07500000000005,
+            273.55,
+            274.025,
+            274.5,
+            274.975,
+            275.45,
+            275.92499999999995,
+            276.4
+          ],
+          "contact": "/workspace/pegula-finals-production/production/evidence/charleston-final-actual-label-contact.jpg",
+          "native_frames": [
+            "/workspace/pegula-finals-production/production/evidence/charleston-final-actual-label-272.600.png",
+            "/workspace/pegula-finals-production/production/evidence/charleston-final-actual-label-274.500.png",
+            "/workspace/pegula-finals-production/production/evidence/charleston-final-actual-label-276.400.png"
+          ],
+          "scope": "Actual this-episode PNG alpha composite over actual source frames with native local geometry. Partial still review only; no entire native film/motion/subtitle/voice/ending QC claim.",
+          "reviewed_at": "2026-10-22T08:09:47.861310+00:00",
+          "reviewer": "Codex actual image inspection, nine actual alpha composites per source",
+          "verdict": "No focal face/eyes, serve/contact action or player silhouette is obscured by actual nontransparent glyphs in nine inspected samples; keep selected live window for final native validation.",
+          "findings": "Nine frames272.60–276.40: actual lime/white text stays on empty backdrop to Pegula right. Her moving visor/eyes/raised fist do not intersect visible glyph ink. Long opponent name remains inside label asset.",
+          "label_sha_verified": true
+        },
+        "required_for_primary_event_label": true
+      },
+      "actual_point_identity": {
+        "match_round": "Charleston2026Final",
+        "server": "Jessica Pegula",
+        "receiver": "Yuliia Starodubtseva",
+        "score_before_point": "Pegula6-2,5-2,40-0",
+        "onscreen_marker": "CHAMPIONSHIP POINT#4",
+        "result": "Pegula wins point/title",
+        "clarification": "Saved earlier match points in commentary refers to opponent Starodubtseva."
+      },
+      "source_scoreboard_evidence": {
+        "path": "/workspace/pegula-finals-production/production/evidence/charleston-final-scoreboard-identity.jpg",
+        "sha256": "be04c0ab1a0e016872ea28db0c541933ccb22e30a600e9049bcc6c58c3406e56"
+      }
+    },
+    {
+      "source_name": "dubai-champion-speech",
+      "source_key": "dubai-champion-speech",
+      "source": "dubai-champion-speech",
+      "source_url": "https://www.youtube.com/watch?v=kuICNiB--fE",
+      "source_file": "/workspace/pegula-finals-production/sources/dubai-champion-speech.mp4",
+      "source_sha256": "b81c05eee0406d4816be14870a933bc2504af15401f14caa3b8408ee1652c918",
+      "start": 28.6,
+      "end": 34.45,
+      "duration": 5.85,
+      "quote_kind": "interview",
+      "use": "primary",
+      "frame": "person",
+      "crop_policy": "cropfill",
+      "cx": 0.445,
+      "cx_face": {
+        "samples": [
+          0.5047,
+          0.5256,
+          0.5254,
+          0.4903,
+          0.4097,
+          0.3645,
+          0.4777,
+          0.5186,
+          0.5219
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T07:56:34+00:00",
+        "median": 0.5047,
+        "spread": 0.1611,
+        "cx": 0.445
+      },
+      "captions": [
+        {
+          "start": 28.84,
+          "end": 30.1,
+          "en": "But just super happy",
+          "zh": "但我特别开心"
+        },
+        {
+          "start": 30.1,
+          "end": 31.65,
+          "en": "to go home with a trophy.",
+          "zh": "能带着奖杯回家"
+        },
+        {
+          "start": 32.7,
+          "end": 34.18,
+          "en": "It was just, it was a great week.",
+          "zh": "这一周真的很棒"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 0.24,
+          "end": 1.5,
+          "text": "But just super happy\n但我特别开心"
+        },
+        {
+          "at": 1.5,
+          "end": 3.05,
+          "text": "to go home with a trophy.\n能带着奖杯回家"
+        },
+        {
+          "at": 4.1,
+          "end": 5.58,
+          "text": "It was just, it was a great week.\n这一周真的很棒"
+        }
+      ],
+      "foreground_packet": "/workspace/pegula-finals-production/production/evidence/dubai-champion-speech-foreground-packet.json",
+      "foreground_packet_sha256": "44d35a43d0278915d98022ecd12b33eebb87d76f1be3ee44cf67487c386b1f61",
+      "audio_review_method": "asr_cross_checked",
+      "audio_tail": "default",
+      "default_outgoing_tail_checked_through": 34.7,
+      "point_time_bounds": null,
+      "scoreboard_identity": null,
+      "visual_review_status": "actual source frame/geometry preselection; final episode PNG/native renderer review pending",
+      "visual_limitations": "Same Dubai2026 final official podium speech, actual Pegula speaking about going home with a trophy. Complete short thought retained through false-start final sentence. No stitched answers. Host next new question begins38.42, outside audited outgoing tail.",
+      "live_label_window": {
+        "source_start": 28.9,
+        "source_end": 32.0,
+        "segment_relative_start": 0.3,
+        "segment_relative_end": 3.4,
+        "show_after": 0.3,
+        "show_for": 3.1,
+        "placement": "Actual match/interview footage only; never title_card/chapter/transition",
+        "native_geometry": {
+          "canvas": [
+            1080,
+            1440
+          ],
+          "inset_width_fraction": 0.6,
+          "inset_scaled_width": 648,
+          "native_card_reference_size": [
+            1200,
+            424
+          ],
+          "conservative_outer_bounds": [
+            386,
+            151,
+            1034,
+            380
+          ]
+        },
+        "evidence": "/workspace/pegula-finals-production/production/evidence/dubai-champion-speech-live-label-zone.jpg",
+        "status": "sampled_conservative_native_footprint_preselected_not_actual_episode_png_approval",
+        "reason": "Actual podium speech: upper rectangle reaches forehead only; eyes remain beneath outer box in sampled fixed-person crop.",
+        "required_for_primary_event_label": false
+      }
+    }
+  ],
+  "total_duration_with_dubai_sf_complete_backup": 102.0,
+  "primary_duration_without_dubai_sf_backup": 61.25,
+  "optional_unapproved_interview": {
+    "source_name": "dubai-sf-interview",
+    "source_key": "dubai-sf-interview",
+    "source_file": "/workspace/pegula-finals-production/sources/dubai-sf-interview.mp4",
+    "source_sha256": "bd3539827f16aff1e82e65f63db3a59ca5c441a1bc05892b59eed88a786e6d27",
+    "candidate_start": 9.15,
+    "candidate_end": 18.12,
+    "frame": "person",
+    "cx": 0.474,
+    "cx_face": {
+      "samples": [
+        0.3983,
+        0.448,
+        0.4908,
+        0.515,
+        0.4545,
+        0.4515,
+        0.5495,
+        0.5451,
+        0.5192
+      ],
+      "frames": 9,
+      "detected": 9,
+      "source_size": [
+        1920,
+        1080
+      ],
+      "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+      "measured_at": "2026-10-22T07:45:40+00:00",
+      "median": 0.4908,
+      "spread": 0.1512,
+      "cx": 0.474,
+      "max_spread": 0.2619
+    },
+    "status": "excluded_optional_candidate_unresolved_connective_not_approved_foreground_packet",
+    "reason": "Small says and I said/and said; medium I’m saying at13.38–13.74. Must not silently pick one as a proven verbatim full answer. Shared substantive phrase13.72–17.96 is certain, but start near previous connective needs careful boundary review. Primary Dubai own speech already supplied complete; do not force extra interview.",
+    "common_quote": "I'm just happy I'm still even here right now. She was playing some incredible tennis.",
+    "common_phrase_measured_variant": {
+      "start": 13.7,
+      "end": 18.15,
+      "cx": 0.491,
+      "cx_face": {
+        "samples": [
+          0.4263,
+          0.4287,
+          0.4832,
+          0.5353,
+          0.5557,
+          0.5509,
+          0.5424,
+          0.5295,
+          0.5186
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T07:56:28+00:00",
+        "median": 0.5295,
+        "spread": 0.1294,
+        "cx": 0.491
+      }
+    },
+    "candidate_live_label_source_window": [
+      9.45,
+      12.45
+    ],
+    "evidence": [
+      "/workspace/pegula-finals-production/production/evidence/dubai-sf-interview-9-boundary-small.en.json",
+      "/workspace/pegula-finals-production/production/evidence/dubai-sf-interview-9-boundary-medium.en.json"
+    ],
+    "uncertain_spans": [
+      {
+        "start": 13.38,
+        "end": 13.74,
+        "reason": "Actual two-model lexical disagreement, not marked complete."
+      }
+    ]
+  },
+  "review_boundaries": {
+    "human_listening_claimed": false,
+    "formal_render_dispatched": false,
+    "shared_spec_modified": false,
+    "git_operations": false,
+    "actual_asr_sources_bound": true,
+    "interview_person_center_actual_nine_samples": true,
+    "fixed_match_cx": 0.5,
+    "contain_or_720_exception_used": false,
+    "final_native_label_png_and_entire_film_qc": "Pending parent; local actual frame/outer-footprint reviews are partial evidence only.",
+    "crop_edges": "DubaiSF major right-edge run and Charleston/DF receiver left-edge motion explicitly retained and not labeled spatially complete. Parent may omit entire backup or select another actual same-match point; cannot substitute another point under championship-point audio as if same action."
+  },
+  "actual_label_review_path": "/workspace/pegula-finals-production/production/evidence/early-actual-label-review.json",
+  "actual_label_review_sha256": "85e14dd0032dd3be83ef23e2a88a870cd14945823a244d83754570a1157939d0"
+}

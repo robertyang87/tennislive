@@ -1,0 +1,195 @@
+{
+  "schema": "pegula.late-season-fact-audit.v1",
+  "player": "Jessica Pegula",
+  "player_id": 316956,
+  "retrieved_utc": "2026-10-22T05:28:49.778988+00:00",
+  "facts_cutoff": "2026-10-22 UTC, exact retrieval times preserved in raw manifests",
+  "official_sources_refreshed": true,
+  "qualification": {
+    "public_announcement_date_utc": "2026-10-14",
+    "public_announcement_date_beijing": "2026-10-14",
+    "consecutive_appearance_number": 5,
+    "official_article": "https://www.wtatennis.com/news/4591678/jessica-pegula-and-coco-gauff-qualify-for-wta-finals-in-indian-wells",
+    "official_article_date_utc": "2026-10-14T10:00:00Z",
+    "official_article_date_beijing": "2026-10-14T18:00:00+08:00",
+    "official_article_publishFrom_utc": "2026-10-13T13:33:00.968000+00:00",
+    "official_article_lastModified_utc": "2026-10-14T12:18:02.673000+00:00",
+    "official_x_url": "https://x.com/WTA/status/2110339830022385710",
+    "official_x_created_utc": "2026-10-14T11:59:58.000Z",
+    "official_x_created_beijing": "2026-10-14T19:59:58+08:00",
+    "official_x_user": "WTA",
+    "official_x_user_id": "17158140",
+    "social_source_provenance": "该WTA帖由官方球员专题4592575正文嵌入，并由公开syndication返回同一id/官方账号。",
+    "social_raw": "raw/qualification-official-x.json",
+    "poster": "raw/qualification-official-x-original.jpg",
+    "poster_source": "https://pbs.twimg.com/media/HUlu4yEXUAEjj3s.jpg",
+    "poster_original_size": [
+      1080,
+      1350
+    ],
+    "date_caution": "网页datePublished/API date为10月14日10:00Z；publishFrom却为10月13日13:33Z。前者可作为网页日期，后者是CMS后台字段；不把它们任一称作最早实际公示时刻。X发帖时间确证为10月14日11:59:58Z=北京时间19:59:58。",
+    "earliest_mathematical_clinch_time": null,
+    "qualification_trigger_match": null,
+    "trigger_caution": "官方公告没有指定最早数学锁定那一场；武汉当天是输球，不写击败Ostapenko锁定。",
+    "safe_narration": "北京时间10月14日，WTA正式公布佩古拉连续第五年入围年终总决赛。"
+  },
+  "late_played_match": {
+    "event": "Wuhan Open",
+    "event_id": 1075,
+    "round": "R32 / second round, first played round after bye",
+    "date_utc": "2026-10-14",
+    "date_wuhan_local": "2026-10-14",
+    "date_beijing": "2026-10-14",
+    "timezone": "Asia/Shanghai / UTC+08:00",
+    "opponent": "Jelena Ostapenko",
+    "result": "L",
+    "score_player_perspective": "6-2 6-7(7) 3-6",
+    "score_winner_perspective": "2-6 7-6(7) 6-3",
+    "official_api_match_id": "LS031",
+    "official_api_match_timestamp": "2026-10-14T08:06:33.01+00:00",
+    "official_api_timestamp_beijing": "2026-10-14T16:06:33.010000+08:00",
+    "official_api_last_updated": "2026-10-14T10:46:27.55+00:00",
+    "official_api_match_time_total": "02:23:59",
+    "exact_finish_time": "not independently established; API lastUpdated is not called exact completion time",
+    "sources": [
+      "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+      "https://www.wtatennis.com/news/4592311/in-the-moment-ostapenko-saves-three-match-points-stuns-pegula-in-wuhan",
+      "https://www.wtatennis.com/tournaments/1075/wuhan/2026/scores/LS031"
+    ],
+    "three_match_points": {
+      "stage": "second-set tiebreak",
+      "count": 3,
+      "process": [
+        {
+          "ordinal": 1,
+          "official_description": "With the court wide open, the American netted a simple volley.",
+          "safe_zh": "第一个赛点，佩古拉在场地已经打开的情况下，把简单截击打下网。"
+        },
+        {
+          "ordinal": 2,
+          "official_description": "Ostapenko found a service winner on her second serve to save the second.",
+          "safe_zh": "第二个赛点，奥斯塔彭科靠二发形成发球直接得分化解。",
+          "do_not_label": "Ace; service winner is not necessarily an ace."
+        },
+        {
+          "ordinal": 3,
+          "official_description": "After hammering the ball from side to side, unable to break through Pegula’s defenses, Ostapenko attempted a drop shot for the first and only time in the match. It landed perfectly for a winner.",
+          "safe_zh": "第三个赛点，奥斯塔彭科多次左右调动后，使出全场唯一一次放短，直接得分。"
+        }
+      ],
+      "exact_tiebreak_point_scores": null,
+      "warning": "官方文案未给三次赛点各自的抢七小分；不能仅由7-6(7)反推每个赛点坐标或把任意放短当该分。",
+      "footage_candidates": [
+        {
+          "url": "https://www.instagram.com/reel/DeeNRKSR_sC/",
+          "publisher": "WTA official @wta, as embedded in official match report",
+          "status": "Official embedded candidate; not downloaded/decoded in this research task",
+          "timecodes": null,
+          "coverage_not_approved": true
+        }
+      ]
+    },
+    "safe_narration": "武汉首秀，她先赢一盘，又在第二盘抢七拿到三个赛点，却被奥斯塔彭科逆转。"
+  },
+  "withdrawals_upcoming_canonical": "withdrawals-upcoming.json",
+  "latest_status": {
+    "player_matches_rows": 76,
+    "post_us_open_completed_singles_matches": [
+      {
+        "event": "Wuhan Open",
+        "event_id": 1075,
+        "round": "R32 / second round, first played round after bye",
+        "date_utc": "2026-10-14",
+        "date_wuhan_local": "2026-10-14",
+        "date_beijing": "2026-10-14",
+        "timezone": "Asia/Shanghai / UTC+08:00",
+        "opponent": "Jelena Ostapenko",
+        "result": "L",
+        "score_player_perspective": "6-2 6-7(7) 3-6",
+        "score_winner_perspective": "2-6 7-6(7) 6-3",
+        "official_api_match_id": "LS031",
+        "official_api_match_timestamp": "2026-10-14T08:06:33.01+00:00",
+        "official_api_timestamp_beijing": "2026-10-14T16:06:33.010000+08:00",
+        "official_api_last_updated": "2026-10-14T10:46:27.55+00:00",
+        "official_api_match_time_total": "02:23:59",
+        "exact_finish_time": "not independently established; API lastUpdated is not called exact completion time",
+        "sources": [
+          "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches",
+          "https://www.wtatennis.com/news/4592311/in-the-moment-ostapenko-saves-three-match-points-stuns-pegula-in-wuhan",
+          "https://www.wtatennis.com/tournaments/1075/wuhan/2026/scores/LS031"
+        ],
+        "three_match_points": {
+          "stage": "second-set tiebreak",
+          "count": 3,
+          "process": [
+            {
+              "ordinal": 1,
+              "official_description": "With the court wide open, the American netted a simple volley.",
+              "safe_zh": "第一个赛点，佩古拉在场地已经打开的情况下，把简单截击打下网。"
+            },
+            {
+              "ordinal": 2,
+              "official_description": "Ostapenko found a service winner on her second serve to save the second.",
+              "safe_zh": "第二个赛点，奥斯塔彭科靠二发形成发球直接得分化解。",
+              "do_not_label": "Ace; service winner is not necessarily an ace."
+            },
+            {
+              "ordinal": 3,
+              "official_description": "After hammering the ball from side to side, unable to break through Pegula’s defenses, Ostapenko attempted a drop shot for the first and only time in the match. It landed perfectly for a winner.",
+              "safe_zh": "第三个赛点，奥斯塔彭科多次左右调动后，使出全场唯一一次放短，直接得分。"
+            }
+          ],
+          "exact_tiebreak_point_scores": null,
+          "warning": "官方文案未给三次赛点各自的抢七小分；不能仅由7-6(7)反推每个赛点坐标或把任意放短当该分。",
+          "footage_candidates": [
+            {
+              "url": "https://www.instagram.com/reel/DeeNRKSR_sC/",
+              "publisher": "WTA official @wta, as embedded in official match report",
+              "status": "Official embedded candidate; not downloaded/decoded in this research task",
+              "timecodes": null,
+              "coverage_not_approved": true
+            }
+          ]
+        },
+        "safe_narration": "武汉首秀，她先赢一盘，又在第二盘抢七拿到三个赛点，却被奥斯塔彭科逆转。"
+      }
+    ],
+    "post_us_open_completed_match_count": 1,
+    "post_us_open_match_record": "0-1",
+    "ningbo_no_player_in_draw": true,
+    "ningbo_no_player_match": true,
+    "no_season_end_or_finals_withdrawal_statement_confirmed": true,
+    "stats_note": "新逐场API仍对应全季64场50-14。WTA10月20日专题4592575直接写50-14；profile50-13恰等于武汉前记录，不能覆盖新完成的一负；不确定后台未更新原因。",
+    "official_record_article": "https://www.wtatennis.com/news/4592575/wta-finals-is-all-about-consistency-how-jessica-pegula-turned-her-once-worst-trait-into-her-best"
+  },
+  "return_context": {
+    "source": "https://www.wtatennis.com/news/4590642/back-to-normal-pegula-ready-for-late-season-push-in-wuhan",
+    "official_article_date_utc": "2026-10-11T19:22:00Z",
+    "official_article_date_beijing": "2026-10-12T03:22:00+08:00",
+    "known": "报道她在美网后连续退出新加坡和北京，准备在武汉复出；她说healthy again/back to normal。",
+    "do_not_extend": "这是武汉前的本人状态，不等于10月22日仍然无伤或解释宁波退赛原因。"
+  },
+  "media_candidates": [
+    {
+      "official_video_api": "https://api.wtatennis.com/content/wta/video/EN/4592281",
+      "title": "Qualified! How Jessica Pegula made the2026WTA Finals Indian Wells",
+      "duration": 571,
+      "brightcove_media_id": "6406843993112",
+      "official_video_page": "https://www.wtatennis.com/videos/4592281/qualified-how-jessica-pegula-made-the-2026-wta-finals-indian-wells",
+      "raw": "raw/qualification-video.json"
+    }
+  ],
+  "unknowns": [
+    "最早数学锁定时间与触发比赛",
+    "新加坡/北京/宁波退赛决定的确切时刻（报道时间与事件时刻不同）",
+    "佩古拉北京伤势具体部位、宁波退赛原因",
+    "东京正式退出公告/原因，当前名单已无她；赛事尚未开赛",
+    "武汉3个赛点的精确小分与完整素材时码"
+  ],
+  "source_search_limits": {
+    "x": "WTA资格帖公开元数据已取得；JPegula与torayppo公开profile页面已保存，检索范围内未见可支持东京退赛原因的相关声明，不代表搜遍全部历史。",
+    "instagram": "JPegula/torayppo profile页面已保存；未取得已过期的9月IGStory原件，使用WTA逐字引述；没有把登录/页面不含相关条目当不存在证明。",
+    "toray_site": "www.toray-ppo.com及/en/均HTTP502，保留失败原文，不据此做缺席/退赛推断。"
+  },
+  "shared_git_or_specs_modified": false
+}

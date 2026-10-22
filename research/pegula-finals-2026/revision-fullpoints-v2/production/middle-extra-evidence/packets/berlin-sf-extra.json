@@ -1,0 +1,74 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Il6cKvP4qAw",
+  "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+  "method": "asr_cross_checked",
+  "reviewer": "Actual independent small.en and medium.en ASR plus sampled source-frame inspection; not human listening",
+  "reviewed_at": "2026-10-22T09:56:49.426476+00:00",
+  "reviewed_from": 209.4,
+  "reviewed_to": 230.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 214.44,
+      "end": 216.78,
+      "en": "Did the rain delay help Sabalenka?",
+      "zh": "雨暂停帮到了萨巴伦卡吗？"
+    },
+    {
+      "start": 217.38,
+      "end": 218.24,
+      "en": "It sure did.",
+      "zh": "确实如此。"
+    },
+    {
+      "start": 219.66,
+      "end": 222.36,
+      "en": "Down a mini-break, came out flying.",
+      "zh": "她一度落后一个迷你破发，重返赛场后火力全开。"
+    },
+    {
+      "start": 224.18,
+      "end": 227.28,
+      "en": "And again, these two are going to a decider.",
+      "zh": "两人又将进入决胜盘。"
+    },
+    {
+      "start": 228.18,
+      "end": 229.74,
+      "en": "Sabalenka taking the second.",
+      "zh": "萨巴伦卡拿下第二盘。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/candidate-small.en.json",
+      "sha256": "c50c72a2a0c801e02cf726523d7f51fc2a8393293239ed871298595e8e167a87",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        206,
+        232
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/candidate-medium.en.json",
+      "sha256": "b7efa231f2ab4838857e0bbe914f4eddfb3296f11909a6d5cc28d9e841c27488",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        206,
+        232
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/scan-small.en.json",
+      "sha256": "ed26b0bd2158e9d913b7c9941b7390463449d7a9e3eef5fc485a3d4f5b45b833",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        0,
+        250
+      ],
+      "role": "independent unprompted article/tennis-term cross-check"
+    }
+  ],
+  "review_notes": "small mini brake normalized to tennis mini-break; medium Down on mini break differs on article; unprompted whole-source small scan supports Down a mini break. Raw ASR retained. Prior speech ends209.24; final retained word second ends229.74. No next foreground word detected through232."
+}

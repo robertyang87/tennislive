@@ -1,0 +1,1366 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-22T08:07:18.627132+00:00",
+  "player": "Jessica Pegula",
+  "season": 2026,
+  "scope": "North American production-bound original audio selections. All selected source bodies preserved. Native final visuals/labels and encoded film QC remain parent production steps.",
+  "method": "asr_cross_checked",
+  "human_listened": false,
+  "source_manifest": "/workspace/pegula-finals-production/audio/north-america-source-manifest.json",
+  "source_manifest_sha256": "380976b04afa1cf013a2f908135ec9c6541b1589d0ea344a26dad75e442a7775",
+  "selections": [
+    {
+      "key": "cold_cincy_speech",
+      "source_name": "cincy-runnerup",
+      "source_key": "cincy-runnerup",
+      "source": "cincy-runnerup",
+      "source_url": "https://www.youtube.com/watch?v=pIRDCAcGpz0",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-runnerup.mp4",
+      "source_sha256": "40e516cbaccdd6ea10131b00316a91b17a807dd289e7f60ed314b8d0b8907de9",
+      "source_fps": "30000/1001",
+      "source_width": 1920,
+      "source_height": 1080,
+      "start": 52.24,
+      "end": 58.7,
+      "duration": 6.46,
+      "seconds": 6.46,
+      "quote_kind": "interview",
+      "_quote_kind": "interview",
+      "frame": "person",
+      "cx": 0.501,
+      "cx_face": {
+        "samples": [
+          0.5109,
+          0.5054,
+          0.5078,
+          0.5053,
+          0.4995,
+          0.4907,
+          0.5022,
+          0.4995,
+          0.499
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T05:30:15+00:00",
+        "median": 0.5022,
+        "spread": 0.0202
+      },
+      "fit": "crop",
+      "crop_policy": "cropfill",
+      "track": false,
+      "narration": "",
+      "captions": [
+        {
+          "start": 52.38,
+          "end": 53.46,
+          "en": "I'm a little upset.",
+          "zh": "我有点郁闷。"
+        },
+        {
+          "start": 53.46,
+          "end": 54.66,
+          "en": "I have two of these now.",
+          "zh": "这种奖杯，我已有两座。"
+        },
+        {
+          "start": 54.8,
+          "end": 56.92,
+          "en": "I wanted the bigger one, but that's okay.",
+          "zh": "我想要更大的，不过没关系。"
+        },
+        {
+          "start": 57.18,
+          "end": 58.48,
+          "en": "It's still a pretty trophy.",
+          "zh": "这个奖杯也很漂亮。"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 0.14,
+          "end": 1.22,
+          "text": "I'm a little upset.\n我有点郁闷。"
+        },
+        {
+          "at": 1.22,
+          "end": 2.42,
+          "text": "I have two of these now.\n这种奖杯，我已有两座。"
+        },
+        {
+          "at": 2.56,
+          "end": 4.68,
+          "text": "I wanted the bigger one, but that's okay.\n我想要更大的，不过没关系。"
+        },
+        {
+          "at": 4.94,
+          "end": 6.24,
+          "text": "It's still a pretty trophy.\n这个奖杯也很漂亮。"
+        }
+      ],
+      "audio_review_packet": "/workspace/pegula-finals-production/production/evidence/cold_cincy_speech-foreground-packet.json",
+      "audio_review_packet_sha256": "c57b014ed951047bf3495bf729c8964cacbf7372d4a37f842d1e4c87f7454ddd",
+      "method": "asr_cross_checked",
+      "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/cincy-runnerup-small.en.json",
+          "sha256": "269a74b3f93c149cd2fbe6686372b30de6444a8b36d95020c7c8917da559a37f",
+          "model": "small.en",
+          "source_sha256": "40e516cbaccdd6ea10131b00316a91b17a807dd289e7f60ed314b8d0b8907de9",
+          "source_clip": [
+            43,
+            70
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/cincy-runnerup-medium.en.json",
+          "sha256": "4d3e8bf3d9fe2017a435a80bc19182e6c2acf1a54bbd3fd2b34cc28dc9e2fb58",
+          "model": "medium.en",
+          "source_sha256": "40e516cbaccdd6ea10131b00316a91b17a807dd289e7f60ed314b8d0b8907de9",
+          "source_clip": [
+            43,
+            70
+          ]
+        }
+      ],
+      "reviewed_from": 52.24,
+      "reviewed_to": 58.7,
+      "uncertain_spans": [],
+      "human_listened": false,
+      "tail_audit": {
+        "interval": [
+          58.7,
+          58.95
+        ],
+        "new_word_leak": false,
+        "next_word": "Next",
+        "next_onsets": [
+          59.66,
+          59.7
+        ],
+        "asr_context_end": 70,
+        "notes": "Actual selected source body unchanged; no new stable identifiable foreground word starts in outgoing native .25s."
+      },
+      "visual_evidence": "Actual Pegula runner-up ceremony, microphone and trophy; nine actual person samples, fixed cx=.501. Historical context is runner-up in 2024 and 2026, not two consecutive seasons.",
+      "visual_review_status": "Actual source frames and fixed source-center diagnostic crops reviewed; episode native PNG and final film QC still required.",
+      "live_label_window": null,
+      "quote": [
+        {
+          "at": 0.14,
+          "end": 1.22,
+          "text": "I'm a little upset.\n我有点郁闷。"
+        },
+        {
+          "at": 1.22,
+          "end": 2.42,
+          "text": "I have two of these now.\n这种奖杯，我已有两座。"
+        },
+        {
+          "at": 2.56,
+          "end": 4.68,
+          "text": "I wanted the bigger one, but that's okay.\n我想要更大的，不过没关系。"
+        },
+        {
+          "at": 4.94,
+          "end": 6.24,
+          "text": "It's still a pretty trophy.\n这个奖杯也很漂亮。"
+        }
+      ],
+      "person_measurement_window": [
+        52.24,
+        58.7
+      ],
+      "person_evidence": "/workspace/pegula-finals-production/audio/speech-person-centers.json",
+      "visual_contact": "/workspace/pegula-finals-production/audio/visual/cincy-runnerup-person-measured-contact.jpg"
+    },
+    {
+      "key": "dc_final",
+      "source_name": "dc-final",
+      "source_key": "dc-final",
+      "source": "dc-final",
+      "source_url": "https://www.youtube.com/watch?v=OvjNXy1mQjY",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/dc-final.mp4",
+      "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "source_fps": "25/1",
+      "source_width": 1920,
+      "source_height": 1080,
+      "start": 234.72,
+      "end": 260.5,
+      "duration": 25.78,
+      "seconds": 25.78,
+      "quote_kind": "commentary",
+      "_quote_kind": "broadcast",
+      "frame": "court",
+      "cx": 0.5,
+      "cx_face": null,
+      "fit": "crop",
+      "crop_policy": "cropfill",
+      "track": false,
+      "narration": "",
+      "captions": [
+        {
+          "start": 247.22,
+          "end": 250.28,
+          "en": "It's Eala's magical moment.",
+          "zh": "这是伊埃拉的神奇时刻。"
+        },
+        {
+          "start": 251.6,
+          "end": 254.42,
+          "en": "The moment she has dreamt of.",
+          "zh": "她梦寐以求的这一刻。"
+        },
+        {
+          "start": 255.66,
+          "end": 260.24,
+          "en": "A first ever tour title delivered in DC.",
+          "zh": "首座巡回赛冠军，在华盛顿。"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 12.5,
+          "end": 15.56,
+          "text": "It's Eala's magical moment.\n这是伊埃拉的神奇时刻。"
+        },
+        {
+          "at": 16.88,
+          "end": 19.7,
+          "text": "The moment she has dreamt of.\n她梦寐以求的这一刻。"
+        },
+        {
+          "at": 20.94,
+          "end": 25.52,
+          "text": "A first ever tour title delivered in DC.\n首座巡回赛冠军，在华盛顿。"
+        }
+      ],
+      "audio_review_packet": "/workspace/pegula-finals-production/production/evidence/dc_final-foreground-packet.json",
+      "audio_review_packet_sha256": "4ed5a3d0813c19d4e748f40baaca9a6cc18a321b6f7ba65e7de94d72b01c3c30",
+      "method": "asr_cross_checked",
+      "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/dc-final-small.en.json",
+          "sha256": "36ced28b8d75f130c65aec06a44268e17b2de7865cff4a20560963539f38732a",
+          "model": "small.en",
+          "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+          "source_clip": [
+            233,
+            291
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/dc-final-medium.en.json",
+          "sha256": "238ab5306ea054bc935c116fcad038c0c1d7b7a4f2d2d9d1084e8f4523cec165",
+          "model": "medium.en",
+          "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+          "source_clip": [
+            233,
+            291
+          ]
+        }
+      ],
+      "reviewed_from": 234.72,
+      "reviewed_to": 260.5,
+      "uncertain_spans": [],
+      "human_listened": false,
+      "tail_audit": {
+        "interval": [
+          260.5,
+          260.75
+        ],
+        "new_word_leak": false,
+        "next_word": "500",
+        "next_onsets": [
+          261.86,
+          262.1
+        ],
+        "asr_context_end": 291,
+        "notes": "Actual selected source body unchanged; no new stable identifiable foreground word starts in outgoing native .25s."
+      },
+      "visual_evidence": "Real second championship point: Pegula light purple far-side server, Eala neon green near-side receiver. Service begins235, full rally to244, outcome244–245, kneeling winner reaction after245, net embrace260. Pegula loses6-4,4-6,0-6. Time-domain full point retained; fixed court-center 3:4 can exclude lateral action. Do not claim all strokes/bodies visible.",
+      "visual_review_status": "Actual source frames and fixed source-center diagnostic crops reviewed; episode native PNG and final film QC still required.",
+      "live_label_window": {
+        "source_start": 235.2,
+        "source_end": 237.2,
+        "segment_relative_start": 0.48,
+        "segment_relative_end": 2.48,
+        "show_after": 0.48,
+        "show_for": 2.0,
+        "actual_png": "/workspace/tennislive/assets/reel/pegula-finals-2026/context-dc-final.png",
+        "actual_png_sha256": "61dc914a7a37a258e4f7fa37282f823c6f9d179f6c82c28e99836d83f03fd6a8",
+        "native_card_width": 0.6,
+        "native_card_top_left": [
+          386,
+          151
+        ],
+        "contact": "/workspace/pegula-finals-production/production/evidence/dc-final-actual-label-nine-contact.jpg",
+        "evidence": "/workspace/pegula-finals-production/production/evidence/north-live-label-review.json",
+        "status": "sampled_actual_source_plus_actual_PNG_alpha_safe_native_episode_verification_pending",
+        "reason": "Actual alpha text is to the right of far-side Pegula throughout nine samples; near-side Eala is below. Letter/face/racket overlap not found at samples."
+      },
+      "quote": [
+        {
+          "at": 12.5,
+          "end": 15.56,
+          "text": "It's Eala's magical moment.\n这是伊埃拉的神奇时刻。"
+        },
+        {
+          "at": 16.88,
+          "end": 19.7,
+          "text": "The moment she has dreamt of.\n她梦寐以求的这一刻。"
+        },
+        {
+          "at": 20.94,
+          "end": 25.52,
+          "text": "A first ever tour title delivered in DC.\n首座巡回赛冠军，在华盛顿。"
+        }
+      ],
+      "visual_contact": "/workspace/pegula-finals-production/audio/visual/dc-final-court-center-contact.jpg",
+      "geometry_policy": "User-requested fixed court-center cx=.5,3:4fill. No tracking/contain; temporal completeness does not imply all lateral action visible."
+    },
+    {
+      "key": "toronto_r16",
+      "source_name": "toronto-r16",
+      "source_key": "toronto-r16",
+      "source": "toronto-r16",
+      "source_url": "https://www.youtube.com/watch?v=w29uIOOBVYM",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/toronto-r16.mp4",
+      "source_sha256": "dbeafb51749c7c1b4575fba7db52d4e3e840b9eb537e8177f6d25904b9ecdefd",
+      "source_fps": "25/1",
+      "source_width": 1920,
+      "source_height": 1080,
+      "start": 261.9,
+      "end": 272.24,
+      "duration": 10.34,
+      "seconds": 10.34,
+      "quote_kind": "commentary",
+      "_quote_kind": "broadcast",
+      "frame": "court",
+      "cx": 0.5,
+      "cx_face": null,
+      "fit": "crop",
+      "crop_policy": "cropfill",
+      "track": false,
+      "narration": "",
+      "captions": [
+        {
+          "start": 266.88,
+          "end": 269.42,
+          "en": "Oh, it hasn't gone over like that.",
+          "zh": "哦，不会就这样过网吧！"
+        },
+        {
+          "start": 270.66,
+          "end": 271.98,
+          "en": "Goodness me.",
+          "zh": "天哪。"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 4.98,
+          "end": 7.52,
+          "text": "Oh, it hasn't gone over like that.\n哦，不会就这样过网吧！"
+        },
+        {
+          "at": 8.76,
+          "end": 10.08,
+          "text": "Goodness me.\n天哪。"
+        }
+      ],
+      "audio_review_packet": "/workspace/pegula-finals-production/production/evidence/toronto_r16-foreground-packet.json",
+      "audio_review_packet_sha256": "2e6f1eb59aeea1955efeb4f10dbd0430d5b799d2f0f48c0fdbcf1d934c1dee29",
+      "method": "asr_cross_checked",
+      "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/toronto-r16-small.en.json",
+          "sha256": "704482f3aa5e3606ea35cafb99c974e5498a9be92f8e26da060b315bb5bb457d",
+          "model": "small.en",
+          "source_sha256": "dbeafb51749c7c1b4575fba7db52d4e3e840b9eb537e8177f6d25904b9ecdefd",
+          "source_clip": [
+            252,
+            298
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/toronto-r16-medium.en.json",
+          "sha256": "1708abade99ef3397d2151853d687e36cc9ddb20baadc2d3c14197b375bc346a",
+          "model": "medium.en",
+          "source_sha256": "dbeafb51749c7c1b4575fba7db52d4e3e840b9eb537e8177f6d25904b9ecdefd",
+          "source_clip": [
+            252,
+            298
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/toronto-r16-alternative-small.en.json",
+          "sha256": "34112bed8429539c9ac67a5cf1e7cd8d61861d9b33646b6fc42ed549f7de6af0",
+          "model": "small.en",
+          "source_sha256": "dbeafb51749c7c1b4575fba7db52d4e3e840b9eb537e8177f6d25904b9ecdefd",
+          "source_clip": [
+            261,
+            281
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/toronto-r16-alternative-medium.en.json",
+          "sha256": "bf6c3bb5fb3b90d025792c322aad83513631be98600d59f4c2eaf90f78cdb68f",
+          "model": "medium.en",
+          "source_sha256": "dbeafb51749c7c1b4575fba7db52d4e3e840b9eb537e8177f6d25904b9ecdefd",
+          "source_clip": [
+            261,
+            281
+          ]
+        }
+      ],
+      "reviewed_from": 261.9,
+      "reviewed_to": 272.24,
+      "uncertain_spans": [],
+      "human_listened": false,
+      "tail_audit": {
+        "interval": [
+          272.24,
+          272.49
+        ],
+        "new_word_leak": false,
+        "next_word": "Well",
+        "next_onsets": [
+          273.4,
+          273.7,
+          273.88
+        ],
+        "asr_context_end": 281,
+        "notes": "Actual selected source body unchanged; no new stable identifiable foreground word starts in outgoing native .25s."
+      },
+      "visual_evidence": "Actual last point: Pegula far-side server, Shnaider near receiver; net-cord ending, Shnaider raises apologetic hand then head-back reaction. Complete final service point and both excited calls retained. Ends after Goodness me at natural pause before Well. Net handshake274–276 is outside this selection. Fixed court-center requested geometry retains temporal complete point, not a promise of all lateral strokes visible.",
+      "visual_review_status": "Actual source frames and fixed source-center diagnostic crops reviewed; episode native PNG and final film QC still required.",
+      "live_label_window": null,
+      "quote": [
+        {
+          "at": 4.98,
+          "end": 7.52,
+          "text": "Oh, it hasn't gone over like that.\n哦，不会就这样过网吧！"
+        },
+        {
+          "at": 8.76,
+          "end": 10.08,
+          "text": "Goodness me.\n天哪。"
+        }
+      ],
+      "visual_contact": "/workspace/pegula-finals-production/audio/visual/toronto-r16-court-center-contact.jpg",
+      "use": "optional_parent_may_omit_entire_segment",
+      "live_label_status": "No label required if omitted; no safe 2s native-label interval approved in this selected window. Do not place on transition card.",
+      "geometry_policy": "User-requested fixed court-center cx=.5,3:4fill. No tracking/contain; temporal completeness does not imply all lateral action visible."
+    },
+    {
+      "key": "cincy_sf",
+      "source_name": "cincy-sf",
+      "source_key": "cincy-sf",
+      "source": "cincy-sf",
+      "source_url": "https://www.youtube.com/watch?v=C8_5ag2DYn0",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-sf.mp4",
+      "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+      "source_fps": "25/1",
+      "source_width": 1920,
+      "source_height": 1080,
+      "start": 262.72,
+      "end": 275.4,
+      "duration": 12.68,
+      "seconds": 12.68,
+      "quote_kind": "commentary",
+      "_quote_kind": "broadcast",
+      "frame": "court",
+      "cx": 0.5,
+      "cx_face": null,
+      "fit": "crop",
+      "crop_policy": "cropfill",
+      "track": false,
+      "narration": "",
+      "captions": [
+        {
+          "start": 267.48,
+          "end": 269.46,
+          "en": "She needs the first only.",
+          "zh": "她只用一个赛点就兑现。"
+        },
+        {
+          "start": 269.52,
+          "end": 272.92,
+          "en": "Jessica Pegula, for the second time in her career,",
+          "zh": "佩古拉职业生涯第二次，"
+        },
+        {
+          "start": 272.92,
+          "end": 275.28,
+          "en": "will feature in the final here in Cincy.",
+          "zh": "打进辛辛那提决赛。"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 4.76,
+          "end": 6.74,
+          "text": "She needs the first only.\n她只用一个赛点就兑现。"
+        },
+        {
+          "at": 6.8,
+          "end": 10.2,
+          "text": "Jessica Pegula, for the second time in her career,\n佩古拉职业生涯第二次，"
+        },
+        {
+          "at": 10.2,
+          "end": 12.56,
+          "text": "will feature in the final here in Cincy.\n打进辛辛那提决赛。"
+        }
+      ],
+      "audio_review_packet": "/workspace/pegula-finals-production/production/evidence/cincy_sf-foreground-packet.json",
+      "audio_review_packet_sha256": "a09e42e252d0740f42967ce6c5ea6eb1cbad87f445d2efe7836e2b314a52062f",
+      "method": "asr_cross_checked",
+      "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/cincy-sf-small.en.json",
+          "sha256": "78cddb6a2d3870291fcb7a1b62811657602cbbaf14c3ee640359ffa9700f1df5",
+          "model": "small.en",
+          "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+          "source_clip": [
+            254,
+            286
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/cincy-sf-medium.en.json",
+          "sha256": "4428b542a7f3578c2e535ddb6623d512e1e660d311312b8532fd864c35b5ce6e",
+          "model": "medium.en",
+          "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+          "source_clip": [
+            254,
+            286
+          ]
+        }
+      ],
+      "reviewed_from": 262.72,
+      "reviewed_to": 275.4,
+      "uncertain_spans": [],
+      "human_listened": false,
+      "tail_audit": {
+        "interval": [
+          275.4,
+          275.65
+        ],
+        "new_word_leak": false,
+        "next_word": "Her",
+        "next_onsets": [
+          275.72,
+          275.72
+        ],
+        "asr_context_end": 286,
+        "notes": "Actual selected source body unchanged; no new stable identifiable foreground word starts in outgoing native .25s."
+      },
+      "visual_evidence": "Real final service point, not earlier254–261 highlight. Pegula near-side service264–265, rally through267, fist/relief reaction267–272. Full two commentator sentences retained. Final score7-5,4-6,6-4 to Pegula.",
+      "visual_review_status": "Actual source frames and fixed source-center diagnostic crops reviewed; episode native PNG and final film QC still required.",
+      "live_label_window": {
+        "source_start": 264.88,
+        "source_end": 266.92,
+        "segment_relative_start": 2.16,
+        "segment_relative_end": 4.2,
+        "show_after": 2.16,
+        "show_for": 2.04,
+        "actual_png": "/workspace/tennislive/assets/reel/pegula-finals-2026/context-cincy-sf.png",
+        "actual_png_sha256": "a7f551ecb3b1b2b876206194a935b1043bc94bc6636019dafb581e7c13c2b31f",
+        "native_card_width": 0.6,
+        "native_card_top_left": [
+          386,
+          151
+        ],
+        "contact": "/workspace/pegula-finals-production/production/evidence/cincy-sf-actual-label-nine-contact.jpg",
+        "evidence": "/workspace/pegula-finals-production/production/evidence/north-live-label-review.json",
+        "status": "sampled_actual_source_plus_actual_PNG_alpha_safe_native_episode_verification_pending",
+        "reason": "Actual alpha text remains right of far-side Swiatek, near-side Pegula below. Nine sampled service/rally frames show no face/body obstruction."
+      },
+      "quote": [
+        {
+          "at": 4.76,
+          "end": 6.74,
+          "text": "She needs the first only.\n她只用一个赛点就兑现。"
+        },
+        {
+          "at": 6.8,
+          "end": 10.2,
+          "text": "Jessica Pegula, for the second time in her career,\n佩古拉职业生涯第二次，"
+        },
+        {
+          "at": 10.2,
+          "end": 12.56,
+          "text": "will feature in the final here in Cincy.\n打进辛辛那提决赛。"
+        }
+      ],
+      "visual_contact": "/workspace/pegula-finals-production/audio/visual/cincy-sf-court-center-contact.jpg",
+      "geometry_policy": "User-requested fixed court-center cx=.5,3:4fill. No tracking/contain; temporal completeness does not imply all lateral action visible."
+    },
+    {
+      "key": "cincy_final",
+      "source_name": "cincy-final",
+      "source_key": "cincy-final",
+      "source": "cincy-final",
+      "source_url": "https://www.youtube.com/watch?v=Z2_awLHqcww",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-final.mp4",
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "source_fps": "25/1",
+      "source_width": 1920,
+      "source_height": 1080,
+      "start": 236.6,
+      "end": 260.5,
+      "duration": 23.9,
+      "seconds": 23.9,
+      "quote_kind": "commentary",
+      "_quote_kind": "broadcast",
+      "frame": "court",
+      "cx": 0.5,
+      "cx_face": null,
+      "fit": "crop",
+      "crop_policy": "cropfill",
+      "track": false,
+      "narration": "",
+      "captions": [
+        {
+          "start": 246.7,
+          "end": 250.02,
+          "en": "It is the first title of the year for Coco Gauff.",
+          "zh": "这是高芙今年的首冠。"
+        },
+        {
+          "start": 250.62,
+          "end": 252.72,
+          "en": "It is her second in Cincinnati,",
+          "zh": "她第二次在辛辛那提夺冠，"
+        },
+        {
+          "start": 253.54,
+          "end": 258.2,
+          "en": "and it is the 12th singles title of her tremendous career.",
+          "zh": "也是她生涯第十二座单打冠军。"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 10.1,
+          "end": 13.42,
+          "text": "It is the first title of the year for Coco Gauff.\n这是高芙今年的首冠。"
+        },
+        {
+          "at": 14.02,
+          "end": 16.12,
+          "text": "It is her second in Cincinnati,\n她第二次在辛辛那提夺冠，"
+        },
+        {
+          "at": 16.94,
+          "end": 21.6,
+          "text": "and it is the 12th singles title of her tremendous career.\n也是她生涯第十二座单打冠军。"
+        }
+      ],
+      "audio_review_packet": "/workspace/pegula-finals-production/production/evidence/cincy_final-foreground-packet.json",
+      "audio_review_packet_sha256": "45bbfaf63915ce9b1e34194f2aa846178593d6b145884261a5c1bb584af08114",
+      "method": "asr_cross_checked",
+      "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/cincy-final-small.en.json",
+          "sha256": "0bf125b1fcd2129f9b2177d7665d781a51fb3046149fc14b960b98901066daf9",
+          "model": "small.en",
+          "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+          "source_clip": [
+            234.0,
+            261.0
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/cincy-final-medium.en.json",
+          "sha256": "44adb58455542d949db0c5a0cd1bbafb0fe5113da5fa1ffd2bbcdb00d7f2b7e0",
+          "model": "medium.en",
+          "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+          "source_clip": [
+            234.0,
+            261.0
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/cincy-final-close-small.en.json",
+          "sha256": "1873b237efcb26174bcecce58d373929635f54105ec8ca81b3531aa3a0b91a86",
+          "model": "small.en",
+          "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+          "source_clip": [
+            246.0,
+            269.0
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/cincy-final-close-medium.en.json",
+          "sha256": "da2162c9eb0b56450489a878885633c940a1344b4911a42fd4c5f05f143c63e4",
+          "model": "medium.en",
+          "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+          "source_clip": [
+            246.0,
+            269.0
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/cincy-final-alternative-small.en.json",
+          "sha256": "2d4dc033321030fb4b83580a15c6d4bf21bfe2d0c40fb3b8d5e973e9a370e297",
+          "model": "small.en",
+          "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+          "source_clip": [
+            246.7,
+            261
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/cincy-final-alternative-medium.en.json",
+          "sha256": "3398a968d2d5826d8447995473dd49990d749a1f286b38d82ff0dba561099fe7",
+          "model": "medium.en",
+          "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+          "source_clip": [
+            246.7,
+            261
+          ]
+        }
+      ],
+      "reviewed_from": 236.6,
+      "reviewed_to": 260.5,
+      "uncertain_spans": [],
+      "human_listened": false,
+      "tail_audit": {
+        "interval": [
+          260.5,
+          260.75
+        ],
+        "new_word_leak": false,
+        "next_word": "And/The embrace",
+        "next_onsets": [
+          261.8,
+          262.5
+        ],
+        "asr_context_end": 269,
+        "notes": "Actual selected source body unchanged; no new stable identifiable foreground word starts in outgoing native .25s."
+      },
+      "visual_evidence": "Pegula near-side service237–239, final rally to246, Gauff raised-arms reaction then net embrace256–260. Full three-clause commentator summary ends258.20, so old255.28 ending would cut a sentence and is rejected. Both close actual models place initial It246.70–247.18/247.20; no artificial word inserted. Pegula loses2-6,4-6.",
+      "visual_review_status": "Actual source frames and fixed source-center diagnostic crops reviewed; episode native PNG and final film QC still required.",
+      "live_label_window": {
+        "source_start": 255.76,
+        "source_end": 257.76,
+        "segment_relative_start": 19.16,
+        "segment_relative_end": 21.16,
+        "show_after": 19.16,
+        "show_for": 2.0,
+        "actual_png": "/workspace/tennislive/assets/reel/pegula-finals-2026/context-cincy-final.png",
+        "actual_png_sha256": "cf5d2df276486eb9bbcc1dff2d6a55c068d4b606d569d34f654f4a89e3fb0272",
+        "native_card_width": 0.6,
+        "native_card_top_left": [
+          386,
+          151
+        ],
+        "contact": "/workspace/pegula-finals-production/production/evidence/cincy-final-actual-label-nine-contact.jpg",
+        "evidence": "/workspace/pegula-finals-production/production/evidence/north-live-label-review.json",
+        "status": "sampled_actual_source_plus_actual_PNG_alpha_safe_native_episode_verification_pending",
+        "reason": "Continuous actual courtside/net approach. Both athletes enter beneath actual text; sky/light/crowd lie behind text. No athlete covered in nine samples; ends before their later closer faces."
+      },
+      "quote": [
+        {
+          "at": 10.1,
+          "end": 13.42,
+          "text": "It is the first title of the year for Coco Gauff.\n这是高芙今年的首冠。"
+        },
+        {
+          "at": 14.02,
+          "end": 16.12,
+          "text": "It is her second in Cincinnati,\n她第二次在辛辛那提夺冠，"
+        },
+        {
+          "at": 16.94,
+          "end": 21.6,
+          "text": "and it is the 12th singles title of her tremendous career.\n也是她生涯第十二座单打冠军。"
+        }
+      ],
+      "visual_contact": "/workspace/pegula-finals-production/audio/visual/cincy-final-court-center-contact.jpg",
+      "geometry_policy": "User-requested fixed court-center cx=.5,3:4fill. No tracking/contain; temporal completeness does not imply all lateral action visible."
+    },
+    {
+      "key": "us_qf_bp_save",
+      "source_name": "us-qf",
+      "source_key": "us-qf",
+      "source": "us-qf",
+      "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "source_fps": "60000/1001",
+      "source_width": 1920,
+      "source_height": 1080,
+      "start": 150.5,
+      "end": 164.8,
+      "duration": 14.3,
+      "seconds": 14.3,
+      "quote_kind": "commentary",
+      "_quote_kind": "broadcast",
+      "frame": "court",
+      "cx": 0.5,
+      "cx_face": null,
+      "fit": "crop",
+      "crop_policy": "cropfill",
+      "track": false,
+      "narration": "",
+      "captions": [],
+      "native_quote_cues": [],
+      "audio_review_packet": "/workspace/pegula-finals-production/production/evidence/us_qf_bp_save-foreground-packet.json",
+      "audio_review_packet_sha256": "17a8182c40cee3076425c763e28b4641f897b9d36f66ed0c8db0e4df3c42a08a",
+      "method": "asr_cross_checked",
+      "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/us-qf-bpsave-small.en.json",
+          "sha256": "5b721b654754bf6941d0c847ce9f5ecca1901611b8cc4029c3356985572f98e8",
+          "model": "small.en",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "source_clip": [
+            134.0,
+            167.2
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/us-qf-bpsave-medium.en.json",
+          "sha256": "eb9428a4bfd22f5f81c29f4b3e6aa2d2de04df5c1d5e61f3f0c985d6df3e042e",
+          "model": "medium.en",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "source_clip": [
+            134.0,
+            167.2
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/us-qf-selected-turbo.json",
+          "sha256": "e4df180c31649bcf99a44463b15d4c1b1408fea9227cd793bb43b761d2ddcdf6",
+          "model": "large-v3-turbo",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "source_clip": [
+            150,
+            167.2
+          ]
+        }
+      ],
+      "reviewed_from": 150.5,
+      "reviewed_to": 164.8,
+      "uncertain_spans": [],
+      "human_listened": false,
+      "tail_audit": {
+        "interval": [
+          164.8,
+          165.05
+        ],
+        "new_word_leak": false,
+        "next_word": null,
+        "next_onsets": null,
+        "asr_context_end": 167.2,
+        "notes": "Three actual decoders reviewed across164.80–165.05; no new stable identifiable foreground English. No audio-tail silence needed."
+      },
+      "visual_evidence": "Actual saved break point at5-3 while serving for match, NOT the match point. Pegula burgundy far-side server, Navarro blue near receiver; serve151, long rally through162, Pegula fist reaction163–164.8. Temporal complete point retained. Fixed court center.5 can briefly exclude lateral opponent movement; no all-strokes-visible claim.",
+      "visual_review_status": "Actual source frames and fixed source-center diagnostic crops reviewed; episode native PNG and final film QC still required.",
+      "live_label_window": {
+        "source_start": 157.0,
+        "source_end": 159.0,
+        "segment_relative_start": 6.5,
+        "segment_relative_end": 8.5,
+        "show_after": 6.5,
+        "show_for": 2.0,
+        "actual_png": "/workspace/tennislive/assets/reel/pegula-finals-2026/context-us-qf.png",
+        "actual_png_sha256": "55e5d84c08f5a7daddbe4ba3143a6bf14f8c0402ba1908fa94bfef5a5aba2b27",
+        "native_card_width": 0.6,
+        "native_card_top_left": [
+          386,
+          151
+        ],
+        "contact": "/workspace/pegula-finals-production/production/evidence/us-qf-actual-label-nine-contact.jpg",
+        "evidence": "/workspace/pegula-finals-production/production/evidence/north-live-label-review.json",
+        "status": "sampled_actual_source_plus_actual_PNG_alpha_safe_native_episode_verification_pending",
+        "reason": "Far-side Pegula moves left of text throughout actual saved-break-point rally; Navarro below. The earlier151–156 point frames are NOT safe; use157–159 only. Do not label the reaction close-up."
+      },
+      "quote": [],
+      "visual_contact": "/workspace/pegula-finals-production/audio/visual/us-qf-court-center-contact.jpg",
+      "geometry_policy": "User-requested fixed court-center cx=.5,3:4fill. No tracking/contain; temporal completeness does not imply all lateral action visible."
+    },
+    {
+      "key": "us_qf_reaction",
+      "source_name": "us-qf",
+      "source_key": "us-qf",
+      "source": "us-qf",
+      "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "source_fps": "60000/1001",
+      "source_width": 1920,
+      "source_height": 1080,
+      "start": 190.7,
+      "end": 203.2,
+      "duration": 12.5,
+      "seconds": 12.5,
+      "quote_kind": "commentary",
+      "_quote_kind": "broadcast",
+      "frame": "court",
+      "cx": 0.5,
+      "cx_face": null,
+      "fit": "crop",
+      "crop_policy": "cropfill",
+      "track": false,
+      "narration": "",
+      "captions": [
+        {
+          "start": 190.86,
+          "end": 192.48,
+          "en": "She got through it.",
+          "zh": "她挺过来了。"
+        },
+        {
+          "start": 199.28,
+          "end": 202.9,
+          "en": "She's in the semis at her favorite tournament.",
+          "zh": "她在最爱的赛事打进四强。"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 0.16,
+          "end": 1.78,
+          "text": "She got through it.\n她挺过来了。"
+        },
+        {
+          "at": 8.58,
+          "end": 12.2,
+          "text": "She's in the semis at her favorite tournament.\n她在最爱的赛事打进四强。"
+        }
+      ],
+      "audio_review_packet": "/workspace/pegula-finals-production/production/evidence/us_qf_reaction-foreground-packet.json",
+      "audio_review_packet_sha256": "310d192590c00b476da7b0b4a8c236d8810e7498b4fd751617bcbd6f25bfc5b8",
+      "method": "asr_cross_checked",
+      "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/us-qf-small.en.json",
+          "sha256": "a9e4621d249f55fbca6e92471938b7858796aafd401f338d3d641a3b91af0ca9",
+          "model": "small.en",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "source_clip": [
+            166,
+            205
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/us-qf-medium.en.json",
+          "sha256": "b87a919b3d0c998ca6a58be991874bac3158bcb0b80d7a8f4416bd6f9b6a24c4",
+          "model": "medium.en",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "source_clip": [
+            166,
+            205
+          ]
+        }
+      ],
+      "reviewed_from": 190.7,
+      "reviewed_to": 203.2,
+      "uncertain_spans": [],
+      "human_listened": false,
+      "tail_audit": {
+        "interval": [
+          203.2,
+          203.45
+        ],
+        "new_word_leak": false,
+        "next_word": null,
+        "next_onsets": null,
+        "asr_context_end": 205,
+        "notes": "Actual selected source body unchanged; no new stable identifiable foreground word starts in outgoing native .25s."
+      },
+      "visual_evidence": "Authentic same-match post-win Pegula reaction, kept as full12.50s with complete She got through it and full semis/favorite tournament sentence. This is reaction, not another complete match point. No live label on this face reaction; put result card on the selected earlier live point.",
+      "visual_review_status": "Actual source frames and fixed source-center diagnostic crops reviewed; episode native PNG and final film QC still required.",
+      "live_label_window": null,
+      "quote": [
+        {
+          "at": 0.16,
+          "end": 1.78,
+          "text": "She got through it.\n她挺过来了。"
+        },
+        {
+          "at": 8.58,
+          "end": 12.2,
+          "text": "She's in the semis at her favorite tournament.\n她在最爱的赛事打进四强。"
+        }
+      ],
+      "visual_contact": "/workspace/pegula-finals-production/audio/visual/us-qf-court-center-contact.jpg",
+      "geometry_policy": "User-requested fixed court-center cx=.5,3:4fill. No tracking/contain; temporal completeness does not imply all lateral action visible."
+    },
+    {
+      "key": "us_qf_interview",
+      "source_name": "us-qf-interview",
+      "source_key": "us-qf-interview",
+      "source": "us-qf-interview",
+      "source_url": "https://www.youtube.com/watch?v=2FI5qs9EXNs",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf-interview.mp4",
+      "source_sha256": "39828758dc1c8d1f40ec1389a66825395b93c2d8e91cda27b5728b5de96eaea7",
+      "source_fps": "60000/1001",
+      "source_width": 1920,
+      "source_height": 1080,
+      "start": 57.4,
+      "end": 74.72,
+      "duration": 17.32,
+      "seconds": 17.32,
+      "quote_kind": "interview",
+      "_quote_kind": "interview",
+      "frame": "person",
+      "cx": 0.524,
+      "cx_face": {
+        "samples": [
+          0.5275,
+          0.4996,
+          0.524,
+          0.5541,
+          0.496,
+          0.5067,
+          0.5183,
+          0.4929,
+          0.5133
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T05:30:23+00:00",
+        "median": 0.5133,
+        "spread": 0.0612
+      },
+      "fit": "crop",
+      "crop_policy": "cropfill",
+      "track": false,
+      "narration": "",
+      "captions": [
+        {
+          "start": 57.44,
+          "end": 60.34,
+          "en": "I think I do a great job of having a short-term memory,",
+          "zh": "我很擅长不纠结刚发生的事，"
+        },
+        {
+          "start": 60.34,
+          "end": 62.82,
+          "en": "so I know that every time I come out, no matter what,",
+          "zh": "所以每次上场，无论如何，"
+        },
+        {
+          "start": 62.92,
+          "end": 66.28,
+          "en": "I just have to tell all the negative me",
+          "zh": "我得对那个消极的自己说，"
+        },
+        {
+          "start": 66.28,
+          "end": 67.86,
+          "en": "to shut up and just play tennis",
+          "zh": "闭嘴，继续打网球，"
+        },
+        {
+          "start": 67.86,
+          "end": 69.4,
+          "en": "and compete and battle",
+          "zh": "去竞争，去战斗，"
+        },
+        {
+          "start": 69.4,
+          "end": 71.98,
+          "en": "and think out there and try and problem-solve as best I can.",
+          "zh": "动脑筋，尽全力解决问题。"
+        },
+        {
+          "start": 72.14,
+          "end": 74.7,
+          "en": "And yeah, that's all I'm trying to do, really.",
+          "zh": "对，我努力做的就是这些。"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 0.04,
+          "end": 2.94,
+          "text": "I think I do a great job of having a short-term memory,\n我很擅长不纠结刚发生的事，"
+        },
+        {
+          "at": 2.94,
+          "end": 5.42,
+          "text": "so I know that every time I come out, no matter what,\n所以每次上场，无论如何，"
+        },
+        {
+          "at": 5.52,
+          "end": 8.88,
+          "text": "I just have to tell all the negative me\n我得对那个消极的自己说，"
+        },
+        {
+          "at": 8.88,
+          "end": 10.46,
+          "text": "to shut up and just play tennis\n闭嘴，继续打网球，"
+        },
+        {
+          "at": 10.46,
+          "end": 12.0,
+          "text": "and compete and battle\n去竞争，去战斗，"
+        },
+        {
+          "at": 12.0,
+          "end": 14.58,
+          "text": "and think out there and try and problem-solve as best I can.\n动脑筋，尽全力解决问题。"
+        },
+        {
+          "at": 14.74,
+          "end": 17.3,
+          "text": "And yeah, that's all I'm trying to do, really.\n对，我努力做的就是这些。"
+        }
+      ],
+      "audio_review_packet": "/workspace/pegula-finals-production/production/evidence/us_qf_interview-foreground-packet.json",
+      "audio_review_packet_sha256": "3afc17f02df02c56fb18159b0b325e690e73abc0ded2e0fc4ab05a6d6661d970",
+      "method": "asr_cross_checked",
+      "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/us-qf-interview-small.en.json",
+          "sha256": "b3c6315c84c59c6119959f58881c84de3f24fa4dd95e4c55c2a46b6f6e8e4670",
+          "model": "small.en",
+          "source_sha256": "39828758dc1c8d1f40ec1389a66825395b93c2d8e91cda27b5728b5de96eaea7",
+          "source_clip": [
+            45,
+            78
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/us-qf-interview-medium.en.json",
+          "sha256": "51211e88fc01e1425c6838f048af4fb25df835a7ac0b39dfc6fe7ef3bc141168",
+          "model": "medium.en",
+          "source_sha256": "39828758dc1c8d1f40ec1389a66825395b93c2d8e91cda27b5728b5de96eaea7",
+          "source_clip": [
+            45,
+            78
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/us-qf-interview-turbo-diagnostic.json",
+          "sha256": "4cd4fee5bd0019ecc0fd8a00a0b53ad92a43c41c4c529805644a7b356b8fff64",
+          "model": "large-v3-turbo",
+          "source_sha256": "39828758dc1c8d1f40ec1389a66825395b93c2d8e91cda27b5728b5de96eaea7",
+          "source_clip": [
+            62,
+            77
+          ]
+        }
+      ],
+      "reviewed_from": 57.4,
+      "reviewed_to": 74.72,
+      "uncertain_spans": [],
+      "human_listened": false,
+      "tail_audit": {
+        "interval": [
+          74.72,
+          74.97
+        ],
+        "new_word_leak": false,
+        "next_word": "Well (interviewer)",
+        "next_onsets": [
+          75.14,
+          75.12
+        ],
+        "asr_context_end": 78,
+        "notes": "medium smears next interviewer Well to74.70; independent small and targeted turbo agree75.14/75.12, while player really ends74.56/74.60. Thus native tail to74.97 does not include next stable word."
+      },
+      "visual_evidence": "Authentic Pegula on-court interview after beating Navarro, not after semifinal loss/qualification. Nine actual person samples fixed cx=.524. Natural hand temporarily covers part of her own face in source; no overlay/artificial crop cause.",
+      "visual_review_status": "Actual source frames and fixed source-center diagnostic crops reviewed; episode native PNG and final film QC still required.",
+      "live_label_window": null,
+      "quote": [
+        {
+          "at": 0.04,
+          "end": 2.94,
+          "text": "I think I do a great job of having a short-term memory,\n我很擅长不纠结刚发生的事，"
+        },
+        {
+          "at": 2.94,
+          "end": 5.42,
+          "text": "so I know that every time I come out, no matter what,\n所以每次上场，无论如何，"
+        },
+        {
+          "at": 5.52,
+          "end": 8.88,
+          "text": "I just have to tell all the negative me\n我得对那个消极的自己说，"
+        },
+        {
+          "at": 8.88,
+          "end": 10.46,
+          "text": "to shut up and just play tennis\n闭嘴，继续打网球，"
+        },
+        {
+          "at": 10.46,
+          "end": 12.0,
+          "text": "and compete and battle\n去竞争，去战斗，"
+        },
+        {
+          "at": 12.0,
+          "end": 14.58,
+          "text": "and think out there and try and problem-solve as best I can.\n动脑筋，尽全力解决问题。"
+        },
+        {
+          "at": 14.74,
+          "end": 17.3,
+          "text": "And yeah, that's all I'm trying to do, really.\n对，我努力做的就是这些。"
+        }
+      ],
+      "person_measurement_window": [
+        57.4,
+        74.72
+      ],
+      "person_evidence": "/workspace/pegula-finals-production/audio/speech-person-centers.json",
+      "visual_contact": "/workspace/pegula-finals-production/audio/visual/us-qf-interview-person-measured-contact.jpg"
+    },
+    {
+      "key": "us_sf_bp_save",
+      "source_name": "us-sf",
+      "source_key": "us-sf",
+      "source": "us-sf",
+      "source_url": "https://www.youtube.com/watch?v=1WAjW7l89YQ",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-sf.mp4",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "source_fps": "60000/1001",
+      "source_width": 1920,
+      "source_height": 1080,
+      "start": 16.92,
+      "end": 27.4,
+      "duration": 10.48,
+      "seconds": 10.48,
+      "quote_kind": "commentary",
+      "_quote_kind": "broadcast",
+      "frame": "court",
+      "cx": 0.5,
+      "cx_face": null,
+      "fit": "crop",
+      "crop_policy": "cropfill",
+      "track": false,
+      "narration": "",
+      "captions": [
+        {
+          "start": 25.14,
+          "end": 26.48,
+          "en": "Oh, what a save!",
+          "zh": "哦，救得真漂亮！"
+        }
+      ],
+      "native_quote_cues": [
+        {
+          "at": 8.22,
+          "end": 9.56,
+          "text": "Oh, what a save!\n哦，救得真漂亮！"
+        }
+      ],
+      "audio_review_packet": "/workspace/pegula-finals-production/production/evidence/us_sf_bp_save-foreground-packet.json",
+      "audio_review_packet_sha256": "bcc955c7859488952f7ea1a3165f4b2a1d6e5d9f702cbd6055d13a9ceb9a4a6f",
+      "method": "asr_cross_checked",
+      "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/us-sf-alternative-small.en.json",
+          "sha256": "fa7aceeaaea49b210ac58c5064707c69b1159415db8b082d863e44dda36d21b5",
+          "model": "small.en",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "source_clip": [
+            16,
+            30
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/us-sf-alternative-medium.en.json",
+          "sha256": "c430de0a5f4ddf6f58e9991d974a0de27ab30cd51475ea647bf1821a0dd41a19",
+          "model": "medium.en",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "source_clip": [
+            16,
+            30
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/evidence/us-sf-selected-turbo.json",
+          "sha256": "870c4bd58dcf55c5b8d19b8eb3e07019bad6670084beb8b407fa972638add228",
+          "model": "large-v3-turbo",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "source_clip": [
+            23,
+            30
+          ]
+        }
+      ],
+      "reviewed_from": 16.92,
+      "reviewed_to": 27.4,
+      "uncertain_spans": [],
+      "human_listened": false,
+      "tail_audit": {
+        "interval": [
+          27.4,
+          27.65
+        ],
+        "new_word_leak": false,
+        "next_word": null,
+        "next_onsets": null,
+        "asr_context_end": 30,
+        "notes": "Actual selected source body unchanged; no new stable identifiable foreground word starts in outgoing native .25s."
+      },
+      "visual_evidence": "First-set Sabalenka2-1, Pegula serving30-40; full serve and saved break point, ending Pegula walking reaction. NOT championship point or final match result; loss5-7,2-6 may be given by live full-match-result label. Pegula near side, Sabalenka far. Requested fixed center3:4 has lateral spatial limitations; no promise all strokes fully visible.",
+      "visual_review_status": "Actual source frames and fixed source-center diagnostic crops reviewed; episode native PNG and final film QC still required.",
+      "live_label_window": {
+        "source_start": 24.24,
+        "source_end": 26.24,
+        "segment_relative_start": 7.32,
+        "segment_relative_end": 9.32,
+        "show_after": 7.32,
+        "show_for": 2.0,
+        "actual_png": "/workspace/tennislive/assets/reel/pegula-finals-2026/context-us-sf.png",
+        "actual_png_sha256": "bade3ab96c820ffd5915ecfdfa560a3dcdf43991e770b6f11b0afcc5d6818888",
+        "native_card_width": 0.6,
+        "native_card_top_left": [
+          386,
+          151
+        ],
+        "contact": "/workspace/pegula-finals-production/production/evidence/us-sf-actual-label-nine-contact.jpg",
+        "evidence": "/workspace/pegula-finals-production/production/evidence/north-live-label-review.json",
+        "status": "sampled_actual_source_plus_actual_PNG_alpha_safe_native_episode_verification_pending",
+        "reason": "Far-side Sabalenka is left of actual text throughout; near-side Pegula below. At26.24 source cut to Pegula close-up, face remains left of actual text. Do not extend later without native check."
+      },
+      "quote": [
+        {
+          "at": 8.22,
+          "end": 9.56,
+          "text": "Oh, what a save!\n哦，救得真漂亮！"
+        }
+      ],
+      "visual_contact": "/workspace/pegula-finals-production/audio/visual/us-sf-court-center-contact.jpg",
+      "geometry_policy": "User-requested fixed court-center cx=.5,3:4fill. No tracking/contain; temporal completeness does not imply all lateral action visible."
+    }
+  ],
+  "total_seconds": 133.76,
+  "caption_cues": 25,
+  "audio_packets_complete": 9,
+  "notes": [
+    "Two interview windows bound to existing actual nine-sample person measurements.",
+    "USQF saved-break-point audio classified using actual three-model evidence as no stable identifiable foreground English; sound preserved. No fabricated umpire transcript.",
+    "USSF early saved break point is a real complete point, never labelled final point.",
+    "Toronto optional; no transition-card label fallback.",
+    "Live label preliminary interval notes are supplemented separately using actual episode transparent PNG alpha, not the obsolete narrow diagnostic rectangle."
+  ]
+}

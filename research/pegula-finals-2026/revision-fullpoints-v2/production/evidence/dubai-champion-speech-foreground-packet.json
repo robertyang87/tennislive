@@ -1,0 +1,89 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=kuICNiB--fE",
+  "source_sha256": "b81c05eee0406d4816be14870a933bc2504af15401f14caa3b8408ee1652c918",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex early-source agent: actual word-timestamp small.en/medium.en comparison; no human listening claim",
+  "reviewed_at": "2026-10-22T08:04:46.518073+00:00",
+  "status": "complete",
+  "reviewed_from": 0.0,
+  "reviewed_to": 90.4,
+  "foreground_english": [
+    {
+      "start": 28.84,
+      "end": 30.1,
+      "en": "But just super happy",
+      "zh": "但我特别开心",
+      "text": "But just super happy"
+    },
+    {
+      "start": 30.1,
+      "end": 31.65,
+      "en": "to go home with a trophy.",
+      "zh": "能带着奖杯回家",
+      "text": "to go home with a trophy."
+    },
+    {
+      "start": 32.7,
+      "end": 34.18,
+      "en": "It was just, it was a great week.",
+      "zh": "这一周真的很棒",
+      "text": "It was just, it was a great week."
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/media/dubai-champion-speech-small.en.json",
+      "sha256": "e5c63a1cc838f161d45c0bc47fc9f87e9759c76b1f841bb80798212316571569",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        0.0,
+        90.4
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/media/dubai-champion-speech-medium.en.json",
+      "sha256": "4249a5493430d6c2a44bc9e8cd91e5f2db061cfe753028169faf4d20fc9920e5",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        20.4,
+        34.7
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dubai-champion-speech-28.3-boundary-small.en.json",
+      "sha256": "f2c255cdc60d8071aa4eaee719c910d76df621b265c2d7886fb3c9928bd99880",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        28.3,
+        35
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dubai-champion-speech-28.3-boundary-medium.en.json",
+      "sha256": "d2fa5ffd672fc1329807fce8324f7379fe55a7e43b420e6df4e3c3f3fb6e25eb",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        28.3,
+        35
+      ]
+    }
+  ],
+  "word_level_resolution": {
+    "proper_names": "Canonical official event/player spelling applied to clearly corresponding ASR phonetic errors, e.g.Pagula→Pegula, Helena/Rabakana/Rebecca→Elena Rybakina, Anissimova→Anisimova. Does not invent new utterances.",
+    "ao": "Dedicated442–456 ASR confirms full sentence and Rybakina surname; small full makes +small lexical makes +medium full makes resolve medium lexical make.",
+    "charleston": "Dedicated273–280 both models agree “claims the title again” correcting initial medium article a. Dedicated258–270 resolves complete earlier So good/saved-match-points prelude.",
+    "dubai_sf": "Dedicated267–272 both models find “She’s done it again.” Small broad phantom Well258 removed. Both models agree remainder; source-bound primary identities normalize names.",
+    "champion": "Dedicated28.3–35 both models agree “It was just, it was a great week”, recovering false start omitted by initial medium. Nonlexical um need not be burned in subtitles."
+  },
+  "additional_foreground_audit": "Both actual ASR word lists within the chosen source body were compared. Only the listed intelligible broadcast/own-speech English was resolved; no umpire words fabricated from noise/crowd/impact/grunts. This is transcript cross-check, not human listening or final-mix approval.",
+  "outgoing_tail_audit": {
+    "native_default_seconds": 0.25,
+    "selected_end": 34.45,
+    "tail_through": 34.7,
+    "first_next_english_start": 38.42,
+    "conclusion": "No next English sentence onset inside default outgoing tail in the reviewed actual audio.",
+    "audio_tail": "default",
+    "note": "DubaiSF297.5–304 dedicated both-model check contains only the retained last phrase; no next English recovered through304. Other onsets from wider full ASR. No silence patch needed for these source-bound windows."
+  }
+}

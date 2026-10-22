@@ -1,0 +1,1002 @@
+{
+  "schema": "tennislive.pegula-north-america-research-candidates.v1",
+  "created_at": "2026-10-22T05:37:14.502735+00:00",
+  "player": "Jessica Pegula",
+  "season": 2026,
+  "phase": "source_and_outline_research_only",
+  "formal_render_authorized": false,
+  "human_listened": false,
+  "source_manifest": "/workspace/pegula-finals-production/audio/north-america-source-manifest.json",
+  "download_dispatches": "/workspace/pegula-finals-production/audio/north-america-download-dispatches.json",
+  "sources_native_1080": 8,
+  "candidates": [
+    {
+      "source_name": "dc-final",
+      "kind": "complete_final_point_and_winner_reaction",
+      "source_url": "https://www.youtube.com/watch?v=OvjNXy1mQjY",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/dc-final.mp4",
+      "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "source_width": 1920,
+      "source_height": 1080,
+      "source_fps": "25/1",
+      "start": 234.72,
+      "end": 260.5,
+      "seconds": 25.78,
+      "story_use": "华盛顿决赛被逆转；佩古拉6-4先赢一盘，最终6-4 4-6 0-6。",
+      "visual_evidence": "实际本场：Pegula浅紫、Eala荧光绿。234–235赛点#2，235–244完整发球/回合，244–245得分，245后Eala跪地反应、260网前拥抱。帧证据包含完整源画面与固定cx=.5诊断裁图。",
+      "caption_candidates_absolute": [
+        {
+          "start": 247.22,
+          "end": 250.28,
+          "en": "It's Eala's magical moment.",
+          "zh": "这是伊埃拉的神奇时刻。"
+        },
+        {
+          "start": 251.6,
+          "end": 254.42,
+          "en": "The moment she has dreamt of.",
+          "zh": "她梦寐以求的这一刻。"
+        },
+        {
+          "start": 255.66,
+          "end": 260.24,
+          "en": "A first ever tour title delivered in DC.",
+          "zh": "首座巡回赛冠军，在华盛顿。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 12.5,
+          "end": 15.56,
+          "text": "It's Eala's magical moment.\n这是伊埃拉的神奇时刻。"
+        },
+        {
+          "at": 16.88,
+          "end": 19.7,
+          "text": "The moment she has dreamt of.\n她梦寐以求的这一刻。"
+        },
+        {
+          "at": 20.94,
+          "end": 25.52,
+          "text": "A first ever tour title delivered in DC.\n首座巡回赛冠军，在华盛顿。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "review_state": "asr_cross_checked_candidate",
+      "asr_evidence": [
+        {
+          "file": "/workspace/pegula-finals-production/audio/dc-final-small.en.json",
+          "sha256": "36ced28b8d75f130c65aec06a44268e17b2de7865cff4a20560963539f38732a",
+          "model": "small.en",
+          "source_clip": [
+            233,
+            291
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/dc-final-medium.en.json",
+          "sha256": "238ab5306ea054bc935c116fcad038c0c1d7b7a4f2d2d9d1084e8f4523cec165",
+          "model": "medium.en",
+          "source_clip": [
+            233,
+            291
+          ]
+        }
+      ],
+      "human_listened": false,
+      "approved_for_formal_render": false,
+      "fit": "crop",
+      "track": false,
+      "cx": 0.5,
+      "frame": "court",
+      "visual_source_contact": "/workspace/pegula-finals-production/audio/visual/dc-final-source-contact.jpg",
+      "visual_fixed_center_contact": "/workspace/pegula-finals-production/audio/visual/dc-final-court-center-contact.jpg",
+      "tail_audit": {
+        "interval": [
+          260.5,
+          260.75
+        ],
+        "next_word": "500",
+        "next_onsets": [
+          261.86,
+          262.1
+        ],
+        "new_word_leak": false
+      },
+      "timing_note": "内部字幕分句按双模型实际单词边界拟定；正式制作前再校准句内分屏，完整选窗保留。",
+      "date_note": "跨日/雨断后的当地完赛日交由本集官方数据审计统一落字；不继承旧预告日期。"
+    },
+    {
+      "source_name": "toronto-r16",
+      "kind": "complete_last_point_and_reaction",
+      "source_url": "https://www.youtube.com/watch?v=w29uIOOBVYM",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/toronto-r16.mp4",
+      "source_sha256": "dbeafb51749c7c1b4575fba7db52d4e3e840b9eb537e8177f6d25904b9ecdefd",
+      "source_width": 1920,
+      "source_height": 1080,
+      "source_fps": "25/1",
+      "start": 261.9,
+      "end": 277.52,
+      "seconds": 15.62,
+      "story_use": "加拿大第四轮3-6 3-6负施耐德；真实终局出现幸运擦网球。",
+      "visual_evidence": "261.9–263.08施耐德接发近景，随后切全场：佩古拉远端发球、施耐德近端接球，266–267终局，施耐德举手致歉，274–276网前握手。末分完整时间窗，3:4出框细节仅按诊断裁图记录，不能宣称所有击球员全时可见。",
+      "caption_candidates_absolute": [
+        {
+          "start": 267.06,
+          "end": 269.38,
+          "en": "Oh, it hasn't gone over like that.",
+          "zh": "哦，不会就这样过网吧！"
+        },
+        {
+          "start": 270.66,
+          "end": 271.88,
+          "en": "Goodness me.",
+          "zh": "天哪。"
+        },
+        {
+          "start": 273.7,
+          "end": 277.52,
+          "en": "Well, Diana Shnaider. Back-to-back good fortune.",
+          "zh": "施耐德接连得到幸运眷顾。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 5.16,
+          "end": 7.48,
+          "text": "Oh, it hasn't gone over like that.\n哦，不会就这样过网吧！"
+        },
+        {
+          "at": 8.76,
+          "end": 9.98,
+          "text": "Goodness me.\n天哪。"
+        },
+        {
+          "at": 11.8,
+          "end": 15.62,
+          "text": "Well, Diana Shnaider. Back-to-back good fortune.\n施耐德接连得到幸运眷顾。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "review_state": "visual_complete_sentence_candidates_tail_boundary_needs_lock",
+      "asr_evidence": [
+        {
+          "file": "/workspace/pegula-finals-production/audio/toronto-r16-small.en.json",
+          "sha256": "704482f3aa5e3606ea35cafb99c974e5498a9be92f8e26da060b315bb5bb457d",
+          "model": "small.en",
+          "source_clip": [
+            252,
+            298
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/toronto-r16-medium.en.json",
+          "sha256": "1708abade99ef3397d2151853d687e36cc9ddb20baadc2d3c14197b375bc346a",
+          "model": "medium.en",
+          "source_clip": [
+            252,
+            298
+          ]
+        }
+      ],
+      "human_listened": false,
+      "approved_for_formal_render": false,
+      "fit": "crop",
+      "track": false,
+      "cx": 0.5,
+      "frame": "court",
+      "visual_source_contact": "/workspace/pegula-finals-production/audio/visual/toronto-r16-source-contact.jpg",
+      "visual_fixed_center_contact": "/workspace/pegula-finals-production/audio/visual/toronto-r16-court-center-contact.jpg",
+      "tail_audit": {
+        "interval": [
+          277.52,
+          277.77
+        ],
+        "next_word": "A (smile from Jessica Pegula)",
+        "next_onsets": [
+          277.52,
+          278.04
+        ],
+        "new_word_leak_possible": true,
+        "production_recommendation": "If retaining exact body end277.52, audio_tail:silence only for outgoing extra native tail; do not mute/trim selected full sentences. Boundary should be rechecked after outline approval."
+      }
+    },
+    {
+      "source_name": "cincy-sf",
+      "kind": "complete_match_point_and_two_complete_commentator_sentences",
+      "source_url": "https://www.youtube.com/watch?v=C8_5ag2DYn0",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-sf.mp4",
+      "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+      "source_width": 1920,
+      "source_height": 1080,
+      "source_fps": "25/1",
+      "start": 262.72,
+      "end": 275.4,
+      "seconds": 12.68,
+      "story_use": "决胜盘曾1-3落后，最终7-5 4-6 6-4击败斯瓦泰克，再进辛辛那提决赛。",
+      "visual_evidence": "263发球准备、264–267完整赛点回合、267–272佩古拉握拳释然反应，后续网前致意。注意254–261是此前一分，不冒充赛点。",
+      "caption_candidates_absolute": [
+        {
+          "start": 267.48,
+          "end": 269.46,
+          "en": "She needs the first only.",
+          "zh": "她只用一个赛点就兑现。"
+        },
+        {
+          "start": 269.52,
+          "end": 272.92,
+          "en": "Jessica Pegula, for the second time in her career,",
+          "zh": "佩古拉职业生涯第二次，"
+        },
+        {
+          "start": 272.92,
+          "end": 275.28,
+          "en": "will feature in the final here in Cincy.",
+          "zh": "打进辛辛那提决赛。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 4.76,
+          "end": 6.74,
+          "text": "She needs the first only.\n她只用一个赛点就兑现。"
+        },
+        {
+          "at": 6.8,
+          "end": 10.2,
+          "text": "Jessica Pegula, for the second time in her career,\n佩古拉职业生涯第二次，"
+        },
+        {
+          "at": 10.2,
+          "end": 12.56,
+          "text": "will feature in the final here in Cincy.\n打进辛辛那提决赛。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "review_state": "asr_cross_checked_candidate",
+      "asr_evidence": [
+        {
+          "file": "/workspace/pegula-finals-production/audio/cincy-sf-small.en.json",
+          "sha256": "78cddb6a2d3870291fcb7a1b62811657602cbbaf14c3ee640359ffa9700f1df5",
+          "model": "small.en",
+          "source_clip": [
+            254,
+            286
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/cincy-sf-medium.en.json",
+          "sha256": "4428b542a7f3578c2e535ddb6623d512e1e660d311312b8532fd864c35b5ce6e",
+          "model": "medium.en",
+          "source_clip": [
+            254,
+            286
+          ]
+        }
+      ],
+      "human_listened": false,
+      "approved_for_formal_render": false,
+      "fit": "crop",
+      "track": false,
+      "cx": 0.5,
+      "frame": "court",
+      "visual_source_contact": "/workspace/pegula-finals-production/audio/visual/cincy-sf-source-contact.jpg",
+      "visual_fixed_center_contact": "/workspace/pegula-finals-production/audio/visual/cincy-sf-court-center-contact.jpg",
+      "tail_audit": {
+        "interval": [
+          275.4,
+          275.65
+        ],
+        "next_word": "Her",
+        "next_onsets": [
+          275.72,
+          275.72
+        ],
+        "new_word_leak": false
+      },
+      "alternate_earlier_highlight": {
+        "start": null,
+        "end": 261.98,
+        "quote": "Oh, it is outstanding! Jessica Pegula, take a bow.",
+        "note": "254–255精彩防守分；完整发球起点尚未回溯，不给完整回合通过标签。"
+      }
+    },
+    {
+      "source_name": "cincy-final",
+      "kind": "complete_championship_point_and_commentator_summary",
+      "source_url": "https://www.youtube.com/watch?v=Z2_awLHqcww",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-final.mp4",
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "source_width": 1920,
+      "source_height": 1080,
+      "source_fps": "25/1",
+      "start": 236.6,
+      "end": 260.5,
+      "seconds": 23.9,
+      "story_use": "决赛2-6 4-6负高芙，第二次获得辛辛那提亚军；2024和2026年份明确。",
+      "visual_evidence": "236.6全场，237–239佩古拉近端发球，239–246末分完整回合，246后高芙举手，256–260两人网前握手拥抱。固定球场中心 .5；不沿用旧采访lead_in的左移裁切。",
+      "caption_candidates_absolute": [
+        {
+          "start": 246.96,
+          "end": 250.02,
+          "en": "It is the first title of the year for Coco Gauff.",
+          "zh": "这是高芙今年的首冠。"
+        },
+        {
+          "start": 250.62,
+          "end": 252.66,
+          "en": "It is her second in Cincinnati,",
+          "zh": "她第二次在辛辛那提夺冠，"
+        },
+        {
+          "start": 253.54,
+          "end": 258.2,
+          "en": "and it is the 12th singles title of her tremendous career.",
+          "zh": "也是她生涯第十二座单打冠军。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 10.36,
+          "end": 13.42,
+          "text": "It is the first title of the year for Coco Gauff.\n这是高芙今年的首冠。"
+        },
+        {
+          "at": 14.02,
+          "end": 16.06,
+          "text": "It is her second in Cincinnati,\n她第二次在辛辛那提夺冠，"
+        },
+        {
+          "at": 16.94,
+          "end": 21.6,
+          "text": "and it is the 12th singles title of her tremendous career.\n也是她生涯第十二座单打冠军。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "review_state": "asr_cross_checked_candidate",
+      "asr_evidence": [
+        {
+          "file": "/workspace/pegula-finals-production/audio/cincy-final-small.en.json",
+          "sha256": "0bf125b1fcd2129f9b2177d7665d781a51fb3046149fc14b960b98901066daf9",
+          "model": "small.en",
+          "source_clip": [
+            234.0,
+            261.0
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/cincy-final-medium.en.json",
+          "sha256": "44adb58455542d949db0c5a0cd1bbafb0fe5113da5fa1ffd2bbcdb00d7f2b7e0",
+          "model": "medium.en",
+          "source_clip": [
+            234.0,
+            261.0
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/cincy-final-close-small.en.json",
+          "sha256": "1873b237efcb26174bcecce58d373929635f54105ec8ca81b3531aa3a0b91a86",
+          "model": "small.en",
+          "source_clip": [
+            246.0,
+            269.0
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/cincy-final-close-medium.en.json",
+          "sha256": "da2162c9eb0b56450489a878885633c940a1344b4911a42fd4c5f05f143c63e4",
+          "model": "medium.en",
+          "source_clip": [
+            246.0,
+            269.0
+          ]
+        }
+      ],
+      "human_listened": false,
+      "approved_for_formal_render": false,
+      "fit": "crop",
+      "track": false,
+      "cx": 0.5,
+      "frame": "court",
+      "visual_source_contact": "/workspace/pegula-finals-production/audio/visual/cincy-final-source-contact.jpg",
+      "visual_fixed_center_contact": "/workspace/pegula-finals-production/audio/visual/cincy-final-court-center-contact.jpg",
+      "tail_audit": {
+        "interval": [
+          260.5,
+          260.75
+        ],
+        "next_word": "And/The embrace",
+        "next_onsets": [
+          261.8,
+          262.5
+        ],
+        "new_word_leak": false
+      },
+      "timing_note": "第一词It在两模型中因前面无语音被延展到246.00；句头字幕246.96只是候选显示点，需制作时细校。实际完整句尾到258.10/258.20，旧spec255.28会截句，不可复用。",
+      "assertion_note": "解说中的首冠/第十二冠仅忠实引用本场原声，不据此直接覆盖全季官方数据口径。"
+    },
+    {
+      "source_name": "us-qf",
+      "kind": "complete_second_match_point_audio_umpire_unresolved",
+      "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "source_width": 1920,
+      "source_height": 1080,
+      "source_fps": "60000/1001",
+      "start": 168.84,
+      "end": 179.9,
+      "seconds": 11.06,
+      "story_use": "3-6 6-4 6-3逆转纳瓦罗，晋级美网四强。",
+      "visual_evidence": "169实际原图显示Pegula酒红上衣在远端发球，Navarro蓝衣近端接发；不是旧spec里写的佩古拉接发。169–173完整第二赛点，173–179佩古拉弯腰、抬头释然反应。",
+      "caption_candidates_absolute": [
+        {
+          "start": 177.74,
+          "end": 179.76,
+          "en": "3-6, 6-4, 6-3.",
+          "zh": "三比六、六比四、六比三。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 8.9,
+          "end": 10.92,
+          "text": "3-6, 6-4, 6-3.\n三比六、六比四、六比三。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "review_state": "visual_complete_umpire_words_unresolved_not_audio_approved",
+      "asr_evidence": [
+        {
+          "file": "/workspace/pegula-finals-production/audio/us-qf-small.en.json",
+          "sha256": "a9e4621d249f55fbca6e92471938b7858796aafd401f338d3d641a3b91af0ca9",
+          "model": "small.en",
+          "source_clip": [
+            166,
+            205
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/us-qf-medium.en.json",
+          "sha256": "b87a919b3d0c998ca6a58be991874bac3158bcb0b80d7a8f4416bd6f9b6a24c4",
+          "model": "medium.en",
+          "source_clip": [
+            166,
+            205
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/us-qf-turbo-diagnostic.json",
+          "sha256": "7779c36006da564cf78e3ae0527b92fcdf804493d7ced710454186ba4658d484",
+          "model": "large-v3-turbo",
+          "source_clip": [
+            172.8,
+            180.5
+          ]
+        }
+      ],
+      "human_listened": false,
+      "approved_for_formal_render": false,
+      "fit": "crop",
+      "track": false,
+      "cx": 0.5,
+      "frame": "court",
+      "visual_source_contact": "/workspace/pegula-finals-production/audio/visual/us-qf-source-contact.jpg",
+      "visual_fixed_center_contact": "/workspace/pegula-finals-production/audio/visual/us-qf-court-center-contact.jpg",
+      "uncertainty": {
+        "absolute_interval": [
+          173.4,
+          177.52
+        ],
+        "note": "small/medium只稳定认出最终盘分；turbo识别Go inside the match regular / Two sets to one。不得根据标准宣告模板编写Game set and match Pegula，旧spec的模板纠错不等于本次已核。保留真实声音，正式采用整段前需解决这段背景裁判词；本轮不假标complete。"
+      },
+      "tail_audit": {
+        "interval": [
+          179.9,
+          180.15
+        ],
+        "no_new_foreground_word_detected": true,
+        "note": "现有实际上下文ASR覆盖到205；没有检出180附近新解说。"
+      }
+    },
+    {
+      "source_name": "us-qf",
+      "kind": "clear_post_win_reaction_commentary",
+      "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "source_width": 1920,
+      "source_height": 1080,
+      "source_fps": "60000/1001",
+      "start": 190.7,
+      "end": 203.2,
+      "seconds": 12.5,
+      "story_use": "可与完整终局搭配的真实原声收尾；她挺过来了，在最爱的赛事打进四强。",
+      "visual_evidence": "191与199佩古拉本人真实赛后反应，203官方现场全景；这是赛后反应，不标成另一完整赛点。",
+      "caption_candidates_absolute": [
+        {
+          "start": 190.86,
+          "end": 192.48,
+          "en": "She got through it.",
+          "zh": "她挺过来了。"
+        },
+        {
+          "start": 199.28,
+          "end": 202.9,
+          "en": "She's in the semis at her favorite tournament.",
+          "zh": "她在最爱的赛事打进四强。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 0.16,
+          "end": 1.78,
+          "text": "She got through it.\n她挺过来了。"
+        },
+        {
+          "at": 8.58,
+          "end": 12.2,
+          "text": "She's in the semis at her favorite tournament.\n她在最爱的赛事打进四强。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "review_state": "asr_cross_checked_candidate",
+      "asr_evidence": [
+        {
+          "file": "/workspace/pegula-finals-production/audio/us-qf-small.en.json",
+          "sha256": "a9e4621d249f55fbca6e92471938b7858796aafd401f338d3d641a3b91af0ca9",
+          "model": "small.en",
+          "source_clip": [
+            166,
+            205
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/us-qf-medium.en.json",
+          "sha256": "b87a919b3d0c998ca6a58be991874bac3158bcb0b80d7a8f4416bd6f9b6a24c4",
+          "model": "medium.en",
+          "source_clip": [
+            166,
+            205
+          ]
+        }
+      ],
+      "human_listened": false,
+      "approved_for_formal_render": false,
+      "fit": "crop",
+      "track": false,
+      "cx": 0.5,
+      "frame": "court",
+      "visual_source_contact": "/workspace/pegula-finals-production/audio/visual/us-qf-source-contact.jpg",
+      "visual_fixed_center_contact": "/workspace/pegula-finals-production/audio/visual/us-qf-court-center-contact.jpg",
+      "tail_audit": {
+        "interval": [
+          203.2,
+          203.45
+        ],
+        "new_word_leak": false,
+        "asr_context_end": 205
+      }
+    },
+    {
+      "source_name": "us-sf",
+      "kind": "complete_match_point_with_uncertain_background_call",
+      "source_url": "https://www.youtube.com/watch?v=1WAjW7l89YQ",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-sf.mp4",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "source_width": 1920,
+      "source_height": 1080,
+      "source_fps": "60000/1001",
+      "start": 142.94,
+      "end": 169.7,
+      "seconds": 26.76,
+      "story_use": "5-7 2-6负萨巴伦卡止步美网四强；完整末分与佩古拉走向网前、拥抱。",
+      "visual_evidence": "143–144佩古拉近端发球；145–149完整末分，149–154萨巴握拳，155–162佩古拉走向网前并与对手拥抱，163后萨巴致意。固定cx=.5会在近端右侧救球处裁掉部分身体/球拍，须诚实记录空间限制。",
+      "caption_candidates_absolute": [
+        {
+          "start": 163.16,
+          "end": 169.48,
+          "en": "Aryna Sabalenka is into another US Open championship match.",
+          "zh": "萨巴伦卡再次打进美网决赛。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 20.22,
+          "end": 26.54,
+          "text": "Aryna Sabalenka is into another US Open championship match.\n萨巴伦卡再次打进美网决赛。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "review_state": "visual_complete_background_umpire_unresolved_not_audio_approved",
+      "asr_evidence": [
+        {
+          "file": "/workspace/pegula-finals-production/audio/us-sf-small.en.json",
+          "sha256": "095f4b129978ce830bce2f32a0b9609a1a0915713c1f01fe988337f3f8c86bad",
+          "model": "small.en",
+          "source_clip": [
+            140,
+            171
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/us-sf-medium.en.json",
+          "sha256": "6de85f4be21001a9c24b9c4b6851249a90921f1a1ec04bea75dfb4685bc1fe71",
+          "model": "medium.en",
+          "source_clip": [
+            140,
+            171
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/us-sf-turbo-diagnostic.json",
+          "sha256": "d6c595fecb9e04f0355a80377225b8b70d768dd64e842c2563c28ca81aed58f9",
+          "model": "large-v3-turbo",
+          "source_clip": [
+            149.6,
+            157
+          ]
+        }
+      ],
+      "human_listened": false,
+      "approved_for_formal_render": false,
+      "fit": "crop",
+      "track": false,
+      "cx": 0.5,
+      "frame": "court",
+      "visual_source_contact": "/workspace/pegula-finals-production/audio/visual/us-sf-source-contact.jpg",
+      "visual_fixed_center_contact": "/workspace/pegula-finals-production/audio/visual/us-sf-court-center-contact.jpg",
+      "uncertainty": {
+        "absolute_interval": [
+          150.08,
+          155.76
+        ],
+        "note": "三模型均不能稳定核完整背景裁判宣告，不把And again / 7-match等噪声补造成Game set and match。正式完整保留前需再核；清楚主解说163.16起可单独用。"
+      },
+      "alternate_clear_window": {
+        "start": 162.94,
+        "end": 169.7,
+        "kind": "same_match_winner_reaction_commentary_only",
+        "note": "避开未核裁判声但不是完整末分；可用事实字卡讲佩古拉出局。"
+      },
+      "tail_audit": {
+        "interval": [
+          169.7,
+          169.95
+        ],
+        "note": "现有上下文只到171，未检出此尾窗的新完整前景词；仍需制作阶段衔接审查。"
+      }
+    },
+    {
+      "source_name": "cincy-runnerup",
+      "kind": "player_own_words_cold_open_candidate",
+      "source_url": "https://www.youtube.com/watch?v=pIRDCAcGpz0",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-runnerup.mp4",
+      "source_sha256": "40e516cbaccdd6ea10131b00316a91b17a807dd289e7f60ed314b8d0b8907de9",
+      "source_width": 1920,
+      "source_height": 1080,
+      "source_fps": "30000/1001",
+      "start": 52.24,
+      "end": 58.7,
+      "seconds": 6.46,
+      "story_use": "冷开场可用：捧着亚军奖杯自嘲想要更大的那个，再接赛季夺冠高点。事实背景写2024、2026两次亚军，不写两年两次。",
+      "visual_evidence": "本场本人站在颁奖麦克风前，手持亚军奖杯；52–58连续本人镜头。原生人物中心9/9检测通过，固定cx=.501。",
+      "caption_candidates_absolute": [
+        {
+          "start": 52.38,
+          "end": 53.46,
+          "en": "I'm a little upset.",
+          "zh": "我有点郁闷。"
+        },
+        {
+          "start": 53.46,
+          "end": 54.66,
+          "en": "I have two of these now.",
+          "zh": "这种奖杯，我已有两座。"
+        },
+        {
+          "start": 54.8,
+          "end": 56.92,
+          "en": "I wanted the bigger one, but that's okay.",
+          "zh": "我想要更大的，不过没关系。"
+        },
+        {
+          "start": 57.18,
+          "end": 58.48,
+          "en": "It's still a pretty trophy.",
+          "zh": "这个奖杯也很漂亮。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 0.14,
+          "end": 1.22,
+          "text": "I'm a little upset.\n我有点郁闷。"
+        },
+        {
+          "at": 1.22,
+          "end": 2.42,
+          "text": "I have two of these now.\n这种奖杯，我已有两座。"
+        },
+        {
+          "at": 2.56,
+          "end": 4.68,
+          "text": "I wanted the bigger one, but that's okay.\n我想要更大的，不过没关系。"
+        },
+        {
+          "at": 4.94,
+          "end": 6.24,
+          "text": "It's still a pretty trophy.\n这个奖杯也很漂亮。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "review_state": "asr_cross_checked_candidate",
+      "asr_evidence": [
+        {
+          "file": "/workspace/pegula-finals-production/audio/cincy-runnerup-small.en.json",
+          "sha256": "269a74b3f93c149cd2fbe6686372b30de6444a8b36d95020c7c8917da559a37f",
+          "model": "small.en",
+          "source_clip": [
+            43,
+            70
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/cincy-runnerup-medium.en.json",
+          "sha256": "4d3e8bf3d9fe2017a435a80bc19182e6c2acf1a54bbd3fd2b34cc28dc9e2fb58",
+          "model": "medium.en",
+          "source_clip": [
+            43,
+            70
+          ]
+        }
+      ],
+      "human_listened": false,
+      "approved_for_formal_render": false,
+      "fit": "crop",
+      "track": false,
+      "cx": 0.501,
+      "frame": "person",
+      "visual_source_contact": "/workspace/pegula-finals-production/audio/visual/cincy-runnerup-source-contact.jpg",
+      "visual_fixed_center_contact": "/workspace/pegula-finals-production/audio/visual/cincy-runnerup-court-center-contact.jpg",
+      "cx_face": {
+        "samples": [
+          0.5109,
+          0.5054,
+          0.5078,
+          0.5053,
+          0.4995,
+          0.4907,
+          0.5022,
+          0.4995,
+          0.499
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T05:30:15+00:00",
+        "median": 0.5022,
+        "spread": 0.0202
+      },
+      "person_measurement_window": [
+        52.24,
+        58.7
+      ],
+      "visual_person_measured_contact": "/workspace/pegula-finals-production/audio/visual/cincy-runnerup-person-measured-contact.jpg",
+      "tail_audit": {
+        "interval": [
+          58.7,
+          58.95
+        ],
+        "next_word": "Next",
+        "next_onsets": [
+          59.66,
+          59.7
+        ],
+        "new_word_leak": false
+      },
+      "identity": "Jessica Pegula speaking; tournament official CincyProTennis source, not Gauff speech."
+    },
+    {
+      "source_name": "us-qf-interview",
+      "kind": "player_own_words_ending_candidate",
+      "source_url": "https://www.youtube.com/watch?v=2FI5qs9EXNs",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf-interview.mp4",
+      "source_sha256": "39828758dc1c8d1f40ec1389a66825395b93c2d8e91cda27b5728b5de96eaea7",
+      "source_width": 1920,
+      "source_height": 1080,
+      "source_fps": "60000/1001",
+      "start": 57.4,
+      "end": 74.72,
+      "seconds": 17.32,
+      "story_use": "结尾候选：不纠结上一刻，让消极的自己闭嘴，继续打、竞争、思考并解决问题。此话说于纳瓦罗赛后，不冒充美网出局或年终资格确认后的采访。",
+      "visual_evidence": "本场本人酒红帽/球衣正对麦克风；57–74脸、嘴与手势清楚。原生人物中心9/9通过，固定cx=.524。",
+      "caption_candidates_absolute": [
+        {
+          "start": 57.44,
+          "end": 60.34,
+          "en": "I think I do a great job of having a short-term memory,",
+          "zh": "我很擅长不纠结刚发生的事，"
+        },
+        {
+          "start": 60.34,
+          "end": 62.82,
+          "en": "so I know that every time I come out, no matter what,",
+          "zh": "所以每次上场，无论如何，"
+        },
+        {
+          "start": 62.92,
+          "end": 66.28,
+          "en": "I just have to tell all the negative me",
+          "zh": "我得对那个消极的自己说，"
+        },
+        {
+          "start": 66.28,
+          "end": 67.86,
+          "en": "to shut up and just play tennis",
+          "zh": "闭嘴，继续打网球，"
+        },
+        {
+          "start": 67.86,
+          "end": 69.4,
+          "en": "and compete and battle",
+          "zh": "去竞争，去战斗，"
+        },
+        {
+          "start": 69.4,
+          "end": 71.98,
+          "en": "and think out there and try and problem-solve as best I can.",
+          "zh": "动脑筋，尽全力解决问题。"
+        },
+        {
+          "start": 72.14,
+          "end": 74.7,
+          "en": "And yeah, that's all I'm trying to do, really.",
+          "zh": "对，我努力做的就是这些。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 0.04,
+          "end": 2.94,
+          "text": "I think I do a great job of having a short-term memory,\n我很擅长不纠结刚发生的事，"
+        },
+        {
+          "at": 2.94,
+          "end": 5.42,
+          "text": "so I know that every time I come out, no matter what,\n所以每次上场，无论如何，"
+        },
+        {
+          "at": 5.52,
+          "end": 8.88,
+          "text": "I just have to tell all the negative me\n我得对那个消极的自己说，"
+        },
+        {
+          "at": 8.88,
+          "end": 10.46,
+          "text": "to shut up and just play tennis\n闭嘴，继续打网球，"
+        },
+        {
+          "at": 10.46,
+          "end": 12.0,
+          "text": "and compete and battle\n去竞争，去战斗，"
+        },
+        {
+          "at": 12.0,
+          "end": 14.58,
+          "text": "and think out there and try and problem-solve as best I can.\n动脑筋，尽全力解决问题。"
+        },
+        {
+          "at": 14.74,
+          "end": 17.3,
+          "text": "And yeah, that's all I'm trying to do, really.\n对，我努力做的就是这些。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "review_state": "asr_cross_checked_candidate",
+      "asr_evidence": [
+        {
+          "file": "/workspace/pegula-finals-production/audio/us-qf-interview-small.en.json",
+          "sha256": "b3c6315c84c59c6119959f58881c84de3f24fa4dd95e4c55c2a46b6f6e8e4670",
+          "model": "small.en",
+          "source_clip": [
+            45,
+            78
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/us-qf-interview-medium.en.json",
+          "sha256": "51211e88fc01e1425c6838f048af4fb25df835a7ac0b39dfc6fe7ef3bc141168",
+          "model": "medium.en",
+          "source_clip": [
+            45,
+            78
+          ]
+        },
+        {
+          "file": "/workspace/pegula-finals-production/audio/us-qf-interview-turbo-diagnostic.json",
+          "sha256": "4cd4fee5bd0019ecc0fd8a00a0b53ad92a43c41c4c529805644a7b356b8fff64",
+          "model": "large-v3-turbo",
+          "source_clip": [
+            62,
+            77
+          ]
+        }
+      ],
+      "human_listened": false,
+      "approved_for_formal_render": false,
+      "fit": "crop",
+      "track": false,
+      "cx": 0.524,
+      "frame": "person",
+      "visual_source_contact": "/workspace/pegula-finals-production/audio/visual/us-qf-interview-source-contact.jpg",
+      "visual_fixed_center_contact": "/workspace/pegula-finals-production/audio/visual/us-qf-interview-court-center-contact.jpg",
+      "cx_face": {
+        "samples": [
+          0.5275,
+          0.4996,
+          0.524,
+          0.5541,
+          0.496,
+          0.5067,
+          0.5183,
+          0.4929,
+          0.5133
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T05:30:23+00:00",
+        "median": 0.5133,
+        "spread": 0.0612
+      },
+      "person_measurement_window": [
+        57.4,
+        74.72
+      ],
+      "visual_person_measured_contact": "/workspace/pegula-finals-production/audio/visual/us-qf-interview-person-measured-contact.jpg",
+      "tail_audit": {
+        "interval": [
+          74.72,
+          74.97
+        ],
+        "next_word": "Well (interviewer)",
+        "next_onsets": [
+          75.14,
+          75.12
+        ],
+        "new_word_leak": false,
+        "resolved_diagnostic": "medium merges next interviewerWell into previous segment and starts its word interval74.70; actual targeted turbo+small agree interviewer onset75.12/75.14 and playerreally ends74.60/74.56. No human listening claim."
+      },
+      "condensed_alternative": {
+        "start": 62.84,
+        "end": 74.72,
+        "seconds": 11.88,
+        "note": "从I just have to tell...起，可完整保留到really。须对这个更短窗口重新跑9点人物中心，再用于正式spec；本文件cx_face只绑定57.4–74.72。"
+      }
+    }
+  ],
+  "policy": {
+    "matches": "Fixed court centercx=.5,3:4fill. Do not import old crop_shift_x or hide out-of-frame action.",
+    "speech": "Fixed measured person center,9 actual samples; native measure_person_center evidence present.",
+    "audio": "Actual two-model source-bound ASR; third turbo diagnostics where explicitly recorded. No human-listened claim. Preserve full selected speech and assess outgoing+.25tail.",
+    "captions": "Chinese candidate lines<=16characters; full English words retained. Exact final native subtitle preview/QC follows outline approval.",
+    "facts": "Old narration is discovery pointer only, not source evidence. Dates, whole-season facts and eligibility confirmation belong to current official data audit."
+  },
+  "important_corrections": [
+    "Cincy final full last commentary ends258.10/258.20, not oldspec255.28.",
+    "USQF matchpoint:Pegula far-side server; oldspec calling herreceiver is wrong. Actual169.00s source score and picture prove this.",
+    "Cincy runnerup trophy wording refers to2024 and2026; do not labeltwo finals in two consecutive years.",
+    "Old Toronto spec has conflicting priorDC semifinal score; do not inherit7-5,6-2 into this episode. Use fresh official season audit.",
+    "USQF/USSF umpire announcement remains unresolved; do not normalize ASR noise into templateGame set and match."
+  ],
+  "production_files_modified": false
+}

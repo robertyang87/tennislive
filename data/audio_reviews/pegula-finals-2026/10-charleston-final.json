@@ -1,0 +1,167 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Zwi_zjefnh0",
+  "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex early-source agent: actual word-timestamp small.en/medium.en comparison; no human listening claim",
+  "reviewed_at": "2026-10-22T08:04:46.518073+00:00",
+  "status": "complete",
+  "reviewed_from": 258,
+  "reviewed_to": 300,
+  "foreground_english": [
+    {
+      "start": 262.42,
+      "end": 263.6,
+      "en": "So good.",
+      "zh": "太棒了",
+      "text": "So good."
+    },
+    {
+      "start": 264.8,
+      "end": 266.38,
+      "en": "She saved the match points.",
+      "zh": "对手此前救下那些冠军点",
+      "text": "She saved the match points."
+    },
+    {
+      "start": 266.84,
+      "end": 269.55,
+      "en": "And now a fourth championship point.",
+      "zh": "现在来到第四个冠军点",
+      "text": "And now a fourth championship point."
+    },
+    {
+      "start": 273.0,
+      "end": 273.95,
+      "en": "What a week!",
+      "zh": "多么精彩的一周",
+      "text": "What a week!"
+    },
+    {
+      "start": 275.4,
+      "end": 279.3,
+      "en": "The defending champion claims the title again in Charleston.",
+      "zh": "卫冕冠军再度称霸查尔斯顿",
+      "text": "The defending champion claims the title again in Charleston."
+    },
+    {
+      "start": 281.68,
+      "end": 284.24,
+      "en": "And no one has won more matches this year",
+      "zh": "论本赛季WTA胜场数",
+      "text": "And no one has won more matches this year"
+    },
+    {
+      "start": 284.24,
+      "end": 287.58,
+      "en": "on the WTA Tour than Jess Pegula.",
+      "zh": "还无人超过佩古拉",
+      "text": "on the WTA Tour than Jess Pegula."
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/charleston-final-small.en.json",
+      "sha256": "738856b1f9680fe428f177ee3febb1ca43d78c7e7eb803bab1cc775f4d91ff76",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        267,
+        300
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/charleston-final-medium.en.json",
+      "sha256": "d49928e88088a3f94cdf13b48aea00ab91b06974c0a0dcc8bbbe1d32b9ef4bc7",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        267,
+        300
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/charleston-intro-small.en.json",
+      "sha256": "935ad4de83286846c4910c5311e95859ff7cd10efb75d13ee339629cafdd93c6",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        258,
+        270
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/charleston-intro-medium.en.json",
+      "sha256": "9efdc305537261b135f085969a13577266a5b994195e02ed113fd3aa0f44318a",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        258,
+        270
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/charleston-final-lexical-small.en.json",
+      "sha256": "f4b84f55cb9128966a5772c6bd22776f5641f5792d9492d2a1508d2c38584a8a",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        273,
+        280
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/charleston-final-lexical-medium.en.json",
+      "sha256": "9dae32e27ad45222d32a77633a11e1f428d7d389b454a2c88cf634634f0a61a9",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        273,
+        280
+      ]
+    }
+  ],
+  "word_level_resolution": {
+    "proper_names": "Canonical official event/player spelling applied to clearly corresponding ASR phonetic errors, e.g.Pagula→Pegula, Helena/Rabakana/Rebecca→Elena Rybakina, Anissimova→Anisimova. Does not invent new utterances.",
+    "ao": "Dedicated442–456 ASR confirms full sentence and Rybakina surname; small full makes +small lexical makes +medium full makes resolve medium lexical make.",
+    "charleston": "Dedicated273–280 both models agree “claims the title again” correcting initial medium article a. Dedicated258–270 resolves complete earlier So good/saved-match-points prelude.",
+    "dubai_sf": "Dedicated267–272 both models find “She’s done it again.” Small broad phantom Well258 removed. Both models agree remainder; source-bound primary identities normalize names.",
+    "champion": "Dedicated28.3–35 both models agree “It was just, it was a great week”, recovering false start omitted by initial medium. Nonlexical um need not be burned in subtitles."
+  },
+  "additional_foreground_audit": "Both actual ASR word lists within the chosen source body were compared. Only the listed intelligible broadcast/own-speech English was resolved; no umpire words fabricated from noise/crowd/impact/grunts. This is transcript cross-check, not human listening or final-mix approval.",
+  "outgoing_tail_audit": {
+    "native_default_seconds": 0.25,
+    "selected_end": 287.8,
+    "tail_through": 288.05,
+    "first_next_english_start": 288.54,
+    "conclusion": "No next English sentence onset inside default outgoing tail in the reviewed actual audio.",
+    "audio_tail": "default",
+    "note": "DubaiSF297.5–304 dedicated both-model check contains only the retained last phrase; no next English recovered through304. Other onsets from wider full ASR. No silence patch needed for these source-bound windows."
+  },
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/charleston-final-738856b1f9-charleston-final-small.en.json",
+      "sha256": "738856b1f9680fe428f177ee3febb1ca43d78c7e7eb803bab1cc775f4d91ff76",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/charleston-final-d49928e880-charleston-final-medium.en.json",
+      "sha256": "d49928e88088a3f94cdf13b48aea00ab91b06974c0a0dcc8bbbe1d32b9ef4bc7",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/charleston-final-935ad4de83-charleston-intro-small.en.json",
+      "sha256": "935ad4de83286846c4910c5311e95859ff7cd10efb75d13ee339629cafdd93c6",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/charleston-final-9efdc30553-charleston-intro-medium.en.json",
+      "sha256": "9efdc305537261b135f085969a13577266a5b994195e02ed113fd3aa0f44318a",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/charleston-final-f4b84f55cb-charleston-final-lexical-small.en.json",
+      "sha256": "f4b84f55cb9128966a5772c6bd22776f5641f5792d9492d2a1508d2c38584a8a",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/charleston-final-9dae32e27a-charleston-final-lexical-medium.en.json",
+      "sha256": "9dae32e27ad45222d32a77633a11e1f428d7d389b454a2c88cf634634f0a61a9",
+      "model": "medium.en"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=C8_5ag2DYn0",
+  "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual source-bound small.en/medium.en machine cross-check, with explicitly identified third-model diagnostics. No human listening claim.",
+  "reviewed_at": "2026-10-22T08:07:18.627132+00:00",
+  "status": "complete",
+  "reviewed_from": 262.72,
+  "reviewed_to": 275.4,
+  "foreground_english": [
+    {
+      "start": 267.48,
+      "end": 269.46,
+      "en": "She needs the first only.",
+      "zh": "她只用一个赛点就兑现。"
+    },
+    {
+      "start": 269.52,
+      "end": 272.92,
+      "en": "Jessica Pegula, for the second time in her career,",
+      "zh": "佩古拉职业生涯第二次，"
+    },
+    {
+      "start": 272.92,
+      "end": 275.28,
+      "en": "will feature in the final here in Cincy.",
+      "zh": "打进辛辛那提决赛。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/cincy-sf-78cddb6a2d-cincy-sf-small.en.json",
+      "sha256": "78cddb6a2d3870291fcb7a1b62811657602cbbaf14c3ee640359ffa9700f1df5",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/cincy-sf-4428b542a7-cincy-sf-medium.en.json",
+      "sha256": "4428b542a7f3578c2e535ddb6623d512e1e660d311312b8532fd864c35b5ce6e",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "All identifiable foreground English in the selected body is listed. Actual selected source sound remains intact; caption timing uses the preserved word evidence, with proper names resolved only by official player identity.",
+  "tail_audit": {
+    "interval": [
+      275.4,
+      275.65
+    ],
+    "new_word_leak": false,
+    "next_word": "Her",
+    "next_onsets": [
+      275.72,
+      275.72
+    ],
+    "asr_context_end": 286,
+    "notes": "Actual selected source body unchanged; no new stable identifiable foreground word starts in outgoing native .25s."
+  },
+  "human_listened": false
+}

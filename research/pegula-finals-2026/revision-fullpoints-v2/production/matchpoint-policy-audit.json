@@ -1,0 +1,378 @@
+{
+  "schema": "tennislive.matchpoint-policy-independent-audit.v1",
+  "created_utc": "2026-10-22T09:23:26.873861+00:00",
+  "scope": "Only11actual filmed matches in this episode,not all64season matches.",
+  "policy": "Every filmed match requires one complete true terminal match point(serve/fullrally/outcome/reaction),plus by default one suitable complete optional highlight/miracle/turning point across those3categories combined; maximum one optional point total. If no suitable optional exists,terminal point alone is acceptable.",
+  "spec_file": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+  "spec_sha256": "57f98866a857d678e65667c8e86f55b13993724b91c38b9554fedbf5a78d110c",
+  "source_grid_manifest": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/manifest.json",
+  "source_grid_manifest_sha256": "2d6d558ea01967b45a7d8b563312db299f564c315554d9cccd6b6c634df780e4",
+  "source_grid_method": "Independent fresh actual full-width source2fps frame grids for all10selected non-US windows,with original scoreboard pixel crops and existing source-bound exact timestamp evidence. Approximate action boundaries are visual,not frame-perfect edit instructions.",
+  "human_listened": false,
+  "matches": [
+    {
+      "event": "AO半决赛",
+      "key": "ao",
+      "spec_segment_index": 3,
+      "selected_source_interval": [
+        437.6,
+        455.15
+      ],
+      "source_key": "ao-sf",
+      "source_path": "/workspace/pegula-finals-production/sources/ao-sf.mp4",
+      "source_sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+      "score_before_terminal_point": "Pegula3-6,6-6;TB7-8;Pegula serving;MATCH POINT#4",
+      "terminal_result": "Rybakina wins; finalPegula3-6,6-7(7)",
+      "point_action_approx_bounds": [
+        437.96,
+        443.88
+      ],
+      "reaction_interval": [
+        444,
+        455.15
+      ],
+      "true_terminal_matchpoint_present": true,
+      "serve_complete_in_selected_time_domain": true,
+      "rally_and_outcome_complete_in_selected_time_domain": true,
+      "reaction_present": true,
+      "complete_terminal_point_count": 1,
+      "complete_extra_point_count": 0,
+      "unrelated_complete_extra_points": 0,
+      "source_contact": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/ao/contact.jpg",
+      "scoreboard_evidence": "/workspace/pegula-finals-production/production/evidence/ao-sf-scoreboard-identity.jpg",
+      "verdict": "mandatory_terminal_point_pass; extra_not_yet_selected"
+    },
+    {
+      "event": "迪拜决赛",
+      "key": "dubai-final",
+      "spec_segment_index": 5,
+      "selected_source_interval": [
+        239.5,
+        251.75
+      ],
+      "source_key": "dubai-final",
+      "source_path": "/workspace/pegula-finals-production/sources/dubai-final.mp4",
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "score_before_terminal_point": "Pegula6-2,5-4,40-15;Pegula serving;CHAMPIONSHIP POINT#3",
+      "terminal_result": "Pegula ace/title;6-2,6-4",
+      "point_action_approx_bounds": [
+        239.6,
+        242.45
+      ],
+      "reaction_interval": [
+        243.5,
+        251.75
+      ],
+      "true_terminal_matchpoint_present": true,
+      "serve_complete_in_selected_time_domain": true,
+      "rally_and_outcome_complete_in_selected_time_domain": true,
+      "reaction_present": true,
+      "complete_terminal_point_count": 1,
+      "complete_extra_point_count": 0,
+      "unrelated_complete_extra_points": 0,
+      "source_contact": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/dubai-final/contact.jpg",
+      "scoreboard_evidence": "/workspace/pegula-finals-production/production/evidence/dubai-final-scoreboard-identity.jpg",
+      "verdict": "mandatory_terminal_point_pass; extra_not_yet_selected"
+    },
+    {
+      "event": "迈阿密1/4决赛",
+      "key": "miami-qf",
+      "spec_segment_index": 8,
+      "selected_source_interval": [
+        264.0,
+        276.96
+      ],
+      "source_key": "miami-qf",
+      "source_path": "/workspace/pegula-finals-production/production/middle-evidence/miami-qf.mp4",
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "score_before_terminal_point": "Rybakina2-6,6-3,5-4,40-30;Rybakina serving;MATCH POINT",
+      "terminal_result": "Rybakina service winner;Pegula6-2,3-6,4-6",
+      "point_action_approx_bounds": [
+        265,
+        267.6
+      ],
+      "reaction_interval": [
+        268.5,
+        276.96
+      ],
+      "true_terminal_matchpoint_present": true,
+      "serve_complete_in_selected_time_domain": true,
+      "rally_and_outcome_complete_in_selected_time_domain": true,
+      "reaction_present": true,
+      "complete_terminal_point_count": 1,
+      "complete_extra_point_count": 0,
+      "unrelated_complete_extra_points": 0,
+      "source_contact": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/miami-qf/contact.jpg",
+      "scoreboard_evidence": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/miami-qf/scoreboard-pair.png",
+      "verdict": "mandatory_terminal_point_pass; extra_not_yet_selected"
+    },
+    {
+      "event": "查尔斯顿决赛",
+      "key": "charleston-final",
+      "spec_segment_index": 10,
+      "selected_source_interval": [
+        262.2,
+        287.8
+      ],
+      "source_key": "charleston-final",
+      "source_path": "/workspace/pegula-finals-production/sources/charleston-final.mp4",
+      "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+      "score_before_terminal_point": "Pegula6-2,5-2,40-0;Pegula serving;CHAMPIONSHIP POINT#4",
+      "terminal_result": "Pegula wins/title;6-2,6-2",
+      "point_action_approx_bounds": [
+        267.68,
+        272.48
+      ],
+      "reaction_interval": [
+        272.5,
+        287.8
+      ],
+      "true_terminal_matchpoint_present": true,
+      "serve_complete_in_selected_time_domain": true,
+      "rally_and_outcome_complete_in_selected_time_domain": true,
+      "reaction_present": true,
+      "complete_terminal_point_count": 1,
+      "complete_extra_point_count": 0,
+      "unrelated_complete_extra_points": 0,
+      "source_contact": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/charleston-final/contact.jpg",
+      "scoreboard_evidence": "/workspace/pegula-finals-production/production/evidence/charleston-final-scoreboard-identity.jpg",
+      "verdict": "terminal_point_pass_but_partial_previous_rally_fragment_needs_removal",
+      "partial_extra_fragment": [
+        262.2,
+        263.3
+      ],
+      "problem": "Selected opening contains the last portion of a prior point,then transitions to Pegula preparation. It is not a complete additional point and should not be passed as the allowed extra.",
+      "recommended_change": "Drop prior-point fragment. Suggested new visual/body start about264.6 before the complete She saved the match points clause; exact proposed start must be rebound to existing ASR and incoming dissolve reviewed. Alternatively add the full prior point as the one extra if its serve and complete rally can be recovered; then do not add another extra."
+    },
+    {
+      "event": "柏林半决赛",
+      "key": "berlin-sf",
+      "spec_segment_index": 13,
+      "selected_source_interval": [
+        257.4,
+        277.4
+      ],
+      "source_key": "berlin-sf-sabalenka",
+      "source_path": "/workspace/sabalenka-finals-production/staging/extra/berlin-sf.mp4",
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "score_before_terminal_point": "Sabalenka4-6,7-6,0-5,30-40;Sabalenka serving;MATCH POINT#3",
+      "terminal_result": "Pegula wins;6-4,6-7(4),6-0",
+      "point_action_approx_bounds": [
+        257.9,
+        265
+      ],
+      "reaction_interval": [
+        265.4,
+        277.4
+      ],
+      "true_terminal_matchpoint_present": true,
+      "serve_complete_in_selected_time_domain": true,
+      "rally_and_outcome_complete_in_selected_time_domain": true,
+      "reaction_present": true,
+      "complete_terminal_point_count": 1,
+      "complete_extra_point_count": 0,
+      "unrelated_complete_extra_points": 0,
+      "source_contact": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/berlin-sf/contact.jpg",
+      "scoreboard_evidence": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/berlin-sf/scoreboard-pair.png",
+      "verdict": "mandatory_terminal_point_pass; extra_not_yet_selected"
+    },
+    {
+      "event": "华盛顿决赛",
+      "key": "dc-final",
+      "spec_segment_index": 15,
+      "selected_source_interval": [
+        234.72,
+        260.5
+      ],
+      "source_key": "dc-final",
+      "source_path": "/workspace/pegula-finals-production/audio/sources/dc-final.mp4",
+      "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "score_before_terminal_point": "Pegula6-4,4-6,0-5,15-40;Pegula serving;CHAMPIONSHIP POINT#2",
+      "terminal_result": "Eala wins/title;Pegula6-4,4-6,0-6",
+      "point_action_approx_bounds": [
+        235,
+        244.4
+      ],
+      "reaction_interval": [
+        244.4,
+        260.5
+      ],
+      "true_terminal_matchpoint_present": true,
+      "serve_complete_in_selected_time_domain": true,
+      "rally_and_outcome_complete_in_selected_time_domain": true,
+      "reaction_present": true,
+      "complete_terminal_point_count": 1,
+      "complete_extra_point_count": 0,
+      "unrelated_complete_extra_points": 0,
+      "source_contact": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/dc-final/contact.jpg",
+      "scoreboard_evidence": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/dc-final/scoreboard-pair.png",
+      "verdict": "mandatory_terminal_point_pass; extra_not_yet_selected"
+    },
+    {
+      "event": "辛辛那提半决赛",
+      "key": "cincy-sf",
+      "spec_segment_index": 17,
+      "selected_source_interval": [
+        262.72,
+        275.4
+      ],
+      "source_key": "cincy-sf",
+      "source_path": "/workspace/pegula-finals-production/audio/sources/cincy-sf.mp4",
+      "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+      "score_before_terminal_point": "Pegula7-5,4-6,5-4,40-15;Pegula serving;MATCH POINT",
+      "terminal_result": "Pegula wins;7-5,4-6,6-4",
+      "point_action_approx_bounds": [
+        264.2,
+        267.2
+      ],
+      "reaction_interval": [
+        267.2,
+        275.4
+      ],
+      "true_terminal_matchpoint_present": true,
+      "serve_complete_in_selected_time_domain": true,
+      "rally_and_outcome_complete_in_selected_time_domain": true,
+      "reaction_present": true,
+      "complete_terminal_point_count": 1,
+      "complete_extra_point_count": 0,
+      "unrelated_complete_extra_points": 0,
+      "source_contact": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/cincy-sf/contact.jpg",
+      "scoreboard_evidence": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/cincy-sf/scoreboard-pair.png",
+      "verdict": "mandatory_terminal_point_pass; extra_not_yet_selected"
+    },
+    {
+      "event": "辛辛那提决赛",
+      "key": "cincy-final",
+      "spec_segment_index": 18,
+      "selected_source_interval": [
+        236.6,
+        260.5
+      ],
+      "source_key": "cincy-final",
+      "source_path": "/workspace/pegula-finals-production/audio/sources/cincy-final.mp4",
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "score_before_terminal_point": "Gauff6-2,5-4,40-0;Pegula serving0-40;CHAMPIONSHIP POINT",
+      "terminal_result": "Gauff wins/title;Pegula2-6,4-6",
+      "point_action_approx_bounds": [
+        238.5,
+        246.3
+      ],
+      "reaction_interval": [
+        246.6,
+        260.5
+      ],
+      "true_terminal_matchpoint_present": true,
+      "serve_complete_in_selected_time_domain": true,
+      "rally_and_outcome_complete_in_selected_time_domain": true,
+      "reaction_present": true,
+      "complete_terminal_point_count": 1,
+      "complete_extra_point_count": 0,
+      "unrelated_complete_extra_points": 0,
+      "source_contact": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/cincy-final/contact.jpg",
+      "scoreboard_evidence": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/cincy-final/scoreboard-pair.png",
+      "verdict": "mandatory_terminal_point_pass; extra_not_yet_selected"
+    },
+    {
+      "event": "武汉第二轮",
+      "key": "wuhan-final",
+      "spec_segment_index": 27,
+      "selected_source_interval": [
+        257.64,
+        284.4
+      ],
+      "source_key": "wuhan-r2",
+      "source_path": "/workspace/pegula-finals-production/media/wuhan-r2.mp4",
+      "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+      "score_before_terminal_point": "Ostapenko2-6,7-6,5-3,40-0;Pegula serving0-40;MATCH POINT",
+      "terminal_result": "Ostapenko wins;Pegula6-2,6-7(7),3-6",
+      "point_action_approx_bounds": [
+        259.1,
+        263.5
+      ],
+      "reaction_interval": [
+        263.6,
+        284.4
+      ],
+      "true_terminal_matchpoint_present": true,
+      "serve_complete_in_selected_time_domain": true,
+      "rally_and_outcome_complete_in_selected_time_domain": true,
+      "reaction_present": true,
+      "complete_terminal_point_count": 1,
+      "complete_extra_point_count": 1,
+      "unrelated_complete_extra_points": 0,
+      "source_contact": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/wuhan-final/contact.jpg",
+      "scoreboard_evidence": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/wuhan-final/scoreboard-pair.png",
+      "verdict": "pass_mandatory_terminal_plus_exactly_one_extra",
+      "extra_key": "wuhan-mp3",
+      "extra_selected_interval": [
+        170.6,
+        188.04
+      ],
+      "extra_class": "精彩球/关键转折点",
+      "extra_score": "Set2games6-6;TBPegula7,Ostapenko6;Pegula serving;MATCH POINT#3",
+      "extra_result": "Ostapenko drop shot saves Pegula third match point;TB7-7 afterwards",
+      "extra_complete": true,
+      "extra_source_contact": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/wuhan-mp3/contact.jpg",
+      "extra_scoreboard_evidence": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/wuhan-mp3/scoreboard-pair.png"
+    },
+    {
+      "event": "美网1/4决赛",
+      "key": "us-qf",
+      "spec_segment_index": 20,
+      "selected_source_interval": [
+        150.5,
+        164.8
+      ],
+      "true_terminal_matchpoint_present": false,
+      "complete_terminal_point_count": 0,
+      "complete_extra_point_count": 1,
+      "extra_class": "关键转折点: saved break point",
+      "current_semantics": "Current source window is explicitly a saved break point in spec metadata; reaction-only later segment does not supply the missing terminal serve/rally.",
+      "verdict": "gap_mandatory_terminal_point_missing_in_audited_snapshot",
+      "repair_owner": "USQF/USSF delegated agents preparing new true terminal point; keep existing saved BP as sole extra. New future package not certified here."
+    },
+    {
+      "event": "美网半决赛",
+      "key": "us-sf",
+      "spec_segment_index": 24,
+      "selected_source_interval": [
+        16.92,
+        27.4
+      ],
+      "true_terminal_matchpoint_present": false,
+      "complete_terminal_point_count": 0,
+      "complete_extra_point_count": 1,
+      "extra_class": "关键转折点: saved break point",
+      "current_semantics": "Current source window is explicitly a saved break point in spec metadata; reaction-only later segment does not supply the missing terminal serve/rally.",
+      "verdict": "gap_mandatory_terminal_point_missing_in_audited_snapshot",
+      "repair_owner": "USQF/USSF delegated agents preparing new true terminal point; keep existing saved BP as sole extra. New future package not certified here."
+    }
+  ],
+  "summary": {
+    "filmed_match_count": 11,
+    "mandatory_terminal_matchpoints_present": 9,
+    "mandatory_terminal_gaps": [
+      "us-qf",
+      "us-sf"
+    ],
+    "partial_previous_point_fragment_needs_fix": [
+      "charleston-final262.2–263.3"
+    ],
+    "windows_with_more_than_one_complete_optional_point_observed": [],
+    "currently_has_exactly_one_terminal_plus_one_extra": [
+      "wuhan-final/wuhan-mp3"
+    ],
+    "next_optional_selection_owners": {
+      "early_four": "spring_points agent",
+      "berlin-sf_dc-final_cincy-sf_cincy-final": "this independent agent,package pending",
+      "us-qf_us-sf": "existing saved BP retained as sole extra by US agents"
+    }
+  },
+  "limitations": [
+    "Temporal complete point is not a claim that all16:9source edges or every lateral player movement survive fixedcx=.5crop.",
+    "Original TVdissolves into the serve remain in some officialsource edits. Selected start precedes toss/contact; no additional complete point observed inside those windows.",
+    "Current audit is bound to this spec snapshot. Subsequent spec changes/new selections require matching verification."
+  ],
+  "shared_spec_modified": false,
+  "git_operations": false
+}

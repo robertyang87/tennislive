@@ -1,0 +1,88 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=2FI5qs9EXNs",
+  "source_sha256": "39828758dc1c8d1f40ec1389a66825395b93c2d8e91cda27b5728b5de96eaea7",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual source-bound small.en/medium.en machine cross-check, with explicitly identified third-model diagnostics. No human listening claim.",
+  "reviewed_at": "2026-10-22T08:07:18.627132+00:00",
+  "status": "complete",
+  "reviewed_from": 57.4,
+  "reviewed_to": 74.72,
+  "foreground_english": [
+    {
+      "start": 57.44,
+      "end": 60.34,
+      "en": "I think I do a great job of having a short-term memory,",
+      "zh": "我很擅长不纠结刚发生的事，"
+    },
+    {
+      "start": 60.34,
+      "end": 62.82,
+      "en": "so I know that every time I come out, no matter what,",
+      "zh": "所以每次上场，无论如何，"
+    },
+    {
+      "start": 62.92,
+      "end": 66.28,
+      "en": "I just have to tell all the negative me",
+      "zh": "我得对那个消极的自己说，"
+    },
+    {
+      "start": 66.28,
+      "end": 67.86,
+      "en": "to shut up and just play tennis",
+      "zh": "闭嘴，继续打网球，"
+    },
+    {
+      "start": 67.86,
+      "end": 69.4,
+      "en": "and compete and battle",
+      "zh": "去竞争，去战斗，"
+    },
+    {
+      "start": 69.4,
+      "end": 71.98,
+      "en": "and think out there and try and problem-solve as best I can.",
+      "zh": "动脑筋，尽全力解决问题。"
+    },
+    {
+      "start": 72.14,
+      "end": 74.7,
+      "en": "And yeah, that's all I'm trying to do, really.",
+      "zh": "对，我努力做的就是这些。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/us-qf-interview-b3c6315c84-us-qf-interview-small.en.json",
+      "sha256": "b3c6315c84c59c6119959f58881c84de3f24fa4dd95e4c55c2a46b6f6e8e4670",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/us-qf-interview-51211e88fc-us-qf-interview-medium.en.json",
+      "sha256": "51211e88fc01e1425c6838f048af4fb25df835a7ac0b39dfc6fe7ef3bc141168",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/us-qf-interview-4cd4fee5bd-us-qf-interview-turbo-diagnostic.json",
+      "sha256": "4cd4fee5bd0019ecc0fd8a00a0b53ad92a43c41c4c529805644a7b356b8fff64",
+      "model": "large-v3-turbo"
+    }
+  ],
+  "review_notes": "Full short-term-memory sentence and full negative-me/problem-solving statement retained, including really. medium duplicates that’s once; small and targeted actual turbo agree single that’s. Next interviewer onset resolved using two agreeing actual word-timestamp files; no human listening claim.",
+  "tail_audit": {
+    "interval": [
+      74.72,
+      74.97
+    ],
+    "new_word_leak": false,
+    "next_word": "Well (interviewer)",
+    "next_onsets": [
+      75.14,
+      75.12
+    ],
+    "asr_context_end": 78,
+    "notes": "medium smears next interviewer Well to74.70; independent small and targeted turbo agree75.14/75.12, while player really ends74.56/74.60. Thus native tail to74.97 does not include next stable word."
+  },
+  "human_listened": false
+}

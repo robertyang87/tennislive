@@ -1,0 +1,342 @@
+{
+  "schema": "pegula.native-v3-preview-request.v1",
+  "group": "labels-early",
+  "tag": "fresh-v3b",
+  "spec_path": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+  "spec_sha256": "121faea658074e82492e168f735295e0acd9625fe34c6a6cdcc8f1e92fb33f6c",
+  "cover_seconds": 1.2,
+  "sample_count": 22,
+  "batch_sizes": [
+    22
+  ],
+  "clock_note": "Film offsets use final spec seconds/end-start. Native renderer resolves its own source FPS; requested times are NOT quantized to 30fps.",
+  "publication_approved": false,
+  "final_encoded_film_qc": false,
+  "samples": [
+    {
+      "id": "ao",
+      "segment_index": 3,
+      "film_time": 43.93,
+      "segment_time_requested": 13.67,
+      "source_time_requested": 451.27000000000004,
+      "reasons": [
+        {
+          "why": "before-label",
+          "requested_segment_time": 13.67,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "ao",
+      "segment_index": 3,
+      "film_time": 45.51,
+      "segment_time_requested": 15.25,
+      "source_time_requested": 452.85,
+      "reasons": [
+        {
+          "why": "label-middle",
+          "requested_segment_time": 15.25,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "ao",
+      "segment_index": 3,
+      "film_time": 46.93,
+      "segment_time_requested": 16.67,
+      "source_time_requested": 454.27000000000004,
+      "reasons": [
+        {
+          "why": "label-last",
+          "requested_segment_time": 16.67,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "ao",
+      "segment_index": 3,
+      "film_time": 47.09,
+      "segment_time_requested": 16.83,
+      "source_time_requested": 454.43,
+      "reasons": [
+        {
+          "why": "after-label",
+          "requested_segment_time": 16.83,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "dubai-final",
+      "segment_index": 5,
+      "film_time": 59.88,
+      "segment_time_requested": 0.26999999999999996,
+      "source_time_requested": 239.77,
+      "reasons": [
+        {
+          "why": "before-label",
+          "requested_segment_time": 0.26999999999999996,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "dubai-final",
+      "segment_index": 5,
+      "film_time": 61.56,
+      "segment_time_requested": 1.9500000000000002,
+      "source_time_requested": 241.45,
+      "reasons": [
+        {
+          "why": "label-middle",
+          "requested_segment_time": 1.9500000000000002,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "dubai-final",
+      "segment_index": 5,
+      "film_time": 63.08,
+      "segment_time_requested": 3.47,
+      "source_time_requested": 242.97,
+      "reasons": [
+        {
+          "why": "label-last",
+          "requested_segment_time": 3.47,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "dubai-final",
+      "segment_index": 5,
+      "film_time": 63.24,
+      "segment_time_requested": 3.6300000000000003,
+      "source_time_requested": 243.13,
+      "reasons": [
+        {
+          "why": "after-label",
+          "requested_segment_time": 3.6300000000000003,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "charleston-final",
+      "segment_index": 10,
+      "film_time": 135.37,
+      "segment_time_requested": 7.92,
+      "source_time_requested": 272.52000000000004,
+      "reasons": [
+        {
+          "why": "before-label",
+          "requested_segment_time": 7.92,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "charleston-final",
+      "segment_index": 10,
+      "film_time": 137.35,
+      "segment_time_requested": 9.9,
+      "source_time_requested": 274.5,
+      "reasons": [
+        {
+          "why": "label-middle",
+          "requested_segment_time": 9.9,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "charleston-final",
+      "segment_index": 10,
+      "film_time": 139.17,
+      "segment_time_requested": 11.72,
+      "source_time_requested": 276.32000000000005,
+      "reasons": [
+        {
+          "why": "label-last",
+          "requested_segment_time": 11.72,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "charleston-final",
+      "segment_index": 10,
+      "film_time": 139.33,
+      "segment_time_requested": 11.88,
+      "source_time_requested": 276.48,
+      "reasons": [
+        {
+          "why": "after-label",
+          "requested_segment_time": 11.88,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "rg-r1",
+      "segment_index": 12,
+      "film_time": 172.17,
+      "segment_time_requested": 11.12,
+      "source_time_requested": 704.32,
+      "reasons": [
+        {
+          "why": "before-label",
+          "requested_segment_time": 11.12,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "rg-r1",
+      "segment_index": 12,
+      "film_time": 173.75,
+      "segment_time_requested": 12.7,
+      "source_time_requested": 705.9000000000001,
+      "reasons": [
+        {
+          "why": "label-middle",
+          "requested_segment_time": 12.7,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "rg-r1",
+      "segment_index": 12,
+      "film_time": 175.17,
+      "segment_time_requested": 14.12,
+      "source_time_requested": 707.32,
+      "reasons": [
+        {
+          "why": "label-last",
+          "requested_segment_time": 14.12,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "rg-r1",
+      "segment_index": 12,
+      "film_time": 175.33,
+      "segment_time_requested": 14.28,
+      "source_time_requested": 707.48,
+      "reasons": [
+        {
+          "why": "after-label",
+          "requested_segment_time": 14.28,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "berlin-sf",
+      "segment_index": 14,
+      "film_time": 195.37,
+      "segment_time_requested": 3.92,
+      "source_time_requested": 261.32,
+      "reasons": [
+        {
+          "why": "before-label",
+          "requested_segment_time": 3.92,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "berlin-sf",
+      "segment_index": 14,
+      "film_time": 196.85,
+      "segment_time_requested": 5.4,
+      "source_time_requested": 262.79999999999995,
+      "reasons": [
+        {
+          "why": "label-middle",
+          "requested_segment_time": 5.4,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "berlin-sf",
+      "segment_index": 14,
+      "film_time": 198.17,
+      "segment_time_requested": 6.72,
+      "source_time_requested": 264.12,
+      "reasons": [
+        {
+          "why": "label-last",
+          "requested_segment_time": 6.72,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "berlin-sf",
+      "segment_index": 14,
+      "film_time": 198.33,
+      "segment_time_requested": 6.88,
+      "source_time_requested": 264.28,
+      "reasons": [
+        {
+          "why": "after-label",
+          "requested_segment_time": 6.88,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "cold-quote",
+      "segment_index": 0,
+      "film_time": 4.43,
+      "segment_time_requested": 3.2300000000000004,
+      "source_time_requested": 55.47,
+      "reasons": [
+        {
+          "why": "actual-person-speech-middle",
+          "requested_segment_time": 3.2300000000000004,
+          "boundary_clamped": false
+        }
+      ]
+    },
+    {
+      "id": "dubai-speech",
+      "segment_index": 6,
+      "film_time": 74.785,
+      "segment_time_requested": 2.9250000000000007,
+      "source_time_requested": 31.525000000000002,
+      "reasons": [
+        {
+          "why": "actual-person-speech-middle",
+          "requested_segment_time": 2.9250000000000007,
+          "boundary_clamped": false
+        }
+      ]
+    }
+  ],
+  "source_paths_file": "/workspace/pegula-finals-production/revision-v3-scope/native-source-paths-v3.json",
+  "source_paths_sha256": "362d4001022f68de64f3005e506b8f94a627eda2ffcabbe4b4bb2fa35c76bea5",
+  "source_paths": {
+    "ao-sf": "/workspace/pegula-finals-production/sources/ao-sf.mp4",
+    "berlin-sf-sabalenka": "/workspace/sabalenka-finals-production/staging/extra/berlin-sf.mp4",
+    "charleston-final": "/workspace/pegula-finals-production/sources/charleston-final.mp4",
+    "cincy-final": "/workspace/pegula-finals-production/audio/sources/cincy-final.mp4",
+    "cincy-runnerup": "/workspace/pegula-finals-production/audio/sources/cincy-runnerup.mp4",
+    "cincy-sf": "/workspace/pegula-finals-production/audio/sources/cincy-sf.mp4",
+    "dubai-champion-speech": "/workspace/pegula-finals-production/sources/dubai-champion-speech.mp4",
+    "dubai-final": "/workspace/pegula-finals-production/sources/dubai-final.mp4",
+    "rg-r1": "/workspace/pegula-finals-production/revision-v3-scope/rg/rg-r1-hoh-08EHKHtS6hg.mp4",
+    "us-qf": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+    "us-qf-interview": "/workspace/pegula-finals-production/audio/sources/us-qf-interview.mp4",
+    "us-sf": "/workspace/pegula-finals-production/audio/sources/us-sf.mp4",
+    "wimbledon-qf": "/workspace/pegula-finals-production/revision-v3-scope/wimbledon/2rtc9kSjmPM.mp4"
+  }
+}

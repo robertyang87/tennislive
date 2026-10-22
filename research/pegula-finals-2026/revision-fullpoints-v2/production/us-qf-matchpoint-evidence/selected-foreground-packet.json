@@ -1,0 +1,368 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+  "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex independent point/audio reviewer; actual unprompted two-model and third-model diagnostics plus separate official release, no human listening claim",
+  "reviewed_at": "2026-10-22T09:34:43.596822+00:00",
+  "status": "needs_review",
+  "reviewed_from": 168.84,
+  "reviewed_to": 203.2,
+  "foreground_english": [
+    {
+      "start": 175.74,
+      "end": 177.54,
+      "en": "Two sets to one.",
+      "zh": "盘分二比一。"
+    },
+    {
+      "start": 177.64,
+      "end": 179.76,
+      "en": "3-6, 6-4, 6-3.",
+      "zh": "三比六、六比四、六比三。"
+    },
+    {
+      "start": 190.86,
+      "end": 192.48,
+      "en": "She got through it.",
+      "zh": "她挺过来了。"
+    },
+    {
+      "start": 199.28,
+      "end": 202.9,
+      "en": "She's in the semis at her favorite tournament.",
+      "zh": "她在最爱的赛事打进四强。"
+    }
+  ],
+  "uncertain_spans": [
+    {
+      "start": 173.38,
+      "end": 175.5,
+      "text": "Canonical Game, set and match, Pegula is a proposed contextual normalization, not two complete matching ASR emissions. Actual Game/match/Pegula emissions exist across models/official releases, but set has low confidence.053/.192 and and is supported by only one filtered diagnostic. Other decodes produce Going outside/has had/a/the. Keep this explicit uncertainty until independent final review resolves the weak function words; never say human listened.",
+      "evidence": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/lexical-normalization-review.json"
+    }
+  ],
+  "proposed_canonical_caption_not_approved": {
+    "start": 173.38,
+    "end": 175.5,
+    "en": "Game, set and match, Pegula.",
+    "zh": "比赛结束，佩古拉获胜。",
+    "state": "proposed_canonical_normalization_weak_set_and_not_render_approved"
+  },
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/bandpass-call-medium.en.json",
+      "sha256": "7db80cd41015345b602758c0df1c69f2755a5b810c87308985e73a41d4949c08",
+      "model": "medium.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        173.1,
+        180.3
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/bandpass-call-small.en.json",
+      "sha256": "dae2c996fabd3798d9d9e176c51b37d9e1b500d589abe72d46a55104feb6fe82",
+      "model": "small.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        173.1,
+        180.3
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/bandpass-call-small.json",
+      "sha256": "2a32b59e1609e336320b8f4136953ebd89a14441695cb62773cd049e6a460142",
+      "model": "small",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        173.1,
+        180.3
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/bandpass-call-turbo.json",
+      "sha256": "fb201e5eb0c667b450a91363a506478293738dacef02705dd3552b5189abd45e",
+      "model": "turbo",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        173.1,
+        180.3
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/center-call-medium.en.json",
+      "sha256": "63f13bc629ff45c152ab72f3e11ee1440446ac9cd0b79da1093558d73ceb428d",
+      "model": "medium.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        173.1,
+        180.3
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/center-call-small.en.json",
+      "sha256": "fd1156f56e59f31850713ad4a6518289da8b4a9fa30e76f5f9531ea367242b32",
+      "model": "small.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        173.1,
+        180.3
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/center-call-small.json",
+      "sha256": "ef42f76a5779b63b12bb31da87567c87b89ce7c36e023e7b8831392a7b616b8b",
+      "model": "small",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        173.1,
+        180.3
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/center-call-turbo.json",
+      "sha256": "4f835222642c725d9e6e1ada4c91cd269fd1f9eeb2ff4a880e40b5de0c85ac2d",
+      "model": "turbo",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        173.1,
+        180.3
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/identity-context-medium.en.json",
+      "sha256": "e48692e166a73de968095744c6933e286311220369b9c77f7ecc65ac36b5ef02",
+      "model": "medium.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        173.1,
+        180.3
+      ],
+      "initial_prompt": "Tennis. Jessica Pegula. Emma Navarro.",
+      "method": "actual_source_ASR_with_recorded_official_names_only_initial_prompt_not_expected_sentence"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/identity-context-small.en.json",
+      "sha256": "eb6cc08d96b507abff6f4e5ffbe0a37ee315f4ac1cd1b067adc93373bf908158",
+      "model": "small.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        173.1,
+        180.3
+      ],
+      "initial_prompt": "Tennis. Jessica Pegula. Emma Navarro.",
+      "method": "actual_source_ASR_with_recorded_official_names_only_initial_prompt_not_expected_sentence"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/left-context-medium.en.json",
+      "sha256": "11f4210ea7e0ab420b4d27ccec8b46308db7902fc47058d822836d1f7853c286",
+      "model": "medium.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        166,
+        181
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/left-context-small.en.json",
+      "sha256": "4e1737eb2ba60abf8b757a4550eb3e43c59354ad6bf6f46fddc46e3ef0a3294f",
+      "model": "small.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        166,
+        181
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/left-context-small.json",
+      "sha256": "ab54a6f6c2f5b6d7942baba1590dd4120ccfc617075d3cc4587b9ae8ddc745bf",
+      "model": "small",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        166,
+        181
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/left-context-turbo.json",
+      "sha256": "f87eab09344724dd71cce6184999c1593c26eb6c293827e57797b02f9b39d66c",
+      "model": "turbo",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        166,
+        181
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/right-context-medium.en.json",
+      "sha256": "0fafb5458704fc904769b5e91e4dd51a4e04ac0b1c223fc8f7a376251740dbb6",
+      "model": "medium.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        166,
+        181
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/right-context-small.en.json",
+      "sha256": "7ef941d6c36501dd00a01ce081a6bfb04ee69fb27a79510cb4fd917758e01e65",
+      "model": "small.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        166,
+        181
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/right-context-small.json",
+      "sha256": "4afc17c69808fe682bcc86ef8b86c26fd68f9d1a55a3ce6b647959adfd5d8b4e",
+      "model": "small",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        166,
+        181
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/right-context-turbo.json",
+      "sha256": "fe611d92a86f8f70075c9ca84077e568583fe573297bdfd77549f4b7037904d0",
+      "model": "turbo",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        166,
+        181
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/us-qf-medium.en.json",
+      "sha256": "b87a919b3d0c998ca6a58be991874bac3158bcb0b80d7a8f4416bd6f9b6a24c4",
+      "model": "medium.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        166,
+        205
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_source_bytes_not_human_listening"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/us-qf-small.en.json",
+      "sha256": "a9e4621d249f55fbca6e92471938b7858796aafd401f338d3d641a3b91af0ca9",
+      "model": "small.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        166,
+        205
+      ],
+      "initial_prompt": null,
+      "method": "actual_faster_whisper_source_bytes_not_human_listening"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/us-qf-turbo-diagnostic.json",
+      "sha256": "7779c36006da564cf78e3ae0527b92fcdf804493d7ced710454186ba4658d484",
+      "model": "large-v3-turbo",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        172.8,
+        180.5
+      ],
+      "initial_prompt": null,
+      "method": "actual source_asr.py small.en/medium.en source bytes"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/wideband-identity-medium.en.json",
+      "sha256": "a180adceab0b71aba3a1b9fbabf03f2d37a3019d2f06def9baf10bd652ac848b",
+      "model": "medium.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        173.1,
+        180.3
+      ],
+      "initial_prompt": "Tennis. Jessica Pegula. Emma Navarro.",
+      "method": "actual_source_ASR_with_recorded_official_names_only_initial_prompt_not_expected_sentence"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/wideband-identity-small.en.json",
+      "sha256": "0526b8db9097798ee74ccc93f9193b29ef5660d623e5b4e6e907a69cb5ae2fb3",
+      "model": "small.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        173.1,
+        180.3
+      ],
+      "initial_prompt": "Tennis. Jessica Pegula. Emma Navarro.",
+      "method": "actual_source_ASR_with_recorded_official_names_only_initial_prompt_not_expected_sentence"
+    }
+  ],
+  "secondary_official_source_asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/wta-official-medium.en.json",
+      "sha256": "eaf6bf9a8722d2bff0e9c9de55170408deaade1043e545e39707bccde2ed6c4f",
+      "model": "medium.en",
+      "source_sha256": "456df950c287c4a573d4385d0b2547fb36f5f42fce082113dae64c207518c50e",
+      "clip": [
+        0.0,
+        35.3
+      ],
+      "initial_prompt": null,
+      "method": "actual source_asr.py small.en/medium.en source bytes"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/wta-official-small.en.json",
+      "sha256": "ecda4dbf1f964119d1aa7a9c844c89e524c27ff1fad0e2ad042de66ca18a8f07",
+      "model": "small.en",
+      "source_sha256": "456df950c287c4a573d4385d0b2547fb36f5f42fce082113dae64c207518c50e",
+      "clip": [
+        0.0,
+        35.3
+      ],
+      "initial_prompt": null,
+      "method": "actual source_asr.py small.en/medium.en source bytes"
+    }
+  ],
+  "human_listened": false,
+  "no_mute_no_audio_substitution": true,
+  "review_notes": "Complete serve/rally/result/reaction source window, source raw audio unchanged. Existing BP highlight should remain separately. No retained complete commentator sentence is cut: She got through it and semis/favorite tournament both retained. Initial umpire call remains explicitly unresolved at its weak set/and phonetic normalization; do not turn needs_review into complete to satisfy gate. Official X is a second publication of reaction+court call, lacks serve/rally and cannot substitute alone as full match point.",
+  "tail_audit": {
+    "start": 203.2,
+    "end": 203.45,
+    "new_stable_foreground_word": false,
+    "evidence_scope": [
+      166,
+      205
+    ],
+    "notes": "Actual original small.en/medium.en broad context ends205; no clear next word in outgoing.25. The low-confidence X-small You at31.38 is outside mapped selected body/tail."
+  }
+}

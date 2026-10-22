@@ -1,0 +1,40 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=l9Gd5ksrsVM",
+  "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+  "method": "asr_cross_checked",
+  "reviewer": "Actual independent small.en and medium.en ASR plus sampled source-frame inspection; not human listening",
+  "reviewed_at": "2026-10-22T08:00:52.594284+00:00",
+  "reviewed_from": 170.6,
+  "reviewed_to": 188.04,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 186.23,
+      "end": 187.26,
+      "en": "That is unreal.",
+      "zh": "太不可思议了。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/wuhan-evidence/third-mp-context-small.en.json",
+      "sha256": "a9e2141a711c4b034ac429d6f7f9cbd2bbe8129601f4399a77ea910adcacaa40",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        165.0,
+        194.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/wuhan-evidence/third-mp-context-medium.en.json",
+      "sha256": "e974cd66ce6c5eb7522ccda569f6551bc2b2e7c59f3d4751f003e5732026e2d6",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        165.0,
+        194.0
+      ]
+    }
+  ],
+  "review_notes": "Both models independently sayThat is unreal at186.23/186.24–187.20/187.26. Previous independent sentenceWhat can you do when Ostapenko plays like that ends168.66 bysmall butmedium stretches finalthat through170.52silence; begin170.60afterboth. Actual170.50/171.00frames showPegula stillholdingball inpreparation before172serve, so complete service motion retained. End188.04 is0.78s after latestunreal ending; broadASRthrough194showsno laterEnglish; source point has ended and scoreboard7all before next point. Apply outgoingpad silence to avoid reading beyond selectedend."
+}

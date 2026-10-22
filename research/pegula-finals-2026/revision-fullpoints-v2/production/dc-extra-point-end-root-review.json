@@ -1,0 +1,90 @@
+{
+  "kind": "actual_source_point_end_review",
+  "reviewer": "Codex actual source contact-sheet inspection, not human listening",
+  "reviewed_at": "2026-10-22T10:30:05.300735+00:00",
+  "source_url": "https://www.youtube.com/watch?v=OvjNXy1mQjY",
+  "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+  "selected_window": [
+    156.2,
+    179.8
+  ],
+  "actual_claimed_probe": {
+    "path": "/workspace/tennislive/output/2026-09-27/reel/china-withdrawals-eala-source/probe.json",
+    "sha256": "38b2c3af2815d86656f3319d0e2fd688aa10581f356fb3c32a29af95ee43a9ec",
+    "point_ends": [],
+    "scorebox_guess": "90,870,414,980",
+    "false_positive_point_ends_guess": 182.56
+  },
+  "actually_viewed_contacts": [
+    {
+      "path": "/workspace/pegula-finals-production/production/dc-extra-point-end-evidence/contact-1.jpg",
+      "sha256": "1ed53f55181c289b7e99a1832effdbcdf69bcf5ed385bd2604a5c314bdd2c472"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/dc-extra-point-end-evidence/contact-2.jpg",
+      "sha256": "c6660db5efbc7e891d123adc885954ddc198181e9226962fac8dd98fe5ff9a17"
+    }
+  ],
+  "frame_manifest": {
+    "path": "/workspace/pegula-finals-production/production/dc-extra-point-end-evidence/frames.json",
+    "sha256": "1e0ee640ff61324dc30cb4d2d8c8644861df56f70bfa58af13ab89f196ae7ec4"
+  },
+  "observations": [
+    {
+      "times": [
+        156.2,
+        157,
+        157.5,
+        164
+      ],
+      "fact": "Set point: Pegula serving4-5,30-40 in second set; full serve and live rally retained."
+    },
+    {
+      "times": [
+        167.2,
+        167.6,
+        168
+      ],
+      "fact": "Point finishes and players stop active rally by168.0; source ball is already out of play."
+    },
+    {
+      "times": [
+        168.4,
+        168.8,
+        169.2,
+        170.2
+      ],
+      "fact": "Eala makes actual fist celebration; scoreboard transitions away from point count after second-set outcome."
+    },
+    {
+      "times": [
+        172,
+        174,
+        176
+      ],
+      "fact": "Slow-motion alternate-angle replay of the same completed point, not another live rally."
+    },
+    {
+      "times": [
+        177.5,
+        179.8
+      ],
+      "fact": "Philippine spectators applaud and celebrate, after the set-ending point."
+    },
+    {
+      "times": [
+        180.54,
+        182.56,
+        183.8
+      ],
+      "fact": "Eala between-set closeup;182.56 has no scorebox and is not a new live rally end or score flip."
+    }
+  ],
+  "foreground_packet": {
+    "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/packets/dc-final-extra.json",
+    "sha256": "1a74be54cef026d6c7c615c1d6be1f4a3496e4ac6e55bfd31ab3eff3fc3f148d"
+  },
+  "audio_boundary": "Actual paired ASR packet retains last complete clause through179.36; next complete commentary begins180.54/180.76 outside retained window. Extending to183.8 would include a new partial utterance.",
+  "conclusion": "156.20–179.80 includes complete set-ending point, established result, actual reaction and replay.182.56 is a false positive in actually claimed guessed-scorebox probe. point_end_ok supported by concrete source evidence.",
+  "changes": "Review annotation only; no source end adjustment, no evidence exemption or renderer change."
+}

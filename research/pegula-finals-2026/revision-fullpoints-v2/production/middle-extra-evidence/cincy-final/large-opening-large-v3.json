@@ -1,0 +1,92 @@
+{
+  "model": "large-v3",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-final.mp4",
+  "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+  "clip": [
+    110.0,
+    119.0
+  ],
+  "method": "actual_faster_whisper_cpu_int8_beam5_vadfalse_word_timestamps_no_prompt",
+  "human_listened": false,
+  "created_utc": "2026-10-22T09:45:13.652257+00:00",
+  "segments": [
+    {
+      "start": 112.84,
+      "end": 114.62,
+      "text": " that's the way she went into the forehand",
+      "avg_logprob": -0.3049476286944221,
+      "no_speech_prob": 0.2673377990722656,
+      "words": [
+        {
+          "word": " that's",
+          "start": 112.84,
+          "end": 113.24,
+          "probability": 0.7089419513940811
+        },
+        {
+          "word": " the",
+          "start": 113.24,
+          "end": 113.32,
+          "probability": 0.9971535205841064
+        },
+        {
+          "word": " way",
+          "start": 113.32,
+          "end": 113.48,
+          "probability": 0.9987288117408752
+        },
+        {
+          "word": " she",
+          "start": 113.48,
+          "end": 113.68,
+          "probability": 0.9655890464782715
+        },
+        {
+          "word": " went",
+          "start": 113.68,
+          "end": 113.82,
+          "probability": 0.9980218410491943
+        },
+        {
+          "word": " into",
+          "start": 113.82,
+          "end": 114.02,
+          "probability": 0.9925312399864197
+        },
+        {
+          "word": " the",
+          "start": 114.02,
+          "end": 114.18,
+          "probability": 0.9976402521133423
+        },
+        {
+          "word": " forehand",
+          "start": 114.18,
+          "end": 114.62,
+          "probability": 0.9877069890499115
+        }
+      ]
+    },
+    {
+      "start": 115.72,
+      "end": 116.52,
+      "text": " set point",
+      "avg_logprob": -0.3049476286944221,
+      "no_speech_prob": 0.2673377990722656,
+      "words": [
+        {
+          "word": " set",
+          "start": 115.72,
+          "end": 116.12,
+          "probability": 0.3711928427219391
+        },
+        {
+          "word": " point",
+          "start": 116.12,
+          "end": 116.52,
+          "probability": 0.9456297755241394
+        }
+      ]
+    }
+  ]
+}

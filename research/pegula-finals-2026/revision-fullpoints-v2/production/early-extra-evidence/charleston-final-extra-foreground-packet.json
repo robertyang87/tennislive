@@ -1,0 +1,92 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_key": "charleston-final",
+  "source_url": "https://www.youtube.com/watch?v=Zwi_zjefnh0",
+  "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-bound frames and multiple independent ASR models; not human listening",
+  "reviewed_at": "2026-10-22T09:34:11.096845+00:00",
+  "reviewed_from": 85,
+  "reviewed_to": 142,
+  "status": "complete",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-small.en.json",
+      "sha256": "ee88f244ede5764ce5905224bfcaf9b881876285da7842963b570231cb4cdce0",
+      "model": "small.en",
+      "clip": [
+        100,
+        142
+      ],
+      "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+      "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-medium.en.json",
+      "sha256": "e1c02517bdc5de59a0a9ae0e7f8d391b69dc1d8b28ed0de4dc82e6798e75f436",
+      "model": "medium.en",
+      "clip": [
+        100,
+        142
+      ],
+      "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+      "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-point-small.en.json",
+      "sha256": "827655e3de86ccd4015f8179cae5fda5ef5cd4f83b970c47fec05768d0c2ef29",
+      "model": "small.en",
+      "clip": [
+        85.0,
+        125.0
+      ],
+      "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+      "method": "source_asr.py faster-whisper, no prior text, no VAD"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-point-medium.en.json",
+      "sha256": "0a7c77d50102672b4d5d83de795a7e28e7f6a8d619b77287c350e650b524762f",
+      "model": "medium.en",
+      "clip": [
+        85.0,
+        125.0
+      ],
+      "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+      "method": "source_asr.py faster-whisper, no prior text, no VAD"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-turbo.json",
+      "sha256": "e59b7975140e4103929b4bb4740bcd769c32a36a0f0cf7cdfa177fcc9ebd6efe",
+      "model": "large-v3-turbo",
+      "clip": [
+        88,
+        125
+      ],
+      "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+      "method": "faster_whisper_name_only_prompt_diagnostic"
+    }
+  ],
+  "foreground_english": [
+    {
+      "start": 114.44,
+      "end": 117.68,
+      "en": "It's truly world-class from Pegula.",
+      "zh": "佩古拉这球真是世界级水准。"
+    },
+    {
+      "start": 119.58,
+      "end": 122.08,
+      "en": "The difference between 30-all and 15-40.",
+      "zh": "这一分，决定了是三十平，还是十五比四十。"
+    }
+  ],
+  "review_notes": [
+    "Small well-class corrected to world-class by two medium contexts and turbo.",
+    "First broad medium misses difference phrase; fresh85–125medium andsmall+turbo all identify30-all/15-40.",
+    "Point is NOT a break point:15-30 win prevents15-40, actual resulting score30-30.",
+    "Full continuous long rally lasts over20seconds, so32.64s window is needed with serve setup and complete two commentary thoughts.",
+    "Previous independent Thats more like it ends88.18 at latest; start89.68 before toss. No invented umpire call.",
+    "Second commentary thought ends122.08latest; outgoing .25 to122.57 is before next serve and next commentary. Next distinct commentary Thats how you hit a slice is about next point and excluded."
+  ]
+}

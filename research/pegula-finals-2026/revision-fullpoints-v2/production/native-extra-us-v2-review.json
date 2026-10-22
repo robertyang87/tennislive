@@ -1,0 +1,618 @@
+{
+  "schema": "tennis-native-preview-review/v1",
+  "kind": "native_preview_visual_qc",
+  "status": "native_caption_preview_complete_with_documented_fixed_court_limitations",
+  "final_film_qc": false,
+  "publication_approved": false,
+  "review_method": "All 23 actual native PNGs individually inspected full-size; contacts are derived evidence only. No human listening or audio evaluation claimed. Existing source-bound ASR packets are separate evidence.",
+  "binding": {
+    "spec_path": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+    "preview_spec_file_sha256": "644ea74d2c45639f43cd83aaf91804666a50e60bafa3983307867d3bc672ccfc",
+    "preview_spec_canonical_sha256": "4fa9b53af5884b1fd0a6cb504fe48db6649cdac8cd27117106613f555349bb97",
+    "current_spec_sha256_at_report": "e5ae380159729cb89fc6f87f77efbe4af071a475b4e43075488dd91aed29ec23",
+    "spec_changed_during_review": true,
+    "current_whole_spec_approved": false,
+    "scope_note": "Generated image and manifest bindings remain at original preview spec 644ea74d… . Current spec e5ae3801… has the same four selected source windows, geometry, quote fields and timeline offsets; these preview visual findings therefore apply only to these four unchanged windows. Parent attests full four-segment field identity and only two unrelated subtitle-placement edits. This is not current whole-spec or final-film approval.",
+    "manifest": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/preview_manifest.json",
+    "manifest_sha256": "a01e3df355520481c82bb7a267b02e624801ea10ff439cedb60e9b8b674a4b4b",
+    "requested_samples": "/workspace/pegula-finals-production/preview-extra-us-fullpoints-v2-requested.json",
+    "requested_samples_sha256": "af88214c129ca8561f590447b053d6d7974c9bf398af832acf708a9a0e53e15d",
+    "ass_sha256": "cfba5e6a65729eccd39ad64cc5dfde3eca49aadef2a2babd5c05540307a8e61e",
+    "sources": [
+      {
+        "name": "us-qf",
+        "path": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/source_us-qf.mp4",
+        "sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39"
+      },
+      {
+        "name": "us-sf",
+        "path": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/source_us-sf.mp4",
+        "sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291"
+      }
+    ],
+    "current_spec_selected_scope_applicable": true,
+    "current_spec_approval_scope": {
+      "spec_sha256": "e5ae380159729cb89fc6f87f77efbe4af071a475b4e43075488dd91aed29ec23",
+      "segments": [
+        "us-qf-matchpoint",
+        "us-qf-reaction",
+        "us-sf-matchpoint",
+        "us-sf-postmatch"
+      ],
+      "condition": "Only these unchanged four previewed windows; not whole current spec or final film.",
+      "parent_editor_change_attestation": "Parent confirms all fields of these four windows unchanged; only Dubai-extra and Miami-extra caption placement changed elsewhere.",
+      "comparison": [
+        {
+          "id": "us-qf-matchpoint",
+          "segment_index": 29,
+          "current_film_offset": 457.29,
+          "preview_film_offset": 457.29,
+          "offset_equal": true,
+          "current_recipe_sha256": "24b75824ee68f9eb992b002602197b45508e63fe107c897443e605ae662dae51",
+          "independently_checked_fields": [
+            "source",
+            "start",
+            "end",
+            "cx",
+            "frame",
+            "fit",
+            "track",
+            "quote",
+            "audio_tail",
+            "inset absent",
+            "narration empty",
+            "film offset"
+          ],
+          "comparison_basis": "Run-start observed selected fields, actual native commands/ASS and frozen preview binding offsets; no original full-spec snapshot available in this isolated review directory."
+        },
+        {
+          "id": "us-qf-reaction",
+          "segment_index": 30,
+          "current_film_offset": 461.49,
+          "preview_film_offset": 461.49,
+          "offset_equal": true,
+          "current_recipe_sha256": "6c53637f15ce291d39f7bedf233a177f818769cf9272c724d519cb32d403f0d8",
+          "independently_checked_fields": [
+            "source",
+            "start",
+            "end",
+            "cx",
+            "frame",
+            "fit",
+            "track",
+            "quote",
+            "audio_tail",
+            "inset absent",
+            "narration empty",
+            "film offset"
+          ],
+          "comparison_basis": "Run-start observed selected fields, actual native commands/ASS and frozen preview binding offsets; no original full-spec snapshot available in this isolated review directory."
+        },
+        {
+          "id": "us-sf-matchpoint",
+          "segment_index": 34,
+          "current_film_offset": 521.53,
+          "preview_film_offset": 521.53,
+          "offset_equal": true,
+          "current_recipe_sha256": "4740c20c51558704e259e45e0ee9b3be4cfc670b2358599caf05b6dbee15f95e",
+          "independently_checked_fields": [
+            "source",
+            "start",
+            "end",
+            "cx",
+            "frame",
+            "fit",
+            "track",
+            "quote",
+            "audio_tail",
+            "inset absent",
+            "narration empty",
+            "film offset"
+          ],
+          "comparison_basis": "Run-start observed selected fields, actual native commands/ASS and frozen preview binding offsets; no original full-spec snapshot available in this isolated review directory."
+        },
+        {
+          "id": "us-sf-postmatch",
+          "segment_index": 35,
+          "current_film_offset": 528.59,
+          "preview_film_offset": 528.59,
+          "offset_equal": true,
+          "current_recipe_sha256": "57ef19a0e17fdfb52153e2d9f1d7d870845777e5171637f1d3baba15c24a3caa",
+          "independently_checked_fields": [
+            "source",
+            "start",
+            "end",
+            "cx",
+            "frame",
+            "fit",
+            "track",
+            "quote",
+            "audio_tail",
+            "inset absent",
+            "narration empty",
+            "film offset"
+          ],
+          "comparison_basis": "Run-start observed selected fields, actual native commands/ASS and frozen preview binding offsets; no original full-spec snapshot available in this isolated review directory."
+        }
+      ]
+    }
+  },
+  "geometry": {
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": 25,
+    "cx": 0.5,
+    "crop": "810:1080:555:0",
+    "fill": "crop, full canvas; no letterbox/contain",
+    "crop_tracking": false
+  },
+  "coverage": {
+    "selected_window_count": 4,
+    "actual_png_count": 23,
+    "first_middle_last_per_window": true,
+    "bilingual_cue_count": 11,
+    "all_cue_midpoints_inspected": true,
+    "cue_breakdown": {
+      "us-qf-reaction": 2,
+      "us-sf-postmatch": 9
+    },
+    "full_continuous_video_review": false,
+    "all_physical_strokes_visible_claim": false,
+    "continuous_face_visibility_claim": false
+  },
+  "findings": {
+    "canvas": "All actual samples fill 1080x1440. No visible blank sidebars.",
+    "subtitles": "All 11 sampled bilingual cues visibly readable, within canvas and clear of frame edges; no missing language, clipping or overlapping cue stacking observed.",
+    "labels": "These four new windows have no repeated live information inset. Prior actual-match highlight windows carry their event cards, outside this review scope. No added label covers a face in these samples.",
+    "temporal_point_evidence": "Source-bound independent selection packets document complete serve-to-result point windows. PNG first/middle/last samples corroborate those temporal stages, but do not substitute for continuous-motion final-film QC.",
+    "new_subtitle_or_overlay_blockers": [],
+    "fixed_court_spatial_limits": [
+      {
+        "segment": "us-qf-matchpoint",
+        "observed_source_times": [
+          169.0
+        ],
+        "image_indices": [
+          1
+        ],
+        "description": "Near-side receiver partially clipped at left edge; far-side server and point outcome retained."
+      },
+      {
+        "segment": "us-qf-reaction",
+        "observed_source_times": [
+          201.08
+        ],
+        "image_indices": [
+          8
+        ],
+        "description": "Pegula face outside right crop while waving; arm/racket and partial torso remain. This is actual fixed-center source framing, not card or subtitle occlusion."
+      },
+      {
+        "segment": "us-sf-matchpoint",
+        "known_source_interval": [
+          148.6,
+          149.98
+        ],
+        "observed_source_times": [
+          149.82
+        ],
+        "image_indices": [
+          11
+        ],
+        "description": "Pegula far-right final chase/racket leaves portrait crop; point time window and Sabalenka far-side result reaction remain."
+      },
+      {
+        "segment": "us-sf-postmatch",
+        "observed_source_times": [
+          184.2,
+          185.4,
+          186.24
+        ],
+        "image_indices": [
+          22,
+          23,
+          14
+        ],
+        "description": "Sabalenka bending at right has face partly/outside crop; source TV result scores at right also cropped. Do not claim the original TV graphic fully legible. Bilingual added cues remain readable."
+      }
+    ],
+    "disposition": "Retain explicit requested fixed court-center crop geometry. Do not label all strokes or all reaction faces continuously visible; parent handles final editorial disposition. No unauthorized tracking/contain/format changes made."
+  },
+  "selected_recipe_snapshot_at_report": [
+    {
+      "id": "us-qf-matchpoint",
+      "source": "us-qf",
+      "start": 168.84,
+      "end": 173.04,
+      "cx": 0.5,
+      "frame": "court",
+      "fit": "crop",
+      "track": false,
+      "quote": [],
+      "has_inset": false,
+      "audio_tail": "silence",
+      "source_geometry_and_quote_fields_match_run_start_observation": true
+    },
+    {
+      "id": "us-qf-reaction",
+      "source": "us-qf",
+      "start": 179.96,
+      "end": 203.2,
+      "cx": 0.5,
+      "frame": "court",
+      "fit": "crop",
+      "track": false,
+      "quote": [
+        {
+          "at": 10.9,
+          "end": 12.52,
+          "text": "She got through it.\n她挺过来了。"
+        },
+        {
+          "at": 19.32,
+          "end": 22.94,
+          "text": "She's in the semis at her favorite tournament.\n她在最爱的赛事打进四强。"
+        }
+      ],
+      "has_inset": false,
+      "audio_tail": null,
+      "source_geometry_and_quote_fields_match_run_start_observation": true
+    },
+    {
+      "id": "us-sf-matchpoint",
+      "source": "us-sf",
+      "start": 142.94,
+      "end": 150.0,
+      "cx": 0.5,
+      "frame": "court",
+      "fit": "crop",
+      "track": false,
+      "quote": [],
+      "has_inset": false,
+      "audio_tail": "silence",
+      "source_geometry_and_quote_fields_match_run_start_observation": true
+    },
+    {
+      "id": "us-sf-postmatch",
+      "source": "us-sf",
+      "start": 156.2,
+      "end": 186.4,
+      "cx": 0.5,
+      "frame": "court",
+      "fit": "crop",
+      "track": false,
+      "quote": [
+        {
+          "at": 7.74,
+          "end": 10.44,
+          "text": "Aryna Sabalenka is into another\n萨巴伦卡再次挺进"
+        },
+        {
+          "at": 10.44,
+          "end": 13.44,
+          "text": "US Open championship match.\n美网决赛。"
+        },
+        {
+          "at": 13.92,
+          "end": 14.98,
+          "text": "And boy, oh boy,\n天哪，"
+        },
+        {
+          "at": 17.6,
+          "end": 19.44,
+          "text": "if somebody in the other semi\n若另一场半决赛有人"
+        },
+        {
+          "at": 19.44,
+          "end": 22.08,
+          "text": "can stay with this woman, live with her,\n能够与她抗衡，"
+        },
+        {
+          "at": 22.08,
+          "end": 24.78,
+          "text": "live with her serving,\n顶住她的发球，"
+        },
+        {
+          "at": 25.08,
+          "end": 26.46,
+          "text": "live with her ground game,\n顶住她的底线进攻，"
+        },
+        {
+          "at": 27.62,
+          "end": 28.42,
+          "text": "we are going to have\n我们就将见证"
+        },
+        {
+          "at": 28.42,
+          "end": 30.0,
+          "text": "a fabulous match on Saturday.\n周六的一场精彩对决。"
+        }
+      ],
+      "has_inset": false,
+      "audio_tail": null,
+      "source_geometry_and_quote_fields_match_run_start_observation": true
+    }
+  ],
+  "actual_images": [
+    {
+      "sample": 1,
+      "segment_id": "us-qf-matchpoint",
+      "purpose": "new-window-first",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-01.png",
+      "image_sha256": "82e098c539ec3aa103a31f03f86e65ab99602cfedbd593d3269901aa4687270e",
+      "film_time": 457.45,
+      "source_time": 169.0,
+      "viewed_full_size": true,
+      "observation": "Navarro receiving stance is partly clipped at source-left portrait edge; Pegula far-side preparation retained."
+    },
+    {
+      "sample": 2,
+      "segment_id": "us-qf-matchpoint",
+      "purpose": "new-window-middle",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-02.png",
+      "image_sha256": "f419c82631364956ff6080cb6809f27ef799eb4ba658a1b50ea335b6763f101f",
+      "film_time": 459.37,
+      "source_time": 170.92,
+      "viewed_full_size": true,
+      "observation": "Pegula toss/service phase visible."
+    },
+    {
+      "sample": 3,
+      "segment_id": "us-qf-matchpoint",
+      "purpose": "new-window-last",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-03.png",
+      "image_sha256": "255532b7690257af946377864dc643288588d277c25e77cb8b514af4d2c2ddd0",
+      "film_time": 461.33,
+      "source_time": 172.88,
+      "viewed_full_size": true,
+      "observation": "Point outcome: Navarro failed return at net; far-side Pegula begins forward celebration."
+    },
+    {
+      "sample": 4,
+      "segment_id": "us-qf-reaction",
+      "purpose": "new-window-first",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-04.png",
+      "image_sha256": "c31d1ed4424733c1f1bc5907d50dfa218a59871295a510452686da098f48dfbb",
+      "film_time": 461.65,
+      "source_time": 180.12,
+      "viewed_full_size": true,
+      "observation": "Authentic net/postmatch reaction."
+    },
+    {
+      "sample": 5,
+      "segment_id": "us-qf-reaction",
+      "purpose": "new-window-middle",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-05.png",
+      "image_sha256": "8b4bcdde6c96e85bc1751fbe25a57fe969a0bc71d752a91eb0cb20956bd8f04c",
+      "film_time": 473.09,
+      "source_time": 191.56,
+      "viewed_full_size": true,
+      "observation": "Authentic winner reaction; frame readable."
+    },
+    {
+      "sample": 6,
+      "segment_id": "us-qf-reaction",
+      "purpose": "new-window-last",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-06.png",
+      "image_sha256": "0197b1d779b85606c16ef49a97e5b6561102985f7ef3944df22792787e4802ee",
+      "film_time": 484.57,
+      "source_time": 203.04,
+      "viewed_full_size": true,
+      "observation": "Authentic winner acknowledgement near end of reaction window."
+    },
+    {
+      "sample": 7,
+      "segment_id": "us-qf-reaction",
+      "purpose": "new-bilingual-cue",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-07.png",
+      "image_sha256": "6ff0e11170bbed8c47cda286e669cb0fab02a990e34763446dbe3aeeeae3503b",
+      "film_time": 473.17,
+      "source_time": 191.64,
+      "viewed_full_size": true,
+      "observation": "First complete commentary sentence visibly bilingual and readable."
+    },
+    {
+      "sample": 8,
+      "segment_id": "us-qf-reaction",
+      "purpose": "new-bilingual-cue",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-08.png",
+      "image_sha256": "49c0462503215fb92dae39ef3756e9726ab74ad9cebefcb049aad94525e47ffc",
+      "film_time": 482.61,
+      "source_time": 201.08,
+      "viewed_full_size": true,
+      "observation": "Second complete commentary sentence visibly bilingual and readable; Pegula face has moved outside source-right portrait edge, with arm/racket and partial torso retained."
+    },
+    {
+      "sample": 9,
+      "segment_id": "us-sf-matchpoint",
+      "purpose": "new-window-first",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-09.png",
+      "image_sha256": "57a4d56ef4e08ef57c9b0a00753288e5f1068eba10da179eeca2a8995b53216b",
+      "film_time": 521.69,
+      "source_time": 143.1,
+      "viewed_full_size": true,
+      "observation": "Pegula near-side serving preparation visible."
+    },
+    {
+      "sample": 10,
+      "segment_id": "us-sf-matchpoint",
+      "purpose": "new-window-middle",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-10.png",
+      "image_sha256": "e5ab0f4b8abcf462ddf3a77ff7b5cc955397d4f3b4637800a4933c7d41fcd46f",
+      "film_time": 525.05,
+      "source_time": 146.46,
+      "viewed_full_size": true,
+      "observation": "Service/rally phase visible in fixed-center portrait."
+    },
+    {
+      "sample": 11,
+      "segment_id": "us-sf-matchpoint",
+      "purpose": "new-window-last",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-11.png",
+      "image_sha256": "87aeb11bba808b9b5f2fa7bd5c1eb8b2c570e2e62a2ae0845eaf86cc07477e6d",
+      "film_time": 528.41,
+      "source_time": 149.82,
+      "viewed_full_size": true,
+      "observation": "Point result retained temporally; Pegula final chase/contact outside right portrait edge, Sabalenka far-side walking after point visible."
+    },
+    {
+      "sample": 12,
+      "segment_id": "us-sf-postmatch",
+      "purpose": "new-window-first",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-12.png",
+      "image_sha256": "e05f3f686201bf06fba19f788e7257f5e8216eb62f62871dbb887c09026b3149",
+      "film_time": 528.75,
+      "source_time": 156.36,
+      "viewed_full_size": true,
+      "observation": "Authentic postmatch net approach."
+    },
+    {
+      "sample": 13,
+      "segment_id": "us-sf-postmatch",
+      "purpose": "new-window-middle",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-13.png",
+      "image_sha256": "296e4e97058d4dd56e1822cd6de8cb9133c2e60ab9ce9fa548ca74ed576e4f00",
+      "film_time": 543.67,
+      "source_time": 171.28,
+      "viewed_full_size": true,
+      "observation": "Authentic winner/crowd acknowledgement."
+    },
+    {
+      "sample": 14,
+      "segment_id": "us-sf-postmatch",
+      "purpose": "new-window-last",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-14.png",
+      "image_sha256": "a6096c22657ac5cd164563c85e98c8700e6d5ca9ee7363ff67ca71fed6b773e4",
+      "film_time": 558.63,
+      "source_time": 186.24,
+      "viewed_full_size": true,
+      "observation": "Sabalenka bends at source-right frame edge; face partly/outside portrait. Original TV result graphic scores are cropped at right. Added bilingual subtitle remains readable."
+    },
+    {
+      "sample": 15,
+      "segment_id": "us-sf-postmatch",
+      "purpose": "new-bilingual-cue",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-15.png",
+      "image_sha256": "4e8b6b0e0cf62856282ae5adfb08a030f2454d3e6e6ec8cff98a658c3e3b7c15",
+      "film_time": 537.67,
+      "source_time": 165.28,
+      "viewed_full_size": true,
+      "observation": "Cue 1 visibly bilingual and readable."
+    },
+    {
+      "sample": 16,
+      "segment_id": "us-sf-postmatch",
+      "purpose": "new-bilingual-cue",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-16.png",
+      "image_sha256": "c1067ff18acaac06efc7dfa8eb4360a8e444b92346ff263809262b734ea14098",
+      "film_time": 540.51,
+      "source_time": 168.12,
+      "viewed_full_size": true,
+      "observation": "Cue 2 visibly bilingual and readable."
+    },
+    {
+      "sample": 17,
+      "segment_id": "us-sf-postmatch",
+      "purpose": "new-bilingual-cue",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-17.png",
+      "image_sha256": "6a8a191baa018e49d1e554fe6188c9575576d2ba8cdd359a7753e6658c776a1d",
+      "film_time": 543.03,
+      "source_time": 170.64,
+      "viewed_full_size": true,
+      "observation": "Cue 3 visibly bilingual and readable."
+    },
+    {
+      "sample": 18,
+      "segment_id": "us-sf-postmatch",
+      "purpose": "new-bilingual-cue",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-18.png",
+      "image_sha256": "d0627f84ecc3ac6d8c74f9d3e27e6beee156d75b56e906f7490e47bd805b5161",
+      "film_time": 547.11,
+      "source_time": 174.72,
+      "viewed_full_size": true,
+      "observation": "Cue 4 visibly bilingual and readable; broadcast shows authentic back-facing winner."
+    },
+    {
+      "sample": 19,
+      "segment_id": "us-sf-postmatch",
+      "purpose": "new-bilingual-cue",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-19.png",
+      "image_sha256": "98dcf9b908faa6f503c7e7e668674f3f863c0b4b25b120d336d3edcd8b5c6eff",
+      "film_time": 549.35,
+      "source_time": 176.96,
+      "viewed_full_size": true,
+      "observation": "Cue 5 visibly bilingual and readable."
+    },
+    {
+      "sample": 20,
+      "segment_id": "us-sf-postmatch",
+      "purpose": "new-bilingual-cue",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-20.png",
+      "image_sha256": "afb695748d958ebfae48cf59fda9c47457148cc5a89ee42d0b7d7bac21b0f3e3",
+      "film_time": 551.99,
+      "source_time": 179.6,
+      "viewed_full_size": true,
+      "observation": "Cue 6 visibly bilingual and readable."
+    },
+    {
+      "sample": 21,
+      "segment_id": "us-sf-postmatch",
+      "purpose": "new-bilingual-cue",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-21.png",
+      "image_sha256": "06355019bd8584f2eb6ccc3aa8f06fb8c2b741b1f8b29f167e8f4ccaf6474d6c",
+      "film_time": 554.35,
+      "source_time": 181.96,
+      "viewed_full_size": true,
+      "observation": "Cue 7 visibly bilingual and readable."
+    },
+    {
+      "sample": 22,
+      "segment_id": "us-sf-postmatch",
+      "purpose": "new-bilingual-cue",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-22.png",
+      "image_sha256": "7c162ffcffb9508d464e83d4f5228a166e49bad856676e45d584ac8899847ba3",
+      "film_time": 556.59,
+      "source_time": 184.2,
+      "viewed_full_size": true,
+      "observation": "Cue 8 visibly bilingual and readable. Sabalenka bends toward source-right portrait edge; face reaches/passes edge. Original TV result graphic right scores cropped."
+    },
+    {
+      "sample": 23,
+      "segment_id": "us-sf-postmatch",
+      "purpose": "new-bilingual-cue",
+      "image": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/caption-23.png",
+      "image_sha256": "ed22a587c5ba7a0317fe769ebcebc10cd9a67071a7287defde0153ea5cbcaa70",
+      "film_time": 557.79,
+      "source_time": 185.4,
+      "viewed_full_size": true,
+      "observation": "Cue 9 visibly bilingual and readable. Sabalenka face reaches/passes source-right portrait edge; original TV result graphic right scores cropped."
+    }
+  ],
+  "contacts": [
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/review-contact-01.jpg",
+      "sha256": "dc31c7142d29c6367bf62fb436a82f733798f6cf60ad2a9b4ee49d2c7ea6c174",
+      "derived_from_actual_native_pngs": true
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/review-contact-02.jpg",
+      "sha256": "a45970465e939a7e7fec003deace5e4fa399d7e7202859c6bc6bf467f82600ce",
+      "derived_from_actual_native_pngs": true
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-extra-us-fullpoints-v2/review-contact-03.jpg",
+      "sha256": "435b865b2a889729f4a1baae2302b7b3644e1036d8f9aa855fd958ca758e9e58",
+      "derived_from_actual_native_pngs": true
+    }
+  ],
+  "limitations": [
+    "No final QC or publication approval",
+    "Interior segment samples exclude dissolves and final H.264 compression",
+    "Audio is not produced or evaluated",
+    "Geometry sets without timestamps do not prove all board-width transitions were sampled",
+    "Native sample PNGs do not establish final H.264 continuity, dissolves, audio tails, audio intelligibility or final-film QC.",
+    "Spec changed after preview generation; these findings apply to the four verified unchanged windows in current e5ae3801… only, not to modified Dubai/Miami windows or the whole current spec."
+  ]
+}

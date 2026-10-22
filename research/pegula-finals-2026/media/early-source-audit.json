@@ -1,0 +1,626 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-22T05:32:37.391288+00:00",
+  "scope": "Pegula2026 early-season official media preparation for reviewable outline only",
+  "guardrails": {
+    "formal_render_authorized": false,
+    "render_dispatched": false,
+    "shared_spec_modified": false,
+    "git_fetch_checkout_commit": false,
+    "source_rule": "Actual native1920x1080 only. Rybakina720crop exceptions/contain not inherited.",
+    "match_geometry": "Fixed court center3:4; sampled actual crop810x1080 atx555 from1920x1080. No formal point approval from sparse frames.",
+    "interview_geometry": "Real person-face measurement required later; cx_face null instead of guessed.",
+    "review_claim": "Actual frames visually inspected and actual small.en/medium.en ASR cross-checked; no human listening/full-film QC claim."
+  },
+  "actual_sources": [
+    {
+      "name": "ao-sf",
+      "id": "qMezbjE3Nu4",
+      "publisher": "Australian Open",
+      "title": "Jessica Pegula v Elena Rybakina Extended Highlights | Australian Open 2026 Semifinal",
+      "source_url": "https://www.youtube.com/watch?v=qMezbjE3Nu4",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-qMezbjE3Nu4/qMezbjE3Nu4.mp4",
+      "archive_run_id": 39727602118,
+      "local_file": "/workspace/pegula-finals-production/sources/ao-sf.mp4",
+      "status": "actual_bytes_and_ffprobe",
+      "approved_for_render": false,
+      "bytes": 56217672,
+      "sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+      "width": 1920,
+      "height": 1080,
+      "codec": "av1",
+      "fps": "25/1",
+      "duration": 486.713469,
+      "native_1080": true,
+      "probe_file": "/workspace/pegula-finals-production/media/ao-sf-probe.json",
+      "published_date": "2026-01-29",
+      "archive_run": {
+        "id": 39727602118,
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39727602118",
+        "conclusion": "success"
+      },
+      "official_identity_evidence": {
+        "method": "expanded_web_video_metadata",
+        "channel": "Australian Open",
+        "verified": true,
+        "published_date": "2026-01-29"
+      },
+      "visual_identity_review": {
+        "method": "actual_source_frame_contacts",
+        "frame_contact": "/workspace/pegula-finals-production/media/contacts/ao-sf.jpg",
+        "scope": "Selected actual source frames visually inspected; not full clip/frame-by-frame/crop approval."
+      }
+    },
+    {
+      "name": "dubai-final",
+      "id": "n8N7tGMhsQA",
+      "publisher": "WTA",
+      "title": "Elina Svitolina vs. Jessica Pegula | 2026 Dubai Final | WTA Match Highlights",
+      "source_url": "https://www.youtube.com/watch?v=n8N7tGMhsQA",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-n8N7tGMhsQA/n8N7tGMhsQA.mp4",
+      "archive_run_id": null,
+      "local_file": "/workspace/pegula-finals-production/sources/dubai-final.mp4",
+      "status": "actual_bytes_and_ffprobe",
+      "approved_for_render": false,
+      "bytes": 135815318,
+      "sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "width": 1920,
+      "height": 1080,
+      "codec": "vp9",
+      "fps": "25/1",
+      "duration": 309.405896,
+      "native_1080": true,
+      "probe_file": "/workspace/pegula-finals-production/media/dubai-final-probe.json",
+      "published_date": "2026-02-21",
+      "official_identity_evidence": {
+        "method": "expanded_web_video_metadata",
+        "channel": "WTA",
+        "verified": true,
+        "published_date": "2026-02-21"
+      },
+      "visual_identity_review": {
+        "method": "actual_source_frame_contacts",
+        "frame_contact": "/workspace/pegula-finals-production/media/contacts/dubai-final.jpg",
+        "scope": "Selected actual source frames visually inspected; not full clip/frame-by-frame/crop approval."
+      }
+    },
+    {
+      "name": "dubai-sf",
+      "id": "L7tpXYiUH9c",
+      "publisher": "WTA",
+      "title": "Jessica Pegula vs. Amanda Anisimova | 2026 Dubai Semifinals | WTA Match Highlights",
+      "source_url": "https://www.youtube.com/watch?v=L7tpXYiUH9c",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-L7tpXYiUH9c/L7tpXYiUH9c.mp4",
+      "archive_run_id": 39727605160,
+      "local_file": "/workspace/pegula-finals-production/sources/dubai-sf.mp4",
+      "status": "actual_bytes_and_ffprobe",
+      "approved_for_render": false,
+      "bytes": 70520330,
+      "sha256": "79c8a34c1486229d088196808b2ddb1f8d785648d4c08c6b09a9f2dc3511f619",
+      "width": 1920,
+      "height": 1080,
+      "codec": "av1",
+      "fps": "25/1",
+      "duration": 309.893515,
+      "native_1080": true,
+      "probe_file": "/workspace/pegula-finals-production/media/dubai-sf-probe.json",
+      "published_date": "2026-02-20",
+      "archive_run": {
+        "id": 39727605160,
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39727605160",
+        "conclusion": "success"
+      },
+      "official_identity_evidence": {
+        "method": "expanded_web_video_metadata",
+        "channel": "WTA",
+        "verified": true,
+        "published_date": "2026-02-20"
+      },
+      "visual_identity_review": {
+        "method": "actual_source_frame_contacts",
+        "frame_contact": "/workspace/pegula-finals-production/media/contacts/dubai-sf.jpg",
+        "scope": "Selected actual source frames visually inspected; not full clip/frame-by-frame/crop approval."
+      }
+    },
+    {
+      "name": "charleston-final",
+      "id": "Zwi_zjefnh0",
+      "publisher": "WTA",
+      "title": "Jessica Pegula vs. Yuliia Starodubtseva | 2026 Charleston Final | WTA Match Highlights",
+      "source_url": "https://www.youtube.com/watch?v=Zwi_zjefnh0",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-Zwi_zjefnh0/Zwi_zjefnh0.mp4",
+      "archive_run_id": 39727608213,
+      "local_file": "/workspace/pegula-finals-production/sources/charleston-final.mp4",
+      "status": "actual_bytes_and_ffprobe",
+      "approved_for_render": false,
+      "bytes": 51610870,
+      "sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+      "width": 1920,
+      "height": 1080,
+      "codec": "av1",
+      "fps": "25/1",
+      "duration": 309.684535,
+      "native_1080": true,
+      "probe_file": "/workspace/pegula-finals-production/media/charleston-final-probe.json",
+      "published_date": "2026-04-05",
+      "archive_run": {
+        "id": 39727608213,
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39727608213",
+        "conclusion": "success"
+      },
+      "official_identity_evidence": {
+        "method": "expanded_web_video_metadata",
+        "channel": "WTA",
+        "verified": true,
+        "published_date": "2026-04-05"
+      },
+      "visual_identity_review": {
+        "method": "actual_source_frame_contacts",
+        "frame_contact": "/workspace/pegula-finals-production/media/contacts/charleston-final.jpg",
+        "scope": "Selected actual source frames visually inspected; not full clip/frame-by-frame/crop approval."
+      }
+    },
+    {
+      "name": "berlin-final",
+      "id": "fKfC75_5ZCI",
+      "publisher": "WTA",
+      "title": "Jessica Pegula vs. Linda Noskova | 2026 Berlin Final | WTA Match Highlights",
+      "source_url": "https://www.youtube.com/watch?v=fKfC75_5ZCI",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-fKfC75_5ZCI/fKfC75_5ZCI.mp4",
+      "archive_run_id": 39727611351,
+      "local_file": "/workspace/pegula-finals-production/sources/berlin-final.mp4",
+      "status": "actual_bytes_and_ffprobe",
+      "approved_for_render": false,
+      "bytes": 49909644,
+      "sha256": "ab85a4bf65bc5aadd1b62686b40db035a0f30403e6fd32cf73ed35115ae75171",
+      "width": 1920,
+      "height": 1080,
+      "codec": "av1",
+      "fps": "25/1",
+      "duration": 309.266576,
+      "native_1080": true,
+      "probe_file": "/workspace/pegula-finals-production/media/berlin-final-probe.json",
+      "published_date": "2026-06-21",
+      "archive_run": {
+        "id": 39727611351,
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39727611351",
+        "conclusion": "success"
+      },
+      "official_identity_evidence": {
+        "method": "expanded_web_video_metadata",
+        "channel": "WTA",
+        "verified": true,
+        "published_date": "2026-06-21"
+      },
+      "visual_identity_review": {
+        "method": "actual_source_frame_contacts",
+        "frame_contact": "/workspace/pegula-finals-production/media/contacts/berlin-final.jpg",
+        "scope": "Selected actual source frames visually inspected; not full clip/frame-by-frame/crop approval."
+      }
+    },
+    {
+      "name": "dubai-sf-interview",
+      "id": "GxUTADaA1MQ",
+      "publisher": "Dubai Duty Free Tennis Championships",
+      "title": "Post-Match Interview: Jessica Pegula (2026 semifinal)",
+      "source_url": "https://www.youtube.com/watch?v=GxUTADaA1MQ",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-GxUTADaA1MQ/GxUTADaA1MQ.mp4",
+      "archive_run_id": 39727614847,
+      "local_file": "/workspace/pegula-finals-production/sources/dubai-sf-interview.mp4",
+      "status": "actual_bytes_and_ffprobe",
+      "approved_for_render": false,
+      "bytes": 36387999,
+      "sha256": "bd3539827f16aff1e82e65f63db3a59ca5c441a1bc05892b59eed88a786e6d27",
+      "width": 1920,
+      "height": 1080,
+      "codec": "av1",
+      "fps": "25/1",
+      "duration": 135.697415,
+      "native_1080": true,
+      "probe_file": "/workspace/pegula-finals-production/media/dubai-sf-interview-probe.json",
+      "published_date": "2026-02-20",
+      "archive_run": {
+        "id": 39727614847,
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39727614847",
+        "conclusion": "success"
+      },
+      "official_identity_evidence": {
+        "method": "official_event_page_explicit_youtube_embed",
+        "channel": "Dubai Duty Free Tennis Championships",
+        "verified": false,
+        "published_date": "2026-02-20",
+        "page_url": "https://dubaidutyfreetennischampionships.com/post-match-interview-jessica-pegula/",
+        "saved_page": "/workspace/pegula-finals-production/media/dubai-sf-interview.html",
+        "embedded_video_id": "GxUTADaA1MQ"
+      },
+      "visual_identity_review": {
+        "method": "actual_source_frame_contacts",
+        "frame_contact": "/workspace/pegula-finals-production/media/contacts/dubai-sf-interview.jpg",
+        "scope": "Selected actual source frames visually inspected; not full clip/frame-by-frame/crop approval."
+      }
+    },
+    {
+      "name": "dubai-champion-speech",
+      "id": "kuICNiB--fE",
+      "publisher": "Dubai Duty Free Tennis Championships",
+      "title": "Jessica Pegula champion speech after defeating Svitolina2026DubaiFinal",
+      "source_url": "https://www.youtube.com/watch?v=kuICNiB--fE",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-kuICNiB--fE/kuICNiB--fE.mp4",
+      "archive_run_id": 39727652453,
+      "local_file": "/workspace/pegula-finals-production/sources/dubai-champion-speech.mp4",
+      "status": "actual_bytes_and_ffprobe",
+      "approved_for_render": false,
+      "bytes": 16624545,
+      "sha256": "b81c05eee0406d4816be14870a933bc2504af15401f14caa3b8408ee1652c918",
+      "width": 1920,
+      "height": 1080,
+      "codec": "av1",
+      "fps": "25/1",
+      "duration": 90.418503,
+      "native_1080": true,
+      "probe_file": "/workspace/pegula-finals-production/media/dubai-champion-speech-probe.json",
+      "published_date": "2026-02-21",
+      "archive_run": {
+        "id": 39727652453,
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39727652453",
+        "conclusion": "success"
+      },
+      "official_identity_evidence": {
+        "method": "expanded_web_video_metadata",
+        "channel": "Dubai Duty Free Tennis Championships",
+        "verified": null,
+        "published_date": "2026-02-21",
+        "channel_followers": 8770,
+        "description": "Jessica Pegula's speech after defeating Elina Svitolina to win the 2026 Dubai Duty Free Tennis Championships.",
+        "note": "Exact event-owned channel name and event-specific description. Event podium/microphone and Pegula actual frames inspected."
+      },
+      "visual_identity_review": {
+        "method": "actual_source_frame_contacts",
+        "frame_contact": "/workspace/pegula-finals-production/media/contacts/dubai-champion-speech.jpg",
+        "scope": "Selected actual source frames visually inspected; not full clip/frame-by-frame/crop approval."
+      }
+    },
+    {
+      "name": "berlin-sf-sabalenka",
+      "id": "Il6cKvP4qAw",
+      "publisher": "WTA",
+      "title": "Aryna Sabalenka vs. Jessica Pegula | 2026 Berlin Semifinal | WTA Match Highlights",
+      "published_date": "2026-06-20",
+      "official_identity_evidence": {
+        "method": "web_search_video_result_expanded_metadata",
+        "channel": "WTA",
+        "verified": true,
+        "followers": 2710000,
+        "url": "https://www.youtube.com/watch?v=Il6cKvP4qAw"
+      },
+      "source_url": "https://www.youtube.com/watch?v=Il6cKvP4qAw",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-Il6cKvP4qAw/Il6cKvP4qAw.mp4",
+      "archive_run": {
+        "id": 39718091752,
+        "url": "https://github.com/robertyang87/tennislive/actions/runs/39718091752",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      "status": "actual_bytes_and_ffprobe",
+      "approved_for_render": false,
+      "local_file": "/workspace/sabalenka-finals-production/staging/extra/berlin-sf.mp4",
+      "bytes": 54751842,
+      "sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "width": 1920,
+      "height": 1080,
+      "codec": "av1",
+      "fps": "25/1",
+      "duration": 306.433741,
+      "probe_file": "/workspace/sabalenka-finals-production/research/media/berlin-sf-probe.json",
+      "native_1080": true,
+      "note": "Actual original archive/probe. No source scaling. Selection/audio/crop not audited; candidate acquisition only.",
+      "reuse_from": "sabalenka-finals-production",
+      "visual_identity_review": {
+        "method": "actual_source_frame_contacts",
+        "frame_contact": "/workspace/pegula-finals-production/media/contacts/berlin-sf-sabalenka-center3x4.jpg",
+        "scope": "Selected actual source frames visually inspected; not full clip/frame-by-frame/crop approval."
+      }
+    }
+  ],
+  "event_story_candidates": [
+    {
+      "event": "Australian Open",
+      "date": "2026-01-29",
+      "result": "SF; lost to Elena Rybakina 3-6,6-7(7)",
+      "story_candidate": "第一次打进澳网四强，抢七后止步；以本人最后一轮真实比赛建立赛季起点。",
+      "sources": [
+        "ao-sf"
+      ],
+      "rough_source_scan": [
+        437.4,
+        451.4
+      ],
+      "visual_evidence": [
+        "/workspace/pegula-finals-production/media/contacts/ao-sf-center3x4.jpg"
+      ],
+      "visual_note": "438/442s actual court frames and446/450 reactions inspected. Coarse candidate only: exact serve/point onset, every-frame fixed-center action and complete commentary not yet audited. Do not present earlier set point as match point.",
+      "fact_evidence": [
+        "/workspace/output/WTA年终之路_2026_七人资料/05_佩古拉/05_佩古拉_事实包.json"
+      ],
+      "selection_status": "outline_candidate_only_not_approved_cut"
+    },
+    {
+      "event": "Dubai",
+      "date": "2026-02-20/21",
+      "result": "SF d.Amanda Anisimova1-6,6-4,6-3; F d.Elina Svitolina6-2,6-4",
+      "story_candidate": "半决赛一度1-6、1-3落后，追回后决赛夺冠；赛季首冠，生涯第10冠、第4个WTA1000冠军。可接真实本人“还留在比赛里”与带奖杯回家原声。",
+      "sources": [
+        "dubai-sf",
+        "dubai-final",
+        "dubai-sf-interview",
+        "dubai-champion-speech"
+      ],
+      "rough_source_scan": {
+        "sf": [
+          259.2,
+          283.0
+        ],
+        "final": [
+          239.0,
+          259.5
+        ]
+      },
+      "visual_evidence": [
+        "/workspace/pegula-finals-production/media/contacts/dubai-sf-center3x4.jpg",
+        "/workspace/pegula-finals-production/media/contacts/dubai-final-center3x4.jpg"
+      ],
+      "visual_note": "Actual match-point scoreboards/full-frame reactions inspected. SF262s near player reaches crop left edge; no fixed-court-center complete-point approval. Final239–244 central final point/reaction is promising but still requires frame-by-frame action onset and complete commentary audit. Dubai match highlight has no trophy-lift in inspected235–291s: do not mislabel victory celebration as trophy footage.",
+      "fact_evidence": [
+        "/workspace/pegula-finals-production/media/dubai-official-matches.json",
+        "/workspace/pegula-finals-production/media/dubai-recap.json",
+        "https://www.wtatennis.com/news/4454811/pegula-defeats-svitolina-in-dubai-to-win-10th-title-fourth-wta-1000",
+        "https://dubaidutyfreetennischampionships.com/press-conference-jessica-pegula-2/",
+        "https://dubaidutyfreetennischampionships.com/jessica-pegula-press-conference-3/"
+      ],
+      "source_conflict_note": "WTA4454811 says “Two days earlier” for SF but official SF wasFeb20/finalFeb21. Use dates/previous-day, not two-days.",
+      "selection_status": "outline_candidate_only_not_approved_cut"
+    },
+    {
+      "event": "Charleston",
+      "date": "2026-04-01..05",
+      "result": "Champion; F d.Yuliia Starodubtseva6-2,6-2",
+      "story_candidate": "前四场全部三盘，前三场先丢一盘；决赛两个6-2完成卫冕，收下赛季第二冠。",
+      "sources": [
+        "charleston-final"
+      ],
+      "rough_source_scan": [
+        267.8,
+        283.0
+      ],
+      "visual_evidence": [
+        "/workspace/pegula-finals-production/media/contacts/charleston-final-center3x4.jpg"
+      ],
+      "visual_note": "Actual championship-point40-0 scoreboard/full-frame and celebration inspected. However270s court-center crop clips the near player left; terminal point NOT approved for fixed-center3:4. Need a different complete central point in formal production, or use verified real trophy photo/own interview when available rather than claim this window crop-safe.",
+      "fact_evidence": [
+        "/workspace/pegula-finals-production/media/charleston-official-matches.json",
+        "/workspace/pegula-finals-production/media/charleston-pegula-match-evidence.json",
+        "/workspace/pegula-finals-production/media/charleston-recap.json",
+        "https://www.wtatennis.com/news/4482273/back-to-back-pegula-defends-charleston-title-to-capture-second-trophy-of-2026"
+      ],
+      "first_four_all_three_sets": true,
+      "first_three_lost_first_set": true,
+      "final_two_sets": true,
+      "first_four_scores_pegula_perspective": [
+        "4-6,6-4,7-5 vsPutintseva",
+        "1-6,6-1,7-6(1) vsCocciaretto",
+        "3-6,6-3,6-2 vsShnaider",
+        "6-4,5-7,6-3 vsJovic"
+      ],
+      "source_conflict_note": "WTA4482619 feature mentions first two lost-first-set; actual official match feed plus4482273 establish first THREE. Use four three-set matches / exact official scores.",
+      "selection_status": "outline_candidate_only_not_approved_cut"
+    },
+    {
+      "event": "Roland Garros",
+      "date": "2026-05-26",
+      "result": "R1; lost to Kimberly Birrell6-1,3-6,3-6",
+      "story_candidate": "先拿第一盘仍遭逆转，法网首轮出局。只能据赛果描述低谷，不能杜撰本人心理/更衣室反应。",
+      "sources": [],
+      "visual_evidence": [],
+      "visual_note": "No actual event/tour official1080 same-R1 video or Pegula own same-match presser acquired yet. Official broadcaster WWOS acquisition geo-failed; no circumvention. Internal fallback factual chapter card, with real official season recap only if independently acquired1080 and exact R1 scoreboard verified.",
+      "fact_evidence": [
+        "/workspace/output/WTA年终之路_2026_七人资料/05_佩古拉/05_佩古拉_事实包.json",
+        "/workspace/pegula-finals-production/media/rg-recap.json",
+        "https://www.rolandgarros.com/en-us/matches/2026/SD079",
+        "https://www.wtatennis.com/news/4509859/birrells-biggest-win-aussie-shocks-pegula-in-roland-garros-upset"
+      ],
+      "selection_status": "outline_candidate_only_not_approved_cut"
+    },
+    {
+      "event": "Berlin",
+      "date": "2026-06-20/21",
+      "result": "SF d.Aryna Sabalenka6-4,6-7(4),6-0; F lost to Linda Noskova4-6,6-4,3-6",
+      "story_candidate": "法网首轮失利后，草地半决赛决胜盘送萨巴6-0，重回决赛；最后收获亚军，不能写成柏林夺冠。",
+      "sources": [
+        "berlin-sf-sabalenka",
+        "berlin-final"
+      ],
+      "rough_source_scan": {
+        "sf": [
+          256.5,
+          270.95
+        ],
+        "final": [
+          254.5,
+          283
+        ]
+      },
+      "visual_evidence": [
+        "/workspace/pegula-finals-production/media/contacts/berlin-sf-sabalenka-center3x4.jpg",
+        "/workspace/pegula-finals-production/media/contacts/berlin-final-center3x4.jpg"
+      ],
+      "visual_note": "Actual SF winner reaction and final Noskova falling-to-grass seen. SF260s near player reaches beyond left crop edge, so reuse point needs a new safe centered rally or another visual solution; prior Sabalenka source approval is not Pegula crop approval. SF complete commentary264.78–270.76 verified in previous source-bound small/medium ASR: “Jessica Pegula, the2024winner in Berlin, is into another final.” Final exact point/crop/audio not yet approved.",
+      "fact_evidence": [
+        "/workspace/output/WTA年终之路_2026_七人资料/05_佩古拉/05_佩古拉_事实包.json",
+        "/workspace/sabalenka-finals-production/research/production/asr/berlin-sf-small.en.json",
+        "/workspace/sabalenka-finals-production/research/production/asr/berlin-sf-medium.en.json"
+      ],
+      "selection_status": "outline_candidate_only_not_approved_cut"
+    }
+  ],
+  "interview_candidates": [
+    {
+      "source": "dubai-sf-interview",
+      "source_file": "/workspace/pegula-finals-production/sources/dubai-sf-interview.mp4",
+      "source_sha256": "bd3539827f16aff1e82e65f63db3a59ca5c441a1bc05892b59eed88a786e6d27",
+      "candidate_start": 9.15,
+      "candidate_end": 18.12,
+      "quote_en": "At the start of the third it was one-all ... I'm just happy I'm still even here right now. She was playing some incredible tennis.",
+      "translation_zh": "决胜盘开局打到一平时……我很高兴自己还在比赛里。她打得实在太好了。",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        "/workspace/pegula-finals-production/media/dubai-sf-interview-small.en.json",
+        "/workspace/pegula-finals-production/media/dubai-sf-interview-medium-full-sentence.en.json"
+      ],
+      "status": "candidate_not_final_caption_or_crop_approval",
+      "cx_face": null,
+      "face_center_measurement_status": "required_later_actual_measurement_not_fabricated",
+      "note": "Substantive words agree. The lead-in to the quoted thought differs: small.en “and I said”; medium.en “I’m saying”. Ellipsis explicitly marks that unresolved connective; this is NOT an approved verbatim subtitle. Exact common-words alternative 13.72–18.12: “I’m just happy I’m still even here right now. She was playing some incredible tennis.” Next I begins18.50, so18.12 avoids the new sentence. Contact confirms actual same-match on-court interview, Pegula orange Adidas/white visor. Full formal production must verify crop/word-bound cues.",
+      "asr_model_scope": "small.en original broader audio; medium.en actual selected audio. No human listening claim."
+    },
+    {
+      "source": "dubai-champion-speech",
+      "source_file": "/workspace/pegula-finals-production/sources/dubai-champion-speech.mp4",
+      "source_sha256": "b81c05eee0406d4816be14870a933bc2504af15401f14caa3b8408ee1652c918",
+      "candidate_start": 20.4,
+      "candidate_end": 34.45,
+      "quote_en": "Yeah, it's a great birthday present for me. I get to celebrate by flying back home in a few hours, so I don't know ... we'll see. But just super happy to go home with a trophy. It was a great week.",
+      "translation_zh": "这是很棒的生日礼物。几小时后就要飞回家了，怎么庆祝再看吧。但能带着奖杯回家，我特别开心。这一周很棒。",
+      "method": "asr_cross_checked",
+      "asr_evidence": [
+        "/workspace/pegula-finals-production/media/dubai-champion-speech-small.en.json",
+        "/workspace/pegula-finals-production/media/dubai-champion-speech-medium.en.json"
+      ],
+      "status": "candidate_not_final_caption_or_crop_approval",
+      "cx_face": null,
+      "face_center_measurement_status": "required_later_actual_measurement_not_fabricated",
+      "note": "Complete own answer after the host’s question ends19.86; next host starts38.42. Both models agree on substantive statements. Small.en additionally hears “Yeah” before we’ll see and “It was just” false start before final sentence; ellipsis and this note preserve uncertainty. Not a formal approved word-for-word caption. Short alternative28.60–34.45 contains trophy/great-week thought; do not combine noncontiguous answers as one continuous speech.",
+      "asr_model_scope": "small.en original broader audio; medium.en actual selected audio. No human listening claim."
+    }
+  ],
+  "cover_photos": [
+    {
+      "name": "charleston-recap",
+      "local_file": "/workspace/pegula-finals-production/media/photos/charleston-trophy.jpg",
+      "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/04/05/c7343114-3803-426d-9ea4-57399a43b944/GettyImages-2269951023.jpg",
+      "source_article_id": 4482273,
+      "date": "2026-04-05T18:29:00Z",
+      "credit": "Matthew Stockman/Getty Images",
+      "width": 5181,
+      "height": 3454,
+      "bytes": 12614142,
+      "sha256": "4337f258a403a01dd09bd961feb3aa85c59bf0acbdb6490ab880ce637fede45e",
+      "original_metadata": {
+        "type": "photo",
+        "id": 4482298,
+        "title": "Jesscia Pegula, Charleston 2026",
+        "imageUrl": "https://photoresources.wtatennis.com/wta/photo/2026/04/05/c7343114-3803-426d-9ea4-57399a43b944/GettyImages-2269951023.jpg",
+        "originalDetails": {
+          "width": 5181,
+          "height": 3454,
+          "aspectRatio": 1.5
+        },
+        "metadata": {
+          "credit": "Matthew Stockman/Getty Images"
+        }
+      },
+      "visual_review": "Actually viewed full Charleston photo: real Pegula frontal, both eyes open/unobscured, holding distinctive glass trophy; Credit One Charleston Open/event backdrop and flowers identify ceremony.",
+      "recommendation": "preferred_real_cover_candidate"
+    },
+    {
+      "name": "dubai-recap",
+      "local_file": "/workspace/pegula-finals-production/media/photos/dubai-trophy.jpg",
+      "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/02/21/02ab0450-5d66-4984-974b-610b6545fcd7/GettyImages-2262288302.jpg",
+      "source_article_id": 4454811,
+      "date": "2026-02-21T16:28:00Z",
+      "credit": "Ryan Lim / AFP via Getty Images",
+      "width": 1024,
+      "height": 683,
+      "bytes": 212290,
+      "sha256": "a3adca5ea7f31a2de35bda7f3a9f8ee9d0c95628365f66abfa31cf29e1d9f896",
+      "original_metadata": {
+        "type": "photo",
+        "id": 4454821,
+        "title": "Jessica Pegula, Dubai 2026",
+        "imageUrl": "https://photoresources.wtatennis.com/wta/photo/2026/02/21/02ab0450-5d66-4984-974b-610b6545fcd7/GettyImages-2262288302.jpg",
+        "originalDetails": {
+          "width": 1024,
+          "height": 683,
+          "aspectRatio": 1.4992679
+        },
+        "metadata": {
+          "credit": "Ryan Lim / AFP via Getty Images"
+        }
+      },
+      "visual_review": "Not selected: actual dimensions only 1024x683, below desired cover resolution.",
+      "recommendation": "reject_low_resolution"
+    }
+  ],
+  "link_only_or_failed_candidates": [
+    {
+      "name": "RG official broadcaster WWOS R1",
+      "url": "https://www.youtube.com/watch?v=tLJmHHHO6do",
+      "publisher": "Wide World of Sports (verified; official rights broadcaster, not Roland-Garros channel)",
+      "status": "archive_failed_geo_restricted_no_actual_bytes",
+      "archive_run_id": 39727617439,
+      "failure": "Uploader only makes this video available in Australia; runner outside permitted region; did not bypass.",
+      "official_embed_page": "https://ausopen.com/articles/news/birrell-stuns-pegula-biggest-upset-so-far-roland-garros",
+      "saved_evidence": "/workspace/pegula-finals-production/media/rg-ao-recap.html"
+    },
+    {
+      "name": "RG TNT Sports R1",
+      "url": "https://www.youtube.com/watch?v=VmigUZZYPrs",
+      "publisher": "TNT Sports",
+      "status": "candidate_link_only_resolution_unverified_no_bytes",
+      "note": "Licensed broadcaster candidate; not falsely labeled event/tour official."
+    },
+    {
+      "name": "RG House of Highlights R1",
+      "url": "https://www.youtube.com/watch?v=08EHKHtS6hg",
+      "publisher": "House of Highlights (verified Warner/TNT brand)",
+      "status": "candidate_link_only_resolution_unverified_no_bytes",
+      "note": "Description says watch RG onTNT/truTV/HBOMax. Not falsely labeled event/tour official."
+    },
+    {
+      "name": "Charleston R16 comeback vsCocciaretto",
+      "url": "https://www.youtube.com/watch?v=9hmULm-M2ck",
+      "publisher": "WTA verified",
+      "published_date": "2026-04-02",
+      "status": "candidate_link_only_resolution_unverified_no_bytes",
+      "note": "If narrating4-1 final-set deficit, require actual this-match footage. Final Starodubtseva footage cannot stand in for that point."
+    },
+    {
+      "name": "Charleston champion speech",
+      "url": "https://www.youtube.com/watch?v=oxO3cLkLAVY",
+      "publisher": "Tennis Channel",
+      "published_date": "2026-04-06",
+      "status": "candidate_link_only_no_asr_resolution_unverified",
+      "note": "Broadcaster candidate only; exact own speech/window unreviewed."
+    },
+    {
+      "name": "Pegula official WTA qualified season reel",
+      "url": "https://www.wtatennis.com/videos/4592281/qualified-how-jessica-pegula-made-the-2026-wta-finals-indian-wells",
+      "brightcove_account": "6041795521001",
+      "brightcove_media_id": "6406843993112",
+      "duration_metadata_seconds": 571,
+      "publisher": "WTA",
+      "status": "parent_official_embed_metadata_candidate_no_actual_probe",
+      "note": "Parent found in official qualification4591678 HTML. Do not infer1080 or same-match identities; prefer standalone footage."
+    }
+  ],
+  "primary_text_evidence": {
+    "dubai_sf_presser": "/workspace/pegula-finals-production/media/dubai-sf-presser.html",
+    "dubai_winner_presser": "/workspace/pegula-finals-production/media/dubai-winner-presser.html",
+    "note": "Primary written transcript is supporting factual evidence, not proof words occur in a selected video. Do not attach transcript quotes to nonmatching raw audio."
+  },
+  "remaining_gaps": [
+    "RG same-R1 event/tour official native1080 and own loss interview still unacquired.",
+    "Interviews need exact formal subtitle cues/line widths and actual face-center measurement before production.",
+    "Several terminal points fail sampled fixed-center3:4 motion; find central complete rallies in formal production, preserving complete source commentary.",
+    "No actual dynamic trophy-lift approved in this packet; Charleston cover is a genuine still photo."
+  ]
+}

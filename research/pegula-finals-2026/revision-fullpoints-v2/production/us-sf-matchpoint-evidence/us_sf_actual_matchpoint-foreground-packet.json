@@ -1,0 +1,84 @@
+{
+  "source_name": "us-sf",
+  "source_key": "us-sf",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/us-sf.mp4",
+  "source_url": "https://www.youtube.com/watch?v=1WAjW7l89YQ",
+  "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+  "quote_kind": "commentary",
+  "_quote_kind": "commentary",
+  "cx": 0.5,
+  "human_listened": false,
+  "method": "asr_cross_checked",
+  "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+  "uncertain_spans": [],
+  "key": "us_sf_actual_matchpoint",
+  "start": 142.94,
+  "end": 150.0,
+  "duration": 7.06,
+  "seconds": 7.06,
+  "captions": [],
+  "audio_tail": "silence",
+  "reviewed_from": 142.94,
+  "reviewed_to": 150.0,
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-point-body-small.en.json",
+      "sha256": "b0a239049fa58dd9c0d9f2845d86fb33ce71da92f52d8b48e2a07c2261867caa",
+      "model": "small.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        142.94,
+        150.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-point-body-medium.en.json",
+      "sha256": "641d675ec7e435d08236a8f13f71dd8c93154992ebdb822d5e447becf5f229e8",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        142.94,
+        150.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-pa-boundary-small.en.json",
+      "sha256": "42dfc875bdceb3b9d5f78fccbd28eae3eabe2258669f7bb263b00bd57dee9738",
+      "model": "small.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        148.8,
+        157.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-pa-boundary-medium.en.json",
+      "sha256": "e3957e6b5a5f979bb558d01c11737fc052451899f6ef75ea63f49b914dcb5196",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        148.8,
+        157.0
+      ]
+    }
+  ],
+  "no_foreground_english_reason": "Actual selected body independently transcribed without prompting bysmall.en andmedium.en. Both output only nonlexical Ahh/Ahhh vocalizations synchronized with actual rally/point-ending crowd reaction. No retained intelligible umpire/commentator English identified; this is not a waiver for the excluded audible PA call.",
+  "tail_audit": {
+    "interval": [
+      150.0,
+      150.25
+    ],
+    "mode": "audio_tail:silence",
+    "reason": "Conservatively prevent outgoing native+.25 from drawing any PA opening outside the retained point body. Original body audio remains intact. Earliest earlier broad-context lexical estimate150.08, while dedicated148.8–157 boundarysmall starts150.40; do not claim ASR measures a human-heard phoneme boundary exactly.",
+    "new_word_leak_after_silent_tail": false
+  },
+  "scope": "Only retainedsourceboundbody audited; excludedPA remains untranscribed and is not approved speech.",
+  "excluded_uncertain_spans": [
+    {
+      "start": 150.0,
+      "end": 156.2,
+      "reason": "Whole on-court result declaration excluded by authorized normal editorial timecompression; no retained halfsentence and no guessing exact words."
+    }
+  ],
+  "boundary_diagnostic_caveat": "Dedicated148.8–157 medium.en boundary diagnostic hallucinated Thank you with Thank at exactclipstart148.8, zero-duration and probability.006; this is not usable evidence of true PA onset and is not promoted to a retained caption. Selected142.94–150.00 body independently yields only nonlexicalAhh in both small/medium, and retained156.20 join has no PA in bothmodels. Safe conservative edit is supported at window level; exact phoneme-level onset remains unclaimed."
+}

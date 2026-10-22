@@ -1,0 +1,90 @@
+{
+  "model": "medium.en",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+  "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+  "clip": [
+    166,
+    181
+  ],
+  "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps",
+  "channel_preprocessing": {
+    "channel": "left-context",
+    "bandpass_Hz": null,
+    "peak_normalized_to": 0.8,
+    "sample_rate": 16000,
+    "transformed_audio_sha256": "c869bc88ee0eaf1dfb6110f1c917332d255ce49937546f298da25c309b9ef44a"
+  },
+  "human_listened": false,
+  "created_utc": "2026-10-22T09:18:00.562457+00:00",
+  "segments": [
+    {
+      "start": 175.1,
+      "end": 179.48,
+      "text": " 2 sets 2-1 3-6 6-4 6-3",
+      "avg_logprob": -0.596100975485409,
+      "no_speech_prob": 0.42414742708206177,
+      "words": [
+        {
+          "w": " 2",
+          "s": 175.1,
+          "e": 175.84,
+          "p": 0.029243526980280876
+        },
+        {
+          "w": " sets",
+          "s": 175.84,
+          "e": 176.58,
+          "p": 0.6829806566238403
+        },
+        {
+          "w": " 2",
+          "s": 176.58,
+          "e": 177.24,
+          "p": 0.30320945382118225
+        },
+        {
+          "w": "-1",
+          "s": 177.24,
+          "e": 177.52,
+          "p": 0.7136328965425491
+        },
+        {
+          "w": " 3",
+          "s": 177.52,
+          "e": 177.98,
+          "p": 0.5399476885795593
+        },
+        {
+          "w": "-6",
+          "s": 177.98,
+          "e": 178.36,
+          "p": 0.9207333028316498
+        },
+        {
+          "w": " 6",
+          "s": 178.36,
+          "e": 178.58,
+          "p": 0.6644899845123291
+        },
+        {
+          "w": "-4",
+          "s": 178.58,
+          "e": 178.88,
+          "p": 0.9760495722293854
+        },
+        {
+          "w": " 6",
+          "s": 178.88,
+          "e": 179.12,
+          "p": 0.9520964026451111
+        },
+        {
+          "w": "-3",
+          "s": 179.12,
+          "e": 179.48,
+          "p": 0.9274426400661469
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=2rtc9kSjmPM",
+  "source_sha256": "778a63d5407088ee6c385212ad3cc7335b0ac7df66f2c50c2f3b409268208e04",
+  "method": "asr_cross_checked",
+  "reviewer": "Actual independent small.en and medium.en ASR with large-v3-turbo resolution, plus exact-source-frame inspection; not human listening",
+  "reviewed_at": "2026-10-22T11:02:45.090727+00:00",
+  "reviewed_from": 187.36,
+  "reviewed_to": 212.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 199.08,
+      "end": 203.68,
+      "en": "And once again, Coco is the comeback queen.",
+      "zh": "又一次，高芙成为逆转女王。"
+    },
+    {
+      "start": 203.68,
+      "end": 207.02,
+      "en": "Four six, six three, six three.",
+      "zh": "四比六，六比三，六比三。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/wimbledon-qf-933adb38e9-tail-context-small.en.json",
+      "sha256": "933adb38e96828b1f6851cb15ae1839b2ff7948d754d26ea9473da7e6fa90b0b",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/wimbledon-qf-ecaa2ea7b8-tail-context-medium.en.json",
+      "sha256": "ecaa2ea7b86ca2c30be2f46515c57af2db36675b55439df286e86de50d21a720",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/wimbledon-qf-04a172cae4-final-context-small.en.json",
+      "sha256": "04a172cae46890f43d2236253e8763cf883fbd9d361424925cbd3b4c3e6b1a98",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/wimbledon-qf-ffcb6251fa-final-context-medium.en.json",
+      "sha256": "ffcb6251fa66c0136f3687c234305935d8961e55b13e10841ce26056c3ee47a1",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/wimbledon-qf-8a6cdfee7f-quote-resolution-small.en.json",
+      "sha256": "8a6cdfee7f1d5983edaf7d496208297810917d9078ce230cd8b4239fc36d4245",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/wimbledon-qf-a2ff680bc2-quote-resolution-medium.en.json",
+      "sha256": "a2ff680bc2d418dad3099804a772eb3123262efef016d833afc87247cedbf8b9",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/wimbledon-qf-7b5e857d67-final-resolution-large-v3-turbo.json",
+      "sha256": "7b5e857d67023249b36e060b4ac99ec02c054845f69930878056a2757d23499d",
+      "model": "large-v3-turbo"
+    }
+  ],
+  "review_notes": "Actual independent small.en/medium.en, plus third large-v3-turbo, no human-listening claim. Selected comeback queen supported by final-context-small.en199.18–203.68, tail-context-medium.en199.60–206.66, quote-resolution-medium.en199.42–206.64and large-v3-turbo199.62–206.56. Othercontext rawvariantsco-host/copyright/ScottishQueenare retained, not misrepresented as unanimous. Score spoken Four six, six three, six three: rawFull/forphoneticstandard court-score normalization; originalfinalscoreboard200.00andofficial2026resultconfirm4-6,6-3,6-3winnerperspective. Previous retained-outsidecomment Not an easy volley ends187.16both final-contextmodels; selectedstart187.36afteritandbeforetoss188.00. Finalspoken score ends206.56–207.02, selectedend212.40retains wholeutterance plusPegulareactionandnetembrace. No confirmedforegroundafter207.02before212.40; mediumshortcontext Thankyou213.20andmusic-scanhallucinationsoutsidewindoware notincluded. End+.25=212.65stillbefore213.20. audio_tail:silenceonlyoutsidewindow.",
+  "human_listened": false
+}

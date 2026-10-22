@@ -1,0 +1,70 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=fKfC75_5ZCI",
+  "source_key": "berlin-final",
+  "source_sha256": "ab85a4bf65bc5aadd1b62686b40db035a0f30403e6fd32cf73ed35115ae75171",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-bound frame review and ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T08:12:15.368306+00:00",
+  "reviewed_from": 235,
+  "reviewed_to": 305,
+  "status": "complete",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-final-small.en.json",
+      "sha256": "658f9a5a778e9b558e6fa82376d78f07e93a15d3731e320257137bfe6ffc3c5e",
+      "model": "small.en",
+      "clip": [
+        235,
+        305
+      ],
+      "source_sha256": "ab85a4bf65bc5aadd1b62686b40db035a0f30403e6fd32cf73ed35115ae75171",
+      "method": "faster_whisper word timestamps, no human listening"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-final-medium.en.json",
+      "sha256": "882665114ed7fdcedfbb0258db2904909025f370b0668bf0675d999fd2aa4862",
+      "model": "medium.en",
+      "clip": [
+        235,
+        305
+      ],
+      "source_sha256": "ab85a4bf65bc5aadd1b62686b40db035a0f30403e6fd32cf73ed35115ae75171",
+      "method": "faster_whisper word timestamps, no human listening"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-final-breakpoint-small.en.json",
+      "sha256": "4de2d50976d69b4af4530ad9e008a5fdb00cdb8d9012ba730ecdbabe52610e90",
+      "model": "small.en",
+      "clip": [
+        236,
+        254
+      ],
+      "source_sha256": "ab85a4bf65bc5aadd1b62686b40db035a0f30403e6fd32cf73ed35115ae75171",
+      "method": "faster_whisper word timestamps, no human listening"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-final-breakpoint-turbo.json",
+      "sha256": "dd4e2697817a208d20d5bcda9188334789b35707b334d568a8f329fb7463bc61",
+      "model": "large-v3-turbo",
+      "clip": [
+        236,
+        254
+      ],
+      "source_sha256": "ab85a4bf65bc5aadd1b62686b40db035a0f30403e6fd32cf73ed35115ae75171",
+      "method": "faster_whisper word timestamps, no human listening"
+    }
+  ],
+  "foreground_english": [
+    {
+      "start": 247.4,
+      "end": 251.1,
+      "en": "Bullseye, and it brings the first break of this final set.",
+      "zh": "正中目标，她拿到决胜盘的第一次破发。"
+    }
+  ],
+  "review_notes": [
+    "Full medium and selected turbo independently decode Bullseye; full small incorrectly attaches the preceding authoritatively and selected small misses the opening word. Caption follows medium/turbo, all raw versions retained."
+  ]
+}

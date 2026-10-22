@@ -1,0 +1,432 @@
+{
+  "source_name": "us-sf",
+  "source_key": "us-sf",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/us-sf.mp4",
+  "source_url": "https://www.youtube.com/watch?v=1WAjW7l89YQ",
+  "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+  "publisher": "US Open Tennis Championships (verified official channel)",
+  "source_native_resolution": [
+    1920,
+    1080
+  ],
+  "source_fps": "60000/1001",
+  "source_probe": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/original-probe.json",
+  "point_identity": {
+    "event": "2026 US Open women singles semifinal",
+    "winner": "Aryna Sabalenka",
+    "loser": "Jessica Pegula",
+    "result": "7-5 6-2",
+    "serve_start": 143.7,
+    "last_rally_action": [
+      144.4,
+      148.9
+    ],
+    "result_reaction_start": 150.02,
+    "scoreboard_source_time": 142.94,
+    "scoreboard_png": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/matchpoint-scoreboard.png",
+    "scoreboard_png_sha256": "e58ed01dc9c4801205be109c627ac85df27d7b332bbe76b027712592cb369ec0",
+    "burned_label": "MATCH POINT; SABALENKA7 5 40 / PEGULA5 2 30; serverPegula",
+    "phase": "This is actual terminal matchpoint, not the old saved break point16.92–27.40. Full source chronology from pre-serve through point result, winner closeup, walk to net and handshake preserved."
+  },
+  "official_secondary_source": {
+    "source_url": "https://www.youtube.com/watch?v=QXUe4xTd5cs",
+    "source_file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/QXUe4xTd5cs.mp4",
+    "source_sha256": "b15ad21ce8bcb01339f23f2e34a07f0b92b2d6be814920efd5caf1e0b6e1eaf6",
+    "archive_run": 39754857297,
+    "archive_run_url": "https://github.com/robertyang87/tennislive/actions/runs/39754857297",
+    "actual_bytes": 275100325,
+    "native_resolution": [
+      1920,
+      1080
+    ],
+    "probe": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/extended-probe.json",
+    "duration": 727.504399,
+    "verdict": "Actual same-match official extended highlights; terminalpoint is same court perspective, original same umpire call, both small/medium again fail exact words687.5–693.26. Does not solve sourcecrop or speech uncertainty."
+  },
+  "no_shared_spec_or_git_changes": true,
+  "formal_render_dispatched": false,
+  "created_utc": "2026-10-22T09:39:41.347786+00:00",
+  "status": "split_source_windows_asr_cross_checked_ready_for_native_integration",
+  "human_listened": false,
+  "method": "asr_cross_checked",
+  "selection_duration": 37.26,
+  "selections": [
+    {
+      "source_name": "us-sf",
+      "source_key": "us-sf",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-sf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=1WAjW7l89YQ",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "source_width": 1920,
+      "source_height": 1080,
+      "source_fps": "60000/1001",
+      "quote_kind": "commentary",
+      "_quote_kind": "commentary",
+      "frame": "court",
+      "cx": 0.5,
+      "fit": "crop",
+      "crop_policy": "cropfill",
+      "track": false,
+      "narration": "",
+      "human_listened": false,
+      "method": "asr_cross_checked",
+      "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+      "uncertain_spans": [],
+      "key": "us_sf_actual_matchpoint",
+      "start": 142.94,
+      "end": 150.0,
+      "duration": 7.06,
+      "seconds": 7.06,
+      "captions": [],
+      "quote": [],
+      "native_quote_cues": [],
+      "audio_tail": "silence",
+      "reviewed_from": 142.94,
+      "reviewed_to": 150.0,
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-point-body-small.en.json",
+          "sha256": "b0a239049fa58dd9c0d9f2845d86fb33ce71da92f52d8b48e2a07c2261867caa",
+          "model": "small.en",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "clip": [
+            142.94,
+            150.0
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-point-body-medium.en.json",
+          "sha256": "641d675ec7e435d08236a8f13f71dd8c93154992ebdb822d5e447becf5f229e8",
+          "model": "medium.en",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "clip": [
+            142.94,
+            150.0
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-pa-boundary-small.en.json",
+          "sha256": "42dfc875bdceb3b9d5f78fccbd28eae3eabe2258669f7bb263b00bd57dee9738",
+          "model": "small.en",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "clip": [
+            148.8,
+            157.0
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-pa-boundary-medium.en.json",
+          "sha256": "e3957e6b5a5f979bb558d01c11737fc052451899f6ef75ea63f49b914dcb5196",
+          "model": "medium.en",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "clip": [
+            148.8,
+            157.0
+          ]
+        }
+      ],
+      "no_foreground_english_reason": "Actual selected body independently transcribed without prompting bysmall.en andmedium.en. Both output only nonlexical Ahh/Ahhh vocalizations synchronized with actual rally/point-ending crowd reaction. No retained intelligible umpire/commentator English identified; this is not a waiver for the excluded audible PA call.",
+      "tail_audit": {
+        "interval": [
+          150.0,
+          150.25
+        ],
+        "mode": "audio_tail:silence",
+        "reason": "Conservatively prevent outgoing native+.25 from drawing any PA opening outside the retained point body. Original body audio remains intact. Earliest earlier broad-context lexical estimate150.08, while dedicated148.8–157 boundarysmall starts150.40; do not claim ASR measures a human-heard phoneme boundary exactly.",
+        "new_word_leak_after_silent_tail": false
+      },
+      "visual_evidence": {
+        "source_contact": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-point-source-nine.jpg",
+        "cx05_contact": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-point-cx05-nine.jpg",
+        "nine_samples": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-point-samples.json",
+        "boundary_contact": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-end-boundary-source-nine.jpg",
+        "scoreboard_png": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/matchpoint-scoreboard.png",
+        "scoreboard_sha256": "e58ed01dc9c4801205be109c627ac85df27d7b332bbe76b027712592cb369ec0",
+        "observation": "142.94 pre-serve setup,143.82 toss,144.70 firstserve/rally,148.50–148.90 final chase/contact and outcome;149.10–149.90 both players have stopped the point and are walking.150.00 preserves complete temporal point before150.02 reactioncamera cut. Allthree actual source/fixedcrop/boundary contacts viewed.",
+        "crop_boundary": "Fixedcx.5 loses Pegula far-right final chase/racket around148.6–149.98. Full temporal rally preserved; do not claim full-width action fits3:4. No contain/tracking used.",
+        "scope": "Actual source and fixed3:4geometry only; not native movie QC."
+      },
+      "audio_review_packet": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/us_sf_actual_matchpoint-foreground-packet.json",
+      "audio_review_packet_sha256": "d2d88b23b91cd59a16ed29ad9873e371b2a333ea4c462381387cbb63ca503e00"
+    },
+    {
+      "source_name": "us-sf",
+      "source_key": "us-sf",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-sf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=1WAjW7l89YQ",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "source_width": 1920,
+      "source_height": 1080,
+      "source_fps": "60000/1001",
+      "quote_kind": "commentary",
+      "_quote_kind": "commentary",
+      "frame": "court",
+      "cx": 0.5,
+      "fit": "crop",
+      "crop_policy": "cropfill",
+      "track": false,
+      "narration": "",
+      "human_listened": false,
+      "method": "asr_cross_checked",
+      "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+      "uncertain_spans": [],
+      "key": "us_sf_post_match_reaction_and_commentary",
+      "start": 156.2,
+      "end": 186.4,
+      "duration": 30.2,
+      "seconds": 30.2,
+      "captions": [
+        {
+          "start": 163.94,
+          "end": 166.64,
+          "en": "Aryna Sabalenka is into another",
+          "zh": "萨巴伦卡再次挺进"
+        },
+        {
+          "start": 166.64,
+          "end": 169.64,
+          "en": "US Open championship match.",
+          "zh": "美网决赛。"
+        },
+        {
+          "start": 170.12,
+          "end": 171.18,
+          "en": "And boy, oh boy,",
+          "zh": "天哪，"
+        },
+        {
+          "start": 173.8,
+          "end": 175.64,
+          "en": "if somebody in the other semi",
+          "zh": "若另一场半决赛有人"
+        },
+        {
+          "start": 175.64,
+          "end": 178.28,
+          "en": "can stay with this woman, live with her,",
+          "zh": "能够与她抗衡，"
+        },
+        {
+          "start": 178.28,
+          "end": 180.98,
+          "en": "live with her serving,",
+          "zh": "顶住她的发球，"
+        },
+        {
+          "start": 181.28,
+          "end": 182.66,
+          "en": "live with her ground game,",
+          "zh": "顶住她的底线进攻，"
+        },
+        {
+          "start": 183.82,
+          "end": 184.62,
+          "en": "we are going to have",
+          "zh": "我们就将见证"
+        },
+        {
+          "start": 184.62,
+          "end": 186.2,
+          "en": "a fabulous match on Saturday.",
+          "zh": "周六的一场精彩对决。"
+        }
+      ],
+      "quote": [
+        {
+          "at": 7.74,
+          "end": 10.44,
+          "text": "Aryna Sabalenka is into another\n萨巴伦卡再次挺进"
+        },
+        {
+          "at": 10.44,
+          "end": 13.44,
+          "text": "US Open championship match.\n美网决赛。"
+        },
+        {
+          "at": 13.92,
+          "end": 14.98,
+          "text": "And boy, oh boy,\n天哪，"
+        },
+        {
+          "at": 17.6,
+          "end": 19.44,
+          "text": "if somebody in the other semi\n若另一场半决赛有人"
+        },
+        {
+          "at": 19.44,
+          "end": 22.08,
+          "text": "can stay with this woman, live with her,\n能够与她抗衡，"
+        },
+        {
+          "at": 22.08,
+          "end": 24.78,
+          "text": "live with her serving,\n顶住她的发球，"
+        },
+        {
+          "at": 25.08,
+          "end": 26.46,
+          "text": "live with her ground game,\n顶住她的底线进攻，"
+        },
+        {
+          "at": 27.62,
+          "end": 28.42,
+          "text": "we are going to have\n我们就将见证"
+        },
+        {
+          "at": 28.42,
+          "end": 30.0,
+          "text": "a fabulous match on Saturday.\n周六的一场精彩对决。"
+        }
+      ],
+      "reviewed_from": 156.2,
+      "reviewed_to": 186.65,
+      "native_quote_cues": [
+        {
+          "at": 7.74,
+          "end": 10.44,
+          "text": "Aryna Sabalenka is into another\n萨巴伦卡再次挺进"
+        },
+        {
+          "at": 10.44,
+          "end": 13.44,
+          "text": "US Open championship match.\n美网决赛。"
+        },
+        {
+          "at": 13.92,
+          "end": 14.98,
+          "text": "And boy, oh boy,\n天哪，"
+        },
+        {
+          "at": 17.6,
+          "end": 19.44,
+          "text": "if somebody in the other semi\n若另一场半决赛有人"
+        },
+        {
+          "at": 19.44,
+          "end": 22.08,
+          "text": "can stay with this woman, live with her,\n能够与她抗衡，"
+        },
+        {
+          "at": 22.08,
+          "end": 24.78,
+          "text": "live with her serving,\n顶住她的发球，"
+        },
+        {
+          "at": 25.08,
+          "end": 26.46,
+          "text": "live with her ground game,\n顶住她的底线进攻，"
+        },
+        {
+          "at": 27.62,
+          "end": 28.42,
+          "text": "we are going to have\n我们就将见证"
+        },
+        {
+          "at": 28.42,
+          "end": 30.0,
+          "text": "a fabulous match on Saturday.\n周六的一场精彩对决。"
+        }
+      ],
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-join-body-small.en.json",
+          "sha256": "358903e50af993beac4f321a561d2978ddc5c2dc7506e9058f099df8b9a37b98",
+          "model": "small.en",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "clip": [
+            155.9,
+            164.5
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-join-body-medium.en.json",
+          "sha256": "fa0ebc47591beff29aef9d162590253c8f1baaf460ec7b9e9ea71c3748eddf22",
+          "model": "medium.en",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "clip": [
+            155.9,
+            164.5
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/full-small.en.json",
+          "sha256": "bcea03f713086afbe40c3586a06a489a3574afb9f26dd3d49ad69e10ac50be9e",
+          "model": "small.en",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "clip": [
+            135,
+            187
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/full-medium.en.json",
+          "sha256": "1ef7fa19d90a9a51e7fb43446ab603a5f1bb070acea2bb505ac530110442c188",
+          "model": "medium.en",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "clip": [
+            135,
+            187
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/commentary-boundary-small.en.json",
+          "sha256": "41acb6729fd698b3d3bd75bf435c8ff69d00c2b1d37119c83e6829a61e87f6c4",
+          "model": "small.en",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "clip": [
+            163,
+            172.6
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/commentary-boundary-medium.en.json",
+          "sha256": "a980b2ff88ca32d8dfe2a866e7f7d79c30ce9dd14467b2c8625f509162a6665e",
+          "model": "medium.en",
+          "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+          "clip": [
+            163,
+            172.6
+          ]
+        }
+      ],
+      "boundary_notes": "Entire unidentified umpire declaration omitted between150.00–156.20. All actual short PA variants finish by155.96 (latest cross-trial end), leaving>=.24s before retained156.20. New independent155.9–164.5 small/medium contain no further umpire words and only detect start of Aryna at162.94/163.08 with pause-alignment drift; full context substantive speech starts163.94. Retain156.20 walking to net, actual handshake159.98, all complete commentator sentences163.94–186.20. No source-body audio removed or fake umpire caption supplied.",
+      "tail_audit": {
+        "interval": [
+          186.4,
+          186.65
+        ],
+        "mode": "default_outgoing_0.25",
+        "new_word_leak": false,
+        "evidence": "Fullsource135–187 small/medium final wordSaturday ends186.14/186.20; no next lexical segment through187.0. Brandcut186.95 follows outgoingtail.",
+        "review_method": "asr_cross_checked_not_human_listening"
+      },
+      "visual_evidence": {
+        "source_contact": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-reaction-source-nine.jpg",
+        "cx05_contact": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-reaction-cx05-nine.jpg",
+        "nine_samples": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-reaction-samples.json",
+        "observation": "156.20 Pegula walking toward net,159.98 handshake visible,163.75 winner walking away,167.53 chairumpire handshake,171.30 crowd acknowledgement,175.08 winner wave,178.85 crowd,182.63 winner walking,186.35 official finalresult graphic. Exact fixedcx.5 fullbleed source geometry reviewed. Some closeup edges clipped under owner-fixedcourtcenter, no adjustable person crop applied.",
+        "scope": "Actual source and fixed3:4geometry only; not native movie QC."
+      },
+      "audio_review_packet": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/us_sf_post_match_reaction_and_commentary-foreground-packet.json",
+      "audio_review_packet_sha256": "ad6f11a167d2fe7c4ca5d5d751a14ce8972ef58e4fbd892f73800f944a660395"
+    }
+  ],
+  "editing_authorization": "Parent explicitly authorizes normal timecompression omitting the entire nonhighlight on-court result declaration while preserving actual serve/fullpoint/result and real reactions plus all complete good commentary. User max1 extra highlight can retain previousBPsave16.92–27.40 separately.",
+  "omitted_interval": [
+    150.0,
+    156.2
+  ],
+  "omitted_reason": "Whole on-court declaration whose exact words cannot be reliably transcribed; its originalsource remains retained in internal evidence. No fabricated transcript, no partial-word preservation, no body muting.",
+  "boundary_confidence": "Conservative sourcebound windows supported by dedicated dualASR and actual dense frames.150.00 is a selected safe cut after visible point result, not a false claim of subframe phoneme measurement.",
+  "visual_actual_viewed": [
+    "split-end-boundary-source-nine.jpg",
+    "split-point-cx05-nine.jpg",
+    "split-reaction-cx05-nine.jpg"
+  ],
+  "original_uncut_blocked_record": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/us-sf-matchpoint-original-uncut-blocked.json",
+  "uncertain_spans_in_retained_windows": [],
+  "native_preview_or_final_film_QC": false,
+  "fixed_crop_limitation": "Temporal point complete; final far-right Pegula chase leaves fixed3:4cx.5. Exact sourcefullwidth evidence retained.",
+  "outstanding": "Native episode integration, actual inset/subtitle/transition and finalmovie checks remain parent tasks.",
+  "boundary_diagnostic_caveat": "Dedicated148.8–157 medium.en boundary diagnostic hallucinated Thank you with Thank at exactclipstart148.8, zero-duration and probability.006; this is not usable evidence of true PA onset and is not promoted to a retained caption. Selected142.94–150.00 body independently yields only nonlexicalAhh in both small/medium, and retained156.20 join has no PA in bothmodels. Safe conservative edit is supported at window level; exact phoneme-level onset remains unclaimed."
+}

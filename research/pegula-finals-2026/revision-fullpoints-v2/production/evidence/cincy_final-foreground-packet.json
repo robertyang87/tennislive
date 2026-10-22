@@ -1,0 +1,109 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Z2_awLHqcww",
+  "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual source-bound small.en/medium.en machine cross-check, with explicitly identified third-model diagnostics. No human listening claim.",
+  "reviewed_at": "2026-10-22T08:07:18.627132+00:00",
+  "status": "complete",
+  "reviewed_from": 236.6,
+  "reviewed_to": 260.5,
+  "foreground_english": [
+    {
+      "start": 246.7,
+      "end": 250.02,
+      "en": "It is the first title of the year for Coco Gauff.",
+      "zh": "这是高芙今年的首冠。"
+    },
+    {
+      "start": 250.62,
+      "end": 252.72,
+      "en": "It is her second in Cincinnati,",
+      "zh": "她第二次在辛辛那提夺冠，"
+    },
+    {
+      "start": 253.54,
+      "end": 258.2,
+      "en": "and it is the 12th singles title of her tremendous career.",
+      "zh": "也是她生涯第十二座单打冠军。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/cincy-final-small.en.json",
+      "sha256": "0bf125b1fcd2129f9b2177d7665d781a51fb3046149fc14b960b98901066daf9",
+      "model": "small.en",
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "source_clip": [
+        234.0,
+        261.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/cincy-final-medium.en.json",
+      "sha256": "44adb58455542d949db0c5a0cd1bbafb0fe5113da5fa1ffd2bbcdb00d7f2b7e0",
+      "model": "medium.en",
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "source_clip": [
+        234.0,
+        261.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/cincy-final-close-small.en.json",
+      "sha256": "1873b237efcb26174bcecce58d373929635f54105ec8ca81b3531aa3a0b91a86",
+      "model": "small.en",
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "source_clip": [
+        246.0,
+        269.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/cincy-final-close-medium.en.json",
+      "sha256": "da2162c9eb0b56450489a878885633c940a1344b4911a42fd4c5f05f143c63e4",
+      "model": "medium.en",
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "source_clip": [
+        246.0,
+        269.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/cincy-final-alternative-small.en.json",
+      "sha256": "2d4dc033321030fb4b83580a15c6d4bf21bfe2d0c40fb3b8d5e973e9a370e297",
+      "model": "small.en",
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "source_clip": [
+        246.7,
+        261
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/cincy-final-alternative-medium.en.json",
+      "sha256": "3398a968d2d5826d8447995473dd49990d749a1f286b38d82ff0dba561099fe7",
+      "model": "medium.en",
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "source_clip": [
+        246.7,
+        261
+      ]
+    }
+  ],
+  "review_notes": "All three foreground clauses preserved. Earlier long-context ASR smeared It backward across silence; actual narrow246.70–261 small/medium agree It at246.70. Gauff normalized from Golf/Gough by official identity; quoted first-title/year and career12 are the actual commentator words, not an independent whole-season audit.",
+  "tail_audit": {
+    "interval": [
+      260.5,
+      260.75
+    ],
+    "new_word_leak": false,
+    "next_word": "And/The embrace",
+    "next_onsets": [
+      261.8,
+      262.5
+    ],
+    "asr_context_end": 269,
+    "notes": "Actual selected source body unchanged; no new stable identifiable foreground word starts in outgoing native .25s."
+  },
+  "human_listened": false
+}

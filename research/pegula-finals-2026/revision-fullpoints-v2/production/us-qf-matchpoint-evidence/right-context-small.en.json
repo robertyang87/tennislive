@@ -1,0 +1,66 @@
+{
+  "model": "small.en",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+  "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+  "clip": [
+    166,
+    181
+  ],
+  "method": "actual_faster_whisper_no_prompt_no_hotwords_word_timestamps",
+  "channel_preprocessing": {
+    "channel": "right-context",
+    "bandpass_Hz": null,
+    "peak_normalized_to": 0.8,
+    "sample_rate": 16000,
+    "transformed_audio_sha256": "3a46e3e503195afbd6794768948dcfbed2c1d7354674cf459ebaaa06cd5eab6e"
+  },
+  "human_listened": false,
+  "created_utc": "2026-10-22T09:17:56.298755+00:00",
+  "segments": [
+    {
+      "start": 177.0,
+      "end": 179.42,
+      "text": " 3-6, 6-4, 6-3.",
+      "avg_logprob": -0.7821927467981974,
+      "no_speech_prob": 0.42189711332321167,
+      "words": [
+        {
+          "w": " 3",
+          "s": 177.0,
+          "e": 177.64,
+          "p": 0.04662978649139404
+        },
+        {
+          "w": "-6,",
+          "s": 177.64,
+          "e": 178.28,
+          "p": 0.7134532928466797
+        },
+        {
+          "w": " 6",
+          "s": 178.6,
+          "e": 178.6,
+          "p": 0.8735363483428955
+        },
+        {
+          "w": "-4,",
+          "s": 178.6,
+          "e": 178.86,
+          "p": 0.9521627426147461
+        },
+        {
+          "w": " 6",
+          "s": 178.86,
+          "e": 179.06,
+          "p": 0.9614366888999939
+        },
+        {
+          "w": "-3.",
+          "s": 179.06,
+          "e": 179.42,
+          "p": 0.8772360682487488
+        }
+      ]
+    }
+  ]
+}

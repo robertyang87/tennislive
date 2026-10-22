@@ -1,0 +1,119 @@
+{
+  "model": "medium.en",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+  "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+  "clip": [
+    173.1,
+    180.3
+  ],
+  "method": "actual_source_ASR_with_recorded_official_names_only_initial_prompt_not_expected_sentence",
+  "initial_prompt": "Tennis. Jessica Pegula. Emma Navarro.",
+  "expected_sentence_prompted": false,
+  "bandpass_Hz": [
+    80,
+    4000
+  ],
+  "human_listened": false,
+  "created_utc": "2026-10-22T09:27:23.602087+00:00",
+  "segments": [
+    {
+      "start": 173.1,
+      "end": 179.38,
+      "text": " Going outside the match, Pegula. Two sets, two-one. Three-six, six-four, six-three.",
+      "avg_logprob": -0.3890257477760315,
+      "no_speech_prob": 0.006769225466996431,
+      "words": [
+        {
+          "w": " Going",
+          "s": 173.1,
+          "e": 173.82,
+          "p": 0.017447378486394882
+        },
+        {
+          "w": " outside",
+          "s": 173.82,
+          "e": 174.24,
+          "p": 0.41602832078933716
+        },
+        {
+          "w": " the",
+          "s": 174.24,
+          "e": 174.44,
+          "p": 0.8385037779808044
+        },
+        {
+          "w": " match,",
+          "s": 174.44,
+          "e": 174.78,
+          "p": 0.9890962243080139
+        },
+        {
+          "w": " Pegula.",
+          "s": 175.06,
+          "e": 175.42,
+          "p": 0.11162792518734932
+        },
+        {
+          "w": " Two",
+          "s": 175.8,
+          "e": 176.1,
+          "p": 0.6493674516677856
+        },
+        {
+          "w": " sets,",
+          "s": 176.1,
+          "e": 176.58,
+          "p": 0.7497479915618896
+        },
+        {
+          "w": " two",
+          "s": 177.1,
+          "e": 177.24,
+          "p": 0.7001723051071167
+        },
+        {
+          "w": "-one.",
+          "s": 177.24,
+          "e": 177.54,
+          "p": 0.6284418404102325
+        },
+        {
+          "w": " Three",
+          "s": 177.84,
+          "e": 177.96,
+          "p": 0.7389194369316101
+        },
+        {
+          "w": "-six,",
+          "s": 177.96,
+          "e": 178.3,
+          "p": 0.9218170642852783
+        },
+        {
+          "w": " six",
+          "s": 178.48,
+          "e": 178.56,
+          "p": 0.9165217280387878
+        },
+        {
+          "w": "-four,",
+          "s": 178.56,
+          "e": 178.86,
+          "p": 0.9845596253871918
+        },
+        {
+          "w": " six",
+          "s": 179.0,
+          "e": 179.1,
+          "p": 0.9013370871543884
+        },
+        {
+          "w": "-three.",
+          "s": 179.1,
+          "e": 179.38,
+          "p": 0.9693688154220581
+        }
+      ]
+    }
+  ]
+}

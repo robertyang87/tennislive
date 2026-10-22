@@ -1,0 +1,536 @@
+{
+  "schema": "tennislive.independent-native-early-v2-review.v1",
+  "reviewed_at": "2026-10-22T08:35:05.764103+00:00",
+  "reviewer": "Codex independent visual review of all24 actual native v2PNG files",
+  "status": "sampled_native_v2_visual_checks_passed_with_documented_fixed_crop_limits",
+  "spec_path": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+  "spec_file_sha256": "01c253007a27030a124d4e29d68b1ee6eb914ea5f74907c8a3001cc37bf1077f",
+  "preview_manifest_path": "/workspace/pegula-finals-production/native-preview-early-v2/preview_manifest.json",
+  "preview_manifest_sha256": "e8a92eff9cce0ca76698217d1cc1aa4ab77fb09f6f5449d6922c1961fc555190",
+  "preview_spec_sha_matches_current_file": true,
+  "actual_png_count": 24,
+  "actual_pngs_viewed": [
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-01.png",
+      "sha256": "ce00ca748a7570e353edce33d380d30ff6bda76ebaa2712ae0c9aefd719715a5",
+      "segment_number": 4,
+      "film_time": 43.900000000000006,
+      "segment_time": 13.64,
+      "source": "ao-sf",
+      "source_time": 451.24,
+      "requested_phase": "before-label",
+      "actual_visual_observation": "AO high-angle live court before label: upper right has no information inset. Bilingual caption inside lower canvas."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-02.png",
+      "sha256": "5dda2827631fb6a8ebebc965d7e595d23e6e1dc00673254c389be85b47c54657",
+      "segment_number": 4,
+      "film_time": 45.5,
+      "segment_time": 15.24,
+      "source": "ao-sf",
+      "source_time": 452.84000000000003,
+      "requested_phase": "label-middle",
+      "actual_visual_observation": "AO midpoint: full label in empty upper-right court, scores/tiebreak/name clear; both focal players below glyphs."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-03.png",
+      "sha256": "fd7b9ad6779946cb716286ebe1f4f3a7606784bb684aa30a116c03f55498cec9",
+      "segment_number": 4,
+      "film_time": 46.900000000000006,
+      "segment_time": 16.64,
+      "source": "ao-sf",
+      "source_time": 454.24,
+      "requested_phase": "label-last",
+      "actual_visual_observation": "AO last phase: label faintly fading out during original broadcast high-angle/handshake dissolve. Actual glyphs do not cover a focal face; English/Chinese within canvas."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-04.png",
+      "sha256": "40e39867a8f2f8fea58fc19564bfc5d7522bce6ebdef8e53fc380f25fbb38a87",
+      "segment_number": 4,
+      "film_time": 47.06,
+      "segment_time": 16.8,
+      "source": "ao-sf",
+      "source_time": 454.40000000000003,
+      "requested_phase": "after-label",
+      "actual_visual_observation": "AO after label: no information inset remains. Actual original broadcast dissolve is visible; this is not a chapter/transition card."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-05.png",
+      "sha256": "df4bd0491c52d0bc8f1b2ce539d86fb2f597ea68c86e13dd62b0c0fcbc23abc9",
+      "segment_number": 6,
+      "film_time": 59.85,
+      "segment_time": 0.24,
+      "source": "dubai-final",
+      "source_time": 239.74,
+      "requested_phase": "before-label",
+      "actual_visual_observation": "DubaiF before label: no information inset; actual serve/action visible."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-06.png",
+      "sha256": "814187f85778185864098b5e7b3cc18ed93e80b04f91e0d820f0539b9ffaa357",
+      "segment_number": 6,
+      "film_time": 61.53,
+      "segment_time": 1.92,
+      "source": "dubai-final",
+      "source_time": 241.42,
+      "requested_phase": "label-middle",
+      "actual_visual_observation": "DubaiF midpoint: label clear of far receiver on left and near server lower center; correct winner highlights."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-07.png",
+      "sha256": "bfbcfbf2a153f73266202d969dc6a4f77acc0e8a22b3553eed1ac4a3930ec37b",
+      "segment_number": 6,
+      "film_time": 63.05,
+      "segment_time": 3.44,
+      "source": "dubai-final",
+      "source_time": 242.94,
+      "requested_phase": "label-last",
+      "actual_visual_observation": "DubaiF last phase: label fading, no focal eyes/action under actual glyphs. Far receiver is out of the fixed crop toward left after reception; unchanged spatial limitation."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-08.png",
+      "sha256": "f106111a0ca8f056eaa56c2dbd50892c663d62b7e2cf6e60d1b882238787730f",
+      "segment_number": 6,
+      "film_time": 63.21,
+      "segment_time": 3.6,
+      "source": "dubai-final",
+      "source_time": 243.1,
+      "requested_phase": "after-label",
+      "actual_visual_observation": "DubaiF after label: no upper-right information inset, actual winner reaction still on court; bilingual subtitle inside canvas."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-09.png",
+      "sha256": "daadf038a75fee85625bfda8a255bb1069ba83d2a6a680503fd8ca07943590d9",
+      "segment_number": 9,
+      "film_time": 96.35,
+      "segment_time": 8.24,
+      "source": "miami-qf",
+      "source_time": 272.24,
+      "requested_phase": "before-label",
+      "actual_visual_observation": "Miami before label: no information inset; whole Pegula focal face visible and subtitle below face."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-10.png",
+      "sha256": "8242f154d074116246a599989ddc9d8e13986ae8284626d09de63d4ad1e3c4dc",
+      "segment_number": 9,
+      "film_time": 98.03,
+      "segment_time": 9.92,
+      "source": "miami-qf",
+      "source_time": 273.92,
+      "requested_phase": "label-middle",
+      "actual_visual_observation": "Miami midpoint: complete score/date/name label on backdrop above/right of Pegula face; EN wraps to two lines and ZH stays within lower canvas."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-11.png",
+      "sha256": "f10b582a6fad19ac1cc0474053b952ebd7804638fb9d091154c7d48dbd831b97",
+      "segment_number": 9,
+      "film_time": 99.55,
+      "segment_time": 11.44,
+      "source": "miami-qf",
+      "source_time": 275.44,
+      "requested_phase": "label-last",
+      "actual_visual_observation": "Miami last phase: low-alpha label stays above/right of Pegula cap/eyes; no clipping of subtitles."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-12.png",
+      "sha256": "6d2e66f35f558776408e0188dc5f199b20bce1b16d801ad21ce7820d652fe027",
+      "segment_number": 9,
+      "film_time": 99.71,
+      "segment_time": 11.6,
+      "source": "miami-qf",
+      "source_time": 275.6,
+      "requested_phase": "after-label",
+      "actual_visual_observation": "Miami after label: information inset fully gone; face and bilingual subtitles remain clear."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-13.png",
+      "sha256": "7c87baa61cac41eec10b99e98010430d435c1dba941d484b31e800dff3f44b20",
+      "segment_number": 11,
+      "film_time": 121.98999999999998,
+      "segment_time": 10.32,
+      "source": "charleston-final",
+      "source_time": 272.52,
+      "requested_phase": "before-label",
+      "actual_visual_observation": "Charleston before label: no information inset; actual Pegula champion reaction, full focal face visible."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-14.png",
+      "sha256": "1ec003c6247dbe07e523e99a2a82c7a810db862eca8d3607e3fc507e2b1c1e70",
+      "segment_number": 11,
+      "film_time": 123.94999999999999,
+      "segment_time": 12.28,
+      "source": "charleston-final",
+      "source_time": 274.47999999999996,
+      "requested_phase": "label-middle",
+      "actual_visual_observation": "Charleston midpoint: label on empty right backdrop, no glyph across face/eyes/fist; original moving racket passes in front of face, not a label obstruction."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-15.png",
+      "sha256": "2d02ad6ef781e5ee15c6785ed65d270c5e128f1aa3bc695e0eb467651824a167",
+      "segment_number": 11,
+      "film_time": 125.78999999999999,
+      "segment_time": 14.12,
+      "source": "charleston-final",
+      "source_time": 276.32,
+      "requested_phase": "label-last",
+      "actual_visual_observation": "Charleston last phase: low-alpha label clear of subject, English two-line subtitle+ZH inside canvas. Part of Pegula face/left side at canvas edge is lost to fixed court-center crop, not caused by inset."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-16.png",
+      "sha256": "b2566a1fc2d1dc3023b069d2015f7190e79cb99cc31e6577edcc5a76c48f5b7e",
+      "segment_number": 11,
+      "film_time": 125.94999999999999,
+      "segment_time": 14.28,
+      "source": "charleston-final",
+      "source_time": 276.47999999999996,
+      "requested_phase": "after-label",
+      "actual_visual_observation": "Charleston after label: information inset gone; same known left-edge face/body crop limitation remains as she touches visor."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-17.png",
+      "sha256": "c014d076644c3e8f81a58197d9dc860b4802828cc15d4e2a4770f9af224591fa",
+      "segment_number": 14,
+      "film_time": 160.98999999999998,
+      "segment_time": 3.92,
+      "source": "berlin-sf-sabalenka",
+      "source_time": 261.32,
+      "requested_phase": "before-label",
+      "actual_visual_observation": "BerlinSF before label: no information inset; court and both sampled players visible."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-18.png",
+      "sha256": "3a9d19df83f4f06a8d551a885dbecfe739cbdd74ad3863fce75a6f66e188f064",
+      "segment_number": 14,
+      "film_time": 162.47,
+      "segment_time": 5.4,
+      "source": "berlin-sf-sabalenka",
+      "source_time": 262.79999999999995,
+      "requested_phase": "label-middle",
+      "actual_visual_observation": "BerlinSF midpoint: label on right court/backdrop, far player to its left and near player below; no stroke/eye obstruction in this frame."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-19.png",
+      "sha256": "b5f0520a13404d1d2167f044c4c3b982f22127cac867e8f413380172a9ecb5a9",
+      "segment_number": 14,
+      "film_time": 163.79,
+      "segment_time": 6.72,
+      "source": "berlin-sf-sabalenka",
+      "source_time": 264.12,
+      "requested_phase": "label-last",
+      "actual_visual_observation": "BerlinSF last phase: label low alpha; focal players and ball outside visible glyphs."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-20.png",
+      "sha256": "d99fdd4d02a10ba0f3771a8385f73f63d82d76c4499bd1e2e113bbb061c08105",
+      "segment_number": 14,
+      "film_time": 163.95,
+      "segment_time": 6.88,
+      "source": "berlin-sf-sabalenka",
+      "source_time": 264.28,
+      "requested_phase": "after-label",
+      "actual_visual_observation": "BerlinSF after label: information inset fully gone; sampled action clear."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-21.png",
+      "sha256": "f9741776af84ebfa2f7759b62d066b21728908a91a9046a69243d9cf6daadc82",
+      "segment_number": 1,
+      "film_time": 4.4,
+      "segment_time": 3.2,
+      "source": "cincy-runnerup",
+      "source_time": 55.440000000000005,
+      "requested_phase": "person-or-plain-title",
+      "actual_visual_observation": "Cold opening: native fixed person crop, complete focal face/eyes, trophy on left; actual EN/ZH subtitles inside lower canvas below face, no information inset."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-22.png",
+      "sha256": "dafc7a158b89d2933537d0741e04ab377f9cfb740c2cb3f6428ee5fa03369730",
+      "segment_number": 7,
+      "film_time": 74.78,
+      "segment_time": 2.92,
+      "source": "dubai-champion-speech",
+      "source_time": 31.520000000000003,
+      "requested_phase": "person-or-plain-title",
+      "actual_visual_observation": "Dubai own speech: native fixed measured person crop with entire face visible; actual EN/ZH subtitles below face and inside canvas, no inset."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-23.png",
+      "sha256": "54e0bf506e4bf8f7ffa13d807ebb9bd7a9a00810299ec3202847f5daf7536909",
+      "segment_number": 2,
+      "film_time": 14.06,
+      "segment_time": 6.4,
+      "source": "ao-sf",
+      "source_time": null,
+      "requested_phase": "person-or-plain-title",
+      "actual_visual_observation": "Opening chapter card: no right information inset; large title and Chinese subtitle fully inside canvas."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/native-preview-early-v2/caption-24.png",
+      "sha256": "23359e43e318c24b0416f20f23bd49ab9c38a7f19a73fb2e0f735b695ba4bfd4",
+      "segment_number": 12,
+      "film_time": 142.46999999999997,
+      "segment_time": 5.2,
+      "source": "ao-sf",
+      "source_time": null,
+      "requested_phase": "person-or-plain-title",
+      "actual_visual_observation": "RG low chapter card: no right information inset; title and Chinese subtitle fully inside canvas."
+    }
+  ],
+  "label_phase_reviews": [
+    {
+      "source": "ao-sf",
+      "native_inset_show_after": 13.75,
+      "native_inset_disable_at": 16.75,
+      "source_label_start": 451.35,
+      "source_label_end": 454.35,
+      "samples": [
+        {
+          "image": "caption-01.png",
+          "film_time": 43.900000000000006,
+          "segment_time": 13.64,
+          "source_time": 451.24,
+          "observed_state": "absent_before"
+        },
+        {
+          "image": "caption-02.png",
+          "film_time": 45.5,
+          "segment_time": 15.24,
+          "source_time": 452.84000000000003,
+          "observed_state": "fully_visible_clear"
+        },
+        {
+          "image": "caption-03.png",
+          "film_time": 46.900000000000006,
+          "segment_time": 16.64,
+          "source_time": 454.24,
+          "observed_state": "fading_out_clear"
+        },
+        {
+          "image": "caption-04.png",
+          "film_time": 47.06,
+          "segment_time": 16.8,
+          "source_time": 454.40000000000003,
+          "observed_state": "absent_after"
+        }
+      ],
+      "phase_verdict": "Actual four native frames show before absent / midpoint visible / fade-out last / after absent. Prior V1 close-phase coverage gap resolved for this sampled window."
+    },
+    {
+      "source": "dubai-final",
+      "native_inset_show_after": 0.35,
+      "native_inset_disable_at": 3.55,
+      "source_label_start": 239.85,
+      "source_label_end": 243.05,
+      "samples": [
+        {
+          "image": "caption-05.png",
+          "film_time": 59.85,
+          "segment_time": 0.24,
+          "source_time": 239.74,
+          "observed_state": "absent_before"
+        },
+        {
+          "image": "caption-06.png",
+          "film_time": 61.53,
+          "segment_time": 1.92,
+          "source_time": 241.42,
+          "observed_state": "fully_visible_clear"
+        },
+        {
+          "image": "caption-07.png",
+          "film_time": 63.05,
+          "segment_time": 3.44,
+          "source_time": 242.94,
+          "observed_state": "fading_out_clear"
+        },
+        {
+          "image": "caption-08.png",
+          "film_time": 63.21,
+          "segment_time": 3.6,
+          "source_time": 243.1,
+          "observed_state": "absent_after"
+        }
+      ],
+      "phase_verdict": "Actual four native frames show before absent / midpoint visible / fade-out last / after absent. Prior V1 close-phase coverage gap resolved for this sampled window."
+    },
+    {
+      "source": "miami-qf",
+      "native_inset_show_after": 8.32,
+      "native_inset_disable_at": 11.52,
+      "source_label_start": 272.32,
+      "source_label_end": 275.52,
+      "samples": [
+        {
+          "image": "caption-09.png",
+          "film_time": 96.35,
+          "segment_time": 8.24,
+          "source_time": 272.24,
+          "observed_state": "absent_before"
+        },
+        {
+          "image": "caption-10.png",
+          "film_time": 98.03,
+          "segment_time": 9.92,
+          "source_time": 273.92,
+          "observed_state": "fully_visible_clear"
+        },
+        {
+          "image": "caption-11.png",
+          "film_time": 99.55,
+          "segment_time": 11.44,
+          "source_time": 275.44,
+          "observed_state": "fading_out_clear"
+        },
+        {
+          "image": "caption-12.png",
+          "film_time": 99.71,
+          "segment_time": 11.6,
+          "source_time": 275.6,
+          "observed_state": "absent_after"
+        }
+      ],
+      "phase_verdict": "Actual four native frames show before absent / midpoint visible / fade-out last / after absent. Prior V1 close-phase coverage gap resolved for this sampled window."
+    },
+    {
+      "source": "charleston-final",
+      "native_inset_show_after": 10.4,
+      "native_inset_disable_at": 14.2,
+      "source_label_start": 272.6,
+      "source_label_end": 276.4,
+      "samples": [
+        {
+          "image": "caption-13.png",
+          "film_time": 121.98999999999998,
+          "segment_time": 10.32,
+          "source_time": 272.52,
+          "observed_state": "absent_before"
+        },
+        {
+          "image": "caption-14.png",
+          "film_time": 123.94999999999999,
+          "segment_time": 12.28,
+          "source_time": 274.47999999999996,
+          "observed_state": "fully_visible_clear"
+        },
+        {
+          "image": "caption-15.png",
+          "film_time": 125.78999999999999,
+          "segment_time": 14.12,
+          "source_time": 276.32,
+          "observed_state": "fading_out_clear"
+        },
+        {
+          "image": "caption-16.png",
+          "film_time": 125.94999999999999,
+          "segment_time": 14.28,
+          "source_time": 276.47999999999996,
+          "observed_state": "absent_after"
+        }
+      ],
+      "phase_verdict": "Actual four native frames show before absent / midpoint visible / fade-out last / after absent. Prior V1 close-phase coverage gap resolved for this sampled window."
+    },
+    {
+      "source": "berlin-sf-sabalenka",
+      "native_inset_show_after": 4.0,
+      "native_inset_disable_at": 6.8,
+      "source_label_start": 261.4,
+      "source_label_end": 264.2,
+      "samples": [
+        {
+          "image": "caption-17.png",
+          "film_time": 160.98999999999998,
+          "segment_time": 3.92,
+          "source_time": 261.32,
+          "observed_state": "absent_before"
+        },
+        {
+          "image": "caption-18.png",
+          "film_time": 162.47,
+          "segment_time": 5.4,
+          "source_time": 262.79999999999995,
+          "observed_state": "fully_visible_clear"
+        },
+        {
+          "image": "caption-19.png",
+          "film_time": 163.79,
+          "segment_time": 6.72,
+          "source_time": 264.12,
+          "observed_state": "fading_out_clear"
+        },
+        {
+          "image": "caption-20.png",
+          "film_time": 163.95,
+          "segment_time": 6.88,
+          "source_time": 264.28,
+          "observed_state": "absent_after"
+        }
+      ],
+      "phase_verdict": "Actual four native frames show before absent / midpoint visible / fade-out last / after absent. Prior V1 close-phase coverage gap resolved for this sampled window."
+    }
+  ],
+  "blocking_label_subtitle_canvas_findings": [],
+  "documented_crop_findings": [
+    {
+      "image": "caption-15.png",
+      "film_time": 125.78999999999999,
+      "source": "charleston-final",
+      "source_time": 276.32,
+      "severity": "known_fixed_crop_limitation",
+      "finding": "Pegula approaches/exits left edge in actual champion reaction; part of left face/body is outside fixed court-center crop. This is source reframing loss, not information label or added bars. It is not being mislabeled as entirely uncut subject framing.",
+      "action": "Reported as requested; no sharedspec changes or contain substitution."
+    },
+    {
+      "image": "caption-16.png",
+      "film_time": 125.94999999999999,
+      "source": "charleston-final",
+      "source_time": 276.47999999999996,
+      "severity": "known_fixed_crop_limitation",
+      "finding": "Pegula approaches/exits left edge in actual champion reaction; part of left face/body is outside fixed court-center crop. This is source reframing loss, not information label or added bars. It is not being mislabeled as entirely uncut subject framing.",
+      "action": "Reported as requested; no sharedspec changes or contain substitution."
+    }
+  ],
+  "checks": {
+    "labels_not_on_focal_eyes_or_strokes": "No information glyph collision with focal eyes or serve/stroke action observed in these24 actual native frames, including five midpoint and five fade-out last frames.",
+    "label_before_after": "All five pre-label samples absent, midpoint samples visible, last samples visibly fading, after-label samples absent.",
+    "subtitle_canvas": "Every visible EN/ZH subtitle stays inside1080x1440; two-line English wrap in Miami and Charleston remains below faces.",
+    "cropfill_borders": "No added letterbox/contain borders observed in actual24PNGs. Native source cropfill and full-canvas chapter backgrounds visible. Fixed crop subject losses are separately documented.",
+    "person_center": {
+      "cold_sample": "caption21 source55.44 native fixed crop810x1080at557, consistentcx0.501, whole focal face visible.",
+      "dubai_sample": "caption22 source31.52 native fixed crop810x1080at449, consistentcx0.445, whole focal face visible.",
+      "limit": "Single native sample per speech does not prove all motion through each full speech. Original nine-sample measurement remains separate source evidence."
+    },
+    "chapter_information_insets": {
+      "static_spec_title_cards": [
+        2,
+        3,
+        5,
+        8,
+        10,
+        12,
+        13,
+        15,
+        17,
+        20,
+        24,
+        26,
+        30
+      ],
+      "static_spec_all_have_no_inset": true,
+      "actual_chapter_frames_checked": [
+        "caption-23.png",
+        "caption-24.png"
+      ],
+      "observed": "No information inset on either sampled actual native chapter frame. These are the only chapter samples in this v2set."
+    },
+    "typography": "Native title/date/scores/winner-name accents and tiebreak superscripts readable in sampled midpoint frames; long opponent names inside canvas."
+  },
+  "v1_review_relationship": {
+    "supersedes_for_current_sampled_visual_timing": "production/native-early-review.json",
+    "v1_was_bound_to_other_spec_manifest": "V1 findings remain historical and are not rebound to this corrected preview. V2 directly checks current actual frames and correct cover1.2s timing."
+  },
+  "scope_limits": [
+    "Independent review of actual native PNGs, not hand-assembled source-overlay prechecks.",
+    "Static sparse visual preview only; not final complete MP4/full-motion/dissolve/H264 QC or publication approval.",
+    "No audio was produced/evaluated here; no human listening, TTS quality or final mix approval claim.",
+    "No sharedspec edits, Git operations or formal render/dispatch."
+  ]
+}

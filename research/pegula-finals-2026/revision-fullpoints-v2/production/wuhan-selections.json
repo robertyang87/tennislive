@@ -1,0 +1,324 @@
+{
+  "schema": "pegula.wuhan-source-selections.v1",
+  "recorded_utc": "2026-10-22T08:00:52.594284+00:00",
+  "source_key": "wuhan-r2",
+  "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+  "source_bytes": 88569394,
+  "official_identity": "WTA officialYouTube https://www.youtube.com/watch?v=l9Gd5ksrsVM; originalarchivebyteidentity verified withsource-index",
+  "primary_selections": [
+    {
+      "key": "wuhan_third_match_point",
+      "source": "wuhan-r2",
+      "source_file": "/workspace/pegula-finals-production/media/wuhan-r2.mp4",
+      "source_url": "https://www.youtube.com/watch?v=l9Gd5ksrsVM",
+      "source_fallback": "https://github.com/robertyang87/tennislive/releases/download/source-ostapenko-pegula-wuhan-2026-r2-301dd05c374b11e5/source.mp4",
+      "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+      "start": 170.6,
+      "end": 188.04,
+      "duration": 17.44,
+      "audio_tail": "silence",
+      "audio_tail_scope": "Only source beyond selectedend in outgoing transitionpad; never mutes or changes retained foreground source speech.",
+      "fit": "crop",
+      "cx": 0.5,
+      "track": false,
+      "native_crop_whxy": [
+        810,
+        1080,
+        554,
+        0
+      ],
+      "output_canvas": [
+        1080,
+        1440
+      ],
+      "fps": "25/1",
+      "captions_absolute": [
+        {
+          "start": 186.23,
+          "end": 187.26,
+          "en": "That is unreal.",
+          "zh": "太不可思议了。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 15.63,
+          "end": 16.66,
+          "text": "That is unreal.\n太不可思议了。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "human_listening_claimed": false,
+      "asr_reviewed_ranges": [
+        {
+          "model": "small.en",
+          "range": [
+            165.0,
+            194.0
+          ]
+        },
+        {
+          "model": "medium.en",
+          "range": [
+            165.0,
+            194.0
+          ]
+        }
+      ],
+      "foreground_packet": "/workspace/pegula-finals-production/production/wuhan-evidence/packets/wuhan_third_match_point.json",
+      "foreground_packet_sha256": "e58c1eec12e62a9e150b89e03fdfa6f8263eecf7e074433de17476561870cff2",
+      "unresolved_foreground": [],
+      "boundary_notes": "Both models independently sayThat is unreal at186.23/186.24–187.20/187.26. Previous independent sentenceWhat can you do when Ostapenko plays like that ends168.66 bysmall butmedium stretches finalthat through170.52silence; begin170.60afterboth. Actual170.50/171.00frames showPegula stillholdingball inpreparation before172serve, so complete service motion retained. End188.04 is0.78s after latestunreal ending; broadASRthrough194showsno laterEnglish; source point has ended and scoreboard7all before next point. Apply outgoingpad silence to avoid reading beyond selectedend.",
+      "visual_evidence": {
+        "identity": "2026Wuhan R2. Pegula dark sleevelessdress/visor serving far side in this point; Ostapenko burgundypolo/pinkshoes near side.",
+        "point_identity": "Burned original frame169.56 explicitlyMATCH POINT#3 and tiebreakPegula7/Ostapenko6, set2games6all; outcome7all. This is thirdmatchpoint saved byOstapenko, a matchpoint missed byPegula.",
+        "action": "170.60pre-serve ball preparation;171.5–172wide setup/fullserve;172–185long point includingOstapenko drop shot andPegula failedretrieval;185–188realpoint aftermath withcommentThat is unreal.",
+        "native_crop_observation": "Fixedcx.5 fullbleed is ownerrequired. During far-right failedchase about185s Pegula reaches the right edge of narrow3:4window; original full-width proof establishes point identity/outcome. This package does not falsely certify every originalsourceedge preserved.",
+        "actual_contact": "/workspace/pegula-finals-production/production/wuhan-evidence/third-point-native-contact.jpg",
+        "original_full_width_contact": "/workspace/pegula-finals-production/media/wuhan-initial-proof/contact.jpg"
+      },
+      "visible_score": "Beforethirdpoint:Pegula1setup, secondset6-6, tiebreakPegula7/Ostapenko6. Pointends7-7.",
+      "label_safe_window": {
+        "source_start": 174.8,
+        "source_end": 180.8,
+        "duration": 6.0,
+        "relative_show_after": 4.2,
+        "show_for": 6.0,
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "motion": "editorial",
+        "settled_pixel_geometry": {
+          "width": 648,
+          "right": 46,
+          "top": 151
+        },
+        "label": {
+          "topic": "抢七第三个赛点",
+          "date": "2026.10.14",
+          "place": "武汉第二轮",
+          "people": "佩古拉 vs 奥斯塔彭科",
+          "score": "6-2 6-7(7) 3-6"
+        },
+        "label_png": "/workspace/pegula-finals-production/production/wuhan-evidence/label.png",
+        "label_png_sha256": "2566c20616afe7e6a2cb2ab13313e8ed9cb869c06c25d05623161b28b0e169ff",
+        "actual_overlay_samples": {
+          "contact": "/workspace/pegula-finals-production/production/wuhan-evidence/label-safe-contact.jpg",
+          "times": [
+            174.8,
+            175.2,
+            175.8,
+            176.4,
+            177.0,
+            177.6,
+            178.2,
+            178.8,
+            179.4,
+            180.0,
+            180.4,
+            180.8
+          ]
+        },
+        "inspection": "Contact and first/middle/last fullPNG actually viewed. At sampled times farPegula remains left of real textink and nearOstapenko below it; no face, service motion or racket stroke hidden by this label. No original-camera-wide shortcut used.",
+        "restriction": "Information label only over actual match video. Do not move label to title_card/transition card. No label on pre-serve closeup or drop-shot chase.",
+        "scope": "12sampled actualcrop+same original label PNG, settled geometry; final animatednative output remains to be checked."
+      },
+      "final_render_or_mix_approved": false,
+      "scope": "Reviewed source selection with actual ASR and sampled native3:4/label pixels; final native composition/captions/transitions/mixed MP4 still require QC."
+    },
+    {
+      "key": "wuhan_final_point",
+      "source": "wuhan-r2",
+      "source_file": "/workspace/pegula-finals-production/media/wuhan-r2.mp4",
+      "source_url": "https://www.youtube.com/watch?v=l9Gd5ksrsVM",
+      "source_fallback": "https://github.com/robertyang87/tennislive/releases/download/source-ostapenko-pegula-wuhan-2026-r2-301dd05c374b11e5/source.mp4",
+      "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+      "start": 257.64,
+      "end": 284.4,
+      "duration": 26.76,
+      "audio_tail": "silence",
+      "audio_tail_scope": "Only source beyond selectedend in outgoing transitionpad; never mutes or changes retained foreground source speech.",
+      "fit": "crop",
+      "cx": 0.5,
+      "track": false,
+      "native_crop_whxy": [
+        810,
+        1080,
+        554,
+        0
+      ],
+      "output_canvas": [
+        1080,
+        1440
+      ],
+      "fps": "25/1",
+      "captions_absolute": [
+        {
+          "start": 264.34,
+          "end": 268.12,
+          "en": "Ostapenko packs a power punch in Wuhan.",
+          "zh": "奥斯塔彭科在武汉打出重拳。"
+        },
+        {
+          "start": 268.12,
+          "end": 273.08,
+          "en": "A dazzling attacking performance from one of the biggest hitters in the game,",
+          "zh": "网坛重炮手之一，打出耀眼的进攻表现，"
+        },
+        {
+          "start": 273.08,
+          "end": 275.72,
+          "en": "as she picks Pegula apart.",
+          "zh": "拆解了佩古拉的防线。"
+        },
+        {
+          "start": 276.94,
+          "end": 278.52,
+          "en": "The second seed is stunned.",
+          "zh": "二号种子爆冷出局。"
+        },
+        {
+          "start": 279.06,
+          "end": 281.54,
+          "en": "She missed three match points in the second set,",
+          "zh": "她在第二盘错失了三个赛点，"
+        },
+        {
+          "start": 281.54,
+          "end": 284.08,
+          "en": "and they proved so costly.",
+          "zh": "这让她付出了沉重代价。"
+        }
+      ],
+      "quote_relative": [
+        {
+          "at": 6.7,
+          "end": 10.48,
+          "text": "Ostapenko packs a power punch in Wuhan.\n奥斯塔彭科在武汉打出重拳。"
+        },
+        {
+          "at": 10.48,
+          "end": 15.44,
+          "text": "A dazzling attacking performance from one of the biggest hitters in the game,\n网坛重炮手之一，打出耀眼的进攻表现，"
+        },
+        {
+          "at": 15.44,
+          "end": 18.08,
+          "text": "as she picks Pegula apart.\n拆解了佩古拉的防线。"
+        },
+        {
+          "at": 19.3,
+          "end": 20.88,
+          "text": "The second seed is stunned.\n二号种子爆冷出局。"
+        },
+        {
+          "at": 21.42,
+          "end": 23.9,
+          "text": "She missed three match points in the second set,\n她在第二盘错失了三个赛点，"
+        },
+        {
+          "at": 23.9,
+          "end": 26.44,
+          "text": "and they proved so costly.\n这让她付出了沉重代价。"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "human_listening_claimed": false,
+      "asr_reviewed_ranges": [
+        {
+          "model": "small.en",
+          "range": [
+            254.0,
+            302.0
+          ]
+        },
+        {
+          "model": "medium.en",
+          "range": [
+            254.0,
+            302.0
+          ]
+        },
+        {
+          "model": "small.en",
+          "range": [
+            278.0,
+            287.0
+          ]
+        },
+        {
+          "model": "medium.en",
+          "range": [
+            278.0,
+            287.0
+          ]
+        }
+      ],
+      "foreground_packet": "/workspace/pegula-finals-production/production/wuhan-evidence/packets/wuhan_final_point.json",
+      "foreground_packet_sha256": "7cfbb4e7bcfbb8a2145b2f730de9309b78c573b90f4fc888e0389ab6fb92659a",
+      "unresolved_foreground": [],
+      "boundary_notes": "All substantive words in sixcaptionchunks agree acrosssmall/medium, proper-name phoneticsAustinPenko/Ostepenko/Piggula normalized only to officialOstapenko/Pegula. Firstcomplete sentence264.34/264.82–267.98/268.12; secondcomplete sentence268.12/268.80–275.58/275.72, split only atactualclauseboundary273.08forreadability. Thirdsentence276.94–278.40/278.52. Lastcomplete sentenceShe missed three matchpoints...costly ends284.02/284.08. Originalbroadsmall timing assigned followingAustin from284.02–285.64 acrosspause; explicit278–287actual shortcontext reruns withpropernamesonly independently move nextOstapenko to285.44–286.08(small),285.42–286.14(medium), whilecostly remains284.02/284.06. Keeprawbroadandshortresults, do nothideinitialalignmentdrift. Selectedend284.40 is0.32s after latestretainedcostly and≥1.02s before bothrefinednextwordstarts. Outgoingaudio_tail:silence appliesonlyoutsidewindow, no cutting nextword withdefault.25pad.",
+      "visual_evidence": {
+        "identity": "Same officialWuhan R2. FinalgamePegula visor/sleevelessdress serves near side, Ostapenko burgundypolo receives far side.",
+        "point_identity": "Original257.64scoreboardMATCH POINT, Ostapenko leads thirdset5-3/40-0 onPegulaserve. This is real finalconversion, not another earlierbreak.",
+        "action": "257.64–259pre-point receiver preparation;260–263fullserve/returnpoint andmatchresult;264–268Ostapenko genuinewinnerreaction;269–271playerbox;272–273bothplayers atnet;274–277Pegula realwalk/umpirehandshake;278–284winneractualaftermath. AllEnglishcomplete throughcostly retained.",
+        "actual_contact": "/workspace/pegula-finals-production/production/wuhan-evidence/final-point-native-contact.jpg"
+      },
+      "visible_score": "Openingfinalpoint:Ostapenko2 7 5/40,Pegula6 6 3/0; finalPegula6-2 6-7(7)3-6.",
+      "label_safe_window": null,
+      "final_render_or_mix_approved": false,
+      "scope": "Reviewed source selection with actual ASR and sampled native3:4/label pixels; final native composition/captions/transitions/mixed MP4 still require QC."
+    }
+  ],
+  "primary_total_seconds": 44.2,
+  "primary_no_unresolved_retained_english": true,
+  "human_listening_claimed": false,
+  "shorter_complete_alternative": {
+    "for": "wuhan_final_point",
+    "start": 257.64,
+    "end": 275.92,
+    "duration": 18.28,
+    "captions_absolute": [
+      {
+        "start": 264.34,
+        "end": 268.12,
+        "en": "Ostapenko packs a power punch in Wuhan.",
+        "zh": "奥斯塔彭科在武汉打出重拳。"
+      },
+      {
+        "start": 268.12,
+        "end": 273.08,
+        "en": "A dazzling attacking performance from one of the biggest hitters in the game,",
+        "zh": "网坛重炮手之一，打出耀眼的进攻表现，"
+      },
+      {
+        "start": 273.08,
+        "end": 275.72,
+        "en": "as she picks Pegula apart.",
+        "zh": "拆解了佩古拉的防线。"
+      }
+    ],
+    "total_with_third_point": 35.72,
+    "reason": "EndsafterpicksPegulaapart275.72; nextThe secondseed starts276.94. Samefinalpoint/winnerreaction/netmeeting retained, lessfullverdictcommentary."
+  },
+  "longer_complete_alternative": {
+    "for": "wuhan_final_point",
+    "start": 257.64,
+    "end": 299.4,
+    "duration": 41.76,
+    "total_with_third_point": 59.2,
+    "reason": "CouldretainwholepostmatchverdictthroughWhat a performance299.14ifeditoriallyneeded; notprimarysince44.20alreadyretainskeycostlyline. ExtraEnglishmustbeimportedfromrawASR, notreuseoldspecunreviewedcaptions."
+  },
+  "not_selected": {
+    "first_and_second_match_points": "Notneededforprimary44.2s. Theircountandactionsremainofficialfactpacket; onlyactualthirdmatchpointclaimedasvisualcoverage. No arbitrarypointusedasfirstorsecond."
+  },
+  "qualification_layout": "/workspace/pegula-finals-production/production/qualification-layout.json",
+  "required_final_qc": [
+    "Actual complete native clip and precise subtitles/cues atsourceboundaries",
+    "Actualanimatedlabel first/middle/last againstrealvideo at174.8–180.8",
+    "Outputmix/Wuhanending no nextOstapenkoleak, fullcostlyphrase retained",
+    "Do notclaimthis iswholefinalfilmQC orhumanlistening"
+  ],
+  "shared_git_specs_dispatch_changed": false
+}

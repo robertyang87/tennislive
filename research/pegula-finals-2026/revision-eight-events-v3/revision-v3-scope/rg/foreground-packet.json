@@ -1,0 +1,170 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=08EHKHtS6hg",
+  "source_sha256": "d4a53903e603dc459f0d49b2bad23a5876a66afd80758e392a6faa3d281121ca",
+  "method": "asr_cross_checked",
+  "reviewer": "Independent actual-source small.en/medium.en and multilingual small/large-v3 word-level cross-check; no human-listening claim",
+  "reviewed_at": "2026-10-22T11:23:22.771422+00:00",
+  "reviewed_from": 693.2,
+  "reviewed_to": 714.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "No confirmed foreground English in693.200–714.200. Full-context actual small.en and medium.en ASR both misdecode the same non-English PA into conflicting English hallucinations, retained in raw evidence and rejected. Three independent multilingual French model outputs identify French PA, not English. English body small.en693.2–708.16 and medium.en700–708.16 have empty outputs; earlier medium.en generic outro is retained/rejected. Whole actual French PA and original crowd/ball/exertion audio are preserved. No French is relabelled English; no invented English/French subtitles.",
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/rg/hoh-terminal-small.en.json",
+      "sha256": "9767fc3bbeceba495f1b8c3ce329544ada9c8a23704858296783d7336281fb53",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        640.0,
+        721.37
+      ],
+      "language": "en",
+      "role": "Actual raw word-level ASR; conflicting raw text retained, not asserted as faithful quote"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/rg/hoh-terminal-medium.en.json",
+      "sha256": "7f41c583e3a0cdc4f4ef7f90f530e0293af3388cacb86fe36f08402d9ec218ac",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        640.0,
+        721.37
+      ],
+      "language": "en",
+      "role": "Actual raw word-level ASR; conflicting raw text retained, not asserted as faithful quote"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/rg/selected-body-small.en.json",
+      "sha256": "7bd3e903979a4da069c91a5e2037a3adc409db7577fa6e4d9e2259559eda778b",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        693.2,
+        708.16
+      ],
+      "language": "en",
+      "role": "Actual raw word-level ASR; conflicting raw text retained, not asserted as faithful quote"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/rg/selected-body-medium.en.json",
+      "sha256": "ce1bf00a8f0d3fc0660474ab504cba4390f326f712fac02152b0363fe737b79f",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        693.2,
+        708.16
+      ],
+      "language": "en",
+      "role": "Actual raw word-level ASR; conflicting raw text retained, not asserted as faithful quote"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/rg/body-subwindow-medium.en.json",
+      "sha256": "a31064d57b355f05392bec467cdfa208164b54980dd23719c2fbbe5f653c3613",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        700.0,
+        708.16
+      ],
+      "language": "en",
+      "role": "Actual raw word-level ASR; conflicting raw text retained, not asserted as faithful quote"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/rg/hoh-terminal-multilingual-small.json",
+      "sha256": "75e0cb62ba5caf1222e14dd509abb4b07b99c15f60c0171ed2193b008b9cb504",
+      "model": "small",
+      "actual_reviewed_range": [
+        696,
+        721.37
+      ],
+      "language": "fr",
+      "role": "Actual raw word-level ASR; conflicting raw text retained, not asserted as faithful quote"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/rg/body-and-pa-large-v3-fr.json",
+      "sha256": "6f4be83edb878252ca5e62b55967a849287d39d967ced1740a9eb1dee0321be6",
+      "model": "large-v3",
+      "actual_reviewed_range": [
+        693.2,
+        716.0
+      ],
+      "language": "fr",
+      "role": "Actual raw word-level ASR; conflicting raw text retained, not asserted as faithful quote"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/rg/french-complete-pa-small.json",
+      "sha256": "574591aaf1e0e2177afad0c309404709ff3d57cefe3331cdf1a365ea7fd19dbe",
+      "model": "small",
+      "actual_reviewed_range": [
+        705.5,
+        715
+      ],
+      "language": "fr",
+      "role": "Actual raw word-level ASR; conflicting raw text retained, not asserted as faithful quote"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/rg/french-complete-pa-large-v3.json",
+      "sha256": "dae327f22e64283c16da6a7c6c804129be3f1a96c066a7468b1f1a5a0204bca3",
+      "model": "large-v3",
+      "actual_reviewed_range": [
+        705.5,
+        715
+      ],
+      "language": "fr",
+      "role": "Actual raw word-level ASR; conflicting raw text retained, not asserted as faithful quote"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/revision-v3-scope/rg/french-complete-pa-large-v3-turbo.json",
+      "sha256": "00149796b409fc8c57bd29d05a61218789d4688ff6db471b4191d29ce1098c40",
+      "model": "large-v3-turbo",
+      "actual_reviewed_range": [
+        705.5,
+        715
+      ],
+      "language": "fr",
+      "role": "Actual raw word-level ASR; conflicting raw text retained, not asserted as faithful quote"
+    }
+  ],
+  "human_listened": false,
+  "review_notes": "English-scope packet complete; separate French opening remains unresolved and explicitly not captioned/claimed verbatim approved.693.2–714.2 preserves actual full serve/rally/result,709crouch,710hands-to-mouth,711walking,711.5–713supporter reaction,714winner closeup. Root source dense contact actually viewed. Prior708.16 point-end judgement was mistaken and is withdrawn. No longer cut before PA. Full PA ends by713.78 across French models,714.20 end adds.42s. audio_tail:silence applies only outside body+.25; no body muting.",
+  "excluded_outside_body": {},
+  "foreground_french": [
+    {
+      "language": "fr",
+      "start": 708.3,
+      "end": 713.78,
+      "retained_whole_original_audio": true,
+      "verbatim_transcript_status": "not_approved_opening_unresolved",
+      "uncertain_spans": [
+        {
+          "start": 708.3,
+          "end": 709.98,
+          "reason": "Opening has divergent phonetic ASR variants Chez cet ématch / Sur cet image; do not invent standard chair-umpire template."
+        }
+      ],
+      "verified_partial_meaning": [
+        {
+          "start": 709.58,
+          "end": 710.38,
+          "fr": "Birrell",
+          "zh": "比勒尔",
+          "evidence": "small and large-v3 names-only prompt both output Birrell; proper-name confidence remains low, same-match score/winner identity independently verified."
+        },
+        {
+          "start": 710.34,
+          "end": 711.26,
+          "fr": "deux manches à une",
+          "zh": "两盘比一盘",
+          "evidence": "large-v3 and turbo agree on complete phrase; small phonetic de Manchaïne retained."
+        },
+        {
+          "start": 711.28,
+          "end": 713.78,
+          "fr": "1–6, 6–3, 6–3",
+          "zh": "一比六、六比三、六比三",
+          "evidence": "small,large-v3,turbo all agree spoken numbers; exact official winner score matches."
+        }
+      ],
+      "captions_added": false,
+      "why_no_verbatim_caption": "Opening not reliably transcribed. Preserve entire non-English announcement in original; no false full-transcript approval. Parent explicitly authorized whole French PA retained without fabricated quote on2026-10-22."
+    }
+  ],
+  "french_transcript_approved": false
+}

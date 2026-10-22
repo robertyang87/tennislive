@@ -1,0 +1,107 @@
+{
+  "model": "medium.en",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+  "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+  "clip": [
+    179.96,
+    205.0
+  ],
+  "method": "actual_source_ASR_unprompted_split_editorial_windows",
+  "initial_prompt": null,
+  "expected_sentence_prompted": false,
+  "bandpass_Hz": null,
+  "human_listened": false,
+  "created_utc": "2026-10-22T09:38:09.431263+00:00",
+  "segments": [
+    {
+      "start": 190.52,
+      "end": 193.92,
+      "text": " She got through it.",
+      "avg_logprob": -0.4961181254613967,
+      "no_speech_prob": 0.026325304061174393,
+      "words": [
+        {
+          "w": " She",
+          "s": 190.52,
+          "e": 191.76,
+          "p": 0.4426364004611969
+        },
+        {
+          "w": " got",
+          "s": 191.76,
+          "e": 191.92,
+          "p": 0.9301060438156128
+        },
+        {
+          "w": " through",
+          "s": 191.92,
+          "e": 192.2,
+          "p": 0.9753350615501404
+        },
+        {
+          "w": " it.",
+          "s": 192.2,
+          "e": 193.92,
+          "p": 0.9944994449615479
+        }
+      ]
+    },
+    {
+      "start": 199.8,
+      "end": 202.92,
+      "text": " She's in the 70s at her favorite tournament.",
+      "avg_logprob": -0.4961181254613967,
+      "no_speech_prob": 0.026325304061174393,
+      "words": [
+        {
+          "w": " She's",
+          "s": 199.28,
+          "e": 199.9,
+          "p": 0.9531286954879761
+        },
+        {
+          "w": " in",
+          "s": 199.9,
+          "e": 200.04,
+          "p": 0.9928258657455444
+        },
+        {
+          "w": " the",
+          "s": 200.04,
+          "e": 200.24,
+          "p": 0.9905105233192444
+        },
+        {
+          "w": " 70s",
+          "s": 200.24,
+          "e": 201.16,
+          "p": 0.48377882689237595
+        },
+        {
+          "w": " at",
+          "s": 201.16,
+          "e": 201.98,
+          "p": 0.6032485365867615
+        },
+        {
+          "w": " her",
+          "s": 201.98,
+          "e": 202.2,
+          "p": 0.9916139841079712
+        },
+        {
+          "w": " favorite",
+          "s": 202.2,
+          "e": 202.46,
+          "p": 0.9666177034378052
+        },
+        {
+          "w": " tournament.",
+          "s": 202.46,
+          "e": 202.92,
+          "p": 0.9954634308815002
+        }
+      ]
+    }
+  ]
+}
