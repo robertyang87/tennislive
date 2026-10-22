@@ -1,0 +1,40 @@
+[
+  {
+    "source": "dubai-sf-interview",
+    "source_file": "/workspace/pegula-finals-production/sources/dubai-sf-interview.mp4",
+    "source_sha256": "bd3539827f16aff1e82e65f63db3a59ca5c441a1bc05892b59eed88a786e6d27",
+    "candidate_start": 9.15,
+    "candidate_end": 18.12,
+    "quote_en": "At the start of the third it was one-all ... I'm just happy I'm still even here right now. She was playing some incredible tennis.",
+    "translation_zh": "决胜盘开局打到一平时……我很高兴自己还在比赛里。她打得实在太好了。",
+    "method": "asr_cross_checked",
+    "asr_evidence": [
+      "/workspace/pegula-finals-production/media/dubai-sf-interview-small.en.json",
+      "/workspace/pegula-finals-production/media/dubai-sf-interview-medium-full-sentence.en.json"
+    ],
+    "status": "candidate_not_final_caption_or_crop_approval",
+    "cx_face": null,
+    "face_center_measurement_status": "required_later_actual_measurement_not_fabricated",
+    "note": "Substantive words agree. The lead-in to the quoted thought differs: small.en “and I said”; medium.en “I’m saying”. Ellipsis explicitly marks that unresolved connective; this is NOT an approved verbatim subtitle. Exact common-words alternative 13.72–18.12: “I’m just happy I’m still even here right now. She was playing some incredible tennis.” Next I begins18.50, so18.12 avoids the new sentence. Contact confirms actual same-match on-court interview, Pegula orange Adidas/white visor. Full formal production must verify crop/word-bound cues.",
+    "asr_model_scope": "small.en original broader audio; medium.en actual selected audio. No human listening claim."
+  },
+  {
+    "source": "dubai-champion-speech",
+    "source_file": "/workspace/pegula-finals-production/sources/dubai-champion-speech.mp4",
+    "source_sha256": "b81c05eee0406d4816be14870a933bc2504af15401f14caa3b8408ee1652c918",
+    "candidate_start": 20.4,
+    "candidate_end": 34.45,
+    "quote_en": "Yeah, it's a great birthday present for me. I get to celebrate by flying back home in a few hours, so I don't know ... we'll see. But just super happy to go home with a trophy. It was a great week.",
+    "translation_zh": "这是很棒的生日礼物。几小时后就要飞回家了，怎么庆祝再看吧。但能带着奖杯回家，我特别开心。这一周很棒。",
+    "method": "asr_cross_checked",
+    "asr_evidence": [
+      "/workspace/pegula-finals-production/media/dubai-champion-speech-small.en.json",
+      "/workspace/pegula-finals-production/media/dubai-champion-speech-medium.en.json"
+    ],
+    "status": "candidate_not_final_caption_or_crop_approval",
+    "cx_face": null,
+    "face_center_measurement_status": "required_later_actual_measurement_not_fabricated",
+    "note": "Complete own answer after the host’s question ends19.86; next host starts38.42. Both models agree on substantive statements. Small.en additionally hears “Yeah” before we’ll see and “It was just” false start before final sentence; ellipsis and this note preserve uncertainty. Not a formal approved word-for-word caption. Short alternative28.60–34.45 contains trophy/great-week thought; do not combine noncontiguous answers as one continuous speech.",
+    "asr_model_scope": "small.en original broader audio; medium.en actual selected audio. No human listening claim."
+  }
+]

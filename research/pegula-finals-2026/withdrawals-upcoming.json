@@ -1,0 +1,131 @@
+{
+  "schema": "pegula.withdrawals-upcoming-canonical.v1",
+  "player_id": 316956,
+  "retrieved_utc": "2026-10-22T05:28:49.778988+00:00",
+  "scope": "Actual played tournaments stay separate from pre-event withdrawals and future entries. None of these rows adds a played match, win, loss or tournament-points credit.",
+  "withdrawals": [
+    {
+      "id": "singapore-withdrawal",
+      "event": "Singapore Tennis Open",
+      "event_id": 1152,
+      "event_start": "2026-09-21",
+      "event_end": "2026-09-27",
+      "status": "pre_tournament_withdrawal_confirmed",
+      "counts_as_played_event": false,
+      "counts_in_match_WL": false,
+      "withdrawal_decision_timestamp": null,
+      "official_report_utc": "2026-09-16T13:16:00Z",
+      "official_report_beijing": "2026-09-16T21:16:00+08:00",
+      "announcement_timing_note": "WTA说本人IGStory发表于Tuesday evening，即该周周二晚；缺原Story时区/创建时间，不能给北京时间的具体发帖时刻。用9月16日官方报道或9月中旬退出更稳妥。",
+      "reason_status": "first_person_physical_readiness_explanation",
+      "reason": "美网后经历漫长且身体消耗很大的几周，尚未恢复到她期望的竞争水平。",
+      "verbatim": "After a long and physically demanding few weeks at the US Open, I’m just not quite ready to get back on court and compete at the level I expect from myself.",
+      "medical_diagnosis": null,
+      "do_not_say": [
+        "确诊某部位受伤",
+        "该站输球或获得正赛退赛比分"
+      ],
+      "source": "https://www.wtatennis.com/news/4577362/jessica-pegula-pulls-out-of-singapore-tennis-open-after-busy-hard-court-swing",
+      "raw": "raw/article-4577362.json"
+    },
+    {
+      "id": "beijing-withdrawal",
+      "event": "China Open / Beijing",
+      "event_id": 1020,
+      "event_start": "2026-09-30",
+      "event_end": "2026-10-11",
+      "status": "pre_tournament_withdrawal_confirmed",
+      "counts_as_played_event": false,
+      "counts_in_match_WL": false,
+      "withdrawal_decision_timestamp": null,
+      "official_report_utc": "2026-09-25T21:41:00Z",
+      "official_report_beijing": "2026-09-26T05:41:00+08:00",
+      "announcement_timing_note": "这是WTA文章date字段（网页发表口径），不是已证实的退赛决定时刻。北京时间已是9月26日；不写“北京时间9月25日官宣”。publishFrom为9月25日17:41Z，也仍是北京时间9月26日。",
+      "reason_status": "injury_unspecified",
+      "reason": "WTA报道两人因持续伤情退出；明确Pegula伤势未说明(unspecified)。",
+      "verbatim": "As for Pegula, her injury was unspecified, but she similarly withdrew from Singapore ahead of the tournament.",
+      "medical_diagnosis": null,
+      "do_not_say": [
+        "左腕伤（那是Anisimova）",
+        "佩古拉膝伤/肩伤",
+        "北京已参赛并落败"
+      ],
+      "source": "https://www.wtatennis.com/news/4581969/jessica-pegula-defending-champion-amanda-anisimova-withdraw-from-china-open-with-injuries",
+      "raw": "raw/article-4581969.json"
+    },
+    {
+      "id": "ningbo-withdrawal",
+      "event": "Ningbo Open",
+      "event_id": 2092,
+      "event_start": "2026-10-19",
+      "event_end": "2026-10-25",
+      "status": "pre_tournament_withdrawal_confirmed",
+      "counts_as_played_event": false,
+      "counts_in_match_WL": false,
+      "withdrawal_decision_timestamp": null,
+      "official_report_utc": "2026-10-16T13:30:00Z",
+      "official_report_beijing": "2026-10-16T21:30:00+08:00",
+      "announcement_timing_note": "10月16日WTA赛事指南已把她列入Withdrawals；确切退赛决定/本人官宣时间未知。此前9月24日初始名单含她；10月22日重取正赛签表与赛事逐场均无她。",
+      "reason_status": "not_stated",
+      "reason": null,
+      "verbatim": "Withdrawals: Anna Kalinskaya (illness), Jessica Pegula",
+      "medical_diagnosis": null,
+      "do_not_say": [
+        "佩古拉因illness退出（括号只跟Kalinskaya）",
+        "宁波已开赛后退赛",
+        "她的2026赛季已结束"
+      ],
+      "source": "https://www.wtatennis.com/news/4593047/ningbo-open-2026-everything-to-know-dates-prize-money-who-is-playing",
+      "raw": "raw/article-4593047.json",
+      "initial_entry_source": "https://www.wtatennis.com/news/4581231/elena-rybakina-jessica-pegula-elina-svitolina-iga-swiatek-headline-ningbo-field",
+      "corroborating_sources": [
+        "https://wtafiles.wtatennis.com/pdf/draws/2026/2092/MDS.pdf",
+        "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches"
+      ]
+    }
+  ],
+  "upcoming": [
+    {
+      "id": "tokyo-status",
+      "event": "Toray Pan Pacific Open / Tokyo",
+      "event_id": 1056,
+      "event_start": "2026-10-26",
+      "event_end": "2026-11-01",
+      "status": "future_event_initial_entry_confirmed_latest_list_absent_no_explicit_withdrawal_found",
+      "counts_as_played_event": false,
+      "counts_in_match_WL": false,
+      "latest_check_utc": "2026-10-22T05:28:49.778988+00:00",
+      "initial_official_entry_utc": "2026-10-01T13:36:00Z",
+      "initial_entry_source": "https://www.wtatennis.com/news/4585167/elena-rybakina-jessica-pegula-elina-svitolina-iga-swiatek-headline-tokyo-field",
+      "current_official_player_list_contains_316956": false,
+      "current_official_singles_entry_count": 36,
+      "current_official_matches_count": 0,
+      "withdrawal_decision_timestamp": null,
+      "withdrawal_reason": null,
+      "sources": [
+        "https://www.wtatennis.com/tournaments/1056/tokyo/2026/player-list",
+        "https://api.wtatennis.com/tennis/tournaments/1056/2026/players",
+        "https://api.wtatennis.com/tennis/tournaments/1056/2026/matches"
+      ],
+      "safe_narration": "东京站尚未开打；她曾出现在公布的参赛名单中，但当前官方选手名单已未列出她，是否及何时正式退赛、原因仍未拿到明确公告。",
+      "do_not_say": [
+        "她一定会参加东京",
+        "她已经在东京输球",
+        "无声明却编造退赛原因",
+        "她已结束赛季"
+      ]
+    },
+    {
+      "id": "wta-finals-upcoming",
+      "event": "WTA Finals Indian Wells",
+      "event_id": 808,
+      "event_start": "2026-11-08",
+      "event_end": "2026-11-15",
+      "status": "qualified_not_yet_played",
+      "counts_as_played_event": false,
+      "counts_in_match_WL": false,
+      "source": "https://www.wtatennis.com/news/4591678/jessica-pegula-and-coco-gauff-qualify-for-wta-finals-in-indian-wells",
+      "safe_narration": "她已获年终资格；年终战绩和最终成绩仍未发生。"
+    }
+  ]
+}
