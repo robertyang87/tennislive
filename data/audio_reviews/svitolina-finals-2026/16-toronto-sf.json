@@ -1,0 +1,55 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=YgwYriOtnPs",
+  "source_sha256": "09909651ae61819e07f8ef1f5a577da83774152a33482f7d3ff234cbcf4cf317",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex local source-bound paired ASR with source frames; no human listening",
+  "reviewed_at": "2026-10-22T12:58:20.630136+00:00",
+  "reviewed_from": 240,
+  "reviewed_to": 301,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 258.74,
+      "end": 261.66,
+      "en": "A first final of the season,",
+      "zh": "本赛季第一次闯进决赛"
+    },
+    {
+      "start": 261.66,
+      "end": 266.02,
+      "en": "a first Canadian final for Iga Swiatek.",
+      "zh": "斯瓦泰克首进加拿大站决赛"
+    },
+    {
+      "start": 267.86,
+      "end": 269.24,
+      "en": "Tough for Svitolina.",
+      "zh": "斯维托丽娜很遗憾"
+    },
+    {
+      "start": 269.62,
+      "end": 271.5,
+      "en": "She battled so hard.",
+      "zh": "她拼得那么顽强"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": [
+    "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+    "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed."
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/toronto-sf-aaf7d96aa6-toronto-sf-small.en.json",
+      "sha256": "aaf7d96aa66ece86b9fcecb66c679c1ae892c935567c696bcf3fd38a90fbedf3",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/toronto-sf-1d49f8883e-toronto-sf-medium.en.json",
+      "sha256": "1d49f8883ea4326d505e48d8e6ed40bbdbc36ef89d67a47103f76dc8f244e054",
+      "model": "medium.en"
+    }
+  ]
+}
