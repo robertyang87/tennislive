@@ -1,0 +1,42 @@
+{
+  "schema": "svitolina.native-production-ready-review.v1",
+  "current_spec_sha256": "da92f8e74eff09c6dc4c48c57258c638a958261eea8a86cdf1c6ac453110a1bc",
+  "method": "Actual native PNG samples inspected as contacts and critical fullsize frames; source-bound paired localASR; native frozen voice individual five checks. No human audio listening and no encoded final film QC.",
+  "current_visual_samples": {
+    "equivalent_v5_frames": 83,
+    "current_v7_rome_frames": 6,
+    "total": 89,
+    "equivalence": "/workspace/svitolina-finals-production/production/native-v5-v7-equivalence.json",
+    "equivalence_sha256": "a4bfe5648b76f0e341806a5331798296e0c091fad96138d145fa02b8457fd073",
+    "all4v5manifests_and_current_v7_sha_verified": true
+  },
+  "independent_visual_report": "/workspace/finals-remaining-2026/independent-qc/svi-native-v7-independent-qc.json",
+  "results": {
+    "all31bilingualcue_midpoints": "sampled readable, complete line boundaries, no bottom clipping",
+    "all13narrative_static_cards": "no live information card; native bottom CN subtitle and brand separate",
+    "officialqualificationposter": "fulloriginalunalteredposter insideevidencewrapper, noinfoinset, independentbottomCNsubtitle",
+    "person": "fixed cx.47; first5of9actualSvi face identitysamples complete, last4genuineteamcutaways excluded fromsubject measurement; all9nativeframes viewed",
+    "8informationcards": "finalgross tournament points only; actualvideoonly; unchanged89/98/73style, .6width/.043pad; minimum3.2sec/maximum5.2sec trueface/point-safe windows, longer15seccandidates rejectedusingactualimages",
+    "rome_current": "232.20–235.40afterdeadball; no face or keyliveaction blocked. Faint tail maycrossenteringCocowaist afterpoint; allowedrootconfirmed scope, no zero-body-overlapclaim."
+  },
+  "fixed_crop_limitations": [
+    {
+      "source": "auckland-final",
+      "source_time": 270.6,
+      "evidence": "native-preview-cues-v5-batch1/caption-04.png",
+      "observed": "During original post-match closeup, part of Svi right side of face lies outside fixedcx.5 horizontalcrop. Visible smile remains, source time retained; no claim every closeup face/stroke is always fullyvisible. Court-center framing explicitlyrequired."
+    }
+  ],
+  "rejected_previews_not_counted": [
+    "v3originalbadlabelwindows",
+    "4v5Romelabel-boundaryframes",
+    "old2fadeedgeframes",
+    "v6earlyRome6frames"
+  ],
+  "duration_expected_seconds": 317.794,
+  "frozen_bundle_sha256": "b4bfc7dab36b36078603b83d53bf807a97107d25147ce75552e97a9e1a0ebb91",
+  "bundle_requests": 14,
+  "frozen_voice_preflight": "pass14actualaudio requests with13exact-bytepreviouspasses+1freshrequest",
+  "remaining": "Root coordinates formalrender, runtimeQC, film-bound voice5suite, actualencodedfilmQC and publication gates. No formaldispatch bythisagent.",
+  "created_utc": "2026-10-22T13:54:57.134346+00:00"
+}

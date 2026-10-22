@@ -1,0 +1,49 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=cqQQnYmVkVQ",
+  "source_sha256": "a1017dd34d208197fd0e0d46fcf00d4bab2384284b1bc83d465f9cc3626e6f7f",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex local source-bound paired ASR with source frames; no human listening",
+  "reviewed_at": "2026-10-22T12:58:20.614264+00:00",
+  "reviewed_from": 245,
+  "reviewed_to": 293,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 263.84,
+      "end": 267.74,
+      "en": "Elina Svitolina is the champion in Auckland.",
+      "zh": "斯维托丽娜赢下奥克兰冠军"
+    },
+    {
+      "start": 269.36,
+      "end": 271.9,
+      "en": "Her 19th career title,",
+      "zh": "她职业生涯的第19冠"
+    },
+    {
+      "start": 271.9,
+      "end": 274.84,
+      "en": "and she had to work hard for it in this final.",
+      "zh": "这场决赛她赢得很艰难"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": [
+    "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+    "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed."
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/auckland-final-4c299b122b-auckland-final-small.en.json",
+      "sha256": "4c299b122b2d91839102f1b7acb1b6d6b382340bd1bd380d28d162e518c8b039",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/auckland-final-42d9734d4b-auckland-final-medium.en.json",
+      "sha256": "42d9734d4bc27086c9d0116942ccddc6a573c969678625c98690100688a2ed94",
+      "model": "medium.en"
+    }
+  ]
+}

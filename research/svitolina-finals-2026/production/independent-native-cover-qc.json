@@ -1,0 +1,47 @@
+{
+  "schema": "independent-native-cover-visual-qc/v1",
+  "reviewed_at_utc": "2026-10-22T13:41:38.309516+00:00",
+  "player": "Elina Svitolina",
+  "status": "pass_actual_native_jpeg_visual_qc",
+  "actual_file": "/workspace/svitolina-finals-production/native-cover/poster_local.jpg",
+  "actual_format": "JPEG",
+  "actual_size": [
+    1080,
+    1440
+  ],
+  "actual_sha256": "9cb5bad77f446329d9427db7ee0a921bb677d70570483d9c9859b54c85a52bd1",
+  "png_file": null,
+  "current_spec": "/workspace/tennislive-svitolina/specs/reels/svitolina-finals-2026.json",
+  "current_spec_sha256_at_review": "ce079b25777a8614fa358377425b44a9ac9de67e0793ae22f2777195bc150967",
+  "spec_snapshot": "/workspace/finals-remaining-2026/independent-qc/native-covers/svitolina-spec-at-review.json",
+  "cover_fields_sha256_canonical_utf8": "4c7fac2bae8d1795ff9b97e16ea1db295f8890cf3f3e1a340d50a2014150d9e6",
+  "render_input_original_spec_hash_recorded": false,
+  "binding_limit": "Current cover fields visually match actual poster. Snapshot is exact at review; no claim of provenance of entire final spec or final movie. Owner says forthcoming non-cover Roma label end time change leaves cover unchanged; verify cover-field hash, renderer and actual poster bytes before carrying cover-only review.",
+  "portrait_asset": "/workspace/tennislive-svitolina/assets/reel/svitolina-finals-2026/cover-rome.jpg",
+  "portrait_asset_sha256": "22d36404262ab9b0213c1c5d32708f973288f64e868ba48a0f1c586c59938503",
+  "renderer_at_review": "/workspace/tennislive-svitolina/tools/versus_poster.py",
+  "renderer_sha256_at_review": "455b86f276a93c26f3df33e7017c2d7a1e090df6ab25743c47017613ceae53d9",
+  "owner_render_log": "/workspace/svitolina-finals-production/production/native-cover-local.txt",
+  "actual_viewed": true,
+  "checks": {
+    "1080x1440": true,
+    "correct_person": "Actual Elina Svitolina, official same-year Rome champion photograph",
+    "front_face_eyes_open": true,
+    "head_and_face_complete": true,
+    "full_bleed": true,
+    "subtitle": "斯维托丽娜：7年后重返年终",
+    "subtitle_name_colon": true,
+    "hook_actual_lines": [
+      "本季2冠也有低谷",
+      "7年后重返年终"
+    ],
+    "hook_semantic_break": true,
+    "text_clear_and_no_clipping": true,
+    "face_unobscured": true,
+    "trophy_recognizable_visual_focal_point": "Cup bowl/lid/stem clearly visible to left with subject. Native crop trims far-left handle; hook overlays dark pedestal area below bowl, not face. No claim every trophy/pedestal pixel is text-free.",
+    "brand_safe_area": "Logo/brand/subtitle inset at upper left; full head and face clear to right; no text clipping or collision.",
+    "scrim": "Dark original event portrait remains clear; native top/bottom readability gradient retained, no extra radial full-photo wash visible."
+  },
+  "material_issues": [],
+  "final_encoded_film_qc": false
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "svitolina.native-preview-review.v1",
+  "scope": "Actual native PNG visual preview only; not encoded-film QC or human audio listening.",
+  "spec_sha256": "516dde096d4487361cedeebdf8872ad78c8772207a882d102194afe5d5d697f2",
+  "reviewed_utc": "2026-10-22T13:23:00.648147+00:00",
+  "manifest_bindings": [
+    {
+      "path": "/workspace/svitolina-finals-production/native-preview-labels-v3-batch1/preview_manifest.json",
+      "sha256": "3685576a8bd96a01f77adbbba9f0d32e41a7e9f188bb530333a5ab1f8daf5e39"
+    },
+    {
+      "path": "/workspace/svitolina-finals-production/native-preview-labels-v3-batch2/preview_manifest.json",
+      "sha256": "e78e3f9ce52a9c3eb43728e97ac5142a722ecb72668272885b0a7b116fa357f1"
+    }
+  ],
+  "actual_images_viewed": 42,
+  "contact_sheets": [
+    "/workspace/svitolina-finals-production/native-preview-labels-v3-batch1/contact.jpg",
+    "/workspace/svitolina-finals-production/native-preview-labels-v3-batch2/contact.jpg"
+  ],
+  "findings": [
+    {
+      "id": "cold-rome",
+      "status": "sampled_visual_pass",
+      "detail": "All9 native person samples viewed. First5 actualSvi head/face retained centeredcx.47; last4 genuineoriginalteamreactionshots, not mislabeled asSvi; no addedinformationcard. Bilingualcaptions visible and no bottom clipping."
+    },
+    {
+      "id": "card-qualification",
+      "status": "sampled_visual_pass",
+      "detail": "Fulloriginalqualifiedposter visible within deepblueevidencewrapper, no liveinfoinset, independentCNsubtitlebelow and brand clear. Will need freshspecbinding afterAsiaparagraphchange."
+    },
+    {
+      "id": "auckland-final",
+      "status": "replace_label_interval",
+      "detail": "Right-upperlabel intersectsSviupperface inlatecurrentwindow; actualcaption03 proves. Replace264.70–267.50."
+    },
+    {
+      "id": "rome-final",
+      "status": "replace_label_interval",
+      "detail": "Current235–237.8 label intersectsCocoforehead, actualcaption14/15. Replace."
+    },
+    {
+      "id": "rg-qf",
+      "status": "replace_label_interval",
+      "detail": "Current241.3–244.1 reachesSvifaceathandshake, actualbatch2caption03. Replace."
+    },
+    {
+      "id": "wimbledon-r1",
+      "status": "replace_label_interval",
+      "detail": "Current375.5–378.3 reachesSnigurnearface, actualbatch2caption07. Replace."
+    },
+    {
+      "id": "ao-sf,dubai-final,toronto-sf,us-r3",
+      "status": "current_sampled_label_clear",
+      "detail": "Allcurrentfirst/mid/last/afteractualnativeframesviewed; newlongercandidatesrequirefreshreview."
+    }
+  ],
+  "current_final_status": "historical_preview_only_revisions_required",
+  "publication_approved": false,
+  "human_listening_claimed": false
+}

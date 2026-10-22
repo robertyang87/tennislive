@@ -1,0 +1,109 @@
+{
+  "schema": "tennislive.evidence-path-materialization-repair.v1",
+  "old_spec_sha256": "da92f8e74eff09c6dc4c48c57258c638a958261eea8a86cdf1c6ac453110a1bc",
+  "new_spec_sha256": "6c1ecd8e1c4ec09d382e54159f21ebadf1bdad1955dedcda5ce6dd2aa0dc8f31",
+  "changes": [
+    {
+      "json_path": "segments[10].cx_face.subject_identity_screening.review_images",
+      "old": "research/svitolina-finals-2026/cold-person-identity-contact.jpg",
+      "new": "assets/reel/svitolina-finals-2026/identity/cold-person-identity-contact.jpg",
+      "sha256": "ddfba4bbe547b3d5268878b693c01b7ca2d361d4b73daf52242459f1f75d8204",
+      "bytes": 310672
+    },
+    {
+      "json_path": "segments[10].cx_face.subject_identity_screening.independent_root_images",
+      "old": "research/svitolina-finals-2026/cold-person-independent-contact.jpg",
+      "new": "assets/reel/svitolina-finals-2026/identity/cold-person-independent-contact.jpg",
+      "sha256": "82a9598e801c6a865fde5844290130d2745736ac6bfeb347fc302b53c7838b95",
+      "bytes": 459952
+    }
+  ],
+  "exact_json_delta_paths": [
+    "segments[10].cx_face.subject_identity_screening.review_images",
+    "segments[10].cx_face.subject_identity_screening.independent_root_images"
+  ],
+  "all_other_json_values_identical": true,
+  "native_projection_sha256_old": "a268de00f49565fb8f54108fcafdbca2ddc43f5513503db68147249c88c62f59",
+  "native_projection_sha256_new": "208b58d4f605c0c2d95a0f625ef1dac9ff9dde37d40784b7cfe9af3219d5dbc2",
+  "native_projection_byte_identical": false,
+  "projection_explanation": "Conservative native provenance projection includes these two proof-file paths, so its hash changes. After restoring only those two strings to old values the complete spec is identical; proof JPG bytes are identical. No render geometry, video source/timing, subtitles, styles, text, voices or actual media changed. This is sampled-native input equivalence, not an actual-film QC pass.",
+  "foreground_plan_sha256": "3bec3589f7fc7d9d2c77b57bc33bd00df382c51b43f2fa85f8d5bfcbebee48e3",
+  "foreground_binding_unchanged": true,
+  "native_sample_reuse": {
+    "count": 89,
+    "report": "svi-native-v7-independent-qc.json",
+    "basis": "Every rendering value and referenced visual asset byte remains identical; moved JPGs are identity-screening proof contacts, not displayed film assets."
+  },
+  "frozen_inputs_changed": [
+    "two evidence path strings only"
+  ],
+  "formal_render_succeeded": false,
+  "cloud_sparse_simulation": {
+    "spec_sha256": "6c1ecd8e1c4ec09d382e54159f21ebadf1bdad1955dedcda5ce6dd2aa0dc8f31",
+    "research_absent": true,
+    "real_production_repo_unchanged_by_simulation": true,
+    "tests": [
+      {
+        "name": "sparse-dryrun",
+        "command": [
+          "python",
+          "tools/build_match_reel.py",
+          "render",
+          "--spec",
+          "specs/reels/svitolina-finals-2026.json",
+          "--voice",
+          "zh-CN-YunjianNeural",
+          "--rate",
+          "+6%",
+          "--dry-run",
+          "--outdir",
+          "/workspace/svitolina-finals-production/production/cloud-sparse-simulation/empty-dryrun"
+        ],
+        "cwd": "/workspace/svitolina-finals-production/production/cloud-sparse-simulation",
+        "research_absent": true,
+        "returncode": 0,
+        "log": "/workspace/svitolina-finals-production/production/sparse-dryrun.txt",
+        "log_sha256": "2a566e033c9baef101d13140ce136221fb5e8084444e7d6bc692df708d8aa2a7"
+      },
+      {
+        "name": "sparse-actual-strict-tts",
+        "command": [
+          "python",
+          "tools/build_match_reel.py",
+          "render",
+          "--spec",
+          "specs/reels/svitolina-finals-2026.json",
+          "--voice",
+          "zh-CN-YunjianNeural",
+          "--rate",
+          "+6%",
+          "--check-narration",
+          "--tts-bundle-in",
+          "/workspace/svitolina-finals-production/production/tts-measured-v2.zip",
+          "--outdir",
+          "/workspace/svitolina-finals-production/production/cloud-sparse-simulation/empty-actual-tts"
+        ],
+        "cwd": "/workspace/svitolina-finals-production/production/cloud-sparse-simulation",
+        "research_absent": true,
+        "returncode": 0,
+        "log": "/workspace/svitolina-finals-production/production/sparse-actual-strict-tts.txt",
+        "log_sha256": "d33d33a50647a14660e68f396b38d84f03de37e0e0247688b28d52ce9b0b51e8"
+      }
+    ],
+    "all_pass": true
+  },
+  "exact_workflow_publish_preflight": {
+    "status": "pass",
+    "log_sha256": "18d9d7614e1183068f0e6d9803c0bc59e8b0e84d1241d2186ac22501990a58f3"
+  },
+  "source_index_rebind_required": false,
+  "source_index_explanation": "Source index contains source identities and actual media hashes, no full spec hash. Foreground audio plan hash remains identical. Neither source-index bytes nor transcript packet/index bytes changed.",
+  "strict_tts_restore": {
+    "status": "pass",
+    "actual_import": true,
+    "bundle_sha256": "b4bfc7dab36b36078603b83d53bf807a97107d25147ce75552e97a9e1a0ebb91",
+    "new_synthesis": false,
+    "all_14_requests_reused": true,
+    "scope": "Actual whole paragraph and outro frozen-byte restoration with native timing checks; no actual film or human listening claim."
+  }
+}

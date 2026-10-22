@@ -1,0 +1,56 @@
+{
+  "source_key": "rg-qf",
+  "source_file": "/workspace/svitolina-finals-production/media/sources/rg-qf.mp4",
+  "source_sha256": "6a8aefd56f0fe579586e8390a566de130767fdcb54ec3377bcac65664bc8d359",
+  "source_url": "https://www.youtube.com/watch?v=W7vJsxli0p0",
+  "model": "turbo",
+  "range": [
+    227.0,
+    245.9
+  ],
+  "language": "fr",
+  "method": "actual_faster_whisper_int8_cpu_beam5_vad_false_no_prompt",
+  "human_listening_claimed": false,
+  "created_utc": "2026-10-22T12:39:20.748297+00:00",
+  "segments": [
+    {
+      "start": 234.58,
+      "end": 237.54,
+      "text": " Sous-titrage Société Radio-Canada",
+      "avg_logprob": -0.3281836743865694,
+      "no_speech_prob": 5.338477229721583e-11,
+      "words": [
+        {
+          "word": " Sous",
+          "start": 234.58,
+          "end": 235.98,
+          "probability": 0.26847593020647764
+        },
+        {
+          "word": "-titrage",
+          "start": 235.98,
+          "end": 237.38,
+          "probability": 0.9743849039077759
+        },
+        {
+          "word": " Société",
+          "start": 237.38,
+          "end": 237.54,
+          "probability": 0.8198022246360779
+        },
+        {
+          "word": " Radio",
+          "start": 237.54,
+          "end": 237.54,
+          "probability": 0.9984920024871826
+        },
+        {
+          "word": "-Canada",
+          "start": 237.54,
+          "end": 237.54,
+          "probability": 0.9991325934727987
+        }
+      ]
+    }
+  ]
+}
