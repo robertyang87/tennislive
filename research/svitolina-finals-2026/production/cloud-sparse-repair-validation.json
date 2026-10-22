@@ -1,0 +1,54 @@
+{
+  "spec_sha256": "6c1ecd8e1c4ec09d382e54159f21ebadf1bdad1955dedcda5ce6dd2aa0dc8f31",
+  "research_absent": true,
+  "real_production_repo_unchanged_by_simulation": true,
+  "tests": [
+    {
+      "name": "sparse-dryrun",
+      "command": [
+        "python",
+        "tools/build_match_reel.py",
+        "render",
+        "--spec",
+        "specs/reels/svitolina-finals-2026.json",
+        "--voice",
+        "zh-CN-YunjianNeural",
+        "--rate",
+        "+6%",
+        "--dry-run",
+        "--outdir",
+        "/workspace/svitolina-finals-production/production/cloud-sparse-simulation/empty-dryrun"
+      ],
+      "cwd": "/workspace/svitolina-finals-production/production/cloud-sparse-simulation",
+      "research_absent": true,
+      "returncode": 0,
+      "log": "/workspace/svitolina-finals-production/production/sparse-dryrun.txt",
+      "log_sha256": "2a566e033c9baef101d13140ce136221fb5e8084444e7d6bc692df708d8aa2a7"
+    },
+    {
+      "name": "sparse-actual-strict-tts",
+      "command": [
+        "python",
+        "tools/build_match_reel.py",
+        "render",
+        "--spec",
+        "specs/reels/svitolina-finals-2026.json",
+        "--voice",
+        "zh-CN-YunjianNeural",
+        "--rate",
+        "+6%",
+        "--check-narration",
+        "--tts-bundle-in",
+        "/workspace/svitolina-finals-production/production/tts-measured-v2.zip",
+        "--outdir",
+        "/workspace/svitolina-finals-production/production/cloud-sparse-simulation/empty-actual-tts"
+      ],
+      "cwd": "/workspace/svitolina-finals-production/production/cloud-sparse-simulation",
+      "research_absent": true,
+      "returncode": 0,
+      "log": "/workspace/svitolina-finals-production/production/sparse-actual-strict-tts.txt",
+      "log_sha256": "d33d33a50647a14660e68f396b38d84f03de37e0e0247688b28d52ce9b0b51e8"
+    }
+  ],
+  "all_pass": true
+}

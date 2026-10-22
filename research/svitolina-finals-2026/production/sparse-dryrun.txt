@@ -1,0 +1,74 @@
+[片长] 313.2s = 5 分 13 秒，按实测 12560 kb/s 估 469 MiB —— 成片一律走 Release 附件，不进 git
+[TTS] spec 认领 tts_backend=edge，这一趟不走 Azure：沿用本系列自然云健+6%/+0Hz；实际原生合成、冻结字节及自动五项验收，不人工统一提速。
+[多音字] 没有换字表管不到的非常用读音（641 字、14 段查过）
+  另 4 处落在量过读对的词上（check_polyphones.MEASURED_OK），不逐条报
+  静态筛选不是声学通过；词典和历史词条不能证明本次整句读对。本次 14 段仍须按实际嗓音、语速逐段声学复核，含封面、旁白和片尾。
+
+[dry-run] spec 形状没问题：22 段，画面共 312.0s
+[fps] rg-qf 是 50/1，重采样到主源的 25/1——原生50/1按实际时长转主片25fps，不变速。
+[fps] us-r3 是 30000/1001，重采样到主源的 25/1——原生60000/1001按实际时长转主片25fps，不变速。
+
+[查选段] 认领到 2 份 probe.json，**没查成的源：['ao-sf', 'auckland-final', 'dubai-final', 'rg-qf', 'rome-final', 'wimbledon-r1']**
+
+[查选段] 4 处窗口中途换了镜头（**只报不拦**，离边界不到 0.15s 的已经滤掉——那是窗口对齐了源片自己的镜头边界，本来就该那样）。越靠段落中间越可疑，按这个排的：
+  第 17 段 249.32–271.80s 里第 263.28s 换了镜头（离最近的边界 8.52s）：「A first final of the s…」
+  第 19 段 168.80–185.60s 里第 173.66s 换了镜头（离最近的边界 4.86s）：「She's done it.
+她做到了 An…」
+  第 19 段 168.80–185.60s 里第 170.90s 换了镜头（离最近的边界 2.10s）：「She's done it.
+她做到了 An…」
+  第 17 段 249.32–271.80s 里第 250.84s 换了镜头（离最近的边界 1.52s）：「A first final of the s…」
+  拿缩略图墙对一眼：两边还是同一个人就没事，写一句 `"crosses_cut": "<为什么>"` 挂账；**换了人就是整句旁白压在别人身上**，那要改窗口。
+
+[查选段] 另外这几条也只报不拦：
+  源 ao-sf（https://www.youtube.com/watch?v=g-co4fMMjnc）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方源实际字节已落地并ffprobe；SHA256 464421ecf66067c3e1542f9b8d6d6989385883fdae29ca4d81fa1326809767cb。完整选窗原声/裁切另审，不以分辨率当成片通过。
+  源 auckland-final（https://www.youtube.com/watch?v=cqQQnYmVkVQ）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方源实际字节已落地并ffprobe；SHA256 a1017dd34d208197fd0e0d46fcf00d4bab2384284b1bc83d465f9cc3626e6f7f。完整选窗原声/裁切另审，不以分辨率当成片通过。
+  源 dubai-final（https://www.youtube.com/watch?v=n8N7tGMhsQA）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方源实际字节已落地并ffprobe；SHA256 f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35。完整选窗原声/裁切另审，不以分辨率当成片通过。
+  源 rg-qf（https://www.youtube.com/watch?v=W7vJsxli0p0）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方源实际字节已落地并ffprobe；SHA256 6a8aefd56f0fe579586e8390a566de130767fdcb54ec3377bcac65664bc8d359。完整选窗原声/裁切另审，不以分辨率当成片通过。
+  源 rome-final（https://www.youtube.com/watch?v=WXNZTi6qd1Y）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方源实际字节已落地并ffprobe；SHA256 e5aab2e4155d2ebf9ef25e4d31d2e84b6748963d0442c9a5e1818a14e0f904dc。完整选窗原声/裁切另审，不以分辨率当成片通过。
+  源 wimbledon-r1（https://www.youtube.com/watch?v=efGsU1vRZc8）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：官方源实际字节已落地并ffprobe；SHA256 b75c4fa4809dcfa7a7e949d8b733752853260cfe40c36c5ea5329f02df8978ac。完整选窗原声/裁切另审，不以分辨率当成片通过。
+  源 toronto-sf：死球时刻还没量过，而且猜不出记分条在哪（可能没有常驻记分条，或者门槛卡严了）——段尾只能靠缩略图墙用眼睛定
+  源 us-r3：死球时刻还没量过——probe 猜过 --scorebox 104,888,616,978，还没有人拿它重跑一轮 probe 确认（老 probe；新 probe 会按猜的框自己量一遍）
+  ⚠️ 这几条源片的切点没查成：['ao-sf', 'auckland-final', 'dubai-final', 'rg-qf', 'rome-final', 'wimbledon-r1']
+  选段这一层没有硬伤（片长、分辨率、几何；响度校验按用户要求移除）。**挑段仍然要看缩略图墙**——「近端是谁」「情绪对不对题」机器判不了。
+[dry-run] 文案 svitolina-finals-2026.xhs.txt：正文 412 字（上限 1000）、tag 5 个（上限 5）
+[官方上传] spec 里认不出英文名（cover.matchup[].name_en）——要列官方上传就给 --who <姓>,<姓>
+
+[估旁白] 13 段有旁白（离线估，误差 ±2.2s）
+  第  1 段 画面   8.3s 估旁白  7.54s 余量 +0.78s ← 悬，跑一次 mode=narration
+  第  2 段 画面  10.6s 估旁白  9.19s 余量 +1.37s ← 悬，跑一次 mode=narration
+  第  4 段 画面  10.4s 估旁白  9.18s 余量 +1.22s ← 悬，跑一次 mode=narration
+  第  6 段 画面   9.8s 估旁白  8.36s 余量 +1.48s ← 悬，跑一次 mode=narration
+  第  8 段 画面   7.4s 估旁白  6.71s 余量 +0.69s ← 悬，跑一次 mode=narration
+  第  9 段 画面  13.3s 估旁白 11.65s 余量 +1.63s ← 悬，跑一次 mode=narration
+  第 12 段 画面  10.1s 估旁白  8.70s 余量 +1.38s ← 悬，跑一次 mode=narration
+  第 14 段 画面  12.0s 估旁白 10.02s 余量 +2.02s ← 悬，跑一次 mode=narration
+  第 16 段 画面  10.4s 估旁白  8.69s 余量 +1.71s ← 悬，跑一次 mode=narration
+  第 18 段 画面  13.8s 估旁白 11.99s 余量 +1.85s ← 悬，跑一次 mode=narration
+  第 20 段 画面   9.5s 估旁白  8.51s 余量 +1.01s ← 悬，跑一次 mode=narration
+  第 21 段 画面  13.1s 估旁白 11.99s 余量 +1.13s ← 悬，跑一次 mode=narration
+  第 22 段 画面   9.1s 估旁白  7.69s 余量 +1.39s ← 悬，跑一次 mode=narration
+
+[估旁白] 误差带里这几段已经拿真 TTS 量过（data/narration_checks/svitolina-finals-2026.json）：
+  第 1 段：真 TTS 量过 7.92s，余量 +0.40s
+  第 2 段：真 TTS 量过 10.15s，余量 +0.41s
+  第 4 段：真 TTS 量过 9.96s，余量 +0.44s
+  第 6 段：真 TTS 量过 9.41s，余量 +0.43s
+  第 8 段：真 TTS 量过 6.98s，余量 +0.42s
+  第 9 段：真 TTS 量过 12.86s，余量 +0.42s
+  第 12 段：真 TTS 量过 9.65s，余量 +0.43s
+  第 14 段：真 TTS 量过 11.64s，余量 +0.40s
+  第 16 段：真 TTS 量过 9.96s，余量 +0.44s
+  第 18 段：真 TTS 量过 13.44s，余量 +0.40s
+  第 20 段：真 TTS 量过 9.12s，余量 +0.40s
+  第 21 段：真 TTS 量过 12.72s，余量 +0.40s
+  第 22 段：真 TTS 量过 8.64s，余量 +0.44s
+
+[看画面] 这一条只查数。要看**每一段窗口里到底是什么画面**：
+  PYTHONPATH=src python3 tools/preview_segments_local.py --slug svitolina-finals-2026
+  （本地，几秒钟；改了哪几段就 `--seg 3,7` 只看那几段）
