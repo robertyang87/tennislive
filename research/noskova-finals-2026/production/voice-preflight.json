@@ -1,7 +1,7 @@
 {
   "schema": "noskova.actual-tts-preflight.v1",
   "scope": "Actual frozen local TTS bytes preflight only, not final-movie approval. Native final automated_voice_suite still required.",
-  "bundle_sha256": "a04395bd3f08b66d1d6fbc3265879624c3918aa1577987f565b526e23b7d735f",
+  "bundle_sha256": "26d32fbdf9b1e64dfaf42a8f2e50066bf18be1a5b21f8d969a53cfa111d014ba",
   "entries": [
     {
       "text": "随后，她负于科斯秋克，止步马德里8强，罗马止步第四轮。法网首轮，又以五比七、六比七负于萨卡里。",
@@ -509,5 +509,7 @@
     }
   ],
   "pass": true,
-  "sentence_splits": []
+  "sentence_splits": [],
+  "original_review_bundle_sha256": "a04395bd3f08b66d1d6fbc3265879624c3918aa1577987f565b526e23b7d735f",
+  "producer_repack_identity_proof": "canonical-transport-fix/repack-proof.json; all12audio/marks/request payloads identical, no new speech generated or human listened"
 }
