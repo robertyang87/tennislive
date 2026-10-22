@@ -13,15 +13,15 @@
     "release_tag": "reel-tts-noskova-finals-2026-26d32fbdf9b1e64d",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-noskova-finals-2026-26d32fbdf9b1e64d/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39794121859"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39801947686"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 4.554,
   "layout": "full",
-  "segments_seconds": 295.77,
+  "segments_seconds": 295.41,
   "topbar": null,
-  "film_seconds": 301.56,
+  "film_seconds": 301.2,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -53,44 +53,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "d9bebec321fa4e9e73c7ce5203f4fcc16fa081691b3aab50c09d73252f4a8dd8",
+  "render_inputs_sha256": "214583df9b7583950a299877f8bf43136107f14a346d225957d4cbc18c4f6f7e",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "noskova-finals-2026",
-    "received_at": "2026-10-22T14:15:35Z",
-    "artifact_ready_at": "2026-10-22T14:24:03Z",
-    "elapsed_seconds": 508.273,
+    "received_at": "2026-10-22T15:08:18Z",
+    "artifact_ready_at": "2026-10-22T15:14:07Z",
+    "elapsed_seconds": 349.885,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "ddb10faa24da4eb9c22d6190d3953be2f9a84fddc3e045529823b501b210efc9",
-    "spec_sha256": "157b79dfb5b0c4f5c03e36831c40905cead2237c34cfee7736e979064b351dfd",
-    "run_id": "39794121859",
+    "film_sha256": "86c172d5c8ed2d2d5ef0b7cd90c0163e3495604dd70c3ff6d9a1555a57b4450d",
+    "spec_sha256": "6a5f7213e88e500ce90cb1f3ba531f068e7d8965c62875fbb1180cbf4e6c99e9",
+    "run_id": "39801947686",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-22T14:18:34Z",
-        "run_id": "39794121859"
+        "at": "2026-10-22T15:10:38Z",
+        "run_id": "39801947686"
       }
     ],
-    "render_seconds": 329.273,
-    "pre_render_seconds": 179.0
+    "render_seconds": 209.885,
+    "pre_render_seconds": 140.0
   },
-  "film_sha256": "ddb10faa24da4eb9c22d6190d3953be2f9a84fddc3e045529823b501b210efc9",
-  "film_bytes": 143147851,
-  "qc_attestation_sha256": "37c6be6c85cccc6917fd3fb63bf0e2b7b7ecc817c910dfa52a8b242ab16d3323",
+  "film_sha256": "86c172d5c8ed2d2d5ef0b7cd90c0163e3495604dd70c3ff6d9a1555a57b4450d",
+  "film_bytes": 143069882,
+  "qc_attestation_sha256": "7234f82daa77201d51fe16f8fb12fefb5c4cc1d8822284655ff7ca7b3786f798",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-22T14:18:34Z",
-      "run_id": "39794121859"
+      "at": "2026-10-22T15:10:38Z",
+      "run_id": "39801947686"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-22T14:24:07Z",
-      "run_id": "39794121859"
+      "at": "2026-10-22T15:14:11Z",
+      "run_id": "39801947686"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-noskova-finals-2026/noskova-finals-2026.mp4",
-  "video_bytes": 143147851
+  "video_bytes": 143069882
 }

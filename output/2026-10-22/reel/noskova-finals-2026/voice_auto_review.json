@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "8c693ec357aa1c5ce894c9f715d97b1a549307071b4b1e094a39fc5aa8a467b8",
-    "render_inputs_sha256": "d9bebec321fa4e9e73c7ce5203f4fcc16fa081691b3aab50c09d73252f4a8dd8",
-    "spec_sha256": "157b79dfb5b0c4f5c03e36831c40905cead2237c34cfee7736e979064b351dfd",
-    "film_sha256": "ddb10faa24da4eb9c22d6190d3953be2f9a84fddc3e045529823b501b210efc9",
+    "render_sha256": "e7602fc6e92d91253ed928bba9ac8963af0564d8b5810ecc35e58b2fe636e0a1",
+    "render_inputs_sha256": "214583df9b7583950a299877f8bf43136107f14a346d225957d4cbc18c4f6f7e",
+    "spec_sha256": "6a5f7213e88e500ce90cb1f3ba531f068e7d8965c62875fbb1180cbf4e6c99e9",
+    "film_sha256": "86c172d5c8ed2d2d5ef0b7cd90c0163e3495604dd70c3ff6d9a1555a57b4450d",
     "inventory_sha256": "3c21bdc64324e92b0bda9241d2498b14c51d182e1ee97e7d9547ec462d7dab06"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-22T14:25:55+00:00",
+  "reviewed_at": "2026-10-22T15:15:05+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -186,7 +186,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "随后,他赴于科斯秋克、职布马德里八强、罗马职布第四轮。法王手轮又以5比7、6比7赴于萨卡里。"
+        "transcript": "随后,他赴于科斯秋克、止步马德里八强、罗马止步第四轮。法王手轮又以5比7、6比7赴于萨卡里。"
       },
       "polyphones": [],
       "pauses": {
@@ -218,7 +218,7 @@
         "substituted": 2,
         "sub_ratio": 0.069,
         "longest_deletion": 0,
-        "transcript": "梅阿弥守战师力,斯圖加特打进八强。马德里,他抢七击败高福,竞击八强。"
+        "transcript": "梅阿弥守战师力、斯圖加特打进八强。马德里他抢七击败高福,竞击八强。"
       },
       "polyphones": [],
       "pauses": {
@@ -336,7 +336,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "9月,他帮助捷克奪得比例减金杯。北京止步第四轮后,北京时间10月9日,官方确认他首次入围年中。11日,他因左小腿受伤退出武汉。"
+        "transcript": "9月,他帮助捷克夺得比例减金杯。北京指部第四轮后,北京时间10月9日,官方确认他首次入围年中。11日,他因左小腿受伤退出武汉。"
       },
       "polyphones": [
         {
@@ -379,10 +379,10 @@
         "ref_syllables": 50,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 2,
-        "sub_ratio": 0.04,
+        "substituted": 1,
+        "sub_ratio": 0.02,
         "longest_deletion": 0,
-        "transcript": "北美夏天,多伦多手战出局,新西纳提止步第四轮。梅娃,她第一次打进八强。再次面对萨巴伦卡,胜负指导决胜盘抢师才揭晓。"
+        "transcript": "北美夏天,多伦多首战出局,新西纳提止步第四轮。梅网,他第一次打进八强。再次面对萨巴伦卡,胜负指导决胜盘抢师才揭晓。"
       },
       "polyphones": [],
       "pauses": {
@@ -414,7 +414,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "第一次年中 他会带来怎样的惊喜。"
+        "transcript": "第一次年中,他会带来怎样的惊喜。"
       },
       "polyphones": [],
       "pauses": {
@@ -443,10 +443,10 @@
         "ref_syllables": 47,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.021,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "巴特红宝首轮出局后,他来到温网。夸过凯斯、梅尔滕斯和科斯秋克,他首次打进大晚冠决赛。最后一关是朋友目祸瓦。"
+        "transcript": "巴特红宝首轮出局后,他来到温网。跨过凯斯、梅尔滕斯和科斯秋克,他首次打进大满冠决赛。最后一关是朋友目祸瓦。"
       },
       "polyphones": [],
       "pauses": {
@@ -510,7 +510,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "26天后,故事转向草地。柏林绝赛,他三盘击败佩古拉,拿到本季手冠,也是生涯第二冠。"
+        "transcript": "26天后,故事转向草地。柏林爵塞,他三盘击败佩古拉,拿到本季手冠,也是生涯第二冠。"
       },
       "polyphones": [],
       "pauses": {
