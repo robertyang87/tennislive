@@ -1,6 +1,6 @@
 {
   "slug": "sun-cvetkovic-chengdu-2026-rr1",
-  "checked_at": "2026-10-22T02:24:38Z",
+  "checked_at": "2026-10-22T04:47:39Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -10,11 +10,6 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "b082e94240731a64": {
-      "segment": 2,
-      "spoken": 11.064,
-      "picture": 13.05
-    },
     "57cd3952be3750b9": {
       "segment": 4,
       "spoken": 14.088,
@@ -35,29 +30,34 @@
       "spoken": 8.712,
       "picture": 10.47
     },
-    "543080870cce3ae8": {
+    "41741154a5bbb23c": {
+      "segment": 2,
+      "spoken": 11.04,
+      "picture": 13.05
+    },
+    "7f0ef89f1b486c06": {
       "segment": 12,
-      "spoken": 15.624,
+      "spoken": 14.88,
       "picture": 17.99
     },
-    "26e0ccf1914efc44": {
+    "44a1e5000d0d8177": {
       "segment": 14,
-      "spoken": 18.672,
+      "spoken": 18.624,
       "picture": 21.98
     }
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "bb884c553a1cfbb7f8016883ec5dfafb62c013c97a3d236081d1163c7633de5c",
+    "bundle_sha256": "3a6f8681cfcd2380c7afe4c5a27e2294858f0b14d78b00ace4e7a6f22b887a90",
     "request_count": 8,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-sun-cvetkovic-chengdu-2026-rr1-bb884c553a1cfbb7",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-sun-cvetkovic-chengdu-2026-rr1-bb884c553a1cfbb7/tts_bundle.zip",
+    "release_tag": "reel-tts-sun-cvetkovic-chengdu-2026-rr1-3a6f8681cfcd2380",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-sun-cvetkovic-chengdu-2026-rr1-3a6f8681cfcd2380/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39710995869"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39724189840"
   }
 }
