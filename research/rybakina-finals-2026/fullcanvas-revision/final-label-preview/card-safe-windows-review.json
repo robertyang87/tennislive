@@ -1,0 +1,168 @@
+{
+  "reviewed_at": "2026-10-22T01:53:03.813083+00:00",
+  "method": "Actual source frames extracted, center crop810x1080->1080x1440, current PNG resized648px preserving transparency and overlaid x386 y151. Three temporal samples per candidate; does not prove unsampled frames.",
+  "evidence_directory": "/workspace/rybakina-finals-production/research/evidence",
+  "windows": [
+    {
+      "source": "ao-highlights",
+      "segment_source_start": 163.35,
+      "candidate_source": [
+        163.65,
+        170
+      ],
+      "candidate_segment": [
+        0.3,
+        6.65
+      ],
+      "status": "rejected_whole_window_after_overlay",
+      "actual_overlay_times": [
+        163.65,
+        166.35,
+        169.9
+      ],
+      "observation": "At166.35 far pink-clad player head/arm enters left date/title area. Need narrower window."
+    },
+    {
+      "source": "indian-wells-final",
+      "segment_source_start": 245.6,
+      "candidate_source": [
+        245.9,
+        250.3
+      ],
+      "candidate_segment": [
+        0.3,
+        4.7
+      ],
+      "status": "sampled_overlay_clear",
+      "actual_overlay_times": [
+        245.9,
+        248,
+        250.3
+      ]
+    },
+    {
+      "source": "rg-r2",
+      "segment_source_start": 2,
+      "candidate_source": [
+        3,
+        11.2
+      ],
+      "candidate_segment": [
+        1,
+        9.2
+      ],
+      "status": "sampled_overlay_clear",
+      "actual_overlay_times": [
+        3,
+        7,
+        11.15
+      ]
+    },
+    {
+      "source": "us-final",
+      "segment_source_start": 152,
+      "candidate_source": [
+        153.5,
+        164.1
+      ],
+      "candidate_segment": [
+        1.5,
+        12.1
+      ],
+      "status": "sampled_overlay_clear",
+      "actual_overlay_times": [
+        153.5,
+        158.5,
+        163.9
+      ]
+    }
+  ],
+  "final_ao_recommendation": {
+    "source": "ao-trophy",
+    "source_start": 683.02,
+    "source_end": 694.3,
+    "segment_start": 0,
+    "segment_end": 11.28,
+    "show_for": 11.28,
+    "frame": "person",
+    "cx_used_for_overlay": 0.6896,
+    "topic": "澳网逆转夺冠",
+    "checked_actual_frame_times": [
+      683.02,
+      683.5,
+      684,
+      684.5,
+      685,
+      685.5,
+      686,
+      686.5,
+      687,
+      687.3,
+      688,
+      689,
+      689.3,
+      691.3,
+      693.9
+    ],
+    "conclusion": "No face/eye obstruction seen in actual samples at this fixed native crop and inset placement. First close-up card is near cap crown but above eyes. No racket/serve sequence in this trophy scene.",
+    "evidence": [
+      "/workspace/rybakina-finals-production/research/evidence/ao-trophy-card-earlier.jpg",
+      "/workspace/rybakina-finals-production/research/evidence/ao-trophy-card-alternative.jpg"
+    ],
+    "limitations": "Temporal samples, not final rendered-video QC. Camera pans to crowd around687–690 and player is temporarily outside fixed person crop; do not imply uninterrupted player close-up."
+  },
+  "final_other_recommendations": [
+    {
+      "source": "indian-wells-final",
+      "source_window": [
+        245.9,
+        250.3
+      ],
+      "segment_window": [
+        0.3,
+        4.7
+      ],
+      "duration": 4.4,
+      "actual_sampled_overlay_frames_clear": [
+        245.9,
+        248,
+        250.3
+      ]
+    },
+    {
+      "source": "rg-r2",
+      "source_window": [
+        3,
+        11.2
+      ],
+      "segment_window": [
+        1,
+        9.2
+      ],
+      "duration": 8.2,
+      "actual_sampled_overlay_frames_clear": [
+        3,
+        7,
+        11.15
+      ]
+    },
+    {
+      "source": "us-final",
+      "source_window": [
+        153.5,
+        164.1
+      ],
+      "segment_window": [
+        1.5,
+        12.1
+      ],
+      "duration": 10.6,
+      "actual_sampled_overlay_frames_clear": [
+        153.5,
+        158.5,
+        163.9
+      ]
+    }
+  ],
+  "execution": "Recommendations only; no shared spec edit, render, workflow dispatch or publication by this reviewer."
+}

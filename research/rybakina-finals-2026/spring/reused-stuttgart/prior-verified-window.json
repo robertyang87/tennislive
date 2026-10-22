@@ -1,0 +1,65 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=cu2BtcEjWww",
+  "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b",
+  "source_key": "stuttgart_final",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-window cross-check using independent small.en and medium.en on actual MP4 bytes; not human listening",
+  "reviewed_at": "2026-10-21T16:57:30.151899+00:00",
+  "reviewed_from": 261.0,
+  "reviewed_to": 271.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 265.54,
+      "end": 270.16,
+      "en": "It is a second Stuttgart title for Elena Rybakina.",
+      "zh": "莱巴金娜第2次在斯图加特夺冠。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-249.10-274.40-small.en.json",
+      "sha256": "49ea23984ac272ce130bd254ec3f748b4360d8961dbd0fee5a6e38be96977120",
+      "model": "small.en",
+      "from": 249.1,
+      "to": 274.4,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-249.10-274.40-medium.en.json",
+      "sha256": "7e6c6b34ba1f65f57038c573b84e00ee9519fd7b47d5d37d0d1aa4cf2ee748bf",
+      "model": "medium.en",
+      "from": 249.1,
+      "to": 274.4,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-context-269-284-small.en.json",
+      "sha256": "9eb1f963d55cbebf5fa22e0d6b1327d4dd735a8e901c8638849241fa3e74dc41",
+      "model": "small.en",
+      "from": 269,
+      "to": 284,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    },
+    {
+      "path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-context-269-284-medium.en.json",
+      "sha256": "67fe8582e14907b355ca050e3c49f49bd789a5f9bd6f92b04f7098dd30a28f1b",
+      "model": "medium.en",
+      "from": 269,
+      "to": 284,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32"
+    }
+  ],
+  "review_scope": "Exactly the selected source window; source speech retained at original speed and gain, no muted bypass.",
+  "editorial_basis": {
+    "window_findings": "research/muchova-finals-2026/audio-window-review.json",
+    "window_findings_sha256": "7210d181d91186ba4a10fb95842428219102684f105f0ee5639ec4aae9d3bba0",
+    "runtime_clause_packet": null,
+    "runtime_clause_packet_sha256": null,
+    "final_bilingual_text_source": "specs/reels/muchova-finals-2026.json",
+    "translation_note": "Chinese shortened to the final displayed cue wording without altering the verified meaning. English proper names and tournament names normalized from official source identity; no claim of model character-for-character agreement."
+  }
+}

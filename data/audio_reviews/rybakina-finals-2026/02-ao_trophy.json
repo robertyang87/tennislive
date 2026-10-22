@@ -1,0 +1,64 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=wwy3rHR2YY0",
+  "source_sha256": "dc26904f88f3e22446fc5be9d89add86711195d58fb16cdb56fa9803b3f38fcb",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-media research agent; real small.en + medium.en outputs inspected; no human-listening claim",
+  "reviewed_at": "2026-10-22T01:11:07.903267+00:00",
+  "reviewed_from": 683.02,
+  "reviewed_to": 694.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 683.1,
+      "end": 685.45,
+      "en": "And she has been so impressive",
+      "zh": "她的表现一直如此出色，"
+    },
+    {
+      "start": 685.45,
+      "end": 687.74,
+      "en": "second half of last season,",
+      "zh": "从上个赛季的后半程，"
+    },
+    {
+      "start": 687.74,
+      "end": 691.45,
+      "en": "and now lifting the trophy",
+      "zh": "到如今举起冠军奖杯，"
+    },
+    {
+      "start": 691.45,
+      "end": 694.15,
+      "en": "at the first major of this new season.",
+      "zh": "在新赛季的首站大满贯。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/ao_trophy-fb24715802-ao-trophy-lift-context-small.en.json",
+      "sha256": "fb24715802c6fae98cb58cfc83a2aead57d90de48a240d39856c607faa79729c",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/ao_trophy-d00dcbca15-ao-trophy-lift-context-medium.en.json",
+      "sha256": "d00dcbca1552ab7857d24d92f8e7fd294a99786e454ee875b27a545d3f1c2224",
+      "model": "medium.en"
+    }
+  ],
+  "supporting_visual_evidence": [
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/ao_trophy-70023c596b-ao-trophy-trophy-second.jpg",
+      "sha256": "70023c596ba21d27044d95061e8b8497b9285f8e2c1f840d63661336d372ea7b",
+      "kind": "actual_source_frame_or_face_measurement"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/ao_trophy-9784249871-ao-trophy-final-face.json",
+      "sha256": "9784249871ee243bdeb969aa3e9da2ca714c548a6bb1f63865e9cc29cae14999",
+      "kind": "actual_source_frame_or_face_measurement"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=YCAQnmJBJIk",
+  "source_sha256": "2583a83d9c85843e33e38b8df9664d73a2dbe66ba565f637eae334be43b2ca20",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual small.en + medium.en source-bound transcription cross-check and source-frame inspection, not human listening",
+  "reviewed_at": "2026-10-22T01:16:13.393941+00:00",
+  "status": "complete",
+  "reviewed_from": 152.0,
+  "reviewed_to": 167.0,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 165.46,
+      "end": 166.02,
+      "en": "Five-two.",
+      "zh": "五比二。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "research/rybakina-finals-2026/points/us-final-small.en.json",
+      "sha256": "aeeaf5d002f332e49a4678fb3d8a8b6b86c897ab472fb3c0f9883f748965c537",
+      "model": "small.en"
+    },
+    {
+      "path": "research/rybakina-finals-2026/points/us-final-medium.en.json",
+      "sha256": "8ce53a393371e8559b09dbdde148a116fc0c2ddf1b5731474bf026ddf8d2c25a",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "Actual selected window152–167 has tennis/crowd and a masked background court score call164.20–166.02. Only stable identifiable English content in both actual ASR outputs is5-2, rendered in English words Five-two and translated五比二. The leading sounds disagree Check vs Chet and form no reliably intelligible foreground English; small avg_logprob=-0.96/no_speech_prob=.574, initial Check probability=.077, and its spurious Oh yeah has zero-duration words and Oh probability=.021. Medium avg_logprob=-1.10/no_speech_prob=.505. These masked background fragments are classified as non-identifiable, not reconstructed into Game or another phrase. No foreground commentator sentence occurs in selection. Actual raw ASR retained. No muting, no human-listening claim, no assertion that every background word is understood."
+}

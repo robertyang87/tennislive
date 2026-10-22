@@ -582,6 +582,13 @@ PLAYER_ZH: dict[str, str] = {
     "Valerie Tetreault": "泰特罗",
     "Valérie Tétreault": "泰特罗",
     "Ken Rosewall": "罗斯沃尔",           # 1974 年温网四强，公开赛年代最年长的那个纪录
+    # 官方ITF成都2026名单/中新网中文报道；不是近似的佩特科维奇。
+    "Anastasija Cvetkovic": "茨维特科维奇",
+    "Anastasija Cvetković": "茨维特科维奇",
+    # ITHF bill-talbert、辛大2011/04/14确认William (Bill) Talbert；
+    # 搜狐体育2013/05/10 n375474200.shtml使用“比尔·塔尔伯特”。
+    "Bill Talbert": "塔尔伯特",
+    "William Talbert": "塔尔伯特",
     # 「资格赛最远能打到哪儿」那条冷知识片要点名的六个人。补进表的理由和罗斯沃尔
     # 一样：写稿时凡是外国人名先查这张表，查不到就会现编。六个人都是公开赛年代
     # 从资格赛打进大满贯半决赛的（男四女二），生涯早就结束，不会进 top500。
@@ -619,6 +626,8 @@ PLAYER_ZH: dict[str, str] = {
 # data/evidence/paolini-bejlek-wuhan-2026-r1/facts/raw/wta-match-row.json。
 # PLAYER_ZH 的规范输出仍是「保利尼」，别名不改已经配音/渲染的显示文案。
 PLAYER_ZH_ALIASES: dict[str, str] = {
+    # 人民网2014/01/09 c372176-24073699.html的1971/1972澳网冠军异译。
+    "罗斯维尔": PLAYER_ZH["Ken Rosewall"],
     # Owner explicitly requests 卡塔尔 in Wuhan SF reel; both refer to WTA 329918.
     "卡塔尔": PLAYER_ZH["Sonay Kartal"],
     "卡尔塔尔": PLAYER_ZH["Sonay Kartal"],

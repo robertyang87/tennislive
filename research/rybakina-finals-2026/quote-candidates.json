@@ -1,0 +1,23 @@
+[
+  {
+    "source_key": "stuttgart_interview",
+    "source_file": "/workspace/rybakina-finals-production/sources/stuttgart-interview.mp4",
+    "candidate_window": [
+      153.0,
+      164.5
+    ],
+    "kind": "same_tournament_player_interview",
+    "english_draft": "Overall, as I say, I think I'm on a good path right now, and we are doing a good job with the team. So I'm just hoping not to stop and do even better.",
+    "chinese_draft": "总的来说，我觉得自己正走在正确的道路上，我和团队做得不错。希望能够保持下去，做得更好。",
+    "evidence": [
+      "asr/stuttgart-interview-small.en.json",
+      "asr/stuttgart-quote-medium.en.json"
+    ],
+    "state": "candidate_not_final_audio_review",
+    "remaining": [
+      "Confirm exact sentence onset",
+      "Resolve small/medium minor wording difference",
+      "Measure fixed person crop before use"
+    ]
+  }
+]

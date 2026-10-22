@@ -1,0 +1,82 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=cu2BtcEjWww",
+  "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual-source video-frame review and paired ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T01:06:33.804779+00:00",
+  "reviewed_from": 261,
+  "reviewed_to": 271.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/rybakina-finals-production/research/spring/reused-stuttgart/stuttgart_final-249.10-274.40-small.en.json",
+      "sha256": "49ea23984ac272ce130bd254ec3f748b4360d8961dbd0fee5a6e38be96977120",
+      "model": "small.en",
+      "from": 249.1,
+      "to": 274.4,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode",
+      "reused_source_path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-249.10-274.40-small.en.json",
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b"
+    },
+    {
+      "path": "/workspace/rybakina-finals-production/research/spring/reused-stuttgart/stuttgart_final-249.10-274.40-medium.en.json",
+      "sha256": "7e6c6b34ba1f65f57038c573b84e00ee9519fd7b47d5d37d0d1aa4cf2ee748bf",
+      "model": "medium.en",
+      "from": 249.1,
+      "to": 274.4,
+      "method": "faster_whisper_int8_ffmpeg_16khz_float32_decode",
+      "reused_source_path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-249.10-274.40-medium.en.json",
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b"
+    },
+    {
+      "path": "/workspace/rybakina-finals-production/research/spring/reused-stuttgart/stuttgart_final-context-269-284-small.en.json",
+      "sha256": "9eb1f963d55cbebf5fa22e0d6b1327d4dd735a8e901c8638849241fa3e74dc41",
+      "model": "small.en",
+      "from": 269,
+      "to": 284,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32",
+      "reused_source_path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-context-269-284-small.en.json",
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b"
+    },
+    {
+      "path": "/workspace/rybakina-finals-production/research/spring/reused-stuttgart/stuttgart_final-context-269-284-medium.en.json",
+      "sha256": "67fe8582e14907b355ca050e3c49f49bd789a5f9bd6f92b04f7098dd30a28f1b",
+      "model": "medium.en",
+      "from": 269,
+      "to": 284,
+      "method": "context_faster_whisper_int8_ffmpeg_16khz_float32",
+      "reused_source_path": "data/audio_reviews/muchova-finals-2026/raw/stuttgart_final-context-269-284-medium.en.json",
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b"
+    },
+    {
+      "path": "/workspace/rybakina-finals-production/research/spring/stuttgart-focused-small.en.json",
+      "sha256": "d843fed14b86d475cdc6c09ce4f04d1d5aee912970cc9308dc7da58b9da18c3b",
+      "model": "small.en",
+      "from": 261.0,
+      "to": 272.0,
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b"
+    },
+    {
+      "path": "/workspace/rybakina-finals-production/research/spring/stuttgart-final-medium.en.json",
+      "sha256": "58f0d5c208e310d42740087a8a456779640111d48fc2275f79b049a471f409d5",
+      "model": "medium.en",
+      "from": 245.0,
+      "to": 280.0,
+      "source_sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b"
+    }
+  ],
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_key": "stuttgart_final",
+  "foreground_english": [
+    {
+      "start": 265.54,
+      "end": 270.16,
+      "en": "It is a second Stuttgart title for Elena Rybakina.",
+      "zh": "莱巴金娜第2次在斯图加特夺冠。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_scope": "Complete selected actual source window; original English preserved with phrase-complete bilingual subtitles. Machine cross-check, not human listening.",
+  "visual_review": "Actual 2-second contact and existing identical-byte window: 262s Rybakina pre-serve face, 264s court serve, 266s live championship rally, 268–272 winner reaction. End271.4 preserves complete championship call, avoids274s subsequent mixed cut. Same SHA and exact prior window verified against4 retained ASR files; focused current small ASR independently agrees except normalized proper name."
+}

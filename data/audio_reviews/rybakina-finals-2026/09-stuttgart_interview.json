@@ -1,0 +1,58 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6393472230112",
+  "source_sha256": "ab699a6a297eceacfde44e2d9d27123bdf845a5e72e91e134c4dc71096171309",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-media research agent; real small.en + medium.en outputs inspected; no human-listening claim",
+  "reviewed_at": "2026-10-22T01:10:24.612680+00:00",
+  "reviewed_from": 152.85,
+  "reviewed_to": 164.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 153.28,
+      "end": 155.02,
+      "en": "Overall, as I say,",
+      "zh": "总的来说，正如我所说，"
+    },
+    {
+      "start": 155.18,
+      "end": 157.65,
+      "en": "I think I'm on a good path right now,",
+      "zh": "我觉得自己走在正确的路上，"
+    },
+    {
+      "start": 157.65,
+      "end": 159.98,
+      "en": "and we are doing a good job with the team,",
+      "zh": "我和团队的工作也做得很好，"
+    },
+    {
+      "start": 160.02,
+      "end": 162.92,
+      "en": "so I'm just hoping not to stop",
+      "zh": "所以我希望继续前进，"
+    },
+    {
+      "start": 162.92,
+      "end": 164.38,
+      "en": "and do even better.",
+      "zh": "表现得更好。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Small.en renders I just hoping; medium.en renders I’m just hoping with same meaning; use medium contraction. Main substantive words match. Next interviewer starts165.28; selected end164.6 avoids it.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/stuttgart_interview-4129713313-stuttgart-interview-small.en.json",
+      "sha256": "412971331362e221e90b504f64d842e50b0aef791fe986ed13c33eed84410e23",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/stuttgart_interview-bd67d5bd6f-stuttgart-quote-medium.en.json",
+      "sha256": "bd67d5bd6f76cbc28a64567c1021134055b75c62f4cee911cd899bf973dac4b2",
+      "model": "medium.en"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=7CeEeluu9Q4",
+  "source_sha256": "4924c2c0bdb20c257a482b66d924bbbf950f206c7afecf8585a76adc0dc94063",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual small.en + medium.en source-bound transcription cross-check and source-frame inspection, not human listening",
+  "reviewed_at": "2026-10-22T01:14:55.538033+00:00",
+  "status": "complete",
+  "reviewed_from": 163.35,
+  "reviewed_to": 179.6,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 169.38,
+      "end": 174.1,
+      "en": "Rybakina. It's Elena Rybakina who moves ahead in this final.",
+      "zh": "莱巴金娜在决赛中取得领先。"
+    },
+    {
+      "start": 174.3,
+      "end": 179.46,
+      "en": "She gets the important break and leads 4-3. Final set.",
+      "zh": "关键破发，决胜盘四比三领先。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "research/rybakina-finals-2026/points/ao-highlights-end-small.en.json",
+      "sha256": "b02d462cf866effd9f181197f11ce1eeff36babd501406c2c8120b2fd7eada58",
+      "model": "small.en"
+    },
+    {
+      "path": "research/rybakina-finals-2026/points/ao-break-medium.en.json",
+      "sha256": "22dbaa2522b166dd8b1b463abd20566ec14e46084b2eaad152b5fc0e744486f9",
+      "model": "medium.en"
+    },
+    {
+      "path": "research/rybakina-finals-2026/points/ao-highlights-call-diagnostic.json",
+      "sha256": "11c25289ccace60e2c670fba9733aecfb3cb26a5675824a01d715522b1f78e2f",
+      "model": "large-v3-turbo"
+    }
+  ],
+  "review_notes": "Actual small.en and medium.en agree on foreground commentator sentences. Proper name phonetics normalized to Elena Rybakina. Overlapping background court call169.38–170.90 yields surname Rybakina in medium and independent turbo; its unclear initial syllable And/Dan is not invented as Game or And and is not claimed as a coherent foreground sentence. Caption identifies only verified surname then complete foreground commentary. Source-bound third-model diagnostics retained; no human listening claimed."
+}

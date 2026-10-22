@@ -1,0 +1,119 @@
+{
+  "checked_utc": "2026-10-22T02:17:24.228417+00:00",
+  "sun_publication_risk": {
+    "checked_main_sha": "d47c660aeced51ee2fed3e7cae95612e7a485f11",
+    "conclusion": "未发现Sun成片render或已发送凭据，当前已知仅probe和narration。",
+    "remote_output": "output/2026-10-22/reel/sun-cvetkovic-chengdu-2026-rr1",
+    "present": [
+      "probe.json",
+      "contact_*.jpg",
+      "score_*.jpg"
+    ],
+    "absent": [
+      "render.json (GitHub contents404)",
+      "pushed.json (GitHub contents404)",
+      "2026-10-21同slug目录 (GitHub contents404)"
+    ],
+    "workflow_history": "最近300条match-reel工作流中该slug仅probe/narration：最近成功narration39703737809，2026-10-22T01:06:26Z；无render/push。",
+    "release_found": {
+      "tag": "reel-tts-sun-cvetkovic-chengdu-2026-rr1-69833f6cfe0c83ae",
+      "published_at": "2026-10-22T01:08:37Z",
+      "assets": [
+        "tts_bundle.zip"
+      ],
+      "role": "冻结配音快照，不能当最终成片/已发布。"
+    },
+    "evidence_manifest": "/workspace/rybakina-finals-production/research/sun-unpublished-audit/manifest.json",
+    "scope_limit": "没有将外部人工绕过仓库发送等不可见渠道假设为已排查；结论是正式账本与产线中未发现。"
+  },
+  "minimal_change_actual": {
+    "files": [
+      "specs/reels/sun-cvetkovic-chengdu-2026-rr1.json",
+      "data/audio_reviews/sun-cvetkovic-chengdu-2026-rr1.json"
+    ],
+    "opening": "北京时间十月二十一号下午，成都……",
+    "hit_data_scope": "只认领packet08明确的这一轮两个对手发球分，以及packet12明确的次盘落后两局后连赢六局。没有由7-1反推全抢七接发分；没有UE/Winner/总分。",
+    "dual_asr_actually_compared": [
+      "data/source_asr/663661/small.en.json,1088.48–1096.44 /1693.40–1705.58",
+      "data/source_asr/663661/medium.en.json,1089.15–1095.79 /1678.35–1686.45 /1694.19–1712.25"
+    ],
+    "binding_validation_file": "/workspace/rybakina-finals-production/research/sun-minimal-ci-fix-validation.json",
+    "diff": "/workspace/rybakina-finals-production/research/sun-minimal-ci-fix.diff",
+    "tests": {
+      "opening_coordinates": "passed",
+      "hit_data_declaration": "Sun已不再报错；全库仍因另一既有khachanov-auger-aliassime-beijing-2026-r1失败。未修改该片。"
+    },
+    "tts_bundle_changed": false,
+    "git_committed": false,
+    "shared_name_registry_changed": false,
+    "immutable_packets_changed": false,
+    "future_requirement": "该片未来出片前须重新生成narration冻结包并实测/验听新增开场；本轮未声称新TTS已生成。"
+  },
+  "aliases_structure": {
+    "path": "src/tennislive/zh/players.py:621",
+    "type": "dict[str,str]",
+    "direction": "完整中文别名 → 现有规范中文名",
+    "current_example": "施耐德: PLAYER_ZH[Diana Shnaider]",
+    "normalization": "normalize_player_zh仅查询登记过的完整别名，未知名原样返回，不做模糊身份匹配。",
+    "suggested_rosewall_alias": "\"罗斯维尔\": PLAYER_ZH[\"Ken Rosewall\"]",
+    "reason": "保护同一人物已有合法异译和配音，规范输出仍罗斯沃尔。"
+  },
+  "registrable_identity_sources": {
+    "Cvetkovic": {
+      "english_name": "Anastasija Cvetkovic",
+      "chinese_surname": "茨维特科维奇",
+      "official_event": "https://www.itftennis.com/en/tournament/2026-world-tennis-tour-junior-finals/chn/2026/j-jm-chn-2026-001/media-and-resources/",
+      "reliable_chinese_identity": "https://finance.sina.cn/2026-10-21/detail-inivynsq8138428.d.html",
+      "publisher": "中国新闻网官方账号",
+      "support": "明确塞尔维亚选手阿纳斯塔西娅·茨维特科维奇；与Sun小组赛A组对手一致。",
+      "do_not": "误改为菲科维奇或佩特科维奇。"
+    },
+    "Rosewall": {
+      "english_name": "Ken Rosewall",
+      "canonical_chinese_existing": "罗斯沃尔",
+      "legal_variant": "罗斯维尔",
+      "sources": [
+        {
+          "url": "https://sports.people.com.cn/n/2014/0109/c372176-24073699.html",
+          "publisher": "人民网体育",
+          "title": "历届澳网男女单冠军",
+          "support": "1971和1972男子冠军列罗斯维尔（澳大利亚），同Ken Rosewall生涯冠军身份。",
+          "availability": "搜索索引取得正文片段，直接open502；未谎称页面快照完整取得。"
+        },
+        {
+          "url": "https://sports.sina.com.cn/espnstar/t/2006-01-20/617.html",
+          "publisher": "ESPN/Sina体育",
+          "title": "澳大利亚网球公开赛数据：历届男单冠亚军",
+          "support": "1953、1955、1971、1972冠军用罗斯维尔；与Ken Rosewall四冠年份一致。"
+        }
+      ]
+    },
+    "Talbert": {
+      "english_names": [
+        "Bill Talbert",
+        "William Talbert"
+      ],
+      "canonical_chinese_suggestion": "塔尔伯特",
+      "sources": [
+        {
+          "url": "https://www.tennisfame.com/hall-of-famers/inductees/bill-talbert/",
+          "publisher": "International Tennis Hall of Fame",
+          "support": "Bill Talbert独立生平、1918年出生、1967入堂、曾任美网赛事总监；正文还单独提及Tony Trabert。"
+        },
+        {
+          "url": "https://gobearcats.com/news/2011/04/14/trabert-talbert-signage-to-be-unveiled-at-fridays-tennis-match",
+          "publisher": "University of Cincinnati Athletics官方",
+          "support": "正文直接写“William (Bill) Talbert”，并与Tony Trabert并列，证明二人为不同真人。"
+        },
+        {
+          "url": "https://sports.sohu.com/20130510/n375474200.shtml",
+          "publisher": "搜狐体育",
+          "title": "盘点德国网坛“奇葩” 贝克尔格拉芙外另有高人",
+          "support": "使用“美国名宿比尔·塔尔伯特”译名。",
+          "availability": "搜索索引取得正文片段，直接open超时。"
+        }
+      ],
+      "do_not": "不能把Talbert映射为Tony Trabert/塔尔韦特；允许为Bill/William登记同一英文实体，中文规范一致。"
+    }
+  }
+}
