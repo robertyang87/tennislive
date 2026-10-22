@@ -80,6 +80,34 @@ _APPROVED_MATCH_IDENTITIES[DJOKOVIC_ZVEREV_OMISSION["slug"]] = {
 }
 
 
+
+# The owner approved this single-film omission on 2026-10-22 after disclosure
+# that every accepted W/UE source had been checked and was empty for this ITF
+# junior finals match (official scoring widget carries percentages only; TNNS
+# does not cover the match; the MCP index has no chart; the broadcast shows no
+# statistics board). Like the earlier exceptions, it is bound to one exact
+# film and match identity.
+SUN_CVETKOVIC_OMISSION = {
+    "slug": "sun-cvetkovic-chengdu-2026-rr1",
+    "source_id": "ITF-2026-3454",
+    "match_date": "2026-10-21",
+    "winner_result": "7-6(1) 6-2",
+    "fields": ["winners", "ue"],
+    "decision": "omit_both_rows_for_this_film_only",
+    "authorization": "owner-approved-single-film-omission-2026-10-22",
+}
+APPROVED_WUE_OMISSIONS[SUN_CVETKOVIC_OMISSION["slug"]] = SUN_CVETKOVIC_OMISSION
+_APPROVED_MATCH_IDENTITIES[SUN_CVETKOVIC_OMISSION["slug"]] = {
+    "source": "world_tennis_official",
+    "source_id": "ITF-2026-3454",
+    "winner": "孙心然",
+    "loser": "茨维特科维奇",
+    "participants": ["孙心然", "茨维特科维奇"],
+    "sets": [[7, 6], [6, 2]],
+    "result": "7-6(1) 6-2",
+    "matchup": [["孙心然", "Xinran Sun"], ["茨维特科维奇", "Anastasija Cvetkovic"]],
+}
+
 def _omission_problem(spec: dict) -> str | None:
     """Only explicitly approved films may omit rows; unknown values stay unknown."""
     slug = spec.get("slug")
